@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BA6449EB2;
-	Tue, 25 Aug 2026 13:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB04340243B;
+	Tue, 25 Aug 2026 13:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665180; cv=none; b=FRiYnU6y1sS3i5oXCDjw67IQ+hWafDFXlsLuzDUybQac+gAeA8QOnPhJVz6Ew03+HzWclmpjPNxoofy7p+FfF7tG1wWCm8MJ2p9zSa0FKmSDn23fmBSv+/nhCNdDExyzbD0GX2gmifTlhfce+GH1XlZmTCfXL0jD5DvncclbTGA=
+	t=1787665183; cv=none; b=VQbxS46UIyAMxPU4U0BLNDwF9L4rJRN2cOs6bI28WKweb3g9imvPnEG5LsaF3OMZI+oB4aMWF9EV6O5ofJ3x4ywtKfulLUOss1DU8X8A7wL0lPfiprCMjXJNSgoGhnyq9QerxxUo5a+G3ktZrViYdu3eIbsmNpPyhpdKMxl+0v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665180; c=relaxed/simple;
-	bh=a2eKFn1JpGjNrCrKOS/iwfUseolZNygL6InP8+VtJTI=;
+	s=arc-20240116; t=1787665183; c=relaxed/simple;
+	bh=GmGAJRwSW9CDld9Y+uk2SMEup7Ul1tjaIh4CsAIoIBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0UoI5Mz2Eqgsk0daJGhvYBgCoalnh55Osd6ROjGSdr15nLnXRRk1BB9IVg6KJs4v48CevYgrS8AZE2ugm9nWpphd75W3/17h/wJL0ClZjwtfYXL9xddmUouh9pyVqhiQbzp37AvULKu9pPTScUjg06YX5FY5aj+ZFypdx4LihE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olYZkfO5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tkJTsAykfR8B6Td7I0O3ijOUgryU6lCl30UR/ZjlXeXSJPrula+uTy70K6iBGPFD8i7qiv6FD5t8KZRYqGcO+nGDZSFem29tPUgAlGiygo2YMNYNa5KkuNmz+SkKSH1P/1Ore1rHl3Kf1iMz025Fsrz/11CNlcDIWpfJFrr+hPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bJBljoF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olYZkfO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163721F000E9;
-	Tue, 25 Aug 2026 13:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bJBljoF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C9E1F000E9;
+	Tue, 25 Aug 2026 13:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665178;
-	bh=GbZHOlyGNEEcb0eiyOmi1Od4BG7LF7mtXR4NWCgieu0=;
+	s=korg; t=1787665181;
+	bh=PlZYac1G3aextxs2O+Zn+uknGSRn5XDh+ZyK1wt6fC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=olYZkfO52lgKMjv6/97In9Lan/kWiDEjUaTe/YBnHggndnH4oWt950TlGqG7wWf+V
-	 Fh+KYuNym6PUUIvTpNNXu5pqI36lFPrfULKfSBSdf+LoP4AtUfpUnRNssEcIAXj2/k
-	 jdPiYTnQBH10gmxKPkd3d0M+G5kYsHS9CpFjOCO8=
+	b=2bJBljoFG92SCwyhd/BxRkpionLdXtN7ZZbH0/2NjgIlWyvxSQlq0jXpI0GBQ8vk/
+	 rV2+LEhPv5/QnyfNeM9U2jdv+fwZVEt3QO8dubh7kEmmfVBL0KSDxwDYKa15by7pa8
+	 6jUUVmmFdeYnMITTBn9i7Ts2rOcdaARXyxMP4EcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 06/94] xfs: hoist per-bucket unlinked list check to helper
-Date: Tue, 25 Aug 2026 15:25:02 +0200
-Message-ID: <20260825132542.139428340@linuxfoundation.org>
+Subject: [PATCH 6.18 07/94] xfs: dont livelock in scrub on a circular unlinked list
+Date: Tue, 25 Aug 2026 15:25:03 +0200
+Message-ID: <20260825132542.180803413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -54,101 +54,184 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 7cdafd8f10ebdf745ba6046b9fa67490c343a17f ]
+[ Upstream commit 527eaaefddb6ec5c83a06c9a1559960dd6361753 ]
 
-In the next patch we're going to make this loop more exciting, so hoist
-the code to a helper function to reduce clutter in the resulting code.
+LOLLM points out that online fsck can livelock if an unlinked inode list
+contains a loop.  Use a bitmap to detect cycles.
 
+Cc: stable@vger.kernel.org # v4.15
+Fixes: a12890aebb8959 ("xfs: scrub the AGI")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Stable-dep-of: 527eaaefddb6 ("xfs: don't livelock in scrub on a circular unlinked list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader.c |   62 +++++++++++++++++++++++++++++++-----------------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+ fs/xfs/scrub/agheader.c        |   44 +++++++++++++++++++++++++++++++++--------
+ fs/xfs/scrub/agheader_repair.c |   17 +++++++++++++--
+ 2 files changed, 51 insertions(+), 10 deletions(-)
 
 --- a/fs/xfs/scrub/agheader.c
 +++ b/fs/xfs/scrub/agheader.c
-@@ -933,6 +933,42 @@ xchk_agi_xref(
+@@ -18,6 +18,8 @@
+ #include "xfs_inode.h"
+ #include "scrub/scrub.h"
+ #include "scrub/common.h"
++#include "scrub/bitmap.h"
++#include "scrub/agino_bitmap.h"
+ 
+ int
+ xchk_setup_agheader(
+@@ -935,7 +937,8 @@ xchk_agi_xref(
+ /*
+  * Walk the incore unlinked list for a particular AGI bucket to construct
+  * the unlinked inode bitmap for later reconstruction of the unlinked list.
+- * Returns 1 if we should keep checking, or 0 to stop checking.
++ * Returns 1 if we should keep checking, 0 to stop checking, or a negative
++ * errno.
+  */
+ static int
+ xchk_iunlink_bucket(
+@@ -943,36 +946,57 @@ xchk_iunlink_bucket(
+ 	unsigned int			bucket,
+ 	xfs_agino_t			agino)
+ {
++	struct xagino_bitmap		seen;
++	int				ret;
++
++	xagino_bitmap_init(&seen);
++
+ 	while (agino != NULLAGINO) {
+ 		struct xfs_inode	*ip;
++		unsigned int		len = 1;
+ 
+ 		if (agino % XFS_AGI_UNLINKED_BUCKETS != bucket) {
+ 			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
+-			return 0;
++			goto bad;
++		}
++
++		if (xagino_bitmap_test(&seen, agino, &len)) {
++			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
++			goto bad;
+ 		}
+ 
+ 		ip = xfs_iunlink_lookup(sc->sa.pag, agino);
+ 		if (!ip) {
+ 			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
+-			return 0;
++			goto bad;
+ 		}
+ 
+ 		if (!xfs_inode_on_unlinked_list(ip)) {
+ 			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
+-			return 0;
++			goto bad;
+ 		}
+ 
++		ret = xagino_bitmap_set(&seen, agino, 1);
++		if (ret)
++			goto out_bitmap;
++
+ 		agino = ip->i_next_unlinked;
+ 	}
++	ret = 1;
+ 
+-	return 1;
++out_bitmap:
++	xagino_bitmap_destroy(&seen);
++	return ret;
++bad:
++	ret = 0;
++	goto out_bitmap;
  }
  
  /*
-+ * Walk the incore unlinked list for a particular AGI bucket to construct
-+ * the unlinked inode bitmap for later reconstruction of the unlinked list.
-+ * Returns 1 if we should keep checking, or 0 to stop checking.
-+ */
-+static int
-+xchk_iunlink_bucket(
-+	struct xfs_scrub		*sc,
-+	unsigned int			bucket,
-+	xfs_agino_t			agino)
-+{
-+	while (agino != NULLAGINO) {
-+		struct xfs_inode	*ip;
-+
-+		if (agino % XFS_AGI_UNLINKED_BUCKETS != bucket) {
-+			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
-+			return 0;
-+		}
-+
-+		ip = xfs_iunlink_lookup(sc->sa.pag, agino);
-+		if (!ip) {
-+			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
-+			return 0;
-+		}
-+
-+		if (!xfs_inode_on_unlinked_list(ip)) {
-+			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
-+			return 0;
-+		}
-+
-+		agino = ip->i_next_unlinked;
-+	}
-+
-+	return 1;
-+}
-+
-+/*
   * Check the unlinked buckets for links to bad inodes.  We hold the AGI, so
   * there cannot be any threads updating unlinked list pointers in this AG.
   */
-@@ -942,30 +978,14 @@ xchk_iunlink(
+-STATIC void
++STATIC int
+ xchk_iunlink(
+ 	struct xfs_scrub	*sc,
  	struct xfs_agi		*agi)
- {
- 	unsigned int		i;
--	struct xfs_inode	*ip;
- 
- 	for (i = 0; i < XFS_AGI_UNLINKED_BUCKETS; i++) {
--		xfs_agino_t	agino = be32_to_cpu(agi->agi_unlinked[i]);
-+		int		ret;
- 
--		while (agino != NULLAGINO) {
--			if (agino % XFS_AGI_UNLINKED_BUCKETS != i) {
--				xchk_block_set_corrupt(sc, sc->sa.agi_bp);
--				return;
--			}
--
--			ip = xfs_iunlink_lookup(sc->sa.pag, agino);
--			if (!ip) {
--				xchk_block_set_corrupt(sc, sc->sa.agi_bp);
--				return;
--			}
--
--			if (!xfs_inode_on_unlinked_list(ip)) {
--				xchk_block_set_corrupt(sc, sc->sa.agi_bp);
--				return;
--			}
--
--			agino = ip->i_next_unlinked;
--		}
-+		ret = xchk_iunlink_bucket(sc, i,
-+				be32_to_cpu(agi->agi_unlinked[i]));
-+		if (ret < 1)
-+			return;
+@@ -985,8 +1009,10 @@ xchk_iunlink(
+ 		ret = xchk_iunlink_bucket(sc, i,
+ 				be32_to_cpu(agi->agi_unlinked[i]));
+ 		if (ret < 1)
+-			return;
++			return ret;
  	}
++
++	return 0;
  }
  
+ /* Scrub the AGI. */
+@@ -1073,7 +1099,9 @@ xchk_agi(
+ 	if (pag->pagi_freecount != be32_to_cpu(agi->agi_freecount))
+ 		xchk_block_set_corrupt(sc, sc->sa.agi_bp);
+ 
+-	xchk_iunlink(sc, agi);
++	error = xchk_iunlink(sc, agi);
++	if (error)
++		goto out;
+ 
+ 	xchk_agi_xref(sc);
+ out:
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -1096,18 +1096,22 @@ xrep_iunlink_walk_ondisk_bucket(
+ 	struct xrep_agi		*ragi,
+ 	unsigned int		bucket)
+ {
++	struct xagino_bitmap	seen;
+ 	struct xfs_scrub	*sc = ragi->sc;
+ 	struct xfs_agi		*agi = ragi->agi_bp->b_addr;
+ 	xfs_agino_t		prev_agino = NULLAGINO;
+ 	xfs_agino_t		next_agino;
+ 	int			error = 0;
+ 
++	xagino_bitmap_init(&seen);
++
+ 	next_agino = be32_to_cpu(agi->agi_unlinked[bucket]);
+ 	while (next_agino != NULLAGINO) {
+ 		xfs_agino_t	agino = next_agino;
++		unsigned int	len = 1;
+ 
+ 		if (xchk_should_terminate(ragi->sc, &error))
+-			return error;
++			goto out_bitmap;
+ 
+ 		trace_xrep_iunlink_walk_ondisk_bucket(sc->sa.pag, bucket,
+ 				prev_agino, agino);
+@@ -1115,6 +1119,9 @@ xrep_iunlink_walk_ondisk_bucket(
+ 		if (bucket != agino % XFS_AGI_UNLINKED_BUCKETS)
+ 			break;
+ 
++		if (xagino_bitmap_test(&seen, agino, &len))
++			break;
++
+ 		next_agino = xrep_iunlink_next(sc, agino);
+ 		if (!next_agino) {
+ 			error = xrep_iunlink_reload_next(ragi, prev_agino,
+@@ -1123,10 +1130,16 @@ xrep_iunlink_walk_ondisk_bucket(
+ 				break;
+ 		}
+ 
++		error = xagino_bitmap_set(&seen, agino, 1);
++		if (error)
++			goto out_bitmap;
++
+ 		prev_agino = agino;
+ 	}
+ 
+-	return 0;
++out_bitmap:
++	xagino_bitmap_destroy(&seen);
++	return error;
+ }
+ 
+ /* Decide if this is an unlinked inode in this AG. */
 
 
