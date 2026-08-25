@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C6F480DCF;
-	Tue, 25 Aug 2026 13:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798E942E426;
+	Tue, 25 Aug 2026 13:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665313; cv=none; b=pGNsaF6wWIn5JXmdH45pQUtYxKjJzyPUKGsfbBqzUJPGbGd8CiHidcOWbMbryr3zp41ZgT3cm8uoInorSnIHtZyeG5tz8nuo1ClOZ3exory585oNf7qpoBgOSFgVLPOfe2mDyVU0ToRB1sCBHHOSglxwRBKShnGV1Sp60giR9x4=
+	t=1787665315; cv=none; b=JP8CX8v3NeQiZLrv7cs3H+4cW/M4XmOzjKg+U1sopvMxrKRUUiA4F4jvf/tLfzy+4MzdIKcY606RB5qfDKII4FrRzthQ936/JgG2ttCsMrQ6Lx1YznMG+A7n/R4Ny+C4r/vgasjYiDKTyJO+TVCecco+7nNzIBiCavbe7+AGNSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665313; c=relaxed/simple;
-	bh=9znMyG8X4+qdxKuGE9wvXWrGyxLmzIAveCYMxZOTxv8=;
+	s=arc-20240116; t=1787665315; c=relaxed/simple;
+	bh=Er4Lcrog1YN3DUaU86ht2BxA9kDzq+P1bqibqmOZRAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGpB34xouFPoBM2xhXB2Ebyc/5QB1cak9alix5eYBvsk8HExJDfQK24ipyGPsVgL2rQYAXWVO6qhZs/W724mUNknVIrOaBxHntbs4jSIo0Qh0kYMZ2HoHznCWA+MUjnxrHBSL8iQ2HGyAp81ppWLBcAHVv/iTNILTA3fdFxTF0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1ZQe4bi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WG/IJ00fyEWlrOazOz5EFibH8msXoM/l2HD53EKBjWNHXeMpVXoNKMFSsgKrGsuTJVXZcItzKsS0gXpoyjJ/eiaRTm9yxZ7mP4W42xR3mQJC5xVvlqkLV954Y1vCGN6h5ppdVRL9xxHNbRr3zXPFLur8WTnqQoLVl8i+LwPGZ/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiSt0GQK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1ZQe4bi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED27F1F000E9;
-	Tue, 25 Aug 2026 13:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiSt0GQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E0F1F000E9;
+	Tue, 25 Aug 2026 13:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665311;
-	bh=LJAFBWe+JNw9W2I/4OUbfQZk7QwTvqsxhpcRX6q+5oY=;
+	s=korg; t=1787665314;
+	bh=O+90FlvgsUTBHGPQhOmtql++xFSj002vzxLHTzNt5uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a1ZQe4biKkFVgj7bA0KY1sNoQpZ1UaoEDT7/ktVyGmHw5PXjtp62hk1obRfulj4b5
-	 t6FhB4j2EQFTu3ciZ8+32ku3Hpq30vUD+zMxiA6PK1r4QNbbO0ypONsBcFYiV0+HoR
-	 7YsGufeR2MN4vhFSKpof/Ce0mpeVNzvTEHjRCRmI=
+	b=YiSt0GQKlzcLy1rFhOufVc0PIiS1KoTRYpoy5/K/Lajff5LVhezHT/CwyvB8w8UGg
+	 b1meq1+iNaaZa8YsUJSKIpY3CjsnWK7sINem18D4yUq7hNsw55pHBBXzIlnrYLob3e
+	 fl8M4l5A8QyxQis2PABjd9YVDQDhdoublVZiiwEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 30/94] ext4: dont enable DAX on new encrypted files
-Date: Tue, 25 Aug 2026 15:25:26 +0200
-Message-ID: <20260825132543.087706100@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 72/94] xfrm: fix sk_dst_cache double-free in xfrm_user_policy()
+Date: Tue, 25 Aug 2026 15:26:08 +0200
+Message-ID: <20260825132544.702318552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -53,140 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
+[ Upstream commit c283e9ada7fcb7dd4b10592623086b2e6d2f9925 ]
 
-Currently, when a new encrypted regular file is created, the call to
-ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
-before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
-filesystem is mounted with "-o dax=always".
+xfrm_user_policy() clears the socket dst cache with __sk_dst_reset(),
+i.e. the non-atomic __sk_dst_set(sk, NULL): it reads sk_dst_cache with
+rcu_dereference_protected(), stores NULL and dst_release()s the old dst.
+That is only safe if no other thread modifies sk_dst_cache concurrently.
 
-EXT4_INODE_ENCRYPT then actually gets set a bit later in
-__ext4_new_inode(), when it calls fscrypt_set_context() which calls
-ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
-calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
+For a connected UDP socket that does not hold: the transmit fast path
+(udp_sendmsg -> sk_dst_check -> sk_dst_reset) resets the cache locklessly
+with an atomic xchg(). A per-socket policy change racing a send can make
+both sides observe the same old dst and each dst_release() it, dropping
+the socket's single reference twice and freeing the xfrm_dst bundle while
+it is still referenced:
 
-This was intended to clear S_DAX as well.  However, this was broken by
-commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
-causes data written to the file to bypass encryption, also causing
-xfstests failures such as generic/548 (when "-o dax=always" is used).
+  BUG: KASAN: slab-use-after-free in dst_release
+  Write of size 4 at addr ffff88801897b6c0 by task exploit/155
+  Call Trace:
+   ...
+   dst_release (... ./include/linux/rcuref.h:109)
+   xfrm_user_policy (./include/net/sock.h:2239 ./include/net/sock.h:2256 net/xfrm/xfrm_state.c:3053)
+   do_ip_setsockopt (net/ipv4/ip_sockglue.c:1347)
+   ip_setsockopt (net/ipv4/ip_sockglue.c:1417)
+   do_sock_setsockopt (net/socket.c:2368)
+   __sys_setsockopt (net/socket.c:2393)
+   __x64_sys_setsockopt (net/socket.c:2396)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-Fix this by simplifying the flow by making __ext4_new_inode() set
-EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
-ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
+Reachable by an unprivileged user via a user+network namespace.
 
-Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
-place on new encrypted inodes.  Then it doesn't need to be cleared.
+Use the atomic sk_dst_reset() so the cache is cleared and released with a
+single xchg(): whichever side wins releases the dst once, the other sees
+NULL and does nothing. Behaviour is otherwise unchanged.
 
-As a result of these simplifications, ext4_set_context() no longer needs
-to change inode flags or state when 'handle != NULL'.  Remove that too.
-
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
-Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2b06cdf3e688 ("xfrm: Clear sk_dst_cache when applying per-socket policy.")
+Fixes: be8f8284cd89 ("net: xfrm: allow clearing socket xfrm policies.")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/crypto.c |   40 ++++++++++++++++++++--------------------
- fs/ext4/ialloc.c |    4 ++++
- 2 files changed, 24 insertions(+), 20 deletions(-)
+ net/xfrm/xfrm_state.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/crypto.c
-+++ b/fs/ext4/crypto.c
-@@ -144,7 +144,13 @@ static int ext4_set_context(struct inode
- 	if (inode->i_ino == EXT4_ROOT_INO)
- 		return -EPERM;
- 
--	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
-+	/*
-+	 * For new encrypted inodes, S_DAX is never set in the first place.
-+	 *
-+	 * For existing inodes, this is called only on empty directories.  ext4
-+	 * never sets S_DAX on directories.
-+	 */
-+	if (WARN_ON_ONCE(IS_DAX(inode)))
- 		return -EINVAL;
- 
- 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
-@@ -164,27 +170,24 @@ static int ext4_set_context(struct inode
- 
- 	if (handle) {
- 		/*
-+		 * __ext4_new_inode() should have already set the encrypt flag
-+		 * on the inode and avoided enabling inline data.
-+		 */
-+		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
-+			return -EINVAL;
-+		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
-+			return -EINVAL;
-+		/*
- 		 * Since the inode is new it is ok to pass the
- 		 * XATTR_CREATE flag. This is necessary to match the
- 		 * remaining journal credits check in the set_handle
- 		 * function with the credits allocated for the new
- 		 * inode.
- 		 */
--		res = ext4_xattr_set_handle(handle, inode,
--					    EXT4_XATTR_INDEX_ENCRYPTION,
--					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
--					    ctx, len, XATTR_CREATE);
--		if (!res) {
--			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--			ext4_clear_inode_state(inode,
--					EXT4_STATE_MAY_INLINE_DATA);
--			/*
--			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--			 * S_DAX may be disabled
--			 */
--			ext4_set_inode_flags(inode, false);
--		}
--		return res;
-+		return ext4_xattr_set_handle(handle, inode,
-+					     EXT4_XATTR_INDEX_ENCRYPTION,
-+					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
-+					     ctx, len, XATTR_CREATE);
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index b9049c2297bd5..f463c7bd5321d 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2975,7 +2975,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
+ 	if (sockptr_is_null(optval) && !optlen) {
+ 		xfrm_sk_policy_insert(sk, XFRM_POLICY_IN, NULL);
+ 		xfrm_sk_policy_insert(sk, XFRM_POLICY_OUT, NULL);
+-		__sk_dst_reset(sk);
++		sk_dst_reset(sk);
+ 		return 0;
  	}
  
- 	res = dquot_initialize(inode);
-@@ -205,10 +208,7 @@ retry:
- 				    ctx, len, 0);
- 	if (!res) {
- 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--		/*
--		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--		 * S_DAX may be disabled
--		 */
-+		/* Update inode->i_flags to set S_ENCRYPTED. */
- 		ext4_set_inode_flags(inode, false);
- 		res = ext4_mark_inode_dirty(handle, inode);
- 		if (res)
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -995,6 +995,8 @@ struct inode *__ext4_new_inode(struct mn
- 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
- 		if (err)
- 			goto out;
-+		if (encrypt)
-+			i_flags |= EXT4_ENCRYPT_FL;
+@@ -3015,7 +3015,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
+ 	if (err >= 0) {
+ 		xfrm_sk_policy_insert(sk, err, pol);
+ 		xfrm_pol_put(pol);
+-		__sk_dst_reset(sk);
++		sk_dst_reset(sk);
+ 		err = 0;
  	}
  
- 	err = dquot_initialize(inode);
-@@ -1304,6 +1306,8 @@ got:
- 	ei->i_extra_isize = sbi->s_want_extra_isize;
- 	ei->i_inline_off = 0;
- 	if (ext4_has_feature_inline_data(sb) &&
-+	    /* Encrypted inodes cannot have inline data */
-+	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
- 	    (!(ei->i_flags & (EXT4_DAX_FL|EXT4_EA_INODE_FL)) || S_ISDIR(mode)))
- 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
- 	ret = inode;
+-- 
+2.53.0
+
 
 
