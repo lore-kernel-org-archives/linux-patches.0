@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DDB470117;
-	Tue, 25 Aug 2026 13:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C380946EF65;
+	Tue, 25 Aug 2026 13:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666026; cv=none; b=K7g4f4/W15DGuzHbDUI06oWG2RarmKy1W7HdqXrhZ5bap0j0ZrWdYeS0yC3Pe5dWNzr4iISj9TMR5RR34pOOjKS7LJHj7OOHN9HkDleUpdDjRhJtd6jhSSuyFjfNcBMI7aCTAwnBv+k7gLBmPqkrphiWLlVn2t7owJIqYuE3Q/8=
+	t=1787666028; cv=none; b=jgO97shxjRs80gJEA2H+XIzudgPeSxsV22xCpz37M95w0QREhMCoZrgT8yk6HdbkbmtKbkwcyRglI7ED7jHqcD9msLITfv36Tnpo1B+UHRvosM1UgqJnbeLccNgQ++vL1ehq8j7oDs0MJDTS6T1SmS/d4y8zqaEvsBih0rVh/8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666026; c=relaxed/simple;
-	bh=mY+gnfv+wJMeGbFq5pYtwxTV4TnnWTgp5VIF+Le3oCM=;
+	s=arc-20240116; t=1787666028; c=relaxed/simple;
+	bh=iMSpQSBkjezXtTERwyC9DrWHnu8t9cuujLpfQGaH4mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j4BWdtXRqijwXCa71BJgHzlfnElC2yDAoXWoEEKNeLdVNY8wr9a5JsBbHzH8RctCc/4nWi4+ACq4fcHU9SmuygXXJ9hTGWyVC4EZHe/vw6oMVGsBeBqNKyGM9MXHJEq0x+mUspxM4kn+WalTQik8+2ijx+iXtupER4jrgVsY/B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YVK9Smv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AwjV2rcWHhTCV+moOGbHwPlxWQM1iPe6OL7ofvGNCEegQYq3bNQFsepD5VCNZJ9bf4ok5pT2cGI9ws7wn0bs4QeFLTyAcPzmW3yAOpdGtjuDE7eudA9WY+lSEMTjaYB5x5g2uOpz+PiPOmjvl67xYfeKwzxNs8KT30b4ryoTcfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEkvGdd+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YVK9Smv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CFB1F00A3A;
-	Tue, 25 Aug 2026 13:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEkvGdd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BA21F000E9;
+	Tue, 25 Aug 2026 13:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666025;
-	bh=DMIuV9mvxLkbBDk/5qmckoCoyTfzhJ0WKMWGkW21wXo=;
+	s=korg; t=1787666022;
+	bh=nMYcchDUbeZHY73TJccgPIpVTDtEDaHotFQoSW1lFds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1YVK9SmvMF9Z/Xv2vH3cPV6dd95Re6P3vTIzDKDVjxFEq5KU3xdydVJ6qWUTmgFPs
-	 C9kE0sxTdBgMcqeuBMDlTepf1y662vXnL0Xc9oWUUGqZzTNuTSa0ksQcXnlgt9hNcq
-	 VAee5rwX6Y1NG427T6gPrL1OuR7v7YSBNVxXfwRk=
+	b=uEkvGdd+OX4zT+bEFgKZzsbf5Iiw3AS/VN3X5ZA05h6VxmBVQYc8gM/zSH8MztQfI
+	 p99eMrIBbFBXeH3vjp9HebKkw18buV4cVLSXgihe1FKAyHN8BtbhAVOqmU+vS2UnUP
+	 C8rtflfsqM9YWMZ53VXhmmG3xtGBtojjZb03VnX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 60/79] Input: byd - synchronize timer deletion before freeing private data
-Date: Tue, 25 Aug 2026 15:26:40 +0200
-Message-ID: <20260825132544.037507518@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.1 59/79] nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
+Date: Tue, 25 Aug 2026 15:26:39 +0200
+Message-ID: <20260825132544.000395822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -45,49 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit c83e79c0842ed29860648bcce5022ef0ba5001c6 ]
+commit 737a3b535247226f6e1a7988fd9d6e63e7d6fc71 upstream.
 
-byd_disconnect() uses timer_delete() before freeing the driver's private
-data.  This does not wait for a running byd_clear_touch() callback, which
-dereferences the private data and its psmouse pointer.  A callback racing
-with disconnect can therefore access the private data after it has been
-freed.  The timer can also still be re-armed by byd_process_byte() while
-the disconnect is in progress.
+When fuzzing the nvme target code, I tripped a kernel warning in
+nvmet_tcp_map_data() because the length passed into the allocator is
+controlled by the remote initiator.
 
-Use timer_shutdown_sync() before freeing the private data: it waits for
-a running callback and turns any later re-arm attempt into a no-op.
+A remote initiator that sends a command with an SGL claiming a huge
+number, can create a scatterlist and iovec allocation of over 1 million
+entries, which causes the backing kmalloc call to exceed MAX_PAGE_ORDER
+and then the page allocator will trip on a WARN_ON_ONCE_GFP() message:
 
-Fixes: 2d5f5611dd0d ("Input: byd - enable absolute mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260720061259.1601281-1-lilinmao@kylinos.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ changed `del_timer()` to `timer_shutdown_sync()` since 6.12 predates the `del_timer()` → `timer_delete()` rename ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  WARNING: mm/page_alloc.c:5280 __alloc_frozen_pages_noprof
+  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
+  ...
+  sgl_alloc_order
+  nvmet_tcp_map_data
+  nvmet_tcp_try_recv_pdu
+
+As it's never good to trip a kernel warning remotely due to many systems
+having panic-on-warn enabled, let's silence it by just add GFP_NOWARN to
+the allocation flags.
+
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/byd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/input/mouse/byd.c
-+++ b/drivers/input/mouse/byd.c
-@@ -426,7 +426,7 @@ static void byd_disconnect(struct psmous
- 	struct byd_data *priv = psmouse->private;
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -401,14 +401,15 @@ static int nvmet_tcp_map_data(struct nvm
+ 	}
+ 	cmd->req.transfer_len += len;
  
- 	if (priv) {
--		del_timer(&priv->timer);
-+		timer_shutdown_sync(&priv->timer);
- 		kfree(psmouse->private);
- 		psmouse->private = NULL;
+-	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
++	cmd->req.sg = sgl_alloc(len, GFP_KERNEL | __GFP_NOWARN,
++				&cmd->req.sg_cnt);
+ 	if (!cmd->req.sg)
+ 		return NVME_SC_INTERNAL;
+ 	cmd->cur_sg = cmd->req.sg;
+ 
+ 	if (nvmet_tcp_has_data_in(cmd)) {
+ 		cmd->iov = kmalloc_array(cmd->req.sg_cnt,
+-				sizeof(*cmd->iov), GFP_KERNEL);
++				sizeof(*cmd->iov), GFP_KERNEL | __GFP_NOWARN);
+ 		if (!cmd->iov)
+ 			goto err;
  	}
 
 
