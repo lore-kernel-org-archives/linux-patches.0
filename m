@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66103481FC7;
-	Tue, 25 Aug 2026 13:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAF5446C18;
+	Tue, 25 Aug 2026 13:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666125; cv=none; b=SH8HRSbuztGF3+665lfg8cCUbOzluFyBwo/f/7FnL3YDKapuP25xOHJBpFCk+E10+X0BJRpsR1mZBR2SMUswvTV6e/zuIGwDkMX11he7d1A5Q3CuRNKzbsWLuzPdShU+L24C0fm9Im066EnbRJYeR65TbQx1Yputs5cVsg3kxBY=
+	t=1787666128; cv=none; b=V2Qi1+lsxEuNY+2PNhdLSm5sUlatWOd5UbUKd1Ke0lnS9pIL0TZE159Eu6Si8KsnS62NRctA2s6yADKq1fNsK1nWWkkwgXIGarjSrrzrzwr8stHpFWbzA/xsso8pDNcMDImetz6E0bgOi6wdGvc5F7MOamVIuKRzkEG8Likhwv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666125; c=relaxed/simple;
-	bh=AF/P4cUsTtD/bGZS/YZi+Gdhjtislfa/SxjcVnNYp/U=;
+	s=arc-20240116; t=1787666128; c=relaxed/simple;
+	bh=/YC9gFRhhAy9GuZFoLI2UoPIbJZLwsVrXBEqpBuNUJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gta78UTzzRx3NiBUpdnsOo3xstF+z+Sz1nF4imCjBcvT2+i3UQAefi2IH2Q6PG92SsCqjq0iRUToRKZ6jmDgn3EFW5qnjKW06ohebrNVSoqre7ysf0lsdN1Q3AMgxbkAhinQNGhP9HPB82Kralrt/4M04vHmX5bhNtva1eZG/ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xq5sKyyR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sosEhw1WVFQZGdyQZnZoF2NzSeF/KnX3obcGWjSpOuQB0sHWFjsXCNh9JZqjrsGePNT5m5sp+Xzpg3HK9gRmUpu8Whr6BkY2XU/r4HrAym8QbylpwjyFckAmPytdn27kxxWYRohNyNGMxv5Z7zanz0/xrJxb2gTmZK7fV5Rc7Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xX1iIG4U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xq5sKyyR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73B91F000E9;
-	Tue, 25 Aug 2026 13:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xX1iIG4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73341F000E9;
+	Tue, 25 Aug 2026 13:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666124;
-	bh=w7oME5B5DEOzoGl09HMcGX8LYJwoi9w28c1ExsmYQ9A=;
+	s=korg; t=1787666127;
+	bh=5n2p9sAum1SPkoGI4SdYdrc6gqezdPRVvszNkYy1Ny4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xq5sKyyRKdKHDivyOsaL0m7lH5qPJn56h8M6tdirY8Ud+6OG5gHyvdnT+0Rp1GJXg
-	 l8vcEhpEK/elfG2UkXO1Ktfn+Q63/oCGyGgrjD9cI2M1Tw5iBnaEtws96rSv2F0l9f
-	 9KIZL1thg4FEama3MNqGwJYMiQHTB957fqw2vw1k=
+	b=xX1iIG4U20//CnitA8yE4VOS7bXXeLxG88rfsZRKTJtetkv653C3itxiYnY6Id5Vo
+	 CwglUQ62PYbiwcowmSJmSE6KnqItM/AgX5fxDSl9u2Slk1utdPzsxD0TDYlVnFm3wp
+	 vDi++LSQlo0YjNmu62TsP/LehlJobUs0S7ZOQqD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	stable@kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Jianping Li <jianping.li@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/76] misc: fastrpc: Rework fastrpc_req_munmap
-Date: Tue, 25 Aug 2026 15:26:06 +0200
-Message-ID: <20260825132542.054384883@linuxfoundation.org>
+Subject: [PATCH 5.15 14/76] misc: fastrpc: Remove buffer from list prior to unmap operation
+Date: Tue, 25 Aug 2026 15:26:07 +0200
+Message-ID: <20260825132542.089908319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -51,135 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 
-[ Upstream commit 72fa6f7820c4cf96c5f7aabc4e54bdf52d1e2ac2 ]
+[ Upstream commit 6102ceb4eab845743ee57acd3863fbd06e93c927 ]
 
-Move the lookup of the munmap request to the fastrpc_req_munmap and pass
-on only the buf to the lower level fastrpc_req_munmap_impl. That way
-we can use the lower level fastrpc_req_munmap_impl on error path in
-fastrpc_req_mmap to free the buf without searching for the munmap
-request it belongs to.
+fastrpc_req_munmap_impl() is called to unmap any buffer. The buffer is
+getting removed from the list after it is unmapped from DSP. This can
+create potential race conditions if multiple threads invoke unmap
+concurrently, where one thread may remove the entry from the list while
+another thread's unmap operation is still ongoing.
 
-Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20221125071405.148786-7-srinivas.kandagatla@linaro.org
+Fix this by removing the buffer entry from the list before calling the
+unmap operation. If the unmap fails, the entry is re-added to the list
+so that userspace can retry the unmap, or alternatively, the buffer
+will be cleaned up during device release when the DSP process is torn
+down and all DSP-side mappings are freed along with remaining buffers
+in the list.
+
+Fixes: 2419e55e532de ("misc: fastrpc: add mmap/unmap support")
+Cc: stable@kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260724223342.629168-3-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 6102ceb4eab8 ("misc: fastrpc: Remove buffer from list prior to unmap operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   52 +++++++++++++++++++++++--------------------------
- 1 file changed, 25 insertions(+), 27 deletions(-)
+ drivers/misc/fastrpc.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1389,30 +1389,14 @@ static int fastrpc_invoke(struct fastrpc
- 	return err;
- }
- 
--static int fastrpc_req_munmap_impl(struct fastrpc_user *fl,
--				   struct fastrpc_req_munmap *req)
-+static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *buf)
- {
- 	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
--	struct fastrpc_buf *buf = NULL, *iter, *b;
- 	struct fastrpc_munmap_req_msg req_msg;
- 	struct device *dev = fl->sctx->dev;
- 	int err;
- 	u32 sc;
- 
--	spin_lock(&fl->lock);
--	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
--		if ((iter->raddr == req->vaddrout) && (iter->size == req->size)) {
--			buf = iter;
--			break;
--		}
--	}
--	spin_unlock(&fl->lock);
--
--	if (!buf) {
--		dev_err(dev, "mmap not in list\n");
--		return -EINVAL;
--	}
--
- 	req_msg.pgid = fl->tgid;
- 	req_msg.size = buf->size;
- 	req_msg.vaddr = buf->raddr;
-@@ -1438,12 +1422,29 @@ static int fastrpc_req_munmap_impl(struc
- 
- static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
- {
-+	struct fastrpc_buf *buf = NULL, *iter, *b;
+@@ -1409,9 +1409,6 @@ static int fastrpc_req_munmap_impl(struc
+ 				      &args[0]);
+ 	if (!err) {
+ 		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
+-		spin_lock(&fl->lock);
+-		list_del(&buf->node);
+-		spin_unlock(&fl->lock);
+ 		fastrpc_buf_free(buf);
+ 	} else {
+ 		dev_err(dev, "unmmap\tpt 0x%09lx ERROR\n", buf->raddr);
+@@ -1425,6 +1422,7 @@ static int fastrpc_req_munmap(struct fas
+ 	struct fastrpc_buf *buf = NULL, *iter, *b;
  	struct fastrpc_req_munmap req;
-+	struct device *dev = fl->sctx->dev;
+ 	struct device *dev = fl->sctx->dev;
++	int err;
  
  	if (copy_from_user(&req, argp, sizeof(req)))
  		return -EFAULT;
+@@ -1432,6 +1430,7 @@ static int fastrpc_req_munmap(struct fas
+ 	spin_lock(&fl->lock);
+ 	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
+ 		if ((iter->raddr == req.vaddrout) && (iter->size == req.size)) {
++			list_del(&iter->node);
+ 			buf = iter;
+ 			break;
+ 		}
+@@ -1444,7 +1443,14 @@ static int fastrpc_req_munmap(struct fas
+ 		return -EINVAL;
+ 	}
  
--	return fastrpc_req_munmap_impl(fl, &req);
-+	spin_lock(&fl->lock);
-+	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
-+		if ((iter->raddr == req.vaddrout) && (iter->size == req.size)) {
-+			buf = iter;
-+			break;
-+		}
-+	}
-+	spin_unlock(&fl->lock);
-+
-+	if (!buf) {
-+		dev_err(dev, "mmap\t\tpt 0x%09llx [len 0x%08llx] not in list\n",
-+			req.vaddrout, req.size);
-+		return -EINVAL;
+-	return fastrpc_req_munmap_impl(fl, buf);
++	err = fastrpc_req_munmap_impl(fl, buf);
++	if (err) {
++		spin_lock(&fl->lock);
++		list_add_tail(&buf->node, &fl->mmaps);
++		spin_unlock(&fl->lock);
 +	}
 +
-+	return fastrpc_req_munmap_impl(fl, buf);
++	return err;
  }
  
  static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
-@@ -1452,7 +1453,6 @@ static int fastrpc_req_mmap(struct fastr
- 	struct fastrpc_buf *buf = NULL;
- 	struct fastrpc_mmap_req_msg req_msg;
- 	struct fastrpc_mmap_rsp_msg rsp_msg;
--	struct fastrpc_req_munmap req_unmap;
- 	struct fastrpc_phy_page pages;
- 	struct fastrpc_req_mmap req;
- 	struct device *dev = fl->sctx->dev;
-@@ -1500,7 +1500,8 @@ static int fastrpc_req_mmap(struct fastr
- 				      &args[0]);
- 	if (err) {
- 		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
--		goto err_invoke;
-+		fastrpc_buf_free(buf);
-+		return err;
- 	}
- 
- 	/* update the buffer to be able to deallocate the memory on the DSP */
-@@ -1514,11 +1515,8 @@ static int fastrpc_req_mmap(struct fastr
- 	spin_unlock(&fl->lock);
- 
- 	if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
--		/* unmap the memory and release the buffer */
--		req_unmap.vaddrout = buf->raddr;
--		req_unmap.size = buf->size;
--		fastrpc_req_munmap_impl(fl, &req_unmap);
--		return -EFAULT;
-+		err = -EFAULT;
-+		goto err_assign;
- 	}
- 
- 	dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
-@@ -1526,8 +1524,8 @@ static int fastrpc_req_mmap(struct fastr
- 
- 	return 0;
- 
--err_invoke:
--	fastrpc_buf_free(buf);
-+err_assign:
-+	fastrpc_req_munmap_impl(fl, buf);
- 
- 	return err;
- }
 
 
