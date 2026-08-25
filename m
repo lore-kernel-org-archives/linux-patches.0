@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6489347FAE8;
-	Tue, 25 Aug 2026 13:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD12480DD9;
+	Tue, 25 Aug 2026 13:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664665; cv=none; b=R2f+J+PObAUfuirjESub5qGkXOHdzmkzSbjfV0poJ/RvxJdp53GPsbi/ikO3ICHRjk5rvoDYkfL3oqrm3/Ql/CKmuh8cqR8grKOuq2HBpflPy1dqZAwCOvIh7FcAe2F5PRu2mTgNtpXfVq45uoFDJYp6pM3VmWG9uvT4MzzV0k4=
+	t=1787664668; cv=none; b=E7QrsoozuZbzBlZ1YuVdRBlnsIjhRtkSYHBq9XZOq/aocSb7nAYGwEyuTky8Qo5F68QIPxOaD86bsaLOs5d+j7qvJ1j0f4o3RwgD/vbdfpbSvNB9f8rswt7ew9Ig5l74ELIcWF0W4FCXYLp3PPlfZLR0NPa6LzqsEznOdoDP4qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664665; c=relaxed/simple;
-	bh=tN+yt7D3V5LcHdjkM2bH6zJSbiFFFr6pDPAW448OQhw=;
+	s=arc-20240116; t=1787664668; c=relaxed/simple;
+	bh=Rt4VosGhDb3T87prySBxd1VOYSwYRTyN6UJ5AsXesZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSly/gZcElDISSu8MTnoL6cSaxZYreGpexEYlw5D/E2PHvmr5McK3bshEij0PGD0YEhme6CjcXSihK3O2UzN0u4odvCOcUjrGZxDWLpsMKAZddjTgW1X2JjE4rvvN78yIE5mITGaultuRxafDwEUP5OIFN/aQi59QT/b86IDFHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQxFi976; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JC73mIsXRiYxW8gFWSnTAY8ypQ+COvKTNTsuHPuZMPuo6vKSkNHmRRlPZrNziYaGJCzuDUZM6XDWzFYCbfjC4Zm5wBFImb3el5YaHBTr1O5ZLQIrpIFlWpGPbASSVQUJecJ2M7tJAz8OEY+iIdpy36eu8pKpbpeIYT9AXuBIo6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/fuJaNX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQxFi976"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA63C1F000E9;
-	Tue, 25 Aug 2026 13:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/fuJaNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1041F00A3E;
+	Tue, 25 Aug 2026 13:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664664;
-	bh=rnDbA9wbirV3U+ToYI07hsuHzqu5mf6395xrZFysnJc=;
+	s=korg; t=1787664667;
+	bh=mKB95aC8fxd8h7VcC8GTxX6PhG0gx8L7mo6FY78zmOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQxFi976xm1ZTqtC3BzXCU6Q3kUPGVgD6tKJgblZTg6UuXbVksXWhBulHiT+C9suE
-	 8L66Ffj2vlxTDyg7G/2hP9/eyq+uMlz8R+5IGSvx5YA/kwmZ7qNhGWVszfE/Cw/vN1
-	 vLWDoJC4TmY9PmDlUVTQIlDdQ5qheI97BFfQ2w2M=
+	b=J/fuJaNX5uOBlePzDkHS4QRbcV9EKPMHxzUa8WwO6HKslNEE7WuZR0smQ8umYEVzE
+	 EBEXCQFdLvg20mDa8QkFBVcJO2bVkHKDRizptTKRoZ062Po3aOfLGWo3QfeGTWsxpH
+	 lT5PA0m9YzFvpnRyOJUbi0Q6S76VQPI3mLdr2dcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.2 38/82] nfc: llcp: fix OOB read and u8 offset wrap in TLV parsers
-Date: Tue, 25 Aug 2026 15:25:25 +0200
-Message-ID: <20260825132542.994251755@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 47/82] ipv6: fix use-after-free in ip6_finish_output2()
+Date: Tue, 25 Aug 2026 15:25:34 +0200
+Message-ID: <20260825132543.358740405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,99 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit 78b20c8eeacd2e44a2d8a4cb5316d3c521d90911 upstream.
+commit d0d48d999b0eee6bb176ef4e39d9be868fa80f7e upstream.
 
-nfc_llcp_parse_gb_tlv() and nfc_llcp_parse_connection_tlv() contain
-three related bugs in their TLV parsing loops:
+ip6_finish_output2() caches a pointer to the IPv6 destination
+address (daddr) before invoking lwtunnel_xmit().  The LWT-BPF
+transmit path or other encapsulation operations within
+lwtunnel_xmit() can reallocate the skb head, freeing the memory
+that daddr points to.  When lwtunnel_xmit() returns
+LWTUNNEL_XMIT_CONTINUE, the function continues to use the stale
+daddr pointer to compute the nexthop and to look up or create the
+neighbour entry.  This results in a use-after-free read, which can
+leak sensitive kernel data, pollute the neighbour table with
+arbitrary values, misdirect traffic, or crash the system.
 
-1. 'offset' is declared u8 but tlv_array_len is u16. When TLV data
-   advances offset past 255 it silently wraps to zero, causing
-   infinite loops or double-processing of buffer data.
+Fix this by re-fetching the IPv6 header and the destination
+address pointer after lwtunnel_xmit() returns
+LWTUNNEL_XMIT_CONTINUE, ensuring that the subsequent nexthop
+computation and neighbour lookup operate on valid memory.
 
-2. Before reading tlv[0] (type) and tlv[1] (length) there is no
-   check that offset+2 <= tlv_array_len. A truncated TLV causes
-   an OOB read of one byte past the buffer end.
-
-3. After reading the length field, the value bytes are accessed
-   without checking offset+2+length <= tlv_array_len. A crafted
-   length=0xFF on a short buffer causes up to 255 bytes of OOB
-   read past the buffer end.
-
-Both functions are reachable without authentication via
-nfc_llcp_set_remote_gb() which feeds remote LLCP general bytes
-directly into nfc_llcp_parse_gb_tlv() with no additional
-validation.
-
-Fix all three issues by widening offset from u8 to u16 and adding
-bounds checks for both the TLV header and value field before each
-access.
-
-Fixes: 3df40eb3a2ea ("nfc: constify several pointers to u8, char and sk_buff")
+Fixes: e415ed3a4b8b ("ipv6: use skb_expand_head in ip6_finish_output2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260622131802.239035-1-meatuni001@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/4aa3f53bc44e79572c6dd2340ec7b68ef1a3d87d.1786516730.git.rakukuip@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_commands.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/ipv6/ip6_output.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/nfc/llcp_commands.c
-+++ b/net/nfc/llcp_commands.c
-@@ -193,7 +193,8 @@ int nfc_llcp_parse_gb_tlv(struct nfc_llc
- 			  const u8 *tlv_array, u16 tlv_array_len)
- {
- 	const u8 *tlv = tlv_array;
--	u8 type, length, offset = 0;
-+	u8 type, length;
-+	u16 offset = 0;
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -116,6 +116,8 @@ static int ip6_finish_output2(struct net
  
- 	pr_debug("TLV array length %d\n", tlv_array_len);
+ 		if (res != LWTUNNEL_XMIT_CONTINUE)
+ 			return res;
++		hdr = ipv6_hdr(skb);
++		daddr = &hdr->daddr;
+ 	}
  
-@@ -201,9 +202,15 @@ int nfc_llcp_parse_gb_tlv(struct nfc_llc
- 		return -ENODEV;
- 
- 	while (offset < tlv_array_len) {
-+		if (offset + 2 > tlv_array_len)
-+			return -EINVAL;
-+
- 		type = tlv[0];
- 		length = tlv[1];
- 
-+		if (offset + 2 + length > tlv_array_len)
-+			return -EINVAL;
-+
- 		pr_debug("type 0x%x length %d\n", type, length);
- 
- 		switch (type) {
-@@ -243,7 +250,8 @@ int nfc_llcp_parse_connection_tlv(struct
- 				  const u8 *tlv_array, u16 tlv_array_len)
- {
- 	const u8 *tlv = tlv_array;
--	u8 type, length, offset = 0;
-+	u8 type, length;
-+	u16 offset = 0;
- 
- 	pr_debug("TLV array length %d\n", tlv_array_len);
- 
-@@ -251,9 +259,15 @@ int nfc_llcp_parse_connection_tlv(struct
- 		return -ENOTCONN;
- 
- 	while (offset < tlv_array_len) {
-+		if (offset + 2 > tlv_array_len)
-+			return -EINVAL;
-+
- 		type = tlv[0];
- 		length = tlv[1];
- 
-+		if (offset + 2 + length > tlv_array_len)
-+			return -EINVAL;
-+
- 		pr_debug("type 0x%x length %d\n", type, length);
- 
- 		switch (type) {
+ 	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, skb->len);
 
 
