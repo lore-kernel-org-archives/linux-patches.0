@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232FE4749C1;
-	Tue, 25 Aug 2026 13:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C5B4749C1;
+	Tue, 25 Aug 2026 13:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665951; cv=none; b=SOqlpAio5DyY2fylh8ue4fIo6y7j35JFF53BtwQ5w6WjZvcxD7qL2yKygPRlwkoeQQAii6C/FDWfT1DTP0tYIbRmLWuJqFNTylOIl+SneZCMhTtg0K+mIH9tX0++peMYGEEXcMHxdKrfR78CfQXl8LnyZZ9QAcN6+IXgXifSRNM=
+	t=1787665954; cv=none; b=KXqUzR/uLp+mh337ODtTklOpUc5kacUpIAbjh1hvkROAH+7Adtz9XhzJNBz683CtwNL5uN5dab6ls0IDc/cKAiYoTWVvTK/nWV6yKqJMkIe/WOeq+TGWU/1UefO/DTiLpiRJd3bxpX2osI5lQN1USNG9ZEf81E4is6MktiR0ow4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665951; c=relaxed/simple;
-	bh=IJDKrfEWGq8aXu+DVUbxfKEZzuofAuhmVos/a0LyZKU=;
+	s=arc-20240116; t=1787665954; c=relaxed/simple;
+	bh=rNHoJG72IEQi8FSePnBbMoEfEB6glWK8HM2/KCOAOHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUxyQn0EA1XlkxETTdGwfl09/lA2uuEq4ZIykv9uKL+QKIKVa8kN0MFlGqv64xy3DputVOBJuu9VJdkUFtTo1HP9+eatHCt5mvpOCvzBJX6Fh/EdIkLP/wxrxSdrplhtxHyXfBkFtsmpjktlcHU3shhRXn9D+YvYggVp7U/x15A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmKRVk2e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UpT26iCBlYv8QKFRq5KxI0McpNwenTRSLXs3hsFPATEgJmONHA+GGTLqJvyUkoGJQ/proyU0pmYkZ94qXZf9dEJuwRghv2faaaB6msSdWSp4/ATDSTgaz5lwSVbj0ZBQFK88i3Xh+jpapO2N2OXfGb6cTVCX6Cafd1eVACm1lN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlteIrda; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmKRVk2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A241F000E9;
-	Tue, 25 Aug 2026 13:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlteIrda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDC41F000E9;
+	Tue, 25 Aug 2026 13:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665950;
-	bh=5np7X6ZsgtHVm3sGiIXGeSgOvaHafB7421mL2y4VdSs=;
+	s=korg; t=1787665953;
+	bh=4ddy3pE/tRx0KjjQ9ffORsBz8ME6RXxjpUG3iMiD4Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmKRVk2ekMGsomnOul5YN9dgAfdxWt5MvPmHiri4L77rTOXcwGHOpkstgD3y6RCGT
-	 BDMoCV/YtwZHxJk7wAZEwj9TPNaO/k3GiSJJSCjJhUXy0PgFYiuACV2Z+HJ2P9BcrC
-	 FsaBZXCCMut18iAiK//OAslXfWJX4eirqh8BurNc=
+	b=AlteIrdaDCHfKBMk2LAtztmAuG9t2fPe6Z7SfwvbDoRWs4A1uvFsrDR+PvxDuJPf4
+	 bXTdeZzbA5ZGMV3+CIgLVRnjpDqXB8UMWNfVFcUk4jUAIMantpr5wBm2iin5TNbsNk
+	 9cVxRc0rF4L6/DVYz62fJjCeTLi7mxFS2nQCSSRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 32/79] s390/vfio_ccw: Move cp cleanup out of not operational
-Date: Tue, 25 Aug 2026 15:26:12 +0200
-Message-ID: <20260825132542.956650512@linuxfoundation.org>
+Subject: [PATCH 6.1 33/79] s390/vfio_ccw: Selectively expand io_mutex
+Date: Tue, 25 Aug 2026 15:26:13 +0200
+Message-ID: <20260825132542.994315906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -54,19 +54,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Farman <farman@linux.ibm.com>
 
-[ Upstream commit 0c11f61a876ed6fcca53d442ed3f33ea8362a0f9 ]
+[ Upstream commit 34f4feff3e90bd09308fad0974e97113b23b812a ]
 
-The fsm_notoper() routine is called when the device has been
-lost, and is (by definition) no longer operational. Since this
-can happen asynchronously from the normal behavior of the
-driver, the cleanup may happen when holding other locks
-in the calling sequence (notably, the cio subchannel lock).
+The io_mutex was defined to serialize the io_regions, but then has
+also sort of been associated with the I/O themselves because of
+the close relationship they share.
 
-Push the cleanup of the private->cp resources to a workqueue,
-where it can be done out from under that lock sequence and
-a future patch can safely manage the locking requirements.
+With the handful of races that are possible, the choices are either to:
+ A) expand the scope of io_mutex to close these remaining windows, or
+ B) reduce the scope of io_mutex to just io_region, and introduce a new
+    lock mechanism for the remaining I/O resources
 
-Fixes: 204b394a23ad ("vfio/ccw: Move FSM open/close to MDEV open/close")
+This patch implements A, since B brings with it a lot more interactions
+that would need to be tracked and kept in a correct hierarchy. It also
+takes advantage of the workqueue element for cp_free() that now gets
+called out of fsm_notoper(), which could be invoked out of an interrupt
+context and thus cannot acquire a mutex itself.
+
+Fixes: 4f76617378ee ("vfio-ccw: protect the I/O region")
 Cc: stable@vger.kernel.org
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
@@ -75,101 +80,128 @@ Stable-dep-of: 16b0798024c0 ("s390/vfio_ccw: Implement a crw lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_drv.c     |   10 ++++++++++
- drivers/s390/cio/vfio_ccw_fsm.c     |    3 +--
- drivers/s390/cio/vfio_ccw_ops.c     |   12 ++++++++++++
- drivers/s390/cio/vfio_ccw_private.h |    2 ++
- 4 files changed, 25 insertions(+), 2 deletions(-)
+ drivers/s390/cio/vfio_ccw_chp.c     |    2 +-
+ drivers/s390/cio/vfio_ccw_cp.c      |    8 +++++++-
+ drivers/s390/cio/vfio_ccw_drv.c     |    6 ++++--
+ drivers/s390/cio/vfio_ccw_fsm.c     |    5 +++++
+ drivers/s390/cio/vfio_ccw_private.h |    3 ++-
+ 5 files changed, 19 insertions(+), 5 deletions(-)
 
+--- a/drivers/s390/cio/vfio_ccw_chp.c
++++ b/drivers/s390/cio/vfio_ccw_chp.c
+@@ -97,13 +97,13 @@ static ssize_t vfio_ccw_crw_region_read(
+ 	if (pos + count > sizeof(*region))
+ 		return -EINVAL;
+ 
++	mutex_lock(&private->io_mutex);
+ 	crw = list_first_entry_or_null(&private->crw,
+ 				       struct vfio_ccw_crw, next);
+ 
+ 	if (crw)
+ 		list_del(&crw->next);
+ 
+-	mutex_lock(&private->io_mutex);
+ 	if (i >= private->num_regions) {
+ 		ret = -EINVAL;
+ 		goto out;
+--- a/drivers/s390/cio/vfio_ccw_cp.c
++++ b/drivers/s390/cio/vfio_ccw_cp.c
+@@ -904,17 +904,23 @@ void cp_update_scsw(struct channel_progr
+  */
+ bool cp_iova_pinned(struct channel_program *cp, u64 iova, u64 length)
+ {
++	struct vfio_ccw_private *private =
++		container_of(cp, struct vfio_ccw_private, cp);
+ 	struct ccwchain *chain;
+ 	int i;
+ 
+ 	if (!cp->initialized)
+ 		return false;
+ 
++	mutex_lock(&private->io_mutex);
+ 	list_for_each_entry(chain, &cp->ccwchain_list, next) {
+ 		for (i = 0; i < chain->ch_len; i++)
+-			if (page_array_iova_pinned(chain->ch_pa + i, iova, length))
++			if (page_array_iova_pinned(chain->ch_pa + i, iova, length)) {
++				mutex_unlock(&private->io_mutex);
+ 				return true;
++			}
+ 	}
++	mutex_unlock(&private->io_mutex);
+ 
+ 	return false;
+ }
 --- a/drivers/s390/cio/vfio_ccw_drv.c
 +++ b/drivers/s390/cio/vfio_ccw_drv.c
-@@ -116,6 +116,15 @@ static void vfio_ccw_crw_todo(struct wor
- 		eventfd_signal(private->crw_trigger, 1);
+@@ -82,6 +82,7 @@ static void vfio_ccw_sch_io_todo(struct
+ 
+ 	is_final = !(scsw_actl(&irb->scsw) &
+ 		     (SCSW_ACTL_DEVACT | SCSW_ACTL_SCHACT));
++	mutex_lock(&private->io_mutex);
+ 	if (scsw_is_solicited(&irb->scsw)) {
+ 		cp_update_scsw(&private->cp, &irb->scsw);
+ 		if (is_final && private->state == VFIO_CCW_STATE_CP_PENDING) {
+@@ -89,9 +90,7 @@ static void vfio_ccw_sch_io_todo(struct
+ 			cp_is_finished = true;
+ 		}
+ 	}
+-	mutex_lock(&private->io_mutex);
+ 	memcpy(private->io_region->irb_area, irb, sizeof(*irb));
+-	mutex_unlock(&private->io_mutex);
+ 
+ 	/*
+ 	 * Reset to IDLE only if processing of a channel program
+@@ -101,6 +100,7 @@ static void vfio_ccw_sch_io_todo(struct
+ 	 */
+ 	if (cp_is_finished)
+ 		private->state = VFIO_CCW_STATE_IDLE;
++	mutex_unlock(&private->io_mutex);
+ 
+ 	if (private->io_trigger)
+ 		eventfd_signal(private->io_trigger, 1);
+@@ -122,7 +122,9 @@ static void vfio_ccw_notoper_todo(struct
+ 
+ 	private = container_of(work, struct vfio_ccw_private, notoper_work);
+ 
++	mutex_lock(&private->io_mutex);
+ 	cp_free(&private->cp);
++	mutex_unlock(&private->io_mutex);
  }
  
-+static void vfio_ccw_notoper_todo(struct work_struct *work)
-+{
-+	struct vfio_ccw_private *private;
-+
-+	private = container_of(work, struct vfio_ccw_private, notoper_work);
-+
-+	cp_free(&private->cp);
-+}
-+
  /*
-  * Css driver callbacks
-  */
-@@ -141,6 +150,7 @@ static struct vfio_ccw_private *vfio_ccw
- 	INIT_LIST_HEAD(&private->crw);
- 	INIT_WORK(&private->io_work, vfio_ccw_sch_io_todo);
- 	INIT_WORK(&private->crw_work, vfio_ccw_crw_todo);
-+	INIT_WORK(&private->notoper_work, vfio_ccw_notoper_todo);
- 
- 	private->cp.guest_cp = kcalloc(CCWCHAIN_LEN_MAX, sizeof(struct ccw1),
- 				       GFP_KERNEL);
 --- a/drivers/s390/cio/vfio_ccw_fsm.c
 +++ b/drivers/s390/cio/vfio_ccw_fsm.c
-@@ -176,8 +176,7 @@ static void fsm_notoper(struct vfio_ccw_
+@@ -176,6 +176,7 @@ static void fsm_notoper(struct vfio_ccw_
  	css_sched_sch_todo(sch, SCH_TODO_UNREG);
  	private->state = VFIO_CCW_STATE_NOT_OPER;
  
--	/* This is usually handled during CLOSE event */
--	cp_free(&private->cp);
-+	queue_work(vfio_ccw_work_q, &private->notoper_work);
++	/* This routine could be called from IRQ context, so defer */
+ 	queue_work(vfio_ccw_work_q, &private->notoper_work);
  }
  
- /*
---- a/drivers/s390/cio/vfio_ccw_ops.c
-+++ b/drivers/s390/cio/vfio_ccw_ops.c
-@@ -89,9 +89,16 @@ static void vfio_ccw_mdev_release_dev(st
- 	/*
- 	 * Ensure these work items are fully drained, so none can
- 	 * fire after being released.
-+	 *
-+	 * notoper_work should have nothing to do here, because only
-+	 * open devices could have channel_program resources in use
-+	 * and those would be released during close. Nevertheless,
-+	 * call flush here as well to be certain anything that was
-+	 * allocated is freed.
- 	 */
- 	cancel_work_sync(&private->io_work);
- 	cancel_work_sync(&private->crw_work);
-+	flush_work(&private->notoper_work);
+@@ -412,7 +413,11 @@ static void fsm_close(struct vfio_ccw_pr
  
- 	/*
- 	 * We cannot free vfio_ccw_private here because it includes
-@@ -173,9 +180,14 @@ static void vfio_ccw_mdev_close_device(s
- 	/*
- 	 * Ensure these work items are drained, in the event the
- 	 * device is re-opened instead of released.
-+	 *
-+	 * notoper_work needs to be given a chance to run if it
-+	 * is queued, so any memory associated with the channel
-+	 * program can be returned.
- 	 */
- 	cancel_work_sync(&private->io_work);
- 	cancel_work_sync(&private->crw_work);
-+	flush_work(&private->notoper_work);
+ 	private->state = VFIO_CCW_STATE_STANDBY;
+ 	spin_unlock_irq(sch->lock);
++
++	mutex_lock(&private->io_mutex);
+ 	cp_free(&private->cp);
++	mutex_unlock(&private->io_mutex);
++
+ 	return;
  
- 	vfio_ccw_unregister_dev_regions(private);
- }
+ err_unlock:
 --- a/drivers/s390/cio/vfio_ccw_private.h
 +++ b/drivers/s390/cio/vfio_ccw_private.h
-@@ -88,6 +88,7 @@ struct vfio_ccw_crw {
-  * @req_trigger: eventfd ctx for signaling userspace to return device
-  * @io_work: work for deferral process of I/O handling
-  * @crw_work: work for deferral process of CRW handling
-+ * @notoper_work: work for deferred processing in not-operational state
-  * @release_comp: synchronization helper for vfio device release
-  * @parent: parent data structures for mdevs created
-  */
-@@ -114,6 +115,7 @@ struct vfio_ccw_private {
- 	struct eventfd_ctx	*req_trigger;
- 	struct work_struct	io_work;
- 	struct work_struct	crw_work;
-+	struct work_struct	notoper_work;
- 
- 	struct completion	release_comp;
- 
+@@ -74,7 +74,8 @@ struct vfio_ccw_crw {
+  * @state: internal state of the device
+  * @completion: synchronization helper of the I/O completion
+  * @io_region: MMIO region to input/output I/O arguments/results
+- * @io_mutex: protect against concurrent update of I/O regions
++ * @io_mutex: protect against concurrent update of I/O resources
++ *            and @cp lifecycle
+  * @region: additional regions for other subchannel operations
+  * @cmd_region: MMIO region for asynchronous I/O commands other than START
+  * @schib_region: MMIO region for SCHIB information
 
 
