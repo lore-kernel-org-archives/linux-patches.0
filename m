@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3E347CA8E;
-	Tue, 25 Aug 2026 13:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1B947CA8E;
+	Tue, 25 Aug 2026 13:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666374; cv=none; b=ow32DGUaAD1vBNuacXZTYelkTmwnwuLvIiqOaNrY8GPoJ8lW427v2bpxKgqQWR4MXVdfgsi0eURGzJKs5obIA11FVAA+vWOio67G2vAVN8/Etk6Fh2y8526jLFdSVWvE+OJ+Kqy+Ia+trzK77y1D8hDLH3Nw/a6zCiuvEHvKF/0=
+	t=1787666377; cv=none; b=jjqat2rjtQRtqOsOS2eXuxVPQECUHkJTsHqZuXiWGQqfsbQ6kLGqOYEEpmQoXk84CHJReD6g49aQV6IxK6zFLSf1u+84rGmj35BC/wNtbmDwjQ0PMbkstby/TFiIXQImKLS6j+o29PqABK9boIHomKXsx0vMiW2gLx+lDsBpVeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666374; c=relaxed/simple;
-	bh=qIs4gP8vqmZJjTbHizawTyqkBt5HB0lf1X6OG4NK6BU=;
+	s=arc-20240116; t=1787666377; c=relaxed/simple;
+	bh=CYujrDsICGt17rxKH9O8CWFjNXQQf5JlydPChIVLDec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qz0X/SMIB6rfQIR25mQEp9Opn1pYoxwMtlbLC8Y1Od4wsyI/vAE5G727xTV4h0zfDNRGwTX79VJNnK4EkyBkGESzmMJiX708/WWEFtRSDjFlPR0ifNtsLNT4i7Iha4TpEDonuDqqSJdrjKQfGXiH6GKt7fdrUjawIWcTvB55nCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pwtjvpzn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TYkyeYQVBUDYWn9yuxXkbIoOPR5RVx0f/aJZUOtmIcLSiSHXPZzOqKqxo1eb7363oWdxpjRSwJQuS/ZUoHLdoe26hOkM0TJ3xDGg2kS3iSz/QOO4d+m66jVND+vuogGlQNDiLC+txdN9EQ+ZXouuGs4+d1QUSDB9Bb0FEQheqlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaDj1t4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pwtjvpzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761F21F000E9;
-	Tue, 25 Aug 2026 13:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaDj1t4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446F91F000E9;
+	Tue, 25 Aug 2026 13:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666373;
-	bh=0yt70bBLuyqIq4u2shP31kbH6mLYT/UpzhtZxN8jD+0=;
+	s=korg; t=1787666375;
+	bh=ATYqX+K+5qZp31QXauJd59PEyEFkNDkif7Y7GOOzF5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwtjvpznsKQWfv7YQ1+sdoqQt+gNE2r+HYgrm/8v7YT4um+SA1aIeWGEJjfrLZtPW
-	 GbG2HNPyIFoWg1S8eHHRCIz4wXB2eILcVHVA9ByMTDsbv7OAlb7bGyCdYIic8dAyyg
-	 cE7pSj3mD4Q9O/PSGIZ7MMlbsr5jSTS5WOs1IfyY=
+	b=UaDj1t4jxupfyvf1LRUL+gVWD7KeRY2TFmLjMNNONcWX59m9cEHCBWeOcMf5+lwmr
+	 QdfREZgE1Qeurj4BUR2OrlNqDlsGLiY5wRjqs2e5Km6ylxdU/v03CSUgCLbHn/M5Qi
+	 jG9T/DkZstJFC4D7pErCDs0qsaCF5eWMWqmJr6A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	syzbot+e538032956b1157914a3@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 03/57] ocfs2: fix missing metadata reservation for large xattrs
-Date: Tue, 25 Aug 2026 15:26:25 +0200
-Message-ID: <20260825132541.463328641@linuxfoundation.org>
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 04/57] ext4: stop retrying saturated xattr cache entries
+Date: Tue, 25 Aug 2026 15:26:26 +0200
+Message-ID: <20260825132541.496937656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -58,90 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-commit 0cdc7dde00ec63ac714271fa8b2918d630b8da1a upstream.
+commit 54b6bd40898de7906acb2bccc9a96d1b8e6b4323 upstream.
 
-[BUG]
-lsetxattr() panics the kernel when setting a large xattr value on a
-fragmented filesystem where the file already has an external xattr
-block.
+ext4_xattr_block_set() retries when a cache entry selected for reuse
+has a saturated reference count after taking the buffer lock. The retry
+returns to the mbcache lookup without making that entry ineligible, so
+it can select the same unusable entry indefinitely. A task spinning
+there can hold the parent directory's i_rwsem and leave concurrent
+rmdir callers blocked.
 
-[CAUSE]
-ocfs2_calc_xattr_set_need() never reserves metadata blocks for a new
-xattr value's extent tree when the file already has an external xattr
-block. The not_found path leaves meta_add at zero, so meta_ac is NULL
-when ocfs2_xattr_extend_allocation() runs.
+Normally a reusable entry has a reference count below
+EXT4_XATTR_REFCOUNT_MAX because the count and MBE_REUSABLE_B are
+updated under the same buffer lock. A corrupted filesystem can violate
+that invariant. The syzbot reproducer reports allocator and xattr
+corruption before triggering this retry loop.
 
-A new value root has room for a single extent record. On a fragmented
-filesystem, the allocator cannot satisfy the xattr value in one
-contiguous run, so each non-contiguous run requires its own extent
-record. When the value root's extent list is full and meta_ac is NULL,
-ocfs2_add_clusters_in_btree() returns RESTART_META, and
-ocfs2_xattr_extend_allocation() hits BUG_ON(why == RESTART_META).
+Check the untrusted on-disk count before incrementing it, avoiding
+overflow, and clear MBE_REUSABLE_B when it is already saturated. The
+next lookup then skips the entry that was just proven unusable. This
+mirrors the normal transition at EXT4_XATTR_REFCOUNT_MAX; the release
+path marks the entry reusable again on the exact 1024-to-1023
+transition.
 
-[FIX]
-The case where no xattr block exists yet already calls
-ocfs2_extend_meta_needed(&def_xv.xv.xr_list) to reserve value tree
-metadata. Add the same reservation to the case where an xattr block
-already exists, making the two cases consistent.
+Using the same QEMU harness and guest parameters, current unpatched
+Linux hung in 6 of 8 420-second trials with the do_rmdir signature;
+representative NMI backtraces caught the owner spinning in
+ext4_xattr_block_set(). The patched kernel completed 28 of 28 trials
+without a hung-task report; the final twelve trials exercised the
+reviewed overflow-safe form of the change. syzbot's patch testing also
+completed without reproducing the hang.
 
-Replace the BUG_ON with a -ENOSPC return so that if RESTART_META is
-returned despite the reservation, the error propagates to userspace
-instead of panicking the kernel.
-
-Link: https://lore.kernel.org/amLwn3i9tET8yhG7@dev
-Fixes: a78f9f466894 ("ocfs2: make xattr extension work with new local alloc reservation.")
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Reported-by: syzbot+e538032956b1157914a3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e538032956b1157914a3
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-and-tested-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e68dbebd9617a9250e8d
+Fixes: 65f8b80053a1 ("ext4: fix race when reusing xattr blocks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reported-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
+Tested-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260802065941.1726052-1-matthias.goergens@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/xattr.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ fs/ext4/xattr.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -742,12 +742,10 @@ static int ocfs2_xattr_extend_allocation
- 					 prev_clusters;
- 
- 		if (why != RESTART_NONE && clusters_to_add) {
--			/*
--			 * We can only fail in case the alloc file doesn't give
--			 * up enough clusters.
--			 */
--			BUG_ON(why == RESTART_META);
--
-+			if (why == RESTART_META) {
-+				status = -ENOSPC;
-+				break;
-+			}
- 			credits = ocfs2_calc_extend_credits(inode->i_sb,
- 							    &vb->vb_xv->xr_list);
- 			status = ocfs2_extend_trans(handle, credits);
-@@ -3217,6 +3215,14 @@ meta_guess:
- 			credits += OCFS2_SUBALLOC_ALLOC + 1;
- 
- 		/*
-+		 * Reserve metadata for the new xattr's value extent tree.
-+		 * The not_found path above adds credits for this tree but
-+		 * omits meta_add, leaving meta_ac NULL for large values.
-+		 */
-+		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
-+			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
-+
-+		/*
- 		 * This cluster will be used either for new bucket or for
- 		 * new xattr block.
- 		 * If the cluster size is the same as the bucket size, one
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2041,12 +2041,13 @@ inserted:
+ 				 * stable so we can check the additional
+ 				 * reference fits.
+ 				 */
+-				ref = le32_to_cpu(BHDR(new_bh)->h_refcount) + 1;
+-				if (ref > EXT4_XATTR_REFCOUNT_MAX) {
++				ref = le32_to_cpu(BHDR(new_bh)->h_refcount);
++				if (ref >= EXT4_XATTR_REFCOUNT_MAX) {
+ 					/*
+ 					 * Undo everything and check mbcache
+ 					 * again.
+ 					 */
++					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
+ 					unlock_buffer(new_bh);
+ 					dquot_free_block(inode,
+ 							 EXT4_C2B(EXT4_SB(sb),
+@@ -2057,6 +2058,7 @@ inserted:
+ 					new_bh = NULL;
+ 					goto inserted;
+ 				}
++				ref++;
+ 				BHDR(new_bh)->h_refcount = cpu_to_le32(ref);
+ 				if (ref == EXT4_XATTR_REFCOUNT_MAX)
+ 					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
 
 
