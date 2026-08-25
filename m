@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F069747729B;
-	Tue, 25 Aug 2026 13:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6A847CC80;
+	Tue, 25 Aug 2026 13:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664623; cv=none; b=Ub3yL4SSC8c+KQh6IBuIRJS7ng+Q3ZzGThQ7Ws7qB65/aIB4YhevX+Lohk3jVCBTHnqU2BkHIaJwbB8ZHUhCuUFItyB5rwBAUgHJuShrgs7SKxZ0NL9PC05yyCQiW5aJ2J/1yD1piNSRm4GV0Bhwdz9bQmLYWR7jHPIVrIXXQTw=
+	t=1787664626; cv=none; b=m7RzOMDc7wHkMwPj7ZmaK5y5GSsQreXGc+KV4WPN+W/mE+xuOEnLhZzqH4kEwUxu9Hz6Ldfo6pCEeD2IGkxJG6AK5zNNIGMSXM3wiqQzzBUP53Ta5v3Mxx7VRQSsAYcgwzkHOK3mNW3g0yQUlbpMEPYwztxzeeZHIgo1Dg8+C/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664623; c=relaxed/simple;
-	bh=yy5KdbIwmzS1lYKUZ0Gke+QjNenj2j9Qh80y/uhMpF0=;
+	s=arc-20240116; t=1787664626; c=relaxed/simple;
+	bh=jftf7UPsvNeTxlxWObcPVpp7ih5WyroXDh4rz4WGknc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGZWzXWvfkBLlo7TFP+qVAzEPrRAFh5JHAkuWiF3DVlWBEafee/R5e82zzrmLHpAevVAJRqyumfvUG5Xdpg7WfWuB0M3EcjV9Pfd/Nh9mm1Ed20IXKcvAM48Lew4vT6DqzJFYWpLtj8X+1jS+H3SLKu+JT/gFclXgikPSLdv/0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oXh5Lsm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HqGhHxZBjF1cx8Hi20dyya+5jN13ZW27z3RLpiLi6sbVo4x8YgE8T9Q47hoP3C4+eGASX0aft9F4hcYKpYZ5Y+SJwf8+AgNllL0vGQiRWFL+Elz/LIFZQ3Hnjn3DfH/jalN57vSocR7yLu4UzE3KBSkYsj4gZAcv+lfElKR9YL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksfiS+Yl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oXh5Lsm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0883B1F00A3E;
-	Tue, 25 Aug 2026 13:30:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksfiS+Yl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95951F000E9;
+	Tue, 25 Aug 2026 13:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664621;
-	bh=7uL6aZ3tPrZ/f2LCXBX0wyJeFWak6vKbGhqBBixzKpI=;
+	s=korg; t=1787664624;
+	bh=KI5MJ19KuXVuulN5Vy07DGNSKB687WOrJsNis22aRrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0oXh5Lsm5ggh62rFtJDqXoaMdrqVfrU9NLNs008uUWxuNkEoBWCrXvGdjIUa3E8hk
-	 zb9NI8fYxrcVZM+0R3eI3sswXqoDNBF8gwBKFfxgtk3r1tJ8vdivo2Bn8Hss/40PGW
-	 de3yMAmZUtkSdUf299M2EbS370kT2oUeAWh9Q8VI=
+	b=ksfiS+YlcV97D7VOg2FPLaZ9JJUAQCkfD6KVj05Q4IDsYiyo/ui/xSlknYKYwS6IX
+	 +c6QTs/1g3t0z6XgRAKL+PRr8fOulYbEazbVM+MABMz/fC0JNDum3zlCUfrE3xpDUe
+	 wLgxZY45k+Qh+C9xxiYNLobGg+g60eMSq74XsJxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jan Kara <jack@suse.cz>,
+	Jiazi Liu <liujiazi@amazon.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 7.2 30/82] ext4: dont enable DAX on new encrypted files
-Date: Tue, 25 Aug 2026 15:25:17 +0200
-Message-ID: <20260825132542.693105837@linuxfoundation.org>
+Subject: [PATCH 7.2 31/82] ext4: fix incorrect function call when initializing s_resgid
+Date: Tue, 25 Aug 2026 15:25:18 +0200
+Message-ID: <20260825132542.729568805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -53,140 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Jiazi Liu <jiazi.liu1984@gmail.com>
 
-commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
+commit c87abbab6147dcc5aa1fd8f2a61734d58d8b99ec upstream.
 
-Currently, when a new encrypted regular file is created, the call to
-ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
-before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
-filesystem is mounted with "-o dax=always".
+In __ext4_fill_super(), s_resgid is initialized by calling
+ext4_get_resuid() instead of ext4_get_resgid(), resulting in the
+reserved GID being set to the same value as the reserved UID rather
+than the value stored in the superblock.
 
-EXT4_INODE_ENCRYPT then actually gets set a bit later in
-__ext4_new_inode(), when it calls fscrypt_set_context() which calls
-ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
-calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
-
-This was intended to clear S_DAX as well.  However, this was broken by
-commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
-causes data written to the file to bypass encryption, also causing
-xfstests failures such as generic/548 (when "-o dax=always" is used).
-
-Fix this by simplifying the flow by making __ext4_new_inode() set
-EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
-ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
-
-Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
-place on new encrypted inodes.  Then it doesn't need to be cleared.
-
-As a result of these simplifications, ext4_set_context() no longer needs
-to change inode flags or state when 'handle != NULL'.  Remove that too.
-
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
-Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
+Fixes: 12c84dd4d308 ("ext4: add support for 32-bit default reserved uid and gid values")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
+Signed-off-by: Jiazi Liu <liujiazi@amazon.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://patch.msgid.link/20260727104103.28916-1-liujiazi@amazon.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/crypto.c |   40 ++++++++++++++++++++--------------------
- fs/ext4/ialloc.c |    4 ++++
- 2 files changed, 24 insertions(+), 20 deletions(-)
+ fs/ext4/super.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/crypto.c
-+++ b/fs/ext4/crypto.c
-@@ -144,7 +144,13 @@ static int ext4_set_context(struct inode
- 	if (inode->i_ino == EXT4_ROOT_INO)
- 		return -EPERM;
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5369,7 +5369,7 @@ static int __ext4_fill_super(struct fs_c
+ 	ext4_set_def_opts(sb, es);
  
--	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
-+	/*
-+	 * For new encrypted inodes, S_DAX is never set in the first place.
-+	 *
-+	 * For existing inodes, this is called only on empty directories.  ext4
-+	 * never sets S_DAX on directories.
-+	 */
-+	if (WARN_ON_ONCE(IS_DAX(inode)))
- 		return -EINVAL;
- 
- 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
-@@ -164,27 +170,24 @@ static int ext4_set_context(struct inode
- 
- 	if (handle) {
- 		/*
-+		 * __ext4_new_inode() should have already set the encrypt flag
-+		 * on the inode and avoided enabling inline data.
-+		 */
-+		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
-+			return -EINVAL;
-+		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
-+			return -EINVAL;
-+		/*
- 		 * Since the inode is new it is ok to pass the
- 		 * XATTR_CREATE flag. This is necessary to match the
- 		 * remaining journal credits check in the set_handle
- 		 * function with the credits allocated for the new
- 		 * inode.
- 		 */
--		res = ext4_xattr_set_handle(handle, inode,
--					    EXT4_XATTR_INDEX_ENCRYPTION,
--					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
--					    ctx, len, XATTR_CREATE);
--		if (!res) {
--			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--			ext4_clear_inode_state(inode,
--					EXT4_STATE_MAY_INLINE_DATA);
--			/*
--			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--			 * S_DAX may be disabled
--			 */
--			ext4_set_inode_flags(inode, false);
--		}
--		return res;
-+		return ext4_xattr_set_handle(handle, inode,
-+					     EXT4_XATTR_INDEX_ENCRYPTION,
-+					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
-+					     ctx, len, XATTR_CREATE);
- 	}
- 
- 	res = dquot_initialize(inode);
-@@ -205,10 +208,7 @@ retry:
- 				    ctx, len, 0);
- 	if (!res) {
- 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--		/*
--		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--		 * S_DAX may be disabled
--		 */
-+		/* Update inode->i_flags to set S_ENCRYPTED. */
- 		ext4_set_inode_flags(inode, false);
- 		res = ext4_mark_inode_dirty(handle, inode);
- 		if (res)
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -997,6 +997,8 @@ struct inode *__ext4_new_inode(struct mn
- 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
- 		if (err)
- 			goto out;
-+		if (encrypt)
-+			i_flags |= EXT4_ENCRYPT_FL;
- 	}
- 
- 	err = dquot_initialize(inode);
-@@ -1306,6 +1308,8 @@ got:
- 	ei->i_extra_isize = sbi->s_want_extra_isize;
- 	ei->i_inline_off = 0;
- 	if (ext4_has_feature_inline_data(sb) &&
-+	    /* Encrypted inodes cannot have inline data */
-+	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
- 	    (!(ei->i_flags & (EXT4_DAX_FL|EXT4_EA_INODE_FL)) || S_ISDIR(mode)))
- 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
- 	ret = inode;
+ 	sbi->s_resuid = make_kuid(&init_user_ns, ext4_get_resuid(es));
+-	sbi->s_resgid = make_kgid(&init_user_ns, ext4_get_resuid(es));
++	sbi->s_resgid = make_kgid(&init_user_ns, ext4_get_resgid(es));
+ 	sbi->s_commit_interval = JBD2_DEFAULT_MAX_COMMIT_AGE * HZ;
+ 	sbi->s_min_batch_time = EXT4_DEF_MIN_BATCH_TIME;
+ 	sbi->s_max_batch_time = EXT4_DEF_MAX_BATCH_TIME;
 
 
