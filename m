@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40756481247;
-	Tue, 25 Aug 2026 13:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF763D668B;
+	Tue, 25 Aug 2026 13:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665035; cv=none; b=QsqGyHw/PCnpHLg08qeC7D7/ZyIH5f0vzGAQStcUwoi51rdpYDLERoDX1UCmFsz0JXkfewIYL/xjB4cgbv6PMBCXnY6Z7GQigz+YnQBeYDkV1AtIaXQDBxvTxL3qNYvYQJyhyhq8yPNwq8WTw9Q7i3kZ6uVswrkuc/7Llxyy8ss=
+	t=1787665039; cv=none; b=Y7ikNoDY5G+CT3/T5lgTXiEQizHkfu8lpeN992RxMvn2pbA03hDP6uk5bi6DflC//8UKKBCEOQJYWtk7V3WNS3xhcYoUXVXSR4wOJ3V62zgMMbyXigspNjWuTGG6A7IT7klFjYzfzXmTub3uKhnmFzBTfvvWZMnUASIYoBEV0Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665035; c=relaxed/simple;
-	bh=K3oFKfB+liDajsTwwe8d8y5hrw+VIgOGWl2/6EOs/P4=;
+	s=arc-20240116; t=1787665039; c=relaxed/simple;
+	bh=NwItAT5tmniuBJykz7oKvhJaQWv2AMXu90ipi9RTE64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9VEuEGgerZ8J+hToewp7pKDd7GL+8G0VufWkCOjFuF0+yEYgBi1w6Pe368Kd1sWZReTGX/FLKrTOtzwQnATYtYYELH/OE8kZz5HhVcog26sq1WDGa6CHnbGTsaz61vONWFabVx44eleqHyP7KQ3Ok491l7eAHfo3Ye48Z9TnNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulIYa5An; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZzxjRHPLvJtGjybDoaupOiqxP4GRw2NTahV/nun7YsX5ncr8mgZGhlsHKUeW1y79oIdMy//0lMdnHPD7Be5LOEkB31rC0pPYH4y82B4YOI41OUstfEBWlMhJRYp3w5Ybq0HG4WVtPeOvor9ziz+h7egQS58R0e+74AR5hcbhZqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPxZ2T2o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulIYa5An"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C551F00A3A;
-	Tue, 25 Aug 2026 13:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPxZ2T2o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378EE1F000E9;
+	Tue, 25 Aug 2026 13:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665034;
-	bh=0IWrNTa+Mw2Uxxio0Ji3eNNR9fBl9vVKwsEXLPKbHBY=;
+	s=korg; t=1787665037;
+	bh=s0w93VEG7aORrIAk/0JENj1ZRMp/Lci/sf8+rqLhi0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ulIYa5An7A+ua6O8pguua2bOFh2GWPIuInStwEQirR11M9I3JptFwLsc6oztczj14
-	 KKe1N9XRgB383wTnR8RDO6OxevtotwQP0Xzmb7fI7oexhTbfYtFUcq8GXYYo+U+kjA
-	 u1rM6pEgGwFb5TTOSCV5NG05SLw8aAdR7ONcTDw4=
+	b=hPxZ2T2oxQ1Ph+hg3V0OPW7mC59Z2Dyfntr3QDxv+ubKn6IMvIBM9McL2Z/h3TS6h
+	 rBxu5lZwPCyqa17PRK/SKI59Ljs2ZotMW8mtokXnilY7E4wKPLoj/+0SLSAEp00yWT
+	 UcPQaBO8MwyEg2trEhamdRZa175M79s51q5ysXPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 085/101] HID: nintendo: register input device after capabilities are set
-Date: Tue, 25 Aug 2026 15:26:03 +0200
-Message-ID: <20260825132545.234275283@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 050/101] ipv6: fix use-after-free in ip6_finish_output2()
+Date: Tue, 25 Aug 2026 15:25:28 +0200
+Message-ID: <20260825132543.974867916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,57 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit d723bc1fe2e72b9252234e94c11af644ec477bf7 upstream.
+commit d0d48d999b0eee6bb176ef4e39d9be868fa80f7e upstream.
 
-input_register_device() exposes the device to userspace immediately.
-In joycon_input_create() it was called before joycon_config_rumble()
-configures the FF_RUMBLE capability and the memless force-feedback
-device, so a concurrent EVIOCSFF could dereference a NULL dev->ff.
+ip6_finish_output2() caches a pointer to the IPv6 destination
+address (daddr) before invoking lwtunnel_xmit().  The LWT-BPF
+transmit path or other encapsulation operations within
+lwtunnel_xmit() can reallocate the skb head, freeing the memory
+that daddr points to.  When lwtunnel_xmit() returns
+LWTUNNEL_XMIT_CONTINUE, the function continues to use the stale
+daddr pointer to compute the nexthop and to look up or create the
+neighbour entry.  This results in a use-after-free read, which can
+leak sensitive kernel data, pollute the neighbour table with
+arbitrary values, misdirect traffic, or crash the system.
 
-Registering early also means the initial udev event lacks button and
-axis information, which can make input managers ignore the device.
+Fix this by re-fetching the IPv6 header and the destination
+address pointer after lwtunnel_xmit() returns
+LWTUNNEL_XMIT_CONTINUE, ensuring that the subsequent nexthop
+computation and neighbour lookup operate on valid memory.
 
-Move input_register_device() to the end of joycon_input_create(), after
-all capabilities, the IMU input device and the force-feedback callbacks
-have been configured.
-
-Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
+Fixes: e415ed3a4b8b ("ipv6: use skb_expand_head in ip6_finish_output2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/4aa3f53bc44e79572c6dd2340ec7b68ef1a3d87d.1786516730.git.rakukuip@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-nintendo.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/ip6_output.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -2138,10 +2138,6 @@ static int joycon_input_create(struct jo
- 	ctlr->input->phys = hdev->phys;
- 	input_set_drvdata(ctlr->input, ctlr);
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -116,6 +116,8 @@ static int ip6_finish_output2(struct net
  
--	ret = input_register_device(ctlr->input);
--	if (ret)
--		return ret;
--
- 	if (joycon_type_is_right_joycon(ctlr)) {
- 		joycon_config_right_stick(ctlr->input);
- 		joycon_config_buttons(ctlr->input, right_joycon_button_mappings);
-@@ -2181,6 +2177,10 @@ static int joycon_input_create(struct jo
- 	if (joycon_has_rumble(ctlr))
- 		joycon_config_rumble(ctlr);
+ 		if (res != LWTUNNEL_XMIT_CONTINUE)
+ 			return res;
++		hdr = ipv6_hdr(skb);
++		daddr = &hdr->daddr;
+ 	}
  
-+	ret = input_register_device(ctlr->input);
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
+ 	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, skb->len);
 
 
