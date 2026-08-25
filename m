@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A573481FCB;
-	Tue, 25 Aug 2026 13:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BC1481FB9;
+	Tue, 25 Aug 2026 13:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666178; cv=none; b=h6GkyIGwP0/HaS7Dttlt/rbr3goYwYxvwHsAp9rpuHCBg5lOMcJ7vy6Ti9xf3pNX5Jo0VXY9TRqTaoRp9gEhjBRzYgAE1z3sfzDWuUPp08VYsSEB5gJt3XgAyc1s64AC6/M+Aet6BGr8xKNBn/2rNfYzzYv5lF3edxg5mvEef4E=
+	t=1787666181; cv=none; b=RaAf8AloH7BLiq9ymhldCsgEMiLTc3urJcPgYg7LY5somAXmujQrdBOpkSBbLi4naKqbOkiUAyZWhNEskdZ0sCFQiHVNm9I2lfFgboiuIuLIFQe8oeo0VW9P9CLZFDQ00AH9nuudI+3enL0gNhQX14WGzJO4dvEdIxhT3adCxA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666178; c=relaxed/simple;
-	bh=H90v5iWQKfctABFU992utqvtKLAANfBeALFyTXg/mYw=;
+	s=arc-20240116; t=1787666181; c=relaxed/simple;
+	bh=NI6WzmGcfUDeE/ww5b2V1IKuF1udb5QjIjS5ycje0Ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9TzVQfmu5BA4A4V7a1h/N8CN47HqebzZ2jTccLE9z1RrmrgFvOIaC3yNnzp4vqaeIhTTorjLpNC5xvzq3YinuutXbdd/xNCpDFGmTQVEPg8P+ohzZLNvNrCCvHR+FwRsDT46eqWzqEstojQpPmXSyS72lFdUSwhZpIOrAsDhts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NC+qTdnj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rKmzd2VRbrytuTnZUx1ojDPN1an/sEWz+7vEJPtc/kdxam4KzfchcRhX/pQ8CvKF6iy2ulL6sLMTCY2FXG6VWrF59PiTAiI52tYwnIsqh3gtTu2msXPc9UR4xItaSMs8hUzkRo34EwSNiR+jbswBMI16vI21xxJmZkN/GTR/8i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPNyOF8n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NC+qTdnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0111F00A3A;
-	Tue, 25 Aug 2026 13:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPNyOF8n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7181F000E9;
+	Tue, 25 Aug 2026 13:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666176;
-	bh=wOvpku84lu7+lO0pUqGJAVblOPd+1BZkwDDRxU3oSIo=;
+	s=korg; t=1787666179;
+	bh=WYI3lOmCMGGsgwBm/064jgrysOJ5vzHRTm3+FwlzO2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NC+qTdnjW6jqQcbwmIuMtvFw2+vE4f/vW2WYetIb/MDY8/5+ZqMfc/tZS3IAljDHR
-	 lyATqtpUzpQTrZksumPIEE2b1wrNwPnYkgYiIvQGKWKJ07oe58eSa1v38SxLZgZl53
-	 vG7lvJBN3d0T9nz/cP2X5jmBOJxWJg8kLi/26b/A=
+	b=DPNyOF8nGkmX4r+X5Kzq5vCYg0tnZzcILG/3sfKIfpxA+eCOFrfvuKxC1ZrNnuuql
+	 PjCYaF4/dhVMF3O/8NXR2ObC/l/m5+sc7i507Qndr2TR8FnLQpfn1vZmouydrsLFDz
+	 ljEdHGffQLZoTBWAJIZK/ODZ2+b5CcJCKAjF/8C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Shaoxu Liu <shaoxul@foxmail.com>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 03/76] rndis_host: add overflow check in rndis_rx_fixup()
-Date: Tue, 25 Aug 2026 15:25:56 +0200
-Message-ID: <20260825132541.689826453@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 5.15 30/76] nfc: fdp: bound the device-reported read length and fix an skb leak
+Date: Tue, 25 Aug 2026 15:26:23 +0200
+Message-ID: <20260825132542.741609110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -53,53 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 965a251f23ff69cfb4486974d4532e9bb551c7fc upstream.
+commit 7ad21dcfeb5181af0c3ee2608808c0c0a5283aa1 upstream.
 
-Add an overflow check to ensure that data_offset + data_len + 8 does not
-wrap, which would enable an OOB read of the USB data buffer.
+fdp_nci_i2c_read() takes the next packet length from two device-supplied
+bytes and never validates it. The value is a u16 used as the
+i2c_master_recv() count into a 261-byte on-stack buffer: a malicious,
+counterfeit or malfunctioning controller (or an i2c bus interposer) can
+drive it far past the buffer for a stack out-of-bounds write that
+clobbers the canary and return address, or below the minimum frame size
+(directly, or by truncating the computed sum) so the header/LRC strip
+and the next length read run past a short receive. Reject a length
+outside [FDP_NCI_I2C_MIN_PAYLOAD, FDP_NCI_I2C_MAX_PAYLOAD], as a
+corrupted packet already is, and force resynchronization.
 
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Shaoxu Liu <shaoxul@foxmail.com>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/2026070900-denim-brook-52d4@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The same loop allocates one data skb per iteration and assumes a length
+packet followed by a data packet; a device that sends two data packets
+in one call leaks the first skb when the second allocation overwrites
+it. Free a previously allocated skb before allocating the next.
+
+Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
+Cc: stable@vger.kernel.org
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-b1f8ab4c-v2-1-2d1fe5955325@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rndis_host.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/nfc/fdp/i2c.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/drivers/net/usb/rndis_host.c
-+++ b/drivers/net/usb/rndis_host.c
-@@ -14,6 +14,7 @@
- #include <linux/usb/cdc.h>
- #include <linux/usb/usbnet.h>
- #include <linux/usb/rndis_host.h>
-+#include <linux/overflow.h>
+--- a/drivers/nfc/fdp/i2c.c
++++ b/drivers/nfc/fdp/i2c.c
+@@ -166,9 +166,36 @@ static int fdp_nci_i2c_read(struct fdp_i
+ 		/* Packet that contains a length */
+ 		if (tmp[0] == 0 && tmp[1] == 0) {
+ 			phy->next_read_size = (tmp[2] << 8) + tmp[3] + 3;
++
++			/*
++			 * next_read_size is taken from the device and is used
++			 * as the i2c_master_recv() count for the next packet
++			 * and as the data skb size. A value above the receive
++			 * buffer overflows tmp[]; one below the minimum frame
++			 * size runs the header/LRC strip and the length-field
++			 * read past a short receive. Either way the packet is
++			 * corrupt: drop it and force resynchronization.
++			 */
++			if (phy->next_read_size < FDP_NCI_I2C_MIN_PAYLOAD ||
++			    phy->next_read_size > FDP_NCI_I2C_MAX_PAYLOAD) {
++				dev_dbg(&client->dev, "%s: corrupted packet\n",
++					__func__);
++				phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
++				goto flush;
++			}
+ 		} else {
+ 			phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
  
- 
- /*
-@@ -495,6 +496,7 @@ int rndis_rx_fixup(struct usbnet *dev, s
- 		struct rndis_data_hdr	*hdr = (void *)skb->data;
- 		struct sk_buff		*skb2;
- 		u32			msg_type, msg_len, data_offset, data_len;
-+		u32			overflow_check;
- 
- 		msg_type = le32_to_cpu(hdr->msg_type);
- 		msg_len = le32_to_cpu(hdr->msg_len);
-@@ -503,7 +505,9 @@ int rndis_rx_fixup(struct usbnet *dev, s
- 
- 		/* don't choke if we see oob, per-packet data, etc */
- 		if (unlikely(msg_type != RNDIS_MSG_PACKET || skb->len < msg_len
--				|| (data_offset + data_len + 8) > msg_len)) {
-+				|| (data_offset + data_len + 8) > msg_len
-+				|| check_add_overflow(data_offset, data_len, &overflow_check)
-+				|| check_add_overflow(overflow_check, 8, &overflow_check))) {
- 			dev->net->stats.rx_frame_errors++;
- 			netdev_dbg(dev->net, "bad rndis message %d/%d/%d/%d, len %d\n",
- 				   le32_to_cpu(hdr->msg_type),
++			/*
++			 * Only one data packet is delivered per call; if the
++			 * device sends another, do not overwrite and leak the
++			 * skb allocated for the previous one.
++			 */
++			if (*skb) {
++				kfree_skb(*skb);
++				*skb = NULL;
++			}
++
+ 			*skb = alloc_skb(len, GFP_KERNEL);
+ 			if (*skb == NULL) {
+ 				r = -ENOMEM;
 
 
