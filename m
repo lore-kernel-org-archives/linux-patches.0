@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1FD446C18;
-	Tue, 25 Aug 2026 13:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BE9481648;
+	Tue, 25 Aug 2026 13:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666315; cv=none; b=lcAx81+SCdVDOjfeojK3yFh/rhEaUYtp/jWETMAVvwGA6fpI8jpK3t6RJpVVl8bU03xSsOw4g4CP/G70JLiNv4tNbNwHIvNH1ENZWD5HHXMIB/MwbZ4SeolyVRav7kLAkgGubyEPsYhm+XUmKLfumJls/5OloL2TGe1ThscBt2g=
+	t=1787666320; cv=none; b=ZaJVKTAXxawNpXEBXd/hAuF5r7YTmjMbcxl7d78AupXifaE2UidXAeZGR/6EqooUv7y8/zWn3qYmHu+po1BbdwO/Eu9kN8A7BdQlv5cw2CQVLqiFRxgfwTOON5lUBXBbnOp2tVR2LYX99edEGxooshwWQYaf+0o6qknKDYTujWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666315; c=relaxed/simple;
-	bh=Cn1HUEMONjXc7gBA9CxooHiNFAU147COXaaHiudxuUg=;
+	s=arc-20240116; t=1787666320; c=relaxed/simple;
+	bh=s/oq7jrHEmHxWaa/rUepvbZ/p5F5NBpSQbN4uoI8Aio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipRPp01KWPYw72pkkdDLkeVyNpX/Ph5ZiWQi2ZgnPjvD3cAvL5KRVyABBI9gnc6SSEi20BFGtORNIXXV5A7PZ9U3sMh4PmgRlZgtM3/LPjTO3e/QbtpEoAEGQ2pf3ooOfhsKKRmU7zC08PttcmuJFcSFz1D0oZdVvWVK2BWj6Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ji48Nru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LRyPwEb8fxZ+G1eAvBhIiNMSCnQ0EQylo/QhafVXN9cIzdLQx/AvDNtUJb5l76cq++iJTBu+Jirvzr+gNPLVvt041DMapg7yM0XIWANj5jv3OVKScoo1lMSf7eOGpYan45auCtNermZ1y7P/gYM29Ng8iA1awrO0sbrVqzmhmYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAFSw4/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ji48Nru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408211F000E9;
-	Tue, 25 Aug 2026 13:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAFSw4/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C3D1F00A3A;
+	Tue, 25 Aug 2026 13:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666313;
-	bh=IqfIjOYjqW++JYdKTqTFfx50JBY4cFG7+aiz/rJOYg0=;
+	s=korg; t=1787666319;
+	bh=I9Za2eefmF/RVcFCq/J2KDCgPI05T4LxIdm5LgY6Ddc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Ji48NruabisY1VBgL8ZCUIUh2GvcFzV6XptzQEYeIPONbdpatNqCnf+H8OOxLfrU
-	 euLWzDMNbnCd9D6JsWmAi1G/W0+HMiXcmKgVw9f5haKrE+pazHXQkfJantyThlx1+/
-	 pGJSmMv7kZCliifLV3Cc6yVr6gDoTGTb1oKorYJE=
+	b=zAFSw4/+mprKz9a15Xj46pCv7L2NpZxzXbgWsN5y6NrGT/pp7EQpPRYQqMpFD8PkH
+	 aaHDAwpRwAhBhdYTVCgMpTOMVKHcrqWu6xQROw1hu1doRIXddPzuq8UjvD8NHJdy8h
+	 LrjyBGHVJc+TffbNItv6sVgMdUjeNTh/TQ5/N+7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 76/76] HID: hyperv: validate initial device info bounds
-Date: Tue, 25 Aug 2026 15:27:09 +0200
-Message-ID: <20260825132544.532199948@linuxfoundation.org>
+	Cornelia Huck <cohuck@redhat.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 46/76] s390/vfio_ccw: Ensure index for read/write regions are within range
+Date: Tue, 25 Aug 2026 15:26:39 +0200
+Message-ID: <20260825132543.376053962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -50,101 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-commit 934b7778aa7b7c8f6bb073d2a73ba3674885bae0 upstream.
+[ Upstream commit 9f5f9a78fedc45bc29d6a0a64e3a3472361afae5 ]
 
-The Hyper-V synthetic HID host supplies SYNTH_HID_INITIAL_DEVICE_INFO
-messages that contain a HID descriptor followed by the report descriptor
-bytes. mousevsc_on_receive_device_info() trusts bLength and
-wDescriptorLength without checking that the received packet contains both
-byte ranges.
+The introduction of the capability chain rightly clamped the
+region indexes to the range of the capabilities itself, but
+neglected to do so for the existing read/write regions which
+should also be enforced.
 
-A malformed host or backend message can therefore make the guest read
-past the received VMBus packet while copying the report descriptor. Pass
-the received initial-device-info size into the parser and reject
-descriptor lengths that exceed the packet.
-
-Impact: A malicious Hyper-V host or backend can crash a guest by sending
-a short initial device-info message with an oversized HID report
-descriptor length.
-
-Fixes: b95f5bcb811e ("HID: Move the hid-hyperv driver out of staging")
+Fixes: db8e5d17ac03 ("vfio-ccw: add capabilities chain")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Cc: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Stable-dep-of: 16b0798024c0 ("s390/vfio_ccw: Implement a crw lock")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-hyperv.c |   27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/s390/cio/vfio_ccw_async.c |   16 ++++++++++++++++
+ drivers/s390/cio/vfio_ccw_chp.c   |   15 +++++++++++++++
+ drivers/s390/cio/vfio_ccw_ops.c   |    7 +++----
+ 3 files changed, 34 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -179,18 +179,32 @@ static void mousevsc_free_device(struct
- }
+--- a/drivers/s390/cio/vfio_ccw_async.c
++++ b/drivers/s390/cio/vfio_ccw_async.c
+@@ -8,6 +8,7 @@
+  */
  
- static void mousevsc_on_receive_device_info(struct mousevsc_dev *input_device,
--				struct synthhid_device_info *device_info)
-+					    struct synthhid_device_info *device_info,
-+					    u32 device_info_size)
- {
- 	int ret = 0;
- 	struct hid_descriptor *desc;
- 	struct mousevsc_prt_msg ack;
-+	size_t desc_offset;
-+	size_t desc_size;
+ #include <linux/vfio.h>
++#include <linux/nospec.h>
+ #include <linux/mdev.h>
  
- 	input_device->dev_info_status = -ENOMEM;
+ #include "vfio_ccw_private.h"
+@@ -25,11 +26,20 @@ static ssize_t vfio_ccw_async_region_rea
+ 		return -EINVAL;
  
-+	if (device_info_size < sizeof(*device_info)) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
+ 	mutex_lock(&private->io_mutex);
++
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out_unlock;
 +	}
 +
- 	input_device->hid_dev_info = device_info->hid_dev_info;
- 	desc = &device_info->hid_descriptor;
-+	desc_offset = offsetof(struct synthhid_device_info, hid_descriptor);
-+	desc_size = device_info_size - desc_offset;
- 	if (desc->bLength == 0)
- 		goto cleanup;
-+	if (desc->bLength < sizeof(*desc) || desc->bLength > desc_size) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 	if (copy_to_user(buf, (void *)region + pos, count))
+ 		ret = -EFAULT;
+ 	else
+ 		ret = count;
++
++out_unlock:
+ 	mutex_unlock(&private->io_mutex);
+ 	return ret;
+ }
+@@ -49,6 +59,12 @@ static ssize_t vfio_ccw_async_region_wri
+ 	if (!mutex_trylock(&private->io_mutex))
+ 		return -EAGAIN;
  
- 	/* The pointer is not NULL when we resume from hibernation */
- 	kfree(input_device->hid_desc);
-@@ -205,6 +219,10 @@ static void mousevsc_on_receive_device_i
- 		input_device->dev_info_status = -EINVAL;
- 		goto cleanup;
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 	if (copy_from_user((void *)region + pos, buf, count)) {
+ 		ret = -EFAULT;
+--- a/drivers/s390/cio/vfio_ccw_chp.c
++++ b/drivers/s390/cio/vfio_ccw_chp.c
+@@ -9,6 +9,7 @@
+  */
+ 
+ #include <linux/slab.h>
++#include <linux/nospec.h>
+ #include <linux/vfio.h>
+ #include "vfio_ccw_private.h"
+ 
+@@ -25,6 +26,13 @@ static ssize_t vfio_ccw_schib_region_rea
+ 		return -EINVAL;
+ 
+ 	mutex_lock(&private->io_mutex);
++
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out;
++	}
++
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 
+ 	if (cio_update_schib(private->sch)) {
+@@ -96,6 +104,12 @@ static ssize_t vfio_ccw_crw_region_read(
+ 		list_del(&crw->next);
+ 
+ 	mutex_lock(&private->io_mutex);
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out;
++	}
++
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 
+ 	if (crw)
+@@ -108,6 +122,7 @@ static ssize_t vfio_ccw_crw_region_read(
+ 
+ 	region->crw = 0;
+ 
++out:
+ 	mutex_unlock(&private->io_mutex);
+ 
+ 	kfree(crw);
+--- a/drivers/s390/cio/vfio_ccw_ops.c
++++ b/drivers/s390/cio/vfio_ccw_ops.c
+@@ -259,6 +259,7 @@ static ssize_t vfio_ccw_mdev_read(struct
+ 		return vfio_ccw_mdev_read_io_region(private, buf, count, ppos);
+ 	default:
+ 		index -= VFIO_CCW_NUM_REGIONS;
++		index = array_index_nospec(index, private->num_regions);
+ 		return private->region[index].ops->read(private, buf, count,
+ 							ppos);
  	}
-+	if (input_device->report_desc_size > desc_size - desc->bLength) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
+@@ -312,6 +313,7 @@ static ssize_t vfio_ccw_mdev_write(struc
+ 		return vfio_ccw_mdev_write_io_region(private, buf, count, ppos);
+ 	default:
+ 		index -= VFIO_CCW_NUM_REGIONS;
++		index = array_index_nospec(index, private->num_regions);
+ 		return private->region[index].ops->write(private, buf, count,
+ 							 ppos);
+ 	}
+@@ -359,11 +361,8 @@ static int vfio_ccw_mdev_get_region_info
+ 		    VFIO_CCW_NUM_REGIONS + private->num_regions)
+ 			return -EINVAL;
  
- 	/* The pointer is not NULL when we resume from hibernation */
- 	kfree(input_device->report_desc);
-@@ -285,14 +303,17 @@ static void mousevsc_on_receive(struct h
- 		break;
+-		info->index = array_index_nospec(info->index,
+-						 VFIO_CCW_NUM_REGIONS +
+-						 private->num_regions);
+-
+ 		i = info->index - VFIO_CCW_NUM_REGIONS;
++		i = array_index_nospec(i, private->num_regions);
  
- 	case SYNTH_HID_INITIAL_DEVICE_INFO:
--		WARN_ON(pipe_msg->size < sizeof(struct hv_input_dev_info));
-+		if (WARN_ON_ONCE(pipe_msg->size <
-+				 sizeof(struct synthhid_device_info)))
-+			break;
- 
- 		/*
- 		 * Parse out the device info into device attr,
- 		 * hid desc and report desc
- 		 */
- 		mousevsc_on_receive_device_info(input_dev,
--			(struct synthhid_device_info *)pipe_msg->data);
-+						(struct synthhid_device_info *)pipe_msg->data,
-+						pipe_msg->size);
- 		break;
- 	case SYNTH_HID_INPUT_REPORT:
- 		input_report =
+ 		info->offset = VFIO_CCW_INDEX_TO_OFFSET(info->index);
+ 		info->size = private->region[i].size;
 
 
