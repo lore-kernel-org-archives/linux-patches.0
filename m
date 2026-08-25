@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD12480DD9;
-	Tue, 25 Aug 2026 13:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534C947FB10;
+	Tue, 25 Aug 2026 13:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664668; cv=none; b=E7QrsoozuZbzBlZ1YuVdRBlnsIjhRtkSYHBq9XZOq/aocSb7nAYGwEyuTky8Qo5F68QIPxOaD86bsaLOs5d+j7qvJ1j0f4o3RwgD/vbdfpbSvNB9f8rswt7ew9Ig5l74ELIcWF0W4FCXYLp3PPlfZLR0NPa6LzqsEznOdoDP4qY=
+	t=1787664671; cv=none; b=Qvs2yVnEnks7xVtXl7o03Tl9sJ57px+zLJl9RYImRf46+qmgjXx+yuyQonxTGeBuv+xpgnjTzYGMFdqBu5CxJ8ompOcwBCKNMY37r1+083ATq8d80s9GGZGiVvs5FGeShO+N+NXh0ch8XmI8ZhvgK9Le8hfTFeqgG2hgvVms2l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664668; c=relaxed/simple;
-	bh=Rt4VosGhDb3T87prySBxd1VOYSwYRTyN6UJ5AsXesZA=;
+	s=arc-20240116; t=1787664671; c=relaxed/simple;
+	bh=eIqI7tS03MP6xJdV0rzD1KQhEE+Y1mXJ1HCZMseoxms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JC73mIsXRiYxW8gFWSnTAY8ypQ+COvKTNTsuHPuZMPuo6vKSkNHmRRlPZrNziYaGJCzuDUZM6XDWzFYCbfjC4Zm5wBFImb3el5YaHBTr1O5ZLQIrpIFlWpGPbASSVQUJecJ2M7tJAz8OEY+iIdpy36eu8pKpbpeIYT9AXuBIo6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/fuJaNX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r16rwq4+umLprL6jpQW8AOS3UBpd9TX/5OmPllexofkKRyHpxNx9Y9J4Djr+q6KhXc1HIocdOTSC6K+2FaM93M1KaT43hR7t3UPRGmZWBfuJdlLz+sazAeiSFyRKfN0fbYiJO74T3WHo+uma/8Ilj0EEP69m8WMZbeEMyIfi62k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeyNuQqz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/fuJaNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1041F00A3E;
-	Tue, 25 Aug 2026 13:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeyNuQqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E101F000E9;
+	Tue, 25 Aug 2026 13:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664667;
-	bh=mKB95aC8fxd8h7VcC8GTxX6PhG0gx8L7mo6FY78zmOU=;
+	s=korg; t=1787664670;
+	bh=uYxebZwjMU3a2e4rbg12jYuzGcAXQ7/7a7fXqMkTlqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/fuJaNX5uOBlePzDkHS4QRbcV9EKPMHxzUa8WwO6HKslNEE7WuZR0smQ8umYEVzE
-	 EBEXCQFdLvg20mDa8QkFBVcJO2bVkHKDRizptTKRoZ062Po3aOfLGWo3QfeGTWsxpH
-	 lT5PA0m9YzFvpnRyOJUbi0Q6S76VQPI3mLdr2dcA=
+	b=aeyNuQqzEutwa4OzgkaaTl5NgFoMrWt2gWHARqfXc+Pk09nkkt1lSK8zq5F6m7qvY
+	 vgfFEK4Eaea15vXtCMjPVUwfZgCsVtYVXBwjQTVoOVnR9vbuYA0ZpHWAkNBF4416bA
+	 1AQMd0+lE9ArGNONFCIPecyzVD8xc4WJ7iFnZM3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 47/82] ipv6: fix use-after-free in ip6_finish_output2()
-Date: Tue, 25 Aug 2026 15:25:34 +0200
-Message-ID: <20260825132543.358740405@linuxfoundation.org>
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 7.2 48/82] mailbox: mchp-ipc-sbi: Add null check for devm_kasprintf()
+Date: Tue, 25 Aug 2026 15:25:35 +0200
+Message-ID: <20260825132543.399084233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -54,50 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit d0d48d999b0eee6bb176ef4e39d9be868fa80f7e upstream.
+commit b37c4d0a2fd90c0c31223acd37f763eb8953ed1a upstream.
 
-ip6_finish_output2() caches a pointer to the IPv6 destination
-address (daddr) before invoking lwtunnel_xmit().  The LWT-BPF
-transmit path or other encapsulation operations within
-lwtunnel_xmit() can reallocate the skb head, freeing the memory
-that daddr points to.  When lwtunnel_xmit() returns
-LWTUNNEL_XMIT_CONTINUE, the function continues to use the stale
-daddr pointer to compute the nexthop and to look up or create the
-neighbour entry.  This results in a use-after-free read, which can
-leak sensitive kernel data, pollute the neighbour table with
-arbitrary values, misdirect traffic, or crash the system.
+Add a check to see if devm_kasprintf() is not NULL in
+mchp_ipc_get_cluster_aggr_irq(), returning -ENOMEM if the function
+failed.
 
-Fix this by re-fetching the IPv6 header and the destination
-address pointer after lwtunnel_xmit() returns
-LWTUNNEL_XMIT_CONTINUE, ensuring that the subsequent nexthop
-computation and neighbour lookup operate on valid memory.
-
-Fixes: e415ed3a4b8b ("ipv6: use skb_expand_head in ip6_finish_output2")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/4aa3f53bc44e79572c6dd2340ec7b68ef1a3d87d.1786516730.git.rakukuip@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: gkh_clanker_t1000
+CC: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_output.c |    2 ++
+ drivers/mailbox/mailbox-mchp-ipc-sbi.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -116,6 +116,8 @@ static int ip6_finish_output2(struct net
- 
- 		if (res != LWTUNNEL_XMIT_CONTINUE)
- 			return res;
-+		hdr = ipv6_hdr(skb);
-+		daddr = &hdr->daddr;
- 	}
- 
- 	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, skb->len);
+--- a/drivers/mailbox/mailbox-mchp-ipc-sbi.c
++++ b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
+@@ -378,6 +378,8 @@ static int mchp_ipc_get_cluster_aggr_irq
+ 	for_each_online_cpu(cpuid) {
+ 		hartid = cpuid_to_hartid_map(cpuid);
+ 		irq_name = devm_kasprintf(ipc->dev, GFP_KERNEL, "hart-%lu", hartid);
++		if (!irq_name)
++			return -ENOMEM;
+ 		ret = platform_get_irq_byname_optional(pdev, irq_name);
+ 		if (ret <= 0)
+ 			continue;
 
 
