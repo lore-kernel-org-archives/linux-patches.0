@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAF325393E;
-	Tue, 25 Aug 2026 13:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F8445C70B;
+	Tue, 25 Aug 2026 13:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666300; cv=none; b=MSHTpIdcUDTKThbBTzhjiQ/ozvvDsk62xV7p4K3xyMmOL5vDg0Q9BH+dBMW1Y5g0HWnZFPCtysBxn4GHT4LTk9zoKLxhN9+1/iJwheTOWkd3oSU8xZswZHx7oY4rI8TF+ESW58SkZ+xQ3Sn4ccHD0rsZDR4JcECjDzvJhDko3Ek=
+	t=1787666303; cv=none; b=kNIHFaG7NCxBNSStJ7j47LEw8rfRUsaiCZTy3h0WpgcTFLsBpzymAqles5bKkaRwabKFhssUvnUS4W5JtzeutfdwbawTa/zg7lZc/u5nh4lzhrJHJlZ8of6wFZY2OZFqvdH67tA52Xeo8IB9f+MqoK/mMVpvy4fDVHbdASJmaws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666300; c=relaxed/simple;
-	bh=qlWIPiQ3y0h7tB8S76qWqQblE0pyq/6i/0aEBqcRiTE=;
+	s=arc-20240116; t=1787666303; c=relaxed/simple;
+	bh=9cfp2JqJR1HegDW4+EqFyohZ6JzRFFCl1dWlCzgTF4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKG/QtZP0UZQnXBxCtaRDwBENMSnk2gMFdMeJ1I50u/5FtUcjOfEiv7hbp5pF4icMhEgLiy0AR/DPw9lrRPcedxADYU/AJpGvRikMqMLLiy+DdTZCop6d953s01fA/euRDPz1/rzbGtWcfduZzoyzdSAM42XaFIXzNeYKHsacqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8uA9Nz2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ioJ/kA8VW68ZsiJg32YyUXBU7TqSOoiEg4j+w4VUZtb9WkOB0isrPpUZtePyr6WtRLHYwWswBC3lS+sAlb4XSfmWX2LCMvtxyNAduh0M9tHY+EFQjrL9ojKVclMfsBTO2RfXRSfSV0rQiNta5//ujwba/Ze5rRJf1AjGsZT4Pvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFebJk12; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8uA9Nz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C6C1F000E9;
-	Tue, 25 Aug 2026 13:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFebJk12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704D91F000E9;
+	Tue, 25 Aug 2026 13:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666299;
-	bh=HGBEBgb0Wd0Nmz8o/vmFsYzku88J0YSA53O9Efj9hLM=;
+	s=korg; t=1787666302;
+	bh=xT2eiVMQx211Dz9t4tBhSUNBuGy5IYkT1O8zoSIf+EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c8uA9Nz25sxsD+xwd7aQ3pIr5Wn41HFFGA73BDxtmznunWtRxD7bEmXH82Em84i4Y
-	 0El6XbaNNJ1QaYkev8TSFQv2y0i+AOwEPVUEfFE6OMEZoat5aUodnSykywOoJt+63/
-	 b+L4bM51usUfJ4TrbeAwCMjTV99tzqD9Xzpap86s=
+	b=mFebJk12E3umUaOA6I1tU3vvcjanDyyob3okitVBuH0GOrAWZe1/+tBvvis2vORDQ
+	 qbewKGzwham+S9gliwmz5jG8mlrM35szlllVmE2C1XcxYItpQJ2hgVg8F08s9oOW/U
+	 B8N1Gr3GFOp6H/PXvm4QnaXQboWRwOEokL3RHUzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 71/76] mptcp: pm: fix data race in add_addr timer callback
-Date: Tue, 25 Aug 2026 15:27:04 +0200
-Message-ID: <20260825132544.336571431@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 72/76] can: use skb hash instead of private variable in headroom
+Date: Tue, 25 Aug 2026 15:27:05 +0200
+Message-ID: <20260825132544.376135587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -52,62 +51,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit a7aad5b69d3bdaec20a3ed9284e184502450c0cd ]
+commit d4fb6514ff8ed6912a71294e6b66a5d59ee88007 upstream.
 
-The timer callback reads entry->retrans_times outside pm.lock to decide
-whether to call mptcp_pm_subflow_established(). Since
-mptcp_pm_announced_del_timer() can concurrently set retrans_times =
-ADD_ADDR_RETRANS_MAX under pm.lock, a race condition exists.
+The can_skb_priv::skbcnt variable is used to identify CAN skbs in the RX
+path analogue to the skb->hash.
 
-I discovered this issue while studying the code. AI tools helped me to
-verify the issue can potentially happen under race conditions.
+As the skb hash is not filled in CAN skbs move the private skbcnt value to
+skb->hash and set skb->sw_hash accordingly. The skb->hash is a value used
+for RPS to identify skbs. Use it as intended.
 
-Use a local 'retransmit' flag set inside pm.lock to capture whether
-retransmission is still possible when the lock is taken. This allows to
-call mptcp_pm_subflow_established() accordingly, and not depending on
-the situation that can be different when checked outside the pm.lock.
-
-Fixes: 348d5c1dec60 ("mptcp: move to next addr when timeout")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-4-b8f496d71664@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ applied hunk to mptcp_pm_add_timer() in net/mptcp/pm_netlink.c instead of pm.c, dropping the absent adaptive-timeout shift line ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260201-can_skb_ext-v8-1-3635d790fe8b@hartkopp.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/can/dev/skb.c |    2 --
+ drivers/net/can/slcan.c   |    1 -
+ include/linux/can/core.h  |    1 +
+ include/linux/can/skb.h   |    3 ---
+ net/can/af_can.c          |   14 +++++++++++---
+ net/can/bcm.c             |    2 --
+ net/can/isotp.c           |    3 ---
+ net/can/j1939/socket.c    |    1 -
+ net/can/j1939/transport.c |    2 --
+ net/can/raw.c             |    7 +++----
+ 10 files changed, 15 insertions(+), 21 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -318,6 +318,7 @@ static void mptcp_pm_add_timer(struct ti
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
- 	unsigned int timeout = 0;
-+	bool retransmit;
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -203,7 +203,6 @@ struct sk_buff *alloc_can_skb(struct net
  
- 	pr_debug("msk=%p\n", msk);
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
  
-@@ -355,12 +356,13 @@ static void mptcp_pm_add_timer(struct ti
- 		entry->retrans_times++;
+ 	*cf = skb_put_zero(skb, sizeof(struct can_frame));
+ 
+@@ -234,7 +233,6 @@ struct sk_buff *alloc_canfd_skb(struct n
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	*cfd = skb_put_zero(skb, sizeof(struct canfd_frame));
+ 
+--- a/drivers/net/can/slcan.c
++++ b/drivers/net/can/slcan.c
+@@ -213,7 +213,6 @@ static void slc_bump(struct slcan *sl)
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = sl->dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	skb_put_data(skb, &cf, sizeof(struct can_frame));
+ 
+--- a/include/linux/can/core.h
++++ b/include/linux/can/core.h
+@@ -58,6 +58,7 @@ extern void can_rx_unregister(struct net
+ 			      void *data);
+ 
+ extern int can_send(struct sk_buff *skb, int loop);
++void can_set_skb_uid(struct sk_buff *skb);
+ void can_sock_destruct(struct sock *sk);
+ 
+ #endif /* !_CAN_CORE_H */
+--- a/include/linux/can/skb.h
++++ b/include/linux/can/skb.h
+@@ -43,13 +43,11 @@ struct sk_buff *alloc_can_err_skb(struct
+ /**
+  * struct can_skb_priv - private additional data inside CAN sk_buffs
+  * @ifindex:	ifindex of the first interface the CAN frame appeared on
+- * @skbcnt:	atomic counter to have an unique id together with skb pointer
+  * @frame_len:	length of CAN frame in data link layer
+  * @cf:		align to the following CAN frame at skb->data
+  */
+ struct can_skb_priv {
+ 	int ifindex;
+-	int skbcnt;
+ 	unsigned int frame_len;
+ 	struct can_frame cf[];
+ };
+@@ -107,7 +105,6 @@ static inline bool can_skb_headroom_vali
+ 	if (skb->ip_summed == CHECKSUM_NONE) {
+ 		/* init headroom */
+ 		can_skb_prv(skb)->ifindex = dev->ifindex;
+-		can_skb_prv(skb)->skbcnt = 0;
+ 
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -641,6 +641,16 @@ static int can_rcv_filter(struct can_dev
+ 	return matches;
+ }
+ 
++void can_set_skb_uid(struct sk_buff *skb)
++{
++	/* create non-zero unique skb identifier together with *skb */
++	while (!(skb->hash))
++		skb->hash = atomic_inc_return(&skbcounter);
++
++	skb->sw_hash = 1;
++}
++EXPORT_SYMBOL(can_set_skb_uid);
++
+ static void can_receive(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct can_dev_rcv_lists *dev_rcv_lists;
+@@ -652,9 +662,7 @@ static void can_receive(struct sk_buff *
+ 	atomic_long_inc(&pkg_stats->rx_frames);
+ 	atomic_long_inc(&pkg_stats->rx_frames_delta);
+ 
+-	/* create non-zero unique skb identifier together with *skb */
+-	while (!(can_skb_prv(skb)->skbcnt))
+-		can_skb_prv(skb)->skbcnt = atomic_inc_return(&skbcounter);
++	can_set_skb_uid(skb);
+ 
+ 	rcu_read_lock();
+ 
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -338,7 +338,6 @@ static void bcm_can_tx(struct bcm_op *op
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	skb_put_data(skb, cf, op->cfsiz);
+ 
+@@ -1577,7 +1576,6 @@ static int bcm_tx_send(struct msghdr *ms
  	}
  
--	if (entry->retrans_times >= ADD_ADDR_RETRANS_MAX)
-+	retransmit = entry->retrans_times < ADD_ADDR_RETRANS_MAX;
-+	if (!retransmit)
- 		timeout = 0;
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skb->dev = dev;
+ 	can_skb_set_owner(skb, sk);
+ 	err = can_send(skb, 1); /* send with loopback */
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -218,7 +218,6 @@ static int isotp_send_fc(struct sock *sk
  
- 	spin_unlock_bh(&msk->pm.lock);
+ 	can_skb_reserve(nskb);
+ 	can_skb_prv(nskb)->ifindex = dev->ifindex;
+-	can_skb_prv(nskb)->skbcnt = 0;
  
--	if (entry->retrans_times == ADD_ADDR_RETRANS_MAX)
-+	if (!retransmit)
- 		mptcp_pm_subflow_established(msk);
+ 	nskb->dev = dev;
+ 	can_skb_set_owner(nskb, sk);
+@@ -773,7 +772,6 @@ static void isotp_send_cframe(struct iso
  
- out:
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	cf = (struct canfd_frame *)skb->data;
+ 	skb_put_zero(skb, so->ll.mtu);
+@@ -1069,7 +1067,6 @@ static int isotp_sendmsg(struct socket *
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	so->tx.len = size;
+ 	so->tx.idx = 0;
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -889,7 +889,6 @@ static struct sk_buff *j1939_sk_alloc_sk
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
+ 
+ 	ret = memcpy_from_msg(skb_put(skb, size), msg, size);
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -612,7 +612,6 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
+ 	skb->dev = priv->ndev;
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	/* reserve CAN header */
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
+ 
+@@ -1551,7 +1550,6 @@ j1939_session *j1939_session_fresh_new(s
+ 	skb->dev = priv->ndev;
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skcb = j1939_skb_to_cb(skb);
+ 	memcpy(skcb, rel_skcb, sizeof(*skcb));
+ 
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -74,8 +74,8 @@ MODULE_ALIAS("can-proto-1");
+  */
+ 
+ struct uniqframe {
+-	int skbcnt;
+ 	const struct sk_buff *skb;
++	u32 hash;
+ 	unsigned int join_rx_count;
+ };
+ 
+@@ -136,7 +136,7 @@ static void raw_rcv(struct sk_buff *oskb
+ 
+ 	/* eliminate multiple filter matches for the same skb */
+ 	if (this_cpu_ptr(ro->uniq)->skb == oskb &&
+-	    this_cpu_ptr(ro->uniq)->skbcnt == can_skb_prv(oskb)->skbcnt) {
++	    this_cpu_ptr(ro->uniq)->hash == oskb->hash) {
+ 		if (ro->join_filters) {
+ 			this_cpu_inc(ro->uniq->join_rx_count);
+ 			/* drop frame until all enabled filters matched */
+@@ -147,7 +147,7 @@ static void raw_rcv(struct sk_buff *oskb
+ 		}
+ 	} else {
+ 		this_cpu_ptr(ro->uniq)->skb = oskb;
+-		this_cpu_ptr(ro->uniq)->skbcnt = can_skb_prv(oskb)->skbcnt;
++		this_cpu_ptr(ro->uniq)->hash = oskb->hash;
+ 		this_cpu_ptr(ro->uniq)->join_rx_count = 1;
+ 		/* drop first frame to check all enabled filters? */
+ 		if (ro->join_filters && ro->count > 1)
+@@ -829,7 +829,6 @@ static int raw_sendmsg(struct socket *so
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	err = memcpy_from_msg(skb_put(skb, size), msg, size);
+ 	if (err < 0)
 
 
