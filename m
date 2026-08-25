@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBD242E01B;
-	Tue, 25 Aug 2026 13:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9022ED154;
+	Tue, 25 Aug 2026 13:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665295; cv=none; b=t9/MxG0UgJSATAwqqZ6hVv477F7aCZoIxxRFxInlkWs291b8pHLPP8YVrw40HcF53/k17zY0uXrkAumYVEQI3S93giAUQhmQNm5Sh++8QFEoNj5bQxfeBx7U9wD//Yyv4eFL/5oMyVrUkYmj6n4PgDBYuMZXH7zd/Xd1XepzbL8=
+	t=1787665298; cv=none; b=HWSRJJLXxKKp5tcFVZmBdSoyfoiy1F4vtxFaHiT+aVpz+Gwj+bPEUeGhGHkHEgYQBC3ZpbV7mGLvJvfkXbi2czqYK+eOvyydziNGTCN6RnuUgKv/5+otoq46h3fDq5M0RDFxfNJPRCbNEQkli2b72zRcVHGL/OEXq2vtWaSBI/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665295; c=relaxed/simple;
-	bh=GL3kA4bL+ijQlkS6til+V6bxritcRkJVwTlKP5qHrCc=;
+	s=arc-20240116; t=1787665298; c=relaxed/simple;
+	bh=lXNensG2khjwLnDUt6kOwa5Kjq5wwWhswFyiJDmXj1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwXcGdEXugDw/w8L7l/Qhwgo0WE/spevTgiEwncsXvonX94jVAfyIhygeiOV7LE8FlLmXSXZvp+WAe7upozIRlv4aWXxfRxH2QDkCEAsg3rKxBt+A95dCk2adsu+gXMYnT8sOhzcJwak1mfR3bQi3m4YaiFCX947SnqMTR496o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJ2lFEcz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rOxEZzViMjldX1GkhqgChJHu0PxH12JhDpceAqdNTPu5RkRaTM53aFRNOAp3tp3atMDbDHxRtA9r6gnTCmcp7sVWs3NBF7nurgyTtQvueiLAEXY1GQuCU/3t7EPXtNXuXpO8bGGxUu/BnW7/PyqxvTqdc22I9F+ob7jojwXO9bI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laTZ2bJr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJ2lFEcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6131F00A3A;
-	Tue, 25 Aug 2026 13:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laTZ2bJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593F11F000E9;
+	Tue, 25 Aug 2026 13:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665294;
-	bh=U1JmReHJy2e3Bh7zJi1d7Gxw+GYmM8Pgy0K5F0s20bc=;
+	s=korg; t=1787665296;
+	bh=+cpe1V5yVxm9rEzd6OVR3ficJKB3EKuuWfuXhwsy5MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WJ2lFEczus8zzRoS+EmFjnWstcwmTCgBLFX/hkXyD3MFsJMVP/QNWSWRNiuH4HrcB
-	 McDbAv8DbwIZAeump3eo2I9beh5dej2VY81RY8kzK5PFxmkofEla+5g580tLSzzcB6
-	 ymrWVCXvGjrZqujEy7MDj8CnN/+Ellcds3Q9DdGI=
+	b=laTZ2bJrBRcFXK57lIaFgoSKJYVFO3PaqJQ+Ye2pyUvpnhoTHOZB9V6cCnFsLCVNK
+	 2s/iRBVCrWOe6UsB9lT3zL7WHa7FScNtfA+71ZT8m0KfD80YWMjUcsXp5oPkATFogp
+	 yMRQtse7p5IXwHDYVE4NA7DpvMbE2ZMJ6O3p0syw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 70/94] HID: pidff: fix OOB write when hid->inputs is empty
-Date: Tue, 25 Aug 2026 15:26:06 +0200
-Message-ID: <20260825132544.632811748@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.18 35/94] nfc: fdp: bound the device-reported read length and fix an skb leak
+Date: Tue, 25 Aug 2026 15:25:31 +0200
+Message-ID: <20260825132543.287048202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -51,81 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 67bb1074e3d2d12fa059a9cc707e89398a4e4704 upstream.
+commit 7ad21dcfeb5181af0c3ee2608808c0c0a5283aa1 upstream.
 
-hid_pidff_init_with_quirks() derives its input_dev from
+fdp_nci_i2c_read() takes the next packet length from two device-supplied
+bytes and never validates it. The value is a u16 used as the
+i2c_master_recv() count into a 261-byte on-stack buffer: a malicious,
+counterfeit or malfunctioning controller (or an i2c bus interposer) can
+drive it far past the buffer for a stack out-of-bounds write that
+clobbers the canary and return address, or below the minimum frame size
+(directly, or by truncating the computed sum) so the header/LRC strip
+and the next length read run past a short receive. Reject a length
+outside [FDP_NCI_I2C_MIN_PAYLOAD, FDP_NCI_I2C_MAX_PAYLOAD], as a
+corrupted packet already is, and force resynchronization.
 
-	list_entry(hid->inputs.next, struct hid_input, list)
+The same loop allocates one data skb per iteration and assumes a length
+packet followed by a data packet; a device that sends two data packets
+in one call leaks the first skb when the second allocation overwrites
+it. Free a previously allocated skb before allocating the next.
 
-without first checking that hid->inputs is non-empty.  The list member
-of struct hid_input is at offset 0, so on an empty list list_entry()
-yields &hid->inputs itself and the following hidinput->input load reads
-an unrelated member of struct hid_device.  dev is then a type-confused
-pointer, and force-feedback init writes through it: each
-set_bit(FF_*, dev->ffbit) stores 8 bytes at dev + 192, past the end of
-the object dev actually aliases, and input_ff_create() adds further
-writes of a heap pointer and two function pointers.
-
-Until hid-universal-pidff the only caller was hid_pidff_init() from
-usbhid, which runs under HID_CLAIMED_INPUT and therefore always has at
-least one hid_input.  universal_pidff_probe() starts the device with
-HID_CONNECT_DEFAULT & ~HID_CONNECT_FF and then calls
-hid_pidff_init_with_quirks() directly whenever the descriptor carries a
-PID usage page, bypassing that gate.  A report descriptor whose only
-application collection is on HID_UP_PID leaves hid->inputs empty while
-hid_connect() still succeeds through the hidraw claim, so probe reaches
-the unguarded list_entry().
-
-The write happens in the USB probe path, on the hotplug workqueue, so
-plugging in a malicious device is enough to trigger it; no attacker
-software and no logged-in user are required.  KASAN reports an 8-byte
-out-of-bounds write in hid_pidff_init_with_quirks() reached from
-universal_pidff_probe().
-
-Check for an empty list before deriving dev and return -ENODEV, as the
-other HID force-feedback drivers already do.  universal_pidff_probe()
-propagates the error and unwinds.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: f06bf8d94fff ("HID: Add hid-universal-pidff driver and supported device ids")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-b1f8ab4c-v2-1-2d1fe5955325@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/nfc/fdp/i2c.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -1520,13 +1520,20 @@ static int pidff_check_autocenter(struct
- int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
- {
- 	struct pidff_device *pidff;
--	struct hid_input *hidinput =
--		list_entry(hid->inputs.next, struct hid_input, list);
--	struct input_dev *dev = hidinput->input;
-+	struct hid_input *hidinput;
-+	struct input_dev *dev;
- 	struct ff_device *ff;
- 	int max_effects;
- 	int error;
- 
-+	if (list_empty(&hid->inputs)) {
-+		hid_err(hid, "no inputs found\n");
-+		return -ENODEV;
-+	}
+--- a/drivers/nfc/fdp/i2c.c
++++ b/drivers/nfc/fdp/i2c.c
+@@ -166,9 +166,36 @@ static int fdp_nci_i2c_read(struct fdp_i
+ 		/* Packet that contains a length */
+ 		if (tmp[0] == 0 && tmp[1] == 0) {
+ 			phy->next_read_size = (tmp[2] << 8) + tmp[3] + 3;
 +
-+	hidinput = list_first_entry(&hid->inputs, struct hid_input, list);
-+	dev = hidinput->input;
-+
- 	hid_dbg(hid, "starting pid init\n");
++			/*
++			 * next_read_size is taken from the device and is used
++			 * as the i2c_master_recv() count for the next packet
++			 * and as the data skb size. A value above the receive
++			 * buffer overflows tmp[]; one below the minimum frame
++			 * size runs the header/LRC strip and the length-field
++			 * read past a short receive. Either way the packet is
++			 * corrupt: drop it and force resynchronization.
++			 */
++			if (phy->next_read_size < FDP_NCI_I2C_MIN_PAYLOAD ||
++			    phy->next_read_size > FDP_NCI_I2C_MAX_PAYLOAD) {
++				dev_dbg(&client->dev, "%s: corrupted packet\n",
++					__func__);
++				phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
++				goto flush;
++			}
+ 		} else {
+ 			phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
  
- 	if (list_empty(&hid->report_enum[HID_OUTPUT_REPORT].report_list)) {
++			/*
++			 * Only one data packet is delivered per call; if the
++			 * device sends another, do not overwrite and leak the
++			 * skb allocated for the previous one.
++			 */
++			if (*skb) {
++				kfree_skb(*skb);
++				*skb = NULL;
++			}
++
+ 			*skb = alloc_skb(len, GFP_KERNEL);
+ 			if (*skb == NULL) {
+ 				r = -ENOMEM;
 
 
