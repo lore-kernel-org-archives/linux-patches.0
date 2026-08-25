@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C112E06E4;
-	Tue, 25 Aug 2026 13:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55A1390613;
+	Tue, 25 Aug 2026 13:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665858; cv=none; b=ioEjrVuvLCFezKg2TE5NZcxKEkOpSQa8SzmxZuT5fO9e2prhYKolzQo/BZj/rI6YN/7CAbe7/AM2pFaN8srxuLjOWCSx8DEZrNAkdtitE4W9cOptFysrQOokbUDqtDnoiHmp+Kau76eVqaKeSXaplruJ0TsbBjtSO59byujWXtQ=
+	t=1787665860; cv=none; b=RfXncE1NiqaCFm+LGQkJEosEk7w+sWrkJs84lunAsP8ogqOhYqTeCk2UlPH/vZ0v0iZ8sLvTXlfFWIHHcKiuX92+L1gIYz0Em/7QH/depRwCK1Jtf1Te7pLNe73UTAcloKE0QgPJyZ8kMQEQlObFCZnR7h1CACNGw0I7u5XIo/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665858; c=relaxed/simple;
-	bh=FIQMXsow/I2domHRzkn+tVQWE5DYmFdONZItYV/oYK8=;
+	s=arc-20240116; t=1787665860; c=relaxed/simple;
+	bh=sXw20SU1oIRXEvZmqRs/dwLAEWBIaJm3sfgAdRMhclY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dU8E5SlqvP+XGavkOewkXCdfjeovrLSoGbPvJp3NR0IlIdgvZpeF5Bs1oAddvteG97UPWCX4066m8ExY8k2520RHFkjCsNAuzUbBZGBW+f/nXQ0GCqmTVeAPy55J1grV78vPJLExUmOtN8wU1RZLgv8rV6ANP4aYbwKdbmo5VW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GisYzdr8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PPaOsXpXALdT2KUX4Uqq/t2B+66w6vY9593NQG/w46S40Yf/vHH1GG7inC7BFBftY0oDUG2MVI9CwNzKfxp5OPac0i1F4yiuz57ERD2prhw9gl7kIFBAJ8OuxaOIhG9VpB8qmok4EsDpn6HrReIO+khfCrSPlx3asxNkGE3IGM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yy9lp/ve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GisYzdr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55AB01F000E9;
-	Tue, 25 Aug 2026 13:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yy9lp/ve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1E11F000E9;
+	Tue, 25 Aug 2026 13:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665856;
-	bh=SApMemdJ8MtKaW+2zug5J5n7qI/biISi7rnbYm/girs=;
+	s=korg; t=1787665859;
+	bh=9cxMhLTT2Za7cO1u4WaCJE5EYI1tkYQdDYEAe8WQwic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GisYzdr8fzZ7YGySaqQ8KiRPT69rbX+oP4uxKwJlil9Bqz+t0wC8ew3tEZSUMmX1k
-	 8UrvzkxQqbII/AdBgFPOE5umV9d8aAWnSUSuzk2+6BVcumdxXhjOvkThX7Z72B6B57
-	 wpb+WknsoUMVOfA7+I0eYnPGqq/AQj9qoSuxKQlY=
+	b=Yy9lp/ve9BCPR0UEc1VNwiSEXbvxFO6d3Tve5+GkrKzK8aLQ9c7oVtVuBdMcsTUU+
+	 aWthqoVnVaJDT4s75365XZRflXYOzpie2YOynx8Q5+lJOYaDmRmziYEnqdOIixiDS9
+	 /EaQ/zFgMy1ZvJV6IQ3lX4svEEa3jbiYb9iNXXJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
-	Alec Hall <signshop.alec@gmail.com>,
+	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 65/87] HID: magicmouse: do not keep a stale msc->input if no input is claimed
-Date: Tue, 25 Aug 2026 15:26:28 +0200
-Message-ID: <20260825132544.367715031@linuxfoundation.org>
+Subject: [PATCH 6.6 66/87] HID: magicmouse: Prevent out-of-bounds (OOB) read during DOUBLE_REPORT_ID
+Date: Tue, 25 Aug 2026 15:26:29 +0200
+Message-ID: <20260825132544.406382916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,67 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 0af3b89705688af01aa06025b84fa7a1e06ba6cc upstream.
+commit d93ba918a185aca2594da63e92fdc5495b559c0f upstream.
 
-magicmouse_input_mapping() caches the first hid_input's input_dev in
-msc->input while the report descriptor is parsed, and the rest of the
-driver treats a non-NULL msc->input as proof that an input device was
-registered.
+It is currently possible for a malicious or misconfigured USB device to
+cause an out-of-bounds (OOB) read when submitting reports using
+DOUBLE_REPORT_ID by specifying a large report length and providing a
+smaller one.
 
-That does not hold on the hid-input error path. If hidinput_connect()
-fails -- for instance because input_register_device() returns an error --
-it unwinds through hidinput_disconnect(), which frees every input_dev it
-created, including the one cached in msc->input.
+Let's prevent that by comparing the specified report length with the
+actual size of the data read in from userspace.  If the actual data
+length ends up being smaller than specified, we'll politely warn the
+user and prevent any further processing.
 
-The failure does not abort the probe. hid_connect() only skips the claim:
-
-	if ((connect_mask & HID_CONNECT_HIDINPUT) && !hidinput_connect(hdev,
-				connect_mask & HID_CONNECT_HIDINPUT_FORCE))
-		hdev->claimed |= HID_CLAIMED_INPUT;
-
-and the "device has no listeners" bailout below it does not fire for this
-driver, which sets ->raw_event; on the USB Magic Mouse 2 / Magic Trackpad
-2 paths hidraw and hiddev are claimed as well. hid_hw_start() therefore
-returns 0 and magicmouse_probe() continues with msc->input pointing at
-freed memory. Being non-NULL, it passes the "input not registered" check
-in probe and the NULL checks in ->raw_event and ->event, so the next
-input report dereferences freed memory.
-
-Clear msc->input when the HID core did not claim an input device, so the
-existing NULL checks cover this case as well.
-
-Fixes: f1a9a149abc8 ("HID: magicmouse: fix race between input_register() and probe()")
-Link: https://lore.kernel.org/linux-input/20260728185542.65F091F000E9@smtp.kernel.org/
-Cc: stable@vger.kernel.org
-Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
-Reviewed-by: Alec Hall <signshop.alec@gmail.com>
-Tested-by: Alec Hall <signshop.alec@gmail.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Günther Noack <gnoack@google.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-magicmouse.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hid/hid-magicmouse.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 --- a/drivers/hid/hid-magicmouse.c
 +++ b/drivers/hid/hid-magicmouse.c
-@@ -869,6 +869,16 @@ static int magicmouse_probe(struct hid_d
- 		return ret;
- 	}
+@@ -384,6 +384,10 @@ static int magicmouse_raw_event(struct h
+ 	struct input_dev *input = msc->input;
+ 	int x = 0, y = 0, ii, clicks = 0, npoints;
  
-+	/*
-+	 * When hidinput_connect() fails it frees every input device it
-+	 * created, but that does not fail hid_hw_start(): the core simply
-+	 * does not claim an input. msc->input, cached in ->input_mapping
-+	 * while the report descriptor was parsed, would then be a dangling
-+	 * pointer that passes every NULL check. Trust the core's claim.
-+	 */
-+	if (!(hdev->claimed & HID_CLAIMED_INPUT))
-+		msc->input = NULL;
++	/* Protect against zero sized recursive calls from DOUBLE_REPORT_ID */
++	if (size < 1)
++		return 0;
 +
- 	if (is_usb_magicmouse2(id->vendor, id->product) ||
- 	    is_usb_magictrackpad2(id->vendor, id->product)) {
- 		timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
+ 	switch (data[0]) {
+ 	case TRACKPAD_REPORT_ID:
+ 	case TRACKPAD2_BT_REPORT_ID:
+@@ -484,6 +488,18 @@ static int magicmouse_raw_event(struct h
+ 		/* Sometimes the trackpad sends two touch reports in one
+ 		 * packet.
+ 		 */
++
++		/* Ensure that we have at least 2 elements (report type and size) */
++		if (size < 2)
++			return 0;
++
++		if (size < data[1] + 2) {
++			hid_warn(hdev,
++				 "received report length (%d) was smaller than specified (%d)",
++				 size, data[1] + 2);
++			return 0;
++		}
++
+ 		magicmouse_raw_event(hdev, report, data + 2, data[1]);
+ 		magicmouse_raw_event(hdev, report, data + 2 + data[1],
+ 			size - 2 - data[1]);
 
 
