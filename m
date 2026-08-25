@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB808468C08;
-	Tue, 25 Aug 2026 13:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DC148123A;
+	Tue, 25 Aug 2026 13:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664891; cv=none; b=FqYCa+myP29QOP7FFBLKRn0kwZmIt3oCesSv+w/1MWlBU7sHU1hqC/OJpPGmrWtF8fcWYoXPrixyZeLX+FdN7O5VdKGJjypmB70+R7sf1QSJX/OrLqiUabRtPrUnncSgIiu01ZFtf/uO3I9mLsuibqqQh69APVMHGoRqmnWoQsc=
+	t=1787664893; cv=none; b=heKhELmOiZIiLWN05AUSqC49Vsfe0uyv6m2Q4F4YciHn15PxT4ErHzNyB/r3kp7vSY0VyEWytkQcSIG3Mfdz6cBRJIXowCgq+knRCTl6S9Wohz1mLZvO2ztN6PIX3oaHo69+Csmwmze/4GCtLSfy6kMbzLlr3jFh04AvdmjZ0Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664891; c=relaxed/simple;
-	bh=LkUCFXLZkjexQOQ5d2XQzCBvduwj4EnO/1Ok6OYidqU=;
+	s=arc-20240116; t=1787664893; c=relaxed/simple;
+	bh=abMpKmQGpRosmixrr3jXu21/UyNOIBjSpAYmbgaKin8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTeRue04l21bSakiBrOxApBWIOJgT7qdvZMyCoV5H1hXSB1lvpzBwmphKLABCm7I73d3g4j93FwSa7Y4xnsqJGN2HKPbLRVU1mf+Okb3Fi+Dciaoq0WOaNvicQ09SK21gG9X24bPXDofPQTC8irmeFzeWfVHj7zfZWG7be/lB0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9uIWFxK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iWxoCFxhXx3SILOoWwWGRl1i0BdKL2yjyfmS9hY/PbDiCvsGq+adn0kDfg6yidmmQe6uVqFU+wpBw7m9hhdrtrFLUuwM7pXdQvlp18InZwRQ9UsCD0wEALt9Nu8OQl6lAVprwdLY3EYhtDyOqaP0wLOse+7nO54yVbO6dMUPzi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InALII2V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9uIWFxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B901F000E9;
-	Tue, 25 Aug 2026 13:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InALII2V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8111F000E9;
+	Tue, 25 Aug 2026 13:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664889;
-	bh=e0OESH7Svx4nA6N/fRgEoLqs0p4OTw/XPIMFu/34YFE=;
+	s=korg; t=1787664892;
+	bh=bpYMl5PVjFHB1+Dha4hYr/Leb7igM6Q3VzrAMSd1ioE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g9uIWFxKu7V9XDLt11Zq0M3Dw29WXo91wNNUzjN0V+536QGTaKAfe/2aukYMkIb+Q
-	 htSYKKS4Uz1fCXfN1RwS7EAcIKrBF52VVuzwY+IPqade3SYkdBoOIOEb/1EZKqKwdb
-	 HAGaKRHSMigV5cEe7welxrrOGlmzk//8FTFrFd2A=
+	b=InALII2VwYM+aTk+auC42LJC9f9xFS546hOWSQr0q3FalymkrG1Uf3ZURFARpwpR0
+	 VS+Nc8yIeJQw1tCloyRYpRkAOSLCKzf/Za4+VuibeVmANcgg9etHhCTgkwZugOyAc/
+	 17S2RInAQKufvucC/atnccaYOetoMYSrA8qFxz2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.1 038/101] nfc: fdp: bound the device-reported read length and fix an skb leak
-Date: Tue, 25 Aug 2026 15:25:16 +0200
-Message-ID: <20260825132543.509420645@linuxfoundation.org>
+Subject: [PATCH 7.1 039/101] nfc: microread: validate target discovery payload lengths
+Date: Tue, 25 Aug 2026 15:25:17 +0200
+Message-ID: <20260825132543.545982900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,75 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 7ad21dcfeb5181af0c3ee2608808c0c0a5283aa1 upstream.
+commit 25519469972ef57c3edb1805dabd6c5612b90211 upstream.
 
-fdp_nci_i2c_read() takes the next packet length from two device-supplied
-bytes and never validates it. The value is a u16 used as the
-i2c_master_recv() count into a 261-byte on-stack buffer: a malicious,
-counterfeit or malfunctioning controller (or an i2c bus interposer) can
-drive it far past the buffer for a stack out-of-bounds write that
-clobbers the canary and return address, or below the minimum frame size
-(directly, or by truncating the computed sum) so the header/LRC strip
-and the next length read run past a short receive. Reject a length
-outside [FDP_NCI_I2C_MIN_PAYLOAD, FDP_NCI_I2C_MAX_PAYLOAD], as a
-corrupted packet already is, and force resynchronization.
+microread_target_discovered() parses target discovery payloads from
+skb->data according to the HCI gate. The fixed field offsets and UID
+copies were checked only against the destination nfc_target buffers, not
+against the actual skb length.
 
-The same loop allocates one data skb per iteration and assumes a length
-packet followed by a data packet; a device that sends two data packets
-in one call leaks the first skb when the second allocation overwrites
-it. Free a previously allocated skb before allocating the next.
+Validate that each gate-specific payload contains the fixed fields and
+UID bytes before reading or copying them.
 
-Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
+Fixes: cfad1ba87150 ("NFC: Initial support for Inside Secure microread")
 Cc: stable@vger.kernel.org
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260616-b4-disp-b1f8ab4c-v2-1-2d1fe5955325@proton.me
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260723103508.1-microread-v2-pengpeng@iscas.ac.cn
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/fdp/i2c.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/nfc/microread/microread.c |   31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
---- a/drivers/nfc/fdp/i2c.c
-+++ b/drivers/nfc/fdp/i2c.c
-@@ -166,9 +166,36 @@ static int fdp_nci_i2c_read(struct fdp_i
- 		/* Packet that contains a length */
- 		if (tmp[0] == 0 && tmp[1] == 0) {
- 			phy->next_read_size = (tmp[2] << 8) + tmp[3] + 3;
-+
-+			/*
-+			 * next_read_size is taken from the device and is used
-+			 * as the i2c_master_recv() count for the next packet
-+			 * and as the data skb size. A value above the receive
-+			 * buffer overflows tmp[]; one below the minimum frame
-+			 * size runs the header/LRC strip and the length-field
-+			 * read past a short receive. Either way the packet is
-+			 * corrupt: drop it and force resynchronization.
-+			 */
-+			if (phy->next_read_size < FDP_NCI_I2C_MIN_PAYLOAD ||
-+			    phy->next_read_size > FDP_NCI_I2C_MAX_PAYLOAD) {
-+				dev_dbg(&client->dev, "%s: corrupted packet\n",
-+					__func__);
-+				phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
-+				goto flush;
-+			}
- 		} else {
- 			phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
+--- a/drivers/nfc/microread/microread.c
++++ b/drivers/nfc/microread/microread.c
+@@ -483,13 +483,19 @@ static void microread_target_discovered(
  
-+			/*
-+			 * Only one data packet is delivered per call; if the
-+			 * device sends another, do not overwrite and leak the
-+			 * skb allocated for the previous one.
-+			 */
-+			if (*skb) {
-+				kfree_skb(*skb);
-+				*skb = NULL;
-+			}
+ 	switch (gate) {
+ 	case MICROREAD_GATE_ID_MREAD_ISO_A:
++		if (skb->len <= MICROREAD_EMCF_A_LEN) {
++			r = -EINVAL;
++			goto exit_free;
++		}
 +
- 			*skb = alloc_skb(len, GFP_KERNEL);
- 			if (*skb == NULL) {
- 				r = -ENOMEM;
+ 		targets->supported_protocols =
+ 		      nfc_hci_sak_to_protocol(skb->data[MICROREAD_EMCF_A_SAK]);
+ 		targets->sens_res =
+ 			 be16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_A_ATQA]);
+ 		targets->sel_res = skb->data[MICROREAD_EMCF_A_SAK];
+ 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A_LEN];
+-		if (targets->nfcid1_len > sizeof(targets->nfcid1)) {
++		if (targets->nfcid1_len > sizeof(targets->nfcid1) ||
++		    targets->nfcid1_len > skb->len - MICROREAD_EMCF_A_UID) {
+ 			r = -EINVAL;
+ 			goto exit_free;
+ 		}
+@@ -497,13 +503,19 @@ static void microread_target_discovered(
+ 		       targets->nfcid1_len);
+ 		break;
+ 	case MICROREAD_GATE_ID_MREAD_ISO_A_3:
++		if (skb->len <= MICROREAD_EMCF_A3_LEN) {
++			r = -EINVAL;
++			goto exit_free;
++		}
++
+ 		targets->supported_protocols =
+ 		      nfc_hci_sak_to_protocol(skb->data[MICROREAD_EMCF_A3_SAK]);
+ 		targets->sens_res =
+ 			 be16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_A3_ATQA]);
+ 		targets->sel_res = skb->data[MICROREAD_EMCF_A3_SAK];
+ 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A3_LEN];
+-		if (targets->nfcid1_len > sizeof(targets->nfcid1)) {
++		if (targets->nfcid1_len > sizeof(targets->nfcid1) ||
++		    targets->nfcid1_len > skb->len - MICROREAD_EMCF_A3_UID) {
+ 			r = -EINVAL;
+ 			goto exit_free;
+ 		}
+@@ -511,11 +523,21 @@ static void microread_target_discovered(
+ 		       targets->nfcid1_len);
+ 		break;
+ 	case MICROREAD_GATE_ID_MREAD_ISO_B:
++		if (skb->len < MICROREAD_EMCF_B_UID + 4) {
++			r = -EINVAL;
++			goto exit_free;
++		}
++
+ 		targets->supported_protocols = NFC_PROTO_ISO14443_B_MASK;
+ 		memcpy(targets->nfcid1, &skb->data[MICROREAD_EMCF_B_UID], 4);
+ 		targets->nfcid1_len = 4;
+ 		break;
+ 	case MICROREAD_GATE_ID_MREAD_NFC_T1:
++		if (skb->len < MICROREAD_EMCF_T1_UID + 4) {
++			r = -EINVAL;
++			goto exit_free;
++		}
++
+ 		targets->supported_protocols = NFC_PROTO_JEWEL_MASK;
+ 		targets->sens_res =
+ 			le16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_T1_ATQA]);
+@@ -523,6 +545,11 @@ static void microread_target_discovered(
+ 		targets->nfcid1_len = 4;
+ 		break;
+ 	case MICROREAD_GATE_ID_MREAD_NFC_T3:
++		if (skb->len < MICROREAD_EMCF_T3_UID + 8) {
++			r = -EINVAL;
++			goto exit_free;
++		}
++
+ 		targets->supported_protocols = NFC_PROTO_FELICA_MASK;
+ 		memcpy(targets->nfcid1, &skb->data[MICROREAD_EMCF_T3_UID], 8);
+ 		targets->nfcid1_len = 8;
 
 
