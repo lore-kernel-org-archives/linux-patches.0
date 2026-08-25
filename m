@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E71441027;
-	Tue, 25 Aug 2026 13:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823AC478E58;
+	Tue, 25 Aug 2026 13:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665688; cv=none; b=RJBJYwK5hhvW/rTU7FKacxwjOomLizSZfxc/IQMSpB/qMr6ErRkeWfm2FdVXxFrJixZ+z7NsnkEG6Wqg4rWuUgM9t1ZmTG7/m9yTkkVzMwYDvkWOw8QXbsp06zzIduSE50XKCuVxCniyT0V3rRrjeyaJpt4VZNzxQQeTQlzMonU=
+	t=1787665691; cv=none; b=tYgCQP9Bp3NMmIf02yks3yzkEiJcBaH64xPUNa0alPfwPbburboZV0HjGW2D5ZVrKYNhm6x8OiGk9hXkjBZwVEq4J6G/IYdcyBd9TGXnuELrhxZRXvQnUOap/whwal+Rwj750xH7G4Z1F0G5FFljlvZog79Z6a8j3ypZ14UVsCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665688; c=relaxed/simple;
-	bh=l2jyBQTw2dvIUaNWV88xSJkJp79ONr5aYUpib+a2zLM=;
+	s=arc-20240116; t=1787665691; c=relaxed/simple;
+	bh=ahZNTt1IDP2Azx1UAhBf2fOgBSQEqpIZKCfVqq/VFN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=neCbUE3mFeMQvczoGKVYlkN+Pk1j7LcAX2tDL0a3qC6iWDt1hhqt9N3xMAxZP+4J1EOPdDyRbQo88VKRE22TbtFGTqWRNYYN/7V82+GwPyYwcRV2Sr+SwIX8deRSZsvvUYzd+FyiFgeZaye1ZDIZeAzBU6RqJ6nO/6+2Lbb7n90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL4m45eh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G9VrdLbBKdKPWNalqG1wNVhtaLuTaS1SWwybkuaxdcIc17q7mpRw4NkSiCN/NxdrxJQ9oBNvG1Hi5m13WP99yhBLogdwDezpTO3w4kNIMR9ODOz9XXgGZWB8J0JHDSM/Pi8+UqcweJBDPqX5qbYJDrRZswRUVPPcbUq+ZJRYwxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkTHDdA9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL4m45eh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0CA1F00A3A;
-	Tue, 25 Aug 2026 13:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkTHDdA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B811F000E9;
+	Tue, 25 Aug 2026 13:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665686;
-	bh=O497QysT1E6CEmTv424kWPCXYasvdjt4+mbskcM/tSY=;
+	s=korg; t=1787665690;
+	bh=WJ15f2DWFDpKKYzczGmc3GrHQqYKRLZ7r+Q/bn0V7w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eL4m45ehqGQx8JmaBsUTzC45COTIw31+/7B6JGx6i990TxpUiEXnQR1MkJ7mzJCsU
-	 g6vO1IFdPR25UdmNzufjCPIFs424DFsjU5hzDLUWN312tnM9xChz+kMk4cUjX8Tcbo
-	 kWavcoyv3OmwqgbxbsE9pP5UrOZiLt2IXoeLIxAE=
+	b=TkTHDdA90pI9tDelRdrLnzMPfLe/0QztRqxEjwYODBU8CKUl1lhu2OvfaSE1gWCb+
+	 uW9PmpDlH2u4perTGIj7u72YGPkKu95stq+dJ2esOhONg+Gfqop9yvhXtMbIGzptWV
+	 HAXzuVgqP7EuVOJKCflnRylmQgHN5lGnNWf7YHD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.6 33/87] s390/vfio_ccw: Implement a crw lock
-Date: Tue, 25 Aug 2026 15:25:56 +0200
-Message-ID: <20260825132543.148325051@linuxfoundation.org>
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 34/87] drm/amd/amdgpu: disable ASPM in some situations
+Date: Tue, 25 Aug 2026 15:25:57 +0200
+Message-ID: <20260825132543.188077240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,178 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Kenneth Feng <kenneth.feng@amd.com>
 
-commit 16b0798024c0e9117e395829ddbbe70981c79d9c upstream.
+[ Upstream commit c770ef19673fb1defcbde2ee2b91c3c89bfcf164 ]
 
-Unlike the channel_program struct, which covers synchronous I/O
-submissions and asynchronous interrupts, the CRW region relies
-exclusively on asynchronous events coming from hardware.
+disable ASPM with some ASICs on some specific platforms.
+required from PCIe controller owner.
 
-Implement a lock to manage the list of those payloads, to ensure
-they are read cohesively.
-
-Fixes: 3f02cb2fd9d2 ("vfio-ccw: Wire up the CRW irq and CRW region")
-Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-[farman@linux.ibm.com: resolved merge conflict]
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 2a9c5154a565 ("drm/amdgpu: check ASPM on the dGPU host link")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_chp.c     |   26 ++++++++++++++++----------
- drivers/s390/cio/vfio_ccw_drv.c     |    6 ++++++
- drivers/s390/cio/vfio_ccw_ops.c     |    4 ++++
- drivers/s390/cio/vfio_ccw_private.h |    4 ++++
- 4 files changed, 30 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        |    2 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   54 +++++++++++++++++++++++------
+ drivers/gpu/drm/amd/amdgpu/nv.c            |    2 -
+ 3 files changed, 45 insertions(+), 13 deletions(-)
 
---- a/drivers/s390/cio/vfio_ccw_chp.c
-+++ b/drivers/s390/cio/vfio_ccw_chp.c
-@@ -93,18 +93,13 @@ static ssize_t vfio_ccw_crw_region_read(
- 	loff_t pos = *ppos & VFIO_CCW_OFFSET_MASK;
- 	struct ccw_crw_region *region;
- 	struct vfio_ccw_crw *crw;
-+	unsigned long flags;
- 	int ret;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1300,7 +1300,7 @@ int amdgpu_device_pci_reset(struct amdgp
+ bool amdgpu_device_need_post(struct amdgpu_device *adev);
+ bool amdgpu_device_pcie_dynamic_switching_supported(void);
+ bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev);
+-bool amdgpu_device_aspm_support_quirk(void);
++bool amdgpu_device_nv_aspm_support_quirk(void);
  
- 	if (pos + count > sizeof(*region))
- 		return -EINVAL;
+ void amdgpu_cs_report_moved_bytes(struct amdgpu_device *adev, u64 num_bytes,
+ 				  u64 num_vis_bytes);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -84,6 +84,7 @@
  
- 	mutex_lock(&private->io_mutex);
--	crw = list_first_entry_or_null(&private->crw,
--				       struct vfio_ccw_crw, next);
--
--	if (crw)
--		list_del(&crw->next);
--
- 	if (i >= private->num_regions) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -113,6 +108,16 @@ static ssize_t vfio_ccw_crw_region_read(
- 	i = array_index_nospec(i, private->num_regions);
- 	region = private->region[i].data;
+ #if IS_ENABLED(CONFIG_X86)
+ #include <asm/intel-family.h>
++#include <asm/cpu_device_id.h>
+ #endif
  
-+	spin_lock_irqsave(&private->crw_lock, flags);
-+	crw = list_first_entry_or_null(&private->crw,
-+				       struct vfio_ccw_crw, next);
-+
-+	if (crw)
-+		list_del(&crw->next);
-+
-+	/* Drop CRW lock while copying to userspace */
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
-+
- 	if (crw)
- 		memcpy(&region->crw, &crw->crw, sizeof(region->crw));
- 
-@@ -122,15 +127,16 @@ static ssize_t vfio_ccw_crw_region_read(
- 		ret = count;
- 
- 	region->crw = 0;
--
--out:
--	mutex_unlock(&private->io_mutex);
--
- 	kfree(crw);
- 
- 	/* Notify the guest if more CRWs are on our queue */
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	if (!list_empty(&private->crw) && private->crw_trigger)
- 		eventfd_signal(private->crw_trigger, 1);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
-+
-+out:
-+	mutex_unlock(&private->io_mutex);
- 
- 	return ret;
- }
---- a/drivers/s390/cio/vfio_ccw_drv.c
-+++ b/drivers/s390/cio/vfio_ccw_drv.c
-@@ -118,11 +118,14 @@ void vfio_ccw_sch_io_todo(struct work_st
- void vfio_ccw_crw_todo(struct work_struct *work)
- {
- 	struct vfio_ccw_private *private;
-+	unsigned long flags;
- 
- 	private = container_of(work, struct vfio_ccw_private, crw_work);
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	if (!list_empty(&private->crw) && private->crw_trigger)
- 		eventfd_signal(private->crw_trigger, 1);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
+ MODULE_FIRMWARE("amdgpu/vega10_gpu_info.bin");
+@@ -1283,6 +1284,46 @@ bool amdgpu_device_pcie_dynamic_switchin
+ 	return true;
  }
  
- void vfio_ccw_notoper_todo(struct work_struct *work)
-@@ -286,6 +289,7 @@ static void vfio_ccw_queue_crw(struct vf
- 			       unsigned int rsid)
- {
- 	struct vfio_ccw_crw *crw;
-+	unsigned long flags;
- 
- 	/*
- 	 * If unable to allocate a CRW, just drop the event and
-@@ -303,7 +307,9 @@ static void vfio_ccw_queue_crw(struct vf
- 	crw->crw.erc = erc;
- 	crw->crw.rsid = rsid;
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	list_add_tail(&crw->next, &private->crw);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
- 	queue_work(vfio_ccw_work_q, &private->crw_work);
- }
- 
---- a/drivers/s390/cio/vfio_ccw_ops.c
-+++ b/drivers/s390/cio/vfio_ccw_ops.c
-@@ -55,6 +55,7 @@ static int vfio_ccw_mdev_init_dev(struct
- 	INIT_WORK(&private->io_work, vfio_ccw_sch_io_todo);
- 	INIT_WORK(&private->crw_work, vfio_ccw_crw_todo);
- 	INIT_WORK(&private->notoper_work, vfio_ccw_notoper_todo);
-+	spin_lock_init(&private->crw_lock);
- 
- 	private->cp.guest_cp = kcalloc(CCWCHAIN_LEN_MAX, sizeof(struct ccw1),
- 				       GFP_KERNEL);
-@@ -132,6 +133,7 @@ static void vfio_ccw_mdev_release_dev(st
- 	struct vfio_ccw_private *private =
- 		container_of(vdev, struct vfio_ccw_private, vdev);
- 	struct vfio_ccw_crw *crw, *temp;
-+	unsigned long flags;
- 
- 	/*
- 	 * Ensure these work items are fully drained, so none can
-@@ -147,10 +149,12 @@ static void vfio_ccw_mdev_release_dev(st
- 	cancel_work_sync(&private->crw_work);
- 	flush_work(&private->notoper_work);
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
- 		list_del(&crw->next);
- 		kfree(crw);
++bool amdgpu_device_nv_aspm_support_quirk(void)
++{
++#if IS_ENABLED(CONFIG_X86)
++	struct cpuinfo_x86 *c = &cpu_data(0);
++
++	return !(c->x86 == 6 && c->x86_model == INTEL_FAM6_ALDERLAKE);
++#else
++	return true;
++#endif
++}
++
++static bool amdgpu_device_aspm_support_quirk(struct amdgpu_device *adev)
++{
++#if IS_ENABLED(CONFIG_X86)
++	struct cpuinfo_x86 *c = &cpu_data(0);
++
++	if (!(adev->ip_versions[GC_HWIP][0] == IP_VERSION(12, 0, 0) ||
++		  adev->ip_versions[GC_HWIP][0] == IP_VERSION(12, 0, 1)))
++		return false;
++
++	if (c->x86 == 6 &&
++		adev->pm.pcie_gen_mask & CAIL_PCIE_LINK_SPEED_SUPPORT_GEN5) {
++		switch (c->x86_model) {
++		case VFM_MODEL(INTEL_ALDERLAKE):
++		case VFM_MODEL(INTEL_ALDERLAKE_L):
++		case VFM_MODEL(INTEL_RAPTORLAKE):
++		case VFM_MODEL(INTEL_RAPTORLAKE_P):
++		case VFM_MODEL(INTEL_RAPTORLAKE_S):
++			return true;
++		default:
++			return false;
++		}
++	} else {
++		return false;
++	}
++#else
++	return false;
++#endif
++}
++
+ /**
+  * amdgpu_device_should_use_aspm - check if the device should program ASPM
+  *
+@@ -1305,20 +1346,11 @@ bool amdgpu_device_should_use_aspm(struc
+ 	default:
+ 		return false;
  	}
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
++	if (amdgpu_device_aspm_support_quirk(adev))
++		return false;
+ 	return pcie_aspm_enabled(adev->pdev);
+ }
  
- 	kmem_cache_free(vfio_ccw_crw_region, private->crw_region);
- 	kmem_cache_free(vfio_ccw_schib_region, private->schib_region);
---- a/drivers/s390/cio/vfio_ccw_private.h
-+++ b/drivers/s390/cio/vfio_ccw_private.h
-@@ -98,6 +98,8 @@ struct vfio_ccw_parent {
-  * @cp: channel program for the current I/O operation
-  * @irb: irb info received from interrupt
-  * @scsw: scsw info
-+ * @crw_lock: serialization of CRW list information
-+ * @crw: list of Channel Report Word elements
-  * @io_trigger: eventfd ctx for signaling userspace I/O results
-  * @crw_trigger: eventfd ctx for signaling userspace CRW information
-  * @req_trigger: eventfd ctx for signaling userspace to return device
-@@ -120,6 +122,8 @@ struct vfio_ccw_private {
- 	struct channel_program	cp;
- 	struct irb		irb;
- 	union scsw		scsw;
-+
-+	spinlock_t		crw_lock;
- 	struct list_head	crw;
+-bool amdgpu_device_aspm_support_quirk(void)
+-{
+-#if IS_ENABLED(CONFIG_X86)
+-	struct cpuinfo_x86 *c = &cpu_data(0);
+-
+-	return !(c->x86 == 6 && c->x86_model == INTEL_FAM6_ALDERLAKE);
+-#else
+-	return true;
+-#endif
+-}
+-
+ /* if we get transitioned to only one device, take VGA back */
+ /**
+  * amdgpu_device_vga_set_decode - enable/disable vga decode
+--- a/drivers/gpu/drm/amd/amdgpu/nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/nv.c
+@@ -513,7 +513,7 @@ static int nv_set_vce_clocks(struct amdg
  
- 	struct eventfd_ctx	*io_trigger;
+ static void nv_program_aspm(struct amdgpu_device *adev)
+ {
+-	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
++	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_nv_aspm_support_quirk())
+ 		return;
+ 
+ 	if (!(adev->flags & AMD_IS_APU) &&
 
 
