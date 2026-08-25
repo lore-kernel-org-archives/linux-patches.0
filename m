@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2911F480323;
-	Tue, 25 Aug 2026 13:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F338E3749F4;
+	Tue, 25 Aug 2026 13:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664791; cv=none; b=SVFBNFJ9RtMTfkL//pgeGIF6UgLGyUl7hmWfDAH+nVrQPrOERu6FgxZfta/I0S3wI2R0v8FxDRWzj6ROZjGX+BrHe+1JdT6HghmXj97MsvEcaDoGrNLK3WIVoUGr3UbRpqsagit2tGQedp6e6ahdEUYQ6DuToP8Bcs2OO960VTI=
+	t=1787664794; cv=none; b=CekVRVtG69IBUeNIA476qA4RIwXdlX9VJkXoUClUT3T+2ok2gUuh9p4fPykVIF5CWNfIW/wxyN7NLs6m8DlfDo6ouHE+M6bG4IMtIMizUO/QQwg2g+FYk+I3GXUBjULr2SsRRYCObJtMs9f2ZTLGO49Aw8v2+Y1e2V/1HMLve7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664791; c=relaxed/simple;
-	bh=zNF/LNk9tVFsl3fM6swVomme8vmt2FGIr0Q6mMURgQQ=;
+	s=arc-20240116; t=1787664794; c=relaxed/simple;
+	bh=JSGN/6qnuAhpzAO6fWQDqB3SPPgdKLSJFqcffcPImEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7P98o5N9+ZWFyELuu+BTpTKsymRwphtcPMyP40C+p5WMnr82cnB42YhCwm1RTslq+KQMPLPZKM2dtdNg2560iTYxD0h5qo5IY/QmoWx4O5oHs2AEDmabxWWFnR/lOgnldKUgsNMvisCZiKfENxZQTU3vJLg6rtlboz2bxvLMg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jpz5adx9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o2suSDVZiPs9WuT5oq7WghGJUAT/R4K+E9lMN4jsIXcxqAXVQDv/+RD1ezuajZi2iS8dChmyvt/a2PxaqiVIFnby9ARaJE4KaCbyYPq0cM5LozqYqCmtbtlYBDX8aYuqw4sHsdneP6fO+qtnuxyRrALago+MtwIje+SrqY4/YO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9u+aRR0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jpz5adx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FD01F000E9;
-	Tue, 25 Aug 2026 13:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9u+aRR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583561F000E9;
+	Tue, 25 Aug 2026 13:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664790;
-	bh=lfpn1K5iQjnIP1MuXKwhl50JMDdp4o5a71gXHu/I9Q8=;
+	s=korg; t=1787664792;
+	bh=09nHveeu607YiglTtGC3Up/EX2jYlQFdhhVKPSYUqR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jpz5adx9iJBwEGHLtv0SNCNalKDL+wXXr13g3urxmPzSDyp2jW9miy/XyoYEDgI0G
-	 lvAm7mzKKYTFNsJlzqC3jdCgIa9FnTAZa5U22zZdY5xPSoidQl58TGnaItvOjQ7Cjv
-	 j9CbTuiCsymtij4HUZ4Osy5mfzA8BaJe9JnS3/sk=
+	b=M9u+aRR0QUJgV+t1bCXsvLyXGUQElHgIdQjTbqcRkJ8s5rN/jHM7D1GgNxcnhxb9T
+	 TPBaPWMAKvWDdYRqPutZpUzKJ9Ynj0ZPyAKW48zYkAOOlpotW4uSeqUSAKhHaHMoA7
+	 1f1Q6ZU2U9cIBtRpxqfyLVPMa3U0aJdVAz32z8RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 81/82] Bluetooth: MGMT: reject HCI_CMD_SYNC params_len above 255
-Date: Tue, 25 Aug 2026 15:26:08 +0200
-Message-ID: <20260825132544.658266177@linuxfoundation.org>
+Subject: [PATCH 7.2 82/82] Bluetooth: hci_aml: validate firmware segment lengths
+Date: Tue, 25 Aug 2026 15:26:09 +0200
+Message-ID: <20260825132544.694414345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,64 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit 5d95286b6d6e8f1d304da7522bfa6860fc017e48 upstream.
+commit 2bf6b9baca9372ea51b6d0f2820dc9bf29a83ef4 upstream.
 
-mgmt_hci_cmd_sync() checks that the message length agrees with params_len
-but puts no upper bound on it. params_len is __le16 while the parameter
-length in the HCI command header is a u8:
+aml_download_firmware() reads two lengths from the firmware header and
+uses them to build pointers before checking that the header and segment
+data are present. A truncated or inconsistent firmware image can make
+the driver read past firmware->data while constructing TCI commands.
 
-	struct hci_command_hdr {
-		__le16	opcode;
-		__u8	plen;
-	} __packed;
+Reject images shorter than the header and ensure that the ICCM and DCCM
+ranges fit within the loaded firmware before downloading either segment.
 
-hci_cmd_sync_alloc() assigns one to the other:
-
-	hdr->plen = plen;
-
-	if (plen)
-		skb_put_data(skb, param, plen);
-
-so a params_len of 256 leaves plen at 0 while all 256 bytes are still
-appended. The frame handed to the driver then declares no parameters and
-carries 256 of them. On a length framed transport such as H:4 the
-controller takes the trailing bytes as the start of the next packet.
-
-The mgmt socket MTU is HCI_MAX_FRAME_SIZE, so params_len can reach about
-1KB this way. Commit 03f1700b9b4d ("Bluetooth: MGMT: reject malformed
-HCI_CMD_SYNC commands") only made params_len agree with the message
-length, a value that fits the message but not the header field is still
-accepted.
-
-Reject params_len that does not fit the header field.
-
-Fixes: 827af4787e74 ("Bluetooth: MGMT: Add initial implementation of MGMT_OP_HCI_CMD_SYNC")
+Fixes: 37bac77e4649 ("Bluetooth: hci_uart: Add support for Amlogic HCI UART")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/bluetooth/hci_aml.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2668,6 +2668,14 @@ static int mgmt_hci_cmd_sync(struct sock
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_HCI_CMD_SYNC,
- 				       MGMT_STATUS_INVALID_PARAMS);
+--- a/drivers/bluetooth/hci_aml.c
++++ b/drivers/bluetooth/hci_aml.c
+@@ -247,7 +247,7 @@ static int aml_download_firmware(struct
+ 	struct hci_uart *hu = hci_get_drvdata(hdev);
+ 	struct aml_serdev *amldev = serdev_device_get_drvdata(hu->serdev);
+ 	const struct firmware *firmware = NULL;
+-	struct aml_fw_len *fw_len = NULL;
++	const struct aml_fw_len *fw_len = NULL;
+ 	u8 *iccm_start = NULL, *dccm_start = NULL;
+ 	u32 iccm_len, dccm_len;
+ 	u32 value = 0;
+@@ -281,7 +281,21 @@ static int aml_download_firmware(struct
+ 		goto exit;
+ 	}
  
-+	/* The HCI command header carries the parameter length in a u8, a
-+	 * larger value would be truncated there while the parameters are
-+	 * still appended to the frame in full.
-+	 */
-+	if (le16_to_cpu(cp->params_len) > U8_MAX)
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_HCI_CMD_SYNC,
-+				       MGMT_STATUS_INVALID_PARAMS);
+-	fw_len = (struct aml_fw_len *)firmware->data;
++	if (firmware->size < sizeof(*fw_len)) {
++		bt_dev_err(hdev, "Firmware is too small for its header");
++		ret = -EINVAL;
++		goto exit;
++	}
 +
- 	hci_dev_lock(hdev);
- 	cmd = mgmt_pending_new(sk, MGMT_OP_HCI_CMD_SYNC, hdev, data, len);
- 	if (!cmd)
++	fw_len = (const struct aml_fw_len *)firmware->data;
++	if (fw_len->iccm_len < amldev->aml_dev_data->iccm_offset ||
++	    fw_len->iccm_len > firmware->size - sizeof(*fw_len) ||
++	    fw_len->dccm_len > firmware->size - sizeof(*fw_len) -
++			fw_len->iccm_len) {
++		bt_dev_err(hdev, "Invalid firmware segment lengths");
++		ret = -EINVAL;
++		goto exit;
++	}
+ 
+ 	/* Download ICCM */
+ 	iccm_start = (u8 *)(firmware->data) + sizeof(struct aml_fw_len)
 
 
