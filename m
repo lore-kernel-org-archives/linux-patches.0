@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01691481FCC;
-	Tue, 25 Aug 2026 13:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3579469851;
+	Tue, 25 Aug 2026 13:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666090; cv=none; b=l9aQg3ll3QpGl1X+UqvaptBePQDAEylAvXv68FV//9Gh2dMbi54HAknqMEA2+x4IhEd4HYS43+dpIPSvJkSbyUMt3w3iBXf5XgxwsAqOnx2fqBXxjXl50VfAhGYTUxJp29DloVAHK5iHdAYspThKS77Ezp4eangVVI3BzNlPTU8=
+	t=1787666093; cv=none; b=L5bjcsm5aDOD6Ee5RkKpd0txbTiN4fWJnNcc166+mH96nMkw73Vt3gD6G/0R1VQeaFVCz9sosywxup3vDOjq7UL8jNhGTbCWq0HmGPKusL3RMWRErEHKhn1/40zo6J6+2vpy6gr/kCBjDfh5KV4dpoej8uzI13p8Qx2N8vByEQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666090; c=relaxed/simple;
-	bh=6HvIiTB2xad0A6SW4a/9gK4HrEq2uCbAN5+f3JBAdIs=;
+	s=arc-20240116; t=1787666093; c=relaxed/simple;
+	bh=VRKqYDza5XNGDdA+XT0WizEVVltCNulICmzsm4IZpww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b2RuyTbfoNW4FVScDlIoNWE0U+2AUR6acMBmGZm2JxSPg1+JilM4R8ZszBVgQytXEtOz51bdhKQSqb9vjjuiNiYik9AIYo1RC8XGLOrQMzTtp1cd+Wsn4DvpuhSW7tUR/sFo7NPqjfgcq978itlaNVGpSZeFSvU6cB7c6BK3boo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaSt5+xX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRUWMHtL2hBU7pnv8pe8MRwbldjoTCBbjSmwe3jmG3kXgAwVfgilhRowrv6w76MuGnMahc2/FfmlWcMKQIL+6UZDUesI2Cf3txB5JvTJBgVqeL1oOAQeWu2FfejmqBVB3RnswfFTp9Oa/bvPHNYcRkUVqPY3SDCL67msT4TO13w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbC9jEGJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaSt5+xX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F331F000E9;
-	Tue, 25 Aug 2026 13:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbC9jEGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CBD1F000E9;
+	Tue, 25 Aug 2026 13:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666088;
-	bh=RThzXYvODT46bT9V2zxdANDWqDVJRYOkB9ZkJqvheP8=;
+	s=korg; t=1787666091;
+	bh=iRreexE3gUfUjl6F2+qHxO3/+/m3DGAE2mLxOnAUNpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SaSt5+xXhfffUWBcvH8pT9JCIJIlc3bIieQc5XBHtctsjo0uAXMnpw+hH+nboeN5M
-	 9NooCzFysMLdpKLM5g+9khLPnLM3D9yGYu3xgscrGOfwM1ztsGom41LR22SaCYHJB/
-	 rKm4mAA9dvCcG3SWhlRVt+0iovenMeZzKIV7XXH8=
+	b=TbC9jEGJC32BQ7KGIBl7+EMZgsM0KnCEl/yJyMAfOT5l0vu1pBWZi+FuCn5JKi5je
+	 mDsW6UE8ZTOGIgGxPWRu6K7y/78/su8iEkhRqtJ3rG6utUXQj7ce0P9d9XlAJIQYtz
+	 5ZIoxK2EqmHtbGZKCxzLclCpcsER/MNv0OpuIF2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 79/79] Bluetooth: hci_event: fix LE list UAF on reset
-Date: Tue, 25 Aug 2026 15:26:59 +0200
-Message-ID: <20260825132544.765134333@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.1 50/79] nfc: nci: fix out-of-bounds write in nci_target_auto_activated()
+Date: Tue, 25 Aug 2026 15:26:30 +0200
+Message-ID: <20260825132543.666493347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -50,80 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Samuel Page <sam@bynar.io>
 
-commit 33af47e847fe4a28b109673affb5874015d54f5a upstream.
+commit ac200079db50af81e6b04d058b33ec92901d8edd upstream.
 
-hci_cc_reset() clears the LE accept and resolving lists without taking
-hdev->lock. Other command-complete handlers serialize updates to these
-lists with that lock, and the debugfs readers hold it while walking them.
+nci_target_auto_activated() appends a target to the fixed-size array
+ndev->targets[NCI_MAX_DISCOVERED_TARGETS] and increments ndev->n_targets
+without first checking the array is full; unlike its sibling
+nci_add_new_target(), which bails out when n_targets already equals
+NCI_MAX_DISCOVERED_TARGETS.
 
-This permits the reset completion and a debugfs read to interleave as
-follows:
+ndev->n_targets is only cleared by nci_clear_target_list(), so an NFCC
+that repeatedly re-runs discovery (RF_DISCOVER_RSP, which re-enters
+NCI_DISCOVERY without clearing the target list) and reports an
+auto-activated target (RF_INTF_ACTIVATED_NTF) drives n_targets past the
+limit. The append then writes a struct nfc_target past the end of the
+array (a slab out-of-bounds write), and nfc_targets_found() goes on to
+walk the array with the inflated count:
 
-  hci_rx_work                 debugfs reader
-  -----------                 --------------
-                              lock hdev->lock
-                              fetch current entry
-  list_del(entry)
-  kfree(entry)
-                              read entry fields
+  BUG: KASAN: slab-out-of-bounds in nci_add_new_protocol+0x94/0x2ac [nci]
+  Write of size 2 at addr ffff0000c7299a18 by task kworker/u8:0/12
+  Workqueue: nfc0_nci_rx_wq nci_rx_work [nci]
+  Call trace:
+   nci_add_new_protocol+0x94/0x2ac [nci]
+   nci_ntf_packet+0xddc/0x11a0 [nci]
+   nci_rx_work+0x15c/0x1e0 [nci]
+   process_one_work+0x2dc/0x500
+   worker_thread+0x240/0x460
+   kthread+0x1c0/0x1d0
+   ret_from_fork+0x10/0x20
 
-The reader then dereferences a freed list entry and may follow its stale
-next pointer.
+  The buggy address belongs to the cache kmalloc-2k of size 2048
+  The buggy address is located 1024 bytes to the right of
+  allocated 1560-byte region [ffff0000c7299000, ffff0000c7299618)
 
-KASAN reported:
+Guard nci_target_auto_activated() with the same check used by
+nci_add_new_target().
 
-  BUG: KASAN: slab-use-after-free in white_list_show+0x15f/0x180
-  Read of size 1 at addr ffff8881015dab16 by task poc/95
-
-  Call Trace:
-   white_list_show+0x15f/0x180
-   seq_read_iter+0x3ff/0x1190
-   seq_read+0x267/0x3d0
-   vfs_read+0x177/0xa20
-   ksys_read+0xf7/0x1c0
-
-  Allocated by task 91:
-   hci_bdaddr_list_add+0x1a6/0x3a0
-   hci_cc_le_add_to_accept_list+0xab/0x140
-   hci_cmd_complete_evt+0x26c/0x9a0
-   hci_event_packet+0x454/0xb20
-   hci_rx_work+0x293/0x730
-
-  Freed by task 90:
-   kfree+0x131/0x3c0
-   hci_bdaddr_list_clear+0xd8/0x160
-   hci_cc_reset+0x28a/0x370
-   hci_cmd_complete_evt+0x26c/0x9a0
-   hci_event_packet+0x454/0xb20
-   hci_rx_work+0x293/0x730
-
-Take hdev->lock around both list clears. This matches the existing
-mutation and traversal locking convention.
-
-Fixes: a4d5504d5c39 ("Bluetooth: Clear LE white list when resetting controller")
-Fixes: cfdb0c2d095a ("Bluetooth: Store Resolv list size")
+Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260622145243.3167276-1-sam@bynar.io
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/nfc/nci/ntf.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -297,8 +297,10 @@ static u8 hci_cc_reset(struct hci_dev *h
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -603,6 +603,12 @@ static void nci_target_auto_activated(st
+ 	struct nfc_target *target;
+ 	int rc;
  
- 	hdev->ssp_debug_mode = 0;
++	/* This is a new target, check if we've enough room */
++	if (ndev->n_targets == NCI_MAX_DISCOVERED_TARGETS) {
++		pr_debug("not enough room, ignoring new target...\n");
++		return;
++	}
++
+ 	target = &ndev->targets[ndev->n_targets];
  
-+	hci_dev_lock(hdev);
- 	hci_bdaddr_list_clear(&hdev->le_accept_list);
- 	hci_bdaddr_list_clear(&hdev->le_resolv_list);
-+	hci_dev_unlock(hdev);
- 
- 	return rp->status;
- }
+ 	rc = nci_add_new_protocol(ndev, target, ntf->rf_protocol,
 
 
