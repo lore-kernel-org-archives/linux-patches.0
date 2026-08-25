@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73BB470117;
-	Tue, 25 Aug 2026 13:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4263FAE19;
+	Tue, 25 Aug 2026 13:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665736; cv=none; b=Yy73TsJhEYCHn/SpeTe/Dcs2UD7qeRDJU9u/195ZVOl8PV63uHyNGCBUv4aFHYuKbIqidRcF4Yjr/W+Ndchcq1TapqzKtZMlCUu2ZtL+xjKbVyAYvIBOJA46LYtIcNhJZcTNCVJNUTDlotwKCC3Dr8uKW+ol5/u5W1LIbEh0y3I=
+	t=1787665739; cv=none; b=ByLMEzPkj45ugZf7r3i8opVMvIBvX7Oe6x7ZTP0hDCw6Xt0WzVlYIgEzWzLs4RVIX2iEJI28+jnZKiqRaQXewtVNdRtCJwjJaML98yMTYT3ZNVMWxJFn1qxi6KtH/dctIj8KCKBQX0hczR45LpxVqfwV15WGcZKM7KwZLp8LGK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665736; c=relaxed/simple;
-	bh=52di5i6xGjjXWs1EC5kjkwzGxHN+Gs9z+ZfQacbsckQ=;
+	s=arc-20240116; t=1787665739; c=relaxed/simple;
+	bh=NBaksrYyMykkbVk2j8RMQ37cGwSI4wj6rKcXcD0PxHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AF1n+pc95HLi3Klwoc3vlRVMIak97HTJU3ZRWE6ZsOXVvA3deJkFU1tkEu1U2O9hDhjwYo+XLUnfkMuR3tLeslFFmfgJFeejXJQINBoqsZnFj+YSO6ByUYQCfcphtgVKu3xOP543vC49ALncv6cMwxGJiBoguHwKU0Ad9V4o+EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0NCbpEc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RvkUXQuORkrTLbbb52wrPQwHJmkInat9oBkV9hiARLidyTp214JryI8sG5gTxNx7w8ovA+XaHvN62GIVj56g5VyzTkn3Ek2y1NuOATuz5hC2Rd135Dsgcv+SK9uJGMCWiYSEo4GTr47oLdUxWSnXQGfLgk0fQZeDmmO3GrTEkBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwZHVSHF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0NCbpEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A151F000E9;
-	Tue, 25 Aug 2026 13:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwZHVSHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25131F000E9;
+	Tue, 25 Aug 2026 13:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665735;
-	bh=/SK0Bqy2VCtUV+Mgdr83mzOcq32pLTUTnHDPfvVrhyM=;
+	s=korg; t=1787665738;
+	bh=NtRmv/3GeO54tfc1v1R4Xn1qv73yy7W8ogNnyqImhaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0NCbpEcwscQ/3kLom8DYOG3fddApwst5eQgiiStghjW79uUKCocLxUGlFt0WA6nU
-	 50AcY511bu6uS/LtQxKSTqf1isxmF9O5BxI+u9BUlVldmGota/tUQ2obaAd8CuYMtk
-	 WZn8EDf0SYaTGLxnm5JrJiZRVqc5FDYD1fRKNedc=
+	b=PwZHVSHFkovj63jklM9xdr7E/FfujcwjtKdPiciFE9AyObNySVs5Z1jPODBd6PLYM
+	 czi0H+jepZWyc4pX/I2YDnPWz5lPd1Eod1F2VgxuTjwMJC1qTEwAf4rgXj+p7Ur+hR
+	 LhnihjSSSIgGSCSVlhnSVxno0z5uxr1nlL2hFoTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.6 48/87] nfc: nci: free destination parameters when closing a connection
-Date: Tue, 25 Aug 2026 15:26:11 +0200
-Message-ID: <20260825132543.728884864@linuxfoundation.org>
+	syzbot+2fb5d1f7cc4c1f132bcc@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 22/87] ALSA: dummy: Check card index validity at probe
+Date: Tue, 25 Aug 2026 15:25:45 +0200
+Message-ID: <20260825132542.709370686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -51,35 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 2e65bafdfd3a8bba972b3d17b6a57816557530fc upstream.
+commit 02442d5fe8ee365a084b055d4fa81a0c1abfc3fd upstream.
 
-When a connection is closed, nci_core_conn_close_rsp_packet() frees
-conn_info but not conn_info->dest_params, which is a separate devm
-allocation. Each connect/close cycle leaks one dest_params until the
-NFC device is removed. Free dest_params along with conn_info.
+snd_dummy_probe() blindly trusts that the given devptr->id value is
+within the proper card index range.  It's OK for the devices the
+driver itself creates at the module probe time, but if the device is
+bound manually via sysfs interface, this could be -1 as "none", and
+this leads to OOB access for index[] and other parameters.
 
-Fixes: 9b8d1a4cf2aa ("nfc: nci: Add an additional parameter to identify a connection id")
-Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260721023518.1697625-1-lilinmao@kylinos.cn
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Add a sanity check for the card index and warn/correct it if it's a
+value out of the range.
+
+Reported-by: syzbot+2fb5d1f7cc4c1f132bcc@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/6a73bd4d.01d0871a.3a0d52.0005.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260806100433.1287393-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/rsp.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/drivers/dummy.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/nfc/nci/rsp.c
-+++ b/net/nfc/nci/rsp.c
-@@ -336,6 +336,7 @@ static void nci_core_conn_close_rsp_pack
- 			list_del(&conn_info->list);
- 			if (conn_info == ndev->rf_conn_info)
- 				ndev->rf_conn_info = NULL;
-+			devm_kfree(&ndev->nfc_dev->dev, conn_info->dest_params);
- 			devm_kfree(&ndev->nfc_dev->dev, conn_info);
- 		}
- 	}
+--- a/sound/drivers/dummy.c
++++ b/sound/drivers/dummy.c
+@@ -1025,6 +1025,12 @@ static int snd_dummy_probe(struct platfo
+ 	int idx, err;
+ 	int dev = devptr->id;
+ 
++	if (dev < 0 || dev >= SNDRV_CARDS) {
++		dev_warn(&devptr->dev,
++			 "Invalid card index %d, using default 0\n", dev);
++		dev = 0;
++	}
++
+ 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
+ 				sizeof(struct snd_dummy), &card);
+ 	if (err < 0)
 
 
