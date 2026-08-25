@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B4845DF7A;
-	Tue, 25 Aug 2026 13:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA20392C21;
+	Tue, 25 Aug 2026 13:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665928; cv=none; b=AzP5/olaaYuNNjEXwfJq1Up2eFPPKCG4OzpXtfFucoxaElfHTPhrCBMMF9EsKYexwwqAwDhKULuHT5+um41OHVVk+1mcWmyANfq+ooT47nsLQX7NpyauBdC3hM3O6wax6yD4g2dc9pcI+jb629NPwZri4f9+Mh/MRlqoZ1OM7Y8=
+	t=1787665931; cv=none; b=gmy3eiTNsdOm6ZDvM/FS+L/7yTd/B5/m92Ka7k5lmIT5+8X9wJ480M2n7OoOnacxPDqGMi1UmDJKDdt4cOR471jXk8SA2UUVdifcs3qFTpCp8hPeovwLMpc2cBOo2+1f15KpibcLfdKR+SQQPpmQGBhRnY8LqaD00DGK/yMvvbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665928; c=relaxed/simple;
-	bh=16u24YVw7R43J1Ktjffjkgcgj+/u5RwACpga+twNcfQ=;
+	s=arc-20240116; t=1787665931; c=relaxed/simple;
+	bh=IuXuoJIwg3GMRhWMxQikROP8jhyOlYv8RJEPNBGK1DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6XkYPPHS3BPVNE74FDi8ghMeTXIUg+weiPCrKOXzAi+NZ58EnCI4UhbzIG0lBSqE9bjBTf0VVuFOFJo5OTgVjiHzVAGFtoj3chTMeZr0oCCGSMWgXKIYe31iXXY4siCJ+mKb7pNELVLF/+7QqkYoUm97idVinVlgU10RNkkHkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4+/2+wP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gOcRytYHMyubfe3NZFTH5e/ifeRl4i3bpcjHmZ9AYxryvF1wsY0ZIDplBYzefNK2XJUB7myqiVv6fdCTiVnDKibWszpStVDtGuWbySAVEMyA9UAR39X+3Fkms4pZxUHUxf8J1aHINHCO/TU1bbY8drCpojnozOZYJZ54v0mAFWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmA2/DlI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4+/2+wP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EAE1F00A3A;
-	Tue, 25 Aug 2026 13:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmA2/DlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9BE1F000E9;
+	Tue, 25 Aug 2026 13:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665926;
-	bh=1TLzJL+zWxV8h027B8qvd8qFJl94F+7BaFhM+zZtze4=;
+	s=korg; t=1787665929;
+	bh=VvFtW5GMAogCAU6YRYLLh91vGn82KUFO5MoPXMVPWN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A4+/2+wPAhCSrDL8bM8ukU9GppJUTallUcT5lRjQQIqtmjvxh73MsBdmYGAh4EqwF
-	 lPF4nMK1iFH4gx0JBQiaHrxFV5yUZJ56GgKgR4E0NFDgR+jZpW8oXTdCvCAauJSKpc
-	 xJ5+jPzC6x4riZNdLxQmUUEZJzqmQqmciCvfJaB4=
+	b=wmA2/DlIMFg0ARzNiYb2Pb8Rz0ZSr3tNu+mdUsUddyPOjv+zTWt3MAX3whkjXB2vI
+	 p3kKi3e5ByV3RljkcGzlpbx7IwREevqj/l2N+GxcFZwgbnZHu6vt1g3dfIZ6BdSb0U
+	 LECKU2FkWA/hIkoIwjjHfctAN/DBUap00xYHuXBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Luca Fresi <luca.fresi@bithiatec.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/79] serial: sc16is7xx: enable THRI before filling TX FIFO
-Date: Tue, 25 Aug 2026 15:26:05 +0200
-Message-ID: <20260825132542.680437463@linuxfoundation.org>
+Subject: [PATCH 6.1 26/79] net/packet: convert po->pressure to an atomic flag
+Date: Tue, 25 Aug 2026 15:26:06 +0200
+Message-ID: <20260825132542.720132013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -51,49 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Fresi <luca.fresi@bithiatec.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 246ac114f485c2affb454240f3ea4fabfce22456 ]
+[ Upstream commit 791a3e9f1a86fe8eb09173c9788493b8b5c957f4 ]
 
-sc16is7xx_handle_tx() currently requests the THRI enable only after it has
-filled the TX FIFO. The request is asynchronous because the IER update is
-performed later by reg_work.
+Not only this removes some READ_ONCE()/WRITE_ONCE(),
+this also removes one integer.
 
-The SC16IS7xx generates a THRI interrupt when the TX FIFO crosses its
-trigger level. If the FIFO drains past that level before reg_work enables
-THRI, the chip does not generate a new interrupt. Characters remain queued
-indefinitely even though the hardware FIFO is empty.
-
-This was observed on an SC16IS752 while both UART channels were active.
-During the stall the software TX buffer remained non-empty while TXLVL
-reported 64 bytes free, LSR reported THR and transmitter empty, IER had
-THRI enabled, and IIR reported no interrupt pending.
-
-Enable THRI synchronously before filling the FIFO so the threshold crossing
-cannot be missed.
-
-Fixes: cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Luca Fresi <luca.fresi@bithiatec.com>
-Link: https://patch.msgid.link/20260721222404.204746-1-luca.fresi@bithiatec.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 1a35da325cac ("packet: synchronize pressure clearing with ring reconfiguration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/packet/af_packet.c |   14 ++++++++------
+ net/packet/internal.h  |    2 +-
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -874,6 +874,9 @@ static void sc16is7xx_tx_proc(struct kth
- 		msleep(port->rs485.delay_rts_before_send);
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1358,22 +1358,23 @@ static int __packet_rcv_has_room(const s
  
- 	guard(mutex)(&one->lock);
-+	sc16is7xx_port_update(port, SC16IS7XX_IER_REG,
-+			      SC16IS7XX_IER_THRI_BIT,
-+			      SC16IS7XX_IER_THRI_BIT);
- 	sc16is7xx_handle_tx(port);
+ static int packet_rcv_has_room(struct packet_sock *po, struct sk_buff *skb)
+ {
+-	int pressure, ret;
++	bool pressure;
++	int ret;
+ 
+ 	ret = __packet_rcv_has_room(po, skb);
+ 	pressure = ret != ROOM_NORMAL;
+ 
+-	if (READ_ONCE(po->pressure) != pressure)
+-		WRITE_ONCE(po->pressure, pressure);
++	if (packet_sock_flag(po, PACKET_SOCK_PRESSURE) != pressure)
++		packet_sock_flag_set(po, PACKET_SOCK_PRESSURE, pressure);
+ 
+ 	return ret;
  }
  
+ static void packet_rcv_try_clear_pressure(struct packet_sock *po)
+ {
+-	if (READ_ONCE(po->pressure) &&
++	if (packet_sock_flag(po, PACKET_SOCK_PRESSURE) &&
+ 	    __packet_rcv_has_room(po, NULL) == ROOM_NORMAL)
+-		WRITE_ONCE(po->pressure,  0);
++		packet_sock_flag_set(po, PACKET_SOCK_PRESSURE, false);
+ }
+ 
+ static void packet_sock_destruct(struct sock *sk)
+@@ -1462,7 +1463,8 @@ static unsigned int fanout_demux_rollove
+ 	i = j = min_t(int, po->rollover->sock, num - 1);
+ 	do {
+ 		po_next = pkt_sk(rcu_dereference(f->arr[i]));
+-		if (po_next != po_skip && !READ_ONCE(po_next->pressure) &&
++		if (po_next != po_skip &&
++		    !packet_sock_flag(po_next, PACKET_SOCK_PRESSURE) &&
+ 		    packet_rcv_has_room(po_next, skb) == ROOM_NORMAL) {
+ 			if (i != j)
+ 				po->rollover->sock = i;
+--- a/net/packet/internal.h
++++ b/net/packet/internal.h
+@@ -117,7 +117,6 @@ struct packet_sock {
+ 	spinlock_t		bind_lock;
+ 	struct mutex		pg_vec_lock;
+ 	unsigned long		flags;
+-	int			pressure;
+ 	int			ifindex;	/* bound device		*/
+ 	__be16			num;
+ 	struct packet_rollover	*rollover;
+@@ -146,6 +145,7 @@ enum packet_sock_flags {
+ 	PACKET_SOCK_TP_LOSS,
+ 	PACKET_SOCK_HAS_VNET_HDR,
+ 	PACKET_SOCK_RUNNING,
++	PACKET_SOCK_PRESSURE,
+ };
+ 
+ static inline void packet_sock_flag_set(struct packet_sock *po,
 
 
