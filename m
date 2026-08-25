@@ -1,37 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BC8469851;
-	Tue, 25 Aug 2026 13:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AB5481AA6;
+	Tue, 25 Aug 2026 13:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666117; cv=none; b=o4aJLp4cC5MH7cPci21A47JRKxoGQ8xmbCj6NyeR39c5RwN1ZAf8qiXx40k5cJZ0cED+dHxvLZ0GBMZcXfcp2EEpN40ySlRrtu7cWBfS7pO2bHqYLV4r4oS7CFVVfYNiVNQZQrthgamTzkdcXBXV5ThcAoqfpzxhQ1TfHsIcSqE=
+	t=1787666120; cv=none; b=PqP4+ISCAmb1eZ0h/TOXltkyIIOHo2IcWlExtCkbwE1FxgsVMpqlOxZnaBwp71ofD//2bxAl1K/SCHTqPSfmwqOXzvl4v0scPP8aBsDJt8t7wLbIcPFE9AVU227PLGmlqSpMMEZ8LJX+cO8YJBgRu/cJgIQbKL8MBBE7ge3ZLnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666117; c=relaxed/simple;
-	bh=F5Kk3a5BpyIzoP2dm1o5mFkFbBE54xvRAYc75aN8E5o=;
+	s=arc-20240116; t=1787666120; c=relaxed/simple;
+	bh=/qfE+wtxT943dFUntqBasOCNpNsmxKVfj6+cYoLXsvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+GgxcfWkiiMJ+1EjTQEy82Nq3lv1Mkbwa4iZpuiWwKFooL2ZKJ7F3QXrY/OPgfb4eMBFp1rR/D8NPLQ1HCl/mO+Jg4wWX1pvtdHXJkDKntitHQhdI0rtiQAUIkWMKVmDVo/0eVnwXBuTr/GHXCeDVJfy5Ns3lBUinrU4Np9Nt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPTiKJoE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZqLByNIb4Ro1subZ+taKmpVINZKIkQ+Q8+H3jJ7CVDHtzBGYZJarVSrEYLKT7NHfaNlDndUiOdKoYBN7Ptl4QvOFHT/gEBj0rVwsoZl5EUpiCZQhYZNUAO/lAsCk2V6+HIxVpgPeeJu6jMXUUaZqs3fqSFH2OY+La4GZQ35Xsc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftMcRcim; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPTiKJoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DB91F00A3A;
-	Tue, 25 Aug 2026 13:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftMcRcim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C7D1F000E9;
+	Tue, 25 Aug 2026 13:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666115;
-	bh=9Ih9FlEajp+B3fAxpRIprBaxALGf48JSg2XABDWUkh0=;
+	s=korg; t=1787666118;
+	bh=if/5e/SGa5idwmDjX+rW8QbhPpoI0CS6z6/Ewa1XVKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mPTiKJoE0C3o4qECrJkFZXMsYJ+arMKnEoE9jdXexFG1bK73xjJX+PRC1UShjqUBg
-	 ASpF2u+jq10qat4KTYuyZbn51RPnzXB+bPZP+IKXVn/ROjHyl+ChgIQPPepq1ziOMB
-	 4tuJFzhLeCAO2LqEUHPQ7LDRtlYoWLcRQ3QhmYcc=
+	b=ftMcRcimIzxEWBTI4bWe0Qg4/jcnoVJQP/UySNfdiJqbzS/RwEaI8NWKXs7PzhdAn
+	 mw9X23QyWygFRKZyQEJ6F85aIVudgnhJCOIJXJQ7D51Htj+02BKbQR5H0WkX+DtSqJ
+	 ZtpBwO/3MuNTQRw2AYqdGQ9lrxjlWe93goF9R9gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Junjie Cao <junjie.cao@intel.com>
-Subject: [PATCH 5.15 10/76] gpio: ml-ioh: use raw_spinlock_t for the register lock
-Date: Tue, 25 Aug 2026 15:26:03 +0200
-Message-ID: <20260825132541.937887053@linuxfoundation.org>
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Hengbin Zhang <uqbarz@gmail.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Hugh Dickins <hughd@google.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 11/76] mm/huge_memory: fix huge_zero_pfn race
+Date: Tue, 25 Aug 2026 15:26:04 +0200
+Message-ID: <20260825132541.975807375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -50,185 +66,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 
-commit 600411ea1f2443fdf5b1af9b6480f616d7aff9d0 upstream.
+[ Upstream commit 33192a26cddea7a7e4ca66e5c3eebd36fa8be2bb ]
 
-ioh_irq_type() is registered as the irq_chip .irq_set_type callback and
-takes chip->spinlock with spin_lock_irqsave().  This callback is reached
-from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
-the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
-That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
-an rtmutex-backed sleeping lock, so acquiring it there is invalid.
-ioh_irq_enable() and ioh_irq_disable() take the same lock from the
-.irq_enable/.irq_disable callbacks, which are likewise invoked with
-desc->lock held.
+Patch series "mm/huge_memory: fix huge_zero_pfn race", v2.
 
-Convert the register lock to raw_spinlock_t.  The same lock also
-serializes the GPIO direction/value callbacks and the suspend/resume
-register save/restore, and those critical sections only perform short
-sequences of MMIO register accesses (ioread32()/iowrite32()); the
-.irq_set_type callback additionally emits a dev_warn() on an unsupported
-type.  None of these are sleepable operations, so keeping this register
-lock non-sleeping is appropriate for the irqchip callbacks and does not
-change the GPIO-side locking contract.
+There is a subtle race in the reference-counted huge_zero_folio
+implementation.
 
-This is the same fix as commit a02b8950d619 ("gpio: pch: use
-raw_spinlock_t for the register lock"); this driver shares the same
-structure as gpio-pch.
+The fast path atomic logic fails to account for the fact that the shrinker
+(which drops the final huge_zero_refcount pin) can overwrite huge_zero_pfn
+with the ~0UL sentinel value in shrink_huge_zero_folio_scan() after a
+racing get_huge_zero_folio() installed a valid value there.
 
-Fixes: 54be566317b6 ("gpio-ml-ioh: Support interrupt function")
-Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260731032747.2987292-1-junjie.cao@intel.com
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+This results in huge_zero_folio being correctly set but huge_zero_pfn
+being set incorrectly and thus is_huge_zero_pfn() and consequently
+is_huge_zero_pmd() will misidentify the huge zero folio as being an
+ordinary THP folio.
+
+This can result in the huge zero folio being split and otherwise treated
+incorrectly.
+
+The solution to this is very subtle as there is an atomic fast path, and
+thus ordering in weakly ordered architectures has to be treated very
+carefully.
+
+The first commit fixes the issue by introducing a spinlock around
+huge_zero_[pfn, folio, refcount] write, with careful consideration paid to
+load/store ordering in the fast path.  It is placed first and kept as
+small as possible so that it can be backported on its own.
+
+The second commit is a pure cleanup which reworks the
+CONFIG_PERSISTENT_HUGE_ZERO_FOLIO logic to better separate the persistent
+logic from the dynamically allocated one.
+
+This patch (of 2):
+
+If !CONFIG_PERSISTENT_HUGE_ZERO_FOLIO, the huge_zero_folio is refcounted
+by huge_zero_refcount and returned by mm_get_huge_zero_folio().
+
+When the caller is done with the huge zero page, its reference count is
+decremented.  Only a shrinker can set the reference count to zero.
+
+A race can unfortunately occur between a shrinker decrementing the
+reference count to zero and a concurrent page fault.
+
+This is because shrink_huge_zero_folio_scan() might, if very unlucky, be
+preempted between setting huge_zero_refcount to zero and writing an
+invalid value.
+
+During this time get_huge_zero_folio() could write to huge_zero_pfn before
+shrink_huge_zero_folio_scan() resumes.
+
+In this event the huge zero folio will be persistently misidentified
+causing the THP code path to be entered inappropriately for the huge zero
+folio:
+
+                CPU 0                                   CPU 1
+=======================================|=================================
+shrink_huge_zero_folio_scan()          |
+   atomic_cmpxchg() sets refcount to 0 |
+   xchg() sets huge_zero_folio to NULL | get_huge_zero_folio()
+                 |                     |    atomic_inc_not_zero() -> zero
+      preempted for a long time        |    Allocate new huge zero folio
+                 |                     |    Write valid huge_zero_folio
+                 v                     |    Write valid huge_zero_pfn
+  Overwrite huge_zero_pfn with ~0UL   <--- Invalid overwrite!
+
+This results in is_huge_zero_pfn() and is_huge_zero_pmd() incorrectly
+returning false for a huge zero page which could result in issues like the
+huge zero folio being incorrectly split.
+
+Note that the issue is with huge_zero_pfn not huge_zero_folio, as
+get_huge_zero_folio() uses cmpxchg() gated on huge_zero_folio being NULL
+with a retry loop and shrink_huge_zero_folio_scan() uses xchg() to set
+huge_zero_folio.
+
+Fix the issue by introducing a spinlock, huge_zero_lock, to prevent
+concurrent write of huge_zero_folio, huge_zero_pfn and huge_zero_refcount.
+
+There needs to be significant care taken here to ensure correctness:
+
+The fast path in get_huge_zero_folio() uses atomic_inc_not_zero(), which
+is outside of the critical section, and means huge zero allocation is
+gated on zero huge_zero_refcount.
+
+The fast path doesn't use huge_zero_lock, so the critical section is
+irrelevant to it.
+
+So invariants are required - huge_zero_refcount MUST:
+
+* Only be set in the huge_zero_lock critical section to ensure
+  serialisation of huge_zero_pfn, huge_zero_folio and huge_zero_refcount
+  writes.
+
+* Be set non-zero only AFTER huge_zero_[pfn, folio] are set to valid values
+  so installation of the huge zero folio on read page fault ensures
+  concurrent is_huge_zero_*() calls correctly identify the huge zero folio.
+
+* Be set zero only BEFORE huge_zero_[pfn, folio] are set to NULL and ~0UL
+  respectively, and atomically.
+
+Establish these by:
+
+* Only setting huge_zero_refcount to zero or an absolute value in the
+  huge_zero_lock critical section in get_huge_zero_folio() and
+  shrink_huge_zero_folio_scan(), and always updating atomically there
+  and elsewhere.
+
+* Using atomic_set_release(&huge_zero_refcount) in get_huge_zero_folio()
+  after huge_zero_[pfn, folio] are set. This is paired with
+  atomic_inc_not_zero() to ensure atomic_inc_not_zero() only observes a
+  non-zero value if huge_zero_[pfn, folio] are set.
+
+* Using atomic_cmpxchg() in shrink_huge_zero_folio_scan() (as before) to
+  ensure that it is set zero only when equal to 1 and set atomically.
+
+* atomic_cmpxchg() being fully ordered ensures this is done prior to
+  huge_zero_[folio, pfn] being set to NULL and ~0UL respectively.
+
+Eliminate the retry loop in get_huge_zero_folio() as the atomic_cmpxchg()
+in shrink_huge_zero_folio_scan() is now performed under the lock, and
+replace with an equally locked atomic_inc() to set the reference count
+should the caller be raced on huge zero folio installation.
+
+folio_put() naturally implies a full memory barrier so its ordering is
+maintained correctly.
+
+The huge zero folio also cannot be released except when the shrinker does
+so as it is non-LRU and non-rmappable.
+
+Note that only the huge zero shrinker (via shrink_huge_zero_folio_scan())
+can actually set huge_zero_refcount to zero, which is the count of mm's
+which have at least one huge zero folio installed plus one shrinker pin.
+
+Additionally convert a BUG_ON() to a VM_WARN_ON_ONCE().
+
+Link: https://lore.kernel.org/20260730-fix-refcounted-huge-zero-v2-0-c5d8a41b317f@kernel.org
+Link: https://lore.kernel.org/20260730-fix-refcounted-huge-zero-v2-1-c5d8a41b317f@kernel.org
+Fixes: 3b77e8c8cde5 ("mm/thp: make is_huge_zero_pmd() safe and quicker")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: Hengbin Zhang <uqbarz@gmail.com>
+Closes: https://lore.kernel.org/linux-mm/20260727154001.4102341-1-uqbarz@gmail.com/
+Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Pankaj Raghav <p.raghav@samsung.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Expanded `scoped_guard(spinlock, &huge_zero_lock)` into explicit `spin_lock()`/`spin_unlock()` pairs and converted folio APIs to page APIs. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-ml-ioh.c |   36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ mm/huge_memory.c |   46 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
---- a/drivers/gpio/gpio-ml-ioh.c
-+++ b/drivers/gpio/gpio-ml-ioh.c
-@@ -84,7 +84,7 @@ struct ioh_gpio {
- 	u32 gpio_use_sel;
- 	int ch;
- 	int irq_base;
--	spinlock_t spinlock;
-+	raw_spinlock_t spinlock;
- };
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -61,6 +61,7 @@ unsigned long transparent_hugepage_flags
+ static struct shrinker deferred_split_shrinker;
  
- static const int num_ports[] = {6, 12, 16, 16, 15, 16, 16, 12};
-@@ -95,7 +95,7 @@ static void ioh_gpio_set(struct gpio_chi
- 	struct ioh_gpio *chip =	gpiochip_get_data(gpio);
- 	unsigned long flags;
+ static atomic_t huge_zero_refcount;
++static DEFINE_SPINLOCK(huge_zero_lock);
+ struct page *huge_zero_page __read_mostly;
+ unsigned long huge_zero_pfn __read_mostly = ~0UL;
  
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	reg_val = ioread32(&chip->reg->regs[chip->ch].po);
- 	if (val)
- 		reg_val |= (1 << nr);
-@@ -103,7 +103,7 @@ static void ioh_gpio_set(struct gpio_chi
- 		reg_val &= ~(1 << nr);
+@@ -91,7 +92,8 @@ bool transparent_hugepage_active(struct
+ static bool get_huge_zero_page(void)
+ {
+ 	struct page *zero_page;
+-retry:
++
++	/* Paired with atomic_set_release(). */
+ 	if (likely(atomic_inc_not_zero(&huge_zero_refcount)))
+ 		return true;
  
- 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+@@ -102,17 +104,22 @@ retry:
+ 		return false;
+ 	}
+ 	count_vm_event(THP_ZERO_PAGE_ALLOC);
+-	preempt_disable();
+-	if (cmpxchg(&huge_zero_page, NULL, zero_page)) {
+-		preempt_enable();
++
++	/* Paired with critical section in shrink_huge_zero_page_scan(). */
++	spin_lock(&huge_zero_lock);
++	if (huge_zero_page) {
++		/* Somebody else already installed it. */
++		atomic_inc(&huge_zero_refcount);
++		spin_unlock(&huge_zero_lock);
+ 		__free_pages(zero_page, compound_order(zero_page));
+-		goto retry;
++		return true;
+ 	}
++	WRITE_ONCE(huge_zero_page, zero_page);
+ 	WRITE_ONCE(huge_zero_pfn, page_to_pfn(zero_page));
++	/* Paired with atomic_inc_not_zero(). +1 for shrinker pin. */
++	atomic_set_release(&huge_zero_refcount, 2);
++	spin_unlock(&huge_zero_lock);
+ 
+-	/* We take additional reference here. It will be put back by shrinker */
+-	atomic_set(&huge_zero_refcount, 2);
+-	preempt_enable();
+ 	return true;
  }
  
- static int ioh_gpio_get(struct gpio_chip *gpio, unsigned nr)
-@@ -121,7 +121,7 @@ static int ioh_gpio_direction_output(str
- 	u32 reg_val;
- 	unsigned long flags;
+@@ -155,15 +162,24 @@ static unsigned long shrink_huge_zero_pa
+ static unsigned long shrink_huge_zero_page_scan(struct shrinker *shrink,
+ 				       struct shrink_control *sc)
+ {
+-	if (atomic_cmpxchg(&huge_zero_refcount, 1, 0) == 1) {
+-		struct page *zero_page = xchg(&huge_zero_page, NULL);
+-		BUG_ON(zero_page == NULL);
+-		WRITE_ONCE(huge_zero_pfn, ~0UL);
+-		__free_pages(zero_page, compound_order(zero_page));
+-		return HPAGE_PMD_NR;
++	struct page *zero_page;
++
++	/* Paired with critical section in get_huge_zero_page(). */
++	spin_lock(&huge_zero_lock);
++	/* Paired with atomic_inc_not_zero() in get_huge_zero_page(). */
++	if (atomic_cmpxchg(&huge_zero_refcount, 1, 0) != 1) {
++		spin_unlock(&huge_zero_lock);
++		return 0;
+ 	}
  
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->regs[chip->ch].pm) &
- 					((1 << num_ports[chip->ch]) - 1);
- 	pm |= (1 << nr);
-@@ -134,7 +134,7 @@ static int ioh_gpio_direction_output(str
- 		reg_val &= ~(1 << nr);
- 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
- 
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -145,12 +145,12 @@ static int ioh_gpio_direction_input(stru
- 	u32 pm;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->regs[chip->ch].pm) &
- 				((1 << num_ports[chip->ch]) - 1);
- 	pm &= ~(1 << nr);
- 	iowrite32(pm, &chip->reg->regs[chip->ch].pm);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -254,7 +254,7 @@ static int ioh_irq_type(struct irq_data
- 	dev_dbg(chip->dev, "%s:irq=%d type=%d ch=%d pos=%d type=%d\n",
- 		__func__, irq, type, ch, im_pos, type);
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
-@@ -294,7 +294,7 @@ static int ioh_irq_type(struct irq_data
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	iowrite32(ien | BIT(ch), &chip->reg->regs[chip->ch].ien);
- end:
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -324,11 +324,11 @@ static void ioh_irq_disable(struct irq_d
- 	unsigned long flags;
- 	u32 ien;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	ien &= ~(1 << (d->irq - chip->irq_base));
- 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+-	return 0;
++	zero_page = huge_zero_page;
++	VM_WARN_ON_ONCE(!zero_page);
++	WRITE_ONCE(huge_zero_page, NULL);
++	WRITE_ONCE(huge_zero_pfn, ~0UL);
++	spin_unlock(&huge_zero_lock);
++
++	__free_pages(zero_page, compound_order(zero_page));
++	return HPAGE_PMD_NR;
  }
  
- static void ioh_irq_enable(struct irq_data *d)
-@@ -338,11 +338,11 @@ static void ioh_irq_enable(struct irq_da
- 	unsigned long flags;
- 	u32 ien;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	ien |= 1 << (d->irq - chip->irq_base);
- 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- }
- 
- static irqreturn_t ioh_gpio_handler(int irq, void *dev_id)
-@@ -439,7 +439,7 @@ static int ioh_gpio_probe(struct pci_dev
- 		chip->base = base;
- 		chip->reg = chip->base;
- 		chip->ch = i;
--		spin_lock_init(&chip->spinlock);
-+		raw_spin_lock_init(&chip->spinlock);
- 		ioh_gpio_setup(chip, num_ports[i]);
- 		ret = gpiochip_add_data(&chip->gpio, chip);
- 		if (ret) {
-@@ -525,9 +525,9 @@ static int __maybe_unused ioh_gpio_suspe
- 	struct ioh_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	ioh_gpio_save_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -537,11 +537,11 @@ static int __maybe_unused ioh_gpio_resum
- 	struct ioh_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	iowrite32(0x01, &chip->reg->srst);
- 	iowrite32(0x00, &chip->reg->srst);
- 	ioh_gpio_restore_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
+ static struct shrinker huge_zero_page_shrinker = {
 
 
