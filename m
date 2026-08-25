@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A61B47143A;
-	Tue, 25 Aug 2026 13:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2F7448BA9;
+	Tue, 25 Aug 2026 13:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665459; cv=none; b=lXr6NF5P+7rFvGXjtniZK9J16NqC2Ml1oAsEjI2zmeJXw4GlFf1p+bbFrANVdzNXf9X2Jvj/XtNas44TRTCTZkBFLIBhRA/+A83kKp3ZNs79pYcxtVL7PsjGFvS9uCv26V/NTOXXp3hL1yyn2Mb4HIshbks3B2iJIIb6FQeUb4k=
+	t=1787665462; cv=none; b=sqTYxCjX9WykkNssIaT1ljE0GUTh+tDKla/vKRApGirD1sQ9+Np0i2nW2R16lw8M5N/xsONB21BlVIO6NVzBI9cA07U6hkJGzym1H8HYD3THLYZPkD5L22uYvMBZN3rJe34exa6gFCnqsTIsSdzbuDqZnhytMbWBFDOSDfrE8d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665459; c=relaxed/simple;
-	bh=yzYNh43GgxfwNws7B86HH0qYnFJJAcL+BZ3cbCrMzCo=;
+	s=arc-20240116; t=1787665462; c=relaxed/simple;
+	bh=2JXUGIGQHFWYMdgsUeLQp7k0choa73RzDW5x+Dxtvcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tlBUmDyuyzhoJkeVcjzQ0ykxZGLgSA5Wk9MIabqRu1bgX0bqdcO7vXjKzpZlArA6UGSOhTPOM+kVJyLq258QH0a8bwnOMv2Ul3Q1EP/FmWzS3PYQUYEhwKUpy4owq0nWq1WIp+qneq6R3WngoZYYuMN+rpbU4bhrIpPlitMWIJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uLeHEds; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q56GHUTv5OTi9y1SGwhJ0HGX0zE+b1WP5A0zaDHrsPQfaXyyMo2iHxXzqn6HBeA3r7eq2RXegQTdighZ/1Gq1Wtg07fXLvHlvnLRGRQCLcxU1+ibKXd2mVVxF1DAOkkD55mlpRWHDplhDdC+ogIkPkAy6wEmXu7L9gPb2vgsqEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkdazdCO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uLeHEds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F961F000E9;
-	Tue, 25 Aug 2026 13:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkdazdCO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5E61F000E9;
+	Tue, 25 Aug 2026 13:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665457;
-	bh=lURFdJB9eoE6wZnvGpdQ/2sf1gc8W0BNPZ5ZPAQwpW4=;
+	s=korg; t=1787665460;
+	bh=suamwxzqfTs+EhhHbvfKj4WzzSIZCaeMSnRiyj8M/SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2uLeHEdsWB9Z5Gqi+bnO3UbQ12ewv8o1ClKiZ6M7OvmSRY4vlMv96CGrWgnRZ7fmB
-	 Cla9ScdI6gBS2joPJAAWeUWePHszA+JI7Dqy6w5iwS+2u3GGxv/gYe+Du1kA+wEYTt
-	 ZDIy/p40bwYYYWLufPYPpduTvtToOq5Qoq9tcrVg=
+	b=XkdazdCO1dqc7d6GO/c5OhUWcNU0161L7lMTCeVr9nPj8JjOtCw0UyEuSgb0oinFb
+	 qAIwbIqpr6IgV15SZGF0e4uKixBef+bqCAKO7nNxOq4a9Q9gOWLQMoPl4M2xwl5Gl6
+	 Bo/82/Ne2Gu7dFQ6c4dGw5OBGbamcmSZ1gnA0VAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 32/77] xfs: validate attr entry pointer before field access
-Date: Tue, 25 Aug 2026 15:25:54 +0200
-Message-ID: <20260825132542.818356606@linuxfoundation.org>
+	Pavitra Jha <jhapavitra98@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 33/77] libceph: fix OOB read in decode_watchers() via missing bounds check
+Date: Tue, 25 Aug 2026 15:25:55 +0200
+Message-ID: <20260825132542.860256212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -51,60 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-commit b7eea80be25f3334f131d52982b3131aba77b97d upstream.
+[ Upstream commit 00ead17c7de137a692edee59f2772e6af687e8eb ]
 
-xfs_attr3_leaf_verify_entry() accesses lentry/rentry fields (namelen,
-valuelen) before checking if the entry pointer itself is within bounds.
-If nameidx is crafted to point near the end of the buffer, these field
-accesses can read out-of-bounds before the bounds check at
-name_end > buf_end is performed.
+ceph_start_decoding() validates that struct_len bytes remain in the
+buffer after the encoding header, but accepts struct_len=0 as valid:
+ceph_decode_need(p, end, 0, bad) always passes. When a malicious or
+compromised OSD sends an obj_list_watch_response_t reply with
+struct_len=0, ceph_start_decoding() returns success with p == end,
+leaving zero bytes guaranteed for subsequent reads.
 
-Add explicit bounds checks for entry pointers before accessing their
-fields. Use offsetof() to check that the start of the flexible array
-member (nameval/name) is within bounds, which ensures all preceding
-fields are safe to access.
+The immediately following ceph_decode_32(p) in decode_watchers() has
+no preceding bounds check. With p == end this is a 4-byte read past
+the validated buffer boundary. The garbage value is then passed
+directly to kzalloc_objs() as the watcher count.
 
-Fixes: c84760659dcf2 ("xfs: check attribute leaf block structure")
-Cc: <stable@vger.kernel.org> # v5.5
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+The sibling function decode_watcher() already uses the safe variants
+(ceph_decode_copy_safe, ceph_decode_64_safe, ceph_decode_skip_32)
+after its own ceph_start_decoding() call. decode_watchers() is the
+only site that uses the bare variant, confirming an oversight.
+
+Fix by replacing ceph_decode_32(p) with ceph_decode_32_safe(p, end,
+*num_watchers, bad), consistent with the established pattern.
+
+Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
+deployment (e.g. cloud) can trigger this against any kernel client
+that calls CEPH_OSD_OP_LIST_WATCHERS, without any further privileges
+beyond OSD session establishment.
+
+[ idryomov: trim changelog ]
+
+Cc: stable@vger.kernel.org
+Fixes: a4ed38d7a180 ("libceph: support for CEPH_OSD_OP_LIST_WATCHERS")
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ kept the tree's `kcalloc()` context line instead of upstream's `kzalloc_objs()` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/ceph/osd_client.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_attr_leaf.c
-+++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -268,6 +268,13 @@ xfs_attr3_leaf_verify_entry(
- 	 */
- 	if (ent->flags & XFS_ATTR_LOCAL) {
- 		lentry = xfs_attr3_leaf_name_local(leaf, idx);
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -5090,7 +5090,7 @@ static int decode_watchers(void **p, voi
+ 	if (ret)
+ 		return ret;
+ 
+-	*num_watchers = ceph_decode_32(p);
++	ceph_decode_32_safe(p, end, *num_watchers, bad);
+ 	*watchers = kcalloc(*num_watchers, sizeof(**watchers), GFP_NOIO);
+ 	if (!*watchers)
+ 		return -ENOMEM;
+@@ -5104,6 +5104,9 @@ static int decode_watchers(void **p, voi
+ 	}
+ 
+ 	return 0;
 +
-+		/* Validate lentry pointer is within bounds before field access */
-+		if ((char *)lentry >= buf_end)
-+			return __this_address;
-+		if ((char *)lentry + offsetof(struct xfs_attr_leaf_name_local, nameval) > buf_end)
-+			return __this_address;
-+
- 		namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
- 				be16_to_cpu(lentry->valuelen));
- 		name_end = (char *)lentry + namesize;
-@@ -275,6 +282,13 @@ xfs_attr3_leaf_verify_entry(
- 			return __this_address;
- 	} else {
- 		rentry = xfs_attr3_leaf_name_remote(leaf, idx);
-+
-+		/* Validate rentry pointer is within bounds before field access */
-+		if ((char *)rentry >= buf_end)
-+			return __this_address;
-+		if ((char *)rentry + offsetof(struct xfs_attr_leaf_name_remote, name) > buf_end)
-+			return __this_address;
-+
- 		namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
- 		name_end = (char *)rentry + namesize;
- 		if (rentry->namelen == 0)
++bad:
++	return -EINVAL;
+ }
+ 
+ /*
 
 
