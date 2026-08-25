@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C88481AA4;
-	Tue, 25 Aug 2026 13:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC2F481FC7;
+	Tue, 25 Aug 2026 13:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665617; cv=none; b=k3G44AUKSxuvAPgOkhbgzgWR4WxCSPBa9zEluTNfNm81k54XcF9XoYIV3m/rhHskkM3ljcgmQaUAkbKaydMeGhV+wbLuKxKLrLOrBnkLdN/TbQ3RZb7Gz4/KN/E1HJ7FV9UIrP92SNiLwVTzqw6h0QuLUDDUkTeiYbner1z5Tl0=
+	t=1787665618; cv=none; b=oDTidHQlz/LoQbeNmT1Q9TbS9SkhdhLE+p4A7hJz5iHBQJx9dCe5IPR/TEbdPuYfrnGAvYoLmsfOMSQdTgYvuyaR1bGlqL6fI8PuyNSx/l0+CDClwirhYVLGgE+wBc4ErnhG3Hvk4gfQ60DgS/dtEimqb8TpOIAuzDKAJVu01vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665617; c=relaxed/simple;
-	bh=D/OmeVSm9N+Ylm2xs7qQ0YzMCrUNypIzL6WVMYbCpLU=;
+	s=arc-20240116; t=1787665618; c=relaxed/simple;
+	bh=aeHivqkL3NUBdMnCILsWYBGTo0NeGskJPemOz/DPOiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6VyPmjo34ySLNKcpvyp7J2qGrwProEoyqi6YMJcBjjc7TFLmmMSLtItmQXqt6WyaN7WrbUiuC+HI3gd87UbRINPcSpen6v7DMQQ8uKZcKUgqRpDPvFp2xnFgh8GAt7j7dvK4C72MdQbWsw6NvHX0Ldl6t0hzbgiyjhDZVXG9gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=box+O6gf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjCussEfB3++1neCd8JX4ql5p5BX1APqpqxfWSej8bprYxGmqHpAizNXp7qa3pdRxrt7rhXgHTfexjDDJU7/6gy4djIzjv/XRSmhMCJsop/aKbs2HEe8vyVYZeOUI/QYWD/6MH1wvbhaYD1RPL1ay5zLjFDOZGLTCKvKvf0xTmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6hohH8w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="box+O6gf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93CC1F000E9;
-	Tue, 25 Aug 2026 13:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6hohH8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDF91F00ACA;
+	Tue, 25 Aug 2026 13:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665613;
-	bh=UfuFZzJMSCr1U67WlPVQjjBsU2UKqQenbJWtHrh6Trs=;
+	s=korg; t=1787665616;
+	bh=jPa1yU91cbon7qQ2rKZZJtsQzN3u0F3PCFGRpuNgcNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=box+O6gft7wYBiM0+8ik7m2lbNyRM+f/XQx3AiBiZEWfLzXelrLsQTdrVH3S4ugVT
-	 2K1j7xdga0z1jNywcoKtCECLH3MUS7odue4O5m5F4dWlBHP1R4wNR9x+XH5ElxgJoD
-	 jW+FR45iRPE01INLDR5P2lRJWALu200NEJo+df5U=
+	b=p6hohH8w7zAYa6tnsKs0CZJ/FkYbdjdRRZRrglP1rq7HFkDIp7ebTuLyUaki3rCZc
+	 q6I0n+wgkEn1PcuY2VxxOI84HBS6XKqtWSLO9O+y9DDPXDfGbsuV2LqliYXZU9f6+2
+	 j/3P0xyXtNMOTj+7NJh+Q4mtMBNSSkmXmgK5xAcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 53/77] selinux: require a classs permission values to cover its permission count
-Date: Tue, 25 Aug 2026 15:26:15 +0200
-Message-ID: <20260825132543.640796184@linuxfoundation.org>
+	Steffen Persvold <spersvold@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.6 01/87] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
+Date: Tue, 25 Aug 2026 15:25:24 +0200
+Message-ID: <20260825132541.870805349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
-References: <20260825132541.580275153@linuxfoundation.org>
+In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
+References: <20260825132541.813800447@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,161 +46,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Steffen Persvold <spersvold@gmail.com>
 
-[ Upstream commit b98a8ac50775540f3804397ed08f61ef9910bcab ]
+commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
 
-security_get_permissions() sizes an array by the class's permissions.nprim
-and fills it at value - 1, from the inherited common's permission table and
-then the class's own. A value no permission defines leaves a NULL that
-sel_make_perm_files() passes to d_alloc_name(), an oops inside
-sel_write_load() that strands selinux_state.policy_mutex and leaves every
-later load in uninterruptible sleep; two permissions sharing a value
-overwrite the first kstrdup(). Bounding each value by nprim catches
-neither, and neither would a count: the symbol table is keyed on the
-permission name, so duplicates pass.
+On 32-bit systems the config space is too large to ioremap in one go, so
+pci_ecam_create() maps each bus segment separately and relies on the
+->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
+cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
+every config access.
 
-Track the values each permission table claims and require them to cover
-exactly what its count declares, rejecting a count no value can reach.
-Conforming policies are unaffected.
+The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
+and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
+do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
+per-bus mapping is never set up and the first config read dereferences a
+NULL base, crashing during bus enumeration:
 
+ Unable to handle kernel NULL pointer dereference at virtual address 00000800
+ Oops [#1]
+ CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
+ Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
+ epc : pci_generic_config_read+0x40/0xb0
+  ra : pci_generic_config_read+0x2c/0xb0
+ [<c038db9c>] pci_generic_config_read+0x40/0xb0
+ [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
+ [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
+ [<c039245c>] pci_scan_single_device+0xa4/0x11c
+ [<c0392570>] pci_scan_slot+0x9c/0x23c
+ [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
+ [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
+ [<c0393e54>] pci_host_probe+0x20/0xc8
+ [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
+
+Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
+Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
+move the CAM ops definition there as pci_generic_cam_ops (mirroring
+pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
+
+Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
+Signed-off-by: Steffen Persvold <spersvold@gmail.com>
+[mani: removed timestamp from log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-[ folded in the missing perdatum->value guards and used `void *fp` instead of `struct policy_file *fp` in perm_read() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/policydb.c |   57 +++++++++++++++++++++++++++++++++++++----
- 1 file changed, 52 insertions(+), 5 deletions(-)
+ drivers/pci/controller/pci-host-generic.c |   11 +----------
+ drivers/pci/ecam.c                        |   13 +++++++++++++
+ include/linux/pci-ecam.h                  |    3 +++
+ 3 files changed, 17 insertions(+), 10 deletions(-)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1132,7 +1132,18 @@ static int str_read(char **strp, gfp_t f
- 	return 0;
- }
+--- a/drivers/pci/controller/pci-host-generic.c
++++ b/drivers/pci/controller/pci-host-generic.c
+@@ -14,15 +14,6 @@
+ #include <linux/pci-ecam.h>
+ #include <linux/platform_device.h>
  
--static int perm_read(struct policydb *p, struct symtab *s, void *fp)
-+/*
-+ * Bitmap of the permission values a symtab has claimed.  Values are 1-based
-+ * and bounded by SEL_VEC_MAX, the width of an access vector, so the whole set
-+ * fits in a u32 and the callers reject an nprim past that width.
-+ */
-+static u32 perm_claimed_mask(u32 nprim)
-+{
-+	return nprim ? U32_MAX >> (SEL_VEC_MAX - nprim) : 0;
-+}
-+
-+static int perm_read(struct policydb *p, struct symtab *s, void *fp,
-+		     u32 *claimed)
+-static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
+-	.bus_shift	= 16,
+-	.pci_ops	= {
+-		.map_bus	= pci_ecam_map_bus,
+-		.read		= pci_generic_config_read,
+-		.write		= pci_generic_config_write,
+-	}
+-};
+-
+ static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
  {
- 	char *key = NULL;
- 	struct perm_datum *perdatum;
-@@ -1150,6 +1161,16 @@ static int perm_read(struct policydb *p,
+ 	struct pci_config_window *cfg = bus->sysdata;
+@@ -58,7 +49,7 @@ static const struct pci_ecam_ops pci_dw_
  
- 	len = le32_to_cpu(buf[0]);
- 	perdatum->value = le32_to_cpu(buf[1]);
-+	rc = -EINVAL;
-+	if (perdatum->value < 1 || perdatum->value > SEL_VEC_MAX)
-+		goto bad;
-+	/* indexes an nprim-sized array in security_get_permissions() */
-+	if (perdatum->value > s->nprim)
-+		goto bad;
-+	/* two permissions cannot share one slot of that array */
-+	if (*claimed & (1U << (perdatum->value - 1)))
-+		goto bad;
-+	*claimed |= 1U << (perdatum->value - 1);
+ static const struct of_device_id gen_pci_of_match[] = {
+ 	{ .compatible = "pci-host-cam-generic",
+-	  .data = &gen_pci_cfg_cam_bus_ops },
++	  .data = &pci_generic_cam_ops },
  
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
-@@ -1170,7 +1191,7 @@ static int common_read(struct policydb *
- 	char *key = NULL;
- 	struct common_datum *comdatum;
- 	__le32 buf[4];
--	u32 i, len, nel;
-+	u32 i, len, nel, claimed = 0;
- 	int rc;
+ 	{ .compatible = "pci-host-ecam-generic",
+ 	  .data = &pci_generic_ecam_ops },
+--- a/drivers/pci/ecam.c
++++ b/drivers/pci/ecam.c
+@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
+ };
+ EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
  
- 	comdatum = kzalloc(sizeof(*comdatum), GFP_KERNEL);
-@@ -1189,17 +1210,28 @@ static int common_read(struct policydb *
- 	if (rc)
- 		goto bad;
- 	comdatum->permissions.nprim = le32_to_cpu(buf[2]);
-+	/* no permission value can reach a slot past SEL_VEC_MAX */
-+	rc = -EINVAL;
-+	if (comdatum->permissions.nprim > SEL_VEC_MAX)
-+		goto bad;
- 
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
- 		goto bad;
- 
- 	for (i = 0; i < nel; i++) {
--		rc = perm_read(p, &comdatum->permissions, fp);
-+		rc = perm_read(p, &comdatum->permissions, fp, &claimed);
- 		if (rc)
- 			goto bad;
- 	}
- 
-+	rc = -EINVAL;
-+	if (claimed != perm_claimed_mask(comdatum->permissions.nprim)) {
-+		pr_err("SELinux:  common %s does not define every permission it declares\n",
-+		       key);
-+		goto bad;
++/* CAM ops */
++const struct pci_ecam_ops pci_generic_cam_ops = {
++	.bus_shift	= 16,
++	.pci_ops	= {
++		.add_bus	= pci_ecam_add_bus,
++		.remove_bus	= pci_ecam_remove_bus,
++		.map_bus	= pci_ecam_map_bus,
++		.read		= pci_generic_config_read,
++		.write		= pci_generic_config_write,
 +	}
++};
++EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
 +
- 	hash_eval(&comdatum->permissions.table, "common_permissions", key);
+ #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
+ /* ECAM ops for 32-bit access only (non-compliant) */
+ const struct pci_ecam_ops pci_32b_ops = {
+--- a/include/linux/pci-ecam.h
++++ b/include/linux/pci-ecam.h
+@@ -77,6 +77,9 @@ void __iomem *pci_ecam_map_bus(struct pc
+ /* default ECAM ops */
+ extern const struct pci_ecam_ops pci_generic_ecam_ops;
  
- 	rc = symtab_insert(s, key, comdatum);
-@@ -1335,7 +1367,7 @@ static int class_read(struct policydb *p
- 	char *key = NULL;
- 	struct class_datum *cladatum;
- 	__le32 buf[6];
--	u32 i, len, len2, ncons, nel;
-+	u32 i, len, len2, ncons, nel, claimed = 0, inherited = 0;
- 	int rc;
- 
- 	cladatum = kzalloc(sizeof(*cladatum), GFP_KERNEL);
-@@ -1355,6 +1387,10 @@ static int class_read(struct policydb *p
- 	if (rc)
- 		goto bad;
- 	cladatum->permissions.nprim = le32_to_cpu(buf[3]);
-+	/* no permission value can reach a slot past SEL_VEC_MAX */
-+	rc = -EINVAL;
-+	if (cladatum->permissions.nprim > SEL_VEC_MAX)
-+		goto bad;
- 
- 	ncons = le32_to_cpu(buf[5]);
- 
-@@ -1389,11 +1425,22 @@ static int class_read(struct policydb *p
- 		}
- 	}
- 	for (i = 0; i < nel; i++) {
--		rc = perm_read(p, &cladatum->permissions, fp);
-+		rc = perm_read(p, &cladatum->permissions, fp, &claimed);
- 		if (rc)
- 			goto bad;
- 	}
- 
-+	/* the class's own permissions must claim the slots the common leaves */
-+	if (cladatum->comdatum)
-+		inherited = cladatum->comdatum->permissions.nprim;
-+	rc = -EINVAL;
-+	if (claimed != (perm_claimed_mask(cladatum->permissions.nprim) &
-+			~perm_claimed_mask(inherited))) {
-+		pr_err("SELinux:  class %s does not define every permission it declares\n",
-+		       key);
-+		goto bad;
-+	}
++/* default CAM ops */
++extern const struct pci_ecam_ops pci_generic_cam_ops;
 +
- 	hash_eval(&cladatum->permissions.table, "class_permissions", key);
- 
- 	rc = read_cons_helper(p, &cladatum->constraints, ncons, 0, fp);
+ #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
+ extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
+ extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
 
 
