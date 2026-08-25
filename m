@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8433E25393E;
-	Tue, 25 Aug 2026 13:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C08423A85;
+	Tue, 25 Aug 2026 13:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666059; cv=none; b=SDqBRK3/fGEkd1cYlo6apRQWq4JZx1P3TacOEkTVsXcGwNyPdtBUoXjE0dH4NIAH/bDa8gkVbtStCXY3CBG4s8a84ST3M+nzLR/BB/7GymCDPqarWG7i67G31vDqnb9Y+sm1XGbANiDYS3rcAEqLgS6T64XNfAASdcMHdhMV3Z4=
+	t=1787666063; cv=none; b=ZIQYpopn5YAzccSbqGsJeYuNuTz58maoEPCjzIaGw4VV9nCjiFRm/v4CuIq5XVgQJGkrHkQNfuKFwDyv+gzv6CaOw9xXe9nD88QeVUVsGGqpfgN1w6hAFg11CIoyrMAJVs3yoLevBIo1f8P26ZJZS6yuAKdlb4KGDEY5din0frc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666059; c=relaxed/simple;
-	bh=vpf5LhWpB4h9UsoSJmTxGmuZCmakM+o+tZc/AgkqwYM=;
+	s=arc-20240116; t=1787666063; c=relaxed/simple;
+	bh=Rvzj9Q5MA8GrLhHmb9RJeIqdT2QgfsH37GVL9G/JMu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtFZNzbmIBweWsPvSygW8x/+xGZmAkU+9pH3QXD9vOLra1Wizs2UQAvJc9YsUlg3IaQRHaIuBgXQloV2xsAVUFVF7UtILnbJvtPiaHgLXbnh3qPPhiRN67zXCQuKhCAvIzfMRtVtBcVI/VwNjgfKP5GFgQj9RquXVkz9aKN0M6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvCxhbNO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bj+pz6K2nVj86RDd05nQn3vi5WlU7VrdmZ9YYGYLhjS09IwUsTPJUv5fQqhpWW5ZGmx/IKJLIVYyC09neyQ2lLyMBTBqda0vdoYlQRxpPB93uMKWCQwNn3Wp60owOfE+XBpBcrgIyhKallQExiinxWVxbFAUbJztvrHspGkMnDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqWI258t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvCxhbNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B542F1F000E9;
-	Tue, 25 Aug 2026 13:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqWI258t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C7B1F000E9;
+	Tue, 25 Aug 2026 13:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666058;
-	bh=ZpRjaPWYYFGtqsCzuhgIrbsqtpPcVgqdLkJhrb+Q9hw=;
+	s=korg; t=1787666062;
+	bh=JTOc4V9w5S7wNYQjECG1PCLP/zbAp1yOSb13bL+KBc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvCxhbNOSmJCwYn4zOOwGF3fTposE2CU2fKs8nJ2GHtcOPuvxnlJ4zxlu5bVcwq6X
-	 aCiFOzvd08ff5UU5t4CEMffHXPEmg06MEsMet4VbSaBTFfcaKDQAA9Nvxutf7zoOnG
-	 xrLWpv77uIYHAYx+XRjw/v0yNfb3gnEunKno/sV0=
+	b=YqWI258txAX6424w47vEkNMLZ/hA5nL8WzzyMFvNteeC8BbiUzktAFIsu7DGLNcUU
+	 DrLn4vlZbXKw7zrcxKwaa5ntlh9B9bS3P+/Vln5+298vuVVD47+gfaTDJXTf4FkgCG
+	 5FZOvpcflgJVUqYzRqTmnBfMi0gH7xVZJ7yo1l4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikura Kyouka <mikurakyouka@aosc.io>,
-	"foad.elkhattabi" <foad.elkhattabi@gmail.com>,
-	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
-	Hans de Goede <hansg@kernel.org>,
+	Donglin Lyu <donglin_lyu@outlook.com>,
+	Ruslan Shevchenko <adefka@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 70/79] Input: atkbd - skip deactivate for HONOR FMB-Ps internal keyboard
-Date: Tue, 25 Aug 2026 15:26:50 +0200
-Message-ID: <20260825132544.419432635@linuxfoundation.org>
+Subject: [PATCH 6.1 71/79] Input: atkbd - skip deactivate for HONOR ZQC-P
+Date: Tue, 25 Aug 2026 15:26:51 +0200
+Message-ID: <20260825132544.459313595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -54,46 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+From: Donglin Lyu <DongLin_Lyu@outlook.com>
 
-[ Upstream commit 2aaf33c6e1e82561d7dce2345298a985a2483266 ]
+[ Upstream commit 410c44b1096789d0c40fbee706520e981dba7bc1 ]
 
-After commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd -
-do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID"), HONOR
-FMB-P, aka HONOR MagicBook Pro 14 2025's internal keyboard stops
-working. Adding the atkbd_deactivate_fixup quirk fixes it.
+The internal keyboard on the HONOR ZQC-P (HONOR MagicBook Pro 14 2026)
+does not work after boot.
 
-DMI: HONOR FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025
+Using the kernel command line 'i8042.dumbkbd=1' makes the keyboard
+functional, but the CapsLock LED does not work. Adding the
+'atkbd_deactivate_fixup' quirk fixes the keyboard and CapsLock LED
+natively without requiring boot parameters.
 
-Fixes: 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
-Reported-by: Mikura Kyouka <mikurakyouka@aosc.io>
-Reported-by: foad.elkhattabi <foad.elkhattabi@gmail.com>
-Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20251022-honor-v1-1-ff894ed271a9@linux.dev
+DMI: HONOR ZQC-P/ZQC-P-PCB, BIOS 1.09 03/19/2026
+
+Fixes: 9cf6e24c9fbf ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
+Signed-off-by: Donglin Lyu <donglin_lyu@outlook.com>
+Tested-by: Ruslan Shevchenko <adefka@gmail.com>
+Link: https://patch.msgid.link/20260801151115.52709-1-donglin_lyu@outlook.com
+Cc: stable@vger.kernel.org
+[dtor: keep all HONOR entries together]
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: 410c44b10967 ("Input: atkbd - skip deactivate for HONOR ZQC-P")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/keyboard/atkbd.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 --- a/drivers/input/keyboard/atkbd.c
 +++ b/drivers/input/keyboard/atkbd.c
-@@ -1925,6 +1925,13 @@ static const struct dmi_system_id atkbd_
+@@ -1927,22 +1927,30 @@ static const struct dmi_system_id atkbd_
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
+ 		},
  		.callback = atkbd_deactivate_fixup,
  	},
  	{
-+		.matches = {
+-		/* Lenovo Yoga Air 14 (83QK) */
+ 		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
 +			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
 +			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
+ 		},
+ 		.callback = atkbd_deactivate_fixup,
+ 	},
+ 	{
++		/* HONOR MagicBook Pro 14 2026 */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ZQC-P"),
 +		},
 +		.callback = atkbd_deactivate_fixup,
 +	},
 +	{
- 		/* Lenovo Yoga Air 14 (83QK) */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		/* Lenovo Yoga Air 14 (83QK) */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
+ 		},
+ 		.callback = atkbd_deactivate_fixup,
+ 	},
 
 
