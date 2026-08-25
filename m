@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41340469851;
-	Tue, 25 Aug 2026 13:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE2B470117;
+	Tue, 25 Aug 2026 13:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666012; cv=none; b=BXblttKEYlhRyk8fWEQaQn4LbyMzXbTUhYtYkkgAMXbFVkHMxv+rW6mCNuDUs8mIqredOQb1WGUYSgB7GZyocHaip3ZSi6oUnRTD60uumPyzYtc6Gn06WEOA0XSOsTVUpKdQCswkodah0dAvKsRAIHgICeoKz86W03NjVNfISic=
+	t=1787666015; cv=none; b=SwCr9O2b1SQMIQ7neWnXmw1yoZs6mrGPRCvOl9aZfT0Nowcr7BFP9w2A3nH4NnkoqVybQWI766JR2F0NSC9MhRtGtPKHC9iNawZ2GLk3/BSdCkh1ixau0T/284Qajyk0lozIRj6ZpGm2RGgyTvzY2P5rUkhM3ON67+4lkwAsTCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666012; c=relaxed/simple;
-	bh=2bkM5+WsarCiIgNXc4M/3kBhyroUzyYAdkKEvJpd+Xw=;
+	s=arc-20240116; t=1787666015; c=relaxed/simple;
+	bh=FZgUjzyVkjVJed+rFJN1qb0qbQIA0X5eEHr2qXIfmQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tvJ0/ZG6GrmN6iPKppiQ7VlWItgdpCMo4H9E+qc01oHu483UreadHMJVPG66nFRfb0RAKde55DvSssCGbNeW2VGul3eITqWnT2kBHQ3MPAj8VBZqB5de5elumbZPVrLwPt8o1DItSGT9i9uhyC1eIK8LpOrKPAFvWsaxwP/DWM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ax2VFLS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QPxizeegVVtmU6/KOHuCXC5SCCswh0tNpwg01wxYhGrbctBuwCzO6m2UTi+VgrpMgoPTyBcWy87EePQw0zoZXcgAJlF7akP5cRUOQMRaKtwNm3mLtheGaOnbKu9ox0wCWwGu39Sp1KnvDQSRHG//Nodx//WoppV84Y3pF1YktOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDdrSVJE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ax2VFLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722571F000E9;
-	Tue, 25 Aug 2026 13:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDdrSVJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564A31F000E9;
+	Tue, 25 Aug 2026 13:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666011;
-	bh=PEJYlD/gcXj0QNM0Rstg1lX0dj/Yz1ODktD9MpAVW2g=;
+	s=korg; t=1787666013;
+	bh=DxyoXUjUC00KVmjRG6B4kHzDO9u3nHc7FeBDcNXjrFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ax2VFLSymcYnERhmXPpnyQUYqA8zRYn5bgHUcihl/jiaY4t98gjN+Eg/k6FIL0Mo
-	 NFZJtEjVTHo0D2j+Di3JV7sODdxHnGRNA4hAb8eGpZqcQU9EyLpwCxvysgDVbJL8k/
-	 2uRLzSrvx5qxcJWJ+oX1ja899qESmsDRkWo1j+eQ=
+	b=gDdrSVJEBhnegmH+HBHlcHDc4CVLnnCYdOB7Dx2NUw2h3BbaGyLMjCGV1y8HqkaAZ
+	 yh9Qg5eDoVAL0m2YHMKT651HNXJlkBHgVi7mOvLYhOub9PuoPho9wq+yFKAZ7erZhm
+	 hNTwiJuDrKIzW9ZroSpCTgyJVewfl20MFpksem08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Vega <vega@nebusec.ai>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
 	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.1 47/79] nfc: llcp: reject PDUs shorter than the LLCP header
-Date: Tue, 25 Aug 2026 15:26:27 +0200
-Message-ID: <20260825132543.543081398@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 56/79] ipv6: fix use-after-free in ip6_finish_output2()
+Date: Tue, 25 Aug 2026 15:26:36 +0200
+Message-ID: <20260825132543.894348816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -52,64 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit 95674f506c6376d6722a23144c9acd26609771ed upstream.
+commit d0d48d999b0eee6bb176ef4e39d9be868fa80f7e upstream.
 
-Every LLCP PDU begins with a two-byte header (DSAP/SSAP + PTYPE), but the
-receive path never checked that a frame is at least LLCP_HEADER_SIZE bytes
-before parsing it.
+ip6_finish_output2() caches a pointer to the IPv6 destination
+address (daddr) before invoking lwtunnel_xmit().  The LWT-BPF
+transmit path or other encapsulation operations within
+lwtunnel_xmit() can reallocate the skb head, freeing the memory
+that daddr points to.  When lwtunnel_xmit() returns
+LWTUNNEL_XMIT_CONTINUE, the function continues to use the stale
+daddr pointer to compute the nexthop and to look up or create the
+neighbour entry.  This results in a use-after-free read, which can
+leak sensitive kernel data, pollute the neighbour table with
+arbitrary values, misdirect traffic, or crash the system.
 
-nfc_llcp_rx_skb() reads the header via nfc_llcp_ptype()/nfc_llcp_dsap()/
-nfc_llcp_ssap(), which dereference pdu->data[0] and pdu->data[1], and a
-CONNECT or CC PDU then computes
+Fix this by re-fetching the IPv6 header and the destination
+address pointer after lwtunnel_xmit() returns
+LWTUNNEL_XMIT_CONTINUE, ensuring that the subsequent nexthop
+computation and neighbour lookup operate on valid memory.
 
-	tlv_array_len = skb->len - LLCP_HEADER_SIZE;
-
-as a size_t and hands it to the TLV walk. When the frame is shorter than
-the header the subtraction wraps to a huge value and the walk runs far
-past the buffer, an out-of-bounds read.
-
-A nearby NFC device can reach this without authentication; LLCP link
-activation happens automatically after NFC-DEP.
-
-Guard the common receive choke point __nfc_llcp_recv(), shared by both the
-target (nfc_llcp_data_received()) and initiator (nfc_llcp_recv()) paths, so
-a short skb is dropped before the rx_work worker parses it. Use
-pskb_may_pull() rather than a skb->len test so the two header bytes are
-guaranteed to sit in the skb linear area even for a non-linear skb,
-matching how the sibling NCI and HCI receive paths validate their headers.
-
-Reproduced with a KFENCE out-of-bounds read via /dev/virtual_nci on
-linux-next.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Fixes: e415ed3a4b8b ("ipv6: use skb_expand_head in ip6_finish_output2")
 Cc: stable@vger.kernel.org
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
 Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260714164631.75068-1-doruk@0sec.ai
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/4aa3f53bc44e79572c6dd2340ec7b68ef1a3d87d.1786516730.git.rakukuip@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv6/ip6_output.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1552,6 +1552,11 @@ static void nfc_llcp_rx_work(struct work
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -118,6 +118,8 @@ static int ip6_finish_output2(struct net
  
- static void __nfc_llcp_recv(struct nfc_llcp_local *local, struct sk_buff *skb)
- {
-+	if (!pskb_may_pull(skb, LLCP_HEADER_SIZE)) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
- 	local->rx_pending = skb;
- 	del_timer(&local->link_timer);
- 	schedule_work(&local->rx_work);
+ 		if (res != LWTUNNEL_XMIT_CONTINUE)
+ 			return res;
++		hdr = ipv6_hdr(skb);
++		daddr = &hdr->daddr;
+ 	}
+ 
+ 	rcu_read_lock();
 
 
