@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF933909A4;
-	Tue, 25 Aug 2026 13:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A783B83F9;
+	Tue, 25 Aug 2026 13:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665550; cv=none; b=XGrd+ngRd0Pm2cXN4PHShhCD74i/FhGojazH6+Z1FVGYbeOR3r6sewy3sowZaVFCuFWpcRby72CTAeqCASePGNC2BCm/XuWtcX07kc67cgIteN4PWbR5qUAfhjEv7F7w0gecvhnQUwvmca4RLyhcTBrfyyHMlbwj3WGN6bpG580=
+	t=1787665553; cv=none; b=PMAxFPURw4FlqT5Vixq3kc49HoSGYdT64K6Pphxnn+bXYyIMkMCh1KwhLJ0Gcdnmrr8tGlwthx8DnbP8SV1b9Iy5ZPQdqCWzblAuHzGGHoP4tN18pTNkuSAu9mwto0B4tLRORWA4y51oZBxlEoHLPG4zALegFrs2PaNgBIlse5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665550; c=relaxed/simple;
-	bh=ldoeP9x4Ci8Vxop5OfguEBPYLOYv6/rVY+lJciijb2g=;
+	s=arc-20240116; t=1787665553; c=relaxed/simple;
+	bh=KNSqLZuVRy7osv3t5ceSJJVEkKKFRVcoKzy0ywVOrWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=orklJSqoztPKxIw7/SrRDq4+Vy5+iPhEcFI18HDL/6WcHlt86cYRoTo1n8/mEBDRGtoTJMJUqTMHxtdMIBPiXsM3QtjHZjUI5xtJs7S/nHLlYoBjt0dd8xrCvHdH9wfKjp/sJkoG8ngSavhnnzTln2NFTJRfOjQ9N7cyUeLg7fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQa4R26E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BHUKjvLG4mdadCawTuddSmkO4wdu4THoAOqAgYLBD9AxS2IK2ltlBtUW7iAeP1ZQAWKioJkHT+1cdVHzOt1IPOrjSj0GPiEfYYLFmSK5GQ7ST0dbTsabuYU73a4rohAGp60YhnbpkRzvZDxZxx8pW8soGTuS8rdYgDasENiOEhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0GasYfK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQa4R26E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF651F000E9;
-	Tue, 25 Aug 2026 13:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0GasYfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338E91F000E9;
+	Tue, 25 Aug 2026 13:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665548;
-	bh=oKFcsSLk9fwcOIOti5VN2fUcpt+QUqoKyNhAppBkMbI=;
+	s=korg; t=1787665551;
+	bh=MvSp5VwSJV63HVMzDjN5clswYOjKJS+Ua7rn0igxhho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OQa4R26EyWRPrC991tZCgHPcrLWIsn0T9/S0yA5QY88+X1ZySnMpyuf6oZGKA/qAA
-	 JaJ1DSYKxCmt9jg75FI19Ar6mGYsZ8EsFGVBC05QTMg8AXpx4UES7CZ3cksefMKco6
-	 pidkIV2VIarzeyO3AyqzTOfdpP1mkcCfKrhXuWeY=
+	b=D0GasYfKZM0MPB/tKICKljI/94REkAKGChSXW2JirOUwU3Skx1I6wKMJbZb6LBZmj
+	 scCG08tQFgDT6A2cBUJpahlxmUizxDqVaey6qZNY8IAobE/FsCcs/EQsclKSXS6xfb
+	 vI2RWYMP2GjTz0bdn0Kb1NmHedCfPdeW8a6HDa1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 64/77] ipv4: start using dst_dev_rcu()
-Date: Tue, 25 Aug 2026 15:26:26 +0200
-Message-ID: <20260825132544.045268846@linuxfoundation.org>
+Subject: [PATCH 6.12 65/77] mptcp: pm: fix memory leak from alloc-during-teardown race
+Date: Tue, 25 Aug 2026 15:26:27 +0200
+Message-ID: <20260825132544.084648847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -52,109 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-[ Upstream commit 6ad8de3cefdb6ffa6708b21c567df0dbf82c43a8 ]
+[ Upstream commit efc33b5102ff859bacd390a5f30112d8e0c084c0 ]
 
-Change icmpv4_xrlim_allow(), ip_defrag() to prevent possible UAF.
+mptcp_pm_destroy() empties msk->pm.anno_list and
+msk->pm.userspace_pm_local_addr_list under msk->pm.lock during socket
+teardown, dropping the lock between the two.
 
-Change ipmr_prepare_xmit(), ipmr_queue_fwd_xmit(), ip_mr_output(),
-ipv4_neigh_lookup() to use lockdep enabled dst_dev_rcu().
+A concurrent userspace PM genl ANNOUNCE on the same msk holds a sock
+reference via mptcp_token_get_sock() and, in
+mptcp_pm_nl_announce_doit(), calls
+mptcp_userspace_pm_append_new_local_addr() and
+mptcp_pm_announced_alloc(). Both take msk->pm.lock briefly to add to
+their respective lists. Because the genl handler holds a sock reference,
+mptcp_pm_destroy() may run on the same msk via mptcp_disconnect(), which
+invokes mptcp_destroy_common() without dropping the sock refcount,
+before the handler completes.
 
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-9-edumazet@google.com
+If the lock acquisitions interleave such that mptcp_pm_destroy() empties
+a list first, the later alloc adds its entry to a list head that nothing
+else iterates for this msk, and the entry leaks. kmemleak reports both
+mptcp_pm_add_addr objects (from mptcp_pm_announced_alloc()) and
+mptcp_pm_addr_entry objects (from
+mptcp_userspace_pm_append_new_local_addr()) under sustained concurrent
+ANNOUNCE + close load against the userspace PM.
+
+Add an MPTCP_PM_DESTROYING bit in msk->pm.status, set by
+mptcp_pm_destroy() under pm.lock before the lists are emptied and
+checked under pm.lock by the alloc paths. Either the alloc takes pm.lock
+first, in which case its entry is on the list when mptcp_pm_destroy()
+frees it; or mptcp_pm_destroy() takes pm.lock first, in which case the
+later alloc observes the bit and refuses.
+
+Found by an MPTCP protocol-flow harness extending BRF (arXiv:2305.08782).
+
+Fixes: 9ab4807c84a4 ("mptcp: netlink: Add MPTCP_PM_CMD_ANNOUNCE")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-6-b8f496d71664@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Inlined `mptcp_pm_destroy()` at its call site in `mptcp_destroy_common()` and moved the fences into the pre-rename `mptcp_pm_alloc_anno_list()`/`mptcp_free_local_addr_list()` equivalents, deleting the `mptcp_pm_is_userspace()` guard from inside the callee instead of the call site. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/icmp.c        | 6 +++---
- net/ipv4/ip_fragment.c | 6 ++++--
- net/ipv4/ipmr.c        | 2 +-
- net/ipv4/route.c       | 4 ++--
- 4 files changed, 10 insertions(+), 8 deletions(-)
+ net/mptcp/pm_netlink.c   |    3 +++
+ net/mptcp/pm_userspace.c |    7 ++++---
+ net/mptcp/protocol.c     |    9 +++++++++
+ net/mptcp/protocol.h     |    7 ++++---
+ 4 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index c7af8b914e13c..1fc967a60bb9c 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -320,17 +320,17 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
- 		return true;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -397,6 +397,9 @@ bool mptcp_pm_alloc_anno_list(struct mpt
  
- 	/* No rate limit on loopback */
--	dev = dst_dev(dst);
-+	rcu_read_lock();
-+	dev = dst_dev_rcu(dst);
- 	if (dev && (dev->flags & IFF_LOOPBACK))
- 		goto out;
+ 	lockdep_assert_held(&msk->pm.lock);
  
--	rcu_read_lock();
- 	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr,
- 			       l3mdev_master_ifindex_rcu(dev));
- 	rc = inet_peer_xrlim_allow(peer,
- 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
--	rcu_read_unlock();
- out:
-+	rcu_read_unlock();
- 	if (!rc)
- 		__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITHOST);
- 	else
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index 5825aa8eac7fd..9cc55a0c64f7d 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -470,14 +470,16 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
- /* Process an incoming IP datagram fragment. */
- int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
- {
--	struct net_device *dev = skb->dev ? : skb_dst_dev(skb);
--	int vif = l3mdev_master_ifindex_rcu(dev);
-+	struct net_device *dev;
- 	struct ipq *qp;
-+	int vif;
++	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING))
++		return false;
++
+ 	add_entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
  
- 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
+ 	if (add_entry) {
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -14,9 +14,6 @@ void mptcp_free_local_addr_list(struct m
+ 	struct sock *sk = (struct sock *)msk;
+ 	LIST_HEAD(free_list);
  
- 	/* Lookup (or create) queue header */
- 	rcu_read_lock();
-+	dev = skb->dev ? : skb_dst_dev_rcu(skb);
-+	vif = l3mdev_master_ifindex_rcu(dev);
- 	qp = ip_find(net, ip_hdr(skb), user, vif);
- 	if (qp) {
- 		int ret, refs = 0;
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index de0d9cc7806a1..f0294b1148246 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -1894,7 +1894,7 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
- 			goto out_free;
- 	}
- 
--	dev = rt->dst.dev;
-+	dev = dst_dev_rcu(&rt->dst);
- 
- 	if (skb->len+encap > dst_mtu(&rt->dst) && (ntohs(iph->frag_off) & IP_DF)) {
- 		/* Do not fragment multicasts. Alas, IPv4 does not
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 28d83b3baae3b..9135a9dc8f297 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -413,11 +413,11 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
- 					   const void *daddr)
- {
- 	const struct rtable *rt = container_of(dst, struct rtable, dst);
--	struct net_device *dev = dst_dev(dst);
-+	struct net_device *dev;
- 	struct neighbour *n;
- 
- 	rcu_read_lock();
+-	if (!mptcp_pm_is_userspace(msk))
+-		return;
 -
-+	dev = dst_dev_rcu(dst);
- 	if (likely(rt->rt_gw_family == AF_INET)) {
- 		n = ip_neigh_gw4(dev, rt->rt_gw4);
- 	} else if (rt->rt_gw_family == AF_INET6) {
--- 
-2.53.0
-
+ 	spin_lock_bh(&msk->pm.lock);
+ 	list_splice_init(&msk->pm.userspace_pm_local_addr_list, &free_list);
+ 	spin_unlock_bh(&msk->pm.lock);
+@@ -54,6 +51,10 @@ static int mptcp_userspace_pm_append_new
+ 	bitmap_zero(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 
+ 	spin_lock_bh(&msk->pm.lock);
++	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING)) {
++		ret = -EINVAL;
++		goto append_err;
++	}
+ 	list_for_each_entry(e, &msk->pm.userspace_pm_local_addr_list, list) {
+ 		addr_match = mptcp_addresses_equal(&e->addr, &entry->addr, true);
+ 		if (addr_match && entry->addr.id == 0 && needs_id)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3578,7 +3578,16 @@ void mptcp_destroy_common(struct mptcp_s
+ 	sk_forward_alloc_add(sk, msk->rmem_fwd_alloc);
+ 	WRITE_ONCE(msk->rmem_fwd_alloc, 0);
+ 	mptcp_token_destroy(msk);
++
++	spin_lock_bh(&msk->pm.lock);
++	msk->pm.status |= BIT(MPTCP_PM_DESTROYING);
++	spin_unlock_bh(&msk->pm.lock);
++
+ 	mptcp_pm_free_anno_list(msk);
++
++	/* Free the userspace local address list unconditionally: the socket
++	 * can be reused (mptcp_disconnect()) and re-selected to a different PM
++	 */
+ 	mptcp_free_local_addr_list(msk);
+ }
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -190,9 +190,10 @@ enum mptcp_pm_status {
+ 	MPTCP_PM_ESTABLISHED,
+ 	MPTCP_PM_SUBFLOW_ESTABLISHED,
+ 	MPTCP_PM_ALREADY_ESTABLISHED,	/* persistent status, set after ESTABLISHED event */
+-	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED /* persistent status, set after MPC local address is
+-					 * accounted int id_avail_bitmap
+-					 */
++	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED, /* persistent status, set after MPC local address is
++					  * accounted int id_avail_bitmap
++					  */
++	MPTCP_PM_DESTROYING,		/* To fence out PM list allocs */
+ };
+ 
+ enum mptcp_pm_type {
 
 
