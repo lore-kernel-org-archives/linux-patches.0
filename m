@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6C64749C1;
-	Tue, 25 Aug 2026 13:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099574749C1;
+	Tue, 25 Aug 2026 13:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666254; cv=none; b=mZXOGShCJTZnAel3ej3neuCP2buTtiptBmTuupAopgLkzPopzz0wYl5HG1eNtfdJELtycelWGtmdibxpOCO/dzKean9BRZQ3Da2J1ScqOqtSeA4WHi0y5uiEgMH3RGE+Kzke5Fdejp7Wf3VN4nPFUfO4BDEuE9kSeoVCg5m2vZE=
+	t=1787666257; cv=none; b=myyQa5xeyRr5muR6svX7x25YKRWIi2u7SVUhdyjp8THCRmJUUj5uBKH2BK0U4aDJKqm3ZRsVMVZymgRuptp5jl37tWbBz2jCmfQcQnnl3PhIVyDmuVGKmvGvWd0n40042XPpO5wNAjrfeW7LCPVBZLxusS7ZuxFhvjA0grzELI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666254; c=relaxed/simple;
-	bh=Bk1h+YAqxa3YSOGJVJPfXTaOV4x8IAMOa33X3+egZvQ=;
+	s=arc-20240116; t=1787666257; c=relaxed/simple;
+	bh=y4P6QFOMQn3q2Ft03K8oAAFjGU6xNzMg+71o64S6u4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIX2gkyLTLQdR/cr0yNCHTbyw+OQYhNuzN7UPAKdR/fm+xZNIGlPoCx6YWFrU4niUJOOzei7GA8eoCbUaevCx3rNcSww5vmrE82R8DwNpPDp9kavtoc/bmVcr9yU6ECGZRhHI8F4ndqlrQcRQwriMcU1V8KoA0yyGOHljMJv5D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNveE7BY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TJfxzzTRNvPcvQSC4tLITINX1DqzkeEPRKr+QOZfowLEgVi+mkpVmvAVBy7rqqwWWCOnmEM/fyCAut+evsKbngpRKngWMTOFHFBZr+6gseYdAjMDUrw6aEoWbVb3jpdH31Mqc9XH66Yxw4785VfL7lCFUAH4qh5QlCEU0Yx5bJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMnrmoP6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNveE7BY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6521F000E9;
-	Tue, 25 Aug 2026 13:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMnrmoP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9371F000E9;
+	Tue, 25 Aug 2026 13:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666252;
-	bh=3ZqFSojGkKROVjzOGp4fwYuM2ypCwcmKshKTD7Otks8=;
+	s=korg; t=1787666255;
+	bh=o22bFbsZdGnCU8G96BW7kYMOHAZnQh5my6HA4LMxqvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UNveE7BYt2XCgry+kcpmHRUwTgsABWC/dbIGAPe9QnJpF6eC/kGZiwoZF4BkfiuDy
-	 lv06LsQsrCI59f/LTeAApXSjIIg01xqT70DSut5Z1QuaPTBD0n7gwcHydxYT5pzTgd
-	 5BJkb2vitPtIoOWa2+EMFx2JHWvOtZWGR80NcUo0=
+	b=CMnrmoP6zKOORCyC/uSh0sNwqkjfXlbtXXg7xA9hGUan98L8TVM+ImM4uq3wQpmG6
+	 i91gc0PWwWlA1OEQRRMo6h0EyPYr36+9xrZF86s/de+xoROVSZOCR83h9v407L08TN
+	 s4lPIiKrlj5AY4GArASIJU1JHchmMCLS92PR3C2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Matlack <dmatlack@google.com>,
-	Isaku Yamahata <isaku.yamahata@intel.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
 	Kenta Akagi <k@mgml.me>
-Subject: [PATCH 5.15 57/76] KVM: x86/mmu: Rename __direct_map() to direct_map()
-Date: Tue, 25 Aug 2026 15:26:50 +0200
-Message-ID: <20260825132543.816199020@linuxfoundation.org>
+Subject: [PATCH 5.15 58/76] KVM: x86: Check for invalid/obsolete root *after* making MMU pages available
+Date: Tue, 25 Aug 2026 15:26:51 +0200
+Message-ID: <20260825132543.852962232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -53,77 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Matlack <dmatlack@google.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 6c882ef4fc7bd99b67ad152e75428b669281c521 ]
+[ Upstream commit 2abd5287f08319fa35764566b15c6e22cb1068db ]
 
-Rename __direct_map() to direct_map() since the leading underscores are
-unnecessary. This also makes the page fault handler names more
-consistent: kvm_tdp_mmu_page_fault() calls kvm_tdp_mmu_map() and
-direct_page_fault() calls direct_map().
+Check for a "stale" page fault, i.e. for an invalid and/or obsolete root,
+after making MMU pages available for the shadow MMU.  If reclaiming shadow
+pages zaps an in-use root, i.e. marks it invalid, then KVM will attempt to
+map memory into an invalid root.  On its own, populating an invalid root is
+"fine", but because child shadow pages inherit their parent's role, any
+children created during the map/fetch will be created as invalid pages,
+thus violating KVM's invariant that invalid pages are never on the list of
+active MMU pages.
 
-Opportunistically make some trivial cleanups to comments that had to be
-modified anyway since they mentioned __direct_map(). Specifically, use
-"()" when referring to functions, and include kvm_tdp_mmu_map() among
-the various callers of disallowed_hugepage_adjust().
+Note, the underlying flaw has existed since KVM first started tracking
+invalid roots in 2008 (commit 2e53d63acba7, "KVM: MMU: ignore zapped root
+pagetables"), but the true badness only came along in 2020 (Linux 5.9)
+with the invariant that invalid shadow pages can't be on the list of
+active pages.
 
-No functional change intended.
+Note #2, inheriting role.invalid when creating child shadow pages is also
+far from ideal; that flaw will be addressed separately.
 
-Signed-off-by: David Matlack <dmatlack@google.com>
-Reviewed-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fixes: f95eec9bed76 ("KVM: x86/mmu: Don't put invalid SPs back on the list of active pages")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-Id: <20220921173546.2674386-11-dmatlack@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 2abd5287f083 ("KVM: x86: Check for invalid/obsolete root *after* making MMU pages available")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[backport note: upstream passes struct kvm_page_fault to is_page_fault_stale();
+ here individual parameters are used, as is_page_fault_stale() was
+ backported with that interface in the preceding commit]
 Signed-off-by: Kenta Akagi <k@mgml.me>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/x86/kvm/mmu/mmu.c         |    9 +++++----
+ arch/x86/kvm/mmu/paging_tmpl.h |   10 ++++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2995,11 +2995,11 @@ void disallowed_hugepage_adjust(u64 spte
- 	    is_shadow_present_pte(spte) &&
- 	    !is_large_pte(spte)) {
- 		/*
--		 * A small SPTE exists for this pfn, but FNAME(fetch)
--		 * and __direct_map would like to create a large PTE
--		 * instead: just force them to go down another level,
--		 * patching back for them into pfn the next 9 bits of
--		 * the address.
-+		 * A small SPTE exists for this pfn, but FNAME(fetch),
-+		 * direct_map(), or kvm_tdp_mmu_map() would like to create a
-+		 * large PTE instead: just force them to go down another level,
-+		 * patching back for them into pfn the next 9 bits of the
-+		 * address.
- 		 */
- 		u64 page_mask = KVM_PAGES_PER_HPAGE(level) -
- 				KVM_PAGES_PER_HPAGE(level - 1);
-@@ -3008,9 +3008,9 @@ void disallowed_hugepage_adjust(u64 spte
- 	}
- }
+@@ -4045,16 +4045,17 @@ static int direct_page_fault(struct kvm_
+ 	if (handle_abnormal_pfn(vcpu, is_tdp ? 0 : gpa, gfn, pfn, ACC_ALL, &r))
+ 		return r;
  
--static int __direct_map(struct kvm_vcpu *vcpu, gpa_t gpa, u32 error_code,
--			int map_writable, int max_level, kvm_pfn_t pfn,
--			bool prefault, bool is_tdp)
-+static int direct_map(struct kvm_vcpu *vcpu, gpa_t gpa, u32 error_code,
-+		      int map_writable, int max_level, kvm_pfn_t pfn,
-+		      bool prefault, bool is_tdp)
- {
- 	bool nx_huge_page_workaround_enabled = is_nx_huge_page_enabled();
- 	bool write = error_code & PFERR_WRITE_MASK;
-@@ -4055,8 +4055,8 @@ static int direct_page_fault(struct kvm_
+-	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+-	if (is_page_fault_stale(vcpu, pfn, mmu_seq, hva))
+-		goto out_unlock;
+-
+ 	r = make_mmu_pages_available(vcpu);
  	if (r)
  		goto out_unlock;
  
--	r = __direct_map(vcpu, gpa, error_code, map_writable, max_level, pfn,
--			 prefault, is_tdp);
-+	r = direct_map(vcpu, gpa, error_code, map_writable, max_level, pfn,
-+		       prefault, is_tdp);
++	if (is_page_fault_stale(vcpu, pfn, mmu_seq, hva)) {
++		r = RET_PF_RETRY;
++		goto out_unlock;
++	}
++
+ 	r = direct_map(vcpu, gpa, error_code, map_writable, max_level, pfn,
+ 		       prefault, is_tdp);
  
- out_unlock:
- 	write_unlock(&vcpu->kvm->mmu_lock);
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -923,16 +923,18 @@ static int FNAME(page_fault)(struct kvm_
+ 			walker.pte_access &= ~ACC_EXEC_MASK;
+ 	}
+ 
+-	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+-	if (is_page_fault_stale(vcpu, pfn, mmu_seq, hva))
+-		goto out_unlock;
+-
+ 	kvm_mmu_audit(vcpu, AUDIT_PRE_PAGE_FAULT);
+ 	r = make_mmu_pages_available(vcpu);
+ 	if (r)
+ 		goto out_unlock;
++
++	if (is_page_fault_stale(vcpu, pfn, mmu_seq, hva)) {
++		r = RET_PF_RETRY;
++		goto out_unlock;
++	}
++
+ 	r = FNAME(fetch)(vcpu, addr, &walker, error_code, max_level, pfn,
+ 			 map_writable, prefault);
+ 	kvm_mmu_audit(vcpu, AUDIT_POST_PAGE_FAULT);
 
 
