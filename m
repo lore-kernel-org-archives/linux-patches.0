@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D4B391E4C;
-	Tue, 25 Aug 2026 13:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEED48122F;
+	Tue, 25 Aug 2026 13:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665528; cv=none; b=CFfwJZEB3fB/VSRraOoqUN07KOP+xN3tMvt3+iHmhVlpXTKTwG/y+/M06YOCQvxcdBWx5whnG9E0wZiY7/+0cNSGPWSJ1f9i4tFxhy2nADRiHIMABhJ1dRELNknr4PoKslGorXUeKUno598uwahXzIfsm3af2rnSwPMrP1Z7D0I=
+	t=1787665529; cv=none; b=lt0untd6criqQOli/Gou25zHM84X41a1v+7/b/7s4x9/SCg4NBwHNtmzz6H+tO/x7MQhiaW6fm8+1qaQZWz+jhoOC09p+a+GPr3We/j1AFIigzpR7Cd2X9fDDebCxp86y072LP8KAdatWmHkRVxsLHlCxRz04MX041uLEFDRsNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665528; c=relaxed/simple;
-	bh=CXk8Kdeg6MBtKvhfbGIPO/V1yI5/y+U13Th7UGLKv40=;
+	s=arc-20240116; t=1787665529; c=relaxed/simple;
+	bh=IqxEbCI0+I1M7b7da7gN+atvh0MTnzb1RyzTZuXOFMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBu2/DwdlxqLR6wtHsHCpcAD2OXK08LcLsOVzgeI/DQttePJDnLBhqxiyIuV8XHHKbp3wnG869fggo9M3In2kJZs22x3vGInpM23iqxi+j2FZxVwZetA6y8R/Ov84+MeXYUd97GVK8liC9I35odL4VoHxFLnRODXagG5KYZJzz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6ed4tBC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rfIKeK4NlgYy5fEl91EZu+j1UXfbmr5vBk2biN9Eo8kD1QAirzZINwsW64pZrWv+9f9y2y6GOYOQ0JiuBttArzdp94cvcxrM2s1JZJ3axXgrNkHeW3nqzduX8Dh0qJSJ5DcFkJi5vdDWo3vaLeFn0wAQ1wCbRVFjJoel0xarUYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyuNzlbs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6ed4tBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D9B1F00A3A;
-	Tue, 25 Aug 2026 13:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyuNzlbs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF251F00A3E;
+	Tue, 25 Aug 2026 13:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665522;
-	bh=nXtdTDXmOeOSlELO+vWxplZwDA+xJtiSSXRquY4u28k=;
+	s=korg; t=1787665528;
+	bh=CZlgFmd2eTUY+ke3LLGXmZIlmg9ku904LD8949m8/KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k6ed4tBC8NgrHwv8wxrJeftTK/SH8CfgRAWaHMDFRHakZL0fayfRA4RYv2hF59nCr
-	 QOBwvCgap7FhIoiuXLTIr/Zvx+LziUPmfBrmlWS/sSCouoaCXRc8IqEIKCnsVYmI+h
-	 xCz8aEx2/RfXix15WFJ4MIioWeGBh5VIblvRrYAY=
+	b=tyuNzlbsuiEKq83VmxmrX0B1BYCqr0XYZS5p9GcUuHy6uJSCy4JJMoFjjJjGdsHqt
+	 VNE9FxKNJ+g53MgY9CDGzKayRhtFHYwsImAOVGO0S0iunjTuixcxEeXYkGl3YLEcaI
+	 jBDBwuQDIz4HRkeU4aMhX1cDejLXsQLV2j1Q1oMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 52/77] nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
-Date: Tue, 25 Aug 2026 15:26:14 +0200
-Message-ID: <20260825132543.599946767@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 17/77] serial: sc16is7xx: rename EFR mutex with generic name
+Date: Tue, 25 Aug 2026 15:25:39 +0200
+Message-ID: <20260825132542.236943613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -50,58 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 737a3b535247226f6e1a7988fd9d6e63e7d6fc71 upstream.
+[ Upstream commit d9b2d7ddbb973b981c20b21e9228581bb156f66f ]
 
-When fuzzing the nvme target code, I tripped a kernel warning in
-nvmet_tcp_map_data() because the length passed into the allocator is
-controlled by the remote initiator.
+This mutex is used as a lock when accessing registers that share the same
+address space, not necessarily EFR registers.
 
-A remote initiator that sends a command with an SGL claiming a huge
-number, can create a scatterlist and iovec allocation of over 1 million
-entries, which causes the backing kmalloc call to exceed MAX_PAGE_ORDER
-and then the page allocator will trip on a WARN_ON_ONCE_GFP() message:
+For example, address 0x06 is shared by MSR, TCR and XOFF1 registers,
+independently of EFR.
 
-  WARNING: mm/page_alloc.c:5280 __alloc_frozen_pages_noprof
-  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
-  ...
-  sgl_alloc_order
-  nvmet_tcp_map_data
-  nvmet_tcp_try_recv_pdu
+Rename the mutex with a more generic name to avoid misinterpreting its
+usage.
 
-As it's never good to trip a kernel warning remotely due to many systems
-having panic-on-warn enabled, let's silence it by just add GFP_NOWARN to
-the allocation flags.
-
-Assisted-by: gkh_clanker_2000
-Cc: stable <stable@kernel.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://patch.msgid.link/20251027142957.1032073-3-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 246ac114f485 ("serial: sc16is7xx: enable THRI before filling TX FIFO")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -465,14 +465,15 @@ static int nvmet_tcp_map_data(struct nvm
- 	}
- 	cmd->req.transfer_len += len;
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -327,7 +327,7 @@ struct sc16is7xx_one_config {
+ struct sc16is7xx_one {
+ 	struct uart_port		port;
+ 	struct regmap			*regmap;
+-	struct mutex			efr_lock; /* EFR registers access */
++	struct mutex			lock; /* For registers sharing same address space. */
+ 	struct kthread_work		tx_work;
+ 	struct kthread_work		reg_work;
+ 	struct kthread_delayed_work	ms_work;
+@@ -433,7 +433,7 @@ static void sc16is7xx_efr_lock(struct ua
+ {
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
  
--	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
-+	cmd->req.sg = sgl_alloc(len, GFP_KERNEL | __GFP_NOWARN,
-+				&cmd->req.sg_cnt);
- 	if (!cmd->req.sg)
- 		return NVME_SC_INTERNAL;
- 	cmd->cur_sg = cmd->req.sg;
+-	mutex_lock(&one->efr_lock);
++	mutex_lock(&one->lock);
  
- 	if (nvmet_tcp_has_data_in(cmd)) {
- 		cmd->iov = kmalloc_array(cmd->req.sg_cnt,
--				sizeof(*cmd->iov), GFP_KERNEL);
-+				sizeof(*cmd->iov), GFP_KERNEL | __GFP_NOWARN);
- 		if (!cmd->iov)
- 			goto err;
+ 	/* Backup content of LCR. */
+ 	one->old_lcr = sc16is7xx_port_read(port, SC16IS7XX_LCR_REG);
+@@ -455,7 +455,7 @@ static void sc16is7xx_efr_unlock(struct
+ 	/* Restore original content of LCR */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, one->old_lcr);
+ 
+-	mutex_unlock(&one->efr_lock);
++	mutex_unlock(&one->lock);
+ }
+ 
+ static void sc16is7xx_ier_clear(struct uart_port *port, u8 bit)
+@@ -590,7 +590,7 @@ static int sc16is7xx_set_baud(struct uar
+ 			      SC16IS7XX_MCR_CLKSEL_BIT,
+ 			      prescaler == 1 ? 0 : SC16IS7XX_MCR_CLKSEL_BIT);
+ 
+-	mutex_lock(&one->efr_lock);
++	mutex_lock(&one->lock);
+ 
+ 	/* Backup LCR and access special register set (DLL/DLH) */
+ 	lcr = sc16is7xx_port_read(port, SC16IS7XX_LCR_REG);
+@@ -606,7 +606,7 @@ static int sc16is7xx_set_baud(struct uar
+ 	/* Restore LCR and access to general register set */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+ 
+-	mutex_unlock(&one->efr_lock);
++	mutex_unlock(&one->lock);
+ 
+ 	return DIV_ROUND_CLOSEST((clk / prescaler) / 16, div);
+ }
+@@ -753,7 +753,7 @@ static void sc16is7xx_update_mlines(stru
+ 	unsigned long flags;
+ 	unsigned int status, changed;
+ 
+-	lockdep_assert_held_once(&one->efr_lock);
++	lockdep_assert_held_once(&one->lock);
+ 
+ 	status = sc16is7xx_get_hwmctrl(port);
+ 	changed = status ^ one->old_mctrl;
+@@ -784,7 +784,7 @@ static bool sc16is7xx_port_irq(struct sc
+ 	struct uart_port *port = &s->p[portno].port;
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
+-	mutex_lock(&one->efr_lock);
++	mutex_lock(&one->lock);
+ 
+ 	iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
+ 	if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
+@@ -831,7 +831,7 @@ static bool sc16is7xx_port_irq(struct sc
  	}
+ 
+ out_port_irq:
+-	mutex_unlock(&one->efr_lock);
++	mutex_unlock(&one->lock);
+ 
+ 	return rc;
+ }
+@@ -863,9 +863,9 @@ static void sc16is7xx_tx_proc(struct kth
+ 	    (port->rs485.delay_rts_before_send > 0))
+ 		msleep(port->rs485.delay_rts_before_send);
+ 
+-	mutex_lock(&one->efr_lock);
++	mutex_lock(&one->lock);
+ 	sc16is7xx_handle_tx(port);
+-	mutex_unlock(&one->efr_lock);
++	mutex_unlock(&one->lock);
+ }
+ 
+ static void sc16is7xx_reconf_rs485(struct uart_port *port)
+@@ -932,9 +932,9 @@ static void sc16is7xx_ms_proc(struct kth
+ 	struct sc16is7xx_port *s = dev_get_drvdata(one->port.dev);
+ 
+ 	if (one->port.state) {
+-		mutex_lock(&one->efr_lock);
++		mutex_lock(&one->lock);
+ 		sc16is7xx_update_mlines(one);
+-		mutex_unlock(&one->efr_lock);
++		mutex_unlock(&one->lock);
+ 
+ 		kthread_queue_delayed_work(&s->kworker, &one->ms_work, HZ);
+ 	}
+@@ -1604,7 +1604,7 @@ int sc16is7xx_probe(struct device *dev,
+ 		s->p[i].old_mctrl	= 0;
+ 		s->p[i].regmap		= regmaps[i];
+ 
+-		mutex_init(&s->p[i].efr_lock);
++		mutex_init(&s->p[i].lock);
+ 
+ 		ret = uart_get_rs485_mode(&s->p[i].port);
+ 		if (ret)
 
 
