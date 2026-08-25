@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1986B481AA6;
-	Tue, 25 Aug 2026 13:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9822D2E06E4;
+	Tue, 25 Aug 2026 13:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665647; cv=none; b=c3HpJex87MOcaL3T/SSV1eyUr+8kA7Zcm4ba3+qd9PNdXuhIGKrRvG0qq+tSrxzk+pBYWirHGrxjj5H1jdfoAOXoaNWVIUAOfp9JiZ2FFXXPVaMgDAiVRyGuZ2lngjPdsLBqu3W3Cd8UtbbQhnXmD2Z/G1XejiGbHpAi+WLceZg=
+	t=1787665649; cv=none; b=bjw2AOdHnNOBklMMPfBvNOf0MHQW1pMu60v9Z1U4CBqRPBkHLtDULFML5msGrXR11U/rO+VSnZgAlSZZV0z1J4APa0goPEVeGJlJB7KORzsAYX+l8I/fc4kYdV9afPxnYqcDTh4AXeT//qf9nYFGeiawLJphHDJi/xBEFBn7Z7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665647; c=relaxed/simple;
-	bh=QeLmcUuGNfOX+IO71XrHd6YgvuczWGFk+ZywvGIY2JA=;
+	s=arc-20240116; t=1787665649; c=relaxed/simple;
+	bh=EzcFVCUiKWBEGQ3KjBgoXdF0atKX6Ci8AETfI3eT/zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTvaznQZ5nA7a14quZO064k/Pzd0abDTE7vOeXgrz2zpiVgTZPBAwyq4vrkxDqnLblqK3JW3UQkjwOmhKEYpsFGjMkTQs1vUsXRE30B0dSWry0j0AKWDkSK/hOCWsGH+1QxpRCSBMaYUXablCRV+2a+U3zySnL3Nhee195Q8+SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PodjGqcc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wvk2vOAukqQv4kTTB0YeXXrEIjtSawpiLOlkjd2TydjOB8xPMNS0CXelo3MAp4CFfg/Ec8B8b2a0xIEOuemJ/00VNoSpaYmV29O4subx6gRezB7Ff+S2N+m+m6M16yP3nTypDv6lM2+JuFOdvNgfhwSSyaCv8DKaPYlU31xlLMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdPJnskG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PodjGqcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D911F000E9;
-	Tue, 25 Aug 2026 13:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdPJnskG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E401F000E9;
+	Tue, 25 Aug 2026 13:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665645;
-	bh=jRruoqnsAIcDi4L0RBpp6A4mxBBWXpI2n6gjBov+32Q=;
+	s=korg; t=1787665648;
+	bh=aG4gT8t5u7TPrtYNsVplfpYXXs41JeuLdChHE+2X3X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PodjGqccjZe3psEJyZeP+Nxu0MzpMHmqv3/HXODI6+mzCb5IRrxVTvbbyWWblLojN
-	 Uivcu/G7+8u7pubcLDzLLZkTXXfvUE5QMzoLrHD8jYNYKArx6WjKLS9IyTJhdIZs2+
-	 +67BAdoC2mv7RXMg9g8HjZKTpWKrPjtgzoALK9KE=
+	b=JdPJnskG0ZHC89RNRoNBg6xbFNrnNRl5hjcZCZ9aDQERLD1zck9eER2MtUlEwl/Wx
+	 c8Ry01XgkAL0NKBnqs3vs0NLW+qaQJBRmOaJOmxGSjhR2s4ispcDJ3uQ2ipqKnZ6Go
+	 kkqFrVYY/qKzD/RNppwEVd2mYOThd1ZL78d5UAT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 02/87] Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
-Date: Tue, 25 Aug 2026 15:25:25 +0200
-Message-ID: <20260825132541.911228095@linuxfoundation.org>
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Shaoxu Liu <shaoxul@foxmail.com>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 03/87] rndis_host: add overflow check in rndis_rx_fixup()
+Date: Tue, 25 Aug 2026 15:25:26 +0200
+Message-ID: <20260825132541.948476517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -50,133 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit 43a556b2fd43f2df6dded59c2e26560a27874c24 upstream.
+commit 965a251f23ff69cfb4486974d4532e9bb551c7fc upstream.
 
-rfcomm_sock_recvmsg() completes a deferred setup by calling
-rfcomm_dlc_accept() without holding any RFCOMM lock:
+Add an overflow check to ensure that data_offset + data_len + 8 does not
+wrap, which would enable an OOB read of the USB data buffer.
 
-	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
-		rfcomm_dlc_accept(d);
-		return 0;
-	}
-
-and rfcomm_dlc_accept() dereferences the session on its first line:
-
-	struct sock *sk = d->session->sock->sk;
-
-Every other path that touches d->session runs under rfcomm_mutex:
-rfcomm_dlc_open(), rfcomm_dlc_close(), rfcomm_dlc_exists(),
-rfcomm_dlc_send_rpn(), and the RFCOMM thread through
-rfcomm_process_sessions(). rfcomm_connect_ind() is even documented as
-"called under rfcomm_lock()". This call site is the only one that skips
-it.
-
-The RFCOMM_DEFER_SETUP bit looks like it serialises the accept against
-teardown, since __rfcomm_dlc_close() returns early when it wins the
-test_and_clear. But rfcomm_recv_disc() forces the state first:
-
-	d->state = BT_CLOSED;
-	__rfcomm_dlc_close(d, err);
-
-and the early return only covers BT_CONNECT, BT_CONFIG, BT_OPEN and
-BT_CONNECT2. With the state already BT_CLOSED that switch does not
-match, the bit is never consulted, and __rfcomm_dlc_close() falls
-through to rfcomm_dlc_unlink(), which sets d->session = NULL.
-
-So a remote DISC on a deferred dlc clears the session while leaving
-RFCOMM_DEFER_SETUP set. The next recvmsg() then passes the
-test_and_clear and dereferences a NULL session. No timing window is
-needed: once the DISC has been processed, the dereference is
-unconditional.
-
-Give rfcomm_dlc_accept() the same shape as rfcomm_dlc_open() and
-rfcomm_dlc_close(): an exported wrapper that takes rfcomm_mutex and
-re-checks the session, around a __rfcomm_dlc_accept() that the two
-in-core callers, which already hold the mutex, keep using.
-
-Reproduced on a KASAN + PROVE_LOCKING kernel with a BR/EDR peer emulated
-over /dev/vhci: the peer brings up an ACL link, opens L2CAP on the
-RFCOMM PSM, starts a session, opens a dlc on a channel bound with
-BT_DEFER_SETUP, and sends DISC after the socket is accepted. recv() on
-the accepted socket then hits:
-
-  Oops: general protection fault
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:rfcomm_dlc_accept+0x54/0x350
-  Call Trace:
-    rfcomm_sock_recvmsg+0x1cd/0x230
-    sock_recvmsg+0x166/0x1c0
-    __sys_recvfrom+0x20d/0x300
-
-0x10 is the offset of sock in struct rfcomm_session. With this patch the
-same run completes with recv() returning 0 and no report, and lockdep
-stays quiet, confirming rfcomm_mutex is still taken before lock_sock on
-this path as it is on the thread side.
-
-Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: Shaoxu Liu <shaoxul@foxmail.com>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/2026070900-denim-brook-52d4@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/core.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/net/usb/rndis_host.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1334,7 +1334,10 @@ static struct rfcomm_session *rfcomm_rec
- 	return s;
- }
+--- a/drivers/net/usb/rndis_host.c
++++ b/drivers/net/usb/rndis_host.c
+@@ -14,6 +14,7 @@
+ #include <linux/usb/cdc.h>
+ #include <linux/usb/usbnet.h>
+ #include <linux/usb/rndis_host.h>
++#include <linux/overflow.h>
  
--void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+/* Must be called with rfcomm_mutex held, so that the session cannot be
-+ * unlinked from under us.
-+ */
-+static void __rfcomm_dlc_accept(struct rfcomm_dlc *d)
- {
- 	struct sock *sk = d->session->sock->sk;
- 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
-@@ -1356,6 +1359,21 @@ void rfcomm_dlc_accept(struct rfcomm_dlc
- 	rfcomm_send_msc(d->session, 1, d->dlci, d->v24_sig);
- }
  
-+void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+{
-+	rfcomm_lock();
-+
-+	/* rfcomm_recv_disc() sets the dlc state to BT_CLOSED before calling
-+	 * __rfcomm_dlc_close(), so the RFCOMM_DEFER_SETUP handshake there is
-+	 * skipped and the session can already be unlinked by the time the
-+	 * deferred accept runs from rfcomm_sock_recvmsg().
-+	 */
-+	if (d->session)
-+		__rfcomm_dlc_accept(d);
-+
-+	rfcomm_unlock();
-+}
-+
- static void rfcomm_check_accept(struct rfcomm_dlc *d)
- {
- 	if (rfcomm_check_security(d)) {
-@@ -1368,7 +1386,7 @@ static void rfcomm_check_accept(struct r
- 			d->state_change(d, 0);
- 			rfcomm_dlc_unlock(d);
- 		} else
--			rfcomm_dlc_accept(d);
-+			__rfcomm_dlc_accept(d);
- 	} else {
- 		set_bit(RFCOMM_AUTH_PENDING, &d->flags);
- 		rfcomm_dlc_set_timer(d, RFCOMM_AUTH_TIMEOUT);
-@@ -1953,7 +1971,7 @@ static void rfcomm_process_dlcs(struct r
- 					d->state_change(d, 0);
- 					rfcomm_dlc_unlock(d);
- 				} else
--					rfcomm_dlc_accept(d);
-+					__rfcomm_dlc_accept(d);
- 			}
- 			continue;
- 		} else if (test_and_clear_bit(RFCOMM_AUTH_REJECT, &d->flags)) {
+ /*
+@@ -506,6 +507,7 @@ int rndis_rx_fixup(struct usbnet *dev, s
+ 		struct rndis_data_hdr	*hdr = (void *)skb->data;
+ 		struct sk_buff		*skb2;
+ 		u32			msg_type, msg_len, data_offset, data_len;
++		u32			overflow_check;
+ 
+ 		msg_type = le32_to_cpu(hdr->msg_type);
+ 		msg_len = le32_to_cpu(hdr->msg_len);
+@@ -514,7 +516,9 @@ int rndis_rx_fixup(struct usbnet *dev, s
+ 
+ 		/* don't choke if we see oob, per-packet data, etc */
+ 		if (unlikely(msg_type != RNDIS_MSG_PACKET || skb->len < msg_len
+-				|| (data_offset + data_len + 8) > msg_len)) {
++				|| (data_offset + data_len + 8) > msg_len
++				|| check_add_overflow(data_offset, data_len, &overflow_check)
++				|| check_add_overflow(overflow_check, 8, &overflow_check))) {
+ 			dev->net->stats.rx_frame_errors++;
+ 			netdev_dbg(dev->net, "bad rndis message %d/%d/%d/%d, len %d\n",
+ 				   le32_to_cpu(hdr->msg_type),
 
 
