@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913EA471431;
-	Tue, 25 Aug 2026 13:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963EE480346;
+	Tue, 25 Aug 2026 13:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664902; cv=none; b=AjdhQNIhw/8Xw+gIY4EoKq9mb7F9z0fuU+0kv5q8kbc7RgPlM+x1KWcdiC2+so64Qy37v48TXfX5XjsaLNbLIZxGCLQRJ/wF9LIBkImPVjwjmPuTDs3chHszfFZ/yxsf9uogGj3dWNx8hcxxMmI72Yg+6E0Xa1sY+y+xBgS27wI=
+	t=1787664905; cv=none; b=jC5czWxSjY+kyV9isUf240ht7XzAg/iZKp6HNkiv+QQAG8bAGbxy2UKKYtDgUT20Gp0OYPy+3QBgnjSnusBzxO5bBD0mryKL/oKB7CmMky8hcd45w4u962Ds471kZQvWDp7DFiMBflXbfXRS06oPrbwMzzfizheu7d31+O1f9Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664902; c=relaxed/simple;
-	bh=xbW+i/+fgCpnrhplu1vy/E5vZltxtxLEQQg1pwtnJjw=;
+	s=arc-20240116; t=1787664905; c=relaxed/simple;
+	bh=5m1c6ce+stSCVgEU9iFTlQHj5i7ajZQUrVmcP1WIGzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9UMIICpG1xCIQ6sHibMC6Eh9IF8/o/VPtwvKvCcqnaV7wgMgKFU7biZobAw66D+bo2w9dGlQxOqrViUMj93FDRPz+5F/nmGPzP+adhogytvrMmZbqPUiXZphdLVN8/wQV/QxbvAwnst5uZN9sUFcWHUJmZQMXnJOQTWATynDTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLBoZpoH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EMbf7EpJqgVCvrG8KZ6umbfItPE3zJoUR2f41JFnFOQikO48qoJIjQTNMQ/9eJ/vJbM+Qz44IQvV4uho6QfgiFauyRxhYmvnapmumTPIgl1LyqcvKr4cbZbzt0ySgaJGwboNiiVtTdyaO5AwjYJExiy/ckVZHC/XxfaT/Lt0Fl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTyDfZle; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLBoZpoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C711F000E9;
-	Tue, 25 Aug 2026 13:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTyDfZle"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E5D1F000E9;
+	Tue, 25 Aug 2026 13:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664901;
-	bh=4SmOZ5GRDSijCROk8yum/TPWBQ3WnxXwVwUOr8xMaGY=;
+	s=korg; t=1787664904;
+	bh=X2i4MxSymlUAvoor3jDqg+veSjYb9YPqjnqpTfSrM/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rLBoZpoH+swhWHRjmk/ts3BlUr40NijRzALvfVKoG6HI83ljGtnEanIQUg5e3QbhO
-	 I12yOiCZ2cfxYrbL0Gln3FiyJHAdso1qM2XYTCEFYecUnDaQwwyytOhmPOoj1UwB3q
-	 MPtguZrc29KMnkgiAiQR+ks1yswlmjv/GxmRfH/A=
+	b=xTyDfZleH6BgaqAqiQY6JhLZIqhEmWlBi8OYQDalvP5Wye0uzmvBacDIfG2OxhDAr
+	 XBrS3R5m3S8eeedxJNMJ8P22X6AjJ7AIlsIvMYebTyUjw/GEIGh9z5qSeVEeLb1C1A
+	 jS/z3HikZ1O+caczKLvYcpNYuH+1++DWkBeq4Dis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Xu Rao <raoxu@uniontech.com>,
 	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.1 042/101] nfc: llcp: reject PDUs shorter than the LLCP header
-Date: Tue, 25 Aug 2026 15:25:20 +0200
-Message-ID: <20260825132543.664995027@linuxfoundation.org>
+Subject: [PATCH 7.1 043/101] nfc: pn533: purge fragmented skbs during cleanup
+Date: Tue, 25 Aug 2026 15:25:21 +0200
+Message-ID: <20260825132543.705969147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -52,64 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 95674f506c6376d6722a23144c9acd26609771ed upstream.
+commit 5718fc62198c38c2de5316020a90506f9e75e0bb upstream.
 
-Every LLCP PDU begins with a two-byte header (DSAP/SSAP + PTYPE), but the
-receive path never checked that a frame is at least LLCP_HEADER_SIZE bytes
-before parsing it.
+pn53x_common_clean() purges resp_q before freeing the common PN533 state,
+but it leaves fragment_skb untouched.  The fragmentation helpers queue
+transmit fragments there while sending large initiator or target-mode
+frames, and those skbs remain owned by the driver until they are sent or
+discarded.
 
-nfc_llcp_rx_skb() reads the header via nfc_llcp_ptype()/nfc_llcp_dsap()/
-nfc_llcp_ssap(), which dereference pdu->data[0] and pdu->data[1], and a
-CONNECT or CC PDU then computes
+If the device is removed while fragments are still queued, the common
+cleanup path frees the PN533 state without releasing the queued fragment
+skbs, leaking them.
 
-	tlv_array_len = skb->len - LLCP_HEADER_SIZE;
+Purge fragment_skb during cleanup alongside resp_q.
 
-as a size_t and hands it to the TLV walk. When the frame is shorter than
-the header the subtraction wraps to a huge value and the walk runs far
-past the buffer, an out-of-bounds read.
-
-A nearby NFC device can reach this without authentication; LLCP link
-activation happens automatically after NFC-DEP.
-
-Guard the common receive choke point __nfc_llcp_recv(), shared by both the
-target (nfc_llcp_data_received()) and initiator (nfc_llcp_recv()) paths, so
-a short skb is dropped before the rx_work worker parses it. Use
-pskb_may_pull() rather than a skb->len test so the two header bytes are
-guaranteed to sit in the skb linear area even for a non-linear skb,
-matching how the sibling NCI and HCI receive paths validate their headers.
-
-Reproduced with a KFENCE out-of-bounds read via /dev/virtual_nci on
-linux-next.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Fixes: 963a82e07d4e ("NFC: pn533: Split large Tx frames in chunks")
 Cc: stable@vger.kernel.org
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260714164631.75068-1-doruk@0sec.ai
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/2D896607CAE4408E+20260720021444.3362044-1-raoxu@uniontech.com
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/nfc/pn533/pn533.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1554,6 +1554,11 @@ static void nfc_llcp_rx_work(struct work
+--- a/drivers/nfc/pn533/pn533.c
++++ b/drivers/nfc/pn533/pn533.c
+@@ -2799,6 +2799,7 @@ void pn53x_common_clean(struct pn533 *pr
+ 	destroy_workqueue(priv->wq);
  
- static void __nfc_llcp_recv(struct nfc_llcp_local *local, struct sk_buff *skb)
- {
-+	if (!pskb_may_pull(skb, LLCP_HEADER_SIZE)) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
- 	local->rx_pending = skb;
- 	timer_delete(&local->link_timer);
- 	schedule_work(&local->rx_work);
+ 	skb_queue_purge(&priv->resp_q);
++	skb_queue_purge(&priv->fragment_skb);
+ 
+ 	list_for_each_entry_safe(cmd, n, &priv->cmd_queue, queue) {
+ 		list_del(&cmd->queue);
 
 
