@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78BE481FC1;
-	Tue, 25 Aug 2026 13:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DDB470117;
+	Tue, 25 Aug 2026 13:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666021; cv=none; b=Sj2V8dWNerVEGfeV+4srZ7aOOQD4Pe95A2hhlo1eID4Ds0epqbBin4PL7+zFufOKGDb14+EqPIvR5IcF3BaG8+4siVlNsLnoFXmt3lALQoaHp2SFoCJrfgNH5Cdx7Wo3bYd9LdyiQrllnrYnuDmjZjeyJXeaNV2TnQcBBDbkD0Y=
+	t=1787666026; cv=none; b=K7g4f4/W15DGuzHbDUI06oWG2RarmKy1W7HdqXrhZ5bap0j0ZrWdYeS0yC3Pe5dWNzr4iISj9TMR5RR34pOOjKS7LJHj7OOHN9HkDleUpdDjRhJtd6jhSSuyFjfNcBMI7aCTAwnBv+k7gLBmPqkrphiWLlVn2t7owJIqYuE3Q/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666021; c=relaxed/simple;
-	bh=f/qHFFcD8jBy3ZlJp93QfBallwdjsrhtKwZ/6vildQo=;
+	s=arc-20240116; t=1787666026; c=relaxed/simple;
+	bh=mY+gnfv+wJMeGbFq5pYtwxTV4TnnWTgp5VIF+Le3oCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWOhrKqif9z8Mf32V+RE2IlEAEsuEswgRGOX8XZPLdu+/c8bGAiAiyOPppPPQEU+IzISNA8deWNVg9GdENgU669K+8/GqQr3DLeDKcZ2U36vZAu4Bj5Km3ERrCmx6gfJPpbmjO+qdLgKiQt5Sb9A+UZpXbOkfRRY7930Ix5dnzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Z/JSzfs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=j4BWdtXRqijwXCa71BJgHzlfnElC2yDAoXWoEEKNeLdVNY8wr9a5JsBbHzH8RctCc/4nWi4+ACq4fcHU9SmuygXXJ9hTGWyVC4EZHe/vw6oMVGsBeBqNKyGM9MXHJEq0x+mUspxM4kn+WalTQik8+2ijx+iXtupER4jrgVsY/B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YVK9Smv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Z/JSzfs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE961F000E9;
-	Tue, 25 Aug 2026 13:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YVK9Smv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CFB1F00A3A;
+	Tue, 25 Aug 2026 13:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666019;
-	bh=y6RT+2FtzrS6l7uVWDwOcP/yGJuINaTWqeORnnsJWes=;
+	s=korg; t=1787666025;
+	bh=DMIuV9mvxLkbBDk/5qmckoCoyTfzhJ0WKMWGkW21wXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Z/JSzfsqI55rpQy8/m+gaoLkKfIw9b4OMTdhHlb9FLjX+va6+cXynOdFBXnByfAR
-	 T0oprh8NgI8qpkHY/cVbE47jef9g74vVZVrO46X7t906232r6aNYQjR6ha3Y4JqQcJ
-	 JNVrszDFlzd9gBP84ktmxTcNFiWNBt7RbHcC2o5k=
+	b=1YVK9SmvMF9Z/Xv2vH3cPV6dd95Re6P3vTIzDKDVjxFEq5KU3xdydVJ6qWUTmgFPs
+	 C9kE0sxTdBgMcqeuBMDlTepf1y662vXnL0Xc9oWUUGqZzTNuTSa0ksQcXnlgt9hNcq
+	 VAee5rwX6Y1NG427T6gPrL1OuR7v7YSBNVxXfwRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Jiang HongHui <jiang_hh2019@163.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 58/79] nvmet-fc: fix invalid free in LS IOD error path
-Date: Tue, 25 Aug 2026 15:26:38 +0200
-Message-ID: <20260825132543.968336605@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 60/79] Input: byd - synchronize timer deletion before freeing private data
+Date: Tue, 25 Aug 2026 15:26:40 +0200
+Message-ID: <20260825132544.037507518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -45,52 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiang HongHui <jiang_hh2019@163.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit ba98d6796d12258e837ece065d2ecb59d76ce4ff upstream.
+[ Upstream commit c83e79c0842ed29860648bcce5022ef0ba5001c6 ]
 
-nvmet_fc_alloc_ls_iodlist() advances iod while initializing the LS IOD
-array. If an rqstbuf allocation or response buffer DMA mapping fails,
-the unwind loop decrements iod past the start of the array. The final
-kfree(iod) therefore frees an address before the allocated object.
+byd_disconnect() uses timer_delete() before freeing the driver's private
+data.  This does not wait for a running byd_clear_touch() callback, which
+dereferences the private data and its psmouse pointer.  A callback racing
+with disconnect can therefore access the private data after it has been
+freed.  The timer can also still be re-armed by byd_process_byte() while
+the disconnect is in progress.
 
-This can be reproduced with nvme-fcloop and failslab by setting
-fail-nth to 6 before creating a target port. KASAN reports:
+Use timer_shutdown_sync() before freeing the private data: it waits for
+a running callback and turns any later re-arm attempt into a no-op.
 
-  BUG: KASAN: invalid-free in nvmet_fc_register_targetport
-  Free of addr ffff88816cf8ff48 by task nvmet_fail_nth/9552
-
-Free the original allocation base stored in tgtport->iod instead. With
-this fix applied, the same sysfs write with fail-nth=6 returns -ENOMEM
-without any KASAN report.
-
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Fixes: 2d5f5611dd0d ("Input: byd - enable absolute mode")
 Cc: stable@vger.kernel.org
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jiang HongHui <jiang_hh2019@163.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260720061259.1601281-1-lilinmao@kylinos.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ changed `del_timer()` to `timer_shutdown_sync()` since 6.12 predates the `del_timer()` → `timer_delete()` rename ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    2 +-
+ drivers/input/mouse/byd.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -571,7 +571,7 @@ out_fail:
- 		list_del(&iod->ls_rcv_list);
+--- a/drivers/input/mouse/byd.c
++++ b/drivers/input/mouse/byd.c
+@@ -426,7 +426,7 @@ static void byd_disconnect(struct psmous
+ 	struct byd_data *priv = psmouse->private;
+ 
+ 	if (priv) {
+-		del_timer(&priv->timer);
++		timer_shutdown_sync(&priv->timer);
+ 		kfree(psmouse->private);
+ 		psmouse->private = NULL;
  	}
- 
--	kfree(iod);
-+	kfree(tgtport->iod);
- 
- 	return -EFAULT;
- }
 
 
