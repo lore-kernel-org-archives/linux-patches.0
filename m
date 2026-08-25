@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823AC478E58;
-	Tue, 25 Aug 2026 13:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E11B403123;
+	Tue, 25 Aug 2026 13:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665691; cv=none; b=tYgCQP9Bp3NMmIf02yks3yzkEiJcBaH64xPUNa0alPfwPbburboZV0HjGW2D5ZVrKYNhm6x8OiGk9hXkjBZwVEq4J6G/IYdcyBd9TGXnuELrhxZRXvQnUOap/whwal+Rwj750xH7G4Z1F0G5FFljlvZog79Z6a8j3ypZ14UVsCg=
+	t=1787665696; cv=none; b=J4eEJWlzqZ+4Q6HZ4qlHmZWWOcFXPrKt12VeHWdPrdGFkLxFM0BijUt598e3iOMgpk/PgM6dkxHmlrzT+1nst+K609YYHuiNijUfnRoErJ6PKG9DtYvV3ZTnJuv/XoXmhU4Q8p2c95oZpuYCt4SbMelEXuD+61D96CVOAoTjjEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665691; c=relaxed/simple;
-	bh=ahZNTt1IDP2Azx1UAhBf2fOgBSQEqpIZKCfVqq/VFN8=;
+	s=arc-20240116; t=1787665696; c=relaxed/simple;
+	bh=5f1PQcJop5R5BuQQus5W3oqP+xF0yfBXTzhh2xGfb6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9VrdLbBKdKPWNalqG1wNVhtaLuTaS1SWwybkuaxdcIc17q7mpRw4NkSiCN/NxdrxJQ9oBNvG1Hi5m13WP99yhBLogdwDezpTO3w4kNIMR9ODOz9XXgGZWB8J0JHDSM/Pi8+UqcweJBDPqX5qbYJDrRZswRUVPPcbUq+ZJRYwxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkTHDdA9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vf2q32r1pRlKW2m0zcFYNF2MX83ZTIrHMIKc02doBtV3CYwZYwo1CX6CYnKaN+t+qOBzfKAPNojZ003l9nod/kiqgDfbY220ugBOeVhRX5L8LUrOMyroqyWWvqhwT36cchyHpBe3ZuVYnYSuiobAX9MRXB1kphKsrZJgTtJbOc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5GlnLhi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkTHDdA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B811F000E9;
-	Tue, 25 Aug 2026 13:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5GlnLhi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D3E1F000E9;
+	Tue, 25 Aug 2026 13:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665690;
-	bh=WJ15f2DWFDpKKYzczGmc3GrHQqYKRLZ7r+Q/bn0V7w8=;
+	s=korg; t=1787665694;
+	bh=DkB4KUsez3GGkHJ42eNVqIH1N3mV2tXkxNwWYAwnWeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TkTHDdA90pI9tDelRdrLnzMPfLe/0QztRqxEjwYODBU8CKUl1lhu2OvfaSE1gWCb+
-	 uW9PmpDlH2u4perTGIj7u72YGPkKu95stq+dJ2esOhONg+Gfqop9yvhXtMbIGzptWV
-	 HAXzuVgqP7EuVOJKCflnRylmQgHN5lGnNWf7YHD0=
+	b=x5GlnLhimmfCCkuvb3x7Thy8DXFggmnBYO7Hrgs6zjtnOqqRkpsZvwNgMP4sz9BYx
+	 6FzDgtPMrgrFv/qFkfxji8YIMOFrFqE5kEaRzCebdR/dtfOhKbfQUzbKNFZ6L5nkw4
+	 zrK2qNlnUoG4XBx9K9FXtQaexLZH92dA5+vtqBgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Krunoslav Kovac <krunoslav.kovac@amd.com>,
+	Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Robert Mader <robert.mader@collabora.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 34/87] drm/amd/amdgpu: disable ASPM in some situations
-Date: Tue, 25 Aug 2026 15:25:57 +0200
-Message-ID: <20260825132543.188077240@linuxfoundation.org>
+Subject: [PATCH 6.6 35/87] drm/amd/display: Fix BT2020 YCbCr limited/full range input
+Date: Tue, 25 Aug 2026 15:25:58 +0200
+Message-ID: <20260825132543.226718604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,126 +55,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenneth Feng <kenneth.feng@amd.com>
+From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
 
-[ Upstream commit c770ef19673fb1defcbde2ee2b91c3c89bfcf164 ]
+[ Upstream commit 07bc2dcbcf403d47d6f305ef7f0d3d489491c5fb ]
 
-disable ASPM with some ASICs on some specific platforms.
-required from PCIe controller owner.
+[Why]
+BT2020 YCbCr input is not handled properly when full range
+quantization is used and limited range is not supported at all.
 
-Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+[How]
+- Add enums for BT2020 YCbCr limited/full range
+- Add limited range CSC matrix
+
+Reviewed-by: Krunoslav Kovac <krunoslav.kovac@amd.com>
+Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Robert Mader <robert.mader@collabora.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 2a9c5154a565 ("drm/amdgpu: check ASPM on the dGPU host link")
+Stable-dep-of: 2f9a5c0f018d ("drm/amd/display: fix BT.2020 YCbCr limited output CSC matrix")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h        |    2 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   54 +++++++++++++++++++++++------
- drivers/gpu/drm/amd/amdgpu/nv.c            |    2 -
- 3 files changed, 45 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c                  |    6 +++---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c          |    2 +-
+ drivers/gpu/drm/amd/display/dc/basics/dc_common.c                  |    3 ++-
+ drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c              |    5 +++--
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c                  |    4 ++--
+ drivers/gpu/drm/amd/display/dc/dc_hw_types.h                       |    4 +++-
+ drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c            |    3 ++-
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c        |    3 ++-
+ drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hpo_dp_stream_encoder.c |    3 ++-
+ drivers/gpu/drm/amd/display/dc/inc/hw/dpp.h                        |    6 +++++-
+ drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c      |    4 ++--
+ 11 files changed, 27 insertions(+), 16 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -1300,7 +1300,7 @@ int amdgpu_device_pci_reset(struct amdgp
- bool amdgpu_device_need_post(struct amdgpu_device *adev);
- bool amdgpu_device_pcie_dynamic_switching_supported(void);
- bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev);
--bool amdgpu_device_aspm_support_quirk(void);
-+bool amdgpu_device_nv_aspm_support_quirk(void);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4937,9 +4937,9 @@ fill_plane_color_attributes(const struct
  
- void amdgpu_cs_report_moved_bytes(struct amdgpu_device *adev, u64 num_bytes,
- 				  u64 num_vis_bytes);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -84,6 +84,7 @@
+ 	case DRM_COLOR_YCBCR_BT2020:
+ 		if (full_range)
+-			*color_space = COLOR_SPACE_2020_YCBCR;
++			*color_space = COLOR_SPACE_2020_YCBCR_FULL;
+ 		else
+-			return -EINVAL;
++			*color_space = COLOR_SPACE_2020_YCBCR_LIMITED;
+ 		break;
  
- #if IS_ENABLED(CONFIG_X86)
- #include <asm/intel-family.h>
-+#include <asm/cpu_device_id.h>
- #endif
- 
- MODULE_FIRMWARE("amdgpu/vega10_gpu_info.bin");
-@@ -1283,6 +1284,46 @@ bool amdgpu_device_pcie_dynamic_switchin
- 	return true;
- }
- 
-+bool amdgpu_device_nv_aspm_support_quirk(void)
-+{
-+#if IS_ENABLED(CONFIG_X86)
-+	struct cpuinfo_x86 *c = &cpu_data(0);
-+
-+	return !(c->x86 == 6 && c->x86_model == INTEL_FAM6_ALDERLAKE);
-+#else
-+	return true;
-+#endif
-+}
-+
-+static bool amdgpu_device_aspm_support_quirk(struct amdgpu_device *adev)
-+{
-+#if IS_ENABLED(CONFIG_X86)
-+	struct cpuinfo_x86 *c = &cpu_data(0);
-+
-+	if (!(adev->ip_versions[GC_HWIP][0] == IP_VERSION(12, 0, 0) ||
-+		  adev->ip_versions[GC_HWIP][0] == IP_VERSION(12, 0, 1)))
-+		return false;
-+
-+	if (c->x86 == 6 &&
-+		adev->pm.pcie_gen_mask & CAIL_PCIE_LINK_SPEED_SUPPORT_GEN5) {
-+		switch (c->x86_model) {
-+		case VFM_MODEL(INTEL_ALDERLAKE):
-+		case VFM_MODEL(INTEL_ALDERLAKE_L):
-+		case VFM_MODEL(INTEL_RAPTORLAKE):
-+		case VFM_MODEL(INTEL_RAPTORLAKE_P):
-+		case VFM_MODEL(INTEL_RAPTORLAKE_S):
-+			return true;
-+		default:
-+			return false;
-+		}
-+	} else {
-+		return false;
-+	}
-+#else
-+	return false;
-+#endif
-+}
-+
- /**
-  * amdgpu_device_should_use_aspm - check if the device should program ASPM
-  *
-@@ -1305,20 +1346,11 @@ bool amdgpu_device_should_use_aspm(struc
  	default:
+@@ -5430,7 +5430,7 @@ get_output_color_space(const struct dc_c
+ 		if (dc_crtc_timing->pixel_encoding == PIXEL_ENCODING_RGB)
+ 			color_space = COLOR_SPACE_2020_RGB_FULLRANGE;
+ 		else
+-			color_space = COLOR_SPACE_2020_YCBCR;
++			color_space = COLOR_SPACE_2020_YCBCR_LIMITED;
+ 		break;
+ 	case DRM_MODE_COLORIMETRY_DEFAULT: // ITU601
+ 	default:
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -1091,7 +1091,7 @@ static int amdgpu_current_colorspace_sho
+ 	case COLOR_SPACE_2020_RGB_FULLRANGE:
+ 		seq_puts(m, "BT2020_RGB");
+ 		break;
+-	case COLOR_SPACE_2020_YCBCR:
++	case COLOR_SPACE_2020_YCBCR_LIMITED:
+ 		seq_puts(m, "BT2020_YCC");
+ 		break;
+ 	default:
+--- a/drivers/gpu/drm/amd/display/dc/basics/dc_common.c
++++ b/drivers/gpu/drm/amd/display/dc/basics/dc_common.c
+@@ -40,7 +40,8 @@ bool is_rgb_cspace(enum dc_color_space o
+ 	case COLOR_SPACE_YCBCR709:
+ 	case COLOR_SPACE_YCBCR601_LIMITED:
+ 	case COLOR_SPACE_YCBCR709_LIMITED:
+-	case COLOR_SPACE_2020_YCBCR:
++	case COLOR_SPACE_2020_YCBCR_LIMITED:
++	case COLOR_SPACE_2020_YCBCR_FULL:
  		return false;
- 	}
-+	if (amdgpu_device_aspm_support_quirk(adev))
-+		return false;
- 	return pcie_aspm_enabled(adev->pdev);
- }
- 
--bool amdgpu_device_aspm_support_quirk(void)
--{
--#if IS_ENABLED(CONFIG_X86)
--	struct cpuinfo_x86 *c = &cpu_data(0);
--
--	return !(c->x86 == 6 && c->x86_model == INTEL_FAM6_ALDERLAKE);
--#else
--	return true;
--#endif
--}
--
- /* if we get transitioned to only one device, take VGA back */
- /**
-  * amdgpu_device_vga_set_decode - enable/disable vga decode
---- a/drivers/gpu/drm/amd/amdgpu/nv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nv.c
-@@ -513,7 +513,7 @@ static int nv_set_vce_clocks(struct amdg
- 
- static void nv_program_aspm(struct amdgpu_device *adev)
+ 	default:
+ 		/* Add a case to switch */
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -173,7 +173,7 @@ static bool is_ycbcr2020_type(
  {
--	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_aspm_support_quirk())
-+	if (!amdgpu_device_should_use_aspm(adev) || !amdgpu_device_nv_aspm_support_quirk())
- 		return;
+ 	bool ret = false;
  
- 	if (!(adev->flags & AMD_IS_APU) &&
+-	if (color_space == COLOR_SPACE_2020_YCBCR)
++	if (color_space == COLOR_SPACE_2020_YCBCR_LIMITED || color_space == COLOR_SPACE_2020_YCBCR_FULL)
+ 		ret = true;
+ 	return ret;
+ }
+@@ -244,7 +244,8 @@ void color_space_to_black_color(
+ 	case COLOR_SPACE_YCBCR709_BLACK:
+ 	case COLOR_SPACE_YCBCR601_LIMITED:
+ 	case COLOR_SPACE_YCBCR709_LIMITED:
+-	case COLOR_SPACE_2020_YCBCR:
++	case COLOR_SPACE_2020_YCBCR_LIMITED:
++	case COLOR_SPACE_2020_YCBCR_FULL:
+ 		*black_color = black_color_format[BLACK_COLOR_FORMAT_YUV_CV];
+ 		break;
+ 
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -3296,7 +3296,7 @@ static void set_avi_info_frame(
+ 		break;
+ 	case COLOR_SPACE_2020_RGB_FULLRANGE:
+ 	case COLOR_SPACE_2020_RGB_LIMITEDRANGE:
+-	case COLOR_SPACE_2020_YCBCR:
++	case COLOR_SPACE_2020_YCBCR_LIMITED:
+ 		hdmi_info.bits.EC0_EC2 = COLORIMETRYEX_BT2020RGBYCBCR;
+ 		hdmi_info.bits.C0_C1   = COLORIMETRY_EXTENDED;
+ 		break;
+@@ -3310,7 +3310,7 @@ static void set_avi_info_frame(
+ 		break;
+ 	}
+ 
+-	if (pixel_encoding && color_space == COLOR_SPACE_2020_YCBCR &&
++	if (pixel_encoding && color_space == COLOR_SPACE_2020_YCBCR_LIMITED &&
+ 			stream->out_transfer_func->tf == TRANSFER_FUNCTION_GAMMA22) {
+ 		hdmi_info.bits.EC0_EC2 = 0;
+ 		hdmi_info.bits.C0_C1 = COLORIMETRY_ITU709;
+--- a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
+@@ -616,7 +616,8 @@ enum dc_color_space {
+ 	COLOR_SPACE_YCBCR709_LIMITED,
+ 	COLOR_SPACE_2020_RGB_FULLRANGE,
+ 	COLOR_SPACE_2020_RGB_LIMITEDRANGE,
+-	COLOR_SPACE_2020_YCBCR,
++	COLOR_SPACE_2020_YCBCR_LIMITED,
++	COLOR_SPACE_2020_YCBCR_FULL,
+ 	COLOR_SPACE_ADOBERGB,
+ 	COLOR_SPACE_DCIP3,
+ 	COLOR_SPACE_DISPLAYNATIVE,
+@@ -624,6 +625,7 @@ enum dc_color_space {
+ 	COLOR_SPACE_APPCTRL,
+ 	COLOR_SPACE_CUSTOMPOINTS,
+ 	COLOR_SPACE_YCBCR709_BLACK,
++	COLOR_SPACE_2020_YCBCR = COLOR_SPACE_2020_YCBCR_LIMITED,
+ };
+ 
+ enum dc_dither_option {
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c
+@@ -420,7 +420,7 @@ static void dce110_stream_encoder_dp_set
+ 			dynamic_range_rgb = 1; /*limited range*/
+ 			break;
+ 		case COLOR_SPACE_2020_RGB_FULLRANGE:
+-		case COLOR_SPACE_2020_YCBCR:
++		case COLOR_SPACE_2020_YCBCR_LIMITED:
+ 		case COLOR_SPACE_XR_RGB:
+ 		case COLOR_SPACE_MSREF_SCRGB:
+ 		case COLOR_SPACE_ADOBERGB:
+@@ -432,6 +432,7 @@ static void dce110_stream_encoder_dp_set
+ 		case COLOR_SPACE_APPCTRL:
+ 		case COLOR_SPACE_CUSTOMPOINTS:
+ 		case COLOR_SPACE_UNKNOWN:
++		default:
+ 			/* do nothing */
+ 			break;
+ 		}
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
+@@ -393,7 +393,7 @@ void enc1_stream_encoder_dp_set_stream_a
+ 		break;
+ 	case COLOR_SPACE_2020_RGB_LIMITEDRANGE:
+ 	case COLOR_SPACE_2020_RGB_FULLRANGE:
+-	case COLOR_SPACE_2020_YCBCR:
++	case COLOR_SPACE_2020_YCBCR_LIMITED:
+ 	case COLOR_SPACE_XR_RGB:
+ 	case COLOR_SPACE_MSREF_SCRGB:
+ 	case COLOR_SPACE_ADOBERGB:
+@@ -406,6 +406,7 @@ void enc1_stream_encoder_dp_set_stream_a
+ 	case COLOR_SPACE_CUSTOMPOINTS:
+ 	case COLOR_SPACE_UNKNOWN:
+ 	case COLOR_SPACE_YCBCR709_BLACK:
++	default:
+ 		/* do nothing */
+ 		break;
+ 	}
+--- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hpo_dp_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hpo_dp_stream_encoder.c
+@@ -323,7 +323,7 @@ static void dcn31_hpo_dp_stream_enc_set_
+ 		break;
+ 	case COLOR_SPACE_2020_RGB_LIMITEDRANGE:
+ 	case COLOR_SPACE_2020_RGB_FULLRANGE:
+-	case COLOR_SPACE_2020_YCBCR:
++	case COLOR_SPACE_2020_YCBCR_LIMITED:
+ 	case COLOR_SPACE_XR_RGB:
+ 	case COLOR_SPACE_MSREF_SCRGB:
+ 	case COLOR_SPACE_ADOBERGB:
+@@ -336,6 +336,7 @@ static void dcn31_hpo_dp_stream_enc_set_
+ 	case COLOR_SPACE_CUSTOMPOINTS:
+ 	case COLOR_SPACE_UNKNOWN:
+ 	case COLOR_SPACE_YCBCR709_BLACK:
++	default:
+ 		/* do nothing */
+ 		break;
+ 	}
+--- a/drivers/gpu/drm/amd/display/dc/inc/hw/dpp.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/hw/dpp.h
+@@ -94,10 +94,14 @@ static const struct dpp_input_csc_matrix
+ 		{ 0x39a6, 0x2568, 0,      0xe0d6,
+ 		  0xeedd, 0x2568, 0xf925, 0x9a8,
+ 		  0,      0x2568, 0x43ee, 0xdbb2 } },
+-	{ COLOR_SPACE_2020_YCBCR,
++	{ COLOR_SPACE_2020_YCBCR_FULL,
+ 		{ 0x2F30, 0x2000, 0,      0xE869,
+ 		  0xEDB7, 0x2000, 0xFABC, 0xBC6,
+ 		  0,      0x2000, 0x3C34, 0xE1E6 } },
++	{ COLOR_SPACE_2020_YCBCR_LIMITED,
++		{ 0x35B9, 0x2543, 0,      0xE2B2,
++		  0xEB2F, 0x2543, 0xFA01, 0x0B1F,
++		  0,      0x2543, 0x4489, 0xDB42 } },
+ 	{ COLOR_SPACE_2020_RGB_LIMITEDRANGE,
+ 		{ 0x35E0, 0x255F, 0,      0xE2B3,
+ 		  0xEB20, 0x255F, 0xF9FD, 0xB1E,
+--- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
++++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+@@ -383,10 +383,10 @@ void mod_build_vsc_infopacket(const stru
+ 				colorimetryFormat = ColorimetryYCC_DP_ITU709;
+ 			else if (cs == COLOR_SPACE_ADOBERGB)
+ 				colorimetryFormat = ColorimetryYCC_DP_AdobeYCC;
+-			else if (cs == COLOR_SPACE_2020_YCBCR)
++			else if (cs == COLOR_SPACE_2020_YCBCR_LIMITED)
+ 				colorimetryFormat = ColorimetryYCC_DP_ITU2020YCbCr;
+ 
+-			if (cs == COLOR_SPACE_2020_YCBCR && tf == TRANSFER_FUNC_GAMMA_22)
++			if (cs == COLOR_SPACE_2020_YCBCR_LIMITED && tf == TRANSFER_FUNC_GAMMA_22)
+ 				colorimetryFormat = ColorimetryYCC_DP_ITU709;
+ 			break;
+ 
 
 
