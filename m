@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC97D2E06E4;
-	Tue, 25 Aug 2026 13:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE60740243B;
+	Tue, 25 Aug 2026 13:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665137; cv=none; b=ubxayP17sypWdYWHA9POmZE95Zb2Pmup25BeGk5ugOlTbikJe/fA1HtzQj+Rb6xqnZcQW+T/DgYLAM2gh4m9W3oKu28AKTibnRsMdE8O3Qy9KRYbDS0LMGMcQmqE3kuvAE7wyM1QWSNrKgyyH860/Vpr22HDr42Agm58sJvfQhM=
+	t=1787665140; cv=none; b=NWdmTP8Unxb77btrm/8QM052Jz0Bam5Zj10u4iK60VxEM1jk41xgEC3A4WxB9AaKkhZNOVs+ymSq0TKLyXRohrK6YxrJS3KYWpCRRYhBrU+uZZo6YV79svzNDO25gYBxDPIYf3HHmjlcoJu6fdnqSPySqYHd9xbmuSmJEhXxwF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665137; c=relaxed/simple;
-	bh=nSCgxD9E54abWTZ2hY1dOyRLUiG1UF5LzWfvo+pdUy4=;
+	s=arc-20240116; t=1787665140; c=relaxed/simple;
+	bh=KW7G8jbV+bFvg9D67ON+8kv7asFYf1R7/wA80tVewf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZQADifWX7L0ioRA6JKUZ4YtmHIrfLM13lxANBXrYnHJ+K2JYP/kvLFzqHcISYZUSFSZZu2INpwvgTuqHeFnQqhf5kqIKbAu1WZXJjB1qnLQU8VOTFMIWAIjc3gJE1FyWosfmIPq/IZxE++ygcJhbA4tsB4YdHPvcqg39+2d6a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuI9VlcL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CtF1IwvYD9/rfaUJ6ITosIIuXuXQtpIU/TjY71nl8gGjexUjt9C/lxP8NRBpo/8cQq3Ti5shuhj2S2yzdNAE+P4iSP8ouGfb4VfIIwLRx39Y6covCupn+2/MS/geAAFSo8QoGT8qU/084+YwkyuXtt48370EmtY9DAcHcW8Bw78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biRo+cJB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuI9VlcL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDCD1F000E9;
-	Tue, 25 Aug 2026 13:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biRo+cJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B951F000E9;
+	Tue, 25 Aug 2026 13:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665136;
-	bh=tnQ1wCVI/5g87V4uibs58V3t9bzeqXFKVsSw5UlxGWI=;
+	s=korg; t=1787665139;
+	bh=EoNm5b7+AKUYcYRe9btK41Mb3KHeP3KL4SGZCmqjnIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xuI9VlcLcTKQInf9ZHHprkW68l2Xwe7YdXYAFmzaYyiaDpRtdPWIuSBjiBfLxk1X7
-	 faj42eLRulyTQh/lby9T+7jfI8lEQKn0aNIRLQcvMvSNIgSer2GFPyMaltwzKtRuwQ
-	 37Shv/Zo6Fug/J2g6kbqAoe5FxdeDxMsnQAOMZ2I=
+	b=biRo+cJB11Z2qBAbftC5rdZyAHVw6+atxZAl3PicVxYwAneIWIB8+oBZXNANKRZGL
+	 mrQtCHRrB1jfQtQ/qTp3GucUiGxy3L4skCAjlO+IusJ/X2A/PMhpffpRJe5cQd7Amy
+	 jQow7x35Oa/adfZq3f8+iUmy2zutCtLexeiP68M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 02/94] serial: sc16is7xx: use guards for simple mutex locks
-Date: Tue, 25 Aug 2026 15:24:58 +0200
-Message-ID: <20260825132541.977839487@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 20/94] io_uring/rsrc: fix folio size overflow in io_vec_fill_bvec()
+Date: Tue, 25 Aug 2026 15:25:16 +0200
+Message-ID: <20260825132542.685505339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,91 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 0f4f88bfd7e7bf3f3293045fffdc63586b0a889f ]
+commit 3f3a6a16bbe8bde76532d9415438f8cdef439e5d upstream.
 
-Guards can help to make the code more readable, so use them wherever they
-do so.
+io_vec_fill_bvec() computes the folio size with a plain int 1:
 
-In sc16is7xx_port_irq(), labels and 'rc' locals are eliminated completely.
+	unsigned long folio_size = 1 << imu->folio_shift;
 
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20251027142957.1032073-6-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 246ac114f485 ("serial: sc16is7xx: enable THRI before filling TX FIFO")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+imu->folio_shift is unsigned int and comes from folio_shift() of the
+folio backing the registered buffer, so it can be 32 or more on a 64 bit
+kernel. Shifting int 1 that far is undefined, and on x86 and arm64 the
+count is taken modulo 32, so a shift of 34 yields 4 rather than 16G.
+Every other folio_shift shift in this file already uses 1UL.
+
+The result is that the segment estimate and the fill loop disagree.
+io_estimate_bvec_size() sizes the bvec array with the real shift:
+
+	max_segs += (iov[i].iov_len >> shift) + 2;
+
+so a 1M iovec on a 16G folio is charged 2 segments, while
+io_vec_fill_bvec() then walks the same iovec in folio_size chunks of 4
+bytes and writes res_bvec[bvec_idx] a quarter of a million times, past
+the end of the array it was given. src_bvec is advanced once per
+iteration as well, so imu->bvec is read past its end at the same time.
+validate_fixed_range() only checks that the range is inside the
+registered buffer and does not bound the segment count.
+
+Reaching it needs a folio with a shift of at least 32, which means a
+gigantic hugetlb page: 16G on arm64 with 64K pages, where
+CONT_PMD_SHIFT is 34 and hugetlb_add_hstate(CONT_PMD_SHIFT - PAGE_SHIFT)
+registers that size, and likewise on powerpc. x86_64 tops out at 1G, so
+a shift of 30, which still fits in int and is unaffected.
+
+Use 1UL, as the rest of the file does.
+
+Fixes: 9ef4cbbcb4ac ("io_uring: add infra for importing vectored reg buffers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://patch.msgid.link/20260802163030.51005-1-ali@iusegentoo.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   23 ++++++++---------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+ io_uring/rsrc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -11,6 +11,7 @@
- #define DEFAULT_SYMBOL_NAMESPACE "SERIAL_NXP_SC16IS7XX"
- 
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/device.h>
-@@ -782,18 +783,15 @@ static void sc16is7xx_update_mlines(stru
- 
- static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -1349,7 +1349,7 @@ static int io_vec_fill_bvec(int ddir, st
+ 				struct iovec *iovec, unsigned nr_iovs,
+ 				struct iou_vec *vec)
  {
--	bool rc = true;
- 	unsigned int iir, rxlen;
- 	struct uart_port *port = &s->p[portno].port;
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
--	mutex_lock(&one->lock);
-+	guard(mutex)(&one->lock);
- 
- 	iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
--	if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
--		rc = false;
--		goto out_port_irq;
--	}
-+	if (iir & SC16IS7XX_IIR_NO_INT_BIT)
-+		return false;
- 
- 	iir &= SC16IS7XX_IIR_ID_MASK;
- 
-@@ -833,10 +831,7 @@ static bool sc16is7xx_port_irq(struct sc
- 		break;
- 	}
- 
--out_port_irq:
--	mutex_unlock(&one->lock);
--
--	return rc;
-+	return true;
- }
- 
- static irqreturn_t sc16is7xx_irq(int irq, void *dev_id)
-@@ -878,9 +873,8 @@ static void sc16is7xx_tx_proc(struct kth
- 	    (port->rs485.delay_rts_before_send > 0))
- 		msleep(port->rs485.delay_rts_before_send);
- 
--	mutex_lock(&one->lock);
-+	guard(mutex)(&one->lock);
- 	sc16is7xx_handle_tx(port);
--	mutex_unlock(&one->lock);
- }
- 
- static void sc16is7xx_reconf_rs485(struct uart_port *port)
-@@ -947,9 +941,8 @@ static void sc16is7xx_ms_proc(struct kth
- 	struct sc16is7xx_port *s = dev_get_drvdata(one->port.dev);
- 
- 	if (one->port.state) {
--		mutex_lock(&one->lock);
--		sc16is7xx_update_mlines(one);
--		mutex_unlock(&one->lock);
-+		scoped_guard(mutex, &one->lock)
-+			sc16is7xx_update_mlines(one);
- 
- 		kthread_queue_delayed_work(&s->kworker, &one->ms_work, HZ);
- 	}
+-	unsigned long folio_size = 1 << imu->folio_shift;
++	unsigned long folio_size = 1UL << imu->folio_shift;
+ 	unsigned long folio_mask = folio_size - 1;
+ 	struct bio_vec *res_bvec = vec->bvec;
+ 	size_t total_len = 0;
 
 
