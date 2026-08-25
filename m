@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A77440244F;
-	Tue, 25 Aug 2026 13:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860562E06E4;
+	Tue, 25 Aug 2026 13:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665353; cv=none; b=BzCzgCAuZh855UsFnhS0+24Yi7zhFBJhZ7sVJAQQzdVJy8nu8r6N8twDBofBzzaisYCxjRmJcYicc5UMGsSrvBc4nJlNyR52hjMj0w9neVJ6dVuZpDoiWqjTaXTcyKoDfNExOvtW7B5MIkIoSSa5soL4334UZNTfI09dQCgKT0w=
+	t=1787665356; cv=none; b=sjYrhZ7vz90v15DX02te3rYtxL7UU1F69qnHGNXTYI8zsmoY7BJcD4j6pJjB4pj+kZX14sZ9cWIyB6HnKlUo52JHMZnS7CnjeRs6qnKrziRDVGGfTQXb82mPI6LAkh5bp0EGCrhD+lLHul536sodVwWxf+QAKaI7TMUDJvwAyfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665353; c=relaxed/simple;
-	bh=a2YSeL6I8V3EaL5jpNuoLJis6PzSHGt8SLAQmzzESYI=;
+	s=arc-20240116; t=1787665356; c=relaxed/simple;
+	bh=oDrXpkWhpfTyjU1otTTFq/58P9jbp1jJer4u9aNV55k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InU5iQR+Ba4Jd7WS0toAvn+nDjXTp+DdOolkcPSIkgFSBkw/ilYk+LvaoX5a13HzX1nekyqt83GEwhzT6s+LJ8Ic5Vzutf9lW2hvrBhQ9VjegcVVqgK5+dBgf/VVn8pwsUY/z7pPCd2dWD/kuNP6WtSKHjgxd0iMKrRn+sP5K14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCQMDCnQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aBlroxZeKp0NbIEYdWINAexIgrv3jqzvBU8P8AloR9Hc28RZMSXJK4KHG1EweDE9SognsXXDm31YUWpy7Q7ypaKz7Nhn5KSphAVDCjaMy9gxKtS0VA9cC/zh5f8YbTmtEfsIua/hZ19PeDomooiSCINR4hrqyNUH5llzTHuqbC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=da/UtBfe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCQMDCnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E241C1F000E9;
-	Tue, 25 Aug 2026 13:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="da/UtBfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28DC1F000E9;
+	Tue, 25 Aug 2026 13:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665352;
-	bh=mbdpfdqGX4tkxAg3RaAeM5pHZIbpJiuAdbBp9JiJeDQ=;
+	s=korg; t=1787665355;
+	bh=6MvPRd1qNd/T+px2P2NmvoJxWdGms2aFJAeoaPzkrZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SCQMDCnQ7IpN6Ni0HyHClxauTq/FXbxX2h+FSGbV5yLSY8FLQ2y0Cb9upHyQosSpY
-	 JX2g/OIj5+1nbmw7r8WlJOWu54lpJewsbJk0m97dnhSNPy4Ly9sZ/fkxF4LVo7nZPw
-	 vR0IA5MC6LfX/IYLhyhYD7zODtDx0K9QPBnyx3oU=
+	b=da/UtBfearYSJdiSbleNy32Fr6ZU4r4MX1jyyCfZV/kf0CrldKLmZvcsV0XR2tTqh
+	 hizbMXIVoL+huoTXh3X+/bPGenWZSLetuTciFl5LwhDt6Uv1krWdG+V3JZf/TtbS/q
+	 D35+XpJ0tsg92ff2hhbEegMh11QIJfaSXNefGm1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ali Ahmet Memis <ali@iusegentoo.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 92/94] Bluetooth: ISO: zero the sockaddr before returning it in getname
-Date: Tue, 25 Aug 2026 15:26:28 +0200
-Message-ID: <20260825132545.332995626@linuxfoundation.org>
+Subject: [PATCH 6.18 93/94] Bluetooth: MGMT: reject HCI_CMD_SYNC params_len above 255
+Date: Tue, 25 Aug 2026 15:26:29 +0200
+Message-ID: <20260825132545.366695391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -52,59 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 884cf2cc957da7ac178a0e6c6c69ddfec0481cc8 upstream.
+commit 5d95286b6d6e8f1d304da7522bfa6860fc017e48 upstream.
 
-iso_sock_getname() fills a struct sockaddr_iso in place and returns its
-size without clearing it first, so bytes it does not write are copied to
-user space from the kernel stack. The getsockname(2) and getpeername(2)
-paths both run through do_getsockname(), which hands getname() an
-uninitialized sockaddr_storage on the stack and copies back up to the
-number of bytes getname() returns, so the driver has to initialize every
-byte it accounts for.
+mgmt_hci_cmd_sync() checks that the message length agrees with params_len
+but puts no upper bound on it. params_len is __le16 while the parameter
+length in the HCI command header is a u8:
 
-Two ranges are left uninitialized:
+	struct hci_command_hdr {
+		__le16	opcode;
+		__u8	plen;
+	} __packed;
 
-  - struct sockaddr_iso is 10 bytes but only 9 are written (family,
-    iso_bdaddr, iso_bdaddr_type), leaking the trailing pad byte on every
-    call.
+hci_cmd_sync_alloc() assigns one to the other:
 
-  - for a broadcast peer (BIS_LINK or PA_LINK) the returned length grows
-    by sizeof(struct sockaddr_iso_bc), but only bc_sid, bc_num_bis and
-    bc_bis are filled; bc_bdaddr and bc_bdaddr_type, the first 7 bytes of
-    that structure, are never written.
+	hdr->plen = plen;
 
-An unprivileged process can open a BTPROTO_ISO socket and reach the pad
-leak with getsockname(); the broadcast leak needs an established BIS/PA
-connection. l2cap and rfcomm already memset their sockaddr in getname
-for the same reason; do the same here.
+	if (plen)
+		skb_put_data(skb, param, plen);
 
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Fixes: 0a766a0affb5 ("Bluetooth: ISO: Fix getpeername not returning sockaddr_iso_bc fields")
+so a params_len of 256 leaves plen at 0 while all 256 bytes are still
+appended. The frame handed to the driver then declares no parameters and
+carries 256 of them. On a length framed transport such as H:4 the
+controller takes the trailing bytes as the start of the next packet.
+
+The mgmt socket MTU is HCI_MAX_FRAME_SIZE, so params_len can reach about
+1KB this way. Commit 03f1700b9b4d ("Bluetooth: MGMT: reject malformed
+HCI_CMD_SYNC commands") only made params_len agree with the message
+length, a value that fits the message but not the header field is still
+accepted.
+
+Reject params_len that does not fit the header field.
+
+Fixes: 827af4787e74 ("Bluetooth: MGMT: Add initial implementation of MGMT_OP_HCI_CMD_SYNC")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/mgmt.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1415,6 +1415,7 @@ static int iso_sock_getname(struct socke
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2671,6 +2671,14 @@ static int mgmt_hci_cmd_sync(struct sock
+ 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_HCI_CMD_SYNC,
+ 				       MGMT_STATUS_INVALID_PARAMS);
  
- 	lock_sock(sk);
- 
-+	memset(sa, 0, sizeof(struct sockaddr_iso));
- 	addr->sa_family = AF_BLUETOOTH;
- 
- 	if (peer) {
-@@ -1425,6 +1426,7 @@ static int iso_sock_getname(struct socke
- 		sa->iso_bdaddr_type = iso_pi(sk)->dst_type;
- 
- 		if (hcon && (hcon->type == BIS_LINK || hcon->type == PA_LINK)) {
-+			memset(sa->iso_bc, 0, sizeof(struct sockaddr_iso_bc));
- 			sa->iso_bc->bc_sid = iso_pi(sk)->bc_sid;
- 			sa->iso_bc->bc_num_bis = iso_pi(sk)->bc_num_bis;
- 			memcpy(sa->iso_bc->bc_bis, iso_pi(sk)->bc_bis,
++	/* The HCI command header carries the parameter length in a u8, a
++	 * larger value would be truncated there while the parameters are
++	 * still appended to the frame in full.
++	 */
++	if (le16_to_cpu(cp->params_len) > U8_MAX)
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_HCI_CMD_SYNC,
++				       MGMT_STATUS_INVALID_PARAMS);
++
+ 	hci_dev_lock(hdev);
+ 	cmd = mgmt_pending_new(sk, MGMT_OP_HCI_CMD_SYNC, hdev, data, len);
+ 	if (!cmd)
 
 
