@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F08E3C276D;
-	Tue, 25 Aug 2026 13:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A2546EF87;
+	Tue, 25 Aug 2026 13:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665564; cv=none; b=W3cxQOlQVLeUSJkS+/SeEhRTrA7J/qCdBSGAwcXcVh/kmSe3c3HAh2IeQXZKWGzjCPyE7Nhu12Yn+uGm67qp6k6AZjfkqv3gE111Ygh4qV3opN8z+aJ4C6WXSxZAgf9GR4P9zjlugeHB+ufeskTf+d+8Ub0saFw9ymrCUz+oBKM=
+	t=1787665568; cv=none; b=IhTTRhEqf+fneSjsWD7mDQGVkZBoyIVMFSeKdyd/7m3Q9dngIpLaBtPSG96OF6rwgUK/og/kKV58D1yhfsEtLUu2uLfLq0wd2vhZJ5AFZ6GPji+gzqq0Lh4qFe2PScf7VyaC1k5nQkXdCgB041s2jPqJPD1HV1M94KJYkP4d0jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665564; c=relaxed/simple;
-	bh=+gCO1gJTMJadw8R6FEuLpYgaYiJeMySLaAE2qp+FLlA=;
+	s=arc-20240116; t=1787665568; c=relaxed/simple;
+	bh=ucWfmzkdNjUfqe2QxblqlzZHeJ7OjvUxXTmMunQaCgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fa/zB+/XuMpy7Jzdv6NsD5BU1SpgaMZ738qaeaHqeRTuGE+ZiVx/21SttS3z8fbMVUEknUhpbL6uXR4W9i0RLAq8eLXvtuuUzBvTRVdasaC5gRqLOCzyNkJrhgfHPryry92rRpNHY3Onqe5nEMd1FdILZODtccj3mblK0krvmGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAFcKJZA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XzA26iKs5KJtpIyr9ZlpRHEsIu5xVnrnsOL8x3Fx61iNrGfeVJcy7y6qZv6QiyTXMxJaeFJ0uTUATLYxxayafuJLQXoyuLccCJ/DAVcAlcdlnNRvZugLP2fSQQKomf5wOWB3mz/X1ASU+0BthutsHOUgcqZCLhg10xOulVEVLuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1X0PwIi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAFcKJZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D971F000E9;
-	Tue, 25 Aug 2026 13:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1X0PwIi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42FE1F000E9;
+	Tue, 25 Aug 2026 13:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665563;
-	bh=P4GmzObNLZ7MfjrByE3/iMux5jW+0WKIhYkH3wmRIEE=;
+	s=korg; t=1787665566;
+	bh=rIwoDh6WN3URNEUunQSScas9UNNR6SfOWJy2Z+Y9pQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAFcKJZAJtmca7oXPlRdt5ieT5OYiYMMZEbpCcbpSjd8oea8HeTAoZP1+BNtd5unM
-	 cozTtjptgMmc77lke6M98s0zsGcJgQknauEUyDZJxmf60jQ3LsCr/CgYohLmfHsULh
-	 iAqWxUUbelNsY60dcHg6RKHCpBO/Ht2ryEK4bjNU=
+	b=k1X0PwIiBZFRIly7IyREFHWpc2kE56XXWKjdBADsvWfn/h9J9iFlonziyZrcPMqiL
+	 z3s4UHFK4O295mzJTRVzbS+E5sGnoJ7xG+mXMi5lnGr0Q8LxE3CSKutOMv8953xOJ0
+	 5ckecEjwkxDXNsNhzZqrKvgbYeZLqLKdyMPwKgKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	Jiangshan Yi <yijiangshan@kylinos.cn>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 69/77] HID: nintendo: register input device after capabilities are set
-Date: Tue, 25 Aug 2026 15:26:31 +0200
-Message-ID: <20260825132544.227590782@linuxfoundation.org>
+Subject: [PATCH 6.12 70/77] HID: nintendo: stop device IO before hid_hw_stop on probe failure
+Date: Tue, 25 Aug 2026 15:26:32 +0200
+Message-ID: <20260825132544.271828324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -53,55 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit d723bc1fe2e72b9252234e94c11af644ec477bf7 upstream.
+commit 1f74d3bff6fe04a64e02ab3661d2e0d554565aa6 upstream.
 
-input_register_device() exposes the device to userspace immediately.
-In joycon_input_create() it was called before joycon_config_rumble()
-configures the FF_RUMBLE capability and the memless force-feedback
-device, so a concurrent EVIOCSFF could dereference a NULL dev->ff.
+nintendo_hid_probe() calls hid_device_io_start() before joycon_init()
+and joycon_leds_create().  If either fails, the error path jumps to
+err_close which calls hid_hw_close()/hid_hw_stop() without first calling
+hid_device_io_stop().
 
-Registering early also means the initial udev event lacks button and
-axis information, which can make input managers ignore the device.
+hid_hw_stop() does not stop device IO, so hid_input_report() may still
+run and access driver data that is being torn down, resulting in a
+use-after-free.
 
-Move input_register_device() to the end of joycon_input_create(), after
-all capabilities, the IMU input device and the force-feedback callbacks
-have been configured.
+Add an err_io_stop label that calls hid_device_io_stop() before
+hid_hw_close(), and point the two post-io_start error paths at it.
 
 Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://sashiko.dev/#/patchset/20260730031927.25444-1-yijiangshan@kylinos.cn?part=1
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-nintendo.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hid/hid-nintendo.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 --- a/drivers/hid/hid-nintendo.c
 +++ b/drivers/hid/hid-nintendo.c
-@@ -2142,10 +2142,6 @@ static int joycon_input_create(struct jo
- 	ctlr->input->phys = hdev->phys;
- 	input_set_drvdata(ctlr->input, ctlr);
+@@ -2696,14 +2696,14 @@ static int nintendo_hid_probe(struct hid
+ 	ret = joycon_init(hdev);
+ 	if (ret) {
+ 		hid_err(hdev, "Failed to initialize controller; ret=%d\n", ret);
+-		goto err_close;
++		goto err_io_stop;
+ 	}
  
--	ret = input_register_device(ctlr->input);
--	if (ret)
--		return ret;
--
- 	if (joycon_type_is_right_joycon(ctlr)) {
- 		joycon_config_right_stick(ctlr->input);
- 		joycon_config_buttons(ctlr->input, right_joycon_button_mappings);
-@@ -2185,6 +2181,10 @@ static int joycon_input_create(struct jo
- 	if (joycon_has_rumble(ctlr))
- 		joycon_config_rumble(ctlr);
+ 	/* Initialize the leds */
+ 	ret = joycon_leds_create(ctlr);
+ 	if (ret) {
+ 		hid_err(hdev, "Failed to create leds; ret=%d\n", ret);
+-		goto err_close;
++		goto err_io_stop;
+ 	}
  
-+	ret = input_register_device(ctlr->input);
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
+ 	/* Initialize the battery power supply */
+@@ -2726,7 +2726,8 @@ static int nintendo_hid_probe(struct hid
  
+ err_ida:
+ 	ida_free(&nintendo_player_id_allocator, ctlr->player_id);
+-err_close:
++err_io_stop:
++	hid_device_io_stop(hdev);
+ 	hid_hw_close(hdev);
+ err_stop:
+ 	hid_hw_stop(hdev);
 
 
