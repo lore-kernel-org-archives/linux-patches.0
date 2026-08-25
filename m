@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8614312831;
-	Tue, 25 Aug 2026 14:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9238523EAAA;
+	Tue, 25 Aug 2026 14:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666494; cv=none; b=mQ1oyhJ/Oo7NcjXDKcXHe0yoj+Lc9ifA7+yaAknf4t0sZ6JSGPX0OqPVdKduy1hgzw9EkFASWodOPoKcxT6+/b0HyIDdukqJj9TpoISGaZjpmNw323G971LUe/3pc3nIhg4q3ZNJ9vUHmvdwcPV5slAvfBKIumvVJiVndSt3X9M=
+	t=1787666497; cv=none; b=rof6yqHrR1rIT23A/CJq36wYzyHGsKrq1L4zC0ObNaSadxX4ivJpZGnCIUuuKTk5EY6/ltomjlRxrhEQzUrwa/aDn5cKY2VY9Z1xmrUpgoAe2PomRXTPmieVnACMAi9qO/jZOJzkQQIGsWQXV40Ipcbip62q0XqNE9X4dWT8cz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666494; c=relaxed/simple;
-	bh=Kpstku6TqD6phCMvd9bTfbFq8pd+sAXMdLJY7R6YVPo=;
+	s=arc-20240116; t=1787666497; c=relaxed/simple;
+	bh=Ee9Fy7nZsuGh+j3JZjqNcZrTiRh+CSH65wCXyFbvr7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ba4StOYgGF6qLjM0USlTmlIfWBypU/0mS0hYrEWL7W7nuEMim1+yulaTJebYQ9OSIVGpa65JIrBIqp35ZhY9S73Hl0gk4LXF9Ky+yzO6WUc3PU9Xz3DU6HbRJME94KU+1I87Q/oyxmW6svDTZ1/w7YtF5a+FLFT7umrOrbLklp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eok0XTuP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OeTRIiMivCTjyygHe0uq233A++1GYb5nZqTK3GVaLOPLe8Uw3dg4SvF5WtJRNyzxiQELn+A9O0cgtKJeBVrfmYH+YpPKVh4qryTczeOU+SQmi4aPwlhPO+4/8G8p4j70DEC3f2TAQxWwC2dr6jIp4nUw3Uqlvli6FIaHytjmY9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F07evDDI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eok0XTuP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2175E1F000E9;
-	Tue, 25 Aug 2026 14:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F07evDDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8641F000E9;
+	Tue, 25 Aug 2026 14:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666493;
-	bh=dA1FPQwycExnVOTzMIGFv6+HfC/SMv1BMQGGnlaaEOQ=;
+	s=korg; t=1787666496;
+	bh=EJZkpAjO9g/GCaOLuiqGcyy7mBVtb6Aprbkem5ovGrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eok0XTuPtIcEK2Py8A2nXQqvzbb1bEW/miJbKi65DHlVMS4grnN+J/dyIuRK4iMPi
-	 HSj5401CUCImohEqCcfTT+tcM2oFawpMmoqHr0wgV+Fzd4tJO9hHVZCwdogJkMfrVG
-	 0M8tXaBkDhGja0KOERUYkqGvqjnGq8q7wZdgvzp4=
+	b=F07evDDIq85vFdgMmx5cnTIwkEQkdme+wpsH4hPUV6PV+V5W03Bp66bXdpm8qyfTI
+	 3RIVXUVqaloofPu1Ohz3flIXYbBwWXWBgkRI7pL1urjdlymISnhgzHMPzwwB1CFoJx
+	 iTJxlDMbqqSuZNMCy1yA+gDQBbXTZsFqI9mwE9WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 26/57] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
-Date: Tue, 25 Aug 2026 15:26:48 +0200
-Message-ID: <20260825132542.332236156@linuxfoundation.org>
+Subject: [PATCH 5.10 27/57] s390/vfio_ccw: Cancel existing workqueues
+Date: Tue, 25 Aug 2026 15:26:49 +0200
+Message-ID: <20260825132542.373258366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -51,63 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Eric Farman <farman@linux.ibm.com>
 
-[ Upstream commit c125ee35a49a0518521b52b27631eef061b8719a ]
+[ Upstream commit 79c60b2c61105368dcc8444eb45847e21734f7c4 ]
 
-In atmci_probe, &host->bh_work is bound with atmci_work_func, and
-atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
-queue this work on system_bh_wq.
+The initialization of the io_work and crw_work workqueues begs the
+question of whether they should be un-initialized. Add the corresponding
+cleanup tags in _release_dev to ensure work isn't dispatched after
+the private struct is free'd.
 
-If we remove the module, atmci_remove makes cleanup and the memory
-allocated for host with devm_kzalloc() is released after the remove
-callback returns, while the work mentioned above may still be pending
-or running. The sequence of operations that may lead to a UAF bug is
-as follows:
-
-CPU0                                      CPU1
-
-                                          | atmci_interrupt
-                                          | queue_work(system_bh_wq,
-                                          |            &host->bh_work)
-atmci_remove                              |
-atmci_cleanup_slot(...)                   |
-atmci_writel(host, ATMCI_IDR, ~0UL)       |
-timer_delete_sync(&host->timer)           |
-dma_release_channel(host->dma.chan)       |
-free_irq(platform_get_irq(pdev, 0), host) |
-                                          | atmci_work_func
-                                          | // use host
-// devm resources released after          |
-// remove returns, host is freed          |
-                                          | // use host (use-after-free)
-
-Fix it by canceling the work after all the sources that can schedule
-it (IRQ handler, timeout timer and DMA completion callback) have been
-stopped, and before proceeding with the remaining cleanup in
-atmci_remove.
-
-Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Suggested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Fixes: e5f84dbaea59 ("vfio: ccw: return I/O results asynchronously")
+Fixes: 3f02cb2fd9d2 ("vfio-ccw: Wire up the CRW irq and CRW region")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/atmel-mci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/s390/cio/vfio_ccw_drv.c |    7 +++++++
+ drivers/s390/cio/vfio_ccw_ops.c |    8 ++++++++
+ 2 files changed, 15 insertions(+)
 
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2629,6 +2629,8 @@ static int atmci_remove(struct platform_
+--- a/drivers/s390/cio/vfio_ccw_drv.c
++++ b/drivers/s390/cio/vfio_ccw_drv.c
+@@ -241,6 +241,13 @@ static int vfio_ccw_sch_remove(struct su
  
- 	free_irq(platform_get_irq(pdev, 0), host);
+ 	vfio_ccw_sch_quiesce(sch);
  
-+	tasklet_kill(&host->tasklet);
++	/*
++	 * Ensure these work items are fully drained, so none can
++	 * fire after being released.
++	 */
++	cancel_work_sync(&private->io_work);
++	cancel_work_sync(&private->crw_work);
 +
- 	clk_disable_unprepare(host->mck);
+ 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
+ 		list_del(&crw->next);
+ 		kfree(crw);
+--- a/drivers/s390/cio/vfio_ccw_ops.c
++++ b/drivers/s390/cio/vfio_ccw_ops.c
+@@ -204,6 +204,14 @@ static void vfio_ccw_mdev_release(struct
+ 	}
  
- 	pm_runtime_disable(&pdev->dev);
+ 	cp_free(&private->cp);
++
++	/*
++	 * Ensure these work items are drained, in the event the
++	 * device is re-opened instead of released.
++	 */
++	cancel_work_sync(&private->io_work);
++	cancel_work_sync(&private->crw_work);
++
+ 	vfio_ccw_unregister_dev_regions(private);
+ 	vfio_unregister_notifier(mdev_dev(mdev), VFIO_IOMMU_NOTIFY,
+ 				 &private->nb);
 
 
