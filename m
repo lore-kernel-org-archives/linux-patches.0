@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B7845DF6B;
-	Tue, 25 Aug 2026 13:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E830468C35;
+	Tue, 25 Aug 2026 13:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665682; cv=none; b=c3VeFgOlysU6M8H9XbUoDN3C/mSSm8dcB4e3vkO6w2bKUW9eIZ6imgdqEdCksyFqhpzaMGdCt0XZUvw2zrL8dkp56Lt7+tGozn/61E6ucXxhVsEFiNq7LvzKGNNG9Vi1/SYZryI9Pir08s+D/0kh0kTPFuxWnSlz7qzSxnI0r/Q=
+	t=1787665685; cv=none; b=ESpR4nu7MHicaHPd3s/Z4+YljRoeTolIOtsjJ1ZVXq7fY1iI9SDD5g/6dnBDN3kntm4Dl7QVxS4y7DsALBsBv841IxCN3q6hj7DsuFPhdleCEqgVobrDjB6r7BDT3nEig4XmuuqwV0l6uA5IZ1PISNcBfx5NXBfyOVEI7krV/UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665682; c=relaxed/simple;
-	bh=2l4Ds7SGUngoNogZfGtG3pT7YEzi/BODkEau/ioQeEo=;
+	s=arc-20240116; t=1787665685; c=relaxed/simple;
+	bh=/Kw6FNW0yFvdmh1XYZKTChym++wiSEMXfgQvUnUrhMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxJeaemR32red2imDM5smT7hTL1nW7a0KbJdsi+vmZh5H0tF6n+qsmwvq2lsQ99BlNm4mwN7oKtbsLHJ7fKRvulNdVVDRRlM8GBoZ6VErU+l6/InbF+PuDesZC5hr0DcGUBEQRamQpD6qu8LUZu5d54vNS18tvC5273cQHKyr3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcflAqHN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fq3AEVWayZjSlGX7O9DCAs3Y6CdFWVc22fV05d50k8ihzdCfxMNh/qcMke/FQE1ZK9/gsdsF+JX5plfTfXA7kvJ5jGX7WKCnvFF8vtfnIDcfGdE5Dxo4lODIALzW7c0iSlhP/ZbdmkQntZb4RL9QFpPzt8YZuCtdcfQ/utrlDaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weNH77p1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcflAqHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADD01F000E9;
-	Tue, 25 Aug 2026 13:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weNH77p1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459651F00A3D;
+	Tue, 25 Aug 2026 13:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665680;
-	bh=M5qK/Nps8RQgoGcDs2O1wpTf0tQkDIGZaIePFjogUSg=;
+	s=korg; t=1787665683;
+	bh=fAiKGFvLYnfzoohe0ED5It0klyfdXc4qddTfgYJzAt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZcflAqHN0HND8oyowf0FNqIkpRmB/UxFI+Dmw+SkRCESbd2CHRFwoCur7P86DB9x7
-	 l9D4/ntrKolL0y3t8OBd2Htz4WVtOXytOu9GRfDUasByKVf0OqG+N9wXJTXhYSWNz0
-	 NRMnHRaDiBcsXWvOcyuHSMB178sfQ39Ku4y7PFaI=
+	b=weNH77p1Z6LANqdnl/Ep9kZHIrNZKrKq3m3Vm3F1+ZN9OU6Kskk5RNlzKCuwFUa2/
+	 phUUV1DQA+w9ZRumBvoYxWMtiJ35TqpshdgHJjpwdES/qFvTClkdcRFNdzyDSe33KJ
+	 WLOyuSaWGGFq1X+j6vFj6vj51MVowqqO/zKGmysk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot <sashiko-bot@kernel.org>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Eric Farman <farman@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.6 31/87] s390/vfio_ccw: Ensure first IDAW remains constant
-Date: Tue, 25 Aug 2026 15:25:54 +0200
-Message-ID: <20260825132543.069788359@linuxfoundation.org>
+Subject: [PATCH 6.6 32/87] s390/vfio_ccw: Calculate idal length based on idaw type
+Date: Tue, 25 Aug 2026 15:25:55 +0200
+Message-ID: <20260825132543.106725537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -53,16 +54,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Farman <farman@linux.ibm.com>
 
-commit 565bef268d75bf7df665bce6923a88cd0eb74592 upstream.
+commit 4f6fdc6e1a7fbfa36b945af33c65a417948feac0 upstream.
 
-The first IDAW in a list does not need to be on a 2K/4K boundary
-like all others, and so is read separately to accurately calculate
-the size of the buffer needed to read the full IDAL.
+Sashiko pointed out that get_guest_idal() unconditionally calculates
+the length of the IDAL presuming everything is a Format-2 IDAW.
 
-Verify that the address found in the first IDAW is unchanged between
-reads, to ensure a consistent set of IDAWs being worked with.
+The output of vfio-ccw is always Format-2, but the input can be either
+Format-1 (31-bit addresses) or Format-2 (64-bit addresses). As a result,
+the size of the guest IDAL may be incorrect and should be trimmed down.
 
-Fixes: 01aa26c672c0 ("s390/cio: Combine direct and indirect CCW paths")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/20260720203400.7328E1F000E9@smtp.kernel.org/
+Fixes: 1b676fe3d9d3 ("vfio/ccw: handle a guest Format-1 IDAL")
 Cc: stable@vger.kernel.org
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
@@ -71,66 +74,36 @@ Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |   16 ++++++++++++++++
- drivers/s390/cio/vfio_ccw_cp.h |    2 ++
- 2 files changed, 18 insertions(+)
+ drivers/s390/cio/vfio_ccw_cp.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/drivers/s390/cio/vfio_ccw_cp.c
 +++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -521,6 +521,7 @@ static unsigned long *get_guest_idal(str
- 		&container_of(cp, struct vfio_ccw_private, cp)->vdev;
+@@ -233,6 +233,7 @@ static void convert_ccw0_to_ccw1(struct
+ }
+ 
+ #define idal_is_2k(_cp) (!(_cp)->orb.cmd.c64 || (_cp)->orb.cmd.i2k)
++#define get_idaw_size(_cp) ((_cp)->orb.cmd.c64 ? sizeof(u64) : sizeof(u32))
+ 
+ /*
+  * Helpers to operate ccwchain.
+@@ -522,7 +523,7 @@ static unsigned long *get_guest_idal(str
  	unsigned long *idaws;
  	unsigned int *idaws_f1;
-+	u64 first_idaw;
- 	int idal_len = idaw_nr * sizeof(*idaws);
+ 	u64 first_idaw;
+-	int idal_len = idaw_nr * sizeof(*idaws);
++	int idal_len = idaw_nr * get_idaw_size(cp);
  	int idaw_size = idal_is_2k(cp) ? PAGE_SIZE / 2 : PAGE_SIZE;
  	int idaw_mask = ~(idaw_size - 1);
-@@ -537,6 +538,18 @@ static unsigned long *get_guest_idal(str
- 			kfree(idaws);
- 			return ERR_PTR(ret);
- 		}
-+
-+		idaws_f1 = (unsigned int *)idaws;
-+		if (cp->orb.cmd.c64)
-+			first_idaw = idaws[0];
-+		else
-+			first_idaw = (unsigned long)(idaws_f1[0]);
-+
-+		/* Unexpected mismatch from earlier read */
-+		if (first_idaw != cp->guest_iova) {
-+			kfree(idaws);
-+			return ERR_PTR(-EINVAL);
-+		}
- 	} else {
- 		/* Fabricate an IDAL based off CCW data address */
- 		if (cp->orb.cmd.c64) {
-@@ -598,6 +611,9 @@ static int ccw_count_idaws(struct ccw1 *
- 		iova = ccw->cda;
- 	}
+ 	int i, ret;
+@@ -587,7 +588,7 @@ static int ccw_count_idaws(struct ccw1 *
+ 	struct vfio_device *vdev =
+ 		&container_of(cp, struct vfio_ccw_private, cp)->vdev;
+ 	u64 iova;
+-	int size = cp->orb.cmd.c64 ? sizeof(u64) : sizeof(u32);
++	int size = get_idaw_size(cp);
+ 	int ret;
+ 	int bytes = 1;
  
-+	/* Save the read address for later */
-+	cp->guest_iova = iova;
-+
- 	/* Format-1 IDAWs operate on 2K each */
- 	if (!cp->orb.cmd.c64)
- 		return idal_2k_nr_words((void *)iova, bytes);
---- a/drivers/s390/cio/vfio_ccw_cp.h
-+++ b/drivers/s390/cio/vfio_ccw_cp.h
-@@ -35,6 +35,7 @@
-  * @initialized: whether this instance is actually initialized
-  * @guest_cp: copy of guest channel program
-  * @ccwchain_count: number of channel program segments (linked by TIC)
-+ * @guest_iova: first data address of a guest channel program
-  *
-  * @ccwchain_list is the head of a ccwchain list, that contents the
-  * translated result of the guest channel program that pointed out by
-@@ -46,6 +47,7 @@ struct channel_program {
- 	bool initialized;
- 	struct ccw1 *guest_cp;
- 	unsigned int ccwchain_count;
-+	u64 guest_iova;
- };
- 
- int cp_init(struct channel_program *cp, union orb *orb);
 
 
