@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC61459AD7;
-	Tue, 25 Aug 2026 13:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E55F48165B;
+	Tue, 25 Aug 2026 13:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665878; cv=none; b=EO3HdjjRp35euNcAJVoWHYMY1UON+e+QuduxMYzu5rkrqXHGPNrVkD23V6Api4LkrdWtfpLe+yH26M+MQZjIZvYq4b1iPvYZgMKAt+Z5yQDo0C0XukYQrMKRGHBQ4tDBno1QY/p9BD+CV0EN6G3YYsVBZyoqBmZ37UHr6e9AAMI=
+	t=1787665881; cv=none; b=UHxW9jlZBmvp94TZYz0Ccm+nWg2qiz1hnQchCN3YIg5DknX0+RtaLtqHjKKLf+mhonkkHp5h3lEdoaquXfpyus0crMaH3JOWXOX9Fk42YThgAmra2m8iNtclSf7rogFVSFOeN/EbtgaxQRGWDR7wYnuUKGA8IzI5QR/MKhLeH0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665878; c=relaxed/simple;
-	bh=6dd0QSce0XgYnuzaglZra8yTuRimKngnqLZm942ZBRM=;
+	s=arc-20240116; t=1787665881; c=relaxed/simple;
+	bh=9OysuyJI6WFykE6J2+H2kc0KqWRD26N/QTq1YY/LgXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZMPHR5PQ0soYEUDqm6ajmr8ws78Y6RTx/pjkPbPD6IfQa54Ke6wQJDrezE7bCKmccLGoIZ3I/JL7Y9G9Bkzrvge1csZC+Gi+X+shAa8jxR+6oVPEz8towsk8xG8fwaJybkiQWZ0rkMYCRr6GAXxhtir5UiZhxdg/plpuUN3uh3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxP9xaji; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LzY+mJ4ZNF9miOZ1oP7zVweWIqT9ByXtUXfoNH7mDF+yzitGTOZfcBrWIharBSJfbaC8Fflk42GKF9DkpQ9/+FrQCEJVndTCoHjCGF3pOMo7gHvn5nMUkFPw5KCb6y4FHCOngxNATEnFEf7SYJCHxiuc4hbfC6KLso9aQrqHyD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zu3uRQXR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxP9xaji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFC51F000E9;
-	Tue, 25 Aug 2026 13:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zu3uRQXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD931F000E9;
+	Tue, 25 Aug 2026 13:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665877;
-	bh=fXCTBP16mL3Li9oCBaMzi+SRyz36OZij+dTWZdgmJPA=;
+	s=korg; t=1787665880;
+	bh=YbYO8z37CFGcgwoZ91jfcLTJY73C7aISOAiOOg4lL1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FxP9xaji32WE+i0VKbtkxSsRMHRFuJuHCVxCaKYZ9dEGzfJ52vKxM2eLxRMq1zeBr
-	 jDToAni0g7o8EZ6XkUETxVJ6gyhPPqm3n5pqAHuThsAvsKmXxGosCS86fGjrCSVyfH
-	 RWAT4fHLSaVbqcRGF2lyMrdbae9d4baAdOXO69gs=
+	b=zu3uRQXRmhBLtN/rCokGKu6EKzlkRAge+m32rJyxCJdunh9ROR5Pdb2pUgfMvzg7f
+	 AlUZ2a+Cf5oq6JNtLyavqNcfiCGaIzw9Bi/5fLAsJwqvB6cigfNUugPL1X8SNqckDb
+	 My2T81SfgxmiFk+rPpw5R0lqegNCdqjsWomAc1TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Persvold <spersvold@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 6.1 01/79] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
-Date: Tue, 25 Aug 2026 15:25:41 +0200
-Message-ID: <20260825132541.730637297@linuxfoundation.org>
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.1 10/79] xfs: validate attr entry pointer before field access
+Date: Tue, 25 Aug 2026 15:25:50 +0200
+Message-ID: <20260825132542.064881663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -50,116 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Persvold <spersvold@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
+commit b7eea80be25f3334f131d52982b3131aba77b97d upstream.
 
-On 32-bit systems the config space is too large to ioremap in one go, so
-pci_ecam_create() maps each bus segment separately and relies on the
-->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
-cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
-every config access.
+xfs_attr3_leaf_verify_entry() accesses lentry/rentry fields (namelen,
+valuelen) before checking if the entry pointer itself is within bounds.
+If nameidx is crafted to point near the end of the buffer, these field
+accesses can read out-of-bounds before the bounds check at
+name_end > buf_end is performed.
 
-The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
-and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
-do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
-per-bus mapping is never set up and the first config read dereferences a
-NULL base, crashing during bus enumeration:
+Add explicit bounds checks for entry pointers before accessing their
+fields. Use offsetof() to check that the start of the flexible array
+member (nameval/name) is within bounds, which ensures all preceding
+fields are safe to access.
 
- Unable to handle kernel NULL pointer dereference at virtual address 00000800
- Oops [#1]
- CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
- Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
- epc : pci_generic_config_read+0x40/0xb0
-  ra : pci_generic_config_read+0x2c/0xb0
- [<c038db9c>] pci_generic_config_read+0x40/0xb0
- [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
- [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
- [<c039245c>] pci_scan_single_device+0xa4/0x11c
- [<c0392570>] pci_scan_slot+0x9c/0x23c
- [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
- [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
- [<c0393e54>] pci_host_probe+0x20/0xc8
- [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
-
-Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
-Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
-move the CAM ops definition there as pci_generic_cam_ops (mirroring
-pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
-
-Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
-Signed-off-by: Steffen Persvold <spersvold@gmail.com>
-[mani: removed timestamp from log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
+Fixes: c84760659dcf2 ("xfs: check attribute leaf block structure")
+Cc: <stable@vger.kernel.org> # v5.5
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-generic.c |   11 +----------
- drivers/pci/ecam.c                        |   13 +++++++++++++
- include/linux/pci-ecam.h                  |    3 +++
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ fs/xfs/libxfs/xfs_attr_leaf.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/pci/controller/pci-host-generic.c
-+++ b/drivers/pci/controller/pci-host-generic.c
-@@ -14,15 +14,6 @@
- #include <linux/pci-ecam.h>
- #include <linux/platform_device.h>
- 
--static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
--	.bus_shift	= 16,
--	.pci_ops	= {
--		.map_bus	= pci_ecam_map_bus,
--		.read		= pci_generic_config_read,
--		.write		= pci_generic_config_write,
--	}
--};
--
- static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
- {
- 	struct pci_config_window *cfg = bus->sysdata;
-@@ -58,7 +49,7 @@ static const struct pci_ecam_ops pci_dw_
- 
- static const struct of_device_id gen_pci_of_match[] = {
- 	{ .compatible = "pci-host-cam-generic",
--	  .data = &gen_pci_cfg_cam_bus_ops },
-+	  .data = &pci_generic_cam_ops },
- 
- 	{ .compatible = "pci-host-ecam-generic",
- 	  .data = &pci_generic_ecam_ops },
---- a/drivers/pci/ecam.c
-+++ b/drivers/pci/ecam.c
-@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
- };
- EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
- 
-+/* CAM ops */
-+const struct pci_ecam_ops pci_generic_cam_ops = {
-+	.bus_shift	= 16,
-+	.pci_ops	= {
-+		.add_bus	= pci_ecam_add_bus,
-+		.remove_bus	= pci_ecam_remove_bus,
-+		.map_bus	= pci_ecam_map_bus,
-+		.read		= pci_generic_config_read,
-+		.write		= pci_generic_config_write,
-+	}
-+};
-+EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -267,6 +267,13 @@ xfs_attr3_leaf_verify_entry(
+ 	 */
+ 	if (ent->flags & XFS_ATTR_LOCAL) {
+ 		lentry = xfs_attr3_leaf_name_local(leaf, idx);
 +
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- /* ECAM ops for 32-bit access only (non-compliant) */
- const struct pci_ecam_ops pci_32b_ops = {
---- a/include/linux/pci-ecam.h
-+++ b/include/linux/pci-ecam.h
-@@ -77,6 +77,9 @@ void __iomem *pci_ecam_map_bus(struct pc
- /* default ECAM ops */
- extern const struct pci_ecam_ops pci_generic_ecam_ops;
- 
-+/* default CAM ops */
-+extern const struct pci_ecam_ops pci_generic_cam_ops;
++		/* Validate lentry pointer is within bounds before field access */
++		if ((char *)lentry >= buf_end)
++			return __this_address;
++		if ((char *)lentry + offsetof(struct xfs_attr_leaf_name_local, nameval) > buf_end)
++			return __this_address;
 +
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
- extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
+ 		namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
+ 				be16_to_cpu(lentry->valuelen));
+ 		name_end = (char *)lentry + namesize;
+@@ -274,6 +281,13 @@ xfs_attr3_leaf_verify_entry(
+ 			return __this_address;
+ 	} else {
+ 		rentry = xfs_attr3_leaf_name_remote(leaf, idx);
++
++		/* Validate rentry pointer is within bounds before field access */
++		if ((char *)rentry >= buf_end)
++			return __this_address;
++		if ((char *)rentry + offsetof(struct xfs_attr_leaf_name_remote, name) > buf_end)
++			return __this_address;
++
+ 		namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
+ 		name_end = (char *)rentry + namesize;
+ 		if (rentry->namelen == 0)
 
 
