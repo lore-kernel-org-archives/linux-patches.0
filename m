@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C08423A85;
-	Tue, 25 Aug 2026 13:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD4742902A;
+	Tue, 25 Aug 2026 13:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666063; cv=none; b=ZIQYpopn5YAzccSbqGsJeYuNuTz58maoEPCjzIaGw4VV9nCjiFRm/v4CuIq5XVgQJGkrHkQNfuKFwDyv+gzv6CaOw9xXe9nD88QeVUVsGGqpfgN1w6hAFg11CIoyrMAJVs3yoLevBIo1f8P26ZJZS6yuAKdlb4KGDEY5din0frc=
+	t=1787666066; cv=none; b=aVy40Ra91ylSH7iUNvbA48dSh+WCMZ0hPlFrTDEiwdj/FQjBnpBoZirKfHiPhVgkCPiGLFJl21rekGGnQYnXiwPIRNlGPuW9RyG/stdHe9Exel2kbXV5x0Y6LvV1lgCX1TU2SCzYUQBkQYV3avMF0VgJ47HlQubTqZYUKft6Sx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666063; c=relaxed/simple;
-	bh=Rvzj9Q5MA8GrLhHmb9RJeIqdT2QgfsH37GVL9G/JMu4=;
+	s=arc-20240116; t=1787666066; c=relaxed/simple;
+	bh=Fve0px0SUgoTdC0iIxBXYzBWmJR2DQ6Lw9xAT/ABPUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bj+pz6K2nVj86RDd05nQn3vi5WlU7VrdmZ9YYGYLhjS09IwUsTPJUv5fQqhpWW5ZGmx/IKJLIVYyC09neyQ2lLyMBTBqda0vdoYlQRxpPB93uMKWCQwNn3Wp60owOfE+XBpBcrgIyhKallQExiinxWVxbFAUbJztvrHspGkMnDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqWI258t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P7da7wJ70YhQUwBZwrb/YCRAM66/NiBfYZIenX7lZtBgwOz0vm6tncTwRSHPNBr4gp5nNX9jtPHZfev4YXSaIL2n2e5q07gPK9DrbkHWsRK/R2cQP9185QRO7dBAkKwlf8Dvn47xdRHdbdKgvGybxx/EpC8YYkAcRWECaSiQ6G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwWnoYwU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqWI258t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C7B1F000E9;
-	Tue, 25 Aug 2026 13:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwWnoYwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE57A1F000E9;
+	Tue, 25 Aug 2026 13:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666062;
-	bh=JTOc4V9w5S7wNYQjECG1PCLP/zbAp1yOSb13bL+KBc0=;
+	s=korg; t=1787666065;
+	bh=m2jegZ4ptV9Gu2Xcj0tGhxkK/06BLGKKYtCGWWLdODQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YqWI258txAX6424w47vEkNMLZ/hA5nL8WzzyMFvNteeC8BbiUzktAFIsu7DGLNcUU
-	 DrLn4vlZbXKw7zrcxKwaa5ntlh9B9bS3P+/Vln5+298vuVVD47+gfaTDJXTf4FkgCG
-	 5FZOvpcflgJVUqYzRqTmnBfMi0gH7xVZJ7yo1l4A=
+	b=JwWnoYwUz9uJLfmtUJdhH05pqpvNQitDmUgWR8Xgr0VBRbjol9rzyXr5cjVfrL58H
+	 jFTyzoaQk3492msKsBElg7/mpuhcYYezOETyMhutdUbCmNsO6qY8T/BvNKiTDVPtBg
+	 l/HqHg+062dsktSHJmTNziI8vcVMB3ozkPc4vxJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donglin Lyu <donglin_lyu@outlook.com>,
-	Ruslan Shevchenko <adefka@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 71/79] Input: atkbd - skip deactivate for HONOR ZQC-P
-Date: Tue, 25 Aug 2026 15:26:51 +0200
-Message-ID: <20260825132544.459313595@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 72/79] can: use skb hash instead of private variable in headroom
+Date: Tue, 25 Aug 2026 15:26:52 +0200
+Message-ID: <20260825132544.496194998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -52,70 +51,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donglin Lyu <DongLin_Lyu@outlook.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 410c44b1096789d0c40fbee706520e981dba7bc1 ]
+commit d4fb6514ff8ed6912a71294e6b66a5d59ee88007 upstream.
 
-The internal keyboard on the HONOR ZQC-P (HONOR MagicBook Pro 14 2026)
-does not work after boot.
+The can_skb_priv::skbcnt variable is used to identify CAN skbs in the RX
+path analogue to the skb->hash.
 
-Using the kernel command line 'i8042.dumbkbd=1' makes the keyboard
-functional, but the CapsLock LED does not work. Adding the
-'atkbd_deactivate_fixup' quirk fixes the keyboard and CapsLock LED
-natively without requiring boot parameters.
+As the skb hash is not filled in CAN skbs move the private skbcnt value to
+skb->hash and set skb->sw_hash accordingly. The skb->hash is a value used
+for RPS to identify skbs. Use it as intended.
 
-DMI: HONOR ZQC-P/ZQC-P-PCB, BIOS 1.09 03/19/2026
-
-Fixes: 9cf6e24c9fbf ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
-Signed-off-by: Donglin Lyu <donglin_lyu@outlook.com>
-Tested-by: Ruslan Shevchenko <adefka@gmail.com>
-Link: https://patch.msgid.link/20260801151115.52709-1-donglin_lyu@outlook.com
-Cc: stable@vger.kernel.org
-[dtor: keep all HONOR entries together]
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260201-can_skb_ext-v8-1-3635d790fe8b@hartkopp.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/net/can/dev/skb.c |    2 --
+ include/linux/can/core.h  |    1 +
+ include/linux/can/skb.h   |    2 --
+ net/can/af_can.c          |   14 +++++++++++---
+ net/can/bcm.c             |    2 --
+ net/can/isotp.c           |    3 ---
+ net/can/j1939/socket.c    |    1 -
+ net/can/j1939/transport.c |    2 --
+ net/can/raw.c             |    7 +++----
+ 9 files changed, 15 insertions(+), 19 deletions(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1927,22 +1927,30 @@ static const struct dmi_system_id atkbd_
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
- 	{
--		/* Lenovo Yoga Air 14 (83QK) */
- 		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
-+			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
- 	{
-+		/* HONOR MagicBook Pro 14 2026 */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ZQC-P"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
-+	{
-+		/* Lenovo Yoga Air 14 (83QK) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -202,7 +202,6 @@ static void init_can_skb_reserve(struct
+ 	skb_reset_transport_header(skb);
+ 
+ 	can_skb_reserve(skb);
+-	can_skb_prv(skb)->skbcnt = 0;
+ }
+ 
+ struct sk_buff *alloc_can_skb(struct net_device *dev, struct can_frame **cf)
+@@ -312,7 +311,6 @@ static bool can_skb_headroom_valid(struc
+ 	if (skb->ip_summed == CHECKSUM_NONE) {
+ 		/* init headroom */
+ 		can_skb_prv(skb)->ifindex = dev->ifindex;
+-		can_skb_prv(skb)->skbcnt = 0;
+ 
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 
+--- a/include/linux/can/core.h
++++ b/include/linux/can/core.h
+@@ -58,6 +58,7 @@ extern void can_rx_unregister(struct net
+ 			      void *data);
+ 
+ extern int can_send(struct sk_buff *skb, int loop);
++void can_set_skb_uid(struct sk_buff *skb);
+ void can_sock_destruct(struct sock *sk);
+ 
+ #endif /* !_CAN_CORE_H */
+--- a/include/linux/can/skb.h
++++ b/include/linux/can/skb.h
+@@ -49,13 +49,11 @@ bool can_dropped_invalid_skb(struct net_
+ /**
+  * struct can_skb_priv - private additional data inside CAN sk_buffs
+  * @ifindex:	ifindex of the first interface the CAN frame appeared on
+- * @skbcnt:	atomic counter to have an unique id together with skb pointer
+  * @frame_len:	length of CAN frame in data link layer
+  * @cf:		align to the following CAN frame at skb->data
+  */
+ struct can_skb_priv {
+ 	int ifindex;
+-	int skbcnt;
+ 	unsigned int frame_len;
+ 	struct can_frame cf[];
+ };
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -640,6 +640,16 @@ static int can_rcv_filter(struct can_dev
+ 	return matches;
+ }
+ 
++void can_set_skb_uid(struct sk_buff *skb)
++{
++	/* create non-zero unique skb identifier together with *skb */
++	while (!(skb->hash))
++		skb->hash = atomic_inc_return(&skbcounter);
++
++	skb->sw_hash = 1;
++}
++EXPORT_SYMBOL(can_set_skb_uid);
++
+ static void can_receive(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct can_dev_rcv_lists *dev_rcv_lists;
+@@ -651,9 +661,7 @@ static void can_receive(struct sk_buff *
+ 	atomic_long_inc(&pkg_stats->rx_frames);
+ 	atomic_long_inc(&pkg_stats->rx_frames_delta);
+ 
+-	/* create non-zero unique skb identifier together with *skb */
+-	while (!(can_skb_prv(skb)->skbcnt))
+-		can_skb_prv(skb)->skbcnt = atomic_inc_return(&skbcounter);
++	can_set_skb_uid(skb);
+ 
+ 	rcu_read_lock();
+ 
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -338,7 +338,6 @@ static void bcm_can_tx(struct bcm_op *op
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	skb_put_data(skb, cf, op->cfsiz);
+ 
+@@ -1582,7 +1581,6 @@ static int bcm_tx_send(struct msghdr *ms
+ 	}
+ 
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skb->dev = dev;
+ 	can_skb_set_owner(skb, sk);
+ 	err = can_send(skb, 1); /* send with loopback */
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -218,7 +218,6 @@ static int isotp_send_fc(struct sock *sk
+ 
+ 	can_skb_reserve(nskb);
+ 	can_skb_prv(nskb)->ifindex = dev->ifindex;
+-	can_skb_prv(nskb)->skbcnt = 0;
+ 
+ 	nskb->dev = dev;
+ 	can_skb_set_owner(nskb, sk);
+@@ -773,7 +772,6 @@ static void isotp_send_cframe(struct iso
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	cf = (struct canfd_frame *)skb->data;
+ 	skb_put_zero(skb, so->ll.mtu);
+@@ -1069,7 +1067,6 @@ static int isotp_sendmsg(struct socket *
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	so->tx.len = size;
+ 	so->tx.idx = 0;
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -889,7 +889,6 @@ static struct sk_buff *j1939_sk_alloc_sk
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
+ 
+ 	ret = memcpy_from_msg(skb_put(skb, size), msg, size);
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -613,7 +613,6 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
+ 	skb->dev = priv->ndev;
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	/* reserve CAN header */
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
+ 
+@@ -1553,7 +1552,6 @@ j1939_session *j1939_session_fresh_new(s
+ 	skb->dev = priv->ndev;
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skcb = j1939_skb_to_cb(skb);
+ 	memcpy(skcb, rel_skcb, sizeof(*skcb));
+ 
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -75,8 +75,8 @@ MODULE_ALIAS("can-proto-1");
+  */
+ 
+ struct uniqframe {
+-	int skbcnt;
+ 	const struct sk_buff *skb;
++	u32 hash;
+ 	unsigned int join_rx_count;
+ };
+ 
+@@ -140,7 +140,7 @@ static void raw_rcv(struct sk_buff *oskb
+ 
+ 	/* eliminate multiple filter matches for the same skb */
+ 	if (this_cpu_ptr(ro->uniq)->skb == oskb &&
+-	    this_cpu_ptr(ro->uniq)->skbcnt == can_skb_prv(oskb)->skbcnt) {
++	    this_cpu_ptr(ro->uniq)->hash == oskb->hash) {
+ 		if (!ro->join_filters)
+ 			return;
+ 
+@@ -150,7 +150,7 @@ static void raw_rcv(struct sk_buff *oskb
+ 			return;
+ 	} else {
+ 		this_cpu_ptr(ro->uniq)->skb = oskb;
+-		this_cpu_ptr(ro->uniq)->skbcnt = can_skb_prv(oskb)->skbcnt;
++		this_cpu_ptr(ro->uniq)->hash = oskb->hash;
+ 		this_cpu_ptr(ro->uniq)->join_rx_count = 1;
+ 		/* drop first frame to check all enabled filters? */
+ 		if (ro->join_filters && ro->count > 1)
+@@ -870,7 +870,6 @@ static int raw_sendmsg(struct socket *so
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	/* fill the skb before testing for valid CAN frames */
+ 	err = memcpy_from_msg(skb_put(skb, size), msg, size);
 
 
