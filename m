@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CBE470421;
-	Tue, 25 Aug 2026 13:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC00386C3B;
+	Tue, 25 Aug 2026 13:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664977; cv=none; b=ELkd7CZ81YlkwdeXxQOkAQ4fMw3VrTRSpwMdbaUZMwm19YgA7ohWUUDgC1RfH9Dt5dVnG3DgRDa/XZhpRwYaOQKi2jAC7qgGYaiZo4A9hHIyoJyWyeqNVaUJD24EZ6ZKX8CYByI2rBjdOuU4cHudr52vZvKnyengGJZFrro5d9w=
+	t=1787664980; cv=none; b=TgaiUFRJJLf1K/EjukK8R9F8MVJ2rfdpGVNZO8mG1WUOnsfRDsNRC0k5AVSjtiMr0VUmCT5yaPpGCzG9HGNXh864FcZLQC2nRt7boMpmn7XxBQrVZT3wW9YgLT5CIRV1cinGF+pMx9rpNI3ygcwRQg07Z1t29auGq/CoSQjugRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664977; c=relaxed/simple;
-	bh=4JtsX5ZedFehbEYwleC91AW3t6Uoy5jSHerEQ1zEwVk=;
+	s=arc-20240116; t=1787664980; c=relaxed/simple;
+	bh=0rGlyJxRtpsPDcUIrOQpMKlmIYaomWvJzW/7Iy6cNDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5xeeMOl4EalGynqt7olT1S8uaPUOz6rZsVmNoVPprYTl/6XFm1w3x8cnYhkv5WQqsLvuMquPnrBEZleUpIKwpC6rW14HMQDcAjkaliFczAI/4GNa/aW+6VaeVgEDsskShMPEGGfY2d1p3p1jB4Hc7NIYdxJSSjwyFjZAhUueKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/uCp2Vt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dSpjiHlPxDURPbPgFrB4ip7a5JqZ45++NlSRo5grkhoe5CH66tWjIHAYeJ0N8mZAPCp5w9yNgIzl252T4Px/VTdGgI3C6BwKmgKtM+tYBeVBJeawr9qyIFkQfSe+r0nQ9gH9W7Bcx02I3ZaDAHrlsgWa+ahSa347f6UfYVTTHBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XXQhkAf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/uCp2Vt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABB11F000E9;
-	Tue, 25 Aug 2026 13:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XXQhkAf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F721F000E9;
+	Tue, 25 Aug 2026 13:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664976;
-	bh=BOhwh212TBoQHpRMcFJ/1+ahIjBRMUt/hfBQQM7IrcM=;
+	s=korg; t=1787664979;
+	bh=j/T1WvNuZmEThnx6KANJ1LECZF5WLWdNxncljkiWOgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z/uCp2Vt1UdDIGbew/6mBjqzsD2gCZg9zEbfYXinJ4cCsQzlI6xq1pcn1bxnzmX3u
-	 u+E2aZW/2LYdffy4jA8vSl5HKbDxvken/cUJ7ZHj2Ik4+5Gg6KtKS89ZlzXldOS2UR
-	 PU+JCxMqXiBwmD1g/0ho0iWAmvstiaLZ2g33zFP0=
+	b=2XXQhkAfgIiDzfwGhtWZjfpHqwdwZzykUS08WnY4ejlpZh1qcSZTLzD+4qc4ZhfLu
+	 eCwdJ0BxViEAN8e7p0qCTJeO88Kbq9nhFvDIo/RiYhHFTsIoXapIxIYfmEOvaKZoqd
+	 lyCakBu9MhHAMEaw6woO6qRnuA/49fokw6ouF+f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 068/101] selinux: require a classs permission values to cover its permission count
-Date: Tue, 25 Aug 2026 15:25:46 +0200
-Message-ID: <20260825132544.669314682@linuxfoundation.org>
+	Andrei Fed <andfed.net@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.1 069/101] HID: magicmouse: fix battery reporting for Bluetooth Magic Trackpad USB-C
+Date: Tue, 25 Aug 2026 15:25:47 +0200
+Message-ID: <20260825132544.710620014@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -52,150 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Andrei Fed <andfed.net@gmail.com>
 
-[ Upstream commit b98a8ac50775540f3804397ed08f61ef9910bcab ]
+commit a1556b48efc157fdda07b52ecc56c7bd1e1786f0 upstream.
 
-security_get_permissions() sizes an array by the class's permissions.nprim
-and fills it at value - 1, from the inherited common's permission table and
-then the class's own. A value no permission defines leaves a NULL that
-sel_make_perm_files() passes to d_alloc_name(), an oops inside
-sel_write_load() that strands selinux_state.policy_mutex and leaves every
-later load in uninterruptible sleep; two permissions sharing a value
-overwrite the first kstrdup(). Bounding each value by nprim catches
-neither, and neither would a count: the symbol table is keyed on the
-permission name, so duplicates pass.
+The Apple Magic Trackpad 2 (USB-C) reports a wildly wrong battery
+capacity over Bluetooth, for example a constant 4% for a pack that is
+actually at 74%.
 
-Track the values each permission table claims and require them to cover
-exactly what its count declares, rejecting a count no value can reach.
-Conforming policies are unaffected.
+The device's battery input report (0x90) is laid out as
+[report-id][status][charge]. hid-input's synchronous capacity query,
+hidinput_query_battery_capacity(), assumes the common
+[report-id][capacity] layout and returns buf[1], which for this device
+is the status byte rather than the charge (buf[2]).
 
+magicmouse_fetch_battery(), which requests the battery report through
+hid_hw_request() so the reply is decoded via the report descriptor at
+the correct field offset, is gated to the USB models and never runs
+over Bluetooth. The device does not push battery reports on its own
+either, except a single one at connect time, which is delivered while
+probe holds driver_input_lock and is silently dropped. All userspace
+reads therefore go through the misparsing query, and the device is
+stuck reporting its status byte as the capacity.
+
+Enabling the fetch for Bluetooth is not sufficient on its own: user
+space reacts to the power_supply registration immediately, so a query
+is typically already in flight when the fetch reply is parsed.
+hidinput_get_battery_property() stores the query result and marks the
+battery as queried without rechecking whether a report arrived while
+it was waiting, clobbering the just-reported correct value with the
+misparsed one.
+
+Fix this by adding HID_BATTERY_QUIRK_AVOID_QUERY for the Bluetooth
+Magic Trackpad USB-C so the misparsing query path is never used, and
+by fetching the battery at the end of probe for this device. hidp has
+no asynchronous request() callback, so the fetch is serviced
+synchronously via __hid_request() while probe still holds
+driver_input_lock; call hid_device_io_start() first so the reply is
+processed instead of being discarded.
+
+Tested with a Magic Trackpad USB-C (004c:0324) over Bluetooth on
+6.18.37: the reported capacity now matches the device (verified against
+a raw GET_REPORT of report 0x90) and updates on reconnect.
+
+Fixes: 87a2f10395c8 ("HID: magicmouse: Apple Magic Trackpad 2 USB-C driver support")
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Andrei Fed <andfed.net@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/policydb.c |   51 ++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 46 insertions(+), 5 deletions(-)
+ drivers/hid/hid-input.c      |    3 +++
+ drivers/hid/hid-magicmouse.c |   19 ++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1138,7 +1138,18 @@ int str_read(char **strp, gfp_t flags, s
- 	return 0;
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -375,6 +375,9 @@ static const struct hid_device_id hid_ba
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE,
+ 		USB_DEVICE_ID_APPLE_MAGICTRACKPAD),
+ 	  HID_BATTERY_QUIRK_IGNORE },
++	{ HID_BLUETOOTH_DEVICE(BT_VENDOR_ID_APPLE,
++		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC),
++	  HID_BATTERY_QUIRK_AVOID_QUERY },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM,
+ 		USB_DEVICE_ID_ELECOM_BM084),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -828,6 +828,12 @@ static bool is_usb_magictrackpad2(__u32
+ 	       product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC;
  }
  
--static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
-+/*
-+ * Bitmap of the permission values a symtab has claimed.  Values are 1-based
-+ * and bounded by SEL_VEC_MAX, the width of an access vector, so the whole set
-+ * fits in a u32 and the callers reject an nprim past that width.
-+ */
-+static u32 perm_claimed_mask(u32 nprim)
++static bool is_bt_magictrackpad2(__u32 vendor, __u32 product)
 +{
-+	return nprim ? U32_MAX >> (SEL_VEC_MAX - nprim) : 0;
++	return vendor == BT_VENDOR_ID_APPLE &&
++	       product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC;
 +}
 +
-+static int perm_read(struct policydb *p, struct symtab *s,
-+		     struct policy_file *fp, u32 *claimed)
+ static int magicmouse_fetch_battery(struct hid_device *hdev)
  {
- 	char *key = NULL;
- 	struct perm_datum *perdatum;
-@@ -1170,6 +1181,10 @@ static int perm_read(struct policydb *p,
- 	/* indexes an nprim-sized array in security_get_permissions() */
- 	if (perdatum->value > s->nprim)
- 		goto bad;
-+	/* two permissions cannot share one slot of that array */
-+	if (*claimed & (1U << (perdatum->value - 1)))
-+		goto bad;
-+	*claimed |= 1U << (perdatum->value - 1);
+ #ifdef CONFIG_HID_BATTERY_STRENGTH
+@@ -838,7 +844,8 @@ static int magicmouse_fetch_battery(stru
+ 	bat = hid_get_battery(hdev);
+ 	if (!bat ||
+ 	    (!is_usb_magicmouse2(hdev->vendor, hdev->product) &&
+-	     !is_usb_magictrackpad2(hdev->vendor, hdev->product)))
++	     !is_usb_magictrackpad2(hdev->vendor, hdev->product) &&
++	     !is_bt_magictrackpad2(hdev->vendor, hdev->product)))
+ 		return -1;
  
+ 	report_enum = &hdev->report_enum[bat->report_type];
+@@ -971,6 +978,16 @@ static int magicmouse_probe(struct hid_d
+ 		schedule_delayed_work(&msc->work, msecs_to_jiffies(500));
+ 	}
+ 
++	/*
++	 * Query the Bluetooth Magic Trackpad USB-C battery as done for USB.
++	 * Start io first: probe holds driver_input_lock and the synchronous
++	 * GET_REPORT reply would otherwise be dropped.
++	 */
++	if (is_bt_magictrackpad2(id->vendor, id->product)) {
++		hid_device_io_start(hdev);
++		magicmouse_fetch_battery(hdev);
++	}
++
  	return 0;
- bad:
-@@ -1182,7 +1197,7 @@ static int common_read(struct policydb *
- 	char *key = NULL;
- 	struct common_datum *comdatum;
- 	__le32 buf[4];
--	u32 i, len, nel;
-+	u32 i, len, nel, claimed = 0;
- 	int rc;
- 
- 	comdatum = kzalloc_obj(*comdatum);
-@@ -1204,17 +1219,28 @@ static int common_read(struct policydb *
- 	if (rc)
- 		goto bad;
- 	comdatum->permissions.nprim = le32_to_cpu(buf[2]);
-+	/* no permission value can reach a slot past SEL_VEC_MAX */
-+	rc = -EINVAL;
-+	if (comdatum->permissions.nprim > SEL_VEC_MAX)
-+		goto bad;
- 
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
- 		goto bad;
- 
- 	for (i = 0; i < nel; i++) {
--		rc = perm_read(p, &comdatum->permissions, fp);
-+		rc = perm_read(p, &comdatum->permissions, fp, &claimed);
- 		if (rc)
- 			goto bad;
- 	}
- 
-+	rc = -EINVAL;
-+	if (claimed != perm_claimed_mask(comdatum->permissions.nprim)) {
-+		pr_err("SELinux:  common %s does not define every permission it declares\n",
-+		       key);
-+		goto bad;
-+	}
-+
- 	hash_eval(&comdatum->permissions.table, "common_permissions", key);
- 
- 	rc = symtab_insert(s, key, comdatum);
-@@ -1348,7 +1374,7 @@ static int class_read(struct policydb *p
- 	char *key = NULL;
- 	struct class_datum *cladatum;
- 	__le32 buf[6];
--	u32 i, len, len2, ncons, nel, val;
-+	u32 i, len, len2, ncons, nel, val, claimed = 0, inherited = 0;
- 	int rc;
- 
- 	cladatum = kzalloc_obj(*cladatum);
-@@ -1376,6 +1402,10 @@ static int class_read(struct policydb *p
- 	if (rc)
- 		goto bad;
- 	cladatum->permissions.nprim = le32_to_cpu(buf[3]);
-+	/* no permission value can reach a slot past SEL_VEC_MAX */
-+	rc = -EINVAL;
-+	if (cladatum->permissions.nprim > SEL_VEC_MAX)
-+		goto bad;
- 
- 	ncons = le32_to_cpu(buf[5]);
- 
-@@ -1410,11 +1440,22 @@ static int class_read(struct policydb *p
- 		}
- 	}
- 	for (i = 0; i < nel; i++) {
--		rc = perm_read(p, &cladatum->permissions, fp);
-+		rc = perm_read(p, &cladatum->permissions, fp, &claimed);
- 		if (rc)
- 			goto bad;
- 	}
- 
-+	/* the class's own permissions must claim the slots the common leaves */
-+	if (cladatum->comdatum)
-+		inherited = cladatum->comdatum->permissions.nprim;
-+	rc = -EINVAL;
-+	if (claimed != (perm_claimed_mask(cladatum->permissions.nprim) &
-+			~perm_claimed_mask(inherited))) {
-+		pr_err("SELinux:  class %s does not define every permission it declares\n",
-+		       key);
-+		goto bad;
-+	}
-+
- 	hash_eval(&cladatum->permissions.table, "class_permissions", key);
- 
- 	rc = read_cons_helper(p, &cladatum->constraints, ncons, 0, fp);
+ err_stop_hw:
+ 	if (is_usb_magicmouse2(id->vendor, id->product) ||
 
 
