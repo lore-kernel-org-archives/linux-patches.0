@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7089348381A;
-	Tue, 25 Aug 2026 13:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C7F2E06E4;
+	Tue, 25 Aug 2026 13:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666338; cv=none; b=EI3gfP71R8oSQbycWBVxuTTSGP62hnj0EgKEi3BWhrjdYQc/EU9TGFZlVbJFcX/pgsmCKm++BksdyfaMgkgy7pzLV7hjotxgIhEJ1huT9/xB5Yf75JjN9YPy858n4t53e209Ni8r6tT0kG8tISzb9hJ7uK4uPohIPKjF/+cd67g=
+	t=1787666341; cv=none; b=IHn9ZvM4R9Wh6NdTSlEKJ+tgra01ma59wt7kBlcFvbwgIuameWcGvt7PD7fXj/fAu6smFCQUfP+0gtRErsRkrBINf3gG2J6NBCPSR4iJMghB7yreeNMvVw3l11cb1DCFY/+XNrYpnHLZkLS7XMZgGaTZZSida+kF4G1PRXx/oyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666338; c=relaxed/simple;
-	bh=a1JprQBiklMl6EB+0AYnKwbOMYPQ5eHRQ38N2WLDrlE=;
+	s=arc-20240116; t=1787666341; c=relaxed/simple;
+	bh=SkpAfCGqshWC3NgCvvAQVQHk6T8puuGv20he7G+fy+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jc81L7UcemnvtZnMYk0VltY5iiJuoAtiLz8lkkYwOwH5Cb8Yz3MlJguqe5c+4YhmvWQPRq8hftCZJ4VpmQFGtmk/7UqdE1oQ7GAyf3b/vnnq+bz9FWVkZRxdhB2bL+roYURABq8BHHia8xr+g6wmb93ICTPRRcIyYuYq81BbsXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnhQhWQf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbc6FHywTzm2uMUd0HCtIaguPjmpQE8dTQv7/Rfu7LtZuuKNS3NJGzlt9R1VgR2cWq9EtQgXD/QqQ0WKLgyG4De2yBBHdvOJhJpHkdloMbMeXi83rp5Qm0SIGPUOP9MjpPm+/Pw3JlnXLx2QXFuWSVOrRkLkGZzXXoz65OczprQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTfIVSuv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnhQhWQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E7B1F000E9;
-	Tue, 25 Aug 2026 13:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTfIVSuv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556EE1F000E9;
+	Tue, 25 Aug 2026 13:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666337;
-	bh=idQsK6QYI5DHTlS2kNYT7SnbJgOog27IQxSjsSTrnko=;
+	s=korg; t=1787666339;
+	bh=rjrzY0hvzIpnpVF295fZM3cCVgL7fIFXiMqltnteb+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TnhQhWQfyl4oQda+Na1kXzfWYqM5k8Ha/WtS0wREctHpWyl3In/pUZLodm7e4LVKF
-	 Q4nPvQymf6IRVK42qpraY8cqd60urVldEmmGK+Xc9LRjMadI5NToRIudzm/DvQ57oX
-	 aqRpin9Xx3fVB1/TDOu3xUyFmcmm+mDpH+XLS5Cc=
+	b=eTfIVSuvspm+zWEytU7GAeBNA3xVC9nSDkd7EvSEpMq8VR85Egb9U1sVeOronFFuw
+	 prHDgtHMq7DYge4LOg2AB5fbBV1Zo+bdiyfT1i/2jXab+4iJ4rm/WEEmjslwd/jMH7
+	 +Ew8joF+GefycTu0TztIJgh2EP6oGUAfH+XOUayo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 01/57] Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
-Date: Tue, 25 Aug 2026 15:26:23 +0200
-Message-ID: <20260825132541.395738794@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 10/57] misc: fastrpc: separate fastrpc device from channel context
+Date: Tue, 25 Aug 2026 15:26:32 +0200
+Message-ID: <20260825132541.705938346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -50,133 +50,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-commit 43a556b2fd43f2df6dded59c2e26560a27874c24 upstream.
+[ Upstream commit 965602eabb57d086466ad749e81941e3dd66b595 ]
 
-rfcomm_sock_recvmsg() completes a deferred setup by calling
-rfcomm_dlc_accept() without holding any RFCOMM lock:
+Currently fastrpc misc device instance is within channel context struct
+with a kref. So we have 2 structs with refcount, both of them managing the
+same channel context structure.
 
-	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
-		rfcomm_dlc_accept(d);
-		return 0;
-	}
+Separate fastrpc device from channel context and by adding a dedicated
+fastrpc_device structure, this should clean the structures a bit and also help
+when adding secure device node support.
 
-and rfcomm_dlc_accept() dereferences the session on its first line:
-
-	struct sock *sk = d->session->sock->sk;
-
-Every other path that touches d->session runs under rfcomm_mutex:
-rfcomm_dlc_open(), rfcomm_dlc_close(), rfcomm_dlc_exists(),
-rfcomm_dlc_send_rpn(), and the RFCOMM thread through
-rfcomm_process_sessions(). rfcomm_connect_ind() is even documented as
-"called under rfcomm_lock()". This call site is the only one that skips
-it.
-
-The RFCOMM_DEFER_SETUP bit looks like it serialises the accept against
-teardown, since __rfcomm_dlc_close() returns early when it wins the
-test_and_clear. But rfcomm_recv_disc() forces the state first:
-
-	d->state = BT_CLOSED;
-	__rfcomm_dlc_close(d, err);
-
-and the early return only covers BT_CONNECT, BT_CONFIG, BT_OPEN and
-BT_CONNECT2. With the state already BT_CLOSED that switch does not
-match, the bit is never consulted, and __rfcomm_dlc_close() falls
-through to rfcomm_dlc_unlink(), which sets d->session = NULL.
-
-So a remote DISC on a deferred dlc clears the session while leaving
-RFCOMM_DEFER_SETUP set. The next recvmsg() then passes the
-test_and_clear and dereferences a NULL session. No timing window is
-needed: once the DISC has been processed, the dereference is
-unconditional.
-
-Give rfcomm_dlc_accept() the same shape as rfcomm_dlc_open() and
-rfcomm_dlc_close(): an exported wrapper that takes rfcomm_mutex and
-re-checks the session, around a __rfcomm_dlc_accept() that the two
-in-core callers, which already hold the mutex, keep using.
-
-Reproduced on a KASAN + PROVE_LOCKING kernel with a BR/EDR peer emulated
-over /dev/vhci: the peer brings up an ACL link, opens L2CAP on the
-RFCOMM PSM, starts a session, opens a dlc on a channel bound with
-BT_DEFER_SETUP, and sends DISC after the socket is accepted. recv() on
-the accepted socket then hits:
-
-  Oops: general protection fault
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:rfcomm_dlc_accept+0x54/0x350
-  Call Trace:
-    rfcomm_sock_recvmsg+0x1cd/0x230
-    sock_recvmsg+0x166/0x1c0
-    __sys_recvfrom+0x20d/0x300
-
-0x10 is the offset of sock in struct rfcomm_session. With this patch the
-same run completes with recv() returning 0 and no report, and lockdep
-stays quiet, confirming rfcomm_mutex is still taken before lock_sock on
-this path as it is on the thread side.
-
-Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20220214161002.6831-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 6102ceb4eab8 ("misc: fastrpc: Remove buffer from list prior to unmap operation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/core.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/misc/fastrpc.c |   46 +++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 37 insertions(+), 9 deletions(-)
 
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1330,7 +1330,10 @@ static struct rfcomm_session *rfcomm_rec
- 	return s;
- }
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -78,7 +78,7 @@
+ #define USER_PD		(1)
+ #define SENSORS_PD	(2)
  
--void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+/* Must be called with rfcomm_mutex held, so that the session cannot be
-+ * unlinked from under us.
-+ */
-+static void __rfcomm_dlc_accept(struct rfcomm_dlc *d)
+-#define miscdev_to_cctx(d) container_of(d, struct fastrpc_channel_ctx, miscdev)
++#define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+ 
+ static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+ 						"sdsp", "cdsp"};
+@@ -212,9 +212,14 @@ struct fastrpc_channel_ctx {
+ 	spinlock_t lock;
+ 	struct idr ctx_idr;
+ 	struct list_head users;
+-	struct miscdevice miscdev;
+ 	struct kref refcount;
+ 	u64 dma_mask;
++	struct fastrpc_device *fdevice;
++};
++
++struct fastrpc_device {
++	struct fastrpc_channel_ctx *cctx;
++	struct miscdevice miscdev;
+ };
+ 
+ struct fastrpc_user {
+@@ -1248,10 +1253,14 @@ static int fastrpc_device_release(struct
+ 
+ static int fastrpc_device_open(struct inode *inode, struct file *filp)
  {
- 	struct sock *sk = d->session->sock->sk;
- 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
-@@ -1352,6 +1355,21 @@ void rfcomm_dlc_accept(struct rfcomm_dlc
- 	rfcomm_send_msc(d->session, 1, d->dlci, d->v24_sig);
- }
+-	struct fastrpc_channel_ctx *cctx = miscdev_to_cctx(filp->private_data);
++	struct fastrpc_channel_ctx *cctx;
++	struct fastrpc_device *fdevice;
+ 	struct fastrpc_user *fl = NULL;
+ 	unsigned long flags;
  
-+void rfcomm_dlc_accept(struct rfcomm_dlc *d)
++	fdevice = miscdev_to_fdevice(filp->private_data);
++	cctx = fdevice->cctx;
++
+ 	fl = kzalloc(sizeof(*fl), GFP_KERNEL);
+ 	if (!fl)
+ 		return -ENOMEM;
+@@ -1649,6 +1658,27 @@ static struct platform_driver fastrpc_cb
+ 	},
+ };
+ 
++static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ctx *cctx,
++				   const char *domain)
 +{
-+	rfcomm_lock();
++	struct fastrpc_device *fdev;
++	int err;
 +
-+	/* rfcomm_recv_disc() sets the dlc state to BT_CLOSED before calling
-+	 * __rfcomm_dlc_close(), so the RFCOMM_DEFER_SETUP handshake there is
-+	 * skipped and the session can already be unlinked by the time the
-+	 * deferred accept runs from rfcomm_sock_recvmsg().
-+	 */
-+	if (d->session)
-+		__rfcomm_dlc_accept(d);
++	fdev = devm_kzalloc(dev, sizeof(*fdev), GFP_KERNEL);
++	if (!fdev)
++		return -ENOMEM;
 +
-+	rfcomm_unlock();
++	fdev->cctx = cctx;
++	fdev->miscdev.minor = MISC_DYNAMIC_MINOR;
++	fdev->miscdev.fops = &fastrpc_fops;
++	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s", domain);
++	err = misc_register(&fdev->miscdev);
++	if (!err)
++		cctx->fdevice = fdev;
++
++	return err;
 +}
 +
- static void rfcomm_check_accept(struct rfcomm_dlc *d)
+ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
  {
- 	if (rfcomm_check_security(d)) {
-@@ -1364,7 +1382,7 @@ static void rfcomm_check_accept(struct r
- 			d->state_change(d, 0);
- 			rfcomm_dlc_unlock(d);
- 		} else
--			rfcomm_dlc_accept(d);
-+			__rfcomm_dlc_accept(d);
- 	} else {
- 		set_bit(RFCOMM_AUTH_PENDING, &d->flags);
- 		rfcomm_dlc_set_timer(d, RFCOMM_AUTH_TIMEOUT);
-@@ -1918,7 +1936,7 @@ static void rfcomm_process_dlcs(struct r
- 					d->state_change(d, 0);
- 					rfcomm_dlc_unlock(d);
- 				} else
--					rfcomm_dlc_accept(d);
-+					__rfcomm_dlc_accept(d);
- 			}
- 			continue;
- 		} else if (test_and_clear_bit(RFCOMM_AUTH_REJECT, &d->flags)) {
+ 	struct device *rdev = &rpdev->dev;
+@@ -1678,11 +1708,7 @@ static int fastrpc_rpmsg_probe(struct rp
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+-	data->miscdev.minor = MISC_DYNAMIC_MINOR;
+-	data->miscdev.name = devm_kasprintf(rdev, GFP_KERNEL, "fastrpc-%s",
+-					    domains[domain_id]);
+-	data->miscdev.fops = &fastrpc_fops;
+-	err = misc_register(&data->miscdev);
++	err = fastrpc_device_register(rdev, data, domains[domain_id]);
+ 	if (err) {
+ 		kfree(data);
+ 		return err;
+@@ -1727,7 +1753,9 @@ static void fastrpc_rpmsg_remove(struct
+ 		fastrpc_notify_users(user);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
+ 
+-	misc_deregister(&cctx->miscdev);
++	if (cctx->fdevice)
++		misc_deregister(&cctx->fdevice->miscdev);
++
+ 	of_platform_depopulate(&rpdev->dev);
+ 
+ 	fastrpc_channel_ctx_put(cctx);
 
 
