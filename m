@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB9E417BF9;
-	Tue, 25 Aug 2026 13:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBA53C276D;
+	Tue, 25 Aug 2026 13:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665803; cv=none; b=edQBL9smMBbM6tRctaPveWOmV4z8x/2wkRQtrUutGJ9uKp/J9fsys20ZRB+snCj8Unw/0DMZWFLeR1Z2Yg4lVkXMOnet+AYpRofh888Z6MxAKjq9BFnyDCQyOZ1zDRO7AebG7wK/aBukJylNbSSv3lR1bcizjTl6Wsex8ZDyAPg=
+	t=1787665805; cv=none; b=OlaLx9oVBcbIz+TLyMQUKrJ0JA4FSURlcfMq7i7Nudci9LeAMwW8WlAHy+7kPMMkW4RUW2JeGzp14d+kuA8hPZc2UpuPqCGZX4vA2MY9gZwETN5zV2+/ndXGspUpqK1tU41nXPkukf1LDrNqeWShI0rkterb7aW7SPhSzsdpeMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665803; c=relaxed/simple;
-	bh=y6xKxFFCz1l8IJdQEeAyw2Ix0IaZHp+Jjw99ozzOi+M=;
+	s=arc-20240116; t=1787665805; c=relaxed/simple;
+	bh=ZUI5T4aRSUde1xlr7FhIf4mwlqD76GXDR8NJJhmlcMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YyLtdGD2o6CD3fEdm/ev/8PDyIiqEfSN9rdT2eobSdse7/llQpi76oLV0nGF5gxXKpPZVBMpBbPPrLkIeehf7awWiP+H6qV1obuzVN7LfgfSxZg6g8MrcN3N+v8cBt3tSM9eiLWttJz5EYhdK3KYqNubvVblOmoGpCnI14GH6m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mfdcp9I8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iom2xKDJTRM6x0TiDHU4X2SEB6C2c5IDQVJnRG9TyVOgOrLnBfXiqJ0v80LBUvmMeuRpF4c5kyX+9pcRuS0jhXXrnv0MaQd9aCK+bj/kvrMeKg5QLLuNF6lNckjqSxiQYneqaRKYKlDlrxEyNYN51H+jFgupgbeQ6/Mfg7X0z6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoeLs51r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mfdcp9I8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11B11F000E9;
-	Tue, 25 Aug 2026 13:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoeLs51r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CA21F000E9;
+	Tue, 25 Aug 2026 13:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665801;
-	bh=hIzT3lbRlP09U0K8NkBpm00amzDrRS9rRwVAYj3mXSw=;
+	s=korg; t=1787665804;
+	bh=1k5IkBLLZKp6foMhjts7xWFM942mARcvE65iO+zw9JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mfdcp9I8IQ4v9HXkiHhWS85aMPiqkpkfBPdwW8b0Jo4wLWiE3hUQ3/JDfinfcq7Mu
-	 XWU42dXbzfgdHu5CZLmPnzo+lQ0o+b62MZ70mjiOM9rv1GhyHCUi2LrwPf0qZMsnNY
-	 a07Ajy//fnbdPiaho5+/jDUn5YB0s4Rp2z5IVeGE=
+	b=yoeLs51rDiEOthXK3KKfxjHAv71jUYqb8X4giXA3sk1DJ+FDBLKU+t+XK683Yip3e
+	 XSgnl5OrS5tOo/MFSKEW9e67QlFFdILb0c8hc1FC8E+1tOJ+mqZ2afBKeHyL0yrscl
+	 wMiz48QLic1MpTktgN5Bv0g8a/b+rlwz2XasuQGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donglin Lyu <donglin_lyu@outlook.com>,
-	Ruslan Shevchenko <adefka@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 71/87] Input: atkbd - skip deactivate for HONOR ZQC-P
-Date: Tue, 25 Aug 2026 15:26:34 +0200
-Message-ID: <20260825132544.598338913@linuxfoundation.org>
+Subject: [PATCH 6.6 72/87] mptcp: pm: fix memory leak from alloc-during-teardown race
+Date: Tue, 25 Aug 2026 15:26:35 +0200
+Message-ID: <20260825132544.645924486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,70 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donglin Lyu <DongLin_Lyu@outlook.com>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-[ Upstream commit 410c44b1096789d0c40fbee706520e981dba7bc1 ]
+[ Upstream commit efc33b5102ff859bacd390a5f30112d8e0c084c0 ]
 
-The internal keyboard on the HONOR ZQC-P (HONOR MagicBook Pro 14 2026)
-does not work after boot.
+mptcp_pm_destroy() empties msk->pm.anno_list and
+msk->pm.userspace_pm_local_addr_list under msk->pm.lock during socket
+teardown, dropping the lock between the two.
 
-Using the kernel command line 'i8042.dumbkbd=1' makes the keyboard
-functional, but the CapsLock LED does not work. Adding the
-'atkbd_deactivate_fixup' quirk fixes the keyboard and CapsLock LED
-natively without requiring boot parameters.
+A concurrent userspace PM genl ANNOUNCE on the same msk holds a sock
+reference via mptcp_token_get_sock() and, in
+mptcp_pm_nl_announce_doit(), calls
+mptcp_userspace_pm_append_new_local_addr() and
+mptcp_pm_announced_alloc(). Both take msk->pm.lock briefly to add to
+their respective lists. Because the genl handler holds a sock reference,
+mptcp_pm_destroy() may run on the same msk via mptcp_disconnect(), which
+invokes mptcp_destroy_common() without dropping the sock refcount,
+before the handler completes.
 
-DMI: HONOR ZQC-P/ZQC-P-PCB, BIOS 1.09 03/19/2026
+If the lock acquisitions interleave such that mptcp_pm_destroy() empties
+a list first, the later alloc adds its entry to a list head that nothing
+else iterates for this msk, and the entry leaks. kmemleak reports both
+mptcp_pm_add_addr objects (from mptcp_pm_announced_alloc()) and
+mptcp_pm_addr_entry objects (from
+mptcp_userspace_pm_append_new_local_addr()) under sustained concurrent
+ANNOUNCE + close load against the userspace PM.
 
-Fixes: 9cf6e24c9fbf ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
-Signed-off-by: Donglin Lyu <donglin_lyu@outlook.com>
-Tested-by: Ruslan Shevchenko <adefka@gmail.com>
-Link: https://patch.msgid.link/20260801151115.52709-1-donglin_lyu@outlook.com
+Add an MPTCP_PM_DESTROYING bit in msk->pm.status, set by
+mptcp_pm_destroy() under pm.lock before the lists are emptied and
+checked under pm.lock by the alloc paths. Either the alloc takes pm.lock
+first, in which case its entry is on the list when mptcp_pm_destroy()
+frees it; or mptcp_pm_destroy() takes pm.lock first, in which case the
+later alloc observes the bit and refuses.
+
+Found by an MPTCP protocol-flow harness extending BRF (arXiv:2305.08782).
+
+Fixes: 9ab4807c84a4 ("mptcp: netlink: Add MPTCP_PM_CMD_ANNOUNCE")
 Cc: stable@vger.kernel.org
-[dtor: keep all HONOR entries together]
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-6-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Inlined `mptcp_pm_destroy()` at its call site in `mptcp_destroy_common()` and moved the fences into the pre-rename `mptcp_pm_alloc_anno_list()`/`mptcp_free_local_addr_list()` equivalents, deleting the `mptcp_pm_is_userspace()` guard from inside the callee instead of the call site. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/mptcp/pm_netlink.c   |    3 +++
+ net/mptcp/pm_userspace.c |    7 ++++---
+ net/mptcp/protocol.c     |    9 +++++++++
+ net/mptcp/protocol.h     |    7 ++++---
+ 4 files changed, 20 insertions(+), 6 deletions(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1947,22 +1947,30 @@ static const struct dmi_system_id atkbd_
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
- 	{
--		/* Lenovo Yoga Air 14 (83QK) */
- 		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
-+			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
- 	{
-+		/* HONOR MagicBook Pro 14 2026 */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ZQC-P"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
-+	{
-+		/* Lenovo Yoga Air 14 (83QK) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -398,6 +398,9 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 
+ 	lockdep_assert_held(&msk->pm.lock);
+ 
++	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING))
++		return false;
++
+ 	add_entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
+ 
+ 	if (add_entry) {
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -13,9 +13,6 @@ void mptcp_free_local_addr_list(struct m
+ 	struct sock *sk = (struct sock *)msk;
+ 	LIST_HEAD(free_list);
+ 
+-	if (!mptcp_pm_is_userspace(msk))
+-		return;
+-
+ 	spin_lock_bh(&msk->pm.lock);
+ 	list_splice_init(&msk->pm.userspace_pm_local_addr_list, &free_list);
+ 	spin_unlock_bh(&msk->pm.lock);
+@@ -53,6 +50,10 @@ static int mptcp_userspace_pm_append_new
+ 	bitmap_zero(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 
+ 	spin_lock_bh(&msk->pm.lock);
++	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING)) {
++		ret = -EINVAL;
++		goto append_err;
++	}
+ 	list_for_each_entry(e, &msk->pm.userspace_pm_local_addr_list, list) {
+ 		addr_match = mptcp_addresses_equal(&e->addr, &entry->addr, true);
+ 		if (addr_match && entry->addr.id == 0 && needs_id)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3536,7 +3536,16 @@ void mptcp_destroy_common(struct mptcp_s
+ 	sk_forward_alloc_add(sk, msk->rmem_fwd_alloc);
+ 	WRITE_ONCE(msk->rmem_fwd_alloc, 0);
+ 	mptcp_token_destroy(msk);
++
++	spin_lock_bh(&msk->pm.lock);
++	msk->pm.status |= BIT(MPTCP_PM_DESTROYING);
++	spin_unlock_bh(&msk->pm.lock);
++
+ 	mptcp_pm_free_anno_list(msk);
++
++	/* Free the userspace local address list unconditionally: the socket
++	 * can be reused (mptcp_disconnect()) and re-selected to a different PM
++	 */
+ 	mptcp_free_local_addr_list(msk);
+ }
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -190,9 +190,10 @@ enum mptcp_pm_status {
+ 	MPTCP_PM_ESTABLISHED,
+ 	MPTCP_PM_SUBFLOW_ESTABLISHED,
+ 	MPTCP_PM_ALREADY_ESTABLISHED,	/* persistent status, set after ESTABLISHED event */
+-	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED /* persistent status, set after MPC local address is
+-					 * accounted int id_avail_bitmap
+-					 */
++	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED, /* persistent status, set after MPC local address is
++					  * accounted int id_avail_bitmap
++					  */
++	MPTCP_PM_DESTROYING,		/* To fence out PM list allocs */
+ };
+ 
+ enum mptcp_pm_type {
 
 
