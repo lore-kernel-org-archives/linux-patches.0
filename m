@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48DE2E06E4;
-	Tue, 25 Aug 2026 13:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF77D392C21;
+	Tue, 25 Aug 2026 13:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665829; cv=none; b=KvBeg/6cFQ5+yHq77LTPZ9wIuZLIX3MBpXb6XW4enfd6fRScJyIt2XF/1z9RBbmv2YDQxcvPKLJQ90vfrUsMakasVRodELPZWVOGeUgF7tPxC7Uehv0OEvTbQcWYMPFMIuqDmoyfTgQ7iYBw1ASgSwv/pWfblRi0oGq+3ecMzJM=
+	t=1787665832; cv=none; b=bGQHqtPKK8fQGx4pFeHKhy+K436PkRpvNU/aEZLwx7nqBviF3fgjJRJjgAkzBGR8i3T+sS/s0Tqbm4uCnQa8jnRpsC5QuLaOO82aOeEMaDtDVn9x8lQMzlhS9aMwN0XgISIl/m8dstDFHuAlDDTDcAWMO0wpqglPttDfdUo18mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665829; c=relaxed/simple;
-	bh=aR+F6aKKGowyUqDy/7LTNu23QMhFqjnTcRtWX42tVJU=;
+	s=arc-20240116; t=1787665832; c=relaxed/simple;
+	bh=ffBYe3bSdZDlkuIoyk2M6hRCDqW/h6VxgdL7r8WvybY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=loqWxRn8WDEfkryqjYEMndhXQeNCuuHhT2wZItJVXMRkhEelqMcERRTH53711anqXOAzRIa97OrLN0rJhd8NTp98t/EzMlZiruWGShhY5rvSCmJog4iZISS3SddNdQkik7jIvBEUhE+LwD0gICBYS+qMywRs+kUnfbNVL2aQbxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/FcaY0L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fmYnuHL7rcQFpPiruod+d8IiqjP8spmUowUA0AuAQsbCBITDrFJlI0uOrJtpRrhTRHnF1Ph3014VDtnUDvVt5/Uur2p6r3X0EQ8XfCmT9HbBV8hlzrIiCUyBhsKnrGfRXhinni/hJIklg2v5NpTVGW0b4+TPXtdQPgYZpdjyvgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NXj+v5H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/FcaY0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B851F000E9;
-	Tue, 25 Aug 2026 13:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NXj+v5H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9FD1F000E9;
+	Tue, 25 Aug 2026 13:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665827;
-	bh=EKHy2wk18iodn3KwPrOeNbMCV75EVJLNAPbPMd22Eu4=;
+	s=korg; t=1787665830;
+	bh=aI1kBnZFDIBRHUBuQFsANJtAB89CCA7GTXRuybU9E+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M/FcaY0LhwQjRJ9H10t0TBK8rjrRMH7DTF/0yMenzf9QD+pq9LKNA2xeJNia2BHav
-	 nUb7kPDDD8PBrF0nRwRcYnGCefsRxGBjpjNHYG4m6nTZQ6BnaNo7CPsn80v5e26o9R
-	 pAh63Jp6PupuJIbWCHoG5IVvSgCvNjLVtxlGT7bU=
+	b=0NXj+v5HRD+huZV/PV2fHQKtGl593HigDyVJr+S0mAsxYR2k1HUOqBhq2R7uW46fI
+	 MevriqIkoV7KFlqHSUpXxzf2aDGB8JDPW5ARuIAwNRsJz6x8B2juqMliB9IuGxzbz+
+	 JhEaC0abmmenlvtSvjije6tAuyg+Yfl03BK2c/Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Qing Luo <luoqing@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 80/87] selinux: reject a permission value exceeding the class permission count
-Date: Tue, 25 Aug 2026 15:26:43 +0200
-Message-ID: <20260825132544.963026626@linuxfoundation.org>
+Subject: [PATCH 6.6 63/87] mptcp: pm: fix data race in add_addr timer callback
+Date: Tue, 25 Aug 2026 15:26:26 +0200
+Message-ID: <20260825132544.296681545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,45 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Qing Luo <luoqing@kylinos.cn>
 
-[ Upstream commit d14b5d0e97fccd27974fedc03b903408872907fd ]
+[ Upstream commit a7aad5b69d3bdaec20a3ed9284e184502450c0cd ]
 
-perm_read() bounds a permission value by SEL_VEC_MAX but never by the
-nprim of the owning class or common, which is taken verbatim from the
-policy image.  security_get_permissions() then writes perms[value - 1]
-into an nprim-sized kcalloc() array, so a class declaring fewer
-permissions than its largest permission value drives an out-of-bounds
-heap write.  The top-level symbol tables are validated this way; the
-nested per-class permission table is not.
+The timer callback reads entry->retrans_times outside pm.lock to decide
+whether to call mptcp_pm_subflow_established(). Since
+mptcp_pm_announced_del_timer() can concurrently set retrans_times =
+ADD_ADDR_RETRANS_MAX under pm.lock, a race condition exists.
 
-Reject a permission whose value exceeds nprim, which is already set when
-perm_read() runs.  Well-formed policies are unaffected.
+I discovered this issue while studying the code. AI tools helped me to
+verify the issue can potentially happen under race conditions.
 
+Use a local 'retransmit' flag set inside pm.lock to capture whether
+retransmission is still possible when the lock is taken. This allows to
+call mptcp_pm_subflow_established() accordingly, and not depending on
+the situation that can be different when checked outside the pm.lock.
+
+Fixes: 348d5c1dec60 ("mptcp: move to next addr when timeout")
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: tweak comment for line length]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Stable-dep-of: b98a8ac50775 ("selinux: require a class's permission values to cover its permission count")
+Signed-off-by: Qing Luo <luoqing@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-4-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied to mptcp_pm_add_timer() in pm_netlink.c instead of pm.c and collapsed the adaptive backoff branch to `if (!retransmit) timeout = 0;` since the tree lacks exponential ADD_ADDR retransmission timeouts ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/policydb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mptcp/pm_netlink.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1120,6 +1120,9 @@ static int perm_read(struct policydb *p,
- 	rc = -EINVAL;
- 	if (perdatum->value < 1 || perdatum->value > SEL_VEC_MAX)
- 		goto bad;
-+	/* indexes an nprim-sized array in security_get_permissions() */
-+	if (perdatum->value > s->nprim)
-+		goto bad;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -297,6 +297,7 @@ static void mptcp_pm_add_timer(struct ti
+ 	struct mptcp_sock *msk = entry->sock;
+ 	struct sock *sk = (struct sock *)msk;
+ 	unsigned int timeout = 0;
++	bool retransmit;
  
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
+ 	pr_debug("msk=%p\n", msk);
+ 
+@@ -334,12 +335,13 @@ static void mptcp_pm_add_timer(struct ti
+ 		entry->retrans_times++;
+ 	}
+ 
+-	if (entry->retrans_times >= ADD_ADDR_RETRANS_MAX)
++	retransmit = entry->retrans_times < ADD_ADDR_RETRANS_MAX;
++	if (!retransmit)
+ 		timeout = 0;
+ 
+ 	spin_unlock_bh(&msk->pm.lock);
+ 
+-	if (entry->retrans_times == ADD_ADDR_RETRANS_MAX)
++	if (!retransmit)
+ 		mptcp_pm_subflow_established(msk);
+ 
+ out:
 
 
