@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A6847DD79;
-	Tue, 25 Aug 2026 13:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD563E6386;
+	Tue, 25 Aug 2026 13:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664656; cv=none; b=buh4ZNu91p25yKCkqixOjKwlAWasXyNRFd07wxS5L5JJEcJ0G/cdtz1APbTXvg6+7Az7WQB1C2GZeBHTlDLBjI7mfIqUyrbD8EXDWj4Kf8PGF/1j5IVl4c3047sGJ6cuZimtM77NVYexngM3A/U4B/bHGuhH2Bguach8BMNIddo=
+	t=1787664659; cv=none; b=sBQuJYtG9ge+hU/C0dhPZyN8/fhbPtRXV7m4NFeB9Lxoitxdc+OdTsFGK/5RHATeReWJZ/y4wxsorzRyW0UFg4o8MsqfThHjjCrzW/FIlPjIMklpc2SEQ3yv2rufeEsrsYCGcT1ip/FJzYjqQirXtFrUDL9MkZuL2gUKEx9v5E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664656; c=relaxed/simple;
-	bh=YfZP+PEVkCrAnaxHhhAsyJDr/Imk3fNGv3IUyvoK0Fc=;
+	s=arc-20240116; t=1787664659; c=relaxed/simple;
+	bh=f2Sobdl7wtqXPnBPXQR7kms98qiVD7nQxJCvF/OBRRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DKTfwCwJntISVz7ePMqLBwLfB/UZ1BOtZng6yuYY9h4LN3HOEzymR9kGqI96t1J/+xQlUX5ieBqat2KK5DPWoEWsx3VsNEOiQvuBtuZwq9pjzOpOSIiLZBgA290nR9KcHs+7LWs5TO5negbFwwrC9Ky9duM/2Hm1yykCPe19zJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqs0Pvz0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AJz3w27p1j0coNLZLfhsJIgrqho+1/86Q+zT3OJJc1Pyyt6AnjT5ykZApvXM3noA0ikTThDsPX++Ry3O2v7IHFwhxI07n4t6hBSPHYAQ8iYq78GP234Hu+E0E7WJo/Bg8zU2cOA9djQErsI1Oiy+2FbSoit4+XYtBYPzkXscxF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLkNuxFZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqs0Pvz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60641F000E9;
-	Tue, 25 Aug 2026 13:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLkNuxFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8ED1F000E9;
+	Tue, 25 Aug 2026 13:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664655;
-	bh=y55ikQUFIGs7M4V2FyDyswp1PajIKv6g289oZ4/UKQg=;
+	s=korg; t=1787664658;
+	bh=PA9MK2Ya+v1Os49fpWzQmLdr6MjLEaVsgyimTuI1XYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aqs0Pvz0Y/4nAfoIg7Ge9DVHiqSr5HAJhOma2ZM1l7S4srahzm33i2SyU4WPzcbaq
-	 acBCwbKA2xI4qKIsZVxFs3uBnsTtIU3opKhrwoOlTkJ01vhWcvjN/wdHWFgJSX0kw9
-	 gtBcfUIHKSMTv3/9tbjGKHOk8H8YEICafppXjh1w=
+	b=oLkNuxFZxzSp6wcKEt4VK8LY4sfTMZdkXlKu1yW2FEdhprR9zL5PWCg+xMZG3yHpG
+	 IkzBwbKFCptznp2OmOsYSq2B4FxpVLp2EcurMBFM7F8kl4CaiLoHSXbhvKwAzZg3jB
+	 0nQexp417ypPjKJr4JUgqgx20pSfHqxxJTIdm7C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 08/82] nvmet: fix NULL pointer dereference in nvmet_execute_identify_nslist()
-Date: Tue, 25 Aug 2026 15:24:55 +0200
-Message-ID: <20260825132541.860433924@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 7.2 09/82] futex/pi: Reject cross-mm private futex owners
+Date: Tue, 25 Aug 2026 15:24:56 +0200
+Message-ID: <20260825132541.899090487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -53,43 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 79aba4c9403419d822972d2851f2a96a2c0531cf upstream.
+commit 59b3732f95dda1fbd2234514d35f4fb6b5bb6d85 upstream.
 
-When a host issues an Identify command with CNS 07h (Active Namespace ID
-List for a specific I/O Command Set), nvmet_execute_identify_nslist() is
-called with match_css set. The command-set filter dereferences req->ns,
-but this handler never calls nvmet_req_find_ns(), so req->ns is always
-NULL (nvmet_req_init() resets it to NULL). As soon as an enabled
-namespace with an NSID greater than the requested value exists,
-req->ns->csi dereferences a NULL pointer and oopses.
+A private futex key borrows the waiter's mm without taking an mm_users
+reference. Nevertheless, attach_to_pi_owner() currently accepts an owner
+from a different address space and copies the private key into the owner's
+PI state.
 
-Besides the crash, the comparison is logically wrong: to filter the list
-by command set it must test the command set of the namespace being
-iterated, not a single fixed value. Use the loop variable ns->csi.
+When that owner exits, exit_pi_state_list() uses the saved key to find the
+hash bucket and acquires a reference to the waiter's private hash. If the
+last user of the waiter's mm exits concurrently, futex_hash_free() frees
+the hash while the owner still uses its bucket and reference.
 
-Fixes: 61c9967cd634 ("nvmet: implement active command set ns list")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Prevent this by validating in attach_to_pi_owner() that, for private
+futexes, the owner mm and waiter mm are the same. Perform the check with
+the owner's pi_lock held and after validating owner::futex::state to
+serialize against a concurrent PI-state exit cleanup.
+
+[ tglx: Amended comment ]
+
+Fixes: 80367ad01d93 ("futex: Add basic infrastructure for local task local hash")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Peter Zijlstra <peterz@infradead.org>
+Assisted-by: Codex:gpt-5.6-sol
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/admin-cmd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/futex/pi.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -958,7 +958,7 @@ static void nvmet_execute_identify_nslis
- 	nvmet_for_each_enabled_ns(&ctrl->subsys->namespaces, idx, ns) {
- 		if (ns->nsid <= min_nsid)
- 			continue;
--		if (match_css && req->ns->csi != req->cmd->identify.csi)
-+		if (match_css && ns->csi != req->cmd->identify.csi)
- 			continue;
- 		list[i++] = cpu_to_le32(ns->nsid);
- 		if (i == buf_size / sizeof(__le32))
+--- a/kernel/futex/pi.c
++++ b/kernel/futex/pi.c
+@@ -465,6 +465,26 @@ static int attach_to_pi_owner(u32 __user
+ 		return ret;
+ 	}
+ 
++	/*
++	 * If the owner is about to exit() or exec() and tries to modify
++	 * p::futex::exit_state it is serialized against this code by
++	 * p::pi_lock.
++	 */
++	if (IS_ENABLED(CONFIG_MMU) && futex_key_is_private(key)) {
++		/*
++		 * A private futex key holds a pointer to the waiter's mm
++		 * without holding a reference on it. So it must not be attached
++		 * to an owner in a different address space. Otherwise that
++		 * owner's exit cleanup could access the private hash after the
++		 * key's mm is freed.
++		 */
++		if (unlikely(p->mm != key->private.mm)) {
++			raw_spin_unlock_irq(&p->pi_lock);
++			put_task_struct(p);
++			return -EPERM;
++		}
++	}
++
+ 	__attach_to_pi_owner(p, key, ps);
+ 	raw_spin_unlock_irq(&p->pi_lock);
+ 
 
 
