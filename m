@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EE40243B;
-	Tue, 25 Aug 2026 13:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52B72E06E4;
+	Tue, 25 Aug 2026 13:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665186; cv=none; b=XJqfsd4tjWfw+5pBBu8W8f0QaWMKugebz2BhNEvs5NtUoEl8CKEjB3xYiH5NyawnpDZkVk3IifYbu8loqnINoyAK2HtVxpOPcA6tcgceZshVPAApATCOwkQiWYuHdQNFBOZbzng6sH9iBGPH3h0T27TMnHtnMVM98hB79Npzj5c=
+	t=1787665188; cv=none; b=GyJEyCUyt5CavQBOd1Masp2Yu0TxSfDFrSE2KUeoSePSOBcZAqjOiPTSIdS7sKRr05FBxwrZ2vwiwW80pSwD9kOduzU7na+jafd91GnPo9yZF4cK0Pzu/P0bP7bLbwR34dngJNjEfypOSqTXjyGOiJYJ5AqYKYwCLFhi9SQu6a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665186; c=relaxed/simple;
-	bh=+zEr9ZXfHAxwzEbQi+3arvOJPaxisYmivMmpJoWXPGs=;
+	s=arc-20240116; t=1787665188; c=relaxed/simple;
+	bh=NGHAEShv9Y/DYEv26CGoEVAVZ+jkR1WjhL7VKZIqfJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iezj+rrFwUqi+PmzGdztXRfA0g/5OavpRe2In/rMernS4/yBWIPHsQQqNGlk0Cy8VDpRLVUlDULB8p4EId4dC2dN7WUCE9WmGU1DM77fS5Pdf7y/y50qBHvLmDgXnXoUN/PHwYjHQZ1OV0J1lFjrQ7kQClqtMxNCNC5VwtY8Hss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLCNZOzW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qxeoq53yGsdyAdd1brfqJlOrw5bWTp5oysD1WL7pX+aSDI73bSMOg/NZ3BOR4NPBhX+crRfiL9xL7CKGRGbAkuhMas0/zvavVN0DCc466cd/r794ji6P8DfU4BF8Fluno0+DTWaO9Ok9MVzKJNVY/GTrlVt5vtICvvR5iY4zTWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXnA+KWp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLCNZOzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF90F1F000E9;
-	Tue, 25 Aug 2026 13:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXnA+KWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C221F000E9;
+	Tue, 25 Aug 2026 13:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665184;
-	bh=KAf1jlzDQExf3VFSSbSmUSN8tbwpN1bF29S1en+wjm4=;
+	s=korg; t=1787665187;
+	bh=HJh4TZyeOqdtig0eNKlCSnzCxxyt1kD6ZI9DSD3oF20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLCNZOzW72mq0jpVbiHwklYI5VE5BiH1FmN2UTuHBOBw8jX5OooRn0jVP0LYLVuNv
-	 srJnxyzVwhoyFbBiQJJzjn9uwT0ridaWQYEVkOUUq2HsU02ETiaYHI+5H9H115GYRz
-	 lizGCetn//Jn+A15Jfj7D6JX0qrrgGO8ipa0gaU8=
+	b=cXnA+KWpWHbnaFu8QmLRD1vBUW/x60UO+fYk6oNP7vLFJE7RBKgLM9Hdd3NyULmez
+	 1AkV+K2eONpmBmvFud9+gciZPy6rKWrcXiHsySilEif0C9Bhg79IMuyRdwJ30VrueZ
+	 iDA96m2KNFQsVOTMQInHiqB49qssclfZNivyotTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Persvold <spersvold@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 6.18 08/94] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
-Date: Tue, 25 Aug 2026 15:25:04 +0200
-Message-ID: <20260825132542.217998164@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 09/94] Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
+Date: Tue, 25 Aug 2026 15:25:05 +0200
+Message-ID: <20260825132542.249948327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,116 +50,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Persvold <spersvold@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
+commit 43a556b2fd43f2df6dded59c2e26560a27874c24 upstream.
 
-On 32-bit systems the config space is too large to ioremap in one go, so
-pci_ecam_create() maps each bus segment separately and relies on the
-->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
-cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
-every config access.
+rfcomm_sock_recvmsg() completes a deferred setup by calling
+rfcomm_dlc_accept() without holding any RFCOMM lock:
 
-The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
-and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
-do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
-per-bus mapping is never set up and the first config read dereferences a
-NULL base, crashing during bus enumeration:
+	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
+		rfcomm_dlc_accept(d);
+		return 0;
+	}
 
- Unable to handle kernel NULL pointer dereference at virtual address 00000800
- Oops [#1]
- CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
- Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
- epc : pci_generic_config_read+0x40/0xb0
-  ra : pci_generic_config_read+0x2c/0xb0
- [<c038db9c>] pci_generic_config_read+0x40/0xb0
- [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
- [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
- [<c039245c>] pci_scan_single_device+0xa4/0x11c
- [<c0392570>] pci_scan_slot+0x9c/0x23c
- [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
- [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
- [<c0393e54>] pci_host_probe+0x20/0xc8
- [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
+and rfcomm_dlc_accept() dereferences the session on its first line:
 
-Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
-Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
-move the CAM ops definition there as pci_generic_cam_ops (mirroring
-pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
+	struct sock *sk = d->session->sock->sk;
 
-Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
-Signed-off-by: Steffen Persvold <spersvold@gmail.com>
-[mani: removed timestamp from log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Every other path that touches d->session runs under rfcomm_mutex:
+rfcomm_dlc_open(), rfcomm_dlc_close(), rfcomm_dlc_exists(),
+rfcomm_dlc_send_rpn(), and the RFCOMM thread through
+rfcomm_process_sessions(). rfcomm_connect_ind() is even documented as
+"called under rfcomm_lock()". This call site is the only one that skips
+it.
+
+The RFCOMM_DEFER_SETUP bit looks like it serialises the accept against
+teardown, since __rfcomm_dlc_close() returns early when it wins the
+test_and_clear. But rfcomm_recv_disc() forces the state first:
+
+	d->state = BT_CLOSED;
+	__rfcomm_dlc_close(d, err);
+
+and the early return only covers BT_CONNECT, BT_CONFIG, BT_OPEN and
+BT_CONNECT2. With the state already BT_CLOSED that switch does not
+match, the bit is never consulted, and __rfcomm_dlc_close() falls
+through to rfcomm_dlc_unlink(), which sets d->session = NULL.
+
+So a remote DISC on a deferred dlc clears the session while leaving
+RFCOMM_DEFER_SETUP set. The next recvmsg() then passes the
+test_and_clear and dereferences a NULL session. No timing window is
+needed: once the DISC has been processed, the dereference is
+unconditional.
+
+Give rfcomm_dlc_accept() the same shape as rfcomm_dlc_open() and
+rfcomm_dlc_close(): an exported wrapper that takes rfcomm_mutex and
+re-checks the session, around a __rfcomm_dlc_accept() that the two
+in-core callers, which already hold the mutex, keep using.
+
+Reproduced on a KASAN + PROVE_LOCKING kernel with a BR/EDR peer emulated
+over /dev/vhci: the peer brings up an ACL link, opens L2CAP on the
+RFCOMM PSM, starts a session, opens a dlc on a channel bound with
+BT_DEFER_SETUP, and sends DISC after the socket is accepted. recv() on
+the accepted socket then hits:
+
+  Oops: general protection fault
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:rfcomm_dlc_accept+0x54/0x350
+  Call Trace:
+    rfcomm_sock_recvmsg+0x1cd/0x230
+    sock_recvmsg+0x166/0x1c0
+    __sys_recvfrom+0x20d/0x300
+
+0x10 is the offset of sock in struct rfcomm_session. With this patch the
+same run completes with recv() returning 0 and no report, and lockdep
+stays quiet, confirming rfcomm_mutex is still taken before lock_sock on
+this path as it is on the thread side.
+
+Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-generic.c |   11 +----------
- drivers/pci/ecam.c                        |   13 +++++++++++++
- include/linux/pci-ecam.h                  |    3 +++
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ net/bluetooth/rfcomm/core.c |   24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/controller/pci-host-generic.c
-+++ b/drivers/pci/controller/pci-host-generic.c
-@@ -16,15 +16,6 @@
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1334,7 +1334,10 @@ static struct rfcomm_session *rfcomm_rec
+ 	return s;
+ }
  
- #include "pci-host-common.h"
- 
--static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
--	.bus_shift	= 16,
--	.pci_ops	= {
--		.map_bus	= pci_ecam_map_bus,
--		.read		= pci_generic_config_read,
--		.write		= pci_generic_config_write,
--	}
--};
--
- static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
+-void rfcomm_dlc_accept(struct rfcomm_dlc *d)
++/* Must be called with rfcomm_mutex held, so that the session cannot be
++ * unlinked from under us.
++ */
++static void __rfcomm_dlc_accept(struct rfcomm_dlc *d)
  {
- 	struct pci_config_window *cfg = bus->sysdata;
-@@ -60,7 +51,7 @@ static const struct pci_ecam_ops pci_dw_
+ 	struct sock *sk = d->session->sock->sk;
+ 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
+@@ -1356,6 +1359,21 @@ void rfcomm_dlc_accept(struct rfcomm_dlc
+ 	rfcomm_send_msc(d->session, 1, d->dlci, d->v24_sig);
+ }
  
- static const struct of_device_id gen_pci_of_match[] = {
- 	{ .compatible = "pci-host-cam-generic",
--	  .data = &gen_pci_cfg_cam_bus_ops },
-+	  .data = &pci_generic_cam_ops },
- 
- 	{ .compatible = "pci-host-ecam-generic",
- 	  .data = &pci_generic_ecam_ops },
---- a/drivers/pci/ecam.c
-+++ b/drivers/pci/ecam.c
-@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
- };
- EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
- 
-+/* CAM ops */
-+const struct pci_ecam_ops pci_generic_cam_ops = {
-+	.bus_shift	= 16,
-+	.pci_ops	= {
-+		.add_bus	= pci_ecam_add_bus,
-+		.remove_bus	= pci_ecam_remove_bus,
-+		.map_bus	= pci_ecam_map_bus,
-+		.read		= pci_generic_config_read,
-+		.write		= pci_generic_config_write,
-+	}
-+};
-+EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
++void rfcomm_dlc_accept(struct rfcomm_dlc *d)
++{
++	rfcomm_lock();
 +
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- /* ECAM ops for 32-bit access only (non-compliant) */
- const struct pci_ecam_ops pci_32b_ops = {
---- a/include/linux/pci-ecam.h
-+++ b/include/linux/pci-ecam.h
-@@ -81,6 +81,9 @@ void __iomem *pci_ecam_map_bus(struct pc
- /* default ECAM ops */
- extern const struct pci_ecam_ops pci_generic_ecam_ops;
- 
-+/* default CAM ops */
-+extern const struct pci_ecam_ops pci_generic_cam_ops;
++	/* rfcomm_recv_disc() sets the dlc state to BT_CLOSED before calling
++	 * __rfcomm_dlc_close(), so the RFCOMM_DEFER_SETUP handshake there is
++	 * skipped and the session can already be unlinked by the time the
++	 * deferred accept runs from rfcomm_sock_recvmsg().
++	 */
++	if (d->session)
++		__rfcomm_dlc_accept(d);
 +
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
- extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
++	rfcomm_unlock();
++}
++
+ static void rfcomm_check_accept(struct rfcomm_dlc *d)
+ {
+ 	if (rfcomm_check_security(d)) {
+@@ -1368,7 +1386,7 @@ static void rfcomm_check_accept(struct r
+ 			d->state_change(d, 0);
+ 			rfcomm_dlc_unlock(d);
+ 		} else
+-			rfcomm_dlc_accept(d);
++			__rfcomm_dlc_accept(d);
+ 	} else {
+ 		set_bit(RFCOMM_AUTH_PENDING, &d->flags);
+ 		rfcomm_dlc_set_timer(d, RFCOMM_AUTH_TIMEOUT);
+@@ -1953,7 +1971,7 @@ static void rfcomm_process_dlcs(struct r
+ 					d->state_change(d, 0);
+ 					rfcomm_dlc_unlock(d);
+ 				} else
+-					rfcomm_dlc_accept(d);
++					__rfcomm_dlc_accept(d);
+ 			}
+ 			continue;
+ 		} else if (test_and_clear_bit(RFCOMM_AUTH_REJECT, &d->flags)) {
 
 
