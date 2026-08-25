@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9311B4457CD;
-	Tue, 25 Aug 2026 13:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A163A47143A;
+	Tue, 25 Aug 2026 13:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664855; cv=none; b=qQuxFrzSGKJicbHG7BLvYj4K4jfZzGR22zfEpL3y89ym6kxyWVEIim4sWxzoL6dn1wTo4XPSxXxtrpArjAr8Ut0uLtw64HRF6sV1iWFEJqY0plByxp9q/e0iux04Gsn7754HiD6c2Sy57v+thcb10gl69xYpAz5qRaZwC5A5HVY=
+	t=1787664858; cv=none; b=d8JzIjH089wNr3R96GTH4oEMHaXy35v62asc05FWULABZOl/WpEZwjnQXVlJz2aQYt2HuKdKpk+Cxb/6K/zqnPhZ9pS/JopN45njKKy3mNAIjI3Kd1Ld+plGE+7rg86FdKdlofFOU7juGDgYJRNQmE/Dx8+hrCIQvAdZFYD7224=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664855; c=relaxed/simple;
-	bh=Z3ZhSmbxAn72AmF2b9JuElPRst92nsKl9rkvSXy+4yg=;
+	s=arc-20240116; t=1787664858; c=relaxed/simple;
+	bh=rcC1KLAqQoWlXOvoDkv8gn06/iJFjUTzETCMumV/AnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSO/6cBnktagO4ayyCOht6SNB3Q+taQ4RpUWBmbetBPqT//qykMnRvSF9Yv3d0ms/7rdnS1zTmUXhQsu/D63V5O96+zTdelQdZhk3ubSGmqfTEgqHOGfZ6JcvrTmMz6p15mY+tleScdP9yUQGXXJOnklf9WvjwExIHeYNLLIaZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZwT0Ptq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T7vgBT7KMQBe/EXUncn/Ja61Gifcw8Zhq0I5INREwMb6QHPfy18NAorohT5rJUXoleMQxLr6Q5Uo1/68TSsQJrDwgerD0vLYvWC708bDKlCY1xAIQWaXqCPR8bhMMPwnCXaBQiywTeIfMpe6SnAltQGTpIowX8/4NV8SsFLymNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/vJPJ2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZwT0Ptq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DC41F00A3D;
-	Tue, 25 Aug 2026 13:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/vJPJ2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A4B1F00A3D;
+	Tue, 25 Aug 2026 13:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664854;
-	bh=UzlSWUhXvFbRBFkiIIB21lT1x/nPfYqOuOvw+ztNpZo=;
+	s=korg; t=1787664857;
+	bh=qA/+N4PACYod8Jc+zuKoCXbEWzLJ0iJPOApqmC7LCos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BZwT0Ptqe1eXeWXvzzyOLE6p2S0NHEsY2CKVHxjL0yLlI7tMDFNoi/jnlA0wF++oR
-	 GXmgaBVrFr9zurHk5wxdHmxGhbcU8ZRfOb/wbtaINJ9P0fGHY5f7HMlu5yhEIzdzZk
-	 9NPZFJCt7lDPcLbSB40HFC+7rZcEckcDzNWMyu8c=
+	b=m/vJPJ2Q0Usf9h7Cclg4uXFSP3Lw8BMZkv5FZUJDlqBzpQnD3lNhvgrooAL9+EWIO
+	 iIctR2ZvdewgdIPS6NUE7czTuG8YkEH6yeIw97Yd62MejykIU3TOHz9BVaayNnWY6Q
+	 72aISyiuNFb3FJhzTm+dkY9hXMeYwmcdXMnLXK9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Guanghui Yang <3497809730@qq.com>,
 	Jan Kara <jack@suse.cz>,
-	Jia Zhu <zhujia.zj@bytedance.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 7.1 027/101] ext4: avoid tail write_begin walk for uptodate folios
-Date: Tue, 25 Aug 2026 15:25:05 +0200
-Message-ID: <20260825132543.075326688@linuxfoundation.org>
+Subject: [PATCH 7.1 028/101] ext4: propagate errors from fast commit range replay
+Date: Tue, 25 Aug 2026 15:25:06 +0200
+Message-ID: <20260825132543.118986006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,95 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Zhu <zhujia.zj@bytedance.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-commit d09811183db2891776dbf0c0f1094540e29938f6 upstream.
+commit d8b8dd3530bf41e14b118702cdaf9de64bb96885 upstream.
 
-Ext4 buffered writes into large folios also pay a full buffer_head
-walk in ext4_block_write_begin().  For a small overwrite of an existing
-cached folio, the folio is already uptodate and the write only needs to
-prepare the buffers through the written range.  Walking the suffix still
-makes the write_begin cost proportional to the folio size.
+ext4_fc_replay() stops replaying fast commit tags only when a tag
+handler returns a negative error. However, ext4_fc_replay_add_range()
+and ext4_fc_replay_del_range() currently return 0 from their common
+exit paths even after internal failures.
 
-Before ext4 enabled large folios for regular files, the same loop was
-bounded by a single page of buffers.  That commit made the existing
-full-folio walk visible as a regression for cached small overwrites.
+This hides errors from ext4_fc_record_modified_inode(),
+ext4_map_blocks(), ext4_find_extent(), ext4_ext_insert_extent(),
+ext4_ext_replay_update_ex(), and ext4_ext_remove_space(). As a result,
+a failed ADD_RANGE or DEL_RANGE replay can be treated as successful and
+the replay code may continue with subsequent fast commit tags.
 
-The suffix walk is needed for non-uptodate folios, where ext4 may have
-to submit reads for partial blocks, preserve new-buffer cleanup, and run
-error zeroing.  Keep those folios on the old full walk.
+This is particularly problematic for DEL_RANGE because it may already
+have marked blocks as free before ext4_ext_remove_space() fails. If the
+error is swallowed, replay may continue from a partially applied range
+operation.
 
-For already-uptodate folios, keep the walk starting at the first buffer
-rather than seeking directly to from.  This preserves the existing prefix
-buffer state handling.  Stop once block_start reaches the end of the
-write range, because the skipped suffix would only repeat the
-outside-range uptodate handling for buffers beyond @to.
+Return the saved error from the common exit paths and make the
+ERR_PTR() cases in ADD_RANGE store PTR_ERR() before jumping to out.
 
-On current master, the libMicro ext4 large-folio overwrite test shows
-the following full-series result.  Results are median usecs/call over 10
-runs, lower is better:
-
-case        nofix     this series   improvement
-write_u1k   1.418     0.3405        76.0%
-write_u10k  1.887     0.4175        77.9%
-pwrite_u1k  1.6775    0.3390        79.8%
-pwrite_u10k 1.9035    0.4130        78.3%
-
-Fixes: 7ac67301e82f0 ("ext4: enable large folio for regular file")
-Cc: stable@vger.kernel.org # v6.16+
+Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
-Link: https://patch.msgid.link/20260609035202.90669-3-zhujia.zj@bytedance.com
+Link: https://patch.msgid.link/tencent_E3622146846A84C75C31C7D32AC4D5AD0605@qq.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/ext4/fast_commit.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1182,6 +1182,7 @@ int ext4_block_write_begin(handle_t *han
- 	int nr_wait = 0;
- 	int i;
- 	bool should_journal_data = ext4_should_journal_data(inode);
-+	bool folio_uptodate = folio_test_uptodate(folio);
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -1757,8 +1757,11 @@ static int ext4_fc_replay_add_range(stru
+ 		if (ret == 0) {
+ 			/* Range is not mapped */
+ 			path = ext4_find_extent(inode, cur, path, 0);
+-			if (IS_ERR(path))
++			if (IS_ERR(path)) {
++				ret = PTR_ERR(path);
++				path = NULL;
+ 				goto out;
++			}
+ 			memset(&newex, 0, sizeof(newex));
+ 			newex.ee_block = cpu_to_le32(cur);
+ 			ext4_ext_store_pblock(
+@@ -1770,8 +1773,11 @@ static int ext4_fc_replay_add_range(stru
+ 			path = ext4_ext_insert_extent(NULL, inode,
+ 						      path, &newex, 0);
+ 			up_write((&EXT4_I(inode)->i_data_sem));
+-			if (IS_ERR(path))
++			if (IS_ERR(path)) {
++				ret = PTR_ERR(path);
++				path = NULL;
+ 				goto out;
++			}
+ 			goto next;
+ 		}
  
- 	BUG_ON(!folio_test_locked(folio));
- 	BUG_ON(to > folio_size(folio));
-@@ -1193,13 +1194,13 @@ int ext4_block_write_begin(handle_t *han
- 		head = create_empty_buffers(folio, blocksize, 0);
- 	block = EXT4_PG_TO_LBLK(inode, folio->index);
+@@ -1818,10 +1824,11 @@ next:
+ 	}
+ 	ext4_ext_replay_shrink_inode(inode, i_size_read(inode) >>
+ 					sb->s_blocksize_bits);
++	ret = 0;
+ out:
+ 	ext4_free_ext_path(path);
+ 	iput(inode);
+-	return 0;
++	return ret;
+ }
  
--	for (bh = head, block_start = 0; bh != head || !block_start;
-+	for (bh = head, block_start = 0;
-+	     block_start < to || (!folio_uptodate && bh != head);
- 	    block++, block_start = block_end, bh = bh->b_this_page) {
- 		block_end = block_start + blocksize;
- 		if (block_end <= from || block_start >= to) {
--			if (folio_test_uptodate(folio)) {
-+			if (folio_uptodate)
- 				set_buffer_uptodate(bh);
--			}
- 			continue;
- 		}
- 		if (WARN_ON_ONCE(buffer_new(bh)))
-@@ -1220,7 +1221,7 @@ int ext4_block_write_begin(handle_t *han
- 				if (should_journal_data)
- 					do_journal_get_write_access(handle,
- 								    inode, bh);
--				if (folio_test_uptodate(folio)) {
-+				if (folio_uptodate) {
- 					/*
- 					 * Unlike __block_write_begin() we leave
- 					 * dirtying of new uptodate buffers to
-@@ -1237,7 +1238,7 @@ int ext4_block_write_begin(handle_t *han
- 				continue;
- 			}
- 		}
--		if (folio_test_uptodate(folio)) {
-+		if (folio_uptodate) {
- 			set_buffer_uptodate(bh);
- 			continue;
- 		}
+ /* Replay DEL_RANGE tag */
+@@ -1881,9 +1888,10 @@ ext4_fc_replay_del_range(struct super_bl
+ 	ext4_ext_replay_shrink_inode(inode,
+ 		i_size_read(inode) >> sb->s_blocksize_bits);
+ 	ext4_mark_inode_dirty(NULL, inode);
++	ret = 0;
+ out:
+ 	iput(inode);
+-	return 0;
++	return ret;
+ }
+ 
+ static void ext4_fc_set_bitmaps_and_counters(struct super_block *sb)
 
 
