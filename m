@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6A0481250;
-	Tue, 25 Aug 2026 13:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B579481254;
+	Tue, 25 Aug 2026 13:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664955; cv=none; b=gnwarp74kvrH5e6nPjb9xSGMIYNwdyF8s9yvmln8yOuefTlTBNmL2zegzEutOL/dHk5GZ/7s6rBtH3/A+o1ovVuy325NX5SyQKh3sMCToi/vIo5tGS+xKZBaSiS7FXb/gKxAEVh1K0thEdtseqW8EqF9ydaUQiQrXcuUN4jP+ys=
+	t=1787664958; cv=none; b=oWEfwv33Nj8CPmdhqddQ0aa0/KO+zsWibdhdYsMHJ/8GDeZ/7V4Ohrwgx0YhXgRTEcad7HX1mJYshIZFnMpy3IpFpUXhXZL5mg3Hmkyz0J0SsuzyjT+RuAlMLyjdqk6BbImlTgTLuHbrn1C6uxunNMyJAdNknaOwzpzIlWSBIfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664955; c=relaxed/simple;
-	bh=GVgHV1FPA0hVPHVINvncbL13CWDQmu9tglDFryH29A8=;
+	s=arc-20240116; t=1787664958; c=relaxed/simple;
+	bh=aaOQ9vEZ0n5T6vzSgro/d6JYzUpiqCC1Zwf1s7TmqF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbaghTZ/j+eKE5UgAWJLfl2+DNOxgjoGeY6NMUwakDd1hVnQF6iwkgXgxBlw79UcBT6WSS+Z3u3dRr4IL3SPRGY7WAP7ArOPojEJBWTMHyCoZZ5fsJ381mzQGkdNeJfli9jbCv2gqUqRy4ZX/mTe5iZ4Dfg/BmntzVDiwPDyocw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdSAuGGC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S+AKR1lnFG551JBZiknR4PV3iEIitnH+pu75yhonY07ooF+sGs++PrrQsgSekdGpCIeZk6qhAmpKUIDDJDIQwPVavs3xPTb7TdkY6MR5ONs2LCJd5h2iL6dP+aoa9CdvVD8ID7DGWsFsIiZxBSDQb1lcO7NzP5Q6mfJO5KP0kBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAPG8tr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdSAuGGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDEE1F000E9;
-	Tue, 25 Aug 2026 13:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAPG8tr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9641F000E9;
+	Tue, 25 Aug 2026 13:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664954;
-	bh=DjHp9mumTT0s/MzVdPzo3KtzLbPKbgmhHtEOiu///rs=;
+	s=korg; t=1787664957;
+	bh=PQvu4saGk/FhOpVHNbaL4C3V3fn0Gi+CbrHz/r3rUaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OdSAuGGCCpp954GjpF9WleqwQPiBEJpohgQzFXidLqwxi0dX9UuF0b7cha5c336aq
-	 qe9LXRFzJKnhvdqutHHiLA5AwYMW5qwVBsF4pNgB8lgQtW2tT0naSVFBrAHFwvQjTd
-	 d9e+6nDZ61K3KytDNkx+OmmWjPn+IspjbOTawqxw=
+	b=fAPG8tr/bCqjbiAN203o6uYDChIfo83IUvi0UPi+0RAiPM55VSKxMuETn8rpWAdCd
+	 O/zi66eYcMv+LxZsBbg9p2bycn6xEqDOTanm/B6pe8Zb5AeYITAQSTr5RwPBciZBLN
+	 MqBL+DSzAhCtCuFZq5lzwz6tDSjxLWV4Z0W+BO5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 062/101] drm/amdgpu: Allocate coredump ring buffers per ring
-Date: Tue, 25 Aug 2026 15:25:40 +0200
-Message-ID: <20260825132544.426882540@linuxfoundation.org>
+Subject: [PATCH 7.1 063/101] mptcp: pm: rename add_entry structure to add_addr
+Date: Tue, 25 Aug 2026 15:25:41 +0200
+Message-ID: <20260825132544.466497591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,177 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit e40ff9840fa8a633d149f0242df10cae5e518062 ]
+[ Upstream commit 350d76dd6e79468ac85767f2d236299a135572df ]
 
-Allocate each ring buffer separately. A single allocation summing all
-ring sizes can exceed the page allocator's MAX_ORDER limit and fail;
-per-ring buffers stay small enough to satisfy. The existing allocation
-style doesn't capture any ring data if the huge allocation fails.
-Splitting into multiple allocations helps to capture as much data as
-possible for the core dump.
+Using only the 'add' prefix is confusing: does it refer to a generic
+added entry or address, or specifically to ADD_ADDRs. Using add_addr
+removes this confusion.
 
-A failed ring is left with a NULL buffer and skipped when formatting.
-
-Fixes: eea85914d15b ("drm/amdgpu: save ring content before resetting the device")
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Assisted-by: Claude Code
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3e8e92b7892a6377bef86106bfff1b98cf586aee)
-Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260605-net-next-mptcp-add-addr6-port-ts-v2-10-758e7ca73f4d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: efc33b5102ff ("mptcp: pm: fix memory leak from alloc-during-teardown race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c |   50 +++++++++++------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.h |    3 -
- 2 files changed, 27 insertions(+), 26 deletions(-)
+ net/mptcp/pm.c       |   22 +++++++++++-----------
+ net/mptcp/protocol.h |    2 +-
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-@@ -339,7 +339,7 @@ amdgpu_devcoredump_format(char *buffer,
- 	struct amdgpu_ip_block *ip_block;
- 	struct amdgpu_ring *ring;
- 	int ver, i, j;
--	u32 ring_idx, off;
-+	u32 ring_idx;
- 	bool sizing_pass;
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -12,7 +12,7 @@
  
- 	sizing_pass = buffer == NULL;
-@@ -439,7 +439,6 @@ amdgpu_devcoredump_format(char *buffer,
- 		for (i = 0; i < coredump->num_rings; i++) {
- 			ring_idx = coredump->rings[i].ring_index;
- 			ring = coredump->adev->rings[ring_idx];
--			off = coredump->rings[i].offset;
+ #define ADD_ADDR_RETRANS_MAX	3
  
- 			drm_printf(&p, "ring name: %s\n", ring->name);
- 			drm_printf(&p, "Rptr: 0x%llx Wptr: 0x%llx RB mask: %x\n",
-@@ -448,12 +447,18 @@ amdgpu_devcoredump_format(char *buffer,
- 				   ring->buf_mask);
- 			drm_printf(&p, "Ring size in dwords: %d\n",
- 				ring->ring_size / 4);
-+
-+			if (!coredump->rings[i].ring_dw) {
-+				drm_printf(&p, "Ring contents unavailable\n");
-+				continue;
-+			}
-+
- 			drm_printf(&p, "Ring contents\n");
- 			drm_printf(&p, "Offset \t Value\n");
- 
- 			for (j = 0; j < ring->ring_size; j += 4)
- 				drm_printf(&p, "0x%x \t 0x%x\n", j,
--					   coredump->rings_dw[off + j / 4]);
-+					   coredump->rings[i].ring_dw[j / 4]);
- 		}
- 	}
- 
-@@ -494,10 +499,12 @@ amdgpu_devcoredump_read(char *buffer, lo
- static void amdgpu_devcoredump_free(void *data)
- {
- 	struct amdgpu_coredump_info *coredump = data;
-+	u32 i;
- 
- 	kvfree(coredump->formatted);
-+	for (i = 0; i < coredump->num_rings; i++)
-+		kvfree(coredump->rings[i].ring_dw);
- 	kvfree(coredump->rings);
--	kvfree(coredump->rings_dw);
- 	kvfree(data);
+-struct mptcp_pm_add_entry {
++struct mptcp_pm_add_addr {
+ 	struct list_head	list;
+ 	struct mptcp_addr_info	addr;
+ 	u8			retrans_times;
+@@ -133,11 +133,11 @@ bool mptcp_lookup_subflow_by_saddr(const
+ 	return false;
  }
  
-@@ -539,9 +546,9 @@ void amdgpu_coredump(struct amdgpu_devic
- 	struct amdgpu_coredump_info *coredump;
- 	size_t size = sizeof(*coredump);
- 	struct drm_sched_job *s_job;
--	u64 total_ring_size, ring_count;
-+	u64 ring_count;
- 	struct amdgpu_ring *ring;
--	int i, off, idx;
-+	int i, idx;
+-static struct mptcp_pm_add_entry *
++static struct mptcp_pm_add_addr *
+ mptcp_lookup_anno_list_by_saddr(const struct mptcp_sock *msk,
+ 				const struct mptcp_addr_info *addr)
+ {
+-	struct mptcp_pm_add_entry *entry;
++	struct mptcp_pm_add_addr *entry;
  
- 	/* No need to generate a new coredump if there's one in progress already. */
- 	if (work_busy(&adev->coredump_work))
-@@ -581,7 +588,6 @@ void amdgpu_coredump(struct amdgpu_devic
+ 	lockdep_assert_held(&msk->pm.lock);
  
- 	/* Dump ring content if memory allocation succeeds. */
- 	ring_count = 0;
--	total_ring_size = 0;
- 	for (i = 0; i < adev->num_rings; i++) {
- 		ring = adev->rings[i];
+@@ -152,7 +152,7 @@ mptcp_lookup_anno_list_by_saddr(const st
+ bool mptcp_remove_anno_list_by_saddr(struct mptcp_sock *msk,
+ 				     const struct mptcp_addr_info *addr)
+ {
+-	struct mptcp_pm_add_entry *entry;
++	struct mptcp_pm_add_addr *entry;
+ 	bool ret;
  
-@@ -590,38 +596,34 @@ void amdgpu_coredump(struct amdgpu_devic
- 		    coredump->ring != ring)
- 			continue;
+ 	entry = mptcp_pm_del_add_timer(msk, addr, false);
+@@ -164,7 +164,7 @@ bool mptcp_remove_anno_list_by_saddr(str
  
--		total_ring_size += ring->ring_size;
- 		ring_count++;
- 	}
--	if (ring_count) {
--		coredump->rings_dw = kvzalloc(total_ring_size, GFP_NOWAIT);
-+	if (ring_count)
- 		coredump->rings = kvcalloc(ring_count,
- 					   sizeof(struct amdgpu_coredump_ring),
- 					   GFP_NOWAIT);
--	}
--	if (coredump->rings && coredump->rings_dw) {
--		for (i = 0, off = 0, idx = 0; i < adev->num_rings && idx < ring_count; i++) {
-+	if (coredump->rings) {
-+		for (i = 0, idx = 0; i < adev->num_rings && idx < ring_count; i++) {
-+			struct amdgpu_coredump_ring *cdump_ring;
-+
- 			ring = adev->rings[i];
+ bool mptcp_pm_sport_in_anno_list(struct mptcp_sock *msk, const struct sock *sk)
+ {
+-	struct mptcp_pm_add_entry *entry;
++	struct mptcp_pm_add_addr *entry;
+ 	struct mptcp_addr_info saddr;
+ 	bool ret = false;
  
- 			if (atomic_read(&ring->fence_drv.last_seq) == ring->fence_drv.sync_seq &&
- 			    coredump->ring != ring)
- 				continue;
+@@ -340,8 +340,8 @@ static unsigned int mptcp_adjust_add_add
  
--			coredump->rings[idx].ring_index = ring->idx;
--			coredump->rings[idx].rptr = amdgpu_ring_get_rptr(ring);
--			coredump->rings[idx].wptr = amdgpu_ring_get_wptr(ring);
--			coredump->rings[idx].offset = off;
-+			cdump_ring = &coredump->rings[idx];
+ static void mptcp_pm_add_timer(struct timer_list *timer)
+ {
+-	struct mptcp_pm_add_entry *entry = timer_container_of(entry, timer,
+-							      add_timer);
++	struct mptcp_pm_add_addr *entry = timer_container_of(entry, timer,
++							     add_timer);
+ 	struct mptcp_sock *msk = entry->sock;
+ 	struct sock *sk = (struct sock *)msk;
+ 	unsigned int timeout = 0;
+@@ -399,12 +399,12 @@ out:
+ 	sock_put(sk);
+ }
  
--			memcpy(&coredump->rings_dw[off], ring->ring, ring->ring_size);
--			off += ring->ring_size / 4;
-+			cdump_ring->ring_dw = kvzalloc(ring->ring_size, GFP_NOWAIT);
-+			if (cdump_ring->ring_dw)
-+				memcpy(cdump_ring->ring_dw, ring->ring, ring->ring_size);
-+
-+			cdump_ring->ring_index = ring->idx;
-+			cdump_ring->rptr = amdgpu_ring_get_rptr(ring);
-+			cdump_ring->wptr = amdgpu_ring_get_wptr(ring);
- 			idx++;
- 		}
- 		coredump->num_rings = idx;
--	} else {
--		kvfree(coredump->rings_dw);
--		kvfree(coredump->rings);
--		coredump->rings_dw = NULL;
--		coredump->rings = NULL;
- 	}
+-struct mptcp_pm_add_entry *
++struct mptcp_pm_add_addr *
+ mptcp_pm_del_add_timer(struct mptcp_sock *msk,
+ 		       const struct mptcp_addr_info *addr, bool check_id)
+ {
+-	struct mptcp_pm_add_entry *entry;
+ 	struct sock *sk = (struct sock *)msk;
++	struct mptcp_pm_add_addr *entry;
+ 	bool stop_timer = false;
  
- 	coredump->adev = adev;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.h
-@@ -34,8 +34,8 @@
- struct amdgpu_coredump_ring {
- 	u64				rptr;
- 	u64				wptr;
-+	u32				*ring_dw;
- 	u32				ring_index;
--	u32				offset;
- };
+ 	rcu_read_lock();
+@@ -436,7 +436,7 @@ mptcp_pm_del_add_timer(struct mptcp_sock
+ bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
+ 			      const struct mptcp_addr_info *addr)
+ {
+-	struct mptcp_pm_add_entry *add_entry = NULL;
++	struct mptcp_pm_add_addr *add_entry = NULL;
+ 	struct sock *sk = (struct sock *)msk;
+ 	unsigned int timeout;
  
- struct amdgpu_coredump_ib_info {
-@@ -53,7 +53,6 @@ struct amdgpu_coredump_info {
- 	struct amdgpu_ring              *ring;
+@@ -473,7 +473,7 @@ reset_timer:
  
- 	struct amdgpu_coredump_ring	*rings;
--	u32				*rings_dw;
- 	u32				num_rings;
+ static void mptcp_pm_free_anno_list(struct mptcp_sock *msk)
+ {
+-	struct mptcp_pm_add_entry *entry, *tmp;
++	struct mptcp_pm_add_addr *entry, *tmp;
+ 	struct sock *sk = (struct sock *)msk;
+ 	LIST_HEAD(free_list);
  
- 	/* Readable form of coredevdump, generate once to speed up
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -1133,7 +1133,7 @@ int mptcp_pm_mp_prio_send_ack(struct mpt
+ bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
+ 			      const struct mptcp_addr_info *addr);
+ bool mptcp_pm_sport_in_anno_list(struct mptcp_sock *msk, const struct sock *sk);
+-struct mptcp_pm_add_entry *
++struct mptcp_pm_add_addr *
+ mptcp_pm_del_add_timer(struct mptcp_sock *msk,
+ 		       const struct mptcp_addr_info *addr, bool check_id);
+ bool mptcp_lookup_subflow_by_saddr(const struct list_head *list,
 
 
