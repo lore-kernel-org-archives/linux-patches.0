@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5403D7A07;
-	Tue, 25 Aug 2026 13:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04007407CEF;
+	Tue, 25 Aug 2026 13:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664576; cv=none; b=KnsumWZO6fq0i1Nwtha+wEqbnKMJvXcCnHVTJLT6KedlrOWCDea74jb786IBuzHmXgblh/wu/lxnDb0LhTnv/hcIZLylbhKkwuv9vKC8IDsGIUI5SyuaRpeFAGhMTmo0HiLbBtcs4hZRNruIRX8F5qV4xTDCQsDf5l66PToHPpg=
+	t=1787664580; cv=none; b=pThCSXcz5NkgeYy5ecIdHv3EpS4qmh01+xDdad7vbwN1Gi5dX4NWC4hb0vHBZW/yj6sbaj2dAIioj0aL548iE+X06/D3wQDChsWe5xhjb5JTxdA2Hy5ORCTCGC3yUNnYyNhgQdd/h5JbGfTI2m8zWTLiqPkG1YlR0dCe7xs43ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664576; c=relaxed/simple;
-	bh=vtP5hlMoKTgpBMotQF7xjPoPHduwrqy0CMXirAiFjps=;
+	s=arc-20240116; t=1787664580; c=relaxed/simple;
+	bh=3bvfXv0VMJqMB8QvhlW5s90bGMXG0VL5vEIqz+XSDwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+xIx4FePZYbNbWYkjRH8Zq/M5ODZysJpaEHUhXkSP0hWMmy+csjx+BTqLIRt0lahz2Igrr7qkHMfoUiR+Jzix6Ocdjc6NC34K3SQgfyTRqWKK6ZGK4doiR81gWc4necsRF9Ni93TCTNK3sJmV8Pvi8COGkaNnkPVpP09dnetW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H62UsKED; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tn2/iK7r8S7PyQ6MyYredEUu5iYHqTvi6me5irTZldli2a0tSukPTqobrivi4Opxnhi6rtZstIRaBX8hIyyZBDYMDnwM6g+l3vwzwAcc+8PiLZUnT428uu+VNxb1EDdhJ3PmxpnSX6gjvC64h2b2TYbMHXcFKQ7ZDxcVh4pjQDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRAkO+lW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H62UsKED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703E91F000E9;
-	Tue, 25 Aug 2026 13:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRAkO+lW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5783E1F000E9;
+	Tue, 25 Aug 2026 13:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664575;
-	bh=jjFNufQeXwPRcPMgaAXg8+MykDzrO2wHD3j6uwOjKmA=;
+	s=korg; t=1787664578;
+	bh=JiGom2FAtdwqdQoPPPsr7XFHsdj/hnqCQdD95vufaGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H62UsKED6TB8lVKbpgsyXAGWG3PZN0d0RK5dgMC51b2IZ15znpO0riMTQUMDTND4a
-	 dViWU+jWH43XttMuGgs1VArJtFIKhI22D++gJFVM484zBp0H1y9BtpNHJe3YAL6/2M
-	 uhGiYx89+N1QQMLdIZzWOUJBHe/3eSpdO6pheKyQ=
+	b=yRAkO+lWX7Q0TKKznbYMr9g2RJiRD/NwB/mNWviNina3xctTLq/B+vH9ZZh88O+k3
+	 rtClCoohKUnRqWi+TaevcUMMeDSKwEWvEAuBRmlp7RjEjVrfp/aRI3D+vPThQkb6SO
+	 bStipyfNCduMwdyZ1gVcBGZXscDdzX4ntZsVHTzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Woraphat Khiaodaeng <worapat.kd2@gmail.com>,
+	Vishnu Razdan <vrazdan@openai.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 17/82] io_uring/cmd: fix iovec leak when the async cmd is not recycled
-Date: Tue, 25 Aug 2026 15:25:04 +0200
-Message-ID: <20260825132542.202678347@linuxfoundation.org>
+Subject: [PATCH 7.2 18/82] io_uring/io-wq: fix worker accounting when canceling creation callbacks
+Date: Tue, 25 Aug 2026 15:25:05 +0200
+Message-ID: <20260825132542.240563383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,67 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Woraphat Khiaodaeng <worapat.kd2@gmail.com>
+From: Vishnu Razdan <vrazdan@openai.com>
 
-commit bb34ae5da3365699d53a756f4c96b6ea9f8ba0c1 upstream.
+commit 297b5ccea4acacaa47c150f043bce695202afbf1 upstream.
 
-An io_async_cmd carries an iovec array in ->vec.iovec, allocated when the
-vec has to grow and kept across recycling through ctx->cmd_cache.  On two
-paths nothing frees it and io_clean_op()'s kfree(req->async_data) drops
-the io_async_cmd without it.
+create_worker_cb() reserves an io-wq worker slot only after its
+task-work callback runs. If the callback is canceled before then,
+io_worker_cancel_cb() still decrements acct->nr_workers. When an
+existing worker retires with its creation callback pending, that
+worker has already decremented the same account's worker count.
 
-io_req_uring_cleanup() clears the async data flags only when
-io_alloc_cache_put() succeeds, and the cache holds IO_ALLOC_CACHE_MAX ==
-128 entries, so once it is full the put fails and the vec is left behind.
-An NVMe passthrough workload gets there without doing anything unusual:
-nvme_uring_cmd_io() returns -EIOCBQUEUED, so the io_async_cmd stays
-attached for the lifetime of the command and the live object count tracks
-the queue depth.  Above 128 the puts start failing.
+The resulting undercount permits worker creation beyond the account's
+configured limit. On an AST2600 OpenBMC system, an unchanged sensor
+daemon reached 4,291 threads with the original kernel. With an
+equivalent downstream fix, 25 passive samples under its normal
+workload showed 6-9 threads.
 
-->cleanup is the last chance to free an inherited vec, since
-io_req_uring_cleanup() returns early for an io-wq issued command and is
-not called at all for one completed without ever being issued.  But
-io_clean_op() calls ->cleanup only if REQ_F_NEED_CLEANUP is set, and for
-uring_cmd that happens only where the vec has to grow, so a command
-reusing a large enough cached vec never sets it.  io_rw_alloc_async() and
-io_msg_alloc_async() flag an inherited vec for exactly this reason;
-io_uring_cmd_prep() does not.
+Decrement nr_workers only when the canceled callback is not
+create_worker_cb(). Continuation callbacks still release their reserved
+slot, and both callback types retain the existing running-count,
+reference-count, and create-state cleanup.
 
-Flag an inherited vec in io_uring_cmd_prep(), and free the vec when the
-cache put fails, as io_req_rw_cleanup() does.
-
-The leak is invisible under KASAN, where io_alloc_cache_vec_kasan() frees
-the vec unconditionally.
-
-Fixes: 3a4689ac109f ("io_uring/cmd: add iovec cache for commands")
+Fixes: 1d5f5ea7cb7d ("io-wq: remove worker to owner tw dependency")
 Cc: stable@vger.kernel.org
-Signed-off-by: Woraphat Khiaodaeng <worapat.kd2@gmail.com>
-Link: https://patch.msgid.link/20260802073518.419-1-worapat.kd2@gmail.com
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://patch.msgid.link/20260811-vrazdan-io-wq-b4-submit-v1-1-719ced16c921@openai.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/uring_cmd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ io_uring/io-wq.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -38,6 +38,8 @@ static void io_req_uring_cleanup(struct
- 	if (io_alloc_cache_put(&req->ctx->cmd_cache, ac)) {
- 		ioucmd->sqe = NULL;
- 		io_req_async_data_clear(req, REQ_F_NEED_CLEANUP);
-+	} else {
-+		io_vec_free(&ac->vec);
- 	}
- }
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -211,9 +211,12 @@ static void io_worker_cancel_cb(struct i
+ 	struct io_wq *wq = worker->wq;
  
-@@ -208,6 +210,8 @@ int io_uring_cmd_prep(struct io_kiocb *r
- 	ac = io_uring_alloc_async_data(&req->ctx->cmd_cache, req);
- 	if (!ac)
- 		return -ENOMEM;
-+	if (ac->vec.iovec)
-+		req->flags |= REQ_F_NEED_CLEANUP;
- 	ioucmd->sqe = sqe;
- 	return 0;
- }
+ 	atomic_dec(&acct->nr_running);
+-	raw_spin_lock(&acct->workers_lock);
+-	acct->nr_workers--;
+-	raw_spin_unlock(&acct->workers_lock);
++	/* create_worker_cb() has not reserved a worker slot yet. */
++	if (worker->create_work.func != create_worker_cb) {
++		raw_spin_lock(&acct->workers_lock);
++		acct->nr_workers--;
++		raw_spin_unlock(&acct->workers_lock);
++	}
+ 	io_worker_ref_put(wq);
+ 	clear_bit_unlock(0, &worker->create_state);
+ 	io_worker_release(worker);
 
 
