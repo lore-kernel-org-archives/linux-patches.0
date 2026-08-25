@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F884481665;
-	Tue, 25 Aug 2026 13:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B7845DF6B;
+	Tue, 25 Aug 2026 13:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665679; cv=none; b=FCGggrvWLtgNznXfOFyXpbUubYnimT42mFjM2c9sSMkE6/awNPmHG7YXnAXE+K1QrRc24m2dI2QdY5Vmyb7L/X6mUyGYNc98YA2Z3Ik/RkrqoxvreOaL9ZvGBLISVq+/AICClvJ/NWNZbBe9QeKqdx2lTEm+4zJ7SlEYfHC37KM=
+	t=1787665682; cv=none; b=c3VeFgOlysU6M8H9XbUoDN3C/mSSm8dcB4e3vkO6w2bKUW9eIZ6imgdqEdCksyFqhpzaMGdCt0XZUvw2zrL8dkp56Lt7+tGozn/61E6ucXxhVsEFiNq7LvzKGNNG9Vi1/SYZryI9Pir08s+D/0kh0kTPFuxWnSlz7qzSxnI0r/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665679; c=relaxed/simple;
-	bh=OIGoCRyh87I0NckVj9a8FWBawreFKu3MvAMVGvJ+06k=;
+	s=arc-20240116; t=1787665682; c=relaxed/simple;
+	bh=2l4Ds7SGUngoNogZfGtG3pT7YEzi/BODkEau/ioQeEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HIpvfcyJYI2qHjeRCPPgKdrMp7jvdfEAqFmXMtK8um9LfGyMgC6nQ3GutZ3FrXSgIEam8zWtsqiQNwnYyVfuvL4RCJKfBp1qb7A+j5nCN8rWKYfwJ3Q/4ZrV+vXt7MiJ95SgzP8du7z2hMWTk+h6BzbQm+TVshYvTYJQlSmkEfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTS2kAkf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AxJeaemR32red2imDM5smT7hTL1nW7a0KbJdsi+vmZh5H0tF6n+qsmwvq2lsQ99BlNm4mwN7oKtbsLHJ7fKRvulNdVVDRRlM8GBoZ6VErU+l6/InbF+PuDesZC5hr0DcGUBEQRamQpD6qu8LUZu5d54vNS18tvC5273cQHKyr3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcflAqHN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTS2kAkf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707FC1F000E9;
-	Tue, 25 Aug 2026 13:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcflAqHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADD01F000E9;
+	Tue, 25 Aug 2026 13:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665678;
-	bh=l3RBVZF6TLqa0pjw3hHKkqKZTUdStuhn/BlvLj7+E/U=;
+	s=korg; t=1787665680;
+	bh=M5qK/Nps8RQgoGcDs2O1wpTf0tQkDIGZaIePFjogUSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cTS2kAkfpjr30ovv5IW9vnpCvGYp1Rw0yyoBBD/Wki5ANiPG1G5thgtBsXDNFRcV2
-	 718vjhbIicEAlaeVYbwel2vsYAL/yzTtOlfQnPOvDX+9c+w66m2RlO25DKmmYADklZ
-	 DL7Kd1Jk2+3QnaK+W6LCiEf7H1C00KrWyLFGV8Pw=
+	b=ZcflAqHN0HND8oyowf0FNqIkpRmB/UxFI+Dmw+SkRCESbd2CHRFwoCur7P86DB9x7
+	 l9D4/ntrKolL0y3t8OBd2Htz4WVtOXytOu9GRfDUasByKVf0OqG+N9wXJTXhYSWNz0
+	 NRMnHRaDiBcsXWvOcyuHSMB178sfQ39Ku4y7PFaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Eric Farman <farman@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.6 30/87] s390/vfio_ccw: Free all memory if cp_init() fails
-Date: Tue, 25 Aug 2026 15:25:53 +0200
-Message-ID: <20260825132543.026926468@linuxfoundation.org>
+Subject: [PATCH 6.6 31/87] s390/vfio_ccw: Ensure first IDAW remains constant
+Date: Tue, 25 Aug 2026 15:25:54 +0200
+Message-ID: <20260825132543.069788359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -54,79 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Farman <farman@linux.ibm.com>
 
-commit 74186c2968f8f756ac3226b545b598457c910c75 upstream.
+commit 565bef268d75bf7df665bce6923a88cd0eb74592 upstream.
 
-The routine cp_free() is called to unpin/free any memory once an I/O
-is completed successfully, or if cp_prefetch() fails. But if cp_init()
-fails, and cp->initialized is not enabled, the same routine cannot be
-used to free all the memory.
+The first IDAW in a list does not need to be on a 2K/4K boundary
+like all others, and so is read separately to accurately calculate
+the size of the buffer needed to read the full IDAL.
 
-An attempt to address this exists in ccwchain_handle_ccw(), where a
-single call to ccwchain_free() is made for the currently-processed
-CCW segment. But this will leak other segments (created as a result
-of a Transfer in Channel) that had been allocated as part of the same
-channel program.
+Verify that the address found in the first IDAW is unchanged between
+reads, to ensure a consistent set of IDAWs being worked with.
 
-Address this by performing the cleanup outside of the recursive
-ccwchain_handle_ccw()/ccwchain_loop_tic() logic.
-
-Fixes: 8b515be512a2 ("vfio-ccw: Fix memory leak and don't call cp_free in cp_init")
+Fixes: 01aa26c672c0 ("s390/cio: Combine direct and indirect CCW paths")
 Cc: stable@vger.kernel.org
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-[farman@linux.ibm.com: resolve build error]
+[farman@linux.ibm.com: resolved merge conflict]
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/s390/cio/vfio_ccw_cp.c |   16 ++++++++++++++++
+ drivers/s390/cio/vfio_ccw_cp.h |    2 ++
+ 2 files changed, 18 insertions(+)
 
 --- a/drivers/s390/cio/vfio_ccw_cp.c
 +++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -450,9 +450,6 @@ static int ccwchain_handle_ccw(u32 cda,
- 	/* Loop for tics on this new chain. */
- 	ret = ccwchain_loop_tic(chain, cp);
- 
--	if (ret)
--		ccwchain_free(chain);
--
- 	return ret;
- }
- 
-@@ -481,6 +478,23 @@ static int ccwchain_loop_tic(struct ccwc
- 	return 0;
- }
- 
-+static int ccwchain_build_ccws(u32 cda, struct channel_program *cp)
-+{
-+	struct ccwchain *chain, *temp;
-+	int ret;
+@@ -521,6 +521,7 @@ static unsigned long *get_guest_idal(str
+ 		&container_of(cp, struct vfio_ccw_private, cp)->vdev;
+ 	unsigned long *idaws;
+ 	unsigned int *idaws_f1;
++	u64 first_idaw;
+ 	int idal_len = idaw_nr * sizeof(*idaws);
+ 	int idaw_size = idal_is_2k(cp) ? PAGE_SIZE / 2 : PAGE_SIZE;
+ 	int idaw_mask = ~(idaw_size - 1);
+@@ -537,6 +538,18 @@ static unsigned long *get_guest_idal(str
+ 			kfree(idaws);
+ 			return ERR_PTR(ret);
+ 		}
 +
-+	ret = ccwchain_handle_ccw(cda, cp);
++		idaws_f1 = (unsigned int *)idaws;
++		if (cp->orb.cmd.c64)
++			first_idaw = idaws[0];
++		else
++			first_idaw = (unsigned long)(idaws_f1[0]);
 +
-+	if (ret) {
-+		/* Cleanup if an error occurred */
-+		list_for_each_entry_safe(chain, temp, &cp->ccwchain_list, next) {
-+			ccwchain_free(chain);
++		/* Unexpected mismatch from earlier read */
++		if (first_idaw != cp->guest_iova) {
++			kfree(idaws);
++			return ERR_PTR(-EINVAL);
 +		}
-+	}
-+
-+	return ret;
-+}
-+
- static int ccwchain_fetch_tic(struct ccw1 *ccw,
- 			      struct channel_program *cp)
- {
-@@ -728,7 +742,7 @@ int cp_init(struct channel_program *cp,
- 	memcpy(&cp->orb, orb, sizeof(*orb));
+ 	} else {
+ 		/* Fabricate an IDAL based off CCW data address */
+ 		if (cp->orb.cmd.c64) {
+@@ -598,6 +611,9 @@ static int ccw_count_idaws(struct ccw1 *
+ 		iova = ccw->cda;
+ 	}
  
- 	/* Build a ccwchain for the first CCW segment */
--	ret = ccwchain_handle_ccw(orb->cmd.cpa, cp);
-+	ret = ccwchain_build_ccws(orb->cmd.cpa, cp);
++	/* Save the read address for later */
++	cp->guest_iova = iova;
++
+ 	/* Format-1 IDAWs operate on 2K each */
+ 	if (!cp->orb.cmd.c64)
+ 		return idal_2k_nr_words((void *)iova, bytes);
+--- a/drivers/s390/cio/vfio_ccw_cp.h
++++ b/drivers/s390/cio/vfio_ccw_cp.h
+@@ -35,6 +35,7 @@
+  * @initialized: whether this instance is actually initialized
+  * @guest_cp: copy of guest channel program
+  * @ccwchain_count: number of channel program segments (linked by TIC)
++ * @guest_iova: first data address of a guest channel program
+  *
+  * @ccwchain_list is the head of a ccwchain list, that contents the
+  * translated result of the guest channel program that pointed out by
+@@ -46,6 +47,7 @@ struct channel_program {
+ 	bool initialized;
+ 	struct ccw1 *guest_cp;
+ 	unsigned int ccwchain_count;
++	u64 guest_iova;
+ };
  
- 	if (!ret)
- 		cp->initialized = true;
+ int cp_init(struct channel_program *cp, union orb *orb);
 
 
