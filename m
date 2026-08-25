@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E3E47CA72;
-	Tue, 25 Aug 2026 13:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8163347CA8A;
+	Tue, 25 Aug 2026 13:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664621; cv=none; b=j9ngE2M39tLbMYGJwso/1N7I6GMXaaq0JArPdtXsLY9V6Z8JlUsdFc1LKaD4mn5y4gotfWSWVnyGdr7A1QtKGeknBMBN/fZbW95+dgjBydQKQJrETMYShi7H3185uYamjOk1UY+5Ga7MXx6R00vIXQ5iJLYUPi9XsPmsNFi/BG0=
+	t=1787664621; cv=none; b=kBqTEyCkc8iYQthgfuk/V+bA6GXeglLtjxzrdfbML/CAEXSlulfEeZaIHS5J5zwi10UObaJ6HHRfiyz9qwbpm9DFkp3BcSAYK1XzXoCSLP9xZwbest7QvuT7ySHYP6ZoztsYjBUcRUcwm7yJSjYXC56CVFVvoWLxW/TFQ7Ceofs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1787664621; c=relaxed/simple;
-	bh=l08HOGVQhY1w5LZ0GIFlvwKH+Au60thvPpGIKihNhPQ=;
+	bh=tLJQBOgG7zqQ7/qadetRczMIBoMF9dkj/wFlxWE6yq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5R1s8aWOfmgUPHW8CM6VUYe9NMNqo48HADMsn5byPdGhfLkf375clIawKY1FLMUFvtRDMnE6tsnY+uBrMf3x52loM0KOLehJeQDEFXvdGYw+GaMNHaIpCkovU7fe/aCCPvJLQsdaBn5HJm8e1mAKKPx1aBDnqvsbgu0t2ZgmSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un7NWzrX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ezoqPk3W5L8Jp2YIcwrNlPstkHh2VSoWhqFKuwICa2Bpwd1kXxMbYSYc7FkViDyaDl233zeb/ZyUHzQeThb3EFGkMNO2hB1UkW/VK1xg3yo4vvIx+8sS1cjAEnrxjjz33iNtE6W6jnL362vFLZPZu1Q3lwFNHMR567pahN3PHHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzfG8phT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un7NWzrX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F95E1F000E9;
-	Tue, 25 Aug 2026 13:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzfG8phT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161AE1F00A3A;
+	Tue, 25 Aug 2026 13:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664615;
-	bh=/J0ehQ/8c3tKhUwlN3BrXGnb+SVAfJ2IwxqOUorPHYM=;
+	s=korg; t=1787664618;
+	bh=7pO/lOPepPuv5pCK5E15oiy53bWRKyTz1aYOWF88GaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Un7NWzrXlbuVOHEGUwM0f3nykbGvIEllekpi/d3GKvx2hBzzXF9YY37qmsTWQUQRY
-	 gnogYaBjCCEXlxKcJJ4GrbuSy6GryyTd9dAIRsiYFnFjy9c9jQLY+yh7Tb4S16Tr+e
-	 Ce9XzAo0Y5gh55pshWjQhITD0/vH6EGmgHuX0fNs=
+	b=yzfG8phTxaag6bQDlY3p9lWUziFNdwhwXkfk5EPV9j1LHbmliKdR6OnJnTAuzlIa8
+	 NpDTSfxapOvlFzMqfABVrqz8L3dE8qHzgM+7ncnCwQKvjLltDA2QQ9sfpQpO2z4Mpe
+	 tAkToAYIAKBHJhlpp11sg+F2mqUlsojvMwm+GsRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 7.2 29/82] ext4: propagate errors from fast commit range replay
-Date: Tue, 25 Aug 2026 15:25:16 +0200
-Message-ID: <20260825132542.654140474@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Shameer Kolothum <skolothumtho@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.2 03/82] iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown
+Date: Tue, 25 Aug 2026 15:24:50 +0200
+Message-ID: <20260825132541.685146354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,92 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-commit d8b8dd3530bf41e14b118702cdaf9de64bb96885 upstream.
+commit 9ff145a25c5c8a26b06ef7cf558fb536b18bba6d upstream.
 
-ext4_fc_replay() stops replaying fast commit tags only when a tag
-handler returns a negative error. However, ext4_fc_replay_add_range()
-and ext4_fc_replay_del_range() currently return 0 from their common
-exit paths even after internal failures.
+arm_smmu_impl_remove() is registered as a devres action in
+arm_smmu_impl_probe(), before arm_smmu_init_queues() allocates
+smmu->cmdq.q.base. On a devres unwind, whether a failed probe or an
+unbind, the queue is freed first and arm_smmu_impl_remove() then runs
+tegra241_cmdqv_remove_vintf(), whose VINTF deinit issues a CMD_SYNC on
+the freed memory.
 
-This hides errors from ext4_fc_record_modified_inode(),
-ext4_map_blocks(), ext4_find_extent(), ext4_ext_insert_extent(),
-ext4_ext_replay_update_ex(), and ext4_ext_remove_space(). As a result,
-a failed ADD_RANGE or DEL_RANGE replay can be treated as successful and
-the replay code may continue with subsequent fast commit tags.
+Observed during testing with a QEMU hack that makes the VCMDQ fail to
+enable, so the impl reset fails and probe aborts into the devres unwind:
 
-This is particularly problematic for DEL_RANGE because it may already
-have marked blocks as free before ext4_ext_remove_space() fails. If the
-error is swallowed, replay may continue from a partially applied range
-operation.
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: failed to enable, STATUS=0x00000000
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: GERRORN=0x0, GERROR=0x4, CONS=0x0
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: uncleared error detected, resetting
+ arm-smmu-v3 arm-smmu-v3.0.auto: failed to reset impl
+ arm-smmu-v3 arm-smmu-v3.0.auto: probe with driver arm-smmu-v3 failed with error -110
+ Unable to handle kernel paging request at virtual address ffff8000891e0098
+ ...
+ Internal error: Oops: 0000000096000047 [#1] SMP
+ ...
+ Call trace:
+  arm_smmu_cmdq_issue_cmdlist+0x320/0x6fc (P)
+  tegra241_vcmdq_hw_deinit+0x98/0x168
+  tegra241_vintf_hw_deinit+0x5c/0x1b0
+  tegra241_cmdqv_remove_vintf+0x34/0xec
+  tegra241_cmdqv_remove+0x40/0x9c
+  arm_smmu_impl_remove+0x20/0x30
+  devm_action_release+0x14/0x20
+  devres_release_all+0xa8/0x110
+  device_unbind_cleanup+0x18/0x84
+  really_probe+0x1f0/0x29c
 
-Return the saved error from the common exit paths and make the
-ERR_PTR() cases in ADD_RANGE store PTR_ERR() before jumping to out.
+Drop the VINTF deinit from tegra241_cmdqv_remove_vintf() so the unwind no
+longer touches the freed queue. Quiesce the VINTFs earlier instead. Add a
+device_disable() impl op and run it from arm_smmu_disable_action() while
+the CMDQ is still up. That handles a live unbind. A failed reset is already
+handled because tegra241_vintf_hw_init() deinits the VINTF on its own error
+path. tegra241_cmdqv_remove_vintf() is also used by the iommufd viommu
+destroy path, so quiesce there too.
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Fixes: 4dc0d12474f9 ("iommu/tegra241-cmdqv: Add user-space use support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_E3622146846A84C75C31C7D32AC4D5AD0605@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c    |    2 ++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h    |    1 +
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c |   15 +++++++++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -2196,8 +2196,11 @@ static int ext4_fc_replay_add_range(stru
- 		if (ret == 0) {
- 			/* Range is not mapped */
- 			path = ext4_find_extent(inode, cur, path, 0);
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
-+				path = NULL;
- 				goto out;
-+			}
- 			memset(&newex, 0, sizeof(newex));
- 			newex.ee_block = cpu_to_le32(cur);
- 			ext4_ext_store_pblock(
-@@ -2209,8 +2212,11 @@ static int ext4_fc_replay_add_range(stru
- 			path = ext4_ext_insert_extent(NULL, inode,
- 						      path, &newex, 0);
- 			up_write((&EXT4_I(inode)->i_data_sem));
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
-+				path = NULL;
- 				goto out;
-+			}
- 			goto next;
- 		}
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -5523,6 +5523,8 @@ static void arm_smmu_device_shutdown(str
+ {
+ 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
  
-@@ -2257,10 +2263,11 @@ next:
++	if (smmu->impl_ops && smmu->impl_ops->device_disable)
++		smmu->impl_ops->device_disable(smmu);
+ 	arm_smmu_device_disable(smmu);
+ }
+ 
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -871,6 +871,7 @@ struct arm_smmu_strtab_cfg {
+ 
+ struct arm_smmu_impl_ops {
+ 	int (*device_reset)(struct arm_smmu_device *smmu);
++	void (*device_disable)(struct arm_smmu_device *smmu);
+ 	void (*device_remove)(struct arm_smmu_device *smmu);
+ 	int (*init_structures)(struct arm_smmu_device *smmu);
+ 	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -761,8 +761,6 @@ static void tegra241_cmdqv_remove_vintf(
+ 	struct tegra241_vintf *vintf = cmdqv->vintfs[idx];
+ 	u16 lidx;
+ 
+-	tegra241_vintf_hw_deinit(vintf);
+-
+ 	/* Remove LVCMDQ resources */
+ 	for (lidx = 0; lidx < vintf->cmdqv->num_lvcmdqs_per_vintf; lidx++)
+ 		if (vintf->lvcmdqs[lidx])
+@@ -779,6 +777,17 @@ static void tegra241_cmdqv_remove_vintf(
  	}
- 	ext4_ext_replay_shrink_inode(inode, i_size_read(inode) >>
- 					sb->s_blocksize_bits);
-+	ret = 0;
- out:
- 	ext4_free_ext_path(path);
- 	iput(inode);
--	return 0;
-+	return ret;
  }
  
- /* Replay DEL_RANGE tag */
-@@ -2320,9 +2327,10 @@ ext4_fc_replay_del_range(struct super_bl
- 	ext4_ext_replay_shrink_inode(inode,
- 		i_size_read(inode) >> sb->s_blocksize_bits);
- 	ext4_mark_inode_dirty(NULL, inode);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
++static void tegra241_cmdqv_hw_disable(struct arm_smmu_device *smmu)
++{
++	struct tegra241_cmdqv *cmdqv =
++		container_of(smmu, struct tegra241_cmdqv, smmu);
++	u16 idx;
++
++	for (idx = 0; idx < cmdqv->num_vintfs; idx++)
++		if (cmdqv->vintfs[idx])
++			tegra241_vintf_hw_deinit(cmdqv->vintfs[idx]);
++}
++
+ static void tegra241_cmdqv_remove(struct arm_smmu_device *smmu)
+ {
+ 	struct tegra241_cmdqv *cmdqv =
+@@ -844,6 +853,7 @@ static struct arm_smmu_impl_ops tegra241
+ 	/* For in-kernel use */
+ 	.get_secondary_cmdq = tegra241_cmdqv_get_cmdq,
+ 	.device_reset = tegra241_cmdqv_hw_reset,
++	.device_disable = tegra241_cmdqv_hw_disable,
+ 	.device_remove = tegra241_cmdqv_remove,
+ 	/* For user-space use */
+ 	.hw_info = tegra241_cmdqv_hw_info,
+@@ -1152,6 +1162,7 @@ static void tegra241_cmdqv_destroy_vintf
+ 	if (vintf->mmap_offset)
+ 		iommufd_viommu_destroy_mmap(&vintf->vsmmu.core,
+ 					    vintf->mmap_offset);
++	tegra241_vintf_hw_deinit(vintf);
+ 	tegra241_cmdqv_remove_vintf(vintf->cmdqv, vintf->idx);
  }
  
- static void ext4_fc_set_bitmaps_and_counters(struct super_block *sb)
 
 
