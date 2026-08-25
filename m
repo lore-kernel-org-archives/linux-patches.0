@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9635B41A92C;
-	Tue, 25 Aug 2026 13:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D3A392C21;
+	Tue, 25 Aug 2026 13:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665864; cv=none; b=vEwRdFOYa7twY8cpDChgxf6KWJ5G351bha2mUDpKhpOfchnHBh2utEWlZLc7GMQ32AUvRYVCWQIWXHa0HQVE2RYPPtAsplOofmMFbCnwwZrx+zWUq5+yYVHl6Y5cSHeHK/Phbcb/8nbIXctnX2jfIvOB6sAEPY0Z2Ru/AjuBJR8=
+	t=1787665866; cv=none; b=eSfdX45bnOIbCriGEPQPbFp3mKaVCA0g22HcqxkPVCcwo8cjz4icMedzbmzuv+TE1PtAj9E8EQgeeCTAGtWUMX9kXAdfRAWu1T7971M0LtYCCbljtceHKjS/M0tJHLiJ1OHrHqll8PUpRx8iFZS6zSf91XWp9R2u5wMJlOqbW/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665864; c=relaxed/simple;
-	bh=oHMOKuJRtMlrLQnw6df2RW1cwJ+8tFW5GWc2Zv+YJnM=;
+	s=arc-20240116; t=1787665866; c=relaxed/simple;
+	bh=DDLhtUzkDEAJqkimLlQ1Uk8hLs0X6bC5xW+V+/GEqHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQNnn8TfKykD9jCIrK0u+v9JY3zQcbVs2yQil73p21M1D2hTPvGMip7S8FhknHB4qvq87wm2anCes46qr5pWwI2ieNqPhqX2FPoqVsgw/pF5C6EesxeB3QIXyeUP78627aU/3PsGhZBoph2n9cbiwLfNojLSzilGR2RuH/X7FiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbqMbcZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a2LzrA9IrHffo4h7zudc7t0D6N5m3Cys9B7EVUasz+GEHwCTWSoePCNzFdWoC3q8vH3ZGeq81ifEVA4BWyFMliXQIiGjgOQSvm9lW621AEMPumajqhgROC1qxytY1gks6QlCqXArx4j/VodjgXP6OXdpP/tU8ZcvkkTm8OdtfvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/TffkhW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbqMbcZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A6F1F000E9;
-	Tue, 25 Aug 2026 13:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/TffkhW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1361F00A3A;
+	Tue, 25 Aug 2026 13:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665862;
-	bh=VB0Fxmbx4i8VsjjMk0fK87o6E3W8mdMu238xnylMJTs=;
+	s=korg; t=1787665865;
+	bh=HfQEJYZFdL0TpwsnV9EJU4NgfIDxjtYOeiB0RuRmQJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbqMbcZmki7g+DJ2B6xLokgaeWa0n1eYWrrWKsBdswKa+6kFr7WrvAWyfTGmndRJR
-	 6Ed7wY3P116jWP5ZafPKthI6PwSI9vfX5a5+vLfY3U/ZC3QO1NvbcsiAYIRfU211G9
-	 G2vZroQgR/nCE7eNh1NjiMGuhcDmnB8TDwEO/Ik0=
+	b=c/TffkhW93KWOj5BWdahWxf8BF6o3odr6BXRZ4lgmTIiYGDstIPOAt61dWQT4KhjD
+	 ubFD2yFdYj3ItFY2uxJCGfC5gV2ySZNUKufXEMKNkYSiJU6ZKgJKavzFoQi1DmwXEk
+	 URnj8cmQEoftcj0s36gCaAbFvDH846htNTBhKIaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 67/87] HID: core: fix OOB read of field->usage in hid_set_field()
-Date: Tue, 25 Aug 2026 15:26:30 +0200
-Message-ID: <20260825132544.447556972@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 68/87] xfrm: fix sk_dst_cache double-free in xfrm_user_policy()
+Date: Tue, 25 Aug 2026 15:26:31 +0200
+Message-ID: <20260825132544.482905329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -51,74 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-commit a13cdb19fcb223ed41bdab3bab42b98dba87e90b upstream.
+[ Upstream commit c283e9ada7fcb7dd4b10592623086b2e6d2f9925 ]
 
-hid_set_field() hands field->usage + offset to hid_dump_input() before
-the guard that bounds offset:
+xfrm_user_policy() clears the socket dst cache with __sk_dst_reset(),
+i.e. the non-atomic __sk_dst_set(sk, NULL): it reads sk_dst_cache with
+rcu_dereference_protected(), stores NULL and dst_release()s the old dst.
+That is only safe if no other thread modifies sk_dst_cache concurrently.
 
-	hid_dump_input(field->report->device, field->usage + offset, value);
+For a connected UDP socket that does not hold: the transmit fast path
+(udp_sendmsg -> sk_dst_check -> sk_dst_reset) resets the cache locklessly
+with an atomic xchg(). A per-socket policy change racing a send can make
+both sides observe the same old dst and each dst_release() it, dropping
+the socket's single reference twice and freeing the xfrm_dst bundle while
+it is still referenced:
 
-	if (offset >= field->report_count) {
-		hid_err(...);
-		return -1;
-	}
+  BUG: KASAN: slab-use-after-free in dst_release
+  Write of size 4 at addr ffff88801897b6c0 by task exploit/155
+  Call Trace:
+   ...
+   dst_release (... ./include/linux/rcuref.h:109)
+   xfrm_user_policy (./include/net/sock.h:2239 ./include/net/sock.h:2256 net/xfrm/xfrm_state.c:3053)
+   do_ip_setsockopt (net/ipv4/ip_sockglue.c:1347)
+   ip_setsockopt (net/ipv4/ip_sockglue.c:1417)
+   do_sock_setsockopt (net/socket.c:2368)
+   __sys_setsockopt (net/socket.c:2393)
+   __x64_sys_setsockopt (net/socket.c:2396)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-Under CONFIG_DEBUG_FS hid_dump_input() dereferences that pointer, with
-buf = hid_resolv_usage(usage->hid, NULL).  The usage[] array is
-allocated inline with the hid_field in hid_register_field() and holds
-field->maxusage entries, so an offset past it reads off the end of the
-kvzalloc()ed allocation and into a neighbouring object.  Had the guard
-run first, offset < report_count <= maxusage would already have confined
-the pointer to the array.
+Reachable by an unprivileged user via a user+network namespace.
 
-A caller supplies such an offset today.  picolcd_fb_send_tile()
-validates only report->maxfield before issuing
-hid_set_field(report->field[0], 11 + i, ...) for i = 0..31, so its
-offsets are fixed at 11..42 and are never checked against the bound
-field.  When the device registers that field with fewer usages, the
-framebuffer deferred-io work drives the read on every tile.  KASAN
-reports a 4-byte slab-out-of-bounds read in hid_dump_input() below
-hid_set_field(), and the same boot logs "offset (1) exceeds
-report_count (1)" from the guard that runs only afterwards.
+Use the atomic sk_dst_reset() so the cache is cleared and released with a
+single xchg(): whichever side wins releases the dst once, the other sees
+NULL and does nothing. Behaviour is otherwise unchanged.
 
-Move the hid_dump_input() call below the guard.  Because
-field->maxusage >= field->report_count, the guard then establishes that
-field->usage + offset lies inside the array before it is dereferenced,
-for every caller and without changing behaviour on the valid path.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2b06cdf3e688 ("xfrm: Clear sk_dst_cache when applying per-socket policy.")
+Fixes: be8f8284cd89 ("net: xfrm: allow clearing socket xfrm policies.")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_state.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1907,13 +1907,14 @@ int hid_set_field(struct hid_field *fiel
- 
- 	size = field->report_size;
- 
--	hid_dump_input(field->report->device, field->usage + offset, value);
--
- 	if (offset >= field->report_count) {
- 		hid_err(field->report->device, "offset (%d) exceeds report_count (%d)\n",
- 				offset, field->report_count);
- 		return -1;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index aab20bc35674e..c4593f87872fc 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2711,7 +2711,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
+ 	if (sockptr_is_null(optval) && !optlen) {
+ 		xfrm_sk_policy_insert(sk, XFRM_POLICY_IN, NULL);
+ 		xfrm_sk_policy_insert(sk, XFRM_POLICY_OUT, NULL);
+-		__sk_dst_reset(sk);
++		sk_dst_reset(sk);
+ 		return 0;
  	}
-+
-+	hid_dump_input(field->report->device, field->usage + offset, value);
-+
- 	if (field->logical_minimum < 0) {
- 		if (value != snto32(s32ton(value, size), size)) {
- 			hid_err(field->report->device, "value %d is out of range\n", value);
+ 
+@@ -2751,7 +2751,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
+ 	if (err >= 0) {
+ 		xfrm_sk_policy_insert(sk, err, pol);
+ 		xfrm_pol_put(pol);
+-		__sk_dst_reset(sk);
++		sk_dst_reset(sk);
+ 		err = 0;
+ 	}
+ 
+-- 
+2.53.0
+
 
 
