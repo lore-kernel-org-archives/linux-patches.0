@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F632E06E4;
-	Tue, 25 Aug 2026 14:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849452ED843;
+	Tue, 25 Aug 2026 14:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666419; cv=none; b=ZpAICR42SMsbcJDzZqjda/OgCtsIVg/okBESKs5KCb+TI2O/NVJO6VIq9KJiEdW0cKs4hxY9NQGTywtrD4RB7VwEmYZ/u9kOPrCu2DMqXKe+qpVqPr64OKQNLGgTWXsPIlHC2vc6vhqPa+InWqcYT+NFCBCh62BkFazZX+uT0NU=
+	t=1787666421; cv=none; b=Lt9zV63vcjGatPP42CdTMw2IELCubODS0mYcWyYa/lXhYa2PQWkwfBMX5m0LBOYSMe8TxqU+yLpurCk1og/2zA0+Fe7IxJVQ1hl9TJkdTah1cQZT1DjiJUq0rXmGo1druHarcj8SwpAwmjX4zrqqcGTezea8HZEhXF6pc7xHTDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666419; c=relaxed/simple;
-	bh=oLaIcl3kMbGv6yuRjJkDcXb66gc9IxS2ES6IeeSNLbw=;
+	s=arc-20240116; t=1787666421; c=relaxed/simple;
+	bh=cOskbOPknUe+qORIaeeF0xR4Y3praTbrkv4aPJ9UwDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxrVOQPs2cvlezSHPbrXh3hRQoCmlS8dJR2NL7QmW56WRwMnIJKXTUd2LvKRpYvk+m2awQGhLGtNEx8efavOTc2/pielQ/up49K8poe8KrbGFcw8h8Y8s9noQ8CWz7cpM27xAUFJ6xIdTMJrG8aMa4/J0cfPn992NykMVVtOht4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01PnnxhX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZDs3KzA5XJ71TrQ7p2Uu++Dwjw1wH3md+rDVxHbqvFdMhS55Au23Lq655KwnYBGPR4HxNsItFNRsZzpY+HPvja68UY8Gcemp0P438+0Qil+RqtfgCLAqvoj7XzEhrHG8Y+aW5p/CgS5EbJU+XAoMfTL7iEfaoDKfX6Iq8ayHi1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIdzquLI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01PnnxhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E3B1F000E9;
-	Tue, 25 Aug 2026 14:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIdzquLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FAD1F000E9;
+	Tue, 25 Aug 2026 14:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666417;
-	bh=Q6vTNlK3GJb2DClD1P3TqvwAET7cvIhcEi+7rrP+XQg=;
+	s=korg; t=1787666420;
+	bh=wKlagyNJOz4Ov8xwL8+WNP/G2NtL1CSQ7pry//O4Sw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=01PnnxhX1TSxjpbdMNYWCfMMsmXD2JzzR/25LDx1eWEsQxb8RJvU1t1Zto3rWNciz
-	 6poO/h38Ng/B1EosvXNLt9QqseTxJVIftGQN3xry9Z6vUAEpITfJ+cta5H0ugKdH9a
-	 iNSQsECTBYvdRh+k3IHsf5wCP41uqKZDN33WBCPc=
+	b=OIdzquLI3m+no1pDoohHyEW4HNtgXpXa91mdaZmZ0eAQIP6X59OWVrQDR9F6JvWHi
+	 rT9O5KuEvNbXZMNsVyCIMuCSr8h//Zad+svBHyfV/8wSDU6C77+caCQwfeujrr+kZ+
+	 a+Bd0jDnT4RVBPR8GZuNCB8vLANvTNG6Hm0iyyno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Samuel Page <sam@bynar.io>,
 	Simon Horman <horms@kernel.org>,
 	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 5.10 36/57] nfc: st21nfca: validate ATR_REQ length against the received frame
-Date: Tue, 25 Aug 2026 15:26:58 +0200
-Message-ID: <20260825132542.732667217@linuxfoundation.org>
+Subject: [PATCH 5.10 37/57] nfc: nci: fix out-of-bounds write in nci_target_auto_activated()
+Date: Tue, 25 Aug 2026 15:26:59 +0200
+Message-ID: <20260825132542.771959833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -51,58 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Samuel Page <sam@bynar.io>
 
-commit 5cdcca5d62a66eda6b774110a44cba67bc1a8d1d upstream.
+commit ac200079db50af81e6b04d058b33ec92901d8edd upstream.
 
-st21nfca_tm_recv_atr_req() checks that the received ATR_REQ frame is at
-least ST21NFCA_ATR_REQ_MIN_SIZE and that the self-declared atr_req->length
-is at least sizeof(struct st21nfca_atr_req), but never checks that
-atr_req->length does not exceed the actual received length (skb->len).
+nci_target_auto_activated() appends a target to the fixed-size array
+ndev->targets[NCI_MAX_DISCOVERED_TARGETS] and increments ndev->n_targets
+without first checking the array is full; unlike its sibling
+nci_add_new_target(), which bails out when n_targets already equals
+NCI_MAX_DISCOVERED_TARGETS.
 
-st21nfca_tm_send_atr_res() then trusts the declared length:
+ndev->n_targets is only cleared by nci_clear_target_list(), so an NFCC
+that repeatedly re-runs discovery (RF_DISCOVER_RSP, which re-enters
+NCI_DISCOVERY without clearing the target list) and reports an
+auto-activated target (RF_INTF_ACTIVATED_NTF) drives n_targets past the
+limit. The append then writes a struct nfc_target past the end of the
+array (a slab out-of-bounds write), and nfc_targets_found() goes on to
+walk the array with the inflated count:
 
-	gb_len = atr_req->length - sizeof(struct st21nfca_atr_req);
-	...
-	memcpy(atr_res->gbi, atr_req->gbi, gb_len);
+  BUG: KASAN: slab-out-of-bounds in nci_add_new_protocol+0x94/0x2ac [nci]
+  Write of size 2 at addr ffff0000c7299a18 by task kworker/u8:0/12
+  Workqueue: nfc0_nci_rx_wq nci_rx_work [nci]
+  Call trace:
+   nci_add_new_protocol+0x94/0x2ac [nci]
+   nci_ntf_packet+0xddc/0x11a0 [nci]
+   nci_rx_work+0x15c/0x1e0 [nci]
+   process_one_work+0x2dc/0x500
+   worker_thread+0x240/0x460
+   kthread+0x1c0/0x1d0
+   ret_from_fork+0x10/0x20
 
-so an RF peer that sends a short frame but sets atr_req->length larger
-than the frame makes gb_len exceed the general bytes actually present,
-and the memcpy reads out of bounds past the received skb. Those bytes are
-placed in the ATR_RES and sent back to the peer (kernel-memory disclosure
-to a proximity attacker); a larger declared length is an out-of-bounds
-read (DoS).
+  The buggy address belongs to the cache kmalloc-2k of size 2048
+  The buggy address is located 1024 bytes to the right of
+  allocated 1560-byte region [ffff0000c7299000, ffff0000c7299618)
 
-Reject frames whose declared length exceeds the received length. The
-adjacent nfc_tm_activated() path in the same function already derives its
-general-bytes length from skb->len rather than the declared field.
+Guard nci_target_auto_activated() with the same check used by
+nci_add_new_target().
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing bound is evident from source. Compile-tested.
-
-Fixes: 1892bf844ea0 ("NFC: st21nfca: Adding P2P support to st21nfca in Initiator & Target mode")
+Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260711071301.58071-1-doruk@0sec.ai
+Link: https://patch.msgid.link/20260622145243.3167276-1-sam@bynar.io
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/st21nfca/dep.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/nfc/nci/ntf.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/nfc/st21nfca/dep.c
-+++ b/drivers/nfc/st21nfca/dep.c
-@@ -213,6 +213,9 @@ static int st21nfca_tm_recv_atr_req(stru
- 		goto exit;
- 	}
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -448,6 +448,12 @@ static void nci_target_auto_activated(st
+ 	struct nfc_target *target;
+ 	int rc;
  
-+	if (atr_req->length > skb->len)
-+		return -EPROTO;
++	/* This is a new target, check if we've enough room */
++	if (ndev->n_targets == NCI_MAX_DISCOVERED_TARGETS) {
++		pr_debug("not enough room, ignoring new target...\n");
++		return;
++	}
 +
- 	r = st21nfca_tm_send_atr_res(hdev, atr_req);
- 	if (r)
- 		goto exit;
+ 	target = &ndev->targets[ndev->n_targets];
+ 
+ 	rc = nci_add_new_protocol(ndev, target, ntf->rf_protocol,
 
 
