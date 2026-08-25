@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E30C470117;
-	Tue, 25 Aug 2026 13:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C58446C18;
+	Tue, 25 Aug 2026 13:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666245; cv=none; b=T1UNkEFwZpkb9vsqp7O9NAz1x64WzGCJAVpN735QrcqHbtOwU4TtRZ5f9a1J5aIYYiLFCWgVxGKOhqLDd6awpR4cEcnsNXFNMXshoVBANpyyIh0uNbx8KyjKIHq9No8Zra7qDyl85P1VPr2aD6DWYtX5NnPW/5/2wmoUdQQCW2I=
+	t=1787666249; cv=none; b=ibjvnFdqU/Hdstuf5BrS7n8hSyR4CjYTZKIPcRefiKFZz42yMssbguvocrbOjwRYDK3xVtaWnHlmGP5T1aZfgH1TqsJ95EZXIHNi98krzC9w7dn/43ZWsd7EYWFAPzmu+aKa1x8GQQVUEoFCk+FNTA6NtsyJ3K1K9Hx8Uo+Issw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666245; c=relaxed/simple;
-	bh=D5l/eAX4cbEVxe7fLaEZvjbJh1Oeu5NjwHt3z5KtCJc=;
+	s=arc-20240116; t=1787666249; c=relaxed/simple;
+	bh=kOS3H6qhtvKhu2g0HiIW4cR1Ljyw2uEGTSmYG/OHplw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvtWOTn6k2O8OHo0NgL4QDRH/9fPirn3FoemgGEdb9EBWr8QjJj1EzTvRC+NUCORnup92XbOLj7MGqPUmqRz9MZfyMR6ofgCjQmozLYDouQxxiYjLQioR75ATvItS5XPKQxfoM4VeKC9KeM16k7VGdJFjGdILK4tG49oLd1iiS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FD3Fhl99; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A3t2Gw8wqkGlPM7Gd1t0VoSri3fcKz6Or26oYFOeCdz1reVzyO5qA48mMWCrkPKqCA9oa/pEQf0spdrwwJ0NgKobytxq57/9Hbi4r3/ZmvvAwWMq6YydmmcnaMCt8jCFjPAX2uukt46Lkuxu7IH8sXL6mvGDlsQOZxbnfD+/wGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vy0JvLFT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FD3Fhl99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E061F000E9;
-	Tue, 25 Aug 2026 13:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vy0JvLFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69DA61F000E9;
+	Tue, 25 Aug 2026 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666244;
-	bh=Zx898+DPV+PMuGAR2yrWbdY1D1nQkXtwtoGn1kMoT+o=;
+	s=korg; t=1787666247;
+	bh=l9r3fLE5B4vcaahHZXqjhEuareH3Uydk/Oy4Bu2tGxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FD3Fhl9921iwRJP8mJOWz2ho+ugTS30m8swb1w3Z6AvngC5cmh69cA/s2DIiXtWWZ
-	 ep6VdRQOnaxN67lBLZGyecTs7lbaurXo3wEzI+Kly0DehO9TUYFLdPkC0huAH/eqmk
-	 DlNxabskUdXs521C/chUPUa4BYN4eED25t4Fi/ho=
+	b=Vy0JvLFT8oMvLfHgssOkzw5G00nYqVDTVGcNhOFHpgY7zJ2URuZliQHcoRD9h+PJv
+	 OIn2Si9MS3sK3X4c6rSWsrkMGBcBPl44/6phKtEtIJuqS1bS5THYigwBvd3B01WY3q
+	 P1k6VGoiGFX+vgOuJGxmn4xxnvomuFY20EUfOpd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
+	Chao Peng <chao.p.peng@linux.intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Kenta Akagi <k@mgml.me>
-Subject: [PATCH 5.15 54/76] KVM: x86/mmu: Document the "rules" for using host_pfn_mapping_level()
-Date: Tue, 25 Aug 2026 15:26:47 +0200
-Message-ID: <20260825132543.695510799@linuxfoundation.org>
+Subject: [PATCH 5.15 55/76] KVM: Rename mmu_notifier_* to mmu_invalidate_*
+Date: Tue, 25 Aug 2026 15:26:48 +0200
+Message-ID: <20260825132543.732602097@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -52,66 +52,593 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Chao Peng <chao.p.peng@linux.intel.com>
 
-[ Upstream commit 65e3b446bcceaac7448cb25a2a5bf4adbcf25fe6 ]
+[ Upstream commit 20ec3ebd707c77fb9b11b37193449193d4649f33 ]
 
-Add a comment to document how host_pfn_mapping_level() can be used safely,
-as the line between safe and dangerous is quite thin.  E.g. if KVM were
-to ever support in-place promotion to create huge pages, consuming the
-level is safe if the caller holds mmu_lock and checks that there's an
-existing _leaf_ SPTE, but unsafe if the caller only checks that there's a
-non-leaf SPTE.
+The motivation of this renaming is to make these variables and related
+helper functions less mmu_notifier bound and can also be used for non
+mmu_notifier based page invalidation. mmu_invalidate_* was chosen to
+better describe the purpose of 'invalidating' a page that those
+variables are used for.
 
-Opportunistically tweak the existing comments to explicitly document why
-KVM needs to use READ_ONCE().
+  - mmu_notifier_seq/range_start/range_end are renamed to
+    mmu_invalidate_seq/range_start/range_end.
+
+  - mmu_notifier_retry{_hva} helper functions are renamed to
+    mmu_invalidate_retry{_hva}.
+
+  - mmu_notifier_count is renamed to mmu_invalidate_in_progress to
+    avoid confusion with mn_active_invalidate_count.
+
+  - While here, also update kvm_inc/dec_notifier_count() to
+    kvm_mmu_invalidate_begin/end() to match the change for
+    mmu_notifier_count.
 
 No functional change intended.
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20220715232107.3775620-3-seanjc@google.com>
+Signed-off-by: Chao Peng <chao.p.peng@linux.intel.com>
+Message-Id: <20220816125322.1110439-3-chao.p.peng@linux.intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: 2abd5287f083 ("KVM: x86: Check for invalid/obsolete root *after* making MMU pages available")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Kenta Akagi <k@mgml.me>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ arch/arm64/kvm/mmu.c                     |   10 ++---
+ arch/mips/kvm/mmu.c                      |   12 +++---
+ arch/powerpc/include/asm/kvm_book3s_64.h |    2 -
+ arch/powerpc/kvm/book3s_64_mmu_host.c    |    4 +-
+ arch/powerpc/kvm/book3s_64_mmu_hv.c      |    4 +-
+ arch/powerpc/kvm/book3s_64_mmu_radix.c   |    6 +--
+ arch/powerpc/kvm/book3s_64_vio_hv.c      |    2 -
+ arch/powerpc/kvm/book3s_hv_nested.c      |    2 -
+ arch/powerpc/kvm/book3s_hv_rm_mmu.c      |    8 ++--
+ arch/powerpc/kvm/e500_mmu_host.c         |    4 +-
+ arch/x86/kvm/mmu/mmu.c                   |   14 +++----
+ arch/x86/kvm/mmu/paging_tmpl.h           |    4 +-
+ include/linux/kvm_host.h                 |   60 ++++++++++++++++---------------
+ virt/kvm/kvm_main.c                      |   49 ++++++++++++-------------
+ 14 files changed, 92 insertions(+), 89 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2873,6 +2873,31 @@ static void direct_pte_prefetch(struct k
- 	__direct_pte_prefetch(vcpu, sp, sptep);
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -881,7 +881,7 @@ transparent_hugepage_adjust(struct kvm *
+ 		 * THP doesn't start to split while we are adjusting the
+ 		 * refcounts.
+ 		 *
+-		 * We are sure this doesn't happen, because mmu_notifier_retry
++		 * We are sure this doesn't happen, because mmu_invalidate_retry
+ 		 * was successful and we are holding the mmu_lock, so if this
+ 		 * THP is trying to split, it will be blocked in the mmu
+ 		 * notifier before touching any of the pages, specifically
+@@ -1074,14 +1074,14 @@ static int user_mem_abort(struct kvm_vcp
+ 	gfn = fault_ipa >> PAGE_SHIFT;
+ 
+ 	/*
+-	 * Read mmu_notifier_seq so that KVM can detect if the results of
++	 * Read mmu_invalidate_seq so that KVM can detect if the results of
+ 	 * vma_lookup() or __gfn_to_pfn_memslot() become stale prior to
+ 	 * acquiring kvm->mmu_lock.
+ 	 *
+ 	 * Rely on mmap_read_unlock() for an implicit smp_rmb(), which pairs
+-	 * with the smp_wmb() in kvm_dec_notifier_count().
++	 * with the smp_wmb() in kvm_mmu_invalidate_end().
+ 	 */
+-	mmu_seq = vcpu->kvm->mmu_notifier_seq;
++	mmu_seq = vcpu->kvm->mmu_invalidate_seq;
+ 	mmap_read_unlock(current->mm);
+ 
+ 	pfn = __gfn_to_pfn_memslot(memslot, gfn, false, NULL,
+@@ -1118,7 +1118,7 @@ static int user_mem_abort(struct kvm_vcp
+ 
+ 	spin_lock(&kvm->mmu_lock);
+ 	pgt = vcpu->arch.hw_mmu->pgt;
+-	if (mmu_notifier_retry(kvm, mmu_seq))
++	if (mmu_invalidate_retry(kvm, mmu_seq))
+ 		goto out_unlock;
+ 
+ 	/*
+--- a/arch/mips/kvm/mmu.c
++++ b/arch/mips/kvm/mmu.c
+@@ -615,17 +615,17 @@ retry:
+ 	 * Used to check for invalidations in progress, of the pfn that is
+ 	 * returned by pfn_to_pfn_prot below.
+ 	 */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	/*
+-	 * Ensure the read of mmu_notifier_seq isn't reordered with PTE reads in
+-	 * gfn_to_pfn_prot() (which calls get_user_pages()), so that we don't
++	 * Ensure the read of mmu_invalidate_seq isn't reordered with PTE reads
++	 * in gfn_to_pfn_prot() (which calls get_user_pages()), so that we don't
+ 	 * risk the page we get a reference to getting unmapped before we have a
+-	 * chance to grab the mmu_lock without mmu_notifier_retry() noticing.
++	 * chance to grab the mmu_lock without mmu_invalidate_retry() noticing.
+ 	 *
+ 	 * This smp_rmb() pairs with the effective smp_wmb() of the combination
+ 	 * of the pte_unmap_unlock() after the PTE is zapped, and the
+ 	 * spin_lock() in kvm_mmu_notifier_invalidate_<page|range_end>() before
+-	 * mmu_notifier_seq is incremented.
++	 * mmu_invalidate_seq is incremented.
+ 	 */
+ 	smp_rmb();
+ 
+@@ -638,7 +638,7 @@ retry:
+ 
+ 	spin_lock(&kvm->mmu_lock);
+ 	/* Check if an invalidation has taken place since we got pfn */
+-	if (mmu_notifier_retry(kvm, mmu_seq)) {
++	if (mmu_invalidate_retry(kvm, mmu_seq)) {
+ 		/*
+ 		 * This can happen when mappings are changed asynchronously, but
+ 		 * also synchronously if a COW is triggered by
+--- a/arch/powerpc/include/asm/kvm_book3s_64.h
++++ b/arch/powerpc/include/asm/kvm_book3s_64.h
+@@ -673,7 +673,7 @@ static inline pte_t *find_kvm_host_pte(s
+ 	VM_WARN(!spin_is_locked(&kvm->mmu_lock),
+ 		"%s called with kvm mmu_lock not held \n", __func__);
+ 
+-	if (mmu_notifier_retry(kvm, mmu_seq))
++	if (mmu_invalidate_retry(kvm, mmu_seq))
+ 		return NULL;
+ 
+ 	pte = __find_linux_pte(kvm->mm->pgd, ea, NULL, hshift);
+--- a/arch/powerpc/kvm/book3s_64_mmu_host.c
++++ b/arch/powerpc/kvm/book3s_64_mmu_host.c
+@@ -90,7 +90,7 @@ int kvmppc_mmu_map_page(struct kvm_vcpu
+ 	unsigned long pfn;
+ 
+ 	/* used to check for invalidations in progress */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	/* Get host physical address for gpa */
+@@ -151,7 +151,7 @@ int kvmppc_mmu_map_page(struct kvm_vcpu
+ 	cpte = kvmppc_mmu_hpte_cache_next(vcpu);
+ 
+ 	spin_lock(&kvm->mmu_lock);
+-	if (!cpte || mmu_notifier_retry(kvm, mmu_seq)) {
++	if (!cpte || mmu_invalidate_retry(kvm, mmu_seq)) {
+ 		r = -EAGAIN;
+ 		goto out_unlock;
+ 	}
+--- a/arch/powerpc/kvm/book3s_64_mmu_hv.c
++++ b/arch/powerpc/kvm/book3s_64_mmu_hv.c
+@@ -570,7 +570,7 @@ int kvmppc_book3s_hv_page_fault(struct k
+ 		return -EFAULT;
+ 
+ 	/* used to check for invalidations in progress */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	ret = -EFAULT;
+@@ -685,7 +685,7 @@ int kvmppc_book3s_hv_page_fault(struct k
+ 
+ 	/* Check if we might have been invalidated; let the guest retry if so */
+ 	ret = RESUME_GUEST;
+-	if (mmu_notifier_retry(vcpu->kvm, mmu_seq)) {
++	if (mmu_invalidate_retry(vcpu->kvm, mmu_seq)) {
+ 		unlock_rmap(rmap);
+ 		goto out_unlock;
+ 	}
+--- a/arch/powerpc/kvm/book3s_64_mmu_radix.c
++++ b/arch/powerpc/kvm/book3s_64_mmu_radix.c
+@@ -634,7 +634,7 @@ int kvmppc_create_pte(struct kvm *kvm, p
+ 	/* Check if we might have been invalidated; let the guest retry if so */
+ 	spin_lock(&kvm->mmu_lock);
+ 	ret = -EAGAIN;
+-	if (mmu_notifier_retry(kvm, mmu_seq))
++	if (mmu_invalidate_retry(kvm, mmu_seq))
+ 		goto out_unlock;
+ 
+ 	/* Now traverse again under the lock and change the tree */
+@@ -824,7 +824,7 @@ int kvmppc_book3s_instantiate_page(struc
+ 	bool large_enable;
+ 
+ 	/* used to check for invalidations in progress */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	/*
+@@ -1185,7 +1185,7 @@ void kvmppc_radix_flush_memslot(struct k
+ 	 * Increase the mmu notifier sequence number to prevent any page
+ 	 * fault that read the memslot earlier from writing a PTE.
+ 	 */
+-	kvm->mmu_notifier_seq++;
++	kvm->mmu_invalidate_seq++;
+ 	spin_unlock(&kvm->mmu_lock);
  }
  
-+/*
-+ * Lookup the mapping level for @gfn in the current mm.
-+ *
-+ * WARNING!  Use of host_pfn_mapping_level() requires the caller and the end
-+ * consumer to be tied into KVM's handlers for MMU notifier events!
-+ *
-+ * There are several ways to safely use this helper:
-+ *
-+ * - Check mmu_notifier_retry_hva() after grabbing the mapping level, before
-+ *   consuming it.  In this case, mmu_lock doesn't need to be held during the
-+ *   lookup, but it does need to be held while checking the MMU notifier.
-+ *
-+ * - Hold mmu_lock AND ensure there is no in-progress MMU notifier invalidation
-+ *   event for the hva.  This can be done by explicit checking the MMU notifier
-+ *   or by ensuring that KVM already has a valid mapping that covers the hva.
-+ *
-+ * - Do not use the result to install new mappings, e.g. use the host mapping
-+ *   level only to decide whether or not to zap an entry.  In this case, it's
-+ *   not required to hold mmu_lock (though it's highly likely the caller will
-+ *   want to hold mmu_lock anyways, e.g. to modify SPTEs).
-+ *
-+ * Note!  The lookup can still race with modifications to host page tables, but
-+ * the above "rules" ensure KVM will not _consume_ the result of the walk if a
-+ * race with the primary MMU occurs.
-+ */
- static int host_pfn_mapping_level(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn,
- 				  const struct kvm_memory_slot *slot)
+--- a/arch/powerpc/kvm/book3s_64_vio_hv.c
++++ b/arch/powerpc/kvm/book3s_64_vio_hv.c
+@@ -499,7 +499,7 @@ long kvmppc_rm_h_put_tce_indirect(struct
+ 	/*
+ 	 * used to check for invalidations in progress
+ 	 */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	stt = kvmppc_find_table(vcpu->kvm, liobn);
+--- a/arch/powerpc/kvm/book3s_hv_nested.c
++++ b/arch/powerpc/kvm/book3s_hv_nested.c
+@@ -1574,7 +1574,7 @@ static long int __kvmhv_nested_page_faul
+ 	/* 2. Find the host pte for this L1 guest real address */
+ 
+ 	/* Used to check for invalidations in progress */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	/* See if can find translation in our partition scoped tables for L1 */
+--- a/arch/powerpc/kvm/book3s_hv_rm_mmu.c
++++ b/arch/powerpc/kvm/book3s_hv_rm_mmu.c
+@@ -216,7 +216,7 @@ long kvmppc_do_h_enter(struct kvm *kvm,
+ 	g_ptel = ptel;
+ 
+ 	/* used later to detect if we might have been invalidated */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	/* Find the memslot (if any) for this address */
+@@ -363,7 +363,7 @@ long kvmppc_do_h_enter(struct kvm *kvm,
+ 			rmap = real_vmalloc_addr(rmap);
+ 		lock_rmap(rmap);
+ 		/* Check for pending invalidations under the rmap chain lock */
+-		if (mmu_notifier_retry(kvm, mmu_seq)) {
++		if (mmu_invalidate_retry(kvm, mmu_seq)) {
+ 			/* inval in progress, write a non-present HPTE */
+ 			pteh |= HPTE_V_ABSENT;
+ 			pteh &= ~HPTE_V_VALID;
+@@ -929,7 +929,7 @@ static long kvmppc_do_h_page_init_zero(s
+ 	int i;
+ 
+ 	/* Used later to detect if we might have been invalidated */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	arch_spin_lock(&kvm->mmu_lock.rlock.raw_lock);
+@@ -957,7 +957,7 @@ static long kvmppc_do_h_page_init_copy(s
+ 	long ret = H_SUCCESS;
+ 
+ 	/* Used later to detect if we might have been invalidated */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	arch_spin_lock(&kvm->mmu_lock.rlock.raw_lock);
+--- a/arch/powerpc/kvm/e500_mmu_host.c
++++ b/arch/powerpc/kvm/e500_mmu_host.c
+@@ -339,7 +339,7 @@ static inline int kvmppc_e500_shadow_map
+ 	unsigned long flags;
+ 
+ 	/* used to check for invalidations in progress */
+-	mmu_seq = kvm->mmu_notifier_seq;
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	/*
+@@ -460,7 +460,7 @@ static inline int kvmppc_e500_shadow_map
+ 	}
+ 
+ 	spin_lock(&kvm->mmu_lock);
+-	if (mmu_notifier_retry(kvm, mmu_seq)) {
++	if (mmu_invalidate_retry(kvm, mmu_seq)) {
+ 		ret = -EAGAIN;
+ 		goto out;
+ 	}
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2867,7 +2867,7 @@ static void direct_pte_prefetch(struct k
+ 	 * If addresses are being invalidated, skip prefetching to avoid
+ 	 * accidentally prefetching those addresses.
+ 	 */
+-	if (unlikely(vcpu->kvm->mmu_notifier_count))
++	if (unlikely(vcpu->kvm->mmu_invalidate_in_progress))
+ 		return;
+ 
+ 	__direct_pte_prefetch(vcpu, sp, sptep);
+@@ -2881,7 +2881,7 @@ static void direct_pte_prefetch(struct k
+  *
+  * There are several ways to safely use this helper:
+  *
+- * - Check mmu_notifier_retry_hva() after grabbing the mapping level, before
++ * - Check mmu_invalidate_retry_hva() after grabbing the mapping level, before
+  *   consuming it.  In this case, mmu_lock doesn't need to be held during the
+  *   lookup, but it does need to be held while checking the MMU notifier.
+  *
+@@ -2976,7 +2976,7 @@ int kvm_mmu_hugepage_adjust(struct kvm_v
+ 		return PG_LEVEL_4K;
+ 
+ 	/*
+-	 * mmu_notifier_retry() was successful and mmu_lock is held, so
++	 * mmu_invalidate_retry() was successful and mmu_lock is held, so
+ 	 * the pmd can't be split from under us.
+ 	 */
+ 	mask = KVM_PAGES_PER_HPAGE(level) - 1;
+@@ -4009,7 +4009,7 @@ static bool is_page_fault_stale(struct k
+ 		return true;
+ 
+ 	return !is_noslot_pfn(pfn) &&
+-	       mmu_notifier_retry_hva(vcpu->kvm, mmu_seq, hva);
++	       mmu_invalidate_retry_hva(vcpu->kvm, mmu_seq, hva);
+ }
+ 
+ static int direct_page_fault(struct kvm_vcpu *vcpu, gpa_t gpa, u32 error_code,
+@@ -4036,7 +4036,7 @@ static int direct_page_fault(struct kvm_
+ 	if (r)
+ 		return r;
+ 
+-	mmu_seq = vcpu->kvm->mmu_notifier_seq;
++	mmu_seq = vcpu->kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	if (kvm_faultin_pfn(vcpu, prefault, gfn, gpa, &pfn, &hva,
+@@ -5785,7 +5785,7 @@ void kvm_zap_gfn_range(struct kvm *kvm,
+ 
+ 	write_lock(&kvm->mmu_lock);
+ 
+-	kvm_inc_notifier_count(kvm, gfn_start, gfn_end);
++	kvm_mmu_invalidate_begin(kvm, gfn_start, gfn_end);
+ 
+ 	if (kvm_memslots_have_rmaps(kvm)) {
+ 		for (i = 0; i < KVM_ADDRESS_SPACE_NUM; i++) {
+@@ -5820,7 +5820,7 @@ void kvm_zap_gfn_range(struct kvm *kvm,
+ 		kvm_flush_remote_tlbs_with_address(kvm, gfn_start,
+ 						   gfn_end - gfn_start);
+ 
+-	kvm_dec_notifier_count(kvm, gfn_start, gfn_end);
++	kvm_mmu_invalidate_end(kvm, gfn_start, gfn_end);
+ 
+ 	write_unlock(&kvm->mmu_lock);
+ }
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -634,7 +634,7 @@ static void FNAME(pte_prefetch)(struct k
+ 	 * If addresses are being invalidated, skip prefetching to avoid
+ 	 * accidentally prefetching those addresses.
+ 	 */
+-	if (unlikely(vcpu->kvm->mmu_notifier_count))
++	if (unlikely(vcpu->kvm->mmu_invalidate_in_progress))
+ 		return;
+ 
+ 	if (sp->role.direct)
+@@ -894,7 +894,7 @@ static int FNAME(page_fault)(struct kvm_
+ 	else
+ 		max_level = walker.level;
+ 
+-	mmu_seq = vcpu->kvm->mmu_notifier_seq;
++	mmu_seq = vcpu->kvm->mmu_invalidate_seq;
+ 	smp_rmb();
+ 
+ 	if (kvm_faultin_pfn(vcpu, prefault, walker.gfn, addr, &pfn, &hva,
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -710,10 +710,10 @@ struct kvm {
+ 
+ #if defined(CONFIG_MMU_NOTIFIER) && defined(KVM_ARCH_WANT_MMU_NOTIFIER)
+ 	struct mmu_notifier mmu_notifier;
+-	unsigned long mmu_notifier_seq;
+-	long mmu_notifier_count;
+-	unsigned long mmu_notifier_range_start;
+-	unsigned long mmu_notifier_range_end;
++	unsigned long mmu_invalidate_seq;
++	long mmu_invalidate_in_progress;
++	unsigned long mmu_invalidate_range_start;
++	unsigned long mmu_invalidate_range_end;
+ #endif
+ 	struct list_head devices;
+ 	u64 manual_dirty_log_protect;
+@@ -1100,10 +1100,10 @@ void kvm_mmu_free_memory_cache(struct kv
+ void *kvm_mmu_memory_cache_alloc(struct kvm_mmu_memory_cache *mc);
+ #endif
+ 
+-void kvm_inc_notifier_count(struct kvm *kvm, unsigned long start,
+-				   unsigned long end);
+-void kvm_dec_notifier_count(struct kvm *kvm, unsigned long start,
+-				   unsigned long end);
++void kvm_mmu_invalidate_begin(struct kvm *kvm, unsigned long start,
++			      unsigned long end);
++void kvm_mmu_invalidate_end(struct kvm *kvm, unsigned long start,
++			    unsigned long end);
+ 
+ long kvm_arch_dev_ioctl(struct file *filp,
+ 			unsigned int ioctl, unsigned long arg);
+@@ -1631,42 +1631,44 @@ extern const struct kvm_stats_header kvm
+ extern const struct _kvm_stats_desc kvm_vcpu_stats_desc[];
+ 
+ #if defined(CONFIG_MMU_NOTIFIER) && defined(KVM_ARCH_WANT_MMU_NOTIFIER)
+-static inline int mmu_notifier_retry(struct kvm *kvm, unsigned long mmu_seq)
++static inline int mmu_invalidate_retry(struct kvm *kvm, unsigned long mmu_seq)
  {
+-	if (unlikely(kvm->mmu_notifier_count))
++	if (unlikely(kvm->mmu_invalidate_in_progress))
+ 		return 1;
+ 	/*
+-	 * Ensure the read of mmu_notifier_count happens before the read
+-	 * of mmu_notifier_seq.  This interacts with the smp_wmb() in
+-	 * mmu_notifier_invalidate_range_end to make sure that the caller
+-	 * either sees the old (non-zero) value of mmu_notifier_count or
+-	 * the new (incremented) value of mmu_notifier_seq.
+-	 * PowerPC Book3s HV KVM calls this under a per-page lock
+-	 * rather than under kvm->mmu_lock, for scalability, so
+-	 * can't rely on kvm->mmu_lock to keep things ordered.
++	 * Ensure the read of mmu_invalidate_in_progress happens before
++	 * the read of mmu_invalidate_seq.  This interacts with the
++	 * smp_wmb() in mmu_notifier_invalidate_range_end to make sure
++	 * that the caller either sees the old (non-zero) value of
++	 * mmu_invalidate_in_progress or the new (incremented) value of
++	 * mmu_invalidate_seq.
++	 *
++	 * PowerPC Book3s HV KVM calls this under a per-page lock rather
++	 * than under kvm->mmu_lock, for scalability, so can't rely on
++	 * kvm->mmu_lock to keep things ordered.
+ 	 */
+ 	smp_rmb();
+-	if (kvm->mmu_notifier_seq != mmu_seq)
++	if (kvm->mmu_invalidate_seq != mmu_seq)
+ 		return 1;
+ 	return 0;
+ }
+ 
+-static inline int mmu_notifier_retry_hva(struct kvm *kvm,
+-					 unsigned long mmu_seq,
+-					 unsigned long hva)
++static inline int mmu_invalidate_retry_hva(struct kvm *kvm,
++					   unsigned long mmu_seq,
++					   unsigned long hva)
+ {
+ 	lockdep_assert_held(&kvm->mmu_lock);
+ 	/*
+-	 * If mmu_notifier_count is non-zero, then the range maintained by
+-	 * kvm_mmu_notifier_invalidate_range_start contains all addresses that
+-	 * might be being invalidated. Note that it may include some false
++	 * If mmu_invalidate_in_progress is non-zero, then the range maintained
++	 * by kvm_mmu_notifier_invalidate_range_start contains all addresses
++	 * that might be being invalidated. Note that it may include some false
+ 	 * positives, due to shortcuts when handing concurrent invalidations.
+ 	 */
+-	if (unlikely(kvm->mmu_notifier_count) &&
+-	    hva >= kvm->mmu_notifier_range_start &&
+-	    hva < kvm->mmu_notifier_range_end)
++	if (unlikely(kvm->mmu_invalidate_in_progress) &&
++	    hva >= kvm->mmu_invalidate_range_start &&
++	    hva < kvm->mmu_invalidate_range_end)
+ 		return 1;
+-	if (kvm->mmu_notifier_seq != mmu_seq)
++	if (kvm->mmu_invalidate_seq != mmu_seq)
+ 		return 1;
+ 	return 0;
+ }
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -665,30 +665,31 @@ static void kvm_mmu_notifier_change_pte(
+ 
+ 	/*
+ 	 * .change_pte() must be surrounded by .invalidate_range_{start,end}().
+-	 * If mmu_notifier_count is zero, then no in-progress invalidations,
+-	 * including this one, found a relevant memslot at start(); rechecking
+-	 * memslots here is unnecessary.  Note, a false positive (count elevated
+-	 * by a different invalidation) is sub-optimal but functionally ok.
++	 * If mmu_invalidate_in_progress is zero, then no in-progress
++	 * invalidations, including this one, found a relevant memslot at
++	 * start(); rechecking memslots here is unnecessary.  Note, a false
++	 * positive (count elevated by a different invalidation) is sub-optimal
++	 * but functionally ok.
+ 	 */
+ 	WARN_ON_ONCE(!READ_ONCE(kvm->mn_active_invalidate_count));
+-	if (!READ_ONCE(kvm->mmu_notifier_count))
++	if (!READ_ONCE(kvm->mmu_invalidate_in_progress))
+ 		return;
+ 
+ 	kvm_handle_hva_range(mn, address, address + 1, pte, kvm_change_spte_gfn);
+ }
+ 
+-void kvm_inc_notifier_count(struct kvm *kvm, unsigned long start,
+-				   unsigned long end)
++void kvm_mmu_invalidate_begin(struct kvm *kvm, unsigned long start,
++			      unsigned long end)
+ {
+ 	/*
+ 	 * The count increase must become visible at unlock time as no
+ 	 * spte can be established without taking the mmu_lock and
+ 	 * count is also read inside the mmu_lock critical section.
+ 	 */
+-	kvm->mmu_notifier_count++;
+-	if (likely(kvm->mmu_notifier_count == 1)) {
+-		kvm->mmu_notifier_range_start = start;
+-		kvm->mmu_notifier_range_end = end;
++	kvm->mmu_invalidate_in_progress++;
++	if (likely(kvm->mmu_invalidate_in_progress == 1)) {
++		kvm->mmu_invalidate_range_start = start;
++		kvm->mmu_invalidate_range_end = end;
+ 	} else {
+ 		/*
+ 		 * Fully tracking multiple concurrent ranges has dimishing
+@@ -699,10 +700,10 @@ void kvm_inc_notifier_count(struct kvm *
+ 		 * accumulate and persist until all outstanding invalidates
+ 		 * complete.
+ 		 */
+-		kvm->mmu_notifier_range_start =
+-			min(kvm->mmu_notifier_range_start, start);
+-		kvm->mmu_notifier_range_end =
+-			max(kvm->mmu_notifier_range_end, end);
++		kvm->mmu_invalidate_range_start =
++			min(kvm->mmu_invalidate_range_start, start);
++		kvm->mmu_invalidate_range_end =
++			max(kvm->mmu_invalidate_range_end, end);
+ 	}
+ }
+ 
+@@ -715,7 +716,7 @@ static int kvm_mmu_notifier_invalidate_r
+ 		.end		= range->end,
+ 		.pte		= __pte(0),
+ 		.handler	= kvm_unmap_gfn_range,
+-		.on_lock	= kvm_inc_notifier_count,
++		.on_lock	= kvm_mmu_invalidate_begin,
+ 		.on_unlock	= kvm_arch_guest_memory_reclaimed,
+ 		.flush_on_ret	= true,
+ 		.may_block	= mmu_notifier_range_blockable(range),
+@@ -726,7 +727,7 @@ static int kvm_mmu_notifier_invalidate_r
+ 	/*
+ 	 * Prevent memslot modification between range_start() and range_end()
+ 	 * so that conditionally locking provides the same result in both
+-	 * functions.  Without that guarantee, the mmu_notifier_count
++	 * functions.  Without that guarantee, the mmu_invalidate_in_progress
+ 	 * adjustments will be imbalanced.
+ 	 *
+ 	 * Pairs with the decrement in range_end().
+@@ -740,22 +741,22 @@ static int kvm_mmu_notifier_invalidate_r
+ 	return 0;
+ }
+ 
+-void kvm_dec_notifier_count(struct kvm *kvm, unsigned long start,
+-				   unsigned long end)
++void kvm_mmu_invalidate_end(struct kvm *kvm, unsigned long start,
++			    unsigned long end)
+ {
+ 	/*
+ 	 * This sequence increase will notify the kvm page fault that
+ 	 * the page that is going to be mapped in the spte could have
+ 	 * been freed.
+ 	 */
+-	kvm->mmu_notifier_seq++;
++	kvm->mmu_invalidate_seq++;
+ 	smp_wmb();
+ 	/*
+ 	 * The above sequence increase must be visible before the
+ 	 * below count decrease, which is ensured by the smp_wmb above
+-	 * in conjunction with the smp_rmb in mmu_notifier_retry().
++	 * in conjunction with the smp_rmb in mmu_invalidate_retry().
+ 	 */
+-	kvm->mmu_notifier_count--;
++	kvm->mmu_invalidate_in_progress--;
+ }
+ 
+ static void kvm_mmu_notifier_invalidate_range_end(struct mmu_notifier *mn,
+@@ -767,7 +768,7 @@ static void kvm_mmu_notifier_invalidate_
+ 		.end		= range->end,
+ 		.pte		= __pte(0),
+ 		.handler	= (void *)kvm_null_fn,
+-		.on_lock	= kvm_dec_notifier_count,
++		.on_lock	= kvm_mmu_invalidate_end,
+ 		.on_unlock	= (void *)kvm_null_fn,
+ 		.flush_on_ret	= false,
+ 		.may_block	= mmu_notifier_range_blockable(range),
+@@ -788,7 +789,7 @@ static void kvm_mmu_notifier_invalidate_
+ 	if (wake)
+ 		rcuwait_wake_up(&kvm->mn_memslots_update_rcuwait);
+ 
+-	BUG_ON(kvm->mmu_notifier_count < 0);
++	BUG_ON(kvm->mmu_invalidate_in_progress < 0);
+ }
+ 
+ static int kvm_mmu_notifier_clear_flush_young(struct mmu_notifier *mn,
 
 
