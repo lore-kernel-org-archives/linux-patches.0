@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C217386C3B;
-	Tue, 25 Aug 2026 13:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F039C386C3B;
+	Tue, 25 Aug 2026 13:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665020; cv=none; b=c5SDv+/SQSQcvoD/+82pKgnbH/XjZp8lKH1Zk/lMr9/nvunPpFVFD+ndkzKnhFADvGBT8ErFVZf6YP6XfjFe5wdwiVY308wPxiKYctgVbxyuTboZynAYa6e1Az4FFQLlaC6AOL/QyugRzth8ZmkdMc46jYWxQe7MdM5L8GgO7mI=
+	t=1787665023; cv=none; b=WRFN3cPlTEK9OT6VUMwStJJO0b47EI9dUFJMpDJr/jGAar42NqinwiDCJ4dnfRmTwr3Y6btUVJxaTA/QfNNg/1uSaeoTlSBlvXwgN9Kcs/0avwAM+YQuuIKlFZARyNEUFrJWqkcRhJ9mWBqBRJx1SOWGp0M8WovI0H5aioZ5iAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665020; c=relaxed/simple;
-	bh=Zm+3lG5KQpmigIxSR0MP1gi/aRZony7XXIDvpfCpyb8=;
+	s=arc-20240116; t=1787665023; c=relaxed/simple;
+	bh=4ljEcVk43FJIB6Ic3+lHGRUuihq5dZXcVi6T8V+Wh+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXbtYoPIWKE8sqMrfmAHydCPtv2pfiO/YV0GNOV9XYJMhqEnL+kiKc7qHLxsROZpYKAuotWzxicA04Yha3IdINpzyiAqYIVMZu5M+VOfqxNEFeDoABIB8QhnyK3s8CHt2ImSfeaRi2taF8fuwb9PTTfNZqgiVlFNc2Kkf6QZ8nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJHabXQk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t7A0NhwKMmXnZe/xvBbkhjvAYx2ZbZvxfCjA4hTgxRmUpUvnK1ABRYcmzM1F7s3b0pOmODC+3ezbxX4d1Qu5dPAulL1CNtKrO7CvIxvMJAPXc+XzD8qofoXy+CxUYpHh6eETQipTaRe4v/Bs9OFmnclwqxHRb0Z5UWm0I4sGvuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GzZyDyj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJHabXQk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFEF1F000E9;
-	Tue, 25 Aug 2026 13:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GzZyDyj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5067F1F000E9;
+	Tue, 25 Aug 2026 13:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665018;
-	bh=LHbu55TRODLn0VweWbzUEIuiULrOWfpXpNqDBUfqeHM=;
+	s=korg; t=1787665021;
+	bh=MrU3PiR+vBdw/W8BWZZH6UIgRR1v3V57NT18+RaOjCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HJHabXQkpoTyk2Xm2Giu3cZtJixxfrtcTrdjCu3UZTT5ZdjzCSNUjeRY6Cd2AcDK9
-	 0MUkJ+wpaA+ojEdBgFUZSiZ60Rpgcw8hPibKmgkjYVnFdBF7TBJxyd/4nFIdYa5/xk
-	 s1O5nDLgA2Dcb1UP5WD0jSrkm3rVWNgXLfnE56sQ=
+	b=1GzZyDyj3c+L3qhCEW9cuGrs+hiyLVuKn03y1RUzT1qgKZwB4rEFEli9zZd40MOsM
+	 exdBih1flql5MObTUk5rzImq5ZzEF4ECEqryQAs7pN0INP/QvkpquUz2s+zUGH2k91
+	 dNxwR+9xWkLsuNzJ9mNOVCy3aTFdpEoXS3eGsxS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+350a93852ac854927f45@syzkaller.appspotmail.com,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.1 081/101] futex: Fix might_sleep() warning in futex_pivot_pending()
-Date: Tue, 25 Aug 2026 15:25:59 +0200
-Message-ID: <20260825132545.131100224@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.1 082/101] HID: asus: fix missing hid_is_usb() check
+Date: Tue, 25 Aug 2026 15:26:00 +0200
+Message-ID: <20260825132545.158964653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,157 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Jann Horn <jannh@google.com>
 
-commit d8aa5dd97944a72d4a9e3cc79bb80fcac7d6e829 upstream.
+commit 02bf61dfb44f17ec187d1da1a82495951bbd12df upstream.
 
-A younger me put a WARN in might_sleep() to warn about nested sleep loops. This
-younger me also build a wait-loop variant that can deal with it. This wait-loop
-variant doesn't have all the fancy wrappers, since it isn't used much. It also
-lacks wait-bit support.
+to_usb_interface() can only be used on a hid_device whose parent is really
+USB; uhid can create devices that identify as being on BUS_USB, but don't
+actually have a USB parent.
+Fix the use of to_usb_interface() without a hid_is_usb() check.
 
-Add the wait-bit support and use it to fix the nested wait issue.
+I have verified that it is currently possible to trigger a kernel splat due
+to this bug in an ASAN build, and that this commit fixes the issue.
 
-Fixes: 8e7ff730dd96 ("futex: Fix race in futex_pivot_pending() during private hash resize")
-Reported-by: syzbot+350a93852ac854927f45@syzkaller.appspotmail.com
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260820074927.GH1246887@noisy.programming.kicks-ass.net
-Closes: https://syzkaller.appspot.com/bug?extid=350a93852ac854927f45
+Fixes: 00e005c952f7 ("hid-asus: check ROG Ally MCU version and warn")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/wait.h     |    1 +
- include/linux/wait_bit.h |    1 +
- kernel/futex/core.c      |   27 ++++++++++++++++++++++++++-
- kernel/sched/wait.c      |   15 +++++++++++++++
- kernel/sched/wait_bit.c  |   14 +++++++++++---
- 5 files changed, 54 insertions(+), 4 deletions(-)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
---- a/include/linux/wait.h
-+++ b/include/linux/wait.h
-@@ -1228,6 +1228,7 @@ long prepare_to_wait_event(struct wait_q
- void finish_wait(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
- long wait_woken(struct wait_queue_entry *wq_entry, unsigned mode, long timeout);
- int woken_wake_function(struct wait_queue_entry *wq_entry, unsigned mode, int sync, void *key);
-+int woken_wake_bit_function(struct wait_queue_entry *wq_entry, unsigned mode, int sync, void *key);
- int autoremove_wake_function(struct wait_queue_entry *wq_entry, unsigned mode, int sync, void *key);
- 
- #define DEFINE_WAIT_FUNC(name, function)					\
---- a/include/linux/wait_bit.h
-+++ b/include/linux/wait_bit.h
-@@ -32,6 +32,7 @@ int out_of_line_wait_on_bit_timeout(unsi
- int out_of_line_wait_on_bit_lock(unsigned long *word, int, wait_bit_action_f *action, unsigned int mode);
- struct wait_queue_head *bit_waitqueue(unsigned long *word, int bit);
- extern void __init wait_bit_init(void);
-+extern struct wait_bit_key *__var_wake_key(struct wait_queue_entry *wq_entry, void *arg);
- 
- int wake_bit_function(struct wait_queue_entry *wq_entry, unsigned mode, int sync, void *key);
- 
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -44,6 +44,7 @@
- #include <linux/prctl.h>
- #include <linux/mempolicy.h>
- #include <linux/mmap_lock.h>
-+#include <linux/wait_bit.h>
- 
- #include "futex.h"
- #include "../locking/rtmutex_common.h"
-@@ -1869,11 +1870,35 @@ static int futex_hash_allocate(unsigned
- 		futex_hash_bucket_init(&fph->queues[i], fph);
- 
- 	if (custom) {
-+		struct wait_bit_queue_entry __wbq_entry;
-+		struct wait_queue_head *__wq_head;
-+
- 		/*
- 		 * Only let prctl() wait / retry; don't unduly delay clone().
- 		 */
- again:
--		wait_var_event(mm, futex_pivot_pending(mm));
-+		__wq_head = __var_waitqueue(mm);
-+		init_wait_var_entry(&__wbq_entry, mm, 0);
-+		__wbq_entry.wq_entry.func = woken_wake_bit_function;
-+		add_wait_queue(__wq_head, &__wbq_entry.wq_entry);
-+
-+		/*
-+		 * add_wait_queue()		futex_ref_put()
-+		 * MB (this)			MB (implied)
-+		 * futex_pivot_pending()	wake_up_var()
-+		 *                                waitqueue_active()
-+		 *
-+		 * Notably, it must not be possible to see
-+		 * !futex_pivot_pending() && !waitqueue_active().
-+		 */
-+		smp_mb();
-+
-+		while (!futex_pivot_pending(mm) &&
-+		       wait_woken(&__wbq_entry.wq_entry, TASK_UNINTERRUPTIBLE,
-+				  MAX_SCHEDULE_TIMEOUT))
-+			/* empty */;
-+
-+		remove_wait_queue(__wq_head, &__wbq_entry.wq_entry);
+ drivers/hid/hid-asus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -753,7 +753,7 @@ static int asus_kbd_register_leds(struct
+ 			return ret;
  	}
  
- 	scoped_guard(mutex, &mm->futex_hash_lock) {
---- a/kernel/sched/wait.c
-+++ b/kernel/sched/wait.c
-@@ -5,6 +5,7 @@
-  * (C) 2004 Nadia Yvette Chambers, Oracle
-  */
- #include "sched.h"
-+#include <linux/wait_bit.h>
- 
- void __init_waitqueue_head(struct wait_queue_head *wq_head, const char *name, struct lock_class_key *key)
- {
-@@ -463,3 +464,17 @@ int woken_wake_function(struct wait_queu
- 	return default_wake_function(wq_entry, mode, sync, key);
- }
- EXPORT_SYMBOL(woken_wake_function);
-+
-+int woken_wake_bit_function(struct wait_queue_entry *wq_entry, unsigned mode, int sync, void *arg)
-+{
-+	struct wait_bit_key *key = __var_wake_key(wq_entry, arg);
-+	if (!key)
-+		return 0;
-+
-+	/* Pairs with the smp_store_mb() in wait_woken(). */
-+	smp_mb(); /* C */
-+	wq_entry->flags |= WQ_FLAG_WOKEN;
-+
-+	return default_wake_function(wq_entry, mode, sync, key);
-+}
-+EXPORT_SYMBOL(woken_wake_bit_function);
---- a/kernel/sched/wait_bit.c
-+++ b/kernel/sched/wait_bit.c
-@@ -167,9 +167,7 @@ wait_queue_head_t *__var_waitqueue(void
- }
- EXPORT_SYMBOL(__var_waitqueue);
- 
--static int
--var_wake_function(struct wait_queue_entry *wq_entry, unsigned int mode,
--		  int sync, void *arg)
-+struct wait_bit_key *__var_wake_key(struct wait_queue_entry *wq_entry, void *arg)
- {
- 	struct wait_bit_key *key = arg;
- 	struct wait_bit_queue_entry *wbq_entry =
-@@ -177,6 +175,16 @@ var_wake_function(struct wait_queue_entr
- 
- 	if (wbq_entry->key.flags != key->flags ||
- 	    wbq_entry->key.bit_nr != key->bit_nr)
-+		return NULL;
-+
-+	return key;
-+}
-+
-+static int var_wake_function(struct wait_queue_entry *wq_entry, unsigned int mode,
-+			     int sync, void *arg)
-+{
-+	struct wait_bit_key *key = __var_wake_key(wq_entry, arg);
-+	if (!key)
- 		return 0;
- 
- 	return autoremove_wake_function(wq_entry, mode, sync, key);
+-	if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
++	if ((drvdata->quirks & QUIRK_ROG_ALLY_XPAD) && hid_is_usb(hdev)) {
+ 		intf = to_usb_interface(hdev->dev.parent);
+ 		udev = interface_to_usbdev(intf);
+ 		validate_mcu_fw_version(hdev,
 
 
