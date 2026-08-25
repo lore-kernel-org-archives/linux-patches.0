@@ -1,111 +1,165 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917E3367B77
-	for <patches@lists.linux.dev>; Sun, 23 Aug 2026 10:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D64D3DD502;
+	Tue, 25 Aug 2026 13:29:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787482532; cv=none; b=VpIFNXeoU+XSeYdz638xuCFIugKRAOTL7w7AFp/3Wk/fsUCxrCWaIADFv9l4qMMDFSPoKqRqqtwENjsdXOu0X5/TfTSvThduL3G8M6puxLE55+4mR2M/USCxVwd+PfuYRuIpqRVdUB0GceSmU8txtSaUI4qm+CVjhF16fLKj0vQ=
+	t=1787664552; cv=none; b=ErEvM03LHES78kjcbb0q1OSW4QL6Cs1Zy5SOxYc9b8OpREnSU8xR6HuJSio0cKnmbNLh86q5RpKU1XqR6lZKaaaCg/wZC/c/tQQ92KB/5niTwB9U0XoPmNRjD+fBSF86EILNpXGDuLMW0FXtV7PJU8lnBbOm4+xKYJaeJ8tG/4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787482532; c=relaxed/simple;
-	bh=N+uGOo/eDS1WxTFQV4MXFh5/qVHIMFKkx6nRIDr7V0I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GI3PrEO12IDFjNJqeK7BjS9BangNQiIWg8uIyLjvNulargfox4sZfxbqXP2U7LELfnXnsXcpKuNdIn1f2cz/4OWmFb+AHLpaG31e9eicUkdDx922xFVOOphBJaUP8lGP0sxdYX4iK6MvbVgKpWriSofYNvzI/RasWdMqEnJng+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=mpHwBDMs; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1787664552; c=relaxed/simple;
+	bh=NMprdpSVj2gWC59K20e1LOwvqM83YevVksRkrYlWfF8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=c71GXVMxq/3I/2DfwM0GrsJnKuSatChMGMwPPwvW2PHw+RABS8ueKxr8D2Uw0RS8GtQB4KYzzkhz7PCXY918p+N7BziHLAqHine1ZCvuQHLaEUVvbSL7mhA3iqjF74nHR5Id01OVW+l/ZCnuMNaqF110YGbj4lG099XWGjho9tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIR0TQjv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="mpHwBDMs"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c2055573c8cso368036266b.3
-        for <patches@lists.linux.dev>; Sun, 23 Aug 2026 03:55:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1787482529; x=1788087329; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Xr1IRjdq0tafgzj0wiYO0YYZkzimvM4nS6Ue94QzKNc=;
-        b=mpHwBDMsKcOkF5UX1jvZu/qpf+dcxgXLo3SGb5honn6golubN8l54CV3rAzH8xsQUj
-         08/UzOfGMsk4eoL1Y/JHFusx1YVxg6VejrE8lmI3eAYx0rHl4SXIYmx2xRHV3hCZdDmN
-         iWHAfkpwFdpf+mDW0fpqbqwfkF1MZe4bEef4Vp2e9Q5vAr46naXUMUbvuc10qpshYlRs
-         nusdbr6mVnI+jfD7T5GKjGf+DJWsTBGo2ubAqDnfZwX0pcipVxkR33gobNTR/dkag8/G
-         EN6/4d7pDEsZUTgfyOjnPVZDd4ayH1J44JBd+ByUDARfWFID2YnhGmvakDsqhJyCI3LI
-         oC0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787482529; x=1788087329;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Xr1IRjdq0tafgzj0wiYO0YYZkzimvM4nS6Ue94QzKNc=;
-        b=Y5+Cf2C4sQ9aR4mvDxpn4W/JRwGttg73SfcCp5vSpTb36dn/iJl8AX1R8QHG3ZJ2a2
-         LNB5Xgoi6wrOiGEFpTQkMJ5Zg6nZcOvJ0lm6QMygffdzlogOiGdExgEuuX4leRdQ5d1J
-         RQFtIkODrQ/y6jsGzLxcJkmcCnX9TOO9Im/ch+0qpggku/1cMkNAJwaEdAZfrSFMmbki
-         1rRZ8MaMxf0/lUBRC1qmOlCepBu2x/spi0INNu+e6oGsmK0whOVM2RJ7orZtBzVgbKDB
-         nTHG26l7AsBFRz3Nie1stpyzK8EIMby5gU8TUlqNPPe4c270+Oke8IZ+N29J5edgtQQ+
-         MsKA==
-X-Gm-Message-State: AFuF++lv+LfAUIItRoIH8d61upyK+djNnpki9P8zxEC8MltPizO+xqm5
-	OW4pkZmkn761KPAXwhISiXFtw1cX53PrEcd5IWusVleY4UGlP/+IHTk=
-X-Gm-Gg: AR+sD12GhbdaOBDYg/HMAUjfdO2io8sjry8Atqj1JswgpcSyIA6L3TTjAm+6xQHgoxy
-	/G+3MqVF4pflzBzSQvOjEnTCXRe6M3D6gJkWP2vUoBFulm04vfcwEbu/GU4O1JV08kTARXLIlSt
-	vUP2R+YJCdN3mUw95ihPmBjHSP32+2xTZq5Ypc2WOg5C1+RfEyfvQXmZbxZOHftXmYSEqOiGwJv
-	LZVsXZCPPypWwOc9btRA9kmcDZTCbK/5ftpKTOQ/L7Oibzgg6g2ZRzis5JuyfA0Hha1Yzfm8EPt
-	pvszxH3/l02Qum1B1VJhRvSc6BvTJjJKb3Lp2GQmW6dj5KATO2aGYMJiIU5ggq4HaDOYOX/8pec
-	S/54PvSbYT9dPBTjYQl1myrDa1wlovCcABf8J0IzeI1PxWlmUfK8rg+NAHEaGxAQ711MK5Xgk2p
-	4TXHZPGwbVV2YHcA5m/aEDnPQ8kCn7dgdm2xAJ6DtZydbsc31ZWrj1EEmjqnLXvZavlFfgJdsA5
-	NLIlzQiZfFbRrIsgACq2H4hPW0vI/wEcuFq34oFl22AktJh12EE
-X-Received: by 2002:a17:907:944b:b0:c20:23fb:bb05 with SMTP id a640c23a62f3a-c24926a1cbdmr1254414766b.15.1787482528475;
-        Sun, 23 Aug 2026 03:55:28 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac46c.dip0.t-ipconnect.de. [91.42.196.108])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c24968a2183sm705877066b.58.2026.08.23.03.55.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Aug 2026 03:55:28 -0700 (PDT)
-Message-ID: <76b46256-fc3c-462d-b84b-6b6420d793b4@googlemail.com>
-Date: Sun, 23 Aug 2026 12:55:27 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIR0TQjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413871F00A3F;
+	Tue, 25 Aug 2026 13:29:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1787664550;
+	bh=OxPfiAqrUq/DnE9EgTI9HkNaSEAnGbuOuerTCt7tR1A=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=zIR0TQjvfgGaWmqcBw22FqFm15siIK3eBUKexS3EqB3mB4BhPryPOS4K0KKoTTZB7
+	 RoQwNNwuGf1GNB+/ShUoRdeU4Mws+DByytm0/2z5eO/Nh1QRkKoWsLbey9DtH7iBPf
+	 yOmAmeqy37VeV5OIMuyy7AtynPNxw6BDXlpfvr80=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Steffen Persvold <spersvold@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 7.2 01/82] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
+Date: Tue, 25 Aug 2026 15:24:48 +0200
+Message-ID: <20260825132541.616066702@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
+References: <20260825132541.560541185@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 000/160] 6.6.153-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260821142844.249995408@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260821142844.249995408@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Am 21.08.2026 um 16:30 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.153 release.
-> There are 160 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-Just like rc1, rc2 builds, boots and works fine on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or 
-regressions found.
+------------------
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+From: Steffen Persvold <spersvold@gmail.com>
+
+commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
+
+On 32-bit systems the config space is too large to ioremap in one go, so
+pci_ecam_create() maps each bus segment separately and relies on the
+->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
+cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
+every config access.
+
+The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
+and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
+do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
+per-bus mapping is never set up and the first config read dereferences a
+NULL base, crashing during bus enumeration:
+
+ Unable to handle kernel NULL pointer dereference at virtual address 00000800
+ Oops [#1]
+ CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
+ Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
+ epc : pci_generic_config_read+0x40/0xb0
+  ra : pci_generic_config_read+0x2c/0xb0
+ [<c038db9c>] pci_generic_config_read+0x40/0xb0
+ [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
+ [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
+ [<c039245c>] pci_scan_single_device+0xa4/0x11c
+ [<c0392570>] pci_scan_slot+0x9c/0x23c
+ [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
+ [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
+ [<c0393e54>] pci_host_probe+0x20/0xc8
+ [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
+
+Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
+Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
+move the CAM ops definition there as pci_generic_cam_ops (mirroring
+pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
+
+Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
+Signed-off-by: Steffen Persvold <spersvold@gmail.com>
+[mani: removed timestamp from log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/pci/controller/pci-host-generic.c |   11 +----------
+ drivers/pci/ecam.c                        |   13 +++++++++++++
+ include/linux/pci-ecam.h                  |    3 +++
+ 3 files changed, 17 insertions(+), 10 deletions(-)
+
+--- a/drivers/pci/controller/pci-host-generic.c
++++ b/drivers/pci/controller/pci-host-generic.c
+@@ -16,15 +16,6 @@
+ 
+ #include "pci-host-common.h"
+ 
+-static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
+-	.bus_shift	= 16,
+-	.pci_ops	= {
+-		.map_bus	= pci_ecam_map_bus,
+-		.read		= pci_generic_config_read,
+-		.write		= pci_generic_config_write,
+-	}
+-};
+-
+ static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
+ {
+ 	struct pci_config_window *cfg = bus->sysdata;
+@@ -60,7 +51,7 @@ static const struct pci_ecam_ops pci_dw_
+ 
+ static const struct of_device_id gen_pci_of_match[] = {
+ 	{ .compatible = "pci-host-cam-generic",
+-	  .data = &gen_pci_cfg_cam_bus_ops },
++	  .data = &pci_generic_cam_ops },
+ 
+ 	{ .compatible = "pci-host-ecam-generic",
+ 	  .data = &pci_generic_ecam_ops },
+--- a/drivers/pci/ecam.c
++++ b/drivers/pci/ecam.c
+@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
+ };
+ EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
+ 
++/* CAM ops */
++const struct pci_ecam_ops pci_generic_cam_ops = {
++	.bus_shift	= 16,
++	.pci_ops	= {
++		.add_bus	= pci_ecam_add_bus,
++		.remove_bus	= pci_ecam_remove_bus,
++		.map_bus	= pci_ecam_map_bus,
++		.read		= pci_generic_config_read,
++		.write		= pci_generic_config_write,
++	}
++};
++EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
++
+ #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
+ /* ECAM ops for 32-bit access only (non-compliant) */
+ const struct pci_ecam_ops pci_32b_ops = {
+--- a/include/linux/pci-ecam.h
++++ b/include/linux/pci-ecam.h
+@@ -81,6 +81,9 @@ void __iomem *pci_ecam_map_bus(struct pc
+ /* default ECAM ops */
+ extern const struct pci_ecam_ops pci_generic_ecam_ops;
+ 
++/* default CAM ops */
++extern const struct pci_ecam_ops pci_generic_cam_ops;
++
+ #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
+ extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
+ extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
 
 
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
