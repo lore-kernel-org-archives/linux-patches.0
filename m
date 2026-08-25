@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9822D2E06E4;
-	Tue, 25 Aug 2026 13:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66F5483BCD;
+	Tue, 25 Aug 2026 13:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665649; cv=none; b=bjw2AOdHnNOBklMMPfBvNOf0MHQW1pMu60v9Z1U4CBqRPBkHLtDULFML5msGrXR11U/rO+VSnZgAlSZZV0z1J4APa0goPEVeGJlJB7KORzsAYX+l8I/fc4kYdV9afPxnYqcDTh4AXeT//qf9nYFGeiawLJphHDJi/xBEFBn7Z7E=
+	t=1787665653; cv=none; b=XkSStwZFLgPcoXTlwDyRX8OAszqWwxLArA/79x9PwsIpceZ0SqkWfVES7cGcgKfO+T3dQtfs5n0KNVyUaRIV1FkStmiv4pbJCV+VU4xmIhSTIZJa1YS0n8ZRdYBa70ONFza0MOkY/xiJ0BM7dTAESOAUqUPcj0Z6mir+Sxl6Pu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665649; c=relaxed/simple;
-	bh=EzcFVCUiKWBEGQ3KjBgoXdF0atKX6Ci8AETfI3eT/zs=;
+	s=arc-20240116; t=1787665653; c=relaxed/simple;
+	bh=ZB6vEJYCCc4b6MRRXL9ZUxfeUz2/PxozQ+MXCdBM8vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wvk2vOAukqQv4kTTB0YeXXrEIjtSawpiLOlkjd2TydjOB8xPMNS0CXelo3MAp4CFfg/Ec8B8b2a0xIEOuemJ/00VNoSpaYmV29O4subx6gRezB7Ff+S2N+m+m6M16yP3nTypDv6lM2+JuFOdvNgfhwSSyaCv8DKaPYlU31xlLMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdPJnskG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZXvhnLKsp32P5XuzvoMDAqaf9Y4icfW39VmRCVz8aLmR88gzYk3po/c3IKmU6sqVgGNiystCie1SRz244mXdOg8TtnzEtbPKUDbp1SYqhDxrkMXITKkweqFQj1HSg+M7UDgi4O0Faa2e1L2xj6kJzKYwMUxI1YjdCXSX31lZ87Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjjP8V6X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdPJnskG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E401F000E9;
-	Tue, 25 Aug 2026 13:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjjP8V6X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8681F00A3E;
+	Tue, 25 Aug 2026 13:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665648;
-	bh=aG4gT8t5u7TPrtYNsVplfpYXXs41JeuLdChHE+2X3X8=;
+	s=korg; t=1787665651;
+	bh=JmQxOolE5U+zvNntCzCYJnGOkQHW2oyXMj26CrrEnRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JdPJnskG0ZHC89RNRoNBg6xbFNrnNRl5hjcZCZ9aDQERLD1zck9eER2MtUlEwl/Wx
-	 c8Ry01XgkAL0NKBnqs3vs0NLW+qaQJBRmOaJOmxGSjhR2s4ispcDJ3uQ2ipqKnZ6Go
-	 kkqFrVYY/qKzD/RNppwEVd2mYOThd1ZL78d5UAT8=
+	b=NjjP8V6XLtSBoqgHanRFTwOY9J1py6f9g3/gArWkOttFdPOKGRhvRI//29kWhWPmQ
+	 +gptbWdw+JLimlxukLkpoAiOoasBXdijS1rcFiJavCRJ1t8UI6xjnRgbTHG+WffVnv
+	 TNf+OYhB7eWhfgv2Tqj7Vac8Rw2v5YhQbBSus4Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Shaoxu Liu <shaoxul@foxmail.com>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 03/87] rndis_host: add overflow check in rndis_rx_fixup()
-Date: Tue, 25 Aug 2026 15:25:26 +0200
-Message-ID: <20260825132541.948476517@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 04/87] NTB: ntb_netdev: Preserve RX queue depth on allocation failure
+Date: Tue, 25 Aug 2026 15:25:27 +0200
+Message-ID: <20260825132541.983606745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -53,53 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 965a251f23ff69cfb4486974d4532e9bb551c7fc upstream.
+[ Upstream commit d2121faf133ac3bf9531b53a7e21273649a08517 ]
 
-Add an overflow check to ensure that data_offset + data_len + 8 does not
-wrap, which would enable an OOB read of the USB data buffer.
+ntb_netdev_rx_handler() hands the received skb to the network stack
+before allocating its replacement. If the allocation fails, nothing is
+reposted. Every failure therefore takes one buffer out of the RX queue
+while the interface remains up, and enough failures eventually stall
+reception.
 
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Shaoxu Liu <shaoxul@foxmail.com>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/2026070900-denim-brook-52d4@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+A retry path could refill the queue later, but ntb_netdev has none.
+Allocate the replacement first instead. If that fails, drop the packet
+and repost the same skb. This keeps the queue full and lets packet
+delivery resume as soon as memory is available again.
+
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260806032537.3526498-1-den@valinux.co.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ kept HEAD's `struct net_device *ndev = qp_data;` declaration instead of the per-queue context variables, adding only `new_skb` to the existing `skb` declaration ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rndis_host.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ntb_netdev.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/net/usb/rndis_host.c
-+++ b/drivers/net/usb/rndis_host.c
-@@ -14,6 +14,7 @@
- #include <linux/usb/cdc.h>
- #include <linux/usb/usbnet.h>
- #include <linux/usb/rndis_host.h>
-+#include <linux/overflow.h>
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -100,7 +100,7 @@ static void ntb_netdev_rx_handler(struct
+ 				  void *data, int len)
+ {
+ 	struct net_device *ndev = qp_data;
+-	struct sk_buff *skb;
++	struct sk_buff *skb, *new_skb;
+ 	int rc;
  
+ 	skb = data;
+@@ -115,6 +115,12 @@ static void ntb_netdev_rx_handler(struct
+ 		goto enqueue_again;
+ 	}
  
- /*
-@@ -506,6 +507,7 @@ int rndis_rx_fixup(struct usbnet *dev, s
- 		struct rndis_data_hdr	*hdr = (void *)skb->data;
- 		struct sk_buff		*skb2;
- 		u32			msg_type, msg_len, data_offset, data_len;
-+		u32			overflow_check;
++	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
++	if (!new_skb) {
++		ndev->stats.rx_dropped++;
++		goto enqueue_again;
++	}
++
+ 	skb_put(skb, len);
+ 	skb->protocol = eth_type_trans(skb, ndev);
+ 	skb->ip_summed = CHECKSUM_NONE;
+@@ -127,12 +133,7 @@ static void ntb_netdev_rx_handler(struct
+ 		ndev->stats.rx_bytes += len;
+ 	}
  
- 		msg_type = le32_to_cpu(hdr->msg_type);
- 		msg_len = le32_to_cpu(hdr->msg_len);
-@@ -514,7 +516,9 @@ int rndis_rx_fixup(struct usbnet *dev, s
+-	skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
+-	if (!skb) {
+-		ndev->stats.rx_errors++;
+-		ndev->stats.rx_frame_errors++;
+-		return;
+-	}
++	skb = new_skb;
  
- 		/* don't choke if we see oob, per-packet data, etc */
- 		if (unlikely(msg_type != RNDIS_MSG_PACKET || skb->len < msg_len
--				|| (data_offset + data_len + 8) > msg_len)) {
-+				|| (data_offset + data_len + 8) > msg_len
-+				|| check_add_overflow(data_offset, data_len, &overflow_check)
-+				|| check_add_overflow(overflow_check, 8, &overflow_check))) {
- 			dev->net->stats.rx_frame_errors++;
- 			netdev_dbg(dev->net, "bad rndis message %d/%d/%d/%d, len %d\n",
- 				   le32_to_cpu(hdr->msg_type),
+ enqueue_again:
+ 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
 
 
