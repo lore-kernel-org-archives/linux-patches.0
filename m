@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C2481247;
-	Tue, 25 Aug 2026 13:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECD325393E;
+	Tue, 25 Aug 2026 13:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666271; cv=none; b=T3kjWf7F9OOTeRKwLR2/mvWPhI9OTI11kPxxC0YYLgersRCcZ6Ds38rLLVWTXZHBOG7fUmwvmWw2MNeYhu7dG6KIRy78eQqm32PsUQohqwTDw02FLokT75cPQx3rkpd/BPxeNZzv4onkoU3chHwU+nNi6CcdICAp6jFhQ6OLmsI=
+	t=1787666274; cv=none; b=f02EF3SrUJqv9GJ3L1uobFOeuBOwSJ2zkckxDnrXqoSp7gEVthCxY04jCVlWhB11rBylMgsPPY05HAqIpCsCtuwLvjtmeykpk8++GllXt702HyLKiKHUVKX4VIUN/mZI82Unoed48R6GVCoZSNOPqJ71J+XOLJyCjq//SSHjREQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666271; c=relaxed/simple;
-	bh=tMsuZb+Fti/E5AKUb7pGf2TSdd+amEcVPAdNmHzvQAE=;
+	s=arc-20240116; t=1787666274; c=relaxed/simple;
+	bh=UVX2EV+CFXVaYpjPBS6XRdCxujVkZ9tlq4s4DoYfxqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9G3bi1Y/XTueWrqW7WpvWpRucF8SxnPMYJaKjyOuqxIPySw8OCA9vjsS5NHV3f4GA6D0UDisJs7HvlAOR5LB7FAvrwGetcrt/UY5Du6Zkx/m4K4epddPSmRI4G7h/yKQFpjTTiRvW0wK3UWSjuflAUs5vSU4gqzKtjPStF7iO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guuubVE1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kvmys0EtELrk/UEdua6j7MGToYB0rR4LGY6igN/w47t7uQFGQc4hyT4CQn2zFl+C1187g1qnB2e/hRkeCNyjMl48zIaIsuG8pCpbms+QTGW2M46qxuOdzB9i2xbfoUqkeQpi0yXLa26Wkhq3vB8S+NYTS7it+dDevHWxhJo2lMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C41h0EvD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guuubVE1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0D81F000E9;
-	Tue, 25 Aug 2026 13:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C41h0EvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947361F000E9;
+	Tue, 25 Aug 2026 13:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666270;
-	bh=AS99pU/oPKzRqt0QdL/HmY08su6EmK1J6qQsW95K2MA=;
+	s=korg; t=1787666273;
+	bh=AX2y1QDj8f52wOQLXpK1lYMAmguktYv9rf+pbB2Zt7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=guuubVE1yBvaELI13woO0fsfJdgmhOb+8rcIyJIfYGoTKAdIodSDEHVJZfzPUsccY
-	 j4x8dLd2bA/awr8fl6/7Xv4WqP9iK6e+Rbf2lFfWpZfa6km45iSjmzmrPRri6qSSiD
-	 YQdvc0TdcasTO7HmXNYA8XQ8bk34pdRGCuOr+oDc=
+	b=C41h0EvDHWNpWY9PYNhex5oc3o/G4bDgSw3Xn79Ja1VCKAC26ToQGDtRgHYvXMCze
+	 Q29iEsg5LtdpAp7DSGcNN2usVJZ52WQNKtIKIVeWsM33nfTv9Qpi34Fsdz8C8TADrq
+	 FKKRezS6eybwbLYMpqR2MAvFFkA0YmxbVAIIIsmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 62/76] xfrm: fix sk_dst_cache double-free in xfrm_user_policy()
-Date: Tue, 25 Aug 2026 15:26:55 +0200
-Message-ID: <20260825132544.008422329@linuxfoundation.org>
+Subject: [PATCH 5.15 63/76] KVM: x86: Retry page fault if MMU reload is pending and root has no sp
+Date: Tue, 25 Aug 2026 15:26:56 +0200
+Message-ID: <20260825132544.041374311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -52,74 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit c283e9ada7fcb7dd4b10592623086b2e6d2f9925 ]
+[ Upstream commit 18c841e1f4112d3fb742aca3429e84117fcb1e1c ]
 
-xfrm_user_policy() clears the socket dst cache with __sk_dst_reset(),
-i.e. the non-atomic __sk_dst_set(sk, NULL): it reads sk_dst_cache with
-rcu_dereference_protected(), stores NULL and dst_release()s the old dst.
-That is only safe if no other thread modifies sk_dst_cache concurrently.
+Play nice with a NULL shadow page when checking for an obsolete root in
+the page fault handler by flagging the page fault as stale if there's no
+shadow page associated with the root and KVM_REQ_MMU_RELOAD is pending.
+Invalidating memslots, which is the only case where _all_ roots need to
+be reloaded, requests all vCPUs to reload their MMUs while holding
+mmu_lock for lock.
 
-For a connected UDP socket that does not hold: the transmit fast path
-(udp_sendmsg -> sk_dst_check -> sk_dst_reset) resets the cache locklessly
-with an atomic xchg(). A per-socket policy change racing a send can make
-both sides observe the same old dst and each dst_release() it, dropping
-the socket's single reference twice and freeing the xfrm_dst bundle while
-it is still referenced:
+The "special" roots, e.g. pae_root when KVM uses PAE paging, are not
+backed by a shadow page.  Running with TDP disabled or with nested NPT
+explodes spectaculary due to dereferencing a NULL shadow page pointer.
 
-  BUG: KASAN: slab-use-after-free in dst_release
-  Write of size 4 at addr ffff88801897b6c0 by task exploit/155
-  Call Trace:
-   ...
-   dst_release (... ./include/linux/rcuref.h:109)
-   xfrm_user_policy (./include/net/sock.h:2239 ./include/net/sock.h:2256 net/xfrm/xfrm_state.c:3053)
-   do_ip_setsockopt (net/ipv4/ip_sockglue.c:1347)
-   ip_setsockopt (net/ipv4/ip_sockglue.c:1417)
-   do_sock_setsockopt (net/socket.c:2368)
-   __sys_setsockopt (net/socket.c:2393)
-   __x64_sys_setsockopt (net/socket.c:2396)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Skip the KVM_REQ_MMU_RELOAD check if there is a valid shadow page for the
+root.  Zapping shadow pages in response to guest activity, e.g. when the
+guest frees a PGD, can trigger KVM_REQ_MMU_RELOAD even if the current
+vCPU isn't using the affected root.  I.e. KVM_REQ_MMU_RELOAD can be seen
+with a completely valid root shadow page.  This is a bit of a moot point
+as KVM currently unloads all roots on KVM_REQ_MMU_RELOAD, but that will
+be cleaned up in the future.
 
-Reachable by an unprivileged user via a user+network namespace.
-
-Use the atomic sk_dst_reset() so the cache is cleared and released with a
-single xchg(): whichever side wins releases the dst once, the other sees
-NULL and does nothing. Behaviour is otherwise unchanged.
-
-Fixes: 2b06cdf3e688 ("xfrm: Clear sk_dst_cache when applying per-socket policy.")
-Fixes: be8f8284cd89 ("net: xfrm: allow clearing socket xfrm policies.")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: a955cad84cda ("KVM: x86/mmu: Retry page fault if root is invalidated by memslot update")
+Cc: stable@vger.kernel.org
+Cc: Maxim Levitsky <mlevitsk@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20211209060552.2956723-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 8a75c91a02b4e..7180d4810d339 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2430,7 +2430,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
- 	if (sockptr_is_null(optval) && !optlen) {
- 		xfrm_sk_policy_insert(sk, XFRM_POLICY_IN, NULL);
- 		xfrm_sk_policy_insert(sk, XFRM_POLICY_OUT, NULL);
--		__sk_dst_reset(sk);
-+		sk_dst_reset(sk);
- 		return 0;
- 	}
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 8c381cf61e219..c0257bbb25c39 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4005,7 +4005,21 @@ static bool kvm_faultin_pfn(struct kvm_vcpu *vcpu, bool prefault, gfn_t gfn,
+ static bool is_page_fault_stale(struct kvm_vcpu *vcpu,
+ 				kvm_pfn_t pfn, unsigned long mmu_seq, hva_t hva)
+ {
+-	if (is_obsolete_sp(vcpu->kvm, to_shadow_page(vcpu->arch.mmu->root_hpa)))
++	struct kvm_mmu_page *sp = to_shadow_page(vcpu->arch.mmu->root_hpa);
++
++	/* Special roots, e.g. pae_root, are not backed by shadow pages. */
++	if (sp && is_obsolete_sp(vcpu->kvm, sp))
++		return true;
++
++	/*
++	 * Roots without an associated shadow page are considered invalid if
++	 * there is a pending request to free obsolete roots.  The request is
++	 * only a hint that the current root _may_ be obsolete and needs to be
++	 * reloaded, e.g. if the guest frees a PGD that KVM is tracking as a
++	 * previous root, then __kvm_mmu_prepare_zap_page() signals all vCPUs
++	 * to reload even if no vCPU is actively using the root.
++	 */
++	if (!sp && kvm_test_request(KVM_REQ_MMU_RELOAD, vcpu))
+ 		return true;
  
-@@ -2470,7 +2470,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
- 	if (err >= 0) {
- 		xfrm_sk_policy_insert(sk, err, pol);
- 		xfrm_pol_put(pol);
--		__sk_dst_reset(sk);
-+		sk_dst_reset(sk);
- 		err = 0;
- 	}
- 
+ 	return !is_noslot_pfn(pfn) &&
 -- 
 2.53.0
 
