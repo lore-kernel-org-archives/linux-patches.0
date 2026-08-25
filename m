@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B946947ECFD;
-	Tue, 25 Aug 2026 13:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A6847DD79;
+	Tue, 25 Aug 2026 13:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664653; cv=none; b=TNydq4xEMjd2ASjXtcYClGQros3ldjp9BXnZH+RRDRjUw0n96rsntTZtuxTFWjdualow3KBi1vepeHefC+2cY+M77d31OWzvekv+W1g4FPpqcZMd2Kbb/vmjLG/zoqb7zRu4ANpoYYmWluMJhVXUBX2fr+ol0nPtlKOW9ZkFlvc=
+	t=1787664656; cv=none; b=buh4ZNu91p25yKCkqixOjKwlAWasXyNRFd07wxS5L5JJEcJ0G/cdtz1APbTXvg6+7Az7WQB1C2GZeBHTlDLBjI7mfIqUyrbD8EXDWj4Kf8PGF/1j5IVl4c3047sGJ6cuZimtM77NVYexngM3A/U4B/bHGuhH2Bguach8BMNIddo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664653; c=relaxed/simple;
-	bh=f97iui9zjhCe47SeOvPyuqCIR7zIsvIhUGM0diH+DMc=;
+	s=arc-20240116; t=1787664656; c=relaxed/simple;
+	bh=YfZP+PEVkCrAnaxHhhAsyJDr/Imk3fNGv3IUyvoK0Fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVuywmWI0tX7zajBVFCMz8SvtOOs3zI1/6pSCWHDxAdunO66S2iImMFr2Iw8Dfw5kSHra+clKFU5Cp3zmmEHjWJR1TGuhapHA7LRyZGOd2hFBkwhoRNnfaaRHCDHDxBG+pa90OZHhxobGP5wlLLueabd0l+ggKcexTkRZb8q52w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uG4ITl8m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DKTfwCwJntISVz7ePMqLBwLfB/UZ1BOtZng6yuYY9h4LN3HOEzymR9kGqI96t1J/+xQlUX5ieBqat2KK5DPWoEWsx3VsNEOiQvuBtuZwq9pjzOpOSIiLZBgA290nR9KcHs+7LWs5TO5negbFwwrC9Ky9duM/2Hm1yykCPe19zJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqs0Pvz0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uG4ITl8m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033571F000E9;
-	Tue, 25 Aug 2026 13:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqs0Pvz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60641F000E9;
+	Tue, 25 Aug 2026 13:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664652;
-	bh=NWl1XdnUXhqtE2BGLeEeOaiCTdU7MYom43JfxeANH1k=;
+	s=korg; t=1787664655;
+	bh=y55ikQUFIGs7M4V2FyDyswp1PajIKv6g289oZ4/UKQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uG4ITl8md79ZMOSbiZUe4aPOVPsXAQM3eGlu406rDGzQxgSAx3Cl7ziCcMbrN69JX
-	 +gKnplg09DQyMRcXeYKNwwo9njyIKE9IbJY8tVozHuRRGRsr92zb6jdKnTFpLVxg3z
-	 zTTDIcehMyHYERaCzhCNjc/VgU5wutAFomBoxylA=
+	b=aqs0Pvz0Y/4nAfoIg7Ge9DVHiqSr5HAJhOma2ZM1l7S4srahzm33i2SyU4WPzcbaq
+	 acBCwbKA2xI4qKIsZVxFs3uBnsTtIU3opKhrwoOlTkJ01vhWcvjN/wdHWFgJSX0kw9
+	 gtBcfUIHKSMTv3/9tbjGKHOk8H8YEICafppXjh1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Shaoxu Liu <shaoxul@foxmail.com>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 07/82] rndis_host: add overflow check in rndis_rx_fixup()
-Date: Tue, 25 Aug 2026 15:24:54 +0200
-Message-ID: <20260825132541.824136777@linuxfoundation.org>
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.2 08/82] nvmet: fix NULL pointer dereference in nvmet_execute_identify_nslist()
+Date: Tue, 25 Aug 2026 15:24:55 +0200
+Message-ID: <20260825132541.860433924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -53,53 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-commit 965a251f23ff69cfb4486974d4532e9bb551c7fc upstream.
+commit 79aba4c9403419d822972d2851f2a96a2c0531cf upstream.
 
-Add an overflow check to ensure that data_offset + data_len + 8 does not
-wrap, which would enable an OOB read of the USB data buffer.
+When a host issues an Identify command with CNS 07h (Active Namespace ID
+List for a specific I/O Command Set), nvmet_execute_identify_nslist() is
+called with match_css set. The command-set filter dereferences req->ns,
+but this handler never calls nvmet_req_find_ns(), so req->ns is always
+NULL (nvmet_req_init() resets it to NULL). As soon as an enabled
+namespace with an NSID greater than the requested value exists,
+req->ns->csi dereferences a NULL pointer and oopses.
 
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Shaoxu Liu <shaoxul@foxmail.com>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/2026070900-denim-brook-52d4@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Besides the crash, the comparison is logically wrong: to filter the list
+by command set it must test the command set of the namespace being
+iterated, not a single fixed value. Use the loop variable ns->csi.
+
+Fixes: 61c9967cd634 ("nvmet: implement active command set ns list")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rndis_host.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/nvme/target/admin-cmd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/rndis_host.c
-+++ b/drivers/net/usb/rndis_host.c
-@@ -14,6 +14,7 @@
- #include <linux/usb/cdc.h>
- #include <linux/usb/usbnet.h>
- #include <linux/usb/rndis_host.h>
-+#include <linux/overflow.h>
- 
- 
- /*
-@@ -506,6 +507,7 @@ int rndis_rx_fixup(struct usbnet *dev, s
- 		struct rndis_data_hdr	*hdr = (void *)skb->data;
- 		struct sk_buff		*skb2;
- 		u32			msg_type, msg_len, data_offset, data_len;
-+		u32			overflow_check;
- 
- 		msg_type = le32_to_cpu(hdr->msg_type);
- 		msg_len = le32_to_cpu(hdr->msg_len);
-@@ -514,7 +516,9 @@ int rndis_rx_fixup(struct usbnet *dev, s
- 
- 		/* don't choke if we see oob, per-packet data, etc */
- 		if (unlikely(msg_type != RNDIS_MSG_PACKET || skb->len < msg_len
--				|| (data_offset + data_len + 8) > msg_len)) {
-+				|| (data_offset + data_len + 8) > msg_len
-+				|| check_add_overflow(data_offset, data_len, &overflow_check)
-+				|| check_add_overflow(overflow_check, 8, &overflow_check))) {
- 			dev->net->stats.rx_frame_errors++;
- 			netdev_dbg(dev->net, "bad rndis message %d/%d/%d/%d, len %d\n",
- 				   le32_to_cpu(hdr->msg_type),
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -958,7 +958,7 @@ static void nvmet_execute_identify_nslis
+ 	nvmet_for_each_enabled_ns(&ctrl->subsys->namespaces, idx, ns) {
+ 		if (ns->nsid <= min_nsid)
+ 			continue;
+-		if (match_css && req->ns->csi != req->cmd->identify.csi)
++		if (match_css && ns->csi != req->cmd->identify.csi)
+ 			continue;
+ 		list[i++] = cpu_to_le32(ns->nsid);
+ 		if (i == buf_size / sizeof(__le32))
 
 
