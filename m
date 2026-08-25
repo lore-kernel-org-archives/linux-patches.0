@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C31542E01B;
-	Tue, 25 Aug 2026 13:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233E342E426;
+	Tue, 25 Aug 2026 13:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665333; cv=none; b=lqQm8JHCVRLxlj0+O7wAIeCLV3IXJaP87qSpltCL2u8xTzAL5xdXdYT1NYU+bdNaDfmftH/+G0HhufAbzXWZvJCtj8vOTHnIJfjr/JS3d4I9qgxjDuuHFYrwkxXmneYpcpt86lg/oALIY2kck/F1OI1jEUEpgqZ8+VzYY9/6dQo=
+	t=1787665336; cv=none; b=XLKzEc2tZHawWhtQ0n/PSwVT+3XZVjTFngxmZiRnEkniEuPzazQadDs5UFOHiP009y07PcI+sdPsLwDbmiyVLenC05pdGfiUxppgHVIW7IBVvt/OCEseJn2MGfE3Cf8uyPOzpUnRiy2W9ayhmzUOyzZNHI6LOmz6PXL/SljzU6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665333; c=relaxed/simple;
-	bh=y0oD0Q3LBt68BvsOuzfZ4pTKkVcSJg3Ekq27e1SpJXM=;
+	s=arc-20240116; t=1787665336; c=relaxed/simple;
+	bh=djd1XYj9I0rdPJSw3eYF03RqKMtBbf+rnQVI/qqjPfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHBCYsGyKDByGhu1Az+qZN6Vd1CwOC0CB2RajOj+2m0ZMM7z2EPwHEfqA5ssA+HBFAlAesz3F/qOlkzrrr7UVeYE+y06X0E0tSwi2NifNU51MfbtbLBSEh3uB+ntBemZgNgwnVJ02oSbQeUx+PVp3C8IjlMhABqitYbeP6nLtiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1jXh+vI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G2S2Nq3ppqXlbVbdvCfQijrTIkD8MEKv8x+IOvWEx4jAH1nSKeBpR/sYfzVbXqZsUa9JsYTHDbQyTxWfYhk56woaaFlO4UJ1jIXRbRhMthuzo/+ibOuPh83XqY3QNvLK3jjlcelPtcDpdEXNqjnyBXnGRj4Qwlpg12HJUc/iIzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqTzRPY/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1jXh+vI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6221F000E9;
-	Tue, 25 Aug 2026 13:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqTzRPY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C79B1F000E9;
+	Tue, 25 Aug 2026 13:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665332;
-	bh=gmt+SHgEBap0iqD/3tzTn2FfXfGYKxbQWQtXhezus8U=;
+	s=korg; t=1787665335;
+	bh=MUHeNTNys58COqZiGi9Kedwy+Bu2qQ9hsTNPXbutWxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H1jXh+vIqSpuC4vu8YzzzHk4RYrt7+xHWUWof+lgnBOrf6oBm0AUGzr1fhPI/cOs9
-	 qSJwPeJICBEPZ9kIsTMUG90UR8JEcg7PaatdpesERsCLG/X4XXZd7i6I3BUHWLJP6X
-	 4bVYA9458kYR4VYFHatunXKsszB3CXvWeM6SDW2s=
+	b=cqTzRPY/Qum1+kNqnzezPTnzJNIcf6Vo8DiwLi/pX3qkW1VAE1wGKa7x+py6eSDoT
+	 3T+IML50CT+zRELRpxL9/0L8tLGpNmcjQCygz6KrCpId5o7DbZSc2KW+IHxNSW3xTd
+	 YzrA2u/3m4Q3usgDxt15VBVNVGiHvbwILp2Kx/+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 86/94] HID: hyperv: validate initial device info bounds
-Date: Tue, 25 Aug 2026 15:26:22 +0200
-Message-ID: <20260825132545.175173418@linuxfoundation.org>
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.18 87/94] drm/xe: Dont hand out the flat CCS storage as usable VRAM
+Date: Tue, 25 Aug 2026 15:26:23 +0200
+Message-ID: <20260825132545.201578239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,101 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 934b7778aa7b7c8f6bb073d2a73ba3674885bae0 upstream.
+commit 818bebeb63dd6bf5f4e07e145f6cdbace520a34c upstream.
 
-The Hyper-V synthetic HID host supplies SYNTH_HID_INITIAL_DEVICE_INFO
-messages that contain a HID descriptor followed by the report descriptor
-bytes. mousevsc_on_receive_device_info() trusts bLength and
-wDescriptorLength without checking that the received packet contains both
-byte ranges.
+get_flat_ccs_offset() reads the base of the flat CCS storage from the
+hardware, scales it by the number of enabled L3 nodes, and rounds the
+result up to 128K.  Everything below that offset is then handed to the
+VRAM allocator as usable memory.
 
-A malformed host or backend message can therefore make the guest read
-past the received VMBus packet while copying the report descriptor. Pass
-the received initial-device-info size into the parser and reject
-descriptor lengths that exceed the packet.
+Rounding a limit that means "usable memory ends here" upwards publishes
+whatever lies between the real base and the rounded one as free memory,
+and that memory belongs to the compression hardware.  The scaled value
+has no reason to be 128K aligned, and on a Battlemage G21 with 16 GiB it
+is not:
 
-Impact: A malicious Hyper-V host or backend can crash a guest by sending
-a short initial device-info message with an oversized HID report
-descriptor length.
+	flat CCS base: raw 0x3fafff800, rounded 0x3fb000000
 
-Fixes: b95f5bcb811e ("HID: Move the hid-hyperv driver out of staging")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+so the last 2 KiB of page 0x3fafff000 is CCS storage, in the allocator's
+pool.  Whatever is allocated there gets that tail overwritten by the
+compression hardware, which needs no page-table entry, no buffer object
+and no GPU submission to do it, and does it before userspace exists.
+
+On this machine a Mesa VM's level-3 page table landed on that page on
+every cold boot.  It lost the entry covering the compositor's
+batch-buffer heap, so the compositor's first submission faulted fetching
+its batch and gdm restarted it forever: a black screen on an otherwise
+working machine.  Restarting gdm cleared it because the next VM's page
+tables were allocated somewhere else.
+
+Round down instead, to the page size the allocator works in.  On this
+machine that excludes exactly one page.
+
+Reading the reserved page afterwards shows what had been writing it:
+
+	[369] 0xcccc000000000000
+	[371] 0xcc77000000000000
+	[373] 0xcccc000000000000
+	[375] 0xcc77000000000000
+
+compression metadata, two bytes per sixteen, sitting where the driver
+used to hand out memory.
+
+The assertion that should have caught this compares the offset against
+GSMBASE - ccs_size for equality.  That value is 128K aligned, so it
+agrees with the rounded-up offset precisely when the base is not
+aligned - the check cannot fail in the case it exists to catch, and is
+compiled out unless CONFIG_DRM_XE_DEBUG is set.  Replace it with one
+that can fail: CCS storage must not run into GSM.
+
+[ And this was a debug session from hell, enormously helped by an AI
+  doing much of the grunt-work.
+
+  I'd like to call it my tireless helper, but the AI several times
+  stated flat out that this was impossible and unsolvable and that we
+  should just write a report about it.
+
+  I suspect those things have been trained by people who may not be
+  quite as stubborn as I am.
+
+  But while the AI was ready to give up several times, it did keep
+  adding debug code and analyzing it faithfully when I pushed. So credit
+  where credit is due and I let the AI write the commit message above.
+
+  This is basically a one-liner fixing a bogus "round_up()" to a
+  "round_down()", but there were 24 patches adding more and more debug
+  information to this, and 18 kernel boot to finally narrow it down to
+  this.   - Linus ]
+
+Fixes: 37173392741c ("drm/xe/vram: fix ccs offset calculation")
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-hyperv.c |   27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_vram.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -171,18 +171,32 @@ static void mousevsc_free_device(struct
- }
+--- a/drivers/gpu/drm/xe/xe_vram.c
++++ b/drivers/gpu/drm/xe/xe_vram.c
+@@ -206,12 +206,25 @@ static inline u64 get_flat_ccs_offset(st
+ 		offset = offset_hi << 32; /* HW view bits 39:32 */
+ 		offset |= offset_lo << 6; /* HW view bits 31:6 */
+ 		offset *= num_enabled; /* convert to SW view */
+-		offset = round_up(offset, SZ_128K); /* SW must round up to nearest 128K */
  
- static void mousevsc_on_receive_device_info(struct mousevsc_dev *input_device,
--				struct synthhid_device_info *device_info)
-+					    struct synthhid_device_info *device_info,
-+					    u32 device_info_size)
- {
- 	int ret = 0;
- 	struct hid_descriptor *desc;
- 	struct mousevsc_prt_msg ack;
-+	size_t desc_offset;
-+	size_t desc_size;
- 
- 	input_device->dev_info_status = -ENOMEM;
- 
-+	if (device_info_size < sizeof(*device_info)) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
+-		/* We don't expect any holes */
+-		xe_assert_msg(xe, offset == (xe_mmio_read64_2x32(&gt_to_tile(gt)->mmio, GSMBASE) -
+-					     ccs_size),
+-			      "Hole between CCS and GSM.\n");
++		/*
++		 * Everything below this offset is handed to the VRAM
++		 * allocator, so it has to be the *first* address the
++		 * compression hardware owns, rounded down.  Rounding it up
++		 * publishes CCS storage as free memory.
++		 */
++		offset = round_down(offset, SZ_4K);
 +
- 	input_device->hid_dev_info = device_info->hid_dev_info;
- 	desc = &device_info->hid_descriptor;
-+	desc_offset = offsetof(struct synthhid_device_info, hid_descriptor);
-+	desc_size = device_info_size - desc_offset;
- 	if (desc->bLength == 0)
- 		goto cleanup;
-+	if (desc->bLength < sizeof(*desc) || desc->bLength > desc_size) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
- 
- 	/* The pointer is not NULL when we resume from hibernation */
- 	kfree(input_device->hid_desc);
-@@ -197,6 +211,10 @@ static void mousevsc_on_receive_device_i
- 		input_device->dev_info_status = -EINVAL;
- 		goto cleanup;
- 	}
-+	if (input_device->report_desc_size > desc_size - desc->bLength) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
- 
- 	/* The pointer is not NULL when we resume from hibernation */
- 	kfree(input_device->report_desc);
-@@ -273,14 +291,17 @@ static void mousevsc_on_receive(struct h
- 		break;
- 
- 	case SYNTH_HID_INITIAL_DEVICE_INFO:
--		WARN_ON(pipe_msg->size < sizeof(struct hv_input_dev_info));
-+		if (WARN_ON_ONCE(pipe_msg->size <
-+				 sizeof(struct synthhid_device_info)))
-+			break;
- 
- 		/*
- 		 * Parse out the device info into device attr,
- 		 * hid desc and report desc
- 		 */
- 		mousevsc_on_receive_device_info(input_dev,
--			(struct synthhid_device_info *)pipe_msg->data);
-+						(struct synthhid_device_info *)pipe_msg->data,
-+						pipe_msg->size);
- 		break;
- 	case SYNTH_HID_INPUT_REPORT:
- 		input_report =
++		/*
++		 * CCS storage must not run into GSM.  The old check compared
++		 * the offset against GSMBASE - ccs_size for equality, which
++		 * could not fail: that value is 128K aligned, so it agreed
++		 * with the rounded-up offset even when the base was not 128K
++		 * aligned - exactly the case this fixes.
++		 */
++		xe_assert_msg(xe, offset + ccs_size <=
++			      xe_mmio_read64_2x32(&gt_to_tile(gt)->mmio, GSMBASE),
++			      "CCS overlaps GSM.\n");
+ 	} else {
+ 		reg = xe_gt_mcr_unicast_read_any(gt, XEHP_FLAT_CCS_BASE_ADDR);
+ 		offset = (u64)REG_FIELD_GET(XEHP_FLAT_CCS_PTR, reg) * SZ_64K;
 
 
