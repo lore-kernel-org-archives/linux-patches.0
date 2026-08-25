@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AADA2E06E4;
-	Tue, 25 Aug 2026 13:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E10B1F2B88;
+	Tue, 25 Aug 2026 13:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665112; cv=none; b=VjNfxwvNBZKJ8vcyzHcfA66hmnMvtA1fW4h+xZrkkFWqYKvPTQXSNfRgm22O0sdYveNMFciZ84IABYaXSBKc3LyWJizGMwIelZyyoW4ZoIxWszvm/og5pdpwAT2eLmUJ3htgkQeoC+vW7EZCaB7X2YBvmiG+0nUWjwF8aBRv6Sk=
+	t=1787665115; cv=none; b=f7mIpd8MDZcKwDMeycF+jE3IRjPk3QNP1c64sHAyFJNvw2Zw+y8PmPjOEwuh1sFaI4UQpGxLh7eeBGFh6GoPUWURHcb26x90Vzh729lPjiJpwYr7gZYV9MhnDBd+IhYR6R8Lk0lZyRTlNIT5i2SLHCMnSVAVaZGh8/DGqO2qsIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665112; c=relaxed/simple;
-	bh=lqcuM2EQv/lzG24QUBQCRykZFU3x2EzysGelYl0kCHY=;
+	s=arc-20240116; t=1787665115; c=relaxed/simple;
+	bh=tndNSjj4z2Ywj7qe+aGCSnlLFKMKZjTDnGGu/ng/Bak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LUCDMo6cN4nchTmOj9mOHRuaQkMJuOBPGShfr5FNGIlUqWwGUhvrm1g//uorO+EhJW4ZWU7vaSccfFxmfhoryC4tIDg7N3JM5QrLX+UfiiIucy8f0S/rbbk/9U6cpdOwjqSTf0k3xr1BKqjuRKh24aqcgSmUcAkkbW0qrWz+zo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vwyUxCm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C9W4eg2xgf4W4ZN9Kt9WUim4r8vmcuoAlWCloIO1WqNhkXdEco/uYod7MKscH94b2vZpeZPbihe/ZrUonBVwPxJ8M/OXLQmN40Ln3ew4VPzmrxPJPm03qRm7c7DvnHtPXE1c3kMX4XuiI1wYBQixar1VTT6O9YgWiNERj1zXOvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNyEnMbh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vwyUxCm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82F31F000E9;
-	Tue, 25 Aug 2026 13:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNyEnMbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC641F000E9;
+	Tue, 25 Aug 2026 13:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665111;
-	bh=U+Ajowpl6xyxPKSlmPdtJ+DOLi8VS9XRMTLyWxB3LpA=;
+	s=korg; t=1787665114;
+	bh=g0XEH25QBa5GEB0Ks6fP53fl3Gk0ScgFSWOAX83s3PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1vwyUxCmyYv+X0QLtnkkpP2UafN1k1eUWw7u+PlOlvakovLnAyYI63FO6jJKLPDcp
-	 tmCy6mIXIJtOdUEODEKRCDRZnrRJFViz+5S58q5Ciq49I+Uv6KldAZt+s2J1fQIYB1
-	 CtTzEWhtS/ACE5kteiMMIshNBdvM05AqkKHZxun4=
+	b=LNyEnMbhDB4/5Pq2u5G9g4L+KiK4yxNip7AwJKV4pYpDWOH6pzfvDxaaZYDp1ANDC
+	 /kHNzt3DskREFUy5M5+BL0icBpVQc2KHt/YEFhrzCAyqQyZuHNf7mKekjjfoC840e9
+	 y2t1zIUc/i1tTaVh4J8RGCKUStqYuRrZjC8wZGUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Geoffrey D. Bennett" <g@b4.vu>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 12/94] ALSA: FCP: Use a private URB for the notification endpoint
-Date: Tue, 25 Aug 2026 15:25:08 +0200
-Message-ID: <20260825132542.364465122@linuxfoundation.org>
+Subject: [PATCH 6.18 13/94] ALSA: scarlett2: Use a private URB for the notification endpoint
+Date: Tue, 25 Aug 2026 15:25:09 +0200
+Message-ID: <20260825132542.406321928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -52,141 +52,225 @@ Content-Transfer-Encoding: 8bit
 
 From: Geoffrey D. Bennett <g@b4.vu>
 
-commit 918b8d231c571c50a00efe92ffc8404a537a0490 upstream.
+commit cd17d6ff7b7d2b1dd9bcc80ae7b4a83773f918c6 upstream.
 
-fcp_init_notify() used mixer->urb, which snd_usb_mixer_status_create()
-allocates for the optional UAC2 status interrupt endpoint and mixer.c
-kills, resubmits and frees. On a device with that endpoint,
-fcp_init_notify()'s "already set up" early return fires on the status
-URB and returns success without doing anything. No FCP notification
-URB is submitted, and cmd_done is left zeroed because it is
-initialised past that early return and nowhere else. fcp_init() then
-issues init1_opcode and wait_for_completion_timeout() would crash
-adding to the zeroed wait.head. fcp_cleanup_urb() would also kill and
-free mixer.c's status URB.
+scarlett2_init_notify() used mixer->urb, which
+snd_usb_mixer_status_create() allocates for the UAC2 status interrupt
+endpoint and mixer.c manages. On a device with that endpoint, the
+"already in use" check fires on the status URB and returns 0 for
+success without doing anything. No notification URB is submitted, and
+cmd_done is left zeroed because it is initialised past that check and
+nowhere else. scarlett2_usb_init() then issues SCARLETT2_USB_INIT_1
+and wait_for_completion_timeout() would crash adding to the zeroed
+wait.head.
 
-Use a separate URB in fcp_data, and initialise cmd_done in
-fcp_init_private() where fcp_data is allocated. fcp_init_notify() is
-reached again after suspend via fcp_reinit(), and the URB kill path in
-fcp_notify() completes cmd_done, leaving a stale count that would
-satisfy the next command's wait before the device ACKs. Use
+Use a separate URB in scarlett2_data, as done for FCP, and initialise
+cmd_done in scarlett2_init_private(). mixer.c was also freeing the URB
+in snd_usb_mixer_free() and resubmitting it in
+snd_usb_mixer_activate(), so scarlett2 must now do both: add
+scarlett2_cleanup_urb(), called from private_free and private_suspend,
+and a private_resume callback to re-establish the URB after resume.
+scarlett2_init_notify() is reached from there, and the URB kill path
+in scarlett2_notify() completes cmd_done, leaving a stale count that
+would satisfy the next command's wait before the device ACKs. Use
 reinit_completion() to clear it.
 
-Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
+Also free the URB if the transfer buffer allocation fails, and both if
+usb_submit_urb() fails. Move scarlett2_init_notify() up next to
+scarlett2_cleanup_urb() so scarlett2_init_private() can reference it
+without a forward declaration.
+
+Fixes: 1b65088958ca ("ALSA: scarlett2: Implement handling of the ACK notification")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/2cad281e6434024ca48a9ecc94fa19d6777e9be7.1786290885.git.g@b4.vu
+Link: https://patch.msgid.link/ffb8ba37d5d605dfdfd8576949d67098651f9349.1786290885.git.g@b4.vu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/fcp.c |   38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ sound/usb/mixer.c           |    6 ++
+ sound/usb/mixer.h           |    2 
+ sound/usb/mixer_scarlett2.c |   98 ++++++++++++++++++++++++++++----------------
+ 3 files changed, 71 insertions(+), 35 deletions(-)
 
---- a/sound/usb/fcp.c
-+++ b/sound/usb/fcp.c
-@@ -82,6 +82,7 @@ struct fcp_data {
- 	struct mutex mutex;         /* serialise access to the device */
- 	struct completion cmd_done; /* wait for command completion */
- 	struct file *file;          /* hwdep file */
-+	struct urb *urb;            /* FCP notification endpoint */
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -3743,6 +3743,12 @@ int snd_usb_mixer_resume(struct usb_mixe
+ 	struct usb_mixer_elem_list *list;
+ 	int id, err;
  
- 	struct fcp_notify notify;
++	if (mixer->private_resume) {
++		err = mixer->private_resume(mixer);
++		if (err < 0)
++			return err;
++	}
++
+ 	/* restore cached mixer values */
+ 	for (id = 0; id < MAX_ID_ELEMS; id++) {
+ 		for_each_mixer_elem(list, mixer, id) {
+--- a/sound/usb/mixer.h
++++ b/sound/usb/mixer.h
+@@ -18,6 +18,7 @@ struct usb_mixer_interface {
+ 	struct usb_host_interface *hostif;
+ 	struct list_head list;
+ 	unsigned int ignore_ctl_error;
++	/* UAC2 status interrupt endpoint; owned by mixer.c */
+ 	struct urb *urb;
+ 	/* array[MAX_ID_ELEMS], indexed by unit id */
+ 	struct usb_mixer_elem_list **id_elems;
+@@ -42,6 +43,7 @@ struct usb_mixer_interface {
+ 	void *private_data;
+ 	void (*private_free)(struct usb_mixer_interface *mixer);
+ 	void (*private_suspend)(struct usb_mixer_interface *mixer);
++	int (*private_resume)(struct usb_mixer_interface *mixer);
+ };
  
-@@ -194,7 +195,7 @@ static int fcp_usb(struct usb_mixer_inte
- 	const int max_retries = 5;
- 	int err;
+ #define MAX_CHANNELS	16	/* max logical channels */
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -1292,6 +1292,7 @@ struct scarlett2_data {
+ 	struct usb_mixer_interface *mixer;
+ 	struct mutex usb_mutex; /* prevent sending concurrent USB requests */
+ 	struct completion cmd_done;
++	struct urb *urb;        /* notification endpoint */
+ 	struct mutex data_mutex; /* lock access to this data */
+ 	u8 running;
+ 	u8 hwdep_in_use;
+@@ -8313,13 +8314,70 @@ requeue:
+ 	}
+ }
  
--	if (!mixer->urb)
-+	if (!private->urb)
- 		return -ENODEV;
- 
- 	req = kmalloc(req_buf_size, GFP_KERNEL);
-@@ -307,7 +308,7 @@ static int fcp_reinit(struct usb_mixer_i
- 	void *step0_resp __free(kfree) = NULL;
- 	void *step2_resp __free(kfree) = NULL;
- 
--	if (mixer->urb)
+-/*** Cleanup/Suspend Callbacks ***/
++/*** Notification URB and Cleanup/Suspend Callbacks ***/
++
++/* Submit a URB to receive notifications from the device */
++static int scarlett2_init_notify(struct usb_mixer_interface *mixer)
++{
++	struct usb_device *dev = mixer->chip->dev;
++	struct scarlett2_data *private = mixer->private_data;
++	unsigned int pipe = usb_rcvintpipe(dev, private->bEndpointAddress);
++	void *transfer_buffer;
++	int err;
++
++	/* Already set up */
 +	if (private->urb)
- 		return 0;
- 
- 	step0_resp = kmalloc(private->step0_resp_size, GFP_KERNEL);
-@@ -901,13 +902,15 @@ static int fcp_hwdep_init(struct usb_mix
- 
- static void fcp_cleanup_urb(struct usb_mixer_interface *mixer)
- {
--	if (!mixer->urb)
-+	struct fcp_data *private = mixer->private_data;
++		return 0;
++
++	if (usb_pipe_type_check(dev, pipe))
++		return -EINVAL;
++
++	private->urb = usb_alloc_urb(0, GFP_KERNEL);
++	if (!private->urb)
++		return -ENOMEM;
++
++	transfer_buffer = kmalloc(private->wMaxPacketSize, GFP_KERNEL);
++	if (!transfer_buffer) {
++		usb_free_urb(private->urb);
++		private->urb = NULL;
++		return -ENOMEM;
++	}
++
++	usb_fill_int_urb(private->urb, dev, pipe,
++			 transfer_buffer, private->wMaxPacketSize,
++			 scarlett2_notify, mixer, private->bInterval);
++
++	reinit_completion(&private->cmd_done);
++
++	err = usb_submit_urb(private->urb, GFP_KERNEL);
++	if (err) {
++		kfree(transfer_buffer);
++		usb_free_urb(private->urb);
++		private->urb = NULL;
++	}
++
++	return err;
++}
++
++static void scarlett2_cleanup_urb(struct usb_mixer_interface *mixer)
++{
++	struct scarlett2_data *private = mixer->private_data;
 +
 +	if (!private->urb)
- 		return;
- 
--	usb_kill_urb(mixer->urb);
--	kfree(mixer->urb->transfer_buffer);
--	usb_free_urb(mixer->urb);
--	mixer->urb = NULL;
++		return;
++
 +	usb_kill_urb(private->urb);
 +	kfree(private->urb->transfer_buffer);
 +	usb_free_urb(private->urb);
 +	private->urb = NULL;
++}
+ 
+ static void scarlett2_private_free(struct usb_mixer_interface *mixer)
+ {
+ 	struct scarlett2_data *private = mixer->private_data;
+ 
+ 	cancel_delayed_work_sync(&private->work);
++	scarlett2_cleanup_urb(mixer);
+ 	kfree(private);
+ 	mixer->private_data = NULL;
+ }
+@@ -8330,6 +8388,8 @@ static void scarlett2_private_suspend(st
+ 
+ 	if (cancel_delayed_work_sync(&private->work))
+ 		scarlett2_config_save(private->mixer);
++
++	scarlett2_cleanup_urb(mixer);
  }
  
- static void fcp_private_free(struct usb_mixer_interface *mixer)
-@@ -978,37 +981,37 @@ static int fcp_init_notify(struct usb_mi
- 	int err;
+ /*** Initialisation ***/
+@@ -8449,11 +8509,13 @@ static int scarlett2_init_private(struct
  
- 	/* Already set up */
--	if (mixer->urb)
-+	if (private->urb)
- 		return 0;
+ 	mutex_init(&private->usb_mutex);
+ 	mutex_init(&private->data_mutex);
++	init_completion(&private->cmd_done);
+ 	INIT_DELAYED_WORK(&private->work, scarlett2_config_save_work);
  
- 	if (usb_pipe_type_check(dev, pipe))
- 		return -EINVAL;
+ 	mixer->private_data = private;
+ 	mixer->private_free = scarlett2_private_free;
+ 	mixer->private_suspend = scarlett2_private_suspend;
++	mixer->private_resume = scarlett2_init_notify;
  
+ 	private->info = entry->info;
+ 
+@@ -8470,40 +8532,6 @@ static int scarlett2_init_private(struct
+ 	return scarlett2_find_fc_interface(mixer->chip->dev, private);
+ }
+ 
+-/* Submit a URB to receive notifications from the device */
+-static int scarlett2_init_notify(struct usb_mixer_interface *mixer)
+-{
+-	struct usb_device *dev = mixer->chip->dev;
+-	struct scarlett2_data *private = mixer->private_data;
+-	unsigned int pipe = usb_rcvintpipe(dev, private->bEndpointAddress);
+-	void *transfer_buffer;
+-
+-	if (mixer->urb) {
+-		usb_audio_err(mixer->chip,
+-			      "%s: mixer urb already in use!\n", __func__);
+-		return 0;
+-	}
+-
+-	if (usb_pipe_type_check(dev, pipe))
+-		return -EINVAL;
+-
 -	mixer->urb = usb_alloc_urb(0, GFP_KERNEL);
 -	if (!mixer->urb)
-+	private->urb = usb_alloc_urb(0, GFP_KERNEL);
-+	if (!private->urb)
- 		return -ENOMEM;
- 
- 	transfer_buffer = kmalloc(private->wMaxPacketSize, GFP_KERNEL);
- 	if (!transfer_buffer) {
--		usb_free_urb(mixer->urb);
--		mixer->urb = NULL;
-+		usb_free_urb(private->urb);
-+		private->urb = NULL;
- 		return -ENOMEM;
- 	}
- 
+-		return -ENOMEM;
+-
+-	transfer_buffer = kmalloc(private->wMaxPacketSize, GFP_KERNEL);
+-	if (!transfer_buffer)
+-		return -ENOMEM;
+-
 -	usb_fill_int_urb(mixer->urb, dev, pipe,
-+	usb_fill_int_urb(private->urb, dev, pipe,
- 			 transfer_buffer, private->wMaxPacketSize,
- 			 fcp_notify, mixer, private->bInterval);
- 
+-			 transfer_buffer, private->wMaxPacketSize,
+-			 scarlett2_notify, mixer, private->bInterval);
+-
 -	init_completion(&private->cmd_done);
-+	reinit_completion(&private->cmd_done);
- 
--	err = usb_submit_urb(mixer->urb, GFP_KERNEL);
-+	err = usb_submit_urb(private->urb, GFP_KERNEL);
- 	if (err) {
- 		usb_audio_err(mixer->chip,
- 			      "%s: usb_submit_urb failed: %d\n",
- 			      __func__, err);
- 		kfree(transfer_buffer);
--		usb_free_urb(mixer->urb);
--		mixer->urb = NULL;
-+		usb_free_urb(private->urb);
-+		private->urb = NULL;
- 	}
- 
- 	return err;
-@@ -1059,6 +1062,7 @@ static int fcp_init_private(struct usb_m
- 		return -ENOMEM;
- 
- 	mutex_init(&private->mutex);
-+	init_completion(&private->cmd_done);
- 	init_waitqueue_head(&private->notify.queue);
- 	spin_lock_init(&private->notify.lock);
- 
+-
+-	return usb_submit_urb(mixer->urb, GFP_KERNEL);
+-}
+-
+ /* Cargo cult proprietary initialisation sequence */
+ static int scarlett2_usb_init(struct usb_mixer_interface *mixer)
+ {
 
 
