@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BE52E06E4;
-	Tue, 25 Aug 2026 13:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC61459AD7;
+	Tue, 25 Aug 2026 13:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665875; cv=none; b=PPwSRibuulyGlF4P7IJH33KUxgDNyIovhy/zN9HdgA1wVMK1x+PVL5LR4B+3xr+a7bn/lLYi5IcqGzrIEiilTdUFx+kCulVNufseKiEhMC5D5gEeeLFDd9mpuaajhkXA9PfrnLUUCGlR4szYIsN366uq3y7ekzWeWj6pbqJDXJw=
+	t=1787665878; cv=none; b=EO3HdjjRp35euNcAJVoWHYMY1UON+e+QuduxMYzu5rkrqXHGPNrVkD23V6Api4LkrdWtfpLe+yH26M+MQZjIZvYq4b1iPvYZgMKAt+Z5yQDo0C0XukYQrMKRGHBQ4tDBno1QY/p9BD+CV0EN6G3YYsVBZyoqBmZ37UHr6e9AAMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665875; c=relaxed/simple;
-	bh=wX2dbN3Y/gtQbIotsFSlOddmXi5vqnThQUEcxpB795Q=;
+	s=arc-20240116; t=1787665878; c=relaxed/simple;
+	bh=6dd0QSce0XgYnuzaglZra8yTuRimKngnqLZm942ZBRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4qhoZLN0ey2PWyHCPlbCek0oSzjtuVJuaLYvL3cGd9fuICtyCZ+voFgYyWP+cAoEFmcGX8dQM44+sWv5k5c9di59106/kDpFpJsPNpDc+i+a2Sdi4+ue4Ee6zPMsoAYeHgYlgXR+1gPr+5z8FHy4E8LD9k/Yi47n7tAmVUr9bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XL/l86Bc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZMPHR5PQ0soYEUDqm6ajmr8ws78Y6RTx/pjkPbPD6IfQa54Ke6wQJDrezE7bCKmccLGoIZ3I/JL7Y9G9Bkzrvge1csZC+Gi+X+shAa8jxR+6oVPEz8towsk8xG8fwaJybkiQWZ0rkMYCRr6GAXxhtir5UiZhxdg/plpuUN3uh3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxP9xaji; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XL/l86Bc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D422C1F000E9;
-	Tue, 25 Aug 2026 13:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxP9xaji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFC51F000E9;
+	Tue, 25 Aug 2026 13:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665874;
-	bh=rkystHqY743Rf5+GORz/WRBIfJNucy2K7GUqE8taCN8=;
+	s=korg; t=1787665877;
+	bh=fXCTBP16mL3Li9oCBaMzi+SRyz36OZij+dTWZdgmJPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XL/l86BcpvwQwo2mhNWESqQqRQujHi8FofSHJ473iy3QIBVazi3h+gwwqhGR1ljDc
-	 Nnb0Un7URZ7kXDY7oyZKuOKnabTIriDzLI8yl+eYGBh9MxQHQXNhLdu9f8e7kY+m9z
-	 2HzoA1E73Xw8UCmco+QWXeuaxiYCALwAlE3yFShw=
+	b=FxP9xaji32WE+i0VKbtkxSsRMHRFuJuHCVxCaKYZ9dEGzfJ52vKxM2eLxRMq1zeBr
+	 jDToAni0g7o8EZ6XkUETxVJ6gyhPPqm3n5pqAHuThsAvsKmXxGosCS86fGjrCSVyfH
+	 RWAT4fHLSaVbqcRGF2lyMrdbae9d4baAdOXO69gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 61/87] ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout
-Date: Tue, 25 Aug 2026 15:26:24 +0200
-Message-ID: <20260825132544.221359212@linuxfoundation.org>
+	Steffen Persvold <spersvold@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.1 01/79] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
+Date: Tue, 25 Aug 2026 15:25:41 +0200
+Message-ID: <20260825132541.730637297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
-References: <20260825132541.813800447@linuxfoundation.org>
+In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
+References: <20260825132541.677185791@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,82 +46,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Steffen Persvold <spersvold@gmail.com>
 
-[ Upstream commit 17661c67b206612cb3ba65d5ae726cd2015d0a53 ]
+commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
 
-Ignore IPC errors for pipeline state change if the firmware state is
-crashed or the IPC has timed out.
+On 32-bit systems the config space is too large to ioremap in one go, so
+pci_ecam_create() maps each bus segment separately and relies on the
+->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
+cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
+every config access.
 
-If the firmware has crashed the kernel still needs to go through the state
-changes to reset its internal to be able to correctly work the next time
-the DSP is booted up.
+The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
+and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
+do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
+per-bus mapping is never set up and the first config read dereferences a
+NULL base, crashing during bus enumeration:
 
-The case with IPC timeout is a bit more problematic, but it has been
-rootcaused to be the result of system scheduling blockage and the firmware
-did actually received and handled the message, but the reply handling got
-blocked by issues outside of the SOF stack.
-So far the best way to handle this is to continue with setting the state.
+ Unable to handle kernel NULL pointer dereference at virtual address 00000800
+ Oops [#1]
+ CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
+ Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
+ epc : pci_generic_config_read+0x40/0xb0
+  ra : pci_generic_config_read+0x2c/0xb0
+ [<c038db9c>] pci_generic_config_read+0x40/0xb0
+ [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
+ [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
+ [<c039245c>] pci_scan_single_device+0xa4/0x11c
+ [<c0392570>] pci_scan_slot+0x9c/0x23c
+ [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
+ [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
+ [<c0393e54>] pci_host_probe+0x20/0xc8
+ [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
 
-Fixes: c40aad7c81e5 ("ASoC: SOF: ipc4-pcm: Workaround for crashed firmware on system suspend")
+Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
+Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
+move the CAM ops definition there as pci_generic_cam_ops (mirroring
+pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
+
+Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
+Signed-off-by: Steffen Persvold <spersvold@gmail.com>
+[mani: removed timestamp from log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20260730112343.26687-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-pcm.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pci-host-generic.c |   11 +----------
+ drivers/pci/ecam.c                        |   13 +++++++++++++
+ include/linux/pci-ecam.h                  |    3 +++
+ 3 files changed, 17 insertions(+), 10 deletions(-)
 
---- a/sound/soc/sof/ipc4-pcm.c
-+++ b/sound/soc/sof/ipc4-pcm.c
-@@ -359,7 +359,19 @@ static int sof_ipc4_trigger_pipelines(st
- 	ret = sof_ipc4_set_multi_pipeline_state(sdev, SOF_IPC4_PIPE_PAUSED, trigger_list);
- 	if (ret < 0) {
- 		spcm_err(spcm, substream->stream, "failed to pause all pipelines\n");
--		goto free;
-+		/*
-+		 * workaround: if the firmware is crashed or the IPC timed out
-+		 * while setting the pipeline state we must ignore the error
-+		 * code and proceed to set adjust the local pipeline states.
-+		 *
-+		 * If the firmware is crashed we will not send IPC messages
-+		 * and we are going to see errors printed, but the state of the
-+		 * widgets will be correct for the next boot.
-+		 */
-+		if (sdev->fw_state != SOF_FW_CRASHED && ret != -ETIMEDOUT)
-+			goto free;
+--- a/drivers/pci/controller/pci-host-generic.c
++++ b/drivers/pci/controller/pci-host-generic.c
+@@ -14,15 +14,6 @@
+ #include <linux/pci-ecam.h>
+ #include <linux/platform_device.h>
+ 
+-static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
+-	.bus_shift	= 16,
+-	.pci_ops	= {
+-		.map_bus	= pci_ecam_map_bus,
+-		.read		= pci_generic_config_read,
+-		.write		= pci_generic_config_write,
+-	}
+-};
+-
+ static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
+ {
+ 	struct pci_config_window *cfg = bus->sysdata;
+@@ -58,7 +49,7 @@ static const struct pci_ecam_ops pci_dw_
+ 
+ static const struct of_device_id gen_pci_of_match[] = {
+ 	{ .compatible = "pci-host-cam-generic",
+-	  .data = &gen_pci_cfg_cam_bus_ops },
++	  .data = &pci_generic_cam_ops },
+ 
+ 	{ .compatible = "pci-host-ecam-generic",
+ 	  .data = &pci_generic_ecam_ops },
+--- a/drivers/pci/ecam.c
++++ b/drivers/pci/ecam.c
+@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
+ };
+ EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
+ 
++/* CAM ops */
++const struct pci_ecam_ops pci_generic_cam_ops = {
++	.bus_shift	= 16,
++	.pci_ops	= {
++		.add_bus	= pci_ecam_add_bus,
++		.remove_bus	= pci_ecam_remove_bus,
++		.map_bus	= pci_ecam_map_bus,
++		.read		= pci_generic_config_read,
++		.write		= pci_generic_config_write,
++	}
++};
++EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
 +
-+		ret = 0;
- 	}
+ #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
+ /* ECAM ops for 32-bit access only (non-compliant) */
+ const struct pci_ecam_ops pci_32b_ops = {
+--- a/include/linux/pci-ecam.h
++++ b/include/linux/pci-ecam.h
+@@ -77,6 +77,9 @@ void __iomem *pci_ecam_map_bus(struct pc
+ /* default ECAM ops */
+ extern const struct pci_ecam_ops pci_generic_ecam_ops;
  
- 	/* update PAUSED state for all pipelines just triggered */
-@@ -380,14 +392,15 @@ skip_pause_transition:
- 			 "failed to set final state %d for all pipelines\n",
- 			 state);
- 		/*
--		 * workaround: if the firmware is crashed while setting the
--		 * pipelines to reset state we must ignore the error code and
--		 * reset it to 0.
--		 * Since the firmware is crashed we will not send IPC messages
-+		 * workaround: if the firmware is crashed or the IPC timed out
-+		 * while setting the pipeline state we must ignore the error
-+		 * code and proceed to set adjust the local pipeline states.
-+		 *
-+		 * If the firmware is crashed we will not send IPC messages
- 		 * and we are going to see errors printed, but the state of the
- 		 * widgets will be correct for the next boot.
- 		 */
--		if (sdev->fw_state != SOF_FW_CRASHED || state != SOF_IPC4_PIPE_RESET)
-+		if (sdev->fw_state != SOF_FW_CRASHED && ret != -ETIMEDOUT)
- 			goto free;
- 
- 		ret = 0;
++/* default CAM ops */
++extern const struct pci_ecam_ops pci_generic_cam_ops;
++
+ #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
+ extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
+ extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
 
 
