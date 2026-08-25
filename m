@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF8614A619;
-	Tue, 25 Aug 2026 14:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7158F2F8E90;
+	Tue, 25 Aug 2026 14:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666480; cv=none; b=QPWH7CiMIzR1V1BbckAnnMI8XaBRy0mH9a2csmwVOg0iOz0hGmmSfGQiqf1xj7RPtvDNWsvgahN0c6oJMVyU79ele7Oemo0yggvMTAMHfb4+4c0CQyH3lEBzB3v4sQHzhn9WQ+FyNCA8ei0Xe3O1PBV3+XyoUNfUBi6s3r13C+I=
+	t=1787666483; cv=none; b=qw2fg8JC319mDv28wNt8jpWwrXdUUBOLmt20tY/2aeoZVQXAzW4B2gQvtyGjsbJpG5HUMLxc1VIXRX0CD8MfnS7Wq9SX+GFz6SzARyiwQoP58HGlnv+TQ1lWKy615SrlYCbt7sBn6hOJRwEUCVvfNyHR6tCkbkL10fAuo6+6+q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666480; c=relaxed/simple;
-	bh=+9frnykz1bjZ8VPMNM/iObnv/ErlKljJJ4yPj9QTXc0=;
+	s=arc-20240116; t=1787666483; c=relaxed/simple;
+	bh=YwuUweP32MJmgt+kg8McJJihpIGxSF7wEa8oWlEq3kA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMmdJSQiNL2OEnuSu9JSeWpGo+H1t5HjRaZjkl0bJOcGQ8KPkfLQoPshz2U58T/A84GRAwJtnr6QlNoitW0wYpg3rOMKoinM/u7IaIvN1hPiRCQfl9bHJDxABPjTzu/BDDYZyjPccrqUIh3DGtBX7IGwBL2SLOqF/fonVnG9hY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyMsGGws; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lzS/LTj+a7kBZfYv38qOwcZXTObT0/W9/ZeUkPhMVT+XCodvu1vxv3Nd6g5Q700QTBWow3dg6ETuiR+/nk6qzYOpluTWY45WkyNXUapKXjqtgyRBZwTWwfwd8ZKI1ogJlXToQ37po+0BqUDFZxUAsORt8UF5D3DVSX23oi3yzlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XdKFRii; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyMsGGws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF751F000E9;
-	Tue, 25 Aug 2026 14:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XdKFRii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16771F000E9;
+	Tue, 25 Aug 2026 14:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666479;
-	bh=JImrjkxFiOHBUPQs5xN/MjiRRRfVbjVDynRtLaqkcG8=;
+	s=korg; t=1787666482;
+	bh=Y7yQZEr5T/1VqR3Xq9J0Ra7MdAYrYxILmKr+dZcuhSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyMsGGws933hXcgXQxsTERhEi0i5pvG4lkpNbnkFfng7Uh0G7dXXaWzUqMm9pOwzX
-	 MNCtcQmB0ETsQ+41floRIZYQ5xJhmXkd/TiYbLeoV6iVOjJhsh16VGFO/DfCfCSw1K
-	 73RCzDIMq6fCZBBT/79Ebt3sb9LdW4Eiz2322xY8=
+	b=0XdKFRiiul25EAxJKdF6TCciUmIVJAScaSzYiYEDNKzMD/nFlazIbUO1oyM5W/Uo1
+	 u+KhnC5oIgVFnl964AnLhf9SIjs7jR9tuBV6nCMFfoTWwmdl6TbFMBfTKcxDepowPo
+	 uDPgHrlhj4m1Xs56AOvZhYKjrVV+d2e0BaSNvGGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
+	Sashiko AI Review <sashiko-bot@kernel.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 55/57] HID: core: fix number/pointer type confusion on long items
-Date: Tue, 25 Aug 2026 15:27:17 +0200
-Message-ID: <20260825132543.492238815@linuxfoundation.org>
+Subject: [PATCH 5.10 56/57] HID: sensor: custom: Fix use-after-free in enable_sensor
+Date: Tue, 25 Aug 2026 15:27:18 +0200
+Message-ID: <20260825132543.529407147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -50,66 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 28abce951343fcec26e397610868efa4e1395c3f upstream.
+commit ad8fb82b04422f49530d2aa2753cc81d1c60102c upstream.
 
-When fetch_item() is called by hid_scan_report() on an item with
-HID_ITEM_TAG_LONG, it stores a pointer to the item data in
-item->data.longdata instead of storing a value directly in
-item->data.{u8/u16/u32}.
+enable_sensor_store() can call set_power_report_state(), which
+dereferences sensor_inst->power_state and sensor_inst->report_state.
+These pointers refer to entries in sensor_inst->fields.
 
-When item_udata() or item_sdata() encounters such an item, it incorrectly
-assumes that the item is in short format, and therefore returns the lower
-part of a kernel pointer reinterpreted as a number.
+Create the field attributes before exposing the enable_sensor sysfs
+attribute, so enable_sensor cannot be accessed before the state it
+depends on has been initialized.
 
-When a HID device is connected whose descriptor contains a
-HID_GLOBAL_ITEM_TAG_REPORT_SIZE encoded in long format with size=4, this
-causes the lower half of a kernel pointer to be printed into dmesg as a
-number, like this:
+On remove, delete enable_sensor before freeing the field attributes,
+so a concurrent sysfs write cannot dereference freed memory through
+power_state or report_state.
 
-    hid (null): invalid report_size 107953555
-
-To fix it, let item_udata() and item_sdata() verify that the item is in
-short format.
-
-Note that this bug only affects hid_scan_report(), while the main parsing
-pass hid_parse_collections() will always bail out when encountering a long
-item.
-
-Sidenote: There are currently no users of data.longdata; maybe we should
-just remove any parsing of long-format descriptors as a follow-up.
-
-Fixes: 3dc8fc083dbf ("HID: Use hid_parser for pre-scanning the report descriptors")
+Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260623021950.1736413-1-haoxiang_li2024@163.com?part=1
+Fixes: 4a7de0519df5 ("HID: sensor: Custom and Generic sensor support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-sensor-custom.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -346,6 +346,9 @@ static int hid_add_field(struct hid_pars
+--- a/drivers/hid/hid-sensor-custom.c
++++ b/drivers/hid/hid-sensor-custom.c
+@@ -771,26 +771,26 @@ static int hid_sensor_custom_probe(struc
+ 		return ret;
+ 	}
  
- static u32 item_udata(struct hid_item *item)
- {
-+	if (item->format != HID_ITEM_FORMAT_SHORT)
-+		return 0;
-+
- 	switch (item->size) {
- 	case 1: return item->data.u8;
- 	case 2: return item->data.u16;
-@@ -356,6 +359,9 @@ static u32 item_udata(struct hid_item *i
+-	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
+-				 &enable_sensor_attr_group);
++	ret = hid_sensor_custom_add_attributes(sensor_inst);
+ 	if (ret)
+ 		goto err_remove_callback;
  
- static s32 item_sdata(struct hid_item *item)
- {
-+	if (item->format != HID_ITEM_FORMAT_SHORT)
-+		return 0;
-+
- 	switch (item->size) {
- 	case 1: return item->data.s8;
- 	case 2: return item->data.s16;
+-	ret = hid_sensor_custom_add_attributes(sensor_inst);
++	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
++				 &enable_sensor_attr_group);
+ 	if (ret)
+-		goto err_remove_group;
++		goto err_remove_attributes;
+ 
+ 	ret = hid_sensor_custom_dev_if_add(sensor_inst);
+ 	if (ret)
+-		goto err_remove_attributes;
++		goto err_remove_group;
+ 
+ 	return 0;
+ 
+-err_remove_attributes:
+-	hid_sensor_custom_remove_attributes(sensor_inst);
+ err_remove_group:
+ 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
+ 			   &enable_sensor_attr_group);
++err_remove_attributes:
++	hid_sensor_custom_remove_attributes(sensor_inst);
+ err_remove_callback:
+ 	sensor_hub_remove_callback(hsdev, hsdev->usage);
+ 
+@@ -803,9 +803,10 @@ static int hid_sensor_custom_remove(stru
+ 	struct hid_sensor_hub_device *hsdev = pdev->dev.platform_data;
+ 
+ 	hid_sensor_custom_dev_if_remove(sensor_inst);
+-	hid_sensor_custom_remove_attributes(sensor_inst);
++	/* Remove enable_sensor first as it uses fields via power_state/report_state. */
+ 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
+ 			   &enable_sensor_attr_group);
++	hid_sensor_custom_remove_attributes(sensor_inst);
+ 	sensor_hub_remove_callback(hsdev, hsdev->usage);
+ 
+ 	return 0;
 
 
