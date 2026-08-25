@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA9D2ED843;
-	Tue, 25 Aug 2026 14:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8614312831;
+	Tue, 25 Aug 2026 14:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666492; cv=none; b=YLO4YZbeQGT3NrhlykaTAIqB7DvV9tb81xAdQlKtzSP+f4E+zu+5er4R7+RtzK7dNUUrVf7RZQsNy4bYf6UL2wInTp+Q9lR7iegZ2xAEXSQZ4EuJt+eCb3bbUQFUkH4A5hhkzBq9yTZ9mnNNFk/qEV9ySqNKLWMSXloWBLvR980=
+	t=1787666494; cv=none; b=mQ1oyhJ/Oo7NcjXDKcXHe0yoj+Lc9ifA7+yaAknf4t0sZ6JSGPX0OqPVdKduy1hgzw9EkFASWodOPoKcxT6+/b0HyIDdukqJj9TpoISGaZjpmNw323G971LUe/3pc3nIhg4q3ZNJ9vUHmvdwcPV5slAvfBKIumvVJiVndSt3X9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666492; c=relaxed/simple;
-	bh=vSPVtfTu9N0u26BPoFwRbAK/PaYyhoATgJnDJc0+ja8=;
+	s=arc-20240116; t=1787666494; c=relaxed/simple;
+	bh=Kpstku6TqD6phCMvd9bTfbFq8pd+sAXMdLJY7R6YVPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCIiW4IhMhS792cav0pROW9PlxuenVb6Qmlq1dQdN690YAJhih3vshxqiGI3yAYQMJPyROWvgKMhh7q5cetO1G9MvJpNA3XgKyBGOO2Pxx5TiYqzuy2AMj7IAj3gQWgrQ6rw/37JYPtP0M4fFvoecgpwc8DvlNSq0dTFqt4dLGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlE+v/NK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ba4StOYgGF6qLjM0USlTmlIfWBypU/0mS0hYrEWL7W7nuEMim1+yulaTJebYQ9OSIVGpa65JIrBIqp35ZhY9S73Hl0gk4LXF9Ky+yzO6WUc3PU9Xz3DU6HbRJME94KU+1I87Q/oyxmW6svDTZ1/w7YtF5a+FLFT7umrOrbLklp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eok0XTuP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlE+v/NK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5453C1F00A3A;
-	Tue, 25 Aug 2026 14:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eok0XTuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2175E1F000E9;
+	Tue, 25 Aug 2026 14:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666490;
-	bh=mySLWQeQn8WbsBC8AA45SWHkphdGL/dICwvnCpCt4C0=;
+	s=korg; t=1787666493;
+	bh=dA1FPQwycExnVOTzMIGFv6+HfC/SMv1BMQGGnlaaEOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SlE+v/NKY1wXaXxBDTnoPjG9acLSG8otv+Gm5/Gdgtpv+ClnQRdYV90C74jAo1kQ+
-	 OiLsaeAISyDvQTe48XCkvF/2+1OESeGKWjh6ngTs+jNUvmx8W71CLoRpZs/XRd3Z1T
-	 k5ifU8P0XLz9v+MnRMjYCTCMrlPb27xgMTtPQbqM=
+	b=Eok0XTuPtIcEK2Py8A2nXQqvzbb1bEW/miJbKi65DHlVMS4grnN+J/dyIuRK4iMPi
+	 HSj5401CUCImohEqCcfTT+tcM2oFawpMmoqHr0wgV+Fzd4tJO9hHVZCwdogJkMfrVG
+	 0M8tXaBkDhGja0KOERUYkqGvqjnGq8q7wZdgvzp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/57] xfs: fix ilock leak on error in xfs_dq_get_next_id
-Date: Tue, 25 Aug 2026 15:26:47 +0200
-Message-ID: <20260825132542.287798287@linuxfoundation.org>
+Subject: [PATCH 5.10 26/57] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
+Date: Tue, 25 Aug 2026 15:26:48 +0200
+Message-ID: <20260825132542.332236156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -53,49 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 63320a0f70f66f311f4bccff3af0719c2119f46c ]
+[ Upstream commit c125ee35a49a0518521b52b27631eef061b8719a ]
 
-xfs_dq_get_next_id() takes the quota inode ILOCK before calling
-xfs_iread_extents().  If xfs_iread_extents() fails, the function returns
-immediately without releasing the lock, leaking the quota inode ILOCK.
-This can leave the quota inode locked and cause subsequent quota
-operations to hang.
+In atmci_probe, &host->bh_work is bound with atmci_work_func, and
+atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
+queue this work on system_bh_wq.
 
-Fix this by jumping to a common unlock path on error instead of returning
-directly.
+If we remove the module, atmci_remove makes cleanup and the memory
+allocated for host with devm_kzalloc() is released after the remove
+callback returns, while the work mentioned above may still be pending
+or running. The sequence of operations that may lead to a UAF bug is
+as follows:
 
-Fixes: bda250dbaf39f ("xfs: rewrite xfs_dq_get_next_id using xfs_iext_lookup_extent")
-Cc: stable@vger.kernel.org # v4.12
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+CPU0                                      CPU1
+
+                                          | atmci_interrupt
+                                          | queue_work(system_bh_wq,
+                                          |            &host->bh_work)
+atmci_remove                              |
+atmci_cleanup_slot(...)                   |
+atmci_writel(host, ATMCI_IDR, ~0UL)       |
+timer_delete_sync(&host->timer)           |
+dma_release_channel(host->dma.chan)       |
+free_irq(platform_get_irq(pdev, 0), host) |
+                                          | atmci_work_func
+                                          | // use host
+// devm resources released after          |
+// remove returns, host is freed          |
+                                          | // use host (use-after-free)
+
+Fix it by canceling the work after all the sources that can schedule
+it (IRQ handler, timeout timer and DMA completion callback) have been
+stopped, and before proceeding with the remaining cleanup in
+atmci_remove.
+
+Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/atmel-mci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -745,7 +745,7 @@ xfs_dq_get_next_id(
- 	if (!(quotip->i_df.if_flags & XFS_IFEXTENTS)) {
- 		error = xfs_iread_extents(NULL, quotip, XFS_DATA_FORK);
- 		if (error)
--			return error;
-+			goto out_unlock;
- 	}
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -2629,6 +2629,8 @@ static int atmci_remove(struct platform_
  
- 	if (xfs_iext_lookup_extent(quotip, &quotip->i_df, start, &cur, &got)) {
-@@ -757,6 +757,7 @@ xfs_dq_get_next_id(
- 		error = -ENOENT;
- 	}
+ 	free_irq(platform_get_irq(pdev, 0), host);
  
-+out_unlock:
- 	xfs_iunlock(quotip, lock_flags);
++	tasklet_kill(&host->tasklet);
++
+ 	clk_disable_unprepare(host->mck);
  
- 	return error;
+ 	pm_runtime_disable(&pdev->dev);
 
 
