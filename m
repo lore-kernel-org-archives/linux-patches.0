@@ -1,36 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDDF380FC3;
-	Tue, 25 Aug 2026 13:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A701A408031;
+	Tue, 25 Aug 2026 13:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664592; cv=none; b=K2Mn/IA41MDXfs2s3vCr69pJHiqt+6etbUNbWqaQY04m5rx8tcA7rzslDPxFS9aUxy1umfyjdCoF5BP5Q7WaKy5wsL92GjoHY9EuUlc1ceQzBm0E71GH9SIuNT6g5/kJxUx9epN2zdNN8BMlpqCU+qiGbzLzZmLDG2McJkWESpw=
+	t=1787664594; cv=none; b=cT4ms19vVN3zwpvqjFIF03Wz3v5+NsNVqtFvfG9RZVgbBf/tcaIeJTGqBP94/uCoGRmfaVQ4KdjWXCUzUrstA4QvKEkaZflKtG5W+qki8KLRfWN9krddy30yRT76HndNtTwlsMt/ETo0OmryauZRBGsiYpA56zIajaZeLHwnKQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664592; c=relaxed/simple;
-	bh=d1yFNbTXA4tWC/SiVQkELElyoFAQwXARNgar2VDXYCo=;
+	s=arc-20240116; t=1787664594; c=relaxed/simple;
+	bh=UiwBDkZxCFPKEFHgnfEInoZsHdlBATUeBaIiWddti5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0UOKP/LZ0d9ZYdH/rjeoJGZiT0NA4OPH3BZQJEUlQ4+/STH+wCCd+wLXzxhT/KywdKcrk96vRnedepnPZgQ0STHcd+YWbk4/obFgsYv/nIIRSclycPUy9rLGyRj95JQhdH6Av63b/yMuKiFpBEjQoa4WIVKVXTQR6xJuJQWj3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znen8wAA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GG9WUsh/GSbKxNmZJoM/mw9gc7rMuVvYDEhj79zk7iAY+Xwb7DS/AVW6Aa5WZa0NkMLih+ubTfs1kFq46v+hYVIfHtcmKM+xIR1E4SC6o2GZZ4cbKSGpFfn2RhGdQulg+Ipfh4Q5xD3BGqTHQhVCp61CjfDI1fVCGP2WbuKCwTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPBj2PjS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znen8wAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB891F000E9;
-	Tue, 25 Aug 2026 13:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPBj2PjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AC91F000E9;
+	Tue, 25 Aug 2026 13:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664590;
-	bh=cEO3M9TF+CJhic+vfli6OkOStPCy70AQ3yYz0Qbi9F8=;
+	s=korg; t=1787664593;
+	bh=1AMU/7NVWXybjSeow4d9LrRR9kkmUr32OXzVXHDv4YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=znen8wAA5aZtopONlq2fxh57w+O+WZ+6F5WlQFxXpE+M2wJ7jEb8L1zp6fAE0tmOp
-	 D+wkXQbencNT5gmmaw65IW1nADHEhD8X8ysXtOtwR4rc0tzXebH4CVMIneQ24lHjS7
-	 hou+N2R3f+DLTQ88yCO1KBUP0Z62lGWteBgG4uk8=
+	b=cPBj2PjSxMOEMVEWxyCoGJ63PEhvUJ0P8ByC1Q0J36ibLuXZm+jf8LH4owbBOyBR2
+	 ivtFPWi17UZwlpS5jez0gOzYvTxGlLEeHX+UIbIjAKUwB7w6jDL8H5FcsDf0gQU+R/
+	 OF7R3Qj5+ZOdU4VzSN35vDKUFp1RnwuEHXBfZBAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 21/82] io_uring: defer eventfd signaling when queued from a wakeup handler
-Date: Tue, 25 Aug 2026 15:25:08 +0200
-Message-ID: <20260825132542.350842247@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	syzbot+e538032956b1157914a3@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 22/82] ocfs2: fix missing metadata reservation for large xattrs
+Date: Tue, 25 Aug 2026 15:25:09 +0200
+Message-ID: <20260825132542.387130037@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -49,236 +58,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ian Bridges <icb@fastmail.org>
 
-commit cd305ee3633a45fcf5f3a5d83f99f3cb77d87b6e upstream.
+commit 0cdc7dde00ec63ac714271fa8b2918d630b8da1a upstream.
 
-io_req_local_work_add() signals the CQ ring eventfd inline when it is the
-one to push the first entry onto ->work_list. For DEFER_TASKRUN rings that
-add is frequently done from a waitqueue wakeup handler, where an
-arbitrary waitqueue lock is held.
+[BUG]
+lsetxattr() panics the kernel when setting a large xattr value on a
+fragmented filesystem where the file already has an external xattr
+block.
 
-eventfd_signal_mask() only refuses to recurse when current->in_eventfd
-is set, but that bit is set by eventfd_signal_mask() itself. If the wake
-chain starts somewhere else, signal goes out inline and can feed back
-into epoll.
+[CAUSE]
+ocfs2_calc_xattr_set_need() never reserves metadata blocks for a new
+xattr value's extent tree when the file already has an external xattr
+block. The not_found path leaves meta_add at zero, so meta_ac is NULL
+when ocfs2_xattr_extend_allocation() runs.
 
-Add IOU_F_TWQ_IN_WAKE, set it on the task_work add done from the three
-waitqueue callbacks, and use it to force io_eventfd_signal() down the
-existing call_rcu_hurry() deferral instead of signaling inline.
+A new value root has room for a single extent record. On a fragmented
+filesystem, the allocator cannot satisfy the xattr value in one
+contiguous run, so each non-contiguous run requires its own extent
+record. When the value root's extent list is full and meta_ac is NULL,
+ocfs2_add_clusters_in_btree() returns RESTART_META, and
+ocfs2_xattr_extend_allocation() hits BUG_ON(why == RESTART_META).
 
-Fixes: 21a091b970cd ("io_uring: signal registered eventfd to process deferred task work")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260813133843.2933127-1-4ncienth@gmail.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[FIX]
+The case where no xattr block exists yet already calls
+ocfs2_extend_meta_needed(&def_xv.xv.xr_list) to reserve value tree
+metadata. Add the same reservation to the case where an xattr block
+already exists, making the two cases consistent.
+
+Replace the BUG_ON with a -ENOSPC return so that if RESTART_META is
+returned despite the reservation, the error propagates to userspace
+instead of panicking the kernel.
+
+Link: https://lore.kernel.org/amLwn3i9tET8yhG7@dev
+Fixes: a78f9f466894 ("ocfs2: make xattr extension work with new local alloc reservation.")
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Reported-by: syzbot+e538032956b1157914a3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e538032956b1157914a3
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/io_uring_types.h |    8 ++++++++
- io_uring/eventfd.c             |    8 ++++----
- io_uring/eventfd.h             |    2 +-
- io_uring/futex.c               |    4 ++--
- io_uring/io_uring.c            |    2 +-
- io_uring/poll.c                |   23 ++++++++++++-----------
- io_uring/tw.c                  |    2 +-
- io_uring/waitid.c              |    2 +-
- 8 files changed, 30 insertions(+), 21 deletions(-)
+ fs/ocfs2/xattr.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/include/linux/io_uring_types.h
-+++ b/include/linux/io_uring_types.h
-@@ -20,6 +20,14 @@ enum {
- 	 * It's also ignored unless IORING_SETUP_DEFER_TASKRUN is set.
- 	 */
- 	IOU_F_TWQ_LAZY_WAKE			= 1,
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -740,12 +740,10 @@ static int ocfs2_xattr_extend_allocation
+ 					 prev_clusters;
+ 
+ 		if (why != RESTART_NONE && clusters_to_add) {
+-			/*
+-			 * We can only fail in case the alloc file doesn't give
+-			 * up enough clusters.
+-			 */
+-			BUG_ON(why == RESTART_META);
+-
++			if (why == RESTART_META) {
++				status = -ENOSPC;
++				break;
++			}
+ 			credits = ocfs2_calc_extend_credits(inode->i_sb,
+ 							    &vb->vb_xv->xr_list);
+ 			status = ocfs2_extend_trans(handle, credits);
+@@ -3255,6 +3253,14 @@ meta_guess:
+ 			credits += OCFS2_SUBALLOC_ALLOC + 1;
+ 
+ 		/*
++		 * Reserve metadata for the new xattr's value extent tree.
++		 * The not_found path above adds credits for this tree but
++		 * omits meta_add, leaving meta_ac NULL for large values.
++		 */
++		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
++			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
 +
-+	/*
-+	 * Set when task_work is queued from a waitqueue wakeup handler, where
-+	 * an arbitrary provider waitqueue lock is held. Signaling the CQ ring
-+	 * eventfd inline from there can recurse back into that lock through
-+	 * epoll, so the eventfd signal must be deferred.
-+	 */
-+	IOU_F_TWQ_IN_WAKE			= 2,
- };
- 
- enum io_uring_cmd_flags {
---- a/io_uring/eventfd.c
-+++ b/io_uring/eventfd.c
-@@ -51,9 +51,9 @@ static void io_eventfd_do_signal(struct
- /*
-  * Returns true if the caller should put the ev_fd reference, false if not.
-  */
--static bool __io_eventfd_signal(struct io_ev_fd *ev_fd)
-+static bool __io_eventfd_signal(struct io_ev_fd *ev_fd, bool defer)
- {
--	if (eventfd_signal_allowed()) {
-+	if (!defer && eventfd_signal_allowed()) {
- 		eventfd_signal_mask(ev_fd->cq_ev_fd, EPOLL_URING_WAKE);
- 		return true;
- 	}
-@@ -73,7 +73,7 @@ static bool io_eventfd_trigger(struct io
- 	return !ev_fd->eventfd_async || io_wq_current_is_worker();
- }
- 
--void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event)
-+void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event, bool defer)
- {
- 	bool skip = false;
- 	struct io_ev_fd *ev_fd;
-@@ -113,7 +113,7 @@ void io_eventfd_signal(struct io_ring_ct
- 		spin_unlock(&ctx->completion_lock);
- 	}
- 
--	if (skip || __io_eventfd_signal(ev_fd))
-+	if (skip || __io_eventfd_signal(ev_fd, defer))
- 		io_eventfd_put(ev_fd);
- }
- 
---- a/io_uring/eventfd.h
-+++ b/io_uring/eventfd.h
-@@ -5,4 +5,4 @@ int io_eventfd_register(struct io_ring_c
- 			unsigned int eventfd_async);
- int io_eventfd_unregister(struct io_ring_ctx *ctx);
- 
--void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event);
-+void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event, bool defer);
---- a/io_uring/futex.c
-+++ b/io_uring/futex.c
-@@ -181,7 +181,7 @@ static void io_futex_wakev_fn(struct wak
- 
- 	io_req_set_res(req, 0, 0);
- 	req->io_task_work.func = io_futexv_complete;
--	io_req_task_work_add(req);
-+	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
- }
- 
- int io_futexv_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
-@@ -237,7 +237,7 @@ static void io_futex_wake_fn(struct wake
- 
- 	io_req_set_res(req, 0, 0);
- 	req->io_task_work.func = io_futex_complete;
--	io_req_task_work_add(req);
-+	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
- }
- 
- int io_futexv_wait(struct io_kiocb *req, unsigned int issue_flags)
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -484,7 +484,7 @@ void __io_commit_cqring_flush(struct io_
- 	if (ctx->int_flags & IO_RING_F_OFF_TIMEOUT_USED)
- 		io_flush_timeouts(ctx);
- 	if (ctx->int_flags & IO_RING_F_HAS_EVFD)
--		io_eventfd_signal(ctx, true);
-+		io_eventfd_signal(ctx, true, false);
- }
- 
- static inline void __io_cq_lock(struct io_ring_ctx *ctx)
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -208,9 +208,9 @@ enum {
- 	IOU_POLL_REQUEUE = 4,
- };
- 
--static void __io_poll_execute(struct io_kiocb *req, int mask)
-+static void __io_poll_execute(struct io_kiocb *req, int mask, unsigned tw_flags)
- {
--	unsigned flags = 0;
-+	unsigned flags = tw_flags;
- 
- 	io_req_set_res(req, mask, 0);
- 	req->io_task_work.func = io_poll_task_func;
-@@ -218,14 +218,15 @@ static void __io_poll_execute(struct io_
- 	trace_io_uring_task_add(req, mask);
- 
- 	if (!(req->flags & REQ_F_POLL_NO_LAZY))
--		flags = IOU_F_TWQ_LAZY_WAKE;
-+		flags |= IOU_F_TWQ_LAZY_WAKE;
- 	__io_req_task_work_add(req, flags);
- }
- 
--static inline void io_poll_execute(struct io_kiocb *req, int res)
-+static inline void io_poll_execute(struct io_kiocb *req, int res,
-+				   unsigned tw_flags)
- {
- 	if (io_poll_get_ownership(req))
--		__io_poll_execute(req, res);
-+		__io_poll_execute(req, res, tw_flags);
- }
- 
- /*
-@@ -344,7 +345,7 @@ void io_poll_task_func(struct io_tw_req
- 	if (ret == IOU_POLL_NO_ACTION) {
- 		return;
- 	} else if (ret == IOU_POLL_REQUEUE) {
--		__io_poll_execute(req, 0);
-+		__io_poll_execute(req, 0, 0);
- 		return;
- 	}
- 	io_poll_remove_entries(req);
-@@ -383,7 +384,7 @@ static void io_poll_cancel_req(struct io
- {
- 	io_poll_mark_cancelled(req);
- 	/* kick tw, which should complete the request */
--	io_poll_execute(req, 0);
-+	io_poll_execute(req, 0, 0);
- }
- 
- #define IO_ASYNC_POLL_COMMON	(EPOLLONESHOT | EPOLLPRI)
-@@ -392,7 +393,7 @@ static __cold int io_pollfree_wake(struc
- {
- 	io_poll_mark_cancelled(req);
- 	/* we have to kick tw in case it's not already */
--	io_poll_execute(req, 0);
-+	io_poll_execute(req, 0, IOU_F_TWQ_IN_WAKE);
- 	io_poll_remove_waitq(poll);
- 	return 1;
- }
-@@ -430,7 +431,7 @@ static int io_poll_wake(struct wait_queu
- 			else
- 				req->flags &= ~REQ_F_SINGLE_POLL;
- 		}
--		__io_poll_execute(req, mask);
-+		__io_poll_execute(req, mask, IOU_F_TWQ_IN_WAKE);
- 	}
- 	return 1;
- }
-@@ -618,7 +619,7 @@ static int __io_arm_poll_handler(struct
- 
- 	if (mask && (poll->events & EPOLLET) &&
- 	    io_poll_can_finish_inline(req, ipt)) {
--		__io_poll_execute(req, mask);
-+		__io_poll_execute(req, mask, 0);
- 		return 0;
- 	}
- 	io_napi_add(req);
-@@ -629,7 +630,7 @@ static int __io_arm_poll_handler(struct
- 		 * poll was waken up, queue up a tw, it'll deal with it.
- 		 */
- 		if (atomic_cmpxchg(&req->poll_refs, 1, 0) != 1)
--			__io_poll_execute(req, 0);
-+			__io_poll_execute(req, 0, 0);
- 	}
- 	return 0;
- }
---- a/io_uring/tw.c
-+++ b/io_uring/tw.c
-@@ -173,7 +173,7 @@ void io_req_local_work_add(struct io_kio
- 	if (mpscq_push(&ctx->work_list, &req->io_task_work.node)) {
- 		io_ctx_mark_taskrun(ctx);
- 		if (data_race(ctx->int_flags) & IO_RING_F_HAS_EVFD)
--			io_eventfd_signal(ctx, false);
-+			io_eventfd_signal(ctx, false, flags & IOU_F_TWQ_IN_WAKE);
- 	}
- 
- 	/*
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -253,7 +253,7 @@ static int io_waitid_wait(struct wait_qu
- 		return 1;
- 
- 	req->io_task_work.func = io_waitid_cb;
--	io_req_task_work_add(req);
-+	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
- 	return 1;
- }
- 
++		/*
+ 		 * This cluster will be used either for new bucket or for
+ 		 * new xattr block.
+ 		 * If the cluster size is the same as the bucket size, one
 
 
