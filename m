@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F45481AA9;
-	Tue, 25 Aug 2026 13:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DE548165B;
+	Tue, 25 Aug 2026 13:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665515; cv=none; b=gM6KcQ/g8/VWk2nUs/OCw1UdjKSPtSf6hVpGLRAry16qN12eB6sUtFtNQF8JQNj5t0NQhn78ftpzNsk/tZcSSHJbXvJ76SzJ3T6/P0bbyOAFJpvBpVYpG4IqnMBMIdwQPPFJ2MuihKf/ED1sbQMpNncw6ypNJHpAqHxrnuYDR2o=
+	t=1787665518; cv=none; b=tD9N3z4EOxxsnPoIiSIFjGSP+n7fS05uYeZj1S6Zr3TykebistGwmx8IyakPBw9gvbBjqyZmry+F3W8w5KZ14tEMvkjDTxia3VryE6uvRlmPBE57BTbNLpkq7s/VBdGUIfetUldHRjOAaTUPagZC7xaeG7xdG2UuW/E1ZMmivzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665515; c=relaxed/simple;
-	bh=RetKJNblmlA0a3lbgcO9HrxSeFX9xETsl1+g26R0x9s=;
+	s=arc-20240116; t=1787665518; c=relaxed/simple;
+	bh=Cy19dlp55yu8D8yI5P4j3qref4aK3UANu0bqWoeqA/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9bnZoRC5fkp2CU3IJJsdCCwcSqrCQyKSb6KOsAqbc34FYhLjv+GF8Ejg1qMRsF2p8mTRxLs9vf2lex272TgpIU3g4S5BkUC3+KXWDiv5vB58MvLrhOx+cma4GmMJAfL8HDjzR/6YS8ngwTol8I7trKE9vizsHQ5bUNChm6ZT6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhnrBhur; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bsMDJ734H54BF8FGhpPyPxdYipIFFaGvRRCrr0YKLT3QOKBXzqWC3w86wtk+qCyuGe8XzGxnxY+pBCn0xVPOU6lhGiFX8rotjUpHOABzJUoz6SOrAkojUk23iwB/1mMZWzjVMSIklW0ZfTXzHPuo94ZJcywhGh37SwC60GvLrS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNiq3rtH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhnrBhur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4266C1F00A3A;
-	Tue, 25 Aug 2026 13:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNiq3rtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324F11F000E9;
+	Tue, 25 Aug 2026 13:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665513;
-	bh=DU4rldn2vfnN2VasC+Y5BF2gP9BrJ290ZpOJr1QYZAk=;
+	s=korg; t=1787665516;
+	bh=Sfw/n1EFnb4mjGwhupJFznSNE+08xcRHYIEgO8iR75I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XhnrBhur7SbFYb+o6c8329DtAy7zPsU6qbn9Y7rAK74pRel4+882UQlj2sznWXgVU
-	 GzIRcb0OLir07k8JLK/2wZ8IpX9ZrO0MwqUs5u39OB5qXRSYakwI02K7uEJ3JAgzwn
-	 bvOMmw7cgjidPGUlwnGxn++mpzhm64Ed/fIDQw8Q=
+	b=iNiq3rtH9IKdB+U1xc0q1CWFfSmDj2jsAX6epmDnOCivjoV0FlFx/PrHVALxM2EPk
+	 3FCA1o62WTF5iRueI+E2cfiLkCfpBKO+liSRAAo7/byuYG4jJJYEvUUOKrlG6CgCOm
+	 R7lbS1BPWYuJndsxTLcUjZ04nvnwT6tV1EatBNFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Jiang HongHui <jiang_hh2019@163.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 50/77] nvmet-fc: fix invalid free in LS IOD error path
-Date: Tue, 25 Aug 2026 15:26:12 +0200
-Message-ID: <20260825132543.519235226@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 15/77] NTB: ntb_netdev: Preserve RX queue depth on allocation failure
+Date: Tue, 25 Aug 2026 15:25:37 +0200
+Message-ID: <20260825132542.157117272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -51,46 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiang HongHui <jiang_hh2019@163.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit ba98d6796d12258e837ece065d2ecb59d76ce4ff upstream.
+[ Upstream commit d2121faf133ac3bf9531b53a7e21273649a08517 ]
 
-nvmet_fc_alloc_ls_iodlist() advances iod while initializing the LS IOD
-array. If an rqstbuf allocation or response buffer DMA mapping fails,
-the unwind loop decrements iod past the start of the array. The final
-kfree(iod) therefore frees an address before the allocated object.
+ntb_netdev_rx_handler() hands the received skb to the network stack
+before allocating its replacement. If the allocation fails, nothing is
+reposted. Every failure therefore takes one buffer out of the RX queue
+while the interface remains up, and enough failures eventually stall
+reception.
 
-This can be reproduced with nvme-fcloop and failslab by setting
-fail-nth to 6 before creating a target port. KASAN reports:
+A retry path could refill the queue later, but ntb_netdev has none.
+Allocate the replacement first instead. If that fails, drop the packet
+and repost the same skb. This keeps the queue full and lets packet
+delivery resume as soon as memory is available again.
 
-  BUG: KASAN: invalid-free in nvmet_fc_register_targetport
-  Free of addr ffff88816cf8ff48 by task nvmet_fail_nth/9552
-
-Free the original allocation base stored in tgtport->iod instead. With
-this fix applied, the same sysfs write with fail-nth=6 returns -ENOMEM
-without any KASAN report.
-
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
 Cc: stable@vger.kernel.org
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jiang HongHui <jiang_hh2019@163.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260806032537.3526498-1-den@valinux.co.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ kept HEAD's `struct net_device *ndev = qp_data;` declaration instead of the per-queue context variables, adding only `new_skb` to the existing `skb` declaration ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ntb_netdev.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -569,7 +569,7 @@ out_fail:
- 		list_del(&iod->ls_rcv_list);
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -100,7 +100,7 @@ static void ntb_netdev_rx_handler(struct
+ 				  void *data, int len)
+ {
+ 	struct net_device *ndev = qp_data;
+-	struct sk_buff *skb;
++	struct sk_buff *skb, *new_skb;
+ 	int rc;
+ 
+ 	skb = data;
+@@ -115,6 +115,12 @@ static void ntb_netdev_rx_handler(struct
+ 		goto enqueue_again;
  	}
  
--	kfree(iod);
-+	kfree(tgtport->iod);
++	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
++	if (!new_skb) {
++		ndev->stats.rx_dropped++;
++		goto enqueue_again;
++	}
++
+ 	skb_put(skb, len);
+ 	skb->protocol = eth_type_trans(skb, ndev);
+ 	skb->ip_summed = CHECKSUM_NONE;
+@@ -127,12 +133,7 @@ static void ntb_netdev_rx_handler(struct
+ 		ndev->stats.rx_bytes += len;
+ 	}
  
- 	return -EFAULT;
- }
+-	skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
+-	if (!skb) {
+-		ndev->stats.rx_errors++;
+-		ndev->stats.rx_frame_errors++;
+-		return;
+-	}
++	skb = new_skb;
+ 
+ enqueue_again:
+ 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
 
 
