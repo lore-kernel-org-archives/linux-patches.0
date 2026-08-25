@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD2E3FF8BA;
-	Tue, 25 Aug 2026 13:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC0E46EF7F;
+	Tue, 25 Aug 2026 13:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664758; cv=none; b=TqnQ+DYyfGgMInDWGZ76gR6KFwbjgOCeOJt+sF+l1uzdS0fX+NWknok9mvQCQHnjQOy6pOJWn9PWu0Bau/kP0xltTV/PiUy71St6SGwdmAwZG+AhdKc4lcMiFzyU85Q4tq57FxpviH1n4Z7t0j7FAR2wilnpdOpvpgrLrKt37yI=
+	t=1787664761; cv=none; b=abJcmye0jamm696pqV9yhw445tHp3QN5GU5JgnJGEYwox1vvxHggK10CFtBSyUkzx80z1CZiIB/PqtOr3A9WQ/rx41naUr9d4V9dFSs71YBqW1kdVG+lmyxrZWHmS+12KLDQLjo+tLxorNHe+3Zfz95MLOf5C9qqEC3bpCbRiAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664758; c=relaxed/simple;
-	bh=ZU7DTF9Hih2NbAcHOX4tjT4hkLe3Ywf8Pu65yG5wxa8=;
+	s=arc-20240116; t=1787664761; c=relaxed/simple;
+	bh=X2wwE8LdzZVovkL7LhPlKRbjlNm6CVUQ0Pv032moCn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tAM3z+qf7eigxWHxPHWyGRcBGSrnvOQuuj6uDcEHcENsOFBKShvCLrMjT3LaTaPAIWiL9AZYW9NkbrvQ1uST74eXkHHARUOD3N08pi8rg4QWyQyB4ODILseIbONEkhKGekf9EKtrTkz7eAKg2wzU+aFl8SMUdS8VfD7ToxpfODs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOc2DxWN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hiOi3V+vZ315OuISznBDP4C8bErtlIFqM4BpThu+VOGZnm18LcsM43MqVakwcPE+vn3kLtFfLZOipy2TS1Fb06jd5Iyfl0AE6MA6CsDvdHysK3p4nvdsOwURrClfbiaJtPOWPQJHBfdqkghXEihPS15SG+nyXyi4PwCsEyhBxE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCsDlcRg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOc2DxWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2002D1F000E9;
-	Tue, 25 Aug 2026 13:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCsDlcRg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6A61F000E9;
+	Tue, 25 Aug 2026 13:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664757;
-	bh=AJyM+G6gMNmde4ecmvp66BKqJw/ZN4XhQ/7anBeW6R0=;
+	s=korg; t=1787664760;
+	bh=Ore/AWa7WnrbW3ys73QwX1QWtENi21XZ06NoQsLv8XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rOc2DxWN2alUdBwj6uLFtPDggQVmAtpdjiJFF4Q0QNMwkQX7ODDAhG32BD716695I
-	 5vnPXCNcvGG96yos5x5t1/F+rfwfd8SMUWlOIoa9TLtShrA9oEQt56ATOspMDe/S92
-	 xeTftvIew5uTmqeNZ9ZRQH3lRTKXMefGuMgUIKGU=
+	b=CCsDlcRgBkeCC5YXcBqqIfCJM5eo0e3/C3XMSe330QWe2R+vnwy28b/o9nYTuvQzD
+	 TNmQZ8aKfVKOa2yted8p7NTCOtsYzTsnUMzoHzqhQG8PfxGeclSCwRtHYO4MyclIkY
+	 GZkPUKcuNN5Tc6PpwZRXfZ8ivsDtqMUMGwAiDn/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 76/82] Bluetooth: hci_event: fix LE list UAF on reset
-Date: Tue, 25 Aug 2026 15:26:03 +0200
-Message-ID: <20260825132544.469467462@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 7.2 41/82] nfc: st21nfca: validate ATR_REQ length against the received frame
+Date: Tue, 25 Aug 2026 15:25:28 +0200
+Message-ID: <20260825132543.120008524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,80 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 33af47e847fe4a28b109673affb5874015d54f5a upstream.
+commit 5cdcca5d62a66eda6b774110a44cba67bc1a8d1d upstream.
 
-hci_cc_reset() clears the LE accept and resolving lists without taking
-hdev->lock. Other command-complete handlers serialize updates to these
-lists with that lock, and the debugfs readers hold it while walking them.
+st21nfca_tm_recv_atr_req() checks that the received ATR_REQ frame is at
+least ST21NFCA_ATR_REQ_MIN_SIZE and that the self-declared atr_req->length
+is at least sizeof(struct st21nfca_atr_req), but never checks that
+atr_req->length does not exceed the actual received length (skb->len).
 
-This permits the reset completion and a debugfs read to interleave as
-follows:
+st21nfca_tm_send_atr_res() then trusts the declared length:
 
-  hci_rx_work                 debugfs reader
-  -----------                 --------------
-                              lock hdev->lock
-                              fetch current entry
-  list_del(entry)
-  kfree(entry)
-                              read entry fields
+	gb_len = atr_req->length - sizeof(struct st21nfca_atr_req);
+	...
+	memcpy(atr_res->gbi, atr_req->gbi, gb_len);
 
-The reader then dereferences a freed list entry and may follow its stale
-next pointer.
+so an RF peer that sends a short frame but sets atr_req->length larger
+than the frame makes gb_len exceed the general bytes actually present,
+and the memcpy reads out of bounds past the received skb. Those bytes are
+placed in the ATR_RES and sent back to the peer (kernel-memory disclosure
+to a proximity attacker); a larger declared length is an out-of-bounds
+read (DoS).
 
-KASAN reported:
+Reject frames whose declared length exceeds the received length. The
+adjacent nfc_tm_activated() path in the same function already derives its
+general-bytes length from skb->len rather than the declared field.
 
-  BUG: KASAN: slab-use-after-free in white_list_show+0x15f/0x180
-  Read of size 1 at addr ffff8881015dab16 by task poc/95
+Found by 0sec (https://0sec.ai) using automated source analysis; the
+missing bound is evident from source. Compile-tested.
 
-  Call Trace:
-   white_list_show+0x15f/0x180
-   seq_read_iter+0x3ff/0x1190
-   seq_read+0x267/0x3d0
-   vfs_read+0x177/0xa20
-   ksys_read+0xf7/0x1c0
-
-  Allocated by task 91:
-   hci_bdaddr_list_add+0x1a6/0x3a0
-   hci_cc_le_add_to_accept_list+0xab/0x140
-   hci_cmd_complete_evt+0x26c/0x9a0
-   hci_event_packet+0x454/0xb20
-   hci_rx_work+0x293/0x730
-
-  Freed by task 90:
-   kfree+0x131/0x3c0
-   hci_bdaddr_list_clear+0xd8/0x160
-   hci_cc_reset+0x28a/0x370
-   hci_cmd_complete_evt+0x26c/0x9a0
-   hci_event_packet+0x454/0xb20
-   hci_rx_work+0x293/0x730
-
-Take hdev->lock around both list clears. This matches the existing
-mutation and traversal locking convention.
-
-Fixes: a4d5504d5c39 ("Bluetooth: Clear LE white list when resetting controller")
-Fixes: cfdb0c2d095a ("Bluetooth: Store Resolv list size")
+Fixes: 1892bf844ea0 ("NFC: st21nfca: Adding P2P support to st21nfca in Initiator & Target mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260711071301.58071-1-doruk@0sec.ai
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nfc/st21nfca/dep.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -294,8 +294,10 @@ static u8 hci_cc_reset(struct hci_dev *h
+--- a/drivers/nfc/st21nfca/dep.c
++++ b/drivers/nfc/st21nfca/dep.c
+@@ -205,6 +205,9 @@ static int st21nfca_tm_recv_atr_req(stru
+ 	if (atr_req->length < sizeof(struct st21nfca_atr_req))
+ 		return -EPROTO;
  
- 	hdev->ssp_debug_mode = 0;
- 
-+	hci_dev_lock(hdev);
- 	hci_bdaddr_list_clear(&hdev->le_accept_list);
- 	hci_bdaddr_list_clear(&hdev->le_resolv_list);
-+	hci_dev_unlock(hdev);
- 
- 	return rp->status;
- }
++	if (atr_req->length > skb->len)
++		return -EPROTO;
++
+ 	r = st21nfca_tm_send_atr_res(hdev, atr_req);
+ 	if (r)
+ 		return r;
 
 
