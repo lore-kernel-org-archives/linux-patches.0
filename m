@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA90F3909A4;
-	Tue, 25 Aug 2026 13:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D4B391E4C;
+	Tue, 25 Aug 2026 13:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665527; cv=none; b=dMwD/t7hpOo1OUjFN9KI0MrdtlNst5W4sAp+xlCgyWDIPkLPL20tu8iFloBfEEVWr2KY73WFKAb0wivLjr5ZVhbQUF5d0yWF/WUPU4IkXJ5Q4gD76nleoApBYXocVhTFJq5ntwSJrdFlaEPow8ldhY6BJ7PxGqSPk7MRuW1esUg=
+	t=1787665528; cv=none; b=CFfwJZEB3fB/VSRraOoqUN07KOP+xN3tMvt3+iHmhVlpXTKTwG/y+/M06YOCQvxcdBWx5whnG9E0wZiY7/+0cNSGPWSJ1f9i4tFxhy2nADRiHIMABhJ1dRELNknr4PoKslGorXUeKUno598uwahXzIfsm3af2rnSwPMrP1Z7D0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665527; c=relaxed/simple;
-	bh=d3l4KRB2Z03a7BNx7XEIqEsSO+ROSpKkZS8j3qS+XSw=;
+	s=arc-20240116; t=1787665528; c=relaxed/simple;
+	bh=CXk8Kdeg6MBtKvhfbGIPO/V1yI5/y+U13Th7UGLKv40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyBCKMD2zk/Te7PKmQCt3vP01iXpqNKbIP4IYh4/jICwxBLQBsZCNM+vXD/cgHR5qadaHctbZc4Cz63wwY7AijLHpXB7sHnacjXYTHnFZfJH5ELTC1r7WICuAjDQptGq5n2HXpbYlHV7m3zAzv26IDEUxb4JAgqp0rC4+LbD3Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ra1QcqZg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JBu2/DwdlxqLR6wtHsHCpcAD2OXK08LcLsOVzgeI/DQttePJDnLBhqxiyIuV8XHHKbp3wnG869fggo9M3In2kJZs22x3vGInpM23iqxi+j2FZxVwZetA6y8R/Ov84+MeXYUd97GVK8liC9I35odL4VoHxFLnRODXagG5KYZJzz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6ed4tBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ra1QcqZg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E291E1F000E9;
-	Tue, 25 Aug 2026 13:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6ed4tBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D9B1F00A3A;
+	Tue, 25 Aug 2026 13:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665525;
-	bh=OTuzUIoYRDPnyjv5lK2XXi/6Ui7YTI4/SdCa8vL6lHo=;
+	s=korg; t=1787665522;
+	bh=nXtdTDXmOeOSlELO+vWxplZwDA+xJtiSSXRquY4u28k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ra1QcqZge059QESfuoynfUnnlOUxZ/G+v2pHnfkrt6zeifLa3HIofec92Q71E6MfO
-	 Zmf1KxMg8cCC9hl5OqbrOxqsM8dHTnUKCM2AIYgRa+oBYYHFfWUEH/OO3YGETPG9eN
-	 bYgSYTCyLdJwfHU51aYBcYGnJzFCelpIBk4iMq5c=
+	b=k6ed4tBC8NgrHwv8wxrJeftTK/SH8CfgRAWaHMDFRHakZL0fayfRA4RYv2hF59nCr
+	 QOBwvCgap7FhIoiuXLTIr/Zvx+LziUPmfBrmlWS/sSCouoaCXRc8IqEIKCnsVYmI+h
+	 xCz8aEx2/RfXix15WFJ4MIioWeGBh5VIblvRrYAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 16/77] serial: amba-pl011: synchronize DMA teardown
-Date: Tue, 25 Aug 2026 15:25:38 +0200
-Message-ID: <20260825132542.199314667@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.12 52/77] nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
+Date: Tue, 25 Aug 2026 15:26:14 +0200
+Message-ID: <20260825132543.599946767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -51,56 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 440915499231e9db1c361aa45bb702e8fd3b4a32 ]
+commit 737a3b535247226f6e1a7988fd9d6e63e7d6fc71 upstream.
 
-dmaengine_terminate_all() does not wait for a running callback, so the TX
-callback can still touch the TX buffer after it is freed. The RX poll
-timer reads the RX buffers without the port lock.
+When fuzzing the nvme target code, I tripped a kernel warning in
+nvmet_tcp_map_data() because the length passed into the allocator is
+controlled by the remote initiator.
 
-Switch to dmaengine_terminate_sync() and delete the RX timer before
-freeing the buffers.
+A remote initiator that sends a command with an SGL claiming a huge
+number, can create a scatterlist and iovec allocation of over 1 million
+entries, which causes the backing kmalloc call to exceed MAX_PAGE_ORDER
+and then the page allocator will trip on a WARN_ON_ONCE_GFP() message:
 
-Fixes: ead76f329f77 ("ARM: 6763/1: pl011: add optional RX DMA to PL011 v2")
+  WARNING: mm/page_alloc.c:5280 __alloc_frozen_pages_noprof
+  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
+  ...
+  sgl_alloc_order
+  nvmet_tcp_map_data
+  nvmet_tcp_try_recv_pdu
+
+As it's never good to trip a kernel warning remotely due to many systems
+having panic-on-warn enabled, let's silence it by just add GFP_NOWARN to
+the allocation flags.
+
+Assisted-by: gkh_clanker_2000
 Cc: stable <stable@kernel.org>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260731085915.326775-4-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ changed upstream's `timer_delete_sync()` deletion to match this tree's `del_timer_sync()` spelling at the old call site ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/amba-pl011.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/target/tcp.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1171,7 +1171,7 @@ static void pl011_dma_shutdown(struct ua
- 
- 	if (uap->using_tx_dma) {
- 		/* In theory, this should already be done by pl011_dma_flush_buffer */
--		dmaengine_terminate_all(uap->dmatx.chan);
-+		dmaengine_terminate_sync(uap->dmatx.chan);
- 		if (uap->dmatx.queued) {
- 			dma_unmap_single(uap->dmatx.chan->device->dev,
- 					 uap->dmatx.dma, uap->dmatx.len,
-@@ -1184,12 +1184,12 @@ static void pl011_dma_shutdown(struct ua
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -465,14 +465,15 @@ static int nvmet_tcp_map_data(struct nvm
  	}
+ 	cmd->req.transfer_len += len;
  
- 	if (uap->using_rx_dma) {
--		dmaengine_terminate_all(uap->dmarx.chan);
-+		if (uap->dmarx.poll_rate)
-+			timer_delete_sync(&uap->dmarx.timer);
-+		dmaengine_terminate_sync(uap->dmarx.chan);
- 		/* Clean up the RX DMA */
- 		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_a, DMA_FROM_DEVICE);
- 		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_b, DMA_FROM_DEVICE);
--		if (uap->dmarx.poll_rate)
--			del_timer_sync(&uap->dmarx.timer);
- 		uap->using_rx_dma = false;
+-	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
++	cmd->req.sg = sgl_alloc(len, GFP_KERNEL | __GFP_NOWARN,
++				&cmd->req.sg_cnt);
+ 	if (!cmd->req.sg)
+ 		return NVME_SC_INTERNAL;
+ 	cmd->cur_sg = cmd->req.sg;
+ 
+ 	if (nvmet_tcp_has_data_in(cmd)) {
+ 		cmd->iov = kmalloc_array(cmd->req.sg_cnt,
+-				sizeof(*cmd->iov), GFP_KERNEL);
++				sizeof(*cmd->iov), GFP_KERNEL | __GFP_NOWARN);
+ 		if (!cmd->iov)
+ 			goto err;
  	}
- }
 
 
