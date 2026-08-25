@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD65F3749F4;
-	Tue, 25 Aug 2026 13:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04FC481233;
+	Tue, 25 Aug 2026 13:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664802; cv=none; b=BDV4UTv+F3C7xWzEsaL5G2j//xsxREPACGfYldo4zTzmPZ4BNbdYqb0GvYfF46XG/64MAlSeoPfKcSomT3fiYIwOzdXqJUtd/g0Z7pmNWBW0Z07Qjvz8hNlJ0EiCRbp3n6dwWKjoHISvVW0b46dr5ctPi9qpv33osUGWgV8hoKk=
+	t=1787664806; cv=none; b=cc95GwetpNqJ5uDohfNaY7sTeeEzWpq6n3S7Va0VTPhDOLLGVGge73coFj8QeomM0wAXZ25idmGOAOzpHRXv6MTZ4Cj1ZlAS68P+ztvt3WElsoXwDU3CCAoMT1OabR1x0uZppJCohbZG21YTNbnErftYkZXoF0V9OOd4LIgQ2Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664802; c=relaxed/simple;
-	bh=+ezzsGL380dVDTr+W0u7bb8xHQ2phjAFrHSFSNDQ4Fo=;
+	s=arc-20240116; t=1787664806; c=relaxed/simple;
+	bh=pjaLOT2mPJoVISfqzvaudA8mwUL/YXsut/ndahvmyCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YRQGmc3tPMWUsNyGtm8OjrZSUgnbbBxYH9UxBKZXiUEr/eBXcX9XEsk6897DL31v0bi6hgYaE+ZlMU8Pb2gNWXFDvvEa34slfhqayBBpSc+ltM5EBHz4BF+1zKA8vT3We5ou+Yi9LtuVaFMp8tqvIuvdf6ZLq094SETJjxWpDUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrfIOEiP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QGPGFLntWB2iYoWskYc/rX2kO5PC75LW6SzQPvXHeDgI+XOAZXVIv9pIO/1dlAblG7a6vjFFVaLmhMJYI9voK0Cp+F0BWKF7cM2/Ng4k/2YAdKAoMNlNKunZ3H/d9CehLQicaInMW6iCsz2TXAS6v2b0gvobnhtdH56tBsIvyUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFO3TNTe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrfIOEiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F8E1F00A3A;
-	Tue, 25 Aug 2026 13:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFO3TNTe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F1D1F000E9;
+	Tue, 25 Aug 2026 13:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664801;
-	bh=XO58yyT4zo5R+VL+hi6DxiO5GCfUGQhCRbEZOwPwzsM=;
+	s=korg; t=1787664804;
+	bh=FV8Ke7WMn10hMA+TXHDkSjqM3zq0eVEIm6ySKsdsNnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TrfIOEiPNqJFX1OU6LhVdKIIMDUMp40U+KTfF8VzxzbiCkG/Xl3bnjaHMYQXZgJAx
-	 +FHLhXvwaOr9Ep7YroCWv+3Y4ErjKlnHchm2p35dxy6gS9UjtGTeTZ/eruGBAq20kU
-	 /7NsvFbjQxNl1eBVvzKIAuKPzMhd6RiriaIpEqQc=
+	b=JFO3TNTevj4NoGVFU/zVrWDuq51g93owG8m6CNMJn5HQY0VytM083T+1EmEHG7eLM
+	 YmvAbIFP6ZJkuCVZ0OvMyLj0Cc09Ynl0JS6ThnW+qpbFCN36NankJ8ovajO/L4B+vI
+	 xbdKjYtSmFxJfkAs37aLleyn/6wxy1xFGx20/rP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 002/101] xfs: dont livelock in scrub on a circular unlinked list
-Date: Tue, 25 Aug 2026 15:24:40 +0200
-Message-ID: <20260825132542.090084369@linuxfoundation.org>
+Subject: [PATCH 7.1 003/101] xfs: add a xchk_ip_set_corrupt helper
+Date: Tue, 25 Aug 2026 15:24:41 +0200
+Message-ID: <20260825132542.136305032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -52,186 +53,359 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 527eaaefddb6ec5c83a06c9a1559960dd6361753 ]
+[ Upstream commit aa7cfdb6e16b474328c79736f9b9dad09addc81c ]
 
-LOLLM points out that online fsck can livelock if an unlinked inode list
-contains a loop.  Use a bitmap to detect cycles.
+Add a smaller wrapper to set a inode corrupted by the xfs_inode
+pointer.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: a12890aebb8959 ("xfs: scrub the AGI")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: 8ed78104722b ("xfs: rtsummary scrub should treat rtbitmap corruption errors as an xref error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader.c        |   44 +++++++++++++++++++++++++++++++++--------
- fs/xfs/scrub/agheader_repair.c |   17 +++++++++++++--
- 2 files changed, 51 insertions(+), 10 deletions(-)
+ fs/xfs/scrub/bmap.c      |    8 ++++----
+ fs/xfs/scrub/common.c    |   10 +++++-----
+ fs/xfs/scrub/common.h    |    2 ++
+ fs/xfs/scrub/dir.c       |    2 +-
+ fs/xfs/scrub/dirtree.c   |    4 ++--
+ fs/xfs/scrub/metapath.c  |    6 +++---
+ fs/xfs/scrub/nlinks.c    |   12 ++++++------
+ fs/xfs/scrub/parent.c    |    6 +++---
+ fs/xfs/scrub/rtbitmap.c  |   12 ++++++------
+ fs/xfs/scrub/rtsummary.c |   12 ++++++------
+ 10 files changed, 38 insertions(+), 36 deletions(-)
 
---- a/fs/xfs/scrub/agheader.c
-+++ b/fs/xfs/scrub/agheader.c
-@@ -18,6 +18,8 @@
- #include "xfs_inode.h"
- #include "scrub/scrub.h"
- #include "scrub/common.h"
-+#include "scrub/bitmap.h"
-+#include "scrub/agino_bitmap.h"
+--- a/fs/xfs/scrub/bmap.c
++++ b/fs/xfs/scrub/bmap.c
+@@ -1040,7 +1040,7 @@ xchk_bmap(
+ 	case XFS_COW_FORK:
+ 		/* No CoW forks filesystem doesn't support out of place writes */
+ 		if (!xfs_has_reflink(mp) && !xfs_has_zoned(mp)) {
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 			return 0;
+ 		}
+ 		break;
+@@ -1052,7 +1052,7 @@ xchk_bmap(
+ 		 * attr here.
+ 		 */
+ 		if (!xfs_has_attr(mp))
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 		break;
+ 	default:
+ 		ASSERT(whichfork == XFS_DATA_FORK);
+@@ -1137,7 +1137,7 @@ xchk_bmap_data(
+ 	int			error;
  
- int
- xchk_setup_agheader(
-@@ -935,7 +937,8 @@ xchk_agi_xref(
- /*
-  * Walk the incore unlinked list for a particular AGI bucket to construct
-  * the unlinked inode bitmap for later reconstruction of the unlinked list.
-- * Returns 1 if we should keep checking, or 0 to stop checking.
-+ * Returns 1 if we should keep checking, 0 to stop checking, or a negative
-+ * errno.
-  */
- static int
- xchk_iunlink_bucket(
-@@ -943,36 +946,57 @@ xchk_iunlink_bucket(
- 	unsigned int			bucket,
- 	xfs_agino_t			agino)
+ 	if (xchk_file_looks_zapped(sc, XFS_SICK_INO_BMBTD_ZAPPED)) {
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 		return 0;
+ 	}
+ 
+@@ -1165,7 +1165,7 @@ xchk_bmap_attr(
+ 	 * returning immediately.
+ 	 */
+ 	if (xchk_file_looks_zapped(sc, XFS_SICK_INO_BMBTA_ZAPPED)) {
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 		return 0;
+ 	}
+ 
+--- a/fs/xfs/scrub/common.c
++++ b/fs/xfs/scrub/common.c
+@@ -1110,7 +1110,7 @@ xchk_install_live_inode(
+ 	struct xfs_inode	*ip)
  {
-+	struct xagino_bitmap		seen;
-+	int				ret;
-+
-+	xagino_bitmap_init(&seen);
-+
- 	while (agino != NULLAGINO) {
- 		struct xfs_inode	*ip;
-+		unsigned int		len = 1;
- 
- 		if (agino % XFS_AGI_UNLINKED_BUCKETS != bucket) {
- 			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
--			return 0;
-+			goto bad;
-+		}
-+
-+		if (xagino_bitmap_test(&seen, agino, &len)) {
-+			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
-+			goto bad;
- 		}
- 
- 		ip = xfs_iunlink_lookup(sc->sa.pag, agino);
- 		if (!ip) {
- 			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
--			return 0;
-+			goto bad;
- 		}
- 
- 		if (!xfs_inode_on_unlinked_list(ip)) {
- 			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
--			return 0;
-+			goto bad;
- 		}
- 
-+		ret = xagino_bitmap_set(&seen, agino, 1);
-+		if (ret)
-+			goto out_bitmap;
-+
- 		agino = ip->i_next_unlinked;
- 	}
-+	ret = 1;
- 
--	return 1;
-+out_bitmap:
-+	xagino_bitmap_destroy(&seen);
-+	return ret;
-+bad:
-+	ret = 0;
-+	goto out_bitmap;
- }
- 
- /*
-  * Check the unlinked buckets for links to bad inodes.  We hold the AGI, so
-  * there cannot be any threads updating unlinked list pointers in this AG.
-  */
--STATIC void
-+STATIC int
- xchk_iunlink(
- 	struct xfs_scrub	*sc,
- 	struct xfs_agi		*agi)
-@@ -985,8 +1009,10 @@ xchk_iunlink(
- 		ret = xchk_iunlink_bucket(sc, i,
- 				be32_to_cpu(agi->agi_unlinked[i]));
- 		if (ret < 1)
--			return;
-+			return ret;
- 	}
-+
-+	return 0;
- }
- 
- /* Scrub the AGI. */
-@@ -1073,7 +1099,9 @@ xchk_agi(
- 	if (pag->pagi_freecount != be32_to_cpu(agi->agi_freecount))
- 		xchk_block_set_corrupt(sc, sc->sa.agi_bp);
- 
--	xchk_iunlink(sc, agi);
-+	error = xchk_iunlink(sc, agi);
-+	if (error)
-+		goto out;
- 
- 	xchk_agi_xref(sc);
- out:
---- a/fs/xfs/scrub/agheader_repair.c
-+++ b/fs/xfs/scrub/agheader_repair.c
-@@ -1096,18 +1096,22 @@ xrep_iunlink_walk_ondisk_bucket(
- 	struct xrep_agi		*ragi,
- 	unsigned int		bucket)
- {
-+	struct xagino_bitmap	seen;
- 	struct xfs_scrub	*sc = ragi->sc;
- 	struct xfs_agi		*agi = ragi->agi_bp->b_addr;
- 	xfs_agino_t		prev_agino = NULLAGINO;
- 	xfs_agino_t		next_agino;
- 	int			error = 0;
- 
-+	xagino_bitmap_init(&seen);
-+
- 	next_agino = be32_to_cpu(agi->agi_unlinked[bucket]);
- 	while (next_agino != NULLAGINO) {
- 		xfs_agino_t	agino = next_agino;
-+		unsigned int	len = 1;
- 
- 		if (xchk_should_terminate(ragi->sc, &error))
--			return error;
-+			goto out_bitmap;
- 
- 		trace_xrep_iunlink_walk_ondisk_bucket(sc->sa.pag, bucket,
- 				prev_agino, agino);
-@@ -1115,6 +1119,9 @@ xrep_iunlink_walk_ondisk_bucket(
- 		if (bucket != agino % XFS_AGI_UNLINKED_BUCKETS)
- 			break;
- 
-+		if (xagino_bitmap_test(&seen, agino, &len))
-+			break;
-+
- 		next_agino = xrep_iunlink_next(sc, agino);
- 		if (!next_agino) {
- 			error = xrep_iunlink_reload_next(ragi, prev_agino,
-@@ -1123,10 +1130,16 @@ xrep_iunlink_walk_ondisk_bucket(
- 				break;
- 		}
- 
-+		error = xagino_bitmap_set(&seen, agino, 1);
-+		if (error)
-+			goto out_bitmap;
-+
- 		prev_agino = agino;
+ 	if (!igrab(VFS_I(ip))) {
+-		xchk_ino_set_corrupt(sc, ip->i_ino);
++		xchk_ip_set_corrupt(sc, ip);
+ 		return -EFSCORRUPTED;
  	}
  
--	return 0;
-+out_bitmap:
-+	xagino_bitmap_destroy(&seen);
-+	return error;
- }
+@@ -1439,13 +1439,13 @@ xchk_metadata_inode_forks(
  
- /* Decide if this is an unlinked inode in this AG. */
+ 	/* Metadata inodes don't live on the rt device. */
+ 	if (sc->ip->i_diflags & XFS_DIFLAG_REALTIME) {
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 		return 0;
+ 	}
+ 
+ 	/* They should never participate in reflink. */
+ 	if (xfs_is_reflink_inode(sc->ip)) {
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 		return 0;
+ 	}
+ 
+@@ -1462,7 +1462,7 @@ xchk_metadata_inode_forks(
+ 				&error))
+ 			return error;
+ 		if (shared)
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 	}
+ 
+ 	/*
+@@ -1471,7 +1471,7 @@ xchk_metadata_inode_forks(
+ 	 */
+ 	if (xfs_inode_hasattr(sc->ip)) {
+ 		if (!xfs_has_metadir(sc->mp)) {
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 			return 0;
+ 		}
+ 
+--- a/fs/xfs/scrub/common.h
++++ b/fs/xfs/scrub/common.h
+@@ -32,6 +32,8 @@ void xchk_set_corrupt(struct xfs_scrub *
+ void xchk_block_set_corrupt(struct xfs_scrub *sc,
+ 		struct xfs_buf *bp);
+ void xchk_ino_set_corrupt(struct xfs_scrub *sc, xfs_ino_t ino);
++#define xchk_ip_set_corrupt(_sc, _ip) \
++	xchk_ino_set_corrupt((_sc), (_ip)->i_ino)
+ void xchk_fblock_set_corrupt(struct xfs_scrub *sc, int whichfork,
+ 		xfs_fileoff_t offset);
+ #ifdef CONFIG_XFS_QUOTA
+--- a/fs/xfs/scrub/dir.c
++++ b/fs/xfs/scrub/dir.c
+@@ -1080,7 +1080,7 @@ xchk_directory(
+ 
+ 	/* Plausible size? */
+ 	if (sc->ip->i_disk_size < xfs_dir2_sf_hdr_size(0)) {
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 		return 0;
+ 	}
+ 
+--- a/fs/xfs/scrub/dirtree.c
++++ b/fs/xfs/scrub/dirtree.c
+@@ -979,10 +979,10 @@ xchk_dirtree(
+ 	xchk_dirtree_evaluate(dl, &oc);
+ 	if (xchk_dirtree_parentless(dl)) {
+ 		if (oc.good || oc.bad || oc.suspect)
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 	} else {
+ 		if (oc.bad || oc.good + oc.suspect != 1)
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 		if (oc.suspect)
+ 			xchk_ino_xref_set_corrupt(sc, sc->ip->i_ino);
+ 	}
+--- a/fs/xfs/scrub/metapath.c
++++ b/fs/xfs/scrub/metapath.c
+@@ -314,7 +314,7 @@ xchk_metapath(
+ 
+ 	/* Parent required to do anything else. */
+ 	if (mpath->dp == NULL) {
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 		return 0;
+ 	}
+ 
+@@ -329,7 +329,7 @@ xchk_metapath(
+ 	trace_xchk_metapath_lookup(sc, mpath->path, mpath->dp, ino);
+ 	if (error == -ENOENT) {
+ 		/* No directory entry at all */
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 		error = 0;
+ 		goto out_ilock;
+ 	}
+@@ -337,7 +337,7 @@ xchk_metapath(
+ 		goto out_ilock;
+ 	if (ino != sc->ip->i_ino) {
+ 		/* Pointing to wrong inode */
+-		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++		xchk_ip_set_corrupt(sc, sc->ip);
+ 	}
+ 
+ out_ilock:
+--- a/fs/xfs/scrub/nlinks.c
++++ b/fs/xfs/scrub/nlinks.c
+@@ -719,7 +719,7 @@ xchk_nlinks_compare_inode(
+ 	 * count, but it will let them decrease it.
+ 	 */
+ 	if (total_links > XFS_NLINK_PINNED) {
+-		xchk_ino_set_corrupt(sc, ip->i_ino);
++		xchk_ip_set_corrupt(sc, ip);
+ 		goto out_corrupt;
+ 	} else if (total_links > XFS_MAXLINK) {
+ 		xchk_ino_set_warning(sc, ip->i_ino);
+@@ -727,7 +727,7 @@ xchk_nlinks_compare_inode(
+ 
+ 	/* Link counts should match. */
+ 	if (total_links != actual_nlink) {
+-		xchk_ino_set_corrupt(sc, ip->i_ino);
++		xchk_ip_set_corrupt(sc, ip);
+ 		goto out_corrupt;
+ 	}
+ 
+@@ -748,7 +748,7 @@ xchk_nlinks_compare_inode(
+ 		 * back references.
+ 		 */
+ 		if (obs.backrefs != 0) {
+-			xchk_ino_set_corrupt(sc, ip->i_ino);
++			xchk_ip_set_corrupt(sc, ip);
+ 			goto out_corrupt;
+ 		}
+ 
+@@ -757,7 +757,7 @@ xchk_nlinks_compare_inode(
+ 		 * children.
+ 		 */
+ 		if (obs.children != 0) {
+-			xchk_ino_set_corrupt(sc, ip->i_ino);
++			xchk_ip_set_corrupt(sc, ip);
+ 			goto out_corrupt;
+ 		}
+ 	}
+@@ -770,7 +770,7 @@ xchk_nlinks_compare_inode(
+ 		 * the root directory.
+ 		 */
+ 		if (obs.parents != 1) {
+-			xchk_ino_set_corrupt(sc, ip->i_ino);
++			xchk_ip_set_corrupt(sc, ip);
+ 			goto out_corrupt;
+ 		}
+ 	} else if (actual_nlink > 0) {
+@@ -779,7 +779,7 @@ xchk_nlinks_compare_inode(
+ 		 * least one parent.
+ 		 */
+ 		if (obs.parents == 0) {
+-			xchk_ino_set_corrupt(sc, ip->i_ino);
++			xchk_ip_set_corrupt(sc, ip);
+ 			goto out_corrupt;
+ 		}
+ 	}
+--- a/fs/xfs/scrub/parent.c
++++ b/fs/xfs/scrub/parent.c
+@@ -729,10 +729,10 @@ xchk_parent_count_pptrs(
+ 			pp->pptrs_found++;
+ 
+ 		if (VFS_I(sc->ip)->i_nlink == 0 && pp->pptrs_found > 0)
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 		else if (VFS_I(sc->ip)->i_nlink > 0 &&
+ 			 pp->pptrs_found == 0)
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 	} else {
+ 		/*
+ 		 * Starting with metadir, we allow checking of parent pointers
+@@ -743,7 +743,7 @@ xchk_parent_count_pptrs(
+ 			pp->pptrs_found++;
+ 
+ 		if (VFS_I(sc->ip)->i_nlink != pp->pptrs_found)
+-			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
++			xchk_ip_set_corrupt(sc, sc->ip);
+ 	}
+ 
+ 	return 0;
+--- a/fs/xfs/scrub/rtbitmap.c
++++ b/fs/xfs/scrub/rtbitmap.c
+@@ -200,13 +200,13 @@ xchk_rtbitmap(
+ 
+ 	/* Is sb_rextents correct? */
+ 	if (mp->m_sb.sb_rextents != rtb->rextents) {
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 
+ 	/* Is sb_rextslog correct? */
+ 	if (mp->m_sb.sb_rextslog != rtb->rextslog) {
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 
+@@ -215,17 +215,17 @@ xchk_rtbitmap(
+ 	 * case can we exceed 4bn bitmap blocks since the super field is a u32.
+ 	 */
+ 	if (rtb->rbmblocks > U32_MAX) {
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 	if (mp->m_sb.sb_rbmblocks != rtb->rbmblocks) {
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 
+ 	/* The bitmap file length must be aligned to an fsblock. */
+ 	if (rbmip->i_disk_size & mp->m_blockmask) {
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 
+@@ -235,7 +235,7 @@ xchk_rtbitmap(
+ 	 * file can be larger than sb_rbmblocks.
+ 	 */
+ 	if (rbmip->i_disk_size < XFS_FSB_TO_B(mp, rtb->rbmblocks)) {
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 
+--- a/fs/xfs/scrub/rtsummary.c
++++ b/fs/xfs/scrub/rtsummary.c
+@@ -314,25 +314,25 @@ xchk_rtsummary(
+ 
+ 	/* Is sb_rextents correct? */
+ 	if (mp->m_sb.sb_rextents != rts->rextents) {
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 
+ 	/* Is m_rsumlevels correct? */
+ 	if (mp->m_rsumlevels != rts->rsumlevels) {
+-		xchk_ino_set_corrupt(sc, rsumip->i_ino);
++		xchk_ip_set_corrupt(sc, rsumip);
+ 		return 0;
+ 	}
+ 
+ 	/* Is m_rsumsize correct? */
+ 	if (mp->m_rsumblocks != rts->rsumblocks) {
+-		xchk_ino_set_corrupt(sc, rsumip->i_ino);
++		xchk_ip_set_corrupt(sc, rsumip);
+ 		return 0;
+ 	}
+ 
+ 	/* The summary file length must be aligned to an fsblock. */
+ 	if (rsumip->i_disk_size & mp->m_blockmask) {
+-		xchk_ino_set_corrupt(sc, rsumip->i_ino);
++		xchk_ip_set_corrupt(sc, rsumip);
+ 		return 0;
+ 	}
+ 
+@@ -342,7 +342,7 @@ xchk_rtsummary(
+ 	 * the file can be larger than rsumsize.
+ 	 */
+ 	if (rsumip->i_disk_size < XFS_FSB_TO_B(mp, rts->rsumblocks)) {
+-		xchk_ino_set_corrupt(sc, rsumip->i_ino);
++		xchk_ip_set_corrupt(sc, rsumip);
+ 		return 0;
+ 	}
+ 
+@@ -358,7 +358,7 @@ xchk_rtsummary(
+ 		 * EFSCORRUPTED means the rtbitmap is corrupt, which is an xref
+ 		 * error since we're checking the summary file.
+ 		 */
+-		xchk_ino_set_corrupt(sc, rbmip->i_ino);
++		xchk_ip_set_corrupt(sc, rbmip);
+ 		return 0;
+ 	}
+ 	if (error)
 
 
