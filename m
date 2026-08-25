@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A521A47F766;
-	Tue, 25 Aug 2026 13:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD25F480968;
+	Tue, 25 Aug 2026 13:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664688; cv=none; b=Puksg5sn6CQAuNsdWXMHT1M69mnIWDd5tt+3GwwSEBy259IlHWOO6GQhtZ9gvvCaFO8j38uEoJGEJZLDzu2Lql6hIArdCNGyk+A5xMhDkM3L86od8Syk3J62uxxn5nfPmKZIMXhkMZCDTThZ5cIjhOPgHVUdasnMnUuFvEOIhjM=
+	t=1787664690; cv=none; b=Rd1WhhRwmMforxnl1RJQPRV4oGD0+RwQbdDxsUveYvwDiINdXRtxhai5WUmFTxi3KAe+bYtpqJrGSVSK2ruKYfcDF86Z1iGpFCAXY9d1t5HOTi8AkTmQKDpZvO1jCpmM2qFuZfah5TFnx2JavblnKDT+FxVe9MJ8T75QkQhRa7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664688; c=relaxed/simple;
-	bh=B3ux2Oje9jDLogQNYjgNYggIREpwR4HhyWEcKi8OzSU=;
+	s=arc-20240116; t=1787664690; c=relaxed/simple;
+	bh=/F9pb37zMWn3mqv4R7KvA5Vn7r755NT44zNgdyY2IR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Er90anVMI9uhwXMJziwrU2QtBykn1n8YAdg7qjLPWAPGI+tzzpr8giqJ1ZhSKB9eyYHU73ZwhgY232S+7sd7/ao1A88p6mQxWTyJee5yg+xOjwtyADcC6WpsUiEbN51EN7AJKpo3RkjSE9TibnG7PUTYIdE9F4YMa237BdjZ8tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxBoiA9B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o+/U7QMWUPYkBOxxQ2GcBWdUHSmNLVtpoo5HB+oZZXm1wnenjXP7833U0L1s0HhdrH8vhdpVvNbyBUJDqvwg7NbISEg6JWYxA/ZvJxhZy+XptJRpni0q3LpCBuIfkMLEz1BzmL4QFLjFX92oiYcpe5jVms00EqEfq6Ofpk3uKbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz5G3pOa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxBoiA9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040A71F00A3D;
-	Tue, 25 Aug 2026 13:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz5G3pOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DB71F00A3A;
+	Tue, 25 Aug 2026 13:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664687;
-	bh=FJ5U33pffFhVdyE69R9fw2I6sCFuMEvc0hDJU92YvKA=;
+	s=korg; t=1787664684;
+	bh=/dQLDu+h4ghLhKieZbLUzTq29xXNDC8C2HMguvPz7vU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uxBoiA9B7jo5HDfZ2OrtE9/ZmRyWGr5kwHN8k3V5hAcFPx1ogdE6QQIEMJJC+txQS
-	 eiuC3LayXUZvjxPfPXuwoCzwHeP9KvZ/jVirl8SG1Q61aN5CLSswJ/ncxuoqhbIGYY
-	 S6mjZ1cZRQlydoS4C909wpouI5eADK4SJD6mn/yM=
+	b=Gz5G3pOaB2k0QAQs/VWLIQAALOemT83Qr88aMyOtG+8nRWzrlCLipvlMBkLywbnt6
+	 W8vo2+9lqreN3qLXWd131j/+49aKHYo06BWOBZ/+g6yMmQywz2obsif/ZfpwRACkqa
+	 23iSHF+kqGyVHZqfSn2CxYW0x0fVatMkjN0QADlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	stable <stable@kernel.org>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 54/82] nvmet: pci-epf: fix use-after-free in nvmet_pci_epf_exec_iod_work()
-Date: Tue, 25 Aug 2026 15:25:41 +0200
-Message-ID: <20260825132543.636799156@linuxfoundation.org>
+Subject: [PATCH 7.2 53/82] nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
+Date: Tue, 25 Aug 2026 15:25:40 +0200
+Message-ID: <20260825132543.599586111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -52,99 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c9e9bb757971485b4e8414b1744507af186d72c9 upstream.
+commit 737a3b535247226f6e1a7988fd9d6e63e7d6fc71 upstream.
 
-nvmet_pci_epf_exec_iod_work() submits an I/O command with req->execute()
-and then waits for the command to complete and transfers the data back
-to the host. This wait is not needed for commands that do not transfer
-data from the device to the host. To decide whether that wait is needed,
-it reads iod->data_len and iod->dma_dir after calling req->execute().
+When fuzzing the nvme target code, I tripped a kernel warning in
+nvmet_tcp_map_data() because the length passed into the allocator is
+controlled by the remote initiator.
 
-However, once req->execute() is called, the command may complete
-asynchronously on another CPU. For commands that do not require a
-device-to-host data transfer, nvmet_pci_epf_queue_response() calls
-nvmet_pci_epf_complete_iod() directly, which can free the iod before it
-reads iod->data_len and iod->dma_dir, resulting in the KFENCE use-after-
-free:
+A remote initiator that sends a command with an SGL claiming a huge
+number, can create a scatterlist and iovec allocation of over 1 million
+entries, which causes the backing kmalloc call to exceed MAX_PAGE_ORDER
+and then the page allocator will trip on a WARN_ON_ONCE_GFP() message:
 
- BUG: KFENCE: use-after-free read in nvmet_pci_epf_exec_iod_work+0x288/0x798 [nvmet_pci_epf]
+  WARNING: mm/page_alloc.c:5280 __alloc_frozen_pages_noprof
+  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
+  ...
+  sgl_alloc_order
+  nvmet_tcp_map_data
+  nvmet_tcp_try_recv_pdu
 
- Use-after-free read at 0x00000000fdfa6d03 (in kfence-#63):
-  nvmet_pci_epf_exec_iod_work+0x288/0x798 [nvmet_pci_epf]
-  process_one_work+0x15c/0x4f0
-  worker_thread+0x18c/0x30c
-  kthread+0x130/0x140
-  ret_from_fork+0x10/0x20
+As it's never good to trip a kernel warning remotely due to many systems
+having panic-on-warn enabled, let's silence it by just add GFP_NOWARN to
+the allocation flags.
 
- kfence-#63: 0x00000000e3de0e71-0x00000000c938ad62, size=712, cache=kmalloc-1k
-
- allocated by task 10 on cpu 0 at 73.995480s (0.005122s ago):
-  mempool_kmalloc+0x1c/0x28
-  mempool_alloc_noprof+0x40/0x9c
-  nvmet_pci_epf_poll_sqs_work+0xd4/0x344 [nvmet_pci_epf]
-  process_one_work+0x15c/0x4f0
-  worker_thread+0x18c/0x30c
-  kthread+0x130/0x140
-  ret_from_fork+0x10/0x20
-
- freed by task 131 on cpu 3 at 73.995521s (0.008385s ago):
-  mempool_kfree+0x10/0x20
-  mempool_free+0x44/0x64
-  nvmet_pci_epf_free_iod+0x88/0x98 [nvmet_pci_epf]
-  nvmet_pci_epf_cq_work+0xfc/0x280 [nvmet_pci_epf]
-  process_one_work+0x15c/0x4f0
-  worker_thread+0x18c/0x30c
-  kthread+0x130/0x140
-  ret_from_fork+0x10/0x20
-
-Fix this by referring to iod->data_len and iod->dma_dir before calling
-req->execute(). The remaining iod accesses such as iod->status are only
-reached on the device-to-host read path. In this case,
-nvmet_pci_epf_queue_response() signals iod->done instead of freeing the
-iod, so the iod stays valid.
-
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/pci-epf.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/nvme/target/tcp.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -1594,6 +1594,7 @@ static void nvmet_pci_epf_exec_iod_work(
- 	struct nvmet_pci_epf_iod *iod =
- 		container_of(work, struct nvmet_pci_epf_iod, work);
- 	struct nvmet_req *req = &iod->req;
-+	bool no_wait;
- 	int ret;
- 
- 	if (!iod->ctrl->link_up) {
-@@ -1638,14 +1639,16 @@ static void nvmet_pci_epf_exec_iod_work(
- 		}
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -446,13 +446,15 @@ static int nvmet_tcp_map_data(struct nvm
  	}
+ 	cmd->req.transfer_len += len;
  
--	req->execute(req);
--
- 	/*
- 	 * If we do not have data to transfer after the command execution
- 	 * finishes, nvmet_pci_epf_queue_response() will complete the command
- 	 * directly. No need to wait for the completion in this case.
- 	 */
--	if (!iod->data_len || iod->dma_dir != DMA_TO_DEVICE)
-+	no_wait = !iod->data_len || iod->dma_dir != DMA_TO_DEVICE;
-+
-+	req->execute(req);
-+
-+	if (no_wait)
- 		return;
+-	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
++	cmd->req.sg = sgl_alloc(len, GFP_KERNEL | __GFP_NOWARN,
++				&cmd->req.sg_cnt);
+ 	if (!cmd->req.sg)
+ 		return NVME_SC_INTERNAL;
+ 	cmd->cur_sg = cmd->req.sg;
  
- 	wait_for_completion(&iod->done);
+ 	if (nvmet_tcp_has_data_in(cmd)) {
+-		cmd->iov = kmalloc_objs(*cmd->iov, cmd->req.sg_cnt);
++		cmd->iov = kmalloc_objs(*cmd->iov, cmd->req.sg_cnt,
++					GFP_KERNEL | __GFP_NOWARN);
+ 		if (!cmd->iov)
+ 			goto err;
+ 	}
 
 
