@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FA63FF8BA;
-	Tue, 25 Aug 2026 13:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483BA480320;
+	Tue, 25 Aug 2026 13:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664741; cv=none; b=WpVu4NIUcUo/cplL2O6f/NUPzPPY6FwLyEI9WgoA519MjDEJxhwHwKlJVsnxr6V3cx+G0du8/qXcn1Y44I8VCgRnENjbWo263+329gDXgSWhJQkOjVfjFz8M0TuWHzsjgNsZx1VwFEVuU6v91j3/LES97RWWNqvbOS/ZXpU/M70=
+	t=1787664744; cv=none; b=DYJZrIox71K3zRJB+zHIdqPujpOdORty8rFnl5/0JdtNPYf4WhaOVs+B1U4jK6rIQjuJEoi7y0wjNfnE9TWlBKpBg3B/lJjQKp2cLV1hKhp+mwok/NXDjzz89NGtYekZyHAjHYzcBAhJc77u343NrZdP5AiSAiaT6TE3BCX4paE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664741; c=relaxed/simple;
-	bh=yX3QcestyasPlsA8/G+/8SUKeYCNugM1arJBXH5Fak0=;
+	s=arc-20240116; t=1787664744; c=relaxed/simple;
+	bh=GVViSIJ0cBHPskrhndkLJCibcLQ1r0zxbO7DnwbQEYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSt6tZRknBqqiWByw8RLmY6pKmAYkb9ohmyA5T5d5rNgBhwhFqcMJubolNGDtn+ja64L5OqOOlEoeCOoxXQkxokjJhr1jjvVU9m6z9jVLYypyI/cFyyinR5DJztyPqzzkdKsYILXccIB2nPQxIYNGD2znXLi+9tYJtcNVOOWwN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuoMfW/p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pcbRNSr1hG+XYgLeBPp7OqCcmpGSy9S0viOiS22NJ9m6/KyeW5ukwH0KXkE3xzfCZ3kKb2LZMz51Wkp9mt1WrloaCVthXkBkMU5vYdbRGixK4VzRDROOuHwtB9pqokHUVc8QT/1T0zjSn5ujIFHLqc9SQzkrls1fKwndL45fbJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTWe9DGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuoMfW/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C016B1F000E9;
-	Tue, 25 Aug 2026 13:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTWe9DGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F5E1F000E9;
+	Tue, 25 Aug 2026 13:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664740;
-	bh=la0X9WRWryFmSIZg0xbkdXUj099Q71FLbxa9rqrGfYs=;
+	s=korg; t=1787664743;
+	bh=PhYnTU/gXdT3tISRh7KU/sAuz0CGZojYR6o3/w12RUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kuoMfW/pFmrFufphko+zmt7swTw7ZGxXjph9jbZxP1+e+/Wyp75ZfbXgbDgLD4zEc
-	 S+2owtN8G448APuMf2SVekJZh6z8EoDru5f+RTSn/L/ZKM8ASnem4YqcGo11IpMFAC
-	 nm7BLxTBobEJhJuFwwgTzbyum9BfejA1xJDKe+MQ=
+	b=nTWe9DGZtfQxW9gPnckfF4GIGz8EvRmTZEZdWFJF4ZKkAWed+XSpHwLRmhsRhtpfO
+	 hA++YrJUIcPdB18MQ+ScUU9s+2AI64T1vHVxr/81+r15MF9+ZHNUp/zmtXjMVUJOZH
+	 vrmWpW548rOVZmbODpHI03CDYpoOTdRkRxYrMFLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>,
-	Michael Zaidman <michael.zaidman@gmail.com>,
+	Sashiko AI Review <sashiko-bot@kernel.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 70/82] HID: ft260: fix stack-use-after-return write in I2C read race
-Date: Tue, 25 Aug 2026 15:25:57 +0200
-Message-ID: <20260825132544.236748680@linuxfoundation.org>
+Subject: [PATCH 7.2 71/82] HID: sensor: custom: Fix use-after-free in enable_sensor
+Date: Tue, 25 Aug 2026 15:25:58 +0200
+Message-ID: <20260825132544.276182893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,147 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit bf3e39df3a397fd82967a31d17c4e02c7feab221 upstream.
+commit ad8fb82b04422f49530d2aa2753cc81d1c60102c upstream.
 
-ft260_i2c_read() points dev->read_buf at a caller-supplied buffer
-(often an on-stack variable), arms a completion and waits up to five
-seconds for the device to return the data. The HID input callback
-ft260_raw_event() runs in the input/IRQ path, independent of the
-dev->lock mutex held by the read path, and copies the device-supplied
-payload into dev->read_buf after a plain NULL check.
+enable_sensor_store() can call set_power_report_state(), which
+dereferences sensor_inst->power_state and sensor_inst->report_state.
+These pointers refer to entries in sensor_inst->fields.
 
-These two paths share read_buf, read_idx and read_len with no
-serialization. If the device delays its response until the read
-times out, ft260_i2c_read() resets the controller, clears read_buf
-and returns, unwinding the stack frame the buffer lived in. A
-response that arrives at that moment lets ft260_raw_event() pass the
-NULL check and then memcpy() the device-controlled payload into the
-now-freed stack location, a bounded but attacker-influenced
-stack-use-after-return write triggerable by malicious or
-malfunctioning hardware.
+Create the field attributes before exposing the enable_sensor sysfs
+attribute, so enable_sensor cannot be accessed before the state it
+depends on has been initialized.
 
-Add a dedicated spinlock that serializes every access to read_buf,
-read_idx and read_len. ft260_raw_event() now holds it across the
-NULL check, the memcpy and the index update, while the read path
-takes it when arming and when clearing the buffer, so the teardown
-can no longer slip between the check and the copy.
+On remove, delete enable_sensor before freeing the field attributes,
+so a concurrent sysfs write cannot dereference freed memory through
+power_state or report_state.
 
-Fixes: 6a82582d9fa4 ("HID: ft260: add usb hid to i2c host bridge driver")
+Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260623021950.1736413-1-haoxiang_li2024@163.com?part=1
+Fixes: 4a7de0519df5 ("HID: sensor: Custom and Generic sensor support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
-Reviewed-by: Michael Zaidman <michael.zaidman@gmail.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ft260.c |   25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/hid/hid-sensor-custom.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/hid/hid-ft260.c
-+++ b/drivers/hid/hid-ft260.c
-@@ -240,6 +240,8 @@ struct ft260_device {
- 	struct mutex lock;
- 	u8 write_buf[FT260_REPORT_MAX_LENGTH];
- 	unsigned long need_wakeup_at;
-+	/* Protects read_buf, read_idx and read_len against ft260_raw_event() */
-+	spinlock_t read_lock;
- 	u8 *read_buf;
- 	u16 read_idx;
- 	u16 read_len;
-@@ -501,6 +503,7 @@ static int ft260_i2c_read(struct ft260_d
- 	int timeout, ret = 0;
- 	struct ft260_i2c_read_request_report rep;
- 	struct hid_device *hdev = dev->hdev;
-+	unsigned long irqflags;
- 	u8 bus_busy = 0;
+--- a/drivers/hid/hid-sensor-custom.c
++++ b/drivers/hid/hid-sensor-custom.c
+@@ -1005,26 +1005,26 @@ static int hid_sensor_custom_probe(struc
+ 		return ret;
+ 	}
  
- 	if ((flag & FT260_FLAG_START_REPEATED) == FT260_FLAG_START_REPEATED)
-@@ -526,9 +529,11 @@ static int ft260_i2c_read(struct ft260_d
+-	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
+-				 &enable_sensor_attr_group);
++	ret = hid_sensor_custom_add_attributes(sensor_inst);
+ 	if (ret)
+ 		goto err_remove_callback;
  
- 		reinit_completion(&dev->wait);
+-	ret = hid_sensor_custom_add_attributes(sensor_inst);
++	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
++				 &enable_sensor_attr_group);
+ 	if (ret)
+-		goto err_remove_group;
++		goto err_remove_attributes;
  
-+		spin_lock_irqsave(&dev->read_lock, irqflags);
- 		dev->read_idx = 0;
- 		dev->read_buf = data;
- 		dev->read_len = rd_len;
-+		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 	ret = hid_sensor_custom_dev_if_add(sensor_inst);
+ 	if (ret)
+-		goto err_remove_attributes;
++		goto err_remove_group;
  
- 		ret = ft260_hid_output_report(hdev, (u8 *)&rep, sizeof(rep));
- 		if (ret < 0) {
-@@ -543,7 +548,9 @@ static int ft260_i2c_read(struct ft260_d
- 			goto ft260_i2c_read_exit;
- 		}
+ 	return 0;
  
-+		spin_lock_irqsave(&dev->read_lock, irqflags);
- 		dev->read_buf = NULL;
-+		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+-err_remove_attributes:
+-	hid_sensor_custom_remove_attributes(sensor_inst);
+ err_remove_group:
+ 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
+ 			   &enable_sensor_attr_group);
++err_remove_attributes:
++	hid_sensor_custom_remove_attributes(sensor_inst);
+ err_remove_callback:
+ 	sensor_hub_remove_callback(hsdev, hsdev->usage);
  
- 		if (flag & FT260_FLAG_STOP)
- 			bus_busy = FT260_I2C_STATUS_BUS_BUSY;
-@@ -562,7 +569,9 @@ static int ft260_i2c_read(struct ft260_d
- 	} while (len > 0);
+@@ -1042,9 +1042,10 @@ static void hid_sensor_custom_remove(str
+ 	}
  
- ft260_i2c_read_exit:
-+	spin_lock_irqsave(&dev->read_lock, irqflags);
- 	dev->read_buf = NULL;
-+	spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 	return ret;
+ 	hid_sensor_custom_dev_if_remove(sensor_inst);
+-	hid_sensor_custom_remove_attributes(sensor_inst);
++	/* Remove enable_sensor first as it uses fields via power_state/report_state. */
+ 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
+ 			   &enable_sensor_attr_group);
++	hid_sensor_custom_remove_attributes(sensor_inst);
+ 	sensor_hub_remove_callback(hsdev, hsdev->usage);
  }
  
-@@ -1018,6 +1027,7 @@ static int ft260_probe(struct hid_device
- 		 "FT260 usb-i2c bridge");
- 
- 	mutex_init(&dev->lock);
-+	spin_lock_init(&dev->read_lock);
- 	init_completion(&dev->wait);
- 
- 	ret = ft260_xfer_status(dev, FT260_I2C_STATUS_BUS_BUSY);
-@@ -1067,6 +1077,7 @@ static int ft260_raw_event(struct hid_de
- {
- 	struct ft260_device *dev = hid_get_drvdata(hdev);
- 	struct ft260_i2c_input_report *xfer = (void *)data;
-+	unsigned long irqflags;
- 
- 	if (size < offsetof(struct ft260_i2c_input_report, data)) {
- 		hid_err(hdev, "short report %d\n", size);
-@@ -1075,6 +1086,8 @@ static int ft260_raw_event(struct hid_de
- 
- 	if (xfer->report >= FT260_I2C_REPORT_MIN &&
- 	    xfer->report <= FT260_I2C_REPORT_MAX) {
-+		bool complete_read;
-+
- 		ft260_dbg("i2c resp: rep %#02x len %d size %d\n",
- 			  xfer->report, xfer->length, size);
- 
-@@ -1085,8 +1098,15 @@ static int ft260_raw_event(struct hid_de
- 			return -1;
- 		}
- 
-+		/*
-+		 * Hold read_lock so a timed-out ft260_i2c_read() cannot
-+		 * clear read_buf between the NULL check and the memcpy.
-+		 */
-+		spin_lock_irqsave(&dev->read_lock, irqflags);
-+
- 		if ((dev->read_buf == NULL) ||
- 		    (xfer->length > dev->read_len - dev->read_idx)) {
-+			spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 			hid_err(hdev, "unexpected report %#02x, length %d\n",
- 				xfer->report, xfer->length);
- 			return -1;
-@@ -1095,8 +1115,11 @@ static int ft260_raw_event(struct hid_de
- 		memcpy(&dev->read_buf[dev->read_idx], &xfer->data,
- 		       xfer->length);
- 		dev->read_idx += xfer->length;
-+		complete_read = dev->read_idx == dev->read_len;
-+
-+		spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 
--		if (dev->read_idx == dev->read_len)
-+		if (complete_read)
- 			complete(&dev->wait);
- 
- 	} else {
 
 
