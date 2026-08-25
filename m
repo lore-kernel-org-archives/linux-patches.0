@@ -1,87 +1,97 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF333B42F2
-	for <patches@lists.linux.dev>; Tue, 25 Aug 2026 19:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F883CE4B5
+	for <patches@lists.linux.dev>; Tue, 25 Aug 2026 21:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787686549; cv=none; b=IfF5NwzRf7rh1j00X1PXKhiUGs2erqwNBWTw6QS7vBR/fWOd9wl7E+rSvvhwT86TZf+9QKj0xfcS1VQC/f5y6LpOet2rzE3KPZgBHmcIM4xIUrfVKqXvuP/pQtdrq7rMaL7ENeokbMbwLD26Ax2F/XJ26vrb6MrO0KPsnlEtrjA=
+	t=1787692458; cv=none; b=IQZotZE+p8QwfpQNI5ffcUmsdkeLfHKJ7QlZKDRmZf75y/cc/oov0sK5nSGyiysFEjEldbXtWlP20rvTrU01kY0EN60/QFmCCBH/BY7bfxMWf6n0ZagPSMhhSCojADwKK7eigc4ISit/wTa00lsTaTwB9ELNeyLDaob1uHcxWVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787686549; c=relaxed/simple;
-	bh=yJNkKIssTK6bpd6TQZHx5wUYU8k+hiyQwo2Ws8BgDBQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XkyOnMBBZ86mNlz+FzL1X1jL3zA2GjV4vXv9LzH9L0Aeth1zahHnDxypUIYDZe/J+HEHkDCVPFgcza5+rwUqFGqnpRUlZma6qn4ziD9DIXQ5xTmki5H2E/YKUXfBcQsi4Ujjv6KfApyZnBrYvVB7R/QRq+/nqs4Lia133QYB+zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=cu47UWBf; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	s=arc-20240116; t=1787692458; c=relaxed/simple;
+	bh=yfjHf3oacadvrlyyDrTgxD7NIYF+FYS1f4+hS2zmuFA=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=gVND2QsDQ9kc5V0BZkHfAEsw6Jc8J4aokGAp4CT3pOBmBozNklUgz2hyopILvXb/KDlz/M9gIYPdoaxw37Xw6wL6bMCAENuRPKHWSfz0RgZMdkzrsZNM4W6Vx1V43D8D1tVyHxpTrqpYxiAZMJQ59htPOFR/P8dADIwrpBauXmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4MyotXs; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="cu47UWBf"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4307A11CD62;
-	Tue, 25 Aug 2026 21:35:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1787686533;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=6EZyt6mUJarS31NPv67W3F31sBMrKX26j9vS5VHAZqw=;
-	b=cu47UWBfJAYqh8eZqayl9xkztQKyJlczqhlJaqlayz9r9RBlumWnW8zhzTq9PWyWQ+YPiH
-	AUslrxgTnRsp74KDPYtS8ibgekRgsfpf2YfHWu6ptwPp8lOOnH69hlWCFSAPiQTHxDcMqM
-	dOiG+7X9JcxDl9/X8arqC59gp8eY35lAR5qjeypyYfzUrvIdW28GliFIvaUvuXIZy/zRgo
-	4UwwMARtiUbK1O9RIYvi3UYHRBbogzlKTOj8Ll5DQuoTh5dnZy7h2Y85SpSiINMSPtBOIY
-	TAN7rz2fpGjjzGsa4AW9UbJtOX5dtjH5iCdPykE2Mpjn+xJru0FlE6HDX0lpOw==
-Date: Tue, 25 Aug 2026 21:35:30 +0200
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.1 000/101] 7.1.11-rc1 review
-Message-ID: <ao3ugql15ECXoDVP@duo.ucw.cz>
-References: <20260825132541.986300899@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4MyotXs"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-92edb12cdf2so13207285a.3
+        for <patches@lists.linux.dev>; Tue, 25 Aug 2026 14:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787692455; x=1788297255; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=FQ4W8vFJosNYzvgFRlXUoBjGheIiHAM48+78JXM8Oqs=;
+        b=H4MyotXs+n121srhqpbkkOBFgCzkJAA4ia5j8GmxFXIb1Oaqo2HzEmqyL+hsYr47fl
+         7tvfxo3WqV2GxvvHqS9z5ibSZY3Zp/WElGZBk/sktQ87XHMcyoGNvit0DALUZkOSQf4B
+         HdJ+xYrRM7uAkzjSW23Hg8kgvBmlEdaDFGdnG2zWuj3/wGxEvihegz/Hpd4lX5X3tAP/
+         xJj6YGSmAsyZBs6rE6oqlObEewb05qcW1I5ai0Z+4NRS9/sDnh2TSxxjL0YHCpBdlFJO
+         bIvOpvcTYgfZrb2oVO9kQBbDkOIhMSbUc3w250ItEYRPRAQU//mau3mIUwu/0mU6f7ZF
+         60EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787692455; x=1788297255;
+        h=content-transfer-encoding:content-type:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FQ4W8vFJosNYzvgFRlXUoBjGheIiHAM48+78JXM8Oqs=;
+        b=oeJQc6nO41gEAAyNi/3en+K9uMeS8V/hwD4v3cIn4p0iA67WWD1Uyt5NXRHspgCrK6
+         jPc6Rz1esm9RF0aNFGj/dnaHPrxI8ypue+LokLb18oS5E7jZosMWr9HqL7fJ7gNjeVwY
+         v6r9yqzxGe0XyEg4p6i4xkT5G9vv+55PfVORHRXjo2xukCy46UoAkAjY9mPsmeyoD3xl
+         m3cj9MY+HSvofJd2CYXgj6wRAC53o2SaoZbRMupwyQpBXZQOCGSUL/tQddPNBNwe1iWv
+         sL/n0cOvE778ltjPzgTN7A1KMt7oBFcTnYAOm+S8Y+KJbpC2V3+u/4IWCTRARvgfGo8w
+         qhEg==
+X-Gm-Message-State: AFuF++lV3RwRUSoamXC3LKbUNrcyOKLNVRGFkZqexSvLm02jSsvaFg7G
+	UqbjKf/RI/pwKr8Eeor5ODt4v78SfRV3uC0ldC6zT1wabiWZJe8dA3A=
+X-Gm-Gg: AR+sD11CMdQVkPBDNG0L2WhRliSU5ZcqXk0YMnyE1bK8pBrDbaOKhAZDWpBIetTzhAl
+	Ex7bwkV2ZeDdbipKg60yGGq8VLCAQzr3VoSyWRdCZutU5vVN2mI1FDpuvQr5t/rye7pRdIkprsb
+	R+suLTiueeQMeYeP19+csLdW4G4vy8zTkGt398GLHNRsYv/1NViMCyMP1TW3rcScITNTOP3WZi7
+	y0sDXI8tqdMbQcIeB1hs+Di7ZsAzB9uppKyzeTR+SJi285TCs2YJA1pfYIURDGKMvxiE0OqDYjY
+	yASSpKoFYKk09PQDgUjntltaTvKVJpt2f9csYHl6TLY941NC7yB4bH2h1DGxXktOUxVLl+WT2CW
+	8jUtddJ3qCqdfZJHHoAsyOKjOt6q61CvKVVJsIeGArCe7x+KMnyU/zC1bZhpSBboEodB77SP7dV
+	2meiw1oaTgvzd53uCm0+0qsJ5ed7n+VdXNemDFlozTy8+0WG8rJiOmD0uPi/NogQt4x7NlDeGgK
+	pxLSOz4HxTzKpVT
+X-Received: by 2002:a05:620a:2945:b0:936:695a:185a with SMTP id af79cd13be357-9378046b550mr129776085a.44.1787692455455;
+        Tue, 25 Aug 2026 14:14:15 -0700 (PDT)
+Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9377e30ed19sm69914685a.8.2026.08.25.14.14.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Aug 2026 14:14:15 -0700 (PDT)
+Subject: Re: [PATCH 5.10 00/57] 5.10.267-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260825132541.342390421@linuxfoundation.org>
+From: Woody Suwalski <terraluna977@gmail.com>
+Message-ID: <cc27b74f-b7ba-7004-27f9-16aeb3a6577d@gmail.com>
+Date: Tue, 25 Aug 2026 17:14:33 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101
+ Firefox/140.0 SeaMonkey/2.53.24
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="QEDt5550zlpS9pO2"
-Content-Disposition: inline
-In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
---QEDt5550zlpS9pO2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi!
-
-> This is the start of the stable review cycle for the 7.1.11 release.
-> There are 101 patches in this series, all will be posted as a response
+Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.267 release.
+> There are 57 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+>
+Build for i386 and installed / booted on 32-bit EeePC. No problems noticed.
 
-CIP testing did not find any problems here:
+Tested-by: Woody Suwalski <terraluna977@gmail.com>
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-7.1.y
-
-Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
-
-Best regards,
-                                                                Pavel
-
---QEDt5550zlpS9pO2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCao3uggAKCRAw5/Bqldv6
-8klyAJ0c3QKJ1BUymRqZQ5KrpkhnWLRoHACeMZLZbLXwFRK28UZZK2tsBuhaEY0=
-=YtKQ
------END PGP SIGNATURE-----
-
---QEDt5550zlpS9pO2--
