@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5854E392C21;
-	Tue, 25 Aug 2026 13:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070DE2E06E4;
+	Tue, 25 Aug 2026 13:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665707; cv=none; b=UthOZNWM7yS8aor5f3VOnmtni4z+U3mlkBc0+uMK/fMOllIeyptuddGSH89Jckko2Q/quaiG8nP92eqXQI1GgTYhEyNQ0y94s+EJjoUe+sxMhkwDspr/ll3/TwoYW6sBIY3vmDXU6wDzFBYx7DqXlTRc119R/FmC6Njr/qR1FLk=
+	t=1787665710; cv=none; b=tWgUYZ+U9sIejeff2U9hIkqexfTYVHEUU0erAJ/GypCLcrx+6nNofSGtR5wFv5+YpQRrEFMMM42LkNXj6NYwb74n1qV6nGzlNzqRMpBLtkJL5nmriDc2zDiPEFt3nryJsTCC9PLoLuKSI9bCDw/Txa94C9PFlyooZ3vE7zSirW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665707; c=relaxed/simple;
-	bh=auyODuSEu1tvDxsecLj7Fv7CTP0x+h92RgpAdDAmH0s=;
+	s=arc-20240116; t=1787665710; c=relaxed/simple;
+	bh=kfrYtC1InokAoY+5t5VdQBIdyLvjd05ogjOEreJqzTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDVKT9b5e5CZ3jG+N0y6xia6xNt7bX0eHXW9nWHHzkK6xM/tRBIYNHokg5U4RbUSDFzWItKaDEB521T9MGMarWjsHipnE+hWOzPaLcDm8USt2Hbhk/eHyaVnkdpBa4YI+vwh2Ua9FljmYukyzaee2qNRMh4UQblU8jAsrqmCIKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWTl6KDs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQVDUXYPiM/4TkWTUdagTiaB7185/0UDnuJO8hX++EgiKJByv8HwvmMF+ia7nG79IiKaIV0kamkYguYKDUGsWUNJb2/8Pgkd8jVAH+Bj+/ovS6wCcg5V2kEreQ91vgh5TP74Z3wc6kxG7u8UJZFR876jJvU1j8137EqToOWp7Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBrIIcUo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWTl6KDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4B71F000E9;
-	Tue, 25 Aug 2026 13:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBrIIcUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B5F1F000E9;
+	Tue, 25 Aug 2026 13:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665705;
-	bh=qj4r/XBuDDdFU4+xY6RXjElVYibovedYAaKavSfdJq4=;
+	s=korg; t=1787665708;
+	bh=ZAJCy2BAB8n8JAm8ObqV3HfxMZPPahIeKCEIa8u7VeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pWTl6KDsHJGkEvF7RDhgniOj7BWu4L3+F0TO7ggkns11XegLhZtKqVXob/pAgokDY
-	 ZW2s3dgxcpx91CzXG+aMmLVLk3z9rLXOJ8BJ4xIHIEHcpky87hIfxdqKSpEETJJSJA
-	 XqzFcB9ls+VHt/MZNLwgrk/ndJzRwCebhoAAtzs4=
+	b=xBrIIcUogw2qLTTNkocgNYVREY1fQkdQGoVaf5fGy3kmv79jUHsTfhkfSyQSImUtO
+	 ywcVsJ4Fq9dzACwLFdujyLqM/8Ug4PJrlxOESaRxZv7GQpWS69aoEUCIf8RyFnDPUs
+	 Gh3eHgmg+IdQhrJSVhU+kxXy0eYXKERZ+OIPXR2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Brian Foster <bfoster@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 21/87] xfs: bounds-check buffer log items dirty bitmap
-Date: Tue, 25 Aug 2026 15:25:44 +0200
-Message-ID: <20260825132542.668377791@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.6 39/87] nfc: fdp: bound the device-reported read length and fix an skb leak
+Date: Tue, 25 Aug 2026 15:26:02 +0200
+Message-ID: <20260825132543.382393304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -53,180 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 813f8136a2ce1fee266d02a7df73db6e8a541604 ]
+commit 7ad21dcfeb5181af0c3ee2608808c0c0a5283aa1 upstream.
 
-xlog_recover_do_reg_buffer() replays each dirty region described by a
-buffer log item's bitmap into the buffer read for that item:
+fdp_nci_i2c_read() takes the next packet length from two device-supplied
+bytes and never validates it. The value is a u16 used as the
+i2c_master_recv() count into a 261-byte on-stack buffer: a malicious,
+counterfeit or malfunctioning controller (or an i2c bus interposer) can
+drive it far past the buffer for a stack out-of-bounds write that
+clobbers the canary and return address, or below the minimum frame size
+(directly, or by truncating the computed sum) so the header/LRC strip
+and the next length read run past a short receive. Reject a length
+outside [FDP_NCI_I2C_MIN_PAYLOAD, FDP_NCI_I2C_MAX_PAYLOAD], as a
+corrupted packet already is, and force resynchronization.
 
-	memcpy(xfs_buf_offset(bp, (uint)bit << XFS_BLF_SHIFT),
-		item->ri_buf[i].iov_base,
-		nbits << XFS_BLF_SHIFT);
+The same loop allocates one data skb per iteration and assumes a length
+packet followed by a data packet; a device that sends two data packets
+in one call leaks the first skb when the second allocation overwrites
+it. Free a previously allocated skb before allocating the next.
 
-The destination offset (bit/nbits, from the logged dirty bitmap) and the
-buffer size (from the logged blf_len) are both attacker-controlled and
-otherwise unrelated, yet the only thing bounding the copy is an ASSERT(),
-which compiles away on production kernels. A crafted image logging a
-small blf_len together with a bitmap bit past the end of that buffer
-drives the memcpy() past the buffer's allocation, corrupting adjacent
-kernel heap during mount-time log recovery. This is reachable by anyone
-who can get a crafted image mounted -- the malicious-filesystem threat
-model XFS already guards against elsewhere.
-
-Turn the ASSERT() into a real XFS_IS_CORRUPT() check that aborts recovery
-of the buffer with -EFSCORRUPTED, consistent with the validate-and-fail
-idiom already used in xlog_recover_do_inode_buffer() and
-xfs_dquot_item_recover.c. xlog_recover_do_reg_buffer() therefore becomes
-STATIC int and its three callers propagate the error.
-
-Found and confirmed with KASAN on a CONFIG_XFS_DEBUG=n build: the crafted
-image trips a slab-out-of-bounds write before this change and fails
-recovery cleanly with -EFSCORRUPTED after it.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-b1f8ab4c-v2-1-2d1fe5955325@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_buf_item_recover.c |   57 ++++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 16 deletions(-)
+ drivers/nfc/fdp/i2c.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/fs/xfs/xfs_buf_item_recover.c
-+++ b/fs/xfs/xfs_buf_item_recover.c
-@@ -444,7 +444,7 @@ xlog_recover_validate_buf_type(
-  * given buffer.  The bitmap in the buf log format structure indicates
-  * where to place the logged data.
-  */
--STATIC void
-+STATIC int
- xlog_recover_do_reg_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog_recover_item	*item,
-@@ -472,8 +472,24 @@ xlog_recover_do_reg_buffer(
- 		ASSERT(nbits > 0);
- 		ASSERT(item->ri_buf[i].iov_base != NULL);
- 		ASSERT(item->ri_buf[i].iov_len % XFS_BLF_CHUNK == 0);
--		ASSERT(BBTOB(bp->b_length) >=
--		       ((uint)bit << XFS_BLF_SHIFT) + (nbits << XFS_BLF_SHIFT));
-+		/*
-+		 * The bitmap is only trustworthy to the extent that it
-+		 * describes a region that actually fits inside the buffer we
-+		 * read in based on the (attacker-controlled) blf_len.  Do not
-+		 * rely on an ASSERT() for this -- it compiles away entirely on
-+		 * non-DEBUG kernels, which is exactly where this matters, so
-+		 * validate it for real and abort recovery of this buffer rather
-+		 * than copying past the end of it.
-+		 */
-+		if (XFS_IS_CORRUPT(mp, BBTOB(bp->b_length) <
-+				((uint)bit << XFS_BLF_SHIFT) +
-+				(nbits << XFS_BLF_SHIFT))) {
-+			xfs_alert(mp,
-+	"Bad buffer log item dirty bitmap (bit %d, nbits %d) for %d-byte buffer at daddr 0x%llx.",
-+				bit, nbits, BBTOB(bp->b_length),
-+				xfs_buf_daddr(bp));
-+			return -EFSCORRUPTED;
-+		}
+--- a/drivers/nfc/fdp/i2c.c
++++ b/drivers/nfc/fdp/i2c.c
+@@ -166,9 +166,36 @@ static int fdp_nci_i2c_read(struct fdp_i
+ 		/* Packet that contains a length */
+ 		if (tmp[0] == 0 && tmp[1] == 0) {
+ 			phy->next_read_size = (tmp[2] << 8) + tmp[3] + 3;
++
++			/*
++			 * next_read_size is taken from the device and is used
++			 * as the i2c_master_recv() count for the next packet
++			 * and as the data skb size. A value above the receive
++			 * buffer overflows tmp[]; one below the minimum frame
++			 * size runs the header/LRC strip and the length-field
++			 * read past a short receive. Either way the packet is
++			 * corrupt: drop it and force resynchronization.
++			 */
++			if (phy->next_read_size < FDP_NCI_I2C_MIN_PAYLOAD ||
++			    phy->next_read_size > FDP_NCI_I2C_MAX_PAYLOAD) {
++				dev_dbg(&client->dev, "%s: corrupted packet\n",
++					__func__);
++				phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
++				goto flush;
++			}
+ 		} else {
+ 			phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
  
- 		/*
- 		 * The dirty regions logged in the buffer, even though
-@@ -527,6 +543,7 @@ xlog_recover_do_reg_buffer(
- 	ASSERT(i == item->ri_total);
- 
- 	xlog_recover_validate_buf_type(mp, bp, buf_f, current_lsn);
-+	return 0;
- }
- 
- /*
-@@ -535,10 +552,10 @@ xlog_recover_do_reg_buffer(
-  * (ie. USR or GRP), then just toss this buffer away; don't recover it.
-  * Else, treat it as a regular buffer and do recovery.
-  *
-- * Return false if the buffer was tossed and true if we recovered the buffer to
-- * indicate to the caller if the buffer needs writing.
-+ * Return 0 if the buffer was not recovered (tossed), 1 if it was recovered and
-+ * needs writing, or a negative errno if recovery of the buffer failed.
-  */
--STATIC bool
-+STATIC int
- xlog_recover_do_dquot_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog			*log,
-@@ -547,6 +564,7 @@ xlog_recover_do_dquot_buffer(
- 	struct xfs_buf_log_format	*buf_f)
- {
- 	uint			type;
-+	int			error;
- 
- 	trace_xfs_log_recover_buf_dquot_buf(log, buf_f);
- 
-@@ -554,7 +572,7 @@ xlog_recover_do_dquot_buffer(
- 	 * Filesystems are required to send in quota flags at mount time.
- 	 */
- 	if (!mp->m_qflags)
--		return false;
-+		return 0;
- 
- 	type = 0;
- 	if (buf_f->blf_flags & XFS_BLF_UDQUOT_BUF)
-@@ -567,10 +585,12 @@ xlog_recover_do_dquot_buffer(
- 	 * This type of quotas was turned off, so ignore this buffer
- 	 */
- 	if (log->l_quotaoffs_flag & type)
--		return false;
-+		return 0;
- 
--	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
--	return true;
-+	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
-+	if (error)
-+		return error;
-+	return 1;
- }
- 
- /*
-@@ -706,7 +726,9 @@ xlog_recover_do_primary_sb_buffer(
- 	xfs_agnumber_t			orig_agcount = mp->m_sb.sb_agcount;
- 	int				error;
- 
--	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+	if (error)
-+		return error;
- 
- 	if (orig_agcount == 0) {
- 		xfs_alert(mp, "Trying to grow file system without AGs");
-@@ -1026,11 +1048,11 @@ xlog_recover_buf_commit_pass2(
- 			goto out_release;
- 	} else if (buf_f->blf_flags &
- 		  (XFS_BLF_UDQUOT_BUF|XFS_BLF_PDQUOT_BUF|XFS_BLF_GDQUOT_BUF)) {
--		bool	dirty;
--
--		dirty = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
--		if (!dirty)
-+		error = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
-+		if (error <= 0)
- 			goto out_release;
-+		/* write dirty buffer */
-+		error = 0;
- 	} else if ((xfs_blft_from_flags(buf_f) & XFS_BLFT_SB_BUF) &&
- 			xfs_buf_daddr(bp) == 0) {
- 		error = xlog_recover_do_primary_sb_buffer(mp, item, bp, buf_f,
-@@ -1038,7 +1060,10 @@ xlog_recover_buf_commit_pass2(
- 		if (error)
- 			goto out_release;
- 	} else {
--		xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+		error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f,
-+						   current_lsn);
-+		if (error)
-+			goto out_release;
- 	}
- 
- 	/*
++			/*
++			 * Only one data packet is delivered per call; if the
++			 * device sends another, do not overwrite and leak the
++			 * skb allocated for the previous one.
++			 */
++			if (*skb) {
++				kfree_skb(*skb);
++				*skb = NULL;
++			}
++
+ 			*skb = alloc_skb(len, GFP_KERNEL);
+ 			if (*skb == NULL) {
+ 				r = -ENOMEM;
 
 
