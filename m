@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A448C481FC2;
-	Tue, 25 Aug 2026 13:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DA348380D;
+	Tue, 25 Aug 2026 13:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666397; cv=none; b=uNzYXUt3/Jq8qnweJYtzkN9uJzpUovOreATDHMiqAUTBb5MH2Fmf/ybX4jJlO+yQAmVSw02Sfz9v2PMPOL5s9UJ07Ps2wR5JMWRWO9fKRn6UFiW015wdLGdj1FHRf3oDhqIBQVvXrf9IA57nVDoAFk7EQshjRvrSWsykgoBJ8iw=
+	t=1787666400; cv=none; b=bcABbK7rNdvwfC3kqWROQdi0mFHD1YvF3O/CWs2durZh1Zsc+l+nfb/1WNwY3RN79asSpZiFzfPFv7eu/GFBkIC2nXuJai2Xru7X1XGf01oL7hint3sSUHLsDcmFThxhJtI8vxpg94EmnF30nNu4YeIBLo4+8c5ubR1klU0477Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666397; c=relaxed/simple;
-	bh=c8j5xG4yQs2RQxyS1aRGnZJ/6v2lb20FaGDCkHsgFFc=;
+	s=arc-20240116; t=1787666400; c=relaxed/simple;
+	bh=dgzHdXMuATX1dhoHBYY0LqCM29DXatJwAEM4hsdYgSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ul5zcRipjfYguR+ba1JOu2AgjK3lBL/oQGDwkQXofO5Bb4scJpMnxomR1C1wjgKqPi7cherv/Rj22WK0ZtefSCvS9VIn5h+sNp7BjbirZYgcxV/UJaVFeoyZSo9X22JE/52FdqmokpZOAvGUgTDKGnLXMwpKamLoFNJloelGUdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lW76xX7N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tiLIWMOKDcV+5TWuuywnp1X356HzhqUig9OzBRSObLJVqCWK1UlyGfYEOJ8J6hZy3MBL3ygm63Hs6EW/ObdD3wyp36WRX4OreKjU14hRwzc6s9ZwhYa2LN5AlVgpnOTQ6/y4ovAXa/nTef7aYubGLp5Pk1Uur3qdkEsng/I2xAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAflKqt+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lW76xX7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D891F000E9;
-	Tue, 25 Aug 2026 13:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAflKqt+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E151F000E9;
+	Tue, 25 Aug 2026 13:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666396;
-	bh=SA8xOVaonhyICKOssMTCVHUA976glhOBT5wpGQZBDP4=;
+	s=korg; t=1787666399;
+	bh=q7gkMLA9DEJX9Tf+x5Z27JNTu1ZEabcfXlyruW+ZO/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lW76xX7NhqYZDJXglXVmjLRjGk7YJAks9Jkeuo3GdZDhozBMAwaefsDX7qMcC1A1i
-	 8DWy8wYldkPonHMpMxogAT4VTba6IPWFbNEkyRG8DQIu2Pi1pJIgcUZ4SESYFn/XW2
-	 Kdnn5fq8ioEz6ARd8M3MVdnTqb58thYmWPn8UacA=
+	b=BAflKqt++p3dCcaMRlnZuDfRa3lXeSd1oAdPcZ941TmDkKHoDZSL7whI18Hgj3Bx/
+	 8AtNCKhf7LFsreLDyew2vKGovp78NWKObi5fS09EkD0Tzp/BSRhLgLeUA9b6RUgpb3
+	 5R/I+FkvmpAlP8ceanGyy3dR4mFT4WVlezBgZAno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang Tang <q.h.hack.winter@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/57] packet: use consistent hard_header_len in TX_RING send path
-Date: Tue, 25 Aug 2026 15:26:43 +0200
-Message-ID: <20260825132542.124414718@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 5.10 30/57] nfc: fdp: bound the device-reported read length and fix an skb leak
+Date: Tue, 25 Aug 2026 15:26:52 +0200
+Message-ID: <20260825132542.498321714@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -52,108 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang Tang <q.h.hack.winter@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 21b5953e7494c16a42e6cd8cf110e18d13ae4a6b ]
+commit 7ad21dcfeb5181af0c3ee2608808c0c0a5283aa1 upstream.
 
-tpacket_snd() reads dev->hard_header_len independently for skb
-allocation and header construction in tpacket_fill_skb(). Concurrent
-netdevice reconfiguration can therefore make the reserved headroom
-smaller than the amount later pushed, or make copylen - hard_header_len
-negative.
+fdp_nci_i2c_read() takes the next packet length from two device-supplied
+bytes and never validates it. The value is a u16 used as the
+i2c_master_recv() count into a 261-byte on-stack buffer: a malicious,
+counterfeit or malfunctioning controller (or an i2c bus interposer) can
+drive it far past the buffer for a stack out-of-bounds write that
+clobbers the canary and return address, or below the minimum frame size
+(directly, or by truncating the computed sum) so the header/LRC strip
+and the next length read run past a short receive. Reject a length
+outside [FDP_NCI_I2C_MIN_PAYLOAD, FDP_NCI_I2C_MAX_PAYLOAD], as a
+corrupted packet already is, and force resynchronization.
 
-Snapshot hard_header_len once before processing ring frames and use it
-for the frame limit, headroom allocation, copy length, and skb
-construction. Pass the snapshot to tpacket_fill_skb().
+The same loop allocates one data skb per iteration and assumes a length
+packet followed by a data packet; a device that sends two data packets
+in one call leaks the first skb when the second allocation overwrites
+it. Free a previously allocated skb before allocating the next.
 
-The separate SOCK_DGRAM consistency problem between hard_header_len and
-header_ops->create is not addressed here.
-
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260805125729.19220-4-q.h.hack.winter@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Applied cleanly after amending the prerequisite that adds `LL_RESERVED_SPACE_EX()`; no target-side adaptation was needed. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-b1f8ab4c-v2-1-2d1fe5955325@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/nfc/fdp/i2c.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2582,6 +2582,7 @@ static int packet_snd_vnet_parse(struct
- static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 		void *frame, struct net_device *dev, void *data, int tp_len,
- 		__be16 proto, unsigned char *addr, int hlen, int copylen,
-+		int hard_header_len,
- 		const struct sockcm_cookie *sockc)
- {
- 	union tpacket_uhdr ph;
-@@ -2613,8 +2614,8 @@ static int tpacket_fill_skb(struct packe
- 	} else if (copylen) {
- 		int hdrlen = min_t(int, copylen, tp_len);
+--- a/drivers/nfc/fdp/i2c.c
++++ b/drivers/nfc/fdp/i2c.c
+@@ -166,9 +166,36 @@ static int fdp_nci_i2c_read(struct fdp_i
+ 		/* Packet that contains a length */
+ 		if (tmp[0] == 0 && tmp[1] == 0) {
+ 			phy->next_read_size = (tmp[2] << 8) + tmp[3] + 3;
++
++			/*
++			 * next_read_size is taken from the device and is used
++			 * as the i2c_master_recv() count for the next packet
++			 * and as the data skb size. A value above the receive
++			 * buffer overflows tmp[]; one below the minimum frame
++			 * size runs the header/LRC strip and the length-field
++			 * read past a short receive. Either way the packet is
++			 * corrupt: drop it and force resynchronization.
++			 */
++			if (phy->next_read_size < FDP_NCI_I2C_MIN_PAYLOAD ||
++			    phy->next_read_size > FDP_NCI_I2C_MAX_PAYLOAD) {
++				dev_dbg(&client->dev, "%s: corrupted packet\n",
++					__func__);
++				phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
++				goto flush;
++			}
+ 		} else {
+ 			phy->next_read_size = FDP_NCI_I2C_MIN_PAYLOAD;
  
--		skb_push(skb, dev->hard_header_len);
--		skb_put(skb, copylen - dev->hard_header_len);
-+		skb_push(skb, hard_header_len);
-+		skb_put(skb, copylen - hard_header_len);
- 		err = skb_store_bits(skb, 0, data, hdrlen);
- 		if (unlikely(err))
- 			return err;
-@@ -2747,7 +2748,7 @@ static int tpacket_snd(struct packet_soc
- 	void *data;
- 	int len_sum = 0;
- 	int status = TP_STATUS_AVAILABLE;
--	int hlen, tlen, copylen = 0;
-+	int hard_header_len, hlen, tlen, copylen = 0;
- 	long timeo;
- 
- 	mutex_lock(&po->pg_vec_lock);
-@@ -2794,8 +2795,9 @@ static int tpacket_snd(struct packet_soc
- 			goto out_put;
- 	}
- 
-+	hard_header_len = READ_ONCE(dev->hard_header_len);
- 	if (po->sk.sk_socket->type == SOCK_RAW)
--		reserve = dev->hard_header_len;
-+		reserve = hard_header_len;
- 	size_max = po->tx_ring.frame_size
- 		- (po->tp_hdrlen - sizeof(struct sockaddr_ll));
- 
-@@ -2832,7 +2834,7 @@ static int tpacket_snd(struct packet_soc
- 			goto tpacket_error;
- 
- 		status = TP_STATUS_SEND_REQUEST;
--		hlen = LL_RESERVED_SPACE(dev);
-+		hlen = LL_RESERVED_SPACE_EX(dev, hard_header_len);
- 		tlen = dev->needed_tailroom;
- 		if (po->has_vnet_hdr) {
- 			data += sizeof(vnet_hdr);
-@@ -2850,10 +2852,10 @@ static int tpacket_snd(struct packet_soc
- 						    vnet_hdr.hdr_len);
- 			has_vnet_hdr = true;
- 		}
--		copylen = max_t(int, copylen, dev->hard_header_len);
-+		copylen = max_t(int, copylen, hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
- 				hlen + tlen + sizeof(struct sockaddr_ll) +
--				(copylen - dev->hard_header_len),
-+				(copylen - hard_header_len),
- 				!need_wait, &err);
- 
- 		if (unlikely(skb == NULL)) {
-@@ -2863,7 +2865,8 @@ static int tpacket_snd(struct packet_soc
- 			goto out_status;
- 		}
- 		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
--					  addr, hlen, copylen, &sockc);
-+					  addr, hlen, copylen, hard_header_len,
-+					  &sockc);
- 		if (likely(tp_len >= 0) &&
- 		    tp_len > dev->mtu + reserve &&
- 		    !po->has_vnet_hdr &&
++			/*
++			 * Only one data packet is delivered per call; if the
++			 * device sends another, do not overwrite and leak the
++			 * skb allocated for the previous one.
++			 */
++			if (*skb) {
++				kfree_skb(*skb);
++				*skb = NULL;
++			}
++
+ 			*skb = alloc_skb(len, GFP_KERNEL);
+ 			if (*skb == NULL) {
+ 				r = -ENOMEM;
 
 
