@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3230383998;
-	Tue, 25 Aug 2026 13:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9E5407CEF;
+	Tue, 25 Aug 2026 13:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664561; cv=none; b=WHihOpT+FtIfuvF2LlBUyKlYbzaVwWYMjNVpYBvKlzS7Muhc9SJ/geU9ZaAt2239vMuvD1Hjyl3sHu8Kepiwuoo98e5vg7zhwCRlSpbUBUMkN2oIitxFCgttFILKOoifGx3wIwIHoGtRaD52X78dgANtUFCCcyEvmehkieB6qPk=
+	t=1787664564; cv=none; b=usoly1IQNaTIww6Jk020Qzx/s9lGOqnULTrVc7gW/N2gG9pvB+06Na4IoCQ3VRW8CiG/I8sIfzoNYuaZ+Wr7W9y5oYvpO4RncsvNey6une3usgIpj7OXIcbGUosD1QgJEH2/moKY5ECiLwiNngnQFvtRKMAJDyMW9gaUiQwo4oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664561; c=relaxed/simple;
-	bh=AkixRHQ4h85QISgmdQQhI3uP9Gwas0fWlEvQROuhLvQ=;
+	s=arc-20240116; t=1787664564; c=relaxed/simple;
+	bh=6MOv6ON3ECcb6YBNFajzu+6zkojXNicu/JtkQlEtONA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oa3uKW48J9FMrt1/JxP6DncEOGsJvjkspUx7gqLyo0+YoS66QF4WQSp/rf8BuEgS0MA1/DUGS/L24Le1vR2ClkkpHUa2/yR6SZwkoigcAh1HDDVmpIeJI0epiVhU1Gz3s64fCQIeZGFcobvqlJNyK3V4XnEat/0BpXxcVTcx084=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwbzOsj6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KlgUzW3tuK4Fvrw53EdrWvxG6CfwloBH2/xuBI43Ihip3A4zgVqk8ONP8jh/ff5EXIDD7NwMj7+Tm09BvkYBnvGYENspN0Tr/MkbJApVwhGVA8xtEeo91QqkyRcQ29vGzDm0VzMc2dM94i45ZMUKfX1nSmk0ikZd3Xua+Oik7C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Com/rC0N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwbzOsj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F04D1F000E9;
-	Tue, 25 Aug 2026 13:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Com/rC0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8841F000E9;
+	Tue, 25 Aug 2026 13:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664559;
-	bh=poIt6euI8QyEY7DIORmV1229KxncP5oQZtHUulxr/n4=;
+	s=korg; t=1787664562;
+	bh=mRIHyY05pOb86ybIKuWFFXi5yVhcfKpJXIgVpjkEsls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwbzOsj6dZVdICyYEV4fgQAU+Tsyt8T1kiHMT5SlIO4X3tihCLl8L77sdgg0MSuF9
-	 N7mr1Uj/dWtFOUB1gg5Grv4v0qwaaOhRNABEsEzv2KsqcdLXyHR2JK97K/MXmORStD
-	 x0fe3j5gLp0GOsTy/Y408UkbPZlSpFRwf9Tb0u3M=
+	b=Com/rC0NMsT17BBgYF6od6f6lY1f3axB418UsfKc/mNpof0O7XMTKSNR+CYwGrfJe
+	 yFXvEm5iCbjssGIje5odk6SV1PYm+KM0vR19FypWJUvlXQW5c5HHA55QVNxwWxYYvr
+	 fuLg1sj7T6C2hxCrQkyhcu8MYsheieGQl/tRNr6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Hoffmann <f3lix.dev@gmx.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.2 12/82] futex: Avoid private hash use-after-free on final put
-Date: Tue, 25 Aug 2026 15:24:59 +0200
-Message-ID: <20260825132542.010975254@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.2 13/82] futex: Fix race on the initial mm->futex.phash.ref allocation
+Date: Tue, 25 Aug 2026 15:25:00 +0200
+Message-ID: <20260825132542.045890620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,54 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Hoffmann <f3lix.dev@gmx.de>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 1c7efabfbaf796f11000a46094a69955a01ec6cc upstream.
+commit bde0238083647381d4747355c5a19115a3422b96 upstream.
 
-futex_private_hash_put() drops the reference to fph before evaluating
-fph->mm for wake_up_var(). futex_ref_put() enables preemption again before
-returning. If that put drops the final reference and the task is preempted,
-another task can pivot to the replacement hash and free the old hash after
-an RCU grace period. The first task then reads fph->mm from the freed
-allocation when it resumes.
+futex_hash_allocate() allocates mm->futex.phash.ref without any locking.
+Commit d9b05321e21e ("futex: Move futex_hash_free() back to __mmput()")
+moved the allocation here and assumed that the process has just a single
+thread at this point.
 
-KASAN reports a slab-use-after-free in futex_private_hash_put(), with the
-read at offset 24 in a freed kmalloc-512 allocation. The allocation and
-free stacks point to futex_hash_allocate() and the RCU free path,
-respectively.
+Commit ee9dce44362b ("futex: Drop CLONE_THREAD requirement for private
+default hash alloc") widened need_futex_hash_allocate_default() to cover
+any CLONE_VM clone, but left out vfork because the parent is suspended and
+cannot race.
 
-Load the mm pointer while the fph reference is still held and pass the
-saved value to wake_up_var(). wake_up_var() uses the pointer as a waitqueue
-key and does not dereference the mm through it.
+That no longer holds once vfork is nested. If a vfork child calls vfork
+again and is then killed with SIGKILL, the parent is released from its
+vfork wait and runs concurrently with the grandchild in the same mm.
+Neither of them went through futex_hash_allocate_default().
 
-Fixes: bd54df5ea7ca ("futex: Allow to resize the private local hash")
-Signed-off-by: Felix Hoffmann <f3lix.dev@gmx.de>
+When both call prctl(PR_FUTEX_HASH, PR_FUTEX_HASH_SET_SLOTS) at the same
+time, each one sees mm->futex.phash.ref as NULL and stores its own percpu
+counter. Only the last store survives. The counter stored first is no
+longer reachable from the mm, so the references on it are not seen by
+__futex_ref_atomic_end(). A private hash that still has references is then
+considered dead and freed, and a task that still holds one of its buckets
+writes into freed memory in futex_q_lock().
+
+Store the counter once with cmpxchg() and let the loser free_percpu() its
+own. The initial reference has to be taken before the store, otherwise
+another task can install a private hash while the counter is still 0.
+
+Fixes: d9b05321e21e ("futex: Move futex_hash_free() back to __mmput()")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260731155024.1150011-1-f3lix.dev@gmx.de
+Link: https://patch.msgid.link/ansrpP4ImE1MaBY9@v4bel
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/futex/core.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/futex/core.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 --- a/kernel/futex/core.c
 +++ b/kernel/futex/core.c
-@@ -143,8 +143,14 @@ static bool futex_private_hash_get(struc
+@@ -1866,14 +1866,18 @@ static int futex_hash_allocate(unsigned
+ 	}
  
- void futex_private_hash_put(struct futex_private_hash *fph)
- {
--	if (fph && futex_ref_put(fph))
--		wake_up_var(fph->mm);
-+	struct mm_struct *mm;
+ 	if (!mm->futex.phash.ref) {
++		unsigned int __percpu *ref = alloc_percpu(unsigned int);
 +
-+	if (!fph)
-+		return;
++		if (!ref)
++			return -ENOMEM;
 +
-+	mm = fph->mm;
-+	if (futex_ref_put(fph))
-+		wake_up_var(mm);
- }
+ 		/*
+-		 * This will always be allocated by the first thread and
+-		 * therefore requires no locking.
++		 * Tasks sharing the mm can run this concurrently, so take the
++		 * initial reference before publishing the counter.
+ 		 */
+-		mm->futex.phash.ref = alloc_percpu(unsigned int);
+-		if (!mm->futex.phash.ref)
+-			return -ENOMEM;
+-		this_cpu_inc(*mm->futex.phash.ref); /* 0 -> 1 */
++		this_cpu_inc(*ref); /* 0 -> 1 */
++		if (cmpxchg(&mm->futex.phash.ref, NULL, ref))
++			free_percpu(ref);
+ 	}
  
- static struct futex_hash_bucket *
+ 	fph = kvzalloc(struct_size(fph, queues, hash_slots),
 
 
