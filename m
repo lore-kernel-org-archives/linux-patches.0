@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20DF45C70B;
-	Tue, 25 Aug 2026 13:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426C4471433;
+	Tue, 25 Aug 2026 13:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666164; cv=none; b=ixIEpPxqlsj8/7I9GnjukKM55zB7CUiMpZsuJCXdCnE247+PYYzkVIeWXdjiYfwHl71ZL+N14Xx9cBDYGcZIuy5SG+xKX0X9lsQiRpqM31j9y/cNP5BFAp1wnEt716yDvx5HXSE+w5BT5j/+gPleUzMuTzEvTGQ4YHxGQH6GcwA=
+	t=1787666166; cv=none; b=geXwjTdc8iG6KvEL4Xr6M9Arx7HKN6mzkaUteKjI+ylmPH98xozTnqdnLUmxhy5oeX17+nQApMUE2Hds9aRH05QcG/XELv/XtOCG397c2HXYjXIpAxRnVKraVFHU/gLKqWAyTCnr4Bf2RozKjTSpCH900bN0jAs2Q/j2DbDErDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666164; c=relaxed/simple;
-	bh=0NbodNnveyuT4QIyTQoFJ0J9DhQK5bfQTjURdJmlCoA=;
+	s=arc-20240116; t=1787666166; c=relaxed/simple;
+	bh=J+PZ9MtD5ATwuupoAHtTqN46ilivp7IkwcEMfDcuxxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezI4nZ4hLQAs+LuYaPYKWtCPGZ/KbzGKcmrzmmNcdWTJjgYsu7hTVGst69cuqmWQv+caslBWroPW61xKPWUqduvBUyfQqhagNbxaXlBAYh2bsofzeay9OKVlI/n8H8ILpCDyUgTgg60DnFL+BwRQ1zSwXRxps8X2Poih0EkQ5Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjcqAFAz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IyTDAm5kMsOuk5x5EyrWLSdzI+V4uucnnF+ifhsFVLQcv60txHJeKGUHbwQ5AphNec4tJPMLFBDOI2gFYttfg3mAs+7iTeVxrudLKg9DtnO4oL4r7VWkhkKMuPN98TBr8t/7wQ1vNkPgn4kvy9mmTFLBcI88qwV5lxOVqVBAqiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joeRJZoW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjcqAFAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1F41F000E9;
-	Tue, 25 Aug 2026 13:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joeRJZoW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7F71F000E9;
+	Tue, 25 Aug 2026 13:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666162;
-	bh=hGTmC5LGwTHaji6cB0dzLo7VD48lhV3Wf1sPqKotCS8=;
+	s=korg; t=1787666165;
+	bh=hhtP4fpQkdyvGf0I54bHxhxCBB5edRflxrCfXwYlwuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gjcqAFAzL2k/Vag4PFaDt9OUE21WfpLUrELHirhLLsYSrnUuC6YpvRdT9Q9hZ9aqx
-	 iJwwXXuWcEn+1VkV0HBVMRxUUgap8eupptqCFSec+WSIxsLAPZGusfcQnLrqa5Q3Cl
-	 z4AzwsFkczzqRiBfMTEofYoVKpQ/FwoBgaymdH+s=
+	b=joeRJZoWLcGO48PJLJyqj4dsNVmdIBSGCJAdiW88h5fdZbWhZAfJVan8IM5yO8LT9
+	 LUXE2ZkYDVAnOjfOEwY0D5WwDh65tJC91VTsE8+WCFs2fANw3nm8SNlksNNDQ8Vdaz
+	 vZg+Ep9onyKo83SJqVx4eI8NaGXC7zgvSf7oQUqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 25/76] inet: frags: publish queues before arming timer
-Date: Tue, 25 Aug 2026 15:26:18 +0200
-Message-ID: <20260825132542.535354502@linuxfoundation.org>
+Subject: [PATCH 5.15 26/76] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
+Date: Tue, 25 Aug 2026 15:26:19 +0200
+Message-ID: <20260825132542.575070482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -53,59 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 653d7ddf6cba867777a3d14c4f83ace008c5ad13 ]
+[ Upstream commit c125ee35a49a0518521b52b27631eef061b8719a ]
 
-inet_frag_create() arms the fragment queue timer before inserting the
-queue into the fqdir rhashtable. If the namespace fragment timeout is
-zero or negative, the timer can run before the queue is published.
+In atmci_probe, &host->bh_work is bound with atmci_work_func, and
+atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
+queue this work on system_bh_wq.
 
-The timer callback then marks the queue complete, tries to remove a node
-that is not in the hash table yet, and drops the anticipated hash
-reference. Creation can subsequently publish the completed queue without
-restoring that reference, leaving a stale hash node after the caller drops
-the remaining reference.
+If we remove the module, atmci_remove makes cleanup and the memory
+allocated for host with devm_kzalloc() is released after the remove
+callback returns, while the work mentioned above may still be pending
+or running. The sequence of operations that may lead to a UAF bug is
+as follows:
 
-Publish the queue first and arm the timer while holding the queue lock.
-This makes timer expiry wait until the queue is visible in the hash table,
-so inet_frag_kill() can remove the node and balance the hash reference.
+CPU0                                      CPU1
 
-Fixes: 648700f76b03 ("inet: frags: use rhashtables for reassembly units")
+                                          | atmci_interrupt
+                                          | queue_work(system_bh_wq,
+                                          |            &host->bh_work)
+atmci_remove                              |
+atmci_cleanup_slot(...)                   |
+atmci_writel(host, ATMCI_IDR, ~0UL)       |
+timer_delete_sync(&host->timer)           |
+dma_release_channel(host->dma.chan)       |
+free_irq(platform_get_irq(pdev, 0), host) |
+                                          | atmci_work_func
+                                          | // use host
+// devm resources released after          |
+// remove returns, host is freed          |
+                                          | // use host (use-after-free)
+
+Fix it by canceling the work after all the sources that can schedule
+it (IRQ handler, timeout timer and DMA completion callback) have been
+stopped, and before proceeding with the remaining cleanup in
+atmci_remove.
+
+Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Link: https://patch.msgid.link/bf66785e7c0c139d7a1900e2f01faeeab344b960.1784948849.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_fragment.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mmc/host/atmel-mci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -339,16 +339,18 @@ static struct inet_frag_queue *inet_frag
- 		*prev = ERR_PTR(-ENOMEM);
- 		return NULL;
- 	}
--	mod_timer(&q->timer, jiffies + fqdir->timeout);
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -2629,6 +2629,8 @@ static int atmci_remove(struct platform_
  
-+	spin_lock_bh(&q->lock);
- 	*prev = rhashtable_lookup_get_insert_key(&fqdir->rhashtable, &q->key,
- 						 &q->node, f->rhash_params);
- 	if (*prev) {
- 		q->flags |= INET_FRAG_COMPLETE;
--		inet_frag_kill(q);
-+		spin_unlock_bh(&q->lock);
- 		inet_frag_destroy(q);
- 		return NULL;
- 	}
-+	mod_timer(&q->timer, jiffies + fqdir->timeout);
-+	spin_unlock_bh(&q->lock);
- 	return q;
- }
+ 	free_irq(platform_get_irq(pdev, 0), host);
  
++	cancel_work_sync(&host->bh_work);
++
+ 	clk_disable_unprepare(host->mck);
+ 
+ 	pm_runtime_disable(&pdev->dev);
 
 
