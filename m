@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9E5407CEF;
-	Tue, 25 Aug 2026 13:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30303DD502;
+	Tue, 25 Aug 2026 13:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664564; cv=none; b=usoly1IQNaTIww6Jk020Qzx/s9lGOqnULTrVc7gW/N2gG9pvB+06Na4IoCQ3VRW8CiG/I8sIfzoNYuaZ+Wr7W9y5oYvpO4RncsvNey6une3usgIpj7OXIcbGUosD1QgJEH2/moKY5ECiLwiNngnQFvtRKMAJDyMW9gaUiQwo4oc=
+	t=1787664566; cv=none; b=qtMMdshXNAKybY/bZCpUEHvNU4gyTK4lf2nCf/CwsF+5xRlkEAh+eUyvZtFO8UO+u7nFevMo1A/1EiO0On7XDFnbXFQyX/CA6wx4LcUZIV0otvsCGn5A5Vxq+9NnqoP8wteCMdw3Wczi1RGJAjKKckknah4SC0hhD4MId44YyKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664564; c=relaxed/simple;
-	bh=6MOv6ON3ECcb6YBNFajzu+6zkojXNicu/JtkQlEtONA=;
+	s=arc-20240116; t=1787664566; c=relaxed/simple;
+	bh=3F5kGlXWcdgw0s9/gDhztgJrKWuA/viXKfYkT8lSeCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlgUzW3tuK4Fvrw53EdrWvxG6CfwloBH2/xuBI43Ihip3A4zgVqk8ONP8jh/ff5EXIDD7NwMj7+Tm09BvkYBnvGYENspN0Tr/MkbJApVwhGVA8xtEeo91QqkyRcQ29vGzDm0VzMc2dM94i45ZMUKfX1nSmk0ikZd3Xua+Oik7C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Com/rC0N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Em74lEysnGkjM0RssTxVjm+Z4JXNKTP/3MBkGI2bGuOz8r7QEqlmCx8ydqDepy3Axq0qNwUj4DChh8R8WWfW0VEZoPvu0maPjUR2BdG7AwSNA5xxoQ1ax0rMP/KT0hnE3cQA7/dqMHeU12aYb7VrmLh+ARPt8M6XfqPOeypdKI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGAwhTzW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Com/rC0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8841F000E9;
-	Tue, 25 Aug 2026 13:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGAwhTzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041C21F00A3A;
+	Tue, 25 Aug 2026 13:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664562;
-	bh=mRIHyY05pOb86ybIKuWFFXi5yVhcfKpJXIgVpjkEsls=;
+	s=korg; t=1787664565;
+	bh=0/4/BazrH5iIbxt21EfpulhnhU4jW2QrODiNTMBaTAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Com/rC0NMsT17BBgYF6od6f6lY1f3axB418UsfKc/mNpof0O7XMTKSNR+CYwGrfJe
-	 yFXvEm5iCbjssGIje5odk6SV1PYm+KM0vR19FypWJUvlXQW5c5HHA55QVNxwWxYYvr
-	 fuLg1sj7T6C2hxCrQkyhcu8MYsheieGQl/tRNr6w=
+	b=HGAwhTzWmVKT2fJB5QOV+AlefPzhgn1duFtiylgUOQMAGCTlfJaf+s+gm3+a2TnC6
+	 dmyB1174MPB1qw+R79+hJ25p0ThlzsaEsHuo4JTMR17yAxJ8FAxKJHEORdcqrsBJeO
+	 UCjeetNT5NIOOZaWGGjJ0HnInL8NJhX8ekU/Pkog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.2 13/82] futex: Fix race on the initial mm->futex.phash.ref allocation
-Date: Tue, 25 Aug 2026 15:25:00 +0200
-Message-ID: <20260825132542.045890620@linuxfoundation.org>
+	Chengfeng Lin <lin2530632123@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.2 14/82] io_uring/futex: dont mark futex wake requests as inflight
+Date: Tue, 25 Aug 2026 15:25:01 +0200
+Message-ID: <20260825132542.084695461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,74 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit bde0238083647381d4747355c5a19115a3422b96 upstream.
+commit 73e7019097473fc9f83a334ef2c6ab3343709fef upstream.
 
-futex_hash_allocate() allocates mm->futex.phash.ref without any locking.
-Commit d9b05321e21e ("futex: Move futex_hash_free() back to __mmput()")
-moved the allocation here and assumed that the process has just a single
-thread at this point.
+Commit 079afb081c42 ("io_uring/futex: mark wait requests as inflight")
+added inflight tracking to ensure that do_exit() ->
+io_uring_files_cancel() finds and cancels pending futex waits before the
+mm goes away, as a private futex wait depends on the mm private futex
+hash staying alive for the duration of the request. However, as
+io_futex_prep() is shared between FUTEX_WAIT and FUTEX_WAKE, wake
+requests got marked as inflight as well.
 
-Commit ee9dce44362b ("futex: Drop CLONE_THREAD requirement for private
-default hash alloc") widened need_futex_hash_allocate_default() to cover
-any CLONE_VM clone, but left out vfork because the parent is suspended and
-cannot race.
+A futex wake executes fully inline at issue time and never depends on
+the mm staying alive after completion, hence there's no need to track
+it. Kill it.
 
-That no longer holds once vfork is nested. If a vfork child calls vfork
-again and is then killed with SIGKILL, the parent is released from its
-vfork wait and runs concurrently with the grandchild in the same mm.
-Neither of them went through futex_hash_allocate_default().
-
-When both call prctl(PR_FUTEX_HASH, PR_FUTEX_HASH_SET_SLOTS) at the same
-time, each one sees mm->futex.phash.ref as NULL and stores its own percpu
-counter. Only the last store survives. The counter stored first is no
-longer reachable from the mm, so the references on it are not seen by
-__futex_ref_atomic_end(). A private hash that still has references is then
-considered dead and freed, and a task that still holds one of its buckets
-writes into freed memory in futex_q_lock().
-
-Store the counter once with cmpxchg() and let the loser free_percpu() its
-own. The initial reference has to be taken before the store, otherwise
-another task can install a private hash while the counter is still 0.
-
-Fixes: d9b05321e21e ("futex: Move futex_hash_free() back to __mmput()")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ansrpP4ImE1MaBY9@v4bel
+Fixes: 079afb081c42 ("io_uring/futex: mark wait requests as inflight")
+Reported-by: Chengfeng Lin <lin2530632123@gmail.com>
+Link: https://lore.kernel.org/io-uring/CANGjgdn=R_qyUdE=j9za+vkmqcxacbP-84OHXF4nZ4ho9qRyVg@mail.gmail.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/futex/core.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ io_uring/futex.c |   11 +++++++++++
+ io_uring/futex.h |    1 +
+ io_uring/opdef.c |    2 +-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -1866,14 +1866,18 @@ static int futex_hash_allocate(unsigned
- 	}
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -149,6 +149,17 @@ int io_futex_prep(struct io_kiocb *req,
+ 	    !futex_validate_input(iof->futex_flags, iof->futex_mask))
+ 		return -EINVAL;
  
- 	if (!mm->futex.phash.ref) {
-+		unsigned int __percpu *ref = alloc_percpu(unsigned int);
++	return 0;
++}
 +
-+		if (!ref)
-+			return -ENOMEM;
++int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
++{
++	int ret;
 +
- 		/*
--		 * This will always be allocated by the first thread and
--		 * therefore requires no locking.
-+		 * Tasks sharing the mm can run this concurrently, so take the
-+		 * initial reference before publishing the counter.
- 		 */
--		mm->futex.phash.ref = alloc_percpu(unsigned int);
--		if (!mm->futex.phash.ref)
--			return -ENOMEM;
--		this_cpu_inc(*mm->futex.phash.ref); /* 0 -> 1 */
-+		this_cpu_inc(*ref); /* 0 -> 1 */
-+		if (cmpxchg(&mm->futex.phash.ref, NULL, ref))
-+			free_percpu(ref);
- 	}
++	ret = io_futex_prep(req, sqe);
++	if (unlikely(ret))
++		return ret;
++
+ 	/* Mark as inflight, so file exit cancelation will find it */
+ 	io_req_track_inflight(req);
+ 	return 0;
+--- a/io_uring/futex.h
++++ b/io_uring/futex.h
+@@ -3,6 +3,7 @@
+ #include "cancel.h"
  
- 	fph = kvzalloc(struct_size(fph, queues, hash_slots),
+ int io_futex_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
++int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
+ int io_futexv_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
+ int io_futex_wait(struct io_kiocb *req, unsigned int issue_flags);
+ int io_futexv_wait(struct io_kiocb *req, unsigned int issue_flags);
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -467,7 +467,7 @@ const struct io_issue_def io_issue_defs[
+ 	},
+ 	[IORING_OP_FUTEX_WAIT] = {
+ #if defined(CONFIG_FUTEX)
+-		.prep			= io_futex_prep,
++		.prep			= io_futex_wait_prep,
+ 		.issue			= io_futex_wait,
+ #else
+ 		.prep			= io_eopnotsupp_prep,
 
 
