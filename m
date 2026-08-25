@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA702E06E4;
-	Tue, 25 Aug 2026 13:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8067825393E;
+	Tue, 25 Aug 2026 13:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666291; cv=none; b=iyi1MZUOof5x33XuhSMKpI2clfgxhXPz/7egNzbEPxE7NrnvwuuWdcAi/iesTG3bLPr/Zj0efZqAGEETB9j8Hmjc1y6wPYEMKAmrA3FrHCL8r8yBYZBFf6Yx5uktjyDoWELNdkKtiIszg461dSGcQLxJee9I2MKuJMHZPNlTbfA=
+	t=1787666294; cv=none; b=rf07a3BA8vaXWLC1AIqetRdyugUJYlOfw/TsSNrpDqcz55x/IQyilnCXlrfNnLLS345TOMWYzwjTuHY2rYd5AVMTkB/6dcx65iDUmJsXUMgKpGalglJwfdan9DKQoj/0MSPog8jx6IzO9fjfSjtfjzhvQlpaAK6FOrR6hFeG4Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666291; c=relaxed/simple;
-	bh=0FKJHOpoAyCFAlO+ImMxZv+XKYl88zsPG+apgqsK6Fc=;
+	s=arc-20240116; t=1787666294; c=relaxed/simple;
+	bh=W9z6XA/pSmqIa9nNNNk0hwtjndWtv+LKz94G7iW1pR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+3hStCcQnCS4xul5lROwJvK6CSW0oN1jn6q11C19n+hswLe8emOJH693shW3axBaAF7qgQ0ephtkSitqWcXvjvpV5JSJqdQXG28jW8qdvOuBtP1677ZUwuFG8eRq1RMsnVedrkKkOfJroBkAkZAat9DOZ3iu0/5eO8ogHiOBDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIA2ftib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qfUk8Uml/l9zZ/lpEuPJxzh6nDAsSTEHhWOgeQpw5ho2k24j1jCQuk2hOAtHLb4bHfvoOZuAejXwYVAogcAyMjJi7/DQ23o5+9fPLVD+iZE0j0vNyhcyYS2lPo1oYloohERzhJKe+4qfNmTKhoR7t5PaW2bGNnZHxByf1O72XWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEUMMREy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIA2ftib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E348F1F000E9;
-	Tue, 25 Aug 2026 13:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEUMMREy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52ED1F00A3D;
+	Tue, 25 Aug 2026 13:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666290;
-	bh=9WVngI/G4RA48y2kY0nny1l3QzP1Qho5eTIHqWHgc00=;
+	s=korg; t=1787666293;
+	bh=o7cmlDTKNzviJsbS0lOvLHZ7L7T/ejPBsGur8t3Aim8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fIA2ftibCAtfh5CNhLsIW82JkKZk3M7UZ8vAQsD9yf08BRS2JbBEbnm4/g5szsI+j
-	 +CW2ADkvnTw9bIP8GP14MYV/e5xw6oLHJ95TV+DdOybm4MsC3bk2aYCF5xr7dIgXN+
-	 VTdE1XV1u8JO1E+Gcwhi06/AVX6yCF+3GcymHdxw=
+	b=jEUMMREyiQkuNuoRLEnK8hJGlv8bmS6UQIll+XU5Vmlr1XkXDZETQdUatwBz3mACJ
+	 jcFxinMO5qP5nAqzgHulTjnRiLsGuY2/JaetL/pyOCsCqAEdh6XPilNW3r3w4SWZ+V
+	 W7vcU0noJkBXX1qO6ZSnAf3dsUtZLaEoIH2FVNoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 69/76] mptcp: pm: ADD_ADDR rtx: always decrease sk refcount
-Date: Tue, 25 Aug 2026 15:27:02 +0200
-Message-ID: <20260825132544.258961017@linuxfoundation.org>
+Subject: [PATCH 5.15 70/76] mptcp: pm: ADD_ADDR rtx: free sk if last
+Date: Tue, 25 Aug 2026 15:27:03 +0200
+Message-ID: <20260825132544.301715728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -54,55 +54,116 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 9634cb35af17019baec21ca648516ce376fa10e6 ]
+[ Upstream commit b7b9a461569734d33d3259d58d2507adfac107ed ]
 
-When an ADD_ADDR is retransmitted, the sk is held in sk_reset_timer().
-It should then be released in all cases at the end.
+When an ADD_ADDR is retransmitted, the sk is held in sk_reset_timer(),
+and released at the end.
 
-Some (unlikely) checks were returning directly instead of calling
-sock_put() to decrease the refcount. Jump to a new 'exit' label to call
-__sock_put() (which will become sock_put() in the next commit) to fix
-this potential leak.
+If at that moment, it was the last reference being held, the sk would
+not be freed. sock_put() should then be called instead of __sock_put().
 
-While at it, drop the '!msk' check which cannot happen because it is
-never reset, and explicitly mark the remaining one as "unlikely".
+But that's not enough: if it is the last reference, sock_put() will call
+sk_free(), which will end up calling sk_stop_timer_sync() on the same
+timer, and waiting indefinitely to finish. So it is needed to mark that
+the timer is done at the end of the timer handler when it has not been
+rescheduled, not to call sk_stop_timer_sync() on "itself".
 
 Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-4-fca8091060a4@kernel.org
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-5-fca8091060a4@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: a7aad5b69d3b ("mptcp: pm: fix data race in add_addr timer callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/mptcp/pm_netlink.c |   28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -320,11 +320,8 @@ static void mptcp_pm_add_timer(struct ti
+@@ -36,6 +36,7 @@ struct mptcp_pm_add_entry {
+ 	struct timer_list	add_timer;
+ 	struct mptcp_sock	*sock;
+ 	u8			retrans_times;
++	bool			timer_done;
+ 	struct rcu_head		rcu;
+ };
+ 
+@@ -316,22 +317,22 @@ static void mptcp_pm_add_timer(struct ti
+ 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
+ 	struct mptcp_sock *msk = entry->sock;
+ 	struct sock *sk = (struct sock *)msk;
+-	unsigned int timeout;
++	unsigned int timeout = 0;
  
  	pr_debug("msk=%p\n", msk);
  
--	if (!msk)
--		return;
--
--	if (inet_sk_state_load(sk) == TCP_CLOSE)
--		return;
-+	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
-+		goto exit;
++	bh_lock_sock(sk);
+ 	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
+-		goto exit;
++		goto out;
  
- 	bh_lock_sock(sk);
+-	bh_lock_sock(sk);
  	if (sock_owned_by_user(sk)) {
-@@ -368,6 +365,7 @@ static void mptcp_pm_add_timer(struct ti
+ 		/* Try again later. */
+-		sk_reset_timer(sk, timer, jiffies + HZ / 20);
++		timeout = HZ / 20;
+ 		goto out;
+ 	}
+ 
+ 	if (mptcp_pm_should_add_signal_addr(msk)) {
+-		sk_reset_timer(sk, timer, jiffies + HZ);
++		timeout = HZ;
+ 		goto out;
+ 	}
+ 
+@@ -354,9 +355,8 @@ static void mptcp_pm_add_timer(struct ti
+ 		entry->retrans_times++;
+ 	}
+ 
+-	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
+-		sk_reset_timer(sk, timer,
+-			       jiffies + timeout);
++	if (entry->retrans_times >= ADD_ADDR_RETRANS_MAX)
++		timeout = 0;
+ 
+ 	spin_unlock_bh(&msk->pm.lock);
+ 
+@@ -364,9 +364,13 @@ static void mptcp_pm_add_timer(struct ti
+ 		mptcp_pm_subflow_established(msk);
  
  out:
++	if (timeout)
++		sk_reset_timer(sk, timer, jiffies + timeout);
++	else
++		/* if sock_put calls sk_free: avoid waiting for this timer */
++		entry->timer_done = true;
  	bh_unlock_sock(sk);
-+exit:
- 	__sock_put(sk);
+-exit:
+-	__sock_put(sk);
++	sock_put(sk);
  }
  
+ struct mptcp_pm_add_entry *
+@@ -427,6 +431,7 @@ static bool mptcp_pm_alloc_anno_list(str
+ 	add_entry->retrans_times = 0;
+ 
+ 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
++	add_entry->timer_done = false;
+ 	timeout = mptcp_get_add_addr_timeout(net);
+ 	if (timeout)
+ 		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
+@@ -447,7 +452,8 @@ void mptcp_pm_free_anno_list(struct mptc
+ 	spin_unlock_bh(&msk->pm.lock);
+ 
+ 	list_for_each_entry_safe(entry, tmp, &free_list, list) {
+-		sk_stop_timer_sync(sk, &entry->add_timer);
++		if (!entry->timer_done)
++			sk_stop_timer_sync(sk, &entry->add_timer);
+ 		kfree_rcu(entry, rcu);
+ 	}
+ }
 
 
