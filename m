@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1770B441027;
-	Tue, 25 Aug 2026 13:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF933909A4;
+	Tue, 25 Aug 2026 13:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665547; cv=none; b=MQVp0DsyXWxM+3aEmXfSprZS12mpsduquCeNcAJXacNkSkF22n3GMB+uzPmrEA3T2/OH2Lzupc1faDdqJjQIfujN2BOrTiml2o4nc2+oIBvQuYBCWSK3EsOdvgJbKXLaAmn6b9hIw99JdfUCmGobMeF7dxP0aNysqme7A+koDwA=
+	t=1787665550; cv=none; b=XGrd+ngRd0Pm2cXN4PHShhCD74i/FhGojazH6+Z1FVGYbeOR3r6sewy3sowZaVFCuFWpcRby72CTAeqCASePGNC2BCm/XuWtcX07kc67cgIteN4PWbR5qUAfhjEv7F7w0gecvhnQUwvmca4RLyhcTBrfyyHMlbwj3WGN6bpG580=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665547; c=relaxed/simple;
-	bh=ScDbE8kwEADlegytySfYbsQJfdX8yt7+md8yDW3jaAE=;
+	s=arc-20240116; t=1787665550; c=relaxed/simple;
+	bh=ldoeP9x4Ci8Vxop5OfguEBPYLOYv6/rVY+lJciijb2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXWuJIqYC0rXw0/0XbfWcQpVKa4DT9ziHmfGZoBbZ3vmGF69TN/9uSeio6uDMHRVXYHsoHiF1KbQWPG2+JASN4gEdwFWANk3IwSmH2T1U2mmNL1oYr6UrdBXMmKI+z4r5KGFsBPLPHLhYIsJje2bJOHUbO7j3iUxwRF4g0ID/is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbTnSyMn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=orklJSqoztPKxIw7/SrRDq4+Vy5+iPhEcFI18HDL/6WcHlt86cYRoTo1n8/mEBDRGtoTJMJUqTMHxtdMIBPiXsM3QtjHZjUI5xtJs7S/nHLlYoBjt0dd8xrCvHdH9wfKjp/sJkoG8ngSavhnnzTln2NFTJRfOjQ9N7cyUeLg7fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQa4R26E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbTnSyMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9731F000E9;
-	Tue, 25 Aug 2026 13:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQa4R26E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF651F000E9;
+	Tue, 25 Aug 2026 13:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665545;
-	bh=5YqiCoT97v7qX70lxyo4eE75yTnM7LwDlUe4Ba7f7bI=;
+	s=korg; t=1787665548;
+	bh=oKFcsSLk9fwcOIOti5VN2fUcpt+QUqoKyNhAppBkMbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZbTnSyMnaMjfdhlBsXiorbZTy3fv6MJElNZ83aAgRzQLEoHHHi7q2nEVX3xAp34eV
-	 TO/0QGV+RK7OTyqVBgO1UO3INUP92DA4p2wNkB878jQm5V5qrAVm/37Ny8fr3L0kQo
-	 04kboGExGdBQptwQHn1V2Am4P8RAOf+LFtsSzcHU=
+	b=OQa4R26EyWRPrC991tZCgHPcrLWIsn0T9/S0yA5QY88+X1ZySnMpyuf6oZGKA/qAA
+	 JaJ1DSYKxCmt9jg75FI19Ar6mGYsZ8EsFGVBC05QTMg8AXpx4UES7CZ3cksefMKco6
+	 pidkIV2VIarzeyO3AyqzTOfdpP1mkcCfKrhXuWeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 63/77] xfrm: fix sk_dst_cache double-free in xfrm_user_policy()
-Date: Tue, 25 Aug 2026 15:26:25 +0200
-Message-ID: <20260825132544.009793872@linuxfoundation.org>
+Subject: [PATCH 6.12 64/77] ipv4: start using dst_dev_rcu()
+Date: Tue, 25 Aug 2026 15:26:26 +0200
+Message-ID: <20260825132544.045268846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -52,74 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c283e9ada7fcb7dd4b10592623086b2e6d2f9925 ]
+[ Upstream commit 6ad8de3cefdb6ffa6708b21c567df0dbf82c43a8 ]
 
-xfrm_user_policy() clears the socket dst cache with __sk_dst_reset(),
-i.e. the non-atomic __sk_dst_set(sk, NULL): it reads sk_dst_cache with
-rcu_dereference_protected(), stores NULL and dst_release()s the old dst.
-That is only safe if no other thread modifies sk_dst_cache concurrently.
+Change icmpv4_xrlim_allow(), ip_defrag() to prevent possible UAF.
 
-For a connected UDP socket that does not hold: the transmit fast path
-(udp_sendmsg -> sk_dst_check -> sk_dst_reset) resets the cache locklessly
-with an atomic xchg(). A per-socket policy change racing a send can make
-both sides observe the same old dst and each dst_release() it, dropping
-the socket's single reference twice and freeing the xfrm_dst bundle while
-it is still referenced:
+Change ipmr_prepare_xmit(), ipmr_queue_fwd_xmit(), ip_mr_output(),
+ipv4_neigh_lookup() to use lockdep enabled dst_dev_rcu().
 
-  BUG: KASAN: slab-use-after-free in dst_release
-  Write of size 4 at addr ffff88801897b6c0 by task exploit/155
-  Call Trace:
-   ...
-   dst_release (... ./include/linux/rcuref.h:109)
-   xfrm_user_policy (./include/net/sock.h:2239 ./include/net/sock.h:2256 net/xfrm/xfrm_state.c:3053)
-   do_ip_setsockopt (net/ipv4/ip_sockglue.c:1347)
-   ip_setsockopt (net/ipv4/ip_sockglue.c:1417)
-   do_sock_setsockopt (net/socket.c:2368)
-   __sys_setsockopt (net/socket.c:2393)
-   __x64_sys_setsockopt (net/socket.c:2396)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-Reachable by an unprivileged user via a user+network namespace.
-
-Use the atomic sk_dst_reset() so the cache is cleared and released with a
-single xchg(): whichever side wins releases the dst once, the other sees
-NULL and does nothing. Behaviour is otherwise unchanged.
-
-Fixes: 2b06cdf3e688 ("xfrm: Clear sk_dst_cache when applying per-socket policy.")
-Fixes: be8f8284cd89 ("net: xfrm: allow clearing socket xfrm policies.")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-9-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/icmp.c        | 6 +++---
+ net/ipv4/ip_fragment.c | 6 ++++--
+ net/ipv4/ipmr.c        | 2 +-
+ net/ipv4/route.c       | 4 ++--
+ 4 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 792e5ef9361aa..e399cd5696cf9 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2881,7 +2881,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
- 	if (sockptr_is_null(optval) && !optlen) {
- 		xfrm_sk_policy_insert(sk, XFRM_POLICY_IN, NULL);
- 		xfrm_sk_policy_insert(sk, XFRM_POLICY_OUT, NULL);
--		__sk_dst_reset(sk);
-+		sk_dst_reset(sk);
- 		return 0;
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index c7af8b914e13c..1fc967a60bb9c 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -320,17 +320,17 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
+ 		return true;
+ 
+ 	/* No rate limit on loopback */
+-	dev = dst_dev(dst);
++	rcu_read_lock();
++	dev = dst_dev_rcu(dst);
+ 	if (dev && (dev->flags & IFF_LOOPBACK))
+ 		goto out;
+ 
+-	rcu_read_lock();
+ 	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr,
+ 			       l3mdev_master_ifindex_rcu(dev));
+ 	rc = inet_peer_xrlim_allow(peer,
+ 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
+-	rcu_read_unlock();
+ out:
++	rcu_read_unlock();
+ 	if (!rc)
+ 		__ICMP_INC_STATS(net, ICMP_MIB_RATELIMITHOST);
+ 	else
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 5825aa8eac7fd..9cc55a0c64f7d 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -470,14 +470,16 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ /* Process an incoming IP datagram fragment. */
+ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
+ {
+-	struct net_device *dev = skb->dev ? : skb_dst_dev(skb);
+-	int vif = l3mdev_master_ifindex_rcu(dev);
++	struct net_device *dev;
+ 	struct ipq *qp;
++	int vif;
+ 
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
+ 
+ 	/* Lookup (or create) queue header */
+ 	rcu_read_lock();
++	dev = skb->dev ? : skb_dst_dev_rcu(skb);
++	vif = l3mdev_master_ifindex_rcu(dev);
+ 	qp = ip_find(net, ip_hdr(skb), user, vif);
+ 	if (qp) {
+ 		int ret, refs = 0;
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index de0d9cc7806a1..f0294b1148246 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -1894,7 +1894,7 @@ static void ipmr_queue_xmit(struct net *net, struct mr_table *mrt,
+ 			goto out_free;
  	}
  
-@@ -2921,7 +2921,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
- 	if (err >= 0) {
- 		xfrm_sk_policy_insert(sk, err, pol);
- 		xfrm_pol_put(pol);
--		__sk_dst_reset(sk);
-+		sk_dst_reset(sk);
- 		err = 0;
- 	}
+-	dev = rt->dst.dev;
++	dev = dst_dev_rcu(&rt->dst);
  
+ 	if (skb->len+encap > dst_mtu(&rt->dst) && (ntohs(iph->frag_off) & IP_DF)) {
+ 		/* Do not fragment multicasts. Alas, IPv4 does not
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 28d83b3baae3b..9135a9dc8f297 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -413,11 +413,11 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
+ 					   const void *daddr)
+ {
+ 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+-	struct net_device *dev = dst_dev(dst);
++	struct net_device *dev;
+ 	struct neighbour *n;
+ 
+ 	rcu_read_lock();
+-
++	dev = dst_dev_rcu(dst);
+ 	if (likely(rt->rt_gw_family == AF_INET)) {
+ 		n = ip_neigh_gw4(dev, rt->rt_gw4);
+ 	} else if (rt->rt_gw_family == AF_INET6) {
 -- 
 2.53.0
 
