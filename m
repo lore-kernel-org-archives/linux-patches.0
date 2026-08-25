@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0CC2E06E4;
-	Tue, 25 Aug 2026 13:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0945D423A85;
+	Tue, 25 Aug 2026 13:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666053; cv=none; b=BlZX06IHCYVA5gy0LXcshSJvvzQG/CFA+uwYNSOGt27vxaCP66zpnJNUN7QsPnGcReGUqsJULIlf9vjU4DIvQ5DHv9scq/PmdRQ9rSgg+Lef7+Dj6xQFRnSxZiad8mLGvukWvj2wFHQXN4Sl4tl4S0ZoaW/jHB95zB0a8dGIlXg=
+	t=1787666056; cv=none; b=d2NjPJxV6lbYmmrVW0n5xrbxLDunDr2xFJGvHCnP0m8iPTipjPDmo8QNdH4BZTJwLBE1dazUfwfCa+KtSXJaDHxJ7jsn/DezGuPNSUS+lyX05oiNMkRmQPdJiPLvHdJgCrJ4HRuAhtNtHhq5Fte7e1R7UUQTLipe8RvSkQS5das=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666053; c=relaxed/simple;
-	bh=jP5ZkIP1+9wqR8NMxl8H4NxtVPMFNIT9n2M5nGlG3y8=;
+	s=arc-20240116; t=1787666056; c=relaxed/simple;
+	bh=gK04B/PNlpM2lK7BXzsX46Z0mvQlE3DWM9ruNbwht20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnBFpX28Unop0YM9oFvfCZOytkndeN1CwYM9y0E0bwWeEMEX2C2A/uMxuG9qmAiw4U0lodWmj+zqu5tBKBxIfNJMMxFOwelOyEEuUL7f9xLfzc2rRJT6sQ7LleDYt8YOtCMYS95LJV2QC4dnf+XmR3zNeg8c1lG1EOqunRquDPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBSDbWYp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p78DPEHWQINo10Pb0YlRvYsUd0N2K/CpVvpokF9z0hoWGw0IYjlZtTno/N88BfZ6SgOh75u8MW4cNhQoFm7yVVLHPf2hQf6iWZeplgQztA4rV0RKEc4whARbGDR7cSdg5WSxGe0aDIY4R/MeBNKxenVEpCk3wPA2JQzHRWy4bw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ed95p62I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBSDbWYp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB661F000E9;
-	Tue, 25 Aug 2026 13:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ed95p62I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8C11F000E9;
+	Tue, 25 Aug 2026 13:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666051;
-	bh=aQJSZOzDRz9cFHpFDj9uVcPXbbfr1HAQPWxEzOFLEEE=;
+	s=korg; t=1787666054;
+	bh=0hzb89kAlns8YwtCyyHG19VJ9eL6WJGgz0Pp83Jw+/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBSDbWYpcOKdBg64KHRVTbJyjFTOWphKTQV22PmC8IIReAHCy2bOmX6o5zT6VQTxe
-	 gvNkqtCuojFOewxiU75BnW5A9cI0Udobc1y3jCQiJkjtfY9kpyqydK7oAXZ/AKFF2j
-	 mQW7BV9FRM8RgZA+Yuz819L0spQzBCOCoKmZ0T58=
+	b=Ed95p62IIl8y+GqJvWCif0qZdgkQ4tC+oW1cGTPSChGoIIOVX7F9Y9tvpXB92pxyK
+	 ziRrqVqlZfR5sIe4U7q/F8WQnfMycRSlDstd3z+afEZKDyKaZjqZFWeYluV91HaQiO
+	 TsMgWepe/XmIN75/iclYyEN+s7xsh//uxDLLyjvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 68/79] xfrm: fix sk_dst_cache double-free in xfrm_user_policy()
-Date: Tue, 25 Aug 2026 15:26:48 +0200
-Message-ID: <20260825132544.339412941@linuxfoundation.org>
+Subject: [PATCH 6.1 69/79] s390/vfio_ccw: Free all memory if cp_init() fails
+Date: Tue, 25 Aug 2026 15:26:49 +0200
+Message-ID: <20260825132544.380755072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -52,74 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Eric Farman <farman@linux.ibm.com>
 
-[ Upstream commit c283e9ada7fcb7dd4b10592623086b2e6d2f9925 ]
+[ Upstream commit 74186c2968f8f756ac3226b545b598457c910c75 ]
 
-xfrm_user_policy() clears the socket dst cache with __sk_dst_reset(),
-i.e. the non-atomic __sk_dst_set(sk, NULL): it reads sk_dst_cache with
-rcu_dereference_protected(), stores NULL and dst_release()s the old dst.
-That is only safe if no other thread modifies sk_dst_cache concurrently.
+The routine cp_free() is called to unpin/free any memory once an I/O
+is completed successfully, or if cp_prefetch() fails. But if cp_init()
+fails, and cp->initialized is not enabled, the same routine cannot be
+used to free all the memory.
 
-For a connected UDP socket that does not hold: the transmit fast path
-(udp_sendmsg -> sk_dst_check -> sk_dst_reset) resets the cache locklessly
-with an atomic xchg(). A per-socket policy change racing a send can make
-both sides observe the same old dst and each dst_release() it, dropping
-the socket's single reference twice and freeing the xfrm_dst bundle while
-it is still referenced:
+An attempt to address this exists in ccwchain_handle_ccw(), where a
+single call to ccwchain_free() is made for the currently-processed
+CCW segment. But this will leak other segments (created as a result
+of a Transfer in Channel) that had been allocated as part of the same
+channel program.
 
-  BUG: KASAN: slab-use-after-free in dst_release
-  Write of size 4 at addr ffff88801897b6c0 by task exploit/155
-  Call Trace:
-   ...
-   dst_release (... ./include/linux/rcuref.h:109)
-   xfrm_user_policy (./include/net/sock.h:2239 ./include/net/sock.h:2256 net/xfrm/xfrm_state.c:3053)
-   do_ip_setsockopt (net/ipv4/ip_sockglue.c:1347)
-   ip_setsockopt (net/ipv4/ip_sockglue.c:1417)
-   do_sock_setsockopt (net/socket.c:2368)
-   __sys_setsockopt (net/socket.c:2393)
-   __x64_sys_setsockopt (net/socket.c:2396)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Address this by performing the cleanup outside of the recursive
+ccwchain_handle_ccw()/ccwchain_loop_tic() logic.
 
-Reachable by an unprivileged user via a user+network namespace.
-
-Use the atomic sk_dst_reset() so the cache is cleared and released with a
-single xchg(): whichever side wins releases the dst once, the other sees
-NULL and does nothing. Behaviour is otherwise unchanged.
-
-Fixes: 2b06cdf3e688 ("xfrm: Clear sk_dst_cache when applying per-socket policy.")
-Fixes: be8f8284cd89 ("net: xfrm: allow clearing socket xfrm policies.")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 8b515be512a2 ("vfio-ccw: Fix memory leak and don't call cp_free in cp_init")
+Cc: stable@vger.kernel.org
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/cio/vfio_ccw_cp.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 6f70aeaafe146..4b0835cb58f5d 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2428,7 +2428,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
- 	if (sockptr_is_null(optval) && !optlen) {
- 		xfrm_sk_policy_insert(sk, XFRM_POLICY_IN, NULL);
- 		xfrm_sk_policy_insert(sk, XFRM_POLICY_OUT, NULL);
--		__sk_dst_reset(sk);
-+		sk_dst_reset(sk);
- 		return 0;
- 	}
+diff --git a/drivers/s390/cio/vfio_ccw_cp.c b/drivers/s390/cio/vfio_ccw_cp.c
+index 06f1d34095367..e64ac6e9b2911 100644
+--- a/drivers/s390/cio/vfio_ccw_cp.c
++++ b/drivers/s390/cio/vfio_ccw_cp.c
+@@ -490,9 +490,6 @@ static int ccwchain_handle_ccw(u32 cda, struct channel_program *cp)
+ 	/* Loop for tics on this new chain. */
+ 	ret = ccwchain_loop_tic(chain, cp);
  
-@@ -2468,7 +2468,7 @@ int xfrm_user_policy(struct sock *sk, int optname, sockptr_t optval, int optlen)
- 	if (err >= 0) {
- 		xfrm_sk_policy_insert(sk, err, pol);
- 		xfrm_pol_put(pol);
--		__sk_dst_reset(sk);
-+		sk_dst_reset(sk);
- 		err = 0;
- 	}
+-	if (ret)
+-		ccwchain_free(chain);
+-
+ 	return ret;
+ }
  
+@@ -521,6 +518,23 @@ static int ccwchain_loop_tic(struct ccwchain *chain, struct channel_program *cp)
+ 	return 0;
+ }
+ 
++static int ccwchain_build_ccws(u32 cda, struct channel_program *cp)
++{
++	struct ccwchain *chain, *temp;
++	int ret;
++
++	ret = ccwchain_handle_ccw(cda, cp);
++
++	if (ret) {
++		/* Cleanup if an error occurred */
++		list_for_each_entry_safe(chain, temp, &cp->ccwchain_list, next) {
++			ccwchain_free(chain);
++		}
++	}
++
++	return ret;
++}
++
+ static int ccwchain_fetch_tic(struct ccwchain *chain,
+ 			      int idx,
+ 			      struct channel_program *cp)
+@@ -699,7 +713,7 @@ int cp_init(struct channel_program *cp, union orb *orb)
+ 	memcpy(&cp->orb, orb, sizeof(*orb));
+ 
+ 	/* Build a ccwchain for the first CCW segment */
+-	ret = ccwchain_handle_ccw(orb->cmd.cpa, cp);
++	ret = ccwchain_build_ccws(orb->cmd.cpa, cp);
+ 
+ 	if (!ret) {
+ 		cp->initialized = true;
 -- 
 2.53.0
 
