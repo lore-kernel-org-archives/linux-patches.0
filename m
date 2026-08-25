@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0F038B7DC;
-	Tue, 25 Aug 2026 13:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B393FAE19;
+	Tue, 25 Aug 2026 13:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665779; cv=none; b=PiRUO7mQ/YklKOXB5WpiNIVhAxmz0VH7UwbnrfEUeLzY74qvtg9mJivarOK8RC++Wn8S9QtiLRuxc01BJuHxFDQcaDLKRSMExeJ6DG0t56wbTk1Mq+yGEtiIlngmJc/keQbKzscr0DVyFMY91HS6588ySYQzpD1XQy6/n42If/M=
+	t=1787665782; cv=none; b=jqis2Q3Mpc3uvwxyupkjLdgG9hdronRYDRSHBpV/HGiN2sTEJLOQAXZZwzFKtw0ZyxNHBaCNMxFcQURvBi1DvUKryEVdZeBBtjK9kVMl/51f1gRIrexKjsll7szYgmtKvpzsAllNorY/mqy8J4oLBZ4vkbQa1ODd+qnemIDH2nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665779; c=relaxed/simple;
-	bh=O2hjA5VyFtOBn6MFCjNgW1B3VNjFO0lPSFXubes398w=;
+	s=arc-20240116; t=1787665782; c=relaxed/simple;
+	bh=uKZBMb9g0egod/yaxVXKlhzBs1CS6HpCf3Klr1rriFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SagWRNIwZMQL9G9zN8XP/Sadbq8iKeSYez1qLqxBqdLcLx6wG2oLsY+DVm1o/zqWuDIZvx2QSL2TCejcCpQyMxKPBxMbCio4LBC0xqEuutjn282ixOr3wBjQPGanTHz/m1ofYn2R6Gu/Z6sgDIbwK0eC/GTLJ3N6sSPxyFsDqYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7kdGDGT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W+wX8e+p+0M37dULiMfY7v7kS0TSZtPkul2H4ftgJYHwlJ7P1M6JIN5i0WBTQgCM0LfoACw+Zt8iaPSyadBVGxHrDNjLmSP4QQnXzUok8kiWt/ZAP5ZEFywkCvx/YZnF7Sorv4oB5aw3gefx8xHo2IbvI2ZcsiE+8NfVWy7CmZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgnzf1L8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7kdGDGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AD81F000E9;
-	Tue, 25 Aug 2026 13:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgnzf1L8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7361F000E9;
+	Tue, 25 Aug 2026 13:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665778;
-	bh=d0GenLVsDteav6WzMPWPBr0Rh9Y73+C0QeogXPQQ8hg=;
+	s=korg; t=1787665780;
+	bh=4d5TPymeu6ge+YBNpk+fcj+HM5j66EcP6/eYRuJy3WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w7kdGDGTxkFOXjaeqS5c41CGvL+K4emtrwiatMutXXOjEzZFYzeQLUslYuTxstrma
-	 SiCdb3XhIxqFydAIEvG84ZTuyQgnyGMrviIovg5NIZv+YJkXAImzWsRJQ3Xiqzi6Mo
-	 T0vjm1ZVzXSeJpT6z0Xb59m0gr7ynOvlIfpJ+6R0=
+	b=rgnzf1L8QjMnZVUNsb5ccfRq6G7X6iQd5ifCIm0qrmRZvWGTMpPmIrua+lqXU/6/i
+	 u9pVuCcwuY5Z7Y5WviipTxNJyTndcsn9xA7k7LqnLbd7UU1YUdYnxwh2YQING44KR1
+	 Wcen6AGypt9DN5GEZYhz3xMMxcgXnZJ5DbmGg0xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 60/87] ASoC: SOF: pcm: Add snd_sof_pcm specific wrappers for dev_dbg() and dev_err()
-Date: Tue, 25 Aug 2026 15:26:23 +0200
-Message-ID: <20260825132544.182218110@linuxfoundation.org>
+	syzbot+abd6a8dca0f2b7726060@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 24/87] null_blk: fix UBSAN shift-out-of-bounds when zone_size is 0 or overflows
+Date: Tue, 25 Aug 2026 15:25:47 +0200
+Message-ID: <20260825132542.786027442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -54,348 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit 860693187c597645b28a421d8acb26428b8afd3f ]
+commit 95491fb05105b61050cb623a5e0227eb26aa3525 upstream.
 
-Introduce spcm_dbg() and spcm_err() macros to provide consistent printing
-for debug and error messages which includes usable information in the
-print's prefix.
+null_zone_no() does sect >> ilog2(dev->zone_size_sects). When
+zone_size_sects is 0, ilog2(0) returns -1, producing shift exponent -1
+which UBSAN reports as shift-out-of-bounds.
 
-Update the prints in pcm.c, ipc3-pcm.c and ipc4-pcm.c to take advantage of
-the features provided by the macros.
+  UBSAN: shift-out-of-bounds in drivers/block/null_blk/zoned.c:21:14
+  shift exponent -1 is negative
+  Call Trace:
+   null_zone_no drivers/block/null_blk/zoned.c:21 [inline]
+   null_process_zoned_cmd+0xf76/0xf80 drivers/block/null_blk/zoned.c:728
+   null_handle_cmd drivers/block/null_blk/main.c:1455 [inline]
+   null_queue_rq+0x8bc/0xe70 drivers/block/null_blk/main.c:1703
+   __blk_mq_issue_directly block/blk-mq.c:2694 [inline]
+   blk_mq_try_issue_directly+0x3f4/0x880 block/blk-mq.c:2754
+   blk_mq_submit_bio+0x20c0/0x2a40 block/blk-mq.c:3208
+   submit_bio_noacct_nocheck+0x2f4/0xa40 block/blk-core.c:790
+   block_read_full_folio+0x7a6/0x810 fs/buffer.c:2463
+   filemap_read_folio+0x12c/0x3a0 mm/filemap.c:2510
+   read_part_sector+0xb6/0x2b0 block/partitions/core.c:724
+   adfspart_check_ICS+0xb1/0x960 block/partitions/acorn.c:357
+   check_partition block/partitions/core.c:143 [inline]
+   blk_add_partitions block/partitions/core.c:591 [inline]
+   bdev_disk_changed+0x851/0x17a0 block/partitions/core.c:695
+   blkdev_get_whole+0x372/0x510 block/bdev.c:751
+   add_disk_final block/genhd.c:412 [inline]
+   add_disk_fwnode+0x24b/0x3a0 block/genhd.c:606
+   null_add_dev+0x130b/0x1d70 drivers/block/null_blk/main.c:2052
+   nullb_device_power_store+0x240/0x380 drivers/block/null_blk/main.c:501
+   configfs_write_iter+0x337/0x430 fs/configfs/file.c:229
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20250206092828.7569-4-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 17661c67b206 ("ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Syzkaller triggers this by creating a zoned null_blk device via
+configfs. The Call Trace shows configfs_write_iter in configfs/file.c
+handling a write to power file, which calls nullb_device_power_store in
+main.c, which calls null_add_dev in main.c, which calls add_disk in
+genhd.c, which triggers partition scan via bdev_disk_changed in
+partitions/core.c.
+
+A zoned null_blk device with zone_size 0 should not be legal. Existing
+code tries to reject it via is_power_of_2() check in zoned.c and
+!zone_size check in main.c, but syzkaller can still reach
+null_zone_no() with zone_size_sects 0 via two paths:
+
+1. Direct 0 via configfs: zone_size attribute store in main.c has
+NULLB_DEVICE_ATTR(zone_size, ulong, NULL) with no validation callback,
+so echo 0 > zone_size succeeds before power store. If zoned is false
+at power store time, the !zone_size check in main.c is skipped, and
+later zoned set true leaves zone_size 0.
+
+2. Large value overflow: mb_to_sects() in zoned.c does
+(sector_t)mb * SZ_1M >> SECTOR_SHIFT which is mb * 2048. If mb is
+1UL << 53 (9PB), mb * 2048 overflows 64-bit to 0. The value is
+power-of-two so is_power_of_2() passes, but mb_to_sects() returns 0.
+
+Check for zero zone_size explicitly in null_init_zoned_dev() in
+zoned.c, returning -EINVAL with "must be non-zero power-of-two".
+Check for zero zone_size_sects after mb_to_sects() conversion,
+returning -EINVAL for overflow case. Keep defensive check in
+null_zone_no() returning 0 for zero sectors to avoid shift out-of-bounds
+even if  zero slips through.
+
+This change should be safe because zone_size is set once in
+null_init_zoned_dev() under device lock and never changes after, and 0
+is never valid for a zoned device. Returning -EINVAL at init time fails
+device creation early with clear error, while defensive return 0 in
+null_zone_no() makes zoned command fail via offline zone check.
+No new locking is introduced.
+
+Reported-by: syzbot+abd6a8dca0f2b7726060@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=abd6a8dca0f2b7726060
+Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0033.GAE@google.com/
+Fixes: 8a3cf049af68 ("null_blk: add zoned block device emulation")
+Cc: stable@vger.kernel.org
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260808114239.69167f68@fangorn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc3-pcm.c  |   13 +++---
- sound/soc/sof/ipc4-pcm.c  |   10 +++--
- sound/soc/sof/pcm.c       |   86 ++++++++++++++++++++--------------------------
- sound/soc/sof/sof-audio.h |   14 +++++++
- 4 files changed, 65 insertions(+), 58 deletions(-)
+ drivers/block/null_blk/zoned.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/sound/soc/sof/ipc3-pcm.c
-+++ b/sound/soc/sof/ipc3-pcm.c
-@@ -117,22 +117,23 @@ static int sof_ipc3_pcm_hw_params(struct
- 	if (platform_params->cont_update_posn)
- 		pcm.params.cont_update_posn = 1;
+--- a/drivers/block/null_blk/zoned.c
++++ b/drivers/block/null_blk/zoned.c
+@@ -16,6 +16,8 @@ static inline sector_t mb_to_sects(unsig
  
--	dev_dbg(component->dev, "stream_tag %d", pcm.params.stream_tag);
-+	spcm_dbg(spcm, substream->stream, "stream_tag %d\n",
-+		 pcm.params.stream_tag);
- 
- 	/* send hw_params IPC to the DSP */
- 	ret = sof_ipc_tx_message(sdev->ipc, &pcm, sizeof(pcm),
- 				 &ipc_params_reply, sizeof(ipc_params_reply));
- 	if (ret < 0) {
--		dev_err(component->dev, "HW params ipc failed for stream %d\n",
--			pcm.params.stream_tag);
-+		spcm_err(spcm, substream->stream,
-+			 "STREAM_PCM_PARAMS ipc failed for stream_tag %d\n",
-+			 pcm.params.stream_tag);
- 		return ret;
- 	}
- 
- 	ret = snd_sof_set_stream_data_offset(sdev, &spcm->stream[substream->stream],
- 					     ipc_params_reply.posn_offset);
- 	if (ret < 0) {
--		dev_err(component->dev, "%s: invalid stream data offset for PCM %d\n",
--			__func__, spcm->pcm.pcm_id);
-+		spcm_err(spcm, substream->stream, "invalid stream data offset\n");
- 		return ret;
- 	}
- 
-@@ -171,7 +172,7 @@ static int sof_ipc3_pcm_trigger(struct s
- 		stream.hdr.cmd |= SOF_IPC_STREAM_TRIG_STOP;
- 		break;
- 	default:
--		dev_err(component->dev, "Unhandled trigger cmd %d\n", cmd);
-+		spcm_err(spcm, substream->stream, "Unhandled trigger cmd %d\n", cmd);
- 		return -EINVAL;
- 	}
- 
---- a/sound/soc/sof/ipc4-pcm.c
-+++ b/sound/soc/sof/ipc4-pcm.c
-@@ -291,12 +291,12 @@ static int sof_ipc4_trigger_pipelines(st
- 	int ret;
- 	int i;
- 
--	dev_dbg(sdev->dev, "trigger cmd: %d state: %d\n", cmd, state);
--
- 	spcm = snd_sof_find_spcm_dai(component, rtd);
- 	if (!spcm)
- 		return -EINVAL;
- 
-+	spcm_dbg(spcm, substream->stream, "cmd: %d, state: %d\n", cmd, state);
-+
- 	pipeline_list = &spcm->stream[substream->stream].pipeline_list;
- 
- 	/* nothing to trigger if the list is empty */
-@@ -358,7 +358,7 @@ static int sof_ipc4_trigger_pipelines(st
- 	 */
- 	ret = sof_ipc4_set_multi_pipeline_state(sdev, SOF_IPC4_PIPE_PAUSED, trigger_list);
- 	if (ret < 0) {
--		dev_err(sdev->dev, "failed to pause all pipelines\n");
-+		spcm_err(spcm, substream->stream, "failed to pause all pipelines\n");
- 		goto free;
- 	}
- 
-@@ -376,7 +376,9 @@ skip_pause_transition:
- 	/* else set the RUNNING/RESET state in the DSP */
- 	ret = sof_ipc4_set_multi_pipeline_state(sdev, state, trigger_list);
- 	if (ret < 0) {
--		dev_err(sdev->dev, "failed to set final state %d for all pipelines\n", state);
-+		spcm_err(spcm, substream->stream,
-+			 "failed to set final state %d for all pipelines\n",
-+			 state);
- 		/*
- 		 * workaround: if the firmware is crashed while setting the
- 		 * pipelines to reset state we must ignore the error code and
---- a/sound/soc/sof/pcm.c
-+++ b/sound/soc/sof/pcm.c
-@@ -99,8 +99,8 @@ sof_pcm_setup_connected_widgets(struct s
- 		ret = snd_soc_dapm_dai_get_connected_widgets(dai, dir, &list,
- 							     dpcm_end_walk_at_be);
- 		if (ret < 0) {
--			dev_err(sdev->dev, "error: dai %s has no valid %s path\n", dai->name,
--				snd_pcm_direction_name(dir));
-+			spcm_err(spcm, dir, "dai %s has no valid %s path\n",
-+				 dai->name, snd_pcm_direction_name(dir));
- 			return ret;
- 		}
- 
-@@ -108,8 +108,7 @@ sof_pcm_setup_connected_widgets(struct s
- 
- 		ret = sof_widget_list_setup(sdev, spcm, params, platform_params, dir);
- 		if (ret < 0) {
--			dev_err(sdev->dev, "error: failed widget list set up for pcm %d dir %d\n",
--				spcm->pcm.pcm_id, dir);
-+			spcm_err(spcm, dir, "Widget list set up failed\n");
- 			spcm->stream[dir].list = NULL;
- 			snd_soc_dapm_dai_free_widgets(&list);
- 			return ret;
-@@ -139,6 +138,8 @@ static int sof_pcm_hw_params(struct snd_
- 	if (!spcm)
- 		return -EINVAL;
- 
-+	spcm_dbg(spcm, substream->stream, "Entry: hw_params\n");
-+
- 	/*
- 	 * Handle repeated calls to hw_params() without free_pcm() in
- 	 * between. At least ALSA OSS emulation depends on this.
-@@ -151,12 +152,9 @@ static int sof_pcm_hw_params(struct snd_
- 		spcm->prepared[substream->stream] = false;
- 	}
- 
--	dev_dbg(component->dev, "pcm: hw params stream %d dir %d\n",
--		spcm->pcm.pcm_id, substream->stream);
--
- 	ret = snd_sof_pcm_platform_hw_params(sdev, substream, params, &platform_params);
- 	if (ret < 0) {
--		dev_err(component->dev, "platform hw params failed\n");
-+		spcm_err(spcm, substream->stream, "platform hw params failed\n");
- 		return ret;
- 	}
- 
-@@ -224,7 +222,8 @@ static int sof_pcm_stream_free(struct sn
- 	if (free_widget_list) {
- 		ret = sof_widget_list_free(sdev, spcm, dir);
- 		if (ret < 0)
--			dev_err(sdev->dev, "failed to free widgets during suspend\n");
-+			spcm_err(spcm, substream->stream,
-+				 "failed to free widgets during suspend\n");
- 	}
- 
- 	return ret;
-@@ -273,8 +272,7 @@ static int sof_pcm_hw_free(struct snd_so
- 	if (!spcm)
- 		return -EINVAL;
- 
--	dev_dbg(component->dev, "pcm: free stream %d dir %d\n",
--		spcm->pcm.pcm_id, substream->stream);
-+	spcm_dbg(spcm, substream->stream, "Entry: hw_free\n");
- 
- 	if (spcm->prepared[substream->stream]) {
- 		/* stop DMA first if needed */
-@@ -323,18 +321,17 @@ static int sof_pcm_prepare(struct snd_so
- 	if (!spcm)
- 		return -EINVAL;
- 
-+	spcm_dbg(spcm, substream->stream, "Entry: prepare\n");
-+
- 	if (spcm->prepared[substream->stream])
- 		return 0;
- 
--	dev_dbg(component->dev, "pcm: prepare stream %d dir %d\n",
--		spcm->pcm.pcm_id, substream->stream);
--
- 	/* set hw_params */
- 	ret = sof_pcm_hw_params(component,
- 				substream, &spcm->params[substream->stream]);
- 	if (ret < 0) {
--		dev_err(component->dev,
--			"error: set pcm hw_params after resume\n");
-+		spcm_err(spcm, substream->stream,
-+			 "failed to set hw_params after resume\n");
- 		return ret;
- 	}
- 
-@@ -364,8 +361,7 @@ static int sof_pcm_trigger(struct snd_so
- 	if (!spcm)
- 		return -EINVAL;
- 
--	dev_dbg(component->dev, "pcm: trigger stream %d dir %d cmd %d\n",
--		spcm->pcm.pcm_id, substream->stream, cmd);
-+	spcm_dbg(spcm, substream->stream, "Entry: trigger (cmd: %d)\n", cmd);
- 
- 	switch (cmd) {
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-@@ -412,7 +408,7 @@ static int sof_pcm_trigger(struct snd_so
- 			reset_hw_params = true;
- 		break;
- 	default:
--		dev_err(component->dev, "Unhandled trigger cmd %d\n", cmd);
-+		spcm_err(spcm, substream->stream, "Unhandled trigger cmd %d\n", cmd);
- 		return -EINVAL;
- 	}
- 
-@@ -497,9 +493,7 @@ static int sof_pcm_open(struct snd_soc_c
- 	if (!spcm)
- 		return -EINVAL;
- 
--	dev_dbg(component->dev, "pcm: open stream %d dir %d\n",
--		spcm->pcm.pcm_id, substream->stream);
--
-+	spcm_dbg(spcm, substream->stream, "Entry: open\n");
- 
- 	caps = &spcm->pcm.caps[substream->stream];
- 
-@@ -529,18 +523,16 @@ static int sof_pcm_open(struct snd_soc_c
- 
- 	ret = snd_sof_pcm_platform_open(sdev, substream);
- 	if (ret < 0) {
--		dev_err(component->dev, "error: pcm open failed %d\n", ret);
-+		spcm_err(spcm, substream->stream,
-+			 "platform pcm open failed %d\n", ret);
- 		return ret;
- 	}
- 
--	dev_dbg(component->dev, "period bytes min %zd, max %zd\n",
--		runtime->hw.period_bytes_min,
--		runtime->hw.period_bytes_max);
--	dev_dbg(component->dev, "period count min %d, max %d\n",
--		runtime->hw.periods_min,
--		runtime->hw.periods_max);
--	dev_dbg(component->dev, "buffer bytes max %zd\n",
--		runtime->hw.buffer_bytes_max);
-+	spcm_dbg(spcm, substream->stream, "period bytes min %zd, max %zd\n",
-+		 runtime->hw.period_bytes_min, runtime->hw.period_bytes_max);
-+	spcm_dbg(spcm, substream->stream, "period count min %d, max %d\n",
-+		 runtime->hw.periods_min, runtime->hw.periods_max);
-+	spcm_dbg(spcm, substream->stream, "buffer bytes max %zd\n", runtime->hw.buffer_bytes_max);
- 
- 	return 0;
+ static inline unsigned int null_zone_no(struct nullb_device *dev, sector_t sect)
+ {
++	if (WARN_ON_ONCE(!dev->zone_size_sects))
++		return 0;
+ 	return sect >> ilog2(dev->zone_size_sects);
  }
-@@ -561,13 +553,12 @@ static int sof_pcm_close(struct snd_soc_
- 	if (!spcm)
- 		return -EINVAL;
  
--	dev_dbg(component->dev, "pcm: close stream %d dir %d\n",
--		spcm->pcm.pcm_id, substream->stream);
-+	spcm_dbg(spcm, substream->stream, "Entry: close\n");
+@@ -65,8 +67,8 @@ int null_init_zoned_dev(struct nullb_dev
+ 	sector_t sector = 0;
+ 	unsigned int i;
  
- 	err = snd_sof_pcm_platform_close(sdev, substream);
- 	if (err < 0) {
--		dev_err(component->dev, "error: pcm close failed %d\n",
--			err);
-+		spcm_err(spcm, substream->stream,
-+			 "platform pcm close failed %d\n", err);
- 		/*
- 		 * keep going, no point in preventing the close
- 		 * from happening
-@@ -601,7 +592,8 @@ static int sof_pcm_new(struct snd_soc_co
- 		return 0;
- 	}
- 
--	dev_dbg(component->dev, "creating new PCM %s\n", spcm->pcm.pcm_name);
-+	dev_dbg(spcm->scomp->dev, "pcm%u (%s): Entry: pcm_construct\n",
-+		spcm->pcm.pcm_id, spcm->pcm.pcm_name);
- 
- 	/* do we need to pre-allocate playback audio buffer pages */
- 	if (!spcm->pcm.playback)
-@@ -609,16 +601,15 @@ static int sof_pcm_new(struct snd_soc_co
- 
- 	caps = &spcm->pcm.caps[stream];
- 
--	/* pre-allocate playback audio buffer pages */
--	dev_dbg(component->dev,
--		"spcm: allocate %s playback DMA buffer size 0x%x max 0x%x\n",
--		caps->name, caps->buffer_size_min, caps->buffer_size_max);
--
- 	if (!pcm->streams[stream].substream) {
--		dev_err(component->dev, "error: NULL playback substream!\n");
-+		spcm_err(spcm, stream, "NULL playback substream!\n");
+-	if (!is_power_of_2(dev->zone_size)) {
+-		pr_err("zone_size must be power-of-two\n");
++	if (!dev->zone_size || !is_power_of_2(dev->zone_size)) {
++		pr_err("zone_size must be non-zero power-of-two\n");
  		return -EINVAL;
  	}
+ 	if (dev->zone_size > dev->size) {
+@@ -97,6 +99,10 @@ int null_init_zoned_dev(struct nullb_dev
+ 	zone_capacity_sects = mb_to_sects(dev->zone_capacity);
+ 	dev_capacity_sects = mb_to_sects(dev->size);
+ 	dev->zone_size_sects = mb_to_sects(dev->zone_size);
++	if (!dev->zone_size_sects) {
++		pr_err("zone_size too large or too small, leads to zero sectors\n");
++		return -EINVAL;
++	}
+ 	dev->nr_zones = round_up(dev_capacity_sects, dev->zone_size_sects)
+ 		>> ilog2(dev->zone_size_sects);
  
-+	/* pre-allocate playback audio buffer pages */
-+	spcm_dbg(spcm, stream, "allocate %s playback DMA buffer size 0x%x max 0x%x\n",
-+		 caps->name, caps->buffer_size_min, caps->buffer_size_max);
-+
- 	snd_pcm_set_managed_buffer(pcm->streams[stream].substream,
- 				   SNDRV_DMA_TYPE_DEV_SG, sdev->dev,
- 				   0, le32_to_cpu(caps->buffer_size_max));
-@@ -631,16 +622,15 @@ capture:
- 
- 	caps = &spcm->pcm.caps[stream];
- 
--	/* pre-allocate capture audio buffer pages */
--	dev_dbg(component->dev,
--		"spcm: allocate %s capture DMA buffer size 0x%x max 0x%x\n",
--		caps->name, caps->buffer_size_min, caps->buffer_size_max);
--
- 	if (!pcm->streams[stream].substream) {
--		dev_err(component->dev, "error: NULL capture substream!\n");
-+		spcm_err(spcm, stream, "NULL capture substream!\n");
- 		return -EINVAL;
- 	}
- 
-+	/* pre-allocate capture audio buffer pages */
-+	spcm_dbg(spcm, stream, "allocate %s capture DMA buffer size 0x%x max 0x%x\n",
-+		 caps->name, caps->buffer_size_min, caps->buffer_size_max);
-+
- 	snd_pcm_set_managed_buffer(pcm->streams[stream].substream,
- 				   SNDRV_DMA_TYPE_DEV_SG, sdev->dev,
- 				   0, le32_to_cpu(caps->buffer_size_max));
---- a/sound/soc/sof/sof-audio.h
-+++ b/sound/soc/sof/sof-audio.h
-@@ -601,6 +601,20 @@ struct snd_sof_pcm *snd_sof_find_spcm_co
- void snd_sof_pcm_period_elapsed(struct snd_pcm_substream *substream);
- void snd_sof_pcm_init_elapsed_work(struct work_struct *work);
- 
-+/*
-+ * snd_sof_pcm specific wrappers for dev_dbg() and dev_err() to provide
-+ * consistent and useful prints.
-+ */
-+#define spcm_dbg(__spcm, __dir, __fmt, ...)					\
-+	dev_dbg((__spcm)->scomp->dev, "pcm%u (%s), dir %d: " __fmt,		\
-+		(__spcm)->pcm.pcm_id, (__spcm)->pcm.pcm_name, __dir,		\
-+		##__VA_ARGS__)
-+
-+#define spcm_err(__spcm, __dir, __fmt, ...)					\
-+	dev_err((__spcm)->scomp->dev, "%s: pcm%u (%s), dir %d: " __fmt,		\
-+		__func__, (__spcm)->pcm.pcm_id, (__spcm)->pcm.pcm_name, __dir,	\
-+		##__VA_ARGS__)
-+
- #if IS_ENABLED(CONFIG_SND_SOC_SOF_COMPRESS)
- void snd_sof_compr_fragment_elapsed(struct snd_compr_stream *cstream);
- void snd_sof_compr_init_elapsed_work(struct work_struct *work);
 
 
