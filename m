@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F338E3749F4;
-	Tue, 25 Aug 2026 13:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4642E06E4;
+	Tue, 25 Aug 2026 13:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664794; cv=none; b=CekVRVtG69IBUeNIA476qA4RIwXdlX9VJkXoUClUT3T+2ok2gUuh9p4fPykVIF5CWNfIW/wxyN7NLs6m8DlfDo6ouHE+M6bG4IMtIMizUO/QQwg2g+FYk+I3GXUBjULr2SsRRYCObJtMs9f2ZTLGO49Aw8v2+Y1e2V/1HMLve7g=
+	t=1787664797; cv=none; b=HUNS0BjzK2AQ3uFccSdt6N8CvkrN/WQ5qvjy10mXo5LbvpCunWDMsUytAXO1jh2iX+LVpj67UYqzW6X1QkI7jj8Z1cZR4OtQ3ItuFGNnw8exks+qpeU2WzZuGpOqf05lOuwtMZUe6f6cyaUtsgs9G2XDX031glry7jsMXb9XJl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664794; c=relaxed/simple;
-	bh=JSGN/6qnuAhpzAO6fWQDqB3SPPgdKLSJFqcffcPImEY=;
+	s=arc-20240116; t=1787664797; c=relaxed/simple;
+	bh=BQVorE3+8IXaeKLeajfZYw0GWBA7IrgA6YDUH2PPR1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2suSDVZiPs9WuT5oq7WghGJUAT/R4K+E9lMN4jsIXcxqAXVQDv/+RD1ezuajZi2iS8dChmyvt/a2PxaqiVIFnby9ARaJE4KaCbyYPq0cM5LozqYqCmtbtlYBDX8aYuqw4sHsdneP6fO+qtnuxyRrALago+MtwIje+SrqY4/YO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9u+aRR0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H0+gxfkrazrmUHmyOXAODPvteel+T7k2TY1EDaAEfCAGYL4OSbiNYWJGFdJCHZav0w2DD6HNovC6ArNGoEnU7kiSvn6kEDgWd8CchS3pCTxJPqBR/BgXwt7DW/R90+cro+KYRVESELC3j7f8buJR9UlM1cMrW+/ijLUll1Qy3KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtNzo2aR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9u+aRR0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583561F000E9;
-	Tue, 25 Aug 2026 13:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtNzo2aR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7311F000E9;
+	Tue, 25 Aug 2026 13:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664792;
-	bh=09nHveeu607YiglTtGC3Up/EX2jYlQFdhhVKPSYUqR0=;
+	s=korg; t=1787664795;
+	bh=AbC0En/+0XCYBrrkVFjTILbD+WSW/oXLa9ndEAEdp5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9u+aRR0QUJgV+t1bCXsvLyXGUQElHgIdQjTbqcRkJ8s5rN/jHM7D1GgNxcnhxb9T
-	 TPBaPWMAKvWDdYRqPutZpUzKJ9Ynj0ZPyAKW48zYkAOOlpotW4uSeqUSAKhHaHMoA7
-	 1f1Q6ZU2U9cIBtRpxqfyLVPMa3U0aJdVAz32z8RY=
+	b=LtNzo2aRDjjT5zdemmfyxf8ayXO14RPkaERVJIbov9/VNsZFryH2+cOQ7wmOU6SkD
+	 vR2UpCtx/l+ERJYX8FFjww/PqsR4ZXIDScmqX7mHVzVJwKITJnsEdFDEzVGM1iueh4
+	 QtxMJQFDY0Odol1RHVbED7XN1xze3j2FKVfRtttQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 82/82] Bluetooth: hci_aml: validate firmware segment lengths
-Date: Tue, 25 Aug 2026 15:26:09 +0200
-Message-ID: <20260825132544.694414345@linuxfoundation.org>
+Subject: [PATCH 7.2 78/82] Bluetooth: hci_sync: Fix accept list UAF during suspend
+Date: Tue, 25 Aug 2026 15:26:05 +0200
+Message-ID: <20260825132544.544806656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,60 +50,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 2bf6b9baca9372ea51b6d0f2820dc9bf29a83ef4 upstream.
+commit f57b399c4fa1501b2d5451f52d861ece86bcf3db upstream.
 
-aml_download_firmware() reads two lengths from the firmware header and
-uses them to build pointers before checking that the header and segment
-data are present. A truncated or inconsistent firmware image can make
-the driver read past firmware->data while constructing TCI commands.
+hci_update_event_filter_sync() walks hdev->accept_list while sending a
+synchronous HCI command for each remote-wakeup device.  The suspend path
+holds hdev->req_lock, but accept-list updates are serialized by hdev->lock.
+Consequently, remove_device() can free the current list entry during the
+controller wait.
 
-Reject images shorter than the header and ensure that the ICCM and DCCM
-ranges fit within the loaded firmware before downloading either segment.
+The following interleaving causes the use-after-free:
 
-Fixes: 37bac77e4649 ("Bluetooth: hci_uart: Add support for Amlogic HCI UART")
+  hci_update_event_filter_sync()    remove_device()
+  fetch accept-list entry
+  hci_set_event_filter_sync()
+    wait for controller response    hci_dev_lock()
+                                    list_del()
+                                    kfree()
+                                    hci_dev_unlock()
+  read the freed list.next
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in hci_suspend_sync+0x835/0x910
+  Read of size 8 at addr ffff88810bec8440 by task kworker/0:1/10
+  Workqueue: events vhci_suspend_work
+  Call Trace:
+   hci_suspend_sync+0x835/0x910
+   hci_suspend_dev+0x182/0x450
+   process_one_work+0x661/0x1090
+   worker_thread+0x45b/0xd10
+
+  Allocated by task 86:
+   hci_bdaddr_list_add_with_flags+0x1a8/0x400
+   add_device+0x381/0x820
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+  Freed by task 91:
+   kfree+0x131/0x3c0
+   remove_device+0x429/0xb70
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+Snapshot the remote-wakeup addresses under hdev->lock.  Release the lock
+before sending HCI commands.  Clear the controller event filter before
+building the snapshot, and skip allocation and the second list traversal
+when there are no matching entries.  This preserves the original filter
+and scan-state updates without retaining an accept-list node across a
+controller wait.
+
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
 Cc: stable@vger.kernel.org
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Link: https://lore.kernel.org/linux-bluetooth/20260730092331.2069741-1-nicoyip.dev@gmail.com/
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_aml.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c |   50 ++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 39 insertions(+), 11 deletions(-)
 
---- a/drivers/bluetooth/hci_aml.c
-+++ b/drivers/bluetooth/hci_aml.c
-@@ -247,7 +247,7 @@ static int aml_download_firmware(struct
- 	struct hci_uart *hu = hci_get_drvdata(hdev);
- 	struct aml_serdev *amldev = serdev_device_get_drvdata(hu->serdev);
- 	const struct firmware *firmware = NULL;
--	struct aml_fw_len *fw_len = NULL;
-+	const struct aml_fw_len *fw_len = NULL;
- 	u8 *iccm_start = NULL, *dccm_start = NULL;
- 	u32 iccm_len, dccm_len;
- 	u32 value = 0;
-@@ -281,7 +281,21 @@ static int aml_download_firmware(struct
- 		goto exit;
- 	}
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6313,6 +6313,8 @@ static int hci_pause_discovery_sync(stru
+ static int hci_update_event_filter_sync(struct hci_dev *hdev)
+ {
+ 	struct bdaddr_list_with_flags *b;
++	bdaddr_t *accept_list;
++	size_t i, num_entries = 0;
+ 	u8 scan = SCAN_DISABLED;
+ 	bool scanning = test_bit(HCI_PSCAN, &hdev->flags);
+ 	int err;
+@@ -6329,23 +6331,49 @@ static int hci_update_event_filter_sync(
+ 	/* Always clear event filter when starting */
+ 	hci_clear_event_filter_sync(hdev);
  
--	fw_len = (struct aml_fw_len *)firmware->data;
-+	if (firmware->size < sizeof(*fw_len)) {
-+		bt_dev_err(hdev, "Firmware is too small for its header");
-+		ret = -EINVAL;
-+		goto exit;
+-	list_for_each_entry(b, &hdev->accept_list, list) {
+-		if (!(b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP))
+-			continue;
+-
+-		bt_dev_dbg(hdev, "Adding event filters for %pMR", &b->bdaddr);
+-
+-		err =  hci_set_event_filter_sync(hdev, HCI_FLT_CONN_SETUP,
+-						 HCI_CONN_SETUP_ALLOW_BDADDR,
+-						 &b->bdaddr,
+-						 HCI_CONN_SETUP_AUTO_ON);
++	hci_dev_lock(hdev);
++
++	list_for_each_entry(b, &hdev->accept_list, list)
++		if (b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)
++			num_entries++;
++
++	if (!num_entries) {
++		hci_dev_unlock(hdev);
++		goto update_scan;
 +	}
 +
-+	fw_len = (const struct aml_fw_len *)firmware->data;
-+	if (fw_len->iccm_len < amldev->aml_dev_data->iccm_offset ||
-+	    fw_len->iccm_len > firmware->size - sizeof(*fw_len) ||
-+	    fw_len->dccm_len > firmware->size - sizeof(*fw_len) -
-+			fw_len->iccm_len) {
-+		bt_dev_err(hdev, "Invalid firmware segment lengths");
-+		ret = -EINVAL;
-+		goto exit;
++	accept_list = kmalloc_array(num_entries, sizeof(*accept_list),
++				    GFP_KERNEL);
++	if (!accept_list) {
++		hci_dev_unlock(hdev);
++		return -ENOMEM;
 +	}
++
++	i = 0;
++	list_for_each_entry(b, &hdev->accept_list, list)
++		if (b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)
++			bacpy(&accept_list[i++], &b->bdaddr);
++
++	hci_dev_unlock(hdev);
++
++	for (i = 0; i < num_entries; i++) {
++		bt_dev_dbg(hdev, "Adding event filters for %pMR",
++			   &accept_list[i]);
++
++		err = hci_set_event_filter_sync(hdev, HCI_FLT_CONN_SETUP,
++						HCI_CONN_SETUP_ALLOW_BDADDR,
++					 &accept_list[i],
++					 HCI_CONN_SETUP_AUTO_ON);
+ 		if (err)
+ 			bt_dev_err(hdev, "Failed to set event filter for %pMR",
+-				   &b->bdaddr);
++				   &accept_list[i]);
+ 		else
+ 			scan = SCAN_PAGE;
+ 	}
  
- 	/* Download ICCM */
- 	iccm_start = (u8 *)(firmware->data) + sizeof(struct aml_fw_len)
++	kfree(accept_list);
++
++update_scan:
+ 	if (scan && !scanning)
+ 		hci_write_scan_enable_sync(hdev, scan);
+ 	else if (!scan && scanning)
 
 
