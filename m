@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9A1423A85;
-	Tue, 25 Aug 2026 13:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E0B2E06E4;
+	Tue, 25 Aug 2026 13:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665992; cv=none; b=YsMi2D/2oSwn8Y8YQZ4PQYr7T3fdyaEpSUaQ1qowVGMtWybeYuyn4A9LzhMQA7IrXzu6Co0fYwouNZq/h3NE2hvSkdUx/shWb9DwnhHLM3zPCpGrwOqRtXyZByr2E+biCVVP/0Pdc8v0cmTpEb1LeQCyRkieer4oeP3678kfpYk=
+	t=1787665995; cv=none; b=oW+9VZTRUQYYdKwVL5ALSBwFuBj2wTNlxT4iOX8eQd5d/r+D6cltcW2ykF+r4act7cHsoASgTBfWk6642fwLqLvTey0haX4Y+UpxU4uZ9GTF143P/d3IzuT11xmc7FzsKBgvpRruYUZEfChesX6csBAjP+PUmtr2BJqUN3NzQt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665992; c=relaxed/simple;
-	bh=zlZvqgKRcMgd1+IP3xVIdZZbMx94hucwIvkAxMlKeNI=;
+	s=arc-20240116; t=1787665995; c=relaxed/simple;
+	bh=SPCKqgSGuVVGGtbpu9Rf74sR5NA9IJYXYmsWSLbImf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IzwstY4qd9CpY3ElvIc0+bhewtAl3mPybbUx48VWbJrMDtJrUyi3KYFcVck915MTu4+sqIELh7LcfzH8F0JJ/eWIALERv0ymSpnVyS+co3Ue6oH10QiYiBd6eAz1fQGL+WiF7+oAHnDCbEtEss24X4ncM4p94QKkem6pA2wfDzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITvg05Mw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k4L82IUMBuXtfkjhjWpTw4LHcRFC3o5YmuRu5rVHQtiVAAEIfaUrqg+rE1hOJTYcpXI6cDTAjh7+zUV/oMJv5TGVfFutjCexZaf8Tl6Qb6oi6ke4llhEXPcBb6VDiETbB2SxKkhKM06i4onwG3zxoVHYJzR8/YZIRJ3jwcjncdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnjZ/7jd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITvg05Mw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC421F000E9;
-	Tue, 25 Aug 2026 13:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnjZ/7jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DA81F000E9;
+	Tue, 25 Aug 2026 13:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665991;
-	bh=7bFfDDOesSyJJnaZ7+s4pSBHfYFPcW+dAnCIYUAQ4AU=;
+	s=korg; t=1787665993;
+	bh=uo6ETron/+WbqdFu+lt47fJw6+cNsNESpsRqB1lpTAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ITvg05MwTJWOoa0lfxQlVJIPZ7XWjdiVdZbirx9c749Ef+SjZ8K14FDrKX7oCCr0J
-	 JQQH8iUUSixw7HgI5H758yyt40CkW3m/kUxpaFrt++IWEzfRdqO422i6aXEOQPc6rZ
-	 vEkVOS6XkuASj7js6JA8Biy88JEGLjLFsaRmx6DM=
+	b=QnjZ/7jdFQ8cQJD+Pw9cweq4Bpi0wDZMvH3mimcFdnBWDMP+Q9y9bEGd2uF35+NPF
+	 CKVcwjfKPP/hhC/1RVCeus5zbvbsqCfk+VcpG6Ok+bVeg3rBeQoMn+vV4i4/FaDkZz
+	 uNurGwZrA4LORLedEzrINU0C5EdoIcWtHztFLRwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.1 45/79] nfc: llcp: bound the connect_sn TLV walk to the skb
-Date: Tue, 25 Aug 2026 15:26:25 +0200
-Message-ID: <20260825132543.470510417@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	syzbot+e538032956b1157914a3@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 05/79] ocfs2: fix missing metadata reservation for large xattrs
+Date: Tue, 25 Aug 2026 15:25:45 +0200
+Message-ID: <20260825132541.872295895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -51,82 +58,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Ian Bridges <icb@fastmail.org>
 
-commit 55c68ac93e7dacc0f5f608b9c39dd4ff48cf28e8 upstream.
+commit 0cdc7dde00ec63ac714271fa8b2918d630b8da1a upstream.
 
-Commit 27256cdb290e ("nfc: llcp: bound SNL TLV parsing to the skb and
-add length checks") fixed the unbounded TLV walk in nfc_llcp_recv_snl(),
-and commit d8bd2dedbde5 ("nfc: llcp: fix OOB read and u8 offset wrap in
-TLV parsers") subsequently bounded nfc_llcp_parse_gb_tlv() and
-nfc_llcp_parse_connection_tlv(). One sibling parser sharing the same
-pattern remains unbounded: nfc_llcp_connect_sn().
+[BUG]
+lsetxattr() panics the kernel when setting a large xattr value on a
+fragmented filesystem where the file already has an external xattr
+block.
 
-nfc_llcp_connect_sn() walks a TLV list, reading a two-byte header
-(type, length) followed by length bytes of value, without checking that
-the two header bytes or the declared length stay within the buffer. It
-returns a pointer to a service name of up to 255 bytes that may point
-past the end of the skb; it is subsequently consumed by memcmp() in
-nfc_llcp_sock_from_sn(). In addition tlv_array_len was computed as
-"skb->len - LLCP_HEADER_SIZE" in size_t, so a CONNECT/CC frame shorter
-than the LLCP header underflows to a huge length and the walk runs far
-past the buffer.
+[CAUSE]
+ocfs2_calc_xattr_set_need() never reserves metadata blocks for a new
+xattr value's extent tree when the file already has an external xattr
+block. The not_found path leaves meta_add at zero, so meta_ac is NULL
+when ocfs2_xattr_extend_allocation() runs.
 
-nfc_llcp_connect_sn() is reachable from nfc_llcp_recv_connect() and
-nfc_llcp_recv_cc(), i.e. from received CONNECT and CC PDUs. A nearby
-NFC device can reach this without authentication; LLCP link activation
-happens automatically after NFC-DEP, and the nfc_llcp_rx_skb()
-dispatcher applies no minimum-length guard.
+A new value root has room for a single extent record. On a fragmented
+filesystem, the allocator cannot satisfy the xattr value in one
+contiguous run, so each non-contiguous run requires its own extent
+record. When the value root's extent list is full and meta_ac is NULL,
+ocfs2_add_clusters_in_btree() returns RESTART_META, and
+ocfs2_xattr_extend_allocation() hits BUG_ON(why == RESTART_META).
 
-Walk the TLV list by pointer, bounded by skb_tail_pointer(skb), and
-validate each declared length before use, matching the approach already
-used for nfc_llcp_recv_snl(). Starting the walk at
-&skb->data[LLCP_HEADER_SIZE] against the tail pointer also removes the
-size_t underflow for short frames.
+[FIX]
+The case where no xattr block exists yet already calls
+ocfs2_extend_meta_needed(&def_xv.xv.xr_list) to reserve value tree
+metadata. Add the same reservation to the case where an xattr block
+already exists, making the two cases consistent.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+Replace the BUG_ON with a -ENOSPC return so that if RESTART_META is
+returned despite the reservation, the error propagates to userspace
+instead of panicking the kernel.
 
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
-Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260709131229.44477-1-doruk@0sec.ai
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://lore.kernel.org/amLwn3i9tET8yhG7@dev
+Fixes: a78f9f466894 ("ocfs2: make xattr extension work with new local alloc reservation.")
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Reported-by: syzbot+e538032956b1157914a3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e538032956b1157914a3
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/ocfs2/xattr.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -847,13 +847,16 @@ static struct nfc_llcp_sock *nfc_llcp_so
- static const u8 *nfc_llcp_connect_sn(const struct sk_buff *skb, size_t *sn_len)
- {
- 	u8 type, length;
--	const u8 *tlv = &skb->data[2];
--	size_t tlv_array_len = skb->len - LLCP_HEADER_SIZE, offset = 0;
-+	const u8 *tlv = &skb->data[LLCP_HEADER_SIZE];
-+	const u8 *tlv_end = skb_tail_pointer(skb);
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -740,12 +740,10 @@ static int ocfs2_xattr_extend_allocation
+ 					 prev_clusters;
  
--	while (offset < tlv_array_len) {
-+	while (tlv + 2 < tlv_end) {
- 		type = tlv[0];
- 		length = tlv[1];
+ 		if (why != RESTART_NONE && clusters_to_add) {
+-			/*
+-			 * We can only fail in case the alloc file doesn't give
+-			 * up enough clusters.
+-			 */
+-			BUG_ON(why == RESTART_META);
+-
++			if (why == RESTART_META) {
++				status = -ENOSPC;
++				break;
++			}
+ 			credits = ocfs2_calc_extend_credits(inode->i_sb,
+ 							    &vb->vb_xv->xr_list);
+ 			status = ocfs2_extend_trans(handle, credits);
+@@ -3215,6 +3213,14 @@ meta_guess:
+ 			credits += OCFS2_SUBALLOC_ALLOC + 1;
  
-+		if (tlv + 2 + length > tlv_end)
-+			break;
+ 		/*
++		 * Reserve metadata for the new xattr's value extent tree.
++		 * The not_found path above adds credits for this tree but
++		 * omits meta_add, leaving meta_ac NULL for large values.
++		 */
++		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
++			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
 +
- 		pr_debug("type 0x%x length %d\n", type, length);
- 
- 		if (type == LLCP_TLV_SN) {
-@@ -861,7 +864,6 @@ static const u8 *nfc_llcp_connect_sn(con
- 			return &tlv[2];
- 		}
- 
--		offset += length + 2;
- 		tlv += length + 2;
- 	}
- 
++		/*
+ 		 * This cluster will be used either for new bucket or for
+ 		 * new xattr block.
+ 		 * If the cluster size is the same as the bucket size, one
 
 
