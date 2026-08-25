@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECD3481AA4;
-	Tue, 25 Aug 2026 13:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A33F46EF87;
+	Tue, 25 Aug 2026 13:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666352; cv=none; b=PWixuI5JtphEmzoMtuYQl9lHYYA/o5gAwwb4cMEkStlf1gOR5TWtQIOxDHruvm7hFj4rFKgH+i5XB+Ar30kYL47XsiDBFmaSnyAmrqt5Akk8QdXx/d5RcSMqfj7W73k9+bn3bEPsxJUec7P0TQBMTX1Su5F8SKTeMgQrNC/AN7o=
+	t=1787666355; cv=none; b=W/A8d5nNKQgrs1bWRVz9SB/HARF2njkyMknjsfo5q3qktJHhfk8QJhv6y6GKVKk3qqnIEOqJoTDUgcc2K7ezQ9n9ENjFF5U7JGoVFi/GRGIOklSbu4WWDBAXhJd7IGZOXblNL5VZF/e/Km3PVUsHLb9ADd4KjNDMGfrQ2LeWr6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666352; c=relaxed/simple;
-	bh=JgL9AubU6PMP7X/VP87kvIONDFPK22s6uEvnP8/PH5A=;
+	s=arc-20240116; t=1787666355; c=relaxed/simple;
+	bh=udls4ncnkcz7NHZxsEICNSfHbDoQ4N0nWh2/0WhUamc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zf6J2bs2GmWczNK+auyGSQLneJQ/MxXBY6PDFepMIzGkvHvphtjru8C0JopK51ow34DvdPEY1tnIWzBMzjecUJvmxgXQvwEB8ApjTNIwwbgrcGVCg2g2gmAZxX22YWFcj+Hq9HPXXsVANK5Vh7ogucyx/CrcBHXMjO1zsG2DInQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xjw/qSoF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZGApQK2edW+jsImfiaHdXAHi9DKqrUYC9lfVUa6E6BSKfuMIxeIzmAkM0+1bO7BieHB5D7Qf//ul09xBCYQIja5gwNYjsyncU+aaksnMNYiHYWkQbSIxrcqydEQDKX+p/K8cHBGLtZS5sf/iRZroh2U7YGXVxlHlhXYyxQok0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isJXe3Vj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xjw/qSoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934A11F000E9;
-	Tue, 25 Aug 2026 13:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isJXe3Vj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775851F000E9;
+	Tue, 25 Aug 2026 13:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666351;
-	bh=1ILzh4ryxtge8DduuOg2yb9WAf7QFAtQKBgDGRzQOJ8=;
+	s=korg; t=1787666354;
+	bh=K5eML3FeOIRrmOXM7q4flj9rLLS326c5W0mVl3Iqf04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xjw/qSoFG2+5W4jgmgFX+PfdBIW/QQ4yxXoVXotb9r+IXKpHQCaL8gB++JUI9kkbH
-	 Acjvv+wy50uwMN5XlbzbuhzDUncpvv81PechYzf2oZXhEVkLmp2p3XhSZFckDsGCzp
-	 qbh1UpFpBGqC0uoc8UikZAHZF7/8hXJZhFvQ+124=
+	b=isJXe3Vj+sufrbVdtmp2RMwxYmYzzeJK70NmovI1ShwgLGWD1a2oVN+b8U7yiwH7f
+	 WdCuy4b8hBU5xIZaZob4GqyxZ46xpMlxC7HkV8V401mDZuunqR1aT1kDplq+KPBajl
+	 oKViNG5Un+kQ6BtdJVafQ/F+mbJhOF/R1SHrcqWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/57] ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops
-Date: Tue, 25 Aug 2026 15:26:36 +0200
-Message-ID: <20260825132541.851760404@linuxfoundation.org>
+Subject: [PATCH 5.10 15/57] NTB: ntb_netdev: Preserve RX queue depth on allocation failure
+Date: Tue, 25 Aug 2026 15:26:37 +0200
+Message-ID: <20260825132541.887300491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -53,127 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 4ff9548d84945d2cbf9e4c207288063a200ea397 ]
+[ Upstream commit d2121faf133ac3bf9531b53a7e21273649a08517 ]
 
-fib_nlmsg_size() still estimates nexthop space as if every gateway is
-encoded as an IPv4 RTA_GATEWAY attribute. IPv4 routes can also carry an
-IPv6 gateway, which fib_nexthop_info() dumps as RTA_VIA.
+ntb_netdev_rx_handler() hands the received skb to the network stack
+before allocating its replacement. If the allocation fails, nothing is
+reposted. Every failure therefore takes one buffer out of the RX queue
+while the interface remains up, and enough failures eventually stall
+reception.
 
-As a result, route notifications can allocate an skb that is too small.
-fib_dump_info() then fails with -EMSGSIZE and rtmsg_fib() hits the
-WARN_ON() that marks such failures as a fib_nlmsg_size() bug. With
-panic_on_warn set, this becomes a kernel panic.
+A retry path could refill the queue later, but ntb_netdev has none.
+Allocate the replacement first instead. If that fails, drop the packet
+and repost the same skb. This keeps the queue full and lets packet
+delivery resume as soon as memory is available again.
 
-Mirror the actual nexthop dump layout in fib_nlmsg_size(): account for
-IPv6 nexthop gateways dumped as RTA_VIA, for the no-header rtnexthop
-layout used inside RTA_MULTIPATH, and for RTA_FLOW only when it is
-actually present.
-
-Fixes: d15662682db2 ("ipv4: Allow ipv6 gateway with ipv4 routes")
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/6f53fa797fcaeb26966432ed7ae9bb87c4961f37.1785411220.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260806032537.3526498-1-den@valinux.co.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ kept HEAD's `struct net_device *ndev = qp_data;` declaration instead of the per-queue context variables, adding only `new_skb` to the existing `skb` declaration ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_semantics.c |   67 ++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 49 insertions(+), 18 deletions(-)
+ drivers/net/ntb_netdev.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -460,6 +460,34 @@ int ip_fib_check_default(__be32 gw, stru
- 	return -1;
- }
- 
-+static size_t fib_nexthop_nlmsg_size(const struct fib_nh_common *nhc,
-+				     bool skip_oif)
-+{
-+	size_t nhsize = 0;
-+
-+	switch (nhc->nhc_gw_family) {
-+	case AF_INET:
-+		nhsize += nla_total_size(4); /* RTA_GATEWAY */
-+		break;
-+	case AF_INET6:
-+		nhsize += nla_total_size(sizeof(struct rtvia) +
-+					 sizeof(struct in6_addr));
-+		break;
-+	}
-+
-+	if (!skip_oif && nhc->nhc_dev)
-+		nhsize += nla_total_size(4); /* RTA_OIF */
-+
-+	if (nhc->nhc_lwtstate) {
-+		/* RTA_ENCAP */
-+		nhsize += lwtunnel_get_encap_size(nhc->nhc_lwtstate);
-+		/* RTA_ENCAP_TYPE */
-+		nhsize += nla_total_size(2);
-+	}
-+
-+	return nhsize;
-+}
-+
- size_t fib_nlmsg_size(struct fib_info *fi)
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -100,7 +100,7 @@ static void ntb_netdev_rx_handler(struct
+ 				  void *data, int len)
  {
- 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
-@@ -477,32 +505,35 @@ size_t fib_nlmsg_size(struct fib_info *f
- 		payload += nla_total_size(4); /* RTA_NH_ID */
+ 	struct net_device *ndev = qp_data;
+-	struct sk_buff *skb;
++	struct sk_buff *skb, *new_skb;
+ 	int rc;
  
- 	if (nhs) {
--		size_t nh_encapsize = 0;
--		/* Also handles the special case nhs == 1 */
--
--		/* each nexthop is packed in an attribute */
--		size_t nhsize = nla_total_size(sizeof(struct rtnexthop));
-+		size_t mpsize = 0;
- 		unsigned int i;
- 
--		/* may contain flow and gateway attribute */
--		nhsize += 2 * nla_total_size(4);
--
--		/* grab encap info */
- 		for (i = 0; i < fib_info_num_path(fi); i++) {
- 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
-+			size_t nhsize;
-+
-+			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
- 
--			if (nhc->nhc_lwtstate) {
--				/* RTA_ENCAP_TYPE */
--				nh_encapsize += lwtunnel_get_encap_size(
--						nhc->nhc_lwtstate);
--				/* RTA_ENCAP */
--				nh_encapsize +=  nla_total_size(2);
-+			if (nhs != 1)
-+				nhsize += NLA_ALIGN(sizeof(struct rtnexthop));
-+
-+#ifdef CONFIG_IP_ROUTE_CLASSID
-+			if (nhc->nhc_family == AF_INET) {
-+				struct fib_nh *nh;
-+
-+				nh = container_of(nhc, struct fib_nh, nh_common);
-+				if (nh->nh_tclassid)
-+					nhsize += nla_total_size(4);
- 			}
-+#endif
-+			if (nhs == 1)
-+				payload += nhsize;
-+			else
-+				mpsize += nhsize;
- 		}
- 
--		/* all nexthops are packed in a nested attribute */
--		payload += nla_total_size((nhs * nhsize) + nh_encapsize);
--
-+		if (nhs != 1)
-+			payload += nla_total_size(mpsize);
+ 	skb = data;
+@@ -115,6 +115,12 @@ static void ntb_netdev_rx_handler(struct
+ 		goto enqueue_again;
  	}
  
- 	return payload;
++	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
++	if (!new_skb) {
++		ndev->stats.rx_dropped++;
++		goto enqueue_again;
++	}
++
+ 	skb_put(skb, len);
+ 	skb->protocol = eth_type_trans(skb, ndev);
+ 	skb->ip_summed = CHECKSUM_NONE;
+@@ -127,12 +133,7 @@ static void ntb_netdev_rx_handler(struct
+ 		ndev->stats.rx_bytes += len;
+ 	}
+ 
+-	skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
+-	if (!skb) {
+-		ndev->stats.rx_errors++;
+-		ndev->stats.rx_frame_errors++;
+-		return;
+-	}
++	skb = new_skb;
+ 
+ enqueue_again:
+ 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
 
 
