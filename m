@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF1E45FFCB;
-	Tue, 25 Aug 2026 13:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196762ED154;
+	Tue, 25 Aug 2026 13:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665129; cv=none; b=V2F+x9AVSFbUJUdEv3eQvgg1Ie6eEhdj5E4yioTLF2IZAy7/MLnifywhbN6uugfl41XIZ7hF3gcCi7WnPB3i3w/LU8RJUHU1dyLUeGPepEBeZ6cj0iLOLysRX1ck0+QbB2bJ5nAgDiSYg+DQ0CMh1HnX9Ckx5cpFbfHJna4WrW0=
+	t=1787665132; cv=none; b=E2ZDfvC5fm4iUwJsRyAjaVZvsMLnM/7vKkDFeIt+iBqbiQ/zYvdyI48tsm5q/pLOsA+MMy4wXjugYVKsjfntK9SnSAx0XCVadK+ZRnEfecmaNIN9UQfjbzmeifQZdPR9ZZf9rZalg2ad3/5m3S4MMTIjNTzoJXDhOC2sUpDDfdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665129; c=relaxed/simple;
-	bh=ZoZcyuDtg7UoETxCOihSxTZZKB5OVsrZCdXCIZ3FlVc=;
+	s=arc-20240116; t=1787665132; c=relaxed/simple;
+	bh=UnoOAxh7EHqH5BSMyvK2m+y8s17Tl+SPIZdxE3GboNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/kszQv3dSbPW3k49BVKNkZlU5vqYmwaYFzvnspZ4r7wzeCHyxGLr23NZUc5AW2kj1nYE9lSquEY9mDLxu8zfrmZuShQsVkpxQIct4nuhwqO3xvMVFs2ABzyZR8bH4lErzJeCE+ncl7l8p+nflcM8me0dNeAMtzLyfBQdcrA73s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ROoAOe0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HddWZirWsaF7TaER2vmaYf1vmjzo3L4reqVFt0aVrafVR0uPQMruun6KcR8l3wVXz4VIOIVXAsJyZQL/xfKOG4U6l9+BU/cNHb3kNbLwEQ1/FG8ztsOXSbM9Lc52WcevpGShVf2hwQ/VWFUHTgI0nzfK43usYn+gX2/rvfRceq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YybYfQ0r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ROoAOe0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF1A1F000E9;
-	Tue, 25 Aug 2026 13:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YybYfQ0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312CB1F00A3A;
+	Tue, 25 Aug 2026 13:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665127;
-	bh=jcc5OH1DIL0W/AhaXgPckMWZ2ri87xdg8wntENTbxx8=;
+	s=korg; t=1787665130;
+	bh=oZRmpMtZSuQCwpvd7zkXc1UKbNaTtzHlIUD4IdUARh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ROoAOe0AScjcgbZygwnjqlzJb4US9GOUCOz35mSAR6uAp9AdCXnHb05q2wP+pa3r
-	 /85aYr7CyNF2O2Z4Pq+klL4cbfUJiS22kDUGmz4+0onncG7waHLVVYMdEQNaFTuKps
-	 IjoOZShJRrIKR5ZsGiIHfikOh/Nfd00mqQHWnGuw=
+	b=YybYfQ0rZ4TqkRpx4cgIyKBhhsFgqyJ//aAfh9zAcwxR2tAmYdL7pk//jso6YQWEt
+	 XuKbUGNquCXkswd7nLq0sGj8czruDpPzacqPlJANxaaEiOGITrfu7+CRat9YWl+Dnf
+	 jN0ONCWCkPThvFlL4EHTXwQfaoBMVSlmb/NElS5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2fb5d1f7cc4c1f132bcc@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 17/94] ALSA: dummy: Check card index validity at probe
-Date: Tue, 25 Aug 2026 15:25:13 +0200
-Message-ID: <20260825132542.570056507@linuxfoundation.org>
+	Woraphat Khiaodaeng <worapat.kd2@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 18/94] io_uring/cmd: fix iovec leak when the async cmd is not recycled
+Date: Tue, 25 Aug 2026 15:25:14 +0200
+Message-ID: <20260825132542.607934429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,43 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Woraphat Khiaodaeng <worapat.kd2@gmail.com>
 
-commit 02442d5fe8ee365a084b055d4fa81a0c1abfc3fd upstream.
+commit bb34ae5da3365699d53a756f4c96b6ea9f8ba0c1 upstream.
 
-snd_dummy_probe() blindly trusts that the given devptr->id value is
-within the proper card index range.  It's OK for the devices the
-driver itself creates at the module probe time, but if the device is
-bound manually via sysfs interface, this could be -1 as "none", and
-this leads to OOB access for index[] and other parameters.
+An io_async_cmd carries an iovec array in ->vec.iovec, allocated when the
+vec has to grow and kept across recycling through ctx->cmd_cache.  On two
+paths nothing frees it and io_clean_op()'s kfree(req->async_data) drops
+the io_async_cmd without it.
 
-Add a sanity check for the card index and warn/correct it if it's a
-value out of the range.
+io_req_uring_cleanup() clears the async data flags only when
+io_alloc_cache_put() succeeds, and the cache holds IO_ALLOC_CACHE_MAX ==
+128 entries, so once it is full the put fails and the vec is left behind.
+An NVMe passthrough workload gets there without doing anything unusual:
+nvme_uring_cmd_io() returns -EIOCBQUEUED, so the io_async_cmd stays
+attached for the lifetime of the command and the live object count tracks
+the queue depth.  Above 128 the puts start failing.
 
-Reported-by: syzbot+2fb5d1f7cc4c1f132bcc@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/6a73bd4d.01d0871a.3a0d52.0005.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260806100433.1287393-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+->cleanup is the last chance to free an inherited vec, since
+io_req_uring_cleanup() returns early for an io-wq issued command and is
+not called at all for one completed without ever being issued.  But
+io_clean_op() calls ->cleanup only if REQ_F_NEED_CLEANUP is set, and for
+uring_cmd that happens only where the vec has to grow, so a command
+reusing a large enough cached vec never sets it.  io_rw_alloc_async() and
+io_msg_alloc_async() flag an inherited vec for exactly this reason;
+io_uring_cmd_prep() does not.
+
+Flag an inherited vec in io_uring_cmd_prep(), and free the vec when the
+cache put fails, as io_req_rw_cleanup() does.
+
+The leak is invisible under KASAN, where io_alloc_cache_vec_kasan() frees
+the vec unconditionally.
+
+Fixes: 3a4689ac109f ("io_uring/cmd: add iovec cache for commands")
+Cc: stable@vger.kernel.org
+Signed-off-by: Woraphat Khiaodaeng <worapat.kd2@gmail.com>
+Link: https://patch.msgid.link/20260802073518.419-1-worapat.kd2@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/dummy.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ io_uring/uring_cmd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/drivers/dummy.c
-+++ b/sound/drivers/dummy.c
-@@ -1017,6 +1017,12 @@ static int snd_dummy_probe(struct platfo
- 	int idx, err;
- 	int dev = devptr->id;
+--- a/io_uring/uring_cmd.c
++++ b/io_uring/uring_cmd.c
+@@ -38,6 +38,8 @@ static void io_req_uring_cleanup(struct
+ 	if (io_alloc_cache_put(&req->ctx->cmd_cache, ac)) {
+ 		ioucmd->sqe = NULL;
+ 		io_req_async_data_clear(req, REQ_F_NEED_CLEANUP);
++	} else {
++		io_vec_free(&ac->vec);
+ 	}
+ }
  
-+	if (dev < 0 || dev >= SNDRV_CARDS) {
-+		dev_warn(&devptr->dev,
-+			 "Invalid card index %d, using default 0\n", dev);
-+		dev = 0;
-+	}
-+
- 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
- 				sizeof(struct snd_dummy), &card);
- 	if (err < 0)
+@@ -212,6 +214,8 @@ int io_uring_cmd_prep(struct io_kiocb *r
+ 	ac = io_uring_alloc_async_data(&req->ctx->cmd_cache, req);
+ 	if (!ac)
+ 		return -ENOMEM;
++	if (ac->vec.iovec)
++		req->flags |= REQ_F_NEED_CLEANUP;
+ 	ioucmd->sqe = sqe;
+ 	return 0;
+ }
 
 
