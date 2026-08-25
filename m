@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EB945C70B;
-	Tue, 25 Aug 2026 13:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F4E392C21;
+	Tue, 25 Aug 2026 13:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665939; cv=none; b=UOq7dt7WEpr+QDNjkZWnVmJ8D5RZG4mP0VMNacJLQd47hec0YzJrCTYSXFB22HfasFt/1Sxaa5oetCm6BvPpUzeXoSIUclU0xGDklM+lyyorraGI6UUa5+tj9iWqRiEcU+2+K4BymvlJxV1lOVls+iOmhDp5DZMmJTdw5xED7FM=
+	t=1787665942; cv=none; b=gWk9FRlyFomoqCXmGzX7U5hHFFOgmI/JE+dqvVwGCcU42BcWrnkBfhtDXjxlWjnWX2txtH34OCEi5KJ0WOvy6mZOf5xmcSUs11PzYdFaBRnR7uRF9Rw0GLSgQzomXEo8xVHMPNO8QD2JUJsfdGiatMbsHvhA/AETnCdoggORR7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665939; c=relaxed/simple;
-	bh=CLVx1GdRTtsKyekMD+CBptOo0Q9qwhH0VldrXfmmRdI=;
+	s=arc-20240116; t=1787665942; c=relaxed/simple;
+	bh=pNXIeGjMjqOKWTKno+GBb8ZKXrOCAWNoCyjj0fxrLDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iaLlu3r4NfcGj5S3IEWy32RbNkXKJpb+tg/bf2O74Jtly3AYpoe2YGsBgS0smuhhzaEU3jv6YqVZOvZXIUJ6SNqNfiPHGkDyF4LiZbESQ7assY3fgQ7ToBL7+yWgsDN3BQHrbqXDvSOr6KeJ0mielrtqhTyt8kpj3/Vgnz78wzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdkNz9ku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AD/Rrhh1Fnz1ol/ZrvsGgN6tyMhQcJkbaBmCeXdZLA1SbATxNBR5k+RdpZPwmH8ilRJ2IJ2GHXWmE2bFDeR1D739N4Nq5eztVh4EAT08n/RYJ+xWHVE8ssuOc9nXM27J4YomOGQgh8TiOrHI04rWYfnEnk19hPWdBF7+ANVPTfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqaHv9ZY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdkNz9ku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57E31F000E9;
-	Tue, 25 Aug 2026 13:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqaHv9ZY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E4F1F000E9;
+	Tue, 25 Aug 2026 13:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665938;
-	bh=PhH5D9+l8GXb+c3HiEnbiB9nPVyVv7e4s4jIo8l1m+E=;
+	s=korg; t=1787665941;
+	bh=AfcWj3W0EBQfpETfmO3fUXK4ITufCinc7scjHqy5JhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QdkNz9kubMpJ67utjm354zEMn1SJbAQN3UJprsgd85k9s7mdWOcV0SFDjrRxHgegz
-	 DCxw3vb3f98C7tkJgMQj4LADJA44UZ8L1JN2qoY9sr8bIW9e89d6B9qOT7eIa4F3cS
-	 J+akOPmBOigu5iYEvKDTgfiJfRR34PnX4vUQeECw=
+	b=ZqaHv9ZYx7a5etWlceWk+SvaZSXcUcdIVb4MKJdSKBMzhiqMsn/bhbMT9kYza+8V/
+	 llSZVpn7aDr+jd0wMxhCcDKlkHNJaVW5TlKjioMHYzULVKwmcb5fTPUCJK6GO1LvDA
+	 BGjXtSt1KKxHVb5hRXXJIbeX6sFDXqsjgSctkkv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Ulf Hansson <ulfh@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 29/79] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
-Date: Tue, 25 Aug 2026 15:26:09 +0200
-Message-ID: <20260825132542.841248617@linuxfoundation.org>
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Shaoxu Liu <shaoxul@foxmail.com>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 03/79] rndis_host: add overflow check in rndis_rx_fixup()
+Date: Tue, 25 Aug 2026 15:25:43 +0200
+Message-ID: <20260825132541.798974266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -51,63 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit c125ee35a49a0518521b52b27631eef061b8719a ]
+commit 965a251f23ff69cfb4486974d4532e9bb551c7fc upstream.
 
-In atmci_probe, &host->bh_work is bound with atmci_work_func, and
-atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
-queue this work on system_bh_wq.
+Add an overflow check to ensure that data_offset + data_len + 8 does not
+wrap, which would enable an OOB read of the USB data buffer.
 
-If we remove the module, atmci_remove makes cleanup and the memory
-allocated for host with devm_kzalloc() is released after the remove
-callback returns, while the work mentioned above may still be pending
-or running. The sequence of operations that may lead to a UAF bug is
-as follows:
-
-CPU0                                      CPU1
-
-                                          | atmci_interrupt
-                                          | queue_work(system_bh_wq,
-                                          |            &host->bh_work)
-atmci_remove                              |
-atmci_cleanup_slot(...)                   |
-atmci_writel(host, ATMCI_IDR, ~0UL)       |
-timer_delete_sync(&host->timer)           |
-dma_release_channel(host->dma.chan)       |
-free_irq(platform_get_irq(pdev, 0), host) |
-                                          | atmci_work_func
-                                          | // use host
-// devm resources released after          |
-// remove returns, host is freed          |
-                                          | // use host (use-after-free)
-
-Fix it by canceling the work after all the sources that can schedule
-it (IRQ handler, timeout timer and DMA completion callback) have been
-stopped, and before proceeding with the remaining cleanup in
-atmci_remove.
-
-Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: Shaoxu Liu <shaoxul@foxmail.com>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/2026070900-denim-brook-52d4@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/atmel-mci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/rndis_host.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2628,6 +2628,8 @@ static int atmci_remove(struct platform_
+--- a/drivers/net/usb/rndis_host.c
++++ b/drivers/net/usb/rndis_host.c
+@@ -14,6 +14,7 @@
+ #include <linux/usb/cdc.h>
+ #include <linux/usb/usbnet.h>
+ #include <linux/usb/rndis_host.h>
++#include <linux/overflow.h>
  
- 	free_irq(platform_get_irq(pdev, 0), host);
  
-+	cancel_work_sync(&host->bh_work);
-+
- 	clk_disable_unprepare(host->mck);
+ /*
+@@ -506,6 +507,7 @@ int rndis_rx_fixup(struct usbnet *dev, s
+ 		struct rndis_data_hdr	*hdr = (void *)skb->data;
+ 		struct sk_buff		*skb2;
+ 		u32			msg_type, msg_len, data_offset, data_len;
++		u32			overflow_check;
  
- 	pm_runtime_disable(&pdev->dev);
+ 		msg_type = le32_to_cpu(hdr->msg_type);
+ 		msg_len = le32_to_cpu(hdr->msg_len);
+@@ -514,7 +516,9 @@ int rndis_rx_fixup(struct usbnet *dev, s
+ 
+ 		/* don't choke if we see oob, per-packet data, etc */
+ 		if (unlikely(msg_type != RNDIS_MSG_PACKET || skb->len < msg_len
+-				|| (data_offset + data_len + 8) > msg_len)) {
++				|| (data_offset + data_len + 8) > msg_len
++				|| check_add_overflow(data_offset, data_len, &overflow_check)
++				|| check_add_overflow(overflow_check, 8, &overflow_check))) {
+ 			dev->net->stats.rx_frame_errors++;
+ 			netdev_dbg(dev->net, "bad rndis message %d/%d/%d/%d, len %d\n",
+ 				   le32_to_cpu(hdr->msg_type),
 
 
