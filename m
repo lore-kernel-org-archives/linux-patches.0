@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4440386C3B;
-	Tue, 25 Aug 2026 13:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEE5386C3B;
+	Tue, 25 Aug 2026 13:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665104; cv=none; b=I5c1TqsosbhSglwswjalWzVSrrBnjo3g7BJ3vNc3pi2EGDsxxC+LFndVfg3j4dkmBH8H+QHh2/A5Xz95kZz7xhNGDAs6veiGyr6S544n5of0NbvOEtbhaC5s/s4BSRKwJhZaxCWo/phCrfysoK6mjtH3GXh3wolmHozoIoO+DFg=
+	t=1787665107; cv=none; b=o2tF0URhzbgkHGmjr7+QOJ5pcHVBuXqH6krwN93uJadyacAhMsDkK7ZS8F3AZZI2rdvB1VNCwFO376mqyQ7vSQrIwdnGDK+82jbSpuzmgONzTkrtOGTyy1XfTjqH44NhY270qmy3dgzua390vTVFmNJ+FwkiCSR+JfPswWGL9yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665104; c=relaxed/simple;
-	bh=aSJKrUgj3Fts1yjXQ0OjzgNtZaiwmYwO9/JcLGmliNw=;
+	s=arc-20240116; t=1787665107; c=relaxed/simple;
+	bh=7cu9rZkZKdnQjt22n82/N6Y9zdyX4CNPtBz39Wjd38o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BnyF89gLq3gG10gBI8WfcW12GUsmWdFXiwAzidTkA6oftYbYB57GpBAXw66EjGzeerNdTo8dufTb6nwkDhD8irHZ/wqutT3FkWlL95aDfXJD+eyfL7LGjtb28P2lv/InNdyb8tUwu/Ootawk8w9LnE0I8wYUbqKnshSYtl9otVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vw+7CpZJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fUyglec4AqY7ydREnvkYBK5oVfIViLn5TbODxns2i2iQ/peMGqmP7poGIJBm7ZNGepnGCL0JU++/bc4FHORqpMKzDWBS6Kgt8iZHD/qg9TBg095PXoPfraFufNj7LSwAOgEPSN9FHj3J8k6U7C9moRrw4o6pyZhxr0ZgaXg8mzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDC1ZF8M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vw+7CpZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE0D1F000E9;
-	Tue, 25 Aug 2026 13:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDC1ZF8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA761F000E9;
+	Tue, 25 Aug 2026 13:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665102;
-	bh=bI4QeT4jAC8oIouuYSGJVO9mfv2BlinSkhUsW9+BblM=;
+	s=korg; t=1787665105;
+	bh=hjUVhm1apbKDpgCoJwxgkkfTMaqdw09ZFkBQ58mTTB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vw+7CpZJ6pfOLlkLtvXP0cF7eWHkG9IGupFZFeUULt4bQR6XP7gxJQPFDzQy3g5uN
-	 DIBoU269GC0OVU48loHFdbjiwrcXiXO6GC8XNPtmorh43NtmjT659aSPh4cOrhU235
-	 jKTa+xetIZ1HeelOjZBvBFNxI5HTe9+jx8WIIdso=
+	b=lDC1ZF8MkzXwRJ40f4tOC/flF2XaLYzy0+vAX+S4zhPj2+IC/5tBL0WMY2bpYTPlA
+	 Vol/cc03pg+IZzWsiF9mkjdBqFwpf8m3Ks3PCZnn8iK6JMsHvKGfYO23/Wfy6Mq2Zr
+	 VP2DD+JV5Fo/6XzY5abJoezcoHI/QkCYAhIK4IFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 01/94] serial: sc16is7xx: rename EFR mutex with generic name
-Date: Tue, 25 Aug 2026 15:24:57 +0200
-Message-ID: <20260825132541.941747084@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Shameer Kolothum <skolothumtho@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 10/94] iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown
+Date: Tue, 25 Aug 2026 15:25:06 +0200
+Message-ID: <20260825132542.284177065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,135 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-[ Upstream commit d9b2d7ddbb973b981c20b21e9228581bb156f66f ]
+commit 9ff145a25c5c8a26b06ef7cf558fb536b18bba6d upstream.
 
-This mutex is used as a lock when accessing registers that share the same
-address space, not necessarily EFR registers.
+arm_smmu_impl_remove() is registered as a devres action in
+arm_smmu_impl_probe(), before arm_smmu_init_queues() allocates
+smmu->cmdq.q.base. On a devres unwind, whether a failed probe or an
+unbind, the queue is freed first and arm_smmu_impl_remove() then runs
+tegra241_cmdqv_remove_vintf(), whose VINTF deinit issues a CMD_SYNC on
+the freed memory.
 
-For example, address 0x06 is shared by MSR, TCR and XOFF1 registers,
-independently of EFR.
+Observed during testing with a QEMU hack that makes the VCMDQ fail to
+enable, so the impl reset fails and probe aborts into the devres unwind:
 
-Rename the mutex with a more generic name to avoid misinterpreting its
-usage.
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: failed to enable, STATUS=0x00000000
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: GERRORN=0x0, GERROR=0x4, CONS=0x0
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: uncleared error detected, resetting
+ arm-smmu-v3 arm-smmu-v3.0.auto: failed to reset impl
+ arm-smmu-v3 arm-smmu-v3.0.auto: probe with driver arm-smmu-v3 failed with error -110
+ Unable to handle kernel paging request at virtual address ffff8000891e0098
+ ...
+ Internal error: Oops: 0000000096000047 [#1] SMP
+ ...
+ Call trace:
+  arm_smmu_cmdq_issue_cmdlist+0x320/0x6fc (P)
+  tegra241_vcmdq_hw_deinit+0x98/0x168
+  tegra241_vintf_hw_deinit+0x5c/0x1b0
+  tegra241_cmdqv_remove_vintf+0x34/0xec
+  tegra241_cmdqv_remove+0x40/0x9c
+  arm_smmu_impl_remove+0x20/0x30
+  devm_action_release+0x14/0x20
+  devres_release_all+0xa8/0x110
+  device_unbind_cleanup+0x18/0x84
+  really_probe+0x1f0/0x29c
 
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20251027142957.1032073-3-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 246ac114f485 ("serial: sc16is7xx: enable THRI before filling TX FIFO")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Drop the VINTF deinit from tegra241_cmdqv_remove_vintf() so the unwind no
+longer touches the freed queue. Quiesce the VINTFs earlier instead. Add a
+device_disable() impl op and run it from arm_smmu_disable_action() while
+the CMDQ is still up. That handles a live unbind. A failed reset is already
+handled because tegra241_vintf_hw_init() deinits the VINTF on its own error
+path. tegra241_cmdqv_remove_vintf() is also used by the iommufd viommu
+destroy path, so quiesce there too.
+
+Fixes: 4dc0d12474f9 ("iommu/tegra241-cmdqv: Add user-space use support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c    |    2 ++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h    |    1 +
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c |   15 +++++++++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -328,7 +328,7 @@ struct sc16is7xx_one_config {
- struct sc16is7xx_one {
- 	struct uart_port		port;
- 	struct regmap			*regmap;
--	struct mutex			efr_lock; /* EFR registers access */
-+	struct mutex			lock; /* For registers sharing same address space. */
- 	struct kthread_work		tx_work;
- 	struct kthread_work		reg_work;
- 	struct kthread_delayed_work	ms_work;
-@@ -436,7 +436,7 @@ static void sc16is7xx_efr_lock(struct ua
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -4929,6 +4929,8 @@ static void arm_smmu_device_shutdown(str
  {
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
  
--	mutex_lock(&one->efr_lock);
-+	mutex_lock(&one->lock);
- 
- 	/* Backup content of LCR. */
- 	one->old_lcr = sc16is7xx_port_read(port, SC16IS7XX_LCR_REG);
-@@ -458,7 +458,7 @@ static void sc16is7xx_efr_unlock(struct
- 	/* Restore original content of LCR */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, one->old_lcr);
- 
--	mutex_unlock(&one->efr_lock);
-+	mutex_unlock(&one->lock);
++	if (smmu->impl_ops && smmu->impl_ops->device_disable)
++		smmu->impl_ops->device_disable(smmu);
+ 	arm_smmu_device_disable(smmu);
  }
  
- static void sc16is7xx_ier_clear(struct uart_port *port, u8 bit)
-@@ -593,7 +593,7 @@ static int sc16is7xx_set_baud(struct uar
- 			      SC16IS7XX_MCR_CLKSEL_BIT,
- 			      prescaler == 1 ? 0 : SC16IS7XX_MCR_CLKSEL_BIT);
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -718,6 +718,7 @@ struct arm_smmu_strtab_cfg {
  
--	mutex_lock(&one->efr_lock);
-+	mutex_lock(&one->lock);
+ struct arm_smmu_impl_ops {
+ 	int (*device_reset)(struct arm_smmu_device *smmu);
++	void (*device_disable)(struct arm_smmu_device *smmu);
+ 	void (*device_remove)(struct arm_smmu_device *smmu);
+ 	int (*init_structures)(struct arm_smmu_device *smmu);
+ 	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -763,8 +763,6 @@ static void tegra241_cmdqv_remove_vintf(
+ 	struct tegra241_vintf *vintf = cmdqv->vintfs[idx];
+ 	u16 lidx;
  
- 	/* Backup LCR and access special register set (DLL/DLH) */
- 	lcr = sc16is7xx_port_read(port, SC16IS7XX_LCR_REG);
-@@ -609,7 +609,7 @@ static int sc16is7xx_set_baud(struct uar
- 	/* Restore LCR and access to general register set */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
- 
--	mutex_unlock(&one->efr_lock);
-+	mutex_unlock(&one->lock);
- 
- 	return DIV_ROUND_CLOSEST((clk / prescaler) / 16, div);
- }
-@@ -756,7 +756,7 @@ static void sc16is7xx_update_mlines(stru
- 	unsigned long flags;
- 	unsigned int status, changed;
- 
--	lockdep_assert_held_once(&one->efr_lock);
-+	lockdep_assert_held_once(&one->lock);
- 
- 	status = sc16is7xx_get_hwmctrl(port);
- 	changed = status ^ one->old_mctrl;
-@@ -787,7 +787,7 @@ static bool sc16is7xx_port_irq(struct sc
- 	struct uart_port *port = &s->p[portno].port;
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
--	mutex_lock(&one->efr_lock);
-+	mutex_lock(&one->lock);
- 
- 	iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
- 	if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
-@@ -834,7 +834,7 @@ static bool sc16is7xx_port_irq(struct sc
+-	tegra241_vintf_hw_deinit(vintf);
+-
+ 	/* Remove LVCMDQ resources */
+ 	for (lidx = 0; lidx < vintf->cmdqv->num_lvcmdqs_per_vintf; lidx++)
+ 		if (vintf->lvcmdqs[lidx])
+@@ -781,6 +779,17 @@ static void tegra241_cmdqv_remove_vintf(
  	}
- 
- out_port_irq:
--	mutex_unlock(&one->efr_lock);
-+	mutex_unlock(&one->lock);
- 
- 	return rc;
- }
-@@ -878,9 +878,9 @@ static void sc16is7xx_tx_proc(struct kth
- 	    (port->rs485.delay_rts_before_send > 0))
- 		msleep(port->rs485.delay_rts_before_send);
- 
--	mutex_lock(&one->efr_lock);
-+	mutex_lock(&one->lock);
- 	sc16is7xx_handle_tx(port);
--	mutex_unlock(&one->efr_lock);
-+	mutex_unlock(&one->lock);
  }
  
- static void sc16is7xx_reconf_rs485(struct uart_port *port)
-@@ -947,9 +947,9 @@ static void sc16is7xx_ms_proc(struct kth
- 	struct sc16is7xx_port *s = dev_get_drvdata(one->port.dev);
++static void tegra241_cmdqv_hw_disable(struct arm_smmu_device *smmu)
++{
++	struct tegra241_cmdqv *cmdqv =
++		container_of(smmu, struct tegra241_cmdqv, smmu);
++	u16 idx;
++
++	for (idx = 0; idx < cmdqv->num_vintfs; idx++)
++		if (cmdqv->vintfs[idx])
++			tegra241_vintf_hw_deinit(cmdqv->vintfs[idx]);
++}
++
+ static void tegra241_cmdqv_remove(struct arm_smmu_device *smmu)
+ {
+ 	struct tegra241_cmdqv *cmdqv =
+@@ -846,6 +855,7 @@ static struct arm_smmu_impl_ops tegra241
+ 	/* For in-kernel use */
+ 	.get_secondary_cmdq = tegra241_cmdqv_get_cmdq,
+ 	.device_reset = tegra241_cmdqv_hw_reset,
++	.device_disable = tegra241_cmdqv_hw_disable,
+ 	.device_remove = tegra241_cmdqv_remove,
+ 	/* For user-space use */
+ 	.hw_info = tegra241_cmdqv_hw_info,
+@@ -1212,6 +1222,7 @@ static void tegra241_cmdqv_destroy_vintf
+ 	if (vintf->mmap_offset)
+ 		iommufd_viommu_destroy_mmap(&vintf->vsmmu.core,
+ 					    vintf->mmap_offset);
++	tegra241_vintf_hw_deinit(vintf);
+ 	tegra241_cmdqv_remove_vintf(vintf->cmdqv, vintf->idx);
+ }
  
- 	if (one->port.state) {
--		mutex_lock(&one->efr_lock);
-+		mutex_lock(&one->lock);
- 		sc16is7xx_update_mlines(one);
--		mutex_unlock(&one->efr_lock);
-+		mutex_unlock(&one->lock);
- 
- 		kthread_queue_delayed_work(&s->kworker, &one->ms_work, HZ);
- 	}
-@@ -1635,7 +1635,7 @@ int sc16is7xx_probe(struct device *dev,
- 		s->p[i].old_mctrl	= 0;
- 		s->p[i].regmap		= regmaps[i];
- 
--		mutex_init(&s->p[i].efr_lock);
-+		mutex_init(&s->p[i].lock);
- 
- 		ret = uart_get_rs485_mode(&s->p[i].port);
- 		if (ret)
 
 
