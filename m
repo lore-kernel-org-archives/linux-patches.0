@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6023392C21;
-	Tue, 25 Aug 2026 13:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1986B481AA6;
+	Tue, 25 Aug 2026 13:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665644; cv=none; b=musQDa9wu/DsaVbMuQcmC0rlW+YGhsSd8XesfipTX2moi+3isQdRZWVqnP5As0UCp5GHlM8qTIiFfr4bZTS2hOuf9alY4Dz0ZgYWNBRAovAEhet83VfVDk7UGEOOIAu5MIwLvtuPCIev5c1qxgjO6bExc/WwpwEd7fLiB/8BI4o=
+	t=1787665647; cv=none; b=c3HpJex87MOcaL3T/SSV1eyUr+8kA7Zcm4ba3+qd9PNdXuhIGKrRvG0qq+tSrxzk+pBYWirHGrxjj5H1jdfoAOXoaNWVIUAOfp9JiZ2FFXXPVaMgDAiVRyGuZ2lngjPdsLBqu3W3Cd8UtbbQhnXmD2Z/G1XejiGbHpAi+WLceZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665644; c=relaxed/simple;
-	bh=RyamAMAoN+iULlODG1Za+3v95qthT1m9NboN8M/KjH0=;
+	s=arc-20240116; t=1787665647; c=relaxed/simple;
+	bh=QeLmcUuGNfOX+IO71XrHd6YgvuczWGFk+ZywvGIY2JA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3KiDiyZPjCcWqJgjsKdGuM0XA+utD5jLvHqheGWB07e61RGjuY6n1QyR8M/WbIPM9QIt8Q3RmuXBDeh7gggo5LODADf315xF1bZ6WNCKpsjTz56QzrfAKxMk8kU7p1m01zTFdWSF/fakumuMZdFhOFNK6Ts4+TfV9xt48N5t2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp49vV37; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gTvaznQZ5nA7a14quZO064k/Pzd0abDTE7vOeXgrz2zpiVgTZPBAwyq4vrkxDqnLblqK3JW3UQkjwOmhKEYpsFGjMkTQs1vUsXRE30B0dSWry0j0AKWDkSK/hOCWsGH+1QxpRCSBMaYUXablCRV+2a+U3zySnL3Nhee195Q8+SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PodjGqcc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp49vV37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2311F000E9;
-	Tue, 25 Aug 2026 13:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PodjGqcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D911F000E9;
+	Tue, 25 Aug 2026 13:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665642;
-	bh=U4JWF0JrjlKUH5yi8LLrmj2qdYC7RBT8g/+sIhGSbGc=;
+	s=korg; t=1787665645;
+	bh=jRruoqnsAIcDi4L0RBpp6A4mxBBWXpI2n6gjBov+32Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tp49vV37s2odt4tz/MrECFrX0k5nQFUq1fM5Azsc40dVAsqdobhI+MOwbwa41NIXD
-	 hwTfFDpLL/zNI6J4UqApZgjBFowWSlpuvKeRgj37OqHGMXPeGRTXfeDjNtz8hxmaP8
-	 BIA08fiLizLFPa9uNZffR+z74b432kNTtuKcTFWM=
+	b=PodjGqccjZe3psEJyZeP+Nxu0MzpMHmqv3/HXODI6+mzCb5IRrxVTvbbyWWblLojN
+	 Uivcu/G7+8u7pubcLDzLLZkTXXfvUE5QMzoLrHD8jYNYKArx6WjKLS9IyTJhdIZs2+
+	 +67BAdoC2mv7RXMg9g8HjZKTpWKrPjtgzoALK9KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 18/87] inet: frags: publish queues before arming timer
-Date: Tue, 25 Aug 2026 15:25:41 +0200
-Message-ID: <20260825132542.547626752@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 02/87] Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
+Date: Tue, 25 Aug 2026 15:25:25 +0200
+Message-ID: <20260825132541.911228095@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -53,66 +50,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 653d7ddf6cba867777a3d14c4f83ace008c5ad13 ]
+commit 43a556b2fd43f2df6dded59c2e26560a27874c24 upstream.
 
-inet_frag_create() arms the fragment queue timer before inserting the
-queue into the fqdir rhashtable. If the namespace fragment timeout is
-zero or negative, the timer can run before the queue is published.
+rfcomm_sock_recvmsg() completes a deferred setup by calling
+rfcomm_dlc_accept() without holding any RFCOMM lock:
 
-The timer callback then marks the queue complete, tries to remove a node
-that is not in the hash table yet, and drops the anticipated hash
-reference. Creation can subsequently publish the completed queue without
-restoring that reference, leaving a stale hash node after the caller drops
-the remaining reference.
+	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
+		rfcomm_dlc_accept(d);
+		return 0;
+	}
 
-Publish the queue first and arm the timer while holding the queue lock.
-This makes timer expiry wait until the queue is visible in the hash table,
-so inet_frag_kill() can remove the node and balance the hash reference.
+and rfcomm_dlc_accept() dereferences the session on its first line:
 
-Fixes: 648700f76b03 ("inet: frags: use rhashtables for reassembly units")
+	struct sock *sk = d->session->sock->sk;
+
+Every other path that touches d->session runs under rfcomm_mutex:
+rfcomm_dlc_open(), rfcomm_dlc_close(), rfcomm_dlc_exists(),
+rfcomm_dlc_send_rpn(), and the RFCOMM thread through
+rfcomm_process_sessions(). rfcomm_connect_ind() is even documented as
+"called under rfcomm_lock()". This call site is the only one that skips
+it.
+
+The RFCOMM_DEFER_SETUP bit looks like it serialises the accept against
+teardown, since __rfcomm_dlc_close() returns early when it wins the
+test_and_clear. But rfcomm_recv_disc() forces the state first:
+
+	d->state = BT_CLOSED;
+	__rfcomm_dlc_close(d, err);
+
+and the early return only covers BT_CONNECT, BT_CONFIG, BT_OPEN and
+BT_CONNECT2. With the state already BT_CLOSED that switch does not
+match, the bit is never consulted, and __rfcomm_dlc_close() falls
+through to rfcomm_dlc_unlink(), which sets d->session = NULL.
+
+So a remote DISC on a deferred dlc clears the session while leaving
+RFCOMM_DEFER_SETUP set. The next recvmsg() then passes the
+test_and_clear and dereferences a NULL session. No timing window is
+needed: once the DISC has been processed, the dereference is
+unconditional.
+
+Give rfcomm_dlc_accept() the same shape as rfcomm_dlc_open() and
+rfcomm_dlc_close(): an exported wrapper that takes rfcomm_mutex and
+re-checks the session, around a __rfcomm_dlc_accept() that the two
+in-core callers, which already hold the mutex, keep using.
+
+Reproduced on a KASAN + PROVE_LOCKING kernel with a BR/EDR peer emulated
+over /dev/vhci: the peer brings up an ACL link, opens L2CAP on the
+RFCOMM PSM, starts a session, opens a dlc on a channel bound with
+BT_DEFER_SETUP, and sends DISC after the socket is accepted. recv() on
+the accepted socket then hits:
+
+  Oops: general protection fault
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:rfcomm_dlc_accept+0x54/0x350
+  Call Trace:
+    rfcomm_sock_recvmsg+0x1cd/0x230
+    sock_recvmsg+0x166/0x1c0
+    __sys_recvfrom+0x20d/0x300
+
+0x10 is the offset of sock in struct rfcomm_session. With this patch the
+same run completes with recv() returning 0 and no report, and lockdep
+stays quiet, confirming rfcomm_mutex is still taken before lock_sock on
+this path as it is on the thread side.
+
+Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Link: https://patch.msgid.link/bf66785e7c0c139d7a1900e2f01faeeab344b960.1784948849.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_fragment.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/bluetooth/rfcomm/core.c |   24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -393,8 +393,8 @@ static struct inet_frag_queue *inet_frag
- 		*prev = ERR_PTR(-ENOMEM);
- 		return NULL;
- 	}
--	mod_timer(&q->timer, jiffies + fqdir->timeout);
- 
-+	spin_lock_bh(&q->lock);
- 	*prev = rhashtable_lookup_get_insert_key(&fqdir->rhashtable, &q->key,
- 						 &q->node, f->rhash_params);
- 	if (*prev) {
-@@ -402,13 +402,13 @@ static struct inet_frag_queue *inet_frag
- 		 * we need to cancel what inet_frag_alloc()
- 		 * anticipated.
- 		 */
--		int refs = 1;
--
- 		q->flags |= INET_FRAG_COMPLETE;
--		inet_frag_kill(q, &refs);
--		inet_frag_putn(q, refs);
-+		spin_unlock_bh(&q->lock);
-+		inet_frag_putn(q, 2);
- 		return NULL;
- 	}
-+	mod_timer(&q->timer, jiffies + fqdir->timeout);
-+	spin_unlock_bh(&q->lock);
- 	return q;
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1334,7 +1334,10 @@ static struct rfcomm_session *rfcomm_rec
+ 	return s;
  }
  
+-void rfcomm_dlc_accept(struct rfcomm_dlc *d)
++/* Must be called with rfcomm_mutex held, so that the session cannot be
++ * unlinked from under us.
++ */
++static void __rfcomm_dlc_accept(struct rfcomm_dlc *d)
+ {
+ 	struct sock *sk = d->session->sock->sk;
+ 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
+@@ -1356,6 +1359,21 @@ void rfcomm_dlc_accept(struct rfcomm_dlc
+ 	rfcomm_send_msc(d->session, 1, d->dlci, d->v24_sig);
+ }
+ 
++void rfcomm_dlc_accept(struct rfcomm_dlc *d)
++{
++	rfcomm_lock();
++
++	/* rfcomm_recv_disc() sets the dlc state to BT_CLOSED before calling
++	 * __rfcomm_dlc_close(), so the RFCOMM_DEFER_SETUP handshake there is
++	 * skipped and the session can already be unlinked by the time the
++	 * deferred accept runs from rfcomm_sock_recvmsg().
++	 */
++	if (d->session)
++		__rfcomm_dlc_accept(d);
++
++	rfcomm_unlock();
++}
++
+ static void rfcomm_check_accept(struct rfcomm_dlc *d)
+ {
+ 	if (rfcomm_check_security(d)) {
+@@ -1368,7 +1386,7 @@ static void rfcomm_check_accept(struct r
+ 			d->state_change(d, 0);
+ 			rfcomm_dlc_unlock(d);
+ 		} else
+-			rfcomm_dlc_accept(d);
++			__rfcomm_dlc_accept(d);
+ 	} else {
+ 		set_bit(RFCOMM_AUTH_PENDING, &d->flags);
+ 		rfcomm_dlc_set_timer(d, RFCOMM_AUTH_TIMEOUT);
+@@ -1953,7 +1971,7 @@ static void rfcomm_process_dlcs(struct r
+ 					d->state_change(d, 0);
+ 					rfcomm_dlc_unlock(d);
+ 				} else
+-					rfcomm_dlc_accept(d);
++					__rfcomm_dlc_accept(d);
+ 			}
+ 			continue;
+ 		} else if (test_and_clear_bit(RFCOMM_AUTH_REJECT, &d->flags)) {
 
 
