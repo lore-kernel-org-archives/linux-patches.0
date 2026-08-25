@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A19C3254BB;
-	Tue, 25 Aug 2026 13:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A6C481673;
+	Tue, 25 Aug 2026 13:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665427; cv=none; b=hUU596+RJ9utB/av+UqvEzbxzL3HuefpTQB38vQf/uwIiEq71oWt06tDkTHvnTDEY627YthyPdmmMZ/p5bPR6uwLL1LG18UicL9ORpJ/qeLLynt2Bm1JjouAc8LqRZhWYmcra0KQ/qm8Icagn7kELihTYk94p3ilAGbG8IPXDfU=
+	t=1787665430; cv=none; b=ScHtCqd6G5AbTtU7fCKsB9XWMKmOTMrYNnNGGlAsB3BtVT9GcgK+uySyNH9vuZLF2JsLaZQxFsPYZ88p1PmZ/gdxcWxbwFgKXthzPd7uCbkQGw/X2LRnC2FW4ug2icHWCAhkbalovtXv3NCytV8lAWDdq3wFhTOAdytU4g04kto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665427; c=relaxed/simple;
-	bh=DFsLkQ4+5twvVR/DEjF+Hny+/PSzdAtoInrqRkRiDZ4=;
+	s=arc-20240116; t=1787665430; c=relaxed/simple;
+	bh=eHIASuAslwGB/7Ex1Kp2d+Xq8hZGe/gmugwSRQar9xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2qSTSmH5KDQNoxduuYGCyQLx50YK3zBJ1/ZWlfzRZ3YACXh36cy0dfzXgOpsuBri2maymGszr6IJWlLgaJWebKNv0C6t6XyMXQohcL5VOYNHuL0sxzftPQY8y3tkIuTHie1eVSUqLVlfUpUjxz3EEgFElNSV8D5XxTQXrczPPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLe2dUaN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n4+jddqYhlAQOdgnXfPK1fGTt68lRDgSot+0AfeQOalhV8LJ2DsWjn+PtPxbUH7bz+tBUu3FFNl7rT+aRbyrz0uVt7IAgmYU7yUrYrnoO8vK5TeGWB1WOP1Un+D+/DL0J/6IhwSKdqy3iY027sai9sRWdQE2lpsU3iR6jylirag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oI629Qw1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLe2dUaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8861F000E9;
-	Tue, 25 Aug 2026 13:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oI629Qw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F511F000E9;
+	Tue, 25 Aug 2026 13:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665426;
-	bh=WGZakjZspmRbx2CN5i5bXcM+uWpt+iLyUTxar29i/ZQ=;
+	s=korg; t=1787665429;
+	bh=sAi0+IKUKS0CO9bdr3f7Q2BS0qBXC8BvVbTDThJKY1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLe2dUaNm6FfCkpcLb7cxXV54pAsgMsjk0zSin+7n3lKadjkd1o6FrfcFLFx7e1m8
-	 Pm2X769hdFcQABZlDEuMmr928BGdQebZ6dZy7XEAggtaTu+/ppK/AO3H7ItMQPP0kE
-	 Z2mhzfJ0OnffStSq/+WIZ03DpgY/vO0Kuzeb6PfE=
+	b=oI629Qw1HfB2ogtvghiEEUq32mGFUKL2pWygnCrm4yy9d9WbveeP1wNPvG6m3wScs
+	 K6RIc5NFXk5/1hRf/rKXpBoPRk7aC+e5WJ1MgexyLNm+9JRBoaXlQEXOleZ3a9wG3Y
+	 9WNvKS6YtipSXIoLC+MbJxzq3sxCTt7C7lLSWA6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 22/77] xfs: bounds-check buffer log items dirty bitmap
-Date: Tue, 25 Aug 2026 15:25:44 +0200
-Message-ID: <20260825132542.436346419@linuxfoundation.org>
+Subject: [PATCH 6.12 23/77] xfs: hoist per-bucket unlinked list check to helper
+Date: Tue, 25 Aug 2026 15:25:45 +0200
+Message-ID: <20260825132542.476742225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -53,180 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 813f8136a2ce1fee266d02a7df73db6e8a541604 ]
+[ Upstream commit 7cdafd8f10ebdf745ba6046b9fa67490c343a17f ]
 
-xlog_recover_do_reg_buffer() replays each dirty region described by a
-buffer log item's bitmap into the buffer read for that item:
+In the next patch we're going to make this loop more exciting, so hoist
+the code to a helper function to reduce clutter in the resulting code.
 
-	memcpy(xfs_buf_offset(bp, (uint)bit << XFS_BLF_SHIFT),
-		item->ri_buf[i].iov_base,
-		nbits << XFS_BLF_SHIFT);
-
-The destination offset (bit/nbits, from the logged dirty bitmap) and the
-buffer size (from the logged blf_len) are both attacker-controlled and
-otherwise unrelated, yet the only thing bounding the copy is an ASSERT(),
-which compiles away on production kernels. A crafted image logging a
-small blf_len together with a bitmap bit past the end of that buffer
-drives the memcpy() past the buffer's allocation, corrupting adjacent
-kernel heap during mount-time log recovery. This is reachable by anyone
-who can get a crafted image mounted -- the malicious-filesystem threat
-model XFS already guards against elsewhere.
-
-Turn the ASSERT() into a real XFS_IS_CORRUPT() check that aborts recovery
-of the buffer with -EFSCORRUPTED, consistent with the validate-and-fail
-idiom already used in xlog_recover_do_inode_buffer() and
-xfs_dquot_item_recover.c. xlog_recover_do_reg_buffer() therefore becomes
-STATIC int and its three callers propagate the error.
-
-Found and confirmed with KASAN on a CONFIG_XFS_DEBUG=n build: the crafted
-image trips a slab-out-of-bounds write before this change and fails
-recovery cleanly with -EFSCORRUPTED after it.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: 527eaaefddb6 ("xfs: don't livelock in scrub on a circular unlinked list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_buf_item_recover.c |   57 ++++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 16 deletions(-)
+ fs/xfs/scrub/agheader.c |   62 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 41 insertions(+), 21 deletions(-)
 
---- a/fs/xfs/xfs_buf_item_recover.c
-+++ b/fs/xfs/xfs_buf_item_recover.c
-@@ -444,7 +444,7 @@ xlog_recover_validate_buf_type(
-  * given buffer.  The bitmap in the buf log format structure indicates
-  * where to place the logged data.
-  */
--STATIC void
-+STATIC int
- xlog_recover_do_reg_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog_recover_item	*item,
-@@ -472,8 +472,24 @@ xlog_recover_do_reg_buffer(
- 		ASSERT(nbits > 0);
- 		ASSERT(item->ri_buf[i].iov_base != NULL);
- 		ASSERT(item->ri_buf[i].iov_len % XFS_BLF_CHUNK == 0);
--		ASSERT(BBTOB(bp->b_length) >=
--		       ((uint)bit << XFS_BLF_SHIFT) + (nbits << XFS_BLF_SHIFT));
-+		/*
-+		 * The bitmap is only trustworthy to the extent that it
-+		 * describes a region that actually fits inside the buffer we
-+		 * read in based on the (attacker-controlled) blf_len.  Do not
-+		 * rely on an ASSERT() for this -- it compiles away entirely on
-+		 * non-DEBUG kernels, which is exactly where this matters, so
-+		 * validate it for real and abort recovery of this buffer rather
-+		 * than copying past the end of it.
-+		 */
-+		if (XFS_IS_CORRUPT(mp, BBTOB(bp->b_length) <
-+				((uint)bit << XFS_BLF_SHIFT) +
-+				(nbits << XFS_BLF_SHIFT))) {
-+			xfs_alert(mp,
-+	"Bad buffer log item dirty bitmap (bit %d, nbits %d) for %d-byte buffer at daddr 0x%llx.",
-+				bit, nbits, BBTOB(bp->b_length),
-+				xfs_buf_daddr(bp));
-+			return -EFSCORRUPTED;
+--- a/fs/xfs/scrub/agheader.c
++++ b/fs/xfs/scrub/agheader.c
+@@ -891,6 +891,42 @@ xchk_agi_xref(
+ }
+ 
+ /*
++ * Walk the incore unlinked list for a particular AGI bucket to construct
++ * the unlinked inode bitmap for later reconstruction of the unlinked list.
++ * Returns 1 if we should keep checking, or 0 to stop checking.
++ */
++static int
++xchk_iunlink_bucket(
++	struct xfs_scrub		*sc,
++	unsigned int			bucket,
++	xfs_agino_t			agino)
++{
++	while (agino != NULLAGINO) {
++		struct xfs_inode	*ip;
++
++		if (agino % XFS_AGI_UNLINKED_BUCKETS != bucket) {
++			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
++			return 0;
 +		}
- 
- 		/*
- 		 * The dirty regions logged in the buffer, even though
-@@ -527,6 +543,7 @@ xlog_recover_do_reg_buffer(
- 	ASSERT(i == item->ri_total);
- 
- 	xlog_recover_validate_buf_type(mp, bp, buf_f, current_lsn);
-+	return 0;
- }
- 
- /*
-@@ -535,10 +552,10 @@ xlog_recover_do_reg_buffer(
-  * (ie. USR or GRP), then just toss this buffer away; don't recover it.
-  * Else, treat it as a regular buffer and do recovery.
-  *
-- * Return false if the buffer was tossed and true if we recovered the buffer to
-- * indicate to the caller if the buffer needs writing.
-+ * Return 0 if the buffer was not recovered (tossed), 1 if it was recovered and
-+ * needs writing, or a negative errno if recovery of the buffer failed.
-  */
--STATIC bool
-+STATIC int
- xlog_recover_do_dquot_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog			*log,
-@@ -547,6 +564,7 @@ xlog_recover_do_dquot_buffer(
- 	struct xfs_buf_log_format	*buf_f)
- {
- 	uint			type;
-+	int			error;
- 
- 	trace_xfs_log_recover_buf_dquot_buf(log, buf_f);
- 
-@@ -554,7 +572,7 @@ xlog_recover_do_dquot_buffer(
- 	 * Filesystems are required to send in quota flags at mount time.
- 	 */
- 	if (!mp->m_qflags)
--		return false;
-+		return 0;
- 
- 	type = 0;
- 	if (buf_f->blf_flags & XFS_BLF_UDQUOT_BUF)
-@@ -567,10 +585,12 @@ xlog_recover_do_dquot_buffer(
- 	 * This type of quotas was turned off, so ignore this buffer
- 	 */
- 	if (log->l_quotaoffs_flag & type)
--		return false;
-+		return 0;
- 
--	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
--	return true;
-+	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
-+	if (error)
-+		return error;
++
++		ip = xfs_iunlink_lookup(sc->sa.pag, agino);
++		if (!ip) {
++			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
++			return 0;
++		}
++
++		if (!xfs_inode_on_unlinked_list(ip)) {
++			xchk_block_set_corrupt(sc, sc->sa.agi_bp);
++			return 0;
++		}
++
++		agino = ip->i_next_unlinked;
++	}
++
 +	return 1;
++}
++
++/*
+  * Check the unlinked buckets for links to bad inodes.  We hold the AGI, so
+  * there cannot be any threads updating unlinked list pointers in this AG.
+  */
+@@ -900,30 +936,14 @@ xchk_iunlink(
+ 	struct xfs_agi		*agi)
+ {
+ 	unsigned int		i;
+-	struct xfs_inode	*ip;
+ 
+ 	for (i = 0; i < XFS_AGI_UNLINKED_BUCKETS; i++) {
+-		xfs_agino_t	agino = be32_to_cpu(agi->agi_unlinked[i]);
++		int		ret;
+ 
+-		while (agino != NULLAGINO) {
+-			if (agino % XFS_AGI_UNLINKED_BUCKETS != i) {
+-				xchk_block_set_corrupt(sc, sc->sa.agi_bp);
+-				return;
+-			}
+-
+-			ip = xfs_iunlink_lookup(sc->sa.pag, agino);
+-			if (!ip) {
+-				xchk_block_set_corrupt(sc, sc->sa.agi_bp);
+-				return;
+-			}
+-
+-			if (!xfs_inode_on_unlinked_list(ip)) {
+-				xchk_block_set_corrupt(sc, sc->sa.agi_bp);
+-				return;
+-			}
+-
+-			agino = ip->i_next_unlinked;
+-		}
++		ret = xchk_iunlink_bucket(sc, i,
++				be32_to_cpu(agi->agi_unlinked[i]));
++		if (ret < 1)
++			return;
+ 	}
  }
  
- /*
-@@ -706,7 +726,9 @@ xlog_recover_do_primary_sb_buffer(
- 	xfs_agnumber_t			orig_agcount = mp->m_sb.sb_agcount;
- 	int				error;
- 
--	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+	if (error)
-+		return error;
- 
- 	if (orig_agcount == 0) {
- 		xfs_alert(mp, "Trying to grow file system without AGs");
-@@ -1026,11 +1048,11 @@ xlog_recover_buf_commit_pass2(
- 			goto out_release;
- 	} else if (buf_f->blf_flags &
- 		  (XFS_BLF_UDQUOT_BUF|XFS_BLF_PDQUOT_BUF|XFS_BLF_GDQUOT_BUF)) {
--		bool	dirty;
--
--		dirty = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
--		if (!dirty)
-+		error = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
-+		if (error <= 0)
- 			goto out_release;
-+		/* write dirty buffer */
-+		error = 0;
- 	} else if ((xfs_blft_from_flags(buf_f) & XFS_BLFT_SB_BUF) &&
- 			xfs_buf_daddr(bp) == 0) {
- 		error = xlog_recover_do_primary_sb_buffer(mp, item, bp, buf_f,
-@@ -1038,7 +1060,10 @@ xlog_recover_buf_commit_pass2(
- 		if (error)
- 			goto out_writebuf;
- 	} else {
--		xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+		error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f,
-+						   current_lsn);
-+		if (error)
-+			goto out_release;
- 	}
- 
- 	/*
 
 
