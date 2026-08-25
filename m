@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8067825393E;
-	Tue, 25 Aug 2026 13:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD3C481672;
+	Tue, 25 Aug 2026 13:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666294; cv=none; b=rf07a3BA8vaXWLC1AIqetRdyugUJYlOfw/TsSNrpDqcz55x/IQyilnCXlrfNnLLS345TOMWYzwjTuHY2rYd5AVMTkB/6dcx65iDUmJsXUMgKpGalglJwfdan9DKQoj/0MSPog8jx6IzO9fjfSjtfjzhvQlpaAK6FOrR6hFeG4Jg=
+	t=1787666297; cv=none; b=WSf3MKIedqbwRn7MprSqWtO4/DPFKv5XBiEdoPn13Rf1MUw5szT7Pe1PPeOgJu3ptmunvxyLVysqm1sE/rxquj8y7I522admh//5Hqv4cfnfAyQLBMhGvB2zRx7k/SoriAqrHuT+U+CmcJlX+VnYlklPclchV9s4aUPHgE900/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666294; c=relaxed/simple;
-	bh=W9z6XA/pSmqIa9nNNNk0hwtjndWtv+LKz94G7iW1pR4=;
+	s=arc-20240116; t=1787666297; c=relaxed/simple;
+	bh=+rWDd5qR2AKs2a7XiPhjOJPr4r3JExoPVLl/qSiv0QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfUk8Uml/l9zZ/lpEuPJxzh6nDAsSTEHhWOgeQpw5ho2k24j1jCQuk2hOAtHLb4bHfvoOZuAejXwYVAogcAyMjJi7/DQ23o5+9fPLVD+iZE0j0vNyhcyYS2lPo1oYloohERzhJKe+4qfNmTKhoR7t5PaW2bGNnZHxByf1O72XWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEUMMREy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q4Z+/7HjR61/WAnJhQI0K+xJOwCF3C1bAR0DdIT4kE0JWhlUdVKhfLNq8dnND/kr/Dmo81Cb/r03lSUkm7UuO57N994wZTXK1L+7zoGct8pNIIXzlt2FTHDLtMdKIl0wGpE6KBiRVe68jGEz4gq48vUtjkDxOC34zCmZeLacCq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svPKuHfN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEUMMREy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52ED1F00A3D;
-	Tue, 25 Aug 2026 13:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svPKuHfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AB91F000E9;
+	Tue, 25 Aug 2026 13:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666293;
-	bh=o7cmlDTKNzviJsbS0lOvLHZ7L7T/ejPBsGur8t3Aim8=;
+	s=korg; t=1787666296;
+	bh=m/8VfcscTr5K6WjyHBycLO51e5tMYqoMHCJ36NjD0Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jEUMMREyiQkuNuoRLEnK8hJGlv8bmS6UQIll+XU5Vmlr1XkXDZETQdUatwBz3mACJ
-	 jcFxinMO5qP5nAqzgHulTjnRiLsGuY2/JaetL/pyOCsCqAEdh6XPilNW3r3w4SWZ+V
-	 W7vcU0noJkBXX1qO6ZSnAf3dsUtZLaEoIH2FVNoQ=
+	b=svPKuHfN9clhhS+QZOYXmS4RT6pOZ6j6MRZvL17wXj+R0LnsxPX834ItbcPEEzfW+
+	 pBT6gAqEUn/XsaLgXVSN9B/qyfgXVM8kCPl2QR6aqPhp+2qy9bmBc/JacE13m2f3ZF
+	 s8Ng8oSBT6bIdjzFxybhzI7wAbNPEVKxv/gFg2Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 70/76] mptcp: pm: ADD_ADDR rtx: free sk if last
-Date: Tue, 25 Aug 2026 15:27:03 +0200
-Message-ID: <20260825132544.301715728@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Jiang HongHui <jiang_hh2019@163.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 44/76] nvmet-fc: fix invalid free in LS IOD error path
+Date: Tue, 25 Aug 2026 15:26:37 +0200
+Message-ID: <20260825132543.298864177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -52,118 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Jiang HongHui <jiang_hh2019@163.com>
 
-[ Upstream commit b7b9a461569734d33d3259d58d2507adfac107ed ]
+commit ba98d6796d12258e837ece065d2ecb59d76ce4ff upstream.
 
-When an ADD_ADDR is retransmitted, the sk is held in sk_reset_timer(),
-and released at the end.
+nvmet_fc_alloc_ls_iodlist() advances iod while initializing the LS IOD
+array. If an rqstbuf allocation or response buffer DMA mapping fails,
+the unwind loop decrements iod past the start of the array. The final
+kfree(iod) therefore frees an address before the allocated object.
 
-If at that moment, it was the last reference being held, the sk would
-not be freed. sock_put() should then be called instead of __sock_put().
+This can be reproduced with nvme-fcloop and failslab by setting
+fail-nth to 6 before creating a target port. KASAN reports:
 
-But that's not enough: if it is the last reference, sock_put() will call
-sk_free(), which will end up calling sk_stop_timer_sync() on the same
-timer, and waiting indefinitely to finish. So it is needed to mark that
-the timer is done at the end of the timer handler when it has not been
-rescheduled, not to call sk_stop_timer_sync() on "itself".
+  BUG: KASAN: invalid-free in nvmet_fc_register_targetport
+  Free of addr ffff88816cf8ff48 by task nvmet_fail_nth/9552
 
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Free the original allocation base stored in tgtport->iod instead. With
+this fix applied, the same sysfs write with fail-nth=6 returns -ENOMEM
+without any KASAN report.
+
+Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-5-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a7aad5b69d3b ("mptcp: pm: fix data race in add_addr timer callback")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jiang HongHui <jiang_hh2019@163.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/nvme/target/fc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -36,6 +36,7 @@ struct mptcp_pm_add_entry {
- 	struct timer_list	add_timer;
- 	struct mptcp_sock	*sock;
- 	u8			retrans_times;
-+	bool			timer_done;
- 	struct rcu_head		rcu;
- };
- 
-@@ -316,22 +317,22 @@ static void mptcp_pm_add_timer(struct ti
- 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
--	unsigned int timeout;
-+	unsigned int timeout = 0;
- 
- 	pr_debug("msk=%p\n", msk);
- 
-+	bh_lock_sock(sk);
- 	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
--		goto exit;
-+		goto out;
- 
--	bh_lock_sock(sk);
- 	if (sock_owned_by_user(sk)) {
- 		/* Try again later. */
--		sk_reset_timer(sk, timer, jiffies + HZ / 20);
-+		timeout = HZ / 20;
- 		goto out;
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -571,7 +571,7 @@ out_fail:
+ 		list_del(&iod->ls_rcv_list);
  	}
  
- 	if (mptcp_pm_should_add_signal_addr(msk)) {
--		sk_reset_timer(sk, timer, jiffies + HZ);
-+		timeout = HZ;
- 		goto out;
- 	}
+-	kfree(iod);
++	kfree(tgtport->iod);
  
-@@ -354,9 +355,8 @@ static void mptcp_pm_add_timer(struct ti
- 		entry->retrans_times++;
- 	}
- 
--	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
--		sk_reset_timer(sk, timer,
--			       jiffies + timeout);
-+	if (entry->retrans_times >= ADD_ADDR_RETRANS_MAX)
-+		timeout = 0;
- 
- 	spin_unlock_bh(&msk->pm.lock);
- 
-@@ -364,9 +364,13 @@ static void mptcp_pm_add_timer(struct ti
- 		mptcp_pm_subflow_established(msk);
- 
- out:
-+	if (timeout)
-+		sk_reset_timer(sk, timer, jiffies + timeout);
-+	else
-+		/* if sock_put calls sk_free: avoid waiting for this timer */
-+		entry->timer_done = true;
- 	bh_unlock_sock(sk);
--exit:
--	__sock_put(sk);
-+	sock_put(sk);
- }
- 
- struct mptcp_pm_add_entry *
-@@ -427,6 +431,7 @@ static bool mptcp_pm_alloc_anno_list(str
- 	add_entry->retrans_times = 0;
- 
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
-+	add_entry->timer_done = false;
- 	timeout = mptcp_get_add_addr_timeout(net);
- 	if (timeout)
- 		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
-@@ -447,7 +452,8 @@ void mptcp_pm_free_anno_list(struct mptc
- 	spin_unlock_bh(&msk->pm.lock);
- 
- 	list_for_each_entry_safe(entry, tmp, &free_list, list) {
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+		if (!entry->timer_done)
-+			sk_stop_timer_sync(sk, &entry->add_timer);
- 		kfree_rcu(entry, rcu);
- 	}
+ 	return -EFAULT;
  }
 
 
