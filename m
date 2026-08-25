@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD23429039;
-	Tue, 25 Aug 2026 13:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DDE3749F4;
+	Tue, 25 Aug 2026 13:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664764; cv=none; b=HG50K0jYKtqpI4bzDxoe8bNxvQ6v4JbReG0vZG+ds7kHhJ+5l7NjVtEInv2HFM9qT94ZwGRJf7VCWIqIHE+bX6BdkdsNLy4L91B3P5lYUANp9zvycGgJYIchGgEucgG+42yu+GkyWexZ8BDDPBo5KXIJlzm8Vi7Rkfxzg19yr7c=
+	t=1787664767; cv=none; b=JKHOPl3BmJBui93f6EJdz4CW2MpktZ5pO8oLFHkaJmfAzBQvoCXmLrfdckSSQe94xtSSQXdN0B8JalFoyaql/hL4DtHA3LBixlGmOcgthLr1U+n+fPIpEQuyqGklLdgF9fAjWxSh5vSi4aJhPuzOVZaJJ6gOIK7TooaNqbXOw2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664764; c=relaxed/simple;
-	bh=YojsfnKmkjrxAht69DWOJrgREH7ssg5bRIcbCbH6IZs=;
+	s=arc-20240116; t=1787664767; c=relaxed/simple;
+	bh=HbLUdqhl2A0i71b1jjKnrXh2n0eN4cwQDoABz1IXxT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utkUdCYnvmXCMkW1ZGIZWxIsWkeoVws2BN5aiUWSK9b4xmFnhPH0gJ/1oqQ8gSWJqEMQqw6KLFha6ymzEyL+AH1zCAQEQ8rv2lGO0XI0huVqVAapjQenZg1gDjHr4LdV/G2JaRLJ47fnC5KtgsiBdtky42JqoWoxyyv/kX1PCRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHUTTt31; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TiznVCO+ugQZ2dFzkqlu7M7MRmC2oLl5dkJiMbsoojxAFpGjEpzE9UnNFWOnv0N/SGCnZvJh/1xk52cOWNJo/dlTOjSP9J2v8anIR58YWqQ94F8V5zTojyUqJU47AUL2sFdixBikmH46eoTNkljlIFOgdK5JfBH3xCy++ItSDlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibwxBndm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHUTTt31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ECC1F000E9;
-	Tue, 25 Aug 2026 13:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibwxBndm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC4D1F000E9;
+	Tue, 25 Aug 2026 13:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664763;
-	bh=B1vaLnMI0YHE+7MQx0m3OYrWhMqISyrIEpgalDk+NuI=;
+	s=korg; t=1787664766;
+	bh=Z06QSoeR1cOcRGrJAw7bGh2xxeuJkQiVhO/l9gXLTxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XHUTTt31PUzEHBHz5mhu+Bq1333YOtSjW/lif1rf+FpKIVBAkLorCrfi2J8oXcdLT
-	 HKrdwq/zxRzhUChyFakqda0GV435dCUkAjaBxJ6TJl35QQsFlyqRVmW+1T0YqXbb4V
-	 FzESmsz9SWr8wkFhFU/k437EjAC4vpupJGFGG3pQ=
+	b=ibwxBndm9ZgGk2pa1e84rkg54dzoVZ8z4mEQvtceE3jyFDnWFPIgvoLTEZ+E1huv6
+	 jZDUu+XPz+Ju1Ck20Gwpa0fquBRA9urcAOTlih0Z8xW3F2ExN2KjPDfs7L8qBQiLXX
+	 qSMQyLOGee3OkuxqbAaBCnpa5U9l6obYDmT6So3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 77/82] Bluetooth: hci_event: validate LE Set CIG Parameters response
-Date: Tue, 25 Aug 2026 15:26:04 +0200
-Message-ID: <20260825132544.507406950@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 7.2 42/82] nfc: nci: add data_len bound checks to activation parameter extractors
+Date: Tue, 25 Aug 2026 15:25:29 +0200
+Message-ID: <20260825132543.157972668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,47 +50,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 0acd4eeb4b225b9bebbf9ef96cc10cdd79b94899 upstream.
+commit 0428fa2c22e2ba0cff766d3b80d461e149102045 upstream.
 
-The Command Complete dispatch validates only the fixed part of the LE Set
-CIG Parameters response. After that part is pulled from the skb,
-hci_cc_le_set_cig_params() trusts num_handles and reads each entry in the
-trailing handle array.
+nci_extract_activation_params_iso_dep() and
+nci_extract_activation_params_nfc_dep() read an inner length byte from
+the NCI RF_INTF_ACTIVATED_NTF payload and use it to memcpy() into fixed
+kernel buffers, but neither function receives the caller-validated
+activation_params_len.  A crafted NCI notification with
+activation_params_len=1 and an inner length byte of up to 20 (NFC-A) or
+50 (NFC-B) causes memcpy() to read that many bytes past the one valid
+byte in the activation params region -- a slab out-of-bounds read of
+kernel memory adjacent to the NCI skb.
 
-Matching num_handles against the command's num_cis does not guarantee
-that the response contains the advertised handles. A truncated response
-from a malfunctioning controller can therefore make the handler read
-beyond the skb data.
+The sibling nci_extract_rf_params_*() family was given equivalent
+protection by commit 571dcbeb8e63 ("net: nfc: nci: Fix parameter
+validation for packet data"), but the two activation parameter
+extractors were not updated at that time.
 
-Validate that the remaining skb data contains all advertised handles.
-Include this in the existing response validation so malformed responses
-also follow the established CIG failure handling.
+Add a data_len parameter to both functions, guard against an empty
+region before consuming the inner length byte, decrement the remaining
+count after consuming it, and clamp the copy length to what is actually
+available.  Update both call sites to pass ntf.activation_params_len,
+which is already validated against the skb at ntf.c:801.
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
 Cc: stable@vger.kernel.org
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-6d52d8b0-v3-1-e26221f8826d@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/nfc/nci/ntf.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3829,8 +3829,10 @@ static u8 hci_cc_le_set_cig_params(struc
- 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -525,15 +525,19 @@ static int nci_rf_discover_ntf_packet(st
  
- 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
--	if (!rp->status && (!cp || rp->num_handles != cp->num_cis ||
--			    rp->cig_id != cp->cig_id)) {
-+	if (!rp->status &&
-+	    (!cp || rp->num_handles != cp->num_cis ||
-+	     rp->cig_id != cp->cig_id ||
-+	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
- 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
- 		status = HCI_ERROR_UNSPECIFIED;
- 	}
+ static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
+ {
+ 	struct activation_params_nfca_poll_iso_dep *nfca_poll;
+ 	struct activation_params_nfcb_poll_iso_dep *nfcb_poll;
+ 
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
+ 		nfca_poll->rats_res_len = min_t(__u8, *data++, NFC_ATS_MAXSIZE);
++		data_len--;
++		nfca_poll->rats_res_len = min_t(__u8, nfca_poll->rats_res_len, data_len);
+ 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
+ 		if (nfca_poll->rats_res_len > 0) {
+ 			memcpy(nfca_poll->rats_res,
+@@ -542,8 +546,12 @@ static int nci_extract_activation_params
+ 		break;
+ 
+ 	case NCI_NFC_B_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
+ 		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
++		data_len--;
++		nfcb_poll->attrib_res_len = min_t(__u8, nfcb_poll->attrib_res_len, data_len);
+ 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
+ 		if (nfcb_poll->attrib_res_len > 0) {
+ 			memcpy(nfcb_poll->attrib_res,
+@@ -562,7 +570,7 @@ static int nci_extract_activation_params
+ 
+ static int nci_extract_activation_params_nfc_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
+ {
+ 	struct activation_params_poll_nfc_dep *poll;
+ 	struct activation_params_listen_nfc_dep *listen;
+@@ -570,9 +578,13 @@ static int nci_extract_activation_params
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
+ 	case NCI_NFC_F_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		poll = &ntf->activation_params.poll_nfc_dep;
+ 		poll->atr_res_len = min_t(__u8, *data++,
+ 					  NFC_ATR_RES_MAXSIZE - 2);
++		data_len--;
++		poll->atr_res_len = min_t(__u8, poll->atr_res_len, data_len);
+ 		pr_debug("atr_res_len %d\n", poll->atr_res_len);
+ 		if (poll->atr_res_len > 0)
+ 			memcpy(poll->atr_res, data, poll->atr_res_len);
+@@ -580,9 +592,13 @@ static int nci_extract_activation_params
+ 
+ 	case NCI_NFC_A_PASSIVE_LISTEN_MODE:
+ 	case NCI_NFC_F_PASSIVE_LISTEN_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		listen = &ntf->activation_params.listen_nfc_dep;
+ 		listen->atr_req_len = min_t(__u8, *data++,
+ 					    NFC_ATR_REQ_MAXSIZE - 2);
++		data_len--;
++		listen->atr_req_len = min_t(__u8, listen->atr_req_len, data_len);
+ 		pr_debug("atr_req_len %d\n", listen->atr_req_len);
+ 		if (listen->atr_req_len > 0)
+ 			memcpy(listen->atr_req, data, listen->atr_req_len);
+@@ -806,12 +822,14 @@ static int nci_rf_intf_activated_ntf_pac
+ 		switch (ntf.rf_interface) {
+ 		case NCI_RF_INTERFACE_ISO_DEP:
+ 			err = nci_extract_activation_params_iso_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_NFC_DEP:
+ 			err = nci_extract_activation_params_nfc_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_FRAME:
 
 
