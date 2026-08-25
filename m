@@ -1,112 +1,111 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F606442B0B
-	for <patches@lists.linux.dev>; Tue, 25 Aug 2026 17:47:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4204819005E
+	for <patches@lists.linux.dev>; Tue, 25 Aug 2026 18:15:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787680065; cv=none; b=SkMy9q+6wRE2LeyfdjlKzBp2qGxOhr9DuzthnneVOVzoT1v+f/9XpZyWSyV66vXXh6VtTW93bVEA+Yn79N98PhxRrtfqtqwFbPLV8Y0IGBJlCzGlXo9iO1j8bRfKY1Gz3b8fwwogiXhPSzko7TmXQo3kGmCA9+9OBd9KkilN5eQ=
+	t=1787681736; cv=none; b=rEcjnjqkHRdUjYSzB2uga9ncRrh7t6K5i87waAaYH78ade26CYWR9/nwVG97NUeGbp2kfeBz4+ZLlIDMErsEuiYikPouxltidjKKzWinCr04UvEJjMeHMlSrP64hph2i0RX54m242UVhszNKSE4QS20C7U1PzYhuTIM7XO/ZEUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787680065; c=relaxed/simple;
-	bh=zMbngc3qdiMhSfAuDNFpS1vX0WbZW8PHrPGV1cV0NHU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a1JahIx8zAKj/O9iLME/DWXtS3KXrg7XC8rujN9iqWonj2GmNnlbLfCne8W1nOh5FiOGUXSDtO04wyJeLt966Fs2O3DveLn0fSaMrFi+rWSu95z1VzJIgQBcP/9W/SgoOHrSKqgLOoxt1ldxp46zAu44+VYoZQezFF8rz1AQzLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZl2emFe; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787681736; c=relaxed/simple;
+	bh=BQRcC2xG25uM6+R1xvzpnNV4l0LH9qmzaH2Rw5U2sE4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s8Zl8O9qmL9ttsdVVeqer9qPNN2eoroLtLjqZEiLCdDnfXEJ4PpvMq1BIXg6fp6jJbMX97Z4CXlVs6PkEmQIFYXj7lhntfwtYUAN9Ipi3/fjz6+Xc4/twM2nmkOftEzuDuRPt6ZgODIc2aAN4fqvBRcyg7Bt4uBbNM5WUiCIsRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZG4qV+Tk; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZl2emFe"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-39652a6e963so937031a91.0
-        for <patches@lists.linux.dev>; Tue, 25 Aug 2026 10:47:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787680063; x=1788284863; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3nqK+uofot3qNgcx5OymPq89/mB6rANapa6yRWsX8aY=;
-        b=aZl2emFeRhCxdaI5dqwFTZB0rVcTTch//SdkpRW+apqDrUQDeHdgiAtVx8/5ihW/8k
-         ACH2pdToIVAIIsxpWo0UxW6O5fQAx+2VW5wfMEoJXwpdZ+koKrdnWk/p4+O2Mg+z1Qrf
-         1p8CSSWTvlxzb9Q1ayG7DZEXjKxMKnSmt4pwKidBYqLEis65m6rQ3t3yohq9bnWwjZoc
-         Qeg3GLGXHu+jVOOnQ/5vKdygicpwS3DJzyvtz4eA83af3T9v0in9hXb/rh8zI7XRCGHr
-         090RMyAc1MHwp0+dgzU52b3Vk8joaz4q77/lacea3TUfGanJeKzQ51+cv0EOedKA+3FV
-         pxXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787680063; x=1788284863;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3nqK+uofot3qNgcx5OymPq89/mB6rANapa6yRWsX8aY=;
-        b=QHO4WppaL58jWlhtCVRJtLEMZnRgAARtKFBXiw06DQSKTQ2RXs8lReb5ZWnrqIsWwL
-         l6bdM7V8DvWujwOdGELi7R5YGaksCuyU+r4sya+O18KMFZiW/Hc2kR7EI7KWBgag1ivh
-         f+6ZnJYa3jj6UVQUhukHhKOuagC8xQMZePYRTKinJOKvfptVAs/LVhgIzuLcQukLJnFi
-         1iTgORiankSJ/bE2Wz8xiNdNUuOUGMiBQ/B8CMbvn9EyLfM7yNsAczgkPHEo3bUB4f5K
-         9odSydka8sOTyYLrxCJL9W0YJQmRAR5sLEjXeBN1pR9bRDuhdYHGMrfiJVl/kbE5EG1W
-         cZig==
-X-Gm-Message-State: AFuF++n0DYB9U0c7VwN7BkMyEa3axDjdRs0iBecDctdPS6Z90yBOvpt1
-	ZK4XQJJv6S7Y2PVU03sr2OQLjTW6zzkPfSZlgFowGmw/IL0BWF/d/t/s
-X-Gm-Gg: AR+sD11cmWEYpnQqdMPSstXmM/FYuYP62EEJjovsVVpO4nKpo0orGm9i3+gBwUu1sUK
-	EjZiJPjt+GS0M0E09FWFkI1h6Xq8jc4XI5tcIUrsONUUp5DqOTjGyG9hdEcN7XyWgVMJqQeaqF0
-	4K8xlySAWqPD5s4oK87DzABJPLlKngexQoiqn9UzpW+DfLdZYqFz7+5Yb2zD0WP10YVD2aZiNqv
-	9BMXy0LNmaFtFcE/5dyJdsY4wXge34w5PEPUPYKi1c+AETpBsQFyq2gNjV+pNpXlr9Q8JVleSy2
-	fXnA3b+PSLBKpult7mI2L5KuTUF/vpv8mKzNRow7zdokrQnsQ2L0ZWzvYsr+98Nof2M9HQK4CyQ
-	OJSApT42FQ6Ohh5cjX/EAQwvizG1VzlvRIeKTAxeigqoZXIUqapvAZ+g42jnfnK3y44ej69sMyb
-	5/XiAsdft+J4CTCWKrYvHgQFvAT42MfcUv5cVpSfYSge8iyrAX8gng3gHBElBavXyP98li12JdK
-	nHKJ1/zKbAwFLI=
-X-Received: by 2002:a17:90a:a890:b0:396:4ce0:6400 with SMTP id 98e67ed59e1d1-3964ce067f1mr7649214a91.2.1787680063258;
-        Tue, 25 Aug 2026 10:47:43 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-141a8eedd13sm891969c88.1.2026.08.25.10.47.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Aug 2026 10:47:42 -0700 (PDT)
-Message-ID: <45629d75-7a00-44e7-ac7e-68685f33bcbb@gmail.com>
-Date: Tue, 25 Aug 2026 10:47:41 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZG4qV+Tk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787681734; x=1819217734;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=BQRcC2xG25uM6+R1xvzpnNV4l0LH9qmzaH2Rw5U2sE4=;
+  b=ZG4qV+Tk58uSii7Y9z2qcQErFV/dWjsZASFDct8oNMbm8NDHHEDZGxvN
+   Txf1WxPYBMhmbUfsWOn4dKxCNXRfyznqUTjpR0E5XM+f8m+vXsoB4Y/8P
+   /RiDZnPNPaJgTovS3pGPLCZEdVMM7sJXgi7qOTJ2Sl9qazuk0308Y0ylu
+   B4hkhcFupRrN23nnpKNCTgDuJhku49Khlo9nHmRQ/VCKOyawsyNVOItVw
+   c9z/8utEMq7t+EBkj91Q/vpaosktS+rTfFnIl8jQyRn2XjP+bmyF2zyx0
+   6EF5+Vkaf3HYqCJkPXh053tCIfuYdStpSsKG9SrL+sWlT7l6Xh80PosYS
+   Q==;
+X-CSE-ConnectionGUID: A7u9ZVOuRUmkwCHTu+fz5Q==
+X-CSE-MsgGUID: gXz0F4F5Tx6d0G5ljaJOYg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="88174197"
+X-IronPort-AV: E=Sophos;i="6.25,243,1779174000"; 
+   d="scan'208";a="88174197"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2026 11:15:33 -0700
+X-CSE-ConnectionGUID: 5QRSZkUrRKiNUYCMYGyHVg==
+X-CSE-MsgGUID: nYB2sVXxRPKJvHw+0RL08Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,243,1779174000"; 
+   d="scan'208";a="265559591"
+Received: from aschofie-mobl2.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.141])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2026 11:15:33 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hansg@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>,
+	Breno Leitao <leitao@debian.org>,
+	platform-driver-x86@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH 0/7] Intel platform driver to reset bitfix filters
+Date: Tue, 25 Aug 2026 11:15:19 -0700
+Message-ID: <20260825181526.13203-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 00/57] 5.10.267-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260825132541.342390421@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/25/26 06:26, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.267 release.
-> There are 57 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 27 Aug 2026 13:25:02 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.267-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Some Intel CPUs implement a "bitfix filter" to suppress reporting of the
+same corrected errors repeatedly in the case where aging silicon
+develops stuck bits.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+But when systems run for weeks, or months, the filters may become clogged
+with transient errors.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+When the filter is full (indicated by a "yellow" signature in a machine
+check bank) clear the filter. This may make space for additional hard
+errors.
+
+Save a time stamp when clearing a filter. Log with "WARN" severity if
+the filter overflows quickly (in tem minutes or less).
+
+This code was originally developend by Qiuxu as an add-on to an EDAC
+driver. But not everyone wants to run an EDAC driver, so I pulled the
+code out into a standalone platform driver. Much of Qiuxu's code was
+cut-and-pasted into this driver, so he gets Co-developed-by credit
+throughout.
+
+Qiuxu Zhuo (1):
+  cacheinfo: Export get_cpu_cacheinfo_id() for loadable modules
+
+Tony Luck (6):
+  x86/mce: Enumeration updates for Intel bitfix filter reset
+  platform/x86/intel/bff: Add stub Intel bitfix filter driver
+  platform/x86/intel/bff: Add Diamond Rapids support
+  platform/x86/intel/bff: Reset bitfix filter when it overflows
+  platform/x86/intel/bff: Compute unique ID for overflowed filter
+  platform/x86/intel/bff: Report frequent filter resets
+
+ include/linux/cacheinfo.h           |  12 +-
+ arch/x86/include/asm/mce.h          |   6 +
+ arch/x86/include/asm/msr-index.h    |   2 +
+ drivers/base/cacheinfo.c            |  17 ++
+ drivers/platform/x86/intel/bff.c    | 284 ++++++++++++++++++++++++++++
+ drivers/platform/x86/intel/Kconfig  |  13 ++
+ drivers/platform/x86/intel/Makefile |   1 +
+ 7 files changed, 324 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/platform/x86/intel/bff.c
+
+
+base-commit: 8d3ae59288f1e7d58d76558a6ee96d533bc5019f
 -- 
-Florian
+2.55.0
+
