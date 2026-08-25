@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9238523EAAA;
-	Tue, 25 Aug 2026 14:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EADD312831;
+	Tue, 25 Aug 2026 14:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666497; cv=none; b=rof6yqHrR1rIT23A/CJq36wYzyHGsKrq1L4zC0ObNaSadxX4ivJpZGnCIUuuKTk5EY6/ltomjlRxrhEQzUrwa/aDn5cKY2VY9Z1xmrUpgoAe2PomRXTPmieVnACMAi9qO/jZOJzkQQIGsWQXV40Ipcbip62q0XqNE9X4dWT8cz8=
+	t=1787666500; cv=none; b=RpB0PieptowxoV9AQeZpt+/JdI+9VVD+HRBaPXIV3/ubAxKvuSs+axW1NHwzMucTT+9GlzsAW31SSYeWirByWZVnvQJ72CA3DU5xzANhyeHRejh4oFwvUde0BHxitmhXy5ppXMdciPfWEKkYIgwtjQcYQxJyc5ohQeIvLDguRlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666497; c=relaxed/simple;
-	bh=Ee9Fy7nZsuGh+j3JZjqNcZrTiRh+CSH65wCXyFbvr7c=;
+	s=arc-20240116; t=1787666500; c=relaxed/simple;
+	bh=T83tOZkWRCzxijIPJ8Fed9XOxue6u3pLH03vbhcSMi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OeTRIiMivCTjyygHe0uq233A++1GYb5nZqTK3GVaLOPLe8Uw3dg4SvF5WtJRNyzxiQELn+A9O0cgtKJeBVrfmYH+YpPKVh4qryTczeOU+SQmi4aPwlhPO+4/8G8p4j70DEC3f2TAQxWwC2dr6jIp4nUw3Uqlvli6FIaHytjmY9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F07evDDI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BI9zzUBHLm5rBJGOxrWwwauRP2VqWwx7ztvp69SROeGfJSDkbgHKypFv4+gouJrlidHcy1p9x+qztSHp08YyxGWTjsTIPu74tIefOBk9Q8uGW03yWkoANeaYvTSbYoFtX0C9hF9H0FslFYdI/2wBzkFywHY/yF5F1iwiwcTvMGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGc8ykDc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F07evDDI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8641F000E9;
-	Tue, 25 Aug 2026 14:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGc8ykDc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6101F000E9;
+	Tue, 25 Aug 2026 14:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666496;
-	bh=EJZkpAjO9g/GCaOLuiqGcyy7mBVtb6Aprbkem5ovGrU=;
+	s=korg; t=1787666499;
+	bh=/fNJ9WKiikCCtGfbP4N6I3R2sryeE/5Csb/9uhhAptE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F07evDDIq85vFdgMmx5cnTIwkEQkdme+wpsH4hPUV6PV+V5W03Bp66bXdpm8qyfTI
-	 3RIVXUVqaloofPu1Ohz3flIXYbBwWXWBgkRI7pL1urjdlymISnhgzHMPzwwB1CFoJx
-	 iTJxlDMbqqSuZNMCy1yA+gDQBbXTZsFqI9mwE9WE=
+	b=AGc8ykDc6f+AR7m+IusCwKF+XVFj/gemEuMRMyfOOQyTHdK6o+SSY4mwKwl4SLfS7
+	 HDB9h2MxgqK0/nDA8kCtPlP4sYD15bFzgtu+/OUiwaAClAObOwlztGqPmxjVUzzJ5B
+	 3eKai4rfUQYJAbSAs33uePIUpRXHm80NnB13jfq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 27/57] s390/vfio_ccw: Cancel existing workqueues
-Date: Tue, 25 Aug 2026 15:26:49 +0200
-Message-ID: <20260825132542.373258366@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	David Matlack <dmatlack@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Bjoern Doebel <doebel@amazon.de>
+Subject: [PATCH 5.10 28/57] KVM: arm64: Retry fault if vma_lookup() results become invalid
+Date: Tue, 25 Aug 2026 15:26:50 +0200
+Message-ID: <20260825132542.417175227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -52,61 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: David Matlack <dmatlack@google.com>
 
-[ Upstream commit 79c60b2c61105368dcc8444eb45847e21734f7c4 ]
+commit 13ec9308a85702af7c31f3638a2720863848a7f2 upstream.
 
-The initialization of the io_work and crw_work workqueues begs the
-question of whether they should be un-initialized. Add the corresponding
-cleanup tags in _release_dev to ensure work isn't dispatched after
-the private struct is free'd.
+Read mmu_invalidate_seq before dropping the mmap_lock so that KVM can
+detect if the results of vma_lookup() (e.g. vma_shift) become stale
+before it acquires kvm->mmu_lock. This fixes a theoretical bug where a
+VMA could be changed by userspace after vma_lookup() and before KVM
+reads the mmu_invalidate_seq, causing KVM to install page table entries
+based on a (possibly) no-longer-valid vma_shift.
 
-Suggested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Fixes: e5f84dbaea59 ("vfio: ccw: return I/O results asynchronously")
-Fixes: 3f02cb2fd9d2 ("vfio-ccw: Wire up the CRW irq and CRW region")
+Re-order the MMU cache top-up to earlier in user_mem_abort() so that it
+is not done after KVM has read mmu_invalidate_seq (i.e. so as to avoid
+inducing spurious fault retries).
+
+This bug has existed since KVM/ARM's inception. It's unlikely that any
+sane userspace currently modifies VMAs in such a way as to trigger this
+race. And even with directed testing I was unable to reproduce it. But a
+sufficiently motivated host userspace might be able to exploit this
+race.
+
+Fixes: 94f8e6418d39 ("KVM: ARM: Handle guest faults in KVM")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: David Matlack <dmatlack@google.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230313235454.2964067-1-dmatlack@google.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+[doebel: adjust to contextual and naming differences in 5.10]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_drv.c |    7 +++++++
- drivers/s390/cio/vfio_ccw_ops.c |    8 ++++++++
- 2 files changed, 15 insertions(+)
+ arch/arm64/kvm/mmu.c |   42 ++++++++++++++++++++----------------------
+ 1 file changed, 20 insertions(+), 22 deletions(-)
 
---- a/drivers/s390/cio/vfio_ccw_drv.c
-+++ b/drivers/s390/cio/vfio_ccw_drv.c
-@@ -241,6 +241,13 @@ static int vfio_ccw_sch_remove(struct su
- 
- 	vfio_ccw_sch_quiesce(sch);
- 
-+	/*
-+	 * Ensure these work items are fully drained, so none can
-+	 * fire after being released.
-+	 */
-+	cancel_work_sync(&private->io_work);
-+	cancel_work_sync(&private->crw_work);
-+
- 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
- 		list_del(&crw->next);
- 		kfree(crw);
---- a/drivers/s390/cio/vfio_ccw_ops.c
-+++ b/drivers/s390/cio/vfio_ccw_ops.c
-@@ -204,6 +204,14 @@ static void vfio_ccw_mdev_release(struct
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -769,6 +769,19 @@ static int user_mem_abort(struct kvm_vcp
+ 		return -EFAULT;
  	}
  
- 	cp_free(&private->cp);
-+
 +	/*
-+	 * Ensure these work items are drained, in the event the
-+	 * device is re-opened instead of released.
++	 * Permission faults just need to update the existing leaf entry,
++	 * and so normally don't require allocations from the memcache. The
++	 * only exception to this is when dirty logging is enabled at runtime
++	 * and a write fault needs to collapse a block entry into a table.
 +	 */
-+	cancel_work_sync(&private->io_work);
-+	cancel_work_sync(&private->crw_work);
++	if (fault_status != FSC_PERM || (logging_active && write_fault)) {
++		ret = kvm_mmu_topup_memory_cache(memcache,
++						 kvm_mmu_cache_min_pages(kvm));
++		if (ret)
++			return ret;
++	}
 +
- 	vfio_ccw_unregister_dev_regions(private);
- 	vfio_unregister_notifier(mdev_dev(mdev), VFIO_IOMMU_NOTIFY,
- 				 &private->nb);
+ 	/* Let's check if we will get back a huge page backed by hugetlbfs */
+ 	mmap_read_lock(current->mm);
+ 	vma = find_vma_intersection(current->mm, hva, hva + 1);
+@@ -818,32 +831,17 @@ static int user_mem_abort(struct kvm_vcp
+ 		fault_ipa &= ~(vma_pagesize - 1);
+ 
+ 	gfn = fault_ipa >> PAGE_SHIFT;
+-	mmap_read_unlock(current->mm);
+ 
+ 	/*
+-	 * Permission faults just need to update the existing leaf entry,
+-	 * and so normally don't require allocations from the memcache. The
+-	 * only exception to this is when dirty logging is enabled at runtime
+-	 * and a write fault needs to collapse a block entry into a table.
++	 * Read mmu_notifier_seq so that KVM can detect if the results of
++	 * find_vma_intersection() or gfn_to_pfn_prot() become stale prior to
++	 * acquiring kvm->mmu_lock.
++	 *
++	 * Rely on mmap_read_unlock() for an implicit smp_rmb(), which pairs
++	 * with the smp_wmb() in kvm_mmu_notifier_invalidate_range_end().
+ 	 */
+-	if (fault_status != FSC_PERM || (logging_active && write_fault)) {
+-		ret = kvm_mmu_topup_memory_cache(memcache,
+-						 kvm_mmu_cache_min_pages(kvm));
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	mmu_seq = vcpu->kvm->mmu_notifier_seq;
+-	/*
+-	 * Ensure the read of mmu_notifier_seq happens before we call
+-	 * gfn_to_pfn_prot (which calls get_user_pages), so that we don't risk
+-	 * the page we just got a reference to gets unmapped before we have a
+-	 * chance to grab the mmu_lock, which ensure that if the page gets
+-	 * unmapped afterwards, the call to kvm_unmap_hva will take it away
+-	 * from us again properly. This smp_rmb() interacts with the smp_wmb()
+-	 * in kvm_mmu_notifier_invalidate_<page|range_end>.
+-	 */
+-	smp_rmb();
++	mmap_read_unlock(current->mm);
+ 
+ 	pfn = gfn_to_pfn_prot(kvm, gfn, write_fault, &writable);
+ 	if (pfn == KVM_PFN_ERR_HWPOISON) {
 
 
