@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A4E472F72;
-	Tue, 25 Aug 2026 13:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66A7481233;
+	Tue, 25 Aug 2026 13:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664720; cv=none; b=StvCC7h7sJ/Yx9i+uskKIPVSUjSYa4nE7fCcmuNLD7h41A61kEwxB7xxKFmneQ8ezBU0qkWtlS+ktcuPG50Adnoxyq5NB0bsmKpnXM6777O+Fo5GlMQ4E40Ww0IvC4ScsCzMdWzjCYScIvXsGjrz6ZsMpFZQydmeRqYaMGCrL/8=
+	t=1787664724; cv=none; b=OJGDVBDkViLSweXb8h2YOH28aHc6e/Scniz95grMU08tX1YRB89pE7+BY9MUsywdMqLcqXXAxqQR2Wg3geb5y5Rm1uWnd/GH+KQxgETWc4MUWEDb7Jzg0Kfncji0ULGk0tSpUlQI3POwJYmI78uIm9oEIAivEc+h/e1MqD/50Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664720; c=relaxed/simple;
-	bh=+v2A4wSNxpcn7bmffJSPi8lD2axfm5ScmfpK+EMenDg=;
+	s=arc-20240116; t=1787664724; c=relaxed/simple;
+	bh=r0j8E620YPlPY4jzErc3YqEimZFUn4jMk61ur5FA53I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMAEGVuOrimoawrCSFj/LY6JgFQg8DWcitaV+N2Bjg65nYP3tUVFUjQL/hJxsfJq+3VmUCkvKvQZHnmkrmGlDsr9y5N4EJo0ZZGDIhI5fmUOFSSNvj3N8ETyicb+6hdAL73psYTdzpYbn/qhYLIThjuOr6+Dcu1XXLSgf5HnQuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzNs5v1o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OYdAKUkvdvkdB0x5BF4Bpn+ah5jWCWnT/GVvFJRcQyO3d/r8DLj2pYRnrRP6EuRcP4g578B0kprnAAmldk+YAZIGQnuUuHcLG+OOrJCqeCG6UNZKs98762ylsdd97XX1UDTLQyVQn7T6DyPK0DShq1pxp84o5lO3/JOrPgSgJ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdISSmbL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzNs5v1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329721F000E9;
-	Tue, 25 Aug 2026 13:31:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdISSmbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274E71F00A3A;
+	Tue, 25 Aug 2026 13:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664719;
-	bh=0WWSiGocIDlA56q9CFmocKOknktUkxJG0sTZbBrkz50=;
+	s=korg; t=1787664722;
+	bh=NOCmvNJuuu1HqNok/C1vMAY8em6Lf9Ovp3TiudOZ12c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WzNs5v1o5PUcQJaSWFb5K2OjhMEVPhEbmqDxj8Y+0rBMOpakzztv9ho6CAgObqX7k
-	 Rp4QBuUYz8FhbsP0E/49hlnPk0TakJygVOcoV07xzI8P+D0rGM5q/ruCBT02k4/H2x
-	 WKnKLADqzAh48aDwgiACjUV1hlVKh0eHjJNHT5OQ=
+	b=kdISSmbLwtSFLYROWV8B/8kkRdxkz8YRuWASQC/btUYiyVc8SORsfGhpkCt8qvaBm
+	 pPl8Zppj0LKbFsPzmpLQ4JRlbg1PfWe1WoRppCUAPY0hKtUzkv4iVkJZocmmEkK+4P
+	 2PY5Kd2bWq3nt4OJOgNWHcUUQDUXDokldRp6OsRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Silvan Jegen <s.jegen@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 64/82] HID: huawei: fix missing hid_is_usb() check
-Date: Tue, 25 Aug 2026 15:25:51 +0200
-Message-ID: <20260825132544.024063399@linuxfoundation.org>
+Subject: [PATCH 7.2 65/82] HID: nintendo: fix out-of-bounds read in joycon_ctlr_read_handler()
+Date: Tue, 25 Aug 2026 15:25:52 +0200
+Message-ID: <20260825132544.055571733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,43 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit 4cdb6b4b34d7823254f6e1b22faf56c96ac57fb9 upstream.
+commit 27b376b945c0aac46fcdfcc950b14a85b874b557 upstream.
 
-to_usb_interface() can only be used on a hid_device whose parent is really
-USB; uhid can create devices that identify as being on BUS_USB, but don't
-actually have a USB parent.
-Fix the use of to_usb_interface() without a hid_is_usb() check.
+joycon_ctlr_read_handler() casts an incoming HID input report to
+struct joycon_input_report and parses it, guarding the cast only with a
+12-byte length check:
 
-I have verified that it is currently possible to trigger a kernel splat due
-to this bug in an ASAN build, and that this commit fixes the issue.
+	if (size >= 12) /* make sure it contains the input report */
+		joycon_parse_report(ctlr, (struct joycon_input_report *)data);
 
-Fixes: e93faaca84b7 ("HID: huawei: fix CD30 keyboard report descriptor issue")
+struct joycon_input_report is 49 bytes: a 13-byte header followed by a
+union whose IMU arm is 36 bytes. For an IMU report joycon_parse_report()
+-> joycon_parse_imu_report() walks that union (struct offsets 13..48),
+so a report of exactly 12 bytes with data[0] == JC_INPUT_IMU_DATA passes
+the guard yet is read up to 37 bytes past its declared length. The
+over-read bytes are decoded into accelerometer/gyroscope values and
+forwarded to userspace through the "(IMU)" input device, leaking
+driver-internal memory. data[0] and size are fully controlled by a
+malicious or spoofed Joy-Con/Pro Controller.
+
+Receive buffers are sized to the maximum report length, so this is an
+over-read within the allocation rather than a slab OOB, but the decoded
+bytes still reach userspace.
+
+The sibling subcmd path in joycon_ctlr_handle_event() already bounds the
+same cast correctly:
+
+	if (size < sizeof(struct joycon_input_report) ||
+	    data[0] != JC_INPUT_SUBCMD_REPLY)
+		break;
+
+Use the same sizeof(struct joycon_input_report) bound here.
+
+Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-huawei.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hid/hid-nintendo.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-huawei.c
-+++ b/drivers/hid/hid-huawei.c
-@@ -44,11 +44,12 @@ static const __u8 huawei_cd30_kbd_rdesc_
- static const __u8 *huawei_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 				  unsigned int *rsize)
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -2607,7 +2607,12 @@ static int joycon_ctlr_read_handler(stru
  {
--	struct usb_interface *intf = to_usb_interface(hdev->dev.parent);
-+	struct usb_interface *intf = hid_is_usb(hdev) ?
-+			to_usb_interface(hdev->dev.parent) : NULL;
- 
- 	switch (hdev->product) {
- 	case USB_DEVICE_ID_HUAWEI_CD30KBD:
--		if (intf->cur_altsetting->desc.bInterfaceNumber == 1) {
-+		if (!intf || intf->cur_altsetting->desc.bInterfaceNumber == 1) {
- 			if (*rsize != sizeof(huawei_cd30_kbd_rdesc_fixed) ||
- 				memcmp(huawei_cd30_kbd_rdesc_fixed, rdesc,
- 					sizeof(huawei_cd30_kbd_rdesc_fixed)) != 0) {
+ 	if (data[0] == JC_INPUT_SUBCMD_REPLY || data[0] == JC_INPUT_IMU_DATA ||
+ 	    data[0] == JC_INPUT_MCU_DATA) {
+-		if (size >= 12) /* make sure it contains the input report */
++		/*
++		 * The whole struct is cast and parsed below, including the
++		 * IMU/subcmd union, not just the 12-byte partial header this
++		 * used to check for.
++		 */
++		if (size >= sizeof(struct joycon_input_report))
+ 			joycon_parse_report(ctlr,
+ 					    (struct joycon_input_report *)data);
+ 	}
 
 
