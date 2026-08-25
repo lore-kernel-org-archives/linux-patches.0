@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC96481255;
-	Tue, 25 Aug 2026 13:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CF2481AB5;
+	Tue, 25 Aug 2026 13:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664873; cv=none; b=CMDQLraSdcQONfNP7WONqpTFUk/bVgY20SFxcfC7noo0QQIMBF1ETqFfD3r6oTO0M+Tdnw6CcSZv0wmQP1BtAIvSbUJLy73kYZB72Azpd/vHIoFCZZcAx6Tm1eZ9g0w0OdrOH67hfAive2pDM9stReGSMBST3JUHzpnGV+U5fMI=
+	t=1787664876; cv=none; b=CBOMvTEBbo54BP16p12JJMpcNyoUCxge9eipJCZsNMWZ4hCHhnaILhznPZePv0GomMXk1AKw+aegt/IJqc0Hblcq+0WIPhrB3Sfjt39aZD+AyBpHkUZCxKl0dVQK8oUNCoQpnto4PtF9lL6H/mvuDatErUMjnfTtvNfgMJf339M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664873; c=relaxed/simple;
-	bh=41OwfW1VE/TPHmo1CXdDiIbwNcJUV2ldBtpFOhkIDMI=;
+	s=arc-20240116; t=1787664876; c=relaxed/simple;
+	bh=Szirko0OctIW3mo+RSn6Df8TMCF4VyuMSw40fJFQklo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ur7RnkF3QQ3DLr9sX7yJfvM61t4Sa4iLpd8XszumhORmt8wgcIwycPGAY2ATSSvgbZZ7fnA02PrtNqI4cYMXilHN3iGoP103XGYwmMhlj/OHL++uEV97MpUh1QPaztPHh0MWRTgLQw/QV4D+yDB0wIWZ663g4or72rJ8ijbIHyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMDXWlTD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lb1DsmrZxkNnXCl+IGIWzpsdU/XMts7vfxQAl+MHF5tIFxQXZuIxsOINHllYHiyxHCyEDWrx4GOGt6IWd5BEGcSIdKvTqYFEuHkOQNIN1TI8eRnLlgEordFB9WW8T+jm1HdCelnEDPjhjvX4xDlUxfa95eCsmjgUEuEvSrAqA94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfFo1IFW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMDXWlTD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F6F1F000E9;
-	Tue, 25 Aug 2026 13:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfFo1IFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DCA1F000E9;
+	Tue, 25 Aug 2026 13:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664872;
-	bh=1E/a6r4xGFqu9Xn0qlfIXOvvH2iV0MeA5eZvT9GOmFk=;
+	s=korg; t=1787664874;
+	bh=L12Az+p48EvwsGNHZFJVYKcdBxO3KmcBXjmYKnqWbCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PMDXWlTDiBK0lgyUabv5U5zfc7PAvKvE6LcUtt/UMxzTl13BpfqH4XSfQdbqGqYEB
-	 laoOEhR4EdHNeTq7iapc/Nn/L7/pZWVa+KTa+QdciIavG2TtiBTxsFNkrS1vZ5Sl1y
-	 H7HlYEIP62pCn3HTEBY97lWdVW/HMmIKf5KVeIPg=
+	b=HfFo1IFWJ4wTz39fC++m1dF5OseEPyKRxBL+hXZh9ocoSsm8tbGucwaKeFaIBXKZm
+	 kOodH26be/UR0oqb8PhrqXV3XT4x1dphYVZqalhSUNtB0zO1hzakIvdH7pMo/jy9mZ
+	 wx0dDvwaMz1H6EjOTsfb7NFwSr7mLBcRDPvJX608=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 033/101] drm/i915/pin: s/dev_priv/i915/ and drop struct drm_device usage
-Date: Tue, 25 Aug 2026 15:25:11 +0200
-Message-ID: <20260825132543.309855445@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Shameer Kolothum <skolothumtho@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.1 007/101] iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown
+Date: Tue, 25 Aug 2026 15:24:45 +0200
+Message-ID: <20260825132542.288692234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -45,113 +46,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-[ Upstream commit 3823bf019d3b31ccd3e79860b7a3e20c719a1db4 ]
+commit 9ff145a25c5c8a26b06ef7cf558fb536b18bba6d upstream.
 
-Improve consistency within i915_fb_pin.c by replacing dev_priv naming
-with i915, and dropping struct drm_device usage.
+arm_smmu_impl_remove() is registered as a devres action in
+arm_smmu_impl_probe(), before arm_smmu_init_queues() allocates
+smmu->cmdq.q.base. On a devres unwind, whether a failed probe or an
+unbind, the queue is freed first and arm_smmu_impl_remove() then runs
+tegra241_cmdqv_remove_vintf(), whose VINTF deinit issues a CMD_SYNC on
+the freed memory.
 
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/3a4ac0a732a561a487e46838bde6327cff5ccb38.1775556190.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Stable-dep-of: fc6487579083 ("drm/xe: Fix DPT allocation paths.")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Observed during testing with a QEMU hack that makes the VCMDQ fail to
+enable, so the impl reset fails and probe aborts into the devres unwind:
+
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: failed to enable, STATUS=0x00000000
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: GERRORN=0x0, GERROR=0x4, CONS=0x0
+ platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: uncleared error detected, resetting
+ arm-smmu-v3 arm-smmu-v3.0.auto: failed to reset impl
+ arm-smmu-v3 arm-smmu-v3.0.auto: probe with driver arm-smmu-v3 failed with error -110
+ Unable to handle kernel paging request at virtual address ffff8000891e0098
+ ...
+ Internal error: Oops: 0000000096000047 [#1] SMP
+ ...
+ Call trace:
+  arm_smmu_cmdq_issue_cmdlist+0x320/0x6fc (P)
+  tegra241_vcmdq_hw_deinit+0x98/0x168
+  tegra241_vintf_hw_deinit+0x5c/0x1b0
+  tegra241_cmdqv_remove_vintf+0x34/0xec
+  tegra241_cmdqv_remove+0x40/0x9c
+  arm_smmu_impl_remove+0x20/0x30
+  devm_action_release+0x14/0x20
+  devres_release_all+0xa8/0x110
+  device_unbind_cleanup+0x18/0x84
+  really_probe+0x1f0/0x29c
+
+Drop the VINTF deinit from tegra241_cmdqv_remove_vintf() so the unwind no
+longer touches the freed queue. Quiesce the VINTFs earlier instead. Add a
+device_disable() impl op and run it from arm_smmu_disable_action() while
+the CMDQ is still up. That handles a live unbind. A failed reset is already
+handled because tegra241_vintf_hw_init() deinits the VINTF on its own error
+path. tegra241_cmdqv_remove_vintf() is also used by the iommufd viommu
+destroy path, so quiesce there too.
+
+Fixes: 4dc0d12474f9 ("iommu/tegra241-cmdqv: Add user-space use support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_fb_pin.c |   24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c    |    2 ++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h    |    1 +
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c |   15 +++++++++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_fb_pin.c
-+++ b/drivers/gpu/drm/i915/display/intel_fb_pin.c
-@@ -29,9 +29,8 @@ intel_fb_pin_to_dpt(const struct drm_fra
- 		    unsigned long *out_flags,
- 		    struct intel_dpt *dpt)
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -5591,6 +5591,8 @@ static void arm_smmu_device_shutdown(str
  {
--	struct drm_device *dev = fb->dev;
--	struct intel_display *display = to_intel_display(dev);
--	struct drm_i915_private *dev_priv = to_i915(dev);
-+	struct intel_display *display = to_intel_display(fb->dev);
-+	struct drm_i915_private *i915 = to_i915(fb->dev);
- 	struct drm_gem_object *_obj = intel_fb_bo(fb);
- 	struct drm_i915_gem_object *obj = to_intel_bo(_obj);
- 	struct i915_address_space *vm = i915_dpt_to_vm(dpt);
-@@ -43,7 +42,7 @@ intel_fb_pin_to_dpt(const struct drm_fra
- 	 * We are not syncing against the binding (and potential migrations)
- 	 * below, so this vm must never be async.
- 	 */
--	if (drm_WARN_ON(&dev_priv->drm, vm->bind_async_flags))
-+	if (drm_WARN_ON(&i915->drm, vm->bind_async_flags))
- 		return ERR_PTR(-EINVAL);
+ 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
  
- 	if (WARN_ON(!i915_gem_object_is_framebuffer(obj)))
-@@ -56,7 +55,7 @@ intel_fb_pin_to_dpt(const struct drm_fra
- 		if (ret)
- 			continue;
++	if (smmu->impl_ops && smmu->impl_ops->device_disable)
++		smmu->impl_ops->device_disable(smmu);
+ 	arm_smmu_device_disable(smmu);
+ }
  
--		if (HAS_LMEM(dev_priv)) {
-+		if (HAS_LMEM(i915)) {
- 			unsigned int flags = obj->flags;
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -804,6 +804,7 @@ struct arm_smmu_strtab_cfg {
  
- 			/*
-@@ -118,9 +117,8 @@ intel_fb_pin_to_ggtt(const struct drm_fr
- 		     bool uses_fence,
- 		     unsigned long *out_flags)
- {
--	struct drm_device *dev = fb->dev;
--	struct intel_display *display = to_intel_display(dev);
--	struct drm_i915_private *dev_priv = to_i915(dev);
-+	struct intel_display *display = to_intel_display(fb->dev);
-+	struct drm_i915_private *i915 = to_i915(fb->dev);
- 	struct drm_gem_object *_obj = intel_fb_bo(fb);
- 	struct drm_i915_gem_object *obj = to_intel_bo(_obj);
- 	struct ref_tracker *wakeref;
-@@ -129,10 +127,10 @@ intel_fb_pin_to_ggtt(const struct drm_fr
- 	unsigned int pinctl;
- 	int ret;
+ struct arm_smmu_impl_ops {
+ 	int (*device_reset)(struct arm_smmu_device *smmu);
++	void (*device_disable)(struct arm_smmu_device *smmu);
+ 	void (*device_remove)(struct arm_smmu_device *smmu);
+ 	int (*init_structures)(struct arm_smmu_device *smmu);
+ 	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -761,8 +761,6 @@ static void tegra241_cmdqv_remove_vintf(
+ 	struct tegra241_vintf *vintf = cmdqv->vintfs[idx];
+ 	u16 lidx;
  
--	if (drm_WARN_ON(dev, !i915_gem_object_is_framebuffer(obj)))
-+	if (drm_WARN_ON(&i915->drm, !i915_gem_object_is_framebuffer(obj)))
- 		return ERR_PTR(-EINVAL);
- 
--	if (drm_WARN_ON(dev, alignment && !is_power_of_2(alignment)))
-+	if (drm_WARN_ON(&i915->drm, alignment && !is_power_of_2(alignment)))
- 		return ERR_PTR(-EINVAL);
- 
- 	/*
-@@ -163,7 +161,7 @@ retry:
- 	ret = i915_gem_object_lock(obj, &ww);
- 	if (!ret && phys_alignment)
- 		ret = i915_gem_object_attach_phys(obj, phys_alignment);
--	else if (!ret && HAS_LMEM(dev_priv))
-+	else if (!ret && HAS_LMEM(i915))
- 		ret = i915_gem_object_migrate(obj, &ww, INTEL_REGION_LMEM_0);
- 	if (!ret)
- 		ret = i915_gem_object_pin_pages(obj);
-@@ -264,7 +262,7 @@ intel_plane_fb_vtd_guard(const struct in
- int intel_plane_pin_fb(struct intel_plane_state *plane_state,
- 		       const struct intel_plane_state *old_plane_state)
- {
--	struct intel_display *display = to_intel_display(plane_state);
-+	struct drm_i915_private *i915 = to_i915(plane_state->uapi.plane->dev);
- 	struct intel_plane *plane = to_intel_plane(plane_state->uapi.plane);
- 	const struct intel_framebuffer *fb =
- 		to_intel_framebuffer(plane_state->hw.fb);
-@@ -308,7 +306,7 @@ int intel_plane_pin_fb(struct intel_plan
- 		 * The DPT object contains only one vma, and there is no VT-d
- 		 * guard, so the VMA's offset within the DPT is always 0.
- 		 */
--		drm_WARN_ON(display->drm, i915_dpt_offset(plane_state->dpt_vma));
-+		drm_WARN_ON(&i915->drm, i915_dpt_offset(plane_state->dpt_vma));
+-	tegra241_vintf_hw_deinit(vintf);
+-
+ 	/* Remove LVCMDQ resources */
+ 	for (lidx = 0; lidx < vintf->cmdqv->num_lvcmdqs_per_vintf; lidx++)
+ 		if (vintf->lvcmdqs[lidx])
+@@ -779,6 +777,17 @@ static void tegra241_cmdqv_remove_vintf(
  	}
+ }
  
- 	/*
++static void tegra241_cmdqv_hw_disable(struct arm_smmu_device *smmu)
++{
++	struct tegra241_cmdqv *cmdqv =
++		container_of(smmu, struct tegra241_cmdqv, smmu);
++	u16 idx;
++
++	for (idx = 0; idx < cmdqv->num_vintfs; idx++)
++		if (cmdqv->vintfs[idx])
++			tegra241_vintf_hw_deinit(cmdqv->vintfs[idx]);
++}
++
+ static void tegra241_cmdqv_remove(struct arm_smmu_device *smmu)
+ {
+ 	struct tegra241_cmdqv *cmdqv =
+@@ -844,6 +853,7 @@ static struct arm_smmu_impl_ops tegra241
+ 	/* For in-kernel use */
+ 	.get_secondary_cmdq = tegra241_cmdqv_get_cmdq,
+ 	.device_reset = tegra241_cmdqv_hw_reset,
++	.device_disable = tegra241_cmdqv_hw_disable,
+ 	.device_remove = tegra241_cmdqv_remove,
+ 	/* For user-space use */
+ 	.hw_info = tegra241_cmdqv_hw_info,
+@@ -1152,6 +1162,7 @@ static void tegra241_cmdqv_destroy_vintf
+ 	if (vintf->mmap_offset)
+ 		iommufd_viommu_destroy_mmap(&vintf->vsmmu.core,
+ 					    vintf->mmap_offset);
++	tegra241_vintf_hw_deinit(vintf);
+ 	tegra241_cmdqv_remove_vintf(vintf->cmdqv, vintf->idx);
+ }
+ 
 
 
