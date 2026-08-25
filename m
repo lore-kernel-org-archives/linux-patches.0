@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF1047799D;
-	Tue, 25 Aug 2026 13:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A177E47D450;
+	Tue, 25 Aug 2026 13:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664631; cv=none; b=o6n3QTiLOv09AEo/vcNEIPrIg1B5kiog9I+QRlQyEzSp5nI9eQX9sZE/VZbtKHlK++xHoLJxDiZgLHg4m2vyoxP5SwkAFi/YD7DbW+WZLaeJg+gZEedBW0LsEDwnC/Mw+suNRMIFWwcMDw/Eh3GJtKhkuOXIYcOTVnJe95n/y1M=
+	t=1787664634; cv=none; b=RBaC/lOObzk4yAxvKH61NRnslX+a7DkrLfKWtmTxLAZDjNmLPxQHwNemhx6hU4fNVVC0NsM779H8ijbLDixFwusFcQB/Exiw5ndrLC++UngR1k3FvwT9l++tqzfwCYPc+8KTu/JKcgJ/sPZl8E8wlxK7lbPXs/s+9h1MR/27ll8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664631; c=relaxed/simple;
-	bh=bZEr/3UukigRp6LGte2Xy2R261VxPjwEh9oiXAx4VMc=;
+	s=arc-20240116; t=1787664634; c=relaxed/simple;
+	bh=xCygUXOyHIbies/If78csD4LfcZd0oANwFouDPGZ9nQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmno5V15/fN/wSBdUrgUmLeiQdex6DkONeZihFO+oZ4+f/v7y99KmsYjRpAwU8XEZJ6TUJI2wFmcDBPv5WDmKbuhDF7eJlSl7jwWccNeX8zkinqIcSh3fYij6nIq7QqYi4S5/1Jwpmv2fGjxa84quPXBiT6Ybwt+w6owiTXFyq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yq9i84Oc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gQ5Wod6lOf7jmNsCNAKSxOiKl7yrCVhRM7jhoGB93irBPEdyJhHmZRo2UYXR/R/SDCLedLtMe6dBHaiklDVxRf3yW3AXbJ0ZXNLlZWhVg9n+c2VoJw4yyhD1aKG8DKokOQXJfhyZ+3JU3u9pPTdZ0zVkkNg3lQYj71sGfUnBaec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxLsTjNO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yq9i84Oc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13611F000E9;
-	Tue, 25 Aug 2026 13:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxLsTjNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9EB1F000E9;
+	Tue, 25 Aug 2026 13:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664630;
-	bh=67euuwzP37wrO1e0Z2dtlFbf5rD4jRx6C/YVCVyiB3U=;
+	s=korg; t=1787664633;
+	bh=dq5mwonnM/c888TGgrXUIN7hyqJ1FOCOp0AfLkkn09s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yq9i84OcC8WVomx76C3RFQFK+yqsjSXb1IiiASAPBX26pg7BR4cEJRx6SBc7KS6Oh
-	 Vd0Co5hfZ+AenD2ih62sHYfPNcB8GB6HEscO6ZzgXmCJIoYOBakGSWiIq8Bmf/bH0N
-	 IbPC+4/xRxv3DLH5SvwFhrcFwlsJpbFpeN9Jmi64=
+	b=oxLsTjNOWfU1VN1EVYZh12VNM3tw6eUPaFVdbh7BjVFk+ef1PLweIAotAzPsZyvzX
+	 TDIFXCEi/QMPeRfoid9KVFKDZeephYjL4k7HfXlkmO9I0RF8qyqo4K4t01Czt4fiSW
+	 hA6VcXhpqPYaD+XS6SG5JQtKEdRJVoSIT+yF1/LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+59178abfeb0ea3f0ab20@syzkaller.appspotmail.com,
-	Christoph Hellwig <hch@lst.de>,
-	Yun Zhou <yun.zhou@windriver.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 33/82] xfs: restore nofs context unconditionally in xfs_trans_roll
-Date: Tue, 25 Aug 2026 15:25:20 +0200
-Message-ID: <20260825132542.803785573@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 7.2 34/82] nfc: digital: clamp SENSF_RES length to the destination buffer
+Date: Tue, 25 Aug 2026 15:25:21 +0200
+Message-ID: <20260825132542.842087591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -53,69 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 0241ea5fb0fe86d2a673163b2f5815111aadc7f7 upstream.
+commit 344a56d7c8e0f3cbaff0bcb1bcd95a1a1db24b16 upstream.
 
-When __xfs_trans_commit() fails in xfs_trans_roll(), the NOFS context
-is cleared but only restored in the success path.  This leaves the
-error path without nofs protection, causing a circular lock dependency
-between xfs_nondir_ilock_class and fs_reclaim:
+digital_in_recv_sensf_res() memcpy()s resp->len bytes from a remote
+NFC-F device response into the NFC_SENSF_RES_MAXSIZE-byte target.sensf_res
+field without an upper-bound check. A nearby malicious NFC-F device can
+send an oversized SENSF_RES response to overflow the stack-local struct
+nfc_target.
 
-       CPU0                    CPU1
-       ----                    ----
-  lock(&xfs_nondir_ilock_class);
-                               lock(fs_reclaim);
-                               lock(&xfs_nondir_ilock_class);
-  lock(fs_reclaim);
+Clamp resp->len to NFC_SENSF_RES_MAXSIZE before the copy.
 
-Fix this by moving xfs_trans_set_context() before the error check so
-that nofs context is always restored on the new transaction.
+Found by 0sec automated security-research tooling (https://0sec.ai).
 
-Reported-by: syzbot+59178abfeb0ea3f0ab20@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=59178abfeb0ea3f0ab20
-Fixes: a1ca658d649a ("xfs: fix incorrect context handling in xfs_trans_roll")
+Fixes: 8c0695e4998d ("NFC Digital: Add NFC-F technology support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260603141355.68156-1-doruk@0sec.ai
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_trans.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/nfc/digital_technology.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/xfs_trans.c
-+++ b/fs/xfs/xfs_trans.c
-@@ -1029,6 +1029,15 @@ xfs_trans_roll(
- 	 * duplicate transaction that gets returned.
- 	 */
- 	error = __xfs_trans_commit(tp, true);
-+
-+	tp = *tpp;
-+	/*
-+	 * __xfs_trans_commit cleared the NOFS flag by calling into
-+	 * xfs_trans_free.  Set it again here before doing memory
-+	 * allocations.
-+	 */
-+	xfs_trans_set_context(tp);
-+
- 	if (error)
- 		return error;
+--- a/net/nfc/digital_technology.c
++++ b/net/nfc/digital_technology.c
+@@ -778,6 +778,8 @@ static void digital_in_recv_sensf_res(st
  
-@@ -1040,13 +1049,6 @@ xfs_trans_roll(
- 	 * either nothing be locked across this call, or that anything that is
- 	 * locked be logged in the prior and the next transactions.
- 	 */
--	tp = *tpp;
--	/*
--	 * __xfs_trans_commit cleared the NOFS flag by calling into
--	 * xfs_trans_free.  Set it again here before doing memory
--	 * allocations.
--	 */
--	xfs_trans_set_context(tp);
- 	error = xfs_log_regrant(tp->t_mountp, tp->t_ticket);
- 	if (error)
- 		return error;
+ 	sensf_res = (struct digital_sensf_res *)resp->data;
+ 
++	resp->len = min_t(unsigned int, resp->len, NFC_SENSF_RES_MAXSIZE);
++
+ 	memcpy(target.sensf_res, sensf_res, resp->len);
+ 	target.sensf_res_len = resp->len;
+ 
 
 
