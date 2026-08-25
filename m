@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D7A48094F;
-	Tue, 25 Aug 2026 13:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63318481257;
+	Tue, 25 Aug 2026 13:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664962; cv=none; b=siOnQ+hYI2AAXHyMnfAVoFrcoZ24t3mU8DXDf0rY+QMlUQ0orF6Rj9kV+d1npLi0gIGKh9nMpYihEhXRYFYtbC2H+bmoUs0FsCu1lYGldteBeD4L+KnXAgJt9RZgreskttSfoaeIGeXYlS8qCO868ez49gNdu7byI3/x26a4P70=
+	t=1787664965; cv=none; b=GuUlgieC98WWJC0rM8xG3TMI3wymLq3P1/C0sw4Mbwyq4PntI4j7Roj1qR27m+0UG4y1tylOxeGuIzJkCP1bDg9iJKSw7bQ6cXjnelP+rYkgT7ypq9yaPiFOHH7oli05GEEmzS4gznUI28CK1blCZtU+Kc8zZpnnk7yekadiN3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664962; c=relaxed/simple;
-	bh=OcX+J5l1uEXFKbtBiT5xVhyL4xSHiWnh1xLaXY1uKdI=;
+	s=arc-20240116; t=1787664965; c=relaxed/simple;
+	bh=EIeRv8WSBo7snTKqZ8QMLOzGvHMSo1eKDDV4oy3ljQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DI3gh6zL2lzgVyIi319ryqRGI/ykXmka9g7/q9pCZLrp28PHJrmAmaKHe4tpRla2M7qnlt9d+StU/MTUlN0D1jCG/1jP3zyVsWAISS4sgna3sE68JYxCTlifJAyDRKxfAS5xmBLjcv9Iz/pQ4zKzC7pSlui1B/4n3tMWjoW6CRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8Kh9TEO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EJkhSY3TTYAdbEkw583nysWLyPec79b3RrxdB4LVbQTQFgy9wPgDFu6R9kl4/dVXDV8o+x93YYTYTiaNDwH5+KD6ZrJlsk4VbeKRzmGGublNV/W/4Tu5voTU6eN06sfbGufEGNyXC1klx42MvcCwjnT0gaDxDBImaz2qqCIoI2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3L0DKva; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8Kh9TEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD09F1F000E9;
-	Tue, 25 Aug 2026 13:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3L0DKva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90A31F00A3A;
+	Tue, 25 Aug 2026 13:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664960;
-	bh=Gun2T5sU9erIRQ9JxXp8RnR9fAPcCBUzKKTKi/d3GaY=;
+	s=korg; t=1787664964;
+	bh=E/Pu9Lh9JECAe5g8gLAl9SVuYMlztlgej5WxunAzSFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y8Kh9TEOnG0sAeq6yFs3gSZZpfJxi9Cdeh7UCBCwBmw5rhpnxgUyGeGltUeflFCGH
-	 kLDU/aTqvHR/gkEpo7f3jbbIJ3rdrb/REy09q76TdhFzITWvGxXpCqcYzuB8S5hCF6
-	 JnzWB/ix+xJ0TWzr8f71T130EIwhC1qgE9wA+6VA=
+	b=F3L0DKvaHJuBEcgV0GMxgpag2b6CqmhH7U1NnN2AuqA+K2Zhwoa4GUQp9dCMERrVE
+	 tk4CK3mJIYdRhGroEryQDK4UYB0uDc4tW4RHX2UC5mWlhq3orZzqrcWFKiwFsEkNtf
+	 7+tb5A7+1neezM9/KTON6OSGkj74mG+p5x80AVVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 064/101] mptcp: pm: uniform announced addresses helpers
-Date: Tue, 25 Aug 2026 15:25:42 +0200
-Message-ID: <20260825132544.509649326@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 7.1 047/101] nfc: nci: fix uninit-value in the RF discover/activated NTF handlers
+Date: Tue, 25 Aug 2026 15:25:25 +0200
+Message-ID: <20260825132543.859762979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -52,297 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Samuel Page <sam@bynar.io>
 
-[ Upstream commit 7d4dacc8ccca8e40fcb5f2ece9ea3e502da1bd3f ]
+commit 8cbe06c1e699c0a165dae5093a2550e65f914818 upstream.
 
-Similar to the previous commit, only using the 'add' or 'anno' prefixes
-is confusing -- generally associated to the action of adding something,
-or the Latin name for "year" -- and lack of uniformity.
+nci_rf_discover_ntf_packet() and nci_rf_intf_activated_ntf_packet() each
+parse a notification into an on-stack struct (nci_rf_discover_ntf /
+nci_rf_intf_activated_ntf) that is not initialised. The RF
+technology-specific parameters are only extracted when
+rf_tech_specific_params_len is non-zero, so a notification that reports a
+zero length leaves the rf_tech_specific_params union uninitialised - and
+both handlers then pass it to nci_add_new_protocol(), which reads it:
 
-This has been causing issues in the past, e.g. del_add_timer seemed to
-suggest the goal is to delete a previously added timer.
+ - discover:  nci_add_new_target() -> nci_add_new_protocol();
+ - activated: nci_target_auto_activated() -> nci_add_new_protocol().
 
-Instead, use the mptcp_pm_announced_ prefix.
+nci_add_new_protocol() uses nfca_poll->nfcid1_len as both a branch
+condition and a memcpy() length and copies nfcid1/sens_res/sel_res into
+ndev->targets, which is later exposed to user space via NFC_CMD_GET_TARGET.
 
-While at it, slightly improves some helpers:
+  BUG: KMSAN: uninit-value in nci_add_new_protocol+0x624/0x6c0
+   nci_add_new_protocol+0x624/0x6c0
+   nci_ntf_packet+0x25b2/0x3c30
+   nci_rx_work+0x318/0x5d0
+   process_scheduled_works+0x84b/0x17a0
+   worker_thread+0xc10/0x11b0
+   kthread+0x376/0x500
+  Local variable ntf.i created at:
+   nci_ntf_packet+0xbc2/0x3c30
 
-- mptcp_lookup_anno_list_by_saddr: no need to specify what is used to do
-  the lookup: mptcp_pm_announced_lookup.
+Zero-initialise both on-stack notifications so the union reads back as
+zero when no technology-specific parameters are present.
 
-- mptcp_pm_sport_in_anno_list: it doesn't just compare the port, but the
-  whole address linked to the sublow: mptcp_pm_announced_has_ssk.
-
-- mptcp_pm_alloc_anno_list: it allocates one item of the list, not a
-  whole list: mptcp_pm_announced_alloc.
-
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260605-net-next-mptcp-add-addr6-port-ts-v2-11-758e7ca73f4d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: efc33b5102ff ("mptcp: pm: fix memory leak from alloc-during-teardown race")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
+Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
+Link: https://lore.kernel.org/netdev/20260623172109.1105965-2-horms@kernel.org/
+Cc: stable@vger.kernel.org
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Link: https://patch.msgid.link/20260626090301.2139500-1-sam@bynar.io
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c      |    2 +-
- net/mptcp/pm.c           |   35 +++++++++++++++++------------------
- net/mptcp/pm_kernel.c    |   10 +++++-----
- net/mptcp/pm_userspace.c |    4 ++--
- net/mptcp/protocol.h     |   12 ++++++------
- net/mptcp/subflow.c      |    4 ++--
- 6 files changed, 33 insertions(+), 34 deletions(-)
+ net/nfc/nci/ntf.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -1261,7 +1261,7 @@ bool mptcp_incoming_options(struct sock
- 				MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_ADDADDR);
- 			} else {
- 				mptcp_pm_add_addr_echoed(msk, &mp_opt.addr);
--				mptcp_pm_del_add_timer(msk, &mp_opt.addr, true);
-+				mptcp_pm_announced_del_timer(msk, &mp_opt.addr, true);
- 				MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_ECHOADD);
- 			}
- 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -134,8 +134,8 @@ bool mptcp_lookup_subflow_by_saddr(const
- }
- 
- static struct mptcp_pm_add_addr *
--mptcp_lookup_anno_list_by_saddr(const struct mptcp_sock *msk,
--				const struct mptcp_addr_info *addr)
-+mptcp_pm_announced_lookup(const struct mptcp_sock *msk,
-+			  const struct mptcp_addr_info *addr)
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -440,7 +440,7 @@ void nci_clear_target_list(struct nci_de
+ static int nci_rf_discover_ntf_packet(struct nci_dev *ndev,
+ 				      const struct sk_buff *skb)
  {
- 	struct mptcp_pm_add_addr *entry;
+-	struct nci_rf_discover_ntf ntf;
++	struct nci_rf_discover_ntf ntf = {};
+ 	const __u8 *data;
+ 	bool add_target = true;
  
-@@ -149,26 +149,26 @@ mptcp_lookup_anno_list_by_saddr(const st
- 	return NULL;
- }
- 
--bool mptcp_remove_anno_list_by_saddr(struct mptcp_sock *msk,
--				     const struct mptcp_addr_info *addr)
-+bool mptcp_pm_announced_remove(struct mptcp_sock *msk,
-+			       const struct mptcp_addr_info *addr)
+@@ -710,7 +710,7 @@ static int nci_rf_intf_activated_ntf_pac
+ 					    const struct sk_buff *skb)
  {
- 	struct mptcp_pm_add_addr *entry;
- 	bool ret;
+ 	struct nci_conn_info *conn_info;
+-	struct nci_rf_intf_activated_ntf ntf;
++	struct nci_rf_intf_activated_ntf ntf = {};
+ 	const __u8 *data;
+ 	int err = NCI_STATUS_OK;
  
--	entry = mptcp_pm_del_add_timer(msk, addr, false);
-+	entry = mptcp_pm_announced_del_timer(msk, addr, false);
- 	ret = entry;
- 	kfree_rcu(entry, rcu);
- 
- 	return ret;
- }
- 
--bool mptcp_pm_sport_in_anno_list(struct mptcp_sock *msk, const struct sock *sk)
-+bool mptcp_pm_announced_has_ssk(struct mptcp_sock *msk, const struct sock *ssk)
- {
- 	struct mptcp_pm_add_addr *entry;
- 	struct mptcp_addr_info saddr;
- 	bool ret = false;
- 
--	mptcp_local_address((struct sock_common *)sk, &saddr);
-+	mptcp_local_address((struct sock_common *)ssk, &saddr);
- 
- 	spin_lock_bh(&msk->pm.lock);
- 	list_for_each_entry(entry, &msk->pm.anno_list, list) {
-@@ -365,7 +365,7 @@ static void mptcp_pm_add_timer(struct ti
- 
- 	spin_lock_bh(&msk->pm.lock);
- 
--	/* The cancel path (mptcp_pm_del_add_timer()) can race with this
-+	/* The cancel path (mptcp_pm_announced_del_timer()) can race with this
- 	 * callback. Once cancel updates retrans_times to MAX, suppress further
- 	 * retransmissions here. If this callback acquires pm.lock first, one
- 	 * final transmit attempt is still possible.
-@@ -400,8 +400,8 @@ out:
- }
- 
- struct mptcp_pm_add_addr *
--mptcp_pm_del_add_timer(struct mptcp_sock *msk,
--		       const struct mptcp_addr_info *addr, bool check_id)
-+mptcp_pm_announced_del_timer(struct mptcp_sock *msk,
-+			     const struct mptcp_addr_info *addr, bool check_id)
- {
- 	struct sock *sk = (struct sock *)msk;
- 	struct mptcp_pm_add_addr *entry;
-@@ -410,7 +410,7 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- 	rcu_read_lock();
- 
- 	spin_lock_bh(&msk->pm.lock);
--	entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
-+	entry = mptcp_pm_announced_lookup(msk, addr);
- 	if (entry && (!check_id || entry->addr.id == addr->id)) {
- 		entry->retrans_times = ADD_ADDR_RETRANS_MAX;
- 		stop_timer = true;
-@@ -433,7 +433,7 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- 	return entry;
- }
- 
--bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
-+bool mptcp_pm_announced_alloc(struct mptcp_sock *msk,
- 			      const struct mptcp_addr_info *addr)
- {
- 	struct mptcp_pm_add_addr *add_entry = NULL;
-@@ -442,8 +442,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 
- 	lockdep_assert_held(&msk->pm.lock);
- 
--	add_entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
--
-+	add_entry = mptcp_pm_announced_lookup(msk, addr);
- 	if (add_entry) {
- 		if (WARN_ON_ONCE(mptcp_pm_is_kernel(msk)))
- 			return false;
-@@ -471,7 +470,7 @@ reset_timer:
- 	return true;
- }
- 
--static void mptcp_pm_free_anno_list(struct mptcp_sock *msk)
-+static void mptcp_pm_free_announced_list(struct mptcp_sock *msk)
- {
- 	struct mptcp_pm_add_addr *entry, *tmp;
- 	struct sock *sk = (struct sock *)msk;
-@@ -740,7 +739,7 @@ void mptcp_pm_add_addr_echoed(struct mpt
- 
- 	spin_lock_bh(&pm->lock);
- 
--	if (mptcp_lookup_anno_list_by_saddr(msk, addr) && READ_ONCE(pm->work_pending))
-+	if (mptcp_pm_announced_lookup(msk, addr) && READ_ONCE(pm->work_pending))
- 		mptcp_pm_schedule_work(msk, MPTCP_PM_SUBFLOW_ESTABLISHED);
- 
- 	spin_unlock_bh(&pm->lock);
-@@ -949,7 +948,7 @@ out_unlock:
- 	 * let the PM state machine progress.
- 	 */
- 	if (skip_add_addr) {
--		mptcp_pm_del_add_timer(msk, addr, true);
-+		mptcp_pm_announced_del_timer(msk, addr, true);
- 		mptcp_pm_subflow_established(msk);
- 	}
- 	return ret;
-@@ -1104,7 +1103,7 @@ void mptcp_pm_worker(struct mptcp_sock *
- 
- void mptcp_pm_destroy(struct mptcp_sock *msk)
- {
--	mptcp_pm_free_anno_list(msk);
-+	mptcp_pm_free_announced_list(msk);
- 
- 	if (mptcp_pm_is_userspace(msk))
- 		mptcp_userspace_pm_free_local_addr_list(msk);
---- a/net/mptcp/pm_kernel.c
-+++ b/net/mptcp/pm_kernel.c
-@@ -370,7 +370,7 @@ static void mptcp_pm_create_subflow_or_s
- 		/* If the alloc fails, we are on memory pressure, not worth
- 		 * continuing, and trying to create subflows.
- 		 */
--		if (!mptcp_pm_alloc_anno_list(msk, &local.addr))
-+		if (!mptcp_pm_announced_alloc(msk, &local.addr))
- 			return;
- 
- 		__clear_bit(endp_id, msk->pm.id_avail_bitmap);
-@@ -1042,7 +1042,7 @@ out_free:
- 	return ret;
- }
- 
--static void mptcp_pm_remove_anno_addr(struct mptcp_sock *msk,
-+static void mptcp_pm_remove_announced(struct mptcp_sock *msk,
- 				      const struct mptcp_addr_info *addr,
- 				      bool force)
- {
-@@ -1051,7 +1051,7 @@ static void mptcp_pm_remove_anno_addr(st
- 
- 	list.ids[list.nr++] = mptcp_endp_get_local_id(msk, addr);
- 
--	announced = mptcp_remove_anno_list_by_saddr(msk, addr);
-+	announced = mptcp_pm_announced_remove(msk, addr);
- 	if (announced || force) {
- 		spin_lock_bh(&msk->pm.lock);
- 		if (announced)
-@@ -1088,7 +1088,7 @@ static int mptcp_nl_remove_subflow_and_s
- 
- 		lock_sock(sk);
- 		remove_subflow = mptcp_lookup_subflow_by_saddr(&msk->conn_list, addr);
--		mptcp_pm_remove_anno_addr(msk, addr, remove_subflow &&
-+		mptcp_pm_remove_announced(msk, addr, remove_subflow &&
- 					  !(entry->flags & MPTCP_PM_ADDR_FLAG_IMPLICIT));
- 
- 		list.ids[0] = mptcp_endp_get_local_id(msk, addr);
-@@ -1223,7 +1223,7 @@ static void mptcp_pm_flush_addrs_and_sub
- 			slist.ids[slist.nr++] = mptcp_endp_get_local_id(msk, &entry->addr);
- 
- 		if (alist.nr < MPTCP_RM_IDS_MAX &&
--		    mptcp_remove_anno_list_by_saddr(msk, &entry->addr))
-+		    mptcp_pm_announced_remove(msk, &entry->addr))
- 			alist.ids[alist.nr++] = mptcp_endp_get_local_id(msk, &entry->addr);
- 	}
- 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -231,7 +231,7 @@ int mptcp_pm_nl_announce_doit(struct sk_
- 	lock_sock(sk);
- 	spin_lock_bh(&msk->pm.lock);
- 
--	if (mptcp_pm_alloc_anno_list(msk, &addr_val.addr)) {
-+	if (mptcp_pm_announced_alloc(msk, &addr_val.addr)) {
- 		msk->pm.add_addr_signaled++;
- 		mptcp_pm_announce_addr(msk, &addr_val.addr, false);
- 		mptcp_pm_addr_send_ack(msk);
-@@ -284,7 +284,7 @@ void mptcp_pm_remove_addr_entry(struct m
- 	int anno_nr = 0;
- 
- 	/* only delete if either announced or matching a subflow */
--	if (mptcp_remove_anno_list_by_saddr(msk, &entry->addr))
-+	if (mptcp_pm_announced_remove(msk, &entry->addr))
- 		anno_nr++;
- 	else if (!mptcp_lookup_subflow_by_saddr(&msk->conn_list, &entry->addr))
- 		return;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1130,16 +1130,16 @@ int mptcp_pm_mp_prio_send_ack(struct mpt
- 			      struct mptcp_addr_info *addr,
- 			      struct mptcp_addr_info *rem,
- 			      u8 bkup);
--bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
-+bool mptcp_pm_announced_alloc(struct mptcp_sock *msk,
- 			      const struct mptcp_addr_info *addr);
--bool mptcp_pm_sport_in_anno_list(struct mptcp_sock *msk, const struct sock *sk);
- struct mptcp_pm_add_addr *
--mptcp_pm_del_add_timer(struct mptcp_sock *msk,
--		       const struct mptcp_addr_info *addr, bool check_id);
-+mptcp_pm_announced_del_timer(struct mptcp_sock *msk,
-+			     const struct mptcp_addr_info *addr, bool check_id);
-+bool mptcp_pm_announced_remove(struct mptcp_sock *msk,
-+			       const struct mptcp_addr_info *addr);
-+bool mptcp_pm_announced_has_ssk(struct mptcp_sock *msk, const struct sock *ssk);
- bool mptcp_lookup_subflow_by_saddr(const struct list_head *list,
- 				   const struct mptcp_addr_info *saddr);
--bool mptcp_remove_anno_list_by_saddr(struct mptcp_sock *msk,
--				     const struct mptcp_addr_info *addr);
- int mptcp_pm_nl_set_flags(struct mptcp_pm_addr_entry *local,
- 			  struct genl_info *info);
- int mptcp_userspace_pm_set_flags(struct mptcp_pm_addr_entry *local,
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -235,7 +235,7 @@ again:
- 			pr_debug("syn inet_sport=%d %d\n",
- 				 ntohs(inet_sk(sk_listener)->inet_sport),
- 				 ntohs(inet_sk((struct sock *)subflow_req->msk)->inet_sport));
--			if (!mptcp_pm_sport_in_anno_list(subflow_req->msk, sk_listener)) {
-+			if (!mptcp_pm_announced_has_ssk(subflow_req->msk, sk_listener)) {
- 				SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MISMATCHPORTSYNRX);
- 				subflow_add_reset_reason(skb, MPTCP_RST_EPROHIBIT);
- 				return -EPERM;
-@@ -926,7 +926,7 @@ create_child:
- 				pr_debug("ack inet_sport=%d %d\n",
- 					 ntohs(inet_sk(sk)->inet_sport),
- 					 ntohs(inet_sk((struct sock *)owner)->inet_sport));
--				if (!mptcp_pm_sport_in_anno_list(owner, sk)) {
-+				if (!mptcp_pm_announced_has_ssk(owner, sk)) {
- 					SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MISMATCHPORTACKRX);
- 					subflow_add_reset_reason(skb, MPTCP_RST_EPROHIBIT);
- 					goto dispose_child;
 
 
