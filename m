@@ -1,411 +1,539 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04FC481233;
-	Tue, 25 Aug 2026 13:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9225E3749F4;
+	Tue, 25 Aug 2026 13:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664806; cv=none; b=cc95GwetpNqJ5uDohfNaY7sTeeEzWpq6n3S7Va0VTPhDOLLGVGge73coFj8QeomM0wAXZ25idmGOAOzpHRXv6MTZ4Cj1ZlAS68P+ztvt3WElsoXwDU3CCAoMT1OabR1x0uZppJCohbZG21YTNbnErftYkZXoF0V9OOd4LIgQ2Ng=
+	t=1787664810; cv=none; b=Tk17gvO3uEwHhbT/nKWtx762Hy/6Dkh6apcuAQ4ZYsWWlXt7VnzHY1gpRpJmnEUC7ToaZm8bgavB/U59ED5AlnOlcKYnY3jZhOwX2n2V1XiO8L3CbTmNmQEX9J87qEdMsiUXB0beESFNqdBtdU/4zNqsL6SR7Cj1rGrO67miyhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664806; c=relaxed/simple;
-	bh=pjaLOT2mPJoVISfqzvaudA8mwUL/YXsut/ndahvmyCc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGPGFLntWB2iYoWskYc/rX2kO5PC75LW6SzQPvXHeDgI+XOAZXVIv9pIO/1dlAblG7a6vjFFVaLmhMJYI9voK0Cp+F0BWKF7cM2/Ng4k/2YAdKAoMNlNKunZ3H/d9CehLQicaInMW6iCsz2TXAS6v2b0gvobnhtdH56tBsIvyUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFO3TNTe; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787664810; c=relaxed/simple;
+	bh=3NIhFkK14n+D3TXYm2KGdLJrrzMGzE1gl6fOiGI0f+I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Igr6xcp52hbgjE2uuyjLAJNnHj9A6H+pKmErwLClLiy6+VZnG9kG8LutrLZFpS7b5kmyPAXe2WOCDlbxXIdfuIctF0CibACsMIrZ2GQgcC93aPEGzQ5PszOASmovE0wtTkCFvsUcvqo8QVLx/FVp9UdzOAryGB+fFWNMGCaiEcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuJGscjJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFO3TNTe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F1D1F000E9;
-	Tue, 25 Aug 2026 13:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuJGscjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71DB1F000E9;
+	Tue, 25 Aug 2026 13:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664804;
-	bh=FV8Ke7WMn10hMA+TXHDkSjqM3zq0eVEIm6ySKsdsNnU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JFO3TNTevj4NoGVFU/zVrWDuq51g93owG8m6CNMJn5HQY0VytM083T+1EmEHG7eLM
-	 YmvAbIFP6ZJkuCVZ0OvMyLj0Cc09Ynl0JS6ThnW+qpbFCN36NankJ8ovajO/L4B+vI
-	 xbdKjYtSmFxJfkAs37aLleyn/6wxy1xFGx20/rP8=
+	s=korg; t=1787664807;
+	bh=tqFPLYO7f65iyYoPGEOBZFNyK3dKYsVQWxU+aefEw7I=;
+	h=From:To:Cc:Subject:Date;
+	b=yuJGscjJW3AuZUvvYLfRiZ3Vw77rRuJp4VOGGG+TbDO3v0AR8pjZH/dlrHnjH+qC5
+	 K7/H9VqAQc9I7zm26ISOF7dY+mk0N7IdYy+vDXx0h7fHNkWBy8iXYzggbuGtQ3cOii
+	 enUwuJI/HwAFeo93aHclmBqZKX2DeDgXUM9CjQIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 003/101] xfs: add a xchk_ip_set_corrupt helper
-Date: Tue, 25 Aug 2026 15:24:41 +0200
-Message-ID: <20260825132542.136305032@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 7.1 000/101] 7.1.11-rc1 review
+Date: Tue, 25 Aug 2026 15:24:38 +0200
+Message-ID: <20260825132541.986300899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
-References: <20260825132541.986300899@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.11-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-7.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 7.1.11-rc1
+X-KernelTest-Deadline: 2026-08-27T13:25+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 7.1.11 release.
+There are 101 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Thu, 27 Aug 2026 13:25:02 +0000.
+Anything received after that time might be too late.
 
-From: Christoph Hellwig <hch@lst.de>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.11-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
+and the diffstat can be found below.
 
-[ Upstream commit aa7cfdb6e16b474328c79736f9b9dad09addc81c ]
+thanks,
 
-Add a smaller wrapper to set a inode corrupted by the xfs_inode
-pointer.
+greg k-h
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Stable-dep-of: 8ed78104722b ("xfs: rtsummary scrub should treat rtbitmap corruption errors as an xref error")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/xfs/scrub/bmap.c      |    8 ++++----
- fs/xfs/scrub/common.c    |   10 +++++-----
- fs/xfs/scrub/common.h    |    2 ++
- fs/xfs/scrub/dir.c       |    2 +-
- fs/xfs/scrub/dirtree.c   |    4 ++--
- fs/xfs/scrub/metapath.c  |    6 +++---
- fs/xfs/scrub/nlinks.c    |   12 ++++++------
- fs/xfs/scrub/parent.c    |    6 +++---
- fs/xfs/scrub/rtbitmap.c  |   12 ++++++------
- fs/xfs/scrub/rtsummary.c |   12 ++++++------
- 10 files changed, 38 insertions(+), 36 deletions(-)
+-------------
+Pseudo-Shortlog of commits:
 
---- a/fs/xfs/scrub/bmap.c
-+++ b/fs/xfs/scrub/bmap.c
-@@ -1040,7 +1040,7 @@ xchk_bmap(
- 	case XFS_COW_FORK:
- 		/* No CoW forks filesystem doesn't support out of place writes */
- 		if (!xfs_has_reflink(mp) && !xfs_has_zoned(mp)) {
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 			return 0;
- 		}
- 		break;
-@@ -1052,7 +1052,7 @@ xchk_bmap(
- 		 * attr here.
- 		 */
- 		if (!xfs_has_attr(mp))
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 		break;
- 	default:
- 		ASSERT(whichfork == XFS_DATA_FORK);
-@@ -1137,7 +1137,7 @@ xchk_bmap_data(
- 	int			error;
- 
- 	if (xchk_file_looks_zapped(sc, XFS_SICK_INO_BMBTD_ZAPPED)) {
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 		return 0;
- 	}
- 
-@@ -1165,7 +1165,7 @@ xchk_bmap_attr(
- 	 * returning immediately.
- 	 */
- 	if (xchk_file_looks_zapped(sc, XFS_SICK_INO_BMBTA_ZAPPED)) {
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 		return 0;
- 	}
- 
---- a/fs/xfs/scrub/common.c
-+++ b/fs/xfs/scrub/common.c
-@@ -1110,7 +1110,7 @@ xchk_install_live_inode(
- 	struct xfs_inode	*ip)
- {
- 	if (!igrab(VFS_I(ip))) {
--		xchk_ino_set_corrupt(sc, ip->i_ino);
-+		xchk_ip_set_corrupt(sc, ip);
- 		return -EFSCORRUPTED;
- 	}
- 
-@@ -1439,13 +1439,13 @@ xchk_metadata_inode_forks(
- 
- 	/* Metadata inodes don't live on the rt device. */
- 	if (sc->ip->i_diflags & XFS_DIFLAG_REALTIME) {
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 		return 0;
- 	}
- 
- 	/* They should never participate in reflink. */
- 	if (xfs_is_reflink_inode(sc->ip)) {
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 		return 0;
- 	}
- 
-@@ -1462,7 +1462,7 @@ xchk_metadata_inode_forks(
- 				&error))
- 			return error;
- 		if (shared)
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 	}
- 
- 	/*
-@@ -1471,7 +1471,7 @@ xchk_metadata_inode_forks(
- 	 */
- 	if (xfs_inode_hasattr(sc->ip)) {
- 		if (!xfs_has_metadir(sc->mp)) {
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 			return 0;
- 		}
- 
---- a/fs/xfs/scrub/common.h
-+++ b/fs/xfs/scrub/common.h
-@@ -32,6 +32,8 @@ void xchk_set_corrupt(struct xfs_scrub *
- void xchk_block_set_corrupt(struct xfs_scrub *sc,
- 		struct xfs_buf *bp);
- void xchk_ino_set_corrupt(struct xfs_scrub *sc, xfs_ino_t ino);
-+#define xchk_ip_set_corrupt(_sc, _ip) \
-+	xchk_ino_set_corrupt((_sc), (_ip)->i_ino)
- void xchk_fblock_set_corrupt(struct xfs_scrub *sc, int whichfork,
- 		xfs_fileoff_t offset);
- #ifdef CONFIG_XFS_QUOTA
---- a/fs/xfs/scrub/dir.c
-+++ b/fs/xfs/scrub/dir.c
-@@ -1080,7 +1080,7 @@ xchk_directory(
- 
- 	/* Plausible size? */
- 	if (sc->ip->i_disk_size < xfs_dir2_sf_hdr_size(0)) {
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 		return 0;
- 	}
- 
---- a/fs/xfs/scrub/dirtree.c
-+++ b/fs/xfs/scrub/dirtree.c
-@@ -979,10 +979,10 @@ xchk_dirtree(
- 	xchk_dirtree_evaluate(dl, &oc);
- 	if (xchk_dirtree_parentless(dl)) {
- 		if (oc.good || oc.bad || oc.suspect)
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 	} else {
- 		if (oc.bad || oc.good + oc.suspect != 1)
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 		if (oc.suspect)
- 			xchk_ino_xref_set_corrupt(sc, sc->ip->i_ino);
- 	}
---- a/fs/xfs/scrub/metapath.c
-+++ b/fs/xfs/scrub/metapath.c
-@@ -314,7 +314,7 @@ xchk_metapath(
- 
- 	/* Parent required to do anything else. */
- 	if (mpath->dp == NULL) {
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 		return 0;
- 	}
- 
-@@ -329,7 +329,7 @@ xchk_metapath(
- 	trace_xchk_metapath_lookup(sc, mpath->path, mpath->dp, ino);
- 	if (error == -ENOENT) {
- 		/* No directory entry at all */
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 		error = 0;
- 		goto out_ilock;
- 	}
-@@ -337,7 +337,7 @@ xchk_metapath(
- 		goto out_ilock;
- 	if (ino != sc->ip->i_ino) {
- 		/* Pointing to wrong inode */
--		xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+		xchk_ip_set_corrupt(sc, sc->ip);
- 	}
- 
- out_ilock:
---- a/fs/xfs/scrub/nlinks.c
-+++ b/fs/xfs/scrub/nlinks.c
-@@ -719,7 +719,7 @@ xchk_nlinks_compare_inode(
- 	 * count, but it will let them decrease it.
- 	 */
- 	if (total_links > XFS_NLINK_PINNED) {
--		xchk_ino_set_corrupt(sc, ip->i_ino);
-+		xchk_ip_set_corrupt(sc, ip);
- 		goto out_corrupt;
- 	} else if (total_links > XFS_MAXLINK) {
- 		xchk_ino_set_warning(sc, ip->i_ino);
-@@ -727,7 +727,7 @@ xchk_nlinks_compare_inode(
- 
- 	/* Link counts should match. */
- 	if (total_links != actual_nlink) {
--		xchk_ino_set_corrupt(sc, ip->i_ino);
-+		xchk_ip_set_corrupt(sc, ip);
- 		goto out_corrupt;
- 	}
- 
-@@ -748,7 +748,7 @@ xchk_nlinks_compare_inode(
- 		 * back references.
- 		 */
- 		if (obs.backrefs != 0) {
--			xchk_ino_set_corrupt(sc, ip->i_ino);
-+			xchk_ip_set_corrupt(sc, ip);
- 			goto out_corrupt;
- 		}
- 
-@@ -757,7 +757,7 @@ xchk_nlinks_compare_inode(
- 		 * children.
- 		 */
- 		if (obs.children != 0) {
--			xchk_ino_set_corrupt(sc, ip->i_ino);
-+			xchk_ip_set_corrupt(sc, ip);
- 			goto out_corrupt;
- 		}
- 	}
-@@ -770,7 +770,7 @@ xchk_nlinks_compare_inode(
- 		 * the root directory.
- 		 */
- 		if (obs.parents != 1) {
--			xchk_ino_set_corrupt(sc, ip->i_ino);
-+			xchk_ip_set_corrupt(sc, ip);
- 			goto out_corrupt;
- 		}
- 	} else if (actual_nlink > 0) {
-@@ -779,7 +779,7 @@ xchk_nlinks_compare_inode(
- 		 * least one parent.
- 		 */
- 		if (obs.parents == 0) {
--			xchk_ino_set_corrupt(sc, ip->i_ino);
-+			xchk_ip_set_corrupt(sc, ip);
- 			goto out_corrupt;
- 		}
- 	}
---- a/fs/xfs/scrub/parent.c
-+++ b/fs/xfs/scrub/parent.c
-@@ -729,10 +729,10 @@ xchk_parent_count_pptrs(
- 			pp->pptrs_found++;
- 
- 		if (VFS_I(sc->ip)->i_nlink == 0 && pp->pptrs_found > 0)
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 		else if (VFS_I(sc->ip)->i_nlink > 0 &&
- 			 pp->pptrs_found == 0)
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 	} else {
- 		/*
- 		 * Starting with metadir, we allow checking of parent pointers
-@@ -743,7 +743,7 @@ xchk_parent_count_pptrs(
- 			pp->pptrs_found++;
- 
- 		if (VFS_I(sc->ip)->i_nlink != pp->pptrs_found)
--			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
-+			xchk_ip_set_corrupt(sc, sc->ip);
- 	}
- 
- 	return 0;
---- a/fs/xfs/scrub/rtbitmap.c
-+++ b/fs/xfs/scrub/rtbitmap.c
-@@ -200,13 +200,13 @@ xchk_rtbitmap(
- 
- 	/* Is sb_rextents correct? */
- 	if (mp->m_sb.sb_rextents != rtb->rextents) {
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 
- 	/* Is sb_rextslog correct? */
- 	if (mp->m_sb.sb_rextslog != rtb->rextslog) {
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 
-@@ -215,17 +215,17 @@ xchk_rtbitmap(
- 	 * case can we exceed 4bn bitmap blocks since the super field is a u32.
- 	 */
- 	if (rtb->rbmblocks > U32_MAX) {
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 	if (mp->m_sb.sb_rbmblocks != rtb->rbmblocks) {
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 
- 	/* The bitmap file length must be aligned to an fsblock. */
- 	if (rbmip->i_disk_size & mp->m_blockmask) {
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 
-@@ -235,7 +235,7 @@ xchk_rtbitmap(
- 	 * file can be larger than sb_rbmblocks.
- 	 */
- 	if (rbmip->i_disk_size < XFS_FSB_TO_B(mp, rtb->rbmblocks)) {
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 
---- a/fs/xfs/scrub/rtsummary.c
-+++ b/fs/xfs/scrub/rtsummary.c
-@@ -314,25 +314,25 @@ xchk_rtsummary(
- 
- 	/* Is sb_rextents correct? */
- 	if (mp->m_sb.sb_rextents != rts->rextents) {
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 
- 	/* Is m_rsumlevels correct? */
- 	if (mp->m_rsumlevels != rts->rsumlevels) {
--		xchk_ino_set_corrupt(sc, rsumip->i_ino);
-+		xchk_ip_set_corrupt(sc, rsumip);
- 		return 0;
- 	}
- 
- 	/* Is m_rsumsize correct? */
- 	if (mp->m_rsumblocks != rts->rsumblocks) {
--		xchk_ino_set_corrupt(sc, rsumip->i_ino);
-+		xchk_ip_set_corrupt(sc, rsumip);
- 		return 0;
- 	}
- 
- 	/* The summary file length must be aligned to an fsblock. */
- 	if (rsumip->i_disk_size & mp->m_blockmask) {
--		xchk_ino_set_corrupt(sc, rsumip->i_ino);
-+		xchk_ip_set_corrupt(sc, rsumip);
- 		return 0;
- 	}
- 
-@@ -342,7 +342,7 @@ xchk_rtsummary(
- 	 * the file can be larger than rsumsize.
- 	 */
- 	if (rsumip->i_disk_size < XFS_FSB_TO_B(mp, rts->rsumblocks)) {
--		xchk_ino_set_corrupt(sc, rsumip->i_ino);
-+		xchk_ip_set_corrupt(sc, rsumip);
- 		return 0;
- 	}
- 
-@@ -358,7 +358,7 @@ xchk_rtsummary(
- 		 * EFSCORRUPTED means the rtbitmap is corrupt, which is an xref
- 		 * error since we're checking the summary file.
- 		 */
--		xchk_ino_set_corrupt(sc, rbmip->i_ino);
-+		xchk_ip_set_corrupt(sc, rbmip);
- 		return 0;
- 	}
- 	if (error)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 7.1.11-rc1
+
+Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+    Bluetooth: hci_aml: validate firmware segment lengths
+
+Ali Ahmet Memis <ali@iusegentoo.com>
+    Bluetooth: MGMT: reject HCI_CMD_SYNC params_len above 255
+
+Ali Ahmet Memis <ali@iusegentoo.com>
+    Bluetooth: ISO: zero the sockaddr before returning it in getname
+
+Ali Ahmet Memis <ali@iusegentoo.com>
+    Bluetooth: ISO: do not force BT_LISTEN after a failed BIG sync
+
+Chengfeng Ye <nicoyip.dev@gmail.com>
+    Bluetooth: hci_sync: Fix accept list UAF during suspend
+
+Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+    Bluetooth: hci_event: validate LE Set CIG Parameters response
+
+Chengfeng Ye <nicoyip.dev@gmail.com>
+    Bluetooth: hci_event: fix LE list UAF on reset
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    drm/xe: Don't hand out the flat CCS storage as usable VRAM
+
+Jose Villaseñor Montfort <pepemontfort@gmail.com>
+    HID: input: read battery capacity from its actual report offset
+
+Michael Bommarito <michael.bommarito@gmail.com>
+    HID: hyperv: validate initial device info bounds
+
+Ibrahim Hashimov <security@auditcode.ai>
+    HID: uclogic: fix use-after-free of inrange_timer on remove
+
+Haoxiang Li <haoxiang_li2024@163.com>
+    HID: sensor: custom: Fix use-after-free in enable_sensor
+
+Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
+    HID: ft260: fix stack-use-after-return write in I2C read race
+
+Jann Horn <jannh@google.com>
+    HID: core: fix number/pointer type confusion on long items
+
+Jann Horn <jannh@google.com>
+    HID: rapoo: fix missing hid_is_usb() check
+
+Jiangshan Yi <yijiangshan@kylinos.cn>
+    HID: nintendo: stop device IO before hid_hw_stop on probe failure
+
+Jiangshan Yi <yijiangshan@kylinos.cn>
+    HID: nintendo: register input device after capabilities are set
+
+Ibrahim Hashimov <security@auditcode.ai>
+    HID: nintendo: fix out-of-bounds read in joycon_ctlr_read_handler()
+
+Jann Horn <jannh@google.com>
+    HID: huawei: fix missing hid_is_usb() check
+
+Jann Horn <jannh@google.com>
+    HID: asus: fix missing hid_is_usb() check
+
+Peter Zijlstra <peterz@infradead.org>
+    futex: Fix might_sleep() warning in futex_pivot_pending()
+
+Hyunwoo Kim <imv4bel@gmail.com>
+    futex: Fix race on the initial mm->futex.phash.ref allocation
+
+Yao Kai <yaokai34@huawei.com>
+    futex: Fix race in futex_pivot_pending() during private hash resize
+
+Thomas Gleixner <tglx@kernel.org>
+    futex/pi: Plug private futex exec() race
+
+Thomas Gleixner <tglx@kernel.org>
+    futex: Sanitize and document task_struct::futex::state transitions
+
+Kyle Zeng <kylebot@openai.com>
+    futex/pi: Reject cross-mm private futex owners
+
+Anand Khoje <anand.a.khoje@oracle.com>
+    net/ionic: avoid OOB TX partner lookup for hwstamp RXQ
+
+Baul Lee <baul.lee@xbow.com>
+    HID: pidff: fix OOB write when hid->inputs is empty
+
+Baul Lee <baul.lee@xbow.com>
+    HID: core: fix OOB read of field->usage in hid_set_field()
+
+Jose Villaseñor Montfort <pepemontfort@gmail.com>
+    HID: magicmouse: do not keep a stale msc->input if no input is claimed
+
+Christopher Kodama <ckhordiasma@gmail.com>
+    HID: magicmouse: re-enable multitouch after reset-resume
+
+Jose Villaseñor Montfort <pepemontfort@gmail.com>
+    HID: magicmouse: prevent unbounded recursion in magicmouse_raw_event()
+
+Andrei Fed <andfed.net@gmail.com>
+    HID: magicmouse: fix battery reporting for Bluetooth Magic Trackpad USB-C
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    selinux: require a class's permission values to cover its permission count
+
+Christian Göttsche <cgzones@googlemail.com>
+    selinux: more strict policy parsing
+
+Christian Göttsche <cgzones@googlemail.com>
+    selinux: use u16 for security classes
+
+Shardul Bankar <shardul.b@mpiricsoftware.com>
+    mptcp: pm: fix memory leak from alloc-during-teardown race
+
+Matthieu Baerts (NGI0) <matttbe@kernel.org>
+    mptcp: pm: uniform announced addresses helpers
+
+Matthieu Baerts (NGI0) <matttbe@kernel.org>
+    mptcp: pm: rename add_entry structure to add_addr
+
+Lijo Lazar <lijo.lazar@amd.com>
+    drm/amdgpu: Allocate coredump ring buffers per ring
+
+Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+    drm/amdgpu: fix recursive ww_mutex acquire in amdgpu_devcoredump_format
+
+Melbin K Mathew <mlbnkm1@gmail.com>
+    fbdev: serialize mode sysfs access with lock_fb_info()
+
+Thomas Zimmermann <tzimmermann@suse.de>
+    fbdev: Wrap user-invoked calls to fb_set_var() in helper
+
+Yifei Gao <gyf161023@gmail.com>
+    nvmet: pci-epf: put CQ ref on create_cq mapping failure
+
+Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+    nvmet: pci-epf: fix use-after-free in nvmet_pci_epf_exec_iod_work()
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
+
+Ibrahim Hashimov <security@auditcode.ai>
+    nvmet-tcp: bound SGL data length before allocating command buffers
+
+Jiang HongHui <jiang_hh2019@163.com>
+    nvmet-fc: fix invalid free in LS IOD error path
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    nvmet-auth: zero the AUTH_RECEIVE response buffer
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    dmaengine: fsl-edma: Add error handling for devm_kasprintf
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    mailbox: mchp-ipc-sbi: Add null check for devm_kasprintf()
+
+Luxiao Xu <rakukuip@gmail.com>
+    ipv6: fix use-after-free in ip6_finish_output2()
+
+Yong Wang <edragain@163.com>
+    ipv4: reject undersized MTUs in ip_do_fragment()
+
+Linmao Li <lilinmao@kylinos.cn>
+    nfc: nci: free destination parameters when closing a connection
+
+Samuel Page <sam@bynar.io>
+    nfc: nci: fix uninit-value in the RF discover/activated NTF handlers
+
+Samuel Page <sam@bynar.io>
+    nfc: nci: fix out-of-bounds write in nci_target_auto_activated()
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    nfc: nci: add data_len bound checks to activation parameter extractors
+
+Doruk Tan Ozturk <doruk@0sec.ai>
+    nfc: st21nfca: validate ATR_REQ length against the received frame
+
+Xu Rao <raoxu@uniontech.com>
+    nfc: pn533: purge fragmented skbs during cleanup
+
+Doruk Tan Ozturk <doruk@0sec.ai>
+    nfc: llcp: reject PDUs shorter than the LLCP header
+
+Muhammad Bilal <meatuni001@gmail.com>
+    nfc: llcp: fix OOB read and u8 offset wrap in TLV parsers
+
+Doruk Tan Ozturk <doruk@0sec.ai>
+    nfc: llcp: bound the connect_sn TLV walk to the skb
+
+Pengpeng Hou <pengpeng@iscas.ac.cn>
+    nfc: microread: validate target discovery payload lengths
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    nfc: fdp: bound the device-reported read length and fix an skb leak
+
+Doruk Tan Ozturk <doruk@0sec.ai>
+    nfc: digital: clamp SENSF_RES length to the destination buffer
+
+Maarten Lankhorst <dev@lankhorst.se>
+    drm/xe: Fix DPT allocation paths.
+
+Ville Syrjälä <ville.syrjala@linux.intel.com>
+    drm/i915: Introduce struct intel_fb_pin_params
+
+Ville Syrjälä <ville.syrjala@linux.intel.com>
+    drm/i915: Track fence region ID in plane state
+
+Jani Nikula <jani.nikula@intel.com>
+    drm/i915/pin: s/dev_priv/i915/ and drop struct drm_device usage
+
+Yun Zhou <yun.zhou@windriver.com>
+    xfs: restore nofs context unconditionally in xfs_trans_roll
+
+Hongling Zeng <zenghongling@kylinos.cn>
+    xfs: validate attr entry pointer before field access
+
+Jiazi Liu <jiazi.liu1984@gmail.com>
+    ext4: fix incorrect function call when initializing s_resgid
+
+Eric Biggers <ebiggers@kernel.org>
+    ext4: don't enable DAX on new encrypted files
+
+Guanghui Yang <3497809730@qq.com>
+    ext4: propagate errors from fast commit range replay
+
+Jia Zhu <zhujia.zj@bytedance.com>
+    ext4: avoid tail write_begin walk for uptodate folios
+
+Guanghui Yang <3497809730@qq.com>
+    ext4: clear error before retrying inode xattr space fallback
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: reject invalid block index in GC ioctl
+
+Matthias Goergens <matthias.goergens@gmail.com>
+    ext4: stop retrying saturated xattr cache entries
+
+Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+    kcov: fix data corruption and race conditions on PREEMPT_RT
+
+Rik van Riel <riel@surriel.com>
+    null_blk: fix UBSAN shift-out-of-bounds when zone_size is 0 or overflows
+
+Ian Bridges <icb@fastmail.org>
+    ocfs2: fix missing metadata reservation for large xattrs
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring: defer eventfd signaling when queued from a wakeup handler
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring/uring_cmd: don't skip completion for a synchronous multishot cmd
+
+Ali Ahmet Memis <ali@iusegentoo.com>
+    io_uring/rsrc: fix folio size overflow in io_vec_fill_bvec()
+
+Vishnu Razdan <vrazdan@openai.com>
+    io_uring/io-wq: fix worker accounting when canceling creation callbacks
+
+Woraphat Khiaodaeng <worapat.kd2@gmail.com>
+    io_uring/cmd: fix iovec leak when the async cmd is not recycled
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: dummy: Check card index validity at probe
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring/futex: only mark private futex waits as inflight
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring/futex: don't mark futex wake requests as inflight
+
+Guixin Liu <kanie@linux.alibaba.com>
+    nvmet: fix NULL pointer dereference in nvmet_execute_identify_nslist()
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    rndis_host: add overflow check in rndis_rx_fixup()
+
+Geoffrey D. Bennett <g@b4.vu>
+    ALSA: scarlett2: Use a private URB for the notification endpoint
+
+Geoffrey D. Bennett <g@b4.vu>
+    ALSA: FCP: Use a private URB for the notification endpoint
+
+Peiyang He <peiyang_he@smail.nju.edu.cn>
+    iommu/iommufd: Fix NULL pointer deref in iommufd_ioas_change_process when racing with iopt_map_file_pages
+
+Shameer Kolothum <skolothumtho@nvidia.com>
+    iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown
+
+Ali Ahmet Memis <ali@iusegentoo.com>
+    Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
+
+Steffen Persvold <spersvold@gmail.com>
+    PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
+
+Darrick J. Wong <djwong@kernel.org>
+    xfs: rtsummary scrub should treat rtbitmap corruption errors as an xref error
+
+Christoph Hellwig <hch@lst.de>
+    xfs: add a xchk_ip_set_corrupt helper
+
+Darrick J. Wong <djwong@kernel.org>
+    xfs: don't livelock in scrub on a circular unlinked list
+
+Darrick J. Wong <djwong@kernel.org>
+    xfs: hoist per-bucket unlinked list check to helper
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ drivers/block/null_blk/zoned.c                     |  10 +-
+ drivers/bluetooth/hci_aml.c                        |  18 +-
+ drivers/dma/fsl-edma-main.c                        |   2 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c   | 265 ++++++++++++---------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.h   |   3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c             |  91 ++++---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h             |   2 +-
+ drivers/gpu/drm/i915/display/intel_display_types.h |   5 +-
+ drivers/gpu/drm/i915/display/intel_fb_pin.c        | 107 +++++----
+ drivers/gpu/drm/i915/display/intel_fb_pin.h        |  17 +-
+ drivers/gpu/drm/i915/display/intel_fbc.c           |  11 +-
+ drivers/gpu/drm/i915/display/intel_fbdev.c         |  20 +-
+ drivers/gpu/drm/i915/display/intel_plane.c         |   3 +-
+ drivers/gpu/drm/i915/i915_initial_plane.c          |   2 +-
+ drivers/gpu/drm/xe/display/xe_fb_pin.c             |  74 +++---
+ drivers/gpu/drm/xe/display/xe_initial_plane.c      |   6 +-
+ drivers/gpu/drm/xe/xe_vram.c                       |  23 +-
+ drivers/hid/Kconfig                                |   1 +
+ drivers/hid/hid-asus.c                             |   2 +-
+ drivers/hid/hid-core.c                             |  11 +-
+ drivers/hid/hid-ft260.c                            |  25 +-
+ drivers/hid/hid-huawei.c                           |   5 +-
+ drivers/hid/hid-hyperv.c                           |  27 ++-
+ drivers/hid/hid-input.c                            |  20 +-
+ drivers/hid/hid-magicmouse.c                       |  73 +++++-
+ drivers/hid/hid-nintendo.c                         |  22 +-
+ drivers/hid/hid-rapoo.c                            |   2 +-
+ drivers/hid/hid-sensor-custom.c                    |  21 +-
+ drivers/hid/hid-uclogic-core.c                     |  12 +-
+ drivers/hid/usbhid/hid-pidff.c                     |  13 +-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c        |   2 +
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h        |   1 +
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c     |  15 +-
+ drivers/iommu/iommufd/ioas.c                       |   4 +
+ drivers/mailbox/mailbox-mchp-ipc-sbi.c             |   2 +
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c    |  17 +-
+ drivers/net/ethernet/pensando/ionic/ionic_txrx.c   |   7 +-
+ drivers/net/usb/rndis_host.c                       |   6 +-
+ drivers/nfc/fdp/i2c.c                              |  27 +++
+ drivers/nfc/microread/microread.c                  |  31 ++-
+ drivers/nfc/pn533/pn533.c                          |   1 +
+ drivers/nfc/st21nfca/dep.c                         |   3 +
+ drivers/nvme/target/admin-cmd.c                    |   2 +-
+ drivers/nvme/target/fabrics-cmd-auth.c             |   2 +-
+ drivers/nvme/target/fc.c                           |   2 +-
+ drivers/nvme/target/pci-epf.c                      |  10 +-
+ drivers/nvme/target/tcp.c                          |  19 +-
+ drivers/pci/controller/pci-host-generic.c          |  11 +-
+ drivers/pci/ecam.c                                 |  13 +
+ drivers/video/fbdev/core/fb_chrdev.c               |   6 +-
+ drivers/video/fbdev/core/fbcon.c                   |   2 -
+ drivers/video/fbdev/core/fbmem.c                   |  13 +
+ drivers/video/fbdev/core/fbsysfs.c                 |  48 +++-
+ drivers/video/fbdev/ps3fb.c                        |   5 +-
+ drivers/video/fbdev/sh_mobile_lcdcfb.c             |   5 +-
+ fs/exec.c                                          |   8 +-
+ fs/ext4/crypto.c                                   |  40 ++--
+ fs/ext4/fast_commit.c                              |  16 +-
+ fs/ext4/ialloc.c                                   |   4 +
+ fs/ext4/inode.c                                    |  11 +-
+ fs/ext4/super.c                                    |   2 +-
+ fs/ext4/xattr.c                                    |   7 +-
+ fs/nilfs2/ioctl.c                                  |  20 +-
+ fs/ocfs2/xattr.c                                   |  18 +-
+ fs/xfs/libxfs/xfs_attr_leaf.c                      |  14 ++
+ fs/xfs/scrub/agheader.c                            |  94 ++++++--
+ fs/xfs/scrub/agheader_repair.c                     |  17 +-
+ fs/xfs/scrub/bmap.c                                |   8 +-
+ fs/xfs/scrub/common.c                              |  10 +-
+ fs/xfs/scrub/common.h                              |   2 +
+ fs/xfs/scrub/dir.c                                 |   2 +-
+ fs/xfs/scrub/dirtree.c                             |   4 +-
+ fs/xfs/scrub/metapath.c                            |   6 +-
+ fs/xfs/scrub/nlinks.c                              |  12 +-
+ fs/xfs/scrub/parent.c                              |   6 +-
+ fs/xfs/scrub/rtbitmap.c                            |  12 +-
+ fs/xfs/scrub/rtsummary.c                           |  12 +-
+ fs/xfs/xfs_trans.c                                 |  16 +-
+ include/linux/fb.h                                 |   2 +
+ include/linux/futex.h                              |   2 +
+ include/linux/hid.h                                |   2 +
+ include/linux/io_uring_types.h                     |   8 +
+ include/linux/pci-ecam.h                           |   3 +
+ include/linux/sched.h                              |   8 +
+ include/linux/wait.h                               |   1 +
+ include/linux/wait_bit.h                           |   1 +
+ io_uring/eventfd.c                                 |   8 +-
+ io_uring/eventfd.h                                 |   2 +-
+ io_uring/futex.c                                   |  32 ++-
+ io_uring/futex.h                                   |   1 +
+ io_uring/io-wq.c                                   |   9 +-
+ io_uring/io_uring.c                                |   2 +-
+ io_uring/opdef.c                                   |   2 +-
+ io_uring/poll.c                                    |  23 +-
+ io_uring/rsrc.c                                    |   2 +-
+ io_uring/tw.c                                      |   2 +-
+ io_uring/uring_cmd.c                               |   8 +-
+ io_uring/waitid.c                                  |   2 +-
+ kernel/futex/core.c                                | 126 ++++++----
+ kernel/futex/futex.h                               |   9 +
+ kernel/futex/pi.c                                  | 125 +++++++---
+ kernel/kcov.c                                      |  90 +++----
+ kernel/sched/wait.c                                |  15 ++
+ kernel/sched/wait_bit.c                            |  14 +-
+ lib/Kconfig.debug                                  |   5 +-
+ net/bluetooth/hci_event.c                          |   8 +-
+ net/bluetooth/hci_sync.c                           |  46 +++-
+ net/bluetooth/iso.c                                |  32 ++-
+ net/bluetooth/mgmt.c                               |   8 +
+ net/bluetooth/rfcomm/core.c                        |  24 +-
+ net/ipv4/ip_output.c                               |   4 +
+ net/ipv6/ip6_output.c                              |   2 +
+ net/mptcp/options.c                                |   2 +-
+ net/mptcp/pm.c                                     |  68 +++---
+ net/mptcp/pm_kernel.c                              |  10 +-
+ net/mptcp/pm_userspace.c                           |   8 +-
+ net/mptcp/protocol.h                               |  21 +-
+ net/mptcp/subflow.c                                |   4 +-
+ net/nfc/digital_technology.c                       |   2 +
+ net/nfc/llcp_commands.c                            |  18 +-
+ net/nfc/llcp_core.c                                |  15 +-
+ net/nfc/nci/ntf.c                                  |  36 ++-
+ net/nfc/nci/rsp.c                                  |   1 +
+ security/selinux/include/security.h                |   1 +
+ security/selinux/ss/avtab.c                        |  35 ++-
+ security/selinux/ss/avtab.h                        |  13 +
+ security/selinux/ss/conditional.c                  |  18 +-
+ security/selinux/ss/constraint.h                   |   1 +
+ security/selinux/ss/policydb.c                     | 248 +++++++++++++++----
+ security/selinux/ss/policydb.h                     |  31 ++-
+ security/selinux/ss/services.c                     |   8 +-
+ sound/drivers/dummy.c                              |   6 +
+ sound/usb/fcp.c                                    |  38 +--
+ sound/usb/mixer.c                                  |   6 +
+ sound/usb/mixer.h                                  |   2 +
+ sound/usb/mixer_scarlett2.c                        |  98 +++++---
+ 137 files changed, 1957 insertions(+), 853 deletions(-)
 
 
