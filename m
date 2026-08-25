@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A42C41A92C;
-	Tue, 25 Aug 2026 13:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E56A423A85;
+	Tue, 25 Aug 2026 13:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665969; cv=none; b=cpkrnXXA7bxacezxnP94frw55GJqBILpVsgQm4HuTd+oPMByh3WjR85REM4gkNkcaLbD/ezxQOule2UVoimsAurhLmx5abfTsH2mcXBlo5Xa96jqR4/VIK67TOhFe8UeurWUwhiV/vqVC1Cdl8CGNgB+mSis1ZjWIRJl768fTJY=
+	t=1787665972; cv=none; b=Wi45RI8tnAmKkHnUbeu9PvjzE94GILt0N1DiGlLeTncsFXvzZN2R2xDP9GZnyPrQxseaDn56W6XXP4bhrxv8zKBaq+t/MMLMbf7ewfMb+NQoxZEZPbJ5NCV7yn+rEcJkSMjtGx9FrbVACWn3hm/vM9VX6FUDqWPaRxuouGmBtXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665969; c=relaxed/simple;
-	bh=jcIbvNER/IgRrX7B7Dg8UtGYfI+IuoN5m3DRTAZSeVk=;
+	s=arc-20240116; t=1787665972; c=relaxed/simple;
+	bh=HWv+saPKD/5ri6uO0m2WHZaSLE659u3O6VWHkCt71Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMuNyK2iWtbJur22DwzFm9E3R+2Kf5d0wbc3+uk80+iTbqk+c8mEJ0eFkZ1shgRQeJCpH1KEoO9/bt9tleXoH7ml3T5Jj/VhRem7Ov2hm+Kf/hQzRFmrz7mMOsi7Ku4ZJDhWGnTZrQDzaAhFgRfr9/72zC4bsL4LyQAl8uS7+Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=selBzuru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KXe2S8PgFDBab04yhBV+ZnXmiIf0V1pFy9YZDOPcYMnbf6btW3fkgTy9XzchC816fghd0CTUSvgtYm1Ms+VmKgahE7B221PukJcR4DQ7HlDouPtTvy638hcQLIBkRHmLx/WVkxwnGFvvpjww81LCiA2gj4zP09hWbhD6vfaF/IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfJ1Id0f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="selBzuru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9751F000E9;
-	Tue, 25 Aug 2026 13:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfJ1Id0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5954A1F000E9;
+	Tue, 25 Aug 2026 13:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665967;
-	bh=HlI93GZgKR2tgkZ9jbIP0rHvX5yGNvs/JZvAJCngwa8=;
+	s=korg; t=1787665970;
+	bh=vp282VNG+uSvZYTGwAv59stzfIoH0cDX++oQVLHJAMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=selBzuru4O5Fk7feJdcNf14fklofRtXBnj7Owv/4BNmm30gyBNbM5sOpnB/M58xZK
-	 OocodfEaSPC4rFQlEXUfr7PJt4UO1X55rR4Q2dHFyAeuKNZrS/+122FM26zcGAMTzX
-	 Jt2c/qZ4IVrNfHBcXLzgS1a1O9tNz/qNpkvrd1U8=
+	b=qfJ1Id0f26XYFgqLNyrDx1BqSb/nEqBLm1MN1uXTKn0ti2OMQlszL7CKxoQjN+MK3
+	 z41JskMUQr+zF3d2eqrJi1Zm+pv+bziN9Z1XkKhUvdPDz6dAiFFML+yBl6i0gYUz+M
+	 eVJtwF9NPI3JvDqfq4JuCxEs6rz8DzZhXxNhYBH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Junjie Cao <junjie.cao@intel.com>
-Subject: [PATCH 6.1 38/79] gpio: ml-ioh: use raw_spinlock_t for the register lock
-Date: Tue, 25 Aug 2026 15:26:18 +0200
-Message-ID: <20260825132543.190085577@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Artem Dinaburg <artem@trailofbits.com>
+Subject: [PATCH 6.1 39/79] tls: fix lockless read of strp->msg_ready in ->poll
+Date: Tue, 25 Aug 2026 15:26:19 +0200
+Message-ID: <20260825132543.234597854@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -50,185 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit 600411ea1f2443fdf5b1af9b6480f616d7aff9d0 upstream.
+commit 0844370f8945086eb9335739d10205dcea8d707b upstream.
 
-ioh_irq_type() is registered as the irq_chip .irq_set_type callback and
-takes chip->spinlock with spin_lock_irqsave().  This callback is reached
-from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
-the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
-That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
-an rtmutex-backed sleeping lock, so acquiring it there is invalid.
-ioh_irq_enable() and ioh_irq_disable() take the same lock from the
-.irq_enable/.irq_disable callbacks, which are likewise invoked with
-desc->lock held.
+tls_sk_poll is called without locking the socket, and needs to read
+strp->msg_ready (via tls_strp_msg_ready). Convert msg_ready to a bool
+and use READ_ONCE/WRITE_ONCE where needed. The remaining reads are
+only performed when the socket is locked.
 
-Convert the register lock to raw_spinlock_t.  The same lock also
-serializes the GPIO direction/value callbacks and the suspend/resume
-register save/restore, and those critical sections only perform short
-sequences of MMIO register accesses (ioread32()/iowrite32()); the
-.irq_set_type callback additionally emits a dev_warn() on an unsupported
-type.  None of these are sleepable operations, so keeping this register
-lock non-sleeping is appropriate for the irqchip callbacks and does not
-change the GPIO-side locking contract.
-
-This is the same fix as commit a02b8950d619 ("gpio: pch: use
-raw_spinlock_t for the register lock"); this driver shares the same
-structure as gpio-pch.
-
-Fixes: 54be566317b6 ("gpio-ml-ioh: Support interrupt function")
-Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260731032747.2987292-1-junjie.cao@intel.com
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Fixes: 121dca784fc0 ("tls: suppress wakeups unless we have a full record")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/0b7ee062319037cf86af6b317b3d72f7bfcd2e97.1713797701.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0844370f8945 ("tls: fix lockless read of strp->msg_ready in ->poll")
+Assisted-by: Codex:GPT-5
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-ml-ioh.c |   36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ include/net/tls.h  |    3 ++-
+ net/tls/tls.h      |    2 +-
+ net/tls/tls_strp.c |    6 +++---
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/gpio/gpio-ml-ioh.c
-+++ b/drivers/gpio/gpio-ml-ioh.c
-@@ -84,7 +84,7 @@ struct ioh_gpio {
- 	u32 gpio_use_sel;
- 	int ch;
- 	int irq_base;
--	spinlock_t spinlock;
-+	raw_spinlock_t spinlock;
- };
+--- a/include/net/tls.h
++++ b/include/net/tls.h
+@@ -122,7 +122,8 @@ struct tls_strparser {
+ 	u32 stopped : 1;
+ 	u32 copy_mode : 1;
+ 	u32 mixed_decrypted : 1;
+-	u32 msg_ready : 1;
++
++	bool msg_ready;
  
- static const int num_ports[] = {6, 12, 16, 16, 15, 16, 16, 12};
-@@ -95,7 +95,7 @@ static void ioh_gpio_set(struct gpio_chi
- 	struct ioh_gpio *chip =	gpiochip_get_data(gpio);
- 	unsigned long flags;
+ 	struct strp_msg stm;
  
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	reg_val = ioread32(&chip->reg->regs[chip->ch].po);
- 	if (val)
- 		reg_val |= BIT(nr);
-@@ -103,7 +103,7 @@ static void ioh_gpio_set(struct gpio_chi
- 		reg_val &= ~BIT(nr);
+--- a/net/tls/tls.h
++++ b/net/tls/tls.h
+@@ -167,7 +167,7 @@ static inline struct sk_buff *tls_strp_m
  
- 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ static inline bool tls_strp_msg_ready(struct tls_sw_context_rx *ctx)
+ {
+-	return ctx->strp.msg_ready;
++	return READ_ONCE(ctx->strp.msg_ready);
  }
  
- static int ioh_gpio_get(struct gpio_chip *gpio, unsigned nr)
-@@ -121,7 +121,7 @@ static int ioh_gpio_direction_output(str
- 	u32 reg_val;
- 	unsigned long flags;
+ static inline bool tls_strp_msg_mixed_decrypted(struct tls_sw_context_rx *ctx)
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -366,7 +366,7 @@ static int tls_strp_copyin(read_descript
+ 	if (strp->stm.full_len && strp->stm.full_len == skb->len) {
+ 		desc->count = 0;
  
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
- 	pm &= BIT(num_ports[chip->ch]) - 1;
- 	pm |= BIT(nr);
-@@ -134,7 +134,7 @@ static int ioh_gpio_direction_output(str
- 		reg_val &= ~BIT(nr);
- 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+-		strp->msg_ready = 1;
++		WRITE_ONCE(strp->msg_ready, 1);
+ 		tls_rx_msg_ready(strp);
+ 	}
  
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+@@ -533,7 +533,7 @@ static int tls_strp_read_sock(struct tls
+ 	if (!tls_strp_check_queue_ok(strp))
+ 		return tls_strp_read_copy(strp, false);
+ 
+-	strp->msg_ready = 1;
++	WRITE_ONCE(strp->msg_ready, 1);
+ 	tls_rx_msg_ready(strp);
  
  	return 0;
- }
-@@ -145,12 +145,12 @@ static int ioh_gpio_direction_input(stru
- 	u32 pm;
- 	unsigned long flags;
+@@ -585,7 +585,7 @@ void tls_strp_msg_done(struct tls_strpar
+ 	else
+ 		tls_strp_flush_anchor_copy(strp);
  
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
- 	pm &= BIT(num_ports[chip->ch]) - 1;
- 	pm &= ~BIT(nr);
- 	iowrite32(pm, &chip->reg->regs[chip->ch].pm);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+-	strp->msg_ready = 0;
++	WRITE_ONCE(strp->msg_ready, 0);
+ 	memset(&strp->stm, 0, sizeof(strp->stm));
  
- 	return 0;
- }
-@@ -254,7 +254,7 @@ static int ioh_irq_type(struct irq_data
- 	dev_dbg(chip->dev, "%s:irq=%d type=%d ch=%d pos=%d type=%d\n",
- 		__func__, irq, type, ch, im_pos, type);
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
-@@ -294,7 +294,7 @@ static int ioh_irq_type(struct irq_data
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	iowrite32(ien | BIT(ch), &chip->reg->regs[chip->ch].ien);
- end:
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -324,11 +324,11 @@ static void ioh_irq_disable(struct irq_d
- 	unsigned long flags;
- 	u32 ien;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	ien &= ~BIT(d->irq - chip->irq_base);
- 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- }
- 
- static void ioh_irq_enable(struct irq_data *d)
-@@ -338,11 +338,11 @@ static void ioh_irq_enable(struct irq_da
- 	unsigned long flags;
- 	u32 ien;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
- 	ien |= BIT(d->irq - chip->irq_base);
- 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- }
- 
- static irqreturn_t ioh_gpio_handler(int irq, void *dev_id)
-@@ -438,7 +438,7 @@ static int ioh_gpio_probe(struct pci_dev
- 		chip->base = base;
- 		chip->reg = chip->base;
- 		chip->ch = i;
--		spin_lock_init(&chip->spinlock);
-+		raw_spin_lock_init(&chip->spinlock);
- 		ioh_gpio_setup(chip, num_ports[i]);
- 		ret = devm_gpiochip_add_data(dev, &chip->gpio, chip);
- 		if (ret) {
-@@ -482,9 +482,9 @@ static int __maybe_unused ioh_gpio_suspe
- 	struct ioh_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	ioh_gpio_save_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -494,11 +494,11 @@ static int __maybe_unused ioh_gpio_resum
- 	struct ioh_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	iowrite32(0x01, &chip->reg->srst);
- 	iowrite32(0x00, &chip->reg->srst);
- 	ioh_gpio_restore_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
+ 	tls_strp_check_rcv(strp);
 
 
