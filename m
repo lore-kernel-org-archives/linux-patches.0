@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEF625393E;
-	Tue, 25 Aug 2026 13:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5FA390613;
+	Tue, 25 Aug 2026 13:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665849; cv=none; b=hrVqdwUN/zYd5u5C4SpANNulbycOOJ43dKoGhQK63ac4sJOCfVU8I2zCuAEMGRT3jyPwCmkFL8cNUbxFgUjzAPanQQYXANAB9TCS+CJFeGBs/cx7ioz1lIep8KmeqTCr3Rh+6K6df8YY/qsxfBl3v89eB/XAGUh0ecrVxT7dWCA=
+	t=1787665852; cv=none; b=QlkCfsOo61SVB4wz8ykNcAFWzx37bgxGLlfVeFrByzYemKu5/mbyfqzGjKzIrdsYXdsbeqUxBa6YDBvBkXr5c6mFkde0iZyDXm9tMp6fWr187hiYm0NNw/QSnje19xQuZWUkidRW1YNzbAe+UXMeZdu1g/SyEBze82pAywF5FaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665849; c=relaxed/simple;
-	bh=G2svGJm7XOIQAGG31LdtGakf2tXtzjYxJ0kRPjhD1IA=;
+	s=arc-20240116; t=1787665852; c=relaxed/simple;
+	bh=jpEEd4AohfqDMEBAYqzPbjB8XKrPvh+8dPYDP4UXk/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edODpSAEBnnCLrIaG5vHJwhpf4grySf1JM7SeLltes2+BNHLLjKJEDeyIDSzuAkWaFqPoflSIYsxnFcTkaXt1e9WpWnSJq12AtxJNCNUwpONmWl83GQq35Hw2gZOHdsudaWRuzCYmM+G4cLkA85EndSuq+c7vrzeZbfG1gop6I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTPQy6td; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i+N9cG49SI7rogqMd+cEH3SIlUHVO+o3KBVzUk191WYi3qGxrThcemupWUqDXAs2ez9u+et8e29OltD2so0Zs0NI+Gw5ABQ6RsvGDJ0xWJEFQDZsY8tBCGMIWOPXHRhJER4U9/XVNbILsjhnni+Cbk4RR+N99g9HXuoTPgFgn9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujE56Pe7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTPQy6td"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746E51F000E9;
-	Tue, 25 Aug 2026 13:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujE56Pe7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6240C1F000E9;
+	Tue, 25 Aug 2026 13:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665848;
-	bh=OzVyqpWYaVZADlMYtE8D5U+OjtSNeWFfwA9OvR0Xsqo=;
+	s=korg; t=1787665850;
+	bh=pHa+psL/RFXDx1pXKkCFa70zFgsVPO5put0tJwqYW6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTPQy6tdPNXtdOMD9GQNRpyBmr4dkCa3MLX7hQ1usTbkrCqGOmLJesHy89h1RWGYa
-	 gfnuqdNA1BYf25310quRwptTGjustvbRTCnJXPRtSzqcXR/SWELVnx8y67Xcd1RaLI
-	 bWUdBGe3jfeJqHIZYet3oKhPniTxIUdjihmQVZG8=
+	b=ujE56Pe7IURA1lYKb9Y5M5MYpQuo0Fc9xkaiqtUl3xRktCEbzgwdZ9nBQ4HfFj3D+
+	 FNCP1aIfreWPobkX5hrrSfP8R73QAiL+/gHi/UhtLo4JiMsTKYp9ADbm73miRnJ8U9
+	 eu2RSExvR005N4GYSImIsu5XBLNv4uY6PetGG43M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 86/87] Bluetooth: hci_event: fix LE list UAF on reset
-Date: Tue, 25 Aug 2026 15:26:49 +0200
-Message-ID: <20260825132545.144131218@linuxfoundation.org>
+Subject: [PATCH 6.6 87/87] Bluetooth: hci_event: validate LE Set CIG Parameters response
+Date: Tue, 25 Aug 2026 15:26:50 +0200
+Message-ID: <20260825132545.169014404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -50,80 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit 33af47e847fe4a28b109673affb5874015d54f5a upstream.
+commit 0acd4eeb4b225b9bebbf9ef96cc10cdd79b94899 upstream.
 
-hci_cc_reset() clears the LE accept and resolving lists without taking
-hdev->lock. Other command-complete handlers serialize updates to these
-lists with that lock, and the debugfs readers hold it while walking them.
+The Command Complete dispatch validates only the fixed part of the LE Set
+CIG Parameters response. After that part is pulled from the skb,
+hci_cc_le_set_cig_params() trusts num_handles and reads each entry in the
+trailing handle array.
 
-This permits the reset completion and a debugfs read to interleave as
-follows:
+Matching num_handles against the command's num_cis does not guarantee
+that the response contains the advertised handles. A truncated response
+from a malfunctioning controller can therefore make the handler read
+beyond the skb data.
 
-  hci_rx_work                 debugfs reader
-  -----------                 --------------
-                              lock hdev->lock
-                              fetch current entry
-  list_del(entry)
-  kfree(entry)
-                              read entry fields
+Validate that the remaining skb data contains all advertised handles.
+Include this in the existing response validation so malformed responses
+also follow the established CIG failure handling.
 
-The reader then dereferences a freed list entry and may follow its stale
-next pointer.
-
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in white_list_show+0x15f/0x180
-  Read of size 1 at addr ffff8881015dab16 by task poc/95
-
-  Call Trace:
-   white_list_show+0x15f/0x180
-   seq_read_iter+0x3ff/0x1190
-   seq_read+0x267/0x3d0
-   vfs_read+0x177/0xa20
-   ksys_read+0xf7/0x1c0
-
-  Allocated by task 91:
-   hci_bdaddr_list_add+0x1a6/0x3a0
-   hci_cc_le_add_to_accept_list+0xab/0x140
-   hci_cmd_complete_evt+0x26c/0x9a0
-   hci_event_packet+0x454/0xb20
-   hci_rx_work+0x293/0x730
-
-  Freed by task 90:
-   kfree+0x131/0x3c0
-   hci_bdaddr_list_clear+0xd8/0x160
-   hci_cc_reset+0x28a/0x370
-   hci_cmd_complete_evt+0x26c/0x9a0
-   hci_event_packet+0x454/0xb20
-   hci_rx_work+0x293/0x730
-
-Take hdev->lock around both list clears. This matches the existing
-mutation and traversal locking convention.
-
-Fixes: a4d5504d5c39 ("Bluetooth: Clear LE white list when resetting controller")
-Fixes: cfdb0c2d095a ("Bluetooth: Store Resolv list size")
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_event.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -294,8 +294,10 @@ static u8 hci_cc_reset(struct hci_dev *h
+@@ -3798,8 +3798,10 @@ static u8 hci_cc_le_set_cig_params(struc
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
  
- 	hdev->ssp_debug_mode = 0;
- 
-+	hci_dev_lock(hdev);
- 	hci_bdaddr_list_clear(&hdev->le_accept_list);
- 	hci_bdaddr_list_clear(&hdev->le_resolv_list);
-+	hci_dev_unlock(hdev);
- 
- 	return rp->status;
- }
+ 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
+-	if (!rp->status && (!cp || rp->num_handles != cp->num_cis ||
+-			    rp->cig_id != cp->cig_id)) {
++	if (!rp->status &&
++	    (!cp || rp->num_handles != cp->num_cis ||
++	     rp->cig_id != cp->cig_id ||
++	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
+ 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
+ 		status = HCI_ERROR_UNSPECIFIED;
+ 	}
 
 
