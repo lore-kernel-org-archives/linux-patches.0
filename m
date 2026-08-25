@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E0F47CC96;
-	Tue, 25 Aug 2026 13:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130DF423761;
+	Tue, 25 Aug 2026 13:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666078; cv=none; b=c0/r/lUPvtCvQm3Bv41XI+NnNiKnyCZRkIHq7kmnV7IPfFGG5kQcNwezxcKXAYmKHwvTfj1hNbFTdr4SzVvlWCBe+C+FWXSe7pSsMMmum8IAUmTRUZ6YHWbIm0DJdsu2W6ipFLA5/U/5MvghTyzcwjcJCH28fFKojk5W/PTy294=
+	t=1787666081; cv=none; b=UTpR9R9skUL4eIJnlm1Nhmuq0GOz9nN1Ko8dWPbNnvIJeKYNFd7DoKtl2LGgOyoVpdGB9U4D+swJh1ixcUEwXKoV8CtUiCJJOxl8dwshHDHT79MfrywRVUmL99YnnsEPEvR5bai3QvnGMUjy1hQScV1glvjn5p2iUiXcynCUsEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666078; c=relaxed/simple;
-	bh=MiwMrjHQH+bTp/gmKEO7fyh3wKGhpgFeulzQuKF14ZY=;
+	s=arc-20240116; t=1787666081; c=relaxed/simple;
+	bh=l5RLfyJlVfTZFWsLprZHjQsdW65zyHpErTgXjvBYoYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3qDqN13GLOb//K485sBHNHv2vOWLoc+ju1I7pn4uyfloKFLyJtHdpqZcQNNKsE8JU3T9iMSiTutqpG7gVIHS1nl0Ti2f8ke8jUlGgETDCRrY+jRpBZV3Pq7cSIZrU3IZtgK3wMM1WjUD2VfDnnFBKa3Rt5XOeQE6I8t3qqoHBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r82iNCLC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oJkUXEcGJ05w7U+uwqCeo6Ls6KmbNoGWQYgI+4TPsRdGFcLVKEoPKXuU9+KPGmHg80AmNc5gk/ouWIV+D0kxz8IZQt+6INj3WTyxY+Wdz/ZTbtl/s1TwNismM9RIaX/et3O/RrYNnXzhb4dMVMTqvANFdp16ZhRm3BfJNCefVxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6HpKjxF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r82iNCLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE0A1F000E9;
-	Tue, 25 Aug 2026 13:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6HpKjxF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662E01F000E9;
+	Tue, 25 Aug 2026 13:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666077;
-	bh=tiP5SbJyTpMr/FNFZl2cgSBq0TlWB3gboXCgvmGA6CQ=;
+	s=korg; t=1787666080;
+	bh=IzLdqzK9ZeZlEd9tjAZwSRDWqPP1vVcchqYzCsnSLqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r82iNCLCM/JGx1h9aBH3Nq8G3FwmQ8clDmg4IZYeg0dQSvTUbnuabCBy558BYu0HV
-	 Sc5h6UFWdR+LifbRPhCrLT4DZI3TCKvUvap8ZefNWXBOGY6539STCfRnrGGAUj1OGQ
-	 k8iEn/xweeUdk7HchE7ltrE/Di/D9r7AOSCqTDQQ=
+	b=W6HpKjxFsKRKmNz6aUIPat/p2VaZuEs9BNa87nBiaOCQxlW8GXy19QQr/ecbOt3qD
+	 reqlo2lcChqujiF9A4rGwexgK9w89lMKDFS2goqHt4f0J2U69ZFdvjBlXeSbolFjUd
+	 HNnvlfjJUGq4m+kibgHLpmsa9yH1eU01CK+i5fc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.1 49/79] nfc: st21nfca: validate ATR_REQ length against the received frame
-Date: Tue, 25 Aug 2026 15:26:29 +0200
-Message-ID: <20260825132543.623409640@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 76/79] HID: core: fix number/pointer type confusion on long items
+Date: Tue, 25 Aug 2026 15:26:56 +0200
+Message-ID: <20260825132544.658404646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -51,58 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Jann Horn <jannh@google.com>
 
-commit 5cdcca5d62a66eda6b774110a44cba67bc1a8d1d upstream.
+commit 28abce951343fcec26e397610868efa4e1395c3f upstream.
 
-st21nfca_tm_recv_atr_req() checks that the received ATR_REQ frame is at
-least ST21NFCA_ATR_REQ_MIN_SIZE and that the self-declared atr_req->length
-is at least sizeof(struct st21nfca_atr_req), but never checks that
-atr_req->length does not exceed the actual received length (skb->len).
+When fetch_item() is called by hid_scan_report() on an item with
+HID_ITEM_TAG_LONG, it stores a pointer to the item data in
+item->data.longdata instead of storing a value directly in
+item->data.{u8/u16/u32}.
 
-st21nfca_tm_send_atr_res() then trusts the declared length:
+When item_udata() or item_sdata() encounters such an item, it incorrectly
+assumes that the item is in short format, and therefore returns the lower
+part of a kernel pointer reinterpreted as a number.
 
-	gb_len = atr_req->length - sizeof(struct st21nfca_atr_req);
-	...
-	memcpy(atr_res->gbi, atr_req->gbi, gb_len);
+When a HID device is connected whose descriptor contains a
+HID_GLOBAL_ITEM_TAG_REPORT_SIZE encoded in long format with size=4, this
+causes the lower half of a kernel pointer to be printed into dmesg as a
+number, like this:
 
-so an RF peer that sends a short frame but sets atr_req->length larger
-than the frame makes gb_len exceed the general bytes actually present,
-and the memcpy reads out of bounds past the received skb. Those bytes are
-placed in the ATR_RES and sent back to the peer (kernel-memory disclosure
-to a proximity attacker); a larger declared length is an out-of-bounds
-read (DoS).
+    hid (null): invalid report_size 107953555
 
-Reject frames whose declared length exceeds the received length. The
-adjacent nfc_tm_activated() path in the same function already derives its
-general-bytes length from skb->len rather than the declared field.
+To fix it, let item_udata() and item_sdata() verify that the item is in
+short format.
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing bound is evident from source. Compile-tested.
+Note that this bug only affects hid_scan_report(), while the main parsing
+pass hid_parse_collections() will always bail out when encountering a long
+item.
 
-Fixes: 1892bf844ea0 ("NFC: st21nfca: Adding P2P support to st21nfca in Initiator & Target mode")
+Sidenote: There are currently no users of data.longdata; maybe we should
+just remove any parsing of long-format descriptors as a follow-up.
+
+Fixes: 3dc8fc083dbf ("HID: Use hid_parser for pre-scanning the report descriptors")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260711071301.58071-1-doruk@0sec.ai
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/st21nfca/dep.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/nfc/st21nfca/dep.c
-+++ b/drivers/nfc/st21nfca/dep.c
-@@ -207,6 +207,9 @@ static int st21nfca_tm_recv_atr_req(stru
- 	if (atr_req->length < sizeof(struct st21nfca_atr_req))
- 		return -EPROTO;
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -349,6 +349,9 @@ static int hid_add_field(struct hid_pars
  
-+	if (atr_req->length > skb->len)
-+		return -EPROTO;
+ static u32 item_udata(struct hid_item *item)
+ {
++	if (item->format != HID_ITEM_FORMAT_SHORT)
++		return 0;
 +
- 	r = st21nfca_tm_send_atr_res(hdev, atr_req);
- 	if (r)
- 		return r;
+ 	switch (item->size) {
+ 	case 1: return item->data.u8;
+ 	case 2: return item->data.u16;
+@@ -359,6 +362,9 @@ static u32 item_udata(struct hid_item *i
+ 
+ static s32 item_sdata(struct hid_item *item)
+ {
++	if (item->format != HID_ITEM_FORMAT_SHORT)
++		return 0;
++
+ 	switch (item->size) {
+ 	case 1: return item->data.s8;
+ 	case 2: return item->data.s16;
 
 
