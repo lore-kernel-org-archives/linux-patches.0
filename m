@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60964449EB2;
-	Tue, 25 Aug 2026 13:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E06449EB2;
+	Tue, 25 Aug 2026 13:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665092; cv=none; b=dx4vV0egXdlvi+H1Mmnqm77qVMso1yiDHE7p6YqDN9ReAi+YNXcUcWFMqBnf3fOHRGGcMIQZWzqLWdZ89Dmjpw4oNQMC/dav8cSFb/o+IbCWkGwgNfo8ZolMf47WrUzjCAND42BSVu81STlyvU98xTyvrh2rrRW/o784sgUJGoA=
+	t=1787665095; cv=none; b=EjLzzYlKqMIe9nuHzLrQXwHkygY1/osLn1Q/mMQibtbbRzc1aqEbFfS7oUxvnQHcKhzRIcaXStF9jVSBKlHXNAAn+t4ZGhonXUrK+eJi83df4hQtDS8X6TLRzzuTmEozZed9ix0ot5Zd9rFDLUhZpdjdWPAz6lFtxKDyr8YwXbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665092; c=relaxed/simple;
-	bh=bzQYsdkqMGExVvK1iiOsflTJlMXAVcDlTW5l9oz0g3M=;
+	s=arc-20240116; t=1787665095; c=relaxed/simple;
+	bh=1kU8s05uGPiCXv3DDUy+tZAfG3tq7u2oRbuQzXYVmxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QS1MdwjFeOzx1TPrYWTc7bNimwDBwy6nSxIh1Y+vPjqDTlPAYBgWfBH+AK9YtkCwAWRv3cYrwE5b6rpiTEbBDW69vwVJCW+WDBVzzCr4x/jLNaaysUQ9gEiXDkd39WIVcAZUGtHRnvA5AuOcu2So5R6r57HMhYKgkm++K6fQjNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8zUJOEr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nWzUYSH7jcTSj+kYeT8+981gAb/sV1EN115uIp1dXXhzdiopONbbrR/g5y3kqDRojIudNgoJTJaR2ITb+/8TAFCEwNIyzLeY25eP10+HOrMlxG7vHvTo+KeYiI28WH6f+bAOxniJ8ylH3YIt8UoAgEQ2D7uIKjfyVScqLvJLfPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATPzxIlK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8zUJOEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7492E1F000E9;
-	Tue, 25 Aug 2026 13:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATPzxIlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C20B1F000E9;
+	Tue, 25 Aug 2026 13:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665091;
-	bh=IhoRJ1CWyIdH3qQdWhImRbogF4+Xn4iI9lsif9r3cbI=;
+	s=korg; t=1787665094;
+	bh=qJPq2xJGVNB8Djf8Q/2pzEGUxCBWY37oL3i19W8Ip00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8zUJOErzRs0HtrBDafX80WTCJAI/otSttXhwqpgIdIJyKJmBOFLoYJq6uYpROfIu
-	 L5cipuF0/Wjm6SzkS4SniZddWZHXsffaREZM80KeDSWSeeD3kGP/FDbxlNm1WHRis3
-	 m+hyQn6SyMJ6Y1u5KRT4NJkh3Wh6tKEgiRZS67P8=
+	b=ATPzxIlKx3XFjSHDOGOsL25WIBEkacxxFSFMq70/t+F5lVTgn6q5EAA5Od2QDWUEc
+	 f2uHYRKyecJbgTt+NqD/TugFoUQK+wybMsykMBq/orVApaMaR1RB7pClvPc1ex5Nr+
+	 b7xnXMiJ+dDtvKp/Ndw9kTT4fGWU3mvr+qI4ODMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
-	Alec Hall <signshop.alec@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 093/101] HID: input: read battery capacity from its actual report offset
-Date: Tue, 25 Aug 2026 15:26:11 +0200
-Message-ID: <20260825132545.460117414@linuxfoundation.org>
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 7.1 094/101] drm/xe: Dont hand out the flat CCS storage as usable VRAM
+Date: Tue, 25 Aug 2026 15:26:12 +0200
+Message-ID: <20260825132545.497856597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -45,129 +44,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit d07644524b6511b622ee7b0e2e68c9ee43d522a4 upstream.
+commit 818bebeb63dd6bf5f4e07e145f6cdbace520a34c upstream.
 
-hidinput_query_battery_capacity() assumes the state-of-charge value is
-the first byte following the report ID (buf[1]) and ignores where the
-battery field actually sits within the report.
+get_flat_ccs_offset() reads the base of the flat CCS storage from the
+hardware, scales it by the number of enabled L3 nodes, and rounds the
+result up to 128K.  Everything below that offset is then handed to the
+VRAM allocator as usable memory.
 
-An Apple Magic Trackpad 2 precedes the AbsoluteStateOfCharge byte with a
-byte of status flags in its battery reports, so this query returns the
-flags byte instead of the charge level.
+Rounding a limit that means "usable memory ends here" upwards publishes
+whatever lies between the real base and the rounded one as free memory,
+and that memory belongs to the compression hardware.  The scaled value
+has no reason to be 128K aligned, and on a Battlemage G21 with 16 GiB it
+is not:
 
-The device happens to make that easy to observe, because it exposes the
-same cell twice: its report descriptor declares AbsoluteStateOfCharge in
-two reports (0x90 and 0x9b), so hidinput_setup_battery() registers two
-power supplies. Only the first one is refreshed by hid-magicmouse -- it
-uses hid_get_battery(), which returns the first battery of the list --
-and that refresh goes through the report event path, which parses the
-field correctly. Nothing ever reports the second one, so every read of
-its capacity takes the query path above. On a USB-C Magic Trackpad over
-USB, on an unpatched 7.1.5:
+	flat CCS base: raw 0x3fafff800, rounded 0x3fb000000
 
-  hid-<serial>-battery-144 = 100%  (Charging)      <- report event path
-  hid-<serial>-battery-155 =   3%  (Discharging)   <- query path
+so the last 2 KiB of page 0x3fafff000 is CCS storage, in the allocator's
+pool.  Whatever is allocated there gets that tail overwritten by the
+compression hardware, which needs no page-table entry, no buffer object
+and no GPU submission to do it, and does it before userspace exists.
 
-Both are the same physical battery. A raw HIDIOCGINPUT of the two
-reports at that same moment:
+On this machine a Mesa VM's level-3 page table landed on that page on
+every cold boot.  It lost the entry covering the compositor's
+batch-buffer heap, so the compositor's first submission faulted fetching
+its batch and gdm restarted it forever: a black screen on an otherwise
+working machine.  Restarting gdm cleared it because the next VM's page
+tables were allocated somewhere else.
 
-  report 0x90 -> [90 03 64]
-  report 0x9b -> [9b 03 64 64 00 00 10 00 00 00 00 00 00 00]
-                     ^flags ^SoC = 0x64 = 100%
+Round down instead, to the page size the allocator works in.  On this
+machine that excludes exactly one page.
 
-The device answers correctly in both cases; only the offset the kernel
-reads the capacity from is wrong. 0x03 is the flags byte (present,
-charging), reported as "3%".
+Reading the reserved page afterwards shows what had been writing it:
 
-Bluetooth takes the same query path for its capacity, where the trackpad
-reported a bogus near-constant ~4% -- 0b100, the FullyCharged flag --
-regardless of the real charge.
+	[369] 0xcccc000000000000
+	[371] 0xcc77000000000000
+	[373] 0xcccc000000000000
+	[375] 0xcc77000000000000
 
-Store the battery field's offset within the report at setup time and use
-it when querying, so the capacity is read from its real position. The
-report event path already parses the field correctly through the HID
-core; only the explicit GET_REPORT query was wrong.
+compression metadata, two bytes per sixteen, sitting where the driver
+used to hand out memory.
 
-Devices whose capacity field is the first field in the report have a
-report_offset of 0 and are unaffected (buf[1 + 0] == buf[1]).
+The assertion that should have caught this compares the offset against
+GSMBASE - ccs_size for equality.  That value is 128K aligned, so it
+agrees with the rounded-up offset precisely when the base is not
+aligned - the check cannot fail in the case it exists to catch, and is
+compiled out unless CONFIG_DRM_XE_DEBUG is set.  Replace it with one
+that can fail: CCS storage must not run into GSM.
 
-Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
-Reviewed-by: Alec Hall <signshop.alec@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[ And this was a debug session from hell, enormously helped by an AI
+  doing much of the grunt-work.
+
+  I'd like to call it my tireless helper, but the AI several times
+  stated flat out that this was impossible and unsolvable and that we
+  should just write a report about it.
+
+  I suspect those things have been trained by people who may not be
+  quite as stubborn as I am.
+
+  But while the AI was ready to give up several times, it did keep
+  adding debug code and analyzing it faithfully when I pushed. So credit
+  where credit is due and I let the AI write the commit message above.
+
+  This is basically a one-liner fixing a bogus "round_up()" to a
+  "round_down()", but there were 24 patches adding more and more debug
+  information to this, and 18 kernel boot to finally narrow it down to
+  this.   - Linus ]
+
+Fixes: 37173392741c ("drm/xe/vram: fix ccs offset calculation")
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-input.c |   17 +++++++++++++----
- include/linux/hid.h     |    2 ++
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_vram.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -433,17 +433,25 @@ static int hidinput_scale_battery_capaci
- static int hidinput_query_battery_capacity(struct hid_battery *bat)
- {
- 	int ret;
-+	/*
-+	 * The capacity field may not be the first field in the report: some
-+	 * devices (e.g. the Apple Magic Trackpad 2 over Bluetooth) precede it
-+	 * with status flags. Read it from its actual byte offset in the report
-+	 * (report_offset is in bits; the leading byte is the report id).
-+	 */
-+	int offset = 1 + bat->report_offset / 8;
-+	int len = offset + 1;
+--- a/drivers/gpu/drm/xe/xe_vram.c
++++ b/drivers/gpu/drm/xe/xe_vram.c
+@@ -88,12 +88,25 @@ static int get_flat_ccs_offset(struct xe
+ 		offset = offset_hi << 32; /* HW view bits 39:32 */
+ 		offset |= offset_lo << 6; /* HW view bits 31:6 */
+ 		offset *= num_enabled; /* convert to SW view */
+-		offset = round_up(offset, SZ_128K); /* SW must round up to nearest 128K */
  
--	u8 *buf __free(kfree) = kmalloc(4, GFP_KERNEL);
-+	u8 *buf __free(kfree) = kmalloc(max(len, 4), GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
- 
--	ret = hid_hw_raw_request(bat->dev, bat->report_id, buf, 4,
-+	ret = hid_hw_raw_request(bat->dev, bat->report_id, buf, max(len, 4),
- 				 bat->report_type, HID_REQ_GET_REPORT);
--	if (ret < 2)
-+	if (ret < len)
- 		return -ENODATA;
- 
--	return hidinput_scale_battery_capacity(bat, buf[1]);
-+	return hidinput_scale_battery_capacity(bat, buf[offset]);
- }
- 
- static int hidinput_get_battery_property(struct power_supply *psy,
-@@ -594,6 +602,7 @@ static int hidinput_setup_battery(struct
- 	bat->max = max;
- 	bat->report_type = report_type;
- 	bat->report_id = field->report->id;
-+	bat->report_offset = field->report_offset;
- 	bat->charge_status = POWER_SUPPLY_STATUS_DISCHARGING;
- 	bat->status = HID_BATTERY_UNKNOWN;
- 
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -642,6 +642,7 @@ enum hid_battery_status {
-  * @max: maximum battery value from HID descriptor
-  * @report_type: HID report type (input/feature)
-  * @report_id: HID report ID for this battery
-+ * @report_offset: bit offset of the capacity field within its report
-  * @charge_status: current charging status
-  * @status: battery reporting status
-  * @capacity: current battery capacity (0-100)
-@@ -657,6 +658,7 @@ struct hid_battery {
- 	__s32 max;
- 	__s32 report_type;
- 	__s32 report_id;
-+	__s32 report_offset;
- 	__s32 charge_status;
- 	enum hid_battery_status status;
- 	__s32 capacity;
+-		/* We don't expect any holes */
+-		xe_assert_msg(xe, offset == (xe_mmio_read64_2x32(&gt_to_tile(gt)->mmio, GSMBASE) -
+-					     ccs_size),
+-			      "Hole between CCS and GSM.\n");
++		/*
++		 * Everything below this offset is handed to the VRAM
++		 * allocator, so it has to be the *first* address the
++		 * compression hardware owns, rounded down.  Rounding it up
++		 * publishes CCS storage as free memory.
++		 */
++		offset = round_down(offset, SZ_4K);
++
++		/*
++		 * CCS storage must not run into GSM.  The old check compared
++		 * the offset against GSMBASE - ccs_size for equality, which
++		 * could not fail: that value is 128K aligned, so it agreed
++		 * with the rounded-up offset even when the base was not 128K
++		 * aligned - exactly the case this fixes.
++		 */
++		xe_assert_msg(xe, offset + ccs_size <=
++			      xe_mmio_read64_2x32(&gt_to_tile(gt)->mmio, GSMBASE),
++			      "CCS overlaps GSM.\n");
+ 	} else {
+ 		reg = xe_gt_mcr_unicast_read_any(gt, XEHP_FLAT_CCS_BASE_ADDR);
+ 		offset = (u64)REG_FIELD_GET(XEHP_FLAT_CCS_PTR, reg) * SZ_64K;
 
 
