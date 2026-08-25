@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E98423A85;
-	Tue, 25 Aug 2026 13:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCCF45DF6B;
+	Tue, 25 Aug 2026 13:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666383; cv=none; b=h1NewZMA0B7RDWAim6UTBHsG6X1t3vhS05zLRotI0/OTyZLhpUKMIMb7K+QIuYsfHkwOc0hgagqDwl4SH/SxGOTbRlGkrXF8nxYosCjaHRz8hAzj4YEoR9W7Gd4/LISOZXU5Qp8+X+Lr1nFfpj0FoFFEjmGO2FfW62JQRm7yeeE=
+	t=1787666385; cv=none; b=cvxokWuHo0M9dwlytVpZtrb6K5UAuskc2ibXeGldarfP4Wc9TE4QwBJOV9AEBm0iLj6Y/ZlADSCQVCDBCejUQ3ED/aABfWo86Tid2Iw7R8DFROrbQijcju1xgXbsWCudrfZ9rVyVntCuakecdxSTGKhCIOs7YyKWbarJY7Jr+dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666383; c=relaxed/simple;
-	bh=2CMHo6Ksq1JZ+KuBULsDhE9qlFtoWPdPtvkvePgFY1o=;
+	s=arc-20240116; t=1787666385; c=relaxed/simple;
+	bh=MMZFKJdUJC6aAka35Cv0FskFnX0V7+48Emu4vfCBzC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvrerbk0rzeHVOi25MQy7D2NOjLTYDrzw+M6jiSOtos0lwM8HosRCBwhXePHSmCerMPI9/mYdslVOYgSygDLvTefOm5wGcajQQZiJ0jSHQwY7cAtkqt8WvqhT8NrrgzWiV0tWwvaanqvDnMWfWMgVtDD1DpIwVUArrfbJC/T8N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/jtKgRE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u1vLi6irTK6VVqhYZ7VdPKybGnhRows3LmfPU0wX+GMO6ukPxQrZS63WAwWXj+CRQvYFTcVPo4GETN1r6ZhLXEp4CyXQbpJ02HQWnV6987uZuILf8SKmQ7Bf7wCARPheIQK9vg7QtRzbn9SpECS5av4poVwyCYCptDmUR2QHBB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIuqeUbl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/jtKgRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098D11F000E9;
-	Tue, 25 Aug 2026 13:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIuqeUbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30A21F000E9;
+	Tue, 25 Aug 2026 13:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666381;
-	bh=2ARB4MR8XRxrPK7ioVRGUQ2QELq7Ue163MDxWdlL2GU=;
+	s=korg; t=1787666384;
+	bh=Vq80UXF/fLIcq/aEFMXHaUYF2+6T3u9f1kFF6BHVSpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/jtKgREVb0BtHewiYqH3cN9QKz3kP9jHHsEtVXUO6GN7iwc+4UQNOmywrpI7j6Iq
-	 dZdsKPR++/0PRhSHxN0lcuzW4+jo2c13vaDyMHvJAUTwZVyxk9cKefnBgrsg7jlFxc
-	 kWwl5Tsu63ygqjOVsWjedilyGtzoipNJL64wNL1Y=
+	b=EIuqeUbloZ7MNRgNAs2UuzYObe4KQ0g5h17QLvR+xFt7p5Fr0Ursz3DjzYWOHQRuy
+	 y9WXatU0f4BO8OnEERfJSLTKTp/MqWZTqqT2ukAtd67Er/K2jnjvRPIzUL2LYYjND2
+	 qEugt52WyQlY4oNUORlVbqLORlHvqZihbxVWO8ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 5.10 06/57] xfs: validate attr entry pointer before field access
-Date: Tue, 25 Aug 2026 15:26:28 +0200
-Message-ID: <20260825132541.563722413@linuxfoundation.org>
+	Baul Lee <baul.lee@xbow.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 07/57] net/x25: fix use-after-free of the socket by its timers
+Date: Tue, 25 Aug 2026 15:26:29 +0200
+Message-ID: <20260825132541.597080427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -51,60 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit b7eea80be25f3334f131d52982b3131aba77b97d upstream.
+[ Upstream commit 2195424c3da2ef1829a63b807e3a900a90e57d85 ]
 
-xfs_attr3_leaf_verify_entry() accesses lentry/rentry fields (namelen,
-valuelen) before checking if the entry pointer itself is within bounds.
-If nameidx is crafted to point near the end of the buffer, these field
-accesses can read out-of-bounds before the bounds check at
-name_end > buf_end is performed.
+The x25 timers are armed with mod_timer() and cancelled with
+timer_delete(), so a pending timer holds no reference on the socket and a
+cancel does not wait for a callback already running on another CPU.
 
-Add explicit bounds checks for entry pointers before accessing their
-fields. Use offsetof() to check that the start of the flexible array
-member (nameval/name) is within bounds, which ensures all preceding
-fields are safe to access.
+x25_heartbeat_expiry() also rearms unconditionally, so it can reinstall
+sk->sk_timer after __x25_destroy_socket() has passed its cancel point.
+The following __sock_put() frees the socket while the timer is still
+queued, and the next expiry uses freed memory.  KASAN reports a
+slab-use-after-free on the kmalloc-2k object freed by close().
 
-Fixes: c84760659dcf2 ("xfs: check attribute leaf block structure")
-Cc: <stable@vger.kernel.org> # v5.5
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+timer_delete_sync() cannot be used here: x25_heartbeat_expiry() and
+x25_timer_expiry() both reach the cancels from inside the timer they
+would wait on, through __x25_destroy_socket() and x25_disconnect().
+
+Arm the timers with sk_reset_timer() and cancel them with sk_stop_timer()
+so that an armed timer owns a reference, and release it in both expiry
+handlers.  Rearm the heartbeat only while sk_hashed(sk) is still true,
+since __x25_destroy_socket() unlinks the socket before dropping it.  Arm
+the deferred destroy timer the same way and drop its reference in
+x25_destroy_timer().
+
+Reproduced on net with KASAN, with the heartbeat period shortened so the
+window recurs.  With this patch the reproducer no longer triggers a
+report and /proc/net/x25 drains.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726220342.47245-1-baul.lee@xbow.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adjusted context due to `del_timer()` not yet renamed to `timer_delete()` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/x25/af_x25.c    |    4 ++--
+ net/x25/x25_timer.c |   25 ++++++++++++++++---------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_attr_leaf.c
-+++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -265,6 +265,13 @@ xfs_attr3_leaf_verify_entry(
- 	 */
- 	if (ent->flags & XFS_ATTR_LOCAL) {
- 		lentry = xfs_attr3_leaf_name_local(leaf, idx);
-+
-+		/* Validate lentry pointer is within bounds before field access */
-+		if ((char *)lentry >= buf_end)
-+			return __this_address;
-+		if ((char *)lentry + offsetof(struct xfs_attr_leaf_name_local, nameval) > buf_end)
-+			return __this_address;
-+
- 		namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
- 				be16_to_cpu(lentry->valuelen));
- 		name_end = (char *)lentry + namesize;
-@@ -272,6 +279,13 @@ xfs_attr3_leaf_verify_entry(
- 			return __this_address;
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -372,6 +372,7 @@ static void x25_destroy_timer(struct tim
+ 	struct sock *sk = from_timer(sk, t, sk_timer);
+ 
+ 	x25_destroy_socket_from_timer(sk);
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -407,9 +408,8 @@ static void __x25_destroy_socket(struct
+ 
+ 	if (sk_has_allocations(sk)) {
+ 		/* Defer: outstanding buffers */
+-		sk->sk_timer.expires  = jiffies + 10 * HZ;
+ 		sk->sk_timer.function = x25_destroy_timer;
+-		add_timer(&sk->sk_timer);
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + 10 * HZ);
  	} else {
- 		rentry = xfs_attr3_leaf_name_remote(leaf, idx);
-+
-+		/* Validate rentry pointer is within bounds before field access */
-+		if ((char *)rentry >= buf_end)
-+			return __this_address;
-+		if ((char *)rentry + offsetof(struct xfs_attr_leaf_name_remote, name) > buf_end)
-+			return __this_address;
-+
- 		namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
- 		name_end = (char *)rentry + namesize;
- 		if (rentry->namelen == 0)
+ 		/* drop last reference so sock_put will free */
+ 		__sock_put(sk);
+--- a/net/x25/x25_timer.c
++++ b/net/x25/x25_timer.c
+@@ -36,45 +36,45 @@ void x25_init_timers(struct sock *sk)
+ 
+ void x25_start_heartbeat(struct sock *sk)
+ {
+-	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
++	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
+ }
+ 
+ void x25_stop_heartbeat(struct sock *sk)
+ {
+-	del_timer(&sk->sk_timer);
++	sk_stop_timer(sk, &sk->sk_timer);
+ }
+ 
+ void x25_start_t2timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t2);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t2);
+ }
+ 
+ void x25_start_t21timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t21);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t21);
+ }
+ 
+ void x25_start_t22timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t22);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t22);
+ }
+ 
+ void x25_start_t23timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t23);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t23);
+ }
+ 
+ void x25_stop_timer(struct sock *sk)
+ {
+-	del_timer(&x25_sk(sk)->timer);
++	sk_stop_timer(sk, &x25_sk(sk)->timer);
+ }
+ 
+ unsigned long x25_display_timer(struct sock *sk)
+@@ -108,7 +108,7 @@ static void x25_heartbeat_expiry(struct
+ 			     sock_flag(sk, SOCK_DEAD))) {
+ 				bh_unlock_sock(sk);
+ 				x25_destroy_socket_from_timer(sk);
+-				return;
++				goto out;
+ 			}
+ 			break;
+ 
+@@ -120,8 +120,14 @@ static void x25_heartbeat_expiry(struct
+ 			break;
+ 	}
+ restart_heartbeat:
+-	x25_start_heartbeat(sk);
++	/* Do not rearm once __x25_destroy_socket() has unlinked the socket:
++	 * it is past its cancel point and owns the teardown from there on.
++	 */
++	if (sk_hashed(sk))
++		x25_start_heartbeat(sk);
+ 	bh_unlock_sock(sk);
++out:
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -166,4 +172,5 @@ static void x25_timer_expiry(struct time
+ 	} else
+ 		x25_do_timer_expiry(sk);
+ 	bh_unlock_sock(sk);
++	sock_put(sk);
+ }
 
 
