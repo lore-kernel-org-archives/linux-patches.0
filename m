@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BC5481230;
-	Tue, 25 Aug 2026 13:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E11348095A;
+	Tue, 25 Aug 2026 13:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665349; cv=none; b=Y5/mgCjT3yRW913nBZ0A13FYGO9GceAYoOtp6dM49O7AP9jLC0qhH5dwCPhEL/7JVu4kaOAlOMlEZ0ey0RtUFiSHTYEZIv/FlqFLh2pbA6/nyvIAt7Jz0387zzhAzebhHtpWOlzkAlefpA1fKrfnPZk3S9EJ9156XPEguztX6so=
+	t=1787665351; cv=none; b=sHS+eOnW4/thJibCcOemanqDlXEPPboGv+QZrWor+qyVuu+ptuqGwjm/ZI7eyPyB71EaySXEZT/+R5Z6NFL/W7DXKAJwQN334wqCwxXC2sQHI8jAKNV4ZO4H9dCkFIVRQibzLE+1wJnOs8rN96umvDFqdeyNJPyn8oHvR1QQg0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665349; c=relaxed/simple;
-	bh=a3/E7KKFlm4MM69h3dthA7VrlXSAPBN18e2dFEFgfKE=;
+	s=arc-20240116; t=1787665351; c=relaxed/simple;
+	bh=16W0GrannQvAnPDAe3a1S2TjW9X/L4A39/RfNv4XPmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsJkAkUor3AmRsvaXbZ5IAcaBCf/m+FNTPIjxA7HPw+iXoGArNzOgGd/AN9P6o9eJRYM+2jejgfsXs36hlIS7rENIQSwL//VQUjauMrr5xNMFpby74YcUBeheAiOpr8YcLxtAwZS4XOZeFc9pjPJ0FhOqtcPTj2khxOrgOkmenU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoZ+Smpw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YrJ33ox8lOJqRYSiCioiX3kGRHg3Y1xggbJR7RiOc9pht08UJ9jzgKpHP+BTike1KPlo+btGtJpd/lK3ZZb99QvRQNR5bC4ejp5cq8jMFeTUAoKI/vyI0vbF4ZKFyJs2ooIv+ndozVxGPygc5J016xWISkll8VmSNDNjbhLOMok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kag1HlF8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoZ+Smpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4231F000E9;
-	Tue, 25 Aug 2026 13:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kag1HlF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FF31F00A3A;
+	Tue, 25 Aug 2026 13:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665346;
-	bh=Hsdi8LjLwDtdX+oCAUGVkqwu+s+GyPKLpvNBWOe5ujg=;
+	s=korg; t=1787665349;
+	bh=k+1pQvWTuZT0xHA0yh2dnDI/D5aiVtSkXLwEsEfuyjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OoZ+SmpwSY5Bm6fXcXDj6hGDNaCMWlSkGntlUubF8663YI6nmFBuClHXAW22TVc1u
-	 wVjtUj+4wVIwAsrjp3FtkvTp5genCk89lH9gg64J/j3ghfCY5ohvZdrq7HHJ9mIo74
-	 HvhGUy+x/DNKqL/hC3pOwXYyby6yxJt4VzOtUwrg=
+	b=Kag1HlF8mdGV6MCDrLhkyVj4o1jg7fHXtOt9uyG0/4Al1gOrVZ2cvZMGE1dhKJNK5
+	 0CpD9ngcy1RBdwinsiTbEuWuRCMSC5eDBP0YnwpdZ0gBeICr3Bzyj+2uqiawCMexnn
+	 og0K6YMp7xX6hhtgZ2HCfFFxri/7Xw3oPP8CBJgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikura Kyouka <mikurakyouka@aosc.io>,
-	"foad.elkhattabi" <foad.elkhattabi@gmail.com>,
-	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
-	Hans de Goede <hansg@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 73/94] Input: atkbd - skip deactivate for HONOR FMB-Ps internal keyboard
-Date: Tue, 25 Aug 2026 15:26:09 +0200
-Message-ID: <20260825132544.735116826@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 91/94] Bluetooth: ISO: do not force BT_LISTEN after a failed BIG sync
+Date: Tue, 25 Aug 2026 15:26:27 +0200
+Message-ID: <20260825132545.307906953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -54,46 +50,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 2aaf33c6e1e82561d7dce2345298a985a2483266 ]
+commit 9838a80096ba472d5e03057136a112631aabae6e upstream.
 
-After commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd -
-do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID"), HONOR
-FMB-P, aka HONOR MagicBook Pro 14 2025's internal keyboard stops
-working. Adding the atkbd_deactivate_fixup quirk fixes it.
+iso_sock_recvmsg() handles the deferred setup of a broadcast sink by
+dropping the socket lock, calling iso_conn_big_sync() and taking the
+lock again:
 
-DMI: HONOR FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025
+	release_sock(sk);
+	iso_conn_big_sync(sk);
+	lock_sock(sk);
 
-Fixes: 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
-Reported-by: Mikura Kyouka <mikurakyouka@aosc.io>
-Reported-by: foad.elkhattabi <foad.elkhattabi@gmail.com>
-Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20251022-honor-v1-1-ff894ed271a9@linux.dev
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: 410c44b10967 ("Input: atkbd - skip deactivate for HONOR ZQC-P")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	sk->sk_state = BT_LISTEN;
+
+The state is written unconditionally, but iso_conn_big_sync() returns
+void and has paths that do nothing at all: hci_get_route() may fail, and
+after re-acquiring the socket lock the connection may already be gone,
+in which case it bails out without ever issuing an LE BIG Create Sync.
+
+While the lock is dropped the connection can be torn down, for example
+when the controller reports HCI_EV_LE_PA_SYNC_LOST:
+
+	hci_le_pa_sync_lost_evt()
+	  hci_disconn_cfm() -> iso_disconn_cfm() -> iso_conn_del()
+	    iso_chan_del()
+	      iso_pi(sk)->conn = NULL
+	      sk->sk_state = BT_CLOSED
+	      sock_set_flag(sk, SOCK_ZAPPED)
+
+iso_conn_big_sync() then finds conn == NULL and returns, but the caller
+still overwrites the BT_CLOSED that iso_chan_del() has just set. The
+socket ends up marked BT_LISTEN with no connection, so recvmsg() reports
+success for a setup that never happened and a later accept() waits for
+BIS connections that can never arrive instead of failing.
+
+A concurrent shutdown() reaches the same write by another route:
+__iso_sock_close() takes the BT_CONNECT2 PA sync path to
+iso_sock_disconn(), which sets BT_DISCONN but leaves conn and
+conn->hcon in place, so iso_conn_big_sync() succeeds and BT_LISTEN is
+written over BT_DISCONN. Both the BT_CONNECT2 and the BT_CONNECTED case
+write the state the same way.
+
+Let iso_conn_big_sync() report whether the BIG sync was started, and
+only move the socket to BT_LISTEN when it was and when the state has not
+changed while the lock was dropped, mirroring what the BT_CONNECT case
+of the same switch already does with iso_connect_cis(). Both conditions
+are needed, the error alone does not cover the shutdown() race.
+
+This corrupts the socket state machine only, it is not a memory safety
+issue. KASAN and lockdep stayed quiet in all of the runs below.
+
+Reproduced with an emulated controller over /dev/vhci on a KASAN +
+PROVE_LOCKING kernel. A PA sync broadcast sink socket is driven to
+BT_CONNECT2 and recvmsg() on it is raced against teardown, with a debug
+delay inside the lock-dropped section to widen the window:
+
+ - HCI_EV_LE_PA_SYNC_LOST injected: 64 of 64 rounds left the socket in
+   BT_LISTEN with the connection gone, recvmsg() returned 0 and accept()
+   on that fd returned EAGAIN, which iso_sock_accept() can only do while
+   the socket is BT_LISTEN. With this patch, 0 of 64, recvmsg() returns
+   an error and accept() returns EBADFD.
+
+ - shutdown() instead of a controller event: 24 of 32 rounds wedged in
+   BT_LISTEN, 0 of 32 with this patch. With only the error check in
+   place and a short window, one round still wedged while recvmsg()
+   returned 0, which is the case the state re-check covers.
+
+An unraced control round behaves the same before and after: recvmsg()
+returns 0, the socket reaches BT_LISTEN and an LE BIG Create Sync is
+issued.
+
+Fixes: 7a17308c1788 ("Bluetooth: iso: Fix circular lock in iso_conn_big_sync")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/iso.c |   30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1938,6 +1938,13 @@ static const struct dmi_system_id atkbd_
- 		.callback = atkbd_deactivate_fixup,
- 	},
- 	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
-+	{
- 		/* Lenovo Yoga Air 14 (83QK) */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1537,9 +1537,9 @@ static void iso_conn_defer_accept(struct
+ 	hci_send_cmd(hdev, HCI_OP_LE_ACCEPT_CIS, sizeof(cp), &cp);
+ }
+ 
+-static void iso_conn_big_sync(struct sock *sk)
++static int iso_conn_big_sync(struct sock *sk)
+ {
+-	int err;
++	int err = 0;
+ 	struct hci_dev *hdev;
+ 	struct iso_conn *conn;
+ 	bdaddr_t src, dst;
+@@ -1554,7 +1554,7 @@ static void iso_conn_big_sync(struct soc
+ 	hdev = hci_get_route(&dst, &src, src_type);
+ 
+ 	if (!hdev)
+-		return;
++		return -EHOSTUNREACH;
+ 
+ 	/* hci_le_big_create_sync requires hdev lock to be held, since
+ 	 * it enqueues the HCI LE BIG Create Sync command via
+@@ -1570,8 +1570,10 @@ static void iso_conn_big_sync(struct soc
+ 	 * both before dereferencing conn->hcon.
+ 	 */
+ 	conn = iso_pi(sk)->conn;
+-	if (!conn || !conn->hcon)
++	if (!conn || !conn->hcon) {
++		err = -ENOTCONN;
+ 		goto unlock;
++	}
+ 
+ 	if (!test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
+ 		err = hci_conn_big_create_sync(hdev, conn->hcon,
+@@ -1587,6 +1589,8 @@ unlock:
+ 	release_sock(sk);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
++
++	return err;
+ }
+ 
+ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+@@ -1611,10 +1615,19 @@ static int iso_sock_recvmsg(struct socke
+ 		case BT_CONNECT2:
+ 			if (test_bit(BT_SK_PA_SYNC, &pi->flags)) {
+ 				release_sock(sk);
+-				iso_conn_big_sync(sk);
++				err = iso_conn_big_sync(sk);
+ 				lock_sock(sk);
+ 
+-				sk->sk_state = BT_LISTEN;
++				/* The socket lock was dropped, so the
++				 * connection may have been torn down
++				 * meanwhile and iso_chan_del() may have
++				 * already moved the socket to BT_CLOSED.
++				 * Only move on to BT_LISTEN if the BIG sync
++				 * was actually started and nothing else has
++				 * changed the state.
++				 */
++				if (!err && sk->sk_state == BT_CONNECT2)
++					sk->sk_state = BT_LISTEN;
+ 			} else {
+ 				iso_conn_defer_accept(pi->conn->hcon);
+ 				sk->sk_state = BT_CONFIG;
+@@ -1625,10 +1638,11 @@ static int iso_sock_recvmsg(struct socke
+ 		case BT_CONNECTED:
+ 			if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
+ 				release_sock(sk);
+-				iso_conn_big_sync(sk);
++				err = iso_conn_big_sync(sk);
+ 				lock_sock(sk);
+ 
+-				sk->sk_state = BT_LISTEN;
++				if (!err && sk->sk_state == BT_CONNECTED)
++					sk->sk_state = BT_LISTEN;
+ 				early_ret = true;
+ 			}
+ 
 
 
