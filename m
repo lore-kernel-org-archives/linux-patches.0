@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC0E46EF7F;
-	Tue, 25 Aug 2026 13:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD23429039;
+	Tue, 25 Aug 2026 13:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664761; cv=none; b=abJcmye0jamm696pqV9yhw445tHp3QN5GU5JgnJGEYwox1vvxHggK10CFtBSyUkzx80z1CZiIB/PqtOr3A9WQ/rx41naUr9d4V9dFSs71YBqW1kdVG+lmyxrZWHmS+12KLDQLjo+tLxorNHe+3Zfz95MLOf5C9qqEC3bpCbRiAg=
+	t=1787664764; cv=none; b=HG50K0jYKtqpI4bzDxoe8bNxvQ6v4JbReG0vZG+ds7kHhJ+5l7NjVtEInv2HFM9qT94ZwGRJf7VCWIqIHE+bX6BdkdsNLy4L91B3P5lYUANp9zvycGgJYIchGgEucgG+42yu+GkyWexZ8BDDPBo5KXIJlzm8Vi7Rkfxzg19yr7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664761; c=relaxed/simple;
-	bh=X2wwE8LdzZVovkL7LhPlKRbjlNm6CVUQ0Pv032moCn4=;
+	s=arc-20240116; t=1787664764; c=relaxed/simple;
+	bh=YojsfnKmkjrxAht69DWOJrgREH7ssg5bRIcbCbH6IZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hiOi3V+vZ315OuISznBDP4C8bErtlIFqM4BpThu+VOGZnm18LcsM43MqVakwcPE+vn3kLtFfLZOipy2TS1Fb06jd5Iyfl0AE6MA6CsDvdHysK3p4nvdsOwURrClfbiaJtPOWPQJHBfdqkghXEihPS15SG+nyXyi4PwCsEyhBxE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCsDlcRg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=utkUdCYnvmXCMkW1ZGIZWxIsWkeoVws2BN5aiUWSK9b4xmFnhPH0gJ/1oqQ8gSWJqEMQqw6KLFha6ymzEyL+AH1zCAQEQ8rv2lGO0XI0huVqVAapjQenZg1gDjHr4LdV/G2JaRLJ47fnC5KtgsiBdtky42JqoWoxyyv/kX1PCRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHUTTt31; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCsDlcRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6A61F000E9;
-	Tue, 25 Aug 2026 13:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHUTTt31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ECC1F000E9;
+	Tue, 25 Aug 2026 13:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664760;
-	bh=Ore/AWa7WnrbW3ys73QwX1QWtENi21XZ06NoQsLv8XE=;
+	s=korg; t=1787664763;
+	bh=B1vaLnMI0YHE+7MQx0m3OYrWhMqISyrIEpgalDk+NuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCsDlcRgBkeCC5YXcBqqIfCJM5eo0e3/C3XMSe330QWe2R+vnwy28b/o9nYTuvQzD
-	 TNmQZ8aKfVKOa2yted8p7NTCOtsYzTsnUMzoHzqhQG8PfxGeclSCwRtHYO4MyclIkY
-	 GZkPUKcuNN5Tc6PpwZRXfZ8ivsDtqMUMGwAiDn/w=
+	b=XHUTTt31PUzEHBHz5mhu+Bq1333YOtSjW/lif1rf+FpKIVBAkLorCrfi2J8oXcdLT
+	 HKrdwq/zxRzhUChyFakqda0GV435dCUkAjaBxJ6TJl35QQsFlyqRVmW+1T0YqXbb4V
+	 FzESmsz9SWr8wkFhFU/k437EjAC4vpupJGFGG3pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.2 41/82] nfc: st21nfca: validate ATR_REQ length against the received frame
-Date: Tue, 25 Aug 2026 15:25:28 +0200
-Message-ID: <20260825132543.120008524@linuxfoundation.org>
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.2 77/82] Bluetooth: hci_event: validate LE Set CIG Parameters response
+Date: Tue, 25 Aug 2026 15:26:04 +0200
+Message-ID: <20260825132544.507406950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,58 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit 5cdcca5d62a66eda6b774110a44cba67bc1a8d1d upstream.
+commit 0acd4eeb4b225b9bebbf9ef96cc10cdd79b94899 upstream.
 
-st21nfca_tm_recv_atr_req() checks that the received ATR_REQ frame is at
-least ST21NFCA_ATR_REQ_MIN_SIZE and that the self-declared atr_req->length
-is at least sizeof(struct st21nfca_atr_req), but never checks that
-atr_req->length does not exceed the actual received length (skb->len).
+The Command Complete dispatch validates only the fixed part of the LE Set
+CIG Parameters response. After that part is pulled from the skb,
+hci_cc_le_set_cig_params() trusts num_handles and reads each entry in the
+trailing handle array.
 
-st21nfca_tm_send_atr_res() then trusts the declared length:
+Matching num_handles against the command's num_cis does not guarantee
+that the response contains the advertised handles. A truncated response
+from a malfunctioning controller can therefore make the handler read
+beyond the skb data.
 
-	gb_len = atr_req->length - sizeof(struct st21nfca_atr_req);
-	...
-	memcpy(atr_res->gbi, atr_req->gbi, gb_len);
+Validate that the remaining skb data contains all advertised handles.
+Include this in the existing response validation so malformed responses
+also follow the established CIG failure handling.
 
-so an RF peer that sends a short frame but sets atr_req->length larger
-than the frame makes gb_len exceed the general bytes actually present,
-and the memcpy reads out of bounds past the received skb. Those bytes are
-placed in the ATR_RES and sent back to the peer (kernel-memory disclosure
-to a proximity attacker); a larger declared length is an out-of-bounds
-read (DoS).
-
-Reject frames whose declared length exceeds the received length. The
-adjacent nfc_tm_activated() path in the same function already derives its
-general-bytes length from skb->len rather than the declared field.
-
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing bound is evident from source. Compile-tested.
-
-Fixes: 1892bf844ea0 ("NFC: st21nfca: Adding P2P support to st21nfca in Initiator & Target mode")
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260711071301.58071-1-doruk@0sec.ai
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/st21nfca/dep.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_event.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/nfc/st21nfca/dep.c
-+++ b/drivers/nfc/st21nfca/dep.c
-@@ -205,6 +205,9 @@ static int st21nfca_tm_recv_atr_req(stru
- 	if (atr_req->length < sizeof(struct st21nfca_atr_req))
- 		return -EPROTO;
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3829,8 +3829,10 @@ static u8 hci_cc_le_set_cig_params(struc
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
  
-+	if (atr_req->length > skb->len)
-+		return -EPROTO;
-+
- 	r = st21nfca_tm_send_atr_res(hdev, atr_req);
- 	if (r)
- 		return r;
+ 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
+-	if (!rp->status && (!cp || rp->num_handles != cp->num_cis ||
+-			    rp->cig_id != cp->cig_id)) {
++	if (!rp->status &&
++	    (!cp || rp->num_handles != cp->num_cis ||
++	     rp->cig_id != cp->cig_id ||
++	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
+ 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
+ 		status = HCI_ERROR_UNSPECIFIED;
+ 	}
 
 
