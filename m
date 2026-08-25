@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA202E06E4;
-	Tue, 25 Aug 2026 13:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A2A468C08;
+	Tue, 25 Aug 2026 13:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665168; cv=none; b=enNazNBzkpD2qY1QW5XpSaTwZUwshdpguElseHJkdEDsRlUI0A9fPibdpWK+/SM2ao3870w9Dfmp/rQF117mxrwRbFDlHg6rFS6WY1DfoTagQUOwohu4q3zCM8Vppav/5N3WdK1/h0tlBRkOfNNZPPBgd5IiiyjwYpUtlNSI6U8=
+	t=1787665171; cv=none; b=ip795EwXuNIEq7uxsgQpCsxMHppaZBU2zZrsWNJYDr+nlcGme15EvHQdFk8x9shnXY6oz8AvzXt4UyrLEsQehPWDpcakYDZr8Ze2i9n4WB2QQVNjJKC1AUHcQFsEUpT9WT7ix/cS/lOO2hcl5MOZKUwadj/K1ePniBAudaCjH/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665168; c=relaxed/simple;
-	bh=MZpE0Vu5XvpYKsTZZAB2c8mChy9PWUKGuLibcUjX/SE=;
+	s=arc-20240116; t=1787665171; c=relaxed/simple;
+	bh=utd2+XNz3vVyyQaj139jYqBtjsGqBbzefmgX8yQ/sFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BOCukG08N+gjo443PuebuvqOel1zufg0x6pyeXdfIvL6VATz7ZAUGTyv70TWLCl3+mZFNgAsZEvqwqBXufUsQFa9gHaCXnTuhoA17iENW2EXE3nkqFcwzU/g76d24mmPt9NVFBK6YmO6tvbXjt+RV58iwQuC2GjgHtBVfEtIkAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYoN5GTG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pkSlNJ5Zciqb+SUEnbR3Yp23e+Ogx9qsbAcEKt0biEiqbqngzPNrItBReIc/itz+XsDWHhNcUq/axEvCfvecFtTMfSqKU8aMcm5+1zlYIuXU5Pp3Gm1tCE3Vr0Aup1rlu8LRYkxC2U4yFAFOfle4mt0N18BN1OXligTv3A/frqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCzZpd/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYoN5GTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6621F000E9;
-	Tue, 25 Aug 2026 13:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCzZpd/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B981F000E9;
+	Tue, 25 Aug 2026 13:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665166;
-	bh=2U3pNx7J7UmlWzxt4SQT5nv0F5VcrCl8p8ZLcjzR0Ws=;
+	s=korg; t=1787665169;
+	bh=xlsW+0pzuHIEoChxVLmP+hia7GF73DXbcQh94WdvmDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sYoN5GTGai3tVg8INRlB4l58QCIkqzsAE2vnz1KR/m6cmZryVbqHI+gp0RkhSQfin
-	 CaVuCFS76OIAEC8dLY9SXEUprhGqCoXKtO7tliu2ERI/gqdgLY3WlUEDpcfc84PCAk
-	 W/ag44BBh+IFoOq00LKJTl3UhGzlxzR+13ZUw7qo=
+	b=TCzZpd/+tiH79CJBA6qZSjJdLPT/5025pBUlGJf7WDj0KVUa8d3n+JUmkCNQ+mt3+
+	 uHCaLgS6h4kUmOXc4yFi3oKqea2xI7OeQ0C/TlAzxcgFzwVYLbyFSv3VJ8Bl6bdhv4
+	 YQyn+L1JQRqGvUafaimFXm1xjjRwNrJVi9nP+7pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 29/94] ext4: propagate errors from fast commit range replay
-Date: Tue, 25 Aug 2026 15:25:25 +0200
-Message-ID: <20260825132543.049255393@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Luca Fresi <luca.fresi@bithiatec.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 03/94] serial: sc16is7xx: enable THRI before filling TX FIFO
+Date: Tue, 25 Aug 2026 15:24:59 +0200
+Message-ID: <20260825132542.014149098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -51,92 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Luca Fresi <luca.fresi@bithiatec.com>
 
-commit d8b8dd3530bf41e14b118702cdaf9de64bb96885 upstream.
+[ Upstream commit 246ac114f485c2affb454240f3ea4fabfce22456 ]
 
-ext4_fc_replay() stops replaying fast commit tags only when a tag
-handler returns a negative error. However, ext4_fc_replay_add_range()
-and ext4_fc_replay_del_range() currently return 0 from their common
-exit paths even after internal failures.
+sc16is7xx_handle_tx() currently requests the THRI enable only after it has
+filled the TX FIFO. The request is asynchronous because the IER update is
+performed later by reg_work.
 
-This hides errors from ext4_fc_record_modified_inode(),
-ext4_map_blocks(), ext4_find_extent(), ext4_ext_insert_extent(),
-ext4_ext_replay_update_ex(), and ext4_ext_remove_space(). As a result,
-a failed ADD_RANGE or DEL_RANGE replay can be treated as successful and
-the replay code may continue with subsequent fast commit tags.
+The SC16IS7xx generates a THRI interrupt when the TX FIFO crosses its
+trigger level. If the FIFO drains past that level before reg_work enables
+THRI, the chip does not generate a new interrupt. Characters remain queued
+indefinitely even though the hardware FIFO is empty.
 
-This is particularly problematic for DEL_RANGE because it may already
-have marked blocks as free before ext4_ext_remove_space() fails. If the
-error is swallowed, replay may continue from a partially applied range
-operation.
+This was observed on an SC16IS752 while both UART channels were active.
+During the stall the software TX buffer remained non-empty while TXLVL
+reported 64 bytes free, LSR reported THR and transmitter empty, IER had
+THRI enabled, and IIR reported no interrupt pending.
 
-Return the saved error from the common exit paths and make the
-ERR_PTR() cases in ADD_RANGE store PTR_ERR() before jumping to out.
+Enable THRI synchronously before filling the FIFO so the threshold crossing
+cannot be missed.
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_E3622146846A84C75C31C7D32AC4D5AD0605@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Luca Fresi <luca.fresi@bithiatec.com>
+Link: https://patch.msgid.link/20260721222404.204746-1-luca.fresi@bithiatec.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1797,8 +1797,11 @@ static int ext4_fc_replay_add_range(stru
- 		if (ret == 0) {
- 			/* Range is not mapped */
- 			path = ext4_find_extent(inode, cur, path, 0);
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
-+				path = NULL;
- 				goto out;
-+			}
- 			memset(&newex, 0, sizeof(newex));
- 			newex.ee_block = cpu_to_le32(cur);
- 			ext4_ext_store_pblock(
-@@ -1810,8 +1813,11 @@ static int ext4_fc_replay_add_range(stru
- 			path = ext4_ext_insert_extent(NULL, inode,
- 						      path, &newex, 0);
- 			up_write((&EXT4_I(inode)->i_data_sem));
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
-+				path = NULL;
- 				goto out;
-+			}
- 			goto next;
- 		}
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -874,6 +874,9 @@ static void sc16is7xx_tx_proc(struct kth
+ 		msleep(port->rs485.delay_rts_before_send);
  
-@@ -1858,10 +1864,11 @@ next:
- 	}
- 	ext4_ext_replay_shrink_inode(inode, i_size_read(inode) >>
- 					sb->s_blocksize_bits);
-+	ret = 0;
- out:
- 	ext4_free_ext_path(path);
- 	iput(inode);
--	return 0;
-+	return ret;
+ 	guard(mutex)(&one->lock);
++	sc16is7xx_port_update(port, SC16IS7XX_IER_REG,
++			      SC16IS7XX_IER_THRI_BIT,
++			      SC16IS7XX_IER_THRI_BIT);
+ 	sc16is7xx_handle_tx(port);
  }
  
- /* Replay DEL_RANGE tag */
-@@ -1922,9 +1929,10 @@ ext4_fc_replay_del_range(struct super_bl
- 	ext4_ext_replay_shrink_inode(inode,
- 		i_size_read(inode) >> sb->s_blocksize_bits);
- 	ext4_mark_inode_dirty(NULL, inode);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
- 
- static void ext4_fc_set_bitmaps_and_counters(struct super_block *sb)
 
 
