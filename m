@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FDB3FAE19;
-	Tue, 25 Aug 2026 13:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C81338B7DC;
+	Tue, 25 Aug 2026 13:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665742; cv=none; b=rme1doCE22bE5B4v/VsZoVHI839qnoulYK4E7bmGhOFniLNDCGwaguOYKQLnHVp9VcgYStdboWyGC0mtYYUEAEYyWi4IclXhN0MHjBjeE0i7KqcTYtZDtH1KXWyxBNeb1DzAjhoYCxJmaB9UPo3/09UyXj0Q/IYbHx+ULI0k6rc=
+	t=1787665745; cv=none; b=PelZ0+ZaWi/Hjr8uv2G9GWIwRZMzwM+x1z9SOIemFt0VXC7WAqgzk+YqWut5jgQ0rHbkrbjMUln299Q3Jx27ljS+iuK02YDK8QICS8xMy/o/soCsxuFqh7h1ELRVblB1EGBls493n8J0Tb0Gv/ER2tAvzUtLvZAr9NI7tB9gyFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665742; c=relaxed/simple;
-	bh=TfirFQVqOoZ/5b3HsK25u1bC8He96mFqkw5L+ZzRABg=;
+	s=arc-20240116; t=1787665745; c=relaxed/simple;
+	bh=1DMWm2+SjrMZiq3UA6WCELOkJDpT2CF30RwIKZxVdJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p576o6dqPN6F3EmXOPjrcFsimICzE5nsHpPbMrw6wjgt6QBwVCKb7/th4oF2wnCbH+c49LJ9a1W1K9kiVW7DPihngLziIQvK1Nnji82yHN888YcMZ3eVGjxRYkVQB+VtGZWaE+XyC+/YwX5eLKMNwgc366/fy6VpCLsMPkn5pfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0Ti/vv4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cWpK9awMlVfA5xWltTpY0/uibPlb0emHy3QcSlhaAdJRH96PqKrrQdg33LrrgT51hGVMYU5qJCjsoA6A3iyiVr6x4Go4MNw37vh8LUWs73fySPIdTPXy1hH2flJh1PLLsFIDPnUAGuxeLuBMJLJYmDYJld+orHBHId3W7dyGpNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4+yJYec; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0Ti/vv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E6B1F000E9;
-	Tue, 25 Aug 2026 13:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4+yJYec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B371F000E9;
+	Tue, 25 Aug 2026 13:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665741;
-	bh=iOemIYvVjXueG45zQ5hUR+V8uiOesOtAWAp10LI4XnA=;
+	s=korg; t=1787665744;
+	bh=A1yZBaZ6T3lXbim8WauibpSU+jd4ITq7PpaNgRgb1xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h0Ti/vv4g5ZaU2XGYDWLhm8/8JOYDcqYPjWb5o/NAXEiNhbfkDYAekWkIgRUEKE4C
-	 yVgYQmLNe4V/MyafoUTfMfCQpn8iozK3aHOM42jMbYrnQD/gvyRcJRhsEeJh9v8qqp
-	 nBIPjms/NH919hYvVEtz5N4hG79KqtsGhRTeYBnE=
+	b=h4+yJYece+Mx9Dc78F6zySj+jpD/HJ1VBUx5wGFko39+ileAYeOugyO7NvvgRvxZ2
+	 jcQWIXIXimL1KsVEJ0ctopPc0OSBHIaalO00h5a63q7WPC3Pxjicqihj6gTOaZnm7i
+	 qL1wNXVWSgE2fr+GHZXW/U8ZBjnoc5Ogh5TyEuTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Li Xiasong <lixiasong1@huawei.com>
-Subject: [PATCH 6.6 49/87] ndisc: ndisc_send_redirect() cleanup
-Date: Tue, 25 Aug 2026 15:26:12 +0200
-Message-ID: <20260825132543.768037327@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 50/87] Input: byd - synchronize timer deletion before freeing private data
+Date: Tue, 25 Aug 2026 15:26:13 +0200
+Message-ID: <20260825132543.811556181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -46,65 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 0784d83df3bfc977c13252a0599be924f0afa68d upstream.
+commit c83e79c0842ed29860648bcce5022ef0ba5001c6 upstream.
 
-ndisc_send_redirect() is always called under rcu_read_lock().
+byd_disconnect() uses timer_delete() before freeing the driver's private
+data.  This does not wait for a running byd_clear_touch() callback, which
+dereferences the private data and its psmouse pointer.  A callback racing
+with disconnect can therefore access the private data after it has been
+freed.  The timer can also still be re-armed by byd_process_byte() while
+the disconnect is in progress.
 
-It can use dev_net_rcu() and avoid one redundant
-rcu_read_lock()/rcu_read_unlock() pair.
+Use timer_shutdown_sync() before freeing the private data: it waits for
+a running callback and turns any later re-arm attempt into a no-op.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250214140705.2105890-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Fixes: 2d5f5611dd0d ("Input: byd - enable absolute mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260720061259.1601281-1-lilinmao@kylinos.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ changed `del_timer()` to `timer_shutdown_sync()` since 6.12 predates the `del_timer()` → `timer_delete()` rename ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ndisc.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/input/mouse/byd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1675,7 +1675,7 @@ static void ndisc_fill_redirect_hdr_opti
- void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
- {
- 	struct net_device *dev = skb->dev;
--	struct net *net = dev_net(dev);
-+	struct net *net = dev_net_rcu(dev);
- 	struct sock *sk = net->ipv6.ndisc_sk;
- 	int optlen = 0;
- 	struct inet_peer *peer;
-@@ -1690,8 +1690,8 @@ void ndisc_send_redirect(struct sk_buff
- 	   ops_data_buf[NDISC_OPS_REDIRECT_DATA_SPACE], *ops_data = NULL;
- 	bool ret;
+--- a/drivers/input/mouse/byd.c
++++ b/drivers/input/mouse/byd.c
+@@ -426,7 +426,7 @@ static void byd_disconnect(struct psmous
+ 	struct byd_data *priv = psmouse->private;
  
--	if (netif_is_l3_master(skb->dev)) {
--		dev = dev_get_by_index_rcu(dev_net(skb->dev), IPCB(skb)->iif);
-+	if (netif_is_l3_master(dev)) {
-+		dev = dev_get_by_index_rcu(net, IPCB(skb)->iif);
- 		if (!dev)
- 			return;
+ 	if (priv) {
+-		del_timer(&priv->timer);
++		timer_shutdown_sync(&priv->timer);
+ 		kfree(psmouse->private);
+ 		psmouse->private = NULL;
  	}
-@@ -1729,12 +1729,10 @@ void ndisc_send_redirect(struct sk_buff
- 		goto release;
- 	}
- 
--	rcu_read_lock();
- 	peer = inet_getpeer_v6(net->ipv6.peers, &ipv6_hdr(skb)->saddr);
- 	if (!peer)
- 		goto release;
- 	ret = inet_peer_xrlim_allow(peer, 1*HZ);
--	rcu_read_unlock();
- 
- 	if (!ret)
- 		goto release;
 
 
