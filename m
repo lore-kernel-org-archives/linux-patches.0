@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5A7392C21;
-	Tue, 25 Aug 2026 13:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6023392C21;
+	Tue, 25 Aug 2026 13:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665641; cv=none; b=uNGKmigqzM1cj8GADNPAOwNmIcscUm5P53tKjCx9mrX669l+rPXbrb46ka/V6eku9n0xwxWavePoyN4pQr3HOdjBar+2Q8Zl6wOLmiGPG25pJBgD/g8AK+J1foqQs9HiGQptbZyvwzAnW/QpPxDLbKm/wglauJQH7RusRJcXCHw=
+	t=1787665644; cv=none; b=musQDa9wu/DsaVbMuQcmC0rlW+YGhsSd8XesfipTX2moi+3isQdRZWVqnP5As0UCp5GHlM8qTIiFfr4bZTS2hOuf9alY4Dz0ZgYWNBRAovAEhet83VfVDk7UGEOOIAu5MIwLvtuPCIev5c1qxgjO6bExc/WwpwEd7fLiB/8BI4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665641; c=relaxed/simple;
-	bh=ulvKbANJDgtakwXvea6xtWSZzjVHDx95B8aqHwRBts0=;
+	s=arc-20240116; t=1787665644; c=relaxed/simple;
+	bh=RyamAMAoN+iULlODG1Za+3v95qthT1m9NboN8M/KjH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbANLdWKp1i4V8KhQJ95QULnz+kYXJahn/n9nTcBlja+Id2Tig5H7Fdy5dOe4EDO0K4u/9xeYe4VoVRiEmvUopvO48hSLG20g6Gi4+LsRurLl1SENzh69kWQ0n57Owkx6CpOXylmmTGxwKy8u6gptghiVhXvQG1L1Sy6nmj5Id8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcSaKYUV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u3KiDiyZPjCcWqJgjsKdGuM0XA+utD5jLvHqheGWB07e61RGjuY6n1QyR8M/WbIPM9QIt8Q3RmuXBDeh7gggo5LODADf315xF1bZ6WNCKpsjTz56QzrfAKxMk8kU7p1m01zTFdWSF/fakumuMZdFhOFNK6Ts4+TfV9xt48N5t2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp49vV37; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcSaKYUV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69CB51F000E9;
-	Tue, 25 Aug 2026 13:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp49vV37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2311F000E9;
+	Tue, 25 Aug 2026 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665640;
-	bh=cmdwfLk0T5S2NgGU8qvLVIbm+hKn9tuclZIRR6AtoU0=;
+	s=korg; t=1787665642;
+	bh=U4JWF0JrjlKUH5yi8LLrmj2qdYC7RBT8g/+sIhGSbGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zcSaKYUVaY8BDPJcBUN+186NvRl/S/DCJIPFtPCecZQOIY2wMQ1GQVcU8PVApouDr
-	 /vy4U34RNos9NU126tnDNNCARGZasKITyDTQmxOa685hD4azxUNKUCq3VvBHFOe555
-	 ecijn7JmbJN3PQGvymFrvd+2i1j8As4BiAm7HYsU=
+	b=tp49vV37s2odt4tz/MrECFrX0k5nQFUq1fM5Azsc40dVAsqdobhI+MOwbwa41NIXD
+	 hwTfFDpLL/zNI6J4UqApZgjBFowWSlpuvKeRgj37OqHGMXPeGRTXfeDjNtz8hxmaP8
+	 BIA08fiLizLFPa9uNZffR+z74b432kNTtuKcTFWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 17/87] inet: frags: save a pair of atomic operations in reassembly
-Date: Tue, 25 Aug 2026 15:25:40 +0200
-Message-ID: <20260825132542.500640434@linuxfoundation.org>
+Subject: [PATCH 6.6 18/87] inet: frags: publish queues before arming timer
+Date: Tue, 25 Aug 2026 15:25:41 +0200
+Message-ID: <20260825132542.547626752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,216 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit ca0359df45a55a9eb4d6dc09a481064abf78320f ]
+[ Upstream commit 653d7ddf6cba867777a3d14c4f83ace008c5ad13 ]
 
-As mentioned in commit 648700f76b03 ("inet: frags:
-use rhashtables for reassembly units"):
+inet_frag_create() arms the fragment queue timer before inserting the
+queue into the fqdir rhashtable. If the namespace fragment timeout is
+zero or negative, the timer can run before the queue is published.
 
-  A followup patch will even remove the refcount hold/release
-  left from prior implementation and save a couple of atomic
-  operations.
+The timer callback then marks the queue complete, tries to remove a node
+that is not in the hash table yet, and drops the anticipated hash
+reference. Creation can subsequently publish the completed queue without
+restoring that reference, leaving a stale hash node after the caller drops
+the remaining reference.
 
-This patch implements this idea, seven years later.
+Publish the queue first and arm the timer while holding the queue lock.
+This makes timer expiry wait until the queue is visible in the hash table,
+so inet_frag_kill() can remove the node and balance the hash reference.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250312082250.1803501-5-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 653d7ddf6cba ("inet: frags: publish queues before arming timer")
+Fixes: 648700f76b03 ("inet: frags: use rhashtables for reassembly units")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Link: https://patch.msgid.link/bf66785e7c0c139d7a1900e2f01faeeab344b960.1784948849.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ieee802154/6lowpan/reassembly.c     |    5 ++++-
- net/ipv4/inet_fragment.c                |   18 ++++++++----------
- net/ipv4/ip_fragment.c                  |    5 ++++-
- net/ipv6/netfilter/nf_conntrack_reasm.c |    5 ++++-
- net/ipv6/reassembly.c                   |    9 ++++-----
- 5 files changed, 24 insertions(+), 18 deletions(-)
+ net/ipv4/inet_fragment.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/net/ieee802154/6lowpan/reassembly.c
-+++ b/net/ieee802154/6lowpan/reassembly.c
-@@ -304,17 +304,20 @@ int lowpan_frag_rcv(struct sk_buff *skb,
- 		goto err;
- 	}
- 
-+	rcu_read_lock();
- 	fq = fq_find(net, cb, &hdr.source, &hdr.dest);
- 	if (fq != NULL) {
--		int ret, refs = 1;
-+		int ret, refs = 0;
- 
- 		spin_lock(&fq->q.lock);
- 		ret = lowpan_frag_queue(fq, skb, frag_type, &refs);
- 		spin_unlock(&fq->q.lock);
- 
-+		rcu_read_unlock();
- 		inet_frag_putn(&fq->q, refs);
- 		return ret;
- 	}
-+	rcu_read_unlock();
- 
- err:
- 	kfree_skb(skb);
 --- a/net/ipv4/inet_fragment.c
 +++ b/net/ipv4/inet_fragment.c
-@@ -375,7 +375,8 @@ static struct inet_frag_queue *inet_frag
+@@ -393,8 +393,8 @@ static struct inet_frag_queue *inet_frag
+ 		*prev = ERR_PTR(-ENOMEM);
+ 		return NULL;
+ 	}
+-	mod_timer(&q->timer, jiffies + fqdir->timeout);
  
- 	timer_setup(&q->timer, f->frag_expire, 0);
- 	spin_lock_init(&q->lock);
--	refcount_set(&q->refcnt, 3);
-+	/* One reference for the timer, one for the hash table. */
-+	refcount_set(&q->refcnt, 2);
- 
- 	return q;
- }
-@@ -397,7 +398,11 @@ static struct inet_frag_queue *inet_frag
++	spin_lock_bh(&q->lock);
  	*prev = rhashtable_lookup_get_insert_key(&fqdir->rhashtable, &q->key,
  						 &q->node, f->rhash_params);
  	if (*prev) {
--		int refs = 2;
-+		/* We could not insert in the hash table,
-+		 * we need to cancel what inet_frag_alloc()
-+		 * anticipated.
-+		 */
-+		int refs = 1;
- 
+@@ -402,13 +402,13 @@ static struct inet_frag_queue *inet_frag
+ 		 * we need to cancel what inet_frag_alloc()
+ 		 * anticipated.
+ 		 */
+-		int refs = 1;
+-
  		q->flags |= INET_FRAG_COMPLETE;
- 		inet_frag_kill(q, &refs);
-@@ -407,7 +412,6 @@ static struct inet_frag_queue *inet_frag
+-		inet_frag_kill(q, &refs);
+-		inet_frag_putn(q, refs);
++		spin_unlock_bh(&q->lock);
++		inet_frag_putn(q, 2);
+ 		return NULL;
+ 	}
++	mod_timer(&q->timer, jiffies + fqdir->timeout);
++	spin_unlock_bh(&q->lock);
  	return q;
  }
  
--/* TODO : call from rcu_read_lock() and no longer use refcount_inc_not_zero() */
- struct inet_frag_queue *inet_frag_find(struct fqdir *fqdir, void *key)
- {
- 	/* This pairs with WRITE_ONCE() in fqdir_pre_exit(). */
-@@ -417,17 +421,11 @@ struct inet_frag_queue *inet_frag_find(s
- 	if (!high_thresh || frag_mem_limit(fqdir) > high_thresh)
- 		return NULL;
- 
--	rcu_read_lock();
--
- 	prev = rhashtable_lookup(&fqdir->rhashtable, key, fqdir->f->rhash_params);
- 	if (!prev)
- 		fq = inet_frag_create(fqdir, key, &prev);
--	if (!IS_ERR_OR_NULL(prev)) {
-+	if (!IS_ERR_OR_NULL(prev))
- 		fq = prev;
--		if (!refcount_inc_not_zero(&fq->refcnt))
--			fq = NULL;
--	}
--	rcu_read_unlock();
- 	return fq;
- }
- EXPORT_SYMBOL(inet_frag_find);
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -477,18 +477,21 @@ int ip_defrag(struct net *net, struct sk
- 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
- 
- 	/* Lookup (or create) queue header */
-+	rcu_read_lock();
- 	qp = ip_find(net, ip_hdr(skb), user, vif);
- 	if (qp) {
--		int ret, refs = 1;
-+		int ret, refs = 0;
- 
- 		spin_lock(&qp->q.lock);
- 
- 		ret = ip_frag_queue(qp, skb, &refs);
- 
- 		spin_unlock(&qp->q.lock);
-+		rcu_read_unlock();
- 		inet_frag_putn(&qp->q, refs);
- 		return ret;
- 	}
-+	rcu_read_unlock();
- 
- 	__IP_INC_STATS(net, IPSTATS_MIB_REASMFAILS);
- 	kfree_skb(skb);
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -452,7 +452,7 @@ int nf_ct_frag6_gather(struct net *net,
- 	struct frag_hdr *fhdr;
- 	struct frag_queue *fq;
- 	struct ipv6hdr *hdr;
--	int refs = 1;
-+	int refs = 0;
- 	u8 prevhdr;
- 
- 	/* Jumbo payload inhibits frag. header */
-@@ -479,9 +479,11 @@ int nf_ct_frag6_gather(struct net *net,
- 	hdr = ipv6_hdr(skb);
- 	fhdr = (struct frag_hdr *)skb_transport_header(skb);
- 
-+	rcu_read_lock();
- 	fq = fq_find(net, fhdr->identification, user, hdr,
- 		     skb->dev ? skb->dev->ifindex : 0);
- 	if (fq == NULL) {
-+		rcu_read_unlock();
- 		pr_debug("Can't find and can't create new queue\n");
- 		return -ENOMEM;
- 	}
-@@ -495,6 +497,7 @@ int nf_ct_frag6_gather(struct net *net,
- 	}
- 
- 	spin_unlock_bh(&fq->q.lock);
-+	rcu_read_unlock();
- 	inet_frag_putn(&fq->q, refs);
- 	return ret;
- }
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -305,9 +305,7 @@ static int ip6_frag_reasm(struct frag_qu
- 	skb_postpush_rcsum(skb, skb_network_header(skb),
- 			   skb_network_header_len(skb));
- 
--	rcu_read_lock();
- 	__IP6_INC_STATS(net, __in6_dev_stats_get(dev, skb), IPSTATS_MIB_REASMOKS);
--	rcu_read_unlock();
- 	fq->q.rb_fragments = RB_ROOT;
- 	fq->q.fragments_tail = NULL;
- 	fq->q.last_run_head = NULL;
-@@ -319,9 +317,7 @@ out_oversize:
- out_oom:
- 	net_dbg_ratelimited("ip6_frag_reasm: no memory for reassembly\n");
- out_fail:
--	rcu_read_lock();
- 	__IP6_INC_STATS(net, __in6_dev_stats_get(dev, skb), IPSTATS_MIB_REASMFAILS);
--	rcu_read_unlock();
- 	inet_frag_kill(&fq->q, refs);
- 	return -1;
- }
-@@ -379,10 +375,11 @@ static int ipv6_frag_rcv(struct sk_buff
- 	}
- 
- 	iif = skb->dev ? skb->dev->ifindex : 0;
-+	rcu_read_lock();
- 	fq = fq_find(net, fhdr->identification, hdr, iif);
- 	if (fq) {
- 		u32 prob_offset = 0;
--		int ret, refs = 1;
-+		int ret, refs = 0;
- 
- 		spin_lock(&fq->q.lock);
- 
-@@ -391,6 +388,7 @@ static int ipv6_frag_rcv(struct sk_buff
- 				     &prob_offset, &refs);
- 
- 		spin_unlock(&fq->q.lock);
-+		rcu_read_unlock();
- 		inet_frag_putn(&fq->q, refs);
- 		if (prob_offset) {
- 			__IP6_INC_STATS(net, __in6_dev_get_safely(skb->dev),
-@@ -400,6 +398,7 @@ static int ipv6_frag_rcv(struct sk_buff
- 		}
- 		return ret;
- 	}
-+	rcu_read_unlock();
- 
- 	__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_REASMFAILS);
- 	kfree_skb(skb);
 
 
