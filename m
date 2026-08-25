@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D722F8E90;
-	Tue, 25 Aug 2026 14:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E6E48167F;
+	Tue, 25 Aug 2026 14:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666454; cv=none; b=gfygjX+vZXMCdrDqCdKx7bENLFwCZsbrU3ga13PdPJKdiRcry5KQN1NHP2QQHlzzkyCw2JdwgAe1/D8EkmRrFhfJHlJT/ygSHa1yhNZNbIX8K+r8IyVCoJNdn1kERKNjZALNn8eqXKgAH22YdKxun4CUuDiDLakaNkeYJzS7QSM=
+	t=1787666456; cv=none; b=RWJ2aAMigW6kak4739gdfEJlZjihXj8KXhDsSazjzxpq+hgFFHyZxN9Dhbsg1W24JEv7nzxF2X51wYBtU12kJXRKPYi1ZKPJzDI+v8zyx38q3KxpntMtq1xNb2ksIecNh3+J9hXlZGAYj7fm8vrmS4w2FjD6vLWP0RYSewMLxfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666454; c=relaxed/simple;
-	bh=3m44yDc+2+XXcFNUC3sra9IUUXniuYQY62jmXn6YuYE=;
+	s=arc-20240116; t=1787666456; c=relaxed/simple;
+	bh=oUWn2NWn5zsJGXS7AfEl7GFBkEdXcTHolDUBewfO1yU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ObOCDgKdsah3HtMQ+UcvElbvytWqTWC2GUnXXFKCzLV2SoEyDb+9VTC/oRwI3IRDny+tnrQLw/sDOVMz/svVaVcoJRafiFA45oXZ/Qycy27Z1vHpkVbUpvy/iAgMQXxLGEcOwuZGTfMpF/GIcgANWkCyrR5dNFVhriWtxIvMVE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vX0fYIho; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uiwCzUb5DBl9jQ25WaD1Rw5HjyN2OZWjjEqeSQlzgFWbJScvhFDpWcsTiFg0NpN+OSZFrx6PPHfJFS5IP4qYmAasqt96oaCl92DYlGbbJchpq8N8jqs09ysjbYU+Z5wGQ2JUTXbrt/j2rWZDXMU6u4R8fM1B9muHUtS3W1NaYD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlzKVmEW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vX0fYIho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412D51F000E9;
-	Tue, 25 Aug 2026 14:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlzKVmEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6421F000E9;
+	Tue, 25 Aug 2026 14:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666452;
-	bh=nC057/97lGUyEh4UljHoXhcbr+A8kIFqbjgVzOAOrnA=;
+	s=korg; t=1787666455;
+	bh=nbwmGHSTSLpzwtnVJ3QfB3/XyaQyR5Sd3pc6ZLjPwlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vX0fYIhoY+JfT2ByPiHbpeTlSt5cHBbEGhRskHl0DOGhjoGVk8hOBqSvqf6fID5OY
-	 MC64aMe6hfgKMPlsKeeTIQHj14cdXSg7neJojALnXRPXYcbsS/mbHkZXi8Ut+Hx/8t
-	 HCqvMRBbPTG+LjHMfm83HmUQmz8tjwnlcAN555L4=
+	b=rlzKVmEWvbPOL6wDWvzknEwPDZonOqkW3lSwbkhnAf2KkaefItLPjn9xsy9Ap/dhn
+	 rGrj4u7fjXhHwU8KHW7j0H83kdifAu5A+pirAJskoF5qoF1dN+Js1lW5ES4vwHE88s
+	 VHtD3svC/XiJIVPs7IPHinB2mTI4NtTRcbNoiseU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 47/57] HID: core: fix OOB read of field->usage in hid_set_field()
-Date: Tue, 25 Aug 2026 15:27:09 +0200
-Message-ID: <20260825132543.175893685@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 48/57] Revert "Input: ims-pcu - fix race condition in reset_device sysfs callback"
+Date: Tue, 25 Aug 2026 15:27:10 +0200
+Message-ID: <20260825132543.214084585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -51,74 +49,28 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+This reverts commit 8b9ff928aa71a2ff6f559da45821b64fa4886a75.
 
-commit a13cdb19fcb223ed41bdab3bab42b98dba87e90b upstream.
-
-hid_set_field() hands field->usage + offset to hid_dump_input() before
-the guard that bounds offset:
-
-	hid_dump_input(field->report->device, field->usage + offset, value);
-
-	if (offset >= field->report_count) {
-		hid_err(...);
-		return -1;
-	}
-
-Under CONFIG_DEBUG_FS hid_dump_input() dereferences that pointer, with
-buf = hid_resolv_usage(usage->hid, NULL).  The usage[] array is
-allocated inline with the hid_field in hid_register_field() and holds
-field->maxusage entries, so an offset past it reads off the end of the
-kvzalloc()ed allocation and into a neighbouring object.  Had the guard
-run first, offset < report_count <= maxusage would already have confined
-the pointer to the array.
-
-A caller supplies such an offset today.  picolcd_fb_send_tile()
-validates only report->maxfield before issuing
-hid_set_field(report->field[0], 11 + i, ...) for i = 0..31, so its
-offsets are fixed at 11..42 and are never checked against the bound
-field.  When the device registers that field with fewer usages, the
-framebuffer deferred-io work drives the read on every tile.  KASAN
-reports a 4-byte slab-out-of-bounds read in hid_dump_input() below
-hid_set_field(), and the same boot logs "offset (1) exceeds
-report_count (1)" from the guard that runs only afterwards.
-
-Move the hid_dump_input() call below the guard.  Because
-field->maxusage >= field->report_count, the guard then establishes that
-field->usage + offset lies inside the array before it is dereferenced,
-for every caller and without changing behaviour on the valid path.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/input/misc/ims-pcu.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1696,13 +1696,14 @@ int hid_set_field(struct hid_field *fiel
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index 1df5e773a1f34..5d2d1797ee209 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1192,8 +1192,6 @@ static ssize_t ims_pcu_reset_device(struct device *dev,
  
- 	size = field->report_size;
+ 	dev_info(pcu->dev, "Attempting to reset device\n");
  
--	hid_dump_input(field->report->device, field->usage + offset, value);
+-	guard(mutex)(&pcu->cmd_mutex);
 -
- 	if (offset >= field->report_count) {
- 		hid_err(field->report->device, "offset (%d) exceeds report_count (%d)\n",
- 				offset, field->report_count);
- 		return -1;
- 	}
-+
-+	hid_dump_input(field->report->device, field->usage + offset, value);
-+
- 	if (field->logical_minimum < 0) {
- 		if (value != snto32(s32ton(value, size), size)) {
- 			hid_err(field->report->device, "value %d is out of range\n", value);
+ 	error = ims_pcu_execute_command(pcu, PCU_RESET, &reset_byte, 1);
+ 	if (error) {
+ 		dev_info(pcu->dev,
+-- 
+2.53.0
+
 
 
