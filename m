@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03934481247;
-	Tue, 25 Aug 2026 13:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B96481AA4;
+	Tue, 25 Aug 2026 13:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666099; cv=none; b=AICCf4PEV/eina3XQ2uP/WncxfAYSf2m8bThFO2M1R5uJ/BIuZ9cCAl60rH18/N8RAD8bvV1IKKZxePXhjSy7cJ18EboE0mPrmvbqDNwSADmuVx07jxIPG5tFSvVLKGbcadzD32QdP8O8vprb7ksMZR7AiO0iJFZs87FS/vOiR0=
+	t=1787666102; cv=none; b=HdxjUok3Qz6dQ7EozsrxJqfcUc+Y2xY7wH2APDGB6On8sxx8Gftf6KrytJwDfEH5sjP8AGx7chwsit4TyCSZszPTpeSibcq8OoncqNlpCl8OI+HqrN70mD7sfizUiIQes4P/CK5VGJVw5PX4fh+Wf1DCG7cq9+G9zcpQR9US6y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666099; c=relaxed/simple;
-	bh=ktEI4kKyQAK/TuHGRXBv3cPENh5NSxXkdYFzp2KlBuE=;
+	s=arc-20240116; t=1787666102; c=relaxed/simple;
+	bh=Bv1BWB38dX/LdaoYgDjR3eYqAbyRaErLuUtj4QWCK/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMcV59jdUiZZ3Vo0ilnpon3XPnRG2OApjVlq9rkoSfwhlCV+8NG8hEGJ93Rp+PlSdNK9PmGFmUUfjdPwQx4F9ViArmg7kMWEF/0JTArcIjCgBoJudgRFjBpkslC7sVmSKPsPUXTz5btRrd3Xk5ju19QSPaz6LF7w073Mj4rVy3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3Xeg0bl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gj6V5ztIY9WPncNYexYUKGAduO0lhprKvhh8thdc79uxpQ/iH3ffqjJ2sPbqJEuu6NPXNuVNvV9JdaTcfYCPO/kxoaMP8/Mno4y15Ccm6OdP+kNGERJCPEeUzazlNC3p4YbhnpcX73E55330D1I2qh/MT257xkhN/K9DM470ti4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayqmQ3Ut; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3Xeg0bl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B4C1F00A3A;
-	Tue, 25 Aug 2026 13:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayqmQ3Ut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4709C1F000E9;
+	Tue, 25 Aug 2026 13:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666097;
-	bh=BfIsVFR5UGl8f3i/nP2FvCpNltnHVC5cw20MtuMTE8E=;
+	s=korg; t=1787666100;
+	bh=vGNGTsjHYYldfmafxjjAnL3DFzCyXYBuFi8u21Yia88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3Xeg0blJkzoSHYf1HHtVzGV2MGEqGYatDIxWdDtWtxhqJCcCX9WNCBBt+kv8H4Fv
-	 83FK/yHQMQ91sAspjyplzyUiZFi/XYO2EIerdO1ofdkzpcvmn8QogL9O7jPg76tWWs
-	 L8CMeEMIYJ/iSCTBUG0GnrE61WI7nvM8YD+EzJzU=
+	b=ayqmQ3Uth03BT/3w7xcEw9BrMfUepYCVyx5OMkts23ApUV2unsvbsArgtsFdkKGp9
+	 AFHtmXqY391gJ3ZRwqRP85TmaZjg2Zyz77TbjKhav/XBbRWBDdzqpcbuzQW+4P86Ei
+	 Q7QrLRKZ+A5s36L5yI0Xi64eDVEpsUg9p9Qxp1fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.1 52/79] nfc: nci: free destination parameters when closing a connection
-Date: Tue, 25 Aug 2026 15:26:32 +0200
-Message-ID: <20260825132543.741952136@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Li Xiasong <lixiasong1@huawei.com>
+Subject: [PATCH 6.1 53/79] ndisc: ndisc_send_redirect() cleanup
+Date: Tue, 25 Aug 2026 15:26:33 +0200
+Message-ID: <20260825132543.780023511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -51,35 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 2e65bafdfd3a8bba972b3d17b6a57816557530fc upstream.
+commit 0784d83df3bfc977c13252a0599be924f0afa68d upstream.
 
-When a connection is closed, nci_core_conn_close_rsp_packet() frees
-conn_info but not conn_info->dest_params, which is a separate devm
-allocation. Each connect/close cycle leaks one dest_params until the
-NFC device is removed. Free dest_params along with conn_info.
+ndisc_send_redirect() is always called under rcu_read_lock().
 
-Fixes: 9b8d1a4cf2aa ("nfc: nci: Add an additional parameter to identify a connection id")
-Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260721023518.1697625-1-lilinmao@kylinos.cn
-Signed-off-by: David Heidelberg <david@ixit.cz>
+It can use dev_net_rcu() and avoid one redundant
+rcu_read_lock()/rcu_read_unlock() pair.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250214140705.2105890-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/rsp.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/ndisc.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/net/nfc/nci/rsp.c
-+++ b/net/nfc/nci/rsp.c
-@@ -336,6 +336,7 @@ static void nci_core_conn_close_rsp_pack
- 			list_del(&conn_info->list);
- 			if (conn_info == ndev->rf_conn_info)
- 				ndev->rf_conn_info = NULL;
-+			devm_kfree(&ndev->nfc_dev->dev, conn_info->dest_params);
- 			devm_kfree(&ndev->nfc_dev->dev, conn_info);
- 		}
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -1671,7 +1671,7 @@ static void ndisc_fill_redirect_hdr_opti
+ void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
+ {
+ 	struct net_device *dev = skb->dev;
+-	struct net *net = dev_net(dev);
++	struct net *net = dev_net_rcu(dev);
+ 	struct sock *sk = net->ipv6.ndisc_sk;
+ 	int optlen = 0;
+ 	struct inet_peer *peer;
+@@ -1686,8 +1686,8 @@ void ndisc_send_redirect(struct sk_buff
+ 	   ops_data_buf[NDISC_OPS_REDIRECT_DATA_SPACE], *ops_data = NULL;
+ 	bool ret;
+ 
+-	if (netif_is_l3_master(skb->dev)) {
+-		dev = dev_get_by_index_rcu(dev_net(skb->dev), IPCB(skb)->iif);
++	if (netif_is_l3_master(dev)) {
++		dev = dev_get_by_index_rcu(net, IPCB(skb)->iif);
+ 		if (!dev)
+ 			return;
  	}
+@@ -1725,12 +1725,10 @@ void ndisc_send_redirect(struct sk_buff
+ 		goto release;
+ 	}
+ 
+-	rcu_read_lock();
+ 	peer = inet_getpeer_v6(net->ipv6.peers, &ipv6_hdr(skb)->saddr);
+ 	if (!peer)
+ 		goto release;
+ 	ret = inet_peer_xrlim_allow(peer, 1*HZ);
+-	rcu_read_unlock();
+ 
+ 	if (!ret)
+ 		goto release;
 
 
