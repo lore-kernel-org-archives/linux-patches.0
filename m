@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2681D423A85;
-	Tue, 25 Aug 2026 13:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136DE479864;
+	Tue, 25 Aug 2026 13:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665963; cv=none; b=ATAUmNL1AanBSDAMlnWYjqOnwnJwbEmGSnlMVxjOK/T6kmHuXDsBe1Yxkuy6O5j75j2nDLk0pA4/91BYELSpfe2XdhLNU8tWHFb32YBbUAozG40VgQN5giczVBM/ajFx7W6yGW/mUhgcK9RCEsa2kUhzISJLj0ZVH2vVkfENi0Q=
+	t=1787665966; cv=none; b=sUF2wHocyT+j1ackxYTzseubJ09oY7Nelb6l6f2+WK9Q2fJ+MUi47HJjkonvgswzJYXjAo8je/n9rLcLIsCAEXq7R1WH21K3vrQL2Vs3wtvRoRNYOA3Bx1ZLUU1G+B4TkuDW+SHI1orRMwKSj4ipBIyofXcxTgVvwU08PS3Cma8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665963; c=relaxed/simple;
-	bh=r8QFd9YWJBU11jbO47dByjQY49lUOtijviWPqYA1FII=;
+	s=arc-20240116; t=1787665966; c=relaxed/simple;
+	bh=RT448wTWaBMVm3Gp1f1d26rvbexNgr23iaHayEfPrHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKerL/6jcu097x5YrpYxDYty2n0jWBYb5QiXyL1NCGLGHYvJFr/sKj+UrPM/1JZgCpGw4xd91anGAQrq7iJe1SfaP3Ztk0rqMOEgnqxJsB95oTF8ooxBgkbkJA9olJ0e0yRPaIWflFGDoEMeiN4PofAT8D7urkkBhRb1inTdNEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6NCv1C3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lcPLW9CQVHXyrqK/fwqJUNiwZgesnsGi4hs1eo6OvjrZLiUvX4RF4VCHOHpu8yHi5ePzCCqFVRMsRO0oCUhJBpV3JU0gR/JJeM0p9DLYMA99QJbJ0nnyYZ7ofrXi8O0QctQKghpAaY7uEyEpfUSRnY/lB3HEH6n9sxGgLF9h38M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBUWWEiO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6NCv1C3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784141F000E9;
-	Tue, 25 Aug 2026 13:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBUWWEiO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EA61F000E9;
+	Tue, 25 Aug 2026 13:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665962;
-	bh=tSEth9EafXzS5/whMrLOj30s7AGGTd0+SEu0HY5CjYk=;
+	s=korg; t=1787665965;
+	bh=gTPwBUq1s0g+mT9pS75YuVMohyg61hBoRSd8edI4SHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n6NCv1C3CNitMfjsZIiJuo8RJK3jqEn1UR/Roc0xl7u597bYNUWBENWD7CV1DKeJZ
-	 n6ymHu7X0MS/OCy/tXpiQT4Tf7Cd+FHo7uE5StXQ7ZxZjhHxb1GBeeWYFYrPK62BAm
-	 wqdndTjZh8RRQOS2jkc83WyWnxCbiF+rcM3DgipE=
+	b=NBUWWEiOJrNQ/+Fq3NERXG9xoy5gJhoiNrA23rwckfDV0DOltWY1clpuSfDqjAndL
+	 9+i2VxtJq3ycx9A/gXWMCT45HBSc2yf4wttgaZkCYz2M6xmBmQwGe/OJS4x3totduT
+	 /4lnRIhp1U7DQRuHjt4A4r7pHd08EigYdC3zkuu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Brian Foster <bfoster@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 36/79] xfs: bounds-check buffer log items dirty bitmap
-Date: Tue, 25 Aug 2026 15:26:16 +0200
-Message-ID: <20260825132543.112443463@linuxfoundation.org>
+Subject: [PATCH 6.1 37/79] drm/amdgpu: check ASPM on the dGPU host link
+Date: Tue, 25 Aug 2026 15:26:17 +0200
+Message-ID: <20260825132543.152417117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -53,164 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 813f8136a2ce1fee266d02a7df73db6e8a541604 ]
+[ Upstream commit 2a9c5154a5650c09ad44ff5e1dff74754e15a3c6 ]
 
-xlog_recover_do_reg_buffer() replays each dirty region described by a
-buffer log item's bitmap into the buffer read for that item:
+dGPUs with an internal PCIe switch expose graphics functions below the
+switch downstream port. The automatic ASPM check uses the display
+endpoint and evaluates the internal link instead of the host link.
 
-	memcpy(xfs_buf_offset(bp, (uint)bit << XFS_BLF_SHIFT),
-		item->ri_buf[i].iov_base,
-		nbits << XFS_BLF_SHIFT);
+Use the switch upstream port for the check and report the selected
+link.
 
-The destination offset (bit/nbits, from the logged dirty bitmap) and the
-buffer size (from the logged blf_len) are both attacker-controlled and
-otherwise unrelated, yet the only thing bounding the copy is an ASSERT(),
-which compiles away on production kernels. A crafted image logging a
-small blf_len together with a bitmap bit past the end of that buffer
-drives the memcpy() past the buffer's allocation, corrupting adjacent
-kernel heap during mount-time log recovery. This is reachable by anyone
-who can get a crafted image mounted -- the malicious-filesystem threat
-model XFS already guards against elsewhere.
-
-Turn the ASSERT() into a real XFS_IS_CORRUPT() check that aborts recovery
-of the buffer with -EFSCORRUPTED, consistent with the validate-and-fail
-idiom already used in xlog_recover_do_inode_buffer() and
-xfs_dquot_item_recover.c. xlog_recover_do_reg_buffer() therefore becomes
-STATIC int and its three callers propagate the error.
-
-Found and confirmed with KASAN on a CONFIG_XFS_DEBUG=n build: the crafted
-image trips a slab-out-of-bounds write before this change and fails
-recovery cleanly with -EFSCORRUPTED after it.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 0ab5d711ec74 ("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4e0d6f2876e704fff707b18c40dbd383aea4a1c9)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ dropped the `xlog_recover_do_primary_sb_buffer()` error-propagation hunk and its primary-SB/rtsb arm since that helper doesn't exist, keeping only the `error = 0;` reset ]
+[ Dropped the upstream APU and `amdgpu_device_aspm_support_quirk(adev)` context lines, keeping 6.1's old-signature quirk helper untouched. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_buf_item_recover.c |   53 ++++++++++++++++++++++++++++++------------
- 1 file changed, 38 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   50 ++++++++++++++++++++++++++++-
+ 1 file changed, 49 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_buf_item_recover.c
-+++ b/fs/xfs/xfs_buf_item_recover.c
-@@ -441,7 +441,7 @@ xlog_recover_validate_buf_type(
-  * given buffer.  The bitmap in the buf log format structure indicates
-  * where to place the logged data.
-  */
--STATIC void
-+STATIC int
- xlog_recover_do_reg_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog_recover_item	*item,
-@@ -469,8 +469,24 @@ xlog_recover_do_reg_buffer(
- 		ASSERT(nbits > 0);
- 		ASSERT(item->ri_buf[i].iov_base != NULL);
- 		ASSERT(item->ri_buf[i].iov_len % XFS_BLF_CHUNK == 0);
--		ASSERT(BBTOB(bp->b_length) >=
--		       ((uint)bit << XFS_BLF_SHIFT) + (nbits << XFS_BLF_SHIFT));
-+		/*
-+		 * The bitmap is only trustworthy to the extent that it
-+		 * describes a region that actually fits inside the buffer we
-+		 * read in based on the (attacker-controlled) blf_len.  Do not
-+		 * rely on an ASSERT() for this -- it compiles away entirely on
-+		 * non-DEBUG kernels, which is exactly where this matters, so
-+		 * validate it for real and abort recovery of this buffer rather
-+		 * than copying past the end of it.
-+		 */
-+		if (XFS_IS_CORRUPT(mp, BBTOB(bp->b_length) <
-+				((uint)bit << XFS_BLF_SHIFT) +
-+				(nbits << XFS_BLF_SHIFT))) {
-+			xfs_alert(mp,
-+	"Bad buffer log item dirty bitmap (bit %d, nbits %d) for %d-byte buffer at daddr 0x%llx.",
-+				bit, nbits, BBTOB(bp->b_length),
-+				xfs_buf_daddr(bp));
-+			return -EFSCORRUPTED;
-+		}
- 
- 		/*
- 		 * The dirty regions logged in the buffer, even though
-@@ -524,6 +540,7 @@ xlog_recover_do_reg_buffer(
- 	ASSERT(i == item->ri_total);
- 
- 	xlog_recover_validate_buf_type(mp, bp, buf_f, current_lsn);
-+	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1375,6 +1375,31 @@ bool amdgpu_device_pcie_dynamic_switchin
+ 	return true;
  }
  
- /*
-@@ -532,10 +549,10 @@ xlog_recover_do_reg_buffer(
-  * (ie. USR or GRP), then just toss this buffer away; don't recover it.
-  * Else, treat it as a regular buffer and do recovery.
++/*
++ * Some dGPUs expose their display endpoint below an internal PCIe switch.
++ * Use the switch upstream port to query the host-facing link.
++ */
++static struct pci_dev *amdgpu_device_get_aspm_pdev(struct amdgpu_device *adev)
++{
++	struct pci_dev *swds, *swus;
++
++	swds = pci_upstream_bridge(adev->pdev);
++	if (!swds ||
++	    (swds->vendor != PCI_VENDOR_ID_ATI &&
++	     swds->vendor != PCI_VENDOR_ID_AMD) ||
++	    pci_pcie_type(swds) != PCI_EXP_TYPE_DOWNSTREAM)
++		return adev->pdev;
++
++	swus = pci_upstream_bridge(swds);
++	if (!swus ||
++	    (swus->vendor != PCI_VENDOR_ID_ATI &&
++	     swus->vendor != PCI_VENDOR_ID_AMD) ||
++	    pci_pcie_type(swus) != PCI_EXP_TYPE_UPSTREAM)
++		return adev->pdev;
++
++	return swus;
++}
++
+ /**
+  * amdgpu_device_should_use_aspm - check if the device should program ASPM
   *
-- * Return false if the buffer was tossed and true if we recovered the buffer to
-- * indicate to the caller if the buffer needs writing.
-+ * Return 0 if the buffer was not recovered (tossed), 1 if it was recovered and
-+ * needs writing, or a negative errno if recovery of the buffer failed.
+@@ -1387,6 +1412,9 @@ bool amdgpu_device_pcie_dynamic_switchin
   */
--STATIC bool
-+STATIC int
- xlog_recover_do_dquot_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog			*log,
-@@ -544,6 +561,7 @@ xlog_recover_do_dquot_buffer(
- 	struct xfs_buf_log_format	*buf_f)
+ bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev)
  {
- 	uint			type;
-+	int			error;
- 
- 	trace_xfs_log_recover_buf_dquot_buf(log, buf_f);
- 
-@@ -551,7 +569,7 @@ xlog_recover_do_dquot_buffer(
- 	 * Filesystems are required to send in quota flags at mount time.
- 	 */
- 	if (!mp->m_qflags)
--		return false;
-+		return 0;
- 
- 	type = 0;
- 	if (buf_f->blf_flags & XFS_BLF_UDQUOT_BUF)
-@@ -564,10 +582,12 @@ xlog_recover_do_dquot_buffer(
- 	 * This type of quotas was turned off, so ignore this buffer
- 	 */
- 	if (log->l_quotaoffs_flag & type)
--		return false;
-+		return 0;
- 
--	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
--	return true;
-+	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
-+	if (error)
-+		return error;
-+	return 1;
++	struct pci_dev *aspm_pdev, *parent;
++	bool enabled;
++
+ 	switch (amdgpu_aspm) {
+ 	case -1:
+ 		break;
+@@ -1397,7 +1425,27 @@ bool amdgpu_device_should_use_aspm(struc
+ 	default:
+ 		return false;
+ 	}
+-	return pcie_aspm_enabled(adev->pdev);
++
++	/*
++	 * pcie_aspm_enabled() checks the link between its argument and
++	 * the immediate upstream bridge. Use SWUS for dGPUs with an
++	 * internal switch so that this is the host-facing link.
++	 */
++	aspm_pdev = amdgpu_device_get_aspm_pdev(adev);
++	parent = pci_upstream_bridge(aspm_pdev);
++	if (!parent) {
++		dev_dbg(adev->dev, "ASPM: no upstream PCIe link for %s\n",
++			pci_name(aspm_pdev));
++		return false;
++	}
++
++	enabled = pcie_aspm_enabled(aspm_pdev);
++	/* Report the exact link used for the automatic ASPM decision. */
++	dev_dbg(adev->dev, "ASPM: link %s <-> %s is %s\n",
++		pci_name(parent), pci_name(aspm_pdev),
++		enabled ? "enabled" : "disabled");
++
++	return enabled;
  }
  
- /*
-@@ -962,13 +982,16 @@ xlog_recover_buf_commit_pass2(
- 			goto out_release;
- 	} else if (buf_f->blf_flags &
- 		  (XFS_BLF_UDQUOT_BUF|XFS_BLF_PDQUOT_BUF|XFS_BLF_GDQUOT_BUF)) {
--		bool	dirty;
--
--		dirty = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
--		if (!dirty)
-+		error = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
-+		if (error <= 0)
- 			goto out_release;
-+		/* write dirty buffer */
-+		error = 0;
- 	} else {
--		xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+		error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f,
-+						   current_lsn);
-+		if (error)
-+			goto out_release;
- 	}
- 
- 	/*
+ bool amdgpu_device_aspm_support_quirk(void)
 
 
