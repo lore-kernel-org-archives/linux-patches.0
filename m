@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B2E47D475;
-	Tue, 25 Aug 2026 13:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF1047799D;
+	Tue, 25 Aug 2026 13:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664628; cv=none; b=Qkhbd9aYdRI5qJC+CV9fj0h49rcAMhwx6Vu9hPxNLN66MksFkWB/nn0exzRHNFwHoVbuTS6TDmIJqHuigVJSj1CFamLdRSmJlKI7mFIWFmZkXEn8VnM7isP4U3ed6lxMSDCMWj9E2D84Cagc3eJPg2piT/5sl2Pu9OHVYOldg1E=
+	t=1787664631; cv=none; b=o6n3QTiLOv09AEo/vcNEIPrIg1B5kiog9I+QRlQyEzSp5nI9eQX9sZE/VZbtKHlK++xHoLJxDiZgLHg4m2vyoxP5SwkAFi/YD7DbW+WZLaeJg+gZEedBW0LsEDwnC/Mw+suNRMIFWwcMDw/Eh3GJtKhkuOXIYcOTVnJe95n/y1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664628; c=relaxed/simple;
-	bh=BYYqltCjzs9sH/LwdT5Kd3pGhO230tIpY9IR31uULX4=;
+	s=arc-20240116; t=1787664631; c=relaxed/simple;
+	bh=bZEr/3UukigRp6LGte2Xy2R261VxPjwEh9oiXAx4VMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MID6wBXtZl8DVWZ/GSFzCaNga4Vf+PHa/oUDcuUgH2lhm7Ew11V/FbQehvaPC0zYj0ntPpuE/zZqRpor10pH2VBiE5e9mRfMCXO+LrRwFPA2LF2WyQ6HAIGRuIJ5TfDRFZEliNbE18rJFMG/2zSClG6MeQOBihiIU/rs+idt/lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdUEqlHz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tmno5V15/fN/wSBdUrgUmLeiQdex6DkONeZihFO+oZ4+f/v7y99KmsYjRpAwU8XEZJ6TUJI2wFmcDBPv5WDmKbuhDF7eJlSl7jwWccNeX8zkinqIcSh3fYij6nIq7QqYi4S5/1Jwpmv2fGjxa84quPXBiT6Ybwt+w6owiTXFyq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yq9i84Oc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdUEqlHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64701F000E9;
-	Tue, 25 Aug 2026 13:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yq9i84Oc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13611F000E9;
+	Tue, 25 Aug 2026 13:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664627;
-	bh=52RvFp7q2SFLpZyZIoRrIduRIxqD1y7jhKxWTtlztBE=;
+	s=korg; t=1787664630;
+	bh=67euuwzP37wrO1e0Z2dtlFbf5rD4jRx6C/YVCVyiB3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdUEqlHzAgh6bApSN4BJf7X3gwOb96iMqsaU89II0GVA7aWtmUO6sZASh77OLxpL0
-	 KfdPKJj1XVwJPbFnvpEQqWPHkLN3Kiz2lxExgP+6lAWzVSQDFBL65j3hudDVDfMa+6
-	 SHMTfjaoSBo1MXFm2OU7HFV5b1+zQANwXeJ+7BH0=
+	b=yq9i84OcC8WVomx76C3RFQFK+yqsjSXb1IiiASAPBX26pg7BR4cEJRx6SBc7KS6Oh
+	 Vd0Co5hfZ+AenD2ih62sHYfPNcB8GB6HEscO6ZzgXmCJIoYOBakGSWiIq8Bmf/bH0N
+	 IbPC+4/xRxv3DLH5SvwFhrcFwlsJpbFpeN9Jmi64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
+	syzbot+59178abfeb0ea3f0ab20@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Yun Zhou <yun.zhou@windriver.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 32/82] xfs: validate attr entry pointer before field access
-Date: Tue, 25 Aug 2026 15:25:19 +0200
-Message-ID: <20260825132542.766642559@linuxfoundation.org>
+Subject: [PATCH 7.2 33/82] xfs: restore nofs context unconditionally in xfs_trans_roll
+Date: Tue, 25 Aug 2026 15:25:20 +0200
+Message-ID: <20260825132542.803785573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,60 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-commit b7eea80be25f3334f131d52982b3131aba77b97d upstream.
+commit 0241ea5fb0fe86d2a673163b2f5815111aadc7f7 upstream.
 
-xfs_attr3_leaf_verify_entry() accesses lentry/rentry fields (namelen,
-valuelen) before checking if the entry pointer itself is within bounds.
-If nameidx is crafted to point near the end of the buffer, these field
-accesses can read out-of-bounds before the bounds check at
-name_end > buf_end is performed.
+When __xfs_trans_commit() fails in xfs_trans_roll(), the NOFS context
+is cleared but only restored in the success path.  This leaves the
+error path without nofs protection, causing a circular lock dependency
+between xfs_nondir_ilock_class and fs_reclaim:
 
-Add explicit bounds checks for entry pointers before accessing their
-fields. Use offsetof() to check that the start of the flexible array
-member (nameval/name) is within bounds, which ensures all preceding
-fields are safe to access.
+       CPU0                    CPU1
+       ----                    ----
+  lock(&xfs_nondir_ilock_class);
+                               lock(fs_reclaim);
+                               lock(&xfs_nondir_ilock_class);
+  lock(fs_reclaim);
 
-Fixes: c84760659dcf2 ("xfs: check attribute leaf block structure")
-Cc: <stable@vger.kernel.org> # v5.5
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Fix this by moving xfs_trans_set_context() before the error check so
+that nofs context is always restored on the new transaction.
+
+Reported-by: syzbot+59178abfeb0ea3f0ab20@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=59178abfeb0ea3f0ab20
+Fixes: a1ca658d649a ("xfs: fix incorrect context handling in xfs_trans_roll")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/xfs/xfs_trans.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_attr_leaf.c
-+++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -325,6 +325,13 @@ xfs_attr3_leaf_verify_entry(
+--- a/fs/xfs/xfs_trans.c
++++ b/fs/xfs/xfs_trans.c
+@@ -1029,6 +1029,15 @@ xfs_trans_roll(
+ 	 * duplicate transaction that gets returned.
  	 */
- 	if (ent->flags & XFS_ATTR_LOCAL) {
- 		lentry = xfs_attr3_leaf_name_local(leaf, idx);
+ 	error = __xfs_trans_commit(tp, true);
 +
-+		/* Validate lentry pointer is within bounds before field access */
-+		if ((char *)lentry >= buf_end)
-+			return __this_address;
-+		if ((char *)lentry + offsetof(struct xfs_attr_leaf_name_local, nameval) > buf_end)
-+			return __this_address;
++	tp = *tpp;
++	/*
++	 * __xfs_trans_commit cleared the NOFS flag by calling into
++	 * xfs_trans_free.  Set it again here before doing memory
++	 * allocations.
++	 */
++	xfs_trans_set_context(tp);
 +
- 		namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
- 				be16_to_cpu(lentry->valuelen));
- 		name_end = (char *)lentry + namesize;
-@@ -332,6 +339,13 @@ xfs_attr3_leaf_verify_entry(
- 			return __this_address;
- 	} else {
- 		rentry = xfs_attr3_leaf_name_remote(leaf, idx);
-+
-+		/* Validate rentry pointer is within bounds before field access */
-+		if ((char *)rentry >= buf_end)
-+			return __this_address;
-+		if ((char *)rentry + offsetof(struct xfs_attr_leaf_name_remote, name) > buf_end)
-+			return __this_address;
-+
- 		namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
- 		name_end = (char *)rentry + namesize;
- 		if (rentry->namelen == 0)
+ 	if (error)
+ 		return error;
+ 
+@@ -1040,13 +1049,6 @@ xfs_trans_roll(
+ 	 * either nothing be locked across this call, or that anything that is
+ 	 * locked be logged in the prior and the next transactions.
+ 	 */
+-	tp = *tpp;
+-	/*
+-	 * __xfs_trans_commit cleared the NOFS flag by calling into
+-	 * xfs_trans_free.  Set it again here before doing memory
+-	 * allocations.
+-	 */
+-	xfs_trans_set_context(tp);
+ 	error = xfs_log_regrant(tp->t_mountp, tp->t_ticket);
+ 	if (error)
+ 		return error;
 
 
