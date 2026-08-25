@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A248F481AA6;
-	Tue, 25 Aug 2026 13:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467F41F2B88;
+	Tue, 25 Aug 2026 13:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666330; cv=none; b=nLzu88ILArejQrb4XQhuVbb5ecWa3j9slgMjP6k06ZqLnNNjk1EMdhubgKggfAx7yLQw5TyqGzSu9ypvJ6yqUtVpiq5rkMIay6qJt8axvbJskbFpeO3KPI9GKjoGJZZgMRQcHNq1P7SdjRWURRCVX1FcllgezJ3YN3K8MyoTMx8=
+	t=1787666332; cv=none; b=WCIWcBlszJSKJ2+zN+K5TUL6ho3t7XF+wHUkoq23d+M2pC6b+6hgF5J8cLM8S/T8ir80q1lmQfSOfaxZTJUBLwbv335+X+apk5tUtV5Zy9aWQJAhE1/zXYgGdAsaktEVaIyHtY932qXkJbMehqmrUMrtwtal2iiTwoupCWyBBQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666330; c=relaxed/simple;
-	bh=dMbOj04O2XVihy/rhoxuqOia8piPZvOMOwFyqO/YPJU=;
+	s=arc-20240116; t=1787666332; c=relaxed/simple;
+	bh=SrWD5DPj0q/cpf0sXutT0vx64/8+E29KuG8d9RYnuQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cr+XiP75QzO6+Dq/nq27YdQqbaEEvGX4ei443phv4ErOztmXzqZ1uuWFoAdbHY+h/TD4CX9kv/Gv4UWQcomyEt8mzcps7lmUVvjkWuaMWfktJDU16cbpn/EL3bbm/YMB0lHudg8niObW6I72oSlUD8V1IX6tF48bqe40VV2ETvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2f+wJZJD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qodNuSBUn/b3CYnVenYfJ0mKDveu/0sQcYmLv5KYExmZ4xQEShkhraR0WvhraNCPO3fxz5TOt26ppw9v/AAJRhhokAwB/TOjDurhJErxatbi8TplAMRDmB58QJG//xPr3aJvI1PZt31QJuYix21tPTZVI+wKRffkzDceqI/UXnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t48+hpZ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2f+wJZJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1901F000E9;
-	Tue, 25 Aug 2026 13:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t48+hpZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9990D1F00A3A;
+	Tue, 25 Aug 2026 13:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666328;
-	bh=KhCXgOM7yoPNOvDti3mhRBpZNK62YtI16IqQJWWOzHs=;
+	s=korg; t=1787666331;
+	bh=UHU9uPhjNASxb+OLi8odgjFEgDa7D22O2DDHYp/ZD8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2f+wJZJDNdkihQivJ0gz4wjlQdAW2a5kI3cEFBgrwBYIu88wa2ylDiCEB7K7uBJJo
-	 J0i1a8rijUOIj86CIWwaB1H9R8kyds4Xq+7XwvljGWoyMMomtHOd5xCWyEXWduHYjh
-	 L2cS4c3+AUwPmWaDems79SWF6O4LWbla2SZgMA+M=
+	b=t48+hpZ/9+b+BaesOYBffL43ChZSlPgmZ+eLGXHoVzG0YlQrpRN2YPKQsLa9q2E0X
+	 J8llMutnPwzITZbu9in1NtTSVZPRroIVVd1HA2OYuOnB6cSnDbEY2MUPzPz1adRBeI
+	 17RF06mLdgQ41nyBJk+aYdpvUFcIWYXjH5yHuB2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/76] mptcp: avoid combining some incoming suboptions
-Date: Tue, 25 Aug 2026 15:26:42 +0200
-Message-ID: <20260825132543.496629832@linuxfoundation.org>
+Subject: [PATCH 5.15 50/76] ASoC: codecs: lpass-tx-macro: Fix enum kcontrol accesses
+Date: Tue, 25 Aug 2026 15:26:43 +0200
+Message-ID: <20260825132543.536274028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -45,225 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Dawid Wróbel <me@dawidwrobel.com>
 
-[ Upstream commit b6ee361524641f57b2e2363f7737f20e17f67827 ]
+[ Upstream commit 1ba381759e45d5d0442452cfa5c42e836191a568 ]
 
-Some MPTCP suboptions are mutually exclusive according to the RFC8684,
-but also because in different places, the code doesn't expect some
-combinations to be present. That's specially true for suboptions that
-would be present twice, but with different attributes.
+The "DEC0 MODE" to "DEC7 MODE" controls are enumerated, but
+tx_macro_dec_mode_get() and tx_macro_dec_mode_put() access their
+value through ucontrol->value.integer.value[0] (a long) instead of
+ucontrol->value.enumerated.item[0] (an unsigned int).
 
-The new restrictions are the same as the ones applied on the output
-side, with mptcp_write_options. The same rules can be reused with a
-small fix: an MP_FASTCLOSE can be used with a DSS when the sender picks
-this option [1], which is not the case on Linux. Here are the rules:
+This same pattern was fixed in the sibling drivers by
+commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
+out of bounds for enum type") and
+commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
+out of bounds for enum type"), but tx-macro was missed.
 
-  Which options can be used together?
+On 64-bit kernels built with CONFIG_SND_CTL_DEBUG, the elem value
+sanity check catches the 4 bytes written past the enumerated item
+and every read of these controls fails with -EINVAL:
 
-  X: mutually exclusive
-  O: often used together
-  C: can be used together in some cases
-  P: could be used together but we prefer not to (optimisations)
+  snd-sm8250 sound: control 2:0:0:DEC0 MODE:0: access overflow
 
-  | Opt: | MPC  | MPJ  | DSS  | ADD  |  RM  | PRIO | FAIL |  FC  |
-  |------|------|------|------|------|------|------|------|------|
-  | MPC  |------|------|------|------|------|------|------|------|
-  | MPJ  |  X   |------|------|------|------|------|------|------|
-  | DSS  |  X   |  X   |------|------|------|------|------|------|
-  | ADD  |  X   |  X   |  P   |------|------|------|------|------|
-  | RM   |  C   |  C   |  C   |  P   |------|------|------|------|
-  | PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
-  | FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
-  | FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
-  | RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
-  |------|------|------|------|------|------|------|------|------|
-
-The only difference is with the 'P': another stack could send and
-ADD_ADDR with other suboptions (DSS, RM_ADDR), and this should be
-allowed.
-
-A few points of attention:
-
- - In theory, an MP_CAPABLE could be used with a RM_ADDR, but there is
-   no reason to add it with a SYN. Note that even with a 4th ACK, it
-   doesn't seem to be useful, except when IDs are known in advance via
-   another channel. Better not to break that.
-
- - Now, combining both an MP_CAPABLE and an MP_JOIN will no longer
-   result to a reject of the two options, but only the second suboption
-   is ignored. That seems OK to do that for this unexpected error. At
-   least now all inconsistent combinations are handled the same way.
-   This could change later in next. This also means the explicit checks
-   for having both MPC + MPJ in subflow.c will now be unreachable.
-   That's fine, they will be removed in a follow-up patch.
-
- - In case of conflicting combinations, the extra suboption(s) is/are
-   ignored: having such combinations either means the remote peer is
-   buggy, or is evil. The simplest action is then taken in this case:
-   stop processing the current suboption.
-
- - In mp_opt->suboptions, there is also a bit reserved to the checksum,
-   which can be used in an MP_CAPABLE and a DSS. Each time a DSS option
-   can be used in parallel with another option, the checksum can be set,
-   so the verification is combined into a new OPTIONS_MPTCP_DSS macro.
-
- - An MP_CAPABLE ACK can carry a Data-Level Length, and an optional
-   Checksum: they are the same as the ones found in a DSS, because a DSS
-   cannot be used in parallel to an MP_CAPABLE. Similarly, even if there
-   is room, a DSS cannot be used with an MP_JOIN.
-
-Fixes: eda7acddf808 ("mptcp: Handle MPTCP TCP options")
+Fixes: c39667ddcfc5 ("ASoC: codecs: lpass-tx-macro: add support for lpass tx macro")
+Assisted-by: Claude:claude-fable-5
 Cc: stable@vger.kernel.org
-Link: https://www.rfc-editor.org/rfc/rfc8684.html#section-3.5-5.1 [1]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-2-b8f496d71664@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ used `!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_SYN)` instead of missing `subopt` variable and `OPTIONS_MPTCP_MPC` instead of `OPTION_MPTCP_MPC_ACK` ]
+Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-1-6d091c736116@dawidwrobel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ kept `snd_soc_kcontrol_component()` context line instead of upstream's renamed `snd_kcontrol_chip()` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c  |   57 +++++++++++++++++++++++++++++++++++++++++++++++++++
- net/mptcp/protocol.h |    1 
- 2 files changed, 58 insertions(+)
+ sound/soc/codecs/lpass-tx-macro.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -45,6 +45,14 @@ static void mptcp_parse_option(const str
- 				expected_opsize = TCPOLEN_MPTCP_MPC_SYN;
- 		}
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1013,7 +1013,7 @@ static int tx_macro_dec_mode_get(struct
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	int path = e->shift_l;
  
-+		/* Only the MPC + ACK can be used with a RM_ADDR */
-+		if (!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_SYN)) {
-+			if ((mp_opt->suboptions & ~OPTION_MPTCP_RM_ADDR) != 0)
-+				break;
-+		} else if (mp_opt->suboptions != 0) {
-+			break;
-+		}
-+
- 		/* Cfr RFC 8684 Section 3.3.0:
- 		 * If a checksum is present but its use had
- 		 * not been negotiated in the MP_CAPABLE handshake, the receiver MUST
-@@ -117,6 +125,11 @@ static void mptcp_parse_option(const str
- 		break;
+-	ucontrol->value.integer.value[0] = tx->dec_mode[path];
++	ucontrol->value.enumerated.item[0] = tx->dec_mode[path];
  
- 	case MPTCPOPT_MP_JOIN:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTION_MPTCP_RM_ADDR |
-+					    OPTION_MPTCP_PRIO)) != 0)
-+			break;
-+
- 		if (opsize == TCPOLEN_MPTCP_MPJ_SYN) {
- 			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYN;
- 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
-@@ -148,6 +161,14 @@ static void mptcp_parse_option(const str
- 		break;
- 
- 	case MPTCPOPT_DSS:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTION_MPTCP_ADD_ADDR |
-+					    OPTION_MPTCP_RM_ADDR |
-+					    OPTION_MPTCP_PRIO |
-+					    OPTION_MPTCP_FASTCLOSE |
-+					    OPTION_MPTCP_FAIL)) != 0)
-+			break;
-+
- 		pr_debug("DSS\n");
- 		ptr++;
- 
-@@ -235,6 +256,12 @@ static void mptcp_parse_option(const str
- 		break;
- 
- 	case MPTCPOPT_ADD_ADDR:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_RM_ADDR |
-+					    OPTION_MPTCP_PRIO)) != 0)
-+			break;
-+
- 		mp_opt->echo = (*ptr++) & MPTCP_ADDR_ECHO;
- 		if (!mp_opt->echo) {
- 			if (opsize == TCPOLEN_MPTCP_ADD_ADDR ||
-@@ -294,6 +321,14 @@ static void mptcp_parse_option(const str
- 		break;
- 
- 	case MPTCPOPT_RM_ADDR:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_MPC |
-+					    OPTIONS_MPTCP_MPJ |
-+					    OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_ADD_ADDR |
-+					    OPTION_MPTCP_PRIO)) != 0)
-+			break;
-+
- 		if (opsize < TCPOLEN_MPTCP_RM_ADDR_BASE + 1 ||
- 		    opsize > TCPOLEN_MPTCP_RM_ADDR_BASE + MPTCP_RM_IDS_MAX)
- 			break;
-@@ -308,6 +343,13 @@ static void mptcp_parse_option(const str
- 		break;
- 
- 	case MPTCPOPT_MP_PRIO:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_MPJ |
-+					    OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_ADD_ADDR |
-+					    OPTION_MPTCP_RM_ADDR)) != 0)
-+			break;
-+
- 		if (opsize != TCPOLEN_MPTCP_PRIO)
- 			break;
- 
-@@ -317,6 +359,11 @@ static void mptcp_parse_option(const str
- 		break;
- 
- 	case MPTCPOPT_MP_FASTCLOSE:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_RST)) != 0)
-+			break;
-+
- 		if (opsize != TCPOLEN_MPTCP_FASTCLOSE)
- 			break;
- 
-@@ -327,6 +374,11 @@ static void mptcp_parse_option(const str
- 		break;
- 
- 	case MPTCPOPT_RST:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTION_MPTCP_FAIL |
-+					    OPTION_MPTCP_FASTCLOSE)) != 0)
-+			break;
-+
- 		if (opsize != TCPOLEN_MPTCP_RST)
- 			break;
- 
-@@ -340,6 +392,11 @@ static void mptcp_parse_option(const str
- 		break;
- 
- 	case MPTCPOPT_MP_FAIL:
-+		/* Can be used with a restricted number of other options */
-+		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
-+					    OPTION_MPTCP_RST)) != 0)
-+			break;
-+
- 		if (opsize != TCPOLEN_MPTCP_FAIL)
- 			break;
- 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -35,6 +35,7 @@
- 				 OPTION_MPTCP_MPC_ACK)
- #define OPTIONS_MPTCP_MPJ	(OPTION_MPTCP_MPJ_SYN | OPTION_MPTCP_MPJ_SYNACK | \
- 				 OPTION_MPTCP_MPJ_ACK)
-+#define OPTIONS_MPTCP_DSS	(OPTION_MPTCP_DSS | OPTION_MPTCP_CSUMREQD)
- 
- /* MPTCP option subtypes */
- #define MPTCPOPT_MP_CAPABLE	0
+ 	return 0;
+ }
+@@ -1022,7 +1022,7 @@ static int tx_macro_dec_mode_put(struct
+ 				 struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+-	int value = ucontrol->value.integer.value[0];
++	int value = ucontrol->value.enumerated.item[0];
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	int path = e->shift_l;
+ 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
 
 
