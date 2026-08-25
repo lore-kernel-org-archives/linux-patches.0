@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D125225A655;
-	Tue, 25 Aug 2026 13:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5464D3DA5B3;
+	Tue, 25 Aug 2026 13:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665574; cv=none; b=ibA4puFFrZjVhj+PFPjWlacEbx0gMC8cJhn1iFshr5LPxVk8RHtR+U0LnH2t3TJgGf8btibpVoElpnJzkiwIIewR6z0C64ERNeGKqN+sDRNh9tutwKH3IfGu6vLbDeIzEJu1K8zKer1IdCVDbdpT2BDFI0uEfC6zHwQM0tqUzJI=
+	t=1787665576; cv=none; b=Wy9EB7Hd3IYKRpT5D2yd5Z/nDisBIpMeifMWdNqgUqtLJkQnRiSt9rbIGEbp5QIEyvGbbhahUHpSaYzv5pdGpiN8/dFxuoQdslCg5lUAA6M/yTRZGYGNu0JUDHtNdtE09elJikvouZnOEuN6IW2fNXG5fu9jRLWQf977hgohTFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665574; c=relaxed/simple;
-	bh=i0N5IXF9IACcalH5zXpcTc/y8fDK7Cw03JANUH2xViM=;
+	s=arc-20240116; t=1787665576; c=relaxed/simple;
+	bh=BrU/6MfuW+BJa2yDW/wORZ53kPskrfNmzzyroIm1j6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqMnho0NiPYinaUhu+LJIzQMrtHWs/hqyguL8FGVqcF6ffLUOrHgbjImOz/dlXHND6t1IPz8dpHYhcV5PJdtv3RtrGHUoK1tj0c1zbC0zFXWAPEemH06chxiEN91lBjg/qR8hk0F24edezwREtGUqef3DU9/kV0SvuCvAKnn0Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIe+NHY+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=p1gpW/S1VMXGY93qOJiLj+vwj4FsF8L3JV3nSKsFxuSL02Z3WfMuwcdV02vwljDQnxoDBqoSTMRdQFl8ctCbpDSZq9wUpqsmASyc5y6brwitYtkwYoLJZ+TyzujF7L2d5SpIKY9NzKAvZrS7idN9Uj4Tag+JuRzTuv08RDAO9Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7Y8c9ld; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIe+NHY+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65021F00AC4;
-	Tue, 25 Aug 2026 13:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7Y8c9ld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A662F1F000E9;
+	Tue, 25 Aug 2026 13:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665572;
-	bh=lbAbGucYh/Wob7Kos0w0u3vn5N45VZ5cz/KX3JzFcQ0=;
+	s=korg; t=1787665575;
+	bh=O797JOzn1vga1HSdQ/VlXSmLOYZNDaDrBin2ZEmX8kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VIe+NHY+9F1z08jNiJAzQ+v+UCy+Rcpa5Tpis978h4wxuMfrx74ljGB6/qLEWtP9j
-	 1ogYEY3dGt5/hFkYEd5F5mjw92egCvp7AtmphmzOAXkSqZdtBdxL/vnMsMl83LvjX7
-	 MhotNnVXMwYcLPSedXshk1beZQNqHP9wMUJu+aSE=
+	b=w7Y8c9ldLUcCuqBxxJqrGKV7n3HS8XmjpS0F+PJQIxtkSkU6kK8hhYzHKUsLfiA9I
+	 yq1rEuYTqwRxpzV3cvrgvgq3Pt7dIH0mDxeKZz1mnCjwTXDew1B++UL5ueE/TSeOgW
+	 pkrJoUH2xb3KB3Je/vpYuhkFi/WF1hPKe1l/4tnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI Review <sashiko-bot@kernel.org>,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 72/77] HID: sensor: custom: Fix use-after-free in enable_sensor
-Date: Tue, 25 Aug 2026 15:26:34 +0200
-Message-ID: <20260825132544.346155870@linuxfoundation.org>
+	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 55/77] ASoC: codecs: lpass-tx-macro: Fix enum kcontrol accesses
+Date: Tue, 25 Aug 2026 15:26:17 +0200
+Message-ID: <20260825132543.720901949@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -46,87 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Dawid Wróbel <me@dawidwrobel.com>
 
-commit ad8fb82b04422f49530d2aa2753cc81d1c60102c upstream.
+[ Upstream commit 1ba381759e45d5d0442452cfa5c42e836191a568 ]
 
-enable_sensor_store() can call set_power_report_state(), which
-dereferences sensor_inst->power_state and sensor_inst->report_state.
-These pointers refer to entries in sensor_inst->fields.
+The "DEC0 MODE" to "DEC7 MODE" controls are enumerated, but
+tx_macro_dec_mode_get() and tx_macro_dec_mode_put() access their
+value through ucontrol->value.integer.value[0] (a long) instead of
+ucontrol->value.enumerated.item[0] (an unsigned int).
 
-Create the field attributes before exposing the enable_sensor sysfs
-attribute, so enable_sensor cannot be accessed before the state it
-depends on has been initialized.
+This same pattern was fixed in the sibling drivers by
+commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
+out of bounds for enum type") and
+commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
+out of bounds for enum type"), but tx-macro was missed.
 
-On remove, delete enable_sensor before freeing the field attributes,
-so a concurrent sysfs write cannot dereference freed memory through
-power_state or report_state.
+On 64-bit kernels built with CONFIG_SND_CTL_DEBUG, the elem value
+sanity check catches the 4 bytes written past the enumerated item
+and every read of these controls fails with -EINVAL:
 
-Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260623021950.1736413-1-haoxiang_li2024@163.com?part=1
-Fixes: 4a7de0519df5 ("HID: sensor: Custom and Generic sensor support")
+  snd-sm8250 sound: control 2:0:0:DEC0 MODE:0: access overflow
+
+Fixes: c39667ddcfc5 ("ASoC: codecs: lpass-tx-macro: add support for lpass tx macro")
+Assisted-by: Claude:claude-fable-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-1-6d091c736116@dawidwrobel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ kept `snd_soc_kcontrol_component()` context line instead of upstream's renamed `snd_kcontrol_chip()` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sensor-custom.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ sound/soc/codecs/lpass-tx-macro.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-sensor-custom.c
-+++ b/drivers/hid/hid-sensor-custom.c
-@@ -1005,26 +1005,26 @@ static int hid_sensor_custom_probe(struc
- 		return ret;
- 	}
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1076,7 +1076,7 @@ static int tx_macro_dec_mode_get(struct
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	int path = e->shift_l;
  
--	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
--				 &enable_sensor_attr_group);
-+	ret = hid_sensor_custom_add_attributes(sensor_inst);
- 	if (ret)
- 		goto err_remove_callback;
- 
--	ret = hid_sensor_custom_add_attributes(sensor_inst);
-+	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
-+				 &enable_sensor_attr_group);
- 	if (ret)
--		goto err_remove_group;
-+		goto err_remove_attributes;
- 
- 	ret = hid_sensor_custom_dev_if_add(sensor_inst);
- 	if (ret)
--		goto err_remove_attributes;
-+		goto err_remove_group;
+-	ucontrol->value.integer.value[0] = tx->dec_mode[path];
++	ucontrol->value.enumerated.item[0] = tx->dec_mode[path];
  
  	return 0;
- 
--err_remove_attributes:
--	hid_sensor_custom_remove_attributes(sensor_inst);
- err_remove_group:
- 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
- 			   &enable_sensor_attr_group);
-+err_remove_attributes:
-+	hid_sensor_custom_remove_attributes(sensor_inst);
- err_remove_callback:
- 	sensor_hub_remove_callback(hsdev, hsdev->usage);
- 
-@@ -1042,9 +1042,10 @@ static void hid_sensor_custom_remove(str
- 	}
- 
- 	hid_sensor_custom_dev_if_remove(sensor_inst);
--	hid_sensor_custom_remove_attributes(sensor_inst);
-+	/* Remove enable_sensor first as it uses fields via power_state/report_state. */
- 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
- 			   &enable_sensor_attr_group);
-+	hid_sensor_custom_remove_attributes(sensor_inst);
- 	sensor_hub_remove_callback(hsdev, hsdev->usage);
  }
- 
+@@ -1085,7 +1085,7 @@ static int tx_macro_dec_mode_put(struct
+ 				 struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+-	int value = ucontrol->value.integer.value[0];
++	int value = ucontrol->value.enumerated.item[0];
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	int path = e->shift_l;
+ 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
 
 
