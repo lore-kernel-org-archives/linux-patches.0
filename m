@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534C947FB10;
-	Tue, 25 Aug 2026 13:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7E347FB10;
+	Tue, 25 Aug 2026 13:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664671; cv=none; b=Qvs2yVnEnks7xVtXl7o03Tl9sJ57px+zLJl9RYImRf46+qmgjXx+yuyQonxTGeBuv+xpgnjTzYGMFdqBu5CxJ8ompOcwBCKNMY37r1+083ATq8d80s9GGZGiVvs5FGeShO+N+NXh0ch8XmI8ZhvgK9Le8hfTFeqgG2hgvVms2l0=
+	t=1787664674; cv=none; b=Ivn70qUCXs0ntxDH0SRcR8btzfBl7T8e7ZilI3jKulVV//7ijskhDxKr2UNBZBZi6qUm7LUgUzkdxDVecUFGn7mN+XHL48/7U4BrxdttyIm1tBhcgeMFRTilKrx2yOiKQLYEQYcGQilU+OvVTPegNA1fbwUTmcdbl3/xO6Tw+0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664671; c=relaxed/simple;
-	bh=eIqI7tS03MP6xJdV0rzD1KQhEE+Y1mXJ1HCZMseoxms=;
+	s=arc-20240116; t=1787664674; c=relaxed/simple;
+	bh=2x0aSf8Jb9izXmlzQb0Ukaurcv7A6WFyXLYJrNPQRN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r16rwq4+umLprL6jpQW8AOS3UBpd9TX/5OmPllexofkKRyHpxNx9Y9J4Djr+q6KhXc1HIocdOTSC6K+2FaM93M1KaT43hR7t3UPRGmZWBfuJdlLz+sazAeiSFyRKfN0fbYiJO74T3WHo+uma/8Ilj0EEP69m8WMZbeEMyIfi62k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeyNuQqz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uh7/2mGO8RSOb7mDdb520eVcRhvWKkLwQuJ0RS4dthPnL4uzno4MMXmy7lWCApV97cfBirLA+y0w9cQrI5zrX1kvp4834VZZRrIMu2m3iYuTekKROvIw42YgdN2t0SpiHGbHpIlsMhCFYKgSHBbde6r7Ws3o9hzXHZ9dGHyeviI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHy14Txm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeyNuQqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E101F000E9;
-	Tue, 25 Aug 2026 13:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHy14Txm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740BB1F000E9;
+	Tue, 25 Aug 2026 13:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664670;
-	bh=uYxebZwjMU3a2e4rbg12jYuzGcAXQ7/7a7fXqMkTlqo=;
+	s=korg; t=1787664673;
+	bh=rxSRPEjfOLm7O42lgV5rhizdSc/CA8a+TxQm5+duJ2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aeyNuQqzEutwa4OzgkaaTl5NgFoMrWt2gWHARqfXc+Pk09nkkt1lSK8zq5F6m7qvY
-	 vgfFEK4Eaea15vXtCMjPVUwfZgCsVtYVXBwjQTVoOVnR9vbuYA0ZpHWAkNBF4416bA
-	 1AQMd0+lE9ArGNONFCIPecyzVD8xc4WJ7iFnZM3Y=
+	b=cHy14Txm2KmH2jLJ8eO4Umy/6G0yictjcrh3DtQGE8/Dmy+3hps90zmBD11uzqwJE
+	 DdifI6DxVXg5R+AHX11nMJx705F91XOxkoBsMbDlk7mDfQl+TMxssvingO1ET7rowr
+	 BEznHrJ8ZPrYJ0nIn1MQzvb6mtD07HW8OqndCX7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	stable <stable@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	imx@lists.linux.dev,
 	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 7.2 48/82] mailbox: mchp-ipc-sbi: Add null check for devm_kasprintf()
-Date: Tue, 25 Aug 2026 15:25:35 +0200
-Message-ID: <20260825132543.399084233@linuxfoundation.org>
+Subject: [PATCH 7.2 49/82] dmaengine: fsl-edma: Add error handling for devm_kasprintf
+Date: Tue, 25 Aug 2026 15:25:36 +0200
+Message-ID: <20260825132543.436484289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -52,31 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit b37c4d0a2fd90c0c31223acd37f763eb8953ed1a upstream.
+commit bf1af4dfdc017dfe989c0dbcf0e608dc95f1d2cb upstream.
 
-Add a check to see if devm_kasprintf() is not NULL in
-mchp_ipc_get_cluster_aggr_irq(), returning -ENOMEM if the function
-failed.
+Add error handling statement to fls_edma3_irq_init() for the
+devm_kasprintf call.
 
-Assisted-by: gkh_clanker_t1000
-CC: Jassi Brar <jassisinghbrar@gmail.com>
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Cc: Frank Li <Frank.Li@nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: imx@lists.linux.dev
 Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/2026070605-frying-fling-b9c5@gregkh
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/mailbox-mchp-ipc-sbi.c |    2 ++
+ drivers/dma/fsl-edma-main.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/mailbox/mailbox-mchp-ipc-sbi.c
-+++ b/drivers/mailbox/mailbox-mchp-ipc-sbi.c
-@@ -378,6 +378,8 @@ static int mchp_ipc_get_cluster_aggr_irq
- 	for_each_online_cpu(cpuid) {
- 		hartid = cpuid_to_hartid_map(cpuid);
- 		irq_name = devm_kasprintf(ipc->dev, GFP_KERNEL, "hart-%lu", hartid);
-+		if (!irq_name)
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -414,6 +414,8 @@ static int fsl_edma3_irq_init(struct pla
+ 
+ 		errirq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s-err",
+ 					     dev_name(&pdev->dev));
++		if (!errirq_name)
 +			return -ENOMEM;
- 		ret = platform_get_irq_byname_optional(pdev, irq_name);
- 		if (ret <= 0)
- 			continue;
+ 
+ 		ret = devm_request_irq(&pdev->dev, fsl_edma->errirq, fsl_edma3_err_handler_shared,
+ 				       0, errirq_name, fsl_edma);
 
 
