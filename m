@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94973E3C4D;
-	Tue, 25 Aug 2026 13:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AFD386C3B;
+	Tue, 25 Aug 2026 13:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665231; cv=none; b=bcuE563Y5VU09j6tdeBXGioWPocxO0380kU0A72Lx7lndgbPlEpTxnuysG4fV0eEmrM5KCkuGkQMdvGh+O9L/Fq/zqN5XwwUhl49rKkFmLJFjHqMO1pNaeSgboxIevBGOeVFeQGigUuWcFuGhqyWH2b6QEAd1f8pmBa871UiRWM=
+	t=1787665233; cv=none; b=brjBQ0cmP+5WKx8WwzEhX0JqYCFdgty76gEEzNvfGR6uIXdNT4+u0XvbOOlCMARPnyJJbMAjytd38CvCUGa0tT4iL4krX/q0SXO5AGn2qrLAmYax/QR1rg+RdxS+dOFMMfg1DPtkBM37D+LmSbsG09IaBU1wZzELHFN4KkG9JVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665231; c=relaxed/simple;
-	bh=knzqh2+XZ5siXB5ihZ6Mf2dYIln9iBMzXvziVz/K2AE=;
+	s=arc-20240116; t=1787665233; c=relaxed/simple;
+	bh=DMRCYq7dhHLYxRpV0iC6lNRfGRTQfUeLWc7aTscmaM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZUmtkR/4Lv0OYt5SH1er1D1dJXhylxUgvsKEzPGHBUVvJZuGKhVRPGbHgb4FrbyaWp+hylvb1HMKfUsCb/N06hQezxb7CcWohrenDiz1ectkWW5beHEn0sRefvqeoaFSuuRCW2AShpR804fOofGUUsqKHbkZwP+VWf/bwU16onM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwNBjkrl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GGWyeN99mHhjAKGeb+MsLgx4Z5eLdK0gdPtK7/t0Ogem5TxTn/T0VWh5vxzyiXuylut2/DfbAQqXHjZwxasHFnnnKSWjvxkeRJvT5tITFPorPy6P96yLL+QthsOZO3H+CeebG4YmTnhTbsSyiCsFGROgC09BvqpWT994mQKNy+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EcJB1yaS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwNBjkrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA691F000E9;
-	Tue, 25 Aug 2026 13:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EcJB1yaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399D71F000E9;
+	Tue, 25 Aug 2026 13:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665229;
-	bh=kbBrfbBMU86pwKKvV7u4sUdDQ/k0qsQ4yZw1pvQXD5s=;
+	s=korg; t=1787665232;
+	bh=fhraT2G6r8ZLS0dckLacyuvdD4W5iqOXYr2twTL4kDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hwNBjkrl1bukygHtL1pnMLZP1SsUKdM35kvJAdtx8D5zhEvwfyzumQsPEUWDbdrpa
-	 Vl/did8TC+voV/y+bdCoHGL6tNMpZAkQuB45Mh3gCeLkx4YXN8gGjtYjyo+49n2Yn8
-	 81dwprnItzy19i8SRycjxXzJW15CdYWn6i+WmMpA=
+	b=EcJB1yaSjme67FBSTGGUNTEQnRW/NV0wtIH3onRKwy5Ka5ZHtDbjrtVUvyjduhTio
+	 yqE1ZHu2jfnOs1vtU9XVHofs3lqA/yzhKrv8qgmSvICjRRhkLPXIAF6sainALzsqMv
+	 mZbubrvKnRa8C6gfBV7qUzfERjyNaJtvs8+/C7cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	imx@lists.linux.dev,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 6.18 50/94] dmaengine: fsl-edma: Add error handling for devm_kasprintf
-Date: Tue, 25 Aug 2026 15:25:46 +0200
-Message-ID: <20260825132543.868941035@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 51/94] nvmet-auth: zero the AUTH_RECEIVE response buffer
+Date: Tue, 25 Aug 2026 15:25:47 +0200
+Message-ID: <20260825132543.908927574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -53,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit bf1af4dfdc017dfe989c0dbcf0e608dc95f1d2cb upstream.
+commit 3ddcfb013322aa37eaa7a0d344b73079c38dfa21 upstream.
 
-Add error handling statement to fls_edma3_irq_init() for the
-devm_kasprintf call.
+nvmet_execute_auth_receive() allocates the response buffer with kmalloc()
+sized by the host-supplied AUTH_RECEIVE allocation length, but the
+DH-HMAC-CHAP builders write only a fixed-size message into it. The full
+allocation length is then copied to the wire by nvmet_copy_to_sgl(), so a
+remote initiator receives the bytes past the built message -- up to nearly
+a page of uninitialized slab -- during the pre-authentication handshake.
 
-Assisted-by: gkh_clanker_2000
-Cc: stable <stable@kernel.org>
-Cc: Frank Li <Frank.Li@nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: imx@lists.linux.dev
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/2026070605-frying-fling-b9c5@gregkh
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Allocate the buffer with kzalloc() so the unwritten tail is zeroed before
+it is sent; conforming responses are unaffected.
+
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-edma-main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/dma/fsl-edma-main.c
-+++ b/drivers/dma/fsl-edma-main.c
-@@ -414,6 +414,8 @@ static int fsl_edma3_irq_init(struct pla
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -558,7 +558,7 @@ void nvmet_execute_auth_receive(struct n
+ 		return;
+ 	}
  
- 		errirq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s-err",
- 					     dev_name(&pdev->dev));
-+		if (!errirq_name)
-+			return -ENOMEM;
- 
- 		ret = devm_request_irq(&pdev->dev, fsl_edma->errirq, fsl_edma3_err_handler_shared,
- 				       0, errirq_name, fsl_edma);
+-	d = kmalloc(al, GFP_KERNEL);
++	d = kzalloc(al, GFP_KERNEL);
+ 	if (!d) {
+ 		status = NVME_SC_INTERNAL;
+ 		goto done;
 
 
