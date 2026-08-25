@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375C2469851;
-	Tue, 25 Aug 2026 13:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BC8469851;
+	Tue, 25 Aug 2026 13:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666114; cv=none; b=Cw6PkJekmvKEQYWSNLc+EouyXXGk/PF1HrrYFnrc/NN3fzC2scl4O9Sq/ogMIYqjTFMzuDG/ylPTw+e4dSat9kKWV/+vTNNOp/zidmNIs6dpVA4YK52ekpD/Nh0lFPw+MkdkEK40bxFsQZXti0JIi0Fo5UTr6XlqALm4pZO+vyc=
+	t=1787666117; cv=none; b=o4aJLp4cC5MH7cPci21A47JRKxoGQ8xmbCj6NyeR39c5RwN1ZAf8qiXx40k5cJZ0cED+dHxvLZ0GBMZcXfcp2EEpN40ySlRrtu7cWBfS7pO2bHqYLV4r4oS7CFVVfYNiVNQZQrthgamTzkdcXBXV5ThcAoqfpzxhQ1TfHsIcSqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666114; c=relaxed/simple;
-	bh=ejW3YV2VlUxjj38YMraNbCsljpDa4w8YQ8Ssbing3zg=;
+	s=arc-20240116; t=1787666117; c=relaxed/simple;
+	bh=F5Kk3a5BpyIzoP2dm1o5mFkFbBE54xvRAYc75aN8E5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDyUItj9WJSwAV77xNndXF+/tjsx6ZUp9T9pTsqCvN/UoiVS9+Hq6kpRhDJ/OqaLqpCmBEG0aXw0k/2xLxooNFTu/8KIorIAZe9YP07pDdky+joIKgmO88wtWFWwgixSGpEmhH7gm2hBeo82W8uT4V66DVU07SjPvAs+mzu/VqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEjsoWY8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W+GgxcfWkiiMJ+1EjTQEy82Nq3lv1Mkbwa4iZpuiWwKFooL2ZKJ7F3QXrY/OPgfb4eMBFp1rR/D8NPLQ1HCl/mO+Jg4wWX1pvtdHXJkDKntitHQhdI0rtiQAUIkWMKVmDVo/0eVnwXBuTr/GHXCeDVJfy5Ns3lBUinrU4Np9Nt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPTiKJoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEjsoWY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F481F000E9;
-	Tue, 25 Aug 2026 13:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPTiKJoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DB91F00A3A;
+	Tue, 25 Aug 2026 13:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666112;
-	bh=F6/LbUYX5F6o+kqCDXBQserFHr3ePaNJuNs7rUsr1Jc=;
+	s=korg; t=1787666115;
+	bh=9Ih9FlEajp+B3fAxpRIprBaxALGf48JSg2XABDWUkh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TEjsoWY8bHLMd7spsTwehsPNQlomgVPdHohtM9TyhA0DpWU6dauTB7TAL12hag5L0
-	 kLOnMqqvyJMGGnHuKa6yAEHeMhdrqiZubE1TQV6QjT0GuEQM+nAD6LpHVCltGpDjVu
-	 kwh1kalPc/T3CYvqVYTE4n3v2/KYVfrEyixl6/N0=
+	b=mPTiKJoE0C3o4qECrJkFZXMsYJ+arMKnEoE9jdXexFG1bK73xjJX+PRC1UShjqUBg
+	 ASpF2u+jq10qat4KTYuyZbn51RPnzXB+bPZP+IKXVn/ROjHyl+ChgIQPPepq1ziOMB
+	 4tuJFzhLeCAO2LqEUHPQ7LDRtlYoWLcRQ3QhmYcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Persvold <spersvold@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 5.15 01/76] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
-Date: Tue, 25 Aug 2026 15:25:54 +0200
-Message-ID: <20260825132541.621032126@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Junjie Cao <junjie.cao@intel.com>
+Subject: [PATCH 5.15 10/76] gpio: ml-ioh: use raw_spinlock_t for the register lock
+Date: Tue, 25 Aug 2026 15:26:03 +0200
+Message-ID: <20260825132541.937887053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -50,116 +50,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Persvold <spersvold@gmail.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
+commit 600411ea1f2443fdf5b1af9b6480f616d7aff9d0 upstream.
 
-On 32-bit systems the config space is too large to ioremap in one go, so
-pci_ecam_create() maps each bus segment separately and relies on the
-->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
-cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
-every config access.
+ioh_irq_type() is registered as the irq_chip .irq_set_type callback and
+takes chip->spinlock with spin_lock_irqsave().  This callback is reached
+from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
+the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
+That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
+an rtmutex-backed sleeping lock, so acquiring it there is invalid.
+ioh_irq_enable() and ioh_irq_disable() take the same lock from the
+.irq_enable/.irq_disable callbacks, which are likewise invoked with
+desc->lock held.
 
-The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
-and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
-do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
-per-bus mapping is never set up and the first config read dereferences a
-NULL base, crashing during bus enumeration:
+Convert the register lock to raw_spinlock_t.  The same lock also
+serializes the GPIO direction/value callbacks and the suspend/resume
+register save/restore, and those critical sections only perform short
+sequences of MMIO register accesses (ioread32()/iowrite32()); the
+.irq_set_type callback additionally emits a dev_warn() on an unsupported
+type.  None of these are sleepable operations, so keeping this register
+lock non-sleeping is appropriate for the irqchip callbacks and does not
+change the GPIO-side locking contract.
 
- Unable to handle kernel NULL pointer dereference at virtual address 00000800
- Oops [#1]
- CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
- Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
- epc : pci_generic_config_read+0x40/0xb0
-  ra : pci_generic_config_read+0x2c/0xb0
- [<c038db9c>] pci_generic_config_read+0x40/0xb0
- [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
- [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
- [<c039245c>] pci_scan_single_device+0xa4/0x11c
- [<c0392570>] pci_scan_slot+0x9c/0x23c
- [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
- [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
- [<c0393e54>] pci_host_probe+0x20/0xc8
- [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
+This is the same fix as commit a02b8950d619 ("gpio: pch: use
+raw_spinlock_t for the register lock"); this driver shares the same
+structure as gpio-pch.
 
-Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
-Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
-move the CAM ops definition there as pci_generic_cam_ops (mirroring
-pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
-
-Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
-Signed-off-by: Steffen Persvold <spersvold@gmail.com>
-[mani: removed timestamp from log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Fixes: 54be566317b6 ("gpio-ml-ioh: Support interrupt function")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260731032747.2987292-1-junjie.cao@intel.com
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-generic.c |   11 +----------
- drivers/pci/ecam.c                        |   13 +++++++++++++
- include/linux/pci-ecam.h                  |    3 +++
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/gpio/gpio-ml-ioh.c |   36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---- a/drivers/pci/controller/pci-host-generic.c
-+++ b/drivers/pci/controller/pci-host-generic.c
-@@ -14,15 +14,6 @@
- #include <linux/pci-ecam.h>
- #include <linux/platform_device.h>
- 
--static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
--	.bus_shift	= 16,
--	.pci_ops	= {
--		.map_bus	= pci_ecam_map_bus,
--		.read		= pci_generic_config_read,
--		.write		= pci_generic_config_write,
--	}
--};
--
- static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
- {
- 	struct pci_config_window *cfg = bus->sysdata;
-@@ -58,7 +49,7 @@ static const struct pci_ecam_ops pci_dw_
- 
- static const struct of_device_id gen_pci_of_match[] = {
- 	{ .compatible = "pci-host-cam-generic",
--	  .data = &gen_pci_cfg_cam_bus_ops },
-+	  .data = &pci_generic_cam_ops },
- 
- 	{ .compatible = "pci-host-ecam-generic",
- 	  .data = &pci_generic_ecam_ops },
---- a/drivers/pci/ecam.c
-+++ b/drivers/pci/ecam.c
-@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
+--- a/drivers/gpio/gpio-ml-ioh.c
++++ b/drivers/gpio/gpio-ml-ioh.c
+@@ -84,7 +84,7 @@ struct ioh_gpio {
+ 	u32 gpio_use_sel;
+ 	int ch;
+ 	int irq_base;
+-	spinlock_t spinlock;
++	raw_spinlock_t spinlock;
  };
- EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
  
-+/* CAM ops */
-+const struct pci_ecam_ops pci_generic_cam_ops = {
-+	.bus_shift	= 16,
-+	.pci_ops	= {
-+		.add_bus	= pci_ecam_add_bus,
-+		.remove_bus	= pci_ecam_remove_bus,
-+		.map_bus	= pci_ecam_map_bus,
-+		.read		= pci_generic_config_read,
-+		.write		= pci_generic_config_write,
-+	}
-+};
-+EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
-+
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- /* ECAM ops for 32-bit access only (non-compliant) */
- const struct pci_ecam_ops pci_32b_ops = {
---- a/include/linux/pci-ecam.h
-+++ b/include/linux/pci-ecam.h
-@@ -77,6 +77,9 @@ void __iomem *pci_ecam_map_bus(struct pc
- /* default ECAM ops */
- extern const struct pci_ecam_ops pci_generic_ecam_ops;
+ static const int num_ports[] = {6, 12, 16, 16, 15, 16, 16, 12};
+@@ -95,7 +95,7 @@ static void ioh_gpio_set(struct gpio_chi
+ 	struct ioh_gpio *chip =	gpiochip_get_data(gpio);
+ 	unsigned long flags;
  
-+/* default CAM ops */
-+extern const struct pci_ecam_ops pci_generic_cam_ops;
-+
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
- extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	reg_val = ioread32(&chip->reg->regs[chip->ch].po);
+ 	if (val)
+ 		reg_val |= (1 << nr);
+@@ -103,7 +103,7 @@ static void ioh_gpio_set(struct gpio_chi
+ 		reg_val &= ~(1 << nr);
+ 
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static int ioh_gpio_get(struct gpio_chip *gpio, unsigned nr)
+@@ -121,7 +121,7 @@ static int ioh_gpio_direction_output(str
+ 	u32 reg_val;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm) &
+ 					((1 << num_ports[chip->ch]) - 1);
+ 	pm |= (1 << nr);
+@@ -134,7 +134,7 @@ static int ioh_gpio_direction_output(str
+ 		reg_val &= ~(1 << nr);
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+ 
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -145,12 +145,12 @@ static int ioh_gpio_direction_input(stru
+ 	u32 pm;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm) &
+ 				((1 << num_ports[chip->ch]) - 1);
+ 	pm &= ~(1 << nr);
+ 	iowrite32(pm, &chip->reg->regs[chip->ch].pm);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -254,7 +254,7 @@ static int ioh_irq_type(struct irq_data
+ 	dev_dbg(chip->dev, "%s:irq=%d type=%d ch=%d pos=%d type=%d\n",
+ 		__func__, irq, type, ch, im_pos, type);
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 
+ 	switch (type) {
+ 	case IRQ_TYPE_EDGE_RISING:
+@@ -294,7 +294,7 @@ static int ioh_irq_type(struct irq_data
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	iowrite32(ien | BIT(ch), &chip->reg->regs[chip->ch].ien);
+ end:
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -324,11 +324,11 @@ static void ioh_irq_disable(struct irq_d
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien &= ~(1 << (d->irq - chip->irq_base));
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static void ioh_irq_enable(struct irq_data *d)
+@@ -338,11 +338,11 @@ static void ioh_irq_enable(struct irq_da
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien |= 1 << (d->irq - chip->irq_base);
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static irqreturn_t ioh_gpio_handler(int irq, void *dev_id)
+@@ -439,7 +439,7 @@ static int ioh_gpio_probe(struct pci_dev
+ 		chip->base = base;
+ 		chip->reg = chip->base;
+ 		chip->ch = i;
+-		spin_lock_init(&chip->spinlock);
++		raw_spin_lock_init(&chip->spinlock);
+ 		ioh_gpio_setup(chip, num_ports[i]);
+ 		ret = gpiochip_add_data(&chip->gpio, chip);
+ 		if (ret) {
+@@ -525,9 +525,9 @@ static int __maybe_unused ioh_gpio_suspe
+ 	struct ioh_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ioh_gpio_save_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -537,11 +537,11 @@ static int __maybe_unused ioh_gpio_resum
+ 	struct ioh_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	iowrite32(0x01, &chip->reg->srst);
+ 	iowrite32(0x00, &chip->reg->srst);
+ 	ioh_gpio_restore_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
 
 
