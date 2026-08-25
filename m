@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AE3481233;
-	Tue, 25 Aug 2026 13:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD6A3DAAA8;
+	Tue, 25 Aug 2026 13:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665406; cv=none; b=d10eWTz8Yk4v0bQae70cXMHTmIkYeaVjAejSRmCaED1q9Igizwo8dBqfeXSCgybRbZdlsZb8c52d7NXp6P8yJnslvmi1uJ/rBoozNoTIB/a6G/2/56TRF6Yb70rNaORC7qqi2xl7MB5D5r1BrsUjjhmHQiEzdYKhmgazdtmWXAc=
+	t=1787665409; cv=none; b=orZA0LrIceaSB/H2LXLgeSIc/2iJK184eMZrN2dleU0uOpVxJKdg32DZ0zB+smvEmGYYfsD8OhhNv3Cou0sK8BSWmMrePYsI1EN6oiiI3IyxEiyB511jWwS9XVbxIU4sJzc7MtxhxGAGvbziXscUAzAptbRPtIc+zteFNYbra/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665406; c=relaxed/simple;
-	bh=fDHwcytRZuqTqyJyjf73BLHsgvYm/Br9Pj1FWAsJRH8=;
+	s=arc-20240116; t=1787665409; c=relaxed/simple;
+	bh=C3LvkuFFXO17igqM4XRnSwp3DBhyjMf9ZuQXEfjWouE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAgv7qWPmK5Jht+52M2So4WZuoGU2WKZO6TM+BnzmPwpbH8MGkODBDh98EccdOOY2mNQOY1Ql81T4vEP09IK+ZhfgDb9Yiq/3XNcg3cqpYZLl3QTy+/qaTK8m47jPnEej0K3g/P8Nih2K/Chx917djK3Dm7S0GhqKZx2E0jRQpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9acxmDB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dirlE1MAF86w2CEDSA9YC7TYUPLTOXnIKzDS/s7GDV01CuncnxeblRcU1YPHaofgSbnm/EVGZ3qU1AJ2irdhxObO0qGg1CJbLNFoYF9FEWXYST53kpa2ddteU0NbzSLwYD+jB7kFJLOqjuAcEa7jaSBfeTwcmSIQEbqwqr9O0oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pV5B81sJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9acxmDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BA61F00A3A;
-	Tue, 25 Aug 2026 13:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pV5B81sJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E6C1F000E9;
+	Tue, 25 Aug 2026 13:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665405;
-	bh=10Cg9QPX8MZDNrh08Lno5HiPlFx4/BjnSPUlQcaOQf0=;
+	s=korg; t=1787665408;
+	bh=2oXx3GsTladVVv8C4CkO0lOrgMcoMrBTPchfVAZ7VqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E9acxmDBOX5Nrn7RJhcJ1XU2ON1P5w+LFlcF2/Po3IxdqkkzCgBOofDlxfFnDLuZW
-	 MaR+VdZJp/9Kxc5ZFK2iFtbdB8O2vouBCPMVB1BVI5tdvoK8MHkkbehfZmuo6z2nI4
-	 LDUMNfVebIiYSjrPReUEtF9G5bJrNvc+/PIKH2b4=
+	b=pV5B81sJog8wgJXVVW1KD/JKGxuwyogh76nzHGt1A+KAXjAQSXTO1obCb4VvZqgBL
+	 2E1AyPEWQTUphLC9IGg8OBFY5k8VfDk/qUXFvaZ3eKF6Phftu7gvGYzpOZ/HSxKXiq
+	 Tim+r2IlFjnmGZy23KYjgRlrKrMh9SgWDPIOsjSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Ziwei Xiao <ziweixiao@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 06/77] gve: fix zero-length skb frag with header-split
-Date: Tue, 25 Aug 2026 15:25:28 +0200
-Message-ID: <20260825132541.807608092@linuxfoundation.org>
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro.iwamatsu.x90@mail.toshiba>
+Subject: [PATCH 6.12 07/77] hwmon: (ltc4286) Fix symbol namespace of MODULE_IMPORT_NS()
+Date: Tue, 25 Aug 2026 15:25:29 +0200
+Message-ID: <20260825132541.843098005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -53,49 +49,25 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rhee <jordanrhee@google.com>
+From: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>
 
-commit 6bf14575c65569dcded90ef78afb8a6d57323f04 upstream.
+In 6.12.y, the namespace specified in MODULE_IMPORT_NS() does not require
+a string. This removes the quotes from the namespace name.
 
-When header split is enabled and a header-only packet is
-received such as a pure TCP ACK, GVE will indicate an
-RX SKB with a zero-length fragment. If this SKB is then
-hairpinned and sent back out, the GVE TX path will emit
-a zero-length descriptor. Hardware considers this
-an illegal descriptor and stops the queue, causing a
-TX timeout and interface reset.
-
-Fix it by not adding the zero-length skb frag.
-
-Cc: stable@vger.kernel.org
-Fixes: 5e37d8254e7f ("gve: Add header split data path")
-Suggested-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Co-developed-by: Ziwei Xiao <ziweixiao@google.com>
-Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
-Signed-off-by: Jordan Rhee <jordanrhee@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20260807224315.234152-2-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Fixes: 7fd4a5682c78 ("hwmon: (ltc4286) Add missing MODULE_IMPORT_NS("PMBUS")")
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro.iwamatsu.x90@mail.toshiba>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hwmon/pmbus/ltc4286.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -850,6 +850,12 @@ static int gve_rx_dqo(struct napi_struct
- 		rx->rx_hsplit_unsplit_pkt += unsplit;
- 		rx->rx_hsplit_bytes += hdr_len;
- 		u64_stats_update_end(&rx->statss);
-+
-+		if (!buf_len) {
-+			gve_enqueue_buf_state(rx, &rx->dqo.recycled_buf_states,
-+					      buf_state);
-+			return 0;
-+		}
- 	}
- 
- 	/* Sync the portion of dma buffer for CPU to read. */
+--- a/drivers/hwmon/pmbus/ltc4286.c
++++ b/drivers/hwmon/pmbus/ltc4286.c
+@@ -173,4 +173,4 @@ module_i2c_driver(ltc4286_driver);
+ MODULE_AUTHOR("Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>");
+ MODULE_DESCRIPTION("PMBUS driver for LTC4286 and compatibles");
+ MODULE_LICENSE("GPL");
+-MODULE_IMPORT_NS("PMBUS");
++MODULE_IMPORT_NS(PMBUS);
 
 
