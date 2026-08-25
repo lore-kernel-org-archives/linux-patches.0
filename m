@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B90847FB0E;
-	Tue, 25 Aug 2026 13:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C480547FB0E;
+	Tue, 25 Aug 2026 13:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664882; cv=none; b=NqnGcqXzU3hZ6c+Z9yYuaUuY8AEwsAGvjF/N7d315urfpiuxP+cepR9kkJfkTVfPEB1k/LPO9yQc9/bqipkGSJ+6STujLoeiQ66ZtdFXAFqLiKSTG0ey3HzM8CxSFyMW6HCqyaIh1hkfd2bKLkQtBba56g4qAXMmk5zJ3ezUYMg=
+	t=1787664885; cv=none; b=LR10aZ0u0I4/dwQ7CI+Li0W6KhoLuMy3f7kZcr44IvDPKDDrLPav5kn6de3ORp5hgCbta96n6joHa/mg/yhqofkvRD+h/l94xTDZbgF4IxYc12Qllb3Rq5Dn3dQvHGjwnx3Fk/7F5UkzBApDbgrSxAROoQ8x7kdLYzt1db+72x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664882; c=relaxed/simple;
-	bh=f1oY6gxGaRLl3NbU5oNaqVjTKKY2bUliOAWx87aysqc=;
+	s=arc-20240116; t=1787664885; c=relaxed/simple;
+	bh=wgu7bZVIJ0FeZsT/eMru4PsdBX7/iId4UJ9fJmbOpSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D1ywy8FQ/vnXMf7fIpsM/kG4QE976Kld32jfvWmyZ3Uld1zbRFosZIb5hZGzbn5AKoqET4LHjgfFC2CaDJuNx9ArzHhxtT3Y8R57y42xhCiX4Lpv8uYzNamZbNECVU5ZKDpA7qlgmsuF2JwZUb6XLjVd9frzi3WYANGPu/Flc7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMT2uMJL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UXwM1JXQTXRlAdl3yzdLIJusJuLdX5P7prWFylZDCD39d42H9hYu1TNgPoXX2Fm4hxG05QYA8wJvzDSEpjoOve39emajpetDNBhNTFMfphnKsrXMY0RF73gXCTMMN6Er40CPku8WuaiXh9QiEB+ftvmZ29RzHar14hkCzmcOKf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeCEIf2a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMT2uMJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4263C1F000E9;
-	Tue, 25 Aug 2026 13:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeCEIf2a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9851F000E9;
+	Tue, 25 Aug 2026 13:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664880;
-	bh=7wWrmg+WwSid213syZJry/UuPJjIngUTV39A+7lIv/o=;
+	s=korg; t=1787664883;
+	bh=2NCWLzkTPKkTOWXDnmMj0cdL/878374KVutBuyITykM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RMT2uMJLv5/wtDqUC5LWtzPDcMd+TQ3jCl7uSRZHvhn5AoUuT+5AzQD6Ib7cIStsG
-	 4VZ7EvxMtLfPIYDbQHcGui2AH2UYi6Wqx9u4vgax6nUKznlGsG/nMQ+coUdoeyu7S1
-	 RJDW8MTATeVzYlgPb8+FUb2TCOUStDzOYBFDltWI=
+	b=zeCEIf2aH/yHC88HQhqzG4XTO4SeVNxhE7P1L1/fb42GKk+3rBItV5ClkPzo7JzgQ
+	 Wo5dznVw6w90E1LvXfR+saj6EoxuLgPJAv1SScW3QoBoGi8veuin82TZL1dKXMB3JM
+	 0lgTlxAGpdmtdbvrZA7f9CPEm+VPww46rd2Y7PmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 035/101] drm/i915: Introduce struct intel_fb_pin_params
-Date: Tue, 25 Aug 2026 15:25:13 +0200
-Message-ID: <20260825132543.387523788@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Maarten Lankhorst <dev@lankhorst.se>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 7.1 036/101] drm/xe: Fix DPT allocation paths.
+Date: Tue, 25 Aug 2026 15:25:14 +0200
+Message-ID: <20260825132543.428439338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -52,362 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-[ Upstream commit a89b7f72f20db1ae1a65e97881e785639db4480a ]
+[ Upstream commit fc648757908304aedbad74f74bf58192aec383db ]
 
-We need to pass a lot of information between the display driver
-and the core driver to get framebuffers mapped into GGTT/DPT
-correctly. Rather than passing around a swarm of integers and
-boolean as function arguments, let's collect it all into a
-structure (struct intel_fb_pin_params).
+Remove the fallback for VRAM to system memory, I tested it and that
+doesn't work at all, only a black screen with pipe fault errors were
+observed.
 
-Start by moving the gtt view, alignment, phys_alignment,
-and vtd_guard there. Going forward additional things need
-to added as well (mainly various boolean flags).
+On systems with media GT, extra latency is added when accessing stolen
+memory when the GT is in MC6. Since we additionally aren't counting how
+much memory is used for stolen and we could in theory fill up the
+entire stolen area with DPT's, avoid using stolen and only use the
+default memory region.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260416174448.28264-3-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Stable-dep-of: fc6487579083 ("drm/xe: Fix DPT allocation paths.")
+Using stolen may also result in random system hangs under load.
+
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7513
+Fixes: 775d0adc01a5 ("drm/xe/fbdev: Limit the usage of stolen for LNL+")
+Cc: <stable@vger.kernel.org> # v6.12+
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260630135523.1775379-2-dev@lankhorst.se
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+Acked-by: Matthew Brost <matthew.brost@intel.com> #teams
+(cherry picked from commit a196406a3831291598fe8e73245914f7acffdfe0)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_fb_pin.c   |   54 ++++++++++++++------------
- drivers/gpu/drm/i915/display/intel_fb_pin.h   |   12 +++--
- drivers/gpu/drm/i915/display/intel_fbdev.c    |   13 +++---
- drivers/gpu/drm/xe/display/xe_fb_pin.c        |   39 +++++++++---------
- drivers/gpu/drm/xe/display/xe_initial_plane.c |    6 +-
- 5 files changed, 69 insertions(+), 55 deletions(-)
+ drivers/gpu/drm/xe/display/xe_fb_pin.c |   33 ++++++++-------------------------
+ 1 file changed, 8 insertions(+), 25 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_fb_pin.c
-+++ b/drivers/gpu/drm/i915/display/intel_fb_pin.c
-@@ -24,9 +24,8 @@
- 
- static struct i915_vma *
- intel_fb_pin_to_dpt(const struct drm_framebuffer *fb,
--		    const struct i915_gtt_view *view,
--		    unsigned int alignment,
--		    struct intel_dpt *dpt)
-+		    struct intel_dpt *dpt,
-+		    const struct intel_fb_pin_params *pin_params)
- {
- 	struct intel_display *display = to_intel_display(fb->dev);
- 	struct drm_i915_private *i915 = to_i915(fb->dev);
-@@ -75,19 +74,20 @@ intel_fb_pin_to_dpt(const struct drm_fra
- 		if (ret)
- 			continue;
- 
--		vma = i915_vma_instance(obj, vm, view);
-+		vma = i915_vma_instance(obj, vm, pin_params->view);
- 		if (IS_ERR(vma)) {
- 			ret = PTR_ERR(vma);
- 			continue;
- 		}
- 
--		if (i915_vma_misplaced(vma, 0, alignment, 0)) {
-+		if (i915_vma_misplaced(vma, 0, pin_params->alignment, 0)) {
- 			ret = i915_vma_unbind(vma);
- 			if (ret)
- 				continue;
- 		}
- 
--		ret = i915_vma_pin_ww(vma, &ww, 0, alignment, PIN_GLOBAL);
-+		ret = i915_vma_pin_ww(vma, &ww, 0, pin_params->alignment,
-+				      PIN_GLOBAL);
- 		if (ret)
- 			continue;
- 	}
-@@ -96,7 +96,8 @@ intel_fb_pin_to_dpt(const struct drm_fra
- 		goto err;
- 	}
- 
--	vma->display_alignment = max(vma->display_alignment, alignment);
-+	vma->display_alignment = max(vma->display_alignment,
-+				     pin_params->alignment);
- 
- 	i915_gem_object_flush_if_display(obj);
- 
-@@ -109,10 +110,7 @@ err:
- 
- struct i915_vma *
- intel_fb_pin_to_ggtt(const struct drm_framebuffer *fb,
--		     const struct i915_gtt_view *view,
--		     unsigned int alignment,
--		     unsigned int phys_alignment,
--		     unsigned int vtd_guard,
-+		     const struct intel_fb_pin_params *pin_params,
- 		     int *out_fence_id)
- {
- 	struct intel_display *display = to_intel_display(fb->dev);
-@@ -128,7 +126,8 @@ intel_fb_pin_to_ggtt(const struct drm_fr
- 	if (drm_WARN_ON(&i915->drm, !i915_gem_object_is_framebuffer(obj)))
- 		return ERR_PTR(-EINVAL);
- 
--	if (drm_WARN_ON(&i915->drm, alignment && !is_power_of_2(alignment)))
-+	if (drm_WARN_ON(&i915->drm, pin_params->alignment &&
-+			!is_power_of_2(pin_params->alignment)))
- 		return ERR_PTR(-EINVAL);
- 
- 	/*
-@@ -157,8 +156,8 @@ intel_fb_pin_to_ggtt(const struct drm_fr
- 	i915_gem_ww_ctx_init(&ww, true);
- retry:
- 	ret = i915_gem_object_lock(obj, &ww);
--	if (!ret && phys_alignment)
--		ret = i915_gem_object_attach_phys(obj, phys_alignment);
-+	if (!ret && pin_params->phys_alignment)
-+		ret = i915_gem_object_attach_phys(obj, pin_params->phys_alignment);
- 	else if (!ret && HAS_LMEM(i915))
- 		ret = i915_gem_object_migrate(obj, &ww, INTEL_REGION_LMEM_0);
- 	if (!ret)
-@@ -166,8 +165,10 @@ retry:
- 	if (ret)
- 		goto err;
- 
--	vma = i915_gem_object_pin_to_display_plane(obj, &ww, alignment,
--						   vtd_guard, view, pinctl);
-+	vma = i915_gem_object_pin_to_display_plane(obj, &ww,
-+						   pin_params->alignment,
-+						   pin_params->vtd_guard,
-+						   pin_params->view, pinctl);
- 	if (IS_ERR(vma)) {
- 		ret = PTR_ERR(vma);
- 		goto err_unpin;
-@@ -270,12 +271,15 @@ int intel_plane_pin_fb(struct intel_plan
- 	struct i915_vma *vma;
- 
- 	if (!intel_fb_uses_dpt(&fb->base)) {
-+		struct intel_fb_pin_params pin_params = {
-+			.view = &plane_state->view.gtt,
-+			.alignment = intel_plane_fb_min_alignment(plane_state),
-+			.phys_alignment = intel_plane_fb_min_phys_alignment(plane_state),
-+			.vtd_guard = intel_plane_fb_vtd_guard(plane_state),
-+		};
- 		int fence_id = -1;
- 
--		vma = intel_fb_pin_to_ggtt(&fb->base, &plane_state->view.gtt,
--					   intel_plane_fb_min_alignment(plane_state),
--					   intel_plane_fb_min_phys_alignment(plane_state),
--					   intel_plane_fb_vtd_guard(plane_state),
-+		vma = intel_fb_pin_to_ggtt(&fb->base, &pin_params,
- 					   intel_plane_uses_fence(plane_state) ? &fence_id : NULL);
- 		if (IS_ERR(vma))
- 			return PTR_ERR(vma);
-@@ -283,16 +287,18 @@ int intel_plane_pin_fb(struct intel_plan
- 		plane_state->ggtt_vma = vma;
- 		plane_state->fence_id = fence_id;
- 	} else {
--		unsigned int alignment = intel_plane_fb_min_alignment(plane_state);
-+		struct intel_fb_pin_params pin_params = {
-+			.view = &plane_state->view.gtt,
-+			.alignment = intel_plane_fb_min_alignment(plane_state),
-+		};
- 
--		vma = i915_dpt_pin_to_ggtt(fb->dpt, alignment / 512);
-+		vma = i915_dpt_pin_to_ggtt(fb->dpt, pin_params.alignment / 512);
- 		if (IS_ERR(vma))
- 			return PTR_ERR(vma);
- 
- 		plane_state->ggtt_vma = vma;
- 
--		vma = intel_fb_pin_to_dpt(&fb->base, &plane_state->view.gtt,
--					  alignment, fb->dpt);
-+		vma = intel_fb_pin_to_dpt(&fb->base, fb->dpt, &pin_params);
- 		if (IS_ERR(vma)) {
- 			i915_dpt_unpin_from_ggtt(fb->dpt);
- 			plane_state->ggtt_vma = NULL;
---- a/drivers/gpu/drm/i915/display/intel_fb_pin.h
-+++ b/drivers/gpu/drm/i915/display/intel_fb_pin.h
-@@ -14,12 +14,16 @@ struct intel_plane_state;
- struct i915_gtt_view;
- struct iosys_map;
- 
-+struct intel_fb_pin_params {
-+	const struct i915_gtt_view *view;
-+	unsigned int alignment;
-+	unsigned int phys_alignment;
-+	unsigned int vtd_guard;
-+};
-+
- struct i915_vma *
- intel_fb_pin_to_ggtt(const struct drm_framebuffer *fb,
--		     const struct i915_gtt_view *view,
--		     unsigned int alignment,
--		     unsigned int phys_alignment,
--		     unsigned int vtd_guard,
-+		     const struct intel_fb_pin_params *pin_params,
- 		     int *out_fence_id);
- 
- void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id);
---- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -264,6 +264,7 @@ int intel_fbdev_driver_fbdev_probe(struc
- {
- 	struct intel_display *display = to_intel_display(helper->dev);
- 	struct intel_fbdev *ifbdev = to_intel_fbdev(helper);
-+	struct intel_fb_pin_params pin_params = {};
- 	struct intel_framebuffer *fb = ifbdev->fb;
- 	struct fb_info *info = helper->info;
- 	struct ref_tracker *wakeref;
-@@ -308,11 +309,13 @@ int intel_fbdev_driver_fbdev_probe(struc
- 	 * This also validates that any existing fb inherited from the
- 	 * BIOS is suitable for own access.
- 	 */
--	vma = intel_fb_pin_to_ggtt(&fb->base, &fb->normal_view.gtt,
--				   fb->min_alignment, 0,
--				   intel_fb_view_vtd_guard(&fb->base, &fb->normal_view,
--							   DRM_MODE_ROTATE_0),
--				   NULL);
-+	pin_params.view = &fb->normal_view.gtt;
-+	pin_params.alignment = fb->min_alignment;
-+	pin_params.vtd_guard = intel_fb_view_vtd_guard(&fb->base,
-+						       &fb->normal_view,
-+						       DRM_MODE_ROTATE_0);
-+
-+	vma = intel_fb_pin_to_ggtt(&fb->base, &pin_params, NULL);
- 	if (IS_ERR(vma)) {
- 		ret = PTR_ERR(vma);
- 		goto out_unlock;
 --- a/drivers/gpu/drm/xe/display/xe_fb_pin.c
 +++ b/drivers/gpu/drm/xe/display/xe_fb_pin.c
-@@ -140,14 +140,14 @@ write_dpt_remapped(struct xe_bo *bo,
- }
+@@ -161,31 +161,14 @@ static int __xe_pin_fb_vma_dpt(const str
+ 		dpt_size = ALIGN(intel_rotation_info_size(&view->rotated) * 8,
+ 				 XE_PAGE_SIZE);
  
- static int __xe_pin_fb_vma_dpt(const struct intel_framebuffer *fb,
--			       const struct i915_gtt_view *view,
--			       struct i915_vma *vma,
--			       unsigned int alignment)
-+			       const struct intel_fb_pin_params *pin_params,
-+			       struct i915_vma *vma)
- {
- 	struct xe_device *xe = to_xe_device(fb->base.dev);
- 	struct xe_tile *tile0 = xe_device_get_root_tile(xe);
- 	struct xe_ggtt *ggtt = tile0->mem.ggtt;
- 	struct drm_gem_object *obj = intel_fb_bo(&fb->base);
-+	const struct i915_gtt_view *view = pin_params->view;
- 	struct xe_bo *bo = gem_to_xe_bo(obj), *dpt;
- 	u32 dpt_size, size = bo->ttm.base.size;
- 
-@@ -168,7 +168,7 @@ static int __xe_pin_fb_vma_dpt(const str
- 						   XE_BO_FLAG_VRAM0 |
- 						   XE_BO_FLAG_GGTT |
- 						   XE_BO_FLAG_PAGETABLE,
--						   alignment, false);
-+						   pin_params->alignment, false);
- 	else
- 		dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
- 						   dpt_size,  ~0ull,
-@@ -176,7 +176,7 @@ static int __xe_pin_fb_vma_dpt(const str
- 						   XE_BO_FLAG_STOLEN |
- 						   XE_BO_FLAG_GGTT |
- 						   XE_BO_FLAG_PAGETABLE,
--						   alignment, false);
-+						   pin_params->alignment, false);
- 	if (IS_ERR(dpt))
- 		dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
- 						   dpt_size,  ~0ull,
-@@ -185,7 +185,7 @@ static int __xe_pin_fb_vma_dpt(const str
- 						   XE_BO_FLAG_GGTT |
- 						   XE_BO_FLAG_PAGETABLE |
- 						   XE_BO_FLAG_FORCE_WC,
--						   alignment, false);
-+						   pin_params->alignment, false);
+-	if (IS_DGFX(xe))
+-		dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
+-						   dpt_size, ~0ull,
+-						   ttm_bo_type_kernel,
+-						   XE_BO_FLAG_VRAM0 |
+-						   XE_BO_FLAG_GGTT |
+-						   XE_BO_FLAG_PAGETABLE,
+-						   pin_params->alignment, false);
+-	else
+-		dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
+-						   dpt_size,  ~0ull,
+-						   ttm_bo_type_kernel,
+-						   XE_BO_FLAG_STOLEN |
+-						   XE_BO_FLAG_GGTT |
+-						   XE_BO_FLAG_PAGETABLE,
+-						   pin_params->alignment, false);
+-	if (IS_ERR(dpt))
+-		dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
+-						   dpt_size,  ~0ull,
+-						   ttm_bo_type_kernel,
+-						   XE_BO_FLAG_SYSTEM |
+-						   XE_BO_FLAG_GGTT |
+-						   XE_BO_FLAG_PAGETABLE |
+-						   XE_BO_FLAG_FORCE_WC,
+-						   pin_params->alignment, false);
++	dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
++					   dpt_size,  ~0ull,
++					   ttm_bo_type_kernel,
++					   XE_BO_FLAG_VRAM_IF_DGFX(tile0) |
++					   XE_BO_FLAG_GGTT |
++					   XE_BO_FLAG_PAGETABLE |
++					   XE_BO_FLAG_FORCE_WC,
++					   pin_params->alignment, false);
  	if (IS_ERR(dpt))
  		return PTR_ERR(dpt);
- 
-@@ -269,11 +269,11 @@ static void write_ggtt_rotated_node(stru
- }
- 
- static int __xe_pin_fb_vma_ggtt(const struct intel_framebuffer *fb,
--				const struct i915_gtt_view *view,
--				struct i915_vma *vma,
--				unsigned int alignment)
-+				const struct intel_fb_pin_params *pin_params,
-+				struct i915_vma *vma)
- {
- 	struct drm_gem_object *obj = intel_fb_bo(&fb->base);
-+	const struct i915_gtt_view *view = pin_params->view;
- 	struct xe_bo *bo = gem_to_xe_bo(obj);
- 	struct xe_device *xe = to_xe_device(fb->base.dev);
- 	struct xe_tile *tile0 = xe_device_get_root_tile(xe);
-@@ -319,8 +319,7 @@ static int __xe_pin_fb_vma_ggtt(const st
- }
- 
- static struct i915_vma *__xe_pin_fb_vma(const struct intel_framebuffer *fb,
--					const struct i915_gtt_view *view,
--					unsigned int alignment)
-+					const struct intel_fb_pin_params *pin_params)
- {
- 	struct drm_device *dev = fb->base.dev;
- 	struct xe_device *xe = to_xe_device(dev);
-@@ -377,9 +376,9 @@ static struct i915_vma *__xe_pin_fb_vma(
- 
- 	vma->bo = bo;
- 	if (intel_fb_uses_dpt(&fb->base))
--		ret = __xe_pin_fb_vma_dpt(fb, view, vma, alignment);
-+		ret = __xe_pin_fb_vma_dpt(fb, pin_params, vma);
- 	else
--		ret = __xe_pin_fb_vma_ggtt(fb, view, vma,  alignment);
-+		ret = __xe_pin_fb_vma_ggtt(fb, pin_params, vma);
- 	if (ret)
- 		goto err_unpin;
- 
-@@ -414,16 +413,13 @@ static void __xe_unpin_fb_vma(struct i91
- 
- struct i915_vma *
- intel_fb_pin_to_ggtt(const struct drm_framebuffer *fb,
--		     const struct i915_gtt_view *view,
--		     unsigned int alignment,
--		     unsigned int phys_alignment,
--		     unsigned int vtd_guard,
-+		     const struct intel_fb_pin_params *pin_params,
- 		     int *out_fence_id)
- {
- 	if (out_fence_id)
- 		*out_fence_id = -1;
- 
--	return __xe_pin_fb_vma(to_intel_framebuffer(fb), view, alignment);
-+	return __xe_pin_fb_vma(to_intel_framebuffer(fb), pin_params);
- }
- 
- void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id)
-@@ -475,7 +471,10 @@ int intel_plane_pin_fb(struct intel_plan
- 	struct i915_vma *vma;
- 	struct intel_framebuffer *intel_fb = to_intel_framebuffer(fb);
- 	struct intel_plane *plane = to_intel_plane(new_plane_state->uapi.plane);
--	unsigned int alignment = plane->min_alignment(plane, fb, 0);
-+	struct intel_fb_pin_params pin_params = {
-+		.view = &new_plane_state->view.gtt,
-+		.alignment = plane->min_alignment(plane, fb, 0),
-+	};
- 
- 	if (reuse_vma(new_plane_state, old_plane_state))
- 		return 0;
-@@ -484,7 +483,7 @@ int intel_plane_pin_fb(struct intel_plan
- 	drm_WARN_ON(bo->ttm.base.dev, !(bo->flags & XE_BO_FLAG_FORCE_WC) &&
- 		    bo->ttm.type != ttm_bo_type_sg);
- 
--	vma = __xe_pin_fb_vma(intel_fb, &new_plane_state->view.gtt, alignment);
-+	vma = __xe_pin_fb_vma(intel_fb, &pin_params);
- 
- 	if (IS_ERR(vma))
- 		return PTR_ERR(vma);
---- a/drivers/gpu/drm/xe/display/xe_initial_plane.c
-+++ b/drivers/gpu/drm/xe/display/xe_initial_plane.c
-@@ -151,9 +151,11 @@ xe_initial_plane_setup(struct drm_plane_
- {
- 	struct intel_plane_state *plane_state = to_intel_plane_state(_plane_state);
- 	struct i915_vma *vma;
-+	struct intel_fb_pin_params pin_params = {
-+		.view = &plane_state->view.gtt,
-+	};
- 
--	vma = intel_fb_pin_to_ggtt(fb, &plane_state->view.gtt,
--				   0, 0, 0, NULL);
-+	vma = intel_fb_pin_to_ggtt(fb, &pin_params, NULL);
- 	if (IS_ERR(vma))
- 		return PTR_ERR(vma);
  
 
 
