@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136DE479864;
-	Tue, 25 Aug 2026 13:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A42C41A92C;
+	Tue, 25 Aug 2026 13:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665966; cv=none; b=sUF2wHocyT+j1ackxYTzseubJ09oY7Nelb6l6f2+WK9Q2fJ+MUi47HJjkonvgswzJYXjAo8je/n9rLcLIsCAEXq7R1WH21K3vrQL2Vs3wtvRoRNYOA3Bx1ZLUU1G+B4TkuDW+SHI1orRMwKSj4ipBIyofXcxTgVvwU08PS3Cma8=
+	t=1787665969; cv=none; b=cpkrnXXA7bxacezxnP94frw55GJqBILpVsgQm4HuTd+oPMByh3WjR85REM4gkNkcaLbD/ezxQOule2UVoimsAurhLmx5abfTsH2mcXBlo5Xa96jqR4/VIK67TOhFe8UeurWUwhiV/vqVC1Cdl8CGNgB+mSis1ZjWIRJl768fTJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665966; c=relaxed/simple;
-	bh=RT448wTWaBMVm3Gp1f1d26rvbexNgr23iaHayEfPrHQ=;
+	s=arc-20240116; t=1787665969; c=relaxed/simple;
+	bh=jcIbvNER/IgRrX7B7Dg8UtGYfI+IuoN5m3DRTAZSeVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcPLW9CQVHXyrqK/fwqJUNiwZgesnsGi4hs1eo6OvjrZLiUvX4RF4VCHOHpu8yHi5ePzCCqFVRMsRO0oCUhJBpV3JU0gR/JJeM0p9DLYMA99QJbJ0nnyYZ7ofrXi8O0QctQKghpAaY7uEyEpfUSRnY/lB3HEH6n9sxGgLF9h38M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBUWWEiO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TMuNyK2iWtbJur22DwzFm9E3R+2Kf5d0wbc3+uk80+iTbqk+c8mEJ0eFkZ1shgRQeJCpH1KEoO9/bt9tleXoH7ml3T5Jj/VhRem7Ov2hm+Kf/hQzRFmrz7mMOsi7Ku4ZJDhWGnTZrQDzaAhFgRfr9/72zC4bsL4LyQAl8uS7+Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=selBzuru; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBUWWEiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EA61F000E9;
-	Tue, 25 Aug 2026 13:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="selBzuru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9751F000E9;
+	Tue, 25 Aug 2026 13:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665965;
-	bh=gTPwBUq1s0g+mT9pS75YuVMohyg61hBoRSd8edI4SHc=;
+	s=korg; t=1787665967;
+	bh=HlI93GZgKR2tgkZ9jbIP0rHvX5yGNvs/JZvAJCngwa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBUWWEiOJrNQ/+Fq3NERXG9xoy5gJhoiNrA23rwckfDV0DOltWY1clpuSfDqjAndL
-	 9+i2VxtJq3ycx9A/gXWMCT45HBSc2yf4wttgaZkCYz2M6xmBmQwGe/OJS4x3totduT
-	 /4lnRIhp1U7DQRuHjt4A4r7pHd08EigYdC3zkuu8=
+	b=selBzuru4O5Fk7feJdcNf14fklofRtXBnj7Owv/4BNmm30gyBNbM5sOpnB/M58xZK
+	 OocodfEaSPC4rFQlEXUfr7PJt4UO1X55rR4Q2dHFyAeuKNZrS/+122FM26zcGAMTzX
+	 Jt2c/qZ4IVrNfHBcXLzgS1a1O9tNz/qNpkvrd1U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 37/79] drm/amdgpu: check ASPM on the dGPU host link
-Date: Tue, 25 Aug 2026 15:26:17 +0200
-Message-ID: <20260825132543.152417117@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Junjie Cao <junjie.cao@intel.com>
+Subject: [PATCH 6.1 38/79] gpio: ml-ioh: use raw_spinlock_t for the register lock
+Date: Tue, 25 Aug 2026 15:26:18 +0200
+Message-ID: <20260825132543.190085577@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -53,103 +50,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-[ Upstream commit 2a9c5154a5650c09ad44ff5e1dff74754e15a3c6 ]
+commit 600411ea1f2443fdf5b1af9b6480f616d7aff9d0 upstream.
 
-dGPUs with an internal PCIe switch expose graphics functions below the
-switch downstream port. The automatic ASPM check uses the display
-endpoint and evaluates the internal link instead of the host link.
+ioh_irq_type() is registered as the irq_chip .irq_set_type callback and
+takes chip->spinlock with spin_lock_irqsave().  This callback is reached
+from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
+the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
+That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
+an rtmutex-backed sleeping lock, so acquiring it there is invalid.
+ioh_irq_enable() and ioh_irq_disable() take the same lock from the
+.irq_enable/.irq_disable callbacks, which are likewise invoked with
+desc->lock held.
 
-Use the switch upstream port for the check and report the selected
-link.
+Convert the register lock to raw_spinlock_t.  The same lock also
+serializes the GPIO direction/value callbacks and the suspend/resume
+register save/restore, and those critical sections only perform short
+sequences of MMIO register accesses (ioread32()/iowrite32()); the
+.irq_set_type callback additionally emits a dev_warn() on an unsupported
+type.  None of these are sleepable operations, so keeping this register
+lock non-sleeping is appropriate for the irqchip callbacks and does not
+change the GPIO-side locking contract.
 
-Fixes: 0ab5d711ec74 ("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4e0d6f2876e704fff707b18c40dbd383aea4a1c9)
+This is the same fix as commit a02b8950d619 ("gpio: pch: use
+raw_spinlock_t for the register lock"); this driver shares the same
+structure as gpio-pch.
+
+Fixes: 54be566317b6 ("gpio-ml-ioh: Support interrupt function")
 Cc: stable@vger.kernel.org
-[ Dropped the upstream APU and `amdgpu_device_aspm_support_quirk(adev)` context lines, keeping 6.1's old-signature quirk helper untouched. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260731032747.2987292-1-junjie.cao@intel.com
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   50 ++++++++++++++++++++++++++++-
- 1 file changed, 49 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-ml-ioh.c |   36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1375,6 +1375,31 @@ bool amdgpu_device_pcie_dynamic_switchin
- 	return true;
+--- a/drivers/gpio/gpio-ml-ioh.c
++++ b/drivers/gpio/gpio-ml-ioh.c
+@@ -84,7 +84,7 @@ struct ioh_gpio {
+ 	u32 gpio_use_sel;
+ 	int ch;
+ 	int irq_base;
+-	spinlock_t spinlock;
++	raw_spinlock_t spinlock;
+ };
+ 
+ static const int num_ports[] = {6, 12, 16, 16, 15, 16, 16, 12};
+@@ -95,7 +95,7 @@ static void ioh_gpio_set(struct gpio_chi
+ 	struct ioh_gpio *chip =	gpiochip_get_data(gpio);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	reg_val = ioread32(&chip->reg->regs[chip->ch].po);
+ 	if (val)
+ 		reg_val |= BIT(nr);
+@@ -103,7 +103,7 @@ static void ioh_gpio_set(struct gpio_chi
+ 		reg_val &= ~BIT(nr);
+ 
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
  }
  
-+/*
-+ * Some dGPUs expose their display endpoint below an internal PCIe switch.
-+ * Use the switch upstream port to query the host-facing link.
-+ */
-+static struct pci_dev *amdgpu_device_get_aspm_pdev(struct amdgpu_device *adev)
-+{
-+	struct pci_dev *swds, *swus;
-+
-+	swds = pci_upstream_bridge(adev->pdev);
-+	if (!swds ||
-+	    (swds->vendor != PCI_VENDOR_ID_ATI &&
-+	     swds->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(swds) != PCI_EXP_TYPE_DOWNSTREAM)
-+		return adev->pdev;
-+
-+	swus = pci_upstream_bridge(swds);
-+	if (!swus ||
-+	    (swus->vendor != PCI_VENDOR_ID_ATI &&
-+	     swus->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(swus) != PCI_EXP_TYPE_UPSTREAM)
-+		return adev->pdev;
-+
-+	return swus;
-+}
-+
- /**
-  * amdgpu_device_should_use_aspm - check if the device should program ASPM
-  *
-@@ -1387,6 +1412,9 @@ bool amdgpu_device_pcie_dynamic_switchin
-  */
- bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev)
- {
-+	struct pci_dev *aspm_pdev, *parent;
-+	bool enabled;
-+
- 	switch (amdgpu_aspm) {
- 	case -1:
- 		break;
-@@ -1397,7 +1425,27 @@ bool amdgpu_device_should_use_aspm(struc
- 	default:
- 		return false;
- 	}
--	return pcie_aspm_enabled(adev->pdev);
-+
-+	/*
-+	 * pcie_aspm_enabled() checks the link between its argument and
-+	 * the immediate upstream bridge. Use SWUS for dGPUs with an
-+	 * internal switch so that this is the host-facing link.
-+	 */
-+	aspm_pdev = amdgpu_device_get_aspm_pdev(adev);
-+	parent = pci_upstream_bridge(aspm_pdev);
-+	if (!parent) {
-+		dev_dbg(adev->dev, "ASPM: no upstream PCIe link for %s\n",
-+			pci_name(aspm_pdev));
-+		return false;
-+	}
-+
-+	enabled = pcie_aspm_enabled(aspm_pdev);
-+	/* Report the exact link used for the automatic ASPM decision. */
-+	dev_dbg(adev->dev, "ASPM: link %s <-> %s is %s\n",
-+		pci_name(parent), pci_name(aspm_pdev),
-+		enabled ? "enabled" : "disabled");
-+
-+	return enabled;
+ static int ioh_gpio_get(struct gpio_chip *gpio, unsigned nr)
+@@ -121,7 +121,7 @@ static int ioh_gpio_direction_output(str
+ 	u32 reg_val;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
+ 	pm &= BIT(num_ports[chip->ch]) - 1;
+ 	pm |= BIT(nr);
+@@ -134,7 +134,7 @@ static int ioh_gpio_direction_output(str
+ 		reg_val &= ~BIT(nr);
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+ 
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -145,12 +145,12 @@ static int ioh_gpio_direction_input(stru
+ 	u32 pm;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm);
+ 	pm &= BIT(num_ports[chip->ch]) - 1;
+ 	pm &= ~BIT(nr);
+ 	iowrite32(pm, &chip->reg->regs[chip->ch].pm);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -254,7 +254,7 @@ static int ioh_irq_type(struct irq_data
+ 	dev_dbg(chip->dev, "%s:irq=%d type=%d ch=%d pos=%d type=%d\n",
+ 		__func__, irq, type, ch, im_pos, type);
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 
+ 	switch (type) {
+ 	case IRQ_TYPE_EDGE_RISING:
+@@ -294,7 +294,7 @@ static int ioh_irq_type(struct irq_data
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	iowrite32(ien | BIT(ch), &chip->reg->regs[chip->ch].ien);
+ end:
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -324,11 +324,11 @@ static void ioh_irq_disable(struct irq_d
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien &= ~BIT(d->irq - chip->irq_base);
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
  }
  
- bool amdgpu_device_aspm_support_quirk(void)
+ static void ioh_irq_enable(struct irq_data *d)
+@@ -338,11 +338,11 @@ static void ioh_irq_enable(struct irq_da
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien |= BIT(d->irq - chip->irq_base);
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static irqreturn_t ioh_gpio_handler(int irq, void *dev_id)
+@@ -438,7 +438,7 @@ static int ioh_gpio_probe(struct pci_dev
+ 		chip->base = base;
+ 		chip->reg = chip->base;
+ 		chip->ch = i;
+-		spin_lock_init(&chip->spinlock);
++		raw_spin_lock_init(&chip->spinlock);
+ 		ioh_gpio_setup(chip, num_ports[i]);
+ 		ret = devm_gpiochip_add_data(dev, &chip->gpio, chip);
+ 		if (ret) {
+@@ -482,9 +482,9 @@ static int __maybe_unused ioh_gpio_suspe
+ 	struct ioh_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ioh_gpio_save_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -494,11 +494,11 @@ static int __maybe_unused ioh_gpio_resum
+ 	struct ioh_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	iowrite32(0x01, &chip->reg->srst);
+ 	iowrite32(0x00, &chip->reg->srst);
+ 	ioh_gpio_restore_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
 
 
