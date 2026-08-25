@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5F445C70B;
-	Tue, 25 Aug 2026 13:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A248F481AA6;
+	Tue, 25 Aug 2026 13:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666326; cv=none; b=p3uYgH+P6MinABRpUEj1HpKNrtYgDaLo2kh+B1DNMNRZGx7gNVwNQCYARl+6OlPpWj8ilAJ9fKQUdiYU+OblRjY8s6gXrgc6EyxqzZIg7ZDU+rfNBOQ+Yz9hMGQ51RqKl8/OHtUP5bmFUKNYoonHeFchmblemaJxrzSqDmtNMns=
+	t=1787666330; cv=none; b=nLzu88ILArejQrb4XQhuVbb5ecWa3j9slgMjP6k06ZqLnNNjk1EMdhubgKggfAx7yLQw5TyqGzSu9ypvJ6yqUtVpiq5rkMIay6qJt8axvbJskbFpeO3KPI9GKjoGJZZgMRQcHNq1P7SdjRWURRCVX1FcllgezJ3YN3K8MyoTMx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666326; c=relaxed/simple;
-	bh=JafeEMCoKrxe9rm3nrl6Zu+0315ZJiVHCFe6yfvBeew=;
+	s=arc-20240116; t=1787666330; c=relaxed/simple;
+	bh=dMbOj04O2XVihy/rhoxuqOia8piPZvOMOwFyqO/YPJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUSYKimVr+yOhPE0eBFKdlu1q2zZhQWBpApoEtgw1e417tDZwQVR4ZKMIOxK8qPislFGuhHdUZoZ660E18g+0DYrFnuw73rtOqdp66xTi8eJDBtbWMQzd0YEv/BgE2GtCwZ+AlnU1w3XkvmDWBVyoMd5o1RW+d38j9rd2TBSPkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lIiyI/4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cr+XiP75QzO6+Dq/nq27YdQqbaEEvGX4ei443phv4ErOztmXzqZ1uuWFoAdbHY+h/TD4CX9kv/Gv4UWQcomyEt8mzcps7lmUVvjkWuaMWfktJDU16cbpn/EL3bbm/YMB0lHudg8niObW6I72oSlUD8V1IX6tF48bqe40VV2ETvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2f+wJZJD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lIiyI/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CE11F000E9;
-	Tue, 25 Aug 2026 13:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2f+wJZJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1901F000E9;
+	Tue, 25 Aug 2026 13:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666325;
-	bh=0DpW2VKT44XeLOCuDUErSW1wPZ/PPeR1S1KsqOz22Mw=;
+	s=korg; t=1787666328;
+	bh=KhCXgOM7yoPNOvDti3mhRBpZNK62YtI16IqQJWWOzHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1lIiyI/4w+dH+E/WPSjD2x5WWltchVwvyUL60S0QjUXvSSLjpx17avAA0X1H0/thK
-	 8CHXlHD/bMvQ4VTqNLs3j44WDjAY7oe5ep1YPSXHMDjPfO/3BhYGE310G7AIGjvhIg
-	 DhMdaRKltYVNUG24JfmA+m5ZRWn6GHnoBzmIWfcg=
+	b=2f+wJZJDNdkihQivJ0gz4wjlQdAW2a5kI3cEFBgrwBYIu88wa2ylDiCEB7K7uBJJo
+	 J0i1a8rijUOIj86CIWwaB1H9R8kyds4Xq+7XwvljGWoyMMomtHOd5xCWyEXWduHYjh
+	 L2cS4c3+AUwPmWaDems79SWF6O4LWbla2SZgMA+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 48/76] s390/vfio_ccw: Implement a crw lock
-Date: Tue, 25 Aug 2026 15:26:41 +0200
-Message-ID: <20260825132543.456403514@linuxfoundation.org>
+Subject: [PATCH 5.15 49/76] mptcp: avoid combining some incoming suboptions
+Date: Tue, 25 Aug 2026 15:26:42 +0200
+Message-ID: <20260825132543.496629832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -53,171 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 16b0798024c0e9117e395829ddbbe70981c79d9c ]
+[ Upstream commit b6ee361524641f57b2e2363f7737f20e17f67827 ]
 
-Unlike the channel_program struct, which covers synchronous I/O
-submissions and asynchronous interrupts, the CRW region relies
-exclusively on asynchronous events coming from hardware.
+Some MPTCP suboptions are mutually exclusive according to the RFC8684,
+but also because in different places, the code doesn't expect some
+combinations to be present. That's specially true for suboptions that
+would be present twice, but with different attributes.
 
-Implement a lock to manage the list of those payloads, to ensure
-they are read cohesively.
+The new restrictions are the same as the ones applied on the output
+side, with mptcp_write_options. The same rules can be reused with a
+small fix: an MP_FASTCLOSE can be used with a DSS when the sender picks
+this option [1], which is not the case on Linux. Here are the rules:
 
-Fixes: 3f02cb2fd9d2 ("vfio-ccw: Wire up the CRW irq and CRW region")
+  Which options can be used together?
+
+  X: mutually exclusive
+  O: often used together
+  C: can be used together in some cases
+  P: could be used together but we prefer not to (optimisations)
+
+  | Opt: | MPC  | MPJ  | DSS  | ADD  |  RM  | PRIO | FAIL |  FC  |
+  |------|------|------|------|------|------|------|------|------|
+  | MPC  |------|------|------|------|------|------|------|------|
+  | MPJ  |  X   |------|------|------|------|------|------|------|
+  | DSS  |  X   |  X   |------|------|------|------|------|------|
+  | ADD  |  X   |  X   |  P   |------|------|------|------|------|
+  | RM   |  C   |  C   |  C   |  P   |------|------|------|------|
+  | PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
+  | FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
+  | FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
+  | RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
+  |------|------|------|------|------|------|------|------|------|
+
+The only difference is with the 'P': another stack could send and
+ADD_ADDR with other suboptions (DSS, RM_ADDR), and this should be
+allowed.
+
+A few points of attention:
+
+ - In theory, an MP_CAPABLE could be used with a RM_ADDR, but there is
+   no reason to add it with a SYN. Note that even with a 4th ACK, it
+   doesn't seem to be useful, except when IDs are known in advance via
+   another channel. Better not to break that.
+
+ - Now, combining both an MP_CAPABLE and an MP_JOIN will no longer
+   result to a reject of the two options, but only the second suboption
+   is ignored. That seems OK to do that for this unexpected error. At
+   least now all inconsistent combinations are handled the same way.
+   This could change later in next. This also means the explicit checks
+   for having both MPC + MPJ in subflow.c will now be unreachable.
+   That's fine, they will be removed in a follow-up patch.
+
+ - In case of conflicting combinations, the extra suboption(s) is/are
+   ignored: having such combinations either means the remote peer is
+   buggy, or is evil. The simplest action is then taken in this case:
+   stop processing the current suboption.
+
+ - In mp_opt->suboptions, there is also a bit reserved to the checksum,
+   which can be used in an MP_CAPABLE and a DSS. Each time a DSS option
+   can be used in parallel with another option, the checksum can be set,
+   so the verification is combined into a new OPTIONS_MPTCP_DSS macro.
+
+ - An MP_CAPABLE ACK can carry a Data-Level Length, and an optional
+   Checksum: they are the same as the ones found in a DSS, because a DSS
+   cannot be used in parallel to an MP_CAPABLE. Similarly, even if there
+   is room, a DSS cannot be used with an MP_JOIN.
+
+Fixes: eda7acddf808 ("mptcp: Handle MPTCP TCP options")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-[ relocated crw_lock init and CRW drain from vfio_ccw_ops.c's mdev_init_dev()/mdev_release_dev() into vfio_ccw_drv.c's sch_probe()/sch_remove(), and kept the two-argument eventfd_signal() calls ]
+Link: https://www.rfc-editor.org/rfc/rfc8684.html#section-3.5-5.1 [1]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-2-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ used `!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_SYN)` instead of missing `subopt` variable and `OPTIONS_MPTCP_MPC` instead of `OPTION_MPTCP_MPC_ACK` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_chp.c     |   26 ++++++++++++++++----------
- drivers/s390/cio/vfio_ccw_drv.c     |   10 ++++++++++
- drivers/s390/cio/vfio_ccw_private.h |    4 ++++
- 3 files changed, 30 insertions(+), 10 deletions(-)
+ net/mptcp/options.c  |   57 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ net/mptcp/protocol.h |    1 
+ 2 files changed, 58 insertions(+)
 
---- a/drivers/s390/cio/vfio_ccw_chp.c
-+++ b/drivers/s390/cio/vfio_ccw_chp.c
-@@ -92,18 +92,13 @@ static ssize_t vfio_ccw_crw_region_read(
- 	loff_t pos = *ppos & VFIO_CCW_OFFSET_MASK;
- 	struct ccw_crw_region *region;
- 	struct vfio_ccw_crw *crw;
-+	unsigned long flags;
- 	int ret;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -45,6 +45,14 @@ static void mptcp_parse_option(const str
+ 				expected_opsize = TCPOLEN_MPTCP_MPC_SYN;
+ 		}
  
- 	if (pos + count > sizeof(*region))
- 		return -EINVAL;
- 
- 	mutex_lock(&private->io_mutex);
--	crw = list_first_entry_or_null(&private->crw,
--				       struct vfio_ccw_crw, next);
--
--	if (crw)
--		list_del(&crw->next);
--
- 	if (i >= private->num_regions) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -112,6 +107,16 @@ static ssize_t vfio_ccw_crw_region_read(
- 	i = array_index_nospec(i, private->num_regions);
- 	region = private->region[i].data;
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
-+	crw = list_first_entry_or_null(&private->crw,
-+				       struct vfio_ccw_crw, next);
++		/* Only the MPC + ACK can be used with a RM_ADDR */
++		if (!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_SYN)) {
++			if ((mp_opt->suboptions & ~OPTION_MPTCP_RM_ADDR) != 0)
++				break;
++		} else if (mp_opt->suboptions != 0) {
++			break;
++		}
 +
-+	if (crw)
-+		list_del(&crw->next);
+ 		/* Cfr RFC 8684 Section 3.3.0:
+ 		 * If a checksum is present but its use had
+ 		 * not been negotiated in the MP_CAPABLE handshake, the receiver MUST
+@@ -117,6 +125,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_JOIN:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
 +
-+	/* Drop CRW lock while copying to userspace */
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
+ 		if (opsize == TCPOLEN_MPTCP_MPJ_SYN) {
+ 			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYN;
+ 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
+@@ -148,6 +161,14 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_DSS:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO |
++					    OPTION_MPTCP_FASTCLOSE |
++					    OPTION_MPTCP_FAIL)) != 0)
++			break;
 +
- 	if (crw)
- 		memcpy(&region->crw, &crw->crw, sizeof(region->crw));
+ 		pr_debug("DSS\n");
+ 		ptr++;
  
-@@ -121,15 +126,16 @@ static ssize_t vfio_ccw_crw_region_read(
- 		ret = count;
+@@ -235,6 +256,12 @@ static void mptcp_parse_option(const str
+ 		break;
  
- 	region->crw = 0;
--
--out:
--	mutex_unlock(&private->io_mutex);
--
- 	kfree(crw);
- 
- 	/* Notify the guest if more CRWs are on our queue */
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	if (!list_empty(&private->crw) && private->crw_trigger)
- 		eventfd_signal(private->crw_trigger, 1);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
+ 	case MPTCPOPT_ADD_ADDR:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
 +
-+out:
-+	mutex_unlock(&private->io_mutex);
+ 		mp_opt->echo = (*ptr++) & MPTCP_ADDR_ECHO;
+ 		if (!mp_opt->echo) {
+ 			if (opsize == TCPOLEN_MPTCP_ADD_ADDR ||
+@@ -294,6 +321,14 @@ static void mptcp_parse_option(const str
+ 		break;
  
- 	return ret;
- }
---- a/drivers/s390/cio/vfio_ccw_drv.c
-+++ b/drivers/s390/cio/vfio_ccw_drv.c
-@@ -119,11 +119,14 @@ static void vfio_ccw_sch_io_todo(struct
- static void vfio_ccw_crw_todo(struct work_struct *work)
- {
- 	struct vfio_ccw_private *private;
-+	unsigned long flags;
- 
- 	private = container_of(work, struct vfio_ccw_private, crw_work);
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	if (!list_empty(&private->crw) && private->crw_trigger)
- 		eventfd_signal(private->crw_trigger, 1);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
- }
- 
- /*
-@@ -207,6 +210,7 @@ static int vfio_ccw_sch_probe(struct sub
- 	INIT_LIST_HEAD(&private->crw);
- 	INIT_WORK(&private->io_work, vfio_ccw_sch_io_todo);
- 	INIT_WORK(&private->crw_work, vfio_ccw_crw_todo);
-+	spin_lock_init(&private->crw_lock);
- 	atomic_set(&private->avail, 1);
- 	private->state = VFIO_CCW_STATE_STANDBY;
- 
-@@ -238,13 +242,16 @@ static void vfio_ccw_sch_remove(struct s
- {
- 	struct vfio_ccw_private *private = dev_get_drvdata(&sch->dev);
- 	struct vfio_ccw_crw *crw, *temp;
-+	unsigned long flags;
- 
- 	vfio_ccw_sch_quiesce(sch);
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
- 		list_del(&crw->next);
- 		kfree(crw);
- 	}
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
- 
- 	vfio_ccw_mdev_unreg(sch);
- 
-@@ -304,6 +311,7 @@ static void vfio_ccw_queue_crw(struct vf
- 			       unsigned int rsid)
- {
- 	struct vfio_ccw_crw *crw;
-+	unsigned long flags;
- 
- 	/*
- 	 * If unable to allocate a CRW, just drop the event and
-@@ -321,7 +329,9 @@ static void vfio_ccw_queue_crw(struct vf
- 	crw->crw.erc = erc;
- 	crw->crw.rsid = rsid;
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	list_add_tail(&crw->next, &private->crw);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
- 	queue_work(vfio_ccw_work_q, &private->crw_work);
- }
- 
---- a/drivers/s390/cio/vfio_ccw_private.h
-+++ b/drivers/s390/cio/vfio_ccw_private.h
-@@ -84,6 +84,8 @@ struct vfio_ccw_crw {
-  * @cp: channel program for the current I/O operation
-  * @irb: irb info received from interrupt
-  * @scsw: scsw info
-+ * @crw_lock: serialization of CRW list information
-+ * @crw: list of Channel Report Word elements
-  * @io_trigger: eventfd ctx for signaling userspace I/O results
-  * @crw_trigger: eventfd ctx for signaling userspace CRW information
-  * @req_trigger: eventfd ctx for signaling userspace to return device
-@@ -108,6 +110,8 @@ struct vfio_ccw_private {
- 	struct channel_program	cp;
- 	struct irb		irb;
- 	union scsw		scsw;
+ 	case MPTCPOPT_RM_ADDR:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_MPC |
++					    OPTIONS_MPTCP_MPJ |
++					    OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
 +
-+	spinlock_t		crw_lock;
- 	struct list_head	crw;
+ 		if (opsize < TCPOLEN_MPTCP_RM_ADDR_BASE + 1 ||
+ 		    opsize > TCPOLEN_MPTCP_RM_ADDR_BASE + MPTCP_RM_IDS_MAX)
+ 			break;
+@@ -308,6 +343,13 @@ static void mptcp_parse_option(const str
+ 		break;
  
- 	struct eventfd_ctx	*io_trigger;
+ 	case MPTCPOPT_MP_PRIO:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_MPJ |
++					    OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_RM_ADDR)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_PRIO)
+ 			break;
+ 
+@@ -317,6 +359,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_FASTCLOSE:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RST)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_FASTCLOSE)
+ 			break;
+ 
+@@ -327,6 +374,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_RST:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_FAIL |
++					    OPTION_MPTCP_FASTCLOSE)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_RST)
+ 			break;
+ 
+@@ -340,6 +392,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_FAIL:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RST)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_FAIL)
+ 			break;
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -35,6 +35,7 @@
+ 				 OPTION_MPTCP_MPC_ACK)
+ #define OPTIONS_MPTCP_MPJ	(OPTION_MPTCP_MPJ_SYN | OPTION_MPTCP_MPJ_SYNACK | \
+ 				 OPTION_MPTCP_MPJ_ACK)
++#define OPTIONS_MPTCP_DSS	(OPTION_MPTCP_DSS | OPTION_MPTCP_CSUMREQD)
+ 
+ /* MPTCP option subtypes */
+ #define MPTCPOPT_MP_CAPABLE	0
 
 
