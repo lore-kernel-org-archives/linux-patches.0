@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47BC386C3B;
-	Tue, 25 Aug 2026 13:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D42848123A;
+	Tue, 25 Aug 2026 13:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665247; cv=none; b=Ywqriv0hNPRp/17EseyrXpHlZgZTQcP14zbvMKvCo6ZqLF8Au3R52g9yCjRMssNq/fTzK/GsABIA4WZG3TnhHJFFEPaaT6G0xlVVPHTSRiEdP21TqcxYlg75Ti4uYwJtO053QwhBT9YmjT4QayShkFHGqMiJafw3KZFfHUheSIg=
+	t=1787665248; cv=none; b=sk0RWZTwuPMByG5QXovO2iCaeZRo91pj2ZbF7IU465kcYvFs/t7eBgi7YVDSiclzxgNkWjrpXZrCSV145ktwl1do7atErrbG/zjiFH6wm5eM1BcRLMzSaWyf3DMHf361OHvxRHxnr39WMwF7KSyR/EJH+jWs13Dr/uqHy9u0G0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665247; c=relaxed/simple;
-	bh=ymbhqzZWP194/S+xSZ3rqNvs9q0KqP0lipWko//MJH0=;
+	s=arc-20240116; t=1787665248; c=relaxed/simple;
+	bh=NqAMKJhwOZcBVaUshZpYMy+tn5P1YLKn5ZcCZ/mZapI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCkiB/IudZEdPMbzqcttsb4D+UDHIfmWtuz6Gr2l6LN1Yxql4mjem6UyFpvWmiOawKeqFnMj+b2iznlp2ZL+zxut1nNYlI/+M3Og8cbvTyHMQ2jH9CW9ZOkDV34xHxNEj/i1xV1/o55EaBBFTc1qjzgpjCZ5DTyjL/iGdB7VZUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO6sORHW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TRlODjJSuyKAKHoj8m4fnhTEfstYfxYMG+tYRcx6KNJYKttQRlbvsOuz6CxoddNXvHgzmxojV0u0zinb6zM7csChDLvxE/+YEuM4too31uIL8cqORPhymNgxvwUX9dNRoqbdGeVJV+zUSzvXE8/JKfLvoE6T/h0HiJgP1rU18VQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHy/g8s4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO6sORHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135601F00A3D;
-	Tue, 25 Aug 2026 13:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHy/g8s4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E110E1F000E9;
+	Tue, 25 Aug 2026 13:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665241;
-	bh=FZmDQ5cTS6n2FHWKdOcePJt/jDfSyubOR4pDj8OP644=;
+	s=korg; t=1787665247;
+	bh=qSqWoiFPyWogUSnkx05V6kdRM7gJX4Gq/DEYQprhhMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tO6sORHWgO6VcuKi6pf3r6GRzLzbX7qgfRbZet54uGqkhWf+Hg8E0SxXfT7HbjQx4
-	 0nLrkQHCnJlYcDgoM0mwHvPLPOS/RFnHj+TBcnGNF4x0m2ZXQUrVXlE/OB9DOiRh3X
-	 FTP5OqNOjcP6CFkmkpeoLEtDyadS7uHNJvD5JgoU=
+	b=zHy/g8s4GPOTD+f2Z3AYI4+uzVUS4pPO3Evn1gpB1i0tzXdXipeoC5sLn7uZVua/K
+	 esFbKWlxD2Nl8+nYh7r4fkw+GP930YfP7rRkxSkgbj7wOt9FxUcpIBXQa0aKrX02nf
+	 W4jvos0f0LGi4mQwS24oYjrbtDD7/56kBD5eCidg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yifei Gao <gyf161023@gmail.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 54/94] nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
-Date: Tue, 25 Aug 2026 15:25:50 +0200
-Message-ID: <20260825132544.016523535@linuxfoundation.org>
+Subject: [PATCH 6.18 56/94] nvmet: pci-epf: put CQ ref on create_cq mapping failure
+Date: Tue, 25 Aug 2026 15:25:52 +0200
+Message-ID: <20260825132544.091426200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Yifei Gao <gyf161023@gmail.com>
 
-commit 737a3b535247226f6e1a7988fd9d6e63e7d6fc71 upstream.
+commit 659ae9d02cb5d72c76f74fff7441eb8fb64d8f5c upstream.
 
-When fuzzing the nvme target code, I tripped a kernel warning in
-nvmet_tcp_map_data() because the length passed into the allocator is
-controlled by the remote initiator.
+nvmet_pci_epf_create_cq() calls nvmet_cq_create(), which takes a
+reference on the controller and installs the completion queue. If the
+subsequent PCI address-space mapping fails or returns a too-small partial
+mapping, the function jumps to err_internal / err_unmap_queue without
+calling nvmet_cq_put(). The matching put in nvmet_pci_epf_delete_cq() is
+gated on NVMET_PCI_EPF_Q_LIVE, which is only set after the mapping
+succeeds, so teardown never releases these references. A remote PCI host
+that drives Create IO CQ commands with a failing PRP1/pci_addr therefore
+leaks the CQ and a controller reference on each attempt.
 
-A remote initiator that sends a command with an SGL claiming a huge
-number, can create a scatterlist and iovec allocation of over 1 million
-entries, which causes the backing kmalloc call to exceed MAX_PAGE_ORDER
-and then the page allocator will trip on a WARN_ON_ONCE_GFP() message:
+Drop the CQ reference on the mapping-failure paths. The err_internal and
+err_unmap_queue labels are only reachable after nvmet_cq_create() has
+succeeded, so this pairs the create/put correctly.
 
-  WARNING: mm/page_alloc.c:5280 __alloc_frozen_pages_noprof
-  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
-  ...
-  sgl_alloc_order
-  nvmet_tcp_map_data
-  nvmet_tcp_try_recv_pdu
-
-As it's never good to trip a kernel warning remotely due to many systems
-having panic-on-warn enabled, let's silence it by just add GFP_NOWARN to
-the allocation flags.
-
-Assisted-by: gkh_clanker_2000
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yifei Gao <gyf161023@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/target/pci-epf.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -457,14 +457,15 @@ static int nvmet_tcp_map_data(struct nvm
- 	}
- 	cmd->req.transfer_len += len;
- 
--	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
-+	cmd->req.sg = sgl_alloc(len, GFP_KERNEL | __GFP_NOWARN,
-+				&cmd->req.sg_cnt);
- 	if (!cmd->req.sg)
- 		return NVME_SC_INTERNAL;
- 	cmd->cur_sg = cmd->req.sg;
- 
- 	if (nvmet_tcp_has_data_in(cmd)) {
- 		cmd->iov = kmalloc_array(cmd->req.sg_cnt,
--				sizeof(*cmd->iov), GFP_KERNEL);
-+				sizeof(*cmd->iov), GFP_KERNEL | __GFP_NOWARN);
- 		if (!cmd->iov)
- 			goto err;
- 	}
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -1338,6 +1338,7 @@ err_unmap_queue:
+ 	nvmet_pci_epf_mem_unmap(ctrl->nvme_epf, &cq->pci_map);
+ err_internal:
+ 	status = NVME_SC_INTERNAL | NVME_STATUS_DNR;
++	nvmet_cq_put(&cq->nvme_cq);
+ err:
+ 	if (test_and_clear_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
+ 		nvmet_pci_epf_remove_irq_vector(ctrl, cq->vector);
 
 
