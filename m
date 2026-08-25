@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2504A481FBF;
-	Tue, 25 Aug 2026 14:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C0914A619;
+	Tue, 25 Aug 2026 14:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666439; cv=none; b=lwCbXloLCDu7zoj9nliU5Bpsi9pO1Al08oYqfbN8DfdoHUpbkFizsLNJqAWM1Wt2tMnFU2+sAAB9IzccrtdH/riXej1SGgNSWsfFVz5s/NNN8fbJpHiaxl91D51iFtd/pCZJPsXxezXd/JTl+8boRWIShzcirDV+/me67mWezs4=
+	t=1787666445; cv=none; b=iViOaf1dQdYncNGcEdj+Ggu9OtfkCL5QOCOoyv0XdeepgHfIiCZAyczTkKBb8MKnaGvmIL+I9OfkZ/gZzvbGwFZRGL2/Ga83WSCf8U4f//lr/k1Jf3KUC51Bl5eogHcGdGVrI5wzqND5DX2Bkp+VS+nHr7mBczCkUF7iVZzlicw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666439; c=relaxed/simple;
-	bh=YUXkEYv7P/b/4zXYKwyV4fwo84qyjHTkyTa55TFK2iA=;
+	s=arc-20240116; t=1787666445; c=relaxed/simple;
+	bh=iY+7ufKWwO8qV3jZgkY7aDtudBTHgZyPZT/plYZpvYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OwIJCuJCZVrCulgUi9pLCiJjMzjQoqjDCSs/YLScSReQwEJbiM6hTvcK2xn9JF4Oz6LdF5+qlFG6zrFt0olZ1caOb3aIfL/Jy0BuKxi4AxyP45gVwyi+k9updVPl9quqLXNvW+9krDSPN8xks457YHEmVXLamtrVgtoiG3/h1rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9XAQjog; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=noMPyB7FUQrq3qxJwN8d1h9NAXU/J9G6xG5HK7o59MeN6NnXMdb/njnAdpY9na501601YLt4vFOO71o7/sN69YL2D+btuPZolOkQYYczAvSimQPclM4GVo2Mk0doCRGCL/OFyVL1Td/mq+QwQbQ5bbbsv0Klx1/JJeQr6IjT8bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnHoFxn9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9XAQjog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7923B1F000E9;
-	Tue, 25 Aug 2026 14:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnHoFxn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679C31F00A3A;
+	Tue, 25 Aug 2026 14:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666438;
-	bh=UNusZ6tOQM6Z/oFKmlM0wPk6aw7G4Vox6tP9S47e+3E=;
+	s=korg; t=1787666444;
+	bh=ndvCnGS/OG6bIMtcBhK6kKKceq6PthkEMNIzk8P+5z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G9XAQjog4UcSnXVeVe0WhHSnbSXgAQz64njNxwGW9cCu4gVhpmMC/ozrukGgDeISy
-	 KtjjEq60KNhKba6QzC3Y3bTMmyFM7Wo18U4nlqyHcWsup9pn0NHzrVvtgkapLP+xlp
-	 7a0f8+KM3Dk6+GZQXKyD9zUytnq+qsomaTTAlwzY=
+	b=mnHoFxn9dGG1BSnL3HN9XpC5aI4VVq58NdBJMJVm2e2n2aFiJ5atD1lPH42BuK9Hx
+	 SlWnqc/w1iIl4bStvsQ09qIoUWZs88jeseauxB3zSCY/sj3c1eAcPUca2WnhkQySLW
+	 AzPqmXOnYtsILaJ192QKbvr6svVceSDCdFkh45nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Jiang HongHui <jiang_hh2019@163.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.10 42/57] nvmet-fc: fix invalid free in LS IOD error path
-Date: Tue, 25 Aug 2026 15:27:04 +0200
-Message-ID: <20260825132542.976446175@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Junjie Cao <junjie.cao@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 44/57] gpio: ml-ioh: use raw_spinlock_t for the register lock
+Date: Tue, 25 Aug 2026 15:27:06 +0200
+Message-ID: <20260825132543.058453036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -51,46 +51,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiang HongHui <jiang_hh2019@163.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-commit ba98d6796d12258e837ece065d2ecb59d76ce4ff upstream.
+[ Upstream commit 600411ea1f2443fdf5b1af9b6480f616d7aff9d0 ]
 
-nvmet_fc_alloc_ls_iodlist() advances iod while initializing the LS IOD
-array. If an rqstbuf allocation or response buffer DMA mapping fails,
-the unwind loop decrements iod past the start of the array. The final
-kfree(iod) therefore frees an address before the allocated object.
+ioh_irq_type() is registered as the irq_chip .irq_set_type callback and
+takes chip->spinlock with spin_lock_irqsave().  This callback is reached
+from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
+the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
+That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
+an rtmutex-backed sleeping lock, so acquiring it there is invalid.
+ioh_irq_enable() and ioh_irq_disable() take the same lock from the
+.irq_enable/.irq_disable callbacks, which are likewise invoked with
+desc->lock held.
 
-This can be reproduced with nvme-fcloop and failslab by setting
-fail-nth to 6 before creating a target port. KASAN reports:
+Convert the register lock to raw_spinlock_t.  The same lock also
+serializes the GPIO direction/value callbacks and the suspend/resume
+register save/restore, and those critical sections only perform short
+sequences of MMIO register accesses (ioread32()/iowrite32()); the
+.irq_set_type callback additionally emits a dev_warn() on an unsupported
+type.  None of these are sleepable operations, so keeping this register
+lock non-sleeping is appropriate for the irqchip callbacks and does not
+change the GPIO-side locking contract.
 
-  BUG: KASAN: invalid-free in nvmet_fc_register_targetport
-  Free of addr ffff88816cf8ff48 by task nvmet_fail_nth/9552
+This is the same fix as commit a02b8950d619 ("gpio: pch: use
+raw_spinlock_t for the register lock"); this driver shares the same
+structure as gpio-pch.
 
-Free the original allocation base stored in tgtport->iod instead. With
-this fix applied, the same sysfs write with fail-nth=6 returns -ENOMEM
-without any KASAN report.
-
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Fixes: 54be566317b6 ("gpio-ml-ioh: Support interrupt function")
 Cc: stable@vger.kernel.org
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jiang HongHui <jiang_hh2019@163.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260731032747.2987292-1-junjie.cao@intel.com
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-ml-ioh.c |   36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -560,7 +560,7 @@ out_fail:
- 		list_del(&iod->ls_rcv_list);
+--- a/drivers/gpio/gpio-ml-ioh.c
++++ b/drivers/gpio/gpio-ml-ioh.c
+@@ -84,7 +84,7 @@ struct ioh_gpio {
+ 	u32 gpio_use_sel;
+ 	int ch;
+ 	int irq_base;
+-	spinlock_t spinlock;
++	raw_spinlock_t spinlock;
+ };
+ 
+ static const int num_ports[] = {6, 12, 16, 16, 15, 16, 16, 12};
+@@ -95,7 +95,7 @@ static void ioh_gpio_set(struct gpio_chi
+ 	struct ioh_gpio *chip =	gpiochip_get_data(gpio);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	reg_val = ioread32(&chip->reg->regs[chip->ch].po);
+ 	if (val)
+ 		reg_val |= (1 << nr);
+@@ -103,7 +103,7 @@ static void ioh_gpio_set(struct gpio_chi
+ 		reg_val &= ~(1 << nr);
+ 
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static int ioh_gpio_get(struct gpio_chip *gpio, unsigned nr)
+@@ -121,7 +121,7 @@ static int ioh_gpio_direction_output(str
+ 	u32 reg_val;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm) &
+ 					((1 << num_ports[chip->ch]) - 1);
+ 	pm |= (1 << nr);
+@@ -134,7 +134,7 @@ static int ioh_gpio_direction_output(str
+ 		reg_val &= ~(1 << nr);
+ 	iowrite32(reg_val, &chip->reg->regs[chip->ch].po);
+ 
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -145,12 +145,12 @@ static int ioh_gpio_direction_input(stru
+ 	u32 pm;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->regs[chip->ch].pm) &
+ 				((1 << num_ports[chip->ch]) - 1);
+ 	pm &= ~(1 << nr);
+ 	iowrite32(pm, &chip->reg->regs[chip->ch].pm);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -256,7 +256,7 @@ static int ioh_irq_type(struct irq_data
+ 	dev_dbg(chip->dev, "%s:irq=%d type=%d ch=%d pos=%d type=%d\n",
+ 		__func__, irq, type, ch, im_pos, type);
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 
+ 	switch (type) {
+ 	case IRQ_TYPE_EDGE_RISING:
+@@ -296,7 +296,7 @@ static int ioh_irq_type(struct irq_data
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	iowrite32(ien | BIT(ch), &chip->reg->regs[chip->ch].ien);
+ end:
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -326,11 +326,11 @@ static void ioh_irq_disable(struct irq_d
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien &= ~(1 << (d->irq - chip->irq_base));
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static void ioh_irq_enable(struct irq_data *d)
+@@ -340,11 +340,11 @@ static void ioh_irq_enable(struct irq_da
+ 	unsigned long flags;
+ 	u32 ien;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ien = ioread32(&chip->reg->regs[chip->ch].ien);
+ 	ien |= 1 << (d->irq - chip->irq_base);
+ 	iowrite32(ien, &chip->reg->regs[chip->ch].ien);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static irqreturn_t ioh_gpio_handler(int irq, void *dev_id)
+@@ -441,7 +441,7 @@ static int ioh_gpio_probe(struct pci_dev
+ 		chip->base = base;
+ 		chip->reg = chip->base;
+ 		chip->ch = i;
+-		spin_lock_init(&chip->spinlock);
++		raw_spin_lock_init(&chip->spinlock);
+ 		ioh_gpio_setup(chip, num_ports[i]);
+ 		ret = gpiochip_add_data(&chip->gpio, chip);
+ 		if (ret) {
+@@ -529,9 +529,9 @@ static int ioh_gpio_suspend(struct pci_d
+ 	struct ioh_gpio *chip = pci_get_drvdata(pdev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	ioh_gpio_save_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	ret = pci_save_state(pdev);
+ 	if (ret) {
+@@ -563,11 +563,11 @@ static int ioh_gpio_resume(struct pci_de
  	}
+ 	pci_restore_state(pdev);
  
--	kfree(iod);
-+	kfree(tgtport->iod);
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	iowrite32(0x01, &chip->reg->srst);
+ 	iowrite32(0x00, &chip->reg->srst);
+ 	ioh_gpio_restore_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
  
- 	return -EFAULT;
+ 	return 0;
  }
 
 
