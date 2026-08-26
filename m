@@ -1,115 +1,87 @@
-Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FEA1990C7
-	for <patches@lists.linux.dev>; Wed, 26 Aug 2026 06:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A7B2E736F
+	for <patches@lists.linux.dev>; Wed, 26 Aug 2026 06:38:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787726094; cv=none; b=KjXRddOqXrYdqTeIKIWQngVzmIgIE+XSwt5TC299kIZIYl4xNQKodytysdLwAbFq2IEbl14uDsiwIKZCs1tq7B02U89tZBvoNeG6j5iI5d691EPyOzWTP/dQVlMjNeXhZaHdhdutICXf1gMxd0QUSdxJJ722sQzCLHSwG8SCOg4=
+	t=1787726324; cv=none; b=MSKmZSX9nQCU2tQ4btJXMs4HFkD1tF3QHLxAxKLLygrDInVW+xX+27UGChPRdP+ubQcD/j86PMl4DiHOdN+/2njFLBA9RYroS5aIUThP+n8kz5mcBxS+l6m7PxviWm7gtERv4V5cIdQza4UUXPk9jSJVlkk9HrQ8oYKsFg6quwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787726094; c=relaxed/simple;
-	bh=Rzcu//JY1THhL0M0GXCK4s/k006T18qVSZhsUDqZwCQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s7h6Laz99yA4RE+2mEhx352lF7aBxA0OxQgk8swiMtxvirFWcAYjiAZnPR6kxvfhKhU8tnpPQ8w8uBtgbZxYLJwG8GAQY33I0Pg5kgTiuKM3x54L/AftFOQpoLWZRFqfrUaASKAQB5hctsKXA/qzw3XrIbCof8w3SJIoEhvdL/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=sfCgU0BB; arc=none smtp.client-ip=35.89.44.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1787726324; c=relaxed/simple;
+	bh=rnIOn4uQkuMIEAXna4wBjWXqQWLbLgxxh7vEnSFHDMM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hd+WoTixBakL9A7xlv7LyUFIKhsFOKDXvW8FhEjGDZEhbJUBFjKVh4pP/9ootF7Lql5BamgEW8Swx82LyRLsZUYskmbJmeKYbjlQLnNdVRV+FSVv3jNAg18BByIN1oPrPy+qtNQNVdWMJ05LhDVy/bO8Xzyhg+Dqo6DfYYiEBF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=R+kWB8bv; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="sfCgU0BB"
-Received: from eig-obgw-6007b.ext.cloudfilter.net ([10.0.30.166])
-	by cmsmtp with ESMTPS
-	id z0ZtwKJSiaC0Uz7DpwVbHc; Wed, 26 Aug 2026 06:34:53 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id z7DowOuOIb8gQz7Dowq4Dc; Wed, 26 Aug 2026 06:34:52 +0000
-X-Authority-Analysis: v=2.4 cv=SJJCVPvH c=1 sm=1 tr=0 ts=6a8e890c
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=60u_ompe4jvr-0JMN7sA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Osr2t4OpWchikzOq4lHwHcg7JUop6ew5mJKlMVDT4+s=; b=sfCgU0BBYQHx3qYACM9WqAx9M8
-	mQPpdSia5oCSr3LyL5sobKwAbunjpz5nzK27y24P4wFLt0k+jhn/lZw9swxq1bAFf2cfFAp1YhlI5
-	cMmHc6HgszpCrnKPBk0DnEBon55f2jA2ofXneGzxFvLwV6J2/zc8HrnExRAtlbx/N0h1fPMGKuWY/
-	zCyTFfut5raopjvr5PkDjfO6VEQOSufif+9DqlTxEG8Zna6ahluuDBNkA0spZKBEL32hPpblTxY8p
-	VaZCpPIvUNE3Jt1wPP8CEt20kEgjfnZD1XmiTMMuncaSQqqeiqPAebwt44OhW1AmLhagYOmfbDnXv
-	cTydzbqg==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:51198 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.99.5)
-	(envelope-from <re@w6rz.net>)
-	id 1wz7Dn-00000004CDM-2UTe;
-	Wed, 26 Aug 2026 00:34:51 -0600
-Message-ID: <de551ce6-ae8e-4988-97ee-2d5bd8013328@w6rz.net>
-Date: Tue, 25 Aug 2026 23:34:50 -0700
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="R+kWB8bv"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B278211CE1F;
+	Wed, 26 Aug 2026 08:38:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1787726315;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=emJjzb6F/JRrxqvKWkA6Ax60YOkwgIzHXq7iZHdGi2o=;
+	b=R+kWB8bvd4zQz2eUeoEiSVWMTOOJzGIgYKM39mUEmuKqGJK4c9dVSiGqnuSeBpbYnYyPsd
+	hYAENuyrYaKRjZIWGC7k2aB3QSbWv17wTl/BURT6cPjBOzSBoiZLsWsU9k819mOu8tkEAe
+	93Otzd1KJYXt9++gSKn6XJ7iwCk26MmwynrXpCrf/QnZ7S8x+bXKfqeMPt8wbRwgQ4utIG
+	UGW0fBpy6iCwnW6FrRSFzgvE3vMNRyFbyJPxnwWGB+EzS8SpfdspUwoKzyB7jWGVXY3e7b
+	xYuLBFR0STzMJfBKmwAByf2rU4L+Wl9GqhoVTU6wfruSyQn+2rXjJDhg4PC5pQ==
+Date: Wed, 26 Aug 2026 08:38:29 +0200
+From: Pavel Machek <pavel@nabladev.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 00/77] 6.12.106-rc1 review
+Message-ID: <ao6J5XxSRnBU0Dj3@duo.ucw.cz>
+References: <20260825132541.580275153@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/76] 5.15.218-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260825132541.568214149@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1wz7Dn-00000004CDM-2UTe
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:51198
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 118
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfP6wh5QI9D9NyOzvYcLR+v6gja3msXtmAG/AQkArb+pY5CpuQid7emG/9v8cmBbcMRxG0EbwJ2dk9QgPNgIDJUgYFK4nExLswwxj95wH4h6aD6h+4UUc
- 2p7mciSm0+lJeIl0z/Jz2nHXrfSHnHMY8kK9+J1/8e5EelrEQeRVv4HyJJAKPflNXgpvSB1C6wvs6g==
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="S33zMeJcvzIMGBkh"
+Content-Disposition: inline
+In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 8/25/26 06:25, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.218 release.
-> There are 76 patches in this series, all will be posted as a response
+
+--S33zMeJcvzIMGBkh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hi!
+
+> This is the start of the stable review cycle for the 6.12.106 release.
+> There are 77 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Thu, 27 Aug 2026 13:25:02 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.218-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+CIP testing did not find any problems here:
 
-Tested-by: Ron Economos <re@w6rz.net>
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-6.12.y
 
+Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
+
+Best regards,
+                                                                Pavel
+
+--S33zMeJcvzIMGBkh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCao6J5QAKCRAw5/Bqldv6
+8jjXAKCcY7+Iq4g8NlwmHCBnogWxCHt/oQCguzNJcXUzde3aTckLoKbObCNafvU=
+=mwGE
+-----END PGP SIGNATURE-----
+
+--S33zMeJcvzIMGBkh--
