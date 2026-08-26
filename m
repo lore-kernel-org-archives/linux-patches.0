@@ -1,60 +1,60 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C8A3B7B76
-	for <patches@lists.linux.dev>; Wed, 26 Aug 2026 08:17:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DFD3B19C4
+	for <patches@lists.linux.dev>; Wed, 26 Aug 2026 08:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787732264; cv=none; b=lIos69XWm6OSSu2WHkWa/ziFfGuazTKfdx/Ej7ssy/D2011fz2TRDu7kqb/RJrXmgm19pwCuSjfshU7C0/KJHiNxk44Z27cJoeJw53nqR7vKl/14cz33yrl0hX9ltuVQnLuFQt6sLQBWEZO/sBoVKQCBpvJKbeqBEX4ZH8HutGQ=
+	t=1787732815; cv=none; b=QyDCEvuGnYPaPH2IkH/aewrS9hT1DOuGcbRFUxoA3JFL+Vds+7+OB0OEcCO5ZjIcBxiQ0WKA9qlmr/NElwL6NtNVhGVUcSzmmqL+m5l1YzOlkhgab1IsY6RlwTNlasM226yUIL1JozSfNsmYnRHU8F3FH+J8TOk5xmwDstl1vOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787732264; c=relaxed/simple;
-	bh=yoZPihR4dSN3Arf8/6Tjk5TGnhIQyxFA6g6a1jMa4hU=;
+	s=arc-20240116; t=1787732815; c=relaxed/simple;
+	bh=YQoJBloZZGt7uTocKg9hFKKJgPxjlonzNB1GRS8X5/8=;
 	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=sdOZxs6YK5MZeJrdI8MrlBhMyWGDFcaCxJgskVJePibn8+NZ5F7vwv69XAlG7kBJbXpzZQLm9FVjd5pKhhZILs96qEzXPAQ4xwlgfStRbCMKYOjWPoRs15iXrIaC+TMpvUUdFmLf/qbRaRUiB8gP6W6dEQX71KGDXL611w2EpRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=L9DUvTbG; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version:Content-Type; b=jDyjVgc07D85FY0l89KuToquhGwGLwBUMcnoBzc97oqTU/YKBkBU1JTo7OO78BI6l+EYZhQGa5tKkx0k4beunR3zN6ytXKeZ91kcnA4CB8CylZFrBlydKwhN4Vju1Z75oytR31IFjLpr4QlcvqKuDmrEKfAHFNOblFrmqDpOodk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T40dWqHF; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="L9DUvTbG"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T40dWqHF"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787732261; x=1819268261;
+  t=1787732809; x=1819268809;
   h=from:date:to:cc:subject:in-reply-to:message-id:
    references:mime-version;
-  bh=yoZPihR4dSN3Arf8/6Tjk5TGnhIQyxFA6g6a1jMa4hU=;
-  b=L9DUvTbGFjF8FssJ0olqZ5orpwy9D/OJkuN3C3t+MQ5RGPIY0KDqAwdm
-   tV6QspFopBFMIF5HgXzMVAiF1eWsP8oeqRW6mH+tGHn4AOPRYDu3J1pZZ
-   APQSy2JvKWZ+WFTQRGQ6XOmQOkjztDn/uNioxyte0fRfe0smxIQt4OxmI
-   lBWn2LrUu8R1Q1yKRjNsk3CCf6dvWz8trSm6lolHvw+6ppj5ZEaE28zmY
-   uYMb5q58IEU4Db6L4nhjll9r6CeuovGMB1rXUgc2EX0MFJGQT7H/e1OQi
-   6qtJGWMSky425jhxhOH94dRLWzosSsuCUqBRAHKgWeH+Dt10hDgv8Kp3T
-   g==;
-X-CSE-ConnectionGUID: akgQaP1oT6WsisDX21aD8g==
-X-CSE-MsgGUID: MpCoAmrZR9CjGZl2Ys27pg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="90720012"
+  bh=YQoJBloZZGt7uTocKg9hFKKJgPxjlonzNB1GRS8X5/8=;
+  b=T40dWqHFVwCyqNwH6V3mUPCojK5wcD+uuLCgqn/OqxDV4gsMNeJoEOL2
+   DXJ4dmjoDvE40JtbM3DWhhnWZgUn78xtXTny7S47PNieGyOtaJXUGWXPB
+   FlQYXBhaPD9mtuHvq7aL9zSZLC5VS070BrcgOR5flbaujrqYObFkAiRXn
+   tSqczxKqoTBKc1XZ/M6nR2Ln1GKhBWC8msMzPJA0fewGELvlFQZ93oyYb
+   PdtySv3NchOtBFpuyP6JKhBs/pqf4viL4WUe1oJmthetlCBOlgQzpucZ0
+   zVgDCV/uU51d32vlivERrOzk7NbZCjB4Llc5/BcLmyL2ih+cDbVAq9T3N
+   Q==;
+X-CSE-ConnectionGUID: dFZup9jGTkyj8/CFd4csTA==
+X-CSE-MsgGUID: wxpex8hLQm+yHJu7U0fGIQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="92025803"
 X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; 
-   d="scan'208";a="90720012"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2026 01:17:39 -0700
-X-CSE-ConnectionGUID: pi5CYKv+R4iXy57VC7bWhg==
-X-CSE-MsgGUID: 3wWPmRteSG2HTAppwvxOKw==
+   d="scan'208";a="92025803"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2026 01:26:45 -0700
+X-CSE-ConnectionGUID: Se2kcoxpThikA6TsG1HgYw==
+X-CSE-MsgGUID: t1Bp7y4gR8+Er/Kdgtn6Zg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; 
-   d="scan'208";a="269462537"
+   d="scan'208";a="261382200"
 Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.247])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2026 01:17:35 -0700
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2026 01:26:42 -0700
 From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Wed, 26 Aug 2026 11:17:31 +0300 (EEST)
+Date: Wed, 26 Aug 2026 11:26:37 +0300 (EEST)
 To: Tony Luck <tony.luck@intel.com>
-cc: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-    Hans de Goede <hansg@kernel.org>, Borislav Petkov <bp@alien8.de>, 
+cc: Hans de Goede <hansg@kernel.org>, Borislav Petkov <bp@alien8.de>, 
     Breno Leitao <leitao@debian.org>, platform-driver-x86@vger.kernel.org, 
-    linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+    LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
     Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Subject: Re: [PATCH 4/7] platform/x86/intel/bff: Add Diamond Rapids support
-In-Reply-To: <20260825181526.13203-5-tony.luck@intel.com>
-Message-ID: <1dd80e86-aba7-0cf9-c2ca-5f72c9f0dcf3@linux.intel.com>
-References: <20260825181526.13203-1-tony.luck@intel.com> <20260825181526.13203-5-tony.luck@intel.com>
+Subject: Re: [PATCH 6/7] platform/x86/intel/bff: Compute unique ID for
+ overflowed filter
+In-Reply-To: <20260825181526.13203-7-tony.luck@intel.com>
+Message-ID: <c62f28a7-25a0-8b74-ae8c-9aca146c8ea9@linux.intel.com>
+References: <20260825181526.13203-1-tony.luck@intel.com> <20260825181526.13203-7-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -65,96 +65,143 @@ Content-Type: text/plain; charset=US-ASCII
 
 On Tue, 25 Aug 2026, Tony Luck wrote:
 
-> There are potentially bitfix filters associated with each machine check
-> bank. Only some banks may implement them.
+> Each L2 cache instance has its own bitfix filter, but always reports
+> errors in machine check bank 3 (on Diamond Rapids).
 > 
-> Machine check banks have varying scope. E.g. there is a separate L2
-> cache for each module, each instance has its own bitfix filter.
+> Compute a unique bitfix filter instance number based on the CPU that
+> logged the error and the machine check bank number.
 > 
-> Add information that will be used to map a <cpu,bank> pair to a unique
-> instance number for a bitfix filter.
+> Special case for banks associated with the Integrated Memory Hub (IMH).
+> Here the "even" numbered CPU modules are associated with IMH0 and the
+> "odd" modules with IMH1.
+> 
+> The unique id will be used to store a time stamp of when the bitfix
+> filter overflowed so that frequent overflows can be logged.
 > 
 > Co-developed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 > Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->  drivers/platform/x86/intel/bff.c | 41 ++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
+>  drivers/platform/x86/intel/bff.c | 74 ++++++++++++++++++++++++++++++++
+>  1 file changed, 74 insertions(+)
 > 
 > diff --git a/drivers/platform/x86/intel/bff.c b/drivers/platform/x86/intel/bff.c
-> index 9522bdb1401d..6360bbc92347 100644
+> index 8cc29d11e019..ae9dc0bf2777 100644
 > --- a/drivers/platform/x86/intel/bff.c
 > +++ b/drivers/platform/x86/intel/bff.c
-> @@ -18,18 +18,51 @@
+> @@ -18,13 +18,18 @@
 >  #define pr_fmt(fmt) "bff: " fmt
 >  
+>  #include <linux/bits.h>
+> +#include <linux/cacheinfo.h>
+> +#include <linux/cleanup.h>
 >  #include <linux/cpufeature.h>
-> +#include <linux/device-id/x86_cpu.h>
+> +#include <linux/cpuhplock.h>
+>  #include <linux/device-id/x86_cpu.h>
 >  #include <linux/errno.h>
 >  #include <linux/init.h>
+> +#include <linux/limits.h>
 >  #include <linux/module.h>
-> +#include <linux/printk.h>
+>  #include <linux/notifier.h>
+>  #include <linux/printk.h>
+> +#include <linux/topology.h>
 >  #include <linux/types.h>
 >  
-> +#include <asm/cpu_device_id.h>
->  #include <asm/cpufeatures.h>
-> +#include <asm/intel-family.h>
->  #include <asm/mce.h>
+>  #include <asm/cpu_device_id.h>
+> @@ -34,6 +39,8 @@
 >  #include <asm/msr.h>
 >  #include <asm/msr-index.h>
 >  
-> +/* Machine check bank scope types */
-> +enum bff_type {
-> +	BFF_NONE = 0,
-> +	BFF_BANK_DCU,
-> +	BFF_BANK_DTLB,
-> +	BFF_BANK_MLC,
-> +	BFF_BANK_CCF,
-> +	BFF_BANK_HSF,
-> +	BFF_BANK_IOCACHE,
-> +};
+> +#define NUM_IMH_PER_SKT		2
 > +
-> +static const enum bff_type dmr_mcbanks[MAX_NR_BANKS] = {
-> +	[1]	= BFF_BANK_DCU,
-> +	[2]	= BFF_BANK_DTLB,
-> +	[3]	= BFF_BANK_MLC,
-> +	[6]	= BFF_BANK_CCF,
-> +	[13]	= BFF_BANK_HSF,
-> +	[17]	= BFF_BANK_IOCACHE
-
-Please add trailing comma.
-
-> +};
-> +
-> +static const struct x86_cpu_id bff_cpu_ids[] __initconst = {
-> +	X86_MATCH_VFM(INTEL_DIAMONDRAPIDS_X, dmr_mcbanks),
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(x86cpu, bff_cpu_ids);
-> +
-> +static const enum bff_type *bank_types;
-> +
->  static int __init bff_init(void)
->  {
-> +	const struct x86_cpu_id *m;
->  	u64 core_caps, mcg_cap;
+>  /* Intel bitfix filter control register defines */
+>  #define MSR_MC0_BFF_CTL		0x000006c0
+>  #define MSR_MCx_BFF_CTL(x)	(MSR_MC0_BFF_CTL + (x))
+> @@ -67,11 +74,78 @@ MODULE_DEVICE_TABLE(x86cpu, bff_cpu_ids);
 >  
->  	if (!cpu_feature_enabled(X86_FEATURE_MCA))
-> @@ -45,6 +78,14 @@ static int __init bff_init(void)
->  	if (!(core_caps & MSR_IA32_CORE_CAPS_BFF_RESET_DETECT))
->  		return -ENODEV;
+>  static const enum bff_type *bank_types;
 >  
-> +	m = x86_match_cpu(bff_cpu_ids);
-> +	if (!m) {
-> +		pr_info("CPU supports bitfix filter, but driver does not\n");
-> +		return -ENODEV;
+> +/* Diamond Rapids maps APICID[2] to the IMH instance. */
+> +static void bff_set_imh_id(struct mce *mce, unsigned long *id)
+> +{
+> +	int imh_num = (NUM_IMH_PER_SKT * topology_physical_package_id(mce->extcpu)) +
+> +		      ((mce->apicid >> 2) & 0x1);
+
+FIELD_GET(), I suggest moving comment where you define the field for that.
+
+> +
+> +	*id |= imh_num;
+> +}
+> +
+> +static bool bff_set_cache_id(int cpu, int level, unsigned long *id)
+> +{
+> +	int cacheid;
+> +
+> +	guard(cpus_read_lock)();
+> +
+> +	cacheid = get_cpu_cacheinfo_id(cpu, level);
+> +	if (cacheid == -1) {
+> +		pr_warn("Could not get L%d cache id for CPU %d\n", level, cpu);
+> +		return false;
 > +	}
 > +
-> +	bank_types = (const enum bff_type *)m->driver_data;
+> +	*id |= cacheid;
 > +
->  	return 0;
+> +	return true;
+> +}
+> +
+> +#define BFF_ID_BANK_SHIFT	16
+> +
+> +/*
+> + * Cache IDs are only unique within a cache level.
+> + * Include the MCA bank number so each BFF-capable hardware
+> + * resource has a unique tracking ID.
+> + */
+> +static unsigned long get_bff_id(struct mce *mce)
+> +{
+> +	unsigned long id = (unsigned long)mce->bank << BFF_ID_BANK_SHIFT;
+
+FIELD_PREP() ?
+
+> +
+> +	switch (bank_types[mce->bank]) {
+> +	case BFF_BANK_DCU:
+> +	case BFF_BANK_DTLB:
+> +		if (!bff_set_cache_id(mce->extcpu, 1, &id))
+> +			return ULONG_MAX;
+> +		break;
+> +
+> +	case BFF_BANK_MLC:
+> +		if (!bff_set_cache_id(mce->extcpu, 2, &id))
+> +			return ULONG_MAX;
+> +		break;
+> +
+> +	case BFF_BANK_CCF:
+> +		if (!bff_set_cache_id(mce->extcpu, 3, &id))
+> +			return ULONG_MAX;
+> +		break;
+> +
+> +	case BFF_BANK_HSF:
+> +	case BFF_BANK_IOCACHE:
+> +		bff_set_imh_id(mce, &id);
+> +		break;
+> +	default:
+> +		return ULONG_MAX;
+> +	}
+> +
+> +	return id;
+> +}
+> +
+>  static void handle_bff(struct mce *mce)
+>  {
+>  	/* The bitfix filter overflowed, get the target CPU to reset it. */
+>  	if (wrmsrq_on_cpu(mce->extcpu, MSR_MCx_BFF_CTL(mce->bank), MCI_BFF_RESET))
+>  		pr_warn("Failed to reset bitfix filter for CPU %d Bank %d\n", mce->extcpu, mce->bank);
+> +
+> +	pr_debug("unique_id = 0x%lx\n", get_bff_id(mce));
 >  }
 >  
+>  static int bff_mce_notify(struct notifier_block *nb, unsigned long val, void *data)
 > 
 
 -- 
