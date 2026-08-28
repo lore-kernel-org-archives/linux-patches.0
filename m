@@ -1,148 +1,162 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC3E3E557D
-	for <patches@lists.linux.dev>; Fri, 28 Aug 2026 08:44:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787906642; cv=pass; b=vD5U97LzSXC1UxgiqT3fznGhj6uxtg8jwri8fdnvaJMX/1AaFIzXwnuq86pcAGr3gyIQh5RP+ejjpFkUbuo72/XaTZ8fJ/iKEetGGyMGWJXUbzVUIdM+HLCn01WmnwSPBDho3eaVtn9uBNHxH7R1cJ1YsdRdsmCr4cblosDI9pU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787906642; c=relaxed/simple;
-	bh=+SsljDUXUlaGkl/5WsILjVk/5Y4d+UkaNdguJIKngg4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rDbHWGaVeS4dQpKSBwpaSMpJCkoa6TkiwYT5WbFEHuDl9FghgO/JfQj0y1882MnFrUXnOywltJgdlNyV/XCEpVpysk6NYt4f1xTq0OJUwWYUqIxlUKd0F9IL/5RvI1+pXFSWhqm7vKIQ6qMCtHTNJhE/tmTSweH+UvA0fDeZRFc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eHHjufBe; arc=pass smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B841299927
+	for <patches@lists.linux.dev>; Fri, 28 Aug 2026 15:30:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787931012; cv=none; b=POXs8H8Oie4yikrOZnN9M/ongpiuV60mvgwsoprbhUgkRUn9NU7WulD6liDuIxkm2qsRre/geI+v7MYJll0L8jOBNXHOH230CQtPOJgd3G8Ah47Hc+PFmVDElB6rpO9AvM+aqLtkTWxf3kw7zy1Cne4jvAwAQWjsAdXWfFZZ8oI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787931012; c=relaxed/simple;
+	bh=EvYVX1jlXunQVQY2wapQxH15oGSKPDjk3N3QBKE/0U0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IYmG/ZTKqSCfs5IWaKcxx/MZVOwdCTBxYhx2b/SFVJu9/KzzuFLPGhhDAa9+REMzkwyaqt6t802a3jE+UialCep/0gJG/sVc4QEAHLnW2h31nrab/KPXy5i8hxCltryWUbSqyzT3fkK1bD1rQY6vbZvpFB2wbS3JLHJrrf3Q9qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ENILynUc; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eHHjufBe"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3a2b4743936so6333451fa.0
-        for <patches@lists.linux.dev>; Fri, 28 Aug 2026 01:44:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787906639; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OhHve3K+S1nRzEAp2QkAI2awfcfV8HOXmVXoQfKcMEkt5+q7GLH9orRZj/AoZQbRNg
-         xb6glIEW3tOdS77VpibVKwbCsLzUuo0zR1F9xh7zIV3aaI6YOJCrZ+XLU3tS3xi8pu08
-         yDvly9A4qEcwXM5i98hKNPiXSEuACU27iR4fKK0RZvwo9vpVg97Rpm6wSInAmEv9vxeI
-         g0pTur7VoPF22EF9o0nUaMMPdQQLna0i8iauWhjyZkDk7MNutB6VZOyMCtMeTlHVr9rZ
-         VFdXcGEfMFfLmjziPsnA1kVu+tVKSuaOCf64NWB0R6iOBOSKaqex05JMeNFpdIN38z7O
-         vDcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zhsiaAmVjzmzESFqvr2tri1C/08hg86tA9bCn5YqmwM=;
-        fh=Wu8l3ZME57g5L6FctVNlqwxd4yU3KaQJv9kB42ah4lo=;
-        b=Nt5/tlFjAeUzsjqhoHQi44Cxoguqp8GkNWVZgFFq3v5ZbWrOBiOJTZduMhUOMRjzgH
-         oI4JaFRFPU1sOFPp9i1Omajc9WZ8kfF1L0Fiu3IXnjeWEW4SiSrsjoxfSX9uXMeFG1n8
-         t+ffu+ziMUl84JBOmJBDomFtWcyMY+gl4LTSqXCbRtqaQdwL05ii23IjRCviznbA3DC7
-         4LpK64a2K9igMtnRIEnaD4lLAekgiWJgBsP0b7NSHOc7NI9flrbLkC7WSZMd5T6D2ugI
-         djBe1RGvKsI3hJYh7azsH60BO6YtS88lfoq+KMJy0A0J6bYIytPNwS8Bglm7mL+/S+Ot
-         f+RA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787906639; x=1788511439; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zhsiaAmVjzmzESFqvr2tri1C/08hg86tA9bCn5YqmwM=;
-        b=eHHjufBeR+KCYb7t+owcbLlVyXOpiq8J2c43ZR/cxXpfVb2zQvP2W1OnoIkKxForJv
-         SjDKBlvgBUAfeVjeIqcW7hrJChhlrJEF1KR2FcmQJ4fcfKdL4OOF0AEbjUnlDZDhJ1gp
-         x+4tM9/O/JqtaswnPIIJBz5+qyin9+bmqB9YfRukKSOILxaNUKkK9ePkIG4nJ9ITb4Bd
-         dUymgWDQ2HBJDiI0OOg90wUwkmXPhiWlNQiLZ6h/WEpO0V5KpG6s/kCfdlW1yJ8n++lh
-         TMwS/TrMK5oY1CvEp4fOtNWzN9622nuao0MkYJqnxOiSGF9G/Tor8t++adcMARhTEkxv
-         Ttvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787906639; x=1788511439;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zhsiaAmVjzmzESFqvr2tri1C/08hg86tA9bCn5YqmwM=;
-        b=kX43itsGSM5ZLAU6Hn8FP2zZquieSppSmqY+ZLOhnTRzGtO0KTVgsn4hmkTxRUTUgK
-         ZiGYuZOp3jDYFPKhvFAqBobDjlaVq6XAQpsOB5hEiB+y/+s+YihzvuLLTdoWzoR6NrFT
-         R45O5M8IUQkNXMrLtPGwCVWcUrbpvwsmcmkVLTxjYmeV3vqOYuhGIhtaGSLjDx/xAFqo
-         H/AkJsB13uhAHA9CrQmZQkUMwqRCTXjTl18sftg1rZ/D1O3Fa8iwWbBv/0Gx2HCo+Zxs
-         4RApD08Gqq958uWZ46+Peke1H1aDayVeuTaevj92nI9y+oTylr1nQmDPrmv+rHb29mdF
-         dGpg==
-X-Forwarded-Encrypted: i=1; AHgh+RonzYXSpaQLUkJqfgVu5a6ytlUSpR/TxbqC2xA/GLzYhv9e49nwnQPwtcwIyfI6jOJs+JLyySOh@lists.linux.dev
-X-Gm-Message-State: AFuF++nMialDLSqCMBlnTU138LkCCDZPQDb6A2hAqA4kx5BKLMCcsXIP
-	p74D5q0cnnN4qBskjrxTOjUsaUy1niWxqE1YKNsY8FWL87IYLb5gQIgBVKCLY9UXPNAjjYgiypY
-	8lP5KCQlYlP13jTx4c9uTpG8+m/yeS/E=
-X-Gm-Gg: AR+sD13KdgdVAgjyocsV5Eq8/zUsSNLKfF6vyoWDLbGhnGucL+miucIVZLROPeqAdPq
-	qzEqwdv1l3gS3TK2BFIW+LAZ8jx+s6w3ET8vnq5YVxeyKJDMWf9Nj4TdnKIgw7VWdCHy7pbulLK
-	NXo8a/ZjNUjcsIIdfTpW2gV5TTbV//kifgyxnzcB426AaQWLICy9UipFH+smSB5hLAtALlvYpn1
-	C97t03Kg+0zmaZRtoi0OECIrlzql6WFH2XvzbXprc9OzhYgK6yIMA+M1cXED4LJNv/e5qcBYJKU
-	cUcH0IBsJNxlfd26ezynlRHl6hTjDNT1U/mAyDSQCyukvFqHkryEXyJyAJ3oAJhU3Jo/ZOUJq6+
-	wIlY=
-X-Received: by 2002:a2e:bc0a:0:b0:3a1:94fc:e1cf with SMTP id
- 38308e7fff4ca-3a301b26568mr8446061fa.10.1787906638442; Fri, 28 Aug 2026
- 01:43:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ENILynUc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787931010; x=1819467010;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=EvYVX1jlXunQVQY2wapQxH15oGSKPDjk3N3QBKE/0U0=;
+  b=ENILynUcNkgodrXUcYb/MWrZ1h1HgW7c65YFQqRgp8Pw2N9VSUfhBeEg
+   vuYBsvXlI57nywPIxCcOj8Q4ZigdXjlXfO53Fi34EucFObILErFneLsKE
+   ZttYqqEjfph1ow6M4E8GMT9jjle3IrqqQrslZfUqaVcg4UPKoqUYK5606
+   chx2yVbDBoWLxRU/pDM0nCfY+8Xq3bIZaY2jU8pw7+Re1zInzkkGKLhqG
+   SuZWayWnrulvtwSwViXdyP5u2sfKVOU1xx1fk3wtwp5oQ+DVGRimq3dYP
+   TzYNEfnB4iPVBVbj2G6bL/C8DN47MvazpCfrv+69dyykf58WDl6gWEm0s
+   Q==;
+X-CSE-ConnectionGUID: eZHSLbpORuyGDi/QJJRMmw==
+X-CSE-MsgGUID: 9TcvfdC4RzazUO6AHzPwbg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11889"; a="99104595"
+X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
+   d="scan'208";a="99104595"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 08:30:10 -0700
+X-CSE-ConnectionGUID: Y4uBGVy4THG9uoS3wSZ3QA==
+X-CSE-MsgGUID: OczJIe/qTqOH4FTiKMLqpQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
+   d="scan'208";a="291682282"
+Received: from iherna2-mobl4.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.223.138])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 08:30:09 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Breno Leitao <leitao@debian.org>,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH v2 4/7] EDAC/intel-bff: Add Diamond Rapids support
+Date: Fri, 28 Aug 2026 08:29:59 -0700
+Message-ID: <20260828153002.10290-5-tony.luck@intel.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260828153002.10290-1-tony.luck@intel.com>
+References: <20260828153002.10290-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260825132541.986300899@linuxfoundation.org>
-In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Fri, 28 Aug 2026 14:13:44 +0530
-X-Gm-Features: AcwNN1UhUoRQqGS--MuKqVVwHa7REQ0stzNan3AFZ6MJrTOOBIX7BijorBSHvPw
-Message-ID: <CAC-m1rq1FSDpRMR4+hYrg0KnJVuiE4R6ggPyCKGfFKu8OqFdKQ@mail.gmail.com>
-Subject: Re: [PATCH 7.1 000/101] 7.1.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 25, 2026 at 7:20=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.1.11 release.
-> There are 101 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 27 Aug 2026 13:25:02 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
-7.1.11-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-7.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-Build and Boot Report  7.1.11-rc1
+There are potentially bitfix filters associated with each machine check
+bank. Only some banks may implement them.
 
-I built and tested Linux kernel version 7.1.11-rc1 using the default
-configurations
-on both x86_64 and arm64 architectures in a virtualized environment.
+Machine check banks have varying scope. E.g. there is a separate L2
+cache for each module, each instance has its own bitfix filter.
 
-The kernel compiled successfully on both architectures and booted
-without issues.
-I did not observe any regressions or new warnings in dmesg during boot.
+Add information that will be used to map a <cpu,bank> pair to a unique
+instance number for a bitfix filter.
 
-Kernel version: 7.1.11-rc1
-Configurations tested: x86_64_defconfig, defconfig
-Architectures tested: x86_64, arm64
-Kernel source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
--stable-rc.git
-Commit: 822f846a60fc16f7c944c77d54276d8932b2c4e0
+Co-developed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ drivers/edac/intel-bff.c | 45 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
+diff --git a/drivers/edac/intel-bff.c b/drivers/edac/intel-bff.c
+index 905cbe58bc53..f70c5e697dae 100644
+--- a/drivers/edac/intel-bff.c
++++ b/drivers/edac/intel-bff.c
+@@ -18,18 +18,55 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/cpufeature.h>
++#include <linux/device-id/x86_cpu.h>
+ #include <linux/errno.h>
+ #include <linux/init.h>
+ #include <linux/module.h>
++#include <linux/printk.h>
+ #include <linux/types.h>
+ 
++#include <asm/cpu_device_id.h>
+ #include <asm/cpufeatures.h>
++#include <asm/intel-family.h>
+ #include <asm/mce.h>
+ #include <asm/msr.h>
+ #include <asm/msr-index.h>
+ 
++/* Machine check bank hardware unit types */
++enum bff_bank_type {
++	BFF_BANK_NONE = 0,
++	BFF_BANK_DCU,
++	BFF_BANK_DTLB,
++	BFF_BANK_MLC,
++	BFF_BANK_CCF,
++	BFF_BANK_HSF,
++	BFF_BANK_IOCACHE,
++};
++
++/*
++ * Mapping from machine check bank numbers on Diamond Rapids CPU, that are
++ * supported by a bitfix filter, to hardware unit type.
++ */
++static const enum bff_bank_type dmr_mcbanks[MAX_NR_BANKS] = {
++	[1]	= BFF_BANK_DCU,
++	[2]	= BFF_BANK_DTLB,
++	[3]	= BFF_BANK_MLC,
++	[6]	= BFF_BANK_CCF,
++	[13]	= BFF_BANK_HSF,
++	[17]	= BFF_BANK_IOCACHE
++};
++
++static const struct x86_cpu_id bff_cpu_ids[] __initconst = {
++	X86_MATCH_VFM(INTEL_DIAMONDRAPIDS_X, dmr_mcbanks),
++	{}
++};
++MODULE_DEVICE_TABLE(x86cpu, bff_cpu_ids);
++
++static const enum bff_bank_type *bff_bank_types;
++
+ static int __init bff_init(void)
+ {
++	const struct x86_cpu_id *m;
+ 	u64 core_caps, mcg_cap;
+ 
+ 	if (!cpu_feature_enabled(X86_FEATURE_MCA))
+@@ -44,6 +81,14 @@ static int __init bff_init(void)
+ 	if (!(core_caps & MSR_IA32_CORE_CAPS_BFF_RESET))
+ 		return -ENODEV;
+ 
++	m = x86_match_cpu(bff_cpu_ids);
++	if (!m) {
++		pr_info("CPU model not supported by the bitfix filter reset driver\n");
++		return -ENODEV;
++	}
++
++	bff_bank_types = (const enum bff_bank_type *)m->driver_data;
++
+ 	return 0;
+ }
+ 
+-- 
+2.55.0
 
-Best regards,
-Dileep Malepu.
