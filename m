@@ -1,46 +1,45 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B841299927
-	for <patches@lists.linux.dev>; Fri, 28 Aug 2026 15:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D534826F2A0
+	for <patches@lists.linux.dev>; Fri, 28 Aug 2026 15:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787931012; cv=none; b=POXs8H8Oie4yikrOZnN9M/ongpiuV60mvgwsoprbhUgkRUn9NU7WulD6liDuIxkm2qsRre/geI+v7MYJll0L8jOBNXHOH230CQtPOJgd3G8Ah47Hc+PFmVDElB6rpO9AvM+aqLtkTWxf3kw7zy1Cne4jvAwAQWjsAdXWfFZZ8oI=
+	t=1787931016; cv=none; b=VaYbLeqNANBiECw4AWiPs0UEM+XHU+yzgTkCoUuJZTaFeecT1e+1mZcCQBHTDGPIJaYRnJ3UKo2lQKmg9DoVg4+dHmQWgwSJ1NfG4ojxeIzBQibg47E/qd4UK4Vr34dkLeKBmN7g05mcDuKV6PD+PhsRANK7oknXuoq2gNWEShA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787931012; c=relaxed/simple;
-	bh=EvYVX1jlXunQVQY2wapQxH15oGSKPDjk3N3QBKE/0U0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYmG/ZTKqSCfs5IWaKcxx/MZVOwdCTBxYhx2b/SFVJu9/KzzuFLPGhhDAa9+REMzkwyaqt6t802a3jE+UialCep/0gJG/sVc4QEAHLnW2h31nrab/KPXy5i8hxCltryWUbSqyzT3fkK1bD1rQY6vbZvpFB2wbS3JLHJrrf3Q9qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ENILynUc; arc=none smtp.client-ip=192.198.163.9
+	s=arc-20240116; t=1787931016; c=relaxed/simple;
+	bh=HpecKzAkGcpxLpmYZHTcW/XUvoZtgeFLIan1qLdyY6k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VWF7jZP0VzRbGlJ9n9f+mmwJ6AiNMwlPF49o6eVZS6K5mj9WWxQYFlWoip6OwnzNjMf8+4qezxuh5n6tbCDQkS8GFTU7Sfl2FEL00IE4RGGIYC4+rvwSATCoisMVKE4GCMjnHjdBqD2jf4n5xjczT93M1q2RLoEnj9CL28e7O9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gXQDiLZ+; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ENILynUc"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gXQDiLZ+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787931010; x=1819467010;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=EvYVX1jlXunQVQY2wapQxH15oGSKPDjk3N3QBKE/0U0=;
-  b=ENILynUcNkgodrXUcYb/MWrZ1h1HgW7c65YFQqRgp8Pw2N9VSUfhBeEg
-   vuYBsvXlI57nywPIxCcOj8Q4ZigdXjlXfO53Fi34EucFObILErFneLsKE
-   ZttYqqEjfph1ow6M4E8GMT9jjle3IrqqQrslZfUqaVcg4UPKoqUYK5606
-   chx2yVbDBoWLxRU/pDM0nCfY+8Xq3bIZaY2jU8pw7+Re1zInzkkGKLhqG
-   SuZWayWnrulvtwSwViXdyP5u2sfKVOU1xx1fk3wtwp5oQ+DVGRimq3dYP
-   TzYNEfnB4iPVBVbj2G6bL/C8DN47MvazpCfrv+69dyykf58WDl6gWEm0s
+  t=1787931013; x=1819467013;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=HpecKzAkGcpxLpmYZHTcW/XUvoZtgeFLIan1qLdyY6k=;
+  b=gXQDiLZ+LxRuZhUadqblVdxrSdaj6lQxuOrVrpfDgTflm7TzuR5uz+bX
+   x8SrPou8NIariLWAyk/NJwKy6iSi83bbvhtME7bUIJwM/HdlJXoLdnoCW
+   dzwJOHdDJ23gwLhPyfrr3UEo+OcAeFPvVj09myPL/mL97Z5rGRsV0ywMK
+   Upqy5o4kM+92xF38f6JXb+eLxkZ3A31FXAbhApABRWxTn8ZQmWL2RkKz8
+   W+iqmVG0NUh/9hi2YIR9Yz+mz0n14X9lrPXkKHW3yosMWDBUCPuBMecoT
+   nmAbdPf3w8azi5srIJZdxDd1jcVwdckr6jyXCq4n3aipyAnEuTbCIYiQm
    Q==;
-X-CSE-ConnectionGUID: eZHSLbpORuyGDi/QJJRMmw==
-X-CSE-MsgGUID: 9TcvfdC4RzazUO6AHzPwbg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11889"; a="99104595"
+X-CSE-ConnectionGUID: Gnlz+IzERFi98/pEqmovSg==
+X-CSE-MsgGUID: gyyA+9mnRJuRP8osNlD7aA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11889"; a="99104579"
 X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
-   d="scan'208";a="99104595"
+   d="scan'208";a="99104579"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 08:30:10 -0700
-X-CSE-ConnectionGUID: Y4uBGVy4THG9uoS3wSZ3QA==
-X-CSE-MsgGUID: OczJIe/qTqOH4FTiKMLqpQ==
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 08:30:09 -0700
+X-CSE-ConnectionGUID: XCpVCHpzQjiu2R2q0n5h7w==
+X-CSE-MsgGUID: KXSngloCQxC6rC7Xu4fs7A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
-   d="scan'208";a="291682282"
+   d="scan'208";a="291682269"
 Received: from iherna2-mobl4.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.223.138])
   by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 08:30:09 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -52,12 +51,10 @@ Cc: Borislav Petkov <bp@alien8.de>,
 	linux-edac@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v2 4/7] EDAC/intel-bff: Add Diamond Rapids support
-Date: Fri, 28 Aug 2026 08:29:59 -0700
-Message-ID: <20260828153002.10290-5-tony.luck@intel.com>
+Subject: [PATCH v2 0/7] EDAC/intel-bff: Driver to reset bitfix filters
+Date: Fri, 28 Aug 2026 08:29:55 -0700
+Message-ID: <20260828153002.10290-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260828153002.10290-1-tony.luck@intel.com>
-References: <20260828153002.10290-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,97 +63,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There are potentially bitfix filters associated with each machine check
-bank. Only some banks may implement them.
+Some Intel CPUs implement a "bitfix filter" to suppress reporting of the
+same corrected errors repeatedly in the case where aging silicon
+develops stuck bits.
 
-Machine check banks have varying scope. E.g. there is a separate L2
-cache for each module, each instance has its own bitfix filter.
+But when systems run for weeks, or months, the filters may become clogged
+with transient errors.
 
-Add information that will be used to map a <cpu,bank> pair to a unique
-instance number for a bitfix filter.
+When the filter is full (indicated by a "yellow" signature in a machine
+check bank) clear the filter. This may make space for additional hard
+errors.
 
-Co-developed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Save a time stamp when clearing a filter. Log with "WARN" severity if
+the filter overflows quickly (in tem minutes or less).
+
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- drivers/edac/intel-bff.c | 45 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+Changes since v1: https://lore.kernel.org/all/20260825181526.13203-1-tony.luck@intel.com/
 
-diff --git a/drivers/edac/intel-bff.c b/drivers/edac/intel-bff.c
-index 905cbe58bc53..f70c5e697dae 100644
---- a/drivers/edac/intel-bff.c
-+++ b/drivers/edac/intel-bff.c
-@@ -18,18 +18,55 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include <linux/cpufeature.h>
-+#include <linux/device-id/x86_cpu.h>
- #include <linux/errno.h>
- #include <linux/init.h>
- #include <linux/module.h>
-+#include <linux/printk.h>
- #include <linux/types.h>
- 
-+#include <asm/cpu_device_id.h>
- #include <asm/cpufeatures.h>
-+#include <asm/intel-family.h>
- #include <asm/mce.h>
- #include <asm/msr.h>
- #include <asm/msr-index.h>
- 
-+/* Machine check bank hardware unit types */
-+enum bff_bank_type {
-+	BFF_BANK_NONE = 0,
-+	BFF_BANK_DCU,
-+	BFF_BANK_DTLB,
-+	BFF_BANK_MLC,
-+	BFF_BANK_CCF,
-+	BFF_BANK_HSF,
-+	BFF_BANK_IOCACHE,
-+};
-+
-+/*
-+ * Mapping from machine check bank numbers on Diamond Rapids CPU, that are
-+ * supported by a bitfix filter, to hardware unit type.
-+ */
-+static const enum bff_bank_type dmr_mcbanks[MAX_NR_BANKS] = {
-+	[1]	= BFF_BANK_DCU,
-+	[2]	= BFF_BANK_DTLB,
-+	[3]	= BFF_BANK_MLC,
-+	[6]	= BFF_BANK_CCF,
-+	[13]	= BFF_BANK_HSF,
-+	[17]	= BFF_BANK_IOCACHE
-+};
-+
-+static const struct x86_cpu_id bff_cpu_ids[] __initconst = {
-+	X86_MATCH_VFM(INTEL_DIAMONDRAPIDS_X, dmr_mcbanks),
-+	{}
-+};
-+MODULE_DEVICE_TABLE(x86cpu, bff_cpu_ids);
-+
-+static const enum bff_bank_type *bff_bank_types;
-+
- static int __init bff_init(void)
- {
-+	const struct x86_cpu_id *m;
- 	u64 core_caps, mcg_cap;
- 
- 	if (!cpu_feature_enabled(X86_FEATURE_MCA))
-@@ -44,6 +81,14 @@ static int __init bff_init(void)
- 	if (!(core_caps & MSR_IA32_CORE_CAPS_BFF_RESET))
- 		return -ENODEV;
- 
-+	m = x86_match_cpu(bff_cpu_ids);
-+	if (!m) {
-+		pr_info("CPU model not supported by the bitfix filter reset driver\n");
-+		return -ENODEV;
-+	}
-+
-+	bff_bank_types = (const enum bff_bank_type *)m->driver_data;
-+
- 	return 0;
- }
- 
+Boris:
+	Change from a platform driver to an EDAC driver to avoid
+	spreading RAS code into yet another corner of the source tree.
+
+Ilpo:
+	Use <linux/bitfield.h> macros FIELD_GET() and FIELD_PREP() for
+	bit wrangling.
+	Did NOT add comma to last initializer for dmr_mcbanks[]. The
+	list is complete, this CPU model won't add extra banks that
+	support the bitfix filter.
+
+Sashiko: https://sashiko.dev/#/patchset/20260825181526.13203-1-tony.luck%40intel.com
+	Ignored complaint about lost #GP faults. The driver
+	checks that the feature is enumerated, so #GP can't happen.
+	Ignored complaint about overwriting bits 63:1 in the reset
+	MSRs. Only bit 0 is defined in these MSRs.
+	Applied suggestion to save bank number in upper 32 bits of bff_id.
+	a/IS_ERR()/xa_is_err()/ for check of return from xa_store()
+
+Miscellaneous:
+	Added entry in MAINTAINERS file
+	Applied some cleanup suggestions from internal AI review.
+
+Qiuxu Zhuo (1):
+  cacheinfo: Export get_cpu_cacheinfo_id() for loadable modules
+
+Tony Luck (6):
+  x86/mce: Add enumeration for Intel bitfix filter reset
+  EDAC/intel-bff: Add stub Intel bitfix filter driver
+  EDAC/intel-bff: Add Diamond Rapids support
+  EDAC/intel-bff: Reset bitfix filter when it overflows
+  EDAC/intel-bff: Compute unique ID for overflowed filter
+  EDAC/intel-bff: Report frequent filter overflows
+
+ include/linux/cacheinfo.h        |  12 +-
+ arch/x86/include/asm/mce.h       |   5 +
+ arch/x86/include/asm/msr-index.h |   2 +
+ drivers/base/cacheinfo.c         |  17 ++
+ drivers/edac/intel-bff.c         | 295 +++++++++++++++++++++++++++++++
+ MAINTAINERS                      |   6 +
+ drivers/edac/Kconfig             |  13 ++
+ drivers/edac/Makefile            |   2 +
+ 8 files changed, 341 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/edac/intel-bff.c
+
+
+base-commit: 8d3ae59288f1e7d58d76558a6ee96d533bc5019f
 -- 
 2.55.0
 
