@@ -1,92 +1,93 @@
 Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7029E299959;
-	Sat, 29 Aug 2026 21:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5F1364052;
+	Sat, 29 Aug 2026 21:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788038287; cv=fail; b=k5+YW2HfE+afB/r0yOGa2nakCV9PWlY8o6aPHxRw7xNXKelVoOxRUaAUrQZNUzOcjmhvTcux2Iu5uGXjXnfwklcwkhxCrjhy+N5Nb7bRLpSxSunk7nSFLk9MI3+AsBHEuk1nE+rbWZbadrXHsYY5dw0wVkJPHtCvxOw52z4vHHU=
+	t=1788038424; cv=fail; b=MBnLFU7oSx7ojjecwXt+3ePEihm1z1PbLB/vkbl1o16q9inR0k3/WxFFB1o6ZDU+ze+WtevfuyYmSE3nThTvyk40MCUa8z9r/EOOCUcXDXKoTSGVdYrZjuNwECmo71lcIDEfhQOUxWHaPDueT0Bi85EF4K5dWaZEx3zmrbU454k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788038287; c=relaxed/simple;
-	bh=nVh4SNwaT0BAw+Hw8Rcx4t1IvFJxCB+0H/rZfajf2jM=;
+	s=arc-20240116; t=1788038424; c=relaxed/simple;
+	bh=9XFVK/Qywzayz8O2Vn+dIosZ+gu93Jfh3LO2mKcgY5I=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=lwRJqTxM+zUw3c3aG8FKKPt74ZkhKw0N0jW2C+HTwzspJ/Ev736EnbV9xclF1vpJRjw/qHVSStqQ8Zksr+vg7CqEWCLVmXYH12EIbhus/rQYNkVKzGy+0B0z05XbAw9VmLWVRFcaQO7MRB5SzEmX4TmrDq4NEiMbVVB2w/77cfw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=hF/aokl6; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=iWmOeXok; arc=fail smtp.client-ip=205.220.165.32
+	 Content-Type:MIME-Version; b=scY4t+Xbb7QVngnCjfw0cYSdg3Z8aZTUJADMaMfdQ/GFnaSnsZgD/NlS7uqPCbJOmUjqJHPX4dYQaON793FCnahUJr/ilHK12CuKpcvZqc5K9DqI4knzpKtrx0s1JZHqkXc7L5XVmUVfV46BnRd3gdsGh+45wB/fawU9TFdDvEA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=QPIjpnAi; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=IcWzSiaE; arc=fail smtp.client-ip=205.220.165.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="hF/aokl6";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="iWmOeXok"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="QPIjpnAi";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="IcWzSiaE"
 Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67TLCkW31709500;
-	Sat, 29 Aug 2026 21:17:44 GMT
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67TKP2uY1630987;
+	Sat, 29 Aug 2026 21:20:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=sUA/tJeA4ebCf3L6nGzvzFcNNOIKEARmYcy2Hcuhcv0=; b=
-	hF/aokl61/e5fw4zaw8hH8fczahTlIGtG22o/uDu6H/yKakPNJN2OhdOLzaNGwqU
-	xnricVUMR39bPP9uV47pSPAANeWyAT2/gG9gYM2HgLxCsVyd6UQI29o3yFkWCUdl
-	vyZmG0obF8UEYZoSf5wFt4bzhfE3XDwvHmYHz9k7OnNvbgNiYC3B0pJTfeynY8NY
-	Rdc/ObxRDORL5MbN38q7UwLxHi2bw/TH3NSKJpjm/0XQsYujxboi9YJ6PTUf4Jkh
-	AIYACvhrW/ja3oX3KIEoAGDsziSUCRmmAN9Xx+wZ8lJGspFahfp4LMKDWRFLb+x1
-	b2bzEFJPN6Tef/3qqJo+tA==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gbp0xrnnn-1
+	corp-2025-04-25; bh=k9PF8D7aEAxQZCLev+O4HwpbOp5ltb6SQjZrm6sPrnU=; b=
+	QPIjpnAiaU9kKGdez6l+PiMRkBqwta2J4NGsE0JL7kqHPJgKuwrdjuX9fziaWFQ+
+	Cw2Gft0uHObulgFuJsvsLojIGgqmOrcw9XOT2QvbagWJiKtD6h/KQ7hwSaR7hnyZ
+	qvXUgkDcWG+AdTYNJeC/VofDGZaBH++2wY1iuCCX7Le0ozYDZyJxHP4HozCIgain
+	MDp0TccJZGKxhBgGo9BD5Q0MKawIFcb8vVI8j9nWEMhP3+wVi97gwyPfvFrZVWEX
+	6UMIpfsbnZs8/3A8LtRFKk9se+JKN4oZLy83gvDXoelI30clQv/Jl4dcQuI9ULd5
+	UKbykrLAKSgECuC6GSQdvw==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gbp0xrnph-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 29 Aug 2026 21:17:44 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 67TLF6qY037964;
-	Sat, 29 Aug 2026 21:17:43 GMT
-Received: from ph7pr06cu001.outbound.protection.outlook.com (mail-westus3azon11010021.outbound.protection.outlook.com [52.101.201.21])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4gbnvbgdq2-1
+	Sat, 29 Aug 2026 21:20:13 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 67TLKAP7007285;
+	Sat, 29 Aug 2026 21:20:12 GMT
+Received: from sj2pr03cu001.outbound.protection.outlook.com (mail-westusazon11012020.outbound.protection.outlook.com [52.101.43.20])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4gbnvbrdtt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Sat, 29 Aug 2026 21:17:43 +0000 (GMT)
+	Sat, 29 Aug 2026 21:20:12 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wi0u3GyURFkZVek/e7XLLA5whjjCv8aTqGL+xqvc2nmcyB2ra6nrc+qhRAL+TnQRLNCxTEGTT1giFIU0YPabDLUbI+l2yIGCy4oTGNmPuF7eWrNekp0+/bRUyCTVcX5s0ETZiSR20X8E1U+mdQ6W3+Odk5f4EctATMS05pNLZ+RnGxNpkFzFPGOw7JVizN1Doc3ur1wAzfmqklGfSt2KZlsOCyhiivF7dn+qsj63+G0YI8bsE5rG+wrcth2Z6vDP39aEZJxJWRKDr1ppB6R2lgVaDOrVRtPxlXpX56MsgR30Kp81SzcHQVak15apF7rzsxRfR3bWu6/qYSfcAOwC+Q==
+ b=i6ipeVQrq3dmko1I3U4V1oKIEYAF+3cetSmIEr4Jm5LMlSO+gk4OGujqfQrS8ogm5pD84CxrLGrwOPhtXmcRS7HUYoPRVaf8/qioZRRT5nGyN+WI6zo7/RjuYKqcV9WdQqxNd7+e50vWxhVxSAdAyXwUkl9ULRN7iETob4DH1iqx5woePYW7ujNxTEGAbQks+QANCS04dfcUY9lTm4+DgQyTUlo3BLOQICoaCReEgCW+c3huVLMPFlEj7qCPEcnHkoKYp+ZwVB7awQzZa2VB+DraFEX43C2C1ESMUfHYodzt+6l3symvDlTT4Bob4ELgEM9G1tktbcrIH0OR7xCgYw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sUA/tJeA4ebCf3L6nGzvzFcNNOIKEARmYcy2Hcuhcv0=;
- b=MS6gUoFPquTRzFrzZs1AMuNFcgggY+eFPI8myamDDYXRBTu12/bdKeV3FB+YPpAOVVIRL522hoWWVBi5xlMRmSw23roK7ZBsFOujxO0xA+t+xiY7oqsHB2r8ZAyO1TZfDUCZrmPqdswKSN6ffFVxzRylzaC1jHKnHYg1dgk3T3gW50hpp+rUGb5qHRIyon4HhZE/3xUPQbtC/R5PxavGWi0iQbMH8vPaoiiVrAP4DHzv0cvtKd+V9Vp0+oTa+CusHMoRzRCSvh3a3Vx71RmGORjmLY39eQ6kjbdR50dGforOCUSbrlTRP8rIigZHFV9G77FgPsmkPzBYexAgaw0HHw==
+ bh=k9PF8D7aEAxQZCLev+O4HwpbOp5ltb6SQjZrm6sPrnU=;
+ b=EAec2V7rTpvskNwfp3Eye6t8GzBpg8MJWus0U2O/dh2+qJrjeXwX4fNa07ElJzVF7rl715/AswOK6egvPYNYhw9/HKLY9UHdTpO3zgwkqeRdRnQg0bSTfw0Db8BBXuAlZUa2KEdsP7FbA5UZTO7tbcWIWExBGWsWI/Hv6BRUiqc+BqGIosRdnGmriB01KUOWFTzBRis8Gxmy/bVXWOEZvuhr8r3ye3SaYgf7HiGsJkVQw2h2y9jtVxHm36FjwyWaS2I6XqXpWIc/5lrEQJj1oLtV8xY73N7nLyfhosLVc5XmpV9DPyuW8G2i9f2p7CD+cVAHSjmFkbA9s5OPDvCqQw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sUA/tJeA4ebCf3L6nGzvzFcNNOIKEARmYcy2Hcuhcv0=;
- b=iWmOeXok1h4fffs/oavjcxG8L9z3+Lyvz0VIOvMurUih2Cdh9J+QWpmLsvo9Eo98aJEJf8qFUctAJ/eazNXz2lDkdp7K8GZ7SyuFitjbWHpr7bcRkKBNmeavZgft5VIp+yGpXp3qucryE4CcUaC5Caj5DxvcRmNoaJJ8zpiSceg=
+ bh=k9PF8D7aEAxQZCLev+O4HwpbOp5ltb6SQjZrm6sPrnU=;
+ b=IcWzSiaE5g1bl8ymttCEsjeS4rJco4wfhlRsXAiUYn4ZpeQYNSRTZR6A9vcgHA6M3n2c/vQl0QWqaqqwga/K9TzH4qjocAR3L28VYEEILUYvFpfwRLkkwdI4dlDb8kAZOOdlLhMHAhGEMu4G0ms5HgRSmBHlg+4yK2IrHQrwBwc=
 Received: from DS3PR10MB997700.namprd10.prod.outlook.com (2603:10b6:8:347::19)
- by PH7PR10MB5675.namprd10.prod.outlook.com (2603:10b6:510:127::9) with
+ by SA1PR10MB6447.namprd10.prod.outlook.com (2603:10b6:806:2b0::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.9; Sat, 29 Aug
- 2026 21:17:39 +0000
+ 2026 21:20:08 +0000
 Received: from DS3PR10MB997700.namprd10.prod.outlook.com
  ([fe80::4c1c:3bb:c4c9:8e7a]) by DS3PR10MB997700.namprd10.prod.outlook.com
  ([fe80::4c1c:3bb:c4c9:8e7a%6]) with mapi id 15.21.0382.007; Sat, 29 Aug 2026
- 21:17:39 +0000
-Message-ID: <6e859ea9-468f-47d3-b462-86c1b629b6e0@oracle.com>
-Date: Sun, 30 Aug 2026 02:47:32 +0530
+ 21:20:07 +0000
+Message-ID: <4c29af2c-2a84-4d7a-81da-9b7f97246432@oracle.com>
+Date: Sun, 30 Aug 2026 02:50:01 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 050/456] sched/vtime: Get rid of generic
- vtime_task_switch() implementation
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-        Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, Alexander Gordeev <agordeev@linux.ibm.com>,
-        Ingo Molnar <mingo@kernel.org>,
-        Frederic Weisbecker <frederic@kernel.org>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
+Subject: Re: [PATCH 5.15 231/456] tipc: fix use-after-free of the discoverer
+ in tipc_disc_rcv()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Xiang Mei <xmei5@asu.edu>,
+        Weiming Shi <bestswngs@gmail.com>,
+        Tung Nguyen <tung.quang.nguyen@est.tech>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Alexander Martyniuk
+ <alexevgmart@gmail.com>,
+        Sasha Levin <sashal@kernel.org>,
         Vegard Nossum <vegard.nossum@oracle.com>
 References: <20260817132539.792407575@linuxfoundation.org>
- <20260817132541.992143810@linuxfoundation.org>
+ <20260817132549.157976577@linuxfoundation.org>
 Content-Language: en-US
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-In-Reply-To: <20260817132541.992143810@linuxfoundation.org>
+In-Reply-To: <20260817132549.157976577@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0091.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:cb::20) To DS3PR10MB997700.namprd10.prod.outlook.com
+X-ClientProxiedBy: FR3P281CA0192.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a4::16) To DS3PR10MB997700.namprd10.prod.outlook.com
  (2603:10b6:8:347::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -95,259 +96,254 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PR10MB997700:EE_|PH7PR10MB5675:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1689508d-ee19-4451-93bf-08df0612f47d
+X-MS-TrafficTypeDiagnostic: DS3PR10MB997700:EE_|SA1PR10MB6447:EE_
+X-MS-Office365-Filtering-Correlation-Id: f450e5db-dbf8-4dbc-875a-08df06134d0d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|18002099003|22082099003|56012099006|6133799003|4143699003|5023799004|10067099003;
+	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|6133799003|18002099003|22082099003|3023799007|4143699003|5023799004|56012099006|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	pgjN+HWr7brkTuj0XmC9u3mXuJIttN7Ag/5i1YktQ5OGFtZv12A+V/fCR890Hey8FAJOTSAOXL4ahXuPm2zeomNzB0akzAPsXvr+8KgIs8s4l8Rok5aAL42ZqUYRWZ6uQYMf/w4DBtwQFANuWsLAP85fZRaeanRR9LR1KOcI/nFEjNkJGxoeAvIgLpPeWyBXUqt9ao75CW1ZtjKEofpLFGLYNDfBBp9DpoaZu5RwuQzQEOlXCR88NdWShDGhshigV/p00MdR9JHe6tPuEZSpG1/uiDal8rJxPsQzNlf5EnlAJ2aGgFGBB2aV/5x4UU99dEcpi3QKHEuSSuh9MbBxWPReYE/INa14cgkAkbWfKVUuUigvIxL5SBFa01SeLXeiyZrZrVd3PqKYB0FrToD/cOAZajEBcgf0rjTCf0hWg9/EowNXkj+tu5M/hqql9AnPOSdanTe4hCV3Dt5bVk9DsqiB+lhTesTv32yFqhjxLuSd5kPGkz2KQEUQqjtBHHrwpDnLtg3tN9znNFv9CBn8I/QLu56DMaLIcJjH8hkLfxbFkxZt+8XbHkynJGShdZCJcwI20QQTEWyvncmDgEQGcjCEo3Y7Di9zql2hb6DAiJEPaar+8ya676k5qGXgXLRCtCNNR7dRpg2qHABz4fEDjw0nzbrQ088ktgzjBIjEii8=
+	qolbW0fwRdUG/oBn9gBXr1X4llqCmNt9owm6y6HyKfZf+WKcAqoqbSGGcSKO7YDFynj9iSKLueBQjTfeC00zlt1deH7ZL1iwwYUUozn8Pxkp2qdQ++QbV08+LNapRoFfOdLkHhWiTnNDfIm0HHERqu0D5bkk9eGLN7339oeN1erK9fXs023/cL/YDh1cJJFhpFuwbch8yRtnKIHFAbC5A8ZH5wuq8AgC7PuaHI4seCq13S7GAmiqsJ1dN9SZ0yXPn4RgeGt20UqwZaZYmkxib8OIuTb2N7GDeS8g+RDXCDD/qlRu8ElP/A2EaVluqeL6oGo/XB4lOKRJIksQ3T1ZpdGDSKTvBRG/WVNfTZQxIh8K1UGkyc25BU4oTYn/7Zo9ABjFh83PFl102NgmRoxF/hXXy8lD6zM4t9TvigGbxhmQoIcQM7q1YED5LF+XiOuOtK4/ZXoyBYcDO9/i7Cm9cD9NLfYxEx8zTYfJ7/rXVlYkiEhSChBaoZnsDbX60siWzpnWLeFyGJPwv8YuZSCXvxeax1wYHynqD89j4jcodi1WuoxEd+s7AsHr5C1oYErrsBUxRwluH0HKzsZ9hQvJcz3JNgpwWJLU8fW13ZGapxhQwruXp8HWhiroL5lAx7nP
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS3PR10MB997700.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(18002099003)(22082099003)(56012099006)(6133799003)(4143699003)(5023799004)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS3PR10MB997700.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(6133799003)(18002099003)(22082099003)(3023799007)(4143699003)(5023799004)(56012099006)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ekpJVGxtQUtqSmlNZGtKZlBudGJuMHVRV3NuWUpzc3pQTm5uVVgvbUw0OU11?=
- =?utf-8?B?RkNINENGWFlmcHY1eXpLWlJIelZaZk5wdzd3RlhVYU5DTzRFWFdFU1krbHA3?=
- =?utf-8?B?ZXBGUktTeWRud3Z5UDdzSkxPRkErVkx3T0NxV1N0cEJjdERhODJXdTV0NFpG?=
- =?utf-8?B?QitSMm5TZnBTMTVHeFJzcTNnWmJjb05QYWVTUFplcVVxQ05sM0RtNHJtVmR1?=
- =?utf-8?B?dVkzVE80T3ZXY2xNZUtJckp3TUhqc1RtRkRRMXhxcmtRNlJ4T3pIS050T0U0?=
- =?utf-8?B?cWtSZUtpc1RLYVcxdHRyRHQ0ZzJvRFR3dGVBcjZ3ZjRPbkh5cnpXeDZlVzNi?=
- =?utf-8?B?Q2dDd3VuOTdoYmZtbWFWeWxHY3RGZm9vMVNzbGl3cFFlUnFwcnVrT3poclNj?=
- =?utf-8?B?bkhMVFBxaDR2ZENqY3pEcFpQdkVJZVc1WElxOVZpekRPb1hLcHVKcm5VRklj?=
- =?utf-8?B?dUdYR2FIZ3hRM2U2WkpvYlN6bzVLQzZCMTZNdU5zby9jS0xzR25kVFdyMjJ6?=
- =?utf-8?B?M3FESmQ0SjNXODlqQ3FIaUZZQy9Mb0tubnJUQmcrd3cramF2ZTJRcFpwcXNs?=
- =?utf-8?B?SkJnOU5PSS8walRiT1JJeTlMcU9razFyQmxPQlhCT0VFdVJkZzc1UEdzRTVD?=
- =?utf-8?B?VklTQTBYbHZ2cmFZMkNyN3dFUWJrMCtjZmg2WUtLMGtJSm12alREa3V5NmUw?=
- =?utf-8?B?S0RESU5tSTg2N1ljZFNsUTRDRHFQQzlMM2RWVGRwaXFwSC9WT0RRMzIrZ0VN?=
- =?utf-8?B?Q3NHTFR0U2JmRnQ1YVNmTS9ETUQ5TDlXVG5PK2lnLzQxS2ZtYVhNNDBFSzBz?=
- =?utf-8?B?bWRaZDJjVVBnRHdQeUxLTDlNOEdLV3FUSTNocmg3b0JyQkFjR3h3b2h1aDN5?=
- =?utf-8?B?dTAwaytFczB2allFaVYvNi9sY2x1OG5QUTlwd2FJRmwxZE9semt1bnlSdmlL?=
- =?utf-8?B?QzJsSTY1bnlpczRKOVcwcUZpUVYvTDlldWFrR0ZuNnR2Z0I1RUdISjhDUlRl?=
- =?utf-8?B?dU9EZFp3NmZmSU1MWVh5MHBoVHpaQWNPN3M1cWp5T0JXcjFOelRvNUxGMnlB?=
- =?utf-8?B?c2NYZ2FmMGlvUkNwRFUyWUFzN3ptakRHV0VES1JVS0doSW5zSkpUZThNNElr?=
- =?utf-8?B?TWJYbm9kMnRGUHhrTVFUMG9VWUNuUXEvYW02QjlGS0pWZmZzN1RBNUZNWlIr?=
- =?utf-8?B?ZUJ0U1FDRXltYTJzMzEzWW9QV0l1WkxLUWFHbm5xSFpSd0o1TmhVenZ0Rm9U?=
- =?utf-8?B?c0NVZlJTcUFzdUc4VWpJTzh0dnREcDBRSjVsTEMzTGtaOUMwRG1ZWUR4NU5u?=
- =?utf-8?B?Ri9RUlVDOVRWa2FNbWZ5MUNXN0phRmRJcGFhL1JnaGIrbmtnMHlsZDFIa3Ur?=
- =?utf-8?B?c3pQc2EwRVNWeG5oMHczbWRlWmVUVEYvY3hXdVFaWUc5cjVRZ0tlM2NMRjdN?=
- =?utf-8?B?ZjZxY2NSS1RYeXAxck5QV3dObkFieHBFeUdtT21BclZWa1prYlczUlZqVDl3?=
- =?utf-8?B?K2VYRHQ5MmRicUoyNjI1eDY3bFZFNUt2Y2hZNmk2ZWk5RWxqZnVoa21LdkdL?=
- =?utf-8?B?eStoR2VKK1dlNjdWcWNSUGpiV3p4cU5xdE81amFJcVRWbmRGRXZPQzNJV3kx?=
- =?utf-8?B?cDJLYXVSWGRqdUovaS9wTDdYRzcwamZ1VlJoVnBmMWF5UXB6ZURnQy94REdn?=
- =?utf-8?B?RUhuS3ZGczRXL1lTdHg5b1V5dVZjdHhrdTRlQUkzZDY4WGV6NGVVbFJsRGtN?=
- =?utf-8?B?UGpsRUtUS1paSTZPK3FPNG1rbjFFOWQvTVY0T2JJc3dUaFBZclJsaThEc2lk?=
- =?utf-8?B?Rm1OY012ZGpJR2E1ZlBOSCtWaDA5Q2Yrako1aG5yaGdwUEdiUldVT0V1U1Zm?=
- =?utf-8?B?dFArc1N4Rm9BbXd4a3podlg1Z0I2b0lkYjV4ZHZwaHhCN1FQOEdGcU5BQW1q?=
- =?utf-8?B?Y3Z6N1VWR1FTancwa3hGd3hyMEhsRXFWdTVOMFRMcE40OGlPMEhHTDJramhm?=
- =?utf-8?B?bmJxcWFZUUxzMXZzanY3N0gxc2tRNmoyUTVBVGpFV25nOWM2dFErQ2pOZkUx?=
- =?utf-8?B?ZDlIWGpYcktvTFNRcVRQQStPTXFvelFBalQ0MkZnZURuSUZWcXNURDZ4d214?=
- =?utf-8?B?ekh5aUliQm0wQVZyZzdrejlNdEZXdFFMeWZZS05vWDNxaTRWY2tBcnlaM2Rw?=
- =?utf-8?B?NVBLdHVBbFFkb0RVNUhNbVlDcElhQk1LZ2N5MVl6Um1wN3Z6UzB4akpoeStW?=
- =?utf-8?B?V2s4OGlkNW0wcmVGd3JpOG1oZjZmWlNDSndDSFE5ZlUxMTRUNjZ4MXNiK3g4?=
- =?utf-8?B?VzRaN2xjZ29QZ1RFUlhzVDFDUXdkcC82NkdTQ0NHVnJNYlFtVHlFRElQTVJH?=
- =?utf-8?Q?eqIOvlXBarZNFvwcaWBHFTJREL8F74w3+vaba?=
+	=?utf-8?B?TEtHVU8vb1JJV3FiUDdmYXJuSkI4Zy93aDlsaVhFMlpleGYveExVRnBnVWg1?=
+ =?utf-8?B?Q0QxQm8zZkg0SlJlVVF2Y1ZQY0ZuOUV5RzdvdnJiZ0YyQ3YxN1hObkpNZ0hJ?=
+ =?utf-8?B?QzVKUW4zRUtuMjNqR2JicU5TOXdOYTNtVUpYNVJQYlBwd3NTU2k2TURjNVhN?=
+ =?utf-8?B?YStsdFhCRGtHaDFMYXpuV1BOc282cUh1Ujc3S1JCYXRDTDJVRzNibzV5SWg3?=
+ =?utf-8?B?YUhObkhsaUQyT2thV1dzYUcvbks2WkhCNys4M0plV0FmOHNvL3U5QzBmS1ov?=
+ =?utf-8?B?cmcwTGRtcmw2VFBJdkR5cVVPdGcwdi9CTFV5Wk56NksrSXo0NlViUzRHVmxw?=
+ =?utf-8?B?cXY4aWN1YlBwdFZGSmtqNFFuelR0TjNhWHhmUG9TZFhrMTBpaWJZNnZKeWxX?=
+ =?utf-8?B?NjFmVGJoQ2JUNWl4dThwZnY3V21nN1YxNzA1Ty9rRzBzVE5Vem5oclRKN3dV?=
+ =?utf-8?B?NEpHTnlVQ1l6WWNhOUVRMXhZQWxndE1yREc0VFBmYmQrL1QwY1p4MEpNb3Zk?=
+ =?utf-8?B?RkJLQStkN0QwdVAvU0Jub08rMHFPWHh0QVJDSUtBc3NMU3ZOV0J4eFRLNlRp?=
+ =?utf-8?B?ZTFIU0s0UlhwaHpEZHpuaVpFbzVwRWhPYUJqMFZnUTRiU3RGSGFpUzJTa3Bo?=
+ =?utf-8?B?TDFLSUxUaVM1Tm9DVHQvOEkvYmtlQXRoazR4N3NMR253emptOGxQYU5xVTlo?=
+ =?utf-8?B?K0Z5ZlQxY3NWbDZnSVBuOXl6MGZSTXhJMTg3aG1MVE5QK2pobktDdDhuTVo0?=
+ =?utf-8?B?RFFjL2RVSHFpb1pERG1nelBNUGxyRHdodTM0MnAweElSOGRBMmZ3NDNmRnVw?=
+ =?utf-8?B?T0gxUzBBcFdrRUlHeDBKcFBiWGIweXY1U2FiQ2ExcDlNU05uS0pYbytuQW9V?=
+ =?utf-8?B?eEZpNm1rV1QrKzVPWTNjY1ZKbm1jbjc2cm85Q013UEMvaVk1T2tiM29hdUUx?=
+ =?utf-8?B?eXdLeHlSbnBTTzlwMkpUdW9sdnUvZXZVdHJySEFkR2Z1NHFPWW54Ynd6QS9T?=
+ =?utf-8?B?TUtKZTFQTzlKQmg4clN2cTdhSWlqVkhIVzVZRWY2YkdITHJNandOcmthMUJa?=
+ =?utf-8?B?TWJkRUp5L2g0aTBJNEErR3NSeEg2b0NZZi9EWGhWMVZuN1RSMW4ydGMrR0Jx?=
+ =?utf-8?B?bjNDa2dSU3BEWkhDQk45TVRLdEZNeFgzZkVacTFicDRRNVBDYnBMRmhtQ25L?=
+ =?utf-8?B?NEc3Rnl4a2pSd3V2SWlLYktHbnZwSGN2a1F1cDVsdXg3eWR1cVkwQWgzZkVT?=
+ =?utf-8?B?L1I3ZGdsUGN6N0ZiOVRhSklFZlFidmZSbys0NVpzVzN4cU5xQk9YMDdHblhn?=
+ =?utf-8?B?VStyTVZxRzdrWWlsSkFJM0NyWE5lQlFpdkZuOVBDTHdaMTc5N1I1eHVXa25Z?=
+ =?utf-8?B?N3pnS3NwVWEwbHhDeHlOeUNwdnRBOEpHOWZnN2dvMkVVU1VUbFNvVGJiYzVJ?=
+ =?utf-8?B?U2V6b0dLc1ljclZxMzRhRmxNbHU2NzRMVmRObUdHWXp6RzEzREo5T3FKYnMv?=
+ =?utf-8?B?eGJOZHU1QmZ5R2pKdUNOK0tvRTRUamI4dllDQmRBYVZ6eUVtRUhneW0yeGN0?=
+ =?utf-8?B?UnZCQ3I1VS9XRE92VUsxMHJVMVhFRXhQRjBEeHpOaUtHSUh3MTFIR2dLbGJW?=
+ =?utf-8?B?a3RicmdPdVE4MUhNbmpNV2tZNnVWOWlVZnNUMTFHa3g4TFgvWVhMOE9uR0Zt?=
+ =?utf-8?B?QUU5M1F2dVN5dzhueGY2S2VENU9pOWtNNUxUWS9FQ2ZSdS9JWlorTlJSbDFD?=
+ =?utf-8?B?L0pLbytBUDkwNHozblhMU281L3FlbzJLWnIzaDhtQ2oweTN4TWZkVkRuYmEy?=
+ =?utf-8?B?Zi83dmsxUUl3SjBZQmlpV25rVnhMMGZTN25ldC9ZZVRKRlZQWVp3NFFrSUVJ?=
+ =?utf-8?B?VUtjWEVRdGlIV3ppLzIxT1Yrelh6cGlqdEpaakdnREQrT1oydVRyZm9CV2wr?=
+ =?utf-8?B?VklCWE1mWkkrRE1BdW1wTE5aZU5sUlE1ZEQ1ZFZrMGc0bmxPVnBlbmJ6ZU9x?=
+ =?utf-8?B?N0Zxd1daenhENXlXaHFCaWR2MXdqcGRucVkyRHNMblpVQVZlbXVhdFRFbGxj?=
+ =?utf-8?B?S2FkN3VMclY2Z3dWZ3VkTzY0dURDby9oSzcxcE5UWi9OWk1jc3E0THVtUisx?=
+ =?utf-8?B?OWRqcVZFTEZJSEdLdnFUbVhBRmxOWE00MzVPSjlLRlhBR3A0dldBNnRrdU9t?=
+ =?utf-8?B?Z3REQUVZc1RnOCt4SVRIc3Yvb3M3YkFZaEFnVjZHZExqUGxiUUpwTDhESDhx?=
+ =?utf-8?B?VkkwSzJxMThGYkR0Q2FFYWNqVUNsVWVnVGN0OHR4a2V1T3Y3VCtiYWRnSmE4?=
+ =?utf-8?B?Qks5d3ZNWTlFNFZFZGZpOHpPZ0xnN3p3QVNzR2xaRUt6Qm5LZ0lTSmpzR1Zk?=
+ =?utf-8?Q?3dbLtK7npi4GNJGqKmD4T75rMXd/YnKUDnmMP?=
 X-Exchange-RoutingPolicyChecked:
-	g6MAPPTfAMPX0jCEX2DAKsREnwuZmu/bHyS7VFfAzO+wk5PtenhIo1ytV6Zfp7yVzfjaUKqYfJpSKdAZTGTP/y/5eCldDAqIgoirve1GHtM1e8kgoSldWvRIH9t38GB/zBVKyfLVb1NQx2TKlYojUoS27oooohfvhMlch9NISGdyHEAzcx398/CZl/tHWrOflxRHS7F7QF6lNHOL/BW+C9HOa7I1NI9i8/hPSFWjKwuESfDCyZTp1HTWq0rwbBfA3xDZ3EOjlT4z2JZqWZk6UOVUvUTc7cfHkrAWY+Y1IgxkNHiuq0joyq7A2NXI9GTViLfSHGaDm/IysjkCEl3I3w==
+	em6Q7qK+ueBKKExiG9kkSGQzMdKdT0VkmAlozwTz7KmGzqyvjDwp3ovN0Nc/jh51xAMRHV0oF9ISjz3U2cGQXQ3csH0LyO4IOrqQTxV439QGjhhNYxRPesG7ocVVz7fTI3DVcEEYPiC2vxCIzxma7Xioryk4hOAfFdXJwjSN8u4orV6aRLeRYjnP84G5Ut1UiwzLYTt9ep1lO85tZZCy0+KQXWSx3xN0n2xHHvcdYkwhiNyAmRfie0I69MwAB5u8N4KH2reyvzc+B22HNF5a8gbrDcuSmrLiT+yk7LkhfFpsVwxHUk2HLPODy4ZfdNOudTuI12p5tmkGRGarcV63Mg==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	8J1l2+M3F90YOWcuZvpJWU6CVjdmIr1Z1k6cdCeo2OQwtIpbwLI3Gxz8dn+N/5DCS0mxFHqtOw7eUGhUzbTnNMFTmWh19KEfwBIavMMFSk8CkZ/jdN22Ta7lp+25gRDTs8PzIEmt3F8m+aCMy+AW3CnM4riD4wLhJZwAaFj80ZvZqHl6MekqZaq0qyV2eOOOXtVcuvQN3DDkBk/aDS68b/Uo/LyHqGz7bKNcAZlUrWQInDKTxynNXPA4mGRJqdGr3Cdy1YPo06Z5N1YQHSrFY9qZPxR3phvi6Zk6f8N16Bycd7oOoGpWvMYFCIM8b8xiCKpsgp8Z3wOrvT5Qb44tXcjAG89lyh3/k08ZYPmkdS9D1hT9O7II9EWFd/EFNEt1j4nDO8Yx5IczkuPQbWJLqvg+Uek+iVtBYSFOsD0VMpNWIYlayuvVvFPf+F1YCsDksLQkqGRkvy8HMQ38v9c3FDYtOPgqKbQYSgrQ5SrjPu2G6Hp3q/x7tcbgVfeOtWk/UHEQvWtKFGqXZW/RFtE9uPURtz1D3zaaqGQYCaLH/mXW9TFlIpjlRR4XXvsiscmuz33hllGhzsVfsootlnOgwZqjnxFPm+sr7d6A9mNHqqw=
+	5X7x3FkjBQ2AF9WcVezCtwRT9rB7/rIPrnjB5vuVdn8wF+IxJHCUFh8UMytW4dcI3qlP64TJ97B0WPvztlkJQSJC1THax13md1l9Aa+6s3Gs1sL34qSEm3zpqL0McTsUqmFPzyoG3PHXPKWWX9Tw70c0rsIl3lzzISDasjEevNXdOAofV9gNLeTPDNk3yXPCC0ePyPgDXSWEAL+MnN4WG44nDari0iHlwDSelJXVGgxNyBL5MTdjrRji/ZUA8ckCIrG5ysSrASDT45f6BM4WEzI9aaWLtpcccaKEBii2plnv/sJ3zVLxfLoOolUczIY0rumy43kfCY4/vbmx6I+dH+SzFhnZXAKQMnZlmDwszUEv7HtAOEz7zx8ucdzEZtl+cSqCK7jZZ3JsrA+Q33njFMIoEZUxls3rnUHoQd0F5WOl/qsdias79gkt3faDryLABO6OSSht5kCu8LOrWcHUIoQxOYtSdpC0J/K5a6KoA6xLCI0Shh9wNGKao6PVrBO9If/idHAXEFrQ/fdssgdxVCSQdn/UQLRimHKKKlUEXhn1erVgpQ5IL7/+NBUeMLxqkHW9KHtw+XLtHzTdPi4i1v6qgeUsXzh4gQ0Q+Ot89v4=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1689508d-ee19-4451-93bf-08df0612f47d
+X-MS-Exchange-CrossTenant-Network-Message-Id: f450e5db-dbf8-4dbc-875a-08df06134d0d
 X-MS-Exchange-CrossTenant-AuthSource: DS3PR10MB997700.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2026 21:17:39.1826
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2026 21:20:07.7465
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DE5wfvWdiA40Inz0+CsjySb98t8RTNSS6p6b9DdbpGy0zfR9EOLnqJxat/JxF+SGXcnLqVTuc7kzZqNzBcQdpxhq/Qvmee8Fc/4hl3xNKuseVH6dwatxZm2PJlgbJlxH
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB5675
+X-MS-Exchange-CrossTenant-UserPrincipalName: o3Uz9t4DICgJmTOFacZ6Sa5srltL0zRSkVtWv4EA4Ee0KJpFkim6zZfND3nEu/X6GLR81QmUCN//N8zcnDeSEbPuOvKOCxHeZGYSO5RMes+okv/MsmwP21gyJgcszhRM
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6447
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-29_06,2026-08-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- mlxscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- spamscore=0 malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2606160000 definitions=main-2608290184
-X-Proofpoint-ORIG-GUID: _OQgEiJJuUwGFGNrOPit3uPpCyr94XYL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI5MDE4NSBTYWx0ZWRfX7BLg3xr9X7PI
- WyyiwulJDSsKkZ5dSRA73GgNCtYHfrVCxjpvqa/r1etoddpw2djKqhJm7pdY6rJvorM1hDPvunN
- QE1dn/G6/9shhFJ6/fmMaXr2s4nipWpATwxMUw6FnF2DlkCdY/ZEVgoY4mVkzHlV54UBFhc/dwN
- eBCxZRKufj767PwhyXX4O7kIa6ZzEdrMrtfsa4ur7DQU8VWqN/YjhxyeAJnKYUamHsfoXUqfLBb
- z3DppTo93VJWqbX3pnaDbHgF09Lear9ekjsmOdDroHS0tv+29U8aDXPshzgVy4dVoAtKn9MHZ0G
- tDNj445D6BgyUSlYPqOuErgrFC/w8qw0lcNC7cJRptZ21KEqLiW8qikd8ay3nMBvAupTzfXA2Wn
- nbDC9zDcilDR2cQJIKEDlJwZ0Z6Ljs0semXGjPFxWSj0Dyhl1bik/ZtwKvmeSZyk6oRZsY2Oo7t
- nXL0an7i0yr8R/T/FRQ==
-X-Authority-Analysis: v=2.4 cv=Ebb4hvmC c=1 sm=1 tr=0 ts=6a934c78 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2606160000 definitions=main-2608290185
+X-Proofpoint-ORIG-GUID: 24yVHJjZcEv8D3OldaVb1XlkZ2oemTEt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI5MDE4NSBTYWx0ZWRfX9oiESYE5jl6B
+ 92FdcCLnrEOOWduALl6tM4heZ6riwU4XPUKyLN3r8qVEDaZUOytEhkfikH/Oy8BODng9pAaRJBM
+ HToJx0EnI4wziyHsUlxDZ3KpS+0XzZPY0O8Ynczg3Xz5cC46zykZ/HymNPYU6hFnHO8pW0A/NVC
+ kunB5KzRT2mUWRTO1pYsMOph2i036zDxh1rS2JYcTegDMSojs6VclThtkDaAaESQZ7Oyx+A7xev
+ OlNtguIXb7E9lPgujfB491OoPNncaV645hs1jJpldplWVEPh+9TZOJzcC0zsSGDeCs5BmeiU1kY
+ EmnKBaLBC0+JfTPp7o5D002x8JMRrYDa14SC/SmSWY49ZQvQq5YNAc29NnP7Jzu17HOX8ObdPnT
+ 4DGzUctNNmSPezw4AJNdfvUgwLzdCI7C+b3pQ9Y0NgQc8oV7PUFOwWI+g9x6z3jZ/6M1ZAI0W+i
+ EGWulyju5HUuBHH7avg==
+X-Authority-Analysis: v=2.4 cv=Ebb4hvmC c=1 sm=1 tr=0 ts=6a934d0d cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=Sv0fKeRqtYgA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=rCeK5E6h5QI9kuc6UegA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: _OQgEiJJuUwGFGNrOPit3uPpCyr94XYL
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI5MDE4NSBTYWx0ZWRfX7Rz0cww9Qo30
- P6zwP4uS5Yq8T5AgMgsRe4iMlSnpbzqAJT7z6X2hF8xRqJdoH3nvkLJG4ZP0GupBMuoQzhLChZp
- kLJycMbGA60Wdmm7dm/qjdY3KSM6P+tlfKHzKlQ3PEgUx+izV0zz
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=bC-a23v3AAAA:8
+ a=pGLkceISAAAA:8 a=VwQbUJbxAAAA:8 a=8u-ZMrWmr02PLxF4UAIA:9 a=QEXdDO2ut3YA:10
+ a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-GUID: 24yVHJjZcEv8D3OldaVb1XlkZ2oemTEt
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI5MDE4NSBTYWx0ZWRfX6742+1ppmmt+
+ aMIk3KGfunAFe8QaY+KsHMSOcmCxtjuTzkdYpRqBDi41YWcwx/6xcdSR/huqAb0IumsyszLmA8x
+ 29DwigQKpB4k0g2VvPaDqNQYytMIpYIu0KkkQBsTdNR2JsqDPlBu
 
 Hi Greg/Sasha,
 
-On 17/08/26 6:57 pm, Greg Kroah-Hartman wrote:
+On 17/08/26 7:00 pm, Greg Kroah-Hartman wrote:
 > 5.15-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Alexander Gordeev <agordeev@linux.ibm.com>
+> From: Weiming Shi <bestswngs@gmail.com>
 > 
-> [ Upstream commit 89d6910cc562ab34d1f1c08f3cf0a9700b8bf2c4 ]
+> commit 1579342d71133da7f00daa02c75cebec7372097b upstream.
 > 
-> The generic vtime_task_switch() implementation gets built only
-> if __ARCH_HAS_VTIME_TASK_SWITCH is not defined, but requires an
-> architecture to implement arch_vtime_task_switch() callback at
-> the same time, which is confusing.
+> bearer_disable() frees b->disc with tipc_disc_delete()'s plain kfree(),
+> but tipc_disc_rcv() still dereferences b->disc in RX softirq under
+> rcu_read_lock() (tipc_udp_recv -> tipc_rcv -> tipc_disc_rcv).
 > 
-> Further, arch_vtime_task_switch() is implemented for 32-bit PowerPC
-> architecture only and vtime_task_switch() generic variant is rather
-> superfluous.
+> L2 bearers are safe thanks to the synchronize_net() in
+> tipc_disable_l2_media(), but the UDP bearer defers that call to the
+> cleanup_bearer() workqueue, so the discoverer is freed with no grace
+> period:
 > 
-> Simplify the whole vtime_task_switch() wiring by moving the existing
-> generic implementation to PowerPC.
+>   BUG: KASAN: slab-use-after-free in tipc_disc_rcv (net/tipc/discover.c:149)
+>   Read of size 8 at addr ffff88802348b728 by task poc_tipc/184
+>   <IRQ>
+>    tipc_disc_rcv (net/tipc/discover.c:149)
+>    tipc_rcv (net/tipc/node.c:2126)
+>    tipc_udp_recv (net/tipc/udp_media.c:391)
+>    udp_rcv (net/ipv4/udp.c:2643)
+>    ip_local_deliver_finish (net/ipv4/ip_input.c:241)
+>   </IRQ>
+>   Freed by task 181:
+>    kfree (mm/slub.c:6565)
+>    bearer_disable (net/tipc/bearer.c:418)
+>    tipc_nl_bearer_disable (net/tipc/bearer.c:1001)
 > 
-> Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-> Signed-off-by: Ingo Molnar <mingo@kernel.org>
-> Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> Acked-by: Michael Ellerman <mpe@ellerman.id.au>
-> Link: https://lore.kernel.org/r/2cb6e3caada93623f6d4f78ad938ac6cd0e2fda8.1712760275.git.agordeev@linux.ibm.com
-> Stable-dep-of: c1c1ffa490fc ("powerpc/vtime: Initialize starttime at boot for native accounting")
+> The bearer is freed with kfree_rcu(); free the discoverer the same way.
+> Add an rcu_head to struct tipc_discoverer and free it and its skb from an
+> RCU callback.
+> 
+> Because the RCU callback (tipc_disc_free_rcu) lives in module text, a
+> call_rcu() that is still pending when the tipc module is unloaded would
+> invoke a freed function. Add an rcu_barrier() to tipc_exit() after the
+> bearer subsystem has been torn down, so all pending discoverer callbacks
+> have run before the module text goes away.
+> 
+> Reachable from an unprivileged user namespace: the TIPCv2 genl family is
+> netnsok and its bearer commands have no GENL_ADMIN_PERM. Needs CONFIG_TIPC
+> and CONFIG_TIPC_MEDIA_UDP.
+> 
+> Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
+> Reported-by: Xiang Mei <xmei5@asu.edu>
+> Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+> Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+> Link: https://patch.msgid.link/20260617135744.3383175-3-bestswngs@gmail.com
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->   arch/powerpc/include/asm/cputime.h | 13 -------------
->   arch/powerpc/kernel/time.c         | 22 ++++++++++++++++++++++
->   kernel/sched/cputime.c             | 13 -------------
->   3 files changed, 22 insertions(+), 26 deletions(-)
+>   net/tipc/core.c     |  5 +++++
+>   net/tipc/discover.c | 14 ++++++++++++--
+>   2 files changed, 17 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/powerpc/include/asm/cputime.h b/arch/powerpc/include/asm/cputime.h
-> index a23356c05af193..2e5cc3abd92df5 100644
-> --- a/arch/powerpc/include/asm/cputime.h
-> +++ b/arch/powerpc/include/asm/cputime.h
-> @@ -31,23 +31,10 @@
->   #ifdef CONFIG_PPC64
->   #define get_accounting(tsk)	(&get_paca()->accounting)
->   #define raw_get_accounting(tsk)	(&local_paca->accounting)
-> -static inline void arch_vtime_task_switch(struct task_struct *tsk) { }
+> diff --git a/net/tipc/core.c b/net/tipc/core.c
+> index 434e70eabe0812..1ddecea1df6e91 100644
+> --- a/net/tipc/core.c
+> +++ b/net/tipc/core.c
+> @@ -218,6 +218,11 @@ static void __exit tipc_exit(void)
+>   	unregister_pernet_device(&tipc_net_ops);
+>   	tipc_unregister_sysctl();
 >   
->   #else
->   #define get_accounting(tsk)	(&task_thread_info(tsk)->accounting)
->   #define raw_get_accounting(tsk)	get_accounting(tsk)
-> -/*
-> - * Called from the context switch with interrupts disabled, to charge all
-> - * accumulated times to the current process, and to prepare accounting on
-> - * the next process.
-> - */
-> -static inline void arch_vtime_task_switch(struct task_struct *prev)
-> -{
-> -	struct cpu_accounting_data *acct = get_accounting(current);
-> -	struct cpu_accounting_data *acct0 = get_accounting(prev);
-> -
-> -	acct->starttime = acct0->starttime;
-> -}
->   #endif
->   
->   /*
-> diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
-> index d0e59f427fd6f1..65235323bee49c 100644
-> --- a/arch/powerpc/kernel/time.c
-> +++ b/arch/powerpc/kernel/time.c
-> @@ -429,6 +429,28 @@ void vtime_flush(struct task_struct *tsk)
->   	acct->hardirq_time = 0;
->   	acct->softirq_time = 0;
+> +	/* TODO: Wait for all timers that called call_rcu() to finish before
+> +	 * calling rcu_barrier().
+> +	 */
+> +	rcu_barrier();
+> +
+>   	pr_info("Deactivated\n");
 >   }
-> +
-> +/*
-> + * Called from the context switch with interrupts disabled, to charge all
-> + * accumulated times to the current process, and to prepare accounting on
-> + * the next process.
-> + */
-> +void vtime_task_switch(struct task_struct *prev)
-> +{
-> +	if (is_idle_task(prev))
-> +		vtime_account_idle(prev);
-> +	else
-> +		vtime_account_kernel(prev);
-> +
-> +	vtime_flush(prev);
-> +
-> +	if (!IS_ENABLED(CONFIG_PPC64)) {
-> +		struct cpu_accounting_data *acct = get_accounting(current);
-> +		struct cpu_accounting_data *acct0 = get_accounting(prev);
-> +
-> +		acct->starttime = acct0->starttime;
-> +	}
-> +}
->   #endif /* CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
 >   
->   void __no_kcsan __delay(unsigned long loops)
-> diff --git a/kernel/sched/cputime.c b/kernel/sched/cputime.c
-> index e3022598f7b02b..d71c4817996b32 100644
-> --- a/kernel/sched/cputime.c
-> +++ b/kernel/sched/cputime.c
-> @@ -406,19 +406,6 @@ static inline void irqtime_account_process_tick(struct task_struct *p, int user_
+> diff --git a/net/tipc/discover.c b/net/tipc/discover.c
+> index e8dcdf267c0c3f..835ff27f8ea88c 100644
+> --- a/net/tipc/discover.c
+> +++ b/net/tipc/discover.c
+> @@ -58,6 +58,7 @@
+>    * @skb: request message to be (repeatedly) sent
+>    * @timer: timer governing period between requests
+>    * @timer_intv: current interval between requests (in ms)
+> + * @rcu: RCU head for deferred freeing
 >    */
->   #ifdef CONFIG_VIRT_CPU_ACCOUNTING_NATIVE
+>   struct tipc_discoverer {
+>   	u32 bearer_id;
+> @@ -69,6 +70,7 @@ struct tipc_discoverer {
+>   	struct sk_buff *skb;
+>   	struct timer_list timer;
+>   	unsigned long timer_intv;
+> +	struct rcu_head rcu;
+>   };
 >   
-> -# ifndef __ARCH_HAS_VTIME_TASK_SWITCH
-> -void vtime_task_switch(struct task_struct *prev)
-> -{
-> -	if (is_idle_task(prev))
-> -		vtime_account_idle(prev);
-> -	else
-> -		vtime_account_kernel(prev);
-> -
-> -	vtime_flush(prev);
-> -	arch_vtime_task_switch(prev);
-> -}
+>   /**
+> @@ -382,6 +384,15 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
+>   	return 0;
+>   }
+>   
+> +static void tipc_disc_free_rcu(struct rcu_head *rp)
+> +{
+> +	struct tipc_discoverer *d = container_of(rp, struct tipc_discoverer,
+> +						 rcu);
+> +
+> +	kfree_skb(d->skb);
+> +	kfree(d);
+> +}
+> +
+>   /**
+>    * tipc_disc_delete - destroy object sending periodic link setup requests
+>    * @d: ptr to link dest structure
+> @@ -389,8 +400,7 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
+>   void tipc_disc_delete(struct tipc_discoverer *d)
+>   {
+>   	del_timer_sync(&d->timer);
+> -	kfree_skb(d->skb);
+> -	kfree(d);
+> +	call_rcu(&d->rcu, tipc_disc_free_rcu);
+
 
 ^^^
+I ran an AI-assisted backport review of f05b3f4c7837 and checked the
+finding against 5.15.y. The RCU conversion is present, but the timer
+lifetime part of the upstream context is missing.
 
-I ran an AI-assisted backport review of f4b5a7d855d2 and checked the
-finding against 5.15.y. The backport relies on an upstream architecture
-invariant that does not hold in 5.15.
+Upstream commit 1579342d7113 is based on the TIPC conversion in
+292a089d78d3e2f7944e60bb897c977785a321e3 and has:
 
-Upstream commit 89d6910cc562 was applied after
-cf8e8658100d4eae80ce9b21f7a81cb024dd5057 ("arch: Remove Itanium (IA-64)
-architecture"). It can therefore remove the generic implementation:
+         timer_shutdown_sync(&d->timer);
+         call_rcu(&d->rcu, tipc_disc_free_rcu);
 
-         void vtime_task_switch(struct task_struct *prev)
-         {
-                 ...
-                 arch_vtime_task_switch(prev);
-         }
+The 5.15 backport instead has:
 
-and provide the remaining implementation only under PowerPC.
+         del_timer_sync(&d->timer);
+         call_rcu(&d->rcu, tipc_disc_free_rcu);
 
-5.15 still supports IA-64. With CONFIG_VIRT_CPU_ACCOUNTING_NATIVE=y it
-has:
+tipc_disc_timeout() and tipc_disc_remove_dest() can call mod_timer().
+Unlike timer_shutdown_sync(), del_timer_sync() does not reject a rearm
+after it returns. A concurrent rearm can therefore leave the timer
+queued while the RCU callback frees the enclosing discoverer, allowing
+a later timer callback to dereference freed memory.
 
-         extern void vtime_task_switch(struct task_struct *prev);
-
-and finish_task_switch() calls that symbol, but IA-64 provides only:
-
-         void arch_vtime_task_switch(struct task_struct *prev)
-
-After f4b5a7d855d2, no vtime_task_switch() definition remains for that
-IA-64 configuration, so the kernel fails at final link.
-
-Maybe we don't worry about IA-64 anymore ? So nothing todo ?
+The timer_shutdown_sync() API is already available in this 5.15 tree. 
+Maybe we should fix with a downstream patch only ?
 
 thanks,
-Harshit
+harshit
 
-
-> -# endif
-> -
->   void vtime_account_irq(struct task_struct *tsk, unsigned int offset)
->   {
->   	unsigned int pc = irq_count() - offset;
+>   }
+>   
+>   /**
 
