@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4893C499F3E;
-	Mon, 31 Aug 2026 14:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271EE4A1387;
+	Mon, 31 Aug 2026 14:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185282; cv=none; b=G5Fi0l+SzQBP9u86Qobu5DtzSmkyZcCuxk0og7Ec+h+xclJXT/wKwlyNEY23WtkqLhOJgaql9tONGJOeRJ1JO3dGxpn5MpVVGbvbBwDugimxROu8qGBabpZTyb/cHrM1M+HPY+grCPsle6wyAyaQ9kAyB2qAHvNcl0J714mPbi0=
+	t=1788185284; cv=none; b=riPqthdaRW4F/lluBN/8vAYlVy9cAi+xJEA3bRrp1fFFu/ZQ4y1MyXnLJjBhVDLvtYVNrXrGXEd/RWB8C9NNN2R6TI79AQ6puX18MXpVL0bu7c4VKu4Iv7L43cus+7XIv5o1wpQ8nFReJegYAf7MoLkpZL79iz7pV+d9DjopUPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185282; c=relaxed/simple;
-	bh=nqxeHDwACKHIiy8keSvMClqnJ6EBz0XxlPKoSKshk28=;
+	s=arc-20240116; t=1788185284; c=relaxed/simple;
+	bh=4zy/sTIsUmadpJ/nQUO5XsIiJthLzPcRk5K+HHwgbus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojmHrMs67Dx/XvUzFzCZwg55IlOkcI/Z2fC7ws4KOtjEFKZ8LTv2pUKA0E+74zPYf0FNypFeoYXZOW1Je+90/FwSfFevNDv4euRrweFf+15scmobS22IWAZSLr7znw0vdMQMCateb0nv2aNLfsEnqzaj9uzJMS5VdphRp839CF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dorSv/b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L1LkFOJZiNLmSzfrDXILckj6O3R8PxOKhOuNCxajrqISJQZzWEoQK90PudymxVX54/pE2r6iLY9AVtRgvMTyoG2nW908huxSdB3H6LW0w7KbFOq+1WMx8AVEXw99pdb4jbyqkN5x6J7cNi0xdgvM6Ns4cuXwfIUOkAw5OwDYZeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N22r+Mqf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dorSv/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AA91F00A3D;
-	Mon, 31 Aug 2026 14:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N22r+Mqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F1C1F000E9;
+	Mon, 31 Aug 2026 14:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185280;
-	bh=XC2yRFhQChfdEewdwYwA6kfKDn2BDARRedoV+JwNsOY=;
+	s=korg; t=1788185283;
+	bh=WVygwbhV/B4dQbV831D7kQTc+GJLtwJcCZgO9ivB26I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2dorSv/b6OJO16005v2juFD7uVqpdkMf3TB2yzJOKBgRxAufkxEqsOr0y7jtTB0YM
-	 gw29ntYluGeJuDgWwObDqzKzx1IlV3nl8e6H2yVM0rBDi11LzIFVxu0ltwL7cgTJzF
-	 xj/6+NDjBKzHde+aekkPI7kkeGfVbmPpyXI2+4rE=
+	b=N22r+MqfRW7ywB+rCd0h+8pAV11I4nwUJoIOW/7etMw8IrTbRA0bruPqujWTIrrLW
+	 r3BtErhslF0FZlJH+qPh1aalIJF5zbnxUU6ETRyj6yPgSjoqNqvyQDNk66/+6xOlpv
+	 kMa9QEc3sQBZZk7LWmPSGqB2phWmi32VZDkgXcfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marouane El Moufid <eun0us@espilon.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 39/43] ALSA: usb-audio: fix OOB write in snd_usbmidi_novation_output()
-Date: Mon, 31 Aug 2026 15:35:47 +0200
-Message-ID: <20260831133400.551906850@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 40/43] USB: serial: option: fix slab OOB read in interrupt URB callback
+Date: Mon, 31 Aug 2026 15:35:48 +0200
+Message-ID: <20260831133400.619312351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -50,57 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marouane El Moufid <eun0us@espilon.net>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 1035a8f63bae28e498b0e7b5ac91d749844a7158 upstream.
+commit 885d802f544ca7bfa8f3984d94233cce715bb6b3 upstream.
 
-snd_usbmidi_novation_output() lays out a two-byte header at
-transfer_buffer[0..1] and passes &transfer_buffer[2] together with a
-length of ep->max_transfer - 2 to snd_rawmidi_transmit():
+The interrupt URB buffer is allocated in setup_port_interrupt_in() based
+on the endpoint's wMaxPacketSize:
 
-	count = snd_rawmidi_transmit(ep->ports[0].substream,
-				     &transfer_buffer[2],
-				     ep->max_transfer - 2);
+    buffer_size = usb_endpoint_maxp(epd);
+    port->interrupt_in_buffer = kmalloc(buffer_size, GFP_KERNEL);
 
-ep->max_transfer comes from the output endpoint's wMaxPacketSize via
-usb_maxpacket(). A malformed or malicious device can advertise a bulk
-OUT endpoint with a wMaxPacketSize of 1 - the USB core only clamps this
-value downwards - so ep->max_transfer becomes 1 and the count argument
-becomes -1.
+When a USB device declares wMaxPacketSize = 8 on its interrupt IN
+endpoint, the buffer is allocated from kmalloc-8 cache (exactly
+8 bytes).
 
-snd_rawmidi_transmit() passes the negative count on to
-__snd_rawmidi_transmit_peek(), where "if (count1 > count) count1 = count"
-leaves count1 negative; get_aligned_size() keeps it negative for a
-byte-stream substream, so the following memcpy(buffer, ..., count1) runs
-with a (size_t)-1 length and writes far past the transfer buffer, which
-was allocated with usb_alloc_coherent(ep->max_transfer).
+If the device sends a short packet (actual_length < wMaxPacketSize),
+the URB completes with status == 0 and the callback proceeds to read:
 
-This is the same class of bug that was fixed for snd_usbmidi_akai_output()
-in commit 0970274613fb ("ALSA: usb-audio: fix OOB write in
-snd_usbmidi_akai_output()"); the novation output routine was left
-unguarded. Bail out when the endpoint cannot hold the two-byte header
-plus at least one payload byte.
+    data[sizeof(struct usb_ctrlrequest)]
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Marouane El Moufid <eun0us@espilon.net>
-Link: https://patch.msgid.link/178749334830.543645.13722252148340572274@espilon.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+which evaluates to data[8], accessing 1 byte beyond the allocated 8-byte
+buffer. This results in a slab out-of-bounds read.
+
+Fix this by adding the missing bounds check: first verify that the
+actual length is large enough to contain the struct usb_ctrlrequest
+header before accessing req_pkt->bRequestType and req_pkt->bRequest,
+and then verify that there is an additional byte for the modem signal
+state before reading data[sizeof(struct usb_ctrlrequest)] inside the
+conditional.  Use sizeof(*req_pkt) instead of sizeof(struct
+usb_ctrlrequest) for consistency.
+
+Assisted-by: Claude:deepseek-v4-pro
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Fixes: 58cfe9113e48 ("[PATCH] USB: add Option Card driver")
+Cc: stable@vger.kernel.org	# v2.6.12
+[ johan: use dev_err(); split signals declaration and initialisation ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/option.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -894,6 +894,8 @@ static void snd_usbmidi_novation_output(
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2693,12 +2693,26 @@ static void option_instat_callback(struc
+ 			dev_dbg(dev, "%s: NULL req_pkt\n", __func__);
+ 			return;
+ 		}
++
++		if (urb->actual_length < sizeof(*req_pkt)) {
++			dev_err(dev, "%s: short packet: %u bytes\n", __func__,
++				urb->actual_length);
++			return;
++		}
++
+ 		if ((req_pkt->bRequestType == 0xA1) &&
+ 				(req_pkt->bRequest == 0x20)) {
++			unsigned char signals;
+ 			int old_dcd_state;
+-			unsigned char signals = *((unsigned char *)
+-					urb->transfer_buffer +
+-					sizeof(struct usb_ctrlrequest));
++
++			if (urb->actual_length < sizeof(*req_pkt) + 1) {
++				dev_err(dev, "%s: short interrupt transfer: %u bytes\n",
++					__func__, urb->actual_length);
++				return;
++			}
++
++			signals = *((unsigned char *)urb->transfer_buffer +
++					sizeof(*req_pkt));
  
- 	if (!ep->ports[0].active)
- 		return;
-+	if (ep->max_transfer < 3)
-+		return;
- 	transfer_buffer = urb->transfer_buffer;
- 	count = snd_rawmidi_transmit(ep->ports[0].substream,
- 				     &transfer_buffer[2],
+ 			dev_dbg(dev, "%s: signal x%x\n", __func__, signals);
+ 
 
 
