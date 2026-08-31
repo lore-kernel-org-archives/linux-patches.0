@@ -1,817 +1,461 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E855535586;
-	Mon, 31 Aug 2026 13:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981EA52ED4F;
+	Mon, 31 Aug 2026 13:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183918; cv=none; b=PceK6WVCSb/PS6RFSsEeADTZhpbaeXlWdmfS+O8fY9szOY0BhWG0nYmYUuswsArcLtLsQH0pMGjdmDWYlSPsFPluzRlt0o3+4TJoqFMJlCWQJgXz9z40AOrPipVmF0c3f8LFZHnVopHlG2LDjTQS13vSJgcpJfeMRNnqeS3QiCM=
+	t=1788183919; cv=none; b=C0zYXFqCYcGR0PFawjHHtPMMmePPEUkIfDmsl13Gny+gqNxskpv4aDCVFg29df13iNa8PXQ4YoVFOmUTkYqlt+yJdLfVCPc6OLqTgB0CpmNxhABvterewcuph6bJHxl8q6N3Z9DeKG9/UPQHpLEqdA94wwKbs2ixZcCylb3nSBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183918; c=relaxed/simple;
-	bh=pbfReUkiTN+ViD/S9SLxqh3oB48pYZ+tqDpJk8sgWIs=;
+	s=arc-20240116; t=1788183919; c=relaxed/simple;
+	bh=EBTForxpSjpKe5If+cnqBgoz6rvUa0VIjMqURHsFCl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fGUla86++ZBNL6CuPPjviBXqkTV6LlJwGSNfM4Itx3hIlJoy9nDUQBgpIQkRVXs8en+8inT1Q2rRGScHCtu3ExLd7ufZ4IfFGeFfcZ9dYKMjBHGeFZ7Pp1z9+Z9/GHetoX+uaeH70vGL/lEQddZ2pNPOdS5B/una+CgGXe3fflw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4TCXZ2t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gxR9QQcIUYksolvFYgqaPAl8pA1cH0A074hiBIehxlte1pgKd4oZZVzYUjbuYfVfBBVbBGWpLxZMCxtwfdiR2c2RygV7qR7h5CEp04WjPPYtC6BguylaKyqvK3JuILCFMIz3lB2wiyDODYVLTGJyXtcBY9LBO/lDzH1ez1JVm2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fBidIe/l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4TCXZ2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792761F00A3D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fBidIe/l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2D21F00A3E;
 	Mon, 31 Aug 2026 13:45:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183915;
-	bh=jn8XzPDAZ2ge1zlAMRg9UNaxQUhrZ1nvMzGlGRnZ3x8=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183916;
+	bh=oSEW1sZndZdlzCRNRuF4bhV3AHpNUq6XsCYj5F7lCNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q4TCXZ2teVt349geN2hsSgk2XYt4iZz6WSMdeeUP0Gqkm7o+92ffx8/u48iLccsVd
-	 puOUi5mN1aHbl0QKax0z0CmcTtNZ6Se+OPuxTe1vtneB9qkXviWoqnNsIzek34jrp1
-	 XzdCMvuMYXUhPKC7kw0aRGaJmLVfHasRUjCBpozk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 10/83] selinux: more strict policy parsing
-Date: Mon, 31 Aug 2026 15:33:46 +0200
-Message-ID: <20260831133359.693900789@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
-References: <20260831133359.207714926@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=fBidIe/lO91/OMDGKeJKfn1oTx7r2gipnwk3y38S+FI4qeLSgDN6MldN91xZs3c3O
+	 QMrgQ4olid8CggPQjcfpRR1EwBEqZ2deMyd0QfRX6zAB9dnGTjO+frrCvKPIEtLiLw
+	 y7u34qOlgy5rhLlQfUolt9t7EV/RLU6QOM1BvD0bPI411K/3cnv1S2zP3Fg3FSwszZ
+	 aRqc0LMnx+zFSvs4ybJ+cgd5vZHDwX8CSWoShQsy+H1WcVtLVO4DJmiPnxgvV+Casz
+	 nxek9mW2HZV0qY4F1JfthxQ4VMDyKtq8+yZVkYPXInHQVPKBLjJSv4RurMglx/ze6O
+	 5qZsuvghJaDbw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
+	Shirisha G <shirisha@linux.ibm.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] ppc/fadump: invoke kmsg_dump in fadump panic path
+Date: Mon, 31 Aug 2026 09:26:47 -0400
+Message-ID: <20260831133314.4125787-379-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-------------------
+[ Upstream commit 6ed8332639853b77329594a241eb99fc36d591a2 ]
 
-From: Christian Göttsche <cgzones@googlemail.com>
+fadump is registered in panic_notifier_list and gets triggered before
+kmsg_dump_desc() in the panic path. As a result, kmsg_dumpers such as
+pstore are not executed during fadump crashes.
 
-[ Upstream commit 18fa21f10d008a0fc22565109c7d38f304295912 ]
+This is problematic because pstore provides a critical fallback mechanism
+for crash analysis. When fadump fails to successfully reboot the system
+or capture a dump, pstore logs may be the only available information from
+the crashed kernel. Without invoking kmsg_dump_desc() in the fadump path,
+we lose this valuable diagnostic data.
 
-Be more strict during parsing of policies and reject invalid values.
+Invoke kmsg_dump_desc() from the fadump panic handler, but only when
+fadump is actually registered (checked via should_fadump_crash()). This
+ensures kmsg_dumpers are called without duplicating the call that occurs
+later in panic() when fadump is not active.
 
-Add some error messages in the case of policy parse failures, to
-enhance debugging, either on a malformed policy or a too strict check.
+The call is placed before crash_fadump() to ensure logs are captured
+before the system attempts to trigger the firmware-assisted dump.
 
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: fixed checkpatch.pl warnings, style problems]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-(cherry picked from commit 18fa21f10d008a0fc22565109c7d38f304295912)
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Reported-by: Shirisha G <shirisha@linux.ibm.com>
+Suggested-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Tested-by: Shirisha G <shirisha@linux.ibm.com>
+Reviewed-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260412113057.46090-1-shivangu@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/include/security.h |   1 +
- security/selinux/ss/avtab.c         |  35 ++++-
- security/selinux/ss/avtab.h         |  13 ++
- security/selinux/ss/conditional.c   |  18 +--
- security/selinux/ss/constraint.h    |   1 +
- security/selinux/ss/policydb.c      | 196 +++++++++++++++++++++++-----
- security/selinux/ss/policydb.h      |  23 +++-
- security/selinux/ss/services.c      |   6 +-
- 8 files changed, 233 insertions(+), 60 deletions(-)
 
-diff --git a/security/selinux/include/security.h b/security/selinux/include/security.h
-index 30e3fa962f6fa..f698ff7962282 100644
---- a/security/selinux/include/security.h
-+++ b/security/selinux/include/security.h
-@@ -225,6 +225,7 @@ int security_read_policy(void **data, size_t *len);
- int security_read_state_kernel(void **data, size_t *len);
- int security_policycap_supported(unsigned int req_cap);
+LLM Generated explanations, may be completely bogus:
+
+# Stable Backport Analysis: `ppc/fadump: invoke kmsg_dump in fadump
+panic path`
+
+**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[ppc/fadump]` `[invoke]` — Ensure `kmsg_dump` (e.g. pstore)
+runs on the fadump panic path before firmware takes over.
+
+### Step 1.2: Tags
+**Record:**
+| Tag | Value |
+|-----|-------|
+| Fixes: | *(none)* |
+| Reported-by: | Shirisha G \<shirisha@linux.ibm.com\> |
+| Suggested-by: | Sourabh Jain \<sourabhjain@linux.ibm.com\> |
+| Tested-by: | Shirisha G \<shirisha@linux.ibm.com\> |
+| Reviewed-by: | Mahesh Salgaonkar, Sourabh Jain (IBM fadump
+maintainers) |
+| Signed-off-by: | Shivang Upadhyay, Madhavan Srinivasan |
+| Link: |
+https://patch.msgid.link/20260412113057.46090-1-shivangu@linux.ibm.com |
+| Cc: stable | *(none — expected for pipeline candidates)* |
+
+**Notable:** IBM fadump subsystem reporters/reviewers; no syzbot; no NAK
+indicators in message.
+
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `ppc_panic_fadump_handler` is registered on
+  `panic_notifier_list` with `INT_MAX` priority and runs **before**
+  `panic()` reaches `kmsg_dump_desc()`. When fadump triggers firmware-
+  assisted dump (`rtas_os_term` / OPAL MPIPL reboot), execution
+  typically never returns to `panic()`, so pstore and other kmsg dumpers
+  never run.
+- **Symptom:** On fadump-configured POWER systems, panic logs are not
+  saved to pstore; if fadump also fails, administrators may have **no**
+  kernel log from the crash.
+- **Root cause:** Ordering gap between early fadump panic notifier and
+  later `kmsg_dump_desc()` in `panic()`.
+- **Fix approach:** Call `kmsg_dump_desc(KMSG_DUMP_PANIC, …)` in
+  `ppc_panic_fadump_handler()` when `should_fadump_crash()` is true,
+  **before** `crash_fadump()`.
+
+### Step 1.4: Hidden bug fix?
+**Record:** No — this is an explicit, well-described functional bug fix
+(missing kmsg dump invocation), not disguised cleanup.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `arch/powerpc/kernel/setup-common.c` (+1 include, +7 lines
+  in handler)
+- **Functions:** `ppc_panic_fadump_handler()`
+- **Scope:** Single-file, surgical (~10 lines)
+
+### Step 2.2: Code flow change
+**Record:**
+
+| Hunk | Before | After |
+|------|--------|-------|
+| Include | No `kmsg_dump.h` | Adds `#include <linux/kmsg_dump.h>` |
+| `ppc_panic_fadump_handler()` | `hard_irq_disable()` → `crash_fadump()`
+| `hard_irq_disable()` → `kmsg_dump_desc()` (if fadump registered) →
+`crash_fadump()` |
+
+**Path affected:** Kernel panic on PowerPC with `CONFIG_FA_DUMP` and
+fadump registered.
+
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Logic / ordering bug on crash path (missing diagnostic
+  dump invocation).
+- **Mechanism:** Verified in `kernel/panic.c` —
+  `atomic_notifier_call_chain(&panic_notifier_list, …)` at line 520 runs
+  **before** `kmsg_dump_desc(KMSG_DUMP_PANIC, buf)` at line 524. Fadump
+  notifier runs first (`INT_MAX` priority in `setup-common.c` line 780).
+  `crash_fadump()` → `fadump_trigger()` calls `rtas_os_term()` (pseries)
+  or `opal_cec_reboot2(OPAL_REBOOT_MPIPL)` (powernv), which
+  terminate/reboot and normally do not return to `panic()`.
+
+### Step 2.4: Fix quality
+**Record:**
+- **Obviously correct:** Yes — mirrors the existing system-reset path in
+  `traps.c:474` (`kmsg_dump()` before `crash_fadump()`).
+- **Minimal:** Yes.
+- **Regression risk:** Very low. `should_fadump_crash()` guard avoids
+  extra dump when fadump is inactive. If `fadump_trigger()` fails and
+  returns (e.g. OPAL `OPAL_UNSUPPORTED`), `panic()` may call
+  `kmsg_dump_desc()` again — redundant but harmless for pstore.
+- **Uses `kmsg_dump_desc` with panic message pointer:** Better than bare
+  `kmsg_dump()` — matches `panic()` behavior.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+**Record:**
+- `ppc_panic_fadump_handler` / `crash_fadump()` call: **ab9dbf771ff9b6**
+  (David Gibson, Dec 2017) — fadump panic notifier restored.
+- Handler structure/priority: **e2aa34ce80a26** (Guilherme Piccoli, Apr
+  2022) — split notifiers, fadump runs early with `INT_MAX` priority.
+- Bug present since fadump panic notifier runs before `kmsg_dump_desc()`
+  in `panic()` — long-standing on 6.18.y.
+
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag. Related prior fix: **e7ca44ed3ba77**
+(2019) fixed the **same pstore gap** on the **system reset** path in
+`traps.c`, not the `panic()` notifier path.
+
+### Step 3.3: Related file history
+**Record:**
+- `e7ca44ed3ba77` — "powerpc: dump kernel log before carrying out fadump
+  or kdump" (traps.c system-reset path).
+- `e2aa34ce80a26` — panic notifier refactor (made fadump run earliest).
+- Standalone 1-patch fix; not part of a series.
+
+### Step 3.4: Author context
+**Record:** Shivang Upadhyay / IBM team; reviewed by Mahesh Salgaonkar
+and Sourabh Jain (long-time fadump maintainers). Same subsystem as 2019
+pstore/fadump fix.
+
+### Step 3.5: Dependencies
+**Record:** None. All symbols exist in this tree:
+- `should_fadump_crash()` — `arch/powerpc/kernel/fadump.c:227`
+- `kmsg_dump_desc()` — `kernel/printk/printk.c:4765`
+- `linux/kmsg_dump.h` — present
+- Applies standalone to 6.18.44.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1–4.5
+**Record:**
+- **b4 dig:** Could not run — patch commit not in local tree (`b4 dig
+  -c` requires commitish).
+- **WebFetch lore / patch.msgid.link:** Blocked by Anubis bot protection
+  — could not read thread.
+- **Commit message Link:** Present but content unverified externally.
+- **Stable list search:** Not performed (lore blocked).
+- **Inference from commit message only:** IBM-internal report; tested
+  and reviewed by fadump maintainers. No evidence of NAKs in commit
+  message.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key functions
+**Record:** `ppc_panic_fadump_handler()`, `should_fadump_crash()`,
+`crash_fadump()`, `kmsg_dump_desc()`
+
+### Step 5.2: Callers
+**Record:**
+- `ppc_panic_fadump_handler` — registered via `setup_panic()` →
+  `atomic_notifier_chain_register(&panic_notifier_list,
+  &ppc_fadump_block)` (line 795).
+- Invoked from `panic()` → `atomic_notifier_call_chain()`
+  (`kernel/panic.c:520`).
+- **Context:** Panic path only; all CPUs eventually panic.
+
+### Step 5.3: Callees
+**Record:** `hard_irq_disable()`, `should_fadump_crash()`,
+`kmsg_dump_desc()` → iterates registered dumpers (pstore, etc.),
+`crash_fadump()` → `fadump_trigger()` → firmware reboot.
+
+### Step 5.4: Reachability
+**Record:**
+- Triggered on any kernel panic when fadump is registered
+  (`fw_dump.dump_registered` and `fw_dump.fadumphdr_addr` set).
+- Common on IBM POWER LPARs / PowerNV with fadump enabled.
+- Not userspace-triggerable directly, but panics are the exact scenario
+  this code handles.
+
+### Step 5.5: Similar patterns
+**Record:** `arch/powerpc/kernel/traps.c:474` already does
+`kmsg_dump(KMSG_DUMP_OOPS)` before `crash_fadump()` on system-reset dump
+path — this patch closes the analogous gap on the **panic notifier**
+path.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+
+### Step 6.1: Buggy code exists?
+**Record:** **YES.** Current `setup-common.c:738-751` has no
+`kmsg_dump_desc()` call. Fix is **not** present in v6.18.44.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected** — single hunk, no structural
+conflicts; file unchanged for fadump handler since 2022 refactor.
+
+### Step 6.3: Related fixes already present?
+**Record:** System-reset path fix (e7ca44ed3ba77) is present in
+`traps.c`. Panic-notifier path fix is **missing** — this commit fills
+that gap.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem
+**Record:** `arch/powerpc` / fadump crash dump — **IMPORTANT** for IBM
+POWER enterprise; **PERIPHERAL** globally (architecture- and config-
+specific: `CONFIG_FA_DUMP`).
+
+### Step 7.2: Activity
+**Record:** Fadump actively maintained in 6.18.y (recent commits: param
+area, CMA init, hugetlb interaction, etc.).
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** IBM POWER (pseries/PowerNV) systems with firmware-assisted
+dump enabled and pstore (or other kmsg dumpers) configured.
+
+### Step 8.2: Trigger conditions
+**Record:** Kernel panic while fadump is registered. Common crash
+scenario on servers using fadump. Not unprivileged attack vector; crash-
+path diagnostic issue.
+
+### Step 8.3: Failure mode severity
+**Record:** **MEDIUM-HIGH** for affected users — loss of pstore panic
+logs when fadump takes over or fails; no normal-runtime impact.
+Operationally critical when fadump is the primary dump mechanism and
+fails (exact scenario described in commit and in e7ca44ed3ba77).
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** Restores last-resort crash diagnostics (pstore) on fadump
+  panic path; same rationale as 2019 stable-class fix.
+- **Risk:** Very low — ~10 lines, guarded by `should_fadump_crash()`,
+  tested by IBM.
+- **Ratio:** Strong benefit for POWER/fadump users; negligible risk.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Real, verifiable ordering bug in panic path
+- Buggy code present in 6.18.44; fix not yet applied
+- Small, self-contained, reviewed/tested by fadump maintainers
+- Direct precedent: e7ca44ed3ba77 fixed same pstore gap on system-reset
+  path
+- Important for IBM POWER crash diagnostics when fadump is active
+
+**AGAINST backport:**
+- Platform/config specific (not all stable users)
+- Fixes diagnostic data loss, not runtime crash/corruption/deadlock
+- Mailing list discussion unverified (lore blocked)
+
+**Unresolved:** Full lore thread content; whether reviewers explicitly
+nominated for stable.
+
+### Step 9.2: Stable rules checklist
+
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — clear ordering fix;
+Tested-by + Reviewed-by IBM maintainers |
+| 2. Fixes real bug affecting users? | **PASS** — pstore not invoked on
+fadump panic path |
+| 3. Important issue? | **PASS (borderline)** — crash-path diagnostic
+loss on enterprise POWER; fallback when fadump fails |
+| 4. Small and contained? | **PASS** — ~10 lines, one file |
+| 5. No new features/APIs? | **PASS** — invokes existing kmsg_dump
+infrastructure |
+| 6. Applies to local tree? | **PASS** — all prerequisites present;
+clean apply |
+
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
+
+### Step 9.4: Decision rationale
+On **6.18.44**, fadump’s early panic notifier prevents `panic()` from
+ever reaching `kmsg_dump_desc()`, leaving pstore empty when firmware
+takes over — precisely when those logs are most needed as a fallback.
+The fix is minimal, matches an established pattern already used on the
+system-reset path, and is low risk. Diagnostic loss on the crash path
+for a supported enterprise platform meets stable backport criteria under
+the “important issue” umbrella, especially given prior acceptance of the
+same class of fix in 2019.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed commit message tags and body from user-provided
+  content
+- **[Phase 2]** Read diff; verified `panic()` ordering in
+  `kernel/panic.c:520-524`
+- **[Phase 2]** Read `ppc_panic_fadump_handler` at `setup-
+  common.c:738-780`; confirmed no `kmsg_dump_desc` call
+- **[Phase 2]** Read `crash_fadump()` and `fadump_trigger`
+  implementations (`fadump.c`, `rtas-fadump.c:555-559`, `opal-
+  fadump.c:581-600`)
+- **[Phase 2]** Read `kmsg_dump_desc()` in
+  `kernel/printk/printk.c:4765-4788`
+- **[Phase 3]** `git describe HEAD` → v6.18.44; Makefile VERSION 6.18.44
+- **[Phase 3]** `git blame` on handler lines → ab9dbf771ff9b6 (2017),
+  e2aa34ce80a26 (2022)
+- **[Phase 3]** `git show e2aa34ce80a26` — fadump notifier INT_MAX
+  priority
+- **[Phase 3]** `git show e7ca44ed3ba77` — prior pstore/fadump fix on
+  system-reset path
+- **[Phase 3]** `git log --oneline -20 -- arch/powerpc/kernel/setup-
+  common.c`
+- **[Phase 4]** `b4 dig -c` — failed (no commit in tree)
+- **[Phase 4]** WebFetch lore.kernel.org and patch.msgid.link — blocked
+  (Anubis)
+- **[Phase 5]** Grep callers: `setup_panic()` registers notifier;
+  `panic()` invokes chain
+- **[Phase 5]** Verified `traps.c:474` kmsg_dump before crash_fadump on
+  system-reset path
+- **[Phase 6]** Confirmed buggy code present; fix absent in v6.18.44
+- **[Phase 6]** Verified `should_fadump_crash()`, `kmsg_dump_desc`,
+  `linux/kmsg_dump.h` exist
+- **UNVERIFIED:** Lore thread review comments and explicit stable
+  nominations
+
+**YES**
+
+ arch/powerpc/kernel/setup-common.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
+index 68d47c53876c6..28186f9ec8da0 100644
+--- a/arch/powerpc/kernel/setup-common.c
++++ b/arch/powerpc/kernel/setup-common.c
+@@ -68,6 +68,7 @@
+ #include <asm/kasan.h>
+ #include <asm/mce.h>
+ #include <asm/systemcfg.h>
++#include <linux/kmsg_dump.h>
  
-+/* Maximum supported number of permissions per class */
- #define SEL_VEC_MAX 32
- struct av_decision {
- 	u32 allowed;
-diff --git a/security/selinux/ss/avtab.c b/security/selinux/ss/avtab.c
-index c2c31521cace1..33556922f15ed 100644
---- a/security/selinux/ss/avtab.c
-+++ b/security/selinux/ss/avtab.c
-@@ -349,7 +349,7 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
- 	struct avtab_extended_perms xperms;
- 	__le32 buf32[ARRAY_SIZE(xperms.perms.p)];
- 	int rc;
--	unsigned int set, vers = pol->policyvers;
-+	unsigned int vers = pol->policyvers;
+ #include "setup.h"
  
- 	memset(&key, 0, sizeof(struct avtab_key));
- 	memset(&datum, 0, sizeof(struct avtab_datum));
-@@ -360,9 +360,12 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
- 			pr_err("SELinux: avtab: truncated entry\n");
- 			return rc;
- 		}
-+		/* Read five or more items: source type, target type,
-+		 * target class, AV type, and at least one datum.
-+		 */
- 		items2 = le32_to_cpu(buf32[0]);
--		if (items2 > ARRAY_SIZE(buf32)) {
--			pr_err("SELinux: avtab: entry overflow\n");
-+		if (items2 < 5 || items2 > ARRAY_SIZE(buf32)) {
-+			pr_err("SELinux: avtab: invalid item count\n");
- 			return -EINVAL;
- 		}
- 		rc = next_entry(buf32, fp, sizeof(u32) * items2);
-@@ -391,6 +394,13 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
- 			return -EINVAL;
- 		}
+@@ -744,6 +745,13 @@ static int ppc_panic_fadump_handler(struct notifier_block *this,
+ 	 */
+ 	hard_irq_disable();
  
-+		if (!policydb_type_isvalid(pol, key.source_type) ||
-+		    !policydb_type_isvalid(pol, key.target_type) ||
-+		    !policydb_class_isvalid(pol, key.target_class)) {
-+			pr_err("SELinux: avtab: invalid type or class\n");
-+			return -EINVAL;
-+		}
++	/*
++	 * Invoke kmsg_dump (e.g., pstore) before crash_fadump() as fadump
++	 * runs before panic()'s kmsg_dump_desc() call.
++	 */
++	if (should_fadump_crash())
++		kmsg_dump_desc(KMSG_DUMP_PANIC, (char *)ptr);
 +
- 		val = le32_to_cpu(buf32[items++]);
- 		enabled = (val & AVTAB_ENABLED_OLD) ? AVTAB_ENABLED : 0;
- 
-@@ -409,6 +419,11 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
- 
- 		for (i = 0; i < ARRAY_SIZE(spec_order); i++) {
- 			if (val & spec_order[i]) {
-+				if (items >= items2) {
-+					pr_err("SELinux: avtab: entry has too many items (%d/%d)\n",
-+					       items + 1, items2);
-+					return -EINVAL;
-+				}
- 				key.specified = spec_order[i] | enabled;
- 				datum.u.data = le32_to_cpu(buf32[items++]);
- 				rc = insertf(a, &key, &datum, p);
-@@ -444,9 +459,13 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
- 		return -EINVAL;
- 	}
- 
--	set = hweight16(key.specified & (AVTAB_XPERMS | AVTAB_TYPE | AVTAB_AV));
--	if (!set || set > 1) {
--		pr_err("SELinux:  avtab:  more than one specifier\n");
-+	if (hweight16(key.specified & ~AVTAB_ENABLED) != 1) {
-+		pr_err("SELinux:  avtab:  not exactly one specifier\n");
-+		return -EINVAL;
-+	}
-+
-+	if (key.specified & ~AVTAB_SPECIFIER_MASK) {
-+		pr_err("SELinux:  avtab:  invalid specifier\n");
- 		return -EINVAL;
- 	}
- 
-@@ -471,6 +490,10 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
- 			pr_err("SELinux: avtab: truncated entry\n");
- 			return rc;
- 		}
-+		if (!avtab_is_valid_xperm_specified(xperms.specified))
-+			pr_warn_once_policyload(pol,
-+						"SELinux: avtab: unsupported xperm specifier %#x\n",
-+						xperms.specified);
- 		rc = next_entry(&xperms.driver, fp, sizeof(u8));
- 		if (rc) {
- 			pr_err("SELinux: avtab: truncated entry\n");
-diff --git a/security/selinux/ss/avtab.h b/security/selinux/ss/avtab.h
-index 850b3453f2598..1de4cce288a76 100644
---- a/security/selinux/ss/avtab.h
-+++ b/security/selinux/ss/avtab.h
-@@ -44,6 +44,7 @@ struct avtab_key {
- 	 AVTAB_XPERMS_DONTAUDIT)
- #define AVTAB_ENABLED_OLD 0x80000000 /* reserved for used in cond_avtab */
- #define AVTAB_ENABLED	  0x8000 /* reserved for used in cond_avtab */
-+#define AVTAB_SPECIFIER_MASK (AVTAB_AV | AVTAB_TYPE | AVTAB_XPERMS | AVTAB_ENABLED)
- 	u16 specified; /* what field is specified */
- };
- 
-@@ -68,6 +69,18 @@ struct avtab_extended_perms {
- 	struct extended_perms_data perms;
- };
- 
-+static inline bool avtab_is_valid_xperm_specified(u8 specified)
-+{
-+	switch (specified) {
-+	case AVTAB_XPERMS_IOCTLFUNCTION:
-+	case AVTAB_XPERMS_IOCTLDRIVER:
-+	case AVTAB_XPERMS_NLMSG:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
- struct avtab_datum {
- 	union {
- 		u32 data; /* access vector or type value */
-diff --git a/security/selinux/ss/conditional.c b/security/selinux/ss/conditional.c
-index 1bebfcb9c6a12..db30462ed6a32 100644
---- a/security/selinux/ss/conditional.c
-+++ b/security/selinux/ss/conditional.c
-@@ -199,19 +199,12 @@ int cond_index_bool(void *key, void *datum, void *datap)
- 	return 0;
- }
- 
--static int bool_isvalid(struct cond_bool_datum *b)
--{
--	if (!(b->state == 0 || b->state == 1))
--		return 0;
--	return 1;
--}
--
- int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct cond_bool_datum *booldatum;
- 	__le32 buf[3];
--	u32 len;
-+	u32 len, val;
- 	int rc;
- 
- 	booldatum = kzalloc(sizeof(*booldatum), GFP_KERNEL);
-@@ -223,11 +216,12 @@ int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
- 		goto err;
- 
- 	booldatum->value = le32_to_cpu(buf[0]);
--	booldatum->state = le32_to_cpu(buf[1]);
-+	val = le32_to_cpu(buf[1]);
- 
- 	rc = -EINVAL;
--	if (!bool_isvalid(booldatum))
-+	if (!val_is_boolean(val))
- 		goto err;
-+	booldatum->state = (int)val;
- 
- 	len = le32_to_cpu(buf[2]);
- 
-@@ -241,6 +235,7 @@ int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
- 
- 	return 0;
- err:
-+	pr_err("SELinux: conditional: failed to read boolean\n");
- 	cond_destroy_bool(key, booldatum, NULL);
- 	return rc;
- }
-@@ -362,7 +357,8 @@ static int expr_node_isvalid(struct policydb *p, struct cond_expr_node *expr)
- 		return 0;
- 	}
- 
--	if (expr->boolean > p->p_bools.nprim) {
-+	if (expr->expr_type == COND_BOOL &&
-+	    (expr->boolean == 0 || expr->boolean > p->p_bools.nprim)) {
- 		pr_err("SELinux: conditional expressions uses unknown bool.\n");
- 		return 0;
- 	}
-diff --git a/security/selinux/ss/constraint.h b/security/selinux/ss/constraint.h
-index 203033cfad672..1d75a8a044df9 100644
---- a/security/selinux/ss/constraint.h
-+++ b/security/selinux/ss/constraint.h
-@@ -50,6 +50,7 @@ struct constraint_expr {
- 	u32 op; /* operator */
- 
- 	struct ebitmap names; /* names */
-+	/* internally unused, only forwarded via policydb_write() */
- 	struct type_set *type_names;
- 
- 	struct constraint_expr *next; /* next expression */
-diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
-index 4c3cc98f87752..b87a512446197 100644
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -638,13 +638,11 @@ static int sens_index(void *key, void *datum, void *datap)
- 	levdatum = datum;
- 	p = datap;
- 
--	if (!levdatum->isalias) {
--		if (!levdatum->level.sens ||
--		    levdatum->level.sens > p->p_levels.nprim)
--			return -EINVAL;
-+	if (!levdatum->level.sens || levdatum->level.sens > p->p_levels.nprim)
-+		return -EINVAL;
- 
-+	if (!levdatum->isalias)
- 		p->sym_val_to_name[SYM_LEVELS][levdatum->level.sens - 1] = key;
--	}
- 
- 	return 0;
- }
-@@ -657,12 +655,11 @@ static int cat_index(void *key, void *datum, void *datap)
- 	catdatum = datum;
- 	p = datap;
- 
--	if (!catdatum->isalias) {
--		if (!catdatum->value || catdatum->value > p->p_cats.nprim)
--			return -EINVAL;
-+	if (!catdatum->value || catdatum->value > p->p_cats.nprim)
-+		return -EINVAL;
- 
-+	if (!catdatum->isalias)
- 		p->sym_val_to_name[SYM_CATS][catdatum->value - 1] = key;
--	}
- 
- 	return 0;
- }
-@@ -1160,6 +1157,9 @@ static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *f
- 
- 	len = le32_to_cpu(buf[0]);
- 	perdatum->value = le32_to_cpu(buf[1]);
-+	rc = -EINVAL;
-+	if (perdatum->value < 1 || perdatum->value > SEL_VEC_MAX)
-+		goto bad;
- 
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
-@@ -1194,6 +1194,9 @@ static int common_read(struct policydb *p, struct symtab *s, struct policy_file
- 	len = le32_to_cpu(buf[0]);
- 	comdatum->value = le32_to_cpu(buf[1]);
- 	nel = le32_to_cpu(buf[3]);
-+	rc = -EINVAL;
-+	if (nel > SEL_VEC_MAX)
-+		goto bad;
- 
- 	rc = symtab_init(&comdatum->permissions, nel);
- 	if (rc)
-@@ -1345,7 +1348,7 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
- 	char *key = NULL;
- 	struct class_datum *cladatum;
- 	__le32 buf[6];
--	u32 i, len, len2, ncons, nel;
-+	u32 i, len, len2, ncons, nel, val;
- 	int rc;
- 
- 	cladatum = kzalloc(sizeof(*cladatum), GFP_KERNEL);
-@@ -1358,8 +1361,16 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
- 
- 	len = le32_to_cpu(buf[0]);
- 	len2 = le32_to_cpu(buf[1]);
--	cladatum->value = le32_to_cpu(buf[2]);
- 	nel = le32_to_cpu(buf[4]);
-+	rc = -EINVAL;
-+	if (nel > SEL_VEC_MAX)
-+		goto bad;
-+
-+	val = le32_to_cpu(buf[2]);
-+	rc = -EINVAL;
-+	if (val > U16_MAX)
-+		goto bad;
-+	cladatum->value = val;
- 
- 	rc = symtab_init(&cladatum->permissions, nel);
- 	if (rc)
-@@ -1427,16 +1438,59 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
- 		if (rc)
- 			goto bad;
- 
--		cladatum->default_user = le32_to_cpu(buf[0]);
--		cladatum->default_role = le32_to_cpu(buf[1]);
--		cladatum->default_range = le32_to_cpu(buf[2]);
-+		rc = -EINVAL;
-+		val = le32_to_cpu(buf[0]);
-+		switch (val) {
-+		case 0:
-+		case DEFAULT_SOURCE:
-+		case DEFAULT_TARGET:
-+			cladatum->default_user = val;
-+			break;
-+		default:
-+			goto bad;
-+		}
-+		val = le32_to_cpu(buf[1]);
-+		switch (val) {
-+		case 0:
-+		case DEFAULT_SOURCE:
-+		case DEFAULT_TARGET:
-+			cladatum->default_role = val;
-+			break;
-+		default:
-+			goto bad;
-+		}
-+		val = le32_to_cpu(buf[2]);
-+		switch (val) {
-+		case 0:
-+		case DEFAULT_SOURCE_LOW:
-+		case DEFAULT_SOURCE_HIGH:
-+		case DEFAULT_SOURCE_LOW_HIGH:
-+		case DEFAULT_TARGET_LOW:
-+		case DEFAULT_TARGET_HIGH:
-+		case DEFAULT_TARGET_LOW_HIGH:
-+		case DEFAULT_GLBLUB:
-+			cladatum->default_range = val;
-+			break;
-+		default:
-+			goto bad;
-+		}
- 	}
- 
- 	if (p->policyvers >= POLICYDB_VERSION_DEFAULT_TYPE) {
- 		rc = next_entry(buf, fp, sizeof(u32) * 1);
- 		if (rc)
- 			goto bad;
--		cladatum->default_type = le32_to_cpu(buf[0]);
-+		rc = -EINVAL;
-+		val = le32_to_cpu(buf[0]);
-+		switch (val) {
-+		case 0:
-+		case DEFAULT_TARGET:
-+		case DEFAULT_SOURCE:
-+			cladatum->default_type = val;
-+			break;
-+		default:
-+			goto bad;
-+		}
- 	}
- 
- 	rc = symtab_insert(s, key, cladatum);
-@@ -1446,6 +1500,8 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
- 	return 0;
- bad:
- 	cls_destroy(key, cladatum, NULL);
-+	if (rc)
-+		pr_err("SELinux:  invalid class\n");
- 	return rc;
- }
- 
-@@ -1637,7 +1693,7 @@ static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *f
- 	struct level_datum *levdatum;
- 	int rc;
- 	__le32 buf[2];
--	u32 len;
-+	u32 len, val;
- 
- 	levdatum = kzalloc(sizeof(*levdatum), GFP_KERNEL);
- 	if (!levdatum)
-@@ -1648,7 +1704,11 @@ static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *f
- 		goto bad;
- 
- 	len = le32_to_cpu(buf[0]);
--	levdatum->isalias = le32_to_cpu(buf[1]);
-+	val = le32_to_cpu(buf[1]);
-+	rc = -EINVAL;
-+	if (!val_is_boolean(val))
-+		goto bad;
-+	levdatum->isalias = val;
- 
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
-@@ -1664,6 +1724,8 @@ static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *f
- 	return 0;
- bad:
- 	sens_destroy(key, levdatum, NULL);
-+	if (rc)
-+		pr_err("SELinux:  invalid sensitivity\n");
- 	return rc;
- }
- 
-@@ -1673,7 +1735,7 @@ static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp
- 	struct cat_datum *catdatum;
- 	int rc;
- 	__le32 buf[3];
--	u32 len;
-+	u32 len, val;
- 
- 	catdatum = kzalloc(sizeof(*catdatum), GFP_KERNEL);
- 	if (!catdatum)
-@@ -1685,7 +1747,11 @@ static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp
- 
- 	len = le32_to_cpu(buf[0]);
- 	catdatum->value = le32_to_cpu(buf[1]);
--	catdatum->isalias = le32_to_cpu(buf[2]);
-+	val = le32_to_cpu(buf[2]);
-+	rc = -EINVAL;
-+	if (!val_is_boolean(val))
-+		goto bad;
-+	catdatum->isalias = val;
- 
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
-@@ -1697,6 +1763,8 @@ static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp
- 	return 0;
- bad:
- 	cat_destroy(key, catdatum, NULL);
-+	if (rc)
-+		pr_err("SELinux:  invalid category\n");
- 	return rc;
- }
- 
-@@ -1878,7 +1946,7 @@ static int range_read(struct policydb *p, struct policy_file *fp)
- 	struct mls_range *r = NULL;
- 	int rc;
- 	__le32 buf[2];
--	u32 i, nel;
-+	u32 i, nel, val;
- 
- 	if (p->policyvers < POLICYDB_VERSION_MLS)
- 		return 0;
-@@ -1909,7 +1977,11 @@ static int range_read(struct policydb *p, struct policy_file *fp)
- 			rc = next_entry(buf, fp, sizeof(u32));
- 			if (rc)
- 				goto out;
--			rt->target_class = le32_to_cpu(buf[0]);
-+			rc = -EINVAL;
-+			val = le32_to_cpu(buf[0]);
-+			if (val > U16_MAX)
-+				goto out;
-+			rt->target_class = val;
- 		} else
- 			rt->target_class = p->process_class;
- 
-@@ -1946,6 +2018,8 @@ static int range_read(struct policydb *p, struct policy_file *fp)
- out:
- 	kfree(rt);
- 	kfree(r);
-+	if (rc)
-+		pr_err("SELinux:  invalid range\n");
- 	return rc;
- }
- 
-@@ -1954,7 +2028,7 @@ static int filename_trans_read_helper_compat(struct policydb *p, struct policy_f
- 	struct filename_trans_key key, *ft = NULL;
- 	struct filename_trans_datum *last, *datum = NULL;
- 	char *name = NULL;
--	u32 len, stype, otype;
-+	u32 len, stype, otype, val;
- 	__le32 buf[4];
- 	int rc;
- 
-@@ -1973,9 +2047,17 @@ static int filename_trans_read_helper_compat(struct policydb *p, struct policy_f
- 	if (rc)
- 		goto out;
- 
-+	rc = -EINVAL;
- 	stype = le32_to_cpu(buf[0]);
-+	if (!policydb_type_isvalid(p, stype))
-+		goto out;
- 	key.ttype = le32_to_cpu(buf[1]);
--	key.tclass = le32_to_cpu(buf[2]);
-+	if (!policydb_type_isvalid(p, key.ttype))
-+		goto out;
-+	val = le32_to_cpu(buf[2]);
-+	if (val > U16_MAX || !policydb_class_isvalid(p, val))
-+		goto out;
-+	key.tclass = val;
- 	key.name = name;
- 
- 	otype = le32_to_cpu(buf[3]);
-@@ -2031,6 +2113,9 @@ static int filename_trans_read_helper_compat(struct policydb *p, struct policy_f
- 	kfree(ft);
- 	kfree(name);
- 	kfree(datum);
-+
-+	if (rc)
-+		pr_err("SELinux:  invalid compat filename transition\n");
- 	return rc;
- }
- 
-@@ -2039,7 +2124,7 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
- 	struct filename_trans_key *ft = NULL;
- 	struct filename_trans_datum **dst, *datum, *first = NULL;
- 	char *name = NULL;
--	u32 len, ttype, ndatum, i;
-+	u32 len, ttype, ndatum, i, val;
- 	u16 tclass;
- 	__le32 buf[3];
- 	int rc;
-@@ -2059,8 +2144,15 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
- 	if (rc)
- 		goto out;
- 
-+	rc = -EINVAL;
- 	ttype = le32_to_cpu(buf[0]);
--	tclass = le32_to_cpu(buf[1]);
-+	if (!policydb_type_isvalid(p, ttype))
-+		goto out;
-+	val = le32_to_cpu(buf[1]);
-+	rc = -EINVAL;
-+	if (val > U16_MAX || !policydb_class_isvalid(p, val))
-+		goto out;
-+	tclass = val;
- 
- 	ndatum = le32_to_cpu(buf[2]);
- 	if (ndatum == 0) {
-@@ -2090,6 +2182,10 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
- 
- 		datum->otype = le32_to_cpu(buf[0]);
- 
-+		rc = -EINVAL;
-+		if (!policydb_type_isvalid(p, datum->otype))
-+			goto out;
-+
- 		dst = &datum->next;
- 	}
- 
-@@ -2121,6 +2217,9 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
- 		ebitmap_destroy(&datum->stypes);
- 		kfree(datum);
- 	}
-+
-+	if (rc)
-+		pr_err("SELinux:  invalid filename transition\n");
- 	return rc;
- }
- 
-@@ -2168,7 +2267,7 @@ static int filename_trans_read(struct policydb *p, struct policy_file *fp)
- static int genfs_read(struct policydb *p, struct policy_file *fp)
- {
- 	int rc;
--	u32 i, j, nel, nel2, len, len2;
-+	u32 i, j, nel, nel2, len, len2, val;
- 	__le32 buf[1];
- 	struct ocontext *l, *c;
- 	struct ocontext *newc = NULL;
-@@ -2238,7 +2337,11 @@ static int genfs_read(struct policydb *p, struct policy_file *fp)
- 			if (rc)
- 				goto out;
- 
--			newc->v.sclass = le32_to_cpu(buf[0]);
-+			rc = -EINVAL;
-+			val = le32_to_cpu(buf[0]);
-+			if (val > U16_MAX || (val != 0 && !policydb_class_isvalid(p, val)))
-+				goto out;
-+			newc->v.sclass = val;
- 			rc = context_read_and_validate(&newc->context[0], p,
- 						       fp);
- 			if (rc)
-@@ -2275,6 +2378,9 @@ static int genfs_read(struct policydb *p, struct policy_file *fp)
- 	}
- 	ocontext_destroy(newc, OCON_FSUSE);
- 
-+	if (rc)
-+		pr_err("SELinux:  invalid genfs\n");
-+
- 	return rc;
- }
- 
-@@ -2283,7 +2389,7 @@ static int ocontext_read(struct policydb *p,
- {
- 	int rc;
- 	unsigned int i;
--	u32 j, nel, len;
-+	u32 j, nel, len, val;
- 	__be64 prefixbuf[1];
- 	__le32 buf[3];
- 	struct ocontext *l, *c;
-@@ -2347,11 +2453,25 @@ static int ocontext_read(struct policydb *p,
- 				rc = next_entry(buf, fp, sizeof(u32) * 3);
- 				if (rc)
- 					goto out;
--				c->u.port.protocol = le32_to_cpu(buf[0]);
--				c->u.port.low_port = le32_to_cpu(buf[1]);
--				c->u.port.high_port = le32_to_cpu(buf[2]);
--				rc = context_read_and_validate(&c->context[0],
--							       p, fp);
-+
-+				rc = -EINVAL;
-+				val = le32_to_cpu(buf[0]);
-+				if (val > U8_MAX)
-+					goto out;
-+				c->u.port.protocol = val;
-+				val = le32_to_cpu(buf[1]);
-+				if (val > U16_MAX)
-+					goto out;
-+				c->u.port.low_port = val;
-+				val = le32_to_cpu(buf[2]);
-+				if (val > U16_MAX)
-+					goto out;
-+				c->u.port.high_port = val;
-+				if (c->u.port.low_port == 0 ||
-+				    c->u.port.low_port > c->u.port.high_port)
-+					goto out;
-+
-+				rc = context_read_and_validate(&c->context[0], p, fp);
- 				if (rc)
- 					goto out;
- 				break;
-@@ -2469,6 +2589,8 @@ static int ocontext_read(struct policydb *p,
- 	}
- 	rc = 0;
- out:
-+	if (rc)
-+		pr_err("SELinux:  invalid ocon\n");
- 	return rc;
- }
- 
-@@ -2483,7 +2605,7 @@ int policydb_read(struct policydb *p, struct policy_file *fp)
- 	struct role_trans_datum *rtd = NULL;
- 	int rc;
- 	__le32 buf[4];
--	u32 i, j, len, nprim, nel, perm;
-+	u32 i, j, len, nprim, nel, perm, val;
- 
- 	char *policydb_str;
- 	const struct policydb_compat_info *info;
-@@ -2675,7 +2797,11 @@ int policydb_read(struct policydb *p, struct policy_file *fp)
- 			rc = next_entry(buf, fp, sizeof(u32));
- 			if (rc)
- 				goto bad;
--			rtk->tclass = le32_to_cpu(buf[0]);
-+			rc = -EINVAL;
-+			val = le32_to_cpu(buf[0]);
-+			if (val > U16_MAX)
-+				goto bad;
-+			rtk->tclass = val;
- 		} else
- 			rtk->tclass = p->process_class;
- 
-diff --git a/security/selinux/ss/policydb.h b/security/selinux/ss/policydb.h
-index a49275d1168d8..20b834581106a 100644
---- a/security/selinux/ss/policydb.h
-+++ b/security/selinux/ss/policydb.h
-@@ -74,7 +74,7 @@ struct class_datum {
- /* Role attributes */
- struct role_datum {
- 	u32 value; /* internal role value */
--	u32 bounds; /* boundary of role */
-+	u32 bounds; /* boundary of role, 0 for none */
- 	struct ebitmap dominates; /* set of roles dominated by this role */
- 	struct ebitmap types; /* set of authorized types for role */
- };
-@@ -110,7 +110,8 @@ struct role_allow {
- /* Type attributes */
- struct type_datum {
- 	u32 value; /* internal type value */
--	u32 bounds; /* boundary of type */
-+	u32 bounds; /* boundary of type, 0 for none */
-+	/* internally unused, only forwarded via policydb_write() */
- 	unsigned char primary; /* primary name? */
- 	unsigned char attribute; /* attribute ?*/
- };
-@@ -118,7 +119,7 @@ struct type_datum {
- /* User attributes */
- struct user_datum {
- 	u32 value; /* internal user value */
--	u32 bounds; /* bounds of user */
-+	u32 bounds; /* bounds of user, 0 for none */
- 	struct ebitmap roles; /* set of authorized roles for user */
- 	struct mls_range range; /* MLS range (min - max) for user */
- 	struct mls_level dfltlevel; /* default login MLS level for user */
-@@ -195,7 +196,7 @@ struct ocontext {
- 		} ibendport;
- 	} u;
- 	union {
--		u16 sclass; /* security class for genfs */
-+		u16 sclass; /* security class for genfs (can be 0 for wildcard) */
- 		u32 behavior; /* labeling behavior for fs_use */
- 	} v;
- 	struct context context[2]; /* security context(s) */
-@@ -388,9 +389,23 @@ static inline char *sym_name(struct policydb *p, unsigned int sym_num,
- 	return p->sym_val_to_name[sym_num][element_nr];
- }
- 
-+static inline bool val_is_boolean(u32 value)
-+{
-+	return value == 0 || value == 1;
-+}
-+
- extern int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len);
- 
- extern u16 string_to_security_class(struct policydb *p, const char *name);
- extern u32 string_to_av_perm(struct policydb *p, u16 tclass, const char *name);
- 
-+#define pr_warn_once_policyload(policy, fmt, ...)    \
-+	do {                                         \
-+		static const void *prev_policy__;    \
-+		if (prev_policy__ != policy) {       \
-+			pr_warn(fmt, ##__VA_ARGS__); \
-+			prev_policy__ = policy;      \
-+		}                                    \
-+	} while (0)
-+
- #endif /* _SS_POLICYDB_H_ */
-diff --git a/security/selinux/ss/services.c b/security/selinux/ss/services.c
-index cbc101b095a30..fb150025359b0 100644
---- a/security/selinux/ss/services.c
-+++ b/security/selinux/ss/services.c
-@@ -446,8 +446,6 @@ static int dump_masked_av_helper(void *k, void *d, void *args)
- 	struct perm_datum *pdatum = d;
- 	char **permission_names = args;
- 
--	BUG_ON(pdatum->value < 1 || pdatum->value > 32);
--
- 	permission_names[pdatum->value - 1] = (char *)k;
- 
- 	return 0;
-@@ -466,7 +464,7 @@ static void security_dump_masked_av(struct policydb *policydb,
- 	char *tclass_name;
- 	char *scontext_name = NULL;
- 	char *tcontext_name = NULL;
--	char *permission_names[32];
-+	char *permission_names[SEL_VEC_MAX];
- 	int index;
- 	u32 length;
- 	bool need_comma = false;
-@@ -507,7 +505,7 @@ static void security_dump_masked_av(struct policydb *policydb,
- 			 "scontext=%s tcontext=%s tclass=%s perms=",
- 			 reason, scontext_name, tcontext_name, tclass_name);
- 
--	for (index = 0; index < 32; index++) {
-+	for (index = 0; index < SEL_VEC_MAX; index++) {
- 		u32 mask = (1 << index);
- 
- 		if ((mask & permissions) == 0)
+ 	/*
+ 	 * If firmware-assisted dump has been registered then trigger
+ 	 * its callback and let the firmware handles everything else.
 -- 
 2.53.0
-
-
 
