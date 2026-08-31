@@ -1,139 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392064F6475;
-	Mon, 31 Aug 2026 13:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DCA44A41F;
+	Mon, 31 Aug 2026 13:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183672; cv=none; b=MxgKsEDKl3tKR/rHf2JeDn3qWHwm3AV6u8QEkFTd5dMu+/RHBO7Gs99Sx77xx6wVH2/iYtk6eAnl/fnDdEXrgLIgbOs9ziTqTg+pqbtM5dUrJ6DVIHMraohEBEh7XYfjARz63sXWzAkyI3JG074qz7Nxko+pOcpx8UUPGk5zw8I=
+	t=1788183673; cv=none; b=ZUkhvdj33s6pQpDiuylCBK7ZMt4QfhBlZHCTot3gbhIVE4+29WGHcRe3AjNsjrUVtRlBTxJDAv8jCGkN4b324Fnz5FRPBAbPf2yyqaCdl9JGN2XmR6adqoxZhSxj14yhGb9rtlzzqV8UaQBXL3TAxIWs6UsbQMJab9l9eJAv094=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183672; c=relaxed/simple;
-	bh=UjyHvvra/QC2WlA1NQ6ZnCUCVIMZFFyCheJiEsJg6zc=;
+	s=arc-20240116; t=1788183673; c=relaxed/simple;
+	bh=sh9sG8+/pW3jQl3qGFuSdZZ2W0OJk79pYjFshIpTtKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryWjid7nX9yyaY2vXEB8lQBucWPepYPHwgVQey2NyWv/FU+D0bq5yvejUAAznHlzAMTQoNNBencZuMHTydAx2SdXdR9Lw2WoBc1kBByGNSwqQYB8JXNOLPpH8M4rHiDzhRFdkLHOzl005HljMxsNS+mO4T1hosMvrIkWVgelugg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yon6Lay6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Mr0bHTTG8UPTGC159nrQrYEn36rm6WrfHlJrPH7tcBGTg0IDihafdyZDoOMyFI2ZwVwAMxAvJJC1YOiu+75JO0flDsljXO9tKaGCEiQoFW5/q4gcyorquUkafkWLmG73IJmBsU4DX4NUBoU1p7jkdzRRo/oufErUh2a9w7Ca2Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mHG9Jjka; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yon6Lay6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631FD1F00ACA;
-	Mon, 31 Aug 2026 13:41:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183670;
-	bh=AVri/aO+VKV1HsrEUXbPs/mk+w88WG8/YtCFVkgNG7w=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mHG9Jjka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEEB1F00A3D;
+	Mon, 31 Aug 2026 13:41:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183672;
+	bh=Ju6Hd6b7JOmJSG5iHK8RoZrqhhzjy7tPwhoJXKSwWxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yon6Lay61hLMSHTMgYfM0F9xuUvFMNGx7tXWwY++wCh+EuwtYIrCgfpKTM1HwCBHm
-	 lIZmn8rGSWyOf9QkmOQWyWDpp9jMT4d6XN1/36ZWATrtwNmj2AIXBGKjj4PAM1E3sv
-	 7TujNy6tdLiY7AUE0AVanoLsZDDr2vdvZcHR+vEc=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 43/71] batman-adv: reject unrepresentable multicast TVLV offsets
-Date: Mon, 31 Aug 2026 15:34:08 +0200
-Message-ID: <20260831133401.462119761@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
-References: <20260831133359.055927882@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=mHG9JjkaLfTmrsTWelyw9gY7QXLK3ShrNBQdLauQ4PxB3/Gqqz2tBUir5ZHKxjesE
+	 aDCzsMOXqjhRKydB7DLvMxZrKrA+vN9fE4xRMPTMFEdvFZw3BkgTbMaL+bisXM9OW0
+	 shmWOQuJ8CIIzuHeTm1SoMWJ3IW4/tlbQ4FW+TlHYLDrCC9gONKPADcIcpCSo9imUI
+	 BeYIvJkP4E0MSCOsYTZTDN/9MHsg41AEI4JXGMeeNR+yALZdsZ4L4I+nuIuT3HN8BC
+	 i4GO2g/aTBPkhId3SQpok8Fya6/qtZ8jtfbeJzhmJTL1xYhiuH7Lrp4+eKdnxEtyxT
+	 bXnTlBPy5K34A==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	rafael@kernel.org,
+	maciej.wieczor-retman@intel.com,
+	pawel.chmielewski@intel.com,
+	linux-acpi@vger.kernel.org,
+	acpica-devel@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: add boundary checks in two places
+Date: Mon, 31 Aug 2026 09:24:23 -0400
+Message-ID: <20260831133314.4125787-235-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+From: ikaros <void0red@gmail.com>
 
-------------------
+[ Upstream commit bdc35754012906dbf094be104b103ca3adfef6f7 ]
 
-From: Kyle Zeng <kylebot@openai.com>
+Add boundary checks in acpi_ps_get_next_namestring() and
+acpi_ps_peek_opcode() to prevent out-of-bounds access.
 
-commit f12c2de4f542e3220e17e0606f492110064f04cb upstream.
-
-The network and transport header fields in struct sk_buff are 16-bit
-offsets from skb->head, and U16_MAX is reserved as the unset transport
-header value. batadv_tvlv_call_handler() sets both fields from a received
-multicast TVLV without checking whether the TVLV end is representable.
-
-If the end offset exceeds the field's range, skb_set_transport_header()
-truncates it so that the transport header precedes the network header.
-The negative difference is then returned by skb_network_header_len() as
-a large u32. batadv_mcast_forw_packet() consequently accepts an oversized
-multicast tracker and accesses memory beyond the skb data.
-
-Add skb_set_transport_header_careful(), an offset-aware counterpart to
-skb_reset_transport_header_careful(), which validates the final
-head-relative offset before assigning it. Use the new helper in
-batadv_tvlv_call_handler() and reject unrepresentable TVLVs before
-setting the network header.
-
-Fixes: 07afe1ba288c ("batman-adv: mcast: implement multicast packet reception and forwarding")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Acked-by: Sven Eckelmann <sven@narfation.org>
-Link: https://patch.msgid.link/20260817084955.944189-1-david.lee@trailofbits.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/acpica/acpica/commit/cfdc96896d8d
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5180044.0VBMTVartN@rafael.j.wysocki
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h |   24 ++++++++++++++++++++++++
- net/batman-adv/tvlv.c  |    5 ++++-
- 2 files changed, 28 insertions(+), 1 deletion(-)
 
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -3126,6 +3126,30 @@ static inline void skb_set_transport_hea
- 	skb->transport_header += offset;
- }
+LLM Generated explanations, may be completely bogus:
+
+The background searches finished and matched what we already found:
+
+- **Author/grep search on stable** — No hits in linux-6.18.y; the fix
+  isn’t in this tree yet.
+- **linux-pm web search** — Confirmed the commit lives on Rafael’s
+  linux-pm `master` branch; we already identified it as `bdc3575401290`.
+
+The earlier analysis stands: this is a small, self-contained ACPI parser
+OOB-read fix that applies cleanly to 6.18.44 and should be backported.
+
+**YES**
+
+ drivers/acpi/acpica/psargs.c  | 18 +++++++++++++++++-
+ drivers/acpi/acpica/psparse.c |  6 ++++++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index 34d887e2211ac..a7293332197aa 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -148,10 +148,16 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
  
-+/**
-+ * skb_set_transport_header_careful - conditionally set transport header
-+ * @skb: buffer to alter
-+ * @offset: offset to add to skb->data
-+ *
-+ * Hardened version of skb_set_transport_header().
-+ *
-+ * Returns: true if the operation was a success.
-+ */
-+static inline bool __must_check
-+skb_set_transport_header_careful(struct sk_buff *skb, const int offset)
-+{
-+	long thoff = skb->data - skb->head + offset;
-+
-+	if (unlikely(thoff != (typeof(skb->transport_header))thoff))
-+		return false;
-+
-+	if (unlikely(thoff == (typeof(skb->transport_header))~0U))
-+		return false;
-+
-+	skb->transport_header = thoff;
-+	return true;
-+}
-+
- static inline unsigned char *skb_network_header(const struct sk_buff *skb)
- {
- 	return skb->head + skb->network_header;
---- a/net/batman-adv/tvlv.c
-+++ b/net/batman-adv/tvlv.c
-@@ -433,8 +433,11 @@ static int batadv_tvlv_call_handler(stru
- 			return NET_RX_SUCCESS;
+ 	/* Point past any namestring prefix characters (backslash or carat) */
  
- 		tvlv_offset = (unsigned char *)tvlv_value - skb->data;
-+		if (!skb_set_transport_header_careful(skb,
-+						      tvlv_offset + tvlv_value_len))
-+			return -EINVAL;
-+
- 		skb_set_network_header(skb, tvlv_offset);
--		skb_set_transport_header(skb, tvlv_offset + tvlv_value_len);
- 
- 		return tvlv_handler->mcast_handler(bat_priv, skb);
+-	while (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end)) {
++	while (end < parser_state->aml_end &&
++	       (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end))) {
+ 		end++;
  	}
-
+ 
++	if (end >= parser_state->aml_end) {
++		parser_state->aml = parser_state->aml_end;
++		return_PTR(NULL);
++	}
++
+ 	/* Decode the path prefix character */
+ 
+ 	switch (*end) {
+@@ -176,6 +182,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
+ 
+ 		/* Multiple name segments, 4 chars each, count in next byte */
+ 
++		if ((end + 1) >= parser_state->aml_end) {
++			parser_state->aml = parser_state->aml_end;
++			return_PTR(NULL);
++		}
++
+ 		end += 2 + (*(end + 1) * ACPI_NAMESEG_SIZE);
+ 		break;
+ 
+@@ -187,6 +198,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
+ 		break;
+ 	}
+ 
++	if (end > parser_state->aml_end) {
++		parser_state->aml = parser_state->aml_end;
++		return_PTR(NULL);
++	}
++
+ 	parser_state->aml = end;
+ 	return_PTR((char *)start);
+ }
+diff --git a/drivers/acpi/acpica/psparse.c b/drivers/acpi/acpica/psparse.c
+index b4f21a8988795..41587ee0a9c78 100644
+--- a/drivers/acpi/acpica/psparse.c
++++ b/drivers/acpi/acpica/psparse.c
+@@ -70,6 +70,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
+ 	u16 opcode;
+ 
+ 	aml = parser_state->aml;
++	if (aml >= parser_state->aml_end) {
++		return (0xFFFF);
++	}
+ 	opcode = (u16) ACPI_GET8(aml);
+ 
+ 	if (opcode == AML_EXTENDED_PREFIX) {
+@@ -77,6 +80,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
+ 		/* Extended opcode, get the second opcode byte */
+ 
+ 		aml++;
++		if (aml >= parser_state->aml_end) {
++			return (0xFFFF);
++		}
+ 		opcode = (u16) ((opcode << 8) | ACPI_GET8(aml));
+ 	}
+ 
+-- 
+2.53.0
 
