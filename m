@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4178647F2EB;
-	Mon, 31 Aug 2026 13:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20A347F78A;
+	Mon, 31 Aug 2026 13:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184749; cv=none; b=oFpc4oEOXwT/DcJZ+yIxNwL7meyzskdsujqppOSF6IO/ewoXX2679jgpG6MBHr8QCnD/PGlhW4oPJOToarujRn+BKdK6fsMikl+0h/8fD8w4o+sCUrjD+FyP4aX5aREl2ZkJGzahbnvmMJGwT580wbbd5HvHCF9HlONO5CA59qY=
+	t=1788184796; cv=none; b=Dw+N/9g10bUA2/OhmHGOnZwijGoXOJNhviIYVM4jfbcAVbISxQUHOMKWQAmz16+nES/xN9Tds4ZdHeLga2VL3tNt6J8EqoI7zsaiK1AP/kKBdcnJ2xTxJLzYfyDzGsITT69wzSLUOL1IeaQvjMLjlnqRDTMG4atamPmw+kEIzF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184749; c=relaxed/simple;
-	bh=V64Iu0MQJnwz0A3OsEwm0Ygfpa1cCaCM2u/Uj3lQRQ4=;
+	s=arc-20240116; t=1788184796; c=relaxed/simple;
+	bh=BBkx0e4k4cEKOtdwtkb/vfhDtCIfPRbMPARKC7qsFhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YP+c+TXAIjiGLnoTo8HRt/m6D+a0HGqKFvRlM5Ue9+mm0Z8KooyEb34JbvfJ6BI0U5BcWJJw9VaPMzfJwLZQMn84/DQfBwh+If1qBjrl4GVwvvjdGlWJfjPtU548fhFG1So/0zp6BovC+jiVhG+ZgQjRJRUD+TajkHPRARWasrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1fHvygB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dUWNsY8VcWu5+QbRjdnVILn06VOYaFyUZ1FE/XZrlxuV3lxapDemvCnbqb6sTmHdPENObn/CiyKWgipyJx0DbKLZJP6lNEVXtBpSEjHuHGeYLdzPsrDCX0A8TWMY83qyQWjC2cczz+/zop0ld3diefhy0oO8iVrpn091V9qMxsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXt7oMQK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1fHvygB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B19F1F000E9;
-	Mon, 31 Aug 2026 13:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXt7oMQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185891F000E9;
+	Mon, 31 Aug 2026 13:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184748;
-	bh=CYZG2aqDmeGA00HB9ptZStmdSaKVzgqmEdj6TQg/3W8=;
+	s=korg; t=1788184793;
+	bh=n+sjG4wm50d6x3jN1ZNzq9tQaIXI8xA1gCpV6v2m76I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A1fHvygBdb+IcZG8EHwB27FoI/rM734/zQIkGNFmG2DuzOVst9m6BEWBnZ9h84R2s
-	 yeuNVIxlt+3y4FgV5eHSKxi4tbZ5wCBbwQG2gJ6ufl13SbOIntu/jDCX4phLWcbFD2
-	 1Afr7LXJAQQpVH6L03y7KGCN1XNCCecjltjvblwY=
+	b=uXt7oMQKeoLhqqboWVxZs3qNoipxG+4PMj/IRYLU5AlAk437WhlLgSMIUWIyQ9AA8
+	 VzGxI04gqmR6IhlW2t4CZK2ZD4E/GbHVEAIu7eJehTClYWXW7BSkkJvoanvn1YVwqa
+	 j59lTnlK2N+8BJzOLtVhDAdgiRZzi/V+wf8B5UfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Huang <hzyitc@outlook.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/92] wifi: ath11k: Add missing hw_ops->get_ring_selector() for IPQ5018
-Date: Mon, 31 Aug 2026 15:34:06 +0200
-Message-ID: <20260831133359.904450963@linuxfoundation.org>
+Subject: [PATCH 6.1 40/92] nfc: nci: add data_len bound checks to activation parameter extractors
+Date: Mon, 31 Aug 2026 15:34:38 +0200
+Message-ID: <20260831133401.787295619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,67 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Huang <hzyitc@outlook.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit ce282d8de71f07f0056ea319541141152c65f552 ]
+[ Upstream commit 0428fa2c22e2ba0cff766d3b80d461e149102045 ]
 
-During sending data after clients connected, hw_ops->get_ring_selector()
-will be called. But for IPQ5018, this member isn't set, and the
-following NULL pointer exception will be occurred:
+nci_extract_activation_params_iso_dep() and
+nci_extract_activation_params_nfc_dep() read an inner length byte from
+the NCI RF_INTF_ACTIVATED_NTF payload and use it to memcpy() into fixed
+kernel buffers, but neither function receives the caller-validated
+activation_params_len.  A crafted NCI notification with
+activation_params_len=1 and an inner length byte of up to 20 (NFC-A) or
+50 (NFC-B) causes memcpy() to read that many bytes past the one valid
+byte in the activation params region -- a slab out-of-bounds read of
+kernel memory adjacent to the NCI skb.
 
-	[   38.840478] 8<--- cut here ---
-	[   38.840517] Unable to handle kernel NULL pointer dereference at virtual address 00000000
-	...
-	[   38.923161] PC is at 0x0
-	[   38.927930] LR is at ath11k_dp_tx+0x70/0x730 [ath11k]
-	...
-	[   39.063264] Process hostapd (pid: 1034, stack limit = 0x801ceb3d)
-	[   39.068994] Stack: (0x856a9a68 to 0x856aa000)
-	...
-	[   39.438467] [<7f323804>] (ath11k_dp_tx [ath11k]) from [<7f314e6c>] (ath11k_mac_op_tx+0x80/0x190 [ath11k])
-	[   39.446607] [<7f314e6c>] (ath11k_mac_op_tx [ath11k]) from [<7f17dbe0>] (ieee80211_handle_wake_tx_queue+0x7c/0xc0 [mac80211])
-	[   39.456162] [<7f17dbe0>] (ieee80211_handle_wake_tx_queue [mac80211]) from [<7f174450>] (ieee80211_probereq_get+0x584/0x704 [mac80211])
-	[   39.467443] [<7f174450>] (ieee80211_probereq_get [mac80211]) from [<7f178c40>] (ieee80211_tx_prepare_skb+0x1f8/0x248 [mac80211])
-	[   39.479334] [<7f178c40>] (ieee80211_tx_prepare_skb [mac80211]) from [<7f179e28>] (__ieee80211_subif_start_xmit+0x32c/0x3d4 [mac80211])
-	[   39.491053] [<7f179e28>] (__ieee80211_subif_start_xmit [mac80211]) from [<7f17af08>] (ieee80211_tx_control_port+0x19c/0x288 [mac80211])
-	[   39.502946] [<7f17af08>] (ieee80211_tx_control_port [mac80211]) from [<7f0fc704>] (nl80211_tx_control_port+0x174/0x1d4 [cfg80211])
-	[   39.515017] [<7f0fc704>] (nl80211_tx_control_port [cfg80211]) from [<808ceac4>] (genl_rcv_msg+0x154/0x340)
-	[   39.526814] [<808ceac4>] (genl_rcv_msg) from [<808cdb74>] (netlink_rcv_skb+0xb8/0x11c)
-	[   39.536446] [<808cdb74>] (netlink_rcv_skb) from [<808ce1d0>] (genl_rcv+0x28/0x34)
-	[   39.544344] [<808ce1d0>] (genl_rcv) from [<808cd234>] (netlink_unicast+0x174/0x274)
-	[   39.551895] [<808cd234>] (netlink_unicast) from [<808cd510>] (netlink_sendmsg+0x1dc/0x440)
-	[   39.559362] [<808cd510>] (netlink_sendmsg) from [<808596e0>] (____sys_sendmsg+0x1a8/0x1fc)
-	[   39.567697] [<808596e0>] (____sys_sendmsg) from [<8085b1a8>] (___sys_sendmsg+0xa4/0xdc)
-	[   39.575941] [<8085b1a8>] (___sys_sendmsg) from [<8085b310>] (sys_sendmsg+0x44/0x74)
-	[   39.583841] [<8085b310>] (sys_sendmsg) from [<80300060>] (ret_fast_syscall+0x0/0x40)
-	...
-	[   39.620734] Code: bad PC value
-	[   39.625869] ---[ end trace 8aef983ad3cbc032 ]---
+The sibling nci_extract_rf_params_*() family was given equivalent
+protection by commit 571dcbeb8e63 ("net: nfc: nci: Fix parameter
+validation for packet data"), but the two activation parameter
+extractors were not updated at that time.
 
-Fixes: ba60f2793d3a ("wifi: ath11k: initialize hw_ops for IPQ5018")
-Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/TYZPR01MB5556D6E3F63EAB5129D11420C953A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+Add a data_len parameter to both functions, guard against an empty
+region before consuming the inner length byte, decrement the remaining
+count after consuming it, and clamp the copy length to what is actually
+available.  Update both call sites to pass ntf.activation_params_len,
+which is already validated against the skb at ntf.c:801.
+
+Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-6d52d8b0-v3-1-e26221f8826d@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
+[ Replaced `NFC_ATS_MAXSIZE` with the literal `20` since that macro doesn't exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/hw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/nci/ntf.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/hw.c b/drivers/net/wireless/ath/ath11k/hw.c
-index 6b4355a68e266..1e7009743c976 100644
---- a/drivers/net/wireless/ath/ath11k/hw.c
-+++ b/drivers/net/wireless/ath/ath11k/hw.c
-@@ -1175,7 +1175,7 @@ const struct ath11k_hw_ops ipq5018_ops = {
- 	.mpdu_info_get_peerid = ath11k_hw_ipq8074_mpdu_info_get_peerid,
- 	.rx_desc_mac_addr2_valid = ath11k_hw_ipq9074_rx_desc_mac_addr2_valid,
- 	.rx_desc_mpdu_start_addr2 = ath11k_hw_ipq9074_rx_desc_mpdu_start_addr2,
--
-+	.get_ring_selector = ath11k_hw_ipq8074_get_tcl_ring_selector,
- };
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -525,15 +525,19 @@ static int nci_rf_discover_ntf_packet(st
  
- #define ATH11K_TX_RING_MASK_0 BIT(0)
--- 
-2.53.0
-
+ static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
+ {
+ 	struct activation_params_nfca_poll_iso_dep *nfca_poll;
+ 	struct activation_params_nfcb_poll_iso_dep *nfcb_poll;
+ 
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
+ 		nfca_poll->rats_res_len = min_t(__u8, *data++, 20);
++		data_len--;
++		nfca_poll->rats_res_len = min_t(__u8, nfca_poll->rats_res_len, data_len);
+ 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
+ 		if (nfca_poll->rats_res_len > 0) {
+ 			memcpy(nfca_poll->rats_res,
+@@ -542,8 +546,12 @@ static int nci_extract_activation_params
+ 		break;
+ 
+ 	case NCI_NFC_B_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
+ 		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
++		data_len--;
++		nfcb_poll->attrib_res_len = min_t(__u8, nfcb_poll->attrib_res_len, data_len);
+ 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
+ 		if (nfcb_poll->attrib_res_len > 0) {
+ 			memcpy(nfcb_poll->attrib_res,
+@@ -562,7 +570,7 @@ static int nci_extract_activation_params
+ 
+ static int nci_extract_activation_params_nfc_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
+ {
+ 	struct activation_params_poll_nfc_dep *poll;
+ 	struct activation_params_listen_nfc_dep *listen;
+@@ -570,9 +578,13 @@ static int nci_extract_activation_params
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
+ 	case NCI_NFC_F_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		poll = &ntf->activation_params.poll_nfc_dep;
+ 		poll->atr_res_len = min_t(__u8, *data++,
+ 					  NFC_ATR_RES_MAXSIZE - 2);
++		data_len--;
++		poll->atr_res_len = min_t(__u8, poll->atr_res_len, data_len);
+ 		pr_debug("atr_res_len %d\n", poll->atr_res_len);
+ 		if (poll->atr_res_len > 0)
+ 			memcpy(poll->atr_res, data, poll->atr_res_len);
+@@ -580,9 +592,13 @@ static int nci_extract_activation_params
+ 
+ 	case NCI_NFC_A_PASSIVE_LISTEN_MODE:
+ 	case NCI_NFC_F_PASSIVE_LISTEN_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		listen = &ntf->activation_params.listen_nfc_dep;
+ 		listen->atr_req_len = min_t(__u8, *data++,
+ 					    NFC_ATR_REQ_MAXSIZE - 2);
++		data_len--;
++		listen->atr_req_len = min_t(__u8, listen->atr_req_len, data_len);
+ 		pr_debug("atr_req_len %d\n", listen->atr_req_len);
+ 		if (listen->atr_req_len > 0)
+ 			memcpy(listen->atr_req, data, listen->atr_req_len);
+@@ -790,12 +806,14 @@ static int nci_rf_intf_activated_ntf_pac
+ 		switch (ntf.rf_interface) {
+ 		case NCI_RF_INTERFACE_ISO_DEP:
+ 			err = nci_extract_activation_params_iso_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_NFC_DEP:
+ 			err = nci_extract_activation_params_nfc_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_FRAME:
 
 
