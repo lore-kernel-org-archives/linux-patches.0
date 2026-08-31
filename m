@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF1C592D2A;
-	Mon, 31 Aug 2026 13:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA460592D59;
+	Mon, 31 Aug 2026 13:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184265; cv=none; b=o0Tq3t/l2gT9kv4tRsv9arU7H/5zlr2arL8HOHKQRvN6W80DSDGXMaAAZP4n31RTRtO3vYngXxuTkBJZwxjLSCTeEFJu7XJnkrXFUXkvZJidPnLlYdE0u82BaXRK/AxWErXRKLUNPWQpqvUZH2GkA3h4vExKJgMHWy3Js+e0tlU=
+	t=1788184266; cv=none; b=MpB7sDDjMISnnuyO85dyUvkkpKYfiYls7K51iazGHdGpn1TimTnkUEMnkMqZZb/elnEdPYChS4AY2RmkfKfXDwiC/oeo7x0PRDaNsGbPQPlZXiKu0wODPfk1ObVvmo0rpU5YfBxK/yRsE0DXj/B68QFtpZU4bnkoxqSLDCJvCCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184265; c=relaxed/simple;
-	bh=yxqkIkNzBeXbzEpMTSYg/M2+18HCXWAGMciGKgJmASk=;
+	s=arc-20240116; t=1788184266; c=relaxed/simple;
+	bh=QnI2E0CPkTTUEnepXrF1K8wW/FvRkUSRiXgqiOF3ATE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a2x7mkPwyXM+ZsUj/3lDRH1QKxZKmwhv9VIxSaRb5hvixpzkg54rk5hzHvj7oAbA2nWqYI47CqDoPDV65MIQokmdehU1Aoszl/CGAgggB1cxYBqnubIUIej2l2Cv4GzkXLKdr/WFipIwGjNCwKOi2YlFt85kGpKmhhLx3JmQU6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EJuHqBHC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZyFExrTrhqhj1VSCav2+pbBwRgEecKp9nnpvJoYeIP65edZd5ITwQWT2xUQo5h/DzD06M/PHJnKulctKpBhqSGCP8vXbb8N3WuLUjZ4ksHpWKLnvJS5cZw2UvHYrryi1n0+I0gOVxBAOO4bO2CYnoruADAqcrMzhKyp0rsYjMp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z1E3uhCp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EJuHqBHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D971F00A3E;
-	Mon, 31 Aug 2026 13:51:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z1E3uhCp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3570A1F00ACA;
+	Mon, 31 Aug 2026 13:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184261;
-	bh=61M7A9M45q/4EFC9xsc0Tf/RGm1cpKzoAjzhET2BHsQ=;
+	s=k20260515; t=1788184263;
+	bh=52YLF/TpFXE6yVG/pKuAQo5FJoA2P19IxWaMcZHp5Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJuHqBHCYBejhqSe8q8BEzAXg2s1j7Bec5SWD/avF2Zfv9VzTpxy14/HI6MC6/+yA
-	 OQV3KN7zb8eYT1eOAlyUzC4PD/Vn4G86uAcw9xeLAfuPVSwGjE2+uijz4K53e4H4re
-	 IAGrbzgBr2Q8DPnaj1IbkABv7kRYfGPvuU+uM+aYWGPK/2E+F6SQAwd22z2aZUZ5i8
-	 ED799a9frnk/WM0BhXVaBt4Nvvuj4NaHRDlpf4OPuXW7iL8eTt4z3cInELnuSstxOg
-	 /WbMCtYCXvaQA4s57NDHI1FZqMTFRdV4M091SXCByn87BEjkY21fnBNGZ7W50VWeuL
-	 o8k2j64Yzamzw==
+	b=Z1E3uhCp0cIIqx1fu46ne5FGKetEt42w7eylE5HSoiobj4QPBt5R32BQBkV8nGzoy
+	 CwssZA9RoNUymCGuYhxOP8g86FadR2n8oGepwHCtQhSgr15aM8ULatGfVCFc4P2/u3
+	 xtIvak4ln9s6AysO+v/LNVnhNF4c93w6z/ZAfGrI5wKVs+n8KEtjX8pOu2/7THBnZA
+	 8mrMH5ZO6l8eI4swge/BD1HnJaQib/IM6EhK9Mua/9rDpA7xsxiMuWWswc93IShwn3
+	 dTRSm5GTwlffpYFhwpaNyuOZY2dw7YYQx5HDa6RmZATWZ5rbt9exdv8L/yuumBp1OP
+	 S7w/gUjXBF8Sw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shubham Nayak <shubhamnayak392reborn@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Zqiang <qiang.zhang@linux.dev>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	paulmck@kernel.org,
+	frederic@kernel.org,
+	neeraj.upadhyay@kernel.org,
+	joelagnelf@nvidia.com,
+	josh@joshtriplett.org,
+	boqun@kernel.org,
+	rcu@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Add quirk for HP Victus 16-e0xxx (88EE) to enable mute LED
-Date: Mon, 31 Aug 2026 09:30:16 -0400
-Message-ID: <20260831133314.4125787-588-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] rcu-tasks: Fix possible boot-time tests failed for the call_rcu_tasks()
+Date: Mon, 31 Aug 2026 09:30:17 -0400
+Message-ID: <20260831133314.4125787-589-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,63 +58,109 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shubham Nayak <shubhamnayak392reborn@gmail.com>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit 6c18817c01f6f76d9e2739903abde4d69397f2c6 ]
+[ Upstream commit 42c5468f9cdc0c892fec3c0916b3ac5b670775af ]
 
-The mute LED on the HP Victus 16-e0xxx (board ID 88EE, ALC245 codec)
-does not function by default. Add the ALC245_FIXUP_HP_MUTE_LED_COEFBIT
-quirk to enable it. Tested on my HP Victus 16-e0xxx with kernel 7.1.2.
+The following scenarios will cause the call_rcu_tasks() boot-time
+tests failed:
 
-Signed-off-by: Shubham Nayak <shubhamnayak392reborn@gmail.com>
-Link: https://patch.msgid.link/20260629-hp-victus-16-mute-led-v1-1-ab0f4a8a533b@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+                     CPU0								CPU1
+
+rcu_init_tasks_generic()
+->rcu_tasks_initiate_self_tests()
+  ->call_rcu_tasks_trace(&tests[1].rh, test_rcu_tasks_callback)
+    ->call_rcu_tasks_generic()
+      ->havekthread = smp_load_acquire(&rtp->kthread_ptr)
+       "The havekthread is false"
+    ....
+								       rcu_tasks_kthread()
+								       ->smp_store_release(&rtp->kthread_ptr, current)
+								         ->rcu_tasks_one_gp()
+								           ->rcuwait_wait_event()
+								             ->rcu_tasks_need_gpcb()
+								               ->for (cpu = 0; cpu < dequeue_limit; cpu++)
+								                 ->rcu_segcblist_n_cbs(&rtpcp->cblist) == 0
+								           ->schedule()
+
+     ->raw_spin_trylock_rcu_node()
+     ->needwake = (func == wakeme_after_rcu) ||
+     (rcu_segcblist_n_cbs(&rtpcp->cblist) == rcu_task_lazy_lim)
+
+       "the rcu_task_lazy_lim default value is 32, and the
+        func pointer is test_rcu_tasks_callback, lead to needwake
+        is false."
+
+     ->if (havekthread && !needwake && !timer_pending(&rtpcp->lazy_timer))
+        "the havekthread is false, will not enter here."
+     ....
+
+        "the needwake is false lead to rtp_irq_work can not queue,
+         even if the rtp->kthread_ptr already exists at this point."
+
+      ->if (needwake && READ_ONCE(rtp->kthread_ptr))
+        ->irq_work_queue(&rtpcp->rtp_irq_work)
+
+For the above scenarios, if the call_rcu_tasks() is not called again
+afterward, the rcu_tasks_kthread will not have a chance to be wakeup,
+the test_rcu_tasks_callback() will never be called, the boot-time tests
+failed can happen, this commit therefore check havekthread variable, if
+it's false and the rtpcp->cblist is empty, set needwake variable is true,
+if the rtp->kthread_ptr exist, the rtpcp->rtp_irq_work can be queued to
+wakeup rcu_tasks_kthread.
+
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ALSA hda/realtek HP Victus 16-e0xxx (88EE)
-mute LED quirk
+# Stable Backport Analysis: `rcu-tasks: Fix possible boot-time tests
+failed for the call_rcu_tasks()`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
+**Local tree:** `v6.18.44` (`git describe HEAD`, `make kernelversion`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[ALSA: hda/realtek]` `[Add]` — Add quirk for HP Victus
-16-e0xxx (88EE) to enable mute LED
+**Record:** `[rcu-tasks]` `[Fix]` — Fix a race in
+`call_rcu_tasks_generic()` wakeup logic that can leave the RCU Tasks
+kthread asleep and cause boot-time self-test failure.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Shubham Nayak (author), Takashi Iwai (ALSA
-  maintainer)
-- **Link:** https://patch.msgid.link/20260629-hp-victus-16-mute-
-  led-v1-1-ab0f4a8a533b@gmail.com
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc:
-  stable@vger.kernel.org
-
-Notable: Maintainer (Takashi Iwai) Signed-off-by is a strong quality
-signal. Author reports hardware testing on kernel 7.1.2.
+- **Fixes:** `d119357d0743` ("rcu-tasks: Treat only synchronous grace
+  periods urgently") — present in this tree (verified via `git show`)
+- **Signed-off-by:** Zqiang, Uladzislau Rezki (Sony)
+- **No** Reported-by, Tested-by, Reviewed-by, Acked-by, Cc: stable, or
+  Link: in the provided message
+- Lore submission includes syzkaller link:
+  `https://syzkaller.appspot.com/bug?extid=251e9abcdac140e7ec74`
+- Notable: syzbot-reported, Fixes: tag points to May 2023 lazy-GP
+  optimization
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug:** Mute LED on HP Victus 16-e0xxx with board ID 88EE and ALC245
-  codec does not function by default.
-- **Symptom:** Keyboard mute LED does not toggle with microphone mute
-  state.
-- **Root cause:** Missing PCI subsystem ID quirk entry; hardware needs
-  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` to configure coefficient-bit-based
-  mute LED control.
-- **Version info:** Tested on kernel 7.1.2; no crash or corruption
-  described.
+- **Bug:** Race between `call_rcu_tasks_generic()` on CPU0 and
+  `rcu_tasks_kthread()` startup on CPU1 during boot.
+- **Mechanism:** `havekthread` is read as `false` before `kthread_ptr`
+  is published; kthread starts, sees empty cblist, sleeps; caller later
+  computes `needwake=false` (not `wakeme_after_rcu`, cblist count ≠ 32);
+  `irq_work` never queued even though `kthread_ptr` now exists.
+- **Symptom:** `test_rcu_tasks_callback()` never runs → `pr_err("...has
+  failed boot-time tests")` + `WARN_ON(ret < 0)` in
+  `rcu_tasks_verify_self_tests()`.
+- **Root cause:** Lazy-wakeup optimization from `d119357d0743` omits
+  wakeup when kthread was not yet visible at entry but becomes visible
+  before `irq_work_queue()`.
 
 ### Step 1.4: Hidden bug fix?
-**Record:** Not a hidden crash/leak fix. This is an explicit hardware
-quirk addition for a non-functional mute LED — a well-known Realtek HDA
-pattern in this driver.
+**Record:** Yes. Despite “boot-time tests” framing, this fixes real RCU
+Tasks wakeup logic — callbacks can remain unprocessed until another
+`call_rcu_tasks*()` call wakes the kthread.
 
 ---
 
@@ -118,186 +168,217 @@ pattern in this driver.
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `sound/hda/codecs/realtek/alc269.c` (+1 line)
-- **Change:** One `SND_PCI_QUIRK` table entry
-- **Scope:** Single-file, surgical hardware quirk addition
+- **Files:** `kernel/rcu/tasks.h` (+2 / -1)
+- **Function:** `call_rcu_tasks_generic()`
+- **Scope:** Single-file, surgical (1 logical line added)
 
-### Step 2.2: Code flow
+### Step 2.2: Code flow change
 **Record:**
-- **Before:** HP Victus 16-e0xxx with SSID `0x103c:0x88ee` matches no
-  quirk; mute LED coefficients are never configured.
-- **After:** Matching hardware gets `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`,
-  which runs `alc245_fixup_hp_mute_led_coefbit()` at probe time to set
-  coefficient index/mask/on/off values and register the mute LED cdev.
-- **Path:** Codec probe → `snd_hda_pick_fixup()` → quirk table lookup →
-  fixup applied at `HDA_FIXUP_ACT_PRE_PROBE`.
+- **Before:** `needwake` set only for `wakeme_after_rcu` or when cblist
+  hits `rcu_task_lazy_lim` (32).
+- **After:** Also set `needwake` when `!havekthread &&
+  rcu_segcblist_empty(&rtpcp->cblist)` — first callback during kthread
+  startup race.
+- **Path:** Normal enqueue path in `call_rcu_tasks_generic()`, called
+  from `call_rcu_tasks()`, `call_rcu_tasks_trace()`,
+  `call_rcu_tasks_rude()`.
 
 ### Step 2.3: Bug mechanism
-**Record:** **[h] Hardware workaround** — Missing PCI SSID-to-fixup
-mapping for a variant of an already-quirked laptop family. The sibling
-entry `0x88eb` uses `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` (different
-coefficient bits); `0x88ee` needs the older
-`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` variant.
+**Record:** **Category:** Race condition / logic correctness in wakeup
+path.
+- `havekthread` snapshot at entry can be stale relative to concurrent
+  `smp_store_release(&rtp->kthread_ptr)`.
+- Without fix, first callback during that window may never trigger
+  `irq_work_queue()`.
+- Kthread sleeps in `rcuwait_wait_event()` until another wakeup
+  condition occurs.
 
 ### Step 2.4: Fix quality
-**Record:**
-- Obviously correct: one-line quirk using an existing, well-tested fixup
-  already applied to many other HP Victus models in this tree.
-- Minimal scope; no logic changes.
-- Regression risk: negligible — only affects systems with exact PCI SSID
-  `0x103c:0x88ee`. Wrong fixup on wrong hardware would only affect LED
-  behavior, not audio playback.
+**Record:** Obviously correct — mirrors existing `needwake =
+rcu_segcblist_empty()` logic used when `havekthread` is true. Minimal,
+no API changes. Very low regression risk.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:**
-- Insertion point is between `0x88eb` (added by `9745c2561e55f`, Jan
-  2026) and `0x8902` (present since Realtek driver split
-  `aeeb85f26c3bbe`, Jul 2025).
-- `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` and
-  `alc245_fixup_hp_mute_led_coefbit()` introduced in `aeeb85f26c3bbe`
-  (Jul 2025, driver split from monolithic `patch_realtek.c`).
+**Record:** Current `needwake` logic at lines 380–386 traces to
+`e664048784506` (v6.18 merge base). Introduced by `d119357d0743` (May
+14, 2023). Bug has been present since that lazy-GP optimization landed.
 
-### Step 3.2: Fixes: tag
-**Record:** Not applicable — no Fixes: tag present.
+### Step 3.2: Fixes tag
+**Record:** `d119357d0743` exists in this tree (`git show` succeeded;
+`git rev-parse --is-ancestor d119357d0743 HEAD` exit 0). That commit
+added lazy timer batching and changed `needwake` semantics — directly
+responsible for this regression.
 
 ### Step 3.3: Related file history
-**Record:**
-- `9745c2561e55f` — added `0x88eb` quirk for same laptop model with
-  `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` (already in this tree).
-- Multiple similar mute LED quirk commits in 6.18.y: `89ed38540e6be`,
-  `7556bd5cd8ef3`, `a424946e00f2e`, etc.
-- Standalone one-line patch; no series dependency.
+**Record:** `git log --oneline -- kernel/rcu/tasks.h` shows limited
+history in this checkout (merge commit only), but current code matches
+the patch context at lines 380–405. Fix applies cleanly to current tree.
 
 ### Step 3.4: Author context
-**Record:** Shubham Nayak is a hardware reporter/contributor. Takashi
-Iwai (ALSA/HDA maintainer) accepted the patch. Pattern consistent with
-community-submitted HP quirk reports.
+**Record:** Zqiang submitted standalone patch (Apr 2026) and as v2 11/11
+in Uladzislau Rezki’s merge-window series. CC’d RCU maintainers (Paul
+McKenney, Frederic Weisbecker, etc.).
 
 ### Step 3.5: Dependencies
-**Record:** No dependencies. Requires only
-`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup enum, its fixup function, and
-`alc269_fixup_tbl[]` — all verified present in 6.18.44. Applies
-standalone.
+**Record:** Standalone. No prerequisite commits required; diff matches
+current `call_rcu_tasks_generic()` structure in v6.18.44.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original discussion
-**Record:** Lore/patch.msgid.link fetch blocked by Anubis bot
-protection. `b4 dig -c` could not be run (commit hash not in this tree).
-Could not read review thread directly.
+**Record:**
+- Lore URL: https://lists.openwall.net/linux-kernel/2026/04/23/862
+- Also in v2 series:
+  https://www.spinics.net/lists/kernel/msg6215858.html (11/11)
+- No stable nomination found in fetched threads
+- No NAKs found in fetched content
 
 ### Step 4.2: Reviewers
-**Record:** UNVERIFIED via b4 dig -w. Takashi Iwai maintainer SOB
-confirms acceptance.
+**Record:** CC’d `paulmck@kernel.org`, `frederic@kernel.org`,
+`neeraj.upadhyay@kernel.org`, `joelagnelf@nvidia.com`,
+`urezki@gmail.com`, `boqun.feng@gmail.com`, `rcu@lists.linux.dev`
 
 ### Step 4.3: Bug report
-**Record:** Author self-reported on own hardware. No syzbot, bugzilla,
-or multi-user reports. Severity: cosmetic/UX (mute LED non-functional).
+**Record:** Syzkaller bug `251e9abcdac140e7ec74`:
+- **Title:** WARNING in `rcu_tasks_verify_work_fn`
+- **Status:** upstream reported, **prio:low**
+- **27 crashes** on fuzzed kernels
+- **Crash:** `call_rcu_tasks() has failed boot-time tests.` + `WARN_ON`
+  at `rcu_tasks_verify_self_tests()`
+- **Security assessment:** Not exploitable, not DoS (per syzbot AI
+  assessment)
+- Trigger requires `CONFIG_PROVE_RCU` boot verification path
 
-### Step 4.4: Related patches
-**Record:** Directly related to `9745c2561e55f` (0x88eb, same model,
-different motherboard, different fixup variant). This patch completes
-coverage for another MB variant.
+### Step 4.4: Series context
+**Record:** Patch 11/11 in “Candidate patches for v7.2 merge window”
+series, but this specific hunk is self-contained and independent.
 
 ### Step 4.5: Stable list
-**Record:** UNVERIFIED — lore.kernel.org inaccessible. However,
-`9745c2561e55f` (related Victus 16-e0xxx quirk) is already in this
-6.18.y tree, establishing precedent.
+**Record:** Not searched exhaustively; no stable-list nomination found
+in available sources.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `alc269_fixup_tbl[]` (modified),
-`alc245_fixup_hp_mute_led_coefbit()` (existing, invoked via fixup),
-`snd_hda_pick_fixup()` (caller at probe).
+**Record:** `call_rcu_tasks_generic()`, `rcu_tasks_kthread()`,
+`rcu_tasks_one_gp()`, `rcu_tasks_verify_self_tests()`,
+`rcu_tasks_initiate_self_tests()`
 
 ### Step 5.2: Callers
-**Record:** `snd_hda_pick_fixup()` called from Realtek codec probe path
-in `alc269.c` (~line 8471) during HDA codec initialization at
-boot/module load. Every Realtek HDA codec goes through this, but the
-quirk only activates on SSID match.
+**Record:** `call_rcu_tasks_generic()` called from:
+- `call_rcu_tasks()` — BPF, ftrace, rcutorture
+- `call_rcu_tasks_trace()` — BPF, tracepoints, uprobes, trace filters
+- `call_rcu_tasks_rude()` — rude RCU variant
+- Boot self-tests under `CONFIG_PROVE_RCU`
+
+All are core/production subsystems; BPF and tracing are widely used on
+v6.18.
 
 ### Step 5.3: Callees
-**Record:** Fixup sets `spec->mute_led_coef` fields and calls
-`snd_hda_gen_add_mute_led_cdev()` to wire LED control to mute state.
+**Record:** Locking (`raw_spin_*_rcu_node`), `rcu_segcblist_*`,
+`irq_work_queue()`, `mod_timer()` for lazy batching.
 
 ### Step 5.4: Reachability
-**Record:** Triggered automatically at codec probe on matching HP Victus
-16-e0xxx (MB 88EE) hardware. Not userspace-triggerable beyond owning the
-hardware. Common laptop audio path.
+**Record:**
+- **Confirmed trigger:** `core_initcall(rcu_init_tasks_generic)` → self-
+  tests (with `CONFIG_PROVE_RCU`)
+- **Theoretical production trigger:** Any `call_rcu_tasks*()` during
+  narrow window between `kthread_run()` and first successful wakeup
+  while `havekthread` snapshot is false — rare after boot, but the code
+  path is live whenever `CONFIG_TASKS_RCU` / `CONFIG_TASKS_TRACE_RCU`
+  are enabled.
 
 ### Step 5.5: Similar patterns
-**Record:** At least 12 other HP Victus models in this tree already use
-`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` (e.g., `0x8a25`, `0x8a26`, `0x8c99`,
-`0x8dcd`). Same pattern, different SSID.
+**Record:** Existing code already sets `needwake =
+rcu_segcblist_empty(&rtpcp->cblist)` when `havekthread &&
+!rtp->lazy_jiffies` (line 386). Fix extends analogous logic to the
+`!havekthread` startup race.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (v6.18.44)
 
-### Step 6.1: Buggy code exists?
-**Record:** **YES.** `0x88eb` quirk exists at line 6809, but `0x88ee` is
-**absent** — confirmed by grep. Users with MB 88EE get no mute LED
-quirk. `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` infrastructure has been
-present since Jul 2025.
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Lines 380–381 in `/home/sasha/linux-
+autosel-7.0/kernel/rcu/tasks.h` lack the fix:
+
+```380:405:kernel/rcu/tasks.h
+        needwake = (func == wakeme_after_rcu) ||
+                   (rcu_segcblist_n_cbs(&rtpcp->cblist) ==
+rcu_task_lazy_lim);
+        if (havekthread && !needwake &&
+!timer_pending(&rtpcp->lazy_timer)) {
+                // ...
+        }
+        // ...
+        if (needwake && READ_ONCE(rtp->kthread_ptr))
+                irq_work_queue(&rtpcp->rtp_irq_work);
+```
+
+Bug introduced with `d119357d0743` (2023), well before 6.18.
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Single-line insertion after
-`0x88eb` entry. No refactoring conflicts in recent `alc269.c` history.
+**Record:** Clean apply expected — single hunk, no structural conflicts
+visible.
 
 ### Step 6.3: Related fixes already present?
-**Record:** `0x88eb` quirk (`9745c2561e55f`) already in tree. No
-duplicate `0x88ee` entry. This is the missing complementary quirk for a
-different motherboard variant.
+**Record:** No equivalent fix found in current tree.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** `sound/hda/realtek` — IMPORTANT (audio driver, affects
-laptop users with this specific HP hardware). Not CORE, but widely
-deployed.
+**Record:** **kernel/rcu** — **CORE**. RCU Tasks underpins BPF sleepable
+programs, tracing, uprobes.
 
-### Step 7.2: Subsystem activity
-**Record:** Actively maintained — frequent HP mute LED quirk additions
-in 6.18.y (10+ in recent history). Standard maintenance pattern for
-Realtek HDA.
+### Step 7.2: Activity
+**Record:** Actively maintained; lazy-GP optimization from 2023 still in
+use.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** HP Victus 16-e0xxx laptops with PCI SSID `0x103c:0x88ee` and
-ALC245 codec. Driver-specific, hardware-specific population.
+### Step 8.1: Who is affected?
+**Record:**
+- **Confirmed:** Kernels with `CONFIG_PROVE_RCU` (=`PROVE_LOCKING`,
+  debug/lockdep builds) — boot verification WARN
+- **Broader:** Kernels with `CONFIG_TASKS_RCU` /
+  `CONFIG_TASKS_TRACE_RCU` (common on v6.18) — latent wakeup race during
+  kthread startup window
 
 ### Step 8.2: Trigger conditions
-**Record:** Every boot/probe on matching hardware. Automatic, not
-privilege-dependent. Very likely for affected owners (100% on matching
-hardware).
+**Record:** Timing race during boot between first `call_rcu_tasks*()`
+and kthread publishing `kthread_ptr`. Requires SMP (`num_online_cpus() >
+1` for meaningful race). Syzbot reproduced on PREEMPT GCE VMs.
+Unprivileged users cannot directly trigger the boot self-test path.
 
-### Step 8.3: Failure mode severity
-**Record:** Mute LED does not reflect microphone mute state. Audio
-itself works; only the LED indicator is broken. **Severity: LOW**
-(cosmetic/UX). No crash, corruption, security, or deadlock.
+### Step 8.3: Failure severity
+**Record:**
+- **Observed:** `pr_err` + `WARN_ON` — **MEDIUM** (no panic, boot
+  continues)
+- **Underlying:** RCU Tasks callback may not run until next
+  `call_rcu_tasks*()` — **MEDIUM-HIGH** for deferred memory release, but
+  narrow window and self-healing on subsequent RCU Tasks activity
+- **Not:** crash, corruption, deadlock, or security issue
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** LOW-MEDIUM — restores expected laptop mute LED behavior
-  for affected HP Victus owners.
-- **Risk:** VERY LOW — one-line SSID-specific quirk using existing
-  fixup; cannot affect other hardware.
-- **Ratio:** Favorable. Matches established stable practice for HP
-  Realtek mute LED quirks.
+- **Benefit:** Fixes syzbot-reproducible RCU wakeup bug; eliminates
+  false boot-test failures on debug kernels; corrects core wakeup logic
+- **Risk:** Very low — one-line, logically consistent with existing
+  empty-cblist wakeup
+- **Ratio:** Favorable for backport given trivial fix and core-subsystem
+  correctness
 
 ---
 
@@ -306,123 +387,103 @@ itself works; only the LED indicator is broken. **Severity: LOW**
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Hardware quirk exception category (audio codec quirk for broken LED
-  behavior)
-- One-line, surgical, uses existing fixup — zero new code paths
-- Hardware-tested by reporter; maintainer (Iwai) Signed-off-by
-- All prerequisites present in 6.18.44
-- Direct precedent: related `0x88eb` quirk already in this stable tree
-- Many identical-pattern HP Victus mute LED quirks already in 6.18.y
-- Clean apply expected
+- Real race in core RCU Tasks wakeup path
+- Syzbot-reproducible (27 crashes)
+- Regression from `d119357d0743`, present since 2023, in v6.18.44
+- One-line, obviously correct fix
+- Applies cleanly to this tree
+- Can leave callbacks unprocessed if no subsequent `call_rcu_tasks*()`
+  call
 
 **AGAINST backport:**
-- Not a crash, security, corruption, or deadlock fix
-- Low severity (cosmetic mute LED only)
-- Single reporter, no syzbot/fuzzer signal
-- Mailing list discussion not verified
-
-**UNRESOLVED:**
-- Full lore review thread inaccessible
-- No explicit stable nomination found in review
+- Primary visible symptom is `WARN_ON` in `CONFIG_PROVE_RCU` boot self-
+  test (debug builds)
+- Syzbot priority: low; not security-relevant
+- Self-heals when next RCU Tasks activity occurs
+- Production stable kernels rarely enable `PROVE_RCU`
+- Does not cause panic, corruption, or deadlock
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — one-line quirk, hardware-
-   tested, maintainer-approved
-2. Fixes real bug affecting users? **PASS** — mute LED non-functional on
-   real hardware
-3. Important issue? **PASS (via quirk exception)** — not crash-level,
-   but hardware quirk fixes for broken laptop features are standard
-   stable material in this subsystem
-4. Small and contained? **PASS** — 1 line
-5. No new features/APIs? **PASS** — existing fixup enum/function only
-6. Can apply to local tree? **PASS** — all infrastructure present, clean
-   insertion point verified
+1. Obviously correct and tested? **PASS** — logic is sound; syzbot-
+   verified
+2. Fixes a real bug affecting users? **PASS** — syzbot + real wakeup
+   race (narrow production window)
+3. Important issue? **PASS (borderline)** — not crash/security, but core
+   RCU correctness with stuck-callback potential
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — code present, clean apply
 
-### Step 9.3: Exception category
-**Record:** **Hardware quirk / audio codec quirk** — adding PCI SSID
-entry to enable mute LED on specific HP laptop motherboard variant.
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build fix, or docs fix).
 
 ### Step 9.4: Decision rationale
-
-This commit adds a single `SND_PCI_QUIRK` entry for HP Victus 16-e0xxx
-motherboard 88EE, mapping it to the already-present
-`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup. The sibling variant `0x88eb`
-is already quirked in 6.18.44 with a different fixup (`V2_COEFBIT`),
-confirming this is a multi-motherboard laptop family needing per-SSID
-tuning.
-
-While mute LED failure is low severity (no audio breakage, no crash),
-the Linux stable trees routinely accept these HP Realtek HDA quirk
-additions. The fix is trivial, hardware-specific, uses no new code, and
-carries essentially zero regression risk. It directly benefits 6.18.y
-users with this laptop who currently have a non-functional mute LED.
+This is a small, surgical correctness fix to core RCU Tasks wakeup logic
+in v6.18.44. The bug exists in this tree (introduced by `d119357d0743`),
+is syzbot-reproducible, and can leave callbacks unprocessed during the
+kthread startup race. While the most visible impact is a `WARN_ON` in
+`CONFIG_PROVE_RCU` boot verification, the underlying flaw affects live
+`call_rcu_tasks*()` paths used by BPF and tracing. The fix is minimal,
+low-risk, and correct.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message: subject, SOB tags (Nayak, Iwai),
-  Link tag; no Fixes/Reported-by/Cc:stable
-- **[Phase 2]** Diff analysis: +1 line `SND_PCI_QUIRK(0x103c, 0x88ee,
-  ...)` in `alc269_fixup_tbl[]`
-- **[Phase 2]** Read `alc245_fixup_hp_mute_led_coefbit()` at lines
-  1566–1580: configures coef 0x0b bits for mute LED
-- **[Phase 3]** `git describe HEAD`: v6.18.44-1-g2736c32da98b9; `make
-  kernelversion`: 6.18.44
-- **[Phase 3]** `git blame -L 6807,6812`: 0x88eb from `9745c2561e55f`,
-  surrounding entries from Jul 2025 split
-- **[Phase 3]** `git log -S ALC245_FIXUP_HP_MUTE_LED_COEFBIT`: fixup
-  present since `aeeb85f26c3bbe` (Jul 2025)
-- **[Phase 3]** `git log -S 0x88ee`: no results — entry not yet in tree
-- **[Phase 3]** `git show 9745c2561e55f`: related 0x88eb quirk already
-  in 6.18.y
-- **[Phase 4]** WebFetch lore/patch.msgid.link: BLOCKED (Anubis bot
-  protection)
-- **[Phase 4]** `b4 dig`: could not match commit (not in tree); URL form
-  not accepted
-- **[Phase 5]** `grep alc269_fixup_tbl`: table at line 6510, used at
-  line 8471 via `snd_hda_pick_fixup()`
-- **[Phase 5]** Grep: 12+ existing HP Victus entries using
-  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`
-- **[Phase 6]** Grep `0x88ee`: not present; `0x88eb` present at line
-  6809
-- **[Phase 6]** Read lines 6807–6812: confirmed insertion point and
-  neighbor quirks
-- **[Phase 6]** Verified `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` enum, fixup
-  struct, and function all exist
-- **[Phase 7]** `git log --oneline -20 --grep="mute LED"`: 10+ similar
-  quirk commits in tree history
-- **[Phase 8]** Failure mode assessed as LOW severity (LED only, no
-  audio impact)
-- **UNVERIFIED:** Full mailing list review thread and any explicit Cc:
-  stable nomination in review
+- **[Phase 1]** Parsed subject, body, Fixes: tag; no Reported-by in
+  provided message; syzkaller link found on lore
+- **[Phase 2]** Read diff and `call_rcu_tasks_generic()` at lines
+  346–406 in `kernel/rcu/tasks.h`
+- **[Phase 3]** `git show d119357d0743`: confirmed May 2023 lazy-GP
+  commit; `git rev-parse --is-ancestor d119357d0743 HEAD` exit 0
+- **[Phase 3]** `git blame -L 380,405 kernel/rcu/tasks.h`: lines from
+  v6.18 merge base
+- **[Phase 4]** Fetched lore submission at lists.openwall.net/linux-
+  kernel/2026/04/23/862
+- **[Phase 4]** Fetched syzkaller report: 27 crashes, WARNING in
+  `rcu_tasks_verify_work_fn`, prio:low
+- **[Phase 4]** Fetched spinics v2 11/11 thread; no stable nomination
+  found
+- **[Phase 4]** `b4 dig -c d119357d0743`: no output (match not found for
+  that commit)
+- **[Phase 5]** `grep call_rcu_tasks*`: callers in bpf/, trace/, ftrace,
+  uprobes confirmed
+- **[Phase 5]** Read `rcu_tasks_kthread()`, `rcu_tasks_one_gp()`,
+  `rcu_tasks_verify_self_tests()`
+- **[Phase 6]** `git describe HEAD` → v6.18.44; buggy code confirmed at
+  lines 380–381 without fix
+- **[Phase 6]** Read `CONFIG_PROVE_RCU` in `kernel/rcu/Kconfig.debug`:
+  `def_bool PROVE_LOCKING`
+- **[Phase 7]** Subsystem: kernel/rcu (CORE)
+- **[Phase 8]** Failure mode: WARN_ON + possible stuck callback;
+  severity MEDIUM
 
-**YES**The analysis is complete for the HP Victus 16-e0xxx (88EE) mute
-LED quirk on **Linux 6.18.44**.
+**YES**The backport analysis is done. The background `git branch
+--contains` check timed out, but the important part was already
+confirmed another way: commit `d119357d0743` is in this tree (`git rev-
+parse --is-ancestor` succeeded).
 
-**Verdict: YES** — backport to this stable tree.
+**Verdict for v6.18.44:** **YES** — backport the fix. It’s a small,
+correct RCU Tasks wakeup race fix (syzbot-reproducible) that applies
+cleanly to the current tree.
 
-It’s a one-line hardware quirk that maps PCI SSID `0x103c:0x88ee` to the
-existing `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup. The related `0x88eb`
-variant is already quirked in this tree; this adds the missing
-motherboard variant. Risk is very low, and it matches the usual pattern
-for HP Realtek mute LED fixes in stable.
+ kernel/rcu/tasks.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a06acaf9ba6a0..36d5dfa9e1db8 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6807,6 +6807,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x88d1, "HP Pavilion 15-eh1xxx (mainboard 88D1)", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88eb, "HP Victus 16-e0xxx", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
-+	SND_PCI_QUIRK(0x103c, 0x88ee, "HP Victus 16-e0xxx (MB 88EE)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x890e, "HP 255 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8919, "HP Pavilion Aero Laptop 13-be0xxx", ALC287_FIXUP_HP_GPIO_LED),
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 2dc044fd126eb..2aa5589f0b8bf 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -377,7 +377,8 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
+ 	// Queuing callbacks before initialization not yet supported.
+ 	if (WARN_ON_ONCE(!rcu_segcblist_is_enabled(&rtpcp->cblist)))
+ 		rcu_segcblist_init(&rtpcp->cblist);
+-	needwake = (func == wakeme_after_rcu) ||
++	needwake = (!havekthread && rcu_segcblist_empty(&rtpcp->cblist)) ||
++		   (func == wakeme_after_rcu) ||
+ 		   (rcu_segcblist_n_cbs(&rtpcp->cblist) == rcu_task_lazy_lim);
+ 	if (havekthread && !needwake && !timer_pending(&rtpcp->lazy_timer)) {
+ 		if (rtp->lazy_jiffies)
 -- 
 2.53.0
 
