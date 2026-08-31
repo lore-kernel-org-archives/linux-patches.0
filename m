@@ -1,103 +1,173 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14D85A6E68;
-	Mon, 31 Aug 2026 13:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7CB4B53F8;
+	Mon, 31 Aug 2026 13:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184345; cv=none; b=Mqoj9d/XGq0oqVKFDf/DIVU7HVhXPwkmtpL3UMTnmYdHtnPgyynf9MqxaeJJ6rJK7V5zUt7eOl/ojSMr2DtEG65TZGseYnVprl5atiqF0W9PzzM4CruJnefM/7d8cGqaLhIXKNc/nzKhnXKEjIGiGMPAWPonO+LDuuIPGUosVaE=
+	t=1788184347; cv=none; b=FmH0wiybqQyJviYw0j2FxxfjupEB/9HMheVfCQrWGbzHvX3GlFd3tQnN/fNbgGH9aF098mSbJ+tpU0E/KwtXIr0o2HBJAoyhTmjGxBf0uk8lBnRiBteSigqS0+4Y4gULvOQLxc+6KczRrfZxCcRWIWhJp7GMcD5hwxoW2PpZNFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184345; c=relaxed/simple;
-	bh=MPtuHUmTOV12FzIgkWPyUZ4QGphBAbikJK35KVvShK8=;
+	s=arc-20240116; t=1788184347; c=relaxed/simple;
+	bh=G2VEtoRAwewj1f6xP5rqTSX4udqPDufR6MKFR80DjlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eFnA1ENjVAEFY0jIJQk1vQp/RFbF4zKPwfSP3vIuYgOuu11YHHyV6c3kSnxObC1P8Z+gAUfPY6ge8WWeyvEm3xrU2uwZxhkRGCoqCRZgToj0oZCOxTFngm7Mkm8VfIA1Szqf1uauncsBJfdeqe3TtQ2+c98sQEIZsGZsldYxhj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fGBqnHZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MGaMk+3wtvl5rc2/Ouait/FxVnskZ/o9iqiU5PfyUTkN+BAiE/6Z8vd1SIN2QYqV+zccOIHgMtTMJq4N8nH/gkUGlvgjgQrr7asL+/Yi7YExziNtKmfcxSPpTH6SCsjeURSF40ZNjfY5yXuiOzZ7kHj+/fpQuKFj/st8UVxPY/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F87dZLJQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fGBqnHZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFBE1F00ACF;
-	Mon, 31 Aug 2026 13:52:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184343;
-	bh=9CocnIRXRS7u2nUnljWPBOSgtxPjYYqHXkzuJp4StY0=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F87dZLJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5301F00A3D;
+	Mon, 31 Aug 2026 13:52:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184346;
+	bh=pvc1xK+6XkDNmakBZsKos1Netw3y3omjqbKPyT+Wxe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGBqnHZ1WKmBQT/Voh5gMCR5QXllJ9SP74rRxMauGHKWdJsQzhTa/uXNUvaI0Ika2
-	 44KlSv6C4obGZElu25F3MmQKkOEoVLoeoF87GE14nRv5nSd7o5NUgQ3jvI4Hr4vWpD
-	 rnfZFCrqBpXt8xeERxNnMqB2jmwcC7dQfjJbT11cO2TXp25+UtqL3zdXEzAITXrMHR
-	 XWy7/Y7lX/dIDL4OLh41Tvm4BK9SLh7KB396rLyoEVNlHB4+SjeSrd0ZHJ/3cYZFRH
-	 sSlwKGlQuOHzxDGwqL4/JsNhv33fS1OxLm9UMaAk6L392M9XNNg/p0KDnheFWzvL92
-	 XxvleN+9BmvUw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Andrei Faleichyk <andrei.faleichyk@noogadev.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: Add quirk for ASUS VivoBook X509DAP
-Date: Mon, 31 Aug 2026 09:31:06 -0400
-Message-ID: <20260831133314.4125787-638-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=F87dZLJQMTssZurdKL+vmQmFUzPqJ8pqRBlryz8UoPEgQbZv/oo+DNVVRqhFOYrMn
+	 mLxJbhdFpHThEgU5OpSXzu1pZKcePPq+J2uBs8rAX6Yp1uWvnXTmbRWcvsTjxHCDQ1
+	 cDa8FhqhljXzKlactRjSOn7tZEEZOk7GhvXOD9uE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Eyal Birger <eyal.birger@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.12 76/99] xfrm: bound nat keepalive state collection
+Date: Mon, 31 Aug 2026 15:34:45 +0200
+Message-ID: <20260831133403.719466731@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrei Faleichyk <andrei.faleichyk@noogadev.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 3580bc53520ce4efc94ece5886ad3670b93667ba ]
+------------------
 
-The internal microphone on ASUS VivoBook X509DAP (subsystem ID
-0x1043:0x197e) is not detected without a quirk entry. Add
-ALC256_FIXUP_ASUS_MIC_NO_PRESENCE to fix the issue.
+From: Zihan Xi <zihanx@nebusec.ai>
 
-Signed-off-by: Andrei Faleichyk <andrei.faleichyk@noogadev.com>
-Link: https://patch.msgid.link/20260603213313.6298-1-andrei.faleichyk@noogadev.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 4e9442ce551ebd84b52ad649df721e2dc28af95a upstream.
+
+The v1 nat keepalive fix allocates a GFP_ATOMIC object for every state
+while collecting references for phase two. This makes the worker's
+temporary memory use depend on the number of states and lets -ENOMEM abort
+the scan.
+
+Replace the allocated list with a fixed-size batch. When the batch is full,
+return a private walk status so xfrm_state_walk() leaves a cursor; drain
+the references after the walk releases xfrm_state_lock and resume from
+the cursor. This bounds temporary memory use and avoids the allocation
+failure path.
+
+The v1 fix also moved nat_keepalive_send() out of the walk callback. Keep
+the phase-two drain BH-disabled, as required by local_lock_nested_bh()
+used by the keepalive sockets.
+
+Fixes: 763fe700b7c5 ("xfrm: avoid lock inversion in nat keepalive work")
+Cc: stable@vger.kernel.org
+Cc: Eyal Birger <eyal.birger@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ net/xfrm/xfrm_nat_keepalive.c |   46 +++++++++++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
+--- a/net/xfrm/xfrm_nat_keepalive.c
++++ b/net/xfrm/xfrm_nat_keepalive.c
+@@ -155,32 +155,30 @@ static void nat_keepalive_send(struct na
+ 	}
+ }
+ 
++enum {
++	NAT_KEEPALIVE_BATCH_SIZE = 16,
++	NAT_KEEPALIVE_BATCH_FULL = 1,
++};
++
+ struct nat_keepalive_work_ctx {
+-	struct list_head states;
++	struct xfrm_state *batch[NAT_KEEPALIVE_BATCH_SIZE];
++	unsigned int nr;
+ 	time64_t next_run;
+ 	time64_t now;
+ };
+ 
+-struct nat_keepalive_state {
+-	struct list_head list;
+-	struct xfrm_state *x;
+-};
+-
+ static int nat_keepalive_work_collect(struct xfrm_state *x, int count, void *ptr)
+ {
+ 	struct nat_keepalive_work_ctx *ctx = ptr;
+-	struct nat_keepalive_state *state;
+ 
+ 	if (!READ_ONCE(x->nat_keepalive_interval))
+ 		return 0;
+ 
+-	state = kmalloc_obj(*state, GFP_ATOMIC);
+-	if (!state)
+-		return -ENOMEM;
++	if (ctx->nr == ARRAY_SIZE(ctx->batch))
++		return NAT_KEEPALIVE_BATCH_FULL;
+ 
+ 	xfrm_state_hold(x);
+-	state->x = x;
+-	list_add_tail(&state->list, &ctx->states);
++	ctx->batch[ctx->nr++] = x;
+ 	return 0;
+ }
+ 
+@@ -226,29 +224,27 @@ out:
+ 
+ static void nat_keepalive_work(struct work_struct *work)
+ {
+-	struct nat_keepalive_state *state, *tmp;
+ 	struct nat_keepalive_work_ctx ctx;
+ 	struct xfrm_state_walk walk;
+ 	struct net *net;
+-	int err;
++	int err, i;
+ 
+-	INIT_LIST_HEAD(&ctx.states);
+ 	ctx.next_run = 0;
+ 	ctx.now = ktime_get_real_seconds();
+ 
+ 	net = container_of(work, struct net, xfrm.nat_keepalive_work.work);
+ 	xfrm_state_walk_init(&walk, IPPROTO_ESP, NULL);
+-	err = xfrm_state_walk(net, &walk, nat_keepalive_work_collect, &ctx);
++	do {
++		ctx.nr = 0;
++		err = xfrm_state_walk(net, &walk, nat_keepalive_work_collect, &ctx);
++		local_bh_disable();
++		for (i = 0; i < ctx.nr; i++) {
++			nat_keepalive_work_single(ctx.batch[i], &ctx);
++			xfrm_state_put(ctx.batch[i]);
++		}
++		local_bh_enable();
++	} while (err == NAT_KEEPALIVE_BATCH_FULL);
+ 	xfrm_state_walk_done(&walk, net);
+-	list_for_each_entry_safe(state, tmp, &ctx.states, list) {
+-		nat_keepalive_work_single(state->x, &ctx);
+-		xfrm_state_put(state->x);
+-		kfree(state);
+-	}
+-	if (err == -ENOMEM) {
+-		schedule_delayed_work(&net->xfrm.nat_keepalive_work, 0);
+-		return;
+-	}
+ 	if (ctx.next_run)
+ 		schedule_delayed_work(&net->xfrm.nat_keepalive_work,
+ 				      (ctx.next_run - ctx.now) * HZ);
 
-The background search finished. A repo-wide `git log -S '0x197e'` turned
-up nothing related to this HDA quirk (only unrelated hits in other
-subsystems), and there are no prior commits from Andrei Faleichyk in
-`sound/hda/` in this tree — consistent with this being a new, standalone
-quirk addition.
-
-**Verdict for Linux 6.18.44:** backport **YES**. One-line
-`SND_PCI_QUIRK` for ASUS VivoBook X509DAP (`0x1043:0x197e`) using the
-existing `ALC256_FIXUP_ASUS_MIC_NO_PRESENCE` fixup; applies cleanly and
-matches the pattern of other ASUS VivoBook mic quirks already in stable.
-
-**YES**
-
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 7a047bdbae462..0c23eb601ecaa 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7116,6 +7116,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x18f1, "Asus FX505DT", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x194e, "ASUS UX563FD", ALC294_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x1970, "ASUS UX550VE", ALC289_FIXUP_ASUS_GA401),
-+	SND_PCI_QUIRK(0x1043, 0x197e, "ASUS VivoBook X509DAP", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1982, "ASUS B1400CEPE", ALC256_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x19ce, "ASUS B9450FA", ALC294_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x19e1, "ASUS UX581LV", ALC295_FIXUP_ASUS_MIC_NO_PRESENCE),
--- 
-2.53.0
 
