@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70FE43E484;
-	Mon, 31 Aug 2026 13:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DC747A0B4;
+	Mon, 31 Aug 2026 13:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184675; cv=none; b=FQAKAVt7AK7UEIwNeSR0v1HQaHOsROq/5Q785hFQaHFXJpTjdHZniZYL9GGkspsANJ652y6hK0nX2v0PYhLAr6bPk/Ocs2mPhlMi97VFwF1AmgPFl0EfUA8nuXtxv13qTJLQG3eNECXL9ww4/pQbmWwZ4s/6H5bww+d2KKfB7jE=
+	t=1788184674; cv=none; b=sCF1O0uMNHn1hRCcT3u1tdOPJDi4YWZVmPjkjhmuFCbfNLFYGh2Q7wQcnAIvOb0PCu3iHGOBv1CCPFnQfsS6iDsEYGXS4QNZ+1HlV0xHVLkbI9bGL6I/tp9WTuUyB5IvnR286U3l4IRS0cXVYC43FNaeSiji+pYoF7ALxewPyFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184675; c=relaxed/simple;
-	bh=IKf2WBDbZ1yVe+owVt7QUSbhK2pkhrQlgJ+nBhY+Me8=;
+	s=arc-20240116; t=1788184674; c=relaxed/simple;
+	bh=IRp1wSBNEzfvxrFYs7fBnz8+OE3EQO01yFSkzyGuySI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fy8WjBiR9LMelfkvyg8999++fCFyZrUYB6zwyF+b17zzfl1RHETDPN0LKHqehgmktp5UKSrDA7FULh+CpBfYwVLYIp2UHMfQxKXsF0tU2QpU5kkx/G5h9qWH3TXgLoCb/tq7oVvUd0OJiqHoHP3obWhCaH4fCnBCW13XCdjcK2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7NzDZoH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H2+j+1jBeaaWO8Srv3zH0LYYQrd73BhBaUoaJVw1kTmNfCBByZljahU5P9cXctk8wvUuAPlUiN20jl4PoBEnzi9hI/BYnGaytDLyRmPZLNhADHHWir8QTblg/KnrXEPK2gjn6QZtHq9K2hTSEZEMaQqi5B5b11QX8hcTBe6H6jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8pWtSyO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7NzDZoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF341F00A3E;
-	Mon, 31 Aug 2026 13:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8pWtSyO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1971F00A3D;
+	Mon, 31 Aug 2026 13:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184674;
-	bh=ZA3jrEckKRFdtPErHOc8Tb0sNZtLZdrctLP17BsWa0o=;
+	s=korg; t=1788184671;
+	bh=viXTdzgEvxsepEikqaL4HIJERpLsJT41Nxg4Ex1Ws3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7NzDZoHJWFmmb5kSNtR2aFv8IcP1zFiHOJNgLbrL2zdP+5HdiTffX+QIkpmewt0R
-	 7EpAvKnthsQvJ7z1fTQdiGSFnfU5LSkJa8iU+WrCiV7Wk27sjPah9EzpufysPNKO21
-	 eEiK2pfpdWY5imeU4cs42i2V9grls7yetO/DWkjI=
+	b=B8pWtSyOPAtmXY5rlYRkcLys1sDTXgo+A5z3pEeiHfrv4hMh/y6Wu28qqUxrM1nOK
+	 SiN0HAkWDKDhTy485rEhk0S3Eo2bRNOCXbDd/IZ3N/fwsSPxOE9qnoY29GYT8scT32
+	 EsnQkWyLoYTZhylb3X7+/VeOTHky5ffInLkUwRjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 6.6 90/91] USB: c67x00: fix use-after-free in c67x00_add_iso_urb()
-Date: Mon, 31 Aug 2026 15:35:18 +0200
-Message-ID: <20260831133404.105395637@linuxfoundation.org>
+	syzbot+3b514b87202742f22c44@syzkaller.appspotmail.com,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 89/91] USB: serial: spcp8x5: drop broken carrier detect support
+Date: Mon, 31 Aug 2026 15:35:17 +0200
+Message-ID: <20260831133404.067910143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -49,49 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit b1e24de475bf2d66fffc9103f3444b783527d55a upstream.
+commit d37186bd95a07e334447f47274a38a311dad2172 upstream.
 
-When TD creation fails for the last packet of an isochronous URB,
-c67x00_add_iso_urb() gives the URB back before updating the endpoint
-scheduling state.
+The driver does not support modem status notifications and instead used
+to fetch the modem status once at open() and subsequently operate on and
+report stale state.
 
-c67x00_giveback_urb() frees the URB private data, and the completion
-callback may release the final URB reference. The following accesses to
-urbp->ep_data, urb->interval, and urbp->cnt can therefore use freed
-memory.
+As part of fixing this, a call to fetch the status was added to
+carrier_raised(), which does not work as that callback must not sleep
+(e.g. unlike tiocmget()).
 
-Update next_frame and cnt before giving back the failed final packet,
-making the giveback the last operation that uses the URB and its private
-data.
+Drop the broken carrier detect support.
 
-Fixes: e9b29ffc519b ("USB: add Cypress c67x00 OTG controller HCD driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260806013502.322067-1-shuangpeng.kernel@gmail.com
+Fixes: e1ed212d8593 ("USB: spcp8x5: add proper modem-status support")
+Cc: stable@vger.kernel.org	# 3.10
+Reported-by: syzbot+3b514b87202742f22c44@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a73cea2.01d0871a.3a0d52.000d.GAE@google.com
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/c67x00/c67x00-sched.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/serial/spcp8x5.c |   13 -------------
+ 1 file changed, 13 deletions(-)
 
---- a/drivers/usb/c67x00/c67x00-sched.c
-+++ b/drivers/usb/c67x00/c67x00-sched.c
-@@ -761,13 +761,13 @@ static int c67x00_add_iso_urb(struct c67
- 				ret);
- 			urb->iso_frame_desc[urbp->cnt].actual_length = 0;
- 			urb->iso_frame_desc[urbp->cnt].status = ret;
--			if (urbp->cnt + 1 == urb->number_of_packets)
--				c67x00_giveback_urb(c67x00, urb, 0);
- 		}
- 
- 		urbp->ep_data->next_frame =
- 		    frame_add(urbp->ep_data->next_frame, urb->interval);
- 		urbp->cnt++;
-+		if (ret && urbp->cnt == urb->number_of_packets)
-+			c67x00_giveback_urb(c67x00, urb, 0);
- 	}
- 	return 0;
+--- a/drivers/usb/serial/spcp8x5.c
++++ b/drivers/usb/serial/spcp8x5.c
+@@ -247,18 +247,6 @@ static void spcp8x5_set_work_mode(struct
+ 		dev_err(&port->dev, "failed to set work mode: %d\n", ret);
  }
+ 
+-static int spcp8x5_carrier_raised(struct usb_serial_port *port)
+-{
+-	u8 msr;
+-	int ret;
+-
+-	ret = spcp8x5_get_msr(port, &msr);
+-	if (ret || msr & MSR_STATUS_LINE_DCD)
+-		return 1;
+-
+-	return 0;
+-}
+-
+ static void spcp8x5_dtr_rts(struct usb_serial_port *port, int on)
+ {
+ 	struct spcp8x5_private *priv = usb_get_serial_port_data(port);
+@@ -471,7 +459,6 @@ static struct usb_serial_driver spcp8x5_
+ 	.num_bulk_out		= 1,
+ 	.open			= spcp8x5_open,
+ 	.dtr_rts		= spcp8x5_dtr_rts,
+-	.carrier_raised		= spcp8x5_carrier_raised,
+ 	.set_termios		= spcp8x5_set_termios,
+ 	.init_termios		= spcp8x5_init_termios,
+ 	.tiocmget		= spcp8x5_tiocmget,
 
 
