@@ -1,49 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30454570C3;
-	Mon, 31 Aug 2026 13:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE50A45629A;
+	Mon, 31 Aug 2026 13:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183274; cv=none; b=GEYSRviGpyXeES81yUa3kD79+QDm5d26Lc2/03Dq52VFMo9RR81tQPbIFM5z4NtHiBxTB2iuhbVLkoE7/Rig5+Un9tnZ9kvu3OLibDOF5YCXNroMVMxbtepajB5eH9t2NiibHAOXmxmQN/echy33bXxa33aNW2jTgtHT48ucEvo=
+	t=1788183276; cv=none; b=NU+YHcbrQbvF2xAVSm+KDcssGx8Xkx/ILT5sYqlOwdpOp38oDEfzEaTrKPSLnfdqemnVjL7tgKwFNGI8vugMm+9Oc2OUHwgLMLHIMIUoaopu7FLacutqmj8ojabeJCs+KNpRfEu+ux94FjOLBLKFoDs/OQ/V8FLAtYPUWpjtfMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183274; c=relaxed/simple;
-	bh=t/bXt/ASDbbvGez2CuTMegvHsZ2LU2lk5dnKRVp7Vhc=;
+	s=arc-20240116; t=1788183276; c=relaxed/simple;
+	bh=XTlDyMPjqqpGEJ0fRTilMvCe868kWUmjSD8KnH9twIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A3m2pDwVGGC4GIEKCp/kQuek5jdZe7xyIilSmXffCTb9plStiik8rzF0pP0FoXrkAwf8F0cWU8nUhhykZCtNvsaRkXIrTvBhphAV72uUCBD5UMcKpmpoVUTetSqMv0+NXMcc5xCL7Gx3KQ3OP8zembcMAxlIKaK2pu/Q9sRyj0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FLNmgTjH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TuLBIqvAjUOjKClxeFVIjhL12LhRVDH2WzoVhgpsd3eTUc9oHoVr9TEzCcpHIioEX18DLwospblMNPx1Kud2lnuvcFRI3Il+4+uZ48YptCJPEtuwp9eVMa7dBBFcA9n4VW8Nku8X73H55Z68I1zTwXf+vlBxpawW0Owh0dtdi50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TmX/6qrJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FLNmgTjH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113951F00A3D;
-	Mon, 31 Aug 2026 13:34:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TmX/6qrJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E7B1F00A3E;
+	Mon, 31 Aug 2026 13:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183272;
-	bh=lmSOHeqnUc5i0bcj+yq+SYcrx7e+BzRTeVbv18wv6GI=;
+	s=k20260515; t=1788183274;
+	bh=A7UcETNau9qk8awitJqCLxjvw7lf1xGvDC5YSGu0tas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLNmgTjHiQAyD6JZy9/5TgGv7f7/oiDsGfNDsCXjLk9B2gTxtaYvcEROJ4sld+5QX
-	 ioG2/Iq25tZBoy1UR3EkCgxjqYtWpkK/8B9B/Vm6erww2hLH/76mOSMnOpehfquU6s
-	 d/8e8gfbwQwAhVxT873niz855wX0t4aL7tpX1oyZHrlBY9dGpKmMe384DyKnsEHXFJ
-	 LfCyAkS0vayVM4R+bO2/JUvm9/JuLwmpTqKlcClF6pIonCB+AzWR+YaaVo9snciuS1
-	 5g1lQxwR0X4a4z8JmAif1i/1LF8xGlxJmouFgf0Bytjno0RZwZJr1fMcKSQidOPhN5
-	 ty+B+MqeU3HYA==
+	b=TmX/6qrJINgTk7nytiuaxkO2Lt0RwH+HWBISgrmUPqkJDDs+0wLeWMbSYpnesghsF
+	 1C4077MyJzTrnH5i67HJNuqjNbwr2xPShLB+zRMXTsqYE/bSGrle+OKXm/rcmKMDel
+	 40pcuIeeQtwLgF1JBT8TKEyxeZNIpPbcd/iFNjpKL9qN4k2InZ3OHt2VlNml6E+F17
+	 o586pQZaYgIx7Lo+DRxzFeGCpAvOSgLpoqdOjS+Ku0eWIkz5q+h+vaHn1OI52njYE+
+	 fAwepYOH8CvNXP3D2zgvrlOUdEGUOjO40t8ZJKjrVbBDeWeXveuPAIhlPIHgGWdknm
+	 gNUJHg7fyfglA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
+	saeedm@nvidia.com,
+	tariqt@nvidia.com,
+	mbloch@nvidia.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] drm: rz-du: Ensure correct suspend/resume ordering with VSP
-Date: Mon, 31 Aug 2026 09:21:16 -0400
-Message-ID: <20260831133314.4125787-48-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] eth: mlx5: fix macsec dependency
+Date: Mon, 31 Aug 2026 09:21:17 -0400
+Message-ID: <20260831133314.4125787-49-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -59,83 +61,73 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit c94e765abb051df62b9f7c27116ef9307216c868 ]
+[ Upstream commit 87ab8276ed24d688febfef4d0c1794896e778192 ]
 
-The VSP serves as an interface to memory and a compositor to the DU. It
-therefore needs to be suspended after and resumed before the DU, to be
-properly stopped and restarted in a controlled fashion driven by the DU
-driver. This currently works by chance. Avoid relying on luck by
-enforcing the correct suspend/resume ordering with device links.
+Configurations with mlx5 built-in but macsec=m fail to link:
 
-Based on similar work done by Laurent Pinchart for R-Car DU.
-commit db5be3a7d6bd ("drm: rcar-du: Ensure correct suspend/resume
-ordering with VSP")
+x86_64-linux-ld: drivers/infiniband/hw/mlx5/macsec.o: in function `mlx5r_add_gid_macsec_operations':
+macsec.c:(.text+0x77d): undefined reference to `macsec_netdev_is_offloaded'
+x86_64-linux-ld: drivers/infiniband/hw/mlx5/macsec.o: in function `mlx5r_del_gid_macsec_operations':
+macsec.c:(.text+0xe81): undefined reference to `macsec_netdev_is_offloaded'
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260330144651.817338-1-tommaso.merciai.xr@bp.renesas.com
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Fix the dependency so this configuration cannot happen.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260622124229.2444502-1-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `drm: rz-du: Ensure correct suspend/resume
-ordering with VSP`
+# Stable Backport Analysis: `eth: mlx5: fix macsec dependency`
 
-**Local tree:** Linux **6.18.43** (`git describe HEAD` → `v6.18.43`,
-detached at `stable/linux-6.18.y`)
-
-**Upstream commit:** `c94e765abb051` (on `all-next`, not yet in this
-6.18.43 checkout)
+**Local tree:** Linux **6.18.44** (`git describe HEAD` →
+`v6.18.44-1-g2736c32da98b9`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[drm: rz-du]` `[Ensure]` — enforce correct suspend/resume
-ordering between RZ/G2L Display Unit (DU) and its VSP compositor via
-device links.
+### Step 1.1: Subject Line
+**Record:** `[eth: mlx5]` `[fix]` — Correct a Kconfig dependency for
+mlx5 MACsec offload so invalid build configurations cannot be selected.
 
 ### Step 1.2: Tags
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Reviewed-by | Laurent Pinchart
-\<laurent.pinchart+renesas@ideasonboard.com\> |
-| Signed-off-by | Tommaso Merciai, Biju Das |
-| Link | https://patch.msgid.link/20260330144651.817338-1-
-tommaso.merciai.xr@bp.renesas.com |
-| Fixes: | **None** (expected for manual review) |
-| Cc: stable | **None** |
-| Reported-by / Tested-by | **None** |
-| syzbot | **None** |
+- **Signed-off-by:** Arnd Bergmann `<arnd@arndb.de>` (author)
+- **Reviewed-by:** Sabrina Dubroca `<sd@queasysnail.net>`
+- **Link:**
+  https://patch.msgid.link/20260622124229.2444502-1-arnd@kernel.org
+- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (net maintainer
+  merge)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or `Tested-
+  by:` tags
+- Notable: Reviewed by a netdev reviewer; merged by net maintainer. No
+  syzbot report.
 
-Notable: reviewed by the R-Car/Renesas DRM expert who authored the
-identical rcar-du fix. No user crash report or Tested-by.
-
-### Step 1.3: Body analysis
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** VSP must be suspended *after* DU and resumed *before* DU
-  because VSP is DU's memory interface/compositor. Current ordering
-  relies on luck (device-tree probe order).
-- **Symptom:** Incorrect suspend/resume ordering can leave VSP stopped
-  while DU still uses it (or vice versa on resume) — undefined behavior
-  during power transitions.
-- **Root cause:** No explicit consumer/supplier relationship between DU
-  and VSP platform devices.
-- **Fix approach:** `device_link_add(DU, VSP, DL_FLAG_STATELESS)` plus
-  cleanup in `rzg2l_du_vsp_cleanup()`.
-- **Reference:** Mirrors `db5be3a7d6bd` ("drm: rcar-du: Ensure correct
-  suspend/resume ordering with VSP").
+- **Bug:** Kernel configurations with `MLX5_CORE=y` (built-in) and
+  `MACSEC=m` (module) can enable `MLX5_MACSEC=y`, but linking fails with
+  undefined references to `macsec_netdev_is_offloaded` from
+  `drivers/infiniband/hw/mlx5/macsec.c`.
+- **Symptom:** Link-time failure (`undefined reference to
+  'macsec_netdev_is_offloaded'`) during kernel build — not a runtime
+  crash.
+- **Root cause:** `MLX5_MACSEC` depends only on `MACSEC` (any tristate
+  value), which does not prevent built-in mlx5 from referencing symbols
+  exported only by a modular MACsec driver.
+- **Author note (from lore):** Bug likely old; first noticed on
+  `next-20260615`; rare in randconfig due to other dependency
+  constraints.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Despite "Ensure" wording rather than "fix", this is a
-power-management correctness bug fix — a race/ordering hazard disguised
-as hardening. Same pattern as a well-understood rcar-du bug fix.
+### Step 1.4: Hidden Bug Fix?
+**Record:** No — this is an explicit build-fix, not disguised cleanup.
+Same class of fix Arnd has done before for mlx5 (TLS, psample).
 
 ---
 
@@ -143,372 +135,326 @@ as hardening. Same pattern as a well-understood rcar-du bug fix.
 
 ### Step 2.1: Inventory
 **Record:**
-| File | Changes |
-|------|---------|
-| `rzg2l_du_vsp.c` | +16 lines |
-| `rzg2l_du_vsp.h` | +2 lines (`struct device_link *link`) |
-| **Total** | 18 lines, 2 files |
-| **Functions** | `rzg2l_du_vsp_cleanup()`, `rzg2l_du_vsp_init()` |
-| **Scope** | Single-subsystem, surgical |
+- **Files:** `drivers/net/ethernet/mellanox/mlx5/core/Kconfig` — 1 line
+  changed (+1/-1)
+- **Functions modified:** None (Kconfig only)
+- **Scope:** Single-file, surgical Kconfig fix
 
-### Step 2.2: Code flow per hunk
+### Step 2.2: Code Flow Change
 **Record:**
-1. **Include `linux/device.h`** — needed for `device_link_add/del`.
-2. **`rzg2l_du_vsp_cleanup()`** — Before: only `put_device(vsp->vsp)`.
-   After: also `device_link_del(vsp->link)` if set.
-3. **`rzg2l_du_vsp_init()`** — Before: find VSP pdev, register cleanup,
-   call `vsp1_du_init()`. After: create stateless device link
-   `DU(consumer) → VSP(supplier)`; fail probe with `-EINVAL` if link
-   creation fails.
-4. **`rzg2l_du_vsp.h`** — Add `struct device_link *link` to `struct
-   rzg2l_du_vsp`.
+- **Before:** `MLX5_MACSEC` selectable whenever `MACSEC` is enabled at
+  any tristate value (`y` or `m`), even when `MLX5_CORE=y` and
+  `MACSEC=m`.
+- **After:** `MLX5_MACSEC` only selectable when `MACSEC=y` (built-in) OR
+  `MACSEC=MLX5_CORE` (MACsec built as module only when mlx5 core is also
+  a module).
+- **Affected path:** Kconfig resolution at build configuration time;
+  prevents a configuration that cannot link.
 
-### Step 2.3: Bug mechanism
-**Record:** **Category:** Power-management ordering / race condition.
-- VSP (`vsp1_drv.c`) has `SYSTEM_SLEEP_PM_OPS`
-  (`vsp1_pm_suspend`/`vsp1_pm_resume`).
-- When `vsp1->drm` is set (DU pipeline mode), VSP expects DU to
-  stop/restart it explicitly; it only does `pm_runtime_force_suspend`
-  during system sleep.
-- Without a device link, kernel suspend/shutdown order depends on
-  ACPI/DT enumeration order — nondeterministic across platforms.
-- `device_link_add(consumer, supplier)` reorders
-  `dpm_list`/`devices_kset` so consumer is always processed before
-  supplier on suspend/shutdown and after supplier on resume.
+### Step 2.3: Bug Mechanism
+**Record:** **Build/configuration bug (h).** Built-in mlx5
+(`MLX5_CORE=y`) links `macsec.o` into `mlx5_ib` when
+`CONFIG_MLX5_MACSEC=y`, calling `macsec_netdev_is_offloaded()` from
+`drivers/net/macsec.c`. With `MACSEC=m`, that symbol lives in a loadable
+module and is unavailable at link time for built-in code.
 
-### Step 2.4: Fix quality
+### Step 2.4: Fix Quality
 **Record:**
-- **Obviously correct:** Yes — identical, proven pattern from rcar-du;
-  reviewed by subsystem maintainer.
-- **Minimal:** Yes — 18 lines, no refactoring.
-- **Regression risk:** Very low. Worst case: `device_link_add()` fails
-  at probe (logged, `-EINVAL`); no hot-path changes.
-- **Red flags:** None.
+- **Obviously correct:** Yes — mirrors the established mlx5 pattern used
+  for TLS (`TLS=y || MLX5_CORE=m` at line 162) and psample (`PSAMPLE=y
+  || PSAMPLE=n || MLX5_CORE=m` at line 115).
+- **Minimal:** One-line change, no unrelated edits.
+- **Regression risk:** Very low — only removes an invalid Kconfig
+  combination; does not change runtime behavior for configurations that
+  already built successfully.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** `rzg2l_du_vsp_init()` and cleanup logic date to initial VSP
-integration (file introduced with RZ/G2L DU driver). Buggy code (no
-device link) has been present since VSP support was added. RZ/G2L DU
-driver landed in `768e9e61b3b99` ("drm: renesas: Add RZ/G2L DU
-Support"), confirmed ancestor of HEAD.
+**Record:**
+- `depends on MACSEC` introduced by **8ff0ac5be14469** (Lior Nahmanson,
+  2022-09-05) — `net/mlx5: Add MACsec offload Tx command support`
+- `config MLX5_MACSEC` symbol added by **7390762a07374** (Patrisious
+  Haddad, 2022-11-29)
+- RoCE MACsec code calling `macsec_netdev_is_offloaded()` added in
+  **758ce14aee825** (2022-05-03) and expanded in **58dbd6428a681**
+  (2023-04-13)
+- `macsec_netdev_is_offloaded()` itself added in **f132fdd9dc81e**
+  (2023-08-20)
+- Bug has been latent since RoCE MACsec started referencing the MACsec
+  core symbol with insufficient Kconfig constraints
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-### Step 3.3: Related file history
-**Record:** Recent rz-du stable activity includes power-sequencing fixes
-(e.g. `79f42487ed60d` — MIPI DSI reboot panic). No prior device_link fix
-for rz-du in this tree. rcar-du sibling fix `db5be3a7d6bd` exists on
-`all-next` but is **not** an ancestor of 6.18.43 HEAD.
+### Step 3.3: Related File History
+**Record:**
+- **c3cd281e2bc8d** (2018): `net/mlx5e: fix TLS dependency` — identical
+  class of fix by same author
+- **7a7dd5114f538** (2021): `mlx5: fix psample_sample_packet link error`
+  — same author, same Kconfig file
+- **96c34151d1577** (2020): mlx5 Kconfig weak-dependency conversion
+  after kconfig `imply` semantics change
+- Standalone one-patch fix, not part of a series
 
-### Step 3.4: Author commits
-**Record:** Tommaso Merciai — Renesas contributor; no other rz-du
-commits in this 6.18.43 tree. Biju Das is rz-du maintainer (signed off).
+### Step 3.4: Author Context
+**Record:** Arnd Bergmann is a long-standing contributor who routinely
+fixes Kconfig/link-dependency issues across the kernel. Multiple prior
+mlx5 Kconfig fixes from him are already in this tree.
 
 ### Step 3.5: Dependencies
-**Record:** **Standalone.** Single patch (v1→v2 only added Reviewed-by
-tag and rcar-du commit reference). No prerequisite commits. Applies
-cleanly (`git apply --check` passed).
+**Record:** No prerequisite commits. Uses `MACSEC=MLX5_CORE` Kconfig
+symbol-equality syntax, which is already present elsewhere in this
+6.18.44 tree (e.g., `BACKLIGHT_CLASS_DEVICE=FB_RIVA`,
+`HID=SND_SOC_SDCA`). Applies standalone.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
+### Step 4.1: Original Discussion
 **Record:**
-- `b4 dig -c c94e765abb051` → https://patch.msgid.link/20260330144651.81
-  7338-1-tommaso.merciai.xr@bp.renesas.com
-- Series: v1 (2026-03-24) → v2 (2026-03-30, committed version)
-- Maintainer response: "Applied to drm-misc-next" (Biju Das)
-- **No stable nomination, no NAKs**
+- **URL:** https://lists.openwall.net/linux-kernel/2026/06/22/987
+- **Series revisions:** v1 only (single patch)
+- **Reviewer feedback:** No NAKs found; `Reviewed-by: Sabrina Dubroca`
+- **Stable nomination:** None in thread
+- **Author context:** Notes bug is probably old, first seen on
+  next-20260615
 
 ### Step 4.2: Reviewers
-**Record:** CC'd to `dri-devel`, `linux-renesas-soc`, Laurent Pinchart,
-Maarten Lankhorst, David Airlie, Thomas Zimmermann, etc. Reviewed-by
-from Laurent Pinchart (subsystem expert).
+**Record:** To: mlx5 maintainers (Saeed Mahameed, Leon Romanovsky,
+etc.), netdev maintainers (Andrew Lunn, David Miller, Jakub Kicinski,
+Paolo Abeni, Eric Dumazet). Cc: netdev@, linux-rdma@, linux-kernel@.
+Reviewed-by from Sabrina Dubroca (netdev).
 
-### Step 4.3: Bug report
-**Record:** No external bug report, stack trace, or syzbot link. Issue
-identified by code analysis ("works by chance").
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link. Failure documented
+via reproducible linker error in commit message and lore submission.
+Syzbot CI skipped the patch as having no functional/runtime impact
+(Kconfig-only).
 
-### Step 4.4: Series context
-**Record:** Standalone 1-patch series. rcar-du counterpart is separate
-but parallel.
+### Step 4.4: Related Patches
+**Record:** No multi-patch series. Direct precedent: TLS and psample
+mlx5 Kconfig fixes already in tree.
 
-### Step 4.5: Stable list
-**Record:** No stable@vger.kernel.org discussion found for this specific
-patch.
+### Step 4.5: Stable List History
+**Record:** No stable@ discussion found. Not searched exhaustively on
+lore stable@, but absence is not a negative signal per review
+guidelines.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `rzg2l_du_vsp_init()`, `rzg2l_du_vsp_cleanup()`,
-`rzg2l_du_vsps_init()` (caller).
+### Step 5.1: Key Functions
+**Record:** No C functions modified. Affected symbols at build time:
+- `mlx5r_add_gid_macsec_operations()` /
+  `mlx5r_del_gid_macsec_operations()` in
+  `drivers/infiniband/hw/mlx5/macsec.c` (call
+  `macsec_netdev_is_offloaded()`)
+- `macsec_netdev_is_offloaded()` in `drivers/net/macsec.c`
+  (EXPORT_SYMBOL_GPL)
 
 ### Step 5.2: Callers
-**Record:** `rzg2l_du_vsps_init()` → called from
-`rzg2l_du_modeset_init()` during DU probe. Runs once per VSP referenced
-in DT `renesas,vsps` property. Init path only — not a hot path.
+**Record:** `mlx5r_add/del_gid_macsec_operations()` called from
+`drivers/infiniband/hw/mlx5/main.c` during RoCE GID add/delete. Only
+compiled when `CONFIG_MLX5_MACSEC=y`. `mlx5_ib-$(CONFIG_MLX5_MACSEC) +=
+macsec.o` in `drivers/infiniband/hw/mlx5/Makefile`.
 
 ### Step 5.3: Callees
-**Record:** `of_find_device_by_node()`, `drmm_add_action_or_reset()`,
-`device_link_add()`, `vsp1_du_init()`, `device_link_del()`,
-`put_device()`.
+**Record:** `macsec_netdev_is_offloaded()` checks whether a netdevice
+has MACsec offload enabled — exported GPL symbol from MACsec core
+driver.
 
 ### Step 5.4: Reachability
-**Record:** Triggered at boot on RZ/G2L platforms with
-`CONFIG_DRM_RZG2L_DU` + `CONFIG_VIDEO_RENESAS_VSP1`. Power-transition
-bugs manifest on suspend/resume/reboot/shutdown — common embedded
-operations.
+**Record:** Bug is reachable at **build time** when a user/distro
+selects `MLX5_CORE=y`, `MACSEC=m`, `MLX5_MACSEC=y`. Not a runtime
+userspace trigger, but blocks kernel compilation entirely for that
+config.
 
-### Step 5.5: Similar patterns
-**Record:** Identical fix in `rcar_du_vsp.c` (`db5be3a7d6bd` on all-
-next). rcar-du also uses `device_link_add` for CMM ordering in
-`rcar_du_kms.c` (already in 6.18.43). Established Renesas DRM pattern.
-
----
-
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.43)
-
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current `rzg2l_du_vsp.c` lacks
-`device_link_add/del` and `vsp->link` field. VSP integration has been
-present since RZ/G2L DU driver merge (`768e9e61b3b99` is ancestor of
-HEAD).
-
-### Step 6.2: Backport complications
-**Record:** **Clean apply** — `git apply --check` on commit diff
-succeeded with no conflicts.
-
-### Step 6.3: Related fixes already present?
-**Record:** No equivalent device_link fix for rz-du in 6.18.43. Related
-rz-du power fix `79f42487ed60d` (MIPI DSI reboot panic) is already in
-stable — shows this subsystem's power-sequencing bugs are stable-worthy.
+### Step 5.5: Similar Patterns
+**Record:** Same Kconfig dependency pattern already used in this file:
+- `MLX5_EN_TLS`: `depends on TLS=y || MLX5_CORE=m` (line 162)
+- `MLX5_TC_SAMPLE`: `depends on PSAMPLE=y || PSAMPLE=n || MLX5_CORE=m`
+  (line 115)
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
 
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/gpu/drm/renesas/rz-du/` — **PERIPHERAL** (Renesas
-RZ/G2L embedded SoCs only). Critical for affected hardware users; not
-universal.
+### Step 6.1: Does Buggy Code Exist?
+**Record:** **YES.** Current tree at
+`drivers/net/ethernet/mellanox/mlx5/core/Kconfig:146` still has `depends
+on MACSEC`. RoCE MACsec code and `macsec_netdev_is_offloaded()`
+references are present. Fix commit is **not yet applied** to this
+checkout.
+
+### Step 6.2: Backport Complications
+**Record:** **Clean apply expected.** Single-line change.
+`MACSEC=MLX5_CORE` syntax is supported in 6.18.44 Kconfig (verified via
+grep of other `=SYMBOL` patterns in tree). No conflicting recent churn
+on this Kconfig block.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** TLS and psample mlx5 Kconfig link fixes are present. No
+equivalent MACsec fix found (`git log --grep="macsec dependency"`
+returns nothing in this tree).
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem
+**Record:** **drivers/net/ethernet/mellanox/mlx5** +
+**drivers/infiniband/hw/mlx5** (RDMA/RoCE MACsec). Criticality:
+**IMPORTANT** — affects Mellanox ConnectX users building custom or
+distro kernels with MACsec offload; not universal core-path but affects
+a widely deployed NIC family.
 
 ### Step 7.2: Activity
-**Record:** Actively maintained in 6.18.y (MIPI DSI fixes, resolution
-updates, encoder fixes in 2025–2026).
+**Record:** mlx5 Kconfig actively maintained; recent commits include PSP
+offload, VXLAN co-dependency removal, HWS support. MACsec Kconfig
+dependency has been unchanged since 2022.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** Users of RZ/G2L/RZ/V2L SoCs with DU+VSP display pipeline
-(`CONFIG_DRM_RZG2L_DU`, `ARCH_RZG2L`). Driver-specific, not config-
-universal.
+### Step 8.1: Who Is Affected
+**Record:** Kernel builders (distro maintainers, embedded vendors,
+advanced users) configuring `MLX5_CORE=y` + `MACSEC=m` +
+`MLX5_MACSEC=y`. Hardware-specific (Mellanox/NVIDIA ConnectX with RoCE
+MACsec offload).
 
-### Step 8.2: Trigger conditions
-**Record:** System suspend (S3), resume, reboot/shutdown. DU has
-`.shutdown` handler (`drm_atomic_helper_shutdown`); VSP has system-sleep
-PM ops. Ordering nondeterminism depends on DT/ACPI device enumeration —
-"works by chance" today.
+### Step 8.2: Trigger Conditions
+**Record:** Selecting the invalid Kconfig combination during `make
+menuconfig` / defconfig customization. Uncommon but explicitly allowed
+by current Kconfig. Not user-triggerable at runtime.
 
-**Note:** rz-du lacks explicit `DEFINE_SIMPLE_DEV_PM_OPS` suspend/resume
-(unlike rcar-du). This limits the immediate S3 benefit until DU PM is
-added, but device links still affect shutdown ordering and will enforce
-correct ordering once PM is added. Maintainers merged this on mainline
-knowing rz-du has no PM ops yet.
+### Step 8.3: Failure Mode Severity
+**Record:** **Build failure** — linker error, kernel cannot be built.
+Per `Documentation/process/stable-kernel-rules.rst` line 19, build
+errors are explicitly listed as valid stable material (excluding
+CONFIG_BROKEN). Severity for stable purposes: **qualifying build
+error**.
 
-### Step 8.3: Failure mode severity
-**Record:** When wrong order triggers: VSP suspended while DU still
-active → undefined behavior, possible oops/corruption/display failure.
-**Severity: HIGH** when triggered; **likelihood: LOW–MEDIUM** (depends
-on DT order). Prior rz-du reboot panic stable backport confirms real-
-world power-transition failures in this driver.
-
-### Step 8.4: Risk-benefit
+### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** MEDIUM-HIGH for RZ/G2L embedded users; prevents
-  nondeterministic suspend/shutdown ordering bugs.
-- **Risk:** VERY LOW — 18-line, proven pattern, probe-time only.
-- **Ratio:** Favorable.
+- **Benefit:** Unblocks valid-intent builders; prevents wasted build
+  time hitting link failure; aligns Kconfig with link requirements
+- **Risk:** Minimal — one-line Kconfig constraint, proven pattern
+- **Ratio:** High benefit, very low risk
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real PM ordering bug in production code path (VSP system-sleep PM + DU
-  dependency)
-- Small, surgical, obviously correct fix mirroring accepted rcar-du
-  pattern
-- Reviewed by Laurent Pinchart (Renesas DRM expert)
-- Buggy code confirmed present in 6.18.43; patch applies cleanly
-- Prior stable backport of rz-du power-sequencing bug (`79f42487ed60d`)
-- VSP driver explicitly documents DU must control VSP during pipeline
-  suspend
+- Fixes a real, reproducible linker failure
+- Explicitly listed stable category: build error
+- One-line, obviously correct fix
+- Same author fixed identical mlx5 Kconfig class before (TLS, psample) —
+  those are in this tree
+- Reviewed-by from netdev reviewer; merged by net maintainer
+- Buggy code confirmed present in 6.18.44
+- Clean backport expected
 
 **AGAINST backport:**
-- No user-reported crash or Tested-by for rz-du specifically
-- rz-du lacks system-sleep PM ops (unlike rcar-du), reducing immediate
-  S3 suspend benefit
-- Peripheral driver — limited user base
-- Theoretical "works by chance" rather than demonstrated failure
+- Rare configuration (author notes randconfig rarely hits it)
+- No runtime/user-visible crash — build-time only
+- No explicit stable nomination or user bug reports
 
-**Unresolved:** No runtime test evidence for rz-du specifically; exact
-failure rate on RZ/G2L boards unverified.
+**Unresolved:** Whether any distro actually ships this broken config
+combination in practice (unverified; not needed for decision — build
+errors are stable-worthy regardless).
 
-### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — correct by inspection;
-reviewed by maintainer; rcar-du analogue tested |
-| 2. Fixes real bug? | **PASS** — PM ordering hazard in DU+VSP pipeline
-|
-| 3. Important issue? | **PASS** — potential crash/corruption on
-suspend/resume/reboot (HIGH severity, moderate likelihood) |
-| 4. Small and contained? | **PASS** — 18 lines, 2 files |
-| 5. No new features/APIs? | **PASS** — internal device link only |
-| 6. Applies to local tree? | **PASS** — clean apply, code and driver
-present |
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — proven Kconfig pattern,
+   Reviewed-by present
+2. Fixes real bug affecting users? **PASS** — reproducible link failure
+   blocks kernel build
+3. Important issue? **PASS** — build error per stable-kernel-rules.rst
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features/APIs? **PASS** — Kconfig constraint only
+6. Can apply to local tree? **PASS** — buggy code present, syntax
+   supported, clean apply
 
-### Step 9.3: Exception categories
-**Record:** N/A — standard bug fix, not device-ID/quirk/DT/build/doc
-exception.
+### Step 9.3: Exception Category
+**Record:** **Build fix** — Kconfig dependency correction preventing
+link failure.
 
-### Step 9.4: Decision rationale
-This commit fixes a real power-management ordering defect in the RZ/G2L
-DU driver that has been present since VSP support was added to 6.18.y.
-The fix is minimal, follows an identical accepted rcar-du pattern, is
-reviewed by the subsystem expert, and applies cleanly to 6.18.43. While
-rz-du currently lacks explicit system-sleep PM callbacks (a separate
-gap), the device link still enforces correct shutdown ordering (DU has a
-`.shutdown` handler) and ensures correct suspend/resume ordering for the
-VSP's system-sleep PM path. The risk is negligible and consistent with
-prior stable backports of rz-du power-sequencing fixes.
+### Step 9.4: Decision Rationale
+
+For **Linux 6.18.44**, this commit should be backported. The tree still
+has the insufficient `depends on MACSEC` constraint while RoCE MACsec
+code unconditionally references `macsec_netdev_is_offloaded()` when
+`CONFIG_MLX5_MACSEC=y`. The fix is a one-line Kconfig change using an
+established mlx5 pattern and syntax already supported in 6.18.y. It
+meets all stable kernel criteria, including the explicit allowance for
+build errors in `stable-kernel-rules.rst`.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user-provided diff
-  and `git show c94e765abb051`
-- **[Phase 2]** Diff analysis: 18 lines across 2 files; adds
-  `device_link_add/del` in init/cleanup
-- **[Phase 3]** `git describe HEAD` → v6.18.43; `git blame` on
-  `rzg2l_du_vsp.c:292-325` → original VSP init code; `git merge-base
-  --is-ancestor 768e9e61b3b99 HEAD` → rz-du driver in tree;
-  `db5be3a7d6bd` not ancestor of HEAD
-- **[Phase 3]** `git apply --check` on commit diff → applies cleanly
-- **[Phase 4]** `b4 dig -c c94e765abb051` → lore URL; `b4 dig -a` →
-  v1/v2 only; `b4 dig -w` → maintainers CC'd; mbox grep → Reviewed-by
-  Laurent Pinchart, "Applied to drm-misc-next", no stable nomination
-- **[Phase 5]** `grep rzg2l_du_vsp_init` → called from
-  `rzg2l_du_vsps_init()` in `rzg2l_du_kms.c`; verified VSP PM ops in
-  `vsp1_drv.c:625-701`
-- **[Phase 6]** Read current `rzg2l_du_vsp.c` — no device_link present;
-  `grep device_link` in rz-du → no matches
-- **[Phase 6]** `git show all-next:rzg2l_du_drv.c | rg pm` → no PM ops
-  on all-next either (fix merged without DU PM)
-- **[Phase 6]** Confirmed `79f42487ed60d` in tree as prior rz-du power
-  stable backport
-- **[Phase 7]** Driver is `CONFIG_DRM_RZG2L_DU`, `ARCH_RZG2L` —
-  peripheral/embedded
-- **[Phase 8]** Verified rz-du has `.shutdown` but no `.pm`
-  suspend/resume in `rzg2l_du_drv.c`; rcar-du has PM ops for comparison
+- **[Phase 1]** `git describe HEAD` → v6.18.44; parsed commit message
+  tags from user query and lore
+- **[Phase 1]** WebFetch lore: https://lists.openwall.net/linux-
+  kernel/2026/06/22/987 — confirmed patch content and author notes
+- **[Phase 2]** Read `Kconfig` lines 143–165 — confirmed current
+  `depends on MACSEC` and TLS precedent at line 162
+- **[Phase 2]** Grep `macsec_netdev_is_offloaded` — found in
+  `drivers/infiniband/hw/mlx5/macsec.c:246,332` and
+  `drivers/net/macsec.c:4355`
+- **[Phase 3]** `git blame` on Kconfig:143-150 — `depends on MACSEC`
+  from 8ff0ac5be14469 (2022-09-05)
+- **[Phase 3]** `git show 8ff0ac5be14469`, `758ce14aee825`,
+  `58dbd6428a681` — MACsec Kconfig and RoCE MACsec introduction
+- **[Phase 3]** `git show c3cd281e2bc8d`, `7a7dd5114f538` — prior Arnd
+  mlx5 Kconfig link fixes
+- **[Phase 3]** `git log --oneline -20 --
+  drivers/net/ethernet/mellanox/mlx5/core/Kconfig` — recent file history
+- **[Phase 3]** `git show f132fdd9dc81e` — `macsec_netdev_is_offloaded`
+  added 2023-08-20
+- **[Phase 4]** b4 dig requires commit hash; commit not in local tree —
+  used WebFetch lore instead
+- **[Phase 4]** WebSearch — found lore URL, GitHub commit 87ab827,
+  syzbot CI skip (no runtime test needed)
+- **[Phase 5]** Read `drivers/infiniband/hw/mlx5/Makefile:33` —
+  `mlx5_ib-$(CONFIG_MLX5_MACSEC) += macsec.o`
+- **[Phase 5]** Grep `=MLX5_CORE` and `=SYMBOL` patterns —
+  `MACSEC=MLX5_CORE` syntax supported in 6.18.44 tree
+- **[Phase 6]** Grep confirmed fix NOT present (`depends on MACSEC`
+  without `MACSEC=y || MACSEC=MLX5_CORE`)
+- **[Phase 6]** `git log --grep="macsec dependency"` — no fix already in
+  tree
+- **[Phase 7]** Read `Documentation/process/stable-kernel-rules.rst:19`
+  — build errors explicitly allowed
+- **[Phase 8]** Confirmed failure mode is link-time build failure, not
+  runtime crash
 
-**YES**The analysis is complete for **Linux 6.18.43**
-(`stable/linux-6.18.y`).
+**YES**
 
-**Commit:** `c94e765abb051` — `drm: rz-du: Ensure correct suspend/resume
-ordering with VSP`
-**Verdict: YES** — backport to this tree.
+ drivers/net/ethernet/mellanox/mlx5/core/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-**Summary:** The RZ/G2L DU driver in 6.18.43 uses a VSP compositor
-without an explicit device link, so suspend/resume/shutdown ordering
-depends on DT probe order. The patch adds the same small
-`device_link_add()` pattern already used for rcar-du (~18 lines, applies
-cleanly). Reviewed by Laurent Pinchart; low risk and consistent with
-prior stable rz-du power-sequencing fixes.
-
-**Caveat:** rz-du still lacks system-sleep PM callbacks (unlike rcar-
-du), so the main immediate benefit is shutdown ordering and future-
-proofing when PM is added — but the underlying ordering bug is real on
-RZ/G2L hardware with VSP.
-
- drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c | 16 ++++++++++++++++
- drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h |  2 ++
- 2 files changed, 18 insertions(+)
-
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c
-index 040d4e4aff000..ab49604d69acf 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.c
-@@ -20,6 +20,7 @@
- #include <drm/drm_vblank.h>
- 
- #include <linux/bitops.h>
-+#include <linux/device.h>
- #include <linux/dma-mapping.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
-@@ -293,6 +294,9 @@ static void rzg2l_du_vsp_cleanup(struct drm_device *dev, void *res)
- {
- 	struct rzg2l_du_vsp *vsp = res;
- 
-+	if (vsp->link)
-+		device_link_del(vsp->link);
-+
- 	put_device(vsp->vsp);
- }
- 
-@@ -317,6 +321,18 @@ int rzg2l_du_vsp_init(struct rzg2l_du_vsp *vsp, struct device_node *np,
- 	if (ret < 0)
- 		return ret;
- 
-+	/*
-+	 * Enforce suspend/resume ordering between the DU (consumer) and the
-+	 * VSP (supplier). The DU will be suspended before and resume after the
-+	 * VSP.
-+	 */
-+	vsp->link = device_link_add(rcdu->dev, vsp->vsp, DL_FLAG_STATELESS);
-+	if (!vsp->link) {
-+		dev_err(rcdu->dev, "Failed to create device link to VSP %s\n",
-+			dev_name(vsp->vsp));
-+		return -EINVAL;
-+	}
-+
- 	ret = vsp1_du_init(vsp->vsp);
- 	if (ret < 0)
- 		return ret;
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h
-index 322eb80dcbaff..a22aaf0843ed7 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_vsp.h
-@@ -15,6 +15,7 @@
- #include <linux/scatterlist.h>
- 
- struct device;
-+struct device_link;
- struct drm_framebuffer;
- struct rzg2l_du_device;
- struct rzg2l_du_format_info;
-@@ -29,6 +30,7 @@ struct rzg2l_du_vsp_plane {
- struct rzg2l_du_vsp {
- 	unsigned int index;
- 	struct device *vsp;
-+	struct device_link *link;
- 	struct rzg2l_du_device *dev;
- };
- 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/Kconfig b/drivers/net/ethernet/mellanox/mlx5/core/Kconfig
+index 3c3e84100d5aa..925ee25d05b47 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/Kconfig
++++ b/drivers/net/ethernet/mellanox/mlx5/core/Kconfig
+@@ -143,7 +143,7 @@ config MLX5_CORE_IPOIB
+ config MLX5_MACSEC
+ 	bool "Connect-X support for MACSec offload"
+ 	depends on MLX5_CORE_EN
+-	depends on MACSEC
++	depends on MACSEC=y || MACSEC=MLX5_CORE
+ 	default n
+ 	help
+ 	  Build support for MACsec cryptography-offload acceleration in the NIC.
 -- 
 2.53.0
 
