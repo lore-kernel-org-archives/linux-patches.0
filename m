@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035AD52ED21;
-	Mon, 31 Aug 2026 14:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807A8481AA6;
+	Mon, 31 Aug 2026 14:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184896; cv=none; b=K3oJfvaovarEY92ooD1vLNeXy8efFoJZN9adT6gBR4LZmTjGsRDVQgKjDI2SSSSOJaeKo4gmiplAGXQ68GeImxTqS4RvwIGqDUa1+8raaYarNnMAHWmL8dVd2AgKrVwd+TAguso9scDqBJHwjwBZeEx9RlpMT9EnLiLIE4UFrFo=
+	t=1788184904; cv=none; b=VBced3bk5SGN7xgHZwE7FSssnTazFMFqwB1XmIHj/OMg21KW/sc4iAG1x1CNNlNKkf2bkHmGnwrIHnbKGsgu9QEvqEcLTXCEmRBiZSN2R8ddl6CYO6BPWNhqshm7kZNv1Dz3iOxJFj/MOYAyrxRVyXn3ZlMiAdduNU7c/sfdePY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184896; c=relaxed/simple;
-	bh=G0RZcQwK6YffEj3eoPA7D7Z74MSMUpDo7aoWPSNhj0E=;
+	s=arc-20240116; t=1788184904; c=relaxed/simple;
+	bh=t2tDITJk9f2qJYFg2SiHOj6c269lRY4l3Wq7fLW2XbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmFHDuvnITiRnkCGeGL6DoTj0C85rfp5802UeLlTjkrjtfTqT/54nIGU65DDwTGRZumfG7TDRGsKrVo/YugumGaCLzB/Z08YU0kNs//JrI/YGWwnUaSJf4g8vMhYj47HWtaZbJoJCQXu8NxHkZjlRcK4ey5xnvevtodAtWhVB7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRYizyta; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YWjFmZZWksg8nYeZA8yvasW3TKIA6E+QxjnvG9RtEZckF/lrwZq2fuz9CP9dPnARHW4nBAo9lnVx08vRlazdmBu8SpCT5wa+osZoGxt9DB4TUIlfEAFy+zYrmXVFuyWu5rbMQQfrXHj8Jl32zqLqMoBm+TkWQLA8JZtrH7AusTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkQoleYo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRYizyta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3891F000E9;
-	Mon, 31 Aug 2026 14:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkQoleYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD861F00A3D;
+	Mon, 31 Aug 2026 14:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184893;
-	bh=EsPN1IP66VKLzWarNOA62L72uxbTqStbpNG0y+mTTr8=;
+	s=korg; t=1788184902;
+	bh=FkEoJhJ37n1AayF5MOTXy3dS630F2kWe6qPK9e1wJug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TRYizytapzItoAcPKj4aHOQL0oDQzdPWD/89YOpSPV7oHmFk6CQUDGGb4ed5X3xYs
-	 hKGH/ZyuMlQPqKbKVYHSMhfc9r1ZkXgdA6ucSx4hCii5GpEpnLoVHNRG0WQko71Zxm
-	 dnnUcOqVEagUnGBKpe3dLswZxKj10SL3oWpcsXlY=
+	b=HkQoleYoH2F+QJNnsnjdTIyP2jSof3BinzTASiohimJkGcqkLKGTUGPgDwDqKbsPZ
+	 x//P2cJixeIyMIm9n+3PMA93Q49qIK+ecxkS/sp58JOS3llKMb+HddljmEOycy+HM/
+	 EAM6GLiWHbXpzJZKeleNL0+Vm2wDfTUi+D2IlKIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.1 75/92] xfrm: fix xfrm_state_construct() auth-trunc leak
-Date: Mon, 31 Aug 2026 15:35:13 +0200
-Message-ID: <20260831133403.491543955@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 78/92] mm/swap: reject swapon() on filesystem-level encrypted files
+Date: Mon, 31 Aug 2026 15:35:16 +0200
+Message-ID: <20260831133403.601546285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -52,44 +58,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit c12cbf56320fb633484ee0ca1fb7d68d6b64b213 upstream.
+commit c310a8932a3107c9bc8f01d473e9d085f8aa9c98 upstream.
 
-attach_auth_trunc() can allocate x->aalg while leaving
-x->props.aalgo at zero when the selected auth algorithm has no
-sadb_alg_id. One real case is cmac(aes).
+ext4 and f2fs don't prevent filesystem-level encrypted files from being
+set up directly as swap files.  In this case, encryption is bypassed.
 
-xfrm_state_construct() then treats !x->props.aalgo as "no auth
-algorithm attached yet" and calls attach_auth(). That overwrites
-x->aalg and loses the first allocation. Any later failure or teardown
-only frees the replacement pointer.
+No one should be doing this, vs.  the methods of encrypted swap that
+actually do work (such as swapping to a dm-crypt device, or swapping to a
+loopback device on top of a filesystem-level encrypted file).
 
-Check whether x->aalg is already attached instead of inferring that
-state from x->props.aalgo.
+Nevertheless, to prevent user error, make swapon() explicitly reject this
+case.  Document this behavior in fscrypt.rst as well.
 
-Fixes: 4447bb33f094 ("xfrm: Store aalg in xfrm_state with a user specified truncation length")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Link: https://lore.kernel.org/20260803180426.3123-1-ebiggers@kernel.org
+Fixes: 9bd8212f981e ("ext4 crypto: add encryption policy and password salt support")
+Fixes: f424f664f0e8 ("f2fs crypto: add encryption policy and password salt support")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Baoquan He <baoquan.he@linux.dev>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/filesystems/fscrypt.rst |    4 ++++
+ mm/swapfile.c                         |    7 +++++++
+ 2 files changed, 11 insertions(+)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -703,7 +703,7 @@ static struct xfrm_state *xfrm_state_con
- 	if ((err = attach_auth_trunc(&x->aalg, &x->props.aalgo,
- 				     attrs[XFRMA_ALG_AUTH_TRUNC], extack)))
- 		goto error;
--	if (!x->props.aalgo) {
-+	if (!x->aalg) {
- 		if ((err = attach_auth(&x->aalg, &x->props.aalgo,
- 				       attrs[XFRMA_ALG_AUTH], extack)))
- 			goto error;
+--- a/Documentation/filesystems/fscrypt.rst
++++ b/Documentation/filesystems/fscrypt.rst
+@@ -1075,6 +1075,10 @@ astute users may notice some differences
+ 
+ - DAX (Direct Access) is not supported on encrypted files.
+ 
++- Encrypted files cannot be used directly as swap files.  To swap to
++  an encrypted file, set up a loopback device on top of it.
++  Alternatively, encrypted swap can use a dm-crypt device.
++
+ - The maximum length of an encrypted symlink is 2 bytes shorter than
+   the maximum length of an unencrypted symlink.  For example, on an
+   EXT4 filesystem with a 4K block size, unencrypted symlinks can be up
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -3058,6 +3058,13 @@ SYSCALL_DEFINE2(swapon, const char __use
+ 		error = -EBUSY;
+ 		goto bad_swap_unlock_inode;
+ 	}
++	if (IS_ENCRYPTED(inode)) {
++		pr_warn_once(
++			"Filesystem-level encrypted swapfile '%s' is unsupported. Create a loop device over it, or use dm-crypt\n",
++			name->name);
++		error = -EINVAL;
++		goto bad_swap_unlock_inode;
++	}
+ 
+ 	/*
+ 	 * Read the swap header.
 
 
