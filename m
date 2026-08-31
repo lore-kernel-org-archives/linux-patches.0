@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352DF488D86;
-	Mon, 31 Aug 2026 14:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A2E495503;
+	Mon, 31 Aug 2026 14:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185207; cv=none; b=Cl0HnG8p0weaa/uXAwPv6l6tqsSFwDS7I/exLmYRdgXq1CrXFz7EMRA2wNVolGZyRRNetdY6Kwsv7oTRgtkwnSSUR4g1guz6E2l1W/fHSnrAc4yuJoixxcgpAworerp1JKs8Qp1xrXCq9h1uO/xGa6GwI9LTIvmBMhj4Fynfuhs=
+	t=1788185234; cv=none; b=l4HcQv5+sJ79QD+niqHRhww32xWa13Uz+3Q41vb0VqxszbN/5GH6vpiuwUSls3/ORfuY3zhM5+CiAtoh6ZmAgn8oDJzgJIdhIVekfcM2LlqRbvjWbSseVcFcv1/4E/Phz9pOUp4FXpqHDI1iEwyQ6B1dmpOs5Z1wSVOFJeNL7iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185207; c=relaxed/simple;
-	bh=f7aF4BUPpnnBgW5zkqel57WnI2k6DcHGqMYl5XwvAMU=;
+	s=arc-20240116; t=1788185234; c=relaxed/simple;
+	bh=2l9qyGJCr925iZTb/rKmkCy/JtGVmtmZdQoxDK1759E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=frrqFUN7SXJ2+47ezmzteAfVar7bqaHnAMQpj+OFeH2XZg9B+hrXLLFZBBDZ0O0WQvUqojc3h5cnH2uXx1HN0V1ER39T0tv5gDRMZOYwqn0e1ChSpyS69tk3ZnNiemYNAHadEbEPr4DjH5V0oEJJCwRn2dyALVZ7jke3hVtRqas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTDQkFHq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OJ9OdmAlukY0QCXSYUIzA1XqxGyz94dsBXyANujfe7nUExR+GMf8oiUMu8x6kv1OccFssOrx6GcDe9IOiRnLYm3CqKcS3enEBkRKfq874Qr5+rvAik0DQb6Lj7cruRFIAIePECrEXv4A0SrjDhpiEgHY+hzpVujWoJyTB2+u0Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myMJboYs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTDQkFHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750BF1F000E9;
-	Mon, 31 Aug 2026 14:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myMJboYs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CC31F000E9;
+	Mon, 31 Aug 2026 14:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185206;
-	bh=E0dm7gQ2BSbKwbX7wh/RDp5MCRa9p5FcJaWv2Q9m5RA=;
+	s=korg; t=1788185231;
+	bh=XZXV+owdvNLeFB8V+0WWkhqU4q3NVJkcMQqSkhHHqmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BTDQkFHq8lsyrxYZjHCFY4dINmYnifZGtowjsbK3RfbQqUSd+KplslF2kgDyfQKr4
-	 vf6SUKI+nXVTIDqXX+fUV2ruJVuM1jnUODj1CMv+DB+KJquMEty3BUAg7wLM0ygWxc
-	 PyL4uBH2NVwlw6T7F5i74wQUS23DMRIIlV/9FaCA=
+	b=myMJboYscQkBGKGnQ9ZnkrlAkdXvLiRuPLgNhBdl/zhVmm7HhJyqtS3zJ19ygZjFP
+	 /2iFIuMCzZnP3939qufLzE7nwLI6AMPMBXmO8o/cvmiSRX3bi4ObA/LFPWmUxhrI/G
+	 cTZ8kU0uHCUSPLFJT3lPzPLBnBJI3+/95UvSkDOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
-	Alec Hall <signshop.alec@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/43] HID: magicmouse: do not keep a stale msc->input if no input is claimed
-Date: Mon, 31 Aug 2026 15:35:28 +0200
-Message-ID: <20260831133359.437874578@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.10 29/43] xfrm: drop ESP-in-TCP packets with no ingress device
+Date: Mon, 31 Aug 2026 15:35:37 +0200
+Message-ID: <20260831133359.934810272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -46,75 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-[ Upstream commit 0af3b89705688af01aa06025b84fa7a1e06ba6cc ]
+commit e1d7c5ac1c246ce5775f604515de0a59fbf2116e upstream.
 
-magicmouse_input_mapping() caches the first hid_input's input_dev in
-msc->input while the report descriptor is parsed, and the rest of the
-driver treats a non-NULL msc->input as proof that an input device was
-registered.
+ESP-in-TCP receives records through the TCP strparser. handle_esp()
+restores skb->dev from the saved skb_iif before passing the packet into
+the XFRM input path.
 
-That does not hold on the hid-input error path. If hidinput_connect()
-fails -- for instance because input_register_device() returns an error --
-it unwinds through hidinput_disconnect(), which frees every input_dev it
-created, including the one cached in msc->input.
+Queued TCP data can be processed after the original ingress device has
+been removed, for example during veth or net namespace teardown. In that
+case dev_get_by_index_rcu() returns NULL. The XFRM IPv4 and IPv6 input
+paths both expect skb->dev to be valid while building the route lookup,
+so queued ESP-in-TCP data can dereference a NULL device.
 
-The failure does not abort the probe. hid_connect() only skips the claim:
+Drop the packet if the saved ingress device can no longer be resolved.
+Such a packet can no longer be routed through the normal XFRM receive
+path, and this preserves the existing behaviour for packets whose ingress
+device still exists.
 
-	if ((connect_mask & HID_CONNECT_HIDINPUT) && !hidinput_connect(hdev,
-				connect_mask & HID_CONNECT_HIDINPUT_FORCE))
-		hdev->claimed |= HID_CLAIMED_INPUT;
-
-and the "device has no listeners" bailout below it does not fire for this
-driver, which sets ->raw_event; on the USB Magic Mouse 2 / Magic Trackpad
-2 paths hidraw and hiddev are claimed as well. hid_hw_start() therefore
-returns 0 and magicmouse_probe() continues with msc->input pointing at
-freed memory. Being non-NULL, it passes the "input not registered" check
-in probe and the NULL checks in ->raw_event and ->event, so the next
-input report dereferences freed memory.
-
-Clear msc->input when the HID core did not claim an input device, so the
-existing NULL checks cover this case as well.
-
-Fixes: f1a9a149abc8 ("HID: magicmouse: fix race between input_register() and probe()")
-Link: https://lore.kernel.org/linux-input/20260728185542.65F091F000E9@smtp.kernel.org/
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
-Reviewed-by: Alec Hall <signshop.alec@gmail.com>
-Tested-by: Alec Hall <signshop.alec@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Assisted-by: Codex:gpt-5.4
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-magicmouse.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/xfrm/espintcp.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -643,6 +643,16 @@ static int magicmouse_probe(struct hid_d
- 		return ret;
- 	}
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -38,6 +38,11 @@ static void handle_esp(struct sk_buff *s
  
-+	/*
-+	 * When hidinput_connect() fails it frees every input device it
-+	 * created, but that does not fail hid_hw_start(): the core simply
-+	 * does not claim an input. msc->input, cached in ->input_mapping
-+	 * while the report descriptor was parsed, would then be a dangling
-+	 * pointer that passes every NULL check. Trust the core's claim.
-+	 */
-+	if (!(hdev->claimed & HID_CLAIMED_INPUT))
-+		msc->input = NULL;
-+
- 	if (!msc->input) {
- 		hid_err(hdev, "magicmouse input not registered\n");
- 		ret = -ENOMEM;
+ 	rcu_read_lock();
+ 	skb->dev = dev_get_by_index_rcu(sock_net(sk), skb->skb_iif);
++	if (!skb->dev) {
++		XFRM_INC_STATS(sock_net(sk), LINUX_MIB_XFRMINERROR);
++		kfree_skb(skb);
++		goto out;
++	}
+ 	local_bh_disable();
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family == AF_INET6)
+@@ -46,6 +51,7 @@ static void handle_esp(struct sk_buff *s
+ #endif
+ 		xfrm4_rcv_encap(skb, IPPROTO_ESP, 0, TCP_ENCAP_ESPINTCP);
+ 	local_bh_enable();
++out:
+ 	rcu_read_unlock();
+ }
+ 
 
 
