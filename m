@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C143F43F091;
-	Mon, 31 Aug 2026 13:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B6847D444;
+	Mon, 31 Aug 2026 13:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184723; cv=none; b=dwO5iA5EXF85wMqSWQ8Ppe+F4dxyN9krSkBniyhPI8dpNgb6LPT3+moNnkc3R0eAHcP1Z4cEN2cRqjQGcE3F73s+OQ1aQR2mCi5jdqlfKJPxqtlSjWEmzab1mlUI7Pq/mr6PcPv+C4xs0uyOwi3VkEsbNgoRW+8zJRFjIclHaBA=
+	t=1788184719; cv=none; b=PlDImeQh8wIBpMGwvgV6yAz0AbEA1jqftiCnLAzTht/t1KD+FKSuFxb80Lpfc+k/F0Cx9iFT3lU2yFftMYVy5DOkvpxSyLpXM9mjhPomOOdDdLIV0zUGBmgTOKY/8cSiXwO2XzyZO7mNieOydoyN9btT0zMFTNywIynrDzbQJsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184723; c=relaxed/simple;
-	bh=QFZatLp85OM61i5l+Ga9ixJaQUR0viK7Z4DJwTsDxXQ=;
+	s=arc-20240116; t=1788184719; c=relaxed/simple;
+	bh=F75ZZnUb6kdZT9ZBEF27WSKOA35Lmtb4T2594U58ius=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpteoqSk/bstzyLShBa65uh471Br6J58zi//wVGOWfnYZlzeLPPJNyFCf0r3P3OMQBoJTCSr+X4axcTAbvV55YmBtaMBaySfIB3f/sR2TnxZvOW+pBK0f/EB+MNVkxK9sPMtSh3ZPWrzUDXduvdwa3elPDPtG07jD+0/Me7HYt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Px3Y6p24; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mNv3yJwRbzclk/zBud+0gMRgX5VVRPmjaAnvv3bwjQwbkZP4+PM9AV6V85nknO6QpkZQNHdJZF1hMWJAWSpsghqD6nRIedA71z3Tebm1u3VT8gdfXwqdi5PL8bt227RNl95ri74aZPlHpRNPsxJpyVZywy5xOzC7BKKbz++nSSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nHksAfh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Px3Y6p24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AE61F00A3D;
-	Mon, 31 Aug 2026 13:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nHksAfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7733B1F00ACA;
+	Mon, 31 Aug 2026 13:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184722;
-	bh=C+Xyd7Wn/CfF0oX0xEQaWbPwOeNSBd+UI3OiQYz1U+w=;
+	s=korg; t=1788184717;
+	bh=O2Iy9f6Dj50LNInk/AJlVez0QnYvw8HOyw3kOsfN1sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Px3Y6p24h5rnCcUDabXAdNGyCbr3x8ffwGTJEsqU9tws1ZVWBLEpfSlDZN/7GYDmq
-	 oECwV9Wwz1ExoFs/9YcFAiL/bwn9cHEMfHGjcAv8tMnqbC9GlQVp5umXyuOs1iYSMX
-	 g1slSxOPjOOS41CzPgU0tmIAEKuzF5lE2+imMrn4=
+	b=1nHksAfhL+bxGc7ZmCObXxO95ZhQBFo5vegsXO8LahLsABzf0X/1glK1D/xXKXitz
+	 4VBP3Cxgcg0+T+HwCH362RZxyG8gSEOkcO6gF4Dda7oQCdpbxmKGKpBb3s2vWsgYCt
+	 7Fl1SsnEWJ8iwWntpQwab7pAHKiyc9BkhpEI4l74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	"Dylan J. Wolff" <wolffd@comp.nus.edu.sg>,
+	Jiacheng Xu <stitch@zju.edu.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 16/92] media: platform: exynos4-is: Add hardware sync wait to fimc_is_hw_change_mode()
-Date: Mon, 31 Aug 2026 15:34:14 +0200
-Message-ID: <20260831133400.381439986@linuxfoundation.org>
+Subject: [PATCH 6.1 14/92] jfs: Fix null-ptr-deref in jfs_ioc_trim
+Date: Mon, 31 Aug 2026 15:34:12 +0200
+Message-ID: <20260831133400.261948740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,36 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Dylan Wolff <wolffd@comp.nus.edu.sg>
 
-[ Upstream commit bd9f6ce7d512fa21249415c16af801a4ed5d97b6 ]
+[ Upstream commit a4685408ff6c3e2af366ad9a7274f45ff3f394ee ]
 
-In fimc_is_hw_change_mode(), the function changes camera modes without
-waiting for hardware completion, risking corrupted data or system hangs
-if subsequent operations proceed before the hardware is ready.
+[ Syzkaller Report ]
 
-Add fimc_is_hw_wait_intmsr0_intmsd0() after mode configuration, ensuring
-hardware state synchronization and stable interrupt handling.
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000087: 0000 [#1
+KASAN: null-ptr-deref in range [0x0000000000000438-0x000000000000043f]
+CPU: 2 UID: 0 PID: 10614 Comm: syz-executor.0 Not tainted
+6.13.0-rc6-gfbfd64d25c7a-dirty #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Sched_ext: serialise (enabled+all), task: runnable_at=-30ms
+RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
+Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
+90 82 fe ff 4c 89 ff 31 f6
+RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
+RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
+R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
+FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+? __die_body+0x61/0xb0
+? die_addr+0xb1/0xe0
+? exc_general_protection+0x333/0x510
+? asm_exc_general_protection+0x26/0x30
+? jfs_ioc_trim+0x34b/0x8f0
+jfs_ioctl+0x3c8/0x4f0
+? __pfx_jfs_ioctl+0x10/0x10
+? __pfx_jfs_ioctl+0x10/0x10
+__se_sys_ioctl+0x269/0x350
+? __pfx___se_sys_ioctl+0x10/0x10
+? do_syscall_64+0xfb/0x210
+do_syscall_64+0xee/0x210
+? syscall_exit_to_user_mode+0x1e0/0x330
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe51f4903ad
+Code: c3 e8 a7 2b 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
+89 f7 48 89 d6 48 89 ca 4d
+RSP: 002b:00007fe5202250c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007fe51f5cbf80 RCX: 00007fe51f4903ad
+RDX: 0000000020000680 RSI: 00000000c0185879 RDI: 0000000000000005
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe520225640
+R13: 000000000000000e R14: 00007fe51f44fca0 R15: 00007fe52021d000
+</TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:jfs_ioc_trim+0x34b/0x8f0
+Code: e7 e8 59 a4 87 fe 4d 8b 24 24 4d 8d bc 24 38 04 00 00 48 8d 93
+90 82 fe ff 4c 89 ff 31 f6
+RSP: 0018:ffffc900055f7cd0 EFLAGS: 00010206
+RAX: 0000000000000087 RBX: 00005866a9e67ff8 RCX: 000000000000000a
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: dffffc0000000000 R08: ffff88807c180003 R09: 1ffff1100f830000
+R10: dffffc0000000000 R11: ffffed100f830001 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000438
+FS:  00007fe520225640(0000) GS:ffff8880b7e80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005593c91b2c88 CR3: 000000014927c000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Kernel panic - not syncing: Fatal exception
 
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[ Analysis ]
+
+We believe that we have found a concurrency bug in the `fs/jfs` module
+that results in a null pointer dereference. There is a closely related
+issue which has been fixed:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234
+
+... but, unfortunately, the accepted patch appears to still be
+susceptible to a null pointer dereference under some interleavings.
+
+To trigger the bug, we think that `JFS_SBI(ipbmap->i_sb)->bmap` is set
+to NULL in `dbFreeBits` and then dereferenced in `jfs_ioc_trim`. This
+bug manifests quite rarely under normal circumstances, but is
+triggereable from a syz-program.
+
+Reported-and-tested-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
+Reported-and-tested-by: Jiacheng Xu <stitch@zju.edu.cn>
+Signed-off-by: Dylan J. Wolff<wolffd@comp.nus.edu.sg>
+Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/jfs/jfs_discard.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c b/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
-index 366e6393817d2..5f9c44e825a5f 100644
---- a/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
-+++ b/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
-@@ -164,6 +164,7 @@ int fimc_is_hw_change_mode(struct fimc_is *is)
- 	if (WARN_ON(is->config_index >= ARRAY_SIZE(cmd)))
- 		return -EINVAL;
+diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
+index 5f4b305030ad5..4b660296caf39 100644
+--- a/fs/jfs/jfs_discard.c
++++ b/fs/jfs/jfs_discard.c
+@@ -86,7 +86,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
+ 	down_read(&sb->s_umount);
+ 	bmp = JFS_SBI(ip->i_sb)->bmap;
  
-+	fimc_is_hw_wait_intmsr0_intmsd0(is);
- 	mcuctl_write(cmd[is->config_index], is, MCUCTL_REG_ISSR(0));
- 	mcuctl_write(is->sensor_index, is, MCUCTL_REG_ISSR(1));
- 	mcuctl_write(is->setfile.sub_index, is, MCUCTL_REG_ISSR(2));
+-	if (minlen > bmp->db_agsize ||
++	if (bmp == NULL ||
++	    minlen > bmp->db_agsize ||
+ 	    start >= bmp->db_mapsize ||
+ 	    range->len < sb->s_blocksize) {
+ 		up_read(&sb->s_umount);
 -- 
 2.53.0
 
