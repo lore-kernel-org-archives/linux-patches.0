@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E138A483800;
-	Mon, 31 Aug 2026 14:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0E1483BCB;
+	Mon, 31 Aug 2026 14:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184862; cv=none; b=BRbHCPqGuM10nsrzmnYEK5gJz4UTKjnb2WMBylY4CccopvpThc/IQfuZDW2IAys6rEJFZ5hbnynedb8kXgRISfRupYrvSXVeHcQ+B6vH3gWgFl7kaumgT3UEiyHDgzabG9HRbUqxgd/yH3JWjqzzIJz0cZ1KEqolWG4MlSuhJZs=
+	t=1788184865; cv=none; b=Xh8oyJ+S/8Ygds1meiXH2Nt2MqYH5d1ur2RwaAN3QZgJpnT1Yd16YaK8oiJCBCt++oircWeEyIByQAfwLfbVTsfYMcRuQz4pArY+Zq358CdhqYRHtDdFR9qmphx6LHBXqFtop1BzO+VnNXvGLF21rlbybHubHq5f3udsWm9bRsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184862; c=relaxed/simple;
-	bh=rvaGAMzKY0c3W/razNyIxQ3OC1LOhR5LJpzTd9WdNRs=;
+	s=arc-20240116; t=1788184865; c=relaxed/simple;
+	bh=kRSh/PBDOUiDHXo4yon0sHM+nS4QdB7IhS573ljDuNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oytlarGkRfPRaM5sdsl+s4YHne2q0GypU+2Dxuv5Abus2BWgt2fEpbaBdb9eygIbawod3w/mD+WeHjdxZ5Pknit9XggN+p6EMTgblih+WM/qyQQZiAfc6edSeeh5zKzPPB0YoCIKay75Kk8puGL75V7B5bTXt0/RjnOegR6bSeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qKZsF5B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eeOKIzcAs0t94F3JMhVEw0tbxE2lteqcWsQ3suSWuvIKoyYgMOtDkXAq2pyyh2YMLjAB+dnZXZlZxoown0PT13e7OUxm72Y2xBI5BMTC/mPQP8eyRl2wzz9TDAua6rXOaP+7s6fblWCztl+heXAuFLggKGtGi3UAnRVNGUBNc/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Jmst8I1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qKZsF5B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059BD1F00A3D;
-	Mon, 31 Aug 2026 14:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Jmst8I1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109AD1F00A3D;
+	Mon, 31 Aug 2026 14:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184860;
-	bh=3sMzx8vg/pxjnXCkSAaFcSC7GA6tVaGzWvUXwcWdsvQ=;
+	s=korg; t=1788184863;
+	bh=t9HThacZCkS5Wk9URC5lyHUxu+2PCjkXAZjCkzCc58A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1qKZsF5BWoF3Y2BkQ/Mljn8DWzl4aA04RxlHPO4+ih9FaAphme0rMCSPAldN0+hz4
-	 GFmPvb58f0WSmIApYrjD9fpVV9wVZjvg/0YLxWRoVSMfikHXYTAdL1e6ff5iH/PNR7
-	 OXwJjNqQeHotvg89mv2Tzr2NzVTP4y2w8Dw9dDJU=
+	b=1Jmst8I1EYmXdiE/OdGTWonWOsSS6wK/dJukw6ClQaPH7Sxwt2+wu+4kiZUCxXa7/
+	 wtcpCAYY3rZmrmzS/rDQGCA9p+Y6tZvp40bdG0uUn161xLWWCvMYnkf4sVo41CYlgy
+	 EFJoNp0xvauvle3MTHGFFBUUE8fP2vRs4nx2WG5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/92] ASoC: nau8821: Cancel delayed work on component remove
-Date: Mon, 31 Aug 2026 15:34:23 +0200
-Message-ID: <20260831133400.932302930@linuxfoundation.org>
+Subject: [PATCH 6.1 26/92] bpf: Fix use-after-free in offloaded map/prog info fill
+Date: Mon, 31 Aug 2026 15:34:24 +0200
+Message-ID: <20260831133401.008406604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,70 +55,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit dbd3fd05cddfdeec1e49b0a66269881c09eebd17 ]
+[ Upstream commit a0c584fc18056709c8e047a82a6045d6c209f4ce ]
 
-Attempting to unload the driver while a jack detection work is pending
-would likely crash the kernel when it is eventually scheduled for
-execution:
+When querying info for an offloaded BPF map or program,
+bpf_map_offload_info_fill_ns() and bpf_prog_offload_info_fill_ns()
+obtain the network namespace with get_net(dev_net(offmap->netdev)).
+However, the associated netdev's netns may be racing with teardown
+during netns destruction. If the netns refcount has already reached 0,
+get_net() performs a refcount_t increment on 0, triggering:
 
-[ 1984.896308] BUG: unable to handle page fault for address: ffffffffc10c2a20
-[...]
-[ 1984.896388] Hardware name: Valve Jupiter/Jupiter, BIOS F7A0131 01/30/2024
-[ 1984.896396] Workqueue: events nau8821_jdet_work [snd_soc_nau8821]
-[ 1984.896414] RIP: 0010:__mutex_lock+0x9f/0x11d0
-[...]
-[ 1984.896504] Call Trace:
-[ 1984.896511]  <TASK>
-[ 1984.896524]  ? snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
-[ 1984.896572]  ? snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
-[ 1984.896596]  snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
-[ 1984.896622]  nau8821_jdet_work+0xeb/0x1e0 [snd_soc_nau8821]
-[ 1984.896636]  process_one_work+0x211/0x590
-[ 1984.896649]  ? srso_return_thunk+0x5/0x5f
-[ 1984.896670]  worker_thread+0x1cd/0x3a0
+  refcount_t: addition on 0; use-after-free.
 
-Cancel unscheduled jdet_work or wait for its execution to finish before
-the component driver gets removed.
+Although rtnl_lock and bpf_devs_lock ensure the netdev pointer remains
+valid, they cannot prevent the netns refcount from reaching zero.
 
-Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
-Fixes: ee70bacef1c6 ("ASoC: nau8821: Avoid unnecessary blocking in IRQ handler")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251231-nau8821-cleanup-v1-2-6b0b76cbbb64@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by using maybe_get_net() instead of get_net(). maybe_get_net()
+uses refcount_inc_not_zero() and returns NULL if the refcount is already
+zero, which causes ns_get_path_cb() to fail and the caller to return
+-ENOENT -- the correct behavior when the netns is being destroyed.
+
+Fixes: 675fc275a3a2d ("bpf: offload: report device information for offloaded programs")
+Fixes: 52775b33bb507 ("bpf: offload: report device information about offloaded maps")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Closes: https://lore.kernel.org/bpf/f0aa3678-79c9-47ae-9e8c-02a3d1df160a@hust.edu.cn/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260409023733.168050-1-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/bpf/offload.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index f464c70011a15..8c015d114cac3 100644
---- a/sound/soc/codecs/nau8821.c
-+++ b/sound/soc/codecs/nau8821.c
-@@ -1147,6 +1147,14 @@ static int nau8821_component_probe(struct snd_soc_component *component)
- 	return 0;
- }
+diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+index 190d9f9dc9870..e67b3d4e1aa8c 100644
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -274,9 +274,8 @@ static struct ns_common *bpf_prog_offload_info_fill_ns(void *private_data)
  
-+static void nau8821_component_remove(struct snd_soc_component *component)
-+{
-+	struct nau8821 *nau8821 = snd_soc_component_get_drvdata(component);
-+
-+	if (nau8821->jdet_active)
-+		cancel_delayed_work_sync(&nau8821->jdet_work);
-+};
-+
- /**
-  * nau8821_calc_fll_param - Calculate FLL parameters.
-  * @fll_in: external clock provided to codec.
-@@ -1505,6 +1513,7 @@ static int __maybe_unused nau8821_resume(struct snd_soc_component *component)
+ 	if (aux->offload) {
+ 		args->info->ifindex = aux->offload->netdev->ifindex;
+-		net = dev_net(aux->offload->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(aux->offload->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
+@@ -501,9 +500,8 @@ static struct ns_common *bpf_map_offload_info_fill_ns(void *private_data)
  
- static const struct snd_soc_component_driver nau8821_component_driver = {
- 	.probe			= nau8821_component_probe,
-+	.remove			= nau8821_component_remove,
- 	.set_sysclk		= nau8821_set_sysclk,
- 	.set_pll		= nau8821_set_fll,
- 	.set_bias_level		= nau8821_set_bias_level,
+ 	if (args->offmap->netdev) {
+ 		args->info->ifindex = args->offmap->netdev->ifindex;
+-		net = dev_net(args->offmap->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(args->offmap->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
 -- 
 2.53.0
 
