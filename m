@@ -1,157 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513995A894E;
-	Mon, 31 Aug 2026 13:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9985F5A9852;
+	Mon, 31 Aug 2026 13:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184353; cv=none; b=KyY/chsaHadt9ZVtmN6ekuueKsIFDgi9sT8OPy8C6RNM7qcQr+4bDZcKLcOHmGKca/vdDA6KQVUv5B2d5DBQrAkfAc7Gb0fijHeZO6R2Z2TOkG4SNcom4hDhUgXngRx0ncfg8N7S3Qhw6n4u7Bx868G1Jo3ZgFI4rnElZ5eeRr0=
+	t=1788184356; cv=none; b=ZEiG4xC0pc0j2ZrIaDb5sJau2tWMqhoKCW7DWG8TvXY80Yc6AMqzLG0GDKjyX6mdVvP3wMgvuAAcauxNFDLrSy9JfFZ16nLq1qfF8nKa3rICbC/DuJyEfY1x3L7kssu8C+IODJ23JRB5dm+eX12u5YuJulp72IszisRr4cOeLMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184353; c=relaxed/simple;
-	bh=6hqlCQ5kq92jrq7wfiOWwETXA3/B9Z0J2y8N2dHQxzo=;
+	s=arc-20240116; t=1788184356; c=relaxed/simple;
+	bh=Jiugd+vIf/ojIFY9fFAWpQYMir2aYhsAbH2fNEv1Jqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L+2fe7xC9fy6ailIQeWocuCm7IF4ssJ8gaUiS6rmdX+F+UeqwN8U/XGVOlNrSSG4VLGULXcjw1r3iPhwfieBjVk9HsibLQQ6UZnqF/NLseHnBXe/kGm/ueFZWBQLTDjfDfNZpymUnBuCIcY1FBeVYUnbxC70JBzuOdla4XPfGbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggqyvOZ5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o0ahE7v4rxWNqmRq/dYENcT5CzBtse3BVlPz3lp9mR2vjRmNnPDD7rqbB0YyUDer2WeA3G5lI0R468dDzZJHHug8Q62aYUVXom+pKSmSMrfeHcy1ScbNKa3q8+UQ1piXPj20jmViacNZ5S1M99VQJm9OKS817hFFRGiio7XtHas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fE05nR9k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggqyvOZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAA01F000E9;
-	Mon, 31 Aug 2026 13:52:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184352;
-	bh=xktnLdwdOOKm8UHvxL9xClglEUbQ9SR+vS/cFunfwfc=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fE05nR9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0136B1F00ACA;
+	Mon, 31 Aug 2026 13:52:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184354;
+	bh=o9+NebgHGO63nbKQ/NTw29/6CNT9fP0EB5RmHlj+FOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ggqyvOZ5d+SM+Hm52IvmEygaA/Nv08/334oY4FTwIgODrz7mL8+PK2nYbOHoaP3Cp
-	 gVW5OduI2Y6R4yCm7yVgzrF47OeIxaw9r8YoQjRGj3F5t4nxZ563xgwvYuehldjVK7
-	 dQBuKeqqo58rmmiTOW+OAGleX7NOd7037bqomPdPDkDc42k3Yxf8XmtHvHAOjDYkU2
-	 FAfi2e4DiNmKIfoxogorsIJCkXDVmxbFDT0oFGYVAK7FfWCg93K1PDgEU793s/BoCj
-	 wvCGBG/gTGMpVzetPTubZj3lP/Z6/2IxCLCqnfjKxvjcD2TtwxYfeESyJLBRjPqC0y
-	 PPJitEVg/3hUQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] netfilter: nfnetlink_log: wait for rcu grace period before freeing pernet state
-Date: Mon, 31 Aug 2026 09:31:10 -0400
-Message-ID: <20260831133314.4125787-642-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=fE05nR9kfKoEz8MyMfGfDJj/N0WY/OoFT4HMHyI+ksP1fgZ3Vyeqkk2YR0Mg/51Kb
+	 yFRSg0HZlgUKdLaXFiSHap83hHrerMgjkxt+xiniRsiL579McPdJOYmVrecBfFEG3G
+	 gAjjy/1kM3g0ALWMgbqYCvpOlI0jOuB3ezhgymdI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 78/99] ipv6: seg6: clear IPv4 control block on IPIP decapsulation
+Date: Mon, 31 Aug 2026 15:34:47 +0200
+Message-ID: <20260831133403.809726605@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 33d1469b0124cc0baaea7a2032123b77a81e0940 ]
+------------------
 
-sashiko reports: "nfnl_log_net_exit() calls nf_log_unset(), which
-clears the logger pointer without an RCU grace period.  Immediately after,
-ops_free_list() frees the per-net state while concurrent packets might
-still be executing nf_log_packet() under rcu_read_lock()."
+From: Kyle Zeng <kylebot@openai.com>
 
-Clear the pointer via .pre_exit to make sure rcu readers have completed
-before pernet storage is free'd.  The change in nf_log_syslog.c is only
-done for consistency: it doesn't use pernet data.
+commit 44930446dde45a7a90fe1446fa38eb0e2c561646 upstream.
 
-Link: https://sashiko.dev/#/patchset/20260731151806.849724-1-pablo%40netfilter.org
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+End.DX4 and End.DT4 decapsulate an IPv4 packet through
+decap_and_validate() and send it directly to IPv4 routing. The inner
+packet therefore bypasses ip_rcv_core(), which normally clears IPCB
+before IPv4 interprets skb->cb.
+
+The skb instead retains IP6CB data from the outer packet. IP6CB and
+IPCB use the same skb->cb storage, so IP6CB(skb)->lastopt overlaps
+IPCB(skb)->opt.optlen and srr, while IP6CB(skb)->nhoff overlaps rr and
+ts.
+
+The sender can make the stale optlen byte nonzero with a valid outer
+extension-header chain. The reproducers put an eight-byte Destination
+Options header immediately after the 40-byte IPv6 header and before the
+Segment Routing Header. ipv6_destopt_rcv() records the sender-controlled
+Destination Options offset in both lastopt and nhoff, setting them to
+40. On the reproduced little-endian x86-64 kernel, IPv4 therefore sees
+optlen = 40 and rr = 40.
+
+Both tcp_v4_save_options() and __ip_options_echo() skip option copying
+when optlen is zero. Here optlen is 40, so the TCP SYN path allocates
+room for 40 bytes of option data and calls __ip_options_echo(). The
+stale rr value makes that function read inner packet byte 41 as the
+Record Route option length. The reproducers set that sender-controlled
+byte to 255, so __ip_options_echo() copies 255 bytes into the 40-byte
+option-data area.
+
+Separate End.DX4 and End.DT4 reproducers on the unpatched v7.2-rc5
+kernel both produced:
+
+  BUG: KASAN: slab-out-of-bounds in __ip_options_echo()
+  Write of size 255
+
+The relevant End.DX4 call path is:
+
+  __ip_options_echo
+  tcp_v4_route_req
+  tcp_conn_request
+  tcp_v4_conn_request
+  tcp_rcv_state_process
+  tcp_v4_do_rcv
+  tcp_v4_rcv
+  ip_protocol_deliver_rcu
+  ip_local_deliver_finish
+  ip_local_deliver
+  input_action_end_dx4_finish
+  input_action_end_dx4
+
+The relevant End.DT4 call path is:
+
+  __ip_options_echo
+  tcp_v4_route_req
+  tcp_conn_request
+  tcp_v4_conn_request
+  tcp_rcv_state_process
+  tcp_v4_do_rcv
+  tcp_v4_rcv
+  ip_protocol_deliver_rcu
+  ip_local_deliver_finish
+  ip_local_deliver
+  input_action_end_dt4
+
+tcp_v4_save_options() is inlined into the tcp_v4_route_req() path, so
+it does not appear as a separate frame.
+
+When decap_and_validate() handles IPPROTO_IPIP, save the ingress
+interface from IP6CB, clear IPCB, and restore the saved value. Doing
+this in the common decapsulation path covers End.DX4, End.DT4, and
+End.DT46's IPv4 arm.
+
+Use IP6CB(skb)->iif rather than skb->skb_iif. These actions run after
+l3mdev processing, which can replace skb_iif with the L3 master;
+IP6CB iif still records the receiving interface set at IPv6 ingress.
+
+Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
+Cc: stable@vger.kernel.org
+Suggested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260817085839.946321-1-david.lee@trailofbits.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ net/ipv6/seg6_local.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-LLM Generated explanations, may be completely bogus:
-
-The background searches finished with no hits:
-
-- **Local tree:** `git log --grep` for the fix subject,
-  `nfnl_log_net_pre_exit`, and related terms returned nothing — the
-  patch is not in `v6.18.44`.
-- **Patchwork:** The kernel.org search also came up empty (no matching
-  nfnetlink entries).
-
-That lines up with the earlier analysis: the buggy code is still present
-in this tree, and the fix looks like a good backport candidate
-(**YES**).
-
- net/netfilter/nf_log_syslog.c |  4 ++--
- net/netfilter/nfnetlink_log.c | 13 +++++++++----
- 2 files changed, 11 insertions(+), 6 deletions(-)
-
-diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
-index 6fa0812cd79ca..07a4f4725fcb2 100644
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -1006,7 +1006,7 @@ static int __net_init nf_log_syslog_net_init(struct net *net)
- 	return ret;
- }
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -256,6 +256,13 @@ static bool decap_and_validate(struct sk
+ 	if (iptunnel_pull_offloads(skb))
+ 		return false;
  
--static void __net_exit nf_log_syslog_net_exit(struct net *net)
-+static void __net_exit nf_log_syslog_net_pre_exit(struct net *net)
- {
- 	nf_log_unset(net, &nf_ip_logger);
- 	nf_log_unset(net, &nf_arp_logger);
-@@ -1017,7 +1017,7 @@ static void __net_exit nf_log_syslog_net_exit(struct net *net)
- 
- static struct pernet_operations nf_log_syslog_net_ops = {
- 	.init = nf_log_syslog_net_init,
--	.exit = nf_log_syslog_net_exit,
-+	.pre_exit = nf_log_syslog_net_pre_exit,
- };
- 
- static int __init nf_log_syslog_init(void)
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index a6989966d80d5..68e5429338330 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -1160,21 +1160,26 @@ static int __net_init nfnl_log_net_init(struct net *net)
- 	return 0;
- }
- 
--static void __net_exit nfnl_log_net_exit(struct net *net)
-+static void __net_exit nfnl_log_net_pre_exit(struct net *net)
- {
--	struct nfnl_log_net *log = nfnl_log_pernet(net);
--	unsigned int i;
--
- #ifdef CONFIG_PROC_FS
- 	remove_proc_entry("nfnetlink_log", net->nf.proc_netfilter);
- #endif
- 	nf_log_unset(net, &nfulnl_logger);
-+}
++	if (proto == IPPROTO_IPIP) {
++		int iif = IP6CB(skb)->iif;
 +
-+static void __net_exit nfnl_log_net_exit(struct net *net)
-+{
-+	struct nfnl_log_net *log = nfnl_log_pernet(net);
-+	unsigned int i;
++		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++		IPCB(skb)->iif = iif;
++	}
 +
- 	for (i = 0; i < INSTANCE_BUCKETS; i++)
- 		WARN_ON_ONCE(!hlist_empty(&log->instance_table[i]));
+ 	return true;
  }
  
- static struct pernet_operations nfnl_log_net_ops = {
- 	.init	= nfnl_log_net_init,
-+	.pre_exit = nfnl_log_net_pre_exit,
- 	.exit	= nfnl_log_net_exit,
- 	.id	= &nfnl_log_net_id,
- 	.size	= sizeof(struct nfnl_log_net),
--- 
-2.53.0
+
 
