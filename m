@@ -1,113 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD6B44606D;
-	Mon, 31 Aug 2026 13:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D2049C4A4;
+	Mon, 31 Aug 2026 13:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183592; cv=none; b=s2qOHdxlHbQQai/9PnarQrsbxrTczmOLunROh0qNJVE+mIu4NF6j6tkQrrjKN9yGykm/u93j7wRJPmJXxTIm6HnGwCH3IJx9cjbWM9eGAv3eClc7ocPyDjJ9/hZP6Hpjd4/bN3V2t5Lfxh04GUAjtKOCPuJH3I3g8aGiDr0SFM4=
+	t=1788183593; cv=none; b=Adj8XxIq0tpv+jQrRyGdOnqFtqhklR9GVKwLnFPj1KXD5uAUEjBJKjRFhvg+ZZgkr3ZPvfH6MiOhMyqnf2mL2+YjZiM557LYAFsXViMTqu0HakNauOVcHlrYIe7FpfQMsx42cA00Y5OW4dTvaKr7poFwv/jvRY4bn2lM7XvhkTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183592; c=relaxed/simple;
-	bh=1gBg+PE6dekI+YtFZlhDQ7cobxN1nMEhCP9BtymPNJw=;
+	s=arc-20240116; t=1788183593; c=relaxed/simple;
+	bh=UWE3/x+BwZ8oc5bBCLk8y333X/YVAIFJfVhZ7lMAFwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WaIdBWdjZb+l9KnALX/SKsXSvhzeq+pQ5sUNbsIYs0W3j1ak8oy3FX4sOR3xYFShoChIoSkiMTMCkzIgxwFS1vmVYPo/pRFqXZ+AhgyDFE3664nQbQdkscktYX80zgI2L0Dw8j5WLs30JVY09MatXOt6H0veUt9xAvSZY/FWuXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKR7RhvT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r+cgbz+uGeNcb9KXKs2FrC16qWJnWh8cJj2zblfANhSntTO9DBPFCoA0yCeDbdv/ICDFwSSgUHEORwWY4oJO6lFVlFp4kqLfPrGy3M27SR/YU6DLq8YnK7QpcO4qvITgtieFwEo05WjmYK5iq9xcGcXsQAz6bMYWIC+6GDPHjaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pdc1WjYK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKR7RhvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A061F0155C;
-	Mon, 31 Aug 2026 13:39:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183590;
-	bh=ZNE5Hq4w/0CTZ2rYjfdbK1gmGco0cHqIi/ms4apQAQs=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pdc1WjYK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3101F00ACF;
+	Mon, 31 Aug 2026 13:39:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183591;
+	bh=PUf6ryr4k5wygbciAqCC4GJMVIQgnWiFUIM3Fc8zmc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKR7RhvTDCtuwDc5PVrmvou9v2Tbbw7JF5fG4N87SDkKARLeyS6PyGouWd9/jsmfO
-	 KUj/eO9i83AF92gafXwbGoaa2O99W7/e75mn+ljFfp0kSmfkJJcVbdgCxMuCEsId8B
-	 NeBltdrcTPCXgUCcJRXfq1+hzr2OalLk44fdN7w4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.2 50/71] crypto: qcom-rng - Enable clock in hwrng case
-Date: Mon, 31 Aug 2026 15:34:15 +0200
-Message-ID: <20260831133401.825147990@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
-References: <20260831133359.055927882@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=Pdc1WjYK/l89/5siC59YAL1Sr7s3V49zW+hckkNRh7rdSjYtnTe9q5LBfPZl68Nae
+	 F4FG334q27j6QqmOluURmITGmJF0oE0oi4P2Qj/tsO4a6wNI8+jlwhq8RTeAUzX2NI
+	 08fmRhb31nfE1RSuEGJ9yVBAL3kh6Xt0NHDf2166aStYCSJEQCaBpW8tBA0KV9xcZ7
+	 3f8saAwGcTDh4KA8ctSibvOP7JBEmUejLvW8rCS7eeNJBW47GZMSEAL7fLugAGOzZk
+	 zISA6xCEXLuXWX//G6JqlOMSn4qzElRiaTSrTyiox7NyvfOItDT4gyk4+7YGJPq09T
+	 s4RABvadMpbAg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	catalin.marinas@arm.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] arm64/daifflags: Make local_daif_*() helpers __always_inline
+Date: Mon, 31 Aug 2026 09:23:34 -0400
+Message-ID: <20260831133314.4125787-186-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+From: Leonardo Bras <leo.bras@arm.com>
 
-------------------
+[ Upstream commit 827ce94e0897a70241abf810b1d3d7d083053a39 ]
 
-From: Eric Biggers <ebiggers@kernel.org>
+Make sure those helpers are always inlined and instrumentation safe.
 
-commit 0fd97bbda2842d7dcccee599ac2c0e9554bdddbc upstream.
-
-Fix qcom-rng.c to enable the clock before accessing the hardware.
-
-Fixes: f29cd5bb64c2 ("crypto: qcom-rng - Add hw_random interface support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Leonardo Bras <leo.bras@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qcom-rng.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
 
---- a/drivers/crypto/qcom-rng.c
-+++ b/drivers/crypto/qcom-rng.c
-@@ -113,6 +113,13 @@ static int qcom_rng_seed(struct crypto_r
- 	return 0;
+LLM Generated explanations, may be completely bogus:
+
+That check also confirms the fix is **not** in this tree: the latest
+`daifflags`-related commit is `8cb7eff32cc00` (PMR restore operations),
+and the `-S'__always_inline void local_daif'` search found no matches.
+Backport recommendation remains **YES**.
+
+ arch/arm64/include/asm/daifflags.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm64/include/asm/daifflags.h b/arch/arm64/include/asm/daifflags.h
+index 5fca480090434..795b351284673 100644
+--- a/arch/arm64/include/asm/daifflags.h
++++ b/arch/arm64/include/asm/daifflags.h
+@@ -19,7 +19,7 @@
+ 
+ 
+ /* mask/save/unmask/restore all exceptions, including interrupts. */
+-static inline void local_daif_mask(void)
++static __always_inline void local_daif_mask(void)
+ {
+ 	WARN_ON(system_has_prio_mask_debugging() &&
+ 		(read_sysreg_s(SYS_ICC_PMR_EL1) == (GIC_PRIO_IRQOFF |
+@@ -38,7 +38,7 @@ static inline void local_daif_mask(void)
+ 	trace_hardirqs_off();
  }
  
-+static int qcom_hwrng_init(struct hwrng *hwrng)
-+{
-+	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
-+
-+	return clk_prepare_enable(qrng->clk);
-+}
-+
- static int qcom_hwrng_read(struct hwrng *hwrng, void *data, size_t max, bool wait)
+-static inline unsigned long local_daif_save_flags(void)
++static __always_inline unsigned long local_daif_save_flags(void)
  {
- 	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
-@@ -120,6 +127,13 @@ static int qcom_hwrng_read(struct hwrng
- 	return qcom_rng_read(qrng, data, max);
+ 	unsigned long flags;
+ 
+@@ -53,7 +53,7 @@ static inline unsigned long local_daif_save_flags(void)
+ 	return flags;
  }
  
-+static void qcom_hwrng_cleanup(struct hwrng *hwrng)
-+{
-+	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
-+
-+	clk_disable_unprepare(qrng->clk);
-+}
-+
- static int qcom_rng_enable(struct qcom_rng *rng)
+-static inline unsigned long local_daif_save(void)
++static __always_inline unsigned long local_daif_save(void)
  {
- 	u32 val;
-@@ -208,7 +222,9 @@ static int qcom_rng_probe(struct platfor
+ 	unsigned long flags;
  
- 	if (rng->match_data->hwrng_support) {
- 		rng->hwrng.name = "qcom_hwrng";
-+		rng->hwrng.init = qcom_hwrng_init;
- 		rng->hwrng.read = qcom_hwrng_read;
-+		rng->hwrng.cleanup = qcom_hwrng_cleanup;
- 		rng->hwrng.quality = QCOM_TRNG_QUALITY;
- 		ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
- 		if (ret) {
-
+@@ -64,7 +64,7 @@ static inline unsigned long local_daif_save(void)
+ 	return flags;
+ }
+ 
+-static inline void local_daif_restore(unsigned long flags)
++static __always_inline void local_daif_restore(unsigned long flags)
+ {
+ 	bool irq_disabled = flags & PSR_I_BIT;
+ 
+@@ -124,7 +124,7 @@ static inline void local_daif_restore(unsigned long flags)
+  * Called by synchronous exception handlers to restore the DAIF bits that were
+  * modified by taking an exception.
+  */
+-static inline void local_daif_inherit(struct pt_regs *regs)
++static __always_inline void local_daif_inherit(struct pt_regs *regs)
+ {
+ 	unsigned long flags = regs->pstate & DAIF_MASK;
+ 
+-- 
+2.53.0
 
