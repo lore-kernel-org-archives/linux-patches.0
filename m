@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8169D477E3B;
-	Mon, 31 Aug 2026 13:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DB4477E4E;
+	Mon, 31 Aug 2026 13:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184418; cv=none; b=UpZHySTz+hZ6flvD/02f9La8q0z2NmpiFTlfkF+oW0npHjVKxB4CYatiGhwDT08zBj73zM6cBjBlUgo/WJno78UQJNMdAr7o9ng0Rq4tuOGVslfp4+/zHZoE3LRCBCDjfwiInBim6sA+TaIQTEuQnHarkz37Qj+PYBZkcYzGHLY=
+	t=1788184426; cv=none; b=rZleCs9ecCHTKwhsC4J8/VdRj/m6pH9+CKOiBgDaTmf6YIfTU4hMqe6iJZWtRmbBVY6pWyST8eMs8nYEyAvXXW++GUBDOda26XwUSUqOm4d/U1srinWZ2XowLjmBMjvg+tmf2uicrhZH1NOhZ7h2Q56q5TteHhBqRH4kBaxxyYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184418; c=relaxed/simple;
-	bh=wNV11fEeBTxcYyMdZEbDOwuWky82aDhornSs1Hna9NY=;
+	s=arc-20240116; t=1788184426; c=relaxed/simple;
+	bh=IGS7uZ6iEsDOzXj8TSMkTSZ5nPQHQ1PBc2yTgFwlMhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JS3ilSR7KbuR4/q8+Z5jULQzaN7gy8r57IWZAoPEnGcynMDeAXqZWlZczz43mP8AklfD/EhXQWGd504RBOFefnr3HyZrVnnp13EuBfVK33si2gMSm6wTficJnxoXrBRr+Q/M7Pf1xHB1XIw3rZe+UsXtlzDA+SLK2yp0PnDq4PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIPaO9BV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q31MoaJx20ZU/4Z4FeLU+QZ6ALdpNPv3v97dn7Depl+RSflB5jeP5esZf4hiVVhedKMh5QU6fomOd0Qh0c3Dz6aFuNOjsnOLgibrVmWah+Ayz+Q1fyjZl9rZVft2WFR8XrE1JuV184CR1ubgYQj6HRU6l8QAKV1RVf2pIoCqC8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izByj7ld; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIPaO9BV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B391F000E9;
-	Mon, 31 Aug 2026 13:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izByj7ld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0C11F000E9;
+	Mon, 31 Aug 2026 13:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184417;
-	bh=z6zgxZNW298Xn9H2lG/JsQCJSn9js89OhetWyFkCNLM=;
+	s=korg; t=1788184425;
+	bh=JazVM+oJ4x2x32PZUPx/bQCqyui6eHM3bRckgGB8B2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cIPaO9BVy210wvNSt4MiOKiyMyfQ+jVkezpBKRtQ7GJ9PysUeQ/qbdD/KdH/SI+cC
-	 kaZpfsR1/PUsW/trmmf8dTjCthmSZxhxW+TNMd6UQ+u4XxtuyBM++0cWoVInkQf8yR
-	 GbtYYKlgR+/bhkVOons67OUp0QcQxQMETXuawHAA=
+	b=izByj7ldXYXbyWAM50qFNSak/3pcmJeoV0F02Xw/whxn2eZ+fxaeI30mMYNBAQI3P
+	 fsTI1Clh7K7zWkkb/wPT5NSuGja/pPK5jYtknTTMb5I5ZQZjkrIuby5qddbkyDuaJa
+	 x9kVSx5ViSzp7hzeERg/1dEMS2CB+t/+GE0esQ7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 98/99] wifi: mt76: mt7925: ensure tx headroom in usb_sdio_tx_prepare_skb
-Date: Mon, 31 Aug 2026 15:35:07 +0200
-Message-ID: <20260831133404.565361126@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 65/99] tls: device: fix out-of-bounds write in tls_append_frag()
+Date: Mon, 31 Aug 2026 15:34:34 +0200
+Message-ID: <20260831133403.233325985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
 References: <20260831133359.740409777@linuxfoundation.org>
@@ -50,65 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit ef3e34874d2332d0f63e72c2c35ce5c93568c125 upstream.
+commit b17cf742eaad70ae29ac558cefb3aa9bbeea03d4 upstream.
 
-mt7925_usb_sdio_tx_prepare_skb() pushes a TX descriptor and a USB
-header onto every skb and assumes the headroom for them is already
-there. That holds for locally generated traffic, where mac80211
-reserves hw->extra_tx_headroom, but forwarded frames are sent through
-ieee80211_8023_xmit(), which does not reserve it. Bridge a wired
-interface to an mt7925u AP and the first forwarded frame that arrives
-short panics the kernel:
+Found with syzkaller and a local syzbot instance running on top of a
+netdevsim TLS offload emulation; tls_device.c is otherwise only reachable
+on a machine with a NIC that implements the offload.
 
- skbuff: skb_under_panic: len:415 put:4 tail:0x19b end:0x640 dev:wlan1
- kernel BUG at net/core/skbuff.c:212!
- Call trace:
-  skb_panic+0x58/0x60 (P)
-  skb_push+0x58/0x60
-  mt7925_usb_sdio_tx_prepare_skb+0xf8/0x1b8 [mt7925_common]
-  mt76u_tx_queue_skb+0xa0/0x1f8 [mt76_usb]
-  __mt76_tx_queue_skb+0x54/0xe8 [mt76]
-  mt76_txq_schedule.part.0+0x204/0x478 [mt76]
-  mt76_txq_schedule_all+0x50/0x80 [mt76]
-  mt792x_tx_worker+0x68/0x100 [mt792x_lib]
-  __mt76_worker_fn+0x84/0x150 [mt76]
+tls_push_data() only checks whether the open record still has room for
+another frag at the bottom of its loop, and the MSG_MORE early break
+skips that check.  The record survives to the next syscall with the frag
+count it already had, and tls_append_frag() does not check either, so
+with TLS_TX_ZEROCOPY_RO every splice(SPLICE_F_MORE) of a byte or two adds
+a non-coalescing pipe page and num_frags walks off the end of
+tls_record_info.frags[MAX_SKB_FRAGS].  Once the record is pushed,
+tls_push_record() runs the same index over sg_tx_data[MAX_SKB_FRAGS] and
+the sg_set_page() writes land on the destruct_work that follows it, which
+the workqueue then calls.
 
-Whether a given setup hits it depends on how much headroom the ingress
-netdev leaves in its rx skbs. Reproduced on a Raspberry Pi 5 bridging
-onboard ethernet to a Netgear A9000; originally reported on an MT7986
-router running OpenWrt. Nick Morrow's testing on a Pi 4 (bcmgenet),
-which leaves more headroom, helped narrow the trigger to the ingress
-path.
+The byte limit is fine because copy drops to 0 and the loop falls through
+to the same check; the frag count has no such feedback.
 
-The same bug was fixed on mt7921 by commit 98c4d0abf5c4 ("mt76:
-mt7921: don't assume adequate headroom for SDIO headers"), but mt7925
-was copied from mt7921 without the fix. Add the same guard here.
+Push the record rather than keep a full one open, which is what a plain
+TCP socket does - tcp_sendmsg_locked() uses tcp_mark_push() and
+new_segment in both the copy and the MSG_SPLICE_PAGES paths, and tls_sw
+already sets full_record when the sk_msg ring fills up, MSG_MORE or not.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+  BUG: KASAN: slab-out-of-bounds in tls_append_frag ( net/tls/tls_device.c:269)
+  Write of size 8 at addr ffff8881104d1530 by task tls_oob/450
+
+  CPU: 2 UID: 0 PID: 450 Comm: tls_oob Not tainted 7.2.0-rc7+ #329 PREEMPT
+  Call Trace:
+   <TASK>
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   tls_append_frag (net/tls/tls_device.c:269)
+   tls_push_data (net/tls/tls_device.c:518)
+   tls_device_sendmsg (net/tls/tls_device.c:583)
+   inet_sendmsg (net/ipv4/af_inet.c:865)
+   sock_sendmsg (net/socket.c:775 net/socket.c:790 net/socket.c:813)
+   splice_to_socket (fs/splice.c:884)
+   do_splice (fs/splice.c:936 fs/splice.c:1349)
+   __do_splice (fs/splice.c:1431)
+   __x64_sys_splice (fs/splice.c:1634 fs/splice.c:1616)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+   </TASK>
+
+and, once the record is pushed:
+
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:300:24
+  index 18 is out of range for type 'skb_frag_t [17]'
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:301:41
+  index 18 is out of range for type 'scatterlist [17]'
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:302:39
+  index 18 is out of range for type 'scatterlist [17]'
+  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:307:38
+  index 26 is out of range for type 'scatterlist [17]'
+
+  kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
+  BUG: unable to handle page fault for address: ffffea000411a680
+  #PF: supervisor instruction fetch in kernel mode
+  #PF: error_code(0x0011) - permissions violation
+  Oops: Oops: 0011 [#1] SMP KASAN PTI
+  Workqueue: ktls_device_destruct 0xffffea000411a680
+  RIP: 0010:0xffffea000411a680
+  Call Trace:
+   <TASK>
+   worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+   </TASK>
+
+Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
 Cc: stable@vger.kernel.org
-Link: https://github.com/morrownr/mt76/issues/52
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260715023348.59506-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260823084758.20936-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/tls/tls_device.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1432,6 +1432,10 @@ int mt7925_usb_sdio_tx_prepare_skb(struc
- 	if (!wcid)
- 		wcid = &dev->mt76.global_wcid;
- 
-+	err = skb_cow_head(skb, MT_SDIO_TXD_SIZE + MT_SDIO_HDR_SIZE);
-+	if (err)
-+		return err;
-+
- 	if (sta) {
- 		struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
- 
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -530,7 +530,8 @@ handle_error:
+ 		if (!size) {
+ last_record:
+ 			tls_push_record_flags = flags;
+-			if (flags & MSG_MORE) {
++			if ((flags & MSG_MORE) &&
++			    record->num_frags < MAX_SKB_FRAGS - 1) {
+ 				more = true;
+ 				break;
+ 			}
 
 
