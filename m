@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D95C47CC85;
-	Mon, 31 Aug 2026 13:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0B043E087;
+	Mon, 31 Aug 2026 13:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184699; cv=none; b=d6h0omw4BkhDiELbUCFBxR2+e2X6nVMbucNLCH8GRNdMvYUM52CO2jBCjtZlRScPnMdm4v1dFTgvAnfz+1eV1kP609sacdI29oLEUWdcMj8xItP2BcZd5rDQ4oIeXRFBewSnvb60ru5L96auy74mNveJEGQST8rLEX6zy0T9NXk=
+	t=1788184695; cv=none; b=gg65+83NFWkKbGFi0DzqFGZaDn/uxz8Eg1JST+qREaqdUtX0syMh7isjjy4zlDNlRtXHRdWJftxw2bLme2ayStFz2qqu7P/WmOUwi1FzWwzRmtR1LZgXbQ80VmMKeT/8GDV3rT03yRo2sQGZDSFMBFqxl1nevACP4cW3yZra0Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184699; c=relaxed/simple;
-	bh=kcT+eyevJtAyXfU1vfdp1Os5SITPoyJHLagDzUDqkTA=;
+	s=arc-20240116; t=1788184695; c=relaxed/simple;
+	bh=XO8X99ZDPqKQogTh5yud8vW74tKkOZe7S7GNY+NzglI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AFMipT45JL2U68R/WVC6Gb+Hrxf5BwOMBJPF+2YbvCmOzySNraA/z5C10Ba4yZe0mA7nCm7mHxxK8FgKbRpBXA3nbyyEDY09WV3r7UKwBawOSP+i/+C3YSjZqxcqmM7uSwLxdNCRCwdXJeN5/ONB8NSxcRds8bPu0bmvWGM3N7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REtIlT+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d4sX3lQ41QzXBShhW90uzeNjqrj9gY5vx6UzXmhRXqZ1pSGyQ72enyuGCelcHx98fQEVIsKSz1XEcdZGCR7n7uJOFGbgxbALLEcD7Dsz98H8y7ByTDROeGRLbb1UtZoDKa4Rwg/stY+aBwW1QeA4Htmlgpg3umIfgixRHSkPgbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WItjIIgZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REtIlT+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854DF1F000E9;
-	Mon, 31 Aug 2026 13:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WItjIIgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76771F00A3D;
+	Mon, 31 Aug 2026 13:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184697;
-	bh=r4VP8234tfloyZLWBk2/25A04Ubl9bLcH4qXmXGKgZA=;
+	s=korg; t=1788184694;
+	bh=LveKPUMVAd6MTUN78ylQjyJGsMFnyrBCzNivNpNbbnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REtIlT+weMZwnjequgONRvkFOwhXJDh8PRWUDwPBLIdakdgyEViTYsoFKzmxULduc
-	 rpqm2+dCUgiBLGkv0ZW7uze2gfV24GN4sm0gQdOgD6W4xsrAyIYNAzzzQ/Zk3ms0nJ
-	 oZdLPgTPJJDznsG0QpujUcTywPzgGPBZkt7WHZsk=
+	b=WItjIIgZDgSwWiVm2YRuO7l5AU8hKZVvNUIcAaz3N8pkZf9Jun7kMxN7cQe5gna+4
+	 uEDI08Cu8NNkn7XvXcK3eohkiua6Uq3wVg+D1l2PGugATw3RsSU4eAYKexALncAjg8
+	 RpI/EufmWSMjK/SguXC6wIT5zYSi6fQU9srwkvus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
+	zdi-disclosures@trendmicro.com,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Breno Leitao <leitao@debian.org>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.6 73/91] xfrm: drop ESP-in-TCP packets with no ingress device
-Date: Mon, 31 Aug 2026 15:35:01 +0200
-Message-ID: <20260831133403.436045904@linuxfoundation.org>
+Subject: [PATCH 6.6 72/91] xfrm: espintcp: fix UAF during close
+Date: Mon, 31 Aug 2026 15:35:00 +0200
+Message-ID: <20260831133403.363562313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -52,58 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit e1d7c5ac1c246ce5775f604515de0a59fbf2116e upstream.
+commit deb232e884877bf10b4ce2580909eedec986c284 upstream.
 
-ESP-in-TCP receives records through the TCP strparser. handle_esp()
-restores skb->dev from the saved skb_iif before passing the packet into
-the XFRM input path.
+ZDI reported and analyzed a race condition during close for espintcp
+sockets:
 
-Queued TCP data can be processed after the original ingress device has
-been removed, for example during veth or net namespace teardown. In that
-case dev_get_by_index_rcu() returns NULL. The XFRM IPv4 and IPv6 input
-paths both expect skb->dev to be valid while building the route lookup,
-so queued ESP-in-TCP data can dereference a NULL device.
+    espintcp_close() frees emsg->skb via kfree_skb() without holding
+    any socket lock. Concurrently, the xfrm_trans_reinject work queue
+    invokes esp_output_tcp_finish() -> espintcp_push_skb() ->
+    espintcp_push_msgs() -> skb_send_sock_locked(), which reads the
+    same skb as a data source.
 
-Drop the packet if the saved ingress device can no longer be resolved.
-Such a packet can no longer be routed through the normal XFRM receive
-path, and this preserves the existing behaviour for packets whose ingress
-device still exists.
+Fix this by adding a synchronize_rcu() call after resetting sk_prot,
+since esp_output_tcp_finish() runs under RCU and won't use a socket
+with sk_prot == &tcp_prot.  Simply taking the socket lock in
+espintcp_close() could lead to leaks, if esp_output_tcp_finish()
+re-adds an skb in the slot we just freed. After this, the existing
+barrier() is no longer needed.
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Assisted-by: Codex:gpt-5.4
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Reported-by: zdi-disclosures@trendmicro.com
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/espintcp.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/xfrm/espintcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/net/xfrm/espintcp.c
 +++ b/net/xfrm/espintcp.c
-@@ -39,6 +39,11 @@ static void handle_esp(struct sk_buff *s
+@@ -516,7 +516,8 @@ static void espintcp_close(struct sock *
+ 	strp_stop(&ctx->strp);
  
- 	rcu_read_lock();
- 	skb->dev = dev_get_by_index_rcu(sock_net(sk), skb->skb_iif);
-+	if (!skb->dev) {
-+		XFRM_INC_STATS(sock_net(sk), LINUX_MIB_XFRMINERROR);
-+		kfree_skb(skb);
-+		goto out;
-+	}
- 	local_bh_disable();
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (sk->sk_family == AF_INET6)
-@@ -47,6 +52,7 @@ static void handle_esp(struct sk_buff *s
- #endif
- 		xfrm4_rcv_encap(skb, IPPROTO_ESP, 0, TCP_ENCAP_ESPINTCP);
- 	local_bh_enable();
-+out:
- 	rcu_read_unlock();
- }
+ 	sk->sk_prot = &tcp_prot;
+-	barrier();
++
++	synchronize_rcu();
  
+ 	cancel_work_sync(&ctx->work);
+ 	strp_done(&ctx->strp);
 
 
