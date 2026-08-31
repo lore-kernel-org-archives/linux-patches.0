@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5402347F2CB;
-	Mon, 31 Aug 2026 13:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E89043E074;
+	Mon, 31 Aug 2026 13:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184746; cv=none; b=krVWHQxotecCPqTo2rFfBNhx9Wvpzyhn7uqM62Qxm0DMOgvAd5xgr9LfGj5GU2qY02jSLMR1/6F1i4Mq8qRp4t4AvDGeUMe2AhOvt29woS7ZxkWhJDrKsQviGBtcBx96Ds1n0l6RH6Ad1itFpFoi4Cn+tgpoxsm74gKo0Bye8Ac=
+	t=1788184752; cv=none; b=EY093/dd1AUFDOVhBtkT4prT2xT8D5VQmOlZK7ALmMEjBnFtm3s/3anvmEp/s1o9INkEUn6X2oMz4jKRzKG4gJh0h6y+0z/2TawTb0eogOHT0ZjmSM8mfrTw9/CYVCPX45EYIO+RSnPHJyoRgTizEfZlMg6qgPbX0Nvfte02oN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184746; c=relaxed/simple;
-	bh=vWfhXLi2E8f0EfGV598mm7YcxuT9nZmxuP4GHDCM6Kk=;
+	s=arc-20240116; t=1788184752; c=relaxed/simple;
+	bh=9clxBcnm8JQ2lZXUS9YC5ZiOZC1ClWfpunFmXokUKZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+G7k2eTEbOeU1KsMFLhjm80ZROkhN+9XepteLco2Po+1ucyuzLKV7N0yWcP3t0gS1w6VRtvjJLCHVF/dwCSnfTN8px1WEjiHIRkOitBZajFpj2vLiWcV8kLB3g3atbEJszgqQFPUfj6uMkUvy/knLyf8UBw6/V6o6sqEijJaz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+ruooUB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WVA5FWS/7yeo4g3HCz8vaQ29mmaLpBj1086x40b+MPd6OU/Atyf0tGvLFrg04MHfczhDwgcy8wtLccNfd1HDufHmsdRCdlTCRmmPBXKfCnPpFdudYtKUeSRzchLgpKyZrl54z3eskVfQ8/kyE198C9ZfhUyXJ6PI4hG5ixOL08Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wxa3cwvq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+ruooUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA651F00A3E;
-	Mon, 31 Aug 2026 13:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wxa3cwvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692401F000E9;
+	Mon, 31 Aug 2026 13:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184745;
-	bh=9hUyMTBPcs2yqkE+tvGV5NtoEI+eCBKOJHJH2i9iBsQ=;
+	s=korg; t=1788184751;
+	bh=/zGnFSC313eAe7qzR19jlIFC2jQezd1wL9Xk3jROoyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K+ruooUB29cuUWNdYpPb8aX5Qcs6t0JsXf5C3rks79LXva3IIkZQBN7JE/wuPoi9b
-	 Y765Z/A9Sryp7/ukd+oW3yJOBQqf5/2u/Dm9mqC3pzi/Djxa/FZjGMaNnp0034i1Do
-	 pNmFCkCBgDCleKVH6UNIwVl2z3QDFx9dwKbqFxJE=
+	b=Wxa3cwvqtDqbLztB9O766XunBpOI1DK8KKeYw06AyrD7J/l7MVlX+WsmJyPD1xIbF
+	 xiQa2Fc5MEKCxw0XbNmSe2Nx0NrA/pw74vz53Hc4jhrT4FikVCkBgyOMxzMTi5+SSp
+	 XHA0xAGhdg+w+9y2br3uYBC2fG7MXsl3+7+adTHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
+	Ben Skeggs <bskeggs@redhat.com>,
+	Karol Herbst <kherbst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/92] Revert "usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal"
-Date: Mon, 31 Aug 2026 15:34:05 +0200
-Message-ID: <20260831133359.851200475@linuxfoundation.org>
+Subject: [PATCH 6.1 09/92] drm/nouveau/kms/nv50-: init hpd_irq_lock for PIOR DP
+Date: Mon, 31 Aug 2026 15:34:07 +0200
+Message-ID: <20260831133359.966321263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -50,39 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Ben Skeggs <bskeggs@redhat.com>
 
-This reverts commit 4476c73bbbb09b13a962176fca934b32d3954a2e.
+[ Upstream commit ea293f823a8805735d9e00124df81a8f448ed1ae ]
 
-The reverted commit uses disable_delayed_work_sync, which was introduced
-by commit 86898fa6b8cd ("workqueue: Implement disable/enable for
-(delayed) work items") in v6.10. The function is therefore unavailable
-in 6.1.y, causing configurations that enable CONFIG_FSL_USB2_OTG to fail
-to build.
+Fixes OOPS on boards with ANX9805 DP encoders.
 
-The upstream commit is unaffected; only its incompatible stable backport
-is being reverted.
-
-Fixes: 4476c73bbbb0 ("usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal")
-Link: https://lore.kernel.org/stable/20260827154302.706689-1-ralf@mandelbit.com/
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Cc: stable@vger.kernel.org # 6.4+
+Signed-off-by: Ben Skeggs <bskeggs@redhat.com>
+Reviewed-by: Karol Herbst <kherbst@redhat.com>
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230719044051.6975-3-skeggsb@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/phy/phy-fsl-usb.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/nouveau/dispnv50/disp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/phy/phy-fsl-usb.c b/drivers/usb/phy/phy-fsl-usb.c
-index ab4df5819ef88..972704262b02b 100644
---- a/drivers/usb/phy/phy-fsl-usb.c
-+++ b/drivers/usb/phy/phy-fsl-usb.c
-@@ -987,7 +987,6 @@ static int fsl_otg_remove(struct platform_device *pdev)
- {
- 	struct fsl_usb2_platform_data *pdata = dev_get_platdata(&pdev->dev);
+diff --git a/drivers/gpu/drm/nouveau/dispnv50/disp.c b/drivers/gpu/drm/nouveau/dispnv50/disp.c
+index a851354c0c5f8..2bed699cadb47 100644
+--- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
+@@ -2018,6 +2018,8 @@ nv50_pior_destroy(struct drm_encoder *encoder)
+ 	nvif_outp_dtor(&nv_encoder->outp);
  
--	disable_delayed_work_sync(&fsl_otg_dev->otg_event);
- 	usb_remove_phy(&fsl_otg_dev->phy);
- 	free_irq(fsl_otg_dev->irq, fsl_otg_dev);
+ 	drm_encoder_cleanup(encoder);
++
++	mutex_destroy(&nv_encoder->dp.hpd_irq_lock);
+ 	kfree(encoder);
+ }
  
+@@ -2062,6 +2064,8 @@ nv50_pior_create(struct drm_connector *connector, struct dcb_output *dcbe)
+ 	nv_encoder->i2c = ddc;
+ 	nv_encoder->aux = aux;
+ 
++	mutex_init(&nv_encoder->dp.hpd_irq_lock);
++
+ 	encoder = to_drm_encoder(nv_encoder);
+ 	encoder->possible_crtcs = dcbe->heads;
+ 	encoder->possible_clones = 0;
 -- 
 2.53.0
 
