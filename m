@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D644B270D;
-	Mon, 31 Aug 2026 13:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7F84746AB;
+	Mon, 31 Aug 2026 13:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184290; cv=none; b=cemgsCqNwamPGHqG2qZ0XlutNEmDsfWZzUOlSR4gEJQsCV/GVPtKLQ17EdmVahZFYguVEQbxsyq36s3ixEs1vyR64ggikmfZLgFIzh+kLHikVwvn08EvECFgRzqfM9HmV50WKVYrEChOsNLC+PitdHh3dJEuI5vAC30hIgOVE5M=
+	t=1788184290; cv=none; b=HZQtdQ3MUMPEIvO6ynME22naYX+7utksR5JScAvtvGmqaXC9T7lV/DKdyVKglKBSzEh2FlHjtvCwmI4kiIXyOc1WhS4zB9ARTnfA/FJFcN/7WA6Rq/Fzd4Zy47BNZRVDBIdjg0ZUUk0mo/u7vXbaB2JM83AERW5NMw0heeT+z2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184290; c=relaxed/simple;
-	bh=4I1T4IkiZFyzlg+b2fsA4mXunk7EqSNP4qXNQxKxb0Q=;
+	bh=tv2t9Qi3Md7T4llAZTdrrda9R0abp35jq5QwT9YHbJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KVPzRlBLUuMyd/QCzDZgQ16rbr/di3c9cs/fTpA4YPeEPoDjrSRXXZgqTVwSfhcg3JN/OyidOL5pA5pf1Szrx3HIrR4Ta2YLVUdR+x3PDLvaxrRHP680idTbpMFVVTgXNyrkQOJ2EFF/BX1Qm1glxAcoljHFM8exdxMskootF8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cnfLGql9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QMb2SWBxgwtTj22pGyzM8k4DKVI/wdzOrMxdVhgGS7n4wdVWqjWKu215U/wyJb9jlYApaLR38Ignu/fgzIIOmjWv6LKFnV1fm2GnlwnyvILJrfSMCjbE9fxDLn5ASaZSsIMuihUFzLNrsbcFzGFTf/m/SsbMCeAfTOj2+ZU7gpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnL2iVXJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cnfLGql9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191D51F00A3F;
-	Mon, 31 Aug 2026 13:51:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnL2iVXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FF51F00A3D;
+	Mon, 31 Aug 2026 13:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184286;
-	bh=Jc96r2kipm502LoiSjzQi2ZERDgZ5U3UbwJMjrtntN4=;
+	s=k20260515; t=1788184288;
+	bh=mOxVgusYOuBLDF9wnkORRZlaJ14L8gZxA3VUemltWLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cnfLGql9+8W91F12RQPUNtbkfotby7RzYsHTRhAIaV0rL90moQzbtW/92VFNipM59
-	 1JRruVAgZvIuSlBr99HE5HT1NC7W/ayU1kRAm4BIVORQOdhrey7RslF+gHALgpONmG
-	 nyy0Nxmh/KoHTQGHHhDJLp9HJE9z5pByPLy29XmvpRmHt29Talc1jnfoZqF6nNVwpE
-	 +k4+CrWkMxCYIKrwt+ueXgMy+M2zM3hLUgvN6mK3YoCLz+bBQRvbpghDXCZcHdOn3a
-	 28W9batK4Wnzle/L+A52hFopDrHGo0IHJW9WLozUSOTGV7+rh6o6NmiB8FwFB9H2GZ
-	 Ypr6b4I4r0pJA==
+	b=GnL2iVXJ96zQT4MzXcLCkxVSdrhV5Ruju1/MyHsHmRxDLHrNw7GCEiNabEUJ88xH6
+	 IunTdUjga7GwgjT3VNkmnqxggyyvZyEr0UP7DoB9bISwSvba6Z+ze6BgaZPiNwnVMO
+	 vAjIqr4bZGc+O1h2oMp60Ch2McgjMJv4Yf693UzqbDapFqsLeJ7Ij2ABdrjlr/3qhU
+	 ml4WPeW7SRfsuA73gj5/zokLBM5M543UnncwG2Ails4jkYXFsN+De2iuctXXFurJyC
+	 rx7xosh8isD0K9H4GSHFzbhWpRipCHXbIEQ5oV0eEAukZjo5pRR224eesBji1isHuz
+	 LfkiqT3s6nQKg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+Cc: Evelyn Ali <evelynali99@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	fw@strlen.de,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	netdev@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] netfilter: nf_conntrack: use get_unaligned_be32() in tcp_sack()
-Date: Mon, 31 Aug 2026 09:30:30 -0400
-Message-ID: <20260831133314.4125787-602-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: ALC882: Fixup for Clevo P775TM1
+Date: Mon, 31 Aug 2026 09:30:31 -0400
+Message-ID: <20260831133314.4125787-603-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -60,388 +54,388 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Evelyn Ali <evelynali99@gmail.com>
 
-[ Upstream commit d3bf9eae486490832bd08fd62ab0ac601f346bd4 ]
+[ Upstream commit def5e78a4e003c83adc9a8b4b72534def3a49641 ]
 
-The timestamp-only fast path dereferences the option stream as
-*(__be32 *)ptr, which assumes 4-byte alignment that the TCP option
-stream does not guarantee. Use get_unaligned_be32() instead, which
-reads the value safely and already returns host byte order, so the
-htonl() on the comparison constant can be dropped.
+Clevo P775TM1 laptops come with an ESS Sabre HiFi DAC. Setting
+0x1b pin VREF to 80% enables said DAC output.
 
-This matches the existing get_unaligned_be32() use later in the same
-function.
-
-Assisted-by: Claude:Opus-4.7
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Evelyn Ali <evelynali99@gmail.com>
+Link: https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject line**
-- Record: `[netfilter: nf_conntrack]` `[use]` — replace unsafe aligned
-  32-bit dereference in `tcp_sack()` timestamp fast path with
-  `get_unaligned_be32()`.
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[ALSA: hda/realtek: ALC882]` `[Fixup]` — Add hardware fixup
+quirk for Clevo P775TM1 laptop audio (ALC882/898 codec path).
 
-**Step 1.2 — Tags**
-- Record:
-  - `Assisted-by: Claude:Opus-4.7`
-  - `Signed-off-by: Rosen Penev <rosenp@gmail.com>`
-  - `Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>`
-  - `Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>` (subsystem
-    maintainer)
-  - No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or
-    `Link:` tags
-  - Notable: maintainer review and commit; reviewer independently
-    spotted the same issue
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Record:**
+- **Signed-off-by:** Evelyn Ali \<evelynali99@gmail.com\> (author)
+- **Link:**
+  https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com
+- **Signed-off-by:** Takashi Iwai \<tiwai@suse.de\> (ALSA/HDA
+  maintainer, committer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable tags
+- Notable: Maintainer commit; v2 patch on lore; no syzbot/fuzzer
+  involvement
 
-**Step 1.3 — Body**
-- Record:
-  - **Bug:** `*(__be32 *)ptr` in the timestamp-only fast path assumes
-    4-byte alignment of the TCP option stream
-  - **Symptom:** Unaligned memory access on architectures that require
-    alignment (kernel trap/oops); undefined behavior elsewhere
-  - **Root cause:** TCP options are not guaranteed 4-byte aligned;
-    `skb_header_pointer()` often returns a pointer directly into skb
-    linear data at a misaligned offset
-  - **Fix:** Use `get_unaligned_be32()`, matching the existing SACK
-    parsing code in the same function
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Record:**
+- **Bug:** Clevo P775TM1 uses an ESS Sabre HiFi DAC; pin 0x1b VREF must
+  be 80% to enable DAC output
+- **Symptom:** No audio output from the external headphone amp / Sabre
+  DAC without the VREF setting
+- **Version info:** None stated
+- **Root cause:** Hardware requires specific pin VREF configuration not
+  provided by default or generic Clevo quirk
 
-**Step 1.4 — Hidden bug fix?**
-- Record: Yes — despite not using "fix" in the subject, this is a
-  correctness/memory-safety bug fix, not cleanup or optimization.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not disguised — explicit hardware fixup/quirk. Fixes broken
+audio on a specific laptop model, not a crash or memory bug.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 — Inventory**
-- Record:
-  - 1 file: `net/netfilter/nf_conntrack_proto_tcp.c` (+5/-5 lines)
-  - Function: `tcp_sack()`
-  - Scope: Single-file, surgical fix
+### Step 2.1: INVENTORY THE CHANGES
+**Record:**
+- **File:** `sound/hda/codecs/realtek/alc882.c` (+22 lines, 0 removed)
+- **Functions modified/added:** `alc898_fixup_clevo_p775tm1()` (new)
+- **Tables modified:** enum fixup IDs, `alc882_fixups[]`,
+  `alc882_fixup_tbl[]`, `alc882_fixup_models[]`
+- **Scope:** Single-file, surgical hardware quirk addition
 
-**Step 2.2 — Code flow**
-- Record:
-  - **Before:** Fast path for timestamp-only TCP options used `*(__be32
-    *)ptr == htonl(...)` — aligned 32-bit read
-  - **After:** Uses `get_unaligned_be32(ptr) == (...)` — safe unaligned
-    read; `htonl()` dropped because `get_unaligned_be32()` returns host
-    byte order
-  - **Path:** Hot path in `tcp_sack()` when `length ==
-    TCPOLEN_TSTAMP_ALIGNED` (12 bytes = NOP/NOP/TIMESTAMP option only)
+### Step 2.2: CODE FLOW CHANGE
+**Record:**
+- **Hunk 1 (enum):** Adds `ALC898_FIXUP_CLEVO_P775TM1` fixup ID
+- **Hunk 2 (new function):** On `HDA_FIXUP_ACT_PRE_PROBE`, sets pin 0x1b
+  to `PIN_VREF80` via `snd_hda_set_pin_ctl_cache()` and sets
+  `spec->gen.keep_vref_in_automute = 1` so automute does not clear VREF
+- **Hunk 3 (fixups table):** Registers fixup function, chained to
+  `ALC882_FIXUP_EAPD`
+- **Hunk 4 (quirk table):** `SND_PCI_QUIRK(0x1558, 0x7709, "Clevo
+  P775TM1", ...)` — PCI SSID match
+- **Hunk 5 (model table):** Adds model name `clevo-p775tm1` for manual
+  override
 
-**Step 2.3 — Bug mechanism**
-- Record:
-  - **Category:** Memory safety / unaligned access (same class as commit
-    `534f81a506879` from 2009 in the same function)
-  - **Mechanism:** `ptr` from `skb_header_pointer()` points at
-    `skb->data + dataoff + sizeof(tcphdr)`. For typical Ethernet+IPv4,
-    options start at offset 54 (54 % 4 = 2), so `*(__be32 *)ptr` is an
-    unaligned access when skb data is linear
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Record:** **Category (h): Hardware workaround / audio codec quirk.**
+Pin 0x1b VREF at 80% gates the ESS Sabre HiFi DAC; without it the
+external amp stays disabled. `keep_vref_in_automute` prevents the
+generic automute path from stripping VREF during jack events.
 
-**Step 2.4 — Fix quality**
-- Record:
-  - Obviously correct: mirrors the existing `get_unaligned_be32()` use
-    at line 442 in the same function
-  - Minimal, no unrelated changes
-  - Low regression risk: `get_unaligned_be32()` is already included via
-    `<linux/unaligned.h>` and used in this file
-  - Byte-order handling is correct (constant built in host order,
-    compared to host-order return value)
+### Step 2.4: ASSESS THE FIX QUALITY
+**Record:** Fix is minimal and follows established patterns in the same
+file (`alc889_fixup_mbp_vref`, other Clevo fixups). Chaining to
+`ALC882_FIXUP_EAPD` matches other Clevo entries. Low regression risk —
+only affects PCI SSID `0x1558:0x7709`. No lock or API changes.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 — Blame**
-- Record:
-  - Fast path introduced in `9fb9cbb1082d6` (Nov 2005, nf_conntrack
-    subsystem creation)
-  - Aligned dereference `*(__be32 *)ptr` from `8f05ce91c8b801` (Mar
-    2007)
-  - Bug has been present since 2007 in this code path
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:** Insertion point (between `0x70d1` and `0x7714` Clevo quirks)
+dates to `aeeb85f26c3bb` (2025-07-09, Realtek driver split). No pre-
+existing bug — this is missing hardware support, not a regression from
+prior code.
 
-**Step 3.2 — Fixes: tag**
-- Record: N/A — no `Fixes:` tag in commit message
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** N/A — no Fixes: tag present.
 
-**Step 3.3 — Related file history**
-- Record:
-  - `534f81a506879` (Mar 2009): fixed unaligned access in SACK option
-    parsing loop in the same `tcp_sack()` function (SPARC64 kernel
-    unaligned access reports) — fast path was missed
-  - `bb9fc37358ffa` (Aug 2011): fixed `TCPOLEN_TSTAMP_ALIGNED*4` typo so
-    the fast path actually runs
-  - Standalone single-patch series (v1 only); no prerequisites
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:** Local tree at `v6.18.44` has only two commits touching
+`alc882.c`: `e1d695b45fd11` (probe rewrite) and `aeeb85f26c3bb` (driver
+split). Commit `def5e78a4e003` is on `master` but not in
+`stable/linux-6.18.y`. Standalone single-patch fix, not part of a
+series.
 
-**Step 3.4 — Author context**
-- Record: Rosen Penev is a regular netfilter contributor; patch
-  committed by Pablo Neira Ayuso (netfilter maintainer)
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** Evelyn Ali has no other commits in this tree. Takashi Iwai
+is the ALSA/HDA maintainer and authored the surrounding Clevo quirk
+infrastructure.
 
-**Step 3.5 — Dependencies**
-- Record: None. `get_unaligned_be32()` and `<linux/unaligned.h>` already
-  present in this tree's version of the file.
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 — Original discussion**
-- Record:
-  - Lore URL:
-    https://patch.msgid.link/20260525215840.93217-1-rosenp@gmail.com
-  - Single v1 patch, no revisions
-  - Fernando Fernandez Mancera: independently spotted the same issue; "I
-    think this is for correctness too"; `Reviewed-by`
-  - Pablo Neira Ayuso: committed with humorous "Missing
-    put_unaligned_be32(), BTW." (read path only)
-  - No NAKs or objections
-
-**Step 4.2 — Reviewers**
-- Record: CC'd to netfilter-devel, netdev, Pablo Neira, Florian
-  Westphal, David S. Miller, Eric Dumazet, Jakub Kicinski, Paolo Abeni —
-  appropriate maintainers included
-
-**Step 4.3 — Bug report**
-- Record: No syzbot or user bug report for this specific fast-path
-  issue. Historical precedent: `534f81a506879` documented real SPARC64
-  unaligned-access kernel messages from the same function's SACK path.
-
-**Step 4.4 — Related patches**
-- Record: Reviewer noted more unaligned-access audits may be needed
-  elsewhere; this patch is self-contained
-
-**Step 4.5 — Stable list**
-- Record: Could not search lore stable archive (bot protection). No
-  stable nomination found in the patch thread.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:** No dependencies. Required symbols (`PIN_VREF80`,
+`snd_hda_set_pin_ctl_cache`, `keep_vref_in_automute`,
+`ALC882_FIXUP_EAPD`) all exist in this tree. `git apply --check` on the
+patch succeeds cleanly.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 5.1 — Key functions**
-- Record: `tcp_sack()` modified; callers unchanged
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:** `b4 dig -c def5e78a4e003` → [v2] thread at
+https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com.
+Only v2 found (no v1 in series list). Maintainer merged without
+objections in thread.
 
-**Step 5.2 — Callers**
-- Record:
-  - `tcp_sack()` called from `tcp_in_window()` when `receiver->flags &
-    IP_CT_TCP_FLAG_SACK_PERM`
-  - `tcp_in_window()` called from `nf_conntrack_tcp_packet()` (line
-    1254)
-  - `nf_conntrack_tcp_packet()` is the main TCP conntrack packet handler
-    — invoked on every tracked TCP packet through netfilter hooks
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** `b4 dig -w`: To linux-sound@vger.kernel.org, Evelyn Ali,
+Takashi Iwai. Appropriate subsystem list and maintainer CC'd.
 
-**Step 5.3 — Callees**
-- Record: `skb_header_pointer()`, `get_unaligned_be32()` — standard
-  skb/conntrack helpers
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** No external bug report or syzbot link. Hardware issue
+reported by patch author on their own hardware.
 
-**Step 5.4 — Reachability**
-- Record:
-  - Reachable from all netfilter conntrack TCP traffic (routers,
-    firewalls, NAT gateways, any `CONFIG_NF_CONNTRACK` system)
-  - Fast path triggers on timestamp-only TCP options (`length == 12`) —
-    very common on modern TCP stacks
-  - Requires SACK negotiation (`IP_CT_TCP_FLAG_SACK_PERM`) — also common
-  - Userspace can trigger via normal TCP connections through conntrack-
-    enabled systems
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** Standalone 1-patch series. No prerequisites.
 
-**Step 5.5 — Similar patterns**
-- Record: Same function already uses `get_unaligned_be32()` at line 442
-  for SACK blocks (fixed in 2009). The fast path was the remaining
-  unaligned dereference.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** Not searched on lore stable list; no stable nomination found
+in patch thread. Absence of Cc: stable is expected per review
+instructions.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 6.1 — Buggy code in tree**
-- Record:
-  - Local tree: **v6.18.44** (`git describe HEAD`)
-  - Buggy code **present** at lines 408–412 of
-    `net/netfilter/nf_conntrack_proto_tcp.c`
-  - Bug present since 2007; not introduced after 6.18 branch point
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** `alc898_fixup_clevo_p775tm1()` (new fixup callback)
 
-**Step 6.2 — Backport complications**
-- Record: `git apply --check` and `git cherry-pick --no-commit` both
-  succeed — clean apply expected
+### Step 5.2: TRACE CALLERS
+**Record:** Invoked by HDA fixup framework during codec probe for
+matching PCI quirk `0x1558:0x7709`. Called from device enumeration when
+the Realtek codec driver loads — standard driver probe path for affected
+hardware.
 
-**Step 6.3 — Related fixes already present**
-- Record:
-  - 2009 SACK-path unaligned fix (`534f81a506879`) is in tree
-  - This specific fast-path fix (`d3bf9eae48649`) is **not** in tree
-    (only on master)
+### Step 5.3: TRACE CALLEES
+**Record:** `snd_hda_set_pin_ctl_cache(codec, 0x1b, PIN_VREF80)` —
+caches pin control for node 0x1b with 80% VREF. Sets
+`spec->gen.keep_vref_in_automute` read later in
+`sound/hda/codecs/generic.c` automute path.
 
----
+### Step 5.4: FOLLOW THE CALL CHAIN
+**Record:** PCI device probe → HDA codec driver → quirk table lookup by
+SSID → fixup chain (`ALC898_FIXUP_CLEVO_P775TM1` → `ALC882_FIXUP_EAPD`)
+→ pin configuration at probe. Reachable on boot for matching hardware;
+not userspace-triggerable but affects all audio on that machine.
 
-## Phase 7: Subsystem Context
-
-**Step 7.1 — Subsystem**
-- Record: `net/netfilter` — nf_conntrack TCP tracker. Criticality:
-  **CORE/IMPORTANT** (widely deployed on servers, routers, embedded
-  systems with `CONFIG_NF_CONNTRACK`)
-
-**Step 7.2 — Activity**
-- Record: Actively maintained subsystem with frequent stable fixes in
-  this tree
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** Same `keep_vref_in_automute` + VREF pattern in
+`alc889_fixup_mbp_vref()` and `alc889_fixup_mac_pins()` in the same file
+(lines 109–144). Multiple Clevo-specific fixups already present
+(`ALC1220_FIXUP_CLEVO_P950`, `ALC1220_FIXUP_CLEVO_PB51ED`, etc.).
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 8.1 — Who is affected**
-- Record: Systems with `CONFIG_NF_CONNTRACK` processing TCP traffic —
-  routers, firewalls, NAT, containers/VMs using conntrack. Not universal
-  (config-dependent), but very common in production networking.
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:** Local tree is **v6.18.44** (`stable/linux-6.18.y`). The fix
+is **absent** — grep finds no `P775TM1`, `0x7709`, or
+`ALC898_FIXUP_CLEVO_P775TM1`. Without the quirk, `0x1558:0x7709` matches
+only the generic `SND_PCI_QUIRK_VENDOR(0x1558, "Clevo laptop",
+ALC882_FIXUP_EAPD)` at line 682, which does not set pin 0x1b VREF. The
+broken behavior (no Sabre DAC output) is present for P775TM1 owners on
+this tree.
 
-**Step 8.2 — Trigger conditions**
-- Record:
-  - Linear skb (common) where TCP options start at non-4-byte-aligned
-    offset
-  - Typical Ethernet+IPv4: options at offset 54 (mod 4 = 2) — verified
-    by calculation
-  - Timestamp-only option layout (length 12)
-  - SACK negotiated on connection
-  - **Likelihood:** High on affected architectures for normal TCP
-    traffic
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** **Clean apply** — `git apply --check` passes with no
+conflicts. File structure matches mainline commit base.
 
-**Step 8.3 — Failure mode**
-- Record:
-  - Strict-alignment architectures (SPARC, some ARM/MIPS): kernel
-    unaligned-access trap — severity **CRITICAL** (documented precedent
-    in same function, 2009)
-  - x86: usually tolerates unaligned access but technically undefined
-    behavior
-  - No data corruption path identified; primarily crash/trap risk
-
-**Step 8.4 — Risk-benefit**
-- Record:
-  - **Benefit:** HIGH — prevents kernel faults on common TCP fast path
-    in widely deployed code
-  - **Risk:** VERY LOW — 5-line change, matches existing pattern in same
-    function, reviewed by subsystem developer and maintainer
-  - **Ratio:** Strong benefit, minimal risk
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** No duplicate or alternative fix for P775TM1 found. Clevo
+VREF/quirk infrastructure is present from the 2025 driver split.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 9.1 — Evidence summary**
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** **sound/ALSA HDA Realtek codec driver** — IMPORTANT (affects
+audio on specific laptop hardware, not core kernel paths).
 
-FOR backport:
-- Real unaligned memory access bug in hot conntrack path
-- Present since 2007; same function had identical-class fix in 2009 for
-  SACK path
-- Typical packet layouts place TCP options at 2-mod-4 offsets (verified)
-- Small, surgical, obviously correct fix
-- Reviewed by Fernando Fernandez Mancera; committed by netfilter
-  maintainer Pablo Neira
-- Applies cleanly to v6.18.44
-- No new APIs or features
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** Actively maintained; frequent laptop quirk additions on
+stable (e.g., `04dd210180575` Clevo mic fix in this tree).
 
-AGAINST backport:
-- No syzbot report or user crash report for this specific fast path
-- Only affects `CONFIG_NF_CONNTRACK` systems
-- Most severe on strict-alignment architectures (smaller user base than
-  x86)
-- Impact on x86 is lower (unaligned access usually works)
+---
 
-UNRESOLVED:
-- No explicit stable nomination in mailing list thread
-- Lore stable archive search blocked
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — matches existing in-function
-   pattern; reviewed and committed by maintainers
-2. Fixes a real bug? **PASS** — unaligned dereference on non-guaranteed-
-   aligned data
-3. Important issue? **PASS** — kernel trap/oops on strict-alignment
-   arch; hot networking path
-4. Small and contained? **PASS** — 1 file, ~5 lines changed
-5. No new features/APIs? **PASS** — correctness fix only
-6. Can apply to local tree? **PASS** — verified clean apply to v6.18.44
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** **Driver-specific / hardware-specific** — Clevo P775TM1
+laptops with PCI SSID `0x1558:0x7709` and Realtek ALC898-class codec.
 
-**Step 9.3 — Exception category**
-- Record: Not a device-ID/quirk/DT/docs exception; qualifies as a core
-  correctness/memory-safety fix
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Record:** Triggers at every boot/probe on matching hardware. Not
+timing-dependent. Unprivileged users cannot trigger it arbitrarily, but
+all users on that laptop are affected.
 
-**Step 9.4 — Decision rationale**
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:** **No audio output** from the ESS Sabre HiFi DAC / external
+headphone amp. **Severity: MEDIUM** — serious functional impairment for
+affected users, but no crash, corruption, deadlock, or security impact.
 
-This commit completes the unaligned-access fix started in 2009 for
-`tcp_sack()`. The timestamp-only fast path — hit on very common TCP
-packets — still uses an aligned `*(__be32 *)` dereference on data that
-is typically 2-byte-aligned in standard Ethernet+IPv4 layouts. On
-strict-alignment architectures this can cause kernel faults; the same
-failure mode was already documented and fixed for the SACK parsing loop
-in this exact function. The fix is minimal, follows an established
-pattern already in the file, applies cleanly to the v6.18.44 tree, and
-has maintainer review.
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Record:**
+- **Benefit:** Enables working audio on Clevo P775TM1 — real hardware
+  fix for real users
+- **Risk:** Very low — 22 lines, SSID-gated, established pattern
+- **Ratio:** Strong benefit, minimal risk — standard stable quirk
+  material
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: COMPILE THE EVIDENCE
+
+**FOR backporting:**
+- Hardware codec quirk — explicit stable exception category
+- Fixes real user-visible bug (no audio) on Clevo P775TM1
+- Small (22 lines), single file, applies cleanly to v6.18.44
+- Follows established patterns in same file (VREF +
+  `keep_vref_in_automute`, Clevo quirk table)
+- Merged by subsystem maintainer (Takashi Iwai)
+- All prerequisites present in this tree
+- Fix not yet in `stable/linux-6.18.y`
+
+**AGAINST backporting:**
+- Not a crash/security/corruption issue
+- Affects narrow hardware population
+- No Tested-by: tag beyond author/maintainer
+- New laptop model — limited user base on 6.18.y today
+
+**Unresolved:** None material to the decision.
+
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — standard HDA quirk pattern;
+   maintainer-merged v2
+2. Fixes a real bug affecting users? **PASS** — broken audio on P775TM1
+3. Important issue? **PASS** (functional/hardware) — no audio is a
+   significant usability failure for affected hardware, though not
+   CRITICAL severity
+4. Small and contained? **PASS** — 22 lines, one file
+5. No new features or APIs? **PASS** — hardware quirk exception applies
+6. Can apply to the local tree? **PASS** — clean apply verified
+
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+**Record:** **Hardware quirk / audio codec quirk** — automatic stable
+YES category per stable rules.
+
+### Step 9.4: DECISION RATIONALE
+
+For **linux-6.18.y (v6.18.44)**, this commit should be backported. It is
+a textbook HDA Realtek laptop quirk: PCI SSID-specific pin VREF
+configuration enabling an external DAC. The same file already contains
+numerous Clevo fixups using identical infrastructure. The patch is
+absent from this stable tree, applies without modification, and fixes a
+real hardware issue with negligible regression risk.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from `git show d3bf9eae48649`
-- [Phase 2] Diff analysis: 5-line change in `tcp_sack()` fast path
-- [Phase 3] `git blame -L 407,413`: aligned dereference from 2007
-  (`8f05ce91c8b801`)
-- [Phase 3] `git show 534f81a506879`: prior SACK-path unaligned fix in
-  same function (SPARC64)
-- [Phase 3] `git show bb9fc37358ffa`: fast path length fix (2011)
-- [Phase 3] `git log --grep`: no duplicate fix for this fast path in
-  stable tree
-- [Phase 4] `b4 dig -c d3bf9eae48649`: lore thread found
-- [Phase 4] `b4 dig -w`: netdev/netfilter maintainers CC'd
-- [Phase 4] `b4 dig -a`: single v1 patch
-- [Phase 4] Mbox review: Reviewed-by from Fernando Fernandez Mancera;
-  maintainer commit
-- [Phase 5] `grep tcp_sack`: called from `tcp_in_window()` →
-  `nf_conntrack_tcp_packet()`
-- [Phase 5] Read `skb_header_pointer()` in `include/linux/skbuff.h`:
-  returns direct skb pointer when linear
-- [Phase 5] Python alignment calc: eth+ipv4 opts at offset 54 (mod 4 =
-  2)
-- [Phase 6] `git describe HEAD`: v6.18.44
-- [Phase 6] Read current file lines 408–412: buggy code still present
-- [Phase 6] `git apply --check` on patch: applies cleanly
-- [Phase 6] `git cherry-pick --no-commit d3bf9eae48649`: auto-merge
-  succeeds
-- [Phase 6] `get_unaligned_be32` already at line 442; `#include
-  <linux/unaligned.h>` at line 17
-- [Phase 8] Failure mode: unaligned access trap on strict-alignment arch
-  — CRITICAL severity class
+- [Phase 1] `git show def5e78a4e003`: parsed tags (SOB Evelyn Ali, Link,
+  SOB Takashi Iwai); no Fixes/Reported-by/Tested-by
+- [Phase 1] Subject parsed: ALSA hda/realtek ALC882 fixup for Clevo
+  P775TM1
+- [Phase 2] Diff: +22 lines in `alc882.c`; new
+  `alc898_fixup_clevo_p775tm1()`, quirk `0x1558:0x7709`
+- [Phase 3] `git describe HEAD`: v6.18.44; tree is `stable/linux-6.18.y`
+- [Phase 3] `git log HEAD..master --grep P775TM1`: commit only on
+  master, not in stable branch
+- [Phase 3] `git apply --check` on patch from `def5e78a4e003`: applies
+  cleanly
+- [Phase 3] `git blame` lines 666–668: surrounding Clevo quirks from
+  `aeeb85f26c3bb` (2025-07-09)
+- [Phase 4] `b4 dig -c def5e78a4e003`: lore URL
+  https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com
+- [Phase 4] `b4 dig -a`: v2 only, standalone patch
+- [Phase 4] `b4 dig -w`: CC'd linux-sound@vger.kernel.org and Takashi
+  Iwai
+- [Phase 4] `b4 dig -m /tmp/p775tm1.mbox`: thread saved; maintainer
+  merge reply, no stable nomination or NAK
+- [Phase 5] `grep keep_vref_in_automute`: used in `alc882.c` lines
+  126/143 and `generic.c` line 4412
+- [Phase 5] `grep PIN_VREF80`: defined in `hda_local.h`, used across HDA
+  codecs
+- [Phase 6] `grep P775TM1|0x7709|ALC898_FIXUP`: no matches — fix absent
+  from local tree
+- [Phase 6] Read `alc882.c` line 682: generic Clevo EAPD quirk exists
+  but lacks VREF fix
+- [Phase 6] Read `alc882.c` lines 666–668: gap where `0x7709` quirk
+  should be inserted
+- [Phase 8] Failure mode: no audio from Sabre DAC; severity MEDIUM
+  (functional, not crash)
 
 **YES**
 
- net/netfilter/nf_conntrack_proto_tcp.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/hda/codecs/realtek/alc882.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index e99ab1e88e9f8..4a23edf7107a5 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -405,11 +405,11 @@ static void tcp_sack(const struct sk_buff *skb, unsigned int dataoff,
- 		return;
+diff --git a/sound/hda/codecs/realtek/alc882.c b/sound/hda/codecs/realtek/alc882.c
+index 529fecd5baa0a..fd466b6985f05 100644
+--- a/sound/hda/codecs/realtek/alc882.c
++++ b/sound/hda/codecs/realtek/alc882.c
+@@ -61,6 +61,7 @@ enum {
+ 	ALC887_FIXUP_ASUS_HMIC,
+ 	ALCS1200A_FIXUP_MIC_VREF,
+ 	ALC888VD_FIXUP_MIC_100VREF,
++	ALC898_FIXUP_CLEVO_P775TM1,
+ };
  
- 	/* Fast path for timestamp-only option */
--	if (length == TCPOLEN_TSTAMP_ALIGNED
--	    && *(__be32 *)ptr == htonl((TCPOPT_NOP << 24)
--				       | (TCPOPT_NOP << 16)
--				       | (TCPOPT_TIMESTAMP << 8)
--				       | TCPOLEN_TIMESTAMP))
-+	if (length == TCPOLEN_TSTAMP_ALIGNED &&
-+	    get_unaligned_be32(ptr) == ((TCPOPT_NOP << 24) |
-+					(TCPOPT_NOP << 16) |
-+					(TCPOPT_TIMESTAMP << 8) |
-+					TCPOLEN_TIMESTAMP))
- 		return;
+ static void alc889_fixup_coef(struct hda_codec *codec,
+@@ -236,6 +237,19 @@ static void alc1220_fixup_clevo_pb51ed(struct hda_codec *codec,
+ 	alc_fixup_headset_mode_no_hp_mic(codec, fix, action);
+ }
  
- 	while (length > 0) {
++/* On Clevo P775TM1, VREF of pin 0x1b enables the external headphone amp */
++static void alc898_fixup_clevo_p775tm1(struct hda_codec *codec,
++				       const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action != HDA_FIXUP_ACT_PRE_PROBE)
++		return;
++
++	snd_hda_set_pin_ctl_cache(codec, 0x1b, PIN_VREF80);
++	spec->gen.keep_vref_in_automute = 1;
++}
++
+ static void alc887_asus_hp_automute_hook(struct hda_codec *codec,
+ 					 struct hda_jack_callback *jack)
+ {
+@@ -560,6 +574,12 @@ static const struct hda_fixup alc882_fixups[] = {
+ 			{}
+ 		}
+ 	},
++	[ALC898_FIXUP_CLEVO_P775TM1] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc898_fixup_clevo_p775tm1,
++		.chained = true,
++		.chain_id = ALC882_FIXUP_EAPD,
++	},
+ };
+ 
+ static const struct hda_quirk alc882_fixup_tbl[] = {
+@@ -664,6 +684,7 @@ static const struct hda_quirk alc882_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1558, 0x67f1, "Clevo PC70H[PRS]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x67f5, "Clevo PD70PN[NRT]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x70d1, "Clevo PC70[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
++	SND_PCI_QUIRK(0x1558, 0x7709, "Clevo P775TM1", ALC898_FIXUP_CLEVO_P775TM1),
+ 	SND_PCI_QUIRK(0x1558, 0x7714, "Clevo X170SM", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x7715, "Clevo X170KM-G", ALC1220_FIXUP_CLEVO_PB51ED),
+ 	SND_PCI_QUIRK(0x1558, 0x9501, "Clevo P950HR", ALC1220_FIXUP_CLEVO_P950),
+@@ -719,6 +740,7 @@ static const struct hda_model_fixup alc882_fixup_models[] = {
+ 	{.id = ALC1220_FIXUP_GB_DUAL_CODECS, .name = "dual-codecs"},
+ 	{.id = ALC1220_FIXUP_GB_X570, .name = "gb-x570"},
+ 	{.id = ALC1220_FIXUP_CLEVO_P950, .name = "clevo-p950"},
++	{.id = ALC898_FIXUP_CLEVO_P775TM1, .name = "clevo-p775tm1"},
+ 	{}
+ };
+ 
 -- 
 2.53.0
 
