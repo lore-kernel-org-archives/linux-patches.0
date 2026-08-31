@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A494534455;
-	Mon, 31 Aug 2026 13:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCCF345725;
+	Mon, 31 Aug 2026 13:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183912; cv=none; b=kBNK91No3cUNTqSTd6qc/ETcTF4Ofy6sSRQXKHe6JZYeSN5ZtbWPqbUtJeySjnz2WmlKf26JZj+I6LpNTcmQ6M7mtsnNa8s7gaSv1W55PWS5DXembVa9see2UOk8xnWIS5osWXw9wHg05gdk2eqjhU97PAVbAGxaQlPR/PAnuT4=
+	t=1788183912; cv=none; b=XJxhaanDsFy7XeJppTI+pey3PhNpCMRsZnLJcjFkgDBGd/He0j+ruUAyLS+d+yBXDh8Z5enPR8pUxmGMJyf0BIYptxXQ1K1IL4/QOw0Urn+Q5RCZMfhDKNCvc+dI6ck6x3WolEfEm85Lal8MQtimkXzs46lvbzotsHS2Rtq7ZnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183912; c=relaxed/simple;
-	bh=pGU4nFc5F5wt4HYuYt9y3KE2TCupWrAg1GDr4pczIaE=;
+	bh=pUPoRK0PlWqnE3rD7pUfw8ucAHK5FYCJdZ8cu/VqBuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmBhkS0b7GVpIYlZXBoO8+N+L/VSp5tHsGCcVmjXjnOnU7BASRq0R5wIb27/uA1b3ikwUsT0HRXPoaRiViklxg+vyfpYH2nuNJHSRahWu6niiyAm7y0JMDszqS9zMDV7pTun1uNXVmszG1vP+5PpoxplNpPkK0U/7AagNEuFcvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hmCvfsU2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uxdYKFbRs1fVXl97m26rokUITUW+DIsb5Wk8zjZQxESNLXM5NfhO8HGHPJ6JkEkol0ZhCVtlqpm2kdVUeV7ahoBj+f0bvUChJyRNcKNLqtKzV4MOeNODrNYn2c4D9tYYNczquy+4LminBUSEcYY8CVvklruegi0Up4sgFZlpWYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LV6enQ37; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hmCvfsU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6201F00A3E;
-	Mon, 31 Aug 2026 13:45:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LV6enQ37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86151F00A3D;
+	Mon, 31 Aug 2026 13:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183909;
-	bh=VB+zg8yOh0NtNBNUbG4qqEaBZn7t5SU2TRbaRNR9sUA=;
+	s=k20260515; t=1788183911;
+	bh=UuqXvgZlLk8azWYKGyjz6OEwqXiLwJfHaMuEOTGTnqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmCvfsU2HUrTNFntQ9XsG3KcJeAZNx3Y0AAWbC/D18eDvA1hMkYPzUr46K9u/TrbK
-	 7MAQbJ211hHvcLeCgR4mHcbtmmsv7UWH9YOzZIxBb6l1E+VhbCYnAvhb3W4+GVcm//
-	 Y6k98EHMzs8WvkEKcezW5pv0ZWDcTZN73E1oOIlutJx/t60lKqeRfR04WfedwZWLG8
-	 1WlZlynXsK8fXzX6/HUixQhU3wZj/jX8+Dtwt6Spg36OVOP0If+gqqhoqs9eyLGJqQ
-	 mJwtsuqeja4DGpAgpBszT9tzbvzvxNIcUWS9bhBhMEFcGjKpgiNl4xO0xQR56YKVUR
-	 jqwWqhoVNtHnA==
+	b=LV6enQ37/hPnucCZXN8eJxCPu3Wh4HDIauL0Y5pvu5VdTsoVMWpS05GbHqbfSnrog
+	 yalVyKunYsgVC90V0SCi/bFE5JvJbZT4WA+X1jUF/rVFGBG+y9rXRgmAMnwyOZ+WZM
+	 YzxxBMFn/+0bEDoDMNTQ4m2O0IewupqkV6CRc83sYtjtWafR/j0ak3w+SnQ8bCS3RB
+	 IFO0LtqUBoZVdrjjyvEVcoiHyypxi/nTrUHeCqYTYPpMSysP209+FKLXZjAuO7zz7H
+	 o5a2ZXrY/mKMXC80j7HguK26tEtEdlHxlOC1tUfmVNERnnxw/IilXYBiNtgzURrJiP
+	 17FFt5+WEqpyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Armin Wolf <W_Armin@gmx.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	maciej.wieczor-retman@intel.com,
-	pawel.chmielewski@intel.com,
-	linux-acpi@vger.kernel.org,
-	acpica-devel@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: Add package limit checks in parser functions
-Date: Mon, 31 Aug 2026 09:26:43 -0400
-Message-ID: <20260831133314.4125787-375-sashal@kernel.org>
+	corbet@lwn.net,
+	nathan@kernel.org,
+	nsc@kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kbuild@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] modpost: Handle malformed WMI GUID strings
+Date: Mon, 31 Aug 2026 09:26:44 -0400
+Message-ID: <20260831133314.4125787-376-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -50,153 +52,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: ikaros <void0red@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit d27d48a528e437aed690f977e69a6fe73fe82ab5 ]
+[ Upstream commit 3429ae7b2f02a4a6ad40d36ee06641d433d75a1b ]
 
-Add package limit checks in parser functions to prevent out-of-bounds
-access.
+Some WMI GUIDs found inside binary MOF files contain both
+uppercase and lowercase characters. Blindly copying such
+GUIDs will prevent the associated WMI driver from loading
+automatically because the WMI GUID found inside WMI device ids
+always contains uppercase characters.
 
-Link: https://github.com/acpica/acpica/commit/b31b45af2122
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3212937.CbtlEUcBR6@rafael.j.wysocki
+Avoid this issue by always converting WMI GUID strings to
+uppercase. Also verify that the WMI GUID string actually looks
+like a valid GUID.
+
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260610203453.816254-10-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The background git searches finished. Both came back empty:
+The background git searches finished. They didn’t turn up the modpost
+WMI GUID commit in this 6.18.44 tree — it’s still only a candidate. The
+closest related in-tree commit is `97b726eb1dc2b` (msi-wmi-platform
+lowercase GUID typo), which lines up with the modpost fix but doesn’t
+replace it.
 
-- No commit matching **"Add package limit"** in this tree
-- No commits from author **ikaros**
-- No related fixes for **"Clamp PackageEnd"**, **"package limit"**, or
-  **"package end"**
+That doesn’t change the earlier conclusion: backport **YES** for 6.18.y.
 
-That confirms the package-limit checks are not in **6.18.44** yet. The
-earlier analysis stands: this is a small, maintainer-reviewed bounds-
-check fix for a real ACPI parser OOB read, and it should be backported.
+ .../wmi/driver-development-guide.rst          |  2 +-
+ scripts/mod/file2alias.c                      | 28 ++++++++++++++++++-
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-**YES**
-
- drivers/acpi/acpica/nsxfname.c |  4 ++++
- drivers/acpi/acpica/psargs.c   |  4 ++++
- drivers/acpi/acpica/psloop.c   | 25 +++++++++++++++++++++++++
- drivers/acpi/acpica/psparse.c  |  8 ++++++++
- 4 files changed, 41 insertions(+)
-
-diff --git a/drivers/acpi/acpica/nsxfname.c b/drivers/acpi/acpica/nsxfname.c
-index 1db831545ec8c..821fb4930e9d8 100644
---- a/drivers/acpi/acpica/nsxfname.c
-+++ b/drivers/acpi/acpica/nsxfname.c
-@@ -512,6 +512,10 @@ acpi_status acpi_install_method(u8 *buffer)
+diff --git a/Documentation/wmi/driver-development-guide.rst b/Documentation/wmi/driver-development-guide.rst
+index 5680303ae314e..ae577a290afc3 100644
+--- a/Documentation/wmi/driver-development-guide.rst
++++ b/Documentation/wmi/driver-development-guide.rst
+@@ -54,7 +54,7 @@ to matching WMI devices using a struct wmi_device_id table:
+ ::
  
- 	parser_state.aml += acpi_ps_get_opcode_size(opcode);
- 	parser_state.pkg_end = acpi_ps_get_next_package_end(&parser_state);
-+	if ((parser_state.pkg_end > parser_state.aml_end) ||
-+	    (parser_state.pkg_end < parser_state.aml)) {
-+		return (AE_AML_PACKAGE_LIMIT);
-+	}
- 	path = acpi_ps_get_next_namestring(&parser_state);
- 
- 	method_flags = *parser_state.aml++;
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 064652d11d9aa..34d887e2211ac 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -867,6 +867,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 
- 		parser_state->pkg_end =
- 		    acpi_ps_get_next_package_end(parser_state);
-+		if ((parser_state->pkg_end > parser_state->aml_end)
-+		    || (parser_state->pkg_end < parser_state->aml)) {
-+			return_ACPI_STATUS(AE_AML_PACKAGE_LIMIT);
-+		}
- 		break;
- 
- 	case ARGP_FIELDLIST:
-diff --git a/drivers/acpi/acpica/psloop.c b/drivers/acpi/acpica/psloop.c
-index 35111ff2526b1..7c3caf0ccab62 100644
---- a/drivers/acpi/acpica/psloop.c
-+++ b/drivers/acpi/acpica/psloop.c
-@@ -361,6 +361,13 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
- 					walk_state->parser_state.aml =
- 					    acpi_ps_get_next_package_end
- 					    (&walk_state->parser_state);
-+					if ((walk_state->parser_state.aml >
-+					     walk_state->parser_state.aml_end)
-+					    || (walk_state->parser_state.aml <
-+						walk_state->aml)) {
-+						return_ACPI_STATUS
-+						    (AE_AML_PACKAGE_LIMIT);
-+					}
- 					walk_state->aml =
- 					    walk_state->parser_state.aml;
- 				}
-@@ -421,6 +428,14 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
- 					parser_state->aml =
- 					    acpi_ps_get_next_package_end
- 					    (parser_state);
-+					if ((parser_state->aml >
-+					     parser_state->aml_end)
-+					    || (parser_state->aml <
-+						walk_state->control_state->
-+						control.aml_predicate_start)) {
-+						return_ACPI_STATUS
-+						    (AE_AML_PACKAGE_LIMIT);
-+					}
- 					walk_state->aml = parser_state->aml;
- 
- 					ACPI_ERROR((AE_INFO,
-@@ -436,6 +451,16 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
- 						walk_state->parser_state.aml =
- 						    acpi_ps_get_next_package_end
- 						    (parser_state);
-+						if ((walk_state->parser_state.
-+						     aml >
-+						     walk_state->parser_state.
-+						     aml_end)
-+						    || (walk_state->
-+							parser_state.aml <
-+							walk_state->aml)) {
-+							return_ACPI_STATUS
-+							    (AE_AML_PACKAGE_LIMIT);
-+						}
- 						walk_state->aml =
- 						    parser_state->aml;
- 					}
-diff --git a/drivers/acpi/acpica/psparse.c b/drivers/acpi/acpica/psparse.c
-index 55a416e56fd83..b4f21a8988795 100644
---- a/drivers/acpi/acpica/psparse.c
-+++ b/drivers/acpi/acpica/psparse.c
-@@ -300,6 +300,7 @@ acpi_ps_next_parse_state(struct acpi_walk_state *walk_state,
+   static const struct wmi_device_id foo_id_table[] = {
+-         /* Only use uppercase letters! */
++         /* Using only uppercase letters is recommended */
+          { "936DA01F-9ABD-4D9D-80C7-02AF85C822A8", NULL },
+          { }
+   };
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index 4e99393a35f15..20e542a888c49 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -1253,6 +1253,8 @@ static void do_tee_entry(struct module *mod, void *symval)
+ static void do_wmi_entry(struct module *mod, void *symval)
  {
- 	struct acpi_parse_state *parser_state = &walk_state->parser_state;
- 	acpi_status status = AE_CTRL_PENDING;
-+	u8 *aml;
+ 	DEF_FIELD_ADDR(symval, wmi_device_id, guid_string);
++	char result[sizeof(*guid_string)];
++	int i;
  
- 	ACPI_FUNCTION_TRACE_PTR(ps_next_parse_state, op);
+ 	if (strlen(*guid_string) != UUID_STRING_LEN) {
+ 		warn("Invalid WMI device id 'wmi:%s' in '%s'\n",
+@@ -1260,7 +1262,31 @@ static void do_wmi_entry(struct module *mod, void *symval)
+ 		return;
+ 	}
  
-@@ -344,7 +345,14 @@ acpi_ps_next_parse_state(struct acpi_walk_state *walk_state,
- 		 * Predicate of an IF was true, and we are at the matching ELSE.
- 		 * Just close out this package
- 		 */
-+		aml = parser_state->aml;
+-	module_alias_printf(mod, false, WMI_MODULE_PREFIX "%s", *guid_string);
++	for (i = 0; i < UUID_STRING_LEN; i++) {
++		char value = (*guid_string)[i];
++		bool valid = false;
 +
- 		parser_state->aml = acpi_ps_get_next_package_end(parser_state);
-+		if ((parser_state->aml > parser_state->aml_end) ||
-+		    (parser_state->aml < aml)) {
-+			status = AE_AML_PACKAGE_LIMIT;
-+			break;
++		if (i == 8 || i == 13 || i == 18 || i == 23) {
++			if (value == '-')
++				valid = true;
++		} else {
++			if (isxdigit(value))
++				valid = true;
 +		}
- 		status = AE_CTRL_PENDING;
- 		break;
++
++		if (!valid) {
++			warn("Invalid character %c inside WMI GUID string '%s' in '%s'\n",
++			     value, *guid_string, mod->name);
++			return;
++		}
++
++		/* Some GUIDs from BMOF definitions contain lowercase characters */
++		result[i] = toupper(value);
++	}
++
++	result[i] = '\0';
++
++	module_alias_printf(mod, false, WMI_MODULE_PREFIX "%s", result);
+ }
  
+ /* Looks like: mhi:S */
 -- 
 2.53.0
 
