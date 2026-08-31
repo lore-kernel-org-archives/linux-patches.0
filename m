@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E4E442105;
-	Mon, 31 Aug 2026 14:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2ED494804;
+	Mon, 31 Aug 2026 14:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185162; cv=none; b=Uv5W4MJkI2yzKC7WHUc6yYkOCaYRb6WSqiGYVj3sx1O6O0X6GlgmIMuvnUg2tZWuLqnPUtrAJJBDmUZVlwPJI15fCgNrgs7Zo+NtDJTKkkm5my9p83lFC35Bgx05Nl39IsTj8wLaObNIydYqyvhWgqi2qCcNsjIK1w1cvxp1Gos=
+	t=1788185168; cv=none; b=WL7ZkkSX5ye6UON/LHrQyS4KT5Ei9/zi4wkOZhASl/v1FC/ECpIGjy3oeBkg5SUl2NhW0WAVy9ibYuRBNVmsPZvZsMloNrJg7Ty5KbwGL+j7gTFuA2PIgpnM8o6ahjccQCjT2RLJg+9l64SG7mWOdZ53lKiLuhglNZ8E116NziY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185162; c=relaxed/simple;
-	bh=/GEoG17JKLoAnlm0rdVGuUhqHnCtjtVjB6YecmRrDfs=;
+	s=arc-20240116; t=1788185168; c=relaxed/simple;
+	bh=Zoeza8n6QCXH2vxpwBeNY5He52xljLiYVZEmEJQfSBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYpOHUAGxWonSwfgVdhXixHQNR06H4FQ5E3ENX4kkZ1LUjkcXwH+Lh1ZX6s/S24Lgq9GJI63WHTojZU2uWaSI9SxvGNejUl2OsgosAWttibRWxewkYLfGmBzb0EOSqY3nWOKxmVvI5ha4jkpZj21ctYzGNqujEYgi2qp5CfkCwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SG+4vX+P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XbXrwOXsd9gpGpOgI8vCbTAWgkPjXisTd+7p1byWcmmknMxTzTepSwPjhsIkIB8KejHH+tpWqz3CVd99Au4SdeuonihENTLo957DwvntJlYKFS7N4gdycRUwS7zGKyclWxT8An+CYFSPFA5C4WSVEB2fEE3RVxxMaJ2M46ViRXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/idyFkU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SG+4vX+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F8B1F000E9;
-	Mon, 31 Aug 2026 14:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/idyFkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42E61F000E9;
+	Mon, 31 Aug 2026 14:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185161;
-	bh=zD4JEXgJkzFH6BtMMjWFyuoj1UnJOt80evzgbXxVmpY=;
+	s=korg; t=1788185167;
+	bh=m7hBJ2VhISshGbYNtTSVV5Terds/O8p5XnteERP5ri0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SG+4vX+P7Sj+HW0fSzPvIi6kI/x4M6OZAuiexXRiCnrlM1aGnIuxTefc/bLFhhg74
-	 3Fw/XZ6hkVh4xdvhy+hiOZq4/qawbkjgMvEccyi2RRmTCalXepTMo436G8AXiGJJ1E
-	 +aiafnO3su8ZQ8XSvJXBh/wyIgF/G5zD9K4ZZy3M=
+	b=N/idyFkUdEbD+BfG/tSrVvl1E+9yXtthZstj8QNiS6EK+YGdTOc7RLJpG1QT7Eqcp
+	 c1VT5aEmJasdOcyUOOuQmlQnYcWkDu2jECIhvBWW4BqGeU86OwWXxxnddRtRU9gjeT
+	 cPBojivcT5+GWkRV7+vkTEWuKfno12RwVl41wifA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 5.15 68/69] USB: c67x00: fix use-after-free in c67x00_add_iso_urb()
-Date: Mon, 31 Aug 2026 15:35:41 +0200
-Message-ID: <20260831133402.146378444@linuxfoundation.org>
+	Will Porter <mrwillporter@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 65/69] ALSA: usb-audio: Complete cleanup after system-resume errors
+Date: Mon, 31 Aug 2026 15:35:38 +0200
+Message-ID: <20260831133401.986820509@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -49,49 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Will Porter <mrwillporter@gmail.com>
 
-commit b1e24de475bf2d66fffc9103f3444b783527d55a upstream.
+commit 1739a976312e110c93a8dee66a1cdf893a1b187e upstream.
 
-When TD creation fails for the last packet of an isochronous URB,
-c67x00_add_iso_urb() gives the URB back before updating the endpoint
-scheduling state.
+A failed system resume can leave the card unusable until reboot.
+usb_audio_resume() jumps to err_out when snd_usb_pcm_resume() or
+snd_usb_mixer_resume() fails. The error path skips the out: block, which
+restores D0 and decrements chip->num_suspended_intf.
 
-c67x00_giveback_urb() frees the URB private data, and the completion
-callback may release the final URB reference. The following accesses to
-urbp->ep_data, urb->interval, and urbp->cnt can therefore use freed
-memory.
+The card stays in SNDRV_CTL_POWER_D3hot, so later control access blocks in
+snd_power_ref_and_wait(). USB core logs an interface resume callback error.
+It does not retry that callback, so a later callback cannot complete the
+skipped cleanup.
 
-Update next_frame and cnt before giving back the failed final packet,
-making the giveback the last operation that uses the URB and its private
-data.
+usb_audio_suspend() increments num_suspended_intf before returning success.
+A system-resume callback must consume the system-suspend count even if a
+component resume fails. Otherwise, the stranded count skews later suspend
+and resume cycles.
 
-Fixes: e9b29ffc519b ("USB: add Cypress c67x00 OTG controller HCD driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260806013502.322067-1-shuangpeng.kernel@gmail.com
+Do not apply this cleanup to runtime-resume errors. Runtime PM can retry
+-EAGAIN or -EBUSY without another suspend callback. The count must continue
+to describe that suspended interface. Other runtime-resume errors latch
+runtime_error in the PM core and do not cause an immediate callback retry.
+
+Both parts of the system-resume error path are longstanding. Commit
+88a8516a2128a ("ALSA: usbaudio: implement USB autosuspend") introduced
+err_out past the D0 restore. Commit 862b2509d157c ("ALSA: usb-audio: Fix
+inconsistent card PM state after resume") later moved
+num_suspended_intf-- into the out: block. The error path now skips both
+operations.
+
+No third-party code is needed to reach the error path.
+snd_usb_mixer_resume() ends in snd_usb_mixer_activate(), which returns the
+result of usb_submit_urb() for devices that have a mixer status URB. Its
+mixer->private_resume hook can also fail through scarlett2_init_notify().
+snd_usb_pcm_resume() issues a SET_CUR request to a UAC3 power domain. It
+can return -EPIPE or -EIO when the device stalls the request.
+
+Route a component error through out: only when system_suspend is nonzero.
+Continue to return runtime-resume errors through err_out. Later component
+resume stages remain skipped. The original error still reaches USB core.
+A later transfer can fail if the device did not recover.
+
+I reproduced the system-resume failure on an Audient iD14 MkI with an
+out-of-tree diagnostic mixer resume hook. An injected -EIO on the unpatched
+core left control readers in uninterruptible sleep in
+snd_power_ref_and_wait() until a reboot. With this patch, the same failure
+restored control access. A second system suspend and resume also succeeded
+after I disabled fault injection.
+
+Assisted-by: Claude:claude-opus-5
+Assisted-by: Antigravity:gemini-3.1-pro-high
+Assisted-by: Codex:gpt-5.6-sol
+Fixes: 88a8516a2128a ("ALSA: usbaudio: implement USB autosuspend")
+Fixes: 862b2509d157c ("ALSA: usb-audio: Fix inconsistent card PM state after resume")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Will Porter <mrwillporter@gmail.com>
+Link: https://patch.msgid.link/20260824225757.26749-1-mrwillporter@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/c67x00/c67x00-sched.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/card.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/c67x00/c67x00-sched.c
-+++ b/drivers/usb/c67x00/c67x00-sched.c
-@@ -761,13 +761,13 @@ static int c67x00_add_iso_urb(struct c67
- 				ret);
- 			urb->iso_frame_desc[urbp->cnt].actual_length = 0;
- 			urb->iso_frame_desc[urbp->cnt].status = ret;
--			if (urbp->cnt + 1 == urb->number_of_packets)
--				c67x00_giveback_urb(c67x00, urb, 0);
- 		}
+--- a/sound/usb/card.c
++++ b/sound/usb/card.c
+@@ -1121,8 +1121,11 @@ static int usb_audio_resume(struct usb_i
  
- 		urbp->ep_data->next_frame =
- 		    frame_add(urbp->ep_data->next_frame, urb->interval);
- 		urbp->cnt++;
-+		if (ret && urbp->cnt == urb->number_of_packets)
-+			c67x00_giveback_urb(c67x00, urb, 0);
+ 	list_for_each_entry(as, &chip->pcm_list, list) {
+ 		err = snd_usb_pcm_resume(as);
+-		if (err < 0)
+-			goto err_out;
++		if (err < 0) {
++			if (!chip->system_suspend)
++				goto err_out;
++			goto out;
++		}
  	}
- 	return 0;
- }
+ 
+ 	/*
+@@ -1131,8 +1134,11 @@ static int usb_audio_resume(struct usb_i
+ 	 */
+ 	list_for_each_entry(mixer, &chip->mixer_list, list) {
+ 		err = snd_usb_mixer_resume(mixer);
+-		if (err < 0)
+-			goto err_out;
++		if (err < 0) {
++			if (!chip->system_suspend)
++				goto err_out;
++			goto out;
++		}
+ 	}
+ 
+ 	list_for_each(p, &chip->midi_list) {
 
 
