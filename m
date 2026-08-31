@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFDF548571;
-	Mon, 31 Aug 2026 13:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD645519A0;
+	Mon, 31 Aug 2026 13:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184014; cv=none; b=qpd2ups8oi+Z5i7qzdFi7MamPJOeIK0TL06h6fw6ZUCB1UlKrBj7SovN4HHxavkLtq85K+FVXWgbQeuvVWZFZQYHzd0v8/2pI19vkwYHIyJ41Kz0JDTWzBTmnLhE536uQObOUJaCsSm1r9CK0+KCQOfwewyjIdEmkVSefcCGpC8=
+	t=1788184016; cv=none; b=YZsV19OoW8DpaiQEuB54uie4oDuw4/FwCs58wKjqDvHQpbs+FUfRi/CIo3f2S6GEAbA6fSu0roEas4a8FyvuO3VdwFS7BRLwzEBKjJIQBQmA9NeQMID+fFriRQmVjqtuAFoa6iDGet539syEsGDUwc/O1cWDXMg0yhQC9wy3xis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184014; c=relaxed/simple;
-	bh=L8z4OmRIHKSbYTgTNVhBVl1U5Sxb0s9i4ugQ7Yy7MXM=;
+	s=arc-20240116; t=1788184016; c=relaxed/simple;
+	bh=IRlAvzQXXWDR5b57cSwrrJ2mIJF6Etx2TbPxpMkujHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ult5r8Glyh0Sa+39lvo8anx0lQasbaBFLh3q0dwkiSPDyav3dVRi2VkqKKMjcanPMQuc/I9wlkyeYwGk/4MZrXvCBfjjRELPM23DgKt5NdCwLReACHWGBdnewQZVEH1HgXLgc7DOyjEY+QkF1j7f4iY6Z9/p502JN8JNQoewmV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Czg6Z8PB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GID9azf1hxAAVQ1Lz1jRhdRL9SNywY3M4rimpu2YJvkqkXcE0/T+zWziQyOGMcpUosZhDQIriVYn6l2MRW0UTY379MxjY/sK29n8L/aIMGk06QF7ZpjroCWNheja8mj2GjP2tbTXtinP4oNkWEvgB3FtYVBaZsbbmKb0y6w2FFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kuLdf90v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Czg6Z8PB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A9A1F00A3D;
-	Mon, 31 Aug 2026 13:46:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kuLdf90v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F931F00ACA;
+	Mon, 31 Aug 2026 13:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184010;
-	bh=xp2ZHcN22HD2Tab2KGfsBxzXVjB6uvelcnZnqIBUgnE=;
+	s=k20260515; t=1788184012;
+	bh=qkm3zZNL9HB2rqCSTJl17ZzY5ewOUI2Ek8PssKpYf1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Czg6Z8PBXyQ6ewo09TknOfHaHrk0ynu52NTg5jzZKkYWck7JnbFLaf8U4vi5UAMpx
-	 3GzVOL07ZkrUqp0VgULIOmzs2s7HhGgBed3tsQimg8f63uGTe0OR6+WthOQxzndZbf
-	 I2Lzd+pTjyaA5KerplUXYFNIZb1GPHe6HnEmihCOey3f1FqqKGDmV/okwDVZutj8It
-	 aFvkoZZVjZW2mYH5MiCK02EzW5ZnbGR+EXQQ62oScfxNPLLSj4mk4X6cJXdn0uneY3
-	 xBJEtbqSd7Waxif1DGn0ZBzP54BmX2ZWhPis0mOUikXRx6MJQnoIvarm1ePOl2qX6q
-	 +F4INlZlNLGRg==
+	b=kuLdf90vHeYgFxUAKky7Lvw116F6nzKmYxnMUXIQwFrbpjLc/BKjph7sUZga8Adxz
+	 Xo8W1g3z7YXqQNd2JqqaPsZDXI3AmK1RGtUhJskNnmENt7vn0PZgQl82DrwVW8hz7S
+	 U3zfXqxJlNftX6sSDOt3/95QE7bi9rWGlXVypAHdrdZurkl0zekuKory7sZ03pqWSz
+	 vP3a2xhj63QrGZH/gHNGYxgEAxTmTQqWkyhsSpU8XzIyTx5Bn19TkOF+LzOcCgnsBe
+	 hkqlUtlbJbZcbS4HUuiUNDZuu8xKxF5FX578Hx/Urxl2fIBsK6kyqxd1DjKEl0Da+v
+	 d+lmcjN48pT+g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pc@manguebit.org,
-	linkinjeon@kernel.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] smb/client: emulate small EOF-extending mode 0 fallocate ranges
-Date: Mon, 31 Aug 2026 09:27:44 -0400
-Message-ID: <20260831133314.4125787-436-sashal@kernel.org>
+	axboe@kernel.dk,
+	linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-block@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] iomap: don't make REQ_POLLED imply REQ_NOWAIT
+Date: Mon, 31 Aug 2026 09:27:45 -0400
+Message-ID: <20260831133314.4125787-437-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,574 +55,444 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 7a06d3b816d73448b4e38b83d65049f090b7b201 ]
+[ Upstream commit 47f28b493daf9049307494689e515205f1c377af ]
 
-When a mode 0 fallocate extends EOF from 1G to 2G + 1M, the client
-currently sends SetEOF for 2G + 1M. This can make fallocate return
-success without allocating the requested range, or allocate extra
-space before that range.
+As described in commit 2bc057692599 ("block: don't make REQ_POLLED imply
+REQ_NOWAIT"), which fixed the same issue for the block device node, there
+are valid cases to poll for I/O completion without REQ_NOWAIT.
 
-For example, on a fresh file:
+Additionally, sing REQ_NOWAIT for file system writes is currently not
+supported as file systems writes are not idempotent and would need a
+retry of just the bio and not the entire operation to be fully supported.
 
-        xfs_io -f \
-          -c "falloc 0 1G" \
-          -c "falloc 2G 1M" \
-          -c "truncate 3G" test
+Switch iomap to set REQ_POLLED and remove the now unused bio_set_polled
+helper.
 
-The second fallocate should allocate [2G, 2G + 1M), leaving [1G, 2G)
-as a hole.
-
-Before this change, the result depended on the server allocation policy.
-With Samba "strict allocate = no", SetEOF could return success without
-allocating [2G, 2G + 1M). With "strict allocate = yes":
-
-	# filefrag -v test
-        [0, 1G)             allocated
-        [1G, 2G)            allocated unexpectedly
-        [2G, 2G + 1M)       allocated
-
-SMB cannot allocate that arbitrary range, so write zeroes to small
-EOF-extending ranges instead. Limit this to 1 MiB to bound the
-client-side I/O cost.
-
-With "strict allocate = no", the requested range [2G, 2G + 1M) is
-allocated by the writes. With "strict allocate = yes":
-
-	# filefrag -v test
-        [0, 1G)             allocated
-        [1G, 2G)            hole
-        [2G, 2G + 1M)       allocated
-
-This fixes the small EOF-extending range case exercised by generic/213.
-
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260518062917.506483-1-hch@lst.de
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+# Stable Backport Analysis: `iomap: don't make REQ_POLLED imply
+REQ_NOWAIT`
+
+**Local tree:** Linux **6.18.43** (`v6.18.43-1-gc7f0dac02d232`)
+
+---
+
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject line**
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[iomap] [don't make / fix] [REQ_POLLED should not imply
+REQ_NOWAIT on filesystem DIO bios]`
 
-Record: `[smb/client] [emulate] small EOF-extending mode 0 fallocate
-ranges — fix incorrect SetEOF-based allocation for small ranges beyond
-EOF`
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Record:**
+- **Fixes:** — none
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:** https://patch.msgid.link/20260518062917.506483-1-hch@lst.de
+- **Cc: stable:** — none (expected for manual review)
+- **Signed-off-by:** Christoph Hellwig `<hch@lst.de>`, Christian Brauner
+  `<brauner@kernel.org>` (merge commit)
+- **Notable:** References upstream commit `2bc057692599` (block-layer
+  companion fix). No syzbot, no user bug reports.
 
-**Step 1.2 — Tags**
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Record:**
+- **Bug:** `bio_set_polled()` propagates `REQ_NOWAIT` onto bios when
+  `IOCB_NOWAIT` is set. For iomap filesystem DIO this is incorrect —
+  filesystem writes are not idempotent at the bio level and cannot be
+  retried by re-submitting just the bio.
+- **Symptom:** Polled filesystem DIO (e.g. io_uring
+  `IORING_SETUP_IOPOLL` on xfs/ext4 O_DIRECT) can hit spurious `-EAGAIN`
+  from the block layer, or fail to make progress — same class of bug
+  fixed for raw block devices in 2023.
+- **Root cause:** iomap reused `bio_set_polled()` which couples
+  `REQ_POLLED` with conditional `REQ_NOWAIT`; block/fops.c was already
+  fixed to decouple them, but iomap was not.
+- **Version info:** Commit dated 2026-05-18; not yet in this 6.18.43
+  tree.
 
-Record:
-- Signed-off-by: Huiwen He, Steve French
-- Reviewed-by: ChenXiaoSong
-- No Fixes:, Reported-by:, Link:, Cc: stable@vger.kernel.org, Tested-
-  by:, or syzbot tags
-- Notable: Reviewed-by present; no explicit stable nomination in commit
-  message
-
-**Step 1.3 — Body analysis**
-
-Record:
-- **Bug:** Mode-0 fallocate extending EOF with a gap (e.g., allocate
-  [2G, 2G+1M) when EOF is 1G) uses `SMB2_set_eof()` instead of
-  allocating the specific range.
-- **Symptoms:**
-  - With Samba `strict allocate = no`: fallocate can return success
-    without allocating [2G, 2G+1M)
-  - With `strict allocate = yes`: may allocate [1G, 2G) unexpectedly
-    instead of leaving a hole
-- **Fix:** For small (≤1 MiB) EOF-extending ranges at or beyond EOF,
-  write zeroes via `smb3_simple_fallocate_range()` instead of SetEOF;
-  refresh `i_blocks` from server `AllocationSize`.
-- **Test reference:** xfstests `generic/213`
-- **Root cause:** SMB has no true fallocate; SetEOF cannot allocate an
-  arbitrary non-contiguous range.
-
-**Step 1.4 — Hidden bug fix?**
-
-Record: Yes. Subject says "emulate" but this is a correctness fix for
-POSIX fallocate semantics on CIFS/SMB mounts, not a feature addition.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not disguised — this is an explicit correctness fix, though
+small. The removal of `bio_set_polled()` is cleanup after the last
+caller is gone.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 — Inventory**
+### Step 2.1: INVENTORY THE CHANGES
+**Record:**
+- `fs/iomap/direct-io.c`: 1 line changed (`bio_set_polled` →
+  `bio->bi_opf |= REQ_POLLED`)
+- `include/linux/bio.h`: 14 lines removed (`bio_set_polled()` helper +
+  comment)
+- **Functions modified:** `iomap_dio_submit_bio()`; `bio_set_polled()`
+  removed
+- **Scope:** Single-subsystem, 2 files, ~16 lines total — surgical fix
 
-Record:
-- **File:** `fs/smb/client/smb2ops.c` (+60 / -9 lines)
-- **Functions modified:** `smb3_simple_fallocate_range()`,
-  `smb3_simple_falloc()`
-- **Scope:** Single-file, surgical fix in SMB3 fallocate emulation path
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Record:**
+- **Hunk 1 (`iomap_dio_submit_bio`):** Before: for async HIPRI DIO, call
+  `bio_set_polled(bio, iocb)` which sets `REQ_POLLED` and also
+  `REQ_NOWAIT` when `IOCB_NOWAIT` is set. After: only `REQ_POLLED` is
+  set; `IOCB_NOWAIT` is handled separately at the iomap layer via
+  `IOMAP_NOWAIT` (line 654–655).
+- **Hunk 2 (`bio.h`):** Remove now-dead `bio_set_polled()` helper (only
+  caller was iomap).
 
-**Step 2.2 — Code flow changes**
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Record:**
+- **Category:** Logic / correctness fix (incorrect flag propagation)
+- **Mechanism:** `REQ_NOWAIT` on a bio causes the block layer to return
+  `-EAGAIN` instead of blocking on resource contention
+  (`__bio_queue_enter`, tag allocation in `blk-mq`). For filesystem DIO
+  through iomap, `IOCB_NOWAIT` is already translated to `IOMAP_NOWAIT`
+  for filesystem-level handling; passing `REQ_NOWAIT` to the block layer
+  is both unnecessary and harmful for writes.
 
-Record:
-- **`smb3_simple_fallocate_range()`:** Buffer allocation moved earlier;
-  new fast path when `off >= i_size_read(inode)` skips
-  `FSCTL_QUERY_ALLOCATED_RANGES` and directly zero-writes the range
-  (correct for beyond-EOF allocation).
-- **`smb3_simple_falloc()`:** Before SetEOF for EOF-extending mode-0
-  fallocate, detects small ranges at/beyond EOF (`off > old_eof`, or
-  `off == old_eof` on sparse non-empty files) and routes through zero-
-  write path; updates size and queries server for real `AllocationSize`
-  to set `i_blocks`.
-
-**Step 2.3 — Bug mechanism**
-
-Record:
-- **Category:** Logic/correctness fix (filesystem semantics)
-- **Mechanism:** SetEOF extends file size but cannot allocate a specific
-  distant range or preserve an intervening hole; zero-writes allocate
-  exactly the requested range on the server.
-
-**Step 2.4 — Fix quality**
-
-Record:
-- Fix is logically sound and minimal for the described case.
-- 1 MiB cap bounds client I/O cost (consistent with existing internal-
-  range fallocate limit).
-- **Minor regression risk:** Low; only affects small EOF-extending
-  mode-0 fallocate on SMB mounts.
-- **Note:** Diff includes `min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE)`
-  buffer sizing from sibling commit `9e4ec3be67af4` (not yet in this
-  tree); backport may need minor adjustment to existing `kvzalloc(1024 *
-  1024)` line.
+### Step 2.4: ASSESS THE FIX QUALITY
+**Record:**
+- Obviously correct: mirrors the already-accepted block-layer fix
+  pattern in `block/fops.c`.
+- Minimal: one-line functional change plus dead-code removal.
+- **Regression risk:** Very low. Block device path already uses the same
+  pattern. `IOMAP_NOWAIT` continues to handle filesystem-level non-
+  blocking semantics.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 — Blame**
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:** Shallow repository limits blame — all lines attribute to
+`a112b91dd6349` (unrelated sunrpc backport). Verified current buggy code
+exists at `fs/iomap/direct-io.c:77` and `include/linux/bio.h:688-693`.
+Kernel.org history (via curl) shows iomap polled-IO support added in
+`daa99c5a3319` (2023-08-01, Jens Axboe: "iomap: only set iocb->private
+for polled bio"); block fix `2bc057692599` (2023-08-08) updated
+`bio_set_polled()` but left iomap calling it.
 
-Record: EOF-extending SetEOF path in `smb3_simple_falloc()` dates to
-merge base `5d324e5159d9e` (v6.18); underlying fallocate emulation
-introduced in `966a3cb7c7db` ("cifs: improve fallocate emulation",
-2021). Bug has been present since SetEOF was used for EOF extension.
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** No `Fixes:` tag. Referenced commit `2bc057692599` ("block:
+don't make REQ_POLLED imply REQ_NOWAIT") exists as a git object in this
+tree; `block/fops.c` already uses the decoupled pattern (`IOCB_NOWAIT`
+and `REQ_POLLED` set independently). iomap was the remaining caller of
+`bio_set_polled()`.
 
-**Step 3.2 — Fixes: tag**
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:** Shallow repo prevents meaningful `git log` on these files.
+External kernel.org log confirms this is a standalone 1-patch fix (not
+part of a series). Related prior fix: `2bc057692599` (block layer,
+2023).
 
-Record: Not applicable — no Fixes: tag in commit message.
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** Christoph Hellwig is the iomap maintainer. Christian Brauner
+is VFS maintainer who applied the patch. Strong subsystem authority.
 
-**Step 3.3 — Related file history**
-
-Record:
-- `7e08ab7a061b1` — "handle overlapping allocated ranges in fallocate" —
-  **already in this tree**
-- `6cc1518357369` — kvzalloc for fallocate buffer — **already in this
-  tree**
-- `9e4ec3be67af4` — reduce fallocate buffer to `min_t(len,
-  SMB2_MAX_BUFFER_SIZE)` — on master, **not in this tree**
-- `5bd1d3dcc25a5` — refresh allocation after EOF-extending fallocate
-  (SetEOF path) — on master, **not in this tree**
-- Part of v8 series "fix fallocate and allocation accounting" (patch
-  4/5), but this specific patch is largely standalone for the small-gap
-  EOF case.
-
-**Step 3.4 — Author context**
-
-Record: Huiwen He authored multiple CIFS fallocate/accounting fixes;
-`7e08ab7a061b1` from same author is already backported to this 6.18.y
-tree.
-
-**Step 3.5 — Dependencies**
-
-Record:
-- **Hard dependency met:** `7e08ab7a061b1` (overlapping ranges fix) is
-  in tree.
-- **Soft dependency:** `9e4ec3be67af4` (buffer size) makes the diff
-  apply cleanly; without it, one hunk needs minor adaptation (use
-  existing 1 MiB buffer or include `9e4ec3` alongside).
-- **Not required:** `5906d0e82e8e0` (duplicate extents), `5bd1d3dcc25a5`
-  (SetEOF allocation refresh) — separate concerns.
-- Can apply standalone with at most minor buffer-allocation adjustment.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:** No prerequisites. Self-contained. Depends only on existing
+`IOCB_HIPRI`/polled-IO infrastructure already present in 6.18.43. Commit
+`47f28b493daf` is NOT in this tree (object not found via `git cat-
+file`).
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1 — Original discussion**
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:** `b4 dig -c` could not run — commit not in local repo.
+Fetched via spinics.net:
+- URL: https://www.spinics.net/lists/linux-fsdevel/msg338671.html
+- Single patch, no series revisions found
+- CC'd: `axboe`, `linux-block`, `linux-fsdevel`, `linux-xfs`, `djwong`,
+  `brauner`
 
-Record:
-- `b4 dig -c 7a06d3b816d73`: [PATCH v8 4/5] at
-  https://patch.msgid.link/20260703053300.913371-5-huiwen.he@linux.dev
-- Series revisions v4–v8 found; committed version is latest (v8).
-- No explicit Cc: stable in thread headers found.
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** CC list includes block maintainer (Axboe), XFS, fsdevel,
+block lists. Brauner applied to `vfs-7.2.iomap` branch. No explicit
+Reviewed-by in commit; no NAKs found.
 
-**Step 4.2 — Reviewers**
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** No bug report, syzbot, or crash trace. Bug identified by
+code analysis and parity with the 2023 block-layer fix. Failure mode
+inferred from block commit message: "repeated -EAGAIN submissions and
+not make any progress."
 
-Record: `b4 dig -w` shows CC to Steve French (maintainer), linux-
-cifs@vger.kernel.org, and core CIFS reviewers. Reviewed-by: ChenXiaoSong
-on all revisions.
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** Standalone 1/1 patch. Companion to `2bc057692599` (already
+in stable block path).
 
-**Step 4.3 — Bug report**
-
-Record: No external bug report or syzbot link. Validation is via
-xfstests `generic/213` (referenced in commit message and series cover
-letters).
-
-**Step 4.4 — Series context**
-
-Record: v8 series covers fallocate + allocation accounting (5 patches).
-Patch 4/5 (this commit) fixes small EOF-extending mode-0 case; patch 5/5
-(`5bd1d3dcc25a5`) addresses SetEOF-path allocation refresh for other
-generic/213/generic/701 scenarios. This patch stands alone for its
-specific bug class.
-
-**Step 4.5 — Stable list**
-
-Record: No stable@vger.kernel.org discussion found for this specific
-patch.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** Not searched (no stable nomination found in thread). Absence
+of `Cc: stable` is not a negative signal per review guidelines.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 — Key functions**
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** `iomap_dio_submit_bio()`, `bio_set_polled()` (removed)
 
-Record: `smb3_simple_falloc()`, `smb3_simple_fallocate_range()`,
-`smb3_simple_fallocate_write_range()`, `cifs_fallocate()` (caller in
-`cifsfs.c`)
+### Step 5.2: TRACE CALLERS
+**Record:** `iomap_dio_submit_bio()` called from iomap DIO write/read
+paths in `fs/iomap/direct-io.c`. Reachable via `iomap_dio_rw()` →
+filesystem `read_iter`/`write_iter` on xfs, ext4, f2fs, gfs2, zonefs,
+btrfs (partial). io_uring sets `IOCB_HIPRI` for `IORING_SETUP_IOPOLL`
+(`io_uring/rw.c:891-895`) and may set `IOCB_NOWAIT` for nonblock issue
+(`io_uring/rw.c:950-954`).
 
-**Step 5.2 — Callers**
+### Step 5.3: TRACE CALLEES
+**Record:** After fix: `bio->bi_opf |= REQ_POLLED`, then `submit_bio()`
+(or filesystem `submit_io` hook). Block layer checks `REQ_NOWAIT` in
+`__bio_queue_enter()` → `bio_wouldblock_error()` → `-EAGAIN`.
 
-Record: `cifs_fallocate()` → `server->ops->fallocate()` →
-`smb3_fallocate()` → `smb3_simple_falloc(file, tcon, off, len, false)`
-for mode 0. Reachable from `fallocate(2)` syscall on CIFS/SMB mounts.
+### Step 5.4: FOLLOW THE CALL CHAIN
+**Record:** Userspace io_uring IOPOLL → `IOCB_HIPRI` + possibly
+`IOCB_NOWAIT` → `xfs_file_read_iter`/`ext4_file_write_iter` →
+`iomap_dio_rw` → `iomap_dio_submit_bio` → block layer. **Reachable from
+userspace** on common filesystems with `.iopoll = iocb_bio_iopoll` (xfs,
+ext4, f2fs, gfs2, zonefs).
 
-**Step 5.3 — Callees**
-
-Record: `SMB2_write()` (zero-fill), `SMB2_query_info()` (allocation
-refresh), `SMB2_ioctl(FSCTL_QUERY_ALLOCATED_RANGES)`,
-`netfs_resize_file()`, `cifs_setsize()`. All exist in this tree.
-
-**Step 5.4 — Reachability**
-
-Record: Userspace `fallocate()` on SMB-mounted files with mode 0 and EOF
-extension — common for preallocation tools (`xfs_io`, databases, etc.).
-Unprivileged users can trigger on writable mounts.
-
-**Step 5.5 — Similar patterns**
-
-Record: Existing code already uses `smb3_simple_fallocate_range()` for
-internal sparse-file holes (len ≤ 1 MiB at lines 3726–3728 in current
-tree). This commit extends the same pattern to EOF-extending cases.
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** `block/fops.c:383-388` already sets `REQ_NOWAIT` and
+`REQ_POLLED` independently — the correct pattern this patch brings to
+iomap.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 6.1 — Buggy code exists?**
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:** **YES.** Current code at `fs/iomap/direct-io.c:76-77` calls
+`bio_set_polled(bio, iocb)`. `bio_set_polled()` at
+`include/linux/bio.h:688-693` still sets `REQ_NOWAIT` when `IOCB_NOWAIT`
+is set. Polled-IO infrastructure present since at least 6.18 branch
+(xfs/ext4 `.iopoll` handlers exist).
 
-Record: **YES.** Local tree is **v6.18.44** (`git describe HEAD`).
-Current `smb3_simple_falloc()` at lines 3665–3680 still uses SetEOF for
-all EOF-extending mode-0 fallocate without the small-range zero-write
-path. Bug present since 2021 fallocate emulation.
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** Expected **clean apply**. The one-line change in
+`iomap_dio_submit_bio` is independent of surrounding `submit_bio` vs
+`blk_crypto_submit_bio` differences. Removing unused `bio_set_polled()`
+is safe — grep confirms only iomap used it.
 
-**Step 6.2 — Backport complications**
-
-Record: **Minor adaptation expected.** Stable tree uses `kvzalloc(1024 *
-1024)` at line 3564; upstream commit expects `kvzalloc(min_t(loff_t,
-len, SMB2_MAX_BUFFER_SIZE))` from `9e4ec3be67af4`. Core logic applies
-cleanly; buffer line is a one-line adjustment or companion pick of
-`9e4ec3`.
-
-**Step 6.3 — Related fixes already present?**
-
-Record: `7e08ab7a061b1` (overlapping allocated ranges) already
-backported. This specific EOF-extending small-range fix is **not**
-present. No duplicate fix found.
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** Block-layer fix (`2bc057692599`) is present in
+`block/fops.c`. iomap-specific fix (`47f28b493daf`) is **NOT** present.
+No alternate fix found.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1 — Subsystem**
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** **Filesystem I/O (iomap direct-I/O)** — **IMPORTANT/CORE-
+adjacent**. Affects all iomap-based filesystem DIO, which includes xfs
+and ext4 on most enterprise/desktop systems.
 
-Record: **fs/smb/client** (CIFS/SMB client) — **IMPORTANT** subsystem
-for enterprise/consumer network filesystem mounts.
-
-**Step 7.2 — Activity**
-
-Record: Actively maintained; multiple fallocate fixes landed in 6.18.y
-cycle including `7e08ab7a061b1`, `6cc1518357369`, `f4e35576da439`
-(i_blocks/generic/694).
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** iomap is mature and actively used. Polled I/O is a
+performance-critical path for io_uring workloads (databases, NVMe-heavy
+applications).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1 — Who is affected**
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** Users of **io_uring polled I/O** (`IORING_SETUP_IOPOLL`)
+with **O_DIRECT** on **iomap filesystems** (xfs, ext4, f2fs, gfs2,
+zonefs). Config-specific but affects a significant high-performance
+workload segment.
 
-Record: Users of CIFS/SMB mounts who call `fallocate()` (mode 0) to
-preallocate space, especially with gaps beyond EOF. Config-specific:
-requires SMB2/3 and fallocate support (already emulated in this driver).
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Record:** `IOCB_HIPRI` set (IOPOLL) on async DIO through iomap. Worst
+case when `IOCB_NOWAIT` is also set and block layer encounters queue
+freeze or request-tag pressure. Trigger is realistic for io_uring
+nonblock + IOPOLL combinations.
 
-**Step 8.2 — Trigger conditions**
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:** Spurious `-EAGAIN` / I/O stalls / failure to make progress
+on polled filesystem DIO. Not a kernel oops, but a **functional
+correctness bug** that breaks a documented I/O path. Severity: **MEDIUM-
+HIGH** (I/O failures on production workloads; same severity class as the
+2023 block fix that was accepted for stable).
 
-Record: `fallocate(0, off, len)` where `off + len > EOF` and (`off >
-EOF` with gap, or EOF extension on sparse file). Example: `falloc 0 1G`
-then `falloc 2G 1M`. Not exotic — matches xfstests generic/213.
-Unprivileged on writable mounts.
-
-**Step 8.3 — Failure mode severity**
-
-Record:
-- Success without allocation → applications believe space is reserved;
-  later writes may hit ENOSPC unexpectedly
-- Over-allocation of gap region → wasted server disk space, incorrect
-  sparse layout
-- **Severity: MEDIUM-HIGH** (filesystem semantics / space accounting
-  correctness; not kernel crash or data corruption, but real user-
-  visible misbehavior)
-
-**Step 8.4 — Risk-benefit**
-
-Record:
-- **Benefit:** HIGH for SMB mount users relying on fallocate; fixes
-  long-standing emulation gap; aligns with already-backported fallocate
-  fixes in this tree
-- **Risk:** LOW — ~60 lines, one file, reviewed, bounded to ≤1 MiB
-  ranges, uses existing write/query paths
-- **Ratio:** Favorable for backport
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Record:**
+- **Benefit:** HIGH for io_uring + filesystem DIO users; completes a fix
+  already applied to block devices
+- **Risk:** VERY LOW — 1-line behavioral fix, dead-code removal, mirrors
+  proven block-layer pattern
+- **Ratio:** Strong benefit, minimal risk
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1 — Evidence summary**
+### Step 9.1: COMPILE THE EVIDENCE
 
 **FOR backport:**
-- Fixes real POSIX fallocate semantics bug on SMB mounts
-- Reproducible via xfstests generic/213
-- Small, reviewed, maintainer-signed
-- Sister fix `7e08ab7a061b1` already in this 6.18.y tree
-- Buggy code confirmed present in v6.18.44
-- All required APIs exist locally
-- Precedent: other CIFS fallocate/i_blocks fixes already in stable
+- Buggy code confirmed present in 6.18.43
+- Companion to block-layer fix already in this tree since 2023
+- Affects major filesystems (xfs, ext4) via io_uring IOPOLL
+- Small (16 lines), maintainer-authored, obviously correct
+- Prevents incorrect `REQ_NOWAIT` on non-idempotent filesystem writes
+- Same failure mode as documented in `2bc057692599`: repeated `-EAGAIN`,
+  no progress
 
 **AGAINST backport:**
-- Not a crash/security/data-corruption issue
-- Part of larger fallocate series; `5bd1d3dcc25a5` covers related
-  SetEOF-path cases separately
-- Minor backport adjustment needed for buffer allocation line
-  (`9e4ec3be67af4` not in tree)
-- `generic/213` may need additional patches for all server
-  configurations
+- No explicit crash report, syzbot, or user bugzilla reference
+- Impact limited to polled + (optionally) nowait filesystem DIO path
+- Not a security or data-corruption fix with demonstrated exploit
 
-**Unresolved:** Whether full `generic/213` pass on all Samba configs
-requires `5bd1d3dcc25a5` as well (separate commit). This commit fixes
-the specific small EOF-extending range case described.
+**UNRESOLVED:**
+- Exact date iomap started using `bio_set_polled` (shallow repo);
+  kernel.org indicates ~Aug 2023
+- Whether any distribution has filed user-visible bug reports
 
-**Step 9.2 — Stable rules checklist**
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — mirrors accepted block fix;
+   maintainer-applied
+2. Fixes a real bug affecting users? **PASS** — incorrect flag
+   propagation on reachable I/O path
+3. Important issue? **PASS** — I/O failures / stalls on io_uring polled
+   filesystem DIO (MEDIUM-HIGH)
+4. Small and contained? **PASS** — 16 lines, 2 files
+5. No new features or APIs? **PASS** — flag-handling correction only
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
+   expected
 
-1. Obviously correct and tested? **PASS** — clear mechanism, Reviewed-
-   by, xfstests reference
-2. Fixes real bug affecting users? **PASS** — incorrect fallocate
-   allocation/semantics on SMB mounts
-3. Important issue? **PASS** — filesystem correctness / space
-   preallocation reliability (MEDIUM-HIGH)
-4. Small and contained? **PASS** — ~60 lines, one file
-5. No new features/APIs? **PASS** — improves existing fallocate
-   emulation
-6. Can apply to local tree? **PASS** — applies with at most one-line
-   buffer allocation adjustment
+### Step 9.3: EXCEPTION CATEGORIES
+**Record:** None apply directly (not device ID, quirk, DT, build, or
+docs). Standard bug fix.
 
-**Step 9.3 — Exception categories**
+### Step 9.4: DECISION RATIONALE
 
-Record: Not a device ID, quirk, DT, build, or docs fix. Standard bug-fix
-category.
-
-**Step 9.4 — Decision rationale**
-
-This commit fixes a longstanding, user-reachable fallocate correctness
-bug in the CIFS/SMB client. The buggy SetEOF path is present in
-v6.18.44. The fix is small, reviewed, and consistent with fallocate
-fixes already backported to this tree (`7e08ab7a061b1`). While not a
-kernel crash, incorrect fallocate success/space allocation directly
-affects applications using SMB mounts for preallocation — a real stable-
-tree concern for the SMB client subsystem.
+This patch completes a fix that was applied to the block-device
+direct-I/O path in 2023 but was never carried to the iomap filesystem
+DIO path. The buggy code is present in Linux 6.18.43. For io_uring users
+running polled O_DIRECT I/O on xfs/ext4 and other iomap filesystems,
+incorrectly setting `REQ_NOWAIT` on bios can cause spurious `-EAGAIN`
+returns from the block layer — particularly harmful because filesystem
+writes cannot safely retry at the bio level. The fix is tiny, low-risk,
+and directly analogous to an already-stable fix.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from `git show 7a06d3b816d73`
-- [Phase 2] Diff analysis from provided diff and `git show 7a06d3b816d73
-  -p`
-- [Phase 3] `git describe HEAD` → v6.18.44; `git blame -L 3665,3680
-  fs/smb/client/smb2ops.c` → SetEOF path from v6.18 merge base
-- [Phase 3] `git show 966a3cb7c7db` → fallocate emulation introduced
-  2021
-- [Phase 3] `git log HEAD..master -- fs/smb/client/smb2ops.c` → commit
-  not in tree; prerequisites identified
-- [Phase 3] `git log --oneline -1 7e08ab7a061b1` → overlapping ranges
-  fix in tree
-- [Phase 3] `git show 9e4ec3be67af4` → buffer sizing prerequisite on
-  master only
-- [Phase 3] `git show 5bd1d3dcc25a5` → separate SetEOF-path follow-up
-- [Phase 4] `b4 dig -c 7a06d3b816d73` → lore URL found
-- [Phase 4] `b4 dig -c 7a06d3b816d73 -a` → v4–v8 series revisions
-- [Phase 4] `b4 dig -c 7a06d3b816d73 -w` → maintainers CC'd
-- [Phase 4] `rg stable /tmp/falloc_thread.mbox` → no stable nomination
-  found
-- [Phase 5] `grep smb3_simple_falloc/cifs_fallocate` → syscall-reachable
-  call chain confirmed
-- [Phase 5] `grep SMB2_query_info/CIFS_INO_BLOCKS` → APIs exist in tree
-- [Phase 6] Read `fs/smb/client/smb2ops.c` lines 3541–3758 → buggy
-  SetEOF path confirmed present
-- [Phase 6] `git merge-base --is-ancestor 99cd0a6eeb6c HEAD` → NOT in
-  tree (unrelated to this fix's core logic)
-- [Phase 6] Read `fs/smb/client/inode.c` `cifs_setsize()` → EOF
-  extension still sets i_blocks from size
-- [Phase 7] `git log --oneline -5 --grep=fallocate HEAD` → prior
-  fallocate fixes in tree
-- [Phase 8] Commit message documents Samba strict-allocate behavior and
-  generic/213
+- **[Phase 1]** Parsed subject, tags, body from provided commit message;
+  fetched spinics.net thread
+- **[Phase 1]** Confirmed no Reported-by/syzbot; found Link and Signed-
+  off-by tags
+- **[Phase 2]** Diff analysis: 1 insertion, 15 deletions across 2 files
+- **[Phase 2]** Read current `iomap_dio_submit_bio()` and
+  `bio_set_polled()` in tree
+- **[Phase 3]** `git describe HEAD`: v6.18.43; `make kernelversion`
+  equivalent from Makefile: 6.18.43
+- **[Phase 3]** `git show 2bc057692599`: confirmed block-layer companion
+  fix content
+- **[Phase 3]** `git cat-file -e 47f28b493daf`: commit NOT in tree
+- **[Phase 3]** `git blame` on changed lines: shallow-repo attribution
+  (limited)
+- **[Phase 3]** curl kernel.org log for `fs/iomap/direct-io.c`: found
+  `daa99c5a3319` (2023-08-01 polled bio) and `47f28b493daf` (2026-05-18
+  fix)
+- **[Phase 4]** spinics.net msg338671.html: original patch thread
+  fetched
+- **[Phase 4]** spinics.net msg338717.html: Brauner applied confirmation
+  fetched
+- **[Phase 4]** `b4 dig -c`: FAILED — commit not in local repo
+- **[Phase 5]** `grep bio_set_polled`: only `fs/iomap/direct-io.c` +
+  `include/linux/bio.h`
+- **[Phase 5]** `grep iopoll`: xfs, ext4, f2fs, gfs2, zonefs all use
+  `iocb_bio_iopoll`
+- **[Phase 5]** Read `io_uring/rw.c:891-954`: IOPOLL sets `IOCB_HIPRI`;
+  nonblock sets `IOCB_NOWAIT`
+- **[Phase 5]** Read `block/blk-core.c:333-342`: `REQ_NOWAIT` →
+  `-EAGAIN` on queue contention
+- **[Phase 5]** Read `fs/iomap/direct-io.c:654-655`: `IOCB_NOWAIT` →
+  `IOMAP_NOWAIT` (separate fs-level handling)
+- **[Phase 6]** Confirmed buggy `bio_set_polled()` call exists in
+  6.18.43 tree
+- **[Phase 6]** `grep bio_set_polled`: only iomap caller — safe to
+  remove helper
+- **[Phase 6]** Read `block/fops.c:383-388`: decoupled pattern already
+  in tree
+- **[Phase 8]** Failure mode: spurious `-EAGAIN` / I/O stall on polled
+  fs DIO; severity MEDIUM-HIGH
+- **UNVERIFIED:** Full `git log` ancestry for iomap polled-IO
+  introduction (shallow repo; used kernel.org instead)
+- **UNVERIFIED:** Whether 6.18.y already has a different backport of
+  this fix (no evidence found)
 
-**YES****Backport verdict: YES** for the local **v6.18.44** tree.
+**YES**The hung `git log HEAD` check didn’t finish — the shallow 6.18.43
+checkout made full ancestry walks impractical. That didn’t change the
+conclusion: I verified the block-layer companion fix another way (`git
+show 2bc057692599`, reading `block/fops.c`), and the iomap bug is still
+present here (`bio_set_polled()` at `fs/iomap/direct-io.c:77`).
 
-This commit fixes a real CIFS/SMB client bug: mode-0 `fallocate()` that
-extends EOF with a gap (e.g. allocate at 2G when EOF is 1G) incorrectly
-used `SetEOF`, which could succeed without allocating the requested
-range or allocate the intervening hole. The fix routes small (≤1 MiB)
-EOF-extending ranges through zero-writes instead, matching POSIX
-semantics and xfstests `generic/213`.
+**Verdict for Linux 6.18.43:** this commit should be backported. It’s a
+small, low-risk fix that stops iomap filesystem DIO from incorrectly
+setting `REQ_NOWAIT` on polled bios — the same class of bug already
+fixed for block devices in 2023. It matters for io_uring IOPOLL +
+O_DIRECT on xfs/ext4 and similar iomap filesystems, where spurious
+`-EAGAIN` or stalled I/O can result.
 
-The buggy SetEOF path is present in this tree, and a related fallocate
-fix (`7e08ab7a061b1`) is already backported here. The patch is small,
-reviewed, and should apply cleanly with at most a one-line buffer-
-allocation tweak (upstream also changed `kvzalloc(1024*1024)` to
-`min_t(len, SMB2_MAX_BUFFER_SIZE)` in sibling commit `9e4ec3be67af4`,
-which is not in this tree yet).
+**YES**
 
- fs/smb/client/smb2ops.c | 69 +++++++++++++++++++++++++++++++++++------
- 1 file changed, 60 insertions(+), 9 deletions(-)
+ fs/iomap/direct-io.c |  2 +-
+ include/linux/bio.h  | 14 --------------
+ 2 files changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 618e36f4d838e..082e6334ab9f6 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3545,12 +3545,25 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 				       loff_t off, loff_t len)
- {
- 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
-+	struct inode *inode = d_inode(cfile->dentry);
- 	u32 out_data_len;
- 	char *buf = NULL;
- 	u64 range_start, range_len, range_end;
- 	loff_t l;
- 	int rc;
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index e73c71f39bd45..92f32e02f77f4 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -74,7 +74,7 @@ static void iomap_dio_submit_bio(const struct iomap_iter *iter,
  
-+	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
-+	if (!buf) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
-+
-+	if (off >= i_size_read(inode)) {
-+		rc = smb3_simple_fallocate_write_range(xid, tcon, cfile,
-+						       off, len, buf);
-+		goto out;
-+	}
-+
- 	in_data.file_offset = cpu_to_le64(off);
- 	in_data.length = cpu_to_le64(len);
- 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
-@@ -3562,12 +3575,6 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	if (rc)
- 		goto out;
+ 	/* Sync dio can't be polled reliably */
+ 	if ((iocb->ki_flags & IOCB_HIPRI) && !is_sync_kiocb(iocb)) {
+-		bio_set_polled(bio, iocb);
++		bio->bi_opf |= REQ_POLLED;
+ 		WRITE_ONCE(iocb->private, bio);
+ 	}
  
--	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
--	if (buf == NULL) {
--		rc = -ENOMEM;
--		goto out;
--	}
+diff --git a/include/linux/bio.h b/include/linux/bio.h
+index 16c1c85613b76..9a15f90359ade 100644
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -678,20 +678,6 @@ static inline bool bioset_initialized(struct bio_set *bs)
+ 	return bs->bio_slab != NULL;
+ }
+ 
+-/*
+- * Mark a bio as polled. Note that for async polled IO, the caller must
+- * expect -EWOULDBLOCK if we cannot allocate a request (or other resources).
+- * We cannot block waiting for requests on polled IO, as those completions
+- * must be found by the caller. This is different than IRQ driven IO, where
+- * it's safe to wait for IO to complete.
+- */
+-static inline void bio_set_polled(struct bio *bio, struct kiocb *kiocb)
+-{
+-	bio->bi_opf |= REQ_POLLED;
+-	if (kiocb->ki_flags & IOCB_NOWAIT)
+-		bio->bi_opf |= REQ_NOWAIT;
+-}
 -
- 	tmp_data = out_data;
- 	while (len) {
- 		/*
-@@ -3642,18 +3649,22 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
- 	struct cifsFileInfo *cfile = file->private_data;
- 	long rc = -EOPNOTSUPP;
- 	unsigned int xid;
--	loff_t new_eof;
-+	loff_t old_eof, new_eof;
-+	struct smb2_file_all_info file_inf;
-+	u64 asize;
-+	int qrc;
- 
- 	xid = get_xid();
- 
- 	inode = d_inode(cfile->dentry);
- 	cifsi = CIFS_I(inode);
-+	old_eof = i_size_read(inode);
- 
- 	trace_smb3_falloc_enter(xid, cfile->fid.persistent_fid, tcon->tid,
- 				tcon->ses->Suid, off, len);
- 	/* if file not oplocked can't be sure whether asking to extend size */
- 	if (!CIFS_CACHE_READ(cifsi))
--		if (keep_size == false) {
-+		if (!keep_size) {
- 			trace_smb3_falloc_err(xid, cfile->fid.persistent_fid,
- 				tcon->tid, tcon->ses->Suid, off, len, rc);
- 			free_xid(xid);
-@@ -3663,11 +3674,51 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
- 	/*
- 	 * Extending the file
- 	 */
--	if ((keep_size == false) && i_size_read(inode) < off + len) {
-+	if (!keep_size && old_eof < off + len) {
- 		rc = inode_newsize_ok(inode, off + len);
- 		if (rc)
- 			goto out;
- 
-+		/*
-+		 * A small range at or beyond EOF can be allocated by writing
-+		 * zeroes.  For off > old_eof, this preserves the intervening
-+		 * hole instead of allocating from offset 0.
-+		 */
-+		if (off > old_eof ||
-+		    (off == old_eof && old_eof != 0 &&
-+		     (cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE))) {
-+			if (len > 1024 * 1024) {
-+				rc = -EOPNOTSUPP;
-+				goto out;
-+			}
-+
-+			rc = smb3_simple_fallocate_range(xid, tcon, cfile,
-+							 off, len);
-+			if (rc) {
-+				spin_lock(&inode->i_lock);
-+				cifsi->time = 0;
-+				spin_unlock(&inode->i_lock);
-+				goto out;
-+			}
-+
-+			new_eof = off + len;
-+			netfs_resize_file(&cifsi->netfs, new_eof, true);
-+			cifs_setsize(inode, new_eof);
-+
-+			qrc = SMB2_query_info(xid, tcon,
-+					      cfile->fid.persistent_fid,
-+					      cfile->fid.volatile_fid, &file_inf);
-+			spin_lock(&inode->i_lock);
-+			if (qrc == 0) {
-+				asize = le64_to_cpu(file_inf.AllocationSize);
-+				inode->i_blocks = CIFS_INO_BLOCKS(asize);
-+			} else {
-+				cifsi->time = 0;
-+			}
-+			spin_unlock(&inode->i_lock);
-+			goto out;
-+		}
-+
- 		if (cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE)
- 			smb2_set_sparse(xid, tcon, cfile, inode, false);
- 
+ static inline void bio_clear_polled(struct bio *bio)
+ {
+ 	bio->bi_opf &= ~REQ_POLLED;
 -- 
 2.53.0
 
