@@ -1,136 +1,137 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1124A9D65;
-	Mon, 31 Aug 2026 13:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1814654B1BA;
+	Mon, 31 Aug 2026 13:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183993; cv=none; b=VDrQ7bue7R3PFFsPdm6Jjyb9WA0c691OmWwtIzJu3QeL6/mY7rqmNhMjqBuPUs1TSyPshHDNayffA3L3UTUvLqdd7JT+DaInVjn+Rz02focZE/LLUcOQMk5kXok3raCWD35IjTLZ2zc1ekoYoIegEEye4v3078+4CrnniZll3D4=
+	t=1788183993; cv=none; b=C3N9Buk8NV0F8wyWfZwwBdsYdMZMQFBX2QUD4US2d4XL9zK2sBrySvd9BGEAjjbn9xs2cuZv2jtu+T4xgFzqh2VqcQREn6+PiaStTpEzbH2uXCqm8dOdDZ5h6hLXZSROPnrINYIoo3Fpo11KPBxTxHyGyoyuZHnIMjjdeYcvoc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183993; c=relaxed/simple;
-	bh=Mvan0bU5jmnYHP7mAiBtLDM3eFoANtNHxw1FXIw2F4Q=;
+	bh=/qJZCH69IOAmgKvszuJveQoaNZWswUi9Gu81IKYBQos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bw+R6ySd1Vz6GiiHvKSuwakVTKGLJnBdncHTkS2EVmlL93tQvi0kn5qPJciX1/+sPn/5T1KrOWAbfLJsV1RYNgz0qaJoxjnZDqM63L6VZ3PhH3Mt5wU7HpZKuozjN5paNFv84ddccn2onkiNeQ9eQ2l7hJPIXD9qT1vDQpMU7Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fRu/cJZW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oi2ZSL9ny/pEf6vHO57TFtB++4ntGN7sZJj46rwzddVfgxGzVP8VMKPQn1Ns33eeebY2rVVg/MGQJtGbwsjUlGvitoWSkQHSgB7DvdNXvyHeJNg2clCSxwLahN7NTDfdM8VUbt2ipc9HWsXgqDWW8U7RLyI7CCvyol+0jNwUOjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xudzuwC7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fRu/cJZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5AE1F01565;
-	Mon, 31 Aug 2026 13:46:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183989;
-	bh=m7t3smsPaXk+IG6UyJgUgzkkF5ggAJww7sz5QElcuF8=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xudzuwC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694AE1F00A3F;
+	Mon, 31 Aug 2026 13:46:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183991;
+	bh=zC0fmCjTnCOuCuxAd7fMWmgE3R9udRe0Y26n+r4AAMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fRu/cJZWepFwvGVPHit6uXlwJ169OMHvMCDqCzvZCFkLQ4pHx6k/lbr+erpYxCtta
-	 ujyS9DSkMHc6InlUjt/Zp8ZY616dfz40uF7Yt60+enAHLSiMg4Y8k2r5HaIz2f4hqB
-	 Uk314ZlRufGnPD1NtcnFer0J3O4NLhHuMSduvhYesLWY13LvUYwqU/YPAA8tYTek/K
-	 pG1lGUadUF9TKv1yU8UYnX0PuKm/4bfuQHJP4vy2/0swO7boZW9Og7mvsagzXnlNV6
-	 vzCczhPoE8Q4mGe8ZSm3BDkBZpXxWBBKGbZ9VD4qmijcS8kA95EYai29KY/bXOXcQd
-	 TDeZpQ3qD6nWQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	pc@manguebit.org,
-	linkinjeon@kernel.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] smb/client: zero-initialize stack-allocated cifs_open_info_data
-Date: Mon, 31 Aug 2026 09:27:32 -0400
-Message-ID: <20260831133314.4125787-424-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=xudzuwC7RKtAkgqEc6OOKTyZxSt9IepvWluIgRv813uJwZxHDhMvMa37dcrtRwQuj
+	 Zt+DrWwwTYITMc3Wv0YCX6reYUW3/sphZE1JRJ7uSSSFfGT66kS9WdJ4wkb9CoG6n9
+	 LVKQNCKJNuvDzYPLwx8nLMjxrXVzvoh2aQvOp+6E=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Jinu Kim <kimjw04271234@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 06/83] KVM: x86/mmu: Check write tracking in all address spaces
+Date: Mon, 31 Aug 2026 15:33:42 +0200
+Message-ID: <20260831133359.516177136@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 8fce4cf4369c766a3293a05419500cbfde72e60d ]
+------------------
 
-Stack-allocated cifs_open_info_data may contain random data.
-This can make some fields have wrong value if they are not set later.
+From: Jinu Kim <kimjw04271234@gmail.com>
 
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Upstream commit 0f38453cdb2e17566ccb7c0f3dabd5bd21caca26 ]
+
+kvm_gfn_is_write_tracked() checks only the supplied memslot, but page
+tracking is per-address-space and shadow pages are shared across all
+address spaces.  With SMM, a GFN can therefore be write-tracked in one
+address space and appear untracked through the other.
+
+Check the supplied slot first, then the slot for the other address space.
+This ensures all callers honor write tracking regardless of the active
+address space.  In particular, it prevents mmu_try_to_unsync_pages() from
+marking an upper-level shadow page unsync and eventually triggering the
+BUG in pte_list_remove().
+
+Fixes: 699023e23965 ("KVM: x86: add SMM to the MMU role, support SMRAM address space")
+Assisted-by: Codex:GPT-5
+Signed-off-by: Jinu Kim <kimjw04271234@gmail.com>
+Message-ID: <20260721103512.2136240-2-kimjw04271234@gmail.com>
+[invert direction of the conditional. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ arch/x86/kvm/mmu/page_track.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background checks finished. Summary:
-
-**Series commits in 6.18.44:** None of the related commits are in your
-tree — `fc8789bb57e62`, `1f551e407bb49`, and `8fce4cf4369c7` (the zero-
-init fix) all return exit 1 from `git merge-base --is-ancestor`.
-
-**Nlink fix:** The main fstat/nlink fix in the series is `9dd1964ac59d2`
-("smb/client: fix incorrect nlink returned by fstat()"), merged via
-`8eae393cbfd79` — also not in 6.18.44.
-
-**Backport verdict:** The zero-init patch still applies cleanly to the
-three uninitialized `cifs_open_info_data` sites in this tree. It's a
-small, correct uninitialized-memory fix in the SMB client, though
-immediate impact at those call sites is limited without the sibling
-series commits. For 6.18.44:
-
-**YES**
-
- fs/smb/client/link.c    | 2 +-
- fs/smb/client/smb1ops.c | 2 +-
- fs/smb/client/smb2ops.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
-index 70f3c0c67eebd..0b8cf3dd65d97 100644
---- a/fs/smb/client/link.c
-+++ b/fs/smb/client/link.c
-@@ -234,7 +234,7 @@ cifs_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
- 	struct cifs_open_parms oparms;
- 	struct cifs_io_parms io_parms = {0};
- 	int buf_type = CIFS_NO_BUFFER;
--	struct cifs_open_info_data query_data;
-+	struct cifs_open_info_data query_data = {};
+diff --git a/arch/x86/kvm/mmu/page_track.c b/arch/x86/kvm/mmu/page_track.c
+index 1b17b12393a8c..7e8195a311bb0 100644
+--- a/arch/x86/kvm/mmu/page_track.c
++++ b/arch/x86/kvm/mmu/page_track.c
+@@ -130,13 +130,23 @@ void __kvm_write_track_remove_gfn(struct kvm *kvm,
+ 	kvm_mmu_gfn_allow_lpage(slot, gfn);
+ }
  
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index ca8f3dd7ff63b..209bcf0fab4be 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -962,7 +962,7 @@ smb_set_file_info(struct inode *inode, const char *full_path,
- 	struct cifs_open_parms oparms;
- 	struct cifsFileInfo *open_file;
- 	FILE_BASIC_INFO new_buf;
--	struct cifs_open_info_data query_data;
-+	struct cifs_open_info_data query_data = {};
- 	__le64 write_time = buf->LastWriteTime;
- 	struct cifsInodeInfo *cinode = CIFS_I(inode);
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index f4d7eb88d3fdb..43eaad8fd0ad4 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5234,7 +5234,7 @@ int __cifs_sfu_make_node(unsigned int xid, struct inode *inode,
+-/*
+- * check if the corresponding access on the specified guest page is tracked.
+- */
++static bool __kvm_gfn_is_write_tracked(const struct kvm_memory_slot *slot,
++				       gfn_t gfn)
++{
++	int index;
++
++	if (!slot)
++		return false;
++
++	index = gfn_to_index(gfn, slot->base_gfn, PG_LEVEL_4K);
++	return !!READ_ONCE(slot->arch.gfn_write_track[index]);
++}
++
++/* check if write access is tracked on the specified guest page.  */
+ bool kvm_gfn_is_write_tracked(struct kvm *kvm,
+ 			      const struct kvm_memory_slot *slot, gfn_t gfn)
  {
- 	struct TCP_Server_Info *server = tcon->ses->server;
- 	struct cifs_open_parms oparms;
--	struct cifs_open_info_data idata;
-+	struct cifs_open_info_data idata = {};
- 	struct cifs_io_parms io_parms = {};
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	struct cifs_fid fid;
+-	int index;
++	const struct kvm_memory_slot *other_slot;
+ 
+ 	if (!slot)
+ 		return false;
+@@ -144,8 +154,18 @@ bool kvm_gfn_is_write_tracked(struct kvm *kvm,
+ 	if (!kvm_page_track_write_tracking_enabled(kvm))
+ 		return false;
+ 
+-	index = gfn_to_index(gfn, slot->base_gfn, PG_LEVEL_4K);
+-	return !!READ_ONCE(slot->arch.gfn_write_track[index]);
++	BUILD_BUG_ON(KVM_MAX_NR_ADDRESS_SPACES > 2);
++
++	if (__kvm_gfn_is_write_tracked(slot, gfn))
++		return true;
++
++	if (kvm_arch_nr_memslot_as_ids(kvm) > 1) {
++		other_slot = __gfn_to_memslot(__kvm_memslots(kvm, slot->as_id ^ 1), gfn);
++		if (__kvm_gfn_is_write_tracked(other_slot, gfn))
++			return true;
++	}
++
++	return false;
+ }
+ 
+ #ifdef CONFIG_KVM_EXTERNAL_WRITE_TRACKING
 -- 
 2.53.0
+
+
 
