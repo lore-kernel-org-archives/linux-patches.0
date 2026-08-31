@@ -1,483 +1,454 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1491A58FD03;
-	Mon, 31 Aug 2026 13:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E435C58FD1F;
+	Mon, 31 Aug 2026 13:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184250; cv=none; b=HD3yp5/OvYWkAhrbqYDReH5SerbHzCQBU87Af42GRlkuxYRvkDR8dl7TdqACsN+yYQ6Zf/W/3/ByE7TbE2i9K6GhhPE3fh/92cKJdr0ZSkM5QsK9n9aBJWo4OigtFmaoxg7cAJieo4yPootJDF+nhSbdVkDOld6zuXZKqnXFXCg=
+	t=1788184251; cv=none; b=kDoWjHizKmjGS7hrXUbQIdvmiCV7p7GtNT3GzlYrda90i4QQK3LEKIg2KS9S/x591ArMgnLe9PaDsHRt6R9zWcQl3NCeEu6qjJr1onFO/gT/KAE8uwHQ3LHekD+Tvu28SixvFR7pCZeNceUuDYurRSOXDhgC6dgugDVbXqket48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184250; c=relaxed/simple;
-	bh=L5dQLdlwDM23UKQ2dI6TB159zHBDvsqxjWKZhY8aA3E=;
+	s=arc-20240116; t=1788184251; c=relaxed/simple;
+	bh=kQ4lYD5oTwFC8xsvbKLxftlUNTKqTEYD/LC8FJsADyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcG4tMgzvgTPcqsTOz9bBvHbaJUTk0H4iHqjvxfyxpukze8TspIjO1X4mHRcsM9d+7Vkjiy/9FHlcc9KhjzCV0mnb5vFHCo5qEqyVlvSFjwlaumVtEAt3h5b4/xD7qbSLbccRQDKMkOCFEOqzPeyaZlrFAUZo+ILXScEIEd6XLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvhOSFiA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uD6lkPPkbIFnVrmIG3mxFV7rwI52rRCkIISfPiuUzsu3ru3/4NErwhDSeG5INffZLXP7r4/OIGMm4Uu2QrmpubjrWjKXAzdjJJGtbnKlM1SWpcXH4R6CqmoDOQ/qvboMz0+wL37DoWQIT79P7uSlb9upf7SBB0E+yvzn6omJJEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XSziANUU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvhOSFiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183B91F00ACF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XSziANUU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50131F00A3E;
 	Mon, 31 Aug 2026 13:50:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184247;
-	bh=9baH9NgaG7wufzAYK0zE5jAPlPE3prYs8t40A4oGmH0=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184248;
+	bh=ilmLay646quhiSaTllAkjbNWVuNYgdU7ga209ABNBWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvhOSFiALI1xkSw1VzTg6xqkL7AxWkCtnrgtx8bpm8ySHBhgrYFf+/IQE+w2/h6ZU
-	 OKxyfqAlSWVfUieuCsrAyLj15GOu/hR6nP4Q/Bnn74vlujzhbsguYQaIc1omIk+/VG
-	 Xez4mElmGvStWPT5UgDaJ1Ksx7DgQMJlYOw9xMFA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	"Brian G ." <gissf1@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 41/99] nilfs2: correct return value kernel-doc descriptions for ioctl functions
-Date: Mon, 31 Aug 2026 15:34:10 +0200
-Message-ID: <20260831133402.048598199@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=XSziANUUcKR5mKtLByLdVHQKiD14anRaTAIxArztSXzS3oDLxda8Qjer7Zw50+wuE
+	 LKA0DVS7CYmeSpy0YS+Kap2e48KYMtxMWL1VQ4yXICxOlqyEFI+9n8+IIQQn4PzJRT
+	 CUreedX9LSMJ+IKn2eEzKgMAjC339gQ6XzzsaFWfl9Z9DOvSIvfFaZ5fLQXSbi+kA2
+	 isdfZtnW14fwrlUMXlIi/iVxr4Ue6CIhfLtvTsIe7ed1sSr9w/ODt8jDtSmO6u/Yeh
+	 M2W1M7A+MeWe65FF/VcYdiJ/RRPOFXZB+2gWAz48OJXefRDql9204CJSaf0+Nm8CgW
+	 FZxMEbX5KV/kA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	heiko@sntech.de,
+	linux-sound@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: rockchip: rockchip_pdm: Reorder clock enable sequence
+Date: Mon, 31 Aug 2026 09:30:08 -0400
+Message-ID: <20260831133314.4125787-580-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-------------------
+[ Upstream commit 3168721d6ec3b610edf6a3c22ad190722a27d276 ]
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Enable the 'hclk' bus clock before the 'clk' controller clock during
+runtime resume.
+The bus clock provides the register access interface, so enable it before
+the controller clock. This also makes the resume sequence the reverse of
+the suspend sequence, which keeps the clock ordering consistent.
 
-[ Upstream commit 17c46a45cdb94c500f4e93b176cdd61931b03020 ]
-
-Patch series "nilfs2: fix kernel-doc comments for function return values",
-v2.
-
-This series fixes the inadequacies in the return value descriptions in
-nilfs2's kernel-doc comments (mainly incorrect formatting), as well as the
-lack of return value descriptions themselves, and fixes most of the
-remaining warnings that are output when the kernel-doc script is run with
-the "-Wall" option.
-
-This patch (of 7):
-
-In the kernel-doc comments for functions, there are many cases where the
-format of the return value description is inaccurate, such as "Return
-Value: ...", which causes many warnings to be output when the kernel-doc
-script is executed with the "-Wall" option.
-
-This fixes such incorrectly formatted return value descriptions for ioctl
-functions.
-
-Link: https://lkml.kernel.org/r/20250110010530.21872-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20250110010530.21872-2-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: "Brian G ." <gissf1@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: a1735eae5544 ("nilfs2: reject invalid block index in GC ioctl")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260602101608.45137-4-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/ioctl.c |  231 ++++++++++++++++++++++--------------------------------
- 1 file changed, 95 insertions(+), 136 deletions(-)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -33,17 +33,14 @@
-  * @dofunc: concrete function of get/set metadata info
-  *
-  * Description: nilfs_ioctl_wrap_copy() gets/sets metadata info by means of
-- * calling dofunc() function on the basis of @argv argument.
-+ * calling dofunc() function on the basis of @argv argument.  If successful,
-+ * the requested metadata information is copied to userspace memory.
-  *
-- * Return Value: On success, 0 is returned and requested metadata info
-- * is copied into userspace. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EINVAL - Invalid arguments from userspace.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EFAULT - Failure during execution of requested operation.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during execution of requested operation.
-+ * * %-EINVAL	- Invalid arguments from userspace.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_wrap_copy(struct the_nilfs *nilfs,
- 				 struct nilfs_argv *argv, int dir,
-@@ -190,13 +187,10 @@ static int nilfs_ioctl_getversion(struct
-  * given checkpoint between checkpoint and snapshot state. This ioctl
-  * is used in chcp and mkcp utilities.
-  *
-- * Return Value: On success, 0 is returned and mode of a checkpoint is
-- * changed. On error, one of the following negative error codes
-- * is returned.
-- *
-- * %-EPERM - Operation not permitted.
-- *
-- * %-EFAULT - Failure during checkpoint mode changing.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * %-EFAULT	- Failure during checkpoint mode changing.
-+ * %-EPERM	- Operation not permitted.
-  */
- static int nilfs_ioctl_change_cpmode(struct inode *inode, struct file *filp,
- 				     unsigned int cmd, void __user *argp)
-@@ -244,13 +238,10 @@ out:
-  * checkpoint from NILFS2 file system. This ioctl is used in rmcp
-  * utility.
-  *
-- * Return Value: On success, 0 is returned and a checkpoint is
-- * removed. On error, one of the following negative error codes
-- * is returned.
-- *
-- * %-EPERM - Operation not permitted.
-- *
-- * %-EFAULT - Failure during checkpoint removing.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * %-EFAULT	- Failure during checkpoint removing.
-+ * %-EPERM	- Operation not permitted.
-  */
- static int
- nilfs_ioctl_delete_checkpoint(struct inode *inode, struct file *filp,
-@@ -296,7 +287,7 @@ out:
-  * requested checkpoints. The NILFS_IOCTL_GET_CPINFO ioctl is used in
-  * lscp utility and by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_cpinfo structures in output buffer.
-+ * Return: Count of nilfs_cpinfo structures in output buffer.
-  */
- static ssize_t
- nilfs_ioctl_do_get_cpinfo(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -320,17 +311,14 @@ nilfs_ioctl_do_get_cpinfo(struct the_nil
-  *
-  * Description: nilfs_ioctl_get_cpstat() returns information about checkpoints.
-  * The NILFS_IOCTL_GET_CPSTAT ioctl is used by lscp, rmcp utilities
-- * and by nilfs_cleanerd daemon.
-+ * and by nilfs_cleanerd daemon.  The checkpoint statistics are copied to
-+ * the userspace memory pointed to by @argp.
-  *
-- * Return Value: On success, 0 is returned, and checkpoints information is
-- * copied into userspace pointer @argp. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EFAULT - Failure during getting checkpoints statistics.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during getting checkpoints statistics.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_cpstat(struct inode *inode, struct file *filp,
- 				  unsigned int cmd, void __user *argp)
-@@ -363,7 +351,8 @@ static int nilfs_ioctl_get_cpstat(struct
-  * info about requested segments. The NILFS_IOCTL_GET_SUINFO ioctl is used
-  * in lssu, nilfs_resize utilities and by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_suinfo structures in output buffer.
-+ * Return: Count of nilfs_suinfo structures in output buffer on success,
-+ * or a negative error code on failure.
-  */
- static ssize_t
- nilfs_ioctl_do_get_suinfo(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -387,17 +376,14 @@ nilfs_ioctl_do_get_suinfo(struct the_nil
-  *
-  * Description: nilfs_ioctl_get_sustat() returns segment usage statistics.
-  * The NILFS_IOCTL_GET_SUSTAT ioctl is used in lssu, nilfs_resize utilities
-- * and by nilfs_cleanerd daemon.
-- *
-- * Return Value: On success, 0 is returned, and segment usage information is
-- * copied into userspace pointer @argp. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-+ * and by nilfs_cleanerd daemon.  The requested segment usage information is
-+ * copied to the userspace memory pointed to by @argp.
-  *
-- * %-EFAULT - Failure during getting segment usage statistics.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during getting segment usage statistics.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_sustat(struct inode *inode, struct file *filp,
- 				  unsigned int cmd, void __user *argp)
-@@ -430,7 +416,8 @@ static int nilfs_ioctl_get_sustat(struct
-  * on virtual block addresses. The NILFS_IOCTL_GET_VINFO ioctl is used
-  * by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_vinfo structures in output buffer.
-+ * Return: Count of nilfs_vinfo structures in output buffer on success, or
-+ * a negative error code on failure.
-  */
- static ssize_t
- nilfs_ioctl_do_get_vinfo(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -457,7 +444,8 @@ nilfs_ioctl_do_get_vinfo(struct the_nilf
-  * about descriptors of disk block numbers. The NILFS_IOCTL_GET_BDESCS ioctl
-  * is used by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_bdescs structures in output buffer.
-+ * Return: Count of nilfs_bdescs structures in output buffer on success, or
-+ * a negative error code on failure.
-  */
- static ssize_t
- nilfs_ioctl_do_get_bdescs(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -494,19 +482,15 @@ nilfs_ioctl_do_get_bdescs(struct the_nil
-  *
-  * Description: nilfs_ioctl_do_get_bdescs() function returns information
-  * about descriptors of disk block numbers. The NILFS_IOCTL_GET_BDESCS ioctl
-- * is used by nilfs_cleanerd daemon.
-- *
-- * Return Value: On success, 0 is returned, and disk block descriptors are
-- * copied into userspace pointer @argp. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EINVAL - Invalid arguments from userspace.
-+ * is used by nilfs_cleanerd daemon.  If successful, disk block descriptors
-+ * are copied to userspace pointer @argp.
-  *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EFAULT - Failure during getting disk block descriptors.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during getting disk block descriptors.
-+ * * %-EINVAL	- Invalid arguments from userspace.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_bdescs(struct inode *inode, struct file *filp,
- 				  unsigned int cmd, void __user *argp)
-@@ -540,16 +524,12 @@ static int nilfs_ioctl_get_bdescs(struct
-  * Description: nilfs_ioctl_move_inode_block() function registers data/node
-  * buffer in the GC pagecache and submit read request.
-  *
-- * Return Value: On success, 0 is returned. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-ENOENT - Requested block doesn't exist.
-- *
-- * %-EEXIST - Blocks conflict is detected.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EEXIST	- Block conflict detected.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOENT	- Requested block doesn't exist.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_move_inode_block(struct inode *inode,
- 					struct nilfs_vdesc *vdesc,
-@@ -604,8 +584,8 @@ static int nilfs_ioctl_move_inode_block(
-  * blocks that garbage collector specified with the array of nilfs_vdesc
-  * structures and stores them into page caches of GC inodes.
-  *
-- * Return Value: Number of processed nilfs_vdesc structures or
-- * error code, otherwise.
-+ * Return: Number of processed nilfs_vdesc structures on success, or
-+ * a negative error code on failure.
-  */
- static int nilfs_ioctl_move_blocks(struct super_block *sb,
- 				   struct nilfs_argv *argv, void *buf)
-@@ -682,14 +662,11 @@ static int nilfs_ioctl_move_blocks(struc
-  * in the period from p_start to p_end, excluding p_end itself. The checkpoints
-  * which have been already deleted are ignored.
-  *
-- * Return Value: Number of processed nilfs_period structures or
-- * error code, otherwise.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EINVAL - invalid checkpoints.
-+ * Return: Number of processed nilfs_period structures on success, or one of
-+ * the following negative error codes on failure:
-+ * * %-EINVAL	- invalid checkpoints.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_delete_checkpoints(struct the_nilfs *nilfs,
- 					  struct nilfs_argv *argv, void *buf)
-@@ -717,14 +694,11 @@ static int nilfs_ioctl_delete_checkpoint
-  * Description: nilfs_ioctl_free_vblocknrs() function frees
-  * the virtual block numbers specified by @buf and @argv->v_nmembs.
-  *
-- * Return Value: Number of processed virtual block numbers or
-- * error code, otherwise.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-ENOENT - The virtual block number have not been allocated.
-+ * Return: Number of processed virtual block numbers on success, or one of the
-+ * following negative error codes on failure:
-+ * * %-EIO	- I/O error.
-+ * * %-ENOENT	- Unallocated virtual block number.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_free_vblocknrs(struct the_nilfs *nilfs,
- 				      struct nilfs_argv *argv, void *buf)
-@@ -746,14 +720,11 @@ static int nilfs_ioctl_free_vblocknrs(st
-  * Description: nilfs_ioctl_mark_blocks_dirty() function marks
-  * metadata file or data blocks as dirty.
-  *
-- * Return Value: Number of processed block descriptors or
-- * error code, otherwise.
-- *
-- * %-ENOMEM - Insufficient memory available.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOENT - the specified block does not exist (hole block)
-+ * Return: Number of processed block descriptors on success, or one of the
-+ * following negative error codes on failure:
-+ * * %-EIO	- I/O error.
-+ * * %-ENOENT	- Non-existent block (hole block).
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_mark_blocks_dirty(struct the_nilfs *nilfs,
- 					 struct nilfs_argv *argv, void *buf)
-@@ -858,7 +829,7 @@ int nilfs_ioctl_prepare_clean_segments(s
-  * from userspace. The NILFS_IOCTL_CLEAN_SEGMENTS ioctl is used by
-  * nilfs_cleanerd daemon.
-  *
-- * Return Value: On success, 0 is returned or error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_clean_segments(struct inode *inode, struct file *filp,
- 				      unsigned int cmd, void __user *argp)
-@@ -982,20 +953,14 @@ out:
-  * and metadata are written out to the device when it successfully
-  * returned.
-  *
-- * Return Value: On success, 0 is retured. On errors, one of the following
-- * negative error code is returned.
-- *
-- * %-EROFS - Read only filesystem.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOSPC - No space left on device (only in a panic state).
-- *
-- * %-ERESTARTSYS - Interrupted.
-- *
-- * %-ENOMEM - Insufficient memory available.
-- *
-- * %-EFAULT - Failure during execution of requested operation.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT		- Failure during execution of requested operation.
-+ * * %-EIO		- I/O error.
-+ * * %-ENOMEM		- Insufficient memory available.
-+ * * %-ENOSPC		- No space left on device (only in a panic state).
-+ * * %-ERESTARTSYS	- Interrupted.
-+ * * %-EROFS		- Read only filesystem.
-  */
- static int nilfs_ioctl_sync(struct inode *inode, struct file *filp,
- 			    unsigned int cmd, void __user *argp)
-@@ -1029,7 +994,7 @@ static int nilfs_ioctl_sync(struct inode
-  * @filp: file object
-  * @argp: pointer on argument from userspace
-  *
-- * Return Value: On success, 0 is returned or error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_resize(struct inode *inode, struct file *filp,
- 			      void __user *argp)
-@@ -1065,7 +1030,7 @@ out:
-  * checks the arguments from userspace and calls nilfs_sufile_trim_fs, which
-  * performs the actual trim operation.
-  *
-- * Return Value: On success, 0 is returned or negative error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_trim_fs(struct inode *inode, void __user *argp)
- {
-@@ -1107,7 +1072,7 @@ static int nilfs_ioctl_trim_fs(struct in
-  * of segments in bytes and upper limit of segments in bytes.
-  * The NILFS_IOCTL_SET_ALLOC_RANGE is used by nilfs_resize utility.
-  *
-- * Return Value: On success, 0 is returned or error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_set_alloc_range(struct inode *inode, void __user *argp)
- {
-@@ -1158,17 +1123,15 @@ out:
-  * @dofunc: concrete function of getting metadata info
-  *
-  * Description: nilfs_ioctl_get_info() gets metadata info by means of
-- * calling dofunc() function.
-- *
-- * Return Value: On success, 0 is returned and requested metadata info
-- * is copied into userspace. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EINVAL - Invalid arguments from userspace.
-+ * calling dofunc() function.  The requested metadata information is copied
-+ * to userspace memory @argp.
-  *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EFAULT - Failure during execution of requested operation.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during execution of requested operation.
-+ * * %-EINVAL	- Invalid arguments from userspace.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_info(struct inode *inode, struct file *filp,
- 				unsigned int cmd, void __user *argp,
-@@ -1208,18 +1171,14 @@ static int nilfs_ioctl_get_info(struct i
-  * encapsulated in nilfs_argv and updates the segment usage info
-  * according to the flags in nilfs_suinfo_update.
-  *
-- * Return Value: On success, 0 is returned. On error, one of the
-- * following negative error codes is returned.
-- *
-- * %-EPERM - Not enough permissions
-- *
-- * %-EFAULT - Error copying input data
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EINVAL - Invalid values in input (segment number, flags or nblocks)
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EEXIST	- Block conflict detected.
-+ * * %-EFAULT	- Error copying input data.
-+ * * %-EINVAL	- Invalid values in input (segment number, flags or nblocks).
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-+ * * %-EPERM	- Not enough permissions.
-  */
- static int nilfs_ioctl_set_suinfo(struct inode *inode, struct file *filp,
- 				unsigned int cmd, void __user *argp)
+LLM Generated explanations, may be completely bogus:
 
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 2)...
+Retry attempt 2...
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 3)...
+Retry attempt 3...
+## Phase 1: Commit Message Forensics
+
+### Step 1.1: Parse the Subject Line
+**Record:** `[ASoC: rockchip: rockchip_pdm]` `[Reorder]` — Reorder the
+runtime-resume clock enable sequence for the Rockchip PDM driver.
+
+### Step 1.2: Parse All Commit Message Tags
+**Record:**
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:**
+  https://patch.msgid.link/20260602101608.45137-4-phucduc.bui@gmail.com
+- **Cc: stable@vger.kernel.org:** — not present (expected)
+- **Signed-off-by:** bui duc phuc, Mark Brown (ASoC maintainer)
+
+Notable: no user report, syzbot, or explicit stable nomination. Mark
+Brown accepted the patch.
+
+### Step 1.3: Analyze the Commit Body
+**Record:**
+- **Bug:** `rockchip_pdm_runtime_resume()` enables `pdm_clk` (controller
+  clock) before `pdm_hclk` (bus clock).
+- **Symptom/failure mode:** Not explicitly described (no crash, hang, or
+  user report). The commit argues that register access requires the bus
+  clock, so resume ordering is wrong and does not mirror suspend.
+- **Version info:** none in the message.
+- **Root cause:** Bus clock (`hclk`) provides the register interface; it
+  must be enabled before the controller clock (`clk`). Suspend disables
+  `clk` then `hclk`; resume should reverse that.
+
+### Step 1.4: Detect Hidden Bug Fixes
+**Record:** Yes — this is a PM correctness bug disguised as ordering
+cleanup. Resume currently mirrors suspend instead of reversing it, which
+is incorrect for clock domains where the bus clock gates register
+access.
+
+---
+
+## Phase 2: Diff Analysis
+
+### Step 2.1: Inventory the Changes
+**Record:**
+- **Files:** `sound/soc/rockchip/rockchip_pdm.c` (+/- ~6 logical lines
+  in one hunk)
+- **Functions modified:** `rockchip_pdm_runtime_resume()`
+- **Scope:** Single-file, surgical PM fix
+
+### Step 2.2: Code Flow Change
+**Record:**
+- **Hunk (runtime resume):**
+  - **Before:** enable `pdm->clk`, then `pdm->hclk`; on second failure,
+    disable `pdm->clk`
+  - **After:** enable `pdm->hclk`, then `pdm->clk`; on second failure,
+    disable `pdm->hclk`
+- **Path affected:** Runtime PM resume and anything that calls it
+  (system sleep resume via `pm_runtime_resume_and_get()`)
+
+### Step 2.3: Bug Mechanism
+**Record:**
+- **Category:** Logic / PM correctness fix (clock enable ordering)
+- **Mechanism:** Suspend disables controller clock first, then bus
+  clock. Resume must enable bus clock first, then controller clock.
+  Current code enables both in the same order as suspend, violating
+  standard clock-domain ordering and the driver’s own probe path (probe
+  enables `hclk` first).
+
+### Step 2.4: Fix Quality
+**Record:**
+- Fix is obviously correct and minimal.
+- Matches the pattern used in `rockchip_sai.c` and `rockchip_i2s_tdm.c`
+  (hclk before functional clock on resume).
+- Regression risk is very low: only reorders two existing
+  `clk_prepare_enable()` calls and corresponding error-path cleanup.
+
+---
+
+## Phase 3: Git History Investigation
+
+### Step 3.1: Blame the Changed Lines
+**Record:**
+- Buggy ordering introduced in **fc05a5b222530** (“ASoC: rockchip: add
+  support for pdm controller”, June 2017).
+- Error-path cleanup added later in **ef0a098efb366** (Dec 2022).
+- Bug has existed since driver introduction; present in this tree.
+
+### Step 3.2: Follow the Fixes: Tag
+**Record:** No `Fixes:` tag — not applicable.
+
+### Step 3.3: File History for Related Changes
+**Record:**
+- Related prior fix: **ef0a098efb366** — missing
+  `clk_disable_unprepare()` on error path in the same function (already
+  in this 6.18.y tree).
+- No evidence this is part of a multi-patch dependency series.
+- Standalone fix.
+
+### Step 3.4: Author's Other Commits
+**Record:** Author (bui duc phuc) has other ASoC cleanup/guard patches;
+this is a targeted Rockchip PDM PM fix accepted by maintainer Mark
+Brown.
+
+### Step 3.5: Dependent/Prerequisite Commits
+**Record:** No dependencies. Code structures (`pdm->clk`, `pdm->hclk`,
+runtime PM callbacks) all exist in this tree. Applies standalone.
+
+---
+
+## Phase 4: Mailing List and External Research
+
+### Step 4.1: Original Patch Discussion
+**Record:**
+- `b4 dig -c 8f78f7bc1806c` failed — commit not in this checkout.
+- Link fetch blocked (403 / bot protection).
+- Could not retrieve lore thread content.
+
+### Step 4.2: Reviewers
+**Record:** UNVERIFIED — `b4 dig -w` failed for the same reason. Mark
+Brown’s Signed-off-by confirms maintainer acceptance.
+
+### Step 4.3: Bug Report Search
+**Record:** No bug report, syzbot link, or crash description in the
+commit message or accessible lore thread.
+
+### Step 4.4: Related Patches / Series
+**Record:** Message-ID suffix `45137-4` suggests patch 4 of a series,
+but no related mbox files for this patch were found in the workspace.
+Fix itself is self-contained.
+
+### Step 4.5: Stable Mailing List History
+**Record:** UNVERIFIED — could not search lore due to access
+restrictions. No `Cc: stable@vger.kernel.org` in the commit message.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+**Record:** `rockchip_pdm_runtime_resume()` (modified), with callers:
+- `rockchip_pdm_probe()` (when runtime PM disabled)
+- `rockchip_pdm_pm_ops` runtime resume callback
+- `rockchip_pdm_resume()` via `pm_runtime_resume_and_get()`
+
+### Step 5.2: Callers
+**Record:**
+- **Runtime PM idle/resume cycle:** common audio power-management path
+- **System sleep resume:** `rockchip_pdm_resume()` →
+  `pm_runtime_resume_and_get()` → `regcache_sync()`
+- **Probe fallback:** only when `CONFIG_PM` disabled
+
+### Step 5.3: Callees
+**Record:** `clk_prepare_enable()`, `clk_disable_unprepare()`,
+`dev_err()`
+
+### Step 5.4: Call Chain / Reachability
+**Record:**
+- Resume path is reachable on Rockchip boards using PDM microphones
+  (RK3328, RK3568, RV1126).
+- Trigger: runtime PM resume after idle, or system suspend/resume.
+- Not directly userspace-triggerable as a security primitive, but
+  reachable during normal audio use and system PM.
+
+### Step 5.5: Similar Patterns
+**Record:**
+- **Correct pattern:** `rockchip_sai.c` and `rockchip_i2s_tdm.c` enable
+  `hclk` before functional clock on resume.
+- **Same bug pattern:** `rockchip_spdif.c` also enables mclk before hclk
+  on resume (not fixed by this commit).
+- **PDM probe:** enables `hclk` first at line 614.
+
+---
+
+## Phase 6: Cross-Referencing Against the Local Tree
+
+### Step 6.1: Does the Buggy Code Exist?
+**Record:** **Yes.** Local tree is **v6.18.44** (`6.18.44`). Current
+code at lines 425–435 enables `pdm->clk` before `pdm->hclk`. Bug present
+since v4.13 era (2017 driver addition).
+
+### Step 6.2: Backport Complications
+**Record:** Expected **clean apply** — single hunk, no structural
+changes needed. No significant recent churn in this function beyond
+unrelated cleanups.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** **ef0a098efb366** (error-path cleanup in the same function)
+is already in this tree. The clock-ordering fix is **not** present.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+### Step 7.1: Subsystem and Criticality
+**Record:** **ASoC / Rockchip PDM audio driver** — **IMPORTANT** for
+embedded Rockchip platforms using PDM digital microphones; not core-
+kernel, but relevant to production ARM64 boards.
+
+### Step 7.2: Subsystem Activity
+**Record:** Driver is mature but still receives maintenance (runtime PM
+conversion, warning fixes, RK3568/RV1126 support). Active enough that PM
+paths matter.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users of Rockchip SoCs with PDM enabled in device tree (e.g.
+RK3568, RK3328, RV1126). Config/platform-specific, not universal.
+
+### Step 8.2: Trigger Conditions
+**Record:**
+- Runtime PM resume after autosuspend
+- System sleep resume (`rockchip_pdm_resume()`)
+- Common during audio use on battery-powered/embedded devices
+- Not unprivileged attack surface; normal device PM operation
+
+### Step 8.3: Failure Mode Severity
+**Record:**
+- **Potential failure:** clock enable/resume problems, PDM capture
+  failure after suspend/resume, possible hardware misbehavior if
+  controller clock is enabled without bus clock
+- **Observed/reported severity:** **UNVERIFIED** — no crash report in
+  commit message; bug latent since 2017
+- **Classification:** **MEDIUM** — functional PM/resume correctness on
+  real hardware, not demonstrated crash/security/corruption
+
+### Step 8.4: Risk-Benefit Ratio
+**Record:**
+- **Benefit:** Correct PM behavior on resume; aligns with sibling
+  Rockchip drivers and probe ordering; may fix intermittent post-resume
+  audio failures
+- **Risk:** Very low — 6-line reorder, no API changes
+- **Ratio:** Moderate benefit, very low risk; importance is somewhat
+  reduced by lack of demonstrated user impact
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Compile
+
+**FOR backport:**
+- Real PM bug: resume does not reverse suspend clock order
+- Bus clock must precede controller clock for register access
+- Probe already enables `hclk` first; runtime resume is internally
+  inconsistent
+- Matches correct pattern in `rockchip_sai` and `rockchip_i2s_tdm`
+- Used on system sleep resume before `regcache_sync()`
+- Small, surgical, maintainer-reviewed fix
+- Buggy code exists in this 6.18.y tree since 2017
+- Prior fix in same function already accepted into stable tree
+
+**AGAINST backport:**
+- No user report, syzbot, or documented crash/hang
+- Commit does not describe concrete user-visible symptoms
+- Bug latent ~9 years without reported failures
+- Stable “important issue” bar usually wants demonstrated impact (crash,
+  corruption, security, deadlock)
+- Similar wrong ordering exists in `rockchip_spdif.c` and has also
+  persisted
+
+**UNRESOLVED:**
+- Lore review thread content
+- Whether reviewers explicitly nominated for stable
+- Concrete failure reports on any Rockchip board
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logically correct;
+   maintainer signed off; no Tested-by
+2. Fixes a real bug affecting users? **PASS** — real PM ordering bug,
+   though user impact unverified
+3. Important issue? **BORDERLINE/PASS** — can break audio after resume
+   on embedded hardware; not proven crash/corruption
+4. Small and contained? **PASS** — one function, ~6 lines
+5. No new features or APIs? **PASS**
+6. Can apply to local tree? **PASS** — code exists, clean apply expected
+
+### Step 9.3: Exception Categories
+**Record:** Not a device-ID/quirk/DT/build/docs exception. Standard
+driver PM bug fix.
+
+### Step 9.4: Decision Rationale
+
+This is a genuine runtime-PM bug in a driver that exists and is used in
+the local **6.18.y** tree. The fix is minimal, obviously correct, and
+aligns the PDM driver with the established Rockchip pattern (`hclk`
+before functional clock on resume, reverse of suspend). The resume path
+is exercised during normal audio PM and system sleep resume before
+register restore.
+
+The main weakness is the absence of any reported crash or user failure
+despite the bug being present since 2017. That lowers urgency, but the
+fix is still appropriate for stable because:
+- it corrects objectively wrong PM ordering on a real resume path,
+- it is zero-risk and self-contained,
+- incorrect clock ordering on resume can cause device malfunction after
+  suspend on Rockchip PDM hardware,
+- a related fix in the same function is already in this stable tree.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed subject, tags, body; no Reported-by/syzbot/Fixes
+  tags found
+- **[Phase 2]** Diff analysis: swap of two `clk_prepare_enable()` calls
+  and corresponding error cleanup in `rockchip_pdm_runtime_resume()`
+- **[Phase 3]** `git blame`: buggy order from fc05a5b222530 (2017);
+  ef0a098efb366 added error-path cleanup (2022)
+- **[Phase 3]** `git log --oneline -20 --
+  sound/soc/rockchip/rockchip_pdm.c`: confirmed related prior fix in
+  tree
+- **[Phase 3]** `git merge-base --is-ancestor fc05a5b222530 HEAD`:
+  original driver commit is in this tree
+- **[Phase 4]** `b4 dig -c 8f78f7bc1806c`: failed — commit not in
+  checkout
+- **[Phase 4]** WebFetch/curl lore: blocked (403/bot protection) —
+  thread content UNVERIFIED
+- **[Phase 5]** Read callers: probe, PM ops, `rockchip_pdm_resume()` via
+  `pm_runtime_resume_and_get()`
+- **[Phase 5]** Compared patterns in `rockchip_sai.c`,
+  `rockchip_i2s_tdm.c`, `rockchip_spdif.c`
+- **[Phase 6]** `git describe HEAD` + Makefile: tree is v6.18.44
+- **[Phase 6]** Read current `rockchip_pdm.c`: buggy ordering confirmed
+  at lines 425–435
+- **[Phase 6]** DT check: PDM present for rk3568/rk3328 in
+  `arch/arm64/boot/dts/rockchip/`
+- **[Phase 8]** Failure mode assessed as functional PM/resume issue; no
+  verified crash report
+
+**YES**
+
+ sound/soc/rockchip/rockchip_pdm.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index 01292b63bf9d6..115e90d3bbfe0 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -426,16 +426,16 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
+ 	struct rk_pdm_dev *pdm = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	ret = clk_prepare_enable(pdm->clk);
++	ret = clk_prepare_enable(pdm->hclk);
+ 	if (ret) {
+-		dev_err(pdm->dev, "clock enable failed %d\n", ret);
++		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	ret = clk_prepare_enable(pdm->hclk);
++	ret = clk_prepare_enable(pdm->clk);
+ 	if (ret) {
+-		clk_disable_unprepare(pdm->clk);
+-		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
++		clk_disable_unprepare(pdm->hclk);
++		dev_err(pdm->dev, "clock enable failed %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-- 
+2.53.0
 
