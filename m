@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CD34A015E;
-	Mon, 31 Aug 2026 13:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A593644AB9D;
+	Mon, 31 Aug 2026 13:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183682; cv=none; b=h4AppXIro0R1+0aOEoTP5u+muGN9x6DV9/wro/bK4j1t2T8Yc/R8bbFaRgcMHzeVU92u9PhhTtuyE0apbPBlE60FJJVyBOXfJudcuVAZPQ0OK5WHZ0XkUKptg/vcem3Uh8B/5RT3ESNd0zOKNm5D47Nv3AHwO1LlD7WRsN08Hwc=
+	t=1788183683; cv=none; b=YYUM0U2ikwCEqJzjOhxuSuIbDikViOEvN9/IVvryQf2VDczJYY5KtkKUNSU7kQs3NVKm0x/C1EtENilpZDZBn/ZJq2bJq0r16GQSMHtZpbKAWWzd8aHr6ziisScVQUj1ylkVriiQ4nknAdtKBWze15RX/Zw5qkrmZTMzGbo3kEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183682; c=relaxed/simple;
-	bh=gMV3plt5lRkLAfiFUxjjzTiY7VOmR+ppSHPAerh0wmQ=;
+	s=arc-20240116; t=1788183683; c=relaxed/simple;
+	bh=+CqGTkV59KDF1qm4DXp/2YQxAAAQpQfQz+m5bfjASXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eQFogVGA0lzD2kjlji6dEe2SSxHMo7/aBB1VnaMMi7vekf3oxWjz1QLzMdixrTUOx1czGUzH0oQpwUcrWNlWqj48oDippTMVRIglwbNvrob1uD/ZhjGP+aX1k0DKyQnJpqT82PYL318YmPI7nBtBUqvceiuwPHzDqtw6Wq7ZXAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZaUXyegc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DHw3MBdwaISt14xg7FoxtE2zaz5yJKFlJaCxsp4uVgHFbYs+LW8iP64DfEoPJdROTCpAmPzOWK++h6gJHZDNJboNqgRJo+yJz+Bu3+AD+ZghiIuJBVmAuy77Msg2SpKamdN1MarOzvWa1CnjbG4zhFUYyZcRlGPO59Y+c6rn3TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQQpEa5F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZaUXyegc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7282D1F00A3E;
-	Mon, 31 Aug 2026 13:41:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQQpEa5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD661F000E9;
+	Mon, 31 Aug 2026 13:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183679;
-	bh=0EYoE+iucVhU+9I9SD8X8rbvJ6Xg9Z+L6r01HOtL3/M=;
+	s=k20260515; t=1788183680;
+	bh=ugFYBDzvjXiiwr1QoCdRHCywzurahxBL1vOPwBRxn3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZaUXyegcmCbH1FdnmJLs+DaYjfT+TbcZG0BPJGENIPPHQkQow39MvGwwWo4qKugHb
-	 N+xJTmDeUGK5WL03g7Gz8kuX/c+X7KeP7MRUN5JoA5OR8RdnmfGAlwLg+Zwhr77XOd
-	 bBj+lZUlG9RlofH//s6teNGV1ZRLqd3uCZ4z71eoB6i9dYjJkuU0ctA3LMtk/84ipP
-	 8jh64vnFMT3KVmTVn//vNIRa/bTd2JPdHHMmU8Ls0TeL+WVuxwU0ku3KZuSGqo9CGX
-	 ASn0Z1VtWmFmYTBkxuTUoNXVO6Yu0MZjtbngur5mT2KvTH4jzzQIyOrQ/NYmUVhLM2
-	 c0ZprL33f8cDw==
+	b=QQQpEa5F35Gg/3Pr1lz/g9cEc66xMK7pFdXQm+tsLF15VKRjYTRvDkcrMdx1QFkIe
+	 XnHuPmlQ3J3nnauC4VoQM2wx/C3frbEWuj4RA1esmwNNitqfBUUE/FfgzZx7pH/024
+	 MTi1qJ/6/upOZ5bpFJZV6T1tW2LH0YjrmJ7QH7FWwCVBN4O+XjxlH4lq1MzpC38HKg
+	 kWy1Ni0GzvbGPOtoeiIfewseNwzaouKwFiAUoPkeHl07slnni8vQ7Ol3u4gCCwk1In
+	 wdZ+P0DcqrEFEefnPrI7vaA5bwkOj4CP7IFVLBYGjWwzfChZGQZWKlJgkJYCb5+dq1
+	 MHVXBWrA3J5fQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brajesh Gupta <brajesh.gupta@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
+Cc: Shahar Tzarfati <shahar.tzarfati@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alessio.belle@imgtec.com,
-	luigi.santivetti@imgtec.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	imagination@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/imagination: Don't timeout job if its fence has been signaled
-Date: Mon, 31 Aug 2026 09:24:27 -0400
-Message-ID: <20260831133314.4125787-239-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: fw: validate SMEM response size
+Date: Mon, 31 Aug 2026 09:24:28 -0400
+Message-ID: <20260831133314.4125787-240-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,423 +47,397 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brajesh Gupta <brajesh.gupta@imgtec.com>
+From: Shahar Tzarfati <shahar.tzarfati@intel.com>
 
-[ Upstream commit ee7cb742531432ec1bb29b996e3363aacd860054 ]
+[ Upstream commit a31b0e535fd11219556c7382ee9f63b2438c3769 ]
 
-Verify the job’s fence in the timeout handler; if the firmware has since
-signaled completion, then report NO HANG.
+The SMEM parsers cast firmware response payloads directly to shared
+memory configuration structures. A short response can leave fields
+outside the received payload while the driver still dereferences them.
 
-Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://patch.msgid.link/20260519-b4-context_reset-v2-2-931018a7131d@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Check the response payload length before reading the base fields in
+both parser variants. Require the full legacy extended layout before
+reading internal TX FIFO data. Valid responses keep the same parsed
+values.
+
+Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715215523.fbdb0016a91d.I5f6c6e04589a24a233559191170ccb43372dee63@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: drm/imagination: Don't timeout job if its
-fence has been signaled
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.43` (`6.18.43`, Makefile VERSION=6 PATCHLEVEL=18
-SUBLEVEL=43)
+**Step 1.1 — Subject line**
+Record: `[wifi: iwlwifi: fw]` `[validate]` — validate SMEM (shared
+memory) firmware response payload size before parsing.
 
----
+**Step 1.2 — Tags**
+Record:
+- **Reviewed-by:** Johannes Berg `<johannes.berg@intel.com>` (iwlwifi
+  maintainer)
+- **Signed-off-by:** Shahar Tzarfati `<shahar.tzarfati@intel.com>`
+  (author)
+- **Signed-off-by:** Miri Korenblit
+  `<miriam.rachel.korenblit@intel.com>` (maintainer)
+- **Link:** `https://patch.msgid.link/20260715215523.fbdb0016a91d...`
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable, or syzbot tags
+- Notable: maintainer review present; part of `[PATCH 5/15]` iwlwifi
+  fixes series (2026-07-15)
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** SMEM parsers cast `pkt->data` directly to
+  `iwl_shared_mem_cfg` / `iwl_shared_mem_cfg_v2` and dereference fields
+  without verifying payload length.
+- **Symptom:** A short firmware response can cause reads past the
+  received buffer.
+- **Root cause:** Missing bounds checks before field access; extended-
+  layout path also reads `internal_txfifo_*` without verifying full
+  struct size.
+- **Version info:** None in message.
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[drm/imagination]` `[Don't]` (preventive fix) — Don't treat
-a completed job as a GPU hang when its fence has already been signaled.
-
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-**Record:**
-- **Signed-off-by:** Brajesh Gupta \<brajesh.gupta@imgtec.com\> (author)
-- **Reviewed-by:** Matt Coster \<matt.coster@imgtec.com\> (IMG reviewer)
-- **Link:** https://patch.msgid.link/20260519-b4-context_reset-v2-2-
-  931018a7131d@imgtec.com (patch 2 of a `context_reset` v2 series)
-- **Signed-off-by:** Matt Coster \<matt.coster@imgtec.com\>
-- No Fixes:, Reported-by:, Tested-by:, Acked-by:, or Cc: stable tags
-- Notable: Reviewed-by from driver vendor; no syzbot/user bug report
-  tags
-
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-**Record:**
-- **Bug description:** The timeout handler does not verify whether the
-  job's fence was already signaled before treating the event as a hang.
-- **Symptom/failure mode:** Spurious "Job timeout" handling and
-  unnecessary scheduler reset even though the firmware already completed
-  the job.
-- **Version information:** None stated.
-- **Root cause:** Race between job completion (fence signaled) and the
-  drm_sched timeout worker running before the free-job worker cleans up
-  the completed job.
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Yes — despite the subject not using "fix", this is a real
-bug fix. It prevents false-positive GPU hang recovery, matching the
-established pattern used by panfrost, etnaviv, v3d, and xe drivers.
+**Step 1.4 — Hidden bug fix?**
+Record: **Yes.** Although titled “validate,” this is a real out-of-
+bounds read fix in firmware-response parsing, not cosmetic cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: INVENTORY THE CHANGES
-**Record:**
-- **Files:** `drivers/gpu/drm/imagination/pvr_queue.c` (+5 lines,
-  comment update)
-- **Functions modified:** `pvr_queue_timedout_job()`
-- **Scope:** Single-file surgical fix in timeout error path
+**Step 2.1 — Inventory**
+Record:
+- **File:** `drivers/net/wireless/intel/iwlwifi/fw/smem.c` (+23 / −5
+  lines)
+- **Functions:** `iwl_parse_shared_mem_22000()`,
+  `iwl_parse_shared_mem()`
+- **Scope:** Single-file, surgical fix
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Record:**
-- **Hunk 1 (early return):** BEFORE: timeout handler always proceeds to
-  `dev_err`, `drm_sched_stop()`, fence reassignment, and scheduler
-  restart. AFTER: if `s_job->s_fence->parent` is already signaled,
-  return `DRM_GPU_SCHED_STAT_NO_HANG` immediately and skip all reset
-  logic.
-- **Hunk 2 (comment):** Documents the new possible return value.
+**Step 2.2 — Code flow per hunk**
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:**
-- **Bug category:** Race condition / logic correctness in timeout
-  handler
-- **Mechanism:** `pvr_queue_run_job()` returns `job->done_fence` as the
-  sched fence parent. When the GPU completes the job, that fence is
-  signaled. If the drm_sched timeout fires before the free-job worker
-  runs, the old code incorrectly enters full hang-recovery:
-  `drm_sched_stop()`, queue list manipulation, parent-fence
-  reassignment, and potentially `atomic_set(&queue->ctx->faulty, 1)` for
-  other pending jobs. The fix detects completion and returns
-  `DRM_GPU_SCHED_STAT_NO_HANG`, which causes
-  `drm_sched_job_reinsert_on_false_timeout()` in the scheduler core to
-  properly reinsert the job for cleanup.
+| Hunk | Before | After |
+|------|--------|-------|
+| `iwl_parse_shared_mem_22000()` | Reads `lmac_num` immediately from
+cast pointer; only checks full struct size for API v4 tail fields |
+Requires `payload_len >= offsetofend(..., lmac_smem[1])` (180 bytes)
+before any reads |
+| `iwl_parse_shared_mem()` base path | Reads `txfifo_size[]`,
+`rxfifo_size[]` with no length check | Requires `payload_len >=
+offsetof(..., rxfifo_addr)` (68 bytes) first |
+| `iwl_parse_shared_mem()` extended path | Reads `internal_txfifo_*`
+when capability set, no size check | Requires `payload_len >=
+sizeof(*mem_cfg)` (100 bytes) before extended fields |
 
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:**
-- **Fix quality:** Obviously correct; identical pattern to panfrost
-  (`dma_fence_is_signaled` → `DRM_GPU_SCHED_STAT_NO_HANG`).
-- **Regression risk:** Very low. Only affects the spurious-timeout path;
-  real hangs still proceed to reset. Must not call `drm_sched_stop()`
-  when returning `NO_HANG` — the fix correctly returns before that call,
-  per scheduler documentation.
+**Step 2.3 — Bug mechanism**
+Record: **Buffer overflow / out-of-bounds read** — firmware response
+parsing reads beyond `pkt` payload on short/malformed responses.
+
+**Step 2.4 — Fix quality**
+Record: Obviously correct; follows existing `IWL_FW_CHECK` +
+`iwl_rx_packet_payload_len()` pattern already used in `pnvm.c` in this
+tree. Minimal risk; early return on bad payload matches existing error-
+handling style in the same file.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** `pvr_queue_timedout_job()` introduced in `eaf01ee5ba28b`
-(Sarah Walker, 2023-11-22, "drm/imagination: Implement job submission
-and scheduling"). The missing fence check has been present since driver
-inception. Confirmed ancestor of HEAD.
+**Step 3.1 — Blame**
+Record: Parser functions trace to `5d324e5159d9e` (6.18 merge base).
+Related bounds work in `1d49a42717bdc` added `lmac_num` cap and v4 full-
+size check but left early reads unguarded. Buggy pattern has been
+present since SMEM parsing existed in this file layout.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** N/A — no Fixes: tag in commit message.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no Fixes: tag.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:** Recent `pvr_queue.c` changes include fence/dependency fixes
-(`943fa73ea0efa`, `68c3de7f707e8`, `df1a1ed5e1bdd`) but none address
-this timeout race. The `DRM_GPU_SCHED_STAT_NO_HANG` infrastructure was
-added earlier (`0b1217bfdfddf`) and adopted by panfrost, xe, etnaviv,
-v3d — imagination was never updated. Standalone fix, not part of an
-applied series in this tree.
+**Step 3.3 — Related commits**
+Record: Part of 15-patch series `wifi: iwlwifi: fixes - 07-15-2026`.
+**Other series patches already in this 6.18.44 tree:**
+- `eae7fdf7d4469` — pnvm payload validation (patch 8/15)
+- `70a6de303c9b3` — TAS block-list pointer arithmetic (patch 6/15)
+- `2d5dec517b539` — wake-packet handler bounds (patch from same author)
+- `a076b0c457c71` — SAR GEO payload validation (patch 4/15)
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Brajesh Gupta has two imagination commits in this tree:
-`c88fdbf3da26e` (double `drm_sched_entity_fini` fix) and `902fd1026ca42`
-(FW trace wait). Regular IMG contributor, not subsystem maintainer.
+This SMEM patch is **not** yet in the tree.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** Link suggests patch 2 of `context_reset-v2` series, but the
-diff is self-contained — no new structures, APIs, or prior-patch
-symbols. Uses only existing `dma_fence_is_signaled()` and
-`DRM_GPU_SCHED_STAT_NO_HANG`. Can apply standalone.
+**Step 3.4 — Author context**
+Record: Shahar Tzarfati; one other commit in tree (`2d5dec517b539`, same
+series). Johannes Berg reviewed and has prior SMEM fix (`1d49a42717bdc`)
+in tree.
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:** `b4 dig -c` failed (commit not in this tree). `b4 shazam`
-did not find the message. WebFetch of lore.kernel.org and
-patch.msgid.link blocked by Anubis bot protection. Link tag indicates
-submission as patch 2 of `context_reset-v2` series to dri-devel, with
-Reviewed-by from IMG engineer.
-
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** Reviewed-by: Matt Coster (IMG). Full recipient list
-unavailable due to lore access failure.
-
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** No Reported-by or bugzilla/syzbot links. Bug mechanism is
-well-established from identical panfrost/etnaviv fixes with explicit
-comments about "timeout fired before free-job worker."
-
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Part of `context_reset-v2` series (patch 2 per message-id).
-This specific change is independent — only adds an early-return guard in
-`pvr_queue_timedout_job()`.
-
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** Could not search lore stable list (bot protection). No
-stable nomination found in commit tags.
+**Step 3.5 — Dependencies**
+Record: **Standalone.** Only touches `smem.c`; uses `IWL_FW_CHECK`,
+`iwl_rx_packet_payload_len()`, and structs already present. No
+prerequisite commits required.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 4: Mailing List and External Research
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `pvr_queue_timedout_job()` (modified), called via
-`pvr_queue_sched_ops.timedout_job`.
+**Step 4.1 — Original discussion**
+Record: `b4 am` on message-id found thread at lore; patch is `[PATCH
+5/15]` in
+`20260715_miriam_rachel_korenblit_wifi_iwlwifi_fixes_07_15_2026.mbx`.
+Cover letter describes series as “bugfixes.” No explicit stable
+nomination found in mbox text.
 
-### Step 5.2: TRACE CALLERS
-**Record:** `pvr_queue_timedout_job` → registered in
-`pvr_queue_sched_ops` → called from `drm_sched_job_timedout()` work item
-when scheduler timeout fires on a pending job. Triggered during normal
-GPU rendering under load or slow interrupt handling.
+**Step 4.2 — Reviewers**
+Record: `b4 am` attestation passed; Reviewed-by Johannes Berg; series
+signed DKIM/intel.com.
 
-### Step 5.3: TRACE CALLEES
-**Record:** Without fix: `dev_err`, `mutex_lock`, `list_del_init`,
-`drm_sched_stop`, fence reassignment loop, `drm_sched_start`. With fix:
-only `dma_fence_is_signaled()` then early return.
+**Step 4.3 — Bug report**
+Record: N/A — no external bug report or syzbot link.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** Userspace Mesa/OpenGL/Vulkan → DRM ioctl job submission →
-`pvr_queue_job_init/push` → drm_sched → `pvr_queue_run_job` → firmware →
-fence signal → (race) timeout worker. Reachable from normal graphics
-workloads on PowerVR/IMG hardware.
+**Step 4.4 — Series context**
+Record: 15-patch iwlwifi hardening series. This patch is independent;
+siblings already partially backported to this tree.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** Identical pattern in:
-- `panfrost_job_timedout()` — checks `job->done_fence`, returns
-  `NO_HANG` with comment "timeout has fired before free-job worker"
-- `etnaviv_sched_timedout_job()` — same comment and pattern
-- `v3d`, `xe` — also use `DRM_GPU_SCHED_STAT_NO_HANG`
+**Step 4.5 — Stable list**
+Record: No stable-list discussion found (UNVERIFIED beyond mbox search).
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** YES. `pvr_queue_timedout_job()` at line 824 in
-`drivers/gpu/drm/imagination/pvr_queue.c` lacks the fence check and
-proceeds directly to `dev_err("Job timeout")` and reset logic. Driver
-present since `eaf01ee5ba28b` (Nov 2023).
+**Step 5.1 — Key functions**
+Record: `iwl_parse_shared_mem_22000()`, `iwl_parse_shared_mem()`, called
+from `iwl_get_shared_mem_conf()`.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** Expected clean apply — 5 lines added at function entry,
-comment update. No conflicting recent changes to this function.
-`DRM_GPU_SCHED_STAT_NO_HANG` and
-`drm_sched_job_reinsert_on_false_timeout()` exist in this tree's
-scheduler.
+**Step 5.2 — Callers**
+Record:
+- `iwl_get_shared_mem_conf()` ← `iwl_mvm_config_fw()` in `mvm/fw.c`
+  (post-firmware-start)
+- `iwl_get_shared_mem_conf()` ← `iwl_mld_config_fw()` in `mld/fw.c`
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** No equivalent fix present. `git log --grep` found no "Don't
-timeout job" commit. Panfrost/etnaviv/v3d/xe already have this pattern;
-imagination does not.
+Every iwlwifi MVM/MLD device hits this during firmware configuration.
 
----
+**Step 5.3 — Callees**
+Record: `iwl_rx_packet_payload_len()`, `IWL_FW_CHECK`, `le32_to_cpu()`,
+`fw_has_capa()`, `iwl_fw_lookup_notif_ver()`.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 5.4 — Reachability**
+Record: Triggered on every iwlwifi bring-up when firmware responds to
+`SHARED_MEM_CFG`. Short/malformed firmware response (corrupt FW, FW bug,
+or hostile FW) can hit the buggy path. Not a direct syscall, but affects
+all iwlwifi users at probe/init.
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** `drivers/gpu/drm/imagination/` — DRM GPU driver
-(CONFIG_DRM_POWERVR). **IMPORTANT** for users with Imagination
-PowerVR/IMG GPUs on ARM64/RISC-V; not universal but critical for those
-platforms.
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** Actively developed — recent commits include fence dependency
-fixes, paired-job handling, and `drm_sched_entity_fini` double-call fix.
-Mature enough for real hardware deployments.
+**Step 5.5 — Similar patterns**
+Record: Same validation pattern added in `pnvm.c` (`eae7fdf7d4469`,
+already in this tree). `smem.c` already had a partial v4 size check but
+not early/base-path checks.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** Users with `CONFIG_DRM_POWERVR` on ARM64 or RISC-V systems
-with Imagination GPUs. Driver-specific but affects all GPU workloads on
-that hardware.
+**Step 6.1 — Buggy code present?**
+Record: **Yes.** Current `smem.c` reads `mem_cfg->lmac_num` and v2
+fields without upfront length validation; extended path lacks size
+check. Tree: `v6.18.44-1-g2736c32da98b9`.
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-**Record:** Job completes and fence is signaled, but drm_sched timeout
-fires before the free-job worker processes it. Can occur under IRQ
-latency, system load, or near-timeout job durations. Triggerable during
-normal rendering; no special privileges needed beyond GPU access.
+**Step 6.2 — Backport complications**
+Record: **Clean apply confirmed** — `git apply --check` on extracted
+patch 5 succeeds against current tree.
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** Without fix: spurious hang recovery — unnecessary
-`drm_sched_stop()`/`drm_sched_start()`, erroneous "Job timeout" log,
-potential `atomic_set(&queue->ctx->faulty, 1)` marking context
-permanently unusable (blocks all future job submission via
-`pvr_queue_job_init` returning `-EIO`). **Severity: HIGH** — can break
-GPU rendering until process/driver restart.
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-**Record:**
-- **Benefit:** HIGH for affected hardware — prevents spurious GPU resets
-  and permanent context faulting
-- **Risk:** VERY LOW — 5-line early return, proven pattern across
-  multiple DRM drivers
-- **Ratio:** Strongly favors backport
+**Step 6.3 — Related fixes already present?**
+Record: `1d49a42717bdc` (22000 LMAC count + v4 tail check) present.
+`eae7fdf7d4469` (pnvm validation) present. **This specific SMEM
+validation is absent.**
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem Context
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 7.1 — Subsystem / criticality**
+Record: `drivers/net/wireless/intel/iwlwifi` — **IMPORTANT** (widely
+deployed laptop/desktop WiFi; firmware init path).
 
-**FOR backporting:**
-- Fixes a real race causing spurious GPU hang recovery
-- Can permanently fault a GPU context (`ctx->faulty`), breaking all
-  subsequent rendering
-- Small, surgical, obviously correct fix
-- Identical pattern already in panfrost, etnaviv, v3d, xe in this tree
-- Bug present since imagination driver's initial scheduling code (2023)
-- Reviewed-by from IMG engineer
-- `DRM_GPU_SCHED_STAT_NO_HANG` infrastructure already in 6.18.43
-- Applies cleanly to this tree
+**Step 7.2 — Activity**
+Record: Actively maintained; multiple iwlwifi bounds-check fixes
+backported to this tree in recent history.
 
-**AGAINST backporting:**
-- Limited to Imagination GPU users (smaller population)
-- No explicit user bug report or syzbot finding in commit message
-- Part of a larger series (though this patch is standalone)
+---
 
-**UNRESOLVED:**
-- Full lore review thread inaccessible (Anubis bot protection)
-- Whether patch 1 of `context_reset-v2` series is also needed for stable
-  (this patch appears independent)
+## Phase 8: Impact and Risk Assessment
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — matches proven
-   panfrost/etnaviv pattern; Reviewed-by present
-2. Fixes a real bug affecting users? **PASS** — spurious timeout on
-   completed jobs
-3. Important issue? **PASS** — spurious GPU reset, context permanent
-   fault, rendering failure (HIGH)
-4. Small and contained? **PASS** — 5 lines, 1 file, 1 function
-5. No new features or APIs? **PASS** — uses existing
-   `DRM_GPU_SCHED_STAT_NO_HANG`
-6. Can apply to the local tree? **PASS** — buggy code present,
-   infrastructure exists, clean apply expected
+**Step 8.1 — Who is affected**
+Record: All users of Intel iwlwifi (MVM and MLD) with `CONFIG_IWLWIFI`.
 
-### Step 9.3: EXCEPTION CATEGORIES
-**Record:** None (not device ID, quirk, DT, build fix, or docs).
-Standard driver bug fix.
+**Step 8.2 — Trigger conditions**
+Record: Firmware returns undersized `SHARED_MEM_CFG` response. Uncommon
+in normal operation; plausible with buggy/corrupt firmware or during
+error recovery. Not trivially userspace-triggerable, but firmware is an
+attack surface.
 
-### Step 9.4: DECISION RATIONALE
+**Step 8.3 — Failure mode**
+Record: Out-of-bounds read past response buffer → kernel oops, info
+leak, or undefined behavior during WiFi init. **Severity: HIGH.**
 
-This commit fixes a well-understood race in the drm_sched timeout path
-that the imagination driver has had since its introduction. Without the
-fix, a completed job can trigger full hang-recovery logic including
-scheduler stop/start and potentially marking the GPU context as
-permanently faulty — a serious, user-visible failure for anyone running
-graphics on PowerVR/IMG hardware. The fix is minimal, follows an
-established pattern already present in four other DRM drivers in this
-tree, and applies cleanly to the 6.18.43 checkout where the buggy code
-is confirmed present.
+**Step 8.4 — Risk vs benefit**
+Record:
+- **Benefit:** HIGH — prevents OOB read on common init path; aligns with
+  already-backported series siblings.
+- **Risk:** LOW — 28-line change, defensive early returns, no API
+  change.
+- **Ratio:** Strongly favors backport.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Step 9.1 — Evidence summary**
+
+**FOR:**
+- Real OOB-read bug in firmware response parsing
+- Small, single-file, maintainer-reviewed fix
+- Buggy code confirmed in 6.18.44 tree
+- Applies cleanly
+- Standalone (no series dependencies)
+- Same iwlwifi hardening series already partially backported here
+- Consistent with `pnvm.c` validation already in tree
+- Affects all iwlwifi devices at firmware init
+
+**AGAINST:**
+- No user report or syzbot reproduction
+- Trigger requires abnormal firmware response (mitigated: consequences
+  are severe)
+- Slightly conservative minimum size for 22000 path (180 bytes vs
+  possibly smaller valid 1-LMAC response) — safe for spec-compliant
+  firmware
+
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct and tested? **PASS** — clear bounds checks;
+   Reviewed-by maintainer; series tested by multiple Tested-by on
+   sibling patches
+2. Fixes real bug affecting users? **PASS** — OOB read on iwlwifi init
+3. Important issue? **PASS** — crash / memory safety (HIGH)
+4. Small and contained? **PASS** — 1 file, ~28 lines
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — verified clean apply
+
+**Step 9.3 — Exception category**
+Record: N/A (standard bug fix, not device-ID/quirk/docs).
+
+**Step 9.4 — Decision rationale**
+This is a textbook stable candidate: a small, obviously correct bounds-
+check fix for firmware response parsing on a widely used driver, with
+the buggy code present in Linux 6.18.44 and no dependencies. Sibling
+patches from the same series are already in this tree; this one should
+follow.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body; identified preventive timeout
-  fix
-- [Phase 1] No Fixes:/Reported-by:/syzbot tags; Reviewed-by: Matt Coster
-  present
-- [Phase 2] Diff: +5 lines in `pvr_queue_timedout_job()`, early
-  `dma_fence_is_signaled` check
-- [Phase 2] Read `drm_sched_job_timedout()` — `NO_HANG` triggers
-  `drm_sched_job_reinsert_on_false_timeout()`
-- [Phase 2] Read scheduler doc: must NOT call `drm_sched_stop()` when
-  returning `NO_HANG`
-- [Phase 3] `git blame`: `pvr_queue_timedout_job` from `eaf01ee5ba28b`
-  (2023-11-22)
-- [Phase 3] `git merge-base --is-ancestor`: driver commit is ancestor of
-  HEAD
-- [Phase 3] `git log -20 -- pvr_queue.c`: no prior timeout-fence fix
-- [Phase 3] Author commits: `c88fdbf3da26e`, `902fd1026ca42` in
-  imagination driver
-- [Phase 4] `b4 dig -c`: failed (commit not in tree)
-- [Phase 4] `b4 shazam`: message not found on lore
-- [Phase 4] WebFetch lore.kernel.org: blocked by Anubis
-- [Phase 4] WebFetch patch.msgid.link: blocked by Anubis
-- [Phase 5] `pvr_queue_timedout_job` registered at
-  `pvr_queue_sched_ops.timedout_job` line 895
-- [Phase 5] `pvr_queue_run_job` returns `dma_fence_get(job->done_fence)`
-  as sched parent
-- [Phase 5] panfrost/etnaviv: identical `dma_fence_is_signaled` →
-  `NO_HANG` pattern confirmed
-- [Phase 6] `git describe HEAD`: v6.18.43
-- [Phase 6] Buggy code confirmed at lines 824-872 without fence check
-- [Phase 6] `DRM_GPU_SCHED_STAT_NO_HANG` exists in
-  `include/drm/gpu_scheduler.h`
-- [Phase 6] `drm_sched_job_reinsert_on_false_timeout` exists in
-  `sched_main.c`
-- [Phase 7] CONFIG_DRM_POWERVR depends on ARM64 or RISC-V 64-bit
-- [Phase 8] `pvr_context.h`: `faulty` flag makes context permanently
-  unusable
-- [Phase 8] `pvr_queue_job_init` line 1108: returns `-EIO` if
-  `ctx->faulty` is set
-- [Phase 8] Without fix: `pvr_queue_start` sets `ctx->faulty` for
-  unfinished pending jobs during reset
-
-**YES**Those background lookups are done and line up with the earlier
-analysis:
-
-- **Commit search / b4 dig:** The patch isn’t in this `v6.18.43` tree
-  yet, so `git log --grep` and `b4 dig -c` couldn’t resolve it by hash.
-- **Related history:** `pvr_queue_timedout_job()` dates to the original
-  imagination scheduling commit (`eaf01ee5ba28b`, Nov 2023); recent
-  nearby fixes are fence/dependency work, not this timeout race.
-- **Prior art:** `DRM_GPU_SCHED_STAT_NO_HANG` is already used the same
-  way in panfrost, xe, etnaviv, and v3d in this tree; imagination is the
-  outlier.
-- **Author context:** Brajesh Gupta has two other imagination fixes here
-  (`drm_sched_entity_fini` double-call, FW trace wait).
-
-That reinforces the earlier call: small, standalone fix for a real
-spurious-timeout bug on PowerVR/IMG hardware.
+- [Phase 1] Parsed subject, tags, body from provided commit message and
+  mbox patch 5/15
+- [Phase 1] Confirmed Reviewed-by Johannes Berg; no Fixes:/Reported-
+  by:/syzbot
+- [Phase 2] Read current `smem.c`; confirmed missing upfront validation
+  matches “before” side of diff
+- [Phase 2] Computed struct offsets: `offsetofend(lmac_smem[1])=180`,
+  `offsetof(rxfifo_addr)=68`, `sizeof(cfg_v2)=100`
+- [Phase 3] `git describe HEAD`: `v6.18.44-1-g2736c32da98b9`; Makefile
+  confirms 6.18.44
+- [Phase 3] `git blame smem.c`: parsers from `5d324e5159d9e`; partial
+  fix `1d49a42717bdc` present
+- [Phase 3] `git log -- drivers/net/wireless/intel/iwlwifi/`: confirmed
+  sibling backports (`eae7fdf7d4469`, `70a6de303c9b3`, `2d5dec517b539`,
+  `a076b0c457c71`); SMEM fix absent
+- [Phase 4] `b4 am` on message-id: found 15-patch series; patch 5 is
+  SMEM validation
+- [Phase 4] Read cover letter: series described as bugfixes
+- [Phase 4] No Cc: stable found in mbox (grep returned empty)
+- [Phase 5] `grep iwl_get_shared_mem_conf`: callers in `mvm/fw.c:1391`,
+  `mld/fw.c:459`
+- [Phase 5] Confirmed `IWL_FW_CHECK` and `iwl_rx_packet_payload_len`
+  exist in tree
+- [Phase 6] `git apply --check` on extracted patch 5: **succeeds**
+  (clean apply)
+- [Phase 6] Confirmed buggy code present; fix not yet applied
+- [Phase 8] Failure mode: OOB read at WiFi firmware init → HIGH severity
 
 **YES**
 
- drivers/gpu/drm/imagination/pvr_queue.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/smem.c | 28 ++++++++++++++++----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_queue.c b/drivers/gpu/drm/imagination/pvr_queue.c
-index bb5835ede6660..7497bca2e7e83 100644
---- a/drivers/gpu/drm/imagination/pvr_queue.c
-+++ b/drivers/gpu/drm/imagination/pvr_queue.c
-@@ -818,7 +818,9 @@ static void pvr_queue_start(struct pvr_queue *queue)
-  * the scheduler, and re-assign parent fences in the middle.
-  *
-  * Return:
-- *  * DRM_GPU_SCHED_STAT_RESET.
-+ *  *%DRM_GPU_SCHED_STAT_NO_HANG if the job fence has already been
-+ *   signaled, or
-+ *  *%DRM_GPU_SCHED_STAT_RESET otherwise.
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/smem.c b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
+index 344ddde85b189..20ed26a1bb00e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/smem.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/smem.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2021, 2025 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2021, 2025-2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
   */
- static enum drm_gpu_sched_stat
- pvr_queue_timedout_job(struct drm_sched_job *s_job)
-@@ -829,6 +831,9 @@ pvr_queue_timedout_job(struct drm_sched_job *s_job)
- 	struct pvr_job *job;
- 	u32 job_count = 0;
- 
-+	if (dma_fence_is_signaled(s_job->s_fence->parent))
-+		return DRM_GPU_SCHED_STAT_NO_HANG;
+@@ -14,9 +14,17 @@ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
+ {
+ 	struct iwl_shared_mem_cfg *mem_cfg = (void *)pkt->data;
+ 	int i, lmac;
+-	int lmac_num = le32_to_cpu(mem_cfg->lmac_num);
+-	u8 api_ver = iwl_fw_lookup_notif_ver(fwrt->fw, SYSTEM_GROUP,
+-					     SHARED_MEM_CFG_CMD, 0);
++	int lmac_num;
++	u8 api_ver;
 +
- 	dev_err(sched->dev, "Job timeout\n");
++	if (IWL_FW_CHECK(fwrt, iwl_rx_packet_payload_len(pkt) <
++			 offsetofend(struct iwl_shared_mem_cfg, lmac_smem[1]),
++			 "bad shared mem notification size\n"))
++		return;
++
++	lmac_num = le32_to_cpu(mem_cfg->lmac_num);
++	api_ver = iwl_fw_lookup_notif_ver(fwrt->fw, SYSTEM_GROUP,
++					  SHARED_MEM_CFG_CMD, 0);
  
- 	/* Before we stop the scheduler, make sure the queue is out of any list, so
+ 	/* Note: notification has 3 entries, but we only expect 2 */
+ 	if (IWL_FW_CHECK(fwrt, lmac_num > ARRAY_SIZE(fwrt->smem_cfg.lmac),
+@@ -30,7 +38,7 @@ static void iwl_parse_shared_mem_22000(struct iwl_fw_runtime *fwrt,
+ 
+ 	if (api_ver >= 4 &&
+ 	    !IWL_FW_CHECK(fwrt, iwl_rx_packet_payload_len(pkt) < sizeof(*mem_cfg),
+-			  "bad shared mem notification size\n")) {
++			  "bad shared mem notification size (v4)\n")) {
+ 		fwrt->smem_cfg.rxfifo2_control_size =
+ 			le32_to_cpu(mem_cfg->rxfifo2_control_size);
+ 	}
+@@ -53,6 +61,11 @@ static void iwl_parse_shared_mem(struct iwl_fw_runtime *fwrt,
+ 	struct iwl_shared_mem_cfg_v2 *mem_cfg = (void *)pkt->data;
+ 	int i;
+ 
++	if (IWL_FW_CHECK(fwrt, iwl_rx_packet_payload_len(pkt) <
++			 offsetof(struct iwl_shared_mem_cfg_v2, rxfifo_addr),
++			 "bad shared mem notification size\n"))
++		return;
++
+ 	fwrt->smem_cfg.num_lmacs = 1;
+ 
+ 	fwrt->smem_cfg.num_txfifo_entries = ARRAY_SIZE(mem_cfg->txfifo_size);
+@@ -67,6 +80,11 @@ static void iwl_parse_shared_mem(struct iwl_fw_runtime *fwrt,
+ 	/* new API has more data, from rxfifo_addr field and on */
+ 	if (fw_has_capa(&fwrt->fw->ucode_capa,
+ 			IWL_UCODE_TLV_CAPA_EXTEND_SHARED_MEM_CFG)) {
++		if (IWL_FW_CHECK(fwrt, iwl_rx_packet_payload_len(pkt) <
++				 sizeof(*mem_cfg),
++				 "bad shared mem notification size (extend)\n"))
++			return;
++
+ 		BUILD_BUG_ON(sizeof(fwrt->smem_cfg.internal_txfifo_size) !=
+ 			     sizeof(mem_cfg->internal_txfifo_size));
+ 
 -- 
 2.53.0
 
