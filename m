@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F67747F764;
-	Mon, 31 Aug 2026 13:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E0E47F2FA;
+	Mon, 31 Aug 2026 13:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184761; cv=none; b=TzLz4KxT2iD5Ch2Twt9ovmSXiHsWfhS0cobs+MZ2Dq4xSwO1xiqwqlsWkdz9dVSJEZv5ScNQU5a8upJdwmj49PlAOpS4X/tf3nBMpuFP7HmaRRrMveDGdyG5qogdAZdx4r4xXIJHvHe1NictqKaicruWvDNDreYzaeKftnOnYkY=
+	t=1788184757; cv=none; b=twicCu25wUKVfLppq1W8NrjBLht0sRIO4tI6OHHs9cQjHmPxTzzyLkuh34EVTTxQKtlZzzIRmFa6DqSaoOpJpWZg0QmfjeLBeZpfaFl8rp96VQf6JMpkxR3+rhyP+bBy8CLVZzl5mCKVC7ell7oOuPnWUsqDTMZE1Ysr/0jrdvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184761; c=relaxed/simple;
-	bh=Mjl6Pi0GbyhLYSRKTjrlXnBhx8ln03DbKh7kENS65hc=;
+	s=arc-20240116; t=1788184757; c=relaxed/simple;
+	bh=CC6CR4uQRhUK3aooqfWTq/jSkIJKQaW68q2+t5ABsgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWL5k7T6M8Y9bVAxuIyJ5pD/Lhf7SrsfWldtl9UmuqcYXAoi0cqn6VpA4CQdHL4ZH3xW3u/YRt4bEoYBQ4Ys50GwdJlN6+9oUoIpi/VFAcA8oisxCfQ0c9stpni2MkyhREW2VqM0rXBTbbDkzj13gY7vLsxQEr6DjIxsQMVtyDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYYRoiLM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R83QcNW0i5Xh4N3PV/jYisXAqKWPX8wGyQwGL/et7yvcnSW2gtaKyh8i2T1p8TaoSAbv7CwnkolsGOMVfzXu2zZ6ZpcToYwWh1LQ6jw8arMUhRPpcwXqhqDFouPeJ7ci77Pg6COI7BR+pi9n7XLO2GbgWOnVsO6c6rqIsZ7sGXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqcNa49g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYYRoiLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB15B1F000E9;
-	Mon, 31 Aug 2026 13:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqcNa49g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3581F000E9;
+	Mon, 31 Aug 2026 13:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184759;
-	bh=NLTqwG8LZoSV3dBYY+bGsOVZZdwQkA6HyFHEXX1DhG0=;
+	s=korg; t=1788184756;
+	bh=vLtZDB0J1xxr1ygrO7eygqw7C2Mm7LuCCB5leXCVh2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYYRoiLMMW0NIpEexZDE7Mq8UmpC9zqWAEBFRJMB7U0+tSJZYt19040FJPapuOuCH
-	 waJ0q6kZDYN9w1E6EW4h31DrfQrLYd2LNs+x+KHV8VddYc1r3BVWgr+cfEsTtgDV6+
-	 l2fTJrSSsYuF2aM/0ABDu5H+evDGCnp12grjCgPk=
+	b=tqcNa49gaZVabRntVEfRoufaD9YJrSzVDbLfwlRibAJh5VgdQLb+YKRJzWxAPz1sY
+	 t486YlHj5nKhQFWs/bjI+rmG62cB4L0iVYs8ZZ40TjYXujPzNwz5WMgnrpFNNHknJX
+	 Eb9ZorZYljILY8yHOdsR1HNoSohyfqicJVIE5N5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 29/92] ASoC: nau8821: Cancel pending work before suspend
-Date: Mon, 31 Aug 2026 15:34:27 +0200
-Message-ID: <20260831133401.178472160@linuxfoundation.org>
+Subject: [PATCH 6.1 20/92] can: j1939: make j1939_sk_bind() fail if device is no longer registered
+Date: Mon, 31 Aug 2026 15:34:18 +0200
+Message-ID: <20260831133400.630348322@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,44 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 7786b10688ac0ebeaff655923cbb2c7d34a98995 ]
+[ Upstream commit 46cea215dc9444ec32a76b1b6a9cb809e17b64d5 ]
 
-A jack detection work that is unscheduled or in progress while executing
-the suspend handler could trigger a race condition.
+There is a theoretical race window in j1939_sk_netdev_event_unregister()
+where two j1939_sk_bind() calls jump in between read_unlock_bh() and
+lock_sock().
 
-Ensure state consistency by cancelling any pending work or wait for its
-execution to complete before processing the suspend.  Since driver
-(re)enables both insert and eject interrupts on resume, there is no risk
-to miss the related jack events.  Therefore, flush_delayed_work() is not
-required here.
+The assumption jsk->priv == priv can fail if the first j1939_sk_bind()
+call once made jsk->priv == NULL due to failed j1939_local_ecu_get() call
+and the second j1939_sk_bind() call again made jsk->priv != NULL due to
+successful j1939_local_ecu_get() call.
 
-Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
-Fixes: ee70bacef1c6 ("ASoC: nau8821: Avoid unnecessary blocking in IRQ handler")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20251231-nau8821-cleanup-v1-3-6b0b76cbbb64@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since the socket lock is held by both j1939_sk_netdev_event_unregister()
+and j1939_sk_bind(), checking ndev->reg_state with the socket lock held can
+reliably make the second j1939_sk_bind() call fail (and close this race
+window).
+
+Fixes: 7fcbe5b2c6a4 ("can: j1939: implement NETDEV_UNREGISTER notification handler")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/5732921e-247e-4957-a364-da74bd7031d7@I-love.SAKURA.ne.jp
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8821.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/can/j1939/socket.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index 8c015d114cac3..bb4e594910a90 100644
---- a/sound/soc/codecs/nau8821.c
-+++ b/sound/soc/codecs/nau8821.c
-@@ -1489,6 +1489,10 @@ static int __maybe_unused nau8821_suspend(struct snd_soc_component *component)
+diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
+index 2c15614ea7dde..1b0086198ba36 100644
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -481,6 +481,12 @@ static int j1939_sk_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 			goto out_release_sock;
+ 		}
  
- 	if (nau8821->irq)
- 		disable_irq(nau8821->irq);
++		if (ndev->reg_state != NETREG_REGISTERED) {
++			dev_put(ndev);
++			ret = -ENODEV;
++			goto out_release_sock;
++		}
 +
-+	if (nau8821->jdet_active)
-+		cancel_delayed_work_sync(&nau8821->jdet_work);
-+
- 	snd_soc_component_force_bias_level(component, SND_SOC_BIAS_OFF);
- 	/* Power down codec power; don't support button wakeup */
- 	snd_soc_component_disable_pin(component, "MICBIAS");
+ 		can_ml = can_get_ml_priv(ndev);
+ 		if (!can_ml) {
+ 			dev_put(ndev);
 -- 
 2.53.0
 
