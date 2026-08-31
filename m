@@ -1,155 +1,284 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB20C463B7B;
-	Mon, 31 Aug 2026 13:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E556C54198F;
+	Mon, 31 Aug 2026 13:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183956; cv=none; b=ZQzgd9lG8SEUf739dgOw8YPun9bkU/5+G2ih/UzFhKOlbeUI/2wMXFsYGCHVTGvlvcJ0TgBc+/4P6PE7DQoVfP7HH81iEIE9vH2KWwvG1hfZLMsEtnZkvTk2Tr+Zi02RECAV9KhLyzhZlaDYJdUxIZsw2lMpKi4qRXJdz/qHFEg=
+	t=1788183958; cv=none; b=a8YeStKulc6okR7eoAjvIrRFEgNkbtnL7JTeHL3usSJQM/vnTgGhX3HGPEELrlnYrnqqTuSgWmJF0+yNfqNioeuijUz8d591VNbhTaLjGs4gL3JgPGzYWdcAjbsv+dipY5i5PKGhKgzQQ91ngsLHsdq2EkjHawAu818ptT2jZ+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183956; c=relaxed/simple;
-	bh=+sgNPuX+cVBpnmZJO8TTtdvLGhD7iEDVMdnJaXblJcw=;
+	s=arc-20240116; t=1788183958; c=relaxed/simple;
+	bh=0rQXtfDgqv77DDVVwmCcFSxT33BiMejZBwipHRAcwpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HNF4a5hAMp9cNZnyme2zS223yFUFF+k8MRepc1Hqw8YWB/ZGuaAFdnXso557UHxY1KcCN/2T2oE+C0YjBKvWErAu1WTAkPgKBzBo86+sleX8FvfVO3+lFIhxGbxP8hm8cw8GUYlEdgIGmBD3vGwrBWQIYk50Nk2Nzfv9g0wjk1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b8GTqxb+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TnGBACDEWNuF7h87lT75Mgexab/wb0mFajXrCdkwyP3PWq46khIDffABMMLPP/dE3zC2h+dqKROKxzojTQ56kEEMQaWdIgxY9tOKNjsVcaeNKV2mFbut35XNWAFVwf9/G4lXz/KAiVD4ANYP0GDFTPvs0e9lyqt3KmhrHB52J7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUxq38QX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b8GTqxb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767331F00ACF;
-	Mon, 31 Aug 2026 13:45:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183954;
-	bh=79SnfAKr0WCbVfxiI6EYmarFRhbBXTB4QyqCZJq5fa8=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUxq38QX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430261F00A3D;
+	Mon, 31 Aug 2026 13:45:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183956;
+	bh=FjFK7+vuR0eQ6o+3jT8Kztrzvt5rcNTGDjAS4T2cLCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b8GTqxb+/FDvS2T1JvLmRW8aO57/fvT6/cWwQyc+p93ETjtElHGIHms6NKPCX2BC8
-	 NcL7SVqjtP+xu36g0ihf3wMouvE5bonYXWaOqsw+yhqQfHpxWvTtYKhxt8N2V9b12P
-	 oAopk0HamywzrO0gMo95NQf96jDR36IT1Zdt11n/AuUTpEBQHlk7tdxFydpxlJeLK+
-	 78OFmbgOaJtRIxkupp68rW5ilcsFImwyOIG3Q+yrHeYP97d/cneWKqm9DaftCcTgAd
-	 zWWSX0MTbTsiuz98khLrDOdzcoB4GbSOgyl43ctmCVwN3BPl+drXn9cnat9gCNG2FH
-	 2q2G+BNTYW/Gw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Frank.Li@nxp.com,
-	linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] mailbox: imx: Use devm_pm_runtime_enable()
-Date: Mon, 31 Aug 2026 09:27:10 -0400
-Message-ID: <20260831133314.4125787-402-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=iUxq38QXcnkzYU5vW9fmTgK00N25m/dd/519XYXCZKRDTyGvocXHZxDzjwFPvWbl/
+	 68UCaHmuwzYD9hob+1+CELLXGgZpnn96fGQWni4zmG63dLUWmeZDOI+KSso1P403lz
+	 2c1Xft/wxjk1v/LcowhK8cSiojCe3GCm4x6feen8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 23/83] io_uring: defer eventfd signaling when queued from a wakeup handler
+Date: Mon, 31 Aug 2026 15:33:59 +0200
+Message-ID: <20260831133400.445085302@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 1f602619e408b6e9655ee76656a2a5ab6e89c5e4 ]
+------------------
 
-sashiko complained about early usage of the device while probe isn't
-completed. This can be mitigated by delaying the pm_runtime_enable()
-into the removal path instead doing it early. This ensures that in an
-error case the device is removed (and imx_mu_shutdown()) before
-pm_runtime_disable() so we don't have to do this manually.
+From: Jens Axboe <axboe@kernel.dk>
 
-For the order to work, lets move devm_mbox_controller_register() until
-after the pm-runtime part. So the reverse order will be mbox-controller
-removal followed by disabling pm runtime.
+[ Upstream commit cd305ee3633a45fcf5f3a5d83f99f3cb77d87b6e ]
 
-Use devm_pm_runtime_enable(), remove manual pm_runtime_disable()
-invocations and move the pm_runtime handling in probe before
-devm_mbox_controller_register().
+io_req_local_work_add() signals the CQ ring eventfd inline when it is the
+one to push the first entry onto ->work_list. For DEFER_TASKRUN rings that
+add is frequently done from a waitqueue wakeup handler, where an
+arbitrary waitqueue lock is held.
 
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+eventfd_signal_mask() only refuses to recurse when current->in_eventfd
+is set, but that bit is set by eventfd_signal_mask() itself. If the wake
+chain starts somewhere else, signal goes out inline and can feed back
+into epoll.
+
+Add IOU_F_TWQ_IN_WAKE, set it on the task_work add done from the three
+waitqueue callbacks, and use it to force io_eventfd_signal() down the
+existing call_rcu_hurry() deferral instead of signaling inline.
+
+Fixes: 21a091b970cd ("io_uring: signal registered eventfd to process deferred task work")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20260813133843.2933127-1-4ncienth@gmail.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ Relocated the `io_req_local_work_add()` hunk into io_uring.c and kept 6.18's `ctx->has_evfd` and open-coded `io_pollfree_wake()` context due to missing tw.c split and `io_poll_remove_waitq()`. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ include/linux/io_uring_types.h |    8 ++++++++
+ io_uring/eventfd.c             |    8 ++++----
+ io_uring/eventfd.h             |    2 +-
+ io_uring/futex.c               |    4 ++--
+ io_uring/io_uring.c            |    4 ++--
+ io_uring/poll.c                |   23 ++++++++++++-----------
+ io_uring/waitid.c              |    2 +-
+ 7 files changed, 30 insertions(+), 21 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background history check finished successfully. It confirmed:
-
-- The imx mailbox PM/mbox ordering issue dates to **676f23eab75adb**
-  (Apr 2020, “Support runtime PM”).
-- The same class of fix is already in **6.18.44** via **a8bd68e4329f9**
-  (mtk-cmdq devm PM/mbox reorder), merged with mailbox-v6.11.
-
-That supports the earlier **YES** verdict: the imx patch fixes the same
-teardown ordering bug for i.MX MU devices in this tree.
-
- drivers/mailbox/imx-mailbox.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index a80cb2c9df6ee..a45c3e6d76575 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -936,38 +936,36 @@ static int imx_mu_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, priv);
- 
--	ret = devm_mbox_controller_register(dev, &priv->mbox);
--	if (ret)
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret < 0)
- 		goto disable_clk;
- 
--	of_platform_populate(dev->of_node, NULL, NULL, dev);
--
--	pm_runtime_enable(dev);
--
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
--		goto disable_runtime_pm;
-+		goto disable_clk;
- 
- 	ret = pm_runtime_put_sync(dev);
- 	if (ret < 0)
--		goto disable_runtime_pm;
-+		goto disable_clk;
- 
- 	clk_disable_unprepare(priv->clk);
- 
-+	ret = devm_mbox_controller_register(dev, &priv->mbox);
-+	if (ret)
-+		goto err_out;
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -17,6 +17,14 @@ enum {
+ 	 * It's also ignored unless IORING_SETUP_DEFER_TASKRUN is set.
+ 	 */
+ 	IOU_F_TWQ_LAZY_WAKE			= 1,
 +
-+	of_platform_populate(dev->of_node, NULL, NULL, dev);
-+
- 	return 0;
++	/*
++	 * Set when task_work is queued from a waitqueue wakeup handler, where
++	 * an arbitrary provider waitqueue lock is held. Signaling the CQ ring
++	 * eventfd inline from there can recurse back into that lock through
++	 * epoll, so the eventfd signal must be deferred.
++	 */
++	IOU_F_TWQ_IN_WAKE			= 2,
+ };
  
--disable_runtime_pm:
--	pm_runtime_disable(dev);
- disable_clk:
- 	clk_disable_unprepare(priv->clk);
-+err_out:
- 	return ret;
- }
- 
- static void imx_mu_remove(struct platform_device *pdev)
+ enum io_uring_cmd_flags {
+--- a/io_uring/eventfd.c
++++ b/io_uring/eventfd.c
+@@ -50,9 +50,9 @@ static void io_eventfd_do_signal(struct
+ /*
+  * Returns true if the caller should put the ev_fd reference, false if not.
+  */
+-static bool __io_eventfd_signal(struct io_ev_fd *ev_fd)
++static bool __io_eventfd_signal(struct io_ev_fd *ev_fd, bool defer)
  {
--	struct imx_mu_priv *priv = platform_get_drvdata(pdev);
--
--	pm_runtime_disable(priv->dev);
+-	if (eventfd_signal_allowed()) {
++	if (!defer && eventfd_signal_allowed()) {
+ 		eventfd_signal_mask(ev_fd->cq_ev_fd, EPOLL_URING_WAKE);
+ 		return true;
+ 	}
+@@ -72,7 +72,7 @@ static bool io_eventfd_trigger(struct io
+ 	return !ev_fd->eventfd_async || io_wq_current_is_worker();
  }
  
- static const struct imx_mu_dcfg imx_mu_cfg_imx6sx = {
--- 
-2.53.0
+-void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event)
++void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event, bool defer)
+ {
+ 	bool skip = false;
+ 	struct io_ev_fd *ev_fd;
+@@ -112,7 +112,7 @@ void io_eventfd_signal(struct io_ring_ct
+ 		spin_unlock(&ctx->completion_lock);
+ 	}
+ 
+-	if (skip || __io_eventfd_signal(ev_fd))
++	if (skip || __io_eventfd_signal(ev_fd, defer))
+ 		io_eventfd_put(ev_fd);
+ }
+ 
+--- a/io_uring/eventfd.h
++++ b/io_uring/eventfd.h
+@@ -4,4 +4,4 @@ int io_eventfd_register(struct io_ring_c
+ 			unsigned int eventfd_async);
+ int io_eventfd_unregister(struct io_ring_ctx *ctx);
+ 
+-void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event);
++void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event, bool defer);
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -174,7 +174,7 @@ static void io_futex_wakev_fn(struct wak
+ 
+ 	io_req_set_res(req, 0, 0);
+ 	req->io_task_work.func = io_futexv_complete;
+-	io_req_task_work_add(req);
++	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ }
+ 
+ int io_futexv_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+@@ -230,7 +230,7 @@ static void io_futex_wake_fn(struct wake
+ 
+ 	io_req_set_res(req, 0, 0);
+ 	req->io_task_work.func = io_futex_complete;
+-	io_req_task_work_add(req);
++	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ }
+ 
+ int io_futexv_wait(struct io_kiocb *req, unsigned int issue_flags)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -578,7 +578,7 @@ void __io_commit_cqring_flush(struct io_
+ 	if (ctx->off_timeout_used)
+ 		io_flush_timeouts(ctx);
+ 	if (ctx->has_evfd)
+-		io_eventfd_signal(ctx, true);
++		io_eventfd_signal(ctx, true, false);
+ }
+ 
+ static inline void __io_cq_lock(struct io_ring_ctx *ctx)
+@@ -1312,7 +1312,7 @@ static void io_req_local_work_add(struct
+ 	if (!head) {
+ 		io_ctx_mark_taskrun(ctx);
+ 		if (ctx->has_evfd)
+-			io_eventfd_signal(ctx, false);
++			io_eventfd_signal(ctx, false, flags & IOU_F_TWQ_IN_WAKE);
+ 	}
+ 
+ 	nr_wait = atomic_read(&ctx->cq_wait_nr);
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -190,9 +190,9 @@ enum {
+ 	IOU_POLL_REQUEUE = 4,
+ };
+ 
+-static void __io_poll_execute(struct io_kiocb *req, int mask)
++static void __io_poll_execute(struct io_kiocb *req, int mask, unsigned tw_flags)
+ {
+-	unsigned flags = 0;
++	unsigned flags = tw_flags;
+ 
+ 	io_req_set_res(req, mask, 0);
+ 	req->io_task_work.func = io_poll_task_func;
+@@ -200,14 +200,15 @@ static void __io_poll_execute(struct io_
+ 	trace_io_uring_task_add(req, mask);
+ 
+ 	if (!(req->flags & REQ_F_POLL_NO_LAZY))
+-		flags = IOU_F_TWQ_LAZY_WAKE;
++		flags |= IOU_F_TWQ_LAZY_WAKE;
+ 	__io_req_task_work_add(req, flags);
+ }
+ 
+-static inline void io_poll_execute(struct io_kiocb *req, int res)
++static inline void io_poll_execute(struct io_kiocb *req, int res,
++				   unsigned tw_flags)
+ {
+ 	if (io_poll_get_ownership(req))
+-		__io_poll_execute(req, res);
++		__io_poll_execute(req, res, tw_flags);
+ }
+ 
+ /*
+@@ -323,7 +324,7 @@ void io_poll_task_func(struct io_kiocb *
+ 	if (ret == IOU_POLL_NO_ACTION) {
+ 		return;
+ 	} else if (ret == IOU_POLL_REQUEUE) {
+-		__io_poll_execute(req, 0);
++		__io_poll_execute(req, 0, 0);
+ 		return;
+ 	}
+ 	io_poll_remove_entries(req);
+@@ -362,7 +363,7 @@ static void io_poll_cancel_req(struct io
+ {
+ 	io_poll_mark_cancelled(req);
+ 	/* kick tw, which should complete the request */
+-	io_poll_execute(req, 0);
++	io_poll_execute(req, 0, 0);
+ }
+ 
+ #define IO_ASYNC_POLL_COMMON	(EPOLLONESHOT | EPOLLPRI)
+@@ -371,7 +372,7 @@ static __cold int io_pollfree_wake(struc
+ {
+ 	io_poll_mark_cancelled(req);
+ 	/* we have to kick tw in case it's not already */
+-	io_poll_execute(req, 0);
++	io_poll_execute(req, 0, IOU_F_TWQ_IN_WAKE);
+ 
+ 	/*
+ 	 * If the waitqueue is being freed early but someone is already
+@@ -426,7 +427,7 @@ static int io_poll_wake(struct wait_queu
+ 			else
+ 				req->flags &= ~REQ_F_SINGLE_POLL;
+ 		}
+-		__io_poll_execute(req, mask);
++		__io_poll_execute(req, mask, IOU_F_TWQ_IN_WAKE);
+ 	}
+ 	return 1;
+ }
+@@ -614,7 +615,7 @@ static int __io_arm_poll_handler(struct
+ 
+ 	if (mask && (poll->events & EPOLLET) &&
+ 	    io_poll_can_finish_inline(req, ipt)) {
+-		__io_poll_execute(req, mask);
++		__io_poll_execute(req, mask, 0);
+ 		return 0;
+ 	}
+ 	io_napi_add(req);
+@@ -625,7 +626,7 @@ static int __io_arm_poll_handler(struct
+ 		 * poll was waken up, queue up a tw, it'll deal with it.
+ 		 */
+ 		if (atomic_cmpxchg(&req->poll_refs, 1, 0) != 1)
+-			__io_poll_execute(req, 0);
++			__io_poll_execute(req, 0, 0);
+ 	}
+ 	return 0;
+ }
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -237,7 +237,7 @@ static int io_waitid_wait(struct wait_qu
+ 		return 1;
+ 
+ 	req->io_task_work.func = io_waitid_cb;
+-	io_req_task_work_add(req);
++	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ 	return 1;
+ }
+ 
+
 
