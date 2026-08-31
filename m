@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC9147D952;
-	Mon, 31 Aug 2026 14:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA6449502C;
+	Mon, 31 Aug 2026 14:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185221; cv=none; b=S2nxmsTuzzCV5Bx4F9msAsREp4Rkm1fqTOsKUP5Cr4PCcQK3UHd6gFaCYKWKLhW5D+gpQtfekw8GHo2ipLiD9lhM0JKr4I+M9OV20+oXsjAbgmhF/ve1DeNLaDUIQ+MrQb62i+TFztA1K64Kz++gpeImW62k5O7idHIQD9/PUAw=
+	t=1788185211; cv=none; b=u8+pBL/R+s/TtyfTFKmK7u5eR5miOKbLpkrPfI6UkaGxsh6RSOEXMsQ8jKjCCK8hmlNoGSOKhcAkFrtGKZWN7/0ShH6gCZUvgn+6RGdiP/+qL2zefu4GwFDwL+qyWiA7G4EmQHxPIohcIyVa+cVvjFl6BcsYhtXh3TDzqeV1aYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185221; c=relaxed/simple;
-	bh=daF6jyXtz4flAk9NaNxqek24hbAiA7THprxTTGs9FiE=;
+	s=arc-20240116; t=1788185211; c=relaxed/simple;
+	bh=ITEL/KLiSr7SnATK3Jzg0sgXEXXau/CJQDNhN4uvvrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FweUWqJF0a9DkVwvmeu7MbiWZOVPvWRbsTpfz6Vi+K6jtDrIwbfZTu9HnKXqpCIeaOZHGK2qYirlT/RHm65dKkUe4zEK3sG5RshA1nQXrO0FjooSLgtea+rqB1Fqkxq45vKY9CJnxsX5Q1h6dNXWOMYhG4Nkr3VVHDwNli/rOWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0vz4aSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G3s4cd2zhdA8GcILuxROpnVL2MkmGXZ70TdnyV2KTQZUV/nUvbF8kKmFCt/zXOJOUetALFTCprOunXSacqgQCw38+1L0nBeDiYGSPzy8/WIytxMA9rI1Swytb4owsqtg4rfQD4eyryf5Cs0G02lV4niKaY+Z5NiSAGKbuc5BD+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTZK1WEa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0vz4aSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C478C1F000E9;
-	Mon, 31 Aug 2026 14:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTZK1WEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA651F000E9;
+	Mon, 31 Aug 2026 14:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185220;
-	bh=IZpSY2y4MqFJFFEDOSSlUE3rxwOG6LbD+ClX21VhA2s=;
+	s=korg; t=1788185208;
+	bh=cFxhhT2XjK7Gy2RuOvJao1ZKeaq/h/yzAi1hyN74gcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V0vz4aSiy/n0JPpKqnX4OwWNXDOaDOOGZVqNJ3PfLSaDVAXMGEQ57g/hDDH8/cCKG
-	 YYkEFOAZVXTTuxu6FKuy9zpV5dQY+bzwlixuBFwpjI5Si5hKcPioDU03v+QYwcZfPT
-	 hj1z9iJoe0G9n5dvHlgn1/vAa0INBB8OD6hzjgrM=
+	b=iTZK1WEaQ4h6FQNAZIRSduzOAQHy2wqALHuJGasXHhKa3yi+A3c+eR13hTcK9DPn0
+	 XCLTQxveBf97ZRWEm+yj4AQVADwiEar9NtyTsukhBBgXEyjsYRBegCkIrWbtucLiAw
+	 KMLQQ41JI9aznSIUn+FJPqRBNCNPlrhbZZ/pTe0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>
-Subject: [PATCH 5.10 25/43] accessibility: speakup: unregister tty ldisc on later init failures
-Date: Mon, 31 Aug 2026 15:35:33 +0200
-Message-ID: <20260831133359.713207504@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 21/43] nfc: nci: add data_len bound checks to activation parameter extractors
+Date: Mon, 31 Aug 2026 15:35:29 +0200
+Message-ID: <20260831133359.478089679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -50,37 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit a76acbaec9b8fd74413646984d2e3626d0543e39 upstream.
+[ Upstream commit 0428fa2c22e2ba0cff766d3b80d461e149102045 ]
 
-The ldisc registration is intentionally non-fatal, since some synth
-drivers do not use tty/ldisc.  However, once speakup_init() continues
-past the registration point and later fails, the init unwind path should
-mirror speakup_exit() and call spk_ttyio_unregister_ldisc().
+nci_extract_activation_params_iso_dep() and
+nci_extract_activation_params_nfc_dep() read an inner length byte from
+the NCI RF_INTF_ACTIVATED_NTF payload and use it to memcpy() into fixed
+kernel buffers, but neither function receives the caller-validated
+activation_params_len.  A crafted NCI notification with
+activation_params_len=1 and an inner length byte of up to 20 (NFC-A) or
+50 (NFC-B) causes memcpy() to read that many bytes past the one valid
+byte in the activation params region -- a slab out-of-bounds read of
+kernel memory adjacent to the NCI skb.
 
-Add the missing unregister call to the error path after synth_release(),
-matching the normal module exit cleanup order.
+The sibling nci_extract_rf_params_*() family was given equivalent
+protection by commit 571dcbeb8e63 ("net: nfc: nci: Fix parameter
+validation for packet data"), but the two activation parameter
+extractors were not updated at that time.
 
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Fixes: e23a9b439ce9 ("staging: speakup: safely register and unregister ldisc")
+Add a data_len parameter to both functions, guard against an empty
+region before consuming the inner length byte, decrement the remaining
+count after consuming it, and clamp the copy length to what is actually
+available.  Update both call sites to pass ntf.activation_params_len,
+which is already validated against the skb at ntf.c:801.
+
+Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260531230804.254962-16-samuel.thibault@ens-lyon.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-6d52d8b0-v3-1-e26221f8826d@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accessibility/speakup/main.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/nfc/nci/ntf.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
---- a/drivers/accessibility/speakup/main.c
-+++ b/drivers/accessibility/speakup/main.c
-@@ -2432,6 +2432,7 @@ error_kbdnotifier:
- 	mutex_lock(&spk_mutex);
- 	synth_release();
- 	mutex_unlock(&spk_mutex);
-+	spk_ttyio_unregister_ldisc();
- 	speakup_kobj_exit();
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -371,15 +371,20 @@ static void nci_rf_discover_ntf_packet(s
+ }
  
- error_kobjects:
+ static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
+-			struct nci_rf_intf_activated_ntf *ntf, __u8 *data)
++			struct nci_rf_intf_activated_ntf *ntf, __u8 *data,
++			__u8 data_len)
+ {
+ 	struct activation_params_nfca_poll_iso_dep *nfca_poll;
+ 	struct activation_params_nfcb_poll_iso_dep *nfcb_poll;
+ 
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
+ 		nfca_poll->rats_res_len = min_t(__u8, *data++, 20);
++		data_len--;
++		nfca_poll->rats_res_len = min_t(__u8, nfca_poll->rats_res_len, data_len);
+ 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
+ 		if (nfca_poll->rats_res_len > 0) {
+ 			memcpy(nfca_poll->rats_res,
+@@ -388,8 +393,12 @@ static int nci_extract_activation_params
+ 		break;
+ 
+ 	case NCI_NFC_B_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
+ 		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
++		data_len--;
++		nfcb_poll->attrib_res_len = min_t(__u8, nfcb_poll->attrib_res_len, data_len);
+ 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
+ 		if (nfcb_poll->attrib_res_len > 0) {
+ 			memcpy(nfcb_poll->attrib_res,
+@@ -407,7 +416,8 @@ static int nci_extract_activation_params
+ }
+ 
+ static int nci_extract_activation_params_nfc_dep(struct nci_dev *ndev,
+-			struct nci_rf_intf_activated_ntf *ntf, __u8 *data)
++			struct nci_rf_intf_activated_ntf *ntf, __u8 *data,
++			__u8 data_len)
+ {
+ 	struct activation_params_poll_nfc_dep *poll;
+ 	struct activation_params_listen_nfc_dep *listen;
+@@ -415,9 +425,13 @@ static int nci_extract_activation_params
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
+ 	case NCI_NFC_F_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		poll = &ntf->activation_params.poll_nfc_dep;
+ 		poll->atr_res_len = min_t(__u8, *data++,
+ 					  NFC_ATR_RES_MAXSIZE - 2);
++		data_len--;
++		poll->atr_res_len = min_t(__u8, poll->atr_res_len, data_len);
+ 		pr_debug("atr_res_len %d\n", poll->atr_res_len);
+ 		if (poll->atr_res_len > 0)
+ 			memcpy(poll->atr_res, data, poll->atr_res_len);
+@@ -425,9 +439,13 @@ static int nci_extract_activation_params
+ 
+ 	case NCI_NFC_A_PASSIVE_LISTEN_MODE:
+ 	case NCI_NFC_F_PASSIVE_LISTEN_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		listen = &ntf->activation_params.listen_nfc_dep;
+ 		listen->atr_req_len = min_t(__u8, *data++,
+ 					    NFC_ATR_REQ_MAXSIZE - 2);
++		data_len--;
++		listen->atr_req_len = min_t(__u8, listen->atr_req_len, data_len);
+ 		pr_debug("atr_req_len %d\n", listen->atr_req_len);
+ 		if (listen->atr_req_len > 0)
+ 			memcpy(listen->atr_req, data, listen->atr_req_len);
+@@ -603,12 +621,14 @@ static void nci_rf_intf_activated_ntf_pa
+ 		switch (ntf.rf_interface) {
+ 		case NCI_RF_INTERFACE_ISO_DEP:
+ 			err = nci_extract_activation_params_iso_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_NFC_DEP:
+ 			err = nci_extract_activation_params_nfc_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_FRAME:
 
 
