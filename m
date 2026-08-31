@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3EF47F76A;
-	Mon, 31 Aug 2026 13:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F82F47DD5C;
+	Mon, 31 Aug 2026 13:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184783; cv=none; b=mYsmrehBQ93OsNpwqHheUb91ODUB4N44tW7GlS2f3gFyb8mwao0BbNRrcP/TTZ+Q19321p+eTqtdGWWZ5DdFh7YY9YF2du4wqdoDjLlAySC04TLx+Up+yfD33XvvOu0d3VX2buBFS22yUzqCcR+E/kMmJF1GoKga4yxuRsEXV1A=
+	t=1788184777; cv=none; b=VhWYY2/gxs59NNP9knxwD3yu5g8qVf14b6BZDzIDU1xkz3mJrQ8/FDRpydgCsu18F2WRBuoYQIlfqM80iqAB1Y3/qmDET9cHtcrxHayBhSpVhQLeVGqDKlU4RZ8CMJzp6aFCgDS0EP8hya7yy2OI8HoTfqRHnbuSdWvXpB1Yyl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184783; c=relaxed/simple;
-	bh=1yBhCj7io3QCjHzKKpK7qyxyDKkuDO9YvWV9iH0eQZo=;
+	s=arc-20240116; t=1788184777; c=relaxed/simple;
+	bh=9aZwEiIY2j4BidGb9E1Gxt5OI0abW/SUCRyr2z66Nrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVBUXPAJ60yJPnA2RXgm1Lhwz/MYm5Nhbe0NSzYz6Sv+c2l75THcBCW3iHHAh5QdWQWrVFPMPSR4rfUtsSuUcY1j3QeBkwVuqmjtNorVqI12ULc+8pQ3lUNJs2VLEQBGRiQyffz4hfBRLpREJ0t2HLNIt9r8JMAGfWwIN1YtC5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bD42JDHt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Wet+CY2xVXFd2Vjj/jFwpecWo0y0LDI5V876PBNQsgouA2Y1LxG3JDAGoaAGZr/2GWDmuFfM7MB1/RhgNotzCBEHk5G5c8B+/M6gUFmYWydOtOQzMhvDFQSEQyDRa3K6Aimt8AsLeT0gtjfAiyzD8np4AJRmrxVhUhwnGRrDLeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzH2U61j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bD42JDHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53251F000E9;
-	Mon, 31 Aug 2026 13:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzH2U61j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A92E1F000E9;
+	Mon, 31 Aug 2026 13:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184782;
-	bh=7PPu+wL2xqP4jGucjjiaHBNFcP71qR040q3d3CKXeA0=;
+	s=korg; t=1788184776;
+	bh=NSZP+Da8Jkkk3ynv2t+nc/r0TkGl5aNWEQhq6VuWvoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bD42JDHtAw5ekRH6isMCzWGgctIAoM+GIgCxSwyiFpbxp3OWHOcwz5f96c5i07eeM
-	 RktZqPYMITAeJNlDP1VJ9upS9FgZo1pRpuvXhkLrzogbT9hgHETtx7qlBnVWTjLT+8
-	 DrVrTUTHjprQyYHgDbNmGHxVbZsvQvpWXcyVQ11s=
+	b=yzH2U61j1kCfJDWCmb/mebYUDOtIQhFzL/NtU7vEW8ZE12mWIcGmsHty/+xXrrja3
+	 +eUGHDbt6H7gnaeIp6o39T4sKtl3uItgLAa7Qq7feRBo1mYIpo2O2xkgZPio1RVEnU
+	 AnMKc512jCqvAuG5/jLtWZk7mJPJhO23e40oLToM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	syzbot+b8d61a58b7c7ebd2c8e0@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	syzbot+2aca91e1d3ae43aef10c@syzkaller.appspotmail.com,
+	=?UTF-8?q?Miguel=20Garc=C3=ADa?= <miguelgarciaroman8@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 37/92] ext4: propagate errors from fast commit range replay
-Date: Mon, 31 Aug 2026 15:34:35 +0200
-Message-ID: <20260831133401.628773012@linuxfoundation.org>
+Subject: [PATCH 6.1 35/92] block: make bio_check_eod work for zero sized devices
+Date: Mon, 31 Aug 2026 15:34:33 +0200
+Message-ID: <20260831133401.526079712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -46,85 +48,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit d8b8dd3530bf41e14b118702cdaf9de64bb96885 ]
+commit 3eb96946f0be6bf447cbdf219aba22bc42672f92 upstream.
 
-ext4_fc_replay() stops replaying fast commit tags only when a tag
-handler returns a negative error. However, ext4_fc_replay_add_range()
-and ext4_fc_replay_del_range() currently return 0 from their common
-exit paths even after internal failures.
+Since the dawn of time bio_check_eod has a check for a non-zero size of
+the device.  This doesn't really make any sense as we never want to send
+I/O to a device that's been set to zero size, or never moved out of that.
 
-This hides errors from ext4_fc_record_modified_inode(),
-ext4_map_blocks(), ext4_find_extent(), ext4_ext_insert_extent(),
-ext4_ext_replay_update_ex(), and ext4_ext_remove_space(). As a result,
-a failed ADD_RANGE or DEL_RANGE replay can be treated as successful and
-the replay code may continue with subsequent fast commit tags.
+I am a bit surprised we haven't caught this for a long time, but the
+removal of the extra validation inside of zram caused syzbot to trip
+over this issue recently.  I've added a Fixes tag for that commit, but
+the issue really goes back way before git history.
 
-This is particularly problematic for DEL_RANGE because it may already
-have marked blocks as free before ext4_ext_remove_space() fails. If the
-error is swallowed, replay may continue from a partially applied range
-operation.
+Fixes: 9fe95babc742 ("zram: remove valid_io_request")
+Reported-by: syzbot+b8d61a58b7c7ebd2c8e0@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230524060538.1593686-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 
-Return the saved error from the common exit paths and make the
-ERR_PTR() cases in ADD_RANGE store PTR_ERR() before jumping to out.
+Backport note for 6.1.y:
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_E3622146846A84C75C31C7D32AC4D5AD0605@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-[ kept the existing `ext4_find_extent(inode, cur, NULL, 0)` call and dropped the `ext4_ext_insert_extent()` error-capture hunk, since this tree's extents API predates the ppath rework and already returns errors via `int` ]
+The same underlying bug affects 6.1.y even though 9fe95babc742 is not in
+that tree.  The syzbot reproducer attaches a socket to /dev/nbd0 without
+setting its capacity, then mounts it as BEFS.  BEFS calls sb_bread() while
+bdev_nr_sectors() is zero.  The maxsector guard makes bio_check_eod() accept
+that read, which reaches NBD and waits for a response instead of failing
+with -EIO.  syzbot reproduced the resulting __bread_gfp() hang on 6.1.y and
+identified this upstream commit by fix bisection.
+
+Reported-by: syzbot+2aca91e1d3ae43aef10c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2aca91e1d3ae43aef10c
+Signed-off-by: Miguel García <miguelgarciaroman8@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ block/blk-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1821,8 +1821,10 @@ static int ext4_fc_replay_add_range(stru
- 		if (ret == 0) {
- 			/* Range is not mapped */
- 			path = ext4_find_extent(inode, cur, NULL, 0);
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
- 				goto out;
-+			}
- 			memset(&newex, 0, sizeof(newex));
- 			newex.ee_block = cpu_to_le32(cur);
- 			ext4_ext_store_pblock(
-@@ -1883,9 +1885,10 @@ next:
- 	}
- 	ext4_ext_replay_shrink_inode(inode, i_size_read(inode) >>
- 					sb->s_blocksize_bits);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 25b4733f25d3d..1fcd80a1c54fd 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -515,7 +515,7 @@ static inline int bio_check_eod(struct bio *bio)
+ 	sector_t maxsector = bdev_nr_sectors(bio->bi_bdev);
+ 	unsigned int nr_sectors = bio_sectors(bio);
  
- /* Replay DEL_RANGE tag */
-@@ -1946,9 +1949,10 @@ ext4_fc_replay_del_range(struct super_bl
- 	ext4_ext_replay_shrink_inode(inode,
- 		i_size_read(inode) >> sb->s_blocksize_bits);
- 	ext4_mark_inode_dirty(NULL, inode);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
- 
- static void ext4_fc_set_bitmaps_and_counters(struct super_block *sb)
+-	if (nr_sectors && maxsector &&
++	if (nr_sectors &&
+ 	    (nr_sectors > maxsector ||
+ 	     bio->bi_iter.bi_sector > maxsector - nr_sectors)) {
+ 		pr_info_ratelimited("%s: attempt to access beyond end of device\n"
+-- 
+2.53.0
+
 
 
