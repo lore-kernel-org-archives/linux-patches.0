@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E70C471258;
-	Mon, 31 Aug 2026 13:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA6157D20F;
+	Mon, 31 Aug 2026 13:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184173; cv=none; b=oLv6nToyceUx5BBd2qcO6b2NUO5WTT/1gs4MRLqo3wrq7JRsvy9vG9wHh++5pOd9LjvzQNfZrPPhzdsDaJh/LvqLS9kWYfhc/995ea+7RT3W/Vo6I17IIyxupfhW1z1oHIcQKEYdE8zzyf9pavb9Q66a0bvwEZ/69ZNjs1NYdbo=
+	t=1788184174; cv=none; b=jPIFohdjRbBA1+GDgw3dHUTrS26OLc0ij7ysIACDKq3qCfn4VzqOKRzFnpn8kS94kmE3WtflnLw5wuPuaUJZ96OG2m3gIWJfYaehxhTc4A+Fw8MJBscrc3DpbHzRoTZRv3RZL7cJ6RdWRLuoVTsaaMh97lwnOdoKWSXn6Gt+qTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184173; c=relaxed/simple;
-	bh=maj71gLSTEZs/M0cVdDA3QZ9a3mo5d82Pd/9XOvqcuE=;
+	s=arc-20240116; t=1788184174; c=relaxed/simple;
+	bh=6RtPStU5jN0itZ9YiHwnhITWHtgU5Y9I/B3l3kDmN7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HkzCbVRF8vtP+vUYXexJIjv2f/7nKJOhdtc90rAaT8/86TUMztLKoNIPUfUn+alK9Eew7YJYubArXvH6ECgrtQDjFwmRzT8hBeVhpONLiSBXX9ut+Q7u6oV1zGO3muYnzKhGUACW+59mpuCJqbFvurwZfTg/UVKBIXo/PdEd1NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6s9jtme; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kpW11uZCB2XJ4jh8nsr+XckoS0ex8u234PkC6BCVjSIBhmNdYDdwNXpMajV/7qVtrEws+rsmslUM1PDIVVBDA68pTYR+Rad4ZVLhJxx6YVmCfJi9fiYxoLbj6CE232G+tn5se8OjGo0UtMFeZRb6gf3KBYm8J5fhZ/uP3xObJPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NnmoUQMp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6s9jtme"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F041F000E9;
-	Mon, 31 Aug 2026 13:49:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NnmoUQMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9188C1F00ACA;
+	Mon, 31 Aug 2026 13:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184171;
-	bh=KWH8q/+Nf3LEPl4TzZQQclYGb8veuIRW8X4vfBv1HmA=;
+	s=k20260515; t=1788184172;
+	bh=ca+0xzSygstzOkzBHNE9FXzmokfjrnGBVeQ88zmKoiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6s9jtmeVpM01M3WzbUvMowGFAyMwh82ZyLtk6G4ZJDlDHp3CWJUCPvQ7LLgoTFC8
-	 JjjaYXrW/Pc6E2Y9uOHJkymdHcoh1qt6rpOp+DX/SecXXhFw+tn/1KqNK3vap8TRk+
-	 v9MJ++b6lMK7NyuzPxYOOkeozaoM5do/+vdzPQ7NqVlUTjapbpeva7xyxB2MA+XkNT
-	 Cj31VmvkED1V9p8JwPtjjvqWPrwg4YuAFVcNF+9YY4GUw9EsdAgu4KpllDFZ3IE+B8
-	 h8gATBZm9J20+ZGO8EkFKMTAU4IevDL9moftOYRJJ/PMRGW6Bl22yAWA4WEWoDaPVa
-	 r77kR2vBzYmDg==
+	b=NnmoUQMptegz9vfkoDszxmtreKt6m9q025Om8gYntNCGJ2D26kD5sRn3EAv8plHKj
+	 AUfjnIeBz5NrfV4EGkwkefZoaBqx0D/nXtfljN5d8LCEvYB7JhlgJyzyoRRlMScecR
+	 D2C93dz2PNo3U/+4/TcgPgXMnvg7g8VUDDQNDCL6VnTOe7sv/TtCed0Qs8PJD/yWyZ
+	 5yBDWYSjAXpkvLNP5Zn/zZxU+P/KzZbI5COWoFOeU4+gtlGgCrQSY0L6tIOHHoRc/p
+	 bRL2FDaA17sheuTQsNDBRAbuqco2ITWWaznq1CGnzS0TlCKy/QphxlGakH067HtTo7
+	 kuGx6bowgOy1A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Muralidhara M K <muralidhara.mk@amd.com>,
-	Muthusamy Ramalingam <muthusamy.ramalingam@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	naveenkrishna.chatradhi@amd.com,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] platform/x86/amd/hsmp: Clamp ioctl/send_message indices (Spectre v1)
-Date: Mon, 31 Aug 2026 09:29:21 -0400
-Message-ID: <20260831133314.4125787-533-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] PCI/sysfs: Use kstrtobool() to parse the ROM attribute input
+Date: Mon, 31 Aug 2026 09:29:22 -0400
+Message-ID: <20260831133314.4125787-534-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,424 +52,365 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Muralidhara M K <muralidhara.mk@amd.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit d20457b46eca76b9bb716dd31af591cad21607b5 ]
+[ Upstream commit 92742802ecbf215a2b60dcfd326d2213595010f1 ]
 
-Although validate_message() checks msg_id, a mispredicted branch can
-still allow speculative indexing into hsmp_msg_desc_table[]. Clamp
-msg.msg_id with array_index_nospec() at entry to hsmp_ioctl_msg() so
-downstream dereferences (including via is_get_msg() and
-hsmp_send_message()) see a bounded index.
+pci_write_rom() controls access to the ROM content through the
+corresponding sysfs attribute, and treats the input as a request to
+disable only when it matches the string "0\n" exactly:
 
-Similarly, hsmp_send_message() bounds-checks msg->sock_ind before
-indexing hsmp_pdev.sock[], but a mispredicted branch can still
-speculatively use the raw index (Spectre v1, CVE-2017-5753). Apply
-array_index_nospec() after the check so every caller that reaches
-hsmp_pdev.sock[] through this helper sees a clamped socket
-index—including hsmp_ioctl_msg() and any other path that hands a
-user-derived struct hsmp_message to hsmp_send_message().
+  if ((off ==  0) && (*buf == '0') && (count == 2))
 
-Reviewed-by: Muthusamy Ramalingam <muthusamy.ramalingam@amd.com>
-Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
-Link: https://patch.msgid.link/20260612042610.1629037-7-muralidhara.mk@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The count == 2 condition encodes the trailing newline that echo(1) appends.
+This was found when userspace wrote "0" without a trailing newline aiming
+to disable access, which failed to match the condition above and enabled
+access instead.  For example:
+
+  $ echo 0 > rom       # "0\n", count 2, access disabled
+  $ echo -n 0 > rom    # "0", count 1, access enabled
+  $ echo > rom         # "", count 1, access enabled (likely not desirable)
+
+Parse the input with kstrtobool(), which handles common boolean inputs such
+as "0", "1", "n", "y" or "off", "on", with or without a trailing newline,
+so both of the above disable access, and update the now stale comment.
+
+As a side effect, input that does not parse as a boolean is rejected with
+-EINVAL rather than enabling access.  The documented "0" and "1" continue
+to work as before, and rejecting malformed input brings the attribute in
+line with how sysfs attributes typically handle it.
+
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260612182448.552406-1-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `platform/x86/amd/hsmp: Clamp
-ioctl/send_message indices (Spectre v1)`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
-**Commit under review:** `d5be735237be5` (upstream: `d20457b46eca`) —
-present on `autosel` branch, **not** in current `HEAD`
+### Step 1.1: Subject line
+**Record:** `[PCI/sysfs] [use] Use kstrtobool() to parse the ROM
+attribute input` — sysfs input-parsing fix in the PCI ROM bin_attribute
+write path.
 
----
+### Step 1.2: Tags
+**Record:**
+- **Link:** `https://patch.msgid.link/20260612182448.552406-1-
+  kwilczynski@kernel.org`
+- **Signed-off-by:** Krzysztof Wilczyński, Bjorn Helgaas (PCI
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Notable: maintainer sign-off (Bjorn Helgaas), no fuzzer/user bug report
+tags.
 
-**Step 1.1 — Subject parse**
-Record: `[platform/x86/amd/hsmp]` `[Clamp]` — Spectre v1 mitigation for
-user-controlled array indices in HSMP ioctl/send_message paths.
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `pci_write_rom()` only disables ROM sysfs access when input
+  is exactly `"0\n"` (`count == 2`). `"0"` without newline (`count ==
+  1`) is treated as enable.
+- **Symptom:** `echo -n 0 > rom` enables access instead of disabling;
+  empty write also enables.
+- **Root cause:** Manual parsing tied disable to `count == 2` (echo’s
+  trailing newline), not to boolean `"0"`.
+- **Fix:** Use `kstrtobool()`; reject invalid input with `-EINVAL`.
 
-**Step 1.2 — Tags**
-Record:
-- `Reviewed-by: Muthusamy Ramalingam <muthusamy.ramalingam@amd.com>`
-  (AMD)
-- `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>`
-  (platform-drivers-x86 maintainer)
-- `Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>` (author)
-- `Link: https://patch.msgid.link/20260612042610.1629037-7-
-  muralidhara.mk@amd.com`
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or syzbot
-  tags
-- `[Upstream commit d20457b46eca...]` marker present (pipeline artifact
-  — ignored per instructions)
-
-**Step 1.3 — Body analysis**
-Record:
-- **Bug:** After bounds checks on `msg_id` and `sock_ind`, a
-  mispredicted branch (Spectre v1 / CVE-2017-5753) can still cause
-  speculative indexing into `hsmp_msg_desc_table[]` and
-  `hsmp_pdev.sock[]`, leaking kernel memory into cache.
-- **Symptom:** Side-channel information disclosure (not a direct crash).
-- **Root cause:** Missing `array_index_nospec()` after bounds checks on
-  user-controlled indices.
-- **Fix:** Clamp `msg.msg_id` in `hsmp_ioctl()` before downstream use;
-  clamp `sock_ind` in `hsmp_send_message()` before socket array access.
-- Note: commit message refers to `hsmp_ioctl_msg()` but the actual
-  function is `hsmp_ioctl()` (verified in source).
-
-**Step 1.4 — Hidden bug fix?**
-Record: No — this is an explicit Spectre v1 security fix, not disguised
-cleanup.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes — described as parsing improvement, but it fixes
+inverted enable/disable semantics and undocumented dependence on a
+trailing newline.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-**Step 2.1 — Inventory**
-Record:
-- **Files:** `drivers/platform/x86/amd/hsmp/hsmp.c` (+23 / -1)
-- **Functions:** `hsmp_send_message()`, `hsmp_ioctl()`
-- **Scope:** Single-file, surgical security fix
+### Step 2.1: Inventory
+**Record:**
+- **File:** `drivers/pci/pci-sysfs.c` (~+4/-3 net)
+- **Function:** `pci_write_rom()`
+- **Scope:** Single-file, surgical fix
 
-**Step 2.2 — Code flow changes**
+### Step 2.2: Code flow
+**Record:**
+- **Before:** Disable only if `off==0 && *buf=='0' && count==2`;
+  everything else enables.
+- **After:** Parse with `kstrtobool()`; on failure return `-EINVAL`;
+  otherwise set `pdev->rom_attr_enabled = enable`.
+- **Path:** sysfs write to PCI `rom` bin_attribute (root-only, mode
+  0600).
 
-| Hunk | Before | After |
-|------|--------|-------|
-| `hsmp_send_message()` | Bounds-check `sock_ind`, then directly index
-`hsmp_pdev.sock[msg->sock_ind]` | After bounds check, `sock_ind =
-array_index_nospec(msg->sock_ind, hsmp_pdev.num_sockets)` then index
-with clamped value |
-| `hsmp_ioctl()` | Bounds-check `msg_id`, then call `is_get_msg()` /
-`hsmp_send_message()` with raw `msg_id` | After bounds check,
-`msg.msg_id = array_index_nospec(msg.msg_id, HSMP_MSG_ID_MAX)` before
-any table dereference |
+### Step 2.3: Bug mechanism
+**Record:** **Logic/correctness fix** — fragile string/count check
+instead of boolean parsing; violates documented “write 0 to disable”
+semantics for writes without `\n`.
 
-Record: Both hunks affect the userspace ioctl hot path and the shared
-`hsmp_send_message()` helper used by ioctl.
-
-**Step 2.3 — Bug mechanism**
-Record: **Memory safety / Spectre v1 speculative out-of-bounds read.**
-User-supplied `msg_id` and `sock_ind` pass explicit bounds checks, but
-CPU speculation can bypass those checks and index past array ends into
-adjacent kernel memory. `array_index_nospec()` masks the index so
-speculative execution cannot use out-of-range values.
-
-**Step 2.4 — Fix quality**
-Record: Fix is minimal, follows the established kernel Spectre-
-mitigation pattern (`array_index_nospec` after bounds check). No new
-locking or API changes. Regression risk is very low. Compiles
-successfully in this tree without additional includes (verified).
+### Step 2.4: Fix quality
+**Record:** Obviously correct, minimal, matches PCI sysfs patterns
+(author’s 2021 kstrtobool series for other attrs). Low regression risk;
+`kstrtobool()` only inspects `s[0]` (and `s[1]` for `on`/`off`), so it
+is safe on sysfs buffers that may lack a trailing `NUL`.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-**Step 3.1 — Blame**
-Record: Vulnerable ioctl/send_message logic dates to `91f410aa679a03`
-("platform/x86: Add AMD system management interface", Feb 2022, first in
-**v6.0**). Bounds checks on `sock_ind` added in `8e75dff56e003` (Oct
-2024 refactor). Bug has been present since driver introduction.
+### Step 3.1: Blame
+**Record:** Buggy `count == 2` logic dates to `1da177e4c3f41` (2005,
+Linux 2.6.12-rc2). Present in this tree at lines 1319–1322.
 
-**Step 3.2 — Fixes: tag**
-Record: N/A — no `Fixes:` tag present.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag.
 
-**Step 3.3 — Related file history**
-Record: Recent `hsmp.c` changes in this tree include timeout/semaphore
-fixes (`784e48a82976e`, `f8afb12a2d750`) and `2c78fb287e1f4` (NULL check
-for `metric_tbl_addr`). No prior Spectre/nospec fix for HSMP in `HEAD`.
+### Step 3.3: Related history
+**Record:** Related PCI sysfs work by same author merged earlier
+(`36f354ec7bf92` EINVAL consistency, `95e83e219d689` CAP_SYS_ADMIN
+checks). A 2021 series ([spinics
+msg110641](https://www.spinics.net/lists/linux-pci/msg110641.html))
+included this `pci_write_rom()` change but the ROM hunk was not merged
+then; this 2026 commit is standalone.
 
-**Step 3.4 — Author context**
-Record: Muralidhara M K (AMD). Patch is part of v6 series "Family 1Ah
-Model 50h-5Fh HSMP and metrics" but this specific commit only touches
-existing ioctl/send paths — no dependency on new message IDs from other
-series patches.
+### Step 3.4: Author context
+**Record:** Krzysztof Wilczyński is an active PCI sysfs contributor;
+Bjorn Helgaas signed off.
 
-**Step 3.5 — Dependencies**
-Record: **Standalone.** Applies cleanly (`git apply --check` passed). No
-prerequisite commits required. `array_index_nospec` and
-`include/linux/nospec.h` exist in this tree.
+### Step 3.5: Dependencies
+**Record:** None. `kstrtobool()` exists in `lib/kstrtox.c`; `bool` and
+`rom_attr_enabled` exist in this tree. Applies standalone.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c d5be735237be5` found thread at
-https://patch.msgid.link/20260612042610.1629037-7-muralidhara.mk@amd.com
-— `[PATCH v6 6/8]`. Series revisions: v5 and v6 exist; committed version
-matches v6. Full lore thread fetch blocked by Anubis bot protection
-(could not read inline review text).
+### Step 4.1: Original discussion
+**Record:** `b4 dig -c <sha>` failed (commit not in this checkout).
+WebFetch of patch.msgid.link blocked (bot protection). Spinics 2021
+series confirms intent and prior ROM fix that was not merged. No stable
+nomination found in available threads.
 
-**Step 4.2 — Reviewers**
-Record: `b4 dig -w` shows CC to `platform-driver-x86@vger.kernel.org`,
-`linux-kernel@vger.kernel.org`, AMD reviewer, and Ilpo Järvinen.
+### Step 4.2: Reviewers
+**Record:** Bjorn Helgaas sign-off verified from commit message; 2021
+series CC’d `linux-pci@`.
 
-**Step 4.3 — Bug report**
-Record: N/A — no external bug report or syzbot link. Security issue
-identified by code review in patch series context.
+### Step 4.3: Bug report
+**Record:** No external bug report or syzbot link; author discovered via
+`echo -n 0` testing.
 
-**Step 4.4 — Series context**
-Record: Patch 6/8 in Family 1Ah HSMP series. The Spectre fix is
-independent of patches 1–5 and 7–8 (new hardware messages/metrics). Safe
-to backport alone.
+### Step 4.4: Series context
+**Record:** Standalone 2026 commit; not part of an unmerged multi-patch
+dependency chain.
 
-**Step 4.5 — Stable list**
-Record: Not searched on lore stable list (thread content unavailable).
-No evidence against backport found.
+### Step 4.5: Stable list
+**Record:** No stable-list discussion found (WebSearch + blocked lore
+fetch).
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-**Step 5.1 — Key functions**
-Record: `hsmp_ioctl()`, `hsmp_send_message()`, `validate_message()`,
-`is_get_msg()`
+### Step 5.1: Key functions
+**Record:** `pci_write_rom()`, `pci_read_rom()` (read path checks
+`rom_attr_enabled`).
 
-**Step 5.2 — Callers**
-Record:
-- `hsmp_ioctl()` — registered as `.unlocked_ioctl` / `.compat_ioctl` in
-  `hsmp_fops`, exposed via misc device `/dev/hsmp` (mode **0644**)
-- `hsmp_send_message()` — called from `hsmp_ioctl()`,
-  `hsmp_msg_get_nargs()`, `hsmp_test()`, internal metric/proto paths,
-  and `hwmon.c` (kernel-constructed messages with trusted indices)
+### Step 5.2: Callers
+**Record:** `pci_write_rom` registered via `BIN_ATTR(rom, 0600,
+pci_read_rom, pci_write_rom, 0)`; invoked from `sysfs_kf_bin_write()` on
+root write to `/sys/bus/pci/devices/.../rom`.
 
-**Step 5.3 — Callees**
-Record: `copy_struct_from_user()`, `is_get_msg()` →
-`hsmp_msg_desc_table[]`, `validate_message()` → `hsmp_msg_desc_table[]`,
-`down_interruptible()`, `__hsmp_send_message()`
+### Step 5.3: Callees
+**Record:** `kstrtobool()`, `to_pci_dev()`, sets
+`pdev->rom_attr_enabled`.
 
-**Step 5.4 — Reachability**
-Record: **Userspace-reachable.** Any local user can open `/dev/hsmp`
-(world-readable/writable) and issue ioctl with crafted
-`msg_id`/`sock_ind`. This is the primary attack surface.
-`hsmp_send_message()` is also exported (`EXPORT_SYMBOL_NS_GPL`) for
-other kernel modules.
+### Step 5.4: Reachability
+**Record:** Reachable by root (CAP_SYS_ADMIN) writing sysfs; documented
+workflow: write `1` to enable ROM read, `0` to disable ([PCI sysfs
+docs](https://www.kernel.org/doc/html/latest/PCI/sysfs-pci.html)).
 
-**Step 5.5 — Similar patterns**
-Record: Kernel has extensive precedent for `array_index_nospec` Spectre
-fixes (e.g., `c2178ff1c70eb` ipv4/icmp, `f0e441be08a2e` drm/ioc32,
-`1f5f94c6c6b2e` vhost/vdpa). No similar fix yet in
-`drivers/platform/x86/`.
+### Step 5.5: Similar patterns
+**Record:** `kstrtobool(buf, ...)` is standard in sysfs store handlers
+across the tree; PCI sysfs already uses it elsewhere after the 2021
+series.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 6: Cross-Reference Against Local Tree
 
-**Step 6.1 — Buggy code present?**
-Record: **YES.** Current `HEAD` at
-`drivers/platform/x86/amd/hsmp/hsmp.c` lines 213–215 and 308–338 contain
-bounds checks without `array_index_nospec`. Driver present since v6.0;
-fully present in 6.18.44.
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Local tree is **6.18.44** (`git describe`:
+`v6.18.44-1-g2736c32da98b9`). Buggy code at `drivers/pci/pci-
+sysfs.c:1319-1322`. Fix not present (`git log -S 'kstrtobool(buf,
+&enable)' -- drivers/pci/pci-sysfs.c` returned nothing).
 
-**Step 6.2 — Backport complications**
-Record: **Clean apply.** `git apply --check` succeeded. Patch compiles
-(`make drivers/platform/x86/amd/hsmp/hsmp.o` succeeded). No conflicts
-with recent hsmp changes in this tree.
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — small hunk, no structural conflicts
+observed.
 
-**Step 6.3 — Fix already present?**
-Record: **NO.** `grep array_index_nospec drivers/platform/x86/amd/hsmp/`
-returns nothing on `HEAD`. Fix exists only on `autosel` branch
-(`d5be735237be5`), not merged into current `HEAD`.
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent fix in this tree; EINVAL consistency work
+exists but not for `pci_write_rom()`.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 7: Subsystem Context
 
-**Step 7.1 — Subsystem**
-Record: `drivers/platform/x86/amd/hsmp` — AMD HSMP platform driver.
-**Criticality: IMPORTANT** (peripheral driver, but security-sensitive
-when `CONFIG_AMD_HSMP` is enabled on AMD EPYC/MI300A servers).
+### Step 7.1: Subsystem
+**Record:** `drivers/pci` sysfs — **IMPORTANT** (core hardware
+enumeration; affects all PCI platforms).
 
-**Step 7.2 — Activity**
-Record: Actively maintained — recent commits for protocol v7 messages,
-telemetry sysfs, semaphore/timeout fixes in 6.16–6.18 timeframe.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1 — Who is affected**
-Record: Systems with `CONFIG_AMD_HSMP` / `CONFIG_AMD_HSMP_ACPI` /
-`CONFIG_AMD_HSMP_PLAT` on AMD EPYC and MI300A platforms. Not universal,
-but real production server hardware.
-
-**Step 8.2 — Trigger conditions**
-Record: Local user opens `/dev/hsmp` and issues ioctl with out-of-range
-`msg_id` or `sock_ind` crafted to exploit branch misprediction.
-**Unprivileged local users can trigger** (device mode 0644). Trigger
-requires Spectre v1 exploitation techniques but the vulnerable code
-pattern is confirmed present.
-
-**Step 8.3 — Failure mode severity**
-Record: **Speculative kernel memory disclosure** (Spectre v1 side
-channel). Severity: **HIGH** from security perspective (CVE-2017-5753
-class). No direct crash or data corruption, but information leak from
-kernel to userspace.
-
-**Step 8.4 — Risk-benefit**
-Record:
-- **Benefit:** Closes a known Spectre v1 gadget on a world-accessible
-  device node; aligns with established kernel security policy.
-- **Risk:** Very low — 23 lines, standard `array_index_nospec` pattern,
-  compiles and applies cleanly.
-- **Ratio:** Strong benefit, minimal risk → backport warranted.
+### Step 7.2: Activity
+**Record:** Actively maintained; recent PCI sysfs commits in file
+history.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 8: Impact and Risk Assessment
 
-**Step 9.1 — Evidence summary**
+### Step 8.1: Who is affected
+**Record:** Root/admin or tools writing to PCI `rom` sysfs without a
+trailing newline (e.g. `echo -n 0`, `write(fd, "0", 1)`).
 
-**FOR backport:**
-- Real Spectre v1 security vulnerability (CVE-2017-5753)
-- User-controlled indices via ioctl on world-accessible `/dev/hsmp`
-- Standard, obviously-correct mitigation pattern
-- Small, single-file, standalone fix
-- Reviewed by AMD engineer and platform-x86 maintainer
-- Applies and compiles cleanly on 6.18.44
-- Bug present since driver introduction (v6.0)
-- Strong kernel precedent for identical fixes in stable
+### Step 8.2: Trigger conditions
+**Record:** Uncommon vs plain `echo 0`, but valid per kernel docs and
+normal for programmatic sysfs clients. Root-only.
 
-**AGAINST backport:**
-- Limited to AMD HSMP-enabled systems (not all kernels/users)
-- No syzbot report or user crash report (side-channel, hard to observe)
-- Part of larger patch series (but this commit is self-contained)
+### Step 8.3: Failure mode severity
+**Record:** **MEDIUM** — no crash/corruption, but inverted access-
+control semantics: disable request enables ROM reads. Documented API
+behavior is wrong for `"0"` without `\n`.
 
-**Unresolved:** Full lore review thread content unavailable (bot
-protection). Does not affect technical assessment.
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** Correct boolean parsing; aligns with docs and other PCI
+  sysfs attrs; rejects garbage with `-EINVAL`.
+- **Risk:** Very low (~5 lines, established API).
+- **Ratio:** Favorable for stable despite modest severity.
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — standard
-   `array_index_nospec`; compiles in this tree; reviewed by AMD +
-   maintainer.
-2. Fixes a real bug? **PASS** — Spectre v1 speculative OOB read on user-
-   controlled indices.
-3. Important issue? **PASS** — security vulnerability (information
-   disclosure).
-4. Small and contained? **PASS** — 23 lines, 1 file, 2 functions.
-5. No new features/APIs? **PASS** — pure hardening, no behavior change
-   for valid inputs.
-6. Can apply to local tree? **PASS** — clean apply, successful compile
-   on 6.18.44.
+---
 
-**Step 9.3 — Exception categories**
-Record: N/A (security hardening, not device ID/quirk/build/doc
-exception).
+## Phase 9: Final Synthesis
 
-**Step 9.4 — Decision rationale**
-This fix closes a Spectre v1 gadget in the AMD HSMP driver where local
-users can pass crafted indices through a world-accessible ioctl
-interface. The vulnerable code exists in Linux 6.18.44, the patch is
-minimal and self-contained, and it follows the same pattern routinely
-accepted for stable backports. The limited hardware scope does not
-outweigh the security nature of the fix.
+### Step 9.1: Evidence summary
+
+**FOR:**
+- Real, reproducible logic bug (`echo -n 0` inverts intent)
+- Violates documented “write 0 to disable” semantics
+- Present since 2005 in this tree
+- Tiny, maintainer-reviewed fix
+- `kstrtobool()` already in tree
+- Consistent with prior PCI sysfs input-validation work
+
+**AGAINST:**
+- No crash, deadlock, or data corruption
+- Root-only sysfs (0600)
+- Common `echo 0` path works
+- No syzbot/user reports
+- Borderline on stable “important issue” bar
+
+**Unresolved:** Full lore thread for 20260612 patch (fetch blocked); no
+explicit stable nomination found.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — straightforward; maintainer
+   SOB; no Tested-by.
+2. Fixes a real bug? **PASS** — inverted enable/disable on valid input.
+3. Important issue? **PASS (borderline)** — access-control semantics +
+   documented API violation; not a crash fix.
+4. Small and contained? **PASS**
+5. No new features/APIs? **PASS** — behavior extension to
+   `y`/`n`/`on`/`off` is minor and consistent with `kstrtobool()`
+   elsewhere.
+6. Can apply to local tree? **PASS**
+
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs-only).
+
+### Step 9.4: Decision rationale
+For **Linux 6.18.y**, the buggy code exists and the fix is absent. The
+bug causes the opposite of the documented disable operation when `"0"`
+is written without a newline — a longstanding sysfs correctness issue
+with very low backport risk. That meets stable criteria, albeit at
+modest severity.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit `d5be735237be5` / upstream `d20457b46eca`:
-  subject, tags, body; noted `hsmp_ioctl_msg` vs `hsmp_ioctl` naming
-  discrepancy
-- [Phase 2] Diff: +23/-1 in `hsmp.c`; two hunks in `hsmp_send_message()`
-  and `hsmp_ioctl()`
-- [Phase 3] `git describe HEAD`: v6.18.44; `git blame`: vulnerable code
-  from `91f410aa679a03` (v6.0)
-- [Phase 3] `git log -20 -- drivers/platform/x86/amd/hsmp/hsmp.c`: no
-  prior nospec fix in HEAD
-- [Phase 3] `git merge-base --is-ancestor d5be735 HEAD`: commit NOT in
-  HEAD; on `autosel` branch
-- [Phase 4] `b4 dig -c d5be735237be5`: lore URL found, patch 6/8 of v6
-  series
-- [Phase 4] `b4 dig -a`: v5 and v6 revisions exist
-- [Phase 4] `b4 dig -w`: platform-driver-x86@, AMD reviewer CC'd
-- [Phase 4] WebFetch lore thread: blocked by Anubis (UNVERIFIED: inline
-  reviewer stable nominations)
-- [Phase 5] `grep hsmp_send_message`: ioctl path + kernel-internal
-  callers identified
-- [Phase 5] Read `hsmp.c:439-446`: misc device mode 0644 confirmed
-- [Phase 5] Read `arch/x86/include/uapi/asm/amd_hsmp.h`: `HSMP_TEST=1`,
-  `HSMP_MSG_ID_MAX`, `hsmp_msg_desc_table[]` confirmed
-- [Phase 6] `grep array_index_nospec drivers/platform/x86/amd/hsmp/`: no
-  matches on HEAD (bug present)
-- [Phase 6] `git apply --check`: patch applies cleanly
-- [Phase 6] `make drivers/platform/x86/amd/hsmp/hsmp.o` with patch:
-  compile succeeded
-- [Phase 7] Read `drivers/platform/x86/amd/hsmp/Kconfig`: AMD_HSMP
-  targets EPYC/MI300A
-- [Phase 8] Device mode 0644: unprivileged local access confirmed
+- [Phase 1] Parsed subject, tags, body from user-provided commit message
+- [Phase 2] Read diff and current `pci_write_rom()` at `drivers/pci/pci-
+  sysfs.c:1313-1325`
+- [Phase 2] Read `pci_read_rom()` gate at lines 1347-1348
+- [Phase 3] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; Makefile
+  → 6.18.44
+- [Phase 3] `git blame -L 1302,1325 drivers/pci/pci-sysfs.c` → buggy
+  logic from `1da177e4c3f41` (2005)
+- [Phase 3] `git show 1da177e4c3f41:...` confirmed original `count == 2`
+  logic
+- [Phase 3] `git log -S 'kstrtobool(buf, &enable)' -- drivers/pci/pci-
+  sysfs.c` → empty (fix not in tree)
+- [Phase 3] `git log --author='Krzysztof Wilczyński' -- drivers/pci/pci-
+  sysfs.c` → related EINVAL/CAP_SYS_ADMIN commits
+- [Phase 4] `b4 dig` by commit hash → failed (commit not in checkout)
+- [Phase 4] WebFetch patch.msgid.link → blocked by bot protection
+- [Phase 4] WebFetch spinics msg110641 → 2021 series with same ROM fix
+  (not merged then)
+- [Phase 4] WebSearch → confirmed commit subject and merge context
+- [Phase 5] Traced sysfs path via `fs/sysfs/file.c:150-168`
+  (`sysfs_kf_bin_write`)
+- [Phase 5] Read `kstrtobool()` at `lib/kstrtox.c:348-392` — only reads
+  first 1–2 bytes
+- [Phase 5] `grep kstrtobool(buf` in drivers → widespread sysfs pattern
+- [Phase 6] Confirmed buggy code present, fix absent in 6.18.44 checkout
+- [Phase 6] `grep rom_attr_enabled` → only `pci-sysfs.c` and
+  `include/linux/pci.h`
+- [Phase 8] Kernel PCI sysfs docs confirm write `"0"` to disable ROM
+  access
+- [Phase 8] `BIN_ATTR(rom, 0600, ...)` at line 1366 → root read/write
+  only
 
-**YES**The background lookups are done and match what we already used in
-the review:
+**YES****Result:** For the checked-out **6.18.44** tree, this commit
+should be backported.
 
-- **Commit hash:** `d5be735237be5` — `platform/x86/amd/hsmp: Clamp
-  ioctl/send_message indices (Spectre v1)`
-- **`hsmp.c` history:** ioctl/send paths go back to the original HSMP
-  driver (`91f410aa679a03`, v6.0); recent churn is mostly refactors,
-  protocol v7, and timeout/semaphore fixes
-- **Fix in tree:** not in current `HEAD` (6.18.44); only on `autosel`
+`pci_write_rom()` only disables ROM sysfs access when the write is
+exactly `"0\n"` (`count == 2`). Writing `"0"` without a newline (e.g.
+`echo -n 0`) incorrectly **enables** access instead of disabling it,
+which contradicts the documented “write 0 to disable” behavior. The fix
+is small (switch to `kstrtobool()`), low risk, and the buggy code is
+still present in this tree — the fix is not merged here yet.
 
-Verdict for this tree is still **YES** — small Spectre v1 hardening on
-`/dev/hsmp`, applies and builds cleanly.
+ drivers/pci/pci-sysfs.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
- drivers/platform/x86/amd/hsmp/hsmp.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/platform/x86/amd/hsmp/hsmp.c b/drivers/platform/x86/amd/hsmp/hsmp.c
-index 19f82c1d30905..008a02ace4842 100644
---- a/drivers/platform/x86/amd/hsmp/hsmp.c
-+++ b/drivers/platform/x86/amd/hsmp/hsmp.c
-@@ -202,6 +202,7 @@ static int validate_message(struct hsmp_message *msg)
- int hsmp_send_message(struct hsmp_message *msg)
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index 990994db752ab..39e4a5b3e5739 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1308,18 +1308,19 @@ void __weak pci_remove_resource_files(struct pci_dev *dev) { return; }
+  * @off: file offset
+  * @count: number of byte in input
+  *
+- * writing anything except 0 enables it
++ * Writing a boolean value enables or disables the ROM display.
+  */
+ static ssize_t pci_write_rom(struct file *filp, struct kobject *kobj,
+ 			     const struct bin_attribute *bin_attr, char *buf,
+ 			     loff_t off, size_t count)
  {
- 	struct hsmp_socket *sock;
-+	unsigned int sock_ind;
- 	int ret;
+ 	struct pci_dev *pdev = to_pci_dev(kobj_to_dev(kobj));
++	bool enable;
  
- 	if (!msg)
-@@ -212,7 +213,15 @@ int hsmp_send_message(struct hsmp_message *msg)
- 
- 	if (!hsmp_pdev.sock || msg->sock_ind >= hsmp_pdev.num_sockets)
- 		return -ENODEV;
--	sock = &hsmp_pdev.sock[msg->sock_ind];
+-	if ((off ==  0) && (*buf == '0') && (count == 2))
+-		pdev->rom_attr_enabled = 0;
+-	else
+-		pdev->rom_attr_enabled = 1;
++	if (kstrtobool(buf, &enable))
++		return -EINVAL;
 +
-+	/*
-+	 * Sanitize sock_ind after the bounds check.  A mispredicted branch can
-+	 * still let the CPU speculatively use msg->sock_ind as an index into
-+	 * hsmp_pdev.sock[] (Spectre v1, CVE-2017-5753), including for callers
-+	 * other than hsmp_ioctl_msg() that pass a user-derived socket index.
-+	 */
-+	sock_ind = array_index_nospec(msg->sock_ind, hsmp_pdev.num_sockets);
-+	sock = &hsmp_pdev.sock[sock_ind];
++	pdev->rom_attr_enabled = enable;
  
- 	ret = down_interruptible(&sock->hsmp_sem);
- 	if (ret < 0)
-@@ -308,6 +317,19 @@ long hsmp_ioctl(struct file *fp, unsigned int cmd, unsigned long arg)
- 	if (msg.msg_id < HSMP_TEST || msg.msg_id >= HSMP_MSG_ID_MAX)
- 		return -ENOMSG;
- 
-+	/*
-+	 * Sanitize the user-controlled msg_id against speculative
-+	 * execution.  The bounds check above retires the out-of-range
-+	 * case with -ENOMSG, but a mispredicted branch can still let the
-+	 * CPU speculatively use msg_id as an index into
-+	 * hsmp_msg_desc_table[] (here and in validate_message() /
-+	 * is_get_msg() called downstream via hsmp_send_message()), and
-+	 * pull arbitrary kernel memory into the cache (Spectre v1,
-+	 * CVE-2017-5753).  Clamp once into msg.msg_id so every downstream
-+	 * dereference sees the sanitized value.
-+	 */
-+	msg.msg_id = array_index_nospec(msg.msg_id, HSMP_MSG_ID_MAX);
-+
- 	switch (fp->f_mode & (FMODE_WRITE | FMODE_READ)) {
- 	case FMODE_WRITE:
- 		/*
+ 	return count;
+ }
 -- 
 2.53.0
 
