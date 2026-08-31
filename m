@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7161048F82C;
-	Mon, 31 Aug 2026 14:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE7848F846;
+	Mon, 31 Aug 2026 14:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185073; cv=none; b=G/7D7M3Bt5JHdhaTGKU2x0pUALWEnNk7k323PveP/UWUMEfub51E0FAF9hLnE57i3RAf5BZlhbmbAEME3AdHUvwj7tyRBS/8mUT1mwKGAj4d4T2Lih1/8xj38ztHLTiWTTghZG6/RomfGlMvLQbMVhwzUMUaTjKeZ1ohBMkz7XE=
+	t=1788185075; cv=none; b=L9iWekkPHegnqGtY4Wo++jZpJjVdGNpdHd5csWOn41ewhoG/RFWKf+j1NnCH7wvsT/YHcCiyUun1luu/MyB0FwcbyrmmD6lyqZF2UoCXTsFlwFR3dnXbNbjF+OxdWWv4I47L1Y8tnLViZkLbXn5a/TzKmYl2oZ7Mlu4rdImhFd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185073; c=relaxed/simple;
-	bh=92K47milANSXJy00yfc8RIAcA8Zn8tewRXa9S77q4OY=;
+	s=arc-20240116; t=1788185075; c=relaxed/simple;
+	bh=lMmwKwvK9JQzKiUVQx71sUy04uL4kI40dsV/aOejjXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnTdJvCAf2+WgiZkCwkbcqmkaFpehfeJpulycozDD6LhZZKTzjMc8ftEnytQrXNIr8Dkvv7E1QZIsIMB0aPNiiRy0au0ZutUNoNULWTQe5rVq84f/N9cx3EsZ6OJR6xl8iqgbddwwlbFty/cPrphJJ46Hc8O7f08K+sY1RJLdw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPEWokm6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o0z27HTwMAw5HWnZCYUMvDkaTkJvB+O7TnxrB5OzNMfXQI7p2JYt0tfkVPYbPRe3SbDnunG2AK4QJrdloIJkS65HluNlZrMUcmwLOihiTIfB3hDJ7dOrk9FARDVGWxlXiofWf8UNV/1LPrLqBraBtQnoIRPlQW80ns6GezWfWU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5IO32yj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPEWokm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D441F000E9;
-	Mon, 31 Aug 2026 14:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5IO32yj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BE11F00A3D;
+	Mon, 31 Aug 2026 14:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185070;
-	bh=D1BRs/aPserJiMb4lW8GpSVKxGCSRq33auFn7BvdRIA=;
+	s=korg; t=1788185073;
+	bh=3uzB38Y2Fkbthy5q2fZwY/Dqah3AAAW/AeNg/z5++CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VPEWokm6glzd91UUYLOXYHE9K9HpYdAlRFUZxXAyKepSCkRiSTIlMJABm1EADQ7gw
-	 gRfCdW9xqE/BCzBDMbE9ufQlqv4/3LlolpNMFgV/SMxefQ3dvjGj1rXxzJJ6fCvNBY
-	 GgpCxCenqAWW31Y/EQJvVVnSX6R3MX5lK91L9aG8=
+	b=S5IO32yjeZ+B9zT6UO3KL8LRray4/yNIqwTzJKvTfp5kYjvJYFTH6iVBB+xgeqqBF
+	 ULKjdi0EPoQNx9SppYzwRW3FLrJg6pRIdWNy4jpkyxr/mrMBtjxoTYEaxyV/+a+Fuj
+	 NTkrwTFIu3f43NXzMvIvMeF+NzdKeYALloAnRO7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	"Brian G ." <gissf1@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/69] nilfs2: correct return value kernel-doc descriptions for ioctl functions
-Date: Mon, 31 Aug 2026 15:34:59 +0200
-Message-ID: <20260831133359.762976823@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Lucas De Marchi <ldemarchi@nvidia.com>
+Subject: [PATCH 5.15 44/69] xhci: dbgtty: Fix unregister on tty_register_driver() failure
+Date: Mon, 31 Aug 2026 15:35:17 +0200
+Message-ID: <20260831133400.791205165@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -52,432 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Lucas De Marchi <ldemarchi@nvidia.com>
 
-[ Upstream commit 17c46a45cdb94c500f4e93b176cdd61931b03020 ]
+commit a916fa66a43e10f63198b6ce978badffc678821a upstream.
 
-Patch series "nilfs2: fix kernel-doc comments for function return values",
-v2.
+If tty_register_driver() fails, it drops the reference, but fails to set
+the global dbc_tty_driver to NULL, causing the unregister to be called
+again when module exits.
 
-This series fixes the inadequacies in the return value descriptions in
-nilfs2's kernel-doc comments (mainly incorrect formatting), as well as the
-lack of return value descriptions themselves, and fixes most of the
-remaining warnings that are output when the kernel-doc script is run with
-the "-Wall" option.
+On module unload dbc_tty_exit() only gates its cleanup on the driver
+pointer being non-NULL, so it operates on the already-freed driver:
 
-This patch (of 7):
+    module_init(xhci_hcd_init)
+      xhci_hcd_init()
+        xhci_dbc_init()                       [return value ignored]
+          dbc_tty_init()
+            tty_register_driver() fails
+              tty_driver_kref_put()           -> driver freed
+              (dbc_tty_driver left dangling)
+    ...
+    module_exit(xhci_hcd_fini)
+      xhci_hcd_fini()
+        xhci_dbc_exit()
+          dbc_tty_exit()
+            if (dbc_tty_driver)               -> true (dangling)
+              tty_unregister_driver()         -> use-after-free
 
-In the kernel-doc comments for functions, there are many cases where the
-format of the return value description is inaccurate, such as "Return
-Value: ...", which causes many warnings to be output when the kernel-doc
-script is executed with the "-Wall" option.
-
-This fixes such incorrectly formatted return value descriptions for ioctl
-functions.
-
-Link: https://lkml.kernel.org/r/20250110010530.21872-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20250110010530.21872-2-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: "Brian G ." <gissf1@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: a1735eae5544 ("nilfs2: reject invalid block index in GC ioctl")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4521f1613940 ("xhci: dbctty: split dbc tty driver registration and unregistration functions.")
+Cc: stable@vger.kernel.org # v5.10
+Cc: Mathias Nyman <mathias.nyman@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lucas De Marchi <ldemarchi@nvidia.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260806142113.2436238-8-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/ioctl.c |  231 ++++++++++++++++++++++--------------------------------
- 1 file changed, 95 insertions(+), 136 deletions(-)
+ drivers/usb/host/xhci-dbgtty.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -32,17 +32,14 @@
-  * @dofunc: concrete function of get/set metadata info
-  *
-  * Description: nilfs_ioctl_wrap_copy() gets/sets metadata info by means of
-- * calling dofunc() function on the basis of @argv argument.
-+ * calling dofunc() function on the basis of @argv argument.  If successful,
-+ * the requested metadata information is copied to userspace memory.
-  *
-- * Return Value: On success, 0 is returned and requested metadata info
-- * is copied into userspace. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EINVAL - Invalid arguments from userspace.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EFAULT - Failure during execution of requested operation.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during execution of requested operation.
-+ * * %-EINVAL	- Invalid arguments from userspace.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_wrap_copy(struct the_nilfs *nilfs,
- 				 struct nilfs_argv *argv, int dir,
-@@ -176,13 +173,10 @@ static int nilfs_ioctl_getversion(struct
-  * given checkpoint between checkpoint and snapshot state. This ioctl
-  * is used in chcp and mkcp utilities.
-  *
-- * Return Value: On success, 0 is returned and mode of a checkpoint is
-- * changed. On error, one of the following negative error codes
-- * is returned.
-- *
-- * %-EPERM - Operation not permitted.
-- *
-- * %-EFAULT - Failure during checkpoint mode changing.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * %-EFAULT	- Failure during checkpoint mode changing.
-+ * %-EPERM	- Operation not permitted.
-  */
- static int nilfs_ioctl_change_cpmode(struct inode *inode, struct file *filp,
- 				     unsigned int cmd, void __user *argp)
-@@ -230,13 +224,10 @@ out:
-  * checkpoint from NILFS2 file system. This ioctl is used in rmcp
-  * utility.
-  *
-- * Return Value: On success, 0 is returned and a checkpoint is
-- * removed. On error, one of the following negative error codes
-- * is returned.
-- *
-- * %-EPERM - Operation not permitted.
-- *
-- * %-EFAULT - Failure during checkpoint removing.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * %-EFAULT	- Failure during checkpoint removing.
-+ * %-EPERM	- Operation not permitted.
-  */
- static int
- nilfs_ioctl_delete_checkpoint(struct inode *inode, struct file *filp,
-@@ -282,7 +273,7 @@ out:
-  * requested checkpoints. The NILFS_IOCTL_GET_CPINFO ioctl is used in
-  * lscp utility and by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_cpinfo structures in output buffer.
-+ * Return: Count of nilfs_cpinfo structures in output buffer.
-  */
- static ssize_t
- nilfs_ioctl_do_get_cpinfo(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -306,17 +297,14 @@ nilfs_ioctl_do_get_cpinfo(struct the_nil
-  *
-  * Description: nilfs_ioctl_get_cpstat() returns information about checkpoints.
-  * The NILFS_IOCTL_GET_CPSTAT ioctl is used by lscp, rmcp utilities
-- * and by nilfs_cleanerd daemon.
-- *
-- * Return Value: On success, 0 is returned, and checkpoints information is
-- * copied into userspace pointer @argp. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EIO - I/O error.
-+ * and by nilfs_cleanerd daemon.  The checkpoint statistics are copied to
-+ * the userspace memory pointed to by @argp.
-  *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EFAULT - Failure during getting checkpoints statistics.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during getting checkpoints statistics.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_cpstat(struct inode *inode, struct file *filp,
- 				  unsigned int cmd, void __user *argp)
-@@ -349,7 +337,8 @@ static int nilfs_ioctl_get_cpstat(struct
-  * info about requested segments. The NILFS_IOCTL_GET_SUINFO ioctl is used
-  * in lssu, nilfs_resize utilities and by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_suinfo structures in output buffer.
-+ * Return: Count of nilfs_suinfo structures in output buffer on success,
-+ * or a negative error code on failure.
-  */
- static ssize_t
- nilfs_ioctl_do_get_suinfo(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -373,17 +362,14 @@ nilfs_ioctl_do_get_suinfo(struct the_nil
-  *
-  * Description: nilfs_ioctl_get_sustat() returns segment usage statistics.
-  * The NILFS_IOCTL_GET_SUSTAT ioctl is used in lssu, nilfs_resize utilities
-- * and by nilfs_cleanerd daemon.
-- *
-- * Return Value: On success, 0 is returned, and segment usage information is
-- * copied into userspace pointer @argp. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EIO - I/O error.
-+ * and by nilfs_cleanerd daemon.  The requested segment usage information is
-+ * copied to the userspace memory pointed to by @argp.
-  *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EFAULT - Failure during getting segment usage statistics.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during getting segment usage statistics.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_sustat(struct inode *inode, struct file *filp,
- 				  unsigned int cmd, void __user *argp)
-@@ -416,7 +402,8 @@ static int nilfs_ioctl_get_sustat(struct
-  * on virtual block addresses. The NILFS_IOCTL_GET_VINFO ioctl is used
-  * by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_vinfo structures in output buffer.
-+ * Return: Count of nilfs_vinfo structures in output buffer on success, or
-+ * a negative error code on failure.
-  */
- static ssize_t
- nilfs_ioctl_do_get_vinfo(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -443,7 +430,8 @@ nilfs_ioctl_do_get_vinfo(struct the_nilf
-  * about descriptors of disk block numbers. The NILFS_IOCTL_GET_BDESCS ioctl
-  * is used by nilfs_cleanerd daemon.
-  *
-- * Return value: count of nilfs_bdescs structures in output buffer.
-+ * Return: Count of nilfs_bdescs structures in output buffer on success, or
-+ * a negative error code on failure.
-  */
- static ssize_t
- nilfs_ioctl_do_get_bdescs(struct the_nilfs *nilfs, __u64 *posp, int flags,
-@@ -480,19 +468,15 @@ nilfs_ioctl_do_get_bdescs(struct the_nil
-  *
-  * Description: nilfs_ioctl_do_get_bdescs() function returns information
-  * about descriptors of disk block numbers. The NILFS_IOCTL_GET_BDESCS ioctl
-- * is used by nilfs_cleanerd daemon.
-- *
-- * Return Value: On success, 0 is returned, and disk block descriptors are
-- * copied into userspace pointer @argp. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EINVAL - Invalid arguments from userspace.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-+ * is used by nilfs_cleanerd daemon.  If successful, disk block descriptors
-+ * are copied to userspace pointer @argp.
-  *
-- * %-EFAULT - Failure during getting disk block descriptors.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during getting disk block descriptors.
-+ * * %-EINVAL	- Invalid arguments from userspace.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_bdescs(struct inode *inode, struct file *filp,
- 				  unsigned int cmd, void __user *argp)
-@@ -526,16 +510,12 @@ static int nilfs_ioctl_get_bdescs(struct
-  * Description: nilfs_ioctl_move_inode_block() function registers data/node
-  * buffer in the GC pagecache and submit read request.
-  *
-- * Return Value: On success, 0 is returned. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-ENOENT - Requested block doesn't exist.
-- *
-- * %-EEXIST - Blocks conflict is detected.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EEXIST	- Block conflict detected.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOENT	- Requested block doesn't exist.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_move_inode_block(struct inode *inode,
- 					struct nilfs_vdesc *vdesc,
-@@ -590,8 +570,8 @@ static int nilfs_ioctl_move_inode_block(
-  * blocks that garbage collector specified with the array of nilfs_vdesc
-  * structures and stores them into page caches of GC inodes.
-  *
-- * Return Value: Number of processed nilfs_vdesc structures or
-- * error code, otherwise.
-+ * Return: Number of processed nilfs_vdesc structures on success, or
-+ * a negative error code on failure.
-  */
- static int nilfs_ioctl_move_blocks(struct super_block *sb,
- 				   struct nilfs_argv *argv, void *buf)
-@@ -668,14 +648,11 @@ static int nilfs_ioctl_move_blocks(struc
-  * in the period from p_start to p_end, excluding p_end itself. The checkpoints
-  * which have been already deleted are ignored.
-  *
-- * Return Value: Number of processed nilfs_period structures or
-- * error code, otherwise.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EINVAL - invalid checkpoints.
-+ * Return: Number of processed nilfs_period structures on success, or one of
-+ * the following negative error codes on failure:
-+ * * %-EINVAL	- invalid checkpoints.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_delete_checkpoints(struct the_nilfs *nilfs,
- 					  struct nilfs_argv *argv, void *buf)
-@@ -703,14 +680,11 @@ static int nilfs_ioctl_delete_checkpoint
-  * Description: nilfs_ioctl_free_vblocknrs() function frees
-  * the virtual block numbers specified by @buf and @argv->v_nmembs.
-  *
-- * Return Value: Number of processed virtual block numbers or
-- * error code, otherwise.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-ENOENT - The virtual block number have not been allocated.
-+ * Return: Number of processed virtual block numbers on success, or one of the
-+ * following negative error codes on failure:
-+ * * %-EIO	- I/O error.
-+ * * %-ENOENT	- Unallocated virtual block number.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_free_vblocknrs(struct the_nilfs *nilfs,
- 				      struct nilfs_argv *argv, void *buf)
-@@ -732,14 +706,11 @@ static int nilfs_ioctl_free_vblocknrs(st
-  * Description: nilfs_ioctl_mark_blocks_dirty() function marks
-  * metadata file or data blocks as dirty.
-  *
-- * Return Value: Number of processed block descriptors or
-- * error code, otherwise.
-- *
-- * %-ENOMEM - Insufficient memory available.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOENT - the specified block does not exist (hole block)
-+ * Return: Number of processed block descriptors on success, or one of the
-+ * following negative error codes on failure:
-+ * * %-EIO	- I/O error.
-+ * * %-ENOENT	- Non-existent block (hole block).
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_mark_blocks_dirty(struct the_nilfs *nilfs,
- 					 struct nilfs_argv *argv, void *buf)
-@@ -844,7 +815,7 @@ int nilfs_ioctl_prepare_clean_segments(s
-  * from userspace. The NILFS_IOCTL_CLEAN_SEGMENTS ioctl is used by
-  * nilfs_cleanerd daemon.
-  *
-- * Return Value: On success, 0 is returned or error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_clean_segments(struct inode *inode, struct file *filp,
- 				      unsigned int cmd, void __user *argp)
-@@ -970,20 +941,14 @@ out:
-  * and metadata are written out to the device when it successfully
-  * returned.
-  *
-- * Return Value: On success, 0 is retured. On errors, one of the following
-- * negative error code is returned.
-- *
-- * %-EROFS - Read only filesystem.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOSPC - No space left on device (only in a panic state).
-- *
-- * %-ERESTARTSYS - Interrupted.
-- *
-- * %-ENOMEM - Insufficient memory available.
-- *
-- * %-EFAULT - Failure during execution of requested operation.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT		- Failure during execution of requested operation.
-+ * * %-EIO		- I/O error.
-+ * * %-ENOMEM		- Insufficient memory available.
-+ * * %-ENOSPC		- No space left on device (only in a panic state).
-+ * * %-ERESTARTSYS	- Interrupted.
-+ * * %-EROFS		- Read only filesystem.
-  */
- static int nilfs_ioctl_sync(struct inode *inode, struct file *filp,
- 			    unsigned int cmd, void __user *argp)
-@@ -1017,7 +982,7 @@ static int nilfs_ioctl_sync(struct inode
-  * @filp: file object
-  * @argp: pointer on argument from userspace
-  *
-- * Return Value: On success, 0 is returned or error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_resize(struct inode *inode, struct file *filp,
- 			      void __user *argp)
-@@ -1053,7 +1018,7 @@ out:
-  * checks the arguments from userspace and calls nilfs_sufile_trim_fs, which
-  * performs the actual trim operation.
-  *
-- * Return Value: On success, 0 is returned or negative error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_trim_fs(struct inode *inode, void __user *argp)
- {
-@@ -1095,7 +1060,7 @@ static int nilfs_ioctl_trim_fs(struct in
-  * of segments in bytes and upper limit of segments in bytes.
-  * The NILFS_IOCTL_SET_ALLOC_RANGE is used by nilfs_resize utility.
-  *
-- * Return Value: On success, 0 is returned or error code, otherwise.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- static int nilfs_ioctl_set_alloc_range(struct inode *inode, void __user *argp)
- {
-@@ -1146,17 +1111,15 @@ out:
-  * @dofunc: concrete function of getting metadata info
-  *
-  * Description: nilfs_ioctl_get_info() gets metadata info by means of
-- * calling dofunc() function.
-- *
-- * Return Value: On success, 0 is returned and requested metadata info
-- * is copied into userspace. On error, one of the following
-- * negative error codes is returned.
-- *
-- * %-EINVAL - Invalid arguments from userspace.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-+ * calling dofunc() function.  The requested metadata information is copied
-+ * to userspace memory @argp.
-  *
-- * %-EFAULT - Failure during execution of requested operation.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EFAULT	- Failure during execution of requested operation.
-+ * * %-EINVAL	- Invalid arguments from userspace.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- static int nilfs_ioctl_get_info(struct inode *inode, struct file *filp,
- 				unsigned int cmd, void __user *argp,
-@@ -1196,18 +1159,14 @@ static int nilfs_ioctl_get_info(struct i
-  * encapsulated in nilfs_argv and updates the segment usage info
-  * according to the flags in nilfs_suinfo_update.
-  *
-- * Return Value: On success, 0 is returned. On error, one of the
-- * following negative error codes is returned.
-- *
-- * %-EPERM - Not enough permissions
-- *
-- * %-EFAULT - Error copying input data
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-EINVAL - Invalid values in input (segment number, flags or nblocks)
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EEXIST	- Block conflict detected.
-+ * * %-EFAULT	- Error copying input data.
-+ * * %-EINVAL	- Invalid values in input (segment number, flags or nblocks).
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-+ * * %-EPERM	- Not enough permissions.
-  */
- static int nilfs_ioctl_set_suinfo(struct inode *inode, struct file *filp,
- 				unsigned int cmd, void __user *argp)
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -599,6 +599,7 @@ static int dbc_tty_init(void)
+ 		pr_err("Can't register dbc tty driver\n");
+ 		tty_driver_kref_put(dbc_tty_driver);
+ 		idr_destroy(&dbc_tty_minors);
++		dbc_tty_driver = NULL;
+ 	}
+ 
+ 	return ret;
 
 
