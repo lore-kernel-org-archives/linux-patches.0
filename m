@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91827476CF0;
-	Mon, 31 Aug 2026 13:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E78A42E43F;
+	Mon, 31 Aug 2026 13:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184489; cv=none; b=Tt/wzsShAYN7apt/pwwJ3C9rN82Ai/jmN4I87m6/JRPrhlvvW5130T1KjycQXZWurLRS7s+OJYG8QFn3byyhmqFTPvRORZ04RWx+2R/H6TtIf3muE7TFYPCPgHhch4KITjaTDQSFOEYc49I5O0uvnH8aYR6DRL1sZD46F4sq8Mk=
+	t=1788184492; cv=none; b=sgB+nS2IwbrZAFj3H/aH3QlIh+/qCw/f2929mf85XCo7QZtUg6MY2mxixcc4K2wDKvhk77/q1zsIHJ7tP/hAztv9xQvoaTqbH/YjhwWwIi1RzyFfgsWX/e3HKxvJBOfz+0NxXT08G3GFAWNidgf+MlVEg5F18rjsDFeGJJLH8O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184489; c=relaxed/simple;
-	bh=ujxhtxtsmgSsQuT+7j7vyiFzH64DEaUGEg2bzRHSAm8=;
+	s=arc-20240116; t=1788184492; c=relaxed/simple;
+	bh=VnxZnaAjODe6Vniv0gAJUEgt2/pHZbGu0djXJUfIGqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOgtPCKo+zX9GTTsnGwd/1q4zq+p6DGg3acv73AkXqHlKOtcnowdkU1mk8DPXZYO7kloWloS9YVjWcDTt6AG24K6b2bj5y/r2B5a/PnUw/KUAa/+KlBtfj25nq70iKSXjDS/rAvVmetVPyDp6gLHm/0jnxsEBnjp4H5iSEwu7xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aw73e8dJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dFgNMBe/1F0vEEOTj3ZlGNCddREzDs419HdTD0ovfYPSdzFHqGYGDvlFfVn37ofCWoXUCUxjQAhjKltG+bwXUSZC1lWQdD026ACDAsLR/7sg7E39HEpUR7ojcgBJUd4naxpXeYFVPrjqt2ksyI91+j8sjpl8ivwthEAKXEfUCok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ft3x2iPO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aw73e8dJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A721F000E9;
-	Mon, 31 Aug 2026 13:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ft3x2iPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9156E1F000E9;
+	Mon, 31 Aug 2026 13:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184488;
-	bh=2UnGo9E1BUpzRJERWJVZ1ufy2FF4kFDzI4avaaBHjf4=;
+	s=korg; t=1788184491;
+	bh=JVUPwsdtOGQXSMUm6aBIXoXaGgyBbOXi26w1JEEGC+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aw73e8dJItj3Anu3lRuCiztySBbmWo1IJaAtQR7DgrcX0l2t7DsQf6sfkh3orAfYw
-	 TPDaQxrNROMsoZsxc5YXpd7M4qFunLapA8B5nVwNqrzxNza/TdvsKyGpDTxiSoWUH+
-	 wA1keLebBmVw8FDjHkoAJc07e9ToCZz0x1Baw1xY=
+	b=Ft3x2iPOWR37MF484mHNws1B1n3v1Ie2C0pjEeUHm3E7A9x5ro7zlfyUZxWb9GdhZ
+	 NiBLWwDv1oOHB9AyD3Z0SG+xZgv4YcJqoqPLBHEHU9/kchyA+m8N3g6sVtItUbck2y
+	 ZIHvdWynMyPIZ7433S1UYo+mL+2mnKHRvIQZ0yQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Vishnu Razdan <vrazdan@openai.com>,
+	Ralf Lici <ralf@mandelbit.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 04/91] io_uring/io-wq: fix worker accounting when canceling creation callbacks
-Date: Mon, 31 Aug 2026 15:33:52 +0200
-Message-ID: <20260831133359.689508959@linuxfoundation.org>
+Subject: [PATCH 6.6 05/91] Revert "usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal"
+Date: Mon, 31 Aug 2026 15:33:53 +0200
+Message-ID: <20260831133359.750156338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -51,60 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Razdan <vrazdan@openai.com>
+From: Ralf Lici <ralf@mandelbit.com>
 
-commit 297b5ccea4acacaa47c150f043bce695202afbf1 upstream.
+This reverts commit 319f7a85b3c4e34ac2fe083eb146fe129a556317.
 
-create_worker_cb() reserves an io-wq worker slot only after its
-task-work callback runs. If the callback is canceled before then,
-io_worker_cancel_cb() still decrements acct->nr_workers. When an
-existing worker retires with its creation callback pending, that
-worker has already decremented the same account's worker count.
+The reverted commit uses disable_delayed_work_sync, which was introduced
+by commit 86898fa6b8cd ("workqueue: Implement disable/enable for
+(delayed) work items") in v6.10. The function is therefore unavailable
+in 6.6.y, causing configurations that enable CONFIG_FSL_USB2_OTG to fail
+to build.
 
-The resulting undercount permits worker creation beyond the account's
-configured limit. On an AST2600 OpenBMC system, an unchanged sensor
-daemon reached 4,291 threads with the original kernel. With an
-equivalent downstream fix, 25 passive samples under its normal
-workload showed 6-9 threads.
+The upstream commit is unaffected; only its incompatible stable backport
+is being reverted.
 
-Decrement nr_workers only when the canceled callback is not
-create_worker_cb(). Continuation callbacks still release their reserved
-slot, and both callback types retain the existing running-count,
-reference-count, and create-state cleanup.
-
-[ Backport: retain the existing wq->lock protecting worker accounting. ]
-
-Fixes: 1d5f5ea7cb7d ("io-wq: remove worker to owner tw dependency")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260811-vrazdan-io-wq-b4-submit-v1-1-719ced16c921@openai.com
-Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
+Fixes: 319f7a85b3c4 ("usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal")
+Link: https://lore.kernel.org/stable/20260827154302.706689-1-ralf@mandelbit.com/
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/phy/phy-fsl-usb.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 37725c5031b4c..a20be1a43aafc 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -193,9 +193,12 @@ static void io_worker_cancel_cb(struct io_worker *worker)
- 	struct io_wq *wq = worker->wq;
+diff --git a/drivers/usb/phy/phy-fsl-usb.c b/drivers/usb/phy/phy-fsl-usb.c
+index 552899fa985ed..79617bb0a70e8 100644
+--- a/drivers/usb/phy/phy-fsl-usb.c
++++ b/drivers/usb/phy/phy-fsl-usb.c
+@@ -987,7 +987,6 @@ static void fsl_otg_remove(struct platform_device *pdev)
+ {
+ 	struct fsl_usb2_platform_data *pdata = dev_get_platdata(&pdev->dev);
  
- 	atomic_dec(&acct->nr_running);
--	raw_spin_lock(&wq->lock);
--	acct->nr_workers--;
--	raw_spin_unlock(&wq->lock);
-+	/* create_worker_cb() has not reserved a worker slot yet. */
-+	if (worker->create_work.func != create_worker_cb) {
-+		raw_spin_lock(&wq->lock);
-+		acct->nr_workers--;
-+		raw_spin_unlock(&wq->lock);
-+	}
- 	io_worker_ref_put(wq);
- 	clear_bit_unlock(0, &worker->create_state);
- 	io_worker_release(worker);
+-	disable_delayed_work_sync(&fsl_otg_dev->otg_event);
+ 	usb_remove_phy(&fsl_otg_dev->phy);
+ 	free_irq(fsl_otg_dev->irq, fsl_otg_dev);
+ 
 -- 
 2.53.0
 
