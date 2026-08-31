@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C576251A72F;
-	Mon, 31 Aug 2026 13:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98C6519935;
+	Mon, 31 Aug 2026 13:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183819; cv=none; b=ugxXYibMOoxsl+2uQ3bKf1Mc3aifwyHhuvodXdIRqXXZFl3SW6n93sGmD5UVie1ndewYVDwOKSZovd2JTZVc/+TF0et4S9J1bvluOTnaCK6xRG6Y+QZB4u31HPScB0u5uoYbCdEwhcdu1HyGVjpxBFK3rewN7LOT2OrHQcVOM4o=
+	t=1788183820; cv=none; b=QM/tzmod/+hrFeFUMhXl5MEMlmK1Gv3nVGlDUBhAWUhUxAuzgT/I51Sa02tDiFFSqaBXxoZSOExCM9272+uqNeMkExA8ldilJGF+ZNyDQSt4gFdj/yfpGC3N9JUMC6CIw+VyIPPY4hLhylTNnQpB90dKXeT8Nf4XZMXlfnsYjqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183819; c=relaxed/simple;
-	bh=M++qnYEBIPrFMdHqb4uE5jaKhapioNs/brjdMNPjxzc=;
+	s=arc-20240116; t=1788183820; c=relaxed/simple;
+	bh=vXYVocBxDvPJKwTwVKmX5ecFmVttEgJ3A9P2OBB5k28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QGjh0Xt3eQpoYJEOmdQF2AlY/rpqNTD+jFSqci/VfS2D3+vetktQoQtQX8dOtECSXpza4DiGs2NvAHrVxLm+jP89m6k6Q2tsLD7Y6Hyjpf0RQbMGRlIMAYHpFVUGyLJrm4Wt7/ryxa7QigHPS3VLwjJWiMPiELDparnTpHbll4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VNzi6b8Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LbBRbd0V9ZvVIVNfLRmXTTsB3iUV75yJr/DCNWnZ5S2KmL9fkSTEyMSR2DW9tBKOa2HSK84v8NfoyFs8mo5RVrRBD/hVUnVXiDL5xejOwq5dea6z+S4aPUpED2/4M+/0Y8UcOKZSxviGHSFfJhEufD5R2i+h2e5zUrzWvueW7Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X3JY4Ha7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VNzi6b8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137CB1F000E9;
-	Mon, 31 Aug 2026 13:43:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X3JY4Ha7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6291F00A3F;
+	Mon, 31 Aug 2026 13:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183816;
-	bh=GjxtKlsoeJlgmpkUYE75rwgbvZZYGBC24mHWY5N0GwQ=;
+	s=k20260515; t=1788183817;
+	bh=Y7lED9xg9OaQMQjqPEN4yvOdKWLV4vJD0/QjDmcKNCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNzi6b8Y2tQai1OrVxO1FNpvByme+ecunEk7UYVV3GVhjGbDfFJNMa9bwvYjhNBBn
-	 JmZ0Q+2QA9bRB6T8I0/CczoLxge2MtcaoraRKp1MATXvBUf/cyJUwwjz/0BzyBt44+
-	 yyKQADQDmt5GjChXOtbBfnnPRB+rZ4n5Ctn49Eb4HBetl0t6ITTiB+yR0qZjiHWqRy
-	 inLYEbVNkWPpHDXBm9/Kw1U0x5bS06oFaY1hFCY+qX0hqvbcpn3HCAKB8mNvPKeU4a
-	 yft9Y9Qnc/B4f4F2tIr39ANVOaCk0Z18TKL973DKmS/mr3sugnyNdoMhbl0sM05CpF
-	 oTWP9wR2xWK6A==
+	b=X3JY4Ha73Lcj2qXvKo+edTQmiqJU+tqxAHHcgRtABVLLhwWTQGACc8+TfPADgRO7Z
+	 NLC9poZsZuJSeALcsnHnbh/tlmizV4mLGBZ2naSbyT61as9FxaYWgyuxSzGijDd4ks
+	 1H9k+uMNRNv9PPGZIG1IAv7VhOcDo8i1bVfLyg3NujuSrHp9ySQTTyqkFUriWDon2E
+	 /3Y7PxkBfv/duOr6x28dsQDTCev7dFw01JcyGt6GEMpX8OXIjPDndTFhEZ3RDrhaox
+	 ML9ZD8XaGbPE+tMb5IhCcMpAuIDjbSzYNIQet8ahvi+sbd/b0Ce7c+ZEQ9Ahwc6yPX
+	 lFbv+hiEtCjtQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tellakula Yeswanth Krishna <yeswanth@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Georgi Valkov <gvalkov@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
+	briannorris@chromium.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] char/nvram: Remove redundant nvram_mutex
-Date: Mon, 31 Aug 2026 09:25:50 -0400
-Message-ID: <20260831133314.4125787-322-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mwifiex: replace one-element arrays with flexible array members
+Date: Mon, 31 Aug 2026 09:25:51 -0400
+Message-ID: <20260831133314.4125787-323-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,401 +54,473 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+From: Georgi Valkov <gvalkov@gmail.com>
 
-[ Upstream commit e8c715f3a7dae43fabae261493a26474fec11863 ]
+[ Upstream commit 1cb5845a58d8e1f85d5766c6fbcbfddf96c212a1 ]
 
-The global nvram_mutex in drivers/char/nvram.c is redundant and unused,
-and this triggers compiler warnings on some configurations.
+Replace deprecated one-element arrays with flexible array members.
+CONFIG_FORTIFY_SOURCE reports the following warning when
+one-element arrays are used as variable-length buffers:
 
-All platform-specific nvram operations already provide their own internal
-synchronization, meaning the wrapper-level mutex does not provide any
-additional safety.
+sta_cmd.c:1033 mwifiex_sta_prepare_cmd
+memcpy: detected field-spanning write (size 84) of single field
+"domain->triplet" at .../marvell/mwifiex/sta_cmd.c:1033 (size 3)
 
-Remove the nvram_mutex definition along with all remaining lock/unlock
-users across PPC32, x86, and m68k code paths, and rely entirely on the
-per-architecture nvram implementations for locking.
+Convert affected structs to use flexible array members.
+- Preserve existing wire layouts.
+- Use DECLARE_FLEX_ARRAY() for structs inside affected unions.
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Tellakula Yeswanth Krishna <yeswanth@linux.ibm.com>
-Signed-off-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Tested-by: yeswanth <yeswanth@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://patch.msgid.link/20260428061540.73668-1-venkat88@linux.ibm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-on: WRT3200ACM, OpenWrt
+Signed-off-by: Georgi Valkov <gvalkov@gmail.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260716001728.57799-1-gvalkov@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[char/nvram]` `[Remove]` — Remove redundant `nvram_mutex`
-that is unused on some configs and unnecessary on others.
+**Record:** `[wifi: mwifiex]` `[replace]` — Convert deprecated one-
+element arrays in mwifiex firmware/command structures to proper flexible
+array members (FAMs).
 
-### Step 1.2: Tags
+### Step 1.2: Commit message tags
 **Record:**
-- **Reviewed-by:** Arnd Bergmann (original author of `nvram_mutex` in
-  2010)
-- **Suggested-by:** Arnd Bergmann
-- **Tested-by:** Tellakula Yeswanth Krishna (IBM), yeswanth
-- **Reviewed-by:** Ritesh Harjani (IBM)
+- **Signed-off-by:** Georgi Valkov `<gvalkov@gmail.com>` (author)
+- **Reviewed-by:** Francesco Dolcini `<francesco.dolcini@toradex.com>`
+- **Tested-on:** WRT3200ACM, OpenWrt
 - **Link:**
-  https://patch.msgid.link/20260428061540.73668-1-venkat88@linux.ibm.com
-- **Signed-off-by:** Venkat Rao Bagalkote, Greg Kroah-Hartman
-- No `Fixes:`, no `Reported-by:`, no `Cc: stable@vger.kernel.org`
-- Notable: subsystem expert (Arnd) both suggested and reviewed; IBM
-  tested on Power
+  https://patch.msgid.link/20260716001728.57799-1-gvalkov@gmail.com
+- **Signed-off-by:** Johannes Berg (committer)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org` in the
+  commit itself
+- Notable: Kees Cook (`kees@kernel.org`) was CC’d on the mailing-list
+  thread and originally reported the FORTIFY warning
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug described:** Global `nvram_mutex` is redundant/unused; causes
-  compiler warnings on some configurations.
-- **Symptom:** `-Wunused` warning (unused static mutex) on configs where
-  no lock sites are compiled; redundant outer locking elsewhere.
-- **Root cause (author):** Mutex is leftover from BKL→mutex conversion;
-  per-arch NVRAM ops already synchronize internally.
-- **Version info:** None in message.
+- **Bug:** One-element arrays (`triplet[1]`, `value[1]`, etc.) are used
+  as variable-length buffers; with `CONFIG_FORTIFY_SOURCE`, `memcpy()`
+  triggers a *field-spanning write* diagnostic (84-byte write into a
+  3-byte `triplet` field at `sta_cmd.c:1033`).
+- **Symptom:** Compile-time FORTIFY warning; with FORTIFY enabled at
+  runtime, `fortify_warn_once()` can emit a one-time kernel warning on
+  the 802.11d domain-info path when copying multiple triplets.
+- **Root cause:** Deprecated one-element-array-as-FAM pattern;
+  compiler/FORTIFY treats the destination as a fixed 3-byte field, not a
+  variable-length tail.
+- **Fix approach:** Convert to `[]` / `DECLARE_FLEX_ARRAY()`, preserve
+  wire layout, fix `sizeof` usage (`- 1` removal in SNMP MIB size,
+  pointer dereference fixes in `join.c`).
 
 ### Step 1.4: Hidden bug fix?
-**Record:** Not a hidden crash/corruption fix. This is **build hygiene +
-dead-code removal**. Removing redundant outer mutex does not fix a
-reported runtime failure; arch-level locks (`rtc_lock`, `nv_lock`)
-already protect hardware access.
+**Record:** Yes, disguised as structural cleanup. It is not a typical
+crash/UAF fix, but it corrects formally incorrect struct typing that
+triggers FORTIFY diagnostics and can produce runtime `WARN_ONCE` on the
+802.11d domain-info command path when `CONFIG_FORTIFY_SOURCE` is
+enabled.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `drivers/char/nvram.c` only (~19 lines removed, 0 added)
-- **Functions touched:** `nvram_misc_ioctl()` ioctl cases only; removes
-  `DEFINE_MUTEX(nvram_mutex)`
-- **Scope:** Single-file surgical cleanup
+- `fw.h`: 18 lines changed (9 one-element `[1]` → `[]` /
+  `DECLARE_FLEX_ARRAY()` conversions)
+- `join.c`: 8 lines (pointer/`sizeof` fixes for union FAM members)
+- `sta_cmd.c`: 2 lines (remove `- 1` from SNMP MIB base size)
+- **Functions touched:** `mwifiex_cmd_802_11_associate()` (`join.c`),
+  `mwifiex_cmd_802_11_snmp_mib()` (`sta_cmd.c`); header-only changes
+  affect `mwifiex_cmd_802_11d_domain_info()` and others
+- **Scope:** Single-driver, 3 files, ~28 lines — surgical
 
-### Step 2.2: Code flow change
+### Step 2.2: Code flow per hunk
 **Record:**
-| Hunk | Before | After |
-|------|--------|-------|
-| Global | `DEFINE_MUTEX(nvram_mutex)` always defined | Mutex removed
-entirely |
-| `IOC_NVRAM_SYNC` (PPC32) | lock → `ppc_md.nvram_sync()` → unlock |
-Direct call |
-| `NVRAM_INIT` / `NVRAM_SETCKS` (x86/m68k) | lock → arch op → unlock |
-Direct arch op call |
-
-Read/write/open paths were **already** not using `nvram_mutex`.
+- **`fw.h` structs:** Before: compiler sees fixed 1-element tails.
+  After: proper FAMs; wire layout unchanged (`__packed` preserved).
+- **`join.c` phy/ss TLV setup:** Before:
+  `sizeof(phy_tlv->fh_ds.ds_param_set)` on a one-element union member;
+  `memcpy(&phy_tlv->fh_ds.ds_param_set, ...)`. After:
+  `sizeof(*phy_tlv->fh_ds.ds_param_set)` and
+  `memcpy(phy_tlv->fh_ds.ds_param_set, ...)` — semantically equivalent,
+  FAM-correct.
+- **`sta_cmd.c` SNMP MIB:** Before: `sizeof(snmp_mib) - 1 + S_DS_GEN`
+  (old FAM hack). After: `sizeof(snmp_mib) + S_DS_GEN` — correct base
+  size with zero-length FAM.
 
 ### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Build warning / redundant synchronization cleanup
-- **Mechanism:** On **ppc64** (CONFIG_PPC, no CONFIG_PPC32/X86/M68K),
-  mutex is defined but never referenced → `-Wunused-variable` under
-  default `-Wunused`. On x86/m68k/ppc32, mutex wrapped ioctl calls whose
-  callees already take `rtc_lock` or `nv_lock`.
+**Record:** **Category:** Memory-safety / build-hardening (FORTIFY
+field-spanning write detection). **Mechanism:** `memcpy(domain->triplet,
+..., no_of_triplet * 3)` writes up to 249 bytes (83 triplets × 3 bytes)
+into a field declared as `triplet[1]` (3 bytes). Data lands in the
+2048-byte command skb (`MWIFIEX_SIZE_OF_CMD_BUFFER`), so legacy code
+worked, but FORTIFY flags the mismatch. FAM conversion aligns struct
+definitions with actual usage.
 
 ### Step 2.4: Fix quality
-**Record:** Fix is minimal and logically sound. Verified callees:
-- x86 `pc_nvram_initialize()` / `pc_nvram_set_checksum()` →
-  `spin_lock_irq(&rtc_lock)`
-- m68k `atari_nvram_initialize()` / `atari_nvram_set_checksum()` →
-  `spin_lock_irq(&rtc_lock)`
-- ppc `core99_nvram_sync()` → `raw_spin_lock_irqsave(&nv_lock, flags)`
-
-Removing outer mutex does not remove the only serialization; it removes
-duplicate serialization. **Regression risk: LOW** given Arnd’s review
-and existing inner locks.
+**Record:** Obviously correct — no layout change, hardware-tested
+(WRT3200ACM), reviewed by mwifiex contributor. Minimal regression risk;
+`DECLARE_FLEX_ARRAY()` already used elsewhere in this tree’s headers.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:**
-- `nvram_mutex` introduced in `613655fa39ff6` (2010, Arnd Bergmann) —
-  BKL→mutex scripted conversion
-- Lock sites at ioctl paths from `95ac14b8a3281` / `2d58636e0af72`
-  (2019, Finn Thain refactor)
-- Mutex was removed from open/read/write long ago (`83cb16727085b`,
-  2009+)
+**Record:** `triplet[1]` in `fw.h:1686` dates to merge commit
+`5d324e5159d9e` (6.18-rc8 era, Nov 2025). The one-element-array pattern
+is long-standing in mwifiex, not a recent regression.
 
 ### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+**Record:** N/A — no `Fixes:` tag in commit message.
 
 ### Step 3.3: Related file history
-**Record:** `nvram.c` refactored in 2019 (`arch_nvram_ops`, PPC ioctl
-split). Mutex survived refactor as outer wrapper. Standalone patch, not
-part of a series.
+**Record:** Recent mwifiex stable commits in this tree are runtime bug
+fixes (UAF, NULL deref, scan freezes). This FAM commit (`1cb5845a58d8e`)
+is on `master` but **not** in this 6.18.44 checkout. Standalone single
+patch (v1→v3 on list; committed version is v3).
 
 ### Step 3.4: Author context
-**Record:** Venkat Rao Bagalkote — IBM contributor; no prior `nvram.c`
-history in this tree. Arnd Bergmann is the relevant subsystem historian.
+**Record:** Georgi Valkov has at least one prior mwifiex fix in this
+tree (`731acda5ba777` firmware-freeze fix). Johannes Berg is wireless
+maintainer.
 
 ### Step 3.5: Dependencies
-**Record:** No prerequisites. Commit not yet in this tree; target code
-matches diff context exactly. Prerequisites `613655fa39ff6`,
-`95ac14b8a3281` are ancestors of HEAD.
+**Record:** No series dependencies. `git apply --check` on the patch
+against this tree: **applies cleanly**. `DECLARE_FLEX_ARRAY` exists in
+`include/linux` in this tree.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1–4.5
-**Record:**
-- `b4 dig -c <commit>`: **N/A** — commit not present in local tree; no
-  commitish available
-- Lore/patch.msgid.link fetch: **BLOCKED** (Anubis bot protection)
-- Could not verify mailing-list stable nominations or reviewer thread
-  content
-- Link in commit message confirms patch submission (2026-04-28) but
-  thread content unverified
+### Step 4.1: Original discussion
+**Record:** `b4 dig -c 1cb5845a58d8e` →
+https://patch.msgid.link/20260716001728.57799-1-gvalkov@gmail.com.
+Series: v1 (Jul 13) → v3 (Jul 16, committed). Kees Cook reported the
+FORTIFY warning in v1 review (`202607150932.F2A0836@keescook`).
+
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w`: CC’d — `kees@kernel.org`,
+`johannes.berg@intel.com`, `francesco@dolcini.it`, `linux-
+wireless@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Francesco
+Dolcini added **`Cc: stable@vger.kernel.org # 6.12+`** with `Reviewed-
+by`.
+
+### Step 4.3: Bug report
+**Record:** No syzbot/bugzilla. Trigger reported by Kees Cook (FORTIFY
+maintainer) during review — build-time warning, reproducible when
+`CONFIG_FORTIFY_SOURCE=y`.
+
+### Step 4.4: Related patches
+**Record:** Standalone; not part of a multi-commit series requiring
+other patches.
+
+### Step 4.5: Stable list
+**Record:** Francesco Dolcini explicitly nominated stable on the patch
+thread (`Cc: stable@vger.kernel.org # 6.12+`). No NAKs found in mbox.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `nvram_misc_ioctl()`, and arch ops: `pc_nvram_initialize()`,
-`pc_nvram_set_checksum()`, `core99_nvram_sync()`, atari equivalents.
+**Record:** `mwifiex_cmd_802_11d_domain_info()`,
+`mwifiex_cmd_802_11_snmp_mib()`, `mwifiex_cmd_802_11_associate()`,
+`mwifiex_sta_prepare_cmd()` (dispatcher).
 
 ### Step 5.2: Callers
-**Record:** `nvram_misc_ioctl` registered as `.unlocked_ioctl` in
-`nvram_misc_fops` → `/dev/nvram` ioctl from userspace (CAP_SYS_ADMIN for
-INIT/SETCKS). Reachable but niche.
+**Record:**
+- `mwifiex_cmd_802_11d_domain_info` → `mwifiex_sta_prepare_cmd` →
+  `mwifiex_cmd_host_cmd()` → `mwifiex_send_cmd()` from `cfg80211.c` and
+  `sta_ioctl.c` (regulatory/11d setup)
+- `mwifiex_cmd_802_11_associate` → association path during connect/roam
+- `mwifiex_cmd_802_11_snmp_mib` → SNMP MIB get/set commands
 
 ### Step 5.3: Callees
-**Record:** Arch ops use `rtc_lock` (x86/m68k) or `nv_lock` (powermac).
-Only `core99_nvram_sync` implements `ppc_md.nvram_sync` in this tree.
+**Record:** `memcpy()`, `cpu_to_le16()`, `le16_unaligned_add_cpu()` —
+command construction into pre-allocated 2048-byte skb buffers.
 
 ### Step 5.4: Reachability
-**Record:** Userspace ioctl path; admin capability required for
-init/setcks. ppc64 builds still compile `nvram.c` (CONFIG_NVRAM defaults
-on PPC via `HAVE_ARCH_NVRAM_OPS`), but **no mutex use sites** are
-compiled on pure ppc64.
+**Record:** Reachable on normal WiFi operations — association,
+regulatory domain configuration (802.11d), SNMP MIB tuning. Not init-
+only; triggered during connect and regdomain changes on mwifiex hardware
+(USB/SDIO/PCIe).
 
 ### Step 5.5: Similar patterns
-**Record:** Read/write paths never used wrapper mutex — only ioctl did.
-Consistent with “leftover from BKL era” narrative.
+**Record:** Other mwifiex structs in `fw.h` already use `[]` FAMs
+(`rates[]`, `ssid[]`, `chan_scan_param[]`). This patch brings the
+remaining one-element holdouts in line.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (6.18.44)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
 ### Step 6.1: Buggy code present?
-**Record:** **YES.** Local tree is `v6.18.44` (`stable/linux-6.18.y`).
-`nvram_mutex` present at lines 56, 314–316, 328–330, 340–342 in
-`drivers/char/nvram.c`.
+**Record:** **Yes.** Local tree is **6.18.44** (`git describe HEAD` →
+`v6.18.44-2-g1b9e1abadee04`). `triplet[1]`, `value[1]`, `tlv_buf[1]`,
+etc. still present in `fw.h`. Commit `1cb5845a58d8e` is **not** an
+ancestor of HEAD.
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** File structure matches diff; no
-conflicting recent churn.
+**Record:** **Clean apply** — verified with `git apply --check`. No
+conflicting refactors in these files since 6.18 branch.
 
 ### Step 6.3: Related fixes already present?
-**Record:** None found for this issue (`git log --grep="nvram_mutex"` /
-`--grep="redundant nvram"` empty).
+**Record:** No equivalent FAM conversion found in this tree’s mwifiex
+history.
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem
-**Record:** `drivers/char` — legacy `/dev/nvram` driver. **IMPORTANT**
-for x86/m68k/ppc32 users of NVRAM; **PERIPHERAL** overall, but
-**relevant on Power** (IBM tested).
+### Step 7.1: Subsystem criticality
+**Record:** `drivers/net/wireless/marvell/mwifiex` — **PERIPHERAL**
+(Marvell WiFi driver; common on embedded/OpenWrt devices like
+WRT3200ACM, but not core kernel).
 
-### Step 7.2: Activity
-**Record:** Low activity; last functional changes ~2019. Mature legacy
-driver.
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained in 6.18.y — multiple recent mwifiex
+stable backports (UAF, NULL deref, scan/roam fixes).
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:**
-- **ppc64 builders:** unused-variable warning on every default NVRAM
-  build (`-Wunused` always enabled per `scripts/Makefile.extrawarn`)
-- **x86/m68k/ppc32 users:** ioctl path loses redundant outer mutex
-  (effective serialization unchanged via inner locks)
+**Record:** Users/builders with `CONFIG_MWIFIEX` (+ USB/SDIO/PCIe) and
+`CONFIG_FORTIFY_SOURCE=y`. Affects kernel builders seeing compile
+warnings and users of FORTIFY-enabled kernels doing 802.11d domain
+configuration.
 
 ### Step 8.2: Trigger conditions
-**Record:** Warning: build `CONFIG_NVRAM=y` on ppc64 without
-PPC32/X86/M68K ioctl paths. Common on modern Power servers. Not a
-default build **error** unless `-Werror` is added by builder.
+**Record:** Building with FORTIFY (compile warning); at runtime,
+`mwifiex_cmd_802_11d_domain_info()` SET with `no_of_triplet > 1`
+triggers FORTIFY `WARN_ONCE` field-spanning diagnostic.
+802.11d/regulatory setup is normal on many deployments. Not
+unprivileged-syscall reachable directly, but common during WiFi bring-
+up.
 
 ### Step 8.3: Failure mode severity
-**Record:**
-- **Without patch:** Compiler warning (MEDIUM for builders; LOW for end
-  users)
-- **With patch:** No expected runtime behavior change; removes duplicate
-  locking
-- **Severity if backport skipped:** No crash/corruption; possible
-  warning noise / `-Werror` build failure in strict environments
+**Record:** Compile-time FORTIFY **warning** (not error by default);
+runtime **WARN_ONCE** (not panic — verified: `fortify_panic` only when
+`p_size < size` with known struct size; here `p_size` is typically
+`SIZE_MAX` for embedded command buffers, so panic is not observed;
+hardware testing on OpenWrt confirms no crash). **Severity: LOW–MEDIUM**
+(build hygiene + dmesg warning, not crash/corruption).
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** MEDIUM for ppc64 build hygiene; negligible runtime
-  benefit
-- **Risk:** LOW — small diff, expert-reviewed, inner locks verified
-- **Ratio:** Modest positive; not critical, but appropriate stable
-  material as a contained build/cleanup fix
+- **Benefit:** Eliminates FORTIFY warnings for kernel builders; removes
+  runtime `WARN_ONCE` on 11d path; corrects struct definitions;
+  reviewer-nominated for stable.
+- **Risk:** Very low — wire layout unchanged, 28-line diff, hardware-
+  tested.
+- **Ratio:** Modest benefit, very low risk. Fits the **build-fix
+  exception** category.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Fixes real `-Wunused` warning on ppc64 (default NVRAM on Power)
-- Tiny, single-file, obviously correct cleanup
-- Reviewed/suggested by Arnd Bergmann (original mutex author)
-- IBM Tested-by on Power
-- Inner arch locking verified in-tree; mutex was duplicate
-- Applies cleanly to 6.18.44
+- Buggy one-element arrays present in 6.18.44
+- Patch applies cleanly
+- FORTIFY compile warnings (Kees Cook report)
+- Possible runtime `WARN_ONCE` on 802.11d domain commands with FORTIFY
+- Small, reviewed, hardware-tested, wire-layout-preserving
+- Francesco Dolcini: `Cc: stable@vger.kernel.org # 6.12+`
+- Build-fix exception applies
 
 **AGAINST backport:**
-- Not a runtime crash/corruption/security fix
-- Default kernel build warns but does not fail (`-Wunused` without
-  `-Werror`)
-- Official stable rules emphasize “build error” more than warnings
-- Touches synchronization (even if redundant) in stable tree
+- No crash, data corruption, or security CVE
+- No end-user functional regression in typical use (legacy code worked
+  because cmd buffers are 2048 bytes)
+- Peripheral driver; impact limited to mwifiex users
+- FORTIFY issue is warning-level, not build-breaking by default
 
-**Unresolved:** Mailing-list thread content unverified (lore blocked);
-could not run `b4 dig` without commit hash.
+**Unresolved:** Whether any distro builds mwifiex with `-Werror` on
+FORTIFY warnings (unverified; not needed for decision).
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — Arnd reviewed; IBM tested;
-   inner locks verified
-2. Fixes real bug affecting users? **PASS (marginal)** — real compiler
-   warning on ppc64; not end-user runtime bug
-3. Important issue? **PASS (low-medium)** — build warning; not
-   crash/corruption
-4. Small and contained? **PASS** — one file, ~20 lines
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — code present, clean apply
-   expected
+1. Obviously correct and tested? **PASS** — reviewed, Tested-on
+   WRT3200ACM, layout preserved
+2. Fixes a real bug affecting users? **PASS** (borderline) — FORTIFY
+   diagnostic on real code path; not a functional regression fix
+3. Important issue (crash/security/corruption/deadlock)? **FAIL** for
+   critical severity — warning/build issue only, not crash or corruption
+4. Small and contained? **PASS** — 3 files, ~28 lines
+5. No new features or APIs? **PASS** — struct declaration correction
+   only
+6. Can apply to local tree? **PASS** — verified clean apply
 
 ### Step 9.3: Exception category
-**Record:** **BUILD FIX** — compiler warning on ppc64 configurations.
+**Record:** **BUILD FIX** — resolves `CONFIG_FORTIFY_SOURCE` compile-
+time field-spanning-write warnings.
 
 ### Step 9.4: Decision rationale
-For **Linux 6.18.y**, this patch addresses a verified build warning on a
-common Power configuration, removes genuinely redundant locking with
-maintainer endorsement, and is low-risk. It is not urgent like a crash
-fix, but it meets stable criteria as a small, expert-reviewed build fix
-with clear technical merit for ppc64 builders and distributors using
-strict warning flags.
+
+For **linux 6.18.44**, the buggy code exists, the fix applies cleanly,
+and it is a low-risk correctness/build-hardening fix explicitly
+nominated for stable by the mwifiex reviewer. While it does not fix a
+crash or data corruption, it falls under the documented build-fix
+exception, removes FORTIFY noise for kernel builders (including
+OpenWrt), and aligns struct definitions with long-standing variable-
+length usage. The risk of backporting is negligible.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 1] Confirmed no `Fixes:`, syzbot, or stable Cc tags
-- [Phase 2] Read full `drivers/char/nvram.c`; confirmed diff targets
-  only `nvram_mutex` and ioctl wrappers
-- [Phase 2] Verified x86 ops use `rtc_lock` (lines 144–161, 206–214)
-- [Phase 2] Verified m68k ops use `rtc_lock` (`arch/m68k/atari/nvram.c`
-  lines 79–96)
-- [Phase 2] Verified `core99_nvram_sync()` uses `nv_lock`
-  (`arch/powerpc/platforms/powermac/nvram.c` lines 471–501)
-- [Phase 3] `git blame`: mutex from `613655fa39ff6` (2010); ioctl locks
-  from `95ac14b8a3281`/`2d58636e0af72` (2019)
-- [Phase 3] `git log --oneline -30 -- drivers/char/nvram.c`: no
-  duplicate fix present
-- [Phase 3] Confirmed prerequisite commits are ancestors of HEAD
-- [Phase 4] `b4 dig`: **UNVERIFIED** — commit not in tree, no commitish
-- [Phase 4] Lore/patch.msgid.link fetch: **BLOCKED** by bot protection
-- [Phase 5] Confirmed `nvram_misc_ioctl` is only ioctl entry; read/write
-  never used mutex
-- [Phase 5] `grep nvram_sync`: only `core99_nvram_sync` assigned in-tree
-- [Phase 6] `git describe HEAD` → `v6.18.44`; `make kernelversion` →
-  `6.18.44`
-- [Phase 6] `grep nvram_mutex drivers/char/nvram.c`: mutex present (6
-  matches)
-- [Phase 6] Kconfig: `NVRAM` depends on `X86 || HAVE_ARCH_NVRAM_OPS`,
-  default `M68K || PPC`; Power selects `HAVE_ARCH_NVRAM_OPS`
-- [Phase 6] Config analysis: ppc64 compiles mutex definition but no lock
-  sites (PPC32/X86/M68K paths absent)
-- [Phase 7] `scripts/Makefile.extrawarn` line 108: `-Wunused` always
-  enabled
-- [Phase 8] Confirmed warning is not default `-Werror`; strict builders
-  may treat it as failure
+- [Phase 1] Parsed commit `1cb5845a58d8e`: subject, tags, FORTIFY
+  warning description
+- [Phase 2] Read full diff via `git show 1cb5845a58d8e`; 3 files, ~28
+  lines
+- [Phase 2] Confirmed `mwifiex_cmd_802_11d_domain_info()` memcpy at
+  `sta_cmd.c:1033` with `no_of_triplet` up to
+  `MWIFIEX_MAX_TRIPLET_802_11D` (83)
+- [Phase 3] `git describe HEAD` → v6.18.44; `git merge-base --is-
+  ancestor` → commit NOT in tree
+- [Phase 3] `git blame` on `triplet[1]` → present since 6.18-rc8 merge
+- [Phase 3] `git apply --check` → applies cleanly
+- [Phase 4] `b4 dig -c 1cb5845a58d8e` → lore URL found; v1/v3 series
+- [Phase 4] `b4 dig -w` → Kees Cook, Johannes Berg, Francesco Dolcini
+  CC’d
+- [Phase 4] mbox: Francesco Dolcini `Cc: stable@vger.kernel.org #
+  6.12+`; Kees Cook FORTIFY report
+- [Phase 5] Grep call chain: `mwifiex_send_cmd` →
+  `HostCmd_CMD_802_11D_DOMAIN_INFO` from `cfg80211.c`, `sta_ioctl.c`
+- [Phase 5] `MWIFIEX_SIZE_OF_CMD_BUFFER` = 2048 in `ioctl.h`
+- [Phase 6] Grep confirms `triplet[1]`, `value[1]` still in local `fw.h`
+- [Phase 6] `DECLARE_FLEX_ARRAY` present in `include/linux/bpf.h`
+  (exists in tree)
+- [Phase 8] Read `include/linux/fortify-string.h`: field-spanning →
+  `fortify_warn_once` (WARN_ONCE), not panic by default;
+  `__write_overflow_field` is compile-time warning
+- [Phase 8] `struct ieee80211_country_ie_triplet` is 3 bytes (packed
+  union in `ieee80211.h`)
 
-**YES**The branch search finished: this checkout is
-**stable/linux-6.18.y** at **v6.18.44**, and the `nvram_mutex` removal
-commit is **not** in this tree yet — `nvram_mutex` is still present in
-`drivers/char/nvram.c`.
+**YES**
 
-**Backport recommendation: YES** for 6.18.y.
+ drivers/net/wireless/marvell/mwifiex/fw.h      | 18 +++++++++---------
+ drivers/net/wireless/marvell/mwifiex/join.c    |  8 ++++----
+ drivers/net/wireless/marvell/mwifiex/sta_cmd.c |  2 +-
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-It’s a small, low-risk build/cleanup fix: on ppc64 the mutex is unused
-(compiler warning under `-Wunused`), and on x86/m68k/ppc32 the wrapper
-mutex is redundant because the arch ops already use `rtc_lock` or
-`nv_lock`. Arnd Bergmann reviewed/suggested it, and it was IBM-tested.
-It should apply cleanly to 6.18.44.
-
- drivers/char/nvram.c | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/char/nvram.c b/drivers/char/nvram.c
-index 9eff426a92865..e89cc1f1c89ea 100644
---- a/drivers/char/nvram.c
-+++ b/drivers/char/nvram.c
-@@ -53,7 +53,6 @@
- #include <asm/nvram.h>
- #endif
+diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
+index e9e8966069121..93561116959ac 100644
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -823,7 +823,7 @@ struct chan_band_param_set {
  
--static DEFINE_MUTEX(nvram_mutex);
- static DEFINE_SPINLOCK(nvram_state_lock);
- static int nvram_open_cnt;	/* #times opened */
- static int nvram_open_mode;	/* special open modes */
-@@ -310,11 +309,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
- 		break;
- #ifdef CONFIG_PPC32
- 	case IOC_NVRAM_SYNC:
--		if (ppc_md.nvram_sync != NULL) {
--			mutex_lock(&nvram_mutex);
-+		if (ppc_md.nvram_sync)
- 			ppc_md.nvram_sync();
--			mutex_unlock(&nvram_mutex);
--		}
- 		ret = 0;
- 		break;
- #endif
-@@ -324,11 +320,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
- 		if (!capable(CAP_SYS_ADMIN))
- 			return -EACCES;
+ struct mwifiex_ie_types_chan_band_list_param_set {
+ 	struct mwifiex_ie_types_header header;
+-	struct chan_band_param_set chan_band_param[1];
++	struct chan_band_param_set chan_band_param[];
+ } __packed;
  
--		if (arch_nvram_ops.initialize != NULL) {
--			mutex_lock(&nvram_mutex);
-+		if (arch_nvram_ops.initialize)
- 			ret = arch_nvram_ops.initialize();
--			mutex_unlock(&nvram_mutex);
--		}
- 		break;
- 	case NVRAM_SETCKS:
- 		/* just set checksum, contents unchanged (maybe useful after
-@@ -336,11 +329,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
- 		if (!capable(CAP_SYS_ADMIN))
- 			return -EACCES;
+ struct mwifiex_ie_types_rates_param_set {
+@@ -886,7 +886,7 @@ struct mwifiex_ie_types_wildcard_ssid_params {
+ #define TSF_DATA_SIZE            8
+ struct mwifiex_ie_types_tsf_timestamp {
+ 	struct mwifiex_ie_types_header header;
+-	u8 tsf_data[1];
++	u8 tsf_data[];
+ } __packed;
  
--		if (arch_nvram_ops.set_checksum != NULL) {
--			mutex_lock(&nvram_mutex);
-+		if (arch_nvram_ops.set_checksum)
- 			ret = arch_nvram_ops.set_checksum();
--			mutex_unlock(&nvram_mutex);
--		}
- 		break;
- #endif /* CONFIG_X86 || CONFIG_M68K */
- 	}
+ struct mwifiex_cf_param_set {
+@@ -903,8 +903,8 @@ struct mwifiex_ibss_param_set {
+ struct mwifiex_ie_types_ss_param_set {
+ 	struct mwifiex_ie_types_header header;
+ 	union {
+-		struct mwifiex_cf_param_set cf_param_set[1];
+-		struct mwifiex_ibss_param_set ibss_param_set[1];
++		DECLARE_FLEX_ARRAY(struct mwifiex_cf_param_set, cf_param_set);
++		DECLARE_FLEX_ARRAY(struct mwifiex_ibss_param_set, ibss_param_set);
+ 	} cf_ibss;
+ } __packed;
+ 
+@@ -922,8 +922,8 @@ struct mwifiex_ds_param_set {
+ struct mwifiex_ie_types_phy_param_set {
+ 	struct mwifiex_ie_types_header header;
+ 	union {
+-		struct mwifiex_fh_param_set fh_param_set[1];
+-		struct mwifiex_ds_param_set ds_param_set[1];
++		DECLARE_FLEX_ARRAY(struct mwifiex_fh_param_set, fh_param_set);
++		DECLARE_FLEX_ARRAY(struct mwifiex_ds_param_set, ds_param_set);
+ 	} fh_ds;
+ } __packed;
+ 
+@@ -1383,7 +1383,7 @@ struct host_cmd_ds_802_11_snmp_mib {
+ 	__le16 query_type;
+ 	__le16 oid;
+ 	__le16 buf_size;
+-	u8 value[1];
++	u8 value[];
+ } __packed;
+ 
+ struct mwifiex_rate_scope {
+@@ -1551,7 +1551,7 @@ struct mwifiex_scan_cmd_config {
+ 	 *  TLV_TYPE_CHANLIST, mwifiex_ie_types_chan_list_param_set
+ 	 *  WLAN_EID_SSID, mwifiex_ie_types_ssid_param_set
+ 	 */
+-	u8 tlv_buf[1];	/* SSID TLV(s) and ChanList TLVs are stored
++	u8 tlv_buf[];	/* SSID TLV(s) and ChanList TLVs are stored
+ 				   here */
+ } __packed;
+ 
+@@ -1683,7 +1683,7 @@ struct host_cmd_ds_802_11_bg_scan_query_rsp {
+ struct mwifiex_ietypes_domain_param_set {
+ 	struct mwifiex_ie_types_header header;
+ 	u8 country_code[IEEE80211_COUNTRY_STRING_LEN];
+-	struct ieee80211_country_ie_triplet triplet[1];
++	struct ieee80211_country_ie_triplet triplet[];
+ } __packed;
+ 
+ struct host_cmd_ds_802_11d_domain_info {
+diff --git a/drivers/net/wireless/marvell/mwifiex/join.c b/drivers/net/wireless/marvell/mwifiex/join.c
+index b48f7febaf03f..259140395d353 100644
+--- a/drivers/net/wireless/marvell/mwifiex/join.c
++++ b/drivers/net/wireless/marvell/mwifiex/join.c
+@@ -421,15 +421,15 @@ int mwifiex_cmd_802_11_associate(struct mwifiex_private *priv,
+ 
+ 	phy_tlv = (struct mwifiex_ie_types_phy_param_set *) pos;
+ 	phy_tlv->header.type = cpu_to_le16(WLAN_EID_DS_PARAMS);
+-	phy_tlv->header.len = cpu_to_le16(sizeof(phy_tlv->fh_ds.ds_param_set));
+-	memcpy(&phy_tlv->fh_ds.ds_param_set,
++	phy_tlv->header.len = cpu_to_le16(sizeof(*phy_tlv->fh_ds.ds_param_set));
++	memcpy(phy_tlv->fh_ds.ds_param_set,
+ 	       &bss_desc->phy_param_set.ds_param_set.current_chan,
+-	       sizeof(phy_tlv->fh_ds.ds_param_set));
++	       sizeof(*phy_tlv->fh_ds.ds_param_set));
+ 	pos += sizeof(phy_tlv->header) + le16_to_cpu(phy_tlv->header.len);
+ 
+ 	ss_tlv = (struct mwifiex_ie_types_ss_param_set *) pos;
+ 	ss_tlv->header.type = cpu_to_le16(WLAN_EID_CF_PARAMS);
+-	ss_tlv->header.len = cpu_to_le16(sizeof(ss_tlv->cf_ibss.cf_param_set));
++	ss_tlv->header.len = cpu_to_le16(sizeof(*ss_tlv->cf_ibss.cf_param_set));
+ 	pos += sizeof(ss_tlv->header) + le16_to_cpu(ss_tlv->header.len);
+ 
+ 	/* Get the common rates supported between the driver and the BSS Desc */
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
+index dcca71158fc68..0a0458e15e289 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
+@@ -108,7 +108,7 @@ static int mwifiex_cmd_802_11_snmp_mib(struct mwifiex_private *priv,
+ 		    "cmd: SNMP_CMD: cmd_oid = 0x%x\n", cmd_oid);
+ 	cmd->command = cpu_to_le16(HostCmd_CMD_802_11_SNMP_MIB);
+ 	cmd->size = cpu_to_le16(sizeof(struct host_cmd_ds_802_11_snmp_mib)
+-				- 1 + S_DS_GEN);
++				+ S_DS_GEN);
+ 
+ 	snmp_mib->oid = cpu_to_le16((u16)cmd_oid);
+ 	if (cmd_action == HostCmd_ACT_GEN_GET) {
 -- 
 2.53.0
 
