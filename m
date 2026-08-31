@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5F243BDD6;
-	Mon, 31 Aug 2026 13:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40A043CE45;
+	Mon, 31 Aug 2026 13:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183221; cv=none; b=XvEgJIorpOr9PX2DI8DKeTbfFLBa3FTsYeZVZoTor+aUM3OwKnNS4Bdm7EY5BL2OOXRdKukTRvppBOSVTH1krlnYWXUHU1mPAxBC1mb3JxkLwWNxvoRYE829k1T0RXlsRvL9X8MFbP+LRG9Dz873qMwPDvcME4ygYY61yMiADQ8=
+	t=1788183223; cv=none; b=gFQ6EOiqs9dqz+zLYez8oeoasew7pFpZC74EPjAKneOOkJzwgQO9r71k9WmoVK2SpRLR6M33dPpWoQnXtiqh+sGGGaP1DU5qq5qHV0FK9uGDXn+RizA8bi4ah8DXclZPWaw4B/WW4I5KKLunBRItZG3DyrIDTMFeMTe7jaIjWz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183221; c=relaxed/simple;
-	bh=TE17VwI9rll3f2GWMfg7sEj/C6x4l/DjzALtKz0vQbo=;
+	s=arc-20240116; t=1788183223; c=relaxed/simple;
+	bh=Tl1v/cimUpoFpd5bYni/skBDPyh2oGsc1aCdnnKwfac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LrmC+a3b2XT+O+BhjmRAhHb8pM42zufXZDpRGTDCivf3ZxuL4gfFCnN08ouJoloPSo+rb2FRZwje0iYi7Yz4FzAvY3U1IPY5n+z2RtqHikhF8YDLJoRd4HEktVpBwGN5uiU3kp7ZEU2w3wkpiqLGLi244gGZZ9Rlnblu1gLFxCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b4/xcCCf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JMiXovpJs2Xxkvw1hWtY8y3HbVkjwiUoMr080CgBfKweNeYF+jjNS7BVH/a9N1vn9QYJd2FdhjN/Z6lt5cnRBW7kVAv71FGiWOuHwEpGBN9WnyWbsi2WUMYFzFnFsQEfSDiSjwGbHaJXr8iMCh9G09H4AMHIZj8hdueO6xcJ8Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RfXbVWKN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b4/xcCCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F14D1F00ACA;
-	Mon, 31 Aug 2026 13:33:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RfXbVWKN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4331F00A3E;
+	Mon, 31 Aug 2026 13:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183219;
-	bh=btqJjj1YUoC5weF03sT25svIkf/+PmS962BjMyfzVHQ=;
+	s=k20260515; t=1788183220;
+	bh=NbhIsQ5XWGPMR7qzfTNPMiqgmyRfRwNggMAQWX1gIkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b4/xcCCf1FKPa0PC98eAuUvUANhQpp1IqDYMDIPpKqiiarXYsQ+yv60JljUHnxKpu
-	 e+lJJQOiOHvhkFg7BeDOVjuTJ1asElCx2Z0vsjZQ12RpDmVVtMlEhgXNp3JvYOHxeu
-	 c/XY7GQyCFP55jHNoMlKY5BoRkjtGUaHI/QP87wjBlY40x7pr7rOBuWf9UESuaOSTF
-	 6gtZRmOyliMuoN2U+1xg1Lu5KYJEyCHpraHK2XFnJ3j3hWvP3PQIEY+ZqObDV6aCz0
-	 ZTP39ws4ZfAtvJjBixEvBxH3bhm9KYL06m2KG2unyMuoS+r1twFahIBs2s5A8ZTB71
-	 IFfIwA37C/FnQ==
+	b=RfXbVWKN7hRB05tSZjwvMHAERLJrnq4e5/ZRanFkZ/jaFJ8rAkkVP/wHJ4ivHpke1
+	 69tlD1d5Vih7zyHZrgI0FRtwx/DDjyy1JFLucETu+9lb0f1wdWNuI72D426T3vCc8o
+	 rR+x5zTR8bf2NWozqIxKUjWpEZUuxho4TZVxKwH6B3JBWIq/UCa9Ur5Hs89QkP71he
+	 I7hCBWXmk9jj2eQS+10haB6u+foEUOj0i7KjiSRIaw+eHh2bYjYRefQzPVyNiI5xy2
+	 SWHoK5dsP2+rLxgtS0dWwHW5RQQ3biLKOKUbRb1jZ6EnaPA/s7aod4kjkwpSZ9GXl+
+	 G1EdqsuJaYYPA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yung-Tse Cheng <mes900903@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+Cc: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	gmaglione@redhat.com,
-	vgoyal@redhat.com,
-	stefanha@redhat.com,
-	miklos@szeredi.hu,
-	virtualization@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	fuse-devel@lists.linux.dev,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] virtio-fs: avoid double-free on failed queue setup
-Date: Mon, 31 Aug 2026 09:20:44 -0400
-Message-ID: <20260831133314.4125787-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] PCI: Avoid FLR for MediaTek MT7925 WiFi
+Date: Mon, 31 Aug 2026 09:20:45 -0400
+Message-ID: <20260831133314.4125787-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,383 +53,398 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yung-Tse Cheng <mes900903@gmail.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit 6af3330ec5d5fb8c06c04eb520a71cf73ea5a765 ]
+[ Upstream commit 9f22b92259bb5ac43e2b9007103787d4418fec56 ]
 
-virtio_fs_setup_vqs() allocates fs->vqs and fs->mq_map before calling
-virtio_find_vqs(). If virtio_find_vqs() fails, the error path frees both
-pointers and returns an error to virtio_fs_probe().
+The MediaTek MT7925 WiFi device advertises FLR capability, but it does not
+work correctly. This manifests in VFIO passthrough scenarios. Normal VM
+operation works fine, including clean shutdown/reboot. However, when the VM
+terminates uncleanly (crash, force-off), VFIO attempts to reset the device
+before it can be assigned to another VM. Because FLR is broken, the reset
+fails, preventing reuse.
 
-virtio_fs_probe() then drops the last kobject reference, and
-virtio_fs_ktype_release() frees fs->vqs and fs->mq_map again. This leaves
-dangling pointers in struct virtio_fs and can trigger a double-free during
-probe failure cleanup.
+This is similar to its predecessor MT7922 (see 81f64e925c29 ("PCI: Avoid
+FLR for Mediatek MT7922 WiFi")), but with different symptoms.  The MT7922
+issue manifests as config read failures (returning ~0) after FLR. The
+MT7925 shows different behavior: config reads work correctly after FLR, but
+firmware communication fails.
 
-Set fs->vqs and fs->mq_map to NULL immediately after kfree() in the
-virtio_fs_setup_vqs() error path so that the later kobject release sees an
-uninitialized state and kfree(NULL) becomes harmless.
+First VM start with MT7925 works fine:
 
-This can be reproduced when a broken virtio-fs device advertises more
-request queues than the transport actually provides. In that case
-virtio_find_vqs() fails while setting up the extra queue, and the probe
-path reaches the double-free cleanup sequence.
+  mt7925e 0000:08:00.0: ASIC revision: 79250000
+  mt7925e 0000:08:00.0: WM Firmware Version: ____000000, Build Time: 20260106153120
 
-Signed-off-by: Yung-Tse Cheng <mes900903@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+After force reset or VM crash, when VFIO attempts FLR to reset the device
+for reassignment, firmware initialization fails:
+
+  mt7925e 0000:08:00.0: ASIC revision: 79250000
+  mt7925e 0000:08:00.0: Message 00000010 (seq 1) timeout
+  mt7925e 0000:08:00.0: Failed to get patch semaphore
+  [Repeats with increasing sequence numbers 2-10]
+  mt7925e 0000:08:00.0: hardware init failed
+
+The driver cannot acquire the patch semaphore needed for firmware
+initialization, indicating that FLR does not properly reset the firmware
+state. The device remains in this broken state until physical power cycle.
+
+Disable FLR for MT7925 so the PCI core falls back to other reset methods,
+e.g., Secondary Bus Reset, which successfully resets the device and allows
+reinitialization for VFIO passthrough reuse.
+
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260522070646.203115-1-jtornosm@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[virtio-fs] [avoid] double-free on failed queue setup` —
-explicit bug fix in the virtio-fs driver error path during virtqueue
-setup.
+### Step 1.1: Subject line
+**Record:** `[PCI] [avoid] Avoid FLR for MediaTek MT7925 WiFi — disable
+broken Function Level Reset so PCI core falls back to Secondary Bus
+Reset`
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Yung-Tse Cheng `<mes900903@gmail.com>` (author)
-- **Signed-off-by:** Miklos Szeredi `<mszeredi@redhat.com>`
-  (FUSE/virtio-fs maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
-  or Cc: stable tags
+- **Signed-off-by:** Jose Ignacio Tornos Martinez
+  `<jtornosm@redhat.com>` (author)
+- **Signed-off-by:** Bjorn Helgaas `<bhelgaas@google.com>` (PCI
+  maintainer)
+- **Reviewed-by:** Manivannan Sadhasivam `<mani@kernel.org>` (MediaTek
+  wireless maintainer)
+- **Link:**
+  https://patch.msgid.link/20260522070646.203115-1-jtornosm@redhat.com
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable, or syzbot tags
+- Notable: PCI subsystem maintainer sign-off + MediaTek maintainer
+  review; references prior MT7922 quirk commit `81f64e925c29`
 
-Notable: maintainer Signed-off-by is a strong quality signal.
-
-### Step 1.3: Body Analysis
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** On `virtio_find_vqs()` failure in `virtio_fs_setup_vqs()`,
-  the error path frees `fs->vqs` and `fs->mq_map`, but
-  `virtio_fs_probe()` then calls `kobject_put()`, which runs
-  `virtio_fs_ktype_release()` and frees the same pointers again.
-- **Symptom:** Double-free and dangling pointers during probe-failure
-  cleanup; potential kernel crash / memory corruption.
-- **Trigger:** Broken virtio-fs device advertising more request queues
-  than the transport actually provides.
-- **Root cause:** Missing NULL assignment after `kfree()` in the setup
-  error path, so the kobject release path cannot tell memory was already
-  freed.
+- **Bug:** MT7925 advertises PCIe FLR capability but FLR does not
+  correctly reset firmware state
+- **Symptom:** After unclean VM termination (crash/force-off), VFIO
+  triggers FLR to reset the device before reassignment; firmware init
+  fails with patch-semaphore timeouts; device stays broken until
+  physical power cycle
+- **Normal use unaffected:** Clean VM shutdown/reboot and host-driver
+  operation work fine
+- **Root cause:** FLR completes from PCI core’s perspective (config
+  reads succeed), so no fallback to SBR; firmware state is not properly
+  reset
+- **Fix:** Set `PCI_DEV_FLAGS_NO_FLR_RESET` via existing `quirk_no_flr`
+  for device ID `0x7925`
+- **Precedent:** MT7922 (`0x0616`) has the same quirk since commit
+  `81f64e925c29` (present in this tree)
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — this is an explicit, clearly described double-free fix,
-not disguised cleanup.
+### Step 1.4: Hidden bug fix?
+**Record:** Not disguised — this is an explicit hardware quirk for
+broken FLR. It prevents a real device-stuck failure in VFIO passthrough
+scenarios.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `fs/fuse/virtio_fs.c` (+2 lines, 0 removed)
-- **Function:** `virtio_fs_setup_vqs()`
-- **Scope:** Single-file, surgical fix (2 lines)
+- **Files:** `drivers/pci/quirks.c` only (+2 lines of code, +1 comment
+  line)
+- **Functions:** `quirk_no_flr()` (unchanged); new
+  `DECLARE_PCI_FIXUP_EARLY` for `PCI_VENDOR_ID_MEDIATEK, 0x7925`
+- **Scope:** Single-file surgical hardware-quirk addition
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change
 **Record:**
-- **Hunk (error path in `virtio_fs_setup_vqs()`):**
-  - **Before:** On failure (`ret != 0`), `kfree(fs->vqs)` and
-    `kfree(fs->mq_map)` leave dangling pointers in `struct virtio_fs`.
-  - **After:** Same frees, then `fs->vqs = NULL` and `fs->mq_map =
-    NULL`, so later `virtio_fs_ktype_release()` does harmless
-    `kfree(NULL)`.
+- **Before:** MT7925 uses FLR when VFIO/PCI core resets the device; FLR
+  appears successful but leaves firmware in a bad state
+- **After:** Early boot quirk sets `PCI_DEV_FLAGS_NO_FLR_RESET`;
+  `pcie_reset_flr()` / `pci_af_flr()` return `-ENOTTY`;
+  `__pci_reset_function_locked()` falls through to bus reset (SBR),
+  which works
 
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** Double-free / dangling pointer on error path.
-**Mechanism:** `virtio_fs_setup_vqs()` and `virtio_fs_ktype_release()`
-both free the same allocations without coordinating ownership transfer.
+### Step 2.3: Bug mechanism
+**Record:** **Category (h): Hardware workaround / PCI quirk**
+- Broken FLR on MT7925 leaves firmware state inconsistent
+- Unlike MT7922 (config reads fail after FLR, eventually timing out to
+  SBR), MT7925 config reads succeed after FLR, so the reset chain never
+  falls back — device remains broken
 
-### Step 2.4: Fix Quality
-**Record:** Obviously correct, minimal, standard kernel pattern.
-Regression risk is very low — only affects the failure path and makes
-cleanup idempotent.
+### Step 2.4: Fix quality
+**Record:**
+- **Quality:** High — identical pattern to MT7922 and other devices in
+  the same `quirk_no_flr` block
+- **Regression risk:** Very low — only affects MT7925 reset path; SBR is
+  the known-working fallback
+- **No unrelated changes**
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
 **Record:**
-- `kfree(fs->vqs)` in error path: Stefan Hajnoczi, 2018-06-12
-  (`a62a8ef9d97da2`)
-- `if (ret) { ... kfree(fs->mq_map); }` wrapper: Peter-Jan Gootzen,
-  2024-05-01 (`529395d2ae6456`, "virtio-fs: add multi-queue support")
-- The **double-free mechanism** was introduced when kobject lifecycle
-  landed in `virtio_fs_ktype_release()` — commit `a8f62f50b4e4e`
-  (2024-02-12, "virtiofs: export filesystem tags through sysfs"). That
-  commit is an ancestor of this tree and of `v6.18`.
+- `quirk_no_flr` block and MT7922 entry (`0x0616`) introduced by
+  `81f64e925c29` (2025-02-12, Bjorn Helgaas)
+- MT7925 quirk line (`0x7925`) is **not** in this tree yet
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag present.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag. Bug is inherent broken hardware FLR
+behavior, not a regression from a specific kernel commit.
 
-### Step 3.3: Related File History
-**Record:** Recent `virtio_fs.c` activity includes other probe/cleanup
-fixes (e.g. `c014021253d77` incorrect fsvq kobj check). No related fix
-for this double-free is present. The candidate fix is not yet in this
-tree.
+### Step 3.3: Related file history
+**Record:**
+- `81f64e925c29` — MT7922 FLR quirk (in tree, was Cc’d stable)
+- Recent `quirks.c` changes in 6.18.44 are unrelated PCI quirks (link
+  retraining, BW controller, bus-reset avoidance)
+- Standalone one-commit fix, not part of a series
 
-### Step 3.4: Author Context
-**Record:** Yung-Tse Cheng has no prior commits in this checkout. Miklos
-Szeredi is the FUSE maintainer and signed off on the patch.
+### Step 3.4: Author context
+**Record:** Jose Ignacio Tornos Martinez (Red Hat); co-signed by PCI
+maintainer Bjorn Helgaas. MT7922 quirk was authored by Bjorn Helgaas
+with Tested-by from QubesOS developer.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone, 2-line fix. No series dependencies. `git apply
---check` succeeds cleanly against the local tree.
+**Record:**
+- Requires existing `quirk_no_flr` infrastructure — **present** in this
+  tree
+- Requires MT7925 PCI device support — **present**
+  (`drivers/net/wireless/mediatek/mt76/mt7925/pci.c`, device ID
+  `0x7925`)
+- No prerequisite commits needed; applies standalone
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:** `b4 dig -c` failed (commit not in local tree). Web search
-found the patch at [mail-archive.com](https://www.mail-
-archive.com/linux-kernel@vger.kernel.org/msg2622149.html) and [Patchew](
-https://patchew.org/linux/20260405193039.178506-1-mes900903@gmail.com/).
-Posted 2026-04-06 by Yung-Tse Cheng. Standalone 1-patch series. Lore
-fetch timed out; no review-thread details retrieved.
-
-### Step 4.2: Reviewers
-**Record:** From Spinics archive: To: virtio-fs maintainers (gmaglione,
-vgoyal, stefanha, miklos). Cc: virtualization@, linux-fsdevel@, linux-
-kernel@. Appropriate maintainers were included.
-
-### Step 4.3: Bug Report
-**Record:** No external bug report or syzbot link. Author describes
-reproducible scenario with a misconfigured/broken virtio-fs device.
-
-### Step 4.4: Related Patches
-**Record:** Standalone fix, not part of a multi-patch series.
-
-### Step 4.5: Stable List History
-**Record:** No stable-list discussion found. UNVERIFIED due to lore
-access failure.
+### Step 4.1–4.5: Lore / b4 dig
+**Record:**
+- `b4 dig -c <hash>`: **N/A** — commit not in this checkout; no commit
+  hash available
+- WebFetch/curl to lore.kernel.org and patch.msgid.link: **blocked** by
+  Anubis bot protection; could not read thread
+- From commit message only: Reviewed-by Manivannan Sadhasivam; Link to
+  patch submission
+- **UNVERIFIED:** Whether reviewers explicitly nominated for stable in
+  the mailing list thread
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `virtio_fs_setup_vqs()`, `virtio_fs_ktype_release()`,
-`virtio_fs_probe()`
+### Step 5.1: Key functions
+**Record:** `quirk_no_flr()` (early fixup), `pcie_reset_flr()`,
+`pci_af_flr()`, `__pci_reset_function_locked()`
 
 ### Step 5.2: Callers
 **Record:**
-- `virtio_fs_setup_vqs()` — called only from `virtio_fs_probe()` (line
-  1133)
-- `virtio_fs_ktype_release()` — kobject `.release` callback, invoked via
-  `kobject_put()` from `virtio_fs_probe()` error path (line 1160) and
-  normal teardown paths
+- `quirk_no_flr` runs at `DECLARE_PCI_FIXUP_EARLY` during PCI
+  enumeration
+- `PCI_DEV_FLAGS_NO_FLR_RESET` checked in `pcie_reset_flr()` and
+  `pci_af_flr()` (`drivers/pci/pci.c:4357, 4379`)
+- `__pci_reset_function_locked()` iterates reset methods; FLR skipped →
+  bus reset used (`drivers/pci/pci.c:5008-5067`)
+- VFIO calls `__pci_reset_function_locked()` on device release/reset
+  (`drivers/vfio/pci/vfio_pci_core.c:707`)
 
 ### Step 5.3: Callees
-**Record:** `kcalloc()`, `virtio_find_vqs()`, `kfree()`, `kobject_put()`
-— standard probe allocation/cleanup.
+**Record:** Quirk only sets `dev->dev_flags |=
+PCI_DEV_FLAGS_NO_FLR_RESET`; reset path uses existing PCI reset
+machinery
 
 ### Step 5.4: Reachability
 **Record:**
-```
-virtio device probe → virtio_fs_probe()
-  → virtio_fs_setup_vqs() [fails]
-    → error path kfree(vqs, mq_map)
-  → out: kobject_put()
-    → virtio_fs_ktype_release() [double-free without fix]
-```
-Reachable during virtio-fs device enumeration when queue setup fails
-(broken device, ENOMEM, or `virtio_find_vqs()` failure). Not a syscall
-path directly, but triggered during driver probe on systems with virtio-
-fs enabled.
+- Trigger: VFIO PCI passthrough + unclean VM termination (crash/force-
+  off)
+- Requires `CONFIG_VFIO_PCI` + `CONFIG_MT7925E` + MT7925 hardware
+- Not a general syscall path, but a documented, reproducible VFIO
+  workflow
 
-### Step 5.5: Similar Patterns
-**Record:** No `fs->vqs = NULL` or `fs->mq_map = NULL` anywhere in
-current `virtio_fs.c`. The dangling-pointer pattern is unique to this
-error path.
+### Step 5.5: Similar patterns
+**Record:** MT7922 (`0x0616`), AMD USB/audio controllers, Intel 82579,
+SolidRun SNET — all use the same `quirk_no_flr` mechanism in this file
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy Code Present?
-**Record:** **YES.** Local tree is **v6.18.44** (`git describe HEAD` →
-`v6.18.44-1-g2736c32da98b9`). Current code at lines 989–992 frees
-without NULLing:
+### Step 6.1: Buggy code exists?
+**Record:**
+- **Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`,
+  `make kernelversion` → `6.18.44`)
+- MT7925 driver present since `c948b5da6bbec` (2023-09-30), ancestor of
+  HEAD
+- MT7922 FLR quirk present (`0x0616` at `quirks.c:5578`)
+- **MT7925 FLR quirk absent** — `0x7925` not in `quirks.c`; commit not
+  applied
+- Bug is reachable: hardware advertises FLR, kernel will use it without
+  this quirk
 
-```989:992:fs/fuse/virtio_fs.c
-        if (ret) {
-                kfree(fs->vqs);
-                kfree(fs->mq_map);
-        }
-```
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected** — two-line addition to existing
+quirk block with no structural changes
 
-And `virtio_fs_ktype_release()` at lines 195–196 frees the same pointers
-again. Fix is not yet applied.
-
-### Step 6.2: Backport Complications
-**Record:** Clean apply — `git apply --check` passed with exit code 0.
-No conflicts expected.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** None. `git log -S 'fs->mq_map = NULL'` returned no results.
-No grep matches for NULL assignments.
+### Step 6.3: Related fixes already present?
+**Record:** MT7922 quirk (`81f64e925c29`) is in tree; no MT7925-specific
+FLR fix present
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem
-**Record:** `fs/fuse/virtio_fs.c` — virtio-fs driver (FUSE over virtio).
-**Criticality: IMPORTANT** — affects virtualization/virtio-fs users, not
-universal core kernel, but probe failures can crash the host/VM.
+### Step 7.1: Subsystem criticality
+**Record:** **PCI core quirks** — IMPORTANT for PCI/VFIO virtualization
+users with MT7925 hardware
 
 ### Step 7.2: Activity
-**Record:** Actively maintained; recent virtio-fs and fuse fixes in this
-tree.
+**Record:** `quirks.c` actively maintained; FLR quirks are a well-
+established pattern in this subsystem
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** Systems with `CONFIG_VIRTIO_FS` enabled (module or built-in)
-where virtio-fs device probe fails during queue setup — VMs with virtio-
-fs, hosts exporting virtio-fs, or broken/malicious virtio device
-configurations.
+### Step 8.1: Who is affected
+**Record:** Users of MT7925 PCIe WiFi (`mt7925e`) with VFIO PCI
+passthrough — config-specific but real production use (e.g., QubesOS-
+style setups)
 
-### Step 8.2: Trigger Conditions
+### Step 8.2: Trigger conditions
+**Record:** VFIO-assigned MT7925 + unclean VM shutdown; not every boot,
+but reproducible and common in VM crash scenarios; requires privileges
+to use VFIO
+
+### Step 8.3: Failure mode severity
+**Record:** Device stuck in broken state until **physical power cycle**;
+firmware init permanently fails on reassignment. **Severity: HIGH** for
+affected users (not kernel oops, but hardware effectively bricked until
+reboot/power-cycle)
+
+### Step 8.4: Risk-benefit
 **Record:**
-- `virtio_find_vqs()` failure (e.g. device advertises more queues than
-  transport supports)
-- Also any error path through `out:` label with `ret != 0` after
-  `fs->vqs`/`fs->mq_map` were allocated (including ENOMEM)
-- Not everyday, but reproducible on probe failure; privileged entity
-  controlling virtio device configuration can trigger it
-
-### Step 8.3: Failure Mode Severity
-**Record:** **Double-free** → kernel oops, possible memory corruption.
-**Severity: HIGH** (crash / potential security impact from heap
-corruption on probe failure).
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH — prevents crash on legitimate probe failure paths
-- **Risk:** VERY LOW — 2 lines, error-path only, idempotent cleanup
+- **Benefit:** HIGH for VFIO + MT7925 users — restores device
+  reusability after unclean VM exit
+- **Risk:** VERY LOW — 2-line quirk, proven pattern, PCI maintainer
+  authored/reviewed
 - **Ratio:** Strongly favors backport
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real double-free bug with clear mechanism
-- Reproducible trigger described (broken virtio-fs queue advertisement)
-- HIGH severity (kernel crash / memory corruption)
-- Minimal 2-line fix, applies cleanly
-- FUSE maintainer (Miklos Szeredi) Signed-off-by
-- Bug present in this 6.18.44 tree since kobject lifecycle (Feb 2024);
-  mq_map added second vector (May 2024)
-- Standard NULL-after-kfree pattern
+- Real hardware bug with documented failure logs in commit message
+- Device unusable until power cycle after VFIO FLR — serious for
+  virtualization users
+- Trivial 2-line PCI quirk, same pattern as MT7922 (already in this
+  tree, was stable-nominated)
+- PCI maintainer (Bjorn Helgaas) sign-off; MediaTek maintainer review
+- MT7925 driver and PCI device ID `0x7925` both present in 6.18.44
+- Classic stable exception: hardware quirk/workaround
 
 **AGAINST backport:**
-- Only triggered on probe failure, not hot path
-- No syzbot report or CVE
-- Lore review thread not fully retrieved
+- Only affects VFIO passthrough path, not normal host-driver operation
+- Narrow hardware population (MT7925 PCIe specifically)
+- No syzbot/fuzzer report or Cc: stable tag (expected for manual review)
 
 **UNRESOLVED:**
-- Whether reviewers explicitly nominated for stable (lore fetch failed)
-- Whether patch has landed in mainline yet (not in this checkout)
+- Mailing list thread content (lore blocked)
+- Whether explicit stable nomination appeared in review thread
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — standard pattern; maintainer
-   SOB; author describes reproduction
-2. Fixes a real bug? **PASS** — verified double-free in local code
-3. Important issue? **PASS** — double-free on probe failure (HIGH)
-4. Small and contained? **PASS** — 2 lines, 1 file
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — clean apply verified
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — identical to in-tree MT7922
+   quirk; maintainer-reviewed
+2. Fixes a real bug affecting users? **PASS** — VFIO device stuck after
+   unclean VM exit
+3. Important issue? **PASS** — hardware effectively bricked until power
+   cycle (HIGH for affected users)
+4. Small and contained? **PASS** — 2 lines in one file
+5. No new features or APIs? **PASS** — PCI quirk only
+6. Can apply to local tree? **PASS** — infrastructure and hardware
+   support both present
 
-### Step 9.3: Exception Categories
-**Record:** None — this is a straight bug fix, not a
-quirk/ID/DT/build/doc exception.
+### Step 9.3: Exception category
+**Record:** **Hardware quirk/workaround** — explicitly allowed for
+stable
 
-### Step 9.4: Decision Rationale
-This tree (6.18.44) contains the buggy code: `virtio_fs_setup_vqs()`
-frees `fs->vqs` and `fs->mq_map` on error without NULLing them, and
-`virtio_fs_probe()` unconditionally calls `kobject_put()` which re-frees
-them in `virtio_fs_ktype_release()`. The fix is minimal, obviously
-correct, and prevents a kernel crash on a realistic probe-failure path.
-It fully meets stable kernel criteria.
+### Step 9.4: Decision rationale
+
+For **Linux 6.18.44**, this commit should be backported. The MT7925 PCIe
+driver and device ID are in this tree, the `quirk_no_flr` mechanism is
+established (including the MT7922 precedent), and without this quirk
+VFIO users with MT7925 hardware hit a broken FLR path that leaves the
+device unusable until a physical power cycle. The fix is minimal,
+follows an existing in-tree pattern, and carries negligible regression
+risk.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 1] Confirmed maintainer Signed-off-by: Miklos Szeredi
-- [Phase 2] Read current `virtio_fs_setup_vqs()` error path (lines
-  986–993): missing NULL assignments
-- [Phase 2] Read `virtio_fs_ktype_release()` (lines 191–197): frees same
-  pointers
-- [Phase 2] Read `virtio_fs_probe()` error path (lines 1158–1161):
-  `kobject_put()` on all failures
-- [Phase 3] `git describe HEAD`: v6.18.44-1-g2736c32da98b9
-- [Phase 3] `git blame -L 989,992`: error-path code from 2018 (vqs) and
-  2024 (mq_map wrapper)
-- [Phase 3] `git show 529395d2ae6456`: mq_map kfree added to error path
-  without NULL
-- [Phase 3] `git show a8f62f50b4e4e`: kobject lifecycle introduced
-  double-free mechanism
-- [Phase 3] `git merge-base --is-ancestor a8f62f50b4e4e HEAD`: confirmed
-  in tree
-- [Phase 3] `git merge-base --is-ancestor 529395d2ae6456 HEAD`:
-  confirmed in tree
-- [Phase 3] `git log -S 'fs->mq_map = NULL'`: no existing fix
-- [Phase 4] `b4 dig -c df25d4faca41c`: failed (commit not in tree)
-- [Phase 4] Web search: found patch submission at mail-archive.com and
-  Patchew (2026-04-06)
-- [Phase 4] Lore direct fetch: timed out — review comments UNVERIFIED
-- [Phase 5] `grep virtio_fs_setup_vqs`: single caller in
-  `virtio_fs_probe()`
-- [Phase 5] Traced probe → setup_vqs error → kobject_put → ktype_release
-  call chain
-- [Phase 6] Confirmed buggy code present at lines 989–992; fix absent
-  (no NULL assignments)
-- [Phase 6] `git apply --check`: patch applies cleanly (exit 0)
-- [Phase 7] Read `fs/fuse/Kconfig`: VIRTIO_FS depends on FUSE_FS +
-  VIRTIO
-- [Phase 8] Assessed severity: double-free on probe failure = HIGH
+- [Phase 1] Parsed commit message: PCI FLR quirk for MT7925; tags: SOB
+  (author + Bjorn Helgaas), Reviewed-by Manivannan Sadhasivam, Link to
+  patch
+- [Phase 2] Diff: +1 comment line, +1
+  `DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_MEDIATEK, 0x7925,
+  quirk_no_flr)` in `drivers/pci/quirks.c`
+- [Phase 3] `git blame` line 5578: MT7922 quirk from `81f64e925c29`
+  (2025-02-12)
+- [Phase 3] `git show 81f64e925c29`: MT7922 quirk had Cc:
+  stable@vger.kernel.org
+- [Phase 3] `git merge-base --is-ancestor 81f64e925c29 HEAD`: MT7922
+  quirk is in tree
+- [Phase 3] `git merge-base --is-ancestor c948b5da6bbec HEAD`: MT7925
+  driver is in tree
+- [Phase 3] `c948b5da6bbec` dated 2023-09-30: initial MT7925 driver
+- [Phase 4] `b4 dig`: N/A — commit hash not in checkout
+- [Phase 4] WebFetch/curl lore.kernel.org: **FAILED** (bot protection)
+- [Phase 5] `grep PCI_DEV_FLAGS_NO_FLR_RESET`: used in `pci.c:4357,
+  4379`
+- [Phase 5] Read `pci_reset_fn_methods`: FLR before bus reset in reset
+  chain
+- [Phase 5] VFIO calls `__pci_reset_function_locked` at
+  `vfio_pci_core.c:707`
+- [Phase 6] `git describe HEAD` → `v6.18.44`; `make kernelversion` →
+  `6.18.44`
+- [Phase 6] `grep 0x7925 drivers/pci/quirks.c`: **NOT FOUND** — quirk
+  absent
+- [Phase 6] `mt7925/pci.c:14`: `PCI_DEVICE(PCI_VENDOR_ID_MEDIATEK,
+  0x7925)` confirmed
+- [Phase 6] Read `quirks.c:5558-5586`: `quirk_no_flr` block with MT7922,
+  no MT7925
+- [Phase 8] Failure mode from commit message: firmware init fails,
+  device stuck until power cycle
 
-**YES**Those background searches finished and line up with the earlier
-analysis:
+**YES**
 
-- **Author lookup** — No commits from Yung-Tse Cheng / `mes900903` in
-  this 6.18.44 tree; the patch is still a candidate, not merged here.
-- **Commit message search** — Nothing matching “avoid double-free on
-  failed queue setup” in local history.
-- **Alternate-fix search** — No other commit in `fs/fuse/` that already
-  fixes this.
-
-Together that confirms the bug is present locally and the fix isn’t
-applied yet. The backport recommendation remains **YES**.
-
- fs/fuse/virtio_fs.c | 2 ++
+ drivers/pci/quirks.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index b2f6486fe1d56..2b3daa93e299a 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -988,7 +988,9 @@ static int virtio_fs_setup_vqs(struct virtio_device *vdev,
- 	kfree(vqs);
- 	if (ret) {
- 		kfree(fs->vqs);
-+		fs->vqs = NULL;
- 		kfree(fs->mq_map);
-+		fs->mq_map = NULL;
- 	}
- 	return ret;
- }
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index f6001be94955e..88d4a3f76bf3b 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5564,6 +5564,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x443, quirk_intel_qat_vf_cap);
+  * Intel 82579LM Gigabit Ethernet Controller 0x1502
+  * Intel 82579V Gigabit Ethernet Controller 0x1503
+  * Mediatek MT7922 802.11ax PCI Express Wireless Network Adapter
++ * Mediatek MT7925 802.11be PCI Express Wireless Network Adapter
+  */
+ static void quirk_no_flr(struct pci_dev *dev)
+ {
+@@ -5576,6 +5577,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_MEDIATEK, 0x0616, quirk_no_flr);
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_MEDIATEK, 0x7925, quirk_no_flr);
+ 
+ /* FLR may cause the SolidRun SNET DPU (rev 0x1) to hang */
+ static void quirk_no_flr_snet(struct pci_dev *dev)
 -- 
 2.53.0
 
