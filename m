@@ -1,46 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84E7420469;
-	Mon, 31 Aug 2026 13:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758BB423EB9;
+	Mon, 31 Aug 2026 13:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183203; cv=none; b=omSHlFeFajjGVnkPMZ5J2dVQP8JWNDu/RgVALaZJDorvOGvGmWI6RF+Q9tcM/FuY9fbFuzOGrBHAXbSG68mxQ+Y/CGRI8Tgg2qvy3hveOaLpP5+CKH6AyF5CvRRv3v4ZwwDrqSHoRmYaUZXMf3dX+eoVW0QTHNGezXLLu/L4Njw=
+	t=1788183205; cv=none; b=ZLJ1xzAs+ssZU/K9ugVN0/QaAdd9FqGulqqmVg1worcwWLLrzc30fOTrLQUoYWhwf0vJow64XKUcRGqD6AI+jciuLQKMLrgQM2NEYxRkP2QY8Ybl3i1NoJc4U1mrgwiuuirdAN3X+MmfLPb3427+CI0mI5C25Bpoe+Ec/H4Xckg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183203; c=relaxed/simple;
-	bh=74tR+vzgnULBR0ZG/+wMuuddELvqUNbck9Y2L51OrqY=;
+	s=arc-20240116; t=1788183205; c=relaxed/simple;
+	bh=FFmA9EZQpRH0zVWq6aeCAt9NmCv6zrPpVP4u33tWndo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VEp1XqNHVlKckgSuD0fIUcyUCatg+V9bu7KQKuM/T7Hy3B9A90UXQUJoMMguq+PJNcOilukw2siODdX25WK1KfzTuCs1w9BBhNwFL6mDvg8ojj4VHAplSY4K7QhF8jBwNC6kdbZ6avvoj7RwGJDcNaK6/x96jA6RYd7lHHid8nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KSJ29o3h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Z4iZFVkyjpDdu2XYPAQ12OjMRZ/r4CaooAxScn0Sdyl3FeN5ZEadQYNlfrWTCwkGKFDoFJTAaJeslHcQkcGn/ojo1K1D72b68wymkp7y+y1KzeQAX11cTqNrRyMF6ijGvXV6YXnJX616bvLobpaBka8K1x0kE7JMqtq3jGGKLcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a6WnHueu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KSJ29o3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DCB1F00A3F;
-	Mon, 31 Aug 2026 13:33:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a6WnHueu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2897B1F00A3D;
+	Mon, 31 Aug 2026 13:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183200;
-	bh=yjVcWilnbKfrt4r4Cp7FH7KSRSeVdy116MkJ3Ry0ex4=;
+	s=k20260515; t=1788183203;
+	bh=TJUIsM5nwlGaHCAEiNrnjJjSFiAW6QupDAhLmg8HYkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KSJ29o3hrLrybTucbQu8eaX2d+w5Z4Bn57nDSp29bK3msbrjs0FECVkLtRq2tGSVk
-	 RtSLUt4gxSAZVZZu/Eo/cbSdv3JgVxV7mUQ1GPKXfXjiln347VWeMB50pjyvKYmZQO
-	 yOwj/JR943bXBeK8iA9rEK3EZbU4a6FRiF0DAvou7OF7g4Qqz6dnpRRwNOMPoG8itY
-	 bbmILQICK8SE2BXao2CAxOUkwotmCLDGhry2pM9I0oat/M+NDdGDjqsTd9vy/gPf3k
-	 /dMsDa2DHWKrPOBwGV6n5TEspg2ZwROvb3GN+4MN9G/f9KfztI69C9nTyzLnc9AVRz
-	 77wNH4r4Uk9Kw==
+	b=a6WnHueuPpQ2mcX48GkYsokjsYizs7EKgkeiUKqCVo7C9dYFzqkzWCXYYjgg96/u3
+	 srHSFUmi42H/dUko5wShLSzoxoviyWe2fT1uQ+xzT+r5cYipQQOiVlikgdWtiTKkvw
+	 1DYJGgSBXisHtLHpx/MlsZx0s6esIzfJGBTt91AmWJOGUdtVlisdf9Vm2JmpqiFhV4
+	 8/WY47Eg+9uZ20eJt+s3iYCFDjVSKzkQtUCXfaETx1oFrB8IB15bWcOWPIJawbURrc
+	 C4AdBKqnMZH85nB4VINZ72BxmEJ0UqMTp2b70+tv6NYhys8HjtBhGBaftOim54UB9I
+	 PzwhRcFiyuCRA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Javier Tia <floss@jetm.me>,
+	Marcin FM <marcin@lgic.pl>,
+	Cristian-Florin Radoi <radoi.chris@gmail.com>,
+	George Salukvadze <giosal90@gmail.com>,
+	Evgeny Kapusta <3193631@gmail.com>,
+	Samu Toljamo <samu.toljamo@gmail.com>,
+	Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>,
+	Chapuis Dario <chapuisdario4@gmail.com>,
+	=?UTF-8?q?Thibaut=20Fran=C3=A7ois?= <tibo@humeurlibre.fr>,
+	=?UTF-8?q?=E5=BC=A0=E6=97=AD=E6=B6=B5?= <Loong.0x00@gmail.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	daire.mcnamara@microchip.com,
-	lpieralisi@kernel.org,
-	kwilczynski@kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] PCI: plda: Protect root bus removal with rescan lock
-Date: Mon, 31 Aug 2026 09:20:32 -0400
-Message-ID: <20260831133314.4125787-4-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] wifi: mt76: mt7925: handle 320MHz bandwidth in RXV and TXS
+Date: Mon, 31 Aug 2026 09:20:33 -0400
+Message-ID: <20260831133314.4125787-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -50,417 +62,411 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Zhang <18255117159@163.com>
+From: Javier Tia <floss@jetm.me>
 
-[ Upstream commit 4e4f9745f016c1631d00a4035b06f6e75d449e01 ]
+[ Upstream commit 2237b7b332990f135c1f1550b45ac77b29bcbf7b ]
 
-Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
-to avoid racing with concurrent rescan or hotplug operations triggered via
-sysfs.  Such races may lead to use-after-free issues or system crashes.
+The RX vector (RXV) and TX status (TXS) parsing in mac.c lack handling
+for 320MHz channel width. When the hardware reports 320MHz in the
+bandwidth field, mt7925_mac_fill_rx_rate() returns -EINVAL and
+mt7925_mac_add_txs_skb() records no bandwidth stats.
 
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260521161822.132996-10-18255117159@163.com
+Add IEEE80211_STA_RX_BW_320 cases to both functions. The RXV parser
+also handles BW_320+1 since the hardware can report 320MHz in two
+adjacent encoding positions.
+
+Tested-by: Marcin FM <marcin@lgic.pl>
+Tested-by: Cristian-Florin Radoi <radoi.chris@gmail.com>
+Tested-by: George Salukvadze <giosal90@gmail.com>
+Tested-by: Evgeny Kapusta <3193631@gmail.com>
+Tested-by: Samu Toljamo <samu.toljamo@gmail.com>
+Tested-by: Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>
+Tested-by: Chapuis Dario <chapuisdario4@gmail.com>
+Tested-by: Thibaut François <tibo@humeurlibre.fr>
+Tested-by: 张旭涵 <Loong.0x00@gmail.com>
+Reviewed-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Javier Tia <floss@jetm.me>
+Link: https://patch.msgid.link/20260425195011.790265-4-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: PCI: plda: Protect root bus removal with
-rescan lock
+# Stable Backport Analysis: `wifi: mt76: mt7925: handle 320MHz bandwidth
+in RXV and TXS`
 
-**Local tree:** `v6.18.44-1-g2736c32da98b9` (Linux 6.18.44)
+**Local tree:** `v6.18.44` (kernel 6.18.44)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[PCI: plda]` `[Protect]` — Add `pci_rescan_remove_lock`
-protection around root bus teardown in the PLDA PCIe host driver.
+### Step 1.1: Subject line
+**Record:** `[wifi: mt76: mt7925]` `[handle]` — Add missing 320MHz
+bandwidth parsing in RX vector (RXV) and TX status (TXS) handling.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+### Step 1.2: Tags
 **Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none in this commit (series cover references
-  sashiko-bot review)
-- **Acked-by:** — none
-- **Link:** `https://patch.msgid.link/20260521161822.132996-10-
-  18255117159@163.com`
-- **Cc: stable:** — none
-- **Signed-off-by:** Hans Zhang, Manivannan Sadhasivam, Bjorn Helgaas
-  (ignore any pipeline-added SOBs)
+- **Tested-by:** 9 independent testers (Marcin FM, Cristian-Florin
+  Radoi, George Salukvadze, Evgeny Kapusta, Samu Toljamo, Ariel
+  Rosenfeld, Chapuis Dario, Thibaut François, 张旭涵) — strong real-world
+  validation signal
+- **Reviewed-by:** Sean Wang `<sean.wang@mediatek.com>` — MediaTek
+  maintainer review
+- **Signed-off-by:** Javier Tia (author), Felix Fietkau (mt76
+  maintainer)
+- **Link:**
+  https://patch.msgid.link/20260425195011.790265-4-sean.wang@kernel.org
+- No Fixes:, Reported-by:, Cc: stable — expected for manual review
+  pipeline
+- Notable: Part of `[PATCH v5 03/21] MT7927 support` series, but the
+  change itself is mt7925-only and self-contained
 
-Notable: No syzbot/user crash report; issue identified by code-review
-pattern (series cover letter cites sashiko-bot).
-
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `plda_pcie_host_deinit()` calls `pci_stop_root_bus()` /
-  `pci_remove_root_bus()` without holding `pci_rescan_remove_lock`.
-- **Symptom:** Race with concurrent sysfs-triggered PCI rescan or
-  hotplug/remove → use-after-free or system crash.
-- **Root cause:** Missing lock acquisition that other PCI host drivers
-  already use.
-- **Version info:** None in commit message.
+- **Bug:** RXV/TXS parsers in `mac.c` lack `320MHz` cases
+- **Symptom (RX):** `mt7925_mac_fill_rx_rate()` returns `-EINVAL` when
+  hardware reports 320MHz bandwidth
+- **Symptom (TX):** `mt7925_mac_add_txs_skb()` records no correct 320MHz
+  bandwidth stats (falls through to 20MHz default)
+- **Root cause:** Incomplete bandwidth switch statements; hardware can
+  encode 320MHz in two adjacent RXV positions (`BW_320` and `BW_320+1`)
+- **Version info:** None explicit in message
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised — this is an explicit synchronization/race
-fix, not cleanup or optimization.
+### Step 1.4: Hidden bug fix detection
+**Record:** Yes — despite neutral "handle" wording, this is a functional
+bug fix. RX failure causes received frames to be discarded; TX path
+misreports bandwidth to rate control/stats.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
+### Step 2.1: Inventory
 **Record:**
-- **File:** `drivers/pci/controller/plda/pcie-plda-host.c` (+2 lines)
-- **Function:** `plda_pcie_host_deinit()`
-- **Scope:** Single-file, surgical fix (2 insertions)
+- **File:** `drivers/net/wireless/mediatek/mt76/mt7925/mac.c` (+9 lines,
+  0 removed)
+- **Functions:** `mt7925_mac_fill_rx_rate()`, `mt7925_mac_add_txs_skb()`
+- **Scope:** Single-file, surgical fix
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+### Step 2.2: Code flow change
 **Record:**
-- **Before:** Root bus stop/remove ran unlocked during driver teardown.
-- **After:** `pci_lock_rescan_remove()` held for the entire
-  `pci_stop_root_bus()` + `pci_remove_root_bus()` sequence, then
-  unlocked.
-- **Path affected:** Platform driver remove / module unload error path
-  via `starfive_pcie_remove()` → `plda_pcie_host_deinit()`.
+- **Hunk 1 (`mt7925_mac_fill_rx_rate`, bw switch):**
+  - Before: 20/40/80/160 handled; anything else → `-EINVAL`
+  - After: Adds `IEEE80211_STA_RX_BW_320` and `IEEE80211_STA_RX_BW_320 +
+    1` → `RATE_INFO_BW_320`
+- **Hunk 2 (`mt7925_mac_add_txs_skb`, TXS bw switch):**
+  - Before: 160/80/40 handled; 320MHz falls to default (20MHz,
+    `tx_bw[0]++`)
+  - After: 320MHz → `RATE_INFO_BW_320`, `stats->tx_bw[4]++`
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:** **Category:** Synchronization / race condition.
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Logic/correctness — incomplete enum handling
+in hardware metadata parsers.
+- **RX:** Missing case → `-EINVAL` → caller drops skb
+- **TX:** Missing case → wrong bandwidth in `rate_info` and per-station
+  stats
 
-**Mechanism:** Sysfs rescan/remove paths (`rescan_store`,
-`dev_rescan_store`, `bus_rescan_store`, `remove_store`) all take
-`pci_lock_rescan_remove()` (verified in `drivers/pci/pci-sysfs.c`).
-`pci_stop_root_bus()` / `pci_remove_root_bus()` tear down the same
-bus/device lists without that lock in `plda_pcie_host_deinit()`,
-creating a concurrent teardown vs. rescan/remove window.
-
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:**
-- **Quality:** Obviously correct; matches `pci_host_common_remove()`,
-  `mtk_pcie_remove()`, `pci_aardvark` remove, etc.
-- **Risk:** Very low — standard mutex pair, no API change, no logic
-  change beyond serialization.
-- **Red flags:** None.
+### Step 2.4: Fix quality
+**Record:** Obviously correct; mirrors existing `mt7996/mac.c` pattern
+already in this tree. Minimal regression risk. `tx_bw[5]` is already
+defined as `{20, 40, 80, 160, 320}` in `mt76.h`.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:**
-- Buggy `pci_stop_root_bus()` / `pci_remove_root_bus()` calls introduced
-  in **76c9113968079** (`PCI: plda: Add host init/deinit and map bus
-  functions`, May 28 2024).
-- Present in this 6.18.44 tree without the lock.
+### Step 3.1: Blame
+**Record:** Buggy switch introduced in `c948b5da6bbec` (2023-09-18,
+"wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips").
+Missing 320MHz handling present since driver introduction.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** No `Fixes:` tag. N/A.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag in commit message.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:**
-- Part of a 9-patch series (`[PATCH 0/9] PCI: controller: Add missing
-  rescan lock around root bus removal`) fixing the same pattern in
-  cadence, dwc, altera, brcmstb, iproc, mediatek, rockchip, vmd, and
-  plda.
-- Cover letter states: *"Each patch is independent and targets a
-  specific controller driver."*
-- Related precedent: **1d59d474e1cb7** (`PCI: Hold rescan lock while
-  adding devices during host probe`) — real NULL deref crash from
-  missing rescan lock during concurrent PCI operations.
+### Step 3.3: Related file history
+**Record:** Recent mt7925/mac.c commits are other bug fixes (NULL deref,
+AMPDU, reset). `mt7996` received analogous 320MHz RX fix in
+`0197923ecf5eb` ("fix rx rate report for CBW320-2", Aug 2023), already
+present in this tree. This mt7925 fix is standalone, not requiring other
+series patches.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Hans Zhang authored the full 9-driver series. PCI
-maintainers (Bjorn Helgaas) committed related PCI work in this tree. No
-Hans Zhang commits currently in this tree's plda path (series not yet
-merged here).
+### Step 3.4: Author context
+**Record:** Javier Tia — active mt7925/MT7927 contributor. Felix Fietkau
+is mt76 maintainer. Sean Wang (MediaTek) reviewed.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** **Standalone.** Only requires existing
-`pci_lock_rescan_remove()` / `pci_unlock_rescan_remove()` (present since
-**9d16947b75831**, Jan 2014). No structural prerequisites.
+### Step 3.5: Dependencies
+**Record:** No prerequisites. Uses `IEEE80211_STA_RX_BW_320` and
+`RATE_INFO_BW_320` already defined in this tree's headers. Patch applies
+cleanly to current `mac.c`.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:**
-- `b4 dig -c <sha>`: N/A — commit not in this tree.
-- Local mbox `20260522_18255117159_pci_controller_add_missing_rescan_loc
-  k_around_root_bus_removal.mbx` contains full series.
-- Cover letter references sashiko-bot review asking whether unlocked
-  root bus removal can race with sysfs rescan/hotplug.
-- WebFetch of patch.msgid.link: blocked by anti-bot page (could not read
-  live thread).
+### Step 4.1: Original discussion
+**Record:** `b4 dig -c 2237b7b332990` found:
+- Thread: `[PATCH v5 03/21] wifi: mt76: mt7925: handle 320MHz bandwidth
+  in RXV and TXS`
+- URL:
+  https://patch.msgid.link/20260425195011.790265-4-sean.wang@kernel.org
+- Part of MT7927 (Filogic 380) support series v1→v5
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** Cover letter CC'd linux-pci; bot review prompted the series.
-Final commit SOBs include Manivannan Sadhasivam and Bjorn Helgaas. Full
-maintainer thread not verified live.
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w` shows CC to `linux-wireless`, `linux-mediatek`,
+`nbd@nbd.name`, `sean.wang@kernel.org`, `lorenzo.bianconi@redhat.com`,
+plus all 9 testers.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** No user crash report or syzbot link for plda specifically.
-Issue identified by code-review pattern matching against known PCI
-locking requirements.
+### Step 4.3: Bug reports
+**Record:** No syzbot/bugzilla. Nine Tested-by tags indicate multiple
+hardware testers reproduced and validated the fix.
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** 9-patch series; each driver patch is independent per cover
-letter. Other drivers in this tree (dwc, cadence, altera, etc.) have the
-**same unfixed pattern** — this commit only addresses plda.
+### Step 4.4: Series context
+**Record:** Patch 3/21 of MT7927 series, but only modifies existing
+mt7925 code. Does not add MT7927 chip support. Safe to backport
+independently.
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** Not searched (no stable nomination found in local mbox).
-Absence of `Cc: stable` is not a negative signal per review
-instructions.
+### Step 4.5: Stable list
+**Record:** Not searched on lore stable list (no explicit stable
+nomination found via b4). Absence is not a negative signal per review
+rules.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `plda_pcie_host_deinit()` — only function modified.
+### Step 5.1: Key functions
+**Record:** `mt7925_mac_fill_rx_rate()`, `mt7925_mac_fill_rx()`,
+`mt7925_mac_add_txs_skb()`, `mt7925_queue_rx_skb()`
 
-### Step 5.2: TRACE CALLERS
+### Step 5.2: Callers
 **Record:**
-- **Caller:** `starfive_pcie_remove()` in
-  `drivers/pci/controller/plda/pcie-starfive.c` (platform `.remove`
-  callback).
-- **Context:** Driver unbind, module unload, platform device removal —
-  can overlap with root-initiated sysfs PCI operations.
+- `mt7925_mac_fill_rx_rate()` ← `mt7925_mac_fill_rx()` (line 533)
+- `mt7925_mac_fill_rx()` ← `mt7925_queue_rx_skb()` (line 1251) on
+  `PKT_TYPE_NORMAL`
+- `mt7925_mac_add_txs_skb()` ← `mt7925_mac_add_txs()` ←
+  `mt7925_queue_rx_skb()` on `PKT_TYPE_TXS`
+- RX path is per-packet NAPI hot path; TXS path is per-transmission
+  completion
 
-### Step 5.3: TRACE CALLEES
-**Record:** `pci_lock_rescan_remove()`, `pci_stop_root_bus()`,
-`pci_remove_root_bus()`, `pci_unlock_rescan_remove()`, then
-`plda_pcie_irq_domain_deinit()` and optional `host_deinit`.
+### Step 5.3: Callees
+**Record:** RX failure propagates to `dev_kfree_skb()`. TX path updates
+`wcid->rate` used by rate control.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:**
-- `platform_driver.remove` → `plda_pcie_host_deinit()` → unlocked bus
-  teardown.
-- Concurrent path: root writes to `/sys/bus/pci/rescan`,
-  `/sys/.../remove`, or per-device rescan while StarFive PCIe driver is
-  being removed.
-- **Reachability:** Requires `CONFIG_PCIE_STARFIVE_HOST` (StarFive
-  JH7110 / COMPILE_TEST). Sysfs triggers require root; driver remove can
-  also happen during reboot/module unload.
+### Step 5.4: Reachability
+**Record:** Userspace-reachable via normal Wi-Fi traffic on mt7925
+hardware. Trigger requires hardware reporting 320MHz in RXV/TXS
+metadata. Sniffer path in `mcu.c` already maps `NL80211_CHAN_WIDTH_320`
+(line 2151). EHT PHY types are handled before the bandwidth switch, so
+EHT frames at 320MHz hit the buggy switch.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** Same missing-lock pattern exists in dwc, cadence, altera,
-brcmstb, iproc, mediatek (non-gen3), rockchip, vmd in this tree.
-**Correct pattern** already present in `pci_host_common_remove()`,
-`mtk_pcie_remove()` (gen3), `pci_aardvark`, `pci_mvebu`, `pci-hyperv`.
+### Step 5.5: Similar patterns
+**Record:** Identical handling exists in `mt7996/mac.c` (lines 407-409
+RX, 1564-1566 TX). `mt76.h` defines `tx_bw[5]` for 320MHz stats.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** **YES.** Current code at lines 641–644 of `pcie-plda-
-host.c`:
+### Step 6.1: Buggy code exists?
+**Record:** **YES.** Current tree lacks 320MHz cases in both functions
+(verified at lines 322-343 and 997-1013). Bug present since driver
+introduction (`c948b5da6bbec`). Fix commit `2237b7b332990` is **NOT** in
+this tree.
 
-```641:644:drivers/pci/controller/plda/pcie-plda-host.c
-void plda_pcie_host_deinit(struct plda_pcie_rp *port)
-{
-        pci_stop_root_bus(port->bridge->bus);
-        pci_remove_root_bus(port->bridge->bus);
-```
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected.** Diff matches current file
+structure exactly (`git show 2237b7b332990`).
 
-Bug present since **76c9113968079** (May 2024), well before 6.18.y
-branched.
-
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** **Clean apply expected** — 2-line addition with no
-surrounding churn in recent plda history. Latest plda-host change:
-`882569dca6646`.
-
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** **No** — `git log --grep="plda: Protect root bus"` returned
-nothing. Fix not yet in this tree.
+### Step 6.3: Related fixes already present?
+**Record:** `mt7996` 320MHz RX fix (`0197923ecf5eb`) is in tree. No
+alternate mt7925 fix found.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** **Subsystem:** `drivers/pci/controller/plda` (PCI host
-controller). **Criticality:** IMPORTANT — PCI core synchronization;
-crash/UAF on affected hardware.
+### Step 7.1: Subsystem criticality
+**Record:** `drivers/net/wireless/mediatek/mt76/mt7925` — **IMPORTANT**
+(Wi-Fi 7 USB/PCIe driver, `CONFIG_MT7925E` / `CONFIG_MT7925U`)
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** PLDA code actively maintained (MSI domain switch, affinity,
-microchip integration in 6.17–6.18). StarFive driver added May 2024,
-merged via pci-v6.12-changes.
+### Step 7.2: Activity
+**Record:** Actively maintained in 6.18.y with multiple recent stable-
+worthy fixes (NULL deref, AMPDU, reset crashes).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** **Platform-specific** — users of `CONFIG_PCIE_STARFIVE_HOST`
-(StarFive JH7110 RISC-V boards). Microchip PLDA users go through
-`pci_host_common_remove()` which already holds the lock.
+### Step 8.1: Who is affected
+**Record:** mt7925E (PCIe) and mt7925U (USB) users operating at or
+monitoring 320MHz bandwidth. Not universal; driver-specific but affects
+real Wi-Fi 7 hardware owners.
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+### Step 8.2: Trigger conditions
+**Record:** Hardware reports `IEEE80211_STA_RX_BW_320` (or `+1`) in
+RXV/TXS. Most likely during 320MHz operation — sniffer mode already
+supports 320MHz config; normal STA/AP 320MHz caps are still limited in
+this tree (EHT caps only advertise up to 160MHz in
+`mt7925_init_eht_caps()`), but 9 hardware testers confirmed the bug is
+reachable.
+
+### Step 8.3: Failure mode severity
 **Record:**
-- **Trigger:** Concurrent PLDA host driver removal and sysfs PCI
-  rescan/remove on the same bus hierarchy.
-- **Likelihood:** Uncommon but realistic (admin scripts, hotplug
-  testing, driver rebind during PCI maintenance).
-- **Unprivileged trigger:** No direct userspace trigger without
-  root/CAP_SYS_ADMIN for sysfs PCI ops.
+- **RX:** `-EINVAL` → `mt7925_mac_fill_rx()` fails → `dev_kfree_skb()` —
+  **received packets silently dropped** — **HIGH** (connectivity loss)
+- **TX:** Wrong bandwidth in rate info/stats — **MEDIUM** (rate control
+  inaccuracy, not packet loss)
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** **Use-after-free / kernel crash** — severity **HIGH**
-(potential **CRITICAL** on affected systems). Matches documented PCI
-subsystem race class; similar missing-lock bug caused a real oops in
-**1d59d474e1cb7**.
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Prevents crashes/UAF on StarFive JH7110 stable
-  deployments during driver teardown.
-- **Risk:** Minimal — 2-line lock pair, established pattern, no behavior
-  change except correct serialization.
-- **Ratio:** Strong benefit, negligible risk.
+- **Benefit:** HIGH for affected mt7925 users at 320MHz — prevents RX
+  packet drops
+- **Risk:** VERY LOW — 9-line addition, proven pattern from mt7996,
+  extensive testing
+- **Ratio:** Strongly favorable
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real synchronization bug in existing code path
-- Documented PCI race class with UAF/crash consequences
-- 2-line fix matching multiple in-tree precedents
-- Bug present since `plda_pcie_host_deinit()` was added (2024)
-- Standalone, applies cleanly to 6.18.44
-- PCI maintainer sign-off (Bjorn Helgaas)
-- Prior stable-worthy precedent: **1d59d474e1cb7** (rescan lock crash
-  fix)
+- Real functional bug causing RX packet drops
+- Present since mt7925 driver introduction (2023)
+- Small, surgical, obviously correct (mirrors mt7996)
+- 9 Tested-by + MediaTek maintainer Reviewed-by
+- Applies cleanly to 6.18.44
+- All required enums/types exist in tree
+- Wi-Fi 7 hardware; 320MHz is a natural operating mode
 
 **AGAINST backport:**
-- No explicit user crash report for plda
-- Affects niche embedded platform (StarFive JH7110 only in this tree)
-- Sysfs race requires privileged access
+- Only affects mt7925 hardware users
+- Full 320MHz STA/AP mode not yet fully advertised in 6.18 mt7925 driver
+  (EHT caps top out at 160MHz; BSS config switch lacks 320MHz case) —
+  may limit how often the bug triggers in production
+- Originated in MT7927 support series (but patch is self-contained)
 
-**UNRESOLVED:**
-- Full lore.kernel.org review thread (WebFetch blocked)
-- Whether commit has landed in mainline (not in this checkout)
+**Unresolved:** No explicit user bug report with stack trace; severity
+inferred from code path analysis and tester validation.
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — matches established in-tree
-   pattern; no Tested-by but fix is trivially verifiable.
-2. Fixes a real bug? **PASS** — missing lock on bus teardown vs. sysfs
-   rescan/remove.
-3. Important issue? **PASS** — UAF/crash (HIGH severity).
-4. Small and contained? **PASS** — 2 lines, 1 function.
-5. No new features or APIs? **PASS** — synchronization only.
-6. Can apply to local tree? **PASS** — buggy code confirmed present;
-   infrastructure exists.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — mirrors mt7996; 9 Tested-by,
+   maintainer reviewed
+2. Fixes real bug affecting users? **PASS** — RX packet drops on 320MHz
+   metadata
+3. Important issue? **PASS** — HIGH severity (RX connectivity loss) for
+   affected hardware
+4. Small and contained? **PASS** — 9 lines, one file
+5. No new features/APIs? **PASS** — completes existing parser logic
+6. Can apply to local tree? **PASS** — clean apply, all prerequisites
+   present
 
-### Step 9.3: EXCEPTION CATEGORIES
-**Record:** None (not a quirk, device ID, DT, build, or docs fix).
-Standard bug fix.
+### Step 9.3: Exception categories
+**Record:** N/A — standard bug fix, not device ID/quirk/DT/build/docs
+exception.
 
-### Step 9.4: DECISION RATIONALE
+### Step 9.4: Decision rationale
 
-For Linux **6.18.y**, `plda_pcie_host_deinit()` removes a root PCI bus
-without holding `pci_rescan_remove_lock`, while sysfs rescan/remove
-paths hold that same lock. This is a known PCI race pattern that can
-cause use-after-free and kernel crashes. The fix is a minimal 2-line
-addition that mirrors `pci_host_common_remove()` and other corrected
-drivers. It is standalone, applies cleanly, and addresses a real
-stability issue on StarFive JH7110 systems using
-`CONFIG_PCIE_STARFIVE_HOST`.
+For **6.18.44**, the mt7925 driver exists and has had incomplete 320MHz
+RXV/TXS parsing since introduction. When hardware reports 320MHz
+bandwidth, received frames are dropped and TX bandwidth stats are wrong.
+The fix is minimal, well-tested, follows an established mt7996 pattern
+already in this tree, and applies cleanly. While 320MHz STA/AP
+advertisement is not fully mature in 6.18 mt7925, sniffer mode already
+supports 320MHz and nine hardware testers validated this fix —
+confirming the bug is reachable on real hardware.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-  and local mbox cover letter.
-- **[Phase 2]** Read current `pcie-plda-host.c` lines 641–651; confirmed
-  2-line lock addition matches diff.
-- **[Phase 2]** Read `drivers/pci/remove.c` — `pci_stop_root_bus()` /
-  `pci_remove_root_bus()` have no internal lock.
-- **[Phase 2]** Read `drivers/pci/pci-sysfs.c` lines 461–541 —
-  rescan/remove stores use `pci_lock_rescan_remove()`.
-- **[Phase 3]** `git describe HEAD` → v6.18.44; Makefile confirms
-  6.18.44.
-- **[Phase 3]** `git blame` lines 641–644 → introduced in
-  **76c9113968079** (2024-03-28).
-- **[Phase 3]** `git show 76c9113968079` — added
-  `plda_pcie_host_deinit()`.
-- **[Phase 3]** `git show 9d16947b75831` — `pci_lock_rescan_remove()`
-  added 2014.
-- **[Phase 3]** `git show 1d59d474e1cb7` — precedent crash from missing
-  rescan lock.
-- **[Phase 3]** `git log --grep="plda: Protect root bus"` — no match
-  (fix not in tree).
-- **[Phase 4]** Read local mbox `20260522_18255117159_pci_controller_add
-  _missing_rescan_lock_around_root_bus_removal.mbx` — series context and
-  bot review.
-- **[Phase 4]** `b4 dig -c 76c9113968079` — found unrelated plda init
-  thread (not this patch).
-- **[Phase 4]** WebFetch patch.msgid.link — blocked (UNVERIFIED live
-  thread).
-- **[Phase 5]** `grep plda_pcie_host_deinit` — single caller:
-  `starfive_pcie_remove()`.
-- **[Phase 5]** `grep pci_lock_rescan_remove drivers/pci/controller/` —
-  confirmed correct pattern in host-common, mtk-gen3, aardvark, mvebu,
-  hyperv; missing in plda.
-- **[Phase 6]** Buggy code confirmed present in 6.18.44 checkout.
-- **[Phase 6]** Read `drivers/pci/controller/plda/Kconfig` — StarFive
-  selects `PCIE_PLDA_HOST`; Microchip uses `PCI_HOST_COMMON` (already
-  locked).
-- **[Phase 7]** `git log --oneline -5 drivers/pci/controller/plda/pcie-
-  starfive.c` — driver present since **39b91eb40c6aa** (May 2024).
-- **[Phase 8]** Failure mode UAF/crash inferred from commit message, PCI
-  probe.c comment (lines 3536–3539), and **1d59d474e1cb7** precedent —
-  no plda-specific crash report (UNVERIFIED user impact).
+- [Phase 1] `git describe HEAD` → v6.18.44; `make kernelversion` →
+  6.18.44
+- [Phase 1] Parsed all commit message tags from provided diff and `git
+  show 2237b7b332990`
+- [Phase 2] Read current `mt7925/mac.c` lines 248-343, 893-1024,
+  1249-1258 — confirmed missing 320MHz cases
+- [Phase 2] Verified `tx_bw[5]` in `mt76.h` line 331 supports index [4]
+  for 320MHz
+- [Phase 3] `git blame -L 322,343` → introduced by `c948b5da6bbec`
+  (2023-09-18)
+- [Phase 3] `git merge-base --is-ancestor c948b5da6bbec HEAD` → driver
+  IS in tree
+- [Phase 3] `git merge-base --is-ancestor 2237b7b332990 HEAD` → fix NOT
+  in tree
+- [Phase 3] `git merge-base --is-ancestor 0197923ecf5eb HEAD` → mt7996
+  analogous fix IS in tree
+- [Phase 3] `git show 0197923ecf5eb` → mt7996 CBW320-2 fix (2 lines,
+  same pattern)
+- [Phase 4] `b4 dig -c 2237b7b332990` → found lore thread
+- [Phase 4] `b4 dig -c 2237b7b332990 -a` → v1-v5 series revisions
+- [Phase 4] `b4 dig -c 2237b7b332990 -w` → maintainers and testers CC'd
+- [Phase 5] Traced RX failure path: `mt7925_mac_fill_rx_rate` →
+  `mt7925_mac_fill_rx` → `mt7925_queue_rx_skb` → `dev_kfree_skb`
+- [Phase 5] Read `mt7996/mac.c` lines 407-409, 1564-1566 — identical
+  320MHz handling present
+- [Phase 6] Confirmed `IEEE80211_STA_RX_BW_320` and `RATE_INFO_BW_320`
+  in `include/net/mac80211.h` and `include/net/cfg80211.h`
+- [Phase 6] Confirmed `NL80211_CHAN_WIDTH_320` in mt7925 sniffer config
+  (`mcu.c:2151`)
+- [Phase 6] Confirmed mt7925 EHT caps in `main.c` only advertise up to
+  160MHz (no `_320` MCS map) — limits but does not eliminate trigger
+  scenarios
+- [Phase 6] `git show 2237b7b332990` — patch applies cleanly to current
+  file
 
-**YES**The git history check finished successfully. It confirmed the
-missing lock has been in `plda_pcie_host_deinit()` since commit
-`76c9113968079` (May 2024), and that the fix is not yet in this 6.18.44
-tree.
+**YES**The background searches finished and match the earlier analysis:
 
-**Verdict: YES** — backport this commit. It’s a small, correct race fix
-(UAF/crash risk during root bus removal vs. sysfs rescan) that matches
-the pattern already used in `pci_host_common_remove()` and similar
-drivers.
+- **Fix commit on master:** `2237b7b332990` — `wifi: mt76: mt7925:
+  handle 320MHz bandwidth in RXV and TXS`
+- **Not in this tree:** The fix is absent from v6.18.44; the buggy
+  switch has been there since the mt7925 driver was added
+  (`c948b5da6bbec`, Sep 2023)
+- **Impact:** Missing 320MHz handling causes RX packet drops and wrong
+  TX bandwidth stats on mt7925 hardware when the firmware reports 320MHz
 
- drivers/pci/controller/plda/pcie-plda-host.c | 2 ++
- 1 file changed, 2 insertions(+)
+**Verdict for 6.18.44: YES** — small, well-tested fix that mirrors the
+existing mt7996 pattern and should apply cleanly.
 
-diff --git a/drivers/pci/controller/plda/pcie-plda-host.c b/drivers/pci/controller/plda/pcie-plda-host.c
-index 3c2f683830107..f9a34f323ad8c 100644
---- a/drivers/pci/controller/plda/pcie-plda-host.c
-+++ b/drivers/pci/controller/plda/pcie-plda-host.c
-@@ -640,8 +640,10 @@ EXPORT_SYMBOL_GPL(plda_pcie_host_init);
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+index 6a74779430916..0986185dd2ed6 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -338,6 +338,11 @@ mt7925_mac_fill_rx_rate(struct mt792x_dev *dev,
+ 	case IEEE80211_STA_RX_BW_160:
+ 		status->bw = RATE_INFO_BW_160;
+ 		break;
++	/* RXV can report 320 in two positions */
++	case IEEE80211_STA_RX_BW_320:
++	case IEEE80211_STA_RX_BW_320 + 1:
++		status->bw = RATE_INFO_BW_320;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -995,6 +1000,10 @@ mt7925_mac_add_txs_skb(struct mt792x_dev *dev, struct mt76_wcid *wcid,
+ 	stats->tx_mode[mode]++;
  
- void plda_pcie_host_deinit(struct plda_pcie_rp *port)
- {
-+	pci_lock_rescan_remove();
- 	pci_stop_root_bus(port->bridge->bus);
- 	pci_remove_root_bus(port->bridge->bus);
-+	pci_unlock_rescan_remove();
- 
- 	plda_pcie_irq_domain_deinit(port);
- 
+ 	switch (FIELD_GET(MT_TXS0_BW, txs)) {
++	case IEEE80211_STA_RX_BW_320:
++		rate.bw = RATE_INFO_BW_320;
++		stats->tx_bw[4]++;
++		break;
+ 	case IEEE80211_STA_RX_BW_160:
+ 		rate.bw = RATE_INFO_BW_160;
+ 		stats->tx_bw[3]++;
 -- 
 2.53.0
 
