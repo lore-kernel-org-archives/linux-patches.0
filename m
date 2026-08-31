@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE33247CC83;
-	Mon, 31 Aug 2026 14:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7551948422B;
+	Mon, 31 Aug 2026 14:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184870; cv=none; b=XQ2bnfS88rvf+vPMfoKczpjECR7TNniLx3I3fLTqcc/Q+ABsvm0w1TE6getSWx1Uv4o4UT8BRkx//GNnqmV5XFHiWF0SZLMYvjj6Wn+88+9JvgIm9Jiu/P1VzQADUVoH1iRhdEeym89yDZFuSJMtsTHB8ZYqGc6o/+v2td6DHW8=
+	t=1788184874; cv=none; b=YSeptRrcpCMPGH5E4VgmN01683L+QXkkjgWO9Ad5fYpvivFskAzHzHHyoIPOTkG3R1o6wIxtM+KeZdmWE9o7IA45jaJJmM85e2ka/A8dR5R5gSZp306lF42ZL3SXG/rbP+aaxvQTLokNY6MN0k1xOcg5FFrxxpxjtnZOukPIJFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184870; c=relaxed/simple;
-	bh=hBphHN2V/al2l9YW+GdVmoxbBZzFCvwlJqKMcey+qI8=;
+	s=arc-20240116; t=1788184874; c=relaxed/simple;
+	bh=6ZCU6m+DZ9nh/Go9wbMA65XZAyOnJHSTFSQkbB7QOoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndTH7Ieiz4PEhmOfSTnPzxMR5Dc1KvzgeexuWXzU8Y+tV1NBLorsWxD7z/FnUX91lvdCbs0RBpS8TstpeHuD/Bn0D/1zUkxtJjlOpGarEAF5MxuYHLQtL47gQkFhE5IaIhoz3fZl1543uCR2dBmu5l1Afjl5/wq70lqSvaYirQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1taYWLDQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UfTf3MgwhUmyPPFye9sCEdjxvdN+wGMWH3Tb4VJKdLa68XuYdCUxfR2FG5fosl0nyUDZ+zhAUzBzKe/+26jBbbeNWCYWTUjA0VQbDr6KBBOuZzs3uRZxWx0hDDYcBcypzrQCYtrsLzsSU5oARVKWr3uOseN84N6o1CONKLFKj5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGolKllw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1taYWLDQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFD01F000E9;
-	Mon, 31 Aug 2026 14:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGolKllw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5CE1F000E9;
+	Mon, 31 Aug 2026 14:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184869;
-	bh=hm9gBW5q4A6njKidaOegCOnBTxtxW7QPppCTkrP183o=;
+	s=korg; t=1788184872;
+	bh=rjVgzoQehlmnKq24xKTzkfDx0WZ/9gdYghuhWW5UNpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1taYWLDQTNQf3sz8IOuMlRUC3f/hxGsHKXqB5fQUwVb5dW9fwOGBUsovxE5uwnUXi
-	 oRz+EF6H9E72Zoo3UY6VRGAVKkuAvTIw9DIgtQTpG69d6hSNGHLQxGATfQbJ1JLpIf
-	 MCI4hiEQ4GDhYZ87flowRKdS6YBv2ZVDlqdTobpA=
+	b=RGolKllwOqGYyGnn9Otpi7fb0CzOBeT9KB5r8Iu24x/PMnFkIzuHcAIxCsVQyvIex
+	 GTGItMSU7WpN57mc+UhOC7KkQB6yBgEMxfuirF0uewDyBv2QWHs0yXkrxy8Bx+sw3a
+	 KePxqqeOw54lM492FF2/Wb3iFqQa7juagZDfkFvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/92] Revert "PM: sleep: Use complete() in device_pm_sleep_init()"
-Date: Mon, 31 Aug 2026 15:34:26 +0200
-Message-ID: <20260831133401.123840840@linuxfoundation.org>
+Subject: [PATCH 6.1 19/92] can: j1939: add missing calls in NETDEV_UNREGISTER notification handler
+Date: Mon, 31 Aug 2026 15:34:17 +0200
+Message-ID: <20260831133400.584169403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -49,37 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 2fe7ebb3d50c8571a9dbfeaf900f34f4c58f6bd6.
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
+[ Upstream commit 93a27b5891b8194a8c083c9a80d2141d4bf47ba8 ]
+
+Currently NETDEV_UNREGISTER event handler is not calling
+j1939_cancel_active_session() and j1939_sk_queue_drop_all().
+This will result in these calls being skipped when j1939_sk_release() is
+called. And I guess that the reason syzbot is still reporting
+
+  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
+
+is caused by lack of these calls.
+
+Calling j1939_cancel_active_session(priv, sk) from j1939_sk_release() can
+be covered by calling j1939_cancel_active_session(priv, NULL) from
+j1939_netdev_notify().
+
+Calling j1939_sk_queue_drop_all() from j1939_sk_release() can be covered
+by calling j1939_sk_netdev_event_netdown() from j1939_netdev_notify().
+
+Therefore, we can reuse j1939_cancel_active_session(priv, NULL) and
+j1939_sk_netdev_event_netdown(priv) for NETDEV_UNREGISTER event handler.
+
+Fixes: 7fcbe5b2c6a4 ("can: j1939: implement NETDEV_UNREGISTER notification handler")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/3ad3c7f8-5a74-4b07-a193-cb0725823558@I-love.SAKURA.ne.jp
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/can/j1939/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index dc3d30860ef32..ef5157fc8dcc5 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -101,7 +101,7 @@ void device_pm_sleep_init(struct device *dev)
- 	dev->power.is_noirq_suspended = false;
- 	dev->power.is_late_suspended = false;
- 	init_completion(&dev->power.completion);
--	complete(&dev->power.completion);
-+	complete_all(&dev->power.completion);
- 	dev->power.wakeup = NULL;
- 	INIT_LIST_HEAD(&dev->power.entry);
- }
-@@ -238,10 +238,6 @@ static void dpm_wait(struct device *dev, bool async)
- 	if (!dev)
- 		return;
- 
--	/* Devices with no PM support don't use the completion. */
--	if (dev->power.no_pm)
--		return;
--
- 	if (async || (pm_async_enabled && dev->power.async_suspend))
- 		wait_for_completion(&dev->power.completion);
- }
+diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
+index 6bbe75d2211d5..21186932f8f61 100644
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -378,6 +378,8 @@ static int j1939_netdev_notify(struct notifier_block *nb,
+ 		j1939_ecu_unmap_all(priv);
+ 		break;
+ 	case NETDEV_UNREGISTER:
++		j1939_cancel_active_session(priv, NULL);
++		j1939_sk_netdev_event_netdown(priv);
+ 		j1939_sk_netdev_event_unregister(priv);
+ 		break;
+ 	}
 -- 
 2.53.0
 
