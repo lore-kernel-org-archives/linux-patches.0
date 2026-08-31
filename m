@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014FD46DFF4;
-	Mon, 31 Aug 2026 13:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F46A426408;
+	Mon, 31 Aug 2026 13:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183302; cv=none; b=Q2SkfSpHu9fKxYNYLHhP/n4z7VgfFoAitdNtUm9NQvGdKahdsD9ve/NkcQwjEOQOi4tz0Jgmb+DFMRpDx2Htxlr1R/QGK/rk+nDYwTn6bxq2OSDxpB3Xwk03pQ9o+8iMbMbrgw2XcGKC2SdubEzIBYS0OA/Kqevm5Z1BzBmiep4=
+	t=1788183304; cv=none; b=t/V4Y8Bv7hYyeV28W2xKU0HoQOcXnL2aWMPsurfPO5ltEoPBJkDS/mwJ7EMt8hn0RPUo/ToApVlCP9+NEhUOWLJl3W+Ghp2+Fs8OBHdWa/eqCRletbwIjQPxoFXWEddx2poL1FQgJVPwKwxhuLJVtkmwtXcoTDEiXB5IpP6FMVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183302; c=relaxed/simple;
-	bh=1xDt4C7KhNf7kVp/+VSVtbC7O7z4obXhQ+RE6SH4Vfo=;
+	s=arc-20240116; t=1788183304; c=relaxed/simple;
+	bh=bndRr2yih9ehv2BaHd34aIU21J9MIKGVS4Ua3gwTt1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OodMFHdfKjiU8xmuvHt9N+znsPKI2+TljDWNv9ZvM4/4eeTQTKPLg140txg8812t2NPjVhGC2LY6OeAx2zCXi59fVzU8wsCWL9jKRCD8TQ7XSY3ETAtj41rtzgemMwG3/XInV9zwuMqdP6kS/IvTMX3u+A07s0XEHL7lOTLCB+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OQ1B9cYa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jQxnfLd0lOdtfM8scHKaczP8wMZxAYvFVFXce9QDfuPbyts7oianmIS2tcdiyGnPXYwghWZTAx2SON8+hqHWC1cmOMuPYFxgXDlu7LCYqN6Y0PasELF9PNkrroVRtt+Bo5Jag9mZa5c7T909k1wxa8dM8fHDXYz/8zLWOKE1QFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZIiwXdfn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OQ1B9cYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3BA1F00A3D;
-	Mon, 31 Aug 2026 13:34:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZIiwXdfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4754D1F00A3F;
+	Mon, 31 Aug 2026 13:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183299;
-	bh=y1preF5+Nm7sJx/6vhxIdSvAsjE3Sh4FPm3KwOWx5nA=;
+	s=k20260515; t=1788183302;
+	bh=+rzxmqvMLiTzDYyaBHgsvbWHJ8M1I8wwtkBuvaPp0EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OQ1B9cYaONWodq5EeYE26AZdKdJw6BfXk/uViTMzCk7rz9I+oKSDUQTIWeokjEbr4
-	 Ac8Oq1SsFyPMLKYXFUcjZ7pPR3erW+Xr2NLIoaPovkDU0NVaxRf7LDdth1i39F9spT
-	 BlLqrs+7rMzLKyZa3YOdn13OdXaMy7rQF2mpiSbfcUeHprKcOnbipMC91hF/KWBSBC
-	 QfVOUrFt3jyVw6NEFLw7fe4EIJPtZfBGOKxgb/mm8nkgD0suipbXXJ13AW7kcotB+s
-	 7CBir4mMKwcEjzgrLMiM5UT8hQ/9XrbVpJNx93r1QOzQPYQ5zQzfXC3uYHlEnTj7+m
-	 2Y9R1ZHO2rYOg==
+	b=ZIiwXdfnJ3FQlD0c+xAVLwF3PThDPtTBlU+2MDAcppTUMJP+t+by+tS26cZGSCRGM
+	 g/fi6GySKPS8Jynb+yfc8W5WM0p6ODlA5o/AXVz44Z1l+Cgj1IWOR9akKdb/KxU5w8
+	 y9mbj6V+SWvITjUrR0OW8TLP0I88RppUt5h0xIrssAAw2Rc/DsYn0DYSkNA+oGhA64
+	 1nNIMjYf/drR2t40bSj4vUNaRvKdCcd9DO91SNE0K+EIr28OSxosbM/UPqECelVsOC
+	 sz4j4dGsfh+VtfJgaocGlXbdt74xXHAxp2PwCwZKK6kUEE+XRzZ7Ypous1B8RjAotW
+	 vOEq6X2R3FuXQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Samson Tam <Samson.Tam@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-hwmon@vger.kernel.org,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] hwmon: (dell-smm) Add Dell Latitude 7530 to fan control whitelist
-Date: Mon, 31 Aug 2026 09:21:34 -0400
-Message-ID: <20260831133314.4125787-66-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/display: Check for sharpening case when calculating max vtaps for scaler
+Date: Mon, 31 Aug 2026 09:21:35 -0400
+Message-ID: <20260831133314.4125787-67-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -47,398 +55,353 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Samson Tam <Samson.Tam@amd.com>
 
-[ Upstream commit 5a1aba28f6c79f4bbb7a5361063225030ecd36f3 ]
+[ Upstream commit 4d8cfd570386eb0b6cb8aa0ca9e9db60a0404337 ]
 
-A user reported that the Dell Latitude 7530 needs to be whitelisted
-for the special SMM calls necessary for globally enabling/disabling
-BIOS fan control.
+[Why & How]
+- calc_lb_num_partitions has check when scaler is not enabled to use
+ larger LB in calculations for max vtaps based on viewport being 1:1
+- however, scaler is forced on when sharpening is enabled, so need
+ to consider this in check
+- taps is predetermined in spl_get_optimal_number_of_taps prior to
+ calc_lb_num_partitions.  Add check for taps not 1 to handle
+ sharpening case
 
-Closes: https://github.com/Wer-Wolf/i8kutils/issues/17
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://lore.kernel.org/r/20260610180141.311503-1-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Samson Tam <Samson.Tam@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `hwmon: (dell-smm) Add Dell Latitude 7530 to
-fan control whitelist`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (stable/linux-6.18.y)
-**Mainline commit:** `5a1aba28f6c79` (merged via `hwmon-for-v7.2`, not
-yet in this 6.18.y checkout)
+**Step 1.1 — Subject line**
+Record: `[drm/amd/display]` `[Check]` — verify sharpening when computing
+max vertical taps for the DCN401 scaler line-buffer partition
+calculation.
 
----
+**Step 1.2 — Tags**
+Record:
+- `Reviewed-by: Charlene Liu <charlene.liu@amd.com>`
+- `Signed-off-by: Samson Tam <Samson.Tam@amd.com>`
+- `Signed-off-by: Ray Wu <ray.wu@amd.com>`
+- `Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>`
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`
+- No `Fixes:`, `Reported-by:`, `Link:`, or `Cc: stable@vger.kernel.org`
+  (expected for manual review)
+- Notable: AMD internal review + `Tested-by` from AMD QA; no syzbot or
+  public bug report
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** `dscl401_spl_calc_lb_num_partitions()` treats a 1:1 viewport
+  as “scaler disabled” and uses an inflated line-buffer (LB) size for
+  max-vtap math, but sharpening forces the scaler on at 1:1.
+- **Symptom:** Overestimated max vertical taps → scaler programmed
+  beyond real LB capacity → display corruption/underflow risk on DCN401
+  with sharpening at native resolution.
+- **Root cause:** `spl_get_optimal_number_of_taps()` sets `taps > 1`
+  before calling `spl_calc_lb_num_partitions()`, but the LB-size branch
+  only checked viewport 1:1, not taps.
+- **Version info:** None in the message.
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[hwmon: (dell-smm)]` `[Add]` — Add Dell Latitude 7530 to
-the existing fan-control DMI whitelist.
-
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-**Record:**
-- **Closes:** https://github.com/Wer-Wolf/i8kutils/issues/17
-- **Signed-off-by:** Armin Wolf \<W_Armin@gmx.de\>
-- **Acked-by:** Pali Rohár \<pali@kernel.org\> (dell-smm co-developer /
-  whitelist maintainer)
-- **Link:**
-  https://lore.kernel.org/r/20260610180141.311503-1-W_Armin@gmx.de
-- **Signed-off-by:** Guenter Roeck \<linux@roeck-us.net\> (hwmon
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or syzbot tags.
-
-Notable: maintainer ack from Pali Rohár; user bug report via GitHub
-issue.
-
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-**Record:**
-- **Bug:** Dell Latitude 7530 is missing from
-  `i8k_whitelist_fan_control`, so the driver never sets the correct SMM
-  codes (`manual_fan`/`auto_fan`) for toggling BIOS automatic fan
-  control.
-- **Symptom:** Manual fan control via hwmon `pwmX_enable` / i8kutils
-  does not work; user saw fan speed capped (~3500 RPM) without the
-  whitelist entry vs ~4000 RPM with it.
-- **Root cause:** SMM fan-control codes differ per Dell model; only
-  whitelisted models get the correct codes at init via
-  `dell_smm_init_dmi()`.
-- No kernel version range stated in the commit message.
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised cleanup — this is an explicit hardware-
-enablement / quirk entry. Functionally fixes broken manual fan control
-on one laptop model.
+**Step 1.4 — Hidden bug fix?**
+Record: Yes. Despite no “fix” in the subject, this is a hardware-
+programming correctness bug in the display scaler path, not a cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: INVENTORY THE CHANGES
-**Record:**
-- **Files:** `drivers/hwmon/dell-smm-hwmon.c` (+8 lines, 0 removed)
-- **Functions touched:** data in `i8k_whitelist_fan_control[]` (used by
-  `dell_smm_init_dmi()`)
-- **Scope:** Single-file, surgical DMI table addition.
+**Step 2.1 — Inventory**
+Record:
+- 1 file: `drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c` (+6 /
+  −2)
+- Function: `dscl401_spl_calc_lb_num_partitions()`
+- Scope: single-file, surgical (two conditionals in two `lb_config`
+  branches)
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Record:**
-- **Before:** On Latitude 7530,
-  `dmi_first_match(i8k_whitelist_fan_control)` returns NULL →
-  `manual_fan`/`auto_fan` stay 0 → `pwmX_enable` sysfs attribute is not
-  exposed (`auto_fan` check at line 864 fails) and
-  `i8k_enable_fan_auto_mode()` is never used with correct SMM codes.
-- **After:** Latitude 7530 matches → `manual_fan=0x30a3`,
-  `auto_fan=0x31a3` (same as Latitude 7320) → fan auto/manual SMM
-  control is enabled for this machine.
-- **Path affected:** `__init` DMI setup at boot (`dell_smm_init_dmi()` →
-  `i8k_init()`).
+**Step 2.2 — Code flow change**
+Record:
+- **Before:** `viewport.width == h_active && viewport.height ==
+  v_active` → use enlarged LB constants (e.g. `970+1290+1170` vs
+  `970+1290+484`).
+- **After:** Same enlarged LB only when viewport is 1:1 **and** `h_taps
+  == 1 && v_taps == 1` (scaler truly off).
+- **Path:** `spl_get_optimal_number_of_taps()` →
+  `spl_calc_lb_num_partitions()` →
+  `dscl401_spl_calc_lb_num_partitions()` during mode/plane setup on
+  DCN401.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:** **Category (h): Hardware workaround / DMI quirk.** Missing
-DMI whitelist entry prevents correct per-model SMM codes from being
-configured. Same mechanism as the existing Latitude 7320 entry
-(`b4be51302d687`).
+**Step 2.3 — Bug mechanism**
+Record: **Logic / hardware correctness fix.**
+When sharpening is enabled at 1:1, taps are already 6 (EASF path) before
+LB calculation, but the old code still assumed scaler-off and inflated
+LB size by ~25% (RGB) or ~55% (YUV420), inflating `num_part_y` and
+`max_taps_y`.
 
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:**
-- Obviously correct: copies the proven Latitude 7320 pattern
-  (`I8K_FAN_30A3_31A3`), user-tested on GitHub.
-- Minimal, no unrelated changes.
-- Regression risk very low: only affects systems matching
-  `DMI_PRODUCT_NAME == "Latitude 7530"`. The original 2019 whitelist
-  commit notes incorrect SMM codes can be dangerous, but this uses the
-  same validated codes as the sibling 7320 model after maintainer/user
-  testing.
+**Step 2.4 — Fix quality**
+Record: Obviously correct and minimal. Uses taps already set before the
+LB call as the scaler-enabled indicator. Low regression risk; only
+narrows the enlarged-LB fast path.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** Insertion point is after Latitude 7320 entry
-(`b4be51302d687`, Jul 2024). Whitelist infrastructure introduced in
-`afe45277ade62` (Nov 2019). `I8K_FAN_30A3_31A3` enum value present since
-at least `8debe3c1295ef`. All prerequisites are long-established in
-6.18.y.
+**Step 3.1 — Blame**
+Record: Buggy viewport-only check introduced in `70839da636050` (“Add
+new DCN401 sources”, 2024-04-26). Present in v6.18.44.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** N/A — no `Fixes:` tag.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no `Fixes:` tag.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:** Multiple prior whitelist additions already in 6.18.y:
-- `b4be51302d687` — Latitude 7320 (same author, same pattern, same
-  `I8K_FAN_30A3_31A3`)
-- `f8611a7981cd0` — G15 5510
-- `fa0bc8f297b29` — G15 5511
-- etc.
+**Step 3.3 — Related file history**
+Record: DCN401 added in `70839da636050`; ISHARP for DCN401 in
+`2998bccfa4197` (2024-05-29). Related DCN401 corruption fix:
+`5d74be8c3a941` (YUV color corruption). Standalone one-commit fix.
 
-Standalone single-patch series (v1 only). No series dependencies.
+**Step 3.4 — Author context**
+Record: Samson Tam is an active AMD display contributor; same author as
+`5d74be8c3a941`.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Armin Wolf is a regular dell-smm contributor in this tree
-(7320 whitelist, OptiPlex DMI entries, fan mode support). Not the
-subsystem maintainer, but established contributor with maintainer ack on
-this patch.
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** No dependencies. Requires only existing
-`i8k_whitelist_fan_control`, `i8k_fan_control_data[]`, and
-`I8K_FAN_30A3_31A3` — all present in 6.18.44. `git apply --check` on the
-mainline patch succeeds cleanly.
+**Step 3.5 — Dependencies**
+Record: None. Only needs `scl_data->taps` fields already used in this
+tree. `git apply --check` on mainline commit `4d8cfd570386e` succeeds
+cleanly.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:**
-- **b4 dig URL:**
-  https://patch.msgid.link/20260610180141.311503-1-W_Armin@gmx.de
-- **Series:** v1 only (committed version is latest)
-- **Reviewer feedback:** Acked-by Pali Rohár; Guenter Roeck applied. No
-  NAKs, no stable nomination in thread.
+**Step 4.1 — Original discussion**
+Record: `b4 dig -c 4d8cfd570386e` found no lore.kernel.org match (likely
+direct AMD/DRM tree path). lore.kernel.org search blocked by Anubis.
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** CC'd: `pali@kernel.org`, `linux@roeck-us.net`, `linux-
-hwmon@vger.kernel.org`. Pali Rohár (co-developer of whitelist mechanism)
-acked.
+**Step 4.2 — Reviewers**
+Record: `b4 dig -w` also found nothing. Commit has `Reviewed-by`
+(Charlene Liu), `Tested-by` (Daniel Wheeler), and Alex Deucher as
+committer.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** GitHub issue #17 (piotr152):
-- User confirmed without `driver_data`: fan capped at 3500 RPM
-- With `I8K_FAN_30A3_31A3`: works, ~4000 RPM
-- Same treatment needed as Latitude 7320 (issue #8)
-- Severity from user perspective: functional fan-control failure, not
-  kernel crash
+**Step 4.3 — Bug report**
+Record: N/A — no `Reported-by:` or `Link:` tags.
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Standalone patch. Related prior fix: `b4be51302d687`
-(Latitude 7320) — already in 6.18.y.
+**Step 4.4 — Series context**
+Record: Standalone; not part of a multi-patch series.
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** No stable-list discussion found for this specific patch. Not
-a negative signal per instructions.
+**Step 4.5 — Stable list history**
+Record: Not searched successfully on lore (bot protection). No evidence
+of prior stable rejection.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `dell_smm_init_dmi()` (consumer of whitelist),
-`i8k_enable_fan_auto_mode()` (uses `manual_fan`/`auto_fan`),
-`dell_smm_is_visible()` (exposes `hwmon_pwm_enable` when `auto_fan` is
-set).
+**Step 5.1 — Key functions**
+Record: `dscl401_spl_calc_lb_num_partitions()`, called via SPL callbacks
+from `spl_get_optimal_number_of_taps()`.
 
-### Step 5.2: TRACE CALLERS
-**Record:** `dell_smm_init_dmi()` called from `i8k_init()` at module
-init (`__init`). Affects all subsequent hwmon sysfs read/write on
-matched Dell laptops. Not interrupt context; init-time configuration.
+**Step 5.2 — Callers**
+Record:
+- `spl_get_optimal_number_of_taps()` (dc_spl.c:1033)
+- `spl_calculate_number_of_taps()` → `spl_calculate_scaler_params()` —
+  display mode/plane configuration on DCN401
 
-### Step 5.3: TRACE CALLEES
-**Record:** `dmi_first_match()` → sets globals `manual_fan`/`auto_fan` →
-used later by `i8k_enable_fan_auto_mode()` → `dell_smm_call()` (SMM BIOS
-call).
+**Step 5.3 — Callees**
+Record: Arithmetic on LB memory constants; sets `num_part_y` /
+`num_part_c` used to derive `max_taps_y` / `max_taps_c`.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** Boot-time DMI match → userspace writes `pwm1_enable` via
-hwmon sysfs (root typically required) → `i8k_enable_fan_auto_mode()`.
-Reachable from userspace on affected hardware; not a security crash
-vector.
+**Step 5.4 — Reachability**
+Record: Reachable on normal display use when DCN401 + adaptive
+sharpening (ISHARP) at 1:1 scaling. Userspace can enable sharpening via
+amdgpu display stack; not an obscure debug-only path.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** Identical pattern used for 12+ models in
-`i8k_whitelist_fan_control[]` in this tree, including Latitude 7320 with
-the same `I8K_FAN_30A3_31A3` codes.
+**Step 5.5 — Similar patterns**
+Record: `dscl32_spl_calc_lb_num_partitions()` has the same viewport-only
+check without taps check, but this commit targets DCN401 only.
+`dscl401_calc_lb_num_partitions()` (non-SPL) unchanged; SPL path is the
+sharpening path (`use_spl`).
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** **YES.** The whitelist table exists but lacks Latitude 7530.
-`grep "Latitude 7530"` returns no matches in 6.18.44. The omission (not
-a regression) means 7530 owners on 6.18.y lack fan-control enablement
-that sibling models (7320) already have.
+**Step 6.1 — Buggy code present?**
+Record: **Yes.**
+`drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c` lines 391–406
+lack the taps check. Fix commit `4d8cfd570386e` is **not** in this tree
+(`git merge-base --is-ancestor` fails).
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** **Clean apply expected.** Verified with `git apply --check`.
-Insertion point (after 7320, before E6440) matches current file layout
-exactly.
+**Step 6.2 — Backport complications**
+Record: Clean apply verified (`git show 4d8cfd570386e | git apply
+--check`). No conflicts expected.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** Latitude 7320 whitelist (`b4be51302d687`) is present.
-Latitude 7530 fix is not. No duplicate fix.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** **hwmon / dell-smm driver.** **IMPORTANT** for Dell laptop
-users relying on fan control; **PERIPHERAL** from a whole-kernel
-perspective (DMI-gated, one laptop model).
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** hwmon is actively maintained in 6.18.y; dell-smm receives
-regular DMI whitelist updates (7320, G15 5510/5511, XPS entries, etc.).
+**Step 6.3 — Related fixes already present?**
+Record: No equivalent taps check. DCN401 and ISHARP support are both
+present.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** **Driver-specific / platform-specific** — Dell Latitude 7530
-owners using `dell-smm` hwmon fan control (i8kutils, manual thermal
-management).
+**Step 7.1 — Subsystem**
+Record: `drivers/gpu/drm/amd/display` — AMDGPU display (DCN401 DPP
+scaler). Criticality: **IMPORTANT** (display output for DCN401 hardware
+users).
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-**Record:** Every boot on Latitude 7530 with `dell-smm` loaded. Common
-for affected hardware owners. Requires root for sysfs writes; not an
-unprivileged attack vector.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** **Functional failure** — manual BIOS fan-control toggle via
-SMM does not work; fan speed may be capped below what manual control
-allows. **Severity: LOW–MEDIUM** (thermal management inconvenience, not
-kernel oops/corruption). Could matter under heavy workloads if BIOS auto
-mode is inadequate.
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-**Record:**
-- **Benefit:** Enables fan control on a real, shipping laptop for 6.18.y
-  users; direct precedent already accepted in this tree (7320).
-- **Risk:** Very low — 8 lines, DMI-gated, maintainer-acked, user-tested
-  codes.
-- **Ratio:** Favorable for backport under the hardware-quirk exception.
+**Step 7.2 — Activity**
+Record: Actively maintained; multiple DCN401 fixes in this tree (NULL
+deref, color corruption, signal checks).
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 8: Impact and Risk Assessment
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 8.1 — Who is affected**
+Record: Users of DCN401-based AMD GPUs (discrete/APU) on 6.18.y with
+adaptive sharpening at native (1:1) resolution. Driver-specific, not
+universal.
 
-**FOR backport:**
-- Hardware quirk / DMI whitelist exception (explicitly allowed for
-  stable)
-- Real user-reported issue with on-hardware testing
-- Acked-by subsystem co-developer (Pali Rohár)
-- Identical precedent already in 6.18.y (Latitude 7320, same SMM codes)
-- 8-line patch, applies cleanly, no dependencies
-- Driver and infrastructure fully present in 6.18.44
+**Step 8.2 — Trigger conditions**
+Record: DCN401 + sharpening enabled + 1:1 viewport. Common for desktop
+use at native panel resolution with sharpening on. Unprivileged users
+can trigger via normal display configuration.
 
-**AGAINST backport:**
-- Not a crash, security, deadlock, or data-corruption fix
-- Strict reading of "important issue" criterion is borderline
-- Fan-control SMM calls carry inherent risk if codes are wrong
-  (mitigated by 7320 precedent and user testing)
+**Step 8.3 — Failure mode severity**
+Record: Incorrect max-vtap calculation → scaler programmed beyond LB
+capacity → **display corruption / underflow** (MEDIUM–HIGH for affected
+hardware; not a kernel oops, but user-visible and similar to accepted
+DCN401 corruption fixes).
 
-**UNRESOLVED:** None material to the decision.
+**Step 8.4 — Risk/benefit**
+Record:
+- **Benefit:** MEDIUM–HIGH for DCN401 + sharpening users
+- **Risk:** VERY LOW (8-line logic fix, tested, reviewed)
+- **Ratio:** Favorable for backport
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — mirrors 7320 entry; user-
-   tested on GitHub; maintainer acked.
-2. Fixes a real bug affecting users? **PASS** — manual fan control non-
-   functional on Latitude 7530.
-3. Important issue? **PASS (via quirk exception)** — not crash-level,
-   but real hardware functionality for laptop thermal management; fits
-   hardware-quirk stable exception.
-4. Small and contained? **PASS** — 8 lines, one file.
-5. No new features or APIs? **PASS** — DMI table entry only; no new
-   sysfs/API surface.
-6. Can apply to local tree? **PASS** — verified clean apply to 6.18.44.
+---
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-**Record:** **Hardware quirk / DMI whitelist workaround** — same
-category as Latitude 7320, XPS 9315, G15 5510 entries already in 6.18.y.
+## Phase 9: Final Synthesis
 
-### Step 9.4: DECISION RATIONALE
+**Step 9.1 — Evidence**
 
-This commit should be backported to **6.18.y**. The dell-smm fan-control
-whitelist is an established, conservative mechanism for per-model SMM
-code selection. Adding Latitude 7530 with the same `I8K_FAN_30A3_31A3`
-codes as the already-backported Latitude 7320 is low risk and fixes a
-confirmed user-facing hardware issue. It is not a kernel-stability crash
-fix, but it squarely matches the stable-tree exception for hardware-
-specific quirks that enable existing driver functionality on real
-devices.
+*For backport:*
+- Real bug in v6.18.44 DCN401 SPL scaler LB calculation
+- Causes overestimated max vtaps when sharpening forces scaler at 1:1
+- Small, reviewed, tested, applies cleanly
+- Precedent: `5d74be8c3a941` (DCN401 display corruption) is already in
+  this tree
+- DCN401 + ISHARP both present since 2024
+
+*Against backport:*
+- No public bug report or syzbot finding
+- Narrow hardware/feature scope (DCN401 + sharpening at 1:1)
+- Display corruption, not documented kernel crash
+- No lore discussion found
+
+*Unresolved:*
+- No public user reports found
+- Exact visual failure modes not documented in the commit message
+
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct and tested? **PASS** — logic matches commit
+   explanation; `Tested-by` + `Reviewed-by`
+2. Fixes a real user-affecting bug? **PASS** — incorrect HW scaler
+   config on reachable path
+3. Important issue? **PASS** — display corruption on affected hardware
+   (same class as prior DCN401 stable fix)
+4. Small and contained? **PASS** — 8 lines, one function, one file
+5. No new features/APIs? **PASS** — correctness fix only
+6. Can apply to local tree? **PASS** — verified clean apply
+
+**Step 9.3 — Exception category**
+Record: Hardware workaround / driver correctness fix for existing DCN401
+hardware support (not a new device ID).
+
+**Step 9.4 — Decision rationale**
+For **linux-6.18.y (v6.18.44)**: the buggy code exists, prerequisites
+(DCN401, ISHARP, SPL) are present, the fix is minimal and low-risk, and
+it prevents display corruption on a real use case (sharpening at native
+resolution). This matches the class of AMDGPU display corruption fixes
+already carried in this stable tree.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** `git show 5a1aba28f6c79`: parsed subject, tags, body
-- **[Phase 1]** GitHub issue #17 fetched: user testing confirms
-  `I8K_FAN_30A3_31A3` works; without entry fan capped at 3500 RPM
-- **[Phase 2]** Read `dell-smm-hwmon.c` lines 432-441, 863-878,
-  1059-1084, 1530-1777: confirmed whitelist → `auto_fan`/`manual_fan` →
-  sysfs and SMM path
-- **[Phase 2]** `git show 5a1aba28f6c79 --stat`: 1 file, +8 lines
-- **[Phase 3]** `git describe HEAD` / `make kernelversion`: tree is
-  v6.18.44
-- **[Phase 3]** `git blame -L 1560,1567`: Latitude 7320 entry from
-  `b4be51302d687`
-- **[Phase 3]** `git log -S i8k_whitelist_fan_control`: whitelist
-  introduced `afe45277ade62` (2019)
-- **[Phase 3]** `git log --grep="fan control whitelist" HEAD`: multiple
-  whitelist commits already in 6.18.y including 7320
-- **[Phase 3]** `git apply --check` on mainline patch: applies cleanly
-  to 6.18.44
-- **[Phase 4]** `b4 dig -c 5a1aba28f6c79`: lore thread found
-- **[Phase 4]** `b4 dig -c 5a1aba28f6c79 -w`: Pali Rohár and Guenter
-  Roeck CC'd
-- **[Phase 4]** `b4 dig -c 5a1aba28f6c79 -a`: v1 only, no later
-  revisions
-- **[Phase 4]** `b4 dig -m /tmp/latitude7530.mbox`: thread downloaded;
-  Acked-by Pali Rohár; no stable Cc
-- **[Phase 5]** `grep dell_smm_init_dmi`: called from `i8k_init()` at
-  line 1808
-- **[Phase 6]** `grep "Latitude 7530"`: not present in 6.18.44 (fix
-  needed)
-- **[Phase 6]** `grep "Latitude 7320"`: present at line 1561 (insertion
-  point confirmed)
-- **[Phase 6]** `I8K_FAN_30A3_31A3` enum and data present at lines
-  1536-1544
-- **[Phase 7]** `git log --oneline -20 -- drivers/hwmon/`: active hwmon
-  maintenance in tree
-- **[Phase 8]** Failure mode assessed as functional/thermal, not crash —
-  severity LOW-MEDIUM
+- [Phase 1] Parsed commit `4d8cfd570386e` message and tags from `git
+  show`
+- [Phase 2] Read diff and current `dcn401_dpp.c` lines 357–428;
+  confirmed missing taps check
+- [Phase 2] Traced `spl_get_optimal_number_of_taps()` at
+  dc_spl.c:1006–1034 — taps set before LB calc
+- [Phase 2] Read sharpening logic at dc_spl.c:1121–1140 and
+  dml21_translation_helper.c:558–563
+- [Phase 3] `git blame` lines 390–416 → `70839da636050` (2024-04-26)
+- [Phase 3] `git log -S "use increased LB size..."` → introduced with
+  DCN401
+- [Phase 3] `2998bccfa4197` ISHARP support confirmed ancestor of HEAD
+- [Phase 3] `git show 4d8cfd570386e | git apply --check` → clean apply
+- [Phase 4] `b4 dig -c 4d8cfd570386e` → no lore match
+- [Phase 4] `b4 dig -c 4d8cfd570386e -w` and `-a` → no results
+- [Phase 4] lore.kernel.org WebFetch → blocked by Anubis
+- [Phase 5] Grep callers: `spl_get_optimal_number_of_taps` →
+  `spl_calculate_number_of_taps` → display setup
+- [Phase 6] `git describe HEAD` → v6.18.44
+- [Phase 6] `git merge-base --is-ancestor 4d8cfd570386e HEAD` → fix NOT
+  in tree
+- [Phase 6] Buggy viewport-only conditions confirmed at lines 391–392
+  and 405–406
+- [Phase 7] `git log --grep=dcn401` shows active DCN401 maintenance
+  including `5d74be8c3a941`
+- [Phase 8] Quantified LB overestimate: 3430 vs 2744 (RGB), 5770 vs 3712
+  (YUV420)
 
 **YES**
 
- drivers/hwmon/dell-smm-hwmon.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
-index 768690a597f4d..9f102589f240c 100644
---- a/drivers/hwmon/dell-smm-hwmon.c
-+++ b/drivers/hwmon/dell-smm-hwmon.c
-@@ -1565,6 +1565,14 @@ static const struct dmi_system_id i8k_whitelist_fan_control[] __initconst = {
- 		},
- 		.driver_data = (void *)&i8k_fan_control_data[I8K_FAN_30A3_31A3],
- 	},
-+	{
-+		.ident = "Dell Latitude 7530",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Latitude 7530"),
-+		},
-+		.driver_data = (void *)&i8k_fan_control_data[I8K_FAN_30A3_31A3],
-+	},
- 	{
- 		.ident = "Dell Latitude E6440",
- 		.matches = {
+diff --git a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
+index b62bbadb0d440..029f59a58c780 100644
+--- a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
++++ b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
+@@ -389,9 +389,11 @@ void dscl401_spl_calc_lb_num_partitions(
+ 		lb_memory_size_a = 1290;
+ 	} else if (lb_config == LB_MEMORY_CONFIG_3) {
+ 		if (scl_data->viewport.width  == scl_data->h_active &&
+-			scl_data->viewport.height == scl_data->v_active) {
++			scl_data->viewport.height == scl_data->v_active &&
++			scl_data->taps.h_taps == 1 && scl_data->taps.v_taps == 1) {
+ 			/* 420 mode: luma using all 3 mem from Y, plus 3rd mem from Cr and Cb */
+ 			/* use increased LB size for calculation only if Scaler not enabled */
++			/* Scaler is forced on when sharpening is on. Add check for taps = 1 */
+ 			lb_memory_size = 970 + 1290 + 1170 + 1170 + 1170;
+ 			lb_memory_size_c = 970 + 1290;
+ 			lb_memory_size_a = 970 + 1290 + 1170;
+@@ -403,8 +405,10 @@ void dscl401_spl_calc_lb_num_partitions(
+ 		}
+ 	} else {
+ 		if (scl_data->viewport.width  == scl_data->h_active &&
+-			scl_data->viewport.height == scl_data->v_active) {
++			scl_data->viewport.height == scl_data->v_active &&
++			scl_data->taps.h_taps == 1 && scl_data->taps.v_taps == 1) {
+ 			/* use increased LB size for calculation only if Scaler not enabled */
++			/* Scaler is forced on when sharpening is on. Add check for taps = 1 */
+ 			lb_memory_size = 970 + 1290 + 1170;
+ 			lb_memory_size_c = 970 + 1290 + 1170;
+ 			lb_memory_size_a = 970 + 1290 + 1170;
 -- 
 2.53.0
 
