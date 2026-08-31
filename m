@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747DC4CCDE9;
-	Mon, 31 Aug 2026 14:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A1448A8DA;
+	Mon, 31 Aug 2026 14:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185115; cv=none; b=sYaSMEkblnzxM4fS+/sIejoQ9ecJUItcurUhQTLdbtgPKgc9a4bz4PkZ6aVqL5H/qGCQQEGoPaYax8LhMAg0edAjcr0k+T9B3x0kCKvTt2V70qsV0XUkyH+MvoDxowvGoKj2F1c9ZrMfQb3oC+O6R4KbNpzt5QsLLjYHj8WroHw=
+	t=1788185123; cv=none; b=glt2tudxYlCvDx1F5hSAniKpkVi0e+YdMN6unurjEHY+xYHPDRkEuze1ZZJ2yxWri6J3xw2dkOXi37wKzJ6d4is6m4gphscY6G7mK6ed87CWzfexrRPwwAQflF6fSotOCaTp36FDyM+dn2yXW1gq1oNsd6YcrjO6CvLuwGxiuPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185115; c=relaxed/simple;
-	bh=NJVpFWrf5bYlVfJDXxswFgh0vvKUrNtR/wYHuGu4/J8=;
+	s=arc-20240116; t=1788185123; c=relaxed/simple;
+	bh=FFvAFsWkGtCovIZfRhkNLILtd9n3j93UlfUOS8wF+NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LA9H6oT+PWaNh0pASTihW3jK3JRquiCaZXj1Lxq90GKHIMX0jTypsay+B8xeB9M7FS74XSIoWvsDZsD1W6nrEGu6SvJp9OScOhgM+5RhhKm4BeE2ntj9hj5x4K6/++SgOsK+oswwXm4hydbQ9w+aWk6WrqoXfuvr2134U6UbNng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IssJFcRD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RgjP1Io8dmgeRHQYcaLTGCsMisiK0tDJYFN2VLWIrQ/H2f4IWuZRm8ymSrMqQX6LJL6QljX360vXqlrLc6aGB/oq0+rKXrG/9zzPowdBdEbzgoPM4zOVF2xA4QJaBxfATT3vpk/Egh8C7DXWvAkoh5JiIB5E+GRJcmiu7qLWAEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUqb0P7e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IssJFcRD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2081F000E9;
-	Mon, 31 Aug 2026 14:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUqb0P7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F3A1F000E9;
+	Mon, 31 Aug 2026 14:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185113;
-	bh=YOEwd/eeOe+DtHnW+O0s0KwPxyrQBNpyVfDTvmsZdlI=;
+	s=korg; t=1788185121;
+	bh=nxoYEzPE1MkKV0aDid3luM1mS9fjTmyiefy9HZdO3lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IssJFcRDqeK3/49OCARJLRbN2xyeFURKdTyhk7t4TUV51ZZiHSUbL2vZRMUVpS0Au
-	 NOTfnATHhoAy816ausvv/gVarQ8i4nWoL27m4db2+1+XZvctyg9X9d8I/kBvqjiqfp
-	 W3eh6hDUEOM0aRhnUitNgUa2m7Og/pzp8rWqOgmE=
+	b=VUqb0P7e0BBPtxSJD/i4Fg4zwWeVGI0eLoLhHdQ4KSmNZ3TqU9Ho6kY5mkj2PvhZ6
+	 9KzNAhP22MG3IVFvc6eaC36rHWmO3ljuSPCG0v1VDvrW/X43M0L9WZiase1bxvrGVg
+	 /4p5FuAu4NX1lmju6ti4QNMQCVX1bnZxP7M8pO/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 57/69] crypto: atmel-tdes - use scatterlist length before DMA mapping
-Date: Mon, 31 Aug 2026 15:35:30 +0200
-Message-ID: <20260831133401.585146792@linuxfoundation.org>
+Subject: [PATCH 5.15 60/69] crypto: qce - Remove unsafe/deprecated algorithms
+Date: Mon, 31 Aug 2026 15:35:33 +0200
+Message-ID: <20260831133401.743222974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -50,48 +52,541 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit ba199bdaa80b09a7dd92f28751de7f3dbb06c510 upstream.
+commit 7e28b0a5c4b7d075b98ce6d8f5290a9d3deb5b92 upstream.
 
-Using sg_dma_len() is only valid after mapping the scatterlist with
-dma_map_sg(). However, atmel_tdes_crypt_start() uses it before mapping
-to compare input/output lengths and to compute the transfer count.
+Remove algorithms that are either unsafe or deprecated and have no
+in-kernel users that cannot be served by the ARM CE implementations.
 
-Use the original scatterlist lengths before DMA mapping to avoid reading
-stale or uninitialized DMA lengths when CONFIG_NEED_SG_DMA_LENGTH=y.
+AES-ECB reveals plaintext patterns (identical plaintext blocks produce
+identical ciphertext blocks) and should not be exposed as a hardware-
+accelerated primitive. DES, Triple DES and HMAC-SHA1 have been
+deprecated for years.
 
-Drop the output scatterlist length in the fast path since it is equal to
-->in_sg->length and does not change the transfer count.
+Remove sha1, ecb(aes), ecb(des), cbc(des), ecb(des3_ede), cbc(des3_ede),
+hmac(sha1) and all AEAD variants built on these primitives as well as
+authenc(hmac(sha256),cbc(des)). Also clean up the - now dead - code,
+flags and constants.
 
-Fixes: 13802005d8f2 ("crypto: atmel - add Atmel DES/TDES driver")
-Fixes: 1f858040c2f7 ("crypto: atmel-tdes - add support for latest release of the IP (0x700)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-tdes.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/crypto/qce/aead.c     |   56 ------------------------
+ drivers/crypto/qce/common.c   |   55 +++++------------------
+ drivers/crypto/qce/common.h   |   16 +-----
+ drivers/crypto/qce/regs-v5.h  |    4 -
+ drivers/crypto/qce/sha.c      |   30 ------------
+ drivers/crypto/qce/sha.h      |    1 
+ drivers/crypto/qce/skcipher.c |   97 ------------------------------------------
+ 7 files changed, 20 insertions(+), 239 deletions(-)
 
---- a/drivers/crypto/atmel-tdes.c
-+++ b/drivers/crypto/atmel-tdes.c
-@@ -499,14 +499,13 @@ static int atmel_tdes_crypt_start(struct
- 			IS_ALIGNED(dd->out_sg->length, dd->ctx->block_size);
- 		fast = in && out;
+--- a/drivers/crypto/qce/aead.c
++++ b/drivers/crypto/qce/aead.c
+@@ -8,8 +8,6 @@
+ #include <crypto/gcm.h>
+ #include <crypto/authenc.h>
+ #include <crypto/internal/aead.h>
+-#include <crypto/internal/des.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ #include <crypto/scatterwalk.h>
+ #include "aead.h"
+@@ -597,7 +595,6 @@ static int qce_aead_setkey(struct crypto
+ 	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+ 	struct crypto_authenc_keys authenc_keys;
+ 	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
+-	u32 _key[6];
+ 	int err;
  
--		if (sg_dma_len(dd->in_sg) != sg_dma_len(dd->out_sg))
-+		if (dd->in_sg->length != dd->out_sg->length)
- 			fast = 0;
+ 	err = crypto_authenc_extractkeys(&authenc_keys, key, keylen);
+@@ -608,26 +605,7 @@ static int qce_aead_setkey(struct crypto
+ 	    authenc_keys.authkeylen > QCE_MAX_KEY_SIZE)
+ 		return -EINVAL;
+ 
+-	if (IS_DES(flags)) {
+-		err = verify_aead_des_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-	} else if (IS_3DES(flags)) {
+-		err = verify_aead_des3_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-		/*
+-		 * The crypto engine does not support any two keys
+-		 * being the same for triple des algorithms. The
+-		 * verify_skcipher_des3_key does not check for all the
+-		 * below conditions. Schedule fallback in this case.
+-		 */
+-		memcpy(_key, authenc_keys.enckey, DES3_EDE_KEY_SIZE);
+-		if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-		    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-		    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-			ctx->need_fallback = true;
+-	} else if (IS_AES(flags)) {
++	if (IS_AES(flags)) {
+ 		/* No random key sizes */
+ 		if (authenc_keys.enckeylen != AES_KEYSIZE_128 &&
+ 		    authenc_keys.enckeylen != AES_KEYSIZE_192 &&
+@@ -699,38 +677,6 @@ struct qce_aead_def {
+ 
+ static const struct qce_aead_def aead_def[] = {
+ 	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+ 		.flags          =  QCE_ALG_AES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+ 		.name           = "authenc(hmac(sha256),cbc(aes))",
+ 		.drv_name       = "authenc-hmac-sha256-cbc-aes-qce",
+--- a/drivers/crypto/qce/common.c
++++ b/drivers/crypto/qce/common.c
+@@ -7,7 +7,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/types.h>
+ #include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+ #include "cipher.h"
+@@ -114,18 +113,16 @@ static u32 qce_auth_cfg(unsigned long fl
+ 			cfg |= AUTH_KEY_SZ_AES256 << AUTH_KEY_SIZE_SHIFT;
  	}
  
+-	if (IS_SHA1(flags) || IS_SHA1_HMAC(flags))
+-		cfg |= AUTH_SIZE_SHA1 << AUTH_SIZE_SHIFT;
+-	else if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
++	if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
+ 		cfg |= AUTH_SIZE_SHA256 << AUTH_SIZE_SHIFT;
+ 	else if (IS_CMAC(flags))
+ 		cfg |= AUTH_SIZE_ENUM_16_BYTES << AUTH_SIZE_SHIFT;
+ 	else if (IS_CCM(flags))
+ 		cfg |= (auth_size - 1) << AUTH_SIZE_SHIFT;
  
- 	if (fast)  {
--		count = min_t(size_t, dd->total, sg_dma_len(dd->in_sg));
--		count = min_t(size_t, count, sg_dma_len(dd->out_sg));
-+		count = min_t(size_t, dd->total, dd->in_sg->length);
+-	if (IS_SHA1(flags) || IS_SHA256(flags))
++	if (IS_SHA256(flags))
+ 		cfg |= AUTH_MODE_HASH << AUTH_MODE_SHIFT;
+-	else if (IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
++	else if (IS_SHA256_HMAC(flags))
+ 		cfg |= AUTH_MODE_HMAC << AUTH_MODE_SHIFT;
+ 	else if (IS_CCM(flags))
+ 		cfg |= AUTH_MODE_CCM << AUTH_MODE_SHIFT;
+@@ -190,7 +187,7 @@ static int qce_setup_regs_ahash(struct c
+ 	else
+ 		qce_cpu_to_be32p_array(auth, rctx->digest, digestsize);
  
- 		err = dma_map_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
- 		if (!err) {
+-	iv_words = (IS_SHA1(rctx->flags) || IS_SHA1_HMAC(rctx->flags)) ? 5 : 8;
++	iv_words = 8;
+ 	qce_write_array(qce, REG_AUTH_IV0, (u32 *)auth, iv_words);
+ 
+ 	if (rctx->first_blk)
+@@ -242,19 +239,8 @@ static u32 qce_encr_cfg(unsigned long fl
+ 
+ 	if (IS_AES(flags))
+ 		cfg |= ENCR_ALG_AES << ENCR_ALG_SHIFT;
+-	else if (IS_DES(flags) || IS_3DES(flags))
+-		cfg |= ENCR_ALG_DES << ENCR_ALG_SHIFT;
+-
+-	if (IS_DES(flags))
+-		cfg |= ENCR_KEY_SZ_DES << ENCR_KEY_SZ_SHIFT;
+-
+-	if (IS_3DES(flags))
+-		cfg |= ENCR_KEY_SZ_3DES << ENCR_KEY_SZ_SHIFT;
+ 
+ 	switch (flags & QCE_MODE_MASK) {
+-	case QCE_MODE_ECB:
+-		cfg |= ENCR_MODE_ECB << ENCR_MODE_SHIFT;
+-		break;
+ 	case QCE_MODE_CBC:
+ 		cfg |= ENCR_MODE_CBC << ENCR_MODE_SHIFT;
+ 		break;
+@@ -339,13 +325,7 @@ static int qce_setup_regs_skcipher(struc
+ 
+ 	encr_cfg = qce_encr_cfg(flags, keylen);
+ 
+-	if (IS_DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 2;
+-	} else if (IS_3DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 6;
+-	} else if (IS_AES(flags)) {
++	if (IS_AES(flags)) {
+ 		if (IS_XTS(flags))
+ 			qce_xtskey(qce, ctx->enc_key, ctx->enc_keylen,
+ 				   rctx->cryptlen);
+@@ -356,14 +336,12 @@ static int qce_setup_regs_skcipher(struc
+ 
+ 	qce_write_array(qce, REG_ENCR_KEY0, (u32 *)enckey, enckey_words);
+ 
+-	if (!IS_ECB(flags)) {
+-		if (IS_XTS(flags))
+-			qce_xts_swapiv(enciv, rctx->iv, ivsize);
+-		else
+-			qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
++	if (IS_XTS(flags))
++		qce_xts_swapiv(enciv, rctx->iv, ivsize);
++	else
++		qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
+ 
+-		qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
+-	}
++	qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
+ 
+ 	if (IS_ENCRYPT(flags))
+ 		encr_cfg |= BIT(ENCODE_SHIFT);
+@@ -392,10 +370,6 @@ static int qce_setup_regs_skcipher(struc
+ #endif
+ 
+ #ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+ static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+ 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+ 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+@@ -472,13 +446,8 @@ static int qce_setup_regs_aead(struct cr
+ 	/* Write initial authentication IV only for HMAC algorithms */
+ 	if (IS_SHA_HMAC(rctx->flags)) {
+ 		/* Write default authentication iv */
+-		if (IS_SHA1_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA1_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha1, auth_ivsize);
+-		} else if (IS_SHA256_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA256_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha256, auth_ivsize);
+-		}
++		auth_ivsize = SHA256_DIGEST_SIZE;
++		memcpy(authiv, std_iv_sha256, auth_ivsize);
+ 		authiv_words = auth_ivsize / sizeof(u32);
+ 		qce_write_array(qce, REG_AUTH_IV0, (u32 *)authiv, authiv_words);
+ 	} else if (IS_CCM(rctx->flags)) {
+--- a/drivers/crypto/qce/common.h
++++ b/drivers/crypto/qce/common.h
+@@ -22,7 +22,7 @@
+ 
+ /* IV length in bytes */
+ #define QCE_AES_IV_LENGTH		AES_BLOCK_SIZE
+-/* max of AES_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE */
++/* max of AES_BLOCK_SIZE */
+ #define QCE_MAX_IV_SIZE			AES_BLOCK_SIZE
+ 
+ /* maximum nonce bytes  */
+@@ -33,14 +33,10 @@
+ #define QCE_MAX_ALIGN_SIZE		64
+ 
+ /* cipher algorithms */
+-#define QCE_ALG_DES			BIT(0)
+-#define QCE_ALG_3DES			BIT(1)
+ #define QCE_ALG_AES			BIT(2)
+ 
+ /* hash and hmac algorithms */
+-#define QCE_HASH_SHA1			BIT(3)
+ #define QCE_HASH_SHA256			BIT(4)
+-#define QCE_HASH_SHA1_HMAC		BIT(5)
+ #define QCE_HASH_SHA256_HMAC		BIT(6)
+ #define QCE_HASH_AES_CMAC		BIT(7)
+ 
+@@ -58,21 +54,15 @@
+ #define QCE_ENCRYPT			BIT(30)
+ #define QCE_DECRYPT			BIT(31)
+ 
+-#define IS_DES(flags)			(flags & QCE_ALG_DES)
+-#define IS_3DES(flags)			(flags & QCE_ALG_3DES)
+ #define IS_AES(flags)			(flags & QCE_ALG_AES)
+ 
+-#define IS_SHA1(flags)			(flags & QCE_HASH_SHA1)
+ #define IS_SHA256(flags)		(flags & QCE_HASH_SHA256)
+-#define IS_SHA1_HMAC(flags)		(flags & QCE_HASH_SHA1_HMAC)
+ #define IS_SHA256_HMAC(flags)		(flags & QCE_HASH_SHA256_HMAC)
+ #define IS_CMAC(flags)			(flags & QCE_HASH_AES_CMAC)
+-#define IS_SHA(flags)			(IS_SHA1(flags) || IS_SHA256(flags))
+-#define IS_SHA_HMAC(flags)		\
+-		(IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
++#define IS_SHA(flags)			IS_SHA256(flags)
++#define IS_SHA_HMAC(flags)		IS_SHA256_HMAC(flags)
+ 
+ #define IS_CBC(mode)			(mode & QCE_MODE_CBC)
+-#define IS_ECB(mode)			(mode & QCE_MODE_ECB)
+ #define IS_CTR(mode)			(mode & QCE_MODE_CTR)
+ #define IS_XTS(mode)			(mode & QCE_MODE_XTS)
+ #define IS_CCM(mode)			(mode & QCE_MODE_CCM)
+--- a/drivers/crypto/qce/regs-v5.h
++++ b/drivers/crypto/qce/regs-v5.h
+@@ -203,7 +203,6 @@
+ 
+ #define AUTH_SIZE_SHIFT			9
+ #define AUTH_SIZE_MASK			GENMASK(13, 9)
+-#define AUTH_SIZE_SHA1			0
+ #define AUTH_SIZE_SHA256		1
+ #define AUTH_SIZE_ENUM_1_BYTES		0
+ #define AUTH_SIZE_ENUM_2_BYTES		1
+@@ -284,15 +283,12 @@
+ 
+ #define ENCR_KEY_SZ_SHIFT		3
+ #define ENCR_KEY_SZ_MASK		GENMASK(5, 3)
+-#define ENCR_KEY_SZ_DES			0
+-#define ENCR_KEY_SZ_3DES		1
+ #define ENCR_KEY_SZ_AES128		0
+ #define ENCR_KEY_SZ_AES256		2
+ 
+ #define ENCR_ALG_SHIFT			0
+ #define ENCR_ALG_MASK			GENMASK(2, 0)
+ #define ENCR_ALG_NONE			0
+-#define ENCR_ALG_DES			1
+ #define ENCR_ALG_AES			2
+ #define ENCR_ALG_KASUMI			4
+ #define ENCR_ALG_SNOW_3G		5
+--- a/drivers/crypto/qce/sha.c
++++ b/drivers/crypto/qce/sha.c
+@@ -24,10 +24,6 @@ struct qce_sha_saved_state {
+ 
+ static LIST_HEAD(ahash_algs);
+ 
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+ static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+ 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+ 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+@@ -346,9 +342,7 @@ static int qce_ahash_hmac_setkey(struct
+ 		return 0;
+ 	}
+ 
+-	if (digestsize == SHA1_DIGEST_SIZE)
+-		alg_name = "sha1-qce";
+-	else if (digestsize == SHA256_DIGEST_SIZE)
++	if (digestsize == SHA256_DIGEST_SIZE)
+ 		alg_name = "sha256-qce";
+ 	else
+ 		return -EINVAL;
+@@ -410,15 +404,6 @@ struct qce_ahash_def {
+ 
+ static const struct qce_ahash_def ahash_def[] = {
+ 	{
+-		.flags		= QCE_HASH_SHA1,
+-		.name		= "sha1",
+-		.drv_name	= "sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+ 		.flags		= QCE_HASH_SHA256,
+ 		.name		= "sha256",
+ 		.drv_name	= "sha256-qce",
+@@ -428,15 +413,6 @@ static const struct qce_ahash_def ahash_
+ 		.std_iv		= std_iv_sha256,
+ 	},
+ 	{
+-		.flags		= QCE_HASH_SHA1_HMAC,
+-		.name		= "hmac(sha1)",
+-		.drv_name	= "hmac-sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+ 		.flags		= QCE_HASH_SHA256_HMAC,
+ 		.name		= "hmac(sha256)",
+ 		.drv_name	= "hmac-sha256-qce",
+@@ -473,9 +449,7 @@ static int qce_ahash_register_one(const
+ 	alg->halg.digestsize = def->digestsize;
+ 	alg->halg.statesize = def->statesize;
+ 
+-	if (IS_SHA1(def->flags))
+-		tmpl->hash_zero = sha1_zero_message_hash;
+-	else if (IS_SHA256(def->flags))
++	if (IS_SHA256(def->flags))
+ 		tmpl->hash_zero = sha256_zero_message_hash;
+ 
+ 	base = &alg->halg.base;
+--- a/drivers/crypto/qce/sha.h
++++ b/drivers/crypto/qce/sha.h
+@@ -7,7 +7,6 @@
+ #define _SHA_H_
+ 
+ #include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+ #include "common.h"
+--- a/drivers/crypto/qce/skcipher.c
++++ b/drivers/crypto/qce/skcipher.c
+@@ -10,7 +10,6 @@
+ #include <linux/types.h>
+ #include <linux/errno.h>
+ #include <crypto/aes.h>
+-#include <crypto/internal/des.h>
+ #include <crypto/internal/skcipher.h>
+ 
+ #include "cipher.h"
+@@ -208,51 +207,6 @@ static int qce_skcipher_setkey(struct cr
+ 	return ret;
+ }
+ 
+-static int qce_des_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			  unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	int err;
+-
+-	err = verify_skcipher_des_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+-static int qce_des3_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			   unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	u32 _key[6];
+-	int err;
+-
+-	err = verify_skcipher_des3_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	/*
+-	 * The crypto engine does not support any two keys
+-	 * being the same for triple des algorithms. The
+-	 * verify_skcipher_des3_key does not check for all the
+-	 * below conditions. Return -ENOKEY in case any two keys
+-	 * are the same. Revisit to see if a fallback cipher
+-	 * is needed to handle this condition.
+-	 */
+-	memcpy(_key, key, DES3_EDE_KEY_SIZE);
+-	if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-	    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-	    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-		return -ENOKEY;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+ static int qce_skcipher_crypt(struct skcipher_request *req, int encrypt)
+ {
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+@@ -275,7 +229,7 @@ static int qce_skcipher_crypt(struct skc
+ 	 * ECB and CBC algorithms require message lengths to be
+ 	 * multiples of block size.
+ 	 */
+-	if (IS_ECB(rctx->flags) || IS_CBC(rctx->flags))
++	if (IS_CBC(rctx->flags))
+ 		if (!IS_ALIGNED(req->cryptlen, blocksize))
+ 			return -EINVAL;
+ 
+@@ -359,15 +313,6 @@ struct qce_skcipher_def {
+ 
+ static const struct qce_skcipher_def skcipher_def[] = {
+ 	{
+-		.flags		= QCE_ALG_AES | QCE_MODE_ECB,
+-		.name		= "ecb(aes)",
+-		.drv_name	= "ecb-aes-qce",
+-		.blocksize	= AES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= AES_MIN_KEY_SIZE,
+-		.max_keysize	= AES_MAX_KEY_SIZE,
+-	},
+-	{
+ 		.flags		= QCE_ALG_AES | QCE_MODE_CBC,
+ 		.name		= "cbc(aes)",
+ 		.drv_name	= "cbc-aes-qce",
+@@ -395,42 +340,6 @@ static const struct qce_skcipher_def skc
+ 		.min_keysize	= AES_MIN_KEY_SIZE * 2,
+ 		.max_keysize	= AES_MAX_KEY_SIZE * 2,
+ 	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_ECB,
+-		.name		= "ecb(des)",
+-		.drv_name	= "ecb-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_CBC,
+-		.name		= "cbc(des)",
+-		.drv_name	= "cbc-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= DES_BLOCK_SIZE,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_ECB,
+-		.name		= "ecb(des3_ede)",
+-		.drv_name	= "ecb-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_CBC,
+-		.name		= "cbc(des3_ede)",
+-		.drv_name	= "cbc-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= DES3_EDE_BLOCK_SIZE,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+ };
+ 
+ static int qce_skcipher_register_one(const struct qce_skcipher_def *def,
+@@ -455,9 +364,7 @@ static int qce_skcipher_register_one(con
+ 	alg->ivsize			= def->ivsize;
+ 	alg->min_keysize		= def->min_keysize;
+ 	alg->max_keysize		= def->max_keysize;
+-	alg->setkey			= IS_3DES(def->flags) ? qce_des3_setkey :
+-					  IS_DES(def->flags) ? qce_des_setkey :
+-					  qce_skcipher_setkey;
++	alg->setkey			= qce_skcipher_setkey;
+ 	alg->encrypt			= qce_skcipher_encrypt;
+ 	alg->decrypt			= qce_skcipher_decrypt;
+ 
 
 
