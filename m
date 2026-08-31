@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765B94ACC84;
-	Mon, 31 Aug 2026 13:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6198A4ACC9C;
+	Mon, 31 Aug 2026 13:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184046; cv=none; b=A/JmKCMvIajPLnQ9cKdpz+SU5hUn8arS1SmV0T6d1IwbcZpRNcMELp8Dotj8zQAwroTpfaUxpAbbcYXPTa+yTApab/+3sMJLdnBQaTLz1PkByJ5UgKxJj5BUs01p6QOYDJdT4ZzKGRjntSSwl6iAgTnxu5TrC43+rA+OHMz3gHM=
+	t=1788184048; cv=none; b=PP7H3zXmrRCjHezJsGDcBerhGtSSSqCq921IYWjSd6n7PbsD6WCGKy2vAaSSPF2Po8TjrAu+v4ZprQrL8+as0m0A1jMRg/GGEwWBxByOdYg9XktWL2VFaokB3w8ASyIVwersrQf7S1Q6T+r2MCNgOo36NPNLYO5IhJ8qyzHXlRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184046; c=relaxed/simple;
-	bh=0qDKHy4Dw1eEbdQk9vQ1hWXocwQ+Nhx6H+pawVgeODY=;
+	s=arc-20240116; t=1788184048; c=relaxed/simple;
+	bh=2agwZIKpELVYimrSMg1EHXYKksUbEOEuom01oeSACU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ftA8NbLxVteB6ZE8terjgmhZi/S+RR9ZxoxJ1W7Su2b14qfKzRL12EOo8jj3cqMhjxdoh3KCx0reH4oPKI49SGUZ8mHWAb6g1J0iTHZOcXpokrfK+597TW0B4yuUQa6g85gDl7H3tJsiwU/ob11NqP2cUXgTDatMchrZT8fpp5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WceWIDYN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=byfQYE1x77ay3gFPcA4M0lo2tdEJcEfAfboG5yhRrg9SvC4DzFdp6HErkETQaAAa6vDAo+tkfMvBYaPUZPyju2HF3KWHPrETZv2ZujoY7eZ/3N7v/AdMfx5KfX4UEOijUjO4Iz9ReFLgpWSat9QhcgWVoztRW0/RQUIS0cJqSYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eKLNJFlg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WceWIDYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5908A1F00ADB;
-	Mon, 31 Aug 2026 13:47:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eKLNJFlg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163BD1F00ADE;
+	Mon, 31 Aug 2026 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184042;
-	bh=RH+H10X8z3esxQO/GSg8KbuJFyaYnpZsgvc6XfrgJ2w=;
+	s=k20260515; t=1788184044;
+	bh=rt4lfTWNmwFbyQ6X9Uiwf5ch2ehd0gQDAwmtyXug9v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WceWIDYNfL6goppWx47NC/A7viNPq8iy11lz+lrsHVLpcAx4LQhK1n2TF8W8GL4bY
-	 hVJtGguk12FHdpuTxO4UQWeNgbeaN70mxiJCJgi6/spI7BZhdXk0zLT1wLpcHP/CB0
-	 5pTGjrLQ1cUQX4VG/egb1hls2GeqTJUMOOq81QvXCHr2pKVjAnQlgublhnzgUjLiM3
-	 WmHFKnsh06uVUQ9pt+gYfY3Eh0vUpnqf4/6/xkCt9cYgpbPyzyn4ihZfDVltOj3meY
-	 dNUxbemrPOX/VkF9l+IcSAYZZ/jMbdegcxevYuhW/Loku/HCxiV0DUCPkNygq+M8ei
-	 Ok+U3NT6mCnSQ==
+	b=eKLNJFlg7g68MbQbV3Y70eT4KGnwd/g3wImXDb+XatQeiANBTSpKXPIq3PgACUOEx
+	 YnVJlwSRUaCZ8yXtbnnipJLm7kqIcUWZio1IP8Hx6CzrRYqIH/RnW4c3Lnvc9G4gnU
+	 pUFSuokub8KSydglQHWXvxkCc5KH+7DWsHLH98ySnwXp0jc29K0ofc8Fj6cPn5D8cR
+	 bEdTDKl3rz2NCFKuIeex7maIfgGleKzCTAm/EV3KuVWnOGuu7wMe3plmXXUiarGciu
+	 5fITUx6Ulq0hvdSDL7zHCgglbA1RPDhjxirqLVCncb05TrO7y6/hNrX6VX59JeGGpV
+	 WRhz+QVu5UNXQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ken Lin <kenlin5@quanta.corp-partner.google.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
-	hverkuil@kernel.org,
-	mchehab@kernel.org,
-	bleung@chromium.org,
-	linux-media@vger.kernel.org,
-	chrome-platform@lists.linux.dev,
+	linusw@kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] media: platform: cros-ec: Add Kulnex and Moxoe to the match table
-Date: Mon, 31 Aug 2026 09:28:05 -0400
-Message-ID: <20260831133314.4125787-457-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] pinctrl: renesas: rzg2l: Handle RZ/V2H(P) IOLH configuration in PM cache
+Date: Mon, 31 Aug 2026 09:28:06 -0400
+Message-ID: <20260831133314.4125787-458-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,15 +54,22 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ken Lin <kenlin5@quanta.corp-partner.google.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit e024767f90f9f50bfcce4b20bb74237ad72450f3 ]
+[ Upstream commit d0fc9f8eb2ce55eb00dbfdc0f19c844df5aee5b8 ]
 
-The Google Kulnex and Moxoe device uses the same approach as Google Brask
-which enables the HDMI CEC via the cros-ec-cec driver.
+Include PIN_CFG_IOLH_RZV2H in the IOLH capability checks when saving
+and restoring pin configuration registers.
 
-Signed-off-by: Ken Lin <kenlin5@quanta.corp-partner.google.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+On RZ/V2H(P), RZ/V2N, and RZ/G3E, the IOLH configuration is defined by
+the PIN_CFG_IOLH_RZV2H capability.  The previous implementation did not
+account for this, causing the IOLH registers to be skipped during PM
+save/restore.
+
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260413182456.811543-4-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,342 +77,311 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[media: platform: cros-ec]` `[Add]` — Add Kulnex and Moxoe
-Google Chromebook board names to the CEC DMI match table so HDMI CEC can
-be enabled on those platforms.
+### Step 1.1: Subject line
+**Record:** `[pinctrl: renesas: rzg2l]` `[Handle]` — Include RZ/V2H(P)
+IOLH capability in PM register save/restore checks.
 
-### Step 1.2: Parse All Commit Message Tags
+### Step 1.2: Commit tags
 **Record:**
-- **Fixes:** none
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** none
-- **Acked-by:** none
-- **Link:** none
-- **Cc: stable:** none (expected; not a negative signal)
-- **Signed-off-by:** Ken Lin `<kenlin5@quanta.corp-partner.google.com>`
-  (author)
-- **Signed-off-by:** Hans Verkuil `<hverkuil+cisco@kernel.org>`
-  (media/CEC maintainer)
+- **Signed-off-by:** Lad Prabhakar `<prabhakar.mahadev-
+  lad.rj@bp.renesas.com>` (author)
+- **Reviewed-by:** Geert Uytterhoeven `<geert+renesas@glider.be>`
+  (Renesas/pinctrl maintainer)
+- **Link:**
+  https://patch.msgid.link/20260413182456.811543-4-prabhakar.mahadev-
+  lad.rj@bp.renesas.com
+- **Signed-off-by:** Geert Uytterhoeven (maintainer tree)
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable@, or syzbot tags
+- Notable: Reviewed by subsystem maintainer; part of v2 5-patch PM
+  caching series (patch 3/5)
 
-No syzbot, bugzilla, or user crash reports. Maintainer sign-off is a
-positive quality signal.
-
-### Step 1.3: Analyze Commit Body
+### Step 1.3: Body analysis
 **Record:**
-- **Bug description:** Google Kulnex and Moxoe Chromebooks use the same
-  HDMI CEC-over-ChromeOS-EC approach as Brask, but are missing from
-  `cec_dmi_match_table[]`.
-- **Symptom/failure mode:** `cros-ec-cec` probe fails on these boards;
-  HDMI CEC is unavailable. No crash is described.
-- **Version information:** none in the commit message.
-- **Root cause:** Driver uses an explicit DMI whitelist per Chromebook
-  model for HDMI DRM device and connector-port mapping. New boards were
-  never added.
+- **Bug:** PM suspend/resume skips IOLH registers on RZ/V2H(P), RZ/V2N,
+  and RZ/G3E because those SoCs use `PIN_CFG_IOLH_RZV2H` instead of
+  `PIN_CFG_IOLH_A/B/C`.
+- **Symptom:** Output-impedance/drive-strength (IOLH) not saved on
+  suspend or restored on resume; pins revert to wrong electrical
+  settings after S2RAM.
+- **Root cause:** `has_iolh` capability check omits
+  `PIN_CFG_IOLH_RZV2H`.
 
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not a hidden crash/UAF/race fix. This is explicit hardware
-enablement: adding board identification entries so an existing driver
-can probe on two new platforms. Functionally equivalent to adding
-PCI/USB IDs or a DMI quirk entry.
+### Step 1.4: Hidden bug fix?
+**Record:** No — this is an explicit PM suspend/resume bug fix, not
+disguised cleanup.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory the Changes
+### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/media/cec/platform/cros-ec/cros-ec-cec.c` (+4
-  lines)
-- **Functions modified:** none directly; only `cec_dmi_match_table[]`
-  data
-- **Scope:** single-file, surgical, 4-line addition
+- **File:** `drivers/pinctrl/renesas/pinctrl-rzg2l.c` (+2 lines net in
+  submitted diff; full v2 patch touches 2 functions)
+- **Functions:** `rzg2l_pinctrl_pm_setup_dedicated_regs()` (shown in
+  candidate diff); v2 submission also changed
+  `rzg2l_pinctrl_pm_setup_regs()` (author later agreed to drop that hunk
+  per maintainer review)
+- **Scope:** Single-file, surgical (2-line logical change)
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow
 **Record:**
-- **Hunk (DMI table):** Before — Kulnex/Moxoe unmatched →
-  `cros_ec_cec_find_hdmi_dev()` warns and returns `-ENODEV`. After —
-  boards match like Brask/Moxie, DRM HDMI device (`0000:00:02.0`) and
-  `port_b_conns` mapping are selected, probe can succeed.
+- **Before:** `has_iolh` true only for `PIN_CFG_IOLH_A|B|C`; dedicated
+  pins with only `PIN_CFG_IOLH_RZV2H` skip IOLH cache read/write.
+- **After:** `PIN_CFG_IOLH_RZV2H` included; IOLH registers saved on
+  suspend and restored on resume for affected dedicated pins.
+- **Path:** System suspend/resume via `rzg2l_pinctrl_suspend_noirq()` /
+  `rzg2l_pinctrl_resume_noirq()` →
+  `rzg2l_pinctrl_pm_setup_dedicated_regs()`.
 
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** hardware identification / platform quirk (DMI-based
-  board whitelist)
-- **Mechanism:** Without a table entry, probe path in
-  `cros_ec_cec_probe()` exits early:
+### Step 2.3: Bug mechanism
+**Record:** **Logic/correctness fix** — incomplete capability bitmask
+causes PM cache to omit IOLH register save/restore for a whole class of
+pins on newer Renesas SoCs.
 
-```501:503:drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-        hdmi_dev = cros_ec_cec_find_hdmi_dev(&pdev->dev, &conns);
-        if (IS_ERR(hdmi_dev))
-                return PTR_ERR(hdmi_dev);
-```
-
-And the lookup function explicitly documents that hardware must be added
-to the table:
-
-```362:365:drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-        /* Hardware support must be added in the cec_dmi_match_table */
-        dev_warn(dev, "CEC notifier not configured for this
-hardware\n");
-
-        return ERR_PTR(-ENODEV);
-```
-
-### Step 2.4: Fix Quality Assessment
-**Record:** Obviously correct — copies the proven Brask/Moxie pattern
-(`port_b_conns`, same PCI DRM device name). Minimal diff. Regression
-risk is very low: only affects DMI matches for "Google"/"Kulnex" and
-"Google"/"Moxoe".
+### Step 2.4: Fix quality
+**Record:** Obviously correct (adds the missing flag already used
+everywhere else in the driver). Minimal risk; no API, locking, or
+structural changes.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame the Changed Lines
-**Record:** The DMI table (lines 304–337) exists in this tree ending at
-Moxie; Kulnex/Moxoe are absent. Git history in this checkout is heavily
-rewritten/squashed (file history is unreliable), but the driver and full
-match table are present since at least `ac3fd01e4c1ef` (Linux 6.18-rc7).
-The "missing entry" condition is present in 6.18.43.
+### Step 3.1: Blame
+**Record:** Buggy `has_iolh` lines at 3009 and 3097 trace to the PM
+caching code (blame shows `19eef1d98eeda` in this shallow stable tree).
+`PIN_CFG_IOLH_RZV2H` (line 65) is present in this tree.
 
-### Step 3.2: Follow Fixes: Tag
-**Record:** N/A — no `Fixes:` tag.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag.
 
-### Step 3.3: File History for Related Changes
-**Record:** The driver has accumulated many Google board entries (Fizz,
-Brask, Moli, …, Moxie). This commit continues that pattern. Standalone
-one-commit change; not part of a multi-patch series.
+### Step 3.3: Related file history
+**Record:** Same PM series already partially backported to this tree:
+- `8d1c6b603327b` — SMT register cache (patch 1/5, same series)
+- `509d342d02fff`, `c4cfa8ee77374` — earlier IOLH/IEN/PUPD/SMT PM fixes
+This IOLH fix is **not** yet in the tree.
 
-### Step 3.4: Author's Other Commits
-**Record:** Ken Lin has no other commits visible in this checkout. Hans
-Verkuil is the media/CEC maintainer and signed off. No related author
-series found here.
+### Step 3.4: Author context
+**Record:** Lad Prabhakar is the RZ/G2L pinctrl driver author/maintainer
+contributor; Geert Uytterhoeven is Renesas maintainer and reviewed the
+series.
 
-### Step 3.5: Dependent/Prerequisite Commits
-**Record:** No dependencies. Driver, `port_b_conns`, DMI/PCI
-infrastructure, and `CONFIG_CEC_CROS_EC` all exist in this tree. Applies
-standalone.
+### Step 3.5: Dependencies
+**Record:** Standalone — only adds a flag to an existing bitmask. Does
+not require patches 2/4/5 (SR/NOD/PUPD) to function; applies cleanly to
+current `rzg2l_pinctrl_pm_setup_dedicated_regs()` at line 3097.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original Patch Discussion
-**Record:** `b4 dig -c 4b3f9bff6067a` failed — commit hash not in local
-repo. Lore search blocked (403/bot protection). **UNVERIFIED:** original
-thread content, reviewer stable nominations, series revisions.
+### Step 4.1: Original discussion
+**Record:** Thread fetched via `b4 mbox` from lore (16 messages). Patch
+3/5 reviewed by Geert Uytterhoeven. Geert noted `PIN_CFG_IOLH_RZV2H` may
+only matter for dedicated pins in `pm_setup_regs`; author agreed to drop
+that hunk. Final fix targets `rzg2l_pinctrl_pm_setup_dedicated_regs()`.
 
 ### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** via `b4 dig -w`. Hans Verkuil SOB confirms
-maintainer involvement.
+**Record:** Geert Uytterhoeven (maintainer), Linus Walleij CC'd on cover
+letter; linux-renesas-soc list.
 
-### Step 4.3: Bug Report
-**Record:** N/A — no Reported-by or Link tags.
+### Step 4.3: Bug reports
+**Record:** No external bug report or syzbot link; issue identified
+during PM caching review/fix series.
 
-### Step 4.4: Related Patches/Series
-**Record:** Same pattern as prior Brask/Moxie/Kinox additions to this
-table. Standalone.
+### Step 4.4: Series context
+**Record:** v2 0/5 cover letter describes 5 related PM cache fixes.
+Patch 1 (SMT) already in this 6.18.43 tree; patches 2/4/5 (SR, NOD,
+dedicated PUPD) are separate and not prerequisites for this IOLH bitmask
+fix.
 
-### Step 4.5: Stable Mailing List History
-**Record:** **UNVERIFIED** — could not search lore stable archive.
+### Step 4.5: Stable list
+**Record:** No stable@ discussion found in thread.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key Functions
-**Record:** `cec_dmi_match_table[]` (data),
-`cros_ec_cec_find_hdmi_dev()`, called from `cros_ec_cec_probe()`.
+### Step 5.1: Key functions
+**Record:** `rzg2l_pinctrl_pm_setup_dedicated_regs()`, called from
+`rzg2l_pinctrl_suspend_noirq()` and `rzg2l_pinctrl_resume_noirq()`.
 
-### Step 5.2: Trace Callers
-**Record:** `cros_ec_cec_probe()` is the platform driver probe path
-during boot/module load on Chromebooks with `CONFIG_CEC_CROS_EC` and
-`CONFIG_CROS_EC`. Affects only matching Google hardware.
+### Step 5.2: Callers
+**Record:** PM suspend/resume noirq path on every system sleep for
+affected pinctrl devices.
 
-### Step 5.3: Trace Callees
-**Record:** `dmi_match()`, `bus_find_device_by_name()` on PCI bus,
-connector mapping via `port_b_conns`.
+### Step 5.3: Callees
+**Record:** `RZG2L_PCTRL_REG_ACCESS32()` macro for hardware IOLH/IEN
+register read (suspend) or write (resume).
 
-### Step 5.4: Call Chain / Reachability
-**Record:** Boot-time platform probe on ChromeOS EC-equipped Google
-devices. Not a syscall path. Userspace impact is missing `/dev/cec*` and
-non-functional HDMI CEC on Kulnex/Moxoe.
+### Step 5.4: Reachability
+**Record:** Triggered on every S2RAM cycle on boards using
+`renesas,r9a09g047-pinctrl` (RZ/G3E), `renesas,r9a09g056-pinctrl`
+(RZ/V2H), or `renesas,r9a09g057-pinctrl` (RZ/V2HP). Dedicated pins
+include Ethernet, SD, XSPI, SCIF, etc.
 
-### Step 5.5: Similar Patterns
-**Record:** Fifteen other Google boards already use the same table
-pattern; Brask and Moxie use identical `port_b_conns` mapping, matching
-the commit message claim.
-
----
-
-## Phase 6: Cross-Referencing Against Local Tree (6.18.43)
-
-### Step 6.1: Does the Buggy Code Exist?
-**Record:** **YES.** Local tree is `6.18.43`
-(`v6.18.43-1-gc7f0dac02d232`). `drivers/media/cec/platform/cros-ec/cros-
-ec-cec.c` exists (602 lines). Table ends at Moxie; Kulnex/Moxoe are
-missing. Driver has been present since 6.18-rc7 in this tree.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** Verified with `git apply --check`
-against current tree — applies without conflicts.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No — `grep` finds no Kulnex or Moxoe anywhere in the tree.
+### Step 5.5: Similar patterns
+**Record:** Same `has_iolh` bitmask omission exists at line 3009 in
+`rzg2l_pinctrl_pm_setup_regs()` for GPIO port pins using
+`RZV2H_MPXED_PIN_FUNCS` (which includes `PIN_CFG_IOLH_RZV2H`). This
+commit (per review) does not fix that path; dedicated-pin path is the
+confirmed target.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## Phase 6: Cross-Reference Against Local Tree (6.18.43)
 
-### Step 7.1: Subsystem and Criticality
-**Record:** `drivers/media/cec/` — media/CEC platform driver.
-**IMPORTANT** for affected Chromebook users, **PERIPHERAL** globally
-(CEC on two specific Google boards).
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Line 3097 in
+`rzg2l_pinctrl_pm_setup_dedicated_regs()`:
+```3097:3097:drivers/pinctrl/renesas/pinctrl-rzg2l.c
+                has_iolh = !!(caps & (PIN_CFG_IOLH_A | PIN_CFG_IOLH_B |
+PIN_CFG_IOLH_C));
+```
+`PIN_CFG_IOLH_RZV2H` is defined (line 65) and used extensively in
+`rzv2h_dedicated_pins` and `rzg3e_dedicated_pins` (e.g., lines 2233+,
+2370+). Affected SoC compatibles are registered (lines 3470–3479).
 
-### Step 7.2: Subsystem Activity
-**Record:** CEC subsystem is active in this tree (recent fixes for seco,
-rc race, debugfs leak). The cros-ec driver itself is mature with a
-growing DMI whitelist.
+### Step 6.2: Backport complications
+**Record:** Clean apply — single-line change at line 3097. No SR/NOD
+infrastructure required (those are separate series patches not in this
+tree).
+
+### Step 6.3: Related fixes already present?
+**Record:** SMT PM cache fix from same series (`8d1c6b603327b`) is
+already in tree. This IOLH fix is the logical next piece.
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem criticality
+**Record:** `drivers/pinctrl/renesas/` — **PERIPHERAL** (platform-
+specific), but suspend/resume correctness is critical for embedded
+products using these SoCs.
+
+### Step 7.2: Activity
+**Record:** Active PM fix series; multiple related backports already
+landed in 6.18.y.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-### Step 8.1: Who Is Affected
-**Record:** Users of Google Kulnex and Moxoe Chromebooks with
-`CONFIG_CEC_CROS_EC=y/m`. Config- and platform-specific; not universal.
+### Step 8.1: Who is affected
+**Record:** Users of RZ/G3E (r9a09g047), RZ/V2H (r9a09g056), RZ/V2HP
+(r9a09g057) who use system suspend/resume. Driver-specific, but
+dedicated pins cover critical peripherals.
 
-### Step 8.2: Trigger Conditions
-**Record:** Booting one of these two board models with the cros-ec-cec
-driver enabled. Deterministic on every boot. Not a security-relevant or
-unprivileged-triggered path.
+### Step 8.2: Trigger conditions
+**Record:** Every S2RAM suspend/resume cycle on affected hardware.
+Requires `CONFIG_PINCTRL` + matching DT compatible. Not userspace-
+triggerable directly, but normal laptop/embedded suspend path.
 
-### Step 8.3: Failure Mode Severity
-**Record:** HDMI CEC non-functional; driver probe returns `-ENODEV` with
-a warning. **Severity: LOW** — feature absence, not crash, corruption,
-deadlock, or security issue.
+### Step 8.3: Failure severity
+**Record:** Wrong pin drive strength/impedance after resume → peripheral
+malfunction (Ethernet, SD, XSPI flash, UART), potential bus errors or
+silent data corruption on high-speed interfaces. **Severity: MEDIUM-
+HIGH** (hardware misconfiguration, not kernel oops).
 
-### Step 8.4: Risk-Benefit Ratio
-**Record:**
-- **Benefit:** Enables HDMI CEC on two new Chromebook models running
-  this kernel; matches established board-enablement pattern.
-- **Risk:** Very low — 4 lines, no logic change, only new DMI strings.
-- **Ratio:** Moderate benefit for a tiny audience vs. very low risk.
-  Does not meet strict "important bug" threshold, but fits the stable
-  exception for hardware identification additions.
+### Step 8.4: Risk-benefit
+**Record:** **Benefit: HIGH** for affected embedded users doing
+suspend/resume. **Risk: VERY LOW** (2-line bitmask fix, maintainer-
+reviewed). Ratio strongly favors backport.
 
 ---
 
 ## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence Compile
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Driver and infrastructure fully present in 6.18.43
-- Real hardware gap on Kulnex/Moxoe — CEC broken without entries
-- Tiny, obviously correct, applies cleanly
-- Follows proven Brask/Moxie `port_b_conns` mapping
-- Media maintainer (Hans Verkuil) signed off
-- Fits stable exception for hardware identification / quirk additions
-  (DMI board ID to existing driver)
+- Real suspend/resume bug on shipping Renesas SoCs in this tree
+- Maintainer-reviewed, obviously correct, minimal diff
+- Same PM series already partially backported (SMT fix in 6.18.43)
+- Affects critical dedicated pins (network, storage, flash buses)
+- Buggy code and `PIN_CFG_IOLH_RZV2H` both present in 6.18.43
 
 **AGAINST backport:**
-- Not a crash, security, corruption, or deadlock fix
-- Failure mode is missing functionality (CEC), severity LOW
-- Affects only two specific new Chromebook models
-- No user reports, syzbot, or explicit stable nomination
-- By-design whitelist: unsupported boards get `-ENODEV`, not a code
-  defect on already-supported hardware
-- Mailing list review details unverified
+- Narrow hardware scope (3 SoC compatibles)
+- No crash/oops — functional/hardware issue after resume
+- GPIO port-pin IOLH path (line 3009) may remain unfixed per maintainer
+  review (out of scope for this commit)
 
-**UNRESOLVED:**
-- Whether Kulnex/Moxoe actually ship with 6.18.y kernels
-- Lore discussion and any stable nominations from reviewers
+**Unresolved:** Whether port-pin IOLH via
+`rzg2l_pinctrl_pm_setup_regs()` also needs the same fix (Geert/author
+agreed to omit; separate issue).
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — mechanical table entries;
-   maintainer SOB; pattern proven on Brask/Moxie.
-2. Fixes a real bug affecting users? **PASS (narrow)** — real hardware
-   support gap for CEC on two boards, not a kernel logic bug.
-3. Important issue (crash, security, corruption, deadlock)? **FAIL** —
-   CEC absence only; LOW severity.
-4. Small and contained? **PASS** — 4 lines, one file.
-5. No new features or APIs? **PASS** — no API change; board ID addition
-   to existing driver.
-6. Can apply to local tree? **PASS** — verified clean apply.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — bitmask addition; Reviewed-
+   by maintainer; series patch 1 tested by multiple Tested-by on SMT
+   patch
+2. Fixes real bug affecting users? **PASS** — IOLH not saved/restored on
+   suspend/resume
+3. Important issue? **PASS** — suspend/resume hardware misconfiguration
+   on critical pins (MEDIUM-HIGH)
+4. Small and contained? **PASS** — 2 lines, one function
+5. No new features or APIs? **PASS**
+6. Can apply to local tree? **PASS** — applies cleanly at line 3097
 
-### Step 9.3: Exception Categories
-**Record:** **Hardware identification / quirk exception** — DMI match
-table entry for an existing platform driver, analogous to adding
-PCI/USB/ACPI IDs. Same category as prior Brask, Moxie, Kinox entries.
+### Step 9.3: Exception category
+**Record:** N/A — standard bug fix, not device-ID/quirk/build fix.
 
-### Step 9.4: Decision Rationale
+### Step 9.4: Decision rationale
 
-This commit does not fix a critical kernel defect. It enables HDMI CEC
-on two new Google Chromebook platforms by extending the existing DMI
-whitelist in `cros-ec-cec`. That is standard stable material under the
-hardware-identification exception: the driver already exists in 6.18.43,
-the change is trivial and low-risk, and it unblocks real hardware for
-users on those boards. It does not meet the strict "important bug"
-criterion on its own, but stable trees routinely take such board-ID
-additions when the driver is already present.
-
-For the locally checked-out **6.18.43** tree: the driver exists, the gap
-exists, and the patch applies cleanly.
+For **Linux 6.18.43**, this commit should be backported. The tree
+already has RZ/V2H and RZ/G3E pinctrl support with extensive
+`PIN_CFG_IOLH_RZV2H` dedicated-pin tables and active PM suspend/resume,
+but the PM cache path omits that capability flag. After S2RAM, dedicated
+function pins (Ethernet, SD, XSPI, etc.) lose their output-impedance
+settings. The fix is trivial, maintainer-reviewed, and consistent with
+the SMT PM cache fix already in this stable tree.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body: hardware enablement for
-  Kulnex/Moxoe CEC; Hans Verkuil SOB; no Fixes/Reported-
-  by/Link/Cc:stable
-- **[Phase 2]** Diff: +4 lines in `cec_dmi_match_table[]`; probe failure
-  path confirmed in source
-- **[Phase 3]** `git describe HEAD`: v6.18.43-1-gc7f0dac02d232; `make
-  kernelversion`: 6.18.43
-- **[Phase 3]** `git show ac3fd01e4c1ef:...cros-ec-cec.c`: driver
-  present since 6.18-rc7; Moxie present, Kulnex/Moxoe absent
-- **[Phase 3]** `grep Kulnex|Moxoe`: no matches in tree
-- **[Phase 3]** Git history in this repo is rewritten/unreliable for
-  blame; table content verified directly
-- **[Phase 4]** `b4 dig -c 4b3f9bff6067a`: failed (commit not in repo)
-- **[Phase 4]** Lore fetch: blocked (403/bot protection) —
-  **UNVERIFIED** mailing list discussion
-- **[Phase 5]** Read `cros_ec_cec_probe()` and
-  `cros_ec_cec_find_hdmi_dev()`: confirmed `-ENODEV` path
-- **[Phase 5]** `grep cros_ec_cec_find_hdmi_dev`: only called from probe
-- **[Phase 6]** File exists at `drivers/media/cec/platform/cros-ec/cros-
-  ec-cec.c` (602 lines)
-- **[Phase 6]** `git apply --check /tmp/kulnex.patch`: applies cleanly
-- **[Phase 6]** `grep Kulnex|Moxoe`: absent from tree
-- **[Phase 7]** `CONFIG_CEC_CROS_EC` in
-  `drivers/media/cec/platform/Kconfig`; depends on `CROS_EC`
-- **[Phase 8]** Failure mode verified: `-ENODEV` + `dev_warn`, not
-  oops/panic
+- **[Phase 1]** Parsed subject, tags, body from commit message and local
+  mbx
+- **[Phase 2]** Read diff and current code at lines 3009, 3097,
+  3179–3243
+- **[Phase 3]** `git describe HEAD` → v6.18.43; `git log --oneline -20
+  -- drivers/pinctrl/renesas/pinctrl-rzg2l.c`; `git blame` on lines
+  3009/3097; confirmed `8d1c6b603327b` (SMT fix from same series) in
+  tree
+- **[Phase 4]** `b4 mbox` fetched 16-message lore thread; Geert review
+  noted dedicated-pin scope; no stable@ nomination found
+- **[Phase 5]** Traced call chain:
+  `rzg2l_pinctrl_suspend_noirq`/`resume_noirq` →
+  `rzg2l_pinctrl_pm_setup_dedicated_regs`; verified
+  `rzv2h_dedicated_pins`/`rzg3e_dedicated_pins` use
+  `PIN_CFG_IOLH_RZV2H`; verified SoC compatibles at lines 3470–3479
+- **[Phase 6]** Confirmed buggy line 3097 present; `PIN_CFG_IOLH_RZV2H`
+  defined at line 65; fix not yet applied; clean apply expected
+- **[Phase 7]** Identified Renesas pinctrl driver subsystem
+- **[Phase 8]** Assessed suspend/resume trigger and MEDIUM-HIGH hardware
+  impact
 
 **YES**
 
- drivers/media/cec/platform/cros-ec/cros-ec-cec.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/cec/platform/cros-ec/cros-ec-cec.c b/drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-index 419b9a7abcceb..4b3f9bff6067a 100644
---- a/drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-+++ b/drivers/media/cec/platform/cros-ec/cros-ec-cec.c
-@@ -334,6 +334,10 @@ static const struct cec_dmi_match cec_dmi_match_table[] = {
- 	{ "Google", "Dirks", "0000:00:02.0", port_ab_conns },
- 	/* Google Moxie */
- 	{ "Google", "Moxie", "0000:00:02.0", port_b_conns },
-+	/* Google Kulnex */
-+	{ "Google", "Kulnex", "0000:00:02.0", port_b_conns },
-+	/* Google Moxoe */
-+	{ "Google", "Moxoe", "0000:00:02.0", port_b_conns },
- };
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index e8cc83029db33..ab8d64a14dd0a 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -3094,7 +3094,8 @@ static void rzg2l_pinctrl_pm_setup_dedicated_regs(struct rzg2l_pinctrl *pctrl, b
+ 		}
  
- static struct device *cros_ec_cec_find_hdmi_dev(struct device *dev,
+ 		/* And apply them in a single shot. */
+-		has_iolh = !!(caps & (PIN_CFG_IOLH_A | PIN_CFG_IOLH_B | PIN_CFG_IOLH_C));
++		has_iolh = !!(caps & (PIN_CFG_IOLH_A | PIN_CFG_IOLH_B |
++				      PIN_CFG_IOLH_C | PIN_CFG_IOLH_RZV2H));
+ 		has_ien = !!(caps & PIN_CFG_IEN);
+ 		pincnt = hweight8(FIELD_GET(RZG2L_SINGLE_PIN_BITS_MASK, cfg));
+ 
 -- 
 2.53.0
 
