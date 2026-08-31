@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA6449502C;
-	Mon, 31 Aug 2026 14:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69EF495519;
+	Mon, 31 Aug 2026 14:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185211; cv=none; b=u8+pBL/R+s/TtyfTFKmK7u5eR5miOKbLpkrPfI6UkaGxsh6RSOEXMsQ8jKjCCK8hmlNoGSOKhcAkFrtGKZWN7/0ShH6gCZUvgn+6RGdiP/+qL2zefu4GwFDwL+qyWiA7G4EmQHxPIohcIyVa+cVvjFl6BcsYhtXh3TDzqeV1aYI=
+	t=1788185235; cv=none; b=HdHgYsNavh96rD5Gz55Iw/26sC3q5c8kj3hiV4KpkVUQ0d0XFknxjTfsRM9q8T/IkFZy3IoUfTZSKbEvZfYOqA9OVIGCHR9bomYpVYXbiuBeLFpgg2UklI5QAOoVBrLex424R5d0DSc/An3DPLa4p+KwO9uUr8vRntcqYA7TMl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185211; c=relaxed/simple;
-	bh=ITEL/KLiSr7SnATK3Jzg0sgXEXXau/CJQDNhN4uvvrc=;
+	s=arc-20240116; t=1788185235; c=relaxed/simple;
+	bh=z2/mW9rI1zvToAFFzsie4ne7WRdsGyRX5seKxDjwgIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3s4cd2zhdA8GcILuxROpnVL2MkmGXZ70TdnyV2KTQZUV/nUvbF8kKmFCt/zXOJOUetALFTCprOunXSacqgQCw38+1L0nBeDiYGSPzy8/WIytxMA9rI1Swytb4owsqtg4rfQD4eyryf5Cs0G02lV4niKaY+Z5NiSAGKbuc5BD+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTZK1WEa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jz+X0msXK1Wo4wcP21fJgpW547I8HCjmcPfRtjrPgI/Y+LcZP8kHPEJUXBsUdrejE0OiGA1gwYjvntT2RHiayvKxt+ITqondYb8mDgoNeEq8LhJimxGO61i5M5fNyetSdqERCref55WMRBzn6GlMElwsgLvUgX677l4unsLs6eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaTCwtGX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTZK1WEa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA651F000E9;
-	Mon, 31 Aug 2026 14:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaTCwtGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056951F00A3D;
+	Mon, 31 Aug 2026 14:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185208;
-	bh=cFxhhT2XjK7Gy2RuOvJao1ZKeaq/h/yzAi1hyN74gcc=;
+	s=korg; t=1788185234;
+	bh=dNwlptMZmzTovA0cBrIKN60Opi70HmEshPY+KZtZGeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTZK1WEaQ4h6FQNAZIRSduzOAQHy2wqALHuJGasXHhKa3yi+A3c+eR13hTcK9DPn0
-	 XCLTQxveBf97ZRWEm+yj4AQVADwiEar9NtyTsukhBBgXEyjsYRBegCkIrWbtucLiAw
-	 KMLQQ41JI9aznSIUn+FJPqRBNCNPlrhbZZ/pTe0M=
+	b=kaTCwtGXoIJSmUc/9eGY9cJDpn6u9PYEWLZ0F9DNBr4rX7NSLnY/LeDV3vsv1Wh6w
+	 dxJpKKf6oc6wK9WGQcgjI/XfXpUrj/1fdBZrmOwGlBe+0Hnk4RiP2VmDSDKZ3BNUqF
+	 UCW3gNmAPMds4dm29v6OmH1x3wZ7Aia5/FnPNtjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	David Heidelberg <david@ixit.cz>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/43] nfc: nci: add data_len bound checks to activation parameter extractors
-Date: Mon, 31 Aug 2026 15:35:29 +0200
-Message-ID: <20260831133359.478089679@linuxfoundation.org>
+Subject: [PATCH 5.10 03/43] ext4: dont enable DAX on new encrypted files
+Date: Mon, 31 Aug 2026 15:35:11 +0200
+Message-ID: <20260831133358.710146400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -51,133 +54,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 0428fa2c22e2ba0cff766d3b80d461e149102045 ]
+commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
 
-nci_extract_activation_params_iso_dep() and
-nci_extract_activation_params_nfc_dep() read an inner length byte from
-the NCI RF_INTF_ACTIVATED_NTF payload and use it to memcpy() into fixed
-kernel buffers, but neither function receives the caller-validated
-activation_params_len.  A crafted NCI notification with
-activation_params_len=1 and an inner length byte of up to 20 (NFC-A) or
-50 (NFC-B) causes memcpy() to read that many bytes past the one valid
-byte in the activation params region -- a slab out-of-bounds read of
-kernel memory adjacent to the NCI skb.
+Currently, when a new encrypted regular file is created, the call to
+ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
+before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
+filesystem is mounted with "-o dax=always".
 
-The sibling nci_extract_rf_params_*() family was given equivalent
-protection by commit 571dcbeb8e63 ("net: nfc: nci: Fix parameter
-validation for packet data"), but the two activation parameter
-extractors were not updated at that time.
+EXT4_INODE_ENCRYPT then actually gets set a bit later in
+__ext4_new_inode(), when it calls fscrypt_set_context() which calls
+ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
+calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
 
-Add a data_len parameter to both functions, guard against an empty
-region before consuming the inner length byte, decrement the remaining
-count after consuming it, and clamp the copy length to what is actually
-available.  Update both call sites to pass ntf.activation_params_len,
-which is already validated against the skb at ntf.c:801.
+This was intended to clear S_DAX as well.  However, this was broken by
+commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
+causes data written to the file to bypass encryption, also causing
+xfstests failures such as generic/548 (when "-o dax=always" is used).
 
-Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
+Fix this by simplifying the flow by making __ext4_new_inode() set
+EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
+ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
+
+Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
+place on new encrypted inodes.  Then it doesn't need to be cleared.
+
+As a result of these simplifications, ext4_set_context() no longer needs
+to change inode flags or state when 'handle != NULL'.  Remove that too.
+
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
+Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260612-b4-disp-6d52d8b0-v3-1-e26221f8826d@proton.me
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/ntf.c |   28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ fs/ext4/ialloc.c |  4 ++++
+ fs/ext4/super.c  | 40 ++++++++++++++++++++--------------------
+ 2 files changed, 24 insertions(+), 20 deletions(-)
 
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -371,15 +371,20 @@ static void nci_rf_discover_ntf_packet(s
- }
+diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
+index 98bd01483afba..cb69fb7b7b825 100644
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -994,6 +994,8 @@ struct inode *__ext4_new_inode(handle_t *handle, struct inode *dir,
+ 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
+ 		if (err)
+ 			goto out;
++		if (encrypt)
++			i_flags |= EXT4_ENCRYPT_FL;
+ 	}
  
- static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
--			struct nci_rf_intf_activated_ntf *ntf, __u8 *data)
-+			struct nci_rf_intf_activated_ntf *ntf, __u8 *data,
-+			__u8 data_len)
- {
- 	struct activation_params_nfca_poll_iso_dep *nfca_poll;
- 	struct activation_params_nfcb_poll_iso_dep *nfcb_poll;
+ 	err = dquot_initialize(inode);
+@@ -1307,6 +1309,8 @@ struct inode *__ext4_new_inode(handle_t *handle, struct inode *dir,
+ 	ei->i_extra_isize = sbi->s_want_extra_isize;
+ 	ei->i_inline_off = 0;
+ 	if (ext4_has_feature_inline_data(sb) &&
++	    /* Encrypted inodes cannot have inline data */
++	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
+ 	    (!(ei->i_flags & EXT4_DAX_FL) || S_ISDIR(mode)))
+ 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+ 	ret = inode;
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index c698dd5816c3a..c1538e61022cb 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1494,7 +1494,13 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 	if (inode->i_ino == EXT4_ROOT_INO)
+ 		return -EPERM;
  
- 	switch (ntf->activation_rf_tech_and_mode) {
- 	case NCI_NFC_A_PASSIVE_POLL_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
- 		nfca_poll->rats_res_len = min_t(__u8, *data++, 20);
-+		data_len--;
-+		nfca_poll->rats_res_len = min_t(__u8, nfca_poll->rats_res_len, data_len);
- 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
- 		if (nfca_poll->rats_res_len > 0) {
- 			memcpy(nfca_poll->rats_res,
-@@ -388,8 +393,12 @@ static int nci_extract_activation_params
- 		break;
+-	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
++	/*
++	 * For new encrypted inodes, S_DAX is never set in the first place.
++	 *
++	 * For existing inodes, this is called only on empty directories.  ext4
++	 * never sets S_DAX on directories.
++	 */
++	if (WARN_ON_ONCE(IS_DAX(inode)))
+ 		return -EINVAL;
  
- 	case NCI_NFC_B_PASSIVE_POLL_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
- 		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
-+		data_len--;
-+		nfcb_poll->attrib_res_len = min_t(__u8, nfcb_poll->attrib_res_len, data_len);
- 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
- 		if (nfcb_poll->attrib_res_len > 0) {
- 			memcpy(nfcb_poll->attrib_res,
-@@ -407,7 +416,8 @@ static int nci_extract_activation_params
- }
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
+@@ -1513,21 +1519,18 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 	 */
  
- static int nci_extract_activation_params_nfc_dep(struct nci_dev *ndev,
--			struct nci_rf_intf_activated_ntf *ntf, __u8 *data)
-+			struct nci_rf_intf_activated_ntf *ntf, __u8 *data,
-+			__u8 data_len)
- {
- 	struct activation_params_poll_nfc_dep *poll;
- 	struct activation_params_listen_nfc_dep *listen;
-@@ -415,9 +425,13 @@ static int nci_extract_activation_params
- 	switch (ntf->activation_rf_tech_and_mode) {
- 	case NCI_NFC_A_PASSIVE_POLL_MODE:
- 	case NCI_NFC_F_PASSIVE_POLL_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		poll = &ntf->activation_params.poll_nfc_dep;
- 		poll->atr_res_len = min_t(__u8, *data++,
- 					  NFC_ATR_RES_MAXSIZE - 2);
-+		data_len--;
-+		poll->atr_res_len = min_t(__u8, poll->atr_res_len, data_len);
- 		pr_debug("atr_res_len %d\n", poll->atr_res_len);
- 		if (poll->atr_res_len > 0)
- 			memcpy(poll->atr_res, data, poll->atr_res_len);
-@@ -425,9 +439,13 @@ static int nci_extract_activation_params
+ 	if (handle) {
+-		res = ext4_xattr_set_handle(handle, inode,
+-					    EXT4_XATTR_INDEX_ENCRYPTION,
+-					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
+-					    ctx, len, 0);
+-		if (!res) {
+-			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-			ext4_clear_inode_state(inode,
+-					EXT4_STATE_MAY_INLINE_DATA);
+-			/*
+-			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-			 * S_DAX may be disabled
+-			 */
+-			ext4_set_inode_flags(inode, false);
+-		}
+-		return res;
++		/*
++		 * __ext4_new_inode() should have already set the encrypt flag
++		 * on the inode and avoided enabling inline data.
++		 */
++		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
++			return -EINVAL;
++		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
++			return -EINVAL;
++		return ext4_xattr_set_handle(handle, inode,
++					     EXT4_XATTR_INDEX_ENCRYPTION,
++					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
++					     ctx, len, 0);
+ 	}
  
- 	case NCI_NFC_A_PASSIVE_LISTEN_MODE:
- 	case NCI_NFC_F_PASSIVE_LISTEN_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		listen = &ntf->activation_params.listen_nfc_dep;
- 		listen->atr_req_len = min_t(__u8, *data++,
- 					    NFC_ATR_REQ_MAXSIZE - 2);
-+		data_len--;
-+		listen->atr_req_len = min_t(__u8, listen->atr_req_len, data_len);
- 		pr_debug("atr_req_len %d\n", listen->atr_req_len);
- 		if (listen->atr_req_len > 0)
- 			memcpy(listen->atr_req, data, listen->atr_req_len);
-@@ -603,12 +621,14 @@ static void nci_rf_intf_activated_ntf_pa
- 		switch (ntf.rf_interface) {
- 		case NCI_RF_INTERFACE_ISO_DEP:
- 			err = nci_extract_activation_params_iso_dep(ndev,
--								    &ntf, data);
-+								    &ntf, data,
-+								    ntf.activation_params_len);
- 			break;
- 
- 		case NCI_RF_INTERFACE_NFC_DEP:
- 			err = nci_extract_activation_params_nfc_dep(ndev,
--								    &ntf, data);
-+								    &ntf, data,
-+								    ntf.activation_params_len);
- 			break;
- 
- 		case NCI_RF_INTERFACE_FRAME:
+ 	res = dquot_initialize(inode);
+@@ -1548,10 +1551,7 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 				    ctx, len, 0);
+ 	if (!res) {
+ 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-		/*
+-		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-		 * S_DAX may be disabled
+-		 */
++		/* Update inode->i_flags to set S_ENCRYPTED. */
+ 		ext4_set_inode_flags(inode, false);
+ 		res = ext4_mark_inode_dirty(handle, inode);
+ 		if (res)
+-- 
+2.53.0
+
 
 
