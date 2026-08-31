@@ -1,115 +1,209 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0104AE12A
-	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E0528C5B1
+	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:44:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788197116; cv=none; b=aYvMpMYIGmbT1KWrJaFAheL2CFzu3JldcLWBbZpEmh+iSntbcI5bddT15Wbgd1dKvH/TEoB4ysmha5Vktct1S8vdckT3glqGNsxc2ADZ+RHnTd8DDkUy1egAOU0Ky2P/+BIA6AjlaGBpXfVKeYDPePTHG/y3vNcOqypqHFzxdU4=
+	t=1788198273; cv=none; b=cKXbWavts+1dge+UTcL+yJkR8lM+o9h/7wj8kTjiyW7oHHdgyvWorRBP0o++vZb0WUIjw2y9/mBcZSySnj07QtmK+fX0dMHGh+DuawvhwMEzE96opGwfzBihbedNia4HIKUmtLlkVIGn8TJbuvuYrhmPeWjvhwLseb2rIZWXSXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788197116; c=relaxed/simple;
-	bh=AHbx0/i7Pgt9YZiuONnuRmcHvLJTE+va4kW7G4fKV+M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ya3cuTCEuI+/4Z3bdTCaNJA86lMTbsDen6UhJIYaokHn2sarXjj5AYroLygeR1yY8KXFMkTpCgthl/NNeuzqnXjSziXWw9SkzLTw4MRWApiFMDec4hIzizmzq0RQEgnrE6aBYTSJnBEVD14BoyhaoHSM6QvaHlagt0dnHIeqAfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WavqGQHv; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788198273; c=relaxed/simple;
+	bh=m4mCceyYGSEylh507AjhMHMA9CPOWNWzet0C2V3dNlE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=W8hkVw9hHqBOnBNa9kxSNtiTNbbvJPnEwU33qoDd21+W6QzVJ45wgQkn+l6FLeXcTEbUcZGlQ7gUgPR7ur3bWfJwZb1nvLbwKNzloN0PiqcaeHkRhx7T9C4UplCILtwOQKWV3uhIddGTp5Zuhkt3YvFXBx18eYdOwRxh4WDoikI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iDeT0F59; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WavqGQHv"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2d712281f8bso42747825ad.1
-        for <patches@lists.linux.dev>; Mon, 31 Aug 2026 10:25:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788197113; x=1788801913; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XK77W5HmajvK4RgjL9G18trFUO/IP7eMuuZI6UF8qGs=;
-        b=WavqGQHvKv//fsPLf96rPvZpxEaLkodhrobBZGMWGovwu8mFsxSDWyQrB+Vol8Sumj
-         s86ptSGhqIsHDms3kLroQjI2NlMpVTSpS3sKkNaahhlXU15fwICJ5I6WdQmfwmLLkZfN
-         cUIMSw4fEU6Abgtx8WvdtnCAZ4U85eZOrSKrIt4wwC8hy23Hy3oeVAJeOWBlNxAEH//k
-         lZ4dkHYXK3pcRuPxIgpz+bGbPLhxCwL3EGyPvkrzGstR1zMPddskQFxd2iy3m/liRTY8
-         G2VXYUgRcumTj+FWp8KQ4jjtQkUGWKgL0eW3csPsr+c2ZT2yCAqugRCoYDDOwKFiQds0
-         kq8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788197113; x=1788801913;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XK77W5HmajvK4RgjL9G18trFUO/IP7eMuuZI6UF8qGs=;
-        b=d3DYvLo2oCEfnd5fqwnEzA2u4qB6YfJGvThEh6wKBGXd7HKbd9b1CgbAA4aDTZ7LRf
-         gNeYoCLulglfaE5ACYfd5qad88dQFcFQHuvsEHiWCqJnpbldOTr/bqgGDrOPBmxfwgIz
-         rBUar3hZzvLqf2re0EkL/PZtBSihbTMI+XDlbga8oA3fLZlK/wKRVolFIbzO4u48rPnc
-         K/LUIncVXanHFlnA0uDEdVFRrzOyLVECLkYiJbV13G7JW3L7QWq0rmehQDM0WbU0iBlN
-         Sw5CZNlDh/f/pKg5ULqzdjLHmXWmBLp43kaDlsGOPVF4UgDNHaqMkMmBX4CZ4fnNpaQ9
-         ToTg==
-X-Gm-Message-State: AFuF++meOcCOPIM/Ca3k7uyJc8liiNdmpieNidOelNOrPNxsMmd5us6h
-	/7mbBsmIKts232JU7TiKiVTEFuIrT69vPzhvNAmVb00kKbRsJgkSnLvF
-X-Gm-Gg: AYBFou20geOb+/FTHNu5mOK1D0T0KRaCUN/OE/wW8Oq22Lqs8lPVXl5rVFKAZV0ownw
-	XZ/mQAtXrPxbr0bGlpModK4rqklAuZKMLtdAapnRFy84Rdi/paRYgpb+p36YmmWP6syc1RzcplP
-	UiDcSAm+EaZs49xEe+XDb+FUOY35WVps2abx9CLnHoiCQxfwrm8WLKwGaLHfP898EzUjaDp99cD
-	xDQ5m712ucdzfLwnB1OLgVesCBDqYzufvqQ/u4x32SXbdRd6tQDpfEz0I7fnNY/L1gMTdYFByvs
-	QPzJHEknfe3rw56Nx5BnZr57HYq3C35DeTiisFqBtHDpx+V9or1Emw2DHllCYIECquiNj7VaN7d
-	IpceA1u74l7fNIOj9lTRsfYMES6q5JK8I04/QuLb1FHfEvoyFRXv7RIRFg2S1o5wsBS9dNkpPpl
-	Kp9pl2AkYI+9dge+h6L4qlGOAgy7q85lz3pkCZ4Pjnvfly0ZnN7Q7oqKAyWJwnZgylxA+bQuU5C
-	iIciD85/JxqCu2JdHS3H50S3Gw9Fw==
-X-Received: by 2002:a17:903:324e:b0:2c9:deec:f564 with SMTP id d9443c01a7336-2d94a8d59acmr32476955ad.13.1788197112756;
-        Mon, 31 Aug 2026 10:25:12 -0700 (PDT)
-Received: from [192.168.1.3] (ip68-4-215-93.oc.oc.cox.net. [68.4.215.93])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-32b28ab0571sm23256193eec.4.2026.08.31.10.25.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Aug 2026 10:25:11 -0700 (PDT)
-Message-ID: <5893399d-bef6-4888-acaa-3bb4ca3ffc01@gmail.com>
-Date: Mon, 31 Aug 2026 10:25:19 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iDeT0F59"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788198272; x=1819734272;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=m4mCceyYGSEylh507AjhMHMA9CPOWNWzet0C2V3dNlE=;
+  b=iDeT0F59lBGBtgWpEczIw35PWv3pjyiDzitZ6xHDXoGnMou7yc216HR4
+   UFFmcarENnniUCHoLx7p8dgDcRPVyL42etp6sqSsjJDn2RZflIAX6kmsr
+   mGHRvhI4N9KebDqtsP9yhFRico2KE6puw+8dTJ1BFYyR7hFkoYjnZaiig
+   veSk/t/ue23/in9vvB995sk3muYPO4PXE4He1eQlgWwGDej/HOE74obfq
+   OxySwan8CUJBT54sYzkMQ+ZopuqA5RZMaGC57e2RYTZwcKcO3+PN5x/eH
+   EAOhIC2rOkqefNh5KuMk7kPwr05DeSJ5CGi+SI9xk/Xw0OhoXDx3clUUy
+   g==;
+X-CSE-ConnectionGUID: 5ZYKjUZnRXGLNK4lxmwIZA==
+X-CSE-MsgGUID: O1KWLFVFQdqESCaWszfP9Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="92479897"
+X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
+   d="scan'208";a="92479897"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:31 -0700
+X-CSE-ConnectionGUID: oyh3d6yoRQar0JlkqKYxeg==
+X-CSE-MsgGUID: 6pizaa+7SniFHBRsJIjcng==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
+   d="scan'208";a="268906938"
+Received: from aherrold-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.17])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:30 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	David E Box <david.e.box@intel.com>,
+	x86@kernel.org
+Cc: Christoph Hellwig <hch@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v11 01/23] x86/resctrl: Give better names to X86_FEATURE flags for monitoring
+Date: Mon, 31 Aug 2026 10:43:59 -0700
+Message-ID: <20260831174421.13921-2-tony.luck@intel.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831174421.13921-1-tony.luck@intel.com>
+References: <20260831174421.13921-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/69] 5.15.220-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260831133358.601894154@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+The feature flags for enumeration of Resource Director Technology (RDT)
+capabilities were chosen when the only feature was LLC cache occupancy
+monitoring and they were given names using the abbreviation CQM for
+Cache Quality of Service Monitoring.
 
+Additional monitoring features have been added to CPUs and the names
+are now more likely to confuse than inform the purpose of these flags.
 
-On 8/31/2026 6:34 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.220 release.
-> There are 69 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.220-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Rename X86_FEATURE_CQM to X86_FEATURE_RDT_M (to match the Intel Software
+Developer's Manual, and for symmetry with X86_FEATURE_RDT_A).
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Rename X86_FEATURE_CQM_LLC to X86_FEATURE_L3_MON since it enumerates
+that some L3 monitoring features may be present.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Add missing dependency to cpuid_deps[].
+
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+v11:
+	New patch. Fix FEATURE options
+
+ Documentation/arch/x86/cpuinfo.rst       | 2 +-
+ arch/x86/include/asm/cpufeatures.h       | 4 ++--
+ tools/arch/x86/include/asm/cpufeatures.h | 4 ++--
+ arch/x86/kernel/cpu/cpuid-deps.c         | 8 +++++---
+ arch/x86/kernel/cpu/resctrl/core.c       | 2 +-
+ arch/x86/kernel/cpu/scattered.c          | 2 +-
+ 6 files changed, 12 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/arch/x86/cpuinfo.rst b/Documentation/arch/x86/cpuinfo.rst
+index 17fce95367e6..5aa4e9d2ad23 100644
+--- a/Documentation/arch/x86/cpuinfo.rst
++++ b/Documentation/arch/x86/cpuinfo.rst
+@@ -96,7 +96,7 @@ Flags can be from scattered CPUID-based features
+ Hardware features enumerated in sparsely populated CPUID leaves get
+ software-defined values. Still, CPUID needs to be queried to determine
+ if a given feature is present. This is done in init_scattered_cpuid_features().
+-For instance, X86_FEATURE_CQM_LLC is defined as 11*32 + 0 and its presence is
++For instance, X86_FEATURE_L3_MON is defined as 11*32 + 0 and its presence is
+ checked at runtime in the respective CPUID leaf [EAX=f, ECX=0] bit EDX[1].
+ 
+ The intent of scattering CPUID leaves is to not bloat struct
+diff --git a/arch/x86/include/asm/cpufeatures.h b/arch/x86/include/asm/cpufeatures.h
+index f70ee74b5f92..6a7f0adb123e 100644
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -252,7 +252,7 @@
+ #define X86_FEATURE_ERMS		( 9*32+ 9) /* "erms" Enhanced REP MOVSB/STOSB instructions */
+ #define X86_FEATURE_INVPCID		( 9*32+10) /* "invpcid" Invalidate Processor Context ID */
+ #define X86_FEATURE_RTM			( 9*32+11) /* "rtm" Restricted Transactional Memory */
+-#define X86_FEATURE_CQM			( 9*32+12) /* "cqm" Cache QoS Monitoring */
++#define X86_FEATURE_RDT_M		( 9*32+12) /* "cqm" Resource Director Technology Monitoring */
+ #define X86_FEATURE_ZERO_FCS_FDS	( 9*32+13) /* Zero out FPU CS and FPU DS */
+ #define X86_FEATURE_MPX			( 9*32+14) /* "mpx" Memory Protection Extension */
+ #define X86_FEATURE_RDT_A		( 9*32+15) /* "rdt_a" Resource Director Technology Allocation */
+@@ -285,7 +285,7 @@
+  *
+  * Reuse free bits when adding new feature flags!
+  */
+-#define X86_FEATURE_CQM_LLC		(11*32+ 0) /* "cqm_llc" LLC QoS if 1 */
++#define X86_FEATURE_L3_MON		(11*32+ 0) /* "cqm_llc" LLC QoS if 1 */
+ #define X86_FEATURE_CQM_OCCUP_LLC	(11*32+ 1) /* "cqm_occup_llc" LLC occupancy monitoring */
+ #define X86_FEATURE_CQM_MBM_TOTAL	(11*32+ 2) /* "cqm_mbm_total" LLC Total MBM monitoring */
+ #define X86_FEATURE_CQM_MBM_LOCAL	(11*32+ 3) /* "cqm_mbm_local" LLC Local MBM monitoring */
+diff --git a/tools/arch/x86/include/asm/cpufeatures.h b/tools/arch/x86/include/asm/cpufeatures.h
+index 6547c0aee45b..9b71a7663e26 100644
+--- a/tools/arch/x86/include/asm/cpufeatures.h
++++ b/tools/arch/x86/include/asm/cpufeatures.h
+@@ -242,7 +242,7 @@
+ #define X86_FEATURE_ERMS		( 9*32+ 9) /* "erms" Enhanced REP MOVSB/STOSB instructions */
+ #define X86_FEATURE_INVPCID		( 9*32+10) /* "invpcid" Invalidate Processor Context ID */
+ #define X86_FEATURE_RTM			( 9*32+11) /* "rtm" Restricted Transactional Memory */
+-#define X86_FEATURE_CQM			( 9*32+12) /* "cqm" Cache QoS Monitoring */
++#define X86_FEATURE_RDT_M		( 9*32+12) /* "cqm" Resource Director Technology Monitoring */
+ #define X86_FEATURE_ZERO_FCS_FDS	( 9*32+13) /* Zero out FPU CS and FPU DS */
+ #define X86_FEATURE_MPX			( 9*32+14) /* "mpx" Memory Protection Extension */
+ #define X86_FEATURE_RDT_A		( 9*32+15) /* "rdt_a" Resource Director Technology Allocation */
+@@ -275,7 +275,7 @@
+  *
+  * Reuse free bits when adding new feature flags!
+  */
+-#define X86_FEATURE_CQM_LLC		(11*32+ 0) /* "cqm_llc" LLC QoS if 1 */
++#define X86_FEATURE_L3_MON		(11*32+ 0) /* "cqm_llc" LLC QoS if 1 */
+ #define X86_FEATURE_CQM_OCCUP_LLC	(11*32+ 1) /* "cqm_occup_llc" LLC occupancy monitoring */
+ #define X86_FEATURE_CQM_MBM_TOTAL	(11*32+ 2) /* "cqm_mbm_total" LLC Total MBM monitoring */
+ #define X86_FEATURE_CQM_MBM_LOCAL	(11*32+ 3) /* "cqm_mbm_local" LLC Local MBM monitoring */
+diff --git a/arch/x86/kernel/cpu/cpuid-deps.c b/arch/x86/kernel/cpu/cpuid-deps.c
+index 99801e844b30..58482c264b76 100644
+--- a/arch/x86/kernel/cpu/cpuid-deps.c
++++ b/arch/x86/kernel/cpu/cpuid-deps.c
+@@ -67,9 +67,11 @@ static const struct cpuid_dep cpuid_deps[] = {
+ 	{ X86_FEATURE_AVX512_4FMAPS,		X86_FEATURE_AVX512F   },
+ 	{ X86_FEATURE_AVX512_VPOPCNTDQ,		X86_FEATURE_AVX512F   },
+ 	{ X86_FEATURE_AVX512_VP2INTERSECT,	X86_FEATURE_AVX512VL  },
+-	{ X86_FEATURE_CQM_OCCUP_LLC,		X86_FEATURE_CQM_LLC   },
+-	{ X86_FEATURE_CQM_MBM_TOTAL,		X86_FEATURE_CQM_LLC   },
+-	{ X86_FEATURE_CQM_MBM_LOCAL,		X86_FEATURE_CQM_LLC   },
++	{ X86_FEATURE_L3_MON,			X86_FEATURE_RDT_M     },
++	{ X86_FEATURE_CQM_OCCUP_LLC,		X86_FEATURE_L3_MON    },
++	{ X86_FEATURE_CQM_MBM_TOTAL,		X86_FEATURE_L3_MON    },
++	{ X86_FEATURE_CQM_MBM_LOCAL,		X86_FEATURE_L3_MON    },
++	{ X86_FEATURE_ABMC,			X86_FEATURE_L3_MON    },
+ 	{ X86_FEATURE_BMEC,			X86_FEATURE_CQM_MBM_TOTAL   },
+ 	{ X86_FEATURE_BMEC,			X86_FEATURE_CQM_MBM_LOCAL   },
+ 	{ X86_FEATURE_SDCIAE,			X86_FEATURE_CAT_L3    },
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 55214d6fdc49..2435eddd24eb 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -1078,7 +1078,7 @@ static enum cpuhp_state rdt_online;
+ /* Runs once on the BSP during boot. */
+ void resctrl_cpu_detect(struct cpuinfo_x86 *c)
+ {
+-	if (!cpu_has(c, X86_FEATURE_CQM_LLC) && !cpu_has(c, X86_FEATURE_ABMC)) {
++	if (!cpu_has(c, X86_FEATURE_L3_MON) && !cpu_has(c, X86_FEATURE_ABMC)) {
+ 		c->x86_cache_max_rmid  = -1;
+ 		c->x86_cache_occ_scale = -1;
+ 		c->x86_cache_mbm_width_offset = -1;
+diff --git a/arch/x86/kernel/cpu/scattered.c b/arch/x86/kernel/cpu/scattered.c
+index 8665a6474806..7e5490e1e537 100644
+--- a/arch/x86/kernel/cpu/scattered.c
++++ b/arch/x86/kernel/cpu/scattered.c
+@@ -32,7 +32,7 @@ static const struct cpuid_bit cpuid_bits[] = {
+ 	{ X86_FEATURE_APX,			CPUID_EDX, 21, 0x00000007, 1 },
+ 	{ X86_FEATURE_RRSBA_CTRL,		CPUID_EDX,  2, 0x00000007, 2 },
+ 	{ X86_FEATURE_BHI_CTRL,			CPUID_EDX,  4, 0x00000007, 2 },
+-	{ X86_FEATURE_CQM_LLC,			CPUID_EDX,  1, 0x0000000f, 0 },
++	{ X86_FEATURE_L3_MON,			CPUID_EDX,  1, 0x0000000f, 0 },
+ 	{ X86_FEATURE_CQM_OCCUP_LLC,		CPUID_EDX,  0, 0x0000000f, 1 },
+ 	{ X86_FEATURE_CQM_MBM_TOTAL,		CPUID_EDX,  1, 0x0000000f, 1 },
+ 	{ X86_FEATURE_CQM_MBM_LOCAL,		CPUID_EDX,  2, 0x0000000f, 1 },
 -- 
-Florian
+2.55.0
 
