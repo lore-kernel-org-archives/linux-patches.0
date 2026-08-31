@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FB443031A;
-	Mon, 31 Aug 2026 14:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC1B480DC3;
+	Mon, 31 Aug 2026 14:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184826; cv=none; b=e5QQjT3XIG/aw3Xx4ABC3Cqz7Wz1RPqwynwu6NQvoOMSmLLBjUXeq1GQe16yPr1JOuJwr3Y2fIh4CfYfbOY+ZN+WHe3UZWm43zzwRxwSznMY/5Zsb3otDNXNVHj9OgghB8WVj3EbJfIFSZ/HkG7i7AwVdsB6QWYrPidZNr0F+a0=
+	t=1788184813; cv=none; b=LXgIY8z7ZQL1KHIS4jowzIdJA8vqb+sqa8DjO4WUEVVKG6Xj/5lUeimUEZ6lsJJbESdXBnDgw3FkBOb5znNoZkFgLr+ekY62Mkm4UO/pDy283NzmuTizsAIP5WnmPWQ2mVcRlicfH5cRFHBFhQdPjRKbYjEctBlO0Ui9aVZ2IFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184826; c=relaxed/simple;
-	bh=tir5Av/jLGPySpnRf46dQuHItAlqXRWn58tywyM/1b0=;
+	s=arc-20240116; t=1788184813; c=relaxed/simple;
+	bh=woAolU+c9r/l+VCID5VyBwvSgtIKPPUi9ov/RINftXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7oXD+wdHiO5SvuoaW31uHYvf/ulVxcxvKZnWNspQhi7ssZXPHSGy9YOj9QBAzas+AXW/wAzMQtlCaaN4X0+VqVTHMuo4Cg6Ns1pDqwgpN2AE8v07G3YVOrj7IaWV2YTZkVMqT32LyA4/fzRQZv89zqPNAnG3Z8lxMHLuuRZh2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVekFSOR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IYF658PPw9xXRkADM6SVXcr7TnraihoLjV3sm7OBOn+DhpdeE0quwJs79IHMfO/Fx72WT1innHfF3jOQXyzP5OLz5tHtU5110koS3gGcEz36o9Z0qImQLKgcnNjJh2DxIKZYe9o4C7pPgWL5BUiHF1yA8XbukQps/m7K/qa/5kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wE+NbGLe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVekFSOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E257F1F00A3E;
-	Mon, 31 Aug 2026 14:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wE+NbGLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7745E1F00A3D;
+	Mon, 31 Aug 2026 14:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184823;
-	bh=w2MZRfUwKtK+uh0gILeD7NiMXwP1ygj9/rzXY3xSny8=;
+	s=korg; t=1788184812;
+	bh=uXuXEV9GACVSzu3OIyNni+Q6O+nTLjZcHru7nWx6i8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rVekFSORAQ3gEWNTKHr/fd5AvzB1VKxNxuzXtMp3dfLPcYtaFjs1qjZfqq8nj3/Rg
-	 /+EEY9HUtcVVcWNX96gWwytURYPF7cUk1ZjZ00ETdo3lLp7Pvzl4U979586bA2NKeL
-	 zIN1QXzhOkvDMopu5OzT+3GjNuH35Joz5/m12GzA=
+	b=wE+NbGLepYi8FB29jmW85XctLkkZFquS+EZSXhlakWbr0ySeT1GWyPhIkVA15j1/r
+	 +sQU/L7KRZk2eziBW2sMd3ci9t621aFeyF6kNRjFDLfL7MF5CGaZVq8DMaQFzOaE1p
+	 BrE1yC5PKxrpXRcFmdLGIihfjgYcAyrrh5obj/RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrik Berkhan <Enrik.Berkhan@inka.de>,
-	Michael Zaidman <michael.zaidman@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 49/92] HID: ft260: improve i2c large reads performance
-Date: Mon, 31 Aug 2026 15:34:47 +0200
-Message-ID: <20260831133402.261917162@linuxfoundation.org>
+Subject: [PATCH 6.1 46/92] HID: nintendo: stop device IO before hid_hw_stop on probe failure
+Date: Mon, 31 Aug 2026 15:34:44 +0200
+Message-ID: <20260831133402.099698484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -52,79 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Zaidman <michael.zaidman@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 54410c14800ad652c77e5c6fc5c17baad6e42cb6 ]
+[ Upstream commit 1f74d3bff6fe04a64e02ab3661d2e0d554565aa6 ]
 
-The patch increases the read buffer size to 180 bytes. It reduces
-the number of ft260_i2c_read() calls by three, improving the big
-reads performance.
+nintendo_hid_probe() calls hid_device_io_start() before joycon_init()
+and joycon_leds_create().  If either fails, the error path jumps to
+err_close which calls hid_hw_close()/hid_hw_stop() without first calling
+hid_device_io_stop().
 
-$ sudo i2ctransfer -y -f 13 w2@0x51 0x0 0x0 r180
+hid_hw_stop() does not stop device IO, so hid_input_report() may still
+run and access driver data that is being torn down, resulting in a
+use-after-free.
 
-Before:
+Add an err_io_stop label that calls hid_device_io_stop() before
+hid_hw_close(), and point the two post-io_start error paths at it.
 
-[  +4.071878] ft260_i2c_write_read: off 0x0 rlen 180 wlen 2
-[  +0.000005] ft260_i2c_write: rep 0xd0 addr 0x51 off 0 len 2 wlen 2 flag 0x2 d[0] 0x0
-[  +0.001097] ft260_xfer_status: bus_status 0x41, clock 100
-[  +0.000175] ft260_xfer_status: bus_status 0x40, clock 100
-[  +0.000004] ft260_i2c_read: rep 0xc2 addr 0x51 len 180 rlen 60 flag 0x3
-[  +0.008579] ft260_raw_event: i2c resp: rep 0xde len 60
-[  +0.000208] ft260_xfer_status: bus_status 0x40, clock 100
-[  +0.000001] ft260_i2c_read: rep 0xc2 addr 0x51 len 120 rlen 60 flag 0x0
-[  +0.008794] ft260_raw_event: i2c resp: rep 0xde len 60
-[  +0.000181] ft260_xfer_status: bus_status 0x40, clock 100
-[  +0.000002] ft260_i2c_read: rep 0xc2 addr 0x51 len 60 rlen 60 flag 0x4
-[  +0.008817] ft260_raw_event: i2c resp: rep 0xde len 60
-[  +0.000223] ft260_xfer_status: bus_status 0x20, clock 100
-
-After:
-
-[ +11.611642] ft260_i2c_write_read: off 0x0 rlen 180 wlen 2
-[  +0.000005] ft260_i2c_write: rep 0xd0 addr 0x51 off 0 len 2 wlen 2 flag 0x2 d[0] 0x0
-[  +0.008001] ft260_xfer_status: bus_status 0x20, clock 100
-[  +0.000001] ft260_i2c_read: rep 0xc2 addr 0x51 len 180 rlen 180 flag 0x7
-[  +0.008994] ft260_raw_event: i2c resp: rep 0xde len 60
-[  +0.007987] ft260_raw_event: i2c resp: rep 0xde len 60
-[  +0.007992] ft260_raw_event: i2c resp: rep 0xde len 60
-[  +0.000206] ft260_xfer_status: bus_status 0x20, clock 100
-
-Suggested-by: Enrik Berkhan <Enrik.Berkhan@inka.de>
-Signed-off-by: Michael Zaidman <michael.zaidman@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Stable-dep-of: bf3e39df3a39 ("HID: ft260: fix stack-use-after-return write in I2C read race")
+Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[ dropped the absent `err_ida:`/`ida_free()` context and retargeted all five `goto err_close` paths to the new `err_io_stop` label ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ft260.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/hid/hid-nintendo.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-ft260.c
-+++ b/drivers/hid/hid-ft260.c
-@@ -30,12 +30,19 @@ MODULE_PARM_DESC(debug, "Toggle FT260 de
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -2273,34 +2273,34 @@ static int nintendo_hid_probe(struct hid
+ 	ret = joycon_init(hdev);
+ 	if (ret) {
+ 		hid_err(hdev, "Failed to initialize controller; ret=%d\n", ret);
+-		goto err_close;
++		goto err_io_stop;
+ 	}
  
- #define FT260_REPORT_MAX_LENGTH (64)
- #define FT260_I2C_DATA_REPORT_ID(len) (FT260_I2C_REPORT_MIN + (len - 1) / 4)
-+
- /*
-- * The input report format assigns 62 bytes for the data payload, but ft260
-- * returns 60 and 2 in two separate transactions. To minimize transfer time
-- * in reading chunks mode, set the maximum read payload length to 60 bytes.
-- */
--#define FT260_RD_DATA_MAX (60)
-+ * The ft260 input report format defines 62 bytes for the data payload, but
-+ * when requested 62 bytes, the controller returns 60 and 2 in separate input
-+ * reports. To achieve better performance with the multi-report read data
-+ * transfers, we set the maximum read payload length to a multiple of 60.
-+ * With a 100 kHz I2C clock, one 240 bytes read takes about 1/27 second,
-+ * which is excessive; On the other hand, some higher layer drivers like at24
-+ * or optoe limit the i2c reads to 128 bytes. To not block other drivers out
-+ * of I2C for potentially troublesome amounts of time, we select the maximum
-+ * read payload length to be 180 bytes.
-+*/
-+#define FT260_RD_DATA_MAX (180)
- #define FT260_WR_DATA_MAX (60)
+ 	ret = joycon_read_info(ctlr);
+ 	if (ret) {
+ 		hid_err(hdev, "Failed to retrieve controller info; ret=%d\n",
+ 			ret);
+-		goto err_close;
++		goto err_io_stop;
+ 	}
  
- /*
+ 	/* Initialize the leds */
+ 	ret = joycon_leds_create(ctlr);
+ 	if (ret) {
+ 		hid_err(hdev, "Failed to create leds; ret=%d\n", ret);
+-		goto err_close;
++		goto err_io_stop;
+ 	}
+ 
+ 	/* Initialize the battery power supply */
+ 	ret = joycon_power_supply_create(ctlr);
+ 	if (ret) {
+ 		hid_err(hdev, "Failed to create power_supply; ret=%d\n", ret);
+-		goto err_close;
++		goto err_io_stop;
+ 	}
+ 
+ 	ret = joycon_input_create(ctlr);
+ 	if (ret) {
+ 		hid_err(hdev, "Failed to create input device; ret=%d\n", ret);
+-		goto err_close;
++		goto err_io_stop;
+ 	}
+ 
+ 	ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
+@@ -2308,7 +2308,8 @@ static int nintendo_hid_probe(struct hid
+ 	hid_dbg(hdev, "probe - success\n");
+ 	return 0;
+ 
+-err_close:
++err_io_stop:
++	hid_device_io_stop(hdev);
+ 	hid_hw_close(hdev);
+ err_stop:
+ 	hid_hw_stop(hdev);
 
 
