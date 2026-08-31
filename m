@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0E1483BCB;
-	Mon, 31 Aug 2026 14:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035AD52ED21;
+	Mon, 31 Aug 2026 14:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184865; cv=none; b=Xh8oyJ+S/8Ygds1meiXH2Nt2MqYH5d1ur2RwaAN3QZgJpnT1Yd16YaK8oiJCBCt++oircWeEyIByQAfwLfbVTsfYMcRuQz4pArY+Zq358CdhqYRHtDdFR9qmphx6LHBXqFtop1BzO+VnNXvGLF21rlbybHubHq5f3udsWm9bRsM=
+	t=1788184896; cv=none; b=K3oJfvaovarEY92ooD1vLNeXy8efFoJZN9adT6gBR4LZmTjGsRDVQgKjDI2SSSSOJaeKo4gmiplAGXQ68GeImxTqS4RvwIGqDUa1+8raaYarNnMAHWmL8dVd2AgKrVwd+TAguso9scDqBJHwjwBZeEx9RlpMT9EnLiLIE4UFrFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184865; c=relaxed/simple;
-	bh=kRSh/PBDOUiDHXo4yon0sHM+nS4QdB7IhS573ljDuNA=;
+	s=arc-20240116; t=1788184896; c=relaxed/simple;
+	bh=G0RZcQwK6YffEj3eoPA7D7Z74MSMUpDo7aoWPSNhj0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeOKIzcAs0t94F3JMhVEw0tbxE2lteqcWsQ3suSWuvIKoyYgMOtDkXAq2pyyh2YMLjAB+dnZXZlZxoown0PT13e7OUxm72Y2xBI5BMTC/mPQP8eyRl2wzz9TDAua6rXOaP+7s6fblWCztl+heXAuFLggKGtGi3UAnRVNGUBNc/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Jmst8I1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nmFHDuvnITiRnkCGeGL6DoTj0C85rfp5802UeLlTjkrjtfTqT/54nIGU65DDwTGRZumfG7TDRGsKrVo/YugumGaCLzB/Z08YU0kNs//JrI/YGWwnUaSJf4g8vMhYj47HWtaZbJoJCQXu8NxHkZjlRcK4ey5xnvevtodAtWhVB7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRYizyta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Jmst8I1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109AD1F00A3D;
-	Mon, 31 Aug 2026 14:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRYizyta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3891F000E9;
+	Mon, 31 Aug 2026 14:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184863;
-	bh=t9HThacZCkS5Wk9URC5lyHUxu+2PCjkXAZjCkzCc58A=;
+	s=korg; t=1788184893;
+	bh=EsPN1IP66VKLzWarNOA62L72uxbTqStbpNG0y+mTTr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Jmst8I1EYmXdiE/OdGTWonWOsSS6wK/dJukw6ClQaPH7Sxwt2+wu+4kiZUCxXa7/
-	 wtcpCAYY3rZmrmzS/rDQGCA9p+Y6tZvp40bdG0uUn161xLWWCvMYnkf4sVo41CYlgy
-	 EFJoNp0xvauvle3MTHGFFBUUE8fP2vRs4nx2WG5M=
+	b=TRYizytapzItoAcPKj4aHOQL0oDQzdPWD/89YOpSPV7oHmFk6CQUDGGb4ed5X3xYs
+	 hKGH/ZyuMlQPqKbKVYHSMhfc9r1ZkXgdA6ucSx4hCii5GpEpnLoVHNRG0WQko71Zxm
+	 dnnUcOqVEagUnGBKpe3dLswZxKj10SL3oWpcsXlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 26/92] bpf: Fix use-after-free in offloaded map/prog info fill
-Date: Mon, 31 Aug 2026 15:34:24 +0200
-Message-ID: <20260831133401.008406604@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.1 75/92] xfrm: fix xfrm_state_construct() auth-trunc leak
+Date: Mon, 31 Aug 2026 15:35:13 +0200
+Message-ID: <20260831133403.491543955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -55,72 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit a0c584fc18056709c8e047a82a6045d6c209f4ce ]
+commit c12cbf56320fb633484ee0ca1fb7d68d6b64b213 upstream.
 
-When querying info for an offloaded BPF map or program,
-bpf_map_offload_info_fill_ns() and bpf_prog_offload_info_fill_ns()
-obtain the network namespace with get_net(dev_net(offmap->netdev)).
-However, the associated netdev's netns may be racing with teardown
-during netns destruction. If the netns refcount has already reached 0,
-get_net() performs a refcount_t increment on 0, triggering:
+attach_auth_trunc() can allocate x->aalg while leaving
+x->props.aalgo at zero when the selected auth algorithm has no
+sadb_alg_id. One real case is cmac(aes).
 
-  refcount_t: addition on 0; use-after-free.
+xfrm_state_construct() then treats !x->props.aalgo as "no auth
+algorithm attached yet" and calls attach_auth(). That overwrites
+x->aalg and loses the first allocation. Any later failure or teardown
+only frees the replacement pointer.
 
-Although rtnl_lock and bpf_devs_lock ensure the netdev pointer remains
-valid, they cannot prevent the netns refcount from reaching zero.
+Check whether x->aalg is already attached instead of inferring that
+state from x->props.aalgo.
 
-Fix this by using maybe_get_net() instead of get_net(). maybe_get_net()
-uses refcount_inc_not_zero() and returns NULL if the refcount is already
-zero, which causes ns_get_path_cb() to fail and the caller to return
--ENOENT -- the correct behavior when the netns is being destroyed.
-
-Fixes: 675fc275a3a2d ("bpf: offload: report device information for offloaded programs")
-Fixes: 52775b33bb507 ("bpf: offload: report device information about offloaded maps")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Closes: https://lore.kernel.org/bpf/f0aa3678-79c9-47ae-9e8c-02a3d1df160a@hust.edu.cn/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260409023733.168050-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4447bb33f094 ("xfrm: Store aalg in xfrm_state with a user specified truncation length")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/offload.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/xfrm/xfrm_user.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
-index 190d9f9dc9870..e67b3d4e1aa8c 100644
---- a/kernel/bpf/offload.c
-+++ b/kernel/bpf/offload.c
-@@ -274,9 +274,8 @@ static struct ns_common *bpf_prog_offload_info_fill_ns(void *private_data)
- 
- 	if (aux->offload) {
- 		args->info->ifindex = aux->offload->netdev->ifindex;
--		net = dev_net(aux->offload->netdev);
--		get_net(net);
--		ns = &net->ns;
-+		net = maybe_get_net(dev_net(aux->offload->netdev));
-+		ns = net ? &net->ns : NULL;
- 	} else {
- 		args->info->ifindex = 0;
- 		ns = NULL;
-@@ -501,9 +500,8 @@ static struct ns_common *bpf_map_offload_info_fill_ns(void *private_data)
- 
- 	if (args->offmap->netdev) {
- 		args->info->ifindex = args->offmap->netdev->ifindex;
--		net = dev_net(args->offmap->netdev);
--		get_net(net);
--		ns = &net->ns;
-+		net = maybe_get_net(dev_net(args->offmap->netdev));
-+		ns = net ? &net->ns : NULL;
- 	} else {
- 		args->info->ifindex = 0;
- 		ns = NULL;
--- 
-2.53.0
-
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -703,7 +703,7 @@ static struct xfrm_state *xfrm_state_con
+ 	if ((err = attach_auth_trunc(&x->aalg, &x->props.aalgo,
+ 				     attrs[XFRMA_ALG_AUTH_TRUNC], extack)))
+ 		goto error;
+-	if (!x->props.aalgo) {
++	if (!x->aalg) {
+ 		if ((err = attach_auth(&x->aalg, &x->props.aalgo,
+ 				       attrs[XFRMA_ALG_AUTH], extack)))
+ 			goto error;
 
 
