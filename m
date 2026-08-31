@@ -1,468 +1,395 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E44449B1EF;
-	Mon, 31 Aug 2026 13:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28BF49B1FD;
+	Mon, 31 Aug 2026 13:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183577; cv=none; b=d9xq5BkcXr8k8CTMSAhOBSuPh0Y7fB4N2P3x/nANFQWpbi/WXJBXCoreiFfnIRbBNSh3IPQNpK20nbcFF0QY4MkGJodFVRcfIXdDQpGAnFVFRY8vkyGKL8YGozI9Nb5eKA2qkH3QD3U2s8VsESrRGO5pkyYroc1VDiUobOdWMPk=
+	t=1788183577; cv=none; b=m7Bl2OMvDAUHjg5fzAQl1gC8NL4VeamcyILkUg8jjPvfXQEhyAKfhestCVd5GQTmC4jlNYU+t21+lzyESVZbKAvq3MS1Gdge9IvsXBLqehlpRoBMVDkbNzPHJPKIut2RTbqz+CWF6/CeixryCLBrpZUmCMqgGJAhuYpNowJMIjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183577; c=relaxed/simple;
-	bh=Xti2/zk76ezVooDxkmmRsMY28LzHnZ3+pZzJVk5uEMs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PR1YpAP9lyCPG0DOoEc9qMjjlH773vOFMOAr+hohR2LGXy2ErdK9ntkqiGmsIkejjWpqaD8FglU8L3/dtcw3O4xwE5XuAsVCc6Df/y2HVOIgd/6stkjRv2BApsly3vuPGvRUlgawS/UaP43nn+JPaBMAc+X35NkpH4cS2QgHd7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TU0deoEd; arc=none smtp.client-ip=100.103.45.18
+	bh=6qSS0Ta9kd27hMotfZgmmBb0m4yzXJK7wE0Mzms2r2A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KyHjgWol6z+X1X345XAXoRqd/ouNB4Dh42pKy+mW1vij4enxlWKr8CfEhl5USHrTds9shHPSk75Tz/0xcn1MhaTfMzSPW8nlI97ljx6XWIN13sbRISnmZNlgSg3dO5n2kVhM46L1SlXxenlFlQ5LLCmDL4cw3uxYFpSLM/gO1Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxIXhE1U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TU0deoEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7C31F00A3E;
-	Mon, 31 Aug 2026 13:39:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183574;
-	bh=iZdEIvs0YPkL9TaMhVLdj8d4VxnHIDPlVGUIzvCCD40=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TU0deoEd2dvSc2hhifpfCKSGESTA3qMsgZ3IC35yYtjxzAXDlcr73vzS0F5WBAmLo
-	 OyJMsEJVvm+JLdrsFKBh66goz/MiP32Oqt08WiA9BUzmHwDhW+hn4tbqFXgeNx0FTP
-	 /t+wpAjXeEio34Xi0wHmcCXEJRVquWVRHbZGmUlH30ExbelZtjq7jVZDP0373huXVZ
-	 rAvgWMxVmIbSaUrfSkXRw28VH3we+YXHjpsIf8n4pcURKJstp64MyTc/8pFSi+pAra
-	 xajD/cuoNSTqMTTZQ0mxAmDKtf/dUlep/D84QvkbNe446TC1UnperYEwdW0pCJhUtp
-	 nParl5zl0KKyw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Biju Das <biju.das.jz@bp.renesas.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm: renesas: rzg2l_mipi_dsi: Fix deassert/assert of CMN_RSTB signal
-Date: Mon, 31 Aug 2026 09:23:25 -0400
-Message-ID: <20260831133314.4125787-177-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxIXhE1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7571F000E9;
+	Mon, 31 Aug 2026 13:39:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183575;
+	bh=6wy/mnOCVGabFaecKdCZZTSflQm2rkdTDN6gFPgOVPg=;
+	h=From:To:Cc:Subject:Date;
+	b=LxIXhE1UWbvD+gsLOde6MNoxtYCTgbuqurJ3+c6Lwjyz7627Ig1l9h87zxKJW1hes
+	 gGmDcGleDSwU++7TlKeuu4DlOva5BWdfdMuDGGOExbXxB27CPr5Xz7dsE5hU0vFAA9
+	 adP8JwCceN92kWZx3MAbAwItIT8S9/CDwbETpc+s=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 7.2 00/71] 7.2.3-rc1 review
+Date: Mon, 31 Aug 2026 15:33:25 +0200
+Message-ID: <20260831133359.055927882@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
 X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.3-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-7.2.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 7.2.3-rc1
+X-KernelTest-Deadline: 2026-09-02T13:34+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
-
-[ Upstream commit 8065890f5cda3f8a503f3b9d326aab0e9cca39e7 ]
-
-The RZ/G2L hardware manual (Rev. 1.50, May 2025), Section 34.4.2.1,
-requires deasserting the CMN_RSTB signal after setting the Link registers.
-Move the reset_control_deassert() call from rzg2l_mipi_dsi_dphy_init() to
-rzg2l_mipi_dsi_startup(), placing it after the Link register writes. This
-reset signal is optional for RZ/V2H SoCs, so add a NULL check. Drop the
-unused ret variable from rzg2l_mipi_dsi_dphy_init().
-
-The CMN_RSTB signal is not required for reading PHY registers in the
-probe. Move reset_control_assert() from rzg2l_mipi_dsi_dphy_exit() to
-rzg2l_mipi_dsi_stop(), placing it before the dphy_exit() call. Since this
-reset signal is optional for RZ/V2H, the call is a no-op on that SoC.
-
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Reviewed-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260330104450.128512-4-biju.das.jz@bp.renesas.com
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-# Stable Backport Analysis: `drm: renesas: rzg2l_mipi_dsi: Fix
-deassert/assert of CMN_RSTB signal`
-
-**Local tree:** Linux **6.18.43** (`v6.18.43`)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-- **Record:** `[drm: renesas: rzg2l_mipi_dsi]` **`Fix`** — correct
-  CMN_RSTB reset deassert/assert timing per RZ/G2L hardware manual.
-
-### Step 1.2: Tags
-- **Fixes:** — none
-- **Reported-by:** — none
-- **Tested-by:** Tommaso Merciai `<tommaso.merciai.xr@bp.renesas.com>`
-- **Reviewed-by:** Tommaso Merciai `<tommaso.merciai.xr@bp.renesas.com>`
-- **Link:** https://patch.msgid.link/20260330104450.128512-4-
-  biju.das.jz@bp.renesas.com
-- **Cc: stable:** — not in the committed message (patches 1–2 of the
-  same series did include it)
-- **Signed-off-by:** Biju Das (ignore pipeline SOB markers)
-
-**Record:** Hardware-tested and reviewed by a Renesas engineer; part of
-v3 series “Improvements on RZ/G2L MIPI DSI driver”. No syzbot/crash
-tags.
-
-### Step 1.3: Body analysis
-- **Bug:** CMN_RSTB is deasserted in `rzg2l_mipi_dsi_dphy_init()` before
-  Link-layer registers are programmed in `rzg2l_mipi_dsi_startup()`.
-  RZ/G2L HW manual §34.4.2.1 requires deassert **after** Link register
-  writes.
-- **Symptom:** Incorrect DSI hardware bring-up sequence; display may
-  fail or behave unreliably on RZ/G2L SoCs with the `rst` reset line.
-- **Root cause:** Reset sequencing does not match hardware manual
-  ordering.
-- **Shutdown side:** `reset_control_assert()` moved from `dphy_exit()`
-  to `stop()` (before PHY teardown), since CMN_RSTB is not needed for
-  PHY register access during exit.
-
-**Record:** Hardware-init correctness bug on Renesas RZ/G2L MIPI DSI;
-optional on RZ/V2H (`rstc` may be NULL).
-
-### Step 1.4: Hidden bug fix?
-- **Record:** No — this is an explicit hardware-sequence fix, not
-  disguised cleanup.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-- **Files:** `drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c` — 9
-  insertions, 9 deletions
-- **Functions:** `rzg2l_mipi_dsi_dphy_init()`,
-  `rzg2l_mipi_dsi_dphy_exit()`, `rzg2l_mipi_dsi_startup()`,
-  `rzg2l_mipi_dsi_stop()`
-- **Scope:** Single-file, surgical fix
-
-### Step 2.2: Code flow changes
-| Hunk | Before | After |
-|------|--------|-------|
-| `dphy_init()` | Deassert CMN_RSTB + 1 ms sleep after PHY timing writes
-| PHY timing only; no reset |
-| `dphy_exit()` | Assert CMN_RSTB after PHY power-down | PHY power-down
-only |
-| `startup()` | Link register writes, then return | Link writes, then
-deassert CMN_RSTB + 1 ms sleep (with NULL check) |
-| `stop()` | Call `dphy_exit()` only | Assert CMN_RSTB, then
-`dphy_exit()` |
-
-**Record:** Normal display enable/disable path (`atomic_pre_enable` →
-`startup`; `atomic_post_disable` → `stop`).
-
-### Step 2.3: Bug mechanism
-- **Category:** Hardware initialization sequence / workaround
-- **Mechanism:** CMN_RSTB released before Link-layer configuration
-  completes, violating required reset sequence.
-
-### Step 2.4: Fix quality
-- **Record:** Minimal, matches manual, uses existing `err_phy` path on
-  deassert failure, NULL-safe for RZ/V2H. Low regression risk.
-
----
-
-## PHASE 3: GIT HISTORY
-
-### Step 3.1: Blame
-- Buggy reset code introduced in `a4871e6201c46` (May 2025, Thomas
-  Zimmermann) when driver was added.
-- Delay tuning in `aa8ad3e0d1fe9` (already in 6.18.43).
-
-**Record:** Bug present since driver introduction; long-standing on
-RZ/G2L platforms.
-
-### Step 3.2: Fixes: tag
-- **Record:** N/A — no Fixes: tag in this commit.
-
-### Step 3.3: Related commits
-- `300a2d970a535` — Move `set_display_timing()` — **present in tree**
-- `aa8ad3e0d1fe9` — Increase reset deassertion delay — **present in
-  tree**
-- `8065890f5cda3` — This CMN_RSTB fix — **NOT present in tree**
-- `79f42487ed60d` — Kernel panic on reboot fix — **present in tree**
-
-**Record:** Patch 3/3 of a v3 series; prerequisites 1/3 and 2/3 already
-backported to 6.18.43.
-
-### Step 3.4: Author context
-- Biju Das is active Renesas maintainer for rz-du/MIPI DSI.
-- **Record:** Subsystem maintainer fix with hardware validation.
-
-### Step 3.5: Dependencies
-- **Record:** Standalone relative to master-only RZ/V2H CPG work.
-  Depends on patches 1–2 of the same series, which are already in this
-  tree. Cherry-pick applies cleanly (verified).
-
----
-
-## PHASE 4: MAILING LIST RESEARCH
-
-### Step 4.1: Discussion
-- **b4 dig -c 8065890f5cda3:** https://patch.msgid.link/20260330104450.1
-  28512-4-biju.das.jz@bp.renesas.com
-- **Series:** v1 → v2 → v3; committed version is v3 3/3 (latest).
-- **Review:** Tommaso Merciai — “Looks good to me”; Reviewed-by +
-  Tested-by on RZ/G3E.
-- **NAKs:** None found.
-- **Stable:** Patches 1/3 and 2/3 submitted with `Cc:
-  stable@vger.kernel.org`; patch 3/3 did not include it in the email,
-  but cover letter describes HW-manual compliance series.
-
-### Step 4.2: Reviewers
-- CC'd: dri-devel, linux-renesas-soc, DRM maintainers (Lankhorst,
-  Ripard, Zimmermann, Airlie, Vetter), Laurent Pinchart.
-- **Record:** Appropriate subsystem review chain.
-
-### Step 4.3: Bug report
-- **Record:** No external bugzilla/syzbot report. Validation is hardware
-  testing on RZ/G3E per lore thread.
-
-### Step 4.4: Series context
-- Cover letter (v3 0/3): manual requires PHY timing + Link register
-  writes **before** CMN_RSTB deassert; v2→v3 merged patches 2+3 “to
-  avoid breakage.”
-- **Record:** Incomplete without this patch if delay fix (patch 2) is
-  already applied.
-
-### Step 4.5: Stable list
-- Patches 1–2 explicitly CC'd stable and were backported to 6.18.y.
-- **Record:** Strong implicit stable intent for the full series.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
-- `rzg2l_mipi_dsi_dphy_init`, `rzg2l_mipi_dsi_startup`,
-  `rzg2l_mipi_dsi_stop`, `rzg2l_mipi_dsi_dphy_exit`
-
-### Step 5.2: Callers
-- `rzg2l_mipi_dsi_startup()` ← `rzg2l_mipi_dsi_atomic_pre_enable()`
-  (display enable)
-- `rzg2l_mipi_dsi_stop()` ← `rzg2l_mipi_dsi_atomic_enable()` error path
-  and `rzg2l_mipi_dsi_atomic_post_disable()` (display disable)
-
-**Record:** Standard DRM atomic display enable/disable path on every
-MIPI DSI panel attach.
-
-### Step 5.3: Callees
-- `reset_control_deassert/assert`, `rzg2l_mipi_dsi_link_write`,
-  `rzg2l_mipi_dsi_phy_write`, `fsleep(1000)`
-
-### Step 5.4: Reachability
-- Triggered whenever a connected MIPI DSI panel is enabled on
-  `renesas,rzg2l-mipi-dsi` hardware.
-- **Record:** Reachable from normal display operations; not obscure
-  debug path.
-
-### Step 5.5: Similar patterns
-- Same manual section addressed by already-backported delay fix
-  (`aa8ad3e0d1fe9`).
-- **Record:** This completes the reset-sequence work started in that
-  commit.
-
----
-
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE
-
-### Step 6.1: Buggy code present?
-- **Yes.** Lines 271–275 (`reset_control_deassert` in `dphy_init`) and
-  line 289 (`reset_control_assert` in `dphy_exit`) confirmed in 6.18.43.
-
-### Step 6.2: Backport difficulty
-- **Clean apply.** `git cherry-pick --no-commit 8065890f5cda3` succeeded
-  with auto-merge only.
-
-### Step 6.3: Related fixes already present?
-- Patches 1/3 and 2/3 of series present; this fix is the missing third
-  piece.
-- **Record:** Tree is in intermediate state — delay fixed but ordering
-  still wrong.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem
-- **drivers/gpu/drm/renesas/rz-du** — Renesas embedded display (MIPI
-  DSI)
-- **Criticality:** PERIPHERAL (platform-specific), but display is
-  primary output on affected boards.
-
-### Step 7.2: Activity
-- Active development: panic fix, runtime PM, reset timing, display
-  timing ordering all landed recently in 6.18.y.
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-### Step 8.1: Who is affected
-- Users of Renesas RZ/G2L SoCs with MIPI DSI displays
-  (`renesas,rzg2l-mipi-dsi`).
-- RZ/V2H unaffected (optional `rst` line; `reset_control_*` is NULL-
-  safe).
-
-### Step 8.2: Trigger conditions
-- Every display enable/disable on RZ/G2L with CMN_RSTB wired.
-- **Likelihood:** Common on affected hardware.
-
-### Step 8.3: Failure mode
-- Incorrect DSI bring-up per hardware manual → display may not work or
-  may be unreliable.
-- **Severity:** HIGH for affected users (no display); not a kernel
-  crash/oops.
-
-### Step 8.4: Risk-benefit
-- **Benefit:** Correct hardware init; completes already-partially-
-  backported series; tested on RZ/G3E.
-- **Risk:** Very low — 18-line reorder, no API changes, NULL-safe.
-- **Ratio:** Strong benefit, minimal risk for RZ/G2L users.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence summary
-
-**FOR backport:**
-- Real hardware-init bug per official RZ/G2L manual
-- Small, surgical, tested on hardware
-- Prerequisites already in 6.18.43
-- Applies cleanly
-- Completes v3 series whose first two patches were already backported
-- Reviewed by Renesas engineer with Tested-by on RZ/G3E
-- Same driver already receives stable fixes (panic on reboot, delay,
-  timing order)
-
-**AGAINST backport:**
-- Platform-specific peripheral driver
-- No crash/security/data-corruption report
-- Patch 3/3 lacks explicit `Cc: stable` in commit message
-
-**Unresolved:** Exact failure modes on all RZ/G2L boards without the fix
-(manual violation vs. observed “display broken”).
-
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — manual compliance + Tested-
-   by on RZ/G3E
-2. Fixes real bug? **PASS** — incorrect reset sequencing
-3. Important issue? **PASS** — display failure on affected embedded
-   platforms
-4. Small and contained? **PASS** — 1 file, ~18 lines
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — cherry-picks cleanly;
-   prerequisites present
-
-### Step 9.3: Exception category
-- **Hardware workaround / init quirk** — correcting reset sequence per
-  SoC manual.
-
-### Step 9.4: Decision rationale
-This tree (6.18.43) already carries patches 1/3 and 2/3 of the same
-hardware-manual compliance series but not the final ordering fix.
-Without it, CMN_RSTB is still deasserted before Link register
-programming, which the RZ/G2L manual explicitly forbids. The fix is
-small, tested, low-risk, and completes work stable maintainers already
-started for this driver.
-
----
-
-## Verification
-
-- [Phase 1] `git describe HEAD` → v6.18.43; parsed commit message and
-  tags
-- [Phase 2] Read current `rzg2l_mipi_dsi.c`; confirmed reset calls at
-  lines 271–275 and 289
-- [Phase 3] `git blame` → reset code from `a4871e6201c46`; `git log --
-  drivers/.../rzg2l_mipi_dsi.c` → series history
-- [Phase 3] `git merge-base --is-ancestor` → patches 1/3 and 2/3
-  present; 8065890f5cda3 absent
-- [Phase 4] `b4 dig -c 8065890f5cda3` → lore URL found
-- [Phase 4] `b4 dig -a` → v1/v2/v3 series; v3 is latest
-- [Phase 4] `b4 dig -w` → DRM/Renesas maintainers CC'd
-- [Phase 4] `/tmp/cmn_rstb_thread.mbox` → Reviewed-by, Tested-by on
-  RZ/G3E; no NAKs; cover letter describes manual requirements
-- [Phase 5] `grep rzg2l_mipi_dsi_startup/stop` → called from
-  atomic_pre_enable/post_disable
-- [Phase 5] `drivers/reset/core.c` →
-  `reset_control_assert/deassert(NULL)` returns 0 (no-op)
-- [Phase 6] Buggy code confirmed in 6.18.43 tree
-- [Phase 6] `git cherry-pick --no-commit 8065890f5cda3` → exit 0, auto-
-  merge only
-- [Phase 8] Driver supports `renesas,rzg2l-mipi-dsi` compatible string
-  in local tree
-
-**YES**
-
- drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-index 04a24ff9dde15..1c6f29c285b65 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-@@ -228,7 +228,6 @@ static int rzg2l_mipi_dsi_dphy_init(struct rzg2l_mipi_dsi *dsi,
- 	u32 dphytim1;
- 	u32 dphytim2;
- 	u32 dphytim3;
--	int ret;
- 
- 	/* All DSI global operation timings are set with recommended setting */
- 	for (i = 0; i < ARRAY_SIZE(rzg2l_mipi_dsi_global_timings); ++i) {
-@@ -268,12 +267,6 @@ static int rzg2l_mipi_dsi_dphy_init(struct rzg2l_mipi_dsi *dsi,
- 	rzg2l_mipi_dsi_phy_write(dsi, DSIDPHYTIM2, dphytim2);
- 	rzg2l_mipi_dsi_phy_write(dsi, DSIDPHYTIM3, dphytim3);
- 
--	ret = reset_control_deassert(dsi->rstc);
--	if (ret < 0)
--		return ret;
--
--	fsleep(1000);
--
- 	return 0;
- }
- 
-@@ -285,8 +278,6 @@ static void rzg2l_mipi_dsi_dphy_exit(struct rzg2l_mipi_dsi *dsi)
- 
- 	dphyctrl0 &= ~(DSIDPHYCTRL0_EN_LDO1200 | DSIDPHYCTRL0_EN_BGR);
- 	rzg2l_mipi_dsi_phy_write(dsi, DSIDPHYCTRL0, dphyctrl0);
--
--	reset_control_assert(dsi->rstc);
- }
- 
- static int rzg2l_dphy_conf_clks(struct rzg2l_mipi_dsi *dsi, unsigned long mode_freq,
-@@ -393,6 +384,14 @@ static int rzg2l_mipi_dsi_startup(struct rzg2l_mipi_dsi *dsi,
- 	dsisetr |= FIELD_PREP(DSISETR_MRPSZ, RZG2L_DCS_BUF_SIZE);
- 	rzg2l_mipi_dsi_link_write(dsi, DSISETR, dsisetr);
- 
-+	if (dsi->rstc) {
-+		ret = reset_control_deassert(dsi->rstc);
-+		if (ret < 0)
-+			goto err_phy;
-+
-+		fsleep(1000);
-+	}
-+
- 	return 0;
- 
- err_phy:
-@@ -404,6 +403,7 @@ static int rzg2l_mipi_dsi_startup(struct rzg2l_mipi_dsi *dsi,
- 
- static void rzg2l_mipi_dsi_stop(struct rzg2l_mipi_dsi *dsi)
- {
-+	reset_control_assert(dsi->rstc);
- 	dsi->info->dphy_exit(dsi);
- 	pm_runtime_put(dsi->dev);
- }
--- 
-2.53.0
+This is the start of the stable review cycle for the 7.2.3 release.
+There are 71 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
+
+Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
+Anything received after that time might be too late.
+
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.3-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 7.2.3-rc1
+
+Miguel Peñaranda <mig.penaranda07@gmail.com>
+    usb: usbfs: fix use-after-free of usb_device in usbdev_release()
+
+Devin Wittmayer <lucid_duck@justthetip.ca>
+    wifi: mt76: mt7925: ensure tx headroom in usb_sdio_tx_prepare_skb
+
+Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+    USB: c67x00: fix use-after-free in c67x00_add_iso_urb()
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: spcp8x5: drop broken carrier detect support
+
+Jiale Yao <yaojiale02@163.com>
+    USB: serial: option: fix slab OOB read in interrupt URB callback
+
+Will Porter <mrwillporter@gmail.com>
+    ALSA: usb-audio: Complete cleanup after system-resume errors
+
+Marouane El Moufid <eun0us@espilon.net>
+    ALSA: usb-audio: fix OOB write in snd_usbmidi_novation_output()
+
+Trevor Vorhees <vorhees-work@proton.me>
+    ALSA: usb-audio: Fix sample rates for PreSonus AudioBox USB
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    usb: core: Strengthen error handling in hub_hub_status()
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    usb: core: Add lock to usb_wakeup_notification()
+
+Christian Borntraeger <borntraeger@linux.ibm.com>
+    KVM: s390: vsie: zero stale crypto bits
+
+Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+    crypto: qce - Remove unsafe/deprecated algorithms
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    crypto: mxs-dcp - fix source scatterlist length access
+
+Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+    crypto: iaa - fall back to software for multi-entry scatterlists
+
+Md Sadre Alam <md.alam@oss.qualcomm.com>
+    crypto: qce - fix CCM AAD buffer underallocation
+
+Jan Sebastian Götte <linux@jaseg.de>
+    crypto: krb5 - use kfree_sensitive() for derived key buffers
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    crypto: atmel-tdes - use scatterlist length before DMA mapping
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: sun8i-ss - Remove crypto_rng interface
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: sun8i-ce - Remove crypto_rng interface
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: qcom-rng - Allow zero as a random number
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: qcom-rng - Remove crypto_rng interface
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: qcom-rng - Enable clock in hwrng case
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    crypto: virtio - bound the akcipher result length
+
+Eric Biggers <ebiggers@kernel.org>
+    kunit: irq: Continue increasing hrtimer interval for longer
+
+Eric Biggers <ebiggers@kernel.org>
+    mm/swap: reject swapon() on filesystem-level encrypted files
+
+Fourie Zhang <littleddfu@gmail.com>
+    netfilter: nf_tables: don't queue packet path object notifications
+
+Eric Biggers <ebiggers@kernel.org>
+    netfilter: nft_set_pipapo_avx2: add missing vzeroupper
+
+Kyle Zeng <kylebot@openai.com>
+    vxlan: keep the last remote linked during FDB flush
+
+Kyle Zeng <kylebot@openai.com>
+    batman-adv: reject unrepresentable multicast TVLV offsets
+
+Kyle Zeng <kylebot@openai.com>
+    ipv6: seg6: clear IPv4 control block on IPIP decapsulation
+
+Kyle Zeng <kylebot@openai.com>
+    net/packet: defer vmalloc TX_RING free until skbs finish
+
+Eric Dumazet <edumazet@google.com>
+    vlan: fix skb_under_panic and races when toggling HW VLAN offload
+
+Norbert Szetei <norbert@doyensec.com>
+    net: bridge: mcast: fix use-after-free of a master VLAN's multicast context
+
+Zihan Xi <zihanx@nebusec.ai>
+    xfrm: bound nat keepalive state collection
+
+Zihan Xi <zihanx@nebusec.ai>
+    xfrm: fix xfrm_state_construct() auth-trunc leak
+
+Asim Viladi Oglu Manizada <manizada@pm.me>
+    xfrm: ah6: validate routing header segments_left
+
+Zihan Xi <xizh2024@lzu.edu.cn>
+    xfrm: avoid lock inversion in nat keepalive work
+
+Zhiling Zou <roxy520tt@gmail.com>
+    xfrm: drop ESP-in-TCP packets with no ingress device
+
+Yong Wang <edragain@163.com>
+    tcp: clamp route advmss to TCP_MIN_MSS
+
+Sabrina Dubroca <sd@queasysnail.net>
+    xfrm: espintcp: fix UAF during close
+
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    net: advertise TCP MSS from the configured MTU, not the learned PMTU
+
+Hyunwoo Kim <imv4bel@gmail.com>
+    net/tcp-ao: fix use-after-free of current_key on reconnect to another peer
+
+Qing Ming <a0yami@mailbox.org>
+    tcp: fix AO info use-after-free in tcp_ao_connect_init()
+
+Rastislav Szabo <rastislav.szabo@isovalent.com>
+    net/tcp: fix TCP-AO key deletion in VRFs
+
+Qing Ming <a0yami@mailbox.org>
+    gtp: serialize PDP context updates
+
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    tls: device: fix out-of-bounds write in tls_append_frag()
+
+Sean Christopherson <seanjc@google.com>
+    KVM: SEV: Wire up kvm_x86_ops.gmem_xxx() if and only if CONFIG_KVM_AMD_SEV=y
+
+Sean Christopherson <seanjc@google.com>
+    KVM: SEV: Mark vCPU RUNNABLE after AP_CREATE, even if VMSA is unusable
+
+Sean Christopherson <seanjc@google.com>
+    KVM: SEV: Extract loading of guest-provided VMSA to a separate helper
+
+Sean Christopherson <seanjc@google.com>
+    KVM: SEV: Track the GPA of the guest-controlled VMSA used for SNP guests
+
+Pankaj Gupta <pankaj.gupta@amd.com>
+    KVM: SEV: Drop FOLL_WRITE for encrypted region registration
+
+Sean Christopherson <seanjc@google.com>
+    KVM: SEV: Allocate full pages for {DE,EN}CRYPT ops on SNP-enabled hosts
+
+Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+    usb: gadget: f_tcm: keep port count until LUN teardown completes
+
+Aleksandr Nogikh <nogikh@google.com>
+    usb: usbtest: disable dynamic ID support
+
+Baokun Li <libaokun@linux.alibaba.com>
+    fuse: fix invalidate lock leak on open O_TRUNC DAX failure
+
+Baokun Li <libaokun@linux.alibaba.com>
+    fuse: fix invalidate lock leak on setattr writeback failure
+
+Rochan Avlur <rochan.avlur@gmail.com>
+    fuse: wait for FR_FINISHED on abort_on_kill to prevent use-after-free
+
+Joanne Koong <joannelkoong@gmail.com>
+    fuse: publish io-uring queues with release semantics
+
+Joanne Koong <joannelkoong@gmail.com>
+    fuse: fix missing barrier when checking io-uring readiness
+
+Miklos Szeredi <mszeredi@redhat.com>
+    fuse: fix race between interrupt and resend
+
+Lucas De Marchi <ldemarchi@nvidia.com>
+    xhci: dbgtty: Fix unregister on tty_alloc_driver() failure
+
+Lucas De Marchi <ldemarchi@nvidia.com>
+    xhci: dbgtty: Fix unregister on tty_register_driver() failure
+
+Breno Leitao <leitao@debian.org>
+    usb: xhci: bail out of setup if the controller is inaccessible
+
+Semih Baskan <strst.gs@gmail.com>
+    usb: xhci: Handle USB3 port events when there is one roothub
+
+Michal Pecio <michal.pecio@gmail.com>
+    usb: xhci: Handle bogus TRB pointers in Missed Service Error events
+
+Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+    accessibility: speakup: unregister tty ldisc on later init failures
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    fpga: dfl: fme: add error handling
+
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    selftests/bpf: Fix test_maps sockmap failure
+
+Dmitry Bogdanov <d.bogdanov@yadro.com>
+    nvme-tcp: fix usage of page_frag_cache
+
+Peiyang He <peiyang_he@smail.nju.edu.cn>
+    RDMA/rxe: Fix OOB in free_rd_atomic_resources()
+
+Ibrahim Hashimov <security@auditcode.ai>
+    RDMA/rxe: Fix responder UAF on IB_QP_MAX_DEST_RD_ATOMIC modify_qp
+
+
+-------------
+
+Diffstat:
+
+ Documentation/filesystems/fscrypt.rst              |   4 +
+ Makefile                                           |   4 +-
+ arch/s390/kvm/vsie.c                               |   1 +
+ arch/x86/kvm/svm/sev.c                             |  99 ++++++++----
+ arch/x86/kvm/svm/svm.c                             |   8 +-
+ arch/x86/kvm/svm/svm.h                             |  13 +-
+ crypto/krb5/krb5_api.c                             |   8 +-
+ drivers/accessibility/speakup/main.c               |   1 +
+ drivers/crypto/Kconfig                             |   1 -
+ drivers/crypto/allwinner/Kconfig                   |  16 --
+ drivers/crypto/allwinner/sun8i-ce/Makefile         |   1 -
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c  |  63 --------
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-prng.c  | 159 ------------------
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h       |  29 ----
+ drivers/crypto/allwinner/sun8i-ss/Makefile         |   1 -
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-core.c  |  45 ------
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-prng.c  | 177 ---------------------
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss.h       |  23 ---
+ drivers/crypto/atmel-tdes.c                        |   5 +-
+ drivers/crypto/intel/iaa/iaa_crypto_main.c         | 111 +++++++------
+ drivers/crypto/intel/iaa/iaa_crypto_stats.c        |   9 ++
+ drivers/crypto/intel/iaa/iaa_crypto_stats.h        |   2 +
+ drivers/crypto/mxs-dcp.c                           |   2 +-
+ drivers/crypto/qce/aead.c                          |  58 +------
+ drivers/crypto/qce/common.c                        |  55 ++-----
+ drivers/crypto/qce/common.h                        |  16 +-
+ drivers/crypto/qce/regs-v5.h                       |   4 -
+ drivers/crypto/qce/sha.c                           |  30 +---
+ drivers/crypto/qce/sha.h                           |   1 -
+ drivers/crypto/qce/skcipher.c                      |  97 +----------
+ drivers/crypto/qcom-rng.c                          | 156 +++---------------
+ .../crypto/virtio/virtio_crypto_akcipher_algs.c    |   3 +-
+ drivers/fpga/dfl-fme-perf.c                        |   2 +
+ drivers/infiniband/sw/rxe/rxe_qp.c                 |  18 ++-
+ drivers/net/gtp.c                                  |  21 ++-
+ drivers/net/vxlan/vxlan_core.c                     |  11 +-
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c    |   4 +
+ drivers/nvme/host/tcp.c                            |   8 +
+ drivers/target/target_core_fabric_configfs.c       |   8 +
+ drivers/usb/c67x00/c67x00-sched.c                  |   4 +-
+ drivers/usb/core/devio.c                           |   2 +-
+ drivers/usb/core/hub.c                             |   7 +-
+ drivers/usb/gadget/function/f_tcm.c                |   2 +-
+ drivers/usb/host/xhci-dbgtty.c                     |  15 +-
+ drivers/usb/host/xhci-ring.c                       |  20 ++-
+ drivers/usb/host/xhci.c                            |  11 +-
+ drivers/usb/misc/usbtest.c                         |   1 +
+ drivers/usb/serial/option.c                        |  20 ++-
+ drivers/usb/serial/spcp8x5.c                       |  13 --
+ fs/fuse/dev.c                                      |  41 ++---
+ fs/fuse/dev_uring.c                                |  20 +--
+ fs/fuse/dir.c                                      |   9 +-
+ fs/fuse/file.c                                     |   4 +-
+ include/kunit/run-in-irq-context.h                 |  10 +-
+ include/linux/skbuff.h                             |  24 +++
+ include/net/ip.h                                   |  25 +++
+ include/net/ip6_route.h                            |  37 +++++
+ include/net/tcp.h                                  |   5 +
+ include/target/target_core_fabric.h                |   2 +
+ mm/swapfile.c                                      |   7 +
+ net/8021q/vlan_dev.c                               |  39 +----
+ net/batman-adv/tvlv.c                              |   5 +-
+ net/bridge/br_multicast.c                          |   4 +-
+ net/ipv4/route.c                                   |   4 +-
+ net/ipv4/tcp_ao.c                                  |  19 ++-
+ net/ipv4/tcp_ipv4.c                                |   2 +-
+ net/ipv4/tcp_minisocks.c                           |   2 +-
+ net/ipv4/tcp_output.c                              |   6 +-
+ net/ipv6/ah6.c                                     |  29 ++--
+ net/ipv6/route.c                                   |   2 +-
+ net/ipv6/seg6_local.c                              |   7 +
+ net/ipv6/tcp_ipv6.c                                |   2 +-
+ net/netfilter/nf_tables_api.c                      |  36 +++--
+ net/netfilter/nft_set_pipapo_avx2.c                |  17 +-
+ net/packet/af_packet.c                             |  96 +++++++++--
+ net/tls/tls_device.c                               |   3 +-
+ net/xfrm/espintcp.c                                |   9 +-
+ net/xfrm/xfrm_nat_keepalive.c                      |  53 ++++--
+ net/xfrm/xfrm_user.c                               |   2 +-
+ sound/usb/card.c                                   |  14 +-
+ sound/usb/midi.c                                   |   2 +
+ sound/usb/quirks-table.h                           |  10 ++
+ .../selftests/bpf/progs/sockmap_verdict_prog.c     |  14 +-
+ 83 files changed, 748 insertions(+), 1182 deletions(-)
+
 
