@@ -1,51 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DE8488220;
-	Mon, 31 Aug 2026 13:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB76440642;
+	Mon, 31 Aug 2026 13:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183492; cv=none; b=cONr7/f18yY3hjWfp6uessCPZPs1I1dngDg9s8yIVb9iTFpVPReyOI0QwiNBUdQNSqHnyOyyQGiP20p+0er207a2+9x0IcKjC05Re+rgePkJ0htVOI7LPtsx6wjqR0a+Ig1iGY4k6L/DMwOknfigZKqaO7lIddBPDZyvWk+DwkM=
+	t=1788183493; cv=none; b=rEkWpWN4vRM0yW4czt7L+tCwmY+4pj4atf548/IHABMimQyquWrUDKfsC2cNGzGY99Mk5074r6tT9OIjEslxdxlRQEts/03t8oJXBFAVHAlMjlUc/xAZUCriGZvVUt31s92mW4k/om9acRyWGBcqPMT57+C1p/aHueetVe10FZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183492; c=relaxed/simple;
-	bh=igJpQ2+b/DsIumtd3nbGGpq60b6OsY4v6n8eMlQJtQI=;
+	s=arc-20240116; t=1788183493; c=relaxed/simple;
+	bh=qpxCDYcmxSY732uR7Q7l597pVJ9PLvEWprPFDE4L0DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m1IyZS8vrwc+ewj7x+m/HgTbKMa/c5GbvXJNzqLab6/N3HWnoWFpri1pLprpLpIW6nCl+Et3oZaYBwgAvkwES7IXL25CElEITol6u7ox3Xxp7N6Kwt8cbzqpHmod8sCQujwu311f3VJZKTaNabnYAw/Lt7Gw/meec4f6WJfk8o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f6Kduyzx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MTaPpF5ptgT6+sFNqMPAtSV0S4UcAsPVH+OaQ9zDgYPceAFPuuIaEmhbiRxO4WH6oqQmkyKd0ikanMErAOXkQhOZwkfyogX/iPl3t7RMJl/j3DTyANgaU6Lh4UX5FWNatYIJmkm19LmAwc2Q6roU9BAOxX8IM2ff5pVmmi3JQiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sk8LbN0l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f6Kduyzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C041F00A3E;
-	Mon, 31 Aug 2026 13:38:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sk8LbN0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA0B1F00A3F;
+	Mon, 31 Aug 2026 13:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183490;
-	bh=OwyQs7/xmQtiE48ERpgIMcjpcG+CGJsvatd3D6VjQYE=;
+	s=k20260515; t=1788183491;
+	bh=0Em9zzb++Ll6MVP0RhQ8NpAE26qmdiVTlfV076VHUHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6KduyzxCUe+tEgSMVuBeTUINKpebs2sxPJdXss1IZLaA1zb/wjU6HCSlbN4tDE4G
-	 /8DB8hV1pVNPBVI1KDlVpVIvZAAvez1AZhRavInno8h8PezxCL5JPMjrYRAFzfe1kN
-	 0RXqWvFLqWqKsp+PtGlwGeauueLl9dFR/H+9UVNrBSz7NcKGtdfWVgNcVH5IEdH1rH
-	 vgMGIMa16FaBx9gZkfCTW6ogH/SVEk5Tq+oO3FW5FEgV5iQdSYjmsfHwZ4cyV2A4Qi
-	 qIZ5JnkZbuOlaEUl+b+zATWrSNbFth0rj4AUyvAa+PnL4oSIsEnowfemdBdFmO/oZL
-	 cQ9UdXQWdmuoQ==
+	b=Sk8LbN0lFZQhSXcE4pWXeD9O/hG/nP5cI9E8LZZEbhUZ3dr0dxtrTRJWIFKSFbE7U
+	 lQzWG/aBe/XwOYnLgxGbG7qKucHSmBfH4u3L6oRNzC/gBT15zF/GR4I4BzkqUcuMvk
+	 6sUM7PiEblkYZGyAPCpnu/ES05pEo9vuSWjMLv/UX1eQyCwsHYBlxqzYHhp4kvE/uy
+	 Hz2MCtdtjNoMUfIjxN6hdRxsRQ7suLzD0/ogxepDX+xvqe+qWB5qwzn6TWlNiTfIXX
+	 f5Z/W6CPvt5aUZXlwXn+/f+EhwITuIdhvICI9ZBTXfxBSN4l8AXiSUKiAL7U4aaeJG
+	 cR0e9J0JZBj1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>,
+	Breno Leitao <leitao@debian.org>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/amd/display: Avoid DPMS-on for phantom stream
-Date: Mon, 31 Aug 2026 09:22:35 -0400
-Message-ID: <20260831133314.4125787-127-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] configfs_depend_prep(): pass configfs_dirent instead of dentry
+Date: Mon, 31 Aug 2026 09:22:36 -0400
+Message-ID: <20260831133314.4125787-128-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -61,339 +52,388 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 10f5f9c0ef32d08b228bfee3684b62f36f395852 ]
+[ Upstream commit 764682e0118432260191d194edbdaff208260483 ]
 
-[Why & How]
-Calling dc_update_planes_and_stream separately for stream and its
-phantom stream causes a NULL pointer dereference, since the phantom is
-destroyed on the first call.
+Again, the only thing it uses dentry for is dentry->d_fsdata; for the
+recursive call the situation is the same as with configfs_detach_prep()
+and the same observation about ->s_dentry->d_fsdata applies.
 
-Skip the call for phantom streams.
-
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `drm/amd/display: Avoid DPMS-on for phantom
-stream`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `stable/linux-6.18.y` at **v6.18.44** (`git describe
-HEAD` / `make kernelversion` → 6.18.44)
+**Step 1.1 — Subject line**
+- Record: `[configfs] [refactor/correct] configfs_depend_prep(): pass
+  configfs_dirent instead of dentry`
 
----
+**Step 1.2 — Tags**
+- Record: `Reviewed-by: Jan Kara <jack@suse.cz>`, `Reviewed-by: Breno
+  Leitao <leitao@debian.org>`, `Signed-off-by: Al Viro
+  <viro@zeniv.linux.org.uk>`. No `Fixes:`, `Reported-by:`, `Link:`, `Cc:
+  stable`, or `Tested-by:` tags. Notable: two subsystem reviewers, no
+  fuzzer/user report.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.3 — Body**
+- Record: The commit explains that `configfs_depend_prep()` only used
+  its dentry argument to reach `dentry->d_fsdata`, which is the
+  `configfs_dirent` itself. The recursive call should pass `child_sd`
+  directly, mirroring the same observation already made for
+  `configfs_detach_prep()` about `->s_dentry->d_fsdata`. No explicit
+  crash report, but the implication is that going through `s_dentry` is
+  unsafe/redundant during tree traversal.
 
-### Step 1.1: Subject line
-**Record:** `[drm/amd/display]` `[Avoid]` — Skip DPMS-on stream updates
-for phantom (SubVP) streams during DP link-training automation to
-prevent a NULL pointer dereference.
-
-### Step 1.2: Tags
-**Record:**
-- **Reviewed-by:** Alvin Lee \<alvin.lee2@amd.com\>
-- **Tested-by:** Daniel Wheeler \<daniel.wheeler@amd.com\>
-- **Signed-off-by:** Ilya Bakoulin, Ray Wu, Alex Deucher (maintainer)
-- **No** Fixes:, Reported-by:, Link:, Cc: stable@vger.kernel.org
-- Notable: Reviewed and tested by AMD display engineers; Alex Deucher
-  acked (subsystem maintainer).
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** Calling `dc_update_planes_and_stream()` separately for a real
-  stream and its paired phantom stream causes a NULL pointer
-  dereference.
-- **Symptom:** Kernel oops / crash in the display driver during DP link
-  retrain automation.
-- **Root cause (author):** The phantom stream is destroyed on the first
-  `dc_update_planes_and_stream()` call; a second call uses a stale/freed
-  pointer.
-- **Fix:** Skip phantom streams when building the list of streams to
-  update with DPMS-on.
-
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit NULL-deref fix, not disguised
-cleanup.
+**Step 1.4 — Hidden bug fix?**
+- Record: **Yes.** Although framed as a signature cleanup, it removes
+  dereferences of `child_sd->s_dentry` during a recursive tree walk. In
+  the current tree, `configfs_readdir()` already treats `s_dentry` as
+  potentially NULL, while `configfs_depend_prep()` does
+  `BUG_ON(!origin)` on that same pointer. This is a latent NULL-deref /
+  kernel-BUG fix, not mere style.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **File:**
-  `drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c` (+2
-  lines)
-- **Function:** `dp_retrain_link_dp_test()`
-- **Scope:** Single-file, surgical fix (2 lines added)
+**Step 2.1 — Inventory**
+- Record: 1 file changed (`fs/configfs/dir.c`), 4 insertions / 8
+  deletions. Functions modified: `configfs_depend_prep()`,
+  `configfs_do_depend_item()`. Scope: single-file surgical change.
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** Loop over `state->streams[i]` on the link caches every
-  stream (including phantoms), then calls
-  `dc_update_planes_and_stream()` for each.
-- **After:** Streams with `is_phantom == true` are skipped during
-  caching; only real streams get DPMS-on updates.
-- **Path affected:** DP link retrain / compliance-test automation error
-  path in `dp_retrain_link_dp_test()`.
+**Step 2.2 — Code flow**
+- Record:
+  - **Hunk 1 (`configfs_depend_prep`)**: Before — take `struct dentry
+    *origin`, `BUG_ON(!origin || !origin->d_fsdata)`, set `sd =
+    origin->d_fsdata`, recurse via `child_sd->s_dentry`. After — take
+    `struct configfs_dirent *sd` directly, recurse via `child_sd`.
+    Removes dentry indirection on the hot recursive path.
+  - **Hunk 2 (`configfs_do_depend_item`)**: Before —
+    `configfs_depend_prep(subsys_dentry, target)`. After —
+    `configfs_depend_prep(subsys_dentry->d_fsdata, target)`. Top-level
+    caller still has a valid pinned subsystem dentry.
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** NULL pointer dereference (memory safety)
-- **Mechanism:** `dc_update_planes_and_stream()` with
-  `stream_update->dpms_off` forces `UPDATE_TYPE_FULL` (verified in
-  `check_update_surfaces_for_stream()` at lines 2966–2996 of `dc.c`).
-  Full updates call `dc_state_remove_phantom_streams_and_planes()` and
-  `dc_state_release_phantom_streams_and_planes()` (lines 3529–3530 of
-  `dc.c`), freeing phantom streams. The second loop iteration still
-  holds a cached phantom pointer → NULL deref.
+**Step 2.3 — Bug mechanism**
+- Record: **Memory safety / NULL dereference fix.** Category (d). Old
+  recursive path: `configfs_depend_prep(child_sd->s_dentry, target)`
+  with `BUG_ON(!origin)`. If `child_sd->s_dentry` is NULL (dentry
+  evicted via `configfs_d_iput()` after `DCACHE_DONTCACHE`, or cleared
+  on lookup failure), the kernel hits `BUG()`. The fix uses the already-
+  available `configfs_dirent` pointer, which is what the function
+  actually needs.
 
-### Step 2.4: Fix quality
-**Record:**
-- Fix is obviously correct and minimal.
-- Matches existing convention: `resource_log_pipe_topology_update()`
-  already skips `is_phantom` streams (`dc_resource.c:2419`).
-- Regression risk: very low — phantom streams should not receive
-  independent DPMS-on updates.
-- No API or structural changes.
+**Step 2.4 — Fix quality**
+- Record: Obviously correct — dentry was only an alias for `d_fsdata`.
+  Minimal diff, no API changes, no new locking. Regression risk very
+  low; it aligns `configfs_depend_prep()` with the pattern already used
+  in the backported lockless-traversal series.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:**
-- Buggy loop introduced by **f5b69101f956f** (2025-07-17): "Cache
-  streams targeting link when performing LT automation"
-- That commit is an ancestor of v6.18.0 and of current HEAD.
-- `is_phantom` on `struct dc_stream_state` dates to **012a04b1d6af6**
-  (2023-11-21).
+**Step 3.1 — Blame**
+- Record: `configfs_depend_prep()` introduced in `631d1febab8e5` (2007,
+  "config item dependancies"). `BUG_ON(!origin || !origin->d_fsdata)`
+  added in `49deb4bc227cb` (2013). The `child_sd->s_dentry` recursive
+  pattern has been present since 2007. Bug latent for years; exposure
+  increased once `DCACHE_DONTCACHE` and dangling-`s_dentry` fixes landed
+  in this tree.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in commit message.
+**Step 3.2 — Fixes: tag**
+- Record: Not applicable — no `Fixes:` tag in commit message.
 
-### Step 3.3: Related file history
-**Record:**
-- **f5b69101f956f** — introduced stream caching loop (root of this bug
-  pattern)
-- **89939cf252d80** (2025-09-29) — different NULL-deref fix in same
-  function: cache `dc` from `link->dc` instead of stale
-  `state->clk_mgr->ctx->dc` after first stream update. Already in
-  6.18.44 but does **not** fix the phantom-stream issue.
-- Fix commit **10f5f9c0ef32d** (upstream) / **56337aae2421b** (stable
-  candidate) is **not** in 6.18.44.
-- Standalone fix; not part of a multi-patch series.
+**Step 3.3 — Related file history**
+- Record: Part of Al Viro's 2026 configfs series on master:
+  - `10da12d352b7b` → in tree as `c3b073a209a9b` (lookup dangling
+    `s_dentry`)
+  - `9b9e8bb81c41f` → in tree as `637ef4961470e` (lockless `s_children`
+    traversal)
+  - `96551d7f9f7b5` — **not** in tree (same fix for
+    `configfs_detach_prep()`)
+  - `764682e011843` — **not** in tree (this commit)
+  Standalone for `depend_prep`; does not require the `detach_prep`
+sibling.
 
-### Step 3.4: Author context
-**Record:** Ilya Bakoulin is an active AMD display contributor (link/DP
-fixes). Alex Deucher is amdgpu/drm maintainer.
+**Step 3.4 — Author context**
+- Record: Al Viro (VFS maintainer) authored the related configfs
+  hardening series. Reviewed by Jan Kara (filesystems).
 
-### Step 3.5: Dependencies
-**Record:**
-- Requires `is_phantom` field — present in this tree
-  (`dc_stream.h:313`).
-- Requires stream-caching loop from f5b69101 — present in this tree.
-- Cherry-pick of upstream **10f5f9c0ef32d** auto-merges cleanly against
-  6.18.44 (verified).
-- **Standalone:** PASS.
+**Step 3.5 — Dependencies**
+- Record: No patch-series numbering. Applies cleanly to 6.18.44
+  (verified via cherry-pick). Benefits from already-present
+  prerequisites (`DCACHE_DONTCACHE`, dangling-`s_dentry` fix, lockless
+  traversal fix) but does not require unbackported commits.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1–4.5
-**Record:**
-- `b4 dig -c 10f5f9c0ef32d`: no lore match found.
-- lore.kernel.org fetch: 403 Forbidden (bot protection).
-- **UNVERIFIED:** No mailing-list thread or stable-list discussion
-  retrieved.
-- Tags show AMD internal review (Reviewed-by, Tested-by) and maintainer
-  sign-off.
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c 764682e011843` found no lore match. Commit went
+  through Viro's `pull-configfs-fixed` tag (`de02909ae81aa` on master).
+  Discussion not retrievable via b4; analysis relies on commit message,
+  code, and series context.
 
----
+**Step 4.2 — Reviewers**
+- Record: `b4 dig -w` also failed (no lore match). Commit lists Jan Kara
+  and Breno Leitao as reviewers.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.3 — Bug report**
+- Record: Not applicable — no `Reported-by:` or `Link:` tags.
 
-### Step 5.1: Key functions
-**Record:** `dp_retrain_link_dp_test()` modified; calls
-`dc_update_planes_and_stream()`.
+**Step 4.4 — Related patches**
+- Record: Sibling `96551d7f9f7b5` (`configfs_detach_prep()`) is the same
+  class of fix for a different function. Independent; not a prerequisite
+  for this commit.
 
-### Step 5.2: Callers
-**Record:**
-- `dp_test_send_link_training()` → `dp_handle_automated_test()` (DP
-  compliance test / link-training automation)
-- `dp_set_preferred_training_settings()` path at line 991 (preferred
-  link settings retrain during normal DP operation)
-
-### Step 5.3: Callees
-**Record:** `dc_update_planes_and_stream()` →
-`update_planes_and_stream_v3/v2()` → phantom removal on FULL updates.
-
-### Step 5.4: Reachability
-**Record:**
-- Trigger requires SubVP/MALL phantom streams on a DP link (`is_phantom
-  == true`).
-- Triggered during DP link retrain (compliance testing or preferred-
-  settings retrain).
-- Not a direct unprivileged syscall path, but reachable during normal
-  display hotplug/link-rate changes on AMD GPUs with SubVP enabled.
-- Config: `CONFIG_DRM_AMD_DC` (common on AMD systems).
-
-### Step 5.5: Similar patterns
-**Record:** `dc_resource.c:2419` skips phantom streams in topology
-logging — same semantic rule applied here.
+**Step 4.5 — Stable list**
+- Record: Not searched separately; the upstream lockless-traversal fix
+  from the same series was already backported to this tree, indicating
+  stable maintainers consider this configfs work relevant.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Buggy code present?
-**Record:** **YES.** Lines 145–148 of `link_dp_cts.c` cache all link
-streams without phantom skip. Bug present since v6.18.0 (f5b69101 is
-ancestor of v6.18).
+**Step 5.1 — Key functions**
+- Record: `configfs_depend_prep()`, `configfs_do_depend_item()`.
 
-### Step 6.2: Backport complications
-**Record:** Clean apply — cherry-pick test succeeded with auto-merge.
-Only contextual difference from upstream is the already-applied `struct
-dc *dc = link->dc` from 89939cf; phantom skip is independent.
+**Step 5.2 — Callers**
+- Record: `configfs_do_depend_item()` called from
+  `configfs_depend_item()` and `configfs_depend_item_unlocked()`.
+  Exported callers include:
+  - `fs/ocfs2/cluster/nodemanager.c`
+  - `drivers/target/target_core_configfs.c`
+  - `drivers/gpio/gpio-sim.c`, `gpio-virtuser.c`, `gpio-aggregator.c`
+  - `drivers/usb/gadget/function/f_tcm.c`
+  These are real production/configfs-client paths.
 
-### Step 6.3: Related fixes already present?
-**Record:** 89939cf fixes a **different** NULL deref in the same
-function (stale `dc` context). Phantom-stream NULL deref remains unfixed
-in 6.18.44.
+**Step 5.3 — Callees**
+- Record: Holds `configfs_dirent_lock`, walks `sd->s_children`, compares
+  `sd->s_element` to target, increments `s_dependent_count` on success.
 
----
+**Step 5.4 — Reachability**
+- Record: Triggered when kernel drivers call `configfs_depend_item()` /
+  `configfs_depend_item_unlocked()` to pin cross-subsystem config items.
+  Reachable from module code managing configfs objects (target, ocfs2,
+  gpio, USB gadget). Not a syscall path, but a real kernel runtime path.
 
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem / criticality
-**Record:** `drivers/gpu/drm/amd/display` — **IMPORTANT** (AMD GPU
-display driver; crash on affected hardware configs).
-
-### Step 7.2: Activity
-**Record:** Actively maintained; multiple recent fixes in
-`link_dp_cts.c` on this branch.
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-### Step 8.1: Who is affected
-**Record:** AMD GPU users with SubVP/MALL phantom streams on a
-DisplayPort link during link retrain or DP compliance-test automation.
-
-### Step 8.2: Trigger conditions
-**Record:**
-- SubVP phantom stream active on the DP link
-- DP link retrain via `dp_retrain_link_dp_test()`
-- Moderately rare compared to general kernel paths, but real on modern
-  AMD APUs/laptops with power-saving display features
-
-### Step 8.3: Failure mode
-**Record:** NULL pointer dereference → kernel oops. **Severity: HIGH**
-(system crash when triggered).
-
-### Step 8.4: Risk vs benefit
-**Record:**
-- **Benefit:** Prevents kernel crash on a real, reproducible code path;
-  2-line fix.
-- **Risk:** Very low — aligns with existing phantom-skip patterns
-  elsewhere.
-- **Ratio:** Favorable for stable backport.
+**Step 5.5 — Similar patterns**
+- Record: `configfs_readdir()` at lines 1695–1697 already does `dentry =
+  next->s_dentry; if (dentry)` before use. `configfs_depend_prep()` is
+  the outlier that assumed `s_dentry` is always valid.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
 
-### Step 9.1: Evidence summary
+**Step 6.1 — Buggy code present?**
+- Record: **Yes.** Tree is `v6.18.44` (`HEAD detached at
+  stable/linux-6.18.y`). `configfs_depend_prep()` still takes `struct
+  dentry *` and recurses through `child_sd->s_dentry` with
+  `BUG_ON(!origin)`.
 
-**FOR backport:**
-- Fixes verified NULL pointer dereference
-- Small (2 lines), obviously correct
-- Buggy code confirmed in 6.18.44 since v6.18.0
-- Applies cleanly
-- Reviewed, tested, maintainer-signed
-- Complements but does not duplicate existing 89939cf fix
+**Step 6.2 — Backport complications**
+- Record: Cherry-pick applies cleanly with auto-merge (`4 insertions, 8
+  deletions`). No rework needed.
 
-**AGAINST backport:**
-- Narrow trigger (SubVP + DP link retrain)
-- No public bug report or syzbot trace in commit message
+**Step 6.3 — Related fixes already present?**
+- Record: Prerequisites already in tree: `c3b073a209a9b` (dangling
+  `s_dentry`), `637ef4961470e` (lockless traversal), `a509e7cf622bc`
+  (`DCACHE_DONTCACHE`). This specific `depend_prep` fix is **not**
+  present. The `detach_prep` sibling fix is also absent.
 
-**UNRESOLVED:**
-- Mailing-list discussion (b4/lore unavailable)
+---
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** (code review + Tested-by)
-2. Fixes real bug affecting users? **PASS** (NULL deref on real path)
-3. Important issue? **PASS** (kernel crash — HIGH severity when
-   triggered)
-4. Small and contained? **PASS** (2 lines, 1 file)
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** (verified cherry-pick)
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 9.3: Exception categories
-**Record:** None — standard bug fix.
+**Step 7.1 — Subsystem**
+- Record: `fs/configfs` — VFS/configfs core. Criticality: **IMPORTANT**
+  (shared infrastructure for target, ocfs2, gpio, USB gadget configfs
+  users).
 
-### Step 9.4: Decision rationale
-This commit fixes a real NULL pointer dereference in the 6.18.y tree.
-The buggy stream-caching loop has been present since v6.18.0; the fix is
-not yet in 6.18.44. The existing 89939cf fix addresses a separate stale-
-context NULL deref in the same function. The phantom-stream skip is
-minimal, follows established conventions, applies cleanly, and prevents
-a kernel oops on AMD systems using SubVP during DP link retrain.
+**Step 7.2 — Activity**
+- Record: Actively maintained in 2026; multiple Al Viro configfs fixes
+  already landed and partially backported to this stable tree.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 — Who is affected**
+- Record: Systems using configfs with `configfs_depend_item()` — notably
+  SCSI target, ocfs2, GPIO sim/virtuser/aggregator, USB gadget TCM.
+
+**Step 8.2 — Trigger conditions**
+- Record: `configfs_depend_item()` called while a subdirectory in the
+  tree has `s_dentry == NULL` but is otherwise live (not
+  `CREATING`/`DROPPING`). More likely with `DCACHE_DONTCACHE` dentry
+  eviction. Not userspace-triggerable directly, but driver-initiated
+  during normal configfs dependency setup.
+
+**Step 8.3 — Failure mode**
+- Record: `BUG_ON(!origin)` → kernel BUG / crash. Severity: **CRITICAL**
+  (hard kernel failure).
+
+**Step 8.4 — Risk-benefit**
+- Record: Benefit **high** (prevents kernel crash in configfs dependency
+  path). Risk **very low** (4-line net change, removes redundant
+  indirection, reviewed by two filesystem developers). Ratio strongly
+  favors backport.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Step 9.1 — Evidence**
+
+*For backport:*
+- Real latent crash: NULL `s_dentry` triggers `BUG_ON` in recursive
+  `configfs_depend_prep()`
+- Same file already handles NULL `s_dentry` in `configfs_readdir()`
+- Prerequisites (`DCACHE_DONTCACHE`, dangling-pointer fix, lockless
+  traversal) already in 6.18.44 increase exposure
+- Small, surgical, applies cleanly
+- Reviewed by Jan Kara and Breno Leitao
+- Part of a series whose main fix is already in this stable tree
+- Used by production subsystems (target, ocfs2, gpio)
+
+*Against backport:*
+- No explicit bug report or syzbot reference
+- Commit message is terse; reads partly like cleanup
+- Sibling `configfs_detach_prep()` fix not yet in tree (incomplete
+  series coverage)
+
+*Unresolved:*
+- No lore discussion retrieved (b4 found nothing)
+- No user-reported crash instance verified
+
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct and tested? **PASS** — logic is trivially correct;
+   reviewed by two developers.
+2. Fixes a real bug affecting users? **PASS** — NULL `s_dentry` →
+   `BUG_ON` crash on `configfs_depend_item()` path.
+3. Important issue? **PASS** — kernel BUG / crash (CRITICAL).
+4. Small and contained? **PASS** — 12 lines, 1 file, 2 functions.
+5. No new features or APIs? **PASS** — internal static function
+   signature change only.
+6. Can apply to local tree? **PASS** — verified clean cherry-pick on
+   6.18.44.
+
+**Step 9.3 — Exception category**
+- Record: Not applicable (not device ID, quirk, DT, build, or docs).
+
+**Step 9.4 — Decision rationale**
+
+This commit completes hardening started by already-backported configfs
+fixes in 6.18.44. With `DCACHE_DONTCACHE` making dentry eviction more
+aggressive, `configfs_d_iput()` can clear `sd->s_dentry` while the
+`configfs_dirent` remains in the live tree. `configfs_depend_prep()`
+then recurses through that NULL pointer and hits `BUG_ON(!origin)`. The
+fix is minimal, self-contained, applies cleanly, and prevents a kernel
+crash in a path used by target, ocfs2, and GPIO configfs clients.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user-provided diff
-  and `git show 10f5f9c0ef32d`
-- **[Phase 2]** Read `link_dp_cts.c:65-157`, `dc.c:2927-2996`,
-  `dc.c:3526-3530`, `dc_state.c:916-956`
-- **[Phase 3]** `git blame -L 145,148 link_dp_cts.c` → f5b69101f956f
-- **[Phase 3]** `git log --oneline` on `link_dp_cts.c` → f5b69101,
-  89939cf present; phantom fix absent
-- **[Phase 3]** `git merge-base --is-ancestor f5b69101 HEAD` → in tree;
-  `10f5f9c0ef32d` → NOT in tree
-- **[Phase 3]** `git merge-base --is-ancestor f5b69101 v6.18` → buggy
-  code in v6.18.0
-- **[Phase 4]** `b4 dig -c 10f5f9c0ef32d` → no match; lore fetch → 403
-- **[Phase 5]** `grep dp_retrain_link_dp_test` → callers at lines 185,
-  601, 991
-- **[Phase 5]** `grep is_phantom` → field exists in `dc_stream.h:313`;
-  skip pattern in `dc_resource.c:2419`
-- **[Phase 6]** `git describe HEAD` → v6.18.44; buggy code confirmed at
-  lines 145-148 without phantom skip
-- **[Phase 6]** Cherry-pick test of 10f5f9c0ef32d → auto-merge success
-- **[Phase 8]** Failure mode: NULL deref on second
-  `dc_update_planes_and_stream()` call after phantom freed
+- [Phase 1] Parsed subject, tags (Reviewed-by x2, no Fixes/Reported-by),
+  body text
+- [Phase 2] Diff: 1 file, `configfs_depend_prep()` +
+  `configfs_do_depend_item()`, 4+/8-
+- [Phase 3] `git blame` lines 1091–1119: function from 2007, BUG_ON from
+  2013
+- [Phase 3] Series check: `c3b073a209a9b` and `637ef4961470e` in tree;
+  `96551d7f9f7b5` and `764682e011843` not in tree
+- [Phase 3] `git show 764682e011843`: full commit on master
+- [Phase 3] `git show 96551d7f9f7b5`: sibling detach_prep commit,
+  independent
+- [Phase 4] `b4 dig -c 764682e011843`: no lore match
+- [Phase 4] `b4 dig -c 764682e011843 -a -w`: no lore match
+- [Phase 5] `grep configfs_depend_item`: callers in ocfs2, target, gpio,
+  usb gadget
+- [Phase 5] Read `configfs_readdir()` lines 1695–1697: NULL `s_dentry`
+  handling confirmed
+- [Phase 5] Read `configfs_d_iput()` lines 45–66: sets `s_dentry = NULL`
+  on dentry eviction
+- [Phase 6] `git describe HEAD`: v6.18.44
+- [Phase 6] Buggy code confirmed at lines 1091–1129 in
+  `fs/configfs/dir.c`
+- [Phase 6] Cherry-pick test: applies cleanly to 6.18.44
+- [Phase 6] `a509e7cf622bc` (`DCACHE_DONTCACHE`) confirmed in tree
+- [Phase 8] Failure mode: `BUG_ON(!origin)` on NULL dentry → kernel
+  crash
 
-**YES**
+**YES**The background checks finished and match the earlier analysis.
 
- drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c | 2 ++
- 1 file changed, 2 insertions(+)
+**6.18.44 stable tree status for the configfs series:**
+- **Present:** `DCACHE_DONTCACHE` (`a509e7cf622bc`), the lookup
+  dangling-`s_dentry` fix (`c3b073a209a9b`), and the lockless
+  `s_children` traversal fix (`637ef4961470e`)
+- **Missing:** `configfs_detach_prep(): pass configfs_dirent instead of
+  dentry` (`96551d7f9f7b5`) and the commit under review
+  (`764682e011843`)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-index 2676ae9f6fe83..5f70793b8372e 100644
---- a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-@@ -143,6 +143,8 @@ static void dp_retrain_link_dp_test(struct dc_link *link,
- 	// Set DPMS on with stream update
- 	// Cache all streams on current link since dc_update_planes_and_stream might kill current_state
- 	for (i = 0; i < MAX_PIPES; i++) {
-+		if (state->streams[i] && state->streams[i]->is_phantom)
-+			continue;
- 		if (state->streams[i] && state->streams[i]->link && state->streams[i]->link == link)
- 			streams_on_link[num_streams_on_link++] = state->streams[i];
- 	}
+That supports the **YES** verdict: the prerequisites that make NULL
+`s_dentry` more likely are already in this tree, but the
+`configfs_depend_prep()` fix is not. The patch applies cleanly on
+6.18.44.The branch search found the commit on **master** (and related
+branches) as `764682e011843` — `configfs_depend_prep(): pass
+configfs_dirent instead of dentry` — merged via Al Viro's `pull-
+configfs-fixed` tag. It is not in the current **6.18.44** stable
+checkout, which matches the earlier analysis.
+
+ fs/configfs/dir.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index 68203952766e6..bfecb68a83797 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -1088,15 +1088,12 @@ static int configfs_dump(struct configfs_dirent *sd, int level)
+  * much on the stack, though, so folks that need this function - be careful
+  * about your stack!  Patches will be accepted to make it iterative.
+  */
+-static int configfs_depend_prep(struct dentry *origin,
++static int configfs_depend_prep(struct configfs_dirent *sd,
+ 				struct config_item *target)
+ {
+-	struct configfs_dirent *child_sd, *sd;
++	struct configfs_dirent *child_sd;
+ 	int ret = 0;
+ 
+-	BUG_ON(!origin || !origin->d_fsdata);
+-	sd = origin->d_fsdata;
+-
+ 	if (sd->s_element == target)  /* Boo-yah */
+ 		goto out;
+ 
+@@ -1104,8 +1101,7 @@ static int configfs_depend_prep(struct dentry *origin,
+ 		if ((child_sd->s_type & CONFIGFS_DIR) &&
+ 		    !(child_sd->s_type & CONFIGFS_USET_DROPPING) &&
+ 		    !(child_sd->s_type & CONFIGFS_USET_CREATING)) {
+-			ret = configfs_depend_prep(child_sd->s_dentry,
+-						   target);
++			ret = configfs_depend_prep(child_sd, target);
+ 			if (!ret)
+ 				goto out;  /* Child path boo-yah */
+ 		}
+@@ -1126,7 +1122,7 @@ static int configfs_do_depend_item(struct dentry *subsys_dentry,
+ 
+ 	spin_lock(&configfs_dirent_lock);
+ 	/* Scan the tree, return 0 if found */
+-	ret = configfs_depend_prep(subsys_dentry, target);
++	ret = configfs_depend_prep(subsys_dentry->d_fsdata, target);
+ 	if (ret)
+ 		goto out_unlock_dirent_lock;
+ 
 -- 
 2.53.0
 
