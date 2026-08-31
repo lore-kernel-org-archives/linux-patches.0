@@ -1,436 +1,447 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97354E56C3;
-	Mon, 31 Aug 2026 13:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295E64E56CD;
+	Mon, 31 Aug 2026 13:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183605; cv=none; b=HB8GIHqYd2fqVUTy/IC2G+9dNyRTCdHKMiiaHuPgYkxup4GEn7P4E1nSZ88x5i6MDoCxd+tFOB9M12czIAWxuYRK0XJvgeseAhfXkDUpbVXb2FW3yMhymbS3okj02UMyyR6FelU307IAf6iyEG5nx8ETnsyqRLITMq5mH1oNKno=
+	t=1788183605; cv=none; b=mb3Q1USf9d5arxQQQN5qNVt8IVoMtvWhiF0Oy2DdF3Q28PvhHi8uth7YsUPoxYv3yWuEQQJ+iegA0WFQpJqiWTz747ALzX5nqL7Ox2hQQtKDr6e9tYBR0fLW9TFKOJnQP1KP0oJ0sQEEPNOVjdIrmlYB32N/rx1msDcm03658Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183605; c=relaxed/simple;
-	bh=hq3LvVJbLSoVc9fDLeWev5a3+jV6a15QR+CehIr11S8=;
+	bh=G4p+A0nY1HJAIlMHGQ6pI067Kb4Dv2NXwCz/uZoUVo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pnzACSbFk0XdzYGvC+WX5ZP5c9phKf/3iUyR2C8nUx3P9usqkAvbd4ylEPH4MKiHRN0bpN24/3IgRHrln9vI2LwphqZEskBLvIr6VYmEQXmMXDTQjJqQTAOTpLojwceuWEy8qbXWTCB8khmjQFTIkDaYpcYkTJGuqEbHUOHy69E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lSCQDRm7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FD7NJdrwbntBmBrvVVZ2X1/kHRm8Z0swwFojz42MK3srB9NLh+8cMIiBiClggZfO45P0g0ZdVhxLm5Glid7wGFvBcTE3c76zUAecPxMiCNJBFZD8nlyiQYW9bAOJCJfPG8rEZZDf260fzuferXzUUDzNTkyxR3NSzkV89rANmlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7xlhbA1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lSCQDRm7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769E91F00ACA;
-	Mon, 31 Aug 2026 13:40:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183602;
-	bh=FRdDbvDICh6LQur0eYHl3aCIVvxP1IckkMD0ZJdShjQ=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7xlhbA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE0C1F000E9;
+	Mon, 31 Aug 2026 13:40:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183603;
+	bh=ZNg8ZT0c2spPmIwFb4I6fqawvIwChoYgan4C9jA/414=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSCQDRm7HtqaY68yuwyba87tbjcMjjvs0npUylx7FTDlV5tM4uenxk6bp854qyOUm
-	 HcOuAgXs5opXpeC9b5QLRcj7o0JbS/G+meT2IkoHuX9lak7nwdw3NYLTicBBnsAiMA
-	 LqUlBLNEeA3kAjTdqdvPG24Bc61c9NbPih4xETGYp42yL9Tw+QECmlZNMLSU449tGT
-	 8c3KSnc74PkxKT+VOsh2+NoUt2Oql3qkLg6owmZO4XpcxGCaCqzJy3Dzw6HNEZkM9f
-	 tmBmRKoMGSWxFnEdj5xIP6VQRgUI4Te2Cs80+EzPaeESf+b7tZsrZHaE/50KOC4ts9
-	 BVZU2pBrd39DA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	shenjian15@huawei.com,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] net: hns3: improve the unused_tuple parameter setting
-Date: Mon, 31 Aug 2026 09:23:41 -0400
-Message-ID: <20260831133314.4125787-193-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=A7xlhbA1I2GGDLEZE0vSeCGTW+jj46DLDB6VrDbeyunEjCLdH2sBatWSE0gtyZR1p
+	 oOhPUeI2Oqh1/+rJPW4u+F/qQX5sgsAKYUbywId0lIxGPf1ZKArdZGTGn/ZwDyonIL
+	 oW//H7u+VRQXY939DRvYbi8tSeyqGQnthdusRm6k=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.2 54/71] crypto: sun8i-ss - Remove crypto_rng interface
+Date: Mon, 31 Aug 2026 15:34:19 +0200
+Message-ID: <20260831133402.034466932@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jijie Shao <shaojijie@huawei.com>
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 1ad6f1ff3e96c7ee888475740c8acdaf822e0813 ]
+------------------
 
-Currently, when the tc tool is used to set flow table rules, the IP address
-and MAC address can be configured separately, for example, src_xx or dst_xx
-can be configured separately.
+From: Eric Biggers <ebiggers@kernel.org>
 
-Therefore, the driver needs to check whether the mask is all zero in
-keys, such as FLOW_DISSECTOR_KEY_IPV4_ADDRS, FLOW_DISSECTOR_KEY_IPV6_ADDRS,
-and FLOW_DISSECTOR_KEY_ETH_ADDRS.
-If the mask is all zero, the tuple is not configured.
-In this case, the driver adds the tuple to unused_tuple.
+commit a78446ee6fae86ac8733f120e3ffce2e5d9384f5 upstream.
 
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Since the crypto_rng interface for hardware PRNGs is unused and is
+redundant with hwrng and the actual Linux RNG, it's being phased out.
+Most drivers for it were already removed.  Go ahead and remove the
+sun8i-ss support which is one of the only remaining ones.
+
+As usual for crypto_rng, this driver was also buggy: its ->generate()
+function had a use-after-free vulnerability due to using
+wait_for_completion_interruptible_timeout() without handling shutting
+down the DMA operation if a signal is sent.  Also, it had a buffer
+overread bug in the line 'memcpy(ctx->seed, d + dlen, ctx->slen);'.
+There's no point in fixing these bugs separately only to remove the code
+anyway, so this commit is marked with Fixes and Cc stable.
+
+Fixes: ac2614d721de ("crypto: sun8i-ss - Add support for the PRNG")
+Cc: stable@vger.kernel.org
+Cc: Corentin Labbe <clabbe.montjoie@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-**Step 1.1 — Subject line**
-Record: `[net: hns3]` `[improve]` — improve `unused_tuple` handling when
-parsing tc flower match keys for MAC and IP addresses.
-
-**Step 1.2 — Tags**
-Record:
-- **Signed-off-by:** Jijie Shao `<shaojijie@huawei.com>` (author)
-- **Link:**
-  https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
-- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (netdev
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable@vger.kernel.org`
-
-Notable: maintainer merge (`kuba@kernel.org`), but no fuzzer or user bug
-report tags.
-
-**Step 1.3 — Body analysis**
-Record:
-- **Bug:** When `tc` installs flower rules with only `src_*` or only
-  `dst_*` for IP/MAC, the dissector key (`FLOW_DISSECTOR_KEY_ETH_ADDRS`,
-  `FLOW_DISSECTOR_KEY_IPV4_ADDRS`, `FLOW_DISSECTOR_KEY_IPV6_ADDRS`) can
-  be present while one side’s mask is all-zero.
-- **Symptom:** Driver fails to mark that tuple as unused; hardware flow-
-  director rules are programmed incorrectly instead of treating the
-  field as a wildcard.
-- **Root cause:** `hclge_get_cls_key_mac()` / `hclge_get_cls_key_ip()`
-  only set `unused_tuple` when the entire key is absent, not when an
-  individual mask is zero.
-
-**Step 1.4 — Hidden bug fix?**
-Record: **Yes.** Subject says “improve,” but this is a correctness fix
-for tc flower hardware offload, not a cosmetic cleanup.
-
----
-
-## Phase 2: Diff Analysis
-
-**Step 2.1 — Inventory**
-Record:
-- **Files:** `drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c`
-  (+12 lines)
-- **Functions:** `hclge_get_cls_key_mac()`, `hclge_get_cls_key_ip()`
-- **Scope:** Single-file, surgical driver fix
-
-**Step 2.2 — Code flow change**
-Record:
-- **MAC hunk:** After copying eth addr keys/masks, if `match.mask->dst`
-  or `match.mask->src` is all-zero, set `INNER_DST_MAC` /
-  `INNER_SRC_MAC` in `unused_tuple`.
-- **IPv4 hunk:** If `match.mask->src` or `match.mask->dst` is zero, set
-  corresponding `INNER_SRC_IP` / `INNER_DST_IP`.
-- **IPv6 hunk:** If `ipv6_addr_any(&match.mask->src/dst)`, set
-  corresponding IP unused bits.
-- **Before:** Only the `else` branch (key fully absent) marked tuples
-  unused.
-- **After:** Per-field zero masks are also treated as unused, matching
-  ethtool-path behavior elsewhere in the same file.
-
-**Step 2.3 — Bug mechanism**
-Record: **Logic / correctness fix.** Category: incorrect hardware tuple
-programming.
-
-When `unused_tuple` is **not** set, `hclge_fd_convert_tuple()` programs
-hardware using:
-
-```862:863:drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-#define calc_x(x, k, v) ((x) = ~(k) & (v))
-#define calc_y(y, k, v) ((y) = (k) & (v))
-```
-
-With mask `k = 0`, this yields `X = key`, `Y = 0` — not wildcard
-behavior. When `unused_tuple` **is** set, `hclge_fd_convert_tuple()`
-skips programming that tuple (wildcard). The ethtool path already does
-zero-mask checks (e.g. `hclge_fd_check_ether_tuple()`); the tc flower
-path did not.
-
-**Step 2.4 — Fix quality**
-Record: Obviously correct, minimal, mirrors existing driver logic. Low
-regression risk. Does not fix the same gap in `hclge_get_cls_key_port()`
-(ports), but that is a separate pre-existing issue.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record: `hclge_get_cls_key_mac()` introduced in `0205ec041ec61` (“net:
-hns3: add support for hw tc offload of tc flower”, Dec 2020).
-`hclge_get_cls_key_ip()` mostly from same commit; signature extended in
-`e199a5b29f199` (2024).
-
-**Step 3.2 — Fixes: tag**
-Record: N/A — no `Fixes:` tag.
-
-**Step 3.3 — Related file history**
-Record: Commit `1ad6f1ff3e96c` is patch 2/6 of “enhance tc flow offload
-support” on master. Other series commits add actions, dissectors,
-debugfs, and file split — not required for this 12-line fix. Standalone.
-
-**Step 3.4 — Author context**
-Record: Jijie Shao is an active hns3 contributor (FD/TC-related commits
-in this tree).
-
-**Step 3.5 — Dependencies**
-Record: None. Functions and structures exist unchanged in 6.18.y.
-Cherry-pick to current HEAD applies cleanly (auto-merge, exit 0).
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c 1ad6f1ff3e96c` →
-https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
-Series: V4 net-next 2/6. Revisions v1–v4 found via `b4 dig -a`. Lore
-direct fetch blocked by bot protection; thread retrieved via `b4 dig
--m`.
-
-**Step 4.2 — Reviewers**
-Record: `b4 dig -w` CC’d `davem@davemloft.net`, `kuba@kernel.org`,
-`pabeni@redhat.com`, `netdev@vger.kernel.org`, Huawei maintainers. No
-explicit stable nomination found in mbox grep.
-
-**Step 4.3 — Bug report**
-Record: No external bug report, syzbot, or user `Reported-by:`.
-
-**Step 4.4 — Series context**
-Record: Part of 6-patch enhancement series, but this patch only fixes
-existing cls-flower parsing; does not depend on new actions/dissectors
-from patches 3–6.
-
-**Step 4.5 — Stable list**
-Record: Not searched on lore stable (no stable nomination found in
-retrieved mbox). UNVERIFIED whether stable@ discussed this separately.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-Record: `hclge_get_cls_key_mac()`, `hclge_get_cls_key_ip()`, called from
-`hclge_parse_cls_flower()`.
-
-**Step 5.2 — Callers**
-Record: `hclge_parse_cls_flower()` ← `hclge_add_cls_flower()` ←
-`add_cls_flower` in `hnae3` ops ← `hns3_nic_setup_tc()`
-(`ndo_setup_tc`). Reachable from userspace via `tc` flower rules on HNS3
-NICs.
-
-**Step 5.3 — Callees**
-Record: `flow_rule_match_*`, `ether_addr_copy`, `ipv6_addr_be32_to_cpu`,
-`unused_tuple |= BIT(...)`.
-
-**Step 5.4 — Reachability**
-Record: Userspace-triggered via `tc filter add ... flower ...` on
-HiSilicon HNS3 hardware with flow-director/tc-flower offload enabled
-(`CONFIG_HNS3`).
-
-**Step 5.5 — Similar patterns**
-Record: Ethtool FD path in same file already checks zero masks
-(`hclge_fd_check_tcpip4_tuple()`, `hclge_fd_check_ether_tuple()`, etc.).
-tc flower path was inconsistent.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree (6.18.y)
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** Local tree is **v6.18.44** (`git describe HEAD`).
-`hclge_get_cls_key_mac()` and `hclge_get_cls_key_ip()` lack zero-mask
-checks. Commit `1ad6f1ff3e96c` is **not** an ancestor of HEAD (`NOT IN
-TREE`). Bug present since tc flower support landed (2020).
-
-**Step 6.2 — Backport complications**
-Record: Clean cherry-pick (auto-merge, no conflicts). Expected apply:
-**clean**.
-
-**Step 6.3 — Related fixes already present?**
-Record: No equivalent fix found in 6.18.y history for this specific
-issue.
-
----
-
-## Phase 7: Subsystem Context
-
-**Step 7.1 — Subsystem / criticality**
-Record: `drivers/net/ethernet/hisilicon/hns3` — **IMPORTANT**
-(server/cloud NIC driver, tc offload data path).
-
-**Step 7.2 — Activity**
-Record: Actively maintained; recent TC/FD fixes in this file (e.g.
-`d7beeb64be5ca`, `6b36e5c4741f1`).
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 — Who is affected**
-Record: Users of HiSilicon HNS3 NICs with hardware tc flower offload,
-configuring rules with partial src/dst IP or MAC matching.
-
-**Step 8.2 — Trigger conditions**
-Record: Common — `tc flower` rules matching only source or only
-destination IP/MAC. Unprivileged users can install tc rules (with
-appropriate capabilities/namespace policy).
-
-**Step 8.3 — Failure mode / severity**
-Record: Incorrect hardware packet classification / queue steering; rules
-may not match intended traffic or may match too narrowly. **Severity:
-MEDIUM** — functional data-path bug, not kernel crash, deadlock, or
-memory corruption.
-
-**Step 8.4 — Risk vs benefit**
-Record:
-- **Benefit:** MEDIUM — fixes real mis-steering for standard tc usage on
-  production NICs
-- **Risk:** LOW — 12 lines, mirrors proven ethtool logic
-- **Ratio:** Favorable for stable
-
----
-
-## Phase 9: Final Synthesis
-
-**Evidence FOR backport:**
-- Real, verifiable logic bug in tc flower offload path
-- Bug present in 6.18.y since 2020
-- Small, self-contained, applies cleanly
-- Aligns tc path with existing ethtool FD logic in same driver
-- Userspace-reachable via `tc` on widely deployed server NICs
-- Maintainer-reviewed and merged
-
-**Evidence AGAINST backport:**
-- No crash, security, or corruption angle
-- No user/fuzzer bug report
-- Part of larger net-next enhancement series (though patch itself is
-  independent)
-- Port matching has same class of bug but is not addressed here
-
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — logic mirrors existing
-   driver patterns; no `Tested-by:` but change is straightforward
-2. Fixes a real bug affecting users? **PASS** — incorrect HW filtering
-   for partial tc flower matches
-3. Important issue? **PASS (borderline)** — incorrect packet steering on
-   production networking path; not crash-level but user-visible and
-   operationally significant
-4. Small and contained? **PASS** — 12 lines, 1 file
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — verified clean cherry-pick
-
-**Exception category:** None (not quirk/ID/DT/docs/build).
-
----
-
-## Problem Summary
-
-This commit fixes a long-standing inconsistency in the HNS3 driver’s tc
-flower offload path. When users install `tc flower` rules specifying
-only source or only destination IP/MAC addresses, the flow dissector
-includes the address key with a zero mask for the unspecified side. The
-driver must mark those tuples as unused so hardware treats them as
-wildcards. Without this fix, `unused_tuple` is not set, hardware is
-programmed with zero-mask tuple values, and flow-director rules behave
-incorrectly.
-
-For **Linux 6.18.y**, the buggy code is present, the fix is absent, the
-patch applies cleanly, and it is standalone. This is appropriate stable
-material: a small, low-risk driver correctness fix for a userspace-
-visible data-path bug.
-
----
-
-## Verification
-
-- [Phase 1] Parsed commit message and tags from provided diff and `git
-  show 1ad6f1ff3e96c`
-- [Phase 2] Analyzed diff: +12 lines in `hclge_get_cls_key_mac()` and
-  `hclge_get_cls_key_ip()`
-- [Phase 2] Verified `calc_x`/`calc_y` macros and
-  `hclge_fd_convert_tuple()` skip logic
-- [Phase 2] Verified ethtool path already has zero-mask checks
-  (`hclge_fd_check_ether_tuple()` etc.)
-- [Phase 3] `git blame`: buggy code from `0205ec041ec61` (2020)
-- [Phase 3] `git merge-base --is-ancestor 1ad6f1ff3e96c HEAD` → NOT IN
-  TREE
-- [Phase 3] Cherry-pick test: `git cherry-pick --no-commit
-  1ad6f1ff3e96c` → exit 0, auto-merge
-- [Phase 4] `b4 dig -c 1ad6f1ff3e96c` → lore URL found
-- [Phase 4] `b4 dig -a` → v1–v4 series revisions
-- [Phase 4] `b4 dig -w` → netdev maintainers CC’d
-- [Phase 4] `b4 dig -m` → cover letter retrieved; patch 2/6 context
-  confirmed
-- [Phase 5] Traced call chain: `hns3_nic_setup_tc` →
-  `hclge_add_cls_flower` → `hclge_parse_cls_flower`
-- [Phase 6] `git describe HEAD` → v6.18.44; Makefile 6.18.44
-- [Phase 6] Read current `hclge_main.c` — buggy code confirmed present
-  (no zero-mask checks in MAC/IP cls helpers)
-- [Phase 8] Assessed severity as MEDIUM functional data-path bug
-- UNVERIFIED: No direct lore stable-list discussion
-- UNVERIFIED: No runtime test evidence beyond maintainer merge
-
-**YES****Task result:** The branch search found commit `1ad6f1ff3e96c`
-on `master` — it matches the patch under review and is not in the local
-6.18.44 tree.
-
-**Verdict (unchanged):** Backport **YES**. Small, standalone fix for
-incorrect tc flower hardware filtering when only src or dst IP/MAC is
-specified; applies cleanly to 6.18.y.
-
- .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c  | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 7f174453928c1..08f7bda4ef4c4 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -7261,6 +7261,10 @@ static void hclge_get_cls_key_mac(const struct flow_rule *flow,
- 		ether_addr_copy(rule->tuples_mask.dst_mac, match.mask->dst);
- 		ether_addr_copy(rule->tuples.src_mac, match.key->src);
- 		ether_addr_copy(rule->tuples_mask.src_mac, match.mask->src);
-+		if (is_zero_ether_addr(match.mask->dst))
-+			rule->unused_tuple |= BIT(INNER_DST_MAC);
-+		if (is_zero_ether_addr(match.mask->src))
-+			rule->unused_tuple |= BIT(INNER_SRC_MAC);
- 	} else {
- 		rule->unused_tuple |= BIT(INNER_DST_MAC);
- 		rule->unused_tuple |= BIT(INNER_SRC_MAC);
-@@ -7309,6 +7313,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
- 		rule->tuples.dst_ip[IPV4_INDEX] = be32_to_cpu(match.key->dst);
- 		rule->tuples_mask.dst_ip[IPV4_INDEX] =
- 						be32_to_cpu(match.mask->dst);
-+		if (!match.mask->src)
-+			rule->unused_tuple |= BIT(INNER_SRC_IP);
-+		if (!match.mask->dst)
-+			rule->unused_tuple |= BIT(INNER_DST_IP);
- 	} else if (addr_type == FLOW_DISSECTOR_KEY_IPV6_ADDRS) {
- 		struct flow_match_ipv6_addrs match;
+ drivers/crypto/allwinner/Kconfig                  |    8 
+ drivers/crypto/allwinner/sun8i-ss/Makefile        |    1 
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-core.c |   45 -----
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-prng.c |  177 ----------------------
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss.h      |   23 --
+ 5 files changed, 254 deletions(-)
+ delete mode 100644 drivers/crypto/allwinner/sun8i-ss/sun8i-ss-prng.c
+
+--- a/drivers/crypto/allwinner/Kconfig
++++ b/drivers/crypto/allwinner/Kconfig
+@@ -105,14 +105,6 @@ config CRYPTO_DEV_SUN8I_SS_DEBUG
+ 	  This will create /sys/kernel/debug/sun8i-ss/stats for displaying
+ 	  the number of requests per flow and per algorithm.
  
-@@ -7321,6 +7329,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
- 				      match.key->dst.s6_addr32);
- 		ipv6_addr_be32_to_cpu(rule->tuples_mask.dst_ip,
- 				      match.mask->dst.s6_addr32);
-+		if (ipv6_addr_any(&match.mask->src))
-+			rule->unused_tuple |= BIT(INNER_SRC_IP);
-+		if (ipv6_addr_any(&match.mask->dst))
-+			rule->unused_tuple |= BIT(INNER_DST_IP);
- 	} else {
- 		rule->unused_tuple |= BIT(INNER_SRC_IP);
- 		rule->unused_tuple |= BIT(INNER_DST_IP);
--- 
-2.53.0
+-config CRYPTO_DEV_SUN8I_SS_PRNG
+-	bool "Support for Allwinner Security System PRNG"
+-	depends on CRYPTO_DEV_SUN8I_SS
+-	select CRYPTO_RNG
+-	help
+-	  Select this option if you want to provide kernel-side support for
+-	  the Pseudo-Random Number Generator found in the Security System.
+-
+ config CRYPTO_DEV_SUN8I_SS_HASH
+ 	bool "Enable support for hash on sun8i-ss"
+ 	depends on CRYPTO_DEV_SUN8I_SS
+--- a/drivers/crypto/allwinner/sun8i-ss/Makefile
++++ b/drivers/crypto/allwinner/sun8i-ss/Makefile
+@@ -1,4 +1,3 @@
+ obj-$(CONFIG_CRYPTO_DEV_SUN8I_SS) += sun8i-ss.o
+ sun8i-ss-y += sun8i-ss-core.o sun8i-ss-cipher.o
+-sun8i-ss-$(CONFIG_CRYPTO_DEV_SUN8I_SS_PRNG) += sun8i-ss-prng.o
+ sun8i-ss-$(CONFIG_CRYPTO_DEV_SUN8I_SS_HASH) += sun8i-ss-hash.o
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-core.c
++++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-core.c
+@@ -11,7 +11,6 @@
+  */
+ 
+ #include <crypto/engine.h>
+-#include <crypto/internal/rng.h>
+ #include <crypto/internal/skcipher.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+@@ -283,25 +282,6 @@ static struct sun8i_ss_alg_template ss_a
+ 		.do_one_request = sun8i_ss_handle_cipher_request,
+ 	},
+ },
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_PRNG
+-{
+-	.type = CRYPTO_ALG_TYPE_RNG,
+-	.alg.rng = {
+-		.base = {
+-			.cra_name		= "stdrng",
+-			.cra_driver_name	= "sun8i-ss-prng",
+-			.cra_priority		= 300,
+-			.cra_ctxsize = sizeof(struct sun8i_ss_rng_tfm_ctx),
+-			.cra_module		= THIS_MODULE,
+-			.cra_init		= sun8i_ss_prng_init,
+-			.cra_exit		= sun8i_ss_prng_exit,
+-		},
+-		.generate               = sun8i_ss_prng_generate,
+-		.seed                   = sun8i_ss_prng_seed,
+-		.seedsize               = PRNG_SEED_SIZE,
+-	}
+-},
+-#endif
+ #ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_HASH
+ {	.type = CRYPTO_ALG_TYPE_AHASH,
+ 	.ss_algo_id = SS_ID_HASH_MD5,
+@@ -501,14 +481,6 @@ static int sun8i_ss_debugfs_show(struct
+ 			seq_printf(seq, "\tFallback due to SG numbers: %lu\n",
+ 				   ss_algs[i].stat_fb_sgnum);
+ 			break;
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_PRNG
+-		case CRYPTO_ALG_TYPE_RNG:
+-			seq_printf(seq, "%s %s reqs=%lu tsize=%lu\n",
+-				   ss_algs[i].alg.rng.base.cra_driver_name,
+-				   ss_algs[i].alg.rng.base.cra_name,
+-				   ss_algs[i].stat_req, ss_algs[i].stat_bytes);
+-			break;
+-#endif
+ #ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_HASH
+ 		case CRYPTO_ALG_TYPE_AHASH:
+ 			seq_printf(seq, "%s %s reqs=%lu fallback=%lu\n",
+@@ -711,16 +683,6 @@ static int sun8i_ss_register_algs(struct
+ 				return err;
+ 			}
+ 			break;
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_PRNG
+-		case CRYPTO_ALG_TYPE_RNG:
+-			err = crypto_register_rng(&ss_algs[i].alg.rng);
+-			if (err) {
+-				dev_err(ss->dev, "Fail to register %s\n",
+-					ss_algs[i].alg.rng.base.cra_name);
+-				ss_algs[i].ss = NULL;
+-			}
+-			break;
+-#endif
+ #ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_HASH
+ 		case CRYPTO_ALG_TYPE_AHASH:
+ 			id = ss_algs[i].ss_algo_id;
+@@ -764,13 +726,6 @@ static void sun8i_ss_unregister_algs(str
+ 				 ss_algs[i].alg.skcipher.base.base.cra_name);
+ 			crypto_engine_unregister_skcipher(&ss_algs[i].alg.skcipher);
+ 			break;
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_PRNG
+-		case CRYPTO_ALG_TYPE_RNG:
+-			dev_info(ss->dev, "Unregister %d %s\n", i,
+-				 ss_algs[i].alg.rng.base.cra_name);
+-			crypto_unregister_rng(&ss_algs[i].alg.rng);
+-			break;
+-#endif
+ #ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_HASH
+ 		case CRYPTO_ALG_TYPE_AHASH:
+ 			dev_info(ss->dev, "Unregister %d %s\n", i,
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-prng.c
++++ /dev/null
+@@ -1,177 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/*
+- * sun8i-ss-prng.c - hardware cryptographic offloader for
+- * Allwinner A80/A83T SoC
+- *
+- * Copyright (C) 2015-2020 Corentin Labbe <clabbe@baylibre.com>
+- *
+- * This file handle the PRNG found in the SS
+- *
+- * You could find a link for the datasheet in Documentation/arch/arm/sunxi.rst
+- */
+-#include "sun8i-ss.h"
+-#include <linux/dma-mapping.h>
+-#include <linux/kernel.h>
+-#include <linux/mm.h>
+-#include <linux/pm_runtime.h>
+-#include <crypto/internal/rng.h>
+-
+-int sun8i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed,
+-		       unsigned int slen)
+-{
+-	struct sun8i_ss_rng_tfm_ctx *ctx = crypto_rng_ctx(tfm);
+-
+-	if (ctx->seed && ctx->slen != slen) {
+-		kfree_sensitive(ctx->seed);
+-		ctx->slen = 0;
+-		ctx->seed = NULL;
+-	}
+-	if (!ctx->seed)
+-		ctx->seed = kmalloc(slen, GFP_KERNEL);
+-	if (!ctx->seed)
+-		return -ENOMEM;
+-
+-	memcpy(ctx->seed, seed, slen);
+-	ctx->slen = slen;
+-
+-	return 0;
+-}
+-
+-int sun8i_ss_prng_init(struct crypto_tfm *tfm)
+-{
+-	struct sun8i_ss_rng_tfm_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	memset(ctx, 0, sizeof(struct sun8i_ss_rng_tfm_ctx));
+-	return 0;
+-}
+-
+-void sun8i_ss_prng_exit(struct crypto_tfm *tfm)
+-{
+-	struct sun8i_ss_rng_tfm_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	kfree_sensitive(ctx->seed);
+-	ctx->seed = NULL;
+-	ctx->slen = 0;
+-}
+-
+-int sun8i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen)
+-{
+-	struct sun8i_ss_rng_tfm_ctx *ctx = crypto_rng_ctx(tfm);
+-	struct rng_alg *alg = crypto_rng_alg(tfm);
+-	struct sun8i_ss_alg_template *algt;
+-	unsigned int todo_with_padding;
+-	struct sun8i_ss_dev *ss;
+-	dma_addr_t dma_iv, dma_dst;
+-	unsigned int todo;
+-	int err = 0;
+-	int flow;
+-	void *d;
+-	u32 v;
+-
+-	algt = container_of(alg, struct sun8i_ss_alg_template, alg.rng);
+-	ss = algt->ss;
+-
+-	if (ctx->slen == 0) {
+-		dev_err(ss->dev, "The PRNG is not seeded\n");
+-		return -EINVAL;
+-	}
+-
+-	/* The SS does not give an updated seed, so we need to get a new one.
+-	 * So we will ask for an extra PRNG_SEED_SIZE data.
+-	 * We want dlen + seedsize rounded up to a multiple of PRNG_DATA_SIZE
+-	 */
+-	todo = dlen + PRNG_SEED_SIZE + PRNG_DATA_SIZE;
+-	todo -= todo % PRNG_DATA_SIZE;
+-
+-	todo_with_padding = ALIGN(todo, dma_get_cache_alignment());
+-	if (todo_with_padding < todo || todo < dlen)
+-		return -EOVERFLOW;
+-
+-	d = kzalloc(todo_with_padding, GFP_KERNEL);
+-	if (!d)
+-		return -ENOMEM;
+-
+-	flow = sun8i_ss_get_engine_number(ss);
+-
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_SS_DEBUG
+-	algt->stat_req++;
+-	algt->stat_bytes += todo;
+-#endif
+-
+-	v = SS_ALG_PRNG | SS_PRNG_CONTINUE | SS_START;
+-	if (flow)
+-		v |= SS_FLOW1;
+-	else
+-		v |= SS_FLOW0;
+-
+-	dma_iv = dma_map_single(ss->dev, ctx->seed, ctx->slen, DMA_TO_DEVICE);
+-	if (dma_mapping_error(ss->dev, dma_iv)) {
+-		dev_err(ss->dev, "Cannot DMA MAP IV\n");
+-		err = -EFAULT;
+-		goto err_free;
+-	}
+-
+-	dma_dst = dma_map_single(ss->dev, d, todo, DMA_FROM_DEVICE);
+-	if (dma_mapping_error(ss->dev, dma_dst)) {
+-		dev_err(ss->dev, "Cannot DMA MAP DST\n");
+-		err = -EFAULT;
+-		goto err_iv;
+-	}
+-
+-	err = pm_runtime_resume_and_get(ss->dev);
+-	if (err < 0)
+-		goto err_pm;
+-	err = 0;
+-
+-	mutex_lock(&ss->mlock);
+-	writel(dma_iv, ss->base + SS_IV_ADR_REG);
+-	/* the PRNG act badly (failing rngtest) without SS_KEY_ADR_REG set */
+-	writel(dma_iv, ss->base + SS_KEY_ADR_REG);
+-	writel(dma_dst, ss->base + SS_DST_ADR_REG);
+-	writel(todo / 4, ss->base + SS_LEN_ADR_REG);
+-
+-	reinit_completion(&ss->flows[flow].complete);
+-	ss->flows[flow].status = 0;
+-	/* Be sure all data is written before enabling the task */
+-	wmb();
+-
+-	writel(v, ss->base + SS_CTL_REG);
+-
+-	wait_for_completion_interruptible_timeout(&ss->flows[flow].complete,
+-						  msecs_to_jiffies(todo));
+-	if (ss->flows[flow].status == 0) {
+-		dev_err(ss->dev, "DMA timeout for PRNG (size=%u)\n", todo);
+-		err = -EFAULT;
+-	}
+-	/* Since cipher and hash use the linux/cryptoengine and that we have
+-	 * a cryptoengine per flow, we are sure that they will issue only one
+-	 * request per flow.
+-	 * Since the cryptoengine wait for completion before submitting a new
+-	 * one, the mlock could be left just after the final writel.
+-	 * But cryptoengine cannot handle crypto_rng, so we need to be sure
+-	 * nothing will use our flow.
+-	 * The easiest way is to grab mlock until the hardware end our requests.
+-	 * We could have used a per flow lock, but this would increase
+-	 * complexity.
+-	 * The drawback is that no request could be handled for the other flow.
+-	 */
+-	mutex_unlock(&ss->mlock);
+-
+-	pm_runtime_put(ss->dev);
+-
+-err_pm:
+-	dma_unmap_single(ss->dev, dma_dst, todo, DMA_FROM_DEVICE);
+-err_iv:
+-	dma_unmap_single(ss->dev, dma_iv, ctx->slen, DMA_TO_DEVICE);
+-
+-	if (!err) {
+-		memcpy(dst, d, dlen);
+-		/* Update seed */
+-		memcpy(ctx->seed, d + dlen, ctx->slen);
+-	}
+-err_free:
+-	kfree_sensitive(d);
+-
+-	return err;
+-}
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss.h
++++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss.h
+@@ -8,7 +8,6 @@
+ #include <crypto/aes.h>
+ #include <crypto/des.h>
+ #include <crypto/engine.h>
+-#include <crypto/rng.h>
+ #include <crypto/skcipher.h>
+ #include <linux/atomic.h>
+ #include <linux/debugfs.h>
+@@ -27,7 +26,6 @@
+ #define SS_ALG_DES		(1 << 2)
+ #define SS_ALG_3DES		(2 << 2)
+ #define SS_ALG_MD5		(3 << 2)
+-#define SS_ALG_PRNG		(4 << 2)
+ #define SS_ALG_SHA1		(6 << 2)
+ #define SS_ALG_SHA224		(7 << 2)
+ #define SS_ALG_SHA256		(8 << 2)
+@@ -68,8 +66,6 @@
+ #define SS_FLOW0	BIT(30)
+ #define SS_FLOW1	BIT(31)
+ 
+-#define SS_PRNG_CONTINUE	BIT(18)
+-
+ #define MAX_SG 8
+ 
+ #define MAXFLOW 2
+@@ -79,9 +75,6 @@
+ #define SS_DIE_ID_SHIFT	20
+ #define SS_DIE_ID_MASK	0x07
+ 
+-#define PRNG_DATA_SIZE (160 / 8)
+-#define PRNG_SEED_SIZE DIV_ROUND_UP(175, 8)
+-
+ #define MAX_PAD_SIZE 4096
+ 
+ /*
+@@ -214,16 +207,6 @@ struct sun8i_cipher_tfm_ctx {
+ };
+ 
+ /*
+- * struct sun8i_ss_prng_ctx - context for PRNG TFM
+- * @seed:	The seed to use
+- * @slen:	The size of the seed
+- */
+-struct sun8i_ss_rng_tfm_ctx {
+-	void *seed;
+-	unsigned int slen;
+-};
+-
+-/*
+  * struct sun8i_ss_hash_tfm_ctx - context for an ahash TFM
+  * @fallback_tfm:	pointer to the fallback TFM
+  * @ss:			pointer to the private data of driver handling this TFM
+@@ -274,7 +257,6 @@ struct sun8i_ss_alg_template {
+ 	struct sun8i_ss_dev *ss;
+ 	union {
+ 		struct skcipher_engine_alg skcipher;
+-		struct rng_alg rng;
+ 		struct ahash_engine_alg hash;
+ 	} alg;
+ 	unsigned long stat_req;
+@@ -300,11 +282,6 @@ int sun8i_ss_skencrypt(struct skcipher_r
+ int sun8i_ss_get_engine_number(struct sun8i_ss_dev *ss);
+ 
+ int sun8i_ss_run_task(struct sun8i_ss_dev *ss, struct sun8i_cipher_req_ctx *rctx, const char *name);
+-int sun8i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen);
+-int sun8i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen);
+-int sun8i_ss_prng_init(struct crypto_tfm *tfm);
+-void sun8i_ss_prng_exit(struct crypto_tfm *tfm);
+ 
+ int sun8i_ss_hash_init_tfm(struct crypto_ahash *tfm);
+ void sun8i_ss_hash_exit_tfm(struct crypto_ahash *tfm);
+
 
