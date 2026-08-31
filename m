@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0FA47F2D9
-	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1209D2DB791
+	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788198290; cv=none; b=ftFcfGT3aFSDUOz3FpGamUCG0iWAyWm4ZP6MlSm8oY/WEHYWIcaoYaYreufHY2u0RtbXyyLwwUdUpMjAPUlQ7SoSSZ9/Fj7U0dAn4BFs4DIKDjyqaX82wDdfx8g2DDIyWQW7HOUlvNSiVj6vEvYTy9uIzDePeaOsTIw0c+ZnaTU=
+	t=1788198292; cv=none; b=g5cdP5Hsw04zD2XQUJPUuDv0XxMbrWBzLXc1ad4MXZyU8XL0qQjGYrsAtmWKfNqiC6GHYVWzaufj/0GsoFkfHWy8tbsZzBwuZ4rjO42zUG+uAx/irIxU8OBpQw39YW6zmMXjPXZZ10+AsyGAYfI0zXbairkhCt0+DUbeQuAOpn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788198290; c=relaxed/simple;
-	bh=2oL2tMiC8gldZ/2aEvGipZr9OCQfTdZexvNzvOG31DQ=;
+	s=arc-20240116; t=1788198292; c=relaxed/simple;
+	bh=/jTi+tnt1ej+QcuyLCn8l49rg9sBgx4D2+lUqrqwpHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxOxGMkwv8VA569FNOQsOxyX4NkFCr8GXQbHiKS2KBjqPopg3ZWA0lrSLLL3ade8piWnwe2/OdECBRwYF8WBLg+zaz3Mhvmh4V8Ql/y1gwdseLUHNRQxSaug/zjl2YN3Z4e6OPNT69LXdJ9z73J4OF3tIwz64RDCjP0hSZtEfEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AdqBzadR; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=ODbOqtOZPP/GdFm2GxK3xcA9jI6pY812cmdzW3QFSoqfnX8gDateTb7eSA7u/AA+4Ehe90omGxtOctAmKAtzRbIOVgzBCcYWiPYjGI3RxGSTK6qhgjotRQWpDGS1D7LKifhdRHs9loyPCefCNACZXdQ4kL+I7mNNbMvumvFMGls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e7TCYsyz; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AdqBzadR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e7TCYsyz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788198288; x=1819734288;
+  t=1788198290; x=1819734290;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=2oL2tMiC8gldZ/2aEvGipZr9OCQfTdZexvNzvOG31DQ=;
-  b=AdqBzadRCEvKkhbiSa1Qf6IfGqErhn7ErF6kTbokEjiPnQQNzjXPLwc7
-   vuW39c8h6ofCyC3lwaH85hPxgtKu2gDxb6mkWFGh/9Zm3dC+FhQSuVlsp
-   VBYD12ft88ucSEO3CCOeTsxEpBCFQYapYMFX6qL6g2PU7tkkp9YicXh2a
-   RpdeUwfIqHcLPawUG8JDUEO6F4dgtChhQYtxQwv8HLBU6320egxgyGCDh
-   UJmZJwPj0bo4h20HwaGdnvS69tEvhwjTNydilJUpEwIGVuxNelIFmGdTW
-   qwg8XL0Oi3FEZcPSaL/KbFesG6H0vNYjNslxrqUTHFo+2g0JPn/jN4BSw
-   w==;
-X-CSE-ConnectionGUID: fqdlHJMZRzuwpNq8mol1aA==
-X-CSE-MsgGUID: 9c8diAM1RCq1dzdGgxX6gw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="92480102"
+  bh=/jTi+tnt1ej+QcuyLCn8l49rg9sBgx4D2+lUqrqwpHM=;
+  b=e7TCYsyzpgxNxsz0dwLGvOMY/DhjLCNOS940ggFIv/4EdJQywvL7aQAZ
+   5P4MVyVEGmxUSFrTPKQtjf2hS3x+uziGXaZQdJJkl5zjy+fLv43PqqYTF
+   3J+H1v2aYV1QGO++6n88OGHEFZLW3PbQ3fwPjfckQzE8xuUo0ULgVd0SS
+   3MAEHKII30JGTIjc29ljzo720MQWHxbCLG99fJufL2R162c9g6QtzF2U6
+   bStz1NrS8l7A5OcTgKO3g30T4tdimW+ITmv2WGIUxYcbrOtFzwEYPryq7
+   WfhQuTOcnvc2hznLjqWZyN9Q/HaxzS8OAg8CVbswS74HbJ3n8eoQU0SDU
+   Q==;
+X-CSE-ConnectionGUID: NRlf4e8cR+KUm1Bckpugwg==
+X-CSE-MsgGUID: Isuosn6kTTStI9S7UO3sMw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="92480111"
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="92480102"
+   d="scan'208";a="92480111"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
   by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:43 -0700
-X-CSE-ConnectionGUID: 8tD81Ln9TimZwgMRbEdsqA==
-X-CSE-MsgGUID: PeeJdshaRF2ZMrJXCqll3w==
+X-CSE-ConnectionGUID: cWyN4GQqSViS4oAqvP8PGQ==
+X-CSE-MsgGUID: ZXRNy8tbQuigHjJ7mOWxVA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="268907023"
+   d="scan'208";a="268907027"
 Received: from aherrold-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.17])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:41 -0700
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:42 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v11 20/23] platform/x86/intel/pmt: Inform resctrl when MMIO maps are being removed
-Date: Mon, 31 Aug 2026 10:44:18 -0700
-Message-ID: <20260831174421.13921-21-tony.luck@intel.com>
+Subject: [PATCH v11 21/23] x86/resctrl: Require 64-bit x86 for resctrl support
+Date: Mon, 31 Aug 2026 10:44:19 -0700
+Message-ID: <20260831174421.13921-22-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831174421.13921-1-tony.luck@intel.com>
 References: <20260831174421.13921-1-tony.luck@intel.com>
@@ -73,68 +73,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Before destroying devices, tell resctrl that the virtual addresses
-supplied by an earlier call to intel_pmt_get_regions_by_feature()
-are about to be invalidated and should not be used again.
+Intel Application Energy Telemetry (AET) provides event counts in 64-bit
+registers in MMIO space. For accurate results these should be read with a
+single 64-bit load operation from the CPU.
+
+In preparation for the removal of the separate CONFIG_X86_CPU_RESCTRL_INTEL_AET
+configuration option, move the X86_64 dependency to X86_CPU_RESCTRL.
+
+This in inline with Dave Hansen's proposal[1] for an addition to Linux
+documentation that details the state of 32-bit x86 support.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/all/c6ab0c24-8931-4f0d-9be6-23498ab4c38b@intel.com/ [1]
 ---
 v11:
-	Unbind/remove operations can't cross package boundaries.
-	Psss package_id instead of bitmap of package IDs.
-	Use dev_warn() to report failure to find package_id.
+Provide more accurate justification on why 32-bit support is not useful
+for resctrl.
 
- drivers/platform/x86/intel/pmt/telemetry.c | 32 ++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ arch/x86/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/pmt/telemetry.c b/drivers/platform/x86/intel/pmt/telemetry.c
-index 2d2282c636b2..92871ce51c57 100644
---- a/drivers/platform/x86/intel/pmt/telemetry.c
-+++ b/drivers/platform/x86/intel/pmt/telemetry.c
-@@ -366,11 +366,43 @@ pmt_telem_find_and_register_endpoint(struct device *dev, u32 guid, u16 pos)
- }
- EXPORT_SYMBOL_NS_GPL(pmt_telem_find_and_register_endpoint, "INTEL_PMT_TELEMETRY");
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index 15fd9ec5ecac..06b5d0c4633e 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -518,7 +518,7 @@ config X86_MPPARSE
  
-+static int pmt_telem_get_package_id(struct pmt_telem_priv *priv)
-+{
-+	u32 ret = -1;
-+	int i;
-+
-+	mutex_lock(&ep_lock);
-+	for (i = 0; i < priv->num_entries; i++) {
-+		struct intel_pmt_entry *entry = &priv->entry[i];
-+		struct pci_dev *pdev = to_pci_dev(entry->ep->dev);
-+		struct oobmsm_plat_info *plat_info;
-+
-+		plat_info = intel_vsec_get_mapping(pdev);
-+		if (!IS_ERR(plat_info)) {
-+			ret = plat_info->package_id;
-+			break;
-+		}
-+	}
-+	mutex_unlock(&ep_lock);
-+
-+	return ret;
-+}
-+
- static void pmt_telem_remove(struct auxiliary_device *auxdev)
- {
- 	struct pmt_telem_priv *priv = auxiliary_get_drvdata(auxdev);
-+	int package_id = pmt_telem_get_package_id(priv);
- 	int i;
+ config X86_CPU_RESCTRL
+ 	bool "x86 CPU resource control support"
+-	depends on X86 && (CPU_SUP_INTEL || CPU_SUP_AMD)
++	depends on X86_64 && (CPU_SUP_INTEL || CPU_SUP_AMD)
+ 	depends on MISC_FILESYSTEMS
+ 	select ARCH_HAS_CPU_RESCTRL
+ 	select RESCTRL_FS
+@@ -541,7 +541,7 @@ config X86_CPU_RESCTRL
  
-+	/*
-+	 * Tell resctrl/AET that virtual mappings for MMIO space in a CPU
-+	 * packages are about to be torn down.
-+	 */
-+	if (package_id != -1)
-+		intel_aet_invalidate(package_id);
-+	else
-+		dev_warn(&auxdev->dev, "Unable to determine package ID for removed device\n");
-+
- 	mutex_lock(&ep_lock);
- 	for (i = 0; i < priv->num_entries; i++) {
- 		struct intel_pmt_entry *entry = &priv->entry[i];
+ config X86_CPU_RESCTRL_INTEL_AET
+ 	bool "Intel Application Energy Telemetry"
+-	depends on X86_64 && X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
++	depends on X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
+ 	help
+ 	  Enable per-RMID telemetry events in resctrl.
+ 
 -- 
 2.55.0
 
