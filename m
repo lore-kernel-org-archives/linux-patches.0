@@ -1,49 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E1B490BEE;
-	Mon, 31 Aug 2026 13:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F414949F6;
+	Mon, 31 Aug 2026 13:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183519; cv=none; b=hImEopt8oaFoRzSRe0Cqafszh2P0RiZ1LVsjlx4PfZrqSQCjc1LnqBRWQvlBhc7B8f13YiKY7p61P+wtH5blUEINQN4xjfteb6jlcFnB4VZn3CIO8ScmNsbrNJKBfGiu653ECo/v7wEPQNFRsfIOVZbsNOf1im7gf4sKOYkeKP8=
+	t=1788183521; cv=none; b=BQ0rSxll/z1QPFDcBVCtXPBqNnoA/bGtq10qkqDVZaOA55i8FyEeMrRquCTsF90cEySTudxMuB+sHMJZvvqeo1l1in95MUudkJfWN7c4dX+tPUYfnm/1sNjm+4og8LJl68YF3WzXDnaWwz4x52X9NeG6ad0qZqjDCB5mthCiIaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183519; c=relaxed/simple;
-	bh=PQl+2EVsvgICC18dXT3Bn6fY9nFx9i22nzg72qQDowU=;
+	s=arc-20240116; t=1788183521; c=relaxed/simple;
+	bh=t74y8aa8QALT2W0gIPlQC5NFgC0c+HZvEOge4iu8Sks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VrcUIoh/yetgaelxmFoPBuwdiuyKUNrwvY3BBn91gBmNXnIMbcnepQ0lex4yq8arjE9Tum5vop98rd90eILVEELqn4XSjBIvmQIOv43725uyqiIp4z6ld+Mrj/QUFxWYZg0XRb/OQvOKnnBdWOlt63ybch7Zj/KWkoQgo6YuMd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L6tTd4ry; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rlrvmee/1Qm32p5j4zdRX3B7H0EER7bpdVYjo4CEoTTP93kNC2GWLXfFotlQRmmdghGxc29A7EMcMmQ8xiKmKQVPxtXbuoPMrgqx9uG+gtY8VVGp24eVgMZ6uIU5X/V7CrIMwnkFVPZa7BWzby36A6UzbbvrQv7bP0TTJ+q1Uew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ghe0hboe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L6tTd4ry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D731F00A3F;
-	Mon, 31 Aug 2026 13:38:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ghe0hboe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131F31F00ACF;
+	Mon, 31 Aug 2026 13:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183516;
-	bh=8OCzv8gHHMhGPGUdxg7OrV/lIV9NbIlPcC62zD6xPjI=;
+	s=k20260515; t=1788183518;
+	bh=zfzcXDm9TmxpRXccnfiV7B/t46lKO3BgYscXgmPgskc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L6tTd4rysqk0kSXJZvp0n/2DyCykRL/Z7s37FZK0Iexa0vHrbtV16+rEPiNZ05I52
-	 ZcAR8C7yTg7ndefI24GQsBWXyxt3pxR7leAD7Sdh/G/AyJIA3GUYYpS987zzXcAQhi
-	 4di6ByZgGeLOT6Dg3iv/PSSKa2cprw6ei9fs8PwneCFZTbjs6VZhcZKq9PQ02w5kW2
-	 iqXYg/XO1d7AK6ze1oE5SvfAEnqyhq2b8u8zXTcSLFZNPWeez1SHmn0odi6SevnUwm
-	 Zg0kh80zZjXZ5zGpHdX1mjIoi2yq9VuFMVWDK7Hqh5UGQHPoWeJs6rUOXyHiX9dSgN
-	 QdHZ4yECbHcyA==
+	b=ghe0hboehe+ZHPCTZsIniB1NGortNfTP5jSpooxCtril4sBeZFkU8re7z3K1SeNUX
+	 yjo8NP1pw/asOKe3YY0yMq4jufgTGrHGZPdX2BIcaSw5+BK/5WiSX2KUwdtg4NHmf5
+	 KvpDhkq+fihA78/woEDk9Kih7V56MDw1VZFMzynuS85FSs6Hw8HKcE93aWBBH1Rf/s
+	 2nhh4mHYmbImdBqlbA8WkR/xtVj2tE+VC91t9uzgVN0riwvH/J0Yyu5Y6YsMxJQKsC
+	 DH/4H4qVJsGCVib2482l13y3Tzd02TA8wdYCL1D6UBUvElHr2FC4V7ACumHC08QV/Q
+	 Pm8l+gxCoxZNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Michael Trimarchi <michael@amarulasolutions.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	peter.ujfalusi@linux.intel.com,
-	yung-chuan.liao@linux.intel.com,
-	daniel.baluta@nxp.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	sound-open-firmware@alsa-project.org,
-	linux-sound@vger.kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ASoC: SOF: validate probe info element counts
-Date: Mon, 31 Aug 2026 09:22:51 -0400
-Message-ID: <20260831133314.4125787-143-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/panel: simple: Add AM-1280800W8TZQW-T00H
+Date: Mon, 31 Aug 2026 09:22:52 -0400
+Message-ID: <20260831133314.4125787-144-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -59,424 +59,443 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 95edf2dbb492f3ea2420111e9c0044c7dec9113c ]
+[ Upstream commit 6acb810ebc5d8dea5c250326c14dc44e32dc8e92 ]
 
-Probe information replies contain a firmware-provided element count. IPC3
-uses that count to copy an array, then returns the unchecked count to its
-caller. A short reply can therefore make the caller walk beyond the copied
-array.
+Add Ampire, AM-1280800W8TZQW-T00H 10.1" TFT LCD panel timings.
 
-IPC4 similarly uses the count both to allocate the destination array and
-to walk the reply. On 32-bit systems the allocation size can wrap, while on
-all systems an excessive count reads beyond the reply payload.
-
-Validate each count against the actual reply size before copying or
-allocating the array, and use kcalloc() for the IPC4 allocation.
-
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260628000329.18606-1-alhouseenyousef@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Co-developed-by: Michael Trimarchi <michael@amarulasolutions.com>
+Signed-off-by: Michael Trimarchi <michael@amarulasolutions.com>
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260515082232.1766586-2-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: drm/panel: simple: Add AM-1280800W8TZQW-T00H
 
-### Step 1.1: Subject Line
-**Record:** `[ASoC: SOF]` `[validate]` — Validate firmware-provided
-probe info element counts before use in IPC3/IPC4 probe handlers.
+**Local tree:** Linux **6.18.44** (`v6.18.44`, `stable/linux-6.18.y`)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[drm/panel: simple]` `[Add]` — Add Ampire
+AM-1280800W8TZQW-T00H 10.1" TFT LCD panel timings to the existing
+`panel-simple` driver.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Yousef Alhouseen `<alhouseenyousef@gmail.com>`
-  (author)
-- **Link:** `https://patch.msgid.link/20260628000329.18606-1-
-  alhouseenyousef@gmail.com`
-- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (ASoC maintainer)
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or `Reviewed-by:` tags
-- Notable: maintainer sign-off; no fuzzer/user bug report in message
+- **Co-developed-by:** Michael Trimarchi
+  \<michael@amarulasolutions.com\>
+- **Signed-off-by:** Michael Trimarchi, Dario Binacchi
+- **Reviewed-by:** Dmitry Baryshkov
+  \<dmitry.baryshkov@oss.qualcomm.com\> (DRM/panel reviewer)
+- **Signed-off-by:** Neil Armstrong \<neil.armstrong@linaro.org\>
+  (maintainer ack)
+- **Link:** https://patch.msgid.link/20260515082232.1766586-2-
+  dario.binacchi@amarulasolutions.com
+- **No** Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org,
+  or syzbot tags
+- **Notable:** Part of a 2-patch v2 series (patch 2/2); patch 1/2 adds
+  the DT binding
 
-### Step 1.3: Body Analysis
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** Probe info IPC replies include a firmware-provided
-  `num_elems`. IPC3 uses it for `kmemdup()` and returns it to callers;
-  IPC4 uses it for allocation and iteration. Neither path validates the
-  count against the actual reply size.
-- **Symptoms:** Short/malformed replies can cause out-of-bounds reads
-  during copy/iteration; on 32-bit IPC4 paths, `num_elems *
-  sizeof(desc)` can wrap in `kzalloc()`.
-- **Root cause:** Missing bounds check on untrusted firmware IPC payload
-  fields.
-- **Version info:** None stated in the commit message.
+- **Bug description:** None — this is hardware enablement, not a bug
+  fix.
+- **Symptom without patch:** A device tree node with `compatible =
+  "ampire,am-1280800w8tzqw-t00h"` will not match `panel-simple`, so the
+  display will not probe and no framebuffer will come up.
+- **Root cause:** Missing `panel_desc` / `drm_display_mode` entry and
+  missing OF compatible in `platform_of_match[]`.
+- **Version info:** None in the message.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Yes. Although the subject says "validate" rather than "fix",
-this is a memory-safety bug fix: unchecked firmware metadata can cause
-OOB access and allocation-size wrap.
+### Step 1.4: Hidden bug fix?
+**Record:** No. This is a straightforward device-ID / panel-timing
+addition. It does not fix leaks, races, crashes, or corruption in
+existing code paths.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- `sound/soc/sof/sof-client-probes-ipc3.c`: +19 / -4 lines
-- `sound/soc/sof/sof-client-probes-ipc4.c`: +11 / -1 lines
-- **Functions modified:** `ipc3_probes_info()`,
-  `ipc4_probes_points_info()`
-- **Scope:** Small, two-file, subsystem-local surgical fix
+- **File changed:** `drivers/gpu/drm/panel/panel-simple.c` only (+28
+  lines)
+- **Functions modified:** None (only static data and one
+  `platform_of_match[]` entry)
+- **Scope:** Single-file, surgical data addition
 
-### Step 2.2: Code Flow Changes
+### Step 2.2: Code flow change
+**Record:**
+- **Hunk 1 (after `ampire_am_1280800n3tzqw_t00h`):** Adds
+  `ampire_am_1280800w8tzqw_t00h_mode` (1280×800, 72.4 MHz pixel clock,
+  different vsync from the N3 sibling) and
+  `ampire_am_1280800w8tzqw_t00h` descriptor (8 bpc, LVDS, RGB888 SPWG).
+  - Before: only the N3 variant is known.
+  - After: W8 variant is also known.
+- **Hunk 2 (`platform_of_match[]`):** Adds `{ .compatible =
+  "ampire,am-1280800w8tzqw-t00h", .data = &ampire_am_1280800w8tzqw_t00h
+  }`.
+  - Before: probe fails for W8 compatible strings.
+  - After: probe succeeds and uses W8-specific timings.
 
-**IPC3 (`ipc3_probes_info`):**
-- **Before:** After IPC success, used `reply->num_elems` directly to
-  compute `bytes *= num_elems`, `kmemdup()`, and `*num_params`.
-- **After:** Reads `payload_size = reply->rhdr.hdr.size`, rejects
-  undersized payloads, computes `elem_size`, validates `num_elems <=
-  payload_size / elem_size`, then copies/returns count.
+### Step 2.3: Bug mechanism
+**Record:** **Category h) — hardware workarounds / device enablement.**
+Not a software bug fix; adds OF compatible + timings for a new panel
+variant on an existing driver.
 
-**IPC4 (`ipc4_probes_points_info`):**
-- **Before:** Used `info->num_elems` directly for `kzalloc(*num_desc *
-  sizeof(**desc))` and loop bound.
-- **After:** Validates `info->num_elems` against `msg.data_size`,
-  switches to `kcalloc()`, rejects invalid counts.
-
-### Step 2.3: Bug Mechanism
-**Record:** **Memory safety / bounds validation bug**
-- **IPC3:** Unchecked `num_elems` can make `bytes = elem_size *
-  num_elems` exceed actual reply payload; `kmemdup()` reads past valid
-  IPC data. If multiplication wraps, a small allocation can be paired
-  with a large returned count, and callers iterate past the allocation.
-- **IPC4:** Unchecked `num_elems` allows loop reads past `msg.data_ptr`
-  bounds; `kzalloc(n * size)` can wrap on 32-bit systems.
-
-### Step 2.4: Fix Quality
-**Record:** Fix is obviously correct and minimal. It mirrors the
-existing SOF pattern in `debug.c` (`struct_size(reply, elems,
-reply->num_elems) != reply->rhdr.hdr.size`). Regression risk is very
-low: only rejects malformed firmware replies.
+### Step 2.4: Fix quality
+**Record:**
+- **Quality:** High — mirrors the existing `am-1280800n3tzqw-t00h`
+  pattern exactly.
+- **Regression risk:** Very low — purely additive static data; no logic
+  or locking changes.
+- **Minor note:** W8 mode struct omits `.flags = DRM_MODE_FLAG_PHSYNC |
+  DRM_MODE_FLAG_PVSYNC` present on the N3 sibling; this matches the
+  submitted upstream patch and was reviewed as-is.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Buggy lines in both files trace to commit `5d324e5159d9e` in
-this shallow checkout. The vulnerable logic is present in the current
-tree at `sof-client-probes-ipc3.c:131-144` and `sof-client-probes-
-ipc4.c:251-264`.
+**Record:** On `origin/master`, the W8 panel code is present at lines
+823–846 and in `platform_of_match`. In the local 6.18.44 tree, the
+insertion point after `ampire_am_1280800n3tzqw_t00h` (lines 797–821) and
+the matching `platform_of_match` entry (line 4966) already exist. The W8
+entry is absent — this is new mainline content not yet in 6.18.y.
 
-### Step 3.2: Fixes Tag
-**Record:** N/A — no `Fixes:` tag in the commit message.
+### Step 3.2: Fixes: tag
+**Record:** Not applicable — no Fixes: tag.
 
-### Step 3.3: Related File History
-**Record:** Repository is shallow (`git rev-parse --is-shallow-
-repository` → `true`), limiting history depth. The probe client files
-exist in this 6.18.44 tree. No duplicate fix found (`grep "invalid probe
-info element count"` → no matches).
+### Step 3.3: Related file history
+**Record:**
+- Sibling panel `am-1280800n3tzqw-t00h` is already in this tree and used
+  by in-tree DTS files (`imx6q-icore-ofcap10.dts`, `px30-engicam-
+  px30-core-ctouch2-of10.dts`, `stm32mp157a-icore-
+  stm32mp1-ctouch2-of10.dts`).
+- On `stable/linux-6.6.y`, the nearly identical sibling addition was
+  backported: `bca684e69c4ce` (+29 lines, same vendor/subject pattern).
+- `w8tzqw` appears only in `panel-simple.c` and `panel-simple.yaml` on
+  mainline — no in-tree DTS references anywhere.
 
-### Step 3.4: Author History
-**Record:** No prior SOF commits from Yousef Alhouseen found in this
-tree. Mark Brown is ASoC maintainer (sign-off).
+### Step 3.4: Author context
+**Record:** Amarula Solutions (same vendor ecosystem as Engicam boards
+using the N3 panel). Dmitry Baryshkov reviewed; Neil Armstrong signed
+off. Same maintainer chain as prior Ampire panel additions.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone fix. Uses only existing headers (`offsetof`,
-`kcalloc`). No series dependency indicated. The commit is not yet
-present in this checkout.
+**Record:** Part of a 2-patch series:
+1. `dt-bindings: display: simple: Add AM-1280800W8TZQW-T00H` (Acked-by:
+   Conor Dooley)
+2. `drm/panel: simple: Add AM-1280800W8TZQW-T00H` (this commit)
+
+This driver patch is self-contained and applies cleanly to 6.18.44. The
+binding patch is a companion but not a compile-time prerequisite for the
+driver itself.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:** UNVERIFIED — `b4 dig` could not match the commit (not in
-local repo). WebFetch to patch.msgid.link and lore.kernel.org returned
-bot-protection pages (403/JS challenge). Could not read review thread.
+### Step 4.1: Original discussion
+**Record:**
+- **b4 am** on msgid
+  `20260515082232.1766586-2-dario.binacchi@amarulasolutions.com` found
+  the v2 series (2 patches).
+- **Link:** https://patch.msgid.link/20260515082232.1766586-1-
+  dario.binacchi@amarulasolutions.com
+- **b4 dig -c** on merge commit `0fd8b67e27ff7` failed (merge commit,
+  not the original patch).
+- **No Cc: stable** nominations found in the mbox thread.
+- **No NAKs** found in the retrieved mbox.
 
 ### Step 4.2: Reviewers
-**Record:** UNVERIFIED — `b4 dig -w` unavailable for this commit.
+**Record:** Dmitry Baryshkov (Reviewed-by), Conor Dooley (Acked-by on
+bindings), Neil Armstrong (Signed-off-by). Appropriate DRM/DT reviewers
+involved.
 
-### Step 4.3: Bug Report
-**Record:** No `Reported-by:` or syzbot link. Issue identified by code
-inspection of firmware IPC parsing.
+### Step 4.3: Bug report
+**Record:** Not applicable — no bug report, syzbot link, or user crash
+report.
 
-### Step 4.4: Related Patches
-**Record:** UNVERIFIED — could not retrieve series revisions from lore.
+### Step 4.4: Series context
+**Record:** 2-patch v2 series. v2 changes were alphabetical ordering and
+correcting WQVGA → WXGA in the binding comment. No board DTS included in
+the series.
 
-### Step 4.5: Stable List History
-**Record:** UNVERIFIED — lore stable search inaccessible.
+### Step 4.5: Stable list history
+**Record:** No stable-list discussion found for this specific panel.
+Sibling `AM-1280800N3TZQW-T00H` was previously backported to 6.6.y.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `ipc3_probes_info()`, `ipc3_probes_points_info()` (wrapper),
-`ipc4_probes_points_info()`
+### Step 5.1: Key functions
+**Record:** No functions modified. Data consumed by
+`panel_simple_get_desc()` → `of_device_get_match_data()` via
+`platform_of_match[]`.
 
 ### Step 5.2: Callers
-**Record:**
-- `sof_probes_compr_shutdown()` in `sof-client-probes.c:78` —
-  compressed-stream shutdown path
-- `sof_probes_dfs_points_read()` in `sof-client-probes.c:227` — debugfs
-  read path (root-accessible)
-
-Both invoke `ipc->points_info()` from the IPC ops table.
+**Record:** `panel_simple_platform_probe()` and DSI probe paths call
+`panel_simple_probe()`, which calls `panel_simple_get_desc()`. Any
+platform device with `compatible = "ampire,am-1280800w8tzqw-t00h"` would
+use the new descriptor. Triggered at boot during DRM/display
+initialization on affected embedded boards.
 
 ### Step 5.3: Callees
-**Record:** `sof_client_ipc_tx_message()`,
-`sof_client_ipc_set_get_data()`, `kmemdup()`, `kzalloc()`/`kcalloc()`,
-`sof_client_get_ipc_max_payload_size()`
+**Record:** Standard panel-simple probe path: mode/timing setup,
+connector registration. No new allocation or locking paths introduced.
 
 ### Step 5.4: Reachability
+**Record:** Reachable on any system with a DT node using this compatible
+and `CONFIG_DRM_PANEL_SIMPLE`. Not userspace-triggered, but affects
+display bring-up on boot for matching hardware.
+
+### Step 5.5: Similar patterns
+**Record:** Identical pattern to `ampire_am_1280800n3tzqw_t00h` already
+in this tree (29-line sibling addition backported to 6.6.y as
+`bca684e69c4ce`).
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+
+### Step 6.1: Does the “buggy” code exist?
+**Record:** The `panel-simple` driver and the sibling N3 Ampire panel
+entry exist in 6.18.44. The W8 compatible is **missing** — boards using
+it cannot get display support. The gap was introduced when W8 support
+landed in mainline after the 6.18 branch point.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected.** Insertion point (`after
+ampire_am_1280800n3tzqw_t00h` and in `platform_of_match[]`) is present
+and unchanged. `git diff HEAD origin/master` shows exactly this 28-line
+addition among broader mainline drift.
+
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent W8 entry in this tree. Sibling N3 panel is
+present. No duplicate fix found.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **drivers/gpu/drm/panel** — IMPORTANT for embedded/display
+platforms; not universal core kernel, but critical for affected
+hardware.
+
+### Step 7.2: Subsystem activity
+**Record:** `panel-simple.c` is mature with extensive static panel
+tables. This follows established conventions.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** **Platform-specific** — embedded boards (Engicam/Amarula
+ecosystem) using the Ampire AM-1280800W8TZQW-T00H 10.1" LVDS panel.
+Requires `CONFIG_DRM_PANEL_SIMPLE`.
+
+### Step 8.2: Trigger conditions
+**Record:** Boot on hardware with DT `compatible =
+"ampire,am-1280800w8tzqw-t00h"`. **No in-tree DTS currently uses this
+compatible** on mainline or 6.18.44. Impact is for downstream/custom DTS
+or future board additions.
+
+### Step 8.3: Failure mode severity
+**Record:** Without the patch: panel probe failure → **no display**
+(MEDIUM functional impact for affected hardware; not a crash,
+corruption, or security issue).
+
+### Step 8.4: Risk-benefit
 **Record:**
-- Trigger requires `CONFIG_SND_SOC_SOF_DEBUG_PROBES`, auto-selected on
-  Intel HDA (`SND_SOC_SOF_HDA_PROBES`) and AMD ACP
-  (`SND_SOC_SOF_ACP_PROBES`) SOF platforms.
-- Malformed `num_elems` must come from SOF firmware IPC replies during
-  probe point enumeration.
-- Not a direct unprivileged syscall path, but reachable during normal
-  audio probe shutdown and root debugfs use when probes are active.
-- Precedent: `sound/soc/sof/debug.c:227-231` already validates similar
-  IPC `num_elems` against `rhdr.hdr.size`.
-
-### Step 5.5: Similar Patterns
-**Record:** `debug.c` already validates IPC element counts; probes code
-was missing equivalent checks. `ipc3-control.c` uses overflow checks for
-control data sizes.
+- **Benefit:** Enables display on W8-variant Ampire panels; follows
+  established stable exception for device-ID additions; direct precedent
+  from sibling N3 backport to 6.6.y.
+- **Risk:** Very low — 28 lines of static data, no behavioral change for
+  existing panels.
+- **Ratio:** Favorable for stable, under the explicit “add a device ID”
+  exception in `stable-kernel-rules.rst`.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Local tree is **v6.18.44** (`6.18.44`). Vulnerable
-code is present; fix is **not** applied. Confirmed by reading current
-sources and absent error string `invalid probe info element count`.
-
-### Step 6.2: Backport Complications
-**Record:** Expected **clean apply** — current file contents match the
-patch base context exactly.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent validation found in probe IPC files. `debug.c`
-has similar validation for a different IPC path only.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-### Step 7.1: Subsystem
-**Record:** `sound/soc/sof` — ASoC / SOF audio driver. **Criticality:
-IMPORTANT** (not core kernel, but widely used on Intel/AMD
-laptop/desktop SOF platforms).
-
-### Step 7.2: Activity
-**Record:** SOF client probe support is active in this tree (`sof-
-client-probes*.c` present, Makefile builds with
-`CONFIG_SND_SOC_SOF_DEBUG_PROBES`).
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Users on SOF platforms with probes enabled (Intel HDA SOF,
-AMD ACP). Config-specific, not universal.
-
-### Step 8.2: Trigger Conditions
-**Record:** SOF firmware returns probe info with `num_elems`
-inconsistent with reply size. Requires probes feature active and a
-probe-info IPC exchange. Most likely with buggy firmware; defense-in-
-depth against compromised firmware is also relevant. Root can trigger
-via debugfs when extractor is running.
-
-### Step 8.3: Failure Mode Severity
-**Record:**
-- **IPC3:** OOB read in `kmemdup()`; potential `size_t` multiply wrap
-  leading to small allocation + large iteration count
-- **IPC4:** OOB read in `info->points[i]` loop; `kzalloc()` size wrap on
-  32-bit
-- **Severity: HIGH** (kernel memory safety; possible oops/KASAN fault)
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** Prevents kernel memory corruption/crash on malformed
-  firmware IPC in an existing code path
-- **Risk:** Very low — only rejects invalid replies; follows established
-  SOF validation pattern
-- **Ratio:** Strong benefit, minimal risk
-
----
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real memory-safety bug (OOB read, allocation-size wrap)
-- Small, surgical, obviously correct fix
-- Buggy code exists in this 6.18.44 tree; fix not yet present
-- Matches existing validation in `debug.c`
-- Maintainer-reviewed (Mark Brown)
-- Callers iterate using returned count after undersized allocation/copy
+- Explicitly permitted by `Documentation/process/stable-kernel-
+  rules.rst`: *“It must either fix a real bug that bothers people or
+  just add a device ID.”*
+- Falls under the device-ID / DT-binding exception category in the
+  evaluation guidelines.
+- Small (28 lines), contained, obviously correct, reviewed.
+- `panel-simple` driver and sibling N3 panel already exist in 6.18.44.
+- Applies cleanly to this tree.
+- Already in mainline (prerequisite met).
+- Identical precedent: `bca684e69c4ce` backported the N3 sibling to
+  6.6.y (+29 lines).
 
 **AGAINST backport:**
-- Config-limited (`CONFIG_SND_SOC_SOF_DEBUG_PROBES`)
-- Trigger requires malformed SOF firmware IPC, not direct userspace
-  input
-- No syzbot/user report in commit message
-- Mailing list review details unavailable
+- Not a bug fix — pure hardware enablement.
+- No in-tree DTS uses this compatible yet (no demonstrated user impact
+  in 6.18.44 today).
+- Ideally paired with patch 1/2 (DT binding yaml update).
+- No stable nomination or user bug report.
 
-**Unresolved:**
-- Full lore review thread and any explicit stable nominations (web
-  access blocked)
+**Unresolved:** Whether a specific shipping board on 6.18.y already uses
+this panel in downstream trees (not verifiable from this tree).
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic is straightforward;
-   maintainer sign-off; pattern proven elsewhere in SOF
-2. Fixes a real bug affecting users? **PASS** — malformed firmware IPC
-   can crash/affect SOF probe users
-3. Important issue? **PASS** — HIGH severity memory safety
-4. Small and contained? **PASS** — ~30 lines, 2 files
-5. No new features or APIs? **PASS** — validation only
-6. Can apply to local tree? **PASS** — code exists; patch context
-   matches
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — reviewed by Dmitry
+   Baryshkov; mirrors existing N3 entry.
+2. Fixes a real bug affecting users? **PASS (via device-ID exception)**
+   — not a software bug, but enables hardware that otherwise cannot
+   work.
+3. Important issue? **PASS (moderate)** — display failure on affected
+   hardware; not crash/security.
+4. Small and contained? **PASS** — 28 lines, one file.
+5. No new features or APIs? **PASS** — new OF compatible on existing
+   driver; standard stable device-ID pattern.
+6. Can apply to local tree? **PASS** — clean apply to existing `panel-
+   simple.c`.
 
-### Step 9.3: Exception Categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-bug-fix exception applies.
+### Step 9.3: Exception category
+**Record:** **NEW DEVICE ID / DT binding addition** to an existing
+driver (`panel-simple`). Same category as PCI/USB ID additions and prior
+Ampire panel additions backported to stable.
 
-### Step 9.4: Decision Rationale
+### Step 9.4: Decision rationale
 
-For **this** tree (6.18.44), the vulnerable probe IPC parsing code is
-present and lacks bounds checking on firmware-provided element counts.
-The fix is minimal, follows an established SOF pattern, and closes a
-real kernel memory-safety hole that can be triggered when SOF probes are
-in use and firmware returns inconsistent IPC data. While the feature is
-config-specific and firmware-mediated, stable trees routinely take such
-IPC validation fixes because the failure mode is kernel OOB access, not
-a benign error return.
+This commit does not fix a kernel bug, but it adds a device identifier
+(OF compatible + panel timings) to an existing, in-tree driver. That is
+explicitly allowed for stable trees per `stable-kernel-rules.rst` and
+matches the established pattern of backporting Ampire `panel-simple`
+additions (the N3 sibling was backported to 6.6.y in an essentially
+identical 29-line patch). The change is low-risk, applies cleanly to
+Linux 6.18.44, and is already in mainline. The companion DT binding
+patch should ideally be backported alongside it, but this driver commit
+alone is valid stable material.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 1] Confirmed no `Fixes:`, `Reported-by:`, or syzbot references
-- [Phase 2] Read diff hunks for `ipc3_probes_info()` and
-  `ipc4_probes_points_info()`
-- [Phase 2] Classified bug as unchecked firmware `num_elems` → OOB /
-  overflow
-- [Phase 3] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; Makefile
-  → 6.18.44
-- [Phase 3] `git blame` on vulnerable lines → `5d324e5159d9e`
-- [Phase 3] `git rev-parse --is-shallow-repository` → `true`
-- [Phase 3] `grep "invalid probe info element count"` → no matches (fix
-  absent)
-- [Phase 4] `b4 dig -c HEAD` on wrong commit; target commit not in repo
-- [Phase 4] WebFetch patch.msgid.link and lore search → blocked by bot
-  protection
-- [Phase 4] curl lore raw → 403 Forbidden
-- [Phase 5] `grep` callers → `sof-client-probes.c:78`, `sof-client-
-  probes.c:227`
-- [Phase 5] Read `debug.c:227-231` — existing `num_elems` vs `hdr.size`
-  validation
-- [Phase 5] Read Kconfig — `SND_SOC_SOF_DEBUG_PROBES` auto-selected by
-  HDA/ACP probe options
-- [Phase 6] Read current `sof-client-probes-ipc3.c:102-148` — vulnerable
-  code confirmed
-- [Phase 6] Read current `sof-client-probes-ipc4.c:207-267` — vulnerable
-  code confirmed
-- [Phase 6] Verified patch context matches current tree contents
-- [Phase 7] Read `sound/soc/sof/Makefile` — probes built under
-  `CONFIG_SND_SOC_SOF_DEBUG_PROBES`
-- [Phase 8] Traced failure modes: OOB read, size wrap, caller over-
-  iteration
-- **UNVERIFIED:** Lore review thread, stable-list discussion, explicit
-  reviewer stable nomination
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+  and mbox.
+- **[Phase 1]** `b4 am
+  20260515082232.1766586-2-dario.binacchi@amarulasolutions.com`:
+  confirmed v2 2-patch series; Reviewed-by Dmitry Baryshkov; Acked-by
+  Conor Dooley on patch 1/2.
+- **[Phase 2]** Diff analysis: +28 lines in `panel-simple.c`; static
+  data + one `platform_of_match` entry.
+- **[Phase 3]** `git describe HEAD`: v6.18.44 / 6.18.44 on
+  `stable/linux-6.18.y`.
+- **[Phase 3]** `git grep "am-1280800w8tzqw-t00h" origin/master`: only
+  in `panel-simple.c` and `panel-simple.yaml` on mainline; absent from
+  HEAD.
+- **[Phase 3]** `git show bca684e69c4ce --stat`: sibling N3 panel
+  backported to 6.6.y (+29 lines, same pattern).
+- **[Phase 3]** `git log stable/linux-6.6.y --grep="1280800"`: N3 panel
+  + binding + bpc fix backported to 6.6.y.
+- **[Phase 4]** `b4 dig -c 0fd8b67e27ff7`: no match (merge commit).
+- **[Phase 4]** Read mbox `v2_20260515_dario_binacchi_dt_bindings_displa
+  y_simple_add_am_1280800w8tzqw_t00h.mbx`: no Cc: stable; 2-patch series
+  confirmed.
+- **[Phase 5]** `grep panel_simple_probe/panel_simple_get_desc` in
+  `panel-simple.c`: standard probe path via
+  `of_device_get_match_data()`.
+- **[Phase 6]** `grep "am-1280800w8tzqw"`: zero matches in local tree.
+- **[Phase 6]** `grep "am-1280800n3tzqw"`: present in `panel-simple.c`
+  and three in-tree DTS files.
+- **[Phase 6]** `git diff HEAD origin/master --
+  drivers/gpu/drm/panel/panel-simple.c`: W8 addition is a clean 28-line
+  insert at expected location.
+- **[Phase 6]** `git show origin/master:panel-simple.c | rg
+  "1280800w8"`: confirmed mainline has full W8 definition.
+- **[Phase 7]** Read `Documentation/process/stable-kernel-rules.rst`:
+  confirms device-ID additions are valid stable material.
+- **[Phase 8]** `git grep "am-1280800w8tzqw-t00h" origin/master`: no DTS
+  references — no in-tree board uses this panel yet.
 
-**YES**
+**YES**The background lookups finished and line up with the earlier
+analysis:
 
- sound/soc/sof/sof-client-probes-ipc3.c | 23 +++++++++++++++++++----
- sound/soc/sof/sof-client-probes-ipc4.c | 11 ++++++++++-
- 2 files changed, 29 insertions(+), 5 deletions(-)
+- **Pickaxe search** (`am-1280800w8tzqw-t00h` on `origin/master`): only
+  surfaced merge commit `0fd8b67e27ff7`, not the original panel patch —
+  the change is buried in a merge, which is why a direct subject/hash
+  search was needed.
+- **Broader pickaxe search** (with `--all`): slow and similarly
+  unhelpful for finding the real introducing commit.
+- **`b4 dig -c 0fd8b67e27ff7`**: no lore match on that RDMA merge
+  commit.
 
-diff --git a/sound/soc/sof/sof-client-probes-ipc3.c b/sound/soc/sof/sof-client-probes-ipc3.c
-index a78ec0954a618..a3e382d6161f1 100644
---- a/sound/soc/sof/sof-client-probes-ipc3.c
-+++ b/sound/soc/sof/sof-client-probes-ipc3.c
-@@ -107,7 +107,7 @@ static int ipc3_probes_info(struct sof_client_dev *cdev, unsigned int cmd,
- 	struct device *dev = &cdev->auxdev.dev;
- 	struct sof_ipc_probe_info_params msg = {{{0}}};
- 	struct sof_ipc_probe_info_params *reply;
--	size_t bytes;
-+	size_t bytes, elem_size, payload_size;
- 	int ret;
+The useful trace came from **`b4 am`** on the patch msgid, which found
+the v2 2-patch series (DT binding + driver). That supports the **YES**
+verdict for 6.18.44: a small device-ID addition to an existing driver,
+with the companion binding patch ideally backported alongside it.
+
+ drivers/gpu/drm/panel/panel-simple.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index ef1c4b9299ee4..878a5dc7748fb 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -820,6 +820,31 @@ static const struct panel_desc ampire_am_1280800n3tzqw_t00h = {
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+ };
  
- 	*params = NULL;
-@@ -128,14 +128,29 @@ static int ipc3_probes_info(struct sof_client_dev *cdev, unsigned int cmd,
- 	if (ret < 0 || reply->rhdr.error < 0)
- 		goto exit;
- 
-+	payload_size = reply->rhdr.hdr.size;
-+	if (payload_size < offsetof(struct sof_ipc_probe_info_params, dma)) {
-+		ret = -EINVAL;
-+		goto exit;
-+	}
++static const struct drm_display_mode ampire_am_1280800w8tzqw_t00h_mode = {
++	.clock = 72400,
++	.hdisplay = 1280,
++	.hsync_start = 1280 + 40,
++	.hsync_end = 1280 + 40 + 80,
++	.htotal = 1280 + 40 + 80 + 40,
++	.vdisplay = 800,
++	.vsync_start = 800 + 10,
++	.vsync_end = 800 + 10 + 18,
++	.vtotal = 800 + 10 + 18 + 10,
++};
 +
- 	if (!reply->num_elems)
- 		goto exit;
- 
- 	if (cmd == SOF_IPC_PROBE_DMA_INFO)
--		bytes = sizeof(reply->dma[0]);
-+		elem_size = sizeof(reply->dma[0]);
- 	else
--		bytes = sizeof(reply->desc[0]);
--	bytes *= reply->num_elems;
-+		elem_size = sizeof(reply->desc[0]);
++static const struct panel_desc ampire_am_1280800w8tzqw_t00h = {
++	.modes = &ampire_am_1280800w8tzqw_t00h_mode,
++	.num_modes = 1,
++	.bpc = 8,
++	.size = {
++		.width = 217,
++		.height = 136,
++	},
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++};
 +
-+	payload_size -= offsetof(struct sof_ipc_probe_info_params, dma);
-+	if (reply->num_elems > payload_size / elem_size) {
-+		dev_err(dev, "%s: invalid probe info element count %u\n",
-+			__func__, reply->num_elems);
-+		ret = -EINVAL;
-+		goto exit;
-+	}
-+
-+	bytes = reply->num_elems * elem_size;
- 	*params = kmemdup(&reply->dma[0], bytes, GFP_KERNEL);
- 	if (!*params) {
- 		ret = -ENOMEM;
-diff --git a/sound/soc/sof/sof-client-probes-ipc4.c b/sound/soc/sof/sof-client-probes-ipc4.c
-index 758a56d271d77..2c2ab85979b83 100644
---- a/sound/soc/sof/sof-client-probes-ipc4.c
-+++ b/sound/soc/sof/sof-client-probes-ipc4.c
-@@ -248,10 +248,19 @@ static int ipc4_probes_points_info(struct sof_client_dev *cdev,
- 		return ret;
- 	}
- 	info = msg.data_ptr;
-+	if (msg.data_size < sizeof(*info) ||
-+	    info->num_elems > (msg.data_size - sizeof(*info)) /
-+			      sizeof(info->points[0])) {
-+		dev_err(dev, "%s: invalid probe info element count %u\n",
-+			__func__, info->num_elems);
-+		kfree(msg.data_ptr);
-+		return -EINVAL;
-+	}
-+
- 	*num_desc = info->num_elems;
- 	dev_dbg(dev, "%s: got %zu probe points", __func__, *num_desc);
- 
--	*desc = kzalloc(*num_desc * sizeof(**desc), GFP_KERNEL);
-+	*desc = kcalloc(*num_desc, sizeof(**desc), GFP_KERNEL);
- 	if (!*desc) {
- 		kfree(msg.data_ptr);
- 		return -ENOMEM;
+ static const struct drm_display_mode ampire_am_480272h3tmqw_t01h_mode = {
+ 	.clock = 9000,
+ 	.hdisplay = 480,
+@@ -4965,6 +4990,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	{
+ 		.compatible = "ampire,am-1280800n3tzqw-t00h",
+ 		.data = &ampire_am_1280800n3tzqw_t00h,
++	}, {
++		.compatible = "ampire,am-1280800w8tzqw-t00h",
++		.data = &ampire_am_1280800w8tzqw_t00h,
+ 	}, {
+ 		.compatible = "ampire,am-480272h3tmqw-t01h",
+ 		.data = &ampire_am_480272h3tmqw_t01h,
 -- 
 2.53.0
 
