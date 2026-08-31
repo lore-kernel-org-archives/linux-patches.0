@@ -1,50 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877FE4503E0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7844A2608;
 	Mon, 31 Aug 2026 13:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183739; cv=none; b=oVsRzYVZhMRDO8FeV1c0yWVBeRHcEpdNXpFi0AtSFpmpUsndXE/qn9kcN3foxPahtV9ByV85Y0kXDT5MZ1bk1ybhUxNL7VW9lTGdDQLlCgPv4MNCf9Q5NyjD7byFtA7c/EKn5BVwqWLMPk9PTgEQfHRZKX8RYsoXypVBt8AMtqE=
+	t=1788183739; cv=none; b=o4RZGjDXzdcxlGR+Qm5S28p3UjShmLTZj4i/xV4312LpXLj6xxnIfVAKcAJVzz2lqgVtDCAFvywtjKBqadOoUuBI0V5DtR6Zd9jjIUR+oyc94Av1k3VOaPbq6rVOY1MmZNytyxmsoX9EqBcoVMPZhCaNKgZzbnQp87CY/osKJIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183739; c=relaxed/simple;
-	bh=gJkgKkIlKjHv7i8UbIL0fSwWesp+q8aGft91VxdSjmk=;
+	bh=EQvRfzAqG7a+WR4Tzp3UpC+56V2y00JW2H/alPSf8bM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=izzkmdG9MScuiy/eZjS3Daut8PrrLIvyFpdr5LiFZzYRnroxHGHOyS+OYNwrVnmjvurvtD3+yLUjkfx4Qlrwg5v6hA/oyiDaTteSBhqdUqliibwL1yxzxzIE3MnX6i0xBjup8VgqBJy9mP13MlDISdbAuwadlsDb+irn07I0Z0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DiBhIK1D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fxHr06JWPMv79bVI4sgBsJnHozWF9FYQ9EI7eDbBdGjQXiVEhHyEtCsuX/Kfe92MlOlDftmUznvDhynDIZeKX3jboWRu8T3Gfbv94Wak4pow1cYzYGjuVmy5vJ2haIT7+dS15H+Pq/W4UmXgDvG5qqx0p6EnB2FH5jlH+5r+sDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PEnXaJD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DiBhIK1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7B51F00A3D;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PEnXaJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E547B1F00A3E;
 	Mon, 31 Aug 2026 13:42:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183736;
-	bh=xtMewim9srNYaEbaRlQ0rwAMxDKSDk1DOz8Kl9xTsgE=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183736;
+	bh=zGUynB7NvTQ0VZ1jKCWdYy5+mVVpIviSEcSDIJ9h9nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DiBhIK1DLKJLUcKUTMp63twAkFnHETd3uWOtsLH8S+1WEH+jSU0Fu8fDTHLLOh7Kv
-	 cZtGdxsBWU+dp7DY9T31R7ZApsQia7vVQqHoxXtBz74ojCT11pWUFH8PZw4lzkRcTW
-	 sjzjVAhIG7J1B1slH1r9/FTSzH2zA6khCKcXGWNpJU7MDsYAFOjz/JEYe2HbD+o9cp
-	 7QlSuIIi9g/m0yt1Iex2RFTe92crUEJXcd28JQttzQhqm/kEVCeqacbKnQUtqcLjuK
-	 c30MO4XpseuT43wPMUH9O5mBw6a9IeGd6RLwDnEJ+X/nrvwuT6DxgMnoDbgFlaCBRP
-	 K/AEzjZNAA9fg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: =?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	andrew@lunn.ch,
-	olteanv@gmail.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] net: dsa: mv88e6xxx: define .pot_clear() for 6321
-Date: Mon, 31 Aug 2026 09:25:01 -0400
-Message-ID: <20260831133314.4125787-273-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=2PEnXaJDNE8AbrrRjOrxP2mnI1tXDo7Ix9XajIzrpZqMfyO1orGtUJTNUMv1af9uL
+	 W6lOm2rkXHbQoWRCmAQcES5QBYMzM6splt+3tJK1+dg3c43SRanS/woHXkSAq6Lr3g
+	 75TMPq+pFa7xB7YSMbLiJdB3aSQFEPFCKLVAnIDU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 08/76] selinux: more strict policy parsing
+Date: Mon, 31 Aug 2026 15:33:40 +0200
+Message-ID: <20260831133359.580219011@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,358 +48,770 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Marek Behún <kabel@kernel.org>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 17826d9708a57d27011d0a6efdebb628d6f8299a ]
+------------------
 
-Commit 9e907d739cc3 ("net: dsa: mv88e6xxx: add POT operation") did not
-add the .pot_clear() method to the 6321 switch operations structure.
-Add them now.
+From: Christian Göttsche <cgzones@googlemail.com>
 
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://patch.msgid.link/20260504153227.1390546-4-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Upstream commit 18fa21f10d008a0fc22565109c7d38f304295912 ]
+
+Be more strict during parsing of policies and reject invalid values.
+
+Add some error messages in the case of policy parse failures, to
+enhance debugging, either on a malformed policy or a too strict check.
+
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: fixed checkpatch.pl warnings, style problems]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+(cherry picked from commit 18fa21f10d008a0fc22565109c7d38f304295912)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-**Step 1.1 — Subject line**
-Record: `[net: dsa: mv88e6xxx] [define] [add missing .pot_clear()
-callback for MV88E6321 switch ops]`
-
-**Step 1.2 — Tags**
-Record:
-- `Signed-off-by: Marek Behún <kabel@kernel.org>` (author)
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (net maintainer
-  merge)
-- `Link:
-  https://patch.msgid.link/20260504153227.1390546-4-kabel@kernel.org`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable@vger.kernel.org`
-
-Notable: patch 3/5 in Marek Behún’s “Fixes for mv88e6xxx for 6320/6321
-family” series. An earlier March 2025 submission to `net` (stable path)
-included `Fixes: 9e907d739cc3` for the same change.
-
-**Step 1.3 — Body analysis**
-Record:
-- Bug: commit `9e907d739cc3` (“add POT operation”) added `pot_clear` to
-  most switch ops tables but omitted `mv88e6321_ops`.
-- Symptom: Priority Override Table (POT) is not cleared during chip
-  setup on MV88E6321.
-- Root cause: missing `.pot_clear = mv88e6xxx_g2_pot_clear` in
-  `mv88e6321_ops`.
-- No crash report, no user bug report in the message.
-
-**Step 1.4 — Hidden bug fix?**
-Record: Yes. Despite the simple “add them now” wording, this is a real
-driver initialization bug, not style cleanup.
-
----
-
-## Phase 2: Diff Analysis
-
-**Step 2.1 — Inventory**
-Record:
-- 1 file: `drivers/net/dsa/mv88e6xxx/chip.c`
-- +1 line, -0 lines
-- Modified structure: `mv88e6321_ops`
-- Scope: single-file, surgical one-liner
-
-**Step 2.2 — Code flow change**
-Record:
-- Before: `mv88e6xxx_pot_setup()` called from `mv88e6xxx_setup()` finds
-  `chip->info->ops->pot_clear == NULL` for 6321 and returns 0 without
-  doing anything.
-- After: `mv88e6xxx_g2_pot_clear()` runs, zeroing all 16 Global2
-  Priority Override Table entries.
-- Affected path: switch probe/setup initialization (normal path, every
-  boot).
-
-**Step 2.3 — Bug mechanism**
-Record:
-- Category: logic/correctness — missing hardware initialization callback
-- Mechanism: `mv88e6xxx_pot_setup()` only acts when `ops->pot_clear` is
-  non-NULL; 6321 was the sole omission among G2-family peers.
-
-**Step 2.4 — Fix quality**
-Record:
-- Obviously correct: identical to `mv88e6320_ops` and 20+ other chips in
-  the same file.
-- Minimal, no unrelated changes.
-- Regression risk: very low; only adds init behavior already used
-  everywhere else in the family.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record:
-- `mv88e6321_ops` area currently attributed to base merge
-  `5d324e5159d9e` (shallow tree limits deeper blame).
-- In `9e907d739cc3` (2017-07-18): `mv88e6320_ops` got `.pot_clear`,
-  `mv88e6321_ops` did not — omission present since POT support was
-  introduced.
-
-**Step 3.2 — Fixes: tag**
-Record: Not applicable in this commit. Referenced commit `9e907d739cc3`
-exists as a git object; POT infrastructure (`mv88e6xxx_pot_setup`,
-`mv88e6xxx_g2_pot_clear`) is present in this tree.
-
-**Step 3.3 — Related changes**
-Record:
-- Same fix appeared in Marek Behún’s March 2025 `[PATCH net 07/13]`
-  series (with `Fixes:` tag); that series does not appear merged.
-- May 2026 `[PATCH net-next 3/5]` series reapplied it to net-next;
-  applied as `17826d9708a5` per lore.
-- Standalone one-liner; no series dependencies.
-
-**Step 3.4 — Author context**
-Record: Marek Behún is an active mv88e6xxx contributor; series CC’d
-Rad/Ericsson contacts (`lev_o@rad.com`), indicating production hardware
-use of 6320/6321 family.
-
-**Step 3.5 — Prerequisites**
-Record: No prerequisites. `mv88e6xxx_g2_pot_clear()` and
-`mv88e6xxx_pot_setup()` already exist in this tree.
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 — Original discussion**
-Record:
-- Series cover: `https://lore.kernel.org/netdev/20260504153227.1390546-
-  1-kabel@kernel.org`
-- Patch 3/5: `https://lore.kernel.org/netdev/20260504153227.1390546-4-
-  kabel@kernel.org`
-- Applied to net-next by Jakub Kicinski (patchwork notification,
-  2026-05-06).
-- No explicit stable nomination found in thread.
-
-**Step 4.2 — Reviewers**
-Record: CC’d Andrew Lunn, Vladimir Oltean, Russell King, Vivien Didelot,
-Tobias Waldekranz, netdev list.
-
-**Step 4.3 — Bug reports**
-Record: None. No syzbot, no user crash report. Author-driven correctness
-fix for supported hardware.
-
-**Step 4.4 — Related patches**
-Record: Part of 5-patch 6320/6321 family series (interrupt count,
-SPEED_200, pot_clear, rmu_disable, devlink ATU hash). This patch is
-independent.
-
-**Step 4.5 — Stable list history**
-Record: No stable-list discussion found. Earlier March 2025 `net`
-submission included `Fixes:` tag, suggesting stable intent, but no `Cc:
-stable` found.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-Record: `mv88e6xxx_pot_setup()`, `mv88e6xxx_g2_pot_clear()`,
-`mv88e6xxx_setup()`, `mv88e6321_ops` (static const).
-
-**Step 5.2 — Callers**
-Record:
-- `mv88e6xxx_setup()` (DSA `.setup` callback at line 7140) calls
-  `mv88e6xxx_pot_setup()` at line 4047.
-- `mv88e6xxx_setup()` runs during DSA switch registration/probe —
-  standard device bring-up path.
-
-**Step 5.3 — Callees**
-Record: `mv88e6xxx_g2_pot_clear()` loops 16 times calling
-`mv88e6xxx_g2_pot_write()` to zero Global2 POT entries
-(`MV88E6XXX_G2_PRIO_OVERRIDE`).
-
-**Step 5.4 — Reachability**
-Record: Triggered on every MV88E6321 probe/boot when driver is built and
-hardware is present. Not userspace-triggerable directly, but affects all
-6321 deployments.
-
-**Step 5.5 — Similar patterns**
-Record: Every other comparable `mv88e6xxx_ops` structure in `chip.c`
-defines `.pot_clear = mv88e6xxx_g2_pot_clear` except `mv88e6321_ops`.
-`mv88e6320_ops` (same `MV88E6XXX_FAMILY_6320`) has it at line 5178.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree (v6.18.43)
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** Local tree is `v6.18.43` (`VERSION=6`, `PATCHLEVEL=18`,
-`SUBLEVEL=43`). `mv88e6321_ops` (lines 5192–5242) lacks `.pot_clear`;
-`mv88e6320_ops` at line 5178 has it. MV88E6321 chip entry exists at
-lines 6275–6300.
-
-**Step 6.2 — Backport complications**
-Record: Clean apply expected — single line insertion between
-`.mgmt_rsvd2cpu` and `.hardware_reset_pre`, matching the upstream diff
-exactly.
-
-**Step 6.3 — Fix already present?**
-Record: No. `git log --grep="define .pot_clear"` returns nothing. Bug
-still present in this checkout.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem**
-Record: `drivers/net/dsa/mv88e6xxx` — network/DSA switch driver.
-Criticality: **IMPORTANT** (peripheral driver, but networking
-correctness on embedded/telecom switches).
-
-**Step 7.2 — Activity**
-Record: Driver is mature and actively maintained; recent 6320/6321
-family fix series indicates ongoing production use.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 — Who is affected**
-Record: Users of Marvell 88E6321 DSA switches only
-(embedded/telecom/automotive Ethernet). Config-dependent on
-`CONFIG_NET_DSA_MV88E6XXX`.
-
-**Step 8.2 — Trigger conditions**
-Record: Every driver probe of an 88E6321 device. Deterministic, not a
-race. Unprivileged users cannot trigger directly.
-
-**Step 8.3 — Failure mode severity**
-Record: Stale Priority Override Table entries may cause incorrect packet
-priority/QoS behavior. **Severity: MEDIUM** — functional networking
-misbehavior, not kernel crash, oops, deadlock, or memory corruption.
-Per-port `port_disable_pri_override` still runs during port setup, but
-that is a separate per-port register, not the Global2 POT table.
-
-**Step 8.4 — Risk/benefit**
-Record:
-- Benefit: **MEDIUM** — restores intended hardware init parity with 6320
-  and all other supported chips; relevant for production 6321
-  deployments.
-- Risk: **VERY LOW** — one-line addition of existing callback.
-- Ratio: favorable, but severity of the underlying bug is not critical.
-
----
-
-## Phase 9: Final Synthesis
-
-**Evidence FOR backport:**
-- Verified real bug: sole chip variant missing `pot_clear` since 2017.
-- Bug exists in v6.18.43 tree; fix applies cleanly.
-- One-line, obviously correct, zero API change.
-- Called on every 6321 probe; ensures POT table is zeroed as intended.
-- Sibling `mv88e6320_ops` and all other G2 chips already do this.
-- Author previously submitted same fix to `net` (stable path) with
-  `Fixes:` tag.
-- Production hardware context (Rad/Ericsson).
-
-**Evidence AGAINST backport:**
-- No crash, security issue, deadlock, or data corruption.
-- No user bug reports or syzbot findings.
-- Bug present ~9 years without urgent reports — suggests limited
-  practical impact (POT may often be zero after reset).
-- Does not strictly meet “important issue” examples in stable-kernel-
-  rules.rst.
-- Narrow hardware population.
-
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — trivial, mirrors identical
-   chips; no Tested-by but logically sound.
-2. Fixes a real bug affecting users? **PASS** — real init omission on
-   supported hardware.
-3. Important issue? **BORDERLINE/FAIL** — QoS/priority init correctness,
-   not crash/corruption/security.
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features/APIs? **PASS**.
-6. Can apply to local tree? **PASS** — verified present and applicable.
-
-**Exception category:** Hardware initialization completeness fix for
-existing supported device (analogous to quirk/workaround category).
-
----
-
-## Problem Summary
-
-When an MV88E6321 switch is probed, `mv88e6xxx_pot_setup()` silently
-skips clearing the Global2 Priority Override Table because
-`mv88e6321_ops` lacks the `pot_clear` callback. Every other comparable
-chip in the driver, including the closely related MV88E6320, performs
-this clear. The result can be stale priority-override entries and
-incorrect QoS behavior on 88E6321 hardware. This is not a kernel crash,
-but it is a genuine driver initialization defect on supported hardware
-in the v6.18.43 tree.
-
-The fix is a single line adding `.pot_clear = mv88e6xxx_g2_pot_clear` to
-`mv88e6321_ops`, matching the established pattern. Risk is negligible;
-benefit is restoring correct init for 6321 users on this stable tree.
-
----
-
-## Verification
-
-- [Phase 1] Parsed commit message and tags; no Reported-by/syzbot; Link
-  to lore series confirmed.
-- [Phase 2] Diff: +1 line in `mv88e6321_ops`, adds `.pot_clear =
-  mv88e6xxx_g2_pot_clear`.
-- [Phase 3] `git show 9e907d739cc3`: confirmed 6320 got `pot_clear`,
-  6321 did not in 2017.
-- [Phase 3] `mv88e6xxx_pot_setup` and `mv88e6xxx_g2_pot_clear` verified
-  present in tree.
-- [Phase 4] Fetched lore mbox via curl: series 3/5, applied to net-next;
-  March 2025 net series had same fix with `Fixes:` tag.
-- [Phase 5] `mv88e6xxx_setup()` → `mv88e6xxx_pot_setup()` call chain
-  verified at lines 3953/4047.
-- [Phase 5] `mv88e6xxx_g2_pot_clear()` clears 16 POT entries in
-  `global2.c:324-336`.
-- [Phase 6] `git describe HEAD`: v6.18.43; buggy code confirmed missing
-  `pot_clear` in `mv88e6321_ops`.
-- [Phase 6] `mv88e6320_ops` at line 5178 has `pot_clear`;
-  `mv88e6321_ops` at 5192–5242 does not.
-- [Phase 8] Failure mode: incorrect QoS/priority, severity MEDIUM (not
-  crash).
-- [Phase 4] b4 dig on `9e907d739cc3`: found 2017 original POT thread
-  (used curl for May 2026 series due to lore bot protection on
-  WebFetch).
-
-**YES**Two background git history searches failed (they timed out on
-this shallow tree), but that didn’t block the analysis.
-
-I already had what we needed from direct code inspection, `git show
-9e907d739cc3`, grep, and the lore mbox fetch. The conclusion stands:
-**YES** for v6.18.43 — `mv88e6321_ops` is the only comparable chip
-missing `.pot_clear`, and the one-line fix restores correct Priority
-Override Table initialization on probe.
-
- drivers/net/dsa/mv88e6xxx/chip.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index b115575f157fe..f324b88450427 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5228,6 +5228,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.set_egress_port = mv88e6095_g1_set_egress_port,
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
-+	.pot_clear = mv88e6xxx_g2_pot_clear,
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
+ security/selinux/include/security.h |   1 +
+ security/selinux/ss/avtab.c         |  35 ++++-
+ security/selinux/ss/avtab.h         |  13 ++
+ security/selinux/ss/conditional.c   |  18 +--
+ security/selinux/ss/constraint.h    |   1 +
+ security/selinux/ss/policydb.c      | 196 +++++++++++++++++++++++-----
+ security/selinux/ss/policydb.h      |  23 +++-
+ security/selinux/ss/services.c      |   6 +-
+ 8 files changed, 233 insertions(+), 60 deletions(-)
+
+diff --git a/security/selinux/include/security.h b/security/selinux/include/security.h
+index 0babb89921816..a74415e3afd3a 100644
+--- a/security/selinux/include/security.h
++++ b/security/selinux/include/security.h
+@@ -236,6 +236,7 @@ int security_read_policy(void **data, size_t *len);
+ int security_read_state_kernel(void **data, size_t *len);
+ int security_policycap_supported(unsigned int req_cap);
+ 
++/* Maximum supported number of permissions per class */
+ #define SEL_VEC_MAX 32
+ struct av_decision {
+ 	u32 allowed;
+diff --git a/security/selinux/ss/avtab.c b/security/selinux/ss/avtab.c
+index d12ca337e6498..fb67b36001566 100644
+--- a/security/selinux/ss/avtab.c
++++ b/security/selinux/ss/avtab.c
+@@ -316,7 +316,7 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
+ 	struct avtab_extended_perms xperms;
+ 	__le32 buf32[ARRAY_SIZE(xperms.perms.p)];
+ 	int rc;
+-	unsigned int set, vers = pol->policyvers;
++	unsigned int vers = pol->policyvers;
+ 
+ 	memset(&key, 0, sizeof(struct avtab_key));
+ 	memset(&datum, 0, sizeof(struct avtab_datum));
+@@ -327,9 +327,12 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
+ 			pr_err("SELinux: avtab: truncated entry\n");
+ 			return rc;
+ 		}
++		/* Read five or more items: source type, target type,
++		 * target class, AV type, and at least one datum.
++		 */
+ 		items2 = le32_to_cpu(buf32[0]);
+-		if (items2 > ARRAY_SIZE(buf32)) {
+-			pr_err("SELinux: avtab: entry overflow\n");
++		if (items2 < 5 || items2 > ARRAY_SIZE(buf32)) {
++			pr_err("SELinux: avtab: invalid item count\n");
+ 			return -EINVAL;
+ 		}
+ 		rc = next_entry(buf32, fp, sizeof(u32) * items2);
+@@ -358,6 +361,13 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
+ 			return -EINVAL;
+ 		}
+ 
++		if (!policydb_type_isvalid(pol, key.source_type) ||
++		    !policydb_type_isvalid(pol, key.target_type) ||
++		    !policydb_class_isvalid(pol, key.target_class)) {
++			pr_err("SELinux: avtab: invalid type or class\n");
++			return -EINVAL;
++		}
++
+ 		val = le32_to_cpu(buf32[items++]);
+ 		enabled = (val & AVTAB_ENABLED_OLD) ? AVTAB_ENABLED : 0;
+ 
+@@ -376,6 +386,11 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
+ 
+ 		for (i = 0; i < ARRAY_SIZE(spec_order); i++) {
+ 			if (val & spec_order[i]) {
++				if (items >= items2) {
++					pr_err("SELinux: avtab: entry has too many items (%d/%d)\n",
++					       items + 1, items2);
++					return -EINVAL;
++				}
+ 				key.specified = spec_order[i] | enabled;
+ 				datum.u.data = le32_to_cpu(buf32[items++]);
+ 				rc = insertf(a, &key, &datum, p);
+@@ -411,9 +426,13 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
+ 		return -EINVAL;
+ 	}
+ 
+-	set = hweight16(key.specified & (AVTAB_XPERMS | AVTAB_TYPE | AVTAB_AV));
+-	if (!set || set > 1) {
+-		pr_err("SELinux:  avtab:  more than one specifier\n");
++	if (hweight16(key.specified & ~AVTAB_ENABLED) != 1) {
++		pr_err("SELinux:  avtab:  not exactly one specifier\n");
++		return -EINVAL;
++	}
++
++	if (key.specified & ~AVTAB_SPECIFIER_MASK) {
++		pr_err("SELinux:  avtab:  invalid specifier\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -438,6 +457,10 @@ int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *po
+ 			pr_err("SELinux: avtab: truncated entry\n");
+ 			return rc;
+ 		}
++		if (!avtab_is_valid_xperm_specified(xperms.specified))
++			pr_warn_once_policyload(pol,
++						"SELinux: avtab: unsupported xperm specifier %#x\n",
++						xperms.specified);
+ 		rc = next_entry(&xperms.driver, fp, sizeof(u8));
+ 		if (rc) {
+ 			pr_err("SELinux: avtab: truncated entry\n");
+diff --git a/security/selinux/ss/avtab.h b/security/selinux/ss/avtab.h
+index 850b3453f2598..1de4cce288a76 100644
+--- a/security/selinux/ss/avtab.h
++++ b/security/selinux/ss/avtab.h
+@@ -44,6 +44,7 @@ struct avtab_key {
+ 	 AVTAB_XPERMS_DONTAUDIT)
+ #define AVTAB_ENABLED_OLD 0x80000000 /* reserved for used in cond_avtab */
+ #define AVTAB_ENABLED	  0x8000 /* reserved for used in cond_avtab */
++#define AVTAB_SPECIFIER_MASK (AVTAB_AV | AVTAB_TYPE | AVTAB_XPERMS | AVTAB_ENABLED)
+ 	u16 specified; /* what field is specified */
+ };
+ 
+@@ -68,6 +69,18 @@ struct avtab_extended_perms {
+ 	struct extended_perms_data perms;
+ };
+ 
++static inline bool avtab_is_valid_xperm_specified(u8 specified)
++{
++	switch (specified) {
++	case AVTAB_XPERMS_IOCTLFUNCTION:
++	case AVTAB_XPERMS_IOCTLDRIVER:
++	case AVTAB_XPERMS_NLMSG:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ struct avtab_datum {
+ 	union {
+ 		u32 data; /* access vector or type value */
+diff --git a/security/selinux/ss/conditional.c b/security/selinux/ss/conditional.c
+index 824c3f8961518..f0a9866f01659 100644
+--- a/security/selinux/ss/conditional.c
++++ b/security/selinux/ss/conditional.c
+@@ -199,19 +199,12 @@ int cond_index_bool(void *key, void *datum, void *datap)
+ 	return 0;
+ }
+ 
+-static int bool_isvalid(struct cond_bool_datum *b)
+-{
+-	if (!(b->state == 0 || b->state == 1))
+-		return 0;
+-	return 1;
+-}
+-
+ int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct cond_bool_datum *booldatum;
+ 	__le32 buf[3];
+-	u32 len;
++	u32 len, val;
+ 	int rc;
+ 
+ 	booldatum = kzalloc_obj(*booldatum);
+@@ -223,11 +216,12 @@ int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ 		goto err;
+ 
+ 	booldatum->value = le32_to_cpu(buf[0]);
+-	booldatum->state = le32_to_cpu(buf[1]);
++	val = le32_to_cpu(buf[1]);
+ 
+ 	rc = -EINVAL;
+-	if (!bool_isvalid(booldatum))
++	if (!val_is_boolean(val))
+ 		goto err;
++	booldatum->state = (int)val;
+ 
+ 	len = le32_to_cpu(buf[2]);
+ 
+@@ -241,6 +235,7 @@ int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ 
+ 	return 0;
+ err:
++	pr_err("SELinux: conditional: failed to read boolean\n");
+ 	cond_destroy_bool(key, booldatum, NULL);
+ 	return rc;
+ }
+@@ -362,7 +357,8 @@ static int expr_node_isvalid(struct policydb *p, struct cond_expr_node *expr)
+ 		return 0;
+ 	}
+ 
+-	if (expr->boolean > p->p_bools.nprim) {
++	if (expr->expr_type == COND_BOOL &&
++	    (expr->boolean == 0 || expr->boolean > p->p_bools.nprim)) {
+ 		pr_err("SELinux: conditional expressions uses unknown bool.\n");
+ 		return 0;
+ 	}
+diff --git a/security/selinux/ss/constraint.h b/security/selinux/ss/constraint.h
+index 203033cfad672..1d75a8a044df9 100644
+--- a/security/selinux/ss/constraint.h
++++ b/security/selinux/ss/constraint.h
+@@ -50,6 +50,7 @@ struct constraint_expr {
+ 	u32 op; /* operator */
+ 
+ 	struct ebitmap names; /* names */
++	/* internally unused, only forwarded via policydb_write() */
+ 	struct type_set *type_names;
+ 
+ 	struct constraint_expr *next; /* next expression */
+diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
+index d36c34cdb5d98..ef5bd0736748c 100644
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -638,13 +638,11 @@ static int sens_index(void *key, void *datum, void *datap)
+ 	levdatum = datum;
+ 	p = datap;
+ 
+-	if (!levdatum->isalias) {
+-		if (!levdatum->level.sens ||
+-		    levdatum->level.sens > p->p_levels.nprim)
+-			return -EINVAL;
++	if (!levdatum->level.sens || levdatum->level.sens > p->p_levels.nprim)
++		return -EINVAL;
+ 
++	if (!levdatum->isalias)
+ 		p->sym_val_to_name[SYM_LEVELS][levdatum->level.sens - 1] = key;
+-	}
+ 
+ 	return 0;
+ }
+@@ -657,12 +655,11 @@ static int cat_index(void *key, void *datum, void *datap)
+ 	catdatum = datum;
+ 	p = datap;
+ 
+-	if (!catdatum->isalias) {
+-		if (!catdatum->value || catdatum->value > p->p_cats.nprim)
+-			return -EINVAL;
++	if (!catdatum->value || catdatum->value > p->p_cats.nprim)
++		return -EINVAL;
+ 
++	if (!catdatum->isalias)
+ 		p->sym_val_to_name[SYM_CATS][catdatum->value - 1] = key;
+-	}
+ 
+ 	return 0;
+ }
+@@ -1159,6 +1156,9 @@ static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *f
+ 
+ 	len = le32_to_cpu(buf[0]);
+ 	perdatum->value = le32_to_cpu(buf[1]);
++	rc = -EINVAL;
++	if (perdatum->value < 1 || perdatum->value > SEL_VEC_MAX)
++		goto bad;
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+@@ -1193,6 +1193,9 @@ static int common_read(struct policydb *p, struct symtab *s, struct policy_file
+ 	len = le32_to_cpu(buf[0]);
+ 	comdatum->value = le32_to_cpu(buf[1]);
+ 	nel = le32_to_cpu(buf[3]);
++	rc = -EINVAL;
++	if (nel > SEL_VEC_MAX)
++		goto bad;
+ 
+ 	rc = symtab_init(&comdatum->permissions, nel);
+ 	if (rc)
+@@ -1342,7 +1345,7 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
+ 	char *key = NULL;
+ 	struct class_datum *cladatum;
+ 	__le32 buf[6];
+-	u32 i, len, len2, ncons, nel;
++	u32 i, len, len2, ncons, nel, val;
+ 	int rc;
+ 
+ 	cladatum = kzalloc_obj(*cladatum);
+@@ -1355,8 +1358,16 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
+ 
+ 	len = le32_to_cpu(buf[0]);
+ 	len2 = le32_to_cpu(buf[1]);
+-	cladatum->value = le32_to_cpu(buf[2]);
+ 	nel = le32_to_cpu(buf[4]);
++	rc = -EINVAL;
++	if (nel > SEL_VEC_MAX)
++		goto bad;
++
++	val = le32_to_cpu(buf[2]);
++	rc = -EINVAL;
++	if (val > U16_MAX)
++		goto bad;
++	cladatum->value = val;
+ 
+ 	rc = symtab_init(&cladatum->permissions, nel);
+ 	if (rc)
+@@ -1424,16 +1435,59 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
+ 		if (rc)
+ 			goto bad;
+ 
+-		cladatum->default_user = le32_to_cpu(buf[0]);
+-		cladatum->default_role = le32_to_cpu(buf[1]);
+-		cladatum->default_range = le32_to_cpu(buf[2]);
++		rc = -EINVAL;
++		val = le32_to_cpu(buf[0]);
++		switch (val) {
++		case 0:
++		case DEFAULT_SOURCE:
++		case DEFAULT_TARGET:
++			cladatum->default_user = val;
++			break;
++		default:
++			goto bad;
++		}
++		val = le32_to_cpu(buf[1]);
++		switch (val) {
++		case 0:
++		case DEFAULT_SOURCE:
++		case DEFAULT_TARGET:
++			cladatum->default_role = val;
++			break;
++		default:
++			goto bad;
++		}
++		val = le32_to_cpu(buf[2]);
++		switch (val) {
++		case 0:
++		case DEFAULT_SOURCE_LOW:
++		case DEFAULT_SOURCE_HIGH:
++		case DEFAULT_SOURCE_LOW_HIGH:
++		case DEFAULT_TARGET_LOW:
++		case DEFAULT_TARGET_HIGH:
++		case DEFAULT_TARGET_LOW_HIGH:
++		case DEFAULT_GLBLUB:
++			cladatum->default_range = val;
++			break;
++		default:
++			goto bad;
++		}
+ 	}
+ 
+ 	if (p->policyvers >= POLICYDB_VERSION_DEFAULT_TYPE) {
+ 		rc = next_entry(buf, fp, sizeof(u32) * 1);
+ 		if (rc)
+ 			goto bad;
+-		cladatum->default_type = le32_to_cpu(buf[0]);
++		rc = -EINVAL;
++		val = le32_to_cpu(buf[0]);
++		switch (val) {
++		case 0:
++		case DEFAULT_TARGET:
++		case DEFAULT_SOURCE:
++			cladatum->default_type = val;
++			break;
++		default:
++			goto bad;
++		}
+ 	}
+ 
+ 	rc = symtab_insert(s, key, cladatum);
+@@ -1443,6 +1497,8 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
+ 	return 0;
+ bad:
+ 	cls_destroy(key, cladatum, NULL);
++	if (rc)
++		pr_err("SELinux:  invalid class\n");
+ 	return rc;
+ }
+ 
+@@ -1634,7 +1690,7 @@ static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *f
+ 	struct level_datum *levdatum;
+ 	int rc;
+ 	__le32 buf[2];
+-	u32 len;
++	u32 len, val;
+ 
+ 	levdatum = kzalloc_obj(*levdatum);
+ 	if (!levdatum)
+@@ -1645,7 +1701,11 @@ static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *f
+ 		goto bad;
+ 
+ 	len = le32_to_cpu(buf[0]);
+-	levdatum->isalias = le32_to_cpu(buf[1]);
++	val = le32_to_cpu(buf[1]);
++	rc = -EINVAL;
++	if (!val_is_boolean(val))
++		goto bad;
++	levdatum->isalias = val;
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+@@ -1661,6 +1721,8 @@ static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *f
+ 	return 0;
+ bad:
+ 	sens_destroy(key, levdatum, NULL);
++	if (rc)
++		pr_err("SELinux:  invalid sensitivity\n");
+ 	return rc;
+ }
+ 
+@@ -1670,7 +1732,7 @@ static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp
+ 	struct cat_datum *catdatum;
+ 	int rc;
+ 	__le32 buf[3];
+-	u32 len;
++	u32 len, val;
+ 
+ 	catdatum = kzalloc_obj(*catdatum);
+ 	if (!catdatum)
+@@ -1682,7 +1744,11 @@ static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp
+ 
+ 	len = le32_to_cpu(buf[0]);
+ 	catdatum->value = le32_to_cpu(buf[1]);
+-	catdatum->isalias = le32_to_cpu(buf[2]);
++	val = le32_to_cpu(buf[2]);
++	rc = -EINVAL;
++	if (!val_is_boolean(val))
++		goto bad;
++	catdatum->isalias = val;
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+@@ -1694,6 +1760,8 @@ static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp
+ 	return 0;
+ bad:
+ 	cat_destroy(key, catdatum, NULL);
++	if (rc)
++		pr_err("SELinux:  invalid category\n");
+ 	return rc;
+ }
+ 
+@@ -1875,7 +1943,7 @@ static int range_read(struct policydb *p, struct policy_file *fp)
+ 	struct mls_range *r = NULL;
+ 	int rc;
+ 	__le32 buf[2];
+-	u32 i, nel;
++	u32 i, nel, val;
+ 
+ 	if (p->policyvers < POLICYDB_VERSION_MLS)
+ 		return 0;
+@@ -1906,7 +1974,11 @@ static int range_read(struct policydb *p, struct policy_file *fp)
+ 			rc = next_entry(buf, fp, sizeof(u32));
+ 			if (rc)
+ 				goto out;
+-			rt->target_class = le32_to_cpu(buf[0]);
++			rc = -EINVAL;
++			val = le32_to_cpu(buf[0]);
++			if (val > U16_MAX)
++				goto out;
++			rt->target_class = val;
+ 		} else
+ 			rt->target_class = p->process_class;
+ 
+@@ -1943,6 +2015,8 @@ static int range_read(struct policydb *p, struct policy_file *fp)
+ out:
+ 	kfree(rt);
+ 	kfree(r);
++	if (rc)
++		pr_err("SELinux:  invalid range\n");
+ 	return rc;
+ }
+ 
+@@ -1951,7 +2025,7 @@ static int filename_trans_read_helper_compat(struct policydb *p, struct policy_f
+ 	struct filename_trans_key key, *ft = NULL;
+ 	struct filename_trans_datum *last, *datum = NULL;
+ 	char *name = NULL;
+-	u32 len, stype, otype;
++	u32 len, stype, otype, val;
+ 	__le32 buf[4];
+ 	int rc;
+ 
+@@ -1970,9 +2044,17 @@ static int filename_trans_read_helper_compat(struct policydb *p, struct policy_f
+ 	if (rc)
+ 		goto out;
+ 
++	rc = -EINVAL;
+ 	stype = le32_to_cpu(buf[0]);
++	if (!policydb_type_isvalid(p, stype))
++		goto out;
+ 	key.ttype = le32_to_cpu(buf[1]);
+-	key.tclass = le32_to_cpu(buf[2]);
++	if (!policydb_type_isvalid(p, key.ttype))
++		goto out;
++	val = le32_to_cpu(buf[2]);
++	if (val > U16_MAX || !policydb_class_isvalid(p, val))
++		goto out;
++	key.tclass = val;
+ 	key.name = name;
+ 
+ 	otype = le32_to_cpu(buf[3]);
+@@ -2028,6 +2110,9 @@ static int filename_trans_read_helper_compat(struct policydb *p, struct policy_f
+ 	kfree(ft);
+ 	kfree(name);
+ 	kfree(datum);
++
++	if (rc)
++		pr_err("SELinux:  invalid compat filename transition\n");
+ 	return rc;
+ }
+ 
+@@ -2036,7 +2121,7 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
+ 	struct filename_trans_key *ft = NULL;
+ 	struct filename_trans_datum **dst, *datum, *first = NULL;
+ 	char *name = NULL;
+-	u32 len, ttype, ndatum, i;
++	u32 len, ttype, ndatum, i, val;
+ 	u16 tclass;
+ 	__le32 buf[3];
+ 	int rc;
+@@ -2056,8 +2141,15 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
+ 	if (rc)
+ 		goto out;
+ 
++	rc = -EINVAL;
+ 	ttype = le32_to_cpu(buf[0]);
+-	tclass = le32_to_cpu(buf[1]);
++	if (!policydb_type_isvalid(p, ttype))
++		goto out;
++	val = le32_to_cpu(buf[1]);
++	rc = -EINVAL;
++	if (val > U16_MAX || !policydb_class_isvalid(p, val))
++		goto out;
++	tclass = val;
+ 
+ 	ndatum = le32_to_cpu(buf[2]);
+ 	if (ndatum == 0) {
+@@ -2087,6 +2179,10 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
+ 
+ 		datum->otype = le32_to_cpu(buf[0]);
+ 
++		rc = -EINVAL;
++		if (!policydb_type_isvalid(p, datum->otype))
++			goto out;
++
+ 		dst = &datum->next;
+ 	}
+ 
+@@ -2118,6 +2214,9 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
+ 		ebitmap_destroy(&datum->stypes);
+ 		kfree(datum);
+ 	}
++
++	if (rc)
++		pr_err("SELinux:  invalid filename transition\n");
+ 	return rc;
+ }
+ 
+@@ -2165,7 +2264,7 @@ static int filename_trans_read(struct policydb *p, struct policy_file *fp)
+ static int genfs_read(struct policydb *p, struct policy_file *fp)
+ {
+ 	int rc;
+-	u32 i, j, nel, nel2, len, len2;
++	u32 i, j, nel, nel2, len, len2, val;
+ 	__le32 buf[1];
+ 	struct ocontext *l, *c;
+ 	struct ocontext *newc = NULL;
+@@ -2235,7 +2334,11 @@ static int genfs_read(struct policydb *p, struct policy_file *fp)
+ 			if (rc)
+ 				goto out;
+ 
+-			newc->v.sclass = le32_to_cpu(buf[0]);
++			rc = -EINVAL;
++			val = le32_to_cpu(buf[0]);
++			if (val > U16_MAX || (val != 0 && !policydb_class_isvalid(p, val)))
++				goto out;
++			newc->v.sclass = val;
+ 			rc = context_read_and_validate(&newc->context[0], p,
+ 						       fp);
+ 			if (rc)
+@@ -2272,6 +2375,9 @@ static int genfs_read(struct policydb *p, struct policy_file *fp)
+ 	}
+ 	ocontext_destroy(newc, OCON_FSUSE);
+ 
++	if (rc)
++		pr_err("SELinux:  invalid genfs\n");
++
+ 	return rc;
+ }
+ 
+@@ -2280,7 +2386,7 @@ static int ocontext_read(struct policydb *p,
+ {
+ 	int rc;
+ 	unsigned int i;
+-	u32 j, nel, len;
++	u32 j, nel, len, val;
+ 	__be64 prefixbuf[1];
+ 	__le32 buf[3];
+ 	struct ocontext *l, *c;
+@@ -2344,11 +2450,25 @@ static int ocontext_read(struct policydb *p,
+ 				rc = next_entry(buf, fp, sizeof(u32) * 3);
+ 				if (rc)
+ 					goto out;
+-				c->u.port.protocol = le32_to_cpu(buf[0]);
+-				c->u.port.low_port = le32_to_cpu(buf[1]);
+-				c->u.port.high_port = le32_to_cpu(buf[2]);
+-				rc = context_read_and_validate(&c->context[0],
+-							       p, fp);
++
++				rc = -EINVAL;
++				val = le32_to_cpu(buf[0]);
++				if (val > U8_MAX)
++					goto out;
++				c->u.port.protocol = val;
++				val = le32_to_cpu(buf[1]);
++				if (val > U16_MAX)
++					goto out;
++				c->u.port.low_port = val;
++				val = le32_to_cpu(buf[2]);
++				if (val > U16_MAX)
++					goto out;
++				c->u.port.high_port = val;
++				if (c->u.port.low_port == 0 ||
++				    c->u.port.low_port > c->u.port.high_port)
++					goto out;
++
++				rc = context_read_and_validate(&c->context[0], p, fp);
+ 				if (rc)
+ 					goto out;
+ 				break;
+@@ -2466,6 +2586,8 @@ static int ocontext_read(struct policydb *p,
+ 	}
+ 	rc = 0;
+ out:
++	if (rc)
++		pr_err("SELinux:  invalid ocon\n");
+ 	return rc;
+ }
+ 
+@@ -2480,7 +2602,7 @@ int policydb_read(struct policydb *p, struct policy_file *fp)
+ 	struct role_trans_datum *rtd = NULL;
+ 	int rc;
+ 	__le32 buf[4];
+-	u32 i, j, len, nprim, nel, perm;
++	u32 i, j, len, nprim, nel, perm, val;
+ 
+ 	char *policydb_str;
+ 	const struct policydb_compat_info *info;
+@@ -2672,7 +2794,11 @@ int policydb_read(struct policydb *p, struct policy_file *fp)
+ 			rc = next_entry(buf, fp, sizeof(u32));
+ 			if (rc)
+ 				goto bad;
+-			rtk->tclass = le32_to_cpu(buf[0]);
++			rc = -EINVAL;
++			val = le32_to_cpu(buf[0]);
++			if (val > U16_MAX)
++				goto bad;
++			rtk->tclass = val;
+ 		} else
+ 			rtk->tclass = p->process_class;
+ 
+diff --git a/security/selinux/ss/policydb.h b/security/selinux/ss/policydb.h
+index a49275d1168d8..20b834581106a 100644
+--- a/security/selinux/ss/policydb.h
++++ b/security/selinux/ss/policydb.h
+@@ -74,7 +74,7 @@ struct class_datum {
+ /* Role attributes */
+ struct role_datum {
+ 	u32 value; /* internal role value */
+-	u32 bounds; /* boundary of role */
++	u32 bounds; /* boundary of role, 0 for none */
+ 	struct ebitmap dominates; /* set of roles dominated by this role */
+ 	struct ebitmap types; /* set of authorized types for role */
+ };
+@@ -110,7 +110,8 @@ struct role_allow {
+ /* Type attributes */
+ struct type_datum {
+ 	u32 value; /* internal type value */
+-	u32 bounds; /* boundary of type */
++	u32 bounds; /* boundary of type, 0 for none */
++	/* internally unused, only forwarded via policydb_write() */
+ 	unsigned char primary; /* primary name? */
+ 	unsigned char attribute; /* attribute ?*/
+ };
+@@ -118,7 +119,7 @@ struct type_datum {
+ /* User attributes */
+ struct user_datum {
+ 	u32 value; /* internal user value */
+-	u32 bounds; /* bounds of user */
++	u32 bounds; /* bounds of user, 0 for none */
+ 	struct ebitmap roles; /* set of authorized roles for user */
+ 	struct mls_range range; /* MLS range (min - max) for user */
+ 	struct mls_level dfltlevel; /* default login MLS level for user */
+@@ -195,7 +196,7 @@ struct ocontext {
+ 		} ibendport;
+ 	} u;
+ 	union {
+-		u16 sclass; /* security class for genfs */
++		u16 sclass; /* security class for genfs (can be 0 for wildcard) */
+ 		u32 behavior; /* labeling behavior for fs_use */
+ 	} v;
+ 	struct context context[2]; /* security context(s) */
+@@ -388,9 +389,23 @@ static inline char *sym_name(struct policydb *p, unsigned int sym_num,
+ 	return p->sym_val_to_name[sym_num][element_nr];
+ }
+ 
++static inline bool val_is_boolean(u32 value)
++{
++	return value == 0 || value == 1;
++}
++
+ extern int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len);
+ 
+ extern u16 string_to_security_class(struct policydb *p, const char *name);
+ extern u32 string_to_av_perm(struct policydb *p, u16 tclass, const char *name);
+ 
++#define pr_warn_once_policyload(policy, fmt, ...)    \
++	do {                                         \
++		static const void *prev_policy__;    \
++		if (prev_policy__ != policy) {       \
++			pr_warn(fmt, ##__VA_ARGS__); \
++			prev_policy__ = policy;      \
++		}                                    \
++	} while (0)
++
+ #endif /* _SS_POLICYDB_H_ */
+diff --git a/security/selinux/ss/services.c b/security/selinux/ss/services.c
+index e48e5204f8a1c..016863f950846 100644
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -446,8 +446,6 @@ static int dump_masked_av_helper(void *k, void *d, void *args)
+ 	struct perm_datum *pdatum = d;
+ 	char **permission_names = args;
+ 
+-	BUG_ON(pdatum->value < 1 || pdatum->value > 32);
+-
+ 	permission_names[pdatum->value - 1] = (char *)k;
+ 
+ 	return 0;
+@@ -466,7 +464,7 @@ static void security_dump_masked_av(struct policydb *policydb,
+ 	char *tclass_name;
+ 	char *scontext_name = NULL;
+ 	char *tcontext_name = NULL;
+-	char *permission_names[32];
++	char *permission_names[SEL_VEC_MAX];
+ 	int index;
+ 	u32 length;
+ 	bool need_comma = false;
+@@ -507,7 +505,7 @@ static void security_dump_masked_av(struct policydb *policydb,
+ 			 "scontext=%s tcontext=%s tclass=%s perms=",
+ 			 reason, scontext_name, tcontext_name, tclass_name);
+ 
+-	for (index = 0; index < 32; index++) {
++	for (index = 0; index < SEL_VEC_MAX; index++) {
+ 		u32 mask = (1 << index);
+ 
+ 		if ((mask & permissions) == 0)
 -- 
 2.53.0
+
+
 
