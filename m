@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC64348A8A4;
-	Mon, 31 Aug 2026 14:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B82B48988D;
+	Mon, 31 Aug 2026 14:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185021; cv=none; b=uRyGtkAj8YThc26dLvhqnLNPjnnXYI5kjlpJGKpHYOAikRqj7FgGfn8eELNv5SXqh0/86rTuCCz9LB466hC7jMcVLWh57xHZ7rIJUk9H5o3SXLwAcbzFxGkH1ORrzlxjurPP+YYmUqgVWlMrO+XJHyUJXyDFHHypfQVzcDlwSv8=
+	t=1788184994; cv=none; b=ZTWRUaMY4E9q0EL74N2brNDRerlETnRmtAmae6m30BZ+bvQlouj/Xu0dmOMAnafH4leMSJ0wMPw/CVBW5bkFkOk+gFhnOJWI8RngshwKPP89OgMTMuw6ROF0EeGsm4QMx3XvOYotEmjzM4pRf4Ffn6RoanFxUG1fTuzBboCMipA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185021; c=relaxed/simple;
-	bh=HAS2m3IAgZk1sa3cmYHW3Uqqga/UkwxfOcPTnkoBc4o=;
+	s=arc-20240116; t=1788184994; c=relaxed/simple;
+	bh=zTnzmJAdV3azDYkCqneNNAvhYo4yMc9ufg1CZ9IOHa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxlVWHs9DUNdvqGarS2Kx2t5drgQVGkVWrVyz59wtL04/R6OMK/aNt020y8+ug7I9zMr+Hk9OgGjzP7XYlBeogJwzSj7JV1+dn5iW+SCmO2hSKWdEIbiXGCtXK/uNi9bLxbM8yFLo6kJ07UwAdOrwcm9eH4mwd0OfZGtYUmEAEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scVlzX8Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ikODgscSRGW+bBtNrCcoIWpEez5UK4fKoe7b5GYjRMosf7q9liYcXmx5MQalem2Dx6C3wO/Nigkcge/QnCKLTMpiyFCqeIUAF0gmqkFeQ0gTFg4QAOduM41DeqphRmkFNNZZBvZvdJsALyVBvL1egtIeC5zvuH6PveU9BKt6pBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSpzx0gH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scVlzX8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5166A1F000E9;
-	Mon, 31 Aug 2026 14:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSpzx0gH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C1F1F000E9;
+	Mon, 31 Aug 2026 14:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185018;
-	bh=MxMsULCjBTxvj41t2B2Kd63uiSb1eDY0I/oT19yn+5U=;
+	s=korg; t=1788184993;
+	bh=IKr9QPdvMrsuslKXeI248qe9YBhS69H/oM/gMkgVEtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=scVlzX8ZhYNc5c7FD0qR6fzyyHFJhkO+jyDatd1jyDocbHFya58qRcyxVw2HZQblr
-	 dDkggzwWiz8Lpaf7YlYGg93/NXwRZ6+C6fuf3GfIlEjgGL4T3NQnTGqfaCRhn6fIPg
-	 8VtJu7pKCmUJ1ur3hseTdkBXpwofK58jFgPFoS84=
+	b=GSpzx0gHpkczkkIiM3f5VDyp2vlifCxf06TlxZSy4Mpmfc43Tk0RcMJIox/LgPenH
+	 GVPEs+qszk0xMbaVnRFoVGGawtbBmFfnEXJFsQO5mPDJRY/Gyrw0i65hrS66ZOfnVa
+	 JmFJ74LNve40tJt+CDds+C28tnma8H7ZAnF5SSDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
-	Denis Arefev <arefev@swemel.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 04/69] ipvs: reload ip header after head reallocation
-Date: Mon, 31 Aug 2026 15:34:37 +0200
-Message-ID: <20260831133358.774937463@linuxfoundation.org>
+Subject: [PATCH 5.15 17/69] Revert "smb: client: use kvzalloc() for megabyte buffer in simple fallocate"
+Date: Mon, 31 Aug 2026 15:34:50 +0200
+Message-ID: <20260831133359.326291950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -52,48 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+This reverts commit d1bc345f6229412d45bab2baf81d45d0e678253a.
 
-commit a2f57827bf7c695b8c72dc4511cae8e86582369d upstream.
-
-__ip_vs_get_out_rt() calls skb_ensure_writable() which may
-reallocate skb->head.
-
-Fixes: 8d8e20e2d7bb ("ipvs: Decrement ttl")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[Denis Arefev: adapted for 5.10/6.1: keep EnterFunction/LeaveFunction
-instrumentation]
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/cifs/smb2ops.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 9e199f00eea73..40a1d31b4054f 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -718,15 +718,13 @@ int
- ip_vs_bypass_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		  struct ip_vs_protocol *pp, struct ip_vs_iphdr *ipvsh)
- {
--	struct iphdr  *iph = ip_hdr(skb);
--
- 	EnterFunction(10);
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 9727cb9250807..3aaa45375d8ba 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -3736,7 +3736,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	if (rc)
+ 		goto out;
  
--	if (__ip_vs_get_out_rt(cp->ipvs, cp->af, skb, NULL, iph->daddr,
-+	if (__ip_vs_get_out_rt(cp->ipvs, cp->af, skb, NULL, ip_hdr(skb)->daddr,
- 			       IP_VS_RT_MODE_NON_LOCAL, NULL, ipvsh) < 0)
- 		goto tx_error;
+-	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kzalloc(1024 * 1024, GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
+@@ -3803,7 +3803,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
  
--	ip_send_check(iph);
-+	ip_send_check(ip_hdr(skb));
+  out:
+ 	kfree(out_data);
+-	kvfree(buf);
++	kfree(buf);
+ 	return rc;
+ }
  
- 	/* Another hack: avoid icmp_send in ip_fragment */
- 	skb->ignore_df = 1;
 -- 
 2.53.0
 
