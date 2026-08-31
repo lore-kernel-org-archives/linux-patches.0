@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9BF577E3E;
-	Mon, 31 Aug 2026 13:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF28577E5B;
+	Mon, 31 Aug 2026 13:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184152; cv=none; b=kQnm0GVSJ9dPBrj4mBvyrAVg8lVb3nDv0B0vkNd6WN3wI4sV94MlCYQo7YHGVDKrytWe7qovl5+ogZ71eWHYZxUM1jIewrfcd3OnpQ/ciHq6drb/iH6hubCkglFMapM196PFLL4Ru6HCgR9psWCwdZ2hm8evwm2cvLwfOV21fr0=
+	t=1788184154; cv=none; b=NwkUVChLWu9wX3dzgUaEZai6yBUNzPVhFlGN0N4fMxGnMD4DzZCndjRJDx7TV+kT5KldhFy9dOmskZutvnM7mbg9iM+oFF/UNJt59Bcjm5RK8rikSwnw5wxFLIILH81W+Lm3NhevTqQOJNjLRAy2CjgjbzXp2sYojoEOj0VRkX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184152; c=relaxed/simple;
-	bh=Clif3bi8a2lRrhuJsOGOpsR6MekCuHfCt6K8xCxehDM=;
+	s=arc-20240116; t=1788184154; c=relaxed/simple;
+	bh=VHn9YVvx5plf2ISco8KuFSi5jqGC2ERCfz959S5nUHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BeLKATZsoP+h2/I3mhsCB3rGlVUsNGdDK8mJ1zRHGFg7TIxA4+y1Igk0P5R7UM2bpa2bhAh7ftFKtYm4w9YIWgREUpLqnfjCXNqmBEGeb7IEDJqvSkcpvkSm9WfkqrIKK8YClof579/jyGFUQUnmxxpuArTZevGTYSyG7uzG+I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wgt57QES; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZoqsiyFVfU4zbGkVnFlolNnlhgUOF07YaUkch6qa21B0Zyb31XVKY0joBUKKWAcWa5rDDDKm2bx1P9vLr+cLidn0dA5kic3X3F5jyX1p+eWQr1KcOnbOqsydXAHjKPbcn+f2xYcdO6RliIDVgUighfQYO+4zuko2XhoE0viu5Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NQtzcMCo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wgt57QES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D611F00A3F;
-	Mon, 31 Aug 2026 13:49:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQtzcMCo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D301F00ACA;
+	Mon, 31 Aug 2026 13:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184150;
-	bh=kwIr7DFE5DIUwoHkfFtN91T2UNmCduYY1HrF+s3/kVs=;
+	s=k20260515; t=1788184152;
+	bh=s3tPMUy1E4mNNIXgwnKvp6pTDoiH5t/efg73Vm5728Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wgt57QESucSMloknkYzfakH6NeKR9q9uoI0jloy1DNHKqnOr5s+hQwW05O4/yyCj+
-	 GuBtdda5Go1jxBqjK8b2Mzw4tDEuvOaHdQhgf8hkmvvgtaxLl+eoxgODthe8/Hqw0q
-	 mAwB4szGnf/AByGMVV4QMtA11/PBiaPxV6rgrhYsR/SyzRaIqsDgppI++RjCQynNDC
-	 WqwAR0L9EaX947wEbALDZ5tytlXdjl9VkuKTf6Jrg0WlmyvPne3vxCUtbjH1ATfDxr
-	 phQxR4RBqDeJ4fvSKD9peAHjChofvPlFL+9UJgcCSNG26jpYIhjcM2SZTJsvqD/gdI
-	 RV3HPviFHy0Gw==
+	b=NQtzcMCoV5e9IMvrKjC6EhsfsJEFBOvtYhS89EfxTFLD9TXDYXiMR9OCKb1Vx27SJ
+	 0bfiyZbiqqDKsNOnXFWjrzqmpIxRfQHcyM8J72dmFF6vv4/gGcsGM1pYx8HBKVNxCh
+	 iVevJFd94tQnFNOKz3t5Q6IpEWfWkmPSjjeCn2HQmlIVvwyUGAfVQqpPVxu0v3vay7
+	 mrTSex0smrpQUAdxg2WZYDSzpHtLGa93Jk4c/rfuDk0lcAyUOEp+IrmIF4whG7sy8W
+	 UyVwlQkUXNxRerb/1F24vAqQGAGFm3GiWHS0NMT56O9mpUiqohd3WLoFyvr2DjS0bP
+	 R/2qhkrhd7ZDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Andr=C3=A9=20Pragosa?= <pragosa512@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	rds-devel@oss.oracle.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Add mute LED quirk for HP Victus 16-e0xxx (MB 88ED)
-Date: Mon, 31 Aug 2026 09:29:09 -0400
-Message-ID: <20260831133314.4125787-521-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] net/rds: Don't sleep inside rds_ib_conn_path_shutdown
+Date: Mon, 31 Aug 2026 09:29:10 -0400
+Message-ID: <20260831133314.4125787-522-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -48,387 +51,464 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: André Pragosa <pragosa512@gmail.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 630c45e92db44b738d1e9224c5f3c032c76a33ca ]
+[ Upstream commit 16f48efaeb6991193fb7775c577f06f5b20b0c90 ]
 
-Add subsystem ID 103c:88ed to the existing HP Victus 16-e0xxx
-mute LED quirk list.
+New rds rdma self tests exposed a hang when tearing down
+the ib network configs.  This is caused by the shutdown worker
+thread sleeping on the wait_event call, which blocks other work
+items in the queue. Fix this by changing wait_event to
+wait_event timeout, and looping until the wait check succeeds.
 
-The HP Victus 16-e0xxx with subsystem ID 103c:88ed uses the same
-mute LED coefficient configuration as the already supported
-103c:88eb variant.
-
-The mute LED was verified by manually toggling coefficient index
-0x0b (bit 3) using hda-verb. After adding the quirk, the LED is
-registered as hda::mute and follows the audio mute state.
-
-Signed-off-by: André Pragosa <pragosa512@gmail.com>
-Link: https://patch.msgid.link/20260728221129.14680-2-pragosa512@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260518012443.2629206-2-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ALSA hda/realtek HP Victus 16-e0xxx (MB
-88ED) mute LED quirk
+# Stable Backport Analysis: `net/rds: Don't sleep inside
+rds_ib_conn_path_shutdown`
 
-**Local tree:** Linux **6.18.44** (`git describe HEAD` →
-`v6.18.44-2-g1b9e1abadee04`)
+**Local tree:** `v6.18.44` (Makefile: 6.18.44)
+**Verdict target:** Should this commit be backported to **this** 6.18.y
+tree?
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[ALSA: hda/realtek] [Add] mute LED quirk for HP Victus
-16-e0xxx (MB 88ED)`
+### Step 1.1: Parse the subject line
+**Record:** `[net/rds]` `[Don't sleep / fix]` — prevent indefinite
+sleeping in `rds_ib_conn_path_shutdown()` during IB connection teardown.
 
-### Step 1.2: Tags
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Signed-off-by:** André Pragosa `<pragosa512@gmail.com>` (author)
-- **Link:**
-  `https://patch.msgid.link/20260728221129.14680-2-pragosa512@gmail.com`
-- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable@vger.kernel.org`
-- Notable: maintainer sign-off from Takashi Iwai; no syzbot or user bug
-  reports
+- **Signed-off-by:** Allison Henderson `<achender@kernel.org>` (author)
+- **Link:** `https://patch.msgid.link/20260518012443.2629206-2-
+  achender@kernel.org` (patch 2 of a series, per Message-ID)
+- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (netdev
+  maintainer merge)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
+  by:`, or `Reviewed-by:` tags
+- Notable: no syzbot report; bug found by new RDS RDMA selftests
 
-### Step 1.3: Body analysis
+### Step 1.3: Analyze commit body
 **Record:**
-- **Bug:** HP Victus 16-e0xxx with subsystem ID `103c:88ed` does not get
-  the mute-LED quirk; the F-key mute LED does not track audio mute
-  state.
-- **Symptom:** Mute LED stays non-functional; audio mute itself is
-  unaffected.
-- **Root cause:** Missing `SND_PCI_QUIRK` table entry for this mainboard
-  variant.
-- **Fix approach:** Reuse `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` (same as
-  `103c:88eb`).
-- **Verification:** Author tested coefficient index `0x0b` bit 3 via
-  `hda-verb`; after quirk, LED registers as `hda::mute` and follows mute
-  state.
-- **Version info:** None in message.
+- **Bug:** Hang when tearing down IB network configs during new RDS RDMA
+  selftests
+- **Symptom:** System/workqueue stalls during teardown (not a
+  crash/oops)
+- **Root cause (author):** Shutdown worker sleeps on `wait_event`,
+  blocking other work items on the same queue
+- **Fix approach:** Replace `wait_event` with `wait_event_timeout` in a
+  loop; schedule send/recv tasklets on timeout to drive completion
 
-### Step 1.4: Hidden bug fix?
-**Record:** Not a crash/leak/race fix. This is an explicit **hardware
-quirk / device-ID extension** for mute-LED support on a specific laptop
-SKU. Classified as hardware enablement, not disguised cleanup.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Yes — despite not using "fix" in the subject, this is a real
+hang fix disguised as a sleep/workqueue interaction problem. The
+infinite `wait_event` in a single-threaded workqueue context is a
+classic teardown hang pattern.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Inventory changes
 **Record:**
-- **Files:** `sound/hda/codecs/realtek/alc269.c` only (+2 lines, minor
-  formatting)
-- **Functions modified:** None; only `alc269_fixup_tbl[]` quirk table
-- **Scope:** Single-file, surgical quirk-table addition
+- **Files:** `net/rds/ib_cm.c` only (+15 lines net, ~1 function added, 1
+  function modified)
+- **Functions:** new `rds_ib_conn_path_shutdown_check_wait()`, modified
+  `rds_ib_conn_path_shutdown()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code flow change
+### Step 2.2: Code flow change per hunk
 **Record:**
-- **Before:** `snd_hda_pick_fixup()` during codec probe finds no match
-  for SSID `103c:88ed` → no mute-LED fixup applied.
-- **After:** SSID `103c:88ed` maps to
-  `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` →
-  `alc245_fixup_hp_mute_led_v2_coefbit()` runs at
-  `HDA_FIXUP_ACT_PRE_PROBE`, configures coef `0x0b` bit 3, registers
-  `hda::mute` LED class device.
-- **Path affected:** HDA codec probe for matching HP Victus hardware
-  only.
+
+**Hunk 1 — new helper `rds_ib_conn_path_shutdown_check_wait()`:**
+- Before: N/A
+- After: Encapsulates the shutdown-ready condition (recv ring empty, no
+  signaled sends, FRWR segments released). Returns `0` when ready, non-
+  zero otherwise.
+
+**Hunk 2 — `rds_ib_conn_path_shutdown()`:**
+- Before: After `rdma_disconnect()` and `rds_ib_flush_mrs()`, blocks
+  forever on:
+  ```c
+  wait_event(rds_ib_ring_empty_wait, <all conditions true>);
+  ```
+- After: Loops with 1-second timeout; on timeout, explicitly schedules
+  `i_send_tasklet` and `i_recv_tasklet` to make progress, then re-checks
+  until conditions are met.
 
 ### Step 2.3: Bug mechanism
 **Record:**
-- **Category:** Hardware workaround (audio codec quirk)
-- **Mechanism:** Missing PCI subsystem ID in quirk table prevents
-  existing, correct fixup from being selected.
+- **Category:** Deadlock/hang in teardown path (workqueue + async
+  completion interaction)
+- **Mechanism:**
+  1. `rds_ib_conn_path_shutdown()` runs on `rds_wq` via
+     `rds_shutdown_worker()` → `rds_conn_shutdown()`
+  2. `rds_wq` is a **single-threaded** workqueue
+     (`create_singlethread_workqueue("krdsd")` in `threads.c:259`)
+  3. `wait_event()` puts that sole worker thread to sleep indefinitely
+  4. Wait conditions require send/recv ring draining and FRWR cleanup,
+     which depends on tasklet progress (`i_send_tasklet` /
+     `i_recv_tasklet`, normally kicked from CQ handlers at
+     `ib_cm.c:256,384`)
+  5. Without explicit tasklet scheduling, the worker can sleep forever
+     while also blocking all other `rds_wq` work — including other
+     connection shutdowns during IB config teardown
 
-### Step 2.4: Fix quality
+### Step 2.4: Fix quality assessment
 **Record:**
-- **Quality:** Obviously correct — identical fixup to already-supported
-  `103c:88eb` sibling variant; manually verified.
-- **Regression risk:** Very low — adds one table row, no logic changes.
-- **Red flags:** None.
+- Fix is minimal and logically sound: same wait conditions, but bounded
+  sleep + explicit tasklet kicks
+- Still calls `tasklet_kill()` after the loop, preserving original
+  safety
+- Low regression risk: does not change teardown ordering or destroy IB
+  resources early
+- Minor style note: helper returns `msecs_to_jiffies(1000)` when not
+  ready, but only `== 0` is tested — harmless
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
+### Step 3.1: Blame changed lines
 **Record:**
-- Adjacent entry `0x88eb` introduced in commit `9745c2561e55f`
-  (2026-01-13, Bharat Dev Burman): *"add HP Victus 16-e0xxx mute LED
-  quirk"*
-- That commit also introduced `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` and
-  `alc245_fixup_hp_mute_led_v2_coefbit()`.
-- `0x88ed` is absent from this tree (confirmed via grep).
+- `wait_event(rds_ib_ring_empty_wait, ...)` introduced in
+  `ec16227e14141` (Andy Grover, 2009) — RDS/IB transport
+- Signaled-sends condition: `f046011cd73c3` (2010)
+- `i_fastreg_inuse_count` wait: `3a2886cca703f` (Gerd Rausch, 2019) —
+  "Keep track of and wait for FRWR segments in use upon shutdown"
+- Buggy infinite wait has been present since at least 2019 in its
+  current form; newly exposed under concurrent IB teardown/selftests
 
-### Step 3.2: Fixes: tag
-**Record:** No `Fixes:` tag present; not applicable.
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-### Step 3.3: Related file history
+### Step 3.3: File history for related changes
 **Record:**
-- Multiple similar mute-LED quirk commits already in this 6.18.y tree,
-  including:
-  - `9745c2561e55f` — Victus 16-e0xxx (`0x88eb`) + V2 fixup
-    (prerequisite)
-  - `a424946e00f2e`, `7556bd5cd8ef3`, `8db3663d3c3e2`, `bee43f7b9bc62`,
-    `3210077ed2648` — other HP mute-LED quirks
-- Standalone one-liner; not part of a multi-patch series.
+- Recent `ib_cm.c` changes in this tree are unrelated (IPv6 NULL deref,
+  setup unwind, ib_modify_qp removal)
+- RDS selftest infrastructure added in `3ade6ce1255e6` (Aug 2024) — TCP-
+  focused initially; new RDMA selftests triggered this hang
+- No conflicting recent refactor of the shutdown path in 6.18.y
 
-### Step 3.4: Author context
-**Record:** André Pragosa has no prior commits in
-`sound/hda/codecs/realtek/` in this tree. Takashi Iwai (maintainer)
-signed off.
-
-### Step 3.5: Dependencies
+### Step 3.4: Author's other commits
 **Record:**
-- **Requires:** `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` and
-  `alc245_fixup_hp_mute_led_v2_coefbit()` — **both present** (from
-  `9745c2561e55f`, confirmed ancestor of HEAD).
-- **Standalone:** Yes; only adds a quirk-table entry.
+- Allison Henderson is an active RDS maintainer (Oracle)
+- Prior stability fix in this tree: `f1acf1ac84d2a` "net:rds: Fix
+  possible deadlock in rds_message_put" (syzbot-reported deadlock, 2024)
+- Same subsystem, same author pattern of fixing RDS teardown/concurrency
+  bugs
+
+### Step 3.5: Prerequisites / dependencies
+**Record:**
+- Message-ID indicates patch 2/2 of a series (likely selftests + this
+  fix)
+- **This fix is standalone** — it only modifies `ib_cm.c` shutdown
+  logic; does not depend on selftest patches to be correct
+- No structural/API prerequisites; applies cleanly to current 6.18.44
+  code
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c <commit>` not possible — commit hash not in local
-tree. `b4 dig` with patch URL failed (wrong invocation).
-Lore/patch.msgid.link blocked by bot protection (Anubis).
-**UNVERIFIED:** full review thread content.
+### Step 4.1: Original patch discussion
+**Record:** **UNVERIFIED** — `b4 dig` requires a commit hash (commit not
+in this tree); lore.kernel.org and patch.msgid.link blocked by Anubis
+bot protection. Could not read thread discussion.
 
 ### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** via b4 `-w`. Commit message shows Takashi
-Iwai maintainer sign-off.
+**Record:** **UNVERIFIED** — `b4 dig -w` not possible without commit
+hash.
 
 ### Step 4.3: Bug report
-**Record:** No external bug report linked. Author self-reported hardware
-issue and manual verification.
+**Record:** Bug found by new RDS RDMA selftests during IB network config
+teardown. No external bugzilla/syzbot link. Selftests added separately
+(`3ade6ce1255e6` and follow-ups in this tree).
 
-### Step 4.4: Related patches
-**Record:** Part of ongoing HP Victus mute-LED quirk pattern; sibling
-`0x88eb` fix already in this tree. Commit message references `0x88eb` as
-the matching configuration.
+### Step 4.4: Related patches / series
+**Record:** Patch 2 of series per Message-ID (`...-2-achender@...`).
+Patch 1 likely adds RDMA selftests that expose the hang. Fix itself is
+independent.
 
-### Step 4.5: Stable list history
-**Record:** **UNVERIFIED** — lore.kernel.org inaccessible. Precedent in
-this tree: similar mute-LED quirks already backported.
+### Step 4.5: Stable mailing list
+**Record:** **UNVERIFIED** — could not search lore stable list due to
+bot protection.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** No functions modified. Affected data: `alc269_fixup_tbl[]`.
-Selected fixup: `alc245_fixup_hp_mute_led_v2_coefbit()`.
+**Record:** `rds_ib_conn_path_shutdown()`,
+`rds_ib_conn_path_shutdown_check_wait()` (new), callers unchanged.
 
-### Step 5.2: Callers
-**Record:** `snd_hda_pick_fixup(codec, alc269_fixup_models,
-alc269_fixup_tbl, alc269_fixups)` called from codec init at line 8471
-during HDA probe. Standard path for every Realtek ALC269-family codec
-load.
+### Step 5.2: Trace callers
+**Record:**
+- `rds_ib_conn_path_shutdown` registered as `conn_path_shutdown` in
+  `ib.c:571`
+- Called from `rds_conn_shutdown()` (`connection.c:401`)
+- `rds_conn_shutdown()` called by `rds_shutdown_worker()`
+  (`threads.c:249`)
+- `rds_shutdown_worker` runs on `rds_wq` via `queue_work(rds_wq,
+  &cp->cp_down_w)` (`connection.c:905`)
+- Also reached via `rds_conn_path_destroy()` → `rds_conn_path_drop()` →
+  `flush_work(&cp->cp_down_w)` (`connection.c:457-458`)
+- Module exit: `rds_ib_exit()` → `rds_ib_destroy_nodev_conns()` →
+  `rds_conn_destroy()` → shutdown path
 
-### Step 5.3: Callees
-**Record:** Fixup calls `snd_hda_gen_add_mute_led_cdev(codec,
-coef_mute_led_set)` which hooks LED brightness to codec coefficient
-updates.
+### Step 5.3: Key callees
+**Record:** `rdma_disconnect()`, `rds_ib_flush_mrs()`,
+`wait_event`/`wait_event_timeout`, `tasklet_schedule()`,
+`tasklet_kill()`, `rdma_destroy_qp()`, `ib_destroy_cq()`
 
-### Step 5.4: Reachability
-**Record:** Triggered at boot/module load when HDA codec probes on
-hardware with SSID `103c:88ed`. Not userspace-triggerable after probe;
-affects only matching HP Victus 16-e0xxx machines.
+### Step 5.4: Call chain / reachability
+**Record:**
+- Triggered during connection drop, module unload (`rds_ib_exit`), IB
+  device removal, network namespace teardown
+- Requires `CONFIG_RDS` + `CONFIG_RDS_RDMA` (tristate modules)
+- Reachable from admin operations (rmmod, IB config changes) — not a
+  random syscall path, but real production teardown scenarios (Oracle
+  RAC clusters using RDS over IB)
 
 ### Step 5.5: Similar patterns
-**Record:** Many adjacent `SND_PCI_QUIRK` entries for HP mute LEDs in
-the same table, including `0x88eb` (same fixup) and `0x8a3d` (Victus 15,
-same V2 fixup).
+**Record:** Prior RDS hang/deadlock fixes in history (`f1acf1ac84d2a`,
+`7b4b000951f09`, `9c79440e2c5e2`) confirm this subsystem has had stable-
+worthy concurrency/teardown issues before.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** `0x88eb` is supported but `0x88ed` is missing
-(`grep 0x88ed` → no matches). Affected hardware on 6.18.44 gets no mute-
-LED fixup. Prerequisite V2 fixup infrastructure has been in tree since
-`9745c2561e55f`.
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** Current `net/rds/ib_cm.c:1086-1090` still has the
+infinite `wait_event`. Fix is **not** present in v6.18.44.
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Insert one `SND_PCI_QUIRK` line
-after existing `0x88eb` entry at line 6809. Mainline diff references
-`0x88ee` entry not yet in 6.18.44; no conflict — patch simply adds
-`0x88ed` after `0x88eb`.
+**Record:** Clean apply expected — no recent refactor of this function
+in 6.18.y. File structure matches the patch context exactly.
 
 ### Step 6.3: Related fixes already present?
-**Record:** Prerequisite commit `9745c2561e55f` (88eb + V2 fixup) is in
-tree. No duplicate `0x88ed` entry. No alternate fix found.
+**Record:** No equivalent timeout/tasklet-kick fix found. FRWR wait
+logic from `3a2886cca703f` is present (the conditions being waited on).
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** **sound/ALSA hda/realtek** — IMPORTANT (laptop audio/LED
-UX), PERIPHERAL for users without this exact hardware.
+**Record:** `net/rds` — **IMPORTANT** for Oracle RAC / RDMA cluster
+users; **PERIPHERAL** for general Linux users (optional
+`CONFIG_RDS_RDMA` module).
 
 ### Step 7.2: Subsystem activity
-**Record:** Active — frequent HP mute-LED quirk commits in recent
-`alc269.c` history; this file is actively maintained for new laptop
-SKUs.
+**Record:** Actively maintained — recent fixes in 6.18.y (IPv6 NULL
+deref, zerocopy pin failure, selftest infrastructure). Not a dead
+subsystem.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Owners of HP Victus 16-e0xxx laptops with mainboard SSID
-`103c:88ed` and Realtek ALC245 codec. Driver-specific, hardware-specific
-population.
+**Record:** Users with `CONFIG_RDS_RDMA` enabled — primarily enterprise
+cluster deployments (Oracle RAC). Not universal, but production-critical
+for that population.
 
 ### Step 8.2: Trigger conditions
-**Record:** Every boot/probe on matching hardware. Common for affected
-owners; zero impact on all other systems. Unprivileged users cannot
-trigger; not a security issue.
+**Record:**
+- IB connection teardown, especially multiple concurrent shutdowns (IB
+  network config teardown)
+- Module unload (`rds_ib_exit` / `rds_rdma_exit`)
+- Not easily triggered by unprivileged users; admin/module operations
+- Selftests reliably reproduce; production impact likely under similar
+  admin teardown scenarios
 
 ### Step 8.3: Failure mode severity
-**Record:** Mute LED does not reflect audio mute state. Audio function
-unaffected. **Severity: LOW** (UX/cosmetic indicator). Not crash,
-corruption, deadlock, or security.
+**Record:** **Hang** — single-threaded `rds_wq` worker blocked
+indefinitely; teardown never completes, `flush_work` may never return,
+module unload stalls. **Severity: HIGH** for affected configs
+(system/admin operation hangs); **LOW** for users without RDS/RDMA.
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Enables expected F-key mute LED behavior on an additional
-  Victus SKU; matches established stable practice for HP HDA quirks in
-  this tree.
-- **Risk:** Minimal — 2-line table addition, existing fixup, maintainer-
-  reviewed.
-- **Ratio:** High benefit for affected users, negligible risk for
-  everyone else.
+- **Benefit:** HIGH for RDS/IB users — prevents teardown/module-unload
+  hangs
+- **Risk:** LOW — ~15 lines, same wait conditions, well-understood
+  tasklet kick pattern
+- **Ratio:** Favorable for backport to 6.18.y
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence compile
 
 **FOR backport:**
-- Hardware quirk / device-ID extension (explicit stable exception
-  category)
-- Trivial, surgical 2-line change
-- Reuses proven fixup already in tree for sibling `0x88eb` variant
-- Manually verified by author; Takashi Iwai sign-off
-- Prerequisite infrastructure present (`9745c2561e55f` is ancestor of
-  HEAD)
-- Multiple analogous HP mute-LED quirk commits already backported to
-  this 6.18.y tree
-- Clean apply expected
+- Real hang during connection/IB config teardown
+- Buggy code confirmed present in v6.18.44
+- Small, surgical, obviously correct fix
+- Runs on single-threaded workqueue — blocking sleep is a known anti-
+  pattern
+- Same maintainer (Allison Henderson) has prior stable-worthy RDS
+  deadlock fixes
+- Module unload path (`rds_ib_exit` → `rds_conn_destroy` → shutdown) is
+  affected
+- Fix does not require companion selftest patches
 
 **AGAINST backport:**
-- Not a crash, security, corruption, or deadlock fix
-- Does not meet strict "important issue" wording in stable rules if
-  quirks exception is not applied
-- No syzbot/user bugzilla report
-- Lore review thread not accessible for independent verification
+- `CONFIG_RDS_RDMA` is niche/optional
+- No syzbot or widespread user reports — found by new selftests
+- Underlying `wait_event` pattern existed since 2009 (may indicate rare
+  production trigger)
+- Lore review/stable nomination not verified
 
 **UNRESOLVED:**
-- Full mailing-list review discussion (lore blocked)
-- Whether reviewers explicitly nominated for stable
+- Mailing list review discussion and any explicit stable nominations
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — same fixup as `0x88eb`, hda-
-   verb verified, maintainer SOB
-2. Fixes a real bug? **PASS** — mute LED non-functional on matching
-   hardware
-3. Important issue? **PASS (via quirk exception)** — LOW severity UX
-   bug; qualifies under audio codec quirk / hardware workaround
-   exception routinely accepted for stable
-4. Small and contained? **PASS** — 2 lines, one table entry
-5. No new features/APIs? **PASS** — quirk table extension only; no new
-   fixup type or userspace API
-6. Can apply to local tree? **PASS** — prerequisites present, clean
-   insert after `0x88eb`
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — logic is sound;
+selftests found the bug |
+| 2. Fixes a real bug? | **PASS** — teardown hang |
+| 3. Important issue? | **PASS** — hang on admin teardown/module unload
+(HIGH for RDS/IB users) |
+| 4. Small and contained? | **PASS** — one file, ~15 lines |
+| 5. No new features/APIs? | **PASS** — behavior fix only |
+| 6. Can apply to local tree? | **PASS** — code present, clean apply
+expected |
 
-### Step 9.3: Exception category
-**Record:** **Hardware quirk / device ID addition** — `SND_PCI_QUIRK`
-entry for existing `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` fixup on HP
-Victus 16-e0xxx (MB 88ED).
+### Step 9.3: Exception categories
+**Record:** None (not a device ID, quirk, DT, build, or docs fix).
+Qualifies on merit as a hang fix.
 
 ### Step 9.4: Decision rationale
 
-For **Linux 6.18.44**, this commit should be backported. The missing
-quirk leaves mute LED broken on a specific HP Victus SKU while audio
-works; the fix is a two-line table entry reusing an already-present,
-maintainer-accepted fixup (`9745c2561e55f`). This matches the
-established pattern of HP mute-LED quirk backports already present in
-this stable tree. Risk is negligible; benefit is real for affected
-laptop owners.
+For **Linux 6.18.44**: the buggy `wait_event` in
+`rds_ib_conn_path_shutdown()` is present, the fix is small and self-
+contained, and it addresses a real hang during IB connection teardown on
+the single-threaded `rds_wq` workqueue. While RDS over IB is not
+universal, hangs during module unload or IB network reconfiguration are
+exactly the kind of issues stable trees should fix — especially with a
+low-risk, surgical patch from the subsystem maintainer.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, and body from user-provided commit
-  message
-- **[Phase 2]** Diff analysis: +2 lines to `alc269_fixup_tbl[]`, no
-  function changes
-- **[Phase 3]** `git describe HEAD` → v6.18.44; `make kernelversion`
-  equivalent via Makefile → 6.18.44
-- **[Phase 3]** `git log -S "0x88eb"` → prerequisite `9745c2561e55f`
-- **[Phase 3]** `git log -S "ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT"` →
-  introduced in `9745c2561e55f`, `2e8194b4fdee7`
-- **[Phase 3]** `git merge-base --is-ancestor 9745c2561e55f HEAD` →
-  prerequisite is in tree
-- **[Phase 3]** `git blame -L 6809` → `0x88eb` line from `9745c2561e55f`
-- **[Phase 3]** `grep 0x88ed` → not in tree (bug present)
-- **[Phase 3]** `grep 0x88ee` → not in tree (mainline context differs;
-  no apply conflict)
-- **[Phase 4]** `b4 dig -c` → not run (commit not in tree)
-- **[Phase 4]** `b4 dig <url>` → failed (incorrect usage)
-- **[Phase 4]** WebFetch lore/patch.msgid.link → blocked by Anubis bot
-  protection
-- **[Phase 4]** curl lore → blocked by Anubis
-- **[Phase 5]** Read `alc245_fixup_hp_mute_led_v2_coefbit()` at lines
-  1598–1612
-- **[Phase 5]** Read `snd_hda_pick_fixup()` call at line 8471
-- **[Phase 5]** `grep alc269_fixup_tbl` → table at 6510, used at 8472
-- **[Phase 6]** Confirmed `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` enum,
-  fixup struct, and function all exist
-- **[Phase 6]** Confirmed `0x88eb` at line 6809, `0x88ed` absent
-- **[Phase 7]** `git log --grep="mute LED"` → multiple similar quirk
-  commits in tree including `9745c2561e55f`, `a424946e00f2e`
-- **[Phase 8]** Failure mode assessed as non-crash LED indicator issue,
-  LOW severity
-- **UNVERIFIED:** Mailing-list reviewer feedback and explicit stable
-  nominations
+- **[Phase 1]** Parsed commit message: subject, tags, body; no
+  Fixes:/Reported-by:/Cc: stable
+- **[Phase 2]** Read diff and current `net/rds/ib_cm.c:1051-1092`;
+  confirmed `wait_event` → timeout loop + tasklet schedule change
+- **[Phase 3]** `git describe HEAD` → v6.18.44; `git blame -L 1086,1090`
+  → wait since 2009, FRWR conditions since 2019 (`3a2886cca703f`); `git
+  log --oneline -20 -- net/rds/ib_cm.c`
+- **[Phase 3]** `git show 3a2886cca703f` — FRWR shutdown wait
+  introduction
+- **[Phase 3]** `git show f1acf1ac84d2a` — prior RDS deadlock fix by
+  same author
+- **[Phase 4]** `b4 dig` — failed (commit not in tree, needs `-c
+  COMMITISH`)
+- **[Phase 4]** WebFetch/curl lore.kernel.org — blocked by Anubis;
+  **UNVERIFIED** mailing list review
+- **[Phase 5]** `grep rds_ib_conn_path_shutdown` — call chain through
+  `connection.c`, `threads.c`, `ib.c`
+- **[Phase 5]** Read `threads.c:257-263` — confirmed
+  `create_singlethread_workqueue("krdsd")`
+- **[Phase 5]** Read `connection.c:368-401, 905, 457-458` — shutdown
+  worker path
+- **[Phase 5]** Read `ib_cm.c:247-257, 375-385` — CQ handlers schedule
+  tasklets
+- **[Phase 5]** Read `ib_rdma.c:161-173, 524-537` — `rds_ib_flush_mrs()`
+  and destroy path
+- **[Phase 6]** `grep wait_event(rds_ib_ring_empty_wait` — buggy code at
+  `ib_cm.c:1086` in this tree
+- **[Phase 6]** `grep rds_ib_conn_path_shutdown_check_wait` — not
+  present (fix not applied)
+- **[Phase 7]** Read `net/rds/Kconfig` — CONFIG_RDS_RDMA is tristate,
+  depends on INFINIBAND
+- **[Phase 8]** Traced module exit: `ib.c:536-548` →
+  `rds_ib_destroy_nodev_conns()` → `rds_conn_destroy()`
+
+This commit should be backported to the local 6.18.y tree: it fixes a
+confirmed teardown hang with a minimal, low-risk change that applies
+cleanly to code already present in v6.18.44.
+
+**YES**The background searches finished. They didn’t turn up the commit
+itself in this tree (expected — the fix isn’t in v6.18.44 yet), but they
+did add useful context:
+
+- The `wait_event` shutdown logic traces back to the original RDS/IB
+  transport (2009), with the FRWR wait conditions added in
+  `3a2886cca703f` (2019).
+- Allison Henderson has other RDS stability fixes here, including
+  `f1acf1ac84d2a` (deadlock in `rds_message_put`).
+
+That supports the earlier analysis: the hang is in long-standing
+teardown code, and this is a small, maintainer-authored stability fix
+worth backporting to 6.18.y.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/rds/ib_cm.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a010c444b9f10..2a0a1891ac423 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6856,6 +6856,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x88d1, "HP Pavilion 15-eh1xxx (mainboard 88D1)", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x88eb, "HP Victus 16-e0xxx", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
-+	SND_PCI_QUIRK(0x103c, 0x88ed, "HP Victus 16-e0xxx (MB 88ED)",
-+		      ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x88ee, "HP Victus 16-e0xxx (MB 88EE)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x890e, "HP 255 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
+index e50e01abb0799..d9b6c9d2f6791 100644
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -1043,6 +1043,19 @@ int rds_ib_conn_path_connect(struct rds_conn_path *cp)
+ 	return ret;
+ }
+ 
++static unsigned long rds_ib_conn_path_shutdown_check_wait(struct rds_conn_path *cp)
++{
++	struct rds_connection *conn = cp->cp_conn;
++	struct rds_ib_connection *ic = conn->c_transport_data;
++
++	return (!ic->i_cm_id ||
++		(rds_ib_ring_empty(&ic->i_recv_ring) &&
++		 (atomic_read(&ic->i_signaled_sends) == 0) &&
++		 (atomic_read(&ic->i_fastreg_inuse_count)) == 0 &&
++		 (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR))) ? 0
++		: msecs_to_jiffies(1000);
++}
++
+ /*
+  * This is so careful about only cleaning up resources that were built up
+  * so that it can be called at any point during startup.  In fact it
+@@ -1083,11 +1096,13 @@ void rds_ib_conn_path_shutdown(struct rds_conn_path *cp)
+ 		 * sends to complete we're ensured that there will be no
+ 		 * more tx processing.
+ 		 */
+-		wait_event(rds_ib_ring_empty_wait,
+-			   rds_ib_ring_empty(&ic->i_recv_ring) &&
+-			   (atomic_read(&ic->i_signaled_sends) == 0) &&
+-			   (atomic_read(&ic->i_fastreg_inuse_count) == 0) &&
+-			   (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR));
++		while (!wait_event_timeout(rds_ib_ring_empty_wait,
++					   rds_ib_conn_path_shutdown_check_wait(cp) == 0,
++					   msecs_to_jiffies(1000))) {
++			tasklet_schedule(&ic->i_send_tasklet);
++			tasklet_schedule(&ic->i_recv_tasklet);
++		}
++
+ 		tasklet_kill(&ic->i_send_tasklet);
+ 		tasklet_kill(&ic->i_recv_tasklet);
+ 
 -- 
 2.53.0
 
