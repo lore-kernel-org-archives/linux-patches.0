@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB5C49503B;
-	Mon, 31 Aug 2026 14:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC9147D952;
+	Mon, 31 Aug 2026 14:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185228; cv=none; b=uT/fbpnbhCGpsGqpgUfODN49IN6ASTsbWwEw8oAeBY/Pkw3qR2zUNVZsW4xx1afBS9Ec0dlPYINtvpDRr6qt9QcIuVBTlhz11hTaYSk/T/SAIkx+wOTLCx3BIS7KnXeJvsgp/b/FuQMwhYKNV/9NBOW+bjQ/bTV6n5LD2XTEUqI=
+	t=1788185221; cv=none; b=S2nxmsTuzzCV5Bx4F9msAsREp4Rkm1fqTOsKUP5Cr4PCcQK3UHd6gFaCYKWKLhW5D+gpQtfekw8GHo2ipLiD9lhM0JKr4I+M9OV20+oXsjAbgmhF/ve1DeNLaDUIQ+MrQb62i+TFztA1K64Kz++gpeImW62k5O7idHIQD9/PUAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185228; c=relaxed/simple;
-	bh=0lIkpo3YQ+dKuGT0n7IW85blA0NF3nfmfVhgxbO2yXI=;
+	s=arc-20240116; t=1788185221; c=relaxed/simple;
+	bh=daF6jyXtz4flAk9NaNxqek24hbAiA7THprxTTGs9FiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZmwv7HXV0RQD/B1k5XNlLvbRDIRmcwUNfdI4ynuegwXu9AH4jgOwdJm9pC/CV9n6VRpAwKrR+MOTH9zskbvQRCgpBLMlcDwRYLltc7xy3WwSWUl9WqMRQFrGiVw0tX4VuCsRJshdmsi/fu4ICTP0Eu/2vublJHq850ahLtLnCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNKF50pt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FweUWqJF0a9DkVwvmeu7MbiWZOVPvWRbsTpfz6Vi+K6jtDrIwbfZTu9HnKXqpCIeaOZHGK2qYirlT/RHm65dKkUe4zEK3sG5RshA1nQXrO0FjooSLgtea+rqB1Fqkxq45vKY9CJnxsX5Q1h6dNXWOMYhG4Nkr3VVHDwNli/rOWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0vz4aSi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNKF50pt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A56C1F000E9;
-	Mon, 31 Aug 2026 14:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0vz4aSi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C478C1F000E9;
+	Mon, 31 Aug 2026 14:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185226;
-	bh=cg62WPmjld0rd5flEZ77FAimtZvZjKTNeyv6hTFWPQ0=;
+	s=korg; t=1788185220;
+	bh=IZpSY2y4MqFJFFEDOSSlUE3rxwOG6LbD+ClX21VhA2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNKF50ptDr7ILinbUQWHKHDU06UEVRWJN1CGT2/n28WXXXIXyKf7LhaI5QwHqkSGT
-	 mh25g5AkJWWben6BTcygKEX97JW8U2Y0SKGeVA0XiPMX2wgy0r2QVTd2ITP6VHKLo2
-	 s+n9w4qgjRiUk+SUjxlA8AfA/ZK79+DE4xo+I/v8=
+	b=V0vz4aSiy/n0JPpKqnX4OwWNXDOaDOOGZVqNJ3PfLSaDVAXMGEQ57g/hDDH8/cCKG
+	 YYkEFOAZVXTTuxu6FKuy9zpV5dQY+bzwlixuBFwpjI5Si5hKcPioDU03v+QYwcZfPT
+	 hj1z9iJoe0G9n5dvHlgn1/vAa0INBB8OD6hzjgrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 5.10 27/43] usb: gadget: f_tcm: keep port count until LUN teardown completes
-Date: Mon, 31 Aug 2026 15:35:35 +0200
-Message-ID: <20260831133359.816232061@linuxfoundation.org>
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 5.10 25/43] accessibility: speakup: unregister tty ldisc on later init failures
+Date: Mon, 31 Aug 2026 15:35:33 +0200
+Message-ID: <20260831133359.713207504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -49,80 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit c39d0916da47d94909391876c9e5bd429ea7b1b9 upstream.
+commit a76acbaec9b8fd74413646984d2e3626d0543e39 upstream.
 
-tcm_usbg_drop_nexus() permits session removal once tpg_port_count
-reaches zero. However, usbg_port_unlink() currently decrements that
-count from the fabric_pre_unlink() callback, before core_dev_del_lun()
-waits for active se_lun references to drain.
+The ldisc registration is intentionally non-fatal, since some synth
+drivers do not use tty/ldisc.  However, once speakup_init() continues
+past the registration point and later fails, the init unwind path should
+mirror speakup_exit() and call spk_ttyio_unregister_ldisc().
 
-If removal of the last LUN races a nexus removal, the latter can observe
-a zero port count and call target_remove_session(). This frees
-sess_cmd_map while an in-flight struct usbg_cmd, including its work item,
-can still be accessed.
+Add the missing unregister call to the error path after synth_release(),
+matching the normal module exit cleanup order.
 
-Overlapping the last-LUN unlink with nexus removal reproduces this
-lifetime violation as a DEBUG_OBJECTS "free active" warning for
-usbg_cmd_work, followed by a target-core BUG/Oops.
-
-The generic target-core unlink path has no callback after
-core_dev_del_lun() completes. Add an optional fabric_post_unlink()
-callback and use it for the f_tcm port count. The count now remains
-nonzero until core_dev_del_lun() has finished draining active LUN
-references, preventing nexus removal from freeing the session during
-command completion.
-
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Fixes: e23a9b439ce9 ("staging: speakup: safely register and unregister ldisc")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260807060733.3186624-1-shuangpeng.kernel@gmail.com
+Link: https://patch.msgid.link/20260531230804.254962-16-samuel.thibault@ens-lyon.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_fabric_configfs.c |    8 ++++++++
- drivers/usb/gadget/function/f_tcm.c          |    2 +-
- include/target/target_core_fabric.h          |    2 ++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/accessibility/speakup/main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/target/target_core_fabric_configfs.c
-+++ b/drivers/target/target_core_fabric_configfs.c
-@@ -689,6 +689,14 @@ static void target_fabric_port_unlink(
- 	}
+--- a/drivers/accessibility/speakup/main.c
++++ b/drivers/accessibility/speakup/main.c
+@@ -2432,6 +2432,7 @@ error_kbdnotifier:
+ 	mutex_lock(&spk_mutex);
+ 	synth_release();
+ 	mutex_unlock(&spk_mutex);
++	spk_ttyio_unregister_ldisc();
+ 	speakup_kobj_exit();
  
- 	core_dev_del_lun(se_tpg, lun);
-+
-+	if (tf->tf_ops->fabric_post_unlink) {
-+		/*
-+		 * Allow fabrics to release state that must remain valid until
-+		 * core_dev_del_lun() has drained all active LUN references.
-+		 */
-+		tf->tf_ops->fabric_post_unlink(se_tpg, lun);
-+	}
- }
- 
- static void target_fabric_port_release(struct config_item *item)
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1732,7 +1732,7 @@ static const struct target_core_fabric_o
- 	.fabric_make_tpg		= usbg_make_tpg,
- 	.fabric_drop_tpg		= usbg_drop_tpg,
- 	.fabric_post_link		= usbg_port_link,
--	.fabric_pre_unlink		= usbg_port_unlink,
-+	.fabric_post_unlink		= usbg_port_unlink,
- 	.fabric_init_nodeacl		= usbg_init_nodeacl,
- 
- 	.tfc_wwn_attrs			= usbg_wwn_attrs,
---- a/include/target/target_core_fabric.h
-+++ b/include/target/target_core_fabric.h
-@@ -94,6 +94,8 @@ struct target_core_fabric_ops {
- 				struct se_lun *);
- 	void (*fabric_pre_unlink)(struct se_portal_group *,
- 				struct se_lun *);
-+	void (*fabric_post_unlink)(struct se_portal_group *se_tpg,
-+				   struct se_lun *lun);
- 	struct se_tpg_np *(*fabric_make_np)(struct se_portal_group *,
- 				struct config_group *, const char *);
- 	void (*fabric_drop_np)(struct se_tpg_np *);
+ error_kobjects:
 
 
