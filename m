@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CB147F79F;
-	Mon, 31 Aug 2026 14:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80725483831;
+	Mon, 31 Aug 2026 14:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184839; cv=none; b=EjNOMTdNxN5z4xLHdWz3cAep3LIIz2n3HQBSCEAQReVQMWjvz1WR+TeF6GgxezCV+F+xWXgR6IjAmLuAM6CgZrP/D0VwnjZtnIazGXaV7HO1iKJ9oObQmD2fBX8V7sNNpZZgAy+aT2B5ieWrnKWbhXsCRgKDh6CQH91yJgpx180=
+	t=1788184844; cv=none; b=FglowkIqD8D/J5TghnSEXuqqY6f0wVJjhJhCVcC3LZgaP7mxXVMyht7v2t1jPYVs6UcDwjKSWy/uzD2Cw2+Mf29Qt+twvCjpbgUD9GfLEeSRTK6w2lcvS5M1mvZNCxDfk7mHtybRw4MIWom01eQbAa7phOy5hXuHOOMCvCmk/iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184839; c=relaxed/simple;
-	bh=h2YrJdb8PfmzmpmG7OgRmWxhex+f5wbOCqAy7X+4fiU=;
+	s=arc-20240116; t=1788184844; c=relaxed/simple;
+	bh=1dknV0SduY7jVKQE3Zz7e45o1/ArJxwVkOXGjRDi2+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtdhVKNhxrw8huLANNZnLPaHVIIOJLA0yjs1XWpWzWA0Kw1qcAXovNAZ7S4kvMUYQtzmtlGzxfHjP86+5H5OvLk4O+uXfyxd6P3z5QsxThCX0lKRGvyVS55sLR0opOElcB6gIt7A9p321kNA2ARBEu/6PYs3R0OWPNJ2EKhX8x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMNC4JqC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=elRpXPQ+ChF7IkkRm/nDuTQ1+bTuvr3w/omoh+1Ar5aoedvt56D623LHHhXeFH+Lr6AbNDIInM0MbnaKnoD+OPSGrLAR1+d1IoUeCIvS8/lfrIJzjkMkSxCpJikW3j9wdLIRmNXo3a3s6RlN7pY5FjzhOjY3iZWo/mj90sx6VMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5idmGC7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMNC4JqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339881F000E9;
-	Mon, 31 Aug 2026 14:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5idmGC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E371F000E9;
+	Mon, 31 Aug 2026 14:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184837;
-	bh=0+FDiJEV6Lfoq/hZHYgx3/YHDg+5EuXR36IckprbJmI=;
+	s=korg; t=1788184843;
+	bh=10Y9Bb7UeL2DlYJLmj3S9PKDSLvF0LN8r9vxtvq3phM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kMNC4JqCuCyWdw7r0ZH6KGdR5vM26VDLmghLLhulVerB3rYtqoeftrkuNO6VBm+OT
-	 Is5IoTJ7/hOMKcDRSglYfSEEzgc7cBeZbVAFYqF9EOgiO9fASQy6i8QJqQwkufYdIp
-	 wPug+4wUExKGIuIsBW46eivqmgwsimHCUkROdMQc=
+	b=o5idmGC7x88J57mRUStA9tlMxMVk1az7s25ww3Y+Kq8A+ajxEK41LGDNrQ6rhKEX/
+	 KHFW8EIFsIB+zn0x7DXtgvwKnfu1kn6eeyHPqLfy1zy57YR1lWcwkA3xdfCK0ZME+C
+	 2+mLk2hMYQYXOg+Xseg0NZ+OyHlNy/TfqIDLl1JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>,
-	Michael Zaidman <michael.zaidman@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 54/92] HID: ft260: fix stack-use-after-return write in I2C read race
-Date: Mon, 31 Aug 2026 15:34:52 +0200
-Message-ID: <20260831133402.528608905@linuxfoundation.org>
+Subject: [PATCH 6.1 56/92] Bluetooth: hci_sync: Fix accept list UAF during suspend
+Date: Mon, 31 Aug 2026 15:34:54 +0200
+Message-ID: <20260831133402.622156418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -52,149 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit bf3e39df3a397fd82967a31d17c4e02c7feab221 ]
+[ Upstream commit f57b399c4fa1501b2d5451f52d861ece86bcf3db ]
 
-ft260_i2c_read() points dev->read_buf at a caller-supplied buffer
-(often an on-stack variable), arms a completion and waits up to five
-seconds for the device to return the data. The HID input callback
-ft260_raw_event() runs in the input/IRQ path, independent of the
-dev->lock mutex held by the read path, and copies the device-supplied
-payload into dev->read_buf after a plain NULL check.
+hci_update_event_filter_sync() walks hdev->accept_list while sending a
+synchronous HCI command for each remote-wakeup device.  The suspend path
+holds hdev->req_lock, but accept-list updates are serialized by hdev->lock.
+Consequently, remove_device() can free the current list entry during the
+controller wait.
 
-These two paths share read_buf, read_idx and read_len with no
-serialization. If the device delays its response until the read
-times out, ft260_i2c_read() resets the controller, clears read_buf
-and returns, unwinding the stack frame the buffer lived in. A
-response that arrives at that moment lets ft260_raw_event() pass the
-NULL check and then memcpy() the device-controlled payload into the
-now-freed stack location, a bounded but attacker-influenced
-stack-use-after-return write triggerable by malicious or
-malfunctioning hardware.
+The following interleaving causes the use-after-free:
 
-Add a dedicated spinlock that serializes every access to read_buf,
-read_idx and read_len. ft260_raw_event() now holds it across the
-NULL check, the memcpy and the index update, while the read path
-takes it when arming and when clearing the buffer, so the teardown
-can no longer slip between the check and the copy.
+  hci_update_event_filter_sync()    remove_device()
+  fetch accept-list entry
+  hci_set_event_filter_sync()
+    wait for controller response    hci_dev_lock()
+                                    list_del()
+                                    kfree()
+                                    hci_dev_unlock()
+  read the freed list.next
 
-Fixes: 6a82582d9fa4 ("HID: ft260: add usb hid to i2c host bridge driver")
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in hci_suspend_sync+0x835/0x910
+  Read of size 8 at addr ffff88810bec8440 by task kworker/0:1/10
+  Workqueue: events vhci_suspend_work
+  Call Trace:
+   hci_suspend_sync+0x835/0x910
+   hci_suspend_dev+0x182/0x450
+   process_one_work+0x661/0x1090
+   worker_thread+0x45b/0xd10
+
+  Allocated by task 86:
+   hci_bdaddr_list_add_with_flags+0x1a8/0x400
+   add_device+0x381/0x820
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+  Freed by task 91:
+   kfree+0x131/0x3c0
+   remove_device+0x429/0xb70
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+Snapshot the remote-wakeup addresses under hdev->lock.  Release the lock
+before sending HCI commands.  Clear the controller event filter before
+building the snapshot, and skip allocation and the second list traversal
+when there are no matching entries.  This preserves the original filter
+and scan-state updates without retaining an accept-list node across a
+controller wait.
+
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
 Cc: stable@vger.kernel.org
-Signed-off-by: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
-Reviewed-by: Michael Zaidman <michael.zaidman@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ adapted per-iteration locking to the flat single-shot `ft260_i2c_read()` body (no chunking loop), dropping one indentation level. ]
+Link: https://lore.kernel.org/linux-bluetooth/20260730092331.2069741-1-nicoyip.dev@gmail.com/
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ft260.c |   25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c |   50 ++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 39 insertions(+), 11 deletions(-)
 
---- a/drivers/hid/hid-ft260.c
-+++ b/drivers/hid/hid-ft260.c
-@@ -240,6 +240,8 @@ struct ft260_device {
- 	struct mutex lock;
- 	u8 write_buf[FT260_REPORT_MAX_LENGTH];
- 	unsigned long need_wakeup_at;
-+	/* Protects read_buf, read_idx and read_len against ft260_raw_event() */
-+	spinlock_t read_lock;
- 	u8 *read_buf;
- 	u16 read_idx;
- 	u16 read_len;
-@@ -500,6 +502,7 @@ static int ft260_i2c_read(struct ft260_d
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6011,6 +6011,8 @@ static int hci_pause_discovery_sync(stru
+ static int hci_update_event_filter_sync(struct hci_dev *hdev)
  {
- 	struct ft260_i2c_read_request_report rep;
- 	struct hid_device *hdev = dev->hdev;
-+	unsigned long irqflags;
- 	u8 bus_busy = 0;
- 	int timeout;
- 	int ret = 0;
-@@ -519,9 +522,11 @@ static int ft260_i2c_read(struct ft260_d
+ 	struct bdaddr_list_with_flags *b;
++	bdaddr_t *accept_list;
++	size_t i, num_entries = 0;
+ 	u8 scan = SCAN_DISABLED;
+ 	bool scanning = test_bit(HCI_PSCAN, &hdev->flags);
+ 	int err;
+@@ -6027,23 +6029,49 @@ static int hci_update_event_filter_sync(
+ 	/* Always clear event filter when starting */
+ 	hci_clear_event_filter_sync(hdev);
  
- 	reinit_completion(&dev->wait);
- 
-+	spin_lock_irqsave(&dev->read_lock, irqflags);
- 	dev->read_idx = 0;
- 	dev->read_buf = data;
- 	dev->read_len = len;
-+	spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 
- 	ret = ft260_hid_output_report(hdev, (u8 *)&rep, sizeof(rep));
- 	if (ret < 0) {
-@@ -537,7 +542,9 @@ static int ft260_i2c_read(struct ft260_d
- 		goto ft260_i2c_read_exit;
+-	list_for_each_entry(b, &hdev->accept_list, list) {
+-		if (!(b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP))
+-			continue;
+-
+-		bt_dev_dbg(hdev, "Adding event filters for %pMR", &b->bdaddr);
+-
+-		err =  hci_set_event_filter_sync(hdev, HCI_FLT_CONN_SETUP,
+-						 HCI_CONN_SETUP_ALLOW_BDADDR,
+-						 &b->bdaddr,
+-						 HCI_CONN_SETUP_AUTO_ON);
++	hci_dev_lock(hdev);
++
++	list_for_each_entry(b, &hdev->accept_list, list)
++		if (b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)
++			num_entries++;
++
++	if (!num_entries) {
++		hci_dev_unlock(hdev);
++		goto update_scan;
++	}
++
++	accept_list = kmalloc_array(num_entries, sizeof(*accept_list),
++				    GFP_KERNEL);
++	if (!accept_list) {
++		hci_dev_unlock(hdev);
++		return -ENOMEM;
++	}
++
++	i = 0;
++	list_for_each_entry(b, &hdev->accept_list, list)
++		if (b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)
++			bacpy(&accept_list[i++], &b->bdaddr);
++
++	hci_dev_unlock(hdev);
++
++	for (i = 0; i < num_entries; i++) {
++		bt_dev_dbg(hdev, "Adding event filters for %pMR",
++			   &accept_list[i]);
++
++		err = hci_set_event_filter_sync(hdev, HCI_FLT_CONN_SETUP,
++						HCI_CONN_SETUP_ALLOW_BDADDR,
++					 &accept_list[i],
++					 HCI_CONN_SETUP_AUTO_ON);
+ 		if (err)
+ 			bt_dev_err(hdev, "Failed to set event filter for %pMR",
+-				   &b->bdaddr);
++				   &accept_list[i]);
+ 		else
+ 			scan = SCAN_PAGE;
  	}
  
-+	spin_lock_irqsave(&dev->read_lock, irqflags);
- 	dev->read_buf = NULL;
-+	spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 
- 	if (flag & FT260_FLAG_STOP)
- 		bus_busy = FT260_I2C_STATUS_BUS_BUSY;
-@@ -550,7 +557,9 @@ static int ft260_i2c_read(struct ft260_d
- 	}
- 
- ft260_i2c_read_exit:
-+	spin_lock_irqsave(&dev->read_lock, irqflags);
- 	dev->read_buf = NULL;
-+	spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 	return ret;
- }
- 
-@@ -1019,6 +1028,7 @@ static int ft260_probe(struct hid_device
- 		 ((struct hidraw *)hdev->hidraw)->minor);
- 
- 	mutex_init(&dev->lock);
-+	spin_lock_init(&dev->read_lock);
- 	init_completion(&dev->wait);
- 
- 	ret = ft260_xfer_status(dev, FT260_I2C_STATUS_BUS_BUSY);
-@@ -1068,6 +1078,7 @@ static int ft260_raw_event(struct hid_de
- {
- 	struct ft260_device *dev = hid_get_drvdata(hdev);
- 	struct ft260_i2c_input_report *xfer = (void *)data;
-+	unsigned long irqflags;
- 
- 	if (size < offsetof(struct ft260_i2c_input_report, data)) {
- 		hid_err(hdev, "short report %d\n", size);
-@@ -1076,6 +1087,8 @@ static int ft260_raw_event(struct hid_de
- 
- 	if (xfer->report >= FT260_I2C_REPORT_MIN &&
- 	    xfer->report <= FT260_I2C_REPORT_MAX) {
-+		bool complete_read;
++	kfree(accept_list);
 +
- 		ft260_dbg("i2c resp: rep %#02x len %d size %d\n",
- 			  xfer->report, xfer->length, size);
- 
-@@ -1086,8 +1099,15 @@ static int ft260_raw_event(struct hid_de
- 			return -1;
- 		}
- 
-+		/*
-+		 * Hold read_lock so a timed-out ft260_i2c_read() cannot
-+		 * clear read_buf between the NULL check and the memcpy.
-+		 */
-+		spin_lock_irqsave(&dev->read_lock, irqflags);
-+
- 		if ((dev->read_buf == NULL) ||
- 		    (xfer->length > dev->read_len - dev->read_idx)) {
-+			spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 			hid_err(hdev, "unexpected report %#02x, length %d\n",
- 				xfer->report, xfer->length);
- 			return -1;
-@@ -1096,8 +1116,11 @@ static int ft260_raw_event(struct hid_de
- 		memcpy(&dev->read_buf[dev->read_idx], &xfer->data,
- 		       xfer->length);
- 		dev->read_idx += xfer->length;
-+		complete_read = dev->read_idx == dev->read_len;
-+
-+		spin_unlock_irqrestore(&dev->read_lock, irqflags);
- 
--		if (dev->read_idx == dev->read_len)
-+		if (complete_read)
- 			complete(&dev->wait);
- 
- 	} else {
++update_scan:
+ 	if (scan && !scanning)
+ 		hci_write_scan_enable_sync(hdev, scan);
+ 	else if (!scan && scanning)
 
 
