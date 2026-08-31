@@ -1,100 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB4E4A64D7;
-	Mon, 31 Aug 2026 13:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6362245DF5B;
+	Mon, 31 Aug 2026 13:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183900; cv=none; b=ft/LgJQDh40lx58ShQ+tAjf2nEOpOOPLzjXkEwXDPYTvdS5fIiXKx566dOanU69yP69SFuwnwddF6QxTmlgKz6UT7Y7w6EmLwCIHZQZNADp4NNWQ3xTam1LZ+VJOAQau+E1D4EIRX27Ymkqk/mgddkstzsIumnx0liHQW9+NfUI=
+	t=1788183901; cv=none; b=bZZ4kKYXuoTa/s4oM33E80zm8jv6UXgEsWYaPOssi4ZSW3WWsv1FIMmaO7E2ESBzqRZ8RxWdr1ZrLCjNYy0XggrbF+E6wECYzESYI6p1IpHgI2jzl0XYsTb+ul5pEeK8dN+WnNV8zIQ0Mm98aBlYR2hJD34ZPxuKYIKgizgs1YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183900; c=relaxed/simple;
-	bh=KpHhR7T33xbWS9ARF9rgrSIYSqkktL2/I887A5Oi5V0=;
+	s=arc-20240116; t=1788183901; c=relaxed/simple;
+	bh=v1LWB8BtzqaiqDXb+XTwpkVvpMYjq5TATDixRxU68Yw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r9aKcAzoQPQrUSsYYhh1/GV+crRZxls5vzmfYwGEajgDrMz9oldK3ABMNi2vvBdWvOcSlpkzre3ioQp/YtnwX2P/LAfdFM8yR9BI3nfczhE27Lc/GNQWRt+0F0mjoYQlYZVzfwBSflHBi5PC7v7KI2e3HNzKKTEqOM8MDsHh6Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DWgvjM1Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S5ijDTHPvt0xqXvUsXlY0CqaaErYjcIyJ9GV4txiUmb+cqGcuwikUHcNOQCa6dH2cQmR9R59YdpWFQefPh7vo3tZlTi9qWnqG7gdCuQCKJOQI5n1M50kViT+OJppOM1WTBVU/E/Db+kn/knK5uScXzJglJDNW4cAi+nU6ovhySc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnl+J4OV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DWgvjM1Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8842D1F00ACA;
-	Mon, 31 Aug 2026 13:44:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183898;
-	bh=rHdXN17Zl3nfk/mohMgINlLi2ZzSoJ53ajnoqYQ0R5M=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnl+J4OV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D201F00A3F;
+	Mon, 31 Aug 2026 13:44:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183900;
+	bh=AdnzLH6yjcTcL8DjSOTlO50JCqt7F/mnP3iP3w9pWAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DWgvjM1Q2OrabayXXEjF6e8ZsifyMVxvn5gedyV2luErrTS2Uj62oFK7KQBaV4dGN
-	 sMPJtA/a9ZsAZY8qGTDhX5/vLecndAjGcNxq8WA8of++i/CEl25CWqkwQcIVKg4M4f
-	 VdnEbyXz1hIklDq+sxkl9vtUW7leoiXwCoQad332/NYBS9DClLxf3gtekPwkgnDJjY
-	 vwLfrIStlHL2cxBhJmlc7FXNSRTPMy0wQTRwFdwJ369q10z+1rMD0MdzW37rNdDNYb
-	 RzKuFJEznO1mA6Zc9g6lZMgarIAb9Q1//gEPq+83pvfkcG8BQJUt6UkK+3ZODMwgCf
-	 jl3vliTZ5PsYQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Arash Golgol <arash.golgol@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] media: video-i2c: use vb2_video_unregister_device on driver removal
-Date: Mon, 31 Aug 2026 09:26:37 -0400
-Message-ID: <20260831133314.4125787-369-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=dnl+J4OVKNdjkTiKgSve4OOAe7zolZ6reoUDX7W5oyvySMommHon9Ps3oZcU7fLsj
+	 j2YgA2TZ3dLC6uOhWoOIU6pSiNBo2a6kSK6XPzdPxwwK6rkAM4lh4rOGc7H1qBbax9
+	 AjyXZjsseq+0fSRbBZMiAIkpy43QF9aKykp3gD3Q=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 7.1 74/76] USB: c67x00: fix use-after-free in c67x00_add_iso_urb()
+Date: Mon, 31 Aug 2026 15:34:46 +0200
+Message-ID: <20260831133403.199353717@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arash Golgol <arash.golgol@gmail.com>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 56384b486b80ce4a2bc93689aae49995f908f90d ]
+------------------
 
-The driver uses vb2_fop_release() as its file release operation, so
-vb2_video_unregister_device() should be used instead of
-video_unregister_device() during driver removal.
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-This ensures that the vb2 queue is properly disconnected before the
-video device is unregistered.
+commit b1e24de475bf2d66fffc9103f3444b783527d55a upstream.
 
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When TD creation fails for the last packet of an isochronous URB,
+c67x00_add_iso_urb() gives the URB back before updating the endpoint
+scheduling state.
+
+c67x00_giveback_urb() frees the URB private data, and the completion
+callback may release the final URB reference. The following accesses to
+urbp->ep_data, urb->interval, and urbp->cnt can therefore use freed
+memory.
+
+Update next_frame and cnt before giving back the failed final packet,
+making the giveback the last operation that uses the URB and its private
+data.
+
+Fixes: e9b29ffc519b ("USB: add Cypress c67x00 OTG controller HCD driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260806013502.322067-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/usb/c67x00/c67x00-sched.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background `git log -S 'vb2_video_unregister_device'` search timed
-out after ~2 minutes and produced no output (it was killed). That didn’t
-affect the backport verdict — the analysis already covered the relevant
-code paths, API docs, and tree state directly.
-
-The conclusion for **6.18.y** remains **YES**: one-line fix, real
-teardown bug on remove during active capture, applies cleanly.
-
- drivers/media/i2c/video-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
-index 1eee2d4f5b40e..16ad1831e4da7 100644
---- a/drivers/media/i2c/video-i2c.c
-+++ b/drivers/media/i2c/video-i2c.c
-@@ -888,7 +888,7 @@ static void video_i2c_remove(struct i2c_client *client)
- 	if (data->chip->set_power)
- 		data->chip->set_power(data, false);
+--- a/drivers/usb/c67x00/c67x00-sched.c
++++ b/drivers/usb/c67x00/c67x00-sched.c
+@@ -761,13 +761,13 @@ static int c67x00_add_iso_urb(struct c67
+ 				ret);
+ 			urb->iso_frame_desc[urbp->cnt].actual_length = 0;
+ 			urb->iso_frame_desc[urbp->cnt].status = ret;
+-			if (urbp->cnt + 1 == urb->number_of_packets)
+-				c67x00_giveback_urb(c67x00, urb, 0);
+ 		}
  
--	video_unregister_device(&data->vdev);
-+	vb2_video_unregister_device(&data->vdev);
+ 		urbp->ep_data->next_frame =
+ 		    frame_add(urbp->ep_data->next_frame, urb->interval);
+ 		urbp->cnt++;
++		if (ret && urbp->cnt == urb->number_of_packets)
++			c67x00_giveback_urb(c67x00, urb, 0);
+ 	}
+ 	return 0;
  }
- 
- #ifdef CONFIG_PM
--- 
-2.53.0
+
 
