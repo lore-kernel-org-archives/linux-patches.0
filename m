@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D19747CC71;
-	Mon, 31 Aug 2026 13:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A7547CC6B;
+	Mon, 31 Aug 2026 13:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184692; cv=none; b=PypwwDVLiL1H3ZNByuTIQ07dJ0NgRVc+xLQVBu/b7oLngh/OEtSqj5l/RW9XsYrWuA/M2CenP58bye2TUO0aYgI/6wnOHQv1ySFyYD4+Opgu3Q6xmcsXq3d0QjgjncPSGrciDzweYzYlzOJihYum+Zt7bvVm/K+gxmG0XzeyL3I=
+	t=1788184689; cv=none; b=nJDW7OKMWyEEUEHvzqVByFYLdhYd4bKrB4m35T9julQeyK6xKjkcG3x1Tx2kOgYA9muoBc2449IB4RZmI8BlqOamTIAebMDkEwfttpfWQlvhqPfFR7ZeZrKFY3Ob9qhdgVg8yhSRuMx8G6Pk2GdACkc7GgtRtuo2ZBUaG5BnflI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184692; c=relaxed/simple;
-	bh=EkjEM3BVNz6GwlySbG99E3r+1CJlounx8+HiGqbEGuo=;
+	s=arc-20240116; t=1788184689; c=relaxed/simple;
+	bh=YqUa7X4MA96Yz8XXoAIcSeKdJJj3vO9HkAnvaqky6Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejjG4Ydo46rQmGSUMhWcYpdOfMFZoHedivcn1B1gPPxdLy9b0QKKdzme3Sp1Hf9vcXuEO0h+BGX3tHhw7HhgPxq8ciPlJFpnKsuDfDfMBVA72IbV/3fJBA3AsfESRHYfIYm3PmHC+TntbXpLierAWjZwZwGlHGuOKJ74IQw+LdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z83T3Agx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ego9N4AkH2yT0fGXs9g49x9uqG3J7M2FFwC8AAdMNg2sTCFp3kIcOwlKTmcihqWgVz0k/F/CNaJi2FvhIrUfv1upyvxZI7ELRu7kxCBiMh101hBmdXiJmgyKgkR5ZjK0aFZvgtQak/GmyZ9PTy8D9T97GipYs5zMv3Y8wqQf1Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNR6Rmqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z83T3Agx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E866E1F000E9;
-	Mon, 31 Aug 2026 13:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNR6Rmqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2531F000E9;
+	Mon, 31 Aug 2026 13:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184691;
-	bh=0E8IUwmxA38CNpQZlGymnQ/7tppJDccTn4pB0P1WsHM=;
+	s=korg; t=1788184688;
+	bh=h9MjDrAvkafSEL8HmT+ryqk5H0ohYuYTL20FHP1GPRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z83T3AgxxJ3L0q0NS7fHE74h1LcZHaYAHyDgN7Sl4KDZsPKp6bHYAnACaIUiqXY53
-	 JQZBloJfRans1hNnjh8ngQ/ZZRu0h4CW0Hm+7QiZJ4wXQzITR/wxWJ6XX5ZnyrjsKx
-	 iXa7bsL/Jg9injAULmgRHdK2fn29Bze1CzJjUb2k=
+	b=CNR6Rmqi7MOuzHzuaPf+T0QO5MSKrOT9C2qA17OE8kB4AMXWu1vTT9c/a1o80dIWX
+	 ErV7Iy+KRdZ4NNz3q/bTINpJj0IDkkeIvAUgZ5itOo0Zd5oO3Wcr6QgNnWGjSPYFFh
+	 SRJFtm4VpyYBpvscF+47obteXjKqwNahBTt7Hc0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.6 71/91] x86/CPU/AMD: Carve out a Zen5 models range
-Date: Mon, 31 Aug 2026 15:34:59 +0200
-Message-ID: <20260831133403.327835213@linuxfoundation.org>
+	Perry Yuan <perry.yuan@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.6 70/91] x86/CPU/AMD: Add models 0x60-0x6f to the Zen5 range
+Date: Mon, 31 Aug 2026 15:34:58 +0200
+Message-ID: <20260831133403.291323306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -51,33 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
+From: Perry Yuan <perry.yuan@amd.com>
 
-commit 52075128273ace53e6254e37899a47d40d4baf45 upstream.
+commit bf5641eccf71bcd13a849930e190563c3a19815d upstream.
 
-Family 0x1a, model 0xd0..0xd7 belongs to the Zen5 generation. Carve it
-out from the larger, Zen6 range where former doesn't belong.
+Add some new Zen5 models for the 0x1A family.
 
-  [ bp: Rewrite commit message, add tags. ]
+  [ bp: Merge the 0x60 and 0x70 ranges. ]
 
-Fixes: b5f53e6d3d32 ("x86/CPU/AMD: Add more Zen6 models")
-Signed-off-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
-[ bp: Backport only the Zen5 bits. ]
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260729055459.15904-1-Pratik.Vishwakarma@amd.com
+Link: https://lore.kernel.org/r/20240729064626.24297-1-bp@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/cpu/amd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/arch/x86/kernel/cpu/amd.c
 +++ b/arch/x86/kernel/cpu/amd.c
-@@ -706,6 +706,7 @@ static void bsp_init_amd(struct cpuinfo_
+@@ -705,7 +705,7 @@ static void bsp_init_amd(struct cpuinfo_
+ 		switch (c->x86_model) {
  		case 0x00 ... 0x2f:
  		case 0x40 ... 0x4f:
- 		case 0x60 ... 0x7f:
-+		case 0xd0 ... 0xd7:
+-		case 0x70 ... 0x7f:
++		case 0x60 ... 0x7f:
  			setup_force_cpu_cap(X86_FEATURE_ZEN5);
  			break;
  		default:
