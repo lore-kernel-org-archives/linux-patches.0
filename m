@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB5057983D;
-	Mon, 31 Aug 2026 13:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023AC53D0C1;
+	Mon, 31 Aug 2026 13:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184161; cv=none; b=iA1jnzGyaSdCrykNbZS3FPzLRgAKIdXcdBp3O+UNLvq/sTYDnuUXQPRM+X0P+ejvAWTzISOy9vz9JGEXo3n48fkekxDBY4yNJIPdDIP1DH+cpKvtNa5jdCmMCUYBdsyv+2kdEx7M3wu6lrMu3U8StRDl8PpETV2Ms0ZNRRk34MA=
+	t=1788184163; cv=none; b=GrRKoMnLKbKwENVLq/8XSH0lr18v1JhDMdh4TiJ7z3U1ZCNz64oOpwsr3NS5Q/Utc5IBgVxjGivuf5jLcGbfxmS3vEPQiX3ijeNZ0FcgYgam81sIj3pR72Ibnyu/OLl8PZXIM+UW3l84MWD5gsG/dwkJxLpnxNGub99H/xqRt5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184161; c=relaxed/simple;
-	bh=Xswt+y1hLefFnxkk2F+3xP6YV6N12Vs7Vsbu/twIh/A=;
+	s=arc-20240116; t=1788184163; c=relaxed/simple;
+	bh=rzWTuNNITA1RP0z2Bs1ytdcA00Pp2AsVQqSvSU1gUDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CQvlAMIf+Z5UAQ7s2DW6j3rjZ5ivNLbJ3t/jtKg9WtGadptATkU3d/LHzMCMe4Zz0yXxEXDVAUAcvD9B3WXauVb0wYF4WHO+dR9JeSZwl1dlzQhFc6r1j7LwgNgoNATlPmi0BTt2k5myPy4irpnsQmNiwCSuBRfI8jvosotnNQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PKAyjcyw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tpcBC6YfGFW/QL4JGdQQzzUlGYcGoyoO80Gsoxwwkzpli4oEf4HZVSosCCDLKvbpTwpQK8Fvbc7F5CNadV8iqgeOXlzDyQuRSPYAcxH7LHHRx95mxxgTaqRCORfBlsMA6JyAw//6UKb0xadm0MtY/WfxcUhxWfIaLTZbN3rjNiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U6SY8Scb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PKAyjcyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F5E1F00A3E;
-	Mon, 31 Aug 2026 13:49:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U6SY8Scb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C4B1F00ADB;
+	Mon, 31 Aug 2026 13:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184158;
-	bh=VfJs/Gcp0CX9jHDu0u3nFy+bIdQiOz97/siV7vNDj2k=;
+	s=k20260515; t=1788184160;
+	bh=Nt3ygAog5YObM4Ykz23j98wLcbCUuH7UCi3DByaXqVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PKAyjcywnLwT/1XdXrwLO2nMhtWa0SMeHbyFxXqAp9VBHyqr6eKrC8iAXqxkwJYdK
-	 MNZ40YjFMFOikwUN+ivOjTJjbJ9DNqHbmDigqw48ghHBDFwcNzx1cPH4TSNYPXOAFC
-	 Tc8WVx57q1e8oq/6eUgRcwvvwGWGR18mNkYbIkEtQVVcZYNhwFWJZugNL5tKrEB98R
-	 9pmZEDMkNlZs9ff4RF1q4NzvjKS4NsZeDeErslAkxoZHCnMfi1m2dUrmEAS1BrqG5P
-	 HG7Aqlg4JaEyGBK30LFuLySKYAuRk9//ZBIM0rIhvPNvwKlvbxX46knurAxcfAimPL
-	 g7hM8sbepL9NQ==
+	b=U6SY8ScbHnlF4tH72vQYIcnkhUolaAfiA4dPDBW3bi5xDlahyZxKzbQXw/ayJoeyN
+	 WKbY0W2meTrCiSXGxAqwHSnlDGx+wzJQdYc7HGkI2I8wR7zIvmdaRJBxZq7CimIje3
+	 m5LF+3Oo+Mxt9VYm8AsMp4DiW+yrrekguTLQEOwCsXJKLqwEDyrEPH3OVKOpt8D/kc
+	 PqvVRfeDFlwWong7CLWTREj9IeG/n47pfeO6GOm5F4jf3pnDPk3MVFYFnrbQ8LivB8
+	 l9sU5W0tWwCRcreNEvfshm5CncAooN4m8F30879QWiaFj1IexCX64xppjkR06KHSFo
+	 az48HWTwYSfOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Pei <cp0613@linux.alibaba.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Jonas Jelonek <jelonek.jonas@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	linux@armlinux.org.uk,
+	andrew@lunn.ch,
+	hkallweit1@gmail.com,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ACPI: scan: Honor _DEP for ACPI0016 PCI/CXL host bridge
-Date: Mon, 31 Aug 2026 09:29:14 -0400
-Message-ID: <20260831133314.4125787-526-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] net: sfp: extend SMBus support
+Date: Mon, 31 Aug 2026 09:29:15 -0400
+Message-ID: <20260831133314.4125787-527-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,52 +59,88 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Jonas Jelonek <jelonek.jonas@gmail.com>
 
-[ Upstream commit bf5418a5fe63f35da35941ae896d5df121d95ffc ]
+[ Upstream commit 58b29bdf6186a8c3f2d725619c0b17cf602ac4e0 ]
 
-CXL root devices (ACPI0017) declare _DEP on their parent ACPI0016
-PCI/CXL host bridge so that cxl_acpi probes only after acpi_pci_root
-has attached the PCI root and registered it for acpi_pci_find_root().
-However, acpi_dev_ready_for_enumeration() only consults dep_unmet
-when the supplier's HID is on acpi_honor_dep_ids[]; otherwise the
-dependency is silently ignored.
+Commit 7662abf4db94 ("net: phy: sfp: Add support for SMBus module access")
+added SMBus access for SFP modules, but limited it to single-byte
+transfers. As a side effect, hwmon is disabled (16-bit reads cannot be
+guaranteed atomic) and a warning is printed.
 
-Without honoring the dependency, cxl_acpi can probe before the PCI
-root is ready. The resulting CXL topology is broken: decoder targets
-read as 0 and no port/endpoint devices appear under
-/sys/bus/cxl/devices/.
+Many SMBus-only I2C controllers in the wild support more than just
+byte access, and SFP cages are often wired to such controllers
+rather than to a full-featured I2C controller -- e.g. the SMBus
+controllers in the Realtek longan and mango SoCs, which advertise
+word access and I2C block reads. Today, they cannot drive an SFP at
+all without falling back to the byte-only path.
 
-Add ACPI0016 to acpi_honor_dep_ids[] so the _DEP declared by ACPI0017
-is enforced. This relies on the preceding patch ("ACPI: PCI: clear
-_DEP dependencies after PCI root bridge attach"), which releases the
-dependency once the PCI root is fully enumerated; the two patches
-must be applied together.
+Extend sfp_smbus_read()/sfp_smbus_write() so that, in addition to
+the existing byte access, they also use SMBus word access and SMBus
+I2C block access whenever the adapter advertises them. Both
+directions are handled in a single read and a single write helper
+that pick the largest supported transfer per chunk and fall back as
+needed.
 
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260526025118.38935-3-cp0613@linux.alibaba.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+I2C-block is preferred unconditionally when available: the protocol
+carries any length 1..32, so it can serve every chunk -- including
+the 1- and 2-byte tails -- without help from word or byte access.
+Note that this requires I2C_FUNC_SMBUS_I2C_BLOCK, which reads a
+caller-specified number of bytes. This deviates from the official
+SMBus Block Read (length is supplied by the slave) but is widely
+supported by Linux I2C controllers/drivers.
+
+Capability matrix this implementation supports:
+
+  - BYTE only:                  works (unchanged behaviour); 1-byte
+                                xfers, hwmon disabled.
+  - BYTE + WORD:                word for >=2-byte chunks, byte for
+                                trailing odd byte.
+  - I2C_BLOCK present (with or
+    without BYTE/WORD):         block as the universal transport for
+                                every chunk.
+  - WORD only (no BYTE/BLOCK):  accepted with WARN_ONCE. Even-length
+                                transfers work; odd-length transfers
+                                (e.g. the 3-byte cotsworks fixup
+                                write) hit the BYTE branch which the
+                                adapter does not implement, so the
+                                xfer returns an error and the
+                                operation is aborted. No mainline
+                                I2C driver was found to advertise
+                                WORD without BYTE; the warning lets
+                                us learn about it if it ever shows
+                                up.
+
+Adapters with asymmetric R/W capabilities (e.g. only READ_I2C_BLOCK
+but not WRITE_I2C_BLOCK) remain functionally correct -- the
+per-iteration fallback uses the direction-specific bits -- but the
+shared i2c_max_block_size is sized by the all-bits-set check, so a
+transfer in the better-supported direction is not upgraded. None of
+the mainline I2C bus drivers surveyed during review advertise such
+asymmetry; promoting i2c_max_block_size to per-direction sizes can
+be revisited if needed.
+
+Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260614133418.2068201-3-jelonek.jonas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ACPI: scan: Honor _DEP for ACPI0016 PCI/CXL
-host bridge
+# Stable Backport Analysis: `net: sfp: extend SMBus support`
+(58b29bdf6186a)
 
-**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, `make kernelversion`
-= 6.18.44)
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[ACPI: scan]` `[Honor]` — Enforce ACPI `_DEP` dependency
-for ACPI0016 (CXL/PCIe host bridge) so ACPI0017 (CXL root) consumers
-wait for PCI root attach.
+### Step 1.1: Subject Line
+**Record:** `[net: sfp]` `[extend]` — Extend existing SMBus SFP access
+beyond single-byte transfers.
 
 ### Step 1.2: Tags
 **Record:**
@@ -107,34 +148,37 @@ wait for PCI root attach.
 |-----|-------|
 | Fixes: | None |
 | Reported-by: | None |
-| Tested-by: | Alison Schofield \<alison.schofield@intel.com\> |
-| Reviewed-by: | Alison Schofield \<alison.schofield@intel.com\> |
-| Link: |
-https://patch.msgid.link/20260526025118.38935-3-cp0613@linux.alibaba.com
-|
-| Signed-off-by: | Chen Pei, Rafael J. Wysocki |
+| Tested-by: | None |
+| Reviewed-by: | Maxime Chevallier \<maxime.chevallier@bootlin.com\>
+(original SMBus author) |
+| Acked-by: | None |
+| Link: | https://patch.msgid.link/20260614133418.2068201-3-
+jelonek.jonas@gmail.com |
+| Cc: stable | None (expected for manual review) |
+| Signed-off-by: | Jonas Jelonek, Jakub Kicinski |
 
-**Notable:** Intel CXL maintainer tested and reviewed. No syzbot. No
-explicit `Cc: stable`.
+Notable: Reviewed by the author of commit 7662abf4db94 that introduced
+SMBus support. No syzbot or user bug reports.
 
-### Step 1.3: Body analysis
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** ACPI0017 (CXL root) declares `_DEP` on parent ACPI0016, but
-  `acpi_dev_ready_for_enumeration()` ignores it because ACPI0016 is not
-  in `acpi_honor_dep_ids[]`.
-- **Symptom:** `cxl_acpi` probes before `acpi_pci_root` registers the
-  PCI root → `acpi_pci_find_root()` returns NULL → broken CXL topology
-  (decoder targets = 0, no devices under `/sys/bus/cxl/devices/`).
-- **Root cause:** `_DEP` silently ignored for ACPI0016 suppliers.
-- **Dependency:** Must be applied with preceding patch "ACPI: PCI: clear
-  _DEP dependencies after PCI root bridge attach" (upstream
-  `3a59c3b772e5d`).
-- **Version info:** None explicit; cover letter says x86 is usually
-  masked by link order; RISC-V is affected.
+- **Bug:** Commit 7662abf4db94 limited SMBus to single-byte transfers.
+  Adapters advertising word or I2C-block SMBus (e.g. Realtek
+  longan/mango SoCs) cannot drive SFP cages; they fail
+  `sfp_i2c_configure()` or are stuck on byte-only path with hwmon
+  disabled.
+- **Symptom:** SFP probe/configure failure (`-EINVAL`) on I2C-block-only
+  adapters; degraded operation (no hwmon, warning spam) on byte-capable
+  but word/block-capable adapters.
+- **Root cause:** `sfp_i2c_configure()` only accepts
+  `I2C_FUNC_SMBUS_BYTE_DATA`; read/write helpers only use
+  `I2C_SMBUS_BYTE_DATA`.
 
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit, well-described functional bug fix
-disguised as a one-line allowlist addition.
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes. Despite “extend” wording, this completes
+broken/incomplete SMBus support introduced by 7662abf4db94. Adapters
+with `I2C_FUNC_SMBUS_I2C_BLOCK` but no `BYTE_DATA` currently get
+`-EINVAL` and the SFP driver fails probe entirely.
 
 ---
 
@@ -142,336 +186,469 @@ disguised as a one-line allowlist addition.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/acpi/scan.c` (+1 line)
-- **Functions:** None modified; only `acpi_honor_dep_ids[]` data changed
-- **Scope:** Single-file, surgical (1 insertion)
+- **File:** `drivers/net/phy/sfp.c` (+111 / -28 on mainline; +120 / -29
+  with quirks prerequisite)
+- **Functions:** `sfp_smbus_byte_read` → `sfp_smbus_read`,
+  `sfp_smbus_byte_write` → `sfp_smbus_write`, `sfp_i2c_configure`
+- **Scope:** Single-file, moderate surgical change
 
-### Step 2.2: Code flow change
+### Step 2.2: Code Flow Changes
 **Record:**
-- **Before:** When ACPI0017 declares `_DEP` on ACPI0016,
-  `acpi_scan_add_dep()` sets `dep->honor_dep = false` (ACPI0016 not in
-  list) → `acpi_dev_ready_for_enumeration()` never blocks on `dep_unmet`
-  → CXL root probes early.
-- **After:** ACPI0016 in honor list → `honor_dep = true` → consumer
-  ACPI0017 blocked until supplier clears dependency.
-- **Path affected:** ACPI device enumeration / attach path in
-  `acpi_bus_check_add()` via `acpi_dev_ready_for_enumeration()`.
+| Hunk | Before | After |
+|------|--------|-------|
+| Read helper | Byte-only loop | Per-chunk: I2C-block → word (≥2 bytes)
+→ byte fallback |
+| Write helper | Byte-only loop | Per-chunk: I2C-block → word (≥2 bytes)
+→ byte fallback |
+| `sfp_i2c_configure` | Requires `BYTE_DATA` only; `max_block_size = 1`
+| Accepts `BYTE_DATA` OR `I2C_BLOCK`; sets block size 16/2/1; word-only
+path with `WARN_ONCE` |
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic / correctness — probe ordering / dependency
-  enforcement
-- **Mechanism:** ACPI `_DEP` declared in firmware is parsed but not
-  enforced unless supplier HID is on `acpi_honor_dep_ids[]`. Early
-  `cxl_acpi_probe()` calls `to_cxl_host_bridge()` →
-  `acpi_pci_find_root()` fails → host bridges skipped silently.
+### Step 2.3: Bug Mechanism
+**Record:** **Logic / hardware correctness fix (category g/h).**
+Incomplete protocol selection left certain SMBus-only adapters unusable
+and forced `i2c_max_block_size = 1`, which disables hwmon
+(`sfp_hwmon_probe()` requires `i2c_block_size >= 2`).
 
-### Step 2.4: Fix quality
-**Record:**
-- **Quality:** Obviously correct; mirrors existing entries (PNP0C0F,
-  RSCV*, INTC*).
-- **Regression risk:** Applying **this patch alone** without the
-  prerequisite would permanently block ACPI0017 enumeration (confirmed
-  in lore review by Alison Schofield). Both patches must ship together.
-- **Risk of combined series:** Very low — follows `pci_link.c` / `ec.c`
-  pattern already in tree.
+### Step 2.4: Fix Quality
+**Record:** Well-structured capability matrix in commit message; BYTE-
+only path preserved unchanged. Low regression risk for existing byte-
+only setups. `i2c_get_functionality()` called once per read/write call
+(minor inefficiency, not a stability concern). Reviewed by subsystem
+expert.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** `acpi_honor_dep_ids[]` introduced by `9d9bcae47fd5a` (2021,
-INT3472 camera PMIC deps). PNP0C0F added by `2cb9155d116c4` (2024,
-pci_link dep series). ACPI0016 handling in `pci_root.c` since
-`241d26bc26add` (2022). CXL ACPI root since `4812be97c015b`. Bug has
-been latent since honor-list mechanism existed without ACPI0016 entry.
+**Record:** Buggy byte-only SMBus code introduced in **7662abf4db94**
+(2025-03-25, Maxime Chevallier). Present in this 6.18.44 tree. Related
+fix **bef389a210e7d** (i2c_block_size init, infinite-loop fix) already
+backported to stable by Greg K-H.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag. Referenced commit 7662abf4db94 is an
+ancestor of HEAD.
 
-### Step 3.3: Related file history
-**Record:** Related pending stable commits on `autosel` branch:
-- `b52e0117014b6` — ACPI: PCI: Clear _DEP dependencies after PCI root
-  bridge attach (prerequisite)
-- `82dbacca5220e` — this commit (upstream `bf5418a5fe63f`)
+### Step 3.3: Related Commits
+**Record:** Part of v11 series (2 patches):
+1. **f2a138abfb719** — `net: sfp: apply I2C adapter quirks to limit
+   block size` (prerequisite on mainline)
+2. **58b29bdf6186a** — this commit
 
-Neither is in current HEAD (`6.18.44`). Part of a 2-patch series (v1,
-May 26 2026).
+`bef389a210e7d` (i2c_block_size init) already in 6.18.44. Neither quirks
+nor extend SMBus are in 6.18.44 yet.
 
-### Step 3.4: Author context
-**Record:** Chen Pei (Alibaba). Series reviewed/tested by Alison
-Schofield (Intel CXL maintainer) and Reviewed-by Dave Jiang on lore
-thread.
+### Step 3.4: Author Context
+**Record:** Jonas Jelonek authored `bef389a210e7d` (already in stable
+6.18.y). Same SFP SMBus series.
 
 ### Step 3.5: Dependencies
-**Record:** **Hard dependency** on patch 1
-(`acpi_dev_clear_dependencies()` in `acpi_pci_root_add()`). Prerequisite
-not in tree. Both patches apply cleanly (`git apply --check` passed).
-Standalone application of this commit alone is harmful.
+**Record:** On mainline, extend SMBus builds atop quirks patch
+(refactors `sfp_i2c_configure` to use local `max_block_size`).
+**f2a138abfb719 applies cleanly to 6.18.44**; **both patches apply
+cleanly in sequence**. Extend SMBus alone conflicts (verified via
+cherry-pick).
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:**
-- `b4 dig -c bf5418a5fe63f` → https://patch.msgid.link/20260526025118.38
-  935-3-cp0613@linux.alibaba.com
-- Series v1, 2 patches, May 26 2026
-- Cover letter explains twofold root cause and mandatory pairing
+### Step 4.1: Original Discussion
+**Record:** `b4 dig -c 58b29bdf6186a` → https://patch.msgid.link/2026061
+4133418.2068201-3-jelonek.jonas@gmail.com (v11 2/2). Series evolved
+v5→v11 since 2026-01-16.
 
 ### Step 4.2: Reviewers
-**Record:** CC'd: rafael@kernel.org, bhelgaas@google.com,
-djbw@kernel.org, linux-cxl@, linux-acpi@, linux-pci@. Alison Schofield:
-Tested-by + Reviewed-by for series. Dave Jiang: Reviewed-by.
+**Record:** `b4 dig -w` CC'd Russell King, Andrew Lunn, netdev
+maintainers, Maxime Chevallier.
 
-### Step 4.3: Bug report
-**Record:** No external bugzilla/syzbot. Cover letter documents
-reproducible failure: decoder targets = 0, empty
-`/sys/bus/cxl/devices/`. Trigger on RISC-V where `acpi_pci_root` vs
-`cxl_acpi` link order is not guaranteed.
+### Step 4.3: Bug Reports
+**Record:** No external bug report links. Hardware impact described for
+Realtek longan/mango SoCs in commit message only.
 
-### Step 4.4: Series context
-**Record:** 2-patch series; both required. Applying only patch 2 "would
-prevent cxl_acpi from ever probing on ACPI0016 systems" (Alison
-Schofield review in mbox).
+### Step 4.4: Series Context
+**Record:** Standalone functional value, but clean backport to 6.18.44
+needs **f2a138abfb719** first.
 
-### Step 4.5: Stable list history
-**Record:** No stable@ discussion found in mbox thread. Not a negative
-signal per instructions.
+### Step 4.5: Stable List
+**Record:** Could not fetch lore thread (bot protection). Related
+**bef389a210e7d** had `Cc: stable@vger.kernel.org` and was backported;
+this commit does not carry that tag.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `acpi_honor_dep_ids[]` (data), consumed by
-`acpi_scan_add_dep()`, `acpi_scan_dep_init()`,
-`acpi_dev_ready_for_enumeration()`.
+### Step 5.1: Key Functions
+**Record:** `sfp_smbus_read`, `sfp_smbus_write`, `sfp_i2c_configure`
 
 ### Step 5.2: Callers
-**Record:**
-- `acpi_dev_ready_for_enumeration()` called from `acpi_bus_check_add()`
-  (scan.c:2288) — core ACPI enumeration path; also `i2c-core-acpi.c`.
-- `cxl_acpi_probe()` (drivers/cxl/acpi.c) depends on
-  `acpi_pci_find_root()` via `to_cxl_host_bridge()` and
-  `add_host_bridge_dport()`.
+**Record:** `sfp_i2c_configure()` ← `sfp_i2c_get()` ← `sfp_probe()`.
+SMBus read/write used via `sfp->read`/`sfp->write` function pointers
+through `sfp_read()`/`sfp_write()` for EEPROM access, module detection,
+hwmon, ethtool `-m`, quirks/fixups.
 
 ### Step 5.3: Callees
-**Record:** Honor flag flows to `dep->honor_dep` →
-`adev->flags.honor_deps` → checked in
-`acpi_dev_ready_for_enumeration()`. Clearing via
-`acpi_dev_clear_dependencies()` (prerequisite patch).
+**Record:** `i2c_get_functionality()`, `i2c_smbus_xfer()`,
+`i2c_check_functionality()`, unaligned accessors.
 
 ### Step 5.4: Reachability
-**Record:** Triggered at boot during ACPI enumeration on systems with
-ACPI0016 + ACPI0017 in DSDT. Affects `CONFIG_CXL_BUS` platforms.
-Userspace cannot directly trigger; firmware-defined topology. Common on
-CXL-capable servers, especially RISC-V.
+**Record:** Triggered at platform device probe when SFP cage uses SMBus-
+only I2C adapter. Affects all SFP operations on that hardware — module
+insert, link bring-up, diagnostics.
 
-### Step 5.5: Similar patterns
-**Record:** Identical pattern to PNP0C0F (`2cb9155d116c4`): honor
-supplier in list + `acpi_dev_clear_dependencies()` after probe.
-Precedent already in 6.18.44.
+### Step 5.5: Similar Patterns
+**Record:** Original SMBus byte support (7662abf4db94) is the incomplete
+pattern this fixes.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
 
-### Step 6.1: Buggy code present?
-**Record:** **YES.** `drivers/acpi/scan.c` lines 857–868 —
-`acpi_honor_dep_ids[]` lacks ACPI0016. `drivers/cxl/acpi.c` has ACPI0017
-probe path. `drivers/acpi/pci_root.c` handles ACPI0016 but does not call
-`acpi_dev_clear_dependencies()`. Full buggy state confirmed in 6.18.44.
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** Current tree has byte-only
+`sfp_smbus_byte_read`/`write` and `sfp_i2c_configure()` requiring
+`I2C_FUNC_SMBUS_BYTE_DATA` only (lines 757–824). SMBus support commit
+7662abf4db94 is an ancestor.
 
-### Step 6.2: Backport complications
-**Record:** Clean apply for both patches (`git apply --check` exit 0).
-No conflicts expected. Minor context: line after PNP0C0F entry.
+### Step 6.2: Backport Complications
+**Record:** Extend SMBus alone → merge conflict in `sfp_i2c_configure`.
+**f2a138abfb719 + 58b29bdf6186a apply cleanly in sequence** (verified).
+Minor adaptation possible without quirks, but quirks patch is small and
+should accompany this.
 
-### Step 6.3: Related fixes already present?
-**Record:** Prerequisite infrastructure exists
-(`acpi_dev_clear_dependencies`, honor_dep mechanism, pci_link
-clear_deps). Neither fix from this series is in HEAD. No duplicate fix
-found.
+### Step 6.3: Related Fixes Already Present?
+**Record:** `bef389a210e7d` (i2c_block_size init / ethtool spin fix)
+present. Quirks and extend SMBus **not** present.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** **IMPORTANT** — ACPI core enumeration + CXL driver. Not
-universal, but critical for CXL memory users on affected platforms.
+### Step 7.1: Subsystem
+**Record:** `drivers/net/phy/sfp.c` — network SFP cage driver.
+**IMPORTANT** for networking/embedded platforms with SFP ports.
 
 ### Step 7.2: Activity
-**Record:** ACPI scan and CXL actively maintained in 6.18.y (recent
-commits: `19b3691ec9402`, `7f0a53c2b94ca` on scan.c; multiple CXL
-commits).
+**Record:** Active — multiple SFP quirk/fix commits in recent history on
+this tree.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 8: IMPACT AND RISK
 
-### Step 8.1: Who is affected
-**Record:** CXL-capable systems with ACPI0016 host bridges and ACPI0017
-root devices — primarily non-x86 (RISC-V called out), but any platform
-where probe order differs from x86 link order.
+### Step 8.1: Who Is Affected
+**Record:** Platform-specific — systems with SFP cages on SMBus-only I2C
+controllers that advertise word or I2C-block (documented: Realtek
+longan/mango). Not universal, but total failure for affected hardware.
 
-### Step 8.2: Trigger conditions
-**Record:** Boot-time ACPI enumeration when ACPI0017 `_DEP` points to
-ACPI0016 and `cxl_acpi` probes before `acpi_pci_root` completes. Non-
-deterministic on RISC-V; masked on typical x86 by built-in link order.
+### Step 8.2: Trigger Conditions
+**Record:** SFP platform probe with non-I2C SMBus adapter lacking
+`I2C_FUNC_I2C` and/or `I2C_FUNC_SMBUS_BYTE_DATA`. Deterministic at boot
+— not a race.
 
-### Step 8.3: Failure mode severity
-**Record:** Complete CXL enumeration failure — no port/endpoint devices,
-decoder targets = 0. **Severity: HIGH** for affected CXL users (hardware
-non-functional); **MEDIUM** overall (platform-specific, x86 often
-unaffected). Not a crash/oops, but total loss of CXL functionality.
-
-### Step 8.4: Risk-benefit
+### Step 8.3: Failure Mode Severity
 **Record:**
-- **Benefit:** HIGH for affected CXL platforms — restores working CXL
-  topology
-- **Risk:** VERY LOW for combined 2-patch series (5 lines total,
-  established pattern)
-- **Ratio:** Strongly favorable when both patches applied together
+- I2C-block-only, no byte: **probe failure** (`-EINVAL`) → SFP cage
+  completely non-functional — **HIGH**
+- Byte-only capable: works but hwmon disabled, warning printed,
+  potentially unreliable — **MEDIUM**
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** HIGH for affected embedded/networking platforms; MEDIUM
+  overall (niche hardware)
+- **Risk:** LOW — byte-only behavior unchanged; new paths gated on
+  adapter capabilities; reviewed; applies cleanly with quirks
+  prerequisite
+- **Ratio:** Favorable for 6.18.y where incomplete SMBus support
+  (7662abf4db94) is already present
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
-**FOR backport:**
-- Fixes real, reproducible hardware enablement bug on CXL/ACPI platforms
-- Intel CXL maintainer tested and reviewed
-- Minimal, obviously correct change (1 line)
-- All infrastructure present in 6.18.44
-- Applies cleanly; direct precedent (PNP0C0F/pci_link series in tree)
-- Prerequisite patch equally small and follows existing
-  `ec.c`/`pci_link.c` pattern
+**FOR:**
+- Fixes complete SFP failure on SMBus I2C-block adapters (probe
+  `-EINVAL`)
+- Completes incomplete SMBus support already in 6.18.44 (7662abf4db94)
+- Restores hwmon on word/block-capable SMBus adapters
+- Reviewed by original SMBus author
+- Same author's related fix (bef389a) already in stable 6.18.y
+- Applies cleanly with small quirks prerequisite
+- BYTE-only path unchanged — low regression risk
+- Fits hardware workaround / enablement stable exception
 
-**AGAINST backport:**
-- Requires paired prerequisite commit (cannot apply alone)
-- Bug masked on most x86 systems
-- Very new (upstream June 2026, not yet in 6.18.44)
-- Niche hardware population (CXL + ACPI0016/0017)
+**AGAINST:**
+- Not a crash, corruption, deadlock, or security issue
+- Platform-specific (Realtek SoCs cited)
+- Arguably “feature completion” rather than regression fix
+- Requires 2-patch series for clean backport
+- No syzbot/fuzzer or explicit user bug report
 
-**Unresolved:** No production deployment data beyond Intel testing.
-
-### Step 9.2: Stable rules checklist
+### Step 9.2: Stable Rules Checklist
 | Criterion | Result |
 |-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — 1-line allowlist;
-Tested-by/Reviewed-by Intel CXL maintainer |
-| 2. Fixes real bug affecting users? | **PASS** — CXL devices missing on
-affected platforms |
-| 3. Important issue? | **PASS** — complete CXL enumeration failure
-(HIGH for affected users) |
-| 4. Small and contained? | **PASS** — 1 line (+ 4 lines prerequisite) |
-| 5. No new features/APIs? | **PASS** — enforcement of existing ACPI
-`_DEP` mechanism |
-| 6. Can apply to local tree? | **PASS** — both patches apply cleanly;
-prerequisite must accompany |
+| 1. Obviously correct and tested? | **PASS** — reviewed, clear
+capability matrix, preserves byte-only behavior |
+| 2. Fixes real bug affecting users? | **PASS** — SFP probe failure /
+non-functional hardware on specific platforms |
+| 3. Important issue? | **PASS** — complete hardware failure on affected
+platforms (HIGH for them) |
+| 4. Small and contained? | **PASS** — ~120 lines, one file (with quirks
+prerequisite) |
+| 5. No new features/APIs? | **PASS** — extends existing SMBus path; no
+userspace API changes |
+| 6. Can apply to local tree? | **PASS** — applies cleanly with
+f2a138abfb719 first |
 
-### Step 9.3: Exception categories
-**Record:** Hardware enablement / probe-order fix for existing CXL ACPI
-driver — analogous to USB/PCI quirks and prior PNP0C0F `_DEP` fix.
+### Step 9.3: Exception Category
+**Record:** Hardware workaround / enablement — enables SFP on SMBus
+controllers that the current byte-only implementation cannot use.
 
-### Step 9.4: Decision rationale
-
-This commit fixes a genuine ACPI probe-ordering bug that leaves CXL
-hardware completely non-functional on platforms (notably RISC-V) where
-`cxl_acpi` can run before `acpi_pci_root` finishes. The change is
-minimal, follows an established in-tree pattern, and has maintainer
-review and testing.
-
-**Critical operational note:** This commit MUST be backported together
-with its prerequisite (`ACPI: PCI: Clear _DEP dependencies after PCI
-root bridge attach`, upstream `3a59c3b772e5d`). Applying this patch
-alone would block `cxl_acpi` from ever probing on ACPI0016 systems, as
-explicitly warned in the lore review.
-
-For the 6.18.44 tree, where the buggy code is present and CXL ACPI
-support is fully integrated, backporting both patches of this series is
-appropriate.
+### Step 9.4: Decision Rationale
+6.18.44 already carries incomplete SMBus SFP support from 7662abf4db94.
+On adapters advertising I2C-block SMBus without byte access,
+`sfp_i2c_configure()` returns `-EINVAL` and the SFP cage fails probe
+entirely. This commit fixes that real hardware failure with a contained,
+reviewed change. Backport **f2a138abfb719** (I2C quirks) alongside it
+for a clean apply.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags; found Tested-by/Reviewed-by Alison
-  Schofield, Link to patch series
-- [Phase 1] Cover letter describes broken CXL topology, decoder targets
-  = 0
-- [Phase 2] Diff: +1 line to `acpi_honor_dep_ids[]` in
-  `drivers/acpi/scan.c`
-- [Phase 2] Read `acpi_dev_ready_for_enumeration()` at scan.c:2470–2476
-  — honors `dep_unmet` only when `honor_deps` set
-- [Phase 2] Read `acpi_scan_add_dep()` at scan.c:2035–2036 — sets
-  `honor_dep` from list
-- [Phase 2] Read `to_cxl_host_bridge()` at cxl/acpi.c:523–533 — requires
-  `acpi_pci_find_root()`
-- [Phase 3] `git describe HEAD` → v6.18.44
-- [Phase 3] `acpi_honor_dep_ids` mechanism from `9d9bcae47fd5a`, in tree
-- [Phase 3] ACPI0016 in `pci_root.c` from `241d26bc26add`, in tree
-- [Phase 3] CXL ACPI0017 driver from `4812be97c015b`, in tree
-- [Phase 3] Commit `bf5418a5fe63f` NOT in HEAD; prerequisite
-  `3a59c3b772e5d` NOT in HEAD
-- [Phase 3] Both on `autosel` branch as `82dbacca5220e` and
-  `b52e0117014b6`
-- [Phase 4] `b4 dig -c bf5418a5fe63f` → lore URL; v1 2-patch series
-- [Phase 4] `b4 dig -w` → CC'd rafael, bhelgaas, djbw, linux-cxl, linux-
-  acpi, linux-pci
-- [Phase 4] mbox: Alison Schofield Tested-by/Reviewed-by; warns patch 2
-  alone blocks cxl_acpi
-- [Phase 4] mbox: RISC-V probe-order issue documented; x86 usually
-  masked
-- [Phase 5] `acpi_dev_ready_for_enumeration` callers: scan.c:2288,
-  i2c-core-acpi.c:155
-- [Phase 5] `pci_link.c:751` has `acpi_dev_clear_dependencies()` —
-  precedent confirmed
-- [Phase 6] Read scan.c:857–868 — ACPI0016 absent from honor list in
-  6.18.44
-- [Phase 6] Read pci_root.c:760–762 — no `acpi_dev_clear_dependencies()`
-  call
-- [Phase 6] `git apply --check` for both patches → exit 0 (clean apply)
-- [Phase 7] CXL Kconfig exists at `drivers/cxl/Kconfig` (CONFIG_CXL_BUS)
-- [Phase 8] Failure mode: complete CXL enumeration failure, not kernel
-  crash
+- [Phase 1] `git show 58b29bdf6186a --format=fuller`: parsed subject,
+  tags, body
+- [Phase 2] `git show 58b29bdf6186a`: full diff analyzed; 111 lines
+  changed on mainline
+- [Phase 3] `git describe HEAD`: v6.18.44-1-g2736c32da98b9 /
+  kernelversion 6.18.44
+- [Phase 3] `git merge-base --is-ancestor 7662abf4db94 HEAD`: SMBus
+  commit confirmed in tree
+- [Phase 3] `git blame -L 806,825 drivers/net/phy/sfp.c`: byte-only code
+  from 7662abf4db94
+- [Phase 3] `git log HEAD --grep="extend SMBus"`: not in 6.18.44
+- [Phase 3] `git log HEAD --grep="apply I2C adapter quirks"`: quirks not
+  in 6.18.44
+- [Phase 3] `git show bef389a210e7d`: related stable backport already
+  present
+- [Phase 4] `b4 dig -c 58b29bdf6186a`: lore URL found
+- [Phase 4] `b4 dig -c 58b29bdf6186a -a`: v5–v11 series revisions listed
+- [Phase 4] `b4 dig -c 58b29bdf6186a -w`: maintainers CC list retrieved
+- [Phase 4] WebFetch lore URL: **FAILED** (bot protection)
+- [Phase 5] `grep sfp_i2c_configure/sfp_read` in sfp.c: probe and EEPROM
+  paths traced
+- [Phase 5] Read `sfp_hwmon_probe()` lines 1711–1723: hwmon requires
+  `i2c_block_size >= 2`
+- [Phase 5] Read probe warning lines 3239–3246: SMBus byte-only warning
+  path
+- [Phase 6] Read current `sfp_smbus_byte_read/write` and
+  `sfp_i2c_configure`: buggy code confirmed present
+- [Phase 6] `git cherry-pick --no-commit 58b29bdf6186a`: **CONFLICT**
+- [Phase 6] `git cherry-pick --no-commit f2a138abfb719`: **clean apply**
+- [Phase 6] Both patches in sequence: **clean apply**, +120/-29 lines
+- [Phase 6] `grep i2c->quirks` in sfp.c: no quirks handling in current
+  tree
+- [Phase 8] `sfp_i2c_get()` error path: configure failure prevents SFP
+  probe
 
-**YES**The background searches finished and line up with the earlier
-analysis:
+**Recommendation:** Backport **f2a138abfb719** first, then
+**58b29bdf6186a**.
 
-- **Git history grep** for ACPI0016-related commits in `drivers/acpi/`
-  only turned up the older CXL host-bridge work (`241d26bc26add` — CXL
-  `_OSC` handling). Neither of the two `_DEP` fixes showed up in that
-  narrow search because they aren’t in the current `6.18.44` HEAD yet.
-- **`autosel` branch search** found both patches from the series:
-  - `b52e0117014b6` — ACPI: PCI: Clear _DEP dependencies after PCI root
-    bridge attach (prerequisite)
-  - `82dbacca5220e` — ACPI: scan: Honor _DEP for ACPI0016 PCI/CXL host
-    bridge (the commit under review)
+**YES**
 
-That confirms the verdict: **YES**, but only as a pair — the
-prerequisite must be backported together with this one-patch change to
-`acpi_honor_dep_ids[]`.
+ drivers/net/phy/sfp.c | 139 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 111 insertions(+), 28 deletions(-)
 
- drivers/acpi/scan.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 16704c2a730c0..a1c8609185d07 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -865,6 +865,7 @@ static const char * const acpi_honor_dep_ids[] = {
- 	"RSCV0005", /* RISC-V SBI MPXY MBOX */
- 	"RSCV0006", /* RISC-V RPMI SYSMSI */
- 	"PNP0C0F",  /* PCI Link Device */
-+	"ACPI0016", /* CXL/PCIe host bridge: CXL root (ACPI0017) depends on PCI root attach */
- 	NULL
- };
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 68aa8e6dd55c2..d13e100e64ec0 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -14,6 +14,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/slab.h>
++#include <linux/unaligned.h>
+ #include <linux/workqueue.h>
  
+ #include "sfp.h"
+@@ -774,50 +775,113 @@ static int sfp_i2c_write(struct sfp *sfp, bool a2, u8 dev_addr, void *buf,
+ 	return ret == ARRAY_SIZE(msgs) ? len : 0;
+ }
+ 
+-static int sfp_smbus_byte_read(struct sfp *sfp, bool a2, u8 dev_addr,
+-			       void *buf, size_t len)
++static int sfp_smbus_read(struct sfp *sfp, bool a2, u8 dev_addr, void *buf,
++			  size_t len)
+ {
+-	union i2c_smbus_data smbus_data;
++	union i2c_smbus_data smbus_data = {0};
+ 	u8 bus_addr = a2 ? 0x51 : 0x50;
++	size_t this_len, transferred;
++	u32 functionality;
+ 	u8 *data = buf;
+ 	int ret;
+ 
+-	while (len) {
+-		ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
+-				     I2C_SMBUS_READ, dev_addr,
+-				     I2C_SMBUS_BYTE_DATA, &smbus_data);
+-		if (ret < 0)
+-			return ret;
++	functionality = i2c_get_functionality(sfp->i2c);
+ 
+-		*data = smbus_data.byte;
++	while (len) {
++		this_len = min(len, sfp->i2c_block_size);
++
++		if (functionality & I2C_FUNC_SMBUS_READ_I2C_BLOCK) {
++			smbus_data.block[0] = this_len;
++			ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
++					     I2C_SMBUS_READ, dev_addr,
++					     I2C_SMBUS_I2C_BLOCK_DATA, &smbus_data);
++			if (ret < 0)
++				return ret;
++
++			transferred = min_t(size_t, smbus_data.block[0], this_len);
++			if (!transferred)
++				return -EIO;
++
++			memcpy(data, &smbus_data.block[1], transferred);
++		} else if (this_len >= 2 &&
++			   (functionality & I2C_FUNC_SMBUS_READ_WORD_DATA)) {
++			ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
++					     I2C_SMBUS_READ, dev_addr,
++					     I2C_SMBUS_WORD_DATA, &smbus_data);
++			if (ret < 0)
++				return ret;
++
++			put_unaligned_le16(smbus_data.word, data);
++			transferred = 2;
++		} else {
++			ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
++					     I2C_SMBUS_READ, dev_addr,
++					     I2C_SMBUS_BYTE_DATA, &smbus_data);
++			if (ret < 0)
++				return ret;
++
++			*data = smbus_data.byte;
++			transferred = 1;
++		}
+ 
+-		len--;
+-		data++;
+-		dev_addr++;
++		data += transferred;
++		len -= transferred;
++		dev_addr += transferred;
+ 	}
+ 
+ 	return data - (u8 *)buf;
+ }
+ 
+-static int sfp_smbus_byte_write(struct sfp *sfp, bool a2, u8 dev_addr,
+-				void *buf, size_t len)
++static int sfp_smbus_write(struct sfp *sfp, bool a2, u8 dev_addr, void *buf,
++			   size_t len)
+ {
+ 	union i2c_smbus_data smbus_data;
+ 	u8 bus_addr = a2 ? 0x51 : 0x50;
++	size_t this_len, transferred;
++	u32 functionality;
+ 	u8 *data = buf;
+ 	int ret;
+ 
++	functionality = i2c_get_functionality(sfp->i2c);
++
+ 	while (len) {
+-		smbus_data.byte = *data;
+-		ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
+-				     I2C_SMBUS_WRITE, dev_addr,
+-				     I2C_SMBUS_BYTE_DATA, &smbus_data);
+-		if (ret)
+-			return ret;
++		this_len = min(len, sfp->i2c_block_size);
++
++		if (functionality & I2C_FUNC_SMBUS_WRITE_I2C_BLOCK) {
++			smbus_data.block[0] = this_len;
++			memcpy(&smbus_data.block[1], data, this_len);
++
++			ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
++					     I2C_SMBUS_WRITE, dev_addr,
++					     I2C_SMBUS_I2C_BLOCK_DATA, &smbus_data);
++			if (ret < 0)
++				return ret;
++
++			transferred = this_len;
++		} else if (this_len >= 2 &&
++			   (functionality & I2C_FUNC_SMBUS_WRITE_WORD_DATA)) {
++			smbus_data.word = get_unaligned_le16(data);
++			ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
++					     I2C_SMBUS_WRITE, dev_addr,
++					     I2C_SMBUS_WORD_DATA, &smbus_data);
++			if (ret < 0)
++				return ret;
++
++			transferred = 2;
++		} else {
++			smbus_data.byte = *data;
++			ret = i2c_smbus_xfer(sfp->i2c, bus_addr, 0,
++					     I2C_SMBUS_WRITE, dev_addr,
++					     I2C_SMBUS_BYTE_DATA, &smbus_data);
++			if (ret < 0)
++				return ret;
++
++			transferred = 1;
++		}
+ 
+-		len--;
+-		data++;
+-		dev_addr++;
++		data += transferred;
++		len -= transferred;
++		dev_addr += transferred;
+ 	}
+ 
+ 	return data - (u8 *)buf;
+@@ -833,10 +897,29 @@ static int sfp_i2c_configure(struct sfp *sfp, struct i2c_adapter *i2c)
+ 		sfp->read = sfp_i2c_read;
+ 		sfp->write = sfp_i2c_write;
+ 		max_block_size = SFP_EEPROM_BLOCK_SIZE;
+-	} else if (i2c_check_functionality(i2c, I2C_FUNC_SMBUS_BYTE_DATA)) {
+-		sfp->read = sfp_smbus_byte_read;
+-		sfp->write = sfp_smbus_byte_write;
+-		max_block_size = 1;
++	} else if (i2c_check_functionality(i2c, I2C_FUNC_SMBUS_BYTE_DATA) ||
++		   i2c_check_functionality(i2c, I2C_FUNC_SMBUS_I2C_BLOCK)) {
++		/* Either protocol alone covers any length: I2C-block carries
++		 * 1..32 bytes per xfer, byte iterates one byte at a time.
++		 */
++		sfp->read = sfp_smbus_read;
++		sfp->write = sfp_smbus_write;
++
++		if (i2c_check_functionality(i2c, I2C_FUNC_SMBUS_I2C_BLOCK))
++			max_block_size = SFP_EEPROM_BLOCK_SIZE;
++		else if (i2c_check_functionality(i2c, I2C_FUNC_SMBUS_WORD_DATA))
++			max_block_size = 2;
++		else
++			max_block_size = 1;
++	} else if (WARN_ONCE(i2c_check_functionality(i2c, I2C_FUNC_SMBUS_WORD_DATA),
++			     "SMBus word-only adapter; odd-length transfers will fail\n")) {
++		/* Word-only: even-length xfers work; odd-length xfers fall
++		 * to BYTE, which the adapter does not advertise and will
++		 * likely fail.
++		 */
++		sfp->read = sfp_smbus_read;
++		sfp->write = sfp_smbus_write;
++		max_block_size = 2;
+ 	} else {
+ 		sfp->i2c = NULL;
+ 		return -EINVAL;
 -- 
 2.53.0
 
