@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF205A4116;
-	Mon, 31 Aug 2026 13:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4AC5A4135;
+	Mon, 31 Aug 2026 13:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184334; cv=none; b=h5VbfF/33Ab85t2UlJphKh/UIgXAdMoi2WtiHojmNbe3PuyFggbnQZf55FHxFB1UL2DCAIw9r4QbLkbokrd7Hn8bRayOlJo6sjdLlCZPNldxbCRzmUuHVTqt3XjpZR88LZdc24JCGXb9ihm+ishH3mwQwEbbe8cSOwtFvEGJTu8=
+	t=1788184335; cv=none; b=kL8IKPAO/U+w3eD8pVqDj3Vhyp9ly1Fk+kGoZ1T9bzHtYhT+UC/N628/2UMPEtSGKOU/WSZsDBtuRQ3u2KxGnXyl+ACwnBV6a9++wHVTgtdM5LExKDLInOsyH4FACrXQDKXIeNAy5w0cRx6mFiGRy/dC7vbSCVMbr0aEx+K2vyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184334; c=relaxed/simple;
-	bh=cF0Rwb4iiVUoE6QIsHGC7SlZyMYl0ckqTJN20oDZzuQ=;
+	s=arc-20240116; t=1788184335; c=relaxed/simple;
+	bh=nXu4cZUKZiyhevammCH2tMRDqODXdyQGcjjk44AEiy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JUaNVPiv8fcweBACmkqCX6OoCW4IR9zE+bBomPxKF+FdOjzanpLr+KCO4PGChEcv3ntBlS+8Svszx3l/JzYvbJpgYB+zGcTlqcXJ4B21sbCa0GHiPvVmpjHyo8NOHFDBtcXITVX1WiuGMiV09e4vdVbiVGH3GtM/d3m+G5iJaHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jqOYAdeX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hqgaw/TPa9lAcQ4iAOXS4JzlhluTvHkSvoDQr2DArUVrCQGVMSscA+J4ynoF/Au3MQoZiL6xX3ZJMhdT3Ghim7TuetwvAJZ2/FWfPVT9nVnB9dzZ+mpoba7jCKPQ334faKgYmXTV2/3G2AYP8izwW2SY0P4/2jnBD5gXyS/92HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fsGNhhlc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jqOYAdeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD0D1F00A3E;
-	Mon, 31 Aug 2026 13:52:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fsGNhhlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0138C1F000E9;
+	Mon, 31 Aug 2026 13:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184331;
-	bh=KlS/P84QSh8TJgklCQ5BAZQdOWGMmdpiND2aQ7OWxRs=;
+	s=k20260515; t=1788184333;
+	bh=tilIhcIkJOC76/K2B7WhRWr6blwCJt6RVnQlspgCzn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jqOYAdeXyzskRVFUYm+h97hGAGGcpxwFV0ejZccXzh3Wajbni3UB09ARLIQ2MnLDL
-	 xhEzHzVBDYt05FZOQXgIom/PInBu85XpfGtbmYLRyF2xzyXSJFHsPujHOJwk+uhWYR
-	 KX2Hn9ADv55Vgj/7Y8HfRQRa/g8WHOnftIjDxWVB9SSIuX4eqs3KEw/zrf42DaB4c3
-	 XVIpbx70ozBosblmRdMQUcHAhofZF+nfg0jVcqDgD7xgcmfQMhw31tWmDcHuj3SOvW
-	 3CsvRv0T21fZY39HXZY+tB3hDIYzckpJxrnTFEDijeIvN5KZadQWC17wfsEQwlDAHo
-	 KsJRb67aM88ag==
+	b=fsGNhhlcuKL3ctem/YccE9THMU00ui4msXC0WySTUb+qg3b2+CygoCe8PqAhGXkFI
+	 7m9mzthJxaNmsqGHq6eNPLi7PgATOU+J02Z2UqOkZgDy+1mpgaHVw0VXUyVC1YoSEq
+	 kiAZzmy1J1n6+4V4z75ZKkcRIemjWmT/VRA4QJVSmpO3RMnXVhLLV/zDoxTxIGlfgM
+	 ozxkMrGg1esQBhg19JxofyLwrrM395gWgBVAPV1aGUPebkB5DPjjH4UjmV0ULT9upE
+	 cvZWMXZj6fok5zWQe2jVflWZeBYd/RocfZpnMqnMppCxq8av7ga3GTpnv1v/TZ1Rab
+	 FIcNTSrwlBO7A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+Cc: Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	matthew.brost@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	intel-xe@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	davem@davemloft.net,
+	nicolas.ferre@microchip.com,
+	alexandre.belloni@bootlin.com,
+	claudiu.beznea@tuxon.dev,
+	linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/xe/guc: Add support for NO_RESPONSE_BUSY in CTB
-Date: Mon, 31 Aug 2026 09:30:58 -0400
-Message-ID: <20260831133314.4125787-630-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] crypto: atmel-ecc - add support for atecc608b
+Date: Mon, 31 Aug 2026 09:30:59 -0400
+Message-ID: <20260831133314.4125787-631-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,511 +57,384 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 4d33314decfeac8b82d771a1bd083a59f4ac6fae ]
+[ Upstream commit b668edaf8dcc8d09f6f1e71797422b44d4bd22a3 ]
 
-We only have support for G2H NO_RESPONSE_BUSY messages over MMIO,
-but it turned out that GuC also uses that type of messages in CTB.
+Tested on hardware with an ATECC608B at 0x60. The device binds
+successfully, passes the driver's sanity check, and registers the
+ecdh-nist-p256 KPP algorithm.
 
-The following error was recently observed on BMG after adding VGT
-policy updates to the GT restart sequence:
+The hardware ECDH path was also exercised using a minimal KPP test
+module, covering private key generation, public key derivation, and
+shared secret computation.
 
- [] xe 0000:03:00.0: [drm] *ERROR* Tile0: GT1: G2H channel broken on read, type=3, reset required
- [] xe 0000:03:00.0: [drm] *ERROR* Tile0: GT1: CT dequeue failed: -95
- ...
- [] xe 0000:03:00.0: [drm] *ERROR* Tile0: GT1: Timed out wait for G2H, fence 21965, action 5502, done no
- [] xe 0000:03:00.0: [drm] PF: Tile0: GT1: Failed to push 1 policy KLV (-ETIME)
- [] xe 0000:03:00.0: [drm] Tile0: GT1: { key 0x8004 : no value } # engine_group_config
-
-where type=3 was this unrecognized NO_RESPONSE_BUSY message.
-
-Note that GuC might send the real RESPONSE message right after
-the BUSY message, so we must be prepared to update our g2h_fence
-data twice before sender actually wakes up and clears the flags.
-
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patch.msgid.link/20260410110457.573-1-michal.wajdeczko@intel.com
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `crypto: atmel-ecc - add support for
+atecc608b`
+
+**Local tree:** Linux **6.18.43** (`v6.18.43-1-gc7f0dac02d232`, detached
+from `stable/linux-6.18.y`)
+
+**Upstream commit:** `b668edaf8dcc8d09f6f1e71797422b44d4bd22a3`
+**Candidate commit:** `beb0043891b43` (not yet in current HEAD)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-**Record:** `[drm/xe/guc]` `[Add support for]` — Extend GuC CTB (Command
-Transport Buffer) handling to recognize `GUC_HXG_TYPE_NO_RESPONSE_BUSY`
-messages, mirroring existing MMIO-path support.
+**Record:** `[crypto: atmel-ecc] [add] support for atecc608b` —
+subsystem is the Atmel ECC crypto driver; verb is “add” (hardware
+enablement, not a bug-fix verb).
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Michal Wajdeczko \<michal.wajdeczko@intel.com\>
-- **Cc:** Daniele Ceraolo Spurio \<daniele.ceraolospurio@intel.com\>
-- **Reviewed-by:** Daniele Ceraolo Spurio
-  \<daniele.ceraolospurio@intel.com\>
-- **Link:** https://patch.msgid.link/20260410110457.573-1-
-  michal.wajdeczko@intel.com
-- **No** Fixes:, Reported-by:, Tested-by:, Acked-by:, or Cc:
-  stable@vger.kernel.org
-- Notable: Reviewed-by from a co-developer; no syzbot/fuzzer report;
-  real hardware log in commit body
+| Tag | Value |
+|-----|-------|
+| Signed-off-by | Thorsten Blum `<thorsten.blum@linux.dev>` |
+| Signed-off-by | Herbert Xu `<herbert@gondor.apana.org.au>` (crypto
+maintainer) |
+| Fixes: | **Absent** (expected for manual review) |
+| Cc: stable | **Absent** (expected) |
+| Reported-by: | **Absent** |
+| Tested-by: | **Absent** (but commit body describes hardware testing) |
+| Link: | **Absent** |
+
+Notable: crypto maintainer Signed-off-by; no syzbot/sanitizer signals.
 
 ### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** GuC can send `NO_RESPONSE_BUSY` (HXG type 3) over the CTB G2H
-  channel, but the CT path only handled it over MMIO. CT treats type 3
-  as unknown and marks the channel broken.
-- **Symptom:** `G2H channel broken on read, type=3, reset required` →
-  `CT dequeue failed: -95` → `Timed out wait for G2H` → `Failed to push
-  1 policy KLV (-ETIME)` with action `0x5502`
-  (`GUC_ACTION_PF2GUC_UPDATE_VGT_POLICY`)
-- **Trigger context:** Observed on BMG (Battlemage) during VGT policy
-  updates in the GT restart sequence
-- **Root cause:** Missing CTB handler for an existing GuC protocol
-  message type; a final response may follow the BUSY message on the same
-  fence
+- **Problem:** ATECC608B secure-element chips are not matched by the
+  existing `atmel-ecc` driver; they will not bind/probe.
+- **Symptom:** Device at I2C address 0x60 does not get a driver; ECDH
+  offload unavailable.
+- **Root cause:** Missing OF compatible (`atmel,atecc608b`) and I2C
+  device ID (`atecc608b`) in match tables.
+- **Verification:** Author tested binding, sanity check, and full ECDH
+  KPP path on real hardware.
 
 ### Step 1.4: Hidden Bug Fix?
-**Record:** Yes. Despite "Add support" wording, this is a protocol-
-handling bug fix. The driver already handles `NO_RESPONSE_BUSY` on MMIO
-(`xe_guc.c`) and in the relay path (`xe_guc_relay.c`); only the CT
-blocking-send path was missing it.
+**Record:** **No.** This is explicit hardware enablement via device-ID
+tables, not a disguised crash/leak/race fix. The driver logic is
+unchanged; only match tables are extended.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `drivers/gpu/drm/xe/xe_guc_ct.c` — +36 / −2 lines
-- **Functions modified:** `struct g2h_fence`, `g2h_fence_init` area,
-  `guc_ct_send_recv()`, `parse_g2h_response()`, `parse_g2h_msg()`
-- **New:** `g2h_fence_reinit()`
-- **Scope:** Single-file, surgical fix
+| File | Changes |
+|------|---------|
+| `drivers/crypto/atmel-ecc.c` | +3 lines |
 
-### Step 2.2: Code Flow Changes
+**Functions modified:** None (only static data tables
+`atmel_ecc_dt_ids[]`, `atmel_ecc_id[]`).
+**Scope:** Single-file, surgical device-ID addition.
+
+### Step 2.2: Code Flow Change
 **Record:**
-- **`g2h_fence`:** Adds `counter` and `wait` fields for BUSY state
-- **`g2h_fence_reinit()`:** Clears response-side fields via
-  `memset_after()` while preserving `seqno` and `response_buffer`
-- **`parse_g2h_msg()`:** Routes `GUC_HXG_TYPE_NO_RESPONSE_BUSY` to
-  `parse_g2h_response()` instead of the `default` broken-channel path
-- **`parse_g2h_response()`:** On BUSY, uses `xa_load()` instead of
-  `xa_erase()` (fence stays registered); reinitializes fence state; sets
-  `wait=true` and `counter`; skips buffer space release for intermediate
-  messages
-- **`guc_ct_send_recv()`:** On `g2h_fence.wait`, reinitializes fence and
-  loops back to `wait_event_timeout()` for the final response
+- **Hunk 1 (OF table):** Before: only `atmel,atecc508a` matched. After:
+  also `atmel,atecc608b`.
+- **Hunk 2 (I2C ID table):** Before: only `"atecc508a"`. After: also
+  `"atecc608b"`.
+- **Affected path:** Device enumeration / driver probe only. No change
+  to ECDH algorithm code, locking, or error handling.
 
 ### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Logic / protocol correctness — missing handler for a
-  valid GuC message type
-- **Mechanism:** When GuC sends type 3 over CTB, `parse_g2h_msg()` hits
-  `default`, logs "channel broken", calls `CT_DEAD()`, returns
-  `-EOPNOTSUPP` (−95). The waiting `guc_ct_send_recv()` then times out.
-  The CT channel is left in a broken state requiring GT reset.
+**Record:** **Category: Hardware device-ID addition (not a runtime bug
+fix).** ATECC608B is protocol-compatible with the existing driver (same
+sanity check, same NIST P-256 ECDH path) but was excluded from match
+tables. Without these entries, the kernel never calls
+`atmel_ecc_probe()` for this hardware.
 
 ### Step 2.4: Fix Quality
-**Record:**
-- Fix is obviously correct: mirrors the existing MMIO `NO_RESPONSE_BUSY`
-  pattern and the established `NO_RESPONSE_RETRY` CT handling
-- Minimal, self-contained, no API changes
-- Low regression risk: only affects the BUSY message path; fence lookup
-  semantics are carefully preserved for intermediate vs. final responses
+**Record:** Obviously correct — standard pattern mirroring the existing
+`atecc508a` entry. Minimal risk; no new APIs, no logic changes.
+Regression risk: **very low**.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** The `parse_g2h_msg()` switch (lines 1411–1427) dates to
-commit `308dc9b27874d` (initial xe driver import, Jul 2025). It has
-handled `NO_RESPONSE_RETRY` since import but never `NO_RESPONSE_BUSY`.
-MMIO BUSY handling was added in `1d087cb7d81f9` (Nov 2023) and is
-present in this tree.
+**Record:** Device-ID tables introduced in `5d324e5159d9e` (Merge tag
+`usb-6.18-rc8`, Nov 2025) with only `atecc508a`. No “buggy code” — just
+incomplete hardware coverage from initial driver landing.
 
 ### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+**Record:** **N/A** — no `Fixes:` tag present.
 
 ### Step 3.3: Related File History
-**Record:**
-- `1d087cb7d81f9` — MMIO `NO_RESPONSE_BUSY` fix (in tree)
-- `3c01e01214026` — MMIO follow-up for unexpected messages after BUSY
-  (in tree)
-- `4d33314decfea` — this CTB fix (NOT in tree; `git merge-base --is-
-  ancestor` returns 1)
-- Recent `xe_guc_ct.c` changes are unrelated CT state/retry fixes
+**Record:** Recent `atmel-ecc.c` history in this tree:
+- `9c032781c2b1f` — `crypto: atmel-ecc - Release client on allocation
+  failure` (actual bug fix, already in tree)
+- `5d324e5159d9e` — driver introduction via usb-6.18-rc8 merge
+
+No prior atecc608b-related commits in HEAD. On `autosel` branch, later
+cleanup commits exist (`006bbe8db4c35`, etc.) but are not prerequisites
+for this 3-line ID addition.
 
 ### Step 3.4: Author Context
-**Record:** Michal Wajdeczko is an active Intel xe/GuC contributor
-(`159afd92bae81`, `2506af5f8109a`, etc. on `xe_guc_ct.c`). Reviewed by
-Daniele Ceraolo Spurio (co-developer).
+**Record:** Thorsten Blum submitted a 2-patch series. Herbert Xu replied
+“All applied. Thanks.” Patch 2/2 (`dt-bindings: trivial-devices: add
+atmel,atecc608b`) is a separate DT binding commit, not part of this
+candidate.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone. Uses `memset_after()` (present in
-`include/linux/string.h`), `GUC_HXG_TYPE_NO_RESPONSE_BUSY` and
-`GUC_HXG_BUSY_MSG_0_COUNTER` (present in `abi/guc_messages_abi.h`). No
-prerequisite commits required. Cherry-pick to HEAD applies cleanly
-(+36/−2, auto-merge, no conflicts).
+**Record:** **Standalone.** No functional dependency on other commits.
+Patch applies cleanly to current HEAD (`git apply --check` succeeded).
+DT binding patch 2/2 is complementary for DT schema validation but not
+required for the driver match tables themselves.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original Discussion
-**Record:**
-- **b4 dig -c 4d33314decfea:** https://patch.msgid.link/20260410110457.5
-  73-1-michal.wajdeczko@intel.com
-- **Series:** v1 (Apr 3) → v2 (Apr 8) → v3 (Apr 10); committed version
-  is v3
-- **Review:** Reviewed-by Daniele Ceraolo Spurio in v3
-- **CI:** Patchwork CI reported failure, but for unrelated IGT test
-  changes — not a functional objection to the patch logic
-- **Stable nomination:** None found in mbox thread
+**Record:** `b4 dig -c beb0043891b43` found thread:
+https://patch.msgid.link/20260412095642.120815-3-thorsten.blum@linux.dev
+
+Series revisions: v1 (2026-03-30) and RESEND (2026-04-12). Committed
+version matches RESEND.
 
 ### Step 4.2: Reviewers
-**Record:** CC'd to `intel-xe@lists.freedesktop.org` and Daniele Ceraolo
-Spurio. Reviewed-by from co-developer.
+**Record:** `b4 dig -w` CC'd Herbert Xu, David S. Miller, Nicolas Ferre
+(Microchip), Alexandre Belloni, Claudiu Beznea, linux-crypto@, linux-
+arm-kernel@, linux-kernel@. Herbert Xu applied the series.
 
-### Step 4.3: Bug Report
-**Record:** No external bug tracker link. Reproducible failure described
-in commit message with full dmesg on BMG hardware.
+### Step 4.3: Bug Reports
+**Record:** **N/A** — no bug report links. Hardware validation described
+in commit message.
 
 ### Step 4.4: Related Patches
-**Record:** Part of a single-patch series (not multi-patch). Related
-MMIO fixes (`1d087cb7d81f9`, `3c01e01214026`) are already in this tree.
+**Record:** Part of `[PATCH RESEND 1/2]` series. Patch 2/2 adds
+`atmel,atecc608b` to `Documentation/devicetree/bindings/trivial-
+devices.yaml` (Acked-by: Rob Herring). That binding patch is separate;
+this driver patch is self-contained.
 
-### Step 4.5: Stable List
-**Record:** No stable-list discussion found.
+### Step 4.5: Stable List History
+**Record:** **Not searched** — no stable-specific discussion found in
+the retrieved thread. Absence of `Cc: stable` is expected and not a
+negative signal.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key Functions
-**Record:** `guc_ct_send_recv()`, `parse_g2h_response()`,
-`parse_g2h_msg()`, `g2h_fence_reinit()`
+**Record:** No functions modified. Match tables feed into
+`atmel_ecc_driver` → `atmel_ecc_probe()` → `atmel_i2c_probe()` →
+`device_sanity_check()`.
 
 ### Step 5.2: Callers
-**Record:** `xe_guc_ct_send_recv()` is reached via
-`xe_guc_ct_send_block()` from many subsystems:
-- `xe_gt_sriov_pf_policy.c` — VGT policy (action 0x5502, the reported
-  failure)
-- `xe_gt_sriov_pf_config.c`, `xe_gt_sriov_pf_control.c`,
-  `xe_gt_sriov_pf_migration.c`
-- `xe_guc.c`, `xe_guc_pc.c`, `xe_guc_submit.c`,
-  `xe_guc_engine_activity.c`, `xe_guc_relay.c`
+**Record:** `atmel_ecc_probe()` is invoked by the I2C core during device
+enumeration when OF compatible or I2C device ID matches. Standard probe
+path on embedded boards with secure elements.
 
 ### Step 5.3: Callees
-**Record:** `wait_event_timeout()`, `xa_load()`/`xa_erase()`,
-`g2h_release_space()`, `wake_up_all()`, `memset_after()`
+**Record:** `atmel_i2c_probe()` performs I2C functionality check, clock
+validation, and `device_sanity_check()` (verifies config/OTP zones are
+locked). Chip-family-agnostic.
 
 ### Step 5.4: Reachability
-**Record:** Triggered during normal GuC CT blocking operations — GT
-reset recovery, SR-IOV PF policy/config pushes, GuC init/load, engine
-activity queries. These run during device operation and GT reset paths
-on systems with `CONFIG_DRM_XE`.
+**Record:** Triggered at boot when ATECC608B is present on I2C bus with
+matching DT `compatible` or I2C board info. Common on embedded/IoT
+platforms (similar boards already use `atmel,atecc508a` in this tree’s
+DTS files).
 
 ### Step 5.5: Similar Patterns
-**Record:** MMIO path in `xe_guc.c:1458–1486` already waits through BUSY
-for final response. Relay path in `xe_guc_relay.c:839–841` handles BUSY.
-CT path had `NO_RESPONSE_RETRY` but not BUSY — clear inconsistency.
+**Record:** `atmel-sha204a.c` and other Atmel I2C crypto drivers use the
+same pattern of multiple compatible strings in OF/I2C tables. ATECC508A
+and ATECC608B share the same I2C command protocol for ECDH operations
+supported by this driver.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (v6.18.43)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy Code Present?
-**Record:** Yes. At `parse_g2h_msg()` lines 1416–1426, type 3 falls
-through to `default` and marks the G2H channel broken.
-`parse_g2h_response()` has no BUSY branch. Confirmed: `git merge-base
---is-ancestor 4d33314decfea HEAD` returns 1 (fix not present).
+### Step 6.1: Does Buggy Code Exist?
+**Record:** The **driver exists** in 6.18.43
+(`CONFIG_CRYPTO_DEV_ATMEL_ECC`, `drivers/crypto/atmel-ecc.c`). The
+**missing device IDs** also exist as a gap — only `atecc508a` is listed;
+`atecc608b` is absent. Driver introduced in 6.18 via `5d324e5159d9e`. No
+`atecc608b` references anywhere in the tree.
 
 ### Step 6.2: Backport Complications
-**Record:** Clean apply verified: `git cherry-pick --no-commit
-4d33314decfea` auto-merges with no conflicts (+36/−2). No structural
-refactoring conflicts in `xe_guc_ct.c`.
+**Record:** **Clean apply** — `git apply --check` on the diff against
+current HEAD succeeded with no conflicts.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** MMIO BUSY handling (`1d087cb7d81f9`) and relay BUSY handling
-are present. CT BUSY handling is the remaining gap — no duplicate fix in
-tree.
+**Record:** `9c032781c2b1f` (allocation-failure leak fix) is already in
+tree. No duplicate atecc608b support found.
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem and Criticality
-**Record:** `drivers/gpu/drm/xe/` — Intel Xe GPU driver. **IMPORTANT**
-for Intel discrete/integrated GPU users. BMG (Battlemage) platform
-support is present (`xe_pci.c` `bmg_desc`, `xe_vsec.c`, GuC firmware
-defs in `xe_uc_fw.c`).
+### Step 7.1: Subsystem Criticality
+**Record:** `drivers/crypto/` — **IMPORTANT** (hardware crypto offload
+for embedded secure elements). Config-dependent
+(`CONFIG_CRYPTO_DEV_ATMEL_ECC`).
 
-### Step 7.2: Activity
-**Record:** Actively maintained — recent commits on `xe_guc_ct.c`
-include CT state management, fence synchronization, and resource-leak
-fixes.
+### Step 7.2: Subsystem Activity
+**Record:** Driver is new to 6.18 (landed Nov 2025). Low churn in this
+tree since introduction (one bug-fix commit).
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who Is Affected
-**Record:** Users of Intel Xe GPUs with GuC CT communication —
-especially BMG with SR-IOV PF enabled, but any platform where GuC sends
-`NO_RESPONSE_BUSY` over CTB during blocking operations.
+**Record:** Users of boards with **ATECC608B** secure elements on I2C,
+using `CONFIG_CRYPTO_DEV_ATMEL_ECC=m/y`. Currently zero support for this
+chip variant in 6.18.y.
 
 ### Step 8.2: Trigger Conditions
-**Record:** GuC sends `NO_RESPONSE_BUSY` (type 3) on the CTB G2H channel
-while the host is blocked in `guc_ct_send_recv()`. Observed during VGT
-policy push (action 0x5502) on BMG; can affect any
-`xe_guc_ct_send_block()` caller when GuC is temporarily busy. Requires
-`CONFIG_DRM_XE` and functioning GuC CT.
+**Record:** ATECC608B present on I2C bus at boot. Not a security
+vulnerability or crash trigger — hardware simply does not bind without
+the ID.
 
-### Step 8.3: Failure Severity
-**Record:** **CRITICAL** — CT G2H channel marked broken (`CT_DEAD`),
-operations fail with `-ETIME`/`-EOPNOTSUPP`, SR-IOV policy/config
-provisioning fails, GT reset required. GPU functionality degrades or
-becomes unusable until reset.
+### Step 8.3: Failure Mode Severity
+**Record:** **LOW** for system stability (no crash/corruption).
+**MEDIUM** for functionality — secure-element ECDH offload is completely
+unavailable for ATECC608B users on 6.18.y without this patch.
 
 ### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** HIGH — prevents CT channel corruption and cascading
-  failures on a widely used communication path
-- **Risk:** LOW — 36 lines, one file, follows established patterns,
-  verified clean cherry-pick
-- **Ratio:** Strongly favors backport
+- **Benefit:** Enables tested hardware on an existing driver; 3-line
+  change.
+- **Risk:** Very low — no logic changes, no API changes.
+- **Ratio:** Favorable for stable under the device-ID exception
+  category.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Fixes a real, observed hardware failure on BMG
-- Causes CT channel breakage and GPU reset requirement — serious
-  stability impact
-- Small, surgical, reviewed fix following existing MMIO/relay patterns
-- Buggy code confirmed present in v6.18.43; fix not yet applied
-- Cherry-picks cleanly
-- Affects many callers of blocking CT send (SR-IOV, GuC init, engine
-  activity, etc.)
+- Trivial I2C/OF device-ID addition to an **existing** driver (explicit
+  stable exception category)
+- Hardware-tested; crypto maintainer applied and Signed-off-by
+- Applies cleanly to 6.18.43
+- Driver already present in this tree since 6.18
+- Without it, ATECC608B hardware cannot use the driver at all
 
 **AGAINST backport:**
-- Commit message trigger (VGT policy in GT restart sequence) may be a
-  newer mainline integration; however, VGT policy push via
-  `xe_guc_ct_send_block()` already exists in 6.18.43, and the bug is
-  protocol-general, not restart-specific
-- No explicit stable nomination or wide user reports beyond Intel
-  internal testing
-- CI reported unrelated test failures (not a functional NAK)
-
-**Unresolved:** Whether the exact "VGT policy during GT restart" call
-path from mainline is already in 6.18.43 — but this does not affect the
-verdict because the underlying CT BUSY bug is present and reachable via
-existing policy push paths.
+- Not a bug fix (crash/leak/race/security)
+- Driver itself is new in 6.18 (limited exposure window)
+- Companion DT binding patch (2/2) is separate — needed for full DT
+  schema compliance but not for driver functionality
+- No user bug reports or syzbot findings
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — mirrors MMIO handling;
-   Reviewed-by; observed fix on BMG
-2. Fixes a real bug affecting users? **PASS** — documented dmesg on real
-   hardware
-3. Important issue? **PASS** — CRITICAL: CT channel broken, GPU reset,
-   operation failures
-4. Small and contained? **PASS** — 36 lines, 1 file
-5. No new features or APIs? **PASS** — protocol parity fix, no userspace
-   changes
-6. Can apply to local tree? **PASS** — verified clean cherry-pick
 
-### Step 9.3: Exception Categories
-**Record:** Hardware quirk/workaround category does not apply. This is a
-driver protocol-handling bug fix.
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — hardware tested,
+maintainer applied |
+| 2. Fixes a real bug? | **PASS via exception** — device-ID addition
+enabling hardware that cannot bind otherwise |
+| 3. Important issue? | **PASS (moderate)** — hardware non-functional
+without it; not crash/security |
+| 4. Small and contained? | **PASS** — 3 lines, one file |
+| 5. No new features/APIs? | **PASS** — only match table entries; falls
+under device-ID exception |
+| 6. Can apply to local tree? | **PASS** — clean apply verified |
+
+### Step 9.3: Exception Category
+**Record:** **NEW DEVICE IDs** — adding OF compatible and I2C device ID
+to an existing driver. The `atmel-ecc` driver is already in 6.18.y; only
+the ID for ATECC608B is new.
 
 ### Step 9.4: Decision Rationale
-This commit closes a longstanding gap where the xe driver's GuC CT
-blocking-send path did not handle `NO_RESPONSE_BUSY`, a message type the
-GuC firmware legitimately sends and that the MMIO and relay paths
-already handle. In v6.18.43, receiving type 3 on CTB corrupts the G2H
-channel and causes timeouts and failures across SR-IOV policy, config,
-and other GuC operations. The fix is small, reviewed, self-contained,
-and applies cleanly to this tree.
+
+This commit does not fix a kernel bug, but it is a textbook stable
+exception: a minimal device-ID addition to an existing driver that
+enables real hardware already validated by the author and accepted by
+the crypto maintainer. The driver is present in 6.18.43, the patch
+applies cleanly, and ATECC608B boards cannot use the driver without it.
+Risk is negligible.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from `git show 4d33314decfea`
-- [Phase 1] Confirmed action 0x5502 =
-  `GUC_ACTION_PF2GUC_UPDATE_VGT_POLICY` in `guc_actions_sriov_abi.h`
-- [Phase 1] Confirmed type 3 = `GUC_HXG_TYPE_NO_RESPONSE_BUSY` in
-  `guc_messages_abi.h`
-- [Phase 2] Full diff reviewed via `git show 4d33314decfea`
-- [Phase 2] Read current buggy code at `xe_guc_ct.c:1411–1427` and
-  `1357–1380`
-- [Phase 3] `git describe HEAD` → v6.18.43
-- [Phase 3] `git merge-base --is-ancestor 4d33314decfea HEAD` → exit 1
-  (not in tree)
-- [Phase 3] `git merge-base --is-ancestor 1d087cb7d81f9 HEAD` → exit 0
-  (MMIO fix in tree)
-- [Phase 3] `git merge-base --is-ancestor 3c01e01214026 HEAD` → exit 0
-- [Phase 3] `git blame` on `parse_g2h_msg` switch → `308dc9b27874d`
-- [Phase 4] `b4 dig -c 4d33314decfea` → lore URL found
-- [Phase 4] `b4 dig -c 4d33314decfea -a` → v1/v2/v3 series, v3 committed
-- [Phase 4] `b4 dig -c 4d33314decfea -w` → CC intel-xe, Daniele Ceraolo
-  Spurio
-- [Phase 4] `b4 dig -m /tmp/no_response_busy.mbx` → Reviewed-by
-  confirmed, no stable Cc
-- [Phase 5] Grep `xe_guc_ct_send_block` → 10+ call sites across xe
-  driver
-- [Phase 5] Read MMIO BUSY handler at `xe_guc.c:1458–1486`
-- [Phase 5] Read relay BUSY handler at `xe_guc_relay.c:839–841`
-- [Phase 6] Confirmed `GUC_HXG_TYPE_NO_RESPONSE_BUSY` absent from
-  `xe_guc_ct.c` grep
-- [Phase 6] Cherry-pick test: clean auto-merge, +36/−2
-- [Phase 6] Confirmed `memset_after` in `include/linux/string.h:508`
-- [Phase 6] Confirmed BMG platform in `xe_pci.c`, `xe_vsec.c`,
-  `xe_uc_fw.c`
-- [Phase 7] Confirmed `xe_gt_sriov_pf_policy.c` uses
-  `xe_guc_ct_send_block` for action 0x5502
-- [Phase 8] Failure mode verified from commit message dmesg and code
-  path analysis
+- **[Phase 1]** Parsed commit message from `git show beb0043891b43`:
+  subject, tags, body analyzed
+- **[Phase 2]** Diff analysis: 3 lines added to `atmel-ecc.c` device-ID
+  tables only
+- **[Phase 3]** `git blame -L 370,390`: tables from `5d324e5159d9e`
+  (6.18-rc8 merge)
+- **[Phase 3]** `git log -20 -- drivers/crypto/atmel-ecc.c`: driver +
+  one prior bug fix in tree
+- **[Phase 3]** `git merge-base --is-ancestor 5d324e5159d9e HEAD`:
+  driver merge is ancestor — driver exists
+- **[Phase 3]** `git apply --check` on commit diff: **applies cleanly**
+- **[Phase 4]** `b4 dig -c beb0043891b43`: lore URL found
+- **[Phase 4]** `b4 dig -a`: v1 and RESEND revisions found
+- **[Phase 4]** `b4 dig -w`: Herbert Xu, linux-crypto@ CC'd
+- **[Phase 4]** `b4 dig -m /tmp/atecc608b.mbox`: Herbert Xu “All
+  applied. Thanks.”; patch 2/2 identified as DT binding only
+- **[Phase 5]** Read `atmel-i2c.c` `device_sanity_check()`: chip-family-
+  agnostic sanity check
+- **[Phase 5]** Read `atmel_ecc_probe()`: standard probe path, no chip-
+  specific branches
+- **[Phase 6]** `git describe HEAD` + `make kernelversion`: tree is
+  **6.18.43**
+- **[Phase 6]** `grep atecc608`: **no matches** in current tree — IDs
+  absent
+- **[Phase 6]** `grep atecc508`: DTS files and driver present — driver
+  exists, only 508a supported
+- **[Phase 7]** `Kconfig CRYPTO_DEV_ATMEL_ECC`: driver is tristate,
+  depends on I2C
+- **[Phase 8]** No crash/corruption path identified; functional gap for
+  ATECC608B hardware
 
-**YES**The background search finished and confirmed the commit: upstream
-`4d33314decfea` (stable-prepared as `a405c6d35e5cc`), plus related MMIO-
-side fixes already in this tree.
+**YES****Verdict: YES** — backport to this tree (Linux 6.18.43).
 
-**Verdict for Linux 6.18.43: YES**
+This is a 3-line device-ID addition (`atmel,atecc608b` OF compatible +
+I2C ID) to the existing `atmel-ecc` driver. It enables ATECC608B
+hardware that otherwise won't bind; it was hardware-tested and accepted
+by Herbert Xu. The patch applies cleanly to the current tree.
 
-The CT blocking-send path in `xe_guc_ct.c` doesn't handle GuC
-`NO_RESPONSE_BUSY` (type 3) messages, so it marks the G2H channel broken
-and causes timeouts/failures (seen on BMG during VGT policy pushes).
-MMIO and relay paths already handle this message type. The fix is small
-(36 lines, one file), reviewed, and cherry-picks cleanly onto
-v6.18.43.The ancestry check finished: `4d33314decfea` is **not** in
-v6.18.43 (`merge-base --is-ancestor` returned exit 1). That matches the
-earlier finding — the CTB `NO_RESPONSE_BUSY` fix still needs to be
-backported to this tree.
+Note: it's patch 1/2 of a series — patch 2/2 adds the DT binding in
+`trivial-devices.yaml` and would be needed separately for full Device
+Tree schema compliance.
 
- drivers/gpu/drm/xe/xe_guc_ct.c | 38 ++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-ecc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
-index 4158e8af13908..b9d265ad06a0e 100644
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -82,13 +82,16 @@ static void ct_dead_capture(struct xe_guc_ct *ct, struct guc_ctb *ctb, u32 reaso
- struct g2h_fence {
- 	u32 *response_buffer;
- 	u32 seqno;
-+	/* fields below this point are setup based on the response */
- 	u32 response_data;
- 	u16 response_len;
- 	u16 error;
- 	u16 hint;
- 	u16 reason;
-+	u32 counter;
- 	bool cancel;
- 	bool retry;
-+	bool wait;
- 	bool fail;
- 	bool done;
+diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
+index 9da5a03880807..8988fc3d8b9fd 100644
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -372,6 +372,8 @@ static void atmel_ecc_remove(struct i2c_client *client)
+ static const struct of_device_id atmel_ecc_dt_ids[] = {
+ 	{
+ 		.compatible = "atmel,atecc508a",
++	}, {
++		.compatible = "atmel,atecc608b",
+ 	}, {
+ 		/* sentinel */
+ 	}
+@@ -381,6 +383,7 @@ MODULE_DEVICE_TABLE(of, atmel_ecc_dt_ids);
+ 
+ static const struct i2c_device_id atmel_ecc_id[] = {
+ 	{ "atecc508a" },
++	{ "atecc608b" },
+ 	{ }
  };
-@@ -102,6 +105,11 @@ static void g2h_fence_init(struct g2h_fence *g2h_fence, u32 *response_buffer)
- 	g2h_fence->seqno = ~0x0;
- }
- 
-+static void g2h_fence_reinit(struct g2h_fence *g2h_fence)
-+{
-+	memset_after(g2h_fence, 0, seqno);
-+}
-+
- static void g2h_fence_cancel(struct g2h_fence *g2h_fence)
- {
- 	g2h_fence->cancel = true;
-@@ -1134,6 +1142,7 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
- 	/* READ_ONCEs pairs with WRITE_ONCEs in parse_g2h_response
- 	 * and g2h_fence_cancel.
- 	 */
-+wait_again:
- 	ret = wait_event_timeout(ct->g2h_fence_wq, READ_ONCE(g2h_fence.done), HZ);
- 	if (!ret) {
- 		LNL_FLUSH_WORK(&ct->g2h_worker);
-@@ -1159,6 +1168,14 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
- 		return -ETIME;
- 	}
- 
-+	if (g2h_fence.wait) {
-+		xe_gt_dbg(gt, "H2G action %#x busy: counter %u\n",
-+			  action[0], g2h_fence.counter);
-+		/* we can't leave any response data if we want to wait again */
-+		g2h_fence_reinit(&g2h_fence);
-+		mutex_unlock(&ct->lock);
-+		goto wait_again;
-+	}
- 	if (g2h_fence.retry) {
- 		xe_gt_dbg(gt, "H2G action %#x retrying: reason %#x\n",
- 			  action[0], g2h_fence.reason);
-@@ -1354,7 +1371,12 @@ static int parse_g2h_response(struct xe_guc_ct *ct, u32 *msg, u32 len)
- 		return -EPROTO;
- 	}
- 
--	g2h_fence = xa_erase(&ct->fence_lookup, fence);
-+	/* don't erase as we still expect a final response with the same fence */
-+	if (type == GUC_HXG_TYPE_NO_RESPONSE_BUSY)
-+		g2h_fence = xa_load(&ct->fence_lookup, fence);
-+	else
-+		g2h_fence = xa_erase(&ct->fence_lookup, fence);
-+
- 	if (unlikely(!g2h_fence)) {
- 		/* Don't tear down channel, as send could've timed out */
- 		/* CT_DEAD(ct, NULL, PARSE_G2H_UNKNOWN); */
-@@ -1365,6 +1387,12 @@ static int parse_g2h_response(struct xe_guc_ct *ct, u32 *msg, u32 len)
- 
- 	xe_gt_assert(gt, fence == g2h_fence->seqno);
- 
-+	/*
-+	 * reinit as we might have already process this g2h_fence before
-+	 * if we received a NO_RESPONSE_BUSY reply
-+	 */
-+	g2h_fence_reinit(g2h_fence);
-+
- 	if (type == GUC_HXG_TYPE_RESPONSE_FAILURE) {
- 		g2h_fence->fail = true;
- 		g2h_fence->error = FIELD_GET(GUC_HXG_FAILURE_MSG_0_ERROR, hxg[0]);
-@@ -1372,6 +1400,9 @@ static int parse_g2h_response(struct xe_guc_ct *ct, u32 *msg, u32 len)
- 	} else if (type == GUC_HXG_TYPE_NO_RESPONSE_RETRY) {
- 		g2h_fence->retry = true;
- 		g2h_fence->reason = FIELD_GET(GUC_HXG_RETRY_MSG_0_REASON, hxg[0]);
-+	} else if (type == GUC_HXG_TYPE_NO_RESPONSE_BUSY) {
-+		g2h_fence->wait = true;
-+		g2h_fence->counter = FIELD_GET(GUC_HXG_BUSY_MSG_0_COUNTER, hxg[0]);
- 	} else if (g2h_fence->response_buffer) {
- 		g2h_fence->response_len = hxg_len;
- 		memcpy(g2h_fence->response_buffer, hxg, hxg_len * sizeof(u32));
-@@ -1379,7 +1410,9 @@ static int parse_g2h_response(struct xe_guc_ct *ct, u32 *msg, u32 len)
- 		g2h_fence->response_data = FIELD_GET(GUC_HXG_RESPONSE_MSG_0_DATA0, hxg[0]);
- 	}
- 
--	g2h_release_space(ct, GUC_CTB_HXG_MSG_MAX_LEN);
-+	/* don't release any space if it was an intermediate message */
-+	if (!g2h_fence->wait)
-+		g2h_release_space(ct, GUC_CTB_HXG_MSG_MAX_LEN);
- 
- 	/* WRITE_ONCE pairs with READ_ONCEs in guc_ct_send_recv. */
- 	WRITE_ONCE(g2h_fence->done, true);
-@@ -1416,6 +1449,7 @@ static int parse_g2h_msg(struct xe_guc_ct *ct, u32 *msg, u32 len)
- 	case GUC_HXG_TYPE_RESPONSE_SUCCESS:
- 	case GUC_HXG_TYPE_RESPONSE_FAILURE:
- 	case GUC_HXG_TYPE_NO_RESPONSE_RETRY:
-+	case GUC_HXG_TYPE_NO_RESPONSE_BUSY:
- 		ret = parse_g2h_response(ct, msg, len);
- 		break;
- 	default:
+ MODULE_DEVICE_TABLE(i2c, atmel_ecc_id);
 -- 
 2.53.0
 
