@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA134766AB;
-	Mon, 31 Aug 2026 13:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FEC47605F;
+	Mon, 31 Aug 2026 13:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183336; cv=none; b=f0bUixa3HT2+FK1GB7Z2vi1+w4CoyYxD4Z36wLbp06o48BhOFhzFlqIkLtCPY+7Dhu62UgFnOT2gnuD2tUO8lC+nijD2uaX3XlQi0acsXbc+zvu7SIyhKKR8GSzgHsAAJl1eFmtJWgDDFxjqzqlr66utXl8NX3JqeTq/FfaQKxs=
+	t=1788183338; cv=none; b=uFG1JBVy0VfYmutnA511N3ideD0o82L8o31MXOSVrCE/sHPrcICwujNEhuYmufZClkF/voq/QW1ApBCaV0764WpFu/1yDvOA00ovjOxc/U3QkcCOQ64bckmNAptbBwc40AWKjPo1uCjqsiitguhYZ6JkunzYJ/2oc7mLmYzYGo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183336; c=relaxed/simple;
-	bh=Ji3iuCbt85ZOnV7oyha6glxbxHK50IsmotDAdsBlp3Q=;
+	s=arc-20240116; t=1788183338; c=relaxed/simple;
+	bh=z/q8QMbgimzJ8DdJc4UIkPKJOi4a/1wTS9yJfPc881w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oALOHXaQnb3FlLYPxttEyvsVBL9rBf63MXoHaCa/1vgWt0FC2iHnyc5VDlxWrDEBgZcSv6oP7g3E4Q+TQF4bwAy0zHY1e72BHpgj0SiqBCiYJdfKkH5C922dSu/AosN3NOEFHZqqMoYPm70+GnaWMXEqWKFtNujzgfAlknjb+mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dMCwncYk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Jqv/4wT16RNsDuBhOcTISfLqMkPE+d2GQdBIkzlclfTqyq0F83viYhO0VgcVHmOj2mCUqkMSGgAPs0Vp1zBbx4NljOk5DxdJ2txYF1rkot5czA1TxYWVoDCqgUd5v4fW0EKwaHmN3Rv+I3jEUV6pSBZO2IKzNRSEyQyz7O40YIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ahai/8k1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dMCwncYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F571F00A3E;
-	Mon, 31 Aug 2026 13:35:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ahai/8k1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F851F000E9;
+	Mon, 31 Aug 2026 13:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183334;
-	bh=dyqWhSF0HVROorFdmbzrMiaIDT7tFT1lvgaoCfGYIDE=;
+	s=k20260515; t=1788183335;
+	bh=Q1t7adITbd9K62Sw4i0sIOi7F0jillbwNrJTFaehe3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dMCwncYkoez6m149pRqUKZvocUcqSDoZJRlovyFAsLUTaw0FCsV6Vi31y1zzZ3mBQ
-	 ZREMpcpw917V4z94t1lyqBZL/psIk0UxIOVfc1ckK6gJY28+UNbZkGmVAN44lI46F9
-	 j4H2G21mXFfg3Eo+zZg09HHvkl1YIhMz3giRGt+MWxQ6XC9ViPWrjo/k2ZQ3z7ynDR
-	 6XP9OvQXidj4kGiPzrY8S+2z7sDsWcwFjauxpwL8lt8QFLtAkoMWGXBn7P5WM3oLQ0
-	 gKCQr26XCO1Kk8uXHiqeAwP0HcC+55WjlfmZo6ce7z74Ix8moMTflupehQRUti2uIe
-	 da8FABIVDr/pg==
+	b=ahai/8k1M0Zch7yHj2wXsC8UToI56wd1ztr4t96bnxvb3sSnUGDhI7IEEYxRcqdaA
+	 zDkuWfyAKQdOgKRPFKyLfOwNe3VYej6mGLwxYz4pHzJRr4YaGsqoOgfGpjIMazceJT
+	 oDNe7R+trovSZU3+rrueP6qfEg05kfvI53jTHpK55tzVpMWlJoadrvvj6j/X/9TmUp
+	 wE/9qA0bssuWK95+ieP9Bl7dXdlUUbBl8Sp2C+pWzSqy5xzDCf4crAfd9/TwqJofj6
+	 /xlMqPCOc3Tb/wrrpiQVNVI2aupERc7w+c9Hh1kKveD32ytF0XqbZw/N5XWSNb0BKu
+	 l9n4clVgOnu5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+Cc: yahia ahmed <yahia.a.abdrabou@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-iio@vger.kernel.org,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] iio: accel: mma8452: switch to non-devm request_threaded_irq()
-Date: Mon, 31 Aug 2026 09:21:54 -0400
-Message-ID: <20260831133314.4125787-86-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] platform/x86: hp-wmi: Add thermal support for board 8B2F
+Date: Mon, 31 Aug 2026 09:21:55 -0400
+Message-ID: <20260831133314.4125787-87-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -46,25 +47,22 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: yahia ahmed <yahia.a.abdrabou@gmail.com>
 
-[ Upstream commit 0a6726ec20cd4c0101f2de0ca485a11676224dea ]
+[ Upstream commit abefbbfc71f5ee50f9e549a2d143f23694d65fc2 ]
 
-Avoid using devm_request_threaded_irq() as the driver requires explicit
-error-handling path(s). Using devm_* API together with goto-based
-unwinding breaks the expected LIFO resource release model.
+Added thermal support for board ID 8B2F.
 
-Add explicit IRQ cleanup in the driver teardown paths to follow kernel
-resource management conventions.
-
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: yahia ahmed <yahia.a.abdrabou@gmail.com>
+Link: https://patch.msgid.link/20260522203418.28784-1-yahia.a.abdrabou@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,407 +70,326 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-**Step 1.1 — Subject line**
+### Step 1.1: Parse the Subject Line
+**Record:** `[platform/x86: hp-wmi]` `[Add]` — Add thermal support for
+HP WMI board ID `8B2F` in the existing Victus S thermal-profile DMI
+table.
 
-Record: `[iio: accel: mma8452]` `[switch]` — Replace
-`devm_request_threaded_irq()` with manual `request_threaded_irq()` and
-explicit `free_irq()` in probe error and remove paths.
-
-**Step 1.2 — Tags**
-
-Record:
+### Step 1.2: Parse All Commit Message Tags
+**Record:**
 - **Fixes:** — none
 - **Reported-by:** — none
 - **Tested-by:** — none
-- **Reviewed-by:** — none
+- **Reviewed-by:** Ilpo Järvinen `<ilpo.jarvinen@linux.intel.com>`
+  (platform/x86 maintainer)
 - **Acked-by:** — none
-- **Link:** — none
+- **Link:** https://patch.msgid.link/20260522203418.28784-1-
+  yahia.a.abdrabou@gmail.com
 - **Cc: stable:** — none (expected for manual review)
-- **Signed-off-by:** Sanjay Chitroda (author), Jonathan Cameron (IIO
-  maintainer)
+- **Signed-off-by:** yahia ahmed, Ilpo Järvinen (ignore pipeline-added
+  SOBs)
 
-Notable: no fuzzer report, no user bug report, no explicit stable
-nomination. Maintainer sign-off is present.
+Notable: maintainer Reviewed-by; no syzbot/crash reports.
 
-**Step 1.3 — Body analysis**
+### Step 1.3: Analyze Commit Body
+**Record:**
+- **Bug description:** Board `8B2F` is missing from
+  `victus_s_thermal_profile_boards`, so Victus S thermal-profile
+  handling is not activated.
+- **Symptom:** On `8B2F` hardware, platform_profile thermal switching
+  and Victus S fan/thermal WMI paths do not engage; generic fallback is
+  used instead.
+- **Version info:** None in message.
+- **Root cause:** Missing DMI board-name entry in an existing quirk
+  table.
 
-Record:
-- **Bug:** `devm_request_threaded_irq()` combined with manual
-  `goto`-based probe unwind breaks devm’s LIFO release model; IRQ stays
-  registered while driver manually tears down buffer/trigger/other
-  resources.
-- **Symptom:** Interrupt handler can run during manual teardown (probe
-  failure or `remove()`), accessing structures being destroyed.
-- **Root cause:** devm releases IRQ only after probe returns or after
-  `remove()` completes, but the driver manually cleans up
-  buffer/trigger/regulators before that point.
-
-**Step 1.4 — Hidden bug fix?**
-
-Record: **Yes.** Despite “switch”/“conventions” wording, this is a real
-teardown-order bug fix, not style-only cleanup.
+### Step 1.4: Detect Hidden Bug Fixes
+**Record:** Not disguised cleanup. This is explicit hardware-enablement:
+a DMI quirk entry for a laptop board that needs the existing Victus S
+thermal path. Without it, thermal/fan behavior is wrong or absent, not
+merely cosmetic.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-**Step 2.1 — Inventory**
+### Step 2.1: Inventory the Changes
+**Record:**
+- **Files:** `drivers/platform/x86/hp/hp-wmi.c` (+4 lines)
+- **Functions/areas:** `victus_s_thermal_profile_boards[]` init table
+- **Scope:** Single-file, surgical DMI table addition
 
-Record:
-- **File:** `drivers/iio/accel/mma8452.c` (+12 / −7)
-- **Functions:** `mma8452_probe()`, `mma8452_remove()`
-- **Scope:** Single-file surgical fix
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** `setup_active_thermal_profile_params()` does not match
+  board `8B2F`; `is_victus_s_board` stays false.
+- **After:** Board `8B2F` matches; `is_victus_s_board = true`,
+  `active_thermal_profile_params = &victus_s_thermal_params`.
+- **Affected path:** Module init →
+  `setup_active_thermal_profile_params()` → `thermal_profile_setup()` /
+  `is_victus_s_thermal_profile()` consumers (platform_profile, hwmon fan
+  paths).
 
-**Step 2.2 — Code flow changes**
+### Step 2.3: Bug Mechanism
+**Record:**
+- **Category:** Hardware quirk / missing device (DMI board) ID
+- **Mechanism:** Wrong code path for known hardware needing Victus S WMI
+  thermal commands and GPU thermal settings
 
-Record:
-- **Hunk 1 (probe IRQ registration):** `devm_request_threaded_irq()` →
-  `request_threaded_irq()` — IRQ no longer tied to devm.
-- **Hunk 2 (probe error paths):** After IRQ registration,
-  `pm_runtime_set_active()` / `iio_device_register()` failures now `goto
-  free_irq` instead of `goto buffer_cleanup`.
-- **Hunk 3 (new `free_irq:` label):** Calls `free_irq(client->irq,
-  indio_dev)` before `buffer_cleanup`.
-- **Hunk 4 (`remove()`):** Adds explicit `free_irq()` before
-  `iio_triggered_buffer_cleanup()`.
-
-**Before → after on probe failure after IRQ setup:**
-- Before: IRQ remains active through `buffer_cleanup` /
-  `trigger_cleanup`
-- After: IRQ freed first, then buffer/trigger cleanup
-
-**Before → after on `remove()`:**
-- Before: IRQ active for entire `remove()`; devm frees only after
-  `remove()` returns
-- After: IRQ freed before buffer/trigger teardown
-
-**Step 2.3 — Bug mechanism**
-
-Record: **Category:** teardown race / potential UAF in interrupt
-context.
-
-`mma8452_interrupt()` (lines 1053–1083) can call
-`iio_trigger_poll_nested(indio_dev->trig)` and `iio_push_event()`. With
-devm, IRQ stays live while `iio_triggered_buffer_cleanup()` and
-`mma8452_trigger_cleanup()` run in probe error and remove paths.
-
-**Step 2.4 — Fix quality**
-
-Record: Fix is minimal, obviously correct, and matches standard non-devm
-IRQ pattern. Low regression risk; no API changes.
+### Step 2.4: Fix Quality
+**Record:** Obviously correct — one DMI entry pointing at existing
+`victus_s_thermal_params`. Minimal risk; no API/locking changes.
+Maintainer-reviewed.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-**Step 3.1 — Blame**
+### Step 3.1: Blame Changed Lines
+**Record:** `victus_s_thermal_profile_boards` table
+introduced/refactored in `d9aefb386fdc4` (Jan 2026, "fix platform
+profile values for Omen 16-wf1xxx"). Prior entries added by commits like
+`54afb047cd7eb`, `94b2a56fd4b1c`, `d4ff92dd98ad1`. The missing-board
+pattern is longstanding; this extends the same table.
 
-Record: `devm_request_threaded_irq()` introduced in `28e3427824ccc8`
-(2015-06-01, “iio: mma8452: Basic support for transient events”). Bug
-present since v4.1 era; definitely present in this 6.18.y tree.
+### Step 3.2: Follow Fixes Tag
+**Record:** N/A — no `Fixes:` tag.
 
-**Step 3.2 — Fixes: tag**
+### Step 3.3: Related File History
+**Record:** Recent related commits are the same pattern (add board IDs
+for Victus/Omen thermal support): `54afb047cd7eb`, `748f897511446`,
+`6e4ab59b8391a`, `d9aefb386fdc4`, etc. Standalone one-entry addition;
+not part of a multi-patch series.
 
-Record: N/A — no Fixes: tag.
+### Step 3.4: Author Context
+**Record:** yahia ahmed — no other hp-wmi commits in this tree.
+Reviewed/committed by Ilpo Järvinen (subsystem maintainer).
 
-**Step 3.3 — Related file history**
-
-Record: Part of v3 series “iio: accel: mma8452: improve coding style, pm
-and resource cleanup” (10 patches). Sibling patch `5bdff291d20c3`
-(“handle I2C read error(s)”) **is already in this tree** as stable
-commit `1cddef80a180a`. IRQ fix (`0a6726ec20cd4`) is **not** in this
-tree.
-
-**Step 3.4 — Author context**
-
-Record: Sanjay Chitroda; Jonathan Cameron committed. Same author has
-another teardown fix already backported here: `04a4d98222109`
-(“ssp_sensors: cancel delayed work_refresh on remove”).
-
-**Step 3.5 — Dependencies**
-
-Record: **Standalone.** Does not depend on other series patches
-(codestyle/header-sort patches are independent). `git apply --check` on
-current tree: **clean apply**.
+### Step 3.5: Dependencies
+**Record:** Requires Victus S thermal infrastructure already in tree
+(`victus_s_thermal_params`, `victus_s_thermal_profile_boards`,
+`setup_active_thermal_profile_params()`). **Present in this 6.18.44
+tree.** Commit diff context (e.g. `omen_v1_legacy_thermal_params`,
+boards `8902`/`8A44`) does not match current tree; backport needs a one-
+entry addition to the current `dmi_system_id` table, not a literal
+apply.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-**Step 4.1 — Original discussion**
+### Step 4.1: Original Patch Discussion
+**Record:** `b4 dig -c` unavailable (commit not in this checkout). `b4
+shazam` and curl/lore fetch blocked (403/Anubis). Link present but
+thread content unverified.
 
-Record: `b4 dig -c 0a6726ec20cd4` → [PATCH v3 02/10](https://patch.msgid
-.link/20260505174640.3998281-3-sanjayembedded@gmail.com). Series v2 and
-v3 found. Lore fetch blocked by bot protection; could not read thread
-replies.
+### Step 4.2: Reviewers
+**Record:** Reviewed-by and Signed-off-by: Ilpo Järvinen (platform/x86
+maintainer). Full recipient list unverified.
 
-**Step 4.2 — Reviewers**
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link.
 
-Record: `b4 dig -w` — CC’d: `jic23@kernel.org`, `linux-
-iio@vger.kernel.org`, and other IIO maintainers/reviewers.
+### Step 4.4: Related Patches/Series
+**Record:** Same pattern as prior Victus board additions
+(`54afb047cd7eb` added `8BBE`/`8BD4`/`8BD5`). Standalone patch.
 
-**Step 4.3 — Bug reports**
-
-Record: None found.
-
-**Step 4.4 — Series context**
-
-Record: 10-patch series; this is patch 02/10. I2C read-error fix from
-same series already backported to 6.18.y; IRQ fix was not.
-
-**Step 4.5 — Stable list**
-
-Record: UNVERIFIED — lore stable search inaccessible.
+### Step 4.5: Stable List History
+**Record:** Not searched successfully (lore blocked). Similar hp-wmi
+stable backports in this tree are crash/ACPI fixes, not board-ID-only
+additions.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-**Step 5.1 — Key functions**
+### Step 5.1: Key Functions
+**Record:** `victus_s_thermal_profile_boards[]`,
+`setup_active_thermal_profile_params()`,
+`is_victus_s_thermal_profile()`, `thermal_profile_setup()`,
+`platform_profile_victus_s_set_ec()`, hwmon fan read/write paths.
 
-Record: `mma8452_probe()`, `mma8452_remove()`, `mma8452_interrupt()`
+### Step 5.2: Callers
+**Record:** `setup_active_thermal_profile_params()` called from
+`hp_wmi_init()` before probe. `is_victus_s_thermal_profile()` used in
+thermal profile setup, hwmon fan visibility/read/write, powersource
+handler registration/cleanup.
 
-**Step 5.2 — Callers**
+### Step 5.3: Callees
+**Record:** `dmi_first_match()`, `omen_thermal_profile_set()`,
+`victus_s_gpu_thermal_profile_set()`,
+`devm_platform_profile_register()`.
 
-Record: `mma8452_probe()` — I2C driver probe during device enumeration.
-`mma8452_remove()` — device unbind/module unload. `mma8452_interrupt()`
-— hardware IRQ thread.
+### Step 5.4: Reachability
+**Record:** Runs at boot on HP WMI laptops. Affects any user of
+`platform_profile` sysfs and hwmon fan interfaces on board `8B2F`.
+Userspace-reachable on affected hardware.
 
-**Step 5.3 — Callees in interrupt path**
-
-Record: `i2c_smbus_read_byte_data()`, `iio_trigger_poll_nested()`,
-`iio_push_event()` — all touch live IIO/trigger state.
-
-**Step 5.4 — Reachability**
-
-Record: Triggered when `client->irq` is non-zero (interrupt-capable
-board config). Probe error path reachable on `iio_device_register()`
-failure etc. Remove path runs on every unbind/unload.
-
-**Step 5.5 — Similar patterns**
-
-Record: Same devm+goto anti-pattern exists in other IIO drivers; this
-fix is driver-specific.
+### Step 5.5: Similar Patterns
+**Record:** Same table pattern as `8BBE`, `8BD4`, `8BD5`, `8C99`, etc.
+Board `8B2F` also appears in `sound/soc/amd/yc/acp6x-mach.c` (HP OMEN
+Gaming Laptop 16-ap0xxx audio quirk, commit `65aabf8896687`), confirming
+real hardware in the ecosystem.
 
 ---
 
 ## Phase 6: Cross-Reference Against Local Tree
 
-**Step 6.1 — Buggy code present?**
+### Step 6.1: Does Buggy Code Exist?
+**Record:** **Yes.** Local tree is **v6.18.44** (`VERSION=6`,
+`PATCHLEVEL=18`, `SUBLEVEL=44`). `victus_s_thermal_profile_boards`
+exists; **`8B2F` is absent.** Victus S infrastructure present since
+`d9aefb386fdc4` and related commits.
 
-Record: **Yes.** Local tree is **Linux 6.18.44** (`git describe HEAD` →
-`v6.18.44`). `drivers/iio/accel/mma8452.c` still uses
-`devm_request_threaded_irq()` at line 1685 with `goto buffer_cleanup` on
-later failures; `remove()` has no `free_irq()`.
+### Step 6.2: Backport Complications
+**Record:** Minor adaptation needed — commit diff context differs from
+current tree (no `omen_v1_legacy_thermal_params`; fewer/different
+entries). Actual backport: add one `dmi_system_id` entry with
+`victus_s_thermal_params`. Clean, low conflict risk.
 
-**Step 6.2 — Backport complications**
-
-Record: **Clean apply** verified with `git apply --check`. No conflicts
-expected.
-
-**Step 6.3 — Related fixes already present?**
-
-Record: `1cddef80a180a` (I2C read error propagation) is present. IRQ
-teardown fix is **not** present.
+### Step 6.3: Related Fixes Already Present?
+**Record:** No existing `8B2F` entry in hp-wmi or grep across tree
+(except unrelated nls/audio entries).
 
 ---
 
-## Phase 7: Subsystem Context
+## Phase 7: Subsystem and Maintainer Context
 
-**Step 7.1 — Subsystem**
+### Step 7.1: Subsystem Criticality
+**Record:** `drivers/platform/x86/hp/` — **IMPORTANT** (laptop platform
+driver; thermal/fan/power management for HP hardware).
 
-Record: `drivers/iio/accel/` — IIO accelerometer driver. **Criticality:
-PERIPHERAL** (hardware-specific, not core kernel).
-
-**Step 7.2 — Activity**
-
-Record: Moderately active; several accel driver fixes backported to
-6.18.y recently.
+### Step 7.2: Subsystem Activity
+**Record:** Actively developed — multiple hp-wmi thermal/board commits
+in 2025–2026 in this tree.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-**Step 8.1 — Who is affected**
+### Step 8.1: Who Is Affected
+**Record:** Owners of HP laptops with DMI board name `8B2F` (HP
+OMEN/Victus family; corroborated by audio quirk for 16-ap0xxx line).
 
-Record: Systems with Freescale/NXP MMA8452-family accelerometer on I2C
-**and** IRQ line configured (embedded/phone-class boards). Config-
-dependent (`CONFIG_MMA8452` or module).
+### Step 8.2: Trigger Conditions
+**Record:** Boot on matching hardware with `CONFIG_HP_WMI`. Common for
+affected laptop owners; not a race or rare error path.
 
-**Step 8.2 — Trigger conditions**
+### Step 8.3: Failure Mode Severity
+**Record:** Without fix: wrong thermal profile path — no Victus S
+platform_profile modes, incorrect fan WMI path, no GPU thermal mode
+control via driver. **Severity: MEDIUM** (functional/hardware issue;
+BIOS still provides baseline thermal management; not a kernel crash).
 
-Record:
-- **Probe failure** after IRQ registration (e.g. `iio_device_register()`
-  OOM) — uncommon
-- **Driver remove/unbind** with IRQ configured and hardware generating
-  interrupts — more realistic
-- Unprivileged users cannot directly trigger; requires device
-  presence/removal
-
-**Step 8.3 — Failure mode severity**
-
-Record: IRQ handler may access buffer/trigger/device state during
-teardown → possible kernel oops/UAF in interrupt context. **Severity:
-HIGH** (crash potential), but **low likelihood** (narrow race window, no
-reports in ~11 years).
-
-**Step 8.4 — Risk-benefit**
-
-Record:
-- **Benefit:** Prevents teardown race on probe error and remove; correct
-  resource ordering
-- **Risk:** Very low (12-line, localized change)
-- **Ratio:** Moderate benefit, very low risk
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Enables correct thermal/fan behavior on real hardware for
+  stable users who cannot upgrade kernels.
+- **Risk:** Very low — 4 lines, existing data structure, no behavior
+  change for other boards.
+- **Ratio:** Favorable.
 
 ---
 
 ## Phase 9: Final Synthesis
 
-**Step 9.1 — Evidence**
+### Step 9.1: Evidence Summary
 
-**FOR:**
-- Real bug: IRQ active during manual teardown in probe error and remove
-  paths
-- Interrupt handler touches IIO buffer/trigger state that is being
-  destroyed
-- Small, surgical, maintainer-committed fix
-- Applies cleanly to 6.18.y
-- Bug present since 2015 in this driver
-- Same author’s teardown fixes have been backported to this tree before
+**FOR backport:**
+- Explicit device/quirk ID addition to existing driver (stable-
+  rules.rst: "just add a device ID" or "hardware quirk")
+- Trivial, obviously correct, maintainer-reviewed
+- Real hardware (`8B2F` confirmed in tree via audio DMI quirk)
+- Required infrastructure exists in v6.18.44
+- Enables platform_profile and hwmon fan control on affected laptops
 
-**AGAINST:**
-- No crash reports, syzbot, or Fixes: tag
-- Peripheral driver; only IRQ-enabled MMA8452 hardware
-- Bug latent ~11 years without reported incidents
-- Stable already took sibling I2C-read fix from same series but not this
-  one
-- Framed as resource-management correctness rather than demonstrated
-  crash
+**AGAINST backport:**
+- Not a crash/security/corruption fix
+- No user bug report or syzbot evidence
+- Commit diff does not apply literally to current tree (needs minor
+  adaptation)
+- Mailing list discussion unverified
 
 **UNRESOLVED:**
-- Lore thread review comments inaccessible
-- No confirmation of real-world crash reproduction
+- Exact laptop model and user testing details from lore thread
+- Whether reviewers nominated `Cc: stable`
 
-**Step 9.2 — Stable rules checklist**
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** (maintainer reviewed; pattern
+   proven by sibling board entries)
+2. Fixes real bug affecting users? **PASS** (hardware quirk —
+   wrong/missing thermal path on `8B2F`)
+3. Important issue? **PASS** (hardware quirk per stable rules;
+   functional thermal/fan management)
+4. Small and contained? **PASS** (4 lines, one file)
+5. No new features/APIs? **PASS** (DMI table entry only; no new APIs)
+6. Can apply to local tree? **PASS** (minor one-entry adaptation to
+   current table)
 
-1. Obviously correct and tested? **PASS** — logic is sound; no Tested-by
-   but maintainer committed
-2. Fixes a real bug? **PASS** — verified teardown ordering bug in code
-3. Important issue? **PASS (borderline)** — crash/UAF potential on
-   remove, but unreported and hardware-specific
-4. Small and contained? **PASS** — 19 lines, one file
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — verified clean apply
+### Step 9.3: Exception Category
+**Record:** Hardware quirk / device ID addition (DMI board ID in
+existing hp-wmi driver). Matches `Documentation/process/stable-kernel-
+rules.rst` line 15: "just add a device ID" and line 19: "hardware
+quirk."
 
-**Step 9.3 — Exception categories**
-
-Record: None (not quirk/DT/build/docs).
-
-**Step 9.4 — Decision rationale**
-
-This is a legitimate teardown-order bug: with
-`devm_request_threaded_irq()`, the IRQ remains registered while
-`mma8452_remove()` and probe error paths manually destroy the triggered
-buffer and trigger that `mma8452_interrupt()` uses. The fix is minimal,
-correct, and applies cleanly to 6.18.44. Severity is borderline for
-stable — no reported crashes, niche hardware — but the failure mode
-(oops/UAF in IRQ context during driver removal) meets the conservative
-stable bar for teardown races, especially given very low backport risk.
+### Step 9.4: Decision Rationale
+For **v6.18.44**, the Victus S thermal framework is present but board
+`8B2F` is missing. This is the same class of change as prior Victus
+board additions — a DMI quirk entry enabling correct thermal and fan
+behavior on real HP hardware. It is small, maintainer-reviewed, low
+risk, and explicitly within stable policy for device-ID/quirk additions.
+The commit should be adapted (not cherry-picked verbatim) to the current
+`dmi_system_id` table layout.
 
 ---
 
 ## Verification
 
-- [Phase 1] `git show 0a6726ec20cd4 --format=fuller`: parsed message,
-  tags, no Fixes/Reported-by
-- [Phase 2] `git show 0a6726ec20cd4`: confirmed +12/−7 diff in
-  probe/remove
-- [Phase 2] Read `mma8452_interrupt()` at lines 1053–1083: handler uses
-  trigger/events during teardown
-- [Phase 3] `git blame -L 1680,1720`: devm IRQ from `28e3427824ccc8`
-  (2015)
-- [Phase 3] `git log all-next -- drivers/iio/accel/mma8452.c`: found
-  commit `0a6726ec20cd4`, series context
-- [Phase 3] `git show 1cddef80a180a`: sibling I2C fix already in stable
-  6.18.y
-- [Phase 3] `git apply --check` on patch: clean apply to HEAD
-- [Phase 4] `b4 dig -c 0a6726ec20cd4`: lore URL found
-- [Phase 4] `b4 dig -c 0a6726ec20cd4 -a`: v2/v3 series revisions found
-- [Phase 4] `b4 dig -c 0a6726ec20cd4 -w`: maintainers CC’d
-- [Phase 4] WebFetch lore URL: **FAILED** (bot protection)
-- [Phase 5] Grep/read `mma8452.c`: confirmed interrupt →
-  `iio_trigger_poll_nested()` / `iio_push_event()`
-- [Phase 6] `git describe HEAD`: v6.18.44
-- [Phase 6] Grep `devm_request_threaded_irq` in tree: still present (bug
-  not fixed)
-- [Phase 6] `git branch --contains 0a6726ec20cd4`: not in stable branch
-- [Phase 7] `git log -20 -- drivers/iio/accel/`: subsystem activity
-  assessed
-- [Phase 8] Read probe/remove error paths: confirmed `goto
-  buffer_cleanup` with active IRQ before fix
+- **[Phase 1]** Parsed subject, tags, body; no Fixes/Reported-by/syzbot
+- **[Phase 2]** Diff: +4 lines, one DMI entry with
+  `victus_s_thermal_params`
+- **[Phase 3]** `git describe HEAD`: v6.18.44; `git blame` on table:
+  `d9aefb386fdc4` refactor; related commits `54afb047cd7eb`,
+  `6e4ab59b8391a`
+- **[Phase 3]** `git log --grep="8B2F"`: no hp-wmi commit in tree
+- **[Phase 4]** `b4 dig -c`: failed (commit not in checkout); `b4
+  shazam`: message-id unknown; lore/patch.msgid.link: blocked
+  (403/Anubis)
+- **[Phase 5]** Read `setup_active_thermal_profile_params()`,
+  `is_victus_s_thermal_profile()`, `thermal_profile_setup()`, hwmon
+  paths
+- **[Phase 5]** `grep 8B2F`: found in `acp6x-mach.c` (HP OMEN 16-ap0xxx
+  audio quirk, `65aabf8896687`)
+- **[Phase 6]** `grep 8B2F` in hp-wmi.c: absent;
+  `victus_s_thermal_params` and table exist
+- **[Phase 6]** Commit diff context (`omen_v1_legacy_thermal_params`,
+  boards `8902`/`8A44`) not in current tree — adaptation required
+- **[Phase 7]** hp-wmi actively maintained; Ilpo Järvinen is maintainer
+- **[Phase 8]** Impact: thermal/fan/platform_profile on board `8B2F`;
+  severity MEDIUM; risk very low
+- **[Phase 9]** `Documentation/process/stable-kernel-rules.rst` line 15
+  confirms device-ID additions are stable-appropriate
 
 **YES**
 
- drivers/iio/accel/mma8452.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
-index cefc7cf4bd835..279a9b3648860 100644
---- a/drivers/iio/accel/mma8452.c
-+++ b/drivers/iio/accel/mma8452.c
-@@ -1682,18 +1682,16 @@ static int mma8452_probe(struct i2c_client *client)
- 		goto trigger_cleanup;
- 
- 	if (client->irq) {
--		ret = devm_request_threaded_irq(&client->dev,
--						client->irq,
--						NULL, mma8452_interrupt,
--						IRQF_TRIGGER_LOW | IRQF_ONESHOT,
--						client->name, indio_dev);
-+		ret = request_threaded_irq(client->irq, NULL, mma8452_interrupt,
-+					   IRQF_TRIGGER_LOW | IRQF_ONESHOT,
-+					   client->name, indio_dev);
- 		if (ret)
- 			goto buffer_cleanup;
- 	}
- 
- 	ret = pm_runtime_set_active(&client->dev);
- 	if (ret < 0)
--		goto buffer_cleanup;
-+		goto free_irq;
- 
- 	pm_runtime_enable(&client->dev);
- 	pm_runtime_set_autosuspend_delay(&client->dev,
-@@ -1702,7 +1700,7 @@ static int mma8452_probe(struct i2c_client *client)
- 
- 	ret = iio_device_register(indio_dev);
- 	if (ret < 0)
--		goto buffer_cleanup;
-+		goto free_irq;
- 
- 	ret = mma8452_set_freefall_mode(data, false);
- 	if (ret < 0)
-@@ -1713,6 +1711,10 @@ static int mma8452_probe(struct i2c_client *client)
- unregister_device:
- 	iio_device_unregister(indio_dev);
- 
-+free_irq:
-+	if (client->irq)
-+		free_irq(client->irq, indio_dev);
-+
- buffer_cleanup:
- 	iio_triggered_buffer_cleanup(indio_dev);
- 
-@@ -1738,6 +1740,9 @@ static void mma8452_remove(struct i2c_client *client)
- 	pm_runtime_disable(&client->dev);
- 	pm_runtime_set_suspended(&client->dev);
- 
-+	if (client->irq)
-+		free_irq(client->irq, indio_dev);
-+
- 	iio_triggered_buffer_cleanup(indio_dev);
- 	mma8452_trigger_cleanup(indio_dev);
- 	mma8452_standby(iio_priv(indio_dev));
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 550d4b39a92af..3f9c718123a85 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -158,6 +158,10 @@ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BAB") },
+ 		.driver_data = (void *)&omen_v1_thermal_params,
+ 	},
++	{
++		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8B2F") },
++		.driver_data = (void *)&victus_s_thermal_params,
++	},
+ 	{
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BBE") },
+ 		.driver_data = (void *)&victus_s_thermal_params,
 -- 
 2.53.0
 
