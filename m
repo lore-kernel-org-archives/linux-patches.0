@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730B7439F8F;
-	Mon, 31 Aug 2026 13:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B3B43A7F8;
+	Mon, 31 Aug 2026 13:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184590; cv=none; b=XDrzilTG6F0m/P/qR6YmJKO8zB13uqz4uUDreMVxFvUo49NxYYPcAVGLKmozoYXdQGMdzftBiyh2GAr5apYBQ7EoxhQLeMoEPm6zcMILaMbAn3xKopeAuvIDgOn5XMeNFwP/cFYYERB2GrSLh+ypF5o3NVO5XJxEQ/eiBiOA7xc=
+	t=1788184593; cv=none; b=HRhKMn8YL4F3cHqOh9Zuo2CJOQcJkNAc778PZw2qINR1Z7Z4lZv9P0EKGssg7oVTTESzIyUCZgLmA8TOAKMBWdHxvXH6exL0koA8XzObu3qYezoPdqR9eFn5AAiZbqK+MJg1NiIW2hwUKpGsyHKM9TM6z3EVSrd9EEDwY8IfbxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184590; c=relaxed/simple;
-	bh=9lxCRzzG2nAPoIWUlcDYCluAR5bpbkRDZRpF9Rxf/1Q=;
+	s=arc-20240116; t=1788184593; c=relaxed/simple;
+	bh=Z5mhGBASgu6wmQXSv2+tc1TN21IOgUp7gZnL2kppN1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDJ+QsBzDkU3BiRGZfjGLjBYTeytLXlCtPs26cMNj9f4+V0MSX/RURu+boF6Gz4SI7etpsunGTgOPDStRBZuMsMH9E4LB3oyh3qZxhD++HycRY3e6rNPsp0kg+1CHC5AzSESpLbDP5+oOof+ogNS3aSddmQ/3kZScB825qQ4U8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1755p+S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABgGy0P5qLKSeJEoOXUU7ltIdKBLghYaJCnyTkgvL589Ns457HHu+0bR2xT18sHLrNOOnAWjW1wcQzBKz1B2K3l4JIBH7lxaXuEcpEQ9RXz51woc2K/OlBI+9FXym/+8Bp2mCGDt48U2f9HgM3br9HToQpZ9uecpKZ8gx79lItU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDuB04/S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1755p+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE521F00A3D;
-	Mon, 31 Aug 2026 13:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDuB04/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F49E1F000E9;
+	Mon, 31 Aug 2026 13:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184589;
-	bh=ZZWZ0B7hvGer/mHWv8NPcxa4O540p8YrkDr8G+1EMS4=;
+	s=korg; t=1788184592;
+	bh=pBjOo9BaT6/g192FzuDToKyD75d23TR5Ei5GfBcMBrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E1755p+SNO6Jj9MUf1GPFiII5BLDl3ieend9o/ZSqoKvFkErFjrUTB2xeO9xOU/0T
-	 YpisuAfkFzWURrXB3KIR46bqYH9YGiVm+fS7A7OYPO53k2E4r8/hfJi49UPwQyVwhl
-	 UVgDWcez6vJaGcTrw3qcmc3RrAAYcTfj8InrT2SA=
+	b=pDuB04/SSzR/ldXqCh2n1XW+3bRUunCh/3rWzm6naJfgf0sNXWwyikQ6jR/f7t0ZM
+	 qcUntFl+gJnWp1BAvKVUjTp0jz8QHeg62dzXHGtmy15Qf6zDEFa/eFR1uvbUL+dU1C
+	 UHtG5CcbiBs7TKmQzybol4hd1symYoNqDAR1cKnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Semih Baskan <strst.gs@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 59/91] usb: xhci: Handle USB3 port events when there is one roothub
-Date: Mon, 31 Aug 2026 15:34:47 +0200
-Message-ID: <20260831133402.797287004@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Lucas De Marchi <ldemarchi@nvidia.com>
+Subject: [PATCH 6.6 60/91] xhci: dbgtty: Fix unregister on tty_register_driver() failure
+Date: Mon, 31 Aug 2026 15:34:48 +0200
+Message-ID: <20260831133402.839171452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -50,57 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Semih Baskan <strst.gs@gmail.com>
+From: Lucas De Marchi <ldemarchi@nvidia.com>
 
-commit 3e91ec3e7d80a327fb558207613c80415d3bf756 upstream.
+commit a916fa66a43e10f63198b6ce978badffc678821a upstream.
 
-handle_port_status() drops every USB3 port event when xhci->shared_hcd is
-NULL. The check dates from a time when xhci-plat always created a shared
-hcd, so a NULL one could only mean the hcd had been removed.
+If tty_register_driver() fails, it drops the reference, but fails to set
+the global dbc_tty_driver to NULL, causing the unregister to be called
+again when module exits.
 
-Since commit 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if
-either root hub has no ports") that is no longer true. A controller whose
-USB2 root hub has no ports gets a single roothub, the USB3 rhub is served
-by the main hcd, and shared_hcd stays NULL for the lifetime of the device.
-Every SuperSpeed port event is then thrown away as bogus behind a debug
-message, so devices never enumerate even though the port sees the device
-and its change bits stay set:
+On module unload dbc_tty_exit() only gates its cleanup on the driver
+pointer being non-NULL, so it operates on the already-freed driver:
 
-  0x006a1203 Powered Connected Enabled Link:U0 PortSpeed:4
-  Change: CSC WRC PRC PLC
+    module_init(xhci_hcd_init)
+      xhci_hcd_init()
+        xhci_dbc_init()                       [return value ignored]
+          dbc_tty_init()
+            tty_register_driver() fails
+              tty_driver_kref_put()           -> driver freed
+              (dbc_tty_driver left dangling)
+    ...
+    module_exit(xhci_hcd_fini)
+      xhci_hcd_fini()
+        xhci_dbc_exit()
+          dbc_tty_exit()
+            if (dbc_tty_driver)               -> true (dangling)
+              tty_unregister_driver()         -> use-after-free
 
-Broadcom Northstar is such a controller. USB3 works there up to 5.15 and
-stops working from 5.19 onwards.
-
-Ask xhci_get_usb3_hcd() instead. It returns the shared hcd when there is
-one, the main hcd when the USB2 root hub has no ports, and NULL once the
-shared hcd is gone, which keeps the original meaning of the check.
-
-Tested on an Asus RT-N18U (BCM47081), which has a single roothub. Before
-the change nothing enumerates on the USB3 port; after it SuperSpeed
-devices enumerate normally over repeated connect and disconnect cycles,
-the change bits shown above clear, and USB2 is unaffected on both ports.
-
-Fixes: 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if either root hub has no ports")
-Cc: stable@vger.kernel.org
-Signed-off-by: Semih Baskan <strst.gs@gmail.com>
+Fixes: 4521f1613940 ("xhci: dbctty: split dbc tty driver registration and unregistration functions.")
+Cc: stable@vger.kernel.org # v5.10
+Cc: Mathias Nyman <mathias.nyman@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lucas De Marchi <ldemarchi@nvidia.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260806142113.2436238-17-mathias.nyman@linux.intel.com
+Link: https://patch.msgid.link/20260806142113.2436238-8-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-dbgtty.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2010,7 +2010,7 @@ static void handle_port_status(struct xh
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -619,6 +619,7 @@ int dbc_tty_init(void)
+ 		pr_err("Can't register dbc tty driver\n");
+ 		tty_driver_kref_put(dbc_tty_driver);
+ 		idr_destroy(&dbc_tty_minors);
++		dbc_tty_driver = NULL;
  	}
  
- 	/* We might get interrupts after shared_hcd is removed */
--	if (port->rhub == &xhci->usb3_rhub && xhci->shared_hcd == NULL) {
-+	if (port->rhub == &xhci->usb3_rhub && xhci_get_usb3_hcd(xhci) == NULL) {
- 		xhci_dbg(xhci, "ignore port event for removed USB3 hcd\n");
- 		bogus_port_status = true;
- 		goto cleanup;
+ 	return ret;
 
 
