@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F875A0ABF;
-	Mon, 31 Aug 2026 13:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76AA4B3398;
+	Mon, 31 Aug 2026 13:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184320; cv=none; b=BZk6+/1KbCL/Hm4BppryQISHHLpqKK+UDKNRmHCdaI+8LpiAHeMa80rLr7Tz3KrliazWf/vkFrGUF/KgVQieLXMHDVmdD2PhN36YRcGs1cQpY1kbzovnMH/ITCVhGMlxe1jCHvMteXMD0+iYz7Obkby75LW7wCzGg4kYEM9fgqM=
+	t=1788184322; cv=none; b=OUjzYbaaL8TCCslghSHN2pKLkoVnbJ7Sh6eXEJtY6Bmhinp6lHh9JTUW4chjWJhy8Ir1kp07CrH6MiuDdqzuNh3YUYUaWn2UJ89TKtMNP5COvZLvcGMFHxXJTHDPkjXtRnMtwnR/CkRgBTT+I88Xo2DRHBgG1gSlkslP777ISSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184320; c=relaxed/simple;
-	bh=xLf09wVcxA9h6jkZi0DhwH75Z5jb+hNoZ/8z5EFt3YA=;
+	s=arc-20240116; t=1788184322; c=relaxed/simple;
+	bh=EgYoyrvMPsoSGWk1v4IkgChDLry2uP5z0WQwDIBV5S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oWvfJ5AFoIGTBewKbWcoPFbZ/oreES27BtD7NDATAzbOVr5Kcinsb6nTIPysbUYcySPEGlPthSYzzprEnPt757Vi+ryIo9/tLZcDuzKpO3jYuT+9EcrNuvP6WP65fZ/5eUCgXo8zfR8TDOajkmw6lvEdgMH1/mqdJ8szt0mggww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aRUpYnlF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gjdQF6FMzxnvSeFm6FZ1r7JdSqZnLA9r/dGzTmdEwTY8X8fA2WnH3ofqPLwiOD1dMlTT3qZvEy3ww5dFIciBDMmG1rBoQ/ufGC91cUPMPiBEtaGRsT9wnOfOCwl7fpzJcaO4sDpaw4af+8FiDZeiYjqH7QVKt4IIDzgxFuPiyVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RE9GnsnI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aRUpYnlF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFB41F00A3D;
-	Mon, 31 Aug 2026 13:51:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RE9GnsnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41F21F00A3E;
+	Mon, 31 Aug 2026 13:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184318;
-	bh=kdfRuPl0hrKyvihyJ/gG0bBiOeV8URDkBe9P+1/RTYg=;
+	s=k20260515; t=1788184319;
+	bh=tbfMNc2pHRJNTVbk8gfPJ8lcFEetRD6t1be6xpPKzpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aRUpYnlFayg/LUcKzDr5xZtvPAz06BDRVgGiRc16O/1FCH2WDWc1qcIXJFGhOkGT/
-	 FTC6hyArvBk8NrP1jBLFw/iU/3HTM0iE8hp8ZHh3E/FyB4sBaY87Qk8R4g5/Rr7bYo
-	 wNx81v+j19BR3JxxBqKvBvuhxtHwCzSws8s+eWRMvSKOVnkvg8fSeGEObVF24lWs4+
-	 Q5kbTS75jEqKUxKjNN/3KzKISQ+oFTZ3b6rvH9eIMhcA8iW+0mem6boDEqZVTIBax1
-	 XDuur9TNECs/gy0eA/69FrcDkv1toPlbTV6Xp7dE1Efud+glRBswBmDfKqJOabtJUW
-	 IsftKScf9weDg==
+	b=RE9GnsnIxs/DNU39mFGVHUpRPvjs1c04B/JzRJ4N9OEOwqjndAaSPjXvJ5xngGkxF
+	 4mKu9nU3d3HwNlyLRNRiJ1HpbQUrxziXLp1SfLTXpF3j0cGgyCwgArC69Tgem/SFaS
+	 3RkbBDZIv2o4eNMqugkH63BYvoTvaDM4VlTOlOeVqkATC6LwaywhyKUP+tJ52Xg1dq
+	 SUxUjAK96xfVwxDmhDR6AcWPJah5DWd9GTMpnJYmaohTplA7LojyZlXV+D7UQHIIRc
+	 knOLXW6boQUPZ+8rT1lA3IUCjlQHaLg17v/M/zTew1EeoXgEcLgsY9Ij3FxVA+S2Xr
+	 NoThGDcdVSZww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexej Sidorenko <alexej@sidorenko.cz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	Anders Larsen <al@alarsen.net>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] Bluetooth: btrtl: fix RTL8761B/BU broken LE extended scan
-Date: Mon, 31 Aug 2026 09:30:49 -0400
-Message-ID: <20260831133314.4125787-621-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] qnx4: handle set_blocksize failures
+Date: Mon, 31 Aug 2026 09:30:50 -0400
+Message-ID: <20260831133314.4125787-622-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,421 +52,410 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexej Sidorenko <alexej@sidorenko.cz>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 5ead2063611ae56809b1b113ac44cef9547c81d7 ]
+[ Upstream commit c7d911ea1cc9a63b07e52f5e75b263be0615b289 ]
 
-RTL8761B and RTL8761BU devices report HCI version 5.1 but do not
-support the LE Extended Scan commands. This causes repeated failures
-with Opcode 0x2042 (LE Set Extended Scan Parameters) returning -EBUSY
-when BlueZ attempts extended scanning while a connection is active.
+qnx4 uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting will hit the
 
-Set HCI_QUIRK_BROKEN_EXT_SCAN for CHIP_ID_8761B to make BlueZ fall
-back to legacy LE scan commands which the firmware supports correctly.
+        BUG_ON(offset >= folio_size(folio));
 
-Tested with RTL8761BU (USB ID 0bda:a728) where the issue manifested
-as continuous 'Opcode 0x2042 failed: -16' errors in dmesg whenever
-a BLE connection was active.
+in folio_set_bh on the first __bread_gfp call.
 
-Signed-off-by: Alexej Sidorenko <alexej@sidorenko.cz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-4-hch@lst.de
+Acked-by: Anders Larsen <al@alarsen.net>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: Bluetooth: btrtl: fix RTL8761B/BU broken LE
-extended scan
+# Stable Backport Analysis: `qnx4: handle set_blocksize failures`
 
-**Local tree:** `v6.18.44-1-g2736c32da98b9` (kernel 6.18.44)
+**Local tree:** `v6.18.44` (Makefile: 6.18.44)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[Bluetooth: btrtl]` `[fix]` — RTL8761B/BU devices falsely
-advertise LE Extended Scan support; set a quirk so the stack falls back
-to legacy LE scan.
+### Step 1.1: Subject Line
+**Record:** `[qnx4] [handle] handle set_blocksize failures` — error-path
+handling for a block-size setup failure during mount.
 
-### Step 1.2: Tags
+### Step 1.2: Commit Message Tags
 **Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none (author says "Tested with RTL8761BU" in body)
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** — none
-- **Cc: stable@vger.kernel.org** — not present (expected)
-- **Signed-off-by:** Alexej Sidorenko (author), Luiz Augusto von Dentz
-  (Bluetooth maintainer)
+- **Signed-off-by:** Christoph Hellwig `<hch@lst.de>` (author)
+- **Link:** https://patch.msgid.link/20260511071701.2456211-4-hch@lst.de
+  (patch 4/N in a series)
+- **Acked-by:** Anders Larsen `<al@alarsen.net>` (qnx4 maintainer)
+- **Signed-off-by:** Christian Brauner `<brauner@kernel.org>` (merger)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or syzbot
+  tags
+- Notable: maintainer ack; part of an hch patch series
 
-Notable: maintainer SOB from Luiz von Dentz is a strong quality signal.
-No syzbot/fuzzer report.
-
-### Step 1.3: Body analysis
+### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug:** RTL8761B/BU report HCI 5.1 and claim LE Extended Scan
-  support, but firmware does not implement those commands.
-- **Symptom:** Repeated `Opcode 0x2042 failed: -16` (-EBUSY) in dmesg
-  when BlueZ attempts extended scanning while a BLE connection is
-  active.
-- **Root cause:** Kernel's `use_ext_scan()` sees advertised capability
-  and uses extended scan HCI commands; firmware rejects them.
-- **Fix approach:** Set `HCI_QUIRK_BROKEN_EXT_SCAN` for `CHIP_ID_8761B`
-  so the stack uses legacy LE scan commands.
-- **Version info:** None stated; hardware has been supported since
-  RTL8761B support landed in 2020.
+- **Bug:** qnx4 ignores `sb_set_blocksize()` failure and continues
+  mounting.
+- **Symptom:** Kernel `BUG_ON(offset >= folio_size(folio))` in
+  `folio_set_bh()` on the first `__bread_gfp` call during mount.
+- **Root cause (author):** buffer_heads do not handle block size >
+  PAGE_SIZE well; a failed `sb_set_blocksize()` leaves `s_blocksize` in
+  a bad state.
+- **No explicit kernel version range** in the message.
 
-Note: commit message labels 0x2042 as "LE Set Extended Scan Parameters",
-but in this tree `0x2041` is Parameters and `0x2042` is Enable
-(`include/net/bluetooth/hci.h`). The quirk disables both via
-`use_ext_scan()`, so the fix is still correct.
-
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit hardware quirk/workaround fix, not
-disguised cleanup.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Yes — despite “handle” rather than “fix”, this prevents a
+kernel panic on a mount error path. Same class of bug fix as
+minix/qnx6/romfs.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Change Inventory
 **Record:**
-- **Files:** `drivers/bluetooth/btrtl.c` (+13 lines, 0 removed)
-- **Function:** `btrtl_set_quirks()`
-- **Scope:** Single-file, surgical hardware quirk addition
+- **File:** `fs/qnx4/inode.c` (+2 / -1 lines)
+- **Function:** `qnx4_fill_super()`
+- **Scope:** Single-file, surgical mount-path fix
 
-### Step 2.2: Code flow change
+### Step 2.2: Code Flow Change
 **Record:**
-- **Hunk (before):** After the `ic_info` NULL check, code only handled
-  `RTL_ROM_LMP_8703B` local-ext-features quirk.
-- **Hunk (after):** New `switch (btrtl_dev->project_id)` sets
-  `HCI_QUIRK_BROKEN_EXT_SCAN` for `CHIP_ID_8761B` before the existing
-  `lmp_subver` switch.
-- **Path affected:** Device init — `btrtl_set_quirks()` called from
-  `btrtl_setup_realtek()` during Realtek USB/UART Bluetooth probe.
+- **Before:** `sb_set_blocksize(s, QNX4_BLOCK_SIZE);` — return value
+  ignored; mount continues on failure.
+- **After:** `if (!sb_set_blocksize(s, QNX4_BLOCK_SIZE)) return
+  -EINVAL;` — mount aborts cleanly.
+- **Path affected:** Mount initialization error path in
+  `qnx4_fill_super()`, before `sb_bread()`.
 
-### Step 2.3: Bug mechanism
-**Record:** **[Hardware workaround / logic correctness]**
-- `use_ext_scan(dev)` is true when controller advertises extended scan
-  support AND quirk is not set.
-- RTL8761B falsely advertises support → kernel sends
-  `HCI_OP_LE_SET_EXT_SCAN_*` commands → firmware returns error (-EBUSY).
-- Quirk forces fallback to legacy `HCI_OP_LE_SET_SCAN_PARAM` /
-  `HCI_OP_LE_SET_SCAN_ENABLE`.
+### Step 2.3: Bug Mechanism
+**Record:** **Logic / correctness fix → kernel panic prevention**
 
-### Step 2.4: Fix quality
+Verified mechanism in this tree:
+
+1. `sb_set_blocksize()` returns `0` on failure (`block/bdev.c:220-229`).
+2. On failure, `sb->s_blocksize` is **not** updated.
+3. `setup_bdev_super()` also calls `sb_set_blocksize(sb,
+   block_size(bdev))` without checking the return value
+   (`fs/super.c:1662`). If that fails (e.g. `block_size(bdev) >
+   PAGE_SIZE` for non-`FS_LBS` filesystems), `s_blocksize` stays `0`
+   (superblock is `kzalloc`'d in `alloc_super()`).
+4. qnx4 then calls `sb_set_blocksize(s, 512)`. That can fail when `512 <
+   bdev_logical_block_size(bdev)` (`block/bdev.c:171-172`), common on
+   4K-native devices.
+5. With `s_blocksize == 0`, `sb_bread()` passes `size=0` into
+   `folio_alloc_buffers()`:
+
+```932:946:fs/buffer.c
+        offset = folio_size(folio);
+        while ((offset -= size) >= 0) {
+                // ...
+                folio_set_bh(bh, folio, offset);
+```
+
+6. With `size=0`, `offset` never decreases; first call is
+   `folio_set_bh(bh, folio, folio_size)` → triggers:
+
+```1582:1582:fs/buffer.c
+        BUG_ON(offset >= folio_size(folio));
+```
+
+Verified with a quick simulation: `size=0` → `offset=4096`, `BUG=True`.
+
+### Step 2.4: Fix Quality
 **Record:**
-- **Quality:** Obviously correct — identical pattern to BCM4377
-  (`hci_bcm4377.c`) and Actions Semi (`btusb.c`).
-- **Regression risk:** Very low — only affects `CHIP_ID_8761B` devices,
-  and only changes scan command selection to what firmware actually
-  supports.
-- **Red flags:** None.
+- **Obviously correct:** Matches established pattern in minix, qnx6,
+  romfs, ufs, udf, etc.
+- **Minimal:** 2 lines.
+- **Regression risk:** Very low. Early `-EINVAL` is handled by
+  `get_tree_bdev()` → `deactivate_locked_super()` → `qnx4_kill_sb()`
+  which frees `qs`.
+- **No API changes.**
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
+**Record:** Unchecked `sb_set_blocksize(s, QNX4_BLOCK_SIZE)` dates to
+`1da177e4c3f41` (Linux 2.6.12-rc2, 2005). Bug present since qnx4
+inception. `folio_set_bh()` BUG added in `465e5e6a1698f` (April 2023);
+confirmed ancestor of HEAD.
+
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag.
+
+### Step 3.3: Related File History
 **Record:**
-- `btrtl_set_quirks()` structure from Max Chou (2023-03-21).
-- `CHIP_ID_8761B` added in `04896832c94aa` ("Bluetooth: btrtl: Add
-  support for RTL8761B", Apr 2020).
-- `HCI_QUIRK_BROKEN_EXT_SCAN` added in `392fca352c7a9` (Nov 2022) for
-  Broadcom 4377.
-- Bug has existed since 8761B support without this quirk — long-standing
-  on common hardware.
+- `git log --oneline -20 -- fs/qnx4/inode.c`: no prior set_blocksize
+  fix.
+- qnx6 has had this check since initial addition (`5d026c7242201`).
+- minix has had it since `1da177e4c3f41` (line 221-222).
+- Commit not yet in this tree (`git log --grep='handle set_blocksize
+  failures'` empty).
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag present.
-
-### Step 3.3: Related file history
-**Record:**
-- Recent `btrtl.c` changes: firmware bounds validation, memory leak fix,
-  quirk bitmap migration — unrelated.
-- No prior fix for 8761B extended scan in this tree.
-- Standalone patch, not part of a series.
-
-### Step 3.4: Author context
-**Record:** Alexej Sidorenko is not a frequent btrtl contributor in this
-tree. Luiz von Dentz (Bluetooth maintainer) signed off. No related
-commits from this author found in-tree.
+### Step 3.4: Author Context
+**Record:** Christoph Hellwig is a core block/VFS developer. Recent qnx4
+work in tree is mostly from other authors (VFS conversions). This is a
+targeted oversight fix, not a refactor.
 
 ### Step 3.5: Dependencies
-**Record:**
-- Requires `HCI_QUIRK_BROKEN_EXT_SCAN` — present (ancestor
-  `392fca352c7a9` confirmed in tree).
-- Requires `CHIP_ID_8761B` — present (ancestor `04896832c94aa` confirmed
-  in tree).
-- Requires `btrtl_set_quirks()` call path — present via
-  `btusb_setup_realtek()` → `btrtl_setup_realtek()`.
-- **Standalone:** Yes, applies without other patches.
+**Record:** Standalone. No series prerequisites. Applies to existing
+`qnx4_fill_super()` + `get_tree_bdev()` mount API already in 6.18.44.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:**
-- `b4 shazam "Bluetooth: btrtl: fix RTL8761B/BU broken LE extended
-  scan"` — not found on lore.
-- `b4 shazam "fix RTL8761B"` / `"BROKEN_EXT_SCAN"` — not found.
-- No `.mbx` file for this patch in the workspace.
-- **UNVERIFIED:** Full review thread — patch may be too recent for lore
-  indexing.
+### Step 4.1: Original Discussion
+**Record:** `b4 dig` could not be run — commit hash not in this tree.
+Link fetch to lore.kernel.org blocked (Anubis bot protection).
+patch.msgid.link timed out. Patch is 4/N per Link tag; content matches a
+focused bug fix.
 
 ### Step 4.2: Reviewers
-**Record:** Could not retrieve via `b4 dig -w` (commit not in local git
-history). Maintainer SOB from Luiz von Dentz confirmed in commit
-message.
+**Record:** Acked-by Anders Larsen (qnx4 maintainer). Merged by VFS
+maintainer Christian Brauner. Strong subsystem review signal despite
+incomplete lore access.
 
-### Step 4.3: Bug report
-**Record:** No external bug report links. Author tested on RTL8761BU
-(USB ID 0bda:a728). That specific VID/PID is not yet in `btusb.c` device
-table in this tree, but many other 8761B/BU IDs are (0x0bda:0x8771,
-0x2b89:0x8761, etc.) — all use the same `BTUSB_REALTEK` →
-`btrtl_setup_realtek()` path.
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link. Bug identified by
+code analysis in patch series (hch). Mechanism verified locally (see
+Phase 2).
 
-### Step 4.4: Related patches
-**Record:** No multi-patch series identified. Precedent: `392fca352c7a9`
-(BCM4377), `7c2b2d2d0cb65` (Actions Semi ATS2851) use the same quirk for
-the same class of bug.
+### Step 4.4: Related Patches
+**Record:** Part of a multi-patch series (patch 4). This hunk is self-
+contained; no evidence other series patches are required for this fix.
 
-### Step 4.5: Stable list history
-**Record:** No stable-list discussion found (lore fetch blocked by bot
-protection for general search).
+### Step 4.5: Stable List History
+**Record:** Not searched (lore inaccessible). Absence of `Cc: stable` is
+expected per instructions.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `btrtl_set_quirks()` — only function modified.
+### Step 5.1: Key Functions
+**Record:** `qnx4_fill_super()`, `sb_set_blocksize()`, `sb_bread()` →
+`__bread_gfp()` → `bdev_getblk()` → `folio_alloc_buffers()` →
+`folio_set_bh()`.
 
 ### Step 5.2: Callers
 **Record:**
-- `btrtl_setup_realtek()` (line 1359) — called from
-  `btusb_setup_realtek()` for all Realtek USB devices.
-- `hci_h5.c` (line 946) — UART Realtek path.
-- Impact: all RTL8761B/BU devices (USB and UART) during probe/setup.
+- `qnx4_fill_super()` ← `qnx4_get_tree()` ← `get_tree_bdev()` ← mount
+  syscall path.
+- Triggered when a user mounts a qnx4 filesystem (`mount -t qnx4 ...`).
 
 ### Step 5.3: Callees
-**Record:** `hci_set_quirks()` — standard HCI quirk registration, no
-side effects beyond flag setting.
+**Record:** `sb_set_blocksize()` → `set_blocksize()` →
+`bdev_validate_blocksize()`. Failure when requested size < device
+logical block size or other validation failure.
 
 ### Step 5.4: Reachability
-**Record:**
-- Trigger: any BLE scan attempt while a connection is active on RTL8761B
-  hardware — common BlueZ usage pattern.
-- Reachable from userspace via normal Bluetooth scanning/discovery
-  operations.
-- Not config-gated beyond `CONFIG_BT` + Realtek hardware.
+**Record:** Reachable from userspace via `mount(2)` when
+`CONFIG_QNX4FS_FS` is enabled. Unprivileged users can attempt mount
+(will fail with permissions or succeed if allowed); kernel panic is not
+an acceptable failure mode.
 
-### Step 5.5: Similar patterns
-**Record:** Identical quirk already used in:
-- `drivers/bluetooth/hci_bcm4377.c:2394`
-- `drivers/bluetooth/btusb.c:4297` (Actions Semi)
+### Step 5.5: Similar Patterns
+**Record:** minix (`fs/minix/inode.c:221`), qnx6
+(`fs/qnx6/inode.c:312`), romfs, ufs, udf, hfs, gfs2, fuse all check
+`sb_set_blocksize()` return value. qnx4 is the outlier.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** `btrtl_set_quirks()` in this tree lacks the
-`CHIP_ID_8761B` / `HCI_QUIRK_BROKEN_EXT_SCAN` case. RTL8761B support and
-extended-scan infrastructure are both present. Bug is live.
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** `fs/qnx4/inode.c:205`:
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Insertion point (`if
-(!btrtl_dev->ic_info) return;` followed by new switch, before existing
-`lmp_subver` switch) matches current file at lines 1331–1334 exactly.
-Recent quirk-bitmap migration (`6851a0c228fc0`) already uses
-`hci_set_quirk()` — compatible.
+```205:205:fs/qnx4/inode.c
+        sb_set_blocksize(s, QNX4_BLOCK_SIZE);
+```
 
-### Step 6.3: Related fixes already present?
-**Record:** No existing fix for 8761B extended scan. Quirk exists for
-other vendors only.
+`QNX4_BLOCK_SIZE` is 512 (`include/uapi/linux/qnx4_fs.h:30`).
+`folio_set_bh()` BUG exists in this tree. Bug has been latent since
+2005; panic path active since folio/buffer conversion (~2023).
+
+### Step 6.2: Backport Complications
+**Record:** **Clean apply expected.** Only contextual difference: tree
+uses `kzalloc(sizeof(...), GFP_KERNEL)` vs. upstream `kzalloc_obj()`.
+The two-line hunk applies directly.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** No equivalent fix in this tree. qnx6 and minix already have
+the check.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/bluetooth/btrtl.c` — **IMPORTANT** (Bluetooth
-subsystem, Realtek USB dongles widely deployed on
-desktops/laptops/embedded).
+### Step 7.1: Subsystem Criticality
+**Record:** **Filesystem driver (qnx4)** — PERIPHERAL in reach (niche,
+read-only FS), but mount path touches core buffer-head infrastructure
+shared by many filesystems.
 
-### Step 7.2: Activity
-**Record:** Actively maintained — 5 commits to `btrtl.c` in recent
-history (firmware validation, leak fix, quirk migration).
+### Step 7.2: Subsystem Activity
+**Record:** Low activity (`git log --oneline -20 -- fs/qnx4/` shows
+mostly VFS API conversions). Mature, rarely touched code — classic
+stable-backport profile.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** Users of RTL8761B/BU Bluetooth adapters (USB dongles like
-ASUS BT500, TP-Link UB500, Edimax BT-8500, and many 0x0bda:0x8771
-variants). Driver-specific, but hardware is very common.
+### Step 8.1: Who Is Affected
+**Record:** Users who enable `CONFIG_QNX4FS_FS` and mount qnx4 on block
+devices where `sb_set_blocksize(512)` fails — notably 4K-logical-sector
+devices where `512 < bdev_logical_block_size(bdev)`.
 
-### Step 8.2: Trigger conditions
+### Step 8.2: Trigger Conditions
 **Record:**
-- BLE connection active + scanning/discovery attempted.
-- Common in desktop/laptop Bluetooth usage with BlueZ.
-- Unprivileged users can trigger via normal Bluetooth operations.
+- **Common on modern storage:** 4K logical block size is widespread.
+- **Userspace trigger:** `mount -t qnx4` on incompatible block device.
+- **Not a race:** Deterministic on mount when blocksize setup fails.
 
-### Step 8.3: Failure mode severity
-**Record:**
-- **Failure:** Extended scan HCI commands fail with -EBUSY; continuous
-  dmesg errors; BLE scanning broken or degraded while connected.
-- **Severity: MEDIUM** — functional breakage and log spam, not kernel
-  crash/panic/data corruption. Real user impact on common hardware.
+### Step 8.3: Failure Mode Severity
+**Record:** **CRITICAL** — `BUG_ON()` kernel panic during mount. Mount
+failure should return `-EINVAL` to userspace, not crash the kernel.
 
-### Step 8.4: Risk-benefit
+### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** HIGH for affected hardware users — restores working BLE
-  scan while connected.
-- **Risk:** VERY LOW — 13-line quirk for one chip ID, established
-  pattern.
-- **Ratio:** Strongly favorable.
+- **Benefit:** HIGH — prevents kernel panic; converts crash to clean
+  mount failure.
+- **Risk:** VERY LOW — 2-line check, established pattern, no behavior
+  change on success path.
+- **Ratio:** Strongly favors backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real hardware bug on common Realtek BT chip
-- Hardware quirk/workaround — standard stable exception category
-- Small (13 lines), surgical, obviously correct
-- Uses existing quirk API — no new features
-- Maintainer (Luiz von Dentz) signed off
-- Author tested on real RTL8761BU hardware
-- Bug present since 8761B support (2020); affects this 6.18.44 tree
-- Prerequisites all present; clean apply expected
-- Same fix pattern already accepted for BCM4377 and Actions Semi
+- Real kernel panic (`BUG_ON`) on mount error path
+- Bug verified in 6.18.44 tree
+- Tiny, obviously correct fix matching minix/qnx6/romfs
+- Acked by qnx4 maintainer; merged by VFS maintainer
+- Error-path cleanup verified via `deactivate_locked_super()` →
+  `qnx4_kill_sb()`
+- Long-standing oversight (since 2005); panic path since folio
+  conversion (~2023)
 
 **AGAINST backport:**
-- Not a crash/security/data-corruption issue (severity MEDIUM, not
-  CRITICAL)
-- No syzbot or multi-user reports
-- Lore discussion not found (may be very recent patch)
+- qnx4 is niche (CONFIG_QNX4FS_FS, read-only legacy FS)
+- No syzbot/user crash report attached
+- Lore discussion not accessible for stable nomination confirmation
 
-**UNRESOLVED:**
-- Full mailing-list review thread not retrieved
-- 0bda:a728 test device ID not yet in btusb table (but fix is chip-ID
-  based, not USB-ID based)
+**Unresolved:**
+- Full lore thread content unavailable (bot protection / timeout)
+- Exact mainline commit SHA not in this tree
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — established quirk pattern;
-   author tested on RTL8761BU; maintainer SOB.
-2. Fixes a real bug affecting users? **PASS** — broken BLE scanning +
-   dmesg errors on RTL8761B/BU.
-3. Important issue? **PASS (MEDIUM)** — functional breakage on common
-   hardware, not crash/corruption.
-4. Small and contained? **PASS** — 13 lines, one file, one chip ID.
-5. No new features or APIs? **PASS** — uses existing
-   `HCI_QUIRK_BROKEN_EXT_SCAN`.
-6. Can apply to local tree? **PASS** — prerequisites present, insertion
-   point matches.
+Neither unresolved item affects the technical verdict.
 
-### Step 9.3: Exception category
-**Record:** **Hardware quirk/workaround** — controller falsely
-advertises HCI 5.1 extended scan capability; quirk forces fallback to
-supported legacy commands.
+### Step 9.2: Stable Rules Checklist
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — matches minix/qnx6;
+maintainer ack |
+| 2. Fixes a real user-affecting bug? | **PASS** — kernel panic on mount
+|
+| 3. Important issue? | **PASS** — CRITICAL (BUG_ON panic) |
+| 4. Small and contained? | **PASS** — 2 lines, one function |
+| 5. No new features/APIs? | **PASS** |
+| 6. Can apply to local tree? | **PASS** — clean apply to 6.18.44 |
 
-### Step 9.4: Decision rationale
-This is a textbook stable hardware-quirk fix: Realtek RTL8761B/BU
-firmware lies about extended scan support, causing repeated HCI command
-failures during normal BlueZ operation. The fix is minimal, follows an
-established pattern already in this tree for other vendors, touches only
-affected hardware, and restores correct behavior. While not a crash-
-level bug, it causes real functional breakage on widely deployed USB
-Bluetooth dongles — exactly the kind of fix stable trees carry for
-existing drivers.
+### Step 9.3: Exception Categories
+**Record:** N/A — standard bug fix, not device-ID/quirk/build/doc
+exception.
+
+### Step 9.4: Decision Rationale
+This commit closes a long-standing gap where qnx4 ignored
+`sb_set_blocksize()` failure while sibling filesystems (minix, qnx6) did
+not. On devices where setting 512-byte blocks fails, mount proceeds with
+`s_blocksize == 0`, and the first `sb_bread()` triggers `BUG_ON()` in
+`folio_set_bh()` — a kernel panic that should be a userspace-visible
+`-EINVAL`. The fix is minimal, well-precedented, and low-risk. qnx4's
+niche status reduces blast radius but does not reduce severity when
+triggered.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message: subject, body, SOBs; no
-  Fixes/Reported-by/Link tags
-- **[Phase 1]** Confirmed opcode note: 0x2041=PARAMS, 0x2042=ENABLE in
-  `include/net/bluetooth/hci.h`
-- **[Phase 2]** Diff: +13 lines in `btrtl_set_quirks()`, one file
-- **[Phase 2]** Read `use_ext_scan()` macro at
-  `include/net/bluetooth/hci_core.h:2011-2013`
-- **[Phase 3]** `git describe HEAD`: v6.18.44-1-g2736c32da98b9
-- **[Phase 3]** `git merge-base --is-ancestor 392fca352c7a9 HEAD`: quirk
-  in tree
-- **[Phase 3]** `git merge-base --is-ancestor 04896832c94aa HEAD`: 8761B
-  support in tree
-- **[Phase 3]** `git blame` on lines 1331-1344: structure unchanged, no
-  8761B quirk present
-- **[Phase 3]** `git log --grep="broken LE extended scan"`: no match
-  (commit not yet merged)
-- **[Phase 4]** `b4 shazam`: patch not found on lore
-- **[Phase 4]** WebFetch lore.kernel.org: blocked by bot protection
-- **[Phase 5]** Grep callers: `btrtl_setup_realtek()` at btrtl.c:1359,
-  `btusb_setup_realtek()` at btusb.c:2709
-- **[Phase 5]** Grep `HCI_QUIRK_BROKEN_EXT_SCAN`: hci_bcm4377.c, btusb.c
-  (Actions Semi)
-- **[Phase 6]** Read current `btrtl_set_quirks()`: missing 8761B quirk
-  case (lines 1290-1345)
-- **[Phase 6]** Verified `CHIP_ID_8761B` enum and firmware mapping at
-  btrtl.c:68,658
-- **[Phase 6]** Verified 8761BU IC_INFO entry at btrtl.c:225-231
-- **[Phase 8]** Grep btusb device table: multiple 8761B/BU USB IDs
-  present (0x8771, 0x8761, etc.)
-- **UNVERIFIED:** Full lore review thread and explicit stable nomination
-  from reviewers
+- **[Phase 1]** Parsed commit message and tags from user-provided
+  content
+- **[Phase 1]** Identified hidden bug fix (panic prevention on mount
+  failure)
+- **[Phase 2]** Read diff: 2-line change in `qnx4_fill_super()`
+- **[Phase 2]** Read `sb_set_blocksize()` at `block/bdev.c:220-229` —
+  returns 0 on failure
+- **[Phase 2]** Read `bdev_validate_blocksize()` at
+  `block/bdev.c:171-172` — rejects size < logical block size
+- **[Phase 2]** Read `folio_alloc_buffers()` + `folio_set_bh()` at
+  `fs/buffer.c:932-946, 1582`
+- **[Phase 2]** Simulated `size=0` path — confirms `BUG_ON` trigger
+  (`offset=4096, triggers BUG=True`)
+- **[Phase 3]** `git describe HEAD` → `v6.18.44`
+- **[Phase 3]** `git blame -L 205,205 fs/qnx4/inode.c` → `1da177e4c3f41`
+  (2005)
+- **[Phase 3]** `git merge-base --is-ancestor 465e5e6a1698f HEAD` →
+  folio_set_bh in tree
+- **[Phase 3]** `git log --grep='handle set_blocksize failures'` → empty
+  (not yet applied)
+- **[Phase 3]** Verified minix check since 2005
+  (`fs/minix/inode.c:221-222`)
+- **[Phase 3]** Verified qnx6 check (`fs/qnx6/inode.c:312-314`)
+- **[Phase 4]** `b4 dig` — failed (no commit hash in tree)
+- **[Phase 4]** WebFetch lore.kernel.org — blocked (Anubis)
+- **[Phase 4]** WebFetch patch.msgid.link — timed out
+- **[Phase 5]** Traced mount call chain: `qnx4_get_tree` →
+  `get_tree_bdev` → `qnx4_fill_super`
+- **[Phase 5]** Confirmed peer filesystems check `sb_set_blocksize`
+  return value
+- **[Phase 6]** Confirmed buggy line at `fs/qnx4/inode.c:205` in 6.18.44
+- **[Phase 6]** `QNX4_BLOCK_SIZE = 0x200` (512) in
+  `include/uapi/linux/qnx4_fs.h:30`
+- **[Phase 6]** Verified error cleanup: `get_tree_bdev` →
+  `deactivate_locked_super` → `qnx4_kill_sb` (`fs/super.c:1705-1708`,
+  `fs/qnx4/inode.c:257-264`)
+- **[Phase 8]** Failure mode: BUG_ON kernel panic, severity CRITICAL
 
-**YES**The background searches finished and didn’t change the
-conclusion.
+**YES**The background history checks finished and match the earlier
+analysis:
 
-**Task 1 (commit search / b4 dig):** The commit isn’t in this tree yet.
-`b4 dig` on HEAD pointed at an unrelated patch, and `git log` had no
-match for “broken LE extended scan” or “8761B/BU”.
+- **`git log --grep='qnx4: handle set_blocksize failures'`** — no match
+  in this tree; the fix isn’t applied yet in **6.18.44**.
+- **`git log -S 'sb_set_blocksize(s, QNX4_BLOCK_SIZE)' --
+  fs/qnx4/inode.c`** — the unchecked call goes back to
+  **`1da177e4c3f41`** (Linux 2.6.12-rc2), so this is a long-standing
+  gap, not a recent regression.
 
-**Task 2 (author / lore):** Alexej Sidorenko and Sidorenko don’t show up
-as btrtl contributors here. `b4 dig` failed due to wrong syntax, and `b4
-shazam` later also found no lore thread for this patch — likely too new
-or not indexed yet.
+That supports the **YES** backport verdict: the bug is present here, the
+fix is small and well-precedented (minix/qnx6 already do this), and it
+prevents a mount-time `BUG_ON()` panic when `sb_set_blocksize(512)`
+fails.
 
-The stable backport verdict stands: **YES** for 6.18.44 — a small
-hardware quirk fix for RTL8761B/BU that restores working BLE scan while
-connected.
+ fs/qnx4/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- drivers/bluetooth/btrtl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index a62eae7276d64..cb1c321910e2a 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -1331,6 +1331,19 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
- 	if (!btrtl_dev->ic_info)
- 		return;
+diff --git a/fs/qnx4/inode.c b/fs/qnx4/inode.c
+index e399e2dd3a124..7a15ad20d98a2 100644
+--- a/fs/qnx4/inode.c
++++ b/fs/qnx4/inode.c
+@@ -202,7 +202,8 @@ static int qnx4_fill_super(struct super_block *s, struct fs_context *fc)
+ 		return -ENOMEM;
+ 	s->s_fs_info = qs;
  
-+	switch (btrtl_dev->project_id) {
-+	case CHIP_ID_8761B:
-+		/* RTL8761B/BU reports HCI version 5.1 but does not support
-+		 * the LE Extended Scan commands (Opcode 0x2042), causing
-+		 * repeated -EBUSY failures when BlueZ attempts extended
-+		 * scanning while a connection is active.
-+		 */
-+		hci_set_quirk(hdev, HCI_QUIRK_BROKEN_EXT_SCAN);
-+		break;
-+	default:
-+		break;
-+	}
-+
- 	switch (btrtl_dev->ic_info->lmp_subver) {
- 	case RTL_ROM_LMP_8703B:
- 		/* 8723CS reports two pages for local ext features,
+-	sb_set_blocksize(s, QNX4_BLOCK_SIZE);
++	if (!sb_set_blocksize(s, QNX4_BLOCK_SIZE))
++		return -EINVAL;
+ 
+ 	s->s_op = &qnx4_sops;
+ 	s->s_magic = QNX4_SUPER_MAGIC;
 -- 
 2.53.0
 
