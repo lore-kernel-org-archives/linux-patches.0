@@ -1,43 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFD0568FA4;
-	Mon, 31 Aug 2026 13:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED95566C58;
+	Mon, 31 Aug 2026 13:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184094; cv=none; b=mSQv1ElBWrH9HC12UuyugharZ+9Weunob3fgpYVuhHv+RSjatimoI1KuNFjI3+DnV5MElm4YNYbYVDUl8HE1xD9f0F/qZRoDJHVNCaLPQJggR4ZeoUH2CihQ4iNLjBv8f8BrHoy2YPPyggnU0dQrs1X83DTa0mQGnqA42TpM4UM=
+	t=1788184095; cv=none; b=YMfMTUll878OUYTAEcNqj+aeCVCX4vPl3yrC8UgUdnPgf15ncMXZ2p2gJWUZqJS+FPpnRlXAaCKbGvuUMavmXneXE5xP4r+35+s0Q3++muW+HGOmaoendXPdJUT2aW2lO0Yf+vnFORc4x52EcAebImTnVTSsuPHXniXM6loRhQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184094; c=relaxed/simple;
-	bh=TR5nw2zJizGYW0eTwl/VD5L4x/nEO5DtrUqCgjiSo8w=;
+	s=arc-20240116; t=1788184095; c=relaxed/simple;
+	bh=d8iWgnIp6yXd9PebB7tlbj4DpHyFhBfco6h6XzfC+NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tXCqnfhlFccNB2l3U6dZJJ0ZoefFtXDQQ90xrVfmqU2ZW937vN/XE4MxZ7uOJRjeh6ZA2TIHWcRWa8jdZh02ZP24VyQJLetYQu7eKuidPfk3FPY62pAU3NqQ4/yMPPTpZ4bonXf2eRIGimZ3XdMNcjXymqiXImTewUQyP+8f+xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oEitBTjY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gXr8cPVJ3U/hxlP104UvYpzgRd3gBkSO0yFDEDLy5oPzDf4vKBSihexlN29P+xRzwcFinLU7vlvGxCblYsohaQldMmx5KQJoAquVNg6Ma/bTsBHnRlMCsE5QSPn4RUiGU1FjzolZBAbGeFuC6xgoWw0grD2U7yF+c29T9rtGeBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JxtE7QXc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oEitBTjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D671F00ACF;
-	Mon, 31 Aug 2026 13:48:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JxtE7QXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231001F00A3F;
+	Mon, 31 Aug 2026 13:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184089;
-	bh=+T1nwtPsIhpp0sCHR+ziTp1gkYJ3/AT5ZTsXnMpCnG4=;
+	s=k20260515; t=1788184092;
+	bh=gcUDc/YMYu8tt5GLt8IMZ7NcJOBB64p0HHW21MoPpMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oEitBTjYq7osAvx28ki3hLL5HuFQssozLf+iGc8YvmBWpnD+AcP7jSi/w0tuW59cC
-	 f/kT/JFgfx8qRLqvN65bBwM/0PyD1PuHaVsHAwxTnUAt5bdX6OEK7eQgWUPKoETR8J
-	 0T9pMsjSpychHtaiEVEVIgfG6k4u1GgOa5f8CxhmOtUY7Us/ViE+SvLtzMNwl/il+3
-	 DwYxb1JMc6DcLL6ADVNEmaBFr8G3xgHwDr3e/I9EDUQMxdOkeEZkiOaT9/WMq8N12c
-	 cdeVkzUlICKxjxSyucOY58wGONmtGs+qhfgp7wwERz41QnHwK8P6DFZR5rUek1UL8o
-	 GG/7YdMc6n2zQ==
+	b=JxtE7QXcOJqLWnhayzvKBTUstjKC4xbQprkAj3yX55nQSYZtGi11CqvOCebwSMOqT
+	 mjAM1aaQIpWj5/n0iO3GHKDePoIJXzolt9Qcw2q8GRvh37I3tacLSllHqG2LWFLRK1
+	 pXeoE58LckANFCHLyL3VZNbC2Dctxz3s337YNlaQ2W3Cqnhw7FID2Hh4jIMLnEphV6
+	 iw2Msyz6WwKXbW8fQLP+Cr/n77esGzQ2UMbH4eVRm4ITUBd5McsAKlJkvH+ntG1jOj
+	 Ar+mEToZRJdJD+oVTg1kc1mBzvqUsYWR2ego9+OhtvHsQI/Gtcv4nOvaciuZfaZAtA
+	 td+HbQLz+7cfQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexandre Courbot <acourbot@nvidia.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+Cc: Alice Mikityanska <alice@isovalent.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	nsc@kernel.org,
-	linux-kbuild@vger.kernel.org,
+	jhs@mojatatu.com,
+	jiri@resnulli.us,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] scripts: modpost: detect and report truncated buf_printf() output
-Date: Mon, 31 Aug 2026 09:28:32 -0400
-Message-ID: <20260831133314.4125787-484-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] net/sched: act_csum: don't mangle UDP tunnel GSO packets
+Date: Mon, 31 Aug 2026 09:28:34 -0400
+Message-ID: <20260831133314.4125787-486-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,78 +59,75 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit d7231d8cb262b1e350c00271bf53d54414b4f3b1 ]
+[ Upstream commit 9bcb30b389ec5888590cb6ec58c7a3b80fe49a11 ]
 
-buf_printf() uses a fixed-size stack buffer. vsnprintf() returns the
-number of bytes that *would* have been written to that buffer, which can
-be larger than the size of said buffer if the formatted string is too
-long.
+Similar to commit add641e7dee3 ("sched: act_csum: don't mangle TCP and
+UDP GSO packets"), UDP tunnel GSO packets going through act_csum
+shouldn't have their checksum calculated at this point, because it will
+be done after segmentation. Setting the checksum in act_csum modifies
+skb->ip_summed and prevents inner IP csum offload from kicking in,
+resulting in a packet with a bad checksum.
 
-The problem is that whenever this happens buf_printf() currently passes
-this length, unchecked, to buf_write(), which silently reads past the
-stack buffer and copies invalid data into the output buffer.
+Add UDP tunnel GSO packets to the exceptions, and also add UDP GSO
+(SKB_GSO_UDP_L4), as the same logic as in the commit mentioned above
+applies to UDP GSO too.
 
-Fix this by detecting vsnprintf() failures and truncations before
-appending to the output buffer, and report a fatal error instead of
-producing corrupt symbol names.
-
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Link: https://patch.msgid.link/20260527-nova-exports-v2-1-06de4c556d55@nvidia.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260611192955.604661-2-alice.kernel@fastmail.im
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `scripts: modpost: detect and report
-truncated buf_printf() output`
+# Stable Backport Analysis: `net/sched: act_csum: don't mangle UDP
+tunnel GSO packets`
 
-**Local tree:** `v6.18.44` (6.18.y stable), `VERSION = 6`, `PATCHLEVEL =
-18`, `SUBLEVEL = 44`
+**Local tree:** Linux **6.18.44** (`git describe HEAD` →
+`v6.18.44-1-g2736c32da98b9`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[scripts/modpost]` `[detect/report]` — Detect and report
-when `buf_printf()` output would exceed its fixed stack buffer, instead
-of silently corrupting output.
+### Step 1.1: Subject Line
+**Record:** `[net/sched] [act_csum] [don't mangle] — Extend GSO skip
+logic in act_csum for UDP tunnel and UDP L4 GSO packets`
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Alexandre Courbot `<acourbot@nvidia.com>` (author)
-- **Link:** `https://patch.msgid.link/20260527-nova-
-  exports-v2-1-06de4c556d55@nvidia.com` (ties fix to nova-exports
-  development)
-- **Signed-off-by:** Nathan Chancellor `<nathan@kernel.org>` (kbuild
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or syzbot tags
-- Notable: kbuild maintainer sign-off; link references nova GPU export
-  work
+- **Reviewed-by:** Davide Caratti `<dcaratti@redhat.com>` (author of the
+  original 2017 act_csum GSO fix)
+- **Reviewed-by:** Willem de Bruijn `<willemb@google.com>` (UDP GSO
+  subsystem expert)
+- **Link:** https://patch.msgid.link/20260611192955.604661-2-
+  alice.kernel@fastmail.im
+- **Signed-off-by:** Alice Mikityanska, Paolo Abeni
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable
+- Notable: Two strong subsystem reviewers; no syzbot/user bug report
 
-### Step 1.3: Body analysis
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** `buf_printf()` uses a 500-byte stack buffer (`SZ`).
-  `vsnprintf()` returns the length that *would* have been written, which
-  can exceed `SZ` on truncation.
-- **Symptom:** That unchecked length is passed to `buf_write()` →
-  `strncpy()` reads past the stack buffer and copies garbage into
-  generated module metadata.
-- **Failure mode:** Corrupt symbol names in `.mod.c` / export tables;
-  host stack buffer over-read (UB).
-- **Fix approach:** Check `len < 0` and `len >= SZ`; call `fatal()`
-  instead of appending.
-- **Root cause:** Missing validation of `vsnprintf()` return value
-  before using it as a copy length.
+- **Bug:** `act_csum` prematurely computes checksums on UDP tunnel GSO
+  and UDP L4 GSO skbs, setting `skb->ip_summed = CHECKSUM_NONE`
+- **Symptom:** Inner IP checksum offload does not run after segmentation
+  → **packets leave with bad checksums**
+- **Root cause:** Only `SKB_GSO_UDP` (UFO) was exempted;
+  `SKB_GSO_UDP_L4`, `SKB_GSO_UDP_TUNNEL`, and `SKB_GSO_UDP_TUNNEL_CSUM`
+  were not
+- **Reference:** Extends logic from `add641e7dee3` ("sched: act_csum:
+  don't mangle TCP and UDP GSO packets", 2017)
+- **Version info:** None explicit; bug exists wherever newer GSO types
+  are used with act_csum
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — clearly a real bug fix despite “detect and report”
-wording. Prevents stack over-read and silent corruption of build
-artifacts.
+### Step 1.4: Hidden Bug Fix?
+**Record:** Not disguised — this is an explicit correctness fix for
+incomplete GSO exemption coverage. The early-return pattern is identical
+to the established 2017 fix.
 
 ---
 
@@ -132,36 +135,40 @@ artifacts.
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `scripts/mod/modpost.c` (+9 / -1 lines)
-- **Function:** `buf_printf()`
-- **Scope:** Single-file, surgical fix in one helper
+- **File:** `net/sched/act_csum.c` only (+8/-4 lines across 2 hunks)
+- **Functions:** `tcf_csum_ipv4_udp()`, `tcf_csum_ipv6_udp()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code flow change
+### Step 2.2: Code Flow Change
 **Record:**
-- **Before:** `vsnprintf(tmp, SZ, ...)` → immediately `buf_write(buf,
-  tmp, len)` with unchecked `len`.
-- **After:** `va_end()` first; if `len < 0` → `perror` + `exit(1)`; if
-  `len >= SZ` → `fatal()`; only then `buf_write(buf, tmp, len)`.
-- **Path affected:** Every `buf_printf()` call during modpost (50 call
-  sites in this tree).
+- **Hunk 1 (`tcf_csum_ipv4_udp`, ~line 262):** Before: skip only
+  `SKB_GSO_UDP`. After: skip `SKB_GSO_UDP | SKB_GSO_UDP_L4 |
+  SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM`
+- **Hunk 2 (`tcf_csum_ipv6_udp`, ~line 318):** Identical change for IPv6
+  path
+- **Path affected:** TX path through tc `act_csum` on GSO UDP/tunnel
+  packets — normal datapath for cloud/tunnel workloads
 
-### Step 2.3: Bug mechanism
+### Step 2.3: Bug Mechanism
 **Record:**
-- **Category:** Buffer over-read / out-of-bounds read (memory safety in
-  host build tool).
-- **Mechanism:** When formatted output needs ≥500 bytes, `vsnprintf()`
-  writes at most 499 chars + NUL into `tmp[500]`, but returns the full
-  required length (e.g. 639). `buf_write()` → `strncpy(dst, tmp, len)`
-  then reads `len` bytes from `tmp`, reading past the stack buffer into
-  adjacent stack memory and copying garbage into the output buffer.
+- **Category:** Logic/correctness fix — premature checksum state
+  mutation on GSO skbs
+- **Mechanism:** Without early return, act_csum zeroes UDP header
+  checksum, computes partial checksum, and sets `skb->ip_summed =
+  CHECKSUM_NONE` (lines 305, 355 in current tree). For GSO packets,
+  checksums must be computed **after** segmentation. Premature
+  `CHECKSUM_NONE` blocks inner IP checksum offload during tunnel GSO
+  segmentation (`skb_udp_tunnel_segment()` path in
+  `net/ipv4/udp_offload.c`)
 
-### Step 2.4: Fix quality
+### Step 2.4: Fix Quality
 **Record:**
-- Obviously correct standard `vsnprintf()` truncation handling.
-- Minimal change; uses existing `fatal()` infrastructure.
-- Regression risk: very low — only affects cases that were already
-  broken; changes silent corruption to explicit build failure.
-- No API or behavioral changes to the running kernel.
+- **Obviously correct:** Mirrors the 2017 TCP/UDP GSO exemption pattern
+  and matches how `udp_gso_segment()` itself distinguishes GSO types
+  (see `net/ipv4/udp_offload.c:647-655`)
+- **Minimal:** Only widens the bitmask in two identical checks
+- **Regression risk:** Very low — only adds more GSO types to an
+  existing skip list; cannot affect non-GSO packets
 
 ---
 
@@ -169,310 +176,298 @@ artifacts.
 
 ### Step 3.1: Blame
 **Record:**
-- `buf_printf()` / `buf_write()` core logic dates to 2005 (Linus
-  Torvalds).
-- `buf_write(buf, tmp, len)` call added in `7670f023aabd9` (Mar 2006,
-  “fix buffer overflow in modpost” — fixed heap allocation sizing, not
-  this `vsnprintf` return-value bug).
-- Buggy pattern present in this tree since ~2006.
+- Buggy `SKB_GSO_UDP`-only check introduced by `0c19f846d582af` (Willem
+  de Bruijn, Nov 2017) — "net: accept UFO datagrams from tuntap and
+  packet"
+- Original GSO exemption for TCP/UDP: `add641e7dee3` (Davide Caratti,
+  Mar 2017)
+- Gap: `SKB_GSO_UDP_TUNNEL` existed since 2014 (`0f4f4ffa7b7c3`);
+  `SKB_GSO_UDP_L4` since 2018 (`ee80d1ebe5ba7`) — never added to
+  act_csum exemptions
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag in commit message.
+### Step 3.2: Fixes: Tag
+**Record:** No Fixes: tag present. N/A.
 
-### Step 3.3: Related file history
-**Record:** Related prior fixes in this file:
-- `7670f023aabd9` (2006): modpost heap buffer overflow on long paths
-- `666ab414fe14e` (2007): stack overflow from fixed `fname[SZ]` buffer
-- `5cfb203a304de` (2015): abort on symbols ≥ `MODULE_NAME_LEN` (~56) in
-  `add_versions()` only
-- `15a28c7c72917`: snprintf safety elsewhere in modpost
+### Step 3.3: Related File History
+**Record:**
+- Recent act_csum changes in this tree: VLAN validation
+  (`ec4930979b3f7`), RCU dump fix (`ba9dc9c14038b`), NULL deref fixes —
+  unrelated
+- No other commit addresses UDP tunnel GSO in act_csum (`git log
+  --grep="act_csum.*GSO"` returns only `add641e7dee3`)
+- Standalone fix, not part of a series
 
-The 2015 check does **not** cover `add_exported_symbols()` KSYMTAB lines
-or extended-modversion name tables.
-
-### Step 3.4: Author context
-**Record:** Alexandre Courbot has minimal modpost history in this tree.
-Nathan Chancellor is an active kbuild contributor (`688c1b491c35d
-modpost: Declare extra_warn with unused attribute`, etc.).
+### Step 3.4: Author Context
+**Record:** Alice Mikityanska (Isovalent/Cilium) — no prior act_csum
+commits in this tree. Reviewers are the relevant experts.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone; no series dependencies. Commit hash
-`0d2f1f09019ba` is **not** in this tree (candidate for backport).
-Applies cleanly to current `buf_printf()`.
+**Record:**
+- Requires `add641e7dee3` — **present** in this tree
+- Requires `SKB_GSO_UDP_L4`, `SKB_GSO_UDP_TUNNEL`,
+  `SKB_GSO_UDP_TUNNEL_CSUM` in `include/linux/skbuff.h` — **all
+  present** (lines 691-705)
+- Applies standalone with no prerequisite commits
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c 0d2f1f09019ba` failed (“Cannot find a commit
-matching”). Lore/patch.msgid.link returned 403 (bot protection). Could
-not retrieve full thread.
+### Step 4.1: Original Discussion
+**Record:** `b4 dig` could not match the commit (not yet merged in this
+tree). Lore.kernel.org and patch.msgid.link blocked by bot protection.
+**UNVERIFIED:** Full mailing list thread content.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` not possible without commit match. Nathan
-Chancellor sign-off verified from commit message.
+**Record:** Commit message lists Davide Caratti and Willem de Bruijn as
+Reviewed-by — both are authoritative for tc actions and UDP GSO
+respectively.
 
-### Step 4.3: Bug report
-**Record:** No syzbot/bugzilla report. Link subject `nova-exports-v2`
-suggests discovery during NVIDIA nova GPU export development (May 2026).
+### Step 4.3: Bug Report
+**Record:** No external bug report, syzbot, or user Reported-by. Bug
+identified by code analysis extending the 2017 fix.
 
-### Step 4.4: Series context
-**Record:** Appears standalone; likely discovered while building nova
-export tables. No other patches required.
+### Step 4.4: Related Patches
+**Record:** Single-patch fix extending `add641e7dee3`. No series
+dependencies.
 
-### Step 4.5: Stable list
-**Record:** Could not search lore (403). No evidence of prior stable
-discussion.
+### Step 4.5: Stable List History
+**Record:** **UNVERIFIED** — could not search lore.kernel.org/stable due
+to bot protection.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `buf_printf()`, `buf_write()` (called from ~50 sites:
-`add_header`, `add_exported_symbols`, `add_versions`,
-`add_extended_versions`, `add_depends`, `write_mod_c_file`, symvers
-output, etc.)
+### Step 5.1: Key Functions
+**Record:** `tcf_csum_ipv4_udp()`, `tcf_csum_ipv6_udp()`, called from
+`tcf_csum_ipv4()` / `tcf_csum_ipv6()` → `tcf_csum_act()`
 
 ### Step 5.2: Callers
-**Record:** All modpost output generation paths during `MODPOST` build
-stage — every in-tree and out-of-tree module build with
-`CONFIG_MODULES`.
+**Record:**
+- `tcf_csum_act()` registered as `.act` in `act_csum_ops` (line 708)
+- Invoked via `tc_wrapper.h` indirect dispatch on skb traversing tc
+  classifier/action pipeline
+- Context: packet TX through qdisc/filter — common in traffic shaping,
+  NAT, and Cilium/eBPF-adjacent tc pipelines
 
 ### Step 5.3: Callees
-**Record:** `vsnprintf()`, `buf_write()` → `xrealloc()`, `strncpy()`.
+**Record:** On the buggy path: `tcf_csum_skb_nextlayer()`,
+`csum_partial()`, `csum_tcpudp_magic()` / `csum_ipv6_magic()`, then
+`skb->ip_summed = CHECKSUM_NONE`
 
 ### Step 5.4: Reachability
-**Record:** Triggered during every kernel module build (`make modules`).
-Reachable whenever any single `buf_printf()` format produces ≥500 bytes.
-Computed thresholds:
-- KSYMTAB line: symbol length ≥470 (line len 500+)
-- SYMBOL_CRC: ≥466
-- Extended version names: ≥494
-- Symvers dump: ≥463
+**Record:**
+- Trigger: `tc action csum` configured on an interface sending GSO UDP
+  tunnel traffic (VXLAN, GENEVE, FOU, etc.) or UDP L4 GSO
+- Reachable from userspace via `tc`/`ip` netlink configuration — no
+  special privileges beyond network admin
+- Common in container/cloud overlay networking
 
-`KSYM_NAME_LEN` is **512** in this tree — valid symbol names can exceed
-all these thresholds.
-
-### Step 5.5: Similar patterns
-**Record:** Prior modpost buffer fixes (`7670f023aabd9`,
-`666ab414fe14e`, `5cfb203a304de`) show this subsystem has a history of
-length-related bugs. The `MODULE_NAME_LEN` guard in `add_versions()`
-does not protect export-symbol or extended-modversion `buf_printf()`
-paths.
+### Step 5.5: Similar Patterns
+**Record:** `net/ipv4/udp_offload.c:647-655` already handles tunnel GSO
+and UDP L4 GSO as distinct types from `SKB_GSO_UDP`. act_csum was
+inconsistent with this established split.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.y)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current `buf_printf()` at lines 1673–1684 still has
-the unchecked pattern:
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** Current tree at lines 262 and 318 checks only
+`SKB_GSO_UDP`:
 
-```1673:1684:scripts/mod/modpost.c
-void __attribute__((format(printf, 2, 3))) buf_printf(struct buffer
-*buf,
-                                                      const char *fmt,
-...)
-{
-        char tmp[SZ];
-        int len;
-        va_list ap;
-
-        va_start(ap, fmt);
-        len = vsnprintf(tmp, SZ, fmt, ap);
-        buf_write(buf, tmp, len);
-        va_end(ap);
-}
+```262:263:net/sched/act_csum.c
+        if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
+                return 1;
 ```
 
-Bug present since ~2006 in this tree.
+The fix commit is **not yet applied** to this checkout.
 
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — `buf_printf()` unchanged except for
-this fix. No conflicting recent churn in this function.
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — two identical one-line bitmask
+expansions. No conflicting recent changes in these functions.
+Difficulty: **trivial**.
 
-### Step 6.3: Related fixes already present?
-**Record:** `5cfb203a304de` guards `add_versions()` for symbols ≥
-`MODULE_NAME_LEN` (~56) only. Does **not** fix this bug for KSYMTAB
-exports (470+ char symbols) or extended modversion name tables (494+
-chars). Fix commit not present in tree.
+### Step 6.3: Related Fixes Already Present?
+**Record:** `add641e7dee3` (original TCP/UDP GSO exemption) is present.
+No duplicate or alternative fix for tunnel/L4 GSO types found.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** `scripts/mod/` (kbuild/modpost) — **IMPORTANT** for all
-module builds; host tool, not runtime kernel code.
+### Step 7.1: Subsystem Criticality
+**Record:** `net/sched` (traffic control) — **IMPORTANT**. Affects
+packet integrity on configured network paths, widely used in data-center
+and container networking.
 
 ### Step 7.2: Activity
-**Record:** Moderately active (`688c1b491c35d`, `5ab23c7923a1d`,
-namespace support commits in recent history).
+**Record:** act_csum actively maintained (VLAN validation, NULL deref
+fixes in 2024-2025). Bug is a long-standing gap, not a regression from
+recent churn.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** Kernel builders using `CONFIG_MODULES` — distro maintainers,
-OOT module developers, anyone building modules with long export symbol
-names or long formatted modpost lines.
+### Step 8.1: Who Is Affected
+**Record:** Users with `tc action csum` in their pipeline sending UDP
+tunnel GSO or UDP L4 GSO traffic — overlay networks (VXLAN/GENEVE),
+Cilium-style deployments, tun/tap GSO injection. Config-specific but
+affects production networking stacks.
 
-### Step 8.2: Trigger conditions
-**Record:** Any `buf_printf()` call producing ≥500 bytes in one format
-string. Plausible with symbol names 470–511 chars (`KSYM_NAME_LEN=512`).
-Rust/mangled export names (nova driver context) increase likelihood. Not
-every boot — only during `MODPOST` stage.
-
-### Step 8.3: Failure mode severity
+### Step 8.2: Trigger Conditions
 **Record:**
-- Stack buffer over-read in host tool (UB; ASan-detectable)
-- Silent corruption of `.mod.c` / symvers / export metadata
-- Downstream: wrong module versioning, insmod failures, or subtle ABI
-  breakage
-- **Severity: HIGH** for affected builds (corruption); **MEDIUM**
-  overall (trigger is uncommon but within supported `KSYM_NAME_LEN`
-  range)
+- `CONFIG_NET_SCHED_ACT_CSUM` enabled (module `act_csum`)
+- tc csum action applied to egress path
+- GSO skb with `gso_type` of `SKB_GSO_UDP_L4`, `SKB_GSO_UDP_TUNNEL`, or
+  `SKB_GSO_UDP_TUNNEL_CSUM`
+- Moderately common in cloud/container environments; not every-boot
+  universal
 
-### Step 8.4: Risk-benefit
+### Step 8.3: Failure Mode Severity
 **Record:**
-- **Benefit:** Prevents silent corruption; converts latent UB to
-  explicit fatal error; aligns modpost with `KSYM_NAME_LEN` support
-- **Risk:** Very low — 9-line change, only affects already-broken cases
-- **Ratio:** Favorable
+- **Failure mode:** Incorrect checksums on transmitted packets → silent
+  packet loss, broken tunnels, degraded connectivity
+- **Severity:** **HIGH** (network data corruption/connectivity failure;
+  not a kernel oops, but real user-visible impact)
+- The 2017 predecessor caused `skb_warn_bad_offload` WARN_ONs; this
+  commit addresses bad checksums specifically for newer GSO types
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** HIGH for affected deployments — restores correct checksum
+  handling for tunnel GSO traffic through tc
+- **Risk:** VERY LOW — 8-line bitmask extension following established
+  pattern, reviewed by subsystem experts
+- **Ratio:** Strongly favors backport
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real, verifiable stack over-read bug in `buf_printf()`
-- Can silently corrupt module build artifacts
-- Trigger thresholds (470–494 char symbols) are within `KSYM_NAME_LEN`
-  (512)
-- Tiny, obviously correct fix
-- Bug present in 6.18.y since ~2006
-- kbuild maintainer sign-off
-- Fits build-tool correctness; prior modpost buffer fixes accepted to
-  mainline
+- Fixes real packet corruption bug (bad checksums on wire)
+- Small, surgical, obviously correct (extends proven 2017 pattern)
+- All GSO types and prerequisite code exist in 6.18.44
+- Reviewed by original act_csum GSO fix author and UDP GSO expert
+- Consistent with how `udp_offload.c` handles the same GSO type split
+- Long-standing gap since 2014/2018 GSO types were introduced
 
 **AGAINST backport:**
-- Host build tool only — no runtime kernel crash
-- Trigger uncommon in typical C kernel code
-- Bug latent ~20 years without widespread reports
-- Lore discussion unretrievable
+- No user bug report or syzbot reproduction
+- Affects only systems with tc act_csum + tunnel GSO (config-specific)
+- Mailing list discussion could not be verified
 
-**Unresolved:** Full mailing-list review thread; no explicit stable
-nomination found.
+**UNRESOLVED:**
+- Full lore review thread content
+- Whether any distribution has filed a user-visible bug report
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — standard `vsnprintf`
-   handling; kbuild maintainer SOB
-2. Fixes real bug affecting users? **PASS** — corrupt module metadata
-   affects builders and downstream module consumers
-3. Important issue? **PASS** — build artifact corruption + stack over-
-   read; HIGH for affected builds
-4. Small and contained? **PASS** — 9 lines, one function
-5. No new features/APIs? **PASS** — error detection only
-6. Can apply to local tree? **PASS** — buggy code confirmed present;
-   clean apply expected
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — mirrors existing exemption;
+   reviewed by two domain experts
+2. Fixes a real bug? **PASS** — bad checksums on transmitted GSO tunnel
+   packets
+3. Important issue? **PASS** — network data corruption / connectivity
+   failure (HIGH)
+4. Small and contained? **PASS** — 8 lines, one file
+5. No new features/APIs? **PASS** — extends existing skip logic only
+6. Can apply to local tree? **PASS** — clean apply, all prerequisites
+   present
 
-### Step 9.3: Exception category
-**Record:** Build fix / build correctness — prevents corruption during
-`MODPOST`.
+### Step 9.3: Exception Categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
 
-### Step 9.4: Decision rationale
+### Step 9.4: Decision Rationale
 
-This commit fixes a genuine memory-safety bug in modpost where truncated
-`vsnprintf()` output causes `strncpy()` to read past a 500-byte stack
-buffer. The kernel defines `KSYM_NAME_LEN` as 512, but `SZ` is 500 and
-export-symbol `buf_printf()` paths lack length guards — so valid-length
-symbols (470–511 chars) can hit this bug. Silent corruption of generated
-module files is worse than a fatal build error. The fix is minimal,
-follows existing `fatal()` conventions, and applies cleanly to this
-6.18.y tree where the buggy code is still present.
+This commit completes the GSO exemption work started in 2017. The local
+6.18.44 tree has the incomplete check (`SKB_GSO_UDP` only) while
+`SKB_GSO_UDP_TUNNEL`, `SKB_GSO_UDP_TUNNEL_CSUM`, and `SKB_GSO_UDP_L4`
+have been in the tree for years. When tunnel GSO packets traverse
+`act_csum`, premature checksum computation corrupts packet checksum
+state, producing on-wire bad checksums. The fix is minimal, follows an
+established pattern, has expert review, and carries negligible
+regression risk.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message
-- **[Phase 1]** Confirmed no `Fixes:`, syzbot, or `Cc: stable` tags
-- **[Phase 2]** Read current `buf_printf()` and `buf_write()` in
-  `scripts/mod/modpost.c`
-- **[Phase 2]** Verified `strncpy(buf->p + buf->pos, s, len)` uses
-  unchecked `len`
-- **[Phase 2]** Confirmed `fatal()` macro in `scripts/mod/modpost.h:244`
-- **[Phase 3]** `git describe HEAD` → `v6.18.44`
-- **[Phase 3]** `git blame -L 1673,1694 scripts/mod/modpost.c` → bug
-  since 2005/2006
-- **[Phase 3]** `git show 7670f023aabd9` → related 2006 modpost buffer
-  fix (different issue)
-- **[Phase 3]** `git show 666ab414fe14e` → 2007 modpost stack overflow
-  fix
-- **[Phase 3]** `git show 5cfb203a304de` → 2015 symbol length check in
-  `add_versions()` only (~56 chars)
-- **[Phase 3]** `git log -1 0d2f1f09019ba` → commit not in tree
-- **[Phase 4]** `b4 dig -c 0d2f1f09019ba` → no match
-- **[Phase 4]** WebFetch lore/patch.msgid.link → 403 blocked
-- **[Phase 4]** curl lore.kernel.org → 403 blocked
-- **[Phase 5]** `grep buf_printf` → 50 call sites in modpost.c
-- **[Phase 5]** Python calculation → KSYMTAB triggers at symbol length
-  470; `KSYM_NAME_LEN=512` in `include/linux/kallsyms.h`
-- **[Phase 5]** Verified `add_exported_symbols()` has no symbol-length
-  check before KSYMTAB `buf_printf()`
-- **[Phase 6]** Confirmed buggy code at lines 1673–1684 in local tree
-- **[Phase 6]** `git log --grep='buf_printf'` / `--grep='truncated
-  buf_printf'` → no fix present
-- **[Phase 7]** `git log --oneline -20 -- scripts/mod/modpost.c` →
-  moderate activity
-- **[UNVERIFIED]** Full mailing-list review discussion (lore blocked)
-- **[UNVERIFIED]** Whether any production distro has hit this in the
-  wild
+- **[Phase 1]** Parsed commit message tags: Reviewed-by ×2, Link tag, no
+  Fixes/Reported-by
+- **[Phase 2]** Diff analysis: 2 hunks in `tcf_csum_ipv4_udp()` and
+  `tcf_csum_ipv6_udp()`, bitmask expanded by 3 GSO types
+- **[Phase 2]** Confirmed `skb->ip_summed = CHECKSUM_NONE` set on non-
+  skipped path (lines 305, 355)
+- **[Phase 3]** `git blame -L 258,265`: GSO check from `0c19f846d582af`
+  (2017)
+- **[Phase 3]** `git show add641e7dee3`: original 2017 TCP/UDP GSO
+  exemption confirmed
+- **[Phase 3]** `git log --grep="act_csum.*GSO"`: only prior GSO fix is
+  `add641e7dee3`
+- **[Phase 3]** `git merge-base --is-ancestor`: all prerequisites
+  (`add641e7dee3`, `0f4f4ffa7b7c3`, `ee80d1ebe5ba7`) confirmed in tree
+- **[Phase 4]** `b4 dig`: no match (commit not merged); **UNVERIFIED**
+  lore thread
+- **[Phase 4]** WebFetch lore.kernel.org and patch.msgid.link: blocked
+  by bot protection
+- **[Phase 5]** `grep tcf_csum_act`: called via tc action dispatch in TX
+  path
+- **[Phase 5]** `net/ipv4/udp_offload.c:647-655`: confirms separate
+  handling of tunnel/L4 GSO types
+- **[Phase 5]** `net/core/gso.c:66-73`: `skb_needs_check()` behavior on
+  `CHECKSUM_NONE` skbs
+- **[Phase 6]** `git describe HEAD`: v6.18.44 — local tree identified
+- **[Phase 6]** `grep SKB_GSO_UDP` in act_csum.c: buggy code present,
+  fix not applied
+- **[Phase 6]** `include/linux/skbuff.h:691-705`: all four GSO types
+  defined
+- **[Phase 8]** Failure mode: bad checksum → packet drops; severity HIGH
+  for affected configs
 
-**YES**The background search finished: this fix is **not** in the local
-`v6.18.44` tree yet.
+**YES**The background search finished: `git log --grep="don't mangle TCP
+and UDP GSO"` found the original 2017 exemption (`add641e7dee3`), and
+there is no matching commit for "don't mangle UDP tunnel GSO" in this
+tree yet.
 
-**Verdict: YES** — backport it.
+That matches the earlier analysis: the bug is still present in 6.18.44,
+and this patch should be backported.
 
-`buf_printf()` in `scripts/mod/modpost.c` can pass an unchecked
-`vsnprintf()` length to `strncpy()`, causing a stack over-read and
-silent corruption of generated module metadata when a single formatted
-line exceeds the 500-byte buffer. That can happen with symbol names
-within the kernel’s `KSYM_NAME_LEN` (512) limit. The patch is small,
-obviously correct, and turns silent corruption into a fatal build error.
+**YES**
 
- scripts/mod/modpost.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/sched/act_csum.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 010c398f6a705..888734d5e6fbe 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1679,8 +1679,17 @@ void __attribute__((format(printf, 2, 3))) buf_printf(struct buffer *buf,
+diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
+index 3a377604ad343..b6873f393aa33 100644
+--- a/net/sched/act_csum.c
++++ b/net/sched/act_csum.c
+@@ -259,7 +259,9 @@ static int tcf_csum_ipv4_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct iphdr *iph;
+ 	u16 ul;
  
- 	va_start(ap, fmt);
- 	len = vsnprintf(tmp, SZ, fmt, ap);
--	buf_write(buf, tmp, len);
- 	va_end(ap);
-+
-+	if (len < 0) {
-+		perror("vsnprintf failed");
-+		exit(1);
-+	}
-+	if (len >= SZ)
-+		fatal("buf_printf output truncated for string %s: %d bytes needed, %d available\n",
-+		      tmp, len + 1, SZ);
-+
-+	buf_write(buf, tmp, len);
- }
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
  
- void buf_write(struct buffer *buf, const char *s, int len)
+ 	/*
+@@ -315,7 +317,9 @@ static int tcf_csum_ipv6_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct ipv6hdr *ip6h;
+ 	u16 ul;
+ 
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
+ 
+ 	/*
 -- 
 2.53.0
 
