@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843FF4DB55B;
-	Mon, 31 Aug 2026 13:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147C94DA55D;
+	Mon, 31 Aug 2026 13:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183563; cv=none; b=XS8GwBb291kYx5OiqSTN+2BH7OaoA9IhN7eXwA/u5B/4pVb8Cc0LTYFG4Q9FIomeRyGQP/+hPzfKVxSSzzHQlWTVM3RR8OwM+BUGiPpf9LQyeJtGAhUYN0joXGHCWws2ZAECMiMW4ZQ0NpK7WFmbu18VBWNFDVA01K+pViBVlik=
+	t=1788183564; cv=none; b=p1fAey1hNctsW6PSjMZzr2egauNEmiLTf98J47vdZcBCbo27XSsYGcAo5qX3nJVQ8flxqndX3JtxffXf9Y2JV7yGdnddbL69T+aixMuazrBH0cg/NucIOFnW+3gQnIz3s0Aj7ZgZlSYPjBwJD2/TsO1FsrTmWmYlf8+Q69/73oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183563; c=relaxed/simple;
-	bh=HH24XWvydhd1vQzRcM2Zbn1brg334Bma9RHnz0kEhMU=;
+	s=arc-20240116; t=1788183564; c=relaxed/simple;
+	bh=FSnRMFDuOduDoUX+A+1CFWwU8H+3h4vesh3ZjzxSr7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KwV74DyRd6HSDfvdPxTQFsgo6TGua93gC8rwdzxQgFeZlHwmg0BMHL86HNutCwIO6S2F3Z03HEAmrZxxAWLzrMHFvqqkKowpM/7+EfzmDiWqSzn1Nwa4h9YM0+D4/G/eipxR+apKdkX0fJq9KIluTf4WOjhdh8M3susGeYBdgow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d21Yl5wo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g5aVH5JXwctqSyHsYIlQONM4RgTB291QbCqR7gS70oYdUCm38HBiWD/yUOzdI4IizSbQUAH5F6tZDPwaiSRL2vjkpVm2Ga0DNGkGqMQwkWdIqXiRpEuUpE93bfPqkEySQ+cTq6KdbDQEF9rYk6R3CAGpnqC/ChWdoMuR4JBUtQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=btb/7jE7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d21Yl5wo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220FD1F00A3D;
-	Mon, 31 Aug 2026 13:39:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="btb/7jE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC88F1F000E9;
+	Mon, 31 Aug 2026 13:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183561;
-	bh=iSE3A/991G2j5h93MT0YhlQUKs7zgjb2Y7gc1xL3Tj4=;
+	s=k20260515; t=1788183563;
+	bh=gSEL1yWGTqhfQjP2tZMPkuQEQVJ76cy62l71kafhDjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d21Yl5woAoeJXKbCf80q9eidORX9lo0u74zHl+sdLzrShjUvrdcEjhjGpGsjyiJvW
-	 hLkHiXPpOg3ERZK8o1OfR0PxZvvETkfV1uvr91sN78n9+76Otexkfu6wSlgKn3esa+
-	 yS1kYY4j0CE0Ke7KDcyQmRKQVTMHCyABhtZVL4kkjIrAUSiJluObAaGid5c2pbKC6+
-	 cj/tA6ceE614o17/KbH0M9+b5GT3igA2yXMDsWHXF5fAo56oDGHNTqvdRrQAE1bOpG
-	 6EKfzXbw6K1pEmleIIXSwwip2SC7MTT5yGOSRMVQneLW+M6TMxc4Eq17wXq6PHPwYV
-	 OOF9k2jQtSVFg==
+	b=btb/7jE7vgW236XRwdG/OGui5uOQ5E3m6awqcvDmYykPTVcEXJSShuHBVGIRzPpG9
+	 JXb/xUQREW98NoZ4nbOZ8cGDGuDYGmrwtDlgswhjVIrkNu/WqEopjFGLQD9FHgCN/6
+	 qNZkgGHhJvb6kooJOj/JBYmYbMSSYkWtDXQ4+8joUfZLXdypLABsgAKUfRtujhAw5r
+	 RJwJaGmbxjZGIQsnaiVjMrrZlVUadYUv6UU+Wqms3sXar1e62QhIYhkCExozywHUt3
+	 9fqj1IaXEimVUdTL13O0YE1IkjDPCzGGBKnycdJmmHXqdw3tixAX3HsyDYAYWMB2KP
+	 zDw/CGZs2c95Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhanjun Dong <zhanjun.dong@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+Cc: Andrea Righi <arighi@nvidia.com>,
+	Felix Abecassis <fabecassis@nvidia.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	matthew.brost@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	intel-xe@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	mingo@redhat.com,
+	juri.lelli@redhat.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/xe: Fix null pointer dereference in devcoredump cleanup
-Date: Mon, 31 Aug 2026 09:23:18 -0400
-Message-ID: <20260831133314.4125787-170-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] sched/fair: Reject misfit pulls onto busy SMT siblings on asym-capacity
+Date: Mon, 31 Aug 2026 09:23:19 -0400
+Message-ID: <20260831133314.4125787-171-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,61 +55,82 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhanjun Dong <zhanjun.dong@intel.com>
+From: Andrea Righi <arighi@nvidia.com>
 
-[ Upstream commit 12ef528d78adc8ea4e7e3db594f3bcac327e79fa ]
+[ Upstream commit bf6aa722198d3c06e4236e8c5a480f30a64e1513 ]
 
-In xe_devcoredump_snapshot_free(), ss->gt may be NULL when the snapshot
-was never fully populated (e.g., when cleanup is triggered without a
-prior capture). Guard the xe_guc_capture_put_matched_nodes() call with
-IS_ERR_OR_NULL() to prevent a null dereference.
+When SD_ASYM_CPUCAPACITY load balancing considers pulling a misfit task,
+capacity_of(dst_cpu) can overstate available compute if the SMT sibling is
+busy: the core does not deliver its full nominal capacity.
 
-In xe_devcoredump_free(), the deferred work is only queued when a
-coredump is captured, so guard cancel_work_sync() with a check on
-coredump->captured.
+If SMT is active and dst_cpu is not on a fully idle core, skip this
+destination so we do not migrate a misfit expecting a capacity upgrade we
+cannot actually provide.
 
-Signed-off-by: Zhanjun Dong <zhanjun.dong@intel.com>
-Reviewed-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Link: https://patch.msgid.link/20260326181017.2060209-1-zhanjun.dong@intel.com
+Reported-by: Felix Abecassis <fabecassis@nvidia.com>
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://patch.msgid.link/20260509180955.1840064-5-arighi@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The follow-up check completed: `git log` found no commits matching the
-fix (`IS_ERR_OR_NULL(ss->gt)` or "devcoredump cleanup"), so it isn’t in
-this tree yet. That matches the earlier read of `xe_devcoredump.c` — the
-unconditional dereference and `cancel_work_sync()` are still there.
-Backport recommendation remains **YES** for v6.18.43.
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+The background `git log --grep` search finished without finding this
+commit in the 6.18.43 tree — which matches what we saw in code
+(`dst_core_idle` is absent from `kernel/sched/fair.c`).
 
- drivers/gpu/drm/xe/xe_devcoredump.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+**Verdict for 6.18.y: YES.** It's a small, maintainer-reviewed
+scheduling correctness fix for misfit task migration on asymmetric-
+capacity + SMT systems. The buggy logic is present in this tree and the
+patch should apply cleanly.
 
-diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
-index 203e3038cc817..26a294f79e79f 100644
---- a/drivers/gpu/drm/xe/xe_devcoredump.c
-+++ b/drivers/gpu/drm/xe/xe_devcoredump.c
-@@ -150,7 +150,8 @@ static void xe_devcoredump_snapshot_free(struct xe_devcoredump_snapshot *ss)
- 	xe_guc_ct_snapshot_free(ss->guc.ct);
- 	ss->guc.ct = NULL;
+ kernel/sched/fair.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index ac5f08cd01a83..fee58d01ae0f9 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -9395,6 +9395,7 @@ struct lb_env {
  
--	xe_guc_capture_put_matched_nodes(&ss->gt->uc.guc);
-+	if (!IS_ERR_OR_NULL(ss->gt))
-+		xe_guc_capture_put_matched_nodes(&ss->gt->uc.guc);
- 	ss->matched_node = NULL;
+ 	int			dst_cpu;
+ 	struct rq		*dst_rq;
++	bool			dst_core_idle;
  
- 	xe_guc_exec_queue_snapshot_free(ss->ge);
-@@ -255,7 +256,8 @@ static void xe_devcoredump_free(void *data)
- 	if (!data || !coredump_to_xe(coredump))
- 		return;
+ 	struct cpumask		*dst_grpmask;
+ 	int			new_dst_cpu;
+@@ -10636,10 +10637,16 @@ static bool update_sd_pick_busiest(struct lb_env *env,
+ 	 * We can use max_capacity here as reduction in capacity on some
+ 	 * CPUs in the group should either be possible to resolve
+ 	 * internally or be covered by avg_load imbalance (eventually).
++	 *
++	 * When SMT is active, only pull a misfit to dst_cpu if it is on a
++	 * fully idle core; otherwise the effective capacity of the core is
++	 * reduced and we may not actually provide more capacity than the
++	 * source.
+ 	 */
+ 	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
+ 	    (sgs->group_type == group_misfit_task) &&
+-	    (!capacity_greater(capacity_of(env->dst_cpu), sg->sgc->max_capacity) ||
++	    (!env->dst_core_idle ||
++	     !capacity_greater(capacity_of(env->dst_cpu), sg->sgc->max_capacity) ||
+ 	     sds->local_stat.group_type != group_has_spare))
+ 		return false;
  
--	cancel_work_sync(&coredump->snapshot.work);
-+	if (coredump->captured)
-+		cancel_work_sync(&coredump->snapshot.work);
+@@ -11206,6 +11213,8 @@ static inline void update_sd_lb_stats(struct lb_env *env, struct sd_lb_stats *sd
+ 	unsigned long sum_util = 0;
+ 	bool sg_overloaded = 0, sg_overutilized = 0;
  
- 	mutex_lock(&coredump->lock);
- 
++	env->dst_core_idle = !sched_smt_active() || is_core_idle(env->dst_cpu);
++
+ 	do {
+ 		struct sg_lb_stats *sgs = &tmp_sgs;
+ 		int local_group;
 -- 
 2.53.0
 
