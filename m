@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1D6463B85;
-	Mon, 31 Aug 2026 13:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD50F459AFC;
+	Mon, 31 Aug 2026 13:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183288; cv=none; b=exNHY+irBHFRAkzUe97BivOdOt7NXU57+diM8tUf0Oo/QhAptLgnXT1Moi4TcSneszW9+yInUEPuTCZCoCVo2epG1cFg9olnkBsF5KEqkNGuufNbDqmTrCK7xkHGTh1ZnlzWXKc/oODzM1zy+UUC44WD/6SdtSqyc0UuDqkVeVs=
+	t=1788183290; cv=none; b=HVN6gu7OiM2bk68AgdRdOlDfTkuRjQ/A7IVd2+LxqMk8JUCe422rCLK+5pIQlNAUffovrqYV0CC2SuBWaRmRsVRE3qC3EB8Eojn3J90vmrHIuGh7XNDR2nRBo/FQsXzjXSeF1AXfPokkaQreWJbP/FmMfpqtPDypfC6dWdNyIwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183288; c=relaxed/simple;
-	bh=oJKRo6iYUwu6JiBDwUYbeLd7bBD9F63TofeajU3Q+OI=;
+	s=arc-20240116; t=1788183290; c=relaxed/simple;
+	bh=TWTekj89miw1K0rfAJArYJpEzMAq2gQ/4T0vpcyUAl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PZVlyTt7zPlhufoipUgdysXEKuZUx7SfzwpiJiFcBncBWTVWz2a/PsunFXP0MMmhVZYe/r/eQUNNMnFxkTQs56mLid1cbdJd7jW4AIm98gxYXQ/LVsdDOIyldC3sJ5f9OVJHp+lougL+1mUWnG4+hnDX+88M/9R2SHbX2boB/iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q0MGuAvo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Xd1JlVYtZ0F978t2LsZ7vw7us8o/ZdjmMEyw0w5cpAuUsDwdZfo2rP2QNdqXJWfUBDxER8p6QcVgO9QF1TrM6T9KkUuxR0gRT2KBfSCXFL+oPJwN1da4x075wdMFSLUrC7Fa3siH5iPojFfd8GsPO1KqChSQhrRX9g8a3bUvqq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vhurul7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q0MGuAvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4E11F00A3E;
-	Mon, 31 Aug 2026 13:34:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vhurul7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525D81F00ACF;
+	Mon, 31 Aug 2026 13:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183285;
-	bh=3GlkRAyGJi4s/IJJOfmPlV2PSzAFfMCOhL/uc1k0p9U=;
+	s=k20260515; t=1788183287;
+	bh=8H4D6esrqEhZzO5igNe5K5dyRdu+n361wC3B0JmmHn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q0MGuAvoV/43moSGMxGcQuc/azCPy3lhsgv9nYI9vXJfhAnk8Zgq2MNM8hbmqFIir
-	 60BNJRILRNbQsfMYqOe6LadOxlhDvRGrqR/gDniJTYrpMmhvGYFmwP7ML1pwhwMGfC
-	 6KYbzPpNEQozE/P3Rm+V5/FKiFdTDX4iAUn7wDZQ/1jTiRrEr3efB4x46hgHbC26FD
-	 6xWUpt8Gr02TLCUc6Pq6Zq8Z1PKl56zl8RYWfA+c8zCe/C6v5dzlMxsNjG6vNqPf57
-	 HqXvs3eMOjH1kq9wVrWaHLVVb20VkDWpOdiboOmlPEqqhM2vTl7x4ODK1L59tdiNxW
-	 C9QQu8PMUtaIA==
+	b=Vhurul7XerXXIZZ5kv9LEJf5Eugy34fLK5wWdImNHhUV74IAOzJlL8Z1b88R6LmRU
+	 NF1YNykG8Dn5ttwig0jWaGC6W2I/x0hz+isgARZlzXD8MXX64zcK12mwPPgTl/5EyF
+	 vq3CP1vdX5wxlwKg3N6YyE+8IRFDBqHH4WBUiHRy96mmFLVqcDa94QRCtntGKFRzLS
+	 xoOyZwAIIn2+D/Kqgns88AakhY+EJwjyFqekI8Z0KQqGZvMO3ZYAvlnD7OYbHvi2Wx
+	 6Ybu4SiT2CNnI0XJb7LQRCnRbGuW7a5ikCMRxIjLQengjTLOlwoxgwMA0ApcDoOinN
+	 kNpLzkkqUjUIA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jason Gunthorpe <jgg@nvidia.com>,
+Cc: Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-rdma@vger.kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] RDMA/umem: Make ib_umem_is_contiguous() safe on 32 bit
-Date: Mon, 31 Aug 2026 09:21:25 -0400
-Message-ID: <20260831133314.4125787-57-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] PCI: altera: Protect root bus removal with rescan lock
+Date: Mon, 31 Aug 2026 09:21:26 -0400
+Message-ID: <20260831133314.4125787-58-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -51,391 +55,399 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 55d984dae65262fbb0a673cff7cc9824a5e19bdb ]
+[ Upstream commit a8759c8ac48c0419f5899e95a6ffc611b07c965b ]
 
-Sashiko points out the roundup_pow_of_two() only uses unsigned long but
-dma_addr_t can be u64.
+Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
+to avoid racing with concurrent rescan or hotplug operations triggered via
+sysfs.  Such races may lead to use-after-free issues or system crashes.
 
-Change this algorithm to be simpler, compute the page size, if any page
-size is found and it results in a single block then it is contiguous.
-
-Link: https://patch.msgid.link/r/3-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260521161822.132996-4-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: PCI: altera: Protect root bus removal with
+rescan lock
 
-### Step 1.1: Subject Line
-**Record:** `[RDMA/umem]` `[Make/safe]` — Make `ib_umem_is_contiguous()`
-safe on 32-bit by fixing type truncation in page-size computation.
+**Local tree:** `v6.18.44-1-g2736c32da98b9` (kernel 6.18.44)
+**Fix commit on mainline:** `a8759c8ac48c0` — **not present in this
+tree**
+**Buggy code:** present since `ec15c4d0d5d2e` (2019, "PCI: altera: Allow
+building as module")
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[PCI: altera]` `[Protect]` — Protect root bus removal with
+rescan lock during driver teardown.
 
 ### Step 1.2: Tags
 **Record:**
-- **Link:** https://patch.msgid.link/r/3-v1-88303e9e509f+f7-
-  ib_umem_types_jgg@nvidia.com
-- **Signed-off-by:** Jason Gunthorpe \<jgg@nvidia.com\>
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, or Cc: stable in
-  the commit message itself
-- **Notable:** Patch is **[PATCH 3/3]** in series "Fix typing issues in
-  the umem code"; cover letter and patch 1 CC `stable@vger.kernel.org`.
-  Author is RDMA subsystem maintainer.
+- **Signed-off-by:** Hans Zhang `<18255117159@163.com>` (author)
+- **Signed-off-by:** Manivannan Sadhasivam `<mani@kernel.org>` (PCI
+  maintainer reviewer)
+- **Signed-off-by:** Bjorn Helgaas `<bhelgaas@google.com>` (PCI
+  maintainer, committer)
+- **Link:**
+  `https://patch.msgid.link/20260521161822.132996-4-18255117159@163.com`
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org
+- Notable: maintainer sign-offs from PCI subsystem; no syzbot or user
+  crash report
 
-### Step 1.3: Body Analysis
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `roundup_pow_of_two()` operates on `unsigned long`, but its
-  input involves `dma_addr_t` which can be `u64` on 32-bit kernels with
-  `CONFIG_ARCH_DMA_ADDR_T_64BIT`.
-- **Symptom:** Incorrect page-size computation in
-  `ib_umem_is_contiguous()`, yielding wrong contiguous/non-contiguous
-  results.
-- **Root cause:** Silent truncation of a 64-bit DMA-address expression
-  to 32-bit `unsigned long` before `roundup_pow_of_two()`.
-- **Fix approach:** Replace XOR/roundup algorithm with
-  `ib_umem_find_best_pgsz()` + `ib_umem_num_dma_blocks() == 1` check.
+- **Bug:** `altera_pcie_remove()` calls `pci_stop_root_bus()` /
+  `pci_remove_root_bus()` without holding `pci_rescan_remove_lock`.
+- **Symptom:** Race with concurrent sysfs-triggered PCI rescan or
+  hotplug → use-after-free or system crash.
+- **Root cause:** Root bus teardown and sysfs rescan/remove paths can
+  run concurrently on the same bus topology.
+- **Version info:** None explicit; bug dates to 2019 module-support
+  commit in this tree.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Yes — despite no "fix" in the subject, this is a type-
-truncation correctness bug, not cleanup. Reported by Sashiko per commit
-message.
+### Step 1.4: Hidden bug fix?
+**Record:** No — this is an explicit synchronization bug fix, not
+disguised cleanup.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `include/rdma/ib_umem.h` only (+3 / -8 lines)
-- **Functions:** `ib_umem_is_contiguous()`
-- **Scope:** Single-file, surgical inline-helper fix
+- **File:** `drivers/pci/controller/pcie-altera.c` (+2 lines)
+- **Function:** `altera_pcie_remove()`
+- **Scope:** Single-file, surgical fix (2 insertions)
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change
 **Record:**
-- **Before:** Compute `pgsz = roundup_pow_of_two((dma_addr ^
-  (umem->length - 1 + dma_addr)) + 1)`, then call
-  `ib_umem_find_best_pgoff(umem, pgsz, U64_MAX)`.
-- **After:** `pgsz = ib_umem_find_best_pgsz(umem, ULONG_MAX,
-  ib_umem_start_dma_addr(umem))`, return true iff `pgsz &&
-  ib_umem_num_dma_blocks(umem, pgsz) == 1`.
-- **Path affected:** Any caller checking umem contiguity (EFA CQ
-  external-memory creation).
+- **Before:** `pci_stop_root_bus()` → `pci_remove_root_bus()` →
+  `altera_pcie_irq_teardown()` with no lock.
+- **After:** Same sequence wrapped in `pci_lock_rescan_remove()` /
+  `pci_unlock_rescan_remove()`.
+- **Path affected:** Platform driver `.remove` callback (module unload /
+  device unbind).
 
-### Step 2.3: Bug Mechanism
+### Step 2.3: Bug mechanism
+**Record:** **Category: synchronization / race condition.**
+- Sysfs rescan (`rescan_store`, `dev_rescan_store` in `pci-sysfs.c`)
+  holds `pci_rescan_remove_lock`.
+- `altera_pcie_remove()` did not, so teardown and rescan could
+  interleave on the same bus.
+- `pci_stop_and_remove_bus_device()` uses
+  `lockdep_assert_held(&pci_rescan_remove_lock)` — the PCI core expects
+  this lock for bus mutation; root-bus removal should follow the same
+  rule.
+
+### Step 2.4: Fix quality
 **Record:**
-- **Category:** Type/size truncation (endianness/type bug family)
-- **Mechanism:** On 32-bit with 64-bit `dma_addr_t`, `(dma_addr ^
-  (umem->length - 1 + dma_addr)) + 1` is computed in 64-bit arithmetic
-  but implicitly truncated when passed to `roundup_pow_of_two(unsigned
-  long)`, producing wrong `pgsz` and wrong contiguity result.
-
-### Step 2.4: Fix Quality
-**Record:** Obviously correct and simpler. Uses existing helpers that
-already handle `dma_addr_t` internally for SG traversal. Low regression
-risk. **Caveat:** Full correctness on 32-bit also requires patch 2/3 of
-the same series (changing `ib_umem_find_best_pgsz()`'s `virt` parameter
-from `unsigned long` to `u64`), which is not yet in this tree.
+- **Quality:** High — matches `pci-aardvark.c`, `pci-mvebu.c`, `pci-
+  host-common.c`, `pci-hyperv.c`, `pcie-mediatek-gen3.c`.
+- **Regression risk:** Very low — standard mutex, no API change, IRQ
+  teardown stays outside the lock (same as other drivers).
+- **Red flags:** None.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Buggy `ib_umem_is_contiguous()` introduced in
-`c897c2c8b8e82` ("RDMA/core: Add umem is_contiguous and start_dma_addr
-helpers", 2025-07-08). Present in this 6.18.y tree.
-
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag on this commit.
-
-### Step 3.3: Related File History
 **Record:**
-- Part of 3-patch series by Jason Gunthorpe (2026-06-01):
-  1. `15fe76e23615f` — Fix truncation for block sizes >= 4G (`iter.c`) —
-     **already backported** as `afd35fec92971`
-  2. `09ea6837a0434` — Boundary conditions in `ib_umem_find_best_pgsz()`
-     — **NOT in tree**
-  3. `55d984dae6526` — This commit — **NOT in tree**
-- `ib_umem_is_contiguous()` caller added in `9fb3dd85197f5` (EFA CQ
-  external memory support), also in tree.
+- Buggy `pci_stop_root_bus`/`pci_remove_root_bus` calls introduced in
+  `ec15c4d0d5d2e` (Ley Foon Tan, 2019-04-24).
+- Function signature updated in `3a610560aa4fc` (2023) — void remove
+  callback; lock omission unchanged.
 
-### Step 3.4: Author Context
-**Record:** Jason Gunthorpe is core RDMA maintainer. Recent related work
-includes `ib_umem_find_best_pgsz()` improvements and umem typing fixes.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag.
+
+### Step 3.3: Related file history
+**Record:**
+- Part of 9-patch series `[PATCH 0/9] PCI: controller: Add missing
+  rescan lock around root bus removal` (Hans Zhang, May 2026).
+- Cover letter: **"Each patch is independent."**
+- Merged to mainline as `a8759c8ac48c0` via `7c97ee7c4951a` (Merge
+  branch 'pci/controller/rescan_lock').
+- Related precedent: `1d59d474e1cb7` "PCI: Hold rescan lock while adding
+  devices during host probe" — **present in this tree**; documents a
+  real NULL-deref crash from missing rescan lock.
+
+### Step 3.4: Author context
+**Record:** Hans Zhang — active PCI contributor (cadence, dwc capability
+search, etc.). Patch reviewed/signed by PCI maintainers.
 
 ### Step 3.5: Dependencies
-**Record:** Patch 2 (`09ea6837a0434`) changes `ib_umem_find_best_pgsz()`
-to accept `u64 virt` instead of `unsigned long virt`. This commit passes
-`ib_umem_start_dma_addr(umem)` (`dma_addr_t`) as that argument. **For a
-complete 32-bit fix, patch 2 should accompany this commit.** Patch 3
-compiles and applies standalone but retains `virt` truncation without
-patch 2.
+**Record:** None.
+- `pci_lock_rescan_remove()` exists since `9d16947b75831` (2014) — **in
+  this tree**.
+- `<linux/pci.h>` already included in `pcie-altera.c`.
+- Standalone; applies cleanly to current `pcie-altera.c`.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
+### Step 4.1: Original discussion
 **Record:**
-- **URL:** https://patch.msgid.link/3-v1-88303e9e509f+f7-
-  ib_umem_types_jgg@nvidia.com (via `b4 dig -c 55d984dae6526`)
-- **Series:** v1 only found; applied to mainline by Jason Gunthorpe on
-  2026-06-05 ("Applied")
-- **Cover letter:** "Fix various silent truncations, issues on 32 bit
-  compiles and understandability"
+- `b4 dig -c` failed (commit not in HEAD).
+- Local mbox/cover: `20260522_18255117159_pci_controller_add_missing_res
+  can_lock_around_root_bus_removal.{cover,mbx}`.
+- Cover letter explains race with sysfs rescan/hotplug → UAF/crash.
+- Triggered by sashiko-bot review of a related cadence patch asking
+  whether root bus teardown needs the lock.
+- Lore fetch blocked (Anubis bot protection) — discussion content taken
+  from local mbox.
 
 ### Step 4.2: Reviewers
-**Record:** To: Leon Romanovsky, linux-rdma; Cc:
-patches@lists.linux.dev, Shiraz Saleem, **stable@vger.kernel.org**
+**Record:** Signed-off-by Manivannan Sadhasivam and Bjorn Helgaas.
+Series sent to linux-pci.
 
-### Step 4.3: Bug Report
-**Record:** No formal bugzilla/syzbot report. Issue raised by Sashiko
-during review (per commit message). No stack traces or crash reports.
+### Step 4.3: Bug report
+**Record:** No syzbot, bugzilla, or user crash report for Altera
+specifically. Cover letter and `1d59d474e1cb7` provide class-of-bug
+evidence in PCI core.
 
-### Step 4.4: Related Patches
-**Record:** 3-patch series; patch 1 already backported to 6.18.y.
-Patches 2+3 remain.
+### Step 4.4: Series context
+**Record:** Patch 3/9; independent per cover letter. Other drivers in
+series (cadence, dwc, brcmstb, etc.) have the same bug pattern.
 
-### Step 4.5: Stable List History
-**Record:** Author CC'd stable on cover letter and patch 1 (which was
-backported). Explicit stable nomination signal.
+### Step 4.5: Stable list
+**Record:** Not searched (lore blocked). No stable nomination found in
+local mbox.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `ib_umem_is_contiguous()`, `ib_umem_find_best_pgsz()`,
-`ib_umem_num_dma_blocks()`, `ib_umem_start_dma_addr()`
+### Step 5.1: Key functions
+**Record:** `altera_pcie_remove()` only.
 
 ### Step 5.2: Callers
-**Record:** Single caller in this tree:
-- `drivers/infiniband/hw/efa/efa_verbs.c` — EFA CQ creation with
-  external memory; rejects non-contiguous buffers with `-EINVAL`.
+**Record:** Called from platform driver framework on:
+- `rmmod` (driver is tristate module since 2019)
+- platform device unbind
+- Module unload is an explicit design goal for post-boot FPGA
+  programming.
 
 ### Step 5.3: Callees
-**Record:** `ib_umem_find_best_pgsz()` walks SG table using
-`dma_addr_t`; `ib_umem_num_dma_blocks()` counts blocks from `umem->iova`
-and `umem->length`.
+**Record:** `pci_lock_rescan_remove()`, `pci_stop_root_bus()`,
+`pci_remove_root_bus()`, `pci_unlock_rescan_remove()`,
+`altera_pcie_irq_teardown()`.
 
 ### Step 5.4: Reachability
-**Record:** Reachable from userspace via RDMA uverbs CQ creation ioctl
-(EFA driver, `CONFIG_INFINIBAND_EFA`). Requires
-`CONFIG_INFINIBAND_USER_MEM`.
+**Record:**
+- Unprivileged users can trigger sysfs PCI rescan
+  (`/sys/bus/pci/rescan`, per-device `rescan`).
+- Root can unload the module (`rmmod`).
+- Concurrent rescan + unload is the race window — realistic on FPGA
+  systems that reload bitstreams.
+- **Userspace-reachable rescan path:** yes (with appropriate
+  privileges).
 
-### Step 5.5: Similar Patterns
-**Record:** Same series addresses related truncation in `iter.c`
-(already backported) and `ib_umem_find_best_pgsz()` (patch 2, not yet
-backported).
-
----
-
-## Phase 6: Cross-Reference Against Local Tree
-
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Tree is **v6.18.44** (`linux-6.18.y`). Buggy
-`roundup_pow_of_two()` code is at lines 122–134 of
-`include/rdma/ib_umem.h`. Introduced July 2025, well within 6.18's
-lifetime.
-
-### Step 6.2: Backport Complications
-**Record:** Clean apply expected — single hunk in one header. No
-conflicting changes found. **Recommend backporting patch 2 alongside for
-complete fix.**
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** Patch 1 of series (`afd35fec92971`) already backported.
-Patches 2 and 3 are not. No alternative fix for this specific bug.
+### Step 5.5: Similar patterns
+**Record:** Same missing-lock pattern in cadence, dwc, brcmstb, iproc,
+mediatek, rockchip, plda, vmd (series). Already-fixed examples:
+aardvark, mvebu, host-common, hyperv, mediatek-gen3.
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE
 
-### Step 7.1: Subsystem
-**Record:** RDMA core (`include/rdma/ib_umem.h`) — **IMPORTANT**
-(affects RDMA memory registration path, used by multiple drivers via
-shared helpers).
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Current HEAD at lines 1078–1079:
+
+```1073:1081:drivers/pci/controller/pcie-altera.c
+static void altera_pcie_remove(struct platform_device *pdev)
+{
+        struct altera_pcie *pcie = platform_get_drvdata(pdev);
+        struct pci_host_bridge *bridge =
+pci_host_bridge_from_priv(pcie);
+
+        pci_stop_root_bus(bridge->bus);
+        pci_remove_root_bus(bridge->bus);
+        altera_pcie_irq_teardown(pcie);
+}
+```
+
+No `pci_lock_rescan_remove()`. Bug present since v4.19-era module
+support.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply** — 2-line addition, no conflicts expected.
+`git show a8759c8ac48c0` matches current file context.
+
+### Step 6.3: Related fixes already present?
+**Record:** `1d59d474e1cb7` (probe-side rescan lock) is in tree. Altera-
+specific remove-path fix (`a8759c8ac48c0`) is **not** in tree.
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **PERIPHERAL** — `CONFIG_PCIE_ALTERA` host controller for
+Altera/Intel FPGA (ARM, ARM64, NIOS2). Not universal, but crash/UAF
+severity is high when triggered.
 
 ### Step 7.2: Activity
-**Record:** Actively developed; `ib_umem_is_contiguous()` is relatively
-new (2025).
+**Record:** Moderately active — recent probe leak fix (`09c43b7b7d29c`),
+Agilex support, IRQ domain updates.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK
 
-### Step 8.1: Who Is Affected
-**Record:** Users of RDMA with `CONFIG_INFINIBAND_USER_MEM` on **32-bit
-architectures with 64-bit DMA addresses** (e.g., ARM with
-`CONFIG_ARCH_DMA_ADDR_T_64BIT`). Currently impacts EFA external-memory
-CQ path directly; helper is available for other drivers.
+### Step 8.1: Who is affected
+**Record:** Users with `CONFIG_PCIE_ALTERA` on Altera/Intel FPGA PCIe
+platforms who unload/reload the driver while PCI sysfs rescan or hotplug
+runs.
 
-### Step 8.2: Trigger Conditions
-**Record:** Creating an RDMA memory region where DMA addresses or span
-computations exceed 32-bit when truncated. Requires EFA (currently) +
-external memory CQ. Not every boot, but reachable from userspace RDMA
-operations.
-
-### Step 8.3: Failure Mode Severity
+### Step 8.2: Trigger conditions
 **Record:**
-- **False negative** (contiguous reported as non-contiguous): `-EINVAL`,
-  CQ creation fails — **MEDIUM**
-- **False positive** (non-contiguous reported as contiguous): device
-  programmed with wrong memory layout — potential **data corruption /
-  hardware malfunction** — **HIGH**
-- Not a typical kernel oops/panic, but correctness bug with corruption
-  potential.
+- Concurrent `altera_pcie_remove()` and sysfs `rescan` or `remove` on
+  the same bus.
+- More likely than average because the driver is a module for post-boot
+  FPGA loading.
+- Requires root for module unload; rescan also typically root.
+- **Likelihood:** uncommon but realistic on target hardware.
 
-### Step 8.4: Risk-Benefit
+### Step 8.3: Failure mode severity
+**Record:** **HIGH** — UAF and kernel crash (per commit message and PCI
+subsystem precedent in `1d59d474e1cb7`).
+
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** MEDIUM-HIGH — fixes real type bug in shared RDMA helper;
-  author nominated for stable; series already partially backported
-- **Risk:** LOW — 3-line net change, uses existing well-tested helpers
-- **Ratio:** Favorable
+- **Benefit:** Prevents crash/UAF on supported FPGA platforms during
+  driver teardown.
+- **Risk:** Very low — 2 lines, established pattern, no behavior change
+  beyond serialization.
+- **Ratio:** Favorable for backport.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR:**
-- Real type-truncation bug on 32-bit with 64-bit `dma_addr_t`
-- Small, surgical, obviously correct fix from RDMA maintainer
-- Author CC'd stable; patch 1 of same series already in 6.18.y
-- False-positive contiguity could cause serious RDMA misprogramming
-- Buggy code confirmed present in v6.18.44
+- Real synchronization bug with documented PCI class-of-crash precedent
+- UAF/crash failure mode
+- Minimal, obviously correct fix matching multiple peer drivers
+- Bug present in this tree since 2019
+- No dependencies; clean apply
+- Maintainer-reviewed (Helgaas, Sadhasivam)
+- Driver explicitly supports module unload scenarios
 
 **AGAINST:**
-- Niche platform config (32-bit + 64-bit DMA + RDMA)
-- Only one direct caller today (EFA)
-- Complete fix requires patch 2 (`09ea6837a0434`) not yet in tree
-- No crash report or syzbot reproduction
+- No Altera-specific crash report or syzbot hit
+- Niche driver (`CONFIG_PCIE_ALTERA`)
+- Race needs concurrent unload + rescan
 
-**Unresolved:** No runtime test results in mailing list thread.
+**UNRESOLVED:**
+- Lore thread not readable (bot protection); relied on local mbox
+- No independent runtime test evidence for Altera specifically
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic is sound; applied to
-   mainline; no objections in review
-2. Fixes a real bug? **PASS** — confirmed type truncation in existing
-   code
-3. Important issue? **PASS** — correctness bug with potential data
-   corruption (false positive path)
-4. Small and contained? **PASS** — 3 lines net, one file
-5. No new features/APIs? **PASS** — same function signature and
-   semantics
-6. Can apply to local tree? **PASS** — applies cleanly; patch 2 should
-   accompany for completeness
+### Step 9.2: Stable rules checklist
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — matches established PCI
+pattern; maintainer-reviewed |
+| 2. Fixes real bug affecting users? | **PASS** — race on module unload
+vs sysfs rescan |
+| 3. Important issue? | **PASS** — UAF/crash (HIGH severity) |
+| 4. Small and contained? | **PASS** — 2 lines, one function |
+| 5. No new features/APIs? | **PASS** — synchronization only |
+| 6. Can apply to local tree? | **PASS** — clean apply, APIs present |
 
-### Step 9.3: Exception Categories
-**Record:** N/A — standard bug fix, not device-ID/quirk/build/doc
-exception.
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+race-condition fix.
 
-### Step 9.4: Decision Rationale
-
-This commit fixes a real, verifiable type-truncation bug in
-`ib_umem_is_contiguous()` that exists in the 6.18.44 tree. The buggy
-code was introduced in July 2025 and can cause incorrect contiguity
-detection on 32-bit kernels where `dma_addr_t` is 64-bit. While the
-immediate caller is the EFA driver's external-memory CQ path, the helper
-is shared RDMA infrastructure.
-
-The fix is minimal, low-risk, and from the RDMA maintainer who
-explicitly CC'd stable. Patch 1 of the same 3-patch series is already
-backported to this tree (`afd35fec92971`), establishing precedent.
-**Patch 2 (`09ea6837a0434`) should be backported together with this
-commit** for a complete 32-bit fix, since this commit passes a
-`dma_addr_t` to `ib_umem_find_best_pgsz()` which still takes `unsigned
-long virt` in 6.18.y. Even standalone, removing the broken
-`roundup_pow_of_two()` path is a meaningful improvement.
+### Step 9.4: Decision rationale
+This is a missing-lock race in root bus teardown — the same class of bug
+that caused a documented crash in `1d59d474e1cb7`, already in 6.18.y.
+The Altera driver has lacked this protection since module support was
+added in 2019. The fix is trivial, follows peer drivers, and prevents
+UAF/crash on FPGA platforms where module reload is an intended use case.
+Niche scope is offset by high severity and very low backport risk.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message: subsystem RDMA/umem, Link tag,
-  Jason Gunthorpe SOB, Sashiko attribution
-- **[Phase 2]** Diff analysis: 3 insertions, 8 deletions in
-  `ib_umem_is_contiguous()`; removes `roundup_pow_of_two()` call
-- **[Phase 3]** `git blame`: buggy code from `c897c2c8b8e82`
-  (2025-07-08), present in tree
-- **[Phase 3]** `git merge-base --is-ancestor c897c2c8b8e82 HEAD`: intro
-  commit IS in tree
-- **[Phase 3]** Series check: patch 1 (`afd35fec92971`) IN tree; patches
-  2 (`09ea6837a0434`) and 3 (`55d984dae6526`) NOT in tree
-- **[Phase 3]** `git log --oneline -20 -- include/rdma/ib_umem.h`:
-  confirmed recent umem history
-- **[Phase 4]** `b4 dig -c 55d984dae6526`: found thread at
-  patch.msgid.link
-- **[Phase 4]** `b4 dig -c 55d984dae6526 -a`: v1 series, 3 patches
-- **[Phase 4]** `b4 dig -c 55d984dae6526 -w`: stable@vger.kernel.org
-  CC'd
-- **[Phase 4]** `b4 dig -m /tmp/umem_thread.mbox`: cover letter
-  describes 32-bit truncation fixes; "Applied" reply from author
-- **[Phase 5]** `grep ib_umem_is_contiguous`: one caller in
-  `efa_verbs.c:1222`
-- **[Phase 5]** Read `efa_verbs.c:1215-1230`: rejects non-contiguous
-  with `-EINVAL`
-- **[Phase 5]** Read `ib_umem_find_best_pgsz()` in `umem.c`: uses
-  `dma_addr_t` internally for SG traversal
-- **[Phase 6]** `git describe HEAD`: v6.18.44; `make kernelversion`:
-  6.18.44
-- **[Phase 6]** Read current `ib_umem.h:122-134`: confirmed buggy code
-  still present
-- **[Phase 6]** `include/linux/types.h:157-161`: `dma_addr_t` is `u64`
-  when `CONFIG_ARCH_DMA_ADDR_T_64BIT`
-- **[Phase 6]** `include/linux/log2.h:174-181`: `roundup_pow_of_two()`
-  uses `unsigned long` / `1UL`
-- **[Phase 8]** Failure mode: wrong contiguity → EINVAL or potential
-  RDMA misprogramming
+- **[Phase 1]** `git show a8759c8ac48c0`: parsed subject, tags, body
+- **[Phase 1]** Local mbox/cover: series context, bot review,
+  independent patches
+- **[Phase 2]** Diff: +2 lines in `altera_pcie_remove()`
+- **[Phase 2]** `drivers/pci/remove.c:143`:
+  `lockdep_assert_held(&pci_rescan_remove_lock)` on bus removal helpers
+- **[Phase 2]** `drivers/pci/pci-sysfs.c:470,504,539`: sysfs rescan
+  holds same lock
+- **[Phase 3]** `git blame -L 1073,1081`: bug from `ec15c4d0d5d2e`
+  (2019)
+- **[Phase 3]** `git show 9d16947b75831`: lock API since 2014
+- **[Phase 3]** `git show 1d59d474e1cb7`: related crash from missing
+  lock; in tree
+- **[Phase 3]** `git log master --grep="Protect root bus removal"`: fix
+  `a8759c8ac48c0` on mainline
+- **[Phase 3]** `git merge-base --is-ancestor a8759c8ac48c0 HEAD`: fix
+  NOT in HEAD
+- **[Phase 4]** `b4 dig`: failed; used local mbox instead
+- **[Phase 4]** WebFetch lore: blocked by Anubis
+- **[Phase 5]** `grep pci_lock_rescan_remove drivers/pci/controller/`:
+  peer drivers use same pattern
+- **[Phase 5]** `Kconfig`: `PCIE_ALTERA` tristate, ARM/ARM64/NIOS2
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** Read `pcie-altera.c:1073-1081`: buggy code confirmed in
+  HEAD
+- **[Phase 6]** `git show master:.../pcie-altera.c`: fix confirmed on
+  mainline
+- **[Phase 8]** `ec15c4d0d5d2e` commit message: module support for post-
+  boot FPGA load
 
-**YES**The analysis is complete: **this commit should be backported to
-the 6.18.y tree (v6.18.44).**
+**YES**The background checks finished and match what we already
+concluded:
 
-**Why:** `ib_umem_is_contiguous()` truncates 64-bit `dma_addr_t` values
-through `roundup_pow_of_two()` on 32-bit kernels with 64-bit DMA
-addresses. That can mis-detect memory contiguity and break EFA external-
-memory CQ creation (or worse, accept non-contiguous memory).
+- **Altera history:** `pcie-altera.c` has never used
+  `pci_lock_rescan_remove()`; the missing lock goes back to the 2019
+  module-support commit. The lock API itself has been in the tree since
+  2014.
+- **Mainline status:** The fix landed on `master` via merge
+  `7c97ee7c4951a` (`PCI: altera: Protect root bus removal with rescan
+  lock`, `a8759c8ac48c0`). It is **not** in your current `v6.18.44`
+  checkout.
 
-**Scope:** Small, low-risk change in `include/rdma/ib_umem.h` (3 lines
-net). The buggy code from July 2025 is present in this tree; the fix is
-not.
+**Verdict remains YES** for backporting to this 6.18.y tree — small,
+obviously correct race fix with crash/UAF potential, and it should apply
+cleanly.
 
-**Follow-up for stable maintainers:** Backport patch 2 of the same
-series (`09ea6837a0434` — changes `ib_umem_find_best_pgsz()` to take
-`u64 virt`) together with this commit for a complete 32-bit fix. Patch 1
-of the series is already in 6.18.y as `afd35fec92971`.
+ drivers/pci/controller/pcie-altera.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- include/rdma/ib_umem.h | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
-
-diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
-index 0cda3e6425d2e..8a74153332577 100644
---- a/include/rdma/ib_umem.h
-+++ b/include/rdma/ib_umem.h
-@@ -121,16 +121,11 @@ static inline unsigned long ib_umem_find_best_pgoff(struct ib_umem *umem,
+diff --git a/drivers/pci/controller/pcie-altera.c b/drivers/pci/controller/pcie-altera.c
+index 76f3823d96139..8ef56e2fabcfb 100644
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -1075,8 +1075,10 @@ static void altera_pcie_remove(struct platform_device *pdev)
+ 	struct altera_pcie *pcie = platform_get_drvdata(pdev);
+ 	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(pcie);
  
- static inline bool ib_umem_is_contiguous(struct ib_umem *umem)
- {
--	dma_addr_t dma_addr;
- 	unsigned long pgsz;
- 
--	/*
--	 * Select the smallest aligned page that can contain the whole umem if
--	 * it was contiguous.
--	 */
--	dma_addr = ib_umem_start_dma_addr(umem);
--	pgsz = roundup_pow_of_two((dma_addr ^ (umem->length - 1 + dma_addr)) + 1);
--	return !!ib_umem_find_best_pgoff(umem, pgsz, U64_MAX);
-+	pgsz = ib_umem_find_best_pgsz(umem, ULONG_MAX,
-+				      ib_umem_start_dma_addr(umem));
-+	return pgsz && ib_umem_num_dma_blocks(umem, pgsz) == 1;
++	pci_lock_rescan_remove();
+ 	pci_stop_root_bus(bridge->bus);
+ 	pci_remove_root_bus(bridge->bus);
++	pci_unlock_rescan_remove();
+ 	altera_pcie_irq_teardown(pcie);
  }
  
- struct ib_umem_dmabuf *ib_umem_dmabuf_get(struct ib_device *device,
 -- 
 2.53.0
 
