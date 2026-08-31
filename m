@@ -1,145 +1,165 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DB154CF5B;
-	Mon, 31 Aug 2026 13:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E8C4AA038;
+	Mon, 31 Aug 2026 13:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184001; cv=none; b=V6hSQmzsaT8GgBCGpX1CgpHs0L0c66Qo1qw/new2QkCkum0RLOB1TEhnY+mSBCZaBvOkJBRBy4owtVBLof7k+XQomC2xLvLFqEycg/WGx2ZWERTAgwycduKkCXV/K7urBpEBr5d6vIWiS3YM6NMijuaaWC8uj9uQhaONUl9xGuw=
+	t=1788184002; cv=none; b=DxAw4Iv2g2KxxFD+Jm7Yxo3ZCzNXYo09RU4DkXAiovE6H4XTOvit6COYLU02JgeKBko1PZsCT8nDq/LEPOboFISiHDkN81Sp1kKGQj12M2dL6uYv2rvGWdih7iH0mb0Vp250r8U6bDsHVkAQ1U+Y2pkjb/l5avE2mn+Vcl0uNrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184001; c=relaxed/simple;
-	bh=pxckBbMAwnrziBb9YEEKL2ash6C2sAm7kF8uSqcUa24=;
+	s=arc-20240116; t=1788184002; c=relaxed/simple;
+	bh=lQ2ms6oxAzmpx+c1DfE469D4Wxy107nfn4ccdZRFfJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aCwLZl9A2ZgVgJte83yFVvlp14NpfCNYAAQCqASDSVFAH0lN+zQ5piJyUVyBvcj6Rv5dWivXGndRK8Ugm6twmkxT+178kptLM6jlwMoNLATOBLQ4iIPVMwVMsWcMZfGrQlABV0w06sdNW2P/njdGLKKxv0ca3VBH22pohIG5pzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZLVk24q0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=T9uFVE7ZPciEbQgCC4eEwGmwv5zW+a/99p2tMgBeO8iYDy3sSKSx9b71Qy9fVTq9BjpG+7FspoELg7NuIuYS26YkBeNz0T78dp8QeWBcQUZb9C+3ZdleDyDIu32FAppJkkfPh1QEHyj5NnRdlF+MdcwdosbABvpJugIi9CsrSq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUYxHbPX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZLVk24q0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A2A1F0155A;
-	Mon, 31 Aug 2026 13:46:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183998;
-	bh=e0pX5ziS2hiD4/DaS76z4oauIogFLF+1YP36epXdZfI=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUYxHbPX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED75B1F0155B;
+	Mon, 31 Aug 2026 13:46:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183999;
+	bh=oJvFoIVyuv97aCFAQZ1t5wvbEYyXgILXj90aBzU77XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZLVk24q0qj5IaGz5fEnbqSDc5sFH5hIhp66u0gQ3Zswd0VanQiZDViNwOaexLO93p
-	 A8vbageLPspRDyS48FXdggygXS5uLOFbTHePxSHiTHTV4j6jHRJpL3/C/3a5UEocaR
-	 EI6d897epLZCvaTPeeej3voSPOeydjtRUAOUf8woehWkpsqhq+9uvL5qq3D5ssofpz
-	 mpPXvdG13LnAqqr93XaK3SGW89bnjxsbPSOTZ/E0pp4aPZfdcjEjsK9yzqGmCYZHu6
-	 jYcB/7K84/EZ1LBl50FWSm4m9cPq8fQkZDwJ6AK9O95xWNdpOlihfI3Z4l0U9Z7Ju3
-	 7owT8xG04+HBg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Chris Lu <chris.lu@mediatek.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: MT7922: Add VID/PID 0e8d/223c
-Date: Mon, 31 Aug 2026 09:27:37 -0400
-Message-ID: <20260831133314.4125787-429-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=sUYxHbPXR+Pzmy0hXER8ZD9xTzmrzXypX3XjN8GRcPrpxTMtWd/iWa/5cba79tu+f
+	 gfyiATwL/6c3uYkC5QDLN/fgnFcqpFwkGzGv1jWRDtaaD2u2YCuK/kblNsVAxx1ae2
+	 bnW2X6p+jfr0NJM5wmZ7RGpNwjkvqut8GRbjJX2M=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 09/83] selinux: use u16 for security classes
+Date: Mon, 31 Aug 2026 15:33:45 +0200
+Message-ID: <20260831133359.648617096@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Lu <chris.lu@mediatek.com>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit fd5dc066b43eb8ae63f713aef704385c686b16e3 ]
+------------------
 
-Add VID 0e8d & PID 223c for MediaTek MT7922 USB Bluetooth chip.
+From: Christian Göttsche <cgzones@googlemail.com>
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+[ Upstream commit fa79a596848fe38c55ccab8832ac35dac07fb00c ]
 
-T:  Bus=07 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0e8d ProdID=223c Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+Security class identifiers are limited to 2^16, thus use the appropriate
+type u16 consistently.
 
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+(cherry picked from commit fa79a596848fe38c55ccab8832ac35dac07fb00c)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ security/selinux/ss/policydb.c |  5 +++--
+ security/selinux/ss/policydb.h | 10 +++++-----
+ security/selinux/ss/services.c |  2 +-
+ 3 files changed, 9 insertions(+), 8 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background git searches finished and match the earlier analysis:
-
-- **`0e8d/223c` is not in this 6.18.44 tree** — subject and message
-  searches returned no matches; `git merge-base --is-ancestor fd5dc066`
-  also shows it isn’t merged here yet.
-- **The patch applies cleanly** at the existing MT7922 quirk block
-  (after `0x04ca:0x38e4`).
-
-**Verdict unchanged: YES** for backport to this tree — a standard 2-line
-USB ID addition for MT7922 hardware the driver already supports, same
-pattern as `c5f173e20fdd7` (0489/e170) already present in 6.18.y.
-
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index cb8f14b9cae80..430e50388864c 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -707,6 +707,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0e8d, 0x223c), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3584), .driver_info = BTUSB_MEDIATEK |
+diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
+index 69c19ef4b8817..4c3cc98f87752 100644
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -951,7 +951,7 @@ int policydb_load_isids(struct policydb *p, struct sidtab *s)
+ 	return 0;
+ }
+ 
+-int policydb_class_isvalid(struct policydb *p, unsigned int class)
++int policydb_class_isvalid(struct policydb *p, u16 class)
+ {
+ 	if (!class || class > p->p_classes.nprim)
+ 		return 0;
+@@ -2039,7 +2039,8 @@ static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp
+ 	struct filename_trans_key *ft = NULL;
+ 	struct filename_trans_datum **dst, *datum, *first = NULL;
+ 	char *name = NULL;
+-	u32 len, ttype, tclass, ndatum, i;
++	u32 len, ttype, ndatum, i;
++	u16 tclass;
+ 	__le32 buf[3];
+ 	int rc;
+ 
+diff --git a/security/selinux/ss/policydb.h b/security/selinux/ss/policydb.h
+index 89a180b1742fb..a49275d1168d8 100644
+--- a/security/selinux/ss/policydb.h
++++ b/security/selinux/ss/policydb.h
+@@ -48,7 +48,7 @@ struct common_datum {
+ 
+ /* Class attributes */
+ struct class_datum {
+-	u32 value; /* class value */
++	u16 value; /* class value */
+ 	char *comkey; /* common name */
+ 	struct common_datum *comdatum; /* common datum */
+ 	struct symtab permissions; /* class-specific permission symbol table */
+@@ -82,7 +82,7 @@ struct role_datum {
+ struct role_trans_key {
+ 	u32 role; /* current role */
+ 	u32 type; /* program executable type, or new object type */
+-	u32 tclass; /* process class, or new object class */
++	u16 tclass; /* process class, or new object class */
+ };
+ 
+ struct role_trans_datum {
+@@ -139,7 +139,7 @@ struct cat_datum {
+ struct range_trans {
+ 	u32 source_type;
+ 	u32 target_type;
+-	u32 target_class;
++	u16 target_class;
+ };
+ 
+ /* Boolean data type */
+@@ -195,7 +195,7 @@ struct ocontext {
+ 		} ibendport;
+ 	} u;
+ 	union {
+-		u32 sclass; /* security class for genfs */
++		u16 sclass; /* security class for genfs */
+ 		u32 behavior; /* labeling behavior for fs_use */
+ 	} v;
+ 	struct context context[2]; /* security context(s) */
+@@ -322,7 +322,7 @@ struct policy_file {
+ extern void policydb_destroy(struct policydb *p);
+ extern int policydb_load_isids(struct policydb *p, struct sidtab *s);
+ extern int policydb_context_isvalid(struct policydb *p, struct context *c);
+-extern int policydb_class_isvalid(struct policydb *p, unsigned int class);
++extern int policydb_class_isvalid(struct policydb *p, u16 class);
+ extern int policydb_type_isvalid(struct policydb *p, unsigned int type);
+ extern int policydb_role_isvalid(struct policydb *p, unsigned int role);
+ extern int policydb_read(struct policydb *p, struct policy_file *fp);
+diff --git a/security/selinux/ss/services.c b/security/selinux/ss/services.c
+index 82608b34260fd..cbc101b095a30 100644
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -3290,7 +3290,7 @@ static int get_classes_callback(void *k, void *d, void *args)
+ {
+ 	struct class_datum *datum = d;
+ 	char *name = k, **classes = args;
+-	u32 value = datum->value - 1;
++	u16 value = datum->value - 1;
+ 
+ 	classes[value] = kstrdup(name, GFP_ATOMIC);
+ 	if (!classes[value])
 -- 
 2.53.0
+
+
 
