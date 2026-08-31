@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E715447A899;
-	Mon, 31 Aug 2026 13:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993B1435A84;
+	Mon, 31 Aug 2026 13:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184478; cv=none; b=sqTDjY0CWzaYIM47ZOLVBkBdUs8V6LqgpLL+9aoHpV25IatHg3MvUuTaN+vuSYQtOZtL7XHaCsj+bHWL4ag66w5xSAL+jiNFwvxCCAsHyjel3AhGMwVsIsQRQOYdj8nOxYvRBHsrT8d+IDOYLiM22McpR9FX/T07+hYSSw5I/gU=
+	t=1788184463; cv=none; b=DDKfWSk9qR8U55wjwgMknMKrIl6Ou/i0SH21m7h1NrYSZ37xhd9Q6jurGTdPkOyfi9MZHsCyWUHutGCRzWRQ0mhTnnRRogqTz1A0ErRGMEX51wv+ppib2p5PnMbDbGJ/2jA5AndRQ60PVmuznvm3GPmavdi5dZyjONchsNcpoEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184478; c=relaxed/simple;
-	bh=YXuNeIw498ClQJKxtEENIOyCIv8jgP9YdKJm1nAwHtY=;
+	s=arc-20240116; t=1788184463; c=relaxed/simple;
+	bh=Ua3XgKVETeNNm4tXRTC8rX4UW8/XSGemmpLE+ZWvFYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKYYo7wzHhG9qqvUFGyCQGQUIYEfD1wGoHMNrJuD7JZ6iaTgUAkzEOlnDpOueGXqH/xgj9p4kn1q5tyjOI+D2l//7itTWlZPqUs0+tqacBc3nxsHhhHaVtEoNfnASPmCIE8h6ocujZ53ujCIvECQMD6MJWHo0hYvslkXTQyZ9L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuOBTFwI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XXZyMSaNGeWdhB1WlfdjkC1IK0uycK5KJfBHLFk5zRpPBs9gM++v+Ob21sznnsCUYzJHvYKFIbZRrf7GAHKCyxGCXBYve/Rp2KiO1McSQa6v6pTtEVggYn5cno6fNzyZc9JSA00DZG4eAEZqIszCwjPCma5UgYsAdryrGmjIQ4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7EiCdFK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuOBTFwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6E81F000E9;
-	Mon, 31 Aug 2026 13:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7EiCdFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30DF1F000E9;
+	Mon, 31 Aug 2026 13:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184476;
-	bh=yL/AWeMZRy5U03mQXZsecFE1OaAQQt51BIZ13CKYFNc=;
+	s=korg; t=1788184462;
+	bh=RyFXfufFk3zWCE8GOQjkcf/smf/TMAnftMLQN19SO70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UuOBTFwIZnmL6O0HUU7roAoCf361qMD9UgGr7m2OU9kEFjGFaPZh2WikfKcLRooId
-	 6s/+Nw7J1gGdkxbwXP+DmQxfcuy+Zfs8BLttHzhSQVW0bC7AF1KYO9Jcw2aDlPWfZZ
-	 u4m6LoXMfzAyho5gS5lOuChg+cEy8lGTRcC4D3uk=
+	b=C7EiCdFK+lXB/UnFenykxpWTSXvwPa0Qmrr0eypjtKz5ICSoLHuLuq79iRkMZU4Im
+	 sVgBjOIc5B0nH8nN/pLwM0oe8nOuXVMZpOKFzmXzbhBD8ccXVMRokboX/qDKN65rNf
+	 KMkm1iSSfGNH9zHF4NhngSO2OPsdkJj3Bm08VggU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 21/91] smc: Use __sk_dst_get() and dst_dev_rcu() in in smc_clc_prfx_set().
-Date: Mon, 31 Aug 2026 15:34:09 +0200
-Message-ID: <20260831133400.729313493@linuxfoundation.org>
+Subject: [PATCH 6.6 17/91] can: j1939: add missing calls in NETDEV_UNREGISTER notification handler
+Date: Mon, 31 Aug 2026 15:34:05 +0200
+Message-ID: <20260831133400.463052741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -52,126 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 935d783e5de9b64587f3adb25641dd8385e64ddb ]
+[ Upstream commit 93a27b5891b8194a8c083c9a80d2141d4bf47ba8 ]
 
-smc_clc_prfx_set() is called during connect() and not under RCU
-nor RTNL.
+Currently NETDEV_UNREGISTER event handler is not calling
+j1939_cancel_active_session() and j1939_sk_queue_drop_all().
+This will result in these calls being skipped when j1939_sk_release() is
+called. And I guess that the reason syzbot is still reporting
 
-Using sk_dst_get(sk)->dev could trigger UAF.
+  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
 
-Let's use __sk_dst_get() and dev_dst_rcu() under rcu_read_lock()
-after kernel_getsockname().
+is caused by lack of these calls.
 
-Note that the returned value of smc_clc_prfx_set() is not used
-in the caller.
+Calling j1939_cancel_active_session(priv, sk) from j1939_sk_release() can
+be covered by calling j1939_cancel_active_session(priv, NULL) from
+j1939_netdev_notify().
 
-While at it, we change the 1st arg of smc_clc_prfx_set[46]_rcu()
-not to touch dst there.
+Calling j1939_sk_queue_drop_all() from j1939_sk_release() can be covered
+by calling j1939_sk_netdev_event_netdown() from j1939_netdev_notify().
 
-Fixes: a046d57da19f ("smc: CLC handshake (incl. preparation steps)")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-3-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Therefore, we can reuse j1939_cancel_active_session(priv, NULL) and
+j1939_sk_netdev_event_netdown(priv) for NETDEV_UNREGISTER event handler.
+
+Fixes: 7fcbe5b2c6a4 ("can: j1939: implement NETDEV_UNREGISTER notification handler")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/3ad3c7f8-5a74-4b07-a193-cb0725823558@I-love.SAKURA.ne.jp
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_clc.c | 41 ++++++++++++++++++++++-------------------
- 1 file changed, 22 insertions(+), 19 deletions(-)
+ net/can/j1939/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index 1bf6cd010f04a..1859682dfb1cd 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -508,10 +508,10 @@ static bool smc_clc_msg_hdr_valid(struct smc_clc_msg_hdr *clcm, bool check_trl)
- }
- 
- /* find ipv4 addr on device and get the prefix len, fill CLC proposal msg */
--static int smc_clc_prfx_set4_rcu(struct dst_entry *dst, __be32 ipv4,
-+static int smc_clc_prfx_set4_rcu(struct net_device *dev, __be32 ipv4,
- 				 struct smc_clc_msg_proposal_prefix *prop)
- {
--	struct in_device *in_dev = __in_dev_get_rcu(dst->dev);
-+	struct in_device *in_dev = __in_dev_get_rcu(dev);
- 	const struct in_ifaddr *ifa;
- 
- 	if (!in_dev)
-@@ -529,12 +529,12 @@ static int smc_clc_prfx_set4_rcu(struct dst_entry *dst, __be32 ipv4,
- }
- 
- /* fill CLC proposal msg with ipv6 prefixes from device */
--static int smc_clc_prfx_set6_rcu(struct dst_entry *dst,
-+static int smc_clc_prfx_set6_rcu(struct net_device *dev,
- 				 struct smc_clc_msg_proposal_prefix *prop,
- 				 struct smc_clc_ipv6_prefix *ipv6_prfx)
- {
- #if IS_ENABLED(CONFIG_IPV6)
--	struct inet6_dev *in6_dev = __in6_dev_get(dst->dev);
-+	struct inet6_dev *in6_dev = __in6_dev_get(dev);
- 	struct inet6_ifaddr *ifa;
- 	int cnt = 0;
- 
-@@ -563,41 +563,44 @@ static int smc_clc_prfx_set(struct socket *clcsock,
- 			    struct smc_clc_msg_proposal_prefix *prop,
- 			    struct smc_clc_ipv6_prefix *ipv6_prfx)
- {
--	struct dst_entry *dst = sk_dst_get(clcsock->sk);
- 	struct sockaddr_storage addrs;
- 	struct sockaddr_in6 *addr6;
- 	struct sockaddr_in *addr;
-+	struct net_device *dev;
-+	struct dst_entry *dst;
- 	int rc = -ENOENT;
- 
--	if (!dst) {
--		rc = -ENOTCONN;
--		goto out;
--	}
--	if (!dst->dev) {
--		rc = -ENODEV;
--		goto out_rel;
--	}
- 	/* get address to which the internal TCP socket is bound */
- 	if (kernel_getsockname(clcsock, (struct sockaddr *)&addrs) < 0)
--		goto out_rel;
-+		goto out;
-+
- 	/* analyze IP specific data of net_device belonging to TCP socket */
- 	addr6 = (struct sockaddr_in6 *)&addrs;
-+
- 	rcu_read_lock();
-+
-+	dst = __sk_dst_get(clcsock->sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	if (!dev) {
-+		rc = -ENODEV;
-+		goto out_unlock;
-+	}
-+
- 	if (addrs.ss_family == PF_INET) {
- 		/* IPv4 */
- 		addr = (struct sockaddr_in *)&addrs;
--		rc = smc_clc_prfx_set4_rcu(dst, addr->sin_addr.s_addr, prop);
-+		rc = smc_clc_prfx_set4_rcu(dev, addr->sin_addr.s_addr, prop);
- 	} else if (ipv6_addr_v4mapped(&addr6->sin6_addr)) {
- 		/* mapped IPv4 address - peer is IPv4 only */
--		rc = smc_clc_prfx_set4_rcu(dst, addr6->sin6_addr.s6_addr32[3],
-+		rc = smc_clc_prfx_set4_rcu(dev, addr6->sin6_addr.s6_addr32[3],
- 					   prop);
- 	} else {
- 		/* IPv6 */
--		rc = smc_clc_prfx_set6_rcu(dst, prop, ipv6_prfx);
-+		rc = smc_clc_prfx_set6_rcu(dev, prop, ipv6_prfx);
+diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
+index 6bbe75d2211d5..21186932f8f61 100644
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -378,6 +378,8 @@ static int j1939_netdev_notify(struct notifier_block *nb,
+ 		j1939_ecu_unmap_all(priv);
+ 		break;
+ 	case NETDEV_UNREGISTER:
++		j1939_cancel_active_session(priv, NULL);
++		j1939_sk_netdev_event_netdown(priv);
+ 		j1939_sk_netdev_event_unregister(priv);
+ 		break;
  	}
-+
-+out_unlock:
- 	rcu_read_unlock();
--out_rel:
--	dst_release(dst);
- out:
- 	return rc;
- }
 -- 
 2.53.0
 
