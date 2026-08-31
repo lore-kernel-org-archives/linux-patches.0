@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9A443BDA8;
-	Mon, 31 Aug 2026 13:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AF243B6EC;
+	Mon, 31 Aug 2026 13:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184636; cv=none; b=rk9wpcilJa+nf0VHGoBLy0KEvMtirdnE72rmzTzmQNutYj0vn+DZed4E8twFRq7iL/3suR2Rdfap2rPh2YuHrk1yzGXy5AzJQEOr/NT7d7ERlp5rlPALCkzAFBRhD9tpdm9WYSIiWRmrK8HFh0T3BdQtKuNyqE2+CmqGrk6+qvA=
+	t=1788184633; cv=none; b=quOz8eablNiLmTX7fRHzWaj9w1yB0vvL/QLaUXb0ZQKxatuyXkZq+Kl7seEw47j/l5piy9wRCa0+LsqFlqbntJc7naE0CroulDFx6q7TDVPeU1wbY6jpeYE7HSkTFVWbfPvSUffejUuSAhQjjrfpBWtD+Y/csEDT7b9ESmaiXU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184636; c=relaxed/simple;
-	bh=idyYsEhQKux7qmHIIMt7QuguGndm7KjF6BNH4nZkygs=;
+	s=arc-20240116; t=1788184633; c=relaxed/simple;
+	bh=k5CLLhItNyQDlhrYmbXwg5+AjUEFGOqelRS5HgkUewk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IgM1Hl9NLzAMJwtjf7S8E2DTXPlw7a/+qcocIYRIARYM5EGdrw7Q7O4b4wQ7nJWCFSESDUZuPlm9xWMzs6Xba8FOFQFXJ0gtUXSWqsM7n7kiNrcjO6gVN23TUR/471tgrDAvBEBGbqZwmwBln/V0kVW1xk+ayDWHf817HJvSUww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6LGSzuE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DU5/WvqkuUywRTkU27hEksf944JA+iRukfsVOq6c8EoAhXZZDbgYWeDn2dxO+LYKUQdsmak+ETYqDPf1oEsaycJfrgfRoeV5HV+1uaCeHwpdRwoRwm4cwiwCeyJ13uOvh7hjRffFl1RGQcUVb5n8Q5O7bnUv75Py973jRuCyvXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDALxojq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6LGSzuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563981F000E9;
-	Mon, 31 Aug 2026 13:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDALxojq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCBE1F000E9;
+	Mon, 31 Aug 2026 13:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184634;
-	bh=sc32BmjViipSB4zbzzwnj+VhU1xvZjht73YrpnYMeTM=;
+	s=korg; t=1788184632;
+	bh=RPNhqbohfipzSrxm8kKgQHQzddMBkpaqMh5F/uCUCus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G6LGSzuEAAJi8pX7i1fnijfoPDaCeKIzbBEZEPnj03fvMEjHy5LsDcUJFRNUmwQD3
-	 +4ATq9lRSsSv1P/CeEdlTPf2ptDY+7mhFpUzP+5YJiMzkmVGfrebyjfYTM1zKpWiRh
-	 /kdvYDs4x2X6y9a150wP5hsHrwATUut704lml5MA=
+	b=GDALxojqNFnoGTDWCPdzMmzGxDiCSHSLW5FUmd4wxdfJv/ti8HIilKe4atr9rsK5p
+	 URAh9WRoktUEN7uVpB84EOZOMAkasXo/zvb9OBpxRMBhLoOgSmD3jDb0v1EyFtRW6Q
+	 JDrLxM2nbzB2+Z+o+5XFbV/dcIIXwKME9Fl/GR2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 77/91] ipv6: seg6: clear IPv4 control block on IPIP decapsulation
-Date: Mon, 31 Aug 2026 15:35:05 +0200
-Message-ID: <20260831133403.583308141@linuxfoundation.org>
+Subject: [PATCH 6.6 76/91] net: bridge: mcast: fix use-after-free of a master VLANs multicast context
+Date: Mon, 31 Aug 2026 15:35:04 +0200
+Message-ID: <20260831133403.548370597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -52,112 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 44930446dde45a7a90fe1446fa38eb0e2c561646 upstream.
+commit 50e5c6605cc9c2dd57bd2d1b3459674d19738983 upstream.
 
-End.DX4 and End.DT4 decapsulate an IPv4 packet through
-decap_and_validate() and send it directly to IPv4 routing. The inner
-packet therefore bypasses ip_rcv_core(), which normally clears IPCB
-before IPv4 interprets skb->cb.
+br_multicast_toggle_one_vlan() clears BR_VLFLAG_MCAST_ENABLED under
+br->multicast_lock before stopping a VLAN's multicast context.  That is
+the teardown handshake: lockless readers gate on the flag through
+br_multicast_ctx_should_use() -> br_multicast_ctx_vlan_disabled(), so
+once it is cleared under the lock no reader can arm the context again.
 
-The skb instead retains IP6CB data from the outer packet. IP6CB and
-IPCB use the same skb->cb storage, so IP6CB(skb)->lastopt overlaps
-IPCB(skb)->opt.optlen and srr, while IP6CB(skb)->nhoff overlaps rr and
-ts.
+For a master VLAN the handshake never runs.  __vlan_del() clears
+BRIDGE_VLAN_INFO_BRENTRY before calling br_vlan_put_master(), so
+br_multicast_toggle_one_vlan(masterv, false) returns early on
+!br_vlan_is_brentry(vlan): the flag stays set and br->multicast_lock is
+never taken.  br_vlan_put_master() then drains the context in
+br_multicast_ctx_deinit() and frees the VLAN through call_rcu(), while a
+reader still inside rcu_read_lock() sees the context as enabled and
+re-arms it.  The port and port-VLAN branch of the function has no
+br_vlan_is_brentry() test and flips the flag under br->multicast_lock,
+so it is not affected.
 
-The sender can make the stale optlen byte nonzero with a valid outer
-extension-header chain. The reproducers put an eight-byte Destination
-Options header immediately after the 40-byte IPv6 header and before the
-Segment Routing Header. ipv6_destopt_rcv() records the sender-controlled
-Destination Options offset in both lastopt and nhoff, setting them to
-40. On the reproduced little-endian x86-64 kernel, IPv4 therefore sees
-optlen = 40 and rr = 40.
+The reader is the bridge transmit path.  For a master VLAN
+br_multicast_rcv() selects brmctx = &vlan->br_mcast_ctx with
+pmctx = NULL, so IGMP sent to the bridge device re-arms the context's
+timers after br_multicast_ctx_deinit() has already stopped them.
 
-Both tcp_v4_save_options() and __ip_options_echo() skip option copying
-when optlen is zero. Here optlen is 40, so the TCP SYN path allocates
-room for 40 bytes of option data and calls __ip_options_echo(). The
-stale rr value makes that function read inner packet byte 41 as the
-Record Route option length. The reproducers set that sender-controlled
-byte to 255, so __ip_options_echo() copies 255 bytes into the 40-byte
-option-data area.
+  BUG: KASAN: slab-use-after-free in detach_if_pending+0x412/0x4a0
+  Write of size 8 at addr ffff88810ac39918 by task brmc/601
+   __mod_timer+0x51a/0xc50
+   br_multicast_host_join+0x25b/0x390
+   __br_multicast_add_group+0x468/0x530
+   br_ip4_multicast_add_group+0x1a0/0x260
+   br_multicast_rcv+0x2cda/0x61e0
+   br_dev_xmit+0x6c4/0x1540
+  Allocated by task 610:
+   br_vlan_add+0x111/0xb40
+   br_vlan_info+0x370/0x3e0
+  Freed by task 0:
+   kfree+0x1a7/0x4f0
+   rcu_core+0x7dc/0x10a0
 
-Separate End.DX4 and End.DT4 reproducers on the unpatched v7.2-rc5
-kernel both produced:
+Only test br_vlan_is_brentry() when enabling, like the
+br_multicast_ctx_vlan_global_disabled() test next to it.  Disabling then
+always clears BR_VLFLAG_MCAST_ENABLED under br->multicast_lock before
+br_multicast_ctx_deinit() drains the context.
 
-  BUG: KASAN: slab-out-of-bounds in __ip_options_echo()
-  Write of size 255
-
-The relevant End.DX4 call path is:
-
-  __ip_options_echo
-  tcp_v4_route_req
-  tcp_conn_request
-  tcp_v4_conn_request
-  tcp_rcv_state_process
-  tcp_v4_do_rcv
-  tcp_v4_rcv
-  ip_protocol_deliver_rcu
-  ip_local_deliver_finish
-  ip_local_deliver
-  input_action_end_dx4_finish
-  input_action_end_dx4
-
-The relevant End.DT4 call path is:
-
-  __ip_options_echo
-  tcp_v4_route_req
-  tcp_conn_request
-  tcp_v4_conn_request
-  tcp_rcv_state_process
-  tcp_v4_do_rcv
-  tcp_v4_rcv
-  ip_protocol_deliver_rcu
-  ip_local_deliver_finish
-  ip_local_deliver
-  input_action_end_dt4
-
-tcp_v4_save_options() is inlined into the tcp_v4_route_req() path, so
-it does not appear as a separate frame.
-
-When decap_and_validate() handles IPPROTO_IPIP, save the ingress
-interface from IP6CB, clear IPCB, and restore the saved value. Doing
-this in the common decapsulation path covers End.DX4, End.DT4, and
-End.DT46's IPv4 arm.
-
-Use IP6CB(skb)->iif rather than skb->skb_iif. These actions run after
-l3mdev processing, which can replace skb_iif with the L3 master;
-IP6CB iif still records the receiving interface set at IPv6 ingress.
-
-Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
+Fixes: 7b54aaaf53cb ("net: bridge: multicast: add vlan state initialization and control")
 Cc: stable@vger.kernel.org
-Suggested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260817085839.946321-1-david.lee@trailofbits.com
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/D400F6C7-543A-4B79-9E5B-D1D8974DE5C9@doyensec.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_local.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bridge/br_multicast.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -256,6 +256,13 @@ static bool decap_and_validate(struct sk
- 	if (iptunnel_pull_offloads(skb))
- 		return false;
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -4312,8 +4312,8 @@ void br_multicast_toggle_one_vlan(struct
+ 	if (br_vlan_is_master(vlan)) {
+ 		br = vlan->br;
  
-+	if (proto == IPPROTO_IPIP) {
-+		int iif = IP6CB(skb)->iif;
-+
-+		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
-+		IPCB(skb)->iif = iif;
-+	}
-+
- 	return true;
- }
+-		if (!br_vlan_is_brentry(vlan) ||
+-		    (on &&
++		if (on &&
++		    (!br_vlan_is_brentry(vlan) ||
+ 		     br_multicast_ctx_vlan_global_disabled(&vlan->br_mcast_ctx)))
+ 			return;
  
 
 
