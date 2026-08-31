@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE8C4F30E8;
-	Mon, 31 Aug 2026 13:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4230F49F105;
+	Mon, 31 Aug 2026 13:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183661; cv=none; b=Ie5i4uvVJs5snCgVcdW2IxIy1X1aBCbLldqIlCuQzjJlncuNTSGYJu/zD9/+YQYajMtDjYlPB9nmMTyzGjKSAxqutZRrok1KmeKkWtwf2Y/RfTNkljLXUjNQWuKmId9ndxj9u8USG70i0gUqDw2Yl9KH4EkZiQRMUyefNwJV/oI=
+	t=1788183662; cv=none; b=c1VCTGRBA+XkMzD7o02i+9imJGpG5kCyWF8LmEiOw9GbRPCSZkbeVUzqbxCbNIQRH9EZHTkxEIbJvESViou9GS2KgWVI/Nzn7yiw6w6tjdi0B0qlXj6rAY9+Isw+se29adMzJNyNjJoaizdLPM0f8aFdMguHNhduc14AxgSiWno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183661; c=relaxed/simple;
-	bh=35ftScKN79r4y9/XpMotZcW20dUe1DAof2CnKV9ela0=;
+	s=arc-20240116; t=1788183662; c=relaxed/simple;
+	bh=5mVFXDDwRIFrktlJtdmQdRepNZhRf8RXk1psKbpzzbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V5JapgM9QGrBDYYUWCrazoRG54s5ojl08f80ZpTb1dX1zWMISm+dE7SaAOkdvq1pM8mRpR6L3+L+B5W0ItiGlzkzufFkfPRMhoI1xexUZFrt1ecpXBKxSQe8HHD784aEXfN9A+JI0JsCA3zz09oSsydqV0i+tpYRcafIzm0Y6hA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jhNVhna1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=F9hgOU5cVEv6XVzWkquvsthgHks+BimJ0/hP1XJbyM3r9YkDc9IokdbIm97oVKUi7HUGbyf/x9KxcB2ds9hZ7FoB8RbwyU1s4EmJH3/GOc8AD6A6YWQD7TrO0z20b/q14H/tSnQJle7GF5nfGEjUHlPo1ZXx4OIPOfi/sdXZaNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EMiXLHUB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jhNVhna1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22A21F00A3D;
-	Mon, 31 Aug 2026 13:40:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EMiXLHUB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130361F00ACF;
+	Mon, 31 Aug 2026 13:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183658;
-	bh=ihLb3RsDQds81mGMVctTKmmoDpuj7IoLPdoU1xnopSs=;
+	s=k20260515; t=1788183660;
+	bh=Vf6+54o0ux6cYkoKwDlPwqpXYnzXiEexW51rM9YxfuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jhNVhna16hkcynvvA9glKOYI0PCIOvHdhAiNcWUPY8MItC6N7byd00nnt6vcVoLl0
-	 9crv/c++t9qfrnF24L0QZ7ZuwqAT99kGrIa1efp+uTmHp9cZTDTIR4NcxGI90UWtAu
-	 eRSVaBjgd1+8N/xCQsVV6lrYH5yv6rqrsuAcH4abMPouyei2Ynfa85SXOZnfpiHJAT
-	 U7/d21p8tVTRlp6uyuDUKFMYOkMPQHxdiUshIKCxnGPMc8/DBuUvtofesj07dw2tZ1
-	 PeEFfZq1tPB4ITph77WKnreeal0mJNTy8Q46KLVaX2sVzuoviVV4JDz+wden/L9No6
-	 aRt+DG6ZGD9Tw==
+	b=EMiXLHUBz7h4PnJKCwdgBmN/x0TSdhDpng+2bp5AzjdZbr36TnJYv7C8AoevCgNaG
+	 vBq44NoOaGiN6xKg5vk+A7bH8wPlOdO3TIhDLhcz1gygEsBGh0+uPAJOOwXewi2rHU
+	 xlap627wrmPz9EcyCOmx+iMI1IErKtJoQGhQhWvpqZNhLv1DXv5IJdhuBWkvjzoW/I
+	 JNw6P+bGiu2sTIuSDeRgIxllZPoW3qeDs1mvXd4JbMBde/gqMlZ8tOZrPGf3SMOoi2
+	 g/m2fjijmyk9RUx9Q4B3rCdu89dL4wAeEQ4Ip2NeqL41ofU5usSj+gOMjk94qa5EQx
+	 NxhUfXcbki+KQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joy Zou <joy.zou@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Peter Zijlstra <peterz@infradead.org>,
+	Lee Jia Jie <jiajie.lee@starlabs.sg>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] regulator: pca9450: Correct default t_off_deb for PCA9451A/PCA9452
-Date: Mon, 31 Aug 2026 09:24:14 -0400
-Message-ID: <20260831133314.4125787-226-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] perf: Fix addr_filter_ranges lifetime
+Date: Mon, 31 Aug 2026 09:24:15 -0400
+Message-ID: <20260831133314.4125787-227-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,385 +55,375 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joy Zou <joy.zou@nxp.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit fbef4191b4961c125585c715407e693f7d0024a9 ]
+[ Upstream commit e62d4192e593630f355094adc467058a05bdc935 ]
 
-The PMIC PCA9451A and PCA9452 have a default power-off debounce time of
-2ms according to their datasheet, while PCA9450A and PCA9450BC use 120us.
+Lee Jia Jie reported that since event::addr_filter_ranges is used
+under RCU, it should be RCU freed.
 
-Add default_t_off_deb field to struct pca9450 to support per-variant
-default configuration when the device tree property is not specified.
-
-Datasheet reference links:
-- PCA9451A Rev.2.1: https://www.nxp.com/docs/en/data-sheet/PCA9451A.pdf
-- PCA9452 Rev.1.0: https://www.nxp.com/docs/en/data-sheet/PCA9452.pdf
-
-Signed-off-by: Joy Zou <joy.zou@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260618-b4-regulator-opt-v1-1-c43b1f62aaf6@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Lee Jia Jie <jiajie.lee@starlabs.sg>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `regulator: pca9450: Correct default
-t_off_deb for PCA9451A/PCA9452`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (Makefile: 6.18.44)
+### Step 1.1: Parse Subject Line
+**Record:** `[perf]` `[Fix]` — correct the lifetime of
+`event::addr_filter_ranges` so it is freed only after RCU readers are
+done.
+
+### Step 1.2: Parse All Commit Message Tags
+**Record:**
+- **Reported-by:** Lee Jia Jie \<jiajie.lee@starlabs.sg\> — single
+  reporter; indicates a real review/testing finding
+- **Signed-off-by:** Peter Zijlstra (Intel) \<peterz@infradead.org\> —
+  perf subsystem maintainer
+- No Fixes:, Link:, Tested-by:, Reviewed-by:, Acked-by:, or Cc: stable
+  tags (absence of Cc: stable is expected per review pipeline)
+
+### Step 1.3: Analyze Commit Body
+**Record:**
+- **Bug:** `event::addr_filter_ranges` is accessed under RCU but was
+  freed synchronously in `__free_event()` before the RCU grace period
+  ended.
+- **Symptom:** Use-after-free when RCU readers still access the array
+  (crash, KASAN report, or memory corruption).
+- **Root cause:** `kfree(event->addr_filter_ranges)` ran in
+  `__free_event()` while `call_rcu(&event->rcu_head, free_event_rcu)`
+  deferred only the `perf_event` struct itself — not the separately
+  allocated array.
+- **Version info:** None in the commit message.
+
+### Step 1.4: Detect Hidden Bug Fixes
+**Record:** Not disguised — this is an explicit lifetime/UAF fix. The
+one-line move of `kfree()` from synchronous teardown to the RCU callback
+is a classic deferred-free pattern.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff Analysis
 
-### Step 1.1: Subject line
-**Record:** `[regulator: pca9450]` `[Correct]` — Fix wrong default
-power-off debounce (`t_off_deb`) for PCA9451A/PCA9452 PMIC variants.
-
-### Step 1.2: Tags
+### Step 2.1: Inventory the Changes
 **Record:**
-- **Reviewed-by:** Frank Li `<Frank.Li@nxp.com>` (NXP reviewer)
-- **Link:** https://patch.msgid.link/20260618-b4-regulator-
-  opt-v1-1-c43b1f62aaf6@oss.nxp.com
-- **Signed-off-by:** Joy Zou `<joy.zou@nxp.com>` (author)
-- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (regulator
-  maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable, syzbot links
+- **File:** `kernel/events/core.c` (+1 / −2 lines)
+- **Functions modified:** `free_event_rcu()`, `__free_event()`
+- **Scope:** Single-file, surgical fix (2-line net change)
 
-Notable: NXP author + NXP reviewer + subsystem maintainer ack; no user
-bug report or fuzzer report.
-
-### Step 1.3: Body analysis
+### Step 2.2: Code Flow Change
 **Record:**
-- **Bug:** PCA9451A and PCA9452 datasheet default power-off debounce is
-  **2 ms**; PCA9450A/PCA9450BC default is **120 µs**. Driver used 120 µs
-  for all variants when DT property `nxp,pmic-on-req-off-debounce-us` is
-  absent.
-- **Symptom:** Wrong PMIC `PWRCTRL` off-debounce programmed at probe on
-  PCA9451A/9452 boards without that DT property.
-- **Root cause:** `pca9450_of_init()` hardcoded `T_OFF_DEB_120US` as the
-  fallback for all chip types.
-- **Fix:** Add per-variant `default_t_off_deb` in `struct pca9450`, set
-  in probe switch.
+- **Hunk 1 (`free_event_rcu`):** Before → frees only `perf_event` struct
+  (after filter cleanup). After → also
+  `kfree(event->addr_filter_ranges)` here, after RCU grace period.
+- **Hunk 2 (`__free_event`):** Before →
+  `kfree(event->addr_filter_ranges)` synchronously, then `call_rcu()`.
+  After → array is not freed here; only the event struct is deferred via
+  `call_rcu()`.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Despite “Correct default,” this is a real hardware-
-configuration bug: the driver overwrites PMIC timing with a value
-inappropriate for PCA9451A/9452.
+### Step 2.3: Bug Mechanism
+**Record:** **Memory safety / use-after-free.** Category (d).
+`addr_filter_ranges` is a separately `kcalloc()`'d array accessed from
+RCU-protected iterators while the parent `perf_event` may still be
+visible to RCU readers until `free_event_rcu()` runs.
+
+### Step 2.4: Fix Quality
+**Record:** Obviously correct — mirrors how the `perf_event` struct
+itself is already RCU-freed. Minimal change. `kfree(NULL)` is safe for
+events without address filters. No meaningful regression risk.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 3: Git History Investigation
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/regulator/pca9450-regulator.c` only (+9 / -1 net
-  functional lines)
-- **Functions:** `pca9450_of_init()`, `pca9450_i2c_probe()`
-- **Scope:** Single-file, surgical fix
+### Step 3.1: Blame Changed Lines
+**Record:** `kfree(event->addr_filter_ranges)` in `__free_event()` was
+placed there by **c70ca298036c5** ("perf/core: Simplify the
+perf_event_alloc() error path", Nov 2024). The same premature-free
+pattern existed in `_free_event()` since **c60f83b813e5b** (Feb 2019)
+when `addr_filter_ranges` was introduced.
 
-### Step 2.2: Code flow change
-**Record:**
-- **Hunk 1 (`struct pca9450`):** Add `int default_t_off_deb`.
-- **Hunk 2 (`pca9450_of_init`):** When `nxp,pmic-on-req-off-debounce-us`
-  is missing (`-EINVAL`), use `pca9450->default_t_off_deb` instead of
-  hardcoded `T_OFF_DEB_120US`.
-- **Hunk 3 (`pca9450_i2c_probe`):** Set `default_t_off_deb` per chip
-  type:
-  - PCA9450A/BC → `T_OFF_DEB_120US`
-  - PCA9451A/9452 → `T_OFF_DEB_2MS`
+### Step 3.2: Follow Fixes: Tag
+**Record:** No Fixes: tag present — N/A.
 
-**Before → After:** Missing DT property → always 120 µs → variant-
-correct default (120 µs or 2 ms).
+### Step 3.3: File History for Related Changes
+**Record:** Related commits in this tree:
+- **c60f83b813e5b** (2019) — introduced `addr_filter_ranges`
+- **c70ca298036c5** (2024) — refactored into `__free_event()`, kept
+  premature `kfree`
+- **0fe8813baf4b2** (Jan 2025) — restored RCU read-lock around
+  `perf_iterate_ctx()` in `perf_event_exec()` (Cc: stable)
+- **e62d4192e5936** (Jun 2026) — this fix; on `master`, **not** in
+  current HEAD
 
-### Step 2.3: Bug mechanism
-**Record:** **Category (g): Logic/correctness fix** — wrong default
-constant for newer PMIC variants. `pca9450_of_init()` always writes
-`PCA9450_REG_PWRCTRL` via `regmap_update_bits()` during probe; with
-missing DT property it programmed 120 µs on chips whose default is 2 ms.
+Standalone fix, not part of a series.
 
-### Step 2.4: Fix quality
-**Record:** Obviously correct, minimal, matches datasheet. Low
-regression risk: PCA9450A/BC behavior unchanged; only PCA9451A/9452
-default path changes. No new public API.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame
-**Record:** Buggy line `t_off_deb = T_OFF_DEB_120US` introduced in
-**55ca06f54f57f** (“regulator: pca9450: Add support for setting debounce
-settings”, 2025-11-17 / backported to 6.18.y 2026-03-19). Before that
-commit, driver did not program `PWRCTRL` debounce at all (hardware
-defaults remained).
-
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag. Bug introduced by 55ca06f54f57f,
-confirmed present in this tree.
-
-### Step 3.3: Related file history
-**Record:**
-- `5edeb7d312628` — add pca9451a support
-- `017b76fb8e5b6` — add pca9452 support
-- `55ca06f54f57f` — add debounce DT configuration (introduced bug)
-- `f7e52a24e5b76` — PCA9452 probed name fix
-Standalone fix; no series dependency.
-
-### Step 3.4: Author context
-**Record:** Joy Zou authored PCA9451A/9452 support commits; NXP
-contributor for this driver.
+### Step 3.4: Author's Other Commits
+**Record:** Peter Zijlstra is the perf core maintainer. He authored
+c70ca298 (which organized the buggy path) and e62d4192 (this fix).
+Multiple recent perf UAF/lifetime fixes exist on this stable branch
+(e.g. c27dea9f50ed5 perf_mmap UAF, c8b7e113f7b61 perf/aux page UAF).
 
 ### Step 3.5: Prerequisites
-**Record:** Requires `pca9450_of_init()` from 55ca06f54f57f and
-PCA9451A/9452 types — all present in this tree. Applies cleanly.
+**Record:** No dependencies. `git apply --check` on e62d4192 against
+current tree succeeds cleanly. Self-contained.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Patch discussion
-**Record:** Link fetch blocked (Anubis bot protection). `b4 dig` for
-this commit hash returned no match (fix not yet merged). `b4 dig -c
-55ca06f54f57f` found the original debounce patch thread. Could not read
-fix-patch review thread.
+### Step 4.1: Original Patch Discussion
+**Record:** `b4 dig -c e62d4192e5936` →
+https://patch.msgid.link/178186383722.1650852.13407085310329360626.tip-
+bot2@tip-bot2 (tip-bot commit notification). `b4 dig -a` returned no
+additional revisions (single-shot fix). Lore fetch blocked by bot
+protection — could not read thread content.
 
 ### Step 4.2: Reviewers
-**Record:** Mark Brown (regulator maintainer) committed; Frank Li (NXP)
-reviewed. Appropriate subsystem coverage.
+**Record:** `b4 dig -w` returned only the tip-bot link; no expanded
+recipient list available.
 
-### Step 4.3: Bug report
-**Record:** No Reported-by or bugzilla/syzbot link. Issue identified
-from datasheet mismatch (author-driven fix).
+### Step 4.3: Bug Report
+**Record:** Reported-by Lee Jia Jie only; no syzbot, no Link: to
+external tracker. Reporter is also credited on c8b7e113f7b61 (another
+perf UAF fix in this tree), suggesting active perf security review.
 
-### Step 4.4: Related patches
-**Record:** Standalone 1/1 fix in “regulator-opt” series per Link
-subject. No other patches required.
+### Step 4.4: Related Patches/Series
+**Record:** Standalone; no series.
 
-### Step 4.5: Stable list
-**Record:** Not searched (no stable discussion found via available
-tools).
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
-**Record:** `pca9450_of_init()`, `pca9450_i2c_probe()`
-
-### Step 5.2: Callers
-**Record:** `pca9450_of_init()` called once from `pca9450_i2c_probe()`
-at line 1371 during I2C device probe (boot-time, board enumeration).
-
-### Step 5.3: Callees
-**Record:** `of_property_read_u32()`, `regmap_update_bits()` on
-`PCA9450_REG_PWRCTRL` — programs PMIC power-control timing.
-
-### Step 5.4: Reachability
-**Record:** Triggered on every boot for PCA9451A/PCA9452 devices when DT
-omits `nxp,pmic-on-req-off-debounce-us`. Not userspace-triggerable;
-embedded platform init path. DT bindings in this tree do not document
-debounce properties, so omission is likely.
-
-### Step 5.5: Similar patterns
-**Record:** Other debounce defaults in `pca9450_of_init()` are also
-hardcoded (e.g. `t_on_deb`, `t_on_step`); only `t_off_deb` differs by
-PMIC variant per commit message/datasheet.
+### Step 4.5: Stable Mailing List
+**Record:** Lore stable search blocked. UNVERIFIED whether stable
+maintainers already discussed this specific fix.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** `drivers/regulator/pca9450-regulator.c:1182` still
-has `t_off_deb = T_OFF_DEB_120US`. PCA9451A/9452 support and debounce
-init code are present. Bug introduced by 55ca06f54f57f (ancestor of
-HEAD). Fix commit not yet in tree.
+### Step 5.1: Key Functions
+**Record:** `free_event_rcu()`, `__free_event()`, `_free_event()`,
+`perf_iterate_ctx()`, `__perf_addr_filters_adjust()`,
+`perf_event_addr_filters_exec()`, `perf_addr_filters_adjust()`,
+`perf_event_exec()`.
 
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — small localized change, no conflicts
-anticipated.
+### Step 5.2: Trace Callers
+**Record:** RCU readers accessing `addr_filter_ranges`:
+- `perf_addr_filters_adjust()` → `rcu_read_lock()` →
+  `perf_iterate_ctx()` → `__perf_addr_filters_adjust()` — triggered from
+  `perf_event_mmap()` on every executable `mmap()`
+- `perf_event_exec()` → `scoped_guard(rcu)` → `perf_iterate_ctx()` →
+  `perf_event_addr_filters_exec()` — triggered on every `execve()`
 
-### Step 6.3: Related fixes already present?
-**Record:** No existing fix for this issue found via `git log --grep`.
+Teardown path: `perf_release` / `perf_event_exit_task` → `_free_event()`
+→ `__free_event()` → `kfree(addr_filter_ranges)` [buggy] →
+`call_rcu(free_event_rcu)`.
+
+### Step 5.3: Key Callees
+**Record:** `kcalloc()` allocates the array (line 13103);
+`list_for_each_entry_rcu()` in `perf_iterate_ctx()` (line 8604);
+`list_del_rcu(&event->event_entry)` in `list_del_event()` (line 2136)
+removes the event from the RCU list but does not wait for grace period
+before the array is freed.
+
+### Step 5.4: Call Chain / Reachability
+**Record:** Reachable from normal process activity (`mmap` of executable
+mappings, `execve`) concurrent with `perf_event` close/exit. Affects
+processes using perf events with address filters on PMUs that expose
+`nr_addr_filters` (Intel PT at `arch/x86/events/intel/pt.c`, CoreSight
+ETM at `drivers/hwtracing/coresight/coresight-etm-perf.c`).
+
+### Step 5.5: Similar Patterns
+**Record:** Same file has multiple recent RCU/lifetime fixes (perf_mmap
+UAF, aux page UAF). The fix pattern (move free into RCU callback)
+matches `free_event_rcu()`'s existing role for the event struct.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 6: Cross-Referencing Against Local Tree
 
-### Step 7.1: Subsystem
-**Record:** `drivers/regulator/` — PMIC driver. **Criticality:
-PERIPHERAL** (platform-specific embedded hardware).
+### Step 6.1: Does Buggy Code Exist?
+**Record:** **YES.** Tree is **linux-6.18.y** at
+`v6.18.44-1-g2736c32da98b9` (Makefile: 6.18.44). Buggy
+`kfree(event->addr_filter_ranges)` is at line 5610 in `__free_event()`.
+`free_event_rcu()` at lines 5157–5165 does not yet free the array. Fix
+commit e62d4192e5936 is **not** an ancestor of HEAD.
 
-### Step 7.2: Activity
-**Record:** Active in 6.18.y; recent pca9450 commits include debounce
-support and PCA9452 name fix.
+### Step 6.2: Backport Complications
+**Record:** `git apply --check` passes cleanly. Line numbers differ
+slightly from the patch context but structure matches. Expected: clean
+apply.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** No equivalent fix found. The premature `kfree` is still
+present.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 8.1: Who is affected
-**Record:** Boards with **PCA9451A** or **PCA9452** PMIC and no
-`nxp,pmic-on-req-off-debounce-us` DT property. PCA9450A/BC unaffected.
+### Step 7.1: Subsystem Criticality
+**Record:** **perf core** (`kernel/events/core.c`) — **CORE/IMPORTANT**.
+Not universal like the scheduler, but widely used for profiling/tracing;
+bugs are memory-safety issues in kernel code reachable from syscalls.
 
-### Step 8.2: Trigger conditions
-**Record:** Every boot/probe on affected hardware without explicit DT
-property. Common case since bindings don't document the property. Not
-unprivileged-userspace reachable.
+### Step 7.2: Subsystem Activity
+**Record:** Highly active — 106 commits to `kernel/events/core.c` since
+c70ca298; multiple UAF fixes landed on this stable branch in 2025–2026.
 
-### Step 8.3: Failure mode severity
-**Record:** PMIC ON_REQ off-debounce set to 120 µs instead of required 2
-ms. Can cause power-sequencing misbehavior (spurious power-off
-recognition, shutdown/boot instability). **Severity: MEDIUM** — real
-hardware impact, not a kernel oops/panic/data corruption.
+---
 
-### Step 8.4: Risk-benefit
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users of perf events with address filters — Intel Processor
+Trace and Arm CoreSight ETM tracing with file-based or kernel address
+filters. Config-dependent on `CONFIG_PERF_EVENTS` and PMU drivers with
+`nr_addr_filters > 0`.
+
+### Step 8.2: Trigger Conditions
+**Record:** Concurrent perf event teardown (`close(2)` on perf fd, task
+exit) with `mmap()` of executable mappings or `execve()` in the same
+process context while address-filter events exist. Timing-dependent but
+realistic. Unprivileged users can trigger via normal perf usage.
+
+### Step 8.3: Failure Mode Severity
+**Record:** **Use-after-free** on kernel heap → kernel oops, KASAN
+splat, or exploitable memory corruption. **Severity: HIGH** (potential
+security impact via UAF).
+
+### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** Fixes regression from 55ca06f54f57f; restores datasheet-
-  correct PMIC timing for PCA9451A/9452.
-- **Risk:** Very low — ~10 lines, PCA9450 variants unchanged.
-- **Ratio:** Moderate benefit, very low risk. Regression fix for code
-  already in this stable tree.
+- **Benefit:** HIGH — prevents UAF in perf core on realistic concurrent
+  paths
+- **Risk:** VERY LOW — 2-line move, no API/behavior change, maintainer-
+  authored
+- **Ratio:** Strongly favors backport
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence compile
+### Step 9.1: Evidence Compile
 
 **FOR backport:**
-- Regression introduced by 55ca06f54f57f (already in 6.18.y)
-- Driver actively programs wrong PMIC register value at probe
-- Datasheet-backed, maintainer-reviewed, minimal fix
-- PCA9451A/9452 support and buggy code both exist in this tree
-- DT bindings omit debounce properties → missing property is the common
-  case
+- Real UAF: `addr_filter_ranges` freed before RCU grace period while RCU
+  iterators access it
+- RCU access paths verified in `perf_addr_filters_adjust()` and
+  `perf_event_exec()`
+- Small, surgical, maintainer fix; applies cleanly to 6.18.y
+- Bug present since 2019; still unfixed in this tree
+- Reported by active perf security reviewer
+- Same class of fix as other accepted stable perf UAF fixes on this
+  branch
 
 **AGAINST backport:**
-- No crash, security issue, or data corruption
-- Platform-specific embedded hardware only
-- No user/fuzzer bug report
-- Workaround: add `nxp,pmic-on-req-off-debounce-us = <2000>` to DT
+- Niche hardware (PT/CoreSight address filters) — not every user
+- No syzbot reproducer or crash log in commit message
+- Lore discussion content unverified
 
-**Unresolved:** Could not read mailing-list review thread for fix patch.
+**UNRESOLVED:**
+- Full mailing-list review thread content (lore blocked)
+- Whether Lee Jia Jie's report included a concrete reproducer/crash log
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — datasheet defaults, NXP
-   review; no runtime test evidence
-2. Fixes real bug? **PASS** — wrong PMIC timing programmed for two
-   variants
-3. Important issue? **PASS (borderline)** — PMIC power-sequencing
-   misconfiguration on affected boards; regression from stable commit
-4. Small and contained? **PASS** — single file, ~10 lines
-5. No new features/APIs? **PASS** — internal field only
-6. Can apply to local tree? **PASS** — prerequisites present, clean
-   apply expected
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — standard RCU deferred-free;
+   maintainer fix; no logic ambiguity
+2. Fixes a real bug? **PASS** — UAF verified by code path analysis
+3. Important issue? **PASS** — UAF / potential crash or security issue
+   (HIGH)
+4. Small and contained? **PASS** — 3 lines, one file
+5. No new features or APIs? **PASS** — lifetime fix only
+6. Can apply to local tree? **PASS** — `git apply --check` succeeds;
+   buggy code confirmed present
 
-### Step 9.3: Exception categories
-**Record:** Hardware quirk/workaround category — per-variant PMIC timing
-correction to match datasheet defaults.
+### Step 9.3: Exception Categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Qualifies
+on straight bug-fix criteria.
 
-### Step 9.4: Decision rationale
+### Step 9.4: Problem Summary for Stable Users
 
-This commit fixes a **regression** in 6.18.y: commit 55ca06f54f57f added
-`pca9450_of_init()` which programs `PCA9450_REG_PWRCTRL` on every probe,
-but used PCA9450A/BC's 120 µs off-debounce default for all variants.
-PCA9451A and PCA9452 require 2 ms per their datasheets. Because DT
-bindings in this tree don't document the debounce property, boards are
-likely to omit it, making the wrong 120 µs value the common case.
+When a perf event with address filters is torn down, `__free_event()`
+immediately frees `addr_filter_ranges` but defers freeing the
+`perf_event` struct via RCU. Meanwhile, `mmap()` and `execve()` paths
+iterate events under `rcu_read_lock()` and read/write
+`event->addr_filter_ranges[]`. A concurrent close/exit can free the
+array while an RCU reader still uses it — a classic use-after-free.
 
-The fix is small, obviously correct, maintainer-reviewed, and restores
-correct hardware behavior without changing PCA9450A/BC paths. While not
-a kernel crash, incorrect PMIC power-off debounce can cause real
-boot/shutdown/power-management failures on affected embedded platforms —
-and this is directly fixing broken behavior introduced by a commit
-already in this stable tree.
+The fix moves `kfree(event->addr_filter_ranges)` into
+`free_event_rcu()`, ensuring the array outlives all RCU readers,
+consistent with how the event struct itself is freed.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from user-provided commit message
-- [Phase 2] Read current `pca9450-regulator.c` at lines 1120–1297, 1371;
-  confirmed diff hunks match tree
-- [Phase 3] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; Makefile
-  → 6.18.44
-- [Phase 3] `git blame -L 1180,1190` → 55ca06f54f57f introduced buggy
-  default
-- [Phase 3] `git show 55ca06f54f57f^` → no `pca9450_of_init` / PWRCTRL
-  programming before debounce commit
-- [Phase 3] `git merge-base --is-ancestor` → 55ca06f54f57f and
-  5edeb7d312628 both ancestors of HEAD
-- [Phase 3] `git log --oneline -20 --
-  drivers/regulator/pca9450-regulator.c` → history reviewed
-- [Phase 4] WebFetch of patch Link → blocked by Anubis
-- [Phase 4] `b4 dig -c 55ca06f54f57f` → found debounce patch thread
-- [Phase 4] `b4 dig` for fix commit → no match (not merged)
-- [Phase 5] `grep pca9450_of_init` → called from probe line 1371
-- [Phase 5] Read `include/linux/regulator/pca9450.h` → `T_OFF_DEB_120US`
-  / `T_OFF_DEB_2MS` definitions
-- [Phase 6] `grep default_t_off_deb` → not present (fix not applied)
-- [Phase 6] `grep pmic-on-req-off-debounce` in tree → driver only, no DT
-  binding docs
-- [Phase 7] `git log --oneline -20 -- drivers/regulator/` → subsystem
-  activity confirmed
-- [Phase 8] Assessed impact from PWRCTRL register programming path in
-  `pca9450_of_init()`
+- [Phase 1] Parsed subject, tags, body from `git show e62d4192e5936`
+- [Phase 2] Diff: +1 line in `free_event_rcu`, −1 line in
+  `__free_event`; net 3 lines changed
+- [Phase 3] `git describe HEAD`: v6.18.44 on linux-6.18.y
+- [Phase 3] `git blame -L 5608,5612`: kfree placed by c70ca298036c5
+- [Phase 3] `git log -S 'kfree(event->addr_filter_ranges)'`:
+  c60f83b813e5b, c70ca298036c5
+- [Phase 3] `git merge-base --is-ancestor e62d4192e5936 HEAD`: fix NOT
+  in tree
+- [Phase 3] `git merge-base --is-ancestor c70ca298036c5 HEAD`: bug-
+  introducing refactor IS in tree
+- [Phase 4] `b4 dig -c e62d4192e5936`: tip-bot lore link found
+- [Phase 4] `b4 dig -a`, `b4 dig -w`: no extra revisions; minimal
+  recipient info
+- [Phase 4] Lore fetch: BLOCKED by bot protection — thread content
+  UNVERIFIED
+- [Phase 5] `grep addr_filter_ranges kernel/events/core.c`: RCU access
+  at lines 8690–8691, 9566, 11514–11520
+- [Phase 5] `perf_iterate_ctx` uses `list_for_each_entry_rcu` at line
+  8604
+- [Phase 5] `perf_addr_filters_adjust` uses `rcu_read_lock` at line 9594
+- [Phase 5] `perf_event_exec` uses `scoped_guard(rcu)` at line 8716
+- [Phase 5] PMUs with address filters: `arch/x86/events/intel/pt.c`,
+  `drivers/hwtracing/coresight/coresight-etm-perf.c`
+- [Phase 6] Buggy `kfree` at line 5610 confirmed in working tree
+- [Phase 6] `git apply --check` of e62d4192: PASSES cleanly
+- [Phase 6] `free_event_rcu` at lines 5157–5165 lacks
+  `kfree(addr_filter_ranges)` — confirms fix needed
+- [Phase 8] Failure mode: UAF, severity HIGH
 
-**YES**
+**YES****Backport recommendation: YES** for linux-6.18.y (v6.18.44).
 
- drivers/regulator/pca9450-regulator.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+This is a small perf-core UAF fix: `event->addr_filter_ranges` was freed
+in `__free_event()` before the RCU grace period ended, while `mmap()`
+and `execve()` paths still access it under RCU via `perf_iterate_ctx()`.
+The fix moves `kfree()` into `free_event_rcu()`, matching how the event
+struct itself is freed.
 
-diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
-index f991dc9365f18..2e79d0e096518 100644
---- a/drivers/regulator/pca9450-regulator.c
-+++ b/drivers/regulator/pca9450-regulator.c
-@@ -44,6 +44,7 @@ struct pca9450 {
- 	unsigned int rcnt;
- 	int irq;
- 	bool sd_vsel_fixed_low;
-+	int default_t_off_deb;
- };
+The buggy code is present in your checkout; commit `e62d4192e5936` is on
+`master` but not in HEAD. The patch applies cleanly with `git apply
+--check`.
+
+ kernel/events/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index f3bd7c97c3aab..99810cfecfd8c 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5161,6 +5161,7 @@ static void free_event_rcu(struct rcu_head *head)
+ 	if (event->ns)
+ 		put_pid_ns(event->ns);
+ 	perf_event_free_filter(event);
++	kfree(event->addr_filter_ranges);
+ 	kmem_cache_free(perf_event_cache, event);
+ }
  
- static const struct regmap_range pca9450_status_range = {
-@@ -1179,7 +1180,7 @@ static int pca9450_of_init(struct pca9450 *pca9450)
+@@ -5607,8 +5608,6 @@ static void __free_event(struct perf_event *event)
+ 	if (event->attach_state & PERF_ATTACH_CALLCHAIN)
+ 		put_callchain_buffers();
  
- 	ret = of_property_read_u32(i2c->dev.of_node, "nxp,pmic-on-req-off-debounce-us", &val);
- 	if (ret == -EINVAL)
--		t_off_deb = T_OFF_DEB_120US;
-+		t_off_deb = pca9450->default_t_off_deb;
- 	else if (ret)
- 		return ret;
- 	else {
-@@ -1274,21 +1275,25 @@ static int pca9450_i2c_probe(struct i2c_client *i2c)
- 	case PCA9450_TYPE_PCA9450A:
- 		regulator_desc = pca9450a_regulators;
- 		pca9450->rcnt = ARRAY_SIZE(pca9450a_regulators);
-+		pca9450->default_t_off_deb = T_OFF_DEB_120US;
- 		type_name = "pca9450a";
- 		break;
- 	case PCA9450_TYPE_PCA9450BC:
- 		regulator_desc = pca9450bc_regulators;
- 		pca9450->rcnt = ARRAY_SIZE(pca9450bc_regulators);
-+		pca9450->default_t_off_deb = T_OFF_DEB_120US;
- 		type_name = "pca9450bc";
- 		break;
- 	case PCA9450_TYPE_PCA9451A:
- 		regulator_desc = pca9451a_regulators;
- 		pca9450->rcnt = ARRAY_SIZE(pca9451a_regulators);
-+		pca9450->default_t_off_deb = T_OFF_DEB_2MS;
- 		type_name = "pca9451a";
- 		break;
- 	case PCA9450_TYPE_PCA9452:
- 		regulator_desc = pca9451a_regulators;
- 		pca9450->rcnt = ARRAY_SIZE(pca9451a_regulators);
-+		pca9450->default_t_off_deb = T_OFF_DEB_2MS;
- 		type_name = "pca9452";
- 		break;
- 	default:
+-	kfree(event->addr_filter_ranges);
+-
+ 	if (event->attach_state & PERF_ATTACH_EXCLUSIVE)
+ 		exclusive_event_destroy(event);
+ 
 -- 
 2.53.0
 
