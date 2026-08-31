@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDA55650EC;
-	Mon, 31 Aug 2026 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C8D565111;
+	Mon, 31 Aug 2026 13:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184076; cv=none; b=dVCC68eECbdOumxdd3lvKug7u1ypCZ+1Y3u5s7Aivsigp7pr0HRBf6MjhYnZNOEoAh13EAicpKrZkacFsr5zFoPvsiSSXxDhr5LEB1LidH71PsMVrFXmTBrYA31q8J+XN9iuKv1drrrrJTAZpYxwAEjCePoTysmf84aeb7T27jI=
+	t=1788184077; cv=none; b=un2m1gxrvrlsiSIKSyAbOXRhB1MNl/78cCi+G96lF8vN/uyOUQl78o4KdQWgE8bpI1kdMPEqvXYVjjC60f41+LDJiGQ2VEUC6P5o93VTawkEN7g75Jpm7d2bzScWYWy8CEzUdCOpeUrrpjgX0aROKR9dhyT1ur7h/5aVRdRguK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184076; c=relaxed/simple;
-	bh=B8jXb2kB+MvImiJHPQN+DD76LkGnzGIfTZlmh916Lzg=;
+	s=arc-20240116; t=1788184077; c=relaxed/simple;
+	bh=wVL1YIJPlbDy/sek2DgAlItW+ozYH1TUIDGq2UvPtF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JJ0ftkrf5zTrlGFwoUObvG5yiPxGzopY9tBpUQ3q/GNDs+YXnIZihUVWgadGPZ+GRlURrbmv6hgGe4AJ0EGZI1z0SlZpJbF9c1cNtOrNB4JYYTLvzz4KkuppaDN2/tEU+kb/QD+4HjvSSj0YAj7AeNYdekFBAjV23StnVMil1EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mNbhbZW2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Heng3J+xHSfUv+ayqPVQokJIMfwt5u8a+2u5zK+b87FFhudyxy+KskdLbLc35aZTvC6GCbQaUcLJUaiE01vb7gyOrnefFZ9rb8lan1mix3f71jmuZ0otw6Bd1KpbbOmgv7EYydO5t6GDoVz1Bx68YOVWuOnlmpN5QLVosETOuXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Si3QEYnl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mNbhbZW2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FC81F00A3D;
-	Mon, 31 Aug 2026 13:47:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Si3QEYnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBE21F00A3E;
+	Mon, 31 Aug 2026 13:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184074;
-	bh=50s9L/q2gc6UqpjOQy0K5eDvQc3IehRiRxZgThDfxkA=;
+	s=k20260515; t=1788184075;
+	bh=GjKDFAUDy91EhvmuMW3l0NSZA+T7hWB6tOHcKdnDrzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNbhbZW2Kfpw1j611greWItmLtWvyQw3U4iaQVadedGFpuupy4LS200ZwdbQscZsI
-	 lVw17MBO09vbwFwUbH+pg5GpCjoe1ZRI5YY6h1HcvRwcOM5eK32VclD40kh//mZib4
-	 jcuMh3XTcRfMGmtk3jk5ytnZ6dFUDLXnJmbJwPiV0X6JI65QGyBRWZNoSt/KjoWSkD
-	 SG7Oa6L9b19POTIycRaDlNFLXWzOJxJgqes5eC7/roF2uJOH9hLwjdTzO6CfqASnV3
-	 R1Gq8hbcpyxjZQvYSUcUG1HQE38Crr2099L7PqYztcappMpByxYp9fyNsqST7txRil
-	 JrKD8mjunSpcg==
+	b=Si3QEYnlKBo5UV7lIryzxy+r3EAda+MbG+G0r1VHH5iWGpfTUg0Wjqv9u/BO2soAI
+	 RYq3/tLXYN3Z11j4PF+OSUYYBrEk0ZzCvAffNWXI9FQ0EfmsMowXSaty+H7B5+MSR8
+	 RUr0eqDfqcP4zgNYG33RY1/WiloV23IJYSVqamun0muKsYBF2n7n/moT/FFRVRUYfe
+	 AC8L4gC1QVy2XzaTOiJS7XgBfDX+SR9o84UWgj+OU+iIcH9NDgs90yYJ6lcDS6dVW7
+	 D0EWMbm5v+df29vuwiprRDOy2kC+X+wfK/An6MmboeIjjutX5cJIV44qJMrTH9WOYK
+	 m+ZFtBPZ3T/AQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
+Cc: Avraham Stern <avraham.stern@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
 	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: cfg80211: harden cfg80211_defragment_element()
-Date: Mon, 31 Aug 2026 09:28:23 -0400
-Message-ID: <20260831133314.4125787-475-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: call iwl_mld_free_ap_early_key() for AP only
+Date: Mon, 31 Aug 2026 09:28:24 -0400
+Message-ID: <20260831133314.4125787-476-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,77 +52,66 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit e48223525a54d3a3182d2d9a497dca022b942b4d ]
+[ Upstream commit c35c44434329c6b3bd2c6c1e5add5ae10d933a4d ]
 
-A previous commit changed mac80211 to no longer make wrong
-calls to cfg80211_defragment_element() with the element
-pointing outside of the buffer. Additionally, harden this
-function itself against that and always return -EINVAL in
-case the element isn't inside the source buffer.
+The driver supports intalling IGTK on a NAN device interface. When
+the IGTK is removed, iwl_mld_free_ap_early_key() is called which
+results in a warning since no links are attached to this interface.
+The iwl_mld_free_ap_early_key() function should be called for AP or
+IBSS interfaces only. Check the interface type before calling it.
 
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260529102644.198945754054.I5ae8fdebf9008abc6e15d0b0f10c3a7b73d02eab@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Link: https://patch.msgid.link/20260512222731.d67d658b421d.Ife2d1f3b17119ce696582ce6a2a69026d368d8af@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: cfg80211: harden
-cfg80211_defragment_element()`
+# Stable Backport Analysis: `wifi: iwlwifi: mld: call
+iwl_mld_free_ap_early_key() for AP only`
 
-**Local tree:** Linux **6.18.44** (`stable/linux-6.18.y`, detached HEAD)
-**Upstream commit:** `e48223525a54d` (not in this tree; patch applies
-cleanly)
+**Local tree:** `v6.18.44` (Makefile: 6.18.44)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[wifi: cfg80211]` `[harden]` — add bounds validation to
-`cfg80211_defragment_element()` so `elem` must lie fully inside the
-`ies` buffer.
+**Record:** `[wifi: iwlwifi: mld]` `[call/fix]` — Only call
+`iwl_mld_free_ap_early_key()` on AP/IBSS interfaces, not on all non-
+pairwise key removals.
 
 ### Step 1.2: Tags
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Fixes: | None |
-| Reported-by: | None |
-| Tested-by: | None |
-| Reviewed-by: | Miriam Rachel Korenblit, Ilan Peer |
-| Acked-by: | None |
-| Link: | https://patch.msgid.link/20260529102644.198945754054.I5ae8fdeb
-f9008abc6e15d0b0f10c3a7b73d02eab@changeid |
-| Cc: stable@vger.kernel.org | None (expected for manual review) |
-| Signed-off-by: | Johannes Berg (author) |
-
-Notable: two Intel wireless reviewers; no syzbot/user bug report; no
-explicit stable nomination.
+- **Signed-off-by:** Avraham Stern `<avraham.stern@intel.com>` (author)
+- **Signed-off-by:** Miri Korenblit
+  `<miriam.rachel.korenblit@intel.com>` (maintainer)
+- **Link:** `https://patch.msgid.link/20260512222731.d67d658b421d...`
+  (patch submission reference)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+- Notable: no syzbot/fuzzer report; Intel iwlwifi maintainer sign-off
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug described:** Callers could pass an `elem` pointer outside the
-  `ies` source buffer; the function did not validate containment before
-  dereferencing `elem->datalen` and calling `memmove()`.
-- **Symptom:** Out-of-bounds reads/copies when `elem` and `ies` refer to
-  different buffers or when the element length extends past `ies +
-  ieslen`.
-- **Root cause:** Missing input validation in an `EXPORT_SYMBOL` helper
-  that processes untrusted 802.11 Information Elements.
-- **Dependency:** References a prior mac80211 commit that stopped
-  passing mismatched `elem`/`ies` pairs (that fix is **already in
-  6.18.y** as `55c479aae99b1`).
+- **Bug:** IGTK can be installed on a NAN device interface. On removal,
+  `iwl_mld_free_ap_early_key()` is called unconditionally for non-
+  pairwise keys, but NAN has no attached links → `WARN_ON(!link)` fires
+  inside that helper.
+- **Symptom:** Kernel warning (`WARN_ON`) during IGTK removal on NAN.
+- **Root cause:** `iwl_mld_free_ap_early_key()` is AP/IBSS-only logic
+  (early key staging before bcast/mcast STAs exist), but the remove path
+  called it for every non-pairwise key regardless of interface type.
+- **Fix:** Gate the call on `vif->type == NL80211_IFTYPE_AP || vif->type
+  == NL80211_IFTYPE_ADHOC`, matching the store path.
 
 ### Step 1.4: Hidden bug fix?
-**Record:** Yes. “Harden” is defense-in-depth, but it enforces the
-documented API contract (`@ies: elements where @elem is contained`) and
-prevents OOB access if callers pass inconsistent pointers or if
-`elem->datalen` would extend past the buffer end.
+**Record:** Yes. Although not labeled "fix", this corrects an asymmetric
+store/remove bug. The store path already restricts early-key handling to
+AP/IBSS; the remove path did not.
 
 ---
 
@@ -132,217 +119,217 @@ prevents OOB access if callers pass inconsistent pointers or if
 
 ### Step 2.1: Inventory
 **Record:**
-| File | Changes | Functions |
-|------|---------|-----------|
-| `net/wireless/scan.c` | +4 / -2 (net +2 functional) |
-`cfg80211_defragment_element()` |
-
-**Scope:** Single-file, surgical fix.
+- **File:** `drivers/net/wireless/intel/iwlwifi/mld/mac80211.c` (+2
+  lines, scope unchanged)
+- **Function:** `iwl_mld_set_key_remove()`
+- **Scope:** Single-file, surgical (2-line condition extension)
 
 ### Step 2.2: Code flow change
 **Record:**
-- **Before:** Only `if (!elem) return -EINVAL;`, then immediately read
-  `elem->datalen` and `memmove()` from `elem->data`.
-- **After:** Also reject when:
-  1. `(const u8 *)elem < ies`
-  2. Element header extends past `ies + ieslen`
-  3. Full element (`header + elem->datalen`) extends past `ies + ieslen`
-- **Path affected:** Entry validation on all callers before any data
-  access or copy.
+- **Before:** Any non-pairwise key removal →
+  `iwl_mld_free_ap_early_key()`.
+- **After:** Non-pairwise key removal on AP or IBSS only →
+  `iwl_mld_free_ap_early_key()`.
+- **Affected path:** `DISABLE_KEY` → `iwl_mld_set_key_remove()` → early-
+  key cleanup before `iwl_mld_remove_key()`.
 
 ### Step 2.3: Bug mechanism
-**Record:** **Memory safety / buffer overflow prevention (d).** The
-function trusted caller-supplied `elem`/`ies` pairing. The already-
-backported mac80211 bug (`55c479aae99b1`) passed a defragmented `elem`
-with the original frame’s `ies`/`ieslen`, enabling heap-adjacent OOB
-reads/copies. This patch validates containment at the API boundary.
+**Record:** **Logic / correctness fix.** `iwl_mld_free_ap_early_key()`
+dereferences `mld_vif->link[key->link_id]`:
+
+```196:207:drivers/net/wireless/intel/iwlwifi/mld/ap.c
+void iwl_mld_free_ap_early_key(struct iwl_mld *mld,
+                               struct ieee80211_key_conf *key,
+                               struct iwl_mld_vif *mld_vif)
+{
+        struct iwl_mld_link *link;
+
+        if (WARN_ON(key->link_id < 0))
+                return;
+
+        link = iwl_mld_link_dereference_check(mld_vif, key->link_id);
+        if (WARN_ON(!link))
+                return;
+```
+
+Called from interfaces that never use early-key storage → spurious
+`WARN_ON`.
 
 ### Step 2.4: Fix quality
-**Record:** Obviously correct. Checks are ordered so `elem->datalen` is
-only read after the element header is confirmed in-bounds. Minimal, no
-API change (still returns `-EINVAL`). Very low regression risk — only
-rejects previously-undefined invalid input.
+**Record:** Obviously correct; mirrors existing store guard at lines
+2099–2102. Minimal regression risk. No new APIs or behavior changes
+beyond suppressing incorrect helper calls.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Original `if (!elem)` from `f837a653a0970` (“wifi: cfg80211:
-add element defragmentation helper”, June 2023). Function has been in
-this tree since well before 6.18 branched.
+**Record:** All lines in this file blame to `7e22de67e545d` (squashed
+stable snapshot). Meaningful per-line history unavailable in this
+checkout.
 
 ### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag. Related buggy caller introduced by
-`4d70e9c5488dd` (May 2024, in this tree), fixed by `55c479aae99b1`
-(already in 6.18.y).
+**Record:** N/A — no `Fixes:` tag present.
 
-### Step 3.3: Related file history
-**Record:** Related commits in this tree:
-- `55c479aae99b1` — mac80211 MLE defragmentation caller fix (IN TREE)
-- `023c1f2f06092` — cfg80211 MLE defragmentation OOB fix (IN TREE, had
-  `Cc: stable`)
-- `11ac7a5e75f51` — bound element ID read when checking non-inheritance
-  (recent hardening pattern)
-
-This hardening patch is standalone (only touches `scan.c`); it does not
-require other patches from wireless-next 07/16 series.
+### Step 3.3: File history
+**Record:** `git log` on `mld/mac80211.c` returns only the squashed HEAD
+commit. Cannot trace introduction of the asymmetry via git history in
+this tree.
 
 ### Step 3.4: Author context
-**Record:** Johannes Berg is cfg80211/mac80211 maintainer. He authored
-both the mac80211 caller fix and this cfg80211 hardening as companion
-changes.
+**Record:** Avraham Stern (Intel iwlwifi). Miri Korenblit signed off —
+iwlwifi maintainer. Part of May 2026 iwlwifi update series (NAN/IGTK
+work in
+`20260511_miriam_rachel_korenblit_wifi_iwlwifi_updates_2026_05_11.mbx`).
 
 ### Step 3.5: Dependencies
-**Record:** The mac80211 caller fix (`55c479aae99b1`) is already in
-6.18.y. This patch applies standalone (`git apply --check` passes). No
-structural prerequisites missing.
+**Record:** Standalone. No series dependency. Applies to existing
+`iwl_mld_set_key_remove()` without prerequisite commits.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original discussion
-**Record:** `b4 dig -c e48223525a54d` → https://patch.msgid.link/2026052
-9102644.198945754054.I5ae8fdebf9008abc6e15d0b0f10c3a7b73d02eab@changeid
-Part of wireless-next series patch **07/16**; this specific hunk is
-self-contained. No thread replies found in mbox. No `Cc: stable` in
-submission.
+**Record:** `b4 dig -c HEAD` did not match this patch (HEAD is unrelated
+amdgpu commit). No `.mbx` file for this specific patch in the workspace.
+Lore.kernel.org blocked by bot protection. Link tag points to May 12,
+2026 submission; not directly fetchable.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` — CC’d to Miriam Rachel Korenblit and Ilan Peer;
-both Reviewed-by on the patch.
+**Record:** UNVERIFIED — could not retrieve thread via b4/lore.
 
 ### Step 4.3: Bug report
-**Record:** No external bug report, syzbot, or crash log. Bug mechanism
-documented in companion commit `55c479aae99b1` (“potentially overrun the
-heap data”).
+**Record:** No external bug report referenced. Bug described in commit
+message only (NAN IGTK removal warning).
 
-### Step 4.4: Series context
-**Record:** Patch 07/16 of a 16-patch UHR/wireless-next series. Only
-`net/wireless/scan.c` changed; no dependency on patches 08–16.
+### Step 4.4: Related patches
+**Record:** Related iwlwifi mld NAN/IGTK work in
+`20260511_miriam_rachel_korenblit_wifi_iwlwifi_updates_2026_05_11.mbx`
+(patches 8–10 add NAN TLC, NAN data, separate TX/RX IGTK tracking). This
+fix is a follow-on to that work.
 
-### Step 4.5: Stable list
-**Record:** No stable-list discussion found for this specific patch. The
-companion mac80211 fix was already backported to 6.18.y.
+### Step 4.5: Stable list history
+**Record:** UNVERIFIED — lore stable search inaccessible.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `cfg80211_defragment_element()` (modified).
+**Record:** `iwl_mld_set_key_remove()`, `iwl_mld_free_ap_early_key()`,
+`iwl_mld_store_ap_early_key()`, `iwl_mld_mac80211_set_key()`.
 
 ### Step 5.2: Callers
-**Record:** In-tree callers (all reachable from WiFi frame processing):
-| Caller | File | Context |
-|--------|------|---------|
-| MLE per-sta profile defrag | `net/mac80211/parse.c:860` | Beacon/probe
-IE parsing |
-| Basic MLE defrag | `net/mac80211/parse.c:909` | EHT ML element parsing
-|
-| Reconf/EPCS MLE defrag | `net/mac80211/parse.c:968` | Post-`55c479`
-fixed path |
-| STA profile enumeration | `net/mac80211/mlme.c:7266,7295` | ML STA
-setup |
-| EPCS per-link parsing | `net/mac80211/mlme.c:11018` | EPCS response
-handling |
-| Internal MLE defrag | `net/wireless/scan.c:2726,2768` | Scan/BSS
-inform paths |
-
-Also `EXPORT_SYMBOL` — external modules may call it. KUnit tests in
-`net/wireless/tests/fragmentation.c`.
+**Record:**
+- `iwl_mld_set_key_remove()` ← `iwl_mld_mac80211_set_key()`
+  (`DISABLE_KEY`)
+- `iwl_mld_mac80211_set_key()` is the mac80211 `set_key` driver callback
+  — reachable on normal WiFi key install/remove from userspace
+  (wpa_supplicant, hostapd, NetworkManager).
 
 ### Step 5.3: Callees
-**Record:** `memmove()` for data copy; fragment loop walks subsequent
-elements.
+**Record:** `iwl_mld_free_ap_early_key()` →
+`iwl_mld_link_dereference_check()` → `WARN_ON` on invalid/missing link.
+`iwl_mld_remove_key()` handles actual FW key removal afterward.
 
 ### Step 5.4: Reachability
-**Record:** Reachable from processing received 802.11 management frames
-(beacons, probe responses, ML reconfiguration). Remote AP/client can
-supply crafted IE data. **Userspace-reachable via WiFi traffic**
-(unprivileged on wireless networks).
+**Record:** **Yes, from userspace.** Any `DISABLE_KEY` for a group key
+(GTK/IGTK/BIGTK) triggers this path. Store path is already AP/IBSS-only:
+
+```2094:2102:drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+        /* After exiting from RFKILL, hostapd configures GTK/ITGK before
+the
+  - AP is started, but those keys can't be sent to the FW before the
+  - MCAST/BCAST STAs are added to it (which happens upon AP start).
+  - Store it here to be sent later when the AP is started.
+         */
+        if ((vif->type == NL80211_IFTYPE_ADHOC ||
+             vif->type == NL80211_IFTYPE_AP) && !sta &&
+             !mld_vif->ap_ibss_active)
+                return iwl_mld_store_ap_early_key(mld, key, mld_vif);
+```
+
+For STA, `key->link_id` is often `-1` (non per-link keys per `key.c`),
+which also triggers `WARN_ON(key->link_id < 0)` in the helper today.
 
 ### Step 5.5: Similar patterns
-**Record:** Same subsystem recently backported `11ac7a5e75f51` (bound
-element ID reads) and `55c479aae99b1` (MLE defragmentation caller fix).
-Consistent hardening pattern for WiFi IE parsing.
+**Record:** Store/remove asymmetry is the only instance. Fix aligns
+remove with store.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
 
 ### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current code at lines 2629–2630 only checks
-`!elem`:
+**Record:** **Yes.** Current tree at lines 2160–2162 still has the
+unconditional call:
 
-```2629:2634:net/wireless/scan.c
-        if (!elem)
-                return -EINVAL;
-
-        /* elem might be invalid after the memmove */
-        next = (void *)(elem->data + elem->datalen);
-        elem_datalen = elem->datalen;
+```2160:2162:drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+        /* if this key was stored to be added later to the FW - free it
+here */
+        if (!(key->flags & IEEE80211_KEY_FLAG_PAIRWISE))
+                iwl_mld_free_ap_early_key(mld, key, mld_vif);
 ```
 
-Function present since 2023; buggy caller path existed from
-`4d70e9c5488dd` until `55c479aae99b1` (caller fix now in tree, API
-validation still missing).
+`iwl_mld` driver fully present (65 files under `mld/`).
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply** — `git show e48223525a54d | git apply
---check` succeeds. Only incidental copyright year change (2025→2026).
+### Step 6.2: Backport difficulty
+**Record:** Clean apply expected — 2-line condition change, no conflicts
+anticipated.
 
 ### Step 6.3: Related fixes already present?
-**Record:**
-- `55c479aae99b1` (mac80211 caller fix) — **IN TREE**
-- `023c1f2f06092` (cfg80211 MLE OOB) — **IN TREE**
-- `e48223525a54d` (this hardening) — **NOT IN TREE**
+**Record:** No equivalent fix found. `git log --grep` found nothing
+(squashed history).
+
+### NAN-specific note for this tree
+**Record:** `NL80211_IFTYPE_NAN` is **not** in `wiphy->interface_modes`
+in this tree (lines 268–273). Full NAN IGTK support from the May 11
+series (patches 8–10) is **not** present (no `tx_igtk`/`rx_igtk`, no
+`NL80211_IFTYPE_NAN` in mac80211.c). The commit-message NAN scenario is
+not yet reachable here, but the STA group-key removal path **is**
+reachable and can hit the same helper incorrectly.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** **net/wireless (cfg80211)** — IMPORTANT. WiFi stack
-processes untrusted over-the-air data on virtually all
-laptops/phones/embedded devices with WiFi.
+**Record:** `drivers/net/wireless/intel/iwlwifi/mld` — IMPORTANT (Intel
+WiFi driver, iwl_mld for newer MLD-capable hardware). Not core kernel,
+but affects WiFi users on supported Intel hardware.
 
 ### Step 7.2: Activity
-**Record:** Actively maintained; multiple recent WiFi IE parsing
-hardening fixes in 6.18.y.
+**Record:** Actively developed; iwl_mld is relatively new (copyright
+2024–2025) with ongoing NAN/MLO work.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected?
-**Record:** All systems with `CONFIG_CFG80211` / WiFi enabled processing
-multi-link (EHT) elements or fragmented IEs.
+### Step 8.1: Who is affected
+**Record:** Users of Intel iwl_mld hardware (WiFi 6E/7 MLD-capable
+devices). All interface types that remove group keys (STA most common
+today; NAN when that support lands).
 
 ### Step 8.2: Trigger conditions
-**Record:**
-- **Known (now fixed at caller):** Mismatched `elem`/`ies` buffers in
-  mac80211 reconf/EPCS paths.
-- **Remaining:** Any caller bug, `EXPORT_SYMBOL` misuse, or element
-  whose declared length extends past the `ies` buffer — function
-  previously proceeded to `memmove()`.
-- **Likelihood post-`55c479`:** Primary known trigger closed; API-level
-  hole remains for edge cases and external callers.
+**Record:** Removing any non-pairwise key (GTK/IGTK/BIGTK) on a non-
+AP/IBSS interface. Common during STA disconnect/roaming. Unprivileged
+users trigger via normal WiFi stack operations.
 
 ### Step 8.3: Failure mode severity
-**Record:** Out-of-bounds kernel memory read/copy from WiFi IE
-processing. **Severity: HIGH** (potential info leak or crash; WiFi
-parsing is a classic remote attack surface). Companion mac80211 commit
-explicitly documented heap-adjacent overrun risk.
+**Record:** `WARN_ON` in driver — **MEDIUM**. No crash, corruption, or
+deadlock by default. Can spam dmesg; with `panic_on_warn` enabled, could
+panic. Functional key removal continues via `iwl_mld_remove_key()`.
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Closes API-level OOB class; companion to already-
-  backported mac80211 fix; protects `EXPORT_SYMBOL` boundary.
-- **Risk:** Very low — 3-line bounds check, returns `-EINVAL` for
-  invalid input only.
-- **Ratio:** Favorable for stable.
+- **Benefit:** Eliminates spurious warnings on STA (and future NAN)
+  group-key removal; corrects logic bug; trivial fix.
+- **Risk:** Very low — 2 lines, mirrors existing store guard, no
+  behavior change for AP/IBSS.
+- **Ratio:** Favorable for backport.
 
 ---
 
@@ -351,127 +338,114 @@ explicitly documented heap-adjacent overrun risk.
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real OOB bug class documented in companion fix already in 6.18.y
-- WiFi IE parsing = remote attack surface
-- Tiny, obviously correct, applies cleanly
-- Maintainer-authored, reviewed by subsystem developers
-- Enforces documented API contract on `EXPORT_SYMBOL` function
-- Consistent with recent WiFi hardening backports in 6.18.y
+- Real logic bug: remove path calls AP-only helper for all non-pairwise
+  keys
+- Reachable today on STA group-key removal (common path)
+- Matches existing store-path guard — obviously correct
+- 2-line, contained fix; no new APIs
+- iwl_mld code exists in v6.18.44; fix applies cleanly
+- Intel maintainer sign-off
 
 **AGAINST backport:**
-- Primary caller bug already fixed by `55c479aae99b1`
-- No syzbot report or user crash report for this specific patch
-- Pure defense-in-depth after caller fix
-- No explicit stable nomination
+- Failure mode is `WARN_ON` only, not crash/corruption (borderline
+  importance)
+- NAN-specific scenario from commit message not yet reachable in 6.18.44
+  (NAN not exposed)
+- iwl_mld user base still growing vs legacy mvm
 
-**Unresolved:** No reproducer tested post-`55c479`; remaining
-exploitability is inferred from code analysis, not a fresh crash report.
+**UNRESOLVED:**
+- No mailing-list review thread retrieved
+- Cannot confirm via git when asymmetry was introduced (squashed tree)
 
 ### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — trivial bounds check;
-existing KUnit tests cover valid paths; no new test for invalid input |
-| 2. Fixes a real bug affecting users? | **PASS** — OOB in WiFi IE
-defragmentation; caller bug was real and already hit stable |
-| 3. Important issue? | **PASS** — OOB / potential crash in network-
-facing code (HIGH) |
-| 4. Small and contained? | **PASS** — 3 functional lines, 1 file |
-| 5. No new features/APIs? | **PASS** — validation only |
-| 6. Can apply to local tree? | **PASS** — clean apply; prerequisite
-mac80211 fix already present |
+1. Obviously correct and tested? **PASS** — mirrors store guard;
+   maintainer SOB; logic verifiable by inspection. No independent
+   Tested-by.
+2. Fixes a real bug affecting users? **PASS** — spurious `WARN_ON` on
+   group-key removal for non-AP/IBSS interfaces.
+3. Important issue? **PASS (borderline)** — `WARN_ON` spam; possible
+   panic with `panic_on_warn`; not data corruption or security.
+4. Small and contained? **PASS** — 2 lines, one function.
+5. No new features or APIs? **PASS**.
+6. Can apply to local tree? **PASS** — buggy code confirmed present.
 
-### Step 9.3: Exception category
-**Record:** Not a device-ID/quirk/DT/docs exception. Qualifies as a
-**security-relevant memory safety hardening** fix.
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build fix, or docs).
 
 ### Step 9.4: Decision rationale
 
-The mac80211 caller fix (`55c479aae99b1`) already in 6.18.y stopped the
-known wrong `elem`/`ies` pairing, but `cfg80211_defragment_element()`
-itself still performs unchecked `memmove()` based on `elem->datalen`
-without verifying the element fits in the declared buffer. This is the
-natural companion fix for an OOB class that stable already acknowledged
-by backporting the caller fix. The change is minimal, low-risk, and
-hardens a boundary that processes untrusted WiFi frame content.
+This is a small, obviously correct fix for a real driver logic error.
+The store path already limits early-key handling to AP/IBSS; the remove
+path should match. Without the fix, removing group keys on STA (and
+eventually NAN) triggers unnecessary `WARN_ON` calls inside
+`iwl_mld_free_ap_early_key()`. While severity is medium (warning, not
+crash), the fix is minimal, low-risk, and aligns two code paths that
+should never have diverged. It meets stable criteria for iwlwifi driver
+bug fixes.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 1] Confirmed no Fixes:/Reported-by:/Cc: stable tags
-- [Phase 2] Diff: 3 bounds checks added to
-  `cfg80211_defragment_element()` entry in `net/wireless/scan.c`
-- [Phase 3] `git describe HEAD` → v6.18.44 (6.18.44)
-- [Phase 3] `git blame` lines 2629–2630 → `f837a653a0970` (Jun 2023)
-- [Phase 3] `git merge-base --is-ancestor 4d70e9c5488d HEAD` → buggy
-  caller intro IN TREE
-- [Phase 3] `git merge-base --is-ancestor 55c479aae99b1 HEAD` → mac80211
-  fix IN TREE
-- [Phase 3] `git merge-base --is-ancestor e48223525a54d HEAD` →
-  hardening NOT IN TREE
-- [Phase 3] `git merge-base --is-ancestor 023c1f2f06092 HEAD` → related
-  OOB fix IN TREE
-- [Phase 4] `b4 dig -c e48223525a54d` → lore URL found
-- [Phase 4] `b4 dig -m /tmp/harden_defrag.mbox` → patch 07/16, Reviewed-
-  by confirmed, no stable CC
-- [Phase 4] WebFetch lore URL → blocked (bot protection); used mbox
-  instead
-- [Phase 5] `grep cfg80211_defragment_element` → 6 in-tree call sites +
-  EXPORT_SYMBOL + KUnit tests
-- [Phase 5] Read callers in `parse.c`, `mlme.c`, `scan.c` — all WiFi
-  frame processing paths
-- [Phase 6] Read current `scan.c:2621–2687` — only `!elem` check present
-  (buggy state)
-- [Phase 6] `git show e48223525a54d | git apply --check` → applies
-  cleanly
-- [Phase 7] `git log --oneline -20 -- net/wireless/` → active subsystem
-  with recent hardening backports
-- [Phase 8] mac80211 fix commit message documents “potentially overrun
-  the heap data” (`git show 55c479aae99b1`)
+- **[Phase 1]** Parsed commit message, tags, and body from user query
+- **[Phase 2]** Read diff and `iwl_mld_free_ap_early_key()` in `ap.c`;
+  confirmed `WARN_ON` mechanism
+- **[Phase 2]** Read `iwl_mld_set_key_remove()` and store-path guard in
+  `mac80211.c`
+- **[Phase 3]** `git describe HEAD` → `v6.18.44`
+- **[Phase 3]** `git blame -L 2160,2162` → lines present, squashed
+  history
+- **[Phase 3]** `git log --oneline --
+  drivers/net/wireless/intel/iwlwifi/mld/mac80211.c` → single squashed
+  commit
+- **[Phase 4]** `b4 dig -c HEAD` → no match for this patch
+- **[Phase 4]** Searched workspace `.mbx` files → no mbox for this
+  specific patch
+- **[Phase 4]** WebFetch lore.kernel.org → blocked (bot protection)
+- **[Phase 4]** Read
+  `20260511_miriam_rachel_korenblit_wifi_iwlwifi_updates_2026_05_11.mbx`
+  → related NAN/IGTK series context
+- **[Phase 5]** `rg iwl_mld_free_ap_early_key` → call sites in
+  `mac80211.c`, definition in `ap.c`
+- **[Phase 5]** Traced `iwl_mld_mac80211_set_key()` → `DISABLE_KEY` →
+  `iwl_mld_set_key_remove()`
+- **[Phase 5]** Read `key.c` `iwl_mld_get_key_sta_mask()` →
+  `key->link_id < 0` common for non per-link STA keys
+- **[Phase 6]** Confirmed buggy code at lines 2160–2162 without AP/IBSS
+  check
+- **[Phase 6]** Confirmed `NL80211_IFTYPE_NAN` not in `interface_modes`
+  (lines 268–273)
+- **[Phase 6]** Confirmed no `tx_igtk`/`rx_igtk` NAN IGTK refactor from
+  May series in current tree
+- **[Phase 6]** Confirmed `iwl_mld` driver present (65 files)
+- **[Phase 7]** Identified subsystem as iwlwifi mld driver
+- **[Phase 8]** Assessed failure mode as `WARN_ON` (MEDIUM severity)
+- **UNVERIFIED:** Mailing-list review discussion and explicit stable
+  nominations
+- **UNVERIFIED:** Whether `panic_on_warn` reports exist for this issue
+- **UNVERIFIED:** Exact commit SHA on mainline (not in this tree's git
+  log)
 
-**YES**The background lookup finished: the related mac80211 fix is
-**`55c479aae99b1`** (`wifi: mac80211: fix MLE defragmentation`), and
-it’s **already in this 6.18.44 tree**. That commit fixed callers passing
-a defragmented `elem` with the original frame’s `ies` buffer, which
-could cause out-of-bounds reads/copies.
+**YES**
 
-The commit under review (**`e48223525a54d`**) adds bounds checks inside
-`cfg80211_defragment_element()` itself. It is **not** in 6.18.y yet, but
-it **applies cleanly** and is the natural companion to the mac80211 fix
-already backported.
+ drivers/net/wireless/intel/iwlwifi/mld/mac80211.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-**Verdict for 6.18.y: YES** — small, low-risk hardening on a WiFi IE
-parsing path that processes untrusted over-the-air data.
-
- net/wireless/scan.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 11f7a27bb7046..9648e24181fb0 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -5,7 +5,7 @@
-  * Copyright 2008 Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright 2016	Intel Deutschland GmbH
-- * Copyright (C) 2018-2025 Intel Corporation
-+ * Copyright (C) 2018-2026 Intel Corporation
-  */
- #include <linux/kernel.h>
- #include <linux/slab.h>
-@@ -2626,7 +2626,9 @@ ssize_t cfg80211_defragment_element(const struct element *elem, const u8 *ies,
- 	ssize_t copied;
- 	u8 elem_datalen;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+index 322669d78b193..27ae06e208402 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
+@@ -2164,7 +2164,9 @@ static void iwl_mld_set_key_remove(struct iwl_mld *mld,
+ 	}
  
--	if (!elem)
-+	if (!elem || (const u8 *)elem < ies ||
-+	    (const u8 *)elem + sizeof(*elem) > ies + ieslen ||
-+	    (const u8 *)elem + sizeof(*elem) + elem->datalen > ies + ieslen)
- 		return -EINVAL;
+ 	/* if this key was stored to be added later to the FW - free it here */
+-	if (!(key->flags & IEEE80211_KEY_FLAG_PAIRWISE))
++	if (!(key->flags & IEEE80211_KEY_FLAG_PAIRWISE) &&
++	    (vif->type == NL80211_IFTYPE_AP ||
++	     vif->type == NL80211_IFTYPE_ADHOC))
+ 		iwl_mld_free_ap_early_key(mld, key, mld_vif);
  
- 	/* elem might be invalid after the memmove */
+ 	/* We already removed it */
 -- 
 2.53.0
 
