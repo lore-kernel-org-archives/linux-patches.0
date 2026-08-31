@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9FF52FE30;
-	Mon, 31 Aug 2026 13:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD17445C6F8;
+	Mon, 31 Aug 2026 13:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183896; cv=none; b=BTQKVB17R87+JEbTSm7iUuyOCHiwuVk/XUkFrAk4VDO+XFnE4uTuB4FOZdPoN0+0/UMLTkX1k3HPb6KYbUTfMlJdw3Z0y+S4eSC5lReInXyxgxVpkyVVnL96oP+kGil9Mae+S8QQQC9IYZ0LxTofCUhr6XILNqPrlZPtrZcc7GQ=
+	t=1788183898; cv=none; b=AmoZr3NgShw8Gku1INPf+mkQ1D44hHl24KG6DK1niMBuIgHR8fXTgiqmWbI69n1c52RIHiPSQQv2nleQkc+YHMCQ169om6IGz4oZIRCOHq6cUtIJqba1kUNvKIkocqQ7YjaNcehm2pPUhoSMoMUOEsB1+lGODFc4gxhmmgd+Egg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183896; c=relaxed/simple;
-	bh=pWVrIfQqLAccbmTRp9KFZ50pC0QRAdK48IRU5dqnAvs=;
+	s=arc-20240116; t=1788183898; c=relaxed/simple;
+	bh=HlvWPTCkkzTxqZXD/COO+QxhBvizyWU848yipgWFibk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rbLXkD4fdxCaAyGs4vERvHgE8IjnDaD6T2XN1bAJ58KD92V0RvhgzBwRRUfSXI/HlTmg0AcHEiD33lpTmEbFlLZzzw6pF9ceV2yM0bmbPZA4FMFW/Ggla9q75Xvm61HaDa/eHkc2NpnirlnnjYTA1q1Mya0ANgND7PMA1+fXwXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SoyNZTR6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qls5Jo9irfnI3EZpPmmICuqv/FVC0HIQoZ70MmnOKWEJ13HQzqaRQxqLa3EkFOrdxiAmfLoMRpjNnw72u0CzI3TNPD0bRPMXdbsJifPyHwVlkV9vnJPKTFMvaz/1B1dhrraFrl5NPgMHgBuNN98oB3CXWlJ0YrhltIDRlV923jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DBzSPXMT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SoyNZTR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6220A1F00ACF;
-	Mon, 31 Aug 2026 13:44:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBzSPXMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D474C1F00ADB;
+	Mon, 31 Aug 2026 13:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183893;
-	bh=LvMxCM6wRPBIoXKwbKzfHcKD7X2x3OPIJ+Qrdx73ImU=;
+	s=k20260515; t=1788183895;
+	bh=pkcFfWywN+zhCyWoi7VJC98VIx6J4HKOu9NgRIrgkeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SoyNZTR64vnljVC5xAae8pXLnmaI4W6J1QpPuXuB10yTQVyPoZK5i46O4l5ddjmww
-	 OC7RUjR0pFfATF/ALvsfjqKmwzJ85iUc8pVA33lh7baOzIOmG2bRmPHA8Nhm5KuMdM
-	 93xunY3cdkfjEXQC6UkiQqZCDgNLpFmfYamSOgNX2WzeHEJAYClWa+eiV63mVup1fj
-	 W2y0z97ZEbYkx6bit+yDNzCQu6jSXgocwlfa29ahmEqzGaX1S4L5nI/vTXH0Uq9+Qd
-	 RJ+A+4MBgxM1dctQz0slmEYk3J6EAGRMIymkfZGORVV8SCPkriSxEcDu6N3wjt62Td
-	 P/uel6YnCEmrA==
+	b=DBzSPXMTfvtGP/k8/Lt3FcABxDGn0OSrzBV29u8nwRO4g8SmUXKslKBXgiGybBpGO
+	 O4A4JgyfNSk1wKuS0Ta00CkmYOdwr17Przk0ZPJblhHYG2Q4B5du00sjk+nTIDwugL
+	 ujSAg6bdazv6dKsv6ozw0zba6fdM9tHsXLCgdbUVwkESqGzIzYvLVfy+HyouzJIggj
+	 7dynDF0gi2MmbnfBiPnvIDvQqs3Xm0jr1Je86f8zI/Tuhjds1rI540eQrbzYqQ8xk7
+	 +VxQQblxt+/ctkTyuI7/NnV89vatZQ1GGTDr5q3OBPJHpmixlwPdmyWIZdJw/vC61g
+	 mB4yJk5eQyBfw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+Cc: Yuqi Xu <xuyuqiabc@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	gfs2@lists.linux.dev,
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] dlm: add usercopy whitelist to dlm_cb cache
-Date: Mon, 31 Aug 2026 09:26:34 -0400
-Message-ID: <20260831133314.4125787-366-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] wifi: cfg80211: reject duplicate wiphy cipher suite entries
+Date: Mon, 31 Aug 2026 09:26:35 -0400
+Message-ID: <20260831133314.4125787-367-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,390 +58,408 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Yuqi Xu <xuyuqiabc@gmail.com>
 
-[ Upstream commit b5314f2c6654a3616fd72777deb1ca766cc50618 ]
+[ Upstream commit 7187d145d9042b037e4f10538f70cf95e380219f ]
 
-The dlm_cb slab cache is created with kmem_cache_create(), which
-provides no usercopy whitelist. When a callback carries LVB data,
-dlm_user_add_ast() copies the LVB into the inline lvbptr[] array within
-the slab-allocated struct dlm_callback and redirects ua->lksb.sb_lvbptr
-to point to it. copy_result_to_user() then calls copy_to_user() with
-this pointer. With CONFIG_HARDENED_USERCOPY enabled, this triggers
-usercopy_abort().
+Duplicate entries in wiphy->cipher_suites do not describe any
+additional capability, but cfg80211 currently accepts them and leaves
+individual consumers to deal with them.
 
-Switch to kmem_cache_create_usercopy() with a whitelist covering the
-lvbptr field.
+One such consumer is the WEXT compatibility code, which appends a WEP
+key length for each WEP cipher entry it sees. Repeated WEP entries can
+therefore overflow the fixed iw_range::encoding_size array returned by
+SIOCGIWRANGE.
 
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Reject duplicate cipher suite entries in wiphy_register() instead.
+This keeps the cipher suite invariant in one place and makes malformed
+wiphy descriptions fail early with -EINVAL, rather than relying on a
+single cfg80211 user to handle duplicates correctly.
+
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/20260413123000.1480661-1-n05ec@lzu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `dlm: add usercopy whitelist to dlm_cb
-cache`
+# Stable Backport Analysis: `wifi: cfg80211: reject duplicate wiphy
+cipher suite entries`
 
-**Local tree:** `v6.18.43-1-gc7f0dac02d232` (kernel version **6.18.43**)
-**Upstream commit:** `b5314f2c6654a`
-**Stable-prepared commit (not in HEAD):** `82278e846311c`
+**Local tree:** `v6.18.43` (6.18.y stable) — verified via `git describe
+HEAD` and Makefile `VERSION/PATCHLEVEL/SUBLEVEL`.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the subject line
-**Record:** `[dlm]` `[add]` — Add a usercopy whitelist to the `dlm_cb`
-slab cache so `copy_to_user()` from inline LVB data in slab-allocated
-`struct dlm_callback` objects is permitted under
-`CONFIG_HARDENED_USERCOPY`.
+**Step 1.1 — Subject line**
+Record: `[wifi: cfg80211]` `[reject]` — reject duplicate wiphy cipher
+suite entries at registration time.
 
-### Step 1.2: Parse all commit message tags
-**Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** Alexander Aring `<aahringo@redhat.com>` (DLM maintainer)
-- **Link:** — none
-- **Cc: stable:** — none
-- **Signed-off-by:** Ziyi Guo (author), Alexander Aring, David Teigland;
-  ignore pipeline-added Sasha Levin SOB
+**Step 1.2 — Tags**
+Record:
+- Reported-by: Yifan Wu \<yifanwucs@gmail.com\>
+- Reported-by: Juefei Pu \<tomapufckgml@gmail.com\>
+- Co-developed-by: Yuan Tan \<yuantan098@gmail.com\>
+- Suggested-by: Xin Liu \<bird@lzu.edu.cn\>
+- Signed-off-by: Yuan Tan, Yuqi Xu, Ren Wei (authors)
+- Signed-off-by: Johannes Berg \<johannes.berg@intel.com\> (cfg80211
+  maintainer)
+- Link:
+  https://patch.msgid.link/20260413123000.1480661-1-n05ec@lzu.edu.cn
+- No Fixes:, Cc: stable, Tested-by, or syzbot tags
 
-Notable: maintainer Acked-by, no syzbot/fuzzer report.
+Notable: two independent reporters; maintainer sign-off.
 
-### Step 1.3: Analyze commit body
-**Record:**
-- **Bug:** `dlm_cb` cache created with `kmem_cache_create()` has no
-  usercopy whitelist. When an AST callback carries LVB data,
-  `dlm_user_add_ast()` copies LVB into inline `lvbptr[]` inside a slab
-  `struct dlm_callback` and repoints `ua->lksb.sb_lvbptr` to it.
-  `copy_result_to_user()` then `copy_to_user()`s from that pointer.
-- **Symptom:** With `CONFIG_HARDENED_USERCOPY`, this triggers
-  `usercopy_abort()`.
-- **Root cause:** Slab object pointer used for userspace copy without
-  declaring a usercopy-whitelisted region at cache creation time.
-- **Version info:** none in message.
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** Duplicate entries in `wiphy->cipher_suites` are accepted by
+  cfg80211.
+- **Symptom:** WEXT compatibility code (`cfg80211_wext_giwrange`)
+  appends a WEP key length for every WEP cipher entry; repeated WEP
+  entries overflow the fixed
+  `iw_range::encoding_size[IW_MAX_ENCODING_SIZES]` array (size 8) when
+  `SIOCGIWRANGE` is handled.
+- **Root cause:** No central validation of cipher suite uniqueness at
+  `wiphy_register()`.
+- **Fix approach:** Reject duplicates early in `wiphy_register()` with
+  `-EINVAL`.
 
-### Step 1.4: Detect hidden bug fixes
-**Record:** Not disguised — this is an explicit bug fix. The failure
-mode (`usercopy_abort()` → `BUG()`) is a kernel panic, not a cosmetic
-cleanup.
+**Step 1.4 — Hidden bug fix?**
+Record: No — this is an explicit bug fix (out-of-bounds write / memory
+corruption in WEXT path), not disguised cleanup.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory the changes
-**Record:**
-- **Files:** `fs/dlm/memory.c` (+3 / -1)
-- **Function:** `dlm_memory_init()`
-- **Scope:** Single-file, surgical fix (4 net lines)
+**Step 2.1 — Inventory**
+Record:
+- 1 file: `net/wireless/core.c` (+18 lines net)
+- New function: `wiphy_cipher_suites_valid()`
+- Modified function: `wiphy_register()`
+- Scope: single-file, surgical validation addition
 
-### Step 2.2: Code flow change per hunk
-**Record:**
-- **Before:** `cb_cache = kmem_cache_create("dlm_cb", ...)` — no
-  usercopy region declared.
-- **After:** `cb_cache = kmem_cache_create_usercopy("dlm_cb", ...,
-  offsetof(struct dlm_callback, lvbptr), sizeof_field(struct
-  dlm_callback, lvbptr), ...)` — whitelists only the `lvbptr[]` field
-  for userspace copies.
-- **Path affected:** Init-time cache creation; runtime path is userspace
-  DLM AST delivery with LVB copy.
+**Step 2.2 — Code flow per hunk**
+Record:
+- **Hunk 1 (new helper):** Before — no duplicate check. After — O(n²)
+  pairwise comparison rejects any duplicate `cipher_suites[i]`; also
+  rejects `n_cipher_suites > 0` with NULL `cipher_suites`.
+- **Hunk 2 (`wiphy_register`):** Before — proceeds to band validation
+  after iface-combination checks. After — returns `-EINVAL` if cipher
+  suites are invalid/duplicated.
 
-### Step 2.3: Bug mechanism
-**Record:** **Category:** Memory safety / hardened usercopy enforcement.
-**Mechanism:** `copy_to_user()` from `cb->lvbptr` (inside SLUB object)
-fails `__check_object_size()` in `mm/slub.c` because the cache has no
-`useroffset`/`usersize`, leading to `usercopy_abort("SLUB object",
-"dlm_cb", ...)`.
+**Step 2.3 — Bug mechanism**
+Record:
+- **Category:** Buffer overflow / out-of-bounds write (memory safety)
+- **Mechanism:** In `cfg80211_wext_giwrange()`:
 
-Verified call chain:
-1. `dlm_add_cb()` → `dlm_user_add_ast()` (user locks)
-2. `dlm_user_add_ast()` sets `cb->lkb_lksb->sb_lvbptr = cb->lvbptr` when
-   `copy_lvb` is true
-3. `device_read()` → `copy_result_to_user()` → `copy_to_user(buf+len,
-   ua->lksb.sb_lvbptr, DLM_USER_LVB_LEN)`
+```160:180:net/wireless/wext-compat.c
+        for (i = 0; i < wdev->wiphy->n_cipher_suites; i++) {
+                switch (wdev->wiphy->cipher_suites[i]) {
+                // ...
+                case WLAN_CIPHER_SUITE_WEP40:
+range->encoding_size[range->num_encoding_sizes++] =
+                                WLAN_KEY_LEN_WEP40;
+                        break;
+                case WLAN_CIPHER_SUITE_WEP104:
+range->encoding_size[range->num_encoding_sizes++] =
+                                WLAN_KEY_LEN_WEP104;
+                        break;
+                }
+        }
+```
 
-### Step 2.4: Fix quality assessment
-**Record:** Fix is obviously correct and minimal. Whitelisting only
-`lvbptr[]` is the established kernel pattern (same author fixed orangefs
-identically). Low regression risk — only expands permitted copy region
-for the exact field intentionally copied to userspace. No lock-order or
-API changes.
+`IW_MAX_ENCODING_SIZES` is 8 (`include/uapi/linux/wireless.h`). There is
+no bounds check on `num_encoding_sizes`. Nine or more WEP cipher entries
+write past `encoding_size[7]` into subsequent `struct iw_range` fields.
+
+**Step 2.4 — Fix quality**
+Record: Obviously correct; minimal; consistent with existing
+`wiphy_register()` sanity checks. Low regression risk — all in-tree
+drivers use unique static cipher lists. Rejecting meaningless duplicates
+is semantically correct.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame the changed lines
-**Record:** Current `cb_cache` creation at lines 51–53 blame to
-`5d324e5159d9e` (v6.18-rc8 import). Inline `lvbptr[DLM_USER_LVB_LEN]` in
-`struct dlm_callback` and the `copy_lvb` redirect in
-`dlm_user_add_ast()` are present in this tree at the same baseline.
-Exact introduction commit of inline `lvbptr` not recoverable from this
-tree's shallow `fs/dlm/` history.
+**Step 3.1 — Blame / introduction of buggy code**
+Record: WEXT cipher-suite loop is in `net/wireless/wext-compat.c`
+(present in v6.18.43). Stable-tree history is compressed; the vulnerable
+pattern predates 6.18.y. The bug is long-standing legacy WEXT code, not
+a recent regression.
 
-### Step 3.2: Follow Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no Fixes: tag in commit message.
 
-### Step 3.3: Related file history
-**Record:** Fix commit `82278e846311c` exists in repo but is **not** an
-ancestor of HEAD. Upstream mainline commit `b5314f2c6654a`. Nearby
-upstream DLM commit `a1ed04430f805` (SRCU list change) is unrelated.
-This usercopy fix is standalone within its 2/4 series position.
+**Step 3.3 — Related file history**
+Record:
+- Recent WEXT fix already in this tree: `3c87b7e64735c` — `wifi:
+  cfg80211: wext: fix IGTK key ID off-by-one`
+- Related validation fix from same research group already in tree:
+  `265c07c09c837` — `wifi: nl80211: reject oversized EMA RNR lists`
+  (Yuqi Xu)
+- Commit under review is **not** yet in this tree (no
+  `wiphy_cipher_suites_valid` present)
 
-### Step 3.4: Author's other commits
-**Record:** Ziyi Guo authored the same class of fix for orangefs
-(`f855f4ab123b2`). Alexander Aring (Acked-by) is DLM maintainer who
-resent the patch in v7.1-rc1 series.
+**Step 3.4 — Author context**
+Record: Authors (Lanzhou University group) have multiple accepted
+cfg80211/nl80211 validation fixes. Johannes Berg (maintainer) signed
+off.
 
-### Step 3.5: Dependencies
-**Record:** No dependencies. Patch is 2/4 in a series but only touches
-`memory.c` cache creation; does not require patch 1/4 (SRCU hlist
-change). `git apply --check` on the diff against current tree:
-**APPLY_OK**.
+**Step 3.5 — Dependencies**
+Record: Standalone; no series dependencies. `git apply --check` on the
+provided diff succeeds against v6.18.43.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original patch discussion
-**Record:** `b4 dig -c 82278e846311c` →
-https://patch.msgid.link/20260427155935.2415989-3-aahringo@redhat.com
-**Series revisions:** v1 from Ziyi Guo (2026-02-12); v7.1-rc1 resend
-(2026-04-27, patch 2/4).
-**Reviewer feedback:** No replies in saved mbox with stable nominations,
-NAKs, or Tested-by.
+**Step 4.1 — Original discussion**
+Record: UNVERIFIED — `b4 shazam` did not find the message-id;
+lore.kernel.org returned 403 (bot protection); `curl` to raw lore URL
+also 403.
 
-### Step 4.2: Reviewers from b4 dig -w
-**Record:** CC'd: Alexander Aring, teigland@redhat.com,
-gfs2@lists.linux.dev. Appropriate DLM/GFS2 audience; maintainer Acked-by
-present.
+**Step 4.2 — Reviewers**
+Record: UNVERIFIED via b4 dig (no commit hash in local tree). Johannes
+Berg maintainer sign-off confirmed from commit message.
 
-### Step 4.3: Bug report search
-**Record:** No Reported-by, syzbot, or bugzilla links. Bug is logically
-reproducible: any DLM userspace client reading AST results with LVB on a
-`CONFIG_HARDENED_USERCOPY=y` kernel.
+**Step 4.3 — Bug report**
+Record: Two Reported-by tags from security researchers; no
+syzbot/bugzilla link. Severity implied: kernel memory corruption on WEXT
+ioctl path.
 
-### Step 4.4: Related patches / series
-**Record:** Part of 4-patch DLM series; this patch is self-contained.
-Same bug class as orangefs usercopy whitelist fix by same author.
+**Step 4.4 — Series context**
+Record: Appears standalone (not part of a multi-patch series).
 
-### Step 4.5: Stable mailing list
-**Record:** No stable-list discussion found in saved mbox thread.
+**Step 4.5 — Stable list history**
+Record: UNVERIFIED — could not search lore stable archive.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `dlm_memory_init()` (modified); affected runtime:
-`dlm_allocate_cb()`, `dlm_user_add_ast()`, `copy_result_to_user()`,
-`device_read()`.
+**Step 5.1 — Key functions**
+Record: `wiphy_cipher_suites_valid()` (new), `wiphy_register()`
+(modified), vulnerable consumer `cfg80211_wext_giwrange()`.
 
-### Step 5.2: Callers
-**Record:**
-- `dlm_allocate_cb()` ← `dlm_get_cb()` ← `dlm_user_add_ast()`
-- `dlm_user_add_ast()` ← `dlm_add_cb()` when `DLM_DFL_USER_BIT` set
-  (userspace locks)
-- `device_read()` ← DLM char device `read` ioctl path (`/dev/dlm_*`),
-  userspace syscall
+**Step 5.2 — Callers**
+Record: `wiphy_register()` called from every cfg80211 driver at
+probe/init (mac80211, brcmfmac, iwlwifi, mwifiex, hwsim, etc.).
+`cfg80211_wext_giwrange()` registered as WEXT handler for `SIOCGIWRANGE`
+in `wext-compat.c`.
 
-### Step 5.3: Callees
-**Record:** `kmem_cache_create_usercopy()`, `kmem_cache_alloc()`,
-`copy_to_user()`, `memcpy()`.
+**Step 5.3 — Callees**
+Record: Validation is pure comparison logic; no new allocations or
+locks.
 
-### Step 5.4: Call chain / reachability
-**Record:** Userspace opens DLM device → lock with `DLM_LKF_VALBLK` →
-AST completion with LVB copy needed (`dlm_may_skip_callback()` sets
-`copy_lvb=1` for user locks) → userspace `read()` on device →
-`copy_to_user()` from slab `lvbptr`. **Reachable from userspace** via
-DLM device read on clusters using GFS2/DLM userspace (CONFIG_DLM=m/y).
+**Step 5.4 — Reachability / trigger path**
+Record: **Verified in-tree trigger via mac80211_hwsim:**
+- `hwsim_known_ciphers()` checks each cipher is known but **does not
+  reject duplicates**
+  (`drivers/net/wireless/virtual/mac80211_hwsim.c:6260-6280`)
+- Up to `ARRAY_SIZE(hwsim_ciphers)` = 11 entries allowed via
+  `HWSIM_ATTR_CIPHER_SUPPORT` (`6456-6462`)
+- 9+ duplicate `WLAN_CIPHER_SUITE_WEP40` entries → `n_cipher_suites` =
+  9+ → `SIOCGIWRANGE` overflows `encoding_size[8]`
+- Requires `CONFIG_CFG80211_WEXT` (enabled in multiple arch defconfigs)
+  and `CONFIG_MAC80211_HWSIM`
+- Creating hwsim radios requires elevated privileges
+  (netlink/CAP_NET_ADMIN); ioctl on the interface may be reachable with
+  lesser privilege depending on netdev permissions
 
-### Step 5.5: Similar patterns
-**Record:** Identical pattern in `fs/orangefs/orangefs-cache.c`,
-`net/core/skbuff.c`, `kernel/fork.c`, etc. Well-established hardened-
-usercopy fix approach.
+**Step 5.5 — Similar patterns**
+Record: No bounds check on `num_encoding_sizes` anywhere in wext-
+compat.c. Other cfg80211 consumers (`cfg80211_supported_cipher_suite`,
+nl80211) tolerate duplicates but gain nothing from them.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.43)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (v6.18.43)
 
-### Step 6.1: Does buggy code exist?
-**Record:** **YES.** `fs/dlm/memory.c` lines 51–53 still use
-`kmem_cache_create()`. `struct dlm_callback` has `unsigned char
-lvbptr[DLM_USER_LVB_LEN]` at `dlm_internal.h:236`. `dlm_user_add_ast()`
-redirect at `user.c:223–226`. Fix commit `82278e846311c` is **not** in
-HEAD.
+**Step 6.1 — Buggy code present?**
+Record: **YES.** `cfg80211_wext_giwrange()` vulnerable loop exists;
+`wiphy_register()` lacks duplicate validation (confirmed by reading
+`net/wireless/core.c` around line 857).
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply** — verified with `git apply --check`. No
-conflicting changes in `fs/dlm/memory.c`.
+**Step 6.2 — Backport complications**
+Record: Clean apply verified (`git apply --check` passed). Insertion
+point after `wiphy_verify_combinations()` matches upstream diff context
+in current `core.c`.
 
-### Step 6.3: Related fixes already present?
-**Record:** None. `git log --grep='usercopy whitelist' -- fs/dlm/`
-returns nothing on HEAD.
+**Step 6.3 — Related fixes already present?**
+Record: No duplicate-cipher validation. Related WEXT fix
+(`3c87b7e64735c`) and nl80211 bounds fix (`265c07c09c837`) from same
+research lineage are already in tree.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** **fs/dlm** — Distributed Lock Manager. **IMPORTANT** for
-cluster filesystem users (GFS2, OCFS2, corosync/pacemaker stacks). Not
-universal like mm/net core, but critical for cluster deployments.
+**Step 7.1 — Subsystem criticality**
+Record: `net/wireless` (cfg80211) — **IMPORTANT** subsystem; affects all
+WiFi users on WEXT-enabled configs.
 
-### Step 7.2: Subsystem activity
-**Record:** DLM actively maintained (Red Hat/David Teigland tree).
-Recent upstream usercopy fix in 2026.
+**Step 7.2 — Activity**
+Record: Actively maintained; recent stable backports include WEXT and
+nl80211 validation fixes.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** Users of DLM userspace API (`CONFIG_DLM`) on kernels built
-with `CONFIG_HARDENED_USERCOPY=y`. Affects cluster nodes running GFS2
-and similar workloads using value-block (LVB) locks.
+**Step 8.1 — Who is affected**
+Record: Systems with `CONFIG_CFG80211_WEXT=y` and a wiphy advertising
+duplicate cipher suites (buggy/OOT driver, or mac80211_hwsim with
+crafted cipher list).
 
-### Step 8.2: Trigger conditions
-**Record:**
-- `CONFIG_DLM` enabled
-- `CONFIG_HARDENED_USERCOPY` enabled (present in multiple arch
-  defconfigs; default-on when `HARDENED_USERCOPY_DEFAULT_ON` is set)
-- Userspace lock operation with LVB (`DLM_LKF_VALBLK`)
-- AST completion where LVB must be copied back (`copy_lvb=1`)
-- Userspace `read()` on DLM device to receive AST
+**Step 8.2 — Trigger conditions**
+Record: Uncommon in production drivers (in-tree arrays are unique), but
+**demonstrably reachable** via in-tree hwsim with duplicate WEP entries.
+Not every boot; requires WEXT ioctl on affected interface.
 
-**Likelihood:** Real for hardened cluster kernels using LVB locks — not
-theoretical.
+**Step 8.3 — Failure mode severity**
+Record: Out-of-bounds writes within kernel `struct iw_range` buffer →
+memory corruption. Severity: **HIGH** (kernel memory safety; potential
+for further exploitation depending on layout and caller context).
 
-### Step 8.3: Failure mode severity
-**Record:** `usercopy_abort()` in `mm/usercopy.c:86–102` calls `BUG()` —
-**kernel panic**. **Severity: CRITICAL.**
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH — prevents kernel panic on legitimate DLM userspace
-  operation
-- **Risk:** VERY LOW — 3-line whitelist addition, field-scoped,
-  maintainer-acked, proven pattern
-- **Ratio:** Strongly favors backport
+**Step 8.4 — Risk-benefit**
+Record:
+- **Benefit:** HIGH — prevents OOB write; centralizes invariant
+  enforcement
+- **Risk:** LOW — ~18 lines, no API change, no in-tree driver uses
+  duplicates
+- **Ratio:** Strong benefit, minimal risk
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence compile
+**Step 9.1 — Evidence summary**
 
-**FOR backport:**
-- Real bug with kernel panic (`BUG()` via `usercopy_abort`)
-- Userspace-reachable via DLM device read
-- Small, surgical, maintainer-acked fix
-- Applies cleanly to 6.18.43
-- Buggy code confirmed present; fix not yet applied
-- Same fix class already accepted upstream (orangefs precedent)
+| FOR backport | AGAINST backport |
+|---|---|
+| Real OOB write in kernel WEXT path | Requires `CONFIG_CFG80211_WEXT`
+(not universal) |
+| Demonstrable via in-tree mac80211_hwsim | Trigger needs unusual
+duplicate cipher list |
+| Small, surgical, maintainer-approved | Lore discussion unverified |
+| Applies cleanly to v6.18.43 | |
+| Precedent: similar validation fixes already in this tree | |
+| No in-tree driver regression expected | |
 
-**AGAINST backport:**
-- Requires `CONFIG_DLM` + `CONFIG_HARDENED_USERCOPY` (not all kernels)
-- No explicit user/syzbot report in commit message
-- Part of a 4-patch series (but this patch is standalone)
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct and tested? **PASS** — logic is trivial; maintainer
+   SOB; reporters identified concrete consumer bug
+2. Fixes real bug affecting users? **PASS** — OOB write on
+   `SIOCGIWRANGE`
+3. Important issue? **PASS** — memory corruption (HIGH)
+4. Small and contained? **PASS** — 1 file, ~18 lines
+5. No new features/APIs? **PASS** — registration-time validation only
+6. Can apply to local tree? **PASS** — clean apply verified; buggy code
+   present
 
-**Unresolved:** Exact kernel version that introduced inline `lvbptr`
-(not needed for decision — code is in 6.18.43).
+**Step 9.3 — Exception category**
+Record: N/A (not device ID/quirk/build/doc); standard bug fix.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — mechanism clear; maintainer
-   Acked-by; no Tested-by
-2. Fixes real bug? **PASS** — hardened usercopy abort on valid DLM
-   operation
-3. Important issue? **PASS** — kernel panic (CRITICAL)
-4. Small and contained? **PASS** — 4 lines, 1 file
-5. No new features/APIs? **PASS** — internal cache metadata only
-6. Can apply to local tree? **PASS** — clean apply verified
+**Step 9.4 — Problem statement for stable users**
 
-### Step 9.3: Exception categories
-**Record:** None directly, but this is a hardened-usercopy compatibility
-fix analogous to accepted build/runtime fixes for
-`CONFIG_HARDENED_USERCOPY` users.
-
-### Step 9.4: Decision rationale
-For **6.18.43**, the buggy code path exists, the failure mode is a
-kernel panic on a legitimate userspace DLM operation when hardened
-usercopy is enabled, and the fix is minimal, maintainer-reviewed, and
-applies cleanly. This meets all stable-kernel criteria.
+Duplicate cipher suite entries in a wiphy description are meaningless
+but currently accepted. When WEXT compatibility is enabled,
+`SIOCGIWRANGE` handling writes one `encoding_size` entry per WEP cipher
+without bounds checking. A wiphy with 9+ duplicate WEP entries
+(achievable via mac80211_hwsim's cipher attribute) causes out-of-bounds
+writes in the kernel `iw_range` buffer. Rejecting duplicates at
+`wiphy_register()` fixes this at the source, consistent with other wiphy
+sanity checks, with negligible risk to legitimate drivers.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user query and `git
-  show b5314f2c6654a`
-- **[Phase 2]** Read diff; traced `dlm_user_add_ast()` →
-  `copy_result_to_user()` in `fs/dlm/user.c`
-- **[Phase 2]** Confirmed `usercopy_abort()` calls `BUG()` in
-  `mm/usercopy.c:86–102`
-- **[Phase 2]** Confirmed SLUB usercopy check in `mm/slub.c:8275–8281`
-- **[Phase 3]** `git describe HEAD` → v6.18.43; fix `82278e846311c` NOT
-  ancestor of HEAD
-- **[Phase 3]** `git apply --check` on patch → APPLY_OK
-- **[Phase 3]** `git blame` on `lvbptr` field and copy path — present in
-  tree
-- **[Phase 4]** `b4 dig -c 82278e846311c` → lore URL found
-- **[Phase 4]** `b4 dig -a` → v1 and v7.1-rc1 revisions
-- **[Phase 4]** `b4 dig -w` → maintainers CC'd
-- **[Phase 4]** Saved mbox `/tmp/dlm_usercopy.mbox` — no stable/Tested-
-  by/NAK replies
-- **[Phase 5]** Traced callers: `dlm_add_cb` → `dlm_user_add_ast`;
-  `device_read` → `copy_result_to_user`
-- **[Phase 5]** Verified `copy_lvb` set in `dlm_may_skip_callback()` for
-  user LVB casts (`ast.c:101–108`)
-- **[Phase 6]** `fs/dlm/memory.c` still uses `kmem_cache_create()`
-  without usercopy whitelist
-- **[Phase 6]** `struct dlm_callback.lvbptr[DLM_USER_LVB_LEN]` at
-  `dlm_internal.h:236`
-- **[Phase 7]** `CONFIG_DLM` in `fs/dlm/Kconfig`; `DLM_USER_LVB_LEN` =
-  32 in `include/uapi/linux/dlm_device.h`
-- **[Phase 8]** `CONFIG_HARDENED_USERCOPY` documented in
-  `security/Kconfig.hardening`; enabled in multiple arch defconfigs
-- **UNVERIFIED:** Exact commit that introduced inline `lvbptr` (shallow
-  `fs/dlm/` history in this tree)
+- [Phase 1] Parsed commit message tags: 2× Reported-by, Johannes Berg
+  SOB, Link tag
+- [Phase 2] Diff: +`wiphy_cipher_suites_valid()`, call in
+  `wiphy_register()`; 1 file changed
+- [Phase 2] Read `wext-compat.c:160-180`: unbounded
+  `num_encoding_sizes++` on WEP cases
+- [Phase 2] Read `wireless.h`: `IW_MAX_ENCODING_SIZES = 8`
+- [Phase 3] `git describe HEAD`: v6.18.43
+- [Phase 3] `git merge-base --is-ancestor 265c07c09c837 HEAD`: EMA
+  validation fix already in tree
+- [Phase 3] `git show 3c87b7e64735c`: WEXT fix already backported to
+  this tree
+- [Phase 3] `git apply --check`: patch applies cleanly
+- [Phase 4] `b4 shazam`: message not found — UNVERIFIED
+- [Phase 4] lore.kernel.org / curl raw: 403 Forbidden — UNVERIFIED
+- [Phase 5] Read `mac80211_hwsim.c:6260-6280`: duplicates allowed in
+  cipher list
+- [Phase 5] Read `mac80211_hwsim.c:6456-6462`: up to 11 ciphers accepted
+- [Phase 5] Read `hwsim_ciphers[]`: 11 entries max, includes
+  WEP40/WEP104
+- [Phase 5] Grep in-tree `cipher_suites[]` arrays: all unique entries
+  (brcmfmac, mac80211, iwlwifi sampled)
+- [Phase 6] Grep `wiphy_cipher_suites_valid`: not present — fix not yet
+  in tree
+- [Phase 6] Read `core.c:857-859`: no cipher-suite validation at
+  registration
+- [Phase 7] `CONFIG_CFG80211_WEXT` present in multiple arch defconfigs
+- [Phase 8] Failure mode: OOB write within `struct iw_range` — severity
+  HIGH
 
-**YES****Verdict: YES** — backport to this tree (6.18.43).
+**YES**
 
-The DLM `dlm_cb` slab cache lacks a usercopy whitelist. When userspace
-AST callbacks copy LVB data from the inline `lvbptr[]` field in a slab-
-allocated `struct dlm_callback`, `copy_to_user()` under
-`CONFIG_HARDENED_USERCOPY` triggers `usercopy_abort()` → `BUG()` (kernel
-panic). The fix switches to `kmem_cache_create_usercopy()` whitelisting
-only `lvbptr[]` — a 4-line, maintainer-acked change that applies cleanly
-and is not yet in HEAD.The check confirmed commit `82278e846311c` is
-**not** in the current 6.18.43 tree — the fix still needs to be
-backported. That supports the **YES** verdict from the earlier analysis.
+ net/wireless/core.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
- fs/dlm/memory.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/fs/dlm/memory.c b/fs/dlm/memory.c
-index 5c35cc67aca4c..ee55994ce90d8 100644
---- a/fs/dlm/memory.c
-+++ b/fs/dlm/memory.c
-@@ -48,8 +48,10 @@ int __init dlm_memory_init(void)
- 	if (!rsb_cache)
- 		goto rsb;
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index efbf7b3046342..98ea1147ab11d 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -726,6 +726,24 @@ static int wiphy_verify_combinations(struct wiphy *wiphy)
+ 	return ret;
+ }
  
--	cb_cache = kmem_cache_create("dlm_cb", sizeof(struct dlm_callback),
-+	cb_cache = kmem_cache_create_usercopy("dlm_cb", sizeof(struct dlm_callback),
- 				     __alignof__(struct dlm_callback), 0,
-+					 offsetof(struct dlm_callback, lvbptr),
-+					 sizeof_field(struct dlm_callback, lvbptr),
- 				     NULL);
- 	if (!cb_cache)
- 		goto cb;
++static bool wiphy_cipher_suites_valid(const struct wiphy *wiphy)
++{
++	int i, j;
++
++	if (wiphy->n_cipher_suites && !wiphy->cipher_suites)
++		return false;
++
++	for (i = 0; i < wiphy->n_cipher_suites; i++) {
++		for (j = 0; j < i; j++) {
++			if (wiphy->cipher_suites[i] ==
++			    wiphy->cipher_suites[j])
++				return false;
++		}
++	}
++
++	return true;
++}
++
+ int wiphy_register(struct wiphy *wiphy)
+ {
+ 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
+@@ -858,6 +876,9 @@ int wiphy_register(struct wiphy *wiphy)
+ 	if (res)
+ 		return res;
+ 
++	if (!wiphy_cipher_suites_valid(wiphy))
++		return -EINVAL;
++
+ 	/* sanity check supported bands/channels */
+ 	for (band = 0; band < NUM_NL80211_BANDS; band++) {
+ 		const struct ieee80211_sband_iftype_data *iftd;
 -- 
 2.53.0
 
