@@ -1,109 +1,442 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F80D58E2B3;
-	Mon, 31 Aug 2026 13:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107B5472F67;
+	Mon, 31 Aug 2026 13:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184245; cv=none; b=gjITHGC7sgOdALR/JPzLgH8dSOiTC7Qvm0wlkqvOdDturzif9vsir8zgwinSsuJu2KOvYKYeqA1aUFGq+O3EcN1OrdZRZEfxPJ2n6GRr79Oz4NrWPFcxzmC3/oQEzmBlstEUIpC7T6Gp9Ij3HqK2xeMyi3ysKpIKy8UrycxGmVQ=
+	t=1788184247; cv=none; b=ZRQls7JGHlSq/At1KyKugE92VsFjJxopoEzB1lBSBegOicC4y6AUdxPgCgm01CIsiZIKXEHNUIkpG5CZPvw5CYrKxIzb9gMRBSnI28azkg+sMrkpsd8CtAZLMPJGTCIKqHdP9g5Xu3YXCItH3rZc416REpSYoC0VSQtOq0qG7y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184245; c=relaxed/simple;
-	bh=OIc7ce+QijvhOEEghUd6vg0nBJ54xs+Ix/VpooIzTek=;
+	s=arc-20240116; t=1788184247; c=relaxed/simple;
+	bh=sFogAciFh4jgeMQFkfSEsz9YBiLULePYoXfC/TqpROs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H2M7Fu9BgWBxUlshpkHtoTgI5wp6edtbzREM7At2capDsJcM43bs8zg5oaI9fMiOLvhtGf0Zo+GO1I8gc3EAocdwI4tho7VqBizWbEO3oDzhLmQEfFmOjVgITXBMurbD9UIxzLmHhN0ekjuZNUJJUz5SVcvixDbaTQ65Rd8VWLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EAky4o+Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HrelkDuvGt49DwhvudvHvNya33EmixHLz/HttlRuSPrUpiqiHPDn2rUtIC4VmSJiOyLqk2F18Xs8n4/lvrMym7gwb/MXXmF4xRJhUR6KlXT03QEu12IowgiX3qIiYdXP3kEo70i2aFuJfj3/rZXUmGRYwsm4etj8ry6kzYDbUf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffE3DZYL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EAky4o+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCF11F00ADE;
-	Mon, 31 Aug 2026 13:50:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184243;
-	bh=U0E64T3hJP4AE/m7rXCnZqVqgk4ckJPtMzLH6MWtkjI=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffE3DZYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB1E1F000E9;
+	Mon, 31 Aug 2026 13:50:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184244;
+	bh=WVkcBe1oKB61vAUHEYlBNEk3Wg3PqUssxl8/dMoJI/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EAky4o+YYBfaSSR42j5fI4Lim+Lz5B0xWq8ELxGT+fsIJUntJEVcwO+cyeNeKMH3B
-	 fHQ1f4rhw34gwx9kC+5g5N2Op/HuA3DPZvDuPejKMRCSTO9gGEHDorMjclEx1nOiuz
-	 j2NaPr60vSNPebV+YtC/tTXsO7gFRemB9pCNv/heRPdWN1z2dP+srLKf5mZp+AFj3a
-	 0Crgir6/rM9nJHKzfGBFsro39m3nHN/aFoiDK8C/MEg1J/AmgbTAl+GM/g1OwWxRlP
-	 RlZZEBMhrrhSIgk8D7yyMCiCLQ3PUVqoBvpLww19wZcp2XXefYWRNicteh31yQXnhB
-	 bYDz7TPivIvbA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Riccardo Mereu <r.mereu@arduino.cc>,
-	Sasha Levin <sashal@kernel.org>,
-	jagan@edgeble.ai,
-	neil.armstrong@linaro.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] drm/panel: jadard-jd9365da-h3: set prepare_prev_first
-Date: Mon, 31 Aug 2026 09:30:05 -0400
-Message-ID: <20260831133314.4125787-577-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=ffE3DZYLrFGjvIjTtUt1KxrvVCBoK1FxGNmYm+25sCC/B9N3Gp2AuavdAXXz4Qlba
+	 bm6riapVNYNLaCPfmHqgeMilEUs0yQeHsSziZkSE3jZWS6JCtTTUGCm+UtILs/RaBu
+	 WtDbxzyJ09uHYhfL0mkBRHORZ221okF0gDOl4B+0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 40/99] ksmbd: harden file lifetime during session teardown
+Date: Mon, 31 Aug 2026 15:34:09 +0200
+Message-ID: <20260831133401.992867437@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit b55a4b5d4769a650f52ea3f1ae680610169d125e ]
+------------------
 
-Sending DSI commands from the prepare() callback requires DSI link to be
-up at that point. For DSI hosts is guaranteed only if the panel driver
-sets the .prepare_prev_first flag. Set it to let these panels work with
-the DSI hosts which don't power on the link in their .mode_set callback.
+From: DaeMyung Kang <charsyam@gmail.com>
 
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Riccardo Mereu <r.mereu@arduino.cc>
-Link: https://patch.msgid.link/20260413-waveshare-dsi-touch-v3-13-3aeb53022c32@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit a42896bebfcc287ed1e61d820a888e33b1eb80ce upstream.
+
+__close_file_table_ids() is the per-session teardown that closes every
+fp belonging to a session (or to one tree connect on that session) by
+walking the session's volatile-id idr.  The current loop has three
+related problems on busy or racing workloads:
+
+  * Sleeping under ft->lock.  The session-teardown skip callback,
+    session_fd_check(), already sleeps in ksmbd_vfs_copy_durable_owner()
+    -> kstrdup(GFP_KERNEL) and down_write(&fp->f_ci->m_lock) (a
+    rw_semaphore).  Running the callback inside write_lock(&ft->lock)
+    trips CONFIG_DEBUG_ATOMIC_SLEEP / CONFIG_PROVE_LOCKING on a
+    durable-fd workload.
+
+  * Refcount accounting blind to f_state.  The unconditional
+    atomic_dec_and_test(&fp->refcount) does not distinguish
+    FP_INITED (idr-owned reference still intact) from FP_CLOSED (an
+    earlier ksmbd_close_fd() already consumed the idr-owned reference
+    while leaving fp in the idr because a holder kept refcount
+    non-zero).  When the latter races with teardown the same path
+    over-decrements into a holder reference and ksmbd_fd_put() later
+    UAFs that holder.
+
+  * FP_NEW window.  Between __open_id() publishing fp into the
+    session idr and ksmbd_update_fstate(..., FP_INITED) committing the
+    transition at the end of smb2_open(), an fp is in FP_NEW and an
+    intervening teardown that takes a transient reference and
+    unpublishes the volatile id leaves the original idr-owned
+    reference orphaned -- the opener is unaware that fp has been
+    unpublished, returns success to the client, and the fp leaks at
+    refcount = 1.
+
+Refactor __close_file_table_ids() to take a transient reference on fp
+and unpublish fp from the session idr *under ft->lock* before calling
+skip() outside the lock.  A transient ref protects lifetime but not
+concurrent field mutation, so the idr_remove() is what keeps
+__ksmbd_lookup_fd() through this session's idr from granting a new
+ksmbd_fp_get() reference to an fp whose fp->conn / fp->tcon /
+fp->volatile_id / op->conn / lock_list links are about to be rewritten
+by session_fd_check().  Durable reconnect is unaffected because it
+reaches fp through the global durable table (ksmbd_lookup_durable_fd
+-> global_ft).
+
+Decide n_to_drop together with any FP_INITED -> FP_CLOSED transition
+under ft->lock so teardown and ksmbd_close_fd() never both consume the
+idr-owned reference.  See ksmbd_mark_fp_closed() for the per-state
+accounting.  For the FP_NEW path to be safe, the opener has to learn
+that fp was unpublished: ksmbd_update_fstate() now returns -ENOENT
+when an FP_NEW -> FP_INITED transition finds f_state already advanced
+or the volatile id cleared (both committed by teardown under
+ft->lock); smb2_open() propagates that as STATUS_OBJECT_NAME_INVALID
+and drops the original reference via ksmbd_fd_put().
+
+The list removal cannot be left for a deferred final putter because
+fp->volatile_id has already been cleared and __ksmbd_remove_fd() will
+intentionally skip both idr_remove() and list_del_init().  Move the
+m_fp_list unlink in __ksmbd_remove_fd() above the volatile-id check so
+that an FP_NEW fp that happened to be added to m_fp_list (smb2_open()
+adds fp->node before ksmbd_update_fstate() runs) is still cleaned up
+on the deferred putter path; list_del_init() on an empty node is a
+no-op and remains safe for fps that were never added.
+
+Add a defensive guard in session_fd_check() that refuses non-FP_INITED
+fps so that even if a teardown reaches an FP_NEW fp it falls into the
+close branch (where the n_to_drop = 1 accounting keeps the opener's
+reference alive) instead of the durable-preserve branch (which mutates
+fp->conn / fp->tcon).
+
+Validation on a debug kernel additionally built with CONFIG_DEBUG_LIST
+and CONFIG_DEBUG_OBJECTS_WORK used a same-session two-tcon workload
+(open/write storm on one tcon, 50 tree disconnects on the other) and
+reported no list-corruption, work_struct ODEBUG, sleep-in-atomic,
+lockdep or kmemleak reports.  Reverting only the
+__close_file_table_ids() hunk while keeping a forced-is_reconnectable()
+harness produced the expected sleep-in-atomic at vfs_cache.c:1095,
+confirming the ft->lock-out-of-sleepable-skip discipline.
+
+KASAN-enabled direct SMB2 coverage with durable handles enabled
+exercised ksmbd_close_tree_conn_fds(), ksmbd_close_session_fds(),
+the FP_NEW failure path, tree_conn_fd_check(), and a non-zero
+session_fd_check() durable-preserve return.  This produced no KASAN,
+DEBUG_LIST, ODEBUG, or WARNING reports.
+
+Fixes: f44158485826 ("cifsd: add file operations")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ fs/smb/server/smb2pdu.c   |    6 +
+ fs/smb/server/vfs_cache.c |  179 ++++++++++++++++++++++++++++++++++++++++------
+ fs/smb/server/vfs_cache.h |    4 -
+ 3 files changed, 164 insertions(+), 25 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background `git log -S'panel-jadard-jd9365da-h3'` search finished
-(took ~3 minutes). It only surfaced merge commits — the first hit is
-`5d324e5159d9e` (usb-6.18-rc8 merge) — which matches what we saw
-earlier: this stable tree’s history doesn’t give a clean upstream
-“driver added in commit X” trail.
-
-That doesn’t change the backport assessment. The driver is present in
-6.18.43, the bug (missing `prepare_prev_first`) is confirmed, the patch
-applies cleanly, and the verdict remains **YES**.
-
- drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-index 5c2530598ddb9..9e5287829b952 100644
---- a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-+++ b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-@@ -1157,6 +1157,8 @@ static int jadard_dsi_probe(struct mipi_dsi_device *dsi)
- 	if (ret)
- 		return ret;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3773,8 +3773,10 @@ err_out1:
  
-+	jadard->panel.prepare_prev_first = true;
+ err_out2:
+ 	if (!rc) {
+-		ksmbd_update_fstate(&work->sess->file_table, fp, FP_INITED);
+-		rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
++		rc = ksmbd_update_fstate(&work->sess->file_table, fp,
++					 FP_INITED);
++		if (!rc)
++			rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
+ 	}
+ 	if (rc) {
+ 		if (rc == -EINVAL)
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -358,13 +358,13 @@ static void ksmbd_remove_durable_fd(stru
+ 
+ static void __ksmbd_remove_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+ {
+-	if (!has_file_id(fp->volatile_id))
+-		return;
+-
+ 	down_write(&fp->f_ci->m_lock);
+ 	list_del_init(&fp->node);
+ 	up_write(&fp->f_ci->m_lock);
+ 
++	if (!has_file_id(fp->volatile_id))
++		return;
 +
- 	drm_panel_add(&jadard->panel);
+ 	write_lock(&ft->lock);
+ 	idr_remove(ft->idr, fp->volatile_id);
+ 	write_unlock(&ft->lock);
+@@ -748,15 +748,58 @@ err_out:
+ 	return ERR_PTR(ret);
+ }
  
- 	mipi_dsi_set_drvdata(dsi, jadard);
--- 
-2.53.0
+-void ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+-			 unsigned int state)
++/**
++ * ksmbd_update_fstate() - update an fp state under the file-table lock
++ * @ft: file table that publishes @fp's volatile id
++ * @fp: file pointer to update
++ * @state: new state
++ *
++ * Return: 0 on success.  The FP_NEW -> FP_INITED transition is special:
++ * -ENOENT if teardown already unpublished @fp by advancing the state or
++ * clearing the volatile id.  Other state updates preserve the historical
++ * fire-and-forget behavior.
++ */
++int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
++			unsigned int state)
+ {
++	int ret;
++
+ 	if (!fp)
+-		return;
++		return -ENOENT;
+ 
+ 	write_lock(&ft->lock);
+-	fp->f_state = state;
++	if (state == FP_INITED &&
++	    (fp->f_state != FP_NEW || !has_file_id(fp->volatile_id))) {
++		ret = -ENOENT;
++	} else {
++		fp->f_state = state;
++		ret = 0;
++	}
+ 	write_unlock(&ft->lock);
++
++	return ret;
++}
++
++/*
++ * ksmbd_mark_fp_closed() - mark fp closed under ft->lock and return how many
++ * refs the teardown path owns.
++ *
++ * FP_INITED has a normal idr-owned reference, so teardown owns both that
++ * reference and the transient lookup reference.  FP_NEW is still owned by the
++ * in-flight opener/reopener, which will drop the original reference after
++ * ksmbd_update_fstate(..., FP_INITED) observes the cleared volatile id.
++ * FP_CLOSED on entry means an earlier ksmbd_close_fd() already consumed the
++ * idr-owned ref.
++ */
++static int ksmbd_mark_fp_closed(struct ksmbd_file *fp)
++{
++	if (fp->f_state == FP_INITED) {
++		set_close_state_blocked_works(fp);
++		fp->f_state = FP_CLOSED;
++		return 2;
++	}
++
++	return 1;
+ }
+ 
+ static int
+@@ -764,7 +807,8 @@ __close_file_table_ids(struct ksmbd_sess
+ 		       struct ksmbd_tree_connect *tcon,
+ 		       bool (*skip)(struct ksmbd_tree_connect *tcon,
+ 				    struct ksmbd_file *fp,
+-				    struct ksmbd_user *user))
++				    struct ksmbd_user *user),
++		       bool skip_preserves_fp)
+ {
+ 	struct ksmbd_file_table *ft = &sess->file_table;
+ 	struct ksmbd_file *fp;
+@@ -772,32 +816,120 @@ __close_file_table_ids(struct ksmbd_sess
+ 	int num = 0;
+ 
+ 	while (1) {
++		int n_to_drop;
++
+ 		write_lock(&ft->lock);
+ 		fp = idr_get_next(ft->idr, &id);
+ 		if (!fp) {
+ 			write_unlock(&ft->lock);
+ 			break;
+ 		}
+-
+-		if (skip(tcon, fp, sess->user) ||
+-		    !atomic_dec_and_test(&fp->refcount)) {
++		if (!atomic_inc_not_zero(&fp->refcount)) {
+ 			id++;
+ 			write_unlock(&ft->lock);
+ 			continue;
+ 		}
+ 
+-		set_close_state_blocked_works(fp);
+-		idr_remove(ft->idr, fp->volatile_id);
+-		fp->volatile_id = KSMBD_NO_FID;
+-		write_unlock(&ft->lock);
++		if (skip_preserves_fp) {
++			/*
++			 * Session teardown: skip() is session_fd_check(),
++			 * which may sleep and mutates fp->conn / fp->tcon /
++			 * fp->volatile_id when it chooses to preserve fp
++			 * for durable reconnect.  Unpublish fp from the
++			 * session idr here, under ft->lock, so that
++			 * __ksmbd_lookup_fd() through this session cannot
++			 * grant a new ksmbd_fp_get() reference to an fp
++			 * whose fields are about to be rewritten outside
++			 * the lock.  Durable reconnect still reaches fp via
++			 * global_ft.
++			 */
++			idr_remove(ft->idr, id);
++			fp->volatile_id = KSMBD_NO_FID;
++			write_unlock(&ft->lock);
+ 
++			if (skip(tcon, fp, sess->user)) {
++				/*
++				 * session_fd_check() has converted fp to
++				 * durable-preserve state and cleared its
++				 * per-conn fields.  fp is already unpublished
++				 * above; the original idr-owned ref keeps it
++				 * alive for the durable scavenger.  Drop only
++				 * the transient ref.  atomic_dec() is safe --
++				 * atomic_inc_not_zero() succeeded on a
++				 * positive value and we added one more, so
++				 * refcount cannot be zero here.
++				 */
++				atomic_dec(&fp->refcount);
++				id++;
++				continue;
++			}
++
++			/*
++			 * Keep the close-state decision under the same lock
++			 * observed by ksmbd_update_fstate(), which is how an
++			 * in-flight FP_NEW opener learns that teardown has
++			 * cleared its volatile id.
++			 */
++			write_lock(&ft->lock);
++			n_to_drop = ksmbd_mark_fp_closed(fp);
++			write_unlock(&ft->lock);
++		} else {
++			/*
++			 * Tree teardown: skip() is tree_conn_fd_check(), a
++			 * cheap pointer compare that doesn't sleep and has
++			 * no side effects, so keep the skip decision plus
++			 * the unpublish-and-mark-closed sequence atomic
++			 * under ft->lock.  fps belonging to other tree
++			 * connects (skip() == true) stay fully published in
++			 * the session idr with no lock window.
++			 */
++			if (skip(tcon, fp, sess->user)) {
++				atomic_dec(&fp->refcount);
++				write_unlock(&ft->lock);
++				id++;
++				continue;
++			}
++			idr_remove(ft->idr, id);
++			fp->volatile_id = KSMBD_NO_FID;
++			n_to_drop = ksmbd_mark_fp_closed(fp);
++			write_unlock(&ft->lock);
++		}
++
++		/*
++		 * fp->volatile_id is already cleared to prevent stale idr
++		 * removal from a deferred final close.  Remove fp from
++		 * m_fp_list here because __ksmbd_remove_fd() will skip the
++		 * list unlink when volatile_id is KSMBD_NO_FID.
++		 */
+ 		down_write(&fp->f_ci->m_lock);
+ 		list_del_init(&fp->node);
+ 		up_write(&fp->f_ci->m_lock);
+ 
+-		__ksmbd_close_fd(ft, fp);
+-
+-		num++;
++		/*
++		 * Drop the references this iteration owns:
++		 *
++		 *   n_to_drop == 2: we observed FP_INITED and committed
++		 *     the FP_CLOSED transition ourselves, so we own the
++		 *     transient (+1) and the still-intact idr-owned ref.
++		 *
++		 *   n_to_drop == 1: either a prior ksmbd_close_fd()
++		 *     already consumed the idr-owned ref, or fp was still
++		 *     FP_NEW and the in-flight opener/reopener must keep
++		 *     the original reference until ksmbd_update_fstate()
++		 *     observes the cleared volatile id.
++		 *
++		 * If we end up as the final putter, finalize fp and
++		 * account the open_files_count decrement via the caller's
++		 * atomic_sub(num, ...).  Otherwise the remaining user's
++		 * ksmbd_fd_put() reaches __put_fd_final(), which does its
++		 * own atomic_dec(&open_files_count), so we must not count
++		 * this fp here -- doing so would double-decrement the
++		 * connection-wide counter.
++		 */
++		if (atomic_sub_and_test(n_to_drop, &fp->refcount)) {
++			__ksmbd_close_fd(NULL, fp);
++			num++;
++		}
+ 		id++;
+ 	}
+ 
+@@ -1071,6 +1203,9 @@ static bool session_fd_check(struct ksmb
+ 	if (!is_reconnectable(fp))
+ 		return false;
+ 
++	if (fp->f_state != FP_INITED)
++		return false;
++
+ 	if (WARN_ON_ONCE(!fp->conn))
+ 		return false;
+ 
+@@ -1122,7 +1257,8 @@ void ksmbd_close_tree_conn_fds(struct ks
+ {
+ 	int num = __close_file_table_ids(work->sess,
+ 					 work->tcon,
+-					 tree_conn_fd_check);
++					 tree_conn_fd_check,
++					 false);
+ 
+ 	atomic_sub(num, &work->conn->stats.open_files_count);
+ }
+@@ -1131,7 +1267,8 @@ void ksmbd_close_session_fds(struct ksmb
+ {
+ 	int num = __close_file_table_ids(work->sess,
+ 					 work->tcon,
+-					 session_fd_check);
++					 session_fd_check,
++					 true);
+ 
+ 	atomic_sub(num, &work->conn->stats.open_files_count);
+ }
+@@ -1271,7 +1408,7 @@ void ksmbd_destroy_file_table(struct ksm
+ 	if (!ft->idr)
+ 		return;
+ 
+-	__close_file_table_ids(sess, NULL, session_fd_check);
++	__close_file_table_ids(sess, NULL, session_fd_check, true);
+ 	idr_destroy(ft->idr);
+ 	kfree(ft->idr);
+ 	ft->idr = NULL;
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -172,8 +172,8 @@ int ksmbd_close_inode_fds(struct ksmbd_w
+ int ksmbd_init_global_file_table(void);
+ void ksmbd_free_global_file_table(void);
+ void ksmbd_set_fd_limit(unsigned long limit);
+-void ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+-			 unsigned int state);
++int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
++			unsigned int state);
+ bool ksmbd_vfs_compare_durable_owner(struct ksmbd_file *fp,
+ 		struct ksmbd_user *user);
+ 
+
 
