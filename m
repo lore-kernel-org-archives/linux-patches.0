@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA1D4BB5D8;
-	Mon, 31 Aug 2026 14:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E138A483800;
+	Mon, 31 Aug 2026 14:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184851; cv=none; b=RsNl2urITmJuNVDhoENz7nrs0XGogLp5puacgmVEyOl2su0ZXlfRl9wG/UFyIaLJUZkR0c/i8QK5xwcTLnyYphFBQa5bnSWedkNvqvNh2UsDnydViig1iJbHLdggUHUksE0QxE1kcTQi8crZVlwIOhf6UdeBpk/gT2CBIX6SSsU=
+	t=1788184862; cv=none; b=BRbHCPqGuM10nsrzmnYEK5gJz4UTKjnb2WMBylY4CccopvpThc/IQfuZDW2IAys6rEJFZ5hbnynedb8kXgRISfRupYrvSXVeHcQ+B6vH3gWgFl7kaumgT3UEiyHDgzabG9HRbUqxgd/yH3JWjqzzIJz0cZ1KEqolWG4MlSuhJZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184851; c=relaxed/simple;
-	bh=lSPDqRPkVqqdFcgoMXvWINUSxoF0wJ2zFEXXf8EzdNM=;
+	s=arc-20240116; t=1788184862; c=relaxed/simple;
+	bh=rvaGAMzKY0c3W/razNyIxQ3OC1LOhR5LJpzTd9WdNRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K44xY52iJtjFWIKccLPAw7rgBwhapv+IVlpNZvnlmZGQ/8OrrdKKOV4rBy7XInr/5EFtdcyrOiWYUtkWDBY8HuGx5yRgw14+dJrMvDdnt2xPbGj1DcmdwYA2zhCkDtjtyW4H8OqyhcAnpH7ocQOCBsVkSqs2+jVgJ5N31nkG36w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1x6uv1t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oytlarGkRfPRaM5sdsl+s4YHne2q0GypU+2Dxuv5Abus2BWgt2fEpbaBdb9eygIbawod3w/mD+WeHjdxZ5Pknit9XggN+p6EMTgblih+WM/qyQQZiAfc6edSeeh5zKzPPB0YoCIKay75Kk8puGL75V7B5bTXt0/RjnOegR6bSeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qKZsF5B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1x6uv1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940DF1F00A3D;
-	Mon, 31 Aug 2026 14:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qKZsF5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059BD1F00A3D;
+	Mon, 31 Aug 2026 14:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184849;
-	bh=iUsAcmf4brebkdsEuQ+l4G051HLDVjcDwu20ivks9C8=;
+	s=korg; t=1788184860;
+	bh=3sMzx8vg/pxjnXCkSAaFcSC7GA6tVaGzWvUXwcWdsvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1x6uv1tI4MHZxIjwHeIg9ZtwdeXUc0uRs05KJxaXTCxDlOjpa3FPWlC7BtSo5I48
-	 kTYny2TvOXCpcDyyE4bLi2hXGNXCoHuhx8Sofk1yvO8cawRsR6TvbxxsbdOPZDpERR
-	 nviaVpoxtTnehjTxtGbR0HyJjwNW77+lQxFX+Gkk=
+	b=1qKZsF5BWoF3Y2BkQ/Mljn8DWzl4aA04RxlHPO4+ih9FaAphme0rMCSPAldN0+hz4
+	 GFmPvb58f0WSmIApYrjD9fpVV9wVZjvg/0YLxWRoVSMfikHXYTAdL1e6ff5iH/PNR7
+	 OXwJjNqQeHotvg89mv2Tzr2NzVTP4y2w8Dw9dDJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 58/92] Bluetooth: ISO: use correct CIS order in Set CIG Parameters event
-Date: Mon, 31 Aug 2026 15:34:56 +0200
-Message-ID: <20260831133402.705000405@linuxfoundation.org>
+Subject: [PATCH 6.1 25/92] ASoC: nau8821: Cancel delayed work on component remove
+Date: Mon, 31 Aug 2026 15:34:23 +0200
+Message-ID: <20260831133400.932302930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,145 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 71e9588435c38112d6a8686d3d8e7cc1de8fe22c ]
+[ Upstream commit dbd3fd05cddfdeec1e49b0a66269881c09eebd17 ]
 
-The order of CIS handle array in Set CIG Parameters response shall match
-the order of the CIS_ID array in the command (Core v5.3 Vol 4 Part E Sec
-7.8.97).  We send CIS_IDs mainly in the order of increasing CIS_ID (but
-with "last" CIS first if it has fixed CIG_ID).  In handling of the
-reply, we currently assume this is also the same as the order of
-hci_conn in hdev->conn_hash, but that is not true.
+Attempting to unload the driver while a jack detection work is pending
+would likely crash the kernel when it is eventually scheduled for
+execution:
 
-Match the correct hci_conn to the correct handle by matching them based
-on the CIG+CIS combination.  The CIG+CIS combination shall be unique for
-ISO_LINK hci_conn at state >= BT_BOUND, which we maintain in
-hci_le_set_cig_params.
+[ 1984.896308] BUG: unable to handle page fault for address: ffffffffc10c2a20
+[...]
+[ 1984.896388] Hardware name: Valve Jupiter/Jupiter, BIOS F7A0131 01/30/2024
+[ 1984.896396] Workqueue: events nau8821_jdet_work [snd_soc_nau8821]
+[ 1984.896414] RIP: 0010:__mutex_lock+0x9f/0x11d0
+[...]
+[ 1984.896504] Call Trace:
+[ 1984.896511]  <TASK>
+[ 1984.896524]  ? snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
+[ 1984.896572]  ? snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
+[ 1984.896596]  snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
+[ 1984.896622]  nau8821_jdet_work+0xeb/0x1e0 [snd_soc_nau8821]
+[ 1984.896636]  process_one_work+0x211/0x590
+[ 1984.896649]  ? srso_return_thunk+0x5/0x5f
+[ 1984.896670]  worker_thread+0x1cd/0x3a0
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 0acd4eeb4b22 ("Bluetooth: hci_event: validate LE Set CIG Parameters response")
+Cancel unscheduled jdet_work or wait for its execution to finish before
+the component driver gets removed.
+
+Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
+Fixes: ee70bacef1c6 ("ASoC: nau8821: Avoid unnecessary blocking in IRQ handler")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20251231-nau8821-cleanup-v1-2-6b0b76cbbb64@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    7 +++---
- net/bluetooth/hci_conn.c         |    4 +--
- net/bluetooth/hci_event.c        |   43 +++++++++++++++++++++++----------------
- 3 files changed, 32 insertions(+), 22 deletions(-)
+ sound/soc/codecs/nau8821.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1192,14 +1192,15 @@ static inline struct hci_conn *hci_conn_
- 			continue;
+diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
+index f464c70011a15..8c015d114cac3 100644
+--- a/sound/soc/codecs/nau8821.c
++++ b/sound/soc/codecs/nau8821.c
+@@ -1147,6 +1147,14 @@ static int nau8821_component_probe(struct snd_soc_component *component)
+ 	return 0;
+ }
  
- 		/* Match CIG ID if set */
--		if (cig != BT_ISO_QOS_CIG_UNSET && cig != c->iso_qos.ucast.cig)
-+		if (cig != BT_ISO_QOS_CIG_UNSET && cig != c->iso_qos.cig)
- 			continue;
- 
- 		/* Match CIS ID if set */
--		if (id != BT_ISO_QOS_CIS_UNSET && id != c->iso_qos.ucast.cis)
-+		if (id != BT_ISO_QOS_CIS_UNSET && id != c->iso_qos.cis)
- 			continue;
- 
--		if (ba_type == c->dst_type && !bacmp(&c->dst, ba)) {
-+		/* Match destination address if set */
-+		if (!ba || (ba_type == c->dst_type && !bacmp(&c->dst, ba))) {
- 			rcu_read_unlock();
- 			return c;
- 		}
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1862,8 +1862,8 @@ struct hci_conn *hci_bind_cis(struct hci
- {
- 	struct hci_conn *cis;
- 
--	cis = hci_conn_hash_lookup_cis(hdev, dst, dst_type, qos->ucast.cig,
--				       qos->ucast.cis);
-+	cis = hci_conn_hash_lookup_cis(hdev, dst, dst_type, qos->cig,
-+				       qos->cis);
- 	if (!cis) {
- 		cis = hci_conn_add_unset(hdev, ISO_LINK, dst, HCI_ROLE_MASTER);
- 		if (!cis)
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3785,49 +3785,58 @@ static u8 hci_cc_le_set_cig_params(struc
- 				   struct sk_buff *skb)
- {
- 	struct hci_rp_le_set_cig_params *rp = data;
-+	struct hci_cp_le_set_cig_params *cp;
- 	struct hci_conn *conn;
--	int i = 0;
-+	u8 status = rp->status;
-+	int i;
- 
- 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
- 
-+	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
-+	if (!cp || rp->num_handles != cp->num_cis || rp->cig_id != cp->cig_id) {
-+		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
-+		status = HCI_ERROR_UNSPECIFIED;
-+	}
++static void nau8821_component_remove(struct snd_soc_component *component)
++{
++	struct nau8821 *nau8821 = snd_soc_component_get_drvdata(component);
 +
- 	hci_dev_lock(hdev);
++	if (nau8821->jdet_active)
++		cancel_delayed_work_sync(&nau8821->jdet_work);
++};
++
+ /**
+  * nau8821_calc_fll_param - Calculate FLL parameters.
+  * @fll_in: external clock provided to codec.
+@@ -1505,6 +1513,7 @@ static int __maybe_unused nau8821_resume(struct snd_soc_component *component)
  
--	if (rp->status) {
-+	if (status) {
- 		while ((conn = hci_conn_hash_lookup_cig(hdev, rp->cig_id))) {
- 			conn->state = BT_CLOSED;
--			hci_connect_cfm(conn, rp->status);
-+			hci_connect_cfm(conn, status);
- 			hci_conn_del(conn);
- 		}
- 		goto unlock;
- 	}
- 
--	rcu_read_lock();
-+	/* BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E page 2553
-+	 *
-+	 * If the Status return parameter is zero, then the Controller shall
-+	 * set the Connection_Handle arrayed return parameter to the connection
-+	 * handle(s) corresponding to the CIS configurations specified in
-+	 * the CIS_IDs command parameter, in the same order.
-+	 */
-+	for (i = 0; i < rp->num_handles; ++i) {
-+		conn = hci_conn_hash_lookup_cis(hdev, NULL, 0, rp->cig_id,
-+						cp->cis[i].cis_id);
-+		if (!conn || !bacmp(&conn->dst, BDADDR_ANY))
-+			continue;
- 
--	list_for_each_entry_rcu(conn, &hdev->conn_hash.list, list) {
--		if (conn->type != ISO_LINK || conn->iso_qos.cig != rp->cig_id ||
--		    conn->state == BT_CONNECTED)
-+		if (conn->state != BT_BOUND && conn->state != BT_CONNECT)
- 			continue;
- 
- 		if (HCI_CONN_HANDLE_UNSET(conn->handle))
- 			ida_free(&hdev->unset_handle_ida, conn->handle);
--		conn->handle = __le16_to_cpu(rp->handle[i++]);
-+		conn->handle = __le16_to_cpu(rp->handle[i]);
- 
- 		bt_dev_dbg(hdev, "%p handle 0x%4.4x link %p", conn,
- 			   conn->handle, conn->link);
- 
- 		/* Create CIS if LE is already connected */
--		if (conn->link && conn->link->state == BT_CONNECTED) {
--			rcu_read_unlock();
-+		if (conn->link && conn->link->state == BT_CONNECTED)
- 			hci_le_create_cis(conn->link);
--			rcu_read_lock();
--		}
--
--		if (i == rp->num_handles)
--			break;
- 	}
- 
--	rcu_read_unlock();
--
- unlock:
- 	hci_dev_unlock(hdev);
- 
+ static const struct snd_soc_component_driver nau8821_component_driver = {
+ 	.probe			= nau8821_component_probe,
++	.remove			= nau8821_component_remove,
+ 	.set_sysclk		= nau8821_set_sysclk,
+ 	.set_pll		= nau8821_set_fll,
+ 	.set_bias_level		= nau8821_set_bias_level,
+-- 
+2.53.0
+
 
 
