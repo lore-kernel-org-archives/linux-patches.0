@@ -1,241 +1,208 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0AB471277;
-	Mon, 31 Aug 2026 13:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8799257ED82;
+	Mon, 31 Aug 2026 13:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184181; cv=none; b=rOxq4dajG1+DPp7iiGZuajzknnqXHd+4NxI62MNA8nTxIxM404V5WRMgEdLraspJbYzrkBSx3DJEBUPnPgtwzhJ+KYNNVEqlRlrs34KrMHBHgBY0fAdWOQARAHTdIy6KOooNaCdfmuMN68aeCKb87bV7Be1b4Fz0NAvqL1gxnD8=
+	t=1788184182; cv=none; b=Q7RRtl14urPCYYaYrDpMsvQpEg+CoZppclTBPMpO34vesSUA/0YPAtABnDrOb9Vqlz/wk5sQaQof5h5mv81GtmVVC+WmJ87PORDMsjW0oRJZ4CSu1rMJ3+tEgIL6wn/cu+aJXH3WCs4d0BgJd72eZDokC5j3TQvkrVKQPpf++nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184181; c=relaxed/simple;
-	bh=xBTGnzfeJJEzwtq9YZLhXd2oXtAIksGTJXrPuJf5gdk=;
+	s=arc-20240116; t=1788184182; c=relaxed/simple;
+	bh=tE3HKNPGw+9rGa08tYZziWaTsPe4o8mNZUeAYnZY35w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMw/goVEf6a4E/njPcglMqrt3uhJhO8wdfeaoj0/69jrAQkGWEA45j7Gn99cDrjXCu4nej3c59V6nMR6kB/RqPL8LJ/BHWxU+QS2Wc4hV8gGfy5AoIrSr+Rl6graOIofdSfSnSOz8KDhGH7yFyfr7IurWrKKcs4IHhu+S7qw69k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1aOwMxX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q98r4NRsEZLFKpIfcHqnlMeSzhgr9grcuiqqUt4MoV6El/N0e+LmYDXZ7C1bn3QQjr2Ye06LUkZjkfxlz/U+qORLYlOoyH866QhLb2i29kuiC7IofGHHkirQn9Cw5ftb5L5R+bT7i5BwZ2BXqeNL8vS3A55XrcJ2l93LtYSLkps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f/aebtDw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1aOwMxX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC121F000E9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f/aebtDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40551F00ACA;
 	Mon, 31 Aug 2026 13:49:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184179;
-	bh=H00OB5KkDgxRcSm6Nl5H4/owZY0gjKcSvg4oXU7/AEI=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184180;
+	bh=9iH17oayUWeHt8Tfzh4cjBq2lKQGzJhvxTnN2dA1kUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a1aOwMxXYl85hgfXLGjo27Y5pnbokUmumYdjTemZCj/LBx+ZXSdU6LduzDPs6qTbV
-	 HALn9r2uCiUWkd+x+QSEG5VwEI5UC9jSOFriQe1t99mzq9kuY8y0zBly0JmzIOYb4P
-	 hRF4ulGM4GmRjXFbEFSpOPUiqXwh5AulqqbiKy1c=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 02/99] RDMA/rxe: Fix OOB in free_rd_atomic_resources()
-Date: Mon, 31 Aug 2026 15:33:31 +0200
-Message-ID: <20260831133359.878824240@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=f/aebtDwdqqLE/MTKny02mW+GiKK7NiNyYaKuRlhh727C6DsNdyIW+5BcW3nLCxP+
+	 AwqWyUjME+y2mmPi3XH3derl6EgUaDjjxuCDRGx0fl5UWjMH19307lfc3JwpYipEp/
+	 PMis1uYaBDFiz4QJ0B3b+9GULOkwl9UOocNWmT453LTKnSIJuhhTAebhdVhh0kITbE
+	 i98HPzxp9GOQnle9O9c5xXsD9UT5TozeWU6OC63MfmvfcKoF9ggfg8Ray3NyttYHNx
+	 QEXzysoIqhn03y/x1SKV4xIB2Ry4P0fP0Zy9PwUwE4tFr6B7x59OTlETm9TuzWzDY9
+	 /TyUsobaTaS3A==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Sechang Lim <rhkrqnwk98@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	john.fastabend@gmail.com,
+	jakub@cloudflare.com,
+	edumazet@google.com,
+	kuniyu@google.com,
+	pabeni@redhat.com,
+	willemb@google.com,
+	davem@davemloft.net,
+	kuba@kernel.org,
+	netdev@vger.kernel.org,
+	bpf@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] bpf, sockmap: reject a packet-modifying SK_SKB stream parser
+Date: Mon, 31 Aug 2026 09:29:27 -0400
+Message-ID: <20260831133314.4125787-539-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-------------------
+[ Upstream commit 31e2f36d3821811c03bddf5fd99ed8fc884fd222 ]
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+sk_psock_strp_parse() runs the BPF_PROG_TYPE_SK_SKB stream-parser program
+to find the length of the next message. strparser assembles a message out
+of several received skbs by chaining them onto the head's frag_list and
+recording where to append the next one in strp->skb_nextp:
 
-[ Upstream commit de329533792a373186d79dca1ca120f8fa0afd05 ]
+	*strp->skb_nextp = skb;
+	strp->skb_nextp = &skb->next;
 
-free_rd_atomic_resources() iterates using qp->attr.max_dest_rd_atomic.
-Updating max_dest_rd_atomic before freeing the old array can make the
-free path walk past the old allocation and trigger a slab out-of-bounds
-write catched by KASAN:
-==================================================================
-BUG: KASAN: slab-out-of-bounds in free_rd_atomic_resource drivers/infiniband/sw/rxe/rxe_qp.c:180 [inline]
-BUG: KASAN: slab-out-of-bounds in free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:171 [inline]
-BUG: KASAN: slab-out-of-bounds in free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:163 [inline]
-BUG: KASAN: slab-out-of-bounds in rxe_qp_from_attr+0x1e88/0x2150 drivers/infiniband/sw/rxe/rxe_qp.c:712
-Write of size 4 at addr ffff88802b8dddb8 by task syz.3.451/11063
+and then calls the parser on the head:
 
-CPU: 0 UID: 0 PID: 11063 Comm: syz.3.451 Not tainted 7.1.0 #2 PREEMPT(full)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x10e/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xf7/0x600 mm/kasan/report.c:482
- kasan_report+0xe4/0x120 mm/kasan/report.c:595
- free_rd_atomic_resource drivers/infiniband/sw/rxe/rxe_qp.c:180 [inline]
- free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:171 [inline]
- free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:163 [inline]
- rxe_qp_from_attr+0x1e88/0x2150 drivers/infiniband/sw/rxe/rxe_qp.c:712
- rxe_modify_qp+0x1e2/0x530 drivers/infiniband/sw/rxe/rxe_verbs.c:623
- ib_security_modify_qp+0x223/0xfa0 drivers/infiniband/core/security.c:625
- _ib_modify_qp+0x333/0xec0 drivers/infiniband/core/verbs.c:1915
- modify_qp+0x13ca/0x1940 drivers/infiniband/core/uverbs_cmd.c:1932
- ib_uverbs_modify_qp+0xcb/0x120 drivers/infiniband/core/uverbs_cmd.c:1958
- ib_uverbs_write+0xb86/0x1030 drivers/infiniband/core/uverbs_main.c:680
- vfs_write+0x2aa/0x1070 fs/read_write.c:686
- ksys_write+0x1f8/0x250 fs/read_write.c:740
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fefc75a70cd
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fefc8495018 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00007fefc7835fa0 RCX: 00007fefc75a70cd
-RDX: 0000000000000078 RSI: 0000200000000240 RDI: 0000000000000007
-RBP: 00007fefc764f10f R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fefc7836038 R14: 00007fefc7835fa0 R15: 00007ffcf0586aa0
- </TASK>
+	len = (*strp->cb.parse_msg)(strp, head);
 
-Allocated by task 11063:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:57
- kasan_save_track+0x14/0x30 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5296 [inline]
- __kmalloc_noprof+0x32a/0x850 mm/slub.c:5308
- kmalloc_noprof include/linux/slab.h:954 [inline]
- kzalloc_noprof include/linux/slab.h:1188 [inline]
- alloc_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:155 [inline]
- rxe_qp_from_attr+0x3f8/0x2150 drivers/infiniband/sw/rxe/rxe_qp.c:714
- rxe_modify_qp+0x1e2/0x530 drivers/infiniband/sw/rxe/rxe_verbs.c:623
- ib_security_modify_qp+0x223/0xfa0 drivers/infiniband/core/security.c:625
- _ib_modify_qp+0x333/0xec0 drivers/infiniband/core/verbs.c:1915
- modify_qp+0x13ca/0x1940 drivers/infiniband/core/uverbs_cmd.c:1932
- ib_uverbs_modify_qp+0xcb/0x120 drivers/infiniband/core/uverbs_cmd.c:1958
- ib_uverbs_write+0xb86/0x1030 drivers/infiniband/core/uverbs_main.c:680
- vfs_write+0x2aa/0x1070 fs/read_write.c:686
- ksys_write+0x1f8/0x250 fs/read_write.c:740
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The parser is only meant to inspect the skb, but the program may call
+bpf_skb_change_tail() -- or the sibling bpf_skb_pull_data(),
+bpf_skb_change_head(), bpf_skb_adjust_room(), all allowed for SK_SKB.
+Once the head carries a frag_list these go
 
-The buggy address belongs to the object at ffff88802b8ddd80
- which belongs to the cache kmalloc-64 of size 64
-The buggy address is located 0 bytes to the right of
- allocated 56-byte region [ffff88802b8ddd80, ffff88802b8dddb8)
+	... -> skb_ensure_writable -> pskb_may_pull -> __pskb_pull_tail
 
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x2b8dd
-flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
-page_type: f5(slab)
-raw: 00fff00000000000 ffff888015c418c0 dead000000000100 dead000000000122
-raw: 0000000000000000 0000000800200020 00000000f5000000 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0xd2c40(GFP_NOFS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 4651, tgid 4651 ((udev-worker)), ts 123427165316, free_ts 123425874255
- set_page_owner include/linux/page_owner.h:32 [inline]
- post_alloc_hook+0xfc/0x120 mm/page_alloc.c:1853
- prep_new_page mm/page_alloc.c:1861 [inline]
- get_page_from_freelist+0x75b/0x3220 mm/page_alloc.c:3941
- __alloc_frozen_pages_noprof+0x27e/0x2b00 mm/page_alloc.c:5221
- alloc_slab_page mm/slub.c:3278 [inline]
- allocate_slab mm/slub.c:3467 [inline]
- new_slab+0xa6/0x670 mm/slub.c:3525
- refill_objects+0x278/0x420 mm/slub.c:7272
- refill_sheaf mm/slub.c:2816 [inline]
- __pcs_replace_empty_main+0x2ed/0x640 mm/slub.c:4652
- alloc_from_pcs mm/slub.c:4750 [inline]
- slab_alloc_node mm/slub.c:4884 [inline]
- __do_kmalloc_node mm/slub.c:5295 [inline]
- __kmalloc_noprof+0x68d/0x850 mm/slub.c:5308
- kmalloc_noprof include/linux/slab.h:954 [inline]
- kzalloc_noprof include/linux/slab.h:1188 [inline]
- tomoyo_encode2+0x100/0x3e0 security/tomoyo/realpath.c:45
- tomoyo_encode+0x29/0x50 security/tomoyo/realpath.c:80
- tomoyo_realpath_from_path+0x18c/0x690 security/tomoyo/realpath.c:283
- tomoyo_get_realpath security/tomoyo/file.c:151 [inline]
- tomoyo_check_open_permission+0x2ab/0x3c0 security/tomoyo/file.c:776
- tomoyo_file_open+0x6b/0x90 security/tomoyo/tomoyo.c:334
- security_file_open+0x7a/0x1b0 security/security.c:2739
- do_dentry_open+0x57e/0x1690 fs/open.c:924
- vfs_open+0x82/0x3f0 fs/open.c:1079
- do_open fs/namei.c:4699 [inline]
- path_openat+0x218a/0x3190 fs/namei.c:4858
-page last free pid 1 tgid 1 stack trace:
- reset_page_owner include/linux/page_owner.h:25 [inline]
- __free_pages_prepare mm/page_alloc.c:1397 [inline]
- __free_frozen_pages+0x763/0xfc0 mm/page_alloc.c:2938
- selinux_genfs_get_sid security/selinux/hooks.c:1364 [inline]
- inode_doinit_with_dentry+0x903/0x1320 security/selinux/hooks.c:1563
- selinux_d_instantiate+0x26/0x30 security/selinux/hooks.c:6658
- security_d_instantiate+0x123/0x190 security/security.c:3704
- d_splice_alias_ops+0x92/0x850 fs/dcache.c:3141
- kernfs_iop_lookup+0x23f/0x2d0 fs/kernfs/dir.c:1289
- lookup_open.isra.0+0x659/0x1080 fs/namei.c:4484
- open_last_lookups fs/namei.c:4611 [inline]
- path_openat+0x17dd/0x3190 fs/namei.c:4855
- do_file_open+0x20c/0x430 fs/namei.c:4887
- do_sys_openat2+0x101/0x1d0 fs/open.c:1364
- do_sys_open fs/open.c:1370 [inline]
- __do_sys_openat fs/open.c:1386 [inline]
- __se_sys_openat fs/open.c:1381 [inline]
- __x64_sys_openat+0x141/0x200 fs/open.c:1381
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+and __pskb_pull_tail() frees the frag_list skbs that strparser still
+tracks through skb_nextp:
 
-Memory state around the buggy address:
- ffff88802b8ddc80: 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc
- ffff88802b8ddd00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
->ffff88802b8ddd80: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
-                                        ^
- ffff88802b8dde00: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
- ffff88802b8dde80: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+	while ((list = skb_shinfo(skb)->frag_list) != insp) {
+		skb_shinfo(skb)->frag_list = list->next;
+		consume_skb(list);
+	}
 
-Fix the OOB by moving the assignment after free_rd_atomic_resources()
-so the old array is freed using the old bound. This matches the original
-ordering in commit 8700e3e7c485 ("Soft RoCE driver").
+strp->skb_nextp now points into a freed sk_buff. The next segment of
+the same message arrives in __strp_recv(), which links it with
+*strp->skb_nextp = skb, an 8-byte write into the freed skb. The free
+and the write happen in different __strp_recv() calls, so the message
+has to span at least three segments before it triggers.
 
-Closes: https://lore.kernel.org/all/365C68B4923F8214+30195a67-0b90-4b92-ab96-2ce41517793c@smail.nju.edu.cn/
-Fixes: b6bbee0d2438 ("IB/rxe: Properly honor max IRD value for rd/atomic.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+  BUG: KASAN: slab-use-after-free in __strp_recv+0x447/0xda0
+  Write of size 8 at addr ffff88810db86140 by task repro/349
+
+  Call Trace:
+   <IRQ>
+   __strp_recv+0x447/0xda0
+   __tcp_read_sock+0x13d/0x590
+   tcp_bpf_strp_read_sock+0x195/0x320
+   strp_data_ready+0x267/0x340
+   sk_psock_strp_data_ready+0x1ce/0x350
+   tcp_data_queue+0x1364/0x2fd0
+   tcp_rcv_established+0xe07/0x1640
+   [...]
+
+  Allocated by task 349:
+   skb_clone+0x17b/0x210
+   __strp_recv+0x2c3/0xda0
+   __tcp_read_sock+0x13d/0x590
+   [...]
+
+  Freed by task 349:
+   kmem_cache_free+0x150/0x570
+   __pskb_pull_tail+0x57b/0xc20
+   skb_ensure_writable+0x236/0x260
+   __bpf_skb_change_tail+0x1d4/0x590
+   sk_skb_change_tail+0x2a/0x40
+   bpf_prog_1b285dcd6c41373e+0x27/0x30
+   bpf_prog_run_pin_on_cpu+0xf3/0x260
+   sk_psock_strp_parse+0x118/0x1e0
+   __strp_recv+0x4f6/0xda0
+   [...]
+
+The same resize also leaves the head's length inconsistent with its
+frags, so a later __pskb_pull_tail() can instead hit the
+BUG_ON(skb_copy_bits(...)) in net/core/skbuff.c.
+
+A stream parser is only meant to measure the next message, not to modify
+the packet. Reject a parser whose program can change packet data
+(prog->aux->changes_pkt_data) at attach time. The check is shared by
+sock_map_prog_update() and sock_map_link_update_prog(), which between them
+cover prog attach, link create and link update. Verdict programs are
+unaffected and may still modify the skb.
+
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Link: https://lore.kernel.org/r/20260620024423.4141004-3-rhkrqnwk98@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index dc75d79b79d6e..3dbc424099547 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -659,8 +659,6 @@ int rxe_qp_from_attr(struct rxe_qp *qp, struct ib_qp_attr *attr, int mask,
- 		int max_dest_rd_atomic = attr->max_dest_rd_atomic ?
- 			roundup_pow_of_two(attr->max_dest_rd_atomic) : 0;
+LLM Generated explanations, may be completely bogus:
+
+The verification command finished: neither `git log --grep='packet-
+modifying'` nor a search for `sock_map_prog_attach_check` returned any
+commits. That confirms the fix is not in the **6.18.44** tree, which
+aligns with the **YES** backport recommendation.
+
+ net/core/sock_map.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 70bbc78fb079f..4ecc6cc6491fd 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -1517,6 +1517,17 @@ static int sock_map_prog_link_lookup(struct bpf_map *map, struct bpf_prog ***ppr
+ 	return 0;
+ }
  
--		qp->attr.max_dest_rd_atomic = max_dest_rd_atomic;
--
- 		/*
- 		 * Not gated by IB_QP_STATE, so the responder task is live.
- 		 * Quiesce recv_task like rxe_qp_reset() before swapping the
-@@ -669,6 +667,7 @@ int rxe_qp_from_attr(struct rxe_qp *qp, struct ib_qp_attr *attr, int mask,
- 		 */
- 		rxe_disable_task(&qp->recv_task);
- 		free_rd_atomic_resources(qp);
-+		qp->attr.max_dest_rd_atomic = max_dest_rd_atomic;
- 		err = alloc_rd_atomic_resources(qp, max_dest_rd_atomic);
- 		/*
- 		 * On ENOMEM leave recv_task quiesced: qp->resp.resources is
++static int sock_map_prog_attach_check(enum bpf_attach_type attach_type,
++				      struct bpf_prog *prog)
++{
++	/* A stream parser must not modify the skb, only measure it. */
++	if (prog && attach_type == BPF_SK_SKB_STREAM_PARSER &&
++	    prog->aux->changes_pkt_data)
++		return -EINVAL;
++
++	return 0;
++}
++
+ /* Handle the following four cases:
+  * prog_attach: prog != NULL, old == NULL, link == NULL
+  * prog_detach: prog == NULL, old != NULL, link == NULL
+@@ -1535,6 +1546,10 @@ static int sock_map_prog_update(struct bpf_map *map, struct bpf_prog *prog,
+ 	if (ret)
+ 		return ret;
+ 
++	ret = sock_map_prog_attach_check(which, prog);
++	if (ret)
++		return ret;
++
+ 	/* for prog_attach/prog_detach/link_attach, return error if a bpf_link
+ 	 * exists for that prog.
+ 	 */
+@@ -1767,6 +1782,11 @@ static int sock_map_link_update_prog(struct bpf_link *link,
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
++
++	ret = sock_map_prog_attach_check(link->attach_type, prog);
++	if (ret)
++		goto out;
++
+ 	if (!sockmap_link->map) {
+ 		ret = -ENOLINK;
+ 		goto out;
 -- 
 2.53.0
-
-
 
