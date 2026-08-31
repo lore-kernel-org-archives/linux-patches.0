@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EEF43F4A6;
-	Mon, 31 Aug 2026 13:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93EA48097D;
+	Mon, 31 Aug 2026 13:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183472; cv=none; b=pTn01E49F+7OK7M9QI6h1l8a73/bAM+OmEjgJctaqWmmFnp/8X39PdYzsF0FwjNUhiCMISdFbAViEStPn42S8VJazgKUK5oReRax0ohpLIavflOi0l2XGmTIhQS4c1G0AqwUiHnkYkRcBtLXJsWuWRDR5eio+denNb/mPk14TsA=
+	t=1788183473; cv=none; b=N+lLTD4Zr6wd6dgEkaYQQmkAFmmKl/b//10Lvvb/ebd9wDG6/LKXM8Vyc2zxmwoiVq8lY6TdLtVuCIfW6GiQxdoxOOofiVA94MgY0Qbq3QgxwosJOJZCOMYQcvR7NLqjN5nXQ4YvkQslzlabCtPvh0sIshm2CGETRWx4vY8Rbns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183472; c=relaxed/simple;
-	bh=JpimYiIdHbRg+hr8DlpmCsjPTHZ10S6O2xwHyf2uBeg=;
+	s=arc-20240116; t=1788183473; c=relaxed/simple;
+	bh=CvxJHnhTWoAUtAg0rQR2WVJiXfeJU2g35eJV30BlNfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NFUdN/ef3KD9RJs9QW1haLu5lCnAh1TPi/YW5QfIVMq7PBxioJBaAWMNF+4nN60k7vVoH5mSDzP+5Pi537n8UaV1OwRN1Gou+9ZxIQlkRwmZLWpkuGYcUFze9aFdQD9QOO+gdGJAelT55DCO8H8YuNJw3usn/FViTN/sY4hDuEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=myEK7VkE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RsKOZJfllZQtjLp10b6fNXnLr+UoPUn1PBJfq9QTdon+/ZBE6KG9A7gpnsXrB6pmRntU6XL8BYZaPAExvkmdZDca5kValtGiGYtOB2XzxqV2Iv/HfAVsUQorFAyx10BW8dCqGc3NjCEs9RTcWlXjzy7n5W92yCF/bq2AL7U5aIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CBp2TPw3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="myEK7VkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21411F00ACA;
-	Mon, 31 Aug 2026 13:37:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CBp2TPw3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5B61F000E9;
+	Mon, 31 Aug 2026 13:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183470;
-	bh=b3B60qoFdReGPZO6ITwG4sYGQo/AaMOlvcp0vHFXmyY=;
+	s=k20260515; t=1788183471;
+	bh=NbkJLc5yKsQTfh8mXKJSXEgZlmQll3of1/16UaM16rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=myEK7VkEEs2d/ncA2PgUaeEEfMEgCMRw0en7kVAvwFzvCRovGQsjrxro7O9AJpk9J
-	 Ip8J6J9QmRJEvMKUn7f8TnIY1kqpUSPPs2TUGwSuOVmkAuUStKQP0DHMKiCvw1t9mK
-	 LQrsInvVd450R2frfZeHqkcdhJtgfHucBpg2lQZAiCYJcaLNwayMXQvSfKqa32dLj9
-	 c710cEC7W7yjMbgbwSZK6ug+QxrGcKrR6UMfFo3y/USjcR7DyPJeCD0oHV5ENslcZG
-	 qDQSpyDBEjBAHN/f7N1YlfblsTptNNrVJBD2DlqEgj2FHOqOxuMI0i4j6AWyMlf43q
-	 kwA58V4/Ag/0Q==
+	b=CBp2TPw3ZQxBA+k1xFKkoa0IPkUBYQFczSyxjwYpFUmBH97r+57U1+Xpcjr43GJpw
+	 naRuKlpTmgU0iud5U47Gn8WQ8U+hMp4h0oYZv1zhOsMlMg+N2FSC6x5vxGWRi0BD/B
+	 laPSg+ERuJSlBN3HPh+T5wjJfYpULb9hUHR5yEbHT7k2dt/ZHpL1INKYxgiCHoP/pH
+	 qv42QegFY2feF2eBq8TY0EyvaEAvwRzLHlLARNTqHV6krnIADi0nZs8eO7NwOJclES
+	 /ILq1OSUomFZ75KFTlrul4bo7wQAC8eGk+u4/4C6bs6uL0fEvLOTUnSm1Dczz/7jsA
+	 A/AMaRqfcBX9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Shuan He <heshuan@bytedance.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] PCI/proc: Fix race between pci_proc_init() and pci_bus_add_device()
-Date: Mon, 31 Aug 2026 09:22:23 -0400
-Message-ID: <20260831133314.4125787-115-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] btrfs: tree-checker: validate INODE_REF's namelen
+Date: Mon, 31 Aug 2026 09:22:24 -0400
+Message-ID: <20260831133314.4125787-116-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -47,573 +49,458 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 8857f6578b001bcf5f53c8c6a3936647f05291a8 ]
+[ Upstream commit 3dc22abc21f5892406c09202fa2627196cc96967 ]
 
-pci_proc_attach_device() creates procfs entries for PCI devices and is
-called from pci_bus_add_device().  It lazily creates the per-bus procfs
-directory (bus->procdir) via proc_mkdir() on first use, and returns early
-if proc_initialized is not yet set.
+[BUG]
+A crafted btrfs image can trigger the following crash:
 
-On x86 with ACPI, PCI enumeration occurs at subsys_initcall, before
-pci_proc_init() sets proc_initialized at device_initcall.  The
-for_each_pci_dev() loop in pci_proc_init() then creates procfs entries for
-these already-enumerated devices, but runs without holding
-pci_rescan_remove_lock.
+  BUG: unable to handle page fault for address: ffffd1dc42884000
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  CPU: 9 UID: 0 PID: 1034 Comm: poc Not tainted 7.1.0-rc4-custom+ #383 PREE=
+MPT(full)  46af0a92938a63be7132e0dfd71e62327c51d5c2
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/20=
+22
+  RIP: 0010:memcpy+0xc/0x10
+  Call Trace:
+   <TASK>
+   read_extent_buffer+0xe4/0x100 [btrfs 3cf0785dd58fec8c5ff84633b772f17ce1f=
+92a8f]
+   btrfs_get_name+0x15e/0x1e0 [btrfs 3cf0785dd58fec8c5ff84633b772f17ce1f92a=
+8f]
+   reconnect_path+0x165/0x390
+   exportfs_decode_fh_raw+0x337/0x400
+   ? drop_caches_sysctl_handler+0xb0/0xb0
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  RIP: 0010:memcpy+0xc/0x10
+  Kernel panic - not syncing: Fatal exception
 
-On ARM64 with devicetree, PCI host bridges probe at device_initcall.  With
-async probing enabled, pci_bus_add_device() can run concurrently with
-pci_proc_init(), and both may call pci_proc_attach_device() for the same
-device or for different devices on the same bus.  As pci_host_probe() holds
-pci_rescan_remove_lock while pci_proc_init() does not, there is no
-serialisation between the two paths.
+[CAUSE]
+TThe crafted image has the following corrupted INODE_REF item:
 
-When two threads concurrently call pci_proc_attach_device() for devices on
-the same bus, both observe bus->procdir as NULL and both call proc_mkdir().
-The proc filesystem serialises directory creation internally, so only one
-caller succeeds.  The other results in a warning like:
+         item 9 key (258 INODE_REF 257) itemoff 11544 itemsize 4106
+         	index 2 namelen 4096 name: d\000\000\000\000\000\000\000\000\000\=
+000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
+\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\00=
+0\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\0=
+00\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\=
+000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
+\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\00=
+0\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\0=
+00\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\=
+000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
+\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\00=
+0\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\0=
+00\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\=
+000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
+\000
 
-  proc_dir_entry '000c:00/00.0' already registered
+The itemsize matches the namelen, but the namelen is 4096, way larger
+than normal name length limit (BTRFS_NAME_LEN, 255).
 
-The caller receives NULL (duplicate entry) and unconditionally stores it to
-bus->procdir, corrupting the valid pointer set by the first caller.
+Meanwhile the memory of the @name is only 255 byte sized, this will cause
+out-of-boundary access, and cause the above crash.
 
-Serialise access to proc_initialized, proc_bus_pci_dir, bus->procdir and
-dev->procent with a new mutex local to drivers/pci/proc.c, and store the
-created entries to bus->procdir and dev->procent only on success, so a
-failed creation can never overwrite a valid pointer.
+[FIX]
+Add extra namelen verification for INODE_REF, just like what we have
+done in ROOT_REF checks.
 
-Additionally, wrap the for_each_pci_dev() loop in pci_proc_init() with
-pci_lock_rescan_remove() to serialise against concurrent PCI bus
-operations, add an early return in pci_proc_attach_device() when
-dev->procent is already set to make the function idempotent, and clear
-bus->procdir in pci_proc_detach_bus() to prevent use of a dangling pointer
-after proc_remove().
+Now the crafted image can be rejected gracefully:
 
-Reported-by: Shuan He <heshuan@bytedance.com>
-Closes: https://lore.kernel.org/linux-pci/20250702155112.40124-2-heshuan@bytedance.com/
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20260611150543.511422-1-kwilczynski@kernel.org
+ BTRFS critical (device dm-2): corrupt leaf: root=3D5 block=3D30572544 slot=
+=3D14 ino=3D259, invalid inode ref name length, has 4096 expect [1, 255]
+ BTRFS error (device dm-2): read time tree block corruption detected on log=
+ical 30572544 mirror 2
+
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/linux-btrfs/aik0hEV6ehKx6Ldv@Air.local/
+Acked-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+[ Rebase, add a Link: tag, add an simple cause analyze ]
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: PCI/proc race fix
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.44** (`git describe HEAD` →
-`v6.18.44-1-g2736c32da98b9`, `make kernelversion` → `6.18.44`)
+### Step 1.1: Subject Line
+**Record:** `[btrfs: tree-checker] [validate] validate INODE_REF's
+namelen =E2=80=94 add missing name-length bounds check in btrfs tree-checke=
+r for
+INODE_REF items`
 
-**Fix status in this tree:** The buggy code is present at HEAD; commit
-`3ab0784441504` / upstream `8857f6578b001` is **not** an ancestor of
-HEAD.
+### Step 1.2: Commit Message Tags
+**Record:**
+- **Reported-by:** Xiang Mei `<xmei5@asu.edu>` =E2=80=94 real reporter with=
+ PoC
+- **Link:** https://lore.kernel.org/linux-
+  btrfs/aik0hEV6ehKx6Ldv@Air.local/
+- **Acked-by:** Weiming Shi `<bestswngs@gmail.com>`
+- **Signed-off-by:** Weiming Shi, Qu Wenruo, David Sterba
+- **Reviewed-by:** David Sterba `<dsterba@suse.com>` (btrfs maintainer)
+- No Fixes:, Cc: stable, or syzbot tags
+- Notable: maintainer review; concrete crash reproducer in message body
+
+### Step 1.3: Commit Body Analysis
+**Record:**
+- **Bug:** Crafted btrfs image with `INODE_REF` item where
+  `namelen=3D4096` but item fits in leaf (`itemsize=3D4106`). Tree-checker
+  passes the within-item bounds check, but downstream code copies the
+  name into a ~255-byte buffer.
+- **Symptom:** Kernel page fault in `memcpy` via `read_extent_buffer` =E2=
+=86=92
+  `btrfs_get_name` =E2=86=92 `reconnect_path` =E2=86=92 `exportfs_decode_fh=
+_raw`; fatal
+  exception / panic.
+- **Root cause:** `check_inode_ref()` validates `ptr + sizeof(*iref) +
+  namelen <=3D end` but does not enforce `namelen <=3D BTRFS_NAME_LEN`
+  (255). `btrfs_get_name()` uses a `NAME_MAX+1` (~256 byte) stack
+  buffer.
+- **Fix result:** Corrupt image rejected at read time with `-EUCLEAN`
+  and clear error message.
+
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Not disguised =E2=80=94 this is an explicit bug fix. It closes a
+validation gap analogous to existing `check_dir_item()` name-length
+checks (lines 602=E2=80=93606 in `tree-checker.c`).
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff Analysis
 
-### Step 1.1: Subject line
-**Record:** `[PCI/proc]` `[Fix]` — race between `pci_proc_init()` and
-`pci_bus_add_device()` during concurrent procfs entry creation.
-
-### Step 1.2: Tags
+### Step 2.1: Change Inventory
 **Record:**
-- **Reported-by:** Shuan He \<heshuan@bytedance.com\> — real-world
-  reporter
-- **Closes:** https://lore.kernel.org/linux-
-  pci/20250702155112.40124-2-heshuan@bytedance.com/ — original bug
-  report thread
-- **Signed-off-by:** Krzysztof Wilczyński, Bjorn Helgaas (PCI
-  maintainer)
-- **Link:** https://lore.kernel.org/r/20260611150543.511422-1-
-  kwilczynski@kernel.org
-- No `Fixes:` tag (expected for manual review)
-- No `Cc: stable@vger.kernel.org` (expected)
-- Ignore pipeline `Signed-off-by: Sasha Levin`
+- **Files:** `fs/btrfs/tree-checker.c` only (+6 lines)
+- **Function:** `check_inode_ref()`
+- **Scope:** Single-file, surgical fix
 
-### Step 1.3: Body analysis
+### Step 2.2: Code Flow Change
 **Record:**
-- **Bug:** Concurrent `pci_proc_attach_device()` calls can both see
-  `bus->procdir == NULL`, both call `proc_mkdir()`; procfs rejects the
-  duplicate with a WARN; the loser stores `NULL` into `bus->procdir`,
-  overwriting a valid pointer.
-- **Symptom:** `WARN(1, "proc_dir_entry '%s/%s' already registered\n",
-  ...)` in dmesg; corrupted `bus->procdir`; missing/broken
-  `/proc/bus/pci` entries.
-- **Trigger (ARM64 DT):** PCI host bridges probe at `device_initcall`;
-  with async probing, `pci_bus_add_device()` can run concurrently with
-  `pci_proc_init()`; `pci_host_probe()` holds `pci_rescan_remove_lock`
-  but `pci_proc_init()` did not.
-- **Trigger (x86 ACPI):** Enumeration at `subsys_initcall` before proc
-  init; `pci_proc_init()`'s `for_each_pci_dev()` loop lacked
-  `pci_rescan_remove_lock`.
-- **Root cause:** No serialization around lazy `bus->procdir` /
-  `dev->procent` creation; unconditional assignment of failed
-  `proc_mkdir()` result.
+- **Before:** After reading `namelen`, only checked that `sizeof(*iref)
+  + namelen` fits within the item boundary.
+- **After:** Rejects `namelen =3D=3D 0` or `namelen > BTRFS_NAME_LEN` before
+  the boundary check.
+- **Path affected:** Read-time leaf validation for every
+  `BTRFS_INODE_REF_KEY` item (`disk-io.c` =E2=86=92 `btrfs_check_leaf()`).
 
-### Step 1.4: Hidden bug fix?
-**Record:** No — explicitly described as a race/pointer-corruption bug
-fix, not disguised cleanup.
+### Step 2.3: Bug Mechanism
+**Record:**
+- **Category:** Buffer overflow / out-of-bounds write (memory safety)
+- **Mechanism:** `struct btrfs_inode_ref` is 10 bytes packed (`index` +
+  `name_len`). With `namelen=3D4096` and `itemsize=3D4106`, `10 + 4096 =3D
+  4106` passes the item-boundary check. Later, `btrfs_get_name()` in
+  `export.c` calls `read_extent_buffer(leaf, name, name_ptr, name_len)`
+  into a `NAME_MAX+1` buffer (`expfs.c:445`), causing OOB access and
+  kernel panic.
+
+### Step 2.4: Fix Quality
+**Record:** Obviously correct; mirrors the existing `check_dir_item()`
+pattern. Minimal, no API changes. Very low regression risk =E2=80=94 only
+rejects already-invalid metadata.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/pci/proc.c` only (+56 / -23 lines)
-- **Functions modified/added:** `__pci_proc_attach_bus()` (new),
-  `pci_proc_attach_device()`, `pci_proc_detach_device()`,
-  `pci_proc_detach_bus()`, `pci_proc_init()`
-- **Scope:** Single-file surgical fix
-
-### Step 2.2: Code flow changes
-**Record:**
-- **Hunk 1:** Add `pci_proc_lock` mutex.
-- **Hunk 2:** Extract `__pci_proc_attach_bus()` — create bus proc dir in
-  temp variable, assign to `bus->procdir` only on success; skip if
-  already set.
-- **Hunk 3:** `pci_proc_attach_device()` — take `pci_proc_lock`; early-
-  return if `dev->procent` already set (idempotent); call
-  `__pci_proc_attach_bus()`; assign `dev->procent` only on successful
-  `proc_create_data()`.
-- **Hunk 4:** `pci_proc_detach_device()` / `pci_proc_detach_bus()` —
-  serialize under same mutex; clear `bus->procdir = NULL` after
-  `proc_remove()`.
-- **Hunk 5:** `pci_proc_init()` — init under `scoped_guard(mutex,
-  &pci_proc_lock)`; wrap `for_each_pci_dev()` loop with
-  `pci_lock_rescan_remove()` / `pci_unlock_rescan_remove()`.
-
-### Step 2.3: Bug mechanism
-**Record:** **Category:** Race condition + pointer corruption
-(reference/state bug).
-- **Before:** Two threads could race on `bus->procdir`; loser's
-  `proc_mkdir()` returned NULL (duplicate), stored unconditionally →
-  valid pointer overwritten with NULL.
-- **After:** Mutex serializes all proc attach/detach/init; pointer
-  assigned only after successful creation; idempotent early returns
-  prevent duplicate work.
-
-Verified in `fs/proc/generic.c:403-416`: `proc_register()` returns NULL
-on duplicate with `WARN(1, "proc_dir_entry '%s/%s' already
-registered\n", ...)`.
-
-### Step 2.4: Fix quality
-**Record:** Fix is minimal, obviously correct, and follows existing PCI
-patterns (`pci_lock_rescan_remove()`, `guard(mutex)` used elsewhere in
-PCI). Low regression risk — adds a local mutex and tightens assignment
-logic. `lockdep_assert_held()` documents locking expectations.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** Lazy `bus->procdir = proc_mkdir(...)` pattern dates to
-initial import (`1da177e4c3f41`, Linux 2.6.12-rc2). Race window widened
-when `pci_proc_attach_device()` moved back to `pci_bus_add_device()` in
-`ef37702eb3cae` (2013). Bug has been latent for years; practical trigger
-on ARM64+async probe is newer.
+**Record:** `check_inode_ref()` introduced in `71bf92a9b8777` (Aug 2019,
+Qu Wenruo). The namelen boundary check has been missing since
+introduction. Overflow check refined in `c7c01a4a2524b3` (David Sterba,
+Nov 2020). Bug present in this tree since at least v4.x-era checker
+addition.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag in commit message.
+### Step 3.2: Fixes: Tag
+**Record:** N/A =E2=80=94 no Fixes: tag. Underlying gap dates to original
+`check_inode_ref()` commit.
 
-### Step 3.3: Related file history
-**Record:** Recent `drivers/pci/proc.c` changes are unrelated cleanups
-(mmap, PDE_DATA removal). No duplicate fix in this tree. Fix commit
-`3ab0784441504` exists on `autosel` branch but not in current HEAD.
+### Step 3.3: Related File History
+**Record:** Recent `tree-checker.c` commits include similar validation
+fixes (`e92c2941204de` bounds check in `check_inode_extref`,
+`96fa515e70f3e` inode ref size typo). Standalone fix; not part of a
+multi-patch series in the message.
 
-### Step 3.4: Author context
-**Record:** Krzysztof Wilczyński is an active PCI contributor/maintainer
-(multiple PCI commits in this tree). Bjorn Helgaas committed the fix
-upstream.
+### Step 3.4: Author Context
+**Record:** Qu Wenruo is a regular btrfs contributor; David Sterba is
+btrfs maintainer. Weiming Shi authored the fix with maintainer
+ack/review.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone — no series prerequisites.
-- `guard(mutex)` / `scoped_guard` available via `#include
-  <linux/module.h>` → `cleanup.h` (proc.c already includes module.h).
-- `pci_lock_rescan_remove()` exists in `drivers/pci/probe.c` and is
-  declared in `drivers/pci/pci.h`.
-- Patch applies cleanly against current `drivers/pci/proc.c` at HEAD.
+**Record:** No prerequisites. `BTRFS_NAME_LEN`, `check_inode_ref()`, and
+`inode_ref_err()` all exist in this tree. Fix applies cleanly after line
+1784 in local `tree-checker.c`.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:**
-- **b4 dig -c 3ab0784441504:** https://patch.msgid.link/20260611150543.5
-  11422-1-kwilczynski@kernel.org
-- **Series revisions:** v1 (2026-04-30) → v2/v3 (2026-06-06) → v4
-  (2026-06-11, committed version)
-- Lore direct fetch blocked by bot protection; thread retrieved via `b4
-  dig -m`.
+### Step 4.1: Original Discussion
+**Record:** Lore URL from commit message blocked (403/Anubis). `b4
+shazam 'validate INODE_REF namelen'` found no match. Full technical
+details available from commit message (stack trace, corrupt item dump,
+before/after behavior).
 
 ### Step 4.2: Reviewers
-**Record:** **b4 dig -w** CC'd: Bjorn Helgaas, Manivannan Sadhasivam,
-Lorenzo Pieralisi, Ilpo Järvinen, Lukas Wunner, Shuan He (reporter),
-linux-pci@vger.kernel.org — appropriate PCI maintainer coverage.
+**Record:** David Sterba Reviewed-by + Signed-off-by confirms maintainer
+review. UNVERIFIED: full CC list from `b4 dig -w` (could not run
+successfully for this commit hash).
 
-### Step 4.3: Bug report
-**Record:** Reported-by Shuan He (Bytedance). Closes July 2025 lore
-thread. WebFetch to lore blocked; bug mechanism and reporter confirmed
-from commit message and mbox metadata.
+### Step 4.3: Bug Report
+**Record:** Reported-by Xiang Mei with reproducible PoC. Crash:
+supervisor write page fault in `memcpy` during NFS exportfs reconnect
+path. Severity: kernel panic.
 
-### Step 4.4: Related patches
-**Record:** Standalone v4 patch; no multi-patch series dependency.
+### Step 4.4: Related Patches
+**Record:** Commit references ROOT_REF checks as precedent; no
+`check_root_ref` or ROOT_BACKREF name-length validation found in this
+tree's `tree-checker.c`. The analogous existing pattern is
+`check_dir_item()` at lines 602=E2=80=93606. `check_inode_extref()` has the=
+ same
+gap (no `BTRFS_NAME_LEN` check) but is out of scope for this commit.
 
-### Step 4.5: Stable list history
-**Record:** No stable-list discussion found in retrieved mbox thread
-(UNVERIFIED for broader stable@ search due to lore access limits).
+### Step 4.5: Stable List History
+**Record:** UNVERIFIED =E2=80=94 could not search lore stable list due to a=
+ccess
+restrictions.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `pci_proc_attach_device()`, `pci_proc_detach_device()`,
-`pci_proc_detach_bus()`, `pci_proc_init()`, `__pci_proc_attach_bus()`.
+### Step 5.1: Key Functions
+**Record:** `check_inode_ref()` (modified); downstream vulnerable
+consumer `btrfs_get_name()` in `export.c`.
 
 ### Step 5.2: Callers
 **Record:**
-- `pci_proc_attach_device()` called from `pci_bus_add_device()`
-  (`drivers/pci/bus.c:358`) — normal device bring-up path.
-- `pci_proc_init()` called via `device_initcall` at boot.
-- Detach called from `drivers/pci/remove.c` on device/bus removal.
-- `pci_bus_add_device()` reached from `pci_host_probe()` →
-  `pci_bus_add_devices()` (`probe.c:3318-3320`, under
-  `pci_lock_rescan_remove()`).
+- `check_inode_ref()` called from `check_leaf_item()` for
+  `BTRFS_INODE_REF_KEY` =E2=86=92 `__btrfs_check_leaf()` =E2=86=92 `btrfs_c=
+heck_leaf()`
+- `btrfs_check_leaf()` called on **read** in `disk-io.c:457` (=E2=80=9Cread=
+ time
+  tree block corruption detected=E2=80=9D)
+- `btrfs_get_name()` registered as `export_operations.get_name` in
+  `btrfs_export_ops`; invoked from `exportfs_decode_fh_raw()` =E2=86=92
+  `reconnect_path()` with `char nbuf[NAME_MAX+1]`
 
 ### Step 5.3: Callees
-**Record:** `proc_mkdir()`, `proc_create_data()`, `proc_remove()`,
-`proc_set_size()`, `pci_lock_rescan_remove()` /
-`pci_unlock_rescan_remove()`.
+**Record:** `btrfs_inode_ref_name_len()`, `inode_ref_err()`, standard
+extent_buffer helpers.
 
 ### Step 5.4: Reachability
-**Record:** Boot-time path on ARM64 DT systems with async device probing
-— common production configuration. Also reachable during PCI
-hotplug/rescan via `pci_bus_add_device()`. Requires `CONFIG_PROC_FS`
-(proc.c is wrapped in `#ifdef CONFIG_PROC_FS` in `pci.h`).
+**Record:** Trigger requires mounting/accessing a btrfs image with
+corrupt `INODE_REF` metadata and hitting the NFS exportfs reconnect
+path. Mounting crafted images typically needs `CAP_SYS_ADMIN`, but the
+panic is still a real robustness/security issue for NFS servers
+exporting btrfs and for any admin mounting untrusted images. Tree-
+checker fix protects all consumers at block-read time.
 
-### Step 5.5: Similar patterns
-**Record:** No other lazy proc-dir creation races found in PCI code;
-this is the sole attach point for PCI proc entries.
-
-**Corruption consequence (verified):** If thread A sets `bus->procdir`
-valid and thread B overwrites with NULL before A reads `bus->procdir`
-for `proc_create_data()`, A passes NULL parent (`proc.c:441-442` at
-HEAD). `proc_create_data()` passes parent to `proc_register()` without
-NULL guard — potential oops during boot enumeration.
+### Step 5.5: Similar Patterns
+**Record:** `check_dir_item()` validates `name_len > BTRFS_NAME_LEN`
+(lines 602=E2=80=93606). `check_inode_ref()` and `check_inode_extref()` lack
+equivalent checks =E2=80=94 this commit closes the INODE_REF gap.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
 
-### Step 6.1: Buggy code exists?
-**Record:** **YES.** At HEAD, `drivers/pci/proc.c:428-437` still has
-unconditional `bus->procdir = proc_mkdir(...)` without locking.
-`pci_proc_init()` at lines 464-472 lacks `pci_rescan_remove_lock`.
-`pci_proc_detach_bus()` does not clear `bus->procdir`.
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** Local tree is `v6.18.44` (`VERSION=3D6,
+PATCHLEVEL=3D18, SUBLEVEL=3D44`). `check_inode_ref()` at lines 1783=E2=80=
+=931790
+reads `namelen` and only checks item-boundary fit =E2=80=94 no `BTRFS_NAME_=
+LEN`
+validation. Fix string `"invalid inode ref name length"` not present
+(grep confirms fix not yet applied).
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** File structure matches the patch
-base. No conflicting recent changes to proc attach logic.
-`guard()`/`scoped_guard()` infrastructure present in 6.18.
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected =E2=80=94 6 lines inserted in one function=
+. No
+structural conflicts observed.
 
-### Step 6.3: Related fixes already present?
-**Record:** **None.** `git merge-base --is-ancestor 3ab0784441504 HEAD`
-→ fix NOT in HEAD. `git merge-base --is-ancestor 8857f6578b001 HEAD` →
-upstream fix NOT in HEAD.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** **drivers/pci** — IMPORTANT subsystem. Affects PCI
-enumeration/procfs on all platforms with `CONFIG_PCI` +
-`CONFIG_PROC_FS`.
-
-### Step 7.2: Activity
-**Record:** PCI subsystem actively maintained in 6.18; this is a
-targeted fix to long-standing init-race code, not dead code.
+### Step 6.3: Related Fixes Already Present?
+**Record:** No equivalent fix found. Related precedent: `e92c2941204de`
+(inode extref bounds check fix, different bug).
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 7: Subsystem Context
 
-### Step 8.1: Who is affected
-**Record:** ARM64 (and other DT) systems with PCI host controllers
-probing at `device_initcall` and async probing enabled. Also any
-platform where `pci_proc_init()` races with concurrent
-`pci_bus_add_device()`. x86 less likely at boot but hotplug paths remain
-relevant.
+### Step 7.1: Subsystem Criticality
+**Record:** **btrfs filesystem** =E2=80=94 IMPORTANT. Affects metadata inte=
+grity
+validation and NFS export path.
 
-### Step 8.2: Trigger conditions
-**Record:** Concurrent threads calling `pci_proc_attach_device()` for
-devices on the same bus during boot init. Timing-dependent but realistic
-with async probe. Unprivileged users cannot trigger at boot; hotplug
-paths may be root-controlled.
+### Step 7.2: Subsystem Activity
+**Record:** `tree-checker.c` actively maintained; multiple checker fixes
+in recent history on this branch.
 
-### Step 8.3: Failure mode severity
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** btrfs users, especially those with NFS exports
+(`CONFIG_NFS_SERVER`). Also any path reading corrupt `INODE_REF` items
+that assumed checker enforced name-length limits.
+
+### Step 8.2: Trigger Conditions
+**Record:** Corrupt/malicious btrfs image with `namelen > 255` but
+within item bounds; block read succeeds checker; exportfs reconnect
+calls `btrfs_get_name()`. Uncommon in practice but trivially craftable
+(PoC provided).
+
+### Step 8.3: Failure Mode Severity
+**Record:** Kernel page fault =E2=86=92 panic. **Severity: CRITICAL** (syst=
+em
+crash). Potential denial-of-service via crafted filesystem image.
+
+### Step 8.4: Risk-Benefit
 **Record:**
-- Kernel WARN during boot (verified procfs path)
-- `bus->procdir` pointer corruption
-- Missing `/proc/bus/pci/<bus>/<dev>` entries (tools relying on legacy
-  PCI proc interface break)
-- Potential NULL-parent `proc_create_data()` if corruption races with
-  in-flight attach
-- **Severity: HIGH** (pointer corruption + plausible crash during init)
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH — prevents boot-time race, pointer corruption, and
-  broken PCI procfs on affected platforms
-- **Risk:** LOW — single-file mutex addition, well-reviewed, no API
-  changes
-- **Ratio:** Strong benefit, minimal risk
+- **Benefit:** HIGH =E2=80=94 prevents kernel panic; rejects corruption
+  gracefully at read time
+- **Risk:** VERY LOW =E2=80=94 6-line validation matching existing dir_item
+  pattern
+- **Ratio:** Strongly favors backport
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real, reported race with concrete dmesg symptom
-- Pointer corruption of `bus->procdir` (kernel data structure
-  corruption)
-- Plausible crash path via NULL `bus->procdir` in `proc_create_data()`
-- Small, single-file fix reviewed by PCI maintainer (Bjorn Helgaas)
-- Buggy code confirmed present in Linux 6.18.44 tree
-- v4 patch after 4 review iterations
+- Real, reproducible kernel panic on crafted btrfs image
+- Missing validation gap since 2019
+- Small, surgical, maintainer-reviewed fix
+- Matches established tree-checker validation patterns
+- Buggy code confirmed present in local 6.18.44 tree
+- Fixes corruption handling at read time (defense in depth)
 
 **AGAINST backport:**
-- Requires `CONFIG_PROC_FS` (most distro kernels have it)
-- Timing-dependent race (but realistic on ARM64+async probe)
-- Legacy `/proc/bus/pci` interface (less critical than sysfs) —
-  mitigated by corruption severity
+- Crash path specifically involves NFS exportfs reconnect (narrower than
+  generic mount)
+- Requires ability to mount/access corrupt btrfs (usually root)
+- `check_inode_extref()` has similar gap (not addressed here =E2=80=94 sepa=
+rate
+  issue)
 
-**Unresolved:** Full text of original Bytedance bug report (lore bot-
-blocked); no explicit stable@ nomination found in thread.
+**UNRESOLVED:**
+- Full lore thread / stable nomination discussion (access blocked)
+- Whether ROOT_REF checker mentioned in commit exists elsewhere in
+  mainline (not found in this tree)
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — mutex serialization +
-   assign-on-success; reviewed by maintainer; reporter confirmed issue
-2. Fixes a real bug affecting users? **PASS** — Bytedance report, ARM64
-   DT boot path
-3. Important issue? **PASS** — pointer corruption, WARN, possible init
-   crash, broken procfs
-4. Small and contained? **PASS** — 1 file, ~80 lines total
-5. No new features/APIs? **PASS** — synchronization only
-6. Can apply to local tree? **PASS** — code present, dependencies
-   satisfied, clean apply expected
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** =E2=80=94 PoC before/after; maint=
+ainer
+   reviewed
+2. Fixes a real bug? **PASS** =E2=80=94 OOB write =E2=86=92 kernel panic
+3. Important issue? **PASS** =E2=80=94 CRITICAL (kernel panic)
+4. Small and contained? **PASS** =E2=80=94 6 lines, one function
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** =E2=80=94 code exists, clean apply exp=
+ected
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs) — standard
-bug-fix backport.
+### Step 9.3: Exception Categories
+**Record:** N/A =E2=80=94 standard bug fix, not a quirk/ID/DT exception.
 
-### Step 9.4: Decision rationale
-This fix addresses a genuine initialization race in PCI procfs setup
-that corrupts `bus->procdir` on a realistic ARM64+async-probe boot path.
-The buggy code is present in this 6.18.44 tree, the fix is small and
-self-contained, and the failure mode (pointer corruption, WARN, missing
-proc entries, possible NULL deref) meets stable importance thresholds.
+### Step 9.4: Decision Rationale
+
+This commit closes a real validation hole in btrfs's tree-checker. A
+crafted `INODE_REF` with `namelen=3D4096` passes the existing within-item
+bounds check (`sizeof(*iref)` is 10 bytes, so `10 + 4096 =3D 4106` fits a
+4106-byte item) but violates `BTRFS_NAME_LEN` (255). Downstream,
+`btrfs_get_name()` copies into a `NAME_MAX+1` buffer, causing a kernel
+panic. The fix is minimal, follows the existing `check_dir_item()`
+pattern, is reviewed by the btrfs maintainer, and the vulnerable code is
+present in this 6.18.44 tree without the fix.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags (Reported-by, Closes, Link, SOBs);
-  ignored pipeline SOB
-- [Phase 1] Identified explicit race/pointer-corruption bug from commit
-  message
-- [Phase 2] Read full diff from `git show 3ab0784441504`; confirmed 1
-  file, +56/-23
-- [Phase 2] Verified `proc_register()` duplicate behavior at
-  `fs/proc/generic.c:403-416`
-- [Phase 2] Verified current HEAD code at `drivers/pci/proc.c:419-476`
-  lacks fix
-- [Phase 3] `git blame -L 428,437`: lazy procdir pattern since 2.6.12
-- [Phase 3] `git show ef37702eb3cae`: `pci_proc_attach_device` moved to
-  `pci_bus_add_device()` in 2013
-- [Phase 3] `git merge-base --is-ancestor 3ab0784441504 HEAD` → NOT in
-  HEAD
-- [Phase 3] `git merge-base --is-ancestor 8857f6578b001 HEAD` → upstream
-  NOT in HEAD
-- [Phase 4] `b4 dig -c 3ab0784441504` → lore URL found
-- [Phase 4] `b4 dig -a` → v1–v4 series, v4 is committed version
-- [Phase 4] `b4 dig -w` → PCI maintainers CC'd
-- [Phase 4] `b4 dig -m /tmp/pci_proc_race.mbox` → thread saved
-- [Phase 4] WebFetch lore URLs → blocked by bot protection (UNVERIFIED
-  for inline thread text)
-- [Phase 5] `grep pci_proc_attach_device` → caller
-  `pci_bus_add_device()` at `bus.c:358`
-- [Phase 5] `grep pci_host_probe` → `pci_lock_rescan_remove()` around
-  `pci_bus_add_devices()` at `probe.c:3318-3320`
-- [Phase 5] Verified `proc_create_data()` uses parent without NULL check
-  (`generic.c:587-597`)
-- [Phase 6] `git describe HEAD` → v6.18.44; `make kernelversion` →
-  6.18.44
-- [Phase 6] Confirmed buggy code present, fix absent at HEAD
-- [Phase 6] Verified `guard(mutex)` available via `module.h` →
-  `cleanup.h` include chain
-- [Phase 6] Verified `pci_lock_rescan_remove()` exists and is used in
-  PCI core
-- [Phase 7] PCI subsystem classified IMPORTANT
-- [Phase 8] Assessed severity HIGH based on pointer corruption +
-  verified procfs/proc_create paths
+- **[Phase 1]** Parsed subject, tags, body; found Reported-by, Link,
+  Reviewed-by David Sterba
+- **[Phase 2]** Diff: +6 lines in `check_inode_ref()` adding `namelen =3D=3D
+  0 || namelen > BTRFS_NAME_LEN` check
+- **[Phase 3]** `git describe HEAD`: `v6.18.44`; blame shows
+  `check_inode_ref` from `71bf92a9b8777` (2019)
+- **[Phase 3]** `git log --oneline -20 -- fs/btrfs/tree-checker.c`:
+  related checker fixes confirmed
+- **[Phase 4]** Lore fetch blocked (403/Anubis); `b4 shazam` no match =E2=
+=80=94
+  UNVERIFIED for thread discussion
+- **[Phase 5]** `grep btrfs_inode_ref_name_len`: multiple consumers;
+  `export.c:287-290` vulnerable path confirmed
+- **[Phase 5]** `expfs.c:445`: `char nbuf[NAME_MAX+1]` confirms small
+  destination buffer
+- **[Phase 5]** `include/uapi/linux/btrfs_tree.h:22`: `BTRFS_NAME_LEN
+  255`
+- **[Phase 5]** `include/uapi/linux/btrfs_tree.h:852-856`: `struct
+  btrfs_inode_ref` is 10 bytes packed
+- **[Phase 5]** `disk-io.c:457-465`: tree-checker runs at read time
+- **[Phase 5]** `tree-checker.c:602-606`: `check_dir_item()` already
+  validates name length =E2=80=94 precedent confirmed
+- **[Phase 6]** `grep 'invalid inode ref name length'`: no matches =E2=80=
+=94 fix
+  not in tree
+- **[Phase 6]** Read `check_inode_ref()` at lines 1752=E2=80=931799: buggy =
+code
+  confirmed present
+- **[Phase 8]** Failure mode: OOB write =E2=86=92 page fault =E2=86=92 pani=
+c, severity
+  CRITICAL
 
-**YES**The background git searches finished successfully.
+**YES****Backport analysis: `btrfs: tree-checker: validate INODE_REF's
+namelen`**
 
-They confirmed the fix exists as commit `3ab0784441504` (upstream
-`8857f6578b001`) on the `autosel` branch, but it is **not** in your
-current 6.18.44 HEAD — the race in `drivers/pci/proc.c` is still present
-there.
+For the local **6.18.44** tree, this should be backported.
 
-**Verdict from the analysis: YES** — this should be backported to this
-tree. It is a small, reviewed fix for a real boot-time race that can
-corrupt `bus->procdir` on ARM64 systems with async probing.
+`check_inode_ref()` only verified that the name fits inside the item,
+not that `namelen <=3D BTRFS_NAME_LEN` (255). A crafted image with
+`namelen=3D4096` in a 4106-byte item passes the checker but later triggers
+an out-of-bounds write in `btrfs_get_name()` during NFS exportfs
+reconnect, causing a kernel panic.
 
- drivers/pci/proc.c | 79 ++++++++++++++++++++++++++++++++--------------
- 1 file changed, 56 insertions(+), 23 deletions(-)
+The fix is small (6 lines), matches the existing `check_dir_item()`
+pattern, is reviewed by btrfs maintainer David Sterba, and the
+vulnerable code is present in this tree without the fix.
 
-diff --git a/drivers/pci/proc.c b/drivers/pci/proc.c
-index 9348a0fb80847..34fbacbafe919 100644
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -18,6 +18,7 @@
- #include "pci.h"
- 
- static int proc_initialized;	/* = 0 */
-+static DEFINE_MUTEX(pci_proc_lock);
- 
- static loff_t proc_bus_pci_lseek(struct file *file, loff_t off, int whence)
- {
-@@ -416,40 +417,64 @@ static const struct seq_operations proc_bus_pci_devices_op = {
- 
- static struct proc_dir_entry *proc_bus_pci_dir;
- 
--int pci_proc_attach_device(struct pci_dev *dev)
-+static int __pci_proc_attach_bus(struct pci_bus *bus)
- {
--	struct pci_bus *bus = dev->bus;
--	struct proc_dir_entry *e;
-+	struct proc_dir_entry *dir;
- 	char name[16];
- 
-+	lockdep_assert_held(&pci_proc_lock);
-+
- 	if (!proc_initialized)
- 		return -EACCES;
- 
--	if (!bus->procdir) {
--		if (pci_proc_domain(bus)) {
--			sprintf(name, "%04x:%02x", pci_domain_nr(bus),
--					bus->number);
--		} else {
--			sprintf(name, "%02x", bus->number);
--		}
--		bus->procdir = proc_mkdir(name, proc_bus_pci_dir);
--		if (!bus->procdir)
--			return -ENOMEM;
--	}
-+	if (bus->procdir)
-+		return 0;
-+
-+	if (pci_proc_domain(bus))
-+		sprintf(name, "%04x:%02x", pci_domain_nr(bus), bus->number);
-+	else
-+		sprintf(name, "%02x", bus->number);
-+
-+	dir = proc_mkdir(name, proc_bus_pci_dir);
-+	if (!dir)
-+		return -ENOMEM;
-+
-+	bus->procdir = dir;
-+
-+	return 0;
-+}
-+
-+int pci_proc_attach_device(struct pci_dev *dev)
-+{
-+	struct pci_bus *bus = dev->bus;
-+	struct proc_dir_entry *entry;
-+	char name[16];
-+	int ret;
-+
-+	guard(mutex)(&pci_proc_lock);
-+
-+	if (dev->procent)
-+		return 0;
-+
-+	ret = __pci_proc_attach_bus(bus);
-+	if (ret)
-+		return ret;
- 
- 	sprintf(name, "%02x.%x", PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
--	e = proc_create_data(name, S_IFREG | S_IRUGO | S_IWUSR, bus->procdir,
--			     &proc_bus_pci_ops, dev);
--	if (!e)
-+	entry = proc_create_data(name, S_IFREG | S_IRUGO | S_IWUSR,
-+				 bus->procdir, &proc_bus_pci_ops, dev);
-+	if (!entry)
- 		return -ENOMEM;
--	proc_set_size(e, dev->cfg_size);
--	dev->procent = e;
-+
-+	proc_set_size(entry, dev->cfg_size);
-+	dev->procent = entry;
- 
- 	return 0;
- }
- 
- int pci_proc_detach_device(struct pci_dev *dev)
- {
-+	guard(mutex)(&pci_proc_lock);
- 	proc_remove(dev->procent);
- 	dev->procent = NULL;
- 	return 0;
-@@ -457,19 +482,27 @@ int pci_proc_detach_device(struct pci_dev *dev)
- 
- int pci_proc_detach_bus(struct pci_bus *bus)
- {
-+	guard(mutex)(&pci_proc_lock);
- 	proc_remove(bus->procdir);
-+	bus->procdir = NULL;
- 	return 0;
- }
- 
- static int __init pci_proc_init(void)
- {
- 	struct pci_dev *dev = NULL;
--	proc_bus_pci_dir = proc_mkdir("bus/pci", NULL);
--	proc_create_seq("devices", 0, proc_bus_pci_dir,
--		    &proc_bus_pci_devices_op);
--	proc_initialized = 1;
-+
-+	scoped_guard(mutex, &pci_proc_lock) {
-+		proc_bus_pci_dir = proc_mkdir("bus/pci", NULL);
-+		proc_create_seq("devices", 0, proc_bus_pci_dir,
-+				&proc_bus_pci_devices_op);
-+		proc_initialized = 1;
-+	}
-+
-+	pci_lock_rescan_remove();
- 	for_each_pci_dev(dev)
- 		pci_proc_attach_device(dev);
-+	pci_unlock_rescan_remove();
- 
- 	return 0;
- }
--- 
+**YES**
+
+ fs/btrfs/tree-checker.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
+index c7e0e5fb6402d..13b711992a1c8 100644
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1840,6 +1840,12 @@ static int check_inode_ref(struct extent_buffer *lea=
+f,
+=20
+ 		iref =3D (struct btrfs_inode_ref *)ptr;
+ 		namelen =3D btrfs_inode_ref_name_len(leaf, iref);
++		if (unlikely(namelen =3D=3D 0 || namelen > BTRFS_NAME_LEN)) {
++			inode_ref_err(leaf, slot,
++				"invalid inode ref name length, has %u expect [1, %u]",
++				namelen, BTRFS_NAME_LEN);
++			return -EUCLEAN;
++		}
+ 		if (unlikely(ptr + sizeof(*iref) + namelen > end)) {
+ 			inode_ref_err(leaf, slot,
+ 				"inode ref overflow, ptr %lu end %lu namelen %u",
+--=20
 2.53.0
 
