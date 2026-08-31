@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE3C533582;
-	Mon, 31 Aug 2026 13:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8095335B7;
+	Mon, 31 Aug 2026 13:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183908; cv=none; b=tNvWkZssmHXWl9XAnzYKaP9wxH6S4iuCFP+K0FHZVGPYTKkG2gmw8uG0lQVMuXeTHLmZQHK8ZmHolMKvDUVOdT2hTyL7udD41Aq1Cmebxgg/Fj//344lJMRqgHocydrc/pplHy2qz2SBFurwat9cU6MTSeQiKvM9sbTl7uBTd3Q=
+	t=1788183910; cv=none; b=FUsaHXyeRfpnGI61Mr5IlWV82sA3TRoTwWbWf7aie/aWE+gRXKWOYE9pHUxQUHWnSv2j7tB8klyMFxFy9HqpFgFCygDPRe8VyUxtogZn1g4g0yWIVVw2q0/Tq4pAwL6LFMWmDAWNwmtm4iYIPSL0OSdMj6aUZDWbbNtY9mUSxlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183908; c=relaxed/simple;
-	bh=sid1sV8s4q74X6o+frYf112Qrz0DPI3Du+XUomqiJzk=;
+	s=arc-20240116; t=1788183910; c=relaxed/simple;
+	bh=gz91NM7X10kUT6WhWI8F+zZOXZenfI9od8SbIM7ogsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FFd6R/CNLWD33gZ/oH9hYpEkfK9mLnK8iK9JsLrc7vq/wEWWGqqTCp6E23w3Yk1EUfKpoaXM4ak0HPk+WMYT0ovrQLj5voCUUSVqCJYO4vR9Xmal3/isgOGhL2Eb9jMuGGsxANiRODy8rzycdK60roqOjijQdRA9p+hCg+pc81w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BLDTigrU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r96CrT5eL/XQRybcUP76wr904LBrVa15mBJSdLAteQWeZvsjW/HfkT2W1r7Nn8466OhZFUoRk5l0nvf0ZR+wSqtfQvwVLrJJWlk0Hl33Ws+sc5gYLcUKFiCCW6JRYvW1NktVJDzYoZwr2GkarIhVjqC52pE/XY35iBQGjfsbcfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pwa/hCiL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BLDTigrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB77A1F00A3F;
-	Mon, 31 Aug 2026 13:45:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pwa/hCiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D2E1F00ACF;
+	Mon, 31 Aug 2026 13:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183906;
-	bh=oN6+Wuu9JYt/03J6GSnpQ/bNKMItuNfqEycApNwj0K8=;
+	s=k20260515; t=1788183907;
+	bh=M+7LVp9j9AboAfWG4h+K1vOBq4gAMxs54XHikRsrbm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLDTigrUYHoCwOkyh1u3i3xKAmhXNDAeTJbKyGhQlxdkxCMYaXacx8B7z7UKxMFyX
-	 1N1BPTJo69f/SM0zgqT91UNOOErrzyrfIXC0ICvuPwegKTj6tj7m8DuM6orCpQdT5a
-	 kab+/mBN7Ae0ulc1sCGCvXGQKfj6HaPxe321xxXj1KumwY8xDv8pBfGkLyO8TSaF/Q
-	 Y/fX2Dcqfo+hLkk5ryDC0O4gVfy3Oh5Rv2DrdJH5BrIgEQZiKH9jldVVV4OAtoSoax
-	 1Tvv+f35qAW9e049YweHldMlxHrWGtVV4g2tRQsFvww2KHmdM1jqK2w4NmyBxWKdX7
-	 IgDWcC79FFZaw==
+	b=Pwa/hCiLOYqVLmv5pKlcWj1DGc36SU5E44TJ8MsUY906g0kWeflIPkSbBpJm/Rl7k
+	 XFvCN7KyhYc2YXFdw34VoKXBSHbB9yepyb/MRRb/RB0w1FD92qwPMgLu1S+3vxYPMn
+	 9ZgOQRXkh9yYHqY8zvamr4OgAvoCNsLiPLuyn2yR77pD73vZaJtXaFgYElnOYW0EPG
+	 tswd7R2ZQkClKNOp5UH+5VozyyvhAIKLa4AsijV4bSb++aiGdEEJLpjkFPw/rTkNJf
+	 bqhrEQ6ohxxrKYK6YF+cGO/LFQUSJFHuzVJZuNQLpZkQwUmFIKkpswetaR/zvS2Gpb
+	 JEAcvTw0wGMyg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Gunal Seenivasagan <gunal2002@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: validate SEC_RT TLV minimum size
-Date: Mon, 31 Aug 2026 09:26:41 -0400
-Message-ID: <20260831133314.4125787-373-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Add quirk for Infinix INBOOK X3 Slim
+Date: Mon, 31 Aug 2026 09:26:42 -0400
+Message-ID: <20260831133314.4125787-374-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,386 +54,425 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Gunal Seenivasagan <gunal2002@gmail.com>
 
-[ Upstream commit d13d5d299c11b7bd3362d5692c56225d9e176664 ]
+[ Upstream commit fd71820e876ef4b816b6305416ba5973bb6b9665 ]
 
-Reject firmware section TLVs that are shorter than the offset field
-before subtracting sizeof(offset) from the section size.
+The Infinix INBOOK X3 Slim (ALC269VB, subsystem 0x2782:0250) has its
+internal speakers wired to pin 0x1b, but the BIOS pin configuration
+table declares 0x1b as "no physical connection" (0x411111f0). It instead
+declares pin 0x14 as the internal speaker, although nothing is connected
+to 0x14.
 
-This prevents size underflow for malformed TLVs.
+As a result the internal speakers are silent under Linux while the
+headphone jack works correctly. The codec output path to 0x14 is fully
+open (DAC assigned and streaming, mixer and pin unmuted, EAPD asserted),
+so the failure is silent with no error reported. The speakers work under
+Windows, where the vendor driver supplies its own pin table.
 
-Assisted-by: GitHubCopilot:GPT-5.3-Codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260717173215.17b040b27edc.I6b32d1e9ad707417e2e604f08a63582456209372@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Add a fixup that disables the unconnected pin 0x14 and declares pin
+0x1b as the internal speaker.
+
+Reusing the existing ALC269VC_FIXUP_INFINIX_Y4_MAX was tried first, since
+it also remaps 0x1b to an internal speaker. It is not sufficient here: it
+leaves 0x14 declared, so autoconfig finds two line_outs
+
+  line_outs=2 (0x14/0x1b/0x0/0x0/0x0) type:speaker
+
+and binds the primary "Speaker" control to the unconnected pin 0x14 while
+demoting the working speaker at 0x1b to "Bass Speaker". Audio is audible
+that way, but the volume and mute controls a desktop actually uses end up
+attached to a pin that is not wired to anything. Disabling 0x14 is what
+produces a single correct Speaker output.
+
+Verified on the affected machine: with the corrected pin
+configuration the driver's autoconfig reports
+
+  line_outs=1 (0x1b/0x0/0x0/0x0/0x0) type:speaker
+
+both channels play, headphone auto-mute switches correctly in both
+directions, and audio survives codec runtime suspend (D3) and resume.
+
+Signed-off-by: Gunal Seenivasagan <gunal2002@gmail.com>
+Link: https://patch.msgid.link/20260726085715.229802-1-gunal2002@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: ALSA: hda/realtek: Add quirk for Infinix
+INBOOK X3 Slim
 
-**Step 1.1 — Subject line**
-
-Record: `[wifi: iwlwifi]` `[validate]` — validate minimum size of SEC_RT
-firmware section TLVs before parsing.
-
-**Step 1.2 — Tags**
-
-Record:
-- `Assisted-by: GitHubCopilot:GPT-5.3-Codex`
-- `Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>`
-- `Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>`
-- `Link: https://patch.msgid.link/20260717173215.17b040b27edc...`
-
-Notable patterns: No `Fixes:`, `Reported-by:`, `Cc:
-stable@vger.kernel.org`, `Tested-by:`, or `Reviewed-by:` tags. Absence
-of stable tags is expected for manual review. Intel internal fixes
-series (patch 5/5).
-
-**Step 1.3 — Body analysis**
-
-Record:
-- **Bug:** `iwl_store_ucode_sec()` subtracts `sizeof(offset)` from TLV
-  length without verifying the TLV is at least that large.
-- **Symptom:** Integer underflow on `sec->size` for malformed TLVs
-  (`tlv_len` 0–3).
-- **Root cause:** `sec->size = size - sizeof(sec_parse->offset)` with
-  signed `int size`; negative result assigned to `size_t` becomes a very
-  large value.
-- **Version info:** None in commit message.
-
-**Step 1.4 — Hidden bug fix?**
-
-Record: Yes — described as validation, but it is a real memory-safety
-bug fix (underflow → huge allocation + out-of-bounds `memcpy`).
+**Local tree:** Linux **6.18.44** (`v6.18.44-2-g1b9e1abadee04`,
+`VERSION=6 PATCHLEVEL=18 SUBLEVEL=44`)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
+### Step 1.1: Parse the subject line
+**Record:** `[ALSA: hda/realtek]` `[Add]` — Add a Realtek HDA codec pin-
+configuration quirk for a specific laptop model.
 
-Record:
-- **File:** `drivers/net/wireless/intel/iwlwifi/iwl-drv.c` (+4 / −1)
-- **Function:** `iwl_store_ucode_sec()`
-- **Scope:** Single-file, surgical fix
+### Step 1.2: Parse all commit message tags
+**Record:**
+- **Signed-off-by:** Gunal Seenivasagan `<gunal2002@gmail.com>` (author)
+- **Link:**
+  `https://patch.msgid.link/20260726085715.229802-1-gunal2002@gmail.com`
+- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA/HDA
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+- Notable: maintainer SOB from Takashi Iwai; no syzbot/fuzzer
+  involvement
 
-**Step 2.2 — Code flow change**
+### Step 1.3: Analyze commit body
+**Record:**
+- **Bug:** Infinix INBOOK X3 Slim (ALC269VB, PCI SSID `0x2782:0x0250`)
+  has internal speakers wired to pin `0x1b`, but BIOS declares `0x1b` as
+  disconnected (`0x411111f0`) and falsely declares pin `0x14` as the
+  internal speaker.
+- **Symptom:** Internal speakers are completely silent under Linux;
+  headphone jack works. No kernel error is reported — audio is routed to
+  the unconnected pin.
+- **Root cause:** Incorrect BIOS pin configuration table; Windows works
+  because the vendor driver overrides it.
+- **Fix approach:** Disable phantom pin `0x14`, declare pin `0x1b` as
+  internal speaker.
+- **Author testing:** Verified on hardware — `line_outs=1`, both
+  channels play, headphone auto-mute works, survives D3 suspend/resume.
+- **Version info:** None stated; hardware is a current laptop model.
 
-Record:
-- **Hunk 1 (parameter type):** `int size` → `size_t size` (matches
-  `tlv_len` as `u32` and `sec->size` as `size_t`).
-- **Hunk 2 (validation):** Before casting `data` to `struct
-  fw_sec_parsing *` and subtracting offset size, reject `size <
-  sizeof(sec_parse->offset)` with `-EINVAL`.
-- **Before:** Malformed TLV with `tlv_len < 4` → read past TLV data,
-  underflow `sec->size` → huge `size_t`.
-- **After:** Early rejection before offset read or size subtraction.
-
-**Step 2.3 — Bug mechanism**
-
-Record:
-- **Category:** Buffer overflow / out-of-bounds read + integer
-  underflow.
-- **Mechanism:** With `tlv_len=1`, `sec->size = 1 - 4 = -3` (signed) →
-  `SIZE_MAX-2` as `size_t`. Later `iwl_alloc_fw_desc()` does
-  `vmalloc(sec->size)` and `memcpy(data, sec->data, desc->len)` far
-  beyond the firmware buffer.
-
-**Step 2.4 — Fix quality**
-
-Record: Obviously correct minimum-length check; minimal change; low
-regression risk. Pre-existing issue: callers ignore
-`iwl_store_ucode_sec()` return value, but the fix still prevents storing
-a corrupted section entry.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-
-Record: `iwl_store_ucode_sec()` and the vulnerable subtraction are
-present in current `stable/linux-6.18.y` checkout (`v6.18.44`). Shallow
-repo limits deep blame; function is long-standing MVM firmware parsing
-code.
-
-**Step 3.2 — Fixes: tag**
-
-Record: Not applicable — no `Fixes:` tag.
-
-**Step 3.3 — Related changes**
-
-Record:
-- Part of `[PATCH iwlwifi-fixes 0/5]` series (July 17, 2026).
-- Patch 1/5 (`acad742714bdc` — bound aligned TLV advance) is a related
-  but separate fix in the same file; **not** in 6.18.y yet.
-- This patch (5/5) is standalone and applies cleanly without patch 1/5.
-- Similar backported fix already in tree: `eae7fdf7d4469` (validate pnvm
-  payload length).
-
-**Step 3.4 — Author context**
-
-Record: Emmanuel Grumbach and Miri Korenblit are iwlwifi maintainers.
-Multiple similar validation fixes from same authors are already in
-6.18.y.
-
-**Step 3.5 — Dependencies**
-
-Record: No dependencies on other series patches. `git apply --check`
-succeeds on current tree. Standalone.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised — this is an explicit hardware pin-
+configuration bug fix. Reusing `ALC269VC_FIXUP_INFINIX_Y4_MAX` partially
+works (audio audible via "Bass Speaker") but leaves volume/mute controls
+bound to the dead pin `0x14`; the dedicated fixup is required for
+correct UX.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Original discussion**
+### Step 2.1: Inventory the changes
+**Record:**
+- **File:** `sound/hda/codecs/realtek/alc269.c` only
+- **Scope:** ~15 lines added, 0 removed
+- **Functions/areas modified:**
+  - Fixup enum (`ALC269VB_FIXUP_INFINIX_INBOOK_X3_SLIM`)
+  - `alc269_fixups[]` pin table entry
+  - `alc269_fixup_tbl[]` PCI quirk entry
+- **Classification:** Single-file, surgical hardware quirk addition
 
-Record:
-- `b4 dig -c d13d5d299c11b`: https://patch.msgid.link/20260717173215.17b
-  040b27edc.I6b32d1e9ad707417e2e604f08a63582456209372@changeid
-- Series: v1 only, patch 5/5 of 5.
-- Cover letter: "A few fixes from our internal tree."
-- No reviewer replies, NAKs, or stable nominations in thread.
+### Step 2.2: Code flow change per hunk
+**Record:**
+1. **Enum hunk:** Adds new fixup ID between `INFINIX_Y4_MAX` and
+   `LUNNEN_GROUND_14`.
+2. **Fixup table hunk:** Before — no override for this SSID; driver
+   trusts BIOS pins → silent speakers. After — applies `HDA_FIXUP_PINS`
+   setting `0x14` to disabled (`0x411111f0`) and `0x1b` to internal
+   speaker (`0x90170110`).
+3. **Quirk table hunk:** Before — SSID `0x2782:0x0250` unmatched. After
+   — matched to new fixup at codec probe time via
+   `snd_hda_pick_fixup()`.
 
-**Step 4.2 — Reviewers**
+### Step 2.3: Bug mechanism
+**Record:** **Category (h): Hardware workaround / audio codec quirk.**
+BIOS provides incorrect HDA pin configuration; autoconfig routes DAC
+output to unconnected pin `0x14`. Fix overrides pin config before probe
+autoconfig runs.
 
-Record: `b4 dig -w`: To johannes@sipsolutions.net; Cc linux-
-wireless@vger.kernel.org, Emmanuel Grumbach. No explicit review acks in
-thread.
-
-**Step 4.3 — Bug report**
-
-Record: No external bug report, syzbot, or sanitizer report. Intel
-internal finding (Copilot-assisted).
-
-**Step 4.4 — Series context**
-
-Record: 5-patch series; patches 1–4 touch different files (`iwl-drv.c`,
-`iwl-dbg-tlv.c`, `acpi.c`, `uefi.c`). Only patch 5/5 is under review
-here.
-
-**Step 4.5 — Stable list**
-
-Record: No stable@vger.kernel.org discussion found for this specific
-fix.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-
-Record: `iwl_store_ucode_sec()` (modified); callers in
-`iwl_parse_tlv_firmware()` switch cases.
-
-**Step 5.2 — Callers**
-
-Record: Called from 7 sites in `iwl_parse_tlv_firmware()` for:
-- `IWL_UCODE_TLV_SEC_RT`, `SEC_INIT`, `SEC_WOWLAN`
-- `IWL_UCODE_TLV_SECURE_SEC_RT`, `SECURE_SEC_INIT`, `SECURE_SEC_WOWLAN`
-- `IWL_UCODE_TLV_SEC_RT_USNIFFER`
-
-All during firmware image parsing at driver probe / firmware load.
-
-**Step 5.3 — Callees**
-
-Record: `krealloc()`, `le32_to_cpu()`; stores into `img->sec[]` consumed
-later by `iwl_alloc_ucode_mem()` → `iwl_alloc_fw_desc()` → `vmalloc()` +
-`memcpy()`.
-
-**Step 5.4 — Reachability**
-
-Record:
-- `iwl_req_fw_callback()` → `iwl_parse_tlv_firmware()` →
-  `iwl_store_ucode_sec()`
-- Triggered on every iwlwifi device probe when loading TLV-format MVM
-  firmware from `/lib/firmware`.
-- Malformed firmware (corrupted file) triggers the bug; legitimate Intel
-  firmware is unaffected.
-
-**Step 5.5 — Similar patterns**
-
-Record: Same file has explicit `invalid_tlv_len` checks for many TLV
-types, but SEC_RT family lacks minimum-length validation. `pnvm.c` has
-similar unchecked `tlv_len - sizeof(*section)` (separate issue). Patch
-1/5 in the same series addresses aligned-length underflow in the TLV
-walker.
+### Step 2.4: Fix quality assessment
+**Record:** Fix is obviously correct — follows dozens of identical
+patterns in the same file (e.g. `LUNNEN_GROUND_14`,
+`CHUWI_COREBOOK_XPRO`). Minimal, SSID-scoped, no API changes. Regression
+risk is very low: only affects `0x2782:0x0250` devices.
 
 ---
 
-## Phase 6: Cross-Referencing Against Local Tree
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 6.1 — Buggy code in tree?**
+### Step 3.1: Blame changed area
+**Record:** Insertion point sits between `ALC269VC_FIXUP_INFINIX_Y4_MAX`
+(from merge `5d324e5159d9e`, Nov 2025) and
+`ALC269VC_FIXUP_LUNNEN_GROUND_14` (commit `2ec8f95a08fed`, Jul 2026,
+already in this tree). The "buggy" state is the **absence** of this
+quirk — the generic Realtek driver has been present for years; this
+specific laptop model is unsupported without the patch.
 
-Record: **Yes.** Local tree is `linux-6.18.y` at `v6.18.44`. Current
-`iwl-drv.c` lacks the minimum-size check; vulnerable line is:
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag present.
 
-```515:515:drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-        sec->size = size - sizeof(sec_parse->offset);
-```
+### Step 3.3: Related file history
+**Record:** Recent related commits in this tree:
+- `2ec8f95a08fed` — "Fix speakers on Lunnen Ground 14" (same vendor
+  `0x2782`, same pin `0x1b` speaker issue, **already backported to
+  stable** with `Cc: stable@vger.kernel.org`)
+- `7484669d1fbab`, `302eb87651326`, `12e43f99242b0` — other recent HDA
+  quirk additions
+- Standalone fix, not part of a multi-patch series.
 
-Commit `d13d5d299c11b` is on `master` but not yet in this stable branch.
+### Step 3.4: Author's other commits
+**Record:** No commits from Gunal Seenivasagan found in this tree (`git
+log --author` returned empty). First-time contributor; patch reviewed
+and applied by maintainer Takashi Iwai.
 
-**Step 6.2 — Backport complications**
-
-Record: Clean apply (`git apply --check` passes). No conflicts expected.
-
-**Step 6.3 — Related fixes already present?**
-
-Record: No equivalent SEC_RT minimum-size fix in tree. Related pnvm
-validation fix (`eae7fdf7d4469`) is already backported.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem**
-
-Record: `drivers/net/wireless/intel/iwlwifi` — IMPORTANT (widely
-deployed WiFi driver on Intel laptops/desktops).
-
-**Step 7.2 — Activity**
-
-Record: Actively maintained; multiple validation fixes backported to
-6.18.y in 2025–2026.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 — Who is affected**
-
-Record: iwlwifi users loading TLV-format MVM firmware (`CONFIG_IWLMVM`).
-Affects driver probe path on Intel WiFi hardware.
-
-**Step 8.2 — Trigger conditions**
-
-Record: Firmware image containing SEC_RT-family TLV with `tlv_len <
-sizeof(__le32)` (0–3 bytes). Requires replacing/corrupting firmware file
-(typically root). Not triggerable by normal Intel firmware. Corrupted
-downloads or malicious firmware replacement are realistic vectors.
-
-**Step 8.3 — Failure severity**
-
-Record:
-- Huge `sec->size` → `vmalloc()` of enormous size (OOM pressure)
-- `memcpy()` out-of-bounds read from firmware buffer → kernel crash or
-  info leak
-- **Severity: HIGH** (memory safety during probe)
-
-**Step 8.4 — Risk vs benefit**
-
-Record:
-- **Benefit:** HIGH — prevents OOB read and runaway allocation on
-  malformed input
-- **Risk:** VERY LOW — 4-line defensive check, no API changes
-- **Ratio:** Strongly favors backport
+### Step 3.5: Prerequisites
+**Record:** No dependencies. Required infrastructure exists in this
+tree:
+- `ALC269VC_FIXUP_INFINIX_Y4_MAX` ✓
+- `ALC269VC_FIXUP_LUNNEN_GROUND_14` ✓ (insertion anchor)
+- `snd_hda_pick_fixup()` / `HDA_FIXUP_PINS` mechanism ✓
+- Patch applies cleanly (`git apply --check` exit 0).
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 9.1 — Evidence summary**
+### Step 4.1: Original patch discussion
+**Record:**
+- **Lore URL:** `https://lore.kernel.org/all/20260726085715.229802-1-
+  gunal2002@gmail.com/`
+- **Series revisions:** v1 → maintainer feedback → v2 (author name/SOB
+  correction only, no functional change)
+- **Maintainer response:** Takashi Iwai: "Applied now. Thanks." on v2
+- No NAKs; no explicit `Cc: stable` nomination in thread
 
-FOR:
-- Real integer underflow → OOB read bug
-- HIGH severity if triggered
-- Small, obviously correct fix
-- Code exists in 6.18.y; applies cleanly
-- Consistent with other iwlwifi validation fixes already in stable
-- Maintainer-authored
+### Step 4.2: Reviewers
+**Record:** CC'd: Takashi Iwai, Jaroslav Kysela, `linux-
+sound@vger.kernel.org`, `linux-kernel@vger.kernel.org`. Takashi Iwai
+(maintainer) reviewed and merged.
 
-AGAINST:
-- No user/syzbot report (internal finding)
-- Trigger requires malformed firmware (unusual in practice)
-- Callers don't propagate `iwl_store_ucode_sec()` error (pre-existing;
-  fix still prevents bad state)
-- Patch 1/5 from same series is a separate related fix, not a blocker
+### Step 4.3: Bug report
+**Record:** No external bug tracker; author-reported hardware issue with
+detailed autoconfig analysis and on-machine verification.
 
-**Step 9.2 — Stable rules checklist**
+### Step 4.4: Related patches
+**Record:** Closely related to `2ec8f95a08fed` (Lunnen Ground 14, same
+ODM vendor ID `0x2782`, pin `0x1b` speaker remap). That fix was stable-
+nominated and backported to this tree.
 
-1. Obviously correct and tested? **PASS** — logic is trivial; no runtime
-   tests in commit, but mechanism is verifiable by inspection.
-2. Fixes a real bug? **PASS** — underflow with OOB read consequence.
-3. Important issue? **PASS** — memory safety / potential crash during
-   probe.
-4. Small and contained? **PASS** — 4 lines, one function.
-5. No new features/APIs? **PASS** — defensive validation only.
-6. Can apply to local tree? **PASS** — clean apply verified.
+### Step 4.5: Stable mailing list
+**Record:** No stable-list discussion found for this specific patch.
+Precedent: sibling Infinix/Lunnen quirk was stable-nominated.
 
-**Step 9.3 — Exception category**
+---
 
-Record: Not applicable (not device ID, quirk, DT, build, or docs).
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 9.4 — Decision rationale**
+### Step 5.1: Key functions
+**Record:** No functions modified — only data tables (`enum`,
+`alc269_fixups[]`, `alc269_fixup_tbl[]`). Consumed at probe via existing
+`alc269_probe()` path.
 
-For the locally checked-out **linux-6.18.y** tree, this commit should be
-backported. The vulnerable code is present, the fix is minimal and self-
-contained, and the failure mode (size underflow leading to out-of-bounds
-`memcpy` during firmware parsing) is a legitimate stability/memory-
-safety issue appropriate for stable.
+### Step 5.2: Callers
+**Record:** `snd_hda_pick_fixup(codec, alc269_fixup_models,
+alc269_fixup_tbl, alc269_fixups)` at line ~8471 in `alc269.c`, called
+from `alc269_probe()` during HDA codec initialization on every boot for
+matching hardware.
+
+### Step 5.3: Callees
+**Record:** Fixup applied via `snd_hda_apply_fixup(codec,
+HDA_FIXUP_ACT_PRE_PROBE)` — standard pin override before autoconfig.
+
+### Step 5.4: Reachability
+**Record:** Triggered at boot when PCI subsystem ID matches
+`0x2782:0x0250`. Affects all users of this laptop model running this
+kernel. Not userspace-triggerable; not a security issue, but a
+guaranteed broken-audio path for affected hardware.
+
+### Step 5.5: Similar patterns
+**Record:** `0x411111f0` ("disable, not connected") used extensively in
+same file (10+ instances). Same vendor `0x2782` has 8+ existing quirks
+in this tree.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+
+### Step 6.1: Does the buggy code exist?
+**Record:** **YES** — the commit is not yet in this tree (no
+`INFINIX_INBOOK_X3_SLIM` / `0x0250` entry found), but the Realtek driver
+and all prerequisite fixups exist. Users with this laptop on 6.18.44
+currently get silent internal speakers — the bug is live in this tree.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply** verified with `git apply --check`. Insertion
+point between `INFINIX_Y4_MAX` and `LUNNEN_GROUND_14` matches current
+file layout exactly.
+
+### Step 6.3: Related fixes already present?
+**Record:** `ALC269VC_FIXUP_INFINIX_Y4_MAX` exists but is insufficient
+(author documented why). No duplicate fix for `0x2782:0x0250` present.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **sound/hda/realtek** — IMPORTANT (affects laptop audio for
+specific hardware; driver is widely used).
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained — multiple quirk commits in `alc269.c`
+within recent history in this tree.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** **Driver-specific** — owners of Infinix INBOOK X3 Slim
+(`0x2782:0x0250`, ALC269VB). No impact on other hardware.
+
+### Step 8.2: Trigger conditions
+**Record:** Every boot on affected hardware. Deterministic, not a race.
+Unprivileged users cannot trigger; hardware ownership required.
+
+### Step 8.3: Failure mode severity
+**Record:** **Silent internal speakers** (functional hardware failure
+from user perspective). Headphones work. No crash, corruption, or
+security impact. Severity: **MEDIUM** for affected users (core laptop
+functionality broken), **LOW** for the fleet overall.
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** Restores internal speaker audio with correct volume/mute
+  controls on a real laptop; tested on hardware; maintainer-merged.
+- **Risk:** Very low — SSID-scoped, established quirk pattern, 15-line
+  diff.
+- **Ratio:** Strong benefit for affected users, negligible risk for
+  everyone else.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence compile
+
+**FOR backport:**
+- Real hardware bug — silent internal speakers on Infinix INBOOK X3 Slim
+- Hardware quirk exception category (explicitly stable-appropriate)
+- Small, surgical, single-file change
+- Verified on affected machine by author
+- Reviewed and applied by ALSA maintainer Takashi Iwai
+- Applies cleanly to Linux 6.18.44
+- Direct precedent: `2ec8f95a08fed` (Lunnen Ground 14, same `0x2782`
+  vendor, same pin `0x1b` issue) already backported to this stable tree
+- Uses well-established `0x411111f0` disable-pin pattern
+
+**AGAINST backport:**
+- Not a crash, security, or data-corruption issue
+- Affects only one laptop model (narrow audience)
+- No explicit `Cc: stable@vger.kernel.org` from author
+- Commit not yet merged into this tree (forward-port candidate)
+
+**Unresolved:** None affecting the decision.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — standard quirk pattern;
+   hardware-verified; maintainer merged
+2. Fixes a real bug affecting users? **PASS** — silent speakers on real
+   hardware
+3. Important issue? **PASS** (via hardware-quirk exception) — functional
+   audio failure on affected laptop; same class as already-stable-
+   backported Lunnen Ground 14 fix
+4. Small and contained? **PASS** — ~15 lines, one file
+5. No new features or APIs? **PASS** — PCI quirk table entry only
+6. Can apply to local tree? **PASS** — verified clean apply
+
+### Step 9.3: Exception category
+**Record:** **Hardware quirk / audio codec quirk** (`SND_PCI_QUIRK` +
+`HDA_FIXUP_PINS`) — automatic stable qualification per stable-kernel-
+rules exceptions.
+
+### Step 9.4: Decision rationale
+
+This commit fixes a deterministic BIOS pin-configuration bug that leaves
+internal speakers completely silent on the Infinix INBOOK X3 Slim. It is
+a textbook stable hardware quirk: small, SSID-scoped, tested,
+maintainer-reviewed, and structurally identical to the Lunnen Ground 14
+speaker fix already present in Linux 6.18.44 stable. The patch applies
+cleanly and has no dependencies.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from user query and `git show
-  d13d5d299c11b`
-- [Phase 2] Read current `iwl-drv.c` lines 493–519, 150–168, 999–1044,
-  1458–1474, 1646–1702
-- [Phase 2] Confirmed `sec->size` is `size_t`, parameter was `int`,
-  subtraction at line 515
-- [Phase 3] `git describe HEAD` → `v6.18.44`; `make kernelversion` →
-  `6.18.44`
-- [Phase 3] `git blame` on `iwl_store_ucode_sec`; shallow repo noted
-- [Phase 3] `git log stable/linux-6.18.y..master -- iwl-drv.c` — commit
-  not in stable, patch 1/5 also absent
-- [Phase 3] `git apply --check` of commit diff on HEAD — passes
-- [Phase 4] `b4 dig -c d13d5d299c11b` — found lore URL
-- [Phase 4] `b4 dig -a` — v1 only, patch 5/5
-- [Phase 4] `b4 dig -w` — johannes, linux-wireless, Emmanuel Grumbach
-- [Phase 4] `b4 dig -m /tmp/iwlwifi_sec_rt.mbox` — read cover letter; no
-  reviews/stable/tested-by
-- [Phase 5] `grep iwl_store_ucode_sec` — 7 call sites in TLV parser
-- [Phase 5] Traced call chain: `iwl_req_fw_callback` →
-  `iwl_parse_tlv_firmware` → `iwl_alloc_ucode` → `iwl_alloc_fw_desc`
-- [Phase 6] Confirmed buggy code present at HEAD; fix absent
-  (`d13d5d299c11b` only on master)
-- [Phase 6] Confirmed `eae7fdf7d4469` similar pnvm fix already in stable
-- [Phase 8] Confirmed TLV parser allows `tlv_len < 4` for SEC_RT cases
-  (no `invalid_tlv_len` guard unlike other TLVs)
+- **[Phase 1]** Parsed commit message tags: Signed-off-by (author +
+  Takashi Iwai), Link tag; no Fixes/Reported-by/Cc:stable
+- **[Phase 1]** Identified bug: BIOS misroutes speaker to unconnected
+  pin 0x14; pin 0x1b actually wired
+- **[Phase 2]** Diff: 1 file, ~15 lines, enum + fixup table + quirk
+  entry; hardware pin override
+- **[Phase 2]** Confirmed `0x411111f0` is standard disable-pin value
+  (10+ uses in same file)
+- **[Phase 3]** `git describe HEAD`: v6.18.44-2-g1b9e1abadee04; kernel
+  6.18.44
+- **[Phase 3]** `git blame`: insertion point between Y4_MAX
+  (5d324e5159d9e) and LUNNEN_GROUND_14 (2ec8f95a08fed)
+- **[Phase 3]** `git log -S INFINIX_Y4_MAX`: prerequisite fixup present
+  since 5d324e5159d9e
+- **[Phase 3]** `git log --author Gunal`: no prior commits in tree
+- **[Phase 3]** `git apply --check`: patch applies cleanly (exit 0)
+- **[Phase 4]** curl lore mbox: found v1/v2 thread; Takashi Iwai
+  "Applied now. Thanks." on v2
+- **[Phase 4]** curl lore: v2 had no functional changes; no stable Cc in
+  thread
+- **[Phase 4]** `git show 2ec8f95a08fed`: sibling Lunnen Ground 14 fix
+  has Cc: stable, Greg K-H SOB, already in 6.18.44
+- **[Phase 5]** grep call path: `snd_hda_pick_fixup()` at alc269.c:8471
+  in probe path
+- **[Phase 6]** grep: `INFINIX_INBOOK_X3_SLIM` and `0x2782, 0x0250`
+  absent — bug present, fix not yet applied
+- **[Phase 6]** grep: prerequisites `INFINIX_Y4_MAX`,
+  `LUNNEN_GROUND_14`, `CHUWI_COREBOOK_XPRO` all present
+- **[Phase 6]** `b4 shazam`: message-id not in b4 cache (used curl lore
+  instead)
+- **[Phase 8]** Failure mode: silent internal speakers, MEDIUM severity
+  for affected hardware
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index 3a4bcfd60905c..e3b1bf31ca60e 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -491,7 +491,7 @@ static void set_sec_offset(struct iwl_firmware_pieces *pieces,
-  * Gets uCode section from tlv.
-  */
- static int iwl_store_ucode_sec(struct fw_img_parsing *img,
--			       const void *data, int size)
-+			       const void *data, size_t size)
- {
- 	struct fw_sec *sec;
- 	const struct fw_sec_parsing *sec_parse;
-@@ -500,6 +500,9 @@ static int iwl_store_ucode_sec(struct fw_img_parsing *img,
- 	if (WARN_ON(!img || !data))
- 		return -EINVAL;
- 
-+	if (size < sizeof(sec_parse->offset))
-+		return -EINVAL;
-+
- 	sec_parse = (const struct fw_sec_parsing *)data;
- 
- 	alloc_size = sizeof(*img->sec) * (img->sec_counter + 1);
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index aabd701eb1d28..a010c444b9f10 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3742,6 +3742,7 @@ enum {
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
+ 	ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13,
+ 	ALC269VC_FIXUP_INFINIX_Y4_MAX,
++	ALC269VB_FIXUP_INFINIX_INBOOK_X3_SLIM,
+ 	ALC269VC_FIXUP_LUNNEN_GROUND_14,
+ 	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+@@ -4195,6 +4196,14 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
+ 	},
++	[ALC269VB_FIXUP_INFINIX_INBOOK_X3_SLIM] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x14, 0x411111f0 }, /* disable, not connected */
++			{ 0x1b, 0x90170110 }, /* use as internal speaker */
++			{ }
++		},
++	},
+ 	[ALC269VC_FIXUP_LUNNEN_GROUND_14] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -7631,6 +7640,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
++	SND_PCI_QUIRK(0x2782, 0x0250, "Infinix INBOOK X3 Slim", ALC269VB_FIXUP_INFINIX_INBOOK_X3_SLIM),
+ 	SND_PCI_QUIRK(0x2782, 0x1407, "Positivo P15X", ALC269_FIXUP_POSITIVO_P15X_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x2782, 0x1409, "Positivo K116J", ALC269_FIXUP_POSITIVO_P15X_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
 -- 
 2.53.0
 
