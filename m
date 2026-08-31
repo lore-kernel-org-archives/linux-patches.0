@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7147648A2AA;
-	Mon, 31 Aug 2026 14:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B00448A8C1;
+	Mon, 31 Aug 2026 14:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185011; cv=none; b=B70veVt5jRoRhEjvhzB0cQ+EBqkOsQsIfmpQhayC6gfyMibhX3LHoY4LHhsv3hCFxFM+jN0ecIn+ZDu8u5WhKq9rHnCECi2PxKTwhKA+9cVyeBIrIDiRkAYZBQrSninACRaGo8zGti6IcE8QNJ2kKGE3dPInTITn1g7wSCnc/do=
+	t=1788185032; cv=none; b=BQzACIVpr99a7edrch5HcEwV5RdQGFOiwFQupi+yyrZDRj47j37N7x4bGWzPKVy8l3B1A5ZQVzwgfGX4tTWGCy7/6PQtlVJH+hKAsBAMaPLDr0UUgwGleXDR7QKsqm2HMJgVONIBkyurO33/6sTdHCAOhHtC+pFtGW6zKjedqko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185011; c=relaxed/simple;
-	bh=hoat0yZX+19I+Faqt9zdWR3nV+5/ZMYDdp47gYPf30E=;
+	s=arc-20240116; t=1788185032; c=relaxed/simple;
+	bh=n84wzhQRRUxT5WoGkJVjuCgWKoH7sQJ42uFOnMGBerY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRBWSLE5gQJ9csEJHYgDmCAYfs6pPF0aeTr175AoPU4loX2aOZhVXwCAlwkNi9EzKU82DufSEjhyjalVfrzRaBus+b2DN8DS7twNUZZJETyXKIYm2+8Eih50yP/ErGviPU0Mpn9gixU5elQb5xbON2bzzYsUYGDTRdkxhohV5aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoiINwih; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bh4BED9sR9btxUDQqf0lKeWW+qe7Z37piiCjovZJ+MEKv27kY4mfm47lQNt5r7hauBBj9uEIBAvvO4W12pk/PXx2WKI8qLkznOJ6RjeWSd2twAVEBODW5Tawl2E4KTwHgMutxci5G7vOv78pOt4vULDPb72nzragLCw+c1AHMxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkxetufM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoiINwih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C145C1F000E9;
-	Mon, 31 Aug 2026 14:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkxetufM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC10F1F000E9;
+	Mon, 31 Aug 2026 14:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185010;
-	bh=Zmd3nVYbZ3fyK4byi+P28g5DxoSqrsGhknjRkYTy350=;
+	s=korg; t=1788185030;
+	bh=FsEulZRJMsI6nJLxUwaDG7gAkBh9xqGZ2c5NCybMAhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hoiINwihfoRPdiyMyHeAF/pPygOgUdWnEc0eD3Przcujkk06oxAd2vOlz+8BVjDmS
-	 JAuw6S3iQZ/BLYVVS8BAnRthbUvepbO8MQq2ZG+XsbK65hOxP20k3ohy6Yuq1PO9QM
-	 eKa+B3l2+fTnZKNdb+jrWFQwWayQy266gEhNXxws=
+	b=BkxetufMCPwPSdP6jSUHfxsK1bzcEbvs/Ri24Qol1zxRiFoxM9EoS5/fFIVcgW64O
+	 Ycq16pw21LbnJ9rriVN2br1CCjN4PNc7OK3ASGz5SJMap+zWz/vEUT/j1AK1u8MRMe
+	 YNn2LzPpPSliiGPi1X6Kl4b6JtrtxBp4lmrb3dEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Denis Arefev <arefev@swemel.ru>
-Subject: [PATCH 5.15 22/69] ipv4: igmp: Fix potential UAF in igmp_gq_start_timer()
-Date: Mon, 31 Aug 2026 15:34:55 +0200
-Message-ID: <20260831133359.544062107@linuxfoundation.org>
+	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 08/69] can: j1939: implement NETDEV_UNREGISTER notification handler
+Date: Mon, 31 Aug 2026 15:34:41 +0200
+Message-ID: <20260831133358.956917593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -53,92 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 7b19c0f81ed1fdaec6bc522569be367199a9edf3 upstream.
+[ Upstream commit 7fcbe5b2c6a4b5407bf2241fdb71e0a390f6ab9a ]
 
-A race condition exists between device teardown (inetdev_destroy) and
-incoming IGMP query processing (igmp_rcv), leading to a Use-After-Free
-in the IGMP timer callback.
+syzbot is reporting
 
-During device destruction, inetdev_destroy() drops the primary reference
-to in_device, which can drop its refcount to 0. The actual freeing of
-in_device memory is deferred via RCU (using call_rcu()).
+  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
 
-Concurrently, igmp_rcv() runs under RCU read lock and obtains the
-in_device pointer. Because the memory is RCU-protected, CPU-0 can safely
-dereference in_device even if its refcount has hit 0.
+problem, for j1939 protocol did not have NETDEV_UNREGISTER notification
+handler for undoing changes made by j1939_sk_bind().
 
-However, if CPU-0 calls igmp_gq_start_timer() and re-arms the timer, it
-attempts to acquire a reference using in_dev_hold(). This increments the
-refcount from 0 to 1, triggering a "refcount_t: addition on 0" warning.
-Since the in_device memory is still scheduled to be freed after the RCU
-grace period (as the free callback does not check the refcount again),
-the device is freed while the timer is still armed. When the timer
-expires, it accesses the freed memory, causing a kernel panic.
+Commit 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct
+callback") expects that a call to j1939_priv_put() can be unconditionally
+delayed until j1939_sk_sock_destruct() is called. But we need to call
+j1939_priv_put() against an extra ref held by j1939_sk_bind() call
+(as a part of undoing changes made by j1939_sk_bind()) as soon as
+NETDEV_UNREGISTER notification fires (i.e. before j1939_sk_sock_destruct()
+is called via j1939_sk_release()). Otherwise, the extra ref on "struct
+j1939_priv" held by j1939_sk_bind() call prevents "struct net_device" from
+dropping the usage count to 1; making it impossible for
+unregister_netdevice() to continue.
 
-Fix this by using refcount_inc_not_zero() (via a new helper
-in_dev_hold_safe()) to prevent acquiring a reference if the device is
-already being destroyed. If the refcount is 0, we do not arm the timer.
-
-A similar issue in IPv6 MLD is fixed in a subsequent patch.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260705181756.963063-2-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[Denis Arefev: adapted for 5.10/5.15: keep prandom_u32(),
-get_random_u32_below() not used here]
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Tested-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Fixes: 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct callback")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/ac9db9a4-6c30-416e-8b94-96e6559d55b2@I-love.SAKURA.ne.jp
+[mkl: remove space in front of label]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/inetdevice.h |    5 +++++
- net/ipv4/igmp.c            |   14 +++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ net/can/j1939/j1939-priv.h |  1 +
+ net/can/j1939/main.c       |  3 +++
+ net/can/j1939/socket.c     | 49 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+)
 
---- a/include/linux/inetdevice.h
-+++ b/include/linux/inetdevice.h
-@@ -277,6 +277,11 @@ static inline void in_dev_put(struct in_
- #define __in_dev_put(idev)  refcount_dec(&(idev)->refcnt)
- #define in_dev_hold(idev)   refcount_inc(&(idev)->refcnt)
+diff --git a/net/can/j1939/j1939-priv.h b/net/can/j1939/j1939-priv.h
+index 31a93cae5111b..81f58924b4acd 100644
+--- a/net/can/j1939/j1939-priv.h
++++ b/net/can/j1939/j1939-priv.h
+@@ -212,6 +212,7 @@ void j1939_priv_get(struct j1939_priv *priv);
  
-+static inline bool in_dev_hold_safe(struct in_device *idev)
+ /* notify/alert all j1939 sockets bound to ifindex */
+ void j1939_sk_netdev_event_netdown(struct j1939_priv *priv);
++void j1939_sk_netdev_event_unregister(struct j1939_priv *priv);
+ int j1939_cancel_active_session(struct j1939_priv *priv, struct sock *sk);
+ void j1939_tp_init(struct j1939_priv *priv);
+ 
+diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
+index cc03ea2f897fd..21528d7ff83db 100644
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -373,6 +373,9 @@ static int j1939_netdev_notify(struct notifier_block *nb,
+ 		j1939_sk_netdev_event_netdown(priv);
+ 		j1939_ecu_unmap_all(priv);
+ 		break;
++	case NETDEV_UNREGISTER:
++		j1939_sk_netdev_event_unregister(priv);
++		break;
+ 	}
+ 
+ 	j1939_priv_put(priv);
+diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
+index 540836c4964d2..5819a6aba1209 100644
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -1298,6 +1298,55 @@ void j1939_sk_netdev_event_netdown(struct j1939_priv *priv)
+ 	read_unlock_bh(&priv->j1939_socks_lock);
+ }
+ 
++void j1939_sk_netdev_event_unregister(struct j1939_priv *priv)
 +{
-+	return refcount_inc_not_zero(&idev->refcnt);
++	struct sock *sk;
++	struct j1939_sock *jsk;
++	bool wait_rcu = false;
++
++rescan: /* The caller is holding a ref on this "priv" via j1939_priv_get_by_ndev(). */
++	read_lock_bh(&priv->j1939_socks_lock);
++	list_for_each_entry(jsk, &priv->j1939_socks, list) {
++		/* Skip if j1939_jsk_add() is not called on this socket. */
++		if (!(jsk->state & J1939_SOCK_BOUND))
++			continue;
++		sk = &jsk->sk;
++		sock_hold(sk);
++		read_unlock_bh(&priv->j1939_socks_lock);
++		/* Check if j1939_jsk_del() is not yet called on this socket after holding
++		 * socket's lock, for both j1939_sk_bind() and j1939_sk_release() call
++		 * j1939_jsk_del() with socket's lock held.
++		 */
++		lock_sock(sk);
++		if (jsk->state & J1939_SOCK_BOUND) {
++			/* Neither j1939_sk_bind() nor j1939_sk_release() called j1939_jsk_del().
++			 * Make this socket no longer bound, by pretending as if j1939_sk_bind()
++			 * dropped old references but did not get new references.
++			 */
++			j1939_jsk_del(priv, jsk);
++			j1939_local_ecu_put(priv, jsk->addr.src_name, jsk->addr.sa);
++			j1939_netdev_stop(priv);
++			/* Call j1939_priv_put() now and prevent j1939_sk_sock_destruct() from
++			 * calling the corresponding j1939_priv_put().
++			 *
++			 * j1939_sk_sock_destruct() is supposed to call j1939_priv_put() after
++			 * an RCU grace period. But since the caller is holding a ref on this
++			 * "priv", we can defer synchronize_rcu() until immediately before
++			 * the caller calls j1939_priv_put().
++			 */
++			j1939_priv_put(priv);
++			jsk->priv = NULL;
++			wait_rcu = true;
++		}
++		release_sock(sk);
++		sock_put(sk);
++		goto rescan;
++	}
++	read_unlock_bh(&priv->j1939_socks_lock);
++	if (wait_rcu)
++		synchronize_rcu();
 +}
 +
- #endif /* __KERNEL__ */
- 
- static __inline__ __be32 inet_make_mask(int logmask)
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -232,16 +232,20 @@ static void igmp_gq_start_timer(struct i
- 		return;
- 
- 	in_dev->mr_gq_running = 1;
--	if (!mod_timer(&in_dev->mr_gq_timer, exp))
--		in_dev_hold(in_dev);
-+	if (in_dev_hold_safe(in_dev)) {
-+		if (mod_timer(&in_dev->mr_gq_timer, exp))
-+			in_dev_put(in_dev);
-+	}
- }
- 
- static void igmp_ifc_start_timer(struct in_device *in_dev, int delay)
+ static int j1939_sk_no_ioctlcmd(struct socket *sock, unsigned int cmd,
+ 				unsigned long arg)
  {
--	int tv = prandom_u32() % delay;
-+	if (in_dev_hold_safe(in_dev)) {
-+		int tv = prandom_u32() % delay;
- 
--	if (!mod_timer(&in_dev->mr_ifc_timer, jiffies+tv+2))
--		in_dev_hold(in_dev);
-+		if (mod_timer(&in_dev->mr_ifc_timer, jiffies + tv + 2))
-+			in_dev_put(in_dev);
-+	}
- }
- 
- static void igmp_mod_timer(struct ip_mc_list *im, int max_delay)
+-- 
+2.53.0
+
 
 
