@@ -1,202 +1,214 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481374A8A37;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED2B463B9E;
 	Mon, 31 Aug 2026 13:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183944; cv=none; b=GWeB0o6ve166A2gtBPDFUPc6HFp6D4iH5+dctbYxLdvx+GZsGXblndYMxfFbi2NsgrwR62vR+5V51Lfog2efvOrCNaipB35gdvkgzM73DHnMJKinC0XG+0xzMCjwimBH9uBAh7NRF+AvCdt8dT7VcNpiePztDFH/VM0HyqpaIZo=
+	t=1788183944; cv=none; b=UIULtOUJZHeXbNusiVPgQXDgTJKvOqMIBaXwnxxZ5zTanHbbNBYYK2WJmI7o8QMPukXdQhb18+S5TB1ZJk5PpuylXPmKY4CTyZJG8SqsW3nJM1JwWeuQilaN8tNxyF+BE5pldk5XpcMaUiDevj2AU3SA/Bed571fxXko8DLau10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183944; c=relaxed/simple;
-	bh=TT+F/1AH4WCi2N1ccSs17jxS88YNy8Hy//a8Rv777kQ=;
+	bh=dYvQsqrrNRuShCxraLUGchRN6V3mPngfa7rV/rHRWaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i8k09chZbLRlDdfhSGqq/yih1O0EsjO53/78ySsVXd9LpyVvISPdGFCURQlFv1hxExAP2bGJFurZ7aI8FCJXwVgzjEPoK33L2wkLzlInpYC3zuaxhN8cQ90tZgjJeOldoB4wOe4Ixp02xLQp4V+jdm9kUjWyWQOdDd3HSRTwRss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AT4ltAiH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jACNxPW9cCChZXJgm1Evhz5KS5TlcsJGvJ+nhZ5bBLPYAGlXtk5U8NUYG8PsMAILKX1sZmjC4jSontao2lPDQxsJIYk7s/7V1tSAAnsOOjcqyyKofOA1uUGp171fWayHZvwrLYNLDB3qHFG8gzln8KevtcNSr4eDTqGbJBU3kSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDi9mT5k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AT4ltAiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4D91F00A3F;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDi9mT5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F228F1F00A3D;
 	Mon, 31 Aug 2026 13:45:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183942;
-	bh=NENeYrjZ5kbWMg+6Nhmv/gEaDsUYhb0bG1JCHfNhYuk=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183942;
+	bh=xHDRP7U5rlhnFeolw4zltfDkw+ryYHi+nKX3BoO3PtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AT4ltAiHzJfXJfD2K92JqWBAdLQ8Tvc4Gg3yJeTo0Mlhbp4H5+doboTgSRzFDBDtz
-	 0JeTmF7X/blSFwsPi40MIk27FmRwedUvsIGgmmt1GUrM7/mH7TqRbEPXDk1i7Hkoo9
-	 OGbvJhdZGQl4F7Rj4gurAgxCKeEFe8TJzmT5SyZf4LMaoogyc9Gg2YZLhXD0Dip241
-	 HvEF5d6QxeZvZmLy1AUg4D7two1HBEGZxZYoN6Q6+yGvSq+7XSiMO2ieO8pUa+8e3J
-	 iywiz2S7bIPo2PWa90k/Ig0VmB8yjx4NrmNwWOMMOJnrZjJVoHPxoSNxqfvZQfE7Rf
-	 N+C+K2PT+cVyw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	andreas.noever@gmail.com,
-	westeri@kernel.org,
-	YehezkelShB@gmail.com,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] thunderbolt: Don't create multiple DMA tunnels on firmware connection manager
-Date: Mon, 31 Aug 2026 09:27:02 -0400
-Message-ID: <20260831133314.4125787-394-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=RDi9mT5kMkvvxB9ANYnisChzOxLw9ghUscs7/+RnNsAVYJ8wLgY+YXg7OnmWLvscS
+	 LxCf0OykdGigMr5INmYaAjLe/w4LtfcDVDSLHy9jHHmufCTre2RxZqVqq0Lr/vHs+s
+	 rW+tndn1eORIFTsqLCnuTKogRZ73G9lhx1pnSeOI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 19/83] powerpc/hv-gpci: fix preempt count leak in sysfs show paths
+Date: Mon, 31 Aug 2026 15:33:55 +0200
+Message-ID: <20260831133400.200013138@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit cf0c38ee554c3e9062408cc3a38325483d52ecd0 ]
+------------------
 
-Firmware connection manager supports only one DMA tunnel per XDomain
-connection. Firmware prior Intel Titan Ridge failed the operation
-directly but the same does not happen anymore on Titan Ridge and
-forward. For this reason add an explicit check, and fail the operation
-accordingly in the driver.
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+[ Upstream commit dbc30a57bd8e026995e9fa8e8c31cffd18542c01 ]
+
+Four sysfs show() callbacks in hv-gpci take get_cpu_var(hv_gpci_reqb)
+(which calls preempt_disable()) but only call the matching put_cpu_var()
+on the error path under the 'out:' label. Every successful read leaks
+one preempt_disable():
+
+  processor_bus_topology_show()
+  processor_config_show()
+  affinity_domain_via_virtual_processor_show()
+  affinity_domain_via_domain_show()
+
+(affinity_domain_via_partition_show() was already correct.)
+
+On a CONFIG_PREEMPT=y kernel, repeated reads raise preempt_count and
+eventually return to userspace with preemption still disabled. The
+next user-mode page fault then hits faulthandler_disabled() == 1,
+gets forced to SIGSEGV, and the resulting coredump trips
+'BUG: scheduling while atomic' in call_usermodehelper_exec ->
+wait_for_completion_state -> schedule:
+
+  BUG: scheduling while atomic: <task>/<pid>/0x00000004
+  ...
+  __schedule_bug+0x6c/0x90
+  __schedule+0x58c/0x13a0
+  schedule+0x48/0x1a0
+  schedule_timeout+0x104/0x170
+  wait_for_completion_state+0x16c/0x330
+  call_usermodehelper_exec+0x254/0x2d0
+  vfs_coredump+0x1050/0x2590
+  get_signal+0xb9c/0xc80
+  do_notify_resume+0xf8/0x470
+
+Add an out_success label that calls put_cpu_var() before returning
+the byte count, mirroring affinity_domain_via_partition_show().
+
+Fixes: 71f1c39647d8 ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show processor bus topology information")
+Fixes: 1a160c2a13c6 ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show processor config information")
+Fixes: 71a7ccb478fc ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show affinity domain via virtual processor information")
+Fixes: a69a57cac1ec ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show affinity domain via domain information")
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260508041256.3447113-1-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ arch/powerpc/perf/hv-gpci.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-Background task results:
-
-1. **`git log --all -S` (failed)** — The search with `--all` hung and
-   produced no output; it was killed.
-
-2. **`git log -S` without `--all` (succeeded)** — Completed in ~52s. In
-   this 6.18.y tree, `icm_fr_approve_xdomain_paths` shows up at the
-   `Linux 6.18-rc7` import (`ac3fd01e4c1ef`) and the bulk history point
-   `19eef1d98eeda`. That confirms the ICM XDomain approve path is
-   present in this tree; it doesn’t give a clean “introduced in mainline
-   at commit X” answer because of how this checkout’s history is
-   structured.
-
-3. **Kernel.org subject search (succeeded, empty)** — A grep on
-   torvalds/linux.git for the commit subject returned only the cgit page
-   shell with no matching commits, so the patch wasn’t in mainline
-   master at search time (or hadn’t landed yet).
-
-None of this changes the earlier **YES** verdict: the buggy ICM path
-exists in 6.18.43, the fix isn’t present, and the change is still
-appropriate for stable.
-
- drivers/thunderbolt/icm.c     | 10 ++++++++++
- drivers/thunderbolt/xdomain.c | 25 +++++++++++++++++++------
- include/linux/thunderbolt.h   |  2 ++
- 3 files changed, 31 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/thunderbolt/icm.c b/drivers/thunderbolt/icm.c
-index f213d9174dc57..961d66c2f81db 100644
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -587,6 +587,11 @@ static int icm_fr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
- 	struct icm_fr_pkg_approve_xdomain request;
- 	int ret;
+diff --git a/arch/powerpc/perf/hv-gpci.c b/arch/powerpc/perf/hv-gpci.c
+index 241551d1282f8..0ec0bd3110652 100644
+--- a/arch/powerpc/perf/hv-gpci.c
++++ b/arch/powerpc/perf/hv-gpci.c
+@@ -210,7 +210,7 @@ static ssize_t processor_bus_topology_show(struct device *dev, struct device_att
+ 			0, 0, buf, &n, arg);
  
-+	if (atomic_read(&xd->ntunnels) >= 1) {
-+		tb_warn(tb, "only one tunnel is supported by the firmware\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	memset(&request, 0, sizeof(request));
- 	request.hdr.code = ICM_APPROVE_XDOMAIN;
- 	request.link_info = xd->depth << ICM_LINK_INFO_DEPTH_SHIFT | xd->link;
-@@ -1157,6 +1162,11 @@ static int icm_tr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
- 	struct icm_tr_pkg_approve_xdomain request;
- 	int ret;
+ 	if (!ret)
+-		return n;
++		goto out_success;
  
-+	if (atomic_read(&xd->ntunnels) >= 1) {
-+		tb_warn(tb, "only one tunnel is supported by the firmware\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	memset(&request, 0, sizeof(request));
- 	request.hdr.code = ICM_APPROVE_XDOMAIN;
- 	request.route_hi = upper_32_bits(xd->route);
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 1eb149445fa05..e2c46366c8160 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -2021,6 +2021,7 @@ struct tb_xdomain *tb_xdomain_alloc(struct tb *tb, struct device *parent,
- 	INIT_DELAYED_WORK(&xd->state_work, tb_xdomain_state_work);
- 	INIT_DELAYED_WORK(&xd->properties_changed_work,
- 			  tb_xdomain_properties_changed);
-+	atomic_set(&xd->ntunnels, 0);
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -244,12 +244,14 @@ static ssize_t processor_bus_topology_show(struct device *dev, struct device_att
+ 				starting_index, 0, buf, &n, arg);
  
- 	xd->local_uuid = kmemdup(local_uuid, sizeof(uuid_t), GFP_KERNEL);
- 	if (!xd->local_uuid)
-@@ -2302,9 +2303,15 @@ int tb_xdomain_enable_paths(struct tb_xdomain *xd, int transmit_path,
- 			    int transmit_ring, int receive_path,
- 			    int receive_ring)
- {
--	return tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
--					       transmit_ring, receive_path,
--					       receive_ring);
-+	int ret;
-+
-+	ret = tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
-+					      transmit_ring, receive_path,
-+					      receive_ring);
-+	if (ret)
-+		return ret;
-+	atomic_inc(&xd->ntunnels);
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(tb_xdomain_enable_paths);
+ 		if (!ret)
+-			return n;
++			goto out_success;
  
-@@ -2327,9 +2334,15 @@ int tb_xdomain_disable_paths(struct tb_xdomain *xd, int transmit_path,
- 			     int transmit_ring, int receive_path,
- 			     int receive_ring)
- {
--	return tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
--						  transmit_ring, receive_path,
--						  receive_ring);
-+	int ret;
-+
-+	ret = tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
-+						 transmit_ring, receive_path,
-+						 receive_ring);
-+	if (ret)
-+		return ret;
-+	atomic_dec(&xd->ntunnels);
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(tb_xdomain_disable_paths);
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
  
-diff --git a/include/linux/thunderbolt.h b/include/linux/thunderbolt.h
-index 7204586c10c3e..466f315f0be7b 100644
---- a/include/linux/thunderbolt.h
-+++ b/include/linux/thunderbolt.h
-@@ -230,6 +230,7 @@ enum tb_link_width {
-  *				changed notification
-  * @bonding_possible: True if lane bonding is possible on local side
-  * @target_link_width: Target link width from the remote host
-+ * @ntunnels: Keeps track of how many tunnels go through this XDomain
-  * @link: Root switch link the remote domain is connected (ICM only)
-  * @depth: Depth in the chain the remote domain is connected (ICM only)
-  *
-@@ -276,6 +277,7 @@ struct tb_xdomain {
- 	int properties_changed_retries;
- 	bool bonding_possible;
- 	u8 target_link_width;
-+	atomic_t ntunnels;
- 	u8 link;
- 	u8 depth;
- };
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -278,7 +280,7 @@ static ssize_t processor_config_show(struct device *dev, struct device_attribute
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -312,12 +314,14 @@ static ssize_t processor_config_show(struct device *dev, struct device_attribute
+ 				starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -346,7 +350,7 @@ static ssize_t affinity_domain_via_virtual_processor_show(struct device *dev,
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -382,12 +386,14 @@ static ssize_t affinity_domain_via_virtual_processor_show(struct device *dev,
+ 				starting_index, secondary_index, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -416,7 +422,7 @@ static ssize_t affinity_domain_via_domain_show(struct device *dev, struct device
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -448,12 +454,14 @@ static ssize_t affinity_domain_via_domain_show(struct device *dev, struct device
+ 					starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
 -- 
 2.53.0
+
+
 
