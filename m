@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F022547884B;
-	Mon, 31 Aug 2026 13:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8169D477E3B;
+	Mon, 31 Aug 2026 13:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184421; cv=none; b=CIDXrnMkTT0Ih6sj7ql6miEowvfIUIKoptpGpmKapV8KvUvaVbok5+wU7MJX9miC7eVi1ePKVhCNsXoH1qLUIGlv/19pHqOuDlynG2ToAuFnDuqkzD89kmnib9I+FXelKnzx3N5hsQgcFfsSkk3/P3fGEXSwz712KgZEdZc7c+w=
+	t=1788184418; cv=none; b=UpZHySTz+hZ6flvD/02f9La8q0z2NmpiFTlfkF+oW0npHjVKxB4CYatiGhwDT08zBj73zM6cBjBlUgo/WJno78UQJNMdAr7o9ng0Rq4tuOGVslfp4+/zHZoE3LRCBCDjfwiInBim6sA+TaIQTEuQnHarkz37Qj+PYBZkcYzGHLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184421; c=relaxed/simple;
-	bh=LkifKfqZECZm8dumfEalxRYe0eTwcZH0nE/o3tykG5k=;
+	s=arc-20240116; t=1788184418; c=relaxed/simple;
+	bh=wNV11fEeBTxcYyMdZEbDOwuWky82aDhornSs1Hna9NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2Ut7BNCxwhxpH3mok94nMFbXAZjMZOykTti6NLVFWq1segm1VJKTsstaCyaxwBI/akkII6PDqyH8OTBGNGEmfuqWJw1JJPfIkKb4MXscENIQGyIbG/bSVPGRSVKOWhvyhT7/752WVzeqRcD3mjFBue7oZ9H1Lu7Ci/u6KsW9yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VmQnMlf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JS3ilSR7KbuR4/q8+Z5jULQzaN7gy8r57IWZAoPEnGcynMDeAXqZWlZczz43mP8AklfD/EhXQWGd504RBOFefnr3HyZrVnnp13EuBfVK33si2gMSm6wTficJnxoXrBRr+Q/M7Pf1xHB1XIw3rZe+UsXtlzDA+SLK2yp0PnDq4PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIPaO9BV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VmQnMlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588341F000E9;
-	Mon, 31 Aug 2026 13:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIPaO9BV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B391F000E9;
+	Mon, 31 Aug 2026 13:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184419;
-	bh=ibAIb4rjX5zEYe+sTjkQjM3Rvg1yoep5XQy7c7PFdvU=;
+	s=korg; t=1788184417;
+	bh=z6zgxZNW298Xn9H2lG/JsQCJSn9js89OhetWyFkCNLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1VmQnMlfESg4tqtL1lgxbkfVpVvwJtIbdaMNtrFLDkohdKGN7IAgBJ0RvpuPz7960
-	 GwnVPNnXWrff3Bi2I2WaYtNOdguWo0xdO9EDi/x/L9UoZX7j78S+DTNXURLNFKOdIc
-	 Yd8NpuNtw9A9EA6VmoY7gTV1Vt6oCDbkoUbUn0Ag=
+	b=cIPaO9BVy210wvNSt4MiOKiyMyfQ+jVkezpBKRtQ7GJ9PysUeQ/qbdD/KdH/SI+cC
+	 kaZpfsR1/PUsW/trmmf8dTjCthmSZxhxW+TNMd6UQ+u4XxtuyBM++0cWoVInkQf8yR
+	 GbtYYKlgR+/bhkVOons67OUp0QcQxQMETXuawHAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	syzbot@syzkaller.appspotmail.com
-Subject: [PATCH 6.12 63/99] usb: usbtest: disable dynamic ID support
-Date: Mon, 31 Aug 2026 15:34:32 +0200
-Message-ID: <20260831133403.153509618@linuxfoundation.org>
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.12 98/99] wifi: mt76: mt7925: ensure tx headroom in usb_sdio_tx_prepare_skb
+Date: Mon, 31 Aug 2026 15:35:07 +0200
+Message-ID: <20260831133404.565361126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
 References: <20260831133359.740409777@linuxfoundation.org>
@@ -51,54 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit 00e2071f6d5621a5ddea311a5e6b143ae6e474af upstream.
+commit ef3e34874d2332d0f63e72c2c35ce5c93568c125 upstream.
 
-The usbtest driver relies on the driver_info field of struct usb_device_id
-to point to a valid struct usbtest_info descriptor. This structure contains
-essential test configurations, such as endpoint addresses and test modes,
-which are required during probe.
+mt7925_usb_sdio_tx_prepare_skb() pushes a TX descriptor and a USB
+header onto every skb and assumes the headroom for them is already
+there. That holds for locally generated traffic, where mac80211
+reserves hw->extra_tx_headroom, but forwarded frames are sent through
+ieee80211_8023_xmit(), which does not reserve it. Bridge a wired
+interface to an mt7925u AP and the first forwarded frame that arrives
+short panics the kernel:
 
-When a user dynamically adds a new device ID via the sysfs new_id
-interface without specifying a reference device, the USB core initializes
-driver_info to 0 (NULL). When a matching device is subsequently probed,
-usbtest_probe() unconditionally casts driver_info to a struct usbtest_info
-pointer and dereferences it, leading to a NULL pointer dereference crash:
+ skbuff: skb_under_panic: len:415 put:4 tail:0x19b end:0x640 dev:wlan1
+ kernel BUG at net/core/skbuff.c:212!
+ Call trace:
+  skb_panic+0x58/0x60 (P)
+  skb_push+0x58/0x60
+  mt7925_usb_sdio_tx_prepare_skb+0xf8/0x1b8 [mt7925_common]
+  mt76u_tx_queue_skb+0xa0/0x1f8 [mt76_usb]
+  __mt76_tx_queue_skb+0x54/0xe8 [mt76]
+  mt76_txq_schedule.part.0+0x204/0x478 [mt76]
+  mt76_txq_schedule_all+0x50/0x80 [mt76]
+  mt792x_tx_worker+0x68/0x100 [mt792x_lib]
+  __mt76_worker_fn+0x84/0x150 [mt76]
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:usbtest_probe+0x3b9/0x1280 drivers/usb/misc/usbtest.c:2822
+Whether a given setup hits it depends on how much headroom the ingress
+netdev leaves in its rx skbs. Reproduced on a Raspberry Pi 5 bridging
+onboard ethernet to a Netgear A9000; originally reported on an MT7986
+router running OpenWrt. Nick Morrow's testing on a Pi 4 (bcmgenet),
+which leaves more headroom, helped narrow the trigger to the ingress
+path.
 
-Because usbtest strictly requires pre-defined usbtest_info descriptors
-to function, dynamic ID binding via sysfs is fundamentally unsupported
-for this driver.
+The same bug was fixed on mt7921 by commit 98c4d0abf5c4 ("mt76:
+mt7921: don't assume adequate headroom for SDIO headers"), but mt7925
+was copied from mt7921 without the fix. Add the same guard here.
 
-Fix this by setting .no_dynamic_id = 1 on usbtest_driver. This instructs
-the USB core to skip creating the new_id and remove_id sysfs interfaces
-for usbtest, preventing invalid dynamic ID entries from being created.
-
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7e1e5911f9eac50bedc7
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260806152651.2370795-1-nogikh@google.com
+Link: https://github.com/morrownr/mt76/issues/52
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260715023348.59506-1-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/usbtest.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/misc/usbtest.c
-+++ b/drivers/usb/misc/usbtest.c
-@@ -3053,6 +3053,7 @@ static struct usb_driver usbtest_driver
- 	.disconnect =	usbtest_disconnect,
- 	.suspend =	usbtest_suspend,
- 	.resume =	usbtest_resume,
-+	.no_dynamic_id = 1,
- };
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -1432,6 +1432,10 @@ int mt7925_usb_sdio_tx_prepare_skb(struc
+ 	if (!wcid)
+ 		wcid = &dev->mt76.global_wcid;
  
- /*-------------------------------------------------------------------------*/
++	err = skb_cow_head(skb, MT_SDIO_TXD_SIZE + MT_SDIO_HDR_SIZE);
++	if (err)
++		return err;
++
+ 	if (sta) {
+ 		struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
+ 
 
 
