@@ -1,134 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE46A4A5EAF;
-	Mon, 31 Aug 2026 13:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173BD4A5ED9;
+	Mon, 31 Aug 2026 13:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183868; cv=none; b=qWl7/2a+M/FR8c0vBu1wNoXqJi40UU9e1aFFZ/w9F6MsLT5keeCRmOIU+1w+u3xE9C1FptDEANc7v3PDMXaz/FiTnjd3xLS6oNa4CrwTozMF2iR0jSbuA3/HgKeOr7cYcQ++NM74fFENJa/j2dmDY66llvjRkYIfpfG2bZaaLhc=
+	t=1788183870; cv=none; b=Lt1C7+tr51bkyfjAz5tUKeN2Fji/IiQHhuxqrvQxyP+N0ysufVx9bCGQMnBvgT6LOVMJhx5+9Sbmbje2IGTOXUS8CW/xZxNJx9jds7cf8uzUceaBGTYhdks4amGqfbYz/LCvynE6nFYWG/N8ItcpnxLBZRR2EoqhoLGa51lWnbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183868; c=relaxed/simple;
-	bh=nDyr1IIkIaI7tgB+sOoSdw4UO/ITkOsZvdO/r7fO8oA=;
+	s=arc-20240116; t=1788183870; c=relaxed/simple;
+	bh=eKdlmggEZAJ7tgR/LJrWoehw4xssjpWoAexsKsyVjSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V/9LUZfoA2q+3vPc6olHr0z2hljySKvPqqOsPYYy2iwLu2STW0itYqxONyCR4jCrbBYTpFcdVdFLTGRrplyafBU0OzXlR6CNIE6VNE1EyL5aDjpPwkY4B2HFcLL4X3GbEJly6xuNj0Nrk8ZR0KoDvKP/Np+7H9bc+NSaACkMAs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q88JGtzr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/dKhDs/wErMwWqrzi6zT0d8PYPSjdAfcEAnZIG7a3jhpke+f4+1rXWm1ibpn9W2b5FjHo/JDUsAOA/WGfnnqHIW7DpLLKvKgFViRdrNJvP/+nwBbTspsD1oiU2FNmhvD70QHZWrRWBOCPwiyWB5rWHDd+BKNrSgXbmYqSL+hRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzc4YxAb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q88JGtzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B12E1F000E9;
-	Mon, 31 Aug 2026 13:44:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183866;
-	bh=Hy0vrqv8cjxsaEY46z5GX7wptc1BaccpsliuEU797qw=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzc4YxAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657D61F00A3D;
+	Mon, 31 Aug 2026 13:44:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183867;
+	bh=hQyEYKqJQyM9OrStiLYWrJaH6W+Dx8uLJpSuM18tKE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q88JGtzraGj1+CAv1f4DZivp2SGpK2dNO8s3VGgPyk05boSV6Slx5Y2D7W/YYCjlc
-	 5OhTXOfB/qYBUWipoQO250oTOgG5LECX23JKVSUsSjBD+BkuNRNVhtU7oVOvyg6oor
-	 Vah7++mHLmqAAC6JJJSnRmoxmoJyr3LZS6m0TdZ2qse8IoNfXJBPRK24xOwwz5HKq5
-	 PK79WFM7TwsCBj1bibt0B3Ko+xlrUotu0LGrWYcqJuDnhGDCjfXeSCJm2CCeP5Eo/6
-	 hPfACAhRorEs1e0TbQXs/4LvC7f0DUKGJjhkoeOI7SGOJehoV7UeQgI96fAM0sT0k2
-	 SgGqWsDQKRWQQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Raf Dickson <rafdog35@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	kys@microsoft.com,
-	haiyangz@microsoft.com,
-	wei.liu@kernel.org,
-	decui@microsoft.com,
-	longli@microsoft.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	bryan-bt.tan@broadcom.com,
-	vishnu.dasa@broadcom.com,
-	linux-hyperv@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] vsock: use sk_acceptq_is_full() helper in all transports
-Date: Mon, 31 Aug 2026 09:26:18 -0400
-Message-ID: <20260831133314.4125787-350-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=tzc4YxAb6eincXE+iYbxtbT4oVYMaT8I6yUr5hoA2CtODsH4U+lwFnsLMWCm2Dwuz
+	 2UESywCpDpSNTSV+OYwTx1ZkrO7QZDkdSAq+hKkGAqpAnVV5S7nVpbg5qpbaTZXerH
+	 ZBij5QzDAjR3yItxzJX0T2vzde5DBfnFPecQsNJE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Lucas De Marchi <ldemarchi@nvidia.com>
+Subject: [PATCH 7.1 24/76] xhci: dbgtty: Fix unregister on tty_alloc_driver() failure
+Date: Mon, 31 Aug 2026 15:33:56 +0200
+Message-ID: <20260831133400.517817039@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raf Dickson <rafdog35@gmail.com>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 4ff2e84ff1b33d79fa0e3ae355ce4a334908ef9a ]
+------------------
 
-Replace the open-coded backlog check with sk_acceptq_is_full().
-The helper uses > instead of >=, which is the correct comparison
-per commit 64a146513f8f ("[NET]: Revert incorrect accept queue
-backlog changes."), and adds READ_ONCE() for proper memory ordering.
+From: Lucas De Marchi <ldemarchi@nvidia.com>
 
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Raf Dickson <rafdog35@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20260612045842.122207-1-rafdog35@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 25b8dfc13495a6c1cf4abacc8ef20196c7f20e5c upstream.
+
+Make sure to set dbc_tty_driver to NULL to match the check in
+dbc_tty_exit(). For that, make detached error handling path common to the
+other branch in the same function.
+
+Fixes: 4521f1613940 ("xhci: dbctty: split dbc tty driver registration and unregistration functions.")
+Cc: stable@vger.kernel.org # v5.10
+Cc: Mathias Nyman <mathias.nyman@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lucas De Marchi <ldemarchi@nvidia.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260806142113.2436238-9-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/usb/host/xhci-dbgtty.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background searches finished and match what the earlier analysis
-already showed:
-
-- **Commit hash search** (`git log --grep="use sk_acceptq_is_full"`): no
-  matches. That patch is not in this v6.18.44 tree yet; the buggy `>=`
-  checks are still in `hyperv_transport.c` and `vmci_transport.c`.
-- **Author search** (Raf Dickson): only one vsock commit here —
-  `ba9ad6015937a` (`vsock/vmci: fix sk_ack_backlog leak on failed
-  handshake`). Nothing for the `sk_acceptq_is_full()` change.
-
-That supports the **YES** backport verdict: the bug is present locally,
-the fix is not, and it should apply cleanly as a 2-line change.
-
- net/vmw_vsock/hyperv_transport.c | 2 +-
- net/vmw_vsock/vmci_transport.c   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/net/vmw_vsock/hyperv_transport.c b/net/vmw_vsock/hyperv_transport.c
-index 4da752b47b116..54c7f51f9145d 100644
---- a/net/vmw_vsock/hyperv_transport.c
-+++ b/net/vmw_vsock/hyperv_transport.c
-@@ -323,7 +323,7 @@ static void hvs_open_connection(struct vmbus_channel *chan)
- 		goto out;
- 
- 	if (conn_from_host) {
--		if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog)
-+		if (sk_acceptq_is_full(sk))
- 			goto out;
- 
- 		new = vsock_create_connected(sk);
-diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
-index 75bf643ff6faf..4f02a6f269cdb 100644
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1002,7 +1002,7 @@ static int vmci_transport_recv_listen(struct sock *sk,
- 	 * reset.  Otherwise we create and initialize a child socket and reply
- 	 * with a connection negotiation.
- 	 */
--	if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog) {
-+	if (sk_acceptq_is_full(sk)) {
- 		vmci_transport_reply_reset(pkt);
- 		return -ECONNREFUSED;
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -628,8 +628,8 @@ int dbc_tty_init(void)
+ 	dbc_tty_driver = tty_alloc_driver(64, TTY_DRIVER_REAL_RAW |
+ 					  TTY_DRIVER_DYNAMIC_DEV);
+ 	if (IS_ERR(dbc_tty_driver)) {
+-		idr_destroy(&dbc_tty_minors);
+-		return PTR_ERR(dbc_tty_driver);
++		ret = PTR_ERR(dbc_tty_driver);
++		goto fail;
  	}
--- 
-2.53.0
+ 
+ 	dbc_tty_driver->driver_name = "dbc_serial";
+@@ -649,12 +649,18 @@ int dbc_tty_init(void)
+ 	ret = tty_register_driver(dbc_tty_driver);
+ 	if (ret) {
+ 		pr_err("Can't register dbc tty driver\n");
+-		tty_driver_kref_put(dbc_tty_driver);
+-		idr_destroy(&dbc_tty_minors);
+-		dbc_tty_driver = NULL;
++		goto fail_put;
+ 	}
+ 
+ 	return ret;
++
++fail_put:
++	tty_driver_kref_put(dbc_tty_driver);
++fail:
++	idr_destroy(&dbc_tty_minors);
++	dbc_tty_driver = NULL;
++
++	return ret;
+ }
+ 
+ void dbc_tty_exit(void)
+
 
