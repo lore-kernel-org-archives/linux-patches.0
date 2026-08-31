@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591434968F6;
-	Mon, 31 Aug 2026 13:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EE9499F2B;
+	Mon, 31 Aug 2026 13:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183528; cv=none; b=f2T2+88zjl5I0XxJdhHzLhzCPOC8MaRCBnjkR48cVR7Ghl/bLLu8pqU2iIEjohq9Vpa3V22G8113RVZD4a7Tq02Z2dX5WaxjPA+UgfE0SGDTS1OLHbqxh5EFJJgJEyDhq6Kmw1OUivg4sKqECLsSqKzBAVnefvV1k1oofeG0wQk=
+	t=1788183530; cv=none; b=rxZAQrLxwz5dfTF6mXbtsOsUb3KpzZmmm9xiHfRqaYMtRPhEZfB4sUlu05IyCBuKawM1ZrZTsLeID8LXqoUt0tzQSLC3N5lPzcxZa3mxN7lYFrjyrWKex422Ze+A+uWCkYeJeJf5aPv7EXTMZaKTiMMsS3cOG++yNJ0IX2JfiWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183528; c=relaxed/simple;
-	bh=hDVWWEqdrziYLZbomuM8rcTjqb4po1Wbb+L2oGl9z/M=;
+	s=arc-20240116; t=1788183530; c=relaxed/simple;
+	bh=jTx1zry5rzdixxC0RgC2msoPn8d7KKD2kbIkXCNjnU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mw34QJcH2i0XEo+vgz456hs7wWnM/sbPwfzhRhOsV/XXTEJK61ppW6Vjjcq6McIfWJQ3506sW+ef+CZIaoccY9vcLAfH80sh5thb3RDijAlewKIMyyQ6Uzvx62U2su/BYy4CET5TzVjN05+lzVaTJR8AyPh2oEQ/p6gp0TzeW5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fdr8C5gx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IiJB09zmr56Ks9TOYyI9EKPZU0T54dmie+g5VM2VX6yL1aN3C1R9RtYM64dUZwjvXOtubnUUkjfYScijdn9M95wwQjQt4AmTaZbhwexVJ8Tr7rBARG8dZidvcZACFjM4eJenJ+Wq22hDHZHKPOJxZVxS2gGaVZoN31xWUDeHfV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lrZfyaSQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fdr8C5gx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252C11F00ACA;
-	Mon, 31 Aug 2026 13:38:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lrZfyaSQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8942E1F00ADE;
+	Mon, 31 Aug 2026 13:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183526;
-	bh=crpun+QCBVEcyB2Pgb0Ue25kuVuSVt9lQ+ZQUwR0CWk=;
+	s=k20260515; t=1788183528;
+	bh=IXXvlLiatEpQKDiVZfBexoB5OaI/sRGWE1Z6th1AgUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdr8C5gxnIoIkZ9LsuYuJiSnsbzY67hcgF80AguVqYnOgwK5bjiqng7h0prP1BcGQ
-	 RSb8tFk3L9e8qJwSmizkB2QXthIR8PuFIbNj1aqh4dQMN7+br4xqxrMZwPlxE+0HCO
-	 R9bTPN6COd4zoOTg7xV45NKXBT2SSnv0L9JCGQ6QCWZvEdmj6hInL9ETMH+CIrFt0U
-	 9ybmQUbTvpO5qFet9FJcX6CHiAlFM+cB57DfH87GqxBrQz6O56RhPBwJ57V5/2VkI3
-	 Ss/AwtF3dXHULLkB9b52wC3NVoJyxCPxp9VII/nLUfbVfvpIzHVwHv1UUN8Gt0/V3p
-	 IK7khGgz6fIDw==
+	b=lrZfyaSQMpKJcyP1q0MRb7Xo5lylWUf4H0/gyaSMfUtIp/AgxyYRnJ0JhQy9u93+y
+	 lv3bxGJHtYDoRGsRsq6I8oSmtVwuny24HV/jHkRX6MSEH4IlZ9KgTchkupB/KQ97DI
+	 reFuQjFEwLNiwGgEc19Otj/xkF1ZEIW0vu4ZAHoNpms58tXoa6jaiR5vbZL0MZ4fjQ
+	 GmIIgNdmkqWZ7g13PUfsMyAlI2+UUggY8weYjSOeUMsifjv4q9aDb7B7WthkxS2n4q
+	 telKzQDUeKMtSS7JKwYua1Ptbi6GnH3jpjbIR/kPPjXJiAFEGbpMkQ9zgd2XSaV2s9
+	 MeMzL1/+SSP5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+Cc: Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-mmc@vger.kernel.org,
+	saeedm@nvidia.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] mmc: davinci: fix mmc_add_host order in probe
-Date: Mon, 31 Aug 2026 09:22:57 -0400
-Message-ID: <20260831133314.4125787-149-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] net/mlx5: E-Switch, align disable sequence with switchdev-to-legacy transition
+Date: Mon, 31 Aug 2026 09:22:58 -0400
+Message-ID: <20260831133314.4125787-150-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,68 +60,68 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit d04e0151d316edbdb4f0397a9b92a1936e4a1421 ]
+[ Upstream commit b48b6308dfaeae49fcda61b4066773cb5e8a9ce8 ]
 
-mmc_add_host() makes the host visible to the MMC core. Register the
-interrupt handlers and advertise MMC_CAP_SDIO_IRQ before that, so the
-core cannot start using the host before IRQ handling is set up.
+This patch align the eswitch disable sequence with the
+switchdev-to-legacy mode transition, where eswitch must be disabled
+before device detachment. The consistent ordering is required for proper
+SD LAG cleanup which depends on eswitch state during teardown.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260531113954.395443-3-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `mmc: davinci: fix mmc_add_host order in
-probe`
+# Stable Backport Analysis: `net/mlx5: E-Switch, align disable sequence
+with switchdev-to-legacy transition`
 
-**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`)
-
-**Commit under review:** `d04e0151d316e` (exists in repo on `all-next`
-etc., **not** an ancestor of this tree’s HEAD)
+**Local tree:** Linux **6.18.44** (`v6.18.44`, `VERSION=6 PATCHLEVEL=18
+SUBLEVEL=44`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[mmc: davinci]` `[fix]` — correct probe initialization
-order so IRQ handlers and SDIO capability are ready before
-`mmc_add_host()`.
+**Record:** `[net/mlx5: E-Switch] [align] — reorder eswitch disable to
+match switchdev-to-legacy teardown ordering`
 
 ### Step 1.2: Tags
 **Record:**
-- **Fixes:** — none
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** — none in commit message
-- **Cc: stable@vger.kernel.org** — none (expected for manual review)
-- **Signed-off-by:** Osama Abdelkader `<osama.abdelkader@gmail.com>`
-  (author)
-- **Signed-off-by:** Ulf Hansson `<ulfh@kernel.org>` (MMC maintainer
-  merge)
-
-Notable: maintainer Signed-off-by; no syzbot/user bug report.
+- **Signed-off-by:** Shay Drory `<shayd@nvidia.com>` (author)
+- **Reviewed-by:** Mark Bloch `<mbloch@nvidia.com>`
+- **Signed-off-by:** Tariq Toukan `<tariqt@nvidia.com>`
+- **Link:**
+  https://patch.msgid.link/20260531113954.395443-3-tariqt@nvidia.com
+  (patch **3/3** in a series)
+- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (net maintainer)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or syzbot
+  tags
+- Message-ID suffix `-3-` indicates this is the third patch in a series
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `mmc_add_host()` exposes the host to the MMC core before IRQ
-  handlers are registered and before `MMC_CAP_SDIO_IRQ` is advertised.
-- **Symptom:** MMC core may start card detection / I/O while interrupts
-  are not handled → requests can hang or SDIO IRQ support is mis-
-  advertised.
-- **Root cause:** Wrong probe ordering; `mmc_add_host()` should be last
-  among setup steps that the core depends on.
-- **Version info:** none in message.
+- **Bug:** E-switch disable runs too late in driver unload paths — after
+  `mlx5_detach_device()` / `mlx5_unregister_device()` — while the
+  switchdev-to-legacy transition disables eswitch **before** detachment.
+- **Symptom/failure mode:** Improper **SD LAG** (Socket Direct / shared-
+  FDB LAG) cleanup during teardown; commit does not include a crash
+  trace.
+- **Root cause (author):** SD LAG cleanup in `mlx5_eswitch_disable()`
+  depends on eswitch still being in the correct state and representors
+  still being present; detaching/unregistering auxiliary devices first
+  breaks that.
 
 ### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit probe-order bug fix, not disguised
-cleanup.
+**Record:** Yes. Described as “align,” but it fixes a **teardown
+ordering bug** — same class as other mlx5 LAG/eswitch unload issues.
 
 ---
 
@@ -121,205 +129,220 @@ cleanup.
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `drivers/mmc/host/davinci_mmc.c` (+5 / −7 lines)
-- **Function:** `davinci_mmcsd_probe()`
-- **Scope:** Single-file surgical fix
+- **File:** `drivers/net/ethernet/mellanox/mlx5/core/main.c` only
+- **Scope:** ~3 lines moved (net zero lines); 3 functions touched
+- **Functions modified:** `mlx5_unload()`, `mlx5_uninit_one()`,
+  `mlx5_unload_one_devl_locked()`
+- **Classification:** Single-file, surgical reordering
 
 ### Step 2.2: Code flow per hunk
-**Record:**
-1. **Remove early `mmc_add_host()`** — before: host registered with core
-   immediately after cpufreq setup → after: deferred until IRQ setup
-   completes.
-2. **IRQ failure path** — before: `goto request_irq_fail` →
-   `mmc_remove_host()` → after: `goto mmc_add_host_fail` (host was never
-   added).
-3. **Move `mmc_add_host()` after IRQ registration** — SDIO IRQ handler
-   registered and `MMC_CAP_SDIO_IRQ` set first, then host registered.
-4. **Remove `request_irq_fail` label** — no longer needed since
-   `mmc_add_host()` hasn’t run yet.
+
+**Hunk 1 — `mlx5_unload()`:**
+- **Before:** `mlx5_eswitch_disable()` was the first call in
+  `mlx5_unload()`.
+- **After:** Removed from `mlx5_unload()`.
+
+**Hunk 2 — `mlx5_uninit_one()`:**
+- **Before:** `mlx5_unregister_device()` → … → `mlx5_unload()` (which
+  disabled eswitch).
+- **After:** `mlx5_eswitch_disable()` → `mlx5_unregister_device()` → … →
+  `mlx5_unload()`.
+
+**Hunk 3 — `mlx5_unload_one_devl_locked()`:**
+- **Before:** `mlx5_detach_device()` → … → `mlx5_unload()` (which
+  disabled eswitch).
+- **After:** `mlx5_eswitch_disable()` → `mlx5_detach_device()` → … →
+  `mlx5_unload()`.
+
+**Record:** Both primary unload paths now disable eswitch **before**
+tearing down auxiliary devices.
 
 ### Step 2.3: Bug mechanism
-**Record:** **Race condition / initialization ordering bug**
-- `mmc_add_host()` → `mmc_start_host()` → `_mmc_detect_change(host, 0,
-  false)` schedules card-detection work immediately.
-- Before fix: detection can issue `mmc_davinci_request()` while
-  `devm_request_irq()` for `mmc_davinci_irq` is not yet registered.
-- Command completion depends on `mmc_davinci_irq()` (interrupt-driven;
-  `mmc_davinci_start_command()` enables `DAVINCI_MMCIM` interrupt mask).
-- SDIO: `MMC_CAP_SDIO_IRQ` was set after `mmc_add_host()`, so core could
-  probe SDIO before capability was advertised.
+**Record:** **Teardown ordering / logic correctness bug**
+- `mlx5_eswitch_disable()` calls `mlx5_lag_disable_change()` →
+  `mlx5_disable_lag()`.
+- For shared-FDB LAG (`MLX5_LAG_MODE_FLAG_SHARED_FDB`),
+  `mlx5_disable_lag()` calls `mlx5_eswitch_reload_ib_reps()`, which
+  requires `esw->mode == MLX5_ESWITCH_OFFLOADS` and `REP_LOADED`
+  representors.
+- `mlx5_detach_device()` / `mlx5_unregister_device()` remove auxiliary
+  devices (including eswitch representors) **before** `mlx5_unload()`
+  ran, so SD LAG cleanup could not run correctly.
+- `mlx5_devlink_eswitch_mode_set()` already disables eswitch **before**
+  mode transition — the unload paths were inconsistent.
 
 ### Step 2.4: Fix quality
 **Record:**
-- **Obviously correct:** matches established MMC driver pattern
-  (`sdhci.c`, `omap_hsmmc.c`, and prior fixes like `mmc: uniphier-sd:
-  register irqs before registering controller`).
-- **Minimal:** pure reorder + simplified error path.
-- **Regression risk:** very low; only changes probe ordering and removes
-  unnecessary `mmc_remove_host()` on IRQ failure.
+- Fix is minimal and mirrors the known-good
+  `mlx5_devlink_eswitch_mode_set()` ordering.
+- `mlx5_eswitch_disable()` requires devlink lock; both call sites
+  already hold `devl_lock()`.
+- **Regression risk:** Low for main unload paths. **Note:**
+  `mlx5_unload()` is still called from init error paths (`err_register`,
+  `err_attach`) without the new early `mlx5_eswitch_disable()` — those
+  paths typically run before switchdev/SD LAG is configured (unverified
+  for all edge cases).
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Buggy order introduced in **2009** (`b4cff4549b7a8c`, Vipin
-Bhandari). `mmc_add_host()` before `devm_request_irq()` has been wrong
-since initial davinci driver integration. `PROBE_PREFER_ASYNCHRONOUS`
-added in `21b2cec61c04b` (2020), increasing realistic race window with
-async detect work.
+**Record:**
+- `mlx5_eswitch_disable()` in `mlx5_unload()`: added/moved to first
+  position by **85b47dc40bbc7** (Sep 2023, Jiri Pirko).
+- `mlx5_detach_device()` before `mlx5_unload()` in
+  `mlx5_unload_one_devl_locked()`: **72ed5d5624af3** (Jan 2023).
+- `mlx5_unregister_device()` before `mlx5_unload()` in
+  `mlx5_uninit_one()`: longstanding (Leon Romanovsky, 2020).
+- Original `mlx5_eswitch_disable` in unload: **f019679ea5f2a** (May
+  2022).
+- **Ordering mismatch has existed since ~2023** when detach was placed
+  before `mlx5_unload()` while eswitch disable remained inside
+  `mlx5_unload()`.
 
 ### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+**Record:** N/A — no `Fixes:` tag.
 
 ### Step 3.3: Related file history
-**Record:** Same class of fix already in tree history:
-- `a5d8de1cb7e1d` — `mmc: uniphier-sd: register irqs before registering
-  controller`
-- `74f45de394d97` — `mmc: renesas_sdhi: register irqs before registering
-  controller`
-
-Standalone one-patch fix; not part of a series.
+**Record:**
+- Shared-FDB LAG introduced **af8c0e25f249a** (Aug 2021) — present in
+  this tree.
+- Related crash fix **4b8eeed4fb105** (Mar 2025): bridge + shared-FDB
+  LAG teardown oops — same subsystem, similar LAG teardown sensitivity.
+- Patch appears standalone (only `main.c`); patches 1–2 of the series
+  were not found locally.
 
 ### Step 3.4: Author context
-**Record:** Osama Abdelkader is an active contributor (e.g. Panthor DRM
-fixes) but not davinci maintainer. Fix merged by Ulf Hansson (MMC
-subsystem maintainer).
+**Record:** Shay Drory is an active mlx5 contributor (eswitch, LAG,
+devlink). Reviewed by Mark Bloch (mlx5 maintainer). Committed via Jakub
+Kicinski (netdev).
 
 ### Step 3.5: Dependencies
-**Record:** No prerequisites. Self-contained reorder in existing probe
-function. Applies standalone.
+**Record:** Self-contained for `main.c`. No structural/API prerequisites
+identified. Patches 1–2 of the series were **not found** in this
+workspace; this patch does not appear to depend on them functionally.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original discussion
-**Record:**
-- **URL:** https://lkml.iu.edu/hypermail/linux/kernel/2605.1/03199.html
-- **Revisions:** single patch (no v2/v3 found)
-- **Maintainer response:** Ulf Hansson — “Applied for next, thanks!”
-  (https://lists.openwall.net/linux-kernel/2026/05/29/1414)
-- **Stable nomination:** none in thread
-- **NAKs/concerns:** none found
+**Record:** `b4 dig -c HEAD` did not match (commit not in tree). Lore
+search returned **403 Forbidden**. patch.msgid.link blocked by bot
+protection. **Could not retrieve mailing list thread.**
 
 ### Step 4.2: Reviewers
-**Record:** CC’d to `linux-mmc@`, `linux-kernel@`, Ulf Hansson, and
-other maintainers. Accepted by subsystem maintainer without objections.
+**Record:** Mark Bloch (Reviewed-by). Jakub Kicinski merged. Full
+recipient list unavailable (b4 `-w` requires commit in tree).
 
 ### Step 4.3: Bug report
-**Record:** No external bug report, syzbot, or stack trace. Bug
-identified by code inspection / correct driver pattern.
+**Record:** No external bug report, syzbot link, or crash trace in the
+commit message.
 
-### Step 4.4: Related patches
-**Record:** Precedent patches in same subsystem (uniphier-sd,
-renesas_sdhi) for identical IRQ-before-`mmc_add_host` ordering.
+### Step 4.4: Series context
+**Record:** Message-ID indicates patch **3/3**; patches 1–2 not
+identified locally. This change is independently applicable.
 
-### Step 4.5: Stable list
-**Record:** No stable-list discussion found (lore.kernel.org blocked by
-bot protection for direct search; patch thread has no stable Cc).
+### Step 4.5: Stable list history
+**Record:** Not searched (lore inaccessible). No stable nomination found
+in commit message.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `davinci_mmcsd_probe()`, `mmc_add_host()`,
-`mmc_start_host()`, `_mmc_detect_change()`, `mmc_davinci_irq()`,
-`mmc_davinci_request()`, `mmc_davinci_start_command()`
+**Record:** `mlx5_eswitch_disable()`, `mlx5_unload()`,
+`mlx5_uninit_one()`, `mlx5_unload_one_devl_locked()`,
+`mlx5_detach_device()`, `mlx5_unregister_device()`,
+`mlx5_disable_lag()`, `mlx5_eswitch_reload_ib_reps()`
 
-### Step 5.2: Callers
+### Step 5.2: Callers of affected paths
 **Record:**
-- `davinci_mmcsd_probe()` — platform driver probe during boot / module
-  load on `ARCH_DAVINCI` boards.
-- `mmc_add_host()` → `mmc_start_host()` → card detection workqueue.
-- `mmc_davinci_request()` — MMC core callback during card init and I/O.
+- `mlx5_uninit_one()` ← `remove_one()` (module/PCI remove), SF driver
+  teardown
+- `mlx5_unload_one_devl_locked()` ← `mlx5_unload_one()` ← devlink
+  reload, firmware reset, health recovery, suspend/resume
+- Both are common operational paths for mlx5 users
 
 ### Step 5.3: Callees
-**Record:** `mmc_add_host()` calls `device_add()`, `mmc_start_host()`;
-probe uses `devm_request_irq()`, `mmc_davinci_cpufreq_register()`.
+**Record:** `mlx5_eswitch_disable()` → `mlx5_lag_disable_change()` →
+`mlx5_disable_lag()` → (shared FDB) `mlx5_eswitch_reload_ib_reps()`;
+`mlx5_detach_device()` tears down auxiliary drivers in reverse order
 
 ### Step 5.4: Reachability
-**Record:**
-- Triggered on every DaVinci MMC controller probe with a card present
-  (or during rescan).
-- Card detection is scheduled from `mmc_start_host()` with **zero
-  delay** (`_mmc_detect_change(host, 0, false)`).
-- Requests issued before IRQ registration can hang waiting for
-  interrupts that have no handler.
-- **Userspace reachability:** indirect via boot-time device enumeration;
-  can cause hung boot / unresponsive MMC block device.
+**Record:** Triggered on driver remove, devlink reload, FW reset
+recovery — admin-initiated but routine in datacenter deployments.
+Requires **CONFIG_MLX5_ESWITCH**, switchdev mode, and multi-PF Socket
+Direct / shared-FDB LAG.
 
 ### Step 5.5: Similar patterns
-**Record:** `sdhci.c` (request IRQ at ~4883, `mmc_add_host` at ~4898),
-`omap_hsmmc.c` (IRQ + `MMC_CAP_SDIO_IRQ` before `mmc_add_host` at
-~1944). Davinci was the outlier.
+**Record:** `mlx5_devlink_eswitch_mode_set()` disables eswitch before
+cleanup (lines 3832–3866 in `eswitch_offloads.c`). Bridge+LAG crash fix
+**4b8eeed4fb105** shows mlx5 shared-FDB LAG teardown ordering can cause
+kernel oops.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
 
 ### Step 6.1: Buggy code present?
-**Record:** **YES.** Current `drivers/mmc/host/davinci_mmc.c` at lines
-1297–1312 still has `mmc_add_host()` before `devm_request_irq()`. Fix
-commit `d04e0151d316e` is **not** in HEAD (`git merge-base --is-
-ancestor` → NOT ancestor).
+**Record:** **YES.** Current tree has:
+- `mlx5_eswitch_disable()` at line 1430 inside `mlx5_unload()`
+- `mlx5_detach_device()` at line 1623 **before** `mlx5_unload()` at line
+  1632
+- `mlx5_unregister_device()` at line 1539 **before** `mlx5_unload()` at
+  line 1550
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Probe structure matches the patch
-context; no conflicting recent churn in that hunk. `request_irq_fail` /
-`mmc_remove_host` path still present and removable as in the patch.
+**Record:** Expected **clean apply** with minor context adjustment (line
+ordering in `mlx5_unload()` differs slightly from the provided diff —
+`mlx5_vhca_event_stop` position — but the semantic change is identical).
 
 ### Step 6.3: Related fixes already present?
-**Record:** uniphier-sd and renesas_sdhi IRQ-ordering fixes are in tree;
-davinci-specific fix is **not**.
+**Record:** **4b8eeed4fb105** (bridge LAG crash) is in tree. This
+specific eswitch-disable ordering fix is **not** present.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** **PERIPHERAL** — `CONFIG_MMC_DAVINCI` (`ARCH_DAVINCI ||
-COMPILE_TEST`). TI DaVinci embedded platforms (e.g. DM644x, OMAP-L138
-class). Small user base but real production embedded deployments.
+**Record:** `drivers/net/ethernet/mellanox/mlx5` — **IMPORTANT**
+(datacenter NIC driver, widely deployed on stable/LTS kernels)
 
 ### Step 7.2: Subsystem activity
-**Record:** davinci driver receives periodic maintenance (PM macros,
-devm helpers, bus-width reporting in 2024–2025) but is mature/legacy.
+**Record:** Actively maintained; frequent mlx5 commits in 6.18.y.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Users building kernels with `CONFIG_MMC_DAVINCI=y/m` on
-DaVinci hardware. Not universal; driver-specific.
+**Record:** Users of **Mellanox ConnectX multi-PF Socket Direct**
+configurations with **shared-FDB LAG** in **switchdev** mode —
+datacenter/cloud NIC deployments. Not universal; config-specific.
 
 ### Step 8.2: Trigger conditions
-**Record:**
-- Boot or module load with MMC/SD/SDIO media present.
-- Race between `mmc_start_host()` detect work and remaining probe steps.
-- More likely since `PROBE_PREFER_ASYNCHRONOUS` (2020).
-- Unprivileged users cannot directly trigger; impact is at
-  boot/enumeration.
+**Record:** Driver unload, devlink reload, FW-reset recovery, or suspend
+on configured SD LAG + switchdev. Admin-initiated but routine.
+Unprivileged users cannot directly trigger.
 
 ### Step 8.3: Failure mode severity
-**Record:**
-- **Hung MMC requests** / boot stall during card detection → **HIGH**
-  for affected hardware.
-- **SDIO IRQ not advertised** → SDIO Wi‑Fi/BT modules may fail →
-  **HIGH** for SDIO users.
-- Not a typical security issue; no data-corruption mechanism identified,
-  but boot hang is a serious stability issue.
+**Record:** Improper LAG/eswitch teardown;
+`mlx5_eswitch_reload_ib_reps()` silently skipped when reps already
+detached. Can leave inconsistent LAG state; related mlx5 LAG teardown
+bugs have caused **kernel oops** (4b8eeed4fb105). **Severity: MEDIUM-
+HIGH** for affected configs; **LOW** for typical single-PF users.
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Prevents probe-time hangs and SDIO capability mis-
-  registration on DaVinci boards; aligns with maintainer-accepted
-  pattern used in sibling drivers.
-- **Risk:** Very low — 12-line reorder, no API changes, simpler error
-  path.
-- **Ratio:** Favorable for backport despite narrow hardware scope.
+- **Benefit:** MEDIUM for affected enterprise users; prevents broken SD
+  LAG teardown on common unload paths
+- **Risk:** LOW — 3-line reorder, mirrors existing mode-set path,
+  reviewed by subsystem maintainer
+- **Ratio:** Favorable for backport
 
 ---
 
@@ -328,142 +351,132 @@ DaVinci hardware. Not universal; driver-specific.
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real initialization race with concrete mechanism (`mmc_start_host` →
-  immediate detect work).
-- IRQ-dependent request completion in `mmc_davinci_irq()`.
-- SDIO capability must be set before host registration.
-- Identical fixes already accepted in MMC subsystem (uniphier-sd,
-  renesas_sdhi).
-- Matches omap_hsmmc/sdhci canonical ordering.
-- Tiny, obviously correct, maintainer-merged.
-- Bug present in 6.18.44; fix not yet applied.
+- Verified ordering bug: detach/unregister before eswitch disable in
+  both main unload paths
+- SD LAG cleanup (`mlx5_disable_lag` → `mlx5_eswitch_reload_ib_reps`)
+  requires eswitch/rep state that detach destroys
+- Matches proven-correct `mlx5_devlink_eswitch_mode_set()` ordering
+- Small, surgical, low regression risk
+- Bug present since ~2023; shared-FDB LAG in tree since 2021
+- Same subsystem had LAG teardown oops fixed for stable (4b8eeed4fb105)
+- NVIDIA maintainer review
 
 **AGAINST backport:**
-- Very small user population (`ARCH_DAVINCI` only).
-- No user bug report or syzbot reproduction.
-- Theoretical race existed since 2009 (may have been rare on synchronous
-  probe).
+- No crash trace, syzbot report, or user bug report in commit message
+- Affects niche multi-PF Socket Direct + switchdev configuration
+- Patch 3/3 — series context unavailable
+- Init error paths (`err_register`/`err_attach`) still call
+  `mlx5_unload()` without early eswitch disable (likely low impact —
+  switchdev typically not configured at probe failure)
 
-**Unresolved:** No field crash log confirming reproduction on specific
-DaVinci board (not required for this class of fix).
+**Unresolved:**
+- Full mailing list review thread (lore inaccessible)
+- Patches 1–2 of the series not found
+- No quantitative report of how often this causes visible failures
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — pattern proven in other MMC
-   drivers; maintainer merged.
-2. Fixes a real bug? **PASS** — probe ordering race verified in code.
-3. Important issue? **PASS** — boot hang / MMC timeout on affected
-   hardware (HIGH for those users).
-4. Small and contained? **PASS** — 1 file, 12 lines.
-5. No new features/APIs? **PASS** — reorder only.
-6. Can apply to local tree? **PASS** — buggy code present; patch should
-   apply cleanly.
+1. Obviously correct and tested? **PASS** — ordering matches mode-set
+   path; Reviewed-by from mlx5 maintainer (no Tested-by)
+2. Fixes a real bug? **PASS** — verifiable teardown ordering violation
+3. Important issue? **PASS (MEDIUM)** — improper teardown on
+   unload/reload for SD LAG; related bugs caused oopses, though this one
+   lacks explicit crash report
+4. Small and contained? **PASS** — single file, ~3 lines moved
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — code exists; clean/minor-context
+   apply expected
 
 ### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-driver probe-order bug fix.
+**Record:** None (not device ID, quirk, DT, build fix, or docs fix).
+Standard bug-fix backport.
 
 ### Step 9.4: Decision rationale
-For **Linux 6.18.44**, this commit fixes a verified probe race in an
-existing driver where the buggy code is present and the fix is absent.
-While the hardware audience is narrow, boot-time hangs on embedded
-systems are exactly the sort of contained, low-risk driver fixes stable
-trees routinely take—especially when the MMC maintainer has already
-accepted the same pattern for other host drivers. The patch is minimal,
-follows established subsystem practice, and introduces negligible
-regression risk.
+For **Linux 6.18.44**, the buggy ordering is present and the fix is
+minimal, obviously correct, and aligns unload paths with the already-
+correct switchdev-to-legacy transition. While the affected configuration
+(multi-PF Socket Direct + shared-FDB LAG + switchdev) is niche and the
+commit lacks a crash report, the mechanism is verified in code, the
+subsystem has a history of LAG teardown oopses, and the fix carries very
+low risk. This meets stable criteria for an important driver teardown
+correctness fix.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message.
-- **[Phase 1]** Confirmed no Reported-by/Tested-by/Fixes/Link tags.
-- **[Phase 2]** Diff analysis: reorder `mmc_add_host()` after IRQ setup;
-  remove `request_irq_fail` path.
-- **[Phase 2]** Read `mmc_add_host()` in
-  `drivers/mmc/core/host.c:644-661` — calls `mmc_start_host()`.
-- **[Phase 2]** Read `mmc_start_host()` / `_mmc_detect_change()` in
-  `drivers/mmc/core/core.c:2338-2353,1441-1452` — schedules detect work
-  with delay 0.
-- **[Phase 2]** Read `davinci_mmcsd_probe()` buggy ordering at
-  `davinci_mmc.c:1297-1328`.
-- **[Phase 2]** Read `mmc_davinci_irq()` and `mmc_davinci_request()` —
-  IRQ-driven completion path.
-- **[Phase 3]** `git blame -L 1290,1330 drivers/mmc/host/davinci_mmc.c`
-  — buggy order since 2009.
-- **[Phase 3]** `git show 21b2cec61c04b` — `PROBE_PREFER_ASYNCHRONOUS`
-  on davinci since 2020.
-- **[Phase 3]** `git log --oneline` — found precedent commits
-  `a5d8de1cb7e1d`, `74f45de394d97`.
-- **[Phase 3]** `git show a5d8de1cb7e1d` — confirmed identical rationale
-  for uniphier-sd.
-- **[Phase 4]** WebFetch lkml.iu.edu patch submission — original patch
-  found.
-- **[Phase 4]** WebFetch lists.openwall.net — Ulf Hansson “Applied for
-  next, thanks!”
-- **[Phase 4]** `b4 dig -c HEAD` — failed (commit not in HEAD); `b4 dig
-  -l` — unsupported syntax.
-- **[Phase 5]** Compared `omap_hsmmc.c:1916-1946` and
-  `sdhci.c:4883-4898` — IRQ before `mmc_add_host`.
-- **[Phase 5]** Read `Kconfig` `CONFIG_MMC_DAVINCI` — `ARCH_DAVINCI ||
-  COMPILE_TEST`.
-- **[Phase 6]** `git describe HEAD` → `v6.18.44`.
-- **[Phase 6]** `git merge-base --is-ancestor d04e0151d316e HEAD` → fix
-  **NOT** in tree.
-- **[Phase 6]** Grep confirmed buggy probe order still present in
-  checked-out tree.
-- **[Phase 6]** `git show d04e0151d316e` — verified commit exists and
-  matches provided diff.
-- **[Phase 7]** `git log --oneline -20 --
-  drivers/mmc/host/davinci_mmc.c` — driver actively maintained.
-- **[Phase 8]** Assessed impact limited to `ARCH_DAVINCI` with boot-time
-  hang severity for those users.
+- **[Phase 1]** Parsed commit message and tags from user-provided diff
+- **[Phase 2]** Analyzed diff: 3 hunks in `main.c`, eswitch disable
+  moved from `mlx5_unload` to `mlx5_uninit_one` and
+  `mlx5_unload_one_devl_locked`
+- **[Phase 3]** `git describe HEAD` → `v6.18.44`; `Makefile` → 6.18.44
+- **[Phase 3]** `git blame` on lines 1428–1450, 1530–1558, 1618–1636 of
+  `main.c` — ordering history confirmed
+- **[Phase 3]** `git show 85b47dc40bbc7` — eswitch disable moved to
+  first in `mlx5_unload` (2023)
+- **[Phase 3]** `git show f019679ea5f2a` — original addition of eswitch
+  disable to unload (2022)
+- **[Phase 3]** `git show af8c0e25f249a` — shared-FDB LAG since Aug 2021
+- **[Phase 3]** `git show 4b8eeed4fb105` — related bridge+LAG oops fix
+  in tree
+- **[Phase 4]** `b4 dig -c HEAD` — no match (commit not in tree)
+- **[Phase 4]** Lore/patch.msgid.link fetch — blocked (403/bot
+  protection); thread not retrieved
+- **[Phase 4]** Workspace `.mbx` search for `align disable sequence` /
+  `395443` — not found
+- **[Phase 5]** Read `mlx5_eswitch_disable()` in `eswitch.c:1780–1790` —
+  calls `mlx5_lag_disable_change`
+- **[Phase 5]** Read `mlx5_disable_lag()` in `lag.c:900–937` — shared-
+  FDB path calls `mlx5_eswitch_reload_ib_reps`
+- **[Phase 5]** Read `mlx5_eswitch_reload_ib_reps()` in
+  `eswitch_offloads.c:3346–3368` — requires OFFLOADS mode and REP_LOADED
+- **[Phase 5]** Read `mlx5_detach_device()` in `dev.c:414–454` — removes
+  auxiliary devices before unload
+- **[Phase 5]** Read `mlx5_devlink_eswitch_mode_set()` in
+  `eswitch_offloads.c:3807–3890` — disables eswitch before mode change
+- **[Phase 5]** `grep mlx5_unload(` — callers: err_register,
+  mlx5_uninit_one, err_attach, mlx5_unload_one_devl_locked
+- **[Phase 6]** Read current `main.c:1428–1645` — buggy ordering
+  confirmed in 6.18.44
+- **[Phase 6]** `grep mlx5_eswitch_disable` — present in tree, not yet
+  reordered
+- **[Phase 8]** Confirmed SD = Socket Direct via `mlx5_get_sd()` usage
+  in `eswitch_offloads.c:3826–3828`
+- **UNVERIFIED:** Mailing list reviewer stable nominations; patches 1–2
+  of series; explicit user crash reports for this specific bug
 
 **YES**
 
- drivers/mmc/host/davinci_mmc.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index 00adc15956fd2..3d0d05ab1fe48 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1294,14 +1294,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 		goto cpu_freq_fail;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 22bdefe5696c9..42bc553d034b5 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1427,7 +1427,6 @@ static int mlx5_load(struct mlx5_core_dev *dev)
  
--	ret = mmc_add_host(mmc);
--	if (ret < 0)
--		goto mmc_add_host_fail;
--
- 	ret = devm_request_irq(&pdev->dev, irq, mmc_davinci_irq, 0,
- 			       mmc_hostname(mmc), host);
- 	if (ret)
--		goto request_irq_fail;
-+		goto mmc_add_host_fail;
+ static void mlx5_unload(struct mlx5_core_dev *dev)
+ {
+-	mlx5_eswitch_disable(dev->priv.eswitch);
+ 	mlx5_devlink_traps_unregister(priv_to_devlink(dev));
+ 	mlx5_sf_dev_table_destroy(dev);
+ 	mlx5_sriov_detach(dev);
+@@ -1536,6 +1535,7 @@ void mlx5_uninit_one(struct mlx5_core_dev *dev)
  
- 	if (host->sdio_irq >= 0) {
- 		ret = devm_request_irq(&pdev->dev, host->sdio_irq,
-@@ -1311,6 +1307,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 			mmc->caps |= MMC_CAP_SDIO_IRQ;
- 	}
+ 	mlx5_hwmon_dev_unregister(dev);
+ 	mlx5_crdump_disable(dev);
++	mlx5_eswitch_disable(dev->priv.eswitch);
+ 	mlx5_unregister_device(dev);
  
-+	ret = mmc_add_host(mmc);
-+	if (ret < 0)
-+		goto mmc_add_host_fail;
-+
- 	rename_region(mem, mmc_hostname(mmc));
+ 	if (!test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state)) {
+@@ -1620,6 +1620,7 @@ void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev, bool suspend)
+ 	devl_assert_locked(priv_to_devlink(dev));
+ 	mutex_lock(&dev->intf_state_mutex);
  
- 	if (mmc->caps & MMC_CAP_8_BIT_DATA)
-@@ -1324,8 +1324,6 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
++	mlx5_eswitch_disable(dev->priv.eswitch);
+ 	mlx5_detach_device(dev, suspend);
  
- 	return 0;
- 
--request_irq_fail:
--	mmc_remove_host(mmc);
- mmc_add_host_fail:
- 	mmc_davinci_cpufreq_deregister(host);
- cpu_freq_fail:
+ 	if (!test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state)) {
 -- 
 2.53.0
 
