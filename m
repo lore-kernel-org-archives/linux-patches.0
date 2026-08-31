@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271EE4A1387;
-	Mon, 31 Aug 2026 14:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6902D499F1C;
+	Mon, 31 Aug 2026 14:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185284; cv=none; b=riPqthdaRW4F/lluBN/8vAYlVy9cAi+xJEA3bRrp1fFFu/ZQ4y1MyXnLJjBhVDLvtYVNrXrGXEd/RWB8C9NNN2R6TI79AQ6puX18MXpVL0bu7c4VKu4Iv7L43cus+7XIv5o1wpQ8nFReJegYAf7MoLkpZL79iz7pV+d9DjopUPo=
+	t=1788185278; cv=none; b=cK3Y2NQKdjhMRi0nsWcaAQ2IAklt2KHK5NltbmlMgn6UsXWKAiUR7IDDHEOxosYKhGEPeWxS2/DFRDrv3S0dMBc6YaVJYOiHP88ebvTlnQBrLq6pt+8ClmPIF6tKpq1kuVV0POfhqlQSUItsZObulqtKM80U7TpatOKOY4BA1S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185284; c=relaxed/simple;
-	bh=4zy/sTIsUmadpJ/nQUO5XsIiJthLzPcRk5K+HHwgbus=;
+	s=arc-20240116; t=1788185278; c=relaxed/simple;
+	bh=EfAud/6/T7QUOzHbAUZpgJCl3u8u3xno1SBGt6hS/hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1LkFOJZiNLmSzfrDXILckj6O3R8PxOKhOuNCxajrqISJQZzWEoQK90PudymxVX54/pE2r6iLY9AVtRgvMTyoG2nW908huxSdB3H6LW0w7KbFOq+1WMx8AVEXw99pdb4jbyqkN5x6J7cNi0xdgvM6Ns4cuXwfIUOkAw5OwDYZeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N22r+Mqf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FBiIJgkCdmaYES7zZ9VGKhHKP5JigjtjkiexD7he2Ksg4y/KdvJV11PMtiNv8EG0YD9LBbpB9qIZh+n3F1LRMFV1sAShYRWViFvKa9//C3Uwm3UF6/3rquerqhnkNdKLijYyDpiKkN1pud74nJo7HNjJQgi5cHX9sTW4khbOQ+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzPc9hlK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N22r+Mqf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F1C1F000E9;
-	Mon, 31 Aug 2026 14:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzPc9hlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36531F000E9;
+	Mon, 31 Aug 2026 14:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185283;
-	bh=WVygwbhV/B4dQbV831D7kQTc+GJLtwJcCZgO9ivB26I=;
+	s=korg; t=1788185277;
+	bh=9CkguLUlTvE1AvFdLBOxAsB7E+oU5SPFpY3DRr3uM7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N22r+MqfRW7ywB+rCd0h+8pAV11I4nwUJoIOW/7etMw8IrTbRA0bruPqujWTIrrLW
-	 r3BtErhslF0FZlJH+qPh1aalIJF5zbnxUU6ETRyj6yPgSjoqNqvyQDNk66/+6xOlpv
-	 kMa9QEc3sQBZZk7LWmPSGqB2phWmi32VZDkgXcfE=
+	b=EzPc9hlKdrqYlAlRQASFgiNPjymO65EOWrl9DYSEQUS2r3Pz8ohM9OyR/BuoOWFAl
+	 /VIHuw6XXkpQ+VbX44OOpu3W5DuYPFJP/0TxFyrmX/yiXUVC205XjhoNzRZ/dpt2+E
+	 VYXtaExAnlbYa/2872wGbzjvCVmPrEeUW8LeJIiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 40/43] USB: serial: option: fix slab OOB read in interrupt URB callback
-Date: Mon, 31 Aug 2026 15:35:48 +0200
-Message-ID: <20260831133400.619312351@linuxfoundation.org>
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 5.10 38/43] usb: core: Strengthen error handling in hub_hub_status()
+Date: Mon, 31 Aug 2026 15:35:46 +0200
+Message-ID: <20260831133400.482777387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -50,78 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit 885d802f544ca7bfa8f3984d94233cce715bb6b3 upstream.
+commit a29496745aa335d97f617385809583241e118610 upstream.
 
-The interrupt URB buffer is allocated in setup_port_interrupt_in() based
-on the endpoint's wMaxPacketSize:
+Add additional error handling after the call to get_hub_status() in
+hub_hub_status().
 
-    buffer_size = usb_endpoint_maxp(epd);
-    port->interrupt_in_buffer = kmalloc(buffer_size, GFP_KERNEL);
+get_hub_status() uses usb_control_msg() which does not verify that the
+message is the correct length, substituting it for
+usb_control_msg_recv() would also solve this issue but increase memory
+allocations.
 
-When a USB device declares wMaxPacketSize = 8 on its interrupt IN
-endpoint, the buffer is allocated from kmalloc-8 cache (exactly
-8 bytes).
+Instead, error handling is copied from the method used in
+hub_ext_port_status(), which shares the same flow of logic as
+hub_hub_status().
 
-If the device sends a short packet (actual_length < wMaxPacketSize),
-the URB completes with status == 0 and the callback proceeds to read:
-
-    data[sizeof(struct usb_ctrlrequest)]
-
-which evaluates to data[8], accessing 1 byte beyond the allocated 8-byte
-buffer. This results in a slab out-of-bounds read.
-
-Fix this by adding the missing bounds check: first verify that the
-actual length is large enough to contain the struct usb_ctrlrequest
-header before accessing req_pkt->bRequestType and req_pkt->bRequest,
-and then verify that there is an additional byte for the modem signal
-state before reading data[sizeof(struct usb_ctrlrequest)] inside the
-conditional.  Use sizeof(*req_pkt) instead of sizeof(struct
-usb_ctrlrequest) for consistency.
-
-Assisted-by: Claude:deepseek-v4-pro
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Fixes: 58cfe9113e48 ("[PATCH] USB: add Option Card driver")
-Cc: stable@vger.kernel.org	# v2.6.12
-[ johan: use dev_err(); split signals declaration and initialisation ]
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260722-usb_core_patches_2-v3-1-87622252bfdd@kroah.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/usb/core/hub.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2693,12 +2693,26 @@ static void option_instat_callback(struc
- 			dev_dbg(dev, "%s: NULL req_pkt\n", __func__);
- 			return;
- 		}
-+
-+		if (urb->actual_length < sizeof(*req_pkt)) {
-+			dev_err(dev, "%s: short packet: %u bytes\n", __func__,
-+				urb->actual_length);
-+			return;
-+		}
-+
- 		if ((req_pkt->bRequestType == 0xA1) &&
- 				(req_pkt->bRequest == 0x20)) {
-+			unsigned char signals;
- 			int old_dcd_state;
--			unsigned char signals = *((unsigned char *)
--					urb->transfer_buffer +
--					sizeof(struct usb_ctrlrequest));
-+
-+			if (urb->actual_length < sizeof(*req_pkt) + 1) {
-+				dev_err(dev, "%s: short interrupt transfer: %u bytes\n",
-+					__func__, urb->actual_length);
-+				return;
-+			}
-+
-+			signals = *((unsigned char *)urb->transfer_buffer +
-+					sizeof(*req_pkt));
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -955,10 +955,12 @@ static int hub_hub_status(struct usb_hub
  
- 			dev_dbg(dev, "%s: signal x%x\n", __func__, signals);
- 
+ 	mutex_lock(&hub->status_mutex);
+ 	ret = get_hub_status(hub->hdev, &hub->status->hub);
+-	if (ret < 0) {
++	if (ret < (int)sizeof(hub->status->hub)) {
+ 		if (ret != -ENODEV)
+ 			dev_err(hub->intfdev,
+ 				"%s failed (err = %d)\n", __func__, ret);
++		if (ret >= 0)
++			ret = -EIO;
+ 	} else {
+ 		*status = le16_to_cpu(hub->status->hub.wHubStatus);
+ 		*change = le16_to_cpu(hub->status->hub.wHubChange);
 
 
