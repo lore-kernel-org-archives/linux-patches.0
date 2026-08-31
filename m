@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8117439F83;
-	Mon, 31 Aug 2026 13:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5F243BDD6;
+	Mon, 31 Aug 2026 13:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183219; cv=none; b=utmCBGYyuYe9g3lpiqBRwdT/BDq/L8GCFUJJaQXz+Ry/IjuKVUzf6ObHid90A8f1+UWEEXJCfljldeBoRUcmNJVoLrtCK7S8CA1zCp3dLe6dZv55U88QrxENohWA0D1DmYKJ0Q4Cq94qnIwvoGGo14yPMrBABPcorpMYYmGi8mA=
+	t=1788183221; cv=none; b=XvEgJIorpOr9PX2DI8DKeTbfFLBa3FTsYeZVZoTor+aUM3OwKnNS4Bdm7EY5BL2OOXRdKukTRvppBOSVTH1krlnYWXUHU1mPAxBC1mb3JxkLwWNxvoRYE829k1T0RXlsRvL9X8MFbP+LRG9Dz873qMwPDvcME4ygYY61yMiADQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183219; c=relaxed/simple;
-	bh=AM8PKwI9A0Nx7pJTy2BhPnlvxqcGOVjc0qnmTKZ8RgI=;
+	s=arc-20240116; t=1788183221; c=relaxed/simple;
+	bh=TE17VwI9rll3f2GWMfg7sEj/C6x4l/DjzALtKz0vQbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eOaaH32ZRcduN90cAcuHaXLMzTonwAONve8ksWpoIm1hJkFnTcbEuVK3ox6xZG34vkF7f4HEkrz84LTkuUqviAwGSDHyAIIG5UJL/fCbY48HoE/VW0zEVQFSkt9WaCTVW4F5IgNJsa7QmAnfJqhwjC3s/ZtNh5i9ZspWiYxkH5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WUy5UOY3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LrmC+a3b2XT+O+BhjmRAhHb8pM42zufXZDpRGTDCivf3ZxuL4gfFCnN08ouJoloPSo+rb2FRZwje0iYi7Yz4FzAvY3U1IPY5n+z2RtqHikhF8YDLJoRd4HEktVpBwGN5uiU3kp7ZEU2w3wkpiqLGLi244gGZZ9Rlnblu1gLFxCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b4/xcCCf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WUy5UOY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5773A1F000E9;
-	Mon, 31 Aug 2026 13:33:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b4/xcCCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F14D1F00ACA;
+	Mon, 31 Aug 2026 13:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183217;
-	bh=s2WzExxrbNaGa4Q4CVRnZE3JXWCu0m9Sj1QCKWehbB8=;
+	s=k20260515; t=1788183219;
+	bh=btqJjj1YUoC5weF03sT25svIkf/+PmS962BjMyfzVHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WUy5UOY3h+1/ZdSD2JYEOQ5E3GnsevExIG3tmXuYYea5nUUnJc4RQZ+medCKI+hxB
-	 Fy4vj94zf1vZMJu0Sy/ZoYf7VsC4GVQ1YWi3lYMgfuoW7EK4zqC2WM1HoVV/S4zpiC
-	 EuCtOYW+D7EEj6QA5gDmzlcvpni4PSI77TMdkND2qRRioWhJ+Yn7q9FnOciJ/tY99a
-	 kHuVNY672ZkLjB1n5r1wM8kZeiN32D09FIhQoCuzJO8ThVhDnPnGIU2sYc6xaB4TTK
-	 pv760pg6+fa8U9UOV86zPyugvf9oIOTNwNv/54pC6egDJHdcLozz6xA+2RgmsMWNaT
-	 CEBA0m4DPCMTA==
+	b=b4/xcCCf1FKPa0PC98eAuUvUANhQpp1IqDYMDIPpKqiiarXYsQ+yv60JljUHnxKpu
+	 e+lJJQOiOHvhkFg7BeDOVjuTJ1asElCx2Z0vsjZQ12RpDmVVtMlEhgXNp3JvYOHxeu
+	 c/XY7GQyCFP55jHNoMlKY5BoRkjtGUaHI/QP87wjBlY40x7pr7rOBuWf9UESuaOSTF
+	 6gtZRmOyliMuoN2U+1xg1Lu5KYJEyCHpraHK2XFnJ3j3hWvP3PQIEY+ZqObDV6aCz0
+	 ZTP39ws4ZfAtvJjBixEvBxH3bhm9KYL06m2KG2unyMuoS+r1twFahIBs2s5A8ZTB71
+	 IFfIwA37C/FnQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Yung-Tse Cheng <mes900903@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	razor@blackwall.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	bridge@lists.linux.dev,
-	netdev@vger.kernel.org,
+	gmaglione@redhat.com,
+	vgoyal@redhat.com,
+	stefanha@redhat.com,
+	miklos@szeredi.hu,
+	virtualization@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	fuse-devel@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] bridge: Add missing READ_ONCE() annotations around FDB destination port
-Date: Mon, 31 Aug 2026 09:20:43 -0400
-Message-ID: <20260831133314.4125787-15-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] virtio-fs: avoid double-free on failed queue setup
+Date: Mon, 31 Aug 2026 09:20:44 -0400
+Message-ID: <20260831133314.4125787-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,464 +58,383 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Yung-Tse Cheng <mes900903@gmail.com>
 
-[ Upstream commit bcdfd9fb109e0c9d76c345b2346b6b75ed1f476d ]
+[ Upstream commit 6af3330ec5d5fb8c06c04eb520a71cf73ea5a765 ]
 
-When roaming, the FDB destination port can change without holding the
-bridge's hash lock. Therefore, add missing READ_ONCE() annotations in
-both RCU readers and readers that hold the lock. In the latter case, the
-annotation is not needed in places where the FDB entry was already
-validated to be a local entry since such entries cannot roam.
+virtio_fs_setup_vqs() allocates fs->vqs and fs->mq_map before calling
+virtio_find_vqs(). If virtio_find_vqs() fails, the error path frees both
+pointers and returns an error to virtio_fs_probe().
 
-Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260517115009.175163-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+virtio_fs_probe() then drops the last kobject reference, and
+virtio_fs_ktype_release() frees fs->vqs and fs->mq_map again. This leaves
+dangling pointers in struct virtio_fs and can trigger a double-free during
+probe failure cleanup.
+
+Set fs->vqs and fs->mq_map to NULL immediately after kfree() in the
+virtio_fs_setup_vqs() error path so that the later kobject release sees an
+uninitialized state and kfree(NULL) becomes harmless.
+
+This can be reproduced when a broken virtio-fs device advertises more
+request queues than the transport actually provides. In that case
+virtio_find_vqs() fails while setting up the extra queue, and the probe
+path reaches the double-free cleanup sequence.
+
+Signed-off-by: Yung-Tse Cheng <mes900903@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `bridge: Add missing READ_ONCE() annotations
-around FDB destination port`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (Makefile: 6.18.44)
+### Step 1.1: Subject Line
+**Record:** `[virtio-fs] [avoid] double-free on failed queue setup` —
+explicit bug fix in the virtio-fs driver error path during virtqueue
+setup.
 
----
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Yung-Tse Cheng `<mes900903@gmail.com>` (author)
+- **Signed-off-by:** Miklos Szeredi `<mszeredi@redhat.com>`
+  (FUSE/virtio-fs maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
+  or Cc: stable tags
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Notable: maintainer Signed-off-by is a strong quality signal.
 
-**Step 1.1 — Subject line**
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** On `virtio_find_vqs()` failure in `virtio_fs_setup_vqs()`,
+  the error path frees `fs->vqs` and `fs->mq_map`, but
+  `virtio_fs_probe()` then calls `kobject_put()`, which runs
+  `virtio_fs_ktype_release()` and frees the same pointers again.
+- **Symptom:** Double-free and dangling pointers during probe-failure
+  cleanup; potential kernel crash / memory corruption.
+- **Trigger:** Broken virtio-fs device advertising more request queues
+  than the transport actually provides.
+- **Root cause:** Missing NULL assignment after `kfree()` in the setup
+  error path, so the kobject release path cannot tell memory was already
+  freed.
 
-Record: `[bridge]` `[add]` missing `READ_ONCE()` annotations around FDB
-destination port during concurrent roaming updates.
-
-**Step 1.2 — Tags**
-
-Record:
-- `Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>` — bridge
-  maintainer ack
-- `Signed-off-by: Ido Schimmel <idosch@nvidia.com>` — bridge
-  maintainer/author
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` — networking tree
-  maintainer
-- `Link:
-  https://patch.msgid.link/20260517115009.175163-1-idosch@nvidia.com`
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or syzbot tags
-
-**Step 1.3 — Body analysis**
-
-Record:
-- **Bug:** `fdb->dst` can change during MAC roaming without holding
-  `br->hash_lock`.
-- **Symptom:** Readers can observe a changing destination port; without
-  `READ_ONCE()`, loads are not paired with existing `WRITE_ONCE()`
-  writers and may be inconsistent across a read/use sequence.
-- **Root cause:** `br_fdb_update()` updates `fdb->dst` locklessly on the
-  fast path (`WRITE_ONCE(fdb->dst, source)` at line 1030 in `br_fdb.c`),
-  while several readers still used plain `f->dst` / `dst->dst` loads.
-- **Version info:** None in the message.
-
-**Step 1.4 — Hidden bug fix?**
-
-Record: **Yes.** Although labeled as annotation work, this is a real
-concurrency correctness fix in the bridge forwarding and FDB management
-paths, completing an established `READ_ONCE`/`WRITE_ONCE` pattern for
-`fdb->dst`.
+### Step 1.4: Hidden Bug Fix?
+**Record:** No — this is an explicit, clearly described double-free fix,
+not disguised cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-**Step 2.1 — Inventory**
+### Step 2.1: Inventory
+**Record:**
+- **File:** `fs/fuse/virtio_fs.c` (+2 lines, 0 removed)
+- **Function:** `virtio_fs_setup_vqs()`
+- **Scope:** Single-file, surgical fix (2 lines)
 
-Record:
-- `net/bridge/br_device.c`: 1 line changed (`br_dev_xmit`)
-- `net/bridge/br_input.c`: 1 line changed (`br_handle_frame_finish`)
-- `net/bridge/br_fdb.c`: 4 lines changed across 3 functions
-- **Total:** ~6 functional lines, 3 files, surgical scope
-- **Functions modified:** `br_dev_xmit`, `br_handle_frame_finish`,
-  `br_fdb_changeaddr`, `br_fdb_delete_by_port`, `br_fdb_clear_offload`
+### Step 2.2: Code Flow Change
+**Record:**
+- **Hunk (error path in `virtio_fs_setup_vqs()`):**
+  - **Before:** On failure (`ret != 0`), `kfree(fs->vqs)` and
+    `kfree(fs->mq_map)` leave dangling pointers in `struct virtio_fs`.
+  - **After:** Same frees, then `fs->vqs = NULL` and `fs->mq_map =
+    NULL`, so later `virtio_fs_ktype_release()` does harmless
+    `kfree(NULL)`.
 
-**Step 2.2 — Code flow changes**
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** Double-free / dangling pointer on error path.
+**Mechanism:** `virtio_fs_setup_vqs()` and `virtio_fs_ktype_release()`
+both free the same allocations without coordinating ownership transfer.
 
-Record:
-| Location | Before | After |
-|---|---|---|
-| `br_dev_xmit` | `br_forward(dst->dst, ...)` after RCU FDB lookup |
-`br_forward(READ_ONCE(dst->dst), ...)` — single stable snapshot of
-roaming port |
-| `br_handle_frame_finish` | same pattern on receive/forward path | same
-fix |
-| `br_fdb_changeaddr` | `f->dst == p` under `hash_lock` |
-`READ_ONCE(f->dst) == p` |
-| `br_fdb_delete_by_port` | `f->dst != p` under `hash_lock` |
-`READ_ONCE(f->dst) != p` |
-| `br_fdb_clear_offload` | `f->dst == p` under `hash_lock` |
-`READ_ONCE(f->dst) == p` |
+### Step 2.4: Fix Quality
+**Record:** Obviously correct, minimal, standard kernel pattern.
+Regression risk is very low — only affects the failure path and makes
+cleanup idempotent.
 
-**Step 2.3 — Bug mechanism**
+---
 
-Record: **Race condition / data-race correctness fix.** Category (b)
-synchronization. `br_fdb_update()` changes `fdb->dst` without
-`hash_lock`:
+## Phase 3: Git History Investigation
 
-```1026:1031:net/bridge/br_fdb.c
-                        /* fastpath: update of existing entry */
-                        if (unlikely(source != READ_ONCE(fdb->dst) &&
-                                     !test_bit(BR_FDB_STICKY,
-&fdb->flags))) {
-                                br_switchdev_fdb_notify(br, fdb,
-RTM_DELNEIGH);
-                                WRITE_ONCE(fdb->dst, source);
+### Step 3.1: Blame
+**Record:**
+- `kfree(fs->vqs)` in error path: Stefan Hajnoczi, 2018-06-12
+  (`a62a8ef9d97da2`)
+- `if (ret) { ... kfree(fs->mq_map); }` wrapper: Peter-Jan Gootzen,
+  2024-05-01 (`529395d2ae6456`, "virtio-fs: add multi-queue support")
+- The **double-free mechanism** was introduced when kobject lifecycle
+  landed in `virtio_fs_ktype_release()` — commit `a8f62f50b4e4e`
+  (2024-02-12, "virtiofs: export filesystem tags through sysfs"). That
+  commit is an ancestor of this tree and of `v6.18`.
+
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag present.
+
+### Step 3.3: Related File History
+**Record:** Recent `virtio_fs.c` activity includes other probe/cleanup
+fixes (e.g. `c014021253d77` incorrect fsvq kobj check). No related fix
+for this double-free is present. The candidate fix is not yet in this
+tree.
+
+### Step 3.4: Author Context
+**Record:** Yung-Tse Cheng has no prior commits in this checkout. Miklos
+Szeredi is the FUSE maintainer and signed off on the patch.
+
+### Step 3.5: Dependencies
+**Record:** Standalone, 2-line fix. No series dependencies. `git apply
+--check` succeeds cleanly against the local tree.
+
+---
+
+## Phase 4: Mailing List and External Research
+
+### Step 4.1: Original Discussion
+**Record:** `b4 dig -c` failed (commit not in local tree). Web search
+found the patch at [mail-archive.com](https://www.mail-
+archive.com/linux-kernel@vger.kernel.org/msg2622149.html) and [Patchew](
+https://patchew.org/linux/20260405193039.178506-1-mes900903@gmail.com/).
+Posted 2026-04-06 by Yung-Tse Cheng. Standalone 1-patch series. Lore
+fetch timed out; no review-thread details retrieved.
+
+### Step 4.2: Reviewers
+**Record:** From Spinics archive: To: virtio-fs maintainers (gmaglione,
+vgoyal, stefanha, miklos). Cc: virtualization@, linux-fsdevel@, linux-
+kernel@. Appropriate maintainers were included.
+
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link. Author describes
+reproducible scenario with a misconfigured/broken virtio-fs device.
+
+### Step 4.4: Related Patches
+**Record:** Standalone fix, not part of a multi-patch series.
+
+### Step 4.5: Stable List History
+**Record:** No stable-list discussion found. UNVERIFIED due to lore
+access failure.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+**Record:** `virtio_fs_setup_vqs()`, `virtio_fs_ktype_release()`,
+`virtio_fs_probe()`
+
+### Step 5.2: Callers
+**Record:**
+- `virtio_fs_setup_vqs()` — called only from `virtio_fs_probe()` (line
+  1133)
+- `virtio_fs_ktype_release()` — kobject `.release` callback, invoked via
+  `kobject_put()` from `virtio_fs_probe()` error path (line 1160) and
+  normal teardown paths
+
+### Step 5.3: Callees
+**Record:** `kcalloc()`, `virtio_find_vqs()`, `kfree()`, `kobject_put()`
+— standard probe allocation/cleanup.
+
+### Step 5.4: Reachability
+**Record:**
+```
+virtio device probe → virtio_fs_probe()
+  → virtio_fs_setup_vqs() [fails]
+    → error path kfree(vqs, mq_map)
+  → out: kobject_put()
+    → virtio_fs_ktype_release() [double-free without fix]
+```
+Reachable during virtio-fs device enumeration when queue setup fails
+(broken device, ENOMEM, or `virtio_find_vqs()` failure). Not a syscall
+path directly, but triggered during driver probe on systems with virtio-
+fs enabled.
+
+### Step 5.5: Similar Patterns
+**Record:** No `fs->vqs = NULL` or `fs->mq_map = NULL` anywhere in
+current `virtio_fs.c`. The dangling-pointer pattern is unique to this
+error path.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree
+
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** Local tree is **v6.18.44** (`git describe HEAD` →
+`v6.18.44-1-g2736c32da98b9`). Current code at lines 989–992 frees
+without NULLing:
+
+```989:992:fs/fuse/virtio_fs.c
+        if (ret) {
+                kfree(fs->vqs);
+                kfree(fs->mq_map);
+        }
 ```
 
-Readers on hot forwarding paths and FDB iterators could observe a
-changing `dst` pointer. `br_forward()` handles `NULL` (`if
-(unlikely(!to))`), but a stale non-NULL port causes mis-forwarding
-during roam; FDB iterators can miss or mishandle entries during
-concurrent updates.
+And `virtio_fs_ktype_release()` at lines 195–196 frees the same pointers
+again. Fix is not yet applied.
 
-**Step 2.4 — Fix quality**
+### Step 6.2: Backport Complications
+**Record:** Clean apply — `git apply --check` passed with exit code 0.
+No conflicts expected.
 
-Record: **High quality, minimal, obviously correct.** Matches the
-existing subsystem convention from `3e19ae7c6fd62` and follow-up
-`5424e678f9b30`. Regression risk is very low — only adds documented
-single-load snapshots.
+### Step 6.3: Related Fixes Already Present?
+**Record:** None. `git log -S 'fs->mq_map = NULL'` returned no results.
+No grep matches for NULL assignments.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 7: Subsystem Context
 
-**Step 3.1 — Blame**
+### Step 7.1: Subsystem
+**Record:** `fs/fuse/virtio_fs.c` — virtio-fs driver (FUSE over virtio).
+**Criticality: IMPORTANT** — affects virtualization/virtio-fs users, not
+universal core kernel, but probe failures can crash the host/VM.
 
-Record:
-- `br_device.c:110` and `br_input.c:226`: original code from 2016
-  (Nikolay Aleksandrov), predating `READ_ONCE` annotations
-- `br_fdb.c:473`: from 2019, also predating full annotation coverage
-- Buggy plain loads have been present since before `3e19ae7c6fd62`
-  (2021)
-
-**Step 3.2 — Fixes: tag**
-
-Record: Not applicable — no `Fixes:` tag.
-
-**Step 3.3 — Related file history**
-
-Record:
-- `3e19ae7c6fd62` — introduced `READ_ONCE`/`WRITE_ONCE` for `fdb->dst`
-  broadly (in tree)
-- `5424e678f9b30` — “use a stable FDB dst snapshot in RCU readers”;
-  fixed `br_fdb_fillbuf`, `fdb_delete_local` writers, etc.; `Cc:
-  stable@vger.kernel.org` (in tree)
-- `17071fb5cb9c2` — annotated `fdb->{updated,used}` races (in tree)
-- This commit fills remaining gaps after those fixes
-- **Standalone:** yes, no series dependency
-
-**Step 3.4 — Author context**
-
-Record: Ido Schimmel is an active bridge maintainer (`Reviewed-by` on
-related stable-bound fix `5424e678`). Nikolay Aleksandrov acked.
-
-**Step 3.5 — Prerequisites**
-
-Record:
-- Requires `WRITE_ONCE(fdb->dst, ...)` writers — present since
-  `3e19ae7c6fd62`
-- Requires roaming fast path in `br_fdb_update()` — present
-- No additional commits required; patch dry-run applies cleanly
+### Step 7.2: Activity
+**Record:** Actively maintained; recent virtio-fs and fuse fixes in this
+tree.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 8: Impact and Risk Assessment
 
-**Step 4.1 — Original discussion**
+### Step 8.1: Who Is Affected
+**Record:** Systems with `CONFIG_VIRTIO_FS` enabled (module or built-in)
+where virtio-fs device probe fails during queue setup — VMs with virtio-
+fs, hosts exporting virtio-fs, or broken/malicious virtio device
+configurations.
 
-Record: **UNVERIFIED** — `b4 dig -c <commit>` could not be run (commit
-not present locally); lore.kernel.org and patch.msgid.link blocked by
-bot protection (Anubis).
+### Step 8.2: Trigger Conditions
+**Record:**
+- `virtio_find_vqs()` failure (e.g. device advertises more queues than
+  transport supports)
+- Also any error path through `out:` label with `ret != 0` after
+  `fs->vqs`/`fs->mq_map` were allocated (including ENOMEM)
+- Not everyday, but reproducible on probe failure; privileged entity
+  controlling virtio device configuration can trigger it
 
-**Step 4.2 — Reviewers**
+### Step 8.3: Failure Mode Severity
+**Record:** **Double-free** → kernel oops, possible memory corruption.
+**Severity: HIGH** (crash / potential security impact from heap
+corruption on probe failure).
 
-Record: **UNVERIFIED** via `b4 dig -w`. Commit message shows maintainer
-ack from Nikolay Aleksandrov and merge by Jakub Kicinski.
-
-**Step 4.3 — Bug report**
-
-Record: Not applicable — no `Reported-by:` or syzbot link.
-
-**Step 4.4 — Related patches**
-
-Record: Part of ongoing `fdb->dst` concurrency hardening; directly
-complements in-tree `5424e678f9b30`.
-
-**Step 4.5 — Stable list history**
-
-Record: **UNVERIFIED** — lore stable search inaccessible.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1 — Key functions**
-
-Record: `br_dev_xmit`, `br_handle_frame_finish`, `br_fdb_changeaddr`,
-`br_fdb_delete_by_port`, `br_fdb_clear_offload`
-
-**Step 5.2 — Callers / reachability**
-
-Record:
-- `br_dev_xmit` — bridge device transmit hot path (every locally
-  originated unicast frame)
-- `br_handle_frame_finish` — bridge receive/forward hot path (every
-  forwarded unicast frame)
-- `br_fdb_delete_by_port` — port removal/teardown
-- `br_fdb_changeaddr` — MAC address change on port
-- `br_fdb_clear_offload` — switchdev offload cleanup
-
-All are reachable in normal bridge operation; forwarding paths are among
-the hottest networking code paths.
-
-**Step 5.3 — Callees**
-
-Record: `br_forward()` dereferences port and forwards skb;
-`br_fdb_find_rcu()` provides RCU-protected FDB entry; concurrent writer
-is `br_fdb_update()`.
-
-**Step 5.4 — User triggerability**
-
-Record: **Yes.** Any bridge with learned MACs that roam between ports
-triggers `br_fdb_update()` lockless `fdb->dst` changes while packets are
-being forwarded.
-
-**Step 5.5 — Similar patterns**
-
-Record: Most other `fdb->dst` readers in this tree already use
-`READ_ONCE()` — e.g. `br_fdb_fillbuf`, `br_fdb_test_addr`,
-`br_switchdev_fdb_notify`, `br_arp_nd_proxy.c`. The patched sites are
-the remaining outliers.
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** HIGH — prevents crash on legitimate probe failure paths
+- **Risk:** VERY LOW — 2 lines, error-path only, idempotent cleanup
+- **Ratio:** Strongly favors backport
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (v6.18.44)
+## Phase 9: Final Synthesis
 
-**Step 6.1 — Buggy code present?**
+### Step 9.1: Evidence Summary
 
-Record: **Yes.** Verified missing annotations at:
-- `br_device.c:110`: `br_forward(dst->dst, ...)`
-- `br_input.c:226`: `br_forward(dst->dst, ...)`
-- `br_fdb.c:473`, `881`, `1663`: plain `f->dst` comparisons
+**FOR backport:**
+- Real double-free bug with clear mechanism
+- Reproducible trigger described (broken virtio-fs queue advertisement)
+- HIGH severity (kernel crash / memory corruption)
+- Minimal 2-line fix, applies cleanly
+- FUSE maintainer (Miklos Szeredi) Signed-off-by
+- Bug present in this 6.18.44 tree since kobject lifecycle (Feb 2024);
+  mq_map added second vector (May 2024)
+- Standard NULL-after-kfree pattern
 
-Roaming writer path is present (`br_fdb.c:1030`).
-
-**Step 6.2 — Backport difficulty**
-
-Record: **Clean apply** — `patch --dry-run` succeeded with no conflicts.
-
-**Step 6.3 — Related fixes already present?**
-
-Record: Partial fix `5424e678f9b30` is already in this tree; this commit
-is the remaining coverage, not a duplicate.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-**Step 7.1 — Subsystem / criticality**
-
-Record: `net/bridge` — **IMPORTANT** (widely deployed in servers, VMs,
-containers, embedded networking).
-
-**Step 7.2 — Activity**
-
-Record: Actively maintained; recent stable-relevant bridge fixes in this
-tree (UAF, sleep-in-atomic, FDB snapshot).
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-**Step 8.1 — Who is affected**
-
-Record: All systems using Linux bridge forwarding with dynamic FDB
-learning and MAC roaming.
-
-**Step 8.2 — Trigger conditions**
-
-Record: Host moves between bridge ports; concurrent forwarding while
-`br_fdb_update()` roams `fdb->dst`. Common in Wi-Fi/Ethernet mobility,
-VM migration, and active L2 networks.
-
-**Step 8.3 — Failure mode / severity**
-
-Record:
-- **Forwarding paths:** packet delivered to wrong port (connectivity bug
-  / potential traffic leakage) — **MEDIUM-HIGH**
-- **FDB management paths:** missed or incorrect entry handling during
-  concurrent roam — **MEDIUM**
-- **Kernel crash:** unlikely on these specific hunks (`br_forward()`
-  handles `NULL`); sibling fix `5424e678` addressed a confirmed NULL-
-  deref in sysfs path
-- **KCSAN/data-race:** definite without fix — **MEDIUM** for
-  CI/sanitizer builds
-
-**Step 8.4 — Risk/benefit**
-
-Record:
-- **Benefit:** HIGH for bridge users with roaming; completes an already-
-  stable-nominated fix family
-- **Risk:** VERY LOW — 6-line annotation-only change matching
-  established pattern
-- **Ratio:** strongly favors backport
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1 — Evidence summary**
-
-**FOR:**
-- Real concurrency bug in hot forwarding path
-- Small, surgical, maintainer-acked
-- Prerequisites and related stable fix already in v6.18.44
-- Applies cleanly
-- Follows established subsystem convention since 2021
-- Complements already-backported `5424e678f9b30`
-
-**AGAINST:**
-- No syzbot/crash report for these exact sites
-- Primary user impact is mis-forwarding rather than panic
-- Mailing list/stable discussion not verified
+**AGAINST backport:**
+- Only triggered on probe failure, not hot path
+- No syzbot report or CVE
+- Lore review thread not fully retrieved
 
 **UNRESOLVED:**
-- Full lore review thread content
-- Whether reviewers explicitly nominated for stable
+- Whether reviewers explicitly nominated for stable (lore fetch failed)
+- Whether patch has landed in mainline yet (not in this checkout)
 
-**Step 9.2 — Stable rules checklist**
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — standard pattern; maintainer
+   SOB; author describes reproduction
+2. Fixes a real bug? **PASS** — verified double-free in local code
+3. Important issue? **PASS** — double-free on probe failure (HIGH)
+4. Small and contained? **PASS** — 2 lines, 1 file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — clean apply verified
 
-| Criterion | Result |
-|---|---|
-| 1. Obviously correct and tested? | **PASS** — pattern proven in-tree;
-maintainer ack |
-| 2. Fixes a real user-affecting bug? | **PASS** — roaming race in
-forwarding/FDB paths |
-| 3. Important issue? | **PASS** — forwarding correctness on common
-bridge deployments |
-| 4. Small and contained? | **PASS** — 6 lines, 3 files |
-| 5. No new features/APIs? | **PASS** — annotation only |
-| 6. Can apply to local tree? | **PASS** — clean dry-run apply; code and
-writers present |
+### Step 9.3: Exception Categories
+**Record:** None — this is a straight bug fix, not a
+quirk/ID/DT/build/doc exception.
 
-**Step 9.3 — Exception category**
-
-Record: Not a device-ID/quirk/DT/build/doc exception; qualifies as a
-standard concurrency correctness bug fix.
-
-**Step 9.4 — Problem statement for stable users**
-
-When a MAC address roams between bridge ports, `fdb->dst` is updated
-locklessly. The remaining unannotated readers in transmit/receive
-forwarding and FDB cleanup paths can observe a changing destination
-port, causing frames to be forwarded to the wrong port or FDB
-maintenance to behave incorrectly. This patch completes the
-`READ_ONCE`/`WRITE_ONCE` pairing already used throughout the rest of the
-bridge FDB code and in the recently backported `5424e678` fix.
+### Step 9.4: Decision Rationale
+This tree (6.18.44) contains the buggy code: `virtio_fs_setup_vqs()`
+frees `fs->vqs` and `fs->mq_map` on error without NULLing them, and
+`virtio_fs_probe()` unconditionally calls `kobject_put()` which re-frees
+them in `virtio_fs_ktype_release()`. The fix is minimal, obviously
+correct, and prevents a kernel crash on a realistic probe-failure path.
+It fully meets stable kernel criteria.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from user-provided diff
-- [Phase 2] Diff analysis: 6 lines across `br_device.c`, `br_input.c`,
-  `br_fdb.c`
-- [Phase 3] `git describe HEAD` → `v6.18.44`
-- [Phase 3] `git blame` on lines 110/226/473 → pre-2021 code missing
-  annotations
-- [Phase 3] `git show 3e19ae7c6fd62` → original `READ_ONCE`/`WRITE_ONCE`
-  introduction
-- [Phase 3] `git show 5424e678f9b30` → related stable-nominated FDB dst
-  snapshot fix, already in tree
-- [Phase 3] `git merge-base --is-ancestor` → both `3e19ae7` and
-  `5424e678` are ancestors of HEAD
-- [Phase 4] **UNVERIFIED:** lore.kernel.org and patch.msgid.link
-  blocked; `b4 dig` not usable without local commit hash
-- [Phase 5] `grep READ_ONCE.*dst` → most readers annotated; patched
-  sites are outliers
-- [Phase 5] Read `br_fdb_update()` → confirmed lockless
-  `WRITE_ONCE(fdb->dst, source)` roaming path
-- [Phase 5] Read `br_forward()` → confirmed `NULL` port handled safely
-- [Phase 6] Read current sources → buggy plain loads confirmed present
-- [Phase 6] `patch --dry-run` → applies cleanly
-- [Phase 8] Assessed failure mode as mis-forwarding during roam, not
-  typical kernel oops
+- [Phase 1] Parsed subject, tags, body from provided commit message
+- [Phase 1] Confirmed maintainer Signed-off-by: Miklos Szeredi
+- [Phase 2] Read current `virtio_fs_setup_vqs()` error path (lines
+  986–993): missing NULL assignments
+- [Phase 2] Read `virtio_fs_ktype_release()` (lines 191–197): frees same
+  pointers
+- [Phase 2] Read `virtio_fs_probe()` error path (lines 1158–1161):
+  `kobject_put()` on all failures
+- [Phase 3] `git describe HEAD`: v6.18.44-1-g2736c32da98b9
+- [Phase 3] `git blame -L 989,992`: error-path code from 2018 (vqs) and
+  2024 (mq_map wrapper)
+- [Phase 3] `git show 529395d2ae6456`: mq_map kfree added to error path
+  without NULL
+- [Phase 3] `git show a8f62f50b4e4e`: kobject lifecycle introduced
+  double-free mechanism
+- [Phase 3] `git merge-base --is-ancestor a8f62f50b4e4e HEAD`: confirmed
+  in tree
+- [Phase 3] `git merge-base --is-ancestor 529395d2ae6456 HEAD`:
+  confirmed in tree
+- [Phase 3] `git log -S 'fs->mq_map = NULL'`: no existing fix
+- [Phase 4] `b4 dig -c df25d4faca41c`: failed (commit not in tree)
+- [Phase 4] Web search: found patch submission at mail-archive.com and
+  Patchew (2026-04-06)
+- [Phase 4] Lore direct fetch: timed out — review comments UNVERIFIED
+- [Phase 5] `grep virtio_fs_setup_vqs`: single caller in
+  `virtio_fs_probe()`
+- [Phase 5] Traced probe → setup_vqs error → kobject_put → ktype_release
+  call chain
+- [Phase 6] Confirmed buggy code present at lines 989–992; fix absent
+  (no NULL assignments)
+- [Phase 6] `git apply --check`: patch applies cleanly (exit 0)
+- [Phase 7] Read `fs/fuse/Kconfig`: VIRTIO_FS depends on FUSE_FS +
+  VIRTIO
+- [Phase 8] Assessed severity: double-free on probe failure = HIGH
 
-**YES**
+**YES**Those background searches finished and line up with the earlier
+analysis:
 
- net/bridge/br_device.c | 2 +-
- net/bridge/br_fdb.c    | 7 ++++---
- net/bridge/br_input.c  | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+- **Author lookup** — No commits from Yung-Tse Cheng / `mes900903` in
+  this 6.18.44 tree; the patch is still a candidate, not merged here.
+- **Commit message search** — Nothing matching “avoid double-free on
+  failed queue setup” in local history.
+- **Alternate-fix search** — No other commit in `fs/fuse/` that already
+  fixes this.
 
-diff --git a/net/bridge/br_device.c b/net/bridge/br_device.c
-index 525d4eccd194a..966fac7017225 100644
---- a/net/bridge/br_device.c
-+++ b/net/bridge/br_device.c
-@@ -107,7 +107,7 @@ netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 		else
- 			br_flood(br, skb, BR_PKT_MULTICAST, false, true, vid);
- 	} else if ((dst = br_fdb_find_rcu(br, dest, vid)) != NULL) {
--		br_forward(dst->dst, skb, false, true);
-+		br_forward(READ_ONCE(dst->dst), skb, false, true);
- 	} else {
- 		br_flood(br, skb, BR_PKT_UNICAST, false, true, vid);
+Together that confirms the bug is present locally and the fix isn’t
+applied yet. The backport recommendation remains **YES**.
+
+ fs/fuse/virtio_fs.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index b2f6486fe1d56..2b3daa93e299a 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -988,7 +988,9 @@ static int virtio_fs_setup_vqs(struct virtio_device *vdev,
+ 	kfree(vqs);
+ 	if (ret) {
+ 		kfree(fs->vqs);
++		fs->vqs = NULL;
+ 		kfree(fs->mq_map);
++		fs->mq_map = NULL;
  	}
-diff --git a/net/bridge/br_fdb.c b/net/bridge/br_fdb.c
-index 6eb3ab69a5140..fe85c8f197e67 100644
---- a/net/bridge/br_fdb.c
-+++ b/net/bridge/br_fdb.c
-@@ -470,7 +470,8 @@ void br_fdb_changeaddr(struct net_bridge_port *p, const unsigned char *newaddr)
- 	spin_lock_bh(&br->hash_lock);
- 	vg = nbp_vlan_group(p);
- 	hlist_for_each_entry(f, &br->fdb_list, fdb_node) {
--		if (f->dst == p && test_bit(BR_FDB_LOCAL, &f->flags) &&
-+		if (READ_ONCE(f->dst) == p &&
-+		    test_bit(BR_FDB_LOCAL, &f->flags) &&
- 		    !test_bit(BR_FDB_ADDED_BY_USER, &f->flags)) {
- 			/* delete old one */
- 			fdb_delete_local(br, p, f);
-@@ -878,7 +879,7 @@ void br_fdb_delete_by_port(struct net_bridge *br,
- 
- 	spin_lock_bh(&br->hash_lock);
- 	hlist_for_each_entry_safe(f, tmp, &br->fdb_list, fdb_node) {
--		if (f->dst != p)
-+		if (READ_ONCE(f->dst) != p)
- 			continue;
- 
- 		if (!do_all)
-@@ -1660,7 +1661,7 @@ void br_fdb_clear_offload(const struct net_device *dev, u16 vid)
- 
- 	spin_lock_bh(&p->br->hash_lock);
- 	hlist_for_each_entry(f, &p->br->fdb_list, fdb_node) {
--		if (f->dst == p && f->key.vlan_id == vid)
-+		if (READ_ONCE(f->dst) == p && f->key.vlan_id == vid)
- 			clear_bit(BR_FDB_OFFLOADED, &f->flags);
- 	}
- 	spin_unlock_bh(&p->br->hash_lock);
-diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
-index 2cbae0f9ae1f0..470615675bdc0 100644
---- a/net/bridge/br_input.c
-+++ b/net/bridge/br_input.c
-@@ -223,7 +223,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
- 
- 		if (now != READ_ONCE(dst->used))
- 			WRITE_ONCE(dst->used, now);
--		br_forward(dst->dst, skb, local_rcv, false);
-+		br_forward(READ_ONCE(dst->dst), skb, local_rcv, false);
- 	} else {
- 		if (!mcast_hit)
- 			br_flood(br, skb, pkt_type, local_rcv, false, vid);
+ 	return ret;
+ }
 -- 
 2.53.0
 
