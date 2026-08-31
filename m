@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0917347CC8C;
-	Mon, 31 Aug 2026 13:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E6347D442;
+	Mon, 31 Aug 2026 13:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184701; cv=none; b=d5ixZ2T75VPgY7SBXn/rF7dmev16Mo75q87mImHcKge06iPLiEancnn9cF79K1rKGu6VVJHq4JH4V4AOukTcrj/Hu+a7K1o3YwVmkbNC4X26aK/NloDN8R+jGIHKU/v3s6pIST5bWVkGHK1EAWOX2caRWbXOVicLrXa1ZKSyYBo=
+	t=1788184706; cv=none; b=pCl5Q+Ul+WrFw7XPfXRJS7npgwTknsII//ASCmRQ+4NrvPszh9xKxWKWjJyfSycs46R7hBdm1Hc3bxbOtLsyZlya9IZSaRtH0KTGTEFmHpEid5AuVIkRFoCVFcqB93vGMb9IDbDVyOVLrmWbgWwnGmLQtDWeQbgNumgUEFnM/9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184701; c=relaxed/simple;
-	bh=mAa7CHypOd19R1nyVhfPvhWBouVGS1uqI8bdCadWJrI=;
+	s=arc-20240116; t=1788184706; c=relaxed/simple;
+	bh=e/OQrEkR1D9RQwn8cvaNi/qZbjvGJ0o5eBU8cR32dKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eP7aNsPTu0Gtirfyt5j/N7Xq4ZcFqZfT2lGJcKEbwoig72bCxoS6YQcM3X6YMggDNUfcMyUWJLjiIUaEuyMnP4fc9bvpEWRFnbqt6Ov34dAV3cqNsqlnKkAt0UBFjpGwuqQT9Lmt4qxdhexn7G45O7tzoYmMhOvmRdlOUA9Fcac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVFzeWgJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hxnKlyyMuvmr1afYh1oq9+m77CdGE4gTbzem3SKJtfvm+cjPMlxOdynu6atlifRkXXsxRPKhe2+qNSCokiVrTXoU3XpqvmgwjY0ttnHYFcKbIFkmK/XBkyt5lIwbWiFYFzfCkWQsw97b80ZfN5wX3WGhEfJu/yDoCL4yTuZLQ2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQhH9f0j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVFzeWgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622621F00A3D;
-	Mon, 31 Aug 2026 13:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQhH9f0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FDA1F000E9;
+	Mon, 31 Aug 2026 13:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184699;
-	bh=UzS1/vkNDNRLyiV1PrU30Yx9JAdEKksUxvBBCP0i94c=;
+	s=korg; t=1788184705;
+	bh=A3VIGYL9NWj9xR8ANx/laWdS+UJBxRwdA/wfF9R1tYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bVFzeWgJp6dYtY+9r8E4GnPnn6gH4QCG/u5xVZiiNnkgfg7g7GbCzWtI7ocCchTLK
-	 X9O18MTf/lo2JQdf82bQGFTvL3w5hCvQvuykotrfAW5Y8854NgxXg2oVD/dzZ4pWm9
-	 grKhTFpj9Jc6BH19HfXVIrRDL3tE/0DfaELecoAs=
+	b=tQhH9f0j9sMgJA+BZ9BiZiARyPSKlbZJnzu52NXlL0/x2mPhLX3tBCdF3EPf10sjg
+	 J1oDFvi0GYXBA+5j4AFPOew8mleRL4aeYZXesCDgf/S0BEUZnsjQGDi+C3FqQykqZC
+	 2HJKED/KnL9iSlhEyEOg88fZceVebVXgc5OSQhbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	syzbot@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 64/91] usb: usbtest: disable dynamic ID support
-Date: Mon, 31 Aug 2026 15:34:52 +0200
-Message-ID: <20260831133403.038429198@linuxfoundation.org>
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 10/92] bpf: Remove tst_run from lwt_seg6local_prog_ops.
+Date: Mon, 31 Aug 2026 15:34:08 +0200
+Message-ID: <20260831133400.026645696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
-References: <20260831133359.468089036@linuxfoundation.org>
+In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
+References: <20260831133359.482388899@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +50,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 00e2071f6d5621a5ddea311a5e6b143ae6e474af upstream.
+[ Upstream commit c13fda93aca118b8e5cd202e339046728ee7dddb ]
 
-The usbtest driver relies on the driver_info field of struct usb_device_id
-to point to a valid struct usbtest_info descriptor. This structure contains
-essential test configurations, such as endpoint addresses and test modes,
-which are required during probe.
+The syzbot reported that the lwt_seg6 related BPF ops can be invoked
+via bpf_test_run() without without entering input_action_end_bpf()
+first.
 
-When a user dynamically adds a new device ID via the sysfs new_id
-interface without specifying a reference device, the USB core initializes
-driver_info to 0 (NULL). When a matching device is subsequently probed,
-usbtest_probe() unconditionally casts driver_info to a struct usbtest_info
-pointer and dereferences it, leading to a NULL pointer dereference crash:
+Martin KaFai Lau said that self test for BPF_PROG_TYPE_LWT_SEG6LOCAL
+probably didn't work since it was introduced in commit 04d4b274e2a
+("ipv6: sr: Add seg6local action End.BPF"). The reason is that the
+per-CPU variable seg6_bpf_srh_states::srh is never assigned in the self
+test case but each BPF function expects it.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:usbtest_probe+0x3b9/0x1280 drivers/usb/misc/usbtest.c:2822
+Remove test_run for BPF_PROG_TYPE_LWT_SEG6LOCAL.
 
-Because usbtest strictly requires pre-defined usbtest_info descriptors
-to function, dynamic ID binding via sysfs is fundamentally unsupported
-for this driver.
-
-Fix this by setting .no_dynamic_id = 1 on usbtest_driver. This instructs
-the USB core to skip creating the new_id and remove_id sysfs interfaces
-for usbtest, preventing invalid dynamic ID entries from being created.
-
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7e1e5911f9eac50bedc7
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260806152651.2370795-1-nogikh@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Reported-by: syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com
+Fixes: d1542d4ae4df ("seg6: Use nested-BH locking for seg6_bpf_srh_states.")
+Fixes: 004d4b274e2a ("ipv6: sr: Add seg6local action End.BPF")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20240710141631.FbmHcQaX@linutronix.de
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/usbtest.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/core/filter.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/usb/misc/usbtest.c
-+++ b/drivers/usb/misc/usbtest.c
-@@ -3053,6 +3053,7 @@ static struct usb_driver usbtest_driver
- 	.disconnect =	usbtest_disconnect,
- 	.suspend =	usbtest_suspend,
- 	.resume =	usbtest_resume,
-+	.no_dynamic_id = 1,
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 91d337252fc90..e2fd25d9e3580 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -11041,7 +11041,6 @@ const struct bpf_verifier_ops lwt_seg6local_verifier_ops = {
  };
  
- /*-------------------------------------------------------------------------*/
+ const struct bpf_prog_ops lwt_seg6local_prog_ops = {
+-	.test_run		= bpf_prog_test_run_skb,
+ };
+ 
+ const struct bpf_verifier_ops cg_sock_verifier_ops = {
+-- 
+2.53.0
+
 
 
