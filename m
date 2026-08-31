@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7551948422B;
-	Mon, 31 Aug 2026 14:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0F547F789;
+	Mon, 31 Aug 2026 14:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184874; cv=none; b=YSeptRrcpCMPGH5E4VgmN01683L+QXkkjgWO9Ad5fYpvivFskAzHzHHyoIPOTkG3R1o6wIxtM+KeZdmWE9o7IA45jaJJmM85e2ka/A8dR5R5gSZp306lF42ZL3SXG/rbP+aaxvQTLokNY6MN0k1xOcg5FFrxxpxjtnZOukPIJFU=
+	t=1788184879; cv=none; b=iGNHy8VoUuo36CkMWB3MYVFjgmM8Z0vDAlVss4WsPmooPCQB9PkOy9/WOen63ZUMPe9VRv8lgvu7nFOWz2A4pvxHmRu2ukpX+vzbNwZ+yHHKnZcMg3e/fD7j7cMHESD0qcY0wjALTKPL3ckyHMhuWBsg8ZSuDbIgKBa/Ylcx9k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184874; c=relaxed/simple;
-	bh=6ZCU6m+DZ9nh/Go9wbMA65XZAyOnJHSTFSQkbB7QOoE=;
+	s=arc-20240116; t=1788184879; c=relaxed/simple;
+	bh=fHSLn+xKoLkz2kUZJxekPSOydKdlsCWrG5jnTPcdNY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfTf3MgwhUmyPPFye9sCEdjxvdN+wGMWH3Tb4VJKdLa68XuYdCUxfR2FG5fosl0nyUDZ+zhAUzBzKe/+26jBbbeNWCYWTUjA0VQbDr6KBBOuZzs3uRZxWx0hDDYcBcypzrQCYtrsLzsSU5oARVKWr3uOseN84N6o1CONKLFKj5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGolKllw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Iy9FC62JRoYGvvQcuwkYbcbQXjk4gfshPbIQ+wmk0XHWV1620lOIz8vHp5sXpyMWqxeEG1tzff5EG0qnmxxz9GM5DaqEVbjA7bSnP6Y81qplYXQ1ZXnu6xYjLFC42OWn7VIUZ85tOsurT3EDwvRsQHukyhTKZZVP99OUuhPep4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO/6Q152; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGolKllw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5CE1F000E9;
-	Mon, 31 Aug 2026 14:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO/6Q152"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB141F000E9;
+	Mon, 31 Aug 2026 14:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184872;
-	bh=rjVgzoQehlmnKq24xKTzkfDx0WZ/9gdYghuhWW5UNpw=;
+	s=korg; t=1788184878;
+	bh=Q4JgAf+8zuA6/usJlbxeiYxWvR0bdK+K8K+8vMgGxnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RGolKllwOqGYyGnn9Otpi7fb0CzOBeT9KB5r8Iu24x/PMnFkIzuHcAIxCsVQyvIex
-	 GTGItMSU7WpN57mc+UhOC7KkQB6yBgEMxfuirF0uewDyBv2QWHs0yXkrxy8Bx+sw3a
-	 KePxqqeOw54lM492FF2/Wb3iFqQa7juagZDfkFvA=
+	b=lO/6Q15207LNMd5xKJpG75j0TKAfmHEwAxyYTMEYyQM+nJjvNvpLy/4Ayx4KTDnQU
+	 qv6zZDaKrK6GLFosdvGPn7vvIB4A8K3ph5bRE5mWAW2zC5QcnbxDjjZUEFycu1tkVK
+	 dqXp1m1ox+8KjEmx2sfGHK0ilQnfxUa5odlEnNog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/92] can: j1939: add missing calls in NETDEV_UNREGISTER notification handler
-Date: Mon, 31 Aug 2026 15:34:17 +0200
-Message-ID: <20260831133400.584169403@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 6.1 70/92] usb: gadget: f_tcm: keep port count until LUN teardown completes
+Date: Mon, 31 Aug 2026 15:35:08 +0200
+Message-ID: <20260831133403.254368536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -52,55 +49,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit 93a27b5891b8194a8c083c9a80d2141d4bf47ba8 ]
+commit c39d0916da47d94909391876c9e5bd429ea7b1b9 upstream.
 
-Currently NETDEV_UNREGISTER event handler is not calling
-j1939_cancel_active_session() and j1939_sk_queue_drop_all().
-This will result in these calls being skipped when j1939_sk_release() is
-called. And I guess that the reason syzbot is still reporting
+tcm_usbg_drop_nexus() permits session removal once tpg_port_count
+reaches zero. However, usbg_port_unlink() currently decrements that
+count from the fabric_pre_unlink() callback, before core_dev_del_lun()
+waits for active se_lun references to drain.
 
-  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
+If removal of the last LUN races a nexus removal, the latter can observe
+a zero port count and call target_remove_session(). This frees
+sess_cmd_map while an in-flight struct usbg_cmd, including its work item,
+can still be accessed.
 
-is caused by lack of these calls.
+Overlapping the last-LUN unlink with nexus removal reproduces this
+lifetime violation as a DEBUG_OBJECTS "free active" warning for
+usbg_cmd_work, followed by a target-core BUG/Oops.
 
-Calling j1939_cancel_active_session(priv, sk) from j1939_sk_release() can
-be covered by calling j1939_cancel_active_session(priv, NULL) from
-j1939_netdev_notify().
+The generic target-core unlink path has no callback after
+core_dev_del_lun() completes. Add an optional fabric_post_unlink()
+callback and use it for the f_tcm port count. The count now remains
+nonzero until core_dev_del_lun() has finished draining active LUN
+references, preventing nexus removal from freeing the session during
+command completion.
 
-Calling j1939_sk_queue_drop_all() from j1939_sk_release() can be covered
-by calling j1939_sk_netdev_event_netdown() from j1939_netdev_notify().
-
-Therefore, we can reuse j1939_cancel_active_session(priv, NULL) and
-j1939_sk_netdev_event_netdown(priv) for NETDEV_UNREGISTER event handler.
-
-Fixes: 7fcbe5b2c6a4 ("can: j1939: implement NETDEV_UNREGISTER notification handler")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/3ad3c7f8-5a74-4b07-a193-cb0725823558@I-love.SAKURA.ne.jp
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260807060733.3186624-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/target/target_core_fabric_configfs.c |    8 ++++++++
+ drivers/usb/gadget/function/f_tcm.c          |    2 +-
+ include/target/target_core_fabric.h          |    2 ++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
-index 6bbe75d2211d5..21186932f8f61 100644
---- a/net/can/j1939/main.c
-+++ b/net/can/j1939/main.c
-@@ -378,6 +378,8 @@ static int j1939_netdev_notify(struct notifier_block *nb,
- 		j1939_ecu_unmap_all(priv);
- 		break;
- 	case NETDEV_UNREGISTER:
-+		j1939_cancel_active_session(priv, NULL);
-+		j1939_sk_netdev_event_netdown(priv);
- 		j1939_sk_netdev_event_unregister(priv);
- 		break;
+--- a/drivers/target/target_core_fabric_configfs.c
++++ b/drivers/target/target_core_fabric_configfs.c
+@@ -689,6 +689,14 @@ static void target_fabric_port_unlink(
  	}
--- 
-2.53.0
-
+ 
+ 	core_dev_del_lun(se_tpg, lun);
++
++	if (tf->tf_ops->fabric_post_unlink) {
++		/*
++		 * Allow fabrics to release state that must remain valid until
++		 * core_dev_del_lun() has drained all active LUN references.
++		 */
++		tf->tf_ops->fabric_post_unlink(se_tpg, lun);
++	}
+ }
+ 
+ static void target_fabric_port_release(struct config_item *item)
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1709,7 +1709,7 @@ static const struct target_core_fabric_o
+ 	.fabric_enable_tpg		= usbg_enable_tpg,
+ 	.fabric_drop_tpg		= usbg_drop_tpg,
+ 	.fabric_post_link		= usbg_port_link,
+-	.fabric_pre_unlink		= usbg_port_unlink,
++	.fabric_post_unlink		= usbg_port_unlink,
+ 	.fabric_init_nodeacl		= usbg_init_nodeacl,
+ 
+ 	.tfc_wwn_attrs			= usbg_wwn_attrs,
+--- a/include/target/target_core_fabric.h
++++ b/include/target/target_core_fabric.h
+@@ -95,6 +95,8 @@ struct target_core_fabric_ops {
+ 				struct se_lun *);
+ 	void (*fabric_pre_unlink)(struct se_portal_group *,
+ 				struct se_lun *);
++	void (*fabric_post_unlink)(struct se_portal_group *se_tpg,
++				   struct se_lun *lun);
+ 	struct se_tpg_np *(*fabric_make_np)(struct se_portal_group *,
+ 				struct config_group *, const char *);
+ 	void (*fabric_drop_np)(struct se_tpg_np *);
 
 
