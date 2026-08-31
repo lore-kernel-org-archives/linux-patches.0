@@ -1,190 +1,208 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FD14FB9A8;
-	Mon, 31 Aug 2026 13:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC014FB9C2;
+	Mon, 31 Aug 2026 13:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183689; cv=none; b=YcUEVWfgU/JV7QuUHVIIEfdInOB5oA73o+0+DagNEY5IOM7S32CI40I1BH2bxnH+Y9unpe7qlFnZnloGYYvXKSYEwie8wl704+ylDjkRVXSifclgHS1pOS81kI8uyROMcFeFmktp93tlQggT8btoHn1NR9yKarcmbkT/qAuu/8s=
+	t=1788183690; cv=none; b=ogZrtcabxyrsM8WMht6fed/isLVFGheLnqf4Sigmfm4x7nypJGM2UUoRIA8e2J41U0IGKhbsO+YXDoYLueOpLYxoUS2OHQrvysqVI3JgAtTYuxIG/ByMIsa3OeU6zUJTLFbiYQPTlH5x4+B9X/5jbezADsaJYNZrdUJ1MWTymGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183689; c=relaxed/simple;
-	bh=l0F5Tva7NyiXDFKG6OZv/jso8uxw2veGQ8tR5IgMvZs=;
+	s=arc-20240116; t=1788183690; c=relaxed/simple;
+	bh=GnmM82HMn3gbifWaOP3eCyd3jXm9tXy+3q8RQwi9Nz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b2o7wiazhQZMkFxcJbLykbq1BErVVKwwzBCkHenCc1XA9TL5R8CxIKoO1mKYs9ZQHyVEm8fRG8hYQMd07VpqZ4RX84YiiRfvICKFv/bb4OAnLGf90JZEwbBzPgyvdiYnD10wn+84VDt2ta+NaN+ACN+3nBKn/ooUhC1uwLUF/+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kDmFnjC/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A+B5BCplDgf1tHLrGhXulMD1RXFO+9UOpWQm39P4Z4c1Y4qa2T9g25YQWxwnxlHzVKOlZHcD/Aejg6BRhDL89NZe0VVUfE3lsEghJy0tw91IePt4D7Pg6SqAxpJHczUq22oE+VoRF/19QrJPp0rbrdfRK1oWZVrWwaoT7a9Zudc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pe6D2g+b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kDmFnjC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB8D1F00A3F;
-	Mon, 31 Aug 2026 13:41:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183687;
-	bh=NkgP11C4/Cybgsngll6cPTs9F7sLLO00L7G3sG5QjCs=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pe6D2g+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3791F00A3E;
+	Mon, 31 Aug 2026 13:41:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183688;
+	bh=boD22AxWbw/Wdd9vnIu6M7v4xU/fWW2mZq1EIrJXcMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDmFnjC/wvEB6g/KCi0KIEzc9CHiPI6tI6gjTMEpqyVuthLtc7S+tQMzbEY27V83R
-	 jvP5Ps80WRIcQ6bTFqVp9xwrHXfpBhBW9I4yc+3cFO9oBS8Go3BLQySEHIwbcknfb9
-	 4soW8UMNjnhnGEo8FckQGvBDZmaVHzEyw7ntzoK1Tfuoxbvbmq06g2T6ZeEoevuVKk
-	 hBaEii/QujTMMJjyFu2UFNHvkoAMGLdThkozsvEE0n0bXSFDyEZ5gQuOdi7O6NUVzo
-	 rGkdbt/62PUfQyuRFEcJOkd4oq45edjlsk7sGQOdqp1CrOe+uddPG8GY5HxENqainW
-	 EFa4yCqCrNa8A==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Martin Karsten <mkarsten@uwaterloo.ca>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] net: napi: Skip last poll when arming gro timer in busy poll
-Date: Mon, 31 Aug 2026 09:24:33 -0400
-Message-ID: <20260831133314.4125787-245-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=pe6D2g+b7Ydk2V61LUb4hr5e913Kj+/6gc8N0s2dla6nfEMGjZ525b3tePQdwH5oz
+	 oY1C/GhM5fJMG2fVU4IlUQkQeoftS7QUzyzmslq6ybb4zqwHZ4qlfo0/5u/ZfNDwnE
+	 L0nVOfrrd0jE+8/wHgjAtD/F2qFqJKkRApD+hS5U=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 10/76] selinux: require a classs permission values to cover its permission count
+Date: Mon, 31 Aug 2026 15:33:42 +0200
+Message-ID: <20260831133359.674486029@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Karsten <mkarsten@uwaterloo.ca>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 7599c13dbe7a2dc49e33f4c6581c6f1287d9410e ]
+------------------
 
-Skip the extra call to napi->poll(), if the gro timer is armed at the
-end of busy polling. This removes the need for having a separate
-__busy_poll_stop() routine and its code is moved directly into the
-relevant places in busy_poll_stop(). Remove obsolete comment about
-ndo_busy_poll_stop().
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-This is a follow-up to commit 58e2330bd455 ("net: napi: Avoid gro timer
-misfiring at end of busypoll"), which has deferred arming the gro timer
-to the end of __busy_poll_stop() to eliminate a race condition between
-a short timer and long poll that could leave the queue stuck with
-interrupts disabled and no timer armed.
+[ Upstream commit b98a8ac50775540f3804397ed08f61ef9910bcab ]
 
-Co-developed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Martin Karsten <mkarsten@uwaterloo.ca>
-Link: https://patch.msgid.link/20260523012247.1574691-1-mkarsten@uwaterloo.ca
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+security_get_permissions() sizes an array by the class's permissions.nprim
+and fills it at value - 1, from the inherited common's permission table and
+then the class's own. A value no permission defines leaves a NULL that
+sel_make_perm_files() passes to d_alloc_name(), an oops inside
+sel_write_load() that strands selinux_state.policy_mutex and leaves every
+later load in uninterruptible sleep; two permissions sharing a value
+overwrite the first kstrdup(). Bounding each value by nprim catches
+neither, and neither would a count: the symbol table is keyed on the
+permission name, so duplicates pass.
+
+Track the values each permission table claims and require them to cover
+exactly what its count declares, rejecting a count no value can reach.
+Conforming policies are unaffected.
+
+Cc: stable@vger.kernel.org
+Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+(cherry picked from commit b98a8ac50775540f3804397ed08f61ef9910bcab)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ security/selinux/ss/policydb.c | 51 ++++++++++++++++++++++++++++++----
+ 1 file changed, 46 insertions(+), 5 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-That background search on `linus-next` finished with no matches (it ran
-~25 minutes and returned empty). The commit is already identified on
-`origin/master` as `7599c13dbe7a2` — it went through the netdev tree,
-not `linus-next`. That doesn’t change the **YES** backport
-recommendation for 6.18.44.
-
- net/core/dev.c | 62 ++++++++++++++++++++++----------------------------
- 1 file changed, 27 insertions(+), 35 deletions(-)
-
-diff --git a/net/core/dev.c b/net/core/dev.c
-index a83083e8761b1..e61cf0b7487fb 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -6787,22 +6787,6 @@ static void skb_defer_free_flush(void)
+diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
+index 6f91f2bec80cc..c959fa90d90fe 100644
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1138,7 +1138,18 @@ int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len)
+ 	return 0;
+ }
  
- #if defined(CONFIG_NET_RX_BUSY_POLL)
- 
--static void __busy_poll_stop(struct napi_struct *napi, unsigned long timeout)
--{
--	if (!timeout) {
--		gro_normal_list(&napi->gro);
--		__napi_schedule(napi);
--		return;
--	}
--
--	/* Flush too old packets. If HZ < 1000, flush all packets */
--	gro_flush_normal(&napi->gro, HZ >= 1000);
--
--	clear_bit(NAPI_STATE_SCHED, &napi->state);
--	hrtimer_start(&napi->timer, ns_to_ktime(timeout),
--		      HRTIMER_MODE_REL_PINNED);
--}
--
- enum {
- 	NAPI_F_PREFER_BUSY_POLL	= 1,
- 	NAPI_F_END_ON_RESCHED	= 2,
-@@ -6818,8 +6802,8 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
- 	/* Busy polling means there is a high chance device driver hard irq
- 	 * could not grab NAPI_STATE_SCHED, and that NAPI_STATE_MISSED was
- 	 * set in napi_schedule_prep().
--	 * Since we are about to call napi->poll() once more, we can safely
--	 * clear NAPI_STATE_MISSED.
-+	 * Since we either call napi->poll() once more or start the timer,
-+	 * we can safely clear NAPI_STATE_MISSED.
- 	 *
- 	 * Note: x86 could use a single "lock and ..." instruction
- 	 * to perform these two clear_bit()
-@@ -6832,27 +6816,35 @@ static void busy_poll_stop(struct napi_struct *napi, void *have_poll_lock,
- 
- 	if (flags & NAPI_F_PREFER_BUSY_POLL) {
- 		napi->defer_hard_irqs_count = napi_get_defer_hard_irqs(napi);
--		if (napi->defer_hard_irqs_count) {
--			/* A short enough gro flush timeout and long enough
--			 * poll can result in timer firing too early.
--			 * Timer will be armed later if necessary.
--			 */
-+		if (napi->defer_hard_irqs_count)
- 			timeout = napi_get_gro_flush_timeout(napi);
-+	}
-+	if (timeout) {
-+		netpoll_poll_unlock(have_poll_lock);
+-static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
++/*
++ * Bitmap of the permission values a symtab has claimed.  Values are 1-based
++ * and bounded by SEL_VEC_MAX, the width of an access vector, so the whole set
++ * fits in a u32 and the callers reject an nprim past that width.
++ */
++static u32 perm_claimed_mask(u32 nprim)
++{
++	return nprim ? U32_MAX >> (SEL_VEC_MAX - nprim) : 0;
++}
 +
-+		/* Drain aged GRO packets before clearing SCHED since the NAPI
-+		 * won't run again until after the timer fires. When HZ < 1000,
-+		 * GRO age comparison is too coarse, so flush everything.
-+		 */
-+		gro_flush_normal(&napi->gro, HZ >= 1000);
-+
-+		clear_bit(NAPI_STATE_SCHED, &napi->state);
-+		hrtimer_start(&napi->timer, ns_to_ktime(timeout),
-+			      HRTIMER_MODE_REL_PINNED);
-+	} else {
-+		/* Use driver poll to re-enable device interrupts. */
-+		rc = napi->poll(napi, budget);
-+		/* Unless rc == budget we no longer own the NAPI instance,
-+		 * IRQ may fire on another CPU, poll this NAPI, and enter GRO.
-+		 */
-+		trace_napi_poll(napi, rc, budget);
-+		netpoll_poll_unlock(have_poll_lock);
-+		if (rc == budget) {
-+			gro_normal_list(&napi->gro);
-+			__napi_schedule(napi);
- 		}
++static int perm_read(struct policydb *p, struct symtab *s,
++		     struct policy_file *fp, u32 *claimed)
+ {
+ 	char *key = NULL;
+ 	struct perm_datum *perdatum;
+@@ -1162,6 +1173,10 @@ static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *f
+ 	/* indexes an nprim-sized array in security_get_permissions() */
+ 	if (perdatum->value > s->nprim)
+ 		goto bad;
++	/* two permissions cannot share one slot of that array */
++	if (*claimed & (1U << (perdatum->value - 1)))
++		goto bad;
++	*claimed |= 1U << (perdatum->value - 1);
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+@@ -1182,7 +1197,7 @@ static int common_read(struct policydb *p, struct symtab *s, struct policy_file
+ 	char *key = NULL;
+ 	struct common_datum *comdatum;
+ 	__le32 buf[4];
+-	u32 i, len, nel;
++	u32 i, len, nel, claimed = 0;
+ 	int rc;
+ 
+ 	comdatum = kzalloc_obj(*comdatum);
+@@ -1204,17 +1219,28 @@ static int common_read(struct policydb *p, struct symtab *s, struct policy_file
+ 	if (rc)
+ 		goto bad;
+ 	comdatum->permissions.nprim = le32_to_cpu(buf[2]);
++	/* no permission value can reach a slot past SEL_VEC_MAX */
++	rc = -EINVAL;
++	if (comdatum->permissions.nprim > SEL_VEC_MAX)
++		goto bad;
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+ 		goto bad;
+ 
+ 	for (i = 0; i < nel; i++) {
+-		rc = perm_read(p, &comdatum->permissions, fp);
++		rc = perm_read(p, &comdatum->permissions, fp, &claimed);
+ 		if (rc)
+ 			goto bad;
  	}
  
--	/* All we really want here is to re-enable device interrupts.
--	 * Ideally, a new ndo_busy_poll_stop() could avoid another round.
--	 */
--	rc = napi->poll(napi, budget);
--	/* We can't gro_normal_list() here, because napi->poll() might have
--	 * rearmed the napi (napi_complete_done()) in which case it could
--	 * already be running on another CPU.
--	 */
--	trace_napi_poll(napi, rc, budget);
--	netpoll_poll_unlock(have_poll_lock);
--	if (rc == budget)
--		__busy_poll_stop(napi, timeout);
- 	bpf_net_ctx_clear(bpf_net_ctx);
- 	local_bh_enable();
- }
++	rc = -EINVAL;
++	if (claimed != perm_claimed_mask(comdatum->permissions.nprim)) {
++		pr_err("SELinux:  common %s does not define every permission it declares\n",
++		       key);
++		goto bad;
++	}
++
+ 	hash_eval(&comdatum->permissions.table, "common_permissions", key);
+ 
+ 	rc = symtab_insert(s, key, comdatum);
+@@ -1348,7 +1374,7 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
+ 	char *key = NULL;
+ 	struct class_datum *cladatum;
+ 	__le32 buf[6];
+-	u32 i, len, len2, ncons, nel, val;
++	u32 i, len, len2, ncons, nel, val, claimed = 0, inherited = 0;
+ 	int rc;
+ 
+ 	cladatum = kzalloc_obj(*cladatum);
+@@ -1376,6 +1402,10 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
+ 	if (rc)
+ 		goto bad;
+ 	cladatum->permissions.nprim = le32_to_cpu(buf[3]);
++	/* no permission value can reach a slot past SEL_VEC_MAX */
++	rc = -EINVAL;
++	if (cladatum->permissions.nprim > SEL_VEC_MAX)
++		goto bad;
+ 
+ 	ncons = le32_to_cpu(buf[5]);
+ 
+@@ -1410,11 +1440,22 @@ static int class_read(struct policydb *p, struct symtab *s, struct policy_file *
+ 		}
+ 	}
+ 	for (i = 0; i < nel; i++) {
+-		rc = perm_read(p, &cladatum->permissions, fp);
++		rc = perm_read(p, &cladatum->permissions, fp, &claimed);
+ 		if (rc)
+ 			goto bad;
+ 	}
+ 
++	/* the class's own permissions must claim the slots the common leaves */
++	if (cladatum->comdatum)
++		inherited = cladatum->comdatum->permissions.nprim;
++	rc = -EINVAL;
++	if (claimed != (perm_claimed_mask(cladatum->permissions.nprim) &
++			~perm_claimed_mask(inherited))) {
++		pr_err("SELinux:  class %s does not define every permission it declares\n",
++		       key);
++		goto bad;
++	}
++
+ 	hash_eval(&cladatum->permissions.table, "class_permissions", key);
+ 
+ 	rc = read_cons_helper(p, &cladatum->constraints, ncons, 0, fp);
 -- 
 2.53.0
+
+
 
