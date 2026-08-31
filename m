@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D769547B43F;
-	Mon, 31 Aug 2026 13:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D35947CA89;
+	Mon, 31 Aug 2026 13:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183359; cv=none; b=deMbjD5G3X6NfuKOuqAE177Cga2VYCwGO2nCYuNmfGM2/IYl5oGYYLM4fSffc80ikpTlhO5vWrzEvYE8KZrGsjoKUPTTeJmwp6yBBwmHKkMMj/oyX2T1S/B88tdP6YbEq6LcYjhLrXypT3f/d5oh0t8EVAOHWrLnhC9VEnCddXI=
+	t=1788183361; cv=none; b=Ym+Uy9U9nxeN/QtT3AYwcasAFAzqlhu+lcUlQbaT39vv3qzjaqp3NMN2gBcOxXUwRrR1A3w6EVtAkWKICJJPbSX4Gsx2JNAw91B19qo3D7ma9ptYPi4G0mpz8UHOT2ohz2tCCfUi5SzIkg/QPfQYMOV82lR2IlfZ4G/7ElwUpmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183359; c=relaxed/simple;
-	bh=4nHe73gpJLS8AsND0tK6jofhpQT18Y2uw3N3lshEUA0=;
+	s=arc-20240116; t=1788183361; c=relaxed/simple;
+	bh=wod/HMkSv//5T2gf2RQr57j3jF8Lr7WpYo1Od7XV34c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XjMfVFEqcU2PPuVLQsqqDesMUOwCJzw/IRrSvFIEtlikCRgnDIMKvfkKjYJkh2O/VnNqkS8AQs8AScuGh+c4gJWZ6Fmmxb3LpdO2z/qnaTMTE/l4y8+glxL55ofaUuQ+ipDhHmJnx6HSYuQtas/t89MHHMbQ38pT7jYIN7YGqUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFbThb0B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TalAe37GtJB4dLt2xfBwQOT7OPRYCgcQtHcgBgXCiKNvLAFtlmX78PUV0nwYdbpzAs9DI0MoNIc/QpkvNkf1c+PPa1xElU/IDWWE4v+6L//qOubLeYlllY7Jly/TNdV/DCPoJotPvJObJEMrnTAp7uU6MnL/MCYkmMX0hPTL4vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqhFjFLg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFbThb0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E5B1F00A3D;
-	Mon, 31 Aug 2026 13:35:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqhFjFLg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8DB1F00A3E;
+	Mon, 31 Aug 2026 13:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183357;
-	bh=NN7rC/PhgdwP3YFrA5lqFCbYg474YP6A3Jrw20xnmco=;
+	s=k20260515; t=1788183359;
+	bh=ahlZPyLBgzB2r84fLnraW0FBw9ZX2LWR50RWd5H2TEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dFbThb0BzNbtfwLP4RvGl5sW6ilc7qfsgetg3xEgtTBiGbkPzYdgSWpH/QCzOqcxM
-	 bGru6krumtnj6jFwypEksxOsYFSEKfT2SA6A8+OQQ+fgb5w7xGwVP6H6rPUugxhP/5
-	 as5DR7vIFLbX5A9FjcC8f1lzZQOcdrk3e2JnHexBkRVE04i5MF6poFokLPRgtGWNUp
-	 Ca3YoRtfEXphxTSI7kPDgOW+WweenF8y3iqaajxeqw08fr0Buuw/PC46xmr2HTd/uo
-	 lQOxVDdd31m8HV1TjqJHuIciytMde5l+DfPjwJzhemo5z9dIhOF1U0naGVAF0DX2Pt
-	 rtuJlyP4VtEHg==
+	b=FqhFjFLgO8q9937RrPLfyM77lyiOuCkusQhGqQ/NY8osD3MrWuf96Rs8rJS7yhjop
+	 xjB6nRC0KJhUAnyKkjlv+IWAAwMRuppjwVh1YUQKQ3mVrG9/nTaFMBsoUfR2P4d41C
+	 t7T9/9HyWeSJsMw2qkvuctmEXx8oY7VDMVf0d04lo8wIMxaVajv8pZIs153WsX1fJK
+	 uDyUcbmfy4uHX8eCKc//00edIXNraC/I3h9t9WNk8Rb/WanwB8zlZfhUVmusm9wrHE
+	 Gp7AZCNvFGvh8WeR/rcM7rexOuwuVto8M4rnZz26GDTRNz5xMFLxQfVEyr9WSMX0ZL
+	 zA3kaOgOW0tXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiang Liu <xiang.liu@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Galen Hassen <rwekyes@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/amd/ras: Fix CPER ring debugfs read overflow
-Date: Mon, 31 Aug 2026 09:22:08 -0400
-Message-ID: <20260831133314.4125787-100-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
+Date: Mon, 31 Aug 2026 09:22:09 -0400
+Message-ID: <20260831133314.4125787-101-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,68 +54,71 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiang Liu <xiang.liu@amd.com>
+From: Galen Hassen <rwekyes@gmail.com>
 
-[ Upstream commit 1e40ef87ffdc291e05ccdade8b9170cc9c1c4249 ]
+[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
 
-The legacy CPER debugfs reader can reach the payload path without a
-valid pointer snapshot. The remaining user byte count is also treated as
-the ring occupancy in dwords, so reads past the header can copy more than
-requested.
+The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
+Conexant SN6140 codec. The internal microphone is on pin 0x1a but
+the BIOS configures it with pin default 0x95a60120, which includes
+a jack detection bit that causes the kernel to treat it as an
+unplugged external mic rather than a fixed internal mic.
 
-Take the CPER lock before sampling pointers. Resample rptr/wptr for
-payload reads, bound the payload copy by available dwords and the
-remaining user size, and advance the file position for each dword copied.
+Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
+setting the connectivity bits to indicate a fixed/always-connected
+device. This allows the internal microphone to be correctly
+identified and used.
 
-Signed-off-by: Xiang Liu <xiang.liu@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Galen Hassen <rwekyes@gmail.com>
+Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: drm/amd/ras: Fix CPER ring debugfs read
-overflow
+# Stable Backport Analysis: ALSA HDA Conexant Lenovo IdeaPad Slim 5
+16AKP10 Quirk
 
-**Local tree:** Linux 6.18.43 (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`, Makefile `6.18.43`)
+**Local tree:** `v6.18.44` (`linux-6.18.y` stable), HEAD `2736c32da98b9`
+**Candidate commit:** `d69c76ccc5540` (upstream `f7c4968ae3af`) — **not
+present in current HEAD**
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1 — Subject line**
-Record: `[drm/amd/ras]` `[Fix]` — fixes a buffer-overflow / bounds bug
-in the legacy CPER ring debugfs reader (`amdgpu_debugfs_ring_read`).
+Record: `[ALSA: hda/conexant]` `[Add]` — Add pin config quirk for Lenovo
+IdeaPad Slim 5 16AKP10
 
 **Step 1.2 — Tags**
 Record:
-- `Signed-off-by: Xiang Liu <xiang.liu@amd.com>` (author)
-- `Reviewed-by: Tao Zhou <tao.zhou1@amd.com>`
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (drm/amdgpu
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable@vger.kernel.org`,
-  `Tested-by:`
-- Cherry-pick object in repo notes `(cherry picked from commit
-  1e40ef87ffdc291e05ccdade8b9170cc9c1c4249)`
+- `Signed-off-by: Galen Hassen <rwekyes@gmail.com>` (author)
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` (ALSA maintainer)
+- `Link:
+  https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+
+Notable: maintainer Signed-off-by; no syzbot/fuzzer involvement.
 
 **Step 1.3 — Body analysis**
 Record:
-- **Bug:** Legacy CPER debugfs reader can enter the payload path without
-  a valid rptr/wptr snapshot; user byte count (`size`) is overwritten
-  with ring occupancy in dwords, so reads past the 12-byte header can
-  copy more data than the user requested.
-- **Symptom:** User buffer overflow on `read()` of
-  `/sys/kernel/debug/dri/*/amdgpu_ring_cper`; also uninitialized pointer
-  use and missing lock coverage on payload-only reads (`*pos >= 12`).
-- **Root cause (author):** Lock taken only inside `if (*pos < 12)`;
-  `early[]` not populated when skipping header; `size` repurposed as
-  dword count; wrong wrap size (`ring_size` bytes vs dword indices);
-  `*pos` not advanced in CPER payload loop.
+- **Bug:** Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID `17aa:38b6`) with
+  Conexant SN6140 codec; internal mic on pin `0x1a` has BIOS default
+  `0x95a60120` with jack-detection connectivity bits.
+- **Symptom:** Kernel treats internal mic as unplugged external mic;
+  internal microphone unusable.
+- **Fix:** Override pin `0x1a` to `0x95a60130` (fixed/always-connected
+  connectivity).
+- **Root cause:** Incorrect BIOS pin configuration, not a kernel logic
+  bug.
 
 **Step 1.4 — Hidden bug fix?**
-Record: No — explicitly labeled and described as an overflow fix.
+Record: Yes — presented as "Add quirk" but fixes a real hardware
+enablement bug (broken internal microphone). Classic HDA codec quirk
+pattern, not cosmetic cleanup.
 
 ---
 
@@ -126,210 +126,190 @@ Record: No — explicitly labeled and described as an overflow fix.
 
 **Step 2.1 — Inventory**
 Record:
-- 1 file: `drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c` (+21 / −8 in the
-  cherry-pick object `6bbede02dc62`)
-- Function modified: `amdgpu_debugfs_ring_read()`
-- Scope: single-file surgical fix (the user-provided diff also shows
-  `amdgpu_ras_cper_debugfs_read` changes, but those are **not** in
-  commit `6bbede02dc62` nor in this tree)
+- **File:** `sound/hda/codecs/conexant.c` only (+12 lines)
+- **Changes:** New enum `CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10`, pin
+  table, fixup entry, `SND_PCI_QUIRK(0x17aa, 0x38b6, ...)`
+- **Scope:** Single-file, surgical hardware quirk addition
 
-**Step 2.2 — Code flow changes**
+**Step 2.2 — Code flow**
+Record per hunk:
+1. **Enum entry** → registers new fixup ID in existing enum.
+2. **Pin table** `{ 0x1a, 0x95a60130 }` → overrides BIOS default at
+   probe via `HDA_FIXUP_PINS`.
+3. **Fixup table entry** → wires pin table into `cxt_fixups[]`.
+4. **PCI quirk** → matches SSID `17aa:38b6` to apply fixup on probe.
 
-| Hunk | Before | After |
-|------|--------|-------|
-| Lock scope | `mutex_lock` only inside `if (*pos < 12)` | Lock held for
-entire CPER read path |
-| Payload entry with `*pos >= 12` | `early[0/1]` never set; unlock
-without lock | Resample rptr/wptr under lock |
-| Copy bound | `size = ring occupancy` (dwords), ignoring user request |
-`read_dw = min(avail_dw, size >> 2)` |
-| Wrap calc | `ring->ring_size` (bytes) | `ring->buf_mask + 1` (dwords)
-|
-| Position | `*pos` not updated in CPER payload loop | `*pos += 4` per
-dword |
+Before: SN6140 codec uses BIOS pin config; pin `0x1a` seen as jack-
+detect external mic (unplugged).
+After: Pin `0x1a` forced to fixed internal mic; ALSA correctly exposes
+internal microphone.
 
 **Step 2.3 — Bug mechanism**
-Record: **Buffer overflow / out-of-bounds user copy** + **uninitialized
-stack data** + **mutex imbalance** + **logic error** (wrong units,
-missing file position advance).
-
-Verified in current HEAD (`amdgpu_ring.c` lines 511–568):
-
-```511:568:drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-        if (*pos < 12) {
-                if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
-                        mutex_lock(&ring->adev->cper.ring_lock);
-                // early[0..2] populated here only
-                ...
-        }
-        ...
-        } else {
-                p = early[0];   // uninitialized if *pos >= 12 at entry
-                ...
-                        size = (early[1] - early[0]);  // overwrites
-user's byte count
-                ...
-                while (size) {   // may copy far more than user
-requested
-                        ...
-                        size--;
-                        // *pos not advanced
-                }
-        }
-out:
-        if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
-                mutex_unlock(...);  // unlock even when lock was never
-taken
-```
+Record: **Hardware workaround / codec quirk** — incorrect BIOS HDA pin
+default causes wrong jack connectivity classification. Same pattern as
+existing `CXT_PINCFG_SWS_JS201D` (`0x95a70130` for internal mic on
+SN6140 hardware).
 
 **Step 2.4 — Fix quality**
-Record: Obviously correct, minimal, no API changes. Low regression risk
-— only affects CPER ring debugfs reads. Reviewed by AMD RAS engineer and
-merged by amdgpu maintainer.
+Record: Obviously correct; minimal; follows established quirk
+infrastructure. Regression risk very low — only affects machines
+matching `17aa:38b6`. No locking, no API, no behavior change for other
+hardware.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1 — Blame**
-Record: Current buggy function attributed to merge `5d324e5159d9e`
-(6.18-rc8 era). Shallow stable history prevents tracing the original
-CPER introduction commit; `amdgpu_cper.c` and CPER ring debugfs support
-are present in this tree.
+Record: Similar SN6140 quirk (`cxt_pincfg_sws_js201d`, pin `0x18` =
+`0x95a70130`) introduced in `4639c5021029d` (Feb 2024, originally
+`patch_conexant.c`). Long-standing, proven pattern.
 
 **Step 3.2 — Fixes: tag**
-Record: N/A — no `Fixes:` tag.
+Record: N/A — no `Fixes:` tag. Bug is BIOS misconfiguration, not
+introduced by a specific kernel commit.
 
 **Step 3.3 — Related file history**
-Record: `git log --oneline -20 --
-drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c` shows only merge commit in
-this shallow tree. AUTOSel nomination exists: `[PATCH AUTOSEL 7.0-6.18]
-drm/amd/ras: Fix CPER ring debugfs read overflow`.
+Record: Recent `conexant.c` changes in this tree include headset mic
+fixes, Acer Swift HP fix, HP ZBook quirk — all similar hardware quirk
+additions. Standalone patch, not part of a series.
 
 **Step 3.4 — Author context**
-Record: Xiang Liu (AMD). Reviewed by Tao Zhou (AMD RAS). Acked by Alex
-Deucher (amdgpu maintainer).
+Record: Galen Hassen is a hardware reporter/contributor (also submitted
+USB quirk patches). Takashi Iwai (ALSA maintainer) applied the patch on
+lore ("Applied now. Thanks.").
 
 **Step 3.5 — Dependencies**
-Record: Standalone. `git cherry-pick --no-commit 6bbede02dc62` auto-
-merges cleanly on HEAD (21 insertions, 8 deletions, 1 file only). No
-prerequisite commits required.
+Record: No prerequisites. Requires only existing Conexant driver
+infrastructure:
+- SN6140 codec ID `0x14f11f87` present since `ca348e7fe1ab9` (in this
+  tree)
+- SN6140 uses default `cxt5066_fixups` path via `snd_hda_pick_fixup()`
+  fallthrough
+- `git apply --check` on the diff against current tree: **passes
+  cleanly**
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 **Step 4.1 — Original discussion**
-Record: `b4 dig -c 6bbede02dc62` →
-https://patch.msgid.link/20260507140004.244348-1-xiang.liu@amd.com
-Single v1 patch, no NAKs found. Tao Zhou replied with `Reviewed-by`.
+Record:
+- Lore URL:
+  https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
+- Series: v1 (2026-06-15) → v2 (2026-06-16); committed version is v2
+  (latest)
+- Takashi Iwai reply: "Applied now. Thanks." — no NAKs, no objections
+- No explicit stable nomination in thread
 
 **Step 4.2 — Reviewers**
-Record: `b4 dig -w`: To/Cc included `amd-gfx@lists.freedesktop.org`,
-Hawking Zhang, Tao Zhou (AMD).
+Record: CC'd to `tiwai@suse.de`, `alsa-devel@alsa-project.org`, `linux-
+sound@vger.kernel.org`. Maintainer reviewed and merged.
 
-**Step 4.3 — Bug reports**
-Record: No syzbot, bugzilla, or user crash reports. Issue identified by
-code review / internal analysis.
+**Step 4.3 — Bug report**
+Record: User-reported hardware issue from patch author (owns the
+laptop). No bugzilla/syzbot link. Severity from user perspective:
+internal microphone completely non-functional.
 
-**Step 4.4 — Series context**
-Record: Standalone 1-patch series. AUTOSel 6.18 nomination confirms
-stable relevance for this series.
+**Step 4.4 — Related patches**
+Record: Separate Realtek quirk exists for Yoga 7 16AKP10
+(`e656ef8698e28` on autosel) — different codec/subsystem; not a
+dependency.
 
-**Step 4.5 — Stable list**
-Record: AUTOSel 7.0-6.18 patch explicitly targets this stable series
-(web search confirmed).
+**Step 4.5 — Stable list history**
+Record: No stable-specific discussion found for this patch.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 — Key functions**
-Record: `amdgpu_debugfs_ring_read()`, called from debugfs
-`file_operations.read`.
+**Step 5.1 — Key functions/structures**
+Record: `cxt_pincfg_lenovo_ideapad_slim5_16akp10[]`, `cxt_fixups[]`,
+`cxt5066_fixups[]`, `cx_probe()` (via `snd_hda_pick_fixup` +
+`snd_hda_apply_fixup`)
 
 **Step 5.2 — Callers**
-Record: `amdgpu_debugfs_ring_fops.read` → debugfs file
-`amdgpu_ring_<name>` created in `amdgpu_debugfs_ring_init()`. CPER ring
-named `"cper"` → `/sys/kernel/debug/dri/<card>/amdgpu_ring_cper`.
+Record: `cx_probe()` → `snd_hda_pick_fixup(codec, cxt5066_fixup_models,
+cxt5066_fixups, cxt_fixups)` → matches `SND_PCI_QUIRK(0x17aa, 0x38b6)` →
+`snd_hda_apply_fixup(HDA_FIXUP_ACT_PRE_PROBE)` applies pin overrides
+before `snd_hda_parse_pin_defcfg()`. Called during HDA codec probe at
+boot/module load.
 
 **Step 5.3 — Callees**
-Record: `mutex_lock/unlock`, `amdgpu_ring_get_rptr/wptr`, `put_user`,
-ring buffer indexing.
+Record: Standard HDA fixup framework (`HDA_FIXUP_PINS` →
+`snd_hda_apply_pincfgs`). No special runtime callbacks.
 
 **Step 5.4 — Reachability**
-Record: Reachable via `read()` syscall on debugfs (requires
-`CONFIG_DEBUG_FS`, debugfs mounted, typically `CAP_SYS_ADMIN`).
-Triggered on any CPER ring read where `*pos >= 12` (normal after first
-12-byte header) or partial reads.
+Record: Triggered automatically on every boot for matching hardware
+(`17aa:38b6` + Conexant SN6140). Not userspace-triggerable, but affects
+all users of this laptop model.
 
 **Step 5.5 — Similar patterns**
-Record: Non-CPER ring path in same function correctly bounds by
-`ring->ring_size + 12` and advances `*pos`; CPER path was the outlier.
+Record: `CXT_PINCFG_SWS_JS201D` uses `0x95a70130` for SN6140 internal
+mic; `CXT_FIXUP_HP_MIC_NO_PRESENCE` fixes similar jack-presence
+misconfiguration on pin `0x1a`. Same bug class, same fix approach.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-**Step 6.1 — Buggy code present?**
-Record: **YES** — verified in HEAD at `amdgpu_ring.c:497–576`. CPER
-subsystem present (`amdgpu_cper.c`, `amdgpu_cper_init()` in
-`amdgpu_device.c:3310`). Fix commit `6bbede02dc62` is **not** an
-ancestor of HEAD.
+**Step 6.1 — Buggy code exists?**
+Record: **Yes.** Conexant driver with SN6140 support (`0x14f11f87`) and
+`cxt5066_fixups[]` quirk table exist in 6.18.44. Without this quirk,
+affected laptops get wrong pin config from BIOS. Quirk `17aa:38b6` is
+absent (grep confirms no matches).
 
 **Step 6.2 — Backport complications**
-Record: **Clean apply** — cherry-pick test succeeded with no conflicts.
+Record: **Clean apply** — `git apply --check` succeeded with zero
+conflicts. File was moved from `patch_conexant.c` to
+`sound/hda/codecs/conexant.c` in this tree, but upstream commit already
+targets the new path.
 
 **Step 6.3 — Related fixes already present?**
-Record: **No** — `git diff HEAD 6bbede02dc62 --
-drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c` shows only the intended fix
-hunks when cherry-picked; HEAD still has buggy code.
+Record: No existing fix for `17aa:38b6` or IdeaPad Slim 5 16AKP10 in
+this tree.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1 — Subsystem**
-Record: `drivers/gpu/drm/amd/amdgpu` — GPU driver, RAS/CPER debug path.
-Criticality: **PERIPHERAL** (AMD GPU + debugfs + CPER/RAS enabled).
+Record: `sound/hda/codecs` — ALSA HDA codec driver. **Criticality:
+PERIPHERAL** (driver-specific), but HDA quirks are routinely backported
+because they fix real hardware for real users.
 
 **Step 7.2 — Activity**
-Record: Active development; CPER support is relatively recent (mainline
-~6.15+ per external references).
+Record: Actively maintained; multiple recent Conexant quirk commits in
+6.18.y history.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1 — Who is affected**
-Record: Systems with AMDGPU, `CONFIG_DEBUG_FS`, CPER ring initialized
-(ACA or SR-IOV RAS CPER enabled), and a privileged user reading the CPER
-ring debugfs file.
+Record: Owners of Lenovo IdeaPad Slim 5 16AKP10 (`17aa:38b6`) with
+Conexant SN6140 codec. Config-dependent on
+`CONFIG_SND_HDA_CODEC_CONEXANT`. Narrow hardware population, but 100%
+affected on that hardware without the quirk.
 
 **Step 8.2 — Trigger conditions**
-Record: Common on second/subsequent `read()` calls (after 12-byte
-header). Requires debugfs access (typically root). Not triggerable by
-unprivileged users under default permissions (debugfs `0444` but debugfs
-mount is root-only on most distros).
+Record: Every boot / codec probe on matching hardware. Not timing-
+dependent; deterministic BIOS misconfiguration.
 
 **Step 8.3 — Failure mode severity**
-Record:
-- User buffer overflow via `put_user` beyond requested `size` → **HIGH**
-  (memory safety)
-- `mutex_unlock` without `mutex_lock` when `*pos >= 12` → **HIGH**
-  (lockdep WARN / potential corruption in debug builds)
-- Uninitialized `early[]` → **MEDIUM-HIGH** (undefined behavior,
-  possible kernel data leak to userspace)
-- Overall: **HIGH** for memory safety; practical exploitability reduced
-  by privileged-only access
+Record: Internal microphone non-functional (no audio input from built-in
+mic). **Severity: MEDIUM** — functional regression, not
+crash/corruption/security. Video calls, voice recording broken out of
+the box.
 
 **Step 8.4 — Risk vs benefit**
 Record:
-- **Benefit:** Prevents user buffer overflow, fixes mutex imbalance,
-  corrects CPER debugfs semantics — **moderate** (narrow audience but
-  real bugs)
-- **Risk:** Very low — 21-line surgical change, reviewed, clean apply
-- **Ratio:** Benefit outweighs risk
+- **Benefit:** Restores internal microphone on a specific popular
+  consumer laptop; zero-cost for all other hardware.
+- **Risk:** Very low — 12-line quirk, PCI SSID-scoped, established
+  pattern.
+- **Ratio:** Strong benefit for affected users, negligible risk for
+  everyone else.
 
 ---
 
@@ -337,152 +317,134 @@ Record:
 
 **Step 9.1 — Evidence summary**
 
-| FOR | AGAINST |
-|-----|---------|
-| Real user buffer overflow | Debugfs-only path |
-| Mutex unlock-without-lock bug | Requires `CONFIG_DEBUG_FS` |
-| Uninitialized stack variable use | Admin/privileged access typically
-required |
-| Small, reviewed, maintainer-acked fix | No syzbot/user crash reports |
-| Applies cleanly to 6.18.43 | Affects narrow hardware/config subset |
-| AUTOSel nominated for 6.18.y | |
-| Buggy code confirmed in this tree | |
+**FOR backport:**
+- Real hardware bug: internal mic broken due to wrong BIOS pin config
+- Hardware quirk exception category (explicitly stable-appropriate)
+- Small (12 lines), single file, applies cleanly to 6.18.44
+- SN6140 driver and quirk infrastructure already in tree
+- ALSA maintainer (Takashi Iwai) reviewed and applied
+- Follows proven pattern (`CXT_PINCFG_SWS_JS201D`,
+  `CXT_FIXUP_HP_MIC_NO_PRESENCE`)
+- No dependencies, no new APIs
+
+**AGAINST backport:**
+- Not a crash, security, or data-corruption issue
+- Affects only one laptop model (narrow scope)
+- No explicit `Cc: stable` or `Tested-by` from hardware owner
+
+**Unresolved:** None material to the decision.
 
 **Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — reviewed by AMD engineer +
-   amdgpu maintainer; logic verified against buggy code
-2. Fixes a real bug? **PASS** — confirmed overflow, mutex bug,
-   uninitialized data
-3. Important issue? **PASS** — memory safety / buffer overflow (severity
-   tempered by privileged-only access)
-4. Small and contained? **PASS** — 1 file, ~29 lines
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — cherry-pick tested clean
+1. Obviously correct and tested? **PASS** — standard quirk pattern;
+   maintainer merged
+2. Fixes a real bug affecting users? **PASS** — internal mic unusable on
+   affected laptop
+3. Important issue? **PASS** (hardware functionality) — not CRITICAL
+   severity, but hardware quirk fixes are standard stable material per
+   stable-kernel-rules exceptions
+4. Small and contained? **PASS** — 12 lines, one file
+5. No new features or APIs? **PASS** — quirk table entry only
+6. Can apply to local tree? **PASS** — clean apply verified
 
 **Step 9.3 — Exception category**
-Record: N/A (not device ID, quirk, DT, build, or docs fix — standard bug
-fix).
+Record: **Hardware quirk/workaround** — codec pin configuration override
+for broken BIOS. Automatic stable qualification per documented
+exceptions.
 
 **Step 9.4 — Decision rationale**
-This fix addresses a genuine memory-safety bug in the CPER ring debugfs
-reader that exists in Linux 6.18.43. The overflow is reachable on
-ordinary multi-read patterns once the 12-byte header has been consumed.
-While the path requires debugfs and typically root access, stable trees
-routinely accept such fixes when they prevent kernel-to-userspace buffer
-overruns and mutex imbalances. The patch is minimal, reviewed, applies
-cleanly, and has been AUTOSel-nominated for 6.18.y.
+This is a textbook HDA codec hardware quirk: the Conexant SN6140 driver
+already exists in 6.18.44, the patch applies cleanly, and without it the
+internal microphone on the Lenovo IdeaPad Slim 5 16AKP10 is non-
+functional. The fix is minimal, PCI-SSID-scoped, and follows the same
+pattern as numerous other Conexant quirks already in stable trees. While
+not a crash-level bug, restoring broken hardware functionality via
+targeted quirks is exactly what stable kernels are expected to carry.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags (Reviewed-by Tao Zhou, SOB Alex
-  Deucher); no Fixes/Reported-by/Link
-- [Phase 1] Identified overflow, uninitialized pointers, lock scope as
-  described bugs
-- [Phase 2] Read `amdgpu_ring.c:497–576` — confirmed all four bug
-  mechanisms in HEAD
-- [Phase 2] Cherry-pick object `6bbede02dc62` changes only
-  `amdgpu_debugfs_ring_read` (+21/−8)
-- [Phase 3] `git describe HEAD` → v6.18.43; `make kernelversion`
-  equivalent → 6.18.43
-- [Phase 3] `git merge-base --is-ancestor 6bbede02dc62 HEAD` → NOT
-  ancestor (fix not yet applied)
-- [Phase 3] `git cherry-pick --no-commit 6bbede02dc62` → clean auto-
-  merge on `amdgpu_ring.c`
-- [Phase 3] `git show 5d324e5159d9e:...amdgpu_ring.c` lines 545–575 →
-  buggy CPER path present at 6.18 base
-- [Phase 4] `b4 dig -c 6bbede02dc62` →
-  https://patch.msgid.link/20260507140004.244348-1-xiang.liu@amd.com
-- [Phase 4] `b4 dig -a` → single v1 revision only
-- [Phase 4] `b4 dig -w` → amd-gfx list, Hawking Zhang, Tao Zhou CC'd
-- [Phase 4] Freedesktop archive — Tao Zhou Reviewed-by, no NAKs
-- [Phase 4] Web search — AUTOSel 7.0-6.18 nomination found
-- [Phase 5] `grep amdgpu_debugfs_ring_fops` → debugfs read entry point
-  at `amdgpu_ring.c:592–595`
-- [Phase 5] `amdgpu_debugfs_ring_init()` creates `amdgpu_ring_cper`
-  debugfs file at line 648–656
-- [Phase 6] `amdgpu_cper_init` present in `amdgpu_device.c:3310`;
-  `amdgpu_cper.c` exists
-- [Phase 6] No `amdgpu_uniras_enabled` or `amdgpu_ras_cper_debugfs_read`
-  in this tree (not needed for fix)
-- [Phase 8] Failure modes verified by code inspection: overflow, mutex
-  imbalance, uninitialized `early[]`
+- [Phase 1] Parsed subject, tags, body; no Fixes:/Reported-by:/syzbot
+- [Phase 1] Identified hardware quirk fixing broken internal microphone
+- [Phase 2] Diff: 12 lines added to `sound/hda/codecs/conexant.c`; enum
+  + pintbl + fixup + PCI quirk
+- [Phase 2] Bug category: hardware pin config workaround (jack-detect →
+  fixed internal)
+- [Phase 3] `git describe HEAD`: v6.18.44-1-g2736c32da98b9; `make
+  kernelversion`: 6.18.44
+- [Phase 3] `git blame` on SWS JS201D quirk: `4639c5021029d` (Feb 2024),
+  same SN6140 pattern
+- [Phase 3] Commit `d69c76ccc5540` NOT ancestor of HEAD; upstream
+  `f7c4968ae3af`
+- [Phase 3] `git apply --check` on diff against current tree: **clean
+  apply**
+- [Phase 3] SN6140 codec `0x14f11f87` in tree since `ca348e7fe1ab9`;
+  rename commit `7f4c540e0859e` also in tree
+- [Phase 4] `b4 dig -c d69c76ccc5540`: lore thread found
+- [Phase 4] `b4 dig -a`: v1→v2 series; v2 is committed version
+- [Phase 4] `b4 dig -w`: CC'd tiwai@suse.de, alsa-devel, linux-sound
+- [Phase 4] Mbox thread: Takashi Iwai "Applied now. Thanks."; no NAKs;
+  no stable nomination
+- [Phase 5] Verified SN6140 (`0x14f11f87`) uses `cxt5066_fixups` via
+  default fallthrough in `cx_probe()`
+- [Phase 5] `grep 38b6` / `IDEAPAD_SLIM5` in conexant.c: no matches
+  (quirk absent)
+- [Phase 5] Similar pin value `0x95a70130` exists at line 838 (SWS
+  JS201D internal mic)
+- [Phase 6] Conexant driver, SN6140 support, and quirk tables confirmed
+  present in 6.18.44
+- [Phase 8] Failure mode: internal mic non-functional; severity MEDIUM;
+  risk VERY LOW
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c | 29 +++++++++++++++++-------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ sound/hda/codecs/conexant.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-index 304564ec2f59a..431cc39ea0178 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -498,8 +498,9 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 					size_t size, loff_t *pos)
- {
- 	struct amdgpu_ring *ring = file_inode(f)->i_private;
--	uint32_t value, result, early[3];
-+	u32 value, result, early[3] = { 0 };
- 	uint64_t p;
-+	u32 avail_dw, start_dw, read_dw;
- 	loff_t i;
- 	int r;
+diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
+index c3c8326d0b77a..fe7445fabb887 100644
+--- a/sound/hda/codecs/conexant.c
++++ b/sound/hda/codecs/conexant.c
+@@ -294,6 +294,7 @@ enum {
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
+ 	CXT_PINCFG_SWS_JS201D,
++	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
+ 	CXT_PINCFG_TOP_SPEAKER,
+ 	CXT_FIXUP_HP_A_U,
+ 	CXT_FIXUP_ACER_SWIFT_HP,
+@@ -831,6 +832,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
+ 	{}
+ };
  
-@@ -508,10 +509,10 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 
- 	result = 0;
- 
--	if (*pos < 12) {
--		if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
--			mutex_lock(&ring->adev->cper.ring_lock);
-+	if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
-+		mutex_lock(&ring->adev->cper.ring_lock);
- 
-+	if (*pos < 12) {
- 		early[0] = amdgpu_ring_get_rptr(ring) & ring->buf_mask;
- 		early[1] = amdgpu_ring_get_wptr(ring) & ring->buf_mask;
- 		early[2] = ring->wptr & ring->buf_mask;
-@@ -543,13 +544,24 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 			*pos += 4;
- 		}
- 	} else {
-+		early[0] = amdgpu_ring_get_rptr(ring) & ring->buf_mask;
-+		early[1] = amdgpu_ring_get_wptr(ring) & ring->buf_mask;
++/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
++static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
++	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
++	{}
++};
 +
- 		p = early[0];
- 		if (early[0] <= early[1])
--			size = (early[1] - early[0]);
-+			avail_dw = early[1] - early[0];
- 		else
--			size = ring->ring_size - (early[0] - early[1]);
-+			avail_dw = ring->buf_mask + 1 - (early[0] - early[1]);
- 
--		while (size) {
-+		start_dw = (*pos > 12) ? ((*pos - 12) >> 2) : 0;
-+		if (start_dw >= avail_dw)
-+			goto out;
-+
-+		p = (p + start_dw) & ring->ptr_mask;
-+		avail_dw -= start_dw;
-+		read_dw = min_t(u32, avail_dw, size >> 2);
-+
-+		while (read_dw) {
- 			if (p == early[1])
- 				goto out;
- 
-@@ -562,9 +574,10 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 
- 			buf += 4;
- 			result += 4;
--			size--;
-+			read_dw--;
- 			p++;
- 			p &= ring->ptr_mask;
-+			*pos += 4;
- 		}
- 	}
- 
+ /* SuoWoSi/South-holding JS201D with sn6140 */
+ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
+ 	{ 0x16, 0x03211040 }, /* hp out */
+@@ -1011,6 +1018,10 @@ static const struct hda_fixup cxt_fixups[] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = cxt_pincfg_sws_js201d,
+ 	},
++	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
++	},
+ 	[CXT_PINCFG_TOP_SPEAKER] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -1119,6 +1130,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
++	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
 -- 
 2.53.0
 
