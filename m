@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B9A43B498;
-	Mon, 31 Aug 2026 13:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2DC47ACF1;
+	Mon, 31 Aug 2026 13:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184532; cv=none; b=FXj49NvJnw96be3+/SPUnq1B064swxbQFTgSqHa1x82UfqNtLtVh0IvdpHjaKr7d53Qp9mko8Ejf6ciWl7Gpq2PwrSwyJOlOT6NZyYkoCInrObCERYqOXk/Bfey5VRZbP3xfVwGR3nVZX3iS48Lz12QVGFfmksOhLw8ilVVt2JM=
+	t=1788184538; cv=none; b=mr6d+trpMS5qdU0utI0ZSm+a32RLHOouEidygSBoQJGkGW7EZXzuIIoGygDnqBQla7zB5dk3LbhNLsPma4ws624NNgtKwRkHJLZCSwLvoFzhHjH+ooxv//apR04UbgU6r0lcdbDkHHf4QdwfaJLVAnDbwFJ9Kn+lqzAMU6isTds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184532; c=relaxed/simple;
-	bh=n4PPTb9/YtWnQmKDDy+IfGnL16ChU38IZVdWbDw3Rtc=;
+	s=arc-20240116; t=1788184538; c=relaxed/simple;
+	bh=z2ckaUxiqhMwGJJm1j54eMrOwuQh4LgZpopd41r2C/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkBmYBjSjDyTtrEN4No2sonuSw0KY10F2cj1uZOoEbF71kZiYXKZV1pIVp4BwyJ1GL3fzJWEtKP2WazTiWMGHqXZx/y4rE6IkWqf7u2zH4Ap4Sgxpuq5wjzLFnAOgRLpTQPLFl6JChNm/HadTQ63h8tM1EU56ej5TYL965H3AQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vzob2bd0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MZHzQqibRnnmGGtcRl7acBj93//38NA5WQelDa189/ntNHz5fDYDPDbBoLrQKa/PdYRWPPkBeReZNaRttqfj2VnjWx5qUtLciiXasWefISy9QfelfeILLqEQmM8UG/ex0EeCMsYTGY69/16Si9WI6Ws4UIqZiDmII8bNsIDs+3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3F7E/W5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vzob2bd0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640401F000E9;
-	Mon, 31 Aug 2026 13:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3F7E/W5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D1D1F000E9;
+	Mon, 31 Aug 2026 13:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184530;
-	bh=L6sOyIflEDIcRmOvNJ/Y1Mxi5uLj29OKW4RZOxrgU3g=;
+	s=korg; t=1788184536;
+	bh=MM+YxIjI7HJhe1q0aPYSkqAbx2BJAXJgvK4t2GKwiyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vzob2bd0FDUlstCRHY9Pl+OtgrFjs8pvc9AVDQQfFXehvWX+wosRXB/PQlGpIRHoz
-	 zXxYhmT7iRrh1x/YuYo0clQ+DMnW0jm7TNHxI/kI2+uY3Z+wV9zoQArLh8x+zGUUrq
-	 P0c9w1fvoMuW7LufjX0BvtwfeL0ItRjzJ8f8eANQ=
+	b=O3F7E/W5pn0mi7qPjmpxdz5pMoL3iH/PpYCi1LC/K8h5ieJZD+WUT1vMBYEU682gg
+	 LrTVjvW3JARIBhpMEpAGcQf1uqDWNwrUXlLTkWig45daB9Is1MsglCcWIsYA/6mrKU
+	 Ox/jpbKcUlpKcWlFYF8c22cocciiqYd8BdrbNMNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Kodama <ckhordiasma@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Weiwen Hu <huweiwen@linux.alibaba.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 41/91] HID: magicmouse: re-enable multitouch after reset-resume
-Date: Mon, 31 Aug 2026 15:34:29 +0200
-Message-ID: <20260831133401.853829641@linuxfoundation.org>
+Subject: [PATCH 6.6 43/91] nvme: rename nvme_sc_to_pr_err to nvme_status_to_pr_err
+Date: Mon, 31 Aug 2026 15:34:31 +0200
+Message-ID: <20260831133401.971314347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -51,67 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Kodama <ckhordiasma@gmail.com>
+From: Weiwen Hu <huweiwen@linux.alibaba.com>
 
-[ Upstream commit 4253fe22b137c4ee68f36b707fdb1b44b191edc4 ]
+[ Upstream commit 22f19a584d7045e0509f103dbc5c0acfd6415163 ]
 
-When the Apple Magic Trackpad 2 (USB) is reset across a power transition
-(e.g. resume from hibernation) it drops out of multitouch mode: it keeps
-sending report ID 0x02 on its HID_TYPE_USBMOUSE interface, but the packet
-shrinks from 21 to 8 bytes and the trackpad2 handler drops it (size < 12).
-Clicks still work but pointer motion is lost until the device is re-plugged
-or the driver reloaded.
+This should better match its semantic.  "sc" is used in the NVMe spec to
+specifically refer to the last 8 bits in the status field. We should not
+reuse "sc" here.
 
-Re-enable multitouch from .reset_resume via the workqueue.  Only
-.reset_resume is needed; suspend-to-idle keeps the device powered and
-retains multitouch.
-
-Fixes: 87a2f10395c8 ("HID: magicmouse: Apple Magic Trackpad 2 USB-C driver support")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude-Code:claude-opus-4-8
-Signed-off-by: Christopher Kodama <ckhordiasma@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ kept 6.6's non-const `magicmouse_report_fixup()` signature in context instead of upstream's `static const __u8 *` ]
+Signed-off-by: Weiwen Hu <huweiwen@linux.alibaba.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 4a3f00262a04 ("nvmet-tcp: bound SGL data length before allocating command buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-magicmouse.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/nvme/host/pr.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -993,6 +993,22 @@ static void magicmouse_remove(struct hid
- 	hid_hw_stop(hdev);
+--- a/drivers/nvme/host/pr.c
++++ b/drivers/nvme/host/pr.c
+@@ -72,12 +72,12 @@ static int nvme_send_ns_pr_command(struc
+ 	return nvme_submit_sync_cmd(ns->queue, c, data, data_len);
  }
  
-+#ifdef CONFIG_PM
-+static int magicmouse_reset_resume(struct hid_device *hdev)
-+{
-+	struct magicmouse_sc *msc = hid_get_drvdata(hdev);
-+
-+	/* The device drops out of multitouch mode on resume; re-send the
-+	 * enable report.  Only the HID_TYPE_USBMOUSE interface accepts it, and
-+	 * it must be deferred. Sending it inline here is too early.
-+	 */
-+	if (msc && hdev->type == HID_TYPE_USBMOUSE)
-+		schedule_delayed_work(&msc->work, msecs_to_jiffies(500));
-+
-+	return 0;
-+}
-+#endif
-+
- static __u8 *magicmouse_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 				     unsigned int *rsize)
+-static int nvme_sc_to_pr_err(int nvme_sc)
++static int nvme_status_to_pr_err(int status)
  {
-@@ -1052,6 +1068,9 @@ static struct hid_driver magicmouse_driv
- 	.event = magicmouse_event,
- 	.input_mapping = magicmouse_input_mapping,
- 	.input_configured = magicmouse_input_configured,
-+#ifdef CONFIG_PM
-+	.reset_resume = magicmouse_reset_resume,
-+#endif
- };
- module_hid_driver(magicmouse_driver);
+-	if (nvme_is_path_error(nvme_sc))
++	if (nvme_is_path_error(status))
+ 		return PR_STS_PATH_FAILED;
  
+-	switch (nvme_sc & 0x7ff) {
++	switch (status & 0x7ff) {
+ 	case NVME_SC_SUCCESS:
+ 		return PR_STS_SUCCESS;
+ 	case NVME_SC_RESERVATION_CONFLICT:
+@@ -122,7 +122,7 @@ static int nvme_pr_command(struct block_
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return nvme_sc_to_pr_err(ret);
++	return nvme_status_to_pr_err(ret);
+ }
+ 
+ static int nvme_pr_register(struct block_device *bdev, u64 old,
+@@ -197,7 +197,7 @@ retry:
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return nvme_sc_to_pr_err(ret);
++	return nvme_status_to_pr_err(ret);
+ }
+ 
+ static int nvme_pr_read_keys(struct block_device *bdev,
 
 
