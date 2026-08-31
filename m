@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B6943C7DB;
-	Mon, 31 Aug 2026 13:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAEC42E43A;
+	Mon, 31 Aug 2026 13:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184642; cv=none; b=CtrwV0PJNXzUb3uTyGLCg0N7E08DG89UPfqZHWjoR7luqvrTA0kNFBUuIwiDXxBHQedZYJsvIL6Q0eNqSTQUP3m2ERJH5ZeJ7wMnsyDfH7oa0myunP6CbcJ7+dGyyU+tUp8tHCgHAeJqNQ6rIghB1C6qzYXl09d0RXnDQKaHZUQ=
+	t=1788184647; cv=none; b=VGmGVplrFx53FnIfqj7e7Ey2fP3+8Ei2gk4D4sr4pGXACkQZ5+Qb9nq/rbsiRtlhBJUMiY6jUGMtgSK7LtwMt3Wj0Vwoy6s7oBnlbFRCaS5uhZqUdpf+fIpXjPaqMOXNDSdql7oZLuDk75vFw9eEeUHIFzB6pAEiOclz87pIPrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184642; c=relaxed/simple;
-	bh=J7K7IC/KbcgpaIMTg8VspfqC1LNWHz0pcH+MTKYHIY0=;
+	s=arc-20240116; t=1788184647; c=relaxed/simple;
+	bh=J9M8vri8xaTJVvRhEQQE6LRvr/7eb0cCThxV2mbSyMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxfhM5dVmCtW7BVZUIx+JvgS2MXO6oUnNnQYzpt05NJzHMfoVTLpCDlLv87zAjROlGj5Bioev8tf2xVExapFPeSahgUZ+kfJ+KLsb1isfj4mCAiEfZ3nQ6PpoR/Da2JIhGOz3JDaNMoylwbBApglPzQJQGfORR9MAS09VTdPJDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfgl7lh6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f/chmfqdLB0Hq1o52RqGpOgxYnwejD8/gRfN8zB3HuyWYFTnQWxUNk0KhC5gEChcF8wFVKKaGEZolDbslBwQzyceQl6NDoBiWqvzZKaiStmGs8OR0r93Ld2cLw8tft57Y45HjCFnURMRBEujWsFJc4bjgSKfj5r+JMlQR2L1FY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kb19jm0W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfgl7lh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0505D1F00A3E;
-	Mon, 31 Aug 2026 13:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kb19jm0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E221F000E9;
+	Mon, 31 Aug 2026 13:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184640;
-	bh=VQzonTazXNWmYZf6NIaLvYfZ1zFlSyJDN4TC/rVG7us=;
+	s=korg; t=1788184646;
+	bh=s3fKHItI+5yd+qNBiZsWRsJpDlRBrxN3z61IQdUcY9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bfgl7lh6LwS5s60EfENzamIy1JF/nGWhVLG4H+mDP9wDVlrRTGK1KvJOr9hBNK4Xl
-	 KPNn16QUQoMrnYx9zyWOcOSc0itVgHQR8oNu+bjVU4NtAu/IhJD1KLjKhwWoYXOplC
-	 9H4H2Q6PeS7iaZu54IesVsV/z5GcA1Zv7oFJ3I9k=
+	b=Kb19jm0WUQOx8XQtkebutQpIzg29ijyIXLyQxCswFTEDxuZW3b+UlymgS6g3CExg7
+	 QuSdeYgZH/1OLTOc7GWlVJMngHnBygk14el+sZDjcZe8ypUtCPGaf9AwcqxVFHW7kC
+	 VqLNTndIZHJlF2nbWCAfFY6IaQfm88UwO17a+aVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thorsten Blum <thorsten.blum@linux.dev>,
+	Frank Li <Frank.Li@nxp.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 79/91] crypto: atmel-tdes - use scatterlist length before DMA mapping
-Date: Mon, 31 Aug 2026 15:35:07 +0200
-Message-ID: <20260831133403.675318098@linuxfoundation.org>
+Subject: [PATCH 6.6 81/91] crypto: mxs-dcp - fix source scatterlist length access
+Date: Mon, 31 Aug 2026 15:35:09 +0200
+Message-ID: <20260831133403.777239652@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -52,46 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit ba199bdaa80b09a7dd92f28751de7f3dbb06c510 upstream.
+commit c5bcb084a9871e5b62afb5f48b60adfa13b5d9f8 upstream.
 
-Using sg_dma_len() is only valid after mapping the scatterlist with
-dma_map_sg(). However, atmel_tdes_crypt_start() uses it before mapping
-to compare input/output lengths and to compute the transfer count.
+mxs_dcp_aes_block_crypt() uses sg_dma_len() without mapping the source
+scatterlist with dma_map_sg() first. Therefore, sg_dma_len() is invalid
+and could return zero or a stale DMA length, causing encryption and
+decryption to process the wrong number of bytes when
+CONFIG_NEED_SG_DMA_LENGTH=y.
 
-Use the original scatterlist lengths before DMA mapping to avoid reading
-stale or uninitialized DMA lengths when CONFIG_NEED_SG_DMA_LENGTH=y.
+Use the original scatterlist length instead.
 
-Drop the output scatterlist length in the fast path since it is equal to
-->in_sg->length and does not change the transfer count.
-
-Fixes: 13802005d8f2 ("crypto: atmel - add Atmel DES/TDES driver")
-Fixes: 1f858040c2f7 ("crypto: atmel-tdes - add support for latest release of the IP (0x700)")
+Fixes: 15b59e7c3733 ("crypto: mxs - Add Freescale MXS DCP driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-tdes.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/crypto/mxs-dcp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/atmel-tdes.c
-+++ b/drivers/crypto/atmel-tdes.c
-@@ -463,14 +463,13 @@ static int atmel_tdes_crypt_start(struct
- 			IS_ALIGNED(dd->out_sg->length, dd->ctx->block_size);
- 		fast = in && out;
+--- a/drivers/crypto/mxs-dcp.c
++++ b/drivers/crypto/mxs-dcp.c
+@@ -333,7 +333,7 @@ static int mxs_dcp_aes_block_crypt(struc
  
--		if (sg_dma_len(dd->in_sg) != sg_dma_len(dd->out_sg))
-+		if (dd->in_sg->length != dd->out_sg->length)
- 			fast = 0;
- 	}
+ 	for_each_sg(req->src, src, sg_nents(req->src), i) {
+ 		src_buf = sg_virt(src);
+-		len = sg_dma_len(src);
++		len = src->length;
+ 		tlen += len;
+ 		limit_hit = tlen > req->cryptlen;
  
- 
- 	if (fast)  {
--		count = min_t(size_t, dd->total, sg_dma_len(dd->in_sg));
--		count = min_t(size_t, count, sg_dma_len(dd->out_sg));
-+		count = min_t(size_t, dd->total, dd->in_sg->length);
- 
- 		err = dma_map_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
- 		if (!err) {
 
 
