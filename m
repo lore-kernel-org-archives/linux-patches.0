@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BE14CCDE9;
-	Mon, 31 Aug 2026 14:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02B9494828;
+	Mon, 31 Aug 2026 14:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185177; cv=none; b=Ub0QeW90/9lU35Xi6gaRSoEzG5OQ1uBq2AaGexUFnslLl7ErDWoMoi8iJNUUk2iY7uu7Xc5o1mnhXQejkLhH4t4iU+fXhWrr3M1vChBbUxJqzgRUeJwbCq1I54wF7wFx8BvAJEqruRmnh9DDagr/FZ5ip5U8iKEXab0mrpJU9QI=
+	t=1788185182; cv=none; b=uqV6C2p++iqfNDbB6LWyXQTsSInJfEpR4prBvfPfochdKuIr5nO/ZQSUYRKGMIrKVz/ucUAsvsgi8mbou9GbHNjrYYjcUb6+ZQ0Vqph5zp+BpjSc4MRDUXncAIfRUbdhn8hlbIOTS3iymurFKfsdg1a+qfmUPJ5dqcWulMxQ7LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185177; c=relaxed/simple;
-	bh=xGOzWgeW/CwILly4EwXN5f++kDD+DCJvEQydSXpPd5A=;
+	s=arc-20240116; t=1788185182; c=relaxed/simple;
+	bh=smAaFnsUMv9cmbNMsfUo+/3vMSKhnrrZhYVH1dF3dLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQrniwmt1kwdRvmjtTb7aED8Tic0nXpw0MUlghxBvDPzcjT6Ho6MdRGC4SHRLGDlJTJ6tAXWN8Nah8NnVd8KD0xnDrgRB3IrhPBrv8WZxURA1A4AAshMQawif4BuJs6XW7513AuSP+3Oa5Z8vBzkhmP51/Ofkf0Z+uRKvk/XQcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqmlxzzz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jCkL8fKp8TrSBGRDZg7DVNKLbY9650BBP7OwPrJxBF8CUkgiv/k3mzcJOcbSTo3bMmA6jAZFqhxax5Gwgao8DZt8Re9Um+Mdl6UR8IjWKlYSyNP36nE7g1kLSNeFvlkmr4ZwJvnl7sfFuRelSU1U39BMczT9C1xcY5dGsIwf7/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c69iUaUE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqmlxzzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402E21F000E9;
-	Mon, 31 Aug 2026 14:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c69iUaUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AA71F000E9;
+	Mon, 31 Aug 2026 14:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185175;
-	bh=ydPUqUvSDShZsViAdeh2b7Gpdm1QgRC+w8EjSndLWqY=;
+	s=korg; t=1788185181;
+	bh=YK2+VqYsDrJiED0idqdhZNfapZwwV2KQLxnpFPyaCbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dqmlxzzz400xiX9hSq8v/FN/8A158AHdIZIZRH/nV28xtxVf8o+22FxuGlSSmkGFJ
-	 X5tpKjgjvXST/LSFk3LmvKMLKbMTnB8ku6JqRMGe5lxkPAlkXVe/eghwIRmYH6o4y1
-	 ygLZFaysl3SOEsyV5NI7WuhfkRVInSW2VF5vTQ4A=
+	b=c69iUaUExMpX/V1mbEe1NQuxRDsLrXYYWyeU4cJ+80R8ixRLti/93/mUiqNs1zlli
+	 F/Q3q/ndGG0mD8d9Teox0QaU4V+AXPP0Y3cekx9d4LR2w5hX8WUbGhVt1HpQyj1QTo
+	 WzAW3nbAK7tfzA2nNBWNHaoRhUyE9JIPGpMmwf7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 11/43] Revert "PM: sleep: Use complete() in device_pm_sleep_init()"
-Date: Mon, 31 Aug 2026 15:35:19 +0200
-Message-ID: <20260831133359.037128144@linuxfoundation.org>
+Subject: [PATCH 5.10 13/43] Revert "mtd: maps: vmu-flash: fix fault in unaligned fixup"
+Date: Mon, 31 Aug 2026 15:35:21 +0200
+Message-ID: <20260831133359.114620962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -49,37 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit d77b629876f15ebf9d9987e60b6747fd73ca8148.
+This reverts commit f781e80c9f1e52d92535c076573b0cdafab04864.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/mtd/maps/vmu-flash.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 24a7e280e3007..964573e30d691 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -102,7 +102,7 @@ void device_pm_sleep_init(struct device *dev)
- 	dev->power.is_noirq_suspended = false;
- 	dev->power.is_late_suspended = false;
- 	init_completion(&dev->power.completion);
--	complete(&dev->power.completion);
-+	complete_all(&dev->power.completion);
- 	dev->power.wakeup = NULL;
- 	INIT_LIST_HEAD(&dev->power.entry);
- }
-@@ -242,10 +242,6 @@ static void dpm_wait(struct device *dev, bool async)
- 	if (!dev)
- 		return;
+diff --git a/drivers/mtd/maps/vmu-flash.c b/drivers/mtd/maps/vmu-flash.c
+index ad10f7887dfa0..f96a165fccc7c 100644
+--- a/drivers/mtd/maps/vmu-flash.c
++++ b/drivers/mtd/maps/vmu-flash.c
+@@ -610,7 +610,7 @@ static int vmu_connect(struct maple_device *mdev)
  
--	/* Devices with no PM support don't use the completion. */
--	if (dev->power.no_pm)
--		return;
--
- 	if (async || (pm_async_enabled && dev->power.async_suspend))
- 		wait_for_completion(&dev->power.completion);
- }
+ 	basic_flash_data = be32_to_cpu(mdev->devinfo.function_data[c - 1]);
+ 
+-	card = kzalloc_obj(struct memcard);
++	card = kmalloc(sizeof(struct memcard), GFP_KERNEL);
+ 	if (!card) {
+ 		error = -ENOMEM;
+ 		goto fail_nomem;
+@@ -628,13 +628,15 @@ static int vmu_connect(struct maple_device *mdev)
+ 	* Not sure there are actually any multi-partition devices in the
+ 	* real world, but the hardware supports them, so, so will we
+ 	*/
+-	card->parts = kzalloc_objs(struct vmupart, card->partitions);
++	card->parts = kmalloc_array(card->partitions, sizeof(struct vmupart),
++				    GFP_KERNEL);
+ 	if (!card->parts) {
+ 		error = -ENOMEM;
+ 		goto fail_partitions;
+ 	}
+ 
+-	card->mtd = kzalloc_objs(struct mtd_info, card->partitions);
++	card->mtd = kmalloc_array(card->partitions, sizeof(struct mtd_info),
++				  GFP_KERNEL);
+ 	if (!card->mtd) {
+ 		error = -ENOMEM;
+ 		goto fail_mtd_info;
 -- 
 2.53.0
 
