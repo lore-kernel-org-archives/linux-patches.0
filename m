@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8D349363D;
-	Mon, 31 Aug 2026 14:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB4E494811;
+	Mon, 31 Aug 2026 14:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185149; cv=none; b=WJZXyDgLcfk90l2+ZT+2i2GhBtz6YQ404yckCcnD1kQWZ62k7L0Wi7SpMqOM/2JWNaL2hFWehWv96F6KKjtxHjuJxDLbPlgFyp/3uT9UJ9i10Np0+Vr2H4hci8TRZLkXqWZJK6ivkvUWCHJPPr1Lb9GbmGZZmsOVyscIx+IPchw=
+	t=1788185174; cv=none; b=F10dj0aPaAUWlK0yAfeLXlUKhk/uVMPSDfqb/a/PYkTmLSw9zxSQ0eaeh55iKBrRHm/6rQvf23IbsEhnNxJrc/8D0PoJAdkwjkv320UnQJD0bvZPKSNok4vKD1s/Ujft1sJgF/Wu3PX0s8gD0RlL0iU+q+4dkixwktpLaaQfSjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185149; c=relaxed/simple;
-	bh=VjLJdTGGv67VxzJItH3g2UUoBTfEZ0fwXYyGpDAXKgc=;
+	s=arc-20240116; t=1788185174; c=relaxed/simple;
+	bh=dYaFDCIGkZIkA5lnBDuuNftQ+60bgt0s5bH27rxs57c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjXYSI/2FAeX4K0A02PcJz5zOkqvkB/pSXlEEpwygqottX4llugUYln8lqXnHKd1x0k6XuRGrpEbmr7nseR8gOju67NsGqW4Yi1oE2edp7hrDi90kpFnu756BfEXEjuVlTzbwAVEse8G1uOjjooSQb6wxy32gH/nZ6Ghlkv+Vcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jh8T6vV9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GuXyTbFRzqF3rGljj4eFHvVceiMrtVMOBUvxeR6T7pi+J26BWrdFvn2ZwqX9o07kGFUdkpAcV8/A3xQuHp/qE6K6YLB3OD3TSBNmNDg6669RK+cM15t8oNSvVkNT23wckw4eZ1pPTQftNG0nAcT70xRD9en8D7An75h+QrQk9ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMVFp9kq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jh8T6vV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABCC1F000E9;
-	Mon, 31 Aug 2026 14:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMVFp9kq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730D01F000E9;
+	Mon, 31 Aug 2026 14:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185147;
-	bh=Q2XCsJW0xVX3fN5HKY56276uNMHQZaKkpgFvA2q1F2A=;
+	s=korg; t=1788185173;
+	bh=NVHQyc9Os580lQnPu7lVrRehGZSgGrR0pVvtfzszGao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jh8T6vV99/HaC+JXAymxO8t2tmoQ/rrd2MR1LXM1iYLhV/tWMby4Nshor2E9t+z25
-	 r3Rm6Xl3j6H6KArLB3WV3EXTNChO3Y4eSpuCXZbYovDRIme/No/dZmqE2PZY5W+jzi
-	 Xq2aGOBcg4539zN23jnCc07Yd5ix5QCH8OMhKwhQ=
+	b=SMVFp9kqHmo0VIDBxOar5YRyRmGDQ8FeQQ24L7fkTP4vh0m7KZLvVnjBdG27onK6d
+	 bgzhfJu0hf3yF22MeJWwfbygHFAwef+vUOQLWV39U+5gtF6KQpUUlPcyY1AuQAcQr6
+	 m4uY6+HogORNb1KoPSdsNTUMX3wWwMc35R+HYPQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 32/69] HID: uclogic: fix use-after-free of inrange_timer on remove
-Date: Mon, 31 Aug 2026 15:35:05 +0200
-Message-ID: <20260831133400.097841064@linuxfoundation.org>
+Subject: [PATCH 5.10 10/43] bpf: Fix use-after-free in offloaded map/prog info fill
+Date: Mon, 31 Aug 2026 15:35:18 +0200
+Message-ID: <20260831133358.998190580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
-References: <20260831133358.601894154@linuxfoundation.org>
+In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
+References: <20260831133358.571886287@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +51,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 506fd50a9027340f0e9dcc587d10ccb03312dba6 ]
+[ Upstream commit a0c584fc18056709c8e047a82a6045d6c209f4ce ]
 
-uclogic_remove() cancels the pen in-range timer and then stops the
-device:
+When querying info for an offloaded BPF map or program,
+bpf_map_offload_info_fill_ns() and bpf_prog_offload_info_fill_ns()
+obtain the network namespace with get_net(dev_net(offmap->netdev)).
+However, the associated netdev's netns may be racing with teardown
+during netns destruction. If the netns refcount has already reached 0,
+get_net() performs a refcount_t increment on 0, triggering:
 
-	timer_delete_sync(&drvdata->inrange_timer);
-	hid_hw_stop(hdev);
+  refcount_t: addition on 0; use-after-free.
 
-timer_delete_sync() only guarantees the timer is idle at that instant.
-uclogic_raw_event_pen() keeps delivering pen reports until hid_hw_stop()
-stops the transport several lines later, and every report with
-pen->inrange == UCLOGIC_PARAMS_PEN_INRANGE_NONE re-arms the timer:
+Although rtnl_lock and bpf_devs_lock ensure the netdev pointer remains
+valid, they cannot prevent the netns refcount from reaching zero.
 
-	mod_timer(&drvdata->inrange_timer, jiffies + msecs_to_jiffies(100));
+Fix this by using maybe_get_net() instead of get_net(). maybe_get_net()
+uses refcount_inc_not_zero() and returns NULL if the refcount is already
+zero, which causes ns_get_path_cb() to fail and the caller to return
+-ENOENT -- the correct behavior when the netns is being destroyed.
 
-A report landing between the timer_delete_sync() call and the transport
-teardown in hid_hw_stop() re-arms inrange_timer after it was cancelled.
-uclogic_remove() then returns and the devm drvdata is freed, while
-hid_hw_stop() has already freed the input device drvdata->pen_input
-points at, so when the timer fires ~100 ms later
-uclogic_inrange_timeout() dereferences freed memory -- a use-after-free
-in timer-softirq context.
-
-Swapping the two calls is not a fix: stopping the device first frees
-drvdata->pen_input via hidinput_disconnect() while the timer may still
-be pending, so a timer already armed before removal fires on the freed
-input device in the window before timer_delete_sync() runs.
-
-Use timer_shutdown_sync() before hid_hw_stop() instead. It cancels the
-timer, waits for a running callback while pen_input is still valid, and
-prevents any further re-arming -- a later mod_timer() from an in-flight
-report is silently ignored -- so the timer is provably dead before
-hid_hw_stop() frees the inputs. This is the ordering the timer core
-documents for this "timer re-armed from another path" teardown case.
-
-Fixes: 01309e29eb95 ("HID: uclogic: Support in-range reporting emulation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ changed timer_delete_sync() to del_timer_sync() in the removed line to match the pre-rename API on this branch ]
+Fixes: 675fc275a3a2d ("bpf: offload: report device information for offloaded programs")
+Fixes: 52775b33bb507 ("bpf: offload: report device information about offloaded maps")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Closes: https://lore.kernel.org/bpf/f0aa3678-79c9-47ae-9e8c-02a3d1df160a@hust.edu.cn/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260409023733.168050-1-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-uclogic-core.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ kernel/bpf/offload.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-uclogic-core.c
-+++ b/drivers/hid/hid-uclogic-core.c
-@@ -346,7 +346,17 @@ static void uclogic_remove(struct hid_de
- {
- 	struct uclogic_drvdata *drvdata = hid_get_drvdata(hdev);
+diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+index bd09290e36484..bfd2ce6733692 100644
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -277,9 +277,8 @@ static struct ns_common *bpf_prog_offload_info_fill_ns(void *private_data)
  
--	del_timer_sync(&drvdata->inrange_timer);
-+	/*
-+	 * Shut the in-range timer down before stopping the device.
-+	 * uclogic_raw_event_pen() re-arms inrange_timer on every pen report
-+	 * and keeps running until hid_hw_stop() stops the transport, so a
-+	 * plain timer_delete_sync() here can be undone by a report landing in
-+	 * the window before hid_hw_stop().  timer_shutdown_sync() cancels the
-+	 * timer and makes any later re-arm a no-op, so it is provably dead
-+	 * before hid_hw_stop() frees the input device drvdata->pen_input
-+	 * points at.
-+	 */
-+	timer_shutdown_sync(&drvdata->inrange_timer);
- 	hid_hw_stop(hdev);
- 	kfree(drvdata->desc_ptr);
- 	uclogic_params_cleanup(&drvdata->params);
+ 	if (aux->offload) {
+ 		args->info->ifindex = aux->offload->netdev->ifindex;
+-		net = dev_net(aux->offload->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(aux->offload->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
+@@ -504,9 +503,8 @@ static struct ns_common *bpf_map_offload_info_fill_ns(void *private_data)
+ 
+ 	if (args->offmap->netdev) {
+ 		args->info->ifindex = args->offmap->netdev->ifindex;
+-		net = dev_net(args->offmap->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(args->offmap->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
+-- 
+2.53.0
+
 
 
