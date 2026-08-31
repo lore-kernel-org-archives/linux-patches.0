@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C878448BBE;
-	Mon, 31 Aug 2026 13:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3877841D102;
+	Mon, 31 Aug 2026 13:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183248; cv=none; b=VOKXyqUcox0wNTn0npa+5d3NEIy3wWD5CmX4IMS6CinTcM4aR+me0j7dQqRMLyFLlfuFYA9jEfZrBfKK6OFnxKG22ALu9o3bUubo0qgUmnMyoubB8Jlbi0AiOgUp7eQCS8UzeNLzvq/60cqH3wSFEreiD2trWVf/3pxQDF+PS18=
+	t=1788183250; cv=none; b=fJsKCJjL4ecFO88EeBaIpXYpBnfiUvHNdZuQnQYr38pPVAD/KspFGXxiZbnkuZyeLayY4tt6TTX5pWO7pVvV7cC4NoopzP/xBlpiC08tjwARZ2u/T0rV7jYtqrmGM5AXCjasqV6F6GtktCUfig8JDVeBr98NTOH1iRfZh8C1TP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183248; c=relaxed/simple;
-	bh=oZZmzJJaTC1OwMdUzjYrScl+rw6YCf3MDagZizbQnsk=;
+	s=arc-20240116; t=1788183250; c=relaxed/simple;
+	bh=tjXasVs+nT5roRKPQZ+XkODiyUAi55MdVEyKSyyNSPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qq/wN9v8RQOvQTzqure3yWPH7jU9zHT7qMKsK4+JFwp+3SHaZW4z+/pI/l4nTZ6ukh6fLvA24zV3BbQljhwHqI8hUf8zlXUro99QNZj3Xc1631C4ufGJj+cpmz+WlfEBbgg2Dni3mrxrAySoYOG5JGCBnQFQ4Xmm52xdPYO+0ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CDVkqgiE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZUrDKe+MZgPRaRCZWPZ1jcP2Cg4EctX5hbEnJ57XLuwL74P9MB12wGOWsds7N0OOJkK4TvBjaIsAlhFFuGZy9/wA5A4y0Cukp72Z4cLMjDB3oocMli7/oz5NF2rWJiq8lTPdOYwsIkAVgta7o06ZIO5QKpmE0x/JFLLEozO0rnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohChnuKv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CDVkqgiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DCE1F00A3E;
-	Mon, 31 Aug 2026 13:34:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohChnuKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8FC1F000E9;
+	Mon, 31 Aug 2026 13:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183246;
-	bh=kHkJAFP3+2eSRsAQlstSfJJhNWEBKMr8y/tJjJW4lcQ=;
+	s=k20260515; t=1788183248;
+	bh=zeHrhVztDTg2l1DwUE5J1tlsgorWbl/Rkj3/n7D97Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CDVkqgiE0gW7jhdNwLWNP/cPHMwHM1kj4o8pMGUzqXo71eXwFO+crKeeEZBIH0MVD
-	 RblHaT6TddOn1xw6x7wYWDGSJ3c5/gnIEUzC+2ozsim6W76yDBvym+GpILtDEzyR6S
-	 55J5GazywQvNy7YAd6AKqLi6NzxPRiSw3qPMiKkcBLlZ/gotc+Vp2f+J2iLFVO60Fs
-	 ljmPSeEFKlVJXGWqpa/bfdRVNWlH0YPSgxyIfXMVMfTICv4X6rcmtOkInQht8/T1tA
-	 jAgN1L8czY136PRhZ+Eki7MTqSJEN0RdVMnwiPG9mQIXDipRASx1ROV9nYC4E+RnMH
-	 LbjQ6mlVARCWA==
+	b=ohChnuKvriNvttD+e4hRkLocsaM3+Sc8sVJnHm5u7wbJSOs0AiqCRpHUaKAXP2Hq2
+	 0OV53LJccFmqhQVY3kKHHM6UJ9q8nsnCYsnRlRcLSxwpL9kEtgcTNdOH0lviNmIq+P
+	 EP4YmFIjXjW5dZikSSTw8A87NnsLsLNxm3bhZfVDbsS7w0uyY8ps7cwja4VIY8onc8
+	 7MuUpBHv0cFJLSWNfdZHlCQWQJ7orWaZC3a+GeFJlBeewyaaCJnQfjsj3TAvEc3NCJ
+	 pxLibouymYvePhfKhQUyh9KrZk71P8G/6ivMZoQIelvQXhpwTLHGG5b/g6a/o04yeF
+	 TcOOwJPaDvBIw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+Cc: =?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linuxppc-dev@lists.ozlabs.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] bus: fsl-mc: wait for the MC firmware to complete its boot
-Date: Mon, 31 Aug 2026 09:21:01 -0400
-Message-ID: <20260831133314.4125787-33-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/arm/komeda: fix error handling for clk_prepare_enable() and callers
+Date: Mon, 31 Aug 2026 09:21:02 -0400
+Message-ID: <20260831133314.4125787-34-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -46,434 +51,457 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 208858b1b48eba83d073542372329cf8ed606526 ]
+[ Upstream commit 6502eb8cfcd6f7bc5f1f8b73ee524112bd93319d ]
 
-There are use cases in which the Management Complex firmware boot
-process is started by the bootloader which does not wait for the boot to
-complete. This is mainly done in order to reduce the overall boot time
-of a DPAA2 based SoC.
+komeda_dev_resume() calls clk_prepare_enable() without checking the
+return value. If the clock fails to enable, the function returns 0
+(success) while IRQs are enabled and IOMMU is connected on potentially
+unclocked hardware, causing undefined behavior on resume.
 
-In this kind of circumstance, the fsl-mc bus driver needs to make sure
-that the MC firmware boot process is finished before proceeding to the
-usual operations such as interrogating the firmware to gather all
-existent DPAA2 objects, creating the fsl-mc devices on the bus etc.
+Propagate the error from clk_prepare_enable() and fix all call sites
+in komeda_drv.c that previously ignored the return value of
+komeda_dev_resume():
 
-Add this kind of check early in the boot process of the fsl-mc bus and
-defer the probe in case the firmware is still in its boot process.
+- komeda_platform_probe(): if resume fails, jump to err_destroy_mdev
+  (skipping the suspend call, since the clock was never enabled)
+- komeda_pm_resume(): propagate the error and skip
+  drm_mode_config_helper_resume() on failure
 
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20260401144508.3062019-1-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+This issue was found by code review without access to Komeda hardware.
+
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130828.1066038-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `drm/arm/komeda: fix error handling for
+clk_prepare_enable() and callers`
 
-### Step 1.1: Subject Line
-**Record:** `[bus: fsl-mc]` `[wait]` — Ensure the Management Complex
-(MC) firmware has finished booting before the fsl-mc bus driver proceeds
-with DPAA2 enumeration.
+**Local tree:** `v6.18.44` (Makefile: 6.18.44)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[drm/arm/komeda]` `[fix]` — Correct error handling for
+`clk_prepare_enable()` and propagate errors to all callers.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Ioana Ciornei `<ioana.ciornei@nxp.com>` (author)
-- **Link:** https://lore.kernel.org/r/20260401144508.3062019-1-
-  ioana.ciornei@nxp.com
-- **Signed-off-by:** Christophe Leroy (CS GROUP) `<chleroy@kernel.org>`
-  (committer/ack)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable tags
-- Notable: NXP author, FSL maintainer committer; no fuzzer or user bug
-  reports
+- **Fixes:** — absent (expected for manual review)
+- **Reported-by:** — absent
+- **Tested-by:** — absent
+- **Reviewed-by:** Liviu Dudau `<liviu.dudau@arm.com>` (Komeda/ARM DRM
+  maintainer)
+- **Acked-by:** — absent
+- **Link:**
+  https://patch.msgid.link/20260609130828.1066038-1-kaneko.dev@pm.me
+- **Cc: stable:** — absent (not a negative signal)
+- **Signed-off-by:** Gustavo Kenji Mendonça Kaneko (author); Liviu Dudau
+  (maintainer); ignore pipeline-added Sasha Levin SOB
 
-### Step 1.3: Body Analysis
+**Notable:** Reviewed by subsystem maintainer. No syzbot/user crash
+report.
+
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** Bootloaders on DPAA2 SoCs may start MC firmware boot
-  asynchronously (to shorten boot time) without waiting for completion.
-- **Symptom:** `fsl_mc_bus_probe()` talks to MC firmware (version query,
-  DPRC enumeration, device creation) before firmware is ready → MC I/O
-  fails.
-- **Failure mode:** Without `-EPROBE_DEFER`, probe fails permanently;
-  DPAA2 networking/storage/crypto does not come up.
-- **Root cause:** Driver assumed MC firmware was ready at probe time; no
-  GSR (Global Status Register) boot-complete check.
-- **Version info:** None in message; fix targets all trees with the
-  existing probe path.
+- **Bug:** `komeda_dev_resume()` calls `clk_prepare_enable()` without
+  checking its return value.
+- **Symptom:** On clock-enable failure, function returns 0 (success)
+  while IRQs are enabled and IOMMU is connected on potentially unclocked
+  hardware.
+- **Failure mode:** Undefined behavior — MMIO to display blocks without
+  a running clock.
+- **Affected paths:** System suspend/resume (`komeda_pm_resume`), probe
+  when runtime PM is disabled, and the core resume helper itself.
+- **Root cause:** Missing error propagation from `clk_prepare_enable()`
+  through resume call chain.
+- **Version info:** None stated.
+- **Discovery:** Code review only; author had no Komeda hardware.
 
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Yes — described as a synchronization improvement, but it
-fixes a real boot race. Without it, `mc_get_version()` and later MC
-portal calls run against firmware still booting, causing hard probe
-failure instead of deferred retry.
+### Step 1.4: Hidden bug fix detection
+**Record:** Explicit bug fix, not disguised cleanup. Classic missing-
+return-value-check pattern in a PM/resume path.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/bus/fsl-mc/fsl-mc-bus.c` only (+46 lines, 0
-  removed)
-- **Functions added:** `fsl_mc_read_gsr()`, `fsl_mc_firmware_check()`
-- **Function modified:** `fsl_mc_bus_probe()` — adds call after GCR1
-  resume
-- **Scope:** Single-file, surgical fix
+| File | Changes |
+|------|---------|
+| `komeda_dev.c` | +4 / -1 (check `clk_prepare_enable` return) |
+| `komeda_drv.c` | +10 / -4 (propagate errors in probe and system PM
+resume) |
 
-### Step 2.2: Code Flow Change
+**Functions modified:** `komeda_dev_resume()`,
+`komeda_platform_probe()`, `komeda_pm_resume()`
+**Scope:** Single-driver, surgical fix (~15 net lines). Two files, one
+subsystem.
+
+### Step 2.2: Code flow per hunk
+
+**Hunk 1 — `komeda_dev_resume()`:**
+- **Before:** `clk_prepare_enable()` return ignored; always proceeds to
+  `enable_irq()` and `connect_iommu()`, returns 0.
+- **After:** On clock failure, return error immediately; skip IRQ/IOMMU
+  setup.
+- **Path:** Resume / probe-init path.
+
+**Hunk 2 — `komeda_platform_probe()`:**
+- **Before:** `komeda_dev_resume()` called with ignored return; probe
+  continues to KMS attach on failure.
+- **After:** On failure, `goto err_destroy_mdev` (skips
+  `komeda_dev_suspend()` since clock was never enabled).
+- **Path:** Probe error path when runtime PM is not enabled.
+
+**Hunk 3 — `komeda_pm_resume()`:**
+- **Before:** `komeda_dev_resume()` failure ignored;
+  `drm_mode_config_helper_resume()` always runs.
+- **After:** Propagate resume error; skip DRM mode-config resume on
+  hardware failure.
+- **Path:** System sleep resume.
+
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Error-path / logic correctness fix.
+**Mechanism:** Ignored `clk_prepare_enable()` error allows subsequent
+MMIO (`d71_enable_irq()` → `malidp_write32_mask()` on GCU/CU/LPU/DOU
+blocks; `d71_connect_iommu()` → GCU/LPU register writes) on unclocked
+hardware, while callers believe resume succeeded.
+
+### Step 2.4: Fix quality
 **Record:**
-- **Hunk 1 (defines):** Adds `FSL_MC_GSR` (offset 0x8) and bit masks for
-  boot-done, MCS status, and boot code.
-- **Hunk 2 (`fsl_mc_firmware_check`):**
-  - Before: No firmware readiness check.
-  - After: Reads GSR; if boot code `0xDD` → `-EOPNOTSUPP` (DPL never
-    started); if `BOOT_DONE` clear → `-EPROBE_DEFER`; if MCS error bits
-    set → `-EINVAL`.
-- **Hunk 3 (`fsl_mc_bus_probe`):**
-  - Before: After GCR1 resume, immediately opens MC portal and calls
-    `mc_get_version()`.
-  - After: Calls `fsl_mc_firmware_check()` first; only proceeds on
-    success.
-
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** Logic / timing race (boot synchronization).
-**Mechanism:** Probe races ahead of asynchronous MC firmware boot
-started by the bootloader. Fix polls hardware GSR and uses
-`-EPROBE_DEFER` so the driver core retries once firmware is ready.
-
-### Step 2.4: Fix Quality
-**Record:** Fix is minimal and follows established kernel patterns
-(`EPROBE_DEFER`, hardware status register). Low regression risk on real
-DPAA2 hardware (GSR register is part of the existing MC control register
-block at `IORESOURCE_MEM` index 1). Minor note:
-`fsl_mc_firmware_check()` is called outside `if (mc->fsl_mc_regs)` —
-would NULL-deref if register resource 1 is absent, but all in-tree DPAA2
-DT bindings provide both `reg` regions and the same resource is already
-required for GCR1 pause/resume logic.
+- Fix is minimal and follows standard kernel error-propagation patterns.
+- `err_destroy_mdev` correctly avoids calling `komeda_dev_suspend()`
+  when resume never enabled the clock.
+- `komeda_rt_pm_resume()` already returned `komeda_dev_resume()`'s
+  value; this patch completes coverage for probe and system PM.
+- **Regression risk:** Low. Only adds early error returns on failure
+  paths.
+- **Note:** `enable_irq()` and `connect_iommu()` return values remain
+  ignored (pre-existing; out of scope).
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Probe path without GSR check dates to Jakub Kicinski merge
-`e7fa5c80defe0` (Jan 2021). GCR1 pause/resume added by Laurentiu Tudor
-`f8cfa9bbab338b` / `8c97a4fc1b348` (Jul 2021). Buggy “assume firmware
-ready” behavior has been present since probe was written; async-
-bootloader scenario was never handled.
+**Record:** Buggy `clk_prepare_enable()` without check introduced in
+`2ebb6701654e0d` ("drm/komeda: Adds power management support",
+2019-09-26). IRQ/IOMMU code added in `efb46508851874` (2019-12-12). Bug
+has existed since Komeda PM support landed.
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-### Step 3.3: Related File History
-**Record:** Recent stable-tree changes to this file include error-
-handling fixes (`b662f91e216fd`), UAF fix (`1d6bd6183e723`),
-`platform_get_resource()` check (`25f526507b8cc`). Commit
-`208858b1b48eb` is standalone (v1 only, no series). On mainline but not
-yet in `stable/linux-6.18.y`.
+### Step 3.3: Related file history
+**Record:** Recent komeda changes in this tree are unrelated (FB
+creation, AFBC overflow fix, DRM client setup). No prior fix for this
+clk error-handling issue. Standalone patch, not part of a series.
 
-### Step 3.4: Author Context
-**Record:** Ioana Ciornei is an active NXP contributor to fsl-mc
-(endpoint, userspace support, command whitelist commits visible in this
-tree). Christophe Leroy is the FSL/soc maintainer who applied the patch.
+### Step 3.4: Author commits
+**Record:** No prior komeda commits from Kaneko in this tree. Fix
+reviewed/committed by maintainer Liviu Dudau.
 
 ### Step 3.5: Dependencies
-**Record:** No prerequisites. Uses existing `mc->fsl_mc_regs`,
-`platform_get_drvdata()`, and `readl()`. Applies cleanly to this tree
-(`git apply --check` passed). Standalone.
+**Record:** No dependencies. No prerequisite commits. Self-contained.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:** `b4 dig -c 208858b1b48eb` →
-https://patch.msgid.link/20260401144508.3062019-1-ioana.ciornei@nxp.com.
-Single v1 submission (Apr 1, 2026). Maintainer reply: “Applied, thanks!”
-— no NAKs, no stable nomination, no review objections.
+### Step 4.1: Original discussion
+**Record:** Link from commit message (`patch.msgid.link`) blocked by
+Anubis bot protection. `b4 dig` requires a commit hash; commit is not in
+this tree, so `b4 dig -c` could not be used. Lore.kernel.org search also
+blocked. **Could not retrieve mailing list thread content.**
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: To/Cc included `chleroy@kernel.org`, `linuxppc-
-dev@lists.ozlabs.org`, `linux-kernel@vger.kernel.org`. Appropriate
-maintainers CC'd.
+**Record:** UNVERIFIED via b4 `-w`. Commit message confirms **Reviewed-
+by: Liviu Dudau** (ARM Komeda maintainer).
 
-### Step 4.3: Bug Report
-**Record:** N/A — no Reported-by or external bug link. Issue is
-described as a known bootloader optimization use case from NXP.
+### Step 4.3: Bug report
+**Record:** No external bug report. Author states issue found by code
+review without hardware access.
 
-### Step 4.4: Related Patches
-**Record:** Standalone patch, not part of a multi-patch series. Related
-historical context: 2021 GCR1 pause/resume series addressed the opposite
-timing problem (MC running too early before IOMMU).
+### Step 4.4: Related patches / series
+**Record:** Standalone 1-patch fix. No series dependencies identified.
 
-### Step 4.5: Stable List
-**Record:** Not searched on lore stable list; no stable nomination found
-in the patch thread.
+### Step 4.5: Stable list history
+**Record:** UNVERIFIED — lore stable search blocked.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `fsl_mc_firmware_check()`, `fsl_mc_read_gsr()`,
-`fsl_mc_bus_probe()`
+### Step 5.1: Key functions
+**Record:** `komeda_dev_resume()`, `komeda_platform_probe()`,
+`komeda_pm_resume()`.
 
 ### Step 5.2: Callers
-**Record:** `fsl_mc_bus_probe()` is the `platform_driver.probe` callback
-for `fsl_mc_bus_driver` — invoked during platform device enumeration at
-boot on DPAA2 SoCs (DT: `fsl,qoriq-mc`; ACPI: `NXP0008`).
+**Record:**
+| Caller | Context |
+|--------|---------|
+| `komeda_platform_probe()` | Device probe, when
+`!pm_runtime_enabled(dev)` |
+| `komeda_rt_pm_resume()` | Runtime PM resume (already propagated
+return) |
+| `komeda_pm_resume()` | System sleep resume |
+
+Komeda supports `arm,mali-d71` and `arm,mali-d32` (local tree; mainline
+also has `armchina,linlon-d6`).
 
 ### Step 5.3: Callees
-**Record:** `readl()` on `mc->fsl_mc_regs + FSL_MC_GSR`;
-`platform_get_drvdata()`; `dev_err()` / `dev_dbg()`.
+**Record:** `clk_prepare_enable()` → on success,
+`mdev->funcs->enable_irq()` (MMIO mask writes) and optional
+`connect_iommu()` (MMIO + timeout polling).
 
 ### Step 5.4: Reachability
-**Record:** Triggered on every boot of DPAA2 hardware when
-`CONFIG_FSL_MC_BUS=y/m`. Bootloader async MC start is the trigger
-condition. Affects init path, not a hot path. Userspace cannot directly
-trigger, but all DPAA2 I/O depends on successful probe.
+**Record:** Triggered on every system resume and probe (when runtime PM
+disabled) for Komeda hardware. `CONFIG_DRM_KOMEDA` tristate driver for
+ARM SoCs with Mali-D71/D32 display. Reachable from kernel PM resume —
+not a userspace syscall path, but affects all suspend/resume cycles on
+affected hardware.
 
-### Step 5.5: Similar Patterns
-**Record:** Existing `EPROBE_DEFER` usage in same file for ACPI DMA
-deferral (`f8cfa9bbab338b`, line 1053). GCR1 pause/resume in bus
-notifier and probe handles complementary MC/IOMMU timing. This fix
-completes the boot-synchronization story for the async-bootloader case.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree
-
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Local tree is **v6.18.43** (`stable/linux-6.18.y`).
-`fsl_mc_firmware_check` / `FSL_MC_GSR` are **not** present (grep found
-no matches). `fsl_mc_bus_probe()` at lines 1069–1091 proceeds directly
-from GCR1 resume to `fsl_create_mc_io()` / `mc_get_version()` with no
-boot-complete check.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply** — `git apply --check` on commit
-`208858b1b48eb` succeeded with no conflicts. Probe structure matches
-mainline.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent GSR boot-check fix in this tree. Prerequisite
-infrastructure (`fsl_mc_regs`, GCR1 defines, bus notifier) all present
-since 2021.
+### Step 5.5: Similar patterns
+**Record:** Other DRM drivers in this tree have received clk error-
+handling fixes (e.g., mediatek, rockchip, cdns-mhdp). Same class of bug.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.y)
 
-### Step 7.1: Subsystem Criticality
-**Record:** **Subsystem:** `drivers/bus/fsl-mc` (NXP QorIQ DPAA2 bus).
-**Criticality:** IMPORTANT for DPAA2 platforms — root bus for all DPAA2
-objects (DPMAC networking, DPNI, DPIO, crypto, etc.). Not universal, but
-essential on affected enterprise/embedded SoCs (LS1088, LS2088, LX2160,
-etc.).
+### Step 6.1: Buggy code present?
+**Record:** **YES.** Current tree at `komeda_dev.c:316` has unchecked
+`clk_prepare_enable(mdev->aclk)`. Callers at `komeda_drv.c:78` and
+`:144` ignore the return value. Bug present since 2019, well before 6.18
+branch.
 
-### Step 7.2: Subsystem Activity
-**Record:** Moderately active — recent stable fixes include UAF, double-
-free, error-handling. MC/IOMMU boot synchronization has been an ongoing
-concern since 2021.
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected.** Local
+`komeda_drv.c`/`komeda_dev.c` match the patch's "before" state at all
+change sites. Only cosmetic difference: mainline `of_match` includes
+`armchina,linlon-d6`; that entry is outside the fix hunks and does not
+affect applicability.
+
+### Step 6.3: Related fixes already present?
+**Record:** **No.** `git log --grep` found no prior komeda clk error-
+handling fix in this tree.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 8.1: Who Is Affected
-**Record:** Platform-specific — users of NXP QorIQ DPAA2 SoCs with
-bootloaders that start MC firmware boot without waiting. All
-DPAA2-dependent functionality is affected when the race loses.
+### Step 7.1: Subsystem criticality
+**Record:** **drivers/gpu/drm/arm/komeda** — PERIPHERAL (ARM Mali
+display IP, embedded/SoC). Important for platforms using Komeda, not
+universal.
 
-### Step 8.2: Trigger Conditions
-**Record:** Boot-time race when bootloader optimizes boot time by not
-waiting for MC firmware. Reasonably likely on newer/fast-boot
-configurations. Not userspace-triggerable; not a security issue.
+### Step 7.2: Subsystem activity
+**Record:** Moderately active in 6.18.y (client setup, DMA mask, AFBC
+fixes). Mature driver with ongoing maintenance.
 
-### Step 8.3: Failure Severity
-**Record:** **Probe failure → DPAA2 subsystem non-functional** (no
-network, no DPAA2 devices enumerated). Without `-EPROBE_DEFER`, failure
-is permanent for that boot. **Severity: HIGH** for affected platforms
-(functional boot failure of core I/O subsystem).
+---
 
-### Step 8.4: Risk-Benefit
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of `CONFIG_DRM_KOMEDA` on ARM SoCs with Mali-D71/D32
+(and linlon-d6 on newer trees). Platform-specific, not all kernel users.
+
+### Step 8.2: Trigger conditions
+**Record:** `clk_prepare_enable(mdev->aclk)` returns an error — clock
+provider failure, DT misconfiguration, resume ordering issue, power-
+domain not ready. Uncommon on healthy systems, more plausible during
+suspend/resume or probe on misconfigured/problematic platforms. Not
+userspace-triggerable directly.
+
+### Step 8.3: Failure mode severity
+**Record:** MMIO to display controller blocks without clock → bus hang,
+kernel oops, or unpredictable hardware behavior. Function returns
+success, so PM stack and DRM resume continue on broken hardware.
+**Severity: HIGH** (potential crash/hang on resume); not CRITICAL (no
+demonstrated exploit, rare trigger, no user reports).
+
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** HIGH for DPAA2 users with async-boot bootloaders —
-  restores reliable boot.
-- **Risk:** LOW — 46 lines, hardware register read, standard defer
-  pattern, applies cleanly.
-- **Ratio:** Strong benefit, low risk.
+- **Benefit:** Prevents undefined hardware access and false-success
+  resume on clock failure; correct probe teardown on init failure.
+- **Risk:** Very low — ~15 lines, error-path only, maintainer-reviewed.
+- **Ratio:** Favorable for stable. Conservative error handling with
+  minimal regression surface.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Fixes real boot race on DPAA2 SoCs
-- Prevents permanent probe failure and broken DPAA2 I/O
-- Small, self-contained, applies cleanly to v6.18.43
-- Uses standard `-EPROBE_DEFER` mechanism
-- Buggy code confirmed present in this tree since 2021
-- NXP developer + FSL maintainer authorship
-- Analogous to prior stable-worthy MC/IOMMU boot timing fixes
+- Real, verifiable bug: ignored `clk_prepare_enable()` return since 2019
+- Subsequent code performs MMIO (`enable_irq`, `connect_iommu`)
+  requiring clock
+- Fix propagates errors through probe and system PM resume
+- Small, surgical, maintainer-reviewed (Liviu Dudau)
+- Bug exists in this 6.18.y tree; patch applies at all change sites
+- PM/resume error-handling fixes are standard stable material
 
 **AGAINST backport:**
-- Platform-specific (DPAA2 only) — but stable routinely takes such fixes
-- No syzbot/user bug report — but mechanism is clear from code and
-  commit message
-- `fsl_mc_firmware_check()` called even when `mc->fsl_mc_regs` may be
-  NULL — mitigated by all real DPAA2 bindings providing resource index 1
+- No user report, syzbot report, or hardware reproduction
+- Trigger (clock enable failure) likely rare on production systems
+- Driver affects a limited hardware population
+- Could not verify mailing list discussion (lore blocked)
 
-**Unresolved:** No independent user crash reports; impact verified by
-code analysis and NXP description only.
+**Unresolved:**
+- Full review thread content unavailable
+- No confirmation of explicit stable nomination in review
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — hardware GSR check +
-   EPROBE_DEFER is standard; maintainer applied without objection.
-2. Fixes a real bug? **PASS** — boot race causes MC I/O failure before
-   firmware ready.
-3. Important issue? **PASS** — HIGH: DPAA2 probe failure, core I/O
-   broken on affected SoCs.
-4. Small and contained? **PASS** — 46 lines, one file.
-5. No new features/APIs? **PASS** — synchronization fix only.
-6. Can apply to local tree? **PASS** — clean apply verified.
+### Step 9.2: Stable rules checklist
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — Standard pattern;
+maintainer reviewed; no hardware test claimed |
+| 2. Fixes a real bug? | **PASS** — Ignored error + false success is a
+real logic bug |
+| 3. Important issue? | **PASS** — HIGH: potential crash/hang on resume
+via unclocked MMIO |
+| 4. Small and contained? | **PASS** — ~15 lines, 2 files, one driver |
+| 5. No new features/APIs? | **PASS** — Error propagation only |
+| 6. Applies to local tree? | **PASS** — Buggy code confirmed in
+v6.18.44 |
 
-### Step 9.3: Exception Categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Qualifies
-as a hardware boot-synchronization bug fix.
+### Step 9.3: Exception categories
+**Record:** N/A — not a device ID, quirk, DT, build, or docs fix.
+Qualifies on bug-fix merits.
 
-### Step 9.4: Decision Rationale
-For **linux-6.18.y (v6.18.43)**, the fsl-mc bus driver lacks any MC
-firmware boot-complete check. When bootloaders start MC firmware
-asynchronously, probe races ahead and fails MC portal operations —
-without `-EPROBE_DEFER` this is a permanent boot failure for the entire
-DPAA2 subsystem. The fix is small, obviously correct, self-contained,
-and applies cleanly. Platform-specific scope is normal for stable DPAA2
-fixes.
+### Step 9.4: Decision rationale
+
+For **this 6.18.y tree**, the Komeda driver is present and has carried
+this resume error-handling bug since 2019. When `clk_prepare_enable()`
+fails, the driver enables IRQs and connects IOMMU via MMIO on unclocked
+hardware while reporting success — a legitimate PM correctness bug with
+crash/hang potential. The fix is minimal, reviewed by the subsystem
+maintainer, and should apply cleanly. The lack of a user report lowers
+urgency but does not negate the technical merit; stable trees routinely
+take ignored-return-value fixes in driver PM paths.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from `git show
-  208858b1b48eb`
-- **[Phase 1]** Confirmed no Fixes:/Reported-by:/Cc: stable tags
-- **[Phase 2]** Full diff analyzed: +46 lines in `fsl-mc-bus.c`, two new
-  functions, one probe call site
-- **[Phase 3]** `git describe HEAD` → v6.18.43; tree on
-  `stable/linux-6.18.y`
-- **[Phase 3]** `git blame` on probe area: core probe from
-  `e7fa5c80defe0` (2021), GCR1 logic from `f8cfa9bbab338b` (2021)
-- **[Phase 3]** `git log stable/linux-6.18.y..origin/master --
-  drivers/bus/fsl-mc/fsl-mc-bus.c`: commit `208858b1b48eb` not in stable
-- **[Phase 3]** `git apply --check` on patch: **clean apply**
-- **[Phase 4]** `b4 dig -c 208858b1b48eb`: found lore thread
-- **[Phase 4]** `b4 dig -a`: single v1, no revisions
-- **[Phase 4]** `b4 dig -w`: chleroy, linuxppc-dev, linux-kernel CC'd
-- **[Phase 4]** `b4 dig -m /tmp/fsl_mc.mbox`: maintainer “Applied,
-  thanks!” — no NAKs or stable discussion
-- **[Phase 5]** `grep fsl_mc_bus_probe`: only platform driver probe
-  callback
-- **[Phase 5]** Read current `fsl_mc_bus_probe()` lines 1014–1096:
-  confirms no GSR check before `mc_get_version()`
-- **[Phase 5]** DT check `fsl-lx2160a.dtsi`: two `reg` entries for fsl-
-  mc (portal + control registers)
-- **[Phase 6]** `grep FSL_MC_GSR fsl_mc_firmware_check`: **not present**
-  in local tree
-- **[Phase 6]** Confirmed buggy probe path exists at lines 1069–1091
-- **[Phase 6]** Patch applies cleanly to v6.18.43
-- **[Phase 7]** `Kconfig`: `FSL_MC_BUS` depends on OF && (LAYERSCAPE ||
-  COMPILE_TEST)
-- **[Phase 8]** Failure mode: `mc_get_version()` error → `goto
-  error_cleanup_mc_io` → non-defer probe failure
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+- **[Phase 1]** Confirmed Reviewed-by: Liviu Dudau; no Reported-
+  by/syzbot/Fixes tags
+- **[Phase 2]** Diff analysis: 2 files, 3 functions, error-propagation
+  pattern verified
+- **[Phase 2]** Read `d71_enable_irq()` and `d71_connect_iommu()` — both
+  perform MMIO requiring clock
+- **[Phase 3]** `git blame -L 314,325 komeda_dev.c`: bug since
+  `2ebb6701654e0d` (2019-09-26)
+- **[Phase 3]** `git show 2ebb6701654e0d`: original PM support commit
+- **[Phase 3]** `git log -20 -- komeda_dev.c komeda_drv.c`: no related
+  prior fix
+- **[Phase 4]** WebFetch patch.msgid.link: **BLOCKED** (Anubis)
+- **[Phase 4]** WebFetch lore.kernel.org: **BLOCKED** (Anubis)
+- **[Phase 4]** `b4 dig -c`: not usable — commit not in local tree
+- **[Phase 5]** Grep callers: probe (line 78), rt_pm_resume (123),
+  pm_resume (144)
+- **[Phase 5]** Verified `komeda_rt_pm_resume` already returns resume
+  error; probe/pm_resume did not
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** Read current `komeda_dev.c:314-325` and
+  `komeda_drv.c:76-146`: buggy code confirmed present
+- **[Phase 6]** Line-by-line comparison: patch hunks match local file
+  structure
+- **[Phase 6]** `git log --grep`: no duplicate fix in tree
+- **[Phase 7]** Read `drivers/gpu/drm/arm/display/Kconfig`:
+  `CONFIG_DRM_KOMEDA` tristate, depends on DRM+OF+COMMON_CLK
+- **[Phase 8]** Assessed severity from verified MMIO-after-clk-failure
+  code path
+- **UNVERIFIED:** Mailing list review discussion content
+- **UNVERIFIED:** Explicit stable nomination in review thread
+- **UNVERIFIED:** Formal `git apply --check` (test patch malformed;
+  manual hunk comparison confirms applicability)
 
 **YES**
 
- drivers/bus/fsl-mc/fsl-mc-bus.c | 46 +++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ drivers/gpu/drm/arm/display/komeda/komeda_dev.c |  6 +++++-
+ drivers/gpu/drm/arm/display/komeda/komeda_drv.c | 14 +++++++++-----
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
-index 996379ace3764..21eb0a3c190fc 100644
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -66,6 +66,13 @@ struct fsl_mc_addr_translation_range {
- #define GCR1_P1_STOP	BIT(31)
- #define GCR1_P2_STOP	BIT(30)
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+index 5ba62e637a616..9aad1d1d28ec0 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+@@ -313,7 +313,11 @@ void komeda_dev_destroy(struct komeda_dev *mdev)
  
-+#define FSL_MC_GSR		0x8
-+#define FSL_MC_GSR_BOOT_DONE	BIT(0)
-+#define FSL_MC_GSR_MCS_MASK	GENMASK(7, 0)
-+#define FSL_MC_GSR_MCS_ERR_MASK	GENMASK(7, 1)
-+#define FSL_MC_GSR_BC_MASK	GENMASK(15, 8)
-+#define FSL_MC_GSR_BC_SHIFT	8
+ int komeda_dev_resume(struct komeda_dev *mdev)
+ {
+-	clk_prepare_enable(mdev->aclk);
++	int err;
 +
- #define FSL_MC_FAPR	0x28
- #define MC_FAPR_PL	BIT(18)
- #define MC_FAPR_BMT	BIT(17)
-@@ -1007,6 +1014,41 @@ static int get_mc_addr_translation_ranges(struct device *dev,
- 	return 0;
- }
++	err = clk_prepare_enable(mdev->aclk);
++	if (err)
++		return err;
  
-+static u32 fsl_mc_read_gsr(struct fsl_mc *mc)
-+{
-+	return readl(mc->fsl_mc_regs + FSL_MC_GSR);
-+}
-+
-+static int fsl_mc_firmware_check(struct platform_device *pdev)
-+{
-+	struct fsl_mc *mc = platform_get_drvdata(pdev);
-+	u32 gsr, boot_done, boot_code, mcs;
-+
-+	gsr = fsl_mc_read_gsr(mc);
-+	boot_code = (gsr & FSL_MC_GSR_BC_MASK) >> FSL_MC_GSR_BC_SHIFT;
-+	if (boot_code == 0xDD) {
-+		dev_err(&pdev->dev,
-+			"fsl-mc: DPL processing was not started, DPAA2 will not work!\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	boot_done = gsr & FSL_MC_GSR_BOOT_DONE;
-+	if (!boot_done) {
-+		dev_dbg(&pdev->dev,
-+			"fsl-mc: DPL processing in progress, defer probe\n");
-+		return -EPROBE_DEFER;
-+	}
-+
-+	mcs = gsr & FSL_MC_GSR_MCS_MASK;
-+	if (mcs & FSL_MC_GSR_MCS_ERR_MASK) {
-+		dev_err(&pdev->dev,
-+			"fsl-mc: MC boot completed with error 0x%x\n", mcs);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * fsl_mc_bus_probe - callback invoked when the root MC bus is being
-  * added
-@@ -1071,6 +1113,10 @@ static int fsl_mc_bus_probe(struct platform_device *pdev)
- 		       mc->fsl_mc_regs + FSL_MC_GCR1);
+ 	mdev->funcs->enable_irq(mdev);
+ 
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+index 358c1512b0879..fc1816c634087 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+@@ -74,8 +74,11 @@ static int komeda_platform_probe(struct platform_device *pdev)
  	}
  
-+	error = fsl_mc_firmware_check(pdev);
-+	if (error)
-+		return error;
-+
- 	/*
- 	 * Get physical address of MC portal for the root DPRC:
- 	 */
+ 	pm_runtime_enable(dev);
+-	if (!pm_runtime_enabled(dev))
+-		komeda_dev_resume(mdrv->mdev);
++	if (!pm_runtime_enabled(dev)) {
++		err = komeda_dev_resume(mdrv->mdev);
++		if (err)
++			goto err_destroy_mdev;
++	}
+ 
+ 	mdrv->kms = komeda_kms_attach(mdrv->mdev);
+ 	if (IS_ERR(mdrv->kms)) {
+@@ -93,7 +96,7 @@ static int komeda_platform_probe(struct platform_device *pdev)
+ 		pm_runtime_disable(dev);
+ 	else
+ 		komeda_dev_suspend(mdrv->mdev);
+-
++err_destroy_mdev:
+ 	komeda_dev_destroy(mdrv->mdev);
+ 
+ free_mdrv:
+@@ -139,11 +142,12 @@ static int __maybe_unused komeda_pm_suspend(struct device *dev)
+ static int __maybe_unused komeda_pm_resume(struct device *dev)
+ {
+ 	struct komeda_drv *mdrv = dev_get_drvdata(dev);
++	int err = 0;
+ 
+ 	if (!pm_runtime_status_suspended(dev))
+-		komeda_dev_resume(mdrv->mdev);
++		err = komeda_dev_resume(mdrv->mdev);
+ 
+-	return drm_mode_config_helper_resume(&mdrv->kms->base);
++	return err ? err : drm_mode_config_helper_resume(&mdrv->kms->base);
+ }
+ 
+ static const struct dev_pm_ops komeda_pm_ops = {
 -- 
 2.53.0
 
