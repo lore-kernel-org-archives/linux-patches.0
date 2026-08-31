@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDE14248B1;
-	Mon, 31 Aug 2026 13:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C8946AA8C;
+	Mon, 31 Aug 2026 13:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183295; cv=none; b=hLssnxL7Eb/eCxHn1zGY/g39Uq5M6bIiOKXbWmLyqJG02QK7hVsCQRHZE5KcC4VmnJqTgLd2DkTjRL0g7tY5nkQrDnJQq8w2VYNtYFbgV2BGlgtGfUTtGcnl9eRZGNRKt58W/4K5votYU2MRWAZT+5vaulvFPGUZmyyEtnNMR7M=
+	t=1788183296; cv=none; b=HnLL2pI+ezZOXGjcmffm2W4lrmvkMMj0LwlJnEFfbQJtM6KEfJ03N8rm0tMaFR8+3QK09nF0Id3slGwwwgWIFh51MWP1Jqce2rzWAdjbM+jwx64/ufjUNKmgK8pV6UzDG1j4byjV+Vjf34pkdCyfwVYuEdnkAMxDRwNLpPTaGDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183295; c=relaxed/simple;
-	bh=EqhjHYSX9krNTVwQTujEXEZPc1B+0co7dIpYNHV4XZM=;
+	s=arc-20240116; t=1788183296; c=relaxed/simple;
+	bh=Q1Om9O+tYLXKWIi+j8yPF31cJiWKxx3aSZjzffXMolo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tq0JkuE8hlISrwsFiIrPIvs1qAp4uRMbOr3vhu68zXoJMZ2ColkN6/rmN355rjEX9P6ilxc7OUWwWFkylbNzG0WutwAsS88yUBFkoTk73+F9YlDBQ4N+Se5+5M0j6aUK4s5aHWmMVJFNzsNI/HLdnr1XHnNFJ7BpQrpptv5cdrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HqbP8Va5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sML294T3MDbr+ijSUpr3IkA698Vkhvbb3IHjUdWHIoBpxugsqzbs7qnWxOJpHLQwEfbE9jOVRvNo01UWTcnnXsakoHSA5263HKlmrien/z8MT9z0VIbzfsHyzPpuR3AwlOmO17EIhXUcriT4sq9///PrTh1oPQctjkM8ruP01KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RqhYv2Qx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HqbP8Va5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1541F00A3D;
-	Mon, 31 Aug 2026 13:34:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RqhYv2Qx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53561F000E9;
+	Mon, 31 Aug 2026 13:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183293;
-	bh=f/BHtKG1ILdDWYf2I6M1OK8mDbPdlT+zrWqUYqJqrJQ=;
+	s=k20260515; t=1788183294;
+	bh=Rto4Ld4oxE/HhgmXsII1Ti65TWprBdnsCAbbrWMsjls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HqbP8Va59gSekH3WaF0YSvssm1ssBxTDmg/u0OCvacTCYcdIAp/ToixefhUuistKR
-	 fF1GFqXyW/99Q/iYkwBk0ZwW+zpoj2v9cnAd/OaGPkliXRX0n/Jf8CU1ySmNqudb9b
-	 BnMQ1cbFsmgrqoCL973T9CMlsvcYSA3jMaMvuxuUGsQNF8xPDL5qJLUOW9Dj73ocDu
-	 zc6LZkzcNnVYzNh9x2/t8VOAGMACrc8m/UnwyxQmAndyZST6vo6tpRD5s76GkWbolu
-	 Nca8TANZXxLk57v0yokH6Ck/FQ+OHv13gDnGW1RLca9jfYcyhM5DFl/5P/gyTcRF9A
-	 mv9ISyWcXWmPw==
+	b=RqhYv2QxTzIE+8deByASzMvXQsT/a++I56fwRKK74yF2denpC89KeQkj5mT9Q8+8L
+	 TjjV6hqeUTh/mLrPpiGdl/dB/6QdhrNVhAO9yOGv4ggtV1PyWSpEu1qgI8tnvDBBSE
+	 gleM2L0x9k9tpuYz6bEr6tz1fwzsF4aQrutaRlEk7tClfJlJM1wQrCMWZBFqt7N4Gx
+	 XXSlzJoPZdHCPnOZ3iaZ0NbDnIrBniBTs05xtmFWfkEtq6bK2FnbrzMvC8fysU8eQ8
+	 ffN5M+zPhTAVloxnWBJFzYLCl4eMZsLrZ0Bd4K1R6JgeK0R2lNahZHtxI4yM5PjM2h
+	 8ox4vWXuGQBMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Florian Eckert <fe@dev.tdt.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] wifi: iwlwifi: mvm: fix sched scan IE sizing
-Date: Mon, 31 Aug 2026 09:21:30 -0400
-Message-ID: <20260831133314.4125787-62-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] PCI: intel-gw: Enable clock before PHY init
+Date: Mon, 31 Aug 2026 09:21:31 -0400
+Message-ID: <20260831133314.4125787-63-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -47,414 +49,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Florian Eckert <fe@dev.tdt.de>
 
-[ Upstream commit 4f155d262b31b9b17e0f9856bdabe0968eb4930f ]
+[ Upstream commit febf9ed3c35e5eec7ea384ebbd55a5296e3ca5e9 ]
 
-Scheduled scan built the probe request before iwl_mvm_scan_fits(),
-so oversized IEs could be copied into the fixed preq buffer before
-length validation. Move iwl_mvm_build_scan_probe() after the fits
-check.
+To ensure that the boot sequence is correct, the DWC PCIe core clock must
+be switched on before PHY init call [1]. This changes are based on patched
+kernel sources of the MaxLinear SDK.
 
-Also advertise max_sched_scan_ie_len using iwl_mvm_max_scan_ie_len()
-so userspace limits account for driver-inserted DS/TPC bytes.
+The reason why the MaxLinear SDK is used as a reference here is, that this
+PCIe DWC IP is used in the URX851 and URX850 SoC. This SoC was originally
+developed by Intel when they acquired Lantiq’s home networking division in
+2015 [2]. In 2020 the home network division was sold to MaxLinear [3].
+Since then, this SoC belongs to MaxLinear. They use their own SDK, which
+runs on kernel version '5.15.x'.
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260714141909.53d2722c79e7.Iebb922efa6173c92f14cd8aa8b4e7f372c0a0fb7@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+[1] https://github.com/maxlinear/linux/blob/updk_9.1.90/drivers/pci/controller/dwc/pcie-intel-gw.c#L544
+[2] https://www.intc.com/news-events/press-releases/detail/364/intel-to-acquire-lantiq-advancing-the-connected-home
+[3] https://investors.maxlinear.com/press-releases/detail/395/maxlinear-to-acquire-intels-home-gateway-platform
+
+Signed-off-by: Florian Eckert <fe@dev.tdt.de>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260417-pcie-intel-gw-v5-4-0a2b933fe04f@dev.tdt.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: iwlwifi: mvm: fix sched scan IE
-sizing`
-
-**Local tree:** `v6.18.44` (Makefile: 6.18.44). The buggy code is
-present; this fix is not yet applied.
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[wifi: iwlwifi: mvm]` `[fix]` — correct scheduled-scan
-probe-request IE sizing/ordering.
-
-### Step 1.2: Tags
-**Record:**
-- **Link:** `https://patch.msgid.link/20260714141909.53d2722c79e7.Iebb92
-  2efa6173c92f14cd8aa8b4e7f372c0a0fb7@changeid`
-- **Reviewed-by:** Ilan Peer \<ilan.peer@intel.com\>
-- **Assisted-by:** GitHubCopilot:gpt-5.3-codex
-- **Signed-off-by:** Emmanuel Grumbach \<emmanuel.grumbach@intel.com\>
-  (author)
-- **Signed-off-by:** Miri Korenblit
-  \<miriam.rachel.korenblit@intel.com\> (maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable, or syzbot tags
-- Notable: Intel iwlwifi maintainer/reviewer sign-offs; no external bug
-  report
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** `iwl_mvm_build_scan_probe()` ran before
-  `iwl_mvm_scan_fits()`, so oversized IEs were `memcpy()`’d into the
-  fixed 512-byte `preq.buf` before length validation.
-- **Symptom:** Stack buffer overflow in `iwl_mvm_sched_scan_start()`;
-  userspace could also be misled by an inflated `max_sched_scan_ie_len`.
-- **Root cause:** Wrong ordering vs. the regular-scan path;
-  `max_sched_scan_ie_len` used `SCAN_OFFLOAD_PROBE_REQ_SIZE - 24 - 2`
-  instead of `iwl_mvm_max_scan_ie_len()` (which accounts for driver-
-  inserted DS/TPC bytes).
-- **Version info:** None in the message.
-
-### Step 1.4: Hidden bug fix?
-**Record:** No — explicitly a bug fix (buffer overflow + incorrect wiphy
-limit advertisement).
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-**Record:**
-- `drivers/net/wireless/intel/iwlwifi/mvm/scan.c`: reorder one call (~2
-  net lines)
-- `drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c`: change
-  `max_sched_scan_ie_len` assignment (~3 net lines)
-- **Functions:** `iwl_mvm_sched_scan_start()`,
-  `iwl_mvm_mac_setup_register()`
-- **Scope:** Two-file, surgical fix
-
-### Step 2.2: Code flow change
-**Record:**
-- **Hunk 1 (`scan.c`):** Before: build probe → filter 6 GHz PSC channels
-  → `iwl_mvm_scan_fits()` → send. After: filter channels →
-  `iwl_mvm_scan_fits()` → build probe → send. Validation now precedes
-  all `memcpy()` into `preq.buf`.
-- **Hunk 2 (`mac80211.c`):** Before: `max_sched_scan_ie_len = 486`.
-  After: `max_sched_scan_ie_len = iwl_mvm_max_scan_ie_len(mvm)` (477 or
-  474 depending on DS support), matching `max_scan_ie_len` and
-  `iwl_mvm_scan_fits()`.
-
-### Step 2.3: Bug mechanism
-**Record:** **Buffer overflow / out-of-bounds write (memory safety).**
-- `params.preq` is `struct iwl_scan_probe_req` with `u8 buf[512]` on the
-  stack inside `iwl_mvm_sched_scan_start()`.
-- `iwl_mvm_build_scan_probe()` copies band/common IEs via unchecked
-  `memcpy()` and may add DS (+3) and TPC (+9) bytes.
-- `iwl_mvm_scan_fits()` caps total IE length at
-  `iwl_mvm_max_scan_ie_fw_cmd_room()` (474–477), but ran too late.
-- Advertised `max_sched_scan_ie_len` was 486, so cfg80211 could accept
-  IEs 9 bytes larger than the driver’s internal limit.
-
-### Step 2.4: Fix quality
-**Record:** Obviously correct; mirrors the regular-scan path
-(`iwl_mvm_scan_fits()` at line 2996 before `iwl_mvm_build_scan_probe()`
-at line 3033). Minimal diff, no API changes. Regression risk: very low.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame
-**Record:** Shallow clone (`git rev-parse --is-shallow-repository` →
-`true`); blame points all relevant `iwl_mvm_sched_scan_start()` lines to
-merge base `5d324e5159d9e` (v6.18-rc8 era). Buggy ordering is present in
-this 6.18.44 tree; cannot pinpoint original introduction commit from
-local history.
-
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in the commit message.
-
-### Step 3.3: Related file history
-**Record:** Shallow history limits `git log` on these files to the merge
-commit only. Related iwlwifi scan fixes (`iwl_mvm_scan_fits()` 6 GHz
-accounting, `iwl_mvm_max_scan_ie_fw_cmd_room()` WFA TPC) were previously
-backported to older stable trees (e.g. 4.19, 5.15, 6.6, 6.10 per web
-search). This commit completes that work for the sched-scan build-order
-and wiphy-advertisement gaps.
-
-### Step 3.4: Author context
-**Record:** Emmanuel Grumbach and Miri Korenblit are iwlwifi
-maintainers. Ilan Peer (Reviewed-by) is a regular Intel iwlwifi
-reviewer.
-
-### Step 3.5: Dependencies
-**Record:** Standalone. Requires only existing symbols:
-`iwl_mvm_build_scan_probe()`, `iwl_mvm_scan_fits()`,
-`iwl_mvm_max_scan_ie_len()` — all present in this tree.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c <hash>` unavailable — commit not in local repo.
-Lore/patch.msgid.link blocked by Anubis bot protection. Web search found
-related iwlwifi scan-sizing threads but not this exact July 2026 patch
-thread.
-
-### Step 4.2: Reviewers
-**Record:** UNVERIFIED via `b4 dig -w` (no local commit hash). Commit
-message lists Reviewed-by: Ilan Peer and maintainer SOB from Miri
-Korenblit.
-
-### Step 4.3: Bug report
-**Record:** No Reported-by or syzbot link. Bug identified by code
-inspection (build-before-validate ordering).
-
-### Step 4.4: Related patches/series
-**Record:** Part of ongoing iwlwifi scan IE sizing hardening;
-complements already-stable commits fixing `iwl_mvm_scan_fits()` and
-`iwl_mvm_max_scan_ie_fw_cmd_room()`. Standalone — no “patch X/Y”
-dependency.
-
-### Step 4.5: Stable list history
-**Record:** UNVERIFIED — lore stable search blocked. Prior related
-iwlwifi scan fixes were autosel’d to stable (evidence from lkml autosel
-posts).
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
-**Record:** `iwl_mvm_sched_scan_start()`, `iwl_mvm_build_scan_probe()`,
-`iwl_mvm_scan_fits()`, `iwl_mvm_max_scan_ie_len()`,
-`iwl_mvm_mac_setup_register()`.
-
-### Step 5.2: Callers
-**Record:**
-- `iwl_mvm_sched_scan_start()` ← `iwl_mvm_mac_sched_scan_start()`
-  (mac80211 `sched_scan_start` op, nl80211 path) and
-  `iwl_mvm_d3_configure()` in `d3.c` (net-detect scheduled scan).
-- Reachable whenever userspace starts scheduled scan on Intel iwlwifi
-  hardware.
-
-### Step 5.3: Callees
-**Record:** `iwl_mvm_build_scan_probe()` uses `memcpy()`,
-`iwl_mvm_copy_and_insert_ds_elem()` (+3 bytes),
-`iwl_mvm_add_tpc_report_ie()` (+9 bytes). `iwl_mvm_scan_fits()` compares
-IE totals against `iwl_mvm_max_scan_ie_fw_cmd_room()`.
-
-### Step 5.4: Reachability
-**Record:** Triggered via `NL80211_CMD_START_SCHED_SCAN` → cfg80211 →
-`iwl_mvm_mac_sched_scan_start()`. Requires `CAP_NET_ADMIN` for nl80211
-scan operations. Common path: wpa_supplicant / NetworkManager scheduled
-scanning on laptops with Intel WiFi.
-
-### Step 5.5: Similar patterns
-**Record:** Regular scan in the same file validates first (line 2996),
-then builds (line 3033). Sched scan had the inverted order (build at
-3151, validate at 3181). `max_scan_ie_len` already uses
-`iwl_mvm_max_scan_ie_len()` at line 585; only `max_sched_scan_ie_len`
-was inconsistent.
-
----
-
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
-
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current tree has:
-- `iwl_mvm_build_scan_probe()` before `iwl_mvm_scan_fits()` in
-  `iwl_mvm_sched_scan_start()` (lines 3151 vs 3181).
-- `max_sched_scan_ie_len = SCAN_OFFLOAD_PROBE_REQ_SIZE - 24 - 2` (486
-  bytes) in `mac80211.c` line 629–630.
-
-### Step 6.2: Backport complications
-**Record:** Expected **clean apply** — current lines match the patch’s
-“before” state exactly. No structural refactor blocking the change.
-
-### Step 6.3: Related fixes already present?
-**Record:** `iwl_mvm_scan_fits()` already includes 6 GHz IE length (line
-841–842). `iwl_mvm_max_scan_ie_fw_cmd_room()` already subtracts WFA TPC
-(line 310). Those prerequisite fixes are in-tree; this commit addresses
-the remaining sched-scan-specific gaps.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** **IMPORTANT** — `drivers/net/wireless/intel/iwlwifi` (Intel
-WiFi, widely deployed on laptops/desktops).
-
-### Step 7.2: Activity
-**Record:** Actively maintained; recent iwlwifi update series in repo
-mbox files (May–July 2026).
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-### Step 8.1: Who is affected
-**Record:** Users of Intel iwlwifi (mvm) with scheduled scanning enabled
-— typical laptop WiFi roaming/background scan scenarios.
-
-### Step 8.2: Trigger conditions
-**Record:** Starting scheduled scan with probe IEs near the advertised
-`max_sched_scan_ie_len` (up to 486 bytes). With the buggy wiphy limit,
-cfg80211 accepts IEs up to 486 (`nl80211.c` line 10807) while the driver
-buffer only safely holds ~474–477 bytes of IE payload plus overhead.
-**Likelihood:** moderate for scan-heavy configs; not every boot, but
-realistic for wpa_supplicant with vendor IEs.
-
-### Step 8.3: Failure mode severity
-**Record:** **HIGH** — stack buffer overflow in kernel context (`params`
-on stack in `iwl_mvm_sched_scan_start()`). Can cause oops/panic or
-memory corruption. Not theoretical: 9-byte wiphy/driver mismatch plus
-build-before-validate makes overflow reachable with legally accepted IE
-sizes.
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH — prevents kernel memory corruption on a common
-  driver.
-- **Risk:** LOW — 4-line reorder + consistent limit assignment.
-- **Ratio:** Strongly favors backport.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence summary
-
-**FOR backport:**
-- Real stack buffer overflow in `iwl_mvm_sched_scan_start()`
-- Incorrect wiphy limit lets userspace submit oversize IEs
-- Small, surgical, maintainer-reviewed fix
-- Buggy code confirmed in v6.18.44 tree
-- Same subsystem had related scan-sizing fixes backported to older
-  stables
-- Regular-scan path already does validation-first; fix aligns sched scan
-
-**AGAINST backport:**
-- Requires `CAP_NET_ADMIN` (not arbitrary unprivileged syscall)
-- No syzbot/user crash report attached
-- Lore review thread not accessible for stable nomination confirmation
-
-**Unresolved:**
-- Original mailing-list thread and any explicit “Cc: stable” discussion
-  (Anubis blocked)
-- Exact upstream commit hash (not in shallow local repo)
-
-### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — logic mirrors working
-regular-scan path; Reviewed-by present |
-| 2. Fixes a real bug? | **PASS** — buffer overflow + wrong wiphy limit
-|
-| 3. Important issue? | **PASS** — kernel memory corruption / crash
-(HIGH) |
-| 4. Small and contained? | **PASS** — ~4 effective lines, 2 files |
-| 5. No new features/APIs? | **PASS** — behavior correction only |
-| 6. Applies to local tree? | **PASS** — buggy code present, clean apply
-expected |
-
-### Step 9.3: Exception category
-**Record:** N/A — standard bug fix, not device-ID/quirk/docs/build
-exception.
-
-### Step 9.4: Decision rationale
-This fix closes a genuine memory-safety hole in Intel iwlwifi scheduled
-scanning on the v6.18.44 tree. Userspace can legally submit probe IEs
-larger than the driver’s fixed 512-byte buffer can hold, and the driver
-copies them before validating. The patch is minimal, obviously correct,
-and follows the same pattern already used for regular scans. The
-CAP_NET_ADMIN requirement reduces but does not eliminate stable
-relevance — memory corruption from a privileged scan request is still a
-serious kernel bug.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message.
-- **[Phase 2]** Read `scan.c` lines 303–334, 751–819, 834–844,
-  2996–3033, 3147–3211; `mac80211.c` lines 585–630, 4217–4229;
-  `fw/api/scan.h` line 55 (`SCAN_OFFLOAD_PROBE_REQ_SIZE = 512`).
-- **[Phase 2]** Confirmed `struct iwl_mvm_scan_params` embeds `struct
-  iwl_scan_probe_req preq` (scan.c:97).
-- **[Phase 2]** Calculated size mismatch: buggy `max_sched_scan_ie_len`
-  = 486 vs `iwl_mvm_max_scan_ie_fw_cmd_room` = 477 (474 with DS).
-- **[Phase 3]** `git describe HEAD` → v6.18.44; `git rev-parse --is-
-  shallow-repository` → true.
-- **[Phase 3]** `git blame -L 3147,3185 scan.c` → buggy order at 3151
-  before 3181.
-- **[Phase 3]** Web search: related iwlwifi scan fixes autosel’d to
-  4.19/5.15/6.6/6.10.
-- **[Phase 4]** `b4 dig` — cannot run without local commit hash; syntax
-  verified via `b4 dig -h`.
-- **[Phase 4]** WebFetch lore.kernel.org and patch.msgid.link — blocked
-  by Anubis.
-- **[Phase 5]** `grep iwl_mvm_sched_scan_start` → callers in
-  `mac80211.c:4229`, `d3.c:1205`.
-- **[Phase 5]** `grep max_sched_scan_ie_len` in `nl80211.c` → validation
-  at 10807, advertisement at 2698.
-- **[Phase 6]** Confirmed buggy code present; fix not applied in current
-  tree.
-- **[Phase 6]** Confirmed prerequisites (`iwl_mvm_scan_fits` 6 GHz, WFA
-  TPC in `max_scan_ie_fw_cmd_room`) already in tree.
-- **UNVERIFIED:** Original lore thread content and explicit stable
-  nomination.
-- **UNVERIFIED:** Upstream commit SHA (commit not in shallow repo).
-- **UNVERIFIED:** `git apply --check` (heredoc formatting error; manual
-  line comparison confirms match).
-
-**YES**
-
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 4 +---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c     | 4 ++--
- 2 files changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 83fb3f9af4745..a0bf9815aef6b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -625,9 +625,7 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
- 	hw->wiphy->max_sched_scan_reqs = 1;
- 	hw->wiphy->max_sched_scan_ssids = PROBE_OPTION_MAX;
- 	hw->wiphy->max_match_sets = iwl_umac_scan_get_max_profiles(mvm->fw);
--	/* we create the 802.11 header and zero length SSID IE. */
--	hw->wiphy->max_sched_scan_ie_len =
--		SCAN_OFFLOAD_PROBE_REQ_SIZE - 24 - 2;
-+	hw->wiphy->max_sched_scan_ie_len = iwl_mvm_max_scan_ie_len(mvm);
- 	hw->wiphy->max_sched_scan_plans = IWL_MAX_SCHED_SCAN_PLANS;
- 	hw->wiphy->max_sched_scan_plan_interval = U16_MAX;
+The background search for `intel,lgm-pcie` in this stable checkout only
+turned up merge commits — the tree’s history is too shallow to show the
+original introduction. From `v5.15` history, the driver dates to
+`ed22aaaede44f` (“PCI: dwc: intel: PCIe RC controller driver”, 2019),
+and the wrong clock/PHY ordering has been there since then.
+
+**Verdict for linux-6.18.y: YES** — enable the core clock before
+`phy_init()` in `intel_pcie_host_setup()`. It’s a small, vendor-
+validated hardware sequencing fix for MaxLinear/Intel Gateway SoCs, and
+it applies with a minor tweak (6.18.y still uses inline interrupt enable
+instead of `intel_pcie_core_irq_enable()`).
+
+Note: this is patch 4/7 of a larger intel-gw series; full driver
+restoration on current dwc may also need the `.start_link()` and ATU
+patches from the same series.
+
+ drivers/pci/controller/dwc/pcie-intel-gw.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-intel-gw.c b/drivers/pci/controller/dwc/pcie-intel-gw.c
+index c21906eced618..8b51eb30112d9 100644
+--- a/drivers/pci/controller/dwc/pcie-intel-gw.c
++++ b/drivers/pci/controller/dwc/pcie-intel-gw.c
+@@ -285,13 +285,9 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
  
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 7bf8236cea6d4..7f5fb93cffff8 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3148,8 +3148,6 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 	if (ret)
- 		return ret;
- 
--	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
+ 	intel_pcie_core_rst_assert(pcie);
+ 	intel_pcie_device_rst_assert(pcie);
 -
- 	/* for 6 GHZ band only PSC channels need to be added */
- 	for (i = 0; i < params.n_channels; i++) {
- 		struct ieee80211_channel *channel = params.channels[i];
-@@ -3183,6 +3181,8 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 		goto out;
- 	}
+-	ret = phy_init(pcie->phy);
+-	if (ret)
+-		return ret;
+-
+ 	intel_pcie_core_rst_deassert(pcie);
  
-+	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
++	/* Controller clock must be provided earlier than PHY */
+ 	ret = clk_prepare_enable(pcie->core_clk);
+ 	if (ret) {
+ 		dev_err(pcie->pci.dev, "Core clock enable failed: %d\n", ret);
+@@ -300,13 +296,17 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	pci->atu_base = pci->dbi_base + 0xC0000;
+ 
++	ret = phy_init(pcie->phy);
++	if (ret)
++		goto phy_err;
 +
- 	uid = iwl_mvm_build_scan_cmd(mvm, vif, &hcmd, &params, type);
- 	if (uid < 0) {
- 		ret = uid;
+ 	intel_pcie_ltssm_disable(pcie);
+ 	intel_pcie_link_setup(pcie);
+ 	intel_pcie_init_n_fts(pci);
+ 
+ 	ret = dw_pcie_setup_rc(&pci->pp);
+ 	if (ret)
+-		goto app_init_err;
++		goto err;
+ 
+ 	dw_pcie_upconfig_setup(pci);
+ 
+@@ -315,7 +315,7 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	ret = dw_pcie_wait_for_link(pci);
+ 	if (ret)
+-		goto app_init_err;
++		goto err;
+ 
+ 	/* Enable integrated interrupts */
+ 	pcie_app_wr_mask(pcie, PCIE_APP_IRNEN, PCIE_APP_IRN_INT,
+@@ -323,11 +323,12 @@ static int intel_pcie_host_setup(struct intel_pcie *pcie)
+ 
+ 	return 0;
+ 
+-app_init_err:
++err:
++	phy_exit(pcie->phy);
++phy_err:
+ 	clk_disable_unprepare(pcie->core_clk);
+ clk_err:
+ 	intel_pcie_core_rst_assert(pcie);
+-	phy_exit(pcie->phy);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
