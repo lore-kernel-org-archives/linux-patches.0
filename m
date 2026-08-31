@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C456E438026;
-	Mon, 31 Aug 2026 13:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3561143991A;
+	Mon, 31 Aug 2026 13:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184656; cv=none; b=FaOjRPZHOw4zETe3hblG8ZFZzaC24pLa+IoyF/+Y+MlG5/EQ6fk4UuvrC300l9zk2w9Vwi6QfaAKobcqF+VccsQqoQ8FD3IsXkm4mLb2vBndEwqzcB1nnR0m1iSLS9twoRHrlAIUmJYcr6bxeos0EJYqwsCTpA4A28VaNFlyY+s=
+	t=1788184653; cv=none; b=fFIg9c2R3dKZjjoG8afZA0pFXKCcVBBUTu3aFPfVCk+LfXKN09hyuI46RXSLyjwpy0NjvHxIjtzxe53s1hMxlVVvBc8BAFXEhcnLa1E/9or6+KSanX/jh5hkLkyilGTdSOmvDD4XBhNswxLDEYvXeqXv7+zx8Qg9sMZBmRv071Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184656; c=relaxed/simple;
-	bh=4RC1KWpotKo0lcF/n2PiIrBO4YsXA52lo0Wrg0Vt/Mk=;
+	s=arc-20240116; t=1788184653; c=relaxed/simple;
+	bh=cXV8Agrm7De/+VeDwAm3HyX+SQzrU6Am35EyzvgDMl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y137OBwi/3hG0bWiDe9iJQtOdD1MKKVdUVJXkNkZP1PPajrcaK3NlJdxLMjbQykOrZX6tP7KwmEk3/dR5HQ7Q7C0M4gECaqod8MkV/9936b2T5uNGscQ1liB16pnaY5hqSTs4RwHga5I7yekWSSYkNXsirB5dFuxDoWZB4MZFrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLP2YAVz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AAOxnE/Kp/TxVA+DS8h8a5DW0y62YDdIC4uKJRfwDym8vfyBJGl9V0whlW+HcoEXrHgg2FYc7nYrP2VWBL4BdoAWubob30TjXFIpiItL+2knXvX41YMi1dqIKI4f4a3PGwULSSQcvZ05/sKor3HG/beEVNyA61YKPRw4j5XjGLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWmIt0za; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLP2YAVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB871F000E9;
-	Mon, 31 Aug 2026 13:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWmIt0za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AED41F000E9;
+	Mon, 31 Aug 2026 13:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184654;
-	bh=hH3FUzYTjO5dPZA3FP920Hw1pqCVyiXshdu21QAXojY=;
+	s=korg; t=1788184651;
+	bh=H3setcUbP0AQMGNrEr2QQJYX8TYubZzJOiBhBI87ofo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLP2YAVzgctie01SD5JCgcO9nC/jURhn70uxIeJ/XcutehjifnettdJyXK+ibSxvN
-	 DizFEVpxgs2ceYI5MIVsXFvl07pfQ7UICWnCZIkeQKBCjlbymIarBn3YgsPIy3n8d0
-	 aZCXe3sk7a7NIYPgDc/ilJIqys/cjdZvxFcthoyQ=
+	b=pWmIt0zaJhvP8JzzcjlG68ZzKYq1r+sxXlWyUcm3u3i3areULics0S2WBmyLoYuiW
+	 kV3qcCY0JPkKpiyjavC3No+1nlHNTdk2ez9PP0ZMh2hCw3zNp0FSBdM2TkemDmkzoU
+	 I74rQik/qNwDB4wCsE3I0ENnPU61yzhUN+dxQXV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 66/91] tls: device: fix out-of-bounds write in tls_append_frag()
-Date: Mon, 31 Aug 2026 15:34:54 +0200
-Message-ID: <20260831133403.123483941@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 6.6 83/91] KVM: s390: vsie: zero stale crypto bits
+Date: Mon, 31 Aug 2026 15:35:11 +0200
+Message-ID: <20260831133403.853768380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -50,102 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit b17cf742eaad70ae29ac558cefb3aa9bbeea03d4 upstream.
+commit 34d5b5b646c91cfb9338d7a12c955a70ffb8c66b upstream.
 
-Found with syzkaller and a local syzbot instance running on top of a
-netdevsim TLS offload emulation; tls_device.c is otherwise only reachable
-on a machine with a NIC that implements the offload.
+When shadowing crypto access bits from a format0 apcb (crycb 0 or 1),
+the bits 64..255 are unchanged from whatever is in the vsie page in the
+crycb and thus in the apcb. This gives a nested guest potential access
+to a device no longer available. Zero out the remaining bits.
 
-tls_push_data() only checks whether the open record still has room for
-another frag at the bottom of its loop, and the MSG_MORE early break
-skips that check.  The record survives to the next syscall with the frag
-count it already had, and tls_append_frag() does not check either, so
-with TLS_TX_ZEROCOPY_RO every splice(SPLICE_F_MORE) of a byte or two adds
-a non-coalescing pipe page and num_frags walks off the end of
-tls_record_info.frags[MAX_SKB_FRAGS].  Once the record is pushed,
-tls_push_record() runs the same index over sg_tx_data[MAX_SKB_FRAGS] and
-the sg_set_page() writes land on the destruct_work that follows it, which
-the workqueue then calls.
-
-The byte limit is fine because copy drops to 0 and the loop falls through
-to the same check; the frag count has no such feedback.
-
-Push the record rather than keep a full one open, which is what a plain
-TCP socket does - tcp_sendmsg_locked() uses tcp_mark_push() and
-new_segment in both the copy and the MSG_SPLICE_PAGES paths, and tls_sw
-already sets full_record when the sk_msg ring fills up, MSG_MORE or not.
-
-  BUG: KASAN: slab-out-of-bounds in tls_append_frag ( net/tls/tls_device.c:269)
-  Write of size 8 at addr ffff8881104d1530 by task tls_oob/450
-
-  CPU: 2 UID: 0 PID: 450 Comm: tls_oob Not tainted 7.2.0-rc7+ #329 PREEMPT
-  Call Trace:
-   <TASK>
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   tls_append_frag (net/tls/tls_device.c:269)
-   tls_push_data (net/tls/tls_device.c:518)
-   tls_device_sendmsg (net/tls/tls_device.c:583)
-   inet_sendmsg (net/ipv4/af_inet.c:865)
-   sock_sendmsg (net/socket.c:775 net/socket.c:790 net/socket.c:813)
-   splice_to_socket (fs/splice.c:884)
-   do_splice (fs/splice.c:936 fs/splice.c:1349)
-   __do_splice (fs/splice.c:1431)
-   __x64_sys_splice (fs/splice.c:1634 fs/splice.c:1616)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-   </TASK>
-
-and, once the record is pushed:
-
-  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:300:24
-  index 18 is out of range for type 'skb_frag_t [17]'
-  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:301:41
-  index 18 is out of range for type 'scatterlist [17]'
-  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:302:39
-  index 18 is out of range for type 'scatterlist [17]'
-  UBSAN: array-index-out-of-bounds in net/tls/tls_device.c:307:38
-  index 26 is out of range for type 'scatterlist [17]'
-
-  kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
-  BUG: unable to handle page fault for address: ffffea000411a680
-  #PF: supervisor instruction fetch in kernel mode
-  #PF: error_code(0x0011) - permissions violation
-  Oops: Oops: 0011 [#1] SMP KASAN PTI
-  Workqueue: ktls_device_destruct 0xffffea000411a680
-  RIP: 0010:0xffffea000411a680
-  Call Trace:
-   <TASK>
-   worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-   </TASK>
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Fixes: 6b79de4b056e ("KVM: s390: vsie: allow guest FORMAT-1 CRYCB on host FORMAT-2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260823084758.20936-1-jiayuan.chen@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260811153738.206885-3-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_device.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/kvm/vsie.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -536,7 +536,8 @@ handle_error:
- 		if (!size) {
- last_record:
- 			tls_push_record_flags = flags;
--			if (flags & MSG_MORE) {
-+			if ((flags & MSG_MORE) &&
-+			    record->num_frags < MAX_SKB_FRAGS - 1) {
- 				more = true;
- 				break;
- 			}
+--- a/arch/s390/kvm/vsie.c
++++ b/arch/s390/kvm/vsie.c
+@@ -149,6 +149,7 @@ static int setup_apcb10(struct kvm_vcpu
+ 			    sizeof(struct kvm_s390_apcb0)))
+ 		return -EFAULT;
+ 
++	memset(apcb_s, 0, sizeof(*apcb_s));
+ 	apcb_s->apm[0] = apcb_h->apm[0] & tmp.apm[0];
+ 	apcb_s->aqm[0] = apcb_h->aqm[0] & tmp.aqm[0] & 0xffff000000000000UL;
+ 	apcb_s->adm[0] = apcb_h->adm[0] & tmp.adm[0] & 0xffff000000000000UL;
 
 
