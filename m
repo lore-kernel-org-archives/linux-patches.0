@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9BE4BA9FD;
-	Mon, 31 Aug 2026 14:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D58243F4C3;
+	Mon, 31 Aug 2026 14:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185024; cv=none; b=BckXJ5jK4BJy8agcX76t2nayb1oCj4OxGPQJLAg1xCfrMckWHKs6EgDO0Ie12UtWwUaXfXg9vR106uwWdi0wtgb3c6kLcmgw5tU3QpeS4+Bo6k9dXhe6lAbu8/W9ds7bYIjye6YsRRxb9ZjxB+PKWMavKJTHgYebbIpvCX0z0C0=
+	t=1788184988; cv=none; b=WjgKU309g8A0sXRuv8sJ926NA92KzY6uov7ayGxDhN1Gdo+vTJQn/tbV/5suMTIFEnZ6bEMFZ8DKYfbm4dXUWqTzVyIT5q9gf47FntMBN0rjpYheYwWGZKZNggA/jR98al882w10JzW2B9kSwQ9uq1conJNpODQfecPXEzOQtM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185024; c=relaxed/simple;
-	bh=GPQzxsynSK1hoMpp/yc4dEvqm1TaPPEpa8Wq0Gz+Elg=;
+	s=arc-20240116; t=1788184988; c=relaxed/simple;
+	bh=e7CINLRZeO+JjZ2YlFlJXh7gEu5H2MN1YrjhXqRTKnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UY83vJhN5Mt0QCbi1/NfbHwmt1jfmgZpoCK9d+MkvzQqOwtOsW6UdDXcc2eWn6nD8uRBjdjMTMi7afQZ8yCYNpFEbjtApkoBdIMPXnfBK5TQcZVMJ9FEjZHo9fnPIP243X9qkJwlJQQmDRVQ4cO86cx2kMbmyTqD/L0WqUaMajo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKRw1ccg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oWWNm+s9ASPE/LDBz7Bh2mg87EEI/2RKB26zr5oY1cZBfmw9bN+fW/3Y9gkzRAlpmbgqtMU9XS0+5YkqGpzI+4s6v0Z8DvNyXhJgZLmJNiAf1c1IFFQijjgc1Lw8FgvBM8DVuRrypohN2+RczVm7a+BF47O6jZObMmsyGD1wh70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK2beNs7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKRw1ccg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316C51F00A3F;
-	Mon, 31 Aug 2026 14:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK2beNs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFA61F000E9;
+	Mon, 31 Aug 2026 14:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185021;
-	bh=UZ+od4i2Oa3xnHgnBNeEES6iDBgm4qIc4RDBGDnpJ5s=;
+	s=korg; t=1788184987;
+	bh=A3Q3HVikSGwkogg9nT6ftUazrKuvHFPDDsw+B1tU6+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sKRw1ccgGXBWUu/kKYcHyIILnBDBnC4Q4AKN0KSmpGvM3TjGh5hLEL9IO7oAnmOx1
-	 Bxr1heNs5pOJS9qprD+ws0/vlpcusgkeNXvoqyRIHkR1R2s/DGH1gBZAgp5pcfHzBX
-	 TMedR3piFjo8tzSxPig5FQHPeXAdwh/ytWD+NAtc=
+	b=PK2beNs7PAkAHUePNIDVI2Q/jTR/ipA9uokg8CJNQFfK5+9b7msv0xrgHTYBo5Kh/
+	 avNh5lZN7rACUGolJmwBrJK3gcLvl3UiWjPcol1c9+64XCiVtJvvYpK7uk2qiEXTA/
+	 vN1bLlww3KXgUstsdjv9O82ojsW26kFPpdpXOYdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/69] bpf: Remove tst_run from lwt_seg6local_prog_ops.
-Date: Mon, 31 Aug 2026 15:34:38 +0200
-Message-ID: <20260831133358.815784209@linuxfoundation.org>
+Subject: [PATCH 5.15 15/69] selinux: switch two allocations to use kzalloc_objs()
+Date: Mon, 31 Aug 2026 15:34:48 +0200
+Message-ID: <20260831133359.237804717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -54,47 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-[ Upstream commit c13fda93aca118b8e5cd202e339046728ee7dddb ]
+[ Upstream commit cf6a513f1937581eb012a217b29817e025a1a0ef ]
 
-The syzbot reported that the lwt_seg6 related BPF ops can be invoked
-via bpf_test_run() without without entering input_action_end_bpf()
-first.
+These were the only two allocations in the policy loading logic
+that were not already using kzalloc_objs() for the policy
+data structures. Fix these to be consistent with the rest and
+to protect against ill-formed policy.
 
-Martin KaFai Lau said that self test for BPF_PROG_TYPE_LWT_SEG6LOCAL
-probably didn't work since it was introduced in commit 04d4b274e2a
-("ipv6: sr: Add seg6local action End.BPF"). The reason is that the
-per-CPU variable seg6_bpf_srh_states::srh is never assigned in the self
-test case but each BPF function expects it.
-
-Remove test_run for BPF_PROG_TYPE_LWT_SEG6LOCAL.
-
-Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
-Reported-by: syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com
-Fixes: d1542d4ae4df ("seg6: Use nested-BH locking for seg6_bpf_srh_states.")
-Fixes: 004d4b274e2a ("ipv6: sr: Add seg6local action End.BPF")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20240710141631.FbmHcQaX@linutronix.de
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 1 -
- 1 file changed, 1 deletion(-)
+ security/selinux/ss/conditional.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index af34e922836ce..6c81daf9efc9d 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -10419,7 +10419,6 @@ const struct bpf_verifier_ops lwt_seg6local_verifier_ops = {
- };
+diff --git a/security/selinux/ss/conditional.c b/security/selinux/ss/conditional.c
+index feb206f3acb4a..12a2c5ef80813 100644
+--- a/security/selinux/ss/conditional.c
++++ b/security/selinux/ss/conditional.c
+@@ -166,9 +166,9 @@ void cond_policydb_destroy(struct policydb *p)
+ int cond_init_bool_indexes(struct policydb *p)
+ {
+ 	kfree(p->bool_val_to_struct);
+-	p->bool_val_to_struct = kmalloc_array(p->p_bools.nprim,
+-					      sizeof(*p->bool_val_to_struct),
+-					      GFP_KERNEL);
++	p->bool_val_to_struct = kcalloc(p->p_bools.nprim,
++					sizeof(*p->bool_val_to_struct),
++					GFP_KERNEL);
+ 	if (!p->bool_val_to_struct)
+ 		return -ENOMEM;
+ 	return 0;
+@@ -716,9 +716,9 @@ static int duplicate_policydb_bools(struct policydb *newdb,
+ 	struct cond_bool_datum **cond_bool_array;
+ 	int rc;
  
- const struct bpf_prog_ops lwt_seg6local_prog_ops = {
--	.test_run		= bpf_prog_test_run_skb,
- };
+-	cond_bool_array = kmalloc_array(orig->p_bools.nprim,
+-					sizeof(*orig->bool_val_to_struct),
+-					GFP_KERNEL);
++	cond_bool_array = kcalloc(orig->p_bools.nprim,
++				  sizeof(*orig->bool_val_to_struct),
++				  GFP_KERNEL);
+ 	if (!cond_bool_array)
+ 		return -ENOMEM;
  
- const struct bpf_verifier_ops cg_sock_verifier_ops = {
 -- 
 2.53.0
 
