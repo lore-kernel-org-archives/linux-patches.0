@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D104A2055;
-	Mon, 31 Aug 2026 13:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF014A1E02;
+	Mon, 31 Aug 2026 13:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183713; cv=none; b=ReHWUBVRle1A2rpxSgwxQ08VDkqSgNvtIEcRC0URe4O+C9wyyFKKciOmmMMTkLc8o0aCxkgGXnBAzmjHQMQeS9oHg2K5v/+0QSCSSEda8OxBTbR7G/MtUIsIwfRLfrjcBpvPSpj7m5J4ADScEC9+XhLleFtdbboknlo6SDu6X44=
+	t=1788183714; cv=none; b=RCmME6gTUeW/OEgxcaWkkJTU6nGvOH0MfhkJA+ZC6WLEdsc0HvC1uDchoncd2W4DoVGQtHNIqja+8iQJ/ys8Fk1MvS+mbdcFKGVwdfL4eOGErXbaFEg2AdUVnlEH7ioFF4K2FVIRIqFwxSjiFPHVnk5qgN2AWtYSYm4ys6hBu2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183713; c=relaxed/simple;
-	bh=lG0ixKQ1mLCxQGPnXgn1lo1cOCb9q3hH11X63UuZKSQ=;
+	s=arc-20240116; t=1788183714; c=relaxed/simple;
+	bh=8QRNQGrPn3mKZUUf9FPk3LPYqaUmCLugOPk+PSUhL2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wt5+sMq72TxDU+dQ9AgQw138RH7zup/Jb9alfVeNlpXVCTxqjUTBJxVWVqeYmI8J1TuufnebngYFE7X1k+crEVMR78G0V5OJYOgXpmWhZkk1Mc6fyg8zqTjTD9WIU46HdpCpXT5O3vSbtbYPxSK4YHB1MZu2oeWoyLlCyatlvvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aqZdnV5E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VfRfKrKNVbecdvExlX8Ar4/6AcvzF5JIaPJCtJqwiJjIh3whJyoSl1avM6baEiP4PF6WKh1nYnWOgSOCoOl6l1G8ry1gvOmsbd979QZx9LLAYjRQ7TMO4MGKn+o8IKbcnE9S+r9OYkoi2MzzMukjZPvDajHzzipvARMbRIoSReQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nEl7rQbk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aqZdnV5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239701F00A3F;
-	Mon, 31 Aug 2026 13:41:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nEl7rQbk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD031F00A3E;
+	Mon, 31 Aug 2026 13:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183711;
-	bh=3NlhHbvyFPMU6mH5r1dGOqevBmHLJaKBG2LBztKcTZ4=;
+	s=k20260515; t=1788183712;
+	bh=YqvMqISvbPGw6o1VNEIJCKDFu6iDAFc1lP0qvaruqM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aqZdnV5EJBQy4hjrSgodr+nVMGulnJLU9RS4vbC8F3+hmKjVzJjj/7Y8GZuQHQdAU
-	 8BWpTjK2JgrCCGvFVabdGVHU6MqWoKH2jf/uSxd1G7ytd3soNgzaRZn3AXYwgdtRiR
-	 hLpRJ3QH4elVhEHrgs2FtnD0Aljcaz51WerU+3SjtmMszNF7JurxhtUdluf0yN4Qn6
-	 lQ+M2xGTCBlho1jziiVK6Oteva90k+VBRpIPOz418zYQyT5i14G0bx7Nq/L0YhpFkA
-	 ETIwR3PA1GnIiovsazJUj5Pqg0qyvlwn5JdtRq9y64PPi7F20nK20/ZBF2RR1s/MbC
-	 mGoYQI8fEcDBw==
+	b=nEl7rQbkUmkb4QoPU9khKxrVuQku89iRwnflxMNJNUy5/uY6TcNDQqRhI7RO90sJz
+	 dqfEHquyzT/82HB97p5Bw2g25YzIDh6QfWlN/g+A6j3Zzubp/J9uJxDND4R9TLHYL6
+	 wBzKN1/P8LG8N4o4bvpQGbcmTaJ3qBLLXxHZG7E55OPZynarCymuhzvyjrTWf4JZLI
+	 wzg7eCnC0OU5pFDuSs5YP8H7x95eCL5qSKo4OgLl4xok3IGTyybgCeu91hrT7vH0KG
+	 DK6otHuzUg1XRwjeXD6x3DOJ/btdAek6RXPuCyfbE24J4i20+w9KF1CNY+MNd/7zAR
+	 WKTCWqbCAMdHA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Matthew Bystrin <dev.mbstr@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	mfd@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: iwlwifi: mvm: validate TX_CMD response layout
-Date: Mon, 31 Aug 2026 09:24:47 -0400
-Message-ID: <20260831133314.4125787-259-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] mfd: rsmu: Add 8a34002 support
+Date: Mon, 31 Aug 2026 09:24:48 -0400
+Message-ID: <20260831133314.4125787-260-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,101 +52,74 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Matthew Bystrin <dev.mbstr@gmail.com>
 
-[ Upstream commit 8d70881707b47353359df57df12f6de67fdacdd2 ]
+[ Upstream commit d18fd55c780c2bae3d353024cab7f8746d3d9e91 ]
 
-TX_CMD parsing uses frame_count to walk status entries and then
-read the trailing SCD SSN. Make the minimum-length check follow
-that exact runtime layout calculation before parsing the payload.
+Add compatible string, i2c_devcie_id and spi_devcie_id to support
+8a34002.
 
-For new TX API, reject TX_CMD responses with frame_count != 1 and
-warn/return in the aggregation handler to document that aggregated
-accounting is expected via BA notifications.
-
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.0474ee89bab9.I84f151aabecb8921b587da092f29f78c47128f0f@changeid
+Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
+Link: https://patch.msgid.link/20260429072047.1111427-3-dev.mbstr@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The background lookup finished: commit `5a6d47d1037f5` is on the
-`autosel` branch but not in the checked-out **v6.18.44** tree.
+The background `git log --grep` searches finished with no matches — this
+tree (6.18.44) doesn't have the `8a34002` commit yet, which matches the
+earlier finding that only the DT binding lists it while the driver ID
+tables do not.
 
-**Verdict: YES** — backport this to 6.18.y.
+That supports the **YES** backport recommendation: it's a small device-
+ID addition to the existing `rsmu` driver, and the patch should apply
+cleanly here.
 
-The MVM TX_CMD handler parses variable-length firmware responses using
-`frame_count` without checking that the packet is large enough for all
-status entries plus the trailing SCD SSN. That can cause an out-of-
-bounds read on a common TX completion path. The fix is small (34 lines,
-one file), applies cleanly, and matches validation already used in the
-MLD path and other iwlwifi handlers already backported to this tree.
+ drivers/mfd/rsmu_i2c.c | 2 ++
+ drivers/mfd/rsmu_spi.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 34 +++++++++++++++++++++
- 1 file changed, 34 insertions(+)
-
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index bb97837baedaf..30aee52bf9cb4 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1581,6 +1581,17 @@ static inline u32 iwl_mvm_get_scd_ssn(struct iwl_mvm *mvm,
- 	return val & 0xFFF;
- }
- 
-+static inline size_t iwl_mvm_tx_resp_min_len(struct iwl_mvm *mvm,
-+					     struct iwl_tx_resp *tx_resp)
-+{
-+	struct agg_tx_status *agg_status =
-+		iwl_mvm_get_agg_status(mvm, tx_resp);
-+
-+	/* The aggregate response ends with a trailing SCD SSN __le32 word. */
-+	return (u8 *)(agg_status + tx_resp->frame_count) - (u8 *)tx_resp +
-+		sizeof(__le32);
-+}
-+
- static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
- 				     struct iwl_rx_packet *pkt)
- {
-@@ -1884,6 +1895,9 @@ static void iwl_mvm_rx_tx_cmd_agg(struct iwl_mvm *mvm,
- 	int queue = SEQ_TO_QUEUE(sequence);
- 	struct ieee80211_sta *sta;
- 
-+	if (WARN_ON_ONCE(iwl_mvm_has_new_tx_api(mvm)))
-+		return;
-+
- 	if (WARN_ON_ONCE(queue < IWL_MVM_DQA_MIN_DATA_QUEUE &&
- 			 (queue != IWL_MVM_DQA_BSS_CLIENT_QUEUE)))
- 		return;
-@@ -1918,6 +1932,26 @@ void iwl_mvm_rx_tx_cmd(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb)
- {
- 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
- 	struct iwl_tx_resp *tx_resp = (void *)pkt->data;
-+	size_t min_len;
-+
-+	if (IWL_FW_CHECK(mvm, !tx_resp->frame_count,
-+			 "invalid TX_CMD frame_count %u\n",
-+			 tx_resp->frame_count))
-+		return;
-+
-+	if (IWL_FW_CHECK(mvm,
-+			 iwl_mvm_has_new_tx_api(mvm) &&
-+			 tx_resp->frame_count != 1,
-+			 "invalid TX_CMD frame_count %u for new TX API\n",
-+			 tx_resp->frame_count))
-+		return;
-+
-+	min_len = iwl_mvm_tx_resp_min_len(mvm, tx_resp);
-+	if (IWL_FW_CHECK(mvm, iwl_rx_packet_payload_len(pkt) < min_len,
-+			 "invalid TX_CMD len %u (frame_count %u, min %zu)\n",
-+			 iwl_rx_packet_payload_len(pkt), tx_resp->frame_count,
-+			 min_len))
-+		return;
- 
- 	if (tx_resp->frame_count == 1)
- 		iwl_mvm_rx_tx_cmd_single(mvm, pkt);
+diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
+index 9e5fc8259eec2..c57795ed20f4e 100644
+--- a/drivers/mfd/rsmu_i2c.c
++++ b/drivers/mfd/rsmu_i2c.c
+@@ -330,6 +330,7 @@ static void rsmu_i2c_remove(struct i2c_client *client)
+ static const struct i2c_device_id rsmu_i2c_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{ "8v19n850", RSMU_SL },
+@@ -341,6 +342,7 @@ MODULE_DEVICE_TABLE(i2c, rsmu_i2c_id);
+ static const struct of_device_id rsmu_i2c_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,8v19n850", .data = (void *)RSMU_SL },
+diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
+index c931d8cea0a1a..e07f21482439e 100644
+--- a/drivers/mfd/rsmu_spi.c
++++ b/drivers/mfd/rsmu_spi.c
+@@ -241,6 +241,7 @@ static void rsmu_spi_remove(struct spi_device *client)
+ static const struct spi_device_id rsmu_spi_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{}
+@@ -250,6 +251,7 @@ MODULE_DEVICE_TABLE(spi, rsmu_spi_id);
+ static const struct of_device_id rsmu_spi_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{}
 -- 
 2.53.0
 
