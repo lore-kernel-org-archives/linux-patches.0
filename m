@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CB849F12D;
-	Mon, 31 Aug 2026 13:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055324F4721;
+	Mon, 31 Aug 2026 13:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183663; cv=none; b=h88FLestt6DC88XmxUuaAoBnIOf63lb0HXx4KA5Z6sHYBrhkWzcpZfwKe/2Uu8qa0udhIbOEPTL/iIGdY2V2ZsVf9FNxHKddo/aojK+1sHKZM9U2Di+8YHoXApZbtgKG7RX7V4R7+LQbmhr8ITRIiSfxPJrG3DarENMwlUCB05w=
+	t=1788183665; cv=none; b=LoIoOXC510ZDZR32pSUcYZkBV+OOJ0I6GDiUKbTj4CdbDpB3lxotErr2jDdUEZ15BwHC7qjEBm0eAd6s/Rb7Sbyc/9ojgj2wAAQDiHF6xFyL4R4MhjqLc981bR062fhZmQyO43G2znkEjn/E7NDz0x1q9M3RISwg3dZrdiQfTx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183663; c=relaxed/simple;
-	bh=Rv3qjL8sceuueb6MHetqiJvkM4+O0Bgr0JPgj6gn/Fk=;
+	s=arc-20240116; t=1788183665; c=relaxed/simple;
+	bh=BW4xLsWHKB5l0atcZ9qxOX/DFKtJ8J3aw15FQLe0Jqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KqVG6vVQ54I06XJd6B6rwNFGGQYTzju9p+KMsU2IU2bTlEfnSTM+01hFyh7ziKMHjP+SV2UKY9htU9Yekb2905vDCPUjv7SmWRL98dfPiFhW0L12HtDl0LlMZh/BElzQAJmYDppkKc+R5cyPOGYkQX7EJ4PYiyxam+ODF1YP0WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YD4Ouxkj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PBiaqADioWn6rG8MXaxLb8QIdWLJ/bhCd4VUKoNvzkLBNKn3oNnQpM/glb9etEiZFr9gz+pyDItflmabe6KonTyMwQiv4M27extAlniP2g61EBwRKjoOXAHkUOTttOK8+wOBj8VT+NW4QeLnj9NEDrsFgAZC3wbrv5pc8pdQMbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kI1jpGyW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YD4Ouxkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D53D1F00ADE;
-	Mon, 31 Aug 2026 13:41:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kI1jpGyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF9F1F00A3F;
+	Mon, 31 Aug 2026 13:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183661;
-	bh=i0ZpJkYJD921bgjORyjmDdYBtyr54hMFY/R9ZuVo8BA=;
+	s=k20260515; t=1788183662;
+	bh=bJRaqYwtJATJVndD9WvdSR6tW7hyJbdXhIGYO3A3wTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YD4OuxkjK4vT4DHX/aryyZ1HFkW3N4oal3WESEISSK0omY6cTxDU+y+ygCot+c1O6
-	 7uWkIHNXmzqf2mQzJizSwRFiZCbCo4MouVF933FIEqy4Tak6OT34Rn1jWVYrv2rt/o
-	 wT1YvrdXMf2+f7JGw/G2MHoWwAQbrAMQw211VQxv1h3VYYZFFQE0jY2TgXgFvbL0dw
-	 m65Qc6xEsJVDr98V1XWTfv1oXnlEXicIX+xX3MFOtytiIa1UVtqiypx7dQ2XhZbhau
-	 /TAw+F4/xM86gHONIMNMfqCboywgZSB0zzgs6da1jy/3eLyF4O5pppeA7OQRiSI1iv
-	 3Hl0Vc9nDt7BQ==
+	b=kI1jpGyWo9pKc81QktOP2Q7t5X7w5IiA4XctTc5U46Uras6gmn6snyorxh08mrxGw
+	 NybhHcyKdAzPvvcxja6h5zXQShTBZO/Mc5jLmn/skjv/umTau6G4Q8scM3Kmlb4LS1
+	 NDKChOYKgcOIn4YxQcyDrz1bAwg79w4jmGt691uF2Nb33XZBUsOpDJJ5XgSKhGEaby
+	 CIxQiC8NcMiVmixZb9zp/fOLul6G/onoxGYc2BApnP5T+uHE/qSTqm2VCrq9bu6A4w
+	 mVLljT4pb5EWUhpyOW4ykNddIdQbBBBUZrfYQ0QIXjmEt7/UPH2o6eloz6veHWlhZM
+	 1/beSLYvpNTdw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhaoyang Yu <2426767509@qq.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	tglx@kernel.org,
+	mingo@redhat.com,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: dm1105: fix missing error check for dma_alloc_coherent
-Date: Mon, 31 Aug 2026 09:24:16 -0400
-Message-ID: <20260831133314.4125787-228-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] x86/microcode/AMD: Move the no-revision fixup to get_patch_level()
+Date: Mon, 31 Aug 2026 09:24:17 -0400
+Message-ID: <20260831133314.4125787-229-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,342 +54,408 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhaoyang Yu <2426767509@qq.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-[ Upstream commit 3eaac9e02d8591d3c790db572ef1c8fa5a841fdb ]
+[ Upstream commit 098bcea71b8d257d80b0037b97b66070806600a5 ]
 
-The return value of dm1105_dma_map(), which handles DMA memory allocation,
-is ignored in dm1105_hw_init(). If dma_alloc_coherent() fails, the driver
-will proceed using a NULL pointer for DMA transfers, leading to a kernel
-oops or invalid hardware access.
+On machines which don't have microcode applied yet, the revision is 0.
+However, this doesn't work with the Zen family/model/stepping patch
+arithmetic. So move the fixup to the patch level getter function and
+this way make sure the patch level is always proper and thus the
+arithmetic always works.
 
-Fix this by checking the return value and propagating -ENOMEM on failure.
+And now that it can be called on any family, make this Zen-only.
 
-Signed-off-by: Zhaoyang Yu <2426767509@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: claude/claude-opus-4-6
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20260530024213.86137-1-bp@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `media: dm1105: fix missing error check for
-dma_alloc_coherent`
+# Stable Backport Analysis: `x86/microcode/AMD: Move the no-revision
+fixup to get_patch_level()`
 
-**Local tree:** `stable/linux-6.18.y` at `v6.18.43` (`6.18.43`)
-**Upstream commit:** `3eaac9e02d8591d3c790db572ef1c8fa5a841fdb` (not in
-this tree yet)
-**Candidate on autosel:** `c01c5e056e60f`
+**Local tree:** `v6.18.44` on branch `stable/linux-6.18.y` (detached
+HEAD)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 – Subject line**
-Record: `[media/dm1105] [fix] missing error check for dma_alloc_coherent
-in dm1105_hw_init()`
+### Step 1.1: Subject line
+**Record:** `[x86/microcode/AMD]` `[move]` — Relocate the zero-revision
+workaround from `need_sha_check()` into `get_patch_level()` so Zen
+patch-ID arithmetic always sees a valid revision.
 
-**Step 1.2 – Tags**
-Record:
-- `Signed-off-by: Zhaoyang Yu <2426767509@qq.com>` (author)
-- `Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>` (media
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable@vger.kernel.org`
-- Pipeline-added markers (`[Upstream commit ...]`, Sasha Levin SOB)
-  ignored per instructions
+### Step 1.2: Tags
+**Record:**
+- **Fixes:** — absent (expected for manual review)
+- **Reported-by:** — absent on this commit (original reporter is on
+  prerequisite `fcf8239ad6a5d`: Vítek Vávra)
+- **Tested-by:** — absent
+- **Reviewed-by / Acked-by:** — absent
+- **Link:**
+  `https://lore.kernel.org/r/20260530024213.86137-1-bp@kernel.org`
+- **Cc: stable:** — absent
+- **Signed-off-by:** Borislav Petkov (AMD) `<bp@alien8.de>`
+- **Assisted-by:** claude/claude-opus-4-6
+- Notable: upstream commit `098bcea71b8d2`; no syzbot, no multi-reporter
+  tags on this specific commit
 
-**Step 1.3 – Body analysis**
-Record:
-- **Bug:** `dm1105_dma_map()` return value ignored in `dm1105_hw_init()`
-- **Symptom:** If `dma_alloc_coherent()` fails, driver continues with
-  NULL `ts_buf` → kernel oops or invalid hardware DMA access
-- **Fix:** Check return value, propagate `-ENOMEM`
-- **Root cause:** Missing error propagation on DMA buffer allocation
-  failure during hardware init
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** On machines with no BIOS microcode loaded,
+  `MSR_AMD64_PATCH_LEVEL` reads as 0. Zen encodes family/model/stepping
+  inside the patch revision word; revision 0 breaks that arithmetic.
+- **Symptom:** Patch matching, cache lookup, and Entrysign cutoff
+  selection fail or behave incorrectly when revision stays 0.
+- **Root cause:** Prior fix (`fcf8239`) synthesized a lowest revision
+  only inside `need_sha_check()`, but many callers use
+  `get_patch_level()` directly and still see 0.
+- **Fix approach:** Centralize the synthesis in `get_patch_level()`,
+  limit it to Zen (family ≥ 0x17).
 
-**Step 1.4 – Hidden bug fix?**
-Record: No — explicitly labeled and described as a bug fix (missing
-error check → NULL pointer use).
+### Step 1.4: Hidden bug fix?
+**Record:** Yes — despite “move” wording, this completes an incomplete
+bug fix. The prior commit addressed only the SHA-check path; this fixes
+all `get_patch_level()` consumers.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 – Inventory**
-Record:
-- **File:** `drivers/media/pci/dm1105/dm1105.c` (+6 / -1 lines)
-- **Function modified:** `dm1105_hw_init()`
-- **Scope:** Single-file, surgical fix
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `arch/x86/kernel/cpu/microcode/amd.c` only
+- **Scope:** ~4 insertions, ~5 deletions (net −1 line); single-file
+  surgical fix
+- **Functions modified:** `need_sha_check()`, `get_patch_level()`
 
-**Step 2.2 – Code flow change**
-Record:
-- **Before:** `dm1105_dma_map(dev);` — return ignored; always `return 0`
-- **After:** `ret = dm1105_dma_map(dev); if (ret) return -ENOMEM;` —
-  failure aborts init
-- **Path:** Probe-time initialization error path (`dm1105_probe()` →
-  `dm1105_hw_init()`)
+### Step 2.2: Code flow per hunk
 
-**Step 2.3 – Bug mechanism**
-Record:
-- **Category:** NULL pointer dereference / missing error-path handling
-- **Mechanism:** `dm1105_dma_map()` returns non-zero when
-  `dma_alloc_coherent()` returns NULL (`return !dev->ts_buf`). Without
-  the check, probe succeeds, IRQ/work handlers later dereference
-  `dev->ts_buf` (e.g. in `dm1105_dmx_buffer()` at lines 676–698)
+**Hunk 1 — `need_sha_check()`:**
+- **Before:** If `cur_rev == 0`, synthesize lowest Zen revision via
+  `cpuid_to_ucode_rev()`.
+- **After:** Passes `cur_rev` through unchanged to
+  `get_cutoff_revision()`.
+- **Path affected:** SHA256 digest verification during microcode
+  application.
 
-**Step 2.4 – Fix quality**
-Record:
-- Obviously correct and minimal
-- Matches existing probe pattern (`if (ret < 0) goto err_pci_iounmap`)
-- On failure, probe goes to `err_pci_iounmap` without calling
-  `dm1105_hw_exit()` — correct, since no DMA buffer was allocated
-- Low regression risk
+**Hunk 2 — `get_patch_level()`:**
+- **Before:** Returns raw MSR value (0 when no BIOS microcode).
+- **After:** If MSR is 0 and CPU is Zen+ (family ≥ 0x17), synthesize
+  lowest revision from CPUID; pre-Zen still returns 0.
+- **Path affected:** All microcode revision queries — early BSP load,
+  patch verification, cache lookup, CPU info collection, reload.
+
+### Step 2.3: Bug mechanism
+**Record:** **Logic / correctness fix** in Zen patch-ID arithmetic.
+
+When `get_patch_level()` returns 0 on Zen:
+1. **`verify_patch()`** (added by `d75aa97c90da2`, present in this
+   tree): `get_cutoff_revision(0)` returns 0 → `if (!cutoff) goto ok`
+   accepts every patch, breaking Entrysign pre/post-cutoff selection.
+2. **`cache_find_patch()` / `patch_cpus_equivalent()`**:
+   `ucode_rev_to_cpuid(0)` does not match the CPU-encoded patch ID →
+   cache miss → `find_patch()` returns NULL → runtime microcode update
+   fails (`UCODE_NFOUND`).
+3. **`patch_newer()`**: revision comparisons against 0 produce wrong
+   ordering.
+
+The fix ensures all callers of `get_patch_level()` see a valid Zen-
+encoded revision.
+
+### Step 2.4: Fix quality
+**Record:** Obviously correct — centralizes existing logic at the single
+source of truth. Minimal diff. Low regression risk: pre-Zen explicitly
+excluded (`family < 0x17` returns 0 unchanged). Removing the duplicate
+fixup from `need_sha_check()` is safe because callers now get a
+synthesized revision from `get_patch_level()` first.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 – Blame**
-Record: Buggy ignore of `dm1105_dma_map()` present at `dm1105_hw_init()`
-line 781 since file entry in this tree (`5d324e5159d9e`). Original
-driver commit `519a4bdcf822` (2008) had the identical pattern in
-`dm1105dvb_hw_init()` — bug present since driver inception.
+### Step 3.1: Blame
+**Record:**
+- Zero-revision fixup in `need_sha_check()` introduced by
+  **`fcf8239ad6a5d`** (Aug 2025): “Handle the case of no BIOS microcode”
+- `get_patch_level()` introduced by **`037e81fb9d2df`**; present since
+  before Zen encoding changes
+- Zen patch-ID encoding introduced by **`94838d230a6c`** (Jul 2024) — in
+  this tree
+- Patch selection using `get_patch_level()` + cutoff:
+  **`d75aa97c90da2`** (Sep 2025, backported Jan 2026) — in this tree
 
-**Step 3.2 – Fixes: tag**
-Record: N/A — no `Fixes:` tag. Bug introduced in original driver
-`519a4bdcf822` ("V4L/DVB (11984): Add support for yet another SDMC
-DM1105 based DVB-S card.").
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag on this commit. Related fix:
+`fcf8239ad6a5d` with `Fixes: 94838d230a6c`, `Cc:
+stable@vger.kernel.org`, `Reported-by: Vítek Vávra`.
 
-**Step 3.3 – Related file history**
-Record:
-- `08ddfd628a2db` — unrelated workqueue leak fix (already in 6.18.y, had
-  `Cc: stable`)
-- `e250b672d40a9` — rc subsystem race fix (indirect, different issue)
-- No prior fix for this DMA error-check bug in this tree
+### Step 3.3: File history
+**Record:** Recent related commits in this tree:
+- `fcf8239ad6a5d` — incomplete zero-rev fix (SHA path only)
+- `d75aa97c90da2` — patch selection via `verify_patch()` +
+  `get_cutoff_revision()`
+- `54e9bd5025a07` — Entrysign Zen5 fixes
+- This commit (`098bcea71b8d2`) is on `origin/master` but **not yet** in
+  `stable/linux-6.18.y`
 
-**Step 3.4 – Author context**
-Record: Zhaoyang Yu submitted similar `dma_alloc_coherent()` error-check
-fixes (e.g. `pch_uart` on autosel). Hans Verkuil (media maintainer)
-committed upstream.
+Standalone single-patch fix; not part of a multi-patch series.
 
-**Step 3.5 – Dependencies**
-Record: Standalone. b4 shows v1 was patch 7/7 of a series, but
-committed/applied v2 is a single independent patch. No prerequisite
-commits required; `dm1105_dma_map()` already returns `int` in this tree.
+### Step 3.4: Author context
+**Record:** Borislav Petkov is the x86/AMD microcode maintainer.
+Multiple recent commits in `amd.c` in this tree.
+
+### Step 3.5: Dependencies
+**Record:**
+- Requires `cpuid_to_ucode_rev()`, `get_cutoff_revision()`, Zen patch-ID
+  logic — all present in v6.18.44
+- Requires `fcf8239ad6a5d` (already in tree) for `cpuid_to_ucode_rev()`
+  and the original partial fix
+- **`git apply --check` on `098bcea71b8d2` passes cleanly** on current
+  tree
+- No other commits required
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1 – Original discussion**
-Record:
-- `b4 dig -c 3eaac9e02d8591d3c790db572ef1c8fa5a841fdb` → https://patch.m
-  sgid.link/tencent_2F5A25B0AB50C4D77CFB3DDEA852BEBE6509@qq.com
-- v2 standalone patch (not a multi-patch dependency for backport)
-- No stable nominations, NAKs, or reviewer objections found in saved
-  mbox
+### Step 4.1: Original discussion
+**Record:**
+- **b4 dig -c 098bcea71b8d2:**
+  `https://patch.msgid.link/20260530024213.86137-1-bp@kernel.org`
+- **b4 dig -a:** v1 only (May 29, 2026); mbox also contains v2 (Jun 3,
+  2026) with same diff
+- **Reviewer feedback:** No replies, NAKs, stable nominations, or
+  Tested-by in thread (single-patch post, no discussion)
 
-**Step 4.2 – Reviewers**
-Record: CC'd to `mchehab@kernel.org`, `linux-media@vger.kernel.org`,
-`linux-kernel@vger.kernel.org`. Hans Verkuil committed upstream (strong
-maintainer endorsement).
+### Step 4.2: Reviewers
+**Record:** **b4 dig -w:** To/Cc: Borislav Petkov, X86 ML, LKML. No
+external reviewers listed.
 
-**Step 4.3 – Bug report**
-Record: N/A — no external bug report or syzbot link. Bug identified by
-code review.
+### Step 4.3: Bug report
+**Record:** No direct bug report on this commit. Original user report on
+`fcf8239ad6a5d` (Vítek Vávra) — machines shipped without BIOS microcode.
+This commit completes that fix.
 
-**Step 4.4 – Series context**
-Record: v1 was 7/7; v2 is standalone. This fix does not depend on
-patches 1–6.
+### Step 4.4: Related patches
+**Record:** Follow-up to `fcf8239ad6a5d`. Interacts with `d75aa97c90da2`
+patch-selection logic. No other series patches needed.
 
-**Step 4.5 – Stable list history**
-Record: Could not search lore stable archive (Anubis bot protection). No
-stable discussion found via b4 mbox.
+### Step 4.5: Stable list
+**Record:** No stable-list discussion found for this specific commit.
+Prior commit `fcf8239` had `Cc: stable@vger.kernel.org`.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 – Key functions**
-Record: `dm1105_hw_init()`, `dm1105_dma_map()`, `dm1105_set_dma_addr()`
+### Step 5.1: Key functions
+**Record:** `get_patch_level()`, `need_sha_check()`, and downstream:
+`verify_patch()`, `cache_find_patch()`, `find_patch()`,
+`load_ucode_amd_bsp()`, `collect_cpu_info_amd()`, `reload_ucode_amd()`,
+`__apply_microcode_amd()`.
 
-**Step 5.2 – Callers**
-Record: `dm1105_hw_init()` called only from `dm1105_probe()` (line
-1031). Probe already handles negative return via `goto err_pci_iounmap`.
+### Step 5.2: Callers of `get_patch_level()`
+**Record:** (verified via grep in `amd.c`)
+- `verify_patch()` — patch container scanning / Entrysign selection
+- `load_ucode_amd_bsp()` — early BSP microcode load
+- `__apply_microcode_amd()` — post-apply verification
+- `find_patch()` → `cache_find_patch()` — runtime patch lookup
+- `reload_ucode_amd()`, `collect_cpu_info_amd()` — reload and sysfs/CPU
+  info
 
-**Step 5.3 – Callees**
-Record: `dm1105_dma_map()` → `dma_alloc_coherent()`; on success,
-`dm1105_set_dma_addr()` programs hardware with DMA address.
+All are boot-time or microcode-update paths on AMD x86 systems.
 
-**Step 5.4 – Reachability**
-Record: Triggered at PCI probe when `CONFIG_DVB_DM1105` is enabled and
-DM1105 hardware is present. DMA alloc failure possible under memory/CMA
-pressure. Without fix, probe succeeds and later IRQ →
-`dm1105_dmx_buffer()` NULL-dereferences `dev->ts_buf`.
+### Step 5.3: Callees
+**Record:** `native_rdmsr(MSR_AMD64_PATCH_LEVEL)`,
+`cpuid_to_ucode_rev()`, `x86_family()`, `pr_info_once()`.
 
-**Step 5.5 – Similar patterns**
-Record: Same long-standing bug pattern in original 2008 driver
-(`dm1105dvb_dma_map` return ignored). Author has submitted similar fixes
-elsewhere.
+### Step 5.4: Reachability
+**Record:** Triggered on every AMD Zen+ system boot where BIOS has not
+applied microcode (MSR reads 0). Common during early boot microcode
+loading and later reload paths. Not userspace-syscall reachable, but
+affects all such hardware at boot.
 
----
-
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.y)
-
-**Step 6.1 – Buggy code present?**
-Record: **YES** — current tree at lines 781–782 ignores
-`dm1105_dma_map()` return. Upstream fix `3eaac9e02d859` is **not** an
-ancestor of HEAD.
-
-**Step 6.2 – Backport complications**
-Record: **Clean apply** — `git diff HEAD c01c5e056e60f` shows only the
-6-line hunk with no conflicts.
-
-**Step 6.3 – Related fixes already present?**
-Record: No duplicate fix. Related `08ddfd628a2db` (workqueue leak) is
-separate.
+### Step 5.5: Similar patterns
+**Record:** `cpuid_to_ucode_rev()` fixup was duplicated in
+`need_sha_check()` and `get_patch_level()`'s `CONFIG_MICROCODE_DBG`
+path. This commit consolidates into one place.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.y)
 
-**Step 7.1 – Subsystem**
-Record: `drivers/media/pci/dm1105` — DVB media PCI driver.
-**Criticality: PERIPHERAL** (niche TV/DVB capture hardware).
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Current tree at
+`arch/x86/kernel/cpu/microcode/amd.c:236-238` still has fixup only in
+`need_sha_check()`. `get_patch_level()` at lines 340-342 returns raw MSR
+without zero-rev handling. All prerequisite commits (`94838d`,
+`fcf8239`, `d75aa97`) are ancestors of HEAD.
 
-**Step 7.2 – Activity**
-Record: Low churn in 6.18.y; driver is mature/legacy with occasional
-maintenance fixes.
+### Step 6.2: Backport complications
+**Record:** **Clean apply** — `git apply --check` on upstream commit
+succeeds with no conflicts. No rework needed for 6.18.y (the
+`hypervisor_present` change in master is a separate commit, not part of
+this patch).
+
+### Step 6.3: Related fixes already present?
+**Record:** `fcf8239ad6a5d` (partial fix) is in tree. This commit is
+**not** yet applied. No alternate fix found.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 8.1 – Who is affected**
-Record: Users with SDMC DM1105-based DVB-S PCI cards and
-`CONFIG_DVB_DM1105` enabled (driver-specific, small population).
+### Step 7.1: Subsystem
+**Record:** `arch/x86` — AMD microcode loader. **Criticality:
+IMPORTANT** (CPU security mitigations, boot-time correctness; not
+universal like mm/VFS, but affects all AMD Zen+ users without BIOS
+ucode).
 
-**Step 8.2 – Trigger conditions**
-Record: `dma_alloc_coherent()` failure during probe (memory pressure,
-CMA exhaustion). Uncommon but realistic. Requires hardware present; not
-userspace-triggerable without the device.
+### Step 7.2: Activity
+**Record:** Actively maintained — multiple microcode commits in
+2025–2026 in this tree (Entrysign, Zen5, patch selection).
 
-**Step 8.3 – Failure severity**
-Record: **HIGH** — kernel oops from NULL dereference in
-`dm1105_dmx_buffer()` when DMA interrupts fire; also possible invalid
-DMA programming via `dm1105_set_dma_addr()` with garbage/zero address.
+---
 
-**Step 8.4 – Risk vs benefit**
-Record:
-- **Benefit:** Prevents probe-from-failure crash on affected hardware;
-  correct error propagation
-- **Risk:** Very low — 6 lines, no API/behavior change on success path
-- **Ratio:** Favorable for backport despite niche hardware
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** AMD Zen and newer (family ≥ 0x17) systems where BIOS has not
+applied microcode (MSR revision = 0). Config: `CONFIG_MICROCODE` + AMD
+CPU.
+
+### Step 8.2: Trigger conditions
+**Record:** Boot or microcode reload on hardware with no prior microcode
+applied. Documented real-world scenario (machines shipped without BIOS
+microcode). Not timing-dependent.
+
+### Step 8.3: Failure mode severity
+**Record:**
+- Microcode fails to load/update (`find_patch()` → NULL)
+- Wrong patch may be selected when dual-patch containers are used
+  (`verify_patch()` bypasses cutoff logic)
+- Missing CPU security/errata mitigations
+- **Severity: HIGH** (functional failure + potential security impact
+  from wrong/missing microcode; not a kernel oops, but materially
+  affects CPU security state)
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit: HIGH** — fixes broken microcode loading on real hardware;
+  completes a stable-nominated partial fix
+- **Risk: VERY LOW** — 9-line move, maintainer-authored, applies
+  cleanly, Zen-only guard
+- **Ratio:** Strong benefit, minimal risk
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1 – Evidence summary**
+### Step 9.1: Evidence compile
 
-| FOR backport | AGAINST backport |
-|---|---|
-| Real NULL-deref bug since 2008 | Niche hardware, few users |
-| Kernel oops on failure path | DMA alloc failure is uncommon |
-| Tiny, obviously correct fix | No syzbot/user report |
-| Applies cleanly to 6.18.y | |
-| Maintainer (Hans Verkuil) signed off | |
-| Probe error path already wired | |
+**FOR backport:**
+- Fixes real bug on Zen+ systems without BIOS microcode (user-reported
+  scenario)
+- Completes incomplete fix from `fcf8239` (which had `Cc: stable`)
+- Breaks `verify_patch()` cutoff selection and `cache_find_patch()` when
+  rev=0
+- Small, surgical, maintainer fix; applies cleanly to 6.18.44
+- All prerequisites present in this tree
+- Upstream in mainline (`098bcea71b8d2`)
 
-**Unresolved:** No user crash reports; lore stable-thread search
-blocked.
+**AGAINST backport:**
+- No independent Tested-by or review discussion
+- No crash/oops — functional/security impact rather than kernel panic
+- Narrow hardware/config scope (AMD Zen+ without BIOS ucode)
 
-**Step 9.2 – Stable rules checklist**
-1. Obviously correct and tested? **PASS** — logic is trivial; maintainer
-   committed upstream
-2. Fixes real bug affecting users? **PASS** — NULL deref on DMA alloc
-   failure with DM1105 hardware
-3. Important issue? **PASS** — kernel oops (HIGH severity when
-   triggered)
-4. Small and contained? **PASS** — 6 lines, 1 file
-5. No new features/APIs? **PASS**
+**Unresolved:** None material to the decision.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — logic is clear; `git apply
+   --check` passes; author is maintainer (no formal Tested-by)
+2. Fixes real bug affecting users? **PASS** — microcode load/selection
+   broken when MSR=0 on Zen
+3. Important issue? **PASS** — HIGH: missing/wrong microcode, security
+   mitigations at stake
+4. Small and contained? **PASS** — single file, ~9 lines changed
+5. No new features/APIs? **PASS** — relocates existing fixup logic
 6. Can apply to local tree? **PASS** — clean apply verified
 
-**Step 9.3 – Exception category**
-Record: N/A (standard bug fix, not quirk/ID/DT/build/doc exception).
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Qualifies
+on merit as a bug fix.
 
-**Step 9.4 – Decision rationale**
-This is a textbook stable candidate: a long-standing missing error check
-that can cause a kernel oops when DMA allocation fails during probe. The
-fix is minimal, maintainer-reviewed, self-contained, and applies cleanly
-to the local 6.18.y tree where the buggy code is confirmed present.
+### Step 9.4: Problem summary for stable users
+
+Commit `fcf8239` added a workaround for machines with no BIOS microcode,
+but only inside `need_sha_check()`. Meanwhile `get_patch_level()` — used
+by patch verification (`d75aa97`), cache lookup, early load, and CPU
+info — still returned 0. On Zen CPUs, revision 0 is not a valid encoded
+patch level, so patch matching arithmetic fails and Entrysign cutoff
+selection is bypassed. This commit moves the synthesis to
+`get_patch_level()` with a Zen-only guard, fixing all consumers at once.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from `git show 3eaac9e02d859`
-  / `c01c5e056e60f`
-- [Phase 1] No Reported-by/syzbot/Fixes: tags found
-- [Phase 2] Read current `dm1105.c` lines 605–612, 669–698, 769–793,
-  1031–1033, 1160–1163
-- [Phase 2] Confirmed `dm1105_dma_map()` returns `!dev->ts_buf` (non-
-  zero on failure)
-- [Phase 2] Confirmed `dm1105_dmx_buffer()` dereferences `dev->ts_buf`
-  without NULL check
-- [Phase 3] `git describe HEAD` → `v6.18.43`; `make kernelversion` →
-  `6.18.43`
-- [Phase 3] `git blame` on hw_init/dma_map lines → present since
-  `5d324e5159d9e` in this file
-- [Phase 3] `git show 519a4bdcf822` → identical bug in original 2008
-  driver
-- [Phase 3] `git merge-base --is-ancestor 3eaac9e02d859 HEAD` → exit 1
-  (fix NOT in tree)
-- [Phase 4] `b4 dig -c 3eaac9e02d859` → lore URL found; v2 standalone
-  patch
-- [Phase 4] `b4 dig -a` → v2 only revision listed as matching
-- [Phase 4] `b4 dig -w` → mchehab, linux-media CC'd
-- [Phase 4] Saved mbox to `/tmp/dm1105_thread.mbox` — no stable
-  nomination or NAK found
-- [Phase 5] `grep dm1105_hw_init` → single caller in `dm1105_probe()`
-- [Phase 6] `git diff HEAD c01c5e056e60f` → clean 6-line apply
-- [Phase 6] Confirmed buggy `dm1105_dma_map(dev);` at line 781 in
-  current tree
-- [Phase 8] Failure mode: NULL deref in work handler after failed DMA
-  alloc — severity HIGH
-- [UNVERIFIED] No end-user crash reports located (none cited in commit
-  or lore thread)
+- [Phase 1] Parsed subject, body, tags; Link to lore confirmed
+- [Phase 2] Read diff and current `amd.c` at lines 232-248, 321-343,
+  504-575, 822-876, 916-930
+- [Phase 3] `git blame` on changed lines; `fcf8239ad6a5d`,
+  `d75aa97c90da2`, `94838d230a6c` identified; ancestry confirmed in tree
+- [Phase 3] `git apply --check` on `098bcea71b8d2` — passes
+- [Phase 4] `b4 dig -c 098bcea71b8d2` — lore URL found; `-a` shows v1;
+  `-w` shows recipients; mbox saved, no review replies
+- [Phase 5] `grep get_patch_level` — 6 call sites in `amd.c`; traced
+  `verify_patch`, `cache_find_patch`, `find_patch` logic
+- [Phase 6] `git describe HEAD` → v6.18.44; buggy code confirmed
+  present; fix not yet in tree
+- [Phase 6] `git merge-base --is-ancestor` — `fcf8239`, `d75aa97`,
+  `94838d` all in tree
+- [Phase 8] Failure modes derived from code paths at
+  `verify_patch():554-556` and `cache_find_patch():851-855`
 
 **YES**
 
- drivers/media/pci/dm1105/dm1105.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/amd.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
-index c1d55b9836744..abd86488064b5 100644
---- a/drivers/media/pci/dm1105/dm1105.c
-+++ b/drivers/media/pci/dm1105/dm1105.c
-@@ -768,6 +768,8 @@ static void dm1105_ir_exit(struct dm1105_dev *dm1105)
- 
- static int dm1105_hw_init(struct dm1105_dev *dev)
+diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
+index 46673530bc6f0..4a33d10685587 100644
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -233,11 +233,6 @@ static bool need_sha_check(u32 cur_rev)
  {
-+	int ret;
-+
- 	dm1105_disable_irqs(dev);
+ 	u32 cutoff;
  
- 	dm_writeb(DM1105_HOST_CTR, 0);
-@@ -778,7 +780,10 @@ static int dm1105_hw_init(struct dm1105_dev *dev)
- 	dm_writew(DM1105_TSCTR, 0xc10a);
+-	if (!cur_rev) {
+-		cur_rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
+-		pr_info_once("No current revision, generating the lowest one: 0x%x\n", cur_rev);
+-	}
+-
+ 	cutoff = get_cutoff_revision(cur_rev);
+ 	if (cutoff)
+ 		return cur_rev <= cutoff;
+@@ -338,6 +333,13 @@ static u32 get_patch_level(void)
+ 	}
  
- 	/* map DMA and set address */
--	dm1105_dma_map(dev);
-+	ret = dm1105_dma_map(dev);
-+	if (ret)
-+		return -ENOMEM;
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
++	if (!rev) {
++		if (x86_family(bsp_cpuid_1_eax) < 0x17)
++			return rev;
 +
- 	dm1105_set_dma_addr(dev);
- 	/* big buffer */
- 	dm_writel(DM1105_RLEN, 5 * DM1105_DMA_BYTES);
++		rev = cpuid_to_ucode_rev(bsp_cpuid_1_eax);
++		pr_info_once("No current revision, generating the lowest one: 0x%x\n", rev);
++	}
+ 
+ 	return rev;
+ }
 -- 
 2.53.0
 
