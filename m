@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00B7521227;
-	Mon, 31 Aug 2026 13:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5404582F7;
+	Mon, 31 Aug 2026 13:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183849; cv=none; b=jLxAN0sILUrZaH2Z8p6Q15FuadQV7xSnI/GNQkPQnMqO7W3LrZzhlqYUztaCKlX6mgxxt9vdKS6g4VHrCCcGA3pf0Cs939rNKepVxdlSd+dmOwC+tu1ZEBealAyhMeDic2rUU+kVdkLk0ft6Lf5F/myzUJydKYN8cvyQ2ISFOyA=
+	t=1788183851; cv=none; b=rtGKxBmpAd7dQsvQPF2Hmb/iCMCXA3yG9QIASB7Z+np/DHgBXsbOIkwVharaVApbNmzvK/qecoezHrrdAUJcELoCzR6zPx5bGhFwczS0qT4QYJ1v8pNZNxI4VDsiEQyBh0w0lPul7C9GOt6qBAlz1/dyhjSEEz5jqKi8qoF4Cl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183849; c=relaxed/simple;
-	bh=+eIMNW+G9+vS/u+rgKv4T3f8IJb0j8tppCh6r0VNmSY=;
+	s=arc-20240116; t=1788183851; c=relaxed/simple;
+	bh=HJsFqcZe9TOHqmaEGiFYco8d84mj/FeUcvNWg284YqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iUmPcdGbDQQ+HKGiXWavRBXRH3BLwvgAeue1D0MFDJAT1mLetLYTOP6gVrtxHunIazlleIFGBA6bSuu7cO9KNjhvFHyMJvUF1DqYEofOHdhD+R5Wocxx7Joc1V3zc+chcHiZCtT3adgo9z8Z5XmSmWki2E0SP9HgieTlvcPZ77M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TBJqPGmz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bnGqrQwpkBiHshIEimanZ+lYTRENHIpWpQEkni3/uTtoPsYnv36YdYroagmbvQEIoLrnReWlqC2n71AQlecuGPWoit1D6j9WDUkT/sGilbnwlsezSK/PGmirwgn26nqnvTKgdgEufT1TrLiwlV5/AgH/30rd+fMiWKXNwI6UOj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QZ+IHlvZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TBJqPGmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777681F00ADE;
-	Mon, 31 Aug 2026 13:44:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QZ+IHlvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443271F00A3F;
+	Mon, 31 Aug 2026 13:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183846;
-	bh=5ZSYxAxyXIXMLA4+TJmzL2ZvISOyC00ADA5E9FDWHxQ=;
+	s=k20260515; t=1788183848;
+	bh=ghenvDoXBgLOI+XHMoui/XCdvU2v2PNvyDMg6wsGwCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TBJqPGmzAffSjVBKMbUqIx2pC1SCHbubjAB+XkX9FUF4r2SOpm1Roj2gSGY2iE0v6
-	 DgMNO7flNIJN4J5iVPwk9sIINs6Uw1LXKY0uARAeS6rufJlv6UsE6t3ISAEg3Xi+c2
-	 JeKa2ePk+V/y0XVpmtjb2gIAG7QI0vHFBxMoUtDk24vRPDvz0QEt+4bAWtwd7QfEds
-	 bYKSCYgDDqeTjMy0GeNONMtrKmMuNclV7DuHqRJe+7dUXLXG/HKGpsc2mO7HkGv7HJ
-	 4v53s5Itz/oSX5ZnNpPv8HgmatItvcFNQwc4C1J4HkS7Lqn75iXNWYcMtZWZ56lTh1
-	 Cp4NB/Q6L3GjA==
+	b=QZ+IHlvZI3ld4GdzlcapbO1/d2lWpAMC/RxZqhxHd0fiG/CV7kiiDrpMOnSe8giWy
+	 cMXU3RMXB+JvSWUnoKHfYKLvoXwcdkShjR3JdZ/VRmKMRGqck6y0Tx4qcBEK3cUIYB
+	 vq9nbAPke7W1Xt53Z1ou+mDPVsDtYUMHbHYs3BBcGFWsBMJxHpVIWnG37V626ZnEQM
+	 /gewIxuqQbkxAcgFw1OgIfrgZ2ccxEOrpHKyxUFAkAfHOW/1aa1QLFE6aCKtlpQhJX
+	 yIHszIdRookXR1lLabN0vqCWjA+MtbPNnQYfquZ3wDDCjBMuJhZKzWKxpVWdJiyzgU
+	 47j7KNR42P/5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: ZhengYuan Huang <gality369@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shengjiu.wang@gmail.com,
-	Xiubo.Lee@gmail.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ASoC: fsl-asoc-card: reduce WM8904 PLL ratio to meet frequency limit
-Date: Mon, 31 Aug 2026 09:26:07 -0400
-Message-ID: <20260831133314.4125787-339-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] btrfs: balance: fix potential bg lookup failure in chunk_usage_filter()
+Date: Mon, 31 Aug 2026 09:26:08 -0400
+Message-ID: <20260831133314.4125787-340-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,390 +47,552 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 99b5316f08f390a5e1ea2239ecca8e2b4ef70ac6 ]
+[ Upstream commit 6dde5221f608e0b548fcf43c68034496f1e58542 ]
 
-WM8904 has a 27 MHz PLL frequency limit. The current S24_LE PLL ratio
-of 384 exceeds this at high sample rates (96 kHz × 384 = 36.864 MHz).
+[BUG]
+Running btrfs balance with a usage filter (-dusage=N) can trigger a
+null-ptr-deref when metadata corruption causes a chunk to have no
+corresponding block group in the in-memory cache:
 
-Reduce the ratio to 192 for WM8904, keeping PLL within limits at all
-supported rates (96 kHz × 192 = 18.432 MHz).
+  KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
+  RIP: 0010:chunk_usage_filter fs/btrfs/volumes.c:3874 [inline]
+  RIP: 0010:should_balance_chunk fs/btrfs/volumes.c:4018 [inline]
+  RIP: 0010:__btrfs_balance fs/btrfs/volumes.c:4172 [inline]
+  RIP: 0010:btrfs_balance+0x2024/0x42b0 fs/btrfs/volumes.c:4604
+  ...
+  Call Trace:
+    btrfs_ioctl_balance fs/btrfs/ioctl.c:3577 [inline]
+    btrfs_ioctl+0x25cf/0x5b90 fs/btrfs/ioctl.c:5313
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    ...
 
-Add codec-specific pll_ratio_s24 field, default 384, override to 192
-for WM8904.
+The bug is reproducible on current development branch.
 
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260429100028.2739711-6-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[CAUSE]
+Two separate data structures are involved:
+
+1. The on-disk chunk tree, which records every chunk (logical address
+   space region) and is iterated by __btrfs_balance().
+
+2. The in-memory block group cache (fs_info->block_group_cache_tree),
+   which is built at mount time by btrfs_read_block_groups() and holds
+   a struct btrfs_block_group for each chunk. This cache is what the
+   usage filter queries.
+
+On a well-formed filesystem, these two are kept in 1:1 correspondence.
+However, btrfs_read_block_groups() builds the cache from block group
+items in the extent tree, not directly from the chunk tree. A corrupted
+image can therefore contain a chunk item in the chunk tree whose
+corresponding block group item is absent from the extent tree; that
+chunk's block group is then never inserted into the in-memory cache.
+
+When balance iterates the chunk tree and reaches such an orphaned chunk,
+should_balance_chunk() calls chunk_usage_filter(), which queries the block
+group cache:
+
+  cache = btrfs_lookup_block_group(fs_info, chunk_offset);
+  chunk_used = cache->used;   /* cache may be NULL */
+
+btrfs_lookup_block_group() returns NULL silently when no cached entry
+covers chunk_offset. chunk_usage_filter() does not check the return value,
+so the immediately following dereference of cache->used triggers the crash.
+
+[FIX]
+Add a NULL check after btrfs_lookup_block_group() in chunk_usage_filter().
+When the lookup fails, emit a btrfs_err() message identifying the
+affected bytenr and return -EUCLEAN to indicate filesystem corruption.
+
+Since chunk_usage_filter() now has an error path, change its return type
+from bool to error pointer and 0 if the chunk passes the usage filter,
+and 1 if it should be skipped.
+
+Update should_balance_chunk() accordingly to propagate negative errors
+from the usage filter.
+
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: btrfs balance NULL deref in
+`chunk_usage_filter()`
 
-### Step 1.1: Subject Line
-**Record:** `[ASoC: fsl-asoc-card]` `[reduce]` — Lower WM8904 S24_LE PLL
-ratio so FLL output stays within the codec’s frequency limit.
+**Local tree:** `v6.18.44` (6.18.y stable)
 
-### Step 1.2: Commit Message Tags
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[btrfs: balance]` `[fix]` — Fix potential block-group
+lookup failure in `chunk_usage_filter()` during btrfs balance with a
+usage filter.
+
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 **Record:**
-- **Signed-off-by:** Shengjiu Wang `<shengjiu.wang@nxp.com>` (author,
-  NXP)
-- **Link:** https://patch.msgid.link/20260429100028.2739711-6-
-  shengjiu.wang@nxp.com
-- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (ASoC maintainer,
-  applied the series)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, or Cc: stable tags
-- Part of **[PATCH v2 5/5]** in series “ASoC: fsl-asoc-card: Add some
-  improvements”
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** David Sterba `<dsterba@suse.com>` (btrfs maintainer)
+- **Acked-by:** — none
+- **Link:** — none in committed message
+- **Cc: stable@vger.kernel.org:** — absent from final commit message;
+  present in v2 mailing-list submission (per web search)
+- **Signed-off-by:** ZhengYuan Huang (author); David Sterba (maintainer)
 
-### Step 1.3: Commit Body Analysis
+Notable: maintainer reviewed and committed; author nominated stable in
+patch series v2.
+
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 **Record:**
-- **Bug:** WM8904 FLL/PLL output is limited to 27 MHz. With the
-  hardcoded S24_LE ratio of 384, high sample rates exceed that (96 kHz ×
-  384 = 36.864 MHz).
-- **Symptom:** FLL programmed out of spec → audio fails or is unreliable
-  at high rates with S24_LE on WM8904 boards.
-- **Root cause:** `fsl-asoc-card.c` uses a single 384 multiplier for all
-  codecs with PLL enabled; WM8904 needs 192.
-- **Fix:** Add per-codec `pll_ratio_s24` (default 384), set 192 for
-  `fsl,imx-audio-wm8904`.
+- **Bug:** NULL pointer dereference in `chunk_usage_filter()` when
+  running `btrfs balance` with `-dusage=N` on a filesystem where
+  metadata corruption left a chunk in the chunk tree without a matching
+  in-memory block group.
+- **Symptom:** KASAN null-ptr-deref at `cache->used` (offset ~0x70),
+  call chain through `should_balance_chunk()` → `__btrfs_balance()` →
+  `btrfs_ioctl_balance()`.
+- **Root cause:** `btrfs_lookup_block_group()` returns NULL when no
+  cached block group covers the chunk offset; `chunk_usage_filter()`
+  dereferences without checking.
+- **Fix:** NULL check, `btrfs_err()` log, return `-EUCLEAN`; change
+  `chunk_usage_filter()` and `should_balance_chunk()` to propagate
+  errors; handle negative return in `__btrfs_balance()`.
+- **Version info:** Bug reproducible on current development branch;
+  underlying usage-filter code dates to 2012.
 
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Yes — despite “reduce ratio,” this is a hardware correctness
-fix (codec clock out of spec), not a cosmetic cleanup.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not disguised — explicitly a NULL pointer dereference fix.
+The return-type refactor (`bool` → `int`) is required to propagate
+`-EUCLEAN`, not cosmetic cleanup.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Change Inventory
+### Step 2.1: INVENTORY THE CHANGES
 **Record:**
-- **File:** `sound/soc/fsl/fsl-asoc-card.c` (+7 / −1)
-- **Functions:** `fsl_asoc_card_hw_params()`, `fsl_asoc_card_probe()`
-- **Structs:** `codec_priv` (+1 field)
-- **Scope:** Single-file, surgical fix
+- **File:** `fs/btrfs/volumes.c` only (~40 lines changed)
+- **Functions modified:** `chunk_usage_filter()`,
+  `should_balance_chunk()`, `__btrfs_balance()`
+- **Scope:** Single-file surgical fix in btrfs balance filtering path
 
-### Step 2.2: Code Flow Changes
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+
+**Hunk 1 — `chunk_usage_filter()`:**
+- **Before:** `btrfs_lookup_block_group()` → immediate `cache->used`
+  dereference; returns `bool`.
+- **After:** NULL check with `unlikely(!cache)` → log + `-EUCLEAN`;
+  returns `int` (negative=error, 0=pass filter, 1=skip chunk).
+
+**Hunk 2 — `should_balance_chunk()`:**
+- **Before:** `if (usage flag && chunk_usage_filter()) return false;`
+- **After:** Calls filter, propagates `ret2 < 0`, treats `ret2` truthy
+  as skip; return type `bool` → `int`.
+
+**Hunk 3 — `__btrfs_balance()`:**
+- **Before:** `ret = should_balance_chunk(...)` then `if (!ret) goto
+  loop` with no error handling.
+- **After:** `if (ret < 0) { unlock; goto error; }` before the skip
+  check.
+
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Record:** **Category:** NULL pointer dereference (memory safety).
+**Mechanism:** On corrupted metadata, chunk tree iteration reaches an
+orphaned chunk; block group cache lookup returns NULL; unchecked
+dereference of `cache->used` crashes the kernel during balance ioctl.
+
+### Step 2.4: ASSESS THE FIX QUALITY
 **Record:**
-- **Hunk 1 (struct):** Adds `pll_ratio_s24` to `codec_priv` with
-  documentation.
-- **Hunk 2 (`hw_params`):** `pll_out = sample_rate * 384` → `pll_out =
-  sample_rate * codec_priv->pll_ratio_s24` for S24_LE.
-- **Hunk 3 (`probe` init):** Default `pll_ratio_s24 = 384` for all
-  codecs.
-- **Hunk 4 (WM8904 branch):** Override to `pll_ratio_s24 = 192` for
-  `fsl,imx-audio-wm8904`.
+- Fix is obviously correct — mirrors existing btrfs patterns (e.g.
+  `scrub.c` checks `if (!cache) goto skip`).
+- Minimal, focused change; no unrelated edits.
+- Low regression risk: only affects the usage-filter error path on
+  corrupted FS; normal filesystems unchanged.
+- Minor note: `chunk_usage_range_filter()` has the same unchecked
+  dereference but is a separate code path (usage-range filter, not
+  `-dusage`); not addressed by this commit.
 
-**Before → After:** WM8904 at 96 kHz S24_LE requests 36.864 MHz FLL
-output → 18.432 MHz (within 27 MHz limit).
+---
 
-### Step 2.3: Bug Mechanism
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:** `chunk_usage_filter()` introduced in `5ce5b3c0916ba`
+("Btrfs: usage filter", Ilya Dryomov, 2012-01-16). The unchecked
+`cache->used` dereference (`bf38be65f3703d`, David Sterba, 2019) has
+been present for years. Bug is long-standing, not recently introduced.
+
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** No `Fixes:` tag in commit message. N/A.
+
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:** Recent `volumes.c` changes include `c19830db30a09` ("replace
+BUG() with error handling in __btrfs_balance()") — complementary error-
+path hardening, not a prerequisite. No duplicate fix for this NULL deref
+found in this tree. Patch is part of a larger series (v2/v3: also fixes
+`chunk_usage_range_filter` and mount-time
+`check_chunk_block_group_mappings()`), but this commit is self-contained
+for the `-dusage` path.
+
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** ZhengYuan Huang has btrfs contributions in this tree (e.g.
+`850de3d87f472` tree-checker fix). David Sterba is btrfs maintainer and
+committed this patch.
+
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:** No prerequisites. All modified functions and
+`btrfs_lookup_block_group()` exist in 6.18.44. The `error:` path in
+`__btrfs_balance()` already exists and returns errors to userspace.
+Applies standalone.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:** `b4 dig -c HEAD` failed (commit not in local tree). Web
+search found:
+- [PATCH v2 1/3] on spinics/lore — subject matches, includes `Cc:
+  stable@vger.kernel.org`
+- [PATCH v3 1/4] on linux-btrfs list — evolved version with `unlikely()`
+  annotation
+- Series cover (v2 0/3): describes two balance NULL derefs plus mount-
+  time verification fix
+
+Reviewer feedback (v2): David Sterba noted `bool ret = true`
+inconsistent with changed return type — addressed in committed version
+(`int ret = 1`).
+
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** CC'd to `linux-btrfs@`, `linux-kernel@`, David Sterba.
+**Reviewed-by** and **Signed-off-by** David Sterba (maintainer).
+
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** No external bug report or syzbot link. Reproducibility
+claimed by author with KASAN stack trace in commit message. Self-
+contained reproduction: corrupted btrfs image + `btrfs balance` with
+usage filter.
+
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** Part of 3–4 patch series fixing:
+1. `chunk_usage_filter()` NULL deref (this commit)
+2. `chunk_usage_range_filter()` NULL deref (separate patch)
+3. `check_chunk_block_group_mappings()` iteration bug (separate patch)
+
+This commit stands alone for the `-dusage` crash.
+
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** Author explicitly nominated `Cc: stable@vger.kernel.org` in
+v2 submission. No evidence of rejection from stable maintainers found.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** `chunk_usage_filter()`, `should_balance_chunk()`,
+`__btrfs_balance()`
+
+### Step 5.2: TRACE CALLERS
 **Record:**
-- **Category:** Hardware workaround / logic correctness (wrong clock
-  ratio for a specific codec).
-- **Mechanism:** Generic 384× ratio violates WM8904’s 27 MHz PLL limit
-  at rates above ~70 kHz with S24_LE (e.g. 88.2 kHz × 384 = 33.9 MHz, 96
-  kHz × 384 = 36.9 MHz).
+- `chunk_usage_filter()` ← `should_balance_chunk()` (when
+  `BTRFS_BALANCE_ARGS_USAGE` set)
+- `should_balance_chunk()` ← `__btrfs_balance()` (chunk tree iteration
+  loop)
+- `__btrfs_balance()` ← `btrfs_balance()` ← `btrfs_ioctl_balance()` ←
+  `btrfs_ioctl()` ← `vfs_ioctl()`
 
-### Step 2.4: Fix Quality
+Balance is triggered via `BTRFS_IOC_BALANCE` ioctl, requiring
+`CAP_SYS_ADMIN`.
+
+### Step 5.3: TRACE CALLEES
+**Record:** `btrfs_lookup_block_group()` →
+`block_group_cache_tree_search()` (returns NULL when no matching entry);
+`btrfs_put_block_group()`, `btrfs_err()`, `mult_perc()`.
+
+### Step 5.4: FOLLOW THE CALL CHAIN
+**Record:** Userspace admin runs `btrfs balance start -dusage=N` → ioctl
+→ balance iterates chunk tree → hits orphaned chunk → NULL deref.
+**Reachable from userspace** (with admin capability) on corrupted
+filesystems.
+
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** `scrub.c:2690-2695` already handles NULL from
+`btrfs_lookup_block_group()` with `if (!cache) goto skip`.
+`check_chunk_block_group_mappings()` in `block-group.c:2339-2346`
+returns `-EUCLEAN` on missing block group. This fix aligns balance with
+established btrfs corruption-handling patterns.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:** **YES.** In 6.18.44 at `fs/btrfs/volumes.c:3997-3998`:
+
+```3997:3998:fs/btrfs/volumes.c
+        cache = btrfs_lookup_block_group(fs_info, chunk_offset);
+        chunk_used = cache->used;
+```
+
+No NULL check. Bug present since 2012 in this code path.
+
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** Expected **clean apply**. Code structure matches the diff
+base. `__btrfs_balance()` already has `error:` label at line 4384.
+Recent `volumes.c` churn is unrelated to these functions.
+
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** Fix not present (no "has no corresponding block group" error
+string in tree). `check_chunk_block_group_mappings()` exists but has a
+known iteration limitation (separate series patch); does not prevent
+this balance crash.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** **Subsystem:** btrfs filesystem (`fs/btrfs/`).
+**Criticality:** IMPORTANT — filesystem code; balance is an
+administrative maintenance operation; crash affects system stability.
+
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** btrfs is actively maintained in 6.18.y with regular fixes
+(error handling, corruption detection). Long-standing balance filter
+code with a latent NULL deref.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** btrfs users running balance with usage filter (`-dusage`,
+`-musage`, `-susage`) on filesystems with chunk/block-group metadata
+inconsistency. Config-specific (btrfs + balance + usage filter) but
+affects real admin workflows on damaged images.
+
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
 **Record:**
-- Minimal, codec-specific override; other codecs unchanged (default
-  384).
-- Low regression risk; only affects WM8904 machine configs using PLL
-  path.
-- NXP-authored, ASoC-maintainer-applied.
+- **Trigger:** Metadata corruption (chunk in chunk tree, no block group
+  in cache) + balance with usage filter
+- **Likelihood:** Low in healthy systems; realistic on
+  corrupted/recovered images
+- **Privilege:** Requires `CAP_SYS_ADMIN` — not unprivileged attack, but
+  admin shouldn't kernel-panic the system
 
----
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:** **NULL pointer dereference → kernel oops/panic.**
+**Severity: CRITICAL** (system crash during filesystem maintenance).
 
-## Phase 3: Git History Investigation
-
-### Step 3.1: Blame
-**Record:** In this 6.18.43 tree, the hardcoded `384` at line 225 and
-WM8904 probe block at lines 833–838 are present. Stable history is
-flattened, but `imx-audio-wm8904` support is in the tree since at least
-Linux 6.18-rc7 (`ac3fd01e4c1ef`).
-
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
-
-### Step 3.3: Related File History
-**Record:** Patch is **[5/5]** in a series; patches 1–4 cover ASRC DPCM,
-CS42888 constraints, and WM8960/WM8962 format limits — unrelated to this
-WM8904 PLL fix. This patch is self-contained.
-
-### Step 3.4: Author Context
-**Record:** Shengjiu Wang is an active NXP/i.MX audio contributor with
-multiple stable-worthy ASoC fixes in this tree.
-
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Applies standalone; only needs existing
-`fsl,imx-audio-wm8904` support and PLL code path already in 6.18.43.
-
----
-
-## Phase 4: Mailing List and External Research
-
-### Step 4.1: Original Discussion
-**Record:** `b4 mbox` retrieved thread from lore (7 messages). Patch v2
-5/5 submitted 2026-04-29. Mark Brown applied entire series to
-`broonie/sound` for-7.2 on 2026-04-30. This patch:
-https://git.kernel.org/broonie/sound/c/99b5316f08f3. No stable
-nomination or NAK found in thread.
-
-### Step 4.2: Reviewers
-**Record:** CC’d: broonie@kernel.org, lgirdwood@gmail.com,
-perex@perex.cz, tiwai@suse.com, linux-sound@vger.kernel.org. Mark Brown
-applied with “Thanks!”
-
-### Step 4.3: Bug Report
-**Record:** No external bug tracker. Issue found during NXP board
-testing per cover letter (“During testing several issues were
-identified”).
-
-### Step 4.4: Series Context
-**Record:** 5-patch series; this patch is independent of patches 1–4.
-
-### Step 4.5: Stable List History
-**Record:** UNVERIFIED — lore stable search blocked by bot protection;
-no stable discussion found in mbox thread.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-### Step 5.1: Key Functions
-**Record:** `fsl_asoc_card_hw_params()`, `fsl_asoc_card_probe()`,
-`wm8904_set_fll()` (codec callee).
-
-### Step 5.2: Callers
-**Record:** `fsl_asoc_card_hw_params` registered as `.hw_params` in card
-DAI ops (line 295) — invoked on every PCM open/hw_params for
-playback/capture.
-
-### Step 5.3: Callees
-**Record:** `snd_soc_dai_set_pll()` → `wm8904_set_fll()` →
-`fll_factors()` configures WM8904 FLL registers. `wm8904.c` does not
-validate Fout against 27 MHz; it can succeed in software while hardware
-is out of spec (Fvco computed up to ~147 MHz at 36.864 MHz Fout).
-
-### Step 5.4: Reachability
-**Record:** Userspace opens PCM stream on imx8mp Hummingboard Pulse (and
-related boards) with WM8904 → `hw_params` → PLL programmed. WM8904
-advertises `SNDRV_PCM_FMTBIT_S24_LE` and rates up to 96 kHz — the broken
-path is reachable from normal audio use.
-
-### Step 5.5: Similar Patterns
-**Record:** Other codecs on the same driver (WM8962, WM8994, NAU8822)
-keep default 384; only WM8904 needs the lower ratio — consistent with
-codec-specific hardware limits.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree (6.18.43)
-
-### Step 6.1: Buggy Code Present?
-**Record:** **YES.** Local tree is `v6.18.43` (stable/linux-6.18.y).
-Buggy hardcoded `384` at line 225; WM8904 config at lines 833–838
-without ratio override. `imx8mp-hummingboard-pulse-codec.dtsi` uses
-`fsl,imx-audio-wm8904`. Multiple DTBs build from that DTSI.
-
-### Step 6.2: Backport Complications
-**Record:** Clean apply expected — patch matches current file structure
-(index `44083d15f6e5` in submission aligns with local tree).
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** `pll_ratio_s24` not in tree; fix not yet applied.
-
----
-
-## Phase 7: Subsystem Context
-
-### Step 7.1: Subsystem and Criticality
-**Record:** **ASoC / sound/soc/fsl** — IMPORTANT for i.MX embedded
-platforms; not core kernel, but affects real shipped hardware.
-
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained; WM8904 Hummingboard support added in
-6.18 cycle.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Users of i.MX boards with `fsl,imx-audio-wm8904` (SolidRun
-imx8mp Hummingboard Pulse/Pro/Mate/Ripple variants).
-CONFIG_SND_SOC_FSL_ASOC_CARD + WM8904.
-
-### Step 8.2: Trigger Conditions
-**Record:** PCM stream with `SNDRV_PCM_FORMAT_S24_LE` at sample rates
-where `rate × 384 > 27 MHz` — notably 88.2 kHz and 96 kHz. Common for
-hi-res audio. Unprivileged users via standard ALSA/PulseAudio/PipeWire.
-
-### Step 8.3: Failure Severity
-**Record:** **MEDIUM-HIGH** for affected hardware — broken or unreliable
-audio (FLL out of spec), not a kernel crash. Real functional defect on
-supported boards.
-
-### Step 8.4: Risk-Benefit
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
 **Record:**
-- **Benefit:** Restores correct audio at high sample rates on WM8904
-  boards already supported in 6.18.y.
-- **Risk:** Very low — 7-line change, WM8904-only override, defaults
-  preserved for other codecs.
-- **Ratio:** Strong benefit, minimal risk.
+- **Benefit:** HIGH — prevents kernel crash; returns `-EUCLEAN` so admin
+  gets actionable corruption error
+- **Risk:** LOW — ~40 lines, error-path only, maintainer-reviewed,
+  matches existing patterns
+- **Ratio:** Strongly favors backport
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: COMPILE THE EVIDENCE
 
 **FOR backport:**
-- Real hardware bug on boards in this tree
-- Vendor-authored, maintainer-applied fix
-- Small, self-contained, standalone within series
-- Buggy code confirmed present in 6.18.43
-- Hardware quirk / workaround category (stable-appropriate)
-- Affects user-visible audio functionality
+- Real, reproducible NULL pointer dereference
+- Kernel crash (CRITICAL severity)
+- Buggy code confirmed present in 6.18.44
+- Long-standing bug (since 2012)
+- Small, single-file fix
+- Reviewed and committed by btrfs maintainer (David Sterba)
+- Author nominated for stable
+- Aligns with btrfs corruption-handling conventions (`-EUCLEAN`)
+- No prerequisites; applies standalone
+- Prevents crash that mount-time checks may not catch
 
 **AGAINST backport:**
-- Not a crash/security/data-corruption issue
-- Limited to one machine driver + one codec variant
-- WM8904 fsl-asoc-card support is relatively new in 6.18
+- Requires filesystem corruption to trigger (mitigated: btrfs routinely
+  hardens corruption paths)
+- Only affects usage-filter balance path, not all balance operations
+- `chunk_usage_range_filter()` has same latent bug (separate fix;
+  doesn't invalidate this one)
+- Requires admin capability (not a general security CVE, but still a
+  stability bug)
 
-**Unresolved:** No independent Tested-by; no explicit stable nomination
-in mailing list.
+**Unresolved:** No syzbot or user bugzilla report; reproduction relies
+on author's KASAN trace.
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — math verified; NXP + Mark
-   Brown; identified in board testing.
-2. Fixes real bug affecting users? **PASS** — broken hi-rate S24_LE
-   audio on WM8904 imx boards.
-3. Important issue? **PASS (MEDIUM)** — functional hardware defect, not
-   crash-level.
-4. Small and contained? **PASS** — 7 lines, one file.
-5. No new features/APIs? **PASS** — internal driver parameter only.
-6. Can apply to local tree? **PASS** — code exists, clean apply
-   expected.
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — NULL check + error
+   propagation; maintainer reviewed
+2. Fixes a real bug affecting users? **PASS** — NULL deref on balance
+   with corrupted FS
+3. Important issue? **PASS** — kernel oops/panic (CRITICAL)
+4. Small and contained? **PASS** — one file, ~40 lines
+5. No new features or APIs? **PASS** — defensive error handling only
+6. Can apply to local tree? **PASS** — code exists, clean apply expected
 
-### Step 9.3: Exception Category
-**Record:** Hardware quirk/workaround — codec-specific clock ratio
-correction.
+### Step 9.3: EXCEPTION CATEGORIES
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
 
-### Step 9.4: Decision Rationale
-For **linux-6.18.y (6.18.43)**: the buggy WM8904 PLL configuration is
-present, real imx8mp Hummingboard hardware is supported, and the fix is
-minimal and codec-specific. This is appropriate stable material as a
-hardware correctness fix for boards already enabled in this tree.
+### Step 9.4: DECISION RATIONALE
+
+For **6.18.44**, this commit fixes a confirmed NULL pointer dereference
+in a reachable admin code path on corrupted btrfs filesystems. The fix
+is minimal, maintainer-reviewed, and converts a kernel crash into a
+proper `-EUCLEAN` error — consistent with how btrfs handles metadata
+inconsistency elsewhere. The bug has existed since 2012 and is present
+in this tree today.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message and
-  mbox
-- [Phase 2] Diff analysis: 7 lines in `fsl-asoc-card.c`, 2 functions
-  modified
-- [Phase 3] `git describe HEAD` → v6.18.43; `git blame` line 225 shows
-  hardcoded 384
-- [Phase 3] `git log stable/linux-6.18.y -S "imx-audio-wm8904"` →
-  present since 6.18-rc7
-- [Phase 3] Confirmed patch 5/5 is standalone within series (mbox cover
-  letter)
-- [Phase 4] `b4 mbox` → 7-message thread; Mark Brown applied series
-  2026-04-30
-- [Phase 4] No stable/CC/stable or NAK in mbox thread
-- [Phase 4] UNVERIFIED: lore stable list search (bot-blocked)
-- [Phase 5] `fsl_asoc_card_hw_params` called from `.hw_params` DAI ops
-  (line 295)
-- [Phase 5] `wm8904_set_fll`/`fll_factors` reviewed — no 27 MHz Fout
-  validation in driver
-- [Phase 5] WM8904 supports S24_LE and up to 96 kHz (`wm8904.c` lines
-  2023–2026)
-- [Phase 6] Buggy code confirmed at line 225; WM8904 probe at lines
-  833–838
-- [Phase 6] `imx8mp-hummingboard-pulse-codec.dtsi` uses `fsl,imx-audio-
-  wm8904`
-- [Phase 6] Multiple DTBs include pulse codec DTSI (Makefile lines 211,
-  pro/mate/ripple)
-- [Phase 8] 96 kHz × 384 = 36.864 MHz > 27 MHz; 96 kHz × 192 = 18.432
-  MHz < 27 MHz
-- [Phase 8] 88.2 kHz × 384 = 33.87 MHz also exceeds limit
+- **[Phase 1]** Parsed subject, tags, body; found Reviewed-by/Signed-
+  off-by David Sterba
+- **[Phase 1]** No Fixes:/Reported-by:/Link: tags in commit message
+- **[Phase 2]** Diff analysis: NULL check in `chunk_usage_filter()`,
+  error propagation through `should_balance_chunk()` and
+  `__btrfs_balance()`
+- **[Phase 2]** Confirmed `chunk_usage_range_filter()` at lines
+  3968-3969 has same unchecked pattern (not fixed by this commit)
+- **[Phase 3]** `git describe HEAD` → `v6.18.44`; `make kernelversion` →
+  `6.18.44`
+- **[Phase 3]** `git blame` lines 3990-4012: function from 2012
+  (`5ce5b3c0916ba`), unchecked deref from 2019
+- **[Phase 3]** `git show 5ce5b3c0916ba` — introduced usage filter
+- **[Phase 3]** `git log --oneline -20 -- fs/btrfs/volumes.c` — no
+  duplicate fix found
+- **[Phase 3]** No prerequisite commits identified
+- **[Phase 4]** `b4 dig -c HEAD` — failed (commit not in tree)
+- **[Phase 4]** Web search found v2/v3 lore submissions with `Cc:
+  stable@vger.kernel.org`
+- **[Phase 4]** Reviewer feedback on bool/int mismatch documented in v2
+  thread
+- **[Phase 5]** Call chain verified: ioctl → balance →
+  `should_balance_chunk()` → `chunk_usage_filter()`
+- **[Phase 5]** `btrfs_ioctl_balance()` requires `CAP_SYS_ADMIN`
+  (ioctl.c:3490)
+- **[Phase 5]** `btrfs_lookup_block_group()` returns NULL when no match
+  (block-group.c:230-264)
+- **[Phase 5]** `scrub.c:2694` — precedent for NULL check after lookup
+- **[Phase 6]** Buggy code confirmed at volumes.c:3997-3998 in 6.18.44
+- **[Phase 6]** `grep "has no corresponding block group"` — fix not yet
+  applied
+- **[Phase 6]** `check_chunk_block_group_mappings()` exists at block-
+  group.c:2321 but has separate iteration limitation
+- **[Phase 8]** Failure mode: NULL deref → kernel oops; severity
+  CRITICAL
 
-**YES**The background git history checks are done. They confirm:
+**YES**The background searches finished and matched what the main
+analysis already used:
 
-- **`imx-audio-wm8904` support is in the 6.18.y tree** (present since at
-  least Linux 6.18-rc7), including the Hummingboard Pulse DTS and the
-  hardcoded `384` PLL ratio.
-- **The fix is not in this tree yet** — `pll_ratio_s24` does not appear
-  on master or stable.
-- **History is flattened** in this checkout, so individual introduction
-  commits are hard to isolate, but the buggy WM8904 path is clearly
-  present in 6.18.43.
+- **Related commits search** — `git log --grep` turned up older btrfs
+  balance work (e.g. balance vs. unused block group deletion), but
+  nothing that already fixes this NULL deref in 6.18.44.
+- **b4 dig** — Failed because the commit isn’t in this checkout; the
+  lore context came from web search instead.
+- **Author search** — ZhengYuan Huang has other btrfs fixes in-tree
+  (e.g. tree-checker), which fits a focused corruption-handling fix
+  reviewed by David Sterba.
 
-That supports the earlier **YES** verdict: this is a small, standalone
-hardware fix for boards already supported in linux-6.18.y.
+**Verdict for 6.18.44: YES** — small, maintainer-reviewed fix for a real
+NULL deref on corrupted btrfs during `balance` with a usage filter
+(`-dusage=N`).
 
- sound/soc/fsl/fsl-asoc-card.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/btrfs/volumes.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 71113886e494b..dcf2e495ad19f 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -48,6 +48,9 @@
-  * @mclk_id: MCLK (or main clock) id for set_sysclk()
-  * @fll_id: FLL (or secordary clock) id for set_sysclk()
-  * @pll_id: PLL id for set_pll()
-+ * @pll_ratio_s24: PLL output ratio for S24_LE format (PLL_freq = sample_rate × ratio)
-+ *                 Default is 384, but some codecs (e.g., WM8904) require lower values
-+ *                 to stay within PLL frequency limits
-  */
- struct codec_priv {
- 	struct clk *mclk;
-@@ -56,6 +59,7 @@ struct codec_priv {
- 	u32 mclk_id;
- 	int fll_id;
- 	int pll_id;
-+	int pll_ratio_s24;
- };
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 863f69b9cf14b..ff67f5ecacb2e 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -3987,14 +3987,19 @@ static bool chunk_usage_range_filter(struct btrfs_fs_info *fs_info, u64 chunk_of
+ 	return ret;
+ }
  
- /**
-@@ -222,7 +226,7 @@ static int fsl_asoc_card_hw_params(struct snd_pcm_substream *substream,
+-static bool chunk_usage_filter(struct btrfs_fs_info *fs_info, u64 chunk_offset,
+-			       struct btrfs_balance_args *bargs)
++static int chunk_usage_filter(struct btrfs_fs_info *fs_info, u64 chunk_offset,
++			      struct btrfs_balance_args *bargs)
+ {
+ 	struct btrfs_block_group *cache;
+ 	u64 chunk_used, user_thresh;
+-	bool ret = true;
++	int ret = 1;
  
- 		if (codec_priv->pll_id >= 0 && codec_priv->fll_id >= 0) {
- 			if (priv->sample_format == SNDRV_PCM_FORMAT_S24_LE)
--				pll_out = priv->sample_rate * 384;
-+				pll_out = priv->sample_rate * codec_priv->pll_ratio_s24;
- 			else
- 				pll_out = priv->sample_rate * 256;
+ 	cache = btrfs_lookup_block_group(fs_info, chunk_offset);
++	if (unlikely(!cache)) {
++		btrfs_err(fs_info, "balance: chunk at bytenr %llu has no corresponding block group",
++			  chunk_offset);
++		return -EUCLEAN;
++	}
+ 	chunk_used = cache->used;
  
-@@ -742,6 +746,7 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 	for (codec_idx = 0; codec_idx < 2; codec_idx++) {
- 		priv->codec_priv[codec_idx].fll_id = -1;
- 		priv->codec_priv[codec_idx].pll_id = -1;
-+		priv->codec_priv[codec_idx].pll_ratio_s24 = 384;
+ 	if (bargs->usage_min == 0)
+@@ -4005,7 +4010,7 @@ static bool chunk_usage_filter(struct btrfs_fs_info *fs_info, u64 chunk_offset,
+ 		user_thresh = mult_perc(cache->length, bargs->usage);
+ 
+ 	if (chunk_used < user_thresh)
+-		ret = false;
++		ret = 0;
+ 
+ 	btrfs_put_block_group(cache);
+ 	return ret;
+@@ -4110,8 +4115,8 @@ static bool chunk_soft_convert_filter(u64 chunk_type, struct btrfs_balance_args
+ 	return false;
+ }
+ 
+-static bool should_balance_chunk(struct extent_buffer *leaf, struct btrfs_chunk *chunk,
+-				 u64 chunk_offset)
++static int should_balance_chunk(struct extent_buffer *leaf, struct btrfs_chunk *chunk,
++				u64 chunk_offset)
+ {
+ 	struct btrfs_fs_info *fs_info = leaf->fs_info;
+ 	struct btrfs_balance_control *bctl = fs_info->balance_ctl;
+@@ -4138,9 +4143,14 @@ static bool should_balance_chunk(struct extent_buffer *leaf, struct btrfs_chunk
  	}
  
- 	/* Diversify the card configurations */
-@@ -835,6 +840,7 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 		priv->codec_priv[0].mclk_id = WM8904_FLL_MCLK;
- 		priv->codec_priv[0].fll_id = WM8904_CLK_FLL;
- 		priv->codec_priv[0].pll_id = WM8904_FLL_MCLK;
-+		priv->codec_priv[0].pll_ratio_s24 = 192;
- 		priv->dai_fmt |= SND_SOC_DAIFMT_CBP_CFP;
- 	} else if (of_device_is_compatible(np, "fsl,imx-audio-spdif")) {
- 		ret = fsl_asoc_card_spdif_init(codec_np, cpu_np, codec_dai_name, priv);
+ 	/* usage filter */
+-	if ((bargs->flags & BTRFS_BALANCE_ARGS_USAGE) &&
+-	    chunk_usage_filter(fs_info, chunk_offset, bargs)) {
+-		return false;
++	if (bargs->flags & BTRFS_BALANCE_ARGS_USAGE) {
++		int ret2;
++
++		ret2 = chunk_usage_filter(fs_info, chunk_offset, bargs);
++		if (ret2 < 0)
++			return ret2;
++		if (ret2)
++			return false;
+ 	} else if ((bargs->flags & BTRFS_BALANCE_ARGS_USAGE_RANGE) &&
+ 	    chunk_usage_range_filter(fs_info, chunk_offset, bargs)) {
+ 		return false;
+@@ -4302,6 +4312,10 @@ static int __btrfs_balance(struct btrfs_fs_info *fs_info)
+ 		ret = should_balance_chunk(leaf, chunk, found_key.offset);
+ 
+ 		btrfs_release_path(path);
++		if (ret < 0) {
++			mutex_unlock(&fs_info->reclaim_bgs_lock);
++			goto error;
++		}
+ 		if (!ret) {
+ 			mutex_unlock(&fs_info->reclaim_bgs_lock);
+ 			goto loop;
 -- 
 2.53.0
 
