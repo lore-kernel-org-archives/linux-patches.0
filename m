@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CBA33936C;
-	Mon, 31 Aug 2026 13:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169CF57AF4E;
+	Mon, 31 Aug 2026 13:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184165; cv=none; b=Dff1y2I8sXvQSUyDa9bIqd4iCAaVI7EZRO0x6u3MmOljqvokFHUZSjhqEYbnC07YQEetAr83++h3SG+sdzKj85X6HSM4TbrOqEK+6paCMje+H2TT3dXmo2zgHNOWEbR/M4uOUHxiLi+P7iXkVGRXdupvufVU4pdw2cqXj2eh4I4=
+	t=1788184166; cv=none; b=aFKDpHAa0LBA/6UdOUZ7/vwgEp2oD9iDtSieOMGxUYvo8FYjUKnps1+3u3MAiYf20X7oL2NIqxa7DfRc1s6sPawdmRyfc4DiUrERBJ+B7kSpdxcfMkNZpSIjlRrEVDal4Q8C4PzYPfL5tIm59Ml7yoN/5HYIn05/3WbWGD0AmoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184165; c=relaxed/simple;
-	bh=P43ptgByxMJNvhdVYQD3OBuf+iwUNXF+nmLaDKab8go=;
+	s=arc-20240116; t=1788184166; c=relaxed/simple;
+	bh=siNDq8U9Y94jeeWCiLQz5TclaZvcIbyTOdymaUH9XlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eYXDY53q75Wyj/0iWXdgkwGLRS2rIK7ccg6O0CpLziIl9SifrRHHmyn9gjjhgZeUBGRoozw80svLBbpWp0++A1mqagU2LvHOxtMTOFfSSDhGDq0f8mZfwndYduVY1qpXZMNQQ3C7V98AZSbtMQC4nWvFGPBoqRVE6IaPNHbLvzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M8EMEdTE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QqqaShfdr6rasTCEn3rBWl+BWl2VGp9M7vHiMy4VYfxZR0KY+z0e1t1LVzvIJSJfWUb/m7CWW8aciABGlNPhfEfqJ5XRCZAfcDm8WPAjOVKSVPiKBHoefk79rOCKNgPW37m45XvTAVroqFWN4YMbiJLc9SGZvPoYjgoMZRMU0AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eVeItwJd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M8EMEdTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF071F000E9;
-	Mon, 31 Aug 2026 13:49:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eVeItwJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803BA1F00ACA;
+	Mon, 31 Aug 2026 13:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184162;
-	bh=1nQyxmkp8tlhFDXVLiFpoKYrMGHF3fMThmSxilPpkeA=;
+	s=k20260515; t=1788184164;
+	bh=0Q1y66WfB+Ah+19IjrF3LGQAdiAiYv1WRhXpM89rYFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8EMEdTEXjZcLkKJCz1SSbGMlLrGhFNQXf/cdo0i30LWwSdCoBklH7GWhi3pdTLNO
-	 A7T2mf67OJXd7muC35vAbdj+1KR06TzW5FeN37K1inL9krLV07wH1wqObg1mpcwP+2
-	 bSCYVEKv+RjnpC3PSeejBR70HzeZwGmoQMJ/9bTBbo0CsqNbo2vJJiBWkYiEwRxyEp
-	 KZMPiLRcYRcH99KoaE39GKekXcYv4P5ixLm9kmQoZYrRjxj3C3kD9dl5lc6hNDoS9F
-	 307FKeBsEvbK+Qabcf2GcmM4gVBp3A60IxDtwm05Wb9IXqd1+9WG+9jAsN1VZ0ASTP
-	 M4oisIk3DPcwQ==
+	b=eVeItwJd35lLDNW7edD6jNs1vkA0O2GNMjCZ6PmCuSy0BI6DN2cgEAPpnrWCiEtFM
+	 h9qDewt81mIYXSvS9A3oqVIZ309OucgZ+N7Jwb1OqcPsW5HPBS15WqgUqvvVPhGZ5O
+	 KsWQFWbw/JefcIWrUNdeQPnIK5YYBUiWRUPFYCWa+QKwzEryc6auW0doWjwgbvwEmw
+	 zr+MaS0IqK2jsJtm9KyHroCHGPyXiU5ZLbU9HRne01fHqcBFEGPAtqOGqBWH7FsV3J
+	 BZuFYJrbedzx00Y9EwpMg2hZqCkL69vgM3tdP6rN+fYDl+GTJxs/+9GI+hysTpor9l
+	 EWg7b6WQM9hmw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	GitHub Copilot <copilot@github.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mvm: d3: validate D3 resume notification payloads
-Date: Mon, 31 Aug 2026 09:29:16 -0400
-Message-ID: <20260831133314.4125787-528-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] media: qcom: camss: avoid format string warning
+Date: Mon, 31 Aug 2026 09:29:17 -0400
+Message-ID: <20260831133314.4125787-529-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,75 +55,322 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit c1a1dc162870a5447cb0fbcf81983473744772d2 ]
+[ Upstream commit 797c1cbf672f372d6a464df0dcedf476fc715969 ]
 
-D3 resume notification handlers read firmware notification fields
-before validating that the payload contains the complete fixed structure.
-This causes buffer underread on malformed or truncated notifications.
+clang-22 warns about csiphy_match_clock_name() taking a variable format
+string that is not checked against the 'int index' argument:
 
-Move payload length validation to occur before any field access in:
-- iwl_mvm_parse_wowlan_info_notif: validate before reading num_mlo_link_keys
-- iwl_mvm_wait_d3_notif D3_END handler: validate before reading flags
+drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
+      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
+      [-Werror,-Wmissing-format-attribute]
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      | __attribute__((format(printf, 2, 3)))
+  562 |                                     int index)
+  563 | {
+  564 |         char name[16]; /* csiphyXXX_timer\0 */
+  565 |
+  566 |         snprintf(name, sizeof(name), format, index);
+      |                                                   ^
+drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      |             ^
 
-Assisted-by: GitHub Copilot <copilot@github.com>
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714141909.762193753434.I148991b8136cc5042fa08b5faf7b57d38aa2fb47@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Change the function to use a snprintf() style format string that allows this
+to be checked at the call site.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The branch check finished: the fix commit `23939b1d1be` is only on the
-`autosel` branch, not on current HEAD (`v6.18.44-1-g2736c32da98b9`). The
-ancestry-path from that commit to HEAD is empty, so the buggy code is
-still present in the checked-out tree.
+## Phase 1: Commit Message Forensics
 
-That matches the earlier analysis: this is a prepared backport candidate
-that hasn’t been applied to 6.18.y yet, and the **YES** recommendation
-still stands.
+**Step 1.1 Record:** Subsystem `media: qcom: camss`; action verb
+`avoid`; claimed intent is to silence/fix a clang-22 `-Wmissing-format-
+attribute` diagnostic in `csiphy_match_clock_name()`.
 
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+**Step 1.2 Record:** Tags present in the submission (verified via lore):
+- `Fixes: 0727615fb975 ("media: qcom: camss: Functionally decompose
+  CSIPHY clock lookups")`
+- `Signed-off-by: Arnd Bergmann <arnd@arndb.de>`
+- `Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>`
+- `Signed-off-by: Bryan O'Donoghue <bod@kernel.org>`
+- No `Reported-by`, `Tested-by`, `Cc: stable`, or bug-report `Link`
+  tags.
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 46e95e25dcd44..dd1c21065bc33 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2141,16 +2141,16 @@ static void iwl_mvm_parse_wowlan_info_notif(struct iwl_mvm *mvm,
- 					    struct iwl_wowlan_status_data *status,
- 					    u32 len)
+**Step 1.3 Record:** Bug is a **build failure**, not a runtime defect.
+With clang-22 and `-Werror,-Wmissing-format-attribute`,
+`csiphy_match_clock_name()` passes a variable `format` to `snprintf()`
+without a printf-style attribute, so the compiler errors out. Symptom:
+kernel build fails when `CONFIG_VIDEO_QCOM_CAMSS` is enabled under those
+compiler flags. Root cause: helper takes `const char *format, int index`
+and uses `snprintf(name, ..., format, index)` without `__printf(2, 3)`.
+
+**Step 1.4 Record:** Not a hidden runtime bug fix. This is an explicit
+compiler-warning/build fix disguised as "avoid warning," but it does
+prevent real build breakage in clang-22 + Werror configurations.
+
+---
+
+## Phase 2: Diff Analysis
+
+**Step 2.1 Record:** One file changed:
+`drivers/media/platform/qcom/camss/camss-csiphy.c` (+7/-3). Function
+modified: `csiphy_match_clock_name()`. Scope: single-file, surgical.
+
+**Step 2.2 Record:**
+- **Before:** `csiphy_match_clock_name(clock_name, format, index)` calls
+  `snprintf(name, sizeof(name), format, index)`.
+- **After:** Function becomes `__printf(2, 3)
+  csiphy_match_clock_name(clock_name, format, ...)` using `va_list` +
+  `vsnprintf()`. Call sites are unchanged and still pass literal format
+  strings plus `csiphy->id`.
+
+**Step 2.3 Record:** Bug category: **build fix / compiler diagnostic
+fix**. Mechanism: adding `__printf(2, 3)` lets clang verify format
+strings at call sites; variadic args preserve existing behavior.
+
+**Step 2.4 Record:** Fix is obviously correct and minimal. Call sites at
+lines 678–692 still pass `"csiphy%d_timer"`, `"csi%d_phy"`, and
+`"csiphy%d"` with `csiphy->id` — compatible with variadic calling.
+Regression risk is very low; behavior is equivalent to the old
+`snprintf()` path. `linux/kernel.h` (already included) provides
+`va_list` support, matching the pattern used in the already-backported
+`clk: qoriq` fix in this tree.
+
+---
+
+## Phase 3: Git History Investigation
+
+**Step 3.1 Record:** Current tree at `camss-csiphy.c:561–567` still has
+the pre-fix code. `git blame` attributes those lines to merge commit
+`5d324e5159d9e`. The `csiphy_match_clock_name()` helper pattern dates to
+commit `0727615fb975` (Oct 2023, "Functionally decompose CSIPHY clock
+lookups").
+
+**Step 3.2 Record:** `Fixes: 0727615fb975` exists in the object database
+and introduced the helper. The buggy pattern is present in the checked-
+out `6.18.43` tree. The fix commit itself is **not** yet in this tree.
+
+**Step 3.3 Record:** Related recent camss commits in this tree are
+runtime fixes (RDI streaming, VFE lite clocks). No duplicate fix for
+this warning. **Precedent:** `558b2eb623f2f` (`clk: qoriq: avoid format
+string warning`) — same author, same clang-22 issue, same
+variadic/`__printf` pattern — was already backported to this `6.18.y`
+tree by Greg Kroah-Hartman.
+
+**Step 3.4 Record:** Arnd Bergmann is a frequent contributor of clang
+build-warning fixes across the kernel. Bryan O'Donoghue is the camss
+subsystem author/maintainer and reviewed the patch.
+
+**Step 3.5 Record:** No series dependencies. Standalone, self-contained.
+Call sites require no changes.
+
+---
+
+## Phase 4: Mailing List and External Research
+
+**Step 4.1 Record:** Original submission at [lore.kernel.org patch
+thread](https://lkml.iu.edu/2603.2/11306.html) (2026-03-20). Bryan
+O'Donoghue replied with `Reviewed-by` ([spinics
+thread](https://www.spinics.net/lists/kernel/msg6110456.html)). No NAKs
+found. No explicit stable nomination in the thread. `b4 dig -c <hash>`
+failed (commit not present locally); lore fetch used instead.
+
+**Step 4.2 Record:** CC list included linux-media, linux-arm-msm, llvm@,
+and subsystem maintainers (Hans Verkuil, Bryan O'Donoghue, etc.).
+Appropriate reviewers were involved.
+
+**Step 4.3 Record:** No user bug report or syzbot report. Failure mode
+documented only via clang compiler output in the commit message.
+
+**Step 4.4 Record:** Standalone patch, not part of a multi-patch series.
+Autosel pipeline has nominated a variant for `6.12.y` (seen in web
+search), indicating automated stable consideration of this class of fix.
+
+**Step 4.5 Record:** No stable-list discussion found beyond autosel
+nomination. Not applicable otherwise.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+**Step 5.1 Record:** Modified function: `csiphy_match_clock_name()`.
+Caller context: `msm_csiphy_subdev_init()` clock-setup loop.
+
+**Step 5.2 Record:** Three call sites in `msm_csiphy_subdev_init()`
+(lines 678, 685, 692), all during CSIPHY probe/initialization when
+`CONFIG_VIDEO_QCOM_CAMSS` is enabled on Qualcomm platforms.
+
+**Step 5.3 Record:** Callees: `va_start`, `vsnprintf`, `va_end`,
+`strcmp`. No allocation, no locking.
+
+**Step 5.4 Record:** Reachable during device probe for Qualcomm camera
+hardware. Not syscall-reachable directly, but affects kernel
+buildability for that driver — not a runtime user-triggerable crash.
+
+**Step 5.5 Record:** Identical pattern fixed in `drivers/clk/clk-
+qoriq.c` in this same tree (`558b2eb623f2f`). Part of a broader clang-22
+`-Wmissing-format-attribute` cleanup effort by Arnd Bergmann.
+
+---
+
+## Phase 6: Cross-Referencing Against the Local Tree
+
+**Step 6.1 Record:** Local tree is **Linux 6.18.43** (`git describe
+HEAD` → `v6.18.43-1-gc7f0dac02d232`, `Makefile` VERSION 6.18.43). Buggy
+code **is present** at `camss-csiphy.c:561–567`. Fix is **not** yet
+applied.
+
+**Step 6.2 Record:** Expected backport difficulty: **clean apply**. File
+structure matches the upstream diff index (`62623393f414` parent in lore
+matches current content pattern).
+
+**Step 6.3 Record:** No equivalent fix already in tree. Sibling fix
+`clk: qoriq: avoid format string warning` is present; camss variant is
+not.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+**Step 7.1 Record:** Subsystem: `drivers/media/platform/qcom/camss` —
+media platform driver for Qualcomm camera ISP. Criticality:
+**PERIPHERAL** (hardware-specific, `CONFIG_VIDEO_QCOM_CAMSS`, ARM QCOM +
+IOMMU).
+
+**Step 7.2 Record:** camss is actively maintained in stable with recent
+runtime fixes (RDI streaming, VFE lite). This patch is orthogonal to
+those.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 Record:** Affected population: kernel **builders** compiling
+`CONFIG_VIDEO_QCOM_CAMSS=y/m` with clang-22 and extra warnings (`W=1`
+enables `-Wmissing-format-attribute` per
+`scripts/Makefile.extrawarn:115`; `W=e` or `CONFIG_WERROR` promotes
+warnings to errors per `scripts/Makefile.extrawarn:217–219`). Not
+universal end-user runtime impact.
+
+**Step 8.2 Record:** Trigger: build with clang-22 + `-Wmissing-format-
+attribute` as error (e.g. `make W=1` or `W=e`, or `CONFIG_WERROR=y`).
+Default builds without extra warnings are unaffected. Unprivileged users
+cannot trigger this at runtime.
+
+**Step 8.3 Record:** Failure mode: **compile-time error** — build abort.
+Severity: **LOW** for deployed systems (no runtime crash/corruption);
+**MEDIUM** for developers/distributions using clang CI with Werror.
+
+**Step 8.4 Record:** Benefit: restores buildability under clang-22
+Werror CI; aligns with already-accepted precedent in this tree. Risk:
+very low (7-line localized change, maintainer-reviewed, no behavior
+change). Risk-benefit: favorable for stable given build-fix policy and
+existing qoriq backport.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Evidence FOR backport:**
+- Qualifies as a **build fix** under stable-kernel-rules exceptions.
+- Buggy code exists in this `6.18.43` tree; fix not yet applied.
+- Small, surgical, maintainer-reviewed (`Reviewed-by: Bryan
+  O'Donoghue`).
+- **Direct precedent in this tree:** `558b2eb623f2f clk: qoriq: avoid
+  format string warning` — identical issue class, same author, already
+  backported to `6.18.y`.
+- Prevents llvm/clang allmodconfig or `W=1`/`W=e` build failures.
+
+**Evidence AGAINST backport:**
+- Zero runtime user impact.
+- Only affects non-default build configurations (extra warnings/Werror).
+- Narrow scope: one optional driver on Qualcomm platforms.
+
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** — straightforward
+   variadic/`__printf` pattern; reviewed by subsystem maintainer.
+2. Fixes a real bug affecting users? **PASS** — real build failure for
+   clang-22 + Werror builders (not theoretical).
+3. Important issue? **PASS (low severity)** — build breakage, not
+   crash/corruption/security.
+4. Small and contained? **PASS** — 1 file, ~10 lines.
+5. No new features or APIs? **PASS** — internal static helper only.
+6. Can apply to local tree? **PASS** — code present, clean apply
+   expected.
+
+**Exception category:** Build fix.
+
+**Decision rationale for Linux 6.18.y:** The tree already accepts this
+exact class of clang-22 format-attribute build fix (qoriq clk driver).
+The camss variant is the same technical issue, same fix pattern, same
+author, and the pre-fix code is present here. While runtime impact is
+nil, stable policy explicitly includes build fixes, and this tree has
+established precedent for backporting them.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed commit message and lore submission; tags recorded; no
+  syzbot/user reports.
+- [Phase 2] Read `camss-csiphy.c:561–692`; confirmed diff changes only
+  `csiphy_match_clock_name()`; call sites unchanged.
+- [Phase 3] `git describe HEAD` → v6.18.43; `git blame -L 561,570` →
+  pre-fix code present; `git show 0727615fb975` → introduced helper Oct
+  2023; `git show 558b2eb623f2f` → sibling fix already in tree.
+- [Phase 3] `git log --grep="avoid format string warning"` → only qoriq
+  fix present, not camss.
+- [Phase 4] WebFetch lore submission and Bryan O'Donoghue review; `b4
+  dig -c` failed (commit not in local repo).
+- [Phase 5] `grep csiphy_match_clock_name` → 3 call sites in
+  `msm_csiphy_subdev_init()`.
+- [Phase 6] Confirmed tree version 6.18.43; buggy code at lines 561–567;
+  fix absent.
+- [Phase 6] Read `scripts/Makefile.extrawarn:113–115,217–219` →
+  `-Wmissing-format-attribute` requires `W=1`; Werror requires `W=e` or
+  `CONFIG_WERROR`.
+- [Phase 6] Read `drivers/media/platform/qcom/camss/Kconfig` →
+  `CONFIG_VIDEO_QCOM_CAMSS` depends on `ARCH_QCOM && IOMMU_DMA`.
+- [Phase 7] `git log --oneline -5 -- drivers/media/platform/qcom/camss/`
+  → active subsystem maintenance.
+- [Phase 8] Assessed severity as compile-time only, LOW runtime / MEDIUM
+  for clang CI builders.
+
+**YES**
+
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 2de97f58f9ae4..74c77969db7ef 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -558,12 +558,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
+ 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
+ }
+ 
+-static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+-				    int index)
++static bool __printf(2, 3)
++csiphy_match_clock_name(const char *clock_name, const char *format, ...)
  {
--	if (IWL_FW_CHECK(mvm, data->num_mlo_link_keys,
--			 "MLO is not supported, shouldn't receive MLO keys\n"))
--		return;
--
- 	if (len < sizeof(*data)) {
- 		IWL_ERR(mvm, "Invalid WoWLAN info notification!\n");
- 		status = NULL;
- 		return;
- 	}
- 
-+	if (IWL_FW_CHECK(mvm, data->num_mlo_link_keys,
-+			 "MLO is not supported, shouldn't receive MLO keys\n"))
-+		return;
+ 	char name[16]; /* csiphyXXX_timer\0 */
++	va_list args;
 +
- 	if (mvm->fast_resume)
- 		return;
++	va_start(args, format);
++	vsnprintf(name, sizeof(name), format, args);
++	va_end(args);
  
-@@ -2970,6 +2970,11 @@ static bool iwl_mvm_wait_d3_notif(struct iwl_notif_wait_data *notif_wait,
- 	case WIDE_ID(PROT_OFFLOAD_GROUP, D3_END_NOTIFICATION): {
- 		struct iwl_d3_end_notif *notif = (void *)pkt->data;
- 
-+		if (len < sizeof(*notif)) {
-+			IWL_ERR(mvm, "Invalid D3 end notification size\n");
-+			break;
-+		}
-+
- 		d3_data->d3_end_flags = __le32_to_cpu(notif->flags);
- 		d3_data->notif_received |= IWL_D3_NOTIF_D3_END_NOTIF;
+-	snprintf(name, sizeof(name), format, index);
+ 	return !strcmp(clock_name, name);
+ }
  
 -- 
 2.53.0
