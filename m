@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA024499F21;
-	Mon, 31 Aug 2026 14:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0E648A8A6;
+	Mon, 31 Aug 2026 14:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185273; cv=none; b=CXYgXKr7U7TryPRamgPXVi1aU5ozlAF+ASGqtszct3g5stwE/rfYMonnMsOdjEaAAQBCQ+6hYHR1bwD1RRBqhwcrpLAwmNC3JVj69AwMCKjCHrSKwlrqzK2Ksm3tf+6Lqasun94fAmxTz7i9mG/giNLnjPb3b/U6dOJ9Ua0wTHs=
+	t=1788185261; cv=none; b=i3ahDv+/Etmm1/N7iVstNYuvsu/JfvD072bBFLCcDqbGC0cVJQNhQwxvz9n0d/+bl7Dnw6GFRMvEbHR3eI9WC985SMxWzKdad3TtO7FBSetTEFf92EsffQy0gVTEBXFK2If4boC59vEo3MX0gnPvoIXN4InkN5uVdKWo/Z7Zu/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185273; c=relaxed/simple;
-	bh=2HuIJ0n3xxda6BCcReLFd/LGnyZBdtNuNyQptrXzvi8=;
+	s=arc-20240116; t=1788185261; c=relaxed/simple;
+	bh=RTGJHmMw2cElY7T0EZ6sXFpBFjSKwJoJoTavMod79JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPyCzd08/ErLNP4MfO3OMZpKSRTNtIpDcdWbA2Z9DaCdfvfpXi3DOt50ue0EmlJZ4Y7ZY6DUeEq2PJ5ABZN7Wb3uUlSLBTJ8FpR1eqCkAh8rhgL7zAZW+fI+ZUPQqOK68I6JOU/XnXoGZOC7UbVsTj8jJ0HwAM6Mu3UP2XJyIq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sFgvU5+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uBW6R258NBAK8t0jwzT9qCLlRF30Lt2S+fPQsyudlk1Pj0FXYp22jGK6YusbyJChmdJGZ8uW+NFryk8LsF5uFkfiBnkPQ/WQjcodEVux16BbZcSwpPe/C04Ehmw68818vXSaEFDDS3qoogjzvQR6q9NEg/Tk0BDjkAUXkYB73TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miVky+YC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sFgvU5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BEC1F00A3E;
-	Mon, 31 Aug 2026 14:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miVky+YC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9541F1F000E9;
+	Mon, 31 Aug 2026 14:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185271;
-	bh=dGvCa2+wFjN8tnzc3EMG7WNTwvHxElKRVNzuL3F35bI=;
+	s=korg; t=1788185260;
+	bh=dV7yTHSWj6SsKnCXVWmfOUQRmgUoc+NCScKUPZjopb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0sFgvU5+n93N4ldSxqkiMnNe2CRWVJCoAiWLZPB0XltKp8YZCs+CEzQThafSKyTx3
-	 deWkWgzYeC/dgkkTRI74j027fK5gJFgN7T0KkLFS1WBn2HwWCPNJ2pYw8vz6zUzK7H
-	 UjLmFMjMwbMgqGpWkbA/ka+0lpZki4mUPuk83jn8=
+	b=miVky+YC4cM3lNa30BwfVfdktvjAJIbw2/0PmNWOLJ6Fh2+wcfRl5GoVvQSLaFjEh
+	 XpWQhMb7VCD/rGRhfaZycqSc0aCoTfPytz2apVnGZxSbdaR4OCthIKNWTAIZCIbCDm
+	 8LuMj2a4Dz8Ax2HRr3+eCsg7Ojz7DB2hEMWlUZdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 5.10 36/43] KVM: s390: vsie: zero stale crypto bits
-Date: Mon, 31 Aug 2026 15:35:44 +0200
-Message-ID: <20260831133400.345590594@linuxfoundation.org>
+	syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 07/43] jfs: add check read-only before truncation in jfs_truncate_nolock()
+Date: Mon, 31 Aug 2026 15:35:15 +0200
+Message-ID: <20260831133358.866847687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -50,35 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 34d5b5b646c91cfb9338d7a12c955a70ffb8c66b upstream.
+[ Upstream commit b5799dd77054c1ec49b0088b006c9908e256843b ]
 
-When shadowing crypto access bits from a format0 apcb (crycb 0 or 1),
-the bits 64..255 are unchanged from whatever is in the vsie page in the
-crycb and thus in the apcb. This gives a nested guest potential access
-to a device no longer available. Zero out the remaining bits.
+Added a check for "read-only" mode in the `jfs_truncate_nolock`
+function to avoid errors related to writing to a read-only
+filesystem.
 
-Fixes: 6b79de4b056e ("KVM: s390: vsie: allow guest FORMAT-1 CRYCB on host FORMAT-2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260811153738.206885-3-borntraeger@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Call stack:
+
+block_write_begin() {
+  jfs_write_failed() {
+    jfs_truncate() {
+      jfs_truncate_nolock() {
+        txEnd() {
+          ...
+          log = JFS_SBI(tblk->sb)->log;
+          // (log == NULL)
+
+If the `isReadOnly(ip)` condition is triggered in
+`jfs_truncate_nolock`, the function execution will stop, and no
+further data modification will occur. Instead, the `xtTruncate`
+function will be called with the "COMMIT_WMAP" flag, preventing
+modifications in "read-only" mode.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=4e89b5368baba8324e07
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/vsie.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/jfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -144,6 +144,7 @@ static int setup_apcb10(struct kvm_vcpu
- 	if (read_guest_real(vcpu, apcb_o, &tmp, sizeof(struct kvm_s390_apcb0)))
- 		return -EFAULT;
+diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
+index 01f55fac31cf3..4066d263e9e11 100644
+--- a/fs/jfs/inode.c
++++ b/fs/jfs/inode.c
+@@ -385,7 +385,7 @@ void jfs_truncate_nolock(struct inode *ip, loff_t length)
  
-+	memset(apcb_s, 0, sizeof(*apcb_s));
- 	apcb_s->apm[0] = apcb_h->apm[0] & tmp.apm[0];
- 	apcb_s->aqm[0] = apcb_h->aqm[0] & tmp.aqm[0] & 0xffff000000000000UL;
- 	apcb_s->adm[0] = apcb_h->adm[0] & tmp.adm[0] & 0xffff000000000000UL;
+ 	ASSERT(length >= 0);
+ 
+-	if (test_cflag(COMMIT_Nolink, ip)) {
++	if (test_cflag(COMMIT_Nolink, ip) || isReadOnly(ip)) {
+ 		xtTruncate(0, ip, length, COMMIT_WMAP);
+ 		return;
+ 	}
+-- 
+2.53.0
+
 
 
