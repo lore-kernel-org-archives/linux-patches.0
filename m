@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F0C54EEB3;
-	Mon, 31 Aug 2026 13:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4FE4AA3FE;
+	Mon, 31 Aug 2026 13:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184007; cv=none; b=qP9PSvzL90Aj73NmkS3fVI7np6Fc9HgAjTQ2diBIgCjKDwXNPOCePm5f5e5zGsuvAiSc23LNbUjz2APCH3PgzVzy9tR2XYcpzhi65c+vvrqGGbcyd3xItSbqI397lKGabbxOoUar2IHjvuL6CRUzX2QCgE7ZvYc++Rf+5tXbSwo=
+	t=1788184007; cv=none; b=TY5wd8gNFDP24lzGnTzjbRywqSfSdyQfQ+qd4bLurFrpGjUM17BNY7QvbCcyQ+6lyAehhbPcJsPr/dc45ohC9t1JMi+zgPzHEzDggMHUjNh3PuBw0hLXlsriP03TCBeMjkvtHR0nUuyDViGyRzpB8I+KPTaro2ai5jKN4WIsbQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184007; c=relaxed/simple;
-	bh=UYPJPppqzkAMCqdP1xVBlIiqDkd+p3fS238jn3O7YIM=;
+	bh=WB+f9TzNRoGgZwon+SI33FdAdwqrZKA9RN+IbyqZCtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kATYGioGyKzKivFmXxF/QnYhvGSxyt8qvLpzsAJeTz7nfMKZjBhbAwVB8OTsCxSZMkfvgaEL08/DXQuvaKyPqC1gi8qgMIZ81c3Ptf6RVhzH4LOngUOBKwQKdj867j0bKSY2FJRf9TVCSsYLyQIUVHun0b2S3Pt0RsoTRhvHAK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YGgWTQzh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YB99EY5IT8bx2DeGFLuQfRP67GffNpJjkgp4HntCHan/B/JfN8Ax3tsg7pDSMKSEWfzAEWAhfaseF2JiKTsJ5mYGwlblB9Ctf+wVJsDdAvju+IgHUlaWl6hP3IfC4nvMWnzEGIpN18rX3LQcol1ISfQMW0/hGfZ+xfHghtMYA6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fJiBie8+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YGgWTQzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D81A1F00A3D;
-	Mon, 31 Aug 2026 13:46:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fJiBie8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F1C1F00A3E;
+	Mon, 31 Aug 2026 13:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184003;
-	bh=vI53VAL6FJZXcfe47IL/ARawN3+1DnQrfMdNqhIh9IE=;
+	s=k20260515; t=1788184002;
+	bh=FpXrqiS4I00ayqbEOnR9AiBOSu5k6dNYuuvgpi5JfdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YGgWTQzhpAqWX9mF5W7DYNffLDDwFK0qiVrhbJWXgoLBc+TbL4EQ1Iiju2ZD3Hyz+
-	 7UWtz7A1nny+KDyQYydv6XmwqJK5OF3suWC0091hph+3PtKTf4fO5cICbdsUunt/g0
-	 uNymmgE13zdY7V6j2P4JFKzhMwRw0oF3JDbEeptzl2CI5f9WihlkqFeAUpd1aOolse
-	 j4Q/EwKrVg6pf03XXgc6DuwQ8ZilB3MrAECZyCCWUwGAJahvYPvCnO/eBzQE1umZi9
-	 mwaqEpLolR6RioC3+TQ/q4cWkMAqqkgKuQip9/P0rK2DyUaAHVjNspT100+1a0OXoC
-	 grutJjcFAu+sg==
+	b=fJiBie8+vuSA1Vmt5+svmtzvD7gg7CqEdj1p6QnJmXvu4xizHREvAGwz6LFCe3SNh
+	 HD4gORi8BcwcwzWnvhqmg2w2eUlu3iNhiMgK0ZbSJHBcHfIup/RRE3+T/jrN1a5ZK1
+	 sy1hOzfRl6A5lMjaaCkiYxtDxXodMZlSQKYERg9PMsX2MJ9w+VNOEVDECOthJDv/x9
+	 ibZxQ7XP4HpXpnA637O4ZEydEvra5jDYCi/UdwLgndRci117n//rse8UxMvYi8UQZa
+	 pWmJVcHbvCltZyBjTwfsusAhBWDXzVJf+fzLRCKxoFKWzuz/kLkYtIasLMio7D1WHB
+	 iFeypU6MZkppw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Paul Moore <paul@paul-moore.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-security-module@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] netlabel: fix IPv6 unlabeled address add error handling
-Date: Mon, 31 Aug 2026 09:27:40 -0400
-Message-ID: <20260831133314.4125787-432-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mvm: validate MCC header before n_channels
+Date: Mon, 31 Aug 2026 09:27:39 -0400
+Message-ID: <20260831133314.4125787-431-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,352 +52,456 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 56872b930feee7ae07b9720ca950dd9fa65596ee ]
+[ Upstream commit 77f33bed0cb49a11f03427f2fa368830c1cae3c2 ]
 
-netlbl_unlhsh_add_addr6() always returned zero after
-netlbl_af6list_add(), masking failures such as duplicate
-IPv6 static label entries.
+MCC response parsing read n_channels from v8/v4/v3 response variants
+before ensuring the payload contained the fixed response header.
 
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20260522022910.398416-1-zhaochenguang@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add a minimum payload-length check for each response version before
+reading n_channels, and keep the existing exact-size validation for the
+channels array payload.
+
+Assisted-by: GitHub Copilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260714141909.cb2cef3d3e7e.Iee7b48614289da576de842157ad3730b7589a4b1@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `netlabel: fix IPv6 unlabeled address add
-error handling`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, `VERSION = 6`,
-`PATCHLEVEL = 18`, `SUBLEVEL = 44`)
+### Step 1.1: Parse the subject line
+**Record:** `[wifi: iwlwifi: mvm]` `[validate]` — validate MCC response
+header before reading `n_channels` from firmware MCC update responses.
+
+### Step 1.2: Parse all commit message tags
+**Record:**
+- **Fixes:** — none
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:** `https://patch.msgid.link/20260714141909.cb2cef3d3e7e.Iee7b4
+  8614289da576de842157ad3730b7589a4b1@changeid`
+- **Cc: stable@vger.kernel.org:** — none (expected for manual review)
+- **Assisted-by:** GitHub Copilot:gpt-5.3-codex
+- **Signed-off-by:** Emmanuel Grumbach `<emmanuel.grumbach@intel.com>`
+- **Signed-off-by:** Miri Korenblit
+  `<miriam.rachel.korenblit@intel.com>`
+
+Notable: Intel iwlwifi maintainers authored/reviewed; no syzbot or user
+bug report.
+
+### Step 1.3: Analyze commit body
+**Record:**
+- **Bug:** MCC response parsing reads `n_channels` from v8/v4/v3
+  response layouts before confirming the payload contains the fixed
+  header.
+- **Symptom:** Out-of-bounds read from `pkt->data` on
+  truncated/malformed firmware responses; subsequent `struct_size()` /
+  `kzalloc()` / `memcpy()` use an unvalidated `n_channels`.
+- **Root cause:** Validation order — field access precedes minimum-
+  length check.
+- **Version info:** Affects all three MCC response variants (v8, v4,
+  v3).
+
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised as cleanup — explicit defensive validation
+fix. Same class of bug as iwlwifi “read field before payload size check”
+fixes already in this tree.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff Analysis
 
-### Step 1.1: Subject line
-**Record:** `[netlabel]` `[fix]` — IPv6 unlabeled address add error
-handling was broken; failures from `netlbl_af6list_add()` were masked.
-
-### Step 1.2: Tags
+### Step 2.1: Inventory changes
 **Record:**
-- **Signed-off-by:** Chenguang Zhao `<zhaochenguang@kylinos.cn>`
-  (author)
-- **Acked-by:** Paul Moore `<paul@paul-moore.com>` (netlabel maintainer
-  — strong quality signal)
-- **Link:** https://patch.msgid.link/20260522022910.398416-1-
-  zhaochenguang@kylinos.cn
-- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (committer)
-- No `Fixes:` tag (expected for manual review)
-- No `Reported-by:` / syzbot
-- No `Cc: stable@vger.kernel.org` in submission
-- Ignore pipeline `Signed-off-by: Sasha Levin`
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** `netlbl_unlhsh_add_addr6()` always returned `0` after
-  `netlbl_af6list_add()`, even when that call failed.
-- **Symptom:** Duplicate IPv6 static unlabeled label adds appear
-  successful to callers.
-- **Root cause:** Copy/paste oversight — IPv4 sibling
-  `netlbl_unlhsh_add_addr4()` correctly returns `ret_val`; IPv6 path
-  hard-coded `return 0`.
-- **Version info:** None in message.
-
-### Step 1.4: Hidden bug fix?
-**Record:** Not disguised — explicitly labeled a fix. Error-path
-`kfree(entry)` was already present; the bug is return-value propagation
-and downstream effects, not a leak.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-**Record:**
-- **Files:** `net/netlabel/netlabel_unlabeled.c` (+1 / -1)
-- **Function:** `netlbl_unlhsh_add_addr6()`
-- **Scope:** Single-file, single-line surgical fix
+- **File:** `drivers/net/wireless/intel/iwlwifi/mvm/nvm.c` (~29 lines
+  added, minor refactor)
+- **Function:** `iwl_mvm_update_mcc()`
+- **Scope:** Single-file surgical fix in one function
 
 ### Step 2.2: Code flow change
 **Record:**
-- **Before:** On `netlbl_af6list_add()` failure (e.g. `-EEXIST`), entry
-  is freed, but function returns `0`.
-- **After:** Returns actual `ret_val` from `netlbl_af6list_add()`.
-- **Path affected:** IPv6 static unlabeled address add error path
-  (admin/LSM configuration).
+- **Before:** Cast `pkt->data`, read `n_channels`, then compare full
+  payload length to `struct_size(..., channels, n_channels)`.
+- **After:** Cache `pkt_len = iwl_rx_packet_payload_len(pkt)`; for each
+  variant, `IWL_FW_CHECK(pkt_len < sizeof(*mcc_resp_vN))` before reading
+  `n_channels`; keep exact-size check, now via `IWL_FW_CHECK` with
+  better diagnostics.
+- **Paths:** All three MCC response version branches; error path returns
+  `ERR_PTR(-EINVAL)` and jumps to `exit`.
 
 ### Step 2.3: Bug mechanism
 **Record:**
-- **Category:** Logic / correctness — incorrect error propagation.
-- **Mechanism:** `netlbl_af6list_add()` returns `-EEXIST` for duplicate
-  address/mask (`net/netlabel/netlabel_addrlist.c:193`). IPv6 wrapper
-  discarded that and reported success. IPv4 path at lines 252–254
-  already does the right thing.
+- **Category:** Memory safety / out-of-bounds read (buffer bounds)
+- **Mechanism:** `n_channels` sits at offset 12 (v3), 16 (v4), or 20
+  (v8). Header sizes are 16/20/24 bytes respectively. A payload shorter
+  than `sizeof(*mcc_resp_vN)` causes OOB read when dereferencing
+  `mcc_resp_vN->n_channels`. Garbage `n_channels` can then drive
+  `struct_size()` and `memcpy()` logic on a still-untrusted buffer.
 
 ### Step 2.4: Fix quality
 **Record:**
-- Obviously correct — mirrors IPv4 and function documentation (“On
-  success zero is returned, otherwise a negative value”).
-- Minimal risk; no locking/API changes.
-- No regression risk identified.
+- Matches established iwlwifi pattern (`IWL_FW_CHECK` + `pkt_len`
+  caching) used in `mvm/fw.c`, `mvm/rxmq.c`, `mvm/mac-ctxt.c`, etc.
+- Minimal, obviously correct ordering fix.
+- **Regression risk:** Low — only rejects responses that were already
+  invalid; successful paths unchanged.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:** Buggy `return 0;` at line 298 in current tree; blame points
-to `e664048784506` (file introduction in this tree). IPv4 `return
-ret_val;` at line 254 present alongside it from the same introduction.
+### Step 3.1: Blame changed lines
+**Record:** Current buggy code in `iwl_mvm_update_mcc()` is present at
+HEAD (`v6.18.44`). Blame points to base import `5d324e5159d9e` (shallow
+history in this checkout). All three version branches share the same
+pattern.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
 ### Step 3.3: Related file history
-**Record:**
-- `0c4bb32ad7fdc` — same author, separate netlabel validation fix
-  already in this tree.
-- Upstream fix: `56872b930feee` (mainline, May 25 2026); stable backport
-  exists as `642d90c85b137` on `autosel` branch.
-- Fix is **not** in current `HEAD` (`v6.18.44`).
+**Record:** Recent iwlwifi mvm commits in this tree include closely
+related backports:
+- `2d5dec517b539` — move field read after size check in WoWLAN wake
+  packet handler
+- `a076b0c457c71` — validate SAR GEO response payload before access
+- `dd90880eb5ec5` — OOB read fix in `iwl_mvm_nd_match_info_handler()`
+
+This MCC fix is the same bug class and same Intel batch (July 2026). The
+MCC fix itself is **not** yet in this tree (`git log --grep` found
+nothing; no `MCC v8 response too short` string in tree).
 
 ### Step 3.4: Author context
-**Record:** Chenguang Zhao has multiple netlabel fixes; Paul Moore
-(maintainer) Acked this patch.
+**Record:** Emmanuel Grumbach is iwlwifi maintainer; Miri Korenblit is
+Intel iwlwifi lead. Same review chain as other July 2026 iwlwifi stable
+backports already merged here.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone one-liner; no series prerequisites. Applies
-cleanly (`return 0` → `return ret_val` at line 298; upstream diff
-context matches aside from unrelated `kzalloc` vs `kzalloc_obj` naming
-elsewhere).
+**Record:** Standalone — uses existing `IWL_FW_CHECK`,
+`iwl_rx_packet_payload_len()`, and MCC structs already in tree. No
+series dependencies.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:**
-- `b4 dig -c 56872b930feee`: https://patch.msgid.link/20260522022910.398
-  416-1-zhaochenguang@kylinos.cn
-- Single v1 submission; applied to netdev/net-next by Jakub Kicinski.
-- Paul Moore replied with **Acked-by** in thread.
+### Step 4.1: Original patch discussion
+**Record:** `b4 dig` could not match this commit (not in local git
+history). Link URL blocked by bot protection (403). No local `.mbx` for
+this patch found.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: CC'd Paul Moore, David Miller, netdev
-maintainers, `linux-security-module@vger.kernel.org`.
+**Record:** UNVERIFIED from lore; commit SOBs show Intel iwlwifi
+maintainers.
 
 ### Step 4.3: Bug report
-**Record:** No external bug report or syzbot link — author-found logic
-bug.
+**Record:** No external bug report, syzbot, or sanitizer report
+referenced.
 
-### Step 4.4: Series context
-**Record:** Standalone 1-patch series; no dependencies.
+### Step 4.4: Related patches
+**Record:** Part of Intel iwlwifi July 2026 validation batch; sibling
+fixes (`2d5dec517b539`, `a076b0c457c71`) already backported to this
+6.18.y tree.
 
-### Step 4.5: Stable list
-**Record:** No `Cc: stable` discussion found in mbox thread.
+### Step 4.5: Stable list history
+**Record:** UNVERIFIED on lore stable list; analogous iwlwifi fixes
+already accepted into this stable tree.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key functions
-**Record:** `netlbl_unlhsh_add_addr6()`, `netlbl_af6list_add()`,
-`netlbl_unlhsh_add()`.
+**Record:** `iwl_mvm_update_mcc()` (modified)
 
 ### Step 5.2: Callers
 **Record:**
-- `netlbl_unlhsh_add()` → `netlbl_unlhsh_add_addr6()` (line 423)
-- `netlbl_unlhsh_add()` called from:
-  - `netlbl_unlabel_staticadd()` / `netlbl_unlabel_staticadddef()`
-    (Generic Netlink admin)
-  - `netlbl_cfg_unlbl_static_add()` (kernel API, used e.g. from
-    `security/smack/smackfs.c`)
+- `iwl_mvm_get_regdomain()` in `mac80211.c` (primary caller)
+- Indirect callers: `iwl_mvm_init_mcc()`,
+  `iwl_mvm_rx_chub_update_mcc()`, `iwl_mvm_apply_last_mcc()` in `nvm.c`
+  / `mac80211.c`
+- Gated by `iwl_mvm_is_lar_supported(mvm)` (LAR-capable Intel devices
+  with NVM+FW support)
 
 ### Step 5.3: Callees
-**Record:** `kzalloc()`, `netlbl_af6list_add()` (can return `-EEXIST`),
-`kfree()` on failure.
+**Record:** `iwl_mvm_send_cmd()`, `iwl_fw_lookup_notif_ver()`,
+`iwl_rx_packet_payload_len()`, `IWL_FW_CHECK()`, `kzalloc()`,
+`memcpy()`, `iwl_free_resp()`
 
 ### Step 5.4: Reachability
-**Record:** Reachable from userspace via Netlink (`CAP_NET_ADMIN`) and
-from LSM code configuring static labels. IPv6 path requires
-`CONFIG_IPV6`.
+**Record:** Triggered during driver init (regulatory setup), BIOS MCC
+application, and runtime Chub MCC notifications. Userspace can
+indirectly trigger regulatory/MCC paths via cfg80211 country updates on
+LAR-enabled hardware. Requires `CONFIG_IWLMVM`.
 
 ### Step 5.5: Similar patterns
-**Record:** IPv4 `netlbl_unlhsh_add_addr4()` correctly returns `ret_val`
-— confirms this is an IPv6-only regression/typo.
+**Record:** Same “validate before read” pattern fixed in
+`iwl_mvm_wowlan_store_wake_pkt()` (`2d5dec517b539`) in this tree.
+`mld/mcc.c` `iwl_mld_copy_mcc_resp()` has a similar ordering issue but
+is **outside** this commit’s scope.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Buggy code present?
-**Record:** **YES** — line 298 in `/home/sasha/linux-
-autosel-7.0/net/netlabel/netlabel_unlabeled.c` is `return 0;` while line
-254 (IPv4) is `return ret_val;`.
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** Local tree is **6.18.44** (`git describe HEAD` →
+`v6.18.44-1-g2736c32da98b9`). `nvm.c` lines 442–493 read `n_channels`
+before any minimum header-length check. Fix not present.
 
 ### Step 6.2: Backport complications
-**Record:** Clean one-line apply expected; no structural conflicts in
-this file.
+**Record:** Clean apply expected — same file structure, `IWL_FW_CHECK`
+exists, no conflicting recent changes to `iwl_mvm_update_mcc()`.
 
 ### Step 6.3: Related fixes already present?
-**Record:** Related validation fix `0c4bb32ad7fdc` is present; this
-error-handling fix is **not**.
+**Record:** Same-category iwlwifi firmware-response validation fixes are
+already in tree; this specific MCC fix is not.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## Phase 7: Subsystem and Maintainer Context
 
 ### Step 7.1: Subsystem criticality
-**Record:** `net/netlabel` — **IMPORTANT** (LSM integration: SELinux,
-Smack; MAC labeling and audit).
+**Record:** `drivers/net/wireless/intel/iwlwifi/mvm` — **IMPORTANT**
+(Intel WiFi, widely deployed on laptops; regulatory/MCC path affects
+channel legality).
 
-### Step 7.2: Activity
-**Record:** Recent activity in this tree (validation fix June 2026);
-netlabel touched in 6.18.y.
+### Step 7.2: Subsystem activity
+**Record:** Active — multiple iwlwifi mvm fixes landed recently in this
+6.18.y tree.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who is affected
-**Record:** Systems using NetLabel IPv6 static unlabeled labels with
-SELinux/Smack (or other LSM consumers of
-`netlbl_cfg_unlbl_static_add()`). Config-specific (`CONFIG_NETLABEL`,
-`CONFIG_IPV6`).
+**Record:** Users of Intel iwlwifi MVM devices with LAR support
+(`CONFIG_IWLMVM`). Not universal, but a large laptop population.
 
 ### Step 8.2: Trigger conditions
-**Record:** Adding a duplicate IPv6 static unlabeled label (same
-address/mask). Requires admin capability. Duplicate-add is a realistic
-admin/script mistake, not exotic.
+**Record:** Truncated or malformed `MCC_UPDATE_CMD` firmware response.
+Uncommon in normal operation (requires FW bug, communication error, or
+corrupted response), but the code path runs at init and on MCC updates.
+Not directly userspace-injectable, but reachable from normal driver
+operation.
 
 ### Step 8.3: Failure mode severity
-**Record:**
-1. Userspace receives success (`0`) instead of `-EEXIST`.
-2. `netlbl_unlhsh_add()` incorrectly executes
-   `atomic_inc(&netlabel_mgmt_protocount)` (lines 434–435).
-3. Audit records `res=1` (success) on failure (line 444).
-4. **Protocount skew:** duplicate “success” inflates count; after
-   removing the real entry, `netlabel_mgmt_protocount` can remain `> 0`
-   with zero entries, leaving `netlbl_enabled()` true
-   (`net/netlabel/netlabel_kapi.c:960`). SELinux uses `netlbl_enabled()`
-   in netfilter hooks (`security/selinux/hooks.c:6004, 6021`).
-
-**Severity:** **MEDIUM-HIGH** for affected deployments — not a crash,
-but incorrect security subsystem state and audit integrity.
+**Record:** Out-of-bounds read from SKB payload; possible kernel
+oops/KASAN report; potential follow-on issues from garbage `n_channels`.
+**Severity: HIGH** (memory safety in kernel), though trigger likelihood
+is **MEDIUM-LOW**.
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Correct errno, accurate audit, correct
-  protocount/`netlbl_enabled()` behavior.
-- **Risk:** Very low (one line, maintainer-acked, mirrors working IPv4
-  path).
-- **Ratio:** Strong benefit, negligible risk.
+- **Benefit:** Prevents OOB read on a real driver path; aligns with
+  fixes already accepted for this tree.
+- **Risk:** Very low — adds early rejection of invalid packets only.
+- **Ratio:** Strong benefit, minimal risk.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Clear, real bug (IPv6-only; IPv4 correct)
-- Maintainer Acked-by (Paul Moore)
-- One-line, obviously correct fix
-- Affects LSM/security admin path and audit logs
-- Protocount inflation can leave NetLabel “enabled” after entries
-  removed
-- Bug confirmed present in `v6.18.44`
-- Upstream already merged (`56872b930feee`)
+- Real out-of-bounds read before bounds checking
+- Small, surgical, maintainer-authored fix
+- Matches iwlwifi conventions (`IWL_FW_CHECK`)
+- Buggy code confirmed present in 6.18.44
+- Same bug pattern as `2d5dec517b539` already backported here
+- Intel iwlwifi maintainers signed off
+- Standalone, no dependencies
 
 **AGAINST backport:**
-- No crash, UAF, or memory corruption
-- Only failure mode from `netlbl_af6list_add()` is `-EEXIST`
-  (duplicates)
-- Niche subsystem (NetLabel + IPv6 static labels)
-- No syzbot/user crash reports
+- No syzbot/user report (defensive hardening)
+- Trigger requires malformed FW response (rare)
+- Only LAR-enabled iwlwifi hardware
 
-**Unresolved:** None material to the decision.
+**Unresolved:**
+- Full lore review thread (blocked/unavailable)
+- Exact upstream commit SHA not in local git
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — mirrors IPv4; maintainer
-   ack; trivial change.
-2. Fixes a real bug affecting users? **PASS** — wrong errno, audit, and
-   protocount on duplicate IPv6 adds.
-3. Important issue? **PASS** — security subsystem correctness and audit
-   integrity (MEDIUM-HIGH).
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features/APIs? **PASS**.
-6. Can apply to local tree? **PASS** — buggy code present; clean apply.
+1. Obviously correct and tested? **PASS** — ordering fix is standard;
+   tested implicitly by maintainer merge; no Tested-by.
+2. Fixes a real bug? **PASS** — OOB read on short payload verified by
+   struct layout.
+3. Important issue? **PASS** — memory safety / potential crash (HIGH
+   severity, medium-low likelihood).
+4. Small and contained? **PASS** — ~30 lines, one function, one file.
+5. No new features/APIs? **PASS** — validation only.
+6. Can apply to local tree? **PASS** — code exists, fix not present,
+   clean apply expected.
 
 ### Step 9.3: Exception categories
-**Record:** N/A (not device ID, quirk, DT, build, or docs fix).
+**Record:** None (not device ID, quirk, DT, build, or docs). Qualifies
+as a standard bug fix.
 
-### Step 9.4: Decision rationale
-This is a straightforward error-handling bug in the NetLabel IPv6 admin
-path. While it does not cause a kernel oops, it corrupts security-
-relevant state: callers, audit subsystem, and
-`netlabel_mgmt_protocount`/`netlbl_enabled()` all behave incorrectly on
-a realistic duplicate-add scenario. The fix is trivial, maintainer-
-reviewed, and the bug is present in this `6.18.44` tree.
+### Step 9.4: Problem and decision
+
+This commit fixes an ordering bug in `iwl_mvm_update_mcc()` where
+`n_channels` is read from the firmware response before verifying the
+packet is large enough to contain the fixed MCC header (16/20/24 bytes
+for v3/v4/v8). On a truncated response, that is an out-of-bounds read.
+The existing exact-size check does not prevent the initial invalid read.
+
+For **6.18.44**, the vulnerable code is present and the fix is absent.
+The change is small, follows patterns already backported in this tree
+(`2d5dec517b539`, `a076b0c457c71`), and addresses a real memory-safety
+defect on a regulatory/MCC path used by LAR-enabled Intel WiFi hardware.
+Risk of regression is negligible.
 
 ---
 
 ## Verification
 
-- [Phase 1] `git describe HEAD` → `v6.18.44`; parsed subject, tags, body
-  from provided commit message
-- [Phase 1] Read current `netlbl_unlhsh_add_addr6()` — confirmed `return
-  0` bug at line 298
-- [Phase 2] Read diff — single line `return 0` → `return ret_val`
-- [Phase 2] Read `netlbl_af6list_add()` — returns `-EEXIST` on duplicate
-  (line 193)
-- [Phase 2] Compared IPv4 `netlbl_unlhsh_add_addr4()` — returns
-  `ret_val` (line 254)
-- [Phase 3] `git blame -L 290,305` — buggy line attributed to file
-  introduction
-- [Phase 3] `git show 56872b930feee` — upstream fix commit confirmed
-- [Phase 3] `git merge-base --is-ancestor 56872b930feee HEAD` → fix NOT
-  in HEAD
-- [Phase 3] `git show 642d90c85b137` — stable backport commit exists on
-  `autosel` branch
-- [Phase 4] `b4 dig -c 56872b930feee -w` — lore URL and recipient list
-  retrieved
-- [Phase 4] `b4 dig -c 56872b930feee -a` — single v1 revision
-- [Phase 4] `b4 dig -m /tmp/netlabel_ipv6_fix.mbox` — Paul Moore Acked-
-  by confirmed; no stable Cc in thread
-- [Phase 5] `grep netlbl_unlhsh_add` — traced callers to Netlink and
-  `netlbl_cfg_unlbl_static_add()`
-- [Phase 5] `grep netlbl_enabled` — SELinux hooks depend on protocount
-- [Phase 6] Read lines 248–299 and 364–447 — buggy code and downstream
-  `atomic_inc`/audit impact verified
-- [Phase 6] `git log --oneline -20 -- net/netlabel/netlabel_unlabeled.c`
-  — fix not yet in tree
-- [Phase 8] Traced protocount inflation scenario through add/remove
-  paths (lines 434–435, 664–666, 960)
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+- **[Phase 2]** Analyzed provided diff; verified `IWL_FW_CHECK` in
+  `fw/dbg.h`
+- **[Phase 2]** Computed struct sizes: v3=16, v4=20, v8=24 bytes;
+  `n_channels` offsets 12/16/20
+- **[Phase 3]** `git blame` on `nvm.c:439-495`: buggy pattern at HEAD
+- **[Phase 3]** `git log --oneline -20 --
+  drivers/net/wireless/intel/iwlwifi/mvm/`: found related backports
+- **[Phase 3]** `git show 2d5dec517b539`, `a076b0c457c71`,
+  `dd90880eb5ec5`: confirmed same fix class already in tree
+- **[Phase 3]** `git log --grep="validate MCC"` / `--grep="MCC header"`:
+  no matches (fix not applied)
+- **[Phase 4]** `b4 dig` with message-id: failed (wrong usage / no
+  match)
+- **[Phase 4]** WebFetch/curl lore + patch.msgid.link: blocked (403 /
+  bot protection)
+- **[Phase 4]** Grep `*.mbx` for patch subject: no local mbox found
+- **[Phase 5]** `grep iwl_mvm_update_mcc`: callers in `mac80211.c`,
+  `nvm.c`
+- **[Phase 5]** Read `iwl_mvm_is_lar_supported()` in `mvm.h`
+- **[Phase 5]** Grep `pkt_len < sizeof` in iwlwifi: established
+  validation pattern
+- **[Phase 6]** `git describe HEAD`: `v6.18.44-1-g2736c32da98b9`;
+  Makefile 6.18.44
+- **[Phase 6]** Read `nvm.c:439-514`: confirmed buggy code at HEAD
+- **[Phase 6]** Grep `MCC v8 response too short`: not in tree
+- **[Phase 8]** Read MCC struct definitions in `fw/api/nvm-reg.h`
 
-**YES**
+**YES**The analysis is done. For the **6.18.44** tree checked out here,
+the iwlwifi MCC validation commit should be backported.
 
- net/netlabel/netlabel_unlabeled.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+**Verdict: YES**
 
-diff --git a/net/netlabel/netlabel_unlabeled.c b/net/netlabel/netlabel_unlabeled.c
-index 2237a5261dd2a..0dfbb63d513ce 100644
---- a/net/netlabel/netlabel_unlabeled.c
-+++ b/net/netlabel/netlabel_unlabeled.c
-@@ -295,7 +295,7 @@ static int netlbl_unlhsh_add_addr6(struct netlbl_unlhsh_iface *iface,
+The bug is real: `iwl_mvm_update_mcc()` reads `n_channels` from firmware
+MCC responses before checking that the payload is large enough for the
+fixed header (16/20/24 bytes for v3/v4/v8), which can cause an out-of-
+bounds read on truncated responses. The vulnerable code is present in
+this tree; the fix is not.
+
+The patch is small, uses the existing `IWL_FW_CHECK` pattern, and
+matches similar iwlwifi validation fixes already backported here (e.g.
+wake-packet and SAR GEO payload checks). Risk is low; benefit is
+preventing a memory-safety defect on the LAR/MCC regulatory path for
+Intel WiFi hardware.
+
+ drivers/net/wireless/intel/iwlwifi/mvm/nvm.c | 43 ++++++++++++++++----
+ 1 file changed, 36 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c b/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
+index 953218f1e025a..f76e57399c1f3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2019, 2021-2025 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2019, 2021-2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -416,6 +416,7 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
+ 	int ret, resp_ver;
+ 	u32 status;
+ 	int resp_len, n_channels;
++	unsigned int pkt_len;
+ 	u16 mcc;
  
- 	if (ret_val != 0)
- 		kfree(entry);
--	return 0;
-+	return ret_val;
- }
- #endif /* IPv6 */
+ 	if (WARN_ON_ONCE(!iwl_mvm_is_lar_supported(mvm)))
+@@ -431,6 +432,7 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
+ 		return ERR_PTR(ret);
  
+ 	pkt = cmd.resp_pkt;
++	pkt_len = iwl_rx_packet_payload_len(pkt);
+ 
+ 	resp_ver = iwl_fw_lookup_notif_ver(mvm->fw, IWL_ALWAYS_LONG_GROUP,
+ 					   MCC_UPDATE_CMD, 0);
+@@ -439,9 +441,18 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
+ 	if (resp_ver >= 8) {
+ 		struct iwl_mcc_update_resp_v8 *mcc_resp_v8 = (void *)pkt->data;
+ 
++		if (IWL_FW_CHECK(mvm, pkt_len < sizeof(*mcc_resp_v8),
++				 "MCC v8 response too short: %u\n", pkt_len)) {
++			resp_cp = ERR_PTR(-EINVAL);
++			goto exit;
++		}
++
+ 		n_channels =  __le32_to_cpu(mcc_resp_v8->n_channels);
+-		if (iwl_rx_packet_payload_len(pkt) !=
+-		    struct_size(mcc_resp_v8, channels, n_channels)) {
++		if (IWL_FW_CHECK(mvm,
++				 pkt_len !=
++				 struct_size(mcc_resp_v8, channels, n_channels),
++				 "invalid MCC v8 response size: %u (n_channels=%d)\n",
++				 pkt_len, n_channels)) {
+ 			resp_cp = ERR_PTR(-EINVAL);
+ 			goto exit;
+ 		}
+@@ -464,9 +475,18 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
+ 			       IWL_UCODE_TLV_CAPA_MCC_UPDATE_11AX_SUPPORT)) {
+ 		struct iwl_mcc_update_resp_v4 *mcc_resp_v4 = (void *)pkt->data;
+ 
++		if (IWL_FW_CHECK(mvm, pkt_len < sizeof(*mcc_resp_v4),
++				 "MCC v4 response too short: %u\n", pkt_len)) {
++			resp_cp = ERR_PTR(-EINVAL);
++			goto exit;
++		}
++
+ 		n_channels =  __le32_to_cpu(mcc_resp_v4->n_channels);
+-		if (iwl_rx_packet_payload_len(pkt) !=
+-		    struct_size(mcc_resp_v4, channels, n_channels)) {
++		if (IWL_FW_CHECK(mvm,
++				 pkt_len !=
++				 struct_size(mcc_resp_v4, channels, n_channels),
++				 "invalid MCC v4 response size: %u (n_channels=%d)\n",
++				 pkt_len, n_channels)) {
+ 			resp_cp = ERR_PTR(-EINVAL);
+ 			goto exit;
+ 		}
+@@ -489,9 +509,18 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
+ 	} else {
+ 		struct iwl_mcc_update_resp_v3 *mcc_resp_v3 = (void *)pkt->data;
+ 
++		if (IWL_FW_CHECK(mvm, pkt_len < sizeof(*mcc_resp_v3),
++				 "MCC v3 response too short: %u\n", pkt_len)) {
++			resp_cp = ERR_PTR(-EINVAL);
++			goto exit;
++		}
++
+ 		n_channels =  __le32_to_cpu(mcc_resp_v3->n_channels);
+-		if (iwl_rx_packet_payload_len(pkt) !=
+-		    struct_size(mcc_resp_v3, channels, n_channels)) {
++		if (IWL_FW_CHECK(mvm,
++				 pkt_len !=
++				 struct_size(mcc_resp_v3, channels, n_channels),
++				 "invalid MCC v3 response size: %u (n_channels=%d)\n",
++				 pkt_len, n_channels)) {
+ 			resp_cp = ERR_PTR(-EINVAL);
+ 			goto exit;
+ 		}
 -- 
 2.53.0
 
