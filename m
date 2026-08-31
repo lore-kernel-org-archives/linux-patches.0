@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27C1415F2E;
-	Mon, 31 Aug 2026 13:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2019641D225;
+	Mon, 31 Aug 2026 13:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183198; cv=none; b=oSSgtp/WPIgZ+754X/r0BlOeLofDQTEP8iUaSlKo80yuTmZ2RakVLF4Ii15hIVIWq9OvA2F+dI5fNjySjrWxnNMSFXvManBFPp2gMBJPC7tG9vCkISKb2/lli2D4p7PSBAPfg2xLEA54Es6GCQvNnFCkvPGD2bqOu4amV51XONI=
+	t=1788183200; cv=none; b=Js4wXiTQpU5+4OKJKl6lQVq3FQTvx4QT0pDX4sNEXGCyFEfd+Kq6brzv2xwjXcgh6xCK/URnGJhQKHVPufVrSuyyCjfT2uGwIzjJWLyapsl75FWUf4hBI9iQFTDTX4Oxosa23//zwFysMEe2AF5ZttMECBIED0NXs3BC/cf5LgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183198; c=relaxed/simple;
-	bh=yV1RDIhNSNFbcxqQ19tWu+IIBErRIfLgNZa1zvqIgSA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Rwu1dby0nzGwM4lXp2b0Z1H0RDpOSbtG91IV4Xk4mljAjce8WETPe1yRoNpshIwQlkmhfB6fpY794kxXJID29fhHCalZXn0EYfTAOuwmuBVZlyVzCzBlVg4gl22UuXxe1zq+h4gmS8JFLnanlkG2W2Wc9tzU4vVia7+Cb1o7Pgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bS2jq2Hy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788183200; c=relaxed/simple;
+	bh=bQNR5dJDB//iPQtoUvHkmucJ5fkcuPfkCvN8hLETjoE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QM1bwYu0cSQ3aY0yM0I6w6fRz5lfZ4v27MupUYTliNQJSz6O7gRFeo2dH9lAv5H8TudCAXpbQc/d0MNYF5XGas3S+nlKNZDUkohuu5LXcNrBUz7dctT0u3q5xvNKWJR6PbV4hTtG94XfM7sQf5eCUrfFeuTTR0JOkXbOx1mNA9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RYBHx5L+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bS2jq2Hy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B061F000E9;
-	Mon, 31 Aug 2026 13:33:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RYBHx5L+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD24F1F00A3D;
+	Mon, 31 Aug 2026 13:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183196;
-	bh=1J77XU+FRYLHnC+JWeMz+Cme7b3XPiYHdf82jWlS5kQ=;
-	h=From:To:Cc:Subject:Date;
-	b=bS2jq2HyaLGzggUI//8K6gY3Uu4GgUijMe4NgKr1RbXFkaS3eW7RCbqAj/haet98O
-	 xoptXExsggFd+S/0am4eYcIfE5pNAG664T1sVuGwFAcn12gIaTEy0+2xbzji3JVvy5
-	 RNtszlZFJxYvWGTtMRrpvXJbNtRPlZFjtJRatL8KdLCR2mW10b8Qqqf3Sb5/bgHcM5
-	 xykF2VUS0q4QFIcepyYE2z75rKCgo+ShIit/ZahKAqaOMe8wAztiZB3m3i0v7wA0IV
-	 eeQRPQUTw7Tu9kRo+s5ZodkRhIgG40kWqZuDFhiQ03FxjIIQKSaoy2QtdgtQq3v2rW
-	 xhYU/gkKE13+w==
+	s=k20260515; t=1788183197;
+	bh=gMSEUv9vvIex0riq53kC05okBgJwyNWZV/O/QUfcg8Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=RYBHx5L++ZyTbbl7k4FjtSSN0dgKTV5D8JoYE8TmHNMrsYuUk8BwM8k0i2jc8nn9h
+	 c5ntR90Ql4KGzdoyyQx9ZEd1Lje2cTElWGMUEyYiqSPFtjbQx14Dc6KDtb3ZZcWAFS
+	 fwMFkyqkV9G17+w95xYQiEqFY6nt+/u0+0oIFtGueJxik6iD3I+4XRlAYMCdV+baYO
+	 lQJaxt/QpAVht0D4LvgUoQZTVlUhXADyifrjYF06XaWMvvzr0T8RPTE8rme+YsgeBC
+	 xGHTM+0fPL7TGV4DnuZNq3DFfmegBNShEvLeOp1ZyMaKWqFPeAdSIGG+iB7l/h5xZA
+	 omuXRKOc+AXlA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Priyansh Jain <priyansh.jain@oss.qualcomm.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: cfg80211: validate IEs in cfg80211_wext_siwgenie()
-Date: Mon, 31 Aug 2026 09:20:29 -0400
-Message-ID: <20260831133314.4125787-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] thermal/drivers/qcom/tsens: Atomic temperature read with hardware-guided retries
+Date: Mon, 31 Aug 2026 09:20:30 -0400
+Message-ID: <20260831133314.4125787-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,395 +57,609 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
 
-[ Upstream commit a2f5286ca4f304d3fd469f01b96b518608912a5c ]
+[ Upstream commit e28ef2f3ccea276436bd0f30c93f99e764ba492b ]
 
-The KASAN allocation trace shows that a malformed IE buffer is
-stored via SIOCSIWGENIE (cfg80211_wext_siwgenie()) without any
-validation. The crash trace shows that a subsequent SIOCSIWESSID
-triggers a connection attempt which calls cfg80211_sme_get_conn_ies()
-to process the stored IE buffer, causing:
+The existing TSENS temperature read logic polls the valid bit and then
+reads the temperature register. When temperature reads are triggered
+at very short intervals, this can race with hardware updates and allow
+the temperature field to be read while it is still being updated.
 
- - An out-of-bounds read in skip_ie() which reads ies[pos+1]
-   (the length byte) past the end of the 1-byte buffer.
+In this case, the valid bit may already be asserted even though the
+temperature value is transitioning, resulting in an incorrect reading.
 
- - An integer underflow in the memcpy size argument when offs
-   returned by ieee80211_ie_split() exceeds ies_len, causing
-   unsigned subtraction to wrap to SIZE_MAX and triggering a
-   fortify panic.
+Hardware programming guidelines require the temperature value and the
+valid bit to be sampled atomically in the same read transaction. A
+reading is considered valid only if the valid bit is observed set in
+that same sample.
 
-Fix this by validating the IE buffer in cfg80211_wext_siwgenie()
-before storing it.
+The guidelines further specify that software should attempt the
+temperature read up to three times to account for transient update
+windows. If none of the attempts yields a valid sample, a stable fallback
+value must be returned: if the first and second samples match, the second
+value is returned;otherwise, if the second and third samples match, the
+third value is returned;if neither pair matches, -EAGAIN is returned.
 
-Reported-by: syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cc867e537e4bd36f69bb
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260725142028.32560-1-kartikey406@gmail.com
-[drop unnecessary ie_len check, update commit message]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Update the TSENS sensor read logic to implement atomic sampling along
+with the recommended retry-and-compare fallback behavior. This removes
+the race window and ensures deterministic temperature values in
+accordance with hardware requirements.
+
+Signed-off-by: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260514113643.1954111-1-priyansh.jain@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: Qualcomm TSENS Atomic Temperature Read
 
-### Step 1.1: Subject Line
-**Record:** `[wifi: cfg80211]` `[validate]` — Add IE validation in
-`cfg80211_wext_siwgenie()` before storing user-supplied generic IE data.
-
-### Step 1.2: Tags
-**Record:**
-- **Reported-by:** syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com
-  (fuzzer-found, strong YES signal)
-- **Closes:**
-  https://syzkaller.appspot.com/bug?extid=cc867e537e4bd36f69bb
-- **Link:**
-  https://patch.msgid.link/20260725142028.32560-1-kartikey406@gmail.com
-- **Signed-off-by:** Deepanshu Kartikey, Johannes Berg (cfg80211
-  maintainer committed/applied)
-- No Fixes:, Cc: stable, Reviewed-by, Tested-by, or Acked-by tags
-- Notable: syzbot report with maintainer application
-
-### Step 1.3: Body Analysis
-**Record:**
-- **Bug:** Malformed IE buffer stored via `SIOCSIWGENIE` without
-  validation; later `SIOCSIWESSID` triggers connection and
-  `cfg80211_sme_get_conn_ies()` processes the bad buffer.
-- **Symptoms:** (1) OOB read in `skip_ie()` reading `ies[pos+1]` past a
-  1-byte buffer; (2) integer underflow in `memcpy` size when
-  `ieee80211_ie_split()` returns `offs > ies_len`, wrapping to
-  `SIZE_MAX` and triggering fortify panic.
-- **Root cause:** Wext path lacked the IE validation that nl80211
-  already performs.
-- **Version info:** None in commit message.
-
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — this is an explicit bug fix for KASAN-reported OOB read
-and fortify panic, not disguised cleanup.
+**Local tree:** `v6.18.44` (Linux 6.18.44)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 2.1: Inventory
-**Record:**
-- **Files:** `net/wireless/wext-sme.c` (+9 lines, 0 removed)
-- **Function:** `cfg80211_wext_siwgenie()`
-- **Scope:** Single-file surgical fix
+### Step 1.1: Subject Line
+**Record:** `[thermal/drivers/qcom/tsens]` — action:
+**update/implement** — **Atomic temperature read with hardware-guided
+retries**
 
-### Step 2.2: Code Flow Change
+### Step 1.2: Commit Message Tags
 **Record:**
-- **Hunk (before):** If `ie_len > 0`, immediately `kmemdup()` and store
-  buffer.
-- **Hunk (after):** Before `kmemdup()`, walk IEs with
-  `for_each_element()` and reject with `-EINVAL` if
-  `!for_each_element_completed()`.
-- **Path affected:** Error/input-validation path on `SIOCSIWGENIE`
-  ioctl.
+- **Signed-off-by:** Priyansh Jain `<priyansh.jain@oss.qualcomm.com>`
+  (author)
+- **Signed-off-by:** Daniel Lezcano `<daniel.lezcano@kernel.org>`
+  (thermal maintainer)
+- **Reviewed-by:** Konrad Dybcio `<konrad.dybcio@oss.qualcomm.com>`
+  (Qualcomm reviewer)
+- **Link:** `https://patch.msgid.link/20260514113643.1954111-1-
+  priyansh.jain@oss.qualcomm.com`
+- **No** Fixes:, Reported-by:, Tested-by:, Acked-by:, Cc:
+  stable@vger.kernel.org
+- **Notable:** Reviewed by Qualcomm engineer; signed by thermal
+  subsystem maintainer. No syzbot or user bug report.
+
+### Step 1.3: Commit Body Analysis
+**Record:**
+- **Bug:** TSENS reads poll the VALID bit, then separately read the
+  temperature field. Under rapid read intervals, VALID may be set while
+  the temperature field is still transitioning, yielding a stale or
+  corrupt reading.
+- **Symptom:** Incorrect temperature values returned to the thermal
+  subsystem.
+- **Root cause:** VALID and temperature are in the same status register
+  but were sampled via separate `regmap_field_read()` transactions
+  instead of one atomic register read.
+- **Fix:** Single `regmap_read()` of the status register; up to 3
+  retries per HW guidelines; fallback comparison logic; return `-EAGAIN`
+  if no stable sample.
+- **Version info:** None specified in the message.
+
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Not disguised as cleanup — this is an explicit hardware-
+correctness bug fix. The retry/fallback logic implements Qualcomm TSENS
+programming guidelines, not a cosmetic refactor.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Change Inventory
+**Record:**
+- **Files:** `drivers/thermal/qcom/tsens.c` (~+100/−50 lines),
+  `drivers/thermal/qcom/tsens.h` (+1 line: `MAX_READ_RETRY 3`)
+- **Functions modified/added:** `tsens_read_temp()` (new),
+  `tsens_hw_to_mC()` (refactored to convert only),
+  `tsens_read_irq_state()`, `get_temp_tsens_valid()`
+- **Scope:** Single-driver, surgical fix with one internal helper added
+
+### Step 2.2: Code Flow Changes
+**Record:**
+
+| Hunk | Before | After |
+|------|--------|-------|
+| `get_temp_tsens_valid()` | Poll VALID via
+`regmap_field_read_poll_timeout()`, then call `tsens_hw_to_mC(s,
+temp_idx)` which does a second `regmap_field_read()` | Call new
+`tsens_read_temp()` for atomic register read + retries, then convert via
+`tsens_hw_to_mC(s, *temp)` |
+| `tsens_hw_to_mC()` | Reads hardware field and converts | Accepts pre-
+read raw value, converts only |
+| `tsens_read_irq_state()` | Threshold reads via `tsens_hw_to_mC(s,
+field)` (implicit read) | Explicit `regmap_field_read()` then
+`tsens_hw_to_mC(s, value)` |
+
+**Affected paths:** Normal thermal zone temperature polling and IRQ
+handler temperature reads during threshold violations.
 
 ### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Buffer overflow / out-of-bounds read + integer underflow
-- **Mechanism:** `skip_ie()` assumes well-formed IEs (`u8 len = ies[pos
-  + 1]`). A 1-byte stored buffer causes OOB read. Bad split offset leads
-  to `ies_len - offs` underflow in `cfg80211_sme_get_conn_ies()`:
+**Record:** **Logic / hardware correctness fix (race on non-atomic
+register sampling).**
 
-```529:534:net/wireless/sme.c
-                offs = ieee80211_ie_split(ies, ies_len, before_extcapa,
-                                          ARRAY_SIZE(before_extcapa),
-0);
-                memcpy(buf, ies, offs);
-                /* leave a whole for extended capabilities IE */
-                memcpy(buf + offs +
-rdev->wiphy.extended_capabilities_len + 2,
-                       ies + offs, ies_len - offs);
+Verified in field definitions — both v1 and v2 place LAST_TEMP and VALID
+in the same `TM_Sn_STATUS_OFF` register:
+
+```135:136:drivers/thermal/qcom/tsens-v1.c
+        REG_FIELD_FOR_EACH_SENSOR11(LAST_TEMP,    TM_Sn_STATUS_OFF,  0,
+9),
+        REG_FIELD_FOR_EACH_SENSOR11(VALID,        TM_Sn_STATUS_OFF, 14,
+14),
 ```
+
+```128:129:drivers/thermal/qcom/tsens-v2.c
+        REG_FIELD_FOR_EACH_SENSOR16(LAST_TEMP,       TM_Sn_STATUS_OFF,
+0,  11),
+        REG_FIELD_FOR_EACH_SENSOR16(VALID,           TM_Sn_STATUS_OFF,
+21,  21),
+```
+
+The old code performed two independent field reads; hardware can update
+the register between them.
 
 ### Step 2.4: Fix Quality
 **Record:**
-- **Quality:** High — matches existing `validate_ie_attr()` pattern in
-  `nl80211.c`.
-- **Regression risk:** Very low — only rejects malformed input that
-  would crash later; well-formed IEs unchanged.
-- **Note:** Johannes dropped the explicit `ie_len < 2` check from v2;
-  `for_each_element_completed()` correctly rejects 1-byte buffers (loop
-  never runs, completion check fails).
+- **Quality:** High — matches documented HW requirements; minimal API
+  surface change (all internal).
+- **Regression risk:** Low. VER_0 path preserved (no VALID bit).
+  Threshold reads in `tsens_read_irq_state()` are separated correctly
+  since thresholds are not subject to the same race.
+- **New behavior:** `-EAGAIN` when no stable sample after 3 attempts —
+  safer than returning a corrupt value.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Current `cfg80211_wext_siwgenie()` in this tree dates to
-initial import at `5d324e5159d9e` (v6.18 merge base). The unvalidated
-`kmemdup()` path has been present since wext-sme support was added — a
-long-standing gap, not a recent regression.
+**Record:**
+- `get_temp_tsens_valid()` introduced in `a7ff82976122e` (Amit Kucheria,
+  2020-04-29): *"Merge tsens-common.c into tsens.c"*
+- VALID-bit polling added in `d012f9189fda0f` (Christian Marangi,
+  2021-10-07): *"Add timeout to get_temp_tsens_valid"* — fixed infinite
+  loop, not the atomic-read race
+- Bug present since ~2020 in this tree; the separate-read pattern
+  predates 6.18 branching
 
 ### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+**Record:** N/A — no Fixes: tag in the commit message.
 
-### Step 3.3: Related Changes
-**Record:** Many related validation fixes in `net/wireless/` (e.g.
-`f8c547e543e12`, `cfbda103aeae6`, `584657c5fc58d`). nl80211 already
-validates IEs via `validate_ie_attr()`; wext path was the missing piece.
-Standalone fix — v3 helper series was explicitly rejected by maintainer.
+### Step 3.3: Related File History
+**Record:** Recent tsens changes in this tree are device-support
+additions (IPQ5018, MSM8937, v1 without RPM). No prior fix for atomic
+sampling. Standalone patch, not part of a series.
 
 ### Step 3.4: Author Context
-**Record:** Deepanshu Kartikey is a contributor; Johannes Berg (cfg80211
-maintainer) applied the patch with modifications.
+**Record:** Priyansh Jain (Qualcomm). Daniel Lezcano is the thermal
+maintainer (Signed-off-by). No other commits from this author in the
+local tsens history.
 
 ### Step 3.5: Dependencies
-**Record:** No prerequisites. Uses `for_each_element` /
-`for_each_element_completed` from `include/linux/ieee80211.h` (included
-via `cfg80211.h`). No dependency on rejected v3
-`cfg80211_validate_ies()` helper.
+**Record:** No prerequisites. Uses existing `priv->tm_map`,
+`priv->fields[]`, `priv->rf[]` — all present in 6.18.44. Applies
+standalone.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original Discussion
-**Record:**
-- **URL:**
-  https://patch.msgid.link/20260725142028.32560-1-kartikey406@gmail.com
-- **Series:** v1 (2026-07-10) → v2 (2026-07-25, committed version)
-- **Maintainer:** Johannes Berg applied modified v2 on 2026-07-28,
-  declined v3 refactor: *"the bigger cleanup isn't great for wireless as
-  a fix right now"*
-- No explicit Cc: stable nomination; no NAKs
+**Record:** UNVERIFIED — `b4 dig` requires a commit hash (commit not in
+this tree). Lore.kernel.org fetch blocked by bot protection. Link tag
+points to `20260514113643.1954111-1-priyansh.jain@oss.qualcomm.com`.
 
 ### Step 4.2: Reviewers
-**Record:** CC'd: johannes@sipsolutions.net, linux-
-wireless@vger.kernel.org, syzbot. Jeff Johnson replied on thread.
-Maintainer applied directly.
+**Record:** UNVERIFIED via b4 dig -w. Commit message lists Reviewed-by:
+Konrad Dybcio and Signed-off-by: Daniel Lezcano.
 
 ### Step 4.3: Bug Report
-**Record:**
-- **syzkaller:** KASAN slab-out-of-bounds in `skip_ie()` /
-  `ieee80211_ie_split_ric()`
-- **Repro:** C reproducer on 2026/07/09; fix commit `a2f5286ca4f3`
-  identified
-- **Stack trace confirms path:** `cfg80211_wext_siwgenie()` →
-  `cfg80211_mgd_wext_siwessid()` → `cfg80211_sme_get_conn_ies()` → crash
-- **Severity:** Kernel crash (KASAN OOB); syzbot security assessment
-  flags DoS/exploitable
+**Record:** No Reported-by: or bugzilla/syzbot links. Bug identified
+from HW programming guidelines, not a user crash report.
 
 ### Step 4.4: Related Patches
-**Record:** v3 series (`cfg80211_validate_ies()` helper) exists but was
-explicitly not taken for this fix cycle.
+**Record:** Standalone single patch; not part of a multi-patch series.
 
-### Step 4.5: Stable List
-**Record:** lore.kernel.org/stable search blocked (bot protection). No
-stable discussion found.
+### Step 4.5: Stable List History
+**Record:** UNVERIFIED — could not search lore stable list due to access
+restrictions.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key Functions
-**Record:** `cfg80211_wext_siwgenie()` (modified); downstream:
-`cfg80211_mgd_wext_connect()`, `cfg80211_sme_get_conn_ies()`,
-`skip_ie()`.
+**Record:** `tsens_read_temp()` (new), `get_temp_tsens_valid()`,
+`tsens_hw_to_mC()`, `tsens_get_temp()`, IRQ handler path at line 605
 
 ### Step 5.2: Callers
 **Record:**
-- `cfg80211_wext_siwgenie()` registered in `wext-compat.c` as
-  `IW_HANDLER(SIOCSIWGENIE, ...)`
-- Stored IEs consumed at connect time via `cfg80211_mgd_wext_connect()`
-  (lines 31–32) → `cfg80211_connect()` → `cfg80211_sme_get_conn_ies()`
+- `get_temp_tsens_valid` is `.get_temp` for 6 tsens v1/v2 platform
+  variants (`tsens-v1.c`, `tsens-v2.c`)
+- Called from IRQ handler when threshold violated (`tsens.c:605`)
+- `tsens_get_temp()` → `priv->ops->get_temp()` → thermal framework
+  polling, hwmon sysfs, cooling decisions
 
 ### Step 5.3: Callees
-**Record:** `for_each_element()`, `for_each_element_completed()`,
-`kmemdup()`, `kfree()`, `cfg80211_disconnect()`.
+**Record:** `regmap_read()`, `regmap_field_read()`, `code_to_degc()`,
+`sign_extend32()`
 
 ### Step 5.4: Reachability
-**Record:**
-- Reachable from userspace via `ioctl(SIOCSIWGENIE)` on wireless
-  netdevice
-- Requires `CAP_NET_ADMIN` (`wext_permission_check()` in `wext-
-  core.c:991-996`)
-- Only when `CONFIG_CFG80211_WEXT` is enabled (common on distros
-  supporting `iwconfig`)
+**Record:** Userspace can trigger via thermal sysfs/hwmon reads. Kernel
+thermal governor polls regularly. IRQ path fires during overheating —
+exactly when rapid successive reads are most likely and accuracy is most
+critical.
 
 ### Step 5.5: Similar Patterns
-**Record:** Identical validation pattern in
-`nl80211.c:validate_ie_attr()` and `scan.c:2749`. Wext path was the
-outlier.
+**Record:** `get_temp_common()` (VER_0/v0.1 paths) uses a different read
+model and is unchanged. Only `get_temp_tsens_valid` platforms (v1, v2)
+are affected.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
 
 ### Step 6.1: Buggy Code Present?
-**Record:** **YES.** Local tree is **v6.18.44** (`git describe HEAD`).
-`cfg80211_wext_siwgenie()` at lines 321–324 does unvalidated
-`kmemdup()`. Fix commit `a2f5286ca4f3` is **NOT** an ancestor of HEAD
-(`git merge-base --is-ancestor` → fix NOT in HEAD).
+**Record:** **YES.** Current `get_temp_tsens_valid()` at lines 751–779
+still uses separate VALID poll + `tsens_hw_to_mC()` field read:
+
+```751:779:drivers/thermal/qcom/tsens.c
+int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+{
+        // ...
+        ret = regmap_field_read_poll_timeout(priv->rf[valid_idx], valid,
+                                             valid, 1, 20 *
+USEC_PER_MSEC);
+        // ...
+        *temp = tsens_hw_to_mC(s, temp_idx);
+        return 0;
+}
+```
+
+The candidate commit is **not** in this tree.
 
 ### Step 6.2: Backport Complications
-**Record:** **Clean apply.** `git apply --check` on the fix diff
-succeeds with no conflicts.
+**Record:** **Clean apply expected.** File structure, enums (`VALID_0`,
+`LAST_TEMP_0`), and `tm_map` match what the patch expects. No
+conflicting refactors in recent 6.18 tsens history.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent validation in `cfg80211_wext_siwgenie()`.
-nl80211 IE validation exists separately; does not cover wext path.
+**Record:** **No.** `git log --grep` found only `d012f9189fda0f`
+(timeout fix), which addressed a different bug (infinite poll loop on
+disabled sensors).
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-**Record:** `net/wireless` (cfg80211) — **IMPORTANT** subsystem; affects
-wireless stack users.
+### Step 7.1: Subsystem Criticality
+**Record:** `drivers/thermal/qcom/tsens` — **IMPORTANT** (Qualcomm SoC
+thermal management on phones, routers, embedded). Not core-kernel-wide,
+but safety-relevant on affected hardware.
 
-### Step 7.2: Activity
-**Record:** Actively maintained; multiple recent IE-validation hardening
-commits in this tree.
+### Step 7.2: Activity Level
+**Record:** Moderately active — recent commits add IPQ5018, MSM8937,
+v1-without-RPM support. Driver is mature but still receiving platform
+additions.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who Is Affected
-**Record:** Users with `CONFIG_CFG80211_WEXT` and wireless interfaces
-using wext ioctls (`iwconfig`, legacy tools). Not universal, but common
-on desktop/server distros.
+**Record:** Users of Qualcomm SoCs with TSENS v1 or v2 (SDM845,
+MSM8996/8998, IPQ routers, many Android devices). Config:
+`CONFIG_QCOM_TSENS` (or module equivalent). Not universal, but large
+embedded/mobile population.
 
 ### Step 8.2: Trigger Conditions
-**Record:**
-- `SIOCSIWGENIE` with malformed IE (e.g. 1-byte buffer) + `SIOCSIWESSID`
-  to trigger connect
-- Requires `CAP_NET_ADMIN` (not unprivileged)
-- syzbot has reproducible C reproducer
+**Record:** Temperature reads at short intervals — thermal framework
+polling, hwmon reads, and especially IRQ-handler reads during threshold
+violations. Plausible in production, not merely theoretical.
 
-### Step 8.3: Failure Mode
-**Record:** KASAN slab-out-of-bounds read → potential kernel oops/panic;
-fortify panic on memcpy underflow. **Severity: HIGH** (kernel crash).
+### Step 8.3: Failure Mode Severity
+**Record:** **Incorrect temperature readings** → wrong thermal
+throttling decisions. Could under-throttle during overheating (hardware
+stress) or over-throttle (performance loss). Not a kernel oops/UAF, but
+affects thermal protection. **Severity: MEDIUM-HIGH** for affected
+platforms.
 
 ### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** HIGH — prevents kernel crash from malformed wext IE input
-- **Risk:** VERY LOW — 9-line input validation, established pattern,
-  maintainer-reviewed
-- **Ratio:** Strongly favors backport
+- **Benefit:** Correct thermal readings per HW spec; safer `-EAGAIN`
+  instead of corrupt values; fixes race on safety-critical overheating
+  path
+- **Risk:** Low — contained driver change, reviewed, follows HW
+  guidelines
+- **Ratio:** Favorable for Qualcomm TSENS users
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- syzbot-reported, reproducible KASAN OOB read
-- Kernel crash (fortify panic) on realistic ioctl sequence
-- Small, surgical, maintainer-applied fix
-- Matches existing nl80211 validation pattern
-- Applies cleanly to v6.18.44
-- Buggy code confirmed present; fix not yet in tree
-- Part of ongoing cfg80211 IE hardening in stable
+- Real, verifiable bug: non-atomic VALID/temp sampling from same
+  register
+- Bug present in 6.18.44 since ~2020
+- Affects thermal protection on widely deployed Qualcomm hardware
+- IRQ path during threshold violations is a concrete high-risk trigger
+- Fix is reviewed, maintainer-signed, follows HW programming guidelines
+- Small, self-contained, no new public APIs
+- Returns `-EAGAIN` instead of corrupt data when sampling fails
 
 **AGAINST backport:**
-- Requires `CAP_NET_ADMIN` (not unprivileged attack)
-- Only affects wext compat path (`CONFIG_CFG80211_WEXT`)
-- No explicit Cc: stable nomination (not a negative per instructions)
-
-**Unresolved:** None material to the decision.
+- No user crash reports, syzbot, or CVE
+- Not oops/UAF/corruption — incorrect sensor data
+- Stable rules discourage unproven "theoretical" races (though this has
+  a concrete HW mechanism)
+- Patch may approach the ~100-line stable size guideline
+- Mailing list discussion unverified
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — standard `for_each_element`
-   validation; syzbot repro; maintainer applied
-2. Fixes real bug affecting users? **PASS** — KASAN-confirmed crash path
-3. Important issue? **PASS** — kernel crash (HIGH severity)
-4. Small and contained? **PASS** — 9 lines, 1 file
-5. No new features/APIs? **PASS** — input validation only
-6. Can apply to local tree? **PASS** — verified clean apply
+1. Obviously correct and tested? **PASS** — HW spec compliance;
+   Reviewed-by + maintainer SOB (runtime testing not independently
+   verified)
+2. Fixes a real bug? **PASS** — verified separate-read race on shared
+   status register
+3. Important issue? **PASS (borderline)** — incorrect thermal readings
+   on overheating path; hardware quirk / HW-requirement compliance
+   category
+4. Small and contained? **PASS** — single driver, ~50 net lines; diff
+   may be near 100-line guideline
+5. No new features/APIs? **PASS** — internal refactor only
+6. Can apply to local tree? **PASS** — buggy code present, no
+   dependencies
 
 ### Step 9.3: Exception Categories
-**Record:** N/A — standard bug fix, not device-ID/quirk/DT/docs
-exception.
+**Record:** **Hardware quirk/workaround** — implements mandatory HW
+atomic-sampling and retry protocol for TSENS status registers.
 
 ### Step 9.4: Decision Rationale
 
-This commit closes a validation gap in the wext compatibility path that
-nl80211 already covers. A `CAP_NET_ADMIN` caller can store a malformed
-1-byte IE via `SIOCSIWGENIE`; a subsequent `SIOCSIWESSID` triggers
-connection processing that reads past the buffer end in `skip_ie()` and
-can panic via fortify-checked `memcpy`. The fix is minimal, follows an
-established in-tree pattern, was applied by the cfg80211 maintainer,
-applies cleanly to this v6.18.44 tree, and the vulnerable code is
-confirmed present without the fix.
+For Linux **6.18.44**, this commit fixes a longstanding hardware-read
+race in the Qualcomm TSENS driver that can return incorrect temperatures
+during rapid reads — including in the IRQ handler when sensors report
+threshold violations. While it does not cause kernel crashes, thermal
+sensor correctness on the overheating path is safety-relevant for a
+large class of production devices. The fix is small, reviewed, follows
+documented HW requirements, and applies cleanly to this tree.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reported-by syzbot, Closes syzkaller URL,
-  Signed-off-by author + Johannes Berg
-- [Phase 1] Subject: wifi: cfg80211 validate IEs in
-  cfg80211_wext_siwgenie()
-- [Phase 2] Diff: +9 lines in cfg80211_wext_siwgenie(), adds
-  for_each_element validation before kmemdup
-- [Phase 2] Verified skip_ie() OOB: `u8 len = ies[pos + 1]` at
-  util.c:1967 with comment "assume validly formed"
-- [Phase 2] Verified underflow path: cfg80211_sme_get_conn_ies() memcpy
-  at sme.c:534 uses `ies_len - offs`
-- [Phase 3] git blame: vulnerable function present in v6.18.44 tree
-- [Phase 3] git merge-base --is-ancestor a2f5286ca4f3 HEAD → fix NOT in
-  HEAD
-- [Phase 3] git apply --check on fix diff → applies cleanly
-- [Phase 4] b4 dig -c a2f5286ca4f3 →
-  https://patch.msgid.link/20260725142028.32560-1-kartikey406@gmail.com
-- [Phase 4] b4 dig -a → v1 and v2 series; v2 is committed version
-- [Phase 4] b4 dig -w → johannes@sipsolutions.net, linux-wireless CC'd
-- [Phase 4] Mbox: Johannes applied modified v2, declined v3 refactor
-- [Phase 4] syzkaller report fetched: KASAN OOB in skip_ie, C repro, fix
-  commit a2f5286ca4f3
-- [Phase 4] Stack trace confirms siwgenie → siwessid → sme_get_conn_ies
-  → skip_ie path
-- [Phase 5] Call chain: wext-compat.c SIOCSIWGENIE handler → wext-sme.c
-  connect path → sme.c
-- [Phase 5] CAP_NET_ADMIN required: wext-core.c:991-996
-  wext_permission_check()
-- [Phase 5] for_each_element_completed pattern exists in nl80211.c:284
-  and scan.c:2749
-- [Phase 5] Macros available via cfg80211.h → ieee80211.h include chain
-- [Phase 6] git describe HEAD → v6.18.44-2-g1b9e1abadee04 (6.18.y tree)
-- [Phase 6] Makefile VERSION/PATCHLEVEL/SUBLEVEL → 6.18.44
-- [Phase 6] Current wext-sme.c:321-324 lacks validation (buggy code
-  confirmed)
-- [Phase 7] net/wireless recent commits show active IE validation
-  hardening
-- [Phase 8] Failure mode: KASAN OOB + fortify panic, severity HIGH
-- [Phase 8] Trigger requires CAP_NET_ADMIN (syzbot assessment:
-  Unprivileged ❌)
+- **[Phase 1]** Parsed subject, tags (SOB, Reviewed-by, Link); no
+  Fixes/Reported-by/syzbot
+- **[Phase 2]** Diff analysis: new `tsens_read_temp()`, refactored
+  `tsens_hw_to_mC()`, updated `get_temp_tsens_valid()` and
+  `tsens_read_irq_state()`
+- **[Phase 2]** Verified LAST_TEMP and VALID share `TM_Sn_STATUS_OFF` in
+  `tsens-v1.c:135-136` and `tsens-v2.c:128-129`
+- **[Phase 3]** `git blame -L 751,779`: core logic from `a7ff82976122e`
+  (2020), polling from `d012f9189fda0f` (2021)
+- **[Phase 3]** `git show d012f9189fda0f`: prior fix addressed infinite
+  poll, not atomic read
+- **[Phase 3]** `git log --oneline -20 -- drivers/thermal/qcom/tsens.c`:
+  no duplicate fix present
+- **[Phase 3]** `git log --grep="Atomic temperature"`: no match in tree
+  (commit not present)
+- **[Phase 4]** UNVERIFIED: `b4 dig -c` failed (no commit hash in tree);
+  lore fetch blocked
+- **[Phase 4]** UNVERIFIED: stable list discussion, reviewer stable
+  nominations
+- **[Phase 5]** `grep get_temp_tsens_valid`: 6 `.get_temp` assignments
+  in v1/v2 + IRQ call at `tsens.c:605`
+- **[Phase 5]** `grep tsens_get_temp`: thermal zone ops at
+  `tsens.c:1170`
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** Read `get_temp_tsens_valid()` at `tsens.c:751-779`:
+  buggy separate-read pattern confirmed
+- **[Phase 6]** `grep tsens_read_temp|MAX_READ_RETRY`: not in tree — fix
+  not yet applied
+- **[Phase 7]** `git log --oneline -20 -- drivers/thermal/qcom/`:
+  subsystem active with platform additions
+- **[Phase 8]** Failure mode: incorrect temperature → thermal mis-
+  management; severity MEDIUM-HIGH on affected platforms
 
-**YES**
+**YES**The background searches finished and match the earlier analysis:
 
- net/wireless/wext-sme.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+- **Subject search:** No commit matching “Atomic temperature read with
+  hardware-guided retries” (or `tsens_read_temp`) is in this **6.18.44**
+  tree — the fix is still a backport candidate, not something already
+  applied.
+- **Related history:** The only closely related prior change is
+  `d012f9189fda0f` (“Add timeout to get_temp_tsens_valid”), which fixed
+  an infinite-poll loop on disabled sensors, not the atomic VALID/temp
+  sampling race this patch addresses.
 
-diff --git a/net/wireless/wext-sme.c b/net/wireless/wext-sme.c
-index 573b6b15a446e..b5914f3658db4 100644
---- a/net/wireless/wext-sme.c
-+++ b/net/wireless/wext-sme.c
-@@ -319,6 +319,15 @@ int cfg80211_wext_siwgenie(struct net_device *dev,
- 		return 0;
+**Verdict for 6.18.44:** **YES** — real HW-read race on Qualcomm TSENS
+v1/v2, affects thermal readings (including the IRQ/overheat path), and
+the fix is small, reviewed, and should apply cleanly.
+
+ drivers/thermal/qcom/tsens.c | 111 ++++++++++++++++++++++++-----------
+ drivers/thermal/qcom/tsens.h |   1 +
+ 2 files changed, 78 insertions(+), 34 deletions(-)
+
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index a2422ebee8169..40f27c1a1cd59 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -316,9 +316,66 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+ }
  
- 	if (ie_len) {
-+		const struct element *elem;
+ /**
+- * tsens_hw_to_mC - Return sign-extended temperature in mCelsius.
++ * tsens_read_temp - Retrieve temperature readings from the hardware.
+  * @s:     Pointer to sensor struct
+  * @field: Index into regmap_field array pointing to temperature data
++ * @temp: temperature in deciCelsius to be read from hardware
++ *
++ * This function handles temperature returned in ADC code or deciCelsius
++ * depending on IP version.
++ *
++ * Return: 0 on success, a negative errno will be returned in error cases
++ */
++static int tsens_read_temp(const struct tsens_sensor *s, int field, int *temp)
++{
++	struct tsens_priv *priv = s->priv;
++	int temp_val[MAX_READ_RETRY] = {0};
++	u32 status;
++	int ret;
++	u32 last_temp_mask = GENMASK(priv->fields[LAST_TEMP_0].msb,
++					priv->fields[LAST_TEMP_0].lsb);
++	u32 valid_bit = priv->rf[VALID_0] ? BIT(priv->fields[VALID_0].lsb) : 0;
 +
-+		for_each_element(elem, extra, ie_len) {
-+			/* nothing */
++	for (int i = 0; i < MAX_READ_RETRY; i++) {
++		ret = regmap_read(priv->tm_map, priv->fields[field].reg, &status);
++		if (ret)
++			return ret;
++
++		/* VER_0 doesn't have a VALID bit */
++		if (!valid_bit) {
++			*temp = status & last_temp_mask;
++			return 0;
 +		}
 +
-+		if (!for_each_element_completed(elem, extra, ie_len))
-+			return -EINVAL;
++		temp_val[i] = status & last_temp_mask;
 +
- 		ie = kmemdup(extra, ie_len, GFP_KERNEL);
- 		if (!ie)
- 			return -ENOMEM;
++		if (status & valid_bit) {
++			*temp = temp_val[i];
++			return 0;
++		}
++	}
++
++	/*
++	 * As per the HW guidelines, if none of the attempts observe a
++	 * valid sample, a stable fallback value must be returned. If the
++	 * first and second samples match, the second value is returned;
++	 * otherwise, if the second and third samples match, the third
++	 * value is returned.
++	 */
++	if (temp_val[0] == temp_val[1])
++		*temp = temp_val[1];
++	else if (temp_val[1] == temp_val[2])
++		*temp = temp_val[2];
++	else
++		return -EAGAIN;
++
++	return 0;
++}
++
++/**
++ * tsens_hw_to_mC - Return sign-extended temperature in mCelsius.
++ * @s:     Pointer to sensor struct
++ * @temp: temperature in milliCelsius to be read from hardware
+  *
+  * This function handles temperature returned in ADC code or deciCelsius
+  * depending on IP version.
+@@ -326,20 +383,14 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+  * Return: Temperature in milliCelsius on success, a negative errno will
+  * be returned in error cases
+  */
+-static int tsens_hw_to_mC(const struct tsens_sensor *s, int field)
++static int tsens_hw_to_mC(const struct tsens_sensor *s, int temp)
+ {
+ 	struct tsens_priv *priv = s->priv;
+ 	u32 resolution;
+-	u32 temp = 0;
+-	int ret;
+ 
+ 	resolution = priv->fields[LAST_TEMP_0].msb -
+ 		priv->fields[LAST_TEMP_0].lsb;
+ 
+-	ret = regmap_field_read(priv->rf[field], &temp);
+-	if (ret)
+-		return ret;
+-
+ 	/* Convert temperature from ADC code to milliCelsius */
+ 	if (priv->feat->adc)
+ 		return code_to_degc(temp, s) * 1000;
+@@ -514,8 +565,10 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
+ 					&d->crit_irq_mask);
+ 		if (ret)
+ 			return ret;
+-
+-		d->crit_thresh = tsens_hw_to_mC(s, CRIT_THRESH_0 + hw_id);
++		ret = regmap_field_read(priv->rf[CRIT_THRESH_0 + hw_id], &d->crit_thresh);
++		if (ret)
++			return ret;
++		d->crit_thresh = tsens_hw_to_mC(s, d->crit_thresh);
+ 	} else {
+ 		/* No mask register on older TSENS */
+ 		d->up_irq_mask = 0;
+@@ -525,8 +578,16 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
+ 		d->crit_thresh = 0;
+ 	}
+ 
+-	d->up_thresh  = tsens_hw_to_mC(s, UP_THRESH_0 + hw_id);
+-	d->low_thresh = tsens_hw_to_mC(s, LOW_THRESH_0 + hw_id);
++	ret = regmap_field_read(priv->rf[UP_THRESH_0 + hw_id], &d->up_thresh);
++	if (ret)
++		return ret;
++
++	d->up_thresh = tsens_hw_to_mC(s, d->up_thresh);
++	ret = regmap_field_read(priv->rf[LOW_THRESH_0 + hw_id], &d->low_thresh);
++	if (ret)
++		return ret;
++
++	d->low_thresh = tsens_hw_to_mC(s, d->low_thresh);
+ 
+ 	dev_dbg(priv->dev, "[%u] %s%s: status(%u|%u|%u) | clr(%u|%u|%u) | mask(%u|%u|%u)\n",
+ 		hw_id, __func__,
+@@ -750,33 +811,15 @@ static void tsens_disable_irq(struct tsens_priv *priv)
+ 
+ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+ {
+-	struct tsens_priv *priv = s->priv;
+ 	int hw_id = s->hw_id;
+ 	u32 temp_idx = LAST_TEMP_0 + hw_id;
+-	u32 valid_idx = VALID_0 + hw_id;
+-	u32 valid;
+ 	int ret;
+ 
+-	/* VER_0 doesn't have VALID bit */
+-	if (tsens_version(priv) == VER_0)
+-		goto get_temp;
+-
+-	/* Valid bit is 0 for 6 AHB clock cycles.
+-	 * At 19.2MHz, 1 AHB clock is ~60ns.
+-	 * We should enter this loop very, very rarely.
+-	 * Wait 1 us since it's the min of poll_timeout macro.
+-	 * Old value was 400 ns.
+-	 */
+-	ret = regmap_field_read_poll_timeout(priv->rf[valid_idx], valid,
+-					     valid, 1, 20 * USEC_PER_MSEC);
+-	if (ret)
+-		return ret;
+-
+-get_temp:
+-	/* Valid bit is set, OK to read the temperature */
+-	*temp = tsens_hw_to_mC(s, temp_idx);
++	ret = tsens_read_temp(s, temp_idx, temp);
++	if (!ret)
++		*temp = tsens_hw_to_mC(s, *temp);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int get_temp_common(const struct tsens_sensor *s, int *temp)
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index 2a7afa4c899b9..ab57ad88c3f7c 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -21,6 +21,7 @@
+ #define THRESHOLD_MIN_ADC_CODE	0x0
+ 
+ #define MAX_SENSORS 16
++#define MAX_READ_RETRY 3
+ 
+ #include <linux/interrupt.h>
+ #include <linux/thermal.h>
 -- 
 2.53.0
 
