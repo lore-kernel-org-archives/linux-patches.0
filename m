@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5734CA789;
-	Mon, 31 Aug 2026 14:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB24C492515;
+	Mon, 31 Aug 2026 14:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185098; cv=none; b=mOSO/7p9UoNgOc4PwcVJW/dGwD9TQPj1Y4mXXvno96g2UbNxevbwnWrCq7oPRskzEHXISUpLBHLDhDAwa7G1IjJpQ9RkaQ2DrCR46gb+SsGOo1vQvwj7xLLn0VTPuJYQbtMet/TnIZYTjFKB9VZzZzJhb7lnDZ3G1rbSlDhAkAU=
+	t=1788185135; cv=none; b=naLaLLd7AL+LZLWDeWLGMPEsc3VSmnJBUcoInk7C9SIZCR++7/hmI98qvJHYVfproUtfTsHps1kSVYKoYVTyxJcMEBxGAyOJ4iQgkG06CvY0kjQ9lIFuI0z3oymlxc8KQunqLn9zEbo3QDHpvskaTxatlamX/p7fMDYuCbmZN5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185098; c=relaxed/simple;
-	bh=iEZ2PudzzcgMeyh4X7/TO3PSTZds6G3sYgtl4xBVggY=;
+	s=arc-20240116; t=1788185135; c=relaxed/simple;
+	bh=K1ejekOuMaVbkqVrcC9fLcfTcWbjm9L7i0AlQlEom6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0gTISlmv/VodYGlVGjrqHa8YPXxyU3DPk/JI6avgBYRg1JGDfCfIKjsuld4rrUpcgYnJbLsIkk8MiNUk+n1VYeXrrazC9n/1RdcB9h23HX96SdEgDGIivPWypGPZ6gEx7Gb9WYQhc1xKD5MRxZBbckAg9b5LcaEIwkjpyCWmZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoOk/Ta9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ArpuYhEAMtSOTzziTNllPAzK3bUkX4QTA2bEJ+5BExfMXK4Fght7n8x5uumcGWWaDy6TScIZE3DBa2q+oONu0XwJxy5QcOI933O2ZvYxtpV5kdwOjDXKuclXfs8OK9hrGt9kj47HOo1su6NeA7R7Dz4rfvBETInJDcGx3HVMLRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMDO5zCg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoOk/Ta9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784DE1F000E9;
-	Mon, 31 Aug 2026 14:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMDO5zCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8651E1F00A3F;
+	Mon, 31 Aug 2026 14:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185096;
-	bh=3Qp1pwB3aAE3EN0So9VGq4Ab2k2OXrKNoAP8L5NEOdA=;
+	s=korg; t=1788185133;
+	bh=vY0ai7rVZZ1Lt6gNOsdszWnwBY0fsoHXkm0ejJhuEFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BoOk/Ta9FV4GqHFmoONv6l/qqNjnSP97IUKygHUsx1wm2oIVlTIwfi1FOE78a7r6D
-	 TCmOL032sEJ05ZbKVj7QU8nHYoGt66mqOAP0BOaGzXqX/pGmTiL5W6ZO4NzUYmM6w5
-	 hV+iie6XAZtWhwbFYstd9wbPlOPLMc3kzeSIAogk=
+	b=OMDO5zCgZTPHmlr9oOFI1SDVwgnB2bRKf5VzozsqSPOQwWiTTL/4h22AdyDeBaitc
+	 ewbivD2u6y3ZgoYg1v0uMbpG+A3b6eMtvz+wvfsOTO/7pOH4+Qm1Wvf28kxhN4xjs2
+	 bvK4iOm82rQx3x8jbdEYD1KBdN4oPTT7MhRpLRi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 5.15 52/69] xfrm: ah6: validate routing header segments_left
-Date: Mon, 31 Aug 2026 15:35:25 +0200
-Message-ID: <20260831133401.293039666@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 28/69] nfc: nci: add data_len bound checks to activation parameter extractors
+Date: Mon, 31 Aug 2026 15:35:01 +0200
+Message-ID: <20260831133359.870308911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -50,102 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 7bad4bda74dc4713f398d3b7624ff05478e3a568 upstream.
+[ Upstream commit 0428fa2c22e2ba0cff766d3b80d461e149102045 ]
 
-AH6 rearranges routing-header addresses before computing or verifying the
-ICV. ipv6_rearrange_rthdr() assumes that segments_left is not larger than
-the number of addresses described by the routing header's hdrlen field.
+nci_extract_activation_params_iso_dep() and
+nci_extract_activation_params_nfc_dep() read an inner length byte from
+the NCI RF_INTF_ACTIVATED_NTF payload and use it to memcpy() into fixed
+kernel buffers, but neither function receives the caller-validated
+activation_params_len.  A crafted NCI notification with
+activation_params_len=1 and an inner length byte of up to 20 (NFC-A) or
+50 (NFC-B) causes memcpy() to read that many bytes past the one valid
+byte in the activation params region -- a slab out-of-bounds read of
+kernel memory adjacent to the NCI skb.
 
-That assumption does not hold for raw IPv6 HDRINCL packets. A packet with
-hdrlen equal to 2 describes one address, but can carry an arbitrary
-segments_left value. With segments_left equal to 255, the function moves
-its address pointer 4,064 bytes backwards and passes a 4,064-byte length to
-memmove(), resulting in an out-of-bounds access.
+The sibling nci_extract_rf_params_*() family was given equivalent
+protection by commit 571dcbeb8e63 ("net: nfc: nci: Fix parameter
+validation for packet data"), but the two activation parameter
+extractors were not updated at that time.
 
-Validate the invariant locally before modifying the routing header or
-performing any address-pointer arithmetic, and propagate malformed-header
-errors to the existing AH6 input and output error paths.
+Add a data_len parameter to both functions, guard against an empty
+region before consuming the inner length byte, decrement the remaining
+count after consuming it, and clamp the copy length to what is actually
+available.  Update both call sites to pass ntf.activation_params_len,
+which is already validated against the skb at ntf.c:801.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
 Cc: stable@vger.kernel.org
-Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-6d52d8b0-v3-1-e26221f8826d@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
+[ Replaced `NFC_ATS_MAXSIZE` with the literal `20` since that macro doesn't exist in this tree. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ah6.c |   29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ net/nfc/nci/ntf.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
---- a/net/ipv6/ah6.c
-+++ b/net/ipv6/ah6.c
-@@ -235,26 +235,28 @@ static void ipv6_rearrange_destopt(struc
-  *	Rearrange the destination address in @iph and the addresses in @rthdr
-  *	so that they appear in the order they will at the final destination.
-  *	See Appendix A2 of RFC 2402 for details.
-+ *
-+ * Return: 0 on success, -EINVAL if segments_left exceeds the number of
-+ * addresses described by hdrlen.
-  */
--static void ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
-+static int ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -525,15 +525,19 @@ static int nci_rf_discover_ntf_packet(st
+ 
+ static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
  {
--	int segments, segments_left;
-+	unsigned int segments, segments_left;
- 	struct in6_addr *addrs;
- 	struct in6_addr final_addr;
+ 	struct activation_params_nfca_poll_iso_dep *nfca_poll;
+ 	struct activation_params_nfcb_poll_iso_dep *nfcb_poll;
  
- 	segments_left = rthdr->segments_left;
- 	if (segments_left == 0)
--		return;
--	rthdr->segments_left = 0;
-+		return 0;
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
+ 		nfca_poll->rats_res_len = min_t(__u8, *data++, 20);
++		data_len--;
++		nfca_poll->rats_res_len = min_t(__u8, nfca_poll->rats_res_len, data_len);
+ 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
+ 		if (nfca_poll->rats_res_len > 0) {
+ 			memcpy(nfca_poll->rats_res,
+@@ -542,8 +546,12 @@ static int nci_extract_activation_params
+ 		break;
  
--	/* The value of rthdr->hdrlen has been verified either by the system
--	 * call if it is locally generated, or by ipv6_rthdr_rcv() for incoming
--	 * packets.  So we can assume that it is even and that segments is
--	 * greater than or equal to segments_left.
--	 *
--	 * For the same reason we can assume that this option is of type 0.
-+	/* Raw locally generated packets can reach AH6 without the invariant
-+	 * required by the rt0-style address rearrangement below.
- 	 */
- 	segments = rthdr->hdrlen >> 1;
-+	if (segments_left > segments)
-+		return -EINVAL;
-+
-+	rthdr->segments_left = 0;
+ 	case NCI_NFC_B_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
+ 		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
++		data_len--;
++		nfcb_poll->attrib_res_len = min_t(__u8, nfcb_poll->attrib_res_len, data_len);
+ 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
+ 		if (nfcb_poll->attrib_res_len > 0) {
+ 			memcpy(nfcb_poll->attrib_res,
+@@ -562,7 +570,7 @@ static int nci_extract_activation_params
  
- 	addrs = ((struct rt0_hdr *)rthdr)->addr;
- 	final_addr = addrs[segments - 1];
-@@ -264,6 +266,8 @@ static void ipv6_rearrange_rthdr(struct
+ static int nci_extract_activation_params_nfc_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
+ {
+ 	struct activation_params_poll_nfc_dep *poll;
+ 	struct activation_params_listen_nfc_dep *listen;
+@@ -570,9 +578,13 @@ static int nci_extract_activation_params
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
+ 	case NCI_NFC_F_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		poll = &ntf->activation_params.poll_nfc_dep;
+ 		poll->atr_res_len = min_t(__u8, *data++,
+ 					  NFC_ATR_RES_MAXSIZE - 2);
++		data_len--;
++		poll->atr_res_len = min_t(__u8, poll->atr_res_len, data_len);
+ 		pr_debug("atr_res_len %d\n", poll->atr_res_len);
+ 		if (poll->atr_res_len > 0)
+ 			memcpy(poll->atr_res, data, poll->atr_res_len);
+@@ -580,9 +592,13 @@ static int nci_extract_activation_params
  
- 	addrs[0] = iph->daddr;
- 	iph->daddr = final_addr;
-+
-+	return 0;
- }
- 
- static int ipv6_clear_mutable_options(struct ipv6hdr *iph, int len, int dir)
-@@ -276,6 +280,7 @@ static int ipv6_clear_mutable_options(st
- 	} exthdr = { .iph = iph };
- 	char *end = exthdr.raw + len;
- 	int nexthdr = iph->nexthdr;
-+	int err;
- 
- 	exthdr.iph++;
- 
-@@ -295,7 +300,9 @@ static int ipv6_clear_mutable_options(st
+ 	case NCI_NFC_A_PASSIVE_LISTEN_MODE:
+ 	case NCI_NFC_F_PASSIVE_LISTEN_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		listen = &ntf->activation_params.listen_nfc_dep;
+ 		listen->atr_req_len = min_t(__u8, *data++,
+ 					    NFC_ATR_REQ_MAXSIZE - 2);
++		data_len--;
++		listen->atr_req_len = min_t(__u8, listen->atr_req_len, data_len);
+ 		pr_debug("atr_req_len %d\n", listen->atr_req_len);
+ 		if (listen->atr_req_len > 0)
+ 			memcpy(listen->atr_req, data, listen->atr_req_len);
+@@ -790,12 +806,14 @@ static int nci_rf_intf_activated_ntf_pac
+ 		switch (ntf.rf_interface) {
+ 		case NCI_RF_INTERFACE_ISO_DEP:
+ 			err = nci_extract_activation_params_iso_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
  			break;
  
- 		case NEXTHDR_ROUTING:
--			ipv6_rearrange_rthdr(iph, exthdr.rth);
-+			err = ipv6_rearrange_rthdr(iph, exthdr.rth);
-+			if (err)
-+				return err;
+ 		case NCI_RF_INTERFACE_NFC_DEP:
+ 			err = nci_extract_activation_params_nfc_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
  			break;
  
- 		default:
+ 		case NCI_RF_INTERFACE_FRAME:
 
 
