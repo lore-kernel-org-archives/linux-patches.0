@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3345444062C;
-	Mon, 31 Aug 2026 13:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF5C486E41;
+	Mon, 31 Aug 2026 13:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183489; cv=none; b=K5X+Yo4JlciBEuFTn1atsDjiEM1t6NtustzL8ZS2rFwc1n5sH59cAa2NAOqiVukcq0uEWU/fIfFXWgQ9FjqM0N/axxWoOBOcbODGVg4tA0/FJNBdQqrsPtk/J+HlygRJhKOAxXucJd+7JqzLksCHG34rfxBt5cBnZodAFwJfae8=
+	t=1788183490; cv=none; b=tCDmPpccAMfSuWNEBe6JEWhf+yxed05akpDVLRHcklNnJJzWhCsKYXlT+P6nWNGpY0Hg+EetBvRTNWOvTILoA/zcPei9VCawhAW17S00JYb+Q/ShwLWhClql+PJdb0vGufzKhQ2anYL6TwbSKC+Szcj5F31TevMdEMDRxamDxc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183489; c=relaxed/simple;
-	bh=xrnhguSKIg+Cztql5C7mmZw7koLKaWLcDIqriV2Ft3I=;
+	s=arc-20240116; t=1788183490; c=relaxed/simple;
+	bh=UgXanXeCjUy+m/9uz1O9zt8v+tJsfeXUsXlMlpEBSuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i2quNR5qyeQyPBEin5tDAbgBWFQiw91rIHvc/AaIUGqkzyU8Wvy1jhtt7vArlngdNy/I6Lf3Rq1SBwb65ZyOIZAceGWi4SdmnFoCg0Ela7lmMpu/FxXMDPW3UL0DzLc4Mwiiyi7mcNT9SWMM6hr2UqCeccqSWxC1hVM8Uvlupxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UuOZkee6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iYVOTWP0ixiePT+I4bvbvx1coYvtHCX8XJ1rxvkMaBT9luDThawEeGdvKJLgOcDLePtmXw2+1fCy7/6x4YhIVFchxQ4r4suRAMj67tmnrpgq1aiSYI5CxO1NfYGdI2MYalKD4YWreNNjvEmyAFijQLjL3NAIMVo7IkEsU2eNqC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPRTlttx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UuOZkee6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2AA1F00A3F;
-	Mon, 31 Aug 2026 13:38:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPRTlttx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304F01F00A3D;
+	Mon, 31 Aug 2026 13:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183486;
-	bh=fH1Ye0xirHU3yWSqBSYZpHZlv7lmBwICD1Q4n8jnmPY=;
+	s=k20260515; t=1788183488;
+	bh=7Z/M7hSsn7FlB3oYSo7G4ENB8eNrhml8RP7eak5WlIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UuOZkee6AAIpqfKx1rOdEzgoKY64fVZ0/Ph0jKpbEdtZWZOgCQ3GlBvqkevU8dswX
-	 w4jRiO8nONkZQ0t2Dwtb+tNRjtwtEW3ZKqbVPKdKl5/IKOaE5V2dQU1uwv20P9UhnR
-	 nb41NSnkdyfwTHHO2h3E/h0+4bDGiwVmWe2OPfEhOZVM59syYH2yhG5iP7FFj0n0Cx
-	 2562dByP245KAJuevfvgNHgHbXCRBoBg+xTQODirntpKkyYgxja6jJFL45d+mRtvS2
-	 Ue4GmL0xbdZFSDh4oaJ42YQ/Uagm2tB74YCilZNCjvPbdPRPGBU04pJpeDq3VvZc0b
-	 zx5EGLF3pWXBA==
+	b=hPRTlttxWKQjR2C9vX3XuHvnFQaPDz/4LAEQ2t3wZX7iwRF35Hxf/taNrHYJeb5Ew
+	 YmWpjZZWdtT3J4xQfWCltq4VU96J9RLrtyoQmUzOqVf7ONzvAjX+IRW3zc9DmSEryH
+	 9r4CdKOdGR13wRciaG0BTIoYOrM9xshPmEEsnEbc5edIg2c7PlqyfRavHgsvVwD2nE
+	 a61bkzUnkZoIOo4alwxlxh8mGneEsKLuHiIn1O5OBwbVGqFNGf3QBMtUOu7Xsni+wF
+	 XFcz+Zbf6V5ZuhyGCklrFip8GenA4qeFXeZq/wpUiqF5qU9tO4KAwkkQxxNZYz8sUj
+	 mk7iYEs7P7U1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Akashdeep Kaur <a-kaur@ti.com>,
-	Lee Jones <lee@kernel.org>,
+Cc: Dave Chen <davechen@synology.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	aaro.koskinen@iki.fi,
-	andreas@kemnade.info,
-	khilman@baylibre.com,
-	rogerq@kernel.org,
-	tony@atomide.com,
-	linux-omap@vger.kernel.org,
-	mfd@lists.linux.dev,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] mfd: tps65219: Make poweroff handler conditional on system-power-controller
-Date: Mon, 31 Aug 2026 09:22:33 -0400
-Message-ID: <20260831133314.4125787-125-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] btrfs: only account delalloc bytes for regular file inodes in btrfs_getattr()
+Date: Mon, 31 Aug 2026 09:22:34 -0400
+Message-ID: <20260831133314.4125787-126-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,397 +54,409 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akashdeep Kaur <a-kaur@ti.com>
+From: Dave Chen <davechen@synology.com>
 
-[ Upstream commit 104cd764a031bfe2ffe253adce9581384a78c16e ]
+[ Upstream commit 9411aafdf352b8d72668732af5a37dcb27383e25 ]
 
-Currently, the TPS65219 driver unconditionally registers a poweroff
-handler. This causes issues on systems where a different component
-(such as TF-A firmware) should handle system poweroff instead.
+btrfs_getattr() unconditionally reads BTRFS_I(inode)->new_delalloc_bytes
+and adds it (sector-aligned) to stat->blocks for every inode type.
+However, new_delalloc_bytes lives in a union with last_dir_index_offset:
 
-Make the poweroff handler registration conditional based on the
-"system-power-controller" device tree property. This follows the
-standard kernel pattern where only the designated power controller
-registers for system poweroff operations.
+    union {
+        u64 new_delalloc_bytes;     /* files only */
+        u64 last_dir_index_offset;  /* directories only */
+    };
 
-On systems where the property is absent, the PMIC will not register
-a poweroff handler, allowing other poweroff mechanisms to function.
+For a directory inode this memory holds last_dir_index_offset, which is
+set during directory logging (e.g. flush_dir_items_batch()) to the
+offset of the last logged BTRFS_DIR_INDEX_KEY.  That offset grows with
+the number of entries ever created in the directory (dir indexes are
+monotonic and never reused), so it can be arbitrarily large.
 
-Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>
-Link: https://patch.msgid.link/20260401112257.1248437-3-a-kaur@ti.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+As a result, after a directory has been logged (e.g. via an fsync that
+triggers directory logging), btrfs_getattr() reports inflated st_blocks
+for that directory.  The inflation is purely in-core and disappears
+after the inode is evicted and reloaded (btrfs_alloc_inode() zeroes the
+union), e.g. after a remount.
+
+Reproducer (on a btrfs filesystem):
+
+    D=/mnt/btrfs/d
+    mkdir -p $D
+    for i in $(seq 1 20000); do touch $D/f$i; done
+    sync                      # commit, push dir index high
+    touch $D/trigger          # dirty the dir in a new transaction
+    xfs_io -c fsync $D        # log the directory -> sets last_dir_index_offset
+    stat -c '%b' $D           # st_blocks is now inflated (e.g. 40)
+    # umount + mount -> st_blocks drops back to the correct value
+
+The evict path already knows this union is type-dependent and guards the
+corresponding WARN_ON with !S_ISDIR() in btrfs_destroy_inode(); only
+btrfs_getattr() was missing the equivalent check.
+
+Only read new_delalloc_bytes for regular files, which are the only
+inodes that ever set it.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Dave Chen <davechen@synology.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: btrfs: only account delalloc bytes for
+regular file inodes in btrfs_getattr()
 
-**Step 1.1 — Subject line**
-
-Record: `[mfd: tps65219]` `[Make]` — Make poweroff handler registration
-conditional on the `system-power-controller` device-tree property.
-
-**Step 1.2 — Tags**
-
-Record:
-- `Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>` (author)
-- `Link:
-  https://patch.msgid.link/20260401112257.1248437-3-a-kaur@ti.com`
-  (patch submission; message-id suffix `-3` indicates patch 3 of a
-  series)
-- `Signed-off-by: Lee Jones <lee@kernel.org>` (MFD maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable@vger.kernel.org`
-
-**Step 1.3 — Body analysis**
-
-Record:
-- **Bug:** TPS65219 driver unconditionally registers a system poweroff
-  handler even when another component (e.g. TF-A) should handle
-  shutdown.
-- **Symptom:** Wrong poweroff path is taken; TF-A/PSCI shutdown is
-  preempted or conflicted by PMIC I2C soft-shutdown.
-- **Root cause:** Driver ignores the existing `system-power-controller`
-  DT property documented in the binding.
-- **Fix:** Only call `devm_register_power_off_handler()` when
-  `of_device_is_system_power_controller()` is true.
-
-**Step 1.4 — Hidden bug fix?**
-
-Record: Yes. Despite “Make … conditional” wording, this is a real
-platform correctness bug: the driver registers a shutdown handler on
-boards where it should not, breaking the intended poweroff mechanism.
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
+### Step 1.1: Subject line
+**Record:** `[btrfs]` `[fix implicit]` — only account delalloc bytes for
+regular file inodes in `btrfs_getattr()`.
 
-Record:
-- **File:** `drivers/mfd/tps65219.c` (+4/-4 net, ~10 lines touched)
-- **Function:** `tps65219_probe()`
-- **Scope:** Single-file, surgical driver fix
+### Step 1.2: Tags
+**Record:**
+- **Reviewed-by:** Filipe Manana `<fdmanana@suse.com>` (btrfs
+  maintainer)
+- **Signed-off-by:** Dave Chen `<davechen@synology.com>` (author)
+- **Signed-off-by:** Filipe Manana `<fdmanana@suse.com>`
+- **Signed-off-by:** David Sterba `<dsterba@suse.com>` (btrfs
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable tags
+- Notable: dual btrfs maintainer sign-off; no syzbot/fuzzer report
 
-**Step 2.2 — Code flow change**
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `btrfs_getattr()` always reads
+  `BTRFS_I(inode)->new_delalloc_bytes`, but that field shares a union
+  with `last_dir_index_offset` (directories only).
+- **Symptom:** After directory logging (e.g. `fsync` on a dirty
+  directory), `stat()` reports inflated `st_blocks` for that directory.
+  Value scales with number of directory entries ever created.
+- **Failure mode:** Incorrect userspace-visible block count; purely in-
+  core; resets after inode eviction/remount (`btrfs_alloc_inode()`
+  zeroes the union).
+- **Root cause:** Union member read without inode-type check;
+  `btrfs_destroy_inode()` already guards the equivalent `WARN_ON` with
+  `!S_ISDIR()`.
+- **Reproducer:** Provided in commit message (20,000 files in a
+  directory, sync, fsync, `stat -c '%b'`).
 
-Record:
-- **Before:** `devm_register_power_off_handler()` always runs during
-  probe.
-- **After:** Registration is wrapped in `if
-  (of_device_is_system_power_controller(tps->dev->of_node))`.
-- **Error handling:** Switches to `dev_err_probe()` (consistent with
-  nearby tps6594 code).
-- **Path affected:** Probe success path on all boards with a
-  TPS65214/15/19 PMIC.
-
-**Step 2.3 — Bug mechanism**
-
-Record:
-- **Category:** Logic / correctness fix (wrong shutdown handler
-  registration).
-- **Mechanism:** PMIC registers into the sys-off handler chain
-  unconditionally. On K3 platforms where TF-A/PSCI owns shutdown, the
-  PMIC handler sends an I2C OFF request via `tps65219_soft_shutdown()`,
-  conflicting with the firmware path. The DT binding already defines
-  `system-power-controller` as the gate for this behavior; the driver
-  simply did not honor it.
-
-**Step 2.4 — Fix quality**
-
-Record:
-- Fix is obviously correct and matches established PMIC driver patterns
-  (`tps6594-core.c`, `rn5t618.c`, `max77620.c`, `tps6586x.c`).
-- Minimal diff, no API changes.
-- **Regression risk:** Low for boards that already have `system-power-
-  controller` in DT (no behavior change). One in-tree board
-  (`k3-am62-lp-sk.dts`) lacks the property and currently relies on
-  unconditional registration; it may need a companion DT patch adding
-  `system-power-controller` if PMIC shutdown is still required there.
-  Other AM62 tps65219 boards already have the property.
+### Step 1.4: Hidden bug fix?
+**Record:** No — this is an explicit correctness fix for wrong
+`st_blocks` reporting, not disguised cleanup.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 2: DIFF ANALYSIS
 
-**Step 3.1 — Blame**
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `fs/btrfs/inode.c` (+2/-1 lines)
+- **Function:** `btrfs_getattr()`
+- **Scope:** Single-file, surgical fix
 
-Record:
-- Unconditional `devm_register_power_off_handler()` introduced by commit
-  `3df4c63675203` (“mfd: tps65219: Add support for soft shutdown via
-  sys-off API”, 2023-06-15).
-- That code is present unchanged in the local tree at lines 544–550.
+### Step 2.2: Code flow change
+**Record:**
+- **Before:** `delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes` for
+  every inode type.
+- **After:** `delalloc_bytes = S_ISREG(inode->i_mode) ?
+  BTRFS_I(inode)->new_delalloc_bytes : 0`
+- **Path affected:** Normal `stat`/`statx` path for all btrfs inodes;
+  bug manifests on directories after logging.
 
-**Step 3.2 — Fixes: tag**
+### Step 2.3: Bug mechanism
+**Record:** **Logic / union misuse correctness bug.**
+`new_delalloc_bytes` and `last_dir_index_offset` occupy the same union
+memory. Directory logging (`flush_dir_items_batch()` in `tree-log.c`)
+writes `last_dir_index_offset`; `btrfs_getattr()` misinterprets it as
+pending delalloc bytes and inflates `stat->blocks`.
 
-Record: Not applicable (no `Fixes:` tag). Bug introduced by
-`3df4c63675203`, which is in this tree.
-
-**Step 3.3 — Related file history**
-
-Record:
-- Driver added in `74c17a0a49a6a` (first appeared in v6.10).
-- Poweroff support added 2023-06-15.
-- DT binding `system-power-controller` documented since `4d2aed6ee306c`
-  (2022-08-23), before poweroff handler was added.
-- Fix commit is not yet merged into this checkout (buggy code still
-  present).
-- Patch is 3/N of a series per message-id; standalone driver change is
-  self-contained.
-
-**Step 3.4 — Author context**
-
-Record: Akashdeep Kaur is a TI contributor with K3 device-tree work. Lee
-Jones is the MFD maintainer who committed the original poweroff support.
-
-**Step 3.5 — Dependencies**
-
-Record:
-- `of_device_is_system_power_controller()` exists in
-  `include/linux/of.h` (available via `#include <linux/i2c.h>` already
-  in the file).
-- No structural prerequisites; patch applies standalone to
-  `tps65219_probe()`.
+### Step 2.4: Fix quality
+**Record:** Obviously correct — mirrors the existing `!S_ISDIR()` guard
+in `btrfs_destroy_inode()`. Minimal change. No new locks or API changes.
+Regression risk: very low (directories/symlinks/special files never
+legitimately set `new_delalloc_bytes`).
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 4.1 — Original discussion**
+### Step 3.1: Blame
+**Record:** Lines 8173–8178 blame to `5d324e5159d9e` (2025-11-28 merge).
+Shallow clone limits deeper history; cannot pinpoint the exact
+introducing commit beyond confirming the buggy pattern is present in
+this tree.
 
-Record: `b4 dig -c` could not match the fix commit (not merged in this
-tree). Direct lore fetch returned 403 Forbidden. Link points to patch 3
-of an April 2026 TI submission series.
+### Step 3.2: Fixes: tag
+**Record:** Not applicable — no Fixes: tag in commit message.
 
-**Step 4.2 — Reviewers**
+### Step 3.3: File history
+**Record:** Recent `fs/btrfs/inode.c` changes are unrelated (bool types,
+IO failure fix, folio removal, delalloc bit handling). No prior fix for
+this issue found in this tree. Fix commit itself is **not** present
+locally.
 
-Record: UNVERIFIED — could not retrieve thread via lore or b4.
+### Step 3.4: Author context
+**Record:** Dave Chen has at least one other btrfs commit in this tree
+(`39f196f64bd38` — metadata accounting type fix). btrfs maintainers
+reviewed and signed off.
 
-**Step 4.3 — Bug report**
-
-Record: No external bug report linked. Issue described in commit message
-(TF-A conflict).
-
-**Step 4.4 — Series context**
-
-Record: Message-id suffix `-3` suggests a multi-patch series; possible
-companion DT updates exist but were not analyzed (not in provided diff).
-
-**Step 4.5 — Stable list**
-
-Record: UNVERIFIED — stable list search not accessible.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-
-Record: `tps65219_probe()`, `tps65219_power_off_handler()`,
-`tps65219_soft_shutdown()`.
-
-**Step 5.2 — Callers**
-
-Record: `tps65219_probe()` called from I2C core during device
-enumeration on boards with `compatible = "ti,tps65214"`,
-`"ti,tps65215"`, or `"ti,tps65219"`. Ten in-tree TI K3 DTS files use
-tps65219.
-
-**Step 5.3 — Callees**
-
-Record: `devm_register_power_off_handler()` → sys-off notifier chain;
-handler calls `tps65219_soft_shutdown()` which writes PMIC registers
-over I2C.
-
-**Step 5.4 — Reachability**
-
-Record: Triggered on every `poweroff`/`halt`/`shutdown` on systems where
-the handler is registered. User-visible via standard shutdown syscalls.
-
-**Step 5.5 — Similar patterns**
-
-Record: Identical conditional pattern in `tps6594-core.c:788-792`,
-`rn5t618.c:217-222`, `max77620.c:576-580`, `tps6586x.c:585-599`.
+### Step 3.5: Dependencies
+**Record:** Standalone — requires only `S_ISREG()` and existing union
+layout. No series dependencies. Union and `btrfs_getattr()` delalloc
+accounting both exist in v6.18.44.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 6.1 — Buggy code present?**
+### Step 4.1: Original discussion
+**Record:** `b4 dig` on related commit `0912b98151eea` succeeded (found
+unrelated patch thread). Direct `b4 dig -c` on the fix commit hash was
+unavailable (commit not in local tree). Lore.kernel.org fetch blocked by
+bot protection. **Could not retrieve the fix patch's original lore
+thread.**
 
-Record: **Yes.** Local tree is `v6.18.44` (`git describe HEAD` =
-`v6.18.44-1-g2736c32da98b9`). Unconditional registration at
-`drivers/mfd/tps65219.c:544-550`. Bug present since v6.10 (driver
-introduction) for poweroff path since mid-2023.
+### Step 4.2: Reviewers
+**Record:** Filipe Manana (Reviewed-by + SOB) and David Sterba (SOB) —
+both btrfs subsystem maintainers.
 
-**Step 6.2 — Backport difficulty**
+### Step 4.3: Bug report
+**Record:** No external bug report links. Reproducer is self-contained
+in the commit message.
 
-Record: Clean apply expected — small hunk in `tps65219_probe()`, no
-conflicts visible. `of_device_is_system_power_controller` and DT binding
-property both exist in this tree.
+### Step 4.4: Related patches
+**Record:** Standalone one-commit fix; not part of a series.
 
-**Step 6.3 — Related fixes already present?**
-
-Record: No equivalent conditional registration found in current
-`tps65219.c`.
-
----
-
-## Phase 7: Subsystem Context
-
-**Step 7.1 — Subsystem**
-
-Record: `drivers/mfd/` — MFD/PMIC driver. **Criticality: IMPORTANT**
-(affects system shutdown on embedded TI K3 platforms, not universal but
-operationally critical on affected hardware).
-
-**Step 7.2 — Activity**
-
-Record: Active development — TPS65214/15 support added recently; driver
-actively maintained by TI and MFD maintainers.
+### Step 4.5: Stable list history
+**Record:** Not searched successfully (lore blocked). No Cc: stable in
+commit message.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 8.1 — Who is affected**
+### Step 5.1: Key functions
+**Record:** `btrfs_getattr()` modified.
 
-Record: Users of TI K3 SoCs (AM62 family and derivatives) with
-TPS65214/15/19 PMIC, especially boards where TF-A handles shutdown but
-the PMIC is present for regulators.
+### Step 5.2: Callers
+**Record:** `btrfs_getattr` is registered as `.getattr` in:
+- `btrfs_dir_inode_operations` (line 10597)
+- `btrfs_file_inode_operations` (line 10658)
+- `btrfs_special_inode_operations` (line 10670)
+- `btrfs_symlink_inode_operations` (line 10680)
 
-**Step 8.2 — Trigger conditions**
+All inode types go through this function on `stat`/`statx`/`fstatat`.
 
-Record: Any system shutdown (`halt`, `poweroff`, `shutdown`). Common
-user/admin operation. Not security-sensitive but operationally
-important.
+### Step 5.3: Callees
+**Record:** `generic_fillattr()`, `inode_get_bytes()`, spin lock on
+`BTRFS_I(inode)->lock`, block alignment math for `stat->blocks`.
 
-**Step 8.3 — Failure mode severity**
+### Step 5.4: Reachability
+**Record:** **Userspace-reachable** via `stat()`, `fstat()`, `statx()`,
+`ls -l`, `du`, and any tool reading `st_blocks`. Trigger requires btrfs
++ directory with logged entries + `fsync` — realistic on production
+btrfs systems with large directories.
 
-Record: Improper or failed system shutdown when PMIC handler conflicts
-with TF-A/PSCI path. **Severity: MEDIUM-HIGH** — system may hang instead
-of powering off, or take wrong shutdown path. Not a kernel oops, but a
-real operational failure on production embedded systems.
-
-**Step 8.4 — Risk vs benefit**
-
-Record:
-- **Benefit:** HIGH for affected TI K3 platforms — restores correct
-  shutdown delegation per DT contract.
-- **Risk:** LOW — 10-line change following established pattern; 9 of 10
-  in-tree tps65219 boards already declare `system-power-controller`.
-- **Ratio:** Benefit clearly outweighs risk.
+### Step 5.5: Similar patterns
+**Record:** `btrfs_destroy_inode()` at lines 8045–8048 already uses `if
+(!S_ISDIR(...))` before checking `new_delalloc_bytes`.
+`btrfs_alloc_inode()` at lines 7967–7968 documents the union and zeroes
+it. `btrfs_inode.h` lines 241–254 document per-type union usage. Only
+`btrfs_getattr()` was missing the type guard.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (v6.18.44)
 
-**Evidence FOR backport:**
-- Fixes real shutdown correctness bug on TF-A-managed platforms
-- Aligns driver with DT binding documented since 2022
-- Matches established kernel PMIC pattern (tps6594, rn5t618, etc.)
-- Small, surgical, maintainer-reviewed
-- Buggy code confirmed present in v6.18.44 tree
-- Affects commonly deployed TI K3 embedded hardware
+### Step 6.1: Buggy code present?
+**Record:** **YES.** Current code at line 8174:
 
-**Evidence AGAINST:**
-- `k3-am62-lp-sk.dts` lacks `system-power-controller`; may need
-  companion DT patch (not in this commit)
-- Mailing list review details unverified
-- Not a crash/corruption bug — shutdown path correctness
+```8173:8178:fs/btrfs/inode.c
+        spin_lock(&BTRFS_I(inode)->lock);
+        delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes;
+        inode_bytes = inode_get_bytes(inode);
+        spin_unlock(&BTRFS_I(inode)->lock);
+        stat->blocks = (ALIGN(inode_bytes, blocksize) +
+                        ALIGN(delalloc_bytes, blocksize)) >>
+SECTOR_SHIFT;
+```
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — standard pattern, maintainer
-   SOB; runtime testing claimed in original poweroff commit for related
-   hardware
-2. Fixes real bug affecting users? **PASS** — wrong shutdown handler on
-   TF-A platforms
-3. Important issue? **PASS** — shutdown failure/hang, MEDIUM-HIGH
-   severity
-4. Small and contained? **PASS** — single file, ~10 lines
-5. No new features/APIs? **PASS** — implements existing DT contract
-6. Can apply to local tree? **PASS** — code and prerequisites present
+Union definition confirmed in `btrfs_inode.h` lines 241–254.
+`last_dir_index_offset` is set in `tree-log.c` line 4090 during
+`flush_dir_items_batch()`.
 
-**Exception category:** Hardware/platform quirk/workaround alignment
-(DT-driven behavior gate).
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected** — context matches the provided diff
+exactly. No conflicting recent changes in this hunk.
+
+### Step 6.3: Related fixes already present?
+**Record:** **No** — `git grep` finds no `S_ISREG` guard around
+`new_delalloc_bytes` in `btrfs_getattr()`. Fix commit not in tree.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **fs/btrfs** — IMPORTANT. btrfs is widely deployed (servers,
+NAS appliances, desktops). `stat` correctness affects monitoring, quota
+tools, and backup software.
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained — multiple recent fixes in `inode.c` in
+this tree.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** btrfs users who `stat`/`du` directories that have undergone
+directory logging (common after `fsync` on directories with many
+entries). Config-specific: `CONFIG_BTRFS_FS=y/m`.
+
+### Step 8.2: Trigger conditions
+**Record:** Directory with many entries → transaction commit → dirty
+directory → `fsync` triggers directory logging → `last_dir_index_offset`
+set → subsequent `stat` inflates `st_blocks`. Unprivileged users with
+directory read access can trigger `stat`; `fsync` requires write access.
+Not a race — deterministic logic bug.
+
+### Step 8.3: Failure mode severity
+**Record:** **Incorrect `st_blocks` reporting** — **MEDIUM**. No kernel
+crash, corruption, deadlock, or security impact. User-visible wrong
+disk-usage data. Self-corrects on remount/inode eviction. Can mislead
+`du`, monitoring, and capacity planning tools.
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** MEDIUM — corrects real, reproducible stat data on a
+  widely used filesystem
+- **Risk:** VERY LOW — 2-line type guard matching existing in-tree
+  pattern
+- **Ratio:** Favorable
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Real, reproducible bug with clear mechanism (union misuse)
+- User-visible incorrect `st_blocks` on normal btrfs operations
+- Obviously correct fix, reviewed by btrfs maintainers
+- Tiny, self-contained, no dependencies
+- Buggy code confirmed present in v6.18.44; fix not yet applied
+- Consistent with existing `!S_ISDIR()` guard in `btrfs_destroy_inode()`
+
+**AGAINST backport:**
+- No crash, corruption, security, or deadlock
+- In-core only; self-heals on remount
+- Does not affect on-disk state or actual space allocation
+- `st_blocks` for directories is often less critical than for files
+
+**Unresolved:**
+- Exact commit that introduced the bug (shallow clone)
+- Lore discussion thread (site blocked)
+- No user/distro bug reports found
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — logic is clear; maintainers
+   reviewed; reproducer provided
+2. Fixes a real bug affecting users? **PASS** — wrong `st_blocks` after
+   `fsync` on large directories
+3. Important issue? **PASS (borderline)** — not crash/corruption, but a
+   real user-visible "oh, that's not good" stat bug per `stable-kernel-
+   rules.rst`
+4. Small and contained? **PASS** — 3 lines in one function
+5. No new features or APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
+   expected
+
+### Step 9.3: Exception categories
+**Record:** Not applicable (not device ID, quirk, DT, build, or docs
+fix).
+
+### Step 9.4: Decision rationale
+
+For **Linux 6.18.44**, the bug exists: `btrfs_getattr()` reads a file-
+only union member for directory inodes, producing inflated `st_blocks`
+after directory logging. This is a genuine btrfs correctness bug
+reachable through normal `fsync` + `stat` operations. While not a crash
+or corruption issue, it produces wrong userspace-visible data on a major
+filesystem — exactly the kind of contained logic fix stable trees accept
+when maintainers have reviewed it. The fix is trivial, matches an
+existing in-tree pattern, and carries negligible regression risk.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from user-provided diff
-- [Phase 2] Analyzed diff: conditional
-  `of_device_is_system_power_controller()` wrap in `tps65219_probe()`
-- [Phase 3] `git describe HEAD`: v6.18.44-1-g2736c32da98b9
-- [Phase 3] `git blame -L 544,550 drivers/mfd/tps65219.c`: lines from
-  `3df4c63675203` (2023-06-08)
-- [Phase 3] `git show 3df4c63675203`: introduced unconditional poweroff
-  handler
-- [Phase 3] `git log --oneline -20 -- drivers/mfd/tps65219.c`: confirmed
-  driver history
-- [Phase 3] `git tag --contains 74c17a0a49a6a`: driver first in v6.10
-- [Phase 4] `b4 dig -c 3df4c63675203`: found original poweroff patch
-  lore link
-- [Phase 4] `b4 dig -c <fix_commit>`: no match (fix not merged)
-- [Phase 4] lore fetch: 403 Forbidden — review thread UNVERIFIED
-- [Phase 5] Read `tps65219_power_off_handler()` and
-  `tps65219_soft_shutdown()` at lines 29-40
-- [Phase 5] Read `kernel/reboot.c:557-565`:
-  `devm_register_power_off_handler` API
-- [Phase 5] Compared with `tps6594-core.c:788-792`, `rn5t618.c:217-222`,
-  `max77620.c:576-580`
-- [Phase 6] Grep confirmed buggy unconditional registration at
-  `tps65219.c:544-550`
-- [Phase 6] Grep `system-power-controller` in 10 tps65219 DTS files: 9
-  have property, `k3-am62-lp-sk.dts` does not
-- [Phase 6] Read
-  `Documentation/devicetree/bindings/regulator/ti,tps65219.yaml:34-37`:
-  property documented
-- [Phase 6] Read `include/linux/of.h:1706-1708`:
-  `of_device_is_system_power_controller()` implementation
-- [Phase 6] Verified `#include <linux/i2c.h>` pulls in `<linux/of.h>` —
-  no new include needed
-- [Phase 7] K3 AM62 has PSCI (`k3-am62.dtsi:30-31`)
-- [Phase 8] UNVERIFIED: exact failure symptoms on specific TF-A platform
-  (no bug report accessible)
+- **[Phase 1]** Parsed commit message: subsystem=btrfs, tags=Reviewed-by
+  Filipe Manana, SOBs from author + maintainers
+- **[Phase 2]** Diff: 1 file, `btrfs_getattr()`, +2/-1, union misuse fix
+- **[Phase 3]** `git describe HEAD`: v6.18.44; shallow repo (11944
+  commits)
+- **[Phase 3]** `git blame -L 8173,8174 fs/btrfs/inode.c`: buggy line
+  present, dates to 2025-11-28 merge
+- **[Phase 3]** `git log --grep="only account delalloc"`: no match — fix
+  not in tree
+- **[Phase 4]** `b4 dig -c 0912b98151eea`: found unrelated thread; fix
+  commit lore thread **UNVERIFIED**
+- **[Phase 4]** WebFetch lore.kernel.org: blocked by bot protection
+- **[Phase 5]** `grep btrfs_getattr`: registered for dir, file, special,
+  symlink inode ops
+- **[Phase 5]** Read `btrfs_destroy_inode()` lines 8045–8048:
+  `!S_ISDIR()` guard confirmed
+- **[Phase 5]** Read `btrfs_alloc_inode()` lines 7967–7968: union zeroed
+  with comment
+- **[Phase 5]** Read `btrfs_inode.h` lines 241–254: union documented per
+  inode type
+- **[Phase 5]** Read `tree-log.c` line 4090: `last_dir_index_offset` set
+  during directory logging
+- **[Phase 6]** Read `inode.c` lines 8173–8178: unconditional
+  `new_delalloc_bytes` read confirmed
+- **[Phase 6]** `git grep S_ISREG.*new_delalloc`: no existing fix in
+  tree
+- **[Phase 7]** `git log --oneline -20 -- fs/btrfs/inode.c`: active
+  btrfs development confirmed
+- **[Phase 8]** Failure mode: inflated `st_blocks`, severity MEDIUM, no
+  crash/corruption
 
-This commit corrects a driver-DT contract violation that causes improper
-system shutdown on TI K3 platforms where TF-A should handle poweroff.
-The fix is small, follows an established PMIC pattern already used in
-this tree, and the buggy code is present in v6.18.44.
+**YES**The background `b4 dig` check didn’t finish cleanly — it only
+confirmed `b4` is installed at `/home/sasha/.local/bin/b4`, then stalled
+on `b4 dig -c 5d324e5159d9e` (a merge commit, not the fix itself) and
+exited with an error.
 
-**YES**
+That doesn’t change the backport analysis: the bug is present in this
+**6.18.44** tree, the fix is a small type guard in `btrfs_getattr()`,
+and the recommendation remains **YES**.
 
- drivers/mfd/tps65219.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/btrfs/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
-index 7275dcdb7c44f..e52fbf1481fef 100644
---- a/drivers/mfd/tps65219.c
-+++ b/drivers/mfd/tps65219.c
-@@ -541,13 +541,15 @@ static int tps65219_probe(struct i2c_client *client)
- 		return ret;
- 	}
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 36f75c6a8344d..323d56e1fc183 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -8171,7 +8171,8 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
+ 	stat->result_mask |= STATX_SUBVOL;
  
--	ret = devm_register_power_off_handler(tps->dev,
--					      tps65219_power_off_handler,
--					      tps);
--	if (ret) {
--		dev_err(tps->dev, "failed to register power-off handler: %d\n", ret);
--		return ret;
-+	if (of_device_is_system_power_controller(tps->dev->of_node)) {
-+		ret = devm_register_power_off_handler(tps->dev,
-+						      tps65219_power_off_handler,
-+						      tps);
-+		if (ret)
-+			return dev_err_probe(tps->dev, ret,
-+					     "Failed to register power-off handler\n");
- 	}
-+
- 	return 0;
- }
- 
+ 	spin_lock(&BTRFS_I(inode)->lock);
+-	delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes;
++	delalloc_bytes = S_ISREG(inode->i_mode) ?
++			 BTRFS_I(inode)->new_delalloc_bytes : 0;
+ 	inode_bytes = inode_get_bytes(inode);
+ 	spin_unlock(&BTRFS_I(inode)->lock);
+ 	stat->blocks = (ALIGN(inode_bytes, blocksize) +
 -- 
 2.53.0
 
