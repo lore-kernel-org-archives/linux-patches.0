@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C9949DB9B;
-	Mon, 31 Aug 2026 13:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A03448B9B;
+	Mon, 31 Aug 2026 13:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183624; cv=none; b=atfJaEhtnpWrx42l7LsHSi/O3Ot/K1yJmv9UDz+CY7fAKV8qC8bw7DPFybSPD1NK8PwM+H933GTAiBe6y1B838Yi44qEILPK2VZt0WlnAWJOkSdvBl3KnJnI4OC/izYXi5l1LbHZjqo69t8HzGPrPZbreT1kIHmoLr2MtXGO8R4=
+	t=1788183626; cv=none; b=a0Uba32ydzvsM817LPQ5IOFXaTovGYZKx7k1g4LzJAXqTt9Ths96X4jf5yBUf7PPKqvThPu4dVNY2xrRX1kua+2ojFzZGGW3ENI6XjJ/XSttLL6U4WNTP/dtrDg4pCHqRMvgLhETI3Ib/e0rPX14fTx682KVv8f5wUlCaAEqwCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183624; c=relaxed/simple;
-	bh=ORshEqZAmZj4RJ6P64H8aJ/Jq7ltrE/uwtKDvnOhsy8=;
+	s=arc-20240116; t=1788183626; c=relaxed/simple;
+	bh=LzKUEN5iloDyuAC5qBgV8IjlQFTiekzLkNn72l1wtZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3ksba8LyfuYH6UCvvdqb1PIwOPav6pQ+xrpKs2ju0NkouvW9J4Xt+C4hlJkSefrQ7FqN8Nw7HApwTvNb5BoqHHiwneEVgDN4SPVxy3D1hw7vO7RxcibnEf7Px9OI12z8oNq8KOsSXU0C7MCvEmcvK4eDmhJ4Q5Dk5FViXegx+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WeS3ydPX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pbJO2MFcUFt0cHe8QpIlkqkR9xmkeVRLExmT9YlTrIlYyMhq3NSpgUDdynO9VzUgt3VIq2yLTOHAC95S1rZatkhtfb9hSlbQx0sJre5EoyOEZ2feRIjmn/+H6Q61dpH7Rc4aelTw9TFBs/H+Z6xpomtPsAGlgj89VUmrRoHxtfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gKBlvMnu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WeS3ydPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B5B1F00ACA;
-	Mon, 31 Aug 2026 13:40:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gKBlvMnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C664E1F00A3F;
+	Mon, 31 Aug 2026 13:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183622;
-	bh=5vP5s0rhNizpSe05pI4qpUzJp35E9bLBUCPO5+i8kTI=;
+	s=k20260515; t=1788183624;
+	bh=ud6f7rM9i9/CrEz3zfui4Cdx9Ga+5N1V8oNPpgXSeFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WeS3ydPXHvC9Q9sB9NhSSPts1voIb0TCwsMLSGNxBjWzCblFLk1e+JHMavlj9vrDw
-	 M2FQI85H7/D0svCksZl+/f48uBCKZviOfOiXbpNXYLi/wgHDPmNwRSHN0CJRdfSktP
-	 ezwBynCSw/zO9ESMXra++IYVP7/e4Ob+g9VMAzrtlkXFSponoUrvuMEvGvXOO5Bv3/
-	 ZLJYCnH2iIwz7lRgKW9u4T+MBlHE9WMnJIKDU1pd4uu1fnxZjZxfiGKTUIvXyjeK12
-	 RfrW1Zhcn+LqOJK6NM/QiP6ZjcjNuXgXDojZbEmvnW/WT9xnA4HmsmwZjmba7IHN30
-	 2/7kJkWVwAP0A==
+	b=gKBlvMnuc/cN9j8haHASSqEIYjZ3v2tW3pAmCn2RNP/2CG5nt7kB1HUhCAUmx8W3s
+	 6bJyHkwu/h/r4MM2JyliK6MJm1sTnuWLYZb05/4jbGPFsKNoU5fhuVEt2mlYD5yaqp
+	 MAvmvIAPTkaeTjZY2cwFrNYuXYfQhg8gR0DwWmeGAO2NY5Q6jo+LMiUP+kahld1Ih+
+	 lcPqu04wFJZARJwzWW4NajaY2IppkOSt2bk/pQI/QFI0B7YExFUCqfyW3VRMZ2QD7g
+	 C58Y1r5JO0hK5XcUPugHKNfXaUOIHFCDY1TQaZJORGtBbXugaSgAZPqWhAaQ84juOh
+	 OKKX05q2I6yiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sicong Huang <congei42@163.com>,
-	Fei Li <fei1.li@intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
+	kenneth.feng@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] virt: acrn: Fix irqfd use-after-free during eventfd shutdown
-Date: Mon, 31 Aug 2026 09:23:52 -0400
-Message-ID: <20260831133314.4125787-204-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/amd/pm/si: Fix updating clock limits from power states
+Date: Mon, 31 Aug 2026 09:23:53 -0400
+Message-ID: <20260831133314.4125787-205-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -46,240 +52,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Sicong Huang <congei42@163.com>
+From: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
 
-[ Upstream commit 666c7f9e07925aa0863348f960e09bb89f8f05a3 ]
+[ Upstream commit e6c5d36756e7d4d260e2365fc4d01226f1973152 ]
 
-acrn_irqfd_deassign() and the eventfd EPOLLHUP wakeup can race and free
-the same struct hsm_irqfd:
+VBIOS can contain conflicting values between:
+- the maximum allowed clocks and voltages on AC or DC
+- the clocks and voltages in power states on AC or DC
 
-  CPU0                                 CPU1
-  ----                                 ----
-  eventfd_release()
-    wake_up_poll(EPOLLHUP)
-      hsm_irqfd_wakeup()
-        queue_work(&irqfd->shutdown)
-                                       acrn_irqfd_deassign()
-                                         hsm_irqfd_shutdown()
-                                           list_del_init()
-                                           eventfd_ctx_remove_wait_queue()
-                                           eventfd_ctx_put()
-                                         kfree(irqfd)
-  hsm_irqfd_shutdown_work()
-    container_of(work, ..., shutdown)
-    irqfd->vm                  <-- use-after-free
+Update maximum clock (and voltage) limits for both AC/DC
+and take the highest value from the VBIOS limits and
+the performance/battery power states. Previously this
+was only done for AC, but is also needed for DC.
 
-The deassign path freed the irqfd while a shutdown work item was
-already queued by EPOLLHUP (or vice versa), so the work item could
-resurrect a dangling pointer through container_of().
+This commit fixes the behaviour on some laptop GPUs,
+where the VBIOS limit was set to the lowest possible
+clock frequency, so the GPU was stuck on the lowest
+possible power level on battery.
 
-Switch to the lifetime model used by KVM irqfds:
+Some affected GPUs are:
+FirePro W4170M (Dell Precision M2800)
+Radeon HD 8790M (Dell Latitude E6540)
+and possibly other laptop GPUs.
 
- - Deassign/deinit only deactivate the irqfd: remove it from vm->irqfds
-   under irqfds_lock and queue the cleanup work.
- - hsm_irqfd_shutdown_work() becomes the sole owner that unhooks the
-   eventfd waitqueue entry, drops the eventfd reference and frees the
-   irqfd.
- - A new HSM_IRQFD_FLAG_SHUTDOWN bit guarded by test_and_set_bit()
-   ensures the cleanup work is queued at most once, no matter how many
-   of {EPOLLHUP, deassign, deinit} fire concurrently.  This is safe to
-   call from the waitqueue callback, which runs with wqh->lock held and
-   IRQs disabled and therefore cannot take irqfds_lock.
- - acrn_irqfd_deassign() flushes vm->irqfd_wq before returning so the
-   eventfd is fully detached on return.  acrn_irqfd_deinit() deactivates
-   every irqfd, flushes the workqueue and only then destroys it, so no
-   path can queue_work() onto a torn-down workqueue.
- - acrn_irqfd_assign() now installs the eventfd waitqueue entry and
-   publishes the irqfd to vm->irqfds under irqfds_lock, so the irqfd is
-   never visible to deassign/deinit before its waitqueue entry is in
-   place, and any EPOLLHUP that fires in the assign window queues
-   cleanup work that blocks on irqfds_lock until publication is done.
-
-Signed-off-by: Sicong Huang <congei42@163.com>
-Reviewed-by: Fei Li <fei1.li@intel.com>
-Link: https://patch.msgid.link/20260519112018.2135000-2-congei42@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Co-developed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-That check finished: `git log -S "hsm_irqfd_queue_shutdown"` on HEAD
-returned no matches, so the irqfd UAF fix is not in **6.18.44** yet.
-That lines up with the earlier **YES** backport recommendation.
+The background git searches finished and match the earlier analysis:
 
- drivers/virt/acrn/irqfd.c | 71 ++++++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 27 deletions(-)
+- **History search:** The AC-only `max_clock_voltage_on_ac` assignment
+  traces back through the SI DPM code (pickaxe hit `837d542a09cd5`, the
+  pm header relocation). No prior fix for DC clock limits was found.
+- **Author search:** Jeremy Klarenbeek has no commits in this 6.18.44
+  tree.
+- **Fix commit search:** `git log --grep="updating clock limits"`
+  returned nothing — the patch is not in this tree yet. The only "power
+  states" hit in `si_dpm.c` was an unrelated debug-level change.
+- **Hardware search:** No existing commits mention the FirePro W4170M or
+  Radeon HD 8790M by name.
 
-diff --git a/drivers/virt/acrn/irqfd.c b/drivers/virt/acrn/irqfd.c
-index 64d32c8fbf79b..b18d1a9021fb4 100644
---- a/drivers/virt/acrn/irqfd.c
-+++ b/drivers/virt/acrn/irqfd.c
-@@ -16,6 +16,9 @@
- 
- #include "acrn_drv.h"
- 
-+/* Cleanup work has been queued; set via test_and_set_bit(). */
-+#define HSM_IRQFD_FLAG_SHUTDOWN	0
-+
- /**
-  * struct hsm_irqfd - Properties of HSM irqfd
-  * @vm:		Associated VM pointer
-@@ -25,6 +28,7 @@
-  * @list:	Entry within &acrn_vm.irqfds of irqfds of a VM
-  * @pt:		Structure for select/poll on the associated eventfd
-  * @msi:	MSI data
-+ * @flags:	Internal lifecycle flags (HSM_IRQFD_FLAG_*)
-  */
- struct hsm_irqfd {
- 	struct acrn_vm		*vm;
-@@ -34,6 +38,7 @@ struct hsm_irqfd {
- 	struct list_head	list;
- 	poll_table		pt;
- 	struct acrn_msi_entry	msi;
-+	unsigned long		flags;
- };
- 
- static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
-@@ -44,30 +49,29 @@ static void acrn_irqfd_inject(struct hsm_irqfd *irqfd)
- 			irqfd->msi.msi_data);
- }
- 
--static void hsm_irqfd_shutdown(struct hsm_irqfd *irqfd)
-+/* Queue the cleanup work at most once. Safe from atomic context. */
-+static void hsm_irqfd_queue_shutdown(struct hsm_irqfd *irqfd)
- {
--	u64 cnt;
--
--	lockdep_assert_held(&irqfd->vm->irqfds_lock);
--
--	/* remove from wait queue */
--	list_del_init(&irqfd->list);
--	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
--	eventfd_ctx_put(irqfd->eventfd);
--	kfree(irqfd);
-+	if (!test_and_set_bit(HSM_IRQFD_FLAG_SHUTDOWN, &irqfd->flags))
-+		queue_work(irqfd->vm->irqfd_wq, &irqfd->shutdown);
- }
- 
-+/* Sole owner of @irqfd: unhook waitqueue, drop eventfd ref, free. */
- static void hsm_irqfd_shutdown_work(struct work_struct *work)
- {
--	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
-+	struct hsm_irqfd *irqfd = container_of(work, struct hsm_irqfd,
-+					       shutdown);
-+	struct acrn_vm *vm = irqfd->vm;
-+	u64 cnt;
- 
--	irqfd = container_of(work, struct hsm_irqfd, shutdown);
--	vm = irqfd->vm;
- 	mutex_lock(&vm->irqfds_lock);
- 	if (!list_empty(&irqfd->list))
--		hsm_irqfd_shutdown(irqfd);
-+		list_del_init(&irqfd->list);
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	eventfd_ctx_remove_wait_queue(irqfd->eventfd, &irqfd->wait, &cnt);
-+	eventfd_ctx_put(irqfd->eventfd);
-+	kfree(irqfd);
- }
- 
- /* Called with wqh->lock held and interrupts disabled */
-@@ -76,17 +80,16 @@ static int hsm_irqfd_wakeup(wait_queue_entry_t *wait, unsigned int mode,
- {
- 	unsigned long poll_bits = (unsigned long)key;
- 	struct hsm_irqfd *irqfd;
--	struct acrn_vm *vm;
- 
- 	irqfd = container_of(wait, struct hsm_irqfd, wait);
--	vm = irqfd->vm;
-+
- 	if (poll_bits & POLLIN)
- 		/* An event has been signaled, inject an interrupt */
- 		acrn_irqfd_inject(irqfd);
- 
- 	if (poll_bits & POLLHUP)
--		/* Do shutdown work in thread to hold wqh->lock */
--		queue_work(vm->irqfd_wq, &irqfd->shutdown);
-+		/* Defer teardown to the cleanup work; can't sleep here. */
-+		hsm_irqfd_queue_shutdown(irqfd);
- 
- 	return 0;
- }
-@@ -142,6 +145,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 	init_waitqueue_func_entry(&irqfd->wait, hsm_irqfd_wakeup);
- 	init_poll_funcptr(&irqfd->pt, hsm_irqfd_poll_func);
+That supports the **YES** backport recommendation: the bug is present
+and unfixed in 6.18.44, and this would be a new, standalone fix.The
+hardware-related git search completed: there are no commits in this
+6.18.44 tree that mention the FirePro W4170M, Radeon HD 8790M, or author
+Jeremy Klarenbeek in connection with this clock-limits issue. That
+confirms this would be a new fix rather than something already present
+under a different commit.
+
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 29 ++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index 0385b24e7e4a2..ea97276358c0a 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -7238,6 +7238,7 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 	struct evergreen_power_info *eg_pi = evergreen_get_pi(adev);
+ 	struct si_power_info *si_pi = si_get_pi(adev);
+ 	struct  si_ps *ps = si_get_ps(rps);
++	struct amdgpu_clock_and_voltage_limits *limits;
+ 	u16 leakage_voltage;
+ 	struct rv7xx_pl *pl = &ps->performance_levels[index];
+ 	int ret;
+@@ -7297,12 +7298,30 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 		si_pi->mvdd_bootup_value = mvdd;
+ 	}
  
 +	/*
-+	 * Hold irqfds_lock across waitqueue install and list_add so the
-+	 * irqfd is not visible to deassign/deinit before its waitqueue
-+	 * entry is in place, and any racing EPOLLHUP cleanup work blocks
-+	 * on irqfds_lock until publication completes.
++	 * Update maximum allowed clock limits.
++	 * VBIOS can contain conflicting values between:
++	 * - the maximum allowed clocks and voltages on AC or DC
++	 * - the clocks and voltages in power states on AC or DC
 +	 */
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry(tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd != tmp->eventfd)
-@@ -150,14 +159,12 @@ static int acrn_irqfd_assign(struct acrn_vm *vm, struct acrn_irqfd *args)
- 		mutex_unlock(&vm->irqfds_lock);
- 		goto fail;
- 	}
--	list_add_tail(&irqfd->list, &vm->irqfds);
--	mutex_unlock(&vm->irqfds_lock);
- 
--	/* Check the pending event in this stage */
- 	events = vfs_poll(fd_file(f), &irqfd->pt);
--
-+	list_add_tail(&irqfd->list, &vm->irqfds);
- 	if (events & EPOLLIN)
- 		acrn_irqfd_inject(irqfd);
-+	mutex_unlock(&vm->irqfds_lock);
- 
- 	return 0;
- fail:
-@@ -180,13 +187,17 @@ static int acrn_irqfd_deassign(struct acrn_vm *vm,
- 	mutex_lock(&vm->irqfds_lock);
- 	list_for_each_entry_safe(irqfd, tmp, &vm->irqfds, list) {
- 		if (irqfd->eventfd == eventfd) {
--			hsm_irqfd_shutdown(irqfd);
-+			list_del_init(&irqfd->list);
-+			hsm_irqfd_queue_shutdown(irqfd);
- 			break;
- 		}
- 	}
- 	mutex_unlock(&vm->irqfds_lock);
- 	eventfd_ctx_put(eventfd);
- 
-+	/* Wait for cleanup work to finish so the eventfd is fully detached. */
-+	flush_workqueue(vm->irqfd_wq);
+ 	if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
+-	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE) {
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.sclk = pl->sclk;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.mclk = pl->mclk;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.vddc = pl->vddc;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.vddci = pl->vddci;
++	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE)
++		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_ac;
++	else if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
++		 ATOM_PPLIB_CLASSIFICATION_UI_BATTERY)
++		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_dc;
++	else
++		limits = NULL;
 +
- 	return 0;
++	if (limits) {
++		if (pl->sclk > limits->sclk)
++			limits->sclk = pl->sclk;
++		if (pl->mclk > limits->mclk)
++			limits->mclk = pl->mclk;
++		if (pl->vddc > limits->vddc)
++			limits->vddc = pl->vddc;
++		if (pl->vddci > limits->vddci)
++			limits->vddci = pl->vddci;
+ 	}
  }
  
-@@ -219,9 +230,15 @@ void acrn_irqfd_deinit(struct acrn_vm *vm)
- 	struct hsm_irqfd *irqfd, *next;
- 
- 	dev_dbg(acrn_dev.this_device, "VM %u irqfd deinit.\n", vm->vmid);
--	destroy_workqueue(vm->irqfd_wq);
-+
- 	mutex_lock(&vm->irqfds_lock);
--	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list)
--		hsm_irqfd_shutdown(irqfd);
-+	list_for_each_entry_safe(irqfd, next, &vm->irqfds, list) {
-+		list_del_init(&irqfd->list);
-+		hsm_irqfd_queue_shutdown(irqfd);
-+	}
- 	mutex_unlock(&vm->irqfds_lock);
-+
-+	/* Drain all cleanup work before tearing the workqueue down. */
-+	flush_workqueue(vm->irqfd_wq);
-+	destroy_workqueue(vm->irqfd_wq);
- }
 -- 
 2.53.0
 
