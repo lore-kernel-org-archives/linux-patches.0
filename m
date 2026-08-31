@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41B74A92E8;
-	Mon, 31 Aug 2026 14:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A82F4BB5BD;
+	Mon, 31 Aug 2026 14:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184951; cv=none; b=nzbDwfuhnFrVGNnNe2o+5fQiO497nf1OOK7CTMTORfhLGyukIZfB0MYsdwLf1IjDN0Tw6Bappen0oOW73j/32fw6HHJGOtosukFKGCDKsUktLECQf5uH7uXqiHddUAXV3MA7qLR9+plX2V6WILd3SAII7VXlApf3rsnC4NqgSDY=
+	t=1788184961; cv=none; b=iDx+Ax8iW67QehB1lv6RfAHvQCE9GuoxnZwQCSWmnKIzVnX32MNBa96IwXREJWRvrK8j+IoKOO0qcyYkVGc/gkZEuKnrLpoFfCBhIbUf0/CeD36/rJDNX09ms9GSMI6//28dehvk+hJw0ZzSuI1vgXdnSNe6fBuqfesOlljSvfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184951; c=relaxed/simple;
-	bh=t60dfad6jus/XPIFfoeVwUbcOu7Xzb1+xBXGLOLRc50=;
+	s=arc-20240116; t=1788184961; c=relaxed/simple;
+	bh=11Tdx4BT1gtB+eK80EPFruZeHcNKgSOAmZaZU6Nf+rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDrBQMsPryiwH9NESrjpa0fokNDw4jIhoESqHrXtO4kfvHwr2nRMzNQTWXtjquVOs3sSWucjaHdWvz2nfLmxVBjlWS5YzT8qJwF3UiNWOtRidy7Q9XR4rVMqafO6C6wG0ANt1eq4wAINc8RuMwH7w5wSr4vjkBM50+Oe7XTpn00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5eU/gEg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pNnxGnGGbaicAfdsZZxp6EMezCv+4B5KzJJvboxSzq214JXsl9+yd78FFUSRoOf2USvBrh7XxcBzqyMD45jV1UMppqNgYGb3ED1WzhHmzPV3d64cIBJ2WYfM26RX+1bPdQr909ja5tax2K6rnVnZDBIgR0yutwz4shC/sHGOZeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnQ+mR4x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5eU/gEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B15A1F000E9;
-	Mon, 31 Aug 2026 14:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnQ+mR4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879E01F000E9;
+	Mon, 31 Aug 2026 14:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184950;
-	bh=xpiafOH+OvjxcZhQfkGHqlIMDHqrud5KfjCS23z5G4k=;
+	s=korg; t=1788184959;
+	bh=dlDuKF3Ckj12iKP/RTM1H+2dYDPN3JygGi/h3m/64Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J5eU/gEgHqU4FqVpidYYkJz1eKle+cg10fFOycyMRuzKzsu4YwgytNoLO/XvBfpLv
-	 2ahxzU5GEJgpqVLfItI8QLyYaI/liiBewdJMgCnVSvLk5Un9uSJlFcPcUFatr8IVDV
-	 3SOQx0zFxpt69RQGwf4n+CQ9eXjkRQAgeAnRnN8I=
+	b=OnQ+mR4xerzRG58kWYSs5Wn7Ow32NKLBeJbYh8EKU3b9AZqwMWqwk2CQ2lsQN8KZb
+	 A58U9gspxy7MXpz2cOv0nCOw9YI5LTBrTMbXA5K0ppCZRXrPxRRISwG1ORDrgJvKhe
+	 e9DEUvcv693FCt+fSMMyBo5XMZT+DqwBR6rtygOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Semih Baskan <strst.gs@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 64/92] usb: xhci: Handle USB3 port events when there is one roothub
-Date: Mon, 31 Aug 2026 15:35:02 +0200
-Message-ID: <20260831133402.978217559@linuxfoundation.org>
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.1 67/92] fuse: fix invalidate lock leak on setattr writeback failure
+Date: Mon, 31 Aug 2026 15:35:05 +0200
+Message-ID: <20260831133403.136566821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -44,63 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Semih Baskan <strst.gs@gmail.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-commit 3e91ec3e7d80a327fb558207613c80415d3bf756 upstream.
+commit 9afeca0d569c9fc89d758fe7a9339d1e8afb1546 upstream.
 
-handle_port_status() drops every USB3 port event when xhci->shared_hcd is
-NULL. The check dates from a time when xhci-plat always created a shared
-hcd, so a NULL one could only mean the hcd had been removed.
+fuse_do_setattr() takes filemap_invalidate_lock() for a DAX truncate
+(fault_blocked = true) and releases it at the out:/error: labels.  But
+when a writeback flush is also needed, a write_inode_now() failure
+returns directly and leaks the lock, so any later fault or truncate on
+the file stalls on the stale rwsem.
 
-Since commit 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if
-either root hub has no ports") that is no longer true. A controller whose
-USB2 root hub has no ports gets a single roothub, the USB3 rhub is served
-by the main hcd, and shared_hcd stays NULL for the lifetime of the device.
-Every SuperSpeed port event is then thrown away as bogus behind a debug
-message, so devices never enumerate even though the port sees the device
-and its change bits stay set:
+For example, truncate(2) on a setuid file reaches fuse_do_setattr()
+with both ATTR_SIZE and ATTR_MODE set:
 
-  0x006a1203 Powered Connected Enabled Link:U0 PortSpeed:4
-  Change: CSC WRC PRC PLC
+  truncate(2)
+  └─ do_truncate()
+     ├─ dentry_needs_remove_privs()         # S_ISUID
+     └─ notify_change()                     # KILL_SUID -> ATTR_MODE
+        └─ fuse_setattr()                   # no killpriv:
+           │                                #   ia_valid |= ATTR_MODE
+           └─ fuse_do_setattr()
+              ├─ filemap_invalidate_lock()  # IS_DAX && is_truncate
+              └─ write_inode_now()          # is_wb && ATTR_MODE
+                 └─ if (err)                # e.g. daemon -> -EIO
+                    return err              # <- lock leaked
 
-Broadcom Northstar is such a controller. USB3 works there up to 5.15 and
-stops working from 5.19 onwards.
+Fix this by adding an unlock label that releases the lock before
+returning the error, and use it for the fuse_dax_break_layouts()
+failure path as well.
 
-Ask xhci_get_usb3_hcd() instead. It returns the shared hcd when there is
-one, the main hcd when the USB2 root hub has no ports, and NULL once the
-shared hcd is gone, which keeps the original meaning of the check.
-
-Tested on an Asus RT-N18U (BCM47081), which has a single roothub. Before
-the change nothing enumerates on the USB3 port; after it SuperSpeed
-devices enumerate normally over repeated connect and disconnect cycles,
-the change bits shown above clear, and USB2 is unaffected on both ports.
-
-Fixes: 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if either root hub has no ports")
-Cc: stable@vger.kernel.org
-Signed-off-by: Semih Baskan <strst.gs@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260806142113.2436238-17-mathias.nyman@linux.intel.com
+Fixes: 6ae330cad6ef ("virtiofs: serialize truncate/punch_hole and dax fault path")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/dir.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1965,7 +1965,7 @@ static void handle_port_status(struct xh
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1715,10 +1715,8 @@ int fuse_do_setattr(struct dentry *dentr
+ 		filemap_invalidate_lock(mapping);
+ 		fault_blocked = true;
+ 		err = fuse_dax_break_layouts(inode, 0, -1);
+-		if (err) {
+-			filemap_invalidate_unlock(mapping);
+-			return err;
+-		}
++		if (err)
++			goto unlock;
  	}
  
- 	/* We might get interrupts after shared_hcd is removed */
--	if (port->rhub == &xhci->usb3_rhub && xhci->shared_hcd == NULL) {
-+	if (port->rhub == &xhci->usb3_rhub && xhci_get_usb3_hcd(xhci) == NULL) {
- 		xhci_dbg(xhci, "ignore port event for removed USB3 hcd\n");
- 		bogus_port_status = true;
- 		goto cleanup;
+ 	if (attr->ia_valid & ATTR_OPEN) {
+@@ -1745,7 +1743,7 @@ int fuse_do_setattr(struct dentry *dentr
+ 			 ATTR_TIMES_SET)) {
+ 		err = write_inode_now(inode, true);
+ 		if (err)
+-			return err;
++			goto unlock;
+ 
+ 		fuse_set_nowrite(inode);
+ 		fuse_release_nowrite(inode);
+@@ -1843,6 +1841,7 @@ error:
+ 
+ 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
+ 
++unlock:
+ 	if (fault_blocked)
+ 		filemap_invalidate_unlock(mapping);
+ 	return err;
 
 
