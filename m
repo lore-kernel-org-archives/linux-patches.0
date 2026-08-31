@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF74455614;
-	Mon, 31 Aug 2026 13:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE9F4499B6;
+	Mon, 31 Aug 2026 13:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183635; cv=none; b=gfWce4BPNdlf+4tfmtU1u1GKD7AP87k37XfU+Yn7LyOzU92xr8elWtODpBMgO0b2K9oXfRSdr0hKM/1efQFJU7e8DcVh+a4aOsAOthDdrI2GpLiHRmCAL/lOpXs7wYlFw0BkRWr9ciNNEP4OCdogyCJAa5Nwb7nQ7fU9H/fywvc=
+	t=1788183637; cv=none; b=poremH1IWPzanNdJRiPx2pzo4x06guqf/y6RTaBfV5EM1Xgt1pYB4Z7JZwokT62Nm/siq0azOIcrQzdx4khJJlgENl4Oq77zhVJkB/07OdRJHIN1HGbmRdIsD/b0GM9G0is/xPFBcTO8Yt/EAW+qTB5OQJE29u5py6Y4VXjDQHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183635; c=relaxed/simple;
-	bh=Gfgxnq/U6TaMcBnMqsRNjLP4VopQWhtIdCCMMKD7Rfc=;
+	s=arc-20240116; t=1788183637; c=relaxed/simple;
+	bh=cQ57fkDsDwzpmwIWoJvw1RgpgDlGKTY+eDCUJZP5RZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VArwPJpQpPAaS27vD0wHWUV3jDFdoQvOjNyWVnZZl4Er6Uo3anaj0lIOu9ad71qZ9u6nqpf0MgnZisuRwsi9ZGEIDzF2w4tm8qiipoVAPPPjEYskCfr4OYx8MGUMgMaMr2FRgi1HuCmAd8TAycPPUa1eBvHbGLT5iTfbjhxxcLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBZsgwYB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r2qmCNQEG0P0imEtAmAmE7cQRBP/G1dU+ph524FL7Lrtcx4aUBpCmGtavD1Cu4fCkHc02MWwBo+F8Tn3OZaaw+Y/yZccyRp1C5TvIOJ5QrE+GqJZqggJflVfqJbLaeafS7cq71yQa5CECBooLfI4J4vaVDY3hGHxjbQpab9mxnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aI+UuBfZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBZsgwYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0421F000E9;
-	Mon, 31 Aug 2026 13:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aI+UuBfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA191F00ACF;
+	Mon, 31 Aug 2026 13:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183633;
-	bh=SMJxjFW71nVkfBeMCdL6T7MLZjPBTAzstFvQ0aGmTcQ=;
+	s=korg; t=1788183636;
+	bh=0348j7GgjD5nrT0ccFOpds++M7C2amy49q2o+LU81Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LBZsgwYBLQCk0GQAuYql0gEkVnboSq646dOU/5VQcR8iqFD4YxcgrbR3rU+Q5Fsyn
-	 QprP/W5SJ+bz/ymcddIw+SMDTrRu9/nYXErV6F4YnjRnK3CYM2IhHijc6R/a1gf/Mx
-	 P/I7BQPmbaydnorNRChPiZcxoIpBY9s0gDyebwc0=
+	b=aI+UuBfZr7qq0WlYDt5z7hnf1Vz1qF5GqukT/bmbTqewwwiF7+tgtEkCUwev0iSEu
+	 2LKBDeXzxP1xUnDsgOfp+u7Gmq72AFo0BJ5EXRFa0eDSenz5jtTT1XtouRKbkevuih
+	 jYjc0fHsa73xvgI5LIqrVzYwnhz+BbopHHcN9kjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 7.2 63/71] usb: core: Strengthen error handling in hub_hub_status()
-Date: Mon, 31 Aug 2026 15:34:28 +0200
-Message-ID: <20260831133402.516976909@linuxfoundation.org>
+	Trevor Vorhees <vorhees-work@proton.me>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.2 64/71] ALSA: usb-audio: Fix sample rates for PreSonus AudioBox USB
+Date: Mon, 31 Aug 2026 15:34:29 +0200
+Message-ID: <20260831133402.561766684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
 References: <20260831133359.055927882@linuxfoundation.org>
@@ -49,45 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Trevor Vorhees <vorhees-work@proton.me>
 
-commit a29496745aa335d97f617385809583241e118610 upstream.
+commit 21e958c4fd92d63139039430c246613505480689 upstream.
 
-Add additional error handling after the call to get_hub_status() in
-hub_hub_status().
+The fixed audio formats for the PreSonus AudioBox USB specify a discrete
+rate mask but leave nr_rates at zero and rate_table unset.  find_format()
+therefore rejects every requested rate, preventing the playback and
+capture streams from being opened.
 
-get_hub_status() uses usb_control_msg() which does not verify that the
-message is the correct length, substituting it for
-usb_control_msg_recv() would also solve this issue but increase memory
-allocations.
+Add the advertised 44100 and 48000 Hz rates to both streams and report
+their 24 significant bits.
 
-Instead, error handling is copied from the method used in
-hub_ext_port_status(), which shares the same flow of logic as
-hub_hub_status().
-
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://patch.msgid.link/20260722-usb_core_patches_2-v3-1-87622252bfdd@kroah.com
+Fixes: 34fe4a9df247 ("ALSA: usb-audio: Add quirk for PreSonus AudioBox USB")
+Cc: stable@vger.kernel.org
+Signed-off-by: Trevor Vorhees <vorhees-work@proton.me>
+Link: https://patch.msgid.link/20260811-audiobox-usb-fix-v1-1-13c8b7f071ea@proton.me
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/quirks-table.h |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -994,10 +994,12 @@ static int hub_hub_status(struct usb_hub
- 
- 	mutex_lock(&hub->status_mutex);
- 	ret = get_hub_status(hub->hdev, &hub->status->hub);
--	if (ret < 0) {
-+	if (ret < (int)sizeof(hub->status->hub)) {
- 		if (ret != -ENODEV)
- 			dev_err(hub->intfdev,
- 				"%s failed (err = %d)\n", __func__, ret);
-+		if (ret >= 0)
-+			ret = -EIO;
- 	} else {
- 		*status = le16_to_cpu(hub->status->hub.wHubStatus);
- 		*change = le16_to_cpu(hub->status->hub.wHubChange);
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -2692,6 +2692,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 			{
+ 				QUIRK_DATA_AUDIOFORMAT(2) {
+ 					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
++					.fmt_bits = 24,
+ 					.channels = 2,
+ 					.iface = 2,
+ 					.altsetting = 1,
+@@ -2703,11 +2704,16 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 						 SNDRV_PCM_RATE_48000,
+ 					.rate_min = 44100,
+ 					.rate_max = 48000,
++					.nr_rates = 2,
++					.rate_table = (unsigned int[]) {
++						44100, 48000
++					},
+ 				}
+ 			},
+ 			{
+ 				QUIRK_DATA_AUDIOFORMAT(3) {
+ 					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
++					.fmt_bits = 24,
+ 					.channels = 2,
+ 					.iface = 3,
+ 					.altsetting = 1,
+@@ -2719,6 +2725,10 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 						 SNDRV_PCM_RATE_48000,
+ 					.rate_min = 44100,
+ 					.rate_max = 48000,
++					.nr_rates = 2,
++					.rate_table = (unsigned int[]) {
++						44100, 48000
++					},
+ 				}
+ 			},
+ 			QUIRK_COMPOSITE_END
 
 
