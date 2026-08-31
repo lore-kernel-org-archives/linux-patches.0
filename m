@@ -1,236 +1,199 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2275964F6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3E759650C;
 	Mon, 31 Aug 2026 13:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184282; cv=none; b=UIlywbf08HGa6dTglLRENdRHVN6i8bpi1z6JQazOAA5cSUqrJZXdZ1dthXXFYzGMY1WfquPOeFEr6ma7Z6MefKuhth41k1yKNE0Islu+v7TgFbV0c/rp2GgfcXx/b0lSzLplbOgc2x9pBIJZbDsxu3JXYDLajCo71fg3i7MjtqY=
+	t=1788184283; cv=none; b=FW2QmX31/Pw826fSQLIs2bXqkVjNH360r8gETcZRyJZxhKbXCK/WWx8PQBW4d4cFFiUQJRtDKJQw4tYrAvSJrTapRz5jbtxnPBdHK5HwUu/xCOF59xiP0RLO0mDSTWRanS9FE0GET7ZBahcNfoK/+AAM1Ind27/HX+XU5dabP94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184282; c=relaxed/simple;
-	bh=7DQPlXEzN7WI/ZJhNp1OCOCeojyf0YI5nPKpWjPOezw=;
+	s=arc-20240116; t=1788184283; c=relaxed/simple;
+	bh=hsqLcn7k0wF52t1YD7AVJcaDKqKxjMIpNCTDKgDrABU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fH0vK3lPWYSkgVI0Yu+A5fZnhbLN6iLlkXWuZ5RM/0Dz6enz0Y36YaWO2kweoU3jUl67maFl6rgMSk4GqyPEBXSLITb4WJquiZUBsF0sTRAgi++oLGYzbyAHOukf1aW+VRZqX8BBAbCGdb/q3jbfJUVDlp7+xFqq/gawnTfveas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKwFqX6j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t1fy4YiTJiNf55o5AFyasrd+b1PIZbFWdNBHZ+5yvx0ny2HTsvrs8I5bYPQSlz6l98pVQ4DxNCMCGlmlabMyrd6is8MFBNV5t8zgG1mgFL3rscHcKU6HaggTCH+iQWGwEcxTUUadrEjT3qTWZDGQO4Y0/VweMHFJLj/154NBpbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEnwj/Vq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKwFqX6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB631F00A3D;
-	Mon, 31 Aug 2026 13:51:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184280;
-	bh=JcFqPQ4TWgXMnuZg61x6R9zAyZTT0bouo2OLeij6rhA=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEnwj/Vq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2018A1F00ADB;
+	Mon, 31 Aug 2026 13:51:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184280;
+	bh=iZlbAUDL3TDdraPpqXfUzHxv3kbeI/0/m6cV8iIrv3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TKwFqX6j44cQfaj+wnVOw8es1MnZZ6IY3hlkJctVp0b998Iyb6q15MR6ZCQPWNbnh
-	 6ubOeaKyFguozVIxwKHrStnYJ8YDMcE+ClyG2kQnm4mhKORzKgfCaHjHI+vXWxouhR
-	 BsTEaNDK59Jb7Xq126Nsap66zGYmrjBbQ6ISchQ+0cq0VHO3jobzO6yCXu+g69AtYd
-	 sgKSwR4djguYLWnHJ2i2enitKQ/DkeU5L0mXBO4eFc9bHjmxQzt6j5oFZNwjPV1p+/
-	 wu4qXzwLqvwhgWPfSmVLbUVNRPhIj6M/PUucah9Xf+DnKaARm9eXJKlvacHlTxwZGU
-	 c5kHQI37ri8Wg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath11k@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] wifi: ath11k: fix invalid data access in ath11k_dp_rx_h_undecap_nwifi
-Date: Mon, 31 Aug 2026 09:30:26 -0400
-Message-ID: <20260831133314.4125787-598-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=aEnwj/VqKAkSCRlmsfkXf5u+ELN5u1pTRjX+6nkEV9kelndUpbefDD3WbZgFgVtYM
+	 PPXhNszZberXvDFjueo8OorpdKC+jBuy1E6q0TT+vsx70wZ4WtRpbblyOdijmQNVlm
+	 oDVDVNPMzK5S8vXesSF8AhS29qo7+xuF+/8g1h5E=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>,
+	Michael Zaidman <michael.zaidman@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 51/99] HID: ft260: fix stack-use-after-return write in I2C read race
+Date: Mon, 31 Aug 2026 15:34:20 +0200
+Message-ID: <20260831133402.601698020@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 6b471e9aefee9ed73278eb1141e0d8530a56fae9 ]
+------------------
 
-In certain cases, hardware might provide packets with a
-length greater than the maximum native Wi-Fi header length.
-This can lead to accessing and modifying fields in the header
-within the ath11k_dp_rx_h_undecap_nwifi() function for the
-DP_RX_DECAP_TYPE_NATIVE_WIFI decap type and
-potentially result in invalid data access and memory corruption.
+From: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
 
-Kernel stack is corrupted in: ath11k_dp_rx_h_undecap+0x6b0/0x6b0 [ath11k]
-Call trace:
- ath11k_dp_rx_h_mpdu+0x0/0x2e8 [ath11k]
- ath11k_dp_rx_h_mpdu+0x1e0/0x2e8 [ath11k]
- ath11k_dp_rx_wbm_err+0x1e0/0x450 [ath11k]
- ath11k_dp_rx_process_wbm_err+0x2fc/0x460 [ath11k]
- ath11k_dp_service_srng+0x2e0/0x348 [ath11k]
+[ Upstream commit bf3e39df3a397fd82967a31d17c4e02c7feab221 ]
 
-Add a sanity check before processing the SKB to prevent invalid
-data access in the undecap native Wi-Fi function for the
-DP_RX_DECAP_TYPE_NATIVE_WIFI decap type.
+ft260_i2c_read() points dev->read_buf at a caller-supplied buffer
+(often an on-stack variable), arms a completion and waits up to five
+seconds for the device to return the data. The HID input callback
+ft260_raw_event() runs in the input/IRQ path, independent of the
+dev->lock mutex held by the read path, and copies the device-supplied
+payload into dev->read_buf after a plain NULL check.
 
-This adapted from the discussion/patch of the ath12k driver [1].
+These two paths share read_buf, read_idx and read_len with no
+serialization. If the device delays its response until the read
+times out, ft260_i2c_read() resets the controller, clears read_buf
+and returns, unwinding the stack frame the buffer lived in. A
+response that arrives at that moment lets ft260_raw_event() pass the
+NULL check and then memcpy() the device-controlled payload into the
+now-freed stack location, a bounded but attacker-influenced
+stack-use-after-return write triggerable by malicious or
+malfunctioning hardware.
 
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-04685-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+Add a dedicated spinlock that serializes every access to read_buf,
+read_idx and read_len. ft260_raw_event() now holds it across the
+NULL check, the memcpy and the index update, while the read path
+takes it when arming and when clearing the buffer, so the teardown
+can no longer slip between the check and the copy.
 
-Link: https://lore.kernel.org/linux-wireless/20250211090302.4105141-1-tamizh.raja@oss.qualcomm.com/ # [1]
-Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260512022351.2033155-2-miaoqing.pan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 6a82582d9fa4 ("HID: ft260: add usb hid to i2c host bridge driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
+Reviewed-by: Michael Zaidman <michael.zaidman@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/hid/hid-ft260.c |   25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background searches finished and match the earlier analysis:
-
-- **Ath11k fix not in tree** — `git log --grep` found no commit for
-  `ath11k_dp_rx_check_nwifi_hdr_len_valid` or the ath11k undecap_nwifi
-  fix.
-- **Ath12k analogue present** — `9a0dddfb30f12` (`wifi: ath12k: Fix
-  invalid data access in ath12k_dp_rx_h_undecap_nwifi`) is already in
-  v6.18.44.
-
-That supports the **YES** backport verdict: the bug is still present in
-ath11k here, and the fix is a proven port of code already merged for
-ath12k in this tree.
-
- drivers/net/wireless/ath/ath11k/dp_rx.c | 50 +++++++++++++++++++++++--
- 1 file changed, 47 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 330446f279cd6..1514f8657d546 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2501,6 +2501,29 @@ static void ath11k_dp_rx_deliver_msdu(struct ath11k *ar, struct napi_struct *nap
- 	ieee80211_rx_napi(ar->hw, pubsta, msdu, napi);
- }
+--- a/drivers/hid/hid-ft260.c
++++ b/drivers/hid/hid-ft260.c
+@@ -240,6 +240,8 @@ struct ft260_device {
+ 	struct mutex lock;
+ 	u8 write_buf[FT260_REPORT_MAX_LENGTH];
+ 	unsigned long need_wakeup_at;
++	/* Protects read_buf, read_idx and read_len against ft260_raw_event() */
++	spinlock_t read_lock;
+ 	u8 *read_buf;
+ 	u16 read_idx;
+ 	u16 read_len;
+@@ -501,6 +503,7 @@ static int ft260_i2c_read(struct ft260_d
+ 	int timeout, ret = 0;
+ 	struct ft260_i2c_read_request_report rep;
+ 	struct hid_device *hdev = dev->hdev;
++	unsigned long irqflags;
+ 	u8 bus_busy = 0;
  
-+static bool ath11k_dp_rx_check_nwifi_hdr_len_valid(struct ath11k_base *ab,
-+						   struct hal_rx_desc *rx_desc,
-+						   struct sk_buff *msdu)
-+{
-+	struct ieee80211_hdr *hdr;
-+	u8 decap_type;
-+	u32 hdr_len;
-+
-+	decap_type = ath11k_dp_rx_h_msdu_start_decap_type(ab, rx_desc);
-+	if (decap_type != DP_RX_DECAP_TYPE_NATIVE_WIFI)
-+		return true;
-+
-+	hdr = (struct ieee80211_hdr *)msdu->data;
-+	hdr_len = ieee80211_hdrlen(hdr->frame_control);
-+
-+	if (likely(hdr_len <= DP_MAX_NWIFI_HDR_LEN))
-+		return true;
-+
-+	ab->soc_stats.invalid_rbm++;
-+	WARN_ON_ONCE(1);
-+	return false;
-+}
-+
- static int ath11k_dp_rx_process_msdu(struct ath11k *ar,
- 				     struct sk_buff *msdu,
- 				     struct sk_buff_head *msdu_list,
-@@ -2571,6 +2594,11 @@ static int ath11k_dp_rx_process_msdu(struct ath11k *ar,
+ 	if ((flag & FT260_FLAG_START_REPEATED) == FT260_FLAG_START_REPEATED)
+@@ -526,9 +529,11 @@ static int ft260_i2c_read(struct ft260_d
+ 
+ 		reinit_completion(&dev->wait);
+ 
++		spin_lock_irqsave(&dev->read_lock, irqflags);
+ 		dev->read_idx = 0;
+ 		dev->read_buf = data;
+ 		dev->read_len = rd_len;
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 
+ 		ret = ft260_hid_output_report(hdev, (u8 *)&rep, sizeof(rep));
+ 		if (ret < 0) {
+@@ -543,7 +548,9 @@ static int ft260_i2c_read(struct ft260_d
+ 			goto ft260_i2c_read_exit;
  		}
- 	}
  
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu))) {
-+		ret = -EINVAL;
-+		goto free_out;
-+	}
-+
- 	ath11k_dp_rx_h_ppdu(ar, rx_desc, rx_status);
- 	ath11k_dp_rx_h_mpdu(ar, msdu, rx_desc, rx_status);
++		spin_lock_irqsave(&dev->read_lock, irqflags);
+ 		dev->read_buf = NULL;
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
  
-@@ -3306,6 +3334,12 @@ static int ath11k_dp_rx_h_verify_tkip_mic(struct ath11k *ar, struct ath11k_peer
- 		    RX_FLAG_IV_STRIPPED | RX_FLAG_DECRYPTED;
- 	skb_pull(msdu, hal_rx_desc_sz);
+ 		if (flag & FT260_FLAG_STOP)
+ 			bus_busy = FT260_I2C_STATUS_BUS_BUSY;
+@@ -562,7 +569,9 @@ static int ft260_i2c_read(struct ft260_d
+ 	} while (len > 0);
  
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ar->ab, rx_desc,
-+							     msdu))) {
-+		dev_kfree_skb_any(msdu);
-+		return -EINVAL;
-+	}
-+
- 	ath11k_dp_rx_h_ppdu(ar, rx_desc, rxs);
- 	ath11k_dp_rx_h_undecap(ar, msdu, rx_desc,
- 			       HAL_ENCRYPT_TYPE_TKIP_MIC, rxs, true);
-@@ -3998,6 +4032,10 @@ static int ath11k_dp_rx_h_null_q_desc(struct ath11k *ar, struct sk_buff *msdu,
- 		skb_put(msdu, hal_rx_desc_sz + l3pad_bytes + msdu_len);
- 		skb_pull(msdu, hal_rx_desc_sz + l3pad_bytes);
- 	}
-+
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ar->ab, desc, msdu)))
-+		return -EINVAL;
-+
- 	ath11k_dp_rx_h_ppdu(ar, desc, status);
- 
- 	ath11k_dp_rx_h_mpdu(ar, msdu, desc, status);
-@@ -4042,7 +4080,7 @@ static bool ath11k_dp_rx_h_reo_err(struct ath11k *ar, struct sk_buff *msdu,
- 	return drop;
+ ft260_i2c_read_exit:
++	spin_lock_irqsave(&dev->read_lock, irqflags);
+ 	dev->read_buf = NULL;
++	spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 	return ret;
  }
  
--static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
-+static bool ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
- 					struct ieee80211_rx_status *status)
+@@ -1018,6 +1027,7 @@ static int ft260_probe(struct hid_device
+ 		 "FT260 usb-i2c bridge");
+ 
+ 	mutex_init(&dev->lock);
++	spin_lock_init(&dev->read_lock);
+ 	init_completion(&dev->wait);
+ 
+ 	ret = ft260_xfer_status(dev, FT260_I2C_STATUS_BUS_BUSY);
+@@ -1067,6 +1077,7 @@ static int ft260_raw_event(struct hid_de
  {
- 	u16 msdu_len;
-@@ -4050,6 +4088,7 @@ static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
- 	u8 l3pad_bytes;
- 	struct ath11k_skb_rxcb *rxcb = ATH11K_SKB_RXCB(msdu);
- 	u32 hal_rx_desc_sz = ar->ab->hw_params.hal_desc_sz;
-+	struct ath11k_base *ab = ar->ab;
+ 	struct ft260_device *dev = hid_get_drvdata(hdev);
+ 	struct ft260_i2c_input_report *xfer = (void *)data;
++	unsigned long irqflags;
  
- 	rxcb->is_first_msdu = ath11k_dp_rx_h_msdu_end_first_msdu(ar->ab, desc);
- 	rxcb->is_last_msdu = ath11k_dp_rx_h_msdu_end_last_msdu(ar->ab, desc);
-@@ -4059,6 +4098,9 @@ static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
- 	skb_put(msdu, hal_rx_desc_sz + l3pad_bytes + msdu_len);
- 	skb_pull(msdu, hal_rx_desc_sz + l3pad_bytes);
+ 	if (size < offsetof(struct ft260_i2c_input_report, data)) {
+ 		hid_err(hdev, "short report %d\n", size);
+@@ -1075,6 +1086,8 @@ static int ft260_raw_event(struct hid_de
  
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ab, desc, msdu)))
-+		return true;
+ 	if (xfer->report >= FT260_I2C_REPORT_MIN &&
+ 	    xfer->report <= FT260_I2C_REPORT_MAX) {
++		bool complete_read;
 +
- 	ath11k_dp_rx_h_ppdu(ar, desc, status);
+ 		ft260_dbg("i2c resp: rep %#02x len %d size %d\n",
+ 			  xfer->report, xfer->length, size);
  
- 	status->flag |= (RX_FLAG_MMIC_STRIPPED | RX_FLAG_MMIC_ERROR |
-@@ -4066,19 +4108,21 @@ static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
+@@ -1085,8 +1098,15 @@ static int ft260_raw_event(struct hid_de
+ 			return -1;
+ 		}
  
- 	ath11k_dp_rx_h_undecap(ar, msdu, desc,
- 			       HAL_ENCRYPT_TYPE_TKIP_MIC, status, false);
++		/*
++		 * Hold read_lock so a timed-out ft260_i2c_read() cannot
++		 * clear read_buf between the NULL check and the memcpy.
++		 */
++		spin_lock_irqsave(&dev->read_lock, irqflags);
 +
-+	return false;
- }
+ 		if ((dev->read_buf == NULL) ||
+ 		    (xfer->length > dev->read_len - dev->read_idx)) {
++			spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 			hid_err(hdev, "unexpected report %#02x, length %d\n",
+ 				xfer->report, xfer->length);
+ 			return -1;
+@@ -1095,8 +1115,11 @@ static int ft260_raw_event(struct hid_de
+ 		memcpy(&dev->read_buf[dev->read_idx], &xfer->data,
+ 		       xfer->length);
+ 		dev->read_idx += xfer->length;
++		complete_read = dev->read_idx == dev->read_len;
++
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
  
- static bool ath11k_dp_rx_h_rxdma_err(struct ath11k *ar,  struct sk_buff *msdu,
- 				     struct ieee80211_rx_status *status)
- {
- 	struct ath11k_skb_rxcb *rxcb = ATH11K_SKB_RXCB(msdu);
--	bool drop = false;
-+	bool drop;
+-		if (dev->read_idx == dev->read_len)
++		if (complete_read)
+ 			complete(&dev->wait);
  
- 	ar->ab->soc_stats.rxdma_error[rxcb->err_code]++;
- 
- 	switch (rxcb->err_code) {
- 	case HAL_REO_ENTR_RING_RXDMA_ECODE_TKIP_MIC_ERR:
--		ath11k_dp_rx_h_tkip_mic_err(ar, msdu, status);
-+		drop = ath11k_dp_rx_h_tkip_mic_err(ar, msdu, status);
- 		break;
- 	default:
- 		/* TODO: Review other rxdma error code to check if anything is
--- 
-2.53.0
+ 	} else {
+
 
