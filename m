@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB0B4CB8DB;
-	Mon, 31 Aug 2026 14:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D055D48AE0F;
+	Mon, 31 Aug 2026 14:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185104; cv=none; b=QpRTdU2g58knKWW2mONy1k8lgEvcQhYAI6Moyi69pEyxMclc4jJ64egNPFtveho2YQuPVBqZkgncvnVsjZHIJ6x6MV2nTZI1vIoeOQQwvfRC8/41awhmx2rr9p88gBerNH8k1Ja1IU1aO25/KAwwu7M6uaXjR2RyCh9i86T8a1o=
+	t=1788185110; cv=none; b=SZnIZHNgPaDSTk9IrPB2A3tjW1OIWrUcof3p5vMbnddkSOhEHzmUEdfKd+TGzaTA2/Ct24jP9vnc05xORoQns8tCaYMN9qM/5jAlTAyX2WKriubEgEc/HrYmMMKT4V7qdLoYQpfMKpcNU5cWgaxZjX+bGzGgBuDtIk9hUbASnSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185104; c=relaxed/simple;
-	bh=KicS1KnMHk1vUeCdICyl9z8MtPMm4rFy8muZp4BY6w0=;
+	s=arc-20240116; t=1788185110; c=relaxed/simple;
+	bh=bwPppRYMOMCjgc8LRT+cZGdH5pNHWZTwUl5F7fRqEf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgRhbQ0qo1K81BJbSL6ZD3FdtBzFH0pb+WHB1bxVhb88/egLGHDf6YzMhPBrd1xYr+XfmSgUYY367Dix4q3LguAvBcB7OQig/dsSmrvKy9tFfqiL4w9pcPrWybwZa2nXcZiTlbpNoalnxFBUWJoREAgK7y+qyct66qBHGvSVX0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tyj5wZ7F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IWamsXvT4rF3QE0jPxwkupS3gH3ovWuGkxwsmrZBpGzmS5YEO/tkOMFjKPhIIKwzYA4rLGkc2DIhagW7JmXzOhtFRAivBbSQT+j3gc7urtSTRLmRv+poCkofGOt+jaZTXV+NAmOOMpi1+R5ubVNFonK+ib0AQAyZaBdpYmSWYZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVBDh+mv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tyj5wZ7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325A11F000E9;
-	Mon, 31 Aug 2026 14:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVBDh+mv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF901F000E9;
+	Mon, 31 Aug 2026 14:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185101;
-	bh=3oDkSufseonMwVhvqm0wAnFE8ZGgQObc0K1vILr4l/U=;
+	s=korg; t=1788185107;
+	bh=tb/aybKG4QqsCoRMc7Iy62bpbXSmUUS6UoAErIjjjvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tyj5wZ7Fpuk/0vQL9GwP11uEVK3+KpqLnhYinuGBT1xhUuNkVYcyhPHjaRwcvH0i4
-	 GdU3IfMrv6xFkt8nD1gHdMPT8FMlkVBNklgN9oNTciHQartvpHGNqORNf3QEu6nqj4
-	 XgNeGve704KHwgDU/EANbCdoL8jWXx83NtmNWIus=
+	b=NVBDh+mvrlZxGTNyvW7alHXFoP/r+IlZtPpZaICQktjATFWnTPm43WwtyQPeRbdP/
+	 ZtgN9wQol2sLBLr/gH4FwmPGuJz1nl0f8XVDsp1wiq4fTJwPvQ4FqSK9y084Jr5DPN
+	 7XXY+IALUM/mEqjy4lwsdZmNgGTSxNgdI2KrFKrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com,
-	wuyankun <wuyankun@uniontech.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 27/69] nilfs2: reject invalid block index in GC ioctl
-Date: Mon, 31 Aug 2026 15:35:00 +0200
-Message-ID: <20260831133359.821046570@linuxfoundation.org>
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 55/69] ipv6: seg6: clear IPv4 control block on IPIP decapsulation
+Date: Mon, 31 Aug 2026 15:35:28 +0200
+Message-ID: <20260831133401.474509256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -53,88 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit a1735eae55448bc79c2da6593455791e886f6ed8 ]
+commit 44930446dde45a7a90fe1446fa38eb0e2c561646 upstream.
 
-Syzbot reported list corruption caused by a double list_add_tail() call on
-bh->b_assoc_buffers within nilfs_lookup_dirty_data_buffers().
+End.DX4 and End.DT4 decapsulate an IPv4 packet through
+decap_and_validate() and send it directly to IPv4 routing. The inner
+packet therefore bypasses ip_rcv_core(), which normally clears IPCB
+before IPv4 interprets skb->cb.
 
-Analysis revealed that the root cause was the insertion of a page/folio
-with a page index of ULONG_MAX into the page cache via the GC ioctl.
-filemap_get_folios_tag(), called by nilfs_lookup_dirty_data_buffers(),
-repeatedly detects a dirty folio with a page index of ULONG_MAX due to
-index wrap-around, leading to duplicate processing of dirty buffers.
+The skb instead retains IP6CB data from the outer packet. IP6CB and
+IPCB use the same skb->cb storage, so IP6CB(skb)->lastopt overlaps
+IPCB(skb)->opt.optlen and srr, while IP6CB(skb)->nhoff overlaps rr and
+ts.
 
-As a preparatory step, the GC ioctl loads the page/folio of the block to
-be moved during GC and inserts it into the page cache based on information
-in the nilfs_vdesc structure passed as an argument.  Normally, this does
-not cause issues because the user-space GC library configures the
-nilfs_vdesc structure properly.  However, since there is no range check on
-the parameters determining the page index, a request with artificially
-crafted parameters -- such as those generated by Syzbot -- can result in a
-page/folio being inserted with a page index of ULONG_MAX, triggering the
-above problem.
+The sender can make the stale optlen byte nonzero with a valid outer
+extension-header chain. The reproducers put an eight-byte Destination
+Options header immediately after the 40-byte IPv6 header and before the
+Segment Routing Header. ipv6_destopt_rcv() records the sender-controlled
+Destination Options offset in both lastopt and nhoff, setting them to
+40. On the reproduced little-endian x86-64 kernel, IPv4 therefore sees
+optlen = 40 and rr = 40.
 
-This resolves the issue by checking the ranges of 'vd_offset' and
-'vd_vblocknr' in the nilfs_vdesc structure that determine the page index,
-thereby preventing the invalid page/folio insertions.
+Both tcp_v4_save_options() and __ip_options_echo() skip option copying
+when optlen is zero. Here optlen is 40, so the TCP SYN path allocates
+room for 40 bytes of option data and calls __ip_options_echo(). The
+stale rr value makes that function read inner packet byte 41 as the
+Record Route option length. The reproducers set that sender-controlled
+byte to 255, so __ip_options_echo() copies 255 bytes into the 40-byte
+option-data area.
 
-Reported-by: syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c37bed40868932d790e9
-Fixes: 7942b919f732 ("nilfs2: ioctl operations")
-Cc: wuyankun <wuyankun@uniontech.com>
+Separate End.DX4 and End.DT4 reproducers on the unpatched v7.2-rc5
+kernel both produced:
+
+  BUG: KASAN: slab-out-of-bounds in __ip_options_echo()
+  Write of size 255
+
+The relevant End.DX4 call path is:
+
+  __ip_options_echo
+  tcp_v4_route_req
+  tcp_conn_request
+  tcp_v4_conn_request
+  tcp_rcv_state_process
+  tcp_v4_do_rcv
+  tcp_v4_rcv
+  ip_protocol_deliver_rcu
+  ip_local_deliver_finish
+  ip_local_deliver
+  input_action_end_dx4_finish
+  input_action_end_dx4
+
+The relevant End.DT4 call path is:
+
+  __ip_options_echo
+  tcp_v4_route_req
+  tcp_conn_request
+  tcp_v4_conn_request
+  tcp_rcv_state_process
+  tcp_v4_do_rcv
+  tcp_v4_rcv
+  ip_protocol_deliver_rcu
+  ip_local_deliver_finish
+  ip_local_deliver
+  input_action_end_dt4
+
+tcp_v4_save_options() is inlined into the tcp_v4_route_req() path, so
+it does not appear as a separate frame.
+
+When decap_and_validate() handles IPPROTO_IPIP, save the ingress
+interface from IP6CB, clear IPCB, and restore the saved value. Doing
+this in the common decapsulation path covers End.DX4, End.DT4, and
+End.DT46's IPv4 arm.
+
+Use IP6CB(skb)->iif rather than skb->skb_iif. These actions run after
+l3mdev processing, which can replace skb_iif with the L3 master;
+IP6CB iif still records the receiving interface set at IPv6 ingress.
+
+Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260817085839.946321-1-david.lee@trailofbits.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/ioctl.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ net/ipv6/seg6_local.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -513,6 +513,7 @@ static int nilfs_ioctl_get_bdescs(struct
-  * Return: 0 on success, or one of the following negative error codes on
-  * failure:
-  * * %-EEXIST	- Block conflict detected.
-+ * * %-EINVAL	- Invalid virtual block descriptor.
-  * * %-EIO	- I/O error.
-  * * %-ENOENT	- Requested block doesn't exist.
-  * * %-ENOMEM	- Insufficient memory available.
-@@ -522,15 +523,30 @@ static int nilfs_ioctl_move_inode_block(
- 					struct list_head *buffers)
- {
- 	struct buffer_head *bh;
-+	__u64 limit_blkidx = (__u64)inode->i_sb->s_maxbytes >> inode->i_blkbits;
- 	int ret;
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -193,6 +193,13 @@ static bool decap_and_validate(struct sk
+ 	if (iptunnel_pull_offloads(skb))
+ 		return false;
  
--	if (vdesc->vd_flags == 0)
-+	/*
-+	 * vblocknr 0 is reserved as an invalid pointer.  Also, limit_blkidx
-+	 * ensures that the page index converted from vd_vblocknr never
-+	 * overflows the page cache limit and respects the architecture's bmap
-+	 * key width.
-+	 */
-+	if (unlikely(vdesc->vd_vblocknr == 0 ||
-+			vdesc->vd_vblocknr >= limit_blkidx))
-+		return -EINVAL;
++	if (proto == IPPROTO_IPIP) {
++		int iif = IP6CB(skb)->iif;
 +
-+	if (vdesc->vd_flags == 0) {
-+		if (unlikely(vdesc->vd_offset >= limit_blkidx))
-+			return -EINVAL;
-+
- 		ret = nilfs_gccache_submit_read_data(
- 			inode, vdesc->vd_offset, vdesc->vd_blocknr,
- 			vdesc->vd_vblocknr, &bh);
--	else
-+	} else {
- 		ret = nilfs_gccache_submit_read_node(
- 			inode, vdesc->vd_blocknr, vdesc->vd_vblocknr, &bh);
++		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++		IPCB(skb)->iif = iif;
 +	}
++
+ 	return true;
+ }
  
- 	if (unlikely(ret < 0)) {
- 		if (ret == -ENOENT)
 
 
