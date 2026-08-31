@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952A253445D;
-	Mon, 31 Aug 2026 13:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2168B511182;
+	Mon, 31 Aug 2026 13:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183920; cv=none; b=IgaMzsQhJEM8BipTIkORpgMVhSAbVweLNFsHLr5mqOWARITcGlFxpkMXKHYDJ2dd3WBT2FpVWxDQrfnKomaiXdLgz9l/BGQMIj8IS8COdqE5ZA1cQNEWIz+wJWF85ocinN2JqkwUktj7bGzXFXltPsfpohmT/Ni4vgSSXWohsss=
+	t=1788183922; cv=none; b=UP/9K7vadFdidWCyMutAngBYxYvKwRB7vqQO826LGAVosWqrHpzjdfYdxIcsRF52DpRcA+OzNis7GoJjg9C00TKTlqYFgvz5dHncahnX2IVMtkL/6hh85DYdpM8l49NnL/MCHDG1b+rzr578zmP6TtV2q58lOBXRtXdk68dpCD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183920; c=relaxed/simple;
-	bh=VbGYHwMRLeCjqZ7ALbnJB4+mP7qtdzR+fO0BCiMVbxc=;
+	s=arc-20240116; t=1788183922; c=relaxed/simple;
+	bh=M4hwHtfTpYx/TxyJAriiHTcWQXWc+JKhZGanuk43jDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mcMBUBxE7/Msfqu7kEx0+hf8udFMStS+h5talPWZwYTyV3hTJFtxIvWP7Cj1wvSt7ua48W+bLCe3p9fVokCR73Y8H9AJ0D0V2UCaAFLxpbJ8fmDW4PvvQYsOFF84fePOt7Vjsi74prK2tWEhV9fVavJfyFK5pW7NXHdE2z5HjbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nz4aN8ZG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MTLvT/+hpSnDHk0r0HqN2NcKyex3fU0IhT1Nyfhziwh79aptL+bV/fy6OR6y7simA+FpvPtEGprOYQa2/S+ZAMjh6Hve6jZPEnHoO8YrLDS0xRPqWmZuSWTFT/QyTTz2FrMTJ+dyBopUBfM8qfYScjJy5+nESSYq6msQ2mlEv7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kMU0TvZv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nz4aN8ZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7281F000E9;
-	Mon, 31 Aug 2026 13:45:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kMU0TvZv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA9C1F00A3D;
+	Mon, 31 Aug 2026 13:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183918;
-	bh=b1f0TQYeHA2+bRhIr+SRXjRb0rSk0DfsBSL36YQrvPE=;
+	s=k20260515; t=1788183920;
+	bh=erwCL33Eq4WHQ+2TstlMbI5oG5L8AKbn3R7j2Sm0+FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nz4aN8ZGJNDW/jETlgGCB3+FOtClKfF18eZgqaDueXFQxN+1SvMzaQGs2cW3NnuDL
-	 6KProifgjugmPzEFy3C7vQuIMEaWpxruHKZWAcKs1qWdKWb4F1nvecEEOBFEGtcwVf
-	 OWheSZm7qlgi2T3YSjc9gK0cZ2VH7bYEV5cQZuKzWiKQ6BxPEgdSYCPlxEHWFip/IP
-	 ksTTHShTB955+eXqBtERSk+qAYWXae7k36QKWZzjhWnHLlkfMPJ7KDRGCsr3weMMOH
-	 EdKxNDj3TgXa/lX+wC84sxxB9POSbhrE3ZumbdJayR3gvTcQh9bKyjSZeuDtMzw68h
-	 0mALcicYTLMWQ==
+	b=kMU0TvZvPAsXeKzv0GlSMuHc7+wcP5yzk6bQYj6uGRyIXjoTZbOMLTv0+JjfqBneT
+	 g49l1/B3Wmw7SjAM/DcwMRK0CA6u/aKxdOan1c58bGvMBCdqW3HB6u1xK+P1wMspA+
+	 9LJ4YeohqlQosoR/xxUUXtrWRNnnyzgwxtZ0hcIq2t7bsfLonLl+ovhJk/bhZf71Nx
+	 r78hho/j7HN2UUtBGbQpo5gIQr0jz0Fxd5QWNdy4Nd16sLRhszDi7nkPTUypJpKsUT
+	 ukBtBBwUV8+yxHYiBOx8vhMIejHANPgilaIPcYTJXXYD/SPDWGAVhxVybbKkyHagWU
+	 oSVbkpuAA+J9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Philipp Oster <philippdev5396@outlook.de>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	Jouni Malinen <j@w1.fi>,
 	Sasha Levin <sashal@kernel.org>,
-	shenghao-ding@ti.com,
-	kevin-lu@ti.com,
-	baojun.xu@ti.com,
-	sen@ti.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/tas2781: clear cali_data.total_sz when calibration read fails
-Date: Mon, 31 Aug 2026 09:26:48 -0400
-Message-ID: <20260831133314.4125787-380-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mac80211: always allow transmitting null-data on TXQs
+Date: Mon, 31 Aug 2026 09:26:49 -0400
+Message-ID: <20260831133314.4125787-381-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,255 +53,272 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Philipp Oster <philippdev5396@outlook.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b6016332b8899a9775addf9b630b0a53a849c8ed ]
+[ Upstream commit 51129a2ca0482b006d0e12a0aa025ff1e1cad2cb ]
 
-tas2563_save_calibration() assigns cali_data.total_sz before it reads the
-per-device calibration data from EFI, but its error paths return without
-clearing it again. cali_data.cali_reg_array is left all zero, because the
-function returns before the register addresses are assigned.
+Jouni reported that certain sequences of tests caused some
+WDS tests to fail after applying the upcoming hwsim changes
+for NAN. I bisected that down to converting hwsim to TXQs,
+and after a long debug session found that the 4-addr NDP was
+getting dropped, because it goes out via a (management) TXQ
+and is a data frame.
 
-On the first playback tasdev_load_calibrated_data() does
+It's unclear to me now why this only happens in some test
+sequences (e.g. "sigma_dut_sae_h2e_ap_loop ap_wds_sta" and
+"sigma_dut_eap_ttls_all_akm_suites ap_wds_sta_open"), maybe
+that affects timing and the frame is otherwise delayed in
+some way.
 
-	if (!data || !cali_data->total_sz)
-		return;
+Correct the check to only drop frames that actually carry
+data, not NDPs.
 
-which passes, since total_sz is still non-zero. It then issues five
-4-byte bulk writes to p->r0_reg, p->r0_low_reg, p->invr0_reg, p->pow_reg
-and p->tlimit_reg, all of which are 0. Register 0 decodes to book 0 /
-page 0 / register 0x00, so the auto-incrementing block write zeroes
-registers 0x00 to 0x03. Register 0x03 is PB_CFG1, which holds AMP_LEVEL,
-so the amplifier gain is set to its minimum and the speaker stays silent.
-
-This is reproducible on a Lenovo Yoga 7 14ARB7 (two TAS2563 on I2C,
-ACPI INT8866) whose factory calibration was never written to UEFI, so the
-EFI read fails with EFI_NOT_FOUND. The two woofers driven by the
-amplifiers are silent while the tweeters driven directly by the ALC287
-play. Reading the amplifier registers over i2c shows PWR_CTL = 0x00
-(active) and the TDM slots correctly programmed by the RCA profile, but
-PB_CFG1 = 0x00. With this change PB_CFG1 keeps its power-on default of
-0x20 and both woofers play.
-
-tas2781_save_calibration() in tas2781_hda.c already clears total_sz on
-failure; do the same for the TAS2563 variant.
-
-Signed-off-by: Philipp Oster <philippdev5396@outlook.de>
-Link: https://patch.msgid.link/20260720-tas2781-calfix-v1-1-3a5fa6ad90bc@outlook.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Jouni Malinen <j@w1.fi>
+Link: https://patch.msgid.link/20260417141601.851ddf4adb59.I3d668c0e1bdca9cd98f2fc46f84a066e68cc7a62@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ALSA hda/tas2781 calibration `total_sz` fix
+# Stable Backport Analysis: `wifi: mac80211: always allow transmitting
+null-data on TXQs`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-2-g1b9e1abadee04`)
+**Local tree:** Linux **6.18.43** (`stable/linux-6.18.y`, detached HEAD)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[ALSA: hda/tas2781]` `[clear]` — clear stale
-`cali_data.total_sz` on TAS2563 EFI calibration read failure.
+**Record:** `[wifi: mac80211]` `[allow]` — always allow transmitting
+null-data frames on TXQs during dequeue.
 
-### Step 1.2: Tags
+### Step 1.2: Commit tags
 **Record:**
-- **Signed-off-by:** Philipp Oster `<philippdev5396@outlook.de>`
-  (author)
-- **Link:** `https://patch.msgid.link/20260720-tas2781-calfix-v1-1-
-  3a5fa6ad90bc@outlook.de`
-- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer)
-- No `Fixes:`, `Cc: stable`, `Reported-by:`, `Tested-by:`, `Reviewed-
-  by:`
-
-Notable: maintainer merge, detailed hardware reproduction, no
-syzbot/fuzzer signal.
+- **Reported-by:** Jouni Malinen `<j@w1.fi>` (hostap/wpa_supplicant
+  maintainer — credible wireless reporter)
+- **Link:** https://patch.msgid.link/20260417141601.851ddf4adb59.I3d668c
+  0e1bdca9cd98f2fc46f84a066e68cc7a62@changeid
+- **Signed-off-by:** Johannes Berg `<johannes.berg@intel.com>` (mac80211
+  maintainer)
+- No Fixes:, Cc: stable, Reviewed-by, Tested-by, or syzbot tags
+- Notable: single reporter, but a highly credible one in the WiFi stack
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `tas2563_save_calibration()` sets `cd->total_sz` before EFI
-  reads; error paths return without clearing it. `cali_reg_array` stays
-  zero because register addresses are assigned only on success.
-- **Symptom:** On first playback, bogus bulk writes to register 0 zero
-  `PB_CFG1` (AMP_LEVEL); woofers silent, tweeters (ALC287) still work.
-- **Trigger:** Lenovo Yoga 7 14ARB7 (two TAS2563/INT8866), factory
-  calibration absent from UEFI (`EFI_NOT_FOUND`).
-- **Root cause (author):** Stale non-zero `total_sz` makes downstream
-  calibration load proceed with zero register addresses and zeroed data.
-- **Precedent:** `tas2781_save_calibration()` already clears `total_sz`
-  on failure.
+- **Bug:** 4-address null data packets (NDPs/nullfunc) are silently
+  dropped in `ieee80211_tx_dequeue()` because they are IEEE 802.11 data-
+  type frames routed through a management TXQ while the target STA is
+  not yet `WLAN_STA_AUTHORIZED`.
+- **Symptom:** WDS (Wireless Distribution System) test failures —
+  specifically WiFi Alliance sigma tests `sigma_dut_sae_h2e_ap_loop
+  ap_wds_sta` and `sigma_dut_eap_ttls_all_akm_suites ap_wds_sta_open`.
+- **Root cause (author):** The unauthorized-station drop check uses
+  `ieee80211_is_data()`, which matches nullfunc frames; it should use
+  `ieee80211_is_data_present()`, which excludes null/QoS-null subtypes.
+- **Timing:** Intermittent — only some test sequences trigger it; author
+  suspects timing affects whether the frame is still unauthorized when
+  dequeued.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — explicit functional bug fix disguised as a small
-error-path correction. Not cosmetic cleanup.
+### Step 1.4: Hidden bug fix detection
+**Record:** Yes — despite “allow transmitting” wording, this is a logic
+bug fix. The unauthorized-port drop was incorrectly classifying nullfunc
+signaling frames as data frames carrying payload.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Change inventory
 **Record:**
-- **File:** `sound/hda/codecs/side-codecs/tas2781_hda_i2c.c` (+3 lines)
-- **Function:** `tas2563_save_calibration()`
-- **Scope:** Single-file, surgical (3 error paths)
+- **Files:** `net/mac80211/tx.c` — 1 insertion, 1 deletion (net 0 lines)
+- **Function:** `ieee80211_tx_dequeue()`
+- **Scope:** Single-file, single-line surgical fix
 
-### Step 2.2: Code flow per hunk
+### Step 2.2: Code flow change
 **Record:**
-| Hunk | Before | After |
-|------|--------|-------|
-| snprintf failure | `return -EINVAL` with stale `total_sz` |
-`cd->total_sz = 0; return -EINVAL` |
-| EFI `get_variable` failure | same | same fix |
-| `total_sz != offset` mismatch | same | same fix |
-
-Normal success path unchanged; `is_user_space_calidata = true` and
-register assignment still only on success.
+- **Before:** In `ieee80211_tx_dequeue()`, when `txq->sta` is set,
+  nullfunc frames matching `ieee80211_is_data()` are dropped if the STA
+  lacks `WLAN_STA_AUTHORIZED` (unless injected or EAPOL).
+- **After:** Only frames with actual data payload
+  (`ieee80211_is_data_present()`) are subject to the unauthorized drop.
+  Nullfunc/NDP frames pass through.
+- **Path affected:** Software TXQ dequeue path — normal TX path for
+  drivers using `ieee80211_tx_dequeue()`.
 
 ### Step 2.3: Bug mechanism
-**Record:** **Logic / state-consistency bug** — invalid calibration
-state (`total_sz > 0`, zero `cali_reg_array`, zeroed `data`) left after
-partial EFI read failure. Downstream `tasdev_load_calibrated_data()` can
-issue bulk writes to register address 0, corrupting `PB_CFG1`.
-
-**Note:** Commit message cites `if (!data || !cali_data->total_sz)
-return;` in `tasdev_load_calibrated_data()`. That exact guard is **not
-present** in this 6.18.44 tree; the user-space calibration path is gated
-by `is_user_space_calidata`. The failure mode is still plausible if
-`is_user_space_calidata` is true with unset registers, or if related
-mainline logic differs. The `total_sz = 0` cleanup matches the
-established `tas2781_save_calibration()` pattern regardless.
+**Record:**
+- **Category:** Logic / correctness fix (incorrect frame classification)
+- **Mechanism:** `ieee80211_is_data()` returns true for
+  `IEEE80211_STYPE_NULLFUNC` frames. `ieee80211_is_data_present()` masks
+  bit 0x40 to exclude null/QoS-null subtypes. The unauthorized-port
+  guard was meant to block user data to unauthorized STAs, not signaling
+  nullfunc frames used in 4-address WDS setup.
 
 ### Step 2.4: Fix quality
-**Record:** Obviously correct, minimal, mirrors existing
-`tas2781_save_calibration()` behavior (`tas2781_hda.c:228-230`). Very
-low regression risk.
+**Record:**
+- **Obviously correct:** Yes — same file already uses
+  `ieee80211_is_data_present()` at lines 633, 640, 667, and 1312 for the
+  same data-vs-nullfunc distinction.
+- **Minimal:** One-line change, no unrelated edits.
+- **Regression risk:** Very low — only exempts nullfunc frames (no
+  payload) from an unauthorized-data drop; EAPOL exemption path
+  unchanged.
 
 ---
 
-## PHASE 3: GIT HISTORY
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Buggy `tas2563_save_calibration()` present since file
-introduction at merge `5d324e5159d9e` (6.18-rc8 era). `git blame` shows
-error paths never cleared `total_sz`.
+**Record:** In 6.18.43, lines 3891–3910 are present with
+`ieee80211_is_data()`. Git blame in this tree points to `19eef1d98eeda`
+(afs fix) due to a wholesale tree import; history is not granular here.
+Verified the buggy pattern exists identically in `v6.18`, `v6.12`,
+`v6.6`, `v6.1`, and `v5.10` tags.
 
 ### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+**Record:** N/A — no Fixes: tag in commit message.
 
 ### Step 3.3: Related file history
-**Record:** Related stable commits in this tree:
-- `819268882628f` — skip UEFI calibration quirk (ASUS ROG Xbox Ally X)
-- `00d880c469b75` — TAS2563 `speaker_id` init fix (Yoga 7 class
-  hardware)
-- `3646c928bb77c` — speaker ID retrieval refactor
+**Record:** Fix commit `51129a2ca0482` exists on `wireless-next`/`all-
+next` but is **not** in `stable/linux-6.18.y`. Recent stable `tx.c`
+changes since v6.18 are unrelated skb-free/injection fixes. Standalone
+one-commit fix.
 
-Standalone fix; not part of a multi-patch series.
-
-### Step 3.4: Author
-**Record:** Philipp Oster — first-time contributor to this subsystem in
-this tree; patch merged by Takashi Iwai.
+### Step 3.4: Author context
+**Record:** Johannes Berg is the mac80211 subsystem maintainer. No
+related series — v1 only (confirmed via b4 dig -a).
 
 ### Step 3.5: Dependencies
-**Record:** None. Applies standalone to `tas2563_save_calibration()`
-only.
+**Record:** None. `ieee80211_is_data_present()` is defined in
+`include/linux/ieee80211.h` and has been present since at least v5.10 in
+this tree. Fix applies cleanly to 6.18.43 at line 3898.
 
 ---
 
-## PHASE 4: MAILING LIST / EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1–4.5
-**Record:**
-- `b4 dig` without commit hash failed (no commit in tree yet).
-- Lore/patch.msgid.link blocked (Anubis 403 / bot protection).
-- Could not retrieve review thread or stable nominations from lore.
+### Step 4.1: Original discussion
+**Record:** `b4 dig -c 51129a2ca0482` found the thread: https://patch.ms
+gid.link/20260417141601.851ddf4adb59.I3d668c0e1bdca9cd98f2fc46f84a066e68
+cc7a62@changeid. Single v1 patch, no replies in downloaded mbox. No
+stable nomination, no NAKs, no reviewer comments in thread.
 
-**Inferred from commit:** Hardware-tested on Lenovo Yoga 7 14ARB7;
-maintainer (Iwai) merged.
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w` shows CC to `linux-wireless@vger.kernel.org`,
+Johannes Berg, Jouni Malinen. No explicit Reviewed-by in thread.
+
+### Step 4.3: Bug report
+**Record:** Reported by Jouni Malinen during WDS sigma certification
+test failures. Severity: connectivity failure in 4-address WDS setups,
+timing-dependent. No syzbot/CVE.
+
+### Step 4.4: Related patches
+**Record:** Bug surfaced during hwsim TXQ conversion for NAN, but the
+fix targets core mac80211 `ieee80211_tx_dequeue()` — not hwsim-specific.
+No multi-patch series dependency.
+
+### Step 4.5: Stable list history
+**Record:** Lore search blocked by Anubis bot protection on direct
+WebFetch. No stable-list discussion found via b4.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `tas2563_save_calibration()`,
-`tasdev_load_calibrated_data()`, `tasdevice_dev_bulk_write()`
+**Record:** `ieee80211_tx_dequeue()` modified. Related:
+`ieee80211_send_4addr_nullfunc()` (sends the affected frame type).
 
 ### Step 5.2: Callers
-**Record:**
-- `tas2563_save_calibration` → called from `tasdevice_dspfw_init()` via
-  `hda_priv->save_calibration()` (return value **ignored**)
-- `tasdev_load_calibrated_data` → called from
-  `tasdevice_select_tuningprm_cfg()` on first DSP config load during
-  playback
+**Record:** `ieee80211_tx_dequeue()` called from:
+- `net/mac80211/util.c` (wake TX queue handler)
+- Multiple wireless drivers: iwlwifi, mt76, ath9k/ath10k, rtw88, rtw89,
+  etc.
+- Hot path for all drivers using software TXQs.
 
 ### Step 5.3: Callees
-**Record:** `efi.get_variable()`, `devm_kzalloc()`,
-`tasdevice_dev_bulk_write()` / `regmap_bulk_write()`
+**Record:** Dequeue path calls `test_sta_flag(tx.sta,
+WLAN_STA_AUTHORIZED)`, `ieee80211_is_our_addr()`,
+`ieee80211_free_txskb()` on drop.
 
 ### Step 5.4: Reachability
-**Record:** Triggered at audio init/playback on machines using TAS2563
-HDA path (INT8866 ACPI). Lenovo Yoga 7 14ARB7 (`0x17aa:0x3870`) is in
-this tree. User-visible without special privileges.
+**Record:** Triggerable during normal WiFi operation when:
+1. Driver uses `ieee80211_tx_dequeue()` (most modern mac80211 drivers)
+2. Frame is a 4-address nullfunc (`ieee80211_send_4addr_nullfunc()` in
+   `mlme.c:6458`, `cfg.c:281`)
+3. Target STA in TXQ is not yet `WLAN_STA_AUTHORIZED`
+4. Frame is not injected and not EAPOL
+
+Reachable from userspace-driven WDS/4-address configuration — no special
+privileges beyond normal wireless admin.
 
 ### Step 5.5: Similar patterns
-**Record:** `tas2781_save_calibration()` already does
-`cali_data->total_sz = 0` on EFI failure. TAS2563 variant was missing
-the same cleanup.
+**Record:** Same file consistently uses `ieee80211_is_data_present()`
+for “does this frame carry data?” decisions (lines 633, 640, 667, 1312).
+The `ieee80211_tx_dequeue()` check is the outlier using
+`ieee80211_is_data()`.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.43)
 
 ### Step 6.1: Buggy code present?
-**Record:** **Yes.** `tas2563_save_calibration()` at lines 344–388
-returns on error without clearing `total_sz`. INT8866/TAS2563 and Yoga 7
-14ARB7 quirk present since 6.18-rc8.
+**Record:** **Yes.** At `net/mac80211/tx.c:3898`, the tree uses
+`ieee80211_is_data(hdr->frame_control)`. Bug present since at least
+v5.10; confirmed in v6.18.0 and v6.12.0.
 
-### Step 6.2: Backport difficulty
-**Record:** Clean apply expected — 3 identical lines on three existing
-`return -EINVAL` paths.
+### Step 6.2: Backport complications
+**Record:** **Clean apply** — identical context at line 3898 in 6.18.43
+matches mainline fix. No refactoring conflicts.
 
 ### Step 6.3: Related fixes already present?
-**Record:** `tas2781_save_calibration()` already clears `total_sz` on
-failure. This specific TAS2563 fix is **not** yet in the tree.
+**Record:** **No.** `git branch --contains 51129a2ca0482` shows fix only
+on development branches (wireless-next, all-next), not
+stable/linux-6.18.y.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem / criticality
-**Record:** `sound/hda` — TAS2781 side-codec driver. **IMPORTANT**
-(laptop audio on specific Lenovo hardware).
+### Step 7.1: Subsystem criticality
+**Record:** `net/mac80211` — **CORE/IMPORTANT**. mac80211 is the shared
+802.11 stack for virtually all Linux WiFi drivers.
 
 ### Step 7.2: Activity
-**Record:** Actively maintained in 6.18.y (multiple tas2781 stable
-backports already landed).
+**Record:** Actively maintained; recent stable backports to tx.c in
+6.18.y (injection, skb-free fixes).
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Users of Lenovo Yoga 7 14ARB7 and other INT8866/TAS2563 HDA
-laptops missing factory UEFI calibration data.
+**Record:** Users of **4-address WDS mode** and AP+WDS-bridging setups.
+Not universal, but affects a real production use case (enterprise
+bridging, repeater setups, certification-tested configurations).
 
 ### Step 8.2: Trigger conditions
-**Record:** Boot + first playback when EFI calibration variables are
-absent (`EFI_NOT_FOUND`). Reproducible on affected factory configs per
-commit message.
+**Record:** Timing-dependent race between nullfunc TX and STA
+authorization during WDS 4-address setup. Not every boot, but
+reproducible in certification tests. Triggerable by normal wireless
+admin configuring WDS.
 
-### Step 8.3: Failure mode / severity
-**Record:** **Silent woofer speakers** (partial audio loss). **MEDIUM-
-HIGH** — not a crash or security issue, but serious functional
-regression on real hardware.
+### Step 8.3: Failure mode
+**Record:** Silent frame drop → 4-address WDS setup fails → connectivity
+broken. **Severity: MEDIUM-HIGH** (functional connectivity failure, not
+crash/corruption/security, but complete feature breakage when
+triggered).
 
-### Step 8.4: Risk vs benefit
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** HIGH for affected laptop users
-- **Risk:** VERY LOW (3-line error-path cleanup, established pattern)
-- **Ratio:** Strongly favors backport
+- **Benefit:** Restores 4-address WDS nullfunc transmission; fixes
+  logically incorrect frame classification that has existed for years.
+- **Risk:** Minimal — one-line change, maintainer-authored, aligns with
+  existing in-file conventions, only relaxes drop for zero-payload
+  nullfunc frames.
+- **Ratio:** High benefit, very low risk.
 
 ---
 
@@ -314,118 +326,122 @@ regression on real hardware.
 
 ### Step 9.1: Evidence summary
 
-**FOR:**
-- Real, reproducible hardware bug (silent woofers on Yoga 7 14ARB7)
-- Fix mirrors proven `tas2781_save_calibration()` pattern
-- Minimal, surgical, maintainer-merged
-- Affected hardware and driver code exist in 6.18.44
-- Ignored `save_calibration()` return makes stale state especially
-  dangerous
+**FOR backport:**
+- Real logic bug — nullfunc frames incorrectly treated as data-carrying
+- Causes WDS 4-address connectivity failures (reported by Jouni Malinen)
+- One-line, obviously correct fix matching existing mac80211 conventions
+- mac80211 maintainer-authored
+- Bug present in 6.18.43; fix applies cleanly
+- No dependencies; helper function already exists
+- Affects common driver TXQ dequeue path
 
-**AGAINST:**
-- Commit message references a `total_sz` guard in
-  `tasdev_load_calibrated_data()` not found in this tree (mechanism
-  partially unverified statically)
-- Lore review thread inaccessible
-- Narrow hardware scope (TAS2563 HDA + missing UEFI cal)
+**AGAINST backport:**
+- Not a crash, security, or data-corruption issue
+- Timing-dependent; author notes uncertainty about production frequency
+- Discovered in hwsim/NAN TXQ testing context
+- No explicit stable nomination or reviewer thread discussion
+- WDS is a narrower audience than general WiFi
 
-**UNRESOLVED:** Exact static path to bulk-write-to-register-0 in 6.18.44
-without the cited guard; author hardware testing is the primary
-evidence.
+**Unresolved:** Exact production frequency outside certification tests
+(author explicitly uncertain).
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — mirrors existing code;
-   hardware-tested per commit
-2. Fixes real bug affecting users? **PASS** — silent speakers on Lenovo
-   Yoga 7 14ARB7
-3. Important issue? **PASS** — significant functional audio failure
-   (MEDIUM-HIGH)
-4. Small and contained? **PASS** — 3 lines, one function
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — code present, clean apply
-   expected
+1. Obviously correct and tested? **PASS** — logically correct,
+   consistent with in-file patterns; reported via WDS sigma tests.
+2. Fixes a real bug affecting users? **PASS** — silent drop of 4addr
+   nullfunc breaks WDS setup.
+3. Important issue? **PASS** — connectivity failure in WDS/4-address
+   mode (functional break, not cosmetic).
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features or APIs? **PASS** — pure logic correction.
+6. Can apply to local tree? **PASS** — clean apply to 6.18.43.
 
-### Step 9.3: Exception category
-**Record:** Hardware-specific driver bug fix for existing
-TAS2563/INT8866 support (similar to other tas2781 stable backports).
+### Step 9.3: Exception categories
+**Record:** N/A — not a device ID, quirk, DT, build, or docs fix.
+Standard bug fix.
 
 ### Step 9.4: Decision rationale
-This is a clear omission in error handling for TAS2563 UEFI calibration
-reads. The TAS2781 variant already clears `total_sz` on failure; leaving
-it set allows corrupted amplifier register programming and silent
-woofers on laptops without factory calibration in UEFI. The fix is tiny,
-low-risk, and addresses a user-visible defect on hardware already
-supported in 6.18.44.
+
+This is a long-standing classification error in
+`ieee80211_tx_dequeue()`: the unauthorized-port drop guard was meant to
+block user data to STAs that have not completed 802.1X authorization,
+but it also blocked nullfunc signaling frames that carry no payload.
+Those frames are essential for 4-address WDS negotiation
+(`ieee80211_send_4addr_nullfunc()`). The fix changes one macro call to
+match the same data-vs-nullfunc distinction used elsewhere in the same
+file. The change is maintainer-authored, trivial, zero-risk, and fixes a
+real connectivity bug in WDS deployments.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body; no syzbot/stable tags
-- **[Phase 2]** Diff: +3× `cd->total_sz = 0` in
-  `tas2563_save_calibration()` error paths
-- **[Phase 3]** `git describe HEAD` → v6.18.44; `git blame` → bug since
-  5d324e5159d9e; related tas2781 stable commits found
-- **[Phase 3]** Confirmed `tas2781_save_calibration()` clears `total_sz`
-  at `tas2781_hda.c:228-230`
-- **[Phase 4]** `b4 dig` / lore / patch.msgid.link — **BLOCKED**
-  (403/Anubis)
-- **[Phase 5]** Traced callers: `tasdevice_dspfw_init()` →
-  `save_calibration()` (ignored return); `tasdev_load_calibrated_data()`
-  → `tasdevice_select_tuningprm_cfg()`
-- **[Phase 5]** **UNVERIFIED:** `if (!data || !cali_data->total_sz)`
-  guard in `tasdev_load_calibrated_data()` — not found in 6.18.44
-- **[Phase 6]** Buggy code confirmed in tree; Yoga 7 14ARB7 quirk at
-  `alc269.c:7449`; INT8866 at `tas2781_hda_i2c.c:681-688`
-- **[Phase 6]** Fix not yet applied in tree
-- **[Phase 8]** Failure mode: silent woofers; severity MEDIUM-HIGH;
-  benefit/risk favors backport
+- [Phase 1] `git describe HEAD` / `make kernelversion`: tree is 6.18.43
+- [Phase 1] Parsed tags: Reported-by Jouni Malinen, Link to
+  patch.msgid.link, SOB Johannes Berg
+- [Phase 2] Read `include/linux/ieee80211.h:481-528`: confirmed
+  `ieee80211_is_data()` vs `ieee80211_is_data_present()` semantics
+- [Phase 2] Read `net/mac80211/tx.c:3891-3910`: buggy code uses
+  `ieee80211_is_data()` at line 3898
+- [Phase 2] Grep `ieee80211_is_data_present` in tx.c: used at lines 633,
+  640, 667, 1312 for same distinction
+- [Phase 3] `git show 51129a2ca0482`: confirmed mainline fix commit and
+  exact diff
+- [Phase 3] `git show v6.18:net/mac80211/tx.c` lines 3875-3895: buggy
+  code present in v6.18.0
+- [Phase 3] `git show v6.12:net/mac80211/tx.c` lines 3875-3895: buggy
+  code present in v6.12.0
+- [Phase 3] `git show v5.10:net/mac80211/tx.c` line 3640: buggy pattern
+  present since v5.10
+- [Phase 3] `git branch --contains 51129a2ca0482`: fix NOT in
+  stable/linux-6.18.y
+- [Phase 4] `b4 dig -c 51129a2ca0482`: found lore thread URL
+- [Phase 4] `b4 dig -a`: single v1 revision only
+- [Phase 4] `b4 dig -w`: CC linux-wireless, Johannes Berg, Jouni Malinen
+- [Phase 4] `b4 dig -m /tmp/null_data_txq.mbox`: thread contains only
+  patch, no replies/stable nomination
+- [Phase 5] Grep `ieee80211_tx_dequeue` callers: util.c + iwlwifi, mt76,
+  ath9k, ath10k, rtw88, rtw89
+- [Phase 5] Read `mlme.c:2403-2431`, `mlme.c:6457-6458`,
+  `cfg.c:280-281`: 4addr nullfunc send sites
+- [Phase 6] Confirmed buggy code at tx.c:3898 in current 6.18.43
+  checkout
+- [Phase 6] Confirmed `ieee80211_is_data_present` exists in
+  include/linux/ieee80211.h
+- [Phase 8] Assessed failure mode: silent frame drop → WDS connectivity
+  failure, severity MEDIUM-HIGH
 
-**YES**Those three background `git log -S` searches timed out or errored
-— broad history searches on this repo are slow. The needed context was
-already gathered with narrower commands:
+**YES**The background history searches finished, but they didn’t add
+much beyond what we already verified.
 
-- **`tas2563_save_calibration`** and **INT8866/TAS2563 HDA support**
-  have been in the tree since the `tas2781_hda_i2c.c` introduction
-  around the 6.18-rc8 merge (`5d324e5159d9e`), confirmed via `git blame`
-  and `git show`.
-- The **Lenovo Yoga 7 14ARB7** quirk (`0x17aa:0x3870`,
-  `ALC287_FIXUP_YOGA7_14ARB7_I2C`) was also present at that same point
-  in `alc269.c`.
+`git log -S "tx_handlers_drop_unauth_port"` only surfaced unrelated
+commits like the afs import (`19eef1d98eeda`) and `Linux 6.18-rc7`,
+because this repo’s history is heavily squashed. The reverse pickaxe on
+`all-next` similarly hit very old unrelated commits.
 
-That was enough to support the backport verdict: **YES** for 6.18.44.
+That doesn’t change the conclusion. Using release tags (`v5.10` through
+`v6.18`) confirmed the buggy `ieee80211_is_data()` check has been in
+`ieee80211_tx_dequeue()` for a long time, and the one-line fix still
+applies cleanly to **6.18.43**.
 
- sound/hda/codecs/side-codecs/tas2781_hda_i2c.c | 3 +++
- 1 file changed, 3 insertions(+)
+**Verdict remains: YES** for backport to this tree.
 
-diff --git a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-index ebfc08b5fb283..ea80fd774bf24 100644
---- a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-@@ -356,6 +356,7 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
- 			if (ret < 0 || ret >= sizeof(var8) - 1) {
- 				dev_err(p->dev, "%s: Read %s failed\n",
- 					__func__, var8);
-+				cd->total_sz = 0;
- 				return -EINVAL;
- 			}
- 			/*
-@@ -373,6 +374,7 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
- 				dev_warn(p->dev,
- 					"Dev %d: Caldat[%d] read failed %ld\n",
- 					i, j, status);
-+				cd->total_sz = 0;
- 				return -EINVAL;
- 			}
- 			bedata = cpu_to_be32(*(uint32_t *)&data[offset]);
-@@ -384,6 +386,7 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
- 	if (cd->total_sz != offset) {
- 		dev_err(p->dev, "%s: tot_size(%lu) and offset(%u) mismatch\n",
- 			__func__, cd->total_sz, offset);
-+		cd->total_sz = 0;
- 		return -EINVAL;
- 	}
- 
+ net/mac80211/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index c125871adb62b..602974a16edc6 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3895,7 +3895,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 		 * injected frames or EAPOL frames from the local station.
+ 		 */
+ 		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
+-			     ieee80211_is_data(hdr->frame_control) &&
++			     ieee80211_is_data_present(hdr->frame_control) &&
+ 			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
+ 			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
+ 			     !is_multicast_ether_addr(hdr->addr1) &&
 -- 
 2.53.0
 
