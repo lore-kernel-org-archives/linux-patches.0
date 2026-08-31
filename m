@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8892D47CA94;
-	Mon, 31 Aug 2026 13:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367584B7144;
+	Mon, 31 Aug 2026 13:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184680; cv=none; b=XiaVB/NwwH5g/yLysgbxbw4RJqtB/c1X+h49rMY8T9CF6RjVa1XZ+Az/Isvzx4e4nDWj+klcOTlHkANaKxPt8VbL9HMewFn1cDS6Dvvek/RRReIqYSKonOKEyo7RmCNw/hE1VbcurtqX7h1i1sxE8k8U8B+O8ZpmKayGJHITZQE=
+	t=1788184681; cv=none; b=A8YkP7ladjnf/5AshYX1GtTATafBiZCnBp6CrjdaWClrEkIoH8SVrA4Z/BrItvXgqUS9FPSr6KTVGDwvf3ok/t2rVbZ7cTeshpC/aWU6ZHbCMioJm6LL/TvpBJLekf80HwQagwMgayySpBum5kmvSOz8kxU/a53ch9O42TjKbu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184680; c=relaxed/simple;
-	bh=ejjVgwy68pNiyWOIEoDMcKfnP0GVmtiw6PGNKQD1MYk=;
+	s=arc-20240116; t=1788184681; c=relaxed/simple;
+	bh=YS5lkk5R9cxDu9GpGRfRMCa6A+8jx3YYzj2mMQ28d1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GuccBYw5y/XE1Mr3knAK15uT5jjWmlDem8QVGYYqa49e3GU9wdsdp78elufNIvYNbXoTehg4H373/WuJILcZ36/R4whb0yXHfKymOEWfSSl3DTuesTIrB7b55AP5m3mSc9MaytzXcpH0JGfxNGJ7oe76EgjCqKuUiC2X72SNsHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+zJ/TJP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bLBr0FxfzJdPtQ1aQvuVky7YXmbQdIimny6KOA/8JN5T+axobnLjKfE2oSRqWKetQkcewp06CWc/s1sMNoY7pkYhaYI3Py0frQ/BJa6N7p5z6rL98oP8MEsU9FXNV0a5Mfy2fYN9VeiUoPaA5qIg/AstyuNKdIuVievRP0VBfjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAMQvQ7o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+zJ/TJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47291F000E9;
-	Mon, 31 Aug 2026 13:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAMQvQ7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80F51F00A3D;
+	Mon, 31 Aug 2026 13:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184677;
-	bh=mhFVjeixboa9gn5Ks7WZBiRo/nlJj99E7VOEHaRUd6Q=;
+	s=korg; t=1788184680;
+	bh=Bl3dLR7mJY2tvrPQ2Nip8071HiYs/BpysAkC8+JPM7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S+zJ/TJPKOyq7PB7coeC0kG/7718li6lNvdckmXIbYYxTn0R/zau7KQKT1tVIiYJw
-	 E/A+TyYPYPqM27sR4U17ethmDI3ItRVPSPlL6p75lfv++zY7hF6eKwDS9gCYJ77s0O
-	 tZriw4bLLSpo3Qlmkem27MiiY5WhpasntB3X9Ri8=
+	b=hAMQvQ7oCA+xm3Rt5Jv73+OYzH267wxEOTXdLz2PbadTDMPhOefoUsFaBNEKkj2gW
+	 077MWdRutLUD7z4+xVDSCvLr/QwvRn1+6tBoIPAL2CNpj6nfjPodrEU0DMhfto//cW
+	 mYWHiDdbCGxok6GJTLcvGYLGpBmSSp8S+BrfL/9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Miguel=20Pe=C3=B1aranda?= <mig.penaranda07@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.6 91/91] usb: usbfs: fix use-after-free of usb_device in usbdev_release()
-Date: Mon, 31 Aug 2026 15:35:19 +0200
-Message-ID: <20260831133404.136416273@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.6 67/91] x86/CPU/AMD: Add X86_FEATURE_ZEN5
+Date: Mon, 31 Aug 2026 15:34:55 +0200
+Message-ID: <20260831133403.165450313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -44,88 +43,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Peñaranda <mig.penaranda07@gmail.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 0dd68b5d01d022fc9c5e71c82a82b0a94d3d0671 upstream.
+commit 3e4147f33f8b647775357bae0248b9a2aeebfcd2 upstream.
 
-usbdev_release() drops its reference to the struct usb_device before
-draining the list of completed async URBs, but that drain path reads back
-through the same object: free_async() calls dec_usb_memory_use_count()
-for any URB whose buffer came from the usbfs mmap() region, and its first
-statement is bus_to_hcd(ps->dev->bus).
+Add a synthetic feature flag for Zen5.
 
-After a disconnect the usbfs reference can be the last one, in which case
-usb_put_dev() frees the device and the subsequent loop reads offset 80 of
-freed memory and uses the result as a struct usb_hcd *, which
-hcd_buffer_free_pages() then dereferences.
-
-This is reachable by an unprivileged process that has read/write access to
-a /dev/bus/usb node: mmap() the fd, submit one URB with a buffer inside the
-mapping, wait for the device to be unplugged, then munmap() and close().
-It reproduces on every attempt rather than being a race, because a live
-MAP_SHARED vma holds a reference on the struct file, so usbdev_release()
-cannot run until the last vma is gone and the freeing branch of
-dec_usb_memory_use_count() is always taken.
-
-  BUG: KASAN: slab-use-after-free in dec_usb_memory_use_count+0x3ae/0x410
-  Read of size 8 at addr ffff8880122ee050 by task poc/769
-  CPU: 1 UID: 1000 PID: 769 Comm: poc Tainted: G    B    6.12.94 #3
-
-  Call Trace:
-   dec_usb_memory_use_count+0x3ae/0x410
-   free_async+0x2aa/0x4f0
-   usbdev_release+0x375/0x460
-   __fput+0x3ea/0xb50
-   __x64_sys_close+0x86/0x100
-
-  Allocated by task 11:
-   usb_alloc_dev+0x55/0xd90
-   hub_event+0x2524/0x43d0
-
-  Freed by task 769:
-   kfree+0x121/0x360
-   device_release+0xd2/0x280
-   usb_put_dev+0x23/0x30
-   usbdev_release+0x2d8/0x460
-
-Release the device reference after the drain loop instead. Nothing between
-the two points requires it to have been dropped.
-
-Fixes: f7d34b445abc ("USB: Add support for usbfs zerocopy.")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Miguel Peñaranda <mig.penaranda07@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260810121209.795089-1-mig.penaranda07@gmail.com
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240104201138.5072-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/devio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/cpufeatures.h |    4 +---
+ arch/x86/kernel/cpu/amd.c          |   25 +++++++++++++++++++++----
+ 2 files changed, 22 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/core/devio.c
-+++ b/drivers/usb/core/devio.c
-@@ -1110,7 +1110,6 @@ static int usbdev_release(struct inode *
- 	if (!ps->suspend_allowed)
- 		usb_autosuspend_device(dev);
- 	usb_unlock_device(dev);
--	usb_put_dev(dev);
- 	put_pid(ps->disc_pid);
- 	put_cred(ps->cred);
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -81,10 +81,8 @@
+ #define X86_FEATURE_K6_MTRR		( 3*32+ 1) /* AMD K6 nonstandard MTRRs */
+ #define X86_FEATURE_CYRIX_ARR		( 3*32+ 2) /* Cyrix ARRs (= MTRRs) */
+ #define X86_FEATURE_CENTAUR_MCR		( 3*32+ 3) /* Centaur MCRs (= MTRRs) */
+-
+-/* CPU types for specific tunings: */
+ #define X86_FEATURE_K8			( 3*32+ 4) /* "" Opteron, Athlon64 */
+-/* FREE, was #define X86_FEATURE_K7			( 3*32+ 5) "" Athlon */
++#define X86_FEATURE_ZEN5		( 3*32+ 5) /* "" CPU based on Zen5 microarchitecture */
+ #define X86_FEATURE_P3			( 3*32+ 6) /* "" P3 */
+ #define X86_FEATURE_P4			( 3*32+ 7) /* "" P4 */
+ #define X86_FEATURE_CONSTANT_TSC	( 3*32+ 8) /* TSC ticks at a constant rate */
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -669,7 +669,7 @@ static void bsp_init_amd(struct cpuinfo_
  
-@@ -1119,6 +1118,7 @@ static int usbdev_release(struct inode *
- 		free_async(as);
- 		as = async_getcompleted(ps);
+ 	/* Figure out Zen generations: */
+ 	switch (c->x86) {
+-	case 0x17: {
++	case 0x17:
+ 		switch (c->x86_model) {
+ 		case 0x00 ... 0x2f:
+ 		case 0x50 ... 0x5f:
+@@ -685,8 +685,8 @@ static void bsp_init_amd(struct cpuinfo_
+ 			goto warn;
+ 		}
+ 		break;
+-	}
+-	case 0x19: {
++
++	case 0x19:
+ 		switch (c->x86_model) {
+ 		case 0x00 ... 0x0f:
+ 		case 0x20 ... 0x5f:
+@@ -700,7 +700,17 @@ static void bsp_init_amd(struct cpuinfo_
+ 			goto warn;
+ 		}
+ 		break;
+-	}
++
++	case 0x1a:
++		switch (c->x86_model) {
++		case 0x00 ... 0x0f:
++			setup_force_cpu_cap(X86_FEATURE_ZEN5);
++			break;
++		default:
++			goto warn;
++		}
++		break;
++
+ 	default:
+ 		break;
  	}
-+	usb_put_dev(dev);
+@@ -1185,6 +1195,11 @@ static void init_amd_zen4(struct cpuinfo
+ 	init_amd_zen_common();
+ }
  
- 	kfree(ps);
- 	return 0;
++static void init_amd_zen5(struct cpuinfo_x86 *c)
++{
++	init_amd_zen_common();
++}
++
+ static void init_amd(struct cpuinfo_x86 *c)
+ {
+ 	early_init_amd(c);
+@@ -1228,6 +1243,8 @@ static void init_amd(struct cpuinfo_x86
+ 		init_amd_zen3(c);
+ 	else if (boot_cpu_has(X86_FEATURE_ZEN4))
+ 		init_amd_zen4(c);
++	else if (boot_cpu_has(X86_FEATURE_ZEN5))
++		init_amd_zen5(c);
+ 
+ 	/*
+ 	 * Enable workaround for FXSAVE leak on CPUs
 
 
