@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230B7455184;
-	Mon, 31 Aug 2026 13:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF75F51355A;
+	Mon, 31 Aug 2026 13:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183791; cv=none; b=FOXobOWT3+Q/r5/NpINNHqBNL2v/T7CFCvEI3i+7gSi0SThIgoiftf5eP8eH1vvzjxQw5XVuZY6myeMkJUGMt6kNqdGrD39NQWYr4RSwBQSAcp9Se+Iu+Sj5fQrHln19wwWiPFu2PA+8PB9H4n0R2sWbBxUT781xVuvvl1fRUGk=
+	t=1788183792; cv=none; b=C+42ebYPZWymh/hQ0g020UjYVZeHkBQVwye8Fv1yJv1+A5qEpoLnap3gFVnRThfxh1nsznLe1vZmZsA12U3dg97N0IX955c2O0WJ2uXmIX6IoFcHA0L7SzpCaRRHCIFdlTt+FVh4c4b9R3EOeoKYfm5tZjLZfYrLSBacdKkq8P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183791; c=relaxed/simple;
-	bh=pL1Yc3xTvlbnNo3FX0+ig4mMRcemswBveKhGXi5hKWA=;
+	s=arc-20240116; t=1788183792; c=relaxed/simple;
+	bh=oFgL3RP1wxKXiJlASNNSke7KZ6fX5kaK2e6l/jZfKFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GO0cNLaBRQJAc1USmJVR/H6sZDnmnIBw6TWDGIZUt/syCj8/3H0TTUUBWhUzzeS3bm+JiN7OZjOVRq+ItloEfRLXYUHbBQtO+hJxWfrAofs2ZkDWGNpMgVAfYZxq9Wu7GC0Z+wh2k8gDTMD3uV45ATp8iPEI3/AWDpk5kAZxm58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CCBWdQ62; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ihpKQ7tdx87plMbhOTuHkQfgbA8aIJ3epCvjQmtt4r7D91AkHwKdRmPMJK5o2Xy7UczMBl5rp43Ii9gGHndq+0e9/hQ0mGUojUBjAk0MKXaaaaOuswKqd5JejMm526AOgMa48m2qQtGEPYw+h9mhsmdi1G5CDnKLPIDgzvJd8YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K6jHC2Up; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CCBWdQ62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDF71F00ADB;
-	Mon, 31 Aug 2026 13:43:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K6jHC2Up"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534A91F00A3F;
+	Mon, 31 Aug 2026 13:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183787;
-	bh=tiyjUwbVJ1UGixWRWWEAuiMC2zC1WC4mW4hbnJB74h0=;
+	s=k20260515; t=1788183789;
+	bh=uoiUdB65pL39pRygv8E6gcLlcbqoHjqbhN8SRMJbg6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCBWdQ62/Q40XO4AMRcsKMF97oVQ6MQLTI+AwlTewlSy2oqvvEANVQnR1Ah9ZaTBP
-	 51WEZmVXUyiAGfrI+y1EhUwkQv2ybfep8NHaqH7Q7g0XWPHeU2h/tNlhOpQTHNS67r
-	 tKOLHN9Ye0p6Fgx6orU7e2TN1qVOmqEjDHaqa6vm0v9JxxKdF9W0NFsAjFiABwHj5r
-	 JeO1rSRxL6DLGQ79LmrDxt82NBEMnSPh4JFY+mggUjB5ExdOBtZ5FVHlHJp4MkV6r3
-	 A7pkg2U46VHS060fga+o5Cwgo2k4vMgcaM0NMj1bmR1gbcA58ly8FJ1BiM0a8xE6sS
-	 JHktqf/QcjrIQ==
+	b=K6jHC2UpVC49+xxeTISAjHy+FR8tZjbAGcWTH5JB63d9oTgsnCtzSLypuvQ+QeelH
+	 sQWWX/xQzYg3IkiSIibMHN+csJRPndw6MMtr/aqhbjhuh/SgNulgCNvR48iqxcBZmQ
+	 GDh37qCCtShftGM8BsurKjPX9II3BPQ42q0jWbLt4BCmnUNneT2DnSCD27qFXWqAnJ
+	 EjrAmykexD1GPMWbtdn4U6izeol6QgYzk9UW7APBQIz9qC/dg19yb+7eufB4G3b7hq
+	 kHdJT3u5kRHM9rPnduPGPBG14YYLyS6zZzqFQl70pInpUmqO8nkwpYk0tgHi5wnpza
+	 JrSn1QrEEAhyg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+Cc: Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] PCI: Wait for device readiness after D3hot -> D0uninitialized transition
-Date: Mon, 31 Aug 2026 09:25:32 -0400
-Message-ID: <20260831133314.4125787-304-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] wifi: mt76: mt7925: add Netgear A8500 USB device ID
+Date: Mon, 31 Aug 2026 09:25:33 -0400
+Message-ID: <20260831133314.4125787-305-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,441 +58,367 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Helgaas <helgaas@kernel.org>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 41167a1e98536b4baf0846fd259c8124bd1c4e1b ]
+[ Upstream commit 291b067a02b9c1fd272057ebf47c365260955fd2 ]
 
-For a device that advertises No_Soft_Reset == 0, a transition from D3hot to
-D0uninitialized is a soft reset, and the resulting internal device state is
-undefined.
+Add USB device ID for the Netgear A8500 (0846:9050) which uses
+the mt7925 chipset.
 
-Per PCIe r7.0, sec 2.3.1, a transition from D3hot to D0uninitialized
-mandates a minimum 10 ms delay before accessing the device. Following this
-delay, the device is permitted to respond to initial configuration requests
-with a Request Retry Status (RRS) completion status if it needs more time
-to initialize.
-
-Call pci_dev_wait() after pci_power_up() performs a D3hot->D0uninitialized
-transition to ensure the device is ready to accept config accesses, as is
-done after the similar transition in pci_pm_reset().
-
-If the device is already ready, this is essentially a no-op except for one
-additional config read.
-
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Link: https://patch.msgid.link/20260518191220.636213-3-bhelgaas@google.com
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260527144735.10254-1-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: PCI D3hot→D0 Readiness Wait
+# Stable Backport Analysis: `wifi: mt76: mt7925: add Netgear A8500 USB
+device ID`
 
-**Local tree:** `v6.18.43` (Linux 6.18.43)
+**Local tree:** `v6.18.44` (Linux 6.18.44)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[PCI]` `[Wait]` — After a D3hot→D0uninitialized power
-transition, wait for the device to become configuration-ready before
-proceeding.
+### Step 1.1: Parse the subject line
+**Record:** `[wifi: mt76: mt7925]` `[add]` — Add USB device ID for
+Netgear A8500 (0846:9050) to the existing mt7925u driver.
 
-### Step 1.2: Tags
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Signed-off-by:** Bjorn Helgaas `<bhelgaas@google.com>` (author, PCI
-  maintainer)
-- **Reviewed-by:** Rafael J. Wysocki `<rafael@kernel.org>` (PM
-  maintainer)
-- **Link:**
-  https://patch.msgid.link/20260518191220.636213-3-bhelgaas@google.com
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable, or syzbot tags
-- Notable: Reviewed by the ACPI/PM maintainer; part of a 2-patch v2
-  series (patch 2/2)
+- **Signed-off-by:** Devin Wittmayer `<lucid_duck@justthetip.ca>`
+  (author)
+- **Link:** https://patch.msgid.link/20260527144735.10254-1-
+  lucid_duck@justthetip.ca
+- **Signed-off-by:** Felix Fietkau `<nbd@nbd.name>` (mt76 maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable@vger.kernel.org`
+- Notable pattern: maintainer (Felix Fietkau) Signed-off-by is a strong
+  quality signal; absence of `Cc: stable` is expected per review
+  pipeline rules.
 
-### Step 1.3: Body Analysis
+### Step 1.3: Analyze commit body
 **Record:**
-- **Bug:** After D3hot→D0uninitialized (soft reset when `No_Soft_Reset
-  == 0`), the kernel waits the mandatory 10 ms (`pci_dev_d3_sleep`) but
-  does not poll until the device stops returning Request Retry Status
-  (RRS) or error responses.
-- **Symptom:** Premature config-space access after power-up; BAR restore
-  / state reads may see `~0` (`PCI_ERROR_RESPONSE`) or RRS, causing
-  resume/probe failures.
-- **Root cause:** `pci_power_up()` lacked the `pci_dev_wait()` call that
-  `pci_pm_reset()` already performs after the same transition.
-- **Spec reference:** PCIe r7.0 §2.3.1.
+- **Bug description:** Netgear A8500 USB WiFi adapter (VID:PID
+  0846:9050) uses the mt7925 chipset but is not recognized by the kernel
+  because its USB ID is missing from `mt7925u_device_table[]`.
+- **Symptom:** Device enumerates as USB hardware but does not bind to
+  `mt7925u` driver; WiFi is non-functional.
+- **Root cause:** Missing entry in the USB device ID table.
+- **Version info:** None stated in commit message.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — this is an explicit, well-described correctness bug fix
-for a spec-mandated timing gap, not disguised cleanup.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not a hidden bug fix in the traditional sense (no
+crash/UAF/leak). This is an explicit **hardware enablement** fix — a
+device ID addition that allows an existing, fully functional driver to
+bind to real hardware. Falls under the stable exception category for new
+device IDs.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Inventory the changes
 **Record:**
-- **File:** `drivers/pci/pci.c` (+22 / -2 lines in series; this commit
-  ~20 net lines)
-- **Function modified:** `pci_power_up()`
-- **Scope:** Single-file, surgical fix in one function
+- **Files changed:** `drivers/net/wireless/mediatek/mt76/mt7925/usb.c`
+  (+3 lines)
+- **Functions modified:** None functionally; only
+  `mt7925u_device_table[]` static data
+- **Scope:** Single-file, surgical, 3-line addition
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change
 **Record:**
-- **Hunk 1 (comment block):** Documents platform vs. PM-capability
-  power-up paths.
-- **Hunk 2 (D3hot branch):**
-  - **Before:** `pci_dev_d3_sleep(dev);` then immediately mark device
-    D0.
-  - **After:** `pci_dev_d3_sleep(dev);` then, if soft-reset applies
-    (`!(pmcsr & PCI_PM_CTRL_NO_SOFT_RESET)`), call `pci_dev_wait()`. On
-    failure, set `current_state = PCI_D3cold` and return `-EIO`.
-- **Affected path:** D3hot→D0 power-up error/normal resume path inside
-  `pci_power_up()`.
+- **Before:** USB core matches 0846:9050 against
+  `mt7925u_device_table[]` → no match → driver does not probe.
+- **After:** USB core matches 0846:9050 → `mt7925u_probe()` is called
+  with `driver_info = MT7925_FIRMWARE_WM` → normal mt7925u
+  initialization path.
+- **Path affected:** USB device enumeration / driver binding at plug-in
+  time.
 
-### Step 2.3: Bug Mechanism
+### Step 2.3: Bug mechanism
 **Record:**
-- **Category:** Logic / spec-compliance / timing correctness fix
-- **Mechanism:** After mandatory 10 ms delay, device may still respond
-  with RRS or synthesized `~0` on config reads. Without polling via
-  `pci_dev_wait()`, subsequent `pci_restore_bars()` /
-  `pci_restore_state()` can operate on garbage. The fix mirrors the
-  existing `pci_pm_reset()` pattern at line 4456.
+- **Category:** Hardware workaround / device ID addition (stable
+  exception)
+- **Mechanism:** Without the VID/PID entry, `usb_driver.id_table`
+  matching fails and the adapter is unusable despite the mt7925 driver
+  being present and functional for other devices.
 
-### Step 2.4: Fix Quality
+### Step 2.4: Fix quality assessment
 **Record:**
-- **Quality:** High — reuses proven `pci_dev_wait()` infrastructure
-  already used for FLR, AF_FLR, and `pci_pm_reset()`.
-- **Regression risk:** Very low — if device is already ready, one extra
-  config read (author's own statement). Worst case adds up to 60 s wait
-  on genuinely broken hardware, then clean `-EIO` failure instead of
-  proceeding with bad state.
-- **No API changes, no new symbols.**
+- **Obviously correct:** Yes — identical pattern to the existing A9000
+  entry (0846:9072) already in this tree.
+- **Minimal/surgical:** Yes — 3 lines, no logic changes.
+- **Regression risk:** Very low — only adds a new match entry; does not
+  alter behavior for existing devices.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** Lines 1349–1352 in this tree (`pci_dev_d3_sleep` only, no
-wait) are present in current `pci_power_up()`. `pci_dev_wait()` exists
-at line 1209 and is already called from `pci_pm_reset()` at line 4456.
-This tree's git history is shallow (single upstream-marker commit per
-file), so exact introduction SHA of the missing wait cannot be
-determined locally.
+### Step 3.1: Blame the changed lines
+**Record:**
+- `mt7925u_device_table[]` introduced in `c948b5da6bbec` (Sep 2023, "add
+  Mediatek Wi-Fi7 driver for mt7925 chips")
+- A9000 entry added in `f6159b2051e15` (Jul 2025, Nick Morrow) — already
+  present in this tree
+- A8500 entry (0846:9050) is **not yet** in this tree
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag in commit message.
+### Step 3.2: Follow Fixes: tag
+**Record:** No `Fixes:` tag present. N/A.
 
-### Step 3.3: Related Changes
-**Record:** Part of v2 2-patch series by Bjorn Helgaas (May 2026):
-1. `PCI: Log device readiness timeouts as errors` — changes `pci_warn` →
-   `pci_err` in `pci_dev_wait()` timeout path
-2. **This commit** — adds `pci_dev_wait()` to `pci_power_up()`
+### Step 3.3: Related file history
+**Record:**
+- Recent commits to `mt7925/usb.c` include functional fixes (crash, NULL
+  deref, deadlock) and the A9000 ID addition `f6159b2051e15`
+- Similar precedent: `fc6627ca8a5f8` added Netgear A7500 (0846:9065) to
+  `mt7921/usb.c` with `Cc: stable@vger.kernel.org`
+- **Standalone:** Yes — single patch, no series dependency
 
-Patch 2 is standalone; patch 1 is a logging improvement only.
+### Step 3.4: Author's other commits
+**Record:** Devin Wittmayer has no other commits in this tree (author is
+new contributor). Felix Fietkau is the mt76 maintainer who applied the
+patch.
 
-### Step 3.4: Author Context
-**Record:** Bjorn Helgaas is the PCI subsystem maintainer. Rafael
-Wysocki (PM maintainer) reviewed. Author applied series to `pci/reset`
-for v7.2 per mailing list follow-up.
-
-### Step 3.5: Dependencies
-**Record:** No code dependencies on patch 1/2. Requires only existing
-`pci_dev_wait()`, `pci_dev_d3_sleep()`, `PCIE_RESET_READY_POLL_MS`, and
-`PCI_PM_CTRL_NO_SOFT_RESET` — all present in this 6.18.43 tree. **Can
-apply standalone: YES.**
+### Step 3.5: Prerequisites
+**Record:**
+- Requires `CONFIG_MT7925U` and existing mt7925u driver — both present
+  in v6.18.44
+- Uses `MT7925_FIRMWARE_WM` — already declared via `MODULE_FIRMWARE` in
+  same file
+- **Can apply standalone:** Yes
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:**
-- Series cover: https://lkml.iu.edu/2605.2/03907.html
-- This patch (v2 2/2): https://lkml.iu.edu/2605.2/03911.html
-- v1 was a single-patch submission (May 14, 2026); v2 added error
-  handling and companion logging patch
-- No NAKs found; maintainer applied to `pci/reset` for v7.2
-- No explicit "Cc: stable" nomination found in available threads
+### Step 4.1: Original patch discussion
+**Record:** `b4 dig -c` could not be run (commit not in local tree). `b4
+dig` with message-id failed (incorrect syntax for message-id lookup).
+WebFetch of patch.msgid.link and lore.kernel.org returned bot-protection
+page. **UNVERIFIED:** Full mailing list review thread not accessible.
 
-### Step 4.2: Reviewers
-**Record:** CC list included Rafael Wysocki, Lukas Wunner, Mika
-Westerberg, Alex Williamson, Mario Limonciello, and other PCI/PM
-experts. Rafael Wysocki provided Reviewed-by.
+### Step 4.2: Reviewers from b4 dig -w
+**Record:** UNVERIFIED — could not retrieve recipient list.
 
-### Step 4.3: Bug Report
-**Record:** No external bug report or syzbot link. Bug identified via
-spec compliance analysis and inconsistency with `pci_pm_reset()`
-behavior.
+### Step 4.3: Bug report search
+**Record:** No `Reported-by:` or bugzilla/syzbot links in commit
+message. Hardware enablement request from contributor.
 
-### Step 4.4: Series Context
-**Record:** 2-patch series; only patch 2/2 is under review. Patch 1 is
-optional for functionality.
+### Step 4.4: Related patches/series
+**Record:** Part of a well-established pattern of Netgear USB ID
+additions to mt76 drivers (mt7921 A7500, mt7925 A9000). Standalone one-
+patch submission.
 
-### Step 4.5: Stable List History
-**Record:** No stable-list discussion found for this specific fix.
+### Step 4.5: Stable mailing list history
+**Record:** UNVERIFIED — lore.kernel.org inaccessible. However, the
+nearly identical A9000 commit (`f6159b2051e15`) in this tree included
+`Cc: stable@vger.kernel.org`, establishing subsystem precedent for such
+patches.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `pci_power_up()` (modified), `pci_dev_wait()` (called),
-`pci_set_full_power_state()` (caller),
-`pci_pm_power_up_and_verify_state()` (direct caller)
+### Step 5.1: Key functions
+**Record:** No functions modified. Data table `mt7925u_device_table[]`
+consumed by `module_usb_driver(mt7925u_driver)` via `.id_table`.
 
-### Step 5.2: Callers of `pci_power_up()`
-**Record:**
-1. `pci_set_full_power_state()` → `__pci_set_power_state()` when `state
-   == PCI_D0` — **system/runtime resume path** (`pci_set_power_state()`
-   is widely used across drivers)
-2. `pci_pm_power_up_and_verify_state()` → called from:
-   - `pci_pm_init()` — boot enumeration (devices left in D3hot by BIOS)
-   - `pci_pm_default_resume_early()` — suspend resume
-   - `pci_pm_thaw_noirq()` — hibernate thaw
+### Step 5.2: Trace callers
+**Record:** USB core calls `usb_match_device()` against
+`mt7925u_device_table[]` during enumeration → on match, calls
+`mt7925u_probe()` (line 132 of `usb.c`). Triggered when user plugs in
+the USB adapter.
 
-### Step 5.3: Callees
-**Record:** `platform_pci_set_power_state()`,
-`pci_read/write_config_word()`, `pci_dev_d3_sleep()`, `pci_dev_wait()` —
-all standard PCI PM primitives.
+### Step 5.3: Trace callees
+**Record:** On successful match, `mt7925u_probe()` initializes the
+mt7925 chipset using existing driver infrastructure and
+`MT7925_FIRMWARE_WM` firmware.
 
-### Step 5.4: Reachability
-**Record:** Triggered on every D3hot→D0 transition through
-`pci_power_up()` for devices without `No_Soft_Reset`. This is a
-**common** path during suspend/resume, hibernate, and boot. Userspace
-can indirectly trigger via runtime PM (`pci_set_power_state`).
+### Step 5.4: Call chain / reachability
+**Record:** USB hotplug during normal desktop/laptop use. Any user with
+this hardware who plugs in the adapter is affected. No privilege
+required to trigger enumeration.
 
-### Step 5.5: Similar Patterns
-**Record:** `pci_pm_reset()` at lines 4448–4456 already does
-`pci_dev_d3_sleep()` + `pci_dev_wait()` after D3hot→D0. This commit
-closes the same gap in `pci_power_up()`.
+### Step 5.5: Similar patterns
+**Record:** Identical pattern in same file for A9000 (0846:9072).
+Similar Netgear IDs in `mt7921/usb.c` (0846:9060, 0846:9065). All use
+same `USB_DEVICE_AND_INTERFACE_INFO` + `MT7925_FIRMWARE_WM` / equivalent
+firmware constant.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.43)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy Code Present?
-**Record:** **YES.** Current `pci_power_up()` at lines 1349–1350:
+### Step 6.1: Does the buggy code exist?
+**Record:** **Yes.** The mt7925u driver and device table exist in
+v6.18.44, but the A8500 entry (0846:9050) is **missing**. Current table
+has only MediaTek reference (0e8d:7925) and Netgear A9000 (0846:9072).
+Driver has been present since `c948b5da6bbec` (confirmed ancestor of
+HEAD).
 
-```1349:1352:drivers/pci/pci.c
-        if (state == PCI_D3hot)
-                pci_dev_d3_sleep(dev);
-        else if (state == PCI_D2)
-                udelay(PCI_PM_D2_DELAY);
-```
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected.** File exists with identical
+structure. Insertion point is between the MediaTek entry and the A9000
+entry (as shown in the candidate diff). Only minor difference: local
+file uses `ISC` license header vs `BSD-3-Clause-Clear` in candidate diff
+— irrelevant to the 3-line ID addition.
 
-No `pci_dev_wait()` call. `pci_dev_wait()` and `pci_pm_reset()`'s
-correct usage both exist in this tree.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** No refactoring conflicts visible.
-`pci_power_up()` structure matches the patch base (`5a9af0bb2c71` index
-in patch matches current code layout).
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No — `git log --grep` found no prior "device readiness" or
-equivalent fix in this tree. Patch 1 (warn→err) also not present (line
-1261 still uses `pci_warn`).
+### Step 6.3: Related fixes already present?
+**Record:** A9000 ID (`f6159b2051e15`) is already in this tree. No
+duplicate A8500 entry found. No alternate fix for A8500.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**Record:** **PCI core** (`drivers/pci/pci.c`) — **CORE** subsystem.
-Affects all PCI/PCIe devices on resume and boot.
+### Step 7.1: Subsystem criticality
+**Record:** `drivers/net/wireless/mediatek/mt76/` — **IMPORTANT**
+(wireless networking driver). Affects users of specific USB WiFi
+hardware, not universal.
 
-### Step 7.2: Activity Level
-**Record:** Mature, actively maintained subsystem. PM paths are long-
-standing; this is a gap in an established code path, not new subsystem
-code.
+### Step 7.2: Subsystem activity
+**Record:** mt7925 subsystem is actively maintained in this tree —
+numerous bugfix commits in recent history (NULL deref, deadlock, crash
+fixes), indicating mature driver with ongoing stable fixes.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** All systems with PCI devices that:
-- Support native PM (`pm_cap` present)
-- Have `No_Soft_Reset == 0` (soft reset on D3hot→D0)
-- Need more than 10 ms to become configuration-ready after soft reset
+### Step 8.1: Who is affected
+**Record:** Users of the Netgear A8500 USB WiFi 7 adapter (0846:9050)
+running kernel 6.18.y with `CONFIG_MT7925U` enabled.
 
-This includes many laptops (BIOS leaves devices in D3hot at boot, per
-existing comment at lines 1402–1405) and suspend/resume scenarios.
+### Step 8.2: Trigger conditions
+**Record:** Plugging in the Netgear A8500 USB adapter. Common,
+deterministic, no special conditions. Unprivileged user can trigger via
+USB device insertion.
 
-### Step 8.2: Trigger Conditions
+### Step 8.3: Failure mode severity
+**Record:** Without fix: adapter is completely non-functional (no driver
+binding). **Severity: MEDIUM** for affected hardware users (device
+unusable, but not a crash/corruption). With fix: normal WiFi operation.
+
+### Step 8.4: Risk-benefit ratio
 **Record:**
-- **When:** D3hot→D0 power-up via `pci_power_up()` with soft-reset
-  semantics
-- **Likelihood:** Intermittent — depends on device initialization time;
-  more likely on slower devices or under load
-- **Userspace trigger:** Indirect via runtime PM resume; unprivileged
-  users can trigger device PM on assigned devices
-
-### Step 8.3: Failure Mode Severity
-**Record:**
-- **Failure mode:** Failed resume, incorrect BAR restoration, driver
-  probe failure, possible oops if driver proceeds with bad config
-- **Severity:** **HIGH** for affected devices (resume failure renders
-  hardware unusable until reboot); **MEDIUM** population-wide (only
-  soft-reset-capable devices that are slow to initialize)
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH — fixes real resume/boot failures on affected
-  hardware; aligns with PCIe spec and existing `pci_pm_reset()` behavior
-- **Risk:** VERY LOW — minimal diff, proven helper, no-op on ready
-  devices
-- **Ratio:** Strongly favors backport
+- **Benefit:** Enables WiFi on a commercially available Netgear USB
+  adapter for stable kernel users
+- **Risk:** Very low — 3-line ID table entry, zero logic change,
+  identical to already-accepted A9000 entry
+- **Ratio:** Strongly favorable
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence compilation
 
-**FOR backport:**
-- Fixes a real spec-compliance bug in a core resume path
-- Can cause suspend/resume and boot failures on affected PCI devices
-- Small, surgical, obviously correct (mirrors `pci_pm_reset()`)
-- PCI maintainer authorship + PM maintainer review
-- All required infrastructure exists in 6.18.43
-- Buggy code confirmed present in this tree
+**FOR backporting:**
+- Classic device ID addition to existing driver (explicit stable
+  exception)
+- Driver fully exists in v6.18.44 (`CONFIG_MT7925U`, probe/remove,
+  firmware)
+- Identical pattern to A9000 entry already in this tree
+- Subsystem precedent: similar Netgear ID patches nominated for stable
+  (`Cc: stable` on A9000, A7500)
+- Maintained by Felix Fietkau (Signed-off-by)
+- 3 lines, zero regression risk to existing devices
+- Enables real hardware for stable users
 
-**AGAINST backport:**
-- No user bug reports or syzbot reproduction (theoretical/spec-driven
-  fix)
-- Part of 2-patch series (patch 1 is logging-only, not required)
-- Adds latency (up to 60 s) only on genuinely broken/unresponsive
-  devices
+**AGAINST backporting:**
+- Not a crash/security/corruption fix — hardware enablement only
+- No Tested-by or Reported-by in commit message
+- Mailing list discussion unverified
 
-**Unresolved:** Exact kernel version when `pci_power_up()` was
-introduced without the wait (shallow git history in this stable tree).
+**UNRESOLVED:**
+- Full lore review thread not accessible
+- No explicit Tested-by confirmation
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — mirrors existing
-   `pci_pm_reset()` pattern; reviewed by PM maintainer
-2. Fixes a real bug affecting users? **PASS** — spec-mandated readiness
-   gap on D3hot→D0 resume
-3. Important issue? **PASS** — resume/probe failures (HIGH for affected
-   devices)
-4. Small and contained? **PASS** — ~20 lines, one function, one file
-5. No new features or APIs? **PASS**
-6. Can apply to local tree? **PASS** — buggy code and all dependencies
-   present in 6.18.43
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — trivial ID entry,
+   maintainer-applied; Tested-by absent but pattern is standard
+2. Fixes a real bug affecting users? **PASS** — device non-functional
+   without ID
+3. Important issue? **PASS** — hardware enablement for real product
+   (stable exception category)
+4. Small and contained? **PASS** — 3 lines, 1 file
+5. No new features or APIs? **PASS** — device ID only
+6. Can apply to local tree? **PASS** — driver and file present, clean
+   apply expected
 
-### Step 9.3: Exception Categories
-**Record:** None (not a quirk/DT/build/doc fix — a core correctness bug
-fix).
+### Step 9.3: Exception category
+**Record:** **NEW DEVICE ID** — adding PCI/USB ID to existing driver.
+Explicitly listed as a stable exception. The mt7925u driver exists; only
+the ID is new.
 
-### Step 9.4: Decision Rationale
+### Step 9.4: Decision rationale
 
-This commit closes a long-standing gap where `pci_power_up()` — used on
-boot, suspend resume, and hibernate thaw — did not wait for device
-readiness after a D3hot→D0 soft reset, even though `pci_pm_reset()`
-already did. The fix is minimal, uses existing infrastructure, has
-maintainer review, and addresses a real failure mode (premature config
-access after power-up) that can break device resume on affected
-hardware. The risk of backporting is negligible since ready devices pay
-only one extra config read.
+This commit adds USB VID/PID `0846:9050` for the Netgear A8500 to the
+existing `mt7925u` driver in the v6.18.44 stable tree. The driver is
+fully present; the A9000 sibling device (0846:9072) is already supported
+in this tree via an identical 3-line patch that was nominated for
+stable. Without this entry, the A8500 adapter cannot bind to any driver
+and is completely unusable. The change is minimal, obviously correct,
+introduces no new APIs, and matches established stable backport practice
+for mt76 Netgear USB adapters.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message
-- **[Phase 1]** Confirmed Reviewed-by: Rafael Wysocki; no
-  syzbot/Reported-by
-- **[Phase 2]** Read current `pci_power_up()` at lines 1303–1360:
-  missing `pci_dev_wait()` confirmed
-- **[Phase 2]** Read `pci_pm_reset()` at lines 4429–4457: has
-  `pci_dev_wait()` after D3hot→D0
-- **[Phase 2]** Read `pci_dev_wait()` at lines 1209–1290: polling logic
-  with 60 s timeout confirmed
-- **[Phase 3]** `git describe HEAD`: v6.18.43-1-gc7f0dac02d232
-- **[Phase 3]** `git blame -L 1340,1365 drivers/pci/pci.c`: D3hot branch
-  lacks wait
-- **[Phase 3]** `git log --grep`: no prior fix for this issue in tree
-- **[Phase 4]** Web search: found v2 series cover at
-  lkml.iu.edu/2605.2/03907.html
-- **[Phase 4]** Web search: found patch 2/2 at
-  lkml.iu.edu/2605.2/03911.html — diff matches provided commit
-- **[Phase 4]** Web search: found patch 1/2 at
-  lkml.iu.edu/2605.2/03901.html — logging only, not a prerequisite
-- **[Phase 4]** Web search: maintainer applied to pci/reset for v7.2
-  (openwall list, May 22 2026)
-- **[Phase 4]** lore.kernel.org direct fetch: 403 Forbidden (used
-  lkml.iu.edu mirror instead)
-- **[Phase 4]** b4 dig: no commit hash available in tree (commit not yet
-  applied); could not run `b4 dig -c`
-- **[Phase 5]** `grep pci_power_up`: callers in
-  `pci_set_full_power_state()`, `pci_pm_power_up_and_verify_state()`
-- **[Phase 5]** Read `pci-driver.c` lines 541–572, 1103–1118:
-  resume/thaw paths call `pci_pm_power_up_and_verify_state()`
-- **[Phase 5]** Read `pci.c` line 3196: boot path `pci_pm_init()` calls
-  `pci_pm_power_up_and_verify_state()`
-- **[Phase 6]** Confirmed `PCI_PM_CTRL_NO_SOFT_RESET`,
-  `PCIE_RESET_READY_POLL_MS`, `pci_dev_d3_sleep()` all exist
-- **[Phase 6]** Line 1261 still has `pci_warn` (patch 1 not applied) —
-  patch 2 applies independently
-- **[Phase 8]** Assessed failure mode: resume/probe failure on slow-to-
-  initialize soft-reset devices
+- [Phase 1] Parsed subject, tags, body from user-provided commit message
+- [Phase 1] Confirmed: no Fixes/Reported-by/Tested-by/Cc:stable tags;
+  Felix Fietkau Signed-off-by present
+- [Phase 2] Diff analysis: 3 lines added to `mt7925u_device_table[]` in
+  `usb.c`
+- [Phase 3] `git describe HEAD`: v6.18.44
+- [Phase 3] `git blame` on usb.c lines 12-18: table from c948b5da6bbec
+  (2023), A9000 from f6159b2051e15 (2025)
+- [Phase 3] `git merge-base --is-ancestor c948b5da6bbec HEAD`: mt7925
+  driver is in tree
+- [Phase 3] `git show f6159b2051e15`: A9000 precedent with Cc:
+  stable@vger.kernel.org
+- [Phase 3] `git show fc6627ca8a5f8`: mt7921 A7500 precedent with Cc:
+  stable
+- [Phase 4] WebFetch patch.msgid.link: blocked by bot protection —
+  UNVERIFIED
+- [Phase 4] WebFetch lore.kernel.org: blocked — UNVERIFIED
+- [Phase 4] b4 dig: commit not in tree, could not dig by hash —
+  UNVERIFIED
+- [Phase 5] Read `mt7925u_probe()` at line 132: standard USB probe path
+- [Phase 5] `grep 0846` in mt76: A9000 (9072) present, A8500 (9050)
+  absent
+- [Phase 6] Read current `usb.c`: A8500 ID missing, driver fully
+  functional
+- [Phase 6] `Kconfig` confirms `CONFIG_MT7925U` exists
+- [Phase 6] `MODULE_FIRMWARE(MT7925_FIRMWARE_WM)` present in usb.c
+- [Phase 7] `git log --oneline -20 -- mt7925/`: active subsystem with
+  many stable-worthy fixes
+- [Phase 8] Failure mode: no driver binding → device unusable (not
+  crash)
 
 **YES**
 
- drivers/pci/pci.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/usb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 439045ab69319..c533111186f70 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1305,7 +1305,18 @@ int pci_power_up(struct pci_dev *dev)
- 	bool need_restore;
- 	pci_power_t state;
- 	u16 pmcsr;
-+	int ret;
- 
-+	/*
-+	 * When setting power state to D0, platform_pci_set_power_state()
-+	 * ensures main power is on.  If it puts the device in D0, it also
-+	 * completes any required delays after the transition; if it leaves
-+	 * the device in D1, D2, or D3hot, we use the PM Capability to
-+	 * transition to D0.
-+	 *
-+	 * In all cases, the device is either Configuration-Ready or
-+	 * inaccessible upon return.
-+	 */
- 	platform_pci_set_power_state(dev, PCI_D0);
- 
- 	if (!dev->pm_cap) {
-@@ -1346,10 +1357,19 @@ int pci_power_up(struct pci_dev *dev)
- 	pci_write_config_word(dev, dev->pm_cap + PCI_PM_CTRL, 0);
- 
- 	/* Mandatory transition delays; see PCI PM 1.2. */
--	if (state == PCI_D3hot)
-+	if (state == PCI_D3hot) {
- 		pci_dev_d3_sleep(dev);
--	else if (state == PCI_D2)
-+		if (!(pmcsr & PCI_PM_CTRL_NO_SOFT_RESET)) {
-+			ret = pci_dev_wait(dev, "power up D3hot->D0uninitialized",
-+					   PCIE_RESET_READY_POLL_MS);
-+			if (ret) {
-+				dev->current_state = PCI_D3cold;
-+				return -EIO;
-+			}
-+		}
-+	} else if (state == PCI_D2) {
- 		udelay(PCI_PM_D2_DELAY);
-+	}
- 
- end:
- 	dev->current_state = PCI_D0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
+index bf040f34e4b9f..995a7fcc419fd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
+@@ -12,6 +12,9 @@
+ static const struct usb_device_id mt7925u_device_table[] = {
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0e8d, 0x7925, 0xff, 0xff, 0xff),
+ 		.driver_info = (kernel_ulong_t)MT7925_FIRMWARE_WM },
++	/* Netgear, Inc. A8500 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9050, 0xff, 0xff, 0xff),
++		.driver_info = (kernel_ulong_t)MT7925_FIRMWARE_WM },
+ 	/* Netgear, Inc. A9000 */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9072, 0xff, 0xff, 0xff),
+ 		.driver_info = (kernel_ulong_t)MT7925_FIRMWARE_WM },
 -- 
 2.53.0
 
