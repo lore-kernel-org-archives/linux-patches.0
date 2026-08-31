@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3561143991A;
-	Mon, 31 Aug 2026 13:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A0E4B7144;
+	Mon, 31 Aug 2026 13:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184653; cv=none; b=fFIg9c2R3dKZjjoG8afZA0pFXKCcVBBUTu3aFPfVCk+LfXKN09hyuI46RXSLyjwpy0NjvHxIjtzxe53s1hMxlVVvBc8BAFXEhcnLa1E/9or6+KSanX/jh5hkLkyilGTdSOmvDD4XBhNswxLDEYvXeqXv7+zx8Qg9sMZBmRv071Y=
+	t=1788184661; cv=none; b=mR7pZcF5CO6Va16QrFrB970zDPmN0zPUxhUs9+xNHG+6CnwOgCLgGZ4Y2pNksBURQkNrVJDGaE2+vP1j/ADiBEs7NtxhcmBrrDPAVPj80SoQH7qVGTj9qataxLFuIQ4Jm/nSNctJ9mTS2GW3cQ+vxwJ6lES9OekeBQyRX8XkQA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184653; c=relaxed/simple;
-	bh=cXV8Agrm7De/+VeDwAm3HyX+SQzrU6Am35EyzvgDMl4=;
+	s=arc-20240116; t=1788184661; c=relaxed/simple;
+	bh=625qtIl+JxMeaR2dUM0wHlaJwdb/sdg4j6nv1Aw/RlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAOxnE/Kp/TxVA+DS8h8a5DW0y62YDdIC4uKJRfwDym8vfyBJGl9V0whlW+HcoEXrHgg2FYc7nYrP2VWBL4BdoAWubob30TjXFIpiItL+2knXvX41YMi1dqIKI4f4a3PGwULSSQcvZ05/sKor3HG/beEVNyA61YKPRw4j5XjGLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWmIt0za; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nm1PbUMKk7hwPFNqbX7uEg+0BV6SMG8iP03x01ku0sw4S37PZn2S7xQ9ZPQY1ZMSF5oLYVUgtMda2PHJ7BrrHeLJOEWc4twE1fi+k/pq4qkYCKxcYj6qPKSh5ApvOYznnziQy55TE/O6gc9eEla+gUk0v75XAsVsvUyJrFRWuFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neZXDTzA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWmIt0za"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AED41F000E9;
-	Mon, 31 Aug 2026 13:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neZXDTzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEB81F000E9;
+	Mon, 31 Aug 2026 13:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184651;
-	bh=H3setcUbP0AQMGNrEr2QQJYX8TYubZzJOiBhBI87ofo=;
+	s=korg; t=1788184660;
+	bh=r46eHr8yc9XPHQLnfG4mdxta4eHvLeOrGJvFXq/mhsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pWmIt0zaJhvP8JzzcjlG68ZzKYq1r+sxXlWyUcm3u3i3areULics0S2WBmyLoYuiW
-	 kV3qcCY0JPkKpiyjavC3No+1nlHNTdk2ez9PP0ZMh2hCw3zNp0FSBdM2TkemDmkzoU
-	 I74rQik/qNwDB4wCsE3I0ENnPU61yzhUN+dxQXV4=
+	b=neZXDTzA2uCGC5lG7HLQ4VfdVp7onzGU9Ln9AnlNhzPg9Vw0W5lfXoiFG0+kKoqCD
+	 zo8tvEec6oURYfAuvEuX3zScnd3s/7l8/MYEjLJEWU4st7s+D1pwgRYIizIOCCyfnf
+	 NxXar3UI9hEfM4W4V17IOui8ThEa/ZmR/qOYNfgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 6.6 83/91] KVM: s390: vsie: zero stale crypto bits
-Date: Mon, 31 Aug 2026 15:35:11 +0200
-Message-ID: <20260831133403.853768380@linuxfoundation.org>
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 6.6 85/91] usb: core: Strengthen error handling in hub_hub_status()
+Date: Mon, 31 Aug 2026 15:35:13 +0200
+Message-ID: <20260831133403.920030509@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -50,35 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit 34d5b5b646c91cfb9338d7a12c955a70ffb8c66b upstream.
+commit a29496745aa335d97f617385809583241e118610 upstream.
 
-When shadowing crypto access bits from a format0 apcb (crycb 0 or 1),
-the bits 64..255 are unchanged from whatever is in the vsie page in the
-crycb and thus in the apcb. This gives a nested guest potential access
-to a device no longer available. Zero out the remaining bits.
+Add additional error handling after the call to get_hub_status() in
+hub_hub_status().
 
-Fixes: 6b79de4b056e ("KVM: s390: vsie: allow guest FORMAT-1 CRYCB on host FORMAT-2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260811153738.206885-3-borntraeger@linux.ibm.com>
+get_hub_status() uses usb_control_msg() which does not verify that the
+message is the correct length, substituting it for
+usb_control_msg_recv() would also solve this issue but increase memory
+allocations.
+
+Instead, error handling is copied from the method used in
+hub_ext_port_status(), which shares the same flow of logic as
+hub_hub_status().
+
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260722-usb_core_patches_2-v3-1-87622252bfdd@kroah.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/vsie.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/core/hub.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -149,6 +149,7 @@ static int setup_apcb10(struct kvm_vcpu
- 			    sizeof(struct kvm_s390_apcb0)))
- 		return -EFAULT;
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -968,10 +968,12 @@ static int hub_hub_status(struct usb_hub
  
-+	memset(apcb_s, 0, sizeof(*apcb_s));
- 	apcb_s->apm[0] = apcb_h->apm[0] & tmp.apm[0];
- 	apcb_s->aqm[0] = apcb_h->aqm[0] & tmp.aqm[0] & 0xffff000000000000UL;
- 	apcb_s->adm[0] = apcb_h->adm[0] & tmp.adm[0] & 0xffff000000000000UL;
+ 	mutex_lock(&hub->status_mutex);
+ 	ret = get_hub_status(hub->hdev, &hub->status->hub);
+-	if (ret < 0) {
++	if (ret < (int)sizeof(hub->status->hub)) {
+ 		if (ret != -ENODEV)
+ 			dev_err(hub->intfdev,
+ 				"%s failed (err = %d)\n", __func__, ret);
++		if (ret >= 0)
++			ret = -EIO;
+ 	} else {
+ 		*status = le16_to_cpu(hub->status->hub.wHubStatus);
+ 		*change = le16_to_cpu(hub->status->hub.wHubChange);
 
 
