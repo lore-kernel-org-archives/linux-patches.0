@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28FD4A9D76;
-	Mon, 31 Aug 2026 13:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FB554A7D7;
+	Mon, 31 Aug 2026 13:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183988; cv=none; b=LAnIK9dRkNoT6nMJOvWl1rk4R9AyXXX4+LJVdt/azcw8LRKdFm1LvwHLpaORwD6vniOyDSV+ahq2UZoCd3wQdOltSoMeqAXRUrZ/VHBcTGFeBLLLIrxkTSacMa6r8wqua6hrgMh/U9r7lTVmpak6C+Kkk5DTXHHXDiJR4f9s1UY=
+	t=1788183990; cv=none; b=lua96UU4HHVW+kESh2PIhbbZ4wgDtLsDH4yF057WXD/mFLjW7DANo5ejFMOKoQQ+8lLzBpV2ZN+3TsmXjz85t1Fqfk6rGWiZ61MFAb2+EIPecOn2KEcvJM3ZogB9KbFdymfnpEyHjRxkUMM0H0XOI1dm3S0ki9l5zUPgqaskRb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183988; c=relaxed/simple;
-	bh=bG6HE97XeTbZtwJczo+3R7kVtqCn1sg/nwCk5Pw33OU=;
+	s=arc-20240116; t=1788183990; c=relaxed/simple;
+	bh=QrrSsW7Q53fjm5gyXVHzfqwlRQmQfNlzWlpLZWkNVWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QCd3zNnxfi2YMV/9Qv5M9+7v6yGpC7wvdc9YvqEPWVLYCpv6Q0Lkk+Ddfj83EejuBRD8guFsMEo6tMbPr2ASkSqoV80VDzTfxN7kjKIBk8+wU4PJkcfabJW/IRpcye3kVwpC3AklUwlT9/xj+Oowt1QSiyuk5TjCRnIW6EBEJGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d5PuIKvQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cOH51xnRu7tE9TPJ9ugkWU/6+5nOaMNbq0LFvX5a08mwPscmtxvPQbegKW49FkCRQ7UxxTrvXi4RgIelOczuhWqPr5zUUVN9FtPtTnC5Jdikr6lyY+Y+VBJvdHES7T73ig0cymRp8+fYDQ6jBSliBFTpGBaiQMAuY0z6cJAnqB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QoVx97Nm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d5PuIKvQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98371F00A3D;
-	Mon, 31 Aug 2026 13:46:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QoVx97Nm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FBD1F00ACA;
+	Mon, 31 Aug 2026 13:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183984;
-	bh=Mk0Kqx6Y2AMx5CFVQu6LfnWMNetcPw3qURDJ/mI0Q+E=;
+	s=k20260515; t=1788183986;
+	bh=AEn1EkuoVMCTAw9FNBlW4wAm8PyUTNXt8wvQ2WMCEkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d5PuIKvQlmzpDQJ3zD/IxjqArkNlGkrzl3DxMEuIDmjfFIKPV/2DYjuNGuZ15J9qu
-	 SMC6y0tPepxn0sZ6IgseMieoDt3LNPHEMrig+e3zNXxAjEIzQrhTfrOMEoPYYbAqEb
-	 AvOvFecrsCFlFTD7SdkII5snJNi6gho9bLqP0vqhs+AZdPsNRX7l1SS1oFyVvDFACr
-	 W218pHpgd9pYXHFwe7nVXw6p81Ysjeu9EvJ1bV5lWPS7PnPcxq/lXIv9W44cxjX5qc
-	 2KFRnOIJxsa5xb0hrsCdwg4eVE0G/QRP00qZbaBTVzp6UIhrKrDDxJ0qvnXM1Xs4xZ
-	 oEvWWZ89q1qEA==
+	b=QoVx97NmD6aVfSHIoZgMHhkShgOvUpG/nzrg7C5UloJspUgz9wOZj7qYSiMySL7eF
+	 WqUDofBr6RP/LmgGNOg6a2Dm+yN8rlCKZOsGdTtOogqwS8pe0XywduTAq13jeHLn3w
+	 VYAfVXwa0oeS46993gaVdSjcMNQabxf+DDjPi8HQO2Jgkdky6DHW8RHvRbDWO476SL
+	 bs48dVcf27Sb++25vKecEj0XkO9gDKMJ+TIRe89cEsAEwP25qE4pdb3EyjOjWwRIST
+	 wVKM5V9a5mxWLjtlAofzUYPtmw3L+q4uD7gkr5O064UMsQjK40MHx2SeKA0TBzw/3Q
+	 l3v0ZtvQDojIw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	rafael@kernel.org,
+	maciej.wieczor-retman@intel.com,
+	pawel.chmielewski@intel.com,
+	linux-acpi@vger.kernel.org,
+	acpica-devel@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: clear tzone on fail
-Date: Mon, 31 Aug 2026 09:27:29 -0400
-Message-ID: <20260831133314.4125787-421-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: validate byte_count in acpi_ps_get_next_package_length()
+Date: Mon, 31 Aug 2026 09:27:30 -0400
+Message-ID: <20260831133314.4125787-422-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,71 +56,65 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit 5c55827ef5c74a5d56939ed0e93df21e6f1f864e ]
+[ Upstream commit d49c6ee08365a8596f639da46eb7e71752b0cd42 ]
 
-iwl_mld_thermal_zone_register() stores the thermal zone pointer in
-mld->tzone before calling thermal_zone_device_enable(). If enable
-fails, the code unregisters the zone but leaves mld->tzone stale,
-so iwl_mld_thermal_zone_unregister() can unregister it again.
-Clear mld->tzone after unregister in the error path.
+Validate package length reading in acpi_ps_get_next_package_length().
 
-While at it remove a pointless if in iwl_mld_thermal_zone_unregister
-after we've alredy checked the tzone pointer is not NULL.
-
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714141909.595dcb8cb7fe.I8125e4a2eeb0390798e3f4074c62c00443eda8e8@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://github.com/acpica/acpica/commit/40e03f9941e2
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3616255.QJadu78ljV@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: iwlwifi: mld: clear tzone on fail`
+# Stable Backport Analysis: ACPICA `acpi_ps_get_next_package_length()`
+bounds check
 
-**Local tree:** `v6.18.44-1-g2736c32da98b9` (kernel version **6.18.44**)
+**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[wifi: iwlwifi: mld]` `[clear]` — clear stale thermal-zone
-pointer on registration failure path in the iwlwifi MLD driver.
+**Record:** `[ACPICA] [validate] validate byte_count in
+acpi_ps_get_next_package_length()` — ACPI parser subsystem; verb is
+“validate,” indicating a safety/bounds fix.
 
 ### Step 1.2: Tags
 **Record:**
-- **Link:** `https://patch.msgid.link/20260714141909.595dcb8cb7fe...`
-  (patch submission reference; lore blocked by bot protection)
-- **Assisted-by:** GitHubCopilot:gpt-5.3-codex
-- **Signed-off-by:** Emmanuel Grumbach `<emmanuel.grumbach@intel.com>`
-  (author)
-- **Signed-off-by:** Miri Korenblit
-  `<miriam.rachel.korenblit@intel.com>` (committer)
-- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc: stable, or
-  syzbot tags
-
-**Notable patterns:** Intel iwlwifi maintainers; no external bug report
-cited.
+- **Link:** https://github.com/acpica/acpica/commit/40e03f9941e2
+  (upstream ACPICA commit)
+- **Link:** https://patch.msgid.link/3616255.QJadu78ljV@rafael.j.wysocki
+  (kernel submission)
+- **Signed-off-by:** ikaros \<void0red@gmail.com\> (author)
+- **Signed-off-by:** Rafael J. Wysocki \<rafael.j.wysocki@intel.com\>
+  (ACPI maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable tags
+- Notable: submitted as **[PATCH v1 13/27]** in an ACPICA upstream sync
+  series (May 27, 2026)
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `iwl_mld_thermal_zone_register()` stores `mld->tzone` before
-  calling `thermal_zone_device_enable()`. On enable failure, the zone is
-  unregistered but `mld->tzone` is left non-NULL.
-- **Symptom:** `iwl_mld_thermal_zone_unregister()` can call
-  `thermal_zone_device_unregister()` again on a freed/stale pointer.
-- **Root cause:** Missing `mld->tzone = NULL` in the enable-failure
-  error path (the register-failure path already clears it correctly).
-- **Secondary change:** Remove redundant inner `if (mld->tzone)` in
-  unregister after the outer NULL check.
+- **Bug:** `acpi_ps_get_next_package_length()` reads package-length
+  encoding bytes without checking remaining AML buffer size.
+- **Symptom:** Out-of-bounds read when `byte_count` (bits 6:7 of first
+  byte) claims more follow-on bytes than exist before `aml_end`.
+- **Upstream evidence:** ACPICA issue #1123 documents ASAN heap-buffer-
+  overflow at `psargs.c:223` in `AcpiPsGetNextPackageLength`, triggered
+  by malformed `issue8.aml` via `acpiexec`.
+- **Root cause:** Parser advances and reads `aml[byte_count]` in a loop
+  without validating `byte_count + 1 <= remaining`.
 
 ### Step 1.4: Hidden bug fix?
-**Record:** **Yes** — described as cleanup but is a real lifecycle bug:
-stale pointer after `thermal_zone_device_unregister()` → use-after-free
-on later access/unregister.
+**Record:** Yes — despite minimal commit text, this is a confirmed
+memory-safety bug fix (heap buffer overflow / OOB read), not cosmetic
+cleanup.
 
 ---
 
@@ -124,193 +122,206 @@ on later access/unregister.
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `drivers/net/wireless/intel/iwlwifi/mld/thermal.c` (+3
-  meaningful lines, -4 lines including copyright year)
-- **Functions:** `iwl_mld_thermal_zone_register()`,
-  `iwl_mld_thermal_zone_unregister()`
-- **Scope:** Single-file surgical fix under `#ifdef CONFIG_THERMAL`
+- **File:** `drivers/acpi/acpica/psargs.c` (+17 lines, 0 removed)
+- **Function:** `acpi_ps_get_next_package_length()`
+- **Scope:** Single-file, single-function surgical fix
 
-### Step 2.2: Code flow per hunk
-
-**Hunk 1 — `iwl_mld_thermal_zone_register()` error path:**
-**Record:** Before: on `thermal_zone_device_enable()` failure →
-unregister zone, leave dangling `mld->tzone`. After: set `mld->tzone =
-NULL` after unregister, matching the `IS_ERR()` path at lines 263–268.
-
-**Hunk 2 — `iwl_mld_thermal_zone_unregister()`:**
-**Record:** Before: redundant double-check `if (mld->tzone)`. After:
-direct unregister + NULL assignment (behavior unchanged for valid
-paths).
+### Step 2.2: Code flow change
+**Record:**
+- **Hunk 1 (remaining == 0):** Before → reads `aml[0]` unconditionally.
+  After → if no bytes remain, return 0 immediately.
+- **Hunk 2 (byte_count >= remaining):** Before → reads `aml[0]`,
+  advances pointer, loops reading `aml[byte_count]` even past buffer
+  end. After → if encoding needs more bytes than available (`byte_count
+  >= remaining` means `byte_count + 1 > remaining`), set
+  `parser_state->aml = aml_end` and return 0.
+- **Normal path:** Unchanged when sufficient bytes exist.
 
 ### Step 2.3: Bug mechanism
-**Record:** **Category:** use-after-free / stale pointer after resource
-teardown.
-
-**Mechanism verified in `thermal_zone_device_unregister()`:**
-
-```1716:1742:drivers/thermal/thermal_core.c
-void thermal_zone_device_unregister(struct thermal_zone_device *tz)
-{
-        if (!tz)
-                return;
-        // ...
-        kfree(tz);
-}
-```
-
-First unregister on enable failure frees `tz`. Without clearing
-`mld->tzone`, later code dereferences freed memory:
-- **Unload path:** `iwl_mld_thermal_exit()` →
-  `iwl_mld_thermal_zone_unregister()` (line 465)
-- **Runtime path:** e.g. `iwl_mld_handle_ct_kill_notif()` at lines 76–77
-  checks `if (mld->tzone)` then calls `thermal_zone_device_update()`
+**Record:**
+- **Category:** Buffer overflow / out-of-bounds read (memory safety)
+- **Mechanism:** ACPI package-length encoding uses 1–4 bytes. With
+  truncated/corrupt AML near `aml_end`, `byte_count` can be 1–3 while
+  only 1–2 bytes remain. The `while (byte_count)` loop does
+  `aml[byte_count]` past the allocation — exactly matching the ASAN
+  report at line 223 (Linux tree line 71: `package_length |=
+  (aml[byte_count] << ...)`).
 
 ### Step 2.4: Fix quality
-**Record:** Obviously correct; mirrors existing pattern in the same
-function. Minimal regression risk. The redundant-if removal is pure
-cleanup.
+**Record:**
+- Fix is obviously correct: compares available bytes against encoding
+  width before reading.
+- Minimal, no unrelated changes.
+- Low regression risk: only affects truncated/corrupt AML; valid tables
+  unchanged.
+- On error, returns 0 and advances to `aml_end` — safe degradation vs.
+  OOB read.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Buggy register/enable path present in current tree at lines
-271–275. `git blame` attributes lines to `5d324e5159d9e` (limited
-history in this stable checkout). Bug present since MLD thermal support
-landed in this tree.
+**Record:** Core parsing logic dates to **2005** (Bob Moore,
+`drivers/acpi/parser/psargs.c`). Bug present since initial
+implementation. `aml_end` field and `ACPI_PTR_DIFF` macro already exist
+in this tree.
 
 ### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in commit message.
+**Record:** N/A — no Fixes: tag. Upstream ACPICA commit references
+GitHub issue #1123.
 
 ### Step 3.3: Related file history
-**Record:** `git log --
-drivers/net/wireless/intel/iwlwifi/mld/thermal.c` shows only the base
-import commit in this tree's history. Related iwlwifi mld fixes (e.g.
-`3a74aaad04735` UAF fix in `link.c`) are already backported here,
-indicating active stable maintenance of iwl_mld.
+**Record:** Recent `psargs.c` changes in 6.18.44 include memory-leak
+fixes (`e6169a8ffee8a`, `5accb265f7a1b`) — same file, same maintainer
+pattern for stable-worthy ACPICA parser fixes. This specific fix is
+**not** yet in the tree.
 
 ### Step 3.4: Author context
-**Record:** Emmanuel Grumbach is iwlwifi maintainer. Miri Korenblit is
-active iwlwifi contributor. No other commits from Grumbach on
-`mld/thermal.c` in this tree's log.
+**Record:** ikaros reported the ACPICA bug with ASAN PoC. Rafael Wysocki
+(ACPI maintainer) carried it into kernel as patch 13/27 of an ACPICA
+sync.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone fix. No series dependencies. No prerequisite
-commits required. Patch context matches current tree code exactly.
+**Record:** Patch is part of a 27-patch series but **this hunk is self-
+contained**:
+- Uses existing `parser_state->aml_end` (in `struct acpi_parse_state`
+  since long ago)
+- Uses existing `ACPI_PTR_DIFF` (`include/acpi/actypes.h:505`)
+- `git apply --check` succeeds cleanly on 6.18.44
+- No prerequisite structural changes from earlier series patches
+  required
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original discussion
-**Record:** `b4 dig` returned no results (empty output). Link URL
-blocked by Anubis bot protection. Local `.mbx` files contain no match
-for "clear tzone". **Could not retrieve lore discussion.**
+**Record:**
+- **URL:** https://lkml.iu.edu/2605.3/06258.html (patch submission, May
+  27, 2026)
+- **Series:** v1 13/27 of ACPICA upstream sync
+- **Review thread:** No replies visible on lkml.iu.edu mirror; no NAKs
+  found
+- **Stable nomination:** None found in available thread content
 
 ### Step 4.2: Reviewers
-**Record:** UNVERIFIED — `b4 dig -w` not available.
+**Record:** `b4 dig -c 40e03f9941e2` failed (ACPICA hash, not in Linux
+tree). Patch submitted by Rafael Wysocki to linux-acpi; maintainer sign-
+off present.
 
 ### Step 4.3: Bug report
-**Record:** No Reported-by: or syzbot link. Bug identified by code
-inspection during driver development.
+**Record:**
+- **ACPICA issue #1123:** Heap-buffer-overflow, ASAN-confirmed,
+  reproducible with `acpiexec -m issue8.aml`
+- Stack trace: `AcpiPsGetNextPackageLength` → `AcpiPsGetNextPackageEnd`
+  → `AcpiPsGetNextArg` → `AcpiPsParseLoop` → `AcpiNsLoadTable` →
+  `AcpiLoadTables`
+- Severity: memory safety violation during ACPI table parsing
 
 ### Step 4.4: Related patches
-**Record:** The legacy MVM driver (`mvm/tt.c` lines 688–692) has the
-same missing-NULL pattern but is **not** fixed by this commit. Out of
-scope for this evaluation.
+**Record:** Same series includes additional boundary checks in
+`acpi_ps_peek_opcode()`, `acpi_ps_get_next_field()`,
+`acpi_ps_get_next_namestring()` (patches 14–27). Those fix related but
+separate OOB paths; this patch stands alone for this specific function.
 
-### Step 4.5: Stable list discussion
-**Record:** UNVERIFIED — lore blocked.
+### Step 4.5: Stable list history
+**Record:** lore.kernel.org/stable blocked by bot protection; no stable-
+specific discussion found via alternate sources.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `iwl_mld_thermal_zone_register()`,
-`iwl_mld_thermal_zone_unregister()`, `iwl_mld_thermal_initialize()`,
-`iwl_mld_thermal_exit()`
+**Record:** `acpi_ps_get_next_package_length()` (modified); callers
+include `acpi_ps_get_next_package_end()`.
 
 ### Step 5.2: Callers
 **Record:**
-- `iwl_mld_thermal_initialize()` called from `iwl_op_mode_mld_start()`
-  (`mld.c:478`) during driver start
-- `iwl_mld_thermal_exit()` called from `iwl_op_mode_mld_stop()`
-  (`mld.c:506`) during driver stop/unload
+- `acpi_ps_get_next_package_end()` → used from `acpi_ps_get_next_arg()`
+  (ARGP_PKGLENGTH, field parsing)
+- `acpi_ps_get_next_package_length()` direct calls in
+  `acpi_ps_get_next_field()` (buffer/field length)
+- Upstream call chain reaches `acpi_ps_parse_loop()` →
+  `acpi_ps_execute_table()` → `acpi_ns_load_table()` →
+  `acpi_load_tables()` → `acpi_bus_init()` at boot
 
 ### Step 5.3: Callees
-**Record:** `thermal_zone_device_register_with_trips()`,
-`thermal_zone_device_enable()`, `thermal_zone_device_unregister()`
+**Record:** Uses `ACPI_PTR_DIFF`, pointer arithmetic on
+`parser_state->aml` / `aml_end`; no allocations or locks.
 
 ### Step 5.4: Reachability
-**Record:** Trigger requires `CONFIG_THERMAL` + `CONFIG_IWLMLD`. Path is
-reachable on Intel MLD WiFi device probe with thermal support enabled.
-`iwl_mld_thermal_zone_register()` is `void` and does not abort probe on
-enable failure — driver continues with stale pointer. Unload always
-calls `iwl_mld_thermal_exit()`.
+**Record:** **Yes — boot path.** `acpi_bus_init()` calls
+`acpi_load_tables()` during ACPI subsystem init. Any corrupt/truncated
+DSDT/SSDT AML with malformed package-length encoding can hit this. With
+`CONFIG_ACPI_TABLE_OVERRIDE_VIA_BUILTIN_INITRD`, root can supply custom
+ACPI tables.
 
 ### Step 5.5: Similar patterns
-**Record:** Register-failure path already sets `mld->tzone = NULL` (line
-267). MVM `tt.c` has identical enable-failure bug (not addressed here).
+**Record:** Same series adds similar bounds checks elsewhere. Prior
+stable-relevant fix in tree: `a3e525feaeec4` “Avoid subobject buffer
+overflow when validating RSDP signature.”
 
 ---
 
 ## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
 
 ### Step 6.1: Buggy code present?
-**Record:** **YES.** Current tree at lines 271–275 lacks `mld->tzone =
-NULL` after unregister on enable failure. Fix commit is **not** yet
-applied.
+**Record:** **Yes.** Lines 58–71 of `drivers/acpi/acpica/psargs.c` lack
+bounds checking — exactly the vulnerable code. Bug present since ~2005.
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Diff context matches current file
-exactly. No conflicting changes in recent history.
+**Record:** **Clean apply** — `git apply --check` passed with zero
+conflicts. `aml_end` and `ACPI_PTR_DIFF` already present.
 
-### Step 6.3: Related fixes already present?
-**Record:** No equivalent fix found. `git log --grep='clear tzone'`
-returns nothing.
+### Step 6.3: Fix already present?
+**Record:** **No.** `git log --grep="validate byte_count"` found
+nothing. Current function has no `remaining` variable or bounds checks.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** **IMPORTANT** — Intel WiFi driver
-(`drivers/net/wireless/intel/iwlwifi/mld/`), device-driver subsystem.
-Affects users of MLD-capable Intel WiFi hardware with thermal support.
+**Record:** **ACPI / ACPICA parser** — IMPORTANT/CORE for x86/ARM
+systems with ACPI. Affects boot-time namespace loading for essentially
+all ACPI-enabled machines.
 
 ### Step 7.2: Activity
-**Record:** Active — multiple iwl_mld stable backports in this tree (PTP
-race, NULL deref, BA session fixes).
+**Record:** Actively maintained; regular ACPICA upstream merges. Recent
+`psargs.c` leak fixes confirm ongoing parser hardening.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK
 
 ### Step 8.1: Who is affected
-**Record:** Config-specific (`CONFIG_IWLMLD` + `CONFIG_THERMAL`). Users
-of newer Intel MLD WiFi devices with thermal framework enabled.
+**Record:** All systems using ACPI (most PCs, many ARM servers/laptops).
+Config: `CONFIG_ACPI=y` (default on most platforms).
 
 ### Step 8.2: Trigger conditions
-**Record:** `thermal_zone_device_enable()` fails after successful
-registration. Uncommon but explicitly handled error path. Any subsequent
-driver unload or thermal notification using `mld->tzone` triggers UAF.
-Not userspace-triggerable directly, but reachable during normal driver
-lifecycle on affected hardware.
+**Record:**
+- Corrupt or truncated ACPI AML in DSDT/SSDT tables
+- Malformed package-length encoding near end of AML buffer
+- Triggered during boot `acpi_load_tables()` — every boot with bad
+  tables
+- Root can inject tables via initrd override; firmware/QEMU can supply
+  bad tables
+- Not directly triggerable by unprivileged userspace, but boot crash is
+  severe
 
 ### Step 8.3: Failure mode severity
-**Record:** **HIGH** — use-after-free on freed `struct
-thermal_zone_device`. Can cause kernel oops on module unload or during
-thermal event handling. Potential security relevance (UAF class).
+**Record:** **HIGH** — heap-buffer-overflow / OOB read; can cause kernel
+oops/panic during early boot, potential info leak with KASAN/ASAN. Boot
+failure = system unusable.
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Prevents UAF on driver teardown and runtime thermal
-  paths; one-line meaningful fix
-- **Risk:** Very low — adds NULL assignment matching existing pattern;
-  cleanup-only hunk in unregister
-- **Ratio:** Strong benefit, minimal risk
+- **Benefit:** HIGH — prevents OOB read on common boot path with corrupt
+  ACPI data
+- **Risk:** VERY LOW — 17-line bounds check, no API changes, clean apply
+- **Ratio:** Strongly favors backport
 
 ---
 
@@ -319,135 +330,129 @@ thermal event handling. Potential security relevance (UAF class).
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real UAF bug on error path with clear mechanism
-- Fix is minimal, obviously correct, matches existing code pattern
-- Buggy code confirmed present in 6.18.44 tree
-- Driver unload path always hits unregister — crash risk on affected
-  hardware
-- iwl_mld actively maintained in this stable series
-- Similar iwl_mld UAF fixes already backported here
+- Confirmed heap-buffer-overflow (ASAN, ACPICA #1123)
+- Boot-path ACPI table parsing (`acpi_load_tables`)
+- Bug present since 2005 in this tree
+- Small, surgical, maintainer-reviewed fix
+- Applies cleanly to 6.18.44
+- Precedent: similar ACPICA overflow/bounds fixes in stable trees
+- Self-contained despite being patch 13/27
 
 **AGAINST backport:**
-- No syzbot/user bug report (theoretical until enable fails)
-- Narrow audience (IWLMLD + CONFIG_THERMAL)
-- MVM driver has same bug but is not fixed by this commit
-- Could not verify lore review discussion
+- Part of larger 27-patch series (but this hunk has no code dependencies
+  on siblings)
+- No syzbot report (but ASAN PoC exists)
+- ACPI tables usually from firmware (limited direct attack surface, but
+  corrupt firmware and initrd override are real)
 
-**Unresolved:** Lore review thread inaccessible; exact frequency of
-`thermal_zone_device_enable()` failure unverified.
+**Unresolved:**
+- No visible reviewer stable nominations (lore blocked)
+- Full series not yet merged to 6.18.44 (only this patch needed for this
+  specific bug)
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic is self-evident; no
-   Tested-by but pattern matches existing error path
-2. Fixes a real bug? **PASS** — stale pointer after free confirmed by
-   code reading
-3. Important issue? **PASS** — UAF, HIGH severity on unload
-4. Small and contained? **PASS** — ~3 meaningful lines in one file
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — code present, clean apply
-   expected
+1. Obviously correct and tested? **PASS** — logic is straightforward;
+   ASAN-tested upstream
+2. Fixes a real bug affecting users? **PASS** — OOB read on ACPI parse
+3. Important issue? **PASS** — memory safety, boot-time crash risk
+   (HIGH)
+4. Small and contained? **PASS** — 17 lines, one function
+5. No new features/APIs? **PASS** — defensive bounds check only
+6. Can apply to local tree? **PASS** — verified clean apply
 
 ### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-bug fix.
+**Record:** N/A (not device ID, quirk, DT, build fix, or docs — standard
+bug fix)
 
-### Step 9.4: Problem and decision rationale
-
-When `thermal_zone_device_enable()` fails during iwl_mld thermal zone
-setup, the driver unregisters the zone but leaves `mld->tzone` pointing
-at freed memory. Because registration failure does not abort driver
-probe, the WiFi device continues operating with a dangling pointer. On
-driver removal (`iwl_op_mode_mld_stop` → `iwl_mld_thermal_exit`),
-`iwl_mld_thermal_zone_unregister()` dereferences that freed structure —
-a classic use-after-free that can oops the kernel. Runtime thermal
-notification paths (`iwl_mld_handle_ct_kill_notif`) are similarly
-affected.
-
-For 6.18.44 users running Intel MLD WiFi with thermal support, this is a
-real stability fix with negligible backport risk. The fix mirrors the
-already-correct `IS_ERR()` path in the same function.
+### Step 9.4: Decision rationale
+For **Linux 6.18.44**, the vulnerable code exists, the fix applies
+cleanly, and the bug is a confirmed out-of-bounds read on the ACPI boot
+parsing path. This meets all stable kernel criteria.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user-provided diff
-- **[Phase 2]** Read `thermal.c` lines 65–467; confirmed missing
-  `mld->tzone = NULL` at lines 271–275
-- **[Phase 2]** Read `thermal_core.c:1716–1742`; confirmed
-  `thermal_zone_device_unregister()` frees `tz` via `kfree(tz)`
-- **[Phase 2]** Read `thermal_core.c:1691–1709`; confirmed second
-  unregister accesses `tz->node` on potentially freed memory
-- **[Phase 3]** `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; `make
-  kernelversion` → `6.18.44`
-- **[Phase 3]** `git blame -L 242,276 thermal.c` → buggy code in current
-  tree
-- **[Phase 3]** `git log --grep='clear tzone'` → no existing fix
-- **[Phase 3]** `git show 3a74aaad04735` → confirmed iwl_mld fixes are
-  backported to this tree
-- **[Phase 4]** `b4 dig` → empty/no match
-- **[Phase 4]** WebFetch lore/patch.msgid.link → blocked by Anubis
-- **[Phase 4]** Grep `*.mbx` for "clear tzone" → no matches
-- **[Phase 5]** Grep `iwl_mld_thermal` → callers in `mld.c:478,506`
-- **[Phase 5]** Read `mld.c:460–527` → thermal init on start, exit on
-  stop
-- **[Phase 6]** Confirmed
-  `drivers/net/wireless/intel/iwlwifi/mld/thermal.c` exists (467 lines)
-- **[Phase 6]** Confirmed `CONFIG_IWLMLD` in `Kconfig:84`
-- **[Phase 6]** Diff context matches current tree — clean apply expected
-- **[Phase 8]** Grep `mvm/tt.c` → same bug pattern at lines 688–692 (not
-  fixed by this commit)
-- **UNVERIFIED:** Lore review discussion and stable nomination comments
-- **UNVERIFIED:** How often `thermal_zone_device_enable()` fails on
-  iwl_mld hardware
+- [Phase 1] Parsed subject, tags, body; identified ASAN-confirmed OOB
+  read
+- [Phase 1] Fetched ACPICA commit 40e03f9941e2 and issue #1123 from
+  GitHub
+- [Phase 2] Read current `psargs.c:45-80` — vulnerable code confirmed
+- [Phase 2] Analyzed diff: adds `remaining` check before `byte_count`
+  read loop
+- [Phase 3] `git blame`: buggy logic from 2005; fix not present
+- [Phase 3] `git log --oneline -20 -- drivers/acpi/acpica/psargs.c`: no
+  matching fix
+- [Phase 3] Verified `struct acpi_parse_state.aml_end` in
+  `aclocal.h:912`
+- [Phase 3] Verified `ACPI_PTR_DIFF` in `include/acpi/actypes.h:505`
+- [Phase 4] `b4 dig -c 40e03f9941e2`: no match (ACPICA-only hash)
+- [Phase 4] lkml.iu.edu/2605.3/06258.html: patch 13/27, Rafael Wysocki
+  submission
+- [Phase 4] GitHub issue #1123: ASAN stack trace and reproduction steps
+- [Phase 5] Traced callers: `acpi_ps_get_next_package_end` →
+  `acpi_ps_get_next_arg` → parse loop → `acpi_ns_load_table` →
+  `acpi_load_tables` → `acpi_bus_init`
+- [Phase 5] Confirmed `acpi_load_tables()` call in
+  `drivers/acpi/bus.c:1413`
+- [Phase 6] `git describe HEAD`: v6.18.44
+- [Phase 6] `git apply --check`: patch applies cleanly
+- [Phase 6] Confirmed fix absent (`remaining` variable not in current
+  code)
+- [Phase 8] Assessed severity: HIGH (boot-time OOB read)
+- [UNVERIFIED] Full lore review thread replies (lore blocked by Anubis)
+- [UNVERIFIED] Whether entire 27-patch series will merge before next
+  6.18.y release (does not affect standalone merit of this fix)
 
-**YES**The `b4 dig` search for the patch thread finished with no match —
-it returned empty output for both the commit hash and the subject line
-`wifi: iwlwifi: mld: clear tzone on fail`. Lore/patch.msgid.link was
-also unreachable (bot protection), so the review thread couldn’t be
-retrieved that way.
+**YES****Verdict: YES** — backport to this tree (Linux 6.18.44).
 
-That doesn’t change the earlier conclusion: the bug is a real stale-
-pointer/UAF on the thermal-zone enable-failure path in `iwl_mld`, the
-fix is small and applies cleanly to this 6.18.44 tree, and the backport
-recommendation remains **YES**.
+The commit adds bounds checks in `acpi_ps_get_next_package_length()` so
+truncated or corrupt ACPI AML cannot trigger an out-of-bounds read when
+decoding package-length fields. That bug is confirmed upstream (ASAN
+heap-buffer-overflow, ACPICA issue #1123), hits the boot path via
+`acpi_load_tables()`, and the vulnerable code is still present in
+6.18.44. The patch is small (17 lines), self-contained, and applies
+cleanly.
 
- drivers/net/wireless/intel/iwlwifi/mld/thermal.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/thermal.c b/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
-index f8a8c35066beb..e445b1d7d4b00 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/thermal.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2024-2025 Intel Corporation
-+ * Copyright (C) 2024-2026 Intel Corporation
-  */
- #ifdef CONFIG_THERMAL
- #include <linux/sort.h>
-@@ -272,6 +272,7 @@ static void iwl_mld_thermal_zone_register(struct iwl_mld *mld)
- 	if (ret) {
- 		IWL_DEBUG_TEMP(mld, "Failed to enable thermal zone\n");
- 		thermal_zone_device_unregister(mld->tzone);
-+		mld->tzone = NULL;
- 	}
- }
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index 55273cbbfc67e..3526ea1094146 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -48,6 +48,7 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	u32 package_length = 0;
+ 	u32 byte_count;
+ 	u8 byte_zero_mask = 0x3F;	/* Default [0:5] */
++	u32 remaining;
  
-@@ -385,10 +386,8 @@ static void iwl_mld_thermal_zone_unregister(struct iwl_mld *mld)
- 		return;
+ 	ACPI_FUNCTION_TRACE(ps_get_next_package_length);
  
- 	IWL_DEBUG_TEMP(mld, "Thermal zone device unregister\n");
--	if (mld->tzone) {
--		thermal_zone_device_unregister(mld->tzone);
--		mld->tzone = NULL;
--	}
-+	thermal_zone_device_unregister(mld->tzone);
-+	mld->tzone = NULL;
- }
+@@ -55,7 +56,23 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	 * Byte 0 bits [6:7] contain the number of additional bytes
+ 	 * used to encode the package length, either 0,1,2, or 3
+ 	 */
++
++	/* Check if we have at least one byte to read */
++	remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
++	if (remaining == 0) {
++		return_UINT32(0);
++	}
++
+ 	byte_count = (aml[0] >> 6);
++
++	/* Validate byte_count and ensure we have enough bytes to read */
++	if (byte_count >= remaining) {
++
++		/* Clamp to available bytes and advance to end */
++		parser_state->aml = parser_state->aml_end;
++		return_UINT32(0);
++	}
++
+ 	parser_state->aml += ((acpi_size)byte_count + 1);
  
- static void iwl_mld_cooling_device_unregister(struct iwl_mld *mld)
+ 	/* Get bytes 3, 2, 1 as needed */
 -- 
 2.53.0
 
