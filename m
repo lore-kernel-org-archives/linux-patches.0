@@ -1,592 +1,463 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEB956C641;
-	Mon, 31 Aug 2026 13:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6973956C64B;
+	Mon, 31 Aug 2026 13:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184107; cv=none; b=iCswuukRKvoMm6cMH7lyg9BSAKPhx/WE6ampBFmA/jkJbgqJZVZ9zNp0hd2XTAC3lPnm5EcalK0AhzO4qjxNpIwCxFfo/cua+R62N34pkXiMp7dOri+MYs16UYZxWB3d1UGiN0g7it9x2834ZN9k6B1SMdx+aev12QCYeYrZcr0=
+	t=1788184108; cv=none; b=jeDeTfIgzpYJjagvm1N31fL8SvrUDnJ6loGJsZ5tH7SPewj3s3DneHpekQKa4H18d4q/no/YI1/9i0k4KQQ3WgBAgX+EH2mW3sMMAMxdiDCKWiO5oN16Eg+PU+U8cm2PDNr7S3sCS49lxR03BnsJmVdzhshi/lEE2EvtHdSjrXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184107; c=relaxed/simple;
-	bh=8GTDpNh+FLCREWSu/x7mc/+P/rgXU9F5NxWP9AKXhNE=;
+	s=arc-20240116; t=1788184108; c=relaxed/simple;
+	bh=xkXO7Xn9rTOeoxTnAPikfIGYnyGBWrQvEYDXsA/8l80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxhUuGBZjBRyJXTyygYrwXFVam7fmolfMxbkzs3+arALFRU1od2al7pSHsilCRTF0TdZYTEYkChUCSjb8Fblsfsy2zyhhj36FZcDhmmZXB2lSUqW9O5cNiiIKrYKuH83tpbFl76hnOh4xIl/zMvn9QzCZel0ztxJBZjKlHpadBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AomWA3Eg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aNYtpB/soSC6wxDBgRqOfoXU/NiGuahJtdr/sP+D+RYuqtFXdMp6u9VFYeg/OohHcAKrcXvvAdwRnA14acBSs4uRtDDxq9Ih7d9ylj1pSxhb3mYHa6aMZaeJi5vdi8r4dAjU9rLqT1HDUKykCW+m1z0C+YZfQYjD9inneecssaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ewRK8erH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AomWA3Eg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546971F00A3E;
-	Mon, 31 Aug 2026 13:48:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184104;
-	bh=TBBvKLY4y6pIq/NckEYq5sSo08dWbJJi+ROdqTonWtY=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ewRK8erH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99F51F00ACF;
+	Mon, 31 Aug 2026 13:48:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184105;
+	bh=mhUV1L2AUmXHJKZbxJWi4kIFg3U6/9Hyhje/cu/Ziks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AomWA3EgY4JRPpiXBDnnbONAWQQzAN9aoEeFpt82JCbo9CaWaimk0aMal5WOZ52hi
-	 uW+Krw8+Qank7hdt6NSYHwcH0L9aiyg4ganO4AJmsbODUSouZZDLE+FxClTpStKJ0B
-	 Y08KBrxEU+gcPsSOGQgnonqGKhYhih8y1/uKIQzQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 73/83] crypto: qce - Remove unsafe/deprecated algorithms
-Date: Mon, 31 Aug 2026 15:34:49 +0200
-Message-ID: <20260831133403.174193604@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
-References: <20260831133359.207714926@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=ewRK8erHtjknv9LfeisT86BqkypZ728eVwBcA7BCnKIX2X0y8eiFF33duczP43Nwt
+	 GqPEByOpEumlD5X0+FZueRS61hWVQBrJSOtU2TcSil9PoPEwEQsQOdiIQhcc5blKBv
+	 LVSAp/wG7b27y0dcCyhzLZZ2lEMu8vxxYqlXQorv3gNQFyKqpSPjkDfVtG0spHuHTh
+	 q1IPWMP9VlPcvRj5dawBBAn72x4vL73Y+sYP8YFoFi5f+Vez6rtjzSiWQp6OVTU4ju
+	 WbDhVTIE/8HneNlVMGM6hNMObuDVVKj+iZCXJV6LXC1F3P8BnfY5zjLWGtoFrZs7iW
+	 OcU4/N4/IPUiA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Kumar Meiyappan <kumar.meiyappan@microchip.com>,
+	Sagar Biradar <sagar.biradar@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	jinpu.wang@cloud.ionos.com,
+	James.Bottomley@HansenPartnership.com,
+	mkp@kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: pm8001: Reject non-fatal dump when controller is crashed
+Date: Mon, 31 Aug 2026 09:28:41 -0400
+Message-ID: <20260831133314.4125787-493-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+From: Kumar Meiyappan <kumar.meiyappan@microchip.com>
 
-------------------
+[ Upstream commit aa3b8f56ef27ed72394a752820abdec4608b731c ]
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+pm80xx_get_non_fatal_dump() can be called even after the controller has
+entered a fatal error state. In that case the forensic memory contents
+are not safe to access for a non-fatal dump request, and attempting to
+do so can trigger a call trace.
 
-commit 7e28b0a5c4b7d075b98ce6d8f5290a9d3deb5b92 upstream.
+Check controller_fatal_error before reading the non-fatal dump buffer
+and return -EINVAL when the controller is already in a crashed state.
 
-Remove algorithms that are either unsafe or deprecated and have no
-in-kernel users that cannot be served by the ARM CE implementations.
+This prevents non-fatal dump collection from running in an invalid
+controller state.
 
-AES-ECB reveals plaintext patterns (identical plaintext blocks produce
-identical ciphertext blocks) and should not be exposed as a hardware-
-accelerated primitive. DES, Triple DES and HMAC-SHA1 have been
-deprecated for years.
-
-Remove sha1, ecb(aes), ecb(des), cbc(des), ecb(des3_ede), cbc(des3_ede),
-hmac(sha1) and all AEAD variants built on these primitives as well as
-authenc(hmac(sha256),cbc(des)). Also clean up the - now dead - code,
-flags and constants.
-
-Cc: stable@vger.kernel.org
-Acked-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kumar Meiyappan <kumar.meiyappan@microchip.com>
+Signed-off-by: Sagar Biradar <sagar.biradar@microchip.com>
+Link: https://patch.msgid.link/20260416154650.415624-1-sagar.biradar@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qce/aead.c     |   56 ------------------------
- drivers/crypto/qce/common.c   |   55 +++++------------------
- drivers/crypto/qce/common.h   |   16 +-----
- drivers/crypto/qce/regs-v5.h  |    4 -
- drivers/crypto/qce/sha.c      |   30 ------------
- drivers/crypto/qce/sha.h      |    1 
- drivers/crypto/qce/skcipher.c |   97 ------------------------------------------
- 7 files changed, 20 insertions(+), 239 deletions(-)
 
---- a/drivers/crypto/qce/aead.c
-+++ b/drivers/crypto/qce/aead.c
-@@ -8,8 +8,6 @@
- #include <crypto/gcm.h>
- #include <crypto/authenc.h>
- #include <crypto/internal/aead.h>
--#include <crypto/internal/des.h>
--#include <crypto/sha1.h>
- #include <crypto/sha2.h>
- #include <crypto/scatterwalk.h>
- #include "aead.h"
-@@ -597,7 +595,6 @@ static int qce_aead_setkey(struct crypto
- 	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
- 	struct crypto_authenc_keys authenc_keys;
- 	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
--	u32 _key[6];
- 	int err;
- 
- 	err = crypto_authenc_extractkeys(&authenc_keys, key, keylen);
-@@ -608,26 +605,7 @@ static int qce_aead_setkey(struct crypto
- 	    authenc_keys.authkeylen > QCE_MAX_KEY_SIZE)
- 		return -EINVAL;
- 
--	if (IS_DES(flags)) {
--		err = verify_aead_des_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
--		if (err)
--			return err;
--	} else if (IS_3DES(flags)) {
--		err = verify_aead_des3_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
--		if (err)
--			return err;
--		/*
--		 * The crypto engine does not support any two keys
--		 * being the same for triple des algorithms. The
--		 * verify_skcipher_des3_key does not check for all the
--		 * below conditions. Schedule fallback in this case.
--		 */
--		memcpy(_key, authenc_keys.enckey, DES3_EDE_KEY_SIZE);
--		if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
--		    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
--		    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
--			ctx->need_fallback = true;
--	} else if (IS_AES(flags)) {
-+	if (IS_AES(flags)) {
- 		/* No random key sizes */
- 		if (authenc_keys.enckeylen != AES_KEYSIZE_128 &&
- 		    authenc_keys.enckeylen != AES_KEYSIZE_192 &&
-@@ -699,38 +677,6 @@ struct qce_aead_def {
- 
- static const struct qce_aead_def aead_def[] = {
- 	{
--		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
--		.name           = "authenc(hmac(sha1),cbc(des))",
--		.drv_name       = "authenc-hmac-sha1-cbc-des-qce",
--		.blocksize      = DES_BLOCK_SIZE,
--		.ivsize         = DES_BLOCK_SIZE,
--		.maxauthsize	= SHA1_DIGEST_SIZE,
--	},
--	{
--		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
--		.name           = "authenc(hmac(sha1),cbc(des3_ede))",
--		.drv_name       = "authenc-hmac-sha1-cbc-3des-qce",
--		.blocksize      = DES3_EDE_BLOCK_SIZE,
--		.ivsize         = DES3_EDE_BLOCK_SIZE,
--		.maxauthsize	= SHA1_DIGEST_SIZE,
--	},
--	{
--		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
--		.name           = "authenc(hmac(sha256),cbc(des))",
--		.drv_name       = "authenc-hmac-sha256-cbc-des-qce",
--		.blocksize      = DES_BLOCK_SIZE,
--		.ivsize         = DES_BLOCK_SIZE,
--		.maxauthsize	= SHA256_DIGEST_SIZE,
--	},
--	{
--		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
--		.name           = "authenc(hmac(sha256),cbc(des3_ede))",
--		.drv_name       = "authenc-hmac-sha256-cbc-3des-qce",
--		.blocksize      = DES3_EDE_BLOCK_SIZE,
--		.ivsize         = DES3_EDE_BLOCK_SIZE,
--		.maxauthsize	= SHA256_DIGEST_SIZE,
--	},
--	{
- 		.flags          =  QCE_ALG_AES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
- 		.name           = "authenc(hmac(sha256),cbc(aes))",
- 		.drv_name       = "authenc-hmac-sha256-cbc-aes-qce",
---- a/drivers/crypto/qce/common.c
-+++ b/drivers/crypto/qce/common.c
-@@ -8,7 +8,6 @@
- #include <linux/interrupt.h>
- #include <linux/types.h>
- #include <crypto/scatterwalk.h>
--#include <crypto/sha1.h>
- #include <crypto/sha2.h>
- 
- #include "cipher.h"
-@@ -115,18 +114,16 @@ static u32 qce_auth_cfg(unsigned long fl
- 			cfg |= AUTH_KEY_SZ_AES256 << AUTH_KEY_SIZE_SHIFT;
- 	}
- 
--	if (IS_SHA1(flags) || IS_SHA1_HMAC(flags))
--		cfg |= AUTH_SIZE_SHA1 << AUTH_SIZE_SHIFT;
--	else if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
-+	if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
- 		cfg |= AUTH_SIZE_SHA256 << AUTH_SIZE_SHIFT;
- 	else if (IS_CMAC(flags))
- 		cfg |= AUTH_SIZE_ENUM_16_BYTES << AUTH_SIZE_SHIFT;
- 	else if (IS_CCM(flags))
- 		cfg |= (auth_size - 1) << AUTH_SIZE_SHIFT;
- 
--	if (IS_SHA1(flags) || IS_SHA256(flags))
-+	if (IS_SHA256(flags))
- 		cfg |= AUTH_MODE_HASH << AUTH_MODE_SHIFT;
--	else if (IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
-+	else if (IS_SHA256_HMAC(flags))
- 		cfg |= AUTH_MODE_HMAC << AUTH_MODE_SHIFT;
- 	else if (IS_CCM(flags))
- 		cfg |= AUTH_MODE_CCM << AUTH_MODE_SHIFT;
-@@ -191,7 +188,7 @@ static int qce_setup_regs_ahash(struct c
- 	else
- 		qce_cpu_to_be32p_array(auth, rctx->digest, digestsize);
- 
--	iv_words = (IS_SHA1(rctx->flags) || IS_SHA1_HMAC(rctx->flags)) ? 5 : 8;
-+	iv_words = 8;
- 	qce_write_array(qce, REG_AUTH_IV0, (u32 *)auth, iv_words);
- 
- 	if (rctx->first_blk)
-@@ -243,19 +240,8 @@ static u32 qce_encr_cfg(unsigned long fl
- 
- 	if (IS_AES(flags))
- 		cfg |= ENCR_ALG_AES << ENCR_ALG_SHIFT;
--	else if (IS_DES(flags) || IS_3DES(flags))
--		cfg |= ENCR_ALG_DES << ENCR_ALG_SHIFT;
--
--	if (IS_DES(flags))
--		cfg |= ENCR_KEY_SZ_DES << ENCR_KEY_SZ_SHIFT;
--
--	if (IS_3DES(flags))
--		cfg |= ENCR_KEY_SZ_3DES << ENCR_KEY_SZ_SHIFT;
- 
- 	switch (flags & QCE_MODE_MASK) {
--	case QCE_MODE_ECB:
--		cfg |= ENCR_MODE_ECB << ENCR_MODE_SHIFT;
--		break;
- 	case QCE_MODE_CBC:
- 		cfg |= ENCR_MODE_CBC << ENCR_MODE_SHIFT;
- 		break;
-@@ -340,13 +326,7 @@ static int qce_setup_regs_skcipher(struc
- 
- 	encr_cfg = qce_encr_cfg(flags, keylen);
- 
--	if (IS_DES(flags)) {
--		enciv_words = 2;
--		enckey_words = 2;
--	} else if (IS_3DES(flags)) {
--		enciv_words = 2;
--		enckey_words = 6;
--	} else if (IS_AES(flags)) {
-+	if (IS_AES(flags)) {
- 		if (IS_XTS(flags))
- 			qce_xtskey(qce, ctx->enc_key, ctx->enc_keylen,
- 				   rctx->cryptlen);
-@@ -357,14 +337,12 @@ static int qce_setup_regs_skcipher(struc
- 
- 	qce_write_array(qce, REG_ENCR_KEY0, (u32 *)enckey, enckey_words);
- 
--	if (!IS_ECB(flags)) {
--		if (IS_XTS(flags))
--			qce_xts_swapiv(enciv, rctx->iv, ivsize);
--		else
--			qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
-+	if (IS_XTS(flags))
-+		qce_xts_swapiv(enciv, rctx->iv, ivsize);
-+	else
-+		qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
- 
--		qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
--	}
-+	qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
- 
- 	if (IS_ENCRYPT(flags))
- 		encr_cfg |= BIT(ENCODE_SHIFT);
-@@ -393,10 +371,6 @@ static int qce_setup_regs_skcipher(struc
- #endif
- 
- #ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
--static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
--	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
--};
--
- static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
- 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
- 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
-@@ -473,13 +447,8 @@ static int qce_setup_regs_aead(struct cr
- 	/* Write initial authentication IV only for HMAC algorithms */
- 	if (IS_SHA_HMAC(rctx->flags)) {
- 		/* Write default authentication iv */
--		if (IS_SHA1_HMAC(rctx->flags)) {
--			auth_ivsize = SHA1_DIGEST_SIZE;
--			memcpy(authiv, std_iv_sha1, auth_ivsize);
--		} else if (IS_SHA256_HMAC(rctx->flags)) {
--			auth_ivsize = SHA256_DIGEST_SIZE;
--			memcpy(authiv, std_iv_sha256, auth_ivsize);
--		}
-+		auth_ivsize = SHA256_DIGEST_SIZE;
-+		memcpy(authiv, std_iv_sha256, auth_ivsize);
- 		authiv_words = auth_ivsize / sizeof(u32);
- 		qce_write_array(qce, REG_AUTH_IV0, (u32 *)authiv, authiv_words);
- 	} else if (IS_CCM(rctx->flags)) {
---- a/drivers/crypto/qce/common.h
-+++ b/drivers/crypto/qce/common.h
-@@ -22,7 +22,7 @@
- 
- /* IV length in bytes */
- #define QCE_AES_IV_LENGTH		AES_BLOCK_SIZE
--/* max of AES_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE */
-+/* max of AES_BLOCK_SIZE */
- #define QCE_MAX_IV_SIZE			AES_BLOCK_SIZE
- 
- /* maximum nonce bytes  */
-@@ -33,14 +33,10 @@
- #define QCE_MAX_ALIGN_SIZE		64
- 
- /* cipher algorithms */
--#define QCE_ALG_DES			BIT(0)
--#define QCE_ALG_3DES			BIT(1)
- #define QCE_ALG_AES			BIT(2)
- 
- /* hash and hmac algorithms */
--#define QCE_HASH_SHA1			BIT(3)
- #define QCE_HASH_SHA256			BIT(4)
--#define QCE_HASH_SHA1_HMAC		BIT(5)
- #define QCE_HASH_SHA256_HMAC		BIT(6)
- #define QCE_HASH_AES_CMAC		BIT(7)
- 
-@@ -58,21 +54,15 @@
- #define QCE_ENCRYPT			BIT(30)
- #define QCE_DECRYPT			BIT(31)
- 
--#define IS_DES(flags)			(flags & QCE_ALG_DES)
--#define IS_3DES(flags)			(flags & QCE_ALG_3DES)
- #define IS_AES(flags)			(flags & QCE_ALG_AES)
- 
--#define IS_SHA1(flags)			(flags & QCE_HASH_SHA1)
- #define IS_SHA256(flags)		(flags & QCE_HASH_SHA256)
--#define IS_SHA1_HMAC(flags)		(flags & QCE_HASH_SHA1_HMAC)
- #define IS_SHA256_HMAC(flags)		(flags & QCE_HASH_SHA256_HMAC)
- #define IS_CMAC(flags)			(flags & QCE_HASH_AES_CMAC)
--#define IS_SHA(flags)			(IS_SHA1(flags) || IS_SHA256(flags))
--#define IS_SHA_HMAC(flags)		\
--		(IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
-+#define IS_SHA(flags)			IS_SHA256(flags)
-+#define IS_SHA_HMAC(flags)		IS_SHA256_HMAC(flags)
- 
- #define IS_CBC(mode)			(mode & QCE_MODE_CBC)
--#define IS_ECB(mode)			(mode & QCE_MODE_ECB)
- #define IS_CTR(mode)			(mode & QCE_MODE_CTR)
- #define IS_XTS(mode)			(mode & QCE_MODE_XTS)
- #define IS_CCM(mode)			(mode & QCE_MODE_CCM)
---- a/drivers/crypto/qce/regs-v5.h
-+++ b/drivers/crypto/qce/regs-v5.h
-@@ -203,7 +203,6 @@
- 
- #define AUTH_SIZE_SHIFT			9
- #define AUTH_SIZE_MASK			GENMASK(13, 9)
--#define AUTH_SIZE_SHA1			0
- #define AUTH_SIZE_SHA256		1
- #define AUTH_SIZE_ENUM_1_BYTES		0
- #define AUTH_SIZE_ENUM_2_BYTES		1
-@@ -284,15 +283,12 @@
- 
- #define ENCR_KEY_SZ_SHIFT		3
- #define ENCR_KEY_SZ_MASK		GENMASK(5, 3)
--#define ENCR_KEY_SZ_DES			0
--#define ENCR_KEY_SZ_3DES		1
- #define ENCR_KEY_SZ_AES128		0
- #define ENCR_KEY_SZ_AES256		2
- 
- #define ENCR_ALG_SHIFT			0
- #define ENCR_ALG_MASK			GENMASK(2, 0)
- #define ENCR_ALG_NONE			0
--#define ENCR_ALG_DES			1
- #define ENCR_ALG_AES			2
- #define ENCR_ALG_KASUMI			4
- #define ENCR_ALG_SNOW_3G		5
---- a/drivers/crypto/qce/sha.c
-+++ b/drivers/crypto/qce/sha.c
-@@ -24,10 +24,6 @@ struct qce_sha_saved_state {
- 
- static LIST_HEAD(ahash_algs);
- 
--static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
--	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
--};
--
- static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
- 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
- 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
-@@ -348,9 +344,7 @@ static int qce_ahash_hmac_setkey(struct
- 		return 0;
- 	}
- 
--	if (digestsize == SHA1_DIGEST_SIZE)
--		alg_name = "sha1-qce";
--	else if (digestsize == SHA256_DIGEST_SIZE)
-+	if (digestsize == SHA256_DIGEST_SIZE)
- 		alg_name = "sha256-qce";
- 	else
- 		return -EINVAL;
-@@ -412,15 +406,6 @@ struct qce_ahash_def {
- 
- static const struct qce_ahash_def ahash_def[] = {
- 	{
--		.flags		= QCE_HASH_SHA1,
--		.name		= "sha1",
--		.drv_name	= "sha1-qce",
--		.digestsize	= SHA1_DIGEST_SIZE,
--		.blocksize	= SHA1_BLOCK_SIZE,
--		.statesize	= sizeof(struct qce_sha_saved_state),
--		.std_iv		= std_iv_sha1,
--	},
--	{
- 		.flags		= QCE_HASH_SHA256,
- 		.name		= "sha256",
- 		.drv_name	= "sha256-qce",
-@@ -430,15 +415,6 @@ static const struct qce_ahash_def ahash_
- 		.std_iv		= std_iv_sha256,
- 	},
- 	{
--		.flags		= QCE_HASH_SHA1_HMAC,
--		.name		= "hmac(sha1)",
--		.drv_name	= "hmac-sha1-qce",
--		.digestsize	= SHA1_DIGEST_SIZE,
--		.blocksize	= SHA1_BLOCK_SIZE,
--		.statesize	= sizeof(struct qce_sha_saved_state),
--		.std_iv		= std_iv_sha1,
--	},
--	{
- 		.flags		= QCE_HASH_SHA256_HMAC,
- 		.name		= "hmac(sha256)",
- 		.drv_name	= "hmac-sha256-qce",
-@@ -475,9 +451,7 @@ static int qce_ahash_register_one(const
- 	alg->halg.digestsize = def->digestsize;
- 	alg->halg.statesize = def->statesize;
- 
--	if (IS_SHA1(def->flags))
--		tmpl->hash_zero = sha1_zero_message_hash;
--	else if (IS_SHA256(def->flags))
-+	if (IS_SHA256(def->flags))
- 		tmpl->hash_zero = sha256_zero_message_hash;
- 
- 	base = &alg->halg.base;
---- a/drivers/crypto/qce/sha.h
-+++ b/drivers/crypto/qce/sha.h
-@@ -7,7 +7,6 @@
- #define _SHA_H_
- 
- #include <crypto/scatterwalk.h>
--#include <crypto/sha1.h>
- #include <crypto/sha2.h>
- 
- #include "common.h"
---- a/drivers/crypto/qce/skcipher.c
-+++ b/drivers/crypto/qce/skcipher.c
-@@ -10,7 +10,6 @@
- #include <linux/types.h>
- #include <linux/errno.h>
- #include <crypto/aes.h>
--#include <crypto/internal/des.h>
- #include <crypto/internal/skcipher.h>
- 
- #include "cipher.h"
-@@ -208,51 +207,6 @@ static int qce_skcipher_setkey(struct cr
- 	return ret;
- }
- 
--static int qce_des_setkey(struct crypto_skcipher *ablk, const u8 *key,
--			  unsigned int keylen)
--{
--	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
--	int err;
--
--	err = verify_skcipher_des_key(ablk, key);
--	if (err)
--		return err;
--
--	ctx->enc_keylen = keylen;
--	memcpy(ctx->enc_key, key, keylen);
--	return 0;
--}
--
--static int qce_des3_setkey(struct crypto_skcipher *ablk, const u8 *key,
--			   unsigned int keylen)
--{
--	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
--	u32 _key[6];
--	int err;
--
--	err = verify_skcipher_des3_key(ablk, key);
--	if (err)
--		return err;
--
--	/*
--	 * The crypto engine does not support any two keys
--	 * being the same for triple des algorithms. The
--	 * verify_skcipher_des3_key does not check for all the
--	 * below conditions. Return -ENOKEY in case any two keys
--	 * are the same. Revisit to see if a fallback cipher
--	 * is needed to handle this condition.
--	 */
--	memcpy(_key, key, DES3_EDE_KEY_SIZE);
--	if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
--	    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
--	    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
--		return -ENOKEY;
--
--	ctx->enc_keylen = keylen;
--	memcpy(ctx->enc_key, key, keylen);
--	return 0;
--}
--
- static int qce_skcipher_crypt(struct skcipher_request *req, int encrypt)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
-@@ -275,7 +229,7 @@ static int qce_skcipher_crypt(struct skc
- 	 * ECB and CBC algorithms require message lengths to be
- 	 * multiples of block size.
- 	 */
--	if (IS_ECB(rctx->flags) || IS_CBC(rctx->flags))
-+	if (IS_CBC(rctx->flags))
- 		if (!IS_ALIGNED(req->cryptlen, blocksize))
- 			return -EINVAL;
- 
-@@ -359,15 +313,6 @@ struct qce_skcipher_def {
- 
- static const struct qce_skcipher_def skcipher_def[] = {
- 	{
--		.flags		= QCE_ALG_AES | QCE_MODE_ECB,
--		.name		= "ecb(aes)",
--		.drv_name	= "ecb-aes-qce",
--		.blocksize	= AES_BLOCK_SIZE,
--		.ivsize		= 0,
--		.min_keysize	= AES_MIN_KEY_SIZE,
--		.max_keysize	= AES_MAX_KEY_SIZE,
--	},
--	{
- 		.flags		= QCE_ALG_AES | QCE_MODE_CBC,
- 		.name		= "cbc(aes)",
- 		.drv_name	= "cbc-aes-qce",
-@@ -395,42 +340,6 @@ static const struct qce_skcipher_def skc
- 		.min_keysize	= AES_MIN_KEY_SIZE * 2,
- 		.max_keysize	= AES_MAX_KEY_SIZE * 2,
- 	},
--	{
--		.flags		= QCE_ALG_DES | QCE_MODE_ECB,
--		.name		= "ecb(des)",
--		.drv_name	= "ecb-des-qce",
--		.blocksize	= DES_BLOCK_SIZE,
--		.ivsize		= 0,
--		.min_keysize	= DES_KEY_SIZE,
--		.max_keysize	= DES_KEY_SIZE,
--	},
--	{
--		.flags		= QCE_ALG_DES | QCE_MODE_CBC,
--		.name		= "cbc(des)",
--		.drv_name	= "cbc-des-qce",
--		.blocksize	= DES_BLOCK_SIZE,
--		.ivsize		= DES_BLOCK_SIZE,
--		.min_keysize	= DES_KEY_SIZE,
--		.max_keysize	= DES_KEY_SIZE,
--	},
--	{
--		.flags		= QCE_ALG_3DES | QCE_MODE_ECB,
--		.name		= "ecb(des3_ede)",
--		.drv_name	= "ecb-3des-qce",
--		.blocksize	= DES3_EDE_BLOCK_SIZE,
--		.ivsize		= 0,
--		.min_keysize	= DES3_EDE_KEY_SIZE,
--		.max_keysize	= DES3_EDE_KEY_SIZE,
--	},
--	{
--		.flags		= QCE_ALG_3DES | QCE_MODE_CBC,
--		.name		= "cbc(des3_ede)",
--		.drv_name	= "cbc-3des-qce",
--		.blocksize	= DES3_EDE_BLOCK_SIZE,
--		.ivsize		= DES3_EDE_BLOCK_SIZE,
--		.min_keysize	= DES3_EDE_KEY_SIZE,
--		.max_keysize	= DES3_EDE_KEY_SIZE,
--	},
- };
- 
- static int qce_skcipher_register_one(const struct qce_skcipher_def *def,
-@@ -455,9 +364,7 @@ static int qce_skcipher_register_one(con
- 	alg->ivsize			= def->ivsize;
- 	alg->min_keysize		= def->min_keysize;
- 	alg->max_keysize		= def->max_keysize;
--	alg->setkey			= IS_3DES(def->flags) ? qce_des3_setkey :
--					  IS_DES(def->flags) ? qce_des_setkey :
--					  qce_skcipher_setkey;
-+	alg->setkey			= qce_skcipher_setkey;
- 	alg->encrypt			= qce_skcipher_encrypt;
- 	alg->decrypt			= qce_skcipher_decrypt;
- 
+LLM Generated explanations, may be completely bogus:
 
+## Phase 1: Commit Message Forensics
+
+### Step 1.1: Subject Line
+Record: **[scsi: pm8001]** **[Reject]** — Reject non-fatal forensic dump
+collection when the PMC-Sierra PM8001 controller is already in a fatal
+error state.
+
+### Step 1.2: Commit Message Tags
+Record:
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:** https://patch.msgid.link/20260416154650.415624-1-
+  sagar.biradar@microchip.com
+- **Cc: stable@** — present in original patch submission (verified via
+  `b4 dig -w`)
+- **Signed-off-by:** Kumar Meiyappan, Sagar Biradar, Martin K. Petersen
+  (SCSI maintainer)
+
+Notable: authors explicitly CC'd `stable@vger.kernel.org`; no syzbot or
+user bug reports.
+
+### Step 1.3: Commit Body Analysis
+Record:
+- **Bug:** `pm80xx_get_non_fatal_dump()` can run after the controller
+  has entered fatal error state.
+- **Symptom:** Attempting to read forensic memory in that state can
+  trigger a kernel call trace.
+- **Root cause:** Missing guard on `controller_fatal_error` before
+  initiating non-fatal dump hardware access.
+- **Fix approach:** Check `controller_fatal_error` and return `-EINVAL`
+  early.
+- **Version info:** none in commit message.
+
+### Step 1.4: Hidden Bug Fix Detection
+Record: **Yes, this is a straightforward bug fix** disguised as "reject"
+rather than "fix", but it clearly prevents unsafe hardware access and
+kernel call traces during error recovery.
+
+---
+
+## Phase 2: Diff Analysis
+
+### Step 2.1: Change Inventory
+Record:
+- **Files:** `drivers/scsi/pm8001/pm80xx_hwi.c` (+7 / -0)
+- **Function modified:** `pm80xx_get_non_fatal_dump()`
+- **Scope:** Single-file, surgical fix
+
+### Step 2.2: Code Flow Change
+Record:
+- **Before:** After mapping host forensic buffer pointer, function
+  immediately increments `non_fatal_count` and performs MMIO
+  writes/reads to the crashed controller (`pm8001_mw32`, `pm8001_mr32`,
+  `pm8001_cw32`).
+- **After:** If `controller_fatal_error` is true, log debug message and
+  return `-EINVAL` before any controller interaction.
+- **Path affected:** Sysfs read of `non_fatal_log` via
+  `non_fatal_log_show()` → `pm80xx_get_non_fatal_dump()`.
+
+### Step 2.3: Bug Mechanism
+Record:
+- **Category:** Logic/correctness fix — unsafe hardware access in
+  invalid controller state.
+- **Mechanism:** After fatal firmware error (`controller_fatal_error =
+  true` set in interrupt handler at line 4084), forensic DMA/MMIO
+  operations are unsafe; the function lacked the same state check used
+  elsewhere in the driver.
+
+### Step 2.4: Fix Quality
+Record:
+- **Quality:** Obviously correct; mirrors existing driver pattern
+  (`pm8001_sas.c` task path, `pm80xx_chip_soft_rst()`).
+- **Regression risk:** Very low — only rejects an operation that should
+  never succeed on a dead controller.
+- **Red flags:** None.
+
+---
+
+## Phase 3: Git History Investigation
+
+### Step 3.1: Blame / Introduction
+Record:
+- Buggy function exists in local tree at
+  `drivers/scsi/pm8001/pm80xx_hwi.c:387-503`.
+- Non-fatal dump sysfs feature originally added in `dba2cc03b9db`
+  (2020-03-16, "scsi: pm80xx: sysfs attribute for non fatal dump").
+- `controller_fatal_error` exists at lines 1445, 1650, 4084 in current
+  tree.
+- Local autosel tree has squashed history; per-file `git blame` is not
+  reliable for introduction dating.
+
+### Step 3.2: Fixes Tag
+Record: **N/A** — no `Fixes:` tag present.
+
+### Step 3.3: Related File History
+Record:
+- Sibling upstream commit `2a8fbcfb04aa9` ("scsi: pm8001: Reject
+  firmware update in fatal error state") from same author/date — same
+  pattern, different sysfs path; also **not** in current HEAD.
+- Standalone v1 patch; not part of a multi-patch series.
+
+### Step 3.4: Author Context
+Record: Kumar Meiyappan / Sagar Biradar are Microchip pm8001 driver
+authors. Martin K. Petersen (SCSI maintainer) committed the fix upstream
+as `aa3b8f56ef27`.
+
+### Step 3.5: Dependencies
+Record: **Standalone.** No prerequisite commits required.
+`controller_fatal_error` field and `pm80xx_get_non_fatal_dump()` both
+exist in this tree. Patch applies at line ~403 with clean context
+(verified against upstream diff and local file).
+
+---
+
+## Phase 4: Mailing List and External Research
+
+### Step 4.1: Original Discussion
+Record:
+- **URL:** https://patch.msgid.link/20260416154650.415624-1-
+  sagar.biradar@microchip.com
+- **Series:** v1 only (no v2/v3)
+- **Maintainer response:** Martin K. Petersen applied to 7.2/scsi-queue
+  (May 22, 2026)
+- **NAKs/concerns:** None found in thread
+- **Stable nomination:** Authors CC'd `stable@vger.kernel.org` in
+  original submission
+
+### Step 4.2: Reviewers
+Record: CC'd Martin K. Petersen, James Bottomley, Jack Wang, linux-scsi,
+stable@, Brian King, Don Brace, and other Microchip engineers.
+
+### Step 4.3: Bug Report
+Record: No external bug report, syzbot, or stack trace in commit
+message. Issue appears internally discovered by driver vendor during
+fatal-error handling review.
+
+### Step 4.4: Related Patches
+Record: Related upstream fix `2a8fbcfb04aa9` for
+`pm8001_store_update_fw()` — same failure class, separate commit. Not a
+dependency for this fix.
+
+### Step 4.5: Stable List History
+Record: Patch was posted directly to stable@ (spinics stable archive).
+No rejection or prior stable discussion found beyond the submission
+itself.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+Record: `pm80xx_get_non_fatal_dump()` (modified), `non_fatal_log_show()`
+(caller), fatal error ISR path setting `controller_fatal_error`.
+
+### Step 5.2: Callers
+Record:
+- `non_fatal_log_show()` in `pm8001_ctl.c:588-591` directly returns
+  result.
+- Exposed as read-only sysfs host attribute `non_fatal_log` in
+  `pm8001_host_attrs[]`.
+- Called during diagnostic collection, typically by root/admin tooling
+  after controller errors.
+
+### Step 5.3: Callees
+Record: `pm8001_mw32()`, `pm8001_mr32()`, `pm8001_cw32()` — MMIO
+register access to potentially dead controller; forensic DMA buffer
+reads from `FORENSIC_MEM`.
+
+### Step 5.4: Reachability
+Record:
+- **Trigger chain:** Controller fatal firmware error → ISR sets
+  `controller_fatal_error` → admin reads
+  `/sys/class/scsi_host/hostN/non_fatal_log` → unsafe MMIO without
+  guard.
+- **Userspace reachable:** Yes, via sysfs read (requires appropriate
+  permissions, typically root/CAP_SYS_ADMIN).
+
+### Step 5.5: Similar Patterns
+Record: Driver already guards fatal-error state in:
+- `pm8001_sas.c:505` — task execution
+- `pm80xx_hwi.c:1650` — soft reset MPI uninit
+- `pm8001_sas.c:237-244` — phy control via `fatal_errors()`
+- `pm8001_init.c:702-704` — NVMD read
+
+This fix fills a gap in the same error-handling model.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree
+
+### Step 6.1: Buggy Code Present?
+Record: **YES.** Local tree is **v6.18.43** (`git describe HEAD` →
+`v6.18.43-1-gc7f0dac02d232`, `make kernelversion` → `6.18.43`).
+`pm80xx_get_non_fatal_dump()` at lines 403-404 lacks
+`controller_fatal_error` check. Upstream fix commit `aa3b8f56ef27` is
+**NOT** an ancestor of HEAD.
+
+### Step 6.2: Backport Complications
+Record: **Clean apply expected.** Local file matches upstream pre-fix
+context at the insertion point. No conflicting changes in that function
+region.
+
+### Step 6.3: Related Fixes Already Present?
+Record: **No.** Neither `aa3b8f56ef27` (this fix) nor sibling
+`2a8fbcfb04aa9` (firmware update guard) are in HEAD.
+`non_fatal_log_show()` directly returns `ssize_t` from dump function, so
+`-EINVAL` propagates correctly to sysfs (no need for separate error-code
+fix `1b6f03b`).
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem Criticality
+Record: **drivers/scsi/pm8001** — PERIPHERAL driver (Microchip/PMC-
+Sierra SAS HBA, `CONFIG_SCSI_PM8001`). Important for deployments using
+this hardware, but not core kernel.
+
+### Step 7.2: Subsystem Activity
+Record: pm8001 driver is mature; forensic dump sysfs has existed since
+2020. Recent upstream activity includes fatal-error handling hardening
+from Microchip (April 2026).
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+Record: **Driver-specific** — systems with PM8001/PM80xx SAS HBAs and
+`CONFIG_SCSI_PM8001` enabled.
+
+### Step 8.2: Trigger Conditions
+Record:
+- Controller must first enter fatal firmware error state (already a
+  serious failure).
+- Then sysfs read of `non_fatal_log` (diagnostic path during triage).
+- **Likelihood:** Uncommon but realistic during failure investigation —
+  exactly when admins collect dumps.
+- **Privilege:** Typically root/admin.
+
+### Step 8.3: Failure Mode Severity
+Record:
+- **Failure mode:** Kernel call trace from unsafe MMIO/DMA on dead
+  controller.
+- **Severity:** **MEDIUM-HIGH** — secondary kernel instability during
+  already-critical failure recovery; not a normal-I/O-path crash, but
+  can produce oops/warnings and complicate diagnostics.
+
+### Step 8.4: Risk-Benefit
+Record:
+- **Benefit:** Prevents additional kernel call traces during HBA failure
+  recovery; aligns driver error handling.
+- **Risk:** Very low — 7-line guard, no API changes, no behavior change
+  on healthy controllers.
+- **Ratio:** Favorable for stable backport.
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Summary
+
+**FOR backport:**
+- Real bug with concrete trigger (fatal error + sysfs non_fatal dump
+  read)
+- Prevents kernel call trace / unsafe hardware access
+- Small (7 lines), obviously correct, standalone
+- Buggy code confirmed present in v6.18.43 tree
+- Consistent with existing `controller_fatal_error` checks in same
+  driver
+- Authors CC'd stable@; SCSI maintainer merged upstream
+- Clean apply expected
+
+**AGAINST backport:**
+- Narrow hardware scope (PM8001 SAS HBAs only)
+- Only affects diagnostic sysfs path after controller already failed
+- No syzbot report or public user bug report
+- "Call trace" severity not fully documented with stack trace
+
+**Unresolved:**
+- Exact call trace type (WARN vs oops) not documented in commit message
+- Introduction date of `controller_fatal_error` not determinable from
+  squashed local git history (but field is present in tree)
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logic is clear; maintainer-
+   applied; no Tested-by but low complexity.
+2. Fixes a real bug? **PASS** — unsafe operation on crashed controller.
+3. Important issue? **PASS** — kernel call trace during failure recovery
+   (medium-high severity).
+4. Small and contained? **PASS** — 7 lines, 1 file, 1 function.
+5. No new features/APIs? **PASS** — guard only.
+6. Can apply to local tree? **PASS** — code exists, patch applies
+   cleanly.
+
+### Step 9.3: Exception Categories
+Record: **None** — standard driver bug fix.
+
+### Step 9.4: Decision Rationale
+This is a small, vendor-submitted fix for a real gap in fatal-error
+handling. The buggy code is present in the local **6.18.43** tree, the
+fix is minimal and follows established driver patterns, and it prevents
+additional kernel instability during exactly the scenario where
+administrators are collecting diagnostic data from a failed HBA. The
+risk is negligible and the authors explicitly nominated it for stable.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed subject, tags; confirmed stable@ CC in original
+  submission via `b4 dig -w`
+- [Phase 1] No Fixes:/Reported-by/syzbot tags
+- [Phase 2] Read full `pm80xx_get_non_fatal_dump()` (lines 387-503);
+  confirmed MMIO access after missing guard
+- [Phase 2] Diff is +7 lines adding `controller_fatal_error` check
+  returning `-EINVAL`
+- [Phase 3] `git describe HEAD` → v6.18.43; `make kernelversion` →
+  6.18.43
+- [Phase 3] `git merge-base --is-ancestor aa3b8f56ef27 HEAD` →
+  NOT_IN_HEAD (fix not yet applied)
+- [Phase 3] `git show aa3b8f56ef27^` at lines 400-415 confirms buggy
+  pre-fix code
+- [Phase 3] `dba2cc03b9db` identified as 2020 introduction of non_fatal
+  dump sysfs
+- [Phase 3] Sibling commit `2a8fbcfb04aa9` found (fw update guard); also
+  NOT_IN_HEAD
+- [Phase 4] `b4 dig -c aa3b8f56ef27` → lore URL found
+- [Phase 4] `b4 dig -a` → v1 only, no later revisions
+- [Phase 4] `b4 dig -w` → stable@, Martin Petersen, James Bottomley CC'd
+- [Phase 4] `b4 dig -m /tmp/pm8001_thread.mbox` → Martin Petersen
+  "Applied to 7.2/scsi-queue"
+- [Phase 5] `grep pm80xx_get_non_fatal_dump` → caller
+  `non_fatal_log_show()` in pm8001_ctl.c:591
+- [Phase 5] `grep controller_fatal_error` → used in pm80xx_hwi.c,
+  pm8001_ctl.c, pm8001_sas.c, pm8001_sas.h
+- [Phase 5] Fatal error set at pm80xx_hwi.c:4084 in interrupt handler
+- [Phase 6] Buggy code confirmed at pm80xx_hwi.c:403-404 without guard
+- [Phase 6] `non_fatal_log_show()` directly returns ssize_t — `-EINVAL`
+  propagation works
+- [Phase 8] CONFIG_SCSI_PM8001 confirmed in drivers/scsi/Kconfig:1494
+- [UNVERIFIED] Exact kernel version when `controller_fatal_error` was
+  introduced (squashed local history)
+- [UNVERIFIED] Full stack trace / oops type from original bug report
+  (not in commit message)
+
+**YES**The background check finished: `aa3b8f56ef27` is **not** in this
+tree (`v6.18.43`), and the buggy code is still present in
+`pm80xx_get_non_fatal_dump()`.
+
+The backport analysis stands: **YES** — this is a small, low-risk guard
+that prevents kernel call traces when reading `non_fatal_log` on a
+controller already in fatal error state.
+
+ drivers/scsi/pm8001/pm80xx_hwi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index 31960b72c1e92..1ce8226fcd292 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -401,6 +401,13 @@ ssize_t pm80xx_get_non_fatal_dump(struct device *cdev,
+ 	char *buf_copy = buf;
+ 
+ 	temp = (u32 *)pm8001_ha->memoryMap.region[FORENSIC_MEM].virt_ptr;
++
++	if (pm8001_ha->controller_fatal_error) {
++		pm8001_dbg(pm8001_ha, FAIL,
++			   "non-fatal dump not available in fatal error state\n");
++		return -EINVAL;
++	}
++
+ 	if (++pm8001_ha->non_fatal_count == 1) {
+ 		if (pm8001_ha->chip_id == chip_8001) {
+ 			snprintf(pm8001_ha->forensic_info.data_buf.direct_data,
+-- 
+2.53.0
 
