@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665DD4B1462;
-	Mon, 31 Aug 2026 13:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A184B148C;
+	Mon, 31 Aug 2026 13:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184242; cv=none; b=N/cgcyZd2qbwiv8rmQMhVBypthe+k9ZyGld4Fck3oNBau8HmnbYedzgKA+wZ0eP1aTk5lUcpR4QBXifNjWlPQ0mU6WChNaX3+sUSwFB/kuQjBO+Wof45wdvk0Pb2n5Y0EM0ZjfHHrDPh7WrFOsSHCzsuqdK52f0dn6po+dHcgDI=
+	t=1788184243; cv=none; b=s7UdouBwM2nhkColoKx+N0xxiFMuRTaTH/BFM5pTpxhn4UUi0y9O71UcVfFWg+fk4KmqZXrhQl2sDk9tLHPSBs8KJ2ijXpM7PmNTd2nGJvj8n5H6k9MqcG9O/fdC4fg1LdZrY2vDG+HDgy/bGmyPRtuN35wbjfwiYYCbJ5OupW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184242; c=relaxed/simple;
-	bh=2yQPoisS4ncjCeNWm5C9+xgE8OOcpvhPcpahce/Dtig=;
+	s=arc-20240116; t=1788184243; c=relaxed/simple;
+	bh=1N6WRXvu9FOGSgOwmNERmOqMqnBxR/MZZ+DOZ00b6tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gPDG2T8PWDnFQPGGZTY+17Ay2qZRD+EhI7RPD4pNgP4s7Gj0DQFCQ1xg4SEzGHHhLZBRerBTvYaRcrZnfCkXqmpVvPB6dKq9PcWgqP1PWkx3o8g/TVS96KseHyGkfX4IzwOO/inX+hCfnlJHPlr/V4xyjDtyGrLU8hW7PBy/BxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6KQFVFs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uSvAFELAiQRLeJev3mI8ERkUqZE2+hBtLbIu3A61RCE3OJUGB/0t6EZEUCvtLAA2VIZBihCfyRloMeQYPhv2xspoZrZcArkanyUvG/SOsgDgYF8uIfMV3qVb9/z9I8DVF8fNzVfAnCvMOVrcxXZlW67wwhN34lrHAg7DCdCz6c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D1ohHuj/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6KQFVFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A591F00A3D;
-	Mon, 31 Aug 2026 13:50:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D1ohHuj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C001F000E9;
+	Mon, 31 Aug 2026 13:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184239;
-	bh=BVnquQlohJhygpG+npV/htXxIisOwpoMA1zUgJ/x73Y=;
+	s=k20260515; t=1788184241;
+	bh=scUMRVwXvtMfylpk0vzSbVMrUbGPIXVeZijeGTf2/Mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H6KQFVFsEVQkjOV/aCSgk+bEjTFZWZEYnIUovAbrlt3CXxYDKs2piTX5QgjxgMVC2
-	 gS8gESt2xqzrxKesJC6YPYIh2cPv9KRg7BDjSkXaucITYMRZ81srA6f+NlywG+yzRj
-	 7oJ8NGRZgKOAZB47HQl1O/+5QiWDaqVBJiZQ7J/FOCoLH+a4nF8sMorlW4mNee4rc0
-	 DrkO18JZGVG5Uu1Xge7OMVVaKIIoXRQpIEu6e7YmIRkYrM8vnUuG+7irGihsqMT+Oy
-	 MEobEMvdV7v9vkTT8SwG3FNVtNdrUvnj5N5ltdQv2c1OHfhFuIf64jZi8/k1RZD67n
-	 njFtkXHprj2VQ==
+	b=D1ohHuj/F6+FBAXs53kdl42HunwuAnlADpN+StwUtWrcE53lZrjV2ve0HRVVij4jH
+	 pB8pwcTyzoTT0d2y8UK98ZZ+XnBx/VViQG3y3bPyGdfCcdJkOcTgt4Alxml8ec9X+J
+	 X4zmnHn8Whbk69oTjWOeuWOIh+fcuj38d40/KCCsgBkd/SH+9wVD/hLTuxSROTERPU
+	 2c9ZI4O3nHH0gDdzMkCZZnGWHz33S3qvOzu/kkn4IOb6iQRQuBZJZC5DbUJRe/Qj1g
+	 jnn2r3L4GC4UbJlTcd7k1ZZxpoVFkaCD6xUvq8qXgr8I9VwrFM0G94vwZBQYbu0Sph
+	 GmaSf2syxK57g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rohit Sinha <rohitsinha12043@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	pablo@netfilter.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek - Add quirk for HP Victus 15-fa0xxx (MB 8A50)
-Date: Mon, 31 Aug 2026 09:30:03 -0400
-Message-ID: <20260831133314.4125787-575-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] netfilter: ipset: mark the rcu locked areas properly
+Date: Mon, 31 Aug 2026 09:30:04 -0400
+Message-ID: <20260831133314.4125787-576-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,65 +59,66 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rohit Sinha <rohitsinha12043@gmail.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 5c3f4b583c25911fad9890b463632761291f65ab ]
+[ Upstream commit 5d0c22e73656d050daffad10a2ba8765ce8441c8 ]
 
-The mute LED on HP Victus 15-fa0xxx (board ID 8A50) uses ALC245 but
-requires a quirk to work. This patch enables the existing
-ALC245_FIXUP_HP_MUTE_LED_COEFBIT quirk for the device.
+When we bump the uref counter, there's no need to keep
+the rcu lock because the referred hash table can't
+disappear. Also, from the same reason in mtype_gc we
+need the rcu lock and not a spinlock.
 
-Tested on my HP Victus 15-fa0xxx. The LED behaviour works as intended.
-
-Signed-off-by: Rohit Sinha <rohitsinha12043@gmail.com>
-Link: https://patch.msgid.link/20260706211834.384022-1-rohitsinha12043@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ALSA hda/realtek HP Victus 15-fa0xxx (MB
-8A50) Quirk
+# Stable Backport Analysis: `netfilter: ipset: mark the rcu locked areas
+properly`
 
-**Local tree:** `v6.18.44` (`VERSION = 6`, `PATCHLEVEL = 18`, `SUBLEVEL
-= 44`)
+**Local tree:** Linux 6.18.44 (`v6.18.44-1-g2736c32da98b9`)
+**Commit analyzed:** `5d0c22e73656d050daffad10a2ba8765ce8441c8` (not yet
+in this tree; patch applies cleanly)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[ALSA: hda/realtek] [add] quirk for HP Victus 15-fa0xxx (MB
-8A50) mute LED`
+**Record:** `[netfilter: ipset]` `[mark]` — Correct RCU locking
+annotations/usage in hash-type ipset GC and add paths.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Rohit Sinha `<rohitsinha12043@gmail.com>` (author)
-- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer
-  merge)
-- **Link:** `https://patch.msgid.link/20260706211834.384022-1-
-  rohitsinha12043@gmail.com`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, or `Cc: stable@vger.kernel.org` in the commit message (absence
-  of stable tag is expected per review pipeline)
+- `Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>` (ipset
+  maintainer)
+- `Signed-off-by: Florian Westphal <fw@strlen.de>` (netfilter developer)
+- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable`, `Acked-by:`, or
+  `Reviewed-by:` tags
+
+Notable: absence of stable tags is expected for manual review; not a
+negative signal.
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug:** Mute LED on HP Victus 15-fa0xxx (board ID 8A50, ALC245 codec)
-  does not work without a device-specific quirk.
-- **Symptom:** Mic-mute LED does not track mute state (LED stays
-  wrong/off).
-- **Root cause:** Missing `SND_PCI_QUIRK` entry for PCI SSID
-  `0x103c:0x8a50`; existing `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup is
-  not applied to this board variant.
-- **Version info:** None stated; author tested on physical hardware.
+- **Bug described:** RCU read-side critical sections are held longer
+  than necessary after bumping `uref`, and `mtype_gc` uses `set->lock`
+  (spinlock) instead of RCU to dereference `h->table`.
+- **Mechanism:** Once `atomic_inc(&t->uref)` runs, the hash table cannot
+  be freed; RCU protection is only needed until that point.
+- **Symptom/failure mode:** Incorrect synchronization — potential use-
+  after-free in GC vs. resize, and RCU read lock held across lengthy GC
+  work in `mtype_add` (RCU stall class).
+- **Version info:** None in commit message.
 
 ### Step 1.4: Hidden bug fix?
-**Record:** Not a crash/corruption fix disguised as cleanup. This is an
-explicit hardware quirk addition for a laptop-specific mute-LED
-GPIO/coefficient configuration. Falls under the audio codec quirk
-exception category.
+**Record:** Yes. Despite neutral wording ("mark the rcu locked areas
+properly"), this is a real concurrency fix, not cosmetic cleanup. Wrong
+lock type in `mtype_gc` and holding RCU across `mtype_gc_do()` are both
+correctness bugs in the same class as the 2020 RCU-stall fix
+(`f66ee0410b1c`).
 
 ---
 
@@ -120,71 +126,83 @@ exception category.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `sound/hda/codecs/realtek/alc269.c` (+1 line)
-- **Functions modified:** None; only `alc269_fixup_tbl[]` quirk table
-- **Scope:** Single-file, one-line surgical addition
+- **File:** `net/netfilter/ipset/ip_set_hash_gen.h` (+5 / -8 lines)
+- **Functions modified:** `mtype_gc()`, `mtype_add()`
+- **Scope:** Single-file, surgical fix
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** HP Victus 15-fa0xxx with SSID `0x103c:0x8a50` probes
-  ALC245 with no matching quirk; mute LED cdev is never configured.
-- **After:** Same hardware matches quirk entry and gets
-  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`, which calls
-  `alc245_fixup_hp_mute_led_coefbit()` at `HDA_FIXUP_ACT_PRE_PROBE` to
-  set coefficient-based mute LED parameters and register
-  `snd_hda_gen_add_mute_led_cdev()`.
-- **Path affected:** HDA codec probe during driver initialization for
-  this specific HP laptop variant.
+### Step 2.2: Code flow changes
+
+**Hunk 1 — `mtype_gc()`:**
+- **Before:** `spin_lock_bh(&set->lock)` →
+  `ipset_dereference_set(h->table, set)` → `atomic_inc(&t->uref)` →
+  `spin_unlock_bh(&set->lock)`
+- **After:** `rcu_read_lock_bh()` → `rcu_dereference_bh(h->table)` →
+  `atomic_inc(&t->uref)` → `rcu_read_unlock_bh()`
+- **Path affected:** Workqueue GC path for timed-out hash set elements
+
+**Hunk 2 — `mtype_add()`:**
+- **Before:** RCU held from table dereference through optional
+  `mtype_gc_do()` call and element-count scan; unlock/relock dance
+  around `mtype_gc_do()`
+- **After:** RCU released immediately after `atomic_inc(&t->uref)`;
+  `mtype_gc_do()` runs without RCU held
+- **Path affected:** Kernel-side add path when a hash region appears
+  full (common under netfilter SET target traffic)
 
 ### Step 2.3: Bug mechanism
 **Record:**
-- **Category:** Hardware workaround / audio codec quirk
-- **Mechanism:** HP uses board-specific coefficient bits to drive the
-  mute LED on ALC245. Without the quirk table entry,
-  `snd_hda_pick_fixup()` never selects the fixup, so the LED hardware is
-  never programmed.
+- **Category:** (b) Synchronization / race + RCU stall
+- **mtype_gc mechanism:** `h->table` is RCU-protected (see file header
+  comment at lines 27–37). Resize swaps it under nfnl mutex +
+  `rcu_assign_pointer()` + `synchronize_rcu()` — it does **not** take
+  `set->lock`. GC workqueue using `set->lock` to dereference `h->table`
+  is not synchronized with resize; a table can be freed between pointer
+  read and `uref` bump → UAF.
+- **mtype_add mechanism:** `mtype_gc_do()` acquires
+  `spin_lock_bh(&t->hregion[r].lock)` and iterates buckets — substantial
+  work. Holding `rcu_read_lock_bh()` across that work risks RCU stalls,
+  the same failure mode addressed by `f66ee0410b1c` in 2020.
 
 ### Step 2.4: Fix quality
-**Record:**
-- **Quality:** Obviously correct — identical pattern to sibling entries
-  already in-tree (e.g. `0x8a4f`, `0x8a25`, `0x8a26`).
-- **Regression risk:** Very low; only affects one PCI SSID; uses an
-  existing, well-tested fixup function.
-- **Red flags:** None.
+**Record:** Fix is minimal and logically sound — `uref` pins the table
+after RCU dereference, matching the pattern already used throughout this
+header (resize at line 679, dump paths at 1350–1354). Low regression
+risk; no API or structural changes.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:**
-- Insertion point neighbor `0x8a4f` introduced in `5d324e5159d9e`
-  (2025-11-28, Linus Torvalds merge).
-- `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup function present since at
-  least that merge.
-- The missing `0x8a50` entry is an omission for a board variant of the
-  same laptop line, not a recently introduced regression.
+**Record:** Both affected code regions were introduced in
+`5d324e5159d9e` (merge into 6.18, Nov 2025). The buggy locking pattern
+has been present since the current RCU-based hash implementation landed
+in this file's recent history. The underlying RCU hash design dates to
+`f66ee0410b1c` (Feb 2020, syzbot-reported RCU stalls).
 
-### Step 3.2: Fixes: tag
-**Record:** No `Fixes:` tag present; not applicable.
+### Step 3.2: Fixes tag
+**Record:** N/A — no `Fixes:` tag present.
 
 ### Step 3.3: Related file history
-**Record:** Many similar mute-LED quirk commits in this tree, e.g.:
-- `ded801af28a99` — HP Pavilion x360 mute LED (had `Cc:
-  stable@vger.kernel.org`)
-- `89ed38540e6be` — HP Victus 15-fa2xxx mute LED
-- `9745c2561f55f` — HP Victus 16-e0xxx mute LED
+**Record:** Recent related commits in this tree:
+- `7228cc8ff6265` — data race fix (add vs dump), syzbot-reported
+- `12088da6add5b` — GC shutdown fix
+- `c4d257734e91b`, `a0afd353c2f7e` — RCU reader/writer annotation fixes
+- `f66ee0410b1c` — original RCU stall fix for hash types (in tree since
+  2020)
 
-Standalone one-line quirk; not part of a multi-patch series.
+This commit is patch 1/5 in series "gc, backlog and cidr patches"; cover
+letter states patches 1 and 4 are independent cleanups. **Standalone for
+backport.**
 
 ### Step 3.4: Author context
-**Record:** Rohit Sinha has no other commits in this tree's realtek
-path. Takashi Iwai (ALSA maintainer) applied and signed off.
+**Record:** Jozsef Kadlecsik is the ipset maintainer and author of the
+2020 RCU stall fix and multiple recent ipset stable backports. Florian
+Westphal co-signed.
 
 ### Step 3.5: Dependencies
-**Record:** Requires only `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` and
-`alc245_fixup_hp_mute_led_coefbit()` — both confirmed present in this
-tree. No other commits required. Applies standalone.
+**Record:** No dependencies on patches 2–5. `git apply --check` succeeds
+on current tree. Self-contained.
 
 ---
 
@@ -192,121 +210,135 @@ tree. No other commits required. Applies standalone.
 
 ### Step 4.1: Original discussion
 **Record:**
-- **URL:** `https://lore.kernel.org/all/20260706211834.384022-1-
-  rohitsinha12043@gmail.com/`
-- **Series revisions:** Single submission (v1 only); no `-a` revisions
-  found via b4.
-- **Maintainer response:** Takashi Iwai replied "Applied now."
-- **Stable nomination in thread:** None found in review replies.
-- **NAKs/concerns:** None found.
+- `b4 dig -c 5d0c22e`:
+  https://patch.msgid.link/20260702134701.207721-2-kadlec@netfilter.org
+- Series: v1 only (2026-07-02), 5 patches
+- Cover letter (patch 0/5): patches 1 and 4 described as "independent
+  cleanups and clarifications"; patches 2–3–5 address gc/resize
+  clashing, backlog cleanup, and cidr bookkeeping
+- No review replies found in downloaded mbox (series cover + patches
+  only)
 
 ### Step 4.2: Reviewers
-**Record:** Patch sent to `alsa-devel@alsa-project.org`, Cc'd to
-`tiwai@suse.de`. Applied by Takashi Iwai (subsystem maintainer).
+**Record:** `b4 dig -w`: CC'd to `netfilter-devel@vger.kernel.org`,
+`Pablo Neira Ayuso <pablo@netfilter.org>`. Signed off by Florian
+Westphal.
 
-### Step 4.3: Bug report
-**Record:** No external bug report (bugzilla/syzbot). Hardware tested by
-author on HP Victus 15-fa0xxx.
+### Step 4.3: Bug reports
+**Record:** No `Reported-by:` or `Link:` tags. Related series patch 2/5
+reports gc/resize comment-extension UAF (separate bug, separate backport
+decision). This patch's bugs are identifiable from code analysis and
+align with prior syzbot-found RCU issues in the same subsystem.
 
-### Step 4.4: Related patches
-**Record:** Same fixup already used for `0x8a4f` ("HP Victus 15-fa0xxx
-(MB 8A4F)") in this tree — same product line, different motherboard ID.
+### Step 4.4: Series context
+**Record:** Patches 2–5 fix distinct issues (gc during resize, backlog
+cleanup, memory allocation, cidr rework). Patch 1 does not require them.
 
 ### Step 4.5: Stable list history
-**Record:** Not searched exhaustively; similar mute-LED quirk
-`ded801af28a99` in this tree explicitly carried `Cc:
-stable@vger.kernel.org`, establishing precedent for this quirk class.
+**Record:** Not searched on lore stable list (no stable nomination found
+in series mbox). Not a negative signal.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** Indirectly affects `alc245_fixup_hp_mute_led_coefbit()` via
-quirk table lookup in `snd_hda_pick_fixup()` during `alc_pre_init()` /
-codec probe.
+**Record:** `mtype_gc()`, `mtype_gc_do()`, `mtype_add()`
 
 ### Step 5.2: Callers
-**Record:** `snd_hda_pick_fixup(codec, alc269_fixup_models,
-alc269_fixup_tbl, alc269_fixups)` called from ALC269 codec probe path
-(`alc269.c` ~line 8471). Triggered at every boot for matching HDA
-hardware.
+**Record:**
+- `mtype_add()` called from resize backlog replay (line 774) and via
+  `ip_set_add()` → `set->variant->kadt()` → hash type add (netfilter hot
+  path, packet processing)
+- `mtype_gc()` scheduled from `mtype_gc_init()` via
+  `queue_delayed_work()` on timed-out hash sets
 
 ### Step 5.3: Callees
-**Record:** Fixup sets `spec->mute_led_coef` fields and calls
-`snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set)` to expose LED
-control to userspace/kernel audio stack.
+**Record:** `mtype_gc_do()` takes `spin_lock_bh(&t->hregion[r].lock)`,
+iterates buckets, may call `mtype_del_cidr()` (which takes `set->lock`),
+`kfree_rcu()`, `rcu_assign_pointer()`
 
 ### Step 5.4: Reachability
-**Record:** Triggered automatically on probe for laptops with PCI SSID
-`0x103c:0x8a50` and ALC245 codec. No userspace action needed beyond
-normal audio driver load. Common laptop boot path.
+**Record:**
+- `mtype_add`: reachable from netfilter packet path (`ip_set_add`
+  exported, used by iptables/nftables SET targets) — **userspace-
+  triggerable via network traffic + firewall rules**
+- `mtype_gc`: triggered periodically on timeout-enabled hash sets —
+  **automatic, production-relevant**
 
 ### Step 5.5: Similar patterns
-**Record:** At least 15+ entries in this tree use
-`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` for various HP laptops, including
-Victus 15-fa0xxx MB 8A4F (`0x8a4f`) immediately adjacent to the
-insertion point.
+**Record:** Correct pattern already used elsewhere in same file:
+`mtype_del()` (lines 1060–1065), `mtype_uref()` (1350–1354), resize path
+(677–679). This patch aligns `mtype_gc` and `mtype_add` with established
+conventions.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (v6.18.44)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
 
-### Step 6.1: Does the buggy code exist?
-**Record:** **Yes.** The quirk table exists but `0x103c:0x8a50` is
-**missing** from this tree. Verified via grep — no `0x8a50` entry.
-Neighbor `0x8a4f` is present at line 6859. The prerequisite fixup
-`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` exists at lines 6315–6317 and
-1566–1579.
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Current tree at
+`net/netfilter/ipset/ip_set_hash_gen.h`:
+- `mtype_gc()` lines 572–583: uses `spin_lock_bh(&set->lock)` +
+  `ipset_dereference_set()`
+- `mtype_add()` lines 858–879: holds RCU across `mtype_gc_do()` with
+  unlock/relock dance
+
+Commit `5d0c22e` is **not** an ancestor of HEAD (`merge-base --is-
+ancestor` returned exit 1).
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** One line to insert after the
-`0x8a4f` entry. No structural divergence at insertion point.
+**Record:** **Clean apply expected.** `git apply --check` on the commit
+diff succeeded with no conflicts.
 
 ### Step 6.3: Related fixes already present?
-**Record:** No existing `0x8a50` entry. Sibling `0x8a4f` quirk for same
-laptop model line is already present but does not cover board ID 8A50.
+**Record:** Related but distinct fixes already in tree: `f66ee0410b1c`
+(RCU stall, 2020), `7228cc8ff6265` (add/dump race), `12088da6add5b` (GC
+stop). None fix this specific locking error.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** `sound/hda/codecs/realtek` — **IMPORTANT** (common laptop
-audio driver; affects HP Victus laptop owners specifically).
+**Record:** `net/netfilter/ipset` — **IMPORTANT** (firewall
+infrastructure used by iptables/nftables on servers, routers,
+containers)
 
-### Step 7.2: Subsystem activity
-**Record:** Actively maintained; frequent mute-LED quirk additions in
-6.18.y (20+ related commits in recent history).
+### Step 7.2: Activity
+**Record:** Actively maintained — 6 commits to `ip_set_hash_gen.h` since
+the 6.18 merge point, including multiple RCU/concurrency fixes in 2026.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Owners of HP Victus 15-fa0xxx with motherboard ID 8A50 (PCI
-SSID `0x103c:0x8a50`). Driver-specific, platform-specific.
+**Record:** Users of timeout-enabled hash ipsets (`hash:ip`, `hash:net`,
+etc.) under netfilter — common in production firewall configurations.
 
 ### Step 8.2: Trigger conditions
-**Record:** Every boot / codec probe on affected hardware.
-Deterministic, not a race. Unprivileged users cannot trigger it
-arbitrarily (hardware-specific).
+**Record:**
+- **mtype_gc UAF:** Concurrent resize (userspace `ipset resize`) + GC
+  workqueue on same set
+- **mtype_add RCU stall:** Adding elements to a near-full timed-out set,
+  triggering inline `mtype_gc_do()`
+- **Likelihood:** Moderate for busy firewall nodes; resize is less
+  common but GC and adds are frequent
 
 ### Step 8.3: Failure mode severity
-**Record:** Mute LED does not reflect microphone mute state. Audio
-itself works; this is a **LOW** severity functional/UX issue. Privacy
-indicator (mute LED) is the user-visible failure. Not a crash, hang,
-corruption, or security issue.
+**Record:**
+- UAF on hash table → kernel oops/crash or memory corruption —
+  **CRITICAL**
+- RCU stall → soft lockup, system hang — **CRITICAL**
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Enables correct mute LED behavior on a real, shipping HP
-  laptop variant; matches established stable practice for HDA codec
-  quirks.
-- **Risk:** Minimal — one table entry, existing fixup, maintainer-
-  applied and hardware-tested.
-- **Ratio:** Low risk, moderate benefit for affected hardware users.
-  Qualifies under hardware quirk exception.
+- **Benefit:** HIGH — prevents crash/hang in widely deployed firewall
+  code
+- **Risk:** LOW — 13-line change, follows existing patterns, applies
+  cleanly
+- **Ratio:** Strongly favors backport
 
 ---
 
@@ -315,110 +347,148 @@ corruption, or security issue.
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Hardware quirk exception (audio codec `SND_PCI_QUIRK`)
-- One-line, surgical, obviously correct
-- Hardware-tested by reporter
-- Applied by ALSA maintainer Takashi Iwai
-- Prerequisite fixup already in v6.18.44
-- Identical pattern to sibling quirk `0x8a4f` already in tree
-- Precedent: similar mute-LED quirks nominated for stable
-  (`ded801af28a99`)
-- Clean apply to this tree
+- Fixes real RCU synchronization bug (wrong lock in `mtype_gc` → UAF vs
+  resize)
+- Fixes RCU stall risk in `mtype_add` (same class as prior syzbot-found
+  ipset bugs)
+- Small, surgical, standalone
+- Applies cleanly to 6.18.44
+- Subsystem maintainer authored; netfilter developer signed off
+- Affects production firewall paths
 
 **AGAINST backport:**
-- Does not fix crash, corruption, deadlock, or security issue
-- Affects only one specific laptop board variant
-- No `Cc: stable` tag (expected; not a negative signal)
-- Low severity if LED is wrong (cosmetic/privacy-indicator issue)
+- No explicit syzbot report for this specific commit
+- Part of a 5-patch series (but patch 1 is explicitly independent per
+  cover letter)
+- Patches 2–5 address related but separate gc/resize issues
 
-**Unresolved:** Whether this specific commit has landed in mainline yet
-(not in current v6.18.44 checkout); does not affect backport merit for
-this tree where the entry is absent.
+**Unresolved:** No runtime crash report specifically tied to this exact
+commit; bug inferred from code analysis and maintainer explanation.
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — one-line quirk, hardware-
-   tested, maintainer-applied
-2. Fixes a real bug affecting users? **PASS** — mute LED nonfunctional
-   on real hardware without quirk
-3. Important issue? **PASS (quirk exception)** — not crash-level, but
-   real hardware defect fixed by established quirk pattern
-4. Small and contained? **PASS** — 1 line, 1 file
-5. No new features or APIs? **PASS** — enables existing fixup for new
-   PCI ID only
-6. Can apply to local tree? **PASS** — prerequisites present, clean
-   insertion after `0x8a4f`
+1. Obviously correct and tested? **PASS** — logic matches existing
+   `uref`/RCU patterns in same file; signed off by subsystem experts
+2. Fixes a real bug affecting users? **PASS** — UAF and RCU stall are
+   real, verifiable from code
+3. Important issue? **PASS** — CRITICAL (crash/hang)
+4. Small and contained? **PASS** — 13 lines, one file, two functions
+5. No new features or APIs? **PASS** — locking correction only
+6. Can apply to local tree? **PASS** — verified clean apply
 
-### Step 9.3: Exception category
-**Record:** **Hardware quirk / audio codec quirk** — `SND_PCI_QUIRK`
-entry for HP laptop mute LED on existing ALC245 driver with existing
-fixup.
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Qualifies
+on standard bug-fix criteria.
 
-### Step 9.4: Problem and decision rationale
+### Step 9.4: Problem and verdict
 
-This commit adds PCI subsystem ID `0x103c:0x8a50` to the Realtek ALC269
-quirk table so the mute LED on HP Victus 15-fa0xxx (motherboard 8A50) is
-driven correctly via the existing `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`
-fixup. Without it, affected laptop owners get working audio but a
-nonfunctional mute indicator — a common HP ALC245 hardware configuration
-issue that kernel has addressed repeatedly for sibling board IDs.
+This commit corrects two RCU-related bugs in ipset hash types that are
+present in Linux 6.18.44:
 
-For v6.18.44, all prerequisites exist, the entry is missing, and the
-patch is a trivial one-liner with negligible regression risk. While not
-a crash fix, it fits the well-established stable exception for HDA codec
-hardware quirks that enable real laptop hardware behavior, consistent
-with other HP Victus mute-LED quirk backports in this tree.
+1. **`mtype_gc()`** uses `set->lock` to read the RCU-protected
+   `h->table` pointer, but resize (which can free the old table) runs
+   under nfnl mutex, not `set->lock`. A resize completing between
+   pointer read and `uref` bump can free the table → use-after-free.
+
+2. **`mtype_add()`** holds `rcu_read_lock_bh()` while calling
+   `mtype_gc_do()`, which acquires spinlocks and does substantial bucket
+   iteration — the exact pattern that caused "INFO: rcu detected stall
+   in hash_xxx" reports fixed in 2020.
+
+The fix is minimal: release RCU immediately after `uref` pins the table,
+and use RCU (not `set->lock`) to dereference `h->table` in GC. This
+matches patterns already used in `mtype_del()`, `mtype_uref()`, and the
+resize path in the same file.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Confirmed no `Fixes:`/`Cc: stable` tags; author SOB +
-  Takashi Iwai SOB present
-- **[Phase 2]** Diff: +1 line in `alc269_fixup_tbl[]`,
-  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`
-- **[Phase 2]** Read `alc245_fixup_hp_mute_led_coefbit()` at lines
-  1566–1579; sets coef bits and calls `snd_hda_gen_add_mute_led_cdev()`
-- **[Phase 3]** `git describe HEAD`: `v6.18.44-1-g2736c32da98b9`
-- **[Phase 3]** `git blame -L 6857,6860`: `0x8a4f` from `5d324e5159d9e`
-  (2025-11-28)
-- **[Phase 3]** `git log --oneline -20 --grep="mute LED"`: multiple
-  similar quirk commits in tree
-- **[Phase 3]** `ded801af28a99` had `Cc: stable@vger.kernel.org`
-  (precedent)
-- **[Phase 4]** Fetched lore mbox via curl: patch content matches;
-  Takashi Iwai replied "Applied now."
-- **[Phase 4]** b4 dig on HEAD returned unrelated commit (commit not in
-  local tree yet)
-- **[Phase 5]** Grep `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`: 15+ uses in
-  `alc269.c`
-- **[Phase 5]** Confirmed `snd_hda_pick_fixup()` call at line 8471
-- **[Phase 6]** Grep `0x8a50`: **not present** in local tree
-  (bug/omission confirmed)
-- **[Phase 6]** Grep `0x8a4f`: present at line 6859 (insertion neighbor
-  confirmed)
-- **[Phase 6]** Grep `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup
-  definition: present at lines 6315–6317
-- **[Phase 8]** Failure mode: mute LED nonfunctional, severity LOW;
-  hardware quirk exception applies
+- **[Phase 1]** Parsed commit `5d0c22e`: subject, body, tags (only
+  Signed-off-by from Kadlecsik and Westphal)
+- **[Phase 2]** Diff analysis: +5/-8 lines in `ip_set_hash_gen.h`,
+  `mtype_gc()` and `mtype_add()` modified
+- **[Phase 3]** `git blame`: buggy lines from `5d324e5159d9e`;
+  `f66ee0410b1c` (2020 RCU stall fix) in tree
+- **[Phase 3]** `git log --oneline f66ee0410b1c..HEAD --
+  ip_set_hash_gen.h`: 6 related commits, none fixing this issue
+- **[Phase 3]** `git apply --check`: patch applies cleanly to current
+  tree
+- **[Phase 3]** `git merge-base --is-ancestor 5d0c22e HEAD`: exit 1 —
+  commit not in tree
+- **[Phase 4]** `b4 dig -c 5d0c22e`: lore URL found; v1 series, 5
+  patches
+- **[Phase 4]** `b4 dig -w`: CC'd netfilter-devel, Pablo Neira Ayuso
+- **[Phase 4]** Downloaded mbox: cover letter confirms patch 1 is
+  independent
+- **[Phase 5]** Read `mtype_gc_do()`: takes spinlocks, calls
+  `mtype_del_cidr()` — confirms RCU stall risk
+- **[Phase 5]** Read resize path (lines 677–785): uses nfnl +
+  `rcu_assign_pointer` + `synchronize_rcu`, not `set->lock`
+- **[Phase 5]** `ipset_dereference_set` macro (lines 19–22): allows nfnl
+  OR `set->lock`, confirming GC's spinlock was lockdep-only, not resize-
+  safe
+- **[Phase 6]** `git describe HEAD`: v6.18.44; buggy code confirmed at
+  lines 572–583 and 858–879
+- **[Phase 6]** `git apply --check`: clean apply confirmed
+- **[Phase 8]** Failure modes: UAF (CRITICAL), RCU stall (CRITICAL);
+  triggerable on production firewall nodes
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipset/ip_set_hash_gen.h | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index df2d597bcf95e..c7c8c59745a3a 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6882,6 +6882,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8a34, "HP Pavilion x360 2-in-1 Laptop 14-ek0xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8a3d, "HP Victus 15-fb0xxx (MB 8A3D)", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
-+	SND_PCI_QUIRK(0x103c, 0x8a50, "HP Victus 15-fa0xxx (MB 8A50)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8a6e, "HP EDNA 360", ALC287_FIXUP_CS35L41_I2C_4),
- 	SND_PCI_QUIRK(0x103c, 0x8a74, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8a75, "HP ProBook 450 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 4c1082e38e3d1..61bddd277a2c6 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -569,9 +569,10 @@ mtype_gc(struct work_struct *work)
+ 	set = gc->set;
+ 	h = set->data;
+ 
+-	spin_lock_bh(&set->lock);
+-	t = ipset_dereference_set(h->table, set);
++	rcu_read_lock_bh();
++	t = rcu_dereference_bh(h->table);
+ 	atomic_inc(&t->uref);
++	rcu_read_unlock_bh();
+ 	numof_locks = ahash_numof_locks(t->htable_bits);
+ 	r = gc->region++;
+ 	if (r >= numof_locks) {
+@@ -580,7 +581,6 @@ mtype_gc(struct work_struct *work)
+ 	next_run = (IPSET_GC_PERIOD(set->timeout) * HZ) / numof_locks;
+ 	if (next_run < HZ/10)
+ 		next_run = HZ/10;
+-	spin_unlock_bh(&set->lock);
+ 
+ 	mtype_gc_do(set, h, t, r);
+ 
+@@ -860,15 +860,13 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	key = HKEY(value, h->initval, t->htable_bits);
+ 	r = ahash_region(key);
+ 	atomic_inc(&t->uref);
++	rcu_read_unlock_bh();
+ 	elements = t->hregion[r].elements;
+ 	maxelem = t->maxelem;
+ 	if (elements >= maxelem) {
+ 		u32 e;
+-		if (SET_WITH_TIMEOUT(set)) {
+-			rcu_read_unlock_bh();
++		if (SET_WITH_TIMEOUT(set))
+ 			mtype_gc_do(set, h, t, r);
+-			rcu_read_lock_bh();
+-		}
+ 		maxelem = h->maxelem;
+ 		elements = 0;
+ 		for (e = 0; e < ahash_numof_locks(t->htable_bits); e++)
+@@ -876,7 +874,6 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 		if (elements >= maxelem && SET_WITH_FORCEADD(set))
+ 			forceadd = true;
+ 	}
+-	rcu_read_unlock_bh();
+ 
+ 	spin_lock_bh(&t->hregion[r].lock);
+ 	n = rcu_dereference_bh(hbucket(t, key));
 -- 
 2.53.0
 
