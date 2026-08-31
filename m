@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C34548A2BC;
-	Mon, 31 Aug 2026 14:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7147648A2AA;
+	Mon, 31 Aug 2026 14:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185017; cv=none; b=vGjD7MVqOXaCQbcsS4ldWFeSHNN0lCA4c/TuMhwYOYnr8JFYsf8Uls8mwzBrwbpIJ1LaTGOvoYzDRrgONrDxDb5mlqhVB7mXnmrCWHZ+kfan58zuP/Q2QZg9hUpdABJlQ40QsCtTf7WwgN59A4qFUhqPLLhZbg7sJ3RsuwWdkqc=
+	t=1788185011; cv=none; b=B70veVt5jRoRhEjvhzB0cQ+EBqkOsQsIfmpQhayC6gfyMibhX3LHoY4LHhsv3hCFxFM+jN0ecIn+ZDu8u5WhKq9rHnCECi2PxKTwhKA+9cVyeBIrIDiRkAYZBQrSninACRaGo8zGti6IcE8QNJ2kKGE3dPInTITn1g7wSCnc/do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185017; c=relaxed/simple;
-	bh=02ThgRFL1a4Tt0QHPldrfM2k9rAixusML87EuSYydxA=;
+	s=arc-20240116; t=1788185011; c=relaxed/simple;
+	bh=hoat0yZX+19I+Faqt9zdWR3nV+5/ZMYDdp47gYPf30E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtlZqNZLjus6+BIDyeXc/qdZ3WBK//WvM3kKAslzfBhy6Vl2cuRfc4lOt3YZsQFp2Lag2yKgRkLWgX/DpValBCAz4mcAdNcg0HWtxAR2n/am0u4ae2X2QOFjTszT5bwxeki7B2Ew/s9ZHJZ90mIAwyoQsumA1b9qlrcS71HY23g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yF7E9kZN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WRBWSLE5gQJ9csEJHYgDmCAYfs6pPF0aeTr175AoPU4loX2aOZhVXwCAlwkNi9EzKU82DufSEjhyjalVfrzRaBus+b2DN8DS7twNUZZJETyXKIYm2+8Eih50yP/ErGviPU0Mpn9gixU5elQb5xbON2bzzYsUYGDTRdkxhohV5aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoiINwih; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yF7E9kZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774441F000E9;
-	Mon, 31 Aug 2026 14:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoiINwih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C145C1F000E9;
+	Mon, 31 Aug 2026 14:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185016;
-	bh=VGLAfbTKUy5E7nfn+YQMNFJbTFF0iAXbr0mjdEW9o74=;
+	s=korg; t=1788185010;
+	bh=Zmd3nVYbZ3fyK4byi+P28g5DxoSqrsGhknjRkYTy350=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yF7E9kZNAQPBcuVOUXi7nh3agdYugs+rbBwUmvhjoA7n4wgY3RTBTjCcOkbaRAICq
-	 xC1gwBzuRFGzpn3r2ZhBChPBIbRXPTDii8yJhsN3L9vquiSxshHVTQ5kWW1fKqB0D5
-	 tkPR6D/yRe+kif/9qPhywr+MLhtgWGIQb/iOXzQ8=
+	b=hoiINwihfoRPdiyMyHeAF/pPygOgUdWnEc0eD3Przcujkk06oxAd2vOlz+8BVjDmS
+	 JAuw6S3iQZ/BLYVVS8BAnRthbUvepbO8MQq2ZG+XsbK65hOxP20k3ohy6Yuq1PO9QM
+	 eKa+B3l2+fTnZKNdb+jrWFQwWayQy266gEhNXxws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Vishnu Razdan <vrazdan@openai.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/69] io_uring/io-wq: fix worker accounting when canceling creation callbacks
-Date: Mon, 31 Aug 2026 15:34:36 +0200
-Message-ID: <20260831133358.738879105@linuxfoundation.org>
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Denis Arefev <arefev@swemel.ru>
+Subject: [PATCH 5.15 22/69] ipv4: igmp: Fix potential UAF in igmp_gq_start_timer()
+Date: Mon, 31 Aug 2026 15:34:55 +0200
+Message-ID: <20260831133359.544062107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -51,63 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Razdan <vrazdan@openai.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 297b5ccea4acacaa47c150f043bce695202afbf1 upstream.
+commit 7b19c0f81ed1fdaec6bc522569be367199a9edf3 upstream.
 
-create_worker_cb() reserves an io-wq worker slot only after its
-task-work callback runs. If the callback is canceled before then,
-io_worker_cancel_cb() still decrements acct->nr_workers. When an
-existing worker retires with its creation callback pending, that
-worker has already decremented the same account's worker count.
+A race condition exists between device teardown (inetdev_destroy) and
+incoming IGMP query processing (igmp_rcv), leading to a Use-After-Free
+in the IGMP timer callback.
 
-The resulting undercount permits worker creation beyond the account's
-configured limit. On an AST2600 OpenBMC system, an unchanged sensor
-daemon reached 4,291 threads with the original kernel. With an
-equivalent downstream fix, 25 passive samples under its normal
-workload showed 6-9 threads.
+During device destruction, inetdev_destroy() drops the primary reference
+to in_device, which can drop its refcount to 0. The actual freeing of
+in_device memory is deferred via RCU (using call_rcu()).
 
-Decrement nr_workers only when the canceled callback is not
-create_worker_cb(). Continuation callbacks still release their reserved
-slot, and both callback types retain the existing running-count,
-reference-count, and create-state cleanup.
+Concurrently, igmp_rcv() runs under RCU read lock and obtains the
+in_device pointer. Because the memory is RCU-protected, CPU-0 can safely
+dereference in_device even if its refcount has hit 0.
 
-[ Backport: retain the existing worker->wqe->lock protecting worker
-  accounting. ]
+However, if CPU-0 calls igmp_gq_start_timer() and re-arms the timer, it
+attempts to acquire a reference using in_dev_hold(). This increments the
+refcount from 0 to 1, triggering a "refcount_t: addition on 0" warning.
+Since the in_device memory is still scheduled to be freed after the RCU
+grace period (as the free callback does not check the refcount again),
+the device is freed while the timer is still armed. When the timer
+expires, it accesses the freed memory, causing a kernel panic.
 
-Fixes: 1d5f5ea7cb7d ("io-wq: remove worker to owner tw dependency")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260811-vrazdan-io-wq-b4-submit-v1-1-719ced16c921@openai.com
-Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by using refcount_inc_not_zero() (via a new helper
+in_dev_hold_safe()) to prevent acquiring a reference if the device is
+already being destroyed. If the refcount is 0, we do not arm the timer.
+
+A similar issue in IPv6 MLD is fixed in a subsequent patch.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260705181756.963063-2-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[Denis Arefev: adapted for 5.10/5.15: keep prandom_u32(),
+get_random_u32_below() not used here]
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/linux/inetdevice.h |    5 +++++
+ net/ipv4/igmp.c            |   14 +++++++++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index edcb5af514b53..f57743d911b4c 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -195,9 +195,12 @@ static void io_worker_cancel_cb(struct io_worker *worker)
- 	struct io_wq *wq = wqe->wq;
+--- a/include/linux/inetdevice.h
++++ b/include/linux/inetdevice.h
+@@ -277,6 +277,11 @@ static inline void in_dev_put(struct in_
+ #define __in_dev_put(idev)  refcount_dec(&(idev)->refcnt)
+ #define in_dev_hold(idev)   refcount_inc(&(idev)->refcnt)
  
- 	atomic_dec(&acct->nr_running);
--	raw_spin_lock(&worker->wqe->lock);
--	acct->nr_workers--;
--	raw_spin_unlock(&worker->wqe->lock);
-+	/* create_worker_cb() has not reserved a worker slot yet. */
-+	if (worker->create_work.func != create_worker_cb) {
-+		raw_spin_lock(&worker->wqe->lock);
-+		acct->nr_workers--;
-+		raw_spin_unlock(&worker->wqe->lock);
++static inline bool in_dev_hold_safe(struct in_device *idev)
++{
++	return refcount_inc_not_zero(&idev->refcnt);
++}
++
+ #endif /* __KERNEL__ */
+ 
+ static __inline__ __be32 inet_make_mask(int logmask)
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -232,16 +232,20 @@ static void igmp_gq_start_timer(struct i
+ 		return;
+ 
+ 	in_dev->mr_gq_running = 1;
+-	if (!mod_timer(&in_dev->mr_gq_timer, exp))
+-		in_dev_hold(in_dev);
++	if (in_dev_hold_safe(in_dev)) {
++		if (mod_timer(&in_dev->mr_gq_timer, exp))
++			in_dev_put(in_dev);
 +	}
- 	io_worker_ref_put(wq);
- 	clear_bit_unlock(0, &worker->create_state);
- 	io_worker_release(worker);
--- 
-2.53.0
-
+ }
+ 
+ static void igmp_ifc_start_timer(struct in_device *in_dev, int delay)
+ {
+-	int tv = prandom_u32() % delay;
++	if (in_dev_hold_safe(in_dev)) {
++		int tv = prandom_u32() % delay;
+ 
+-	if (!mod_timer(&in_dev->mr_ifc_timer, jiffies+tv+2))
+-		in_dev_hold(in_dev);
++		if (mod_timer(&in_dev->mr_ifc_timer, jiffies + tv + 2))
++			in_dev_put(in_dev);
++	}
+ }
+ 
+ static void igmp_mod_timer(struct ip_mc_list *im, int max_delay)
 
 
