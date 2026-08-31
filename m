@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF09478846;
-	Mon, 31 Aug 2026 13:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A7947A0D1;
+	Mon, 31 Aug 2026 13:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184553; cv=none; b=q01MfhPnHOGCq7zGplj4v+tTPaF6pddc80f2uhleJO1p6LvCudQMRcWOzfthpwaejl8wD2ZfXakVics6EM5jkmZFmCzeKmPmpRmTLcD+IzKDavdYUSsTf+MqIBRV7vYemdewhelOHTJQfEZ17ORfWvF4CQEqUufpRsMQobc6HCE=
+	t=1788184529; cv=none; b=XNLW/RSa38tsQGUqOTKxm6RpjjqsA656lMeqEC5Woig77QKQjyXXGjYUYsdX+7j+HVscaXRte33m6IJ+74vRxseeFdxekfre00NT2LTv8fH8a6h6TB0E6c9X4xtrM07JwLuO/DbrXg9jwbmKfthO1fTyd2go6uzHSxFZBMUlKxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184553; c=relaxed/simple;
-	bh=4bmtf/QdCT2VFAMfCyT2x1OiwU1zHHWBmwsdeUvjwWc=;
+	s=arc-20240116; t=1788184529; c=relaxed/simple;
+	bh=0BHBsnLNNowjoG4ZpoyHPlkO7k+k+mHMZYludQ/Xcu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DazU1B7YtiTu7bXxqc80FXphd9VaNzUQ0iU4EuQrQFDEoJRuDsQmDfnxK72m7v2Zpiw4rzxaSn/wqlB7q7jiTd9DKV0ohHXQ6w2QnUmGx0w5CUuw2lNgySBDOijrSsgR+c/t1cAzZ1ZcO+XHKcOwhVk746ajoNihaGfHSYzzLZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRW8OzK5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwTNosPEyRi2cOnT1HTqfaWrxakU7crqQJZzQOpFx6JSxZ1b8olMa7pXgLASvZNGeEzLilTJE7lCrZcO9A49gb6bNKCPxohLDJxaCjP+q3167QFoTCmH4YAiWiOnpYENsONXtcH/m6jWlpt032NHtop/uPEWfU+4MKf48w6nPXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMhGOj8c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRW8OzK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE281F000E9;
-	Mon, 31 Aug 2026 13:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMhGOj8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A77F1F000E9;
+	Mon, 31 Aug 2026 13:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184548;
-	bh=fsjrwQXKGtkrvkqjMixpsWlvUjCFscKCOU3l+9fA33Q=;
+	s=korg; t=1788184528;
+	bh=CITahEz14B374v9V8MaQ2xizXtb/MpJWnIgV1IHlZzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cRW8OzK5ZVxm54MKH01H5vJzf8KqttkfBYTJOnXwILLGgCpMeZsPu72kIIqY3Njo5
-	 b9eG9Pvmotyz5/BEORL+4KRflmVpTqcsn+u8Rq7wIrWTfhHtM2tiuum641u+fheUJ5
-	 vRD8YWOwVaRNaTsDrK9IRnaMBKHCy9J2A1wHYjlg=
+	b=oMhGOj8cUdAhqXLeaLfvKOjep7ogw0/nJRiuyHSgxc2qdG+pEOwwP1GDeOLY4ZqHj
+	 PQC+pvY6AFqmz70ceirxXZ21bom/uSSodKUfxBpexXuHyL4YsA+wCnwBQbRLLvrJCj
+	 2STxpCCR0Tz6PVWfGiq7qEneS+iUcQX51npFzACk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Keith Busch <kbusch@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 46/91] nvmet-tcp: bound SGL data length before allocating command buffers
-Date: Mon, 31 Aug 2026 15:34:34 +0200
-Message-ID: <20260831133402.129935500@linuxfoundation.org>
+Subject: [PATCH 6.6 40/91] nfc: nci: add data_len bound checks to activation parameter extractors
+Date: Mon, 31 Aug 2026 15:34:28 +0200
+Message-ID: <20260831133401.799074841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -52,81 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 4a3f00262a044e8e15064b1a6860968bf0500bf4 ]
+[ Upstream commit 0428fa2c22e2ba0cff766d3b80d461e149102045 ]
 
-nvmet_tcp_map_data() reads the host-controlled 32-bit sgl->length
-and, for the in-capsule offset descriptor (type 0x01), checks it
-against port->inline_data_size before use. Any other SGL descriptor
-type -- including the non-inline transport SGL data-block descriptor
-(type (NVME_TRANSPORT_SGL_DATA_DESC << 4) | NVME_SGL_FMT_TRANSPORT_A,
-the type a real host uses for out-of-capsule writes) skips that check
-entirely and falls straight through to:
+nci_extract_activation_params_iso_dep() and
+nci_extract_activation_params_nfc_dep() read an inner length byte from
+the NCI RF_INTF_ACTIVATED_NTF payload and use it to memcpy() into fixed
+kernel buffers, but neither function receives the caller-validated
+activation_params_len.  A crafted NCI notification with
+activation_params_len=1 and an inner length byte of up to 20 (NFC-A) or
+50 (NFC-B) causes memcpy() to read that many bytes past the one valid
+byte in the activation params region -- a slab out-of-bounds read of
+kernel memory adjacent to the NCI skb.
 
-	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
+The sibling nci_extract_rf_params_*() family was given equivalent
+protection by commit 571dcbeb8e63 ("net: nfc: nci: Fix parameter
+validation for packet data"), but the two activation parameter
+extractors were not updated at that time.
 
-with len taken directly from the wire, unbounded up to 4 GiB.
+Add a data_len parameter to both functions, guard against an empty
+region before consuming the inner length byte, decrement the remaining
+count after consuming it, and clamp the copy length to what is actually
+available.  Update both call sites to pass ntf.activation_params_len,
+which is already validated against the skb at ntf.c:801.
 
-nvmet_req_init() only parses the command and never inspects
-sgl->length, and nvmet_check_transfer_len() -- the only other place
-transfer_len is validated -- runs later, from req->execute(), after
-the allocation has already happened. For a write command the target
-responds with an R2T and parks the command waiting for the host to
-send the data; if the host (or an unauthenticated peer that simply
-never follows up) never does, the sgl_alloc() buffer stays resident
-for the life of the command. NVMe/TCP has no mandatory authentication
-in the default configuration, so any peer able to reach the target
-portal and complete a Fabrics connect can drive this with a single
-crafted command, repeatable across queues and connections for
-amplification. This is unbounded kernel memory allocation
-triggered by a remote, effectively unauthenticated peer.
-
-Validate len against the same NVMET_TCP_MAXH2CDATA ceiling this file
-already uses to bound per-PDU H2C data, for every SGL descriptor type,
-before doing any allocation. This closes the gap for the non-inline
-descriptor while leaving the existing, tighter inline_data_size check
-in place for the in-capsule case.
-
-Runtime-verified on a v6.19 KASAN stand: with this bound in place, a
-crafted write command carrying an oversized non-inline SGL length is
-rejected before sgl_alloc() runs, where the same request previously
-drove an unbounded ~256 MiB kernel allocation (up to 4 GiB) that
-stayed resident pending an R2T the host never satisfies.
-
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260612-b4-disp-6d52d8b0-v3-1-e26221f8826d@proton.me
+Signed-off-by: David Heidelberg <david@ixit.cz>
+[ Replaced `NFC_ATS_MAXSIZE` with the literal `20` since that macro doesn't exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/nfc/nci/ntf.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -417,6 +417,19 @@ static int nvmet_tcp_map_data(struct nvm
- 	if (!len)
- 		return 0;
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -525,15 +525,19 @@ static int nci_rf_discover_ntf_packet(st
  
-+	/*
-+	 * inline_data_size only bounds the in-capsule (type 0x01) SGL
-+	 * descriptor below. A non-inline transport SGL data-block
-+	 * descriptor skips that check entirely and would otherwise reach
-+	 * sgl_alloc() with an attacker-controlled len of up to 4 GiB,
-+	 * pinning that much kernel memory for a command that may never
-+	 * complete. Bound every descriptor type here, before allocating
-+	 * anything, using the same ceiling this file already applies to
-+	 * per-PDU H2C data.
-+	 */
-+	if (len > NVMET_TCP_MAXH2CDATA)
-+		return NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
-+
- 	if (sgl->type == ((NVME_SGL_FMT_DATA_DESC << 4) |
- 			  NVME_SGL_FMT_OFFSET)) {
- 		if (!nvme_is_write(cmd->req.cmd))
+ static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
+ {
+ 	struct activation_params_nfca_poll_iso_dep *nfca_poll;
+ 	struct activation_params_nfcb_poll_iso_dep *nfcb_poll;
+ 
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
+ 		nfca_poll->rats_res_len = min_t(__u8, *data++, 20);
++		data_len--;
++		nfca_poll->rats_res_len = min_t(__u8, nfca_poll->rats_res_len, data_len);
+ 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
+ 		if (nfca_poll->rats_res_len > 0) {
+ 			memcpy(nfca_poll->rats_res,
+@@ -542,8 +546,12 @@ static int nci_extract_activation_params
+ 		break;
+ 
+ 	case NCI_NFC_B_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
+ 		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
++		data_len--;
++		nfcb_poll->attrib_res_len = min_t(__u8, nfcb_poll->attrib_res_len, data_len);
+ 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
+ 		if (nfcb_poll->attrib_res_len > 0) {
+ 			memcpy(nfcb_poll->attrib_res,
+@@ -562,7 +570,7 @@ static int nci_extract_activation_params
+ 
+ static int nci_extract_activation_params_nfc_dep(struct nci_dev *ndev,
+ 						 struct nci_rf_intf_activated_ntf *ntf,
+-						 const __u8 *data)
++						 const __u8 *data, __u8 data_len)
+ {
+ 	struct activation_params_poll_nfc_dep *poll;
+ 	struct activation_params_listen_nfc_dep *listen;
+@@ -570,9 +578,13 @@ static int nci_extract_activation_params
+ 	switch (ntf->activation_rf_tech_and_mode) {
+ 	case NCI_NFC_A_PASSIVE_POLL_MODE:
+ 	case NCI_NFC_F_PASSIVE_POLL_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		poll = &ntf->activation_params.poll_nfc_dep;
+ 		poll->atr_res_len = min_t(__u8, *data++,
+ 					  NFC_ATR_RES_MAXSIZE - 2);
++		data_len--;
++		poll->atr_res_len = min_t(__u8, poll->atr_res_len, data_len);
+ 		pr_debug("atr_res_len %d\n", poll->atr_res_len);
+ 		if (poll->atr_res_len > 0)
+ 			memcpy(poll->atr_res, data, poll->atr_res_len);
+@@ -580,9 +592,13 @@ static int nci_extract_activation_params
+ 
+ 	case NCI_NFC_A_PASSIVE_LISTEN_MODE:
+ 	case NCI_NFC_F_PASSIVE_LISTEN_MODE:
++		if (data_len < 1)
++			return NCI_STATUS_RF_PROTOCOL_ERROR;
+ 		listen = &ntf->activation_params.listen_nfc_dep;
+ 		listen->atr_req_len = min_t(__u8, *data++,
+ 					    NFC_ATR_REQ_MAXSIZE - 2);
++		data_len--;
++		listen->atr_req_len = min_t(__u8, listen->atr_req_len, data_len);
+ 		pr_debug("atr_req_len %d\n", listen->atr_req_len);
+ 		if (listen->atr_req_len > 0)
+ 			memcpy(listen->atr_req, data, listen->atr_req_len);
+@@ -790,12 +806,14 @@ static int nci_rf_intf_activated_ntf_pac
+ 		switch (ntf.rf_interface) {
+ 		case NCI_RF_INTERFACE_ISO_DEP:
+ 			err = nci_extract_activation_params_iso_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_NFC_DEP:
+ 			err = nci_extract_activation_params_nfc_dep(ndev,
+-								    &ntf, data);
++								    &ntf, data,
++								    ntf.activation_params_len);
+ 			break;
+ 
+ 		case NCI_RF_INTERFACE_FRAME:
 
 
