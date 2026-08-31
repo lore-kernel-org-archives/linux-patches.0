@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8CC55C331;
-	Mon, 31 Aug 2026 13:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DE64AC16E;
+	Mon, 31 Aug 2026 13:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184031; cv=none; b=hWAfc58qaItnIHYxR0UKMD91nLM3CGJ3ER5kpNwc7f18CvsdefOmg0iF/EJ+uaPosRCHU3G8gRoD3iGx//s9rOKeUZS9hrRYK3zJppzx5TRaoKP+IJq7EeEcapmAjMGwU4GNkApSNIw4LTkvCD4R9+xr2Xn1qGcq2psyv9a2Ixo=
+	t=1788184032; cv=none; b=CiDJvGIHxxFpSm4qBEL3Sq6z/ajh/fPkK6aHmOQSv82x4nzniUOdku2rxfbeKe14EgieJYACxbl6XaDnAiaj/XFXuBtAB0D7llsF4SH6yhTdfv+awcJwnS+yUqVk+QN9AdXO87f4IZ9KVHj7czJC4QVitkt3QU1e117pGC+0o+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184031; c=relaxed/simple;
-	bh=CXf2XXNXyH+N999dw91S990cWsJg0zFZCl5pXNWl4P0=;
+	s=arc-20240116; t=1788184032; c=relaxed/simple;
+	bh=4HLHSj2hNPbAHZ9cadIATamuUPAdAIrgBYM6HLn29eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ThBAlAKHdBLC1awExsj/w9nLArDl3sfsUbZc+WvZegM0ICCd6FGGVynUHY6HdJxrMTPxhCEhDC3bxmoRnTiXE80zuBHj+qzbC5zGW+rFI52+jXnna9j2LnQrW5DE3Hb7X7TPRWt4ZZuY+Wcu0cC9JAmeHDLrCcZcjs4CjwDUnz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aCo322JB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mD0Bu/IMHxD+htwnlCTxxhobR4AGC9Q3NRoqhm0f5tpl8qqXwVroQYLrjtSZXMGyKvUn2tCPDLrt5qEoTIXabIRoicu+MUXjePg8YBT75VSU0Id9QRqB9CuzXzvhBucgNRTnmCjSbvH4WNq0rPHaWbK/S6ZZuSwrQ2hFLBBQJlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QqELMC2W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aCo322JB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1754E1F000E9;
-	Mon, 31 Aug 2026 13:47:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QqELMC2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EF31F00A3F;
+	Mon, 31 Aug 2026 13:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184028;
-	bh=MYn0f3VU4AfkZURexRgzvVmSfbJTJTQAyw1KqLC7Coc=;
+	s=k20260515; t=1788184029;
+	bh=5HZRyet8+MTLqu/lbJCKQrGdFi3h0QJUzugXKI2HVOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aCo322JBciqsccrsHNRNaEc8LeH6wzrVGqB3ypxd5zE2TYpIDKFneL1LMKScosp26
-	 SZms5b3/z/1LFWqAAp0DQjUlaYM0xdzR0Z4EVpL/FmYz/xmbzRZsyak5WrD6Lr5uV7
-	 omVmGKI3gTBSshX4m9nSNY1KPzsGQ9qR1XGCJLLP7Pg1o9DZwpjND3i2gcStQ3/IfG
-	 /9XO1gcKjOTLI8vnzCKJyIIJdi8Drv+C3+bLgpPFBCACWzDFE5/+YJB8mKhoNXsXPP
-	 aGOOgqizJ0LQZTKsSofGXi2e+dErRMKROE41sgIcuQi7rckrfyytP68d1bodx2yiTY
-	 jrACiHF1FdlEw==
+	b=QqELMC2W1PocPavda7kwl/GRLKGUDVTBKHjfgd2exq34kWPMWofkA0ppN5w42uRKn
+	 NNBhQ1oKfqpoX7/8RjzIGJt9ft1NN474N7LeWbQDwHzLh5VIxu3ywJsFMzcWupiIuy
+	 Pp0b2R5hnEGkYhwfOO3Ci7jMM6puxzSDq5fJkeXTgDyqBCvXy52lU/Xy/097pjCd/w
+	 lpjPB1aFfYPrf7AcNXXuhT/MjI6INUWFXxCQApchiG9Sef3ylsNJZLAsWIm9wMnODJ
+	 k1oNvA5rzQbpl6ygChBIqwzMZIx2f84gHs63hcWTJ0zDm9LyqHd+R6CjrHRqtyndi7
+	 POXn7eylmKsJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Stepan Ionichev <sozdayvek@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: mac80211: ibss: wait for in-flight TX on disconnect
-Date: Mon, 31 Aug 2026 09:27:55 -0400
-Message-ID: <20260831133314.4125787-447-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] usb: gadget: goku_udc: avoid NULL deref of dev->driver in INT_USBRESET log
+Date: Mon, 31 Aug 2026 09:27:56 -0400
+Message-ID: <20260831133314.4125787-448-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,406 +52,390 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit d0e69d9afa59b93c30294eba89b1f15f69e91105 ]
+[ Upstream commit 5bf5e3fba9bc7dfd69701521dbe9809f8ccbdb02 ]
 
-While leaving an IBSS in ieee80211_ibss_disconnect() mac80211 flushes
-stations, turns the carrier off and immediately tells the driver to
-leave as well. While there may be synchronize_net() in station flush
-and in this code later, packets can still be transmitted due to
-cross-CPU race conditions after carrier off is set.
-Therefore, it's possible for a race to happen where a TX to the
-driver occurs while or after telling it to leave the IBSS. This can
-be confusing to drivers, and in the case of iwlwifi leads to an
-attempt to use invalid queues.
+goku_irq() handles a number of bus events under a single ep0 path.
+It already guards the gadget driver suspend/resume callbacks against a
+NULL ->driver:
 
-Move netif_carrier_off() to occur before sta_info_flush() during
-IBSS disconnect, and add synchronize_net() if flushing didn't,
-so that the synchronize_net() always happens between turning the
-carrier off and telling the driver, avoiding this race.
+	if (dev->gadget.speed != USB_SPEED_UNKNOWN
+			&& dev->driver
+			&& dev->driver->resume) {
+		spin_unlock(&dev->lock);
+		dev->driver->resume(&dev->gadget);
+		...
+	}
 
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260706223751.da1ce439cc93.If5cf482f87ab98ce66dd48724e24c81fed236d3f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+but the very next branch unconditionally dereferences dev->driver
+when an INT_USBRESET arrives:
+
+	if (stat & INT_USBRESET) {
+		ACK(INT_USBRESET);
+		INFO(dev, "USB reset done, gadget %s\n",
+			dev->driver->driver.name);
+	}
+
+If the controller raises INT_USBRESET before any gadget driver has
+been bound (or after one has been unbound), dev->driver is NULL and
+the printk dereferences NULL.
+
+smatch flags the inconsistency:
+
+  drivers/usb/gadget/udc/goku_udc.c:1618 goku_irq() error:
+  we previously assumed 'dev->driver' could be null (see line 1607)
+
+Fall back to a placeholder when the gadget driver is not bound.
+
+No functional change while a gadget driver is bound.
+
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Link: https://patch.msgid.link/20260509110636.19762-1-sozdayvek@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: mac80211: ibss: wait for in-flight TX
-on disconnect`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, HEAD `2736c32da98b9`)
-**Upstream commit:** `d0e69d9afa59` (mainline, Jul 7 2026)
-**Candidate on autosel:** `8763b7cb9523a` — **not yet applied** to this
-checkout
+### Step 1.1: Subject Line
+**Record:** `[usb: gadget: goku_udc]` `[avoid]` — avoid NULL dereference
+of `dev->driver` in the `INT_USBRESET` logging path inside `goku_irq()`.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[wifi: mac80211: ibss]` — implicit **fix**
-(wait/synchronize) — ensure in-flight TX completes before telling the
-driver to leave IBSS on disconnect.
-
-### Step 1.2: Tags
+### Step 1.2: Commit Message Tags
 **Record:**
-- **Fixes:** — absent (expected for manual review)
-- **Reported-by:** — none
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** — none (smatch static analysis instead)
 - **Tested-by:** — none
-- **Reviewed-by:** Johannes Berg `<johannes.berg@intel.com>` (mac80211
-  maintainer)
+- **Reviewed-by:** — none in message
 - **Acked-by:** — none
-- **Link:** https://patch.msgid.link/20260706223751.da1ce439cc93.If5cf48
-  2f87ab98ce66dd48724e24c81fed236d3f@changeid
-- **Cc: stable:** — absent (expected)
-- **Signed-off-by:** Pagadala Yesu Anjaneyulu, Miri Korenblit, Johannes
-  Berg (ignore pipeline SOB)
+- **Link:**
+  `https://patch.msgid.link/20260509110636.19762-1-sozdayvek@gmail.com`
+- **Cc: stable:** — not present (expected)
+- **Signed-off-by:** Stepan Ionichev `<sozdayvek@gmail.com>`, Greg
+  Kroah-Hartman `<gregkh@linuxfoundation.org>`
+- **Notable:** smatch-detected inconsistency; Greg KH merged it (USB
+  maintainer)
 
-Notable: maintainer Reviewed-by; no syzbot/user reports; Intel-internal
-fix.
-
-### Step 1.3: Body analysis
+### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug:** On IBSS disconnect, mac80211 flushes stations, turns carrier
-  off, then immediately calls `drv_leave_ibss()`. Cross-CPU races allow
-  TX to reach the driver during/after leave.
-- **Symptom:** Driver confusion; iwlwifi attempts to use invalid queues.
-- **Root cause:** `synchronize_net()` may be skipped when
-  `sta_info_flush()` returns 0 (no stations); carrier was turned off too
-  late; no guaranteed net stack drain between carrier-off and
-  `drv_leave_ibss()`.
-- **Version info:** None in message; fix landed in mainline after v6.18.
+- **Bug:** `goku_irq()` unconditionally dereferences
+  `dev->driver->driver.name` on `INT_USBRESET`, while adjacent
+  suspend/resume code already treats `dev->driver` as possibly NULL.
+- **Symptom:** NULL pointer dereference in interrupt context → kernel
+  oops.
+- **Trigger:** `INT_USBRESET` before a gadget driver is bound, or after
+  one is unbound.
+- **Root cause:** Inconsistent NULL handling in the same function;
+  logging path missed the guard.
+- **Version info:** None stated; code dates to original driver import
+  (2005).
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — despite no "fix" in subject, this is a
-synchronization/race fix disguised as ordering cleanup. Not cosmetic.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Not disguised — this is an explicit NULL-deref fix. smatch
+flagged the inconsistency between line 1607 (NULL check) and line 1619
+(unconditional deref).
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
+### Step 2.1: Change Inventory
 **Record:**
-- **File:** `net/mac80211/ibss.c` only (+3 / -6 lines)
-- **Functions:** `ieee80211_ibss_disconnect()`,
-  `ieee80211_csa_connection_drop_work()`, `ieee80211_ibss_leave()`
-- **Scope:** Single-file surgical fix
+- **File:** `drivers/usb/gadget/udc/goku_udc.c` (+2 / -1)
+- **Function:** `goku_irq()`
+- **Scope:** Single-file, surgical fix (one logging expression)
 
-### Step 2.2: Code flow per hunk
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** `INFO(dev, "USB reset done, gadget %s\n",
+  dev->driver->driver.name);` — always dereferences `dev->driver`.
+- **After:** Ternary: `dev->driver ? dev->driver->driver.name : "<not
+  bound>"`.
+- **Path:** IRQ handler, `INT_USBRESET` branch under `INT_DEVWIDE`;
+  normal USB bus-reset event path.
 
-**Hunk 1 — `ieee80211_ibss_disconnect()`:**
-- **Before:** `sta_info_flush()` → incomplete-sta cleanup →
-  `netif_carrier_off()` → … → `drv_leave_ibss()`
-- **After:** `netif_carrier_off()` → `sta_info_flush()`; if flush
-  returned 0, `synchronize_net()` → … → `drv_leave_ibss()`
-- **Path:** IBSS disconnect / leave / CSA drop
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** NULL pointer dereference. **Mechanism:** `%s`
+format argument evaluates `dev->driver->driver.name` before `printk`;
+when `dev->driver` is NULL, this faults in IRQ context.
 
-**Hunk 2 — `ieee80211_csa_connection_drop_work()`:**
-- **Before:** disconnect → `synchronize_rcu()` → purge skb queue
-- **After:** disconnect → purge skb queue (RCU sync removed; disconnect
-  now guarantees `synchronize_net()`)
-
-**Hunk 3 — `ieee80211_ibss_leave()`:**
-- **Before:** disconnect → … → `synchronize_rcu()` → purge skb queue
-- **After:** disconnect → purge skb queue
-
-### Step 2.3: Bug mechanism
-**Record:** **Race condition / synchronization bug**
-- `sta_info_flush()` only calls `synchronize_net()` when stations are
-  actually flushed (`free_list` non-empty); returns 0 with no sync when
-  empty.
-- Old ordering allowed new TX between flush and carrier-off; even after
-  carrier-off, in-flight TX on other CPUs could reach the driver after
-  `drv_leave_ibss()`.
-- Fix: carrier-off first (blocks new xmit via `!netif_carrier_ok()` in
-  `__dev_direct_xmit()`), then always `synchronize_net()` before
-  `drv_leave_ibss()`.
-
-### Step 2.4: Fix quality
-**Record:** Obviously correct; mirrors the existing IBSS merge path in
-the same file (`netif_carrier_off()` + `synchronize_net()` before
-`drv_leave_ibss()` at lines 244–249). Minimal. Low regression risk —
-adds only ordering + one conditional sync call; maintainer-reviewed.
+### Step 2.4: Fix Quality
+**Record:** Obviously correct. Matches the existing pattern at line 1158
+in the same file (`dev->driver ? dev->driver->driver.name : "(none)"`).
+Minimal change, no behavior change when a driver is bound. Regression
+risk: very low.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** Current disconnect ordering in this tree dates to the v6.18
-import (`5d324e5159d9e`). Deeper per-line history not available in this
-shallow stable checkout; bug appears longstanding in IBSS disconnect
-(merge path already had the correct pattern separately).
+**Record:** Buggy lines introduced in `1da177e4c3f41` (Linus Torvalds,
+2005-04-16) — present since initial import. Long-standing latent bug.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: Related file history
-**Record:** Fix is standalone (v1 only on lore). On `autosel` branch,
-only this commit touches `ibss.c` for this issue. Mainline fix
-`d0e69d9afa59` is **not** in `remotes/stable/linux-6.18.y`.
+### Step 3.3: Related File History
+**Record:** Related commits in this tree:
+- `0d66e04875c5a` — probe-time NULL deref fix (different bug)
+- `37a757e31d992` — cast cleanup on `driver.name`
+- `2a334cfaf3931` — memory leak in `goku_probe()`
+- Standalone one-patch fix; not part of a series.
 
-### Step 3.4: Author context
-**Record:** Pagadala Yesu Anjaneyulu — Intel iwlwifi contributor.
-Johannes Berg (maintainer) reviewed. Miri Korenblit committed upstream.
+### Step 3.4: Author Context
+**Record:** Stepan Ionichev has other NULL-deref fixes in this tree
+(e.g. `1f6a4aec0d366` rtc/msc313). Not the goku_udc maintainer, but
+submits credible static-analysis-driven fixes.
 
 ### Step 3.5: Dependencies
-**Record:** None. Self-contained; no series prerequisites. Applies
-cleanly to current `ibss.c` in this tree.
+**Record:** No dependencies. Patch applies cleanly (`git apply --check`
+succeeded). Self-contained.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c 8763b7cb9523a` → https://patch.msgid.link/2026070
-6223751.da1ce439cc93.If5cf482f87ab98ce66dd48724e24c81fed236d3f@changeid
-Single-message thread (patch only, no replies). v1 only.
+### Step 4.1: Original Patch Discussion
+**Record:** `b4 am` retrieved the mbox from lore. `b4 dig -c` failed
+(commit not in this tree). lore.kernel.org blocked by bot protection;
+full thread not readable via WebFetch. Mbox contains only the initial
+patch, no review replies.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: CC'd `johannes@sipsolutions.net`, `linux-
-wireless@vger.kernel.org`, Miri Korenblit, Johannes Berg. Appropriate
-maintainers included.
+**Record:** `b4 dig -w` unavailable (no commit hash). Mbox shows only
+author SOB; Greg KH SOB on committed version indicates maintainer
+acceptance.
 
-### Step 4.3: Bug report
-**Record:** No external bug report. iwlwifi invalid-queue issue
-described in commit message only (Intel-internal).
+### Step 4.3: Bug Report
+**Record:** smatch static analysis report in commit message. No syzbot,
+no user crash reports. smatch cross-reference to line 1607 is concrete
+evidence.
 
-### Step 4.4: Related patches
-**Record:** Standalone; not part of a series.
+### Step 4.4: Related Patches
+**Record:** Standalone; no series dependencies.
 
-### Step 4.5: Stable list
-**Record:** Not searched on lore stable list; no stable nomination found
-in thread (thread has no replies).
+### Step 4.5: Stable List History
+**Record:** Not searched (lore blocked). No stable nomination found in
+available sources.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `ieee80211_ibss_disconnect()`, `sta_info_flush()` /
-`__sta_info_flush()`, `drv_leave_ibss()`, `ieee80211_ibss_leave()`,
-`ieee80211_csa_connection_drop_work()`
+### Step 5.1: Key Functions
+**Record:** `goku_irq()` (modified), context: `ep0_start()`,
+`udc_enable()`, `goku_udc_start()`, `goku_udc_stop()`.
 
 ### Step 5.2: Callers
-**Record:**
-- `ieee80211_ibss_disconnect()` ← `ieee80211_ibss_leave()`,
-  `ieee80211_csa_connection_drop_work()`
-- `ieee80211_ibss_leave()` ← `ieee80211_leave_ibss()` in `cfg.c`
-  (nl80211 `.leave_ibss` op)
-- Userspace triggers via `NL80211_CMD_LEAVE_IBSS` / interface down; CSA
-  radar path triggers disconnect work
+**Record:** `goku_irq()` registered via `request_irq()` in
+`goku_probe()` at line 1805. Runs in hard/IRQ context on every
+controller interrupt.
 
 ### Step 5.3: Callees
-**Record:** `netif_carrier_off()`, `sta_info_flush()` (may call
-`synchronize_net()` internally), `synchronize_net()`,
-`drv_leave_ibss()`, `ieee80211_bss_info_change_notify()`
+**Record:** `readl()`, `writel()`, `ACK()` macro, `INFO()` macro (wraps
+`printk`), `ep0_setup()`, suspend/resume callbacks.
 
-### Step 5.4: Reachability
-**Record:** Reachable from userspace via cfg80211/nl80211 when leaving
-ad-hoc/IBSS mode or on CSA-driven disconnect. Not obscure kernel-only
-init path.
+### Step 5.4: Call Chain / Reachability
+**Record:** Reachable path verified in code:
+1. `goku_probe()` registers IRQ (line 1805) before any gadget driver
+   binds.
+2. On USB connect, `INT_PWRDETECT` → `ep0_start()` (line 1566) enables
+   `INT_DEVWIDE | INT_EP0` (line 1340), which includes `INT_USBRESET`.
+3. `ep0_start()` can run with `dev->driver == NULL` (driver binds later
+   via `goku_udc_start()` at line 1378).
+4. Host USB reset → `INT_USBRESET` → unconditional
+   `dev->driver->driver.name` deref → oops.
 
-### Step 5.5: Similar patterns
-**Record:** IBSS merge path in same file already uses
-`netif_carrier_off()` + `synchronize_net()` before `drv_leave_ibss()` —
-confirms the disconnect path was missing this established pattern.
+Also reachable after `goku_udc_stop()` sets `dev->driver = NULL` (line
+1410) or `INT_SYSERROR` clears it (line 1559).
 
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
-
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current tree at lines 678–708 of
-`net/mac80211/ibss.c` has `sta_info_flush()` before
-`netif_carrier_off()`, then `drv_leave_ibss()` with no guaranteed
-`synchronize_net()` when flush returns 0.
-
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — autosel commit `8763b7cb9523a` is a
-trivial 9-line change against identical code in this tree.
-
-### Step 6.3: Related fixes already present?
-**Record:** **No.** `git log remotes/stable/linux-6.18.y` does not
-contain `d0e69d9afa59` or `8763b7cb9523a`.
+### Step 5.5: Similar Patterns
+**Record:** Same file line 1158 already uses `dev->driver ?
+dev->driver->driver.name : "(none)"`. `pxa25x_udc.c` uses the same
+idiom. This fix brings `goku_irq()` in line with established convention.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 7.1: Subsystem criticality
-**Record:** `net/mac80211` — **IMPORTANT** (wireless stack; affects all
-WiFi users on affected paths; IBSS/adhoc is a niche but real mode).
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** Local tree is **v6.18.44** (`VERSION=6`,
+`PATCHLEVEL=18`, `SUBLEVEL=44`). Buggy code at lines 1618–1619:
 
-### Step 7.2: Subsystem activity
-**Record:** Actively maintained; iwlwifi is a widely deployed driver.
+```1616:1620:drivers/usb/gadget/udc/goku_udc.c
+                if (stat & INT_USBRESET) {              /* hub reset
+done */
+                        ACK(INT_USBRESET);
+                        INFO(dev, "USB reset done, gadget %s\n",
+                                dev->driver->driver.name);
+                }
+```
+
+Bug present since 2005 import; not introduced after this tree branched.
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply confirmed. No conflicting changes in this hunk.
+Expected difficulty: **clean apply**.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** `0d66e04875c5a` (probe crash fix) is present. This specific
+`INT_USBRESET` NULL-deref fix is **not** present.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 8.1: Who is affected
-**Record:** Users leaving IBSS/adhoc mode (or dropped by CSA/radar) with
-drivers that assume no TX after `leave_ibss` — notably **iwlwifi**.
-Config-specific (`NL80211_IFTYPE_ADHOC`), not universal.
+### Step 7.1: Subsystem Criticality
+**Record:** `drivers/usb/gadget/udc/` — USB gadget UDC driver.
+**PERIPHERAL** (niche Toshiba TC86C001 PCI hardware, `CONFIG_USB_GOKU`).
 
-### Step 8.2: Trigger conditions
-**Record:** IBSS leave, interface teardown, CSA connection drop.
-Userspace-triggerable via nl80211. Race is timing-dependent but
-realistic on SMP. Unprivileged users can trigger if they control the
-wireless interface.
+### Step 7.2: Subsystem Activity
+**Record:** Low churn recently; mostly header moves and minor cleanups.
+Mature, legacy driver.
 
-### Step 8.3: Failure mode severity
-**Record:** Driver TX after IBSS teardown → invalid queue usage in
-iwlwifi (`WARN_ON` paths in `mvm/tx.c`). Severity: **MEDIUM-HIGH** for
-affected users (driver malfunction, possible packet loss/warnings; race
-class can escalate depending on driver). Not a mass crash, but a real
-correctness bug in a common driver.
+---
 
-### Step 8.4: Risk-benefit
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users with `CONFIG_USB_GOKU` (Toshiba TC86C001 "Goku-S" PCI
+UDC). Small but real embedded/legacy population.
+
+### Step 8.2: Trigger Conditions
+**Record:** USB cable connect → host bus reset before gadget driver
+bind; or reset after driver unbind/error. **Moderately likely** during
+normal enumeration. Not userspace-syscall reachable; requires the
+hardware and USB activity.
+
+### Step 8.3: Failure Mode Severity
+**Record:** NULL deref in IRQ handler → **kernel oops** (system crash).
+**Severity: HIGH** for affected hardware.
+
+### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** MEDIUM — fixes real disconnect race for IBSS+iwlwifi;
-  aligns with proven pattern already in same file
-- **Risk:** LOW — 9 lines, maintainer-reviewed, no API changes
-- **Ratio:** Favorable for stable
+- **Benefit:** Prevents IRQ-context crash on a normal enumeration path;
+  smatch-verified real bug.
+- **Risk:** Minimal (2-line ternary, matches existing file pattern).
+- **Ratio:** Favorable — low risk, real crash prevention.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real cross-CPU race on IBSS disconnect
-- Concrete iwlwifi impact (invalid queues)
-- Small, surgical, maintainer-reviewed fix
-- Matches existing correct IBSS merge pattern in same file
-- Buggy code confirmed in v6.18.44 tree; fix not yet applied
-- Applies cleanly
+- Real NULL pointer dereference in IRQ handler
+- Reachable before gadget driver bind (verified call chain)
+- Kernel oops when triggered
+- smatch static analysis confirmation
+- 2-line surgical fix, obviously correct
+- Matches existing pattern in same file (line 1158)
+- Applies cleanly to v6.18.44
+- Greg KH merged (USB maintainer)
+- Bug present since 2005 — affects all stable trees with this driver
 
 **AGAINST backport:**
-- IBSS/adhoc is a niche mode
-- No public bug report or syzbot reproducer
-- Failure mode may be WARN-level rather than panic (unverified crash
-  severity)
-- `synchronize_rcu()` removal rationale not discussed on lore (only
-  maintainer review)
+- Niche hardware (`CONFIG_USB_GOKU`)
+- Only affects logging path (but deref happens evaluating format args,
+  so it still crashes)
+- No user crash reports or syzbot report
+- Limited mailing-list review visibility
 
-**Unresolved:**
-- Exact kernel version that introduced the buggy disconnect ordering
-  (history too shallow to pinpoint)
-- Whether iwlwifi issue always manifests as WARN vs harder failure
+**Unresolved:** Full lore review thread not accessible (bot protection).
+No explicit stable nomination found.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic sound; Reviewed-by
-   maintainer; mirrors in-tree pattern
-2. Fixes real bug affecting users? **PASS** — race on IBSS disconnect
-   with iwlwifi impact
-3. Important issue? **PASS** — driver malfunction on disconnect (MEDIUM-
-   HIGH for affected config)
-4. Small and contained? **PASS** — 9 lines, 1 file
-5. No new features/APIs? **PASS** — ordering/sync only
-6. Can apply to local tree? **PASS** — clean apply to current `ibss.c`
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — trivial ternary, smatch-
+   verified, maintainer-merged.
+2. Fixes a real bug affecting users? **PASS** — NULL deref on real
+   hardware enumeration path.
+3. Important issue? **PASS** — IRQ-context NULL deref → kernel oops
+   (HIGH severity for affected users).
+4. Small and contained? **PASS** — 2 lines, one function.
+5. No new features or APIs? **PASS** — logging safety only.
+6. Can apply to local tree? **PASS** — clean apply verified.
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs).
+### Step 9.3: Exception Categories
+**Record:** None (not device ID, quirk, DT, build fix, or docs).
+Standard bug fix.
 
-### Step 9.4: Decision rationale
+### Step 9.4: Decision Rationale
 
-For **linux-6.18.y** (this checkout): the buggy disconnect sequencing
-exists, the fix is small and maintainer-approved, and it prevents a
-realistic SMP race where TX reaches iwlwifi after IBSS teardown. The fix
-follows an established pattern already used in the IBSS merge path in
-the same file. Conservative stable criteria are met.
+For **this tree (6.18.44)**, the buggy code exists and is reachable:
+`ep0_start()` enables `INT_USBRESET` handling on USB connect before any
+gadget driver binds, so a host bus reset can trigger a NULL dereference
+in `goku_irq()`. The fix is minimal, follows an existing idiom in the
+same driver, and prevents a kernel oops on affected hardware. While the
+driver serves niche legacy hardware, stable trees routinely accept small
+NULL-deref fixes in drivers when the crash path is real and the fix is
+obviously safe.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message and
-  `git show 8763b7cb9523a`
-- [Phase 2] Diff analysis: 3 insertions, 6 deletions in `ibss.c`;
-  verified `sta_info_flush()` conditional `synchronize_net()` at
-  `sta_info.c:1684-1687`
-- [Phase 2] Verified `__dev_direct_xmit()` carrier check at
-  `net/core/dev.c:4853-4854`
-- [Phase 3] `git describe HEAD` → v6.18.44; tree is
-  `stable/linux-6.18.y`
-- [Phase 3] `git show remotes/stable/linux-6.18.y:net/mac80211/ibss.c` →
-  buggy ordering confirmed
-- [Phase 3] Fix not in stable: `git log remotes/stable/linux-6.18.y | rg
-  d0e69d9` → empty; merge-base with fix is `Linux 6.18`
-- [Phase 3] `git show d0e69d9afa59` → upstream mainline commit confirmed
-- [Phase 4] `b4 dig -c 8763b7cb9523a` → lore URL found
-- [Phase 4] `b4 dig -a` → v1 only
-- [Phase 4] `b4 dig -w` → Johannes Berg, linux-wireless CC'd
-- [Phase 4] `/tmp/ibss_thread.mbox` → single patch, no replies, no
-  stable nomination
-- [Phase 5] `grep ieee80211_ibss_leave` → called from `cfg.c:3223`
-  (nl80211 leave_ibss)
-- [Phase 5] Verified IBSS merge correct pattern at `ibss.c:244-249`
-- [Phase 5] iwlwifi invalid queue paths at `mvm/tx.c:814`
-  (`WARN_ON(queue == IWL_MVM_INVALID_QUEUE)`)
-- [Phase 6] Read current `ibss.c:653-710` and `1814-1828` — buggy code
-  present, `synchronize_rcu()` still in leave paths
-- [Phase 6] `git show 8763b7cb9523a` on autosel — patch applies to
-  identical code
-- [Phase 8] IBSS reachability via `cfg.c` `.leave_ibss` op confirmed
-- **UNVERIFIED:** Exact introduction commit of buggy disconnect ordering
-  (shallow history)
-- **UNVERIFIED:** Whether iwlwifi issue always causes only WARN vs oops
+- **[Phase 1]** Parsed subject, tags, body from user-provided commit
+  message and mbox file
+- **[Phase 1]** Confirmed: no Fixes:/Reported-by:/Cc: stable tags;
+  smatch reference in body
+- **[Phase 2]** Diff: +2/-1 in `goku_irq()`, ternary NULL guard on
+  `dev->driver`
+- **[Phase 3]** `git blame -L 1616,1620`: buggy code from
+  `1da177e4c3f41` (2005)
+- **[Phase 3]** `git log --oneline -20 --
+  drivers/usb/gadget/udc/goku_udc.c`: related fixes listed; no duplicate
+  of this fix
+- **[Phase 3]** `git apply --check`: patch applies cleanly
+- **[Phase 4]** `b4 dig -c ac2a984c2f87e`: failed (commit not in tree)
+- **[Phase 4]** `b4 am` on message-id: retrieved mbox with patch content
+- **[Phase 4]** WebFetch lore URL: blocked by bot protection
+  (UNVERIFIED: review thread content)
+- **[Phase 5]** Read `goku_irq()`, `ep0_start()`, `goku_probe()`,
+  `goku_udc_start/stop`: confirmed reachable NULL-deref path
+- **[Phase 5]** `grep dev->driver`: line 1158 has existing NULL-guard
+  pattern; line 1619 does not
+- **[Phase 5]** `goku_udc.h`: `INT_USBRESET` part of `INT_DEVWIDE`;
+  enabled by `ep0_start()`
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** `head Makefile`: VERSION=6, PATCHLEVEL=18, SUBLEVEL=44
+- **[Phase 6]** Read lines 1616–1620: buggy code confirmed present
+- **[Phase 7]** Kconfig: `CONFIG_USB_GOKU` — Toshiba TC86C001 PCI device
+- **[Phase 8]** Failure mode: IRQ NULL deref → oops, severity HIGH for
+  affected hardware
 
-**YES**
+**YES**The commit **should be backported** to this tree (v6.18.44).
 
- net/mac80211/ibss.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+**Summary:** `goku_irq()` can NULL-dereference `dev->driver` when
+handling `INT_USBRESET` during USB connect/reset before a gadget driver
+is bound — a path `ep0_start()` enables on cable connect. The fix is a
+2-line ternary that matches an existing pattern in the same file (line
+1158), applies cleanly, and prevents an IRQ-context kernel oops on
+`CONFIG_USB_GOKU` hardware.
 
-diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
-index 6e36b09fe97f8..6ca2ff354e768 100644
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -675,7 +675,9 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
- 
- 	ifibss->state = IEEE80211_IBSS_MLME_SEARCH;
- 
--	sta_info_flush(sdata, -1);
-+	netif_carrier_off(sdata->dev);
-+	if (!sta_info_flush(sdata, -1))
-+		synchronize_net();
- 
- 	spin_lock_bh(&ifibss->incomplete_lock);
- 	while (!list_empty(&ifibss->incomplete_stations)) {
-@@ -689,8 +691,6 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
+**Verdict: YES**
+
+ drivers/usb/gadget/udc/goku_udc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/usb/gadget/udc/goku_udc.c b/drivers/usb/gadget/udc/goku_udc.c
+index b860c2e764494..c262749a29cc7 100644
+--- a/drivers/usb/gadget/udc/goku_udc.c
++++ b/drivers/usb/gadget/udc/goku_udc.c
+@@ -1616,7 +1616,8 @@ static irqreturn_t goku_irq(int irq, void *_dev)
+ 		if (stat & INT_USBRESET) {		/* hub reset done */
+ 			ACK(INT_USBRESET);
+ 			INFO(dev, "USB reset done, gadget %s\n",
+-				dev->driver->driver.name);
++				dev->driver ? dev->driver->driver.name :
++					      "<not bound>");
+ 		}
+ 		// and INT_ERR on some endpoint's crc/bitstuff/... problem
  	}
- 	spin_unlock_bh(&ifibss->incomplete_lock);
- 
--	netif_carrier_off(sdata->dev);
--
- 	sdata->vif.cfg.ibss_joined = false;
- 	sdata->vif.cfg.ibss_creator = false;
- 	sdata->vif.bss_conf.enable_beacon = false;
-@@ -717,7 +717,6 @@ static void ieee80211_csa_connection_drop_work(struct wiphy *wiphy,
- 			     u.ibss.csa_connection_drop_work);
- 
- 	ieee80211_ibss_disconnect(sdata);
--	synchronize_rcu();
- 	skb_queue_purge(&sdata->skb_queue);
- 
- 	/* trigger a scan to find another IBSS network to join */
-@@ -1823,8 +1822,6 @@ int ieee80211_ibss_leave(struct ieee80211_sub_if_data *sdata)
- 	memset(&ifibss->ht_capa, 0, sizeof(ifibss->ht_capa));
- 	memset(&ifibss->ht_capa_mask, 0, sizeof(ifibss->ht_capa_mask));
- 
--	synchronize_rcu();
--
- 	skb_queue_purge(&sdata->skb_queue);
- 
- 	timer_delete_sync(&sdata->u.ibss.timer);
 -- 
 2.53.0
 
