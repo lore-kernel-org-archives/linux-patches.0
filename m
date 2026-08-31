@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FED0555C0D;
-	Mon, 31 Aug 2026 13:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D9042376A;
+	Mon, 31 Aug 2026 13:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184025; cv=none; b=cXj6JAr1xKuNBvQHcaCBxnqr7JRrpK2xTAOSW08RJIBcw19Zqfnz+ht15IDFThQ/0Dur8EA4eKat1vSaZ04yo2ktyv5ZkKbifnXbvrGIRDuw7g/3IM8kCMwUVEM1zZFEAAbLjrpqaSw3k7vu4ywHG0o0Ac/JtFD87FQR95lsS3k=
+	t=1788184027; cv=none; b=j5kuHDIr0+CHk/Tm7tE/KzV5aL+KFY9N3eyv095rszn2fVmY1Hwm6rBfr1+WUExRLLaw3megbpkFWHaLhtVV4q1EGJnbLmUYH/dqyJ+BmRr6pTf82KoJp9GBsciTpbRcAvzuz/E6ual85WYBUFItmceSmuax1xcfLi//4XWQuB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184025; c=relaxed/simple;
-	bh=f7as2J5ha+rh2KMEDaJOJFTJSZpLbsVAhziGPu44PFs=;
+	s=arc-20240116; t=1788184027; c=relaxed/simple;
+	bh=vk6TDT4IXwsl8J2mrFv6SDNmrW+ZQGixsh65xfz8kBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VE1hPYvWAb9TTiEiRIOyYnmQcIV1FRsOZVEyIO2GWWd4f8/2Fa2bNXI1oc3kwNnKZfrfrkfoVh10Jj/9Fr/mtUGR+tXP5FufGdD6/V9S2gupSH1PYNl/3K2Vjxc8Ov+K7XvZk6m/4B4lJM19R5vSqau5ogxSG0JiQpyziT057L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iGcJK4sV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OWKfuSpR/HLFj+EloTILbIOqkTz4eaCUfJvUi5sEmqQcTnOtcxOhhPs32UO1lO+/xtYTfn5cQaljST9LqSNvfU561RFU8yUO8uBeTk5t/Dikf5Fg5eepFZNichL8gePfu5rsbG+NUDDG1PJgBk3WLtG7ayHFtCKwFJijm1VDzo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UD9fM3zO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iGcJK4sV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26831F000E9;
-	Mon, 31 Aug 2026 13:47:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UD9fM3zO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8167B1F00ADE;
+	Mon, 31 Aug 2026 13:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184022;
-	bh=/T4cX/SYuVx3IVIoOuCrfO08y6KbwPPsNAxZ6k+R63k=;
+	s=k20260515; t=1788184023;
+	bh=SC3qTD2eqmYaKWyZPKFPXbeK4KOaikQ9S2F0cZlVcZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iGcJK4sVarjLiEe7r8O+FSyYKxKBQGQ+7OiMytmcfpZv4i1g3afADfYHsurUmkF/H
-	 oazUGTwwJgaZOMs4y91BkqX1C5y4zxF7M0fgMnLZo2x8J/ZeKbpadtofcjF4Quo82N
-	 RsaBXJzeruXj6q6OwP2d5r+GNeDmsvJoePgIZXvQXQfMy5FKJg0dvLV+dAG1qWCAuD
-	 IPRDs9MBSAGnMRx6IWxEo1FeJSNVNxjJKVTrRZPwxy1bbAVzZS7ib/bWjhsH1VdQlR
-	 rPzc34mll168Mkd1jVst35wvRmzun8tCsv+cC+PIVKzKmcomB8pkAGtgyFHzCs0UBi
-	 emi+JftM3RKHw==
+	b=UD9fM3zODM3B1MCkTIgVDl5WDumGCDpQzoyLLR5RdTZDA0z1H397xiyVnqP7K0OHz
+	 F9nIaySXC/wuJWV6BlhtX8VNBD+++AbZ0r82yVvLD0oIaSai84gKgDMp8PQ6OMzBAj
+	 fmpN8PvS6c+Bl57GKlyqlOp+9Go2Lzpm5rKzFfAiDHVLzixFs9nIi5fpkuknYSYahM
+	 mHWZjyjlygyNJBs4UPJzif/+ZtP+x/dr73aB8g7wwXHdNlEYXjRj4ZCGIOFIOX5ur5
+	 LXKGDgofIzYSAsY8yGKaYvWLAEFQz4hwenX3N2HqfR0mSwzL5h949KPg81zdcPaJuG
+	 RbvNMNnYgNZ6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lin Xianglin <1021538027@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Caio Ramos <caioramos97@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	Vijendar.Mukunda@amd.com,
-	lgirdwood@gmail.com,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] ASoC: amd: yc: Add DMI quirk for HyperX OMEN Gaming Laptop 16-ap1xxx
-Date: Mon, 31 Aug 2026 09:27:51 -0400
-Message-ID: <20260831133314.4125787-443-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] ALSA: hda/realtek: Add HDA_CODEC_QUIRK for Samsung 750XBE/730XBE
+Date: Mon, 31 Aug 2026 09:27:52 -0400
+Message-ID: <20260831133314.4125787-444-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,22 +55,23 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Xianglin <1021538027@qq.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit fe21db8c5e7c2a9815a9be54a1f5d556f905506e ]
+[ Upstream commit 740b3c6780ec1f65aba2bc99a3f41d70bdb13477 ]
 
-The HyperX OMEN Gaming Laptop 16-ap1xxx (HP board 8F06) has an
-internal digital microphone array attached to the AMD ACP PDM
-controller, but the acp6x machine driver does not register the DMIC
-sound card because this board is missing from the DMI quirk table,
-leaving the internal microphone unusable.
+Add a codec SSID quirk for Samsung ELECTRONICS 750XBE/730XBE using
+HDA_CODEC_QUIRK() instead of SND_PCI_QUIRK(), because the alsa-info
+report from this device does not expose a PCI subsystem ID, only the
+HDA codec subsystem ID (0x144d:0xc824) is available.
 
-Add a DMI quirk entry for the HP board "8F06" so the acp6x DMIC
-capture card gets registered.
+This applies ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET to fix sound
+being very low and distorted on the headphone jack of this system.
 
-Signed-off-by: Lin Xianglin <1021538027@qq.com>
-Link: https://patch.msgid.link/tencent_428392223C2AD3BF23E7ABAA7521FE5C0C07@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Caio Ramos <caioramos97@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=208663
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260720123702.799474-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,40 +80,43 @@ LLM Generated explanations, may be completely bogus:
 ## Phase 1: Commit Message Forensics
 
 ### Step 1.1: Subject Line
-**Record:** `[ASoC: amd: yc]` `[Add]` — Add DMI quirk for HyperX OMEN
-Gaming Laptop 16-ap1xxx (HP board 8F06) to enable internal DMIC on AMD
-ACP6x.
+**Record:** `[ALSA: hda/realtek]` `[Add]` — Add an HDA codec SSID quirk
+for Samsung 750XBE/730XBE laptops.
 
 ### Step 1.2: Commit Message Tags
 **Record:**
-- **Signed-off-by:** Lin Xianglin \<1021538027@qq.com\> (author)
-- **Link:** https://patch.msgid.link/tencent_428392223C2AD3BF23E7ABAA752
-  1FE5C0C07@qq.com
-- **Signed-off-by:** Mark Brown \<broonie@kernel.org\> (subsystem
-  maintainer merge)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable@vger.kernel.org
-- Notable: maintainer Signed-off-by; no syzbot or multi-reporter tags
+- **Reported-by:** Caio Ramos `<caioramos97@gmail.com>` — real user
+  report
+- **Link:** https://bugzilla.kernel.org/show_bug.cgi?id=208663 — kernel
+  bugzilla entry
+- **Signed-off-by:** Zhang Heng `<zhangheng@kylinos.cn>` — author
+- **Link:**
+  https://patch.msgid.link/20260720123702.799474-1-zhangheng@kylinos.cn
+  — mailing list submission
+- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` — ALSA/HDA
+  maintainer
+- No `Fixes:`, `Cc: stable`, `Tested-by:`, or `Reviewed-by:` tags
+- Notable: maintainer (Takashi Iwai) signed off and applied; user bug
+  report with long-standing bugzilla thread
 
 ### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug:** HyperX OMEN Gaming Laptop 16-ap1xxx (HP board `8F06`) has an
-  internal DMIC on AMD ACP PDM, but `acp6x` machine driver does not
-  register the DMIC sound card because the board is missing from
-  `yc_acp_quirk_table`.
-- **Symptom:** Internal microphone unusable (no DMIC capture card
-  registered).
-- **Root cause:** Missing DMI quirk entry; ACPI/`_WOV` path alone does
-  not enable registration on this board.
-- **Fix:** Add `DMI_MATCH(DMI_BOARD_VENDOR, "HP")` +
-  `DMI_MATCH(DMI_BOARD_NAME, "8F06")` with `driver_data = &acp6x_card`.
-- **Version info:** None in message; upstream commit `fe21db8c5e7c`
-  merged to broonie/sound `for-7.2` (Linux 7.2).
+- **Bug:** Headphone jack audio on Samsung 750XBE/730XBE is very low and
+  distorted
+- **Symptom:** Unusable headphone output; user filed bugzilla in 2020
+  (kernel 5.4.52)
+- **Root cause:** Device exposes only HDA codec subsystem ID
+  `0x144d:0xc824`, not a PCI subsystem ID, so existing `SND_PCI_QUIRK()`
+  entries cannot match
+- **Fix:** Add `HDA_CODEC_QUIRK(0x144d, 0xc824, ...)` applying existing
+  `ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET`
+- **Version info:** Bugzilla reports kernel 5.4.52; fix committed to
+  mainline July 2026
 
 ### Step 1.4: Hidden Bug Fix Detection
-**Record:** Yes — despite “Add” wording, this is a hardware-enablement
-bug fix. Same pattern as prior HP/Lenovo/ASUS DMI quirk commits in this
-driver (e.g. `65aabf8896687` for OMEN 16-ap0xxx already in this tree).
+**Record:** Not disguised as cleanup — this is an explicit hardware
+quirk fix. It enables an existing, proven fixup for a device that
+previously had no matching quirk entry.
 
 ---
 
@@ -121,73 +124,81 @@ driver (e.g. `65aabf8896687` for OMEN 16-ap0xxx already in this tree).
 
 ### Step 2.1: Change Inventory
 **Record:**
-- **Files:** `sound/soc/amd/yc/acp6x-mach.c` only (+7 lines, 0 removed)
-- **Functions modified:** None; only `yc_acp_quirk_table[]` static data
-- **Scope:** Single-file surgical hardware-quirk addition
+- **Files:** `sound/hda/codecs/realtek/alc269.c` — +1 line, 0 removals
+- **Function/table:** `alc269_fixup_tbl[]` quirk table
+- **Scope:** Single-file, single-line surgical addition
 
 ### Step 2.2: Code Flow Change
 **Record:**
-- **Before:** On HP board `8F06`, `dmi_first_match(yc_acp_quirk_table)`
-  returns NULL at `check_dmi_entry`; if ACPI `AcpDmicConnected`/`_WOV`
-  also fail, `platform_get_drvdata()` is NULL → `acp6x_probe()` returns
-  `-ENODEV` → no DMIC card.
-- **After:** DMI match sets `platform_set_drvdata(pdev, &acp6x_card)` →
-  `devm_snd_soc_register_card()` registers DMIC capture card.
-- **Path affected:** Platform driver probe during boot (`acp6x_probe`).
+- **Before:** At codec probe, `snd_hda_pick_fixup()` walks
+  `alc269_fixup_tbl[]`. Samsung 750XBE/730XBE (codec SSID
+  `0x144d:0xc824`) matches no entry → no headphone fixup applied →
+  broken audio
+- **After:** Same probe path matches the new `HDA_CODEC_QUIRK` entry
+  (via `match_codec_ssid = true`) → applies
+  `ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET` → sets pin widget control
+  verb `{ 0x1a, AC_VERB_SET_PIN_WIDGET_CONTROL, 0xc5 }`
+- **Path affected:** Device probe / codec initialization (one-time per
+  boot)
 
 ### Step 2.3: Bug Mechanism
 **Record:**
-- **Category:** Hardware workaround / quirk (missing board ID in DMI
-  table)
-- **Mechanism:** ACPI does not reliably expose DMIC config on this HP
-  board; existing DMI override path in `acp6x_probe()` was never
-  triggered because `8F06` was absent from the table.
+- **Category:** Hardware quirk / logic correctness fix
+- **Mechanism:** Missing quirk table entry for a device whose
+  identification requires codec SSID matching rather than PCI SSID
+  matching. The fixup infrastructure and verb sequence already exist;
+  only the device ID mapping was missing.
 
 ### Step 2.4: Fix Quality
 **Record:**
-- Obviously correct: identical to dozens of existing entries in the same
-  table.
-- Minimal: 7 lines, no logic changes.
-- Regression risk: very low — only affects systems matching HP vendor +
-  board name `8F06`.
-- No API, locking, or structural changes.
+- Obviously correct: identical pattern to other Samsung headphone quirks
+  already in the tree (e.g. `0x144d:0xca06` using the same
+  `ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET`)
+- Minimal: one line
+- Regression risk: very low — only affects devices with exact codec SSID
+  `0x144d:0xc824`
+- No API, locking, or structural changes
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame / Bug Introduction
+### Step 3.1: Blame / Introduction
 **Record:**
-- `yc_acp_quirk_table` and `acp6x_probe()` DMI override path exist since
-  `fa991481b8b22` (Oct 2021, “ASoC: amd: add YC machine driver using
-  dmic”).
-- Neighboring HP board entries: `8BD6` (b3a51137607cee, Mar 2024),
-  `8EE4` (78783e8d588cf), `8E35` (65aabf8896687, backported to this tree
-  May 2026).
-- Bug is not a regression — it is a missing quirk for hardware never
-  previously listed.
+- `ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET` definition present since
+  base merge `5d324e5159d9e` (v6.18.0, Nov 2025)
+- `HDA_CODEC_QUIRK` macro present in `sound/hda/common/hda_local.h` in
+  this tree
+- The missing quirk entry `0xc824` was never present in 6.18.y — this is
+  a coverage gap, not a regression from a recent commit
 
 ### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag present.
+**Record:** N/A — no `Fixes:` tag in commit message.
 
 ### Step 3.3: Related File History
-**Record:** This file has extensive recent quirk activity in v6.18.44
-(20+ quirk commits). Direct precedent: `65aabf8896687` — “Add HP OMEN
-Gaming Laptop 16-ap0xxx product line in quirk table” — already
-backported to this tree with `Cc: stable@vger.kernel.org`. Same
-subsystem, same failure mode (internal mic not detected), same fix
-pattern.
+**Record:** Recent stable backports in this tree include:
+- `651760f57fe0f` — Samsung Galaxy Book5 360 headphone quirk (Cc:
+  stable, backported by Greg K-H)
+- `b98ecc1c60ad7` — Lenovo Yoga Pro 7 using `HDA_CODEC_QUIRK` for codec
+  SSID matching
+- Same author (Zhang Heng) submitted other `HDA_CODEC_QUIRK` entries
+  already in 6.18.y
+- Standalone single-patch series (v1 only)
 
 ### Step 3.4: Author Context
-**Record:** Lin Xianglin — no prior commits in `sound/soc/amd/yc/` in
-this tree. Mark Brown (maintainer) merged upstream.
+**Record:** Zhang Heng is an active Realtek HDA contributor with
+multiple quirk patches already backported to 6.18.y. Takashi Iwai
+(subsystem maintainer) committed to mainline.
 
 ### Step 3.5: Dependencies
-**Record:** No dependencies. Standalone table entry. Applies cleanly
-after `8E35` in local tree (`git apply --check` succeeded with 1-line
-offset). Upstream context includes `Victus by HP Laptop 16-e1xxx` after
-`8F06`; that entry is not in v6.18.44, but the `8F06` hunk is
-independent.
+**Record:**
+- **Required in tree:** `HDA_CODEC_QUIRK` macro — **present**
+- **Required in tree:** `ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET`
+  fixup — **present**
+- **Required in tree:** `match_codec_ssid` logic in `auto_parser.c` —
+  **present**
+- **Can apply standalone:** Yes — verified with `git cherry-pick --no-
+  commit 740b3c6780ec1` (auto-merged cleanly)
 
 ---
 
@@ -195,120 +206,128 @@ independent.
 
 ### Step 4.1: Original Patch Discussion
 **Record:**
-- **b4 dig -c fe21db8c5e7c:** https://patch.msgid.link/tencent_428392223
-  C2AD3BF23E7ABAA7521FE5C0C07@qq.com
-- **Series revisions:** v1 only (committed version is latest)
-- **Review:** Mark Brown replied “Applied to …/broonie/sound.git
-  for-7.2. Thanks!” — no NAKs
-- **Stable nomination:** None in thread (expected; absence is not
-  negative)
+- **b4 dig URL:**
+  https://patch.msgid.link/20260720123702.799474-1-zhangheng@kylinos.cn
+- **Series:** v1 only (no revisions)
+- **Maintainer response:** Takashi Iwai: "Applied now. Thanks." — no
+  objections or concerns
 
 ### Step 4.2: Reviewers
-**Record (b4 dig -w):** CC'd: `linux-sound@vger.kernel.org`, `alsa-
-devel@alsa-project.org`, `Vijendar.Mukunda@amd.com`,
-`venkataprasad.potturu@amd.com`, `broonie@kernel.org`.
+**Record:** CC'd: `tiwai@suse.com`, `linux-sound@vger.kernel.org`,
+`linux-kernel@vger.kernel.org`, reporter Caio Ramos. ALSA maintainer
+reviewed and applied.
 
 ### Step 4.3: Bug Report
-**Record:** No external bug report or syzbot link. Hardware-specific
-user-facing issue described in commit message. Phoronix notes the quirk
-enables internal mic on HyperX OMEN 16-ap1xxx for Linux 7.2.
+**Record:**
+- **Bugzilla 208663:** "[750XBE/730XBE, Realtek ALC256] Sound very low
+  and distorted on headphone jack"
+- Reported 2020-07-22, last modified 2026-07-20
+- User attached alsa-info dumps and a firmware patch workaround
+- Severity: functional audio defect on real hardware (not a crash)
 
 ### Step 4.4: Related Patches
-**Record:** Sister fix `d63c219b7ff3` / stable backport `65aabf8896687`
-for OMEN 16-ap0xxx (same product line, same mic issue). Mainline also
-has `38417f5fc8e3` for Victus 16-e1xxx — not required for this fix.
+**Record:** Part of ongoing Samsung headphone quirk series. Same fixup
+already used for Galaxy Book3 360 (`0xca06`) via `SND_PCI_QUIRK`. This
+patch extends coverage to a device identifiable only by codec SSID.
 
-### Step 4.5: Stable List History
-**Record:** No stable-list discussion found for this specific patch.
-Sister OMEN ap0xxx patch was explicitly nominated `Cc: stable` and
-backported to 6.18.y.
+### Step 4.5: Stable List Discussion
+**Record:** No stable-specific discussion found. Commit lacks explicit
+`Cc: stable`, but similar Samsung headphone quirk (`651760f57fe0f`) was
+explicitly nominated and backported to this tree.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key Functions
-**Record:** `yc_acp_quirk_table[]` (data), `acp6x_probe()` (consumer at
-line 798).
+**Record:** `alc269_fixup_tbl[]` (quirk table), `snd_hda_pick_fixup()`
+(called from Realtek codec probe)
 
 ### Step 5.2: Callers
-**Record:** `acp6x_probe` registered as `.probe` in `acp6x_mach_driver`,
-loaded via `module_platform_driver()`. Platform device `acp_yc_mach`
-created from `pci-acp6x.c` during ACP6x PCI probe — runs at boot on AMD
-Yellow Carp laptops with `CONFIG_SND_SOC_AMD_YC_MACH`.
+**Record:** `snd_hda_pick_fixup()` called during `alc269` codec probe
+init (`alc269.c` line ~8471). Runs once per HDA codec bind at
+boot/module load. All Realtek ALC269-family devices traverse this path.
 
 ### Step 5.3: Callees
-**Record:** `dmi_first_match()`, `platform_set_drvdata()`,
-`platform_get_drvdata()`, `devm_snd_soc_register_card()`.
+**Record:** Quirk matching in `sound/hda/common/auto_parser.c` checks
+`q->match_codec_ssid` and matches against codec vendor/device ID when
+PCI SSID is unavailable or `HDA_CODEC_QUIRK` is used.
 
 ### Step 5.4: Reachability
-**Record:** Triggered automatically at boot on matching HP hardware. Not
-userspace-triggerable, but affects every boot for affected laptop
-owners. Unprivileged users cannot trigger the bug path — they simply
-lack a working internal mic.
+**Record:** Triggered automatically on every boot for Samsung
+750XBE/730XBE systems with this codec. No userspace action needed beyond
+normal audio subsystem loading. Common laptop hardware path.
 
 ### Step 5.5: Similar Patterns
-**Record:** Same file contains 80+ DMI quirk entries for identical DMIC-
-enablement purpose. This tree already backports these routinely.
+**Record:** 11 existing `HDA_CODEC_QUIRK` entries in `alc269.c` in this
+tree; multiple Samsung entries using
+`ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET` and
+`ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET` via `SND_PCI_QUIRK`.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Buggy Code Present?
-**Record:** Yes. `sound/soc/amd/yc/acp6x-mach.c` exists;
-`yc_acp_quirk_table` has `8E35` but not `8F06` (confirmed via grep).
-Upstream master has `8F06` at line 738; local tree does not. Bug affects
-owners of this laptop running v6.18.44.
+### Step 6.1: Buggy Code in Tree
+**Record:**
+- **Local tree:** Linux **6.18.44** (`git describe HEAD` →
+  `v6.18.44-2-g1b9e1abadee04`)
+- **Bug present:** Yes — `0x144d:0xc824` quirk entry is **absent** (grep
+  confirmed no match)
+- **Commit `740b3c6780ec1`:** On `master`, **not** an ancestor of
+  current HEAD (`merge-base --is-ancestor` exit code 1)
+- All fixup infrastructure the patch depends on **is** present
 
 ### Step 6.2: Backport Complications
-**Record:** Clean apply — `git apply --check` succeeded inserting entry
-after `8E35`. Minor context difference from upstream (no `Victus
-16-e1xxx` entry in this tree) does not block application.
+**Record:** Clean apply verified. Line numbers differ (mainline ~7656 vs
+stable ~7243) but context matches; auto-merge succeeded.
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** `65aabf8896687` (OMEN 16-ap0xxx + board `8E35`) already in
-tree. No fix for `8F06` / 16-ap1xxx present.
+### Step 6.3: Related Fixes Already Present
+**Record:** No duplicate fix for `0xc824`. Related Samsung headphone
+quirks for other models are already in tree. The underlying fixup
+`ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET` is present and used by
+`0xca06`.
 
 ---
 
-## Phase 7: Subsystem Context
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 7.1: Subsystem and Criticality
-**Record:** `sound/soc/amd/yc` — ASoC AMD Yellow Carp audio.
-**IMPORTANT** (laptop audio/DMIC), not core kernel, but affects real
-hardware users.
+### Step 7.1: Subsystem Criticality
+**Record:** `sound/hda` — ALSA HD-audio codec driver. **IMPORTANT**
+subsystem; affects laptop audio for specific hardware. Not core-kernel-
+wide, but affects all users of this Samsung model.
 
 ### Step 7.2: Subsystem Activity
-**Record:** Highly active — 20+ quirk commits in recent history of this
-file in v6.18.44 alone.
+**Record:** Actively maintained in 6.18.y — 20+ realtek quirk commits in
+recent stable history. Quirk additions are routine stable backport
+material in this subsystem.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who Is Affected
-**Record:** Owners of HyperX OMEN Gaming Laptop 16-ap1xxx (HP board
-`8F06`) with `CONFIG_SND_SOC_AMD_ACP6x` / `CONFIG_SND_SOC_AMD_YC_MACH`
-enabled (typical on AMD laptop kernels).
+**Record:** Owners of Samsung 750XBE/730XBE laptops with Realtek codec
+SSID `0x144d:0xc824`. Driver-specific, config-independent (HDA/Realtek
+is standard on these machines).
 
 ### Step 8.2: Trigger Conditions
-**Record:** Every boot on matching hardware where ACPI does not enable
-DMIC. Common/likely for this specific board. Not security-relevant; not
-unprivileged-triggerable.
+**Record:** Every boot with headphone use. 100% reproducible on affected
+hardware. Not security-related; not privilege-dependent.
 
 ### Step 8.3: Failure Mode Severity
-**Record:** Internal microphone completely nonfunctional — **MEDIUM**
-severity (functional hardware loss, no crash/corruption/security
-impact).
+**Record:** Very low/distorted headphone audio — functional defect,
+effectively broken headphone output. **Severity: MEDIUM** (not
+crash/corruption, but real user-visible hardware malfunction).
 
 ### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** Restores internal mic on a real, shipping laptop model;
-  identical to already-accepted stable quirk pattern.
-- **Risk:** Very low — 7-line table entry, board-specific match only.
-- **Ratio:** Strong benefit, negligible risk. Matches established stable
-  practice for this driver.
+- **Benefit:** Restores working headphone audio on affected Samsung
+  laptops; long-standing bugzilla report
+- **Risk:** Minimal — one-line quirk entry, device-specific ID match,
+  reuses proven fixup
+- **Ratio:** Strongly favorable. Matches established stable pattern for
+  HDA codec quirks.
 
 ---
 
@@ -317,132 +336,105 @@ impact).
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Fixes real hardware bug (internal mic unusable)
-- Hardware quirk exception category — explicitly stable-worthy
-- Tiny, obviously correct, standalone
-- Applies cleanly to v6.18.44
-- Driver and quirk infrastructure present since 2021
-- Sister OMEN ap0xxx fix already backported to this exact tree
-- Maintainer (Mark Brown) merged upstream
-- No dependencies or prerequisites
+- Real hardware bug with user report (bugzilla since 2020)
+- One-line hardware quirk — textbook stable exception category
+- All prerequisites present in 6.18.44
+- Patch applies cleanly
+- Maintainer-reviewed and applied to mainline
+- Identical pattern already backported to this tree (`651760f57fe0f`,
+  `b98ecc1c60ad7`)
+- Reuses existing `ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET` — no new
+  APIs or features
 
 **AGAINST backport:**
-- Not a crash, security, corruption, or deadlock issue (lower urgency
-  than KASAN fixes)
-- No Tested-by or explicit Cc: stable in submission
-- Laptop may be relatively new, but users on 6.18.y exist
+- Not a crash, security, or data-corruption issue (functional audio
+  only)
+- No explicit `Cc: stable` tag (expected for manual review pipeline)
 
-**Unresolved:** No Tested-by tag; no explicit stable nomination for this
-specific patch (sister patch had one).
+**Unresolved:** None affecting the decision.
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — pattern proven by many
-   identical quirks; no Tested-by but maintainer merged.
-2. Fixes real bug affecting users? **PASS** — internal mic nonfunctional
-   on specific laptop.
-3. Important issue? **PASS (moderate)** — functional hardware loss;
-   hardware-quirk exception applies strongly.
-4. Small and contained? **PASS** — 7 lines, one file, table entry only.
-5. No new features or APIs? **PASS** — extends existing quirk table
-   only.
-6. Can apply to local tree? **PASS** — verified with `git apply
-   --check`.
+1. Obviously correct and tested? **PASS** — maintainer applied; pattern
+   proven on sibling Samsung models
+2. Fixes a real bug affecting users? **PASS** — bugzilla #208663, user-
+   reported
+3. Important issue? **PASS** — hardware non-functionality on affected
+   laptops (MEDIUM severity, quirk exception applies)
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features or APIs? **PASS** — maps existing fixup to new device
+   ID
+6. Can apply to local tree? **PASS** — clean cherry-pick verified
 
 ### Step 9.3: Exception Category
-**Record:** Hardware quirk/workaround — automatic stable qualification
-per stable-kernel-rules exceptions.
+**Record:** Hardware quirk / codec SSID quirk — automatic stable
+qualification per established HDA Realtek quirk backport practice in
+this tree.
 
 ### Step 9.4: Decision Rationale
-For **v6.18.44**, this commit should be backported. The ACP6x YC machine
-driver and DMI quirk mechanism are fully present; the only gap is the
-missing `8F06` entry. The fix is identical in nature to `65aabf8896687`,
-which stable maintainers already accepted for the closely related OMEN
-16-ap0xxx. Risk is negligible; benefit is restoring internal microphone
-functionality for affected laptop owners.
+This commit adds a missing codec SSID quirk entry for Samsung
+750XBE/730XBE laptops, enabling an existing headphone fixup that is
+already used for other Samsung models in Linux 6.18.44. The bug is real,
+the fix is minimal and device-specific, all infrastructure exists in
+this tree, and the patch applies cleanly. This is standard stable
+material for the Realtek HDA driver.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message tags from user query and upstream
-  `fe21db8c5e7c` via GitHub API
-- **[Phase 1]** Confirmed no Fixes:/Reported-by:/Cc: stable tags
-- **[Phase 2]** Diff analysis: +7 lines to `yc_acp_quirk_table[]` in
-  `acp6x-mach.c`
-- **[Phase 2]** Read `acp6x_probe()` lines 758–816: confirmed DMI
-  override → card registration flow
-- **[Phase 3]** `git describe HEAD`: v6.18.44; Makefile VERSION=6
-  PATCHLEVEL=18 SUBLEVEL=44
-- **[Phase 3]** `git blame` lines 650–677: neighboring HP quirk entries
-  and dates
-- **[Phase 3]** `git log --oneline -30 --
-  sound/soc/amd/yc/acp6x-mach.c`: extensive quirk history;
-  `65aabf8896687` sister fix present
-- **[Phase 3]** `git show 65aabf8896687`: OMEN ap0xxx fix with Cc:
-  stable, backported to this tree
-- **[Phase 3]** `git log --diff-filter=A`: file added `fa991481b8b22`
-  (2021)
-- **[Phase 3]** `git log -S'8F06'`: no results — commit not yet in tree
-- **[Phase 4]** `b4 dig -c fe21db8c5e7c`: found lore thread
-- **[Phase 4]** `b4 dig -c fe21db8c5e7c -a`: v1 only, no later revisions
-- **[Phase 4]** `b4 dig -c fe21db8c5e7c -w`: maintainers and AMD
-  developers CC'd
-- **[Phase 4]** `b4 dig -c fe21db8c5e7c -m /tmp/ap1xxx.mbox`: Mark Brown
-  “Applied to for-7.2”, no NAKs
-- **[Phase 4]** GitHub API: upstream commit `fe21db8c5e7c` message
-  confirmed
-- **[Phase 4]** Mainline raw file curl: `8F06` present at line 738 in
-  torvalds/linux master
-- **[Phase 5]** `grep acp6x_probe`: probe registered in
-  `acp6x_mach_driver`, platform device from `pci-acp6x.c:238`
-- **[Phase 6]** `grep 8F06` in local tree: not found
-- **[Phase 6]** `grep 8E35` in local tree: present at line 668
-- **[Phase 6]** `git apply --check`: patch applies cleanly after `8E35`
-  (offset 1 line)
-- **[Phase 6]** `grep 'Victus by HP Laptop 16-e1xxx'`: not in local tree
-  (upstream-only context; not a blocker)
-- **[Phase 7]** Kconfig: `CONFIG_SND_SOC_AMD_YC_MACH` depends on
-  `CONFIG_SND_SOC_AMD_ACP6x` — present in tree
-- **[Phase 8]** Failure mode assessed as nonfunctional internal mic
-  (MEDIUM), not crash/security
+- [Phase 1] Parsed subject, tags, body; found Reported-by, bugzilla
+  link, maintainer SOB
+- [Phase 2] Diff: +1 line in `alc269_fixup_tbl[]`, adds
+  `HDA_CODEC_QUIRK(0x144d, 0xc824, ...)`
+- [Phase 3] `git describe HEAD`: v6.18.44; commit `740b3c6780ec1` on
+  master, not in HEAD
+- [Phase 3] `git merge-base --is-ancestor 740b3c6780ec1 HEAD`: exit 1
+  (not in tree)
+- [Phase 3] `git cherry-pick --no-commit 740b3c6780ec1`: auto-merged
+  cleanly
+- [Phase 3] Grep `0x144d, 0xc824`: no matches in tree (quirk absent)
+- [Phase 3] Grep `ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET`: present
+  (enum, fixup def, used by `0xca06`)
+- [Phase 3] Grep `HDA_CODEC_QUIRK`: macro in `hda_local.h`, 11 uses in
+  `alc269.c`
+- [Phase 4] `b4 dig -c 740b3c6780ec1`: found lore thread
+- [Phase 4] `b4 dig -a`: v1 only, no revisions
+- [Phase 4] `b4 dig -w`: CC'd tiwai, linux-sound, reporter
+- [Phase 4] Mbox: Takashi Iwai "Applied now. Thanks."
+- [Phase 4] Bugzilla 208663 fetched: user report from 2020, headphone
+  distortion
+- [Phase 5] `snd_hda_pick_fixup()` called at codec probe (~line 8471)
+- [Phase 5] `match_codec_ssid` logic verified in `auto_parser.c:1069`
+- [Phase 6] Tree is 6.18.44; prerequisites present; quirk entry missing
+- [Phase 6] Similar backport `651760f57fe0f` confirmed in tree with Cc:
+  stable
+- [Phase 8] Failure mode: broken headphone audio, MEDIUM severity
 
-**YES****Verdict: YES** — backport to this tree (v6.18.44).
+**YES****Backport recommendation: YES** for Linux 6.18.44.
 
-This is a small hardware quirk fix: add HP board `8F06` to
-`yc_acp_quirk_table` so the internal DMIC works on the HyperX OMEN
-Gaming Laptop 16-ap1xxx. Same pattern as the OMEN 16-ap0xxx quirk
-already in this tree (`65aabf8896687`). The patch applies cleanly (+7
-lines after the `8E35` entry); upstream is `fe21db8c5e7c`, merged by
-Mark Brown.The author/product search finished: **Lin Xianglin** has no
-prior commits under `sound/soc/amd/yc/` in this tree, and **`16-ap1xxx`
-/ `8F06` are not present** locally. That matches the earlier finding —
-the fix is upstream-only (`fe21db8c5e7c`) and still needs backporting to
-v6.18.44.The Victus check confirms **`Victus by HP Laptop 16-e1xxx` is
-not in v6.18.44** — that entry exists only on mainline, after `8F06`. It
-doesn't block the backport: the `8F06` hunk still applies cleanly right
-after the existing `8E35` entry.
+This is a one-line `HDA_CODEC_QUIRK` for Samsung 750XBE/730XBE (codec
+SSID `0x144d:0xc824`) that applies the existing
+`ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET` fixup for very low/distorted
+headphone audio. The fix is on mainline (`740b3c6780ec1`) but not in
+this tree yet; all prerequisites are present and the patch applies
+cleanly. Same pattern as other Samsung headphone quirks already
+backported to 6.18.y.
 
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 636b211856e7d..82a150c51eaca 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -675,6 +675,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "8E35"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_BOARD_NAME, "8F06"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index f1e6557847a85..de604ab8625a0 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7286,6 +7286,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
+ 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
++	HDA_CODEC_QUIRK(0x144d, 0xc824, "Samsung ELECTRONICS (750XBE/730XBE)", ALC298_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc832, "Samsung Galaxy Book Flex Alpha (NP730QCJ)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
+ 	SND_PCI_QUIRK(0x144d, 0xc876, "Samsung 730QED (NP730QED-KA2US)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
 -- 
 2.53.0
 
