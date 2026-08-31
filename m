@@ -1,120 +1,196 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598DE51121D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF58651122D;
 	Mon, 31 Aug 2026 13:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183781; cv=none; b=mamr8OLNalkzLh3qDM8h10f2394fVBOddTS38QZojGlDmpqa5phCNKbMkt6+nLnlCojmkg6Qm6N1XWOO8IFM71Knbvn6/EZwJwKoeWKH1twogY/finhbrvQkIylouaR2Tf77QG06gLiHHKt4YwDaLz0Sj4SGgw/tPTl09+x8hXE=
+	t=1788183781; cv=none; b=tb3A6YV37gG3ghtndZson4o9fVmZs6uoKK5rCs9gKTSB1Wl4VX9yFZ7ymJV05Fk9J9IKZKZLeAp45cL6wTIsqhLbzSaRq45kICpnodWu9sJN4aRCn/ufKzK2ql8/PKdhFUKWSYUGacYhxR0HqlRcBcaymPzGPybGYJOA2Dhwapg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183781; c=relaxed/simple;
-	bh=kd1Nwg5dgKl/b6mkRX4naRdRVzjdAanqwJzg6bCBxIw=;
+	bh=rljJhm/GCTwEMlHZCCUdbzLrhGq9FGXQiYVlcS9i2Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bHNajYnix9oGFFQ+vtNqYBItyOJF1xF86Fh5zuYc+958gA9JDlx+30NLay6zlvKtRwIT+EO1OYardWMfhJWEKPkcESgJCYqm98Q+YQHwwIoBMV0YB9Y0WVhmgxMEKfWqUIspzP2iQrb0xHF1BV/+5GzmP5H1OQk19ORyIOn1YHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OAGPBrBC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZXalRpqFiOm6HqjQRTgFwhK7VCCtnN7eDqmMLlhO041JwSpKSmGASA/94rdOwjc5F3QAR4z7//M9c/ZkTeK9BmO4iKe6Za7B2ImhHFrvm/eboPhlFb/V/JTr4SI1kH7XgJDUDRTBlI4MzXhLeOW8IvmfZ1pz4C1nZ5vPPNuC9JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MF9ZaEmp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OAGPBrBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D541F00A3D;
-	Mon, 31 Aug 2026 13:42:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183779;
-	bh=KdJ/ILiecvNMOnwKPAJ83nzD1Wby8ZHc1pg4UsJGv8I=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MF9ZaEmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C521F00A3F;
+	Mon, 31 Aug 2026 13:42:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183779;
+	bh=huQJZygsCjeLPfPMu9tknIhG+7F9nVeVgWoH71/ofBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OAGPBrBCJxSIu6pEMu30Yx3EYqcknd5SCV5H2mch9LN6jGvNAR39knDE4BlZuKrE2
-	 Ozop1qV2fnOx3n7kwoQFQXXQ32m5/yELI3TcpBRHzyByqx89pwhRIEloVXNK7MLgrV
-	 P02zvhDm7pVN6t62cF6xxI1cVWfN/KVPbX5YRoVUYagWIrGCjWYp797QcDF9I2XiAk
-	 k7gw5M8RJAGWc8/IWD2rEavorKD8qpmY53SImBQb1Tid44SX2i44DpgmeadRJjZECO
-	 xpdEiwldxZ9XiQsp96Y7XpSU1WUFKBoyAzuHvUvaHd3vQX8+2DE/WofzXoyW2wxQ9w
-	 JdrFhwYM38yzg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Xu Yang <xu.yang_2@nxp.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] usb: gadget: udc: skip pullup() if already connected
-Date: Mon, 31 Aug 2026 09:25:27 -0400
-Message-ID: <20260831133314.4125787-299-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=MF9ZaEmpsyVR8nvtiBVqrU5uTldqHROd5D63g5NNtmhAY+opZr8ckpwPV+kfP7l6/
+	 TswUlMyRDS06IXke/7hJ4VTvySwyuSyJws+6gEMEe6HSI8yShcZwAoVH3NH9LpJnyN
+	 bfvepUrxU/XBMUiujF+ngKx+suL61Bfdhr6rpT+Q=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 39/76] net: advertise TCP MSS from the configured MTU, not the learned PMTU
+Date: Mon, 31 Aug 2026 15:34:11 +0200
+Message-ID: <20260831133401.448242577@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 62911bc82b0332aee7546156800d3516500fa1e1 ]
+------------------
 
-The device controller may update vbus status via usb_udc_vbus_handler(),
-which tries to connect the gadget even though gadget_bind_driver() has
-already called usb_udc_connect_control_locked(). This causes pullup() to
-be called twice. Avoid this by checking if gadget->connected is true.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-This also set gadget->connected as false in usb_gadget_activate() if it
-became connected while it was being deactivated. Otherwise,
-usb_gadget_connect_locked will return early and pullup() won't be called.
+commit 2640e64195948a601430d230c9864f5426574cde upstream.
 
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260423095355.2673035-1-xu.yang_2@nxp.com
+The MSS a host puts in its SYN tells the peer how big a segment it may
+send us. Right now we can shrink it with a PMTU we learned on our own
+send path, which is the wrong direction entirely.
+
+On asymmetric paths this bites - think DSR load balancers, where the
+request side goes through a smaller-MTU overlay. We learn a small PMTU
+going out, then advertise a small MSS, and the peer stays capped for the
+whole connection even though its path back to us is wide. MSS only shows
+up in the SYN and never grows back.
+
+On symmetric paths we lose nothing by dropping it either: the peer runs
+its own PMTU discovery and usually already knows the real path MTU.
+
+So work out the advertised MSS from the configured route or device MTU
+and ignore the learned PMTU. Our send side is unchanged, still clamped by
+tcp_current_mss(). Add ip_dst_mtu_configured()/ip6_dst_mtu_configured()
+and use them from the two default_advmss() paths.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 164a5e7ad531 ("ipv4: ipv4_default_advmss() should use route mtu")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260815070413.294559-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ include/net/ip.h        |   25 +++++++++++++++++++++++++
+ include/net/ip6_route.h |   37 +++++++++++++++++++++++++++++++++++++
+ net/ipv4/route.c        |    4 ++--
+ net/ipv6/route.c        |    2 +-
+ 4 files changed, 65 insertions(+), 3 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background `git log -S` search finished. In this **v6.18.43**
-checkout the history is flattened, so pickaxe only points at
-`19eef1d98eeda` for `vbus_work` in `core.c` — it doesn’t show when that
-logic was really introduced. That matches what we already inferred from
-mainline: the dual connect path dates to the 2023 `usb_udc_vbus_handler`
-workqueue offload.
-
-That doesn’t change the backport call: the buggy code is present in this
-tree, the fix is small and applies cleanly, and the verdict remains
-**YES**.
-
- drivers/usb/gadget/udc/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index ab1bcc5512b2c..fa49746d54036 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -714,6 +714,9 @@ static int usb_gadget_connect_locked(struct usb_gadget *gadget)
- 		goto out;
- 	}
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -506,6 +506,31 @@ out:
+ 	return res;
+ }
  
-+	if (gadget->connected)
-+		goto out;
++/* Configured/administrative MTU of a route, for advertising the TCP MSS.
++ *
++ * Unlike ip_dst_mtu_maybe_forward(), this deliberately ignores the
++ * ICMP-learned path MTU (rt->rt_pmtu).  The advertised MSS bounds what the
++ * peer may send to us and must reflect our receive capability (the device or
++ * route-configured MTU), not a path MTU learned on the reverse (send)
++ * direction, which may not apply to the peer->us path and outlives the fnhe
++ * for the whole connection.  See RFC 2923 section 2.3 and the comment above
++ * tcp_advertise_mss().
++ */
++static inline unsigned int ip_dst_mtu_configured(const struct dst_entry *dst)
++{
++	unsigned int mtu, res;
 +
- 	if (gadget->deactivated || !gadget->udc->allow_connect || !gadget->udc->started) {
- 		/*
- 		 * If the gadget isn't usable (because it is deactivated,
-@@ -887,8 +890,10 @@ int usb_gadget_activate(struct usb_gadget *gadget)
- 	 * If gadget has been connected before deactivation, or became connected
- 	 * while it was being deactivated, we call usb_gadget_connect().
- 	 */
--	if (gadget->connected)
-+	if (gadget->connected) {
-+		gadget->connected = false;
- 		ret = usb_gadget_connect_locked(gadget);
-+	}
++	rcu_read_lock();
++	mtu = dst_metric_raw(dst, RTAX_MTU);
++	if (!mtu)
++		mtu = READ_ONCE(dst_dev_rcu(dst)->mtu);
++	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
++	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
++	rcu_read_unlock();
++
++	return res;
++}
++
+ static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
+ 					  const struct sk_buff *skb)
+ {
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -385,6 +385,43 @@ out:
+ 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
+ }
  
- unlock:
- 	mutex_unlock(&gadget->udc->connect_lock);
--- 
-2.53.0
++/* Configured/administrative MTU of a route, for advertising the TCP MSS.
++ *
++ * Unlike ip6_dst_mtu_maybe_forward(), this ignores any ICMPv6-learned path
++ * MTU (which is kept on the RTF_CACHE exception route) and returns the MTU of
++ * the underlying route (fib6_pmtu) or the egress device.  The advertised MSS
++ * bounds what the peer may send to us and must reflect our receive
++ * capability, not a path MTU learned on the reverse (send) direction.  See
++ * RFC 2923 section 2.3 and the comment above tcp_advertise_mss().
++ */
++static inline unsigned int ip6_dst_mtu_configured(const struct dst_entry *dst)
++{
++	const struct rt6_info *rt = dst_rt6_info(dst);
++	const struct fib6_info *from;
++	struct inet6_dev *idev;
++	unsigned int mtu = 0;
++
++	rcu_read_lock();
++	/* IPv6 keeps the learned PMTU and the configured MTU in the same
++	 * RTAX_MTU slot: the learned value sits on this (possibly RTF_CACHE)
++	 * dst, the configured one on the underlying route.  Reach the latter
++	 * via ->from (fib6_pmtu), populated by ip6_route_info_create().
++	 */
++	from = rcu_dereference(rt->from);
++	if (from)
++		mtu = from->fib6_pmtu;
++	if (!mtu) {
++		mtu = IPV6_MIN_MTU;
++		idev = __in6_dev_get(dst_dev_rcu(dst));
++		if (idev)
++			mtu = max_t(unsigned int, mtu, READ_ONCE(idev->cnf.mtu6));
++	}
++	rcu_read_unlock();
++
++	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
++	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
++}
++
+ u32 ip6_mtu_from_fib6(const struct fib6_result *res,
+ 		      const struct in6_addr *daddr,
+ 		      const struct in6_addr *saddr);
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1360,8 +1360,8 @@ static unsigned int ipv4_default_advmss(
+ 
+ 	rcu_read_lock();
+ 	net = dst_dev_net_rcu(dst);
+-	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
+-				   net->ipv4.ip_rt_min_advmss);
++	advmss = max_t(unsigned int, ip_dst_mtu_configured(dst) - header_size,
++		       net->ipv4.ip_rt_min_advmss);
+ 	rcu_read_unlock();
+ 
+ 	return min(advmss, IPV4_MAX_PMTU - header_size);
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3259,7 +3259,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
+ 
+ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ {
+-	unsigned int mtu = dst6_mtu(dst);
++	unsigned int mtu = ip6_dst_mtu_configured(dst);
+ 	struct net *net;
+ 
+ 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
+
 
