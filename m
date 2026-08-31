@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE07243FD3F;
-	Mon, 31 Aug 2026 14:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089B048425A;
+	Mon, 31 Aug 2026 14:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184968; cv=none; b=UHLoC9Zq6H1nTqVvb2ICefNzHQfO9Chq+P02BhRVcA7i6olwMSUDuxfBvJE/YeRJbK4K0MqP4zrLz0fIWBf+hdHMcrxonmd2EKxgkdSspNY3o4Te52As9FIlY5P+ROy/hqqc1iLDQjozjm/UkH8XnygkyMk4OoIVhkb07wAON/s=
+	t=1788184980; cv=none; b=jkec685kmIHvlzvXXQqPyV+Swx2yGTeJ/4o1ENK9qd8G1/7VlO1THaqGScsoDQFF62xvj3DTnqiMKBzz/vyLAedj0PBb1dGlUZhnCrYHfC/Qrh/YVqs7YXiivi+qeYCfG4WlQ3DFwEL0AldaxLJ5epFsOQeCASp2vWL8MmvifUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184968; c=relaxed/simple;
-	bh=Q3tat8MXZwty1o7YAM+xtPI52CtpSe0lEs+tw5p1ttA=;
+	s=arc-20240116; t=1788184980; c=relaxed/simple;
+	bh=I75POsHT9aLosLUTJAaDP5xh2j4gmpXgmOtLT+A96As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G40rh+qKAaVUvgEDOEkIfgkWd68zzH8wfSsdvlVnr+1zjWJxXIqZzlGA8Q3w7KMyCrmix/Qs1lPji2/N6KHsbBVcnVvoKmQXMVVEMPLmYqadBRHyY3qThkekGarMLki5RKdJdRhs/4XR950/SROXYnZpBNJ0q61PI3KcAlqKa74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2ciSHeJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hFVvL/b8XIlgc2NklrFP1O0UYcABq3jMurJwB7HMnXDzZpsvAg51onOgr42Q5p+VD9xLtOgIH7sai8KoY5fky3kOqPcFbmkU0tRjTwqgteNr05j7mneJBIZDvJ9MJkqA2QgEQ93xejoTJc5I00mEwlB7yiU0Yuu2OYTol+hYwdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dnwc6M8f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2ciSHeJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E831F000E9;
-	Mon, 31 Aug 2026 14:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dnwc6M8f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698C51F000E9;
+	Mon, 31 Aug 2026 14:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184967;
-	bh=hJu/SExb0NDzHUrQaO2sbSQE6fEE2ils9N1RJKLuHrI=;
+	s=korg; t=1788184978;
+	bh=aB7dvKglkQAP69lj8h7FwTtYC5MxojnpGnrjG4z4KM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S2ciSHeJ9xt4hJQ/c7BPKJMOKuJr7r3DCKEgz5EHlxStGPei2OqNUjh3wjbzjJLVh
-	 OXUQX4TTgcK2X9lMLEpbuIBnDrdu8xCHdcLf3WJ8tDMAlbasIIsVRbBAF68YTnbXJK
-	 2PKYaNUur8gc40ljYVkKQ1o7jcn3NrlTAdTK1C2A=
+	b=Dnwc6M8fYA52M43VQY45cAdexdQfeIEiOpkFEppRf27xik5dpz0VhiO/6pkDPNpiC
+	 aaxkwh/7EGSSXmVVZwjXp0Xo8WUvsNr3h2l698nV0UTEISVhkwila26sr+9f+nayIa
+	 FBeL0tAgdVRQe6t7cWPgnbQlxlYWcmBBTccJ8TbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 60/92] Bluetooth: hci_event: validate LE Set CIG Parameters response
-Date: Mon, 31 Aug 2026 15:34:58 +0200
-Message-ID: <20260831133402.796997302@linuxfoundation.org>
+Subject: [PATCH 5.15 12/69] bpf: Fix use-after-free in offloaded map/prog info fill
+Date: Mon, 31 Aug 2026 15:34:45 +0200
+Message-ID: <20260831133359.115522124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
-References: <20260831133359.482388899@linuxfoundation.org>
+In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
+References: <20260831133358.601894154@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +51,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 0acd4eeb4b225b9bebbf9ef96cc10cdd79b94899 ]
+[ Upstream commit a0c584fc18056709c8e047a82a6045d6c209f4ce ]
 
-The Command Complete dispatch validates only the fixed part of the LE Set
-CIG Parameters response. After that part is pulled from the skb,
-hci_cc_le_set_cig_params() trusts num_handles and reads each entry in the
-trailing handle array.
+When querying info for an offloaded BPF map or program,
+bpf_map_offload_info_fill_ns() and bpf_prog_offload_info_fill_ns()
+obtain the network namespace with get_net(dev_net(offmap->netdev)).
+However, the associated netdev's netns may be racing with teardown
+during netns destruction. If the netns refcount has already reached 0,
+get_net() performs a refcount_t increment on 0, triggering:
 
-Matching num_handles against the command's num_cis does not guarantee
-that the response contains the advertised handles. A truncated response
-from a malfunctioning controller can therefore make the handler read
-beyond the skb data.
+  refcount_t: addition on 0; use-after-free.
 
-Validate that the remaining skb data contains all advertised handles.
-Include this in the existing response validation so malformed responses
-also follow the established CIG failure handling.
+Although rtnl_lock and bpf_devs_lock ensure the netdev pointer remains
+valid, they cannot prevent the netns refcount from reaching zero.
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Cc: stable@vger.kernel.org
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by using maybe_get_net() instead of get_net(). maybe_get_net()
+uses refcount_inc_not_zero() and returns NULL if the refcount is already
+zero, which causes ns_get_path_cb() to fail and the caller to return
+-ENOENT -- the correct behavior when the netns is being destroyed.
+
+Fixes: 675fc275a3a2d ("bpf: offload: report device information for offloaded programs")
+Fixes: 52775b33bb507 ("bpf: offload: report device information about offloaded maps")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Closes: https://lore.kernel.org/bpf/f0aa3678-79c9-47ae-9e8c-02a3d1df160a@hust.edu.cn/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260409023733.168050-1-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/bpf/offload.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3793,8 +3793,10 @@ static u8 hci_cc_le_set_cig_params(struc
- 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
+diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+index fcdd28224f532..b3850bd8a2c5f 100644
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -274,9 +274,8 @@ static struct ns_common *bpf_prog_offload_info_fill_ns(void *private_data)
  
- 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
--	if (!rp->status && (!cp || rp->num_handles != cp->num_cis ||
--			    rp->cig_id != cp->cig_id)) {
-+	if (!rp->status &&
-+	    (!cp || rp->num_handles != cp->num_cis ||
-+	     rp->cig_id != cp->cig_id ||
-+	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
- 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
- 		status = HCI_ERROR_UNSPECIFIED;
- 	}
+ 	if (aux->offload) {
+ 		args->info->ifindex = aux->offload->netdev->ifindex;
+-		net = dev_net(aux->offload->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(aux->offload->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
+@@ -501,9 +500,8 @@ static struct ns_common *bpf_map_offload_info_fill_ns(void *private_data)
+ 
+ 	if (args->offmap->netdev) {
+ 		args->info->ifindex = args->offmap->netdev->ifindex;
+-		net = dev_net(args->offmap->netdev);
+-		get_net(net);
+-		ns = &net->ns;
++		net = maybe_get_net(dev_net(args->offmap->netdev));
++		ns = net ? &net->ns : NULL;
+ 	} else {
+ 		args->info->ifindex = 0;
+ 		ns = NULL;
+-- 
+2.53.0
+
 
 
