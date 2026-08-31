@@ -1,592 +1,449 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A5D4A5C4D;
-	Mon, 31 Aug 2026 13:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0151D525A6F;
+	Mon, 31 Aug 2026 13:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183862; cv=none; b=aHxsjcCezcJAs2NZnZ8JB8S9ZIp1Y8f/LqupteVBVFhOao0n1e64f/l9q0eHiutdgkR+qZR1oXGMHmC82qUFroO2ZSb5ycTA57WWFKrgm4X3pL5kYnW9PsuznQzifnZmf7xBWh0MdQlnbxkj1X1zRg/Eg/smGlOGM3q0gr6gPeY=
+	t=1788183863; cv=none; b=SAo5xH9ot+9Pvfv/jRgaICRY64ObhAUl1xpB+try7s/rCjC+GeSonhA3XK6x/LTV2kLxBfNdMAJH5r3WVh7fDXKUj1/XyMWsNRoVYVjsm1ot5nS0b4liWFFd9fzqeTulA878rXAqWSZRxE82Cdw783mUuDpe0kW4kZZVRpBLEWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183862; c=relaxed/simple;
-	bh=bXQ6SPvJkIaYKd9pP72BiKjPzMbz4Hv8RDZHED18WFM=;
+	s=arc-20240116; t=1788183863; c=relaxed/simple;
+	bh=ngM2hmLXNNb2yM0KxAfiYZN18ij7FLX5uaebl+80Efg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sfop0FtCjxDPQ6Cyv4oEJV+37zCR7knnU+hJNlvpi2slEmWye6cXfSivIKfHWH7NSfuy+fVz/nvCrO0ExMQ+uINU6T6g2TyarlwO1mhaHoPizzfGDjR6vh22odIlN8zO9ev2T8on5wv/pMqs+1q3MhlW4eyP1mh1dPfLAw7mS1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxqqvNzA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZXENkGTOOPkf0DHhfaOduShUqAr9gCLqXfYDkjen0HARZwY3JwmIQpdY3pSNn6nHRb8lHsSkI1w2bK9mEEdeXbPMAsRLzliQhL6lm18KhOqjmCELqFVSMEvBtYRec2FcWNhD8v8HFPOs+y3HuhIEDbaPFu7dWQhGNoa4kilz9J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLEsDjHg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxqqvNzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05371F000E9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLEsDjHg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46E11F00A3D;
 	Mon, 31 Aug 2026 13:44:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183859;
-	bh=snpaSj964/ResTAPlVBpsU4/OTEViRknbLbsXfdL2TI=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183859;
+	bh=PCZJYIcnf3ceMTCmR4evOhuHbJFuQAFeLPT8UgL3h3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wxqqvNzA3xwFTXAMy2Yze65ApkTSMs97b2HJWsBN12WSf85LHVM2RkNgtM+xulfis
-	 WyRTMkQXRq5tU4HaHm3mDHwlzj9wnAuwh7+X/wj5oDI0sTdm4Dyr97iB8a57MQsXUB
-	 El+uaJQNrFugTYajmiCCqjEUIiUsy3j/lTKk4pY4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 65/76] crypto: qce - Remove unsafe/deprecated algorithms
-Date: Mon, 31 Aug 2026 15:34:37 +0200
-Message-ID: <20260831133402.787526195@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
-References: <20260831133359.185608553@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=oLEsDjHgQJKnpr3j+/9S7VLlj+czzBXfkS4nUeMyEYsWteGsMezgdk1HTT25qzVE/
+	 OKR1kUlzC8wzoFj+1qkSIhbNfVFBzInSHvZ3M0Q5NSlGfhUKWbuLIznwULSR90PIEA
+	 pCzsSmJSA2DsvnlVryEF4MFYWhZI5qKNlkda2kQoUZTkSU6ki73leeJG7t6AUEucDz
+	 +lfl7cP9jU12CoAqJilGWa9hFoUTs+NyNLNcFYet+BkeP941iYBW4nzoCzXYrBOKw3
+	 A/Q6hl5ltRbfKLMaJJUsqvZva1BjjJ7G3cngYWaKUXoT8BUjiFBizc5xdQieluErEC
+	 mY3unFYhu2gXw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Piotr Kubik <piotr@kubik.pl>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	pavel@kernel.org,
+	linux-leds@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] leds: trigger: gpio: Use GPIOD_FLAGS_BIT_NONEXCLUSIVE
+Date: Mon, 31 Aug 2026 09:26:15 -0400
+Message-ID: <20260831133314.4125787-347-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+From: Piotr Kubik <piotr@kubik.pl>
 
-------------------
+[ Upstream commit 26e15f2558f66b6747ef981df8054d0d92d01b60 ]
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+When a GPIO is shared between the LED trigger driver and another driver,
+the LED trigger driver needs to request the GPIO with
+GPIOD_FLAGS_BIT_NONEXCLUSIVE to allow both drivers to monitor the same
+GPIO pin.
 
-commit 7e28b0a5c4b7d075b98ce6d8f5290a9d3deb5b92 upstream.
+Without this flag, if another driver has already claimed the GPIO,
+the LED trigger driver's gpiod_get_optional() call fails silently,
+and the LED trigger doesn't work.
 
-Remove algorithms that are either unsafe or deprecated and have no
-in-kernel users that cannot be served by the ARM CE implementations.
+This is needed for scenarios like:
+- SFP module presence/status LED triggered by SFP Mod_ABS/Rx_LOS
 
-AES-ECB reveals plaintext patterns (identical plaintext blocks produce
-identical ciphertext blocks) and should not be exposed as a hardware-
-accelerated primitive. DES, Triple DES and HMAC-SHA1 have been
-deprecated for years.
+Both GPIOs are also monitored by the SFP driver for module state
+management, so they need to be shared.
 
-Remove sha1, ecb(aes), ecb(des), cbc(des), ecb(des3_ede), cbc(des3_ede),
-hmac(sha1) and all AEAD variants built on these primitives as well as
-authenc(hmac(sha256),cbc(des)). Also clean up the - now dead - code,
-flags and constants.
-
-Cc: stable@vger.kernel.org
-Acked-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Piotr Kubik <piotr@kubik.pl>
+Link: https://patch.msgid.link/20260408115106.379834-1-piotr@kubik.pl
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qce/aead.c     |   56 ------------------------
- drivers/crypto/qce/common.c   |   55 +++++------------------
- drivers/crypto/qce/common.h   |   16 +-----
- drivers/crypto/qce/regs-v5.h  |    4 -
- drivers/crypto/qce/sha.c      |   30 ------------
- drivers/crypto/qce/sha.h      |    1 
- drivers/crypto/qce/skcipher.c |   97 ------------------------------------------
- 7 files changed, 20 insertions(+), 239 deletions(-)
 
---- a/drivers/crypto/qce/aead.c
-+++ b/drivers/crypto/qce/aead.c
-@@ -9,8 +9,6 @@
- #include <crypto/gcm.h>
- #include <crypto/authenc.h>
- #include <crypto/internal/aead.h>
--#include <crypto/internal/des.h>
--#include <crypto/sha1.h>
- #include <crypto/sha2.h>
- #include <crypto/scatterwalk.h>
- #include "aead.h"
-@@ -592,7 +590,6 @@ static int qce_aead_setkey(struct crypto
- 	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
- 	struct crypto_authenc_keys authenc_keys;
- 	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
--	u32 _key[6];
- 	int err;
- 
- 	err = crypto_authenc_extractkeys(&authenc_keys, key, keylen);
-@@ -603,26 +600,7 @@ static int qce_aead_setkey(struct crypto
- 	    authenc_keys.authkeylen > QCE_MAX_KEY_SIZE)
- 		return -EINVAL;
- 
--	if (IS_DES(flags)) {
--		err = verify_aead_des_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
--		if (err)
--			return err;
--	} else if (IS_3DES(flags)) {
--		err = verify_aead_des3_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
--		if (err)
--			return err;
--		/*
--		 * The crypto engine does not support any two keys
--		 * being the same for triple des algorithms. The
--		 * verify_skcipher_des3_key does not check for all the
--		 * below conditions. Schedule fallback in this case.
--		 */
--		memcpy(_key, authenc_keys.enckey, DES3_EDE_KEY_SIZE);
--		if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
--		    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
--		    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
--			ctx->need_fallback = true;
--	} else if (IS_AES(flags)) {
-+	if (IS_AES(flags)) {
- 		/* No random key sizes */
- 		if (authenc_keys.enckeylen != AES_KEYSIZE_128 &&
- 		    authenc_keys.enckeylen != AES_KEYSIZE_192 &&
-@@ -694,38 +672,6 @@ struct qce_aead_def {
- 
- static const struct qce_aead_def aead_def[] = {
- 	{
--		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
--		.name           = "authenc(hmac(sha1),cbc(des))",
--		.drv_name       = "authenc-hmac-sha1-cbc-des-qce",
--		.blocksize      = DES_BLOCK_SIZE,
--		.ivsize         = DES_BLOCK_SIZE,
--		.maxauthsize	= SHA1_DIGEST_SIZE,
--	},
--	{
--		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
--		.name           = "authenc(hmac(sha1),cbc(des3_ede))",
--		.drv_name       = "authenc-hmac-sha1-cbc-3des-qce",
--		.blocksize      = DES3_EDE_BLOCK_SIZE,
--		.ivsize         = DES3_EDE_BLOCK_SIZE,
--		.maxauthsize	= SHA1_DIGEST_SIZE,
--	},
--	{
--		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
--		.name           = "authenc(hmac(sha256),cbc(des))",
--		.drv_name       = "authenc-hmac-sha256-cbc-des-qce",
--		.blocksize      = DES_BLOCK_SIZE,
--		.ivsize         = DES_BLOCK_SIZE,
--		.maxauthsize	= SHA256_DIGEST_SIZE,
--	},
--	{
--		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
--		.name           = "authenc(hmac(sha256),cbc(des3_ede))",
--		.drv_name       = "authenc-hmac-sha256-cbc-3des-qce",
--		.blocksize      = DES3_EDE_BLOCK_SIZE,
--		.ivsize         = DES3_EDE_BLOCK_SIZE,
--		.maxauthsize	= SHA256_DIGEST_SIZE,
--	},
--	{
- 		.flags          =  QCE_ALG_AES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
- 		.name           = "authenc(hmac(sha256),cbc(aes))",
- 		.drv_name       = "authenc-hmac-sha256-cbc-aes-qce",
---- a/drivers/crypto/qce/common.c
-+++ b/drivers/crypto/qce/common.c
-@@ -8,7 +8,6 @@
- #include <linux/interrupt.h>
- #include <linux/types.h>
- #include <crypto/scatterwalk.h>
--#include <crypto/sha1.h>
- #include <crypto/sha2.h>
- 
- #include "cipher.h"
-@@ -115,18 +114,16 @@ static u32 qce_auth_cfg(unsigned long fl
- 			cfg |= AUTH_KEY_SZ_AES256 << AUTH_KEY_SIZE_SHIFT;
- 	}
- 
--	if (IS_SHA1(flags) || IS_SHA1_HMAC(flags))
--		cfg |= AUTH_SIZE_SHA1 << AUTH_SIZE_SHIFT;
--	else if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
-+	if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
- 		cfg |= AUTH_SIZE_SHA256 << AUTH_SIZE_SHIFT;
- 	else if (IS_CMAC(flags))
- 		cfg |= AUTH_SIZE_ENUM_16_BYTES << AUTH_SIZE_SHIFT;
- 	else if (IS_CCM(flags))
- 		cfg |= (auth_size - 1) << AUTH_SIZE_SHIFT;
- 
--	if (IS_SHA1(flags) || IS_SHA256(flags))
-+	if (IS_SHA256(flags))
- 		cfg |= AUTH_MODE_HASH << AUTH_MODE_SHIFT;
--	else if (IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
-+	else if (IS_SHA256_HMAC(flags))
- 		cfg |= AUTH_MODE_HMAC << AUTH_MODE_SHIFT;
- 	else if (IS_CCM(flags))
- 		cfg |= AUTH_MODE_CCM << AUTH_MODE_SHIFT;
-@@ -191,7 +188,7 @@ static int qce_setup_regs_ahash(struct c
- 	else
- 		qce_cpu_to_be32p_array(auth, rctx->digest, digestsize);
- 
--	iv_words = (IS_SHA1(rctx->flags) || IS_SHA1_HMAC(rctx->flags)) ? 5 : 8;
-+	iv_words = 8;
- 	qce_write_array(qce, REG_AUTH_IV0, (u32 *)auth, iv_words);
- 
- 	if (rctx->first_blk)
-@@ -243,19 +240,8 @@ static u32 qce_encr_cfg(unsigned long fl
- 
- 	if (IS_AES(flags))
- 		cfg |= ENCR_ALG_AES << ENCR_ALG_SHIFT;
--	else if (IS_DES(flags) || IS_3DES(flags))
--		cfg |= ENCR_ALG_DES << ENCR_ALG_SHIFT;
--
--	if (IS_DES(flags))
--		cfg |= ENCR_KEY_SZ_DES << ENCR_KEY_SZ_SHIFT;
--
--	if (IS_3DES(flags))
--		cfg |= ENCR_KEY_SZ_3DES << ENCR_KEY_SZ_SHIFT;
- 
- 	switch (flags & QCE_MODE_MASK) {
--	case QCE_MODE_ECB:
--		cfg |= ENCR_MODE_ECB << ENCR_MODE_SHIFT;
--		break;
- 	case QCE_MODE_CBC:
- 		cfg |= ENCR_MODE_CBC << ENCR_MODE_SHIFT;
- 		break;
-@@ -340,13 +326,7 @@ static int qce_setup_regs_skcipher(struc
- 
- 	encr_cfg = qce_encr_cfg(flags, keylen);
- 
--	if (IS_DES(flags)) {
--		enciv_words = 2;
--		enckey_words = 2;
--	} else if (IS_3DES(flags)) {
--		enciv_words = 2;
--		enckey_words = 6;
--	} else if (IS_AES(flags)) {
-+	if (IS_AES(flags)) {
- 		if (IS_XTS(flags))
- 			qce_xtskey(qce, ctx->enc_key, ctx->enc_keylen,
- 				   rctx->cryptlen);
-@@ -357,14 +337,12 @@ static int qce_setup_regs_skcipher(struc
- 
- 	qce_write_array(qce, REG_ENCR_KEY0, (u32 *)enckey, enckey_words);
- 
--	if (!IS_ECB(flags)) {
--		if (IS_XTS(flags))
--			qce_xts_swapiv(enciv, rctx->iv, ivsize);
--		else
--			qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
-+	if (IS_XTS(flags))
-+		qce_xts_swapiv(enciv, rctx->iv, ivsize);
-+	else
-+		qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
- 
--		qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
--	}
-+	qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
- 
- 	if (IS_ENCRYPT(flags))
- 		encr_cfg |= BIT(ENCODE_SHIFT);
-@@ -393,10 +371,6 @@ static int qce_setup_regs_skcipher(struc
- #endif
- 
- #ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
--static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
--	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
--};
--
- static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
- 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
- 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
-@@ -473,13 +447,8 @@ static int qce_setup_regs_aead(struct cr
- 	/* Write initial authentication IV only for HMAC algorithms */
- 	if (IS_SHA_HMAC(rctx->flags)) {
- 		/* Write default authentication iv */
--		if (IS_SHA1_HMAC(rctx->flags)) {
--			auth_ivsize = SHA1_DIGEST_SIZE;
--			memcpy(authiv, std_iv_sha1, auth_ivsize);
--		} else if (IS_SHA256_HMAC(rctx->flags)) {
--			auth_ivsize = SHA256_DIGEST_SIZE;
--			memcpy(authiv, std_iv_sha256, auth_ivsize);
--		}
-+		auth_ivsize = SHA256_DIGEST_SIZE;
-+		memcpy(authiv, std_iv_sha256, auth_ivsize);
- 		authiv_words = auth_ivsize / sizeof(u32);
- 		qce_write_array(qce, REG_AUTH_IV0, (u32 *)authiv, authiv_words);
- 	} else if (IS_CCM(rctx->flags)) {
---- a/drivers/crypto/qce/common.h
-+++ b/drivers/crypto/qce/common.h
-@@ -22,7 +22,7 @@
- 
- /* IV length in bytes */
- #define QCE_AES_IV_LENGTH		AES_BLOCK_SIZE
--/* max of AES_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE */
-+/* max of AES_BLOCK_SIZE */
- #define QCE_MAX_IV_SIZE			AES_BLOCK_SIZE
- 
- /* maximum nonce bytes  */
-@@ -33,14 +33,10 @@
- #define QCE_MAX_ALIGN_SIZE		64
- 
- /* cipher algorithms */
--#define QCE_ALG_DES			BIT(0)
--#define QCE_ALG_3DES			BIT(1)
- #define QCE_ALG_AES			BIT(2)
- 
- /* hash and hmac algorithms */
--#define QCE_HASH_SHA1			BIT(3)
- #define QCE_HASH_SHA256			BIT(4)
--#define QCE_HASH_SHA1_HMAC		BIT(5)
- #define QCE_HASH_SHA256_HMAC		BIT(6)
- #define QCE_HASH_AES_CMAC		BIT(7)
- 
-@@ -58,21 +54,15 @@
- #define QCE_ENCRYPT			BIT(30)
- #define QCE_DECRYPT			BIT(31)
- 
--#define IS_DES(flags)			(flags & QCE_ALG_DES)
--#define IS_3DES(flags)			(flags & QCE_ALG_3DES)
- #define IS_AES(flags)			(flags & QCE_ALG_AES)
- 
--#define IS_SHA1(flags)			(flags & QCE_HASH_SHA1)
- #define IS_SHA256(flags)		(flags & QCE_HASH_SHA256)
--#define IS_SHA1_HMAC(flags)		(flags & QCE_HASH_SHA1_HMAC)
- #define IS_SHA256_HMAC(flags)		(flags & QCE_HASH_SHA256_HMAC)
- #define IS_CMAC(flags)			(flags & QCE_HASH_AES_CMAC)
--#define IS_SHA(flags)			(IS_SHA1(flags) || IS_SHA256(flags))
--#define IS_SHA_HMAC(flags)		\
--		(IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
-+#define IS_SHA(flags)			IS_SHA256(flags)
-+#define IS_SHA_HMAC(flags)		IS_SHA256_HMAC(flags)
- 
- #define IS_CBC(mode)			(mode & QCE_MODE_CBC)
--#define IS_ECB(mode)			(mode & QCE_MODE_ECB)
- #define IS_CTR(mode)			(mode & QCE_MODE_CTR)
- #define IS_XTS(mode)			(mode & QCE_MODE_XTS)
- #define IS_CCM(mode)			(mode & QCE_MODE_CCM)
---- a/drivers/crypto/qce/regs-v5.h
-+++ b/drivers/crypto/qce/regs-v5.h
-@@ -203,7 +203,6 @@
- 
- #define AUTH_SIZE_SHIFT			9
- #define AUTH_SIZE_MASK			GENMASK(13, 9)
--#define AUTH_SIZE_SHA1			0
- #define AUTH_SIZE_SHA256		1
- #define AUTH_SIZE_ENUM_1_BYTES		0
- #define AUTH_SIZE_ENUM_2_BYTES		1
-@@ -284,15 +283,12 @@
- 
- #define ENCR_KEY_SZ_SHIFT		3
- #define ENCR_KEY_SZ_MASK		GENMASK(5, 3)
--#define ENCR_KEY_SZ_DES			0
--#define ENCR_KEY_SZ_3DES		1
- #define ENCR_KEY_SZ_AES128		0
- #define ENCR_KEY_SZ_AES256		2
- 
- #define ENCR_ALG_SHIFT			0
- #define ENCR_ALG_MASK			GENMASK(2, 0)
- #define ENCR_ALG_NONE			0
--#define ENCR_ALG_DES			1
- #define ENCR_ALG_AES			2
- #define ENCR_ALG_KASUMI			4
- #define ENCR_ALG_SNOW_3G		5
---- a/drivers/crypto/qce/sha.c
-+++ b/drivers/crypto/qce/sha.c
-@@ -25,10 +25,6 @@ struct qce_sha_saved_state {
- 
- static LIST_HEAD(ahash_algs);
- 
--static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
--	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
--};
--
- static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
- 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
- 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
-@@ -349,9 +345,7 @@ static int qce_ahash_hmac_setkey(struct
- 		return 0;
- 	}
- 
--	if (digestsize == SHA1_DIGEST_SIZE)
--		alg_name = "sha1-qce";
--	else if (digestsize == SHA256_DIGEST_SIZE)
-+	if (digestsize == SHA256_DIGEST_SIZE)
- 		alg_name = "sha256-qce";
- 	else
- 		return -EINVAL;
-@@ -413,15 +407,6 @@ struct qce_ahash_def {
- 
- static const struct qce_ahash_def ahash_def[] = {
- 	{
--		.flags		= QCE_HASH_SHA1,
--		.name		= "sha1",
--		.drv_name	= "sha1-qce",
--		.digestsize	= SHA1_DIGEST_SIZE,
--		.blocksize	= SHA1_BLOCK_SIZE,
--		.statesize	= sizeof(struct qce_sha_saved_state),
--		.std_iv		= std_iv_sha1,
--	},
--	{
- 		.flags		= QCE_HASH_SHA256,
- 		.name		= "sha256",
- 		.drv_name	= "sha256-qce",
-@@ -431,15 +416,6 @@ static const struct qce_ahash_def ahash_
- 		.std_iv		= std_iv_sha256,
- 	},
- 	{
--		.flags		= QCE_HASH_SHA1_HMAC,
--		.name		= "hmac(sha1)",
--		.drv_name	= "hmac-sha1-qce",
--		.digestsize	= SHA1_DIGEST_SIZE,
--		.blocksize	= SHA1_BLOCK_SIZE,
--		.statesize	= sizeof(struct qce_sha_saved_state),
--		.std_iv		= std_iv_sha1,
--	},
--	{
- 		.flags		= QCE_HASH_SHA256_HMAC,
- 		.name		= "hmac(sha256)",
- 		.drv_name	= "hmac-sha256-qce",
-@@ -476,9 +452,7 @@ static int qce_ahash_register_one(const
- 	alg->halg.digestsize = def->digestsize;
- 	alg->halg.statesize = def->statesize;
- 
--	if (IS_SHA1(def->flags))
--		tmpl->hash_zero = sha1_zero_message_hash;
--	else if (IS_SHA256(def->flags))
-+	if (IS_SHA256(def->flags))
- 		tmpl->hash_zero = sha256_zero_message_hash;
- 
- 	base = &alg->halg.base;
---- a/drivers/crypto/qce/sha.h
-+++ b/drivers/crypto/qce/sha.h
-@@ -7,7 +7,6 @@
- #define _SHA_H_
- 
- #include <crypto/scatterwalk.h>
--#include <crypto/sha1.h>
- #include <crypto/sha2.h>
- 
- #include "common.h"
---- a/drivers/crypto/qce/skcipher.c
-+++ b/drivers/crypto/qce/skcipher.c
-@@ -11,7 +11,6 @@
- #include <linux/types.h>
- #include <linux/errno.h>
- #include <crypto/aes.h>
--#include <crypto/internal/des.h>
- #include <crypto/internal/skcipher.h>
- 
- #include "cipher.h"
-@@ -209,51 +208,6 @@ static int qce_skcipher_setkey(struct cr
- 	return ret;
- }
- 
--static int qce_des_setkey(struct crypto_skcipher *ablk, const u8 *key,
--			  unsigned int keylen)
--{
--	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
--	int err;
--
--	err = verify_skcipher_des_key(ablk, key);
--	if (err)
--		return err;
--
--	ctx->enc_keylen = keylen;
--	memcpy(ctx->enc_key, key, keylen);
--	return 0;
--}
--
--static int qce_des3_setkey(struct crypto_skcipher *ablk, const u8 *key,
--			   unsigned int keylen)
--{
--	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
--	u32 _key[6];
--	int err;
--
--	err = verify_skcipher_des3_key(ablk, key);
--	if (err)
--		return err;
--
--	/*
--	 * The crypto engine does not support any two keys
--	 * being the same for triple des algorithms. The
--	 * verify_skcipher_des3_key does not check for all the
--	 * below conditions. Return -ENOKEY in case any two keys
--	 * are the same. Revisit to see if a fallback cipher
--	 * is needed to handle this condition.
--	 */
--	memcpy(_key, key, DES3_EDE_KEY_SIZE);
--	if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
--	    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
--	    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
--		return -ENOKEY;
--
--	ctx->enc_keylen = keylen;
--	memcpy(ctx->enc_key, key, keylen);
--	return 0;
--}
--
- static int qce_skcipher_crypt(struct skcipher_request *req, int encrypt)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
-@@ -276,7 +230,7 @@ static int qce_skcipher_crypt(struct skc
- 	 * ECB and CBC algorithms require message lengths to be
- 	 * multiples of block size.
+LLM Generated explanations, may be completely bogus:
+
+## Phase 1: Commit Message Forensics
+
+### Step 1.1: Subject Line
+**Record:** `[leds: trigger: gpio]` `[Use]` — Add
+`GPIOD_FLAGS_BIT_NONEXCLUSIVE` when requesting the GPIO used by the gpio
+LED trigger.
+
+### Step 1.2: Tags
+**Record:**
+- **Link:**
+  https://patch.msgid.link/20260408115106.379834-1-piotr@kubik.pl
+- **Signed-off-by:** Piotr Kubik \<piotr@kubik.pl\>
+- **Signed-off-by:** Lee Jones \<lee@kernel.org\> (LED subsystem
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable tags
+- Notable: maintainer (Lee Jones) Signed-off-by is a quality signal
+
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** When a GPIO is shared between the gpio LED trigger and
+  another driver (e.g. SFP `Mod_ABS` / `Rx_LOS`), the LED trigger
+  requests the GPIO exclusively; if another driver already claimed it,
+  acquisition fails and the trigger does not work.
+- **Symptom:** Status LEDs driven by the gpio trigger do not function on
+  shared-GPIO hardware.
+- **Use case:** SFP module presence/status LEDs on network appliances
+  where the SFP driver also monitors the same GPIO lines.
+- **Root cause:** Missing `GPIOD_FLAGS_BIT_NONEXCLUSIVE` on
+  `gpiod_get_optional()`.
+
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes. Although not labeled "fix", this is a functional bug
+fix: shared-GPIO hardware enablement, not a refactor or optimization.
+
+---
+
+## Phase 2: Diff Analysis
+
+### Step 2.1: Inventory
+**Record:**
+- **File:** `drivers/leds/trigger/ledtrig-gpio.c` (+2 / -1 lines)
+- **Function:** `gpio_trig_activate()`
+- **Scope:** Single-file, surgical one-line functional change
+
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** `gpiod_get_optional(dev, "trigger-sources", GPIOD_IN)` —
+  exclusive GPIO request.
+- **After:** Same call with `GPIOD_IN | GPIOD_FLAGS_BIT_NONEXCLUSIVE` —
+  allows sharing with an already-claimed GPIO.
+- **Path:** LED trigger activation during default-trigger setup or
+  manual trigger selection.
+
+### Step 2.3: Bug Mechanism
+**Record:**
+- **Category:** Logic / hardware-workaround (shared GPIO access).
+- **Mechanism:** Without `NONEXCLUSIVE`, `gpiod_request()` returns
+  `-EBUSY` when another consumer already holds the line.
+  `gpiod_get_optional()` propagates `ERR_PTR(-EBUSY)`.
+  `gpio_trig_activate()` returns that error.
+  `led_match_default_trigger()` ignores the `led_trigger_set()` return
+  value, so activation failure is silent and the LED never gets the gpio
+  trigger.
+
+Verified in gpiolib:
+
+```4672:4674:drivers/gpio/gpiolib.c
+        if (ret) {
+                if (!(ret == -EBUSY && flags &
+GPIOD_FLAGS_BIT_NONEXCLUSIVE))
+                        return ERR_PTR(ret);
+```
+
+And in LED core:
+
+```271:278:drivers/leds/led-triggers.c
+static bool led_match_default_trigger(struct led_classdev *led_cdev,
+                                      struct led_trigger *trig)
+{
+        if (!strcmp(led_cdev->default_trigger, trig->name) &&
+            trigger_relevant(led_cdev, trig)) {
+                led_cdev->flags |= LED_INIT_DEFAULT_TRIGGER;
+                led_trigger_set(led_cdev, trig);
+                return true;
+```
+
+### Step 2.4: Fix Quality
+**Record:**
+- Obviously correct: matches the established pattern used across many
+  drivers in this tree (regulators, extcon, PHY drivers, etc.).
+- Minimal change, no API changes.
+- Low regression risk: only affects the shared-GPIO case; exclusive
+  GPIOs behave as before.
+- The flag is marked deprecated in `consumer.h`, but remains the
+  supported workaround throughout this tree.
+
+---
+
+## Phase 3: Git History Investigation
+
+### Step 3.1: Blame
+**Record:**
+- Buggy line introduced by `9bbd6b7209cf1` (Andy Shevchenko, Nov 3
+  2023): switched to `gpiod_get_optional()` without `NONEXCLUSIVE`.
+- Underlying trigger-sources design from `4a11dbf04f31c` (Linus Walleij,
+  Sep 26 2023).
+- Both commits are present in this 6.18.44 tree.
+
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag in commit message.
+
+### Step 3.3: Related File History
+**Record:** Recent `ledtrig-gpio.c` history is cleanups only (sysfs,
+kstrtox, DEVICE_ATTR_RW). No related fix already present. Standalone
+patch, not part of a series.
+
+### Step 3.4: Author Context
+**Record:** Piotr Kubik has other networking-related work in this tree
+(e.g. PSE driver). This gpio-trigger fix is a focused hardware-
+enablement change, not a large series.
+
+### Step 3.5: Dependencies
+**Record:**
+- Requires `GPIOD_FLAGS_BIT_NONEXCLUSIVE` (present since
+  `ec757001c818c`, 2018).
+- Requires trigger-sources gpio trigger (`4a11dbf04f31c`, 2023) —
+  present in this tree.
+- No other commits required. Applies standalone.
+
+---
+
+## Phase 4: Mailing List and External Research
+
+### Step 4.1: Original Discussion
+**Record:** `b4 dig -c <commit>` could not run — commit is not in this
+checkout. Lore/patch.msgid.link fetch blocked by Anubis bot protection.
+Could not retrieve thread discussion.
+
+### Step 4.2: Reviewers
+**Record:** UNVERIFIED — could not run `b4 dig -w` without commit hash.
+Lee Jones Signed-off-by indicates maintainer acceptance.
+
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link. Use case described in
+commit message (SFP Mod_ABS/Rx_LOS LEDs).
+
+### Step 4.4: Related Patches
+**Record:** No multi-patch series indicated. SFP driver
+(`drivers/net/phy/sfp.c`) claims GPIOs via `devm_gpiod_get_optional()`
+without `NONEXCLUSIVE` at lines 3149–3150 — consistent with SFP-probes-
+first, LED-joins-shared scenario described in the commit.
+
+### Step 4.5: Stable List History
+**Record:** UNVERIFIED — could not search lore stable list due to fetch
+restrictions.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+**Record:** `gpio_trig_activate()` modified.
+
+### Step 5.2: Callers
+**Record:** `gpio_trig_activate` is the `.activate` callback for
+`gpio_led_trigger`, invoked from `led_trigger_set()` in
+`drivers/leds/led-triggers.c` during:
+- Default trigger setup at LED registration (`led_trigger_set_default()`
+  → `led_match_default_trigger()`)
+- Late trigger module load (`led_trigger_register()`)
+- Manual trigger changes via sysfs
+
+### Step 5.3: Callees
+**Record:** `gpiod_get_optional()`, `gpiod_set_consumer_name()`,
+`request_threaded_irq()` (already uses `IRQF_SHARED`),
+`gpio_trig_irq()`.
+
+### Step 5.4: Reachability
+**Record:** Triggered during device probe/LED registration for any
+platform using `linux,default-trigger = "gpio"` with `trigger-sources`
+referencing a GPIO also claimed by another driver. Requires
+`CONFIG_LEDS_TRIGGER_GPIO`. SFP network appliances are the documented
+case.
+
+### Step 5.5: Similar Patterns
+**Record:** `GPIOD_FLAGS_BIT_NONEXCLUSIVE` is used in 30+ locations in
+this tree for the same shared-GPIO pattern (regulators, extcon, micrel
+PHY, etc.). LED gpio trigger was an omission.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
+
+### Step 6.1: Buggy Code Present?
+**Record:** YES. Current tree at `drivers/leds/trigger/ledtrig-
+gpio.c:89`:
+
+```89:89:drivers/leds/trigger/ledtrig-gpio.c
+        gpio_data->gpiod = gpiod_get_optional(dev, "trigger-sources",
+GPIOD_IN);
+```
+
+Fix is not yet applied. Bug has existed since Nov 2023 in this tree.
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — single-line change, no surrounding
+churn. No conflicts anticipated.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** No — `git log --grep` found no matching fix in this tree.
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem
+**Record:** `drivers/leds/trigger/` — LED triggers. **Criticality:
+PERIPHERAL** (status LEDs), but on network appliances SFP status LEDs
+are operationally important.
+
+### Step 7.2: Activity
+**Record:** Moderate recent activity (cleanups in 2024–2025). trigger-
+sources gpio trigger is mature in this tree.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Config-specific — systems with `CONFIG_LEDS_TRIGGER_GPIO`
+and device trees wiring gpio LED triggers to GPIO lines shared with
+another driver (documented: SFP Mod_ABS/Rx_LOS). Not universal, but real
+on network appliance hardware.
+
+### Step 8.2: Trigger Conditions
+**Record:**
+- Another driver (e.g. SFP) claims the GPIO before LED gpio trigger
+  activates.
+- Common probe order on SFP platforms (SFP probes first).
+- Not a security issue; unprivileged users cannot trigger this directly.
+
+### Step 8.3: Failure Mode Severity
+**Record:** Status LEDs silently non-functional. **Severity: LOW to
+MEDIUM** — no crash, corruption, or deadlock, but broken hardware
+indication on affected platforms.
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Restores intended SFP/status LED behavior on shared-GPIO
+  platforms; one-line fix following established kernel pattern.
+- **Risk:** Very low — minimal, well-understood change.
+- **Ratio:** Moderate benefit, very low risk. Fits hardware-
+  quirk/workaround exception category.
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Summary
+
+**FOR backport:**
+- Real, verified bug with understood mechanism (EBUSY on shared GPIO →
+  silent activation failure).
+- Small, obviously correct, maintainer-reviewed fix.
+- Buggy code and all prerequisites exist in 6.18.44.
+- Established `GPIOD_FLAGS_BIT_NONEXCLUSIVE` pattern used widely in this
+  tree.
+- Hardware workaround for network appliance SFP LED use case.
+
+**AGAINST backport:**
+- Not a crash, security, corruption, or deadlock issue.
+- Affects a narrow configuration (shared GPIO + gpio LED trigger).
+- `GPIOD_FLAGS_BIT_NONEXCLUSIVE` is deprecated (though still the
+  required workaround).
+- No in-tree DTS found yet wiring SFP GPIOs to gpio LED triggers (use
+  case may be out-of-tree/future DTS).
+
+**UNRESOLVED:**
+- Full mailing list review thread (fetch blocked).
+- Whether any in-tree DTS currently triggers this exact SFP+gpio-trigger
+  configuration.
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — mechanism verified in code;
+   maintainer SOB; pattern proven across tree.
+2. Fixes a real bug affecting users? **PASS** — shared-GPIO LED trigger
+   silently fails.
+3. Important issue? **PASS (borderline)** — not crash/security, but real
+   hardware functionality loss on network appliances; fits hardware-
+   workaround exception.
+4. Small and contained? **PASS** — 1-line functional change.
+5. No new features or APIs? **PASS** — fixes existing trigger behavior.
+6. Can apply to local tree? **PASS** — prerequisites present, clean
+   apply expected.
+
+### Step 9.3: Exception Category
+**Record:** Hardware quirk/workaround — shared GPIO access between LED
+trigger and another driver (SFP).
+
+### Step 9.4: Decision Rationale
+For the **6.18.44** tree checked out here: the bug exists, the fix is
+minimal and follows a well-established kernel pattern, and it restores
+broken status-LED functionality on real shared-GPIO hardware (SFP
+network appliances). Severity is below crash/corruption tier, but stable
+trees routinely accept such hardware-enablement GPIO sharing fixes.
+Benefit outweighs the very low regression risk.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed subject, tags, body; identified hardware-sharing bug
+- [Phase 2] Read diff and `ledtrig-gpio.c`; verified EBUSY → silent
+  failure path via `gpiolib.c:4672-4674` and `led-triggers.c:271-278`
+- [Phase 3] `git blame`: buggy line from `9bbd6b7209cf1` (Nov 2023);
+  trigger-sources from `4a11dbf04f31c` (Sep 2023)
+- [Phase 3] `git log --oneline -20 -- drivers/leds/trigger/ledtrig-
+  gpio.c`: no duplicate fix
+- [Phase 3] `git show ec757001c818c`: NONEXCLUSIVE support since 2018
+- [Phase 4] `b4 dig`: failed — commit not in tree
+- [Phase 4] WebFetch lore/patch.msgid.link: blocked by Anubis
+- [Phase 5] Traced `gpio_trig_activate` → `led_trigger_set` →
+  `led_match_default_trigger` call chain
+- [Phase 5] `grep GPIOD_FLAGS_BIT_NONEXCLUSIVE`: 30+ existing uses in
+  tree
+- [Phase 5] Read `sfp.c:3149-3150`: SFP claims GPIOs without
+  NONEXCLUSIVE
+- [Phase 6] `git describe HEAD`: v6.18.44-1-g2736c32da98b9
+- [Phase 6] Confirmed buggy code at `ledtrig-gpio.c:89` without fix
+- [Phase 6] `grep trigger-sources *.dts*`: USB router use cases present;
+  no in-tree SFP+gpio-trigger DTS found
+- [Phase 8] Confirmed `gpiod_not_found()` only maps `-ENOENT` to NULL,
+  not `-EBUSY` (`gpiolib.h:221`)
+
+**YES**The background search finished. It turned up related work
+(Puzzle-M801 board DTS with SFP+, Broadcom PHY/SFP LED handling), but
+nothing that changes the backport call.
+
+**Verdict for this 6.18.44 tree: YES**
+
+The gpio LED trigger fails silently when another driver (e.g. SFP for
+Mod_ABS/Rx_LOS) already owns the GPIO. Adding
+`GPIOD_FLAGS_BIT_NONEXCLUSIVE` is a one-line fix that matches an
+established pattern elsewhere in the tree, and the buggy code is still
+present at `ledtrig-gpio.c:89`.
+
+ drivers/leds/trigger/ledtrig-gpio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/leds/trigger/ledtrig-gpio.c b/drivers/leds/trigger/ledtrig-gpio.c
+index 7f6a2352b0acd..3199275fd250b 100644
+--- a/drivers/leds/trigger/ledtrig-gpio.c
++++ b/drivers/leds/trigger/ledtrig-gpio.c
+@@ -86,7 +86,8 @@ static int gpio_trig_activate(struct led_classdev *led)
+ 	 * The generic property "trigger-sources" is followed,
+ 	 * and we hope that this is a GPIO.
  	 */
--	if (IS_ECB(rctx->flags) || IS_CBC(rctx->flags))
-+	if (IS_CBC(rctx->flags))
- 		if (!IS_ALIGNED(req->cryptlen, blocksize))
- 			return -EINVAL;
- 
-@@ -360,15 +314,6 @@ struct qce_skcipher_def {
- 
- static const struct qce_skcipher_def skcipher_def[] = {
- 	{
--		.flags		= QCE_ALG_AES | QCE_MODE_ECB,
--		.name		= "ecb(aes)",
--		.drv_name	= "ecb-aes-qce",
--		.blocksize	= AES_BLOCK_SIZE,
--		.ivsize		= 0,
--		.min_keysize	= AES_MIN_KEY_SIZE,
--		.max_keysize	= AES_MAX_KEY_SIZE,
--	},
--	{
- 		.flags		= QCE_ALG_AES | QCE_MODE_CBC,
- 		.name		= "cbc(aes)",
- 		.drv_name	= "cbc-aes-qce",
-@@ -396,42 +341,6 @@ static const struct qce_skcipher_def skc
- 		.min_keysize	= AES_MIN_KEY_SIZE * 2,
- 		.max_keysize	= AES_MAX_KEY_SIZE * 2,
- 	},
--	{
--		.flags		= QCE_ALG_DES | QCE_MODE_ECB,
--		.name		= "ecb(des)",
--		.drv_name	= "ecb-des-qce",
--		.blocksize	= DES_BLOCK_SIZE,
--		.ivsize		= 0,
--		.min_keysize	= DES_KEY_SIZE,
--		.max_keysize	= DES_KEY_SIZE,
--	},
--	{
--		.flags		= QCE_ALG_DES | QCE_MODE_CBC,
--		.name		= "cbc(des)",
--		.drv_name	= "cbc-des-qce",
--		.blocksize	= DES_BLOCK_SIZE,
--		.ivsize		= DES_BLOCK_SIZE,
--		.min_keysize	= DES_KEY_SIZE,
--		.max_keysize	= DES_KEY_SIZE,
--	},
--	{
--		.flags		= QCE_ALG_3DES | QCE_MODE_ECB,
--		.name		= "ecb(des3_ede)",
--		.drv_name	= "ecb-3des-qce",
--		.blocksize	= DES3_EDE_BLOCK_SIZE,
--		.ivsize		= 0,
--		.min_keysize	= DES3_EDE_KEY_SIZE,
--		.max_keysize	= DES3_EDE_KEY_SIZE,
--	},
--	{
--		.flags		= QCE_ALG_3DES | QCE_MODE_CBC,
--		.name		= "cbc(des3_ede)",
--		.drv_name	= "cbc-3des-qce",
--		.blocksize	= DES3_EDE_BLOCK_SIZE,
--		.ivsize		= DES3_EDE_BLOCK_SIZE,
--		.min_keysize	= DES3_EDE_KEY_SIZE,
--		.max_keysize	= DES3_EDE_KEY_SIZE,
--	},
- };
- 
- static int qce_skcipher_register_one(const struct qce_skcipher_def *def,
-@@ -455,9 +364,7 @@ static int qce_skcipher_register_one(con
- 	alg->ivsize			= def->ivsize;
- 	alg->min_keysize		= def->min_keysize;
- 	alg->max_keysize		= def->max_keysize;
--	alg->setkey			= IS_3DES(def->flags) ? qce_des3_setkey :
--					  IS_DES(def->flags) ? qce_des_setkey :
--					  qce_skcipher_setkey;
-+	alg->setkey			= qce_skcipher_setkey;
- 	alg->encrypt			= qce_skcipher_encrypt;
- 	alg->decrypt			= qce_skcipher_decrypt;
- 
-
+-	gpio_data->gpiod = gpiod_get_optional(dev, "trigger-sources", GPIOD_IN);
++	gpio_data->gpiod = gpiod_get_optional(dev, "trigger-sources",
++					      GPIOD_IN | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
+ 	if (IS_ERR(gpio_data->gpiod)) {
+ 		ret = PTR_ERR(gpio_data->gpiod);
+ 		kfree(gpio_data);
+-- 
+2.53.0
 
