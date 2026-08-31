@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3C047A86A;
-	Mon, 31 Aug 2026 13:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6BE5AD59B;
+	Mon, 31 Aug 2026 13:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184475; cv=none; b=M8uW4DyXdYpZdyvIqm6rpaP5LH0MsdQ4MJzYIOKTdi7mFFbCkp3vqJbiubce3banIqGLI8EypmJpeBABwzyFvqsG93JmgeeeBZvgbaTP/hmQ/PrbXTAItsLCxdaaSv0hkPX/9hCMP3wnqi8isE/BM+x8S+djjiLwfdKZnNg1XN0=
+	t=1788184485; cv=none; b=dSyYAj+poGeedhw/sICHzCOIKy6sPIZcc8LumuoMgiPXuQtaHgB8GaTxPNdGa3TOQliYUXBPd/Uvu2kETL/5ti4ZfvDqjQfX5KaO8QvTeS553DatcVDLF7KxpF8qBAKUwSwmHJEt/XBznomuieErL8NxcG4A3Dn3F5/g+cwhPFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184475; c=relaxed/simple;
-	bh=/XHFahrXPAcoQNblvXFnBRy9EeWhoo3U0UWoQL0+nwE=;
+	s=arc-20240116; t=1788184485; c=relaxed/simple;
+	bh=ZdBCAirr0CYQ1l1SoeFsbXFPIme/a2leAS/m39lvJ80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVSApVM7INJmetAhHI/oLNFB/zWMiTFw+ULqlEoDeRQ6ZhxBOxzDScTjv/vOzyQZSmogOFMCeXYvambUAtyIcXbTHBVOMPP99FSAmebbQU+RlMEJqXDhNP7/Hb2oG/STkG62cIdwBRa55WMzMSROygAnRA0CbgphFk4TXT/dSk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDeIbWIt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FSs69qZ/rV+rotFPcgyAdjDTXzpGxHn2fIaqo4TWFJIrsgp6K8Cv5wvPu1RCzvsrK+yhUAknL3nlixCY51m7WpV9WD6n4h7h2QExmniOhMMlmRW8oZOKGxXg/NC1NOFhJ5VnwUNtoz8vtRHiw3PN5d5MtFpSCtpx+OI6viiaQ/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9hKiyGy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDeIbWIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCBC1F000E9;
-	Mon, 31 Aug 2026 13:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9hKiyGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D941F000E9;
+	Mon, 31 Aug 2026 13:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184474;
-	bh=sTv3Ptu1NoV4V/umjtMWgXBZ3O1OXlLDxYYjF+fmUio=;
+	s=korg; t=1788184482;
+	bh=H+sHYum14L+99eSvvcXRHtoT1uf5Jc24gUndFbPUR24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lDeIbWIt91RH6qNENlZPI+3jAxj6EuX6ma8EJ91LzuTT9MqpDRHT7AXLoAK6K7vH7
-	 Zm4INlQY8WgxqoCgu3Ba85OK05MhlNmfOPbcuiq0MdCN2mZ5/WUaRMU12Zok/6fuO+
-	 r0xOrHvlDttogMzWYo1wVLDDSrGNKOzB/DsY21Rw=
+	b=l9hKiyGyae1THYVQ/qz27airW+T69H9MjJpvdbu7oOm9V5EJ+xAQ3QDng7knWhzME
+	 sIaK9XPhQZhici3QBml8y6ymFbfymkmYsP/fMcIub5dnKb9N9F6e2WLl5dFceJxA8u
+	 5mVOIy3NAkOmRj1eVw9TFmzu4Y5OLYbMoShy/xqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 20/91] KVM: arm64: Prevent access to vCPU events before init
-Date: Mon, 31 Aug 2026 15:34:08 +0200
-Message-ID: <20260831133400.666716565@linuxfoundation.org>
+Subject: [PATCH 6.6 23/91] ASoC: nau8821: Cancel delayed work on component remove
+Date: Mon, 31 Aug 2026 15:34:11 +0200
+Message-ID: <20260831133400.843965297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -51,89 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 0aa1b76fe1429629215a7c79820e4b96233ac4a3 ]
+[ Upstream commit dbd3fd05cddfdeec1e49b0a66269881c09eebd17 ]
 
-Another day, another syzkaller bug. KVM erroneously allows userspace to
-pend vCPU events for a vCPU that hasn't been initialized yet, leading to
-KVM interpreting a bunch of uninitialized garbage for routing /
-injecting the exception.
+Attempting to unload the driver while a jack detection work is pending
+would likely crash the kernel when it is eventually scheduled for
+execution:
 
-In one case the injection code and the hyp disagree on whether the vCPU
-has a 32bit EL1 and put the vCPU into an illegal mode for AArch64,
-tripping the BUG() in exception_target_el() during the next injection:
+[ 1984.896308] BUG: unable to handle page fault for address: ffffffffc10c2a20
+[...]
+[ 1984.896388] Hardware name: Valve Jupiter/Jupiter, BIOS F7A0131 01/30/2024
+[ 1984.896396] Workqueue: events nau8821_jdet_work [snd_soc_nau8821]
+[ 1984.896414] RIP: 0010:__mutex_lock+0x9f/0x11d0
+[...]
+[ 1984.896504] Call Trace:
+[ 1984.896511]  <TASK>
+[ 1984.896524]  ? snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
+[ 1984.896572]  ? snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
+[ 1984.896596]  snd_soc_dapm_disable_pin+0x26/0x60 [snd_soc_core]
+[ 1984.896622]  nau8821_jdet_work+0xeb/0x1e0 [snd_soc_nau8821]
+[ 1984.896636]  process_one_work+0x211/0x590
+[ 1984.896649]  ? srso_return_thunk+0x5/0x5f
+[ 1984.896670]  worker_thread+0x1cd/0x3a0
 
-  kernel BUG at arch/arm64/kvm/inject_fault.c:40!
-  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-  CPU: 3 UID: 0 PID: 318 Comm: repro Not tainted 6.17.0-rc4-00104-g10fd0285305d #6 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  pstate: 21402009 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-  pc : exception_target_el+0x88/0x8c
-  lr : pend_serror_exception+0x18/0x13c
-  sp : ffff800082f03a10
-  x29: ffff800082f03a10 x28: ffff0000cb132280 x27: 0000000000000000
-  x26: 0000000000000000 x25: ffff0000c2a99c20 x24: 0000000000000000
-  x23: 0000000000008000 x22: 0000000000000002 x21: 0000000000000004
-  x20: 0000000000008000 x19: ffff0000c2a99c20 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000 x15: 00000000200000c0
-  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-  x8 : ffff800082f03af8 x7 : 0000000000000000 x6 : 0000000000000000
-  x5 : ffff800080f621f0 x4 : 0000000000000000 x3 : 0000000000000000
-  x2 : 000000000040009b x1 : 0000000000000003 x0 : ffff0000c2a99c20
-  Call trace:
-   exception_target_el+0x88/0x8c (P)
-   kvm_inject_serror_esr+0x40/0x3b4
-   __kvm_arm_vcpu_set_events+0xf0/0x100
-   kvm_arch_vcpu_ioctl+0x180/0x9d4
-   kvm_vcpu_ioctl+0x60c/0x9f4
-   __arm64_sys_ioctl+0xac/0x104
-   invoke_syscall+0x48/0x110
-   el0_svc_common.constprop.0+0x40/0xe0
-   do_el0_svc+0x1c/0x28
-   el0_svc+0x34/0xf0
-   el0t_64_sync_handler+0xa0/0xe4
-   el0t_64_sync+0x198/0x19c
-  Code: f946bc01 b4fffe61 9101e020 17fffff2 (d4210000)
+Cancel unscheduled jdet_work or wait for its execution to finish before
+the component driver gets removed.
 
-Reject the ioctls outright as no sane VMM would call these before
-KVM_ARM_VCPU_INIT anyway. Even if it did the exception would've been
-thrown away by the eventual reset of the vCPU's state.
-
-Cc: stable@vger.kernel.org # 6.17
-Fixes: b7b27facc7b5 ("arm/arm64: KVM: Add KVM_GET/SET_VCPU_EVENTS")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: aab1ad11d69f ("ASoC: nau8821: new driver")
+Fixes: ee70bacef1c6 ("ASoC: nau8821: Avoid unnecessary blocking in IRQ handler")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20251231-nau8821-cleanup-v1-2-6b0b76cbbb64@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/nau8821.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index d581aedf00190..37a6545238187 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1497,6 +1497,9 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
- 	case KVM_GET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
+diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
+index 3cf531258911b..0bfb4601fe333 100644
+--- a/sound/soc/codecs/nau8821.c
++++ b/sound/soc/codecs/nau8821.c
+@@ -1275,6 +1275,14 @@ static int nau8821_component_probe(struct snd_soc_component *component)
+ 	return 0;
+ }
  
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
++static void nau8821_component_remove(struct snd_soc_component *component)
++{
++	struct nau8821 *nau8821 = snd_soc_component_get_drvdata(component);
 +
- 		if (kvm_arm_vcpu_get_events(vcpu, &events))
- 			return -EINVAL;
- 
-@@ -1508,6 +1511,9 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
- 	case KVM_SET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
- 
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
++	if (nau8821->jdet_active)
++		cancel_delayed_work_sync(&nau8821->jdet_work);
++};
 +
- 		if (copy_from_user(&events, argp, sizeof(events)))
- 			return -EFAULT;
+ /**
+  * nau8821_calc_fll_param - Calculate FLL parameters.
+  * @fll_in: external clock provided to codec.
+@@ -1633,6 +1641,7 @@ static int __maybe_unused nau8821_resume(struct snd_soc_component *component)
  
+ static const struct snd_soc_component_driver nau8821_component_driver = {
+ 	.probe			= nau8821_component_probe,
++	.remove			= nau8821_component_remove,
+ 	.set_sysclk		= nau8821_set_sysclk,
+ 	.set_pll		= nau8821_set_fll,
+ 	.set_bias_level		= nau8821_set_bias_level,
 -- 
 2.53.0
 
