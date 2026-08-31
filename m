@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E66435514;
-	Mon, 31 Aug 2026 13:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB82435504;
+	Mon, 31 Aug 2026 13:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184424; cv=none; b=stfAp8KmeJyHxt62H9xsrCbj9t3thEz31ACqPXmI1WWoN2HGGaH7DID+oCsKiH9tkKg9uQBbpC5fbJP/j/gbRDYTwm+Svl5mEArMFwu1txdeV2+8GhT218sqGuPRiFju9Y5BJdok3ekdlu/Fm3GZhhNU0QDsuEsWAWl4LM+LtK0=
+	t=1788184429; cv=none; b=PszkWmZEbDk1jG72AWYYKUrC7GL9YRCAltwYYAXvSRLYrKa6IyRwx9KRQScg+JFNk834LfJ9mZWgCN07FPdWtUlMzmeqkOAKATidrqqumwTDA/71FcEYEUdNmuvpsuOldfjtOs4IjI9WuEUnxXG/EYOQ5+F5S4vVu+ldBfU0yHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184424; c=relaxed/simple;
-	bh=WixoY4aSza0eR+3/VSUQdFKgXtgDGE317uBoo/VNbBs=;
+	s=arc-20240116; t=1788184429; c=relaxed/simple;
+	bh=tkVgBAgjtGPJFjFd9dTQ3d24n122omPCmnaNvceYLQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=laziPYldq/CLtg+HRtn2AAdZkY9Fqfa3eS4QUUdb56AMHnn5FKGeOrk+F1fR1hT48y932Ikgn/NfRBSVr/6KVDTRjWp95n3RgS8JFur6dAKfBxtzecDLqcLVvc7tlSM9OzvA1NhMYlGif1UUFkVtcZHaJ11iwOc4wHUi8Nt7W6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQZRkczt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZjIuwBLkRPaTyEsJrD32/9M4uW01+8AQu+pnMDev9c9A3DAVNKDFtjXn0PZoSLNSYACISauLCKPD9YslsShGo600YozKS8OpFuptbSGtfR9exsSPbGDVzRxsgj8zHe4R1aP/yyXuCJRIFqIqSnLSWfMh567YHCfhaz+dfoXqjDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzTtsqFX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQZRkczt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FBB1F00A3D;
-	Mon, 31 Aug 2026 13:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzTtsqFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF0B1F000E9;
+	Mon, 31 Aug 2026 13:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184422;
-	bh=VGpZRhAMNvm0F4e6QSWMBKB0Nu7HJEaIf1lsk2WOERQ=;
+	s=korg; t=1788184428;
+	bh=M5pObhBjxKY2PC1ClRTj0e5suBOl/To7wbqVb3dFZ7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQZRkcztTUaObakDbLbSLxfJTwTY5U+aNJ2v/2HRUOQ3HGIHw3iQfr4GrMmUEtQZY
-	 I3eAiX53YHHydJQz/IH/959TRFuUcDIZTYaORbqG8m/AusdLtiOSdVmBvGIT/qfJd0
-	 WYMaDHCLWkp3uln9lB+LRc/3zOehr/TlC3r6JZLw=
+	b=HzTtsqFX/CcAIWRd9pJRVzib6DwlEeF6rXJ0Lcy0e7+5VP0/dwWVPxMlvNj1KwE9r
+	 hkri6T/7p5YB7Cga2TEZDGSLVV1xqwbX1Rypt5pWQe2RkZxWodmaDFwVG3cug90wMX
+	 oypSJxNWzJPS3Y90t29hk3nL1yEAeG0I5irIGCfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 6.12 64/99] usb: gadget: f_tcm: keep port count until LUN teardown completes
-Date: Mon, 31 Aug 2026 15:34:33 +0200
-Message-ID: <20260831133403.193330535@linuxfoundation.org>
+	Qing Ming <a0yami@mailbox.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 66/99] gtp: serialize PDP context updates
+Date: Mon, 31 Aug 2026 15:34:35 +0200
+Message-ID: <20260831133403.283665209@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
 References: <20260831133359.740409777@linuxfoundation.org>
@@ -49,80 +50,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Qing Ming <a0yami@mailbox.org>
 
-commit c39d0916da47d94909391876c9e5bd429ea7b1b9 upstream.
+commit 498386b6d402737db1e2eeed4c385acbf0ef9e34 upstream.
 
-tcm_usbg_drop_nexus() permits session removal once tpg_port_count
-reaches zero. However, usbg_port_unlink() currently decrements that
-count from the fabric_pre_unlink() callback, before core_dev_del_lun()
-waits for active se_lun references to drain.
+PDP contexts can be deleted through GTP_CMD_DELPDP or while the GTP
+network device is being unregistered. The latter is serialized by RTNL,
+but the generic-netlink delete path only holds RCU.
 
-If removal of the last LUN races a nexus removal, the latter can observe
-a zero port count and call target_remove_session(). This frees
-sess_cmd_map while an in-flight struct usbg_cmd, including its work item,
-can still be accessed.
+Running both paths concurrently can therefore make both paths delete the
+same PDP context. The issue was found through static analysis and
+reproduced on a KASAN-enabled kernel by a simple two-thread program
+racing GTP_CMD_DELPDP against RTM_DELLINK:
 
-Overlapping the last-LUN unlink with nexus removal reproduces this
-lifetime violation as a DEBUG_OBJECTS "free active" warning for
-usbg_cmd_work, followed by a target-core BUG/Oops.
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: maybe wild-memory-access in range
+         [0xdead000000000120-0xdead000000000127]
+  RIP: gtp_genl_del_pdp+0x1c1/0x420 [gtp]
+  RBP: dead000000000122
 
-The generic target-core unlink path has no callback after
-core_dev_del_lun() completes. Add an optional fabric_post_unlink()
-callback and use it for the f_tcm port count. The count now remains
-nonzero until core_dev_del_lun() has finished draining active LUN
-references, preventing nexus removal from freeing the session during
-command completion.
+The second deletion dereferenced the poisoned hlist pprev pointer.
 
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Serialize gtp_pdp_add(), gtp_genl_del_pdp(), and gtp_dellink() with a
+shared mutex. Keep the mutex held until the final use of a PDP context in
+the NEWPDP path, and keep the RCU read-side section around the complete
+PDP context use in the DELPDP path.
+
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260807060733.3186624-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Qing Ming <a0yami@mailbox.org>
+Link: https://patch.msgid.link/20260818150000.7670-1-a0yami@mailbox.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_fabric_configfs.c |    8 ++++++++
- drivers/usb/gadget/function/f_tcm.c          |    2 +-
- include/target/target_core_fabric.h          |    2 ++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/gtp.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
---- a/drivers/target/target_core_fabric_configfs.c
-+++ b/drivers/target/target_core_fabric_configfs.c
-@@ -690,6 +690,14 @@ static void target_fabric_port_unlink(
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -12,6 +12,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/skbuff.h>
+ #include <linux/udp.h>
+ #include <linux/rculist.h>
+@@ -105,6 +106,7 @@ struct gtp_net {
+ };
+ 
+ static u32 gtp_h_initval;
++static DEFINE_MUTEX(gtp_pdp_lock);
+ 
+ static struct genl_family gtp_genl_family;
+ 
+@@ -148,7 +150,8 @@ static struct pdp_ctx *gtp0_pdp_find(str
+ 
+ 	head = &gtp->tid_hash[gtp0_hashfn(tid) % gtp->hash_size];
+ 
+-	hlist_for_each_entry_rcu(pdp, head, hlist_tid) {
++	hlist_for_each_entry_rcu(pdp, head, hlist_tid,
++				 lockdep_is_held(&gtp_pdp_lock)) {
+ 		if (pdp->af == family &&
+ 		    pdp->gtp_version == GTP_V0 &&
+ 		    pdp->u.v0.tid == tid)
+@@ -165,7 +168,8 @@ static struct pdp_ctx *gtp1_pdp_find(str
+ 
+ 	head = &gtp->tid_hash[gtp1u_hashfn(tid) % gtp->hash_size];
+ 
+-	hlist_for_each_entry_rcu(pdp, head, hlist_tid) {
++	hlist_for_each_entry_rcu(pdp, head, hlist_tid,
++				 lockdep_is_held(&gtp_pdp_lock)) {
+ 		if (pdp->af == family &&
+ 		    pdp->gtp_version == GTP_V1 &&
+ 		    pdp->u.v1.i_tei == tid)
+@@ -182,7 +186,8 @@ static struct pdp_ctx *ipv4_pdp_find(str
+ 
+ 	head = &gtp->addr_hash[ipv4_hashfn(ms_addr) % gtp->hash_size];
+ 
+-	hlist_for_each_entry_rcu(pdp, head, hlist_addr) {
++	hlist_for_each_entry_rcu(pdp, head, hlist_addr,
++				 lockdep_is_held(&gtp_pdp_lock)) {
+ 		if (pdp->af == AF_INET &&
+ 		    pdp->ms.addr.s_addr == ms_addr)
+ 			return pdp;
+@@ -217,7 +222,8 @@ static struct pdp_ctx *ipv6_pdp_find(str
+ 
+ 	head = &gtp->addr_hash[ipv6_hashfn(ms_addr) % gtp->hash_size];
+ 
+-	hlist_for_each_entry_rcu(pdp, head, hlist_addr) {
++	hlist_for_each_entry_rcu(pdp, head, hlist_addr,
++				 lockdep_is_held(&gtp_pdp_lock)) {
+ 		if (pdp->af == AF_INET6 &&
+ 		    ipv6_pdp_addr_equal(&pdp->ms.addr6, ms_addr))
+ 			return pdp;
+@@ -1550,9 +1556,11 @@ static void gtp_dellink(struct net_devic
+ 	struct pdp_ctx *pctx;
+ 	int i;
+ 
++	mutex_lock(&gtp_pdp_lock);
+ 	for (i = 0; i < gtp->hash_size; i++)
+ 		hlist_for_each_entry_safe(pctx, next, &gtp->tid_hash[i], hlist_tid)
+ 			pdp_context_delete(pctx);
++	mutex_unlock(&gtp_pdp_lock);
+ 
+ 	list_del(&gtp->list);
+ 	unregister_netdevice_queue(dev, head);
+@@ -2051,6 +2059,7 @@ static int gtp_genl_new_pdp(struct sk_bu
+ 		goto out_unlock;
  	}
  
- 	core_dev_del_lun(se_tpg, lun);
++	mutex_lock(&gtp_pdp_lock);
+ 	pctx = gtp_pdp_add(gtp, sk, info);
+ 	if (IS_ERR(pctx)) {
+ 		err = PTR_ERR(pctx);
+@@ -2058,6 +2067,7 @@ static int gtp_genl_new_pdp(struct sk_bu
+ 		gtp_tunnel_notify(pctx, GTP_CMD_NEWPDP, GFP_KERNEL);
+ 		err = 0;
+ 	}
++	mutex_unlock(&gtp_pdp_lock);
+ 
+ out_unlock:
+ 	rtnl_unlock();
+@@ -2135,6 +2145,8 @@ static int gtp_genl_del_pdp(struct sk_bu
+ 	if (!info->attrs[GTPA_VERSION])
+ 		return -EINVAL;
+ 
++	mutex_lock(&gtp_pdp_lock);
 +
-+	if (tf->tf_ops->fabric_post_unlink) {
-+		/*
-+		 * Allow fabrics to release state that must remain valid until
-+		 * core_dev_del_lun() has drained all active LUN references.
-+		 */
-+		tf->tf_ops->fabric_post_unlink(se_tpg, lun);
-+	}
+ 	rcu_read_lock();
+ 
+ 	pctx = gtp_find_pdp(sock_net(skb->sk), info->attrs);
+@@ -2155,6 +2167,7 @@ static int gtp_genl_del_pdp(struct sk_bu
+ 
+ out_unlock:
+ 	rcu_read_unlock();
++	mutex_unlock(&gtp_pdp_lock);
+ 	return err;
  }
  
- static void target_fabric_port_release(struct config_item *item)
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1678,7 +1678,7 @@ static const struct target_core_fabric_o
- 	.fabric_enable_tpg		= usbg_enable_tpg,
- 	.fabric_drop_tpg		= usbg_drop_tpg,
- 	.fabric_post_link		= usbg_port_link,
--	.fabric_pre_unlink		= usbg_port_unlink,
-+	.fabric_post_unlink		= usbg_port_unlink,
- 	.fabric_init_nodeacl		= usbg_init_nodeacl,
- 
- 	.tfc_wwn_attrs			= usbg_wwn_attrs,
---- a/include/target/target_core_fabric.h
-+++ b/include/target/target_core_fabric.h
-@@ -95,6 +95,8 @@ struct target_core_fabric_ops {
- 				struct se_lun *);
- 	void (*fabric_pre_unlink)(struct se_portal_group *,
- 				struct se_lun *);
-+	void (*fabric_post_unlink)(struct se_portal_group *se_tpg,
-+				   struct se_lun *lun);
- 	struct se_tpg_np *(*fabric_make_np)(struct se_portal_group *,
- 				struct config_group *, const char *);
- 	void (*fabric_drop_np)(struct se_tpg_np *);
 
 
