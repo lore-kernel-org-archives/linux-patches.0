@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0E847D465;
-	Mon, 31 Aug 2026 13:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B1247DF8B;
+	Mon, 31 Aug 2026 13:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184730; cv=none; b=Dk1M5doL2lGVq7Lui2daR/uuTucThVograrkDJDqTYn/9CJTrrpWRYjoENgevwP8zTVaEiGeghdIrM2kdAksgglfYSKwx07B3BmNqnELe+8OCyocbGzoKTi0AOFmBkWUUh+lWoTT9RZOOnW3RFHsvGjSxSEUBP2i8VjYhx7M5Rc=
+	t=1788184739; cv=none; b=jpWQd38f8bcj4QdasMSDmcJMraOBDvAMLGDBojiHC/0vkpA/pcjx3YemRfu6gmcscq+qj89lbm8YOpPP+OvGvhB8KcXm6i1xlMYr+fabfV3AMtTMuqzXAEhTZr/9DZnCKWnEuU6hNmqA12cxiHrrKJOwBDxVeNRQR2Av7QXPjB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184730; c=relaxed/simple;
-	bh=O7JHclBS6cMnvJ6PaCNIlGAkJfVCrpglFtAJ1BNOpO8=;
+	s=arc-20240116; t=1788184739; c=relaxed/simple;
+	bh=a3XZ4GyW+pdnDUAGj59o2L1PGq+VsykoND/1kzGUniA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzFMAgU9uyLAf1/f4ZdXu15bS0zKCWTU9STBQejOPXMekLrivJYX50ePwfd2LiFKp2OkCkm1I+iwDDYlNo4HnkYj0ny5igktojbwaEU3//VVeDLdlfGrv+LN9R3ec9AwKvbFtg9NlkRkjFF7MnVo+VHNGDq8YX+xIX5aIuP1DpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEDXDBpD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZOumaDHtgIhQyvFpqII+H4zbYm79gq2d/hgZj60lDMJ9cI/fHKC9aAKX/IbA0Q1XrJYPN8anIsc5uBl25TDYc9XSz5yJY0VauRAwZEXoFe5lc40xdd8ktFl22Lb2TQdDhnNC7N9tqPtWaPtECjWwTaAaLu+qRDydpHIQuKAxwYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXLypVoW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEDXDBpD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6401F000E9;
-	Mon, 31 Aug 2026 13:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXLypVoW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BEC1F000E9;
+	Mon, 31 Aug 2026 13:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184728;
-	bh=floG1vFzAoSAT33JTW8bNwBs+fXCZ57QoMvhbSVGjH8=;
+	s=korg; t=1788184736;
+	bh=BiuwtLzbJLataVvL3qrdzoKuTLqFC9SdmkMWG3Zuujk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OEDXDBpDFuMONxHC1C6g6mQ+6H08Dy7HU8Dy2oKp17CTPdr14u7oS+1y4BcOeP2Wt
-	 JJA8ygVkfPb9Sy4ouy2Wde22q2eLSvsxwXVwj1phPVYmTESsYfhZdGMLVCSOpj21/K
-	 5BmqBYB7y+j0VmR05uTK/03Sfj2ghQRcm4i5iJyE=
+	b=ZXLypVoWQ0pFhxJjCynY/ndEYLC6QP3tM8rbEMhRS0gkrnrMyte5tMING4K0SoOZi
+	 2mlN9oIFbL8/a94jfGHP53nF0HTTnOu06Tev8alml3Ajbcf2LTQShJa/6UuN8DBuip
+	 u5+kBG4LU1GeFwMwDWERMgLrrKj9dNrJBQFYKNBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 18/92] can: j1939: implement NETDEV_UNREGISTER notification handler
-Date: Mon, 31 Aug 2026 15:34:16 +0200
-Message-ID: <20260831133400.522897504@linuxfoundation.org>
+Subject: [PATCH 6.1 04/92] ext4: dont enable DAX on new encrypted files
+Date: Mon, 31 Aug 2026 15:34:02 +0200
+Message-ID: <20260831133359.701881832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -53,132 +54,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 7fcbe5b2c6a4b5407bf2241fdb71e0a390f6ab9a ]
+commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
 
-syzbot is reporting
+Currently, when a new encrypted regular file is created, the call to
+ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
+before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
+filesystem is mounted with "-o dax=always".
 
-  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
+EXT4_INODE_ENCRYPT then actually gets set a bit later in
+__ext4_new_inode(), when it calls fscrypt_set_context() which calls
+ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
+calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
 
-problem, for j1939 protocol did not have NETDEV_UNREGISTER notification
-handler for undoing changes made by j1939_sk_bind().
+This was intended to clear S_DAX as well.  However, this was broken by
+commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
+causes data written to the file to bypass encryption, also causing
+xfstests failures such as generic/548 (when "-o dax=always" is used).
 
-Commit 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct
-callback") expects that a call to j1939_priv_put() can be unconditionally
-delayed until j1939_sk_sock_destruct() is called. But we need to call
-j1939_priv_put() against an extra ref held by j1939_sk_bind() call
-(as a part of undoing changes made by j1939_sk_bind()) as soon as
-NETDEV_UNREGISTER notification fires (i.e. before j1939_sk_sock_destruct()
-is called via j1939_sk_release()). Otherwise, the extra ref on "struct
-j1939_priv" held by j1939_sk_bind() call prevents "struct net_device" from
-dropping the usage count to 1; making it impossible for
-unregister_netdevice() to continue.
+Fix this by simplifying the flow by making __ext4_new_inode() set
+EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
+ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
 
-Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Tested-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Fixes: 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct callback")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/ac9db9a4-6c30-416e-8b94-96e6559d55b2@I-love.SAKURA.ne.jp
-[mkl: remove space in front of label]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
+place on new encrypted inodes.  Then it doesn't need to be cleared.
+
+As a result of these simplifications, ext4_set_context() no longer needs
+to change inode flags or state when 'handle != NULL'.  Remove that too.
+
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
+Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/j1939/j1939-priv.h |  1 +
- net/can/j1939/main.c       |  3 +++
- net/can/j1939/socket.c     | 49 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+)
+ fs/ext4/crypto.c | 40 ++++++++++++++++++++--------------------
+ fs/ext4/ialloc.c |  4 ++++
+ 2 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/net/can/j1939/j1939-priv.h b/net/can/j1939/j1939-priv.h
-index 1d3d5d0551e0f..cf26352d1d8ce 100644
---- a/net/can/j1939/j1939-priv.h
-+++ b/net/can/j1939/j1939-priv.h
-@@ -214,6 +214,7 @@ void j1939_priv_get(struct j1939_priv *priv);
+diff --git a/fs/ext4/crypto.c b/fs/ext4/crypto.c
+index 8292494a9b6c8..8497f6125a8eb 100644
+--- a/fs/ext4/crypto.c
++++ b/fs/ext4/crypto.c
+@@ -150,7 +150,13 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 	if (inode->i_ino == EXT4_ROOT_INO)
+ 		return -EPERM;
  
- /* notify/alert all j1939 sockets bound to ifindex */
- void j1939_sk_netdev_event_netdown(struct j1939_priv *priv);
-+void j1939_sk_netdev_event_unregister(struct j1939_priv *priv);
- int j1939_cancel_active_session(struct j1939_priv *priv, struct sock *sk);
- void j1939_tp_init(struct j1939_priv *priv);
+-	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
++	/*
++	 * For new encrypted inodes, S_DAX is never set in the first place.
++	 *
++	 * For existing inodes, this is called only on empty directories.  ext4
++	 * never sets S_DAX on directories.
++	 */
++	if (WARN_ON_ONCE(IS_DAX(inode)))
+ 		return -EINVAL;
  
-diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
-index b45f834ff2cf6..6bbe75d2211d5 100644
---- a/net/can/j1939/main.c
-+++ b/net/can/j1939/main.c
-@@ -377,6 +377,9 @@ static int j1939_netdev_notify(struct notifier_block *nb,
- 		j1939_sk_netdev_event_netdown(priv);
- 		j1939_ecu_unmap_all(priv);
- 		break;
-+	case NETDEV_UNREGISTER:
-+		j1939_sk_netdev_event_unregister(priv);
-+		break;
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
+@@ -169,6 +175,14 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 	 */
+ 
+ 	if (handle) {
++		/*
++		 * __ext4_new_inode() should have already set the encrypt flag
++		 * on the inode and avoided enabling inline data.
++		 */
++		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
++			return -EINVAL;
++		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
++			return -EINVAL;
+ 		/*
+ 		 * Since the inode is new it is ok to pass the
+ 		 * XATTR_CREATE flag. This is necessary to match the
+@@ -176,21 +190,10 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 		 * function with the credits allocated for the new
+ 		 * inode.
+ 		 */
+-		res = ext4_xattr_set_handle(handle, inode,
+-					    EXT4_XATTR_INDEX_ENCRYPTION,
+-					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
+-					    ctx, len, XATTR_CREATE);
+-		if (!res) {
+-			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-			ext4_clear_inode_state(inode,
+-					EXT4_STATE_MAY_INLINE_DATA);
+-			/*
+-			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-			 * S_DAX may be disabled
+-			 */
+-			ext4_set_inode_flags(inode, false);
+-		}
+-		return res;
++		return ext4_xattr_set_handle(handle, inode,
++					     EXT4_XATTR_INDEX_ENCRYPTION,
++					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
++					     ctx, len, XATTR_CREATE);
  	}
  
- 	j1939_priv_put(priv);
-diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
-index c8173cd34433c..2c15614ea7dde 100644
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -1300,6 +1300,55 @@ void j1939_sk_netdev_event_netdown(struct j1939_priv *priv)
- 	read_unlock_bh(&priv->j1939_socks_lock);
- }
+ 	res = dquot_initialize(inode);
+@@ -211,10 +214,7 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 				    ctx, len, 0);
+ 	if (!res) {
+ 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-		/*
+-		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-		 * S_DAX may be disabled
+-		 */
++		/* Update inode->i_flags to set S_ENCRYPTED. */
+ 		ext4_set_inode_flags(inode, false);
+ 		res = ext4_mark_inode_dirty(handle, inode);
+ 		if (res)
+diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
+index be057f7ddc24d..7e6555fb650db 100644
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -996,6 +996,8 @@ struct inode *__ext4_new_inode(struct user_namespace *mnt_userns,
+ 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
+ 		if (err)
+ 			goto out;
++		if (encrypt)
++			i_flags |= EXT4_ENCRYPT_FL;
+ 	}
  
-+void j1939_sk_netdev_event_unregister(struct j1939_priv *priv)
-+{
-+	struct sock *sk;
-+	struct j1939_sock *jsk;
-+	bool wait_rcu = false;
-+
-+rescan: /* The caller is holding a ref on this "priv" via j1939_priv_get_by_ndev(). */
-+	read_lock_bh(&priv->j1939_socks_lock);
-+	list_for_each_entry(jsk, &priv->j1939_socks, list) {
-+		/* Skip if j1939_jsk_add() is not called on this socket. */
-+		if (!(jsk->state & J1939_SOCK_BOUND))
-+			continue;
-+		sk = &jsk->sk;
-+		sock_hold(sk);
-+		read_unlock_bh(&priv->j1939_socks_lock);
-+		/* Check if j1939_jsk_del() is not yet called on this socket after holding
-+		 * socket's lock, for both j1939_sk_bind() and j1939_sk_release() call
-+		 * j1939_jsk_del() with socket's lock held.
-+		 */
-+		lock_sock(sk);
-+		if (jsk->state & J1939_SOCK_BOUND) {
-+			/* Neither j1939_sk_bind() nor j1939_sk_release() called j1939_jsk_del().
-+			 * Make this socket no longer bound, by pretending as if j1939_sk_bind()
-+			 * dropped old references but did not get new references.
-+			 */
-+			j1939_jsk_del(priv, jsk);
-+			j1939_local_ecu_put(priv, jsk->addr.src_name, jsk->addr.sa);
-+			j1939_netdev_stop(priv);
-+			/* Call j1939_priv_put() now and prevent j1939_sk_sock_destruct() from
-+			 * calling the corresponding j1939_priv_put().
-+			 *
-+			 * j1939_sk_sock_destruct() is supposed to call j1939_priv_put() after
-+			 * an RCU grace period. But since the caller is holding a ref on this
-+			 * "priv", we can defer synchronize_rcu() until immediately before
-+			 * the caller calls j1939_priv_put().
-+			 */
-+			j1939_priv_put(priv);
-+			jsk->priv = NULL;
-+			wait_rcu = true;
-+		}
-+		release_sock(sk);
-+		sock_put(sk);
-+		goto rescan;
-+	}
-+	read_unlock_bh(&priv->j1939_socks_lock);
-+	if (wait_rcu)
-+		synchronize_rcu();
-+}
-+
- static int j1939_sk_no_ioctlcmd(struct socket *sock, unsigned int cmd,
- 				unsigned long arg)
- {
+ 	err = dquot_initialize(inode);
+@@ -1311,6 +1313,8 @@ struct inode *__ext4_new_inode(struct user_namespace *mnt_userns,
+ 	ei->i_extra_isize = sbi->s_want_extra_isize;
+ 	ei->i_inline_off = 0;
+ 	if (ext4_has_feature_inline_data(sb) &&
++	    /* Encrypted inodes cannot have inline data */
++	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
+ 	    (!(ei->i_flags & EXT4_DAX_FL) || S_ISDIR(mode)))
+ 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+ 	ret = inode;
 -- 
 2.53.0
 
