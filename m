@@ -1,47 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53A71FF7C7
-	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB5C3ABD91
+	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788198274; cv=none; b=LPYts81cNirHTMT1YU/6h+am/trJi8CXp2MK1vn3eDmQOd603VyFzTFV6qIAy/vzcw4LKmTaa+RuHZAPqCKOxUyKUepMG1PDD2T16O2WfVV15puNPgrrQMZlZnZtjPz+N98QaLMH2D+yav8SGx6JtIhuWFvuTYS6LoQKMD0Y1Zw=
+	t=1788198275; cv=none; b=RYqvEJ0pK6Cuj4QR5p6rmI6bFqiAgBhahqSyD7b3fhdfcoQA+yJncqauHLWCQRWFCyI0K/4roc/vHOqYszzLbh0a3ESTkAmpYFSsZ0uSgu9TbUPDdwhXwZmbl0j5vBShnwr1goxKhNS82XOEHhkmhVjDANudxvXwsGyuVSHGE38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788198274; c=relaxed/simple;
-	bh=+l/a+UB3qUaycrzGLXosMOwUslQcmOgRsf/S1fbGN+0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=vDbcQ3UL08mEF9FeBeqHZrzHW+87Ou5EspbCHkVJg4XJxVDHpLixjD0qpD3dH0+k2aRXL+ns3bVWfyeda+DD6Y3uHfQZAOCmjKd1MGCxnJWVRDrseAOs4SDB5tigsSfZzwR4hymeOhJCsVp9nLqFT+WurkR+DBEQVJ1pZ1S7bZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DQPTFI4N; arc=none smtp.client-ip=198.175.65.14
+	s=arc-20240116; t=1788198275; c=relaxed/simple;
+	bh=rtXP+ZV+ZhfZyGXoj7bFm+8ohjVE+0kKIObjn4xX2T4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=okTvSSQ+SllkSCkqcBfhiknp09RqC9jUhuoAJ4VWysfD94z9qTuUtl3Siu99DIxNTg+OSlu0qp3xI20/I4ReQXICF/6v8fmAr1v09U7BddVkv79spfA4uToYmI2+km3+xZRjvgBbzS0MnvEQMna+FqSSiyJdOjjSa5wMREEVNPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JLDSHTx1; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DQPTFI4N"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JLDSHTx1"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788198271; x=1819734271;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=+l/a+UB3qUaycrzGLXosMOwUslQcmOgRsf/S1fbGN+0=;
-  b=DQPTFI4NvyDGCeVabi++6sQmZIP30v+OlGHetq0yNT9mAEW+hMN/1Ogx
-   bPtccUrbH+5xH56GnAD9x77W6oMy7g/liA5OGSKG8HhKtZHqRM8MywN3P
-   EjOBdmij9/qidie7h7+m16FBXyJ8dRfYfSwOHfUm0hE1EqCLM4WpS6fF4
-   3ZhYyrOrcskYZlL4yW938+6ijNOyTF4XpSdEODJ3r1uBsqhNTObxX+spc
-   /Zjs9vwuewL09grdFA6/ofRq3XZ+C/kd0o0juleU1/1INkyU2vHZQ8S1y
-   uoM37iEQEJI0wgmgZByEFjuxKV5IulhT/cIubOkTumNmfYiXrG0UZzFQK
-   w==;
-X-CSE-ConnectionGUID: Bqq++uzsQOqakgT4iNNZ4w==
-X-CSE-MsgGUID: 5xrMx2vhSGaIgKu5umAnsQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="92479888"
+  t=1788198273; x=1819734273;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=rtXP+ZV+ZhfZyGXoj7bFm+8ohjVE+0kKIObjn4xX2T4=;
+  b=JLDSHTx1iDZRj+onOPJ4JBb2RQS3W6Ebzf4WjogF5j1xqVuBT7mnKGxz
+   wFyBI8KNbr/7gemhe5hEay0WWG458bYdPI1cNbpVpVvHuqGxnFC66g7YL
+   qA9DFL3CFL/T6mZwp3OMo9LH28ZU0vubnZOK7XhikFDTLZUu/nq3/xyIA
+   cEz/E7d40ojsktxy7ERAJTGv+STyPIx92nWnBhy2nEUHzzpkyKBWHSbjr
+   jWr5ozOeoXvXvXXIPo5fW/jyOxiKCNVjGVAS0VUjIHo82zWxjqmhF82dc
+   akItf7+aRnMf6scemu1DAQgrgkiUEk66NLnXgyX01B49Y/ggzcCkdJGYG
+   g==;
+X-CSE-ConnectionGUID: B2ZaLEIDSvi6DKFj2RTnGg==
+X-CSE-MsgGUID: UC90yREZSXy/c6mB8ZYP7Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="92479906"
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="92479888"
+   d="scan'208";a="92479906"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:31 -0700
-X-CSE-ConnectionGUID: sR8u0EstT9qsh8WfQoheRg==
-X-CSE-MsgGUID: ykbAgbwKTCSyKrOZH7lp7w==
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:32 -0700
+X-CSE-ConnectionGUID: 8d68QUxvSMKsXDWy2/9xmA==
+X-CSE-MsgGUID: BcaPZNCtRiuE/1NHI5wk1w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="268906935"
+   d="scan'208";a="268906944"
 Received: from aherrold-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.17])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:29 -0700
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:30 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,10 +59,12 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v11 00/23] Allow AET to use PMT as loadable module
-Date: Mon, 31 Aug 2026 10:43:58 -0700
-Message-ID: <20260831174421.13921-1-tony.luck@intel.com>
+Subject: [PATCH v11 02/23] x86/resctrl: Check if monitoring features are enabled
+Date: Mon, 31 Aug 2026 10:44:00 -0700
+Message-ID: <20260831174421.13921-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831174421.13921-1-tony.luck@intel.com>
+References: <20260831174421.13921-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,85 +73,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Requiring INTEL_PMT_TELEMETRY=y to enable AET is a functional workaround
-to enable enumeration of Application Energy Telemetry (AET) events, but
-unacceptable to many users. It results in increased configuration complexity,
-increased kernel memory footprint and inability to patch problems by unloading
-a module and loading an updated version.
+Both Intel and AMD manuals say that software must first check
+CPUID(0x7,0x0).EBX[12] to see if any monitoring features are enabled
+before checking for specific features enabled in subleaves.
 
-Add a registration function to the AET code that can be used by
-INTEL_PMT_TELEMETRY to provide the enumeration functions.
+Each of the L3-based monitoring features is gated by X86_FEATURE_L3_MON
 
-INTEL_PMT_TELEMETRY can be loaded/unloaded independently of
-resctrl file system mount/unmount. Perform enumeration on
-every mount and cleanup on every unmount.
+Add check feature bits.
 
-Patch series based on v7.3-rc1
-
+Fixes: cbc82b172638 ("x86: Add support for Intel Cache QoS Monitoring (CQM) detection")
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+v11:
+	New patch
 
-Changes since v10:
-Link: https://lore.kernel.org/all/20260729172752.11561-1-tony.luck@intel.com/
+ arch/x86/kernel/cpu/resctrl/core.c | 33 ++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
-Several cleanups prepended to the series based on v10 discussion in
-patches 1..8. See individual patches for changes to each part.
-
-Tony Luck (23):
-  x86/resctrl: Give better names to X86_FEATURE flags for monitoring
-  x86/resctrl: Check if monitoring features are enabled
-  x86/resctrl: Enumerate monitor features in rdt_get_l3_mon_config()
-  x86/resctrl: Apply Intel MBM quirk from rdt_get_l3_mon_config()
-  x86/resctrl: Delete resctrl_cpu_detect()
-  arm,x86,fs/resctrl: Replace architecture
-    resctrl_arch_{alloc,mon}_capable()
-  x86/resctrl: Add special case for Intel Haswell enumeration
-  x86/resctrl: Delete rdt_alloc_capable and rdt_mon_capable
-  fs/resctrl: Remove redundant calls to resctrl_mon_capable()
-  x86/resctrl: Honor rdt=perf option to force enable AET perf events
-  fs/resctrl: Add interface to disable a monitor event
-  arm,x86,fs/resctrl: Handle change in number of RMIDs on each mount
-  x86/resctrl: Handle systems when AET is the only resource
-  x86/resctrl: Enforce system RMID limit on AET event groups
-  x86/resctrl: Add PMT registration API for AET enumeration callbacks
-  platform/x86/intel/pmt: Register enumeration functions with resctrl
-  arm,x86/resctrl: Resolve INTEL_PMT_TELEMETRY symbols at runtime
-  fs/resctrl: Call arch code for every mount
-  x86/resctrl: Export interface to report telemetry unbind/remove
-  platform/x86/intel/pmt: Inform resctrl when MMIO maps are being
-    removed
-  x86/resctrl: Require 64-bit x86 for resctrl support
-  x86/resctrl: Simplify Kconfig options for resctrl
-  x86/resctrl: Document telemetry mount timing caveat
-
- Documentation/arch/x86/cpuinfo.rst         |   2 +-
- Documentation/filesystems/resctrl.rst      |  60 +++++++-
- include/linux/arm_mpam.h                   |   3 -
- include/linux/intel_vsec.h                 |  14 ++
- include/linux/resctrl.h                    |  74 +++++++++-
- arch/x86/include/asm/cpufeatures.h         |   4 +-
- arch/x86/include/asm/processor.h           |   4 -
- arch/x86/include/asm/resctrl.h             |  24 +--
- arch/x86/kernel/cpu/resctrl/internal.h     |  24 +--
- tools/arch/x86/include/asm/cpufeatures.h   |   4 +-
- arch/x86/kernel/cpu/amd.c                  |   3 -
- arch/x86/kernel/cpu/cpuid-deps.c           |   8 +-
- arch/x86/kernel/cpu/hygon.c                |   3 -
- arch/x86/kernel/cpu/intel.c                |   7 -
- arch/x86/kernel/cpu/resctrl/core.c         | 162 +++++++++++----------
- arch/x86/kernel/cpu/resctrl/intel_aet.c    | 132 +++++++++++++++--
- arch/x86/kernel/cpu/resctrl/monitor.c      |  71 ++++++---
- arch/x86/kernel/cpu/scattered.c            |   2 +-
- drivers/platform/x86/intel/pmt/telemetry.c |  46 +++++-
- drivers/resctrl/mpam_resctrl.c             |  44 +++---
- fs/resctrl/monitor.c                       | 112 ++++++++++----
- fs/resctrl/pseudo_lock.c                   |   6 +-
- fs/resctrl/rdtgroup.c                      |  76 ++++++----
- arch/x86/Kconfig                           |  15 +-
- arch/x86/kernel/cpu/resctrl/Makefile       |   2 +-
- 25 files changed, 620 insertions(+), 282 deletions(-)
-
-
-base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 2435eddd24eb..fcbecf677914 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -968,20 +968,27 @@ static __init bool get_rdt_mon_resources(void)
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+ 	bool ret = false;
+ 
+-	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+-		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
+-		ret = true;
+-	}
+-	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
+-		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
+-	}
+-	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
+-		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
++	/* Any monitoring at all? */
++	if (!cpu_feature_enabled(X86_FEATURE_RDT_M))
++		return false;
++
++	/* Any of the L3 monitoring features? */
++	if (cpu_feature_enabled(X86_FEATURE_L3_MON)) {
++		if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
++			resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
++			ret = true;
++		}
++		if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
++			resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
++			ret = true;
++		}
++		if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
++			resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0, NULL);
++			ret = true;
++		}
++		if (rdt_cpu_has(X86_FEATURE_ABMC))
++			ret = true;
+ 	}
+-	if (rdt_cpu_has(X86_FEATURE_ABMC))
+-		ret = true;
+ 
+ 	if (!ret)
+ 		return false;
 -- 
 2.55.0
 
