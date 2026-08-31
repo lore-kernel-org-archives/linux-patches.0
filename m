@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61705499F02;
-	Mon, 31 Aug 2026 14:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2742E4908D9;
+	Mon, 31 Aug 2026 14:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185258; cv=none; b=E3yorwjzHs7DxoYxh9nVfPzCCO3i0h54R/b8c9twzue+7wJjvpV292oEnx2Bqu4T6+lD0rUAzqxYX9xo7CMHFCq7UdvnVy0mNARTLqZ0GL0ZSbEHoAPB4KUZ0wH+nl03A4JowySBYdl3eZEWJqB5bP48lLADVyvkJlxjxZ0Ww1A=
+	t=1788185264; cv=none; b=iU1KCN5bK2HYxMriLAuWG0JCKh6gsaQqXs9j68R/UIFzhOKUpS5T3nDR01JPhymWhRD9lautMxKEEnJxe+zB8oalo8eqCaKXrb+wnc2qbB6mWEU+IPmwXXwYTZjq9O3c/A2f8D4rL3pTAf8hdMAgr1mDCr50JFDzCk6PFGbNtFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185258; c=relaxed/simple;
-	bh=ylo5z3ckQHpHqJb6a5kGpN1ON+IKcrzWvo8KcoGiEMY=;
+	s=arc-20240116; t=1788185264; c=relaxed/simple;
+	bh=qVzVUzhQXDpjC3vo0sq3GAt7f5RDtF0v9UvlMTQ/dHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgjNgqjE6UyLbgzIh5hTnGQunvieKhKrWcYTlN1Y6PnSAvsI2FKfOsqoLH3Sym6hfGGkV4OdxTMwTq+vVHpPw6fYC+Vw8FaVWdZGlu+QxL3iImM3V7uIWBElgHnjN/ZD6pvjFPuClrMdNzjBzmCz8WsrXiV934+1NsaTAFsnJG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSo9L52p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YsCa9s5GDbF01Efkps44qB3X3oDqDlDQB77b8tbpNaETetHCXOrdsAkNO+opm1Y+iWAh3KQph5tQZ6eOrNGNMlMYhkM+C4UTTzMI4hok7u20PLAiX2KyCoFvbZ9Ji+DBDSaiw1WgeuwbxqIkaSxQCQm2BLxW5+kFJNB2hNAwRKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMZYlOxc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSo9L52p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23621F000E9;
-	Mon, 31 Aug 2026 14:07:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMZYlOxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEB01F000E9;
+	Mon, 31 Aug 2026 14:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185257;
-	bh=G74TUqE3LJSD65FggfcnVDlpRs0hMfpFNB/sMBbcsCM=;
+	s=korg; t=1788185263;
+	bh=bJff/SEO/YpxVGIOkAZ+qsc0+ZWEWVcbQwIfew2HWgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RSo9L52p9Yoax1tVHMKN7tveFI27waKf8qJPlYXXvdgR/u8RSSyK76IPdVuzflrPf
-	 iQH7+RlFYTI++MjdYv9GBDboPwaCvVdjRp4zOPWN5qeO8kIsl6NdfbdWLf7s8Y7/OC
-	 XWR3E1mgm9KlCP0Xgyjp4RSuenD07cLllpKc/vKI=
+	b=yMZYlOxcWBQ4UDvlr87Tu8UoI8UGGDTf/7II6HmHnizCxPMR0fnMH/Xx289ANewv3
+	 qoliduIMhGFnn0vxdpPmqFKdNk6ts/2dm6zTGhjn4p/km0Qv3dQFwEBujx4xpNj0pW
+	 DS4qllFjsBhZyvxTmfJq5x6YqtiPYaGndcr+oxpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 06/43] bpf: Remove tst_run from lwt_seg6local_prog_ops.
-Date: Mon, 31 Aug 2026 15:35:14 +0200
-Message-ID: <20260831133358.832009876@linuxfoundation.org>
+Subject: [PATCH 5.10 08/43] jfs: add check read-only before txBeginAnon() call
+Date: Mon, 31 Aug 2026 15:35:16 +0200
+Message-ID: <20260831133358.908445995@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -54,47 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit c13fda93aca118b8e5cd202e339046728ee7dddb ]
+[ Upstream commit 0176e69743ecc02961f2ae1ea42439cd2bf9ed58 ]
 
-The syzbot reported that the lwt_seg6 related BPF ops can be invoked
-via bpf_test_run() without without entering input_action_end_bpf()
-first.
+Added a read-only check before calling `txBeginAnon` in `extAlloc`
+and `extRecord`. This prevents modification attempts on a read-only
+mounted filesystem, avoiding potential errors or crashes.
 
-Martin KaFai Lau said that self test for BPF_PROG_TYPE_LWT_SEG6LOCAL
-probably didn't work since it was introduced in commit 04d4b274e2a
-("ipv6: sr: Add seg6local action End.BPF"). The reason is that the
-per-CPU variable seg6_bpf_srh_states::srh is never assigned in the self
-test case but each BPF function expects it.
+Call trace:
+ txBeginAnon+0xac/0x154
+ extAlloc+0xe8/0xdec fs/jfs/jfs_extent.c:78
+ jfs_get_block+0x340/0xb98 fs/jfs/inode.c:248
+ __block_write_begin_int+0x580/0x166c fs/buffer.c:2128
+ __block_write_begin fs/buffer.c:2177 [inline]
+ block_write_begin+0x98/0x11c fs/buffer.c:2236
+ jfs_write_begin+0x44/0x88 fs/jfs/inode.c:299
 
-Remove test_run for BPF_PROG_TYPE_LWT_SEG6LOCAL.
-
-Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
-Reported-by: syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com
-Fixes: d1542d4ae4df ("seg6: Use nested-BH locking for seg6_bpf_srh_states.")
-Fixes: 004d4b274e2a ("ipv6: sr: Add seg6local action End.BPF")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20240710141631.FbmHcQaX@linutronix.de
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=4e89b5368baba8324e07
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/jfs/jfs_extent.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 18d8094d87591..8ec5b4d868ab9 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -9920,7 +9920,6 @@ const struct bpf_verifier_ops lwt_seg6local_verifier_ops = {
- };
+diff --git a/fs/jfs/jfs_extent.c b/fs/jfs/jfs_extent.c
+index d4e063dbb9a0b..d695157df567d 100644
+--- a/fs/jfs/jfs_extent.c
++++ b/fs/jfs/jfs_extent.c
+@@ -77,6 +77,11 @@ extAlloc(struct inode *ip, s64 xlen, s64 pno, xad_t * xp, bool abnr)
+ 	int rc;
+ 	int xflag;
  
- const struct bpf_prog_ops lwt_seg6local_prog_ops = {
--	.test_run		= bpf_prog_test_run_skb,
- };
++	if (isReadOnly(ip)) {
++		jfs_error(ip->i_sb, "read-only filesystem\n");
++		return -EIO;
++	}
++
+ 	/* This blocks if we are low on resources */
+ 	txBeginAnon(ip->i_sb);
  
- const struct bpf_verifier_ops cg_sock_verifier_ops = {
+@@ -412,6 +417,11 @@ int extRecord(struct inode *ip, xad_t * xp)
+ {
+ 	int rc;
+ 
++	if (isReadOnly(ip)) {
++		jfs_error(ip->i_sb, "read-only filesystem\n");
++		return -EIO;
++	}
++
+ 	txBeginAnon(ip->i_sb);
+ 
+ 	mutex_lock(&JFS_IP(ip)->commit_mutex);
 -- 
 2.53.0
 
