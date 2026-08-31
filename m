@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A66248A2BC;
-	Mon, 31 Aug 2026 14:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2287A49483F;
+	Mon, 31 Aug 2026 14:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185293; cv=none; b=fF0KijJOUHwkK2AFMtCt+v+D1kugyEjpLd7ePcYva6nQ3K4Bie/ayey4B+ZFWRLBP/TKAkoqP0S81fLbi/kc/ldGFkG5P5ezw3YrAO8qer9Zt0h1cBsACFlo9i77EDdpcC6js3Yvs7Bt1Q/5k9xzk0GuCLCp+pjM/wIvJK1wNbE=
+	t=1788185187; cv=none; b=C1KGJ91g/uA9m+5I7GsUXIRUHlimV8umHgCaCjXTxgaLwY7RcHOoRqjDbFdYicPr79IY6o6a3wxGGVhPnWb1NxefISdIxLUjZCDQS2mA0GSVi7wHe+l+S0EQymQVs5c1rUbliaixaZSLvZNJrrA4yp5oy40BXpPJ47ptq5xHxUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185293; c=relaxed/simple;
-	bh=Im+8XIVZg5vdQ2BKnnXL5P+iNgF0txt7FULMY9+9ssg=;
+	s=arc-20240116; t=1788185187; c=relaxed/simple;
+	bh=9jIsr5ZeOEtRY6iolzN/v3wPSMS5NRhAOGMLsA6q8zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XOZkEk6H0wpyYLcqnBpVZ4CsRyf2B1SMp0QXgpIAhFnZLGEtu2nULXBvPRi+1+fhvTiWr5M9QFyLEFet0tn339/D958b1AsXp8JAw/4vqsgMpFqrrUtJVw0Cz0yIDgEnxvJ40lLOpF0Ct3LbvxT5tcWC+V+zAi2EKFMiyq8c4wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYe93F3M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HFYidMZvUzc3sAe9jtrYzRtED3UHtcMHIlTpust/kKW0ulr7bMmjbAGICObP/qlFZj8odidimFtVmCsepH8mPy2VHrp4DSr2cvDWaCATGKYgKmDG1cubEftwWIs4rUewJ2vBrwDhsSXKUSF2O5giN/iXNXRoPtXQrNOK2E6RdHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDHeOQRj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYe93F3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D301F000E9;
-	Mon, 31 Aug 2026 14:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDHeOQRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B7B1F000E9;
+	Mon, 31 Aug 2026 14:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185291;
-	bh=gZs87srd6YCiVhvNm6VlhA+1p+VpWKEYej9bWWODCsM=;
+	s=korg; t=1788185185;
+	bh=o8oqnJQmez0ORCRexc9g51JUlQX4UKVb1cGBE5gFdPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cYe93F3MNUC34KeYmo/qFpPqDmjnKfvpR9SlIzbZT4Lp3R/75RoqB8AVDQLVTbWzb
-	 YmGrIQaRhvQvMwdidhLXpomw5yKQugmvA05MIpfOR4myJTcPcrvFZflW7kJXFA4ie1
-	 xlomqxLMgh/1ziB/TMVYsAe2c2GSch6SFMVuXwkA=
+	b=cDHeOQRjAzRySYrF+OJNx18NWyQFpxpAMnASA9/X4B5O1htMP6R+jZpxOLkWzIJaf
+	 xgJ8oYGXiGMkrDEEC74Nf1+jPBCQFZ5797cbcwAQ/iAZaHzptvGhdjVS5Sky48dH/p
+	 AVBmIc5c9MTju6g8SozpRx8JdCAserH57EHm6OLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Miguel=20Pe=C3=B1aranda?= <mig.penaranda07@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 43/43] usb: usbfs: fix use-after-free of usb_device in usbdev_release()
-Date: Mon, 31 Aug 2026 15:35:51 +0200
-Message-ID: <20260831133400.804733282@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 14/43] Revert "smb: client: use kvzalloc() for megabyte buffer in simple fallocate"
+Date: Mon, 31 Aug 2026 15:35:22 +0200
+Message-ID: <20260831133359.154636597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -44,88 +43,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Peñaranda <mig.penaranda07@gmail.com>
+This reverts commit a0c4a3e5387421ae252126a7bc29f3cd95b3cf06.
 
-commit 0dd68b5d01d022fc9c5e71c82a82b0a94d3d0671 upstream.
-
-usbdev_release() drops its reference to the struct usb_device before
-draining the list of completed async URBs, but that drain path reads back
-through the same object: free_async() calls dec_usb_memory_use_count()
-for any URB whose buffer came from the usbfs mmap() region, and its first
-statement is bus_to_hcd(ps->dev->bus).
-
-After a disconnect the usbfs reference can be the last one, in which case
-usb_put_dev() frees the device and the subsequent loop reads offset 80 of
-freed memory and uses the result as a struct usb_hcd *, which
-hcd_buffer_free_pages() then dereferences.
-
-This is reachable by an unprivileged process that has read/write access to
-a /dev/bus/usb node: mmap() the fd, submit one URB with a buffer inside the
-mapping, wait for the device to be unplugged, then munmap() and close().
-It reproduces on every attempt rather than being a race, because a live
-MAP_SHARED vma holds a reference on the struct file, so usbdev_release()
-cannot run until the last vma is gone and the freeing branch of
-dec_usb_memory_use_count() is always taken.
-
-  BUG: KASAN: slab-use-after-free in dec_usb_memory_use_count+0x3ae/0x410
-  Read of size 8 at addr ffff8880122ee050 by task poc/769
-  CPU: 1 UID: 1000 PID: 769 Comm: poc Tainted: G    B    6.12.94 #3
-
-  Call Trace:
-   dec_usb_memory_use_count+0x3ae/0x410
-   free_async+0x2aa/0x4f0
-   usbdev_release+0x375/0x460
-   __fput+0x3ea/0xb50
-   __x64_sys_close+0x86/0x100
-
-  Allocated by task 11:
-   usb_alloc_dev+0x55/0xd90
-   hub_event+0x2524/0x43d0
-
-  Freed by task 769:
-   kfree+0x121/0x360
-   device_release+0xd2/0x280
-   usb_put_dev+0x23/0x30
-   usbdev_release+0x2d8/0x460
-
-Release the device reference after the drain loop instead. Nothing between
-the two points requires it to have been dropped.
-
-Fixes: f7d34b445abc ("USB: Add support for usbfs zerocopy.")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Miguel Peñaranda <mig.penaranda07@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260810121209.795089-1-mig.penaranda07@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/devio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/smb2ops.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/devio.c
-+++ b/drivers/usb/core/devio.c
-@@ -1098,7 +1098,6 @@ static int usbdev_release(struct inode *
- 	if (!ps->suspend_allowed)
- 		usb_autosuspend_device(dev);
- 	usb_unlock_device(dev);
--	usb_put_dev(dev);
- 	put_pid(ps->disc_pid);
- 	put_cred(ps->cred);
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index a520e90adf3ec..51f8ea0c89065 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -3568,7 +3568,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	if (rc)
+ 		goto out;
  
-@@ -1107,6 +1106,7 @@ static int usbdev_release(struct inode *
- 		free_async(as);
- 		as = async_getcompleted(ps);
- 	}
-+	usb_put_dev(dev);
+-	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kzalloc(1024 * 1024, GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
+@@ -3635,7 +3635,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
  
- 	kfree(ps);
- 	return 0;
+  out:
+ 	kfree(out_data);
+-	kvfree(buf);
++	kfree(buf);
+ 	return rc;
+ }
+ 
+-- 
+2.53.0
+
 
 
