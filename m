@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E265529402;
-	Mon, 31 Aug 2026 13:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88545293F8;
+	Mon, 31 Aug 2026 13:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183875; cv=none; b=hlIXv5q01eSZlL7CHKQ1aYJ0Ula+E1+41s+emmcdXGbz5u80EPrAMHPCWC+Go5z/6fbwJkJwY9bL116Zhh5uFDSGbcR/A1cc1DRJDc7rqJOSja4njIe46nvgBq49VL1O7+kZtR0MuN4/XlMh87VE+TjciI3OFvfSEB9xG9xJCbw=
+	t=1788183877; cv=none; b=detrywcBmCQ8sYQ7xHSEEZQDgM5JwVqmxSTG7Sya/FADIUm/oVGRNYUtwTSXxHVmiQfSrazttEU31zV9k4plIwg4Dv+SZQxDmfu3TqhvGspcXhfwZLkJvpDRlo//GGEBvN6TPbM62jIDyOKlSY/jnnDPMwqEBmG0fUPVBNmzL8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183875; c=relaxed/simple;
-	bh=nFXSYCry55EdaEUWfLjYeH4SpTT0xiTGgYhF7KRr9Jg=;
+	s=arc-20240116; t=1788183877; c=relaxed/simple;
+	bh=qpWI73L8vgTIHGSXios1j7XIvTyywj6zMvBzUjPcgew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BDb/wxUiUY3eHN7WolZc1cVNAh8yiwItWchCKAeBBaZen0cXsaBdwlaHA1NM7WRtUMnb57LYwFKdQ5pGc+FPpvOQQhAo//cIkdQMcW1w6ipAvtCw/azvJqeIwUOxbLMGoqJOMhFIV2HG5mhoAyJewHMDjjiglQr0HsLYe9MQdlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f48LC4EH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=L3SzgYKMKmGmJ8yZwxXQecUiQ33BanFKY3lIJxxXcibYQneVfBrlqPt3hXX4T4okFvQ8X/oTtXb8R6qiJ6Gzs4pojjaInudkAZ3faJH0gFsxcvlEAGLcHBTixfA5coa4upERepVKihvCKd804guqQHG+pGW/v9Xzmbpkuq9dgaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ecSZE4T0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f48LC4EH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F80B1F00A3F;
-	Mon, 31 Aug 2026 13:44:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ecSZE4T0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D276A1F000E9;
+	Mon, 31 Aug 2026 13:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183873;
-	bh=AVxcecYfqKzkf+K6sEeSD8U++FsBsTuA1nkqXpso3B4=;
+	s=k20260515; t=1788183874;
+	bh=uzD/bvx2wfiQnNSbs6W6Vc/o8YOP6CDwTRIrMxm6Vvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f48LC4EHoPgv9Hh7ToWohO1CH4oQM5yNsNnN8XQD2NaQsFsMtbeZc3UnXFGt8C9rP
-	 bEyjL0oi/66pu1dn67dlcWLPv/An7UphVFK4BhPAW5T/yrhsY61JB9PCvq8pN/xOPB
-	 JSPGGFcRwMjVnwmPkKnFLoG9Gg0snRD0k9UTTXI1+zB3HZKKBywnWMOVZyHmEQjJXa
-	 sMCtHYV23kSXfciV99xS/YFsqHk63MZVeYBIGeFGcPlGRhBMo6s8rKk3Y9ViRDMi6O
-	 SymT6g7K/MMgtZWAGLvmig1tCZL7lMFOqa89fLnxrGMqDdlwVmMWItMjTy7W00Z1w2
-	 PI5W0B8DdLG/Q==
+	b=ecSZE4T0yIA/+uiMUq6s6uxwjnorPNhbFnOPsQkGCD0zziM3szpjruvDWTvgswSuI
+	 /4TtVGeMfPneUSOF0VC6GnQ45itXuWGpzpECWeg/y2P3xbN4z0U5KLU3kkm8/MCkRZ
+	 qPiE+B7Js6trrYd3YX7hw+NATysSRf/OwpYExs3ti5MHfIs+mz49bwyKoPyuVFWGQz
+	 /S2tMo7AghYxpx47Dc8emV1qPburTR5CBdgue88ErBfGQ11QLyY5U1QIS6vbP7KxYd
+	 jDm93LUJbB+Tqf0ds5ozOWtsa+9wJJVN11nbhMhr37CD9Fp8j/PmR4JltrOjINLdB3
+	 i6FSKMvIU0uZQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Rosen Penev <rosenp@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	linux-mips@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: disallow puncturing in US/CA for WH
-Date: Mon, 31 Aug 2026 09:26:22 -0400
-Message-ID: <20260831133314.4125787-354-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] mips: cps: Assemble jr.hb with an R2 ISA level
+Date: Mon, 31 Aug 2026 09:26:23 -0400
+Message-ID: <20260831133314.4125787-355-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,425 +53,410 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit ce2edf7c3910cb3222d51c0a7457b7a71703a5b1 ]
+[ Upstream commit e5d64f868e484da06f5c141c18c32c01c269625e ]
 
-FM continues to follow the BIOS/MCC policy, while WH sets
-DISALLOW_PUNCTURING for US/CA and clears it for other MCC values.
-Update the MCC handling accordingly.
+A MIPS allmodconfig built with LLVM can select CPU_MIPS32_R1 together
+with MIPS_MT_SMP. In that configuration clang invokes the integrated
+assembler with -march=mips32, and the MIPS MT path in cps-vec.S fails
+to assemble two jr.hb instructions:
 
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260515150751.df1f1fdd141f.I900c9e2e3dd722619db12ba10d0879a56a2a55f2@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+  arch/mips/kernel/cps-vec.S:376:2: error: instruction requires
+  a CPU feature not currently enabled
+
+  arch/mips/kernel/cps-vec.S:490:4: error: instruction requires
+  a CPU feature not currently enabled
+
+The earlier jr.hb in the same file is already assembled inside a .set
+MIPS_ISA_LEVEL_RAW scope. The two failing sites are reached after
+popping back to the file's base ISA level, so LLVM correctly rejects
+them for an R1 target.
+
+Wrap those jr.hb instructions in the same ISA-level push/pop used by
+the working site. This keeps the MT code unchanged while making the
+required R2 hazard-branch encoding explicit to the assembler.
+
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: iwlwifi: mld: disallow puncturing in
-US/CA for WH`
+## Tree context
 
-**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`)
+**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`,
+`make kernelversion` → `6.18.44`)
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[wifi: iwlwifi: mld]` `[disallow]` — MLD driver regulatory
-policy: block EHT channel puncturing on WH RF hardware when MCC is US or
-Canada.
-
-### Step 1.2: Tags
-**Record:**
-- **Signed-off-by:** Pagadala Yesu Anjaneyulu, Miri Korenblit
-- **Reviewed-by:** Emmanuel Grumbach (Intel iwlwifi maintainer)
-- **Link:** patch.msgid.link URL (Anubis-protected; could not fetch
-  content)
-- **No** Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org,
-  syzbot links
-
-Notable: maintainer review present; no user/fuzzer bug report.
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug described:** WH RF type does not apply the correct puncturing
-  policy during MCC (Mobile Country Code) updates. FM follows BIOS/MCC
-  policy via `iwl_puncturing_is_allowed_in_bios()`; WH should
-  unconditionally disallow puncturing in US/CA and allow it elsewhere.
-- **Symptom:** WH adapters in US/CA would not have
-  `IEEE80211_HW_DISALLOW_PUNCTURING` set, so mac80211 would accept
-  punctured channel definitions that should be blocked.
-- **Root cause (author):** Incomplete MCC handling — only FM was covered
-  in the existing `if` block; WH needs its own branch.
-- **Version info:** None in message.
-
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Despite no "fix" in the subject, this closes a
-regulatory-policy gap on supported WH hardware. Not a crash fix, but
-incorrect driver behavior on real hardware in specific regions.
+**Commit under review:** `e5d64f868e484` — *mips: cps: Assemble jr.hb
+with an R2 ISA level* (mainline, 2026-05-26). **Not** an ancestor of
+this tree (`git merge-base --is-ancestor` → exit 1). The unfixed code is
+still present at lines 376 and 490 of `arch/mips/kernel/cps-vec.S`.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 1: Commit message forensics
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/net/wireless/intel/iwlwifi/mld/mcc.c` (+11 / -2,
-  ~13 net lines)
-- **Function:** `iwl_mld_get_regdomain()`
-- **Scope:** Single-file, surgical regulatory-policy fix
+**Step 1.1 — Subject parse**
+Record: `[mips: cps]` `[assemble/wrap]` — Wrap two `jr.hb` instructions
+in R2 ISA-level `.set push`/`.set pop` blocks so LLVM's integrated
+assembler accepts them.
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** Only `IWL_CFG_RF_TYPE_FM` sets/clears
-  `DISALLOW_PUNCTURING` based on BIOS+MCC. WH (and PE) hit no branch —
-  flag never set for US/CA.
-- **After:** FM unchanged. New `else if` for `IWL_CFG_RF_TYPE_WH`: if
-  MCC is `IWL_MCC_US` (0x5553) or `IWL_MCC_CANADA` (0x4341), set
-  `DISALLOW_PUNCTURING`; otherwise clear it.
-- **Path affected:** Every MCC/regdomain update (init, firmware
-  notification, manual regdomain refresh) via `iwl_mld_get_regdomain()`.
+**Step 1.2 — Tags**
+Record:
+- `Assisted-by: Codex:GPT-5.5`
+- `Signed-off-by: Rosen Penev <rosenp@gmail.com>`
+- `Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>`
+- `Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>`
+- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable@vger.kernel.org`,
+  `Tested-by:`
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic / regulatory correctness fix
-- **Mechanism:** WH hardware uses the MLD driver
-  (`iwl_drv_is_wifi7_supported()` → RF type ≥ FM). Without the WH
-  branch, `ieee80211_chandef_usable()` in mac80211 allows punctured
-  chandefs when `DISALLOW_PUNCTURING` is not set:
+Notable: reviewed by a MIPS maintainer; merged by Thomas Bogendoerfer
+(MIPS maintainer). LLVM toolchain folks were CC'd on the mailing list
+thread.
 
-```785:787:net/mac80211/mlme.c
-        if (chandef->punctured &&
-            ieee80211_hw_check(&sdata->local->hw, DISALLOW_PUNCTURING))
-                return false;
-```
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** With `CPU_MIPS32_R1` + `MIPS_MT_SMP` (reachable via MIPS
+  `allmodconfig`) and **LLVM/clang**, integrated assembler runs with
+  `-march=mips32` (R1). Two `jr.hb` sites in `mips_cps_boot_vpes` fail
+  assembly with *"instruction requires a CPU feature not currently
+  enabled"* at lines 376 and 490.
+- **Symptom:** Kernel **build failure** (assembler error), not a runtime
+  crash.
+- **Root cause:** Those `jr.hb` instructions sit outside `.set
+  MIPS_ISA_LEVEL_RAW` scope after a `.set pop`; an earlier `jr.hb` in
+  the same file (line 212) is correctly inside such a scope.
+- **Fix approach:** Wrap each failing `jr.hb` in `.set push` / `.set
+  MIPS_ISA_LEVEL_RAW` / `.set pop`, matching the working site.
 
-FM already uses `iwl_puncturing_is_allowed_in_bios()` for the same
-countries:
-
-```716:728:drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
-bool iwl_puncturing_is_allowed_in_bios(u32 puncturing, u16 mcc)
-{
-        /* Some kind of regulatory mess means we need to currently
-disallow
-  - puncturing in the US and Canada unless enabled in BIOS.
-         */
-        switch (mcc) {
-        case IWL_MCC_US:
-                return puncturing & IWL_UEFI_CNV_PUNCTURING_USA_EN_MSK;
-        case IWL_MCC_CANADA:
-                return puncturing &
-IWL_UEFI_CNV_PUNCTURING_CANADA_EN_MSK;
-        default:
-                return true;
-        }
-}
-```
-
-### Step 2.4: Fix quality
-**Record:** Obviously correct — mirrors existing FM pattern with WH-
-specific unconditional US/CA block. Minimal diff. Low regression risk;
-only affects WH RF type during MCC updates. Comment update clarifies
-prior misleading "later always do puncturing" note.
+**Step 1.4 — Hidden bug fix?**
+Record: **Yes** — described as an assembly fix, but it is a real
+**build-breaking bug** for a valid Kconfig combination with LLVM. Not
+cosmetic.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 2: Diff analysis
 
-### Step 3.1: Blame
-**Record:** Puncturing block in `mcc.c` lines 132–140 attributed to
-commit `7e22de67e545d` (flattened history in this checkout — not the
-true origin commit). Buggy omission (WH not handled) is present in
-current tree at those lines.
+**Step 2.1 — Inventory**
+Record:
+- **File:** `arch/mips/kernel/cps-vec.S` (+6 lines, 0 removed)
+- **Function:** `mips_cps_boot_vpes` (inside `#elif
+  defined(CONFIG_MIPS_MT)` path)
+- **Scope:** Single-file, surgical (2 hunks, 3 lines each)
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+**Step 2.2 — Code flow per hunk**
 
-### Step 3.3: File history
-**Record:** `git log --oneline` on `mld/mcc.c` returns only the
-flattened import commit. History is not useful for dating the original
-FM puncturing code. Patch is **15/15** in
-`v2_20260515_miriam_rachel_korenblit_wifi_iwlwifi_updates_2026_05_14`
-series; this commit is **standalone** within `mcc.c` and does not depend
-on other series patches.
+| Hunk | Before | After |
+|------|--------|-------|
+| Site 1 (~line 375) | After `dvpe` block's `.set pop`, `jr.hb t1`
+assembled at file base ISA (R1 under LLVM) | `jr.hb` wrapped in
+temporary R2 ISA scope |
+| Site 2 (~line 489) | After VPE-exit `.set pop`, `jr.hb t0` at base ISA
+| Same R2 scope wrapper |
 
-### Step 3.4: Author context
-**Record:** Pagadala Yesu Anjaneyulu (Intel). Series collected by Miri
-Korenblit (Intel iwlwifi). Reviewed by Emmanuel Grumbach (maintainer).
+Record: Both hunks affect the `CONFIG_MIPS_MT` boot-VPE path in
+`mips_cps_boot_vpes`, reached during CPS SMP boot when MT is enabled.
 
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Uses symbols already in tree:
-`IWL_CFG_RF_TYPE_WH`, `IWL_MCC_US`, `IWL_MCC_CANADA`,
-`ieee80211_hw_set()`, `DISALLOW_PUNCTURING`. All verified present.
+**Step 2.3 — Bug mechanism**
+Record: **Build / assembler ISA-level mismatch.** `jr.hb` is a Release 2
+instruction. With `CPU_MIPS32_R1`, clang passes `-march=mips32` to the
+integrated assembler. Without `.set MIPS_ISA_LEVEL_RAW`, LLVM rejects
+`jr.hb`. This is not a runtime logic bug; emitted instructions are
+unchanged for hardware that already supports MT (which implies R2).
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original discussion
-**Record:** Local mbox `v2_20260515_miriam_rachel_korenblit_wifi_iwlwifi
-_updates_2026_05_14.mbx` contains patch `[PATCH v2 15/15]` with
-identical diff and message. `b4 dig -c` could not be run (commit not in
-tree). lore.kernel.org blocked by Anubis.
-
-### Step 4.2: Reviewers
-**Record:** Reviewed-by: Emmanuel Grumbach. Series cover lists multiple
-Intel iwlwifi developers; no stable nomination found in mbox grep.
-
-### Step 4.3: Bug report
-**Record:** No Reported-by, no syzbot, no crash trace. Issue is
-regulatory policy alignment, not a reported oops.
-
-### Step 4.4: Series context
-**Record:** Part of 15-patch iwlwifi update series (UHR, NAN, debugfs,
-PCI IDs, etc.). This patch is independently applicable — only touches
-`mcc.c`.
-
-### Step 4.5: Stable list
-**Record:** Could not search lore stable list (Anubis). No stable
-nomination found in local mbox.
+**Step 2.4 — Fix quality**
+Record:
+- **Obviously correct:** Mirrors the existing working pattern at lines
+  202–212 in `mips_cps_core_init`.
+- **Minimal:** Only assembler directives added; no instruction sequence
+  changes.
+- **Regression risk:** Very low — scoped `.set push`/`.set pop` with no
+  lock or control-flow changes.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 3: Git history investigation
 
-### Step 5.1: Key functions
-**Record:** `iwl_mld_get_regdomain()` modified.
+**Step 3.1 — Blame**
+Record: `git blame` in this stable checkout attributes all lines to an
+unrelated amdgpu cherry-pick root (`7e22de67e545d`), so per-line
+introduction dates are unreliable here. File header shows `cps-vec.S`
+dates to 2013 (Paul Burton). The unwrapped `jr.hb` sites are long-
+standing; the failure is exposed by LLVM's stricter ISA enforcement, not
+by a recent regression in this tree.
 
-### Step 5.2: Callers
-**Record:** `iwl_mld_get_regdomain()` called from:
-- `iwl_mld_get_current_regdomain()` →
-  `iwl_mld_update_changed_regdomain()`, `iwl_mld_init_mcc()`
-- `iwl_mld_apply_last_mcc()` (init path)
-- `iwl_mld_handle_update_mcc()` (firmware MCC notification)
+**Step 3.2 — Fixes: tag**
+Record: N/A — no `Fixes:` tag present.
 
-All run on normal device operation / regdomain changes — common paths
-for WH hardware users.
+**Step 3.3 — File history**
+Record: `git log --oneline -20 -- arch/mips/kernel/cps-vec.S` shows only
+the amdgpu commit (stable-tree history artifact). No prior fix for this
+issue in this tree.
 
-### Step 5.3: Callees
-**Record:** `CSR_HW_RFID_TYPE()`, `le16_to_cpu()`, `ieee80211_hw_set()`,
-`__clear_bit()`.
+**Step 3.4 — Author context**
+Record: Rosen Penev (regular contributor, often build/toolchain fixes).
+Reviewed/merged by MIPS maintainers.
 
-### Step 5.4: Reachability
-**Record:** WH devices (BE211, BE213, AX221, Killer BE1775s/i) are
-registered under `CONFIG_IWLMLD` in `pcie/drv.c`. Driver selection uses
-MLD opmode for WiFi 7 (RF ≥ FM, fw ≥ 97). WH users in US/CA hit this
-code on every MCC update. **Userspace-reachable** via normal WiFi
-operation and regdomain changes.
-
-### Step 5.5: Similar patterns
-**Record:** FM branch in same function;
-`iwl_puncturing_is_allowed_in_bios()` in `fw/regulatory.c`; TAS US/CA
-block-list logic in `mld/regulatory.c` and `mvm/fw.c` for same
-countries.
+**Step 3.5 — Dependencies**
+Record: **Standalone.** Single-patch series (v1 only). No prerequisite
+commits. Patch context matches current file (verified programmatically —
+both sites match).
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+## Phase 4: Mailing list and external research
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current `mcc.c` lines 132–140 handle only FM; WH is
-not covered. WH hardware support exists (`cfg/rf-wh.c`, PCI IDs in
-`pcie/drv.c` lines 1062–1078). Commit not yet applied.
+**Step 4.1 — Original discussion**
+Record:
+- `b4 dig -c e5d64f868e484` →
+  https://patch.msgid.link/20260507232323.489383-1-rosenp@gmail.com
+- **Series:** v1 only (no later revisions)
+- Thomas Bogendoerfer: *"applied to mips-next"*
+- Maciej W. Rozycki: called the approach *"exceedingly pedantic"* but
+  concluded *"your patch is not incorrect and fixes a real problem"* →
+  `Reviewed-by:`
+- **No explicit `Cc: stable` nomination** in thread
+- **No NAKs**
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Target hunk matches current file
-structure exactly. No conflicting changes in recent tree history for
-this file.
+**Step 4.2 — Reviewers**
+Record: `b4 dig -w` — CC'd: `linux-mips@vger.kernel.org`, Thomas
+Bogendoerfer, Nathan Chancellor, Nick Desaulniers, LLVM list, LKML.
 
-### Step 6.3: Related fixes already present?
-**Record:** FM puncturing logic already in tree. No WH branch found. No
-duplicate fix.
+**Step 4.3 — Bug report**
+Record: N/A — no external bug tracker link. Failure described concretely
+in commit message with assembler error text and line numbers.
 
----
+**Step 4.4 — Related patches**
+Record: Maciej noted a broader cleanup (wrap entire `CONFIG_MIPS_MT`
+block, redefine `MIPS_ISA_LEVEL_RAW` per word size) as future work —
+**not required** for this fix.
 
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** **IMPORTANT** — `drivers/net/wireless/intel/iwlwifi` (Intel
-WiFi, widely deployed). WH = WiFi 7 adapters (BE211/BE213/Killer
-BE1775).
-
-### Step 7.2: Activity
-**Record:** iwlwifi MLD actively developed; WH is current-generation
-hardware in this tree.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Who is affected
-**Record:** Users with **WH RF Intel WiFi 7 adapters**
-(`CONFIG_IWLMLD=y/m`) in **US or Canada**. Not universal; driver- and
-region-specific.
-
-### Step 8.2: Trigger conditions
-**Record:** WH device boot, MCC update from firmware/BIOS, or regdomain
-change while MCC is US (0x5553) or Canada (0x4341). Common on WH laptops
-in North America. Unprivileged users indirectly trigger via normal WiFi
-stack operation.
-
-### Step 8.3: Failure mode severity
-**Record:** **Incorrect regulatory behavior** — punctured EHT channels
-allowed when they must be disallowed. Not a kernel crash, UAF, or data
-corruption. Potential FCC/ISED non-compliance and possible
-connectivity/regulatory mismatch with firmware. **Severity: MEDIUM**
-(regulatory/hardware correctness, not system stability).
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Corrects regulatory policy on supported WH hardware in
-  US/CA; aligns with FM precedent in same function.
-- **Risk:** Very low — 9 lines of logic, WH-only, maintainer-reviewed.
-- **Ratio:** Moderate benefit for WH US/CA users; very low risk.
+**Step 4.5 — Stable list**
+Record: Not searched on lore stable list (no indication of prior stable
+discussion). Absence of stable nomination is not a negative signal per
+review instructions.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 5: Code semantic analysis
 
-### Step 9.1: Evidence summary
+**Step 5.1 — Key functions**
+Record: `mips_cps_boot_vpes` (assembly leaf in `cps-vec.o`)
 
-**FOR backport:**
-- Real bug on supported WH hardware in this tree
-- Small, surgical, maintainer-reviewed fix
-- FM already has analogous logic; WH was an oversight
-- WH adapters (BE211, BE213, Killer BE1775) are in `pcie/drv.c` for
-  6.18.44
-- Hardware-specific regulatory policy fix (stable-acceptable category)
-- Clean apply to current tree
+**Step 5.2 — Callers**
+Record: `cps-vec.o` is linked when `CONFIG_MIPS_CPS=y`
+(`arch/mips/kernel/Makefile:61`). `mips_cps_boot_vpes` is part of CPS
+secondary-core/VPE boot vector code — early boot, not userspace-
+reachable, but required for SMP bring-up on CPS platforms.
 
-**AGAINST backport:**
-- No crash, security issue, data corruption, or deadlock
-- No user reports or fuzzer findings
-- Pure regulatory/policy fix without demonstrated functional breakage
-- Part of a larger feature series (though this hunk is independent)
-- Stable rules emphasize crash/security/corruption class issues
+**Step 5.3 — Callees**
+Record: MT ASE coprocessor ops (`dvpe`, `evpe`, `mfc0`/`mtc0` on
+MVPCONTROL/VPECONTROL/TCHALT). Fix only changes assembler ISA scope
+around `jr.hb`.
 
-**Unresolved:** Original lore thread content; exact mainline commit SHA;
-date WH support landed (history flattened in this checkout).
+**Step 5.4 — Reachability**
+Record: Code is compiled when `CONFIG_MIPS_CPS` and `CONFIG_MIPS_MT`
+(selected by `CONFIG_MIPS_MT_SMP`) are both enabled. Trigger for the
+**bug** is at **compile time** with LLVM + `CPU_MIPS32_R1`, not at
+runtime.
 
-### Step 9.2: Stable rules checklist
+**Step 5.5 — Similar patterns**
+Record: Same file line 212 (`mips_cps_core_init`) already wraps `jr.hb`
+inside `.set MIPS_ISA_LEVEL_RAW`. `arch/mips/kernel/entry.S`
+(`mips_ihb`) uses the same pattern. The two failing sites were
+inconsistent with established local convention.
+
+---
+
+## Phase 6: Cross-reference against local tree (6.18.44)
+
+**Step 6.1 — Buggy code present?**
+Record: **YES.** Lines 376 and 490 have bare `jr.hb` outside `.set
+MIPS_ISA_LEVEL_RAW` scope. Fix commit is **not** in this tree.
+
+**Step 6.2 — Backport complications**
+Record: **Clean apply expected.** Both patch contexts match current file
+content exactly. No conflicting changes detected.
+
+**Step 6.3 — Related fixes already present?**
+Record: **None found** in this tree for this issue.
+
+---
+
+## Phase 7: Subsystem and maintainer context
+
+**Step 7.1 — Subsystem**
+Record: **arch/mips** — platform-specific boot/SMP assembly.
+Criticality: **IMPORTANT** for MIPS CPS+MT SMP platforms and for anyone
+building MIPS kernels; not universal like mm/net, but affects real
+builders and CI.
+
+**Step 7.2 — Activity**
+Record: MIPS CPS/MT code is mature; this is a toolchain compatibility
+fix on existing code.
+
+---
+
+## Phase 8: Impact and risk assessment
+
+**Step 8.1 — Who is affected**
+Record: **Config-specific builders** — MIPS kernels with
+`CONFIG_MIPS_CPS` + `CONFIG_MIPS_MT_SMP` + `CPU_MIPS32_R1`, built with
+**LLVM/clang**. Typical trigger: `allmodconfig` CI builds; also any
+distro/toolchain vendor using clang for MIPS.
+
+**Step 8.2 — Trigger conditions**
+Record:
+- **When:** At kernel **build** time (assembler phase)
+- **How common:** Uncommon for production defconfigs (most CPS platforms
+  use R2+), but **common in kernel CI** (`allmodconfig`) and
+  increasingly relevant as LLVM MIPS support grows
+- **Userspace trigger:** No — not a runtime/security issue
+
+**Step 8.3 — Failure mode severity**
+Record: **Build failure** (hard assembler error) — severity **MEDIUM**
+for stable (blocks compilation; no runtime crash, no data corruption, no
+security exposure).
+
+**Step 8.4 — Risk/benefit**
+Record:
+- **Benefit:** Unblocks LLVM MIPS builds for valid configurations;
+  aligns with growing clang/LLVM kernel build support
+- **Risk:** Very low (6 assembler-directive lines, no logic change)
+- **Ratio:** Favorable — classic low-risk build fix
+
+---
+
+## Phase 9: Final synthesis
+
+**Evidence FOR backport:**
+- Fixes a **real, reproducible build failure** (documented assembler
+  errors)
+- Falls under stable **BUILD FIX** exception category
+- Small, surgical, maintainer-reviewed
+- Buggy code exists in 6.18.44; patch applies cleanly
+- Standalone, no dependencies
+- Matches established pattern already used in the same file
+
+**Evidence AGAINST backport:**
+- Only affects a **niche Kconfig** (`allmodconfig` + R1 + MT_SMP + CPS +
+  LLVM)
+- **No runtime user impact** on already-built/deployed kernels
+- Reviewer noted a cleaner long-term approach exists (not blocking)
+
+**Stable rules checklist:**
 | Criterion | Result |
 |-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — simple MCC check;
+| 1. Obviously correct and tested? | **PASS** — mirrors working site;
 Reviewed-by maintainer |
-| 2. Fixes real bug affecting users? | **PASS** — WH US/CA users get
-wrong puncturing policy |
-| 3. Important issue? | **PASS (borderline)** — regulatory correctness
-on active hardware, not crash class |
-| 4. Small and contained? | **PASS** — 1 file, ~11 lines |
-| 5. No new features/APIs? | **PASS** — enforces existing
-`DISALLOW_PUNCTURING` flag |
-| 6. Applies to local tree? | **PASS** — buggy code and WH support both
-present in 6.18.44 |
+| 2. Fixes real bug affecting users? | **PASS** — blocks kernel
+compilation for valid config |
+| 3. Important issue? | **PASS** (moderate) — build fix, not
+crash/corruption |
+| 4. Small and contained? | **PASS** — 6 lines, 1 file |
+| 5. No new features/APIs? | **PASS** — assembler directives only |
+| 6. Can apply to local tree? | **PASS** — context verified |
 
-### Step 9.3: Exception category
-**Record:** Hardware-specific regulatory workaround for WH RF in US/CA —
-analogous to existing FM puncturing policy and other iwlwifi US/CA
-regulatory handling (TAS block lists).
-
-### Step 9.4: Decision rationale
-For **6.18.44**, WH WiFi 7 hardware is fully supported under
-`CONFIG_IWLMLD`, but `iwl_mld_get_regdomain()` omits WH from puncturing
-restrictions that FM already enforces. Without this fix, WH adapters in
-US/Canada incorrectly permit EHT channel puncturing. The fix is minimal,
-obviously correct, independently applicable, and corrects wrong behavior
-on shipping hardware in this tree. It does not meet the strongest stable
-signals (crash/security/corruption), but it is a real, user-visible
-regulatory bug on supported hardware with very low backport risk.
+**Exception category:** **BUILD FIX** (#4 in stable exceptions)
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message and local mbox
-- **[Phase 1]** Confirmed no Fixes:/Reported-by:/syzbot tags
-- **[Phase 2]** Read full diff; verified FM and new WH branches
-- **[Phase 2]** Read `net/mac80211/mlme.c:785-787` —
-  `DISALLOW_PUNCTURING` gates punctured chandefs
-- **[Phase 2]** Read `fw/regulatory.c:716-728` — FM US/CA BIOS
-  puncturing policy
-- **[Phase 3]** `git describe HEAD` → v6.18.44; Makefile VERSION 6.18.44
-- **[Phase 3]** `git blame -L 130,145 mcc.c` — puncturing block present,
-  FM-only
-- **[Phase 3]** Read local mbox cover + patch 15/15 — standalone in
-  mcc.c
-- **[Phase 4]** Read `v2_20260515_miriam_rachel_korenblit_wifi_iwlwifi_u
-  pdates_2026_05_14.mbx` — no stable Cc found
-- **[Phase 4]** WebFetch lore/patch.msgid.link — blocked (Anubis)
-- **[Phase 4]** `b4 dig` — commit not in tree; could not match by SHA
-- **[Phase 5]** Grep `iwl_mld_get_regdomain` — 4 call sites in mcc.c
-- **[Phase 5]** Read `iwl-drv.c:180-183,1861-1864` — WH uses MLD opmode
-  (RF ≥ FM)
-- **[Phase 5]** Read `pcie/drv.c:1062-1078` — WH PCI device entries
-  present
-- **[Phase 5]** Read `cfg/rf-wh.c` — BE211, BE213, AX221, Killer BE1775
-  names
-- **[Phase 6]** Read current `mcc.c:132-140` — FM-only, WH missing (bug
-  confirmed)
-- **[Phase 6]** Grep `IWL_CFG_RF_TYPE_WH`, `IWL_MCC_US`,
-  `IWL_MCC_CANADA` — all symbols exist
-- **[Phase 7]** Confirmed `CONFIG_IWLMLD` in Kconfig/Makefile
-- **[Phase 8]** Assessed impact: WH + US/CA + MLD path; regulatory
-  MEDIUM severity
-- **UNVERIFIED:** Exact mainline commit date; lore reviewer discussion
-  beyond mbox headers
+- [Phase 1] `git show e5d64f868e484` — parsed full commit message and
+  tags
+- [Phase 1] Tags: Reviewed-by Maciej W. Rozycki; no Fixes/Reported-
+  by/Cc:stable
+- [Phase 2] Read `arch/mips/kernel/cps-vec.S` lines 198–495 — confirmed
+  two bare `jr.hb` vs wrapped site at 212
+- [Phase 2] Read `arch/mips/include/asm/compiler.h` —
+  `MIPS_ISA_LEVEL_RAW` defined as mips64r2/r5/r6 per CPU config
+- [Phase 3] `git blame` — unreliable in this stable tree (all lines →
+  unrelated root commit)
+- [Phase 3] `git merge-base --is-ancestor e5d64f868e484 HEAD` → exit 1
+  (fix not in 6.18.44)
+- [Phase 3] Python context match — both patch sites match current file
+- [Phase 4] `b4 dig -c e5d64f868e484` — lore URL found
+- [Phase 4] `b4 dig -a` — v1 only, no later revisions
+- [Phase 4] `b4 dig -w` — MIPS maintainer and LLVM folks CC'd
+- [Phase 4] `b4 dig -m /tmp/cps-jr-hb.mbx` — Thomas applied; Maciej
+  Reviewed-by, noted "fixes a real problem"
+- [Phase 5] `grep jr.hb arch/mips` — 3 sites in cps-vec.S; entry.S uses
+  same `.set MIPS_ISA_LEVEL_RAW` pattern
+- [Phase 5] `arch/mips/kernel/Makefile:61` — cps-vec.o built with
+  CONFIG_MIPS_CPS
+- [Phase 6] `git describe HEAD` / `make kernelversion` — tree is 6.18.44
+- [Phase 6] Buggy code confirmed present at lines 376, 490
+- [Phase 6] `arch/mips/Kconfig` — MIPS_MT_SMP and MIPS_CPS are
+  independently selectable options
+- [Phase 8] Failure mode: assembler error at build time, severity MEDIUM
 
-**YES**The background `git show` on `7e22de67e545d` finished: that
-commit is actually `drm/amdgpu/gfx10: replace BUG_ON() with WARN_ON()`,
-not iwlwifi work. The iwlwifi `mcc.c` lines show up under it because
-this 6.18.44 checkout has flattened history, so blame/log can’t reliably
-date when FM puncturing support or WH hardware landed.
+---
 
-That doesn’t change the backport call: WH adapters are supported in this
-tree, the FM-only puncturing logic is present, and the missing WH US/CA
-handling is a real regulatory-policy gap. Verdict remains **YES** for
-6.18.44.
+## Conclusion
 
- drivers/net/wireless/intel/iwlwifi/mld/mcc.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+For **Linux 6.18.44**, this commit fixes a legitimate LLVM/clang build
+breakage in MIPS CPS+MT SMP assembly code. It is small, maintainer-
+reviewed, applies cleanly, and matches an established in-file pattern.
+While the affected configuration is niche and the failure is at build
+time rather than runtime, **build fixes are explicitly appropriate for
+stable trees**, and LLVM support is increasingly important for kernel
+builds.
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mcc.c b/drivers/net/wireless/intel/iwlwifi/mld/mcc.c
-index 16bb1b4904f99..8502129abe493 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mcc.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mcc.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2024-2025 Intel Corporation
-+ * Copyright (C) 2024-2026 Intel Corporation
-  */
+**YES**The analysis is done for **Linux 6.18.44**.
+
+**Commit:** `e5d64f868e484` — *mips: cps: Assemble jr.hb with an R2 ISA
+level*
+
+**Problem:** With LLVM/clang and `CPU_MIPS32_R1` + `MIPS_MT_SMP` (e.g.
+MIPS `allmodconfig`), two `jr.hb` instructions in `arch/mips/kernel/cps-
+vec.S` fail assembly because they sit outside a `.set
+MIPS_ISA_LEVEL_RAW` scope.
+
+**Fix:** Wrap those two sites in the same ISA-level push/pop used
+elsewhere in the file (+6 lines, one file). Reviewed by Maciej W.
+Rozycki; applies cleanly to this tree; the unfixed code is still present
+in 6.18.44.
+
+**Verdict:** **YES** — small, maintainer-reviewed build fix with very
+low risk.
+
+ arch/mips/kernel/cps-vec.S | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/mips/kernel/cps-vec.S b/arch/mips/kernel/cps-vec.S
+index 2ae7034a3d5c4..70413c816eb03 100644
+--- a/arch/mips/kernel/cps-vec.S
++++ b/arch/mips/kernel/cps-vec.S
+@@ -373,8 +373,11 @@ LEAF(mips_cps_boot_vpes)
+ 	.set	pop
  
- #include <net/cfg80211.h>
-@@ -129,7 +129,7 @@ iwl_mld_get_regdomain(struct iwl_mld *mld,
+ 	PTR_LA	t1, 1f
++	.set	push
++	.set	MIPS_ISA_LEVEL_RAW
+ 	jr.hb	t1
+ 	 nop
++	.set	pop
+ 1:	mfc0	t1, CP0_MVPCONTROL
+ 	ori	t1, t1, MVPCONTROL_VPC
+ 	mtc0	t1, CP0_MVPCONTROL
+@@ -487,8 +490,11 @@ LEAF(mips_cps_boot_vpes)
+ 	li	t0, TCHALT_H
+ 	mtc0	t0, CP0_TCHALT
+ 	PTR_LA	t0, 1f
++	.set	push
++	.set	MIPS_ISA_LEVEL_RAW
+ 1:	jr.hb	t0
+ 	 nop
++	.set	pop
  
- 	mld->mcc_src = resp->source_id;
+ 2:
  
--	/* FM is the earliest supported and later always do puncturing */
-+	/* FM follows BIOS/MCC policy, WH disallows puncturing only in US/CA. */
- 	if (CSR_HW_RFID_TYPE(mld->trans->info.hw_rf_id) == IWL_CFG_RF_TYPE_FM) {
- 		if (!iwl_puncturing_is_allowed_in_bios(mld->bios_enable_puncturing,
- 						       le16_to_cpu(resp->mcc)))
-@@ -137,6 +137,15 @@ iwl_mld_get_regdomain(struct iwl_mld *mld,
- 		else
- 			__clear_bit(IEEE80211_HW_DISALLOW_PUNCTURING,
- 				    mld->hw->flags);
-+	} else if (CSR_HW_RFID_TYPE(mld->trans->info.hw_rf_id) ==
-+			IWL_CFG_RF_TYPE_WH) {
-+		u16 mcc = le16_to_cpu(resp->mcc);
-+
-+		if (mcc == IWL_MCC_US || mcc == IWL_MCC_CANADA)
-+			ieee80211_hw_set(mld->hw, DISALLOW_PUNCTURING);
-+		else
-+			__clear_bit(IEEE80211_HW_DISALLOW_PUNCTURING,
-+				    mld->hw->flags);
- 	}
- 
- out:
 -- 
 2.53.0
 
