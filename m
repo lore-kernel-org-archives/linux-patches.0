@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2A648382C;
-	Mon, 31 Aug 2026 14:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A423F9F45;
+	Mon, 31 Aug 2026 14:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184842; cv=none; b=sxi/D8XbGjTI08sf59xSIaMDJIDXi7BbEYx/uJDNUjFQg7PQRmTrIrdJxYtq0+OllgZq1QPIOLKXTbV696RLc1aKFpjTTyfQaPezANRPXUKQHqrSHk5VAG8X6QMT+wRgtnksHcEmow8L6HKWZgcF2fCstxeH9ENKU0Gd/GxQQKE=
+	t=1788184856; cv=none; b=DodiLgRYXCxa1J008qm2flnr9cZFwSTAVzNk1S0xCOoEpJbUiLS6CltTabafm8SmAh5CfXp1/BGa1iQknbzXDBmvRREZ1ksq8OnQ18BGf897dlq+iY1K+foaFH0EzrWhDF7tieYrzczSGi3OX+QdJ5UPKVvBBQvhxxvWPzXnHkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184842; c=relaxed/simple;
-	bh=Ec6lvPN1XIpXtkvYGpx6/+oEFu+ZJuyNCpOzy9MPKJo=;
+	s=arc-20240116; t=1788184856; c=relaxed/simple;
+	bh=aKhGFyzMQPLPXI1ouXBv/4PJbNpYjXc0iOkby7/UjlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7CkOZmnTGL607vQ2lF9wqeNoDp5OKl88UNtM4GviFEcXGMStAJo2sqyRDlb1meuZUn4itvgZtvP6sC/0XxeVNIxmVCpJXU3gXZ02DLAjFoAZaocWCeOwpgYhGOwQQl3MGdDFFI1CXN/ZhoeFHGcWNyVeXDqQWb3t5WpKKzplyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAJjXPnR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MdMTndMIv4SsH/PBN/7xAur2XhEpKsSSF4/K5rTJFOyMQeCNi9MfdV2OKlzNEMfB0AmBo580wCPPAaa1vY/r8woV7V4waZJauZC5lldFeoPsj18OVwX/IMPdyR5YeUVhooft+306YzLXWeyy299AkpZq1NX+eSFYplzTpG5mc04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmxSyf+d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAJjXPnR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AAC1F00A3D;
-	Mon, 31 Aug 2026 14:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmxSyf+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDD81F000E9;
+	Mon, 31 Aug 2026 14:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184840;
-	bh=HdapKoxAuIWKT9SewrQdswibN72Tx8qx1XIYO6gr2l0=;
+	s=korg; t=1788184854;
+	bh=sUVu/cqM7zftvvZvDTikgtlWRxYhnfzQhiuURz/HU9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WAJjXPnR0w2XPLgzMxBDrCk0dt13qz1Jo4rabah7h7FzgM/h1j047nwOzs4DU2gT5
-	 yYF6P0cUL6oGOEKCtqvLA6jGOzXwbsXC1UPL0T7rMiGYvOWgVKOw0uHsfCH+bMLo9X
-	 Ba089QJDxh2k0jxu6nlN984bRK6LJK/i3RHHMhIg=
+	b=cmxSyf+dK39OHvl5mzAZ68GHU/dSo9jo4YnPCf7hUba+JS92YIzFkHnBNFziqWdwI
+	 56S64RKYK2BMt4izJMDTEOKzwLurJFmlXLInq4kXRPvF7tLhwKVZnFNpKZ1RmDi5wL
+	 ysZqL4/oD+ZKpc77Qd9pZlhqK5mDJ5exOs6cB/H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 55/92] Bluetooth: hci_sync: Use bt_dev_err() to log error message in hci_update_event_filter_sync()
-Date: Mon, 31 Aug 2026 15:34:53 +0200
-Message-ID: <20260831133402.577118497@linuxfoundation.org>
+Subject: [PATCH 6.1 59/92] Bluetooth: hci_event: fix Set CIG Parameters error status handling
+Date: Mon, 31 Aug 2026 15:34:57 +0200
+Message-ID: <20260831133402.747092631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,32 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit da0186f19a7433d3d5607b0f61e9a3de17d1f721 ]
+[ Upstream commit db9cbcadc16e8b9f0b3ef5870f3a38ebafcbe8e0 ]
 
-Use bt_dev_err() instead of bt_dev_dbg() to log error message in
-hci_update_event_filter_sync().
+If the event has error status, return right error code and don't show
+incorrect "response malformed" messages.
 
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: f57b399c4fa1 ("Bluetooth: hci_sync: Fix accept list UAF during suspend")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0acd4eeb4b22 ("Bluetooth: hci_event: validate LE Set CIG Parameters response")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_event.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6038,7 +6038,7 @@ static int hci_update_event_filter_sync(
- 						 &b->bdaddr,
- 						 HCI_CONN_SETUP_AUTO_ON);
- 		if (err)
--			bt_dev_dbg(hdev, "Failed to set event filter for %pMR",
-+			bt_dev_err(hdev, "Failed to set event filter for %pMR",
- 				   &b->bdaddr);
- 		else
- 			scan = SCAN_PAGE;
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3793,7 +3793,8 @@ static u8 hci_cc_le_set_cig_params(struc
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
+ 
+ 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
+-	if (!cp || rp->num_handles != cp->num_cis || rp->cig_id != cp->cig_id) {
++	if (!rp->status && (!cp || rp->num_handles != cp->num_cis ||
++			    rp->cig_id != cp->cig_id)) {
+ 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
+ 		status = HCI_ERROR_UNSPECIFIED;
+ 	}
 
 
