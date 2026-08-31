@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4F2559CB1;
-	Mon, 31 Aug 2026 13:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2924559309;
+	Mon, 31 Aug 2026 13:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184040; cv=none; b=GdY1nDy3hVaAZoUMY3dtT+KeDCPv5ngoAGPusfuRBVt39t+hzhr3noxFweWZ/7f2VLWIi8PdiR7WSeRheAGyz7ix8Hu/BuABNzalY4aG4jOfklDT1V8JIAb9zr/4IKD9+zQOICPAVSXJheyDvCC6+iKMU2HU2cAos2DHh9hrDBk=
+	t=1788184041; cv=none; b=ubqJkFwraRESIO6Q4jpPm8HfH366QdSa5WqGpri0UF4N0FlUdLQhHdEGOUKHPOthqA2LjIHdFTo/RqFqFBapP5sKEabS9gl4LAQM+mfpEdu2fUR0IvZkMSnlaxUoh5Z5cY3cTMDHPyuBKpw7Z0NHo2yYedUTjjL4ijQRe1urLqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184040; c=relaxed/simple;
-	bh=kH69iWh0feqmj+H1R0EAK1lw/P8oqi7VDnJjCNhEFzU=;
+	s=arc-20240116; t=1788184041; c=relaxed/simple;
+	bh=2vswX9jpbQTPlRned2jej5ckctGRRJzxcb+71J6sBXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1koaRJIMUWi7dp3P/AmpDNWYrL4rUPg+Zed92t8oM2EHRQco3Xxfxp4k16afkzGo3P3xlsF5BUmg+LjSRtEfxQtxLl/G4i8uG4f7q08rTJeTyi3oh2CbO9YJJkSa+tw/uOVy2qjy6MYwWU+n9LuvWBzzpCj8qRAUbcd/MTRncY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4xgkruc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qIQ+Xz+IYNlkL3CN1UDJ3yQoqVcgd6Zre9RjhfoKx4Aohcn+UOw7z0HCWfFd6kX191Z2V2LtExDM+39NZyZJBUT5zbARPVtrPemRZvzSVlbI7l6o0MP3xgiHLrnw+emmPWbgVGbutVypVuvP2qqFieY0mX7Io9lUB7/lCs623lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJKFDXfn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4xgkruc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB1E1F00ACA;
-	Mon, 31 Aug 2026 13:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJKFDXfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D749E1F00A3E;
+	Mon, 31 Aug 2026 13:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184036;
-	bh=4lOq/NooncOV/CWfdrl92DytmwyQ+D8dfEVMI0s5Ajc=;
+	s=korg; t=1788184039;
+	bh=+rYEwCiV9kWHkwNI9dlFX/mPj/95Ldfh5wXia7DJGPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C4xgkruch9U8CZGZ6yj3tmf0okIaN3AIUy5lEM+bOCZad29U34H0a+TqC5FA4sLmr
-	 OUjf60y1Y1B5dpUooW0Z4qBtFG1HIoWjNAgMQu1vP3zzd/2njViDDkHFiDDO9Cyigc
-	 VlSpzMrzdid0y9vrWCe0o0bCfrMo9rBbRj39YFnw=
+	b=EJKFDXfnnF882Vr7jY1H/LOJxYsgZYlr9c1gA+jAREab/yuNdjx3oSZPEnJo6srZg
+	 9YlhCodvncfI5atZ6BJQ9ZH6nCLNPPlgB6dA+oOJVKvUgACWrGkOkDH9CDzVcgcFl5
+	 bQjHW52aOWv6nTDz7nWJKUF1NiotjY8isf8vXbKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Lucas De Marchi <ldemarchi@nvidia.com>
-Subject: [PATCH 6.18 34/83] xhci: dbgtty: Fix unregister on tty_register_driver() failure
-Date: Mon, 31 Aug 2026 15:34:10 +0200
-Message-ID: <20260831133401.184866968@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.18 52/83] xfrm: drop ESP-in-TCP packets with no ingress device
+Date: Mon, 31 Aug 2026 15:34:28 +0200
+Message-ID: <20260831133402.164827927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
 References: <20260831133359.207714926@linuxfoundation.org>
@@ -50,53 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <ldemarchi@nvidia.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-commit a916fa66a43e10f63198b6ce978badffc678821a upstream.
+commit e1d7c5ac1c246ce5775f604515de0a59fbf2116e upstream.
 
-If tty_register_driver() fails, it drops the reference, but fails to set
-the global dbc_tty_driver to NULL, causing the unregister to be called
-again when module exits.
+ESP-in-TCP receives records through the TCP strparser. handle_esp()
+restores skb->dev from the saved skb_iif before passing the packet into
+the XFRM input path.
 
-On module unload dbc_tty_exit() only gates its cleanup on the driver
-pointer being non-NULL, so it operates on the already-freed driver:
+Queued TCP data can be processed after the original ingress device has
+been removed, for example during veth or net namespace teardown. In that
+case dev_get_by_index_rcu() returns NULL. The XFRM IPv4 and IPv6 input
+paths both expect skb->dev to be valid while building the route lookup,
+so queued ESP-in-TCP data can dereference a NULL device.
 
-    module_init(xhci_hcd_init)
-      xhci_hcd_init()
-        xhci_dbc_init()                       [return value ignored]
-          dbc_tty_init()
-            tty_register_driver() fails
-              tty_driver_kref_put()           -> driver freed
-              (dbc_tty_driver left dangling)
-    ...
-    module_exit(xhci_hcd_fini)
-      xhci_hcd_fini()
-        xhci_dbc_exit()
-          dbc_tty_exit()
-            if (dbc_tty_driver)               -> true (dangling)
-              tty_unregister_driver()         -> use-after-free
+Drop the packet if the saved ingress device can no longer be resolved.
+Such a packet can no longer be routed through the normal XFRM receive
+path, and this preserves the existing behaviour for packets whose ingress
+device still exists.
 
-Fixes: 4521f1613940 ("xhci: dbctty: split dbc tty driver registration and unregistration functions.")
-Cc: stable@vger.kernel.org # v5.10
-Cc: Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Lucas De Marchi <ldemarchi@nvidia.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260806142113.2436238-8-mathias.nyman@linux.intel.com
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Assisted-by: Codex:gpt-5.4
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgtty.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/xfrm/espintcp.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -651,6 +651,7 @@ int dbc_tty_init(void)
- 		pr_err("Can't register dbc tty driver\n");
- 		tty_driver_kref_put(dbc_tty_driver);
- 		idr_destroy(&dbc_tty_minors);
-+		dbc_tty_driver = NULL;
- 	}
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -40,6 +40,11 @@ static void handle_esp(struct sk_buff *s
  
- 	return ret;
+ 	rcu_read_lock();
+ 	skb->dev = dev_get_by_index_rcu(sock_net(sk), skb->skb_iif);
++	if (!skb->dev) {
++		XFRM_INC_STATS(sock_net(sk), LINUX_MIB_XFRMINERROR);
++		kfree_skb(skb);
++		goto out;
++	}
+ 	local_bh_disable();
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family == AF_INET6)
+@@ -48,6 +53,7 @@ static void handle_esp(struct sk_buff *s
+ #endif
+ 		xfrm4_rcv_encap(skb, IPPROTO_ESP, 0, TCP_ENCAP_ESPINTCP);
+ 	local_bh_enable();
++out:
+ 	rcu_read_unlock();
+ }
+ 
 
 
