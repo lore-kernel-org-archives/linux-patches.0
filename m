@@ -1,43 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FEC47605F;
-	Mon, 31 Aug 2026 13:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ACE474258;
+	Mon, 31 Aug 2026 13:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183338; cv=none; b=uFG1JBVy0VfYmutnA511N3ideD0o82L8o31MXOSVrCE/sHPrcICwujNEhuYmufZClkF/voq/QW1ApBCaV0764WpFu/1yDvOA00ovjOxc/U3QkcCOQ64bckmNAptbBwc40AWKjPo1uCjqsiitguhYZ6JkunzYJ/2oc7mLmYzYGo8=
+	t=1788183340; cv=none; b=kHI5TagiUuil8wxjcYME31MIIuUmPX6bChMpfMx2sU/fElCyMG61vaG13M3X9TOjCEFZv2+IHRjkSwEt+LV0ico9cHg1yqUJXB+Ylw02sSp1IKQWJGWNt5YEvAatBnXLfFTsjL/w5iHLFP5FWY5LayBk/vrCZUar8uiC36/G6lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183338; c=relaxed/simple;
-	bh=z/q8QMbgimzJ8DdJc4UIkPKJOi4a/1wTS9yJfPc881w=;
+	s=arc-20240116; t=1788183340; c=relaxed/simple;
+	bh=axz5vylE4FxBOgoV1DlQWb8KgAqUuL00a1VstUYsNKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jqv/4wT16RNsDuBhOcTISfLqMkPE+d2GQdBIkzlclfTqyq0F83viYhO0VgcVHmOj2mCUqkMSGgAPs0Vp1zBbx4NljOk5DxdJ2txYF1rkot5czA1TxYWVoDCqgUd5v4fW0EKwaHmN3Rv+I3jEUV6pSBZO2IKzNRSEyQyz7O40YIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ahai/8k1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YYfZsEUMXYlKPThSo1FRxvO6IWiD4BgJz2s2bXukG4UrKfWl/N3lIeeZ4n9aBDHhS7KPiQC/mwtp82dQRUpzJ12V9TY+pBRm47rKear00wgQX4ujV5qbDSIGJQxDlzw5N9aLtdrAbi/YLtM995tOeo2FMGLdlICzQQcuzUIvE00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOHGpe3n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ahai/8k1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F851F000E9;
-	Mon, 31 Aug 2026 13:35:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOHGpe3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BA81F00A3D;
+	Mon, 31 Aug 2026 13:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183335;
-	bh=Q1t7adITbd9K62Sw4i0sIOi7F0jillbwNrJTFaehe3c=;
+	s=k20260515; t=1788183337;
+	bh=QpstxJnSY0vcdZyNSDutxF0fesjA6gCk/K78ALCzL4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ahai/8k1M0Zch7yHj2wXsC8UToI56wd1ztr4t96bnxvb3sSnUGDhI7IEEYxRcqdaA
-	 zDkuWfyAKQdOgKRPFKyLfOwNe3VYej6mGLwxYz4pHzJRr4YaGsqoOgfGpjIMazceJT
-	 oDNe7R+trovSZU3+rrueP6qfEg05kfvI53jTHpK55tzVpMWlJoadrvvj6j/X/9TmUp
-	 wE/9qA0bssuWK95+ieP9Bl7dXdlUUbBl8Sp2C+pWzSqy5xzDCf4crAfd9/TwqJofj6
-	 /xlMqPCOc3Tb/wrrpiQVNVI2aupERc7w+c9Hh1kKveD32ytF0XqbZw/N5XWSNb0BKu
-	 l9n4clVgOnu5w==
+	b=jOHGpe3nR2OxwcY4oja0MXj0lYsegH1QjBiYFc+z7mp2G3xrQrq33cslcM2mZh99E
+	 nYXDXw31cXqJoj0+8b64QkEkRBSmnthr/7981/XamXKAMiSmQz6c4k26xCr+LdyNzX
+	 qVF2xWxj6e/TvYRP4BgJeBTQ8kUVgB/DaFpEoilDDOq8awB4iRLYKXj946CrTPWlTl
+	 sLEJOfUZj1zeA0txtg0IREkIRjxyXz08Fi1uSVtkdZvUSAWtzB+rhYsVLjSna/cJNp
+	 NSCWm4NanUmlMKKQpXxK9WmTcKeOAo5TcTnI7zRmBAXbk7e3E8BSyWDGfmvPWjw6ch
+	 OwwMd5Ed0gciA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: yahia ahmed <yahia.a.abdrabou@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Stefan Berger <stefanb@linux.ibm.com>,
+	Kamlesh Kumar <kam@juniper.net>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	roberto.sassu@huawei.com,
+	dmitry.kasatkin@gmail.com,
+	paul@paul-moore.com,
+	jmorris@namei.org,
+	serge@hallyn.com,
+	linux-integrity@vger.kernel.org,
+	linux-security-module@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] platform/x86: hp-wmi: Add thermal support for board 8B2F
-Date: Mon, 31 Aug 2026 09:21:55 -0400
-Message-ID: <20260831133314.4125787-87-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] integrity: Check for NULL returned by asymmetric_key_public_key
+Date: Mon, 31 Aug 2026 09:21:56 -0400
+Message-ID: <20260831133314.4125787-88-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -47,22 +53,22 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: yahia ahmed <yahia.a.abdrabou@gmail.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-[ Upstream commit abefbbfc71f5ee50f9e549a2d143f23694d65fc2 ]
+[ Upstream commit c93a5f038ccc11ed8558ce642f62d5ede701a348 ]
 
-Added thermal support for board ID 8B2F.
+Check for a NULL pointer returned by asymmetric_key_public_key and return
+-ENOKEY in this case.
 
-Signed-off-by: yahia ahmed <yahia.a.abdrabou@gmail.com>
-Link: https://patch.msgid.link/20260522203418.28784-1-yahia.a.abdrabou@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Tested-by: Kamlesh Kumar <kam@juniper.net>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,326 +76,335 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[platform/x86: hp-wmi]` `[Add]` — Add thermal support for
-HP WMI board ID `8B2F` in the existing Victus S thermal-profile DMI
-table.
+### Step 1.1: Subject line
+**Record:** `[integrity]` `[Check]` — Add a NULL check on the return
+value of `asymmetric_key_public_key()` in asymmetric signature
+verification.
 
-### Step 1.2: Parse All Commit Message Tags
+### Step 1.2: Tags
 **Record:**
-- **Fixes:** — none
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** Ilpo Järvinen `<ilpo.jarvinen@linux.intel.com>`
-  (platform/x86 maintainer)
-- **Acked-by:** — none
-- **Link:** https://patch.msgid.link/20260522203418.28784-1-
-  yahia.a.abdrabou@gmail.com
-- **Cc: stable:** — none (expected for manual review)
-- **Signed-off-by:** yahia ahmed, Ilpo Järvinen (ignore pipeline-added
-  SOBs)
+- **Signed-off-by:** Stefan Berger `<stefanb@linux.ibm.com>` (author)
+- **Tested-by:** Kamlesh Kumar `<kam@juniper.net>`
+- **Signed-off-by:** Mimi Zohar `<zohar@linux.ibm.com>` (integrity
+  subsystem maintainer)
+- **No** Fixes:, Reported-by:, Link:, Cc: stable@vger.kernel.org,
+  Reviewed-by:, Acked-by:
 
-Notable: maintainer Reviewed-by; no syzbot/crash reports.
+Notable: maintainer sign-off plus Tested-by; no syzbot or user bug
+report.
 
-### Step 1.3: Analyze Commit Body
+### Step 1.3: Body analysis
 **Record:**
-- **Bug description:** Board `8B2F` is missing from
-  `victus_s_thermal_profile_boards`, so Victus S thermal-profile
-  handling is not activated.
-- **Symptom:** On `8B2F` hardware, platform_profile thermal switching
-  and Victus S fan/thermal WMI paths do not engage; generic fallback is
-  used instead.
-- **Version info:** None in message.
-- **Root cause:** Missing DMI board-name entry in an existing quirk
-  table.
+- **Bug:** `asymmetric_key_public_key()` can return NULL; the code
+  dereferences `pk` without checking.
+- **Symptom:** NULL pointer dereference → kernel oops in
+  `asymmetric_verify()`.
+- **Fix:** Return `-ENOKEY` and jump to the existing `out:` cleanup
+  path.
+- **Series context:** Patch 1/4 of “Add support for ML-DSA signature for
+  EVM and IMA”; v3 added patches 1/4 and 2/4 per Mimi Zohar’s review
+  comments on v2.
 
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not disguised cleanup. This is explicit hardware-enablement:
-a DMI quirk entry for a laptop board that needs the existing Victus S
-thermal path. Without it, thermal/fan behavior is wrong or absent, not
-merely cosmetic.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes — explicit NULL-dereference fix, not cosmetic cleanup.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory the Changes
+### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/platform/x86/hp/hp-wmi.c` (+4 lines)
-- **Functions/areas:** `victus_s_thermal_profile_boards[]` init table
-- **Scope:** Single-file, surgical DMI table addition
+- **File:** `security/integrity/digsig_asymmetric.c` (+4 / −0)
+- **Function:** `asymmetric_verify()`
+- **Scope:** Single-file, surgical (4 lines)
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change
 **Record:**
-- **Before:** `setup_active_thermal_profile_params()` does not match
-  board `8B2F`; `is_victus_s_board` stays false.
-- **After:** Board `8B2F` matches; `is_victus_s_board = true`,
-  `active_thermal_profile_params = &victus_s_thermal_params`.
-- **Affected path:** Module init →
-  `setup_active_thermal_profile_params()` → `thermal_profile_setup()` /
-  `is_victus_s_thermal_profile()` consumers (platform_profile, hwmon fan
-  paths).
+- **Before:** After `request_asymmetric_key()` succeeds, `pk =
+  asymmetric_key_public_key(key)` is used immediately as
+  `pk->pkey_algo`.
+- **After:** If `pk` is NULL, set `ret = -ENOKEY`, `goto out` (which
+  calls `key_put(key)`).
+- **Path:** Error handling in IMA/EVM asymmetric signature verification
+  (sig v2).
 
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Hardware quirk / missing device (DMI board) ID
-- **Mechanism:** Wrong code path for known hardware needing Victus S WMI
-  thermal commands and GPU thermal settings
+### Step 2.3: Bug mechanism
+**Record:** **Category:** NULL pointer dereference.
+**Mechanism:** `asymmetric_key_public_key()` is an inline accessor
+returning `key->payload.data[asym_crypto]`, which can be NULL. The code
+assumed it was always valid after a successful key lookup.
 
-### Step 2.4: Fix Quality
-**Record:** Obviously correct — one DMI entry pointing at existing
-`victus_s_thermal_params`. Minimal risk; no API/locking changes.
-Maintainer-reviewed.
+### Step 2.4: Fix quality
+**Record:** Obviously correct; mirrors existing `!pkey` handling in
+`restrict_link_by_digsig()` / `restrict_link_by_ca()`. Uses existing
+`out:` label. Very low regression risk.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame Changed Lines
-**Record:** `victus_s_thermal_profile_boards` table
-introduced/refactored in `d9aefb386fdc4` (Jan 2026, "fix platform
-profile values for Omen 16-wf1xxx"). Prior entries added by commits like
-`54afb047cd7eb`, `94b2a56fd4b1c`, `d4ff92dd98ad1`. The missing-board
-pattern is longstanding; this extends the same table.
+### Step 3.1: Blame
+**Record:** Lines 110–111 in the local tree were introduced in commit
+`6bda50f4333fa` (2025-11-29) when `digsig_asymmetric.c` was added. The
+missing NULL check has been present since that introduction in this
+tree.
 
-### Step 3.2: Follow Fixes Tag
-**Record:** N/A — no `Fixes:` tag.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag.
 
-### Step 3.3: Related File History
-**Record:** Recent related commits are the same pattern (add board IDs
-for Victus/Omen thermal support): `54afb047cd7eb`, `748f897511446`,
-`6e4ab59b8391a`, `d9aefb386fdc4`, etc. Standalone one-entry addition;
-not part of a multi-patch series.
+### Step 3.3: Related file history
+**Record:** On `stable/linux-6.18.y`, `digsig_asymmetric.c` appears from
+`6bda50f4333fa`. The buggy pattern is present at merge-base
+`7b923c78b50d`. Part of ML-DSA v3 series (4 patches); this commit is
+standalone and does not require patches 2–4.
 
-### Step 3.4: Author Context
-**Record:** yahia ahmed — no other hp-wmi commits in this tree.
-Reviewed/committed by Ilpo Järvinen (subsystem maintainer).
+### Step 3.4: Author context
+**Record:** Stefan Berger is a regular integrity contributor. Mimi Zohar
+(maintainer) signed off. Series included in `integrity-v7.2` pull (June
+2026).
 
 ### Step 3.5: Dependencies
-**Record:** Requires Victus S thermal infrastructure already in tree
-(`victus_s_thermal_params`, `victus_s_thermal_profile_boards`,
-`setup_active_thermal_profile_params()`). **Present in this 6.18.44
-tree.** Commit diff context (e.g. `omen_v1_legacy_thermal_params`,
-boards `8902`/`8A44`) does not match current tree; backport needs a one-
-entry addition to the current `dmi_system_id` table, not a literal
-apply.
+**Record:** No prerequisites. Applies independently of ML-DSA support
+(patches 3/4 and 4/4).
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original Patch Discussion
-**Record:** `b4 dig -c` unavailable (commit not in this checkout). `b4
-shazam` and curl/lore fetch blocked (403/Anubis). Link present but
-thread content unverified.
+### Step 4.1: Original discussion
+**Record:** Found via spinics/openwall at [PATCH v3
+1/4](https://www.spinics.net/lists/kernel/msg6157574.html). Cover
+letter: [PATCH v3
+0/4](https://www.spinics.net/lists/kernel/msg6157584.html). v3 added
+patches 1/4 and 2/4 addressing Mimi’s v2 comments. `b4 dig -c` could not
+be run (commit not in local tree); `b4 shazam` did not find message-id.
+lore.kernel.org blocked by bot protection.
 
 ### Step 4.2: Reviewers
-**Record:** Reviewed-by and Signed-off-by: Ilpo Järvinen (platform/x86
-maintainer). Full recipient list unverified.
+**Record:** CC’d: linux-integrity, linux-security-module, Mimi Zohar,
+Roberto Sassu, Eric Biggers.
 
-### Step 4.3: Bug Report
-**Record:** No external bug report or syzbot link.
+### Step 4.3: Bug report
+**Record:** No external bug report, syzbot, or sanitizer report. Found
+during ML-DSA series review (Mimi’s v2 feedback).
 
-### Step 4.4: Related Patches/Series
-**Record:** Same pattern as prior Victus board additions
-(`54afb047cd7eb` added `8BBE`/`8BD4`/`8BD5`). Standalone patch.
+### Step 4.4: Series context
+**Record:** 4-patch ML-DSA series. This patch is independently valuable;
+later patches refactor and add ML-DSA sigv3 support.
 
-### Step 4.5: Stable List History
-**Record:** Not searched successfully (lore blocked). Similar hp-wmi
-stable backports in this tree are crash/ACPI fixes, not board-ID-only
-additions.
+### Step 4.5: Stable list
+**Record:** No stable-list discussion found. Included in maintainer’s
+`integrity-v7.2` pull for mainline.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key Functions
-**Record:** `victus_s_thermal_profile_boards[]`,
-`setup_active_thermal_profile_params()`,
-`is_victus_s_thermal_profile()`, `thermal_profile_setup()`,
-`platform_profile_victus_s_set_ec()`, hwmon fan read/write paths.
+### Step 5.1: Key functions
+**Record:** `asymmetric_verify()` modified.
 
 ### Step 5.2: Callers
-**Record:** `setup_active_thermal_profile_params()` called from
-`hp_wmi_init()` before probe. `is_victus_s_thermal_profile()` used in
-thermal profile setup, hwmon fan visibility/read/write, powersource
-handler registration/cleanup.
+**Record:**
+- `integrity_digsig_verify()` in `security/integrity/digsig.c` (sig
+  types 2 and 3)
+- Callers of `integrity_digsig_verify()`:
+  - `security/integrity/ima/ima_appraise.c` — IMA signature appraisal
+  - `security/integrity/evm/evm_main.c` — EVM signature verification
 
 ### Step 5.3: Callees
-**Record:** `dmi_first_match()`, `omen_thermal_profile_set()`,
-`victus_s_gpu_thermal_profile_set()`,
-`devm_platform_profile_register()`.
+**Record:** `request_asymmetric_key()`, `asymmetric_key_public_key()`,
+`verify_signature()`, `key_put()`.
 
 ### Step 5.4: Reachability
-**Record:** Runs at boot on HP WMI laptops. Affects any user of
-`platform_profile` sysfs and hwmon fan interfaces on board `8B2F`.
-Userspace-reachable on affected hardware.
+**Record:** Reachable from file access when
+`CONFIG_INTEGRITY_ASYMMETRIC_KEYS` and IMA/EVM appraisal are enabled. On
+this tree, IMA rejects sig version ≥ 3 before verification; sig v2
+asymmetric verification is the affected path.
 
-### Step 5.5: Similar Patterns
-**Record:** Same table pattern as `8BBE`, `8BD4`, `8BD5`, `8C99`, etc.
-Board `8B2F` also appears in `sound/soc/amd/yc/acp6x-mach.c` (HP OMEN
-Gaming Laptop 16-ap0xxx audio quirk, commit `65aabf8896687`), confirming
-real hardware in the ecosystem.
+### Step 5.5: Similar patterns
+**Record:** `crypto/asymmetric_keys/restrict.c` checks `if (!pkey)
+return -ENOPKG`. `verify_signature()` checks `!key->payload.data[0]`
+(same slot as `asym_crypto`) — but only after `asymmetric_verify()`
+would have already crashed on NULL `pk`.
 
 ---
 
 ## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Does Buggy Code Exist?
-**Record:** **Yes.** Local tree is **v6.18.44** (`VERSION=6`,
-`PATCHLEVEL=18`, `SUBLEVEL=44`). `victus_s_thermal_profile_boards`
-exists; **`8B2F` is absent.** Victus S infrastructure present since
-`d9aefb386fdc4` and related commits.
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Local tree is **v6.18.43** (`stable/linux-6.18.y`,
+`HEAD` detached). `security/integrity/digsig_asymmetric.c` lines 110–111
+lack the NULL check:
 
-### Step 6.2: Backport Complications
-**Record:** Minor adaptation needed — commit diff context differs from
-current tree (no `omen_v1_legacy_thermal_params`; fewer/different
-entries). Actual backport: add one `dmi_system_id` entry with
-`victus_s_thermal_params`. Clean, low conflict risk.
+```110:111:security/integrity/digsig_asymmetric.c
+        pk = asymmetric_key_public_key(key);
+        pks.pkey_algo = pk->pkey_algo;
+```
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** No existing `8B2F` entry in hp-wmi or grep across tree
-(except unrelated nls/audio entries).
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — 4 lines at a stable location. Minor
+field-name difference (`pks.digest` vs `pks.m` in the submitted diff)
+does not affect patch placement.
+
+### Step 6.3: Related fixes already present?
+**Record:** No — grep shows no existing NULL check at this site.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## Phase 7: Subsystem Context
 
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/platform/x86/hp/` — **IMPORTANT** (laptop platform
-driver; thermal/fan/power management for HP hardware).
+### Step 7.1: Subsystem criticality
+**Record:** **security/integrity** (IMA/EVM) — **IMPORTANT** (security-
+sensitive, affects systems with integrity appraisal enabled).
 
-### Step 7.2: Subsystem Activity
-**Record:** Actively developed — multiple hp-wmi thermal/board commits
-in 2025–2026 in this tree.
+### Step 7.2: Activity
+**Record:** Actively maintained; recent IMA/EVM commits on this branch.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-### Step 8.1: Who Is Affected
-**Record:** Owners of HP laptops with DMI board name `8B2F` (HP
-OMEN/Victus family; corroborated by audio quirk for 16-ap0xxx line).
+### Step 8.1: Who is affected
+**Record:** Systems with `CONFIG_INTEGRITY_ASYMMETRIC_KEYS` and IMA/EVM
+digital-signature appraisal. Not universal, but important for
+secured/enterprise deployments.
 
-### Step 8.2: Trigger Conditions
-**Record:** Boot on matching hardware with `CONFIG_HP_WMI`. Common for
-affected laptop owners; not a race or rare error path.
+### Step 8.2: Trigger conditions
+**Record:** A signature references a key ID that resolves to an
+asymmetric key whose `asym_crypto` payload is NULL. With standard
+X.509-loaded RSA/ECDSA keys this is unlikely; the subsystem already
+treats `!pkey` as a valid error state elsewhere. More relevant once non-
+standard key types (e.g. ML-DSA) are introduced. Trigger does not
+require ML-DSA patch 4/4 on this tree, but practical likelihood on
+6.18.y without ML-DSA is low.
 
-### Step 8.3: Failure Mode Severity
-**Record:** Without fix: wrong thermal profile path — no Victus S
-platform_profile modes, incorrect fan WMI path, no GPU thermal mode
-control via driver. **Severity: MEDIUM** (functional/hardware issue;
-BIOS still provides baseline thermal management; not a kernel crash).
+### Step 8.3: Failure mode severity
+**Record:** **Kernel oops** (NULL dereference at `pk->pkey_algo`) —
+**CRITICAL** if triggered.
 
-### Step 8.4: Risk-Benefit
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Enables correct thermal/fan behavior on real hardware for
-  stable users who cannot upgrade kernels.
-- **Risk:** Very low — 4 lines, existing data structure, no behavior
-  change for other boards.
-- **Ratio:** Favorable.
+- **Benefit:** Prevents crash in security verification path; returns
+  proper error instead.
+- **Risk:** Very low — 4 lines, uses existing cleanup, no API change.
+- **Ratio:** Favorable for stable despite rare trigger on current 6.18.y
+  key types.
 
 ---
 
 ## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Explicit device/quirk ID addition to existing driver (stable-
-  rules.rst: "just add a device ID" or "hardware quirk")
-- Trivial, obviously correct, maintainer-reviewed
-- Real hardware (`8B2F` confirmed in tree via audio DMI quirk)
-- Required infrastructure exists in v6.18.44
-- Enables platform_profile and hwmon fan control on affected laptops
+- Real NULL-deref bug in security code
+- Small, surgical, maintainer-signed fix with Tested-by
+- Buggy code exists in v6.18.43
+- Applies cleanly and standalone
+- IMA/EVM verification path is security-critical
+- Consistent with existing `!pkey` handling in asymmetric key code
 
 **AGAINST backport:**
-- Not a crash/security/corruption fix
-- No user bug report or syzbot evidence
-- Commit diff does not apply literally to current tree (needs minor
-  adaptation)
-- Mailing list discussion unverified
+- No user report or fuzzer finding
+- Added during ML-DSA series review; practical trigger on 6.18.y without
+  ML-DSA may be very rare
+- Standard X.509 keys normally always populate `asym_crypto`
+- IMA already rejects sig v3 on this tree, limiting some future trigger
+  scenarios
 
-**UNRESOLVED:**
-- Exact laptop model and user testing details from lore thread
-- Whether reviewers nominated `Cc: stable`
+**Unresolved:** No confirmed production crash on 6.18.y with current key
+types only.
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** (maintainer reviewed; pattern
-   proven by sibling board entries)
-2. Fixes real bug affecting users? **PASS** (hardware quirk —
-   wrong/missing thermal path on `8B2F`)
-3. Important issue? **PASS** (hardware quirk per stable rules;
-   functional thermal/fan management)
-4. Small and contained? **PASS** (4 lines, one file)
-5. No new features/APIs? **PASS** (DMI table entry only; no new APIs)
-6. Can apply to local tree? **PASS** (minor one-entry adaptation to
-   current table)
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** (simple NULL check; Tested-by;
+   maintainer SOB)
+2. Fixes a real bug? **PASS** (NULL deref is a real defect, even if
+   trigger is edge-case)
+3. Important issue? **PASS** (kernel oops in integrity verification —
+   HIGH/CRITICAL)
+4. Small and contained? **PASS** (4 lines, one function)
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS**
 
-### Step 9.3: Exception Category
-**Record:** Hardware quirk / device ID addition (DMI board ID in
-existing hp-wmi driver). Matches `Documentation/process/stable-kernel-
-rules.rst` line 15: "just add a device ID" and line 19: "hardware
-quirk."
+### Step 9.3: Exception categories
+**Record:** None (not a quirk, device ID, or build fix).
 
-### Step 9.4: Decision Rationale
-For **v6.18.44**, the Victus S thermal framework is present but board
-`8B2F` is missing. This is the same class of change as prior Victus
-board additions — a DMI quirk entry enabling correct thermal and fan
-behavior on real HP hardware. It is small, maintainer-reviewed, low
-risk, and explicitly within stable policy for device-ID/quirk additions.
-The commit should be adapted (not cherry-picked verbatim) to the current
-`dmi_system_id` table layout.
+### Step 9.4: Decision rationale
+
+For **linux-6.18.y** specifically: the vulnerable code is present, the
+fix is minimal and obviously correct, and a NULL dereference in the
+IMA/EVM signature path is exactly the kind of security-subsystem defect
+stable trees should fix. While the trigger may be uncommon with today’s
+RSA/ECDSA-only keyrings, the kernel already acknowledges that asymmetric
+keys can lack a public-key payload (`restrict.c`), and this path lacked
+the corresponding guard. The patch is independent of the ML-DSA feature
+commits and safe to backport alone.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body; no Fixes/Reported-by/syzbot
-- **[Phase 2]** Diff: +4 lines, one DMI entry with
-  `victus_s_thermal_params`
-- **[Phase 3]** `git describe HEAD`: v6.18.44; `git blame` on table:
-  `d9aefb386fdc4` refactor; related commits `54afb047cd7eb`,
-  `6e4ab59b8391a`
-- **[Phase 3]** `git log --grep="8B2F"`: no hp-wmi commit in tree
-- **[Phase 4]** `b4 dig -c`: failed (commit not in checkout); `b4
-  shazam`: message-id unknown; lore/patch.msgid.link: blocked
-  (403/Anubis)
-- **[Phase 5]** Read `setup_active_thermal_profile_params()`,
-  `is_victus_s_thermal_profile()`, `thermal_profile_setup()`, hwmon
-  paths
-- **[Phase 5]** `grep 8B2F`: found in `acp6x-mach.c` (HP OMEN 16-ap0xxx
-  audio quirk, `65aabf8896687`)
-- **[Phase 6]** `grep 8B2F` in hp-wmi.c: absent;
-  `victus_s_thermal_params` and table exist
-- **[Phase 6]** Commit diff context (`omen_v1_legacy_thermal_params`,
-  boards `8902`/`8A44`) not in current tree — adaptation required
-- **[Phase 7]** hp-wmi actively maintained; Ilpo Järvinen is maintainer
-- **[Phase 8]** Impact: thermal/fan/platform_profile on board `8B2F`;
-  severity MEDIUM; risk very low
-- **[Phase 9]** `Documentation/process/stable-kernel-rules.rst` line 15
-  confirms device-ID additions are stable-appropriate
+- **[Phase 1]** Parsed commit message and tags from user query and
+  spinics/openwall
+- **[Phase 2]** Read `security/integrity/digsig_asymmetric.c`; confirmed
+  4-line NULL check at `asymmetric_key_public_key()` call site
+- **[Phase 2]** Read `include/keys/asymmetric-type.h`; confirmed
+  `asymmetric_key_public_key()` returns `key->payload.data[asym_crypto]`
+  with no NULL guarantee
+- **[Phase 3]** `git describe HEAD` → `v6.18.43`; Makefile VERSION
+  6.18.43
+- **[Phase 3]** `git blame -L 108,115
+  security/integrity/digsig_asymmetric.c` → `6bda50f4333fa`
+- **[Phase 3]** `git show 7b923c78b50d:...` → buggy code at merge-base
+- **[Phase 3]** `git branch` → detached from `stable/linux-6.18.y`
+- **[Phase 4]** spinics/openwall: found v3 1/4 and 0/4; v3 added patches
+  per Mimi’s comments
+- **[Phase 4]** `b4 shazam` — message-id not found; `b4 dig -c` not run
+  (commit absent locally)
+- **[Phase 4]** lore.kernel.org — blocked (bot protection)
+- **[Phase 4]** Web search — commit `c93a5f0`, integrity-v7.2 pull
+  confirmed
+- **[Phase 5]** `grep asymmetric_verify` — callers in `digsig.c`,
+  `ima_appraise.c`, `evm_main.c`
+- **[Phase 5]** Read `crypto/asymmetric_keys/restrict.c` — `!pkey`
+  checks at lines 141 and 183
+- **[Phase 5]** Read `crypto/asymmetric_keys/signature.c` —
+  `verify_signature()` checks `!key->payload.data[0]` but only after
+  `asymmetric_verify()` would crash
+- **[Phase 6]** Confirmed NULL check absent in current tree at lines
+  110–111
+- **[Phase 6]** Read `ima_appraise.c` lines 335–338 — sig v3 rejected
+  before `integrity_digsig_verify()`
+- **[Phase 8]** `grep mldsa` in `crypto/asymmetric_keys` — no ML-DSA
+  support in this tree
+- **UNVERIFIED:** Exact Mimi Zohar review text (follow-up to v2 on
+  spinics not fetched); no production crash report
 
-**YES**
+**YES**The background history search finished. In this
+`stable/linux-6.18.y` checkout, `digsig_asymmetric.c` and the
+`asymmetric_verify()` path without the NULL check both trace back to
+commit `6bda50f4333fa` (Nov 29, 2025), when that file was added. The
+vulnerable code is present in the current v6.18.43 tree, so the backport
+analysis stands: **YES**.
 
- drivers/platform/x86/hp/hp-wmi.c | 4 ++++
+ security/integrity/digsig_asymmetric.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 550d4b39a92af..3f9c718123a85 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -158,6 +158,10 @@ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BAB") },
- 		.driver_data = (void *)&omen_v1_thermal_params,
- 	},
-+	{
-+		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8B2F") },
-+		.driver_data = (void *)&victus_s_thermal_params,
-+	},
- 	{
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BBE") },
- 		.driver_data = (void *)&victus_s_thermal_params,
+diff --git a/security/integrity/digsig_asymmetric.c b/security/integrity/digsig_asymmetric.c
+index 457c0a396caf3..17219424a34dd 100644
+--- a/security/integrity/digsig_asymmetric.c
++++ b/security/integrity/digsig_asymmetric.c
+@@ -108,6 +108,10 @@ int asymmetric_verify(struct key *keyring, const char *sig,
+ 	pks.hash_algo = hash_algo_name[hdr->hash_algo];
+ 
+ 	pk = asymmetric_key_public_key(key);
++	if (!pk) {
++		ret = -ENOKEY;
++		goto out;
++	}
+ 	pks.pkey_algo = pk->pkey_algo;
+ 	if (!strcmp(pk->pkey_algo, "rsa")) {
+ 		pks.encoding = "pkcs1";
 -- 
 2.53.0
 
