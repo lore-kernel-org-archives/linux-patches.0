@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD844429CE9;
-	Mon, 31 Aug 2026 13:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF7E42DA20;
+	Mon, 31 Aug 2026 13:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183209; cv=none; b=oKp0iZxjN9mi4exH536cZhqty5j7+1tZm80tIE3nibGy8qo8QmpIzPzT2hM1sVoY82XHVkhhjn+BYHViavuSDr5IWupECaYv4BE9hpEESZo19qbedog0ZNa6/2XVfXbsTF+cqXhlTOKEcpYwEN2OVw986VKm/ATGUFX87qdMF5s=
+	t=1788183210; cv=none; b=qFto6HJjS4+bbGa1af61Z30whLUnUdcI81vD6B1ixyCtT1p8Yh+1/tt5+PkAkCGb6ygFcBjj8Zm2NZR0JXSEIjpYoBy9r2f1GCsIz9Gh57IXqi/orbEX+HXWWcIFjdXTa6+NFJuHe5mXHy+6+gPWygfhKcxK0DDZV4yRYjl6ado=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183209; c=relaxed/simple;
-	bh=1YVcFeLfY4xqm3RixxqW0U+vVsjxFLhrq1mFFv3nnaQ=;
+	s=arc-20240116; t=1788183210; c=relaxed/simple;
+	bh=Cpdq/hdLgHOnK2/2Df8uliquYDhINglA8BG+lAA2qb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uFFd3rYmEDZIwHOFZHYZ61iegRGWsMehpP5q+19vIlQeayiY481jij/Jzwwf7OAyvROBBsyYe/Z6BWVCjl7U4W/U35tPbWWHvT/kWy4DMotzcmyEZKkW1qVp96lBTncxp4TDD4pVfzrrKoYlGOSz1xmyKBntMlo0RPzzw/sDmDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dpXhtKUd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QbGcsfuEkPqTsA1zHadI2BHV4KS+gCyZx0YXgHl5PGX6mKh0x25fvOk/4mKxupsTr8rcWoj6JxnghKXd2oTfIecvlbyBM6CM5AtiOT4ZKKDYTru3aijizzmurzb8eZyo8AAesm7Iw1jFyH2QZ3Mbyjk7+zDEYNJQRGDsXoe67bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R//+bULy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dpXhtKUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB68F1F00A3E;
-	Mon, 31 Aug 2026 13:33:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R//+bULy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E701F000E9;
+	Mon, 31 Aug 2026 13:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183207;
-	bh=s/ySp6tpAiWTs38eF7/dkv/CrRdEcZL8fgTVLdmpmVI=;
+	s=k20260515; t=1788183209;
+	bh=dsJxYGfTejdNN0K+N2I9dd0MGqetmjFk7kICNZ32h50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dpXhtKUdB2FugOqN7iBL4MJUhBC0ZXSlhpRgb09gfB8glCYZMAES7M8L2Tjy432hi
-	 VSRvmgNBcvjD8zea9YIAoDyOBqMYeOSL3yybFu+9ZExqUv2N2niRgTA5vaaE17R9rA
-	 T1EfgbsbuwaF+49xlLI4OblmEqHV0R/TV3d4c7z7qKBJxCma+wyfAEWfbrERNbySwH
-	 oAveX9iHGk2wrnYXFXITJRTRdWCWSz/jzmLgFx9W2cavQELjBaoYhvxCzSon0xw9R+
-	 J6iEe301Q4JFapZUSSzCUrhI6LQKA/BUFqF3Jd7wSRqQWbMZPsiuK3ApNnVifr8ON0
-	 ja6Fbov1z0jXg==
+	b=R//+bULyW7jwqzY0pCOZGK0mLliQnsISYggrICGt2tIquF4f4DM9KvSng3r5AMOMy
+	 3hKzYPBEEJMqU2mNibqQ7OsJr86kRenWhmTf9keMhuCdq2VHXe+hmJHAjbrj9zQjCC
+	 0OZbNCiySroQkZS9gbnrmzYQWLMdO8sTe13BNqJLyfZ2zznqvypwhEC7WViQGRcNvW
+	 s6UqkOtuOoAhW19X8sh1SSH1I/WP6qSnaiCF20soGcCJVWw25k9VCgyu3S/Y3RkTB4
+	 Z2Wddl2lmjgT81a5CpQu809nKyLnoRiD+g+c2zCDi3196BM0qliN+OEzYWtaXKU4Ld
+	 01d2mhacYsJOg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+Cc: Yu Peng <pengyu@kylinos.cn>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-mmc@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
+	catalin.marinas@arm.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] mmc: renesas_sdhi: Add OF entry for RZ/G2E SoC
-Date: Mon, 31 Aug 2026 09:20:36 -0400
-Message-ID: <20260831133314.4125787-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] arm64: fixmap: Allow 256K early_ioremap() at any offset
+Date: Mon, 31 Aug 2026 09:20:37 -0400
+Message-ID: <20260831133314.4125787-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,319 +53,378 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Yu Peng <pengyu@kylinos.cn>
 
-[ Upstream commit ebf7f2198ac4817bd2929cf83c697cefa8bf36a9 ]
+[ Upstream commit 21fc7ec93f8b633b60d5bddef2f1529ff6b36185 ]
 
-The RZ/G2E (R8A774C0) SoC was previously handled via the generic
-"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
-the SDHI IP on RZ/G2E is identical with the R-Car E3 (R8A77990), it
-requires the specific quirks and configuration defined in
-`of_r8a77990_compatible` rather than the generic Gen3 data.
+NR_FIX_BTMAPS is the per-slot page limit for early_ioremap(). Since
+__early_ioremap() maps the page-aligned physical range, a 256K request
+can require one extra page when the physical address is not page-aligned.
 
-Add the explicit "renesas,sdhi-r8a774c0" match entry to map it correctly.
-Note that the DT binding file renesas,sdhi.yaml does not need an update
-as the entry for this SoC is already present.
+Reserve one extra page per slot so the 256K mapping budget is usable
+regardless of the initial page offset.
 
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Link: https://lore.kernel.org/r/08fd96fa-ee3a-4904-bd11-bb08bd90436f@kylinos.cn
+Signed-off-by: Yu Peng <pengyu@kylinos.cn>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `arm64: fixmap: Allow 256K early_ioremap()
+at any offset`
 
-**Step 1.1 — Subject line**
-Record: `[mmc: renesas_sdhi] [Add] Add OF entry for RZ/G2E SoC — maps
-RZ/G2E (R8A774C0) SDHI to correct SoC-specific quirks data`
-
-**Step 1.2 — Tags**
-Record:
-- Fixes: — absent (expected for manual review)
-- Reported-by: — none
-- Tested-by: — none
-- Reviewed-by: Geert Uytterhoeven, Wolfram Sang
-- Acked-by: — none
-- Link: — none in commit message
-- Cc: stable@vger.kernel.org — absent in upstream commit (present on
-  patch 1/3 of the series only)
-- Signed-off-by: Lad Prabhakar, Ulf Hansson
-
-Notable: reviewed by Renesas/MMC subsystem experts; part of a 3-patch
-series.
-
-**Step 1.3 — Body analysis**
-Record:
-- Bug: RZ/G2E SDHI was matched via generic `renesas,rcar-gen3-sdhi`
-  fallback instead of SoC-specific quirks
-- Symptom: missing R-Car E3 (R8A77990) quirks — HS400 calibration table
-  and manual tap correction
-- Root cause: DTS uses `renesas,sdhi-r8a774c0` as primary compatible,
-  but driver OF table lacked that entry
-- Version info: none explicit; binding already documents
-  `renesas,sdhi-r8a774c0`
-
-**Step 1.4 — Hidden bug fix?**
-Record: Yes — presented as “add OF entry” but fixes incorrect hardware
-configuration. Cover letter documents measured eMMC HS400 bandwidth
-improvements on RZ/G2E (read 159472 → 180781 KB/s, write 126355 → 127725
-KB/s).
+**Local tree:** `v6.18.44-2-g1b9e1abadee04` (detached from
+`stable/linux-6.18.y`, kernel version **6.18.44**)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
-Record:
-- Files: `drivers/mmc/host/renesas_sdhi_internal_dmac.c` (+1 line)
-- Function: `renesas_sdhi_internal_dmac_of_match[]` (static OF match
-  table)
-- Scope: single-file, surgical (1 line)
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[arm64: fixmap]` `[Allow]` — fix boot-time fixmap slot
+sizing so a full 256K `early_ioremap()` works at any physical page
+offset.
 
-**Step 2.2 — Code flow**
-Record:
-- Before: `renesas,sdhi-r8a774c0` not in table → OF match falls through
-  to `renesas,rcar-gen3-sdhi` → `of_rcar_gen3_compatible` (no quirks)
-- After: `renesas,sdhi-r8a774c0` → `of_r8a77990_compatible` (R-Car E3
-  quirks: `sdhi_quirks_r8a77990`)
-- Path: device probe during MMC controller initialization on RZ/G2E
-  boards
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Record:**
+- **Link:** `https://lore.kernel.org/r/08fd96fa-
+  ee3a-4904-bd11-bb08bd90436f@kylinos.cn`
+- **Signed-off-by:** Yu Peng `<pengyu@kylinos.cn>` (author)
+- **Signed-off-by:** Will Deacon `<will@kernel.org>` (arm64 maintainer,
+  committer on mainline)
+- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Cc:
+  stable@
+- Notable: maintainer commit/sign-off on mainline (`21fc7ec93f8b6`); no
+  syzbot or user bug report
 
-**Step 2.3 — Bug mechanism**
-Record:
-- Category: (h) Hardware workaround / quirk mapping
-- Mechanism: wrong `of_device_id` → wrong `quirks` pointer → missing
-  `hs400_calib_table` and `manual_tap_correction` in
-  `renesas_sdhi_probe()`
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Record:**
+- **Bug:** `NR_FIX_BTMAPS` is the per-slot page budget for
+  `early_ioremap()`. `__early_ioremap()` page-aligns the physical range,
+  so a 256K request at a non-page-aligned address can require **one
+  extra page** (65 pages on 4K kernels).
+- **Symptom:** `WARN_ON(nrpages > NR_FIX_BTMAPS)` in `__early_ioremap()`
+  → returns `NULL` → early-boot mapping failure.
+- **Root cause:** `NR_FIX_BTMAPS` was defined as exactly `SZ_256K /
+  PAGE_SIZE` (64 on 4K pages), without room for alignment slop.
+- **No** explicit kernel version range in the message.
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct — RZ/G2E SDHI IP is identical to R-Car E3;
-same mapping pattern as already-backported G2H fix. Minimal regression
-risk.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record: `of_r8a77990_compatible` introduced in `71b7597c63d2d`
-(2021-07-29, Yoshihiro Shimoda). Present in v6.18.44.
-
-**Step 3.2 — Fixes: tag**
-Record: N/A — no Fixes: tag.
-
-**Step 3.3 — Related changes**
-Record:
-- `77223211f44db` (2018): added SDHI nodes to `r8a774c0.dtsi` with
-  `renesas,sdhi-r8a774c0` compatible
-- `535ff092b6860`: G2H sibling fix already backported to v6.18.44 with
-  `Cc: stable@vger.kernel.org`
-- Series on master: G2H (`f48ee497`), G2N (`5ce500d31a162`), G2E
-  (`ebf7f2198ac48`) — patches are independent one-liners
-- G2N OF entry not in stable; G2E not in stable
-
-**Step 3.4 — Author context**
-Record: Lad Prabhakar — Renesas contributor; same author as G2H fix
-already in stable.
-
-**Step 3.5 — Dependencies**
-Record: Standalone. `of_r8a77990_compatible` and `sdhi_quirks_r8a77990`
-exist in tree. Backport adds one line; in 6.18.44 (no `r8a774b1` entry)
-it fits after `sdhi-mmc-r8a77470` and before `sdhi-r8a774e1`.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not disguised — this is an explicit correctness fix for
+fixmap slot sizing, not style cleanup.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Discussion**
-Record:
-- URL:
-  https://patch.msgid.link/20260519135342.623943-4-prabhakar.mahadev-
-  lad.rj@bp.renesas.com
-- Series: v2 0/3 — “Add OF entries for RZ/G2H, RZ/G2N, and RZ/G2E SoCs”
-- Cover letter documents HS400 eMMC test results on all three SoCs
-- No NAKs found; reviewed by Wolfram Sang and Geert Uytterhoeven
+### Step 2.1: INVENTORY THE CHANGES
+**Record:**
+- **Files:** `arch/arm64/include/asm/fixmap.h` (+5 / -1 lines, ~6 lines
+  changed)
+- **Scope:** Single-header, surgical change
+- **Modified:** `NR_FIX_BTMAPS` macro and comment block in `enum
+  fixed_addresses`
 
-**Step 4.2 — Reviewers**
-Record: Ulf Hansson (MMC maintainer), Wolfram Sang, Geert Uytterhoeven,
-linux-mmc@, linux-renesas-soc@ CC’d.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Record:**
+- **Before:** `NR_FIX_BTMAPS = SZ_256K / PAGE_SIZE` (64 pages @ 4K)
+- **After:** `NR_FIX_BTMAPS = (SZ_256K / PAGE_SIZE) + 1` (65 pages @ 4K)
+- **Affected path:** `__early_ioremap()` in `mm/early_ioremap.c` — early
+  boot only (`WARN_ON(system_state >= SYSTEM_RUNNING)`)
 
-**Step 4.3 — Bug report**
-Record: No external bug report; author-provided benchmark data in cover
-letter.
+Relevant existing logic:
 
-**Step 4.4 — Series context**
-Record: 3 independent patches; G2H (1/3) already backported to 6.18.44;
-G2E (3/3) is self-contained.
+```131:140:mm/early_ioremap.c
+        offset = offset_in_page(phys_addr);
+        phys_addr &= PAGE_MASK;
+        size = PAGE_ALIGN(last_addr + 1) - phys_addr;
+        // ...
+        nrpages = size >> PAGE_SHIFT;
+        if (WARN_ON(nrpages > NR_FIX_BTMAPS))
+                return NULL;
+```
 
-**Step 4.5 — Stable list**
-Record: `Cc: stable@vger.kernel.org` on patch 1/3 (G2H) only; series
-author intended stable consideration for the family of fixes.
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Record:** **Logic/correctness — off-by-one in fixmap page budget.**
+Category: boot-time mapping failure / NULL return from
+`early_ioremap()`.
 
----
+Verified math: for `size = SZ_256K` and any `offset_in_page(phys) != 0`,
+`nrpages = 65` while `NR_FIX_BTMAPS = 64` → failure.
 
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-Record: `renesas_sdhi_internal_dmac_of_match[]`,
-`renesas_sdhi_internal_dmac_probe()` → `renesas_sdhi_probe()`
-
-**Step 5.2 — Callers**
-Record: platform driver probe during device enumeration; triggered when
-RZ/G2E SDHI nodes are enabled (e.g. EK874 `sdhi0`, `sdhi3`).
-
-**Step 5.3 — Callees**
-Record: `of_device_get_match_data()` → quirks applied in
-`renesas_sdhi_probe()` for HS400 calibration (`hs400_calib_table`) and
-tap correction (`manual_tap_correction`).
-
-**Step 5.4 — Reachability**
-Record: Boot-time probe on RZ/G2E boards with SD/MMC enabled. EK874
-enables `sdhi0` (SD UHS) and `sdhi3` (SDIO WLAN). Userspace cannot
-directly trigger, but all storage I/O on these interfaces is affected.
-
-**Step 5.5 — Similar patterns**
-Record: Same pattern as G2H (`r8a774e1` → `of_r8a7795_compatible`),
-already backported to this tree.
+### Step 2.4: ASSESS THE FIX QUALITY
+**Record:**
+- **Obviously correct:** Yes — standard fix for page-aligned mapping of
+  unaligned ranges.
+- **Minimal:** Yes — one macro change + comment.
+- **Regression risk:** Very low — adds 7 extra fixmap pages total (7
+  slots × 1 page). Cherry-pick auto-merges cleanly on this tree.
+- **Side effect:** `MAX_MAP_CHUNK` / `MAP_CHUNK_SIZE` grow by one page,
+  correctly reflecting usable mapping budget.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 6.1 — Buggy code exists?**
-Record: Yes. `r8a774c0.dtsi` SDHI nodes use `renesas,sdhi-r8a774c0`
-since 2018; driver OF table in v6.18.44 lacks this entry. Commit
-`ebf7f2198ac48` not in tree.
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:** Current `NR_FIX_BTMAPS` lines blame to `5d324e5159d9e`
+(merge, Nov 2025) in this checkout. Value `SZ_256K / PAGE_SIZE` present
+since at least **v5.10** through **v6.18.44** on arm64.
 
-**Step 6.2 — Backport complications**
-Record: Clean apply — one line. Insert before existing `r8a774e1` entry
-(G2H backport already present).
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-**Step 6.3 — Related fixes present?**
-Record: G2H fix (`535ff092b6860`) backported; G2E fix absent.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:** Standalone 1-patch series (v1 only per `b4 dig -a`).
+Mainline commit: `21fc7ec93f8b6`. Merged to master after `Linux 6.18.44`
+(`1efe5d048a391`). No prerequisite commits.
 
----
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** Yu Peng — not a regular arm64 maintainer; patch
+reviewed/applied by Will Deacon (arm64 maintainer).
 
-## Phase 7: Subsystem Context
-
-**Step 7.1 — Subsystem**
-Record: `drivers/mmc/host` — IMPORTANT (MMC/SD/eMMC storage on embedded
-Renesas RZ/G2E)
-
-**Step 7.2 — Activity**
-Record: Actively maintained; recent G2H backport shows ongoing stable
-attention for this driver.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:** None. Self-contained header change. Applies standalone.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 8.1 — Who is affected**
-Record: RZ/G2E (R8A774C0) users — EK874, CAT874 boards and derivatives.
-Config: `CONFIG_MMC`, Renesas SDHI internal DMAC.
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:**
+- **URL:**
+  https://patch.msgid.link/20260708023514.2445926-1-pengyu@kylinos.cn
+- **Series:** v1 only (no v2/v3)
+- **Will Deacon reply:** "Applied to arm64 (for-next/fixes), thanks!" —
+  no NAKs, no stable nomination in thread
 
-**Step 8.2 — Trigger conditions**
-Record: Any boot with SDHI enabled on RZ/G2E. Common on reference
-boards. Not userspace-triggerable but affects all MMC I/O.
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** CC'd: Catalin Marinas, Will Deacon, Thomas Huth, linux-arm-
+kernel, linux-kernel. Applied directly by Will Deacon.
 
-**Step 8.3 — Failure mode severity**
-Record: Suboptimal HS400/HS200 operation — measured ~13% read bandwidth
-loss on eMMC; missing tap correction risks data integrity at high
-speeds. Severity: MEDIUM-HIGH for embedded storage reliability.
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** No Reported-by, syzbot, or bugzilla link. Code-
+analysis/maintainer-accepted fix.
 
-**Step 8.4 — Risk-benefit**
-Record: Benefit HIGH for RZ/G2E users (proven performance fix, correct
-hardware quirks). Risk VERY LOW (1 line, uses existing data structures,
-precedent with G2H backport).
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** Single-patch series. RISC-V and powerpc use the same
+`SZ_256K / PAGE_SIZE` pattern but are out of scope for this arm64-only
+commit.
+
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** Not searched separately; no stable discussion found in patch
+thread.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Evidence FOR:**
-- Fixes real hardware misconfiguration on shipping RZ/G2E boards
-- Documented eMMC HS400 performance improvement
-- 1-line, obviously correct hardware quirk mapping
-- Same pattern as G2H fix already backported to v6.18.44
-- Reviewed by subsystem maintainers
-- `of_r8a77990_compatible` prerequisite exists in tree since 2021
-- DTS binding and nodes already present since 2018
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** Macro only — affects `__early_ioremap()`, `early_ioremap()`,
+`early_memremap()`, `copy_from_early_mem()` (via `MAX_MAP_CHUNK`), ACPI
+`MAP_CHUNK_SIZE`.
 
-**Evidence AGAINST:**
-- Performance-focused rather than crash/corruption explicitly reported
-  (but HS400 without proper calibration can cause silent errors)
-- G2E patch lacks explicit `Cc: stable` (G2H had it)
-- Part of a 3-patch series (but each patch is independent)
+### Step 5.2: TRACE CALLERS
+**Record:** On arm64, `__acpi_map_table()` → `early_memremap(phys,
+size)` maps whole ACPI tables without chunking
+(`arch/arm64/kernel/acpi.c`). Also EFI early paths, generic
+`copy_from_early_mem()`. All early-boot, pre-`SYSTEM_RUNNING`.
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — reviewed, benchmarked
-2. Fixes real bug affecting users? **PASS** — wrong quirks on RZ/G2E
-   since 2018
-3. Important issue? **PASS** — storage performance/reliability on
-   embedded platform
-4. Small and contained? **PASS** — 1 line
-5. No new features/APIs? **PASS** — maps to existing quirks
-6. Can apply to local tree? **PASS** — clean one-line backport
+Chunking helpers (`copy_from_early_mem`, `acpi_table_upgrade`) already
+limit `clen + slop <= MAP_CHUNK_SIZE` with page-aligned `phys`, so they
+stay within 64 pages today. **Direct** `early_memremap(phys, ~256K)` at
+misaligned `phys` is the failure path.
 
-**Exception category:** Hardware quirk/workaround (OF match → correct
-quirks table)
+### Step 5.3: TRACE CALLEES
+**Record:** `__early_ioremap()` → `__early_set_fixmap()` /
+`__late_set_fixmap()` per page.
+
+### Step 5.4: FOLLOW THE CALL CHAIN
+**Record:** Reachable during kernel boot on ACPI/EFI arm64 systems. Not
+a post-boot userspace syscall path, but boot failure is severe.
+
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** Identical `SZ_256K / PAGE_SIZE` define in
+`arch/riscv/include/asm/fixmap.h` and
+`arch/powerpc/include/asm/fixmap.h` — same latent bug, different arch.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:** **YES.** Current tree has:
+```
+#define NR_FIX_BTMAPS           (SZ_256K / PAGE_SIZE)
+```
+Bug present since at least v5.10 on arm64 (verified across tags
+v5.10–v6.18.44). Fix **not** present on this 6.18.44 tree; **is** on
+`master`.
+
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** **Clean apply** — tested `git cherry-pick --no-commit
+21fc7ec93f8b6`: auto-merged `arch/arm64/include/asm/fixmap.h` with no
+conflicts.
+
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** No equivalent fix in this tree. `master` has commit
+`21fc7ec93f8b6`.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** **arm64 boot / fixmap / early_ioremap** — **CORE** for arm64
+boot; affects all arm64 kernels using early MMIO/ACPI/EFI mappings.
+
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** Active; fix landed in arm64-fixes for post-6.18 mainline.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** **Platform-specific (arm64)** — all arm64 builds;
+practically relevant for ACPI/EFI early-boot mapping when a ~256K region
+is mapped at a non-page-aligned physical address.
+
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Record:**
+- `early_ioremap()` / `early_memremap()` with `size` near `SZ_256K` and
+  `phys % PAGE_SIZE != 0`
+- Uncommon but deterministic; firmware-chosen ACPI table placement can
+  satisfy this
+- Not a post-boot unprivileged syscall trigger
+
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:** `WARN_ON` + `NULL` return from `__early_ioremap()` →
+ACPI/EFI early mapping failure → **boot failure or ACPI broken**.
+Severity: **HIGH** for affected configs (boot-time), though trigger
+frequency is **LOW**.
+
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Record:**
+- **Benefit:** MEDIUM-HIGH — restores intended 256K early_ioremap
+  budget; prevents deterministic boot failures in edge cases
+- **Risk:** VERY LOW — 7 extra fixmap pages, no API change, maintainer-
+  applied
+- **Ratio:** Favorable for stable
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: COMPILE THE EVIDENCE
+
+**FOR backport:**
+- Real, deterministic off-by-one bug in fixmap sizing
+- Boot-time failure mode (NULL from `early_ioremap`)
+- Tiny, obviously correct fix; arm64 maintainer signed off
+- In mainline (`21fc7ec93f8b6`); cherry-picks cleanly to 6.18.44
+- Bug present in this tree since at least v5.10
+- Meets stable size rule (< 100 lines)
+
+**AGAINST backport:**
+- No user/syzbot report — edge-case trigger
+- Most chunking callers already avoid the failure
+- arm64-only (not a concern for this tree-specific verdict)
+
+**UNRESOLVED:** No documented production incident; impact inferred from
+code path analysis.
+
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — mathematically correct;
+   maintainer-applied to mainline (no explicit Tested-by)
+2. Fixes a real bug? **PASS** — deterministic `nrpages > NR_FIX_BTMAPS`
+   failure
+3. Important issue? **PASS** — boot-time mapping failure (HIGH severity,
+   lower frequency)
+4. Small and contained? **PASS** — 6 lines, one file
+5. No new features/APIs? **PASS** — sizing correction only
+6. Can apply to local tree? **PASS** — clean cherry-pick verified
+
+### Step 9.3: EXCEPTION CATEGORIES
+**Record:** N/A — standard bug fix, not device-ID/quirk/build/doc
+exception.
+
+### Step 9.4: DECISION RATIONALE
+For **this 6.18.44 arm64 stable tree**, the buggy `NR_FIX_BTMAPS`
+definition exists and the fix is already in mainline. The patch is
+minimal, maintainer-backed, and prevents real early-boot
+`early_ioremap()` failures when the full 256K mapping budget is used at
+a misaligned physical address. Risk is negligible.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit `ebf7f2198ac48` on master; tags: Reviewed-by
-  Geert, Wolfram; no Fixes/Reported-by
-- [Phase 2] Diff: +1 line in `renesas_sdhi_internal_dmac_of_match[]`
-- [Phase 3] `git describe HEAD`: v6.18.44; `of_r8a77990_compatible` from
-  `71b7597c63d2d` (2021)
-- [Phase 3] SDHI DTS nodes since `77223211f44db` (2018); G2H backport
-  `535ff092b6860` in stable
-- [Phase 3] `ebf7f2198ac48` not ancestor of HEAD (not in stable)
-- [Phase 4] `b4 dig -c ebf7f2198ac48`: lore thread found; v2 3/3 series
-- [Phase 4] Cover letter: HS400 benchmark data for RZ/G2E
-- [Phase 4] `Cc: stable` only on patch 1/3 (G2H)
-- [Phase 5] Verified `sdhi_quirks_r8a77990` has `hs400_calib_table` +
-  `manual_tap_correction`
-- [Phase 5] EK874 DTS: `sdhi0` and `sdhi3` enabled
-- [Phase 6] `r8a774c0` in driver OF table: absent; in DTS: present
-- [Phase 6] Current stable OF table read at lines 279–295 confirms
-  missing `r8a774c0` entry
+- [Phase 1] `git describe HEAD` → v6.18.44; parsed commit message tags
+- [Phase 2] Read `mm/early_ioremap.c` lines 100–160; confirmed alignment
+  → `nrpages` check
+- [Phase 2] Python math: offset 1/2048/4095 + 256K → `nrpages=65`,
+  `NR_FIX_BTMAPS=64`, `fail=True`
+- [Phase 3] `git blame` on fixmap.h; tags v5.10–v6.18.44 all show
+  `SZ_256K / PAGE_SIZE`
+- [Phase 3] `git show 21fc7ec93f8b6` — mainline commit details
+- [Phase 3] `git log 1efe5d048a391..master --grep='256K early_ioremap'`
+  — fix after 6.18.44
+- [Phase 4] `b4 dig -c 21fc7ec93f8b6` — lore URL found
+- [Phase 4] `b4 dig -c 21fc7ec93f8b6 -w` — maintainers CC'd
+- [Phase 4] `b4 dig -c 21fc7ec93f8b6 -a` — v1 only
+- [Phase 4] `b4 dig -m /tmp/fixmap_thread.mbox` — Will Deacon "Applied"
+  reply, no NAKs
+- [Phase 5] Grep `early_memremap`/`__acpi_map_table` call paths on arm64
+- [Phase 5] Read `arch/arm64/kernel/acpi.c` — direct
+  `early_memremap(phys, size)` without chunking
+- [Phase 6] `git show HEAD:arch/arm64/include/asm/fixmap.h` — buggy
+  macro confirmed
+- [Phase 6] `git show master:arch/arm64/include/asm/fixmap.h` — fixed
+  macro on master
+- [Phase 6] `git cherry-pick --no-commit 21fc7ec93f8b6` — clean auto-
+  merge
 
-This commit should be backported to the v6.18.44 stable tree. It
-corrects a long-standing hardware quirk mapping bug for RZ/G2E SDHI,
-follows the same pattern as the already-backported G2H fix, and is a
-minimal one-line change with demonstrated user impact.
+---
 
-**YES****Verdict: YES** — backport to v6.18.44.
+**YES**Those background checks finished and line up with the earlier
+analysis:
 
-This is a one-line OF match-table fix for RZ/G2E (R8A774C0) SDHI.
-Without it, the driver falls back to generic Gen3 quirks instead of the
-R-Car E3-specific ones (`of_r8a77990_compatible`), which hurts HS400
-eMMC performance and tuning on boards like EK874.
+- **NR_FIX_BTMAPS history** — The `SZ_256K / PAGE_SIZE` definition has
+  been in arm64 `fixmap.h` since at least v5.10 through v6.18.44, so the
+  off-by-one bug is long-standing in this tree.
+- **Branch check** — The fix is on `master` (`21fc7ec93f8b6`); the
+  6.18.44 checkout still has the buggy `(SZ_256K / PAGE_SIZE)` define.
+- **Release timing** — The fix landed in mainline after the `Linux
+  6.18.44` tag, which is why it belongs as a stable backport.
 
-It matches the G2H fix already in this stable tree (`535ff092b6860`), is
-small and self-contained, and should apply cleanly as a single line
-before the existing `r8a774e1` entry.
+**Verdict for 6.18.y: YES** — small, maintainer-applied fix for a real
+early-boot `early_ioremap()` failure when mapping 256K at a misaligned
+physical address; cherry-picks cleanly.
 
- drivers/mmc/host/renesas_sdhi_internal_dmac.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/fixmap.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/renesas_sdhi_internal_dmac.c b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-index 8bc1c3209edb0..6cca38e32b991 100644
---- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-+++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-@@ -280,6 +280,7 @@ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
- 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
- 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a774b1", .data = &of_r8a77965_compatible, },
-+	{ .compatible = "renesas,sdhi-r8a774c0", .data = &of_r8a77990_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
+diff --git a/arch/arm64/include/asm/fixmap.h b/arch/arm64/include/asm/fixmap.h
+index 635a43c4ec85b..9288021ba93b1 100644
+--- a/arch/arm64/include/asm/fixmap.h
++++ b/arch/arm64/include/asm/fixmap.h
+@@ -78,8 +78,12 @@ enum fixed_addresses {
+ 	/*
+ 	 * Temporary boot-time mappings, used by early_ioremap(),
+ 	 * before ioremap() is functional.
++	 *
++	 * Reserve one extra page so a 256K mapping may start at any
++	 * offset within a page. early_ioremap() maps the page-aligned
++	 * physical range, so the initial offset can consume an extra page.
+ 	 */
+-#define NR_FIX_BTMAPS		(SZ_256K / PAGE_SIZE)
++#define NR_FIX_BTMAPS		((SZ_256K / PAGE_SIZE) + 1)
+ #define FIX_BTMAPS_SLOTS	7
+ #define TOTAL_FIX_BTMAPS	(NR_FIX_BTMAPS * FIX_BTMAPS_SLOTS)
+ 
 -- 
 2.53.0
 
