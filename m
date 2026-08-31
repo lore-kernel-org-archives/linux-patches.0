@@ -1,50 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145124A4408;
-	Mon, 31 Aug 2026 13:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB14D4A4419;
+	Mon, 31 Aug 2026 13:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183788; cv=none; b=DUgBbWUvQfhey2SQAc6fMe3bVi9p6879X+133QGu0/yh96q7UyC9J/THJCZY9k0mJGxUt9x7MRGzVnLR6WBtG+BnubUdZhirBK8BeherUDbtBlgyvNuU4ryJAsBK5z9Cnmn6hO8Dk58oWV5dbG96X0/am2BzGi5kbB4nrTOYNqI=
+	t=1788183789; cv=none; b=t5RVRQGvtJHaJayLLlGOHcQxpzuPLRNPRnjbOOGxFCoPbP27GJRGAZl2pVbf+361Z27Vm6ljJMQNOGDU0AbQbnb1qDmUCj8nTXeZrHUPmERDMh/6qJGt/HWFqBeVSxlYTPPSM5Tt1kpryGobm5bxhvxITPx8ovyvW381hw4qrRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183788; c=relaxed/simple;
-	bh=iAgDOfzU4RQhEhWsPC9iYjnqjlKVx2JPCOkBZqloeqQ=;
+	s=arc-20240116; t=1788183789; c=relaxed/simple;
+	bh=xstikX929/IDylXCPciXyPDe9vooOsgX0CTP/SkyteI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NQjfL4e8YcnevP9zMscIBvBMShV2yi2s/JR/V4PhVxcmYdHsSt6oM3Mq4fVKRkgqrI5n3MEBbemoiK2x/tUfXrxpBfq0F7mFO1w5Ev2vvnVjKPGFs10vIivPovLB6R56t6xpUfq3i1C2EMyrIsE35m9KEK0NwlPx7N0Ac+yT0LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PCHnaKLP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JdrD7zHx3Pn7fCZy432NEqhw0AZoLC0tIuqMdfmOJyzMJJJnuBKZrkrTn0yw3M7GeS6x1UXzfbW8/bs390uNN9fIVgSJ0Up/JJZpdhWLHet/QYy9l0VPPPWGkU32Z4wQLAIJkdwbV7DocvtolD94/VNtq0klK4R0vdlZO/fS5lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=arpHFTzD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PCHnaKLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BB51F00ACA;
-	Mon, 31 Aug 2026 13:43:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="arpHFTzD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFFC1F00A3D;
+	Mon, 31 Aug 2026 13:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183784;
-	bh=l9zmcEklIITvQXoUh4Cg5QygAyfmWb4TLQnCl5Fn0Ds=;
+	s=k20260515; t=1788183786;
+	bh=F57cKwWOyxk6wWEiBw0cUMp8iuu++NR1laMxD6Lax4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PCHnaKLPRADY2yZiE/3wTnaYX+Gp71GyEtzvMnKtm4v+bUGJ9C3CBOKAnRN8rT+6E
-	 w4E6ycXlHiMhZ+kC88rXZF9xCkK7SVd+OT7nZUCsRs/+NaJJqaogdHMkWei5dfKdVI
-	 hX1VotJkrC0fG4wiZOBRDDldkcGF8ilDBjl56moNRvfsLKQcL/cF9IEQKrVUdvV+WP
-	 8d1C2pM1PkinWjxrvKm/FBju+bxotamB1lisj9XZGqYs3bskXz4WPLSqine/t1U7cK
-	 mzjehHaPJx5CsE0ZXYwL26ZauJsvzOV5uwb2IPYYpZykOdFJwu4odPP1v663t2GCbb
-	 lnMWTP7LzF8KQ==
+	b=arpHFTzDPX2CmFjYNzExp9yjKMtv2dF56Dl232pE+fqfmtPan6iABrFZ9gcbScShf
+	 Nzx4VUzJx7VjXyC9gv1BZ9oVrS6pv8L6aG08G9FVZkGb+oUmB5HpSLCZJcErZ0G0Bk
+	 SOqlbFoZuRfRM5+jEIPzZKCsasLutLqS6166lvPfhEQ5n5YCn24+QMTMoLXFbCtz0a
+	 /wYuwCWtvviVANpO+x57B1OaOE0pazxZdWdogmMkJy2g0NIO0K7ldbK4MoSkzVtmBJ
+	 L/QxEjuUIPZrJ9aLvEEP3sPfm9cZh1FAGok4MjEwWSKtpHWcE7ZtW0WpTe37TVWrd+
+	 5Inclc1MlOumw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maoyi Xie <maoyixie.tju@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Praveen Kakkolangara <praveen.kakkolangara@aumovio.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: David Howells <dhowells@redhat.com>,
+	syzbot+3c74b1f0c372e98efc32@syzkaller.appspotmail.com,
+	Paulo Alcantara <pc@manguebit.org>,
+	hongao <hongao@uniontech.com>,
+	ChenXiaoSong <chenxiaosong@chenxiaosong.com>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	rds-devel@oss.oracle.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] rds: filter RDS_INFO_* getsockopt by caller's netns
-Date: Mon, 31 Aug 2026 09:25:30 -0400
-Message-ID: <20260831133314.4125787-302-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] netfs: Fix DIO write retry for filesystems without a ->prepare_write()
+Date: Mon, 31 Aug 2026 09:25:31 -0400
+Message-ID: <20260831133314.4125787-303-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -60,815 +57,439 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c96a5209dda666004b8ee1ed7f0d493d09a4f200 ]
+[ Upstream commit 64f04f9789237728be4e1836151848af350d1374 ]
 
-The RDS_INFO_* family of getsockopt(2) options reads several
-file-scope global lists that are not per-netns:
+Fix netfs_unbuffered_write() so that it doesn't re-issue a write twice when
+the filesystem doesn't have a ->prepare_write().  The resetting of the
+iterator and the call to netfs_reissue_write() should just be removed as
+almost everything it does is done again when the loop it's in goes back to
+the top.
 
-  rds_sock_info / rds6_sock_info,
-  rds_sock_inc_info / rds6_sock_inc_info        -> rds_sock_list
-  rds_tcp_tc_info / rds6_tcp_tc_info            -> rds_tcp_tc_list
-  rds_conn_info / rds6_conn_info,
-  rds_conn_message_info_cmn (for the *_SEND_MESSAGES and
-  *_RETRANS_MESSAGES variants),
-  rds_for_each_conn_info (for RDS_INFO_IB_CONNECTIONS)
-                                                -> rds_conn_hash[]
+It does, however, still need the IN_PROGRESS flag setting, so that (and the
+stat inc) are moved out of the if-statement.
 
-The handlers do not filter by the caller's network namespace.
-rds_info_getsockopt() has no netns or capable() check, and
-rds_create() has no capable() check, so AF_RDS is reachable from
-an unprivileged user namespace. As a result, an unprivileged
-caller in a fresh user_ns plus netns can read the bound address
-and sock inode of every RDS socket on the host, the peer address
-of incoming messages on every RDS socket on the host, the peer
-address and TCP sequence numbers of every rds-tcp connection on
-the host, and the peer address and RDS sequence numbers of every
-RDS connection on the host.
+Further, the MADE_PROGRESS flags should be cleared and wreq->transferred
+should be updated, so fix those too.
 
-The rds-tcp transport is reachable from a non-initial netns (see
-rds_set_transport()), so a one-shot init_net gate at
-rds_info_getsockopt() would deny legitimate per-netns visibility
-to rds-tcp callers. Instead, filter at each handler by comparing
-the netns of the caller's socket to the netns of the list entry,
-or to rds_conn_net(conn) for connection paths. Only copy entries
-whose netns matches the caller. Counters (RDS_INFO_COUNTERS) are
-aggregate statistics and remain global.
-
-Reproducer (KASAN VM, rds and rds_tcp loaded): an AF_RDS socket
-binds 127.0.0.1:4242 in init_net as root. A child process enters
-a fresh user_ns plus netns and opens AF_RDS there, then calls
-getsockopt(SOL_RDS, RDS_INFO_SOCKETS). Before this change, the
-child sees the init_net socket. After this change, the child
-sees zero entries.
-
-Drop the rds_sock_count, rds_tcp_tc_count, and rds6_tcp_tc_count
-globals. v2 used them for the size precheck and lens->nr; v3
-replaced the precheck with a per-ns count from a first pass over
-the list, so the globals have no remaining readers. The matching
-increments and decrements in rds_create()/rds_destroy_sock() and
-rds_tcp_set_callbacks()/rds_tcp_restore_callbacks() go away with
-them. Reported by the kernel test robot under clang W=1.
-
-Suggested-by: Allison Henderson <achender@kernel.org>
-Suggested-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Co-developed-by: Praveen Kakkolangara <praveen.kakkolangara@aumovio.com>
-Signed-off-by: Praveen Kakkolangara <praveen.kakkolangara@aumovio.com>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260520084236.2724349-1-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+3c74b1f0c372e98efc32@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3c74b1f0c372e98efc32
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260625140640.3116900-16-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: hongao <hongao@uniontech.com>
+cc: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `rds: filter RDS_INFO_* getsockopt by
-caller's netns`
+# Backport Analysis: `netfs: Fix DIO write retry for filesystems without
+a ->prepare_write()`
 
-**Local tree:** `v6.18.44` (`linux-6.18.y` stable). The vulnerable code
-is present; this fix is not yet applied.
+**Local tree:** `v6.18.44` (6.18.y stable) — `VERSION = 6`, `PATCHLEVEL
+= 18`, `SUBLEVEL = 44`
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[net/rds]` `[filter]` — Restrict `RDS_INFO_*` getsockopt
-handlers to return only data from the caller's network namespace.
+### Step 1.1: Parse the subject line
+**Record:** `[netfs]` `[Fix]` — Correct DIO/unbuffered write retry when
+the filesystem has no `->prepare_write()` hook.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Suggested-by:** Allison Henderson `<achender@kernel.org>`, Simon
-  Horman `<horms@kernel.org>` — subsystem experts identified the issue
-- **Reviewed-by:** Allison Henderson `<achender@kernel.org>` — RDS
-  maintainer review
-- **Co-developed-by:** Praveen Kakkolangara
-- **Signed-off-by:** Praveen Kakkolangara, Maoyi Xie, Jakub Kicinski
-- **Link:** https://patch.msgid.link/20260520084236.2724349-1-
-  maoyixie.tju@gmail.com
-- No `Fixes:`, `Reported-by: syzbot`, or `Cc: stable@vger.kernel.org`
-  (expected for pipeline candidates)
-- Notable: Reviewed by subsystem maintainer; security issue identified
-  by maintainers, not a fuzzer report
+| Tag | Value |
+|-----|-------|
+| Reported-by | syzbot+3c74b1f0c372e98efc32@syzkaller.appspotmail.com |
+| Closes | https://syzkaller.appspot.com/bug?extid=3c74b1f0c372e98efc32
+|
+| Signed-off-by | David Howells \<dhowells@redhat.com\> |
+| Link |
+https://patch.msgid.link/20260625140640.3116900-16-dhowells@redhat.com |
+| cc | Paulo Alcantara, hongao, ChenXiaoSong, netfs@lists.linux.dev,
+linux-fsdevel@vger.kernel.org |
+| Signed-off-by | Christian Brauner (Amutable) \<brauner@kernel.org\> |
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Notable patterns:** syzbot report (strong YES signal). No `Fixes:` tag
+(expected for manual review). No `Cc: stable` tag (not a negative
+signal).
+
+### Step 1.3: Analyze commit body
 **Record:**
-- **Bug:** `RDS_INFO_*` getsockopt handlers iterate global lists
-  (`rds_sock_list`, `rds_tcp_tc_list`, `rds_conn_hash[]`) without
-  filtering by the caller's netns
-- **Symptom:** Unprivileged process in a fresh `user_ns` + `netns` can
-  read host-wide RDS socket addresses/inodes, peer addresses, TCP
-  sequence numbers, and RDS sequence numbers
-- **Root cause:** `rds_info_getsockopt()` has no netns/capability check;
-  `rds_create()` has no `capable()` check; AF_RDS is reachable from
-  unprivileged user namespaces; global lists are not per-netns
-- **Reproducer:** Documented — root binds AF_RDS in init_net; child in
-  new user_ns+netns calls `getsockopt(SOL_RDS, RDS_INFO_SOCKETS)` and
-  sees init_net sockets before fix, zero after
-- **Design note:** Cannot use a blanket `init_net` gate because rds-tcp
-  legitimately works in non-init netns
+- **Bug:** On retry in `netfs_unbuffered_write()`, when
+  `stream->prepare_write` is NULL, the code calls
+  `netfs_reissue_write()` and then the loop iterates again and issues
+  the write a second time.
+- **Symptom:** Double write issuance, incorrect progress accounting
+  (`wreq->transferred` not updated on partial retry), stale
+  `NETFS_SREQ_MADE_PROGRESS` flag.
+- **Root cause:** The retry path incorrectly mirrored `write_retry.c`’s
+  `netfs_reissue_write()` pattern, but `netfs_unbuffered_write()`’s loop
+  already re-issues at the top on the next iteration.
+- **Version info:** None explicit; bug is tied to code introduced in
+  6.18.y backports.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised — this is an explicit security/access-control
-fix. Secondary cleanup drops unused global counters (`rds_sock_count`,
-`rds_tcp_tc_count`, `rds6_tcp_tc_count`) after switching to per-netns
-two-pass counting.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Yes — despite “fix retry logic” wording, this is a real
+memory-safety and correctness bug: syzbot reports KASAN slab-use-after-
+free in `netfs_unbuffered_write()`, reachable from userspace `write()`
+via 9p.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
+### Step 2.1: Inventory changes
 **Record:**
-- `net/rds/af_rds.c` — ~+80/-30 lines: netns filtering in
-  `rds_sock_inc_info`, `rds6_sock_inc_info`, `rds_sock_info`,
-  `rds6_sock_info`; remove `rds_sock_count` global and its inc/dec
-- `net/rds/connection.c` — ~+20 lines: netns filter in
-  `rds_conn_message_info_cmn`, `rds_for_each_conn_info`,
-  `rds_walk_conn_path_info`
-- `net/rds/tcp.c` — ~+50/-20 lines: netns filtering in
-  `rds_tcp_tc_info`, `rds6_tcp_tc_info`; remove
-  `rds_tcp_tc_count`/`rds6_tcp_tc_count` globals
-- **Functions modified:** 9 info-export handlers + socket create/destroy
-  callback paths (counter removal only)
-- **Scope:** Multi-file but single-purpose; no API changes
+- **Files:** `fs/netfs/direct_write.c` only (+6 / -10 lines, net −4)
+- **Function:** `netfs_unbuffered_write()`
+- **Scope:** Single-file surgical fix in retry path
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+### Step 2.2: Code flow change per hunk
 **Record:**
-- **Before:** Each handler walks entire global list and copies all
-  matching entries regardless of netns
-- **After:** Each handler gets `struct net *net = sock_net(sock->sk)`,
-  skips entries where `!net_eq(sock_net(rds_rs_to_sk(rs)), net)` or
-  `!net_eq(rds_conn_net(conn), net)`, uses two-pass count-then-copy for
-  size precheck
-- **Affected path:** `getsockopt(SOL_RDS, RDS_INFO_*)` — userspace
-  diagnostic path, but reachable from unprivileged netns
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:**
-- **Category:** Security — cross-network-namespace information
-  disclosure
-- **Mechanism:** Global data structures shared across all netns;
-  getsockopt handlers lacked netns scoping. Unprivileged
-  container/namespace user reads host-wide connection metadata including
-  TCP/RDS sequence numbers useful for traffic analysis or hijacking
+| Hunk | Before → After |
+|------|----------------|
+| Partial transfer | `iov_iter_advance()` only → also `wreq->transferred
++= subreq->transferred` |
+| Flag clearing | No `MADE_PROGRESS` clear →
+`__clear_bit(NETFS_SREQ_MADE_PROGRESS, ...)` added |
+| prepare_write branch | `if/else`: else calls `netfs_reset_iter()` +
+`netfs_reissue_write()` → unified path: optional `prepare_write()`,
+always set `IN_PROGRESS` + stat |
 
-### Step 2.4: ASSESS THE FIX QUALITY
+**Affected path:** Retry branch when `NETFS_SREQ_NEED_RETRY` is set
+(error recovery during unbuffered/DIO writes).
+
+### Step 2.3: Bug mechanism
 **Record:**
-- Fix is obviously correct — standard `net_eq()` pattern already used in
-  this subsystem (`recv.c:377`)
-- Minimal per-handler filtering; preserves legitimate per-netns rds-tcp
-  visibility
-- Low regression risk: only restricts over-broad data export;
-  `RDS_INFO_COUNTERS` intentionally remains global per commit message
-- Two-pass counting handles buffer sizing correctly; comment documents
-  benign race with concurrent `rds_bind()`
+- **Category:** Logic/correctness bug with memory safety consequences
+  (UAF); also reference-counting/lifecycle corruption from double issue.
+- **Mechanism:** `netfs_reissue_write()` calls `netfs_do_issue_write()`
+  → `stream->issue_write()`. The loop then continues with `subreq` still
+  non-NULL, skips `netfs_prepare_write()`, and calls
+  `stream->issue_write(subreq)` again at line 134. This corrupts
+  subrequest lifecycle and can free the subrequest while the loop still
+  holds a pointer to it (matching syzbot’s alloc/free/read pattern).
+
+### Step 2.4: Fix quality
+**Record:** Obviously correct. The `prepare_write` path already worked
+this way (set up state, loop back, issue once). The fix unifies the
+no-`prepare_write` path to match. Minimal regression risk; no new APIs
+or locking changes.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** Info handlers in `af_rds.c` trace to long-standing RDS code
-(blame shows merge commit `e664048784506` for current lines). Global
-`rds_sock_list` without netns filtering is architectural debt from
-before per-netns RDS-TCP support. RDS-TCP netns support added in
-`d5a8ac28a7ff` (Aug 2015). Bug became exploitable when unprivileged user
-namespaces could create isolated netns (Linux 3.8+) and open AF_RDS
-sockets without capability checks.
+### Step 3.1: Blame changed lines
+**Record:**
+- Retry infrastructure: `72d08d2839649` (upstream `a0b4c7a49137`, Feb
+  2026) — “Fix unbuffered/DIO writes to dispatch subrequests in strict
+  sequence”
+- Buggy `else { netfs_reissue_write() }` branch: `a4d1b4ba9754b`
+  (upstream `e9075e420a1e`, Mar 2026) — “Fix NULL pointer dereference in
+  netfs_unbuffered_write() on retry”
+- Both commits are ancestors of HEAD in this tree.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** No `Fixes:` tag present — N/A.
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag in commit message. The bug was
+introduced by `a4d1b4ba9754b`, which attempted to fix an earlier NULL
+deref (syzbot `7227db0f`) but introduced the double-issue/UAF.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:** Related fixes already in this tree:
-- `a7494479757d6` — restrict RDS/IB transport to init_net (partial
-  mitigation, does not fix getsockopt leak)
-- `9591042533140` — drop cross-netns incoming messages (UAF fix in recv
-  path)
-- `91ce1bb6e4194` — zero per-item info buffers (stack leak fix,
-  complementary)
-This fix is **standalone** — no series dependency.
+### Step 3.3: File history for related changes
+**Record:** Recent `direct_write.c` history in this tree:
+- `f0035858dfb23` — stream->front removal
+- `a4d1b4ba9754b` — NULL deref fix (introduced this bug)
+- `72d08d2839649` — sequential DIO write dispatch
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Maoyi Xie has multiple net-namespace security fixes in
-networking (e.g., requiring `CAP_NET_ADMIN` for tunnel changelink). Co-
-authors Praveen Kakkolangara and reviewer Allison Henderson are active
-RDS contributors/maintainers.
+Standalone fix; not part of a multi-commit dependency chain for this
+tree.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** Requires `rds_conn_net()` helper — **present** in this tree
-(`rds.h:174-177`). Requires `read_pnet`/`write_pnet` on `conn->c_net` —
-**present**. No other prerequisites. Should apply cleanly.
+### Step 3.4: Author's other commits
+**Record:** David Howells is the netfs subsystem author. He authored
+`72d08d2839649` (the retry loop) and this follow-up fix. Deepanshu
+Kartikey authored the incomplete `a4d1b4ba9754b` fix.
+
+### Step 3.5: Prerequisites
+**Record:**
+- **Required in tree:** `72d08d2839649` (retry loop) and `a4d1b4ba9754b`
+  (if/else structure) — both present.
+- **Fix commit `64f04f978923`:** NOT in HEAD.
+- **Standalone:** Yes — only modifies existing retry path; cherry-pick
+  applies cleanly.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:** `b4 dig -c <sha>` could not run — commit not in local tree.
-Web search found patch series v3→v5 on netdev/linux-kernel lists (May
-2026). Final version is v5. Reviewed-by Allison Henderson on committed
-version. Could not fetch lore/patch.msgid.link (bot protection/timeout).
+### Step 4.1: Original patch discussion
+**Record:**
+- `b4 dig -c 64f04f978923`: found at
+  https://patch.msgid.link/20260625140640.3116900-16-dhowells@redhat.com
+- Subject: `[PATCH v3 15/15] netfs: Fix DIO write retry for filesystems
+  without a ->prepare_write()`
+- Part of a 15-patch netfs series; this patch is self-contained in
+  `direct_write.c`.
+- Lore page blocked by bot protection; could not read thread body.
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** CC list from v5 includes netdev, linux-rdma, rds-devel
-maintainers (David Miller, Eric Dumazet, Jakub Kicinski, Paolo Abeni).
-Reviewed-by Allison Henderson (RDS maintainer).
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w` CC list includes David Howells, Christian
+Brauner, Paulo Alcantara, Christoph Hellwig, netfs@lists.linux.dev,
+linux-fsdevel@vger.kernel.org, syzbot address. Appropriate subsystem
+coverage.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** No syzbot/bugzilla link. Issue identified by RDS maintainers
-(Suggested-by Henderson, Horman). Reproducer included in commit message.
-Kernel test robot noted unused globals (W=1), not the security bug
-itself.
+### Step 4.3: Bug report
+**Record:** https://syzkaller.appspot.com/bug?extid=3c74b1f0c372e98efc32
+- **Type:** KASAN: slab-use-after-free Read in `netfs_unbuffered_write`
+- **Status:** Fixed upstream 2026/07/29
+- **Priority:** high
+- **Trigger:** `ksys_write` → `v9fs_file_write_iter` →
+  `netfs_unbuffered_write_iter` → `netfs_unbuffered_write`
+- **AI assessment:** Exploitable, unprivileged, userspace-triggerable
+- **8 crashes** over ~75 days
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Standalone 1-patch fix; evolved v1→v5 during review (v3
-addressed two-pass counting feedback from Simon Horman). No other
-patches required.
+### Step 4.4: Related patches/series
+**Record:** Patch 15/15 of v3 netfs series. Other series patches (e.g.,
+“Fix oops in write-retry from mis-resetting the subreq iterator”) are
+NOT in this tree, but this patch does not depend on them — verified by
+clean cherry-pick.
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** Not searched — commit not yet in stable tree. No evidence
-against backport found.
+### Step 4.5: Stable mailing list
+**Record:** Could not search lore stable list (bot protection). No
+evidence against stable nomination.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `rds_sock_info`, `rds6_sock_info`, `rds_sock_inc_info`,
-`rds6_sock_inc_info`, `rds_conn_message_info_cmn`,
-`rds_for_each_conn_info`, `rds_walk_conn_path_info`, `rds_tcp_tc_info`,
-`rds6_tcp_tc_info`
+### Step 5.1: Key functions
+**Record:** `netfs_unbuffered_write()` (modified),
+`netfs_reissue_write()` (no longer called from here on retry)
 
-### Step 5.2: TRACE CALLERS
-**Record:** All called from `rds_info_getsockopt()` (`info.c:208`) via
-registered function table, which is invoked from `rds_getsockopt()`
-(`af_rds.c:506`) on `getsockopt(2)` for `SOL_RDS` options. Reachable
-from any process with an AF_RDS socket.
+### Step 5.2: Callers
+**Record:**
+- `netfs_unbuffered_write_iter_locked()` ←
+  `netfs_unbuffered_write_iter()`
+- Callers of `netfs_unbuffered_write_iter()`:
+  - `fs/9p/vfs_file.c` (no `prepare_write` — **affected**)
+  - `fs/smb/client/file.c` (has `cifs_prepare_write` — uses
+    `prepare_write` path, not affected by this specific bug)
+  - `fs/netfs/buffered_write.c` (fallback path)
 
-### Step 5.3: TRACE CALLEES
-**Record:** `sock_net()`, `net_eq()`, `rds_conn_net()`,
-`rds_info_copy()`, list iteration under existing locks (`rds_sock_lock`,
-`rds_tcp_tc_list_lock`, RCU for conn hash).
+### Step 5.3: Callees in retry path
+**Record:** `iov_iter_advance`, `retry_request` op, flag bit ops,
+`netfs_get_subrequest`, optional `prepare_write`, then loop-top
+`stream->issue_write()`.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** `syscall:getsockopt` → `sock_getsockopt` → `rds_getsockopt`
-→ `rds_info_getsockopt` → info handler. **Userspace-reachable** from
-unprivileged user in new netns (confirmed: `rds_create()` at
-`af_rds.c:703-716` has no `capable()` check).
+### Step 5.4: Call chain / reachability
+**Record:** `write(2)` → VFS → `v9fs_file_write_iter` →
+`netfs_unbuffered_write_iter` → `netfs_unbuffered_write`. **Userspace-
+reachable** on 9p mounts with O_DIRECT or unbuffered write paths.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** Same `net_eq(sock_net(...), rds_conn_net(...))` pattern
-already applied in `recv.c:377` for cross-netns message delivery. This
-fix extends the same principle to the info-export path.
+### Step 5.5: Similar patterns
+**Record:** `write_retry.c` correctly uses `netfs_reissue_write()`
+outside a re-issue loop. `netfs_unbuffered_write()` has its own issue-
+at-loop-top pattern — the bug was copying the wrong pattern.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** **YES.** Verified:
-- `rds_sock_inc_info` iterates all of `rds_sock_list` without netns
-  check (`af_rds.c:746`)
-- `rds_tcp_tc_info` exports all TCP connections without netns filter
-  (`tcp.c:245-264`)
-- `rds_conn_message_info_cmn` walks all of `rds_conn_hash` without netns
-  filter (`connection.c:560-594`)
-- `rds_info_getsockopt()` has no netns/capability gate
-  (`info.c:158-218`)
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** Lines 189–199 in `fs/netfs/direct_write.c` contain
+the buggy `else { netfs_reissue_write(); }` branch. Introduced by
+`a4d1b4ba9754b`, which is in this tree.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** Expected **clean apply**. File structure matches the diff
-context. Recent related RDS netns commits in this tree use the same
-helpers. No conflicting refactor detected in last 10 commits on these
-files.
+### Step 6.2: Backport complications
+**Record:** **Clean apply.** `git cherry-pick --no-commit 64f04f978923`
+succeeded with auto-merge on `fs/netfs/direct_write.c`.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** Partial mitigations present (`a7494479757d6` blocks RDS/IB
-in non-init netns for *transport setup*, `9591042533140` fixes recv
-UAF), but **no fix for getsockopt info leak**. This commit is still
-needed.
+### Step 6.3: Related fixes already present?
+**Record:** `a4d1b4ba9754b` (incomplete NULL-deref fix) is present. Fix
+`64f04f978923` is NOT present (`git merge-base --is-ancestor` returns
+failure). No duplicate fix found.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** `net/rds` — networking protocol (IMPORTANT). Security-
-relevant when `CONFIG_RDS` is enabled/built as module.
+### Step 7.1: Subsystem criticality
+**Record:** `fs/netfs/` — IMPORTANT. Shared library for network
+filesystems (9p, CIFS, AFS, Ceph). Write path affects data integrity.
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** Actively maintained — multiple RDS netns security fixes
-landed in 6.18.y recently, indicating ongoing hardening of namespace
-isolation in this driver.
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained in 6.18.y — multiple netfs fixes already
+backported (UAF, deadlock, writeback fixes visible in recent log).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** Systems with `CONFIG_RDS`/`CONFIG_RDS_TCP` enabled and RDS
-in use on the host. Any multi-tenant/container environment where
-untrusted users can create user+network namespaces. Not universal
-(CONFIG-dependent), but impact is severe when RDS is loaded.
+### Step 8.1: Who is affected
+**Record:** Users of network filesystems without `prepare_write` on the
+upload stream — primarily **9p**. Config-dependent (9p + unbuffered/DIO
+write + write retry).
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+### Step 8.2: Trigger conditions
+**Record:** Write subrequest marked `NETFS_SREQ_NEED_RETRY` during
+unbuffered/DIO write when `stream->prepare_write == NULL`. Syzbot
+reproduces via `write()` syscall. Unprivileged users can trigger on
+accessible 9p mounts.
+
+### Step 8.3: Failure mode severity
 **Record:**
-- **Trigger:** Create user_ns + netns (unprivileged since 3.8), load/use
-  AF_RDS, call `getsockopt(SOL_RDS, RDS_INFO_*)`
-- **Likelihood:** Moderate — requires RDS module loaded, but module
-  autoload via `MODULE_ALIAS_NETPROTO(PF_RDS)` is possible
-- **Unprivileged trigger:** **Yes** — no capability check in
-  `rds_create()`
+- KASAN slab-use-after-free (syzbot-confirmed) — **CRITICAL** (crash,
+  potential security)
+- Double write issuance — **CRITICAL** (data corruption risk)
+- Incorrect `wreq->transferred` — **HIGH** (wrong offsets, potential
+  corruption)
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** Cross-namespace **information disclosure** — socket
-addresses, inode numbers, peer addresses, TCP sequence numbers, RDS
-sequence numbers. Severity: **CRITICAL** (security vulnerability; aids
-network reconnaissance and potentially TCP sequence prediction attacks).
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** HIGH — closes documented namespace isolation bypass
-- **Risk:** LOW — surgical netns filtering using established in-
-  subsystem pattern; no behavior change for correctly scoped callers
-- **Ratio:** Strongly favors backport
+- **Benefit:** HIGH — fixes syzbot UAF, prevents double-write and
+  progress accounting errors on a common netfs code path.
+- **Risk:** VERY LOW — ~10-line change, mirrors existing `prepare_write`
+  path behavior.
+- **Ratio:** Strongly favors backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real security bug — cross-netns info leak
-- Unprivileged reproduction path documented
-- Leaks sensitive data (TCP/RDS sequence numbers, peer addresses, socket
-  inodes)
-- Reviewed by RDS maintainer (Allison Henderson)
-- Small, focused fix using existing `net_eq()`/`rds_conn_net()`
-  infrastructure
-- Buggy code confirmed present in linux-6.18.y
-- Prerequisites (`rds_conn_net`, per-net conn support) present in tree
-- Consistent with other RDS netns hardening already backported to this
-  tree
+- syzbot-reported, reproducible KASAN UAF
+- Userspace-triggerable via `write()` on 9p
+- High priority, assessed exploitable
+- Small, surgical, obviously correct fix
+- Bug exists in this 6.18.44 tree (introduced by prior stable backport
+  `a4d1b4ba9754b`)
+- Applies cleanly
+- Fixes real data-integrity and crash bugs
 
 **AGAINST backport:**
-- CONFIG_RDS is optional/tristate — not every system has RDS loaded
-- No syzbot/CVE reference (weaker signal, but maintainers documented the
-  issue)
+- Part of a 15-patch series (but this patch is self-contained)
+- Only affects filesystems without `prepare_write` (primarily 9p, not
+  CIFS/AFS)
 
-**UNRESOLVED:**
-- Full lore thread content (fetch blocked)
-- Exact upstream commit SHA not in local remotes
+**Unresolved:** Could not read full lore review thread (bot protection).
+Does not affect decision — syzbot evidence is sufficient.
 
-Neither unresolved item affects the technical decision.
+### Step 9.2: Stable rules checklist
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — syzbot tested prior
+NULL-deref fix; this is author's correction of that approach |
+| 2. Fixes real bug affecting users? | **PASS** — syzbot UAF, 8 crashes
+|
+| 3. Important issue? | **PASS** — CRITICAL (UAF, data corruption) |
+| 4. Small and contained? | **PASS** — single file, ~10 lines |
+| 5. No new features/APIs? | **PASS** |
+| 6. Can apply to local tree? | **PASS** — verified clean cherry-pick |
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — clear netns filtering;
-   reviewed by maintainer; reproducer provided
-2. Fixes a real bug affecting users? **PASS** — documented cross-netns
-   info leak
-3. Important issue? **PASS** — security information disclosure
-   (CRITICAL)
-4. Small and contained? **PASS** — ~3 files, focused handlers, no
-   refactoring
-5. No new features or APIs? **PASS** — access restriction only
-6. Can apply to local tree? **PASS** — code and helpers present; clean
-   apply expected
+### Step 9.3: Exception categories
+**Record:** N/A — standard bug fix, not a quirk/ID/DT/doc exception.
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-**Record:** Security bug fix (not device ID, quirk, DT, build, or docs
-exception).
-
-### Step 9.4: DECISION RATIONALE
-
-This commit closes a namespace isolation hole in RDS diagnostic
-getsockopt handlers. An unprivileged user in a container-like
-user+network namespace can currently enumerate host-wide RDS connection
-state including TCP sequence numbers. The fix applies the same
-`net_eq()` scoping pattern already used elsewhere in RDS and is a
-standard stable security backport. The bug exists in linux-6.18.44;
-partial mitigations (RDS/IB transport restriction, recv-path UAF fix) do
-not address this getsockopt leak.
+### Step 9.4: Decision rationale
+This 6.18.y tree contains the buggy retry path from `a4d1b4ba9754b` but
+not the corrective fix. The bug causes slab-use-after-free (syzbot-
+confirmed, high priority, userspace-triggerable on 9p) and double write
+issuance. The fix is minimal, applies cleanly, and corrects a regression
+introduced by a prior stable backport. This is exactly the kind of
+follow-up fix stable trees need.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags (Reviewed-by Henderson, Suggested-by
-  Henderson/Horman, Link to patch)
-- [Phase 2] Read diff: 3 files, netns `net_eq()` filters in 9 handlers,
-  global counter removal
-- [Phase 3] `git describe HEAD` → v6.18.44; `git blame` on
-  `rds_sock_inc_info` → long-standing code; `d5a8ac28a7ff` → RDS-TCP
-  netns since 2015; related commits `a7494479757d6`, `9591042533140`
-  present
-- [Phase 4] Web search found v3-v5 patch series; Reviewed-by Henderson;
-  `b4 dig`/`WebFetch` lore blocked (no commit SHA in tree / bot
-  protection)
-- [Phase 5] Traced call chain: `getsockopt` → `rds_getsockopt` →
-  `rds_info_getsockopt` → handlers; confirmed `rds_create()` lacks
-  `capable()` at `af_rds.c:703-716`
-- [Phase 6] Confirmed buggy globals and unfiltered loops at
-  `af_rds.c:746`, `tcp.c:245`, `connection.c:560`; `rds_conn_net()`
-  exists at `rds.h:174`; fix not present
-- [Phase 7] Subsystem: net/rds, actively receiving netns security fixes
-- [Phase 8] Failure mode: cross-netns info leak, unprivileged trigger,
-  CRITICAL severity
+- **[Phase 1]** Parsed commit message and tags; confirmed syzbot
+  Reported-by and Closes link
+- **[Phase 2]** Read `fs/netfs/direct_write.c` lines 94–205; confirmed
+  retry loop double-issue path
+- **[Phase 2]** Read `netfs_reissue_write()` in
+  `fs/netfs/write_issue.c:240-257`; confirms it calls
+  `netfs_do_issue_write()`
+- **[Phase 3]** `git describe HEAD`: v6.18.44
+- **[Phase 3]** `git blame -L 163,200`: retry code from `72d08d2839649`,
+  buggy else from `a4d1b4ba9754b`
+- **[Phase 3]** `git show a4d1b4ba9754b`: introduced
+  `netfs_reissue_write()` in else branch
+- **[Phase 3]** `git show 72d08d2839649`: introduced sequential DIO
+  write retry loop
+- **[Phase 3]** `git merge-base --is-ancestor`: both prerequisites in
+  HEAD; fix `64f04f978923` NOT in HEAD
+- **[Phase 4]** `b4 dig -c 64f04f978923`: found lore URL, patch v3 15/15
+- **[Phase 4]** `b4 dig -w`: confirmed maintainer CC list
+- **[Phase 4]** WebFetch syzbot bug page: KASAN UAF, high priority,
+  exploitable, 8 crashes, v9p trigger via `ksys_write`
+- **[Phase 5]** `grep netfs_unbuffered_write_iter`: callers in 9p, SMB,
+  netfs buffered_write
+- **[Phase 5]** `grep prepare_write fs/9p`: no matches — 9p lacks
+  `prepare_write`
+- **[Phase 5]** `grep prepare_write fs/smb`, `fs/afs`: both have
+  `prepare_write` set
+- **[Phase 6]** Confirmed buggy else branch at `direct_write.c:189-199`
+- **[Phase 6]** `git cherry-pick --no-commit 64f04f978923`: clean apply
+  (exit 0)
+- **[Phase 8]** Syzbot stack trace: UAF at `netfs_unbuffered_write` via
+  `v9fs_file_write_iter` + `ksys_write`
 
-**YES**The remote search (`sasha-next`, `sashal`, `stable/linux-6.19.y`)
-finished without finding the fix commit — it isn’t in those local refs
-yet, which matches this tree still having the vulnerable getsockopt
-handlers.
+**YES**
 
-The analysis stands: this is a cross-netns information leak in
-`RDS_INFO_*` getsockopt paths, exploitable from unprivileged
-user+network namespaces when RDS is loaded. The fix is small, reviewed
-by the RDS maintainer, and the prerequisites (`rds_conn_net()`, etc.)
-are already in **linux-6.18.y v6.18.44**.
+ fs/netfs/direct_write.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-**YES** — backport recommended for this tree.
-
- net/rds/af_rds.c     | 59 ++++++++++++++++++++++++++++++++++-------
- net/rds/connection.c | 13 +++++++++
- net/rds/tcp.c        | 63 ++++++++++++++++++++++++++++----------------
- 3 files changed, 104 insertions(+), 31 deletions(-)
-
-diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
-index 7a0f5150e9103..cc3a898bf5d51 100644
---- a/net/rds/af_rds.c
-+++ b/net/rds/af_rds.c
-@@ -43,7 +43,6 @@
+diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
+index f9ab69de3e298..c2873ecbeceb6 100644
+--- a/fs/netfs/direct_write.c
++++ b/fs/netfs/direct_write.c
+@@ -166,13 +166,16 @@ static int netfs_unbuffered_write(struct netfs_io_request *wreq)
+ 		 */
+ 		subreq->error = -EAGAIN;
+ 		trace_netfs_sreq(subreq, netfs_sreq_trace_retry);
+-		if (subreq->transferred > 0)
++		if (subreq->transferred > 0) {
+ 			iov_iter_advance(&wreq->buffer.iter, subreq->transferred);
++			wreq->transferred += subreq->transferred;
++		}
  
- /* this is just used for stats gathering :/ */
- static DEFINE_SPINLOCK(rds_sock_lock);
--static unsigned long rds_sock_count;
- static LIST_HEAD(rds_sock_list);
- DECLARE_WAIT_QUEUE_HEAD(rds_poll_waitq);
+ 		if (stream->source == NETFS_UPLOAD_TO_SERVER &&
+ 		    wreq->netfs_ops->retry_request)
+ 			wreq->netfs_ops->retry_request(wreq, stream);
  
-@@ -82,7 +81,6 @@ static int rds_release(struct socket *sock)
++		__clear_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
+ 		__clear_bit(NETFS_SREQ_NEED_RETRY, &subreq->flags);
+ 		__clear_bit(NETFS_SREQ_BOUNDARY, &subreq->flags);
+ 		__clear_bit(NETFS_SREQ_FAILED, &subreq->flags);
+@@ -186,17 +189,10 @@ static int netfs_unbuffered_write(struct netfs_io_request *wreq)
  
- 	spin_lock_bh(&rds_sock_lock);
- 	list_del_init(&rs->rs_item);
--	rds_sock_count--;
- 	spin_unlock_bh(&rds_sock_lock);
+ 		netfs_get_subrequest(subreq, netfs_sreq_trace_get_resubmit);
  
- 	rds_trans_put(rs->rs_transport);
-@@ -694,7 +692,6 @@ static int __rds_create(struct socket *sock, struct sock *sk, int protocol)
- 
- 	spin_lock_bh(&rds_sock_lock);
- 	list_add_tail(&rs->rs_item, &rds_sock_list);
--	rds_sock_count++;
- 	spin_unlock_bh(&rds_sock_lock);
- 
- 	return 0;
-@@ -735,6 +732,7 @@ static void rds_sock_inc_info(struct socket *sock, unsigned int len,
- 			      struct rds_info_iterator *iter,
- 			      struct rds_info_lengths *lens)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct rds_sock *rs;
- 	struct rds_incoming *inc;
- 	unsigned int total = 0;
-@@ -744,6 +742,9 @@ static void rds_sock_inc_info(struct socket *sock, unsigned int len,
- 	spin_lock_bh(&rds_sock_lock);
- 
- 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
-+		/* Only show sockets in the caller's netns. */
-+		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
-+			continue;
- 		/* This option only supports IPv4 sockets. */
- 		if (!ipv6_addr_v4mapped(&rs->rs_bound_addr))
- 			continue;
-@@ -774,6 +775,7 @@ static void rds6_sock_inc_info(struct socket *sock, unsigned int len,
- 			       struct rds_info_iterator *iter,
- 			       struct rds_info_lengths *lens)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct rds_incoming *inc;
- 	unsigned int total = 0;
- 	struct rds_sock *rs;
-@@ -783,6 +785,9 @@ static void rds6_sock_inc_info(struct socket *sock, unsigned int len,
- 	spin_lock_bh(&rds_sock_lock);
- 
- 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
-+		/* Only show sockets in the caller's netns. */
-+		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
-+			continue;
- 		read_lock(&rs->rs_recv_lock);
- 
- 		list_for_each_entry(inc, &rs->rs_recv_queue, i_item) {
-@@ -806,7 +811,9 @@ static void rds_sock_info(struct socket *sock, unsigned int len,
- 			  struct rds_info_iterator *iter,
- 			  struct rds_info_lengths *lens)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct rds_info_socket sinfo;
-+	unsigned int copied = 0;
- 	unsigned int cnt = 0;
- 	struct rds_sock *rs;
- 
-@@ -814,12 +821,24 @@ static void rds_sock_info(struct socket *sock, unsigned int len,
- 
- 	spin_lock_bh(&rds_sock_lock);
- 
--	if (len < rds_sock_count) {
--		cnt = rds_sock_count;
--		goto out;
-+	/* First pass: count entries visible in the caller's netns. */
-+	list_for_each_entry(rs, &rds_sock_list, rs_item) {
-+		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
-+			continue;
-+		if (!ipv6_addr_v4mapped(&rs->rs_bound_addr))
-+			continue;
-+		cnt++;
- 	}
- 
-+	if (len < cnt)
-+		goto out;
-+
- 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
-+		if (copied >= cnt)
-+			break;
-+		/* Only show sockets in the caller's netns. */
-+		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
-+			continue;
- 		/* This option only supports IPv4 sockets. */
- 		if (!ipv6_addr_v4mapped(&rs->rs_bound_addr))
- 			continue;
-@@ -832,8 +851,13 @@ static void rds_sock_info(struct socket *sock, unsigned int len,
- 		sinfo.inum = sock_i_ino(rds_rs_to_sk(rs));
- 
- 		rds_info_copy(iter, &sinfo, sizeof(sinfo));
--		cnt++;
-+		copied++;
- 	}
-+	/* A concurrent rds_bind() can change rs_bound_addr between the
-+	 * two passes without holding rds_sock_lock, so copied may be
-+	 * less than cnt. Report what was actually copied.
-+	 */
-+	cnt = copied;
- 
- out:
- 	lens->nr = cnt;
-@@ -847,17 +871,32 @@ static void rds6_sock_info(struct socket *sock, unsigned int len,
- 			   struct rds_info_iterator *iter,
- 			   struct rds_info_lengths *lens)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct rds6_info_socket sinfo6;
-+	unsigned int copied = 0;
-+	unsigned int cnt = 0;
- 	struct rds_sock *rs;
- 
- 	len /= sizeof(struct rds6_info_socket);
- 
- 	spin_lock_bh(&rds_sock_lock);
- 
--	if (len < rds_sock_count)
-+	/* First pass: count entries visible in the caller's netns. */
-+	list_for_each_entry(rs, &rds_sock_list, rs_item) {
-+		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
-+			continue;
-+		cnt++;
-+	}
-+
-+	if (len < cnt)
- 		goto out;
- 
- 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
-+		if (copied >= cnt)
-+			break;
-+		/* Only show sockets in the caller's netns. */
-+		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
-+			continue;
- 		sinfo6.sndbuf = rds_sk_sndbuf(rs);
- 		sinfo6.rcvbuf = rds_sk_rcvbuf(rs);
- 		sinfo6.bound_addr = rs->rs_bound_addr;
-@@ -867,10 +906,12 @@ static void rds6_sock_info(struct socket *sock, unsigned int len,
- 		sinfo6.inum = sock_i_ino(rds_rs_to_sk(rs));
- 
- 		rds_info_copy(iter, &sinfo6, sizeof(sinfo6));
-+		copied++;
- 	}
-+	cnt = copied;
- 
-  out:
--	lens->nr = rds_sock_count;
-+	lens->nr = cnt;
- 	lens->each = sizeof(struct rds6_info_socket);
- 
- 	spin_unlock_bh(&rds_sock_lock);
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index 4764628fe12a3..9fd58b7250e9a 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -541,6 +541,7 @@ static void rds_conn_message_info_cmn(struct socket *sock, unsigned int len,
- 				      struct rds_info_lengths *lens,
- 				      int want_send, bool isv6)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct hlist_head *head;
- 	struct list_head *list;
- 	struct rds_connection *conn;
-@@ -563,6 +564,9 @@ static void rds_conn_message_info_cmn(struct socket *sock, unsigned int len,
- 			struct rds_conn_path *cp;
- 			int npaths;
- 
-+			/* Only show connections in the caller's netns. */
-+			if (!net_eq(rds_conn_net(conn), net))
-+				continue;
- 			if (!isv6 && conn->c_isv6)
- 				continue;
- 
-@@ -661,6 +665,7 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
- 			  u64 *buffer,
- 			  size_t item_len)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct hlist_head *head;
- 	struct rds_connection *conn;
- 	size_t i;
-@@ -673,6 +678,9 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
- 	for (i = 0, head = rds_conn_hash; i < ARRAY_SIZE(rds_conn_hash);
- 	     i++, head++) {
- 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
-+			/* Only show connections in the caller's netns. */
-+			if (!net_eq(rds_conn_net(conn), net))
-+				continue;
- 
- 			/* Zero the per-item buffer before handing it to the
- 			 * visitor so any field the visitor does not write -
-@@ -706,6 +714,7 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
- 				    u64 *buffer,
- 				    size_t item_len)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct hlist_head *head;
- 	struct rds_connection *conn;
- 	size_t i;
-@@ -720,6 +729,10 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
- 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
- 			struct rds_conn_path *cp;
- 
-+			/* Only show connections in the caller's netns. */
-+			if (!net_eq(rds_conn_net(conn), net))
-+				continue;
-+
- 			/* XXX We only copy the information from the first
- 			 * path for now.  The problem is that if there are
- 			 * more than one underlying paths, we cannot report
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 1980a197034ba..ab509498cf752 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -46,14 +46,6 @@
- static DEFINE_SPINLOCK(rds_tcp_tc_list_lock);
- static LIST_HEAD(rds_tcp_tc_list);
- 
--/* rds_tcp_tc_count counts only IPv4 connections.
-- * rds6_tcp_tc_count counts both IPv4 and IPv6 connections.
-- */
--static unsigned int rds_tcp_tc_count;
--#if IS_ENABLED(CONFIG_IPV6)
--static unsigned int rds6_tcp_tc_count;
--#endif
+-		if (stream->prepare_write) {
++		if (stream->prepare_write)
+ 			stream->prepare_write(subreq);
+-			__set_bit(NETFS_SREQ_IN_PROGRESS, &subreq->flags);
+-			netfs_stat(&netfs_n_wh_retry_write_subreq);
+-		} else {
+-			struct iov_iter source;
 -
- /* Track rds_tcp_connection structs so they can be cleaned up */
- static DEFINE_SPINLOCK(rds_tcp_conn_lock);
- static LIST_HEAD(rds_tcp_conn_list);
-@@ -110,11 +102,6 @@ void rds_tcp_restore_callbacks(struct socket *sock,
- 	/* done under the callback_lock to serialize with write_space */
- 	spin_lock(&rds_tcp_tc_list_lock);
- 	list_del_init(&tc->t_list_item);
--#if IS_ENABLED(CONFIG_IPV6)
--	rds6_tcp_tc_count--;
--#endif
--	if (!tc->t_cpath->cp_conn->c_isv6)
--		rds_tcp_tc_count--;
- 	spin_unlock(&rds_tcp_tc_list_lock);
- 
- 	tc->t_sock = NULL;
-@@ -201,11 +188,6 @@ void rds_tcp_set_callbacks(struct socket *sock, struct rds_conn_path *cp)
- 	/* done under the callback_lock to serialize with write_space */
- 	spin_lock(&rds_tcp_tc_list_lock);
- 	list_add_tail(&tc->t_list_item, &rds_tcp_tc_list);
--#if IS_ENABLED(CONFIG_IPV6)
--	rds6_tcp_tc_count++;
--#endif
--	if (!tc->t_cpath->cp_conn->c_isv6)
--		rds_tcp_tc_count++;
- 	spin_unlock(&rds_tcp_tc_list_lock);
- 
- 	/* accepted sockets need our listen data ready undone */
-@@ -233,20 +215,37 @@ static void rds_tcp_tc_info(struct socket *rds_sock, unsigned int len,
- 			    struct rds_info_iterator *iter,
- 			    struct rds_info_lengths *lens)
- {
-+	struct net *net = sock_net(rds_sock->sk);
- 	struct rds_info_tcp_socket tsinfo;
- 	struct rds_tcp_connection *tc;
-+	unsigned int copied = 0;
-+	unsigned int cnt = 0;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&rds_tcp_tc_list_lock, flags);
- 
--	if (len / sizeof(tsinfo) < rds_tcp_tc_count)
-+	/* First pass: count entries visible in the caller's netns. */
-+	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
-+		if (tc->t_cpath->cp_conn->c_isv6)
-+			continue;
-+		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
-+			continue;
-+		cnt++;
-+	}
-+
-+	if (len / sizeof(tsinfo) < cnt)
- 		goto out;
- 
- 	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
- 		struct inet_sock *inet = inet_sk(tc->t_sock->sk);
- 
-+		if (copied >= cnt)
-+			break;
- 		if (tc->t_cpath->cp_conn->c_isv6)
- 			continue;
-+		/* Only show connections in the caller's netns. */
-+		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
-+			continue;
- 
- 		tsinfo.local_addr = inet->inet_saddr;
- 		tsinfo.local_port = inet->inet_sport;
-@@ -261,10 +260,12 @@ static void rds_tcp_tc_info(struct socket *rds_sock, unsigned int len,
- 		tsinfo.tos = tc->t_cpath->cp_conn->c_tos;
- 
- 		rds_info_copy(iter, &tsinfo, sizeof(tsinfo));
-+		copied++;
+-			netfs_reset_iter(subreq);
+-			source = subreq->io_iter;
+-			netfs_reissue_write(stream, subreq, &source);
+-		}
++		__set_bit(NETFS_SREQ_IN_PROGRESS, &subreq->flags);
++		netfs_stat(&netfs_n_wh_retry_write_subreq);
  	}
-+	cnt = copied;
  
- out:
--	lens->nr = rds_tcp_tc_count;
-+	lens->nr = cnt;
- 	lens->each = sizeof(tsinfo);
- 
- 	spin_unlock_irqrestore(&rds_tcp_tc_list_lock, flags);
-@@ -279,19 +280,35 @@ static void rds6_tcp_tc_info(struct socket *sock, unsigned int len,
- 			     struct rds_info_iterator *iter,
- 			     struct rds_info_lengths *lens)
- {
-+	struct net *net = sock_net(sock->sk);
- 	struct rds6_info_tcp_socket tsinfo6;
- 	struct rds_tcp_connection *tc;
-+	unsigned int copied = 0;
-+	unsigned int cnt = 0;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&rds_tcp_tc_list_lock, flags);
- 
--	if (len / sizeof(tsinfo6) < rds6_tcp_tc_count)
-+	/* First pass: count entries visible in the caller's netns. */
-+	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
-+		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
-+			continue;
-+		cnt++;
-+	}
-+
-+	if (len / sizeof(tsinfo6) < cnt)
- 		goto out;
- 
- 	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
- 		struct sock *sk = tc->t_sock->sk;
- 		struct inet_sock *inet = inet_sk(sk);
- 
-+		if (copied >= cnt)
-+			break;
-+		/* Only show connections in the caller's netns. */
-+		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
-+			continue;
-+
- 		tsinfo6.local_addr = sk->sk_v6_rcv_saddr;
- 		tsinfo6.local_port = inet->inet_sport;
- 		tsinfo6.peer_addr = sk->sk_v6_daddr;
-@@ -304,10 +321,12 @@ static void rds6_tcp_tc_info(struct socket *sock, unsigned int len,
- 		tsinfo6.last_seen_una = tc->t_last_seen_una;
- 
- 		rds_info_copy(iter, &tsinfo6, sizeof(tsinfo6));
-+		copied++;
- 	}
-+	cnt = copied;
- 
- out:
--	lens->nr = rds6_tcp_tc_count;
-+	lens->nr = cnt;
- 	lens->each = sizeof(tsinfo6);
- 
- 	spin_unlock_irqrestore(&rds_tcp_tc_list_lock, flags);
+ 	netfs_unbuffered_write_done(wreq);
 -- 
 2.53.0
 
