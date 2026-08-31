@@ -1,331 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9774B5CB7;
-	Mon, 31 Aug 2026 13:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFEF476CD6;
+	Mon, 31 Aug 2026 13:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184375; cv=none; b=nE+o/0X6dcEr6EwFphtG9XYMG1hLW/9YCw9llEoXu2Mlo1ANPWK46HcDuT/QRTrlZnPHi8C7a1ox6fhWR0nWd6SAZEazBw7+6yNpFMqSYbDRI/xBtHkX92+iKUfI2zMJSqHc0CeAXIfjXF/cDlOTJBR0q9Z7reXsJ8TKiQDNlh0=
+	t=1788184380; cv=none; b=CtrRBE9PBTVtRg61WSO7mfRyL05RFxNm4QHdRCAIpLUdUOnCV8gBMyh25DRS4LFIxITZmpjlx6ReGjdsIz/KiqmwjSIVBTTHR0vWRCgVTJmUHGUd+joZNPs/kCcDnko1clrZ7UCx5xBw7wVDkPj3HRC8T021MutgBcCuBeswptY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184375; c=relaxed/simple;
-	bh=XqdCnkwfxeLVnH4fOllX0+u1y++n6G8kNaeM2fSVr4s=;
+	s=arc-20240116; t=1788184380; c=relaxed/simple;
+	bh=0GnKRMGzbyWbMXbQ8K9NRe3rPOBo1iJiuPo+9bQ2ud4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfwvFQaeR7oEIV5IJhUvN2E8Z90V+/JTlorwKn/6WHQ1bdCfgIoDxBpSzpFIm1SVsGo5krVI8p7XFchUURaSkmXw7Gz8uFzRcG5xTPIvJf7Nhrht9B87xW2yXRIG/s3X87FufSm6Y3KUfJ8nx/6clJAZKpV2yvPgIme/DX4xGoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Or5U4U/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r++y4WBx/t2OgSKBcS4E2Y66auSr3QgSu5XppjOZfwyCUQYul5YTHPmpIghW/fAjvNaoKMbHO4zLDTofpAH3Dn6fuuMI7otuvH8hfc6Ehhc+SZyWFhHYxX7TLyWNy/h0NFvS39TIHVg3l0xNNQhOJ/bXHwbQ7ndBOZtF3s0FTag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=klxrtnBg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Or5U4U/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AF01F00A3D;
-	Mon, 31 Aug 2026 13:52:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184374;
-	bh=9mGCk6H8brp7PoNBRCoRMEatj8E311ITtcFbGkTZNto=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="klxrtnBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BB11F00A3E;
+	Mon, 31 Aug 2026 13:52:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184378;
+	bh=qdInuau1opK/NX1CRfecjEgVmT9hD+5UWjqPRkbGtwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Or5U4U/9SnxKX9BQ+zOk5j1+QzRVX0a91v6Vt00i465aSKViDiqcVyBGN2Mk21R0
-	 bATnaVw2zu14c9E2xQflYAW4Nisngw0+4CxJ9rNDC3NgZw6jXZfBbRzVKr9mPbrGGU
-	 arVWh8W4FdNb1HesL/DxuznWQlLNe0WQNwHbibPU=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 85/99] crypto: qcom-rng - Remove crypto_rng interface
-Date: Mon, 31 Aug 2026 15:34:54 +0200
-Message-ID: <20260831133404.062760815@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=klxrtnBg3BcSTzJ8E7cCoOzW1xS63h5D5wkzC+lqQDb0oRrxJnx3cYY3DUfrPGmUO
+	 t2SPjEYQ1KZMgK1RA+8ZLpHks1xpnYfBtb4AM+Y56Kd5eTH5AHEwvVDv+DjdQO8Fvi
+	 MjVfquerzNh3ESwyFZMjnUXLwA8UipJTzhEqOe0lzsd9cZGON0K0EapyLVIfnsQSBR
+	 l8tsrOl5sSqpErys6+mOZ/cK5H6jJVwzNLGBH60TzuxCiXENxmlCH1ja2l4XLR5R+5
+	 +OpbK2waoxYZMX/6VMfl3DRxO32KWaqQsL/Tz1+JYoUSN5lwVn4rsSGogXMVNIxuXI
+	 cX6yr+kIRsWkg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	cezary.rojewski@intel.com,
+	liam.r.girdwood@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	yung-chuan.liao@linux.intel.com,
+	kai.vehmanen@linux.intel.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] ASoC: sof_sdw: Add a quirk for 0x17aa383c laptop using sidecar amps with cs42l43
+Date: Mon, 31 Aug 2026 09:31:26 -0400
+Message-ID: <20260831133314.4125787-658-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-------------------
+[ Upstream commit 04f15d8f393037ed72876399882265604a370b2b ]
 
-From: Eric Biggers <ebiggers@kernel.org>
+Add a quirk for a Lenovo laptop (SSID: 0x17aa383c) to allow using sidecar
+CS35L56 amps with CS42L43 codec.
 
-commit 2ecdf5c9910e20f73639bc322f0518a3439d17c0 upstream.
-
-qcom-rng.c exposes the same hardware through two completely separate
-interfaces, crypto_rng and hwrng.  However, the implementation of this
-is buggy because it permits generation operations from these interfaces
-to run concurrently with each other, accessing the same registers.  That
-is, qcom_rng_generate() synchronizes with itself but not with
-qcom_hwrng_read().  This results in potential repetition of output from
-the RNG, output of non-random values, etc.
-
-Fortunately, there's actually no point in hardware RNG drivers
-implementing the crypto_rng interface.  It's not actually used by
-anything besides the "rng" algorithm type of AF_ALG, which in turn is
-not actually used in practice.  Other crypto_rng hardware drivers are
-likewise being phased out, leaving just the hwrng support.
-
-Thus, remove it to simplify the code and avoid conflict (and confusion)
-with the hwrng interface which is the one that actually matters.
-
-Fixes: f29cd5bb64c2 ("crypto: qcom-rng - Add hw_random interface support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260703130210.21991-1-mstrozek@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/Kconfig    |    1 
- drivers/crypto/qcom-rng.c |  158 +++++-----------------------------------------
- 2 files changed, 19 insertions(+), 140 deletions(-)
 
---- a/drivers/crypto/Kconfig
-+++ b/drivers/crypto/Kconfig
-@@ -648,7 +648,6 @@ config CRYPTO_DEV_QCOM_RNG
- 	tristate "Qualcomm Random Number Generator Driver"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on HW_RANDOM
--	select CRYPTO_RNG
- 	help
- 	  This driver provides support for the Random Number
- 	  Generator hardware found on Qualcomm SoCs.
---- a/drivers/crypto/qcom-rng.c
-+++ b/drivers/crypto/qcom-rng.c
-@@ -3,10 +3,8 @@
- //
- // Based on msm-rng.c and downstream driver
- 
--#include <crypto/internal/rng.h>
- #include <linux/acpi.h>
- #include <linux/clk.h>
--#include <linux/crypto.h>
- #include <linux/hw_random.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
-@@ -32,24 +30,15 @@
- #define QCOM_TRNG_QUALITY	1024
- 
- struct qcom_rng {
--	struct mutex lock;
- 	void __iomem *base;
- 	struct clk *clk;
- 	struct hwrng hwrng;
--	struct qcom_rng_match_data *match_data;
--};
--
--struct qcom_rng_ctx {
--	struct qcom_rng *rng;
- };
- 
- struct qcom_rng_match_data {
--	bool skip_init;
- 	bool hwrng_support;
- };
- 
--static struct qcom_rng *qcom_rng_dev;
--
- static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
- {
- 	unsigned int currsize = 0;
-@@ -80,37 +69,6 @@ static int qcom_rng_read(struct qcom_rng
- 	return currsize;
- }
- 
--static int qcom_rng_generate(struct crypto_rng *tfm,
--			     const u8 *src, unsigned int slen,
--			     u8 *dstn, unsigned int dlen)
--{
--	struct qcom_rng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct qcom_rng *rng = ctx->rng;
--	int ret;
--
--	ret = clk_prepare_enable(rng->clk);
--	if (ret)
--		return ret;
--
--	mutex_lock(&rng->lock);
--
--	ret = qcom_rng_read(rng, dstn, dlen);
--
--	mutex_unlock(&rng->lock);
--	clk_disable_unprepare(rng->clk);
--
--	if (ret >= 0)
--		ret = 0;
--
--	return ret;
--}
--
--static int qcom_rng_seed(struct crypto_rng *tfm, const u8 *seed,
--			 unsigned int slen)
--{
--	return 0;
--}
--
- static int qcom_hwrng_init(struct hwrng *hwrng)
- {
- 	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
-@@ -132,74 +90,26 @@ static void qcom_hwrng_cleanup(struct hw
- 	clk_disable_unprepare(qrng->clk);
- }
- 
--static int qcom_rng_enable(struct qcom_rng *rng)
--{
--	u32 val;
--	int ret;
--
--	ret = clk_prepare_enable(rng->clk);
--	if (ret)
--		return ret;
--
--	/* Enable PRNG only if it is not already enabled */
--	val = readl_relaxed(rng->base + PRNG_CONFIG);
--	if (val & PRNG_CONFIG_HW_ENABLE)
--		goto already_enabled;
--
--	val = readl_relaxed(rng->base + PRNG_LFSR_CFG);
--	val &= ~PRNG_LFSR_CFG_MASK;
--	val |= PRNG_LFSR_CFG_CLOCKS;
--	writel(val, rng->base + PRNG_LFSR_CFG);
--
--	val = readl_relaxed(rng->base + PRNG_CONFIG);
--	val |= PRNG_CONFIG_HW_ENABLE;
--	writel(val, rng->base + PRNG_CONFIG);
--
--already_enabled:
--	clk_disable_unprepare(rng->clk);
--
--	return 0;
--}
--
--static int qcom_rng_init(struct crypto_tfm *tfm)
--{
--	struct qcom_rng_ctx *ctx = crypto_tfm_ctx(tfm);
--
--	ctx->rng = qcom_rng_dev;
--
--	if (!ctx->rng->match_data->skip_init)
--		return qcom_rng_enable(ctx->rng);
--
--	return 0;
--}
--
--static struct rng_alg qcom_rng_alg = {
--	.generate	= qcom_rng_generate,
--	.seed		= qcom_rng_seed,
--	.seedsize	= 0,
--	.base		= {
--		.cra_name		= "stdrng",
--		.cra_driver_name	= "qcom-rng",
--		.cra_flags		= CRYPTO_ALG_TYPE_RNG,
--		.cra_priority		= 300,
--		.cra_ctxsize		= sizeof(struct qcom_rng_ctx),
--		.cra_module		= THIS_MODULE,
--		.cra_init		= qcom_rng_init,
--	}
--};
--
- static int qcom_rng_probe(struct platform_device *pdev)
- {
-+	const struct qcom_rng_match_data *match_data;
- 	struct qcom_rng *rng;
- 	int ret;
- 
-+	match_data = device_get_match_data(&pdev->dev);
-+	if (match_data == NULL || !match_data->hwrng_support) {
-+		dev_info(&pdev->dev, "TRNG support not detected\n");
-+		/*
-+		 * In this case the driver does nothing except the dev_info(),
-+		 * but bind the device anyway to avoid effects on GCC state.
-+		 */
-+		return 0;
-+	}
-+
- 	rng = devm_kzalloc(&pdev->dev, sizeof(*rng), GFP_KERNEL);
- 	if (!rng)
- 		return -ENOMEM;
- 
--	platform_set_drvdata(pdev, rng);
--	mutex_init(&rng->lock);
--
- 	rng->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(rng->base))
- 		return PTR_ERR(rng->base);
-@@ -208,55 +118,26 @@ static int qcom_rng_probe(struct platfor
- 	if (IS_ERR(rng->clk))
- 		return PTR_ERR(rng->clk);
- 
--	rng->match_data = (struct qcom_rng_match_data *)device_get_match_data(&pdev->dev);
--
--	qcom_rng_dev = rng;
--	ret = crypto_register_rng(&qcom_rng_alg);
--	if (ret) {
--		dev_err(&pdev->dev, "Register crypto rng failed: %d\n", ret);
--		qcom_rng_dev = NULL;
--		return ret;
--	}
--
--	if (rng->match_data->hwrng_support) {
--		rng->hwrng.name = "qcom_hwrng";
--		rng->hwrng.init = qcom_hwrng_init;
--		rng->hwrng.read = qcom_hwrng_read;
--		rng->hwrng.cleanup = qcom_hwrng_cleanup;
--		rng->hwrng.quality = QCOM_TRNG_QUALITY;
--		ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
--		if (ret) {
--			dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
--			qcom_rng_dev = NULL;
--			goto fail;
--		}
--	}
--
--	return ret;
--fail:
--	crypto_unregister_rng(&qcom_rng_alg);
-+	rng->hwrng.name = "qcom_hwrng";
-+	rng->hwrng.init = qcom_hwrng_init;
-+	rng->hwrng.read = qcom_hwrng_read;
-+	rng->hwrng.cleanup = qcom_hwrng_cleanup;
-+	rng->hwrng.quality = QCOM_TRNG_QUALITY;
-+	ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
-+	if (ret)
-+		dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
- 	return ret;
- }
- 
--static void qcom_rng_remove(struct platform_device *pdev)
--{
--	crypto_unregister_rng(&qcom_rng_alg);
--
--	qcom_rng_dev = NULL;
--}
--
- static struct qcom_rng_match_data qcom_prng_match_data = {
--	.skip_init = false,
- 	.hwrng_support = false,
- };
- 
- static struct qcom_rng_match_data qcom_prng_ee_match_data = {
--	.skip_init = true,
- 	.hwrng_support = false,
- };
- 
- static struct qcom_rng_match_data qcom_trng_match_data = {
--	.skip_init = true,
- 	.hwrng_support = true,
- };
- 
-@@ -276,7 +157,6 @@ MODULE_DEVICE_TABLE(of, qcom_rng_of_matc
- 
- static struct platform_driver qcom_rng_driver = {
- 	.probe = qcom_rng_probe,
--	.remove_new =  qcom_rng_remove,
- 	.driver = {
- 		.name = KBUILD_MODNAME,
- 		.of_match_table = of_match_ptr(qcom_rng_of_match),
+LLM Generated explanations, may be completely bogus:
 
+Both background git commands finished successfully and match the earlier
+analysis:
+
+**`SOC_SDW_SIDECAR_AMPS` history** — The flag landed with the 6.18 merge
+(`5d324e5159d9e`), then showed up in Dell PTL CS42L43 quirks
+(`921903d73967f`) and the Lenovo `0x3821` quirk (`2ca80dd4bb0e2`,
+already in this 6.18.y tree). All prerequisites for the `0x383c` entry
+are present.
+
+**Stable vs upstream** — Merge-base with `04f15d8f39303` is
+`7d0a66e4bb908`. That quirk commit is on master but not in stable HEAD
+yet; it should apply cleanly right after the existing `0x3821` line.
+
+Verdict unchanged: **YES** for backport to this `linux-6.18.y` tree.
+
+ sound/soc/intel/boards/sof_sdw.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index c9f4fe84c7eed..4a2b375d7dd9d 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -811,6 +811,7 @@ static const struct snd_pci_quirk sof_sdw_ssid_quirk_table[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x2348, "Lenovo P16", SOC_SDW_CODEC_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x2349, "Lenovo P1", SOC_SDW_CODEC_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3821, "Lenovo 0x3821", SOC_SDW_SIDECAR_AMPS),
++	SND_PCI_QUIRK(0x17aa, 0x383c, "Lenovo 0x383c", SOC_SDW_SIDECAR_AMPS),
+ 	{}
+ };
+ 
+-- 
+2.53.0
 
