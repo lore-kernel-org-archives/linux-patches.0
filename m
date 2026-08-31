@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB7448C41F;
-	Mon, 31 Aug 2026 13:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9597548CD47;
+	Mon, 31 Aug 2026 13:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183504; cv=none; b=kYe2uEBCDrdVx01f8c1FQ6gk+G05vCmINnOGHT/sUrywiU8AS5Gv2zXdplrfSCpd2+4B76XBinJ5CiuSGR5d1nLYBaaiMMMmyoeSJJPjzFjuMmoK8HgZoxS7tzTqQAsDtmox9XlVKNw1XkyIvFmgWxU81Nnto6VHREhTH7P47gE=
+	t=1788183506; cv=none; b=YBRMHuYcv5SAOzNSvigmCuXoujYRaSL0GISl/wexDb+5XyQVNnCNZpzC3SGGXeKRVnVisOJbkIUuqjqawLuMeFIrFuJrKq166/8TI4lQBB/TAAX7wdQGkq1FFoL61f0hjtH/aHGsevwEPKCmlioyi5qGZ2BsvdcdtIbLOtutqkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183504; c=relaxed/simple;
-	bh=FTVURYjRuNK6aMRecHajX/sNqfncFdUdxy6hx1rAWOE=;
+	s=arc-20240116; t=1788183506; c=relaxed/simple;
+	bh=BZaqUhVwE9M9AvVI1ckdH04/KyPfZsht/RVSbm0/E5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B2iFWJki9ZEHnPxbAAz1qhvP0v7HLD8k3a3IRNPX/VO/BZ1kowMN/+8/r3lNWPKG3Q+CTXWU77wQ/ZgxVPzmGeGur4qNXhLuT1VRC0lCUpg8NStL0iIJMMlX025vu9mEOyulsqy2LrRd+7n6dcnr50Qd5mFKgF2VPQ2cMSOzGiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ECsV0E2a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=D7i4yJQfG/nY1dA23qos10prxnITaZ1XbC7gH9rj8B7s+mKnMzZKZBT6+LaMGmH2qQJeffKlZDQ/h3ZfT/y5fc6/BH0eOkNh3Ad5Ajjtuuyj8cZbS+tqJt3scT6kN2IIQQTClDPN8CmCFIzgoGShYU/+G0eQLx2b9k6cBzN6Fu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FcKezk6S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ECsV0E2a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4534A1F00A3D;
-	Mon, 31 Aug 2026 13:38:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FcKezk6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AF01F000E9;
+	Mon, 31 Aug 2026 13:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183501;
-	bh=yd5UOgsFxhDufEVl3sFtYrBA70lz23oH9L4LHyhHJ6g=;
+	s=k20260515; t=1788183503;
+	bh=zYjGexxpgR3gyp+1xzYD3nJSA80PSxg8RoXvPs2h2uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ECsV0E2a13MV2T4dUzlcpaGRgydNT227tAEtaHSAmLNpNHPRIpB8K294aY6ldy1mc
-	 3fQ/L8/bNLLP5WgVh6ySfy0V/rX32+ZRY/+gJwxkotd1YC0F+FllLZJQCf5zTmLhZ0
-	 1Bi31bnuyL/QDLGPOnMKHMAmkTcVvVmCrgD5Phbwhi4wJ8jFyCvsMHvxFMYBY1ccfR
-	 xP/03rFLOfxDTBLTlVo9Sy2Na1nACr/dHbNobvPepmUhPKwhXMghGKEBKpD2hkSFKt
-	 EeG/mbxnOYwguqILgd5VZUIXgHDHnT/C6n1bSy0yi7xSLiyEJCXUl25JL9q/bPljs7
-	 X+mLP/748JxKw==
+	b=FcKezk6SuwCs27ZYSUeRWBHtk6vTnTHCyNcs4CKlYbv2QdbHPyjlT7nnHljvjCxHb
+	 RSrrCgwf95fO6DtiCb8NNxEhw6zwpIUxEiKuk5vUBnNMX26kNIPhqucCl6yPQWDuHi
+	 NIAFl39lK+gL8Fsq4zAKWh4Gctkeu0ml8QLucTz+3TUMezC3j6KSsDQrqpuOGtDnXK
+	 KsW91vvZ7rl6XumcOC+BcO3pDp3NeF1O25CzdkYA4bQZBTiBkJLnGl5QSYJwihQOiT
+	 NiIA84xpCYy+YO9k61+sr2AdTxmFGYxuORl+Iu/IUx5e4StKZxcE1QLHufSJDabShK
+	 +Xt7kGNykwCyA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paul Cercueil <paul@crapouillou.net>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] media: v4l2-common: Always register clock with device-specific name
-Date: Mon, 31 Aug 2026 09:22:42 -0400
-Message-ID: <20260831133314.4125787-134-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: adapt ND match notif sizing to fixed matches array
+Date: Mon, 31 Aug 2026 09:22:43 -0400
+Message-ID: <20260831133314.4125787-135-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,415 +52,464 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 0b42657bea6ba635226e8ef551076d024ceacdc9 ]
+[ Upstream commit a426d3227c669ef0ad9855b311a68129f10ac8bf ]
 
-If we need to register a dummy fixed-frequency clock, always register it
-using a device-specific name.
+Switch iwl_scan_offload_match_info::matches to a fixed-size array and
+adjust D3 netdetect size handling accordingly.
 
-This supports the use case where a system has two of the same sensor,
-meaning two instances of the same driver, which previously both tried
-(and failed) to create a clock with the same name.
+In MVM D3 paths, compute expected payload size as
+offsetof(struct iwl_scan_offload_match_info, matches) + matches_len to
+preserve previous behavior after the struct layout change.
 
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+In MLD D3 netdetect handling, keep the simple full-notification size
+assumption and validate against sizeof(*notif) before accessing data.
+
+This keeps scan offload / netdetect functionality unchanged while
+making length checks consistent with the new struct definition.
+
+Assisted-by: GitHubCopilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715215523.4c4346140bcc.I44313ac41daca352e6aecdba09a1c3570c3eea06@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `media: v4l2-common: Always register clock
-with device-specific name`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.43** (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[media: v4l2-common]` — implicit fix via “Always register…”
-— ensures dummy fixed-frequency clocks use unique, device-specific
-names.
+### Step 1.1: Subject Line
+**Record:** `[wifi: iwlwifi]` `[adapt]` — adapt ND (netdetect) match-
+notification sizing after changing
+`iwl_scan_offload_match_info::matches` to a fixed-size array.
 
 ### Step 1.2: Tags
 **Record:**
-- **Fixes:** — none
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** Mehdi Djait `<mehdi.djait@linux.intel.com>`
-- **Acked-by:** — none
-- **Link:** — none
-- **Cc: stable:** — none (expected for manual review)
-- **Signed-off-by:** Paul Cercueil (author), Hans Verkuil (media
-  maintainer)
+- **Assisted-by:** GitHubCopilot:gpt-5.3-codex
+- **Signed-off-by:** Emmanuel Grumbach \<emmanuel.grumbach@intel.com\>
+- **Signed-off-by:** Miri Korenblit
+  \<miriam.rachel.korenblit@intel.com\>
+- **Link:** https://patch.msgid.link/20260715215523.4c4346140bcc.I44313a
+  c41daca352e6aecdba09a1c3570c3eea06@changeid
 
-Notable: Intel media reviewer sign-off; no syzbot or user bug reports.
+No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+stable tags. Absence of Cc: stable is expected per review instructions.
 
-### Step 1.3: Body analysis
+Notable: authored/signed by Intel iwlwifi maintainers; patch 15/15 in
+the "wifi: iwlwifi: fixes - 07-15-2026" series (local mbox).
+
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** When `__devm_v4l2_sensor_clk_get()` registers a dummy fixed
-  clock and the caller passes a non-NULL `id` (e.g. `"xvclk"`), the
-  clock is registered under that bare string. Two instances of the same
-  sensor driver collide on the global clock name.
-- **Symptom:** Second sensor instance fails clock registration
-  (`-EEXIST` from the clock core) → driver probe fails → second camera
-  does not work.
-- **Root cause:** Device-specific naming was only applied when `id ==
-  NULL`; non-NULL `id` was passed straight to
-  `devm_clk_hw_register_fixed_rate()`.
-- **Version info:** None in the commit message.
+- **Bug described:** After switching `matches[]` (flexible array) to
+  `matches[IWL_SCAN_MAX_PROFILES_V2]` (fixed array), `sizeof(struct
+  iwl_scan_offload_match_info)` changes from header-only (24 bytes) to
+  header + 8 profile slots (144 bytes). Existing length checks that use
+  `sizeof()` become wrong.
+- **Symptom/failure mode:** Incorrect length validation can allow out-
+  of-bounds reads when copying match data in D3/WoWLAN netdetect paths,
+  or reject valid notifications if checks double-count match data.
+- **Root cause:** Flexible-array `sizeof()` semantics vs. fixed-array
+  `sizeof()` semantics; `iwl_mvm_netdetect_query_results()` only
+  validated the header size while copying `matches_len` bytes.
+- **Version info:** None in commit message.
 
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit hardware-enablement bug fix, not
-disguised cleanup.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Yes — disguised as a struct-layout adaptation, but it fixes
+real out-of-bounds read conditions in WoWLAN netdetect handling. The MVM
+query path and MLD notification path both validate too few bytes
+relative to what `memcpy()` consumes.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/media/v4l2-core/v4l2-common.c` (+7 / −6)
-- **Function:** `__devm_v4l2_sensor_clk_get()`
-- **Scope:** Single-file, surgical fix (~13 lines touched)
+| File | Changes |
+|------|---------|
+| `drivers/net/wireless/intel/iwlwifi/fw/api/scan.h` | Copyright year;
+`matches[]` → `matches[IWL_SCAN_MAX_PROFILES_V2]` |
+| `drivers/net/wireless/intel/iwlwifi/mvm/d3.c` | 3 hunks in
+`iwl_mvm_netdetect_query_results()` and
+`iwl_mvm_nd_match_info_handler()` |
 
-### Step 2.2: Code flow change
-**Record:**
+**Functions modified:** `iwl_mvm_netdetect_query_results()`,
+`iwl_mvm_nd_match_info_handler()`
+**Scope:** Single-subsystem, surgical (~8 insertions, ~5 deletions
+across 2 files).
 
-| Hunk | Before | After |
-|------|--------|-------|
-| Clock naming | Only when `!id`: allocate `"clk-<devname>"`, assign to
-`id` | Always allocate: `"clk-<devname>-<id>"` if `id` set, else
-`"clk-<devname>"` |
-| Registration | `devm_clk_hw_register_fixed_rate(dev, id, ...)` |
-`devm_clk_hw_register_fixed_rate(dev, clk_id, ...)` |
+### Step 2.2: Code Flow Changes
 
-Affected path: dummy fixed-clock registration on non-OF platforms or
-legacy ACPI/OF paths when `devm_clk_get_optional()` returns no clock.
+**Hunk 1 — `scan.h` struct:**
+- **Before:** `matches[]` flex array; `sizeof(struct)` = 24 (header
+  only).
+- **After:** `matches[8]` fixed array; `sizeof(struct)` = 144 (header +
+  8 × 15-byte entries).
 
-### Step 2.3: Bug mechanism
-**Record:** **Logic / correctness fix** — global clock namespace
-collision. `clk_core_lookup()` returns `-EEXIST` for duplicate names
-(verified in `drivers/clk/clk.c:3910-3914`).
+**Hunk 2 — `iwl_mvm_netdetect_query_results()` V2 path:**
+- **Before:** `query_len = sizeof(struct iwl_scan_offload_match_info)`
+  (= 24); then `memcpy(..., matches_len)` where `matches_len` can be up
+  to 120 bytes.
+- **After:** `query_len = offsetof(..., matches) + matches_len` (= 24 +
+  matches_len). Validation now covers data actually copied.
 
-### Step 2.4: Fix quality
-**Record:**
-- Obviously correct: mirrors the existing NULL-`id` naming pattern and
-  extends it.
-- Minimal, no API changes.
-- Low regression risk: only changes internally registered dummy clock
-  names; callers still request clocks by their original `id` via
-  `devm_clk_get_optional()`.
-- `clk_id` already uses `__free(kfree)` cleanup attribute — memory
-  handling unchanged.
+**Hunk 2 — V1 path:**
+- **Before:** `query_len = sizeof(v1 struct)` (= 24 header only).
+- **After:** `query_len = sizeof(v1 struct) + matches_len`.
+
+**Hunk 3 — `iwl_mvm_nd_match_info_handler()`:**
+- **Before:** `len < sizeof(struct) + matches_len` (= 24 + matches_len)
+  — correct with flex array (already fixed by dd90880 in this tree).
+- **After:** `len < offsetof(..., matches) + matches_len` (= 24 +
+  matches_len) — equivalent numerically, but required to avoid breaking
+  the check after the struct change (without it, `sizeof + matches_len`
+  would be 144 + matches_len, wrongly rejecting valid notifications).
+
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** Memory safety / out-of-bounds read.
+
+**Specific mechanism:**
+1. `iwl_mvm_netdetect_query_results()` accepted responses as short as 24
+   bytes but copied up to `matches_len` bytes (up to 120 for V2, more
+   for V1).
+2. `iwl_mld_netdetect_match_info_handler()` (MLD, unchanged in diff)
+   checks `len < sizeof(*notif)` (= 24 with flex array) then
+   `memcpy(..., NETDETECT_QUERY_BUF_LEN)` (= 120 bytes). The struct
+   change makes `sizeof(*notif)` = 144, aligning validation with the
+   copy.
+3. The `offsetof` change in `iwl_mvm_nd_match_info_handler()` prevents a
+   regression from the struct layout change.
+
+### Step 2.4: Fix Quality
+**Record:** Fix is minimal and logically sound. Using `offsetof +
+matches_len` is the standard pattern for variable-length trailing data
+with a fixed-maximum struct. Regression risk is low: MVM paths preserve
+prior effective thresholds; MLD gets stricter validation matching what
+`memcpy` already required. No public API changes.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** Buggy naming logic present since helper introduction. `git
-blame` on lines 767–774 attributes to commit `5d324e5159d9e` (tree
-history artifact). `git show v6.18:...` confirms identical buggy code in
-**Linux 6.18.0**. Helper does **not** exist in v6.17 (`grep` count = 0).
+**Record:** `matches[]` at `scan.h:1277` comes from merge
+`5d324e5159d9e` (6.18-rc8 era). The flex-array layout and insufficient
+query-path validation have been present since this code landed in the
+6.18.y lineage.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: Tag
+**Record:** Not applicable — no Fixes: tag in this commit.
 
-### Step 3.3: Related file history
-**Record:**
-- `git log v6.18..HEAD -- drivers/media/v4l2-core/v4l2-common.c`: only
-  `2b2a17af8d8c7` (YUV24 format info) — unrelated.
-- Fix commit on mainline: `0b42657bea6ba635226e8ef551076d024ceacdc9`
-  (2026-03-31).
-- Standalone; not part of a multi-patch series.
+Related prior fix in this tree: `dd90880eb5ec5` (stable backport of
+upstream `744fabc338e87`) fixed the same class of OOB read in
+`iwl_mvm_nd_match_info_handler()` only. It did **not** fix
+`iwl_mvm_netdetect_query_results()` or MLD netdetect validation.
 
-### Step 3.4: Author context
-**Record:** Paul Cercueil — regular media contributor. Hans Verkuil
-merged. Mehdi Djait (Intel) reviewed. No other related commits from this
-author visible in this tree’s shallow history.
+### Step 3.3: File History
+**Record:** Recent iwlwifi D3 changes in this tree include `dd90880`
+(nd_match_info_handler OOB) and `2d5dec5` (wake packet handler). This
+commit is the logical follow-up for adjacent netdetect paths. It is
+patch 15/15 in a series but only touches `scan.h` and `mvm/d3.c` — no
+dependency on patches 1–14 for these hunks.
 
-### Step 3.5: Dependencies
-**Record:** None. Self-contained; no prerequisite commits. Applies
-cleanly to current `v4l2-common.c` in this tree (buggy code confirmed at
-lines 767–774).
+### Step 3.4: Author Context
+**Record:** Emmanuel Grumbach is a long-standing Intel iwlwifi
+maintainer (11 of 15 patches in the series). Miri Korenblit is the
+series submitter. High subsystem credibility.
+
+### Step 3.5: Prerequisites
+**Record:** Self-contained. Verified with `git apply --check` — applies
+cleanly to this tree (minor line offsets only). No prerequisite commits
+required.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:**
-- `b4 dig -c 0b42657bea6b`:
-  https://patch.msgid.link/20260331084340.67613-1-paul@crapouillou.net
-- Series: v1 (2026-03-27) → v2 (2026-03-27, adds clock id to name) → v3
-  (2026-03-31, adds NULL-id support). Committed version is v3.
-- No stable nomination found in thread.
-- No NAKs found in mbox.
+### Step 4.1: Original Discussion
+**Record:** `b4 dig -c <commit>` unavailable (commit not yet in git).
+Local mbox
+`20260715_miriam_rachel_korenblit_wifi_iwlwifi_fixes_07_15_2026.mbx`
+contains the patch. Lore/patch.msgid.link fetches blocked by bot
+protection. Cover letter describes series as "bugfixes" with no per-
+patch stable nominations.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: To/Cc includes Mauro Chehab, Mehdi Djait,
-Laurent Pinchart, linux-media, linux-kernel.
+**Record:** UNVERIFIED for patch 15 specifically — no Reviewed-by on
+this individual patch. Series patch 2 has Reviewed-by: Johannes Berg.
+Maintainers Grumbach/Korenblit are authors.
 
-### Step 4.3: Bug report
-**Record:** No external bug report. Author describes a concrete dual-
-sensor scenario.
+### Step 4.3: Bug Reports
+**Record:** No Reported-by or syzbot link. Same bug class as SVACE-found
+dd90880 (already in 6.18.y). Mechanism verified by code inspection.
 
-### Step 4.4: Related patches
-**Record:** Helper introduced by the large “Add a helper for obtaining
-the clock producer” series (landed in 6.18). This fix is a follow-up to
-that introduction.
+### Step 4.4: Series Context
+**Record:** Part of 15-patch iwlwifi validation-hardening series. This
+patch is independently applicable; it does not require other series
+patches.
 
-### Step 4.5: Stable list history
-**Record:** Not searched separately; no stable discussion found in patch
-thread.
+### Step 4.5: Stable List History
+**Record:** UNVERIFIED — lore.kernel.org/stable search blocked. Related
+fix dd90880 was explicitly Cc: stable and is already in this 6.18.y
+tree.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `__devm_v4l2_sensor_clk_get()` — wrappers
-`devm_v4l2_sensor_clk_get()` and `devm_v4l2_sensor_clk_get_legacy()`.
+### Step 5.1: Key Functions
+**Record:** `iwl_mvm_netdetect_query_results()`,
+`iwl_mvm_nd_match_info_handler()`, and (indirectly via struct change)
+`iwl_mld_netdetect_match_info_handler()`.
 
 ### Step 5.2: Callers
-**Record:** 40+ camera sensor drivers call this helper. **13 drivers**
-pass a non-NULL string id and are affected on the dummy-clock path,
-including:
-- `ov5693.c` (`"xvclk"`), `ov5640.c` (`"xclk"`), `ov7740.c` (`"xvclk"`),
-  `imx296.c` (`"inck"`), etc.
-- Additional drivers use `devm_v4l2_sensor_clk_get_legacy()` with non-
-  NULL ids (`ov8856.c`, `ov5695.c`, etc.).
-- Many drivers pass `NULL` — already worked before this fix.
+**Record:**
+- `iwl_mvm_netdetect_query_results()` — called from D3 resume/WoWLAN
+  netdetect reporting path (`d3.c:~2610`) when firmware uses query-based
+  ND results.
+- `iwl_mvm_nd_match_info_handler()` — called from D3 notification
+  handler on `OFFLOAD_MATCH_INFO_NOTIF` (`d3.c:~2967`).
+- `iwl_mld_netdetect_match_info_handler()` — called from MLD D3 resume
+  notification dispatch (`mld/d3.c:~1322`).
+
+All are WoWLAN suspend/resume (D3) paths on Intel wireless hardware.
 
 ### Step 5.3: Callees
-**Record:** `devm_clk_get_optional()`, `device_property_read_u32("clock-
-frequency")`, `devm_clk_hw_register_fixed_rate()`, `kasprintf()`.
+**Record:** `iwl_mvm_send_cmd()`, `iwl_rx_packet_payload_len()`,
+`memcpy()`, `le32_to_cpu()`, `IWL_ERR()`, `IWL_FW_CHECK()`.
 
 ### Step 5.4: Reachability
+**Record:** Triggered during system suspend with WoWLAN netdetect
+configured — common laptop use case. Requires
+`CONFIG_IWLMVM`/`CONFIG_IWLMVM` module and compatible Intel firmware.
+Reachable from normal userspace power-management (suspend), not a root-
+only obscure ioctl.
+
+### Step 5.5: Similar Patterns
+**Record:** Same `sizeof(flex_array_struct) + trailing_data` under-
+validation pattern that dd90880 fixed in
+`iwl_mvm_nd_match_info_handler()`. The query path
+(`iwl_mvm_netdetect_query_results`) was left unfixed. MLD path has the
+identical pattern with `sizeof(*notif)`.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree
+
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** Local tree is `stable/linux-6.18.y` at v6.18.44
+(`git describe HEAD` → `v6.18.44-2-g1b9e1abadee04`). Confirmed:
+- `matches[]` flex array at `scan.h:1277`
+- `query_len = sizeof(struct iwl_scan_offload_match_info)` without
+  `matches_len` at `mvm/d3.c:2473`
+- MLD `len < sizeof(*notif)` (= 24) before 120-byte `memcpy` at
+  `mld/d3.c:1134-1152`
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — `git apply --check` succeeded with
+only line-offset adjustments. No conflicting refactors in these
+functions on 6.18.y.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** `dd90880eb5ec5` fixed `iwl_mvm_nd_match_info_handler()`
+length check (flex-array era). The query-path and MLD-path bugs remain
+unfixed. This commit's `offsetof` change in `nd_match_info_handler`
+preserves dd90880's effective threshold after the struct change.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+### Step 7.1: Subsystem Criticality
+**Record:** **Subsystem:** `drivers/net/wireless/intel/iwlwifi` — WiFi
+driver (IMPORTANT). Affects Intel laptop/desktop WiFi users using WoWLAN
+netdetect.
+
+### Step 7.2: Subsystem Activity
+**Record:** Actively maintained; recent stable backports include dd90880
+and wake-packet fixes in the same D3 code.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users of Intel iwlwifi (MVM and MLD) with WoWLAN network-
+detection enabled during suspend. Config-dependent (`CONFIG_IWLWIFI`,
+`CONFIG_IWLMVM`/`CONFIG_IWLMLO`), but affects a large installed base of
+Intel WiFi laptops.
+
+### Step 8.2: Trigger Conditions
+**Record:** System suspend with netdetect profiles configured; firmware
+returns a scan-offload match query response or notification shorter than
+header + match data. Unprivileged users trigger suspend via normal power
+management. If firmware always sends full payloads, the bug is latent;
+if firmware sends truncated/malformed data, OOB read occurs.
+
+### Step 8.3: Failure Mode Severity
+**Record:** Out-of-bounds kernel read from firmware notification buffer
+→ potential kernel oops, info leak, or corrupted netdetect results.
+**Severity: HIGH** (memory safety in kernel, WoWLAN resume path).
+
+### Step 8.4: Risk-Benefit
 **Record:**
-1. I2C/ACPI camera sensor probes during boot or module load.
-2. `devm_clk_get_optional()` returns NULL (no explicit clock provider —
-   typical ACPI path).
-3. `CONFIG_COMMON_CLK` enabled, platform is non-OF or legacy mode.
-4. `clock-frequency` property present.
-5. Second identical sensor → name collision → `-EEXIST` → probe failure.
-
-Example from `ov5693.c`:
-
-```1292:1296:drivers/media/i2c/ov5693.c
-        ov5693->xvclk = devm_v4l2_sensor_clk_get(&client->dev, "xvclk");
-        if (IS_ERR(ov5693->xvclk))
-                return dev_err_probe(&client->dev,
-PTR_ERR(ov5693->xvclk),
-                                     "failed to get xvclk: %ld\n",
-                                     PTR_ERR(ov5693->xvclk));
-```
-
-Userspace cannot directly trigger this, but it is a normal boot-time
-hardware path on ACPI dual-camera systems.
-
-### Step 5.5: Similar patterns
-**Record:** NULL-`id` path already used device-specific naming
-(`"clk-%s"`). Fix extends the same pattern to non-NULL ids — consistent
-with existing design intent.
+- **Benefit:** HIGH — closes OOB reads in netdetect query and
+  notification paths; aligns validation with actual `memcpy` sizes;
+  complements dd90880 already in tree.
+- **Risk:** LOW — ~13 lines, 2 files, no behavior change for correctly-
+  sized firmware payloads; MLD gets stricter validation that matches
+  existing `memcpy` requirements.
+- **Ratio:** Strong benefit, low risk.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.43)
+## Phase 9: Final Synthesis
 
-### Step 6.1: Buggy code present?
-**Record:** **YES.** Current tree at lines 767–774 has the pre-fix
-logic. Confirmed identical in `v6.18.0`. Helper absent in v6.17 — bug
-introduced with the helper in 6.18.
-
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Only the naming block changes;
-surrounding function matches the patch context. One unrelated commit
-(`YUV24 format info`) since v6.18.0 in this file.
-
-### Step 6.3: Related fixes already present?
-**Record:** **No.** `git log --grep="device-specific name"` returned
-nothing. Fix not in this tree.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** **drivers/media** — IMPORTANT, driver-specific. Affects ACPI
-camera sensor users, not the whole kernel.
-
-### Step 7.2: Activity
-**Record:** `devm_v4l2_sensor_clk_get` is new in 6.18 (large driver
-conversion series). Active development area with a bug shipped from
-initial release.
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-### Step 8.1: Who is affected
-**Record:** ACPI (and some legacy) platforms with **two or more
-instances of the same camera sensor driver** where the dummy fixed-clock
-path is used and the driver passes a non-NULL clock id. Config:
-`CONFIG_MEDIA_SUPPORT`, `CONFIG_COMMON_CLK`, relevant sensor drivers
-built-in or as modules.
-
-### Step 8.2: Trigger conditions
-**Record:** Moderately narrow but realistic — dual front/rear camera
-with same sensor model on ACPI laptops/tablets. Not every boot (single-
-camera systems unaffected). Not userspace-triggerable.
-
-### Step 8.3: Failure severity
-**Record:** **Probe failure** for the second sensor (`-EEXIST` →
-`dev_err_probe`). No kernel oops/panic, no data corruption, no security
-impact. **Severity: MEDIUM** — hardware does not work, system remains
-stable.
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Enables dual-camera ACPI systems that are broken in all
-  6.18.y releases shipped so far; fixes a bug present since 6.18.0.
-- **Risk:** Very low — 7-line naming change, reviewed, no API impact.
-- **Ratio:** Favorable for **6.18.y** specifically, where the helper and
-  bug both exist.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real, reproducible probe failure on dual-sensor ACPI systems
-- Bug shipped in 6.18.0 and present in 6.18.43
-- Small, obviously correct, reviewed fix
-- 13+ sensor drivers use non-NULL ids on the affected path
-- No dependencies; clean apply
-- Hardware-enablement fix (similar category to quirks/workarounds)
+- Fixes real out-of-bounds read in `iwl_mvm_netdetect_query_results()`
+  (both V1 and V2 API branches) — only 24-byte header validated, up to
+  120+ bytes copied.
+- Fixes MLD netdetect under-validation via struct `sizeof` correction
+  (24 → 144 bytes required before 120-byte `memcpy`).
+- Same bug class as dd90880, already backported to this 6.18.y tree.
+- WoWLAN/D3 suspend path — user-visible laptop functionality.
+- Small, surgical, from Intel iwlwifi maintainers.
+- Applies cleanly to this tree.
+- No new features or APIs.
 
 **AGAINST backport:**
-- Not a crash, deadlock, corruption, or security issue
-- Narrow trigger: ACPI + dual same sensor + non-NULL id + dummy clock
-  path
-- Many drivers pass NULL (already worked)
-- No user/syzbot report; no explicit stable nomination
+- Struct layout change (flex → fixed array) is slightly broader than a
+  one-line check fix, but necessary and internal to firmware API
+  headers.
+- No explicit Reported-by or Cc: stable (not a negative signal per
+  instructions).
+- Part of a 15-patch series (but this patch is standalone).
 
-**Unresolved:** No specific hardware platform named in the commit or
-mailing list thread.
+**Unresolved:** Lore discussion and stable-list history could not be
+fetched (bot protection).
 
-### Step 9.2: Stable rules checklist
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logic verified by size
+   arithmetic; Intel maintainer authorship.
+2. Fixes a real bug affecting users? **PASS** — OOB read in WoWLAN
+   netdetect paths.
+3. Important issue? **PASS** — memory safety / potential crash on
+   suspend resume.
+4. Small and contained? **PASS** — 2 files, ~13 lines.
+5. No new features or APIs? **PASS** — correctness/validation fix only.
+6. Can apply to local tree? **PASS** — `git apply --check` succeeded.
 
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — simple naming logic,
-Reviewed-by from Intel media developer |
-| 2. Fixes a real user-affecting bug? | **PASS** — second camera probe
-fails on dual-sensor ACPI systems |
-| 3. Important issue? | **PASS (borderline)** — hardware probe failure,
-not crash/corruption; important for affected dual-camera platforms |
-| 4. Small and contained? | **PASS** — 1 file, ~7 net lines |
-| 5. No new features/APIs? | **PASS** — internal clock naming only |
-| 6. Applies to this tree? | **PASS** — buggy code confirmed in 6.18.43;
-helper absent in older series |
+### Step 9.3: Exception Categories
+**Record:** Not applicable (not a device ID, quirk, DT, build, or docs-
+only change). Qualifies as a memory-safety bug fix.
 
-### Step 9.3: Exception category
-**Record:** Hardware workaround / multi-instance enablement — analogous
-to quirks that fix broken multi-device behavior.
+### Step 9.4: Problem Summary for Stable Users
 
-### Step 9.4: Decision rationale
-For **this 6.18.43 tree**, the `devm_v4l2_sensor_clk_get` helper was
-introduced in 6.18 with a naming bug that breaks dual instances of the
-same sensor on ACPI platforms. The fix is minimal, low-risk, and self-
-contained. While severity is medium rather than critical, stable 6.18.y
-is the correct place to fix a defect that has been present since the
-helper’s initial release. Older stable series (e.g. 6.12.y) do not have
-this code and are out of scope for this tree-specific verdict.
+This commit addresses insufficient payload-length validation in Intel
+iwlwifi WoWLAN network-detection (netdetect) handling during D3
+suspend/resume. The MVM query-results path validates only the 24-byte
+notification header but then copies up to 120 bytes of match data; the
+MLD path has the same under-validation. A short or malformed firmware
+response can cause an out-of-bounds kernel read. The patch also changes
+the firmware API struct from a flexible to a fixed-size matches array (8
+entries, matching `IWL_SCAN_MAX_PROFILES_V2`) and adjusts MVM length
+calculations with `offsetof()` so checks remain correct.
+
+This is a natural companion to dd90880 (already in 6.18.y), which fixed
+the same under-validation pattern in the MVM notification handler but
+left the query path and MLD path unfixed.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags (Reviewed-by: Mehdi Djait; no
-  Fixes/Reported-by/Link)
-- **[Phase 2]** Diff analysis: naming logic in
-  `__devm_v4l2_sensor_clk_get()`, +7/−6 lines
-- **[Phase 3]** `git describe HEAD`: v6.18.43; `make kernelversion`:
-  6.18.43
-- **[Phase 3]** `git blame` lines 767–774: pre-fix code present
-- **[Phase 3]** `git show v6.18:...`: identical buggy code in 6.18.0
-- **[Phase 3]** `git show v6.17:...`: helper absent (count 0)
-- **[Phase 3]** `git log v6.18..HEAD -- v4l2-common.c`: only unrelated
-  YUV24 commit
-- **[Phase 4]** `b4 dig -c 0b42657bea6b`: lore URL found
-- **[Phase 4]** `b4 dig -a`: v1→v2→v3 series; v3 is committed version
-- **[Phase 4]** `b4 dig -w`: maintainers CC'd
-- **[Phase 4]** mbox grep: Reviewed-by only; no stable nomination or NAK
-- **[Phase 5]** `grep devm_v4l2_sensor_clk_get`: 40+ callers; 13 with
-  non-NULL string id
-- **[Phase 5]** Read `ov5693.c:1292-1296`: probe fails on clock error
-- **[Phase 5]** Read `clk.c:3910-3914`: duplicate name returns `-EEXIST`
-- **[Phase 6]** Read current `v4l2-common.c:767-774`: buggy code
-  confirmed
-- **[Phase 6]** `git merge-base --is-ancestor v6.18 HEAD`: v6.18 is
-  ancestor
-- **[Phase 8]** Failure mode: probe failure, severity MEDIUM
+- [Phase 1] Parsed subject, tags, body from user-provided commit message
+  and local mbox patch 15/15.
+- [Phase 2] Diff analysis: 2 files, functions
+  `iwl_mvm_netdetect_query_results` and `iwl_mvm_nd_match_info_handler`;
+  computed sizes (header=24, profile_match=15, fixed struct=144,
+  matches_len up to 120 for V2).
+- [Phase 3] `git blame scan.h:1277` → merge 5d324e5159d9e; `git log`
+  shows dd90880 already in tree for nd_match_info_handler; upstream
+  744fabc338e87 present.
+- [Phase 3] `git apply --check` on patch hunks → applies cleanly to
+  6.18.44 tree.
+- [Phase 4] Local mbox cover letter read; lore/patch.msgid.link blocked
+  by bot protection — UNVERIFIED for list discussion.
+- [Phase 4] `b4 dig -c` not usable (commit not in git history).
+- [Phase 5] `grep` call chains: netdetect_query from d3.c:2610;
+  nd_match_info_handler from d3.c:2967; mld handler from mld/d3.c:1322.
+- [Phase 5] Read current `mvm/d3.c:2471-2492`, `mvm/d3.c:2838`,
+  `mld/d3.c:1134-1152` — confirmed under-validation before memcpy.
+- [Phase 6] `git describe HEAD` → v6.18.44 on `stable/linux-6.18.y`;
+  buggy code confirmed present.
+- [Phase 6] No duplicate fix for query path found in tree.
+- [Phase 8] Failure mode: OOB read, severity HIGH; trigger: WoWLAN
+  netdetect during suspend.
 
-**YES**The analysis is complete for **Linux 6.18.43**.
+**YES**
 
-**Verdict: backport this fix.**
+ drivers/net/wireless/intel/iwlwifi/fw/api/scan.h | 4 ++--
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c      | 9 ++++++---
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-The bug is in `__devm_v4l2_sensor_clk_get()` since 6.18.0: when a dummy
-fixed clock is registered with a non-NULL `id` (e.g. `"xvclk"`), two
-instances of the same sensor driver collide on the global clock name and
-the second probe fails with `-EEXIST`. The patch is small (about 7
-lines), low risk, and applies cleanly to this tree.
-
-**YES**The history search finished. Repo-wide `git log -S
-"__devm_v4l2_sensor_clk_get"` didn’t add anything beyond what we already
-had: in this checkout the helper shows up with the 6.18 release, and it
-isn’t present in v6.17. That matches the earlier conclusion — the bug
-exists in 6.18.43 and the fix is worth backporting.
-
-**YES**The `devm_clk_hw_register_fixed_rate` history search finished. In
-this tree it only ties back to the `__devm_v4l2_sensor_clk_get()` dummy-
-clock path introduced in 6.18 — nothing that changes the backport call.
-Verdict remains **YES**.
-
- drivers/media/v4l2-core/v4l2-common.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
-index c1e3bcb4c1c40..524c11e92aec5 100644
---- a/drivers/media/v4l2-core/v4l2-common.c
-+++ b/drivers/media/v4l2-core/v4l2-common.c
-@@ -764,14 +764,15 @@ struct clk *__devm_v4l2_sensor_clk_get(struct device *dev, const char *id,
- 	if (ret)
- 		return ERR_PTR(ret == -EINVAL ? -EPROBE_DEFER : ret);
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
+index 46fcc32608e34..b05948fbb2a37 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/scan.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -1274,7 +1274,7 @@ struct iwl_scan_offload_match_info {
+ 	u8 resume_while_scanning;
+ 	u8 self_recovery;
+ 	__le16 reserved;
+-	struct iwl_scan_offload_profile_match matches[];
++	struct iwl_scan_offload_profile_match matches[IWL_SCAN_MAX_PROFILES_V2];
+ } __packed; /* SCAN_OFFLOAD_PROFILES_QUERY_RSP_S_VER_3 and
+ 	     * SCAN_OFFLOAD_MATCH_INFO_NOTIFICATION_S_VER_1
+ 	     */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index 82dca6ba56c7f..58384d7e7cd35 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -2481,13 +2481,15 @@ iwl_mvm_netdetect_query_results(struct iwl_mvm *mvm,
  
--	if (!id) {
-+	if (id)
-+		clk_id = kasprintf(GFP_KERNEL, "clk-%s-%s", dev_name(dev), id);
-+	else
- 		clk_id = kasprintf(GFP_KERNEL, "clk-%s", dev_name(dev));
--		if (!clk_id)
--			return ERR_PTR(-ENOMEM);
--		id = clk_id;
--	}
+ 	if (fw_has_api(&mvm->fw->ucode_capa,
+ 		       IWL_UCODE_TLV_API_SCAN_OFFLOAD_CHANS)) {
+-		query_len = sizeof(struct iwl_scan_offload_match_info);
+ 		matches_len = sizeof(struct iwl_scan_offload_profile_match) *
+ 			max_profiles;
++		query_len = offsetof(struct iwl_scan_offload_match_info,
++				     matches) + matches_len;
+ 	} else {
+-		query_len = sizeof(struct iwl_scan_offload_profiles_query_v1);
+ 		matches_len = sizeof(struct iwl_scan_offload_profile_match_v1) *
+ 			max_profiles;
++		query_len = sizeof(struct iwl_scan_offload_profiles_query_v1) +
++			matches_len;
+ 	}
  
--	clk_hw = devm_clk_hw_register_fixed_rate(dev, id, NULL, 0, rate);
-+	if (!clk_id)
-+		return ERR_PTR(-ENOMEM);
-+
-+	clk_hw = devm_clk_hw_register_fixed_rate(dev, clk_id, NULL, 0, rate);
- 	if (IS_ERR(clk_hw))
- 		return ERR_CAST(clk_hw);
+ 	len = iwl_rx_packet_payload_len(cmd.resp_pkt);
+@@ -2846,7 +2848,8 @@ static void iwl_mvm_nd_match_info_handler(struct iwl_mvm *mvm,
+ 	if (IS_ERR_OR_NULL(vif))
+ 		return;
  
+-	if (len < sizeof(struct iwl_scan_offload_match_info) + matches_len) {
++	if (len < offsetof(struct iwl_scan_offload_match_info, matches) +
++		    matches_len) {
+ 		IWL_ERR(mvm, "Invalid scan match info notification\n");
+ 		return;
+ 	}
 -- 
 2.53.0
 
