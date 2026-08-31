@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6902D499F1C;
-	Mon, 31 Aug 2026 14:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D065E4A2E1B;
+	Mon, 31 Aug 2026 14:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185278; cv=none; b=cK3Y2NQKdjhMRi0nsWcaAQ2IAklt2KHK5NltbmlMgn6UsXWKAiUR7IDDHEOxosYKhGEPeWxS2/DFRDrv3S0dMBc6YaVJYOiHP88ebvTlnQBrLq6pt+8ClmPIF6tKpq1kuVV0POfhqlQSUItsZObulqtKM80U7TpatOKOY4BA1S4=
+	t=1788185290; cv=none; b=A/MPl50M3YnZ/qJEavJDHHG3i4dULgbGdAy3xeBOa1e7uDeEavaOxAW4BFubPgoF97jmbtXqGwMV6GM9dOH3Xpi2XmEmW0ufEh9IdNX1e/t2MGRYpRZvlbZAY489Js2B8/P4BIpZ2d+clBmDYEZ9LZuZpraQ3ypw+DG/YK7v74w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185278; c=relaxed/simple;
-	bh=EfAud/6/T7QUOzHbAUZpgJCl3u8u3xno1SBGt6hS/hE=;
+	s=arc-20240116; t=1788185290; c=relaxed/simple;
+	bh=eA6zRH8O1RYINvbG6w8h4fSsT48R1wIAyzTczS4qxXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBiIJgkCdmaYES7zZ9VGKhHKP5JigjtjkiexD7he2Ksg4y/KdvJV11PMtiNv8EG0YD9LBbpB9qIZh+n3F1LRMFV1sAShYRWViFvKa9//C3Uwm3UF6/3rquerqhnkNdKLijYyDpiKkN1pud74nJo7HNjJQgi5cHX9sTW4khbOQ+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzPc9hlK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CIV6yeJJbLLOe0B/9pXODc62sH5TxBPHjUrecdBNjLQZX6RojzOxBtVvVImNgEJfaofM2Ny1gxwAoKMO5oW1kn/3F7uvZcYm3pnoqa5AVqeQQ4ZN3m6kzy6IClA4rdn1Fd1ih8ZM/2nQeWLyw8sFAKfTs0r28T50sVmBe7TfZlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxhkUkRX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzPc9hlK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36531F000E9;
-	Mon, 31 Aug 2026 14:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxhkUkRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352B61F00A3D;
+	Mon, 31 Aug 2026 14:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185277;
-	bh=9CkguLUlTvE1AvFdLBOxAsB7E+oU5SPFpY3DRr3uM7U=;
+	s=korg; t=1788185288;
+	bh=bnin/Z9C00Uc8pUorwza9IObV+uQjyyu4OraZYA6mSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzPc9hlKdrqYlAlRQASFgiNPjymO65EOWrl9DYSEQUS2r3Pz8ohM9OyR/BuoOWFAl
-	 /VIHuw6XXkpQ+VbX44OOpu3W5DuYPFJP/0TxFyrmX/yiXUVC205XjhoNzRZ/dpt2+E
-	 VYXtaExAnlbYa/2872wGbzjvCVmPrEeUW8LeJIiw=
+	b=oxhkUkRXTDxKvr20p/vv5epUwg7eSoPq4T1rTr24Ql/dsGQbvubg5sthaDtgnezt6
+	 DTG64qjPr5SZBYJhGjNn5c8fDazkP1UltqVSGwe86bxXt9j89gcU6MZFX3m1oUfIQx
+	 LE5KY3PO0fVvBMiPJ9meV0bRKpnt/yKOBaX0qLvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 5.10 38/43] usb: core: Strengthen error handling in hub_hub_status()
-Date: Mon, 31 Aug 2026 15:35:46 +0200
-Message-ID: <20260831133400.482777387@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 5.10 42/43] USB: c67x00: fix use-after-free in c67x00_add_iso_urb()
+Date: Mon, 31 Aug 2026 15:35:50 +0200
+Message-ID: <20260831133400.739290391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -49,45 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit a29496745aa335d97f617385809583241e118610 upstream.
+commit b1e24de475bf2d66fffc9103f3444b783527d55a upstream.
 
-Add additional error handling after the call to get_hub_status() in
-hub_hub_status().
+When TD creation fails for the last packet of an isochronous URB,
+c67x00_add_iso_urb() gives the URB back before updating the endpoint
+scheduling state.
 
-get_hub_status() uses usb_control_msg() which does not verify that the
-message is the correct length, substituting it for
-usb_control_msg_recv() would also solve this issue but increase memory
-allocations.
+c67x00_giveback_urb() frees the URB private data, and the completion
+callback may release the final URB reference. The following accesses to
+urbp->ep_data, urb->interval, and urbp->cnt can therefore use freed
+memory.
 
-Instead, error handling is copied from the method used in
-hub_ext_port_status(), which shares the same flow of logic as
-hub_hub_status().
+Update next_frame and cnt before giving back the failed final packet,
+making the giveback the last operation that uses the URB and its private
+data.
 
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://patch.msgid.link/20260722-usb_core_patches_2-v3-1-87622252bfdd@kroah.com
+Fixes: e9b29ffc519b ("USB: add Cypress c67x00 OTG controller HCD driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260806013502.322067-1-shuangpeng.kernel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/c67x00/c67x00-sched.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -955,10 +955,12 @@ static int hub_hub_status(struct usb_hub
+--- a/drivers/usb/c67x00/c67x00-sched.c
++++ b/drivers/usb/c67x00/c67x00-sched.c
+@@ -761,13 +761,13 @@ static int c67x00_add_iso_urb(struct c67
+ 				ret);
+ 			urb->iso_frame_desc[urbp->cnt].actual_length = 0;
+ 			urb->iso_frame_desc[urbp->cnt].status = ret;
+-			if (urbp->cnt + 1 == urb->number_of_packets)
+-				c67x00_giveback_urb(c67x00, urb, 0);
+ 		}
  
- 	mutex_lock(&hub->status_mutex);
- 	ret = get_hub_status(hub->hdev, &hub->status->hub);
--	if (ret < 0) {
-+	if (ret < (int)sizeof(hub->status->hub)) {
- 		if (ret != -ENODEV)
- 			dev_err(hub->intfdev,
- 				"%s failed (err = %d)\n", __func__, ret);
-+		if (ret >= 0)
-+			ret = -EIO;
- 	} else {
- 		*status = le16_to_cpu(hub->status->hub.wHubStatus);
- 		*change = le16_to_cpu(hub->status->hub.wHubChange);
+ 		urbp->ep_data->next_frame =
+ 		    frame_add(urbp->ep_data->next_frame, urb->interval);
+ 		urbp->cnt++;
++		if (ret && urbp->cnt == urb->number_of_packets)
++			c67x00_giveback_urb(c67x00, urb, 0);
+ 	}
+ 	return 0;
+ }
 
 
