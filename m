@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C63468C3B;
-	Mon, 31 Aug 2026 13:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECADC469855;
+	Mon, 31 Aug 2026 13:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183293; cv=none; b=u1fMrYEwcZMxhY/LV3x55bM+c9sUgYMc1Cx3UVac5ll3SN3MTp99XXG0Bk7UC3adsTwgb+xdw9HuJ18k9sKqrLbsXr+QVlJWNzh0AQ4toazN6vvLDajO8vvH0HobRMObjI0ztjy5r1bfDyh6DviKKe66UQc89VKcMj01/ZhrhLQ=
+	t=1788183294; cv=none; b=XGKRgH6XFYYv/BTtMnl5ce0woYari3Xdt8Lev9ohZWRbRAdPF3kIGLmJJx/xBxRCw5l3EFwtRsJy8RbUs+bYDOIfuwZD+0Av3ui65dptQL9ouxcuGff7N9OXXHcG1jLiR8Do7gNFfYW/URapk+fwGncgIGKbWRTkWS6bCnnEL+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183293; c=relaxed/simple;
-	bh=HLiBdYmCQfRbz9b62Ku8mQ6d4hMrifr3NdIv7TWd/BQ=;
+	s=arc-20240116; t=1788183294; c=relaxed/simple;
+	bh=pY6oZyil6X72ogphhbf5fgHGa/BIOUFgikVKfvisMl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A9gxxyMRJST/S2wA8FJsbpzEPDRXUQTNdC4BqUJCTHz4mbV3xCgZdYY0HfNRvM7ZqCJJjewGzvqkE/YNgCzSfzPZdygbVy9QRrPoFNj1DNWAvzXByXQemX+tWsOdt8M3qwu9DKE3xhJpymcc/0Kp6uUM52vRqJSDos8q6jr1g0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f8+ltzgM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=L9hKjSL+IYNrrcTkHrURkd+edkdhuDPvafOPFOxLgJx6s1ebCNrtKIhW7ukQdBrPJYJPUdiWx7SQYwwCQeG7xPRplHRU4HxEx2vcGPrM9xH2BhjN64nA0tLqQbIG3ATqa3ENHa+YnyXA2/6sB6/dKxq4bAdIW2HSsVk/tWzvxm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A//w0OUh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f8+ltzgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4859F1F00A3E;
-	Mon, 31 Aug 2026 13:34:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A//w0OUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0601F00A3F;
+	Mon, 31 Aug 2026 13:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183290;
-	bh=PSa/J42ad4e/7Ts2G0oDuoktwXfLZfk+vMouwLvcDzs=;
+	s=k20260515; t=1788183291;
+	bh=40BT4Xcte5wJP6zPSe0nFxczfcaDOItBpRR5JXW1bCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f8+ltzgMzBfujXW8+8ImZdOqkt6hYxcM78Vnj8Lk7tnCmuIHnnmnxuLNWitPuT8HI
-	 YX1bC9hWc89pu+OI0tsoseWGR9tuX2ynYpYvctyMYNGhme9F+M738A5+EUzf88jk8o
-	 UmgNnvy3+l5hHk5vPOYp0ApKUJYI2CVCCbzPmHx6Ld+AHc5AC/6jI9+7mInRcKWX0v
-	 uPXLJGKOgLUFdPwCaZg3wPFsLlI8rkK5ouHAZH9Lr6Z1RN3v1aF5DaX+l06kvi40Xo
-	 X3j/EaJPMyqAy2gtGz0rEwUUJ/BybqGKVsEerR6GnXg+SXzLEC9eIOgkrExWQufjNN
-	 sdo30c8MVTCHw==
+	b=A//w0OUhcDXx3DsR3YNmkxS/LI6K1zulRgNey2INW0iFvGuJUHtT9I/DrTomi+8D/
+	 IE3DRC6z5XBNir2AjAmCy7z3wY3Yke4L1YdlHIv492AfBRhVnKGFkc3qCs47+R/43s
+	 vMexJMvEQOIdzRSMbv2NHd+RGUPLDmzmfj7ewUT+6Nh8FN1Xq8sTuCkKC38D7qdqua
+	 p9pZHe/I3dHA5okD8cCSOHf0+KgO5JRVNs3cPBnB28nDqt9qE3PEntj460IquebHkp
+	 ok0PDqTlG1nKfKGltoMQtpt4bqj3kczlXJvD/ORnMz0dM5hNeVaU6dPeH8PzZ4Af+H
+	 vTruguEjt48hA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Furst Blumier <seal@furst.blue>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	maciej.wieczor-retman@intel.com,
-	pawel.chmielewski@intel.com,
-	linux-acpi@vger.kernel.org,
-	acpica-devel@lists.linux.dev,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: Improve argument parsing in acpi_ps_get_next_simple_arg()
-Date: Mon, 31 Aug 2026 09:21:28 -0400
-Message-ID: <20260831133314.4125787-60-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Add quirk for HP 255 15.6 inch G9 Notebook PC
+Date: Mon, 31 Aug 2026 09:21:29 -0400
+Message-ID: <20260831133314.4125787-61-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,517 +54,363 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ikaros <void0red@gmail.com>
+From: Furst Blumier <seal@furst.blue>
 
-[ Upstream commit 27d27e75ecb752a0b4da848c440bb3a88396ecba ]
+[ Upstream commit 98e157916f83c26a41448267180944048d2f1460 ]
 
-Improve argument parsing in acpi_ps_get_next_simple_arg() to handle
-remaining AML data safely.
+The HP 255 15.6 inch G9 Notebook PC (PCI SSID 103c:8a1b) uses the
+ALC236 codec but lacks an entry in the quirk table, causing the kernel
+to fall back to a null SSID match (103c:0000) and skip the necessary
+fixup. Add a quirk entry using ALC236_FIXUP_HP_MUTE_LED_COEFBIT2,
+matching the HP 255 G8 which uses the same codec and fixup. This fixes
+the mute-button LED and fixes an issue with unplugging and replugging a
+headset jack not being recognized as an audio sink.
 
-Link: https://github.com/acpica/acpica/commit/ecbb8bcfe301
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2008043.taCxCBeP46@rafael.j.wysocki
+Signed-off-by: Furst Blumier <seal@furst.blue>
+Link: https://patch.msgid.link/20260609201706.502075-1-seal@furst.blue
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: ALSA HDA Realtek HP 255 G9 Quirk
 
-**Step 1.1 — Subject line**
-
-Record: **[ACPICA] [Improve] argument parsing in
-`acpi_ps_get_next_simple_arg()` to handle remaining AML data safely**
-
-**Step 1.2 — Tags**
-
-Record:
-- **Link:** https://github.com/acpica/acpica/commit/ecbb8bcfe301
-- **Link:** https://patch.msgid.link/2008043.taCxCBeP46@rafael.j.wysocki
-  (blocked by bot protection; lkml.iu.edu mirror used instead)
-- **Signed-off-by:** ikaros \<void0red@gmail.com\> (author)
-- **Signed-off-by:** Rafael J. Wysocki \<rafael.j.wysocki@intel.com\>
-  (ACPI maintainer)
-- No **Fixes:**, **Reported-by:**, **Cc: stable**, **Tested-by:**, or
-  **Reviewed-by:** tags in the message
-- Notable: patch is **[PATCH v1 17/27]** in Rafael’s ACPICA sync series
-  (May 2026); upstream ACPICA commit fixes GitHub issues **#1073** and
-  **#1131**
-
-**Step 1.3 — Body analysis**
-
-Record:
-- **Bug:** `acpi_ps_get_next_simple_arg()` reads integer and string AML
-  arguments without checking how many bytes remain before
-  `parser_state->aml_end`.
-- **Symptoms:** Out-of-bounds reads when AML is truncated or a string
-  lacks a null terminator within the buffer; downstream code (e.g.
-  `strlen()` on the string pointer) can also OOB-read.
-- **Root cause:** Unbounded `*aml` / `ACPI_MOVE_*` reads and unbounded
-  `while (aml[length])` loop.
-- **Fix approach:** Compute `remaining = aml_end - aml`, bounds-check
-  all reads, bound the string scan, warn and force a null terminator at
-  the buffer edge when needed.
-
-**Step 1.4 — Hidden bug fix?**
-
-Record: **Yes.** “Improve argument parsing” is defensive hardening
-against real memory-safety bugs (heap-buffer-overflow confirmed in
-upstream ACPICA via ASAN).
+**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`,
+Makefile `VERSION/PATCHLEVEL/SUBLEVEL` = 6/18/44)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
+### Step 1.1: Parse the subject line
+**Record:** `[ALSA: hda/realtek]` `[Add]` — Add quirk for HP 255 15.6
+inch G9 Notebook PC (PCI SSID quirk table entry).
 
-Record:
-- **File:** `drivers/acpi/acpica/psargs.c` (+68 / −10 per lkml; net ~58
-  lines)
-- **Function:** `acpi_ps_get_next_simple_arg()` only
-- **Scope:** Single-file, single-function surgical fix
+### Step 1.2: Parse all commit message tags
+**Record:**
+- **Signed-off-by:** Furst Blumier `<seal@furst.blue>` (author)
+- **Link:**
+  https://patch.msgid.link/20260609201706.502075-1-seal@furst.blue
+- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA/HDA
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+- Notable: maintainer sign-off present; no syzbot/fuzzer report
 
-**Step 2.2 — Code flow per hunk**
+### Step 1.3: Analyze commit body
+**Record:**
+- **Bug:** HP 255 15.6 inch G9 (PCI SSID `103c:8a1b`) uses ALC236 codec
+  but has no quirk entry.
+- **Mechanism:** Kernel falls back to a generic/null SSID match
+  (`103c:0000`) and skips the needed fixup.
+- **Symptoms:** Broken mute-button LED; unplugging/replugging a headset
+  jack is not recognized as an audio sink.
+- **Fix approach:** Add quirk using `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2`,
+  same as HP 255 G8.
+- **Version info:** None stated in commit message.
 
-Record:
-- **ARGP_BYTEDATA:** Before: always read 1 byte. After: read only if
-  `remaining >= 1`, else return 0 with `length = 0`.
-- **ARGP_WORD/DWORD/QWORDDATA:** Before: always read 2/4/8 bytes. After:
-  full read if enough bytes; else zero-init and `memcpy()` partial bytes
-  if any remain.
-- **ARGP_CHARLIST:** Before: unbounded scan for `'\0'`. After: scan only
-  within `remaining`; if no terminator, `ACPI_WARNING`, write `'\0'` at
-  `aml[remaining-1]`, set `length = remaining`.
-- **Normal path:** `parser_state->aml += length` unchanged.
-
-**Step 2.3 — Bug mechanism**
-
-Record: **Memory safety / buffer overflow (OOB read).** Integer cases
-read past `aml_end`; string case can scan past `aml_end` and pass a non-
-terminated pointer to later `strlen()`-based code (upstream issue
-#1131).
-
-**Step 2.4 — Fix quality**
-
-Record: Fix is minimal, uses existing `aml_end` and `ACPI_PTR_DIFF`
-(already used elsewhere in ACPICA). Low regression risk on valid AML.
-Minor concern: in-place mutation of AML bytes for malformed strings
-(`aml[remaining-1] = 0`), but this only triggers on invalid AML and is
-the upstream-chosen mitigation to prevent downstream OOB.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised — this is an explicit hardware quirk fix. It
+is not a crash/security fix, but it fixes real, user-visible audio
+behavior on a specific laptop model.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 2: DIFF ANALYSIS
 
-**Step 3.1 — Blame**
+### Step 2.1: Inventory the changes
+**Record:**
+- **Files:** `sound/hda/codecs/realtek/alc269.c` (+1 line)
+- **Functions modified:** None directly; change is in static
+  `alc269_fixup_tbl[]`
+- **Scope:** Single-file, single-line surgical quirk addition
 
-Record: Buggy logic dates to original ACPICA import (~2005, Bob Moore /
-Len Brown). Present in this tree at lines 364–443 of `psargs.c`. Not a
-recently introduced regression.
+### Step 2.2: Code flow change
+**Record:**
+- **Before:** `103c:8a1b` has no entry in `alc269_fixup_tbl[]`; probe
+  falls through to a generic HP fixup (vendor table
+  `ALC269_FIXUP_HP_MUTE_LED` at line 7652) or no specific ALC236
+  coefbit2 fixup.
+- **After:** Exact SSID match selects
+  `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` during `snd_hda_pick_fixup()` in
+  codec probe.
+- **Path affected:** Codec initialization / probe path (boot and module
+  load).
 
-**Step 3.2 — Fixes: tag**
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Hardware workaround / audio codec quirk (HDA
+  pin/LED/jack configuration).
+- **Mechanism:** Missing PCI SSID → wrong fixup applied → incorrect
+  mute-LED coefficient setup and headset jack behavior for ALC236 on
+  this board.
 
-Record: N/A — no `Fixes:` tag in commit message.
-
-**Step 3.3 — Related file history**
-
-Record: Recent `psargs.c` changes in v6.18.44 are copyright updates and
-separate memory-leak fixes (`acpi_ps_get_next_field`,
-`acpi_ps_get_next_namepath`). No prior fix for this bounds-check issue.
-
-**Step 3.4 — Author commits**
-
-Record: Author ikaros/void0red is an ACPICA contributor (fuzzing-driven
-fixes). Rafael Wysocki is ACPI subsystem maintainer; patch submitted as
-part of ACPICA v1 27-patch series.
-
-**Step 3.5 — Dependencies**
-
-Record: Listed as patch 17/27 in an ACPICA bulk sync, but the diff is
-self-contained — uses only existing `struct acpi_parse_state` fields
-(`aml`, `aml_end`, `aml_start`) and `ACPI_PTR_DIFF`. No structural
-prerequisites from other series patches identified. **Can apply
-standalone.**
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 — Original discussion**
-
-Record:
-- **b4 dig -c ecbb8bcfe301:** Failed (ACPICA SHA not in Linux git)
-- **lkml mirror:** https://lkml.iu.edu/2605.3/06252.html — Rafael’s
-  [PATCH v1 17/27], May 27 2026
-- **Series revisions:** Part of v1 27-patch ACPICA update; no evidence
-  of a newer conflicting version for this hunk
-- **Stable nomination in thread:** Not found in available sources
-- **NAKs:** None found
-
-**Step 4.2 — Reviewers**
-
-Record: Rafael J. Wysocki (maintainer) signed off and submitted. Full
-recipient list unavailable (b4/lore blocked).
-
-**Step 4.3 — Bug reports**
-
-Record:
-- **GitHub acpica#1073:** ASAN heap-buffer-overflow in
-  `AcpiPsGetNextSimpleArg` at integer read (iasl fuzzing)
-- **GitHub acpica#1131:** ASAN heap-buffer-overflow via `strlen()` on
-  malformed AML string without null terminator (acpiexec); fixed by this
-  commit
-- Both closed after ecbb8bc
-
-**Step 4.4 — Series context**
-
-Record: One patch in a 27-patch ACPICA sync; this hunk is independent
-and does not require the other 26 patches.
-
-**Step 4.5 — Stable list**
-
-Record: Could not search lore stable list (bot protection). No stable-
-specific discussion found via web search.
+### Step 2.4: Fix quality assessment
+**Record:**
+- **Quality:** High — one-line addition, reuses an existing fixup
+  already applied to HP 255 G8 (`0x890e`) and HP 255 G10 (`0x8b2f`) in
+  this tree.
+- **Regression risk:** Very low — no logic changes, no new APIs, no
+  structural changes.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 5.1 — Key functions**
+### Step 3.1: Blame the changed lines
+**Record:** Insertion point is between lines 6843–6844 (after `0x8a0f`,
+before `0x8a1f`). Neighbor entries added in commits like `bee43f7b9bc62`
+(HP 14s-dr5xxx, `0x8a1f`) and `aeeb85f26c3bb` (Realtek driver split,
+July 2025). The *absence* of `0x8a1b` is the bug — not a recently
+introduced regression in existing code.
 
-Record: `acpi_ps_get_next_simple_arg()` modified.
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-**Step 5.2 — Callers**
+### Step 3.3: Related file history
+**Record:** This tree regularly backports similar HDA Realtek quirk
+commits (e.g. `bee43f7b9bc62` HP 14s-dr5xxx mute LED quirk,
+`302eb87651326` HP Dragonfly Folio G3). Standalone one-liner; not part
+of a multi-patch series.
 
-Record:
-- `acpi_ps_get_arguments()` in `psloop.c` (constant/string opcode
-  arguments during parse loop)
-- `acpi_ps_get_next_arg()` in `psargs.c` (general argument fetching)
+### Step 3.4: Author's other commits
+**Record:** No prior commits from Furst Blumier in
+`sound/hda/codecs/realtek/` in this tree. Patch carries Takashi Iwai
+maintainer sign-off.
 
-Both are on the ACPI AML parse path used during table load and method
-execution.
-
-**Step 5.3 — Callees**
-
-Record: `acpi_ps_init_op()`, `acpi_ps_get_next_namestring()` (unchanged
-paths), `ACPI_MOVE_*` macros, `memcpy()`, `ACPI_WARNING()`.
-
-**Step 5.4 — Reachability**
-
-Record:
-- Boot: `acpi_ns_one_complete_parse()` →
-  `acpi_ds_init_aml_walk(aml_start, aml_length)` → `acpi_ps_parse_aml()`
-  → parse loop → `acpi_ps_get_next_simple_arg()`
-- Runtime: ACPI method evaluation uses the same walk/parse path via
-  `acpi_ds_init_aml_walk()`
-- **Reachable on every ACPI-enabled system** when parsing tables or
-  evaluating methods. Trigger requires malformed/truncated AML (buggy
-  firmware, corrupted tables, or injected SSDT).
-
-**Step 5.5 — Similar patterns**
-
-Record: No existing bounds-check pattern for this function in v6.18.44.
-`parser_state->aml_end` is set in `acpi_ds_init_aml_walk()`
-(`dswstate.c:578-586`) for all AML walks. `psloop.c` already uses
-`parser_state->aml < parser_state->aml_end` at the loop level, but
-individual argument parsing lacked per-field bounds checks.
+### Step 3.5: Prerequisites / dependencies
+**Record:**
+- `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` enum, fixup table entry, and
+  `alc236_fixup_hp_mute_led_coefbit2()` all exist in this tree (lines
+  3875, 5552–5554, 1551–1563).
+- HP 255 G8 (`0x890e`, line 6811) and HP 255 G10 (`0x8b2f`, line 6874)
+  already use the same fixup.
+- **Can apply standalone:** Yes.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 6.1 — Buggy code present?**
+### Step 4.1: Original patch discussion
+**Record:** Could not retrieve — `b4 dig` requires a commit hash (not
+provided); no matching mbox in workspace. `patch.msgid.link` and
+`lore.kernel.org` blocked by Anubis bot protection.
 
-Record: **Yes.** Local tree is `v6.18.44` (Makefile 6.18.44).
-`acpi_ps_get_next_simple_arg()` at `psargs.c:364-443` has the unbounded
-reads. Commit ecbb8bc is **not** in this tree.
+### Step 4.2: Reviewers from b4 dig -w
+**Record:** N/A — b4 dig not run (no commit hash available).
 
-**Step 6.2 — Backport complications**
+### Step 4.3: Bug report
+**Record:** No external bug report linked beyond the patch submission
+message-id. Author-reported hardware issue on HP 255 G9.
 
-Record: **Clean apply expected.** lkml diff index (`3526ea109414`)
-matches current file structure; only line-offset difference. `aml_end`
-field exists in `aclocal.h:912`. `ACPI_PTR_DIFF` used elsewhere in
-ACPICA.
+### Step 4.4: Related patches / series
+**Record:** Same fixup pattern as HP 255 G8/G10 and multiple other HP
+ALC236 laptops in `alc269_fixup_tbl[]`. Standalone patch.
 
-**Step 6.3 — Related fixes already present?**
-
-Record: **No.** `git log --grep` found no prior fix for this function’s
-bounds checking in `psargs.c`.
-
----
-
-## Phase 7: Subsystem Context
-
-**Step 7.1 — Subsystem / criticality**
-
-Record: **ACPI / ACPICA parser** — **CORE** for all `CONFIG_ACPI`
-systems (essentially all x86 PCs and many ARM servers).
-
-**Step 7.2 — Activity**
-
-Record: ACPICA receives regular maintenance; this is a targeted safety
-fix within a periodic upstream sync.
+### Step 4.5: Stable mailing list history
+**Record:** UNVERIFIED — could not search lore stable list due to bot
+protection.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 8.1 — Who is affected**
+### Step 5.1: Key functions
+**Record:** Indirectly affects `alc269_probe()` → `snd_hda_pick_fixup()`
+→ `alc236_fixup_hp_mute_led_coefbit2()` via fixup table selection.
 
-Record: All ACPI-enabled systems parsing AML at boot or during method
-evaluation. Driver-specific only in the sense that it requires ACPI,
-which is near-universal on supported platforms.
+### Step 5.2: Callers
+**Record:** `snd_hda_pick_fixup()` called from `alc269.c` probe at lines
+8471–8486 during HDA codec initialization (device probe at boot/module
+load). Common path for all Realtek HDA laptops using this driver.
 
-**Step 8.2 — Trigger conditions**
+### Step 5.3: Callees
+**Record:** Selected fixup `alc236_fixup_hp_mute_led_coefbit2()`
+configures mute-LED coefficient registers (`spec->mute_led_coef.idx =
+0x07`, etc.) and registers mute-LED cdev via
+`snd_hda_gen_add_mute_led_cdev()`.
 
-Record: Malformed or truncated AML bytecode (truncated integer args,
-string without `'\0'` within buffer). Uncommon in practice from
-legitimate firmware, but confirmed reproducible with fuzzed AML. ACPI
-table override/SSDT loading requires elevated privileges; primary
-production risk is buggy OEM firmware.
+### Step 5.4: Call chain / reachability
+**Record:** Triggered automatically at audio codec probe on affected
+hardware — no userspace syscall needed. Every boot on HP 255 G9 without
+this quirk gets wrong fixup.
 
-**Step 8.3 — Failure mode severity**
-
-Record: **OOB read** → potential kernel oops, info leak, or further
-cascading OOB in `strlen()`. **Severity: HIGH** (boot-time or runtime
-crash on ACPI parse path).
-
-**Step 8.4 — Risk vs benefit**
-
-Record:
-- **Benefit: HIGH** — prevents memory-safety bug on a core boot path
-- **Risk: LOW** — single function, defensive checks, no API change;
-  valid AML behavior unchanged
-- **Ratio:** Strong benefit, low risk → backport warranted
+### Step 5.5: Similar patterns
+**Record:** At least 15 other machines in this tree use
+`ALC236_FIXUP_HP_MUTE_LED_COEFBIT2`, including HP 255 G8 (`0x890e`) and
+HP 255 G10 (`0x8b2f`). Same-generation G9 (`0x8a1b`) is the obvious
+missing sibling.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-**Evidence FOR backport:**
-- Confirmed heap-buffer-overflow (ASAN) in upstream ACPICA for this
-  exact function
-- Same vulnerable code present in v6.18.44 since ~2005
-- `aml_end` infrastructure already exists and is set on all parse paths
-- Small, self-contained, maintainer-signed fix
-- Prevents OOB reads during ACPI table parsing and method evaluation
-- Fits stable criteria: real bug, important (crash/security-class memory
-  safety), no new APIs
+### Step 6.1: Does the buggy code exist?
+**Record:** **Yes.** `0x8a1b` is absent from `alc269_fixup_tbl[]` in
+v6.18.44. Confirmed by grep (no matches) and `git log -S "0x8a1b" --
+sound/hda/` (empty). Adjacent entries `0x8a0f` and `0x8a1f` are present
+at lines 6843–6844.
 
-**Evidence AGAINST backport:**
-- Part of a 27-patch ACPICA series (cosmetic concern only; patch is
-  standalone)
-- In-place AML mutation for malformed strings (edge case; upstream-
-  accepted)
-- Bugs found via iasl/acpiexec fuzzing, not a field user report (but
-  kernel shares the code)
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected** — single-line insertion in sorted
+quirk table between existing HP entries. No structural divergence around
+insertion point.
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — straightforward bounds
-   checks; ASAN-verified upstream
-2. Fixes a real bug affecting users? **PASS** — OOB read on ACPI parse
-   path
-3. Important issue? **PASS** — HIGH severity (memory safety / potential
-   crash)
-4. Small and contained? **PASS** — one function, ~58 net lines
-5. No new features or APIs? **PASS** — defensive parsing only
-6. Can apply to local tree? **PASS** — buggy code present, dependencies
-   satisfied
+### Step 6.3: Related fixes already present?
+**Record:** No prior fix for `103c:8a1b`. Related sibling quirks for HP
+255 G8/G10 already present with same fixup type.
 
-**Exception category:** N/A (not device ID, quirk, DT, build, or docs)
+---
 
-**Conclusion:** This commit fixes a long-standing memory-safety hole in
-core ACPI AML parsing that is present in the v6.18.44 tree. The fix is
-surgical, uses existing parser state, and prevents out-of-bounds reads
-that can crash the kernel when malformed AML is encountered.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** `sound/hda/codecs/realtek` — **IMPORTANT** (laptop audio;
+affects users of specific HP hardware, not universal).
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained in 6.18.y — numerous recent Realtek
+quirk backports in `git log --oneline -20 -- sound/hda/codecs/realtek/`.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of **HP 255 15.6 inch G9 Notebook PC** (PCI SSID
+`103c:8a1b`) with ALC236 codec and `CONFIG_SND_HDA_CODEC_REALTEK`.
+
+### Step 8.2: Trigger conditions
+**Record:** Every boot / audio driver probe on affected hardware. Not
+timing-dependent; deterministic. Unprivileged users cannot trigger the
+fix, but all users of this laptop are affected without it.
+
+### Step 8.3: Failure mode severity
+**Record:**
+- Mute LED does not work correctly
+- Headset jack replug not recognized as audio sink
+- **Severity: MEDIUM** — functional audio regression, not kernel crash,
+  data corruption, or security issue
+
+### Step 8.4: Risk-benefit ratio
+**Record:**
+- **Benefit:** Restores correct audio jack detection and mute LED on a
+  real laptop model; matches established pattern for G8/G10 in same
+  product line.
+- **Risk:** Minimal — one table entry, existing fixup, maintainer-
+  reviewed.
+- **Ratio:** Favorable for stable backport under the hardware-quirk
+  exception.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence compile
+
+**FOR backporting:**
+- Fixes real hardware bug on HP 255 G9 (mute LED + headset jack)
+- One-line, obviously correct quirk using proven existing fixup
+- Same fixup as HP 255 G8 already in this tree
+- ALC236 fixup infrastructure fully present in 6.18.44
+- Takashi Iwai (maintainer) signed off
+- Hardware quirk — explicit stable exception category
+- This tree routinely takes similar HDA Realtek quirk patches
+- Missing quirk confirmed in v6.18.44
+
+**AGAINST backporting:**
+- Not a crash, security, or data-corruption issue
+- Affects only one specific laptop model
+- No independent test report or syzbot validation
+
+**UNRESOLVED:**
+- Mailing list review thread content (blocked)
+- Whether reviewers explicitly nominated for stable
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — mirrors HP 255 G8;
+   maintainer SOB; standard quirk pattern.
+2. Fixes a real bug affecting users? **PASS** — mute LED and headset
+   jack on real hardware.
+3. Important issue? **PASS (borderline)** — not crash/security, but real
+   user-visible hardware malfunction; quirk exception applies.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features or APIs? **PASS** — table entry only, reuses existing
+   fixup.
+6. Can apply to local tree? **PASS** — prerequisites present; clean
+   insertion.
+
+### Step 9.3: Exception category
+**Record:** **Hardware quirk/workaround** — adding PCI SSID entry to
+existing Realtek HDA driver quirk table. This is one of the explicitly
+allowed stable exceptions.
+
+### Step 9.4: Decision rationale
+
+For Linux **6.18.44**, owners of the HP 255 15.6 inch G9 hit wrong HDA
+fixup behavior because `103c:8a1b` is missing from the quirk table while
+the needed `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` fixup and sibling entries
+(HP 255 G8/G10) are already present. The patch is a minimal, maintainer-
+approved hardware quirk of the kind routinely accepted into stable
+trees. Severity is functional rather than catastrophic, but the stable-
+kernel rules explicitly welcome such quirks, and the risk of regression
+is negligible.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from user-provided commit message
-  and lkml mirror
-- [Phase 1] Confirmed upstream fixes acpica#1073 and #1131 via GitHub
-  issue pages
-- [Phase 2] Diff analysis: single-function bounds-check fix in
-  `acpi_ps_get_next_simple_arg()`
-- [Phase 3] `git describe HEAD`: v6.18.44
-- [Phase 3] `git blame -L 364,443 drivers/acpi/acpica/psargs.c`: code
-  from ~2005
-- [Phase 3] `git log --oneline -20 -- drivers/acpi/acpica/psargs.c`: no
-  prior bounds-check fix
-- [Phase 3] `git log -1 ecbb8bcfe301`: commit not in local tree
-- [Phase 4] `b4 dig -c ecbb8bcfe301`: no match (ACPICA-only SHA)
-- [Phase 4] lkml.iu.edu/2605.3/06252.html: found [PATCH v1 17/27] with
-  identical diff
-- [Phase 4] GitHub acpica#1073: ASAN heap-buffer-overflow at integer
-  read
-- [Phase 4] GitHub acpica#1131: ASAN heap-buffer-overflow via strlen on
-  malformed string
-- [Phase 5] `grep acpi_ps_get_next_simple_arg`: callers in
-  `psloop.c:71`, `psargs.c:769`
-- [Phase 5] Read `nsparse.c:173-198`: table parse sets
-  `aml_start`/`aml_length` via `acpi_ds_init_aml_walk()`
-- [Phase 5] Read `dswstate.c:578-586`: `aml_end` set from `aml_start +
-  aml_length`
-- [Phase 6] Read `psargs.c:364-443`: confirmed vulnerable code in
-  v6.18.44
-- [Phase 6] Read `aclocal.h:909-920`: `aml_end` field exists in `struct
-  acpi_parse_state`
-- [Phase 8] Assessed severity as HIGH based on verified OOB read
-  mechanism
-- [UNVERIFIED] Full lore.kernel.org review thread (Anubis bot blocked
-  direct fetch)
-- [UNVERIFIED] Whether any reviewer explicitly nominated for stable (not
-  needed for decision)
+- **[Phase 1]** Parsed subject, tags, and body from provided commit
+  message.
+- **[Phase 1]** Confirmed Takashi Iwai maintainer sign-off; no
+  syzbot/Fixes: tags.
+- **[Phase 2]** Diff: +1 line `SND_PCI_QUIRK(0x103c, 0x8a1b, ...)` in
+  `alc269_fixup_tbl[]`.
+- **[Phase 2]** Read `alc236_fixup_hp_mute_led_coefbit2()` at lines
+  1551–1563.
+- **[Phase 3]** `git blame -L 6840,6846`: neighbors from commits
+  `302eb87651326`, `bee43f7b9bc62`, `aeeb85f26c3bb`.
+- **[Phase 3]** `git log -S "ALC236_FIXUP_HP_MUTE_LED_COEFBIT2"`: fixup
+  present since driver split and earlier quirk commits.
+- **[Phase 3]** `git log -S "0x8a1b" -- sound/hda/`: empty — quirk never
+  added to this tree.
+- **[Phase 4]** UNVERIFIED: `b4 dig` not run (no commit hash provided).
+- **[Phase 4]** UNVERIFIED: lore.kernel.org and patch.msgid.link blocked
+  by Anubis.
+- **[Phase 5]** Read `snd_hda_pick_fixup()` in
+  `sound/hda/common/auto_parser.c` lines 1006–1103.
+- **[Phase 5]** Read probe call sites at `alc269.c` lines 8471–8486.
+- **[Phase 5]** Grep: `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` used by HP 255
+  G8 (`0x890e`, line 6811) and G10 (`0x8b2f`, line 6874).
+- **[Phase 6]** `git describe HEAD` → `v6.18.44`; Makefile confirms
+  6.18.44.
+- **[Phase 6]** Grep for `0x8a1b` / `HP 255 15.6 inch G9`: no matches in
+  tree.
+- **[Phase 6]** Read insertion area lines 6840–6846: gap between
+  `0x8a0f` and `0x8a1f` confirmed.
+- **[Phase 7]** `git log --oneline -20 -- sound/hda/codecs/realtek/`:
+  active quirk backport activity.
+- **[Phase 8]** Failure mode assessed as functional audio (MEDIUM), not
+  crash/security.
 
-**YES**The background history searches finished and matched what the
-main analysis already used.
+**YES**
 
-**Task 264644** (`git log` on `psargs.c`): Recent changes are copyright
-updates and separate leak fixes in `acpi_ps_get_next_field()` /
-`acpi_ps_get_next_namepath()`. Nothing related to bounds checking in
-`acpi_ps_get_next_simple_arg()`.
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-**Task 264645** (author/search): No Linux-kernel commits from
-ikaros/void0red on this fix; the patch came through Rafael Wysocki’s
-ACPICA sync. Recent ACPI work in this tree includes other parser/safety
-fixes, but not this one.
-
-That confirms the vulnerable code is still present in **v6.18.44** and
-this fix isn’t already here. Verdict remains **YES** for stable
-backport.
-
- drivers/acpi/acpica/psargs.c | 78 +++++++++++++++++++++++++++++++-----
- 1 file changed, 68 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 3526ea1094146..064652d11d9aa 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -384,6 +384,8 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 	u32 length;
- 	u16 opcode;
- 	u8 *aml = parser_state->aml;
-+	u32 remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
-+	u64 partial_value;
- 
- 	ACPI_FUNCTION_TRACE_U32(ps_get_next_simple_arg, arg_type);
- 
-@@ -393,8 +395,13 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 1 byte from the AML stream */
- 
- 		opcode = AML_BYTE_OP;
--		arg->common.value.integer = (u64) *aml;
--		length = 1;
-+		if (remaining >= 1) {
-+			arg->common.value.integer = (u64)*aml;
-+			length = 1;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+		}
- 		break;
- 
- 	case ARGP_WORDDATA:
-@@ -402,8 +409,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 2 bytes from the AML stream */
- 
- 		opcode = AML_WORD_OP;
--		ACPI_MOVE_16_TO_64(&arg->common.value.integer, aml);
--		length = 2;
-+		if (remaining >= 2) {
-+			ACPI_MOVE_16_TO_64(&arg->common.value.integer, aml);
-+			length = 2;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_DWORDDATA:
-@@ -411,8 +429,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 4 bytes from the AML stream */
- 
- 		opcode = AML_DWORD_OP;
--		ACPI_MOVE_32_TO_64(&arg->common.value.integer, aml);
--		length = 4;
-+		if (remaining >= 4) {
-+			ACPI_MOVE_32_TO_64(&arg->common.value.integer, aml);
-+			length = 4;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_QWORDDATA:
-@@ -420,8 +449,19 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Get 8 bytes from the AML stream */
- 
- 		opcode = AML_QWORD_OP;
--		ACPI_MOVE_64_TO_64(&arg->common.value.integer, aml);
--		length = 8;
-+		if (remaining >= 8) {
-+			ACPI_MOVE_64_TO_64(&arg->common.value.integer, aml);
-+			length = 8;
-+		} else {
-+			arg->common.value.integer = 0;
-+			length = 0;
-+			if (remaining > 0) {
-+				partial_value = 0;
-+				memcpy(&partial_value, aml, remaining);
-+				arg->common.value.integer = partial_value;
-+				length = remaining;
-+			}
-+		}
- 		break;
- 
- 	case ARGP_CHARLIST:
-@@ -434,10 +474,28 @@ acpi_ps_get_next_simple_arg(struct acpi_parse_state *parser_state,
- 		/* Find the null terminator */
- 
- 		length = 0;
--		while (aml[length]) {
-+		while ((length < remaining) && aml[length]) {
-+			length++;
-+		}
-+		if (length < remaining) {
-+
-+			/* Account for the terminating null */
- 			length++;
-+		} else {
-+			/*
-+			 * No terminator found - add null at buffer boundary
-+			 * and report a warning
-+			 */
-+			ACPI_WARNING((AE_INFO,
-+				      "Invalid AML string: no null terminator, truncating at offset %u",
-+				      (u32)(aml - parser_state->aml)));
-+
-+			/* Add null terminator at the boundary */
-+			if (remaining > 0) {
-+				aml[remaining - 1] = 0;
-+				length = remaining;
-+			}
- 		}
--		length++;
- 		break;
- 
- 	case ARGP_NAME:
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 0c23eb601ecaa..0ef5468b0701a 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6841,6 +6841,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x89e7, "HP Elite x2 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a06, "HP Dragonfly Folio G3 2-in-1", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a0f, "HP Pavilion 14-ec1xxx", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8a1b, "HP 255 15.6 inch G9 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a1f, "HP Laptop 14s-dr5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a20, "HP Laptop 15s-fq5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a25, "HP Victus 16-d1xxx (MB 8A25)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
 -- 
 2.53.0
 
