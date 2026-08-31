@@ -1,49 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F10E44C4F2;
-	Mon, 31 Aug 2026 13:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F4E450906;
+	Mon, 31 Aug 2026 13:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183263; cv=none; b=aBotEJ6b09nW84XREoaa850sFgtLfUZ3FYrft9L8siMaVZwApM08pycazSLRGnOi87AufKrZ78TmwQy/KfnfgTOthR8Njix+TChOnpAJlfafZgFnyuCkSYFfezEOt1H2T+k27YsTT3cmGwUpIFYMZhYIoU7v99ue341kSnPji8c=
+	t=1788183265; cv=none; b=fC5CNw2nRceCTbOC1HBS/CMp5dqeUtB/A7OB4YD/Tfs5X6Vj44nlxB5mOKiF60qoTmJcOOgidWRmEuoepr0UD7Tndl2GMClOxYZ6a8B4dkplOdVkZVppBJCycK4Of6BWrSI8f5ioSbieG9xnYOtxION2sGaW27hB2xd7oroL8NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183263; c=relaxed/simple;
-	bh=4dwgWVwz4ZRqbMOX6hL1Y835EV4fxFoNSlSJJOu9CuU=;
+	s=arc-20240116; t=1788183265; c=relaxed/simple;
+	bh=MqngZ8Tj06+Q7KL5Ue/Pqn1J4tGdwuDeBsXgnbZhC+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XqdGvtO+Qj98ijcPWXzye/BYsavtMwjzVNiCmUv6noZbUWRuYy2CJq2g5kgWoWM9LYtY4XQACKsd4GpT/8MGh3p+SIeX8qn+W1Fcyxf5K8hJh8ihljLh2Cfl3m5XGH9tinF1eo0iTdCmgRP70zFoH5PPUFlu+URghiBnmbPt1fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YSI8qjiM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=P/TVf3DyF0ia73fYqGOjMQNbVszMZF3Q0CNI0R9GXex0nelhVFRgMztROMxIUhHKmrByNX5wd9/GNN7uKdJj9MXWOHYr2eUMPpxzbW3uyV4Xc/KnXmQKBck44fgjgvzUsDPnTLb6kou3kN1nVkszN2g+JXXF1NIfUig2F//rwhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5pW9A8m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YSI8qjiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03F31F00ACA;
-	Mon, 31 Aug 2026 13:34:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5pW9A8m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5587B1F000E9;
+	Mon, 31 Aug 2026 13:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183260;
-	bh=FVEIMvQRhEEYabIx3Us3sDKbsfe1vi4QRyuPrzSIVew=;
+	s=k20260515; t=1788183263;
+	bh=cO2mZ5HN8GGzP/R9aMklJrVC6U8lRQNLY/LSuFjXokw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YSI8qjiM39dMfsQL5VLIsN279pgF7LShWDjcaU6DIJmp2oYwQAOmo+3DSB91BqVkb
-	 3zsFQWq8G9Xt3pDIsTw+mVJoqdOVymGL8jBvRWDEvI5aA9fR3KPb6lGOtyhQFZKTev
-	 jrH7imdLNpx45H4J0vIRevJYfKMneaQ9txc3ZbRpMOc2FYVnXU6aeNyD1UIBM7YPRB
-	 M7qeExVwR2ofzWLeMa90VptLSbhAZQ1JmTIgCldkQSdK0rmlAPTYXjsnCm+pR6xx8D
-	 nmZyPKsTazkLRG7+dNqzE7qhR3tsA0fSZx+ePdWfSm0Yk3La4+WV9dU7zNi67TN3Re
-	 lTesZS9lAISYw==
+	b=k5pW9A8m9nDeOrHOD88v8Nr7n2s9oqwvE0MvO2H21VJNX2h9/0fqwTgZafsn3MQl/
+	 cEP/Pzc5Zw9fldQN1IdX9Ft0GTP7cmxF2Pd/rMhscIqIz1kS7Vyzb5gYrKCYD41N8b
+	 BFQVDK1Adzy4mwh3hQYM0RqndmOA7DgIzpQfPetnP4TwwX5Nrbyl1+v3Z0GTp+0y9p
+	 UuXkjVTMrTZ/eXRFBA7Zd9/ylbt4PDzyP2677QiZP4FmryS7dNvy41NXtwxzlnCAAo
+	 uIt7R+bGnO+VXkZwLT2EoKmYRh9ddLid9RLrEu3aZ6kIdULduobIfxmppDFr4ihOqt
+	 d1rjE7HeTlMjw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Goldwyn Rodrigues <rgoldwyn@suse.de>,
-	Goldwyn Rodrigues <rgoldwyn@suse.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>,
+	Xuegang Lu <xuegang.lu@airoha.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	roberto.sassu@huawei.com,
-	dmitry.kasatkin@gmail.com,
-	paul@paul-moore.com,
-	jmorris@namei.org,
-	serge@hallyn.com,
-	linux-integrity@vger.kernel.org,
-	linux-security-module@vger.kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ima: return error early if file xattr cannot be changed
-Date: Mon, 31 Aug 2026 09:21:10 -0400
-Message-ID: <20260831133314.4125787-42-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] net: airoha: Reserve RX headroom to avoid skb reallocation
+Date: Mon, 31 Aug 2026 09:21:11 -0400
+Message-ID: <20260831133314.4125787-43-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -59,164 +59,179 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Goldwyn Rodrigues <rgoldwyn@suse.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 69fc6474236d9edda6983623e4282f2bdfd8e3d8 ]
+[ Upstream commit bbfb1983944f2eaa8ee192e0f7b59ecc0fda9981 ]
 
-During early boot, the filesystem is read-only and any changes
-to xattrs are not allowed. This fails in case of ext4 because
-changing xattr starts an ext4 transaction which fails with the
-following warning.
+Reserve NET_SKB_PAD + NET_IP_ALIGN bytes of headroom for received packets
+to avoid skb head reallocation when pushing protocol headers into the skb.
 
-WARNING: fs/ext4/ext4_jbd2.c:75 at ext4_journal_check_start+0x63/0xa0 [ext4], CPU#1: systemd-sysroot/561
-CPU: 1 UID: 0 PID: 561 Comm: systemd-sysroot Not tainted 6.19.12-1-default #1 PREEMPT(voluntary) openSUSE Tumbleweed  c2dfc3c9d9f6f1233251c5d4410574fe82a348ee
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-RIP: 0010:ext4_journal_check_start+0x63/0xa0 [ext4]
-Call Trace:
-  __ext4_journal_start_sb+0x3e/0x180 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
-  ext4_xattr_set+0x104/0x150 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
-  __vfs_setxattr+0x9a/0xd0
-  __vfs_setxattr_noperm+0x76/0x1f0
-  ima_appraise_measurement+0x23e/0xe40
-  ima_d_path+0x5a/0xd0
-  process_measurement+0xb29/0xc40
-  ? copy_from_kernel_nofault+0x21/0xe0
-  ? fscrypt_file_open+0xc0/0xe0
-  ? ext4_file_open+0x60/0x490 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
-  ? bpf_prog_31efb7c56239148b_restrict_filesystems+0xab/0x126
-  ? __bpf_prog_exit+0x23/0xd0
-  ? __bpf_tramp_exit+0xd/0x50
-  ? bpf_trampoline_6442530367+0x9f/0xea
-  ima_file_check+0x57/0x80
-  security_file_post_open+0x50/0xf0
-  path_openat+0x493/0x1650
-  do_filp_open+0xc7/0x170
-
-Detect the state of the file early and return the error.
-
-Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Tested-by: Xuegang Lu <xuegang.lu@airoha.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260513-airoha-rx-headroom-v1-1-bd87798e422d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `ima: return error early if file xattr
-cannot be changed`
+# Stable Backport Analysis: `net: airoha: Reserve RX headroom to avoid
+skb reallocation`
 
-**Local tree:** `v6.18.43` (`make kernelversion` → 6.18.43)
+**Local tree:** Linux **6.18.43** (`git describe HEAD` →
+`v6.18.43-1-gc7f0dac02d232`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[ima]` `[return]` — Early-return from IMA xattr fix path
-when the inode cannot accept xattr changes.
+### Step 1.1: Parse the subject line
+**Record:** `[net: airoha]` `[Reserve]` — Reserve RX headroom in the
+Airoha Ethernet driver to prevent skb head reallocation on received
+packets.
 
-### Step 1.2: Commit message tags
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Signed-off-by:** Goldwyn Rodrigues `<rgoldwyn@suse.com>` (author)
-- **Signed-off-by:** Mimi Zohar `<zohar@linux.ibm.com>` (IMA maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Link:,
-  or Cc: stable tags (absence is expected per review pipeline)
+| Tag | Value |
+|-----|-------|
+| Tested-by | Xuegang Lu `<xuegang.lu@airoha.com>` (Airoha vendor
+engineer) |
+| Signed-off-by | Lorenzo Bianconi `<lorenzo@kernel.org>` (driver
+author) |
+| Signed-off-by | Jakub Kicinski `<kuba@kernel.org>` (netdev maintainer)
+|
+| Link | https://patch.msgid.link/20260513-airoha-rx-
+headroom-v1-1-bd87798e422d@kernel.org |
+| Fixes: | **Not present** (expected for manual review) |
+| Cc: stable | **Not present** (expected) |
+| Reported-by: | **Not present** |
 
-**Notable:** Maintainer sign-off from Mimi Zohar carries weight for IMA
-changes.
+**Notable patterns:** Vendor `Tested-by` from Airoha; no
+syzbot/sanitizer reports; no explicit crash description in the commit
+message.
 
-### Step 1.3: Commit body analysis
+### Step 1.3: Analyze commit body text
 **Record:**
-- **Bug:** With `IMA_APPRAISE_FIX`, IMA tries to write `security.ima`
-  xattrs during file open even when the filesystem is read-only (typical
-  early boot before remount-rw).
-- **Symptom:** ext4 starts a journal transaction for xattr set, hits
-  `WARN_ON_ONCE(sb_rdonly(sb))` in `ext4_journal_check_start()`, logs a
-  kernel warning.
-- **Reproducer:** `systemd-sysroot` opening files on read-only ext4
-  during early boot on openSUSE Tumbleweed 6.19.12; full stack trace
-  provided.
-- **Root cause (author):** IMA does not check whether the
-  file/filesystem is writable before calling `__vfs_setxattr_noperm()`.
-- **Fix approach:** Detect read-only/immutable state early in
-  `ima_fix_xattr()` and return `-EROFS`/`-EPERM`.
+- **Bug described:** RX skbs are built without `NET_SKB_PAD +
+  NET_IP_ALIGN` headroom, so the network stack must reallocate skb heads
+  when pushing protocol headers.
+- **Symptom/failure mode:** skb head reallocation on the RX path
+  (performance/correctness issue for page_pool-based RX, not a
+  documented oops).
+- **Version info:** None in commit message.
+- **Root cause (author):** Driver omitted standard RX headroom
+  reservation that peer drivers (e.g. MediaTek) already use.
 
-### Step 1.4: Hidden bug fix detection
-**Record:** Yes — despite not using "fix" in the subject verb, this is a
-correctness bug fix. IMA was attempting an operation guaranteed to fail,
-driving filesystem code down an error/warning path. Not cosmetic
-cleanup.
+### Step 1.4: Detect hidden bug fixes
+**Record:** **Yes, partially.** While framed as avoiding reallocation,
+the final patch also tightens RX length validation (`data_len` now uses
+`AIROHA_RX_LEN()` / `e->dma_len` instead of unadjusted buffer sizes).
+During review of v5, sashiko-bot flagged that without this bounds
+adjustment, `__skb_put()` with `skb_reserve()` could overflow skb bounds
+if hardware returned an oversized length. Lorenzo acknowledged and fixed
+this in v6. The committed version includes both the headroom fix and the
+bounds-check correction.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS — LINE BY LINE
 
-### Step 2.1: Change inventory
+### Step 2.1: Inventory the changes
 **Record:**
-- **Files:** `security/integrity/ima/ima_appraise.c` (+5 lines, 0
-  removed)
-- **Function modified:** `ima_fix_xattr()`
-- **Scope:** Single-file, surgical fix
+| File | Changes |
+|------|---------|
+| `drivers/net/ethernet/airoha/airoha_eth.c` | +8 / -6 lines |
+| `drivers/net/ethernet/airoha/airoha_eth.h` | +2 lines |
+| **Functions modified:** `airoha_qdma_fill_rx_queue()`,
+`airoha_qdma_rx_process()` |
+| **Scope:** Single-subsystem, two-file surgical driver fix |
 
-### Step 2.2: Code flow change
-**Record:**
-- **Hunk (ima_fix_xattr):**
-  - **Before:** Always prepared xattr data and called
-    `__vfs_setxattr_noperm()`, even on read-only filesystems or
-    immutable inodes.
-  - **After:** Returns `-EROFS` if `IS_RDONLY(d_inode(dentry))`,
-    `-EPERM` if `IS_IMMUTABLE(d_inode(dentry))`, before touching xattr
-    data or calling VFS.
-  - **Path affected:** `IMA_APPRAISE_FIX` path in
-    `ima_appraise_measurement()` (line 602) and `ima_update_xattr()`
-    (line 646).
+### Step 2.2: Code flow change per hunk
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic/correctness fix — missing precondition checks
-  before VFS xattr write.
-- **Mechanism:** `IS_RDONLY()` expands to `sb_rdonly((inode)->i_sb)` —
-  the same condition ext4 warns on at `ext4_jbd2.c:76`. Early return
-  avoids the pointless journal start and `WARN_ON_ONCE`.
+**Hunk 1 — `airoha_qdma_fill_rx_queue()`:**
+- **Before:** DMA buffer starts at page_pool fragment offset; full
+  `SKB_WITH_OVERHEAD(q->buf_size)` used for DMA length.
+- **After:** Offset advanced by `AIROHA_RX_HEADROOM`; DMA length reduced
+  by headroom via `AIROHA_RX_LEN()`.
+- **Path affected:** RX ring refill (initialization/hot path).
 
-### Step 2.4: Fix quality
+**Hunk 2 — `airoha_qdma_rx_process()` DMA sync:**
+- **Before:** Synced `SKB_WITH_OVERHEAD(q->buf_size)` regardless of
+  actual buffer offset.
+- **After:** Syncs `e->dma_len` (actual mapped region).
+- **Path affected:** RX NAPI processing.
+
+**Hunk 3 — `airoha_qdma_rx_process()` length validation:**
+- **Before:** `data_len` used full `q->buf_size` /
+  `SKB_WITH_OVERHEAD(q->buf_size)`.
+- **After:** `data_len` uses `AIROHA_RX_LEN(q->buf_size)` or
+  `e->dma_len`.
+- **Path affected:** RX validation before skb construction.
+
+**Hunk 4 — `airoha_qdma_rx_process()` skb build:**
+- **Before:** `napi_build_skb(e->buf, q->buf_size)` with no headroom.
+- **After:** `napi_build_skb(e->buf - AIROHA_RX_HEADROOM, q->buf_size)`
+  + `skb_reserve(q->skb, AIROHA_RX_HEADROOM)`.
+- **Path affected:** First-buffer skb construction on every received
+  packet.
+
+**Hunk 5 — header defines:**
+- **Before:** No headroom macros.
+- **After:** `AIROHA_RX_HEADROOM = NET_SKB_PAD + NET_IP_ALIGN`,
+  `AIROHA_RX_LEN(_n) = (_n) - AIROHA_RX_HEADROOM`.
+
+### Step 2.3: Bug mechanism classification
 **Record:**
-- **Quality:** Obviously correct; mirrors existing EVM guard pattern in
-  `evm_main.c:267-269`.
-- **Regression risk:** Very low. On failure paths the code already
-  received `-EROFS` from ext4; this only avoids the warning and
-  unnecessary FS work.
-- **Minor gap vs EVM:** EVM also checks `s_readonly_remount`; this patch
-  does not. That is a pre-existing difference, not a regression from
-  this fix. The reported early-boot RO-root case is covered by
-  `IS_RDONLY()`.
+- **Category:** Logic/correctness fix + memory-safety hardening
+- **Mechanism:** Driver uses `page_pool` + `napi_build_skb()` +
+  `skb_mark_for_recycle()` but did not reserve the standard `NET_SKB_PAD
+  + NET_IP_ALIGN` (typically 34 bytes) of RX headroom. When the network
+  stack later pushes headers (bridging, VLAN, DSA, GRO, etc.),
+  `skb_cow_head()` / `pskb_expand_head()` forces skb head reallocation,
+  defeating the page_pool zero-copy model. The bounds-check update
+  prevents accepting packet lengths that would overflow the reduced
+  usable buffer after `skb_reserve()`.
+
+### Step 2.4: Fix quality assessment
+**Record:**
+- **Quality:** High. Matches established pattern in `mtk_eth_soc.c`
+  (`skb_reserve(skb, NET_SKB_PAD + NET_IP_ALIGN)`).
+- **Regression risk:** Very low. Only reduces usable DMA buffer by a
+  fixed 34-byte headroom; all length checks and DMA sync updated
+  consistently.
+- **Red flags:** None. No API changes, no cross-subsystem impact.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame changed lines
-**Record:** Stable tree blame shows `ima_fix_xattr()` at lines 88–106
-without the guard checks. Function and `nop_mnt_idmap` usage are present
-in v6.18.43. Exact mainline introduction commit not traceable in this
-stable snapshot (single base commit in file history).
+### Step 3.1: Blame the changed lines
+**Record:** Local tree has shallow history (~50 commits). `git blame`
+attributes all `airoha_eth.c` RX code to a bulk-import commit, so the
+exact introduction commit cannot be determined from this checkout. The
+driver source header shows Copyright 2024, and the buggy RX path is
+**present in 6.18.43** at lines 549–674 of `airoha_eth.c`.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in commit message.
+### Step 3.2: Follow Fixes: tag
+**Record:** No `Fixes:` tag present. Not applicable.
 
-### Step 3.3: Related file history
-**Record:** Recent IMA commits in this tree include `b6766b171a5c4`,
-`148e4f7ece720`, `9e1f51c1ad57c`, etc. No related fix for this issue
-already present. Standalone one-patch series (v1 only).
+### Step 3.3: File history for related changes
+**Record:** `git log --oneline -- drivers/net/ethernet/airoha/` returns
+no airoha-specific commits in this shallow stable checkout. The fix is
+**standalone** (not part of a multi-patch dependency chain in the
+committed form). During netdev review it was patch 02/12 of a larger
+series, but this commit is self-contained.
 
-### Step 3.4: Author context
-**Record:** Goldwyn Rodrigues (SUSE). Mimi Zohar (IMA maintainer)
-reviewed and signed off. Author has other commits in tree (e.g., btrfs
-tracepoint fix).
+### Step 3.4: Author's relationship to subsystem
+**Record:** Lorenzo Bianconi is the Airoha Ethernet driver author (per
+file header and patch submission). Jakub Kicinski (netdev maintainer)
+applied the patch. Strong subsystem ownership.
 
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Uses `IS_RDONLY`, `IS_IMMUTABLE`,
-`d_inode()` — all present. `nop_mnt_idmap` and `__vfs_setxattr_noperm`
-already used in the same function. Applies standalone.
+### Step 3.5: Prerequisite commits
+**Record:** No prerequisite commits referenced. All symbols
+(`napi_build_skb`, `page_pool`, `skb_mark_for_recycle`,
+`SKB_WITH_OVERHEAD`) exist in 6.18.43. Patch applies cleanly with minor
+line-number offset (verified via `git apply --check`).
 
 ---
 
@@ -224,247 +239,319 @@ already used in the same function. Applies standalone.
 
 ### Step 4.1: Original patch discussion
 **Record:**
-- **b4 dig URL:** https://patch.msgid.link/aposxvqsrlbe7gtyvtsdh5nyg5sgo
-  fimerqpt6ez4fbxhtqyjj@4u3othdcgipp
-- **Series:** v1 only (no v2/v3)
-- **Mimi Zohar reply:** "Thank you! The patch makes a lot of sense."
-- No NAKs found. No explicit stable nomination in thread.
+- **b4 dig URL:** https://patch.msgid.link/20260513-airoha-rx-
+  headroom-v1-1-bd87798e422d@kernel.org
+- **Series revisions:** Only v1 found via `b4 dig -a` (direct
+  submission, applied as-is to net-next)
+- **Key reviewer feedback:** In the v5 series thread (spinics.net),
+  sashiko-bot flagged missing bounds-check adjustment as a potential
+  buffer overflow; Lorenzo replied "ack, I will fix it in v6." The
+  committed version includes that fix.
+- **Stable nominations:** None found in the thread (only patchwork-bot
+  apply notification).
+- **NAKs:** None.
 
-### Step 4.2: Reviewers
-**Record:** CC'd to `linux-integrity@vger.kernel.org`. Mimi Zohar
-(maintainer) responded positively and signed off in the committed
-version.
+### Step 4.2: Reviewers from b4 dig -w
+**Record:** CC'd: Andrew Lunn, David S. Miller, Eric Dumazet, Jakub
+Kicinski, Paolo Abeni, linux-arm-kernel, linux-mediatek, netdev, Xuegang
+Lu (Airoha). Appropriate netdev maintainer coverage.
 
-### Step 4.3: Bug report
-**Record:** Concrete stack trace in commit message from openSUSE
-Tumbleweed / QEMU, `systemd-sysroot` during early boot. Severity from
-reporter: kernel WARNING (not oops/panic).
+### Step 4.3: Bug report details
+**Record:** No formal bug report URL in commit. OpenWrt downstream
+commit `dda777dd4472` describes this as part of "Airoha reported bug for
+ethernet" and backported it to their 6.12 airoha target. Vendor testing
+confirmed via `Tested-by: Xuegang Lu`.
 
-### Step 4.4: Related patches
-**Record:** Part of a larger SUSE series on mainline (`[PATCH 02/19]` in
-mirror), but this specific patch is self-contained with no series
-dependencies.
+### Step 4.4: Related patches in series
+**Record:** Part of a larger airoha-eth multi-patch series on net-next,
+but this specific commit is independently applicable and functionally
+complete.
 
-### Step 4.5: Stable list history
-**Record:** Not searched on lore stable list (no indication of prior
-stable discussion). Not a negative signal.
+### Step 4.5: Stable mailing list history
+**Record:** Not searched exhaustively; no stable-list nomination found
+in available thread data.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `ima_fix_xattr()` (modified); callers
-`ima_appraise_measurement()`, `ima_update_xattr()`.
+### Step 5.1: Key functions modified
+**Record:** `airoha_qdma_fill_rx_queue()`, `airoha_qdma_rx_process()`
 
 ### Step 5.2: Callers
 **Record:**
-- `ima_appraise_measurement()` ← `process_measurement()` ←
-  `ima_file_check()` (LSM `file_post_open` hook)
-- `ima_update_xattr()` ← post-write xattr update path
-- **Context:** File open during boot (`systemd-sysroot`), common
-  security hook path.
+- `airoha_qdma_fill_rx_queue()` called from `airoha_qdma_rx_process()`
+  (line 716) and `airoha_qdma_init_rx_queue()` (line 802)
+- `airoha_qdma_rx_process()` called from `airoha_qdma_rx_napi_poll()`
+  (line 727)
+- NAPI poll is the standard per-packet RX hot path on every received
+  frame
 
-### Step 5.3: Callees
-**Record:** `__vfs_setxattr_noperm()` → `__vfs_setxattr()` → filesystem
-`xattr_set` (ext4 starts journal).
+### Step 5.3: Key callees
+**Record:** `page_pool_dev_alloc_frag()`, `napi_build_skb()`,
+`skb_reserve()`, `skb_mark_for_recycle()`, `eth_type_trans()`,
+`napi_gro_receive()`, `dma_sync_single_for_cpu()`
 
-### Step 5.4: Reachability
-**Record:**
-- Trigger: `CONFIG_IMA_APPRAISE` + `IMA_APPRAISE_FIX` mode + read-only
-  root during early boot + files opened that fail IMA appraisal.
-- Reachable from normal file open syscall path via LSM hook. Not obscure
-  module-init-only code.
+### Step 5.4: Call chain / reachability
+**Record:** Hardware interrupt → NAPI poll → `airoha_qdma_rx_process()`
+→ network stack (`napi_gro_receive`). **Every received packet** on
+Airoha hardware traverses this path. Commonly triggered on OpenWrt
+router platforms with DSA switching and bridging.
 
 ### Step 5.5: Similar patterns
-**Record:** EVM already guards identically before xattr update:
-
-```267:273:security/integrity/evm/evm_main.c
-                        } else if (!IS_RDONLY(inode) &&
-                                   !(inode->i_sb->s_readonly_remount) &&
-                                   !IS_IMMUTABLE(inode) &&
-                                   !is_unsupported_hmac_fs(dentry)) {
-                                evm_update_evmxattr(dentry, xattr_name,
-                                                    xattr_value,
-                                                    xattr_value_len);
-```
-
-IMA was missing the equivalent guard — clear oversight.
+**Record:** `drivers/net/ethernet/mediatek/mtk_eth_soc.c:2320` uses
+`skb_reserve(skb, NET_SKB_PAD + NET_IP_ALIGN)` on RX. Many page_pool-
+aware drivers reserve equivalent headroom. The Airoha driver was missing
+this standard practice.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (v6.18.43)
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** `ima_fix_xattr()` at lines 88–106 lacks
-`IS_RDONLY`/`IS_IMMUTABLE` checks. Fix is not yet applied (`grep` found
-no matches).
+### Step 6.1: Does the buggy code exist?
+**Record:** **Yes.** In 6.18.43:
+- `airoha_eth.c:571-573`: no headroom offset, `e->dma_len =
+  SKB_WITH_OVERHEAD(q->buf_size)`
+- `airoha_eth.c:638-644`: unadjusted length checks
+- `airoha_eth.c:654`: `napi_build_skb(e->buf, q->buf_size)` without
+  `skb_reserve()`
+- `AIROHA_RX_HEADROOM` macro **not defined** in `airoha_eth.h`
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Context matches exactly (same
-function, same `nop_mnt_idmap` usage, same line structure).
+**Record:** **Clean apply** with minor line-number offset (functions at
+lines 549/613 vs. 526/594 in upstream diff). No conflicting changes
+detected. `AIROHA_MAX_MTU` differs (9216 local vs 9220 upstream) but is
+unrelated to this patch.
 
 ### Step 6.3: Related fixes already present?
-**Record:** **No.** No prior commit in this tree addresses this issue.
+**Record:** `git log --grep="headroom"` and `git log --grep="airoha"`
+return no matches. **Fix is not already in 6.18.43.**
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** **security/integrity/ima** — IMPORTANT. IMA is used on
-secure-boot and integrity-measurement deployments (enterprise Linux,
-embedded secure systems).
+**Record:** `drivers/net/ethernet/airoha/` — **IMPORTANT** (platform
+primary Ethernet MAC for Airoha SoCs used in routers/embedded). Config:
+`CONFIG_NET_AIROHA` depends on `ARCH_AIROHA || COMPILE_TEST`, selects
+`PAGE_POOL`.
 
 ### Step 7.2: Subsystem activity
-**Record:** Active — multiple IMA fixes in v6.18.y stable queue already.
+**Record:** Driver is actively developed (2024 copyright, recent multi-
+patch series on net-next). Bug present since initial RX implementation.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Systems with `CONFIG_IMA_APPRAISE` and `IMA_APPRAISE_FIX`
-(or `ima_appraise=fix` boot param) on read-only root during early boot.
-Relevant to dracut/initramfs/systemd-sysroot workflows on ext4 (and
-potentially other journaled FS).
+**Record:** Users of Airoha SoC gigabit Ethernet (`CONFIG_NET_AIROHA`) —
+embedded routers (OpenWrt airoha target), MediaTek-related DSA switch
+platforms. Not universal, but **primary network path** for those
+systems.
 
 ### Step 8.2: Trigger conditions
 **Record:**
-- Early boot, RO root filesystem
-- IMA appraise-fix mode attempting to repair missing/wrong
-  `security.ima` xattrs on file open
-- **Likelihood:** Moderate for IMA-enabled distros during every boot
-  until rw remount
-- **Unprivileged trigger:** Indirectly — any file open during sysroot
-  phase can trigger it
+- **Trigger:** Any RX traffic where the network stack pushes headers
+  (bridging, VLAN, DSA tag handling, GRO, forwarding). Very common on
+  router workloads.
+- **Likelihood:** High on deployed Airoha router configurations.
+- **Unprivileged trigger:** Yes (incoming network traffic).
 
 ### Step 8.3: Failure mode severity
-**Record:** `WARN_ON_ONCE` from ext4 journal layer. **Severity: MEDIUM**
-— no crash, panic, corruption, or deadlock, but spurious kernel warnings
-on every affected file open during early boot. Pollutes logs and may
-trigger monitoring alerts on security-hardened systems.
-
-### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Eliminates reproducible boot-time warnings; aligns IMA
-  with EVM; avoids pointless FS journal operations.
-- **Risk:** Minimal (5 lines, well-understood checks).
-- **Ratio:** Favorable — low risk, real (if non-critical) user-visible
-  bug fix.
+- **Without fix:** Per-packet skb head reallocation on header push;
+  page_pool recycling defeated; elevated CPU and allocation pressure;
+  potential `rx_dropped` under load; theoretical skb bounds overflow if
+  hardware returns oversized length (bounds-check issue fixed in final
+  version).
+- **Severity:** **MEDIUM-HIGH** for affected hardware — functional
+  networking degradation, not a typical kernel oops, but real user-
+  visible impact on production router platforms.
+
+### Step 8.4: Risk-benefit ratio
+**Record:**
+- **Benefit:** HIGH for Airoha users (correct page_pool RX behavior,
+  reduced per-packet allocations, hardened length validation).
+- **Risk:** VERY LOW (10-line surgical change, vendor-tested,
+  established driver pattern).
+- **Ratio:** Favorable for backport to 6.18.y where the driver and buggy
+  code both exist.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence compiled
 
 **FOR backport:**
-- Reproducible bug with full stack trace (openSUSE)
-- IMA maintainer endorsed ("makes a lot of sense") and signed off
-- 5-line surgical fix, obviously correct
-- Mirrors existing EVM pattern in same subsystem
-- Buggy code confirmed present in v6.18.43
-- Clean apply, no dependencies
-- Real logic bug (attempting impossible xattr write)
+- Buggy code confirmed present in 6.18.43
+- Vendor-tested (`Tested-by: Xuegang Lu @airoha.com`)
+- OpenWrt downstream backported as "Airoha reported bug" to 6.12
+- Standard RX headroom pattern used by peer drivers (MediaTek)
+- page_pool + `skb_mark_for_recycle` without headroom is incorrect for
+  header-push workloads
+- Includes bounds-check hardening from review feedback
+- Small, self-contained, applies cleanly
+- Affects every RX packet on Airoha hardware
 
 **AGAINST backport:**
-- Failure mode is WARNING only, not crash/corruption/security
-- Requires `IMA_APPRAISE_FIX` — narrower than default IMA enforce mode
-- Does not add EVM's `s_readonly_remount` check (minor, pre-existing
-  gap)
+- Commit message frames issue as avoiding reallocation (optimization
+  language)
+- No documented kernel crash, oops, or CVE
+- Narrow hardware scope (`ARCH_AIROHA`)
+- No explicit `Cc: stable` or maintainer stable nomination
+- Performance fix rather than crash/corruption fix per strict stable-
+  kernel-rules wording
 
-**Unresolved:** Exact mainline commit that introduced `ima_fix_xattr()`
-without guards (not traceable in stable snapshot history).
+**Unresolved:** Exact symptoms Airoha reported to OpenWrt are not
+documented in the upstream commit or lore thread.
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic mirrors EVM;
-   maintainer reviewed; reproducer provided.
-2. Fixes a real bug affecting users? **PASS** — concrete openSUSE early-
-   boot warning.
-3. Important issue? **PASS (borderline)** — WARN_ON spam during boot on
-   IMA systems; not crash-level but user-visible on security
-   deployments.
-4. Small and contained? **PASS** — 5 lines, 1 file.
-5. No new features or APIs? **PASS** — defensive checks only.
-6. Can apply to local tree? **PASS** — code exists, patch applies
-   cleanly.
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — standard pattern, vendor
+Tested-by, netdev maintainer applied |
+| 2. Fixes a real bug? | **PASS** — driver RX headroom omission
+affecting page_pool skb handling |
+| 3. Important issue? | **PASS** — functional RX path degradation on
+deployed hardware; bounds-check hardening |
+| 4. Small and contained? | **PASS** — 10 insertions, 6 deletions, 2
+files |
+| 5. No new features/APIs? | **PASS** — internal driver constants only |
+| 6. Can apply to local tree? | **PASS** — verified clean apply to
+6.18.43 |
 
 ### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build fix, or docs).
-Standard bug fix.
+**Record:** Not a device ID, quirk, DT, build, or documentation fix.
+Standard driver correctness fix.
 
 ### Step 9.4: Decision rationale
-
-For **v6.18.43**, this commit fixes a real, reproducible bug in the IMA
-appraisal-fix path where the kernel incorrectly attempts xattr writes on
-read-only filesystems during early boot. The result is ext4
-`WARN_ON_ONCE` spam — not a crash, but a genuine defect in security
-subsystem code that EVM already handles correctly. The fix is minimal,
-maintainer-approved, and applies cleanly to this tree.
+For **6.18.43**, the Airoha Ethernet driver exists with the buggy RX
+path. This is a vendor-reported, vendor-tested correction to a
+fundamental RX buffer layout error that breaks the page_pool zero-copy
+model on every packet requiring header push — a common case on Airoha
+router platforms with DSA and bridging. The fix is minimal, obviously
+correct, and carries negligible regression risk. While not a crash fix,
+it addresses a real functional defect on production hardware that
+downstream (OpenWrt) has already deemed worth backporting.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body; identified IMA early-boot RO
-  xattr warning bug
-- **[Phase 2]** Diff analysis: +5 lines in `ima_fix_xattr()`, adds
-  `IS_RDONLY`/`IS_IMMUTABLE` guards
-- **[Phase 3]** `git describe HEAD` → v6.18.43; `git blame`/`git show`
-  confirm buggy code at lines 88–106 without guards
-- **[Phase 3]** No Fixes: tag; no related fix in tree; standalone patch
-- **[Phase 4]** `b4 dig -c 69fc6474236d9edda6983623e4282f2bdfd8e3d8`:
-  lore URL found; v1 only
-- **[Phase 4]** `b4 dig -w`: CC'd linux-integrity@vger.kernel.org
-- **[Phase 4]** Mbox thread: Mimi Zohar — "The patch makes a lot of
-  sense"
-- **[Phase 5]** Call chain verified: `ima_file_check` →
-  `process_measurement` → `ima_appraise_measurement` → `ima_fix_xattr`
-- **[Phase 5]** EVM parallel check at `evm_main.c:267-269` verified via
-  grep
-- **[Phase 5]** `IS_RDONLY` → `sb_rdonly()` verified at
-  `include/linux/fs.h:2546`
-- **[Phase 5]** ext4 warning at `fs/ext4/ext4_jbd2.c:76` —
-  `WARN_ON_ONCE(sb_rdonly(sb))` verified
-- **[Phase 6]** `grep IS_RDONLY` in ima: no matches — fix not present
-- **[Phase 6]** `ima_fix_xattr` and `nop_mnt_idmap` present in v6.18.43
-- **[Phase 8]** Failure mode: WARN_ON_ONCE, severity MEDIUM
+- **[Phase 1]** Parsed commit message tags: Tested-by (Airoha), Signed-
+  off-by (author + netdev maintainer), Link present; no Fixes:/Cc:
+  stable/Reported-by
+- **[Phase 1]** Identified hidden bounds-check fix from v5→v6 review
+  cycle (spinics.net sashiko-bot thread)
+- **[Phase 2]** Diff analysis: 2 files, functions
+  `airoha_qdma_fill_rx_queue()` and `airoha_qdma_rx_process()` modified
+- **[Phase 2]** Read current buggy code at `airoha_eth.c:549-674` —
+  confirmed no headroom reservation
+- **[Phase 3]** `git describe HEAD`: v6.18.43-1-gc7f0dac02d232; `make
+  kernelversion`: 6.18.43
+- **[Phase 3]** `git blame` on RX functions: shallow history, all
+  attributed to bulk import; buggy code present
+- **[Phase 3]** No Fixes: tag to follow
+- **[Phase 4]** `b4 dig -c bbfb1983944f`: found lore URL
+  https://patch.msgid.link/20260513-airoha-rx-
+  headroom-v1-1-bd87798e422d@kernel.org
+- **[Phase 4]** `b4 dig -a`: only v1 revision
+- **[Phase 4]** `b4 dig -w`: netdev maintainers CC'd including Jakub
+  Kicinski, David S. Miller, Eric Dumazet
+- **[Phase 4]** `b4 dig -m /tmp/airoha_headroom.mbox`: thread saved;
+  only patchwork-bot apply notification, no stable nomination
+- **[Phase 4]** spinics.net v5 review thread: sashiko-bot bounds-check
+  concern, Lorenzo acknowledged fix for v6
+- **[Phase 4]** OpenWrt commit dda777dd4472: "Airoha reported bug for
+  ethernet", backported to 6.12
+- **[Phase 5]** Caller trace: `airoha_qdma_rx_napi_poll()` →
+  `airoha_qdma_rx_process()` → `napi_gro_receive()`
+- **[Phase 5]** `mtk_eth_soc.c:2320`: confirmed peer driver uses
+  `skb_reserve(skb, NET_SKB_PAD + NET_IP_ALIGN)`
+- **[Phase 5]** `include/linux/skbuff.h`: `NET_SKB_PAD = max(32,
+  L1_CACHE_BYTES)`, `NET_IP_ALIGN = 2`
+- **[Phase 5]** `gro.c:100-110`: pp_recycle mismatch prevents GRO
+  merging — page_pool skb handling is sensitive
+- **[Phase 6]** Confirmed `AIROHA_RX_HEADROOM` absent from local
+  `airoha_eth.h`
+- **[Phase 6]** `git apply --check` with line-adjusted patch: **applies
+  cleanly** (exit 0)
+- **[Phase 6]** `git log --grep="headroom"` / `--grep="airoha"`: no
+  existing fix in tree
+- **[Phase 7]** Read `drivers/net/ethernet/airoha/Kconfig`:
+  CONFIG_NET_AIROHA selects PAGE_POOL
+- **[Phase 8]** Assessed impact: Airoha SoC primary Ethernet,
+  router/embedded deployments
 
-**YES**The background history search (`git log --all -S
-"ima_fix_xattr"`) was stopped — `--all` scans too many branches and had
-hung. That didn’t change the backport conclusion.
+**YES**
 
-For **v6.18.43**, the important part is already verified:
-`ima_fix_xattr()` is present **without** the `IS_RDONLY`/`IS_IMMUTABLE`
-guards, so the early-boot ext4 warning is a real issue here. Pinning the
-exact mainline commit that introduced `ima_fix_xattr` isn’t possible in
-this stable snapshot (file history collapses to the release base), and
-it isn’t needed for the decision.
+ drivers/net/ethernet/airoha/airoha_eth.c | 14 ++++++++------
+ drivers/net/ethernet/airoha/airoha_eth.h |  2 ++
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-**Verdict for this tree: YES** — small, maintainer-reviewed fix for a
-reproducible IMA appraise-fix warning on read-only root during early
-boot.
-
- security/integrity/ima/ima_appraise.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
-index 5149ff4fd50d2..d5f7de58caac5 100644
---- a/security/integrity/ima/ima_appraise.c
-+++ b/security/integrity/ima/ima_appraise.c
-@@ -90,6 +90,11 @@ static int ima_fix_xattr(struct dentry *dentry, struct ima_iint_cache *iint)
- 	int rc, offset;
- 	u8 algo = iint->ima_hash->algo;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index 64ab34e37c36f..e016f7521af59 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -568,9 +568,10 @@ static int airoha_qdma_fill_rx_queue(struct airoha_queue *q)
+ 		q->queued++;
+ 		nframes++;
  
-+	if (IS_RDONLY(d_inode(dentry)))
-+		return -EROFS;
-+	if (IS_IMMUTABLE(d_inode(dentry)))
-+		return -EPERM;
-+
- 	if (algo <= HASH_ALGO_SHA1) {
- 		offset = 1;
- 		iint->ima_hash->xattr.sha1.type = IMA_XATTR_DIGEST;
++		offset += AIROHA_RX_HEADROOM;
+ 		e->buf = page_address(page) + offset;
+ 		e->dma_addr = page_pool_get_dma_addr(page) + offset;
+-		e->dma_len = SKB_WITH_OVERHEAD(q->buf_size);
++		e->dma_len = SKB_WITH_OVERHEAD(AIROHA_RX_LEN(q->buf_size));
+ 
+ 		val = FIELD_PREP(QDMA_DESC_LEN_MASK, e->dma_len);
+ 		WRITE_ONCE(desc->ctrl, cpu_to_le32(val));
+@@ -635,13 +636,12 @@ static int airoha_qdma_rx_process(struct airoha_queue *q, int budget)
+ 		q->tail = (q->tail + 1) % q->ndesc;
+ 		q->queued--;
+ 
+-		dma_sync_single_for_cpu(eth->dev, e->dma_addr,
+-					SKB_WITH_OVERHEAD(q->buf_size), dir);
++		dma_sync_single_for_cpu(eth->dev, e->dma_addr, e->dma_len,
++					dir);
+ 
+ 		page = virt_to_head_page(e->buf);
+ 		len = FIELD_GET(QDMA_DESC_LEN_MASK, desc_ctrl);
+-		data_len = q->skb ? q->buf_size
+-				  : SKB_WITH_OVERHEAD(q->buf_size);
++		data_len = q->skb ? AIROHA_RX_LEN(q->buf_size) : e->dma_len;
+ 		if (!len || data_len < len)
+ 			goto free_frag;
+ 
+@@ -651,10 +651,12 @@ static int airoha_qdma_rx_process(struct airoha_queue *q, int budget)
+ 
+ 		port = eth->ports[p];
+ 		if (!q->skb) { /* first buffer */
+-			q->skb = napi_build_skb(e->buf, q->buf_size);
++			q->skb = napi_build_skb(e->buf - AIROHA_RX_HEADROOM,
++						q->buf_size);
+ 			if (!q->skb)
+ 				goto free_frag;
+ 
++			skb_reserve(q->skb, AIROHA_RX_HEADROOM);
+ 			__skb_put(q->skb, len);
+ 			skb_mark_for_recycle(q->skb);
+ 			q->skb->dev = port->dev;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
+index 57e8ddb30a9c5..216273595115d 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.h
++++ b/drivers/net/ethernet/airoha/airoha_eth.h
+@@ -32,6 +32,8 @@
+ #define AIROHA_FE_MC_MAX_VLAN_TABLE	64
+ #define AIROHA_FE_MC_MAX_VLAN_PORT	16
+ #define AIROHA_NUM_TX_IRQ		2
++#define AIROHA_RX_HEADROOM		(NET_SKB_PAD + NET_IP_ALIGN)
++#define AIROHA_RX_LEN(_n)		((_n) - AIROHA_RX_HEADROOM)
+ #define HW_DSCP_NUM			2048
+ #define IRQ_QUEUE_LEN(_n)		((_n) ? 1024 : 2048)
+ #define TX_DSCP_NUM			1024
 -- 
 2.53.0
 
