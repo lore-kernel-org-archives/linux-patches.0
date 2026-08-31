@@ -1,443 +1,592 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3327524B0D;
-	Mon, 31 Aug 2026 13:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A5D4A5C4D;
+	Mon, 31 Aug 2026 13:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183861; cv=none; b=aNE16RRD60MyD96OQ35PXv+vBxuZIn6GhIdXF1bpSfJse+Zpryi2vDRFA1JiGulizAvhabDwiLnpTaT78j9XTl2Q9dLcfA4cziXSDqjBiY5pMgBJxhrGbleecP08DCkYWHmPbMMrucpHYiMPsiFfSvaWpAYHtM2m0e8HjuTYkHs=
+	t=1788183862; cv=none; b=aHxsjcCezcJAs2NZnZ8JB8S9ZIp1Y8f/LqupteVBVFhOao0n1e64f/l9q0eHiutdgkR+qZR1oXGMHmC82qUFroO2ZSb5ycTA57WWFKrgm4X3pL5kYnW9PsuznQzifnZmf7xBWh0MdQlnbxkj1X1zRg/Eg/smGlOGM3q0gr6gPeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183861; c=relaxed/simple;
-	bh=OZseUKhZwRVlbj1/1OsmDOimzc7BCHLoRTaWQt1CYXU=;
+	s=arc-20240116; t=1788183862; c=relaxed/simple;
+	bh=bXQ6SPvJkIaYKd9pP72BiKjPzMbz4Hv8RDZHED18WFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HCUqtbMRZHO14NErNaIp6A8pPY0XzDYmnymG7EByho+3yBZsG2zOKno/vlhZrQW15Mi+iG7SxLy3GRwqwTtFWcdU9hu46Iq/caRade3WR3h9UdMxMkjxE558szEk52WUbjRe9rXtaqGNV23vXZlnfnNlFOeRE9GIuEpX3bA32HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ihp/Ma7J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sfop0FtCjxDPQ6Cyv4oEJV+37zCR7knnU+hJNlvpi2slEmWye6cXfSivIKfHWH7NSfuy+fVz/nvCrO0ExMQ+uINU6T6g2TyarlwO1mhaHoPizzfGDjR6vh22odIlN8zO9ev2T8on5wv/pMqs+1q3MhlW4eyP1mh1dPfLAw7mS1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxqqvNzA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ihp/Ma7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E671F00ADB;
-	Mon, 31 Aug 2026 13:44:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183858;
-	bh=SjSB3VUQZ+aGSf3a9gQmCHoW8bUyI2z57BnBPQlXIF8=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxqqvNzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05371F000E9;
+	Mon, 31 Aug 2026 13:44:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183859;
+	bh=snpaSj964/ResTAPlVBpsU4/OTEViRknbLbsXfdL2TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ihp/Ma7J05v3G+Bnoa1CQpGcUXCeTtKeuejPd3MZd/Ldu0wZagZETZI/cxAv1/m+/
-	 07DZTOpvd/xdjKHhan4C2pg7Q4MdcsW/gOZ1p+u6rsDLLoBwwpEE34pqxtGDyrL+7w
-	 FLINvPvtp5owJdWIWMcDry95pcXS99RKcdLQeL79ZbGWpog9ZjWZMY2WIXGzPQt6QV
-	 1JsXUhLHSk3AlIdRdZcf8QCLNexOlu8WqTrrU0ycyaJliPCc03GOWiLp5WEpn9Tj0+
-	 7EJ1PHAETMI72IjmuilZg3kKAgpR8UUW/93yv+Dn17o7WKeryxUhQ16KGzjJ8YB91w
-	 yBJ8EyBVf1RJQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net: au1000: move free_irq out of the close-time spinlocked section
-Date: Mon, 31 Aug 2026 09:26:14 -0400
-Message-ID: <20260831133314.4125787-346-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=wxqqvNzA3xwFTXAMy2Yze65ApkTSMs97b2HJWsBN12WSf85LHVM2RkNgtM+xulfis
+	 WyRTMkQXRq5tU4HaHm3mDHwlzj9wnAuwh7+X/wj5oDI0sTdm4Dyr97iB8a57MQsXUB
+	 El+uaJQNrFugTYajmiCCqjEUIiUsy3j/lTKk4pY4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Eric Biggers <ebiggers@kernel.org>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.1 65/76] crypto: qce - Remove unsafe/deprecated algorithms
+Date: Mon, 31 Aug 2026 15:34:37 +0200
+Message-ID: <20260831133402.787526195@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit f48763beab4eea41fc480c9702ec6eebe8d75e4f ]
+------------------
 
-au1000_close() calls free_irq() while aup->lock is still held with
-spin_lock_irqsave(). free_irq() can sleep because it takes the IRQ
-descriptor request mutex, so it does not belong inside the close-time
-spinlocked section.
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-This was found by our static analysis tool and then confirmed by manual
-review of the in-tree au1000_close() .ndo_stop path. The reviewed path
-keeps aup->lock held across the MAC reset, queue stop and
-free_irq(dev->irq, dev).
+commit 7e28b0a5c4b7d075b98ce6d8f5290a9d3deb5b92 upstream.
 
-A directed runtime validation kept that ndo_stop carrier and the same
-free_irq(dev->irq, dev) operation under the driver lock. Lockdep reported
-"BUG: sleeping function called from invalid context" and "Invalid wait
-context" while free_irq() was taking desc->request_mutex, with
-au1000_close() and free_irq() on the stack.
+Remove algorithms that are either unsafe or deprecated and have no
+in-kernel users that cannot be served by the ARM CE implementations.
 
-Drop aup->lock before freeing the IRQ. The protected close-time work still
-stops the device and queue before IRQ teardown, but the sleepable IRQ core
-path now runs outside the spinlocked section.
+AES-ECB reveals plaintext patterns (identical plaintext blocks produce
+identical ciphertext blocks) and should not be exposed as a hardware-
+accelerated primitive. DES, Triple DES and HMAC-SHA1 have been
+deprecated for years.
 
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Remove sha1, ecb(aes), ecb(des), cbc(des), ecb(des3_ede), cbc(des3_ede),
+hmac(sha1) and all AEAD variants built on these primitives as well as
+authenc(hmac(sha256),cbc(des)). Also clean up the - now dead - code,
+flags and constants.
+
+Cc: stable@vger.kernel.org
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-# Stable Backport Analysis: `net: au1000: move free_irq out of the
-close-time spinlocked section`
-
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[net: au1000]` `[move]` — relocate `free_irq()` out of a
-spinlocked section in `au1000_close()`.
-
-### Step 1.2: Commit message tags
-**Record:**
-| Tag | Value |
-|-----|-------|
-| Signed-off-by | Runyu Xiao `<runyu.xiao@seu.edu.cn>` |
-| Reviewed-by | Simon Horman `<horms@kernel.org>` |
-| Link |
-https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
-|
-| Signed-off-by | Jakub Kicinski `<kuba@kernel.org>` (committer) |
-| Fixes: | Not in final commit message (present in lore submission:
-`Fixes: 1da177e4c3f4`) |
-| Cc: stable | Present in lore submission (`Cc: stable@vger.kernel.org`)
-|
-| Reported-by / Tested-by | None |
-| syzbot | None |
-
-**Notable:** Author nominated for stable in lore; subsystem reviewer
-approved.
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** `au1000_close()` calls `free_irq()` while holding `aup->lock`
-  via `spin_lock_irqsave()`.
-- **Symptom:** Lockdep reports `"BUG: sleeping function called from
-  invalid context"` and `"Invalid wait context"` because `free_irq()`
-  takes `desc->request_mutex`.
-- **Trigger:** `ndo_stop` / netdev close path (`ifconfig down`, driver
-  unload).
-- **Root cause:** Sleepable IRQ teardown inside an atomic (spinlocked)
-  context.
-- **Fix:** Drop `aup->lock` before `free_irq()`; MAC reset and queue
-  stop remain protected.
-
-### Step 1.4: Hidden bug fix detection
-**Record:** Not disguised — this is an explicit locking-context bug fix,
-even though the subject uses "move" rather than "fix".
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Change inventory
-**Record:**
-- **File:** `drivers/net/ethernet/amd/au1000_eth.c` (+1 line moved, net
-  ~2 lines changed)
-- **Function:** `au1000_close()`
-- **Scope:** Single-file, surgical fix
-
-### Step 2.2: Code flow change
-**Record:**
-| Hunk | Before | After |
-|------|--------|-------|
-| `au1000_close()` | Hold `aup->lock` → reset MAC → stop queue →
-`free_irq()` → unlock | Hold lock → reset MAC → stop queue → **unlock**
-→ `free_irq()` |
-
-Affected path: netdev `.ndo_stop` error/teardown path.
-
-### Step 2.3: Bug mechanism
-**Record:** **Category:** Synchronization / invalid context (sleeping
-while holding spinlock).
-
-`free_irq()` → `__free_irq()` → `mutex_lock(&desc->request_mutex)` in
-`kernel/irq/manage.c`. That is illegal while
-`spin_lock_irqsave(&aup->lock)` is held.
-
-### Step 2.4: Fix quality
-**Record:**
-- **Obviously correct:** Yes — matches established netdev driver
-  pattern.
-- **Minimal:** Two-line reorder.
-- **Regression risk:** Low. MAC reset and `netif_stop_queue()` still run
-  under the lock. IRQ handler (`au1000_interrupt`) does not take
-  `aup->lock`; `au1000_rx()` / `au1000_tx_ack()` also do not use it.
-- **Precedent:** `net: macb: Move devm_{free,request}_irq() out of spin
-  lock area` (99405131d6edd) — same class of fix, backported to stable
-  with `Cc: stable@vger.kernel.org`.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame
-**Record:** Buggy `free_irq()` under spinlock dates to **2005**
-(`1da177e4c3f4`, Linux 2.6.12-rc2). Present in this 6.18.44 tree at
-lines 939–948.
-
-### Step 3.2: Fixes: tag
-**Record:** Lore submission has `Fixes: 1da177e4c3f4` — original import
-of this driver code. Bug has existed since driver introduction; fix is
-relevant to all trees that contain this driver.
-
-### Step 3.3: Related file history
-**Record:** Recent `au1000_eth.c` changes are cleanups (static
-annotations, platform remove callback). No related fix already applied.
-Fix is standalone (not part of a series).
-
-### Step 3.4: Author context
-**Record:** Runyu Xiao has submitted similar lock-context fixes (e.g.,
-`misc: nsm`, `mmc: vub300`). Simon Horman (Reviewed-by) is a networking
-maintainer.
-
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Patch is self-contained and structurally
-identical to current tree code.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original discussion
-**Record:** Lore thread fetched via `curl` from `https://lore.kernel.org
-/netdev/20260619151816.1144289-1-runyu.xiao@seu.edu.cn/t.mbox.gz`. `b4
-dig -c` could not be used (commit not in this checkout). Patch includes
-lockdep stack trace and `Cc: stable@vger.kernel.org`.
-
-### Step 4.2: Reviewers
-**Record:** To: netdev maintainers (Lunn, Miller, Dumazet, Kicinski,
-Abeni). Cc: `netdev@vger.kernel.org`, `stable@vger.kernel.org`.
-**Reviewed-by: Simon Horman**.
-
-### Step 4.3: Bug report
-**Record:** Static analysis discovery, confirmed by manual review and
-runtime lockdep validation with reproduced stack trace in patch
-submission.
-
-### Step 4.4: Related patches
-**Record:** macb IRQ-out-of-spinlock fix (99405131d6edd) is directly
-analogous and was stable-backported.
-
-### Step 4.5: Stable list history
-**Record:** Author explicitly nominated `Cc: stable@vger.kernel.org` in
-submission. No objection found in fetched thread.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
-**Record:** `au1000_close()` (modified); related: `au1000_interrupt()`,
-`au1000_open()`, `au1000_reset_mac_unlocked()`.
-
-### Step 5.2: Callers
-**Record:** `au1000_close` is registered as `.ndo_stop` in
-`au1000_netdev_ops` (line 1051). Called from generic netdev core on
-interface down — user-reachable via `ioctl(SIOCSIFFLAGS)` / `ip link set
-down`.
-
-### Step 5.3: Callees
-**Record:** `phy_stop()`, `spin_lock_irqsave()`,
-`au1000_reset_mac_unlocked()`, `netif_stop_queue()`, `free_irq()`,
-`spin_unlock_irqrestore()`.
-
-### Step 5.4: Reachability
-**Record:** **Userspace-reachable** on systems with
-`CONFIG_MIPS_AU1X00_ENET` (depends on `MIPS_ALCHEMY`). Trigger: bringing
-interface down.
-
-### Step 5.5: Similar patterns
-**Record:** `au1000_open()` already calls `free_irq()` **without**
-holding `aup->lock` on init failure (line 915) — the close path was
-inconsistent.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
-
-### Step 6.1: Buggy code in tree?
-**Record:** **YES.** Current `au1000_close()` at lines 939–948 still
-calls `free_irq()` before `spin_unlock_irqrestore()`.
-
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected** — only reordering unlock vs.
-`free_irq()` in unchanged function structure. No conflicting recent
-churn in this function.
-
-### Step 6.3: Related fixes already present?
-**Record:** **No.** Grep and `git log` show no prior au1000 free_irq
-lock-context fix in this tree.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** **drivers/net/ethernet/amd** — **PERIPHERAL** (MIPS Alchemy
-embedded Ethernet). Niche hardware, but netdev close is a standard
-operational path.
-
-### Step 7.2: Subsystem activity
-**Record:** Low activity; driver is mature/legacy. Bug is long-standing,
-not recently introduced.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Who is affected
-**Record:** Users of **MIPS Alchemy (AU1X00) boards** with
-`CONFIG_MIPS_AU1X00_ENET=y/m`. Small population, but real embedded
-deployments.
-
-### Step 8.2: Trigger conditions
-**Record:** Netdev close (`ifconfig down`, `ip link set down`, driver
-remove). **Common** operational action, not a rare init-only path.
-Unprivileged users can trigger if they can manage the interface.
-
-### Step 8.3: Failure mode severity
-**Record:**
-- With lockdep / `CONFIG_DEBUG_ATOMIC_SLEEP`: **BUG splat** on every
-  interface down.
-- Without debug: sleeping (`mutex_lock`) while holding spinlock risks
-  **deadlock / soft lockup** if the mutex blocks.
-- **Severity: MEDIUM-HIGH** (locking violation with realistic hang
-  potential; lockdep-confirmed).
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Eliminates invalid sleep-in-atomic on standard teardown
-  path; aligns with stable precedent (macb).
-- **Risk:** Very low — 2-line reorder, reviewed by maintainer, MAC/queue
-  still quiesced under lock before IRQ free.
-- **Ratio:** Favorable for backport.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence summary
-
-**FOR backport:**
-- Real, verified locking bug (`free_irq` under spinlock)
-- Lockdep stack trace in lore submission
-- Small, surgical, obviously correct fix
-- Reviewed-by subsystem maintainer
-- Author nominated `Cc: stable`
-- Bug present since 2005, confirmed in 6.18.44 tree
-- Identical macb fix was stable-backported
-- User-triggerable netdev close path
-
-**AGAINST backport:**
-- Obscure hardware (MIPS Alchemy only)
-- May only produce visible splats on debug kernels (though production
-  deadlock risk remains)
-
-**Unresolved:** None material to the decision.
-
-### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — lockdep-validated;
-Reviewed-by maintainer |
-| 2. Fixes real bug? | **PASS** — invalid sleep context in
-`au1000_close()` |
-| 3. Important issue? | **PASS** — lockdep BUG / potential deadlock on
-netdev close |
-| 4. Small and contained? | **PASS** — 1 file, ~2 lines |
-| 5. No new features/APIs? | **PASS** |
-| 6. Can apply to local tree? | **PASS** — buggy code present; clean
-apply |
-
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-bug fix.
-
-### Step 9.4: Decision rationale
-This commit fixes a long-standing invalid-context bug in the AU1000
-Ethernet driver's netdev close path. `free_irq()` takes a mutex and must
-not run while holding a spinlock. The fix is minimal, reviewed, lockdep-
-confirmed, and follows the same pattern as the macb fix already accepted
-into stable. The buggy code is present in this 6.18.44 tree, the driver
-is built for MIPS Alchemy platforms, and the trigger (interface down) is
-routine. Benefit outweighs risk.
-
----
-
-## Verification
-
-- **[Phase 1]** `git describe HEAD` + Makefile: tree is 6.18.44
-- **[Phase 1]** Parsed tags from commit message and lore mbox
-- **[Phase 2]** Read diff and `au1000_close()` in tree (lines 929–951)
-- **[Phase 2]** Confirmed `free_irq()` →
-  `mutex_lock(&desc->request_mutex)` in `kernel/irq/manage.c:1826`
-- **[Phase 3]** `git blame -L 939,948`: bug since `1da177e4c3f4` (2005)
-- **[Phase 3]** `git log --oneline -20 --
-  drivers/net/ethernet/amd/au1000_eth.c`: no prior fix
-- **[Phase 4]** `curl` lore mbox: found `Cc: stable`, lockdep trace,
-  `Reviewed-by: Simon Horman`
-- **[Phase 4]** `b4 dig -c`: N/A — commit not in checkout; used lore
-  curl instead
-- **[Phase 4]** `git show 99405131d6edd`: macb analogous fix stable-
-  backported
-- **[Phase 5]** Grep `aup->lock` in `au1000_eth.c`: IRQ path does not
-  use driver lock
-- **[Phase 5]** Confirmed `.ndo_stop = au1000_close` at line 1051
-- **[Phase 6]** Buggy code confirmed present at lines 946–948
-- **[Phase 6]** `CONFIG_MIPS_AU1X00_ENET` in
-  `drivers/net/ethernet/amd/Kconfig:104-111`
-- **[Phase 8]** Assessed severity from lockdep report and mutex-under-
-  spinlock semantics
-
-**YES**The background git search finished. It didn’t find this
-`free_irq` fix in the tree yet, and there’s no earlier au1000-specific
-backport for it.
-
-What did turn up:
-- `d04455fba3777` — unrelated `au1000_eth` cleanup
-- Several other `free_irq`/locking fixes from Runyu Xiao, but in other
-  drivers (nsm, brcmfmac, rt2x00, etc.)
-
-That matches the earlier conclusion: the bug is still present in
-6.18.44, and this patch should be backported.
-
-**YES**
-
- drivers/net/ethernet/amd/au1000_eth.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/ethernet/amd/au1000_eth.c b/drivers/net/ethernet/amd/au1000_eth.c
-index 9d35ac348ebe3..5a04056e38fa3 100644
---- a/drivers/net/ethernet/amd/au1000_eth.c
-+++ b/drivers/net/ethernet/amd/au1000_eth.c
-@@ -943,9 +943,10 @@ static int au1000_close(struct net_device *dev)
- 	/* stop the device */
- 	netif_stop_queue(dev);
+ drivers/crypto/qce/aead.c     |   56 ------------------------
+ drivers/crypto/qce/common.c   |   55 +++++------------------
+ drivers/crypto/qce/common.h   |   16 +-----
+ drivers/crypto/qce/regs-v5.h  |    4 -
+ drivers/crypto/qce/sha.c      |   30 ------------
+ drivers/crypto/qce/sha.h      |    1 
+ drivers/crypto/qce/skcipher.c |   97 ------------------------------------------
+ 7 files changed, 20 insertions(+), 239 deletions(-)
+
+--- a/drivers/crypto/qce/aead.c
++++ b/drivers/crypto/qce/aead.c
+@@ -9,8 +9,6 @@
+ #include <crypto/gcm.h>
+ #include <crypto/authenc.h>
+ #include <crypto/internal/aead.h>
+-#include <crypto/internal/des.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ #include <crypto/scatterwalk.h>
+ #include "aead.h"
+@@ -592,7 +590,6 @@ static int qce_aead_setkey(struct crypto
+ 	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+ 	struct crypto_authenc_keys authenc_keys;
+ 	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
+-	u32 _key[6];
+ 	int err;
  
-+	spin_unlock_irqrestore(&aup->lock, flags);
-+
- 	/* disable the interrupt */
- 	free_irq(dev->irq, dev);
--	spin_unlock_irqrestore(&aup->lock, flags);
+ 	err = crypto_authenc_extractkeys(&authenc_keys, key, keylen);
+@@ -603,26 +600,7 @@ static int qce_aead_setkey(struct crypto
+ 	    authenc_keys.authkeylen > QCE_MAX_KEY_SIZE)
+ 		return -EINVAL;
  
- 	return 0;
+-	if (IS_DES(flags)) {
+-		err = verify_aead_des_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-	} else if (IS_3DES(flags)) {
+-		err = verify_aead_des3_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-		/*
+-		 * The crypto engine does not support any two keys
+-		 * being the same for triple des algorithms. The
+-		 * verify_skcipher_des3_key does not check for all the
+-		 * below conditions. Schedule fallback in this case.
+-		 */
+-		memcpy(_key, authenc_keys.enckey, DES3_EDE_KEY_SIZE);
+-		if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-		    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-		    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-			ctx->need_fallback = true;
+-	} else if (IS_AES(flags)) {
++	if (IS_AES(flags)) {
+ 		/* No random key sizes */
+ 		if (authenc_keys.enckeylen != AES_KEYSIZE_128 &&
+ 		    authenc_keys.enckeylen != AES_KEYSIZE_192 &&
+@@ -694,38 +672,6 @@ struct qce_aead_def {
+ 
+ static const struct qce_aead_def aead_def[] = {
+ 	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+ 		.flags          =  QCE_ALG_AES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+ 		.name           = "authenc(hmac(sha256),cbc(aes))",
+ 		.drv_name       = "authenc-hmac-sha256-cbc-aes-qce",
+--- a/drivers/crypto/qce/common.c
++++ b/drivers/crypto/qce/common.c
+@@ -8,7 +8,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/types.h>
+ #include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+ #include "cipher.h"
+@@ -115,18 +114,16 @@ static u32 qce_auth_cfg(unsigned long fl
+ 			cfg |= AUTH_KEY_SZ_AES256 << AUTH_KEY_SIZE_SHIFT;
+ 	}
+ 
+-	if (IS_SHA1(flags) || IS_SHA1_HMAC(flags))
+-		cfg |= AUTH_SIZE_SHA1 << AUTH_SIZE_SHIFT;
+-	else if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
++	if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
+ 		cfg |= AUTH_SIZE_SHA256 << AUTH_SIZE_SHIFT;
+ 	else if (IS_CMAC(flags))
+ 		cfg |= AUTH_SIZE_ENUM_16_BYTES << AUTH_SIZE_SHIFT;
+ 	else if (IS_CCM(flags))
+ 		cfg |= (auth_size - 1) << AUTH_SIZE_SHIFT;
+ 
+-	if (IS_SHA1(flags) || IS_SHA256(flags))
++	if (IS_SHA256(flags))
+ 		cfg |= AUTH_MODE_HASH << AUTH_MODE_SHIFT;
+-	else if (IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
++	else if (IS_SHA256_HMAC(flags))
+ 		cfg |= AUTH_MODE_HMAC << AUTH_MODE_SHIFT;
+ 	else if (IS_CCM(flags))
+ 		cfg |= AUTH_MODE_CCM << AUTH_MODE_SHIFT;
+@@ -191,7 +188,7 @@ static int qce_setup_regs_ahash(struct c
+ 	else
+ 		qce_cpu_to_be32p_array(auth, rctx->digest, digestsize);
+ 
+-	iv_words = (IS_SHA1(rctx->flags) || IS_SHA1_HMAC(rctx->flags)) ? 5 : 8;
++	iv_words = 8;
+ 	qce_write_array(qce, REG_AUTH_IV0, (u32 *)auth, iv_words);
+ 
+ 	if (rctx->first_blk)
+@@ -243,19 +240,8 @@ static u32 qce_encr_cfg(unsigned long fl
+ 
+ 	if (IS_AES(flags))
+ 		cfg |= ENCR_ALG_AES << ENCR_ALG_SHIFT;
+-	else if (IS_DES(flags) || IS_3DES(flags))
+-		cfg |= ENCR_ALG_DES << ENCR_ALG_SHIFT;
+-
+-	if (IS_DES(flags))
+-		cfg |= ENCR_KEY_SZ_DES << ENCR_KEY_SZ_SHIFT;
+-
+-	if (IS_3DES(flags))
+-		cfg |= ENCR_KEY_SZ_3DES << ENCR_KEY_SZ_SHIFT;
+ 
+ 	switch (flags & QCE_MODE_MASK) {
+-	case QCE_MODE_ECB:
+-		cfg |= ENCR_MODE_ECB << ENCR_MODE_SHIFT;
+-		break;
+ 	case QCE_MODE_CBC:
+ 		cfg |= ENCR_MODE_CBC << ENCR_MODE_SHIFT;
+ 		break;
+@@ -340,13 +326,7 @@ static int qce_setup_regs_skcipher(struc
+ 
+ 	encr_cfg = qce_encr_cfg(flags, keylen);
+ 
+-	if (IS_DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 2;
+-	} else if (IS_3DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 6;
+-	} else if (IS_AES(flags)) {
++	if (IS_AES(flags)) {
+ 		if (IS_XTS(flags))
+ 			qce_xtskey(qce, ctx->enc_key, ctx->enc_keylen,
+ 				   rctx->cryptlen);
+@@ -357,14 +337,12 @@ static int qce_setup_regs_skcipher(struc
+ 
+ 	qce_write_array(qce, REG_ENCR_KEY0, (u32 *)enckey, enckey_words);
+ 
+-	if (!IS_ECB(flags)) {
+-		if (IS_XTS(flags))
+-			qce_xts_swapiv(enciv, rctx->iv, ivsize);
+-		else
+-			qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
++	if (IS_XTS(flags))
++		qce_xts_swapiv(enciv, rctx->iv, ivsize);
++	else
++		qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
+ 
+-		qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
+-	}
++	qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
+ 
+ 	if (IS_ENCRYPT(flags))
+ 		encr_cfg |= BIT(ENCODE_SHIFT);
+@@ -393,10 +371,6 @@ static int qce_setup_regs_skcipher(struc
+ #endif
+ 
+ #ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+ static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+ 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+ 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+@@ -473,13 +447,8 @@ static int qce_setup_regs_aead(struct cr
+ 	/* Write initial authentication IV only for HMAC algorithms */
+ 	if (IS_SHA_HMAC(rctx->flags)) {
+ 		/* Write default authentication iv */
+-		if (IS_SHA1_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA1_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha1, auth_ivsize);
+-		} else if (IS_SHA256_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA256_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha256, auth_ivsize);
+-		}
++		auth_ivsize = SHA256_DIGEST_SIZE;
++		memcpy(authiv, std_iv_sha256, auth_ivsize);
+ 		authiv_words = auth_ivsize / sizeof(u32);
+ 		qce_write_array(qce, REG_AUTH_IV0, (u32 *)authiv, authiv_words);
+ 	} else if (IS_CCM(rctx->flags)) {
+--- a/drivers/crypto/qce/common.h
++++ b/drivers/crypto/qce/common.h
+@@ -22,7 +22,7 @@
+ 
+ /* IV length in bytes */
+ #define QCE_AES_IV_LENGTH		AES_BLOCK_SIZE
+-/* max of AES_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE */
++/* max of AES_BLOCK_SIZE */
+ #define QCE_MAX_IV_SIZE			AES_BLOCK_SIZE
+ 
+ /* maximum nonce bytes  */
+@@ -33,14 +33,10 @@
+ #define QCE_MAX_ALIGN_SIZE		64
+ 
+ /* cipher algorithms */
+-#define QCE_ALG_DES			BIT(0)
+-#define QCE_ALG_3DES			BIT(1)
+ #define QCE_ALG_AES			BIT(2)
+ 
+ /* hash and hmac algorithms */
+-#define QCE_HASH_SHA1			BIT(3)
+ #define QCE_HASH_SHA256			BIT(4)
+-#define QCE_HASH_SHA1_HMAC		BIT(5)
+ #define QCE_HASH_SHA256_HMAC		BIT(6)
+ #define QCE_HASH_AES_CMAC		BIT(7)
+ 
+@@ -58,21 +54,15 @@
+ #define QCE_ENCRYPT			BIT(30)
+ #define QCE_DECRYPT			BIT(31)
+ 
+-#define IS_DES(flags)			(flags & QCE_ALG_DES)
+-#define IS_3DES(flags)			(flags & QCE_ALG_3DES)
+ #define IS_AES(flags)			(flags & QCE_ALG_AES)
+ 
+-#define IS_SHA1(flags)			(flags & QCE_HASH_SHA1)
+ #define IS_SHA256(flags)		(flags & QCE_HASH_SHA256)
+-#define IS_SHA1_HMAC(flags)		(flags & QCE_HASH_SHA1_HMAC)
+ #define IS_SHA256_HMAC(flags)		(flags & QCE_HASH_SHA256_HMAC)
+ #define IS_CMAC(flags)			(flags & QCE_HASH_AES_CMAC)
+-#define IS_SHA(flags)			(IS_SHA1(flags) || IS_SHA256(flags))
+-#define IS_SHA_HMAC(flags)		\
+-		(IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
++#define IS_SHA(flags)			IS_SHA256(flags)
++#define IS_SHA_HMAC(flags)		IS_SHA256_HMAC(flags)
+ 
+ #define IS_CBC(mode)			(mode & QCE_MODE_CBC)
+-#define IS_ECB(mode)			(mode & QCE_MODE_ECB)
+ #define IS_CTR(mode)			(mode & QCE_MODE_CTR)
+ #define IS_XTS(mode)			(mode & QCE_MODE_XTS)
+ #define IS_CCM(mode)			(mode & QCE_MODE_CCM)
+--- a/drivers/crypto/qce/regs-v5.h
++++ b/drivers/crypto/qce/regs-v5.h
+@@ -203,7 +203,6 @@
+ 
+ #define AUTH_SIZE_SHIFT			9
+ #define AUTH_SIZE_MASK			GENMASK(13, 9)
+-#define AUTH_SIZE_SHA1			0
+ #define AUTH_SIZE_SHA256		1
+ #define AUTH_SIZE_ENUM_1_BYTES		0
+ #define AUTH_SIZE_ENUM_2_BYTES		1
+@@ -284,15 +283,12 @@
+ 
+ #define ENCR_KEY_SZ_SHIFT		3
+ #define ENCR_KEY_SZ_MASK		GENMASK(5, 3)
+-#define ENCR_KEY_SZ_DES			0
+-#define ENCR_KEY_SZ_3DES		1
+ #define ENCR_KEY_SZ_AES128		0
+ #define ENCR_KEY_SZ_AES256		2
+ 
+ #define ENCR_ALG_SHIFT			0
+ #define ENCR_ALG_MASK			GENMASK(2, 0)
+ #define ENCR_ALG_NONE			0
+-#define ENCR_ALG_DES			1
+ #define ENCR_ALG_AES			2
+ #define ENCR_ALG_KASUMI			4
+ #define ENCR_ALG_SNOW_3G		5
+--- a/drivers/crypto/qce/sha.c
++++ b/drivers/crypto/qce/sha.c
+@@ -25,10 +25,6 @@ struct qce_sha_saved_state {
+ 
+ static LIST_HEAD(ahash_algs);
+ 
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+ static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+ 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+ 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+@@ -349,9 +345,7 @@ static int qce_ahash_hmac_setkey(struct
+ 		return 0;
+ 	}
+ 
+-	if (digestsize == SHA1_DIGEST_SIZE)
+-		alg_name = "sha1-qce";
+-	else if (digestsize == SHA256_DIGEST_SIZE)
++	if (digestsize == SHA256_DIGEST_SIZE)
+ 		alg_name = "sha256-qce";
+ 	else
+ 		return -EINVAL;
+@@ -413,15 +407,6 @@ struct qce_ahash_def {
+ 
+ static const struct qce_ahash_def ahash_def[] = {
+ 	{
+-		.flags		= QCE_HASH_SHA1,
+-		.name		= "sha1",
+-		.drv_name	= "sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+ 		.flags		= QCE_HASH_SHA256,
+ 		.name		= "sha256",
+ 		.drv_name	= "sha256-qce",
+@@ -431,15 +416,6 @@ static const struct qce_ahash_def ahash_
+ 		.std_iv		= std_iv_sha256,
+ 	},
+ 	{
+-		.flags		= QCE_HASH_SHA1_HMAC,
+-		.name		= "hmac(sha1)",
+-		.drv_name	= "hmac-sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+ 		.flags		= QCE_HASH_SHA256_HMAC,
+ 		.name		= "hmac(sha256)",
+ 		.drv_name	= "hmac-sha256-qce",
+@@ -476,9 +452,7 @@ static int qce_ahash_register_one(const
+ 	alg->halg.digestsize = def->digestsize;
+ 	alg->halg.statesize = def->statesize;
+ 
+-	if (IS_SHA1(def->flags))
+-		tmpl->hash_zero = sha1_zero_message_hash;
+-	else if (IS_SHA256(def->flags))
++	if (IS_SHA256(def->flags))
+ 		tmpl->hash_zero = sha256_zero_message_hash;
+ 
+ 	base = &alg->halg.base;
+--- a/drivers/crypto/qce/sha.h
++++ b/drivers/crypto/qce/sha.h
+@@ -7,7 +7,6 @@
+ #define _SHA_H_
+ 
+ #include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+ #include "common.h"
+--- a/drivers/crypto/qce/skcipher.c
++++ b/drivers/crypto/qce/skcipher.c
+@@ -11,7 +11,6 @@
+ #include <linux/types.h>
+ #include <linux/errno.h>
+ #include <crypto/aes.h>
+-#include <crypto/internal/des.h>
+ #include <crypto/internal/skcipher.h>
+ 
+ #include "cipher.h"
+@@ -209,51 +208,6 @@ static int qce_skcipher_setkey(struct cr
+ 	return ret;
  }
--- 
-2.53.0
+ 
+-static int qce_des_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			  unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	int err;
+-
+-	err = verify_skcipher_des_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+-static int qce_des3_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			   unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	u32 _key[6];
+-	int err;
+-
+-	err = verify_skcipher_des3_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	/*
+-	 * The crypto engine does not support any two keys
+-	 * being the same for triple des algorithms. The
+-	 * verify_skcipher_des3_key does not check for all the
+-	 * below conditions. Return -ENOKEY in case any two keys
+-	 * are the same. Revisit to see if a fallback cipher
+-	 * is needed to handle this condition.
+-	 */
+-	memcpy(_key, key, DES3_EDE_KEY_SIZE);
+-	if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-	    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-	    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-		return -ENOKEY;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+ static int qce_skcipher_crypt(struct skcipher_request *req, int encrypt)
+ {
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+@@ -276,7 +230,7 @@ static int qce_skcipher_crypt(struct skc
+ 	 * ECB and CBC algorithms require message lengths to be
+ 	 * multiples of block size.
+ 	 */
+-	if (IS_ECB(rctx->flags) || IS_CBC(rctx->flags))
++	if (IS_CBC(rctx->flags))
+ 		if (!IS_ALIGNED(req->cryptlen, blocksize))
+ 			return -EINVAL;
+ 
+@@ -360,15 +314,6 @@ struct qce_skcipher_def {
+ 
+ static const struct qce_skcipher_def skcipher_def[] = {
+ 	{
+-		.flags		= QCE_ALG_AES | QCE_MODE_ECB,
+-		.name		= "ecb(aes)",
+-		.drv_name	= "ecb-aes-qce",
+-		.blocksize	= AES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= AES_MIN_KEY_SIZE,
+-		.max_keysize	= AES_MAX_KEY_SIZE,
+-	},
+-	{
+ 		.flags		= QCE_ALG_AES | QCE_MODE_CBC,
+ 		.name		= "cbc(aes)",
+ 		.drv_name	= "cbc-aes-qce",
+@@ -396,42 +341,6 @@ static const struct qce_skcipher_def skc
+ 		.min_keysize	= AES_MIN_KEY_SIZE * 2,
+ 		.max_keysize	= AES_MAX_KEY_SIZE * 2,
+ 	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_ECB,
+-		.name		= "ecb(des)",
+-		.drv_name	= "ecb-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_CBC,
+-		.name		= "cbc(des)",
+-		.drv_name	= "cbc-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= DES_BLOCK_SIZE,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_ECB,
+-		.name		= "ecb(des3_ede)",
+-		.drv_name	= "ecb-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_CBC,
+-		.name		= "cbc(des3_ede)",
+-		.drv_name	= "cbc-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= DES3_EDE_BLOCK_SIZE,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+ };
+ 
+ static int qce_skcipher_register_one(const struct qce_skcipher_def *def,
+@@ -455,9 +364,7 @@ static int qce_skcipher_register_one(con
+ 	alg->ivsize			= def->ivsize;
+ 	alg->min_keysize		= def->min_keysize;
+ 	alg->max_keysize		= def->max_keysize;
+-	alg->setkey			= IS_3DES(def->flags) ? qce_des3_setkey :
+-					  IS_DES(def->flags) ? qce_des_setkey :
+-					  qce_skcipher_setkey;
++	alg->setkey			= qce_skcipher_setkey;
+ 	alg->encrypt			= qce_skcipher_encrypt;
+ 	alg->decrypt			= qce_skcipher_decrypt;
+ 
+
 
