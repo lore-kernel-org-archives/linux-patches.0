@@ -1,387 +1,259 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C756592214;
-	Mon, 31 Aug 2026 13:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E249592D33;
+	Mon, 31 Aug 2026 13:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184262; cv=none; b=pms/sfi7O6Ocaab08TGUYqeEyZ+ut0dA0Q76o/ByTlVMt5buPjaZT304hoqEycE9oVE86GBX47UfDpGMETjHd3UMUeUxhnKKYmFJhu+DqB5Q6ONAg5ag+dIC68gMIGIQvx4iJR2vankfryXtN3KJIN5CmKNsgIGXf9W0Ie2IeR0=
+	t=1788184264; cv=none; b=R+b6phVObefw+rItPR3JbXRv8ZLIFN0VhcwcSZ1TbNB5RHC+hIPW+OCj4snYBn8F06JcQA7pYMFAkYp1UNxfY8dWSfquyBrC8kE0vT9hwsN5wiO+hD/LHC+R6gjRSbd/w90l8Ll4fbLEaFau8W7Rd84zrve/w68RYZr6t0GKFi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184262; c=relaxed/simple;
-	bh=oQ711CS7bu5fPtfZe9FQvoMnU2ysPqtcJaYehIlZW18=;
+	s=arc-20240116; t=1788184264; c=relaxed/simple;
+	bh=AInOx9p6hCE5FZLwG+CtZz13j2YIGb2WKsUiehLMjYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qd6ZxVpLw9y0GbBYJvw8PH2k/BGkJl6x+npTlOe8gJgCySHm0clukxlaplmmA2Tf1AdF5g2MKbWkZiy0wvlJALTogczwxxAWvrI+hHsyjPrbVMBNqaPcf47n+F4lNNp0GIwqbQ6ZMKCAEwcaaNhU5ZBv319MhUF6Cf4SeeyOZGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeAOi8zI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pJJpxO1zLZjd16gLIXDVNg6T2nDsNpXHiNZSUBl53iKcRQBNK3ecJe+k78xtUGyiVvS5YaaBzXLpM1bE6/s8t3i2whAah6psnRrb4wKpnshjM0kDbBwjkOMLGpJJDz9wZkHIl44paclX5EoQ6Nlr66ldYu0QAP9v895+umniiV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZLGTMIS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeAOi8zI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1B81F00A3F;
-	Mon, 31 Aug 2026 13:50:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184260;
-	bh=Xrd25d3lSl0keEIk+M1xGehTLksJ1UefujdL9tdsESM=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZLGTMIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF761F000E9;
+	Mon, 31 Aug 2026 13:51:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184261;
+	bh=LqLUIgNEcfG2nn9jwBE5FSL/PpQJa4/USxC4mOWqlko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oeAOi8zIR8PMmmlM8j5GEsrEtFPSrho/N0VZD0UtBwGSD8OkKojVwJOPlMuU2+78T
-	 Njz9fHwzgFZbywQUtnJD1f7pPqOjWHAgNXDoRPUeZRy19mZZJlY4cX4gIGEMwzQpEM
-	 xDU7F6Ioi3hAu9GX2dJv6WrVNHlRkJnDxQajJ/Zd4FuZ6U3PFZgJEZwDKMEqbgQcd6
-	 HX/CIZswZeid8msqD/SYv60SjOYBZdJCMAjZBzqwyMDFwqjMPoDM9r0oCGOoXYvnHa
-	 3ujyXyXMi/67XH3F1xdAJ8cpCyOH3Enp4AyduBfAlpg0VJ7paPyCvG7LQnkcji0Z7u
-	 +4CGjMlIrMQWg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
-	Guillermo Servera Negre <guillem@gservera.com>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: rtw89: 8851bu: add Mercusys MA60XNB (2c4e:0128)
-Date: Mon, 31 Aug 2026 09:30:15 -0400
-Message-ID: <20260831133314.4125787-587-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=sZLGTMISSPLh/nnY/xmNCF5KZRsfrchsUBCxvnuQRsIhjj/gkpnnmKEsgsu53fzb7
+	 I4+agCmmGLY4fo/MjNwqdiO5rABpxe1A0BPOm8qUUzTi7mMLdSAA5xrnKvuZ5YCTGe
+	 tJGEkdCygzHYHIw6dJdxUJPfDHWM7wEguRqDR5GI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 46/99] HID: pidff: clang-format pass
+Date: Mon, 31 Aug 2026 15:34:15 +0200
+Message-ID: <20260831133402.350359277@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 575e6a72bd68008b6795345113d3e94f3dccbf5d ]
+------------------
 
-Add the specific USB device ID which adapter tested fully functional on
-Fedora 44 with kernel 7.0.8-200.fc44.x86_64 and linux-firmware
-20260410-1.fc44.
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-Reported-by: Guillermo Servera Negre <guillem@gservera.com>
-Tested-by: Guillermo Servera Negre <guillem@gservera.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260525011728.6836-1-pkshih@realtek.com
+[ Upstream commit ae42428fb4e3d2eed344f0d6fcfa778bc8b8f80a ]
+
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: 67bb1074e3d2 ("HID: pidff: fix OOB write when hid->inputs is empty")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/hid/usbhid/hid-pidff.c |   55 +++++++++++++++++++----------------------
+ 1 file changed, 26 insertions(+), 29 deletions(-)
+
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -9,12 +9,11 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include "hid-pidff.h"
++#include <linux/hid.h>
+ #include <linux/input.h>
++#include <linux/minmax.h>
+ #include <linux/slab.h>
+ #include <linux/usb.h>
+-#include <linux/hid.h>
+-#include <linux/minmax.h>
+-
+ 
+ #define	PID_EFFECTS_MAX		64
+ #define	PID_INFINITE		U16_MAX
+@@ -285,7 +284,7 @@ static s32 pidff_clamp(s32 i, struct hid
+ static int pidff_rescale(int i, int max, struct hid_field *field)
+ {
+ 	return i * (field->logical_maximum - field->logical_minimum) / max +
+-		field->logical_minimum;
++	       field->logical_minimum;
+ }
+ 
+ /*
+@@ -329,18 +328,18 @@ static void pidff_set_signed(struct pidf
+ 	else {
+ 		if (value < 0)
+ 			usage->value[0] =
+-			    pidff_rescale(-value, -S16_MIN, usage->field);
++				pidff_rescale(-value, -S16_MIN, usage->field);
+ 		else
+ 			usage->value[0] =
+-			    pidff_rescale(value, S16_MAX, usage->field);
++				pidff_rescale(value, S16_MAX, usage->field);
+ 	}
+ 	pr_debug("calculated from %d to %d\n", value, usage->value[0]);
+ }
+ 
+ static void pidff_set_time(struct pidff_usage *usage, u16 time)
+ {
+-	usage->value[0] = pidff_clamp(
+-		pidff_rescale_time(time, usage->field), usage->field);
++	usage->value[0] = pidff_clamp(pidff_rescale_time(time, usage->field),
++				      usage->field);
+ }
+ 
+ static void pidff_set_duration(struct pidff_usage *usage, u16 duration)
+@@ -463,11 +462,11 @@ static void pidff_set_effect_report(stru
+ 		pidff_get_effect_type_id(pidff, effect);
+ 
+ 	pidff_set_duration(&pidff->set_effect[PID_DURATION],
+-		effect->replay.length);
++			   effect->replay.length);
+ 
+ 	pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = effect->trigger.button;
+ 	pidff_set_time(&pidff->set_effect[PID_TRIGGER_REPEAT_INT],
+-			effect->trigger.interval);
++		       effect->trigger.interval);
+ 	pidff->set_effect[PID_GAIN].value[0] =
+ 		pidff->set_effect[PID_GAIN].field->logical_maximum;
+ 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
+@@ -477,10 +476,10 @@ static void pidff_set_effect_report(stru
+ 	/* Omit setting delay field if it's missing */
+ 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
+ 		pidff_set_time(&pidff->set_effect[PID_START_DELAY],
+-				effect->replay.delay);
++			       effect->replay.delay);
+ 
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_EFFECT],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -510,10 +509,10 @@ static void pidff_set_periodic_report(st
+ 			 effect->u.periodic.offset);
+ 	pidff_set(&pidff->set_periodic[PID_PHASE], effect->u.periodic.phase);
+ 	pidff_set_time(&pidff->set_periodic[PID_PERIOD],
+-			effect->u.periodic.period);
++		       effect->u.periodic.period);
+ 
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_PERIODIC],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -560,7 +559,7 @@ static void pidff_set_condition_report(s
+ 		pidff_set(&pidff->set_condition[PID_DEAD_BAND],
+ 			  effect->u.condition[i].deadband);
+ 		hid_hw_request(pidff->hid, pidff->reports[PID_SET_CONDITION],
+-				HID_REQ_SET_REPORT);
++			       HID_REQ_SET_REPORT);
+ 	}
+ }
+ 
+@@ -623,7 +622,7 @@ static void pidff_set_gain_report(struct
+ 
+ 	pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], gain);
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_DEVICE_GAIN],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -717,21 +716,19 @@ static void pidff_fetch_pool(struct pidf
+  */
+ static int pidff_request_effect_upload(struct pidff_device *pidff, int efnum)
+ {
+-	int j;
+-
+ 	pidff->create_new_effect_type->value[0] = efnum;
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_CREATE_NEW_EFFECT],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ 	hid_dbg(pidff->hid, "create_new_effect sent, type: %d\n", efnum);
+ 
+ 	pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0] = 0;
+ 	pidff->block_load_status->value[0] = 0;
+ 	hid_hw_wait(pidff->hid);
+ 
+-	for (j = 0; j < 60; j++) {
++	for (int i = 0; i < 60; i++) {
+ 		hid_dbg(pidff->hid, "pid_block_load requested\n");
+ 		hid_hw_request(pidff->hid, pidff->reports[PID_BLOCK_LOAD],
+-				HID_REQ_GET_REPORT);
++			       HID_REQ_GET_REPORT);
+ 		hid_hw_wait(pidff->hid);
+ 		if (pidff->block_load_status->value[0] ==
+ 		    pidff->status_id[PID_BLOCK_LOAD_SUCCESS]) {
+@@ -808,8 +805,8 @@ static int pidff_erase_effect(struct inp
+ 	struct pidff_device *pidff = dev->ff->private;
+ 	int pid_id = pidff->pid_id[effect_id];
+ 
+-	hid_dbg(pidff->hid, "starting to erase %d/%d\n",
+-		effect_id, pidff->pid_id[effect_id]);
++	hid_dbg(pidff->hid, "starting to erase %d/%d\n", effect_id,
++		pidff->pid_id[effect_id]);
+ 
+ 	/*
+ 	 * Wait for the queue to clear. We do not want
+@@ -929,7 +926,7 @@ static void pidff_autocenter(struct pidf
+ 		pidff->set_effect[PID_START_DELAY].value[0] = 0;
+ 
+ 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_EFFECT],
+-			HID_REQ_SET_REPORT);
++		       HID_REQ_SET_REPORT);
+ }
+ 
+ /*
+@@ -1196,7 +1193,7 @@ static int pidff_find_special_fields(str
+ 
+ 	if (PIDFF_FIND_SPECIAL_KEYS(status_id, block_load_status,
+ 				    block_load_status) !=
+-			ARRAY_SIZE(pidff_block_load_status)) {
++	    ARRAY_SIZE(pidff_block_load_status)) {
+ 		hid_err(pidff->hid,
+ 			"block load status identifiers not found\n");
+ 		return -1;
+@@ -1204,7 +1201,7 @@ static int pidff_find_special_fields(str
+ 
+ 	if (PIDFF_FIND_SPECIAL_KEYS(operation_id, effect_operation_status,
+ 				    effect_operation_status) !=
+-			ARRAY_SIZE(pidff_effect_operation_status)) {
++	    ARRAY_SIZE(pidff_effect_operation_status)) {
+ 		hid_err(pidff->hid, "effect operation identifiers not found\n");
+ 		return -1;
+ 	}
+@@ -1408,8 +1405,8 @@ static int pidff_check_autocenter(struct
+ int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
+ {
+ 	struct pidff_device *pidff;
+-	struct hid_input *hidinput = list_entry(hid->inputs.next,
+-						struct hid_input, list);
++	struct hid_input *hidinput =
++		list_entry(hid->inputs.next, struct hid_input, list);
+ 	struct input_dev *dev = hidinput->input;
+ 	struct ff_device *ff;
+ 	int max_effects;
+@@ -1496,7 +1493,7 @@ int hid_pidff_init_with_quirks(struct hi
+ 
+ 	return 0;
+ 
+- fail:
++fail:
+ 	hid_device_io_stop(hid);
+ 
+ 	kfree(pidff);
 
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-### Step 1.1: Subject Line
-**Record:** `[wifi: rtw89: 8851bu] [add] Mercusys MA60XNB USB device ID
-(2c4e:0128)`
-
-### Step 1.2: Tags
-**Record:**
-- **Reported-by:** Guillermo Servera Negre \<guillem@gservera.com\> —
-  user-reported hardware enablement
-- **Tested-by:** Guillermo Servera Negre \<guillem@gservera.com\> —
-  verified on Fedora 44 / kernel 7.0.8
-- **Signed-off-by:** Ping-Ke Shih \<pkshih@realtek.com\> — rtw89
-  maintainer
-- **Link:**
-  https://patch.msgid.link/20260525011728.6836-1-pkshih@realtek.com
-- No Fixes:, Cc: stable, Reviewed-by, or Acked-by tags
-- Notable: real user report + maintainer-authored + tested on target
-  hardware
-
-### Step 1.3: Body Analysis
-**Record:**
-- **Bug:** Mercusys MA60XNB (USB 2c4e:0128) is not bound by
-  `rtw89_8851bu`; WiFi does not work on kernels without this ID.
-- **Symptom:** Adapter not recognized by the rtw89 WiFi driver; no
-  wireless connectivity.
-- **Root cause:** Missing `usb_device_id` table entry; USB core cannot
-  match the device to `rtw89_8851bu`.
-- **Version info:** Tested on Fedora 44 with kernel 7.0.8 and linux-
-  firmware 20260410.
-
-### Step 1.4: Hidden Bug Fix?
-**Record:** Not a crash/corruption fix. This is explicit **hardware
-enablement** via a new USB ID — a well-established stable exception
-category.
-
----
-
-## Phase 2: Diff Analysis
-
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/net/wireless/realtek/rtw89/rtw8851bu.c` (+3 lines)
-- **Function/area:** `rtw_8851bu_id_table[]` USB ID table
-- **Scope:** Single-file, surgical device-ID addition
-
-### Step 2.2: Code Flow Change
-**Record:**
-- **Before:** USB device 2c4e:0128 not in `rtw_8851bu_id_table`;
-  `rtw89_8851bu` does not probe it.
-- **After:** Device matches table entry → `rtw89_usb_probe()` runs →
-  RTL8851BU WiFi comes up.
-- **Path:** USB enumeration / driver binding (normal probe path).
-
-### Step 2.3: Bug Mechanism
-**Record:** **Hardware workarounds / device ID addition.** Same chip
-family and driver as existing entries (D-Link AX9U, TP-Link Archer
-TX10UB Nano, etc.). Without the ID, the existing driver never attaches.
-
-### Step 2.4: Fix Quality
-**Record:**
-- Obviously correct: identical pattern to adjacent entries.
-- Minimal: 3 lines, no logic changes.
-- Regression risk: very low — only affects matching of this specific
-  VID:PID.
-- No API, structure, or behavior changes beyond enabling one device.
-
----
-
-## Phase 3: Git History Investigation
-
-### Step 3.1: Blame
-**Record:**
-- `rtw8851bu.c` added in `52cf443237856` (2025-07-04): "wifi: rtw89: Add
-  rtw8851bu.c"
-- D-Link AX9U ID added in `2ffc73cdb8247` (2025-09-02): same RTL8851BU
-  pattern
-- Candidate commit `575e6a72bd680` is **not** in this tree (`git merge-
-  base --is-ancestor` exit 1)
-
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
-
-### Step 3.3: Related Changes
-**Record:**
-- `79f9e221dddec` already in **this** tree: "Bluetooth: btusb: Add USB
-  ID 2c4e:0128 for Mercusys MA60XNB" — describes it as an **RTL8851BU-
-  based Wi-Fi + Bluetooth adapter**
-- `2ffc73cdb8247` in this tree: D-Link AX9U (also RTL8851BU) ID addition
-  — precedent for stable backport of rtw8851bu IDs
-- Standalone single-patch series (v1 only per `b4 dig -a`)
-
-### Step 3.4: Author Context
-**Record:** Ping-Ke Shih is rtw89 maintainer; regular contributor with
-multiple commits in this tree.
-
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Driver, probe path (`rtw89_usb_probe`),
-and chip support (`rtw8851b`) all exist in 6.18.44. Backport is a
-straight table entry; mainline has extra `rtw8851b_usb_info` structure
-not present here, but the ID lines apply independently after the D-Link
-entry.
-
----
-
-## Phase 4: Mailing List and External Research
-
-### Step 4.1: Patch Discussion
-**Record:**
-- `b4 dig -c 575e6a72bd680`:
-  https://patch.msgid.link/20260525011728.6836-1-pkshih@realtec.com
-- Single v1 submission (2026-05-25)
-- WebFetch of lore URL blocked (Anubis bot protection) — could not read
-  thread replies
-
-### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: To/Cc — Ping-Ke Shih, linux-
-wireless@vger.kernel.org, guillem@gservera.com
-
-### Step 4.3: Bug Report
-**Record:** User report via Guillermo Servera Negre; hardware tested
-working with ID present. No syzbot/security report.
-
-### Step 4.4: Related Patches
-**Record:** Companion btusb ID `79f9e221dddec` already backported to
-this tree; WiFi side is the missing half for MA60XNB users.
-
-### Step 4.5: Stable List
-**Record:** Not searched separately; btusb half already landed in 6.18.y
-via stable backport.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-### Step 5.1: Key Functions
-**Record:** `rtw_8851bu_id_table[]` (modified); `rtw89_usb_probe` /
-`rtw89_usb_disconnect` (unchanged, referenced by driver struct)
-
-### Step 5.2: Callers
-**Record:** USB core matches `id_table` during enumeration → calls
-`rtw89_usb_probe`. Standard hotplug path for USB WiFi dongles.
-
-### Step 5.3: Callees
-**Record:** Probe delegates to existing rtw89 USB infrastructure in
-`usb.c`; no new code paths.
-
-### Step 5.4: Reachability
-**Record:** Triggered when user plugs in Mercusys MA60XNB. Common, user-
-visible path.
-
-### Step 5.5: Similar Patterns
-**Record:** Same file already has D-Link, TP-Link, Edimax IDs; btusb
-already has 2c4e:0128; rtw88 has other Mercusys 2c4e IDs.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree
-
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Local tree is **Linux 6.18.44** (`git describe
-HEAD` → v6.18.44). `rtw8851bu.c` exists with 4 device IDs; **2c4e:0128
-is absent**. Driver present since July 2025.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply** — insert 3 lines after D-Link block (line
-21), before TP-Link block. Mainline base differs structurally but
-insertion point and syntax match this tree.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** btusb ID for same device **already in tree**
-(`79f9e221dddec`). WiFi ID is **not** present. No duplicate fix.
-
----
-
-## Phase 7: Subsystem Context
-
-### Step 7.1: Subsystem
-**Record:** `drivers/net/wireless/realtek/rtw89` — **IMPORTANT** (common
-USB WiFi hardware, user-visible).
-
-### Step 7.2: Activity
-**Record:** Actively maintained; frequent stable backports including
-other USB ID additions (`2ffc73cdb8247`).
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Users of Mercusys MA60XNB on 6.18.y without this ID — WiFi
-non-functional despite driver being built.
-
-### Step 8.2: Trigger Conditions
-**Record:** Plug in MA60XNB USB adapter. Common, unprivileged user
-action. Certainty: 100% without ID.
-
-### Step 8.3: Failure Mode Severity
-**Record:** WiFi driver never binds — **hardware does not work**
-(functional failure, not kernel crash). Severity for affected users:
-**HIGH** (device unusable for intended purpose). Not a security/crash
-issue.
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** Enables WiFi on a commercially sold RTL8851BU adapter;
-  completes pairing with already-backported btusb ID.
-- **Risk:** Negligible — 3-line ID table entry, zero logic change.
-- **Ratio:** Strongly favorable.
-
----
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence Summary
-
-**FOR backport:**
-- Standard stable exception: new USB ID on existing driver
-- Real user report + Tested-by on target hardware
-- Maintainer-authored (Ping-Ke Shih)
-- Driver and probe infrastructure exist in 6.18.44
-- btusb ID for same device already in this stable tree — WiFi half is
-  missing
-- Precedent: D-Link AX9U RTL8851BU ID already in stable
-  (`2ffc73cdb8247`)
-- 3 lines, obviously correct
-
-**AGAINST backport:**
-- Not a crash/security/data-corruption fix (lower urgency than UAF
-  fixes)
-- Lore thread content unverified (fetch blocked)
-
-**UNRESOLVED:**
-- Full mailing-list review thread not readable (Anubis)
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — same pattern as existing
-   entries; Tested-by present
-2. Fixes real bug affecting users? **PASS** — device unusable for WiFi
-   without ID
-3. Important issue? **PASS** — hardware enablement for real users
-   (functional failure)
-4. Small and contained? **PASS** — 3 lines, one file
-5. No new features/APIs? **PASS** — device ID exception only
-6. Can apply to local tree? **PASS** — driver exists; clean insertion
-
-### Step 9.3: Exception Category
-**Record:** **NEW DEVICE ID** — textbook stable material.
-
-### Step 9.4: Decision Rationale
-For Linux **6.18.44**, the `rtw89_8851bu` driver is present but lacks
-the Mercusys MA60XNB ID. The Bluetooth interface of the same adapter is
-already supported via a stable backport (`79f9e221dddec`). Adding the
-WiFi ID is a minimal, tested, maintainer-approved enablement fix with
-negligible regression risk and clear user benefit.
-
----
-
-## Verification
-
-- [Phase 1] Parsed commit `575e6a72bd680`: subject, Reported-by, Tested-
-  by, Link tags
-- [Phase 2] Diff: +3 lines to `rtw_8851bu_id_table[]` in `rtw8851bu.c`
-- [Phase 3] `git describe HEAD`: v6.18.44 / kernel 6.18.44
-- [Phase 3] `git merge-base --is-ancestor 575e6a72bd680 HEAD`: exit 1 —
-  commit not in tree
-- [Phase 3] `git log --oneline --
-  drivers/net/wireless/realtek/rtw89/rtw8851bu.c`: 2 commits (driver add
-  + D-Link ID)
-- [Phase 3] `git blame` lines 16–28: table from `52cf443237856`, D-Link
-  from `2ffc73cdb8247`
-- [Phase 3] `git show 79f9e221dddec`: btusb Mercusys ID already in
-  stable, notes RTL8851BU combo adapter
-- [Phase 4] `b4 dig -c 575e6a72bd680`: lore URL found
-- [Phase 4] `b4 dig -a`: single v1 patch
-- [Phase 4] `b4 dig -w`: linux-wireless CC'd
-- [Phase 4] WebFetch lore URL: **blocked** (Anubis) — thread content
-  unverified
-- [Phase 5] `grep rtw89_usb_probe`: probe in `usb.c`, used by
-  `rtw8851bu.c`
-- [Phase 6] Read `rtw8851bu.c`: no 2c4e:0128 entry; driver fully present
-- [Phase 6] `grep 2c4e.*0128`: present in `btusb.c`, absent from
-  `rtw8851bu.c`
-- [Phase 7] Kconfig/Makefile: `CONFIG_RTW89_8851BU` builds
-  `rtw89_8851bu` module
-- [Phase 8] Failure mode: WiFi non-functional without ID; bt half
-  already works in tree
-
-**YES**The background history search finished. It found only the
-Bluetooth half of the Mercusys MA60XNB support already in this tree
-(`79f9e221dddec` in `btusb.c`); the rtw89 WiFi ID commit
-(`575e6a72bd680`) is not present on 6.18.44.
-
-That matches the earlier analysis: backporting the 3-line WiFi ID
-addition is appropriate for this stable tree.
-
- drivers/net/wireless/realtek/rtw89/rtw8851bu.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-index 04e1ab13b7535..10fcfade6151e 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-@@ -19,6 +19,9 @@ static const struct usb_device_id rtw_8851bu_id_table[] = {
- 	/* D-Link AX9U rev. A1 */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x332a, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
-+	/* Mercusys MA60XNB */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2C4E, 0x0128, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
- 	/* TP-Link Archer TX10UB Nano */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3625, 0x010b, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
--- 
-2.53.0
 
