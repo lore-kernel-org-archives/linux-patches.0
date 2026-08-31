@@ -1,146 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CD854A7EA;
-	Mon, 31 Aug 2026 13:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842FD550DD6;
+	Mon, 31 Aug 2026 13:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184013; cv=none; b=qOVOKhnnbAy0q9wTsO0wOTUfa/g2rJkazpTMLQdYermYATLn0FepgMcDn6kmT/mwy+vslULHK1TaEXhK2TN4d3ocgVFzEEktIYO1UtuXJkkXbZYhusMynCeWQF8hJkuIdqsWj5uRcbDzTUO0KhHy4SbCzsx68S4pPzsdiGOiweA=
+	t=1788184013; cv=none; b=Gb1WG0EU5pmUpbGZufXA+47Z5cYKzfjdlohNezV/oMaysJ9fECQeRCv4btizWGLXf9pRBL5NVl5Z85oDhI1vatvDIHC/uhaPacVHMCBz4d+N/I5yEc5yRXEvVoBICwzNytdaMU6PiS7C3RYnQTKRdNP2Epl1UhpBPBD7aEGxq4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184013; c=relaxed/simple;
-	bh=sqc49t+truWSins9fRTsXY4A3xHIzZOXPG1tV7tKm5o=;
+	bh=C47U+KQ/VC6oQB/DUYkljZq+EqDJNklsDweNtqMVO2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GHZbfLmRnBziTy2YoVXcRXxK8SsB0qYybTRp85fMS4244h+wGgAKIsLx67utmZdv9AluLeNmcA+z723+CetozF0wsL29wEygXe9hDkK1GF0UqRft7yO5QvUh3+I5NmQ8Uu1ryjypL1Tx1++qSVXQtN05y5vgFowxU3SnwIyAQUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bZAPIrUc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q6Z3SNiMAEgyMhUjkQuKWYfndW3MPFg+bt3WQV5GUctJSwLE+Jy66gAxz6jhPw58T3ppVlwmpTfK+8H4T2bZs8hW0fKwguI9KT4QLX87d8DUs81264Zbb2Kf77Twh6pkwTkIsGiKRkLci2Krk80gwATa02TELbkNuM3b8GS8IXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ij5ZJpHE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bZAPIrUc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B071F000E9;
-	Mon, 31 Aug 2026 13:46:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184008;
-	bh=AG0F9BvLOVbF4CLd/YQqa5xZ4iSGLAvGtaNOe68ZGQI=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ij5ZJpHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608ED1F00A3E;
+	Mon, 31 Aug 2026 13:46:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184010;
+	bh=6WkJEIcrMSxDSNlVx/Ai3t+ZMkmJhGkZ3zkd9Ps+Olk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZAPIrUcbZ+km19C6+Rdev3whexAW2QX3TKMWuuUDCBKlCMBCuL9PpSJCrOGeIsyP
-	 lEMJhjIBOsF4jMP5xtX0K9C1Yao5CGeMMSpuvdKFX6mOOPxIuwklIE580XyVJ6x8wd
-	 6RXX6ELGxdDDSA6Ls8b4z2YF1oEg2nuBLxydnQiMldq00d6XCVbwi3KSfpIcjtZJkV
-	 LZ37paHxsmtYaKg9IW4SMX2bRMEpj6Z9UR2suhN53eEe8dDiY59H34lGteiaDViiPp
-	 5cKZDpGAoM7uZt2aM9RFZBwxf0TH8yDgg3akxiPK8t/oH5WHq5V/xe5vbK/QN8m375
-	 aUVO5gM9OCy3g==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Stepan Ionichev <sozdayvek@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	ulfh@kernel.org,
-	linux-mmc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] mmc: davinci: avoid NULL deref of host->data in IRQ handler
-Date: Mon, 31 Aug 2026 09:27:43 -0400
-Message-ID: <20260831133314.4125787-435-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=Ij5ZJpHEY2b9v4Opl3Yjg+vsLZ2wNp0FjsddRLMyDicMWJjQSVh+j3EggMPxjG7+r
+	 EaP47sgqsE4WHQWhNMdjzbJGh3DTHvmtUuTIT1NHcjBzwTV7CIVjidGQUoV/9Gl2V0
+	 ATNQVvPFu7ClnbaR5ASIA/cxrj9mo8Dh9AaMA4yQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 43/83] KVM: SEV: Mark vCPU RUNNABLE after AP_CREATE, even if VMSA is unusable
+Date: Mon, 31 Aug 2026 15:34:19 +0200
+Message-ID: <20260831133401.706947341@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 4f28846aaf8db9668e338b8987973f8935edff34 ]
+------------------
 
-mmc_davinci_irq() returns early only when both host->cmd and
-host->data are NULL:
+From: Sean Christopherson <seanjc@google.com>
 
-  if (host->cmd == NULL && host->data == NULL) {
-          ...
-          return IRQ_NONE;
-  }
+commit 98ade8c48c28c227fe2e80e545ff0c57cd4712a3 upstream.
 
-So we may legitimately reach the rest of the handler with
-host->data == NULL (and therefore data == NULL). The DATDNE branch
-already guards against this with an explicit "if (data != NULL)"
-check, but the subsequent TOUTRD ("read data timeout") and
-CRCWR/CRCRD ("data CRC error") branches dereference data
-unconditionally:
+Always mark the vCPU as RUNNABLE after responding to AP_CREATE, even if the
+guest-specified VMSA is unusable, e.g. isn't backed by a memslot or doesn't
+have a backing guest_memfd page.  If the VMSA is unusable, leaving the vCPU
+in a non-running state will effectively hang the vCPU instead of reporting
+an error to userspace.  This will also allow retrying the VMSA load in the
+future, to fix a bug where KVM doesn't honor guest_memfd invalidation
+events, e.g. if AP_CREATION races with PUNCH_HOLE.
 
-  if (qstatus & MMCST0_TOUTRD) {
-          data->error = -ETIMEDOUT;        <-- NULL deref
-          ...
-          davinci_abort_data(host, data);
-  }
-
-  if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
-          data->error = -EILSEQ;           <-- NULL deref
-          ...
-  }
-
-If either bit is set in qstatus while host->data is NULL, the kernel
-will crash inside the IRQ handler. smatch flags this:
-
-  drivers/mmc/host/davinci_mmc.c:933 mmc_davinci_irq() error: we
-    previously assumed 'data' could be null (see line 914)
-
-Gate both branches on a non-NULL data, matching the existing pattern
-used by the DATDNE branch.
-
-No functional change for callers where data is non-NULL, which is
-the only case in which these branches did meaningful work before
-this change.
-
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 6.12.x
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Link: https://patch.msgid.link/20260709204948.1988414-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ arch/x86/kvm/svm/sev.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background git search finished. It found other DaVinci-related fixes
-in this tree (gpio, i2c, etc.), but no commit matching the `if (data &&
-(qstatus & ...)` guard pattern — so the MMC IRQ NULL-deref fix is still
-absent from **6.18.43**.
-
-That matches the earlier analysis: the buggy unguarded branches are
-present in `drivers/mmc/host/davinci_mmc.c`, and this patch should be
-backported.
-
-**YES**
-
- drivers/mmc/host/davinci_mmc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index 2b7d6d9bcde51..00adc15956fd2 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -928,7 +928,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
- 		}
- 	}
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -4062,9 +4062,6 @@ static void sev_snp_reload_vmsa(struct k
+ 	svm->sev_es.snp_guest_vmsa_gpa = gpa;
+ 	svm->vmcb->control.vmsa_pa = pfn_to_hpa(pfn);
  
--	if (qstatus & MMCST0_TOUTRD) {
-+	if (data && (qstatus & MMCST0_TOUTRD)) {
- 		/* Read data timeout */
- 		data->error = -ETIMEDOUT;
- 		end_transfer = 1;
-@@ -940,7 +940,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
- 		davinci_abort_data(host, data);
- 	}
+-	/* Mark the vCPU as runnable */
+-	kvm_set_mp_state(vcpu, KVM_MP_STATE_RUNNABLE);
+-
+ 	/*
+ 	 * gmem pages aren't currently migratable, but if this ever changes
+ 	 * then care should be taken to ensure svm->sev_es.vmsa is pinned
+@@ -4096,6 +4093,15 @@ static void sev_snp_init_protected_guest
+ 	svm->sev_es.snp_pending_vmsa_gpa = INVALID_PAGE;
  
--	if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
-+	if (data && (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD))) {
- 		/* Data CRC error */
- 		data->error = -EILSEQ;
- 		end_transfer = 1;
--- 
-2.53.0
+ 	sev_snp_reload_vmsa(vcpu, gpa);
++
++	/*
++	 * Mark the vCPU as runnable for CREATE requests, indicated by a valid
++	 * VMSA GPA, even if installing the VMSA failed, so that KVM_RUN will
++	 * fail instead of blocking indefinitely and hanging the vCPU, e.g. if
++	 * the backing guest_memfd page is unavailable.
++	 */
++	if (VALID_PAGE(gpa))
++		kvm_set_mp_state(vcpu, KVM_MP_STATE_RUNNABLE);
+ }
+ 
+ static int sev_snp_ap_creation(struct vcpu_svm *svm)
+
 
