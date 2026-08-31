@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD614B7160;
-	Mon, 31 Aug 2026 13:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF218430CD3;
+	Mon, 31 Aug 2026 13:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184599; cv=none; b=XAFpHTSnQntwpm1gnH5vGR2llFDJnF2pvMoBaZ56fBq9GcufJoiKZD7Z+8WNPhjSRNGsJpTnBDYKO8STNUpsezc5E/PCvHIkBJ9XRNo0Jzug6YmxIXKkkHbgYRatK6waNWIH9rccmjQA+GDkVuRT2Uv4pEUDYI9hyqQkXvncbC0=
+	t=1788184602; cv=none; b=Ssk/G919Ajy7NJ/P2PWBhGOVorOJxk/4BbkZRgj4owFfdEoxLVllQXQ52vRQbEJybzn/waSlMlCjUYCK3CvdZvsVxFcVxG2QadcPL6q3QnNpIaw/tLuLC+tykO3lf8l/wz25sDZv+ZoOFTTgG4OHohA8t2i7WHDRNuRgO9LO++w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184599; c=relaxed/simple;
-	bh=Bi152230k8QMV1HQsPyRLdFd8QYC5lauzHR0anAP0T0=;
+	s=arc-20240116; t=1788184602; c=relaxed/simple;
+	bh=L/1yrCeyHikT87Pl3li/weCoLVOfunM4QKsBfyggztE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lAdbMCr8mvcf284jrG9UVZQ5KbN7ApFUjOAhbBQAAi2gM/bEejAQWsZ6gPOFdCh2MNOubMKtCi774JlOyL7RlA3hfnqCTs54YhQ9FbLY1EiwJi65/4Qu79vakL/0N3lyEEiDE1xZvFAvTl0V6ap5oJ8jJiXJUb2oFTTgKrsWpAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qekofV8V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BLZPi0ofpWBZHJ5NwblolC1H84/8szaW3BNjr35ivilJa6bcSmPcN46w8Jf9tY0SMjnbI8+ucrXjcMn7PtLPYWPRMUagG2m6C8q/q8yyNF/YkJP88Tj3E2h/60QEmwKd7JBb0kqUt15gStgaHZOnLgLkf6Rq5hzO3+uEiUmabvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRGLQSIx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qekofV8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4E91F000E9;
-	Mon, 31 Aug 2026 13:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRGLQSIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6221F000E9;
+	Mon, 31 Aug 2026 13:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184597;
-	bh=wJzM9bGm7oGYZkwhRag9hExX2K+V0Pyiv84FM147js8=;
+	s=korg; t=1788184600;
+	bh=GGeO2m0svmTmvhXddpr+QEkxVjPFs8tTrIiAiguRj5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qekofV8VnyBcj8lSkoOTaLtRfmpiy7KGRZAe2RxzzBJ165/nyiknR1MH/poO2MOB3
-	 e/R3NioDvQCU9uWotzaYj2TR8Iyb2flXTCIOMyjSlf8nPkUmrhUX/cKSFvmJAfNhP7
-	 Acf27RuClBuM/1vUiER+/KXMsuicr2EFa9rR3tkA=
+	b=cRGLQSIx3F7XcADKmdSlpvO3YfUKsjAHMJwRRb3kXe6kZXO06UkORwOC1VC4+/ZRO
+	 /+lKyUGHFZeP2u2mAsxEjUe+GIUGPQin/g0cj6LcAJgb1XIEYx8B+j0/gxX/BeXT1K
+	 vX4e8ZEQQpiKX6ng/nfqFkQklpsfiy0RRPgJipdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Baokun Li <libaokun@linux.alibaba.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.6 62/91] fuse: fix invalidate lock leak on setattr writeback failure
-Date: Mon, 31 Aug 2026 15:34:50 +0200
-Message-ID: <20260831133402.930097402@linuxfoundation.org>
+Subject: [PATCH 6.6 63/91] fuse: fix invalidate lock leak on open O_TRUNC DAX failure
+Date: Mon, 31 Aug 2026 15:34:51 +0200
+Message-ID: <20260831133402.973908841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -53,73 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun@linux.alibaba.com>
 
-commit 9afeca0d569c9fc89d758fe7a9339d1e8afb1546 upstream.
+commit a927f1867e61b78f39f9da0bbba3c98c2ca151fe upstream.
 
-fuse_do_setattr() takes filemap_invalidate_lock() for a DAX truncate
-(fault_blocked = true) and releases it at the out:/error: labels.  But
-when a writeback flush is also needed, a write_inode_now() failure
-returns directly and leaks the lock, so any later fault or truncate on
-the file stalls on the stale rwsem.
+fuse_open() takes filemap_invalidate_lock() for a DAX truncate
+(dax_truncate = true) and releases it before the out_inode_unlock
+label.  But when fuse_dax_break_layouts() fails, the goto
+out_inode_unlock skips the unlock and leaks the rwsem, so any later
+fault or truncate on the file stalls on the stale lock.
 
-For example, truncate(2) on a setuid file reaches fuse_do_setattr()
-with both ATTR_SIZE and ATTR_MODE set:
+fuse_dax_break_layouts() can fail with -ERESTARTSYS when a signal
+interrupts the wait for busy DAX pages to drain:
 
-  truncate(2)
-  └─ do_truncate()
-     ├─ dentry_needs_remove_privs()         # S_ISUID
-     └─ notify_change()                     # KILL_SUID -> ATTR_MODE
-        └─ fuse_setattr()                   # no killpriv:
-           │                                #   ia_valid |= ATTR_MODE
-           └─ fuse_do_setattr()
-              ├─ filemap_invalidate_lock()  # IS_DAX && is_truncate
-              └─ write_inode_now()          # is_wb && ATTR_MODE
-                 └─ if (err)                # e.g. daemon -> -EIO
-                    return err              # <- lock leaked
+  open("file", O_RDWR | O_TRUNC)
+  └─ fuse_open()
+     ├─ filemap_invalidate_lock()        # dax_truncate
+     └─ fuse_dax_break_layouts()
+        └─ dax_break_layout()
+           └─ wait_page_idle()           # TASK_INTERRUPTIBLE
+              └─ fuse_wait_dax_page()    # unlock, schedule, re-lock
+                 └─ signal → -ERESTARTSYS
+     goto out_inode_unlock               # <- lock leaked
 
-Fix this by adding an unlock label that releases the lock before
-returning the error, and use it for the fuse_dax_break_layouts()
-failure path as well.
+Fix this by moving filemap_invalidate_unlock() below the label so
+that all error paths release the lock, and rename the label to
+out_unlock as it now covers more than just the inode lock.
 
-Fixes: 6ae330cad6ef ("virtiofs: serialize truncate/punch_hole and dax fault path")
-Cc: stable@vger.kernel.org # v5.10+
+Fixes: 2fdbb8dd0155 ("fuse: fix deadlock between atomic O_TRUNC and page invalidation")
+Cc: stable@vger.kernel.org # v6.0+
 Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dir.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/fuse/file.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -1879,10 +1879,8 @@ int fuse_do_setattr(struct dentry *dentr
- 		filemap_invalidate_lock(mapping);
- 		fault_blocked = true;
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -260,7 +260,7 @@ int fuse_open_common(struct inode *inode
+ 		filemap_invalidate_lock(inode->i_mapping);
  		err = fuse_dax_break_layouts(inode, 0, -1);
--		if (err) {
--			filemap_invalidate_unlock(mapping);
--			return err;
--		}
-+		if (err)
-+			goto unlock;
+ 		if (err)
+-			goto out_inode_unlock;
++			goto out_unlock;
  	}
  
- 	if (attr->ia_valid & ATTR_OPEN) {
-@@ -1909,7 +1907,7 @@ int fuse_do_setattr(struct dentry *dentr
- 			 ATTR_TIMES_SET)) {
- 		err = write_inode_now(inode, true);
- 		if (err)
--			return err;
-+			goto unlock;
+ 	if (is_wb_truncate || dax_truncate)
+@@ -280,9 +280,9 @@ int fuse_open_common(struct inode *inode
+ 		else if (!(ff->open_flags & FOPEN_KEEP_CACHE))
+ 			invalidate_inode_pages2(inode->i_mapping);
+ 	}
++out_unlock:
+ 	if (dax_truncate)
+ 		filemap_invalidate_unlock(inode->i_mapping);
+-out_inode_unlock:
+ 	if (is_wb_truncate || dax_truncate)
+ 		inode_unlock(inode);
  
- 		fuse_set_nowrite(inode);
- 		fuse_release_nowrite(inode);
-@@ -2017,6 +2015,7 @@ error:
- 
- 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
- 
-+unlock:
- 	if (fault_blocked)
- 		filemap_invalidate_unlock(mapping);
- 	return err;
 
 
