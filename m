@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F82F47DD5C;
-	Mon, 31 Aug 2026 13:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1614247F766;
+	Mon, 31 Aug 2026 13:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184777; cv=none; b=VhWYY2/gxs59NNP9knxwD3yu5g8qVf14b6BZDzIDU1xkz3mJrQ8/FDRpydgCsu18F2WRBuoYQIlfqM80iqAB1Y3/qmDET9cHtcrxHayBhSpVhQLeVGqDKlU4RZ8CMJzp6aFCgDS0EP8hya7yy2OI8HoTfqRHnbuSdWvXpB1Yyl0=
+	t=1788184789; cv=none; b=NRcgyB4bdkMcvGfujcrqP4ExwsWaqJES0nF3HnBDcsK3WS8A30Hz6HCgNP7VTDhVxDhrfxC9d+DrHXl2Oyazqm3QuUIg2VnS2ad4u6DhTQ+VvhYgw3mv+Wtz7ad03dSXzqmWvbGdwIepAmirLqvGNo/6aveeiojO2+E2E/s21Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184777; c=relaxed/simple;
-	bh=9aZwEiIY2j4BidGb9E1Gxt5OI0abW/SUCRyr2z66Nrk=;
+	s=arc-20240116; t=1788184789; c=relaxed/simple;
+	bh=05Whw9uFkoZ0jylku3YFdPd6WdDzvKsh9wtXV9zIqD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wet+CY2xVXFd2Vjj/jFwpecWo0y0LDI5V876PBNQsgouA2Y1LxG3JDAGoaAGZr/2GWDmuFfM7MB1/RhgNotzCBEHk5G5c8B+/M6gUFmYWydOtOQzMhvDFQSEQyDRa3K6Aimt8AsLeT0gtjfAiyzD8np4AJRmrxVhUhwnGRrDLeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzH2U61j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qbk8wM3qmhTY6ee06md/SCcT4uPjdvRCviYJVU6TR9+boPXYhuaLtMWrf1RlnP7BIWaxQeM05So85IzmXzlFx0mcpx+ckJNiBT/giBarX8OnBX7KPF0dX7QUrWhHH2EP3/q5dR3PbAuB9gTp8zHLgScDz7ZXC2hN3iBO58CizKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGHm0Zfy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzH2U61j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A92E1F000E9;
-	Mon, 31 Aug 2026 13:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGHm0Zfy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1261F000E9;
+	Mon, 31 Aug 2026 13:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184776;
-	bh=NSZP+Da8Jkkk3ynv2t+nc/r0TkGl5aNWEQhq6VuWvoA=;
+	s=korg; t=1788184788;
+	bh=BJq1Up2vcRpNePJk9aYdzs7PC/EicsKG3p9Vz5lfzS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yzH2U61j1kCfJDWCmb/mebYUDOtIQhFzL/NtU7vEW8ZE12mWIcGmsHty/+xXrrja3
-	 +eUGHDbt6H7gnaeIp6o39T4sKtl3uItgLAa7Qq7feRBo1mYIpo2O2xkgZPio1RVEnU
-	 AnMKc512jCqvAuG5/jLtWZk7mJPJhO23e40oLToM=
+	b=KGHm0ZfyXURB5iFp7vgOIcXjS/IWOKzv1vIfG7Bx4gYgfBbtQJ2hHIAROQNZi2o/A
+	 vMV36Zk9sCa66AIPffLk9ZA6EB1L8NVtu4dF9ha/D/Z3H+bzkAy6dSI5RNx5S6SlKG
+	 oJkEbw/hzzRvHxVG1isZmliBCcY8W9CrIlqd7rV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b8d61a58b7c7ebd2c8e0@syzkaller.appspotmail.com,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	syzbot+2aca91e1d3ae43aef10c@syzkaller.appspotmail.com,
-	=?UTF-8?q?Miguel=20Garc=C3=ADa?= <miguelgarciaroman8@gmail.com>,
+	syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 35/92] block: make bio_check_eod work for zero sized devices
-Date: Mon, 31 Aug 2026 15:34:33 +0200
-Message-ID: <20260831133401.526079712@linuxfoundation.org>
+Subject: [PATCH 6.1 21/92] smc: Fix use-after-free in __pnet_find_base_ndev().
+Date: Mon, 31 Aug 2026 15:34:19 +0200
+Message-ID: <20260831133400.690781986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -48,63 +47,216 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 3eb96946f0be6bf447cbdf219aba22bc42672f92 upstream.
+[ Upstream commit 3d3466878afd8d43ec0ca2facfbc7f03e40d0f79 ]
 
-Since the dawn of time bio_check_eod has a check for a non-zero size of
-the device.  This doesn't really make any sense as we never want to send
-I/O to a device that's been set to zero size, or never moved out of that.
+syzbot reported use-after-free of net_device in __pnet_find_base_ndev(),
+which was called during connect(). [0]
 
-I am a bit surprised we haven't caught this for a long time, but the
-removal of the extra validation inside of zram caused syzbot to trip
-over this issue recently.  I've added a Fixes tag for that commit, but
-the issue really goes back way before git history.
+smc_pnet_find_ism_resource() fetches sk_dst_get(sk)->dev and passes
+down to pnet_find_base_ndev(), where RTNL is held.  Then, UAF happened
+at __pnet_find_base_ndev() when the dev is first used.
 
-Fixes: 9fe95babc742 ("zram: remove valid_io_request")
-Reported-by: syzbot+b8d61a58b7c7ebd2c8e0@syzkaller.appspotmail.com
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230524060538.1593686-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This means dev had already been freed before acquiring RTNL in
+pnet_find_base_ndev().
 
-Backport note for 6.1.y:
+While dev is going away, dst->dev could be swapped with blackhole_netdev,
+and the dev's refcnt by dst will be released.
 
-The same underlying bug affects 6.1.y even though 9fe95babc742 is not in
-that tree.  The syzbot reproducer attaches a socket to /dev/nbd0 without
-setting its capacity, then mounts it as BEFS.  BEFS calls sb_bread() while
-bdev_nr_sectors() is zero.  The maxsector guard makes bio_check_eod() accept
-that read, which reaches NBD and waits for a response instead of failing
-with -EIO.  syzbot reproduced the resulting __bread_gfp() hang on 6.1.y and
-identified this upstream commit by fix bisection.
+We must hold dev's refcnt before calling smc_pnet_find_ism_resource().
 
-Reported-by: syzbot+2aca91e1d3ae43aef10c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2aca91e1d3ae43aef10c
-Signed-off-by: Miguel García <miguelgarciaroman8@gmail.com>
+Also, smc_pnet_find_roce_resource() has the same problem.
+
+Let's use __sk_dst_get() and dst_dev_rcu() in the two functions.
+
+[0]:
+BUG: KASAN: use-after-free in __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
+Read of size 1 at addr ffff888036bac33a by task syz.0.3632/18609
+
+CPU: 1 UID: 0 PID: 18609 Comm: syz.0.3632 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xca/0x240 mm/kasan/report.c:482
+ kasan_report+0x118/0x150 mm/kasan/report.c:595
+ __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
+ pnet_find_base_ndev net/smc/smc_pnet.c:946 [inline]
+ smc_pnet_find_ism_by_pnetid net/smc/smc_pnet.c:1103 [inline]
+ smc_pnet_find_ism_resource+0xef/0x390 net/smc/smc_pnet.c:1154
+ smc_find_ism_device net/smc/af_smc.c:1030 [inline]
+ smc_find_proposal_devices net/smc/af_smc.c:1115 [inline]
+ __smc_connect+0x372/0x1890 net/smc/af_smc.c:1545
+ smc_connect+0x877/0xd90 net/smc/af_smc.c:1715
+ __sys_connect_file net/socket.c:2086 [inline]
+ __sys_connect+0x313/0x440 net/socket.c:2105
+ __do_sys_connect net/socket.c:2111 [inline]
+ __se_sys_connect net/socket.c:2108 [inline]
+ __x64_sys_connect+0x7a/0x90 net/socket.c:2108
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f47cbf8eba9
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f47ccdb1038 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: ffffffffffffffda RBX: 00007f47cc1d5fa0 RCX: 00007f47cbf8eba9
+RDX: 0000000000000010 RSI: 0000200000000280 RDI: 000000000000000b
+RBP: 00007f47cc011e19 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f47cc1d6038 R14: 00007f47cc1d5fa0 R15: 00007ffc512f8aa8
+ </TASK>
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888036bacd00 pfn:0x36bac
+flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
+raw: 00fff00000000000 ffffea0001243d08 ffff8880b863fdc0 0000000000000000
+raw: ffff888036bacd00 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as freed
+page last allocated via order 2, migratetype Unmovable, gfp_mask 0x446dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO|__GFP_NOWARN|__GFP_RETRY_MAYFAIL|__GFP_COMP), pid 16741, tgid 16741 (syz-executor), ts 343313197788, free_ts 380670750466
+ set_page_owner include/linux/page_owner.h:32 [inline]
+ post_alloc_hook+0x240/0x2a0 mm/page_alloc.c:1851
+ prep_new_page mm/page_alloc.c:1859 [inline]
+ get_page_from_freelist+0x21e4/0x22c0 mm/page_alloc.c:3858
+ __alloc_frozen_pages_noprof+0x181/0x370 mm/page_alloc.c:5148
+ alloc_pages_mpol+0x232/0x4a0 mm/mempolicy.c:2416
+ ___kmalloc_large_node+0x5f/0x1b0 mm/slub.c:4317
+ __kmalloc_large_node_noprof+0x18/0x90 mm/slub.c:4348
+ __do_kmalloc_node mm/slub.c:4364 [inline]
+ __kvmalloc_node_noprof+0x6d/0x5f0 mm/slub.c:5067
+ alloc_netdev_mqs+0xa3/0x11b0 net/core/dev.c:11812
+ tun_set_iff+0x532/0xef0 drivers/net/tun.c:2775
+ __tun_chr_ioctl+0x788/0x1df0 drivers/net/tun.c:3085
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:598 [inline]
+ __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+page last free pid 18610 tgid 18608 stack trace:
+ reset_page_owner include/linux/page_owner.h:25 [inline]
+ free_pages_prepare mm/page_alloc.c:1395 [inline]
+ __free_frozen_pages+0xbc4/0xd30 mm/page_alloc.c:2895
+ free_large_kmalloc+0x13a/0x1f0 mm/slub.c:4820
+ device_release+0x99/0x1c0 drivers/base/core.c:-1
+ kobject_cleanup lib/kobject.c:689 [inline]
+ kobject_release lib/kobject.c:720 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ kobject_put+0x22b/0x480 lib/kobject.c:737
+ netdev_run_todo+0xd2e/0xea0 net/core/dev.c:11513
+ rtnl_unlock net/core/rtnetlink.c:157 [inline]
+ rtnl_net_unlock include/linux/rtnetlink.h:135 [inline]
+ rtnl_dellink+0x537/0x710 net/core/rtnetlink.c:3563
+ rtnetlink_rcv_msg+0x7cc/0xb70 net/core/rtnetlink.c:6946
+ netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2552
+ netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
+ netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1346
+ netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1896
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ __sock_sendmsg+0x219/0x270 net/socket.c:729
+ ____sys_sendmsg+0x505/0x830 net/socket.c:2614
+ ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2668
+ __sys_sendmsg net/socket.c:2700 [inline]
+ __do_sys_sendmsg net/socket.c:2705 [inline]
+ __se_sys_sendmsg net/socket.c:2703 [inline]
+ __x64_sys_sendmsg+0x19b/0x260 net/socket.c:2703
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Memory state around the buggy address:
+ ffff888036bac200: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff888036bac280: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+>ffff888036bac300: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                                        ^
+ ffff888036bac380: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff888036bac400: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+Fixes: 0afff91c6f5e ("net/smc: add pnetid support")
+Fixes: 1619f770589a ("net/smc: add pnetid support for SMC-D and ISM")
+Reported-by: syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68c237c7.050a0220.3c6139.0036.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250916214758.650211-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/smc_pnet.c | 43 ++++++++++++++++++++++---------------------
+ 1 file changed, 22 insertions(+), 21 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 25b4733f25d3d..1fcd80a1c54fd 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -515,7 +515,7 @@ static inline int bio_check_eod(struct bio *bio)
- 	sector_t maxsector = bdev_nr_sectors(bio->bi_bdev);
- 	unsigned int nr_sectors = bio_sectors(bio);
+diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
+index af12e02152740..adbccaa2f28a0 100644
+--- a/net/smc/smc_pnet.c
++++ b/net/smc/smc_pnet.c
+@@ -1127,37 +1127,38 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
+  */
+ void smc_pnet_find_roce_resource(struct sock *sk, struct smc_init_info *ini)
+ {
+-	struct dst_entry *dst = sk_dst_get(sk);
+-
+-	if (!dst)
+-		goto out;
+-	if (!dst->dev)
+-		goto out_rel;
++	struct net_device *dev;
++	struct dst_entry *dst;
  
--	if (nr_sectors && maxsector &&
-+	if (nr_sectors &&
- 	    (nr_sectors > maxsector ||
- 	     bio->bi_iter.bi_sector > maxsector - nr_sectors)) {
- 		pr_info_ratelimited("%s: attempt to access beyond end of device\n"
+-	smc_pnet_find_roce_by_pnetid(dst->dev, ini);
++	rcu_read_lock();
++	dst = __sk_dst_get(sk);
++	dev = dst ? dst_dev_rcu(dst) : NULL;
++	dev_hold(dev);
++	rcu_read_unlock();
+ 
+-out_rel:
+-	dst_release(dst);
+-out:
+-	return;
++	if (dev) {
++		smc_pnet_find_roce_by_pnetid(dev, ini);
++		dev_put(dev);
++	}
+ }
+ 
+ void smc_pnet_find_ism_resource(struct sock *sk, struct smc_init_info *ini)
+ {
+-	struct dst_entry *dst = sk_dst_get(sk);
++	struct net_device *dev;
++	struct dst_entry *dst;
+ 
+ 	ini->ism_dev[0] = NULL;
+-	if (!dst)
+-		goto out;
+-	if (!dst->dev)
+-		goto out_rel;
+ 
+-	smc_pnet_find_ism_by_pnetid(dst->dev, ini);
++	rcu_read_lock();
++	dst = __sk_dst_get(sk);
++	dev = dst ? dst_dev_rcu(dst) : NULL;
++	dev_hold(dev);
++	rcu_read_unlock();
+ 
+-out_rel:
+-	dst_release(dst);
+-out:
+-	return;
++	if (dev) {
++		smc_pnet_find_ism_by_pnetid(dev, ini);
++		dev_put(dev);
++	}
+ }
+ 
+ /* Lookup and apply a pnet table entry to the given ib device.
 -- 
 2.53.0
 
