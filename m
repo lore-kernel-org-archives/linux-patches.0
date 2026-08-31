@@ -1,144 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06714443A9D;
-	Mon, 31 Aug 2026 13:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DAC4432F8;
+	Mon, 31 Aug 2026 13:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183548; cv=none; b=EUuryZus5hpbP+iT8fCdHOf5GCiXPbdN3JxhBY1ON7U14nfN9ISQDxazhTMH98mcK6SuBz3KpjZF03q9l4RpbZPtEBqthCoNYFdOVu5fpRNSPYGFc6yyMvYoWtyzVvni7PGGSBCJOu97o7bjVT6ZQbHiSbbP6z1/redPXJWUXrc=
+	t=1788183549; cv=none; b=Z3fuuAo6fNHVFL40hhLCefHf9tttJD/DGk11GQ4PVjHC/kKGqGDhXv5BfS/dCebIV5P4Fvq9H4nlCM72Qfx1UdmFV/tDJN1rENPzxGfZ0fZl8BteJAjmM6zvkGGKtuWCvMY7VhW8iK2oN83V6hPNGi0/r6/hZNtW/KZGzQ9ljdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183548; c=relaxed/simple;
-	bh=5bNopTXtiJjeKjY0nv3y83UpqoOye0L99V/qq0x75bA=;
+	s=arc-20240116; t=1788183549; c=relaxed/simple;
+	bh=FbjK2nNStEEx3bwHKta5uj663jZ1WS9uhG/89rl+980=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Isl+Lm4ix3ITFKbnmJyFHqm/t8arzNymMy3apwVRaZM1aoDqh3cqTMA73MJPqAxRrM5r71g7D3Lau4tPs2LjnPxA9qAr8kU/e1b4P1sZUoprxJRDPJCNAsXaIaQLskfEevOQ7E2E99udvhJHB9A5pjPGjvi5DBG6j8T8b6dsdTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9RDd9gQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XlON7JXHvPXa4bQs6cxbGUiBAE8VCALBQWIm3qqAkxZqI8vvlojXN+iWslwSmB8iTE7j+vIItMurtqMG0YUCDL77lpzj3ZhgHKqq5vDCX36cDsQ9kf+P6IxseDVtq0hTS2A4mmjze/NB2ouEJmbV8o9HgxQIcfTu8XalRga2qfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5PIArOo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9RDd9gQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAF51F00ACA;
-	Mon, 31 Aug 2026 13:39:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183545;
-	bh=R3KCqClXRWaxwR65BU2A412AAAdvKTWiIEGL1q11zyA=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5PIArOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253901F00A3D;
+	Mon, 31 Aug 2026 13:39:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183547;
+	bh=ViKcaXTjCrdLleakiUycKJ3npOjAGWPQu59QWe/Gtxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O9RDd9gQrFHi+X6mMEUkvfxKfPDdvlzj6tfkOaFjVpK65uCWmeq8QsUDm7/i0XJ0V
-	 YUO7GmDMf19JAqWzElWug8Ye2Yb3uWvQdapqDw1FFmg2BjSYLPsUoOcK/5aiHDg0ca
-	 lLwLJMF5lQaEvQDjpovB6uaxAlcHHYxdBml2isUPFDeQWRcj7uAFIkxWPXo7FDIVuA
-	 R6RV7cSINCAaxylqM9TapQm2hhrJ+3NDXRTuCtntUeHAMIv8622PH4r0kHJIZA9laC
-	 Z0eK3wIzHKmCfmoXIx9pWQ67YqGS+xYpU7FuxfJEwKkaaZLyNCJ2/w1/Gq1FZTVITD
-	 /OxawuC+KlITw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Craig McQueen <craig@mcqueen.au>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	pavel@kernel.org,
-	linux-leds@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] leds: core: Fix race condition for software blink
-Date: Mon, 31 Aug 2026 09:23:09 -0400
-Message-ID: <20260831133314.4125787-161-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=z5PIArOoEQZdi9Am28GkLw80AYoMkUsa49A23P4wPBkRcWBjc3wxrfbmWDJGBJ30N
+	 OsuQ3dZOphLTQNEPcu45gbW/Mrl7VAYsk3IDY14JLRX7I33+Rid3WSI/E+Ac+yhVYI
+	 Da60gQKt9YUvmFe1qvkwYxZShI1DGUZxXcAVf6J4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 7.2 34/71] xfrm: drop ESP-in-TCP packets with no ingress device
+Date: Mon, 31 Aug 2026 15:33:59 +0200
+Message-ID: <20260831133400.863250641@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Craig McQueen <craig@mcqueen.au>
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit f92135f100669b508dd62b424ab20bcb33494c79 ]
+------------------
 
-led_set_brightness() function: Change handling of software blink to
-avoid race conditions when stopping blink and setting brightness.
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-Triggers may call led_set_brightness(LED_OFF),
-led_set_brightness(LED_FULL) in quick succession to disable blinking and
-turn the LED on. If the delayed work task has not yet disabled blinking
-by the time the second call occurs, then the brightness also needs to be
-changed in the delayed work task.
+commit e1d7c5ac1c246ce5775f604515de0a59fbf2116e upstream.
 
-Signed-off-by: Craig McQueen <craig@mcqueen.au>
-Link: https://patch.msgid.link/20260423113638.2079302-1-craig@mcqueen.au
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ESP-in-TCP receives records through the TCP strparser. handle_esp()
+restores skb->dev from the saved skb_iif before passing the packet into
+the XFRM input path.
+
+Queued TCP data can be processed after the original ingress device has
+been removed, for example during veth or net namespace teardown. In that
+case dev_get_by_index_rcu() returns NULL. The XFRM IPv4 and IPv6 input
+paths both expect skb->dev to be valid while building the route lookup,
+so queued ESP-in-TCP data can dereference a NULL device.
+
+Drop the packet if the saved ingress device can no longer be resolved.
+Such a packet can no longer be routed through the normal XFRM receive
+path, and this preserves the existing behaviour for packets whose ingress
+device still exists.
+
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Assisted-by: Codex:gpt-5.4
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ net/xfrm/espintcp.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-LLM Generated explanations, may be completely bogus:
-
-The background searches finished and line up with the earlier analysis:
-
-- **Commit lookup:** `f92135f100669` (`leds: core: Fix race condition
-  for software blink`) is in mainline via the `leds-next-7.2` merge, but
-  it is **not** in the current `6.18.44` checkout — so it is a valid
-  backport candidate for this tree.
-- **Related history:** The prerequisite fixes are already here
-  (`fa15d8c69238b`, `2c70953b6f535`, ordered LED workqueue from
-  `32360bf6a5d40`).
-
-That supports the **YES** verdict: the bug exists in v6.18.44, the fix
-is small and upstream, and the needed infrastructure is already present.
-
- drivers/leds/led-core.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
-index 59473f286b31f..eeb36e50c285c 100644
---- a/drivers/leds/led-core.c
-+++ b/drivers/leds/led-core.c
-@@ -304,24 +304,31 @@ EXPORT_SYMBOL_GPL(led_stop_software_blink);
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -37,6 +37,11 @@ static void handle_esp(struct sk_buff *s
  
- void led_set_brightness(struct led_classdev *led_cdev, unsigned int brightness)
- {
--	/*
--	 * If software blink is active, delay brightness setting
--	 * until the next timer tick.
--	 */
--	if (test_bit(LED_BLINK_SW, &led_cdev->work_flags)) {
-+	if (brightness) {
- 		/*
--		 * If we need to disable soft blinking delegate this to the
--		 * work queue task to avoid problems in case we are called
--		 * from hard irq context.
-+		 * If software blink disable is pending, also queue brightness setting.
-+		 * If software blink is active, delay brightness setting
-+		 * until the next timer tick.
- 		 */
--		if (!brightness) {
--			set_bit(LED_BLINK_DISABLE, &led_cdev->work_flags);
-+		if (test_bit(LED_SET_BRIGHTNESS, &led_cdev->work_flags) ||
-+		    test_bit(LED_BLINK_DISABLE, &led_cdev->work_flags)) {
-+			led_cdev->delayed_set_value = brightness;
-+			set_bit(LED_SET_BRIGHTNESS, &led_cdev->work_flags);
- 			queue_work(led_cdev->wq, &led_cdev->set_brightness_work);
--		} else {
--			set_bit(LED_BLINK_BRIGHTNESS_CHANGE,
--				&led_cdev->work_flags);
-+			return;
-+		} else if (test_bit(LED_BLINK_SW, &led_cdev->work_flags)) {
- 			led_cdev->new_blink_brightness = brightness;
-+			set_bit(LED_BLINK_BRIGHTNESS_CHANGE, &led_cdev->work_flags);
-+			return;
- 		}
-+	} else if (test_bit(LED_BLINK_SW, &led_cdev->work_flags)) {
-+		/*
-+		 * If we need to disable soft blinking delegate this to the
-+		 * work queue task to avoid problems in case we are called
-+		 * from hard irq context.
-+		 */
-+		set_bit(LED_BLINK_DISABLE, &led_cdev->work_flags);
-+		queue_work(led_cdev->wq, &led_cdev->set_brightness_work);
- 		return;
- 	}
+ 	rcu_read_lock();
+ 	skb->dev = dev_get_by_index_rcu(sock_net(sk), skb->skb_iif);
++	if (!skb->dev) {
++		XFRM_INC_STATS(sock_net(sk), LINUX_MIB_XFRMINERROR);
++		kfree_skb(skb);
++		goto out;
++	}
+ 	local_bh_disable();
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (sk->sk_family == AF_INET6)
+@@ -45,6 +50,7 @@ static void handle_esp(struct sk_buff *s
+ #endif
+ 		xfrm4_rcv_encap(skb, IPPROTO_ESP, 0, TCP_ENCAP_ESPINTCP);
+ 	local_bh_enable();
++out:
+ 	rcu_read_unlock();
+ }
  
--- 
-2.53.0
+
 
