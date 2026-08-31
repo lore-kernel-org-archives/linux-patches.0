@@ -1,103 +1,130 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228FB47F781;
-	Mon, 31 Aug 2026 13:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1E247DF86;
+	Mon, 31 Aug 2026 13:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183464; cv=none; b=CK6IWkxsiSBnKhBCVaHfpKm+roN3SVTfRuI6TfG7gNTDUIeHbPUrGZzKIwlvzvO8k/0i0h9kUpQBE1AT4/XW8lQK58Lnc5W/Sz6G4obw0cvwFXYTZ1vGn3j3zsZCJLSJznSK/G3Sx/qK0SgPlzogOis9l+mn5kmf3hrjvZdHi3U=
+	t=1788183467; cv=none; b=DHSGr04uZ6z10YR5XBnfFt+iqsUcgz07e5tT7LwjEcUp1zSAavcVLN/JzAZ8YEOQmXSGI/yuyb5bvdKeS2Swpq68Wr4FTyzCuKlXEfbL+Zhj4/sNFrIOTiJwQaf5A0/w/XbaPJiAjXmWm0sY55JsnyHFb1d82sKDKGMBwnzDP8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183464; c=relaxed/simple;
-	bh=LG1lnK+eu905RJMV0XpQ2MVQAss3rIzZtqTejqF+EOk=;
+	s=arc-20240116; t=1788183467; c=relaxed/simple;
+	bh=qRElta4qRQbCFokGPSLwymYkowcbGkfHtxjQZxjkH0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyR1s/c9IftvPAyxGDB4EXp3rFx/Mcc+FUkvB0J9QNYM54X3pubK8dpf2XikQ8NTJm7tIJUwEhmp7n+8HZuAKX3O124dg1LCbAiK3NLYBHaLD+jezfvmVUBcQ1vPFKf+SHHN2g61r2C7jNkEdqC1GBDRbgEF7/WSY2P7LnAOuPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mx8cC2rC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BK71cpMVG++INxGhC3jrpprpe/pto6EVE7Q1sQCnjI0fIfo+vUaCNubv4so4C5UCtF1vxTlcPZT4p/P/Y02zPoeybXg7umirbrCCcf190MNKvIRVi/qYA7pxrJp+ZqpklYKAgsbBIlPFG+e0fydsO22R2uBzPNgD9wT8/U7irfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKvXzfDk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mx8cC2rC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9B71F00A3F;
-	Mon, 31 Aug 2026 13:37:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183463;
-	bh=+cT9VZJ4nI0oegICZvjfshAj04GCGW/ExACGxHSW/HM=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKvXzfDk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B75F1F000E9;
+	Mon, 31 Aug 2026 13:37:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183465;
+	bh=FriE7Q/3hBXe9DhsBeY5ltcTMB9IjjyDSsaAOzXPBZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mx8cC2rCTfhRPCIe/cLvBx2V4Mn35YwS+x8EYmfrnFAUD+5tSq3gNE+GEaXZAnLb5
-	 9jxyo2Yp3TH6EXsa06Y4sxZFOaym6rBrIkKN+NqT9due/Ws9BKtpwSv43H0k1Fk4GZ
-	 LVS+5HHPVnlqhIQG3k0wE0y7wNTWr2K0l7Sr0GuDLtdOXwezet99YwRAlXixefU0ai
-	 2dNaAFWXCFLLWg5Vu94UnySiYwI9Eh9YGCop5mKVzwEb328R95OEzLUplcT1LvUSYc
-	 LNnY363fJOiPqmXs5NLX4SOCWUx3xxPIxmoIH7eIhDkC6ij3Ze3aXM2Z3gK6BKCrph
-	 yL1c90+Jm8hRg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	yung-chuan.liao@linux.intel.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] soundwire: intel_auxdevice: Add cs42l43b to wake_capable_list
-Date: Mon, 31 Aug 2026 09:22:19 -0400
-Message-ID: <20260831133314.4125787-111-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=wKvXzfDkFjjPsWH3fjfxBWvfpBF1OkKHWSMotSfGeSwrNcPZ2I2pQGl/BgMa9E/Yo
+	 UJUeIAkDO3e+1gr0FgdfVzUAPndXNoWYMpuWNIfQIm7SypOg+7lg0mxIcrrum8TJrE
+	 Y/JuSrBrcWtZAN94eDZGexoid83VXK/vOzyTy5lA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 01/71] RDMA/rxe: Fix responder UAF on IB_QP_MAX_DEST_RD_ATOMIC modify_qp
+Date: Mon, 31 Aug 2026 15:33:26 +0200
+Message-ID: <20260831133359.117432493@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit be6d8daaab654e9b0a8508757534d556d399d0cd ]
+------------------
 
-Add cs42l43b (both packaging options) to the wake_capable_list
-because it can generate jack events whilst the bus is stopped.
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260429153614.741899-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ Upstream commit 6f7014237405e7f032b5c53a82d9eccf6161c291 ]
+
+rxe_qp_from_attr() handles IB_QP_MAX_DEST_RD_ATOMIC outside the
+IB_QP_STATE path, so it holds no state_lock and runs while the responder
+task rxe_receiver() (recv_task on rxe_wq) is live. A modify_qp() setting
+only that attribute calls free_rd_atomic_resources() then
+alloc_rd_atomic_resources(), swapping qp->resp.resources[] while
+rxe_prepare_res()/find_resource() walk it; free_rd_atomic_resources()
+also leaves the cached pointer qp->resp.res dangling. A local
+unprivileged user can race the free/realloc into a use-after-free in
+rxe_receiver() (local DoS).
+
+Drain recv_task around the swap with rxe_disable_task()/rxe_enable_task(),
+as rxe_qp_reset() already does when tearing this array down, re-enabling
+only after alloc_rd_atomic_resources() succeeds so the responder never
+resumes against a NULL qp->resp.resources on the ENOMEM path. Also clear
+qp->resp.res in free_rd_atomic_resources(), like the rxe_resp.c
+completion paths.
+
+Reproduced under KASAN; the slab-use-after-free in rxe_receiver() is gone.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Link: https://patch.msgid.link/20260712121720.78001-1-security@auditcode.ai
+Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ drivers/infiniband/sw/rxe/rxe_qp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background history checks finished successfully and match the
-earlier analysis:
-
-- `wake_capable_list` has been in this tree since Linux 6.18-rc7
-  (`ac3fd01e4c1ef`).
-- The only later change to it here is the cs42l45 entry
-  (`487e455643c04`), which `b4 dig` links to the Cirrus lore thread from
-  December 2025.
-
-That supports treating the cs42l43b addition the same way: a small
-hardware quirk for an existing Intel SoundWire wake table. The backport
-recommendation remains **YES** for 6.18.43.
-
- drivers/soundwire/intel_auxdevice.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index 8752b0e3ce74c..c0c8ffcecc6bf 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -51,6 +51,8 @@ struct wake_capable_part {
- };
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index f3dff1aea96af..61cbf05fbf583 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -172,6 +172,7 @@ static void free_rd_atomic_resources(struct rxe_qp *qp)
+ 		}
+ 		kfree(qp->resp.resources);
+ 		qp->resp.resources = NULL;
++		qp->resp.res = NULL;
+ 	}
+ }
  
- static struct wake_capable_part wake_capable_list[] = {
-+	{0x01fa, 0x2A30},
-+	{0x01fa, 0x2A3B},
- 	{0x01fa, 0x4243},
- 	{0x01fa, 0x4245},
- 	{0x025d, 0x5682},
+@@ -709,11 +710,23 @@ int rxe_qp_from_attr(struct rxe_qp *qp, struct ib_qp_attr *attr, int mask,
+ 
+ 		qp->attr.max_dest_rd_atomic = max_dest_rd_atomic;
+ 
++		/*
++		 * Not gated by IB_QP_STATE, so the responder task is live.
++		 * Quiesce recv_task like rxe_qp_reset() before swapping the
++		 * rd_atomic array, so rxe_receiver() cannot race the free/
++		 * realloc.
++		 */
++		rxe_disable_task(&qp->recv_task);
+ 		free_rd_atomic_resources(qp);
+-
+ 		err = alloc_rd_atomic_resources(qp, max_dest_rd_atomic);
++		/*
++		 * On ENOMEM leave recv_task quiesced: qp->resp.resources is
++		 * NULL and rxe_prepare_res()/find_resource() would deref it.
++		 * Re-enable only after a fresh array is installed.
++		 */
+ 		if (err)
+ 			return err;
++		rxe_enable_task(&qp->recv_task);
+ 	}
+ 
+ 	if (mask & IB_QP_EN_SQD_ASYNC_NOTIFY)
 -- 
 2.53.0
+
+
 
