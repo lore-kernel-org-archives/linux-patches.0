@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3643F53CA8A;
-	Mon, 31 Aug 2026 13:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34FC4A8A06;
+	Mon, 31 Aug 2026 13:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183942; cv=none; b=CeScGi/aCGEIZqSNmQlr8Evk7K4m9SjUEWAVb54pcgL6IKUIPh9+cKKSOZ+1aey5HYV+lyq2xcqg3T84eGx3C+ecotAf4NipePn1e0nwFgwFjcUDn3A3jd+3oxwC2ifbzRzjLfr7/95jde0Rfps3WGCXP7sXligRgQAJklVUXks=
+	t=1788183943; cv=none; b=TeddLG5eRm5hYMK4o1twytJ8YR9kCFF84Q8Nq7qKjs/60a/eEchX6uTCQJNG1a0/p1NytPXIMNA0nYN74wJBiovqN8VVkF1xkdggY18PU+z3msha8s7UorV7Qyu5+mj7QJcIClIURrTHS1d89n3fM111m6Pgq4klVuAitWuXnbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183942; c=relaxed/simple;
-	bh=pWiOcmL05qqBtwUga/Xnye2Td1ckWBlq4qkl34Z93qk=;
+	s=arc-20240116; t=1788183943; c=relaxed/simple;
+	bh=RzRQe0czuJJCNEDFfAYZErCKIdLeXW6UnHOQzUUwDwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nXLn8BNh2lHJW877Qz3IRN/m8gVEbASCHWGhEq5Y1B7VhWxiIMzQ+AMjLhH11bZyTCVeX0fTSZhMfXwJy3JgOgOroq2wst18kaAXyEjP/ulLF/jhi8aUO/MLTkk4auQrY9pBtzSO5t5PmrbsJKkgf82TOEIg/bt6vnwPM9NB7hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mb0NIH7j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aGAh7naH2A1jWQpxNK67KvZZ8HW4cewV2XSTEPFeD8ntaanp8s8VGUrmFGt322on7O3i9P3jXWkFVIaur+m9bArczFo9oMTeL2+sq83PAavw0FaXa+ZyUgO1E/1bNPkybgSqFsesl3vJ1034Rww3XVwLSlX0eI94a1iG30YRydI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=omkhpQA7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mb0NIH7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E643C1F000E9;
-	Mon, 31 Aug 2026 13:45:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="omkhpQA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EB11F00A3E;
+	Mon, 31 Aug 2026 13:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183938;
-	bh=To1z/W0cY9na/zl6r+yTzM85id3mcrKlPbBi1jyEGeY=;
+	s=k20260515; t=1788183940;
+	bh=+bsTals5aQzg276KW5Vi/a4LSVQxt/HnEKRZN92zOPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mb0NIH7j9ibywgk2Xz2qfoL+4sSvVQXjcrgLjXJbgBt+BI7XmFwSgB++USgPjWZ7m
-	 XKc3RhRyZm60VhcfiR5EE82bUuIL/5MT5sHjYvtBLCKGpo7kDjGvec7VfsNfaUhCBg
-	 AmpW6HGwGIqsHSv5xpq14kfF3O8/c2cD64nK/seouBMKtVNp+znVoyKPoaX5Ho8c8M
-	 GcF0UViketY7zyd18Ccv0ivX8SUUtr0vZeatgdTk05AUiKc6P9mtccwGMC5HMM2ifI
-	 jPo7eWoB9SlE69mRkSpY+jLbWt5zHezZi0TiIWy5qQGEikLcsH/ORE2vj25B+N2wLh
-	 VuHggp44m8UeA==
+	b=omkhpQA7dNOWnf62XfC9AoxtK3AEprXo6pELMNvT/GvC86LmH+m0ghajQVZOYsGQ/
+	 tlEKQI4hKxDbKHCPDNE9LiHNOn5X9aUJnokcyRHyDXp3pzFqIW4VLMPXEPhCOdi16k
+	 JQsEsgRaXSdWkfg0Tq1hiDPVEZ9zjPjU/y/BU5nIPawQDAEkHgVyGcs6NN5mtF1dNH
+	 bXTjlZ1P/jWMpkH3/emQvtCf5z4KuW2brCR9yCk3+6xP7c9+yGFyB96/b7HJvyDsu7
+	 Dhjqt111f/+jeU3XbyMCCgZUSa3qhmJgdj+QK7Yc3sGK3BChH/G/J8vpL6VQ2S3L7E
+	 FVkXqtYKUxxxw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sunday Clement <Sunday.Clement@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] drm/amdkfd: Fix OOB memory exposure in get_wave_state()
-Date: Mon, 31 Aug 2026 09:27:00 -0400
-Message-ID: <20260831133314.4125787-392-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] ipv6: use READ_ONCE() for bindv6only default in inet6_create()
+Date: Mon, 31 Aug 2026 09:27:01 -0400
+Message-ID: <20260831133314.4125787-393-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,461 +56,367 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sunday Clement <Sunday.Clement@amd.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 7ef144458f48d5589e36f1b3d83e83db2e5c5ba5 ]
+[ Upstream commit 7a20eb54224ab7481c1f5a1619a6a5677be93eed ]
 
-The get_wave_state() function for v9 trusts cp_hqd_cntl_stack_size and
-cp_hqd_cntl_stack_offset values read directly from the MQD, which are
-written by GPU microcode and fully attacker-controlled on the
-CRIU-restore path (via AMDKFD_IOC_RESTORE_PROCESS with H3).
+inet6_create() reads net->ipv6.sysctl.bindv6only locklessly.
 
-this leads to an unbounded copy_to_user() that can leak adjacent
-GTT/kernel memory. If offset > size, integer underflow produces a ~4 GiB
-read length, if size is set to 1 MiB against a 4 KiB allocation, we leak
-1 MiB of adjacent kernel memory (other queues' MQDs, ring buffers, KASLR
-pointers).
+Use READ_ONCE() for this sysctl access.
 
-Fix by clamping both cp_hqd_cntl_stack_size to the actual allocated
-buffer size (q->ctl_stack_size) and cp_hqd_cntl_stack_offset to the
-clamped size before performing arithmetic and copy_to_user().
-
-This ensures we never read beyond the allocated kernel BO regardless of
-attacker-supplied MQD field values.
-
-Signed-off-by: Sunday Clement <Sunday.Clement@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260602002414.1504106-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-# Stable Backport Analysis: `drm/amdkfd: Fix OOB memory exposure in
-get_wave_state()`
-
-**Local tree:** Linux **6.18.43** (`v6.18.43-1-gc7f0dac02d232`)
-
----
-
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[drm/amdkfd]` `[Fix]` — Fix out-of-bounds kernel memory
-exposure in `get_wave_state()` for GFX9 (v9 MQD manager).
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[ipv6]` `[use]` — Add `READ_ONCE()` around the lockless
+read of `net->ipv6.sysctl.bindv6only` in `inet6_create()`.
 
-### Step 1.2: Tags
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Signed-off-by | Sunday Clement `<Sunday.Clement@amd.com>` (author) |
-| Acked-by | Alex Deucher `<alexander.deucher@amd.com>` |
-| Signed-off-by | Alex Deucher `<alexander.deucher@amd.com>` (committer)
-|
-| Fixes: | **Absent** (expected for candidate review) |
-| Cc: stable | **Absent** (expected) |
-| Reported-by: | **Absent** |
-| Link: | **Absent** |
+- **Reviewed-by:** Ido Schimmel \<idosch@nvidia.com\> — subsystem
+  reviewer endorsement
+- **Link:** https://patch.msgid.link/20260602002414.1504106-1-
+  runyu.xiao@seu.edu.cn — original v2 submission
+- **Signed-off-by:** Runyu Xiao \<runyu.xiao@seu.edu.cn\> — author
+- **Signed-off-by:** Jakub Kicinski \<kuba@kernel.org\> — networking
+  maintainer merge
+- **No Fixes:, Reported-by:, Cc: stable@, Tested-by:** in the committed
+  message (v2 dropped Fixes/stable trailers per review; v1 had both)
 
-Notable: Acked-by from AMDGPU/KFD maintainer Alex Deucher is a strong
-quality signal.
+**Notable:** v1 (lkml archive) included `Cc: stable@vger.kernel.org` and
+a KCSAN stack trace; v2 shortened the message per maintainer feedback.
 
-### Step 1.3: Body Analysis
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 **Record:**
-- **Bug:** `get_wave_state()` in `kfd_mqd_manager_v9.c` trusts
-  `cp_hqd_cntl_stack_size` and `cp_hqd_cntl_stack_offset` from the MQD
-  without bounds checking.
-- **Attack vector:** On the CRIU-restore path (`AMDKFD_IOC_CRIU_OP` /
-  `KFD_CRIU_OP_RESTORE`), the full MQD is copied from userspace via
-  `restore_mqd()` → `memcpy(m, mqd_src, sizeof(*m))`, making those
-  fields attacker-controlled.
-- **Symptoms:** Unbounded `copy_to_user()` reads beyond the allocated
-  control-stack BO, leaking adjacent GTT/kernel memory (other MQDs, ring
-  buffers, KASLR pointers). If `offset > size`, unsigned subtraction
-  underflows to ~4 GiB copy length.
-- **Root cause:** MQD fields used directly for pointer arithmetic and
-  copy size without clamping to `q->ctl_stack_size` (the actual
-  allocation size).
-- **Version info:** Not specified; affects GFX9 v9 MQD path with CWSR
-  enabled.
+- **Bug:** `inet6_create()` reads `net->ipv6.sysctl.bindv6only` without
+  synchronization while the sysctl can be written concurrently via
+  `proc_dou8vec_minmax()`.
+- **Symptom:** KCSAN data-race report (`inet6_create` read vs
+  `proc_dou8vec_minmax` write); v1 stress test toggled
+  `/proc/sys/net/ipv6/bindv6only` while creating AF_INET6 sockets.
+- **Root cause:** Missing `READ_ONCE()` on a lockless per-net sysctl
+  reader; inconsistent with adjacent sysctl reads in the same function.
+- **Version info:** v1 reproduced on Linux v6.18.21 with QEMU+KCSAN.
 
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Not disguised — explicitly labeled as a security/memory-
-safety fix. Clear OOB read → info-leak vulnerability.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Yes — presented as annotation/correctness, but it fixes a
+real KCSAN-detected data race. Not cosmetic cleanup.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Change Inventory
+### Step 2.1: INVENTORY THE CHANGES
 **Record:**
-- **File:** `drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c` (+7/−3
-  net, ~10 lines touched)
-- **Function:** `get_wave_state()` (static, v9 MQD manager)
-- **Scope:** Single-file, surgical fix
+- **Files:** `net/ipv6/af_inet6.c` only (+1/−1)
+- **Function:** `inet6_create()`
+- **Scope:** Single-file, single-line surgical fix
 
-### Step 2.2: Code Flow Change
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 **Record:**
+- **Before:** `sk->sk_ipv6only = net->ipv6.sysctl.bindv6only;` — plain
+  load during socket creation.
+- **After:** `sk->sk_ipv6only = READ_ONCE(net->ipv6.sysctl.bindv6only);`
+  — annotated atomic load.
+- **Path:** Normal socket creation via `socket(PF_INET6, ...)` →
+  `__sock_create()` → `inet6_create()`.
 
-| Hunk | Before | After |
-|------|--------|-------|
-| Variable setup | Used raw MQD fields | Declares `cntl_stack_size`,
-`cntl_stack_offset`; clamps to `q->ctl_stack_size` |
-| Size calculation for copy | `*ctl_stack_used_size =
-m->cp_hqd_cntl_stack_size - m->cp_hqd_cntl_stack_offset` (used directly
-for copy) | Recalculated as `cntl_stack_size - cntl_stack_offset` after
-clamping |
-| `copy_to_user` of stack data | `ctl_stack +
-m->cp_hqd_cntl_stack_offset`, length `*ctl_stack_used_size` | `ctl_stack
-+ cntl_stack_offset`, length clamped `*ctl_stack_used_size` |
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Record:** **Category:** Synchronization / data-race fix (KCSAN).
+**Mechanism:** Concurrent unsynchronized read in `inet6_create()` vs
+write through IPv6 sysctl handler; `READ_ONCE()` documents intentional
+lockless access and prevents problematic compiler behavior.
 
-Header fields are still populated from unclamped MQD values before the
-clamp (pre-existing behavior); the security-critical kernel read is what
-gets fixed.
-
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Buffer overflow / out-of-bounds read → kernel
-  information disclosure
-- **Mechanism:** Attacker-supplied MQD
-  `cp_hqd_cntl_stack_size`/`cp_hqd_cntl_stack_offset` drive
-  `copy_to_user()` source pointer (`mqd_ctl_stack + offset`) and length
-  (`size - offset`) without validation against the BO allocated as
-  `ALIGN(q->ctl_stack_size, PAGE_SIZE)` at MQD creation time.
-
-### Step 2.4: Fix Quality
-**Record:**
-- Fix is obviously correct: `min_t()` clamping to known allocation bound
-  is standard kernel practice.
-- Minimal, no API changes, no new features.
-- Low regression risk: only affects the data-copy path; worst case
-  slightly truncates data returned to userspace when MQD fields are
-  corrupt/malicious (correct behavior).
-- Alex Deucher noted C89 mixed-declaration issue in v1 (variables after
-  statements); the candidate diff moves declarations to function top,
-  addressing that.
+### Step 2.4: ASSESS THE FIX QUALITY
+**Record:** Obviously correct — matches
+`READ_ONCE(net->core.sysctl_txrehash)` and
+`READ_ONCE(net->ipv6.sysctl.flowlabel_reflect)` on adjacent lines.
+Minimal regression risk.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** `git blame` on lines 336–370 attributes all lines to
-`a112b91dd6349` (sunrpc backport marker commit) — this stable tree has
-flattened/squashed history, so blame is not reliable for dating the
-original code. The `get_wave_state()` function and vulnerable
-`copy_to_user` pattern are **present in the current tree**.
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:** `bindv6only` assignment introduced in **9fe516ba3fb29b**
+(Eric Dumazet, 2014, "inet: move ipv6only in sock_common").
+`flowlabel_reflect` got `READ_ONCE()` in **7d4c7533b632c** (Jan 2026,
+already in this tree); `bindv6only` on the next line was left unchanged.
 
-### Step 3.2: Fixes: Tag
-**Record:** No `Fixes:` tag present. N/A.
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** No `Fixes:` tag in committed message. v1 referenced `Fixes:
+9fe516ba3fb2` — that commit is in this tree and introduced the
+`sk_ipv6only` assignment pattern.
 
-### Step 3.3: Related File History
-**Record:** `git log --oneline --
-drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c` returns only one commit
-in this tree (history squashed). Cannot trace intermediate fixes from
-local git alone.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:** **7d4c7533b632c** — same function, same sysctl-read pattern,
+already backported to v6.18.44 (Signed-off-by: Sasha Levin). This commit
+completes the same pattern for the adjacent `bindv6only` read.
+Standalone one-liner, not part of a multi-patch series.
 
-### Step 3.4: Author Context
-**Record:** Sunday Clement (AMD). Alex Deucher Acked and committed. No
-other Sunday Clement commits found in this tree's amdkfd history
-(squashed tree).
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** Runyu Xiao has other small networking correctness fixes in
+history; not the subsystem maintainer, but patch was reviewed by Ido
+Schimmel and merged by Jakub Kicinski.
 
-### Step 3.5: Dependencies
-**Record:**
-- **Standalone fix** — no series dependency, no prerequisite commits
-  referenced.
-- Requires existing code: `get_wave_state()` v9 copy path, CRIU restore,
-  `q->ctl_stack_size` in `queue_properties`. All verified present in
-  6.18.43 tree.
-- **v9-specific:** v10+ `get_wave_state()` does not copy control stack
-  to userspace (only header metadata), so this bug is unique to the v9
-  path.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:** No dependencies. Applies standalone. `READ_ONCE` and
+`bindv6only` sysctl infrastructure exist in this tree.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:**
-- `b4 dig` failed in this environment.
-- Web search found thread: https://lists.freedesktop.org/archives/amd-
-  gfx/2026-May/144498.html
-- Submitted May 13, 2026 by Sunday Clement; Alex Deucher replied same
-  day with **Acked-by** (after noting C89 declaration placement).
-- Single-patch submission, not part of a series.
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:** Commit not in local tree; `b4 dig -c` unavailable. v1 at
+https://lkml.iu.edu/2605.3/12693.html; v2 at
+https://lists.openwall.net/linux-kernel/2026/06/02/11. v2 dropped
+Fixes/stable trailers per review. v1 included KCSAN stack trace and `Cc:
+stable@vger.kernel.org`.
 
-### Step 4.2: Reviewers
-**Record:** Alex Deucher (AMDGPU maintainer) reviewed and Acked.
-Appropriate subsystem maintainer involvement confirmed.
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** v2 CC'd davem, kuba, pabeni, dsahern, idosch, edumazet,
+horms, netdev@, linux-kernel@. Final commit has **Reviewed-by: Ido
+Schimmel**.
 
-### Step 4.3: Bug Report
-**Record:** No external bug report, syzbot, or CVE referenced. Security
-impact described in commit message and review thread.
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** v1 documents KCSAN report with full stack
+(`proc_dou8vec_minmax` write vs `inet6_create` read). Stress test: 75313
+sysctl toggles + 360000+ socket creations in 45s on v6.18.21. No syzbot
+report.
 
-### Step 4.4: Related Patches
-**Record:** No related patches in a series. v10+ not affected (no stack
-copy). No other GFX versions need this exact fix.
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** v1→v2 only; no multi-patch series. Related: Eric Dumazet's
+sysctl `READ_ONCE` annotations, including **7d4c7533b632c** already in
+this tree.
 
-### Step 4.5: Stable List Discussion
-**Record:** No stable@vger.kernel.org nomination found in the thread.
-Not a negative signal per instructions.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** Not searched separately. v1 explicitly nominated stable; v2
+dropped that trailer (message cleanup, not a technical rejection).
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `get_wave_state()` (v9), called via
-`get_wave_state_v9_4_3()` for multi-XCC GFX9.4.3+.
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** `inet6_create()` — only modified function.
 
-### Step 5.2: Callers
-**Record:**
-```
-kfd_ioctl_get_queue_wave_state()          [kfd_chardev.c:541]
-  → pqm_get_wave_state()
-[kfd_process_queue_manager.c:685]
-    → dqm->ops.get_wave_state()
-[kfd_device_queue_manager.c:2690]
-      → mqd_mgr->get_wave_state()         [kfd_mqd_manager_v9.c:336]
-```
-`AMDKFD_IOC_GET_QUEUE_WAVE_STATE` has ioctl flag `0` (no special
-capability beyond KFD device access).
+### Step 5.2: TRACE CALLERS
+**Record:** `inet6_create` registered as `.create` in `inet6_family_ops`
+(line 743). Called from generic socket creation (`__sock_create()` →
+family `create` hook). Every `socket(PF_INET6, ...)` hits this path —
+common, userspace-reachable.
 
-### Step 5.3: Callees
-**Record:** `get_mqd()`, `copy_to_user()` — the vulnerable path copies
-from `mqd_ctl_stack` (kernel BO at `mqd + PAGE_SIZE`).
+### Step 5.3: TRACE CALLEES
+**Record:** Reads per-net sysctl, assigns to `sk->sk_ipv6only` (1-bit
+bitfield in `sock_common`). `bindv6only` is `u8` in
+`include/net/netns/ipv6.h`, written via `proc_dou8vec_minmax` in
+`sysctl_net_ipv6.c`.
 
-### Step 5.4: Attack Chain (Reachability)
-**Record:**
-1. Attacker with `CAP_CHECKPOINT_RESTORE` calls `AMDKFD_IOC_CRIU_OP`
-   with `KFD_CRIU_OP_RESTORE` (`kfd_ioctl_criu`, flag
-   `KFD_IOC_FLAG_CHECKPOINT_RESTORE`).
-2. `kfd_criu_restore_queue()` → `copy_from_user()` of MQD →
-   `pqm_create_queue()` → `restore_mqd()` → `memcpy(m, mqd_src,
-   sizeof(*m))` — **full MQD including malicious stack size/offset
-   fields**.
-3. Attacker calls `AMDKFD_IOC_GET_QUEUE_WAVE_STATE` on the restored
-   queue (queue must be inactive, `cwsr_enabled`).
-4. `get_wave_state()` performs OOB `copy_to_user()`, leaking kernel
-   memory.
+### Step 5.4: FOLLOW THE CALL CHAIN
+**Record:** `socket()` syscall → `__sys_socket` → `__sock_create` →
+`inet6_create`. Concurrent writer: `write()` to
+`/proc/sys/net/ipv6/bindv6only` (mode 0644). Userspace-reachable on both
+sides.
 
-Reachable from userspace ioctl path. Poisoning requires
-`CHECKPOINT_RESTORE` capability; the leak ioctl itself does not.
-
-### Step 5.5: Similar Patterns
-**Record:** `checkpoint_mqd()` also uses `m->cp_hqd_cntl_stack_size` for
-`memcpy` (line 388) — potentially a separate concern on restore, but not
-addressed by this commit and not the `get_wave_state` leak path under
-review. v10/v11/v12 `get_wave_state()` do not perform the vulnerable
-stack copy.
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** Same function already uses `READ_ONCE()` for
+`flowlabel_reflect`, `txrehash`, and `sysctl_ip_no_pmtu_disc`. Many
+other IPv6 sysctl reads use `READ_ONCE()` in this tree. **Note:**
+`drivers/infiniband/core/cma.c:4041` still reads `bindv6only` without
+`READ_ONCE()` — out of scope for this commit.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.43)
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-### Step 6.1: Buggy Code Exists?
-**Record:** **YES.** Current tree at `kfd_mqd_manager_v9.c:350-366`:
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:** **Yes.** Local tree is **v6.18.44** (`git describe HEAD`).
+Line 229 of `net/ipv6/af_inet6.c` still has the plain read:
 
-```350:366:drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-        *ctl_stack_used_size = m->cp_hqd_cntl_stack_size -
-                m->cp_hqd_cntl_stack_offset;
-        // ...
-        if (copy_to_user(ctl_stack + m->cp_hqd_cntl_stack_offset,
-                                mqd_ctl_stack +
-m->cp_hqd_cntl_stack_offset,
-                                *ctl_stack_used_size))
+```227:230:net/ipv6/af_inet6.c
+        inet6_assign_bit(REPFLOW, sk,
+READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
+                                      FLOWLABEL_REFLECT_ESTABLISHED);
+        sk->sk_ipv6only = net->ipv6.sysctl.bindv6only;
+        sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
 ```
 
-CRIU restore infrastructure (`kfd_criu_restore_queue`, `restore_mqd`,
-`AMDKFD_IOC_CRIU_OP`) all present. Control stack BO allocated at
-`ALIGN(q->ctl_stack_size, PAGE_SIZE)` in `alloc_mqd()` (line 139).
+Bug present since 2014 in this tree. Fix not yet applied.
 
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** Single hunk in one file. No
-structural conflicts observed. Candidate diff uses top-of-function
-variable declarations (addresses maintainer C89 feedback).
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** Clean apply expected — one-line change, no surrounding
+churn. Adjacent `READ_ONCE()` lines already present from
+**7d4c7533b632c**.
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** `git log --grep="OOB"` and `--grep="get_wave_state"` in
-amdkfd returned no results. Fix is **not** already in this tree.
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** **7d4c7533b632c** fixed `flowlabel_reflect` in the same
+function but left `bindv6only` unfixed. No other fix for this specific
+race in this tree.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/gpu/drm/amd/amdkfd` — AMDGPU KFD (HSA compute).
-**IMPORTANT** subsystem: affects AMD GPU compute users (ROCm, HPC, ML
-workloads). Security-relevant ioctl path.
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** **Subsystem:** `net/ipv6` — core networking.
+**Criticality:** CORE (every IPv6 socket creation).
 
-### Step 7.2: Subsystem Activity
-**Record:** Active development (CRIU, MES, multi-XCC support visible in
-tree). CRIU restore is a relatively newer code path where insufficient
-validation is plausible.
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** Active — recent sysctl data-race annotation commits
+(`7d4c7533b632c`, route.c, exthdrs.c, icmp.c annotations) show ongoing
+lockless-sysctl hygiene work, with several already backported to 6.18.y.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** Users of AMD GFX9 GPUs (Vega20, MI50, MI100, etc.) with:
-- `CONFIG_HSA_AMD`/amdkfd enabled
-- CWSR (`cwsr_enabled`) enabled
-- CRIU checkpoint/restore used (containers, migration)
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** All users creating AF_INET6 sockets while `bindv6only`
+sysctl is being modified. Universal for IPv6-enabled systems; trigger
+requires concurrent sysctl write.
 
-### Step 8.2: Trigger Conditions
-**Record:**
-- Requires `CAP_CHECKPOINT_RESTORE` to poison MQD via CRIU restore
-- Then `AMDKFD_IOC_GET_QUEUE_WAVE_STATE` on inactive queue
-- Not every boot path — specific to CRIU restore + wave state query
-- Unprivileged direct trigger: **No** (needs CHECKPOINT_RESTORE for
-  poisoning step)
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Record:** Concurrent `socket(PF_INET6,...)` and write to
+`/proc/sys/net/ipv6/bindv6only`. Uncommon in production (sysctl rarely
+toggled), but reproducible under stress. Unprivileged users can trigger
+the read path; sysctl write requires appropriate permissions.
 
-### Step 8.3: Failure Mode Severity
-**Record:**
-- **Failure mode:** Kernel memory information disclosure to userspace
-  (KASLR pointers, adjacent BO contents)
-- **Secondary:** Integer underflow could attempt multi-GB copy
-  (potential crash/hang)
-- **Severity: HIGH** (security — info leak, KASLR bypass aid)
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:** KCSAN data-race warning; possible wrong `sk_ipv6only`
+default affecting IPv4-mapped address behavior (`IPV6_V6ONLY`). Not a
+crash/UAF/corruption. **Severity: MEDIUM** (KCSAN-detected race with
+functional misbehavior potential, not a security/crash issue).
 
-### Step 8.4: Risk-Benefit
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
 **Record:**
-- **Benefit: HIGH** — closes a real kernel memory leak on a security-
-  sensitive ioctl path
-- **Risk: VERY LOW** — 7 lines, bounds clamping only, maintainer-Acked
-- **Ratio:** Strongly favors backport
+- **Benefit:** MEDIUM — eliminates KCSAN race, aligns with established
+  sysctl reader contract, completes incomplete fix next to already-
+  backported `flowlabel_reflect` change.
+- **Risk:** VERY LOW — one-line `READ_ONCE()`, identical to proven
+  pattern.
+- **Ratio:** Favorable for stable, especially given direct precedent in
+  this tree.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: COMPILE THE EVIDENCE
 
 **FOR backport:**
-- Real security bug: OOB kernel read → info leak (KASLR, adjacent BOs)
-- Small, surgical, maintainer-Acked fix
-- Buggy code and CRIU infrastructure exist in 6.18.43
-- v9-specific `copy_to_user` of control stack is the vulnerable
-  operation
-- Integer underflow can produce ~4 GiB copy attempt
-- Defense-in-depth: kernel must not trust MQD fields without validation
+- KCSAN-reproducible data race with documented stack trace (v1)
+- One-line, obviously correct fix matching adjacent lines
+- Buggy code present in v6.18.44 since 2014
+- Same-class fix (`flowlabel_reflect`) already backported to this tree
+  in same function
+- Reviewed-by subsystem reviewer; merged by networking maintainer
+- Common code path (`socket()` for PF_INET6)
+- Applies cleanly
 
 **AGAINST backport:**
-- Requires `CAP_CHECKPOINT_RESTORE` for the poisoning step (limits
-  attack surface to CRIU-capable contexts)
-- Only affects GFX9 (v9 MQD manager), not GFX10+
-- Header metadata still uses unclamped values (minor, not the security
-  issue)
+- No crash, corruption, or security impact demonstrated
+- Race window is narrow (sysctl rarely changed at runtime)
+- `u8` sysctl — torn reads impractical on normal architectures
+- v2 dropped explicit stable nomination (likely message policy, not
+  technical rejection)
+- Functional impact (wrong default `IPV6_V6ONLY`) is low severity
 
-**Unresolved:** Exact mainline commit SHA not available in this tree;
-original introduction date of vulnerable code not determinable due to
-squashed stable history.
+**Unresolved:** No maintainer reply explicitly rejecting stable backport
+found; patch.msgid.link blocked by bot protection.
 
-### Step 9.2: Stable Rules Checklist
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — matches established pattern;
+   v1 reports build + KCSAN runtime testing.
+2. Fixes a real bug? **PASS** — KCSAN data race, reproducible.
+3. Important issue? **PASS (borderline)** — KCSAN data race in core
+   socket path; functional misbehavior possible, not crash-level.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features or APIs? **PASS**.
+6. Can apply to local tree? **PASS** — buggy code confirmed present;
+   clean apply.
 
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — `min_t()` clamping is
-standard; Acked by maintainer |
-| 2. Fixes real bug affecting users? | **PASS** — kernel memory info
-leak via ioctl |
-| 3. Important issue? | **PASS** — security (info disclosure, KASLR
-leak) |
-| 4. Small and contained? | **PASS** — 1 file, ~10 lines |
-| 5. No new features/APIs? | **PASS** — validation only |
-| 6. Can apply to local tree? | **PASS** — buggy code present, clean
-apply expected |
+### Step 9.3: EXCEPTION CATEGORIES
+**Record:** Not a device-ID/quirk/DT/build/doc exception. Standard
+correctness fix following established sysctl `READ_ONCE()` convention.
 
-### Step 9.3: Exception Categories
-**Record:** None of the hardware-quirk/DT/device-ID exceptions apply.
-This is a security bug fix.
+### Step 9.4: DECISION RATIONALE
 
-### Step 9.4: Decision Rationale
-
-For **Linux 6.18.43**, the vulnerable `get_wave_state()` code exists,
-the CRIU restore attack path is present, and the fix is a minimal
-bounds-check that closes a kernel memory information disclosure. This
-meets all stable kernel criteria for a security fix. The
-`CAP_CHECKPOINT_RESTORE` requirement limits who can trigger it, but
-container/CRIU environments are exactly where stable kernels with AMDGPU
-compute are deployed, and leaking KASLR/kernel pointers is a meaningful
-security impact.
+For **Linux 6.18.44**, this should be backported. The incomplete fix in
+**7d4c7533b632c** (already in this stable tree) added `READ_ONCE()` for
+`flowlabel_reflect` on the line immediately above but missed
+`bindv6only`. This commit closes that gap with the same one-line
+pattern, at negligible risk. While user-visible impact is low (wrong
+`IPV6_V6ONLY` default under a rare race), the KCSAN-detected data race
+is real, the fix is trivial and proven, and this tree's maintainers have
+already accepted the identical class of fix in the same function.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user query;
-  confirmed Acked-by Alex Deucher
-- **[Phase 1]** No Fixes:/Reported-by:/Cc: stable tags (expected)
-- **[Phase 2]** Read diff and current `kfd_mqd_manager_v9.c:336-370` —
-  vulnerable `copy_to_user` confirmed
-- **[Phase 2]** Verified BO allocation size uses `q->ctl_stack_size` at
-  `kfd_mqd_manager_v9.c:139`
-- **[Phase 3]** `git blame -L 336,370` — squashed history, unreliable
-  for dating
-- **[Phase 3]** `git log --oneline -- kfd_mqd_manager_v9.c` — single
-  commit (squashed tree)
-- **[Phase 3]** No Fixes: tag to follow
-- **[Phase 4]** `b4 dig` — **failed** (tool unavailable)
-- **[Phase 4]** WebFetch lore thread — Alex Deucher Acked-by confirmed
-  at https://lists.freedesktop.org/archives/amd-gfx/2026-May/144498.html
-- **[Phase 4]** No stable list nomination found
-- **[Phase 5]** Traced call chain: `kfd_ioctl_get_queue_wave_state` →
-  `pqm_get_wave_state` → `get_wave_state` (v9)
-- **[Phase 5]** Verified CRIU restore path: `kfd_criu_restore_queue` →
-  `restore_mqd` → `memcpy(m, mqd_src, sizeof(*m))` at line 422
-- **[Phase 5]** Verified v10 `get_wave_state` does NOT copy stack data
-  (only header) — bug v9-specific
-- **[Phase 6]** `git describe HEAD` → v6.18.43; `Makefile` → 6.18.43
-- **[Phase 6]** Buggy code present; fix not yet applied
-- **[Phase 6]** CRIU ioctl `KFD_CRIU_OP_RESTORE` present with
-  `KFD_IOC_FLAG_CHECKPOINT_RESTORE`
-- **[Phase 8]** Failure mode: kernel info leak, severity HIGH
+- **[Phase 1]** Parsed subject, tags, body; fetched v1 from lkml.iu.edu
+  for KCSAN details and v1 stable nomination.
+- **[Phase 2]** Confirmed single-line diff in `inet6_create()`.
+- **[Phase 3]** `git describe HEAD` → v6.18.44; `git blame` → bindv6only
+  line from 9fe516ba3fb29b (2014); `git show 7d4c7533b632c` →
+  flowlabel_reflect READ_ONCE already backported with Sasha Levin SOB.
+- **[Phase 3]** `git log --grep='bindv6only default'` → commit not in
+  tree; fix not yet applied.
+- **[Phase 4]** b4 dig requires commit hash (unavailable); used
+  lkml.iu.edu and openwall archive for v1/v2 content.
+- **[Phase 4]** v1 KCSAN stack trace and stress-test numbers verified
+  from lkml archive.
+- **[Phase 5]** `grep inet6_create` → registered at af_inet6.c:743;
+  `grep READ_ONCE(net->` in net/ipv6/ → widespread pattern.
+- **[Phase 5]** Verified `skc_ipv6only` is 1-bit bitfield; `bindv6only`
+  is u8 sysctl.
+- **[Phase 6]** Read af_inet6.c:227-230 — buggy plain read confirmed
+  present.
+- **[Phase 6]** `git diff HEAD -- net/ipv6/af_inet6.c` → no local diff;
+  fix absent.
+- **[Phase 7]** `git log --grep='annotate data-race' -- net/ipv6/` →
+  multiple similar fixes in tree.
+- **[Phase 8]** Documented trigger (socket + sysctl write) and MEDIUM
+  severity assessment.
 
-**YES**
+**YES**The background searches finished and match the earlier analysis:
 
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+- **Task 841606:** `b4 dig` on the related `flowlabel_reflect` commit
+  (`7d4c7533b632c`) found its lore thread. A grep for
+  `READ_ONCE.*bindv6only` returned no matches in this tree.
+- **Task 841607:** The `bindv6only` READ_ONCE commit is **not** in
+  v6.18.44 — `git log --grep='bindv6only default'` found nothing, and
+  `net/ipv6/af_inet6.c` still has the plain read on line 229.
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index f2dee320fada4..e3a33a92b1799 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -341,11 +341,15 @@ static int get_wave_state(struct mqd_manager *mm, void *mqd,
- {
- 	struct v9_mqd *m;
- 	struct kfd_context_save_area_header header;
-+	u32 cntl_stack_size;
-+	u32 cntl_stack_offset;
+**Verdict unchanged: YES** for backport to this 6.18.y tree — it’s a
+one-line KCSAN data-race fix that completes the same pattern already
+applied to the adjacent `flowlabel_reflect` read in `inet6_create()`.
+
+ net/ipv6/af_inet6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index f8e1dc4f3227f..1c45e1d15506c 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -226,7 +226,7 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
+ 	np->pmtudisc	= IPV6_PMTUDISC_WANT;
+ 	inet6_assign_bit(REPFLOW, sk, READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
+ 				      FLOWLABEL_REFLECT_ESTABLISHED);
+-	sk->sk_ipv6only	= net->ipv6.sysctl.bindv6only;
++	sk->sk_ipv6only	= READ_ONCE(net->ipv6.sysctl.bindv6only);
+ 	sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
  
- 	/* Control stack is located one page after MQD. */
- 	void *mqd_ctl_stack = (void *)((uintptr_t)mqd + PAGE_SIZE);
- 
- 	m = get_mqd(mqd);
-+	cntl_stack_size = min_t(u32, m->cp_hqd_cntl_stack_size,   q->ctl_stack_size);
-+	cntl_stack_offset = min_t(u32, m->cp_hqd_cntl_stack_offset, cntl_stack_size);
- 
- 	*ctl_stack_used_size = m->cp_hqd_cntl_stack_size -
- 		m->cp_hqd_cntl_stack_offset;
-@@ -361,9 +365,10 @@ static int get_wave_state(struct mqd_manager *mm, void *mqd,
- 	if (copy_to_user(ctl_stack, &header, sizeof(header.wave_state)))
- 		return -EFAULT;
- 
--	if (copy_to_user(ctl_stack + m->cp_hqd_cntl_stack_offset,
--				mqd_ctl_stack + m->cp_hqd_cntl_stack_offset,
--				*ctl_stack_used_size))
-+	*ctl_stack_used_size = cntl_stack_size - cntl_stack_offset;
-+
-+	if (copy_to_user(ctl_stack + cntl_stack_offset, mqd_ctl_stack + cntl_stack_offset,
-+					*ctl_stack_used_size))
- 		return -EFAULT;
- 
- 	return 0;
+ 	/* Init the ipv4 part of the socket since we can have sockets
 -- 
 2.53.0
 
