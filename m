@@ -1,124 +1,187 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13BA5921F3;
-	Mon, 31 Aug 2026 13:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249805921FC;
+	Mon, 31 Aug 2026 13:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184260; cv=none; b=guYohzwErlVTSvCxHkLJBR+fPXv/QYr7OYSIf7l6aJmhQL/y/8mqdq0uHO8A8N8vxo8G0SFKaiWJFglL+vjMNRi3cg8KM5eznrbCh0NBbB4KijL/DKZgUL9BX4A30EYmB8b9Ogwn1ysAAUTe5NDaFmK1wjbiaWpQTU/FJUgGoOg=
+	t=1788184260; cv=none; b=GZuIgUgtZp+nS2tBC2MvtJGBxaN5iMJysghf8SOzPeZpUVXPZd+3aHxKaj6/UJ8gJUgHqNUc0OrKx0yM/zXjpuDelJHfjejrIvzxaCI20gP3U0H8HhGdZqniSOvxLifY/HE35MQmWTTSkOgO0s1oIpiucYXHLl7kRLPcoA+ePAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184260; c=relaxed/simple;
-	bh=7HRChmrFfGxoj+hIjT8UeB3BjHu9D5NWXk4DlMLXzXI=;
+	bh=kUdUQCj2FbIsVsDmeIXnoKOSBOckzjh9N4rlF0xYr0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UvOUiigDF6jr85pqZPGGO1u+J5KJ0RY3jG2QK/slIljrI5erVU8bUCgSP0BMA7+D7u2x+4PB10savRceYp/A8YYP78NL/PW3FTNkH6QLizk8O0DWoTXgB7kO1pkQbolc0KOm4ZnpvjeKzlIEPVY2D3nFkIy4j+2fpEaAlg5Hmvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEN75hpm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=akN4m3RNJ7Y4E9MdOXrGDroOtTrdl8CTjmuNr0woOf+5ApPBKjpRc/fs2N0xFsf5EJI2+iVof5BNvwmbNesGB3i7JznBGiJDlf/ujMm1pNwAZchit9Yr4aby6wUc915bKagkViAEdgXtl9aS68fzyuqPdaZkDSUGfpAKDjHka9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1art5+o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEN75hpm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECD01F00A3E;
-	Mon, 31 Aug 2026 13:50:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184258;
-	bh=1ddNYRlzvjA+IbHZuoSgXjNf2dnTqeGfZr/H4aIQxfQ=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1art5+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCA01F00A3D;
+	Mon, 31 Aug 2026 13:50:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184259;
+	bh=BHUptxBK+67yDtgnKZp0bf1L7jCzGKxagaar+rOrSqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UEN75hpmcR7pzwb8hhUbCWR2yuaOBCanKQk5ea1zbhxojJ2YJrZAl51wAx4Gj4AbI
-	 RhZRto428ZpdTi0Uxs95y23wEDthfAOFMdFiY2br6TLO6A0S2qkChGi2fyH7eyDC27
-	 8vcE/fexAF17ilHe5pAmKUwBjjsE/o42Iqb5k1ykkWVtTibfLsOj7kLC5HJpLrUMVG
-	 zN8XPc1HcgJFa26Ev3QCnhH21183tvWOYAQTqu9FILo3L/KwEl/hJye+Evj0bLGTfo
-	 DWNFVK5Kd0y0Cwf5ABOto1lGxUzLvrpSHWIWp0VNDpU4NSoNdxTxDmgCqAjDVKer5I
-	 Wv779qxeMupRQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Ilya Dryomov <idryomov@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com,
-	linux-crypto@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] crypto: testmgr - allow authenc(hmac(sha{256,384}),cts(cbc(aes))) in FIPS mode
-Date: Mon, 31 Aug 2026 09:30:14 -0400
-Message-ID: <20260831133314.4125787-586-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=H1art5+o94Hik6ut/lQ0UYWx6CJFgSV9KA6AIAIaJGR3pFi9/utC44h8ii8UtifQB
+	 VfLgvlgxrXRnU0Y0Kh+I3n4EHs8ftDkIL7yZ3g2dl2mEsqBQtCSZ/eVIyqwcUfNsA3
+	 t/YnqE6yQCqVIMEZkRyKC4eRrxEd6W+NkZWyqmBc=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Oleg Makarenko <oleg@makarenk.ooo>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 45/99] HID: pidff: Use ARRAY_SIZE macro instead of sizeof
+Date: Mon, 31 Aug 2026 15:34:14 +0200
+Message-ID: <20260831133402.272671742@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 6b7e97752854b1f7bccc41864428ea3b55c53cde ]
+------------------
 
-hmac(sha256), hmac(sha384) and cts(cbc(aes)) algorithms have been
-marked as FIPS allowed for years.  Mark the respective authenc()
-constructions per RFC 8009 ("AES Encryption with HMAC-SHA2 for
-Kerberos 5") as such as well.
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-SP 800-57 Part 3 Rev. 1 from Jan 2015 [1] links the draft of what
-became RFC 8009 in Oct 2016 as approved in section 6.3 Procurement
-Guidance (item/recommendation 3).
+[ Upstream commit 8de2cef6d0de8cdddee8d653a18791525af26fad ]
 
-[1] https://csrc.nist.gov/pubs/sp/800/57/pt3/r1/final
+Could lead to issues when arrays won't be 8 bit fields
 
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Oleg Makarenko <oleg@makarenk.ooo>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: 67bb1074e3d2 ("HID: pidff: fix OOB write when hid->inputs is empty")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/hid/usbhid/hid-pidff.c |   48 ++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -158,20 +158,20 @@ struct pidff_usage {
+ struct pidff_device {
+ 	struct hid_device *hid;
+ 
+-	struct hid_report *reports[sizeof(pidff_reports)];
++	struct hid_report *reports[ARRAY_SIZE(pidff_reports)];
+ 
+-	struct pidff_usage set_effect[sizeof(pidff_set_effect)];
+-	struct pidff_usage set_envelope[sizeof(pidff_set_envelope)];
+-	struct pidff_usage set_condition[sizeof(pidff_set_condition)];
+-	struct pidff_usage set_periodic[sizeof(pidff_set_periodic)];
+-	struct pidff_usage set_constant[sizeof(pidff_set_constant)];
+-	struct pidff_usage set_ramp[sizeof(pidff_set_ramp)];
+-
+-	struct pidff_usage device_gain[sizeof(pidff_device_gain)];
+-	struct pidff_usage block_load[sizeof(pidff_block_load)];
+-	struct pidff_usage pool[sizeof(pidff_pool)];
+-	struct pidff_usage effect_operation[sizeof(pidff_effect_operation)];
+-	struct pidff_usage block_free[sizeof(pidff_block_free)];
++	struct pidff_usage set_effect[ARRAY_SIZE(pidff_set_effect)];
++	struct pidff_usage set_envelope[ARRAY_SIZE(pidff_set_envelope)];
++	struct pidff_usage set_condition[ARRAY_SIZE(pidff_set_condition)];
++	struct pidff_usage set_periodic[ARRAY_SIZE(pidff_set_periodic)];
++	struct pidff_usage set_constant[ARRAY_SIZE(pidff_set_constant)];
++	struct pidff_usage set_ramp[ARRAY_SIZE(pidff_set_ramp)];
++
++	struct pidff_usage device_gain[ARRAY_SIZE(pidff_device_gain)];
++	struct pidff_usage block_load[ARRAY_SIZE(pidff_block_load)];
++	struct pidff_usage pool[ARRAY_SIZE(pidff_pool)];
++	struct pidff_usage effect_operation[ARRAY_SIZE(pidff_effect_operation)];
++	struct pidff_usage block_free[ARRAY_SIZE(pidff_block_free)];
+ 
+ 	/*
+ 	 * Special field is a field that is not composed of
+@@ -194,10 +194,10 @@ struct pidff_device {
+ 	/* Special field in effect_operation */
+ 	struct hid_field *effect_operation_status;
+ 
+-	int control_id[sizeof(pidff_device_control)];
+-	int type_id[sizeof(pidff_effect_types)];
+-	int status_id[sizeof(pidff_block_load_status)];
+-	int operation_id[sizeof(pidff_effect_operation_status)];
++	int control_id[ARRAY_SIZE(pidff_device_control)];
++	int type_id[ARRAY_SIZE(pidff_effect_types)];
++	int status_id[ARRAY_SIZE(pidff_block_load_status)];
++	int operation_id[ARRAY_SIZE(pidff_effect_operation_status)];
+ 
+ 	int pid_id[PID_EFFECTS_MAX];
+ 
+@@ -642,7 +642,7 @@ static void pidff_set_device_control(str
+ 		hid_dbg(pidff->hid, "DEVICE_CONTROL is a bitmask\n");
+ 
+ 		/* Clear current bitmask */
+-		for (i = 0; i < sizeof(pidff_device_control); i++) {
++		for (i = 0; i < ARRAY_SIZE(pidff_device_control); i++) {
+ 			index = pidff->control_id[i];
+ 			if (index < 1)
+ 				continue;
+@@ -1002,7 +1002,7 @@ static int pidff_check_usage(int usage)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < sizeof(pidff_reports); i++)
++	for (i = 0; i < ARRAY_SIZE(pidff_reports); i++)
+ 		if (usage == (HID_UP_PID | pidff_reports[i]))
+ 			return i;
+ 
+@@ -1121,7 +1121,7 @@ static int pidff_find_special_keys(int *
+ 
+ #define PIDFF_FIND_SPECIAL_KEYS(keys, field, name) \
+ 	pidff_find_special_keys(pidff->keys, pidff->field, pidff_ ## name, \
+-		sizeof(pidff_ ## name))
++		ARRAY_SIZE(pidff_ ## name))
+ 
+ /*
+  * Find and check the special fields
+@@ -1196,7 +1196,7 @@ static int pidff_find_special_fields(str
+ 
+ 	if (PIDFF_FIND_SPECIAL_KEYS(status_id, block_load_status,
+ 				    block_load_status) !=
+-			sizeof(pidff_block_load_status)) {
++			ARRAY_SIZE(pidff_block_load_status)) {
+ 		hid_err(pidff->hid,
+ 			"block load status identifiers not found\n");
+ 		return -1;
+@@ -1204,7 +1204,7 @@ static int pidff_find_special_fields(str
+ 
+ 	if (PIDFF_FIND_SPECIAL_KEYS(operation_id, effect_operation_status,
+ 				    effect_operation_status) !=
+-			sizeof(pidff_effect_operation_status)) {
++			ARRAY_SIZE(pidff_effect_operation_status)) {
+ 		hid_err(pidff->hid, "effect operation identifiers not found\n");
+ 		return -1;
+ 	}
+@@ -1220,7 +1220,7 @@ static int pidff_find_effects(struct pid
+ {
+ 	int i;
+ 
+-	for (i = 0; i < sizeof(pidff_effect_types); i++) {
++	for (i = 0; i < ARRAY_SIZE(pidff_effect_types); i++) {
+ 		int pidff_type = pidff->type_id[i];
+ 
+ 		if (pidff->set_effect_type->usage[pidff_type].hid !=
+@@ -1270,7 +1270,7 @@ static int pidff_find_effects(struct pid
+ #define PIDFF_FIND_FIELDS(name, report, strict) \
+ 	pidff_find_fields(pidff->name, pidff_ ## name, \
+ 		pidff->reports[report], \
+-		sizeof(pidff_ ## name), strict)
++		ARRAY_SIZE(pidff_ ## name), strict)
+ 
+ /*
+  * Fill and check the pidff_usages
 
-The background git searches finished and match what we already had:
-
-- **Subject search** — No commit with “allow authenc” in this tree.
-  Related hits are krb5/CTS/RFC 8009 work (`d1775a177f7f3`, SUNRPC RFC
-  8009 KUnit tests, etc.).
-- **Krb5 test vectors** — Added in `1b80b6f446ed2` (“crypto/krb5: Test
-  manager data”), committed **2025-03-02**. That’s when the two
-  `authenc(...,cts(cbc(aes)))` entries landed without `fips_allowed`.
-- **Commit hash search** — Ilya Dryomov’s testmgr patch isn’t in 6.18.44
-  yet; only his unrelated Ceph/RBD commits show up.
-
-That supports the earlier **YES** verdict: the gap is in this tree, the
-fix is a small metadata correction, and it unblocks RFC 8009 Kerberos
-crypto in FIPS mode.
-
- crypto/testmgr.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/crypto/testmgr.c b/crypto/testmgr.c
-index 6a490aaa71b9a..9a4d75782a486 100644
---- a/crypto/testmgr.c
-+++ b/crypto/testmgr.c
-@@ -4264,6 +4264,7 @@ static const struct alg_test_desc alg_test_descs[] = {
- 		.alg = "authenc(hmac(sha256),cts(cbc(aes)))",
- 		.generic_driver = "authenc(hmac-sha256-lib,cts(cbc(aes-generic)))",
- 		.test = alg_test_aead,
-+		.fips_allowed = 1,
- 		.suite = {
- 			.aead = __VECS(krb5_test_aes128_cts_hmac_sha256_128)
- 		}
-@@ -4293,6 +4294,7 @@ static const struct alg_test_desc alg_test_descs[] = {
- 		.alg = "authenc(hmac(sha384),cts(cbc(aes)))",
- 		.generic_driver = "authenc(hmac-sha384-lib,cts(cbc(aes-generic)))",
- 		.test = alg_test_aead,
-+		.fips_allowed = 1,
- 		.suite = {
- 			.aead = __VECS(krb5_test_aes256_cts_hmac_sha384_192)
- 		}
--- 
-2.53.0
 
