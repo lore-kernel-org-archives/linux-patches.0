@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD8B5875C5;
-	Mon, 31 Aug 2026 13:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40455883C3;
+	Mon, 31 Aug 2026 13:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184215; cv=none; b=HBF02+sSgiBBG3pV74fuKo+RfCt66GVuNPkTQoPRLvtuAJIwr+lpEF1lVcjdFVre1dwEy8ycYAASuWNBK6YXwgeo6BqYuwT+yKgJilHAFjQkVwu0cYineLfMrqPWnAyNAlfE3CYtrZ9sidb8dqeWw4HmncHTWKgYJcG4jP6xWxg=
+	t=1788184217; cv=none; b=MrYaOIGQfHgdwhYBz3TWjg23U9SjGESw9+3vtTsOle/DgUMJvbopcSLKIyxblyZjcIamp70o059TxB5ks0KQAix7t2xKSdG7+h1L1sxu9+rTqjdjsGNG5iQJMDZllKQH+YK5Keg89PjdZlKkEI97q1NeBypwPhiCpjmLCgrA7WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184215; c=relaxed/simple;
-	bh=uHOsRr9AlSAAS6Gx0GwtXMFvJIT2ss8lf1xq9+LNe5Q=;
+	s=arc-20240116; t=1788184217; c=relaxed/simple;
+	bh=YCF+eNE6+T2D6QqWAcz1qWyE8sySlbHtUEAfsOBzrRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N6frd+431Sx4e/Lw2aFJ+F7BsSkFXPQKO3RH6YjqNrdEMCi2s5DlKkadVIZ5xToO9/UlbOH3s5p5SlV0ve/v3b3qFLFGHAExNk2DAX6oOzE5JiAz578YBvYFUVIJWUZxCztlDHP6sA5SEbWESE+xdFikuuGWThRGFpULefZykHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/ehLg/c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XPYzpqirDUB9qhrc2ZBzZwfn4IVa04VxJYmltz24DmsnA+S59yPrvQHjYN3xFodVBa2GkhgrTqzG4qkMbyM7t3rnCbGO5NkbWOSalQL+nNdUW6zWUlX6W/WcootJXLdTKWz1co3aTc1zsJUscN4eCmEqT4HUD9WKzGu3ECgcGCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TTiAIGfP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/ehLg/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694B81F000E9;
-	Mon, 31 Aug 2026 13:50:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TTiAIGfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6427E1F00ACF;
+	Mon, 31 Aug 2026 13:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184213;
-	bh=fk5hVOIDrn15yQGOza9z7T9PpSYIbdA5T28sdCLMpMI=;
+	s=k20260515; t=1788184214;
+	bh=X5JSczIqqrXgLmX9GdYXKaTc+21EA5Z4/dPe2QB8BoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/ehLg/cS1IXx6e4+xeRmAAnCw4YEMUiPP48s8DxPwH0jmAy2BQkCvRAudD8JKvlp
-	 Y4CNxo0kQqLeOOjgPm4e7X4R3cv8OpXErZOjdKIRrHtbLoZzJTSR3lseN/yHf6UFfw
-	 EL9EkQZgujD5Jh2+4bUBqdrC0vrhJtjl2Qv5KBM49Z7MfDg9nQ6ntm2ehH1mt0RX0j
-	 mLHecwsXRWy1m7YyXsZiC2XAkJCQbL24wo+Oy0lJn++2v+0TYWr6GsaqUy0+Q46aC5
-	 dOr750i3Uul6r7hjKCPjO4GoLW8Wl5CeaBVjBqqBrcRCMwsFxGW45GQMHxmWAhkG3h
-	 QcWLdwj7WsKiw==
+	b=TTiAIGfPPRTZ8/JPHmhoWUrWlY8AR/pds2Bxsg9RoPikORVEKGmQE0Mw+ywZPxMhh
+	 XT6uNOHJ/vtp1lbikRqs1HuAFLToEEEOI+HDOOqo0ifBkE2oI4bOjFDZrZppGTLZgG
+	 JlgWhLONLHlW8GSjC3IouJBjHJ5mDeADN7+uUUD5XnezOpZGfYrNqcvEZoFfYRZjb+
+	 U67CJx/Nc9bNNCSbXyoMHoKiteg+c308XzU7FBvVUii8pdtQVtIFwx7hUyhA8YCVlR
+	 dRsnzOPHtUQrI2yxfM+HM69cOKYb+PcgiwVLWsWQgEEI4uN9SPOSg0S23iMNmqv5Dr
+	 AGR6Mx7eC6bnw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dominik Kaszewski <dominik.kaszewski@amd.com>,
+Cc: Ovidiu Bunea <ovidiu.bunea@amd.com>,
 	Wenjing Liu <wenjing.liu@amd.com>,
-	Chenyu Chen <chen-yu.chen@amd.com>,
+	James Lin <pinglei.lin@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
 	harry.wentland@amd.com,
@@ -42,9 +42,9 @@ Cc: Dominik Kaszewski <dominik.kaszewski@amd.com>,
 	amd-gfx@lists.freedesktop.org,
 	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] drm/amd/display: Fix DPMS using partially updated pipe context
-Date: Mon, 31 Aug 2026 09:29:47 -0400
-Message-ID: <20260831133314.4125787-559-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/display: Find link encoder for flexible DIG mapping cases
+Date: Mon, 31 Aug 2026 09:29:48 -0400
+Message-ID: <20260831133314.4125787-560-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -60,415 +60,364 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominik Kaszewski <dominik.kaszewski@amd.com>
+From: Ovidiu Bunea <ovidiu.bunea@amd.com>
 
-[ Upstream commit 6fd45b5d8955bbc362ac3dfe181529f7b1cfd224 ]
+[ Upstream commit 74ef54e656e7006cfc215e960b0cf2720a7a3d48 ]
 
-[Why & How]
-DPMS functions should not use partially updated pipe context passed
-as argument of commit_planes_do_stream_update, and instead use the
-one in current_state, which is guaranteed to be the most recently
-programmed HW config.
+[why & how]
+link->link_enc can only be used to identify the link's link encoder
+when the link is not permitted to use flexible link encoder
+assignments.
+
+Use the correct function for identifying link encoder and add
+function pointer guards before calling them.
 
 Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Dominik Kaszewski <dominik.kaszewski@amd.com>
-Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Signed-off-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
+Signed-off-by: James Lin <pinglei.lin@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `drm/amd/display: Fix DPMS using partially
-updated pipe context`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.43` (Makefile: 6.18.43, `DC_VER` "3.2.351")
+**Step 1.1 — Subject line**
+Record: `[drm/amd/display]` `[Find]` — Correct link-encoder lookup in
+`power_down_encoders()` for flexible DIG mapping.
 
----
+**Step 1.2 — Tags**
+Record:
+- Reviewed-by: Wenjing Liu \<wenjing.liu@amd.com\>
+- Signed-off-by: Ovidiu Bunea, James Lin, Alex Deucher
+- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable tags
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.3 — Body**
+Record:
+- Bug: `link->link_enc` is only valid when the link does not use
+  flexible link-encoder assignment.
+- Symptom: Wrong encoder used (or dereferenced) during encoder power-
+  down.
+- Root cause: `power_down_encoders()` used `link->link_enc` instead of
+  the dynamic lookup API.
+- Fix: Use `link_enc_cfg_get_link_enc(link)` and guard function pointers
+  before calling them.
 
-### Step 1.1: Subject Line
-**Record:** `[drm/amd/display]` `[Fix]` — DPMS operations must not use a
-partially updated `pipe_ctx` from the in-flight commit `context`; they
-should use the pipe context from `current_state` (last programmed HW
-config).
-
-### Step 1.2: Tags
-**Record:**
-| Tag | Value |
-|-----|-------|
-| Reviewed-by | Wenjing Liu \<wenjing.liu@amd.com\> |
-| Signed-off-by | Dominik Kaszewski, Chenyu Chen, Alex Deucher |
-| Fixes: | **Not present** (expected for candidate review) |
-| Reported-by: | **Not present** |
-| Cc: stable | **Not present** (not a negative signal) |
-| Link: | **Not present** |
-
-Notable: AMD display reviewer sign-off; no syzbot/user bug report.
-
-### Step 1.3: Body Analysis
-**Record:**
-- **Bug:** `commit_planes_do_stream_update()` receives `context`
-  (new/partial state). DPMS handlers were passed `pipe_ctx` from that
-  partial state instead of the HW-backed state.
-- **Symptom:** DPMS off/on and related link blanking can target wrong or
-  unprogrammed hardware resources during commits that also update stream
-  state.
-- **Root cause:** DPMS manipulates live hardware (blank stream, disable
-  audio, link training) but was using a pipe context that may not yet
-  reflect programmed HW — the same class of problem the adjacent test-
-  pattern comment already documents.
-- **Version info:** Patch submitted April 15, 2026 as part of "DC
-  Patches Apr 20 2026" (patch 17/19).
-
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — explicitly labeled a fix. Correctness bug in display
-power-management path, not cosmetic cleanup.
+**Step 1.4 — Hidden bug fix?**
+Record: Yes. Although the subject does not say "fix", the body and diff
+clearly address incorrect encoder identification and missing NULL guards
+— a real correctness/crash bug, not cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/gpu/drm/amd/display/dc/core/dc.c` (+14 / −7)
-- **Function:** `commit_planes_do_stream_update()`
-- **Scope:** Single-file, surgical fix in one function
+**Step 2.1 — Inventory**
+Record:
+- File: `drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c` (+7
+  / -5)
+- Function: `power_down_encoders()`
+- Scope: Single-file, surgical fix
 
-### Step 2.2: Code Flow Change
-**Record:**
+**Step 2.2 — Code flow**
+Record:
+- Hunk 1: `link->link_enc` → `link_enc_cfg_get_link_enc(link)` — uses
+  dynamically assigned encoder for flexible-mapping links.
+- Hunk 2: `disable_output` only called when `link_enc` is non-NULL.
+- Hunk 3: FEC disable wrapped in checks for `link_enc`,
+  `fec_set_enable`, and `fec_set_ready`.
 
-| Hunk | Before | After |
-|------|--------|-------|
-| DPMS off | `set_dpms_off(pipe_ctx)` from `context` |
-`set_dpms_off(dpms_pipe_ctx)` from `dc->current_state` |
-| Audio disable | `az_disable` via `context` pipe_ctx | via
-`current_state` pipe_ctx (with local `audio` pointer) |
-| DPMS on | `set_dpms_on(dc->current_state, pipe_ctx)` |
-`set_dpms_on(dc->current_state, dpms_pipe_ctx)` |
-| OCS workaround | `set_dpms_on` + link checks on `context` pipe_ctx |
-same operations on `current_state` pipe_ctx |
+**Step 2.3 — Bug mechanism**
+Record:
+- Category: Logic/correctness + NULL pointer dereference.
+- For `is_dig_mapping_flexible` links (USB4/DPIA), `link->link_enc` is
+  not the assigned encoder; DPIA link construction even has `/* TODO:
+  Create link encoder */` and never sets `link->link_enc`.
+- FEC disable added by commit `5f0c5775d4eeb` calls
+  `link_enc->funcs->...` without NULL checks on a potentially NULL/wrong
+  encoder.
 
-**Execution path:** Stream update commits where
-`stream_update->dpms_off` is set, or the `blank_stream_on_ocs_change` DP
-workaround fires — during `commit_planes_for_stream()` before front-end
-programming completes.
-
-### Step 2.3: Bug Mechanism
-**Record:** **Logic / correctness fix** — wrong data source for hardware
-operations.
-
-`link_set_dpms_off()` and `link_set_dpms_on()` dereference
-`pipe_ctx->stream_res` (stream encoders, timing generator),
-`pipe_ctx->link_res`, and `pipe_ctx->link_config` to blank streams,
-disable audio, and manage DP links. When `context` is only partially
-built, those fields may not match what's actually programmed. The test-
-pattern block immediately above already states front-end changes are not
-yet applied at this stage.
-
-### Step 2.4: Fix Quality
-**Record:**
-- **Obviously correct:** Yes — `set_dpms_on()` already takes
-  `dc->current_state`; only the `pipe_ctx` argument was wrong. Fix
-  aligns DPMS with that intent.
-- **Minimal:** Yes — one new pointer, no API changes.
-- **Regression risk:** Very low — uses the same pipe index `j` already
-  being iterated; reviewed by AMD display engineer.
+**Step 2.4 — Fix quality**
+Record: Obviously correct; matches the pattern already used at line 1163
+in the same file and throughout the DC subsystem. Minimal regression
+risk — for non-flexible links, `link_enc_cfg_get_link_enc()` returns
+`link->link_enc`.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:** Buggy DPMS lines (3693–3714) blame to `5d324e5159d9e`
-(shallow tree limits deeper history). Function and buggy pattern are
-present in this checkout.
+**Step 3.1 — Blame**
+Record: Lines 1734–1748 introduced/modified by `5f0c5775d4eeb` ("Disable
+FEC when powering down encoders", Jan 2026). Earlier
+`power_down_encoders()` structure dates to `19eef1d98eeda`. The FEC
+addition created the vulnerable path in this tree.
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no `Fixes:` tag.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no Fixes: tag present.
 
-### Step 3.3: Related File History
-**Record:** Repo is shallow (~11,547 commits). `dc.c` shows only two
-recent commits in this clone. Patch is **17/19** in "DC Patches Apr 20
-2026" but this specific change only touches the DPMS block in `dc.c` and
-does not depend on other series entries (dcn42 clock gating, power
-module, etc.).
+**Step 3.3 — Related file history**
+Record: FEC commit `5f0c5775d4eeb` (upstream `8cee62904caf9`) is in this
+6.18.y tree and is the direct prerequisite/introducer of the buggy code.
+`link_enc_cfg_get_link_enc()` and `is_dig_mapping_flexible`
+infrastructure are present.
 
-### Step 3.4: Author Context
-**Record:** Dominik Kaszewski (AMD display). Reviewed by Wenjing Liu
-(AMD). Signed off by Alex Deucher (AMD DRM maintainer). Author has other
-DC display work in the broader ecosystem.
+**Step 3.4 — Author context**
+Record: Ovidiu Bunea also authored the FEC power-down commit. Alex
+Deucher is AMD DRM maintainer. Patch is standalone within a 17-patch AMD
+DC batch series.
 
-### Step 3.5: Dependencies
-**Record:** **Standalone.** No prerequisite commits required; only
-changes which `pipe_ctx` pointer DPMS uses. Applies cleanly against
-current `dc.c` at lines 3693–3714.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original Discussion
-**Record:** Found at https://lists.freedesktop.org/archives/amd-
-gfx/2026-April/142846.html (patch 17/19). No replies on that page; no
-explicit stable nomination found.
-
-### Step 4.2: Reviewers
-**Record:** Cover letter CC'd AMD display maintainers (Harry Wentland,
-Leo Li, Aurabindo Pillai, Roman Li, etc.). Patch has `Reviewed-by:
-Wenjing Liu`.
-
-### Step 4.3: Bug Reports
-**Record:** No external bug report, syzbot, or KASAN report. Internal
-AMD correctness fix.
-
-### Step 4.4: Series Context
-**Record:** Part of 19-patch DC drop (Apr 2026). This patch is
-independent — other series items (power module, dcn42 changes, double-
-free fix) are separate. Patch 5 ("Align HWSS fast commit path with
-legacy path") may increase exposure but is not a prerequisite for this
-fix's correctness.
-
-### Step 4.5: Stable List
-**Record:** lore.kernel.org stable search blocked (bot protection). No
-stable discussion found via cover letter or patch page.
+**Step 3.5 — Dependencies**
+Record: No code dependencies on other patches in the series. Uses
+existing `link_enc_cfg_get_link_enc()` from `link_enc_cfg.h`, which is
+already included in `dce110_hwseq.c`. Standalone backport.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 4: Mailing List and External Research
 
-### Step 5.1: Key Functions
-**Record:** `commit_planes_do_stream_update()` — modified. Calls
-`link_set_dpms_off()` / `link_set_dpms_on()` via `dc->link_srv`.
+**Step 4.1 — Original discussion**
+Record: [PATCH 12/17] on amd-gfx, Apr 29 2026 —
+https://lists.freedesktop.org/archives/amd-gfx/2026-April/143792.html.
+Part of "DC Patches May 4 2026" series
+(https://lists.freedesktop.org/archives/amd-gfx/2026-April/143780.html).
+No replies or stable nominations found in the thread.
 
-### Step 5.2: Callers
-**Record:** `commit_planes_do_stream_update()` called from
-`commit_planes_for_stream()` (line 4201), which is invoked from
-`update_planes_and_stream_v2()` / v3 commit paths — the standard display
-commit pipeline used by `dc_commit_updates_for_stream()`.
+**Step 4.2 — Reviewers**
+Record: Reviewed-by Wenjing Liu (AMD display). Signed-off-by Alex
+Deucher (maintainer). `b4 dig -c 8cee62904caf9` found no lore match for
+the related FEC commit.
 
-### Step 5.3: Callees
-**Record:** `set_dpms_off` → `link_set_dpms_off()` (blanks stream,
-disables audio, DP link teardown). `set_dpms_on` → `link_set_dpms_on()`
-(link enable, infoframes, stream attribute setup). Both require valid
-`stream_res` and `link_res` from programmed HW.
+**Step 4.3 — Bug report**
+Record: No external bug report. Related FEC commit describes "no light
+up" when FEC disable targets the wrong DIG encoder — same underlying
+class of failure.
 
-### Step 5.4: Reachability
-**Record:**
-- `link_set_all_streams_dpms_off_for_link()` →
-  `dc_commit_updates_for_stream()` with `stream_update.dpms_off` (link
-  hotplug/detection paths)
-- DPMS during atomic commits when stream updates include power-state
-  changes
-- `blank_stream_on_ocs_change` workaround for DP output color-space
-  changes
+**Step 4.4 — Series context**
+Record: Patch 12/17 in a 17-patch AMD internal batch (121 files total).
+This patch alone touches one function in one file and is independent of
+the larger series changes.
 
-**Userspace reachable:** Yes — display blank/unblank, suspend/resume,
-hotplug, and mode commits on AMDGPU systems with `CONFIG_DRM_AMD_DC`.
-
-### Step 5.5: Similar Patterns
-**Record:** Test-pattern handling in the same function (lines 3670–3690)
-explicitly documents that only `current_state` can be used for HW
-operations at this commit stage. DPMS was inconsistent with that
-established pattern.
+**Step 4.5 — Stable list**
+Record: lore.kernel.org/stable search blocked by bot protection; no
+stable discussion found.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (v6.18.43)
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Buggy Code Present?
-**Record:** **YES.** Lines 3693–3714 in
-`drivers/gpu/drm/amd/display/dc/core/dc.c` use `pipe_ctx` from `context`
-for all DPMS operations. The fix is **not** yet applied in this tree.
+**Step 5.1 — Key functions**
+Record: `power_down_encoders()`, `link_enc_cfg_get_link_enc()`,
+`dce110_power_down()`.
 
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected** — single hunk, no structural
-conflicts visible. Line numbers differ slightly from lore patch (3898 vs
-3693) but code matches.
+**Step 5.2 — Callers**
+Record: `power_down_encoders()` ← `power_down_all_hw_blocks()` ← display
+mode-commit path (~line 2013) and `dce110_power_down()` (~line 2678).
+`dce110_power_down` is the `.power_down` hook for all DCN generations
+(dcn10 through dcn401).
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent fix found via grep or log search in this tree.
+**Step 5.3 — Callees**
+Record: `link_enc_cfg_get_link_enc()`, `blank_dp_stream()`,
+`disable_output()`, `fec_set_enable()`, `fec_set_ready()`.
 
----
+**Step 5.4 — Reachability**
+Record: Triggered on display mode changes, suspend/resume, and DC power-
+down — common user-visible paths. Affects systems with USB4/DPIA or
+other flexible DIG-mapping links.
 
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem & Criticality
-**Record:** `drivers/gpu/drm/amd/display` — **IMPORTANT** (AMD GPU
-display stack; affects all AMDGPU users with DC enabled, not core
-kernel).
-
-### Step 7.2: Activity
-**Record:** Actively maintained; recent commit in tree is DMUB aux
-validation fix (`1ecde19bfce65`).
+**Step 5.5 — Similar patterns**
+Record: Same file line 1163, `link_dp_phy.c` lines 149–187, and many
+other DC paths already use `link_enc_cfg_get_link_enc()` with NULL
+guards. `power_down_encoders()` was an outlier.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## Phase 6: Cross-Reference Against Local Tree (6.18.43)
 
-### Step 8.1: Who Is Affected
-**Record:** AMDGPU users with `CONFIG_DRM_AMD_DC` — laptops/desktops
-with AMD GPUs using the modern display core (DCN2+).
+**Step 6.1 — Buggy code present?**
+Record: Yes. Current tree at lines 1734–1748 still uses `link->link_enc`
+without NULL guards. `is_dig_mapping_flexible`,
+`link_enc_cfg_get_link_enc()`, and FEC power-down code are all present.
 
-### Step 8.2: Trigger Conditions
-**Record:** Any commit that includes a `stream_update` with `dpms_off`
-(or OCS color-space workaround) while `context` has partially updated
-pipe state. Common during screen blank/unblank, link power events, and
-combined stream updates.
+**Step 6.2 — Backport difficulty**
+Record: Clean apply expected. `link_enc_cfg.h` already included; no
+structural conflicts.
 
-### Step 8.3: Failure Mode Severity
-**Record:**
-- Display fails to blank or wake correctly
-- Wrong encoder/link programmed → black screen, flicker
-- Audio endpoint disable on wrong resource
-- Potential NULL/invalid `stream_res` dereference if partial context
-  lacks populated resources
-
-**Severity: HIGH** (user-visible display failures; possible oops on bad
-pointers — not confirmed by report but plausible from code inspection of
-`link_set_dpms_off()`).
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH — fixes real DPMS correctness on a widely used
-  driver path
-- **Risk:** VERY LOW — 7-line logical change, AMD-reviewed, mirrors
-  existing in-function pattern
-- **Ratio:** Strongly favors backport
+**Step 6.3 — Related fixes already present?**
+Record: FEC power-down commit `5f0c5775d4eeb` is present; this follow-up
+fix is not.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem Context
 
-### Step 9.1: Evidence Summary
+**Step 7.1 — Subsystem/criticality**
+Record: `drivers/gpu/drm/amd/display` — IMPORTANT (AMD GPU display
+driver, affects display output on affected hardware).
 
-**FOR backport:**
-- Real correctness bug in DPMS HW programming path
-- User-visible impact (screen power, suspend/resume, hotplug)
-- Small, surgical, AMD-reviewed fix
-- Buggy code confirmed present in v6.18.43
-- Standalone — no series dependencies
-- Consistent with documented constraint in adjacent test-pattern code
+**Step 7.2 — Activity**
+Record: Actively maintained; recent FEC power-down commit in this tree.
 
-**AGAINST backport:**
-- No user/syzbot report (internal discovery)
-- Part of larger DC patchset (but this hunk is independent)
-- AMDGPU-specific, not universal kernel path
+---
 
-**Unresolved:** Exact kernel version that introduced the buggy DPMS-
-in-`commit_planes_do_stream_update` pattern (shallow history). Does not
-affect the decision for this tree where the bug exists.
+## Phase 8: Impact and Risk Assessment
 
-### Step 9.2: Stable Rules Checklist
+**Step 8.1 — Who is affected**
+Record: AMD GPU users with flexible DIG link-encoder mapping (USB4/DPIA
+links confirmed; `is_dig_mapping_flexible` set in `construct_dpia()`).
+All DCN-based AMD GPUs use `dce110_power_down`.
 
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — logic is clear;
-Reviewed-by from AMD display |
-| 2. Fixes a real user-affecting bug? | **PASS** — DPMS uses wrong pipe
-context during commits |
-| 3. Important issue? | **PASS** — display blank/wake failures, possible
-crash |
-| 4. Small and contained? | **PASS** — 1 file, ~14 lines |
-| 5. No new features/APIs? | **PASS** |
-| 6. Applies to local tree? | **PASS** — buggy code present, clean apply
-expected |
+**Step 8.2 — Trigger conditions**
+Record: Display power-down during mode changes, suspend/resume, or DC
+teardown when FEC was enabled or a flexible-mapping link needs encoder
+operations. Moderately common on affected hardware.
 
-### Step 9.3: Exception Categories
-**Record:** None (not a device ID, quirk, DT, build, or docs fix) —
-standard bug fix.
+**Step 8.3 — Failure mode**
+Record:
+- Wrong encoder → FEC not disabled on correct DIG → display fails to
+  light up (documented in related FEC commit).
+- NULL `link_enc` on DPIA links → kernel oops from
+  `link_enc->funcs->...`.
+- Severity: HIGH (display failure or crash).
 
-### Step 9.4: Decision Rationale
-For **v6.18.43**, the buggy DPMS path exists and the fix is a minimal,
-obviously correct correction that ensures display power-management
-operations use the hardware-backed `current_state` pipe context rather
-than a partially built commit context. This prevents incorrect blanking,
-wake failures, and potential resource dereference on a common AMDGPU
-commit path. The fix is self-contained and low-risk.
+**Step 8.4 — Risk/benefit**
+Record: Benefit HIGH for affected hardware. Risk LOW — 12-line change,
+follows established API, backward-compatible for fixed-mapping links.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Evidence FOR backport:**
+- Fixes real display bug and potential NULL dereference
+- Small, surgical, obviously correct
+- Prerequisites (`link_enc_cfg_get_link_enc`, FEC power-down) exist in
+  6.18.y
+- Reviewed by AMD display engineer; signed off by maintainer
+- Follow-up to an already-backported FEC fix (`5f0c5775d4eeb`)
+- Matches established patterns throughout the same subsystem
+
+**Evidence AGAINST:**
+- Only affects flexible DIG-mapping hardware (primarily USB4/DPIA), not
+  all AMD users
+- Part of a large AMD batch series (but this patch is self-contained)
+
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** (code review by AMD; pattern
+   used elsewhere; no runtime test tag)
+2. Fixes a real bug? **PASS**
+3. Important issue? **PASS** (display failure / possible oops)
+4. Small and contained? **PASS** (one function, one file)
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS**
+
+**Exception category:** Not applicable (hardware quirk/workaround
+category does not apply; this is a driver logic fix).
+
+---
+
+## Problem Summary
+
+Commit `5f0c5775d4eeb` added FEC disable logic to
+`power_down_encoders()` using `link->link_enc` directly. For links with
+flexible DIG encoder assignment, that field is not the currently
+assigned encoder — and for USB4/DPIA links it is never created at all
+(`construct_dpia()` has a "TODO: Create link encoder" comment). The
+result is either operating on the wrong hardware block (display does not
+light up) or dereferencing NULL (kernel oops). This commit corrects the
+lookup and adds the guards that other DC code paths already use.
+
+For the 6.18.y tree specifically: the buggy code and all prerequisites
+are present, the FEC fix is already backported, and this small follow-up
+completes that fix for flexible-mapping cases.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user-provided diff
-  and lore page
-- **[Phase 2]** Read diff hunks; verified `link_set_dpms_off/on` use
-  `pipe_ctx->stream_res` and `link_res` in `link_dpms.c`
-- **[Phase 3]** `git describe HEAD` → v6.18.43; `git blame -L 3690,3715`
-  → buggy lines present; shallow repo confirmed
-- **[Phase 3]** `git log -S "set_dpms_off(pipe_ctx)" -- dc.c` → only
-  merge commit (limited by shallow history)
-- **[Phase 4]** WebFetch lore patch 17/19 at
-  https://lists.freedesktop.org/archives/amd-gfx/2026-April/142846.html
-- **[Phase 4]** WebFetch cover letter 00/19 — series context, no stable
-  nomination
-- **[Phase 4]** lore.kernel.org stable search — blocked by bot
-  protection (UNVERIFIED for stable-list discussion)
-- **[Phase 5]** `grep commit_planes_do_stream_update` — one call site at
-  line 4201 in `commit_planes_for_stream()`
-- **[Phase 5]** Traced `dc_commit_updates_for_stream()` →
-  `update_planes_and_stream_v2/v3` → `commit_planes_for_stream()`
-- **[Phase 5]** Read `link_set_all_streams_dpms_off_for_link()` — calls
-  `dc_commit_updates_for_stream` with `dpms_off`
-- **[Phase 6]** Read `dc.c` lines 3587–3735 — confirmed buggy code
-  without fix
-- **[Phase 6]** `DC_VER` in `dc.h` → "3.2.351"; fix not present
-- **[Phase 7]** Subsystem path confirmed: `drivers/gpu/drm/amd/display`
-- **[Phase 8]** Analyzed `link_set_dpms_off()` at line 2346 — uses
-  stream_enc, blank_stream, audio disable on pipe_ctx resources
+- [Phase 1] Parsed commit message and tags from user-provided diff and
+  lore page
+- [Phase 2] Read current `power_down_encoders()` at lines 1728–1753 in
+  `dce110_hwseq.c`
+- [Phase 3] `git blame -L 1734,1748`: FEC commit `5f0c5775d4eeb`
+  introduced vulnerable lines
+- [Phase 3] `git show 5f0c5775d4eeb` and `git show 8cee62904caf9`: FEC
+  commit present in tree
+- [Phase 3] `git log --oneline -5 -- dce110_hwseq.c`: confirmed FEC
+  commit is most recent change to this function
+- [Phase 4] Fetched amd-gfx lore pages for patch 12/17 and series cover
+  letter
+- [Phase 4] `b4 dig -c 8cee62904caf9`: no lore match (tool limitation,
+  not analysis blocker)
+- [Phase 5] `grep
+  power_down_encoders/power_down_all_hw_blocks/dce110_power_down`:
+  traced call chain
+- [Phase 5] `grep link_enc_cfg_get_link_enc`: confirmed widespread use
+  of correct API in subsystem
+- [Phase 5] Read `construct_dpia()` in `link_factory.c` lines 760–827:
+  DPIA links set `is_dig_mapping_flexible = true`, no `link_enc` created
+- [Phase 5] Read `link_enc_cfg_get_link_enc()` in `dc_link_enc_cfg.c`
+  lines 550–568: flexible vs fixed logic verified
+- [Phase 5] Read `dp_set_fec_enable()` in `link_dp_phy.c` lines 180–188:
+  NULL guard pattern confirmed
+- [Phase 6] `git describe HEAD`: v6.18.43-1-gc7f0dac02d232 (6.18.y
+  stable tree)
+- [Phase 6] Confirmed fix not yet applied (line 1734 still uses
+  `link->link_enc`)
+- [Phase 6] Confirmed `link_enc_cfg.h` included at line 49 of
+  `dce110_hwseq.c`
+- [Phase 6] `grep .power_down = dce110_power_down`: all DCN init files
+  use this path
+- [Phase 8] Read FEC commit message: "no light up" failure mode
+  documented for wrong DIG encoder
 
-**YES**
+**YES****Verdict: YES** — this commit should be backported to the 6.18.y
+tree.
 
- drivers/gpu/drm/amd/display/dc/core/dc.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+It fixes a real bug in `power_down_encoders()` where `link->link_enc` is
+used directly instead of `link_enc_cfg_get_link_enc()`. On flexible DIG-
+mapping links (notably USB4/DPIA), that can mean the wrong encoder is
+targeted or a NULL pointer is dereferenced during power-down — causing
+display failures or a kernel oops. The fix is small, self-contained, and
+the prerequisite FEC power-down commit (`5f0c5775d4eeb`) is already in
+this tree.
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 927837249479f..627a9fb4c551e 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -3690,27 +3690,34 @@ static void commit_planes_do_stream_update(struct dc *dc,
- 				resource_build_test_pattern_params(&context->res_ctx, pipe_ctx);
- 			}
+ .../drm/amd/display/dc/hwss/dce110/dce110_hwseq.c    | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 8f86177de48dc..0841b1d0b7775 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1731,20 +1731,22 @@ static void power_down_encoders(struct dc *dc)
  
-+			// DPMS should not use partially updated pipe context
-+			struct pipe_ctx *dpms_pipe_ctx = &dc->current_state->res_ctx.pipe_ctx[j];
-+
- 			if (stream_update->dpms_off) {
- 				if (*stream_update->dpms_off) {
--					dc->link_srv->set_dpms_off(pipe_ctx);
-+					dc->link_srv->set_dpms_off(dpms_pipe_ctx);
- 					/* for dpms, keep acquired resources*/
--					if (pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only)
--						pipe_ctx->stream_res.audio->funcs->az_disable(pipe_ctx->stream_res.audio);
-+					if (dpms_pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only) {
-+						struct audio *audio = dpms_pipe_ctx->stream_res.audio;
-+
-+						audio->funcs->az_disable(audio);
-+					}
+ 	for (i = 0; i < dc->link_count; i++) {
+ 		struct dc_link *link = dc->links[i];
+-		struct link_encoder *link_enc = link->link_enc;
++		struct link_encoder *link_enc = link_enc_cfg_get_link_enc(link);
+ 		enum signal_type signal = link->connector_signal;
  
- 					dc->optimized_required = true;
+ 		dc->link_srv->blank_dp_stream(link, false);
+ 		if (signal != SIGNAL_TYPE_EDP)
+ 			signal = SIGNAL_TYPE_NONE;
  
- 				} else {
- 					if (get_seamless_boot_stream_count(context) == 0)
- 						dc->hwss.prepare_bandwidth(dc, dc->current_state);
--					dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
-+					dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
- 				}
--			} else if (pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change && stream_update->output_color_space
--					&& !stream->dpms_off && dc_is_dp_signal(pipe_ctx->stream->signal)) {
-+			} else if (dpms_pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change &&
-+					stream_update->output_color_space &&
-+					!stream->dpms_off && dc_is_dp_signal(dpms_pipe_ctx->stream->signal)) {
- 				/*
- 				 * Workaround for firmware issue in some receivers where they don't pick up
- 				 * correct output color space unless DP link is disabled/re-enabled
- 				 */
--				dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
-+				dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
- 			}
+-		if (link->ep_type == DISPLAY_ENDPOINT_PHY)
++		if (link->ep_type == DISPLAY_ENDPOINT_PHY && link_enc)
+ 			link_enc->funcs->disable_output(link_enc, signal);
  
- 			if (stream_update->abm_level && pipe_ctx->stream_res.abm) {
+ 		if (link->fec_state == dc_link_fec_enabled) {
+-			link_enc->funcs->fec_set_enable(link_enc, false);
+-			link_enc->funcs->fec_set_ready(link_enc, false);
+-			link->fec_state = dc_link_fec_not_ready;
++			if (link_enc && link_enc->funcs->fec_set_enable && link_enc->funcs->fec_set_ready) {
++				link_enc->funcs->fec_set_enable(link_enc, false);
++				link_enc->funcs->fec_set_ready(link_enc, false);
++				link->fec_state = dc_link_fec_not_ready;
++			}
+ 		}
+ 
+ 		link->link_status.link_active = false;
 -- 
 2.53.0
 
