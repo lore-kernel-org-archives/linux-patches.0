@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7676647CC83;
-	Mon, 31 Aug 2026 14:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4876547F2F9;
+	Mon, 31 Aug 2026 14:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185238; cv=none; b=VRgqsAVKPaWyXMSnI+ZF+XuIsnyCGnmzombygb3MTyifi+zrDG+EuioZprY+cglZWsQ0JUrUAZzFVhKGISSAj5A9F+VuL3DPA8UMiSin7+8NVzXGJTVE/O2DVY2fMFvDQuYjkviyOl/AAP6DqPxQuwy3TF9fxgB0hI8ZX+FIUdk=
+	t=1788185241; cv=none; b=flMEHf78tF31sd4F8kaHReMDDl9taHwhTkyAEKbcDAKYwJ7U3G487ZV9TwX0WN5fBBniqVRkMx8WdpCCxMEaVJ923p7o2ZJoZA+IPHc5rXwnlxxHWN+bHH++SaP2CUdS5eIpfP12HCq/fecE0rkMYf4excT0ihdAx+zpTpYn9uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185238; c=relaxed/simple;
-	bh=3ufONHjhGoHEkpE82foWdg9/jxzcceZH4RddDviTj78=;
+	s=arc-20240116; t=1788185241; c=relaxed/simple;
+	bh=/tsmHEtGq1OmvEAfLn+34A4e36ejqsvn0mIYaAhdsq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckkKGVS+DHmtOnVa0sn2NMMMkvwb1maUN7en7CtAsfOjt1PdQeD+9rxwZQYi2o4ePEOCdrQVUGlcHC0Sv+VoQAhhJEDl5TsUiLQQkRSTei07jIXi/rQntUJerbSmTmSPrcz0PK6N/RnIZOzPPPVksh5fPvvMJDoIBqQFdhsG6Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yL2aekh/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mog3rCPYjDrHQlRi/7Z9vQ/UjvDX65noSKM8DqXDmIp6MI1VVTTMViRvjwTuoZjp39ruNJHuD3LeM5OPSsCsVWiFIuBe8ramTkByC24TouzoT0rJMWBAJy/cYebhfbvWPfegqlkjGsTRWUlQyXrtpzgQlH+TTA51st0kAwa56ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BE0aXjbz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yL2aekh/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D085A1F000E9;
-	Mon, 31 Aug 2026 14:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BE0aXjbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26A11F000E9;
+	Mon, 31 Aug 2026 14:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185237;
-	bh=mxnD/atLFOldBikquAE+LErxPja8aI9wOLDqTf56jNo=;
+	s=korg; t=1788185240;
+	bh=Yi9UpQ3aCNAGdKnheCdtX0UVzw5znYk2NQmDYD6dmkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yL2aekh/J+da4aa14YgujXXW3zjBZ99RR9lZp/vdvT44CWyfAa3H8O4ibMM3h0Jp4
-	 3cP9/7Y5K/njw9OSt1AtFbZpEk0v8jExL6BD+2MK4mTBhfBmA4JsnxrWTuIABINtPc
-	 50rTFO6COswes92UHajCyFRTikb/sLVJcaowLsXM=
+	b=BE0aXjbzJomsECl78Mi1W3yrsZwzzKFK5q7wkeU90CbcCgoatJ+di+HQCheoBjE3c
+	 FCgekwnsNlkjzcgMgO5qbxsM5XV35nGLUOiNDDjyWpQWktjWWMkhlV8svBdA6jaaz1
+	 MeNbVegZ9iO6b+ZSnwAqPG8KagQcZg9NichL5GmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 5.10 30/43] xfrm: ah6: validate routing header segments_left
-Date: Mon, 31 Aug 2026 15:35:38 +0200
-Message-ID: <20260831133400.008460981@linuxfoundation.org>
+Subject: [PATCH 5.10 31/43] xfrm: fix xfrm_state_construct() auth-trunc leak
+Date: Mon, 31 Aug 2026 15:35:39 +0200
+Message-ID: <20260831133400.070655414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -50,102 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 7bad4bda74dc4713f398d3b7624ff05478e3a568 upstream.
+commit c12cbf56320fb633484ee0ca1fb7d68d6b64b213 upstream.
 
-AH6 rearranges routing-header addresses before computing or verifying the
-ICV. ipv6_rearrange_rthdr() assumes that segments_left is not larger than
-the number of addresses described by the routing header's hdrlen field.
+attach_auth_trunc() can allocate x->aalg while leaving
+x->props.aalgo at zero when the selected auth algorithm has no
+sadb_alg_id. One real case is cmac(aes).
 
-That assumption does not hold for raw IPv6 HDRINCL packets. A packet with
-hdrlen equal to 2 describes one address, but can carry an arbitrary
-segments_left value. With segments_left equal to 255, the function moves
-its address pointer 4,064 bytes backwards and passes a 4,064-byte length to
-memmove(), resulting in an out-of-bounds access.
+xfrm_state_construct() then treats !x->props.aalgo as "no auth
+algorithm attached yet" and calls attach_auth(). That overwrites
+x->aalg and loses the first allocation. Any later failure or teardown
+only frees the replacement pointer.
 
-Validate the invariant locally before modifying the routing header or
-performing any address-pointer arithmetic, and propagate malformed-header
-errors to the existing AH6 input and output error paths.
+Check whether x->aalg is already attached instead of inferring that
+state from x->props.aalgo.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 4447bb33f094 ("xfrm: Store aalg in xfrm_state with a user specified truncation length")
 Cc: stable@vger.kernel.org
-Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ah6.c |   29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ net/xfrm/xfrm_user.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ah6.c
-+++ b/net/ipv6/ah6.c
-@@ -238,26 +238,28 @@ static void ipv6_rearrange_destopt(struc
-  *	Rearrange the destination address in @iph and the addresses in @rthdr
-  *	so that they appear in the order they will at the final destination.
-  *	See Appendix A2 of RFC 2402 for details.
-+ *
-+ * Return: 0 on success, -EINVAL if segments_left exceeds the number of
-+ * addresses described by hdrlen.
-  */
--static void ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
-+static int ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
- {
--	int segments, segments_left;
-+	unsigned int segments, segments_left;
- 	struct in6_addr *addrs;
- 	struct in6_addr final_addr;
- 
- 	segments_left = rthdr->segments_left;
- 	if (segments_left == 0)
--		return;
--	rthdr->segments_left = 0;
-+		return 0;
- 
--	/* The value of rthdr->hdrlen has been verified either by the system
--	 * call if it is locally generated, or by ipv6_rthdr_rcv() for incoming
--	 * packets.  So we can assume that it is even and that segments is
--	 * greater than or equal to segments_left.
--	 *
--	 * For the same reason we can assume that this option is of type 0.
-+	/* Raw locally generated packets can reach AH6 without the invariant
-+	 * required by the rt0-style address rearrangement below.
- 	 */
- 	segments = rthdr->hdrlen >> 1;
-+	if (segments_left > segments)
-+		return -EINVAL;
-+
-+	rthdr->segments_left = 0;
- 
- 	addrs = ((struct rt0_hdr *)rthdr)->addr;
- 	final_addr = addrs[segments - 1];
-@@ -267,6 +269,8 @@ static void ipv6_rearrange_rthdr(struct
- 
- 	addrs[0] = iph->daddr;
- 	iph->daddr = final_addr;
-+
-+	return 0;
- }
- 
- static int ipv6_clear_mutable_options(struct ipv6hdr *iph, int len, int dir)
-@@ -279,6 +283,7 @@ static int ipv6_clear_mutable_options(st
- 	} exthdr = { .iph = iph };
- 	char *end = exthdr.raw + len;
- 	int nexthdr = iph->nexthdr;
-+	int err;
- 
- 	exthdr.iph++;
- 
-@@ -298,7 +303,9 @@ static int ipv6_clear_mutable_options(st
- 			break;
- 
- 		case NEXTHDR_ROUTING:
--			ipv6_rearrange_rthdr(iph, exthdr.rth);
-+			err = ipv6_rearrange_rthdr(iph, exthdr.rth);
-+			if (err)
-+				return err;
- 			break;
- 
- 		default:
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -614,7 +614,7 @@ static struct xfrm_state *xfrm_state_con
+ 	if ((err = attach_auth_trunc(&x->aalg, &x->props.aalgo,
+ 				     attrs[XFRMA_ALG_AUTH_TRUNC])))
+ 		goto error;
+-	if (!x->props.aalgo) {
++	if (!x->aalg) {
+ 		if ((err = attach_auth(&x->aalg, &x->props.aalgo,
+ 				       attrs[XFRMA_ALG_AUTH])))
+ 			goto error;
 
 
