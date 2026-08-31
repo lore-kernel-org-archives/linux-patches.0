@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79D852F12D;
-	Mon, 31 Aug 2026 13:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E1C52F15B;
+	Mon, 31 Aug 2026 13:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183894; cv=none; b=bBPLTff898i1/Sgeed5B1FHxi9YXbRxtqMt0xcEPAla9dOL+o2mzLmTxXU3UdsxzyUUM/ENF+pLbOVxHYJPz2EdGJDqy+xmTbKW4hr/GC2ft2Vf6hXYZS2xyfIZuYld596bbE7JzkqxPFYlOV28nQeNqFc+UtfW3nofAh/vPEzc=
+	t=1788183895; cv=none; b=iGHs35TcYDaEIKtIYKDhBVXSDgLJGYKBZGHDbFsT8Gx/DbRUk00e9gak40zJD1c0LyMZvC9MLNuhY1rRBGwfk8tOtRrHAswQ89PT5bj5VpZFY4+PBgQDbLNATPeED7jawSfgeuClIt2jeXQTA8CUltY0GLwbxeMYDx5Je5UCrek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183894; c=relaxed/simple;
-	bh=1gQ0fNHi0dr34p5DUc/kt39jh94iHQ1aQJ4epP2Bvvc=;
+	s=arc-20240116; t=1788183895; c=relaxed/simple;
+	bh=hrFcvzb5Iy4Qn6c3lsfcopO/hX/YFtt7ht+vNs4wL18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XtOW1CGHXnro30tVfGQ1fl4m4rVbozE8RCYx1q+bE25E0kWtwBcx3yZLkYnKCeOknZq8fhpTOfMZw13CNKDuS4W0k95WOx7PFm6spfmsz4ASHZrzu7JUBJDHqmEFXDMfBE7hy+ptlZMTNCaVaFbtd6dNGLMhPk0noqTWzuPjRvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O1r27pYo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tAH5vjDX5TOu/8lQmZ4sLFHo1NTX6ilx+5H2ZaF5EbcqkUMxgdcX3SIqZTk/QWcS/jyboZ9nBOsaEUITmlJXHOrFsLrEx/QCXoDEWSZTLUcN+TyBrpp7BPYH0Hzd49mi7Kt5IuMt1MSTbSp0eyk+IpR9ZcD/4lHXjBHx2YaShH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RYcjO6O/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O1r27pYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C44B1F00A3F;
-	Mon, 31 Aug 2026 13:44:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RYcjO6O/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41571F00ACA;
+	Mon, 31 Aug 2026 13:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183890;
-	bh=lVESvZtxLPN53N+V3hPGCVqY68pmm6oEw0Is776h6Cc=;
+	s=k20260515; t=1788183892;
+	bh=PuxItlRph/WPV55pacij2MW97sd3QALaiFtFO8FcCO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1r27pYoYv5RNmTPmn482JXQwAIig2CeL5vhqE2J9tB8BVwTe55R/OloqutkjS+BP
-	 X83zlMu6+E+wELlOUILPOLWCYW8UXxeRtQfLEGEhiCPOtjHf2XzBKt0wSnb0+apdEL
-	 pNJ+nxOMFKwEL5Xju1iDKSKep0jRdjTzMERljOrjkAeRRi6A8QYgNJY/axK61Vq/Ax
-	 eeGvd2k9dDYEcg8aXkM5kcQCnnpAxFDqHrTsFcJF/QYQq8vQYv86m7Gf/G8sybA2ya
-	 3Q1MzgjO8sXx39HCHdoslfr3BBa+hE4lVV7OOJ4wS5E6ZcPaL4c+lZQ6I7TayNqH86
-	 3Bh+DUrrOyn4w==
+	b=RYcjO6O/Qd8eH5tMREISSCf2flh6ocFaGrTBl9PaySFx+6YGyO/SwBQLiDW8J+F35
+	 1NS7LaBr4UISRrlsaf4nEpgczRF9DMP//7PINi9TcUbiW8/Nj3GwOp6gjjfPkFzamc
+	 aGLk3PfMqfnX4hb1ojcWhP0zsQ34SKukKUVIGwDJSsZsPy/RB3fyLJpm/yxRNgVzNN
+	 dSCbpyDfsrhIxzJlyKSuCMVX3eLyR3ZlR3y3sFjUVBmgXFYEKx2BaS/bi/Ux5br4zJ
+	 Tnlf600qSuj09VdWW9uYhYjZqnYST5O5DGtdZM2l65B8kzfs76Yinz/tgiJmkjnXFf
+	 dUFKZTwFZLhLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	saravanak@kernel.org,
-	devicetree@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drivers/of: validate live-tree string properties before string use
-Date: Mon, 31 Aug 2026 09:26:32 -0400
-Message-ID: <20260831133314.4125787-364-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: don't WARN on WoWLAN suspend w/o netdetect
+Date: Mon, 31 Aug 2026 09:26:33 -0400
+Message-ID: <20260831133314.4125787-365-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,85 +53,71 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 1e54c31b9cbbb42162e2e4317c18c8a8b350a79d ]
+[ Upstream commit 301b0dfa9db3f1e204de95e803bbd88fbd878c7c ]
 
-`populate_properties()` stores live-tree property values as raw byte
-sequences plus a separate `length`. They are not globally guaranteed to
-be NUL-terminated.
+Clearly, from a user perspective, it must be valid to configure
+WoWLAN and then suspend while not connected to a network. Since
+mac80211 doesn't distinguish these cases and simply calls the
+driver to suspend whenever WoWLAN is configured, the driver has
+to cleanly handle the case where it's called for WoWLAN, it's
+not connected but there's also no netdetect configured.
 
-`of_prop_next_string()` iterates string-list properties by walking raw
-bytes, `__of_node_is_type()` checks `device_type`,
-`__of_device_is_status()` checks `status`, and
-`of_alias_from_compatible()` reads the first `compatible` entry. These
-paths must validate that the relevant string fits within the property
-bounds before they hand it to C string helpers.
+Remove the WARN_ON() and keep returning 1 to disconnect and
+then suspend.
 
-Validate these live-tree string properties within their declared bounds.
-In particular, make `of_prop_next_string()` reject malformed entries
-before returning them, keep the `device_type` check inside the existing
-no-lock helper path, and add unit coverage for malformed first and
-trailing string-list entries.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260507081812.91838-1-pengpeng@iscas.ac.cn
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260527230313.19720967372b.Iff30814510a26f9f609f98eeea3111c50c1afb31@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `drivers/of: validate live-tree string
-properties before string use`
+# Stable Backport Analysis: `wifi: iwlwifi: mld: don't WARN on WoWLAN
+suspend w/o netdetect`
 
-## Local Tree Context
-
-This checkout is **linux-6.18.y** at **v6.18.43** (`HEAD detached from
-stable/linux-6.18.y`). The buggy code is present; this fix is not yet
-applied.
+**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[drivers/of]` `[validate]` — Validate live-tree string
-properties before passing them to C string helpers (`strlen`, `strcmp`,
-etc.).
+### Step 1.1: Subject line
+**Record:** `[wifi: iwlwifi: mld]` `[don't WARN]` — Remove spurious
+`WARN_ON()` when suspending with WoWLAN configured but not associated
+and without netdetect.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Pengpeng Hou `<pengpeng@iscas.ac.cn>` (author)
-- **Link:**
-  https://patch.msgid.link/20260507081812.91838-1-pengpeng@iscas.ac.cn
-- **Signed-off-by:** Rob Herring (Arm) `<robh@kernel.org>` (OF
-  maintainer merge)
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or `Reviewed-by:` tags
+- **Signed-off-by:** Johannes Berg, Miri Korenblit (author SOBs; ignore
+  pipeline SOBs per instructions)
+- **Reviewed-by:** Emmanuel Grumbach \<emmanuel.grumbach@intel.com\>
+  (iwlwifi maintainer)
+- **Link:** https://patch.msgid.link/20260527230313.19720967372b.Iff3081
+  4510a26f9f609f98eeea3111c50c1afb31@changeid
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable, or syzbot tags
 
-Notable: maintainer merge sign-off from Rob Herring; no syzbot or user
-bug report.
-
-### Step 1.3: Body Analysis
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `populate_properties()` and live-tree property storage keep
-  raw byte sequences with a `length` field; they are not guaranteed NUL-
-  terminated.
-- **Affected paths:** `of_prop_next_string()`, `__of_node_is_type()`,
-  `__of_device_is_status()`, `of_alias_from_compatible()` use
-  `strlen`/`strcmp` without verifying the string fits within `length`.
-- **Symptom:** Out-of-bounds reads when scanning for a NUL terminator on
-  malformed properties.
-- **Fix:** Validate with `strnlen()` within declared bounds; switch
-  `of_alias_from_compatible()` to `of_property_read_string_index()`
-  (already validated).
-- **Root cause:** Inconsistent validation — some OF helpers already use
-  `strnlen`, these paths do not.
+- **Bug:** `WARN_ON(!wowlan->nd_config)` fires when WoWLAN is
+  configured, the STA is not associated, and netdetect is not enabled.
+- **Symptom:** Kernel warning + stack trace on a valid suspend path;
+  behavior was already to `return 1`.
+- **Root cause:** Incorrect assumption that “not associated ⇒ must be
+  netdetect”; mac80211 calls the WoWLAN suspend path whenever WoWLAN is
+  configured, without distinguishing netdetect vs. other WoWLAN
+  triggers.
+- **Fix approach:** Remove `WARN_ON()`, keep `return 1` so mac80211
+  disconnects and falls back to normal suspend.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Yes. Despite “validate” wording rather than “fix”, this is a
-real memory-safety bug fix (out-of-bounds read), not cosmetic cleanup.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes — labeled as warning cleanup, but it corrects a wrong
+invariant on the system suspend path. Functional handling was already
+correct (`return 1`); the bug is the spurious `WARN_ON()` on a
+legitimate user scenario.
 
 ---
 
@@ -139,507 +125,310 @@ real memory-safety bug fix (out-of-bounds read), not cosmetic cleanup.
 
 ### Step 2.1: Inventory
 **Record:**
-| File | Change |
-|------|--------|
-| `drivers/of/base.c` | ~30 lines modified |
-| `drivers/of/property.c` | ~25 lines modified |
-| `drivers/of/unittest.c` | ~35 lines added (tests) |
+- **File:** `drivers/net/wireless/intel/iwlwifi/mld/d3.c` (+5 / -2
+  lines)
+- **Function:** `iwl_mld_wowlan_suspend()`
+- **Scope:** Single-file, surgical change
 
-**Functions modified:** `__of_node_is_type()`,
-`__of_device_is_status()`, `of_alias_from_compatible()`,
-`of_prop_next_string()`
-
-**Scope:** Single-subsystem, surgical fix + unit tests.
-
-### Step 2.2: Code Flow Changes
-
-**Hunk 1 — `__of_node_is_type()`:**
-- Before: `strcmp(match, type)` with no bounds check on `device_type`.
-- After: `strnlen(match, len) >= len` rejects unterminated values before
-  `strcmp`.
-
-**Hunk 2 — `__of_device_is_status()`:**
-- Before: `strlen(status)` / `strcmp` / `strncmp` without verifying
-  `status` is NUL-terminated within `statlen`.
-- After: Rejects if `strnlen(status, statlen) >= statlen`.
-
-**Hunk 3 — `of_alias_from_compatible()`:**
-- Before: `strlen(compatible) > cplen` — `strlen` itself can read past
-  `cplen` if no NUL exists within bounds.
-- After: Uses `of_property_read_string_index()` which already validates
-  via `strnlen`.
-
-**Hunk 4 — `of_prop_next_string()`:**
-- Before: On first entry (`cur == NULL`), returns `prop->value`
-  unconditionally; on advance uses `strlen(cur)` without bounds.
-- After: Validates cursor within `[value, value+length)`; uses `strnlen`
-  for both current and next strings; rejects unterminated entries.
-
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** Memory safety — out-of-bounds read (buffer
-over-read).
-
-**Mechanism:** Property values are stored as `(value, length)` byte
-sequences. `strlen()`/`strcmp()` scan until NUL. If no NUL exists within
-`length`, they read past the property boundary. The tree already has
-test data for this:
-
-```65:66:drivers/of/unittest-data/tests-phandle.dtsi
-                                unterminated-string = [40 41 42 43];
-                                unterminated-string-list = "first",
-"second", [40 41 42 43];
-```
-
-`of_property_read_string_index()` already rejects these (`-EILSEQ`), but
-`of_prop_next_string()` does not.
-
-### Step 2.4: Fix Quality
+### Step 2.2: Code flow change
 **Record:**
-- **Obviously correct:** Matches the existing pattern in
-  `of_property_read_string()` and `of_property_read_string_helper()`.
-- **Minimal:** No API changes, no refactoring.
-- **Regression risk:** Low — well-formed DT strings behave the same;
-  only malformed properties change from OOB-read to safe rejection.
+- **Hunk (not associated branch):**
+  - **Before:** `WARN_ON(!wowlan->nd_config)` then `return 1` — logs
+    warning on valid path.
+  - **After:** `if (!wowlan->nd_config) return 1` — same control flow,
+    no warning.
+- **Path:** WoWLAN suspend when STA is not associated and netdetect is
+  disabled.
+
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Logic / correctness — incorrect assertion on
+valid error/fallback path. **Mechanism:** Driver treated “no netdetect
+while disconnected” as impossible; mac80211 can legitimately reach this
+case. `return 1` is the intended mac80211 contract (disconnect then
+suspend normally).
+
+### Step 2.4: Fix quality
+**Record:** Obviously correct; matches existing `iwl_mvm` behavior (see
+below). Minimal diff. **Regression risk:** Very low — only removes a
+warning; return value unchanged.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Shallow clone (`git rev-parse --is-shallow-repository` →
-`true`); blame points all lines to merge base `6bda50f4333fa`. Cannot
-determine original introduction commit from this checkout. Buggy code is
-present in 6.18.43.
+**Record:** `WARN_ON(!wowlan->nd_config)` introduced in
+**d1e879ec600f9** (`wifi: iwlwifi: add iwlmld sub-driver`, 2025-03-05).
+Present since iwl_mld was added; iwl_mld is in v6.18.
 
-### Step 3.2: Fixes Tag
-**Record:** N/A — no `Fixes:` tag in commit message.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag.
 
-### Step 3.3: Related File History
-**Record:** Shallow history limits `git log` on these files. In-tree,
-`of_property_read_string()` (line 505) and
-`of_property_read_string_helper()` (line 581) already use `strnlen`.
-`overlay.c` line 228 also validates before `strlen`. This fix closes the
-remaining gaps in the same subsystem.
+### Step 3.3: Related file history
+**Record:** Recent `d3.c` changes are WoWLAN API updates and null-check
+fixes; no duplicate fix for this issue. Patch is **12/15** in an
+iwlwifi-next series but this hunk is **standalone** (no series
+dependency for this change).
 
-### Step 3.4: Author History
-**Record:** No prior commits from Pengpeng Hou in this shallow tree. Rob
-Herring (OF maintainer) merged it.
+### Step 3.4: Author context
+**Record:** Johannes Berg is mac80211/iwlwifi lead. Reviewed by Emmanuel
+Grumbach (maintainer).
 
-### Step 3.5: Dependencies
-**Record:** Standalone. Uses existing `of_property_read_string_index()`
-(inline in `include/linux/of.h`, calls
-`of_property_read_string_helper`). No series dependencies.
+### Step 3.5: Prerequisites
+**Record:** None. `git format-patch -1 dc71bf31e0159 | git apply
+--check` succeeds on current HEAD.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1–4.5
-**Record:**
-- `b4 dig -c HEAD` matched wrong commit (local HEAD, not this patch).
-- `b4 dig` with message-ID failed (requires `-c COMMITISH`).
-- lore.kernel.org and patch.msgid.link blocked by bot protection
-  (Anubis).
-- **UNVERIFIED:** Full mailing-list review thread, stable nominations,
-  reviewer NAKs.
+### Step 4.1: Original discussion
+**Record:** `b4 dig -c dc71bf31e0159` found thread: [PATCH iwlwifi-next
+12/15] at lore URL above. Part of v1 15-patch series (2026-05-27, Miri
+Korenblit). **UNVERIFIED:** Full thread content (stable nominations,
+NAKs) — WebFetch blocked by bot protection.
 
-From commit message and Rob Herring merge sign-off: patch went through
-normal OF maintainer tree.
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w`: CC'd linux-wireless, Johannes Berg, Emmanuel
+Grumbach.
+
+### Step 4.3: Bug report
+**Record:** N/A — no external bug report or syzbot link.
+
+### Step 4.4: Series context
+**Record:** Patch 12/15 of iwlwifi-next series; this change is
+independent.
+
+### Step 4.5: Stable list
+**Record:** **UNVERIFIED** — could not search stable@ lore due to fetch
+limitations.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `of_prop_next_string`, `__of_node_is_type`,
-`__of_device_is_status`, `of_alias_from_compatible`
+### Step 5.1: Key functions
+**Record:** `iwl_mld_wowlan_suspend()`, called from `iwl_mld_suspend()`.
 
 ### Step 5.2: Callers
 **Record:**
-- `of_prop_next_string`: `__of_device_is_compatible()` (core device
-  matching), `drivers/memory/of_memory.c`,
-  `drivers/net/wireless/mediatek/mt76/eeprom.c`, `drivers/leds/leds-
-  powernv.c`, `arch/powerpc/platforms/pseries/of_helpers.c`, macro in
-  `include/linux/of.h`
-- `__of_device_is_status` → `of_device_is_available()` (called on
-  essentially every OF device probe), `of_device_is_fail`,
-  `of_device_is_reserved`
-- `__of_node_is_type` → `of_find_node_by_type()`,
-  `of_get_next_cpu_node()`, `__of_device_is_compatible()`
-- `of_alias_from_compatible` → SPI, I2C, DRM DSI, HSI, ACPI bus alias
-  handling
+- `iwl_mld_suspend()` → `iwl_mld_wowlan_suspend()` (`mac80211.c:1996`)
+- `iwl_mld_suspend()` registered as mac80211 `.suspend` op
+- mac80211 `__ieee80211_suspend()` → `drv_suspend()` (`pm.c:116`)
+- Triggered on system suspend when WoWLAN is configured
 
 ### Step 5.3: Callees
-**Record:** `__of_get_property`, `strnlen`, `strcmp`, `strncmp`,
-`of_property_read_string_index` → `of_property_read_string_helper`
+**Record:** On the affected path: early `return 1` (no netdetect
+config). Otherwise `iwl_mld_netdetect_config()` or
+`iwl_mld_wowlan_config()`.
 
 ### Step 5.4: Reachability
-**Record:** Reachable on every boot on DT-based platforms (ARM, RISC-V,
-PowerPC, etc.) during device-tree parsing, matching, and probe. Trigger
-requires malformed property data (bad DT blob, overlay, or dynamic
-property), not normal well-formed vendor DT.
+**Record:** **Userspace-reachable** via system suspend with WoWLAN
+enabled, STA disconnected, netdetect not configured. Common laptop
+scenario (WoWLAN enabled, not connected).
 
-### Step 5.5: Similar Patterns
-**Record:** Same `strnlen(prop->value, prop->length) >= prop->length`
-check already exists in:
-- `of_property_read_string()` at `drivers/of/property.c:505`
-- `of_property_read_string_helper()` at `drivers/of/property.c:581`
-- `overlay.c:228`
+### Step 5.5: Similar patterns
+**Record:** `iwl_mvm` already handles this without `WARN_ON`:
 
-This fix brings the remaining helpers in line.
+```1289:1294:drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+        if (mvm_link->ap_sta_id == IWL_INVALID_STA) {
+                /* if we're not associated, this must be netdetect */
+                if (!wowlan->nd_config) {
+                        ret = 1;
+                        goto out_noreset;
+                }
+```
+
+MLD incorrectly added `WARN_ON()` where MVM silently returns 1.
+
+When driver returns 1, mac80211 handles it explicitly:
+
+```132:141:net/mac80211/pm.c
+                } else if (err > 0) {
+                        WARN_ON(err != 1);
+                        /* cfg80211 will call back into mac80211 to
+disconnect
+    - all interfaces, allow that to proceed properly
+                         */
+                        ieee80211_wake_queues_by_reason(hw,
+                                        IEEE80211_MAX_QUEUE_MAP,
+IEEE80211_QUEUE_STOP_REASON_SUSPEND,
+                                        false);
+                        return err;
+```
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** All four vulnerable code paths exist in 6.18.43:
+### Step 6.1: Buggy code present?
+**Record:** **Yes** — current HEAD still has:
 
-```615:629:drivers/of/property.c
-const char *of_prop_next_string(const struct property *prop, const char
-*cur)
-{
-        const void *curv = cur;
-        // ...
-        curv += strlen(cur) + 1;  // no bounds check on cur or first
-string
+```1944:1948:drivers/net/wireless/intel/iwlwifi/mld/d3.c
+        if (!bss_vif->cfg.assoc) {
+                int ret;
+                /* If we're not associated, this must be netdetect */
+                if (WARN_ON(!wowlan->nd_config))
+                        return 1;
 ```
 
-```83:87:drivers/of/base.c
-static bool __of_node_is_type(const struct device_node *np, const char
-*type)
-{
-        const char *match = __of_get_property(np, "device_type", NULL);
-        return np && match && type && !strcmp(match, type);  // no
-bounds check
-```
+`d1e879ec600f9` is an ancestor of HEAD; iwl_mld has been in tree since
+v6.18.
 
-### Step 6.2: Backport Difficulty
-**Record:** Clean apply expected — line context matches the provided
-diff. No conflicting changes in recent 6.18.y history on these
-functions.
+### Step 6.2: Backport complications
+**Record:** **Clean apply** — verified with `git apply --check`. No
+rework needed.
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** Partial. `of_property_read_string*` paths already validate.
-`of_prop_next_string` and the three `base.c` helpers do not. No
-duplicate fix found.
+### Step 6.3: Related fixes already present?
+**Record:** **No** — `git merge-base --is-ancestor dc71bf31e0159 HEAD` →
+fix **NOT** in HEAD.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem
-**Record:** `drivers/of` — Open Firmware / Device Tree core.
-**Criticality: CORE** for all DT-based platforms.
+### Step 7.1: Subsystem criticality
+**Record:** **IMPORTANT** — Intel iwlwifi MLD driver (`CONFIG_IWLMLD`),
+WoWLAN/system suspend on laptops.
 
 ### Step 7.2: Activity
-**Record:** Actively maintained; recent commits include fwnode flag
-thread-safety and alias refcount leak fixes in this tree.
+**Record:** Actively developed; multiple recent mld fixes in this tree
+(race fixes, null checks, WoWLAN updates).
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** All DT/OF platforms (ARM, RISC-V, PowerPC, some MIPS, etc.).
-Not x86 ACPI-only systems.
+### Step 8.1: Who is affected
+**Record:** Users of Intel WiFi chips using iwl_mld (new MLD-capable
+devices) on 6.18.y with WoWLAN configured.
 
-### Step 8.2: Trigger Conditions
+### Step 8.2: Trigger conditions
+**Record:** System suspend while disconnected, WoWLAN enabled, netdetect
+not configured. **Common** on laptops. Any user can trigger via suspend.
+
+### Step 8.3: Failure mode severity
+**Record:** **MEDIUM** — spurious `WARN_ON()` (kernel warning + stack
+trace, taints debugging). Suspend still proceeds via `return 1`. Could
+panic only with `panic_on_warn=1`. Not data corruption or security.
+
+### Step 8.4: Risk-benefit
 **Record:**
-- Malformed DT property without NUL within declared `length`
-- Examples: raw byte properties (`[40 41 42 43]`), truncated overlay
-  properties, dynamic properties via `__of_prop_dup()` (copies exact
-  length, no added NUL)
-- Unprivileged trigger: only if attacker can supply/modify DT (some
-  embedded boot chains, overlay loading)
-- Well-formed vendor DT: not affected
-
-### Step 8.3: Failure Mode
-**Record:** Out-of-bounds read past property boundary → KASAN report,
-potential oops, information leak from adjacent memory. **Severity:
-HIGH** (memory safety); not data corruption but real kernel robustness
-issue.
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH for DT platforms — closes OOB-read holes in core
-  matching/probe paths
-- **Risk:** VERY LOW — ~55 lines of production code, mirrors existing
-  validated patterns
-- **Ratio:** Strongly favors backport
+- **Benefit:** Eliminates false warnings on a real suspend path; aligns
+  MLD with MVM; cleaner logs for production/monitoring.
+- **Risk:** Very low — 3-line behavioral-equivalent change.
+- **Ratio:** Moderate benefit, very low risk. Precedent in this tree for
+  iwlwifi/mac80211 “don’t WARN” stable fixes.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real out-of-bounds read bug in core OF code
-- Affects device matching, status checks, alias resolution — common boot
-  paths
-- Small, surgical, maintainer-merged fix
-- Consistent with validation already present in same files
-- Unit tests included
-- Bug demonstrable with existing `unterminated-string` test data
+- Real bug: spurious `WARN_ON()` on valid WoWLAN suspend path
+- Bug present in 6.18.44 since iwl_mld introduction
+- Fix is minimal, reviewed by maintainer, matches proven MVM pattern
+- Applies cleanly
+- Affects laptop suspend — important PM path
+- Similar “don’t WARN” iwlwifi/mac80211 fixes exist in tree history
 
 **AGAINST backport:**
-- Requires malformed DT to trigger (not typical production DT)
-- No user/syzbot report in commit message
-- Mailing-list discussion unverified
+- Functional suspend already works (`return 1` unchanged)
+- Severity is warning-only under default config
+- Does not meet “critical” bar (crash/corruption/security/deadlock)
+- No user bug report or syzbot
 
-**Unresolved:**
-- Full lore review thread (blocked)
-- Exact mainline commit hash (not in shallow 6.18.y history)
+**UNRESOLVED:**
+- Lore thread review comments / stable nomination (fetch blocked)
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — mirrors existing `strnlen`
-   pattern; adds unit tests
-2. Fixes a real bug? **PASS** — OOB read on malformed properties
-3. Important issue? **PASS** — memory safety / potential crash on DT
-   platforms
-4. Small and contained? **PASS** — ~55 lines production code + tests
-5. No new features/APIs? **PASS** — behavior change only for malformed
-   input
-6. Can apply to local tree? **PASS** — buggy code present, clean apply
-   expected
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — matches MVM; Reviewed-by
+   maintainer
+2. Fixes real bug affecting users? **PASS** — spurious warning on real
+   suspend scenario
+3. Important issue? **PASS (low-medium)** — not crash/corruption, but
+   incorrect behavior on PM path for new driver in this tree
+4. Small and contained? **PASS** — 7 lines, one function
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — clean apply verified
 
-### Step 9.3: Exception Category
-**Record:** N/A (not device ID, quirk, DT binding, build fix, or docs
-fix — standard bug fix).
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs).
 
-### Step 9.4: Decision Rationale
+### Step 9.4: Decision rationale
 
-For **linux-6.18.y**, this commit fixes a genuine memory-safety gap in
-core device-tree string handling. Several OF helpers already validate
-with `strnlen`, but `of_prop_next_string()` and three `base.c` helpers
-do not — creating inconsistent, unsafe behavior on malformed properties.
-The fix is small, follows established in-tree patterns, is merged by the
-OF maintainer, and affects paths used during every device probe on DT
-platforms. The trigger (malformed DT) is uncommon in production but is
-exactly the class of input the kernel must handle safely.
+For **Linux 6.18.44**, iwl_mld is part of this stable series and the
+buggy `WARN_ON()` has been present since the driver landed. The fix
+removes a developer assertion that fires on a legitimate user workflow
+(WoWLAN configured, disconnected suspend without netdetect). The iwl_mvm
+driver already handles this case correctly without warning. The change
+is trivial, safe, and applies cleanly. While severity is moderate rather
+than critical, this is an appropriate stable fix for a new driver’s
+suspend path in a tree that already carries similar iwlwifi/mac80211
+warning fixes.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Confirmed no `Fixes:`, `Reported-by:`, or `Cc: stable`
-  tags
-- **[Phase 2]** Diff analysis: 3 production files, 4 functions modified
-- **[Phase 2]** Read current `of_prop_next_string()` at
-  `drivers/of/property.c:615-629` — uses unbounded `strlen`
-- **[Phase 2]** Read current `__of_node_is_type()` at
-  `drivers/of/base.c:83-87` — no bounds check
-- **[Phase 2]** Read current `__of_device_is_status()` at
-  `drivers/of/base.c:437-460` — no bounds check
-- **[Phase 2]** Read current `of_alias_from_compatible()` at
-  `drivers/of/base.c:1170-1181` — `strlen` before bounds validation
-- **[Phase 2]** Read `of_property_read_string()` at
-  `drivers/of/property.c:505` — already uses `strnlen` (fix pattern
-  exists)
-- **[Phase 2]** Read `of_property_read_string_helper()` at
-  `drivers/of/property.c:581` — already uses `strnlen`
-- **[Phase 2]** Read `overlay.c:228` — already uses `strnlen`
-- **[Phase 3]** `git rev-parse --is-shallow-repository` → `true`
-  (limited history)
-- **[Phase 3]** `git blame` on changed lines — all point to
-  `6bda50f4333fa` (shallow base)
-- **[Phase 3]** Verified `of_property_read_string_index` exists at
-  `include/linux/of.h:1262-1268`
-- **[Phase 4]** `b4 dig -c HEAD` — returned unrelated URL (wrong match)
-- **[Phase 4]** `b4 dig` with message-ID — failed (wrong usage)
-- **[Phase 4]** UNVERIFIED: lore.kernel.org and patch.msgid.link blocked
-  by bot protection
-- **[Phase 5]** `grep of_prop_next_string` — 6 call sites in production
-  code
-- **[Phase 5]** `grep of_alias_from_compatible` — 6 production call
-  sites
-- **[Phase 5]** `grep of_device_is_available` — widespread driver usage
-  confirmed
-- **[Phase 6]** `git describe HEAD` → `v6.18.43-1-gc7f0dac02d232`;
-  branch `stable/linux-6.18.y`
-- **[Phase 6]** Confirmed buggy code present in all four functions
-- **[Phase 6]** Read `tests-phandle.dtsi:65-66` — unterminated test
-  properties exist
-- **[Phase 6]** Read `__of_prop_dup()` at `drivers/of/dynamic.c:424` —
-  `kmemdup` without NUL padding
-- **[Phase 8]** Failure mode: OOB read via `strlen`/`strcmp` on non-NUL-
-  terminated property within declared length
+- **[Phase 1]** Parsed commit message and tags from user query and `git
+  show dc71bf31e0159`
+- **[Phase 2]** Read current `d3.c:1929-1958`; confirmed diff scope
+  (nd_config WARN_ON only)
+- **[Phase 3]** `git blame -L 1944,1955`: buggy code from d1e879ec600f9
+  (2025-03-05)
+- **[Phase 3]** `git log -S 'WARN_ON(!wowlan->nd_config)'`: only
+  d1e879ec600f9 introduced it
+- **[Phase 3]** `git merge-base --is-ancestor d1e879ec600f9 HEAD`: MLD
+  driver in this tree
+- **[Phase 3]** `git merge-base --is-ancestor d1e879ec600f9 v6.18`: MLD
+  in v6.18 release
+- **[Phase 3]** `git merge-base --is-ancestor dc71bf31e0159 HEAD`: fix
+  NOT in HEAD
+- **[Phase 3]** `git format-patch -1 dc71bf31e0159 | git apply --check`:
+  applies cleanly
+- **[Phase 4]** `b4 dig -c dc71bf31e0159`: found lore thread URL
+- **[Phase 4]** `b4 dig -a`: patch 12/15 of iwlwifi-next v1 series
+- **[Phase 4]** `b4 dig -w`: CC'd linux-wireless, Berg, Grumbach
+- **[Phase 4]** WebFetch lore URL: **FAILED** (bot protection) — review
+  discussion UNVERIFIED
+- **[Phase 5]** Traced call chain: `__ieee80211_suspend` →
+  `iwl_mld_suspend` → `iwl_mld_wowlan_suspend`
+- **[Phase 5]** Compared with `mvm/d3.c:1289-1294`: MVM returns 1
+  without WARN
+- **[Phase 5]** Read `pm.c:132-141`: return 1 triggers disconnect-then-
+  suspend flow
+- **[Phase 6]** `git describe HEAD` / `make kernelversion`: 6.18.44
+- **[Phase 6]** Confirmed buggy code at `d3.c:1947`
+- **[Phase 7]** `Kconfig`: `CONFIG_IWLMLD` exists
+- **[Phase 8]** Assessed trigger: WoWLAN + disconnected suspend
+- **UNVERIFIED:** Lore review comments and stable@ discussion
 
 **YES**
 
- drivers/of/base.c     | 43 ++++++++++++++++++++++++++-----------------
- drivers/of/property.c | 27 +++++++++++++++++++++------
- drivers/of/unittest.c | 32 ++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+), 23 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/d3.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/base.c b/drivers/of/base.c
-index 6620bf07b79b8..f6b99bd7a9ceb 100644
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -82,9 +82,17 @@ EXPORT_SYMBOL(of_node_name_prefix);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/d3.c b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+index dd85be94433cc..0cb7bfcd6420e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/d3.c
+@@ -1943,8 +1943,11 @@ int iwl_mld_wowlan_suspend(struct iwl_mld *mld, struct cfg80211_wowlan *wowlan)
  
- static bool __of_node_is_type(const struct device_node *np, const char *type)
- {
--	const char *match = __of_get_property(np, "device_type", NULL);
-+	const char *match;
-+	int len;
-+
-+	if (!np || !type)
-+		return false;
-+
-+	match = __of_get_property(np, "device_type", &len);
-+	if (!match || len <= 0 || strnlen(match, len) >= len)
-+		return false;
+ 	if (!bss_vif->cfg.assoc) {
+ 		int ret;
+-		/* If we're not associated, this must be netdetect */
+-		if (WARN_ON(!wowlan->nd_config))
++		/*
++		 * If not associated we can only do netdetect, if
++		 * that's not enabled then just suspend normally.
++		 */
++		if (!wowlan->nd_config)
+ 			return 1;
  
--	return np && match && type && !strcmp(match, type);
-+	return !strcmp(match, type);
- }
- 
- #define EXCLUDED_DEFAULT_CELLS_PLATFORMS ( \
-@@ -444,22 +452,22 @@ static bool __of_device_is_status(const struct device_node *device,
- 		return false;
- 
- 	status = __of_get_property(device, "status", &statlen);
--	if (status == NULL)
-+	if (!status || statlen <= 0)
-+		return false;
-+	if (strnlen(status, statlen) >= statlen)
- 		return false;
- 
--	if (statlen > 0) {
--		while (*strings) {
--			unsigned int len = strlen(*strings);
-+	while (*strings) {
-+		unsigned int len = strlen(*strings);
- 
--			if ((*strings)[len - 1] == '-') {
--				if (!strncmp(status, *strings, len))
--					return true;
--			} else {
--				if (!strcmp(status, *strings))
--					return true;
--			}
--			strings++;
-+		if ((*strings)[len - 1] == '-') {
-+			if (!strncmp(status, *strings, len))
-+				return true;
-+		} else {
-+			if (!strcmp(status, *strings))
-+				return true;
- 		}
-+		strings++;
- 	}
- 
- 	return false;
-@@ -1170,10 +1178,11 @@ EXPORT_SYMBOL(of_find_matching_node_and_match);
- int of_alias_from_compatible(const struct device_node *node, char *alias, int len)
- {
- 	const char *compatible, *p;
--	int cplen;
-+	int ret;
- 
--	compatible = of_get_property(node, "compatible", &cplen);
--	if (!compatible || strlen(compatible) > cplen)
-+	ret = of_property_read_string_index(node, "compatible", 0,
-+					    &compatible);
-+	if (ret)
- 		return -ENODEV;
- 	p = strchr(compatible, ',');
- 	strscpy(alias, p ? p + 1 : compatible, len);
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index c1feb631e3831..71322b5bda267 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -614,16 +614,31 @@ EXPORT_SYMBOL_GPL(of_prop_next_u32);
- 
- const char *of_prop_next_string(const struct property *prop, const char *cur)
- {
--	const void *curv = cur;
-+	const char *curv;
-+	const char *end;
-+	size_t len;
- 
--	if (!prop)
-+	if (!prop || !prop->value || !prop->length)
- 		return NULL;
- 
--	if (!cur)
--		return prop->value;
-+	curv = cur ? cur : prop->value;
-+	end = prop->value + prop->length;
- 
--	curv += strlen(cur) + 1;
--	if (curv >= prop->value + prop->length)
-+	if (curv < (const char *)prop->value || curv >= end)
-+		return NULL;
-+
-+	if (cur) {
-+		len = strnlen(curv, end - curv);
-+		if (len >= end - curv)
-+			return NULL;
-+
-+		curv += len + 1;
-+		if (curv >= end)
-+			return NULL;
-+	}
-+
-+	len = strnlen(curv, end - curv);
-+	if (len >= end - curv)
- 		return NULL;
- 
- 	return curv;
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 02b780b6e8e25..729813d54c22d 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -713,6 +713,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
- static void __init of_unittest_property_string(void)
- {
- 	const char *strings[4];
-+	const struct property *prop;
- 	struct device_node *np;
- 	int rc;
- 
-@@ -789,6 +790,37 @@ static void __init of_unittest_property_string(void)
- 	strings[1] = NULL;
- 	rc = of_property_read_string_array(np, "phandle-list-names", strings, 1);
- 	unittest(rc == 1 && strings[1] == NULL, "Overwrote end of string array; rc=%i, str='%s'\n", rc, strings[1]);
-+
-+	/* of_prop_next_string() tests */
-+	prop = of_find_property(np, "phandle-list-names", NULL);
-+	strings[0] = of_prop_next_string(prop, NULL);
-+	unittest(strings[0] && !strcmp(strings[0], "first"),
-+		 "of_prop_next_string() failure; got '%s'\n", strings[0]);
-+	strings[0] = of_prop_next_string(prop, strings[0]);
-+	unittest(strings[0] && !strcmp(strings[0], "second"),
-+		 "of_prop_next_string() failure; got '%s'\n", strings[0]);
-+	strings[0] = of_prop_next_string(prop, strings[0]);
-+	unittest(strings[0] && !strcmp(strings[0], "third"),
-+		 "of_prop_next_string() failure; got '%s'\n", strings[0]);
-+	strings[0] = of_prop_next_string(prop, strings[0]);
-+	unittest(!strings[0],
-+		 "of_prop_next_string() should return NULL at end of list\n");
-+
-+	prop = of_find_property(np, "unterminated-string", NULL);
-+	strings[0] = of_prop_next_string(prop, NULL);
-+	unittest(!strings[0],
-+		 "of_prop_next_string() should reject unterminated first string\n");
-+
-+	prop = of_find_property(np, "unterminated-string-list", NULL);
-+	strings[0] = of_prop_next_string(prop, NULL);
-+	unittest(strings[0] && !strcmp(strings[0], "first"),
-+		 "of_prop_next_string() failure; got '%s'\n", strings[0]);
-+	strings[0] = of_prop_next_string(prop, strings[0]);
-+	unittest(strings[0] && !strcmp(strings[0], "second"),
-+		 "of_prop_next_string() failure; got '%s'\n", strings[0]);
-+	strings[0] = of_prop_next_string(prop, strings[0]);
-+	unittest(!strings[0],
-+		 "of_prop_next_string() should reject unterminated trailing string\n");
- }
- 
- #define propcmp(p1, p2) (((p1)->length == (p2)->length) && \
+ 		ret = iwl_mld_netdetect_config(mld, bss_vif, wowlan);
 -- 
 2.53.0
 
