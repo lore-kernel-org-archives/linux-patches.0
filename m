@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D994B5CD1;
-	Mon, 31 Aug 2026 13:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4BF4766B4;
+	Mon, 31 Aug 2026 13:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184412; cv=none; b=lAlJZREj0Z5ORMK8GDBSUfsZgkqHI6r0g8mjVwbgcM8oRkM67mGOwQdmievUfIO+hueXzeoe5n2q3IRR0qZrY2nNr9d4mc4ycdgffh5p9p6UjMhYOeMzCau3dsvJsWGdL3AMzTeXkxprdEZSD7q1gPbBhIcglspDegi7viYvCsM=
+	t=1788184415; cv=none; b=qZHhLkjPeQonGzmexVpN4jrS/z/gyn2i9JXERPkZPsH6/4/HiGly7JAOzhGF0FC+GeQoeOrLkWssAW669ETOY9vBWD0ZJSrg4VSJgydNqHxzGvpXgvCfrPZ0uvOeGlLxH7RYISPG9cLx6Ozyp1Ehj0PEDcuZBW8KGAWKRGwmGTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184412; c=relaxed/simple;
-	bh=HYUqtF2h9UuLA5vyFtGnnMcJbf3ZZorC7k5YYt5z6Jc=;
+	s=arc-20240116; t=1788184415; c=relaxed/simple;
+	bh=hYz84zrmSkxTbJe0FbhUIzZ93Pxagtf48fe1sjF0EzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cXDxJgFeJCaYyG1kXoWn19pi40U5YJuW8yJRAR4wS22Ng40LZ/T+tkSwiuwzY8s8a6xAh7e089quULPdsKMPvBBAeoWCsjuxh6+5ZE5vIjrZ4J4gzu5aZHS908NWLEaryWk9OdtwxBKmCRdbJndPlYEUbuJvlrzOdGOlU3Z9gLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V63IZsGh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HR+1Xc7C4Z26y+v8DcG4XM5hU1Rk3GrZPlOgUpumS/2uZcbeREzNXAl7+akAgrqLOVtTbOau2xmk4aXPOH3UmkvPjld/yKQswMIiLnwErKToeuoqYvxgloIjRUD8l1Rm68tVXRTk+5vwbYKhuMordAAqTC+vSfskJjMH9Qvh5vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCy7P/D9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V63IZsGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF45A1F000E9;
-	Mon, 31 Aug 2026 13:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCy7P/D9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD771F00A3D;
+	Mon, 31 Aug 2026 13:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184411;
-	bh=t/zguG8Ea+Ze8spTVg1H93Gw7vc5OK0TUdF+5C7N+Yk=;
+	s=korg; t=1788184414;
+	bh=9oBbxUHHtTWN279PjUz2TbvygZZPvgjdEoAgUmY3Zfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V63IZsGhJYVVMxrpN+T1NtPHckjEov5OlzfGcJD9TtNbn/BuiI2mkFtKwjG4zR5i8
-	 OycTIg3qz6Rgj+CXZWEtplT3jhZobTlH+X4zsOMn8z9kwCmPyYuZLe0bjBAXPLV/Wr
-	 yl/zfubLw/O/lMR7j99gtI7liTRe0a/tV0/V2pkM=
+	b=MCy7P/D9N99pd5t/Ij85cbN+/0KzUlInaeBTTQo7kIyTkplRU/bjRjwCC24dNREle
+	 yva6rcpfSCtHp0jizfs48qfPbheSGuH/dr7f0ULuU6WRj9bJvjGeKgRlR3Is8LbIfu
+	 Vw+nI9Wme6ShOqSeULZqNTvRZQXX8ZbPEMci0MOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 6.12 97/99] USB: c67x00: fix use-after-free in c67x00_add_iso_urb()
-Date: Mon, 31 Aug 2026 15:35:06 +0200
-Message-ID: <20260831133404.529217283@linuxfoundation.org>
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.12 62/99] fuse: fix invalidate lock leak on open O_TRUNC DAX failure
+Date: Mon, 31 Aug 2026 15:34:31 +0200
+Message-ID: <20260831133403.114472320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
 References: <20260831133359.740409777@linuxfoundation.org>
@@ -43,55 +44,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-commit b1e24de475bf2d66fffc9103f3444b783527d55a upstream.
+commit a927f1867e61b78f39f9da0bbba3c98c2ca151fe upstream.
 
-When TD creation fails for the last packet of an isochronous URB,
-c67x00_add_iso_urb() gives the URB back before updating the endpoint
-scheduling state.
+fuse_open() takes filemap_invalidate_lock() for a DAX truncate
+(dax_truncate = true) and releases it before the out_inode_unlock
+label.  But when fuse_dax_break_layouts() fails, the goto
+out_inode_unlock skips the unlock and leaks the rwsem, so any later
+fault or truncate on the file stalls on the stale lock.
 
-c67x00_giveback_urb() frees the URB private data, and the completion
-callback may release the final URB reference. The following accesses to
-urbp->ep_data, urb->interval, and urbp->cnt can therefore use freed
-memory.
+fuse_dax_break_layouts() can fail with -ERESTARTSYS when a signal
+interrupts the wait for busy DAX pages to drain:
 
-Update next_frame and cnt before giving back the failed final packet,
-making the giveback the last operation that uses the URB and its private
-data.
+  open("file", O_RDWR | O_TRUNC)
+  └─ fuse_open()
+     ├─ filemap_invalidate_lock()        # dax_truncate
+     └─ fuse_dax_break_layouts()
+        └─ dax_break_layout()
+           └─ wait_page_idle()           # TASK_INTERRUPTIBLE
+              └─ fuse_wait_dax_page()    # unlock, schedule, re-lock
+                 └─ signal → -ERESTARTSYS
+     goto out_inode_unlock               # <- lock leaked
 
-Fixes: e9b29ffc519b ("USB: add Cypress c67x00 OTG controller HCD driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260806013502.322067-1-shuangpeng.kernel@gmail.com
+Fix this by moving filemap_invalidate_unlock() below the label so
+that all error paths release the lock, and rename the label to
+out_unlock as it now covers more than just the inode lock.
+
+Fixes: 2fdbb8dd0155 ("fuse: fix deadlock between atomic O_TRUNC and page invalidation")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/c67x00/c67x00-sched.c |    4 ++--
+ fs/fuse/file.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/c67x00/c67x00-sched.c
-+++ b/drivers/usb/c67x00/c67x00-sched.c
-@@ -761,13 +761,13 @@ static int c67x00_add_iso_urb(struct c67
- 				ret);
- 			urb->iso_frame_desc[urbp->cnt].actual_length = 0;
- 			urb->iso_frame_desc[urbp->cnt].status = ret;
--			if (urbp->cnt + 1 == urb->number_of_packets)
--				c67x00_giveback_urb(c67x00, urb, 0);
- 		}
- 
- 		urbp->ep_data->next_frame =
- 		    frame_add(urbp->ep_data->next_frame, urb->interval);
- 		urbp->cnt++;
-+		if (ret && urbp->cnt == urb->number_of_packets)
-+			c67x00_giveback_urb(c67x00, urb, 0);
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -267,7 +267,7 @@ static int fuse_open(struct inode *inode
+ 		filemap_invalidate_lock(inode->i_mapping);
+ 		err = fuse_dax_break_layouts(inode, 0, -1);
+ 		if (err)
+-			goto out_inode_unlock;
++			goto out_unlock;
  	}
- 	return 0;
- }
+ 
+ 	if (is_wb_truncate || dax_truncate)
+@@ -291,9 +291,9 @@ static int fuse_open(struct inode *inode
+ 		else if (!(ff->open_flags & FOPEN_KEEP_CACHE))
+ 			invalidate_inode_pages2(inode->i_mapping);
+ 	}
++out_unlock:
+ 	if (dax_truncate)
+ 		filemap_invalidate_unlock(inode->i_mapping);
+-out_inode_unlock:
+ 	if (is_wb_truncate || dax_truncate)
+ 		inode_unlock(inode);
+ 
 
 
