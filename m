@@ -1,132 +1,128 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59CE52B1C8;
-	Mon, 31 Aug 2026 13:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C60D52B1E3;
+	Mon, 31 Aug 2026 13:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183880; cv=none; b=WqV7VQX2PzQgOJIQHvF0VNdLdakFlcC7SEXwV89yaCLR5fV1G3CuwHUVJiBJmtSuByAXyJU/M5LXyTwx0BsVs/bCOWLAkP1HX7VyM6wbafQWuJm5e+4A0kTF33d9zp/L0R9o1K4Kdm1A94vBSIHh/LthCruWYkuHdNtvwlyQ0v4=
+	t=1788183881; cv=none; b=TaiyOUxzPKuJMKzzu2jbtmygtsq/jvEzIQ63RWoFPyLAlegqmkQZTjuwsabBnu/4CH8ymlwvKkcRXHWDAOkismRnJVjWpxjWvtLM1ILunIDaC7KY8pie9C8q/2OAoGDYHssCmcSDnobHrubhwojPDg3iyOX5j7i2BPqnqdBLE5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183880; c=relaxed/simple;
-	bh=sb8dpUN2hbrGQSjXREIMP/gjRoH0MDBt+aHPV8RFPc0=;
+	s=arc-20240116; t=1788183881; c=relaxed/simple;
+	bh=5VbkjIU+epqjFMIjrIACHln6zDd0q7CBt7eGyVH8T1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNXhOOTK32hAM5qiTD5y180uyVZmQeh9+OCkYbVDpY1u2kNrpZ52HzrYl0WgGepuq43xhx53VP1IH6eQnHchslhayvoG0qkq/GEXm9PMR3LeW+sYnGq3Er5mznkjfOVWS8Hl4lnHKmbZ6EBFT6LVYk1ruKTpACJlOBG29fVDlRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJjn2BRl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eikT8DeNltdawWO9Al4JSM81ZHxWxqYJnGYzGsTZ0wcwHJdupN7nY0z/OnlFxih7d8JsR1+jp+wmqXhu3SCDuZfg4YcIF3pNRYkN+OQeapyNWxpDCJnTLp+5lI0EwfoT4aotKI00pIMQFKxHDCiGjhzTVIa2FaKFojJ6vFkw27c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aC8GRyv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dJjn2BRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BBC1F00ACF;
-	Mon, 31 Aug 2026 13:44:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183878;
-	bh=QwYnHj3cltivoVTF2AufhtInubvueKHuHYcq4uUZHPU=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aC8GRyv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04DC1F01558;
+	Mon, 31 Aug 2026 13:44:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183879;
+	bh=HI/0NJf8mgeydVBTqtYKeb3Gwwm3L5knCNeH1UhI21o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJjn2BRlBoerXo54P1VtDjfM7pJBgZ+0IkAVjex1YR2CCUPVT+lG/wRgZk633pasy
-	 3mYAr94VD4nNCHa31XvsNTotGLD258nJ82gQRvyimZfOCvcQnr90/IO762apecoF6h
-	 FJdRYLPPpbNGwdGF1JI/iXJiXT9L/p0GMnTfyOTDEOABC6YpTIEUVew9gGG6EWtu8s
-	 6wxI0pJ+bWwyqh7TkI3jo2O08O4xFOYpd6sLK5IEhtwKJRvSDbq1t92Zl6lD7IJcHk
-	 JQVs7OPiPGhmDvPVtoKka5bDd3AP14Z8dU3R3JYLdRKE3wObw49o3fRMefyFx32y6K
-	 9NvXW/9QgD2oA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] drm/gem: Consider GEM object reclaimable if shrinking fails
-Date: Mon, 31 Aug 2026 09:26:25 -0400
-Message-ID: <20260831133314.4125787-357-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=2aC8GRyvRzZlSJyL/nGsD9xgjmSUTdjlgechHKqIfZFNcyQEmUBasuG8wKTz5Zov1
+	 6jnugvYiHocr6vAF53w8lCrzm8yaq0T7+uGjiQ2fmi0yfXorVnrtZh/cG+Ss92XGLY
+	 UkHjQlcMxR4n3kNWq9w4/07/W11PHyjsjYiUru8E=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 7.1 28/76] usb: gadget: f_tcm: keep port count until LUN teardown completes
+Date: Mon, 31 Aug 2026 15:34:00 +0200
+Message-ID: <20260831133400.763548155@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 71c8224a18825102ee1e5e70498f96f6c2d2a81d ]
+------------------
 
-If the object wasn't moved to a different LRU after the shrink callback
-returns, it means the buffer is still reclaimable. Update the remaining
-counter to reflect that.
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-v2:
-- Collect R-b
+commit c39d0916da47d94909391876c9e5bd429ea7b1b9 upstream.
 
-v3:
-- Collect R-b
+tcm_usbg_drop_nexus() permits session removal once tpg_port_count
+reaches zero. However, usbg_port_unlink() currently decrements that
+count from the fabric_pre_unlink() callback, before core_dev_del_lun()
+waits for active se_lun references to drain.
 
-v4:
-- No changes
+If removal of the last LUN races a nexus removal, the latter can observe
+a zero port count and call target_remove_session(). This frees
+sess_cmd_map while an in-flight struct usbg_cmd, including its work item,
+can still be accessed.
 
-v5:
-- No changes
+Overlapping the last-LUN unlink with nexus removal reproduces this
+lifetime violation as a DEBUG_OBJECTS "free active" warning for
+usbg_cmd_work, followed by a target-core BUG/Oops.
 
-v6:
-- No changes
+The generic target-core unlink path has no callback after
+core_dev_del_lun() completes. Add an optional fabric_post_unlink()
+callback and use it for the f_tcm port count. The count now remains
+nonzero until core_dev_del_lun() has finished draining active LUN
+references, preventing nexus removal from freeing the session during
+command completion.
 
-v7:
-- No changes
-
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20260401134854.2275433-2-boris.brezillon@collabora.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260807060733.3186624-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/target/target_core_fabric_configfs.c |    8 ++++++++
+ drivers/usb/gadget/function/f_tcm.c          |    2 +-
+ include/target/target_core_fabric.h          |    2 ++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background `b4 dig` on the original `drm_gem_lru_scan` introduction
-commit (`a4871e6201c46`) finished successfully. It matched the Thomas
-Zimmermann May 2025 thread:
-https://patch.msgid.link/20250520094203.30545-5-tzimmermann@suse.de
-
-That lines up with the earlier finding that the helper and the missing
-`*remaining` accounting have been in this tree since `drm_gem.c` landed;
-the Boris Brezillon patch is a small, standalone fix on top of that.
-
-For **Linux 6.18.43**, the backport recommendation remains **YES**.
-
- drivers/gpu/drm/drm_gem.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-index 5c4a113b08941..224ed96bd0d4a 100644
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -1601,6 +1601,16 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 			 */
- 			WARN_ON(obj->lru == &still_in_lru);
- 			WARN_ON(obj->lru == lru);
-+		} else if (obj->lru == &still_in_lru) {
-+			/*
-+			 * If the object wasn't moved and wasn't shrunk either,
-+			 * it's still remaining as reclaimable. Note that
-+			 * obj->lru is supposed to be checked with the LRU lock
-+			 * held for an accurate result, but we don't care about
-+			 * accuracy here. Worst thing that could happen is an
-+			 * extra scan.
-+			 */
-+			*remaining += obj->size >> PAGE_SHIFT;
- 		}
+--- a/drivers/target/target_core_fabric_configfs.c
++++ b/drivers/target/target_core_fabric_configfs.c
+@@ -690,6 +690,14 @@ static void target_fabric_port_unlink(
+ 	}
  
- 		dma_resv_unlock(obj->resv);
--- 
-2.53.0
+ 	core_dev_del_lun(se_tpg, lun);
++
++	if (tf->tf_ops->fabric_post_unlink) {
++		/*
++		 * Allow fabrics to release state that must remain valid until
++		 * core_dev_del_lun() has drained all active LUN references.
++		 */
++		tf->tf_ops->fabric_post_unlink(se_tpg, lun);
++	}
+ }
+ 
+ static void target_fabric_port_release(struct config_item *item)
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -2024,7 +2024,7 @@ static const struct target_core_fabric_o
+ 	.fabric_enable_tpg		= usbg_enable_tpg,
+ 	.fabric_drop_tpg		= usbg_drop_tpg,
+ 	.fabric_post_link		= usbg_port_link,
+-	.fabric_pre_unlink		= usbg_port_unlink,
++	.fabric_post_unlink		= usbg_port_unlink,
+ 	.fabric_init_nodeacl		= usbg_init_nodeacl,
+ 
+ 	.tfc_wwn_attrs			= usbg_wwn_attrs,
+--- a/include/target/target_core_fabric.h
++++ b/include/target/target_core_fabric.h
+@@ -95,6 +95,8 @@ struct target_core_fabric_ops {
+ 				struct se_lun *);
+ 	void (*fabric_pre_unlink)(struct se_portal_group *,
+ 				struct se_lun *);
++	void (*fabric_post_unlink)(struct se_portal_group *se_tpg,
++				   struct se_lun *lun);
+ 	struct se_tpg_np *(*fabric_make_np)(struct se_portal_group *,
+ 				struct config_group *, const char *);
+ 	void (*fabric_drop_np)(struct se_tpg_np *);
+
 
