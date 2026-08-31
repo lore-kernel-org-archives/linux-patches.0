@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A8047DF86;
-	Mon, 31 Aug 2026 13:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981A247ECFE;
+	Mon, 31 Aug 2026 13:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183458; cv=none; b=HnPtJ49THqVWc32flmgXKszAHQKOezJVpPT5JNEqLiTr8uSQqvaNiie5+8BXJz5KxN+9Bb55kXoMWlQ11XViSK2DOK6BP20GW0SYVxJ5cYzIZN0mFAhnEv3MpdnZ8CCpfPKm5JkEXnPKrKJ7MtjGNB/YiRi+YQFuv/7NMN7nGLA=
+	t=1788183460; cv=none; b=L+fY9Oieq+pnjIBg01lED7uTQPeWGFGK+3M5UGKzNZuJOPgiT0gTP0okD+QOaZ0gbtlfuMtZAxyJ249ssfIixE8vY/cUQMa7FFLQLxuzOwg8K1xP7S8vOiRAcSalZ7P32TI9CucsoK+0aKhRpV9QvSfEhtVTovfKBRnSYbx500M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183458; c=relaxed/simple;
-	bh=+hBV3VC8oghTFATaE06fBctpbwHYg/11NE4p8sUtRwM=;
+	s=arc-20240116; t=1788183460; c=relaxed/simple;
+	bh=B+L8thju9wU+r8u6ipoag1HmMC/oYkI2acABse7f66M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LhrM2RUfGgsze2WBDEiK8kgRNb9Etc1hG46qaCkolIBT5QjFDVv9Ct8jjVIBuqauYaSf5wH6XH4Z+1jdHEGLR959qHRdxy7A6mbh4HaZlhz3YT48rUGW5gWfPtIRZRPQ2nl1uxy/A/RhUFAm6oOOHjvQjIZ+jL7+7UZoe5SowBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPCkp9kJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KblTAv9QTp0Jgf9qxETk/L3ZbFXNCo56tw73SMH/sPVWs4r93aUHxvWbg/IsB7idCIpGsfUgm2gM/pC/cRr1oq1cXq9xZPy9/HOW/vBs4xEfVKsz9kmt154nVVBhtEKACfvLybM/Lpu4+fRAouxke/JW6abVPwuDRbpSXVMyN4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UXnV7LZ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPCkp9kJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425731F000E9;
-	Mon, 31 Aug 2026 13:37:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UXnV7LZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB62B1F00A3D;
+	Mon, 31 Aug 2026 13:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183456;
-	bh=hp0zo/g+UZnqTLyekrqgz6rWmUrXHOudIzqku7WJKes=;
+	s=k20260515; t=1788183458;
+	bh=ZjJY1vX9s+jaimzcKtacl9O7Y1PhJM7bV1ZBdpqFekQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cPCkp9kJ4jh0YSbsWckfQ9iarRPGisC5SS8JjKZPDVgEAPs/IANTa/lROLfHnS1xp
-	 MSZm+irJzp+tb5cjND0oDq0+4UWNq2cGodD1YW/K9V/Qh548bYcuuhvqb2t+eplvQf
-	 7Tb8+DeXRWZpruM+OB3EpTfx7Iv88ecEspgLFqfNQhz84y/iux2O2oncAeQZ8skZDj
-	 X9+4cJhq+3ic0aNHdNckt97fP7+HL1t5nZ0Atnmm+b1v1G0UpKmdnZi7jP8xQSlLcY
-	 7g2+WgppuC4QfPQjQQCwlyWVAU1P6PbhZpomGro4fN9DWKYKgUQisuhgmzDPt/M4YX
-	 gbnbae7RWMO6A==
+	b=UXnV7LZ7w1rb+IA2AfhAuIj0vhGqSPTHjLTP3anB697m7fU50iT2n0w6Z3u1oOL0b
+	 2ON/595V5Lmn+LDpVbzrR0zqcYpXpO8UGN9xMC4zpFRqNsexANV3haYSZsfoTDOQgW
+	 KUq0qtwaeWT1RV8SbI5FX58Oo4JYL/Ov1vkFLa35t8o5NqXmTUp49RyICojLa31MsP
+	 qJj0uBCGbFxueJCU4e0bQwOqoBZV8T+WeDWAegfKDVTIIsSdbXrMZ1beWoMWSPJ/96
+	 z7MCvmR+R6WJmikBuJYkRa6KqgCrgG7z6cCVqt8hHDH+b1iy5qaDeHEQKwvbvpNCsZ
+	 gHbvRRqxwRAKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Karl Mehltretter <kmehltretter@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+Cc: =?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mhiramat@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] tracing: Disable KCOV instrumentation for trace_irqsoff.o
-Date: Mon, 31 Aug 2026 09:22:15 -0400
-Message-ID: <20260831133314.4125787-107-sashal@kernel.org>
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] drm/arm/malidp: use clk_bulk API in runtime PM resume and suspend
+Date: Mon, 31 Aug 2026 09:22:16 -0400
+Message-ID: <20260831133314.4125787-108-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -47,57 +51,32 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 01046072880b654dbadf71be2f645aad4a7b5d87 ]
+[ Upstream commit 46f715a16989f4e7bbbc2eb41447051874b027f3 ]
 
-When KCOV runs its boot selftest with whole-kernel instrumentation
-enabled, it sets current->kcov_mode to KCOV_MODE_TRACE_PC without
-installing a coverage area. Any instrumented code accepted as task-context
-coverage in that window dereferences current->kcov_area and crashes.
+malidp_runtime_pm_resume() calls clk_prepare_enable() three times
+without checking the return value. If any clock fails to enable, the
+driver silently proceeds with unclocked hardware, leading to undefined
+behavior.
 
-On ARMv5 Versatile PB with CONFIG_KCOV_SELFTEST=y,
-CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y, boot hits a
-NULL pointer fault during the selftest:
+Convert both the resume and suspend paths to use the clk_bulk API:
+clk_bulk_prepare_enable() in resume checks the return value and rolls
+back any successfully enabled clocks on failure;
+clk_bulk_disable_unprepare() in suspend keeps the two paths symmetric.
 
-  kcov: running self test
-  Internal error: Oops: 5 [#1] ARM
-  PC is at __sanitizer_cov_trace_pc+0x4c/0x90
-  Kernel panic - not syncing: Fatal exception
+This issue was found by code review without access to Mali DP hardware.
 
-A diagnostic run showed the unwanted coverage comes from the IRQs-off
-tracer callbacks reached from ARM IRQ entry before hardirq context is
-visible to KCOV:
-
-  __sanitizer_cov_trace_pc from tracer_hardirqs_off+0x18/0x1cc
-  tracer_hardirqs_off from trace_hardirqs_off+0x34/0x54
-  trace_hardirqs_off from __irq_svc+0x58/0xb0
-  __irq_svc from kcov_init+0x7c/0xdc
-
-and similarly through tracer_hardirqs_on().
-
-trace_preemptirq.o is already excluded because this tracing path can run
-from early interrupt code and produce coverage unrelated to syscall
-inputs. Exclude trace_irqsoff.o as well, instead of requiring users to
-turn off CONFIG_KCOV_INSTRUMENT_ALL=y, which is the default whole-kernel
-KCOV mode.
-
-With the exclusion in place, the same ARMv5 Versatile PB QEMU test boots
-through the KCOV selftest and reaches userspace.
-
-Tested on ARMv5 Versatile PB QEMU with CONFIG_KCOV_SELFTEST=y,
-CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y.
-
-Link: https://patch.msgid.link/20260525170428.67211-1-kmehltretter@gmail.com
-Assisted-by: Codex:gpt-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -105,364 +84,406 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-### Step 1.1: Subject line
-**Record:** `[tracing] [disable] Disable KCOV instrumentation for
-trace_irqsoff.o` — tracing subsystem; disables KCOV instrumentation on
-one object file to prevent a boot crash.
+**Step 1.1 — Subject line**
+Record: `[drm/arm/malidp]` `[use]` — Convert runtime PM resume/suspend
+clock handling to `clk_bulk` API with proper error checking.
 
-### Step 1.2: Tags
-**Record:**
+**Step 1.2 — Tags**
+Record:
+- **Fixes:** none
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** Liviu Dudau `<liviu.dudau@arm.com>` (Mali DP driver
+  maintainer/original author)
+- **Acked-by:** none
 - **Link:**
-  https://patch.msgid.link/20260525170428.67211-1-kmehltretter@gmail.com
-- **Assisted-by:** Codex:gpt-5
-- **Signed-off-by:** Karl Mehltretter `<kmehltretter@gmail.com>`
-- **Signed-off-by:** Steven Rostedt `<rostedt@goodmis.org>` (tracing
-  maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable tags
-- Notable: maintainer sign-off; tested configuration described in body;
-  no syzbot report
+  https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
+- **Cc: stable:** none (expected for manual review)
+- **Signed-off-by:** Gustavo Kenji Mendonça Kaneko, Liviu Dudau (ignore
+  pipeline-added SOBs)
 
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** With `CONFIG_KCOV_SELFTEST=y`,
-  `CONFIG_KCOV_INSTRUMENT_ALL=y`, and `CONFIG_IRQSOFF_TRACER=y`, KCOV
-  boot selftest sets `current->kcov_mode = KCOV_MODE_TRACE_PC` without
-  installing a coverage area. Instrumented IRQ-off tracer code reached
-  from ARM IRQ entry can call `__sanitizer_cov_trace_pc()`, which
-  dereferences NULL `current->kcov_area`.
-- **Symptom:** NULL pointer fault / kernel panic during boot on ARMv5
-  Versatile PB QEMU: `PC is at __sanitizer_cov_trace_pc`, panic during
-  `kcov: running self test`.
-- **Root cause:** `trace_irqsoff.o` is still KCOV-instrumented while
-  `trace_preemptirq.o` was already excluded; `tracer_hardirqs_off()` /
-  `tracer_hardirqs_on()` live in `trace_irqsoff.c` and run from IRQ
-  entry before hardirq context is visible to KCOV’s `in_task()`
-  filtering.
-- **Stack trace (from message):** `__sanitizer_cov_trace_pc` ←
-  `tracer_hardirqs_off` ← `trace_hardirqs_off` ← `__irq_svc` ←
-  `kcov_init`.
+Notable: maintainer Reviewed-by; no user/fuzzer reports.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Although framed as instrumentation exclusion, this is a
-real boot crash fix for a valid Kconfig combination, completing the same
-class of fix already applied to `trace_preemptirq.o` in commit
-`bb5eb8f3b3297` (2022).
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** `malidp_runtime_pm_resume()` calls `clk_prepare_enable()`
+  three times without checking return values.
+- **Symptom/failure mode:** On clock-enable failure, driver continues
+  with unclocked or partially clocked hardware → undefined behavior;
+  then sets `pm_suspended = false` and runs IRQ hardware init.
+- **Version info:** none stated.
+- **Root cause:** Missing error handling on runtime PM resume clock
+  enables; partial enable not rolled back.
+
+**Step 1.4 — Hidden bug fix?**
+Record: **Yes.** Subject says "use clk_bulk API," but the substantive
+fix is ignored `clk_prepare_enable()` errors on the PM resume path — a
+real correctness/robustness bug, not mere style.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **Files:** `kernel/trace/Makefile` only (+3/-2 lines net)
-- **Change:** Add `KCOV_INSTRUMENT_trace_irqsoff.o := n`; broaden
-  comment from “this file” to “these files”
-- **Scope:** Single-file, surgical Makefile change
+**Step 2.1 — Inventory**
+Record:
+- **File:** `drivers/gpu/drm/arm/malidp_drv.c` (+16 / −6)
+- **Functions:** `malidp_runtime_pm_suspend()`,
+  `malidp_runtime_pm_resume()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code flow
-**Record:**
-- **Before:** Only `trace_preemptirq.o` excluded from KCOV;
-  `trace_irqsoff.o` remains instrumented when
-  `CONFIG_KCOV_INSTRUMENT_ALL=y`.
-- **After:** Both `trace_preemptirq.o` and `trace_irqsoff.o` excluded.
-- **Affected path:** IRQ entry/exit →
-  `trace_hardirqs_off()`/`trace_hardirqs_on()` (uninstrumented wrapper
-  in `trace_preemptirq.c`) →
-  `tracer_hardirqs_off()`/`tracer_hardirqs_on()` (instrumented
-  implementation in `trace_irqsoff.c`) → `__sanitizer_cov_trace_pc()`.
+**Step 2.2 — Code flow per hunk**
 
-### Step 2.3: Bug mechanism
-**Record:** **Category:** NULL pointer dereference / boot crash in debug
-instrumentation path.
-- `kcov_init()` selftest sets `kcov_mode` without `kcov_area` (verified
-  in `kernel/kcov.c:1097-1098`).
-- `check_kcov_mode()` allows tracing when `in_task()` is true
-  (`kernel/kcov.c:183-184`); during early ARM IRQ handling,
-  `preempt_count` may not yet reflect hardirq context
-  (`include/linux/preempt.h:130`).
-- Instrumented `tracer_hardirqs_*()` in `trace_irqsoff.o` calls
-  `__sanitizer_cov_trace_pc()` which dereferences `t->kcov_area` at line
-  220 without NULL guard.
+| Hunk | Before | After |
+|------|--------|-------|
+| Suspend | Three individual `clk_disable_unprepare()` calls
+(mclk→aclk→pclk) | `clk_bulk_disable_unprepare()` on `[pclk, aclk,
+mclk]` array |
+| Resume | Three `clk_prepare_enable()` calls, return values ignored |
+`clk_bulk_prepare_enable()` with error check; return error on failure |
 
-### Step 2.4: Fix quality
-**Record:** Obviously correct; mirrors existing
-`KCOV_INSTRUMENT_trace_preemptirq.o := n` pattern from `bb5eb8f3b3297`.
-Minimal, no API changes. Regression risk very low — only disables KCOV
-on code that should never contribute syscall-relevant coverage anyway.
+Record: Suspend path is symmetric refactor only (bulk disable runs in
+reverse order, matching old behavior). Resume path adds error
+propagation and rollback on partial failure.
+
+**Step 2.3 — Bug mechanism**
+Record: **Error-path / logic correctness fix.** Category: ignored return
+values + partial resource state on failure. If `aclk` fails after `pclk`
+succeeds, old code leaves `pclk` enabled, ignores failure, and proceeds
+to `malidp_de_irq_hw_init()` / `malidp_se_irq_hw_init()` on mis-clocked
+hardware.
+
+**Step 2.4 — Fix quality**
+Record: Fix is minimal and idiomatic. `clk_bulk_disable()` /
+`clk_bulk_unprepare()` iterate in reverse order, so suspend behavior
+matches the old manual sequence. Resume rollback via
+`clk_bulk_prepare_enable()` is standard. Low regression risk; maintainer
+requested v2 suspend symmetry change.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:** Lines 34-36 in `kernel/trace/Makefile` introduced by
-`bb5eb8f3b3297` (Congyu Liu, 2022-05-23) — preemptirq exclusion only.
-`trace_irqsoff.c` has existed since `81d68a96a3984` (2008). The gap
-(preemptirq excluded, irqsoff not) has been present since the 2022 fix.
+**Step 3.1 — Blame**
+Record: Buggy `clk_prepare_enable()` calls introduced in
+`85f6421889eca6` ("drm: mali-dp: Enable power management for the
+device.", 2017-03-22, Liviu Dudau). Present in this tree since driver PM
+was added.
 
-### Step 3.2: Fixes: tag
-**Record:** Not applicable — no Fixes: tag in commit message.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no Fixes: tag.
 
-### Step 3.3: Related file history
-**Record:** Recent `trace_irqsoff.c` changes are unrelated tracer fixes
-(e.g. `c834a97962c70`). No prerequisite series; standalone one-line
-Makefile fix. The candidate commit is not yet in this tree (fix absent
-from current `kernel/trace/Makefile`).
+**Step 3.3 — Related file history**
+Record: Recent `malidp_drv.c` changes are unrelated DRM API cleanups.
+Standalone patch; v2 incorporated maintainer feedback (suspend
+symmetry). No prerequisite commits required.
 
-### Step 3.4: Author context
-**Record:** Steven Rostedt signed off (tracing maintainer). Prior
-related fix `bb5eb8f3b3297` was Acked-by Dmitry Vyukov (KCOV author).
-Karl Mehltretter appears to be reporting/fixing a gap in the 2022
-exclusion.
+**Step 3.4 — Author context**
+Record: Gustavo Kenji Mendonça Kaneko is a contributor; Liviu Dudau is
+the Mali DP maintainer and original driver author. Maintainer reviewed
+and merged to `drm-misc-fixes`.
 
-### Step 3.5: Dependencies
-**Record:** No dependencies. Uses standard `KCOV_INSTRUMENT_<stem>.o`
-mechanism in `scripts/Makefile.lib:84-90`. Applies standalone.
+**Step 3.5 — Dependencies**
+Record: No dependencies. `clk_bulk_prepare_enable()` /
+`clk_bulk_disable_unprepare()` exist in `include/linux/clk.h` in this
+tree. Patch is self-contained.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** UNVERIFIED — `b4 shazam` could not find the message-id;
-lore.kernel.org returns 403/bot protection via WebFetch and curl. Link
-from commit message could not be fetched.
+**Step 4.1 — Original discussion**
+Record:
+- **URL:**
+  https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
+- **Series:** v1 (resume only) → v2 (resume + suspend symmetry, per
+  Liviu Dudau)
+- **Reviewer feedback:** Liviu Dudau requested suspend conversion and
+  commit-message correction in v2
+- **Stable nomination:** none found in thread
+- **NAKs:** none
 
-### Step 4.2: Reviewers
-**Record:** UNVERIFIED via b4 dig -w (could not locate thread). Steven
-Rostedt SOB confirms maintainer acceptance.
+**Step 4.2 — Reviewers (b4 dig -w)**
+Record: CC'd dri-devel, Liviu Dudau, DRM maintainers (Lankhorst, Ripard,
+Zimmermann, Airlie, Vetter), linux-kernel.
 
-### Step 4.3: Bug report
-**Record:** Reproduced by author on ARMv5 Versatile PB QEMU with
-documented Kconfig. No syzbot/bugzilla link. Severity: boot panic during
-KCOV selftest.
+**Step 4.3 — Bug report**
+Record: No external bug report. Author states issue found by code review
+without Mali DP hardware access.
 
-### Step 4.4: Related patches
-**Record:** Direct predecessor: `bb5eb8f3b3297 tracing: Disable kcov on
-trace_preemptirq.c` — same rationale, incomplete because tracer
-implementation lives in separate `trace_irqsoff.o`.
+**Step 4.4 — Related patches**
+Record: v1 was `[PATCH 1/2] drm/arm/malidp: fix ignored
+clk_prepare_enable() in runtime PM resume`; v2 is the committed version.
 
-### Step 4.5: Stable list history
-**Record:** UNVERIFIED — could not search lore stable archive due to
-access restrictions.
+**Step 4.5 — Stable list**
+Record: No stable-specific discussion found.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `tracer_hardirqs_off()`, `tracer_hardirqs_on()` in
-`trace_irqsoff.c`; `trace_hardirqs_off()`, `trace_hardirqs_on()` in
-`trace_preemptirq.c`; `__sanitizer_cov_trace_pc()`, `check_kcov_mode()`,
-`selftest()`, `kcov_init()` in `kcov.c`.
+**Step 5.1 — Key functions**
+Record: `malidp_runtime_pm_resume()`, `malidp_runtime_pm_suspend()`
 
-### Step 5.2: Callers
-**Record:** `trace_hardirqs_off`/`on` called from ARM entry code
-(`arch/arm/kernel/entry-header.S:208,215,217` via `svc_exit`;
-`arch/arm/kernel/entry-armv.S:210`). Exported symbols used broadly
-across architectures for IRQ flag tracing. `kcov_init` is
-`device_initcall` — runs during boot with interrupts enabled.
+**Step 5.2 — Callers**
 
-### Step 5.3: Callees
-**Record:** `tracer_hardirqs_off()` → `start_critical_timing()`; KCOV-
-instrumented code in `trace_irqsoff.o` inserts calls to
-`__sanitizer_cov_trace_pc()`.
+| Caller | Context |
+|--------|---------|
+| `SET_RUNTIME_PM_OPS` | PM core runtime suspend/resume |
+| `pm_runtime_get_sync()` in `malidp_bind()`, atomic commit, unbind |
+Hot display paths |
+| `malidp_pm_resume_early()` | System sleep early resume — **still
+ignores return value** (pre-existing) |
+| Direct call when PM runtime disabled | Probe fallback |
 
-### Step 5.4: Reachability
-**Record:** Triggered during boot when KCOV selftest runs
-(`device_initcall`) and a timer interrupt fires during the 300ms wait
-loop. Reachable with `CONFIG_KCOV=y`, `CONFIG_KCOV_SELFTEST=y`,
-`CONFIG_KCOV_INSTRUMENT_ALL=y` (default **y** per
-`lib/Kconfig.debug:2149`), and `CONFIG_IRQSOFF_TRACER=y` or
-`CONFIG_PREEMPT_TRACER=y` (both build `trace_irqsoff.o`).
+Record: Reachable on every runtime PM resume and system sleep resume on
+Mali DP hardware.
 
-### Step 5.5: Similar patterns
-**Record:** Extensive KCOV exclusions across tree (mm/, lib/, kernel/,
-arch/*/entry/, `kernel/trace/Makefile` for preemptirq). This fix fills
-an obvious gap in the same file/pattern.
+**Step 5.3 — Callees**
+Record: `clk_bulk_prepare_enable()`, `clk_bulk_disable_unprepare()`,
+`malidp_de_irq_hw_init()`, `malidp_se_irq_hw_init()`
+
+**Step 5.4 — Reachability**
+Record: Triggered during device probe, display atomic commits
+(`pm_runtime_get_sync` in `malidp_atomic_commit_tail`), system
+suspend/resume, and module teardown. Users with
+`CONFIG_DRM_MALI_DISPLAY` on ARM/ARM64 platforms (e.g. NXP LS1028A) are
+affected.
+
+**Step 5.5 — Similar patterns**
+Record: Komeda driver in the same tree also has unchecked
+`clk_prepare_enable()` calls — separate issue; this fix is Mali-DP-
+specific.
 
 ---
 
 ## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Local tree is **Linux 6.18.44** (`git describe
-HEAD` → `v6.18.44`). `kernel/trace/Makefile` has only:
-```34:36:kernel/trace/Makefile
-# Functions in this file could be invoked from early interrupt
-# code and produce random code coverage.
-KCOV_INSTRUMENT_trace_preemptirq.o := n
-```
-`trace_irqsoff.o` is built (lines 62-63) but not excluded. All
-KCOV/selftest infrastructure present (`lib/Kconfig.debug`,
-`kernel/kcov.c`).
+**Step 6.1 — Buggy code in tree?**
+Record: **Yes.** Local tree is **v6.18.44** (`make kernelversion` =
+6.18.44). Buggy code at lines 679–694 of `malidp_drv.c`. Present since
+2017. Mainline fix commit `46f715a16989f4e7bbbc2eb41447051874b027f3` is
+**not** an ancestor of HEAD.
 
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — exact context matches the proposed
-diff. No conflicting changes in this area.
+**Step 6.2 — Backport complications**
+Record: Expected clean apply — structure matches mainline diff context.
+No conflicting recent PM changes in this file.
 
-### Step 6.3: Related fixes already present?
-**Record:** Partial fix `bb5eb8f3b3297` is present (preemptirq only).
-This specific irqsoff exclusion is **not** present. No duplicate fix
-found.
+**Step 6.3 — Related fixes already present?**
+Record: None. `git log -S 'clk_bulk_prepare_enable' --
+drivers/gpu/drm/arm/malidp_drv.c` returns empty.
 
 ---
 
 ## Phase 7: Subsystem and Maintainer Context
 
-### Step 7.1: Subsystem criticality
-**Record:** **tracing + KCOV** — IMPORTANT for kernel developers,
-fuzzers (syzkaller per `KCOV_INSTRUMENT_ALL` help text), and CI systems
-using KCOV selftest. Not universal production path, but KCOV is
-security-relevant infrastructure.
+**Step 7.1 — Subsystem**
+Record: `drivers/gpu/drm/arm/` — DRM display driver for ARM Mali
+DP500/550/650. **Criticality: PERIPHERAL** (platform-specific
+embedded/display hardware via `CONFIG_DRM_MALI_DISPLAY`).
 
-### Step 7.2: Subsystem activity
-**Record:** tracing subsystem actively maintained in 6.18.y (recent
-irqsoff tracer fixes in 2025).
+**Step 7.2 — Activity**
+Record: Driver is mature with infrequent changes; PM code largely
+unchanged since 2017.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-### Step 8.1: Who is affected
-**Record:** Config-specific — users/distributions building with KCOV
-enabled, especially `KCOV_SELFTEST` (Kconfig says “Recommended to be
-enabled”) and whole-kernel instrumentation (`KCOV_INSTRUMENT_ALL`,
-default y). Affects fuzzing/CI/boot-validation workflows, not typical
-end-user kernels without KCOV.
+**Step 8.1 — Who is affected**
+Record: Users with Mali Display Processor hardware on ARM/ARM64
+(DP500/550/650), typically embedded (NXP LS1028A, ARM Juno, etc.).
+Config-specific: `CONFIG_DRM_MALI_DISPLAY=m/y`.
 
-### Step 8.2: Trigger conditions
-**Record:** Boot-time, with KCOV selftest + instrument-all +
-irqsoff/preempt tracer enabled; timer interrupt during selftest wait
-loop. Not userspace-triggerable on production kernels without KCOV, but
-reliably reproducible in the described test config.
+**Step 8.2 — Trigger conditions**
+Record: Any `clk_prepare_enable()` failure during runtime PM resume —
+most plausible after system suspend/resume or power-domain transitions
+when clock framework state changes. Rare in practice (clocks succeed at
+probe), but realistic on resume paths. Not a direct userspace attack
+vector.
 
-### Step 8.3: Failure mode severity
-**Record:** NULL pointer dereference → kernel oops → **panic during
-boot**. Severity: **CRITICAL** for affected configurations (system does
-not reach userspace).
+**Step 8.3 — Failure mode severity**
+Record: Undefined hardware behavior — possible bus hang, kernel oops, or
+corrupted display state when IRQ/block init runs without clocks.
+**Severity: HIGH** (potential crash/hang), though **unreported in the
+field**.
 
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Prevents deterministic boot panic for valid, documented
-  Kconfig used in fuzzing/CI; completes incomplete 2022 fix.
-- **Risk:** Very low — one Makefile line, established exclusion
-  mechanism, no behavior change except suppressing inappropriate KCOV
-  callbacks.
-- **Ratio:** Favorable for backport.
+**Step 8.4 — Risk-benefit**
+Record:
+- **Benefit:** Prevents proceeding with broken clock state; propagates
+  errors to `pm_runtime_get_sync()` callers; rolls back partial enables.
+- **Risk:** Very low — 22-line change, maintainer-reviewed, suspend
+  order preserved by bulk API semantics.
+- **Ratio:** Favorable for affected hardware users.
 
 ---
 
 ## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence summary
+**Evidence FOR backport:**
+- Real, verifiable bug (ignored error returns) present since 2017 in
+  this tree
+- Serious failure mode if triggered (unclocked HW + IRQ init)
+- Small, self-contained, maintainer-reviewed fix
+- Uses existing `clk_bulk` API already in 6.18
+- Improves error propagation to `pm_runtime_get_sync()` paths used
+  during display commits
 
-**FOR backport:**
-- Real boot crash (NULL deref in `__sanitizer_cov_trace_pc`)
-- Small, surgical, obviously correct fix following existing pattern
-- Bug exists in 6.18.44 tree; fix not yet applied
-- `KCOV_INSTRUMENT_ALL` defaults to y; `KCOV_SELFTEST` recommended in
-  Kconfig
-- Maintainer (Rostedt) signed off
-- Completes gap left by `bb5eb8f3b3297`
+**Evidence AGAINST backport:**
+- No user reports, syzbot, or hardware testing
+- Niche driver affecting limited embedded platforms
+- `malidp_pm_resume_early()` still ignores resume errors (incomplete for
+  system-sleep path; pre-existing call-site issue)
+- Clock failures after successful probe are uncommon
 
-**AGAINST backport:**
-- Only affects KCOV debug/fuzzing configurations, not typical production
-  kernels
-- No syzbot/CVE report
-- Mailing list review details unverified
+**Unresolved questions:**
+- No confirmed production crash from this bug
+- No runtime test on actual Mali DP hardware
 
-**Unresolved:** Full lore thread content; whether reviewers explicitly
-nominated for stable.
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** — standard API, maintainer
+   Reviewed-by; no hardware Tested-by
+2. Fixes a real bug? **PASS** — objectively ignores
+   `clk_prepare_enable()` errors
+3. Important issue? **PASS** — undefined behavior / potential crash on
+   PM resume (HIGH if triggered, rare trigger)
+4. Small and contained? **PASS** — 1 file, ~22 lines
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code present, APIs
+   available
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — author tested on ARMv5 QEMU;
-   mechanism verified in code; mirrors prior accepted fix.
-2. Fixes a real bug? **PASS** — boot panic with documented Kconfig.
-3. Important issue? **PASS** — boot crash (CRITICAL for affected
-   config); KCOV is fuzzing/security infrastructure.
-4. Small and contained? **PASS** — 1 line + comment, single Makefile.
-5. No new features/APIs? **PASS** — build-time instrumentation exclusion
-   only.
-6. Can apply to local tree? **PASS** — code present, clean apply
-   expected.
+**Exception category:** None (not device ID, quirk, DT, build, or docs
+fix — straight driver bug fix).
 
-### Step 9.3: Exception categories
-**Record:** Build/instrumentation fix for valid kernel configuration —
-analogous to existing KCOV exclusion pattern (similar to build-fix
-category for instrumented builds).
+---
 
-### Step 9.4: Decision rationale
+## Problem Summary for Stable Users
 
-For **Linux 6.18.44**, this commit should be backported. The tree has
-the incomplete 2022 preemptirq KCOV exclusion but not the irqsoff one,
-leaving `tracer_hardirqs_*()` instrumented. Combined with KCOV selftest
-(which deliberately enables tracing without a coverage area), this
-causes a deterministic boot panic on interrupt during `kcov_init()`. The
-fix is minimal, follows an established in-tree pattern, is signed by the
-tracing maintainer, and has very low regression risk while preventing a
-hard boot failure for KCOV/fuzzing configurations that stable trees are
-expected to support.
+On Linux **6.18.44**, the Mali DP driver's runtime PM resume enables
+three clocks (`pclk`, `aclk`, `mclk`) without checking for failure. If
+any enable fails (e.g. during resume from suspend), the driver
+continues, marks the device active, and initializes display IRQ hardware
+on potentially unclocked silicon. The fix uses
+`clk_bulk_prepare_enable()` to check errors and roll back partial
+enables, and makes suspend symmetric via `clk_bulk_disable_unprepare()`.
+
+For stable trees carrying Mali DP since 2017, this closes a long-
+standing PM robustness hole. Impact is limited to
+`CONFIG_DRM_MALI_DISPLAY` users, but the consequence of triggering is
+severe enough to warrant backport: small fix, low risk, prevents
+potential hangs/crashes on resume.
+
+**Concern:** Fix does not address `malidp_pm_resume_early()` ignoring
+the return value — a follow-up could improve system-sleep resume, but
+that does not diminish the value of fixing the runtime PM callback
+itself.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body; identified boot panic bug and
-  maintainer SOB
-- [Phase 2] Diff: 1 Makefile line added; verified call chain preemptirq
-  wrapper → irqsoff tracer → `__sanitizer_cov_trace_pc`
-- [Phase 3] `git describe HEAD`: v6.18.44 / 6.18.44
-- [Phase 3] `git blame kernel/trace/Makefile:34-36`: `bb5eb8f3b3297`
-  (2022-05-23)
-- [Phase 3] `git show bb5eb8f3b3297`: prior preemptirq-only exclusion
-  confirmed
-- [Phase 3] `trace_irqsoff.c` exists since 2008 (`81d68a96a3984`)
-- [Phase 3] Fix commit not in tree; `KCOV_INSTRUMENT_trace_irqsoff.o`
-  absent
-- [Phase 4] UNVERIFIED: lore/b4 thread inaccessible (403/bot protection,
-  message-id not found)
-- [Phase 5] Read `kernel/kcov.c:174-220,1080-1132`: selftest sets mode
-  without area; `check_kcov_mode` + NULL `kcov_area` deref confirmed
-- [Phase 5] Read `kernel/trace/trace_irqsoff.c:643-647`,
-  `trace_preemptirq.c:102-109`: tracer in irqsoff.o, wrapper in
-  preemptirq.o
-- [Phase 5] Read `arch/arm/kernel/entry-header.S:202-218`:
-  `trace_hardirqs_off/on` called from `svc_exit` during IRQ handling
-- [Phase 5] Read `include/linux/preempt.h:130`: `in_task()` based on
-  preempt_count hardirq bits
-- [Phase 5] Read `scripts/Makefile.lib:84-90`:
-  `KCOV_INSTRUMENT_<stem>.o` mechanism confirmed
-- [Phase 6] Current `kernel/trace/Makefile` missing irqsoff exclusion;
-  `trace_irqsoff.o` built at lines 62-63
-- [Phase 6] `lib/Kconfig.debug:2146-2172`: `KCOV_INSTRUMENT_ALL` default
-  y; `KCOV_SELFTEST` recommended
-- [Phase 8] Failure mode: boot panic, severity CRITICAL for affected
-  Kconfig
+- [Phase 1] Parsed commit message and tags from user-provided content
+  and mainline commit `46f715a`
+- [Phase 1] Confirmed no Reported-by/syzbot; found Reviewed-by: Liviu
+  Dudau
+- [Phase 2] Verified diff: +16/−6 in `malidp_drv.c`, two functions
+  modified
+- [Phase 2] Read `clk_bulk_disable()` in `drivers/clk/clk-bulk.c`:
+  disables in reverse order (lines 214–215), matching old suspend
+  sequence
+- [Phase 2] Read `clk_bulk_prepare_enable()` in `include/linux/clk.h`
+  (lines 1164–1175): prepare+enable with rollback
+- [Phase 3] `git blame -L 686,700`: buggy code from `85f6421889eca6`
+  (2017-03-22)
+- [Phase 3] `git log -S 'clk_prepare_enable(hwdev->pclk)'`: introduced
+  in `ad49f8602fe88` (initial driver)
+- [Phase 3] `git merge-base --is-ancestor 46f715a HEAD`: commit NOT in
+  current tree
+- [Phase 4] `b4 dig -c 46f715a`: found thread at
+  https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
+- [Phase 4] `b4 dig -a`: v2 is latest revision
+- [Phase 4] `b4 dig -w`: dri-devel + DRM maintainers CC'd
+- [Phase 4] Saved mbox; Liviu Dudau Reviewed-by + merge confirmation; no
+  stable nomination
+- [Phase 4] Fetched lkml.iu.edu mirror of patch thread
+- [Phase 5] Grep callers: `pm_runtime_get_sync` at lines 242, 761, 862,
+  892; `SET_RUNTIME_PM_OPS` at line 985
+- [Phase 5] Read `malidp_pm_resume_early()` (lines 975–979): ignores
+  return value (not fixed by this patch)
+- [Phase 6] `git describe HEAD` = v6.18.44-1-g2736c32da98b9; `make
+  kernelversion` = 6.18.44
+- [Phase 6] Read current `malidp_drv.c` lines 667–700: buggy code
+  confirmed present
+- [Phase 6] `git log -S 'clk_bulk_prepare_enable' -- malidp_drv.c`:
+  empty (fix not present)
+- [Phase 7] Read `drivers/gpu/drm/arm/Kconfig`:
+  `CONFIG_DRM_MALI_DISPLAY` for DP500/550/650
+- [Phase 8] Grep DTS: Mali DP references in `fsl-ls1028a.dtsi` (limited
+  platform footprint)
 
-**YES**
+**YES****Verdict: YES** — backport to this tree (Linux **6.18.44**).
 
- kernel/trace/Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+The Mali DP driver’s runtime PM resume has ignored
+`clk_prepare_enable()` failures since 2017. On failure it can still
+bring up IRQs on unclocked hardware. The fix is small (one file, ~22
+lines), uses the existing `clk_bulk` API, and was **Reviewed-by** Liviu
+Dudau (driver maintainer). The buggy code is present here; mainline
+commit `46f715a` is not in this tree yet.
 
-diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
-index dcb4e02afc5f4..36b3ed5251f46 100644
---- a/kernel/trace/Makefile
-+++ b/kernel/trace/Makefile
-@@ -31,9 +31,10 @@ ifdef CONFIG_GCOV_PROFILE_FTRACE
- GCOV_PROFILE := y
- endif
+**Caveat:** No field reports or hardware testing — found by code review
+only. `malidp_pm_resume_early()` still ignores the resume return value;
+that’s a separate follow-up, not a reason to skip this fix.
+
+ drivers/gpu/drm/arm/malidp_drv.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
+index bc5f5e9798c32..2bf4a647e4b28 100644
+--- a/drivers/gpu/drm/arm/malidp_drv.c
++++ b/drivers/gpu/drm/arm/malidp_drv.c
+@@ -669,6 +669,11 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm_to_malidp(drm);
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
  
--# Functions in this file could be invoked from early interrupt
--# code and produce random code coverage.
-+# Functions in these files can run from IRQ entry before hardirq context
-+# is visible to KCOV, and produce coverage unrelated to syscall inputs.
- KCOV_INSTRUMENT_trace_preemptirq.o := n
-+KCOV_INSTRUMENT_trace_irqsoff.o := n
+ 	/* we can only suspend if the hardware is in config mode */
+ 	WARN_ON(!hwdev->hw->in_config_mode(hwdev));
+@@ -676,9 +681,7 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	malidp_se_irq_fini(hwdev);
+ 	malidp_de_irq_fini(hwdev);
+ 	hwdev->pm_suspended = true;
+-	clk_disable_unprepare(hwdev->mclk);
+-	clk_disable_unprepare(hwdev->aclk);
+-	clk_disable_unprepare(hwdev->pclk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(clks), clks);
  
- CFLAGS_bpf_trace.o := -I$(src)
+ 	return 0;
+ }
+@@ -688,10 +691,17 @@ static int malidp_runtime_pm_resume(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm_to_malidp(drm);
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
++	int err;
++
++	err = clk_bulk_prepare_enable(ARRAY_SIZE(clks), clks);
++	if (err)
++		return err;
  
+-	clk_prepare_enable(hwdev->pclk);
+-	clk_prepare_enable(hwdev->aclk);
+-	clk_prepare_enable(hwdev->mclk);
+ 	hwdev->pm_suspended = false;
+ 	malidp_de_irq_hw_init(hwdev);
+ 	malidp_se_irq_hw_init(hwdev);
 -- 
 2.53.0
 
