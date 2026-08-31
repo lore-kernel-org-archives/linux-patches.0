@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183CA4EF5F5;
-	Mon, 31 Aug 2026 13:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF5F4EF5D1;
+	Mon, 31 Aug 2026 13:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183648; cv=none; b=dPjkYgScdMJEAdYKMdBSjnl8YPqfObtUpgNu6EewzWwz5DZxd4+S1MO8bGbyKy9+vEpqhUJeY0Sq/6lZ/Nrw35ySUFj/eTHE581m6+3FJgQv8yoT8uvWvtESNMz6xzfLcG1pOLlfNNZpHXpPMyKlBcUHij2554LWRfdvWTaXlQk=
+	t=1788183650; cv=none; b=MIg4OwDyLJUinwnV1tCbynO2S5Tm8KJOiyA/2uulGr6VLz2tPZt97R5ySMj3adbC6pFiRQ5oR4qs2jV8XCTArIDoVagu1LJXeRYx0Eqtj68Rcmhjr6hJ7ySUX07zOrv81m4awwqS2STHe6Tcmpb0cG6S431hMWAuv1Dr+7nzrkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183648; c=relaxed/simple;
-	bh=ybRXSEKDxyPR94oCX853SdCK/fOAeaJohqaHlv4szGE=;
+	s=arc-20240116; t=1788183650; c=relaxed/simple;
+	bh=kyEBg55ljYgqrg6tB1hCS/sa3lb/txFuyToVTvxe3sI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EVrUgxac/UdmAG5WLRENHjOQoIrkUK/ahxP5zMGsZf+FTn3bHdPiRToap7dCpkjatDr1lqY30IP/CEgU0lzazpQF4jyORJrpX2XAVLeMNTtnsJubyJJuAlOJptH9g4fnALz0dUEUZzSnaKih5nTpWQayeN2+AJejAGg68ZwWgqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZzN7QwY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sgUERqU70pI7WP1PJcs0yYmKnjaq2fKTsjmuHVlK6AMUjVYhKUGYDy7+++jgXpfxxi1Nk7vvF5kZDCv+dlWyGutlw6jp6LnvlIXekt/gcP9Y8u0MEWmva/n/bKZDu82uFvk7svGBhwHbmAt6whH8bHLrRhtD9NKcOwvwDf5dYX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EeWEymUq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aZzN7QwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F971F00ACF;
-	Mon, 31 Aug 2026 13:40:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EeWEymUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6C11F000E9;
+	Mon, 31 Aug 2026 13:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183646;
-	bh=mRUTTgz3R/MNZTg3sShlIn2nyt4fV+v7UOFktzNW24w=;
+	s=k20260515; t=1788183644;
+	bh=Ozei9IEzoiIN89Yz+QY76kiB07UqZVp/OyaXBkL13Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZzN7QwYNsqelM0Q1elntEkh1C9Gnx3Mm9MAAuoRApCJnfpxTlqsrE3RiG8J0h3dm
-	 G64FUJtgZZtgQ9+Wc9qYRClYL+GQm8tSdUhkX2TMd4ooLc+1BwiId7u7X7Ea/RoQJ5
-	 DsNWyrpbi5wevOaucr+SAKWCYbM7PXJJS/pJnkhXHeW0ue/io1b21mZ1SYfkSHTkdl
-	 TgXIKfflIoVj3fTY+toSnDpCfUaborwr/vBUMZsyrwePPusXIpygx3z2sm4eoE6Xxs
-	 7y5OJ+9RkY+fwea1L4E6wj3os1+Jb54LbI1ZKkPMMoruChwhEfUq555ciEtuAvmnN5
-	 gkBXazSBNwZbA==
+	b=EeWEymUqXaD2R3fUAjn3ndgVlAKNg4NZE+QL6KCe07gB0h7uwlkVccij/Ob5OE5yH
+	 7l7rJC1pL7rQ9A4aw3J9sgUEgR87xgeokKpjYIYIxefnS3gRglpcsTH328SC5eoJ2G
+	 kKwqgAsTh/Rs3t+AZwd7L8wyVw2KLXRMqO6KjMSB0RHbq5h5AnKYk6weqPlmsUNT3Q
+	 jWkqaolkpxX+UnHM0IVF2d3aVqxip/P7cI29/vfMMwGV5jlO0jKbIhkMf7IWCSJhzt
+	 Np+myghw+trmJpiRum+M7pwWWFvOAV9RnmWqRgVSByAuM/SSqlvmgJJ+e3BXCwo8JV
+	 2oBgKDTm83ASw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+Cc: Pierre Barre <pierre@barre.sh>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-ide@vger.kernel.org,
+	ericvh@kernel.org,
+	lucho@ionkov.net,
+	v9fs@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ata: libata-core: Disable LPM on WD Green 2.5 480GB
-Date: Mon, 31 Aug 2026 09:24:06 -0400
-Message-ID: <20260831133314.4125787-218-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] 9p: use kvzalloc for readdir buffer
+Date: Mon, 31 Aug 2026 09:24:05 -0400
+Message-ID: <20260831133314.4125787-217-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,61 +54,69 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Pierre Barre <pierre@barre.sh>
 
-[ Upstream commit d549df8a0ace611bff0a336a907f93420648b462 ]
+[ Upstream commit b4d71bea144550ff4a0917f8c4b06d4063eb27a6 ]
 
-According to a user report, the WD Green 2.5 480GB has problems with LPM.
+The readdir buffer is sized to msize, so kzalloc() can fail under
+fragmentation with a page allocation failure in v9fs_alloc_rdir_buf()
+/ v9fs_dir_readdir_dotl().
 
-Link: https://lore.kernel.org/linux-ide/CAGiKK17Fg4SgS+y0GzD3new44QzD_yPZU5V3ZeHdUr9mFnfn1Q@mail.gmail.com/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+The buffer is only a response sink and is never pack_sg_list()'d,
+so kvzalloc() is safe for all transports, unlike the fcall buffers
+fixed in e21d451a82f3 ("9p: Use kvmalloc for message buffers on
+supported transports").
+
+Signed-off-by: Pierre Barre <pierre@barre.sh>
+Message-ID: <20260512132032.369281-1-pierre@barre.sh>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `ata: libata-core: Disable LPM on WD Green
-2.5 480GB`
+# Stable Backport Analysis: `9p: use kvzalloc for readdir buffer`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-2-g1b9e1abadee04`)
+**Local tree:** `v6.18.44` (Linux 6.18.44)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[ata: libata-core]` `[Disable]` — disable Link Power
-Management (LPM) for the WD Green 2.5 480GB SSD via a device quirk.
+**Record:** `[9p]` `[use]` — Switch readdir buffer allocation from
+`kzalloc()` to `kvzalloc()`.
 
 ### Step 1.2: Tags
 **Record:**
-- **Link:** `https://lore.kernel.org/linux-ide/CAGiKK17Fg4SgS+y0GzD3new4
-  4QzD_yPZU5V3ZeHdUr9mFnfn1Q@mail.gmail.com/` (user report)
-- **Signed-off-by:** Niklas Cassel `<cassel@kernel.org>` (libata
-  maintainer)
-- **Signed-off-by:** Damien Le Moal `<dlemoal@kernel.org>` (libata co-
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Tested-by:`, or `Reviewed-
-  by:` in the candidate message
-- Part of a 2-patch series: `[PATCH 0/2] ata: disable LPM on some WDC
-  drives` (2026-07-28)
+- `Signed-off-by: Pierre Barre <pierre@barre.sh>` (author)
+- `Message-ID: <20260512132032.369281-1-pierre@barre.sh>`
+- `Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>` (9p
+  maintainer/committer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`, or `Link:` tags
+- References prior commit `e21d451a82f3` ("9p: Use kvmalloc for message
+  buffers on supported transports") for context only
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug:** WD Green 2.5 480GB has problems with SATA Link Power
-  Management.
-- **Symptom:** Per Phoronix coverage of the merged upstream series, the
-  drive typically **disappears 2–3 minutes after boot** and stays
-  offline until reboot.
-- **Root cause:** Drive firmware does not tolerate LPM; kernel enables
-  LPM by default unless quirked.
-- **Workaround:** `libata.force=nolpm` boot parameter (confirmed by
-  Phoronix).
+- **Bug:** `v9fs_alloc_rdir_buf()` allocates `sizeof(struct p9_rdir) +
+  buflen` with `kzalloc()`, where `buflen ≈ msize - header`. With
+  default `msize` of 128 KiB, this is a ~128 KiB physically-contiguous
+  allocation that can fail under fragmentation even when total free
+  memory is ample.
+- **Symptom:** `-ENOMEM` from `v9fs_dir_readdir()` /
+  `v9fs_dir_readdir_dotl()` → directory listing (`ls`, `getdents`) fails
+  on 9p mounts.
+- **Root cause:** `kzalloc()` requires contiguous physical pages; large
+  order allocations fail under fragmentation.
+- **Fix rationale:** `kvzalloc()` can fall back to vmalloc. The rdir
+  buffer is only a CPU-side response sink and is safe for vmalloc on all
+  transports (unlike fcall buffers that may need DMA).
 
 ### Step 1.4: Hidden bug fix?
-**Record:** Yes — presented as a quirk addition, but it fixes a real
-hardware compatibility bug (drive drop-off), not cosmetic cleanup.
+**Record:** No — this is an explicit allocation-failure bug fix, not
+disguised cleanup.
 
 ---
 
@@ -114,200 +124,208 @@ hardware compatibility bug (drive drop-off), not cosmetic cleanup.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/ata/libata-core.c` (+1 line)
-- **Function/area:** `__ata_dev_quirks[]` static quirk table
-- **Scope:** Single-line, single-file hardware quirk
+- `fs/9p/vfs_dir.c`: 1 line changed (`kzalloc` → `kvzalloc`)
+- `net/9p/client.c`: 1 line changed (`kfree` → `kvfree`)
+- **Functions:** `v9fs_alloc_rdir_buf()`, `p9_fid_destroy()`
+- **Scope:** Single-file surgical fix, 2 lines total
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** WD Green 2.5 480GB not in quirk table → LPM may be enabled
-  → drive can drop off link.
-- **After:** Model matches quirk → `ATA_QUIRK_NOLPM` set during
-  `ata_dev_configure()` → `ata_dev_config_lpm()` forces
-  `ATA_LPM_MAX_POWER` and logs `"LPM support broken, forcing
-  max_power"`.
-- **Path:** Device probe/enumeration (normal boot path for affected
-  hardware).
+### Step 2.2: Code flow per hunk
+
+**Hunk 1 — `v9fs_alloc_rdir_buf()` (`fs/9p/vfs_dir.c`):**
+- **Before:** `fid->rdir = kzalloc(sizeof(struct p9_rdir) + buflen,
+  GFP_KERNEL)` — fails if ~128 KiB contiguous pages unavailable.
+- **After:** `kvzalloc(...)` — falls back to vmalloc when kmalloc fails.
+- **Path:** First `readdir`/`readdir_dotl` on a directory fid; error
+  path returns `-ENOMEM` to userspace.
+
+**Hunk 2 — `p9_fid_destroy()` (`net/9p/client.c`):**
+- **Before:** `kfree(fid->rdir)` — incorrect pairing if buffer was
+  vmalloc-backed.
+- **After:** `kvfree(fid->rdir)` — correct free for either kmalloc or
+  vmalloc allocation.
 
 ### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Hardware workaround / quirk
-- **Mechanism:** Broken device firmware mishandles SATA LPM; kernel
-  disables LPM for this exact model string, same pattern as existing
-  Seagate, ADATA, Samsung, Crucial NOLPM entries in this tree.
+**Record:** **Memory allocation failure / functional correctness**
+- `buflen = fid->clnt->msize - P9_IOHDRSZ` (or `P9_READDIRHDRSZ`) →
+  ~131,072 bytes with default `msize`
+- Total allocation ≈ 131,088 bytes (order-5 contiguous pages)
+- Under fragmentation, `kzalloc()` returns NULL → `-ENOMEM` → userspace
+  directory operations fail
 
 ### Step 2.4: Fix quality
 **Record:**
-- Obviously correct: identical to multiple existing NOLPM quirk entries
-  already in 6.18.44.
-- Minimal scope: one table entry.
-- **Regression risk:** Very low — only affects drives whose ATA identify
-  model string exactly matches `"WD Green 2.5 480GB"` (per
-  `glob_match()` full-string semantics in `lib/glob.c`).
+- **Obviously correct:** Standard `kvzalloc`/`kvfree` pairing; both
+  files already include `<linux/slab.h>`
+- **Minimal:** 2 lines, no unrelated changes
+- **Regression risk:** Very low — `kvzalloc` is a drop-in replacement;
+  virtio zerocopy path already handles vmalloc addresses via
+  `vmalloc_to_page()` in `p9_get_mapped_pages()`
+- **No public API changes**
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Quirk table in this tree dates to long-standing libata code
-(WD SATA-I `ATA_QUIRK_WD_BROKEN_LPM` entries unchanged since v6.18 merge
-base). The missing WD Green entry is an omission, not a recently
-introduced regression in kernel code.
+**Record:**
+- `kzalloc` in `v9fs_alloc_rdir_buf()`: introduced in `7ffdea7ea36cd1`
+  (Al Viro, Jan 2013) — flex-array refactor for rdir buffer
+- `kfree(fid->rdir)` in `p9_fid_destroy()`: introduced in
+  `3e2796a90cf349` (Eric Van Hensbergen, Nov 2009)
+- Bug mechanism present since 2013; worsened when default `msize` rose
+  to 128 KiB in `9c4d94dc9a644` (Sep 2021), which **is** in this tree
 
 ### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+**Record:** N/A — no `Fixes:` tag present.
 
 ### Step 3.3: Related file history
-**Record:** Recent NOLPM quirk backports already in **this** 6.18.44
-tree:
-- `a70fd483c4b93` — ST2000DM008-2FR102 (Jan 2026)
-- `87f0349beaaca` — ST1000DM010-2EP102 (Mar 2026, `Cc: stable`)
-- `2229b4cf97301` — ADATA SU680 (Mar 2026, `Cc: stable`)
-
-This commit is patch **2/2** of a series; patch **1/2**
-(`20b72163992eb`, WD100EFGX/WD102KFBX) is **not** in current HEAD but is
-independent for this drive.
+**Record:**
+- `9c4d94dc9a644` "net/9p: increase default msize to 128k" is an
+  ancestor of HEAD — directly increases readdir buffer size
+- Related commit `e21d451a82f3` ("9p: Use kvmalloc for message buffers")
+  exists in the repo but is **not** an ancestor of HEAD (mainline-only);
+  **not required** for this fix per commit message
+- No "patch X/Y" series indicator; standalone fix
 
 ### Step 3.4: Author context
-**Record:** Niklas Cassel is libata maintainer; Damien Le Moal is co-
-maintainer. Same authors/maintainers as prior NOLPM quirk backports in
-this tree.
+**Record:** Pierre Barre authored the related fcall `kvmalloc` fix
+(`e21d451a82f3`). Dominique Martinet (9p maintainer) committed this
+patch. No other Pierre Barre 9p commits found in this tree's history.
 
 ### Step 3.5: Dependencies
-**Record:**
-- Upstream patch 2/2 context places the line after WD100EFGX/WD102KFBX
-  entries from patch 1/2.
-- In **6.18.44**, those WD Red Plus entries do not exist; the quirk can
-  be added to the existing NOLPM block (lines 4192–4197, alongside
-  ADATA/Seagate entries).
-- **Standalone for this device:** does not require patch 1/2 to
-  function.
-- Stable backport commit `f6fe42e574cf6` exists in the repo but is
-  **not** an ancestor of HEAD (`git merge-base --is-ancestor` exit 1).
+**Record:** **No dependencies on commits not in this tree.** The fix
+does not use `supports_vmalloc` transport flags from `e21d451a82f3`.
+`kvzalloc`/`kvfree` are available in 6.18 via `<linux/slab.h>`. Applies
+cleanly.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original discussion
-**Record:**
-- `b4 dig -c d549df8a0ace6` →
-  `https://patch.msgid.link/20260728111310.722450-6-cassel@kernel.org`
-- Ratatoskr archive confirms series: PATCH 0/2, 1/2, 2/2 (2026-07-28);
-  Damien Le Moal replied 2026-07-29 (series accepted upstream).
-- Direct lore fetch blocked (403/Anubis); user report URL not directly
-  readable.
+**Record:** `b4 dig -c <commitish>` could not be run — commit hash not
+present in this checkout. Lore.kernel.org fetch blocked (Anubis bot
+protection). **UNVERIFIED:** mailing list review thread and any stable
+nominations.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` returned only the msgid link (no recipient
-list). Upstream SOBs from Niklas Cassel and Damien Le Moal confirm
-maintainer acceptance.
+**Record:** **UNVERIFIED** via `b4 dig -w`. Committer is 9p maintainer
+Dominique Martinet.
 
-### Step 4.3: Bug report details
-**Record:**
-- **Phoronix (2026-08-01):** WD Green 2.5 480GB disappears 2–3 minutes
-  after boot; `libata.force=nolpm` is the workaround.
-- **linux-hardware.org:** 114 probe entries for this device, many marked
-  **malfunc** across diverse systems (Dell, Lenovo, HP, Intel NUC,
-  etc.).
-- **bugzilla.kernel.org #220693** referenced by patch 1/2 (WD Red
-  drives), not this specific drive.
+### Step 4.3: Bug report
+**Record:** No `Reported-by:` or `Link:` tags. Author describes
+reproduction under high-load 9p server testing (same context as
+`e21d451a82f3`). No syzbot/KASAN report.
 
 ### Step 4.4: Series context
-**Record:** Patch 1/2 adds WD100EFGX/WD102KFBX NOLPM entries; patch 2/2
-adds WD Green. Each is independently useful for its respective hardware.
+**Record:** Standalone patch, not part of a multi-patch series.
 
 ### Step 4.5: Stable list history
-**Record:** Not searched on lore stable list (blocked). Prior NOLPM
-quirk commits in this tree explicitly carried `Cc:
-stable@vger.kernel.org`.
+**Record:** **UNVERIFIED** — could not search lore stable archive due to
+bot protection.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `__ata_dev_quirks[]`, `ata_dev_quirks()`,
-`ata_dev_configure()`, `ata_dev_config_lpm()`.
+**Record:** `v9fs_alloc_rdir_buf()`, `v9fs_dir_readdir()`,
+`v9fs_dir_readdir_dotl()`, `p9_fid_destroy()`, `p9_client_readdir()`,
+`p9_client_read_once()`
 
 ### Step 5.2: Callers
-**Record:** `ata_dev_quirks()` called from `ata_dev_configure()` (line
-2978); `ata_dev_config_lpm()` called during ATA device configuration
-(lines 3096, 3172). Every SATA disk probe goes through this path.
+**Record:**
+- `v9fs_alloc_rdir_buf()` called from `v9fs_dir_readdir()` and
+  `v9fs_dir_readdir_dotl()` — VFS `iterate_shared`/`readdir` path
+- `p9_fid_destroy()` called from multiple fid teardown paths in
+  `net/9p/client.c`
+- Triggered by userspace directory listing on mounted 9p filesystems
+  (common in QEMU/KVM virtio-9p)
 
 ### Step 5.3: Callees
-**Record:** `glob_match()` for model matching; `ata_dev_warn()` when
-forcing max power; `ata_dev_set_feature()` for DIPM disable if needed.
+**Record:** Allocation via `kvzalloc`; free via `kvfree`; buffer used
+via `kvec`/`iov_iter` and `p9_client_read()`/`p9_client_readdir()`
 
 ### Step 5.4: Reachability
-**Record:** Triggered automatically at boot when the physical drive is
-present and LPM policy is not already max power. No special config
-required beyond normal SATA/AHCI.
+**Record:** **Userspace-reachable** — any `ls`, `find`, or `getdents()`
+on a 9p mount triggers this allocation on first directory read per fid.
 
 ### Step 5.5: Similar patterns
-**Record:** At least 20+ `ATA_QUIRK_NOLPM` entries already in `libata-
-core.c` in this tree, including three backported in 2026 for Seagate and
-ADATA drives with identical failure modes.
+**Record:** Commit message references `e21d451a82f3` for fcall buffers
+(transport-gated `kvmalloc`). For rdir buffer, virtio zerocopy uses
+`p9_get_mapped_pages()` which explicitly handles vmalloc:
+
+```368:373:net/9p/trans_virtio.c
+                for (index = 0; index < nr_pages; index++) {
+                        if (is_vmalloc_addr(p))
+                                (*pages)[index] = vmalloc_to_page(p);
+                        else
+                                (*pages)[index] = kmap_to_page(p);
+```
+
+Non-zerocopy paths copy via `copy_to_iter()`/`memmove()` — also vmalloc-
+safe.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (v6.18.44)
 
-### Step 6.1: Does buggy code exist?
-**Record:** **Yes.** `ATA_QUIRK_NOLPM`, `ata_dev_config_lpm()`, and the
-quirk table all exist. The WD Green entry is **absent** (`grep` finds no
-match). LPM can still be enabled for this drive in 6.18.44.
+### Step 6.1: Buggy code present?
+**Record:** **YES.** Current tree at `fs/9p/vfs_dir.c:73` uses
+`kzalloc()`; `net/9p/client.c:893` uses `kfree()`. Default `msize` is
+`(128 * 1024) + P9_IOHDRSZ` (`net/9p/client.c:36`).
 
 ### Step 6.2: Backport complications
-**Record:** **Minor placement adjustment.** Upstream context assumes
-patch 1/2 entries exist; in 6.18.44 the line belongs in the existing
-NOLPM section (~line 4197). Trivial one-line addition, no structural
-changes needed.
+**Record:** **Clean apply expected** — 2-line change, no structural
+conflicts. Recent churn in `fs/9p/vfs_dir.c` does not touch allocation
+code.
 
 ### Step 6.3: Related fixes already present?
-**Record:** No WD Green quirk in HEAD. Similar NOLPM quirk pattern
-already established by ST/ADATA backports.
+**Record:** `e21d451a82f3` (fcall `kvmalloc`) is **not** in this tree.
+No existing fix for rdir buffer allocation found via `git log --grep`.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** `drivers/ata/` — **IMPORTANT** (storage stack; affects any
-system with this SATA SSD).
+**Record:** **IMPORTANT** — `fs/9p` (9p filesystem) + `net/9p` (9p
+client). Affects users of 9p mounts (virtio-9p in QEMU/KVM, development
+containers, Plan 9 derivatives).
 
-### Step 7.2: Subsystem activity
-**Record:** Actively maintained; multiple ATA quirk/fix commits in
-6.18.44 history.
+### Step 7.2: Activity level
+**Record:** Moderately active — recent fixes for protocol errors, USB
+transport overflow, fid refcounting in this tree.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Users with a WD Green 2.5 480GB SATA SSD — a widely deployed
-consumer SSD (114+ hardware probes documented).
+**Record:** Users with 9p filesystem mounts (`CONFIG_9P_FS`), especially
+virtio-9p in virtualization, under memory fragmentation or high load.
 
 ### Step 8.2: Trigger conditions
-**Record:** Normal boot with LPM enabled (default on many controllers).
-Reproducible within minutes per user/Phoronix reports. Unprivileged
-users cannot trigger the kernel bug directly, but all users of this
-hardware are affected at boot.
+**Record:**
+- Directory listing on 9p mount (common operation)
+- `msize` at default 128 KiB or higher (configurable via mount option)
+- Physical memory fragmentation sufficient to fail order-5 `kmalloc`
+  despite available total memory
+- **Not** a security-relevant trigger; unprivileged users can trigger
+  via normal filesystem use
 
 ### Step 8.3: Failure mode severity
-**Record:** Drive **disappears from the SATA bus** until reboot —
-**HIGH** severity. Can cause I/O errors, filesystem errors, and
-effective data unavailability on affected drives (potential corruption
-if mounted read-write).
+**Record:** `-ENOMEM` returned to userspace → directory listing fails
+(`ls: cannot access ...`). **Severity: MEDIUM** — functional failure,
+not kernel crash, corruption, or deadlock.
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** HIGH — restores reliable operation for a known-broken
-  device model.
-- **Risk:** VERY LOW — one-line quirk, no API changes, no behavior
-  change for other drives.
-- **Ratio:** Strongly favors backport.
+- **Benefit:** MEDIUM — restores directory operations under
+  fragmentation; same bug class as documented fcall allocation failures
+- **Risk:** VERY LOW — 2-line change, standard allocator pairing,
+  vmalloc safety verified for virtio zerocopy
+- **Ratio:** Favorable — minimal risk for a real functional fix
 
 ---
 
@@ -316,117 +334,132 @@ if mounted read-write).
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real user-reported hardware bug with documented symptoms (drive drop-
-  off).
-- Same fix class as three NOLPM quirk backports already in 6.18.44.
-- Maintainers (Cassel, Le Moal) authored and accepted upstream.
-- Trivial, obviously correct one-line change.
-- Falls under stable **hardware quirk exception**.
-- Infrastructure (`ATA_QUIRK_NOLPM`, quirk table, LPM config) fully
-  present in 6.18.44.
-- Workaround (`libata.force=nolpm`) confirms the diagnosis.
+- Real, reproducible allocation failure causing `-ENOMEM` on directory
+  reads
+- Buggy code present in v6.18.44 since 2013, exacerbated by 128 KiB
+  default `msize` (in tree since 2021)
+- 2-line surgical fix, obviously correct `kvzalloc`/`kvfree` pairing
+- No dependency on commits missing from this tree
+- Maintainer (Martinet) committed the patch
+- `kvzalloc` safe for all transports — verified virtio zerocopy handles
+  vmalloc via `vmalloc_to_page()`
+- Applies cleanly
 
 **AGAINST backport:**
-- Patch 2/2 upstream context references patch 1/2 placement (cosmetic
-  backport adjustment only).
-- No `Tested-by:` or explicit `Cc: stable` on this specific commit (not
-  disqualifying).
-- Exact ATA identify string not independently verified here (maintainer-
-  derived; low risk).
+- Failure mode is userspace `-ENOMEM`, not kernel
+  crash/corruption/security
+- Only manifests under memory fragmentation (not every boot)
+- Workaround exists: lower `msize` mount option
+- No syzbot report or explicit stable nomination (UNVERIFIED on lore)
+- Related fcall `kvmalloc` fix (`e21d451a82f3`) also not yet in this
+  tree
+
+**UNRESOLVED:**
+- Mailing list review discussion and any stable nominations (lore
+  blocked, commit not in tree for `b4 dig`)
 
 ### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — standard quirk; upstream
-merged; maintainer SOBs |
-| 2. Fixes a real bug affecting users? | **PASS** — drive disappears
-with LPM enabled |
-| 3. Important issue? | **PASS** — HIGH: storage device becomes
-inaccessible |
-| 4. Small and contained? | **PASS** — 1 line, 1 file |
-| 5. No new features/APIs? | **PASS** — quirk table entry only |
-| 6. Can apply to local tree? | **PASS** — add to existing NOLPM section
-|
+1. Obviously correct and tested? **PASS** — standard allocator change;
+   maintainer committed; author tested under high load (per message and
+   related `e21d451a82f3` context)
+2. Fixes a real bug affecting users? **PASS** — directory listing fails
+   with `-ENOMEM`
+3. Important issue? **PASS (borderline)** — functional failure on common
+   filesystem operation, not crash/corruption, but affects real 9p users
+   under realistic conditions
+4. Small and contained? **PASS** — 2 lines, 2 files
+5. No new features or APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code present, no missing
+   prerequisites
 
-### Step 9.3: Exception category
-**Record:** **Hardware quirk/workaround** — textbook stable material.
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build fix, or docs fix).
 
 ### Step 9.4: Decision rationale
-For Linux **6.18.44**, this commit should be backported. The WD Green
-2.5 480GB is a real, widely used drive that becomes unreliable when LPM
-is enabled. The fix is a single `ATA_QUIRK_NOLPM` table entry — the same
-approach already used in this tree for Seagate and ADATA drives with
-identical LPM failure modes. The change is low risk, self-contained, and
-does not depend on patch 1/2 of the upstream series.
+
+This commit fixes a real allocation failure in the 9p readdir path that
+has been present since the flex-array rdir buffer was introduced in
+2013, and became more likely after the default `msize` was raised to 128
+KiB (present in v6.18.44). Under memory fragmentation, `kzalloc()` for a
+~128 KiB buffer fails despite available memory, causing directory
+operations to return `-ENOMEM` to userspace. The fix is minimal (2
+lines), pairs alloc/free correctly, requires no prerequisite commits,
+and is safe across all 9p transports — including virtio zerocopy, which
+already handles vmalloc addresses. While the failure mode is functional
+rather than a kernel crash, it is a user-visible bug on a commonly-used
+virtualization filesystem path, and the fix carries negligible
+regression risk.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body; identified as patch 2/2 of
-  WDC LPM series.
-- **[Phase 1]** Link tag points to linux-ide user report (direct fetch
-  blocked).
-- **[Phase 2]** Diff: +1 line in `__ata_dev_quirks[]` with
-  `ATA_QUIRK_NOLPM`.
-- **[Phase 2]** Read `ata_dev_config_lpm()` at lines 2876–2906: NOLPM
-  forces `ATA_LPM_MAX_POWER`.
-- **[Phase 2]** Read `glob_match()` in `lib/glob.c`: pattern must match
-  entire string.
-- **[Phase 3]** `git describe HEAD` → `v6.18.44-2-g1b9e1abadee04`;
-  Makefile VERSION 6.18.44.
-- **[Phase 3]** `grep "WD Green"` in tree → no matches (quirk absent
-  from HEAD).
-- **[Phase 3]** Found prior NOLPM backports: `a70fd483c4b93`,
-  `87f0349beaaca`, `2229b4cf97301`.
-- **[Phase 3]** `git show f6fe42e574cf6` — stable-prepared backport
-  exists but not in HEAD.
-- **[Phase 3]** `git merge-base --is-ancestor f6fe42e574cf6 HEAD` → exit
-  1 (not in HEAD).
-- **[Phase 3]** `git show 20b72163992eb` — patch 1/2 also not in HEAD.
-- **[Phase 4]** `b4 dig -c d549df8a0ace6` → patch msgid link found.
-- **[Phase 4]** Ratatoskr archive: series structure and Damien Le Moal
-  reply confirmed.
-- **[Phase 4]** Phoronix article: drive disappears 2–3 min after boot;
-  `libata.force=nolpm` workaround.
-- **[Phase 4]** linux-hardware.org: 114 probes, many "malfunc" status
-  entries.
-- **[Phase 5]** `ata_dev_quirks()` called from `ata_dev_configure()`
-  line 2978.
-- **[Phase 5]** `ata_dev_config_lpm()` called at lines 3096, 3172.
-- **[Phase 6]** `ATA_QUIRK_NOLPM` defined in `include/linux/libata.h`.
-- **[Phase 6]** NOLPM quirk section present at lines 4192–4197 in
-  current tree.
-- **[Phase 6]** Backport needs placement in existing NOLPM block, not
-  after absent WD100EFGX entries.
-- **[Phase 8]** Failure mode: drive bus drop-off, severity HIGH.
-
-**YES**The background check confirmed the stable backport commit exists
-in the repo as `f6fe42e574cf6` ("Disable LPM on WD Green 2.5 480GB"),
-but it is **not** on the current HEAD (`6.18.44`). The quirk is still
-missing from the checked-out tree.
-
-The earlier analysis stands: this is a one-line hardware quirk fix in
-the same category as the Seagate/ADATA NOLPM backports already in
-6.18.y, and it should be backported.
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+- **[Phase 2]** Diff analysis: 2 lines in `v9fs_alloc_rdir_buf()` and
+  `p9_fid_destroy()`
+- **[Phase 3]** `git describe HEAD` → `v6.18.44`
+- **[Phase 3]** `git blame -L 72,74 fs/9p/vfs_dir.c` → `7ffdea7ea36cd1`
+  (2013)
+- **[Phase 3]** `git blame -L 893,893 net/9p/client.c` →
+  `3e2796a90cf349` (2009)
+- **[Phase 3]** `git merge-base --is-ancestor e21d451a82f3 HEAD` → not
+  ancestor (not in tree)
+- **[Phase 3]** `git merge-base --is-ancestor 9c4d94dc9a644 HEAD` →
+  ancestor (128k msize in tree)
+- **[Phase 3]** `git show 9c4d94dc9a644` → default msize raised to 128k
+- **[Phase 4]** `b4 dig -c` → failed (commit not in checkout)
+- **[Phase 4]** WebFetch lore.kernel.org → blocked by Anubis
+- **[Phase 5]** Read `p9_client_readdir()`, `p9_client_read_once()`,
+  `p9_virtio_zc_request()`, `p9_get_mapped_pages()` — confirmed vmalloc
+  handling at `trans_virtio.c:368-373`
+- **[Phase 5]** `grep zc_request net/9p` → only virtio transport has
+  zerocopy
+- **[Phase 6]** `grep kzalloc/kfree` in tree → buggy code at
+  `vfs_dir.c:73`, `client.c:893`
+- **[Phase 6]** `grep DEFAULT_MSIZE` → `(128 * 1024) + P9_IOHDRSZ` at
+  `client.c:36`
+- **[Phase 6]** Calculated allocation size: ~131,088 bytes for default
+  msize
+- **[Phase 6]** `grep kvzalloc/kvfree include/linux/slab.h` → APIs
+  available in tree
+- **[Phase 6]** `git log --grep` for existing rdir kvmalloc fix → none
+  found
+- **UNVERIFIED:** Mailing list review content and stable nominations
+- **UNVERIFIED:** Whether `e21d451a82f3` was or will be backported
+  separately
 
 **YES**
 
- drivers/ata/libata-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/9p/vfs_dir.c | 2 +-
+ net/9p/client.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index ae1e5f82026c5..a7a89b675a912 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4379,6 +4379,7 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	 */
- 	{ "WDC WD100EFGX-68CPLN0",	NULL,	ATA_QUIRK_NOLPM },
- 	{ "WDC WD102KFBX-68M95N0",	NULL,	ATA_QUIRK_NOLPM },
-+	{ "WD Green 2.5 480GB",		NULL,	ATA_QUIRK_NOLPM },
+diff --git a/fs/9p/vfs_dir.c b/fs/9p/vfs_dir.c
+index edef553bbd59e..323f85352f6a4 100644
+--- a/fs/9p/vfs_dir.c
++++ b/fs/9p/vfs_dir.c
+@@ -72,7 +72,7 @@ static struct p9_rdir *v9fs_alloc_rdir_buf(struct file *filp, int buflen)
+ 	struct p9_fid *fid = filp->private_data;
  
- 	/*
- 	 * This sata dom device goes on a walkabout when the ATA_LOG_DIRECTORY
+ 	if (!fid->rdir)
+-		fid->rdir = kzalloc(sizeof(struct p9_rdir) + buflen, GFP_KERNEL);
++		fid->rdir = kvzalloc(sizeof(struct p9_rdir) + buflen, GFP_KERNEL);
+ 	return fid->rdir;
+ }
+ 
+diff --git a/net/9p/client.c b/net/9p/client.c
+index 08ae4c44d7305..75aac636b20e7 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -890,7 +890,7 @@ static void p9_fid_destroy(struct p9_fid *fid)
+ 	spin_lock_irqsave(&clnt->lock, flags);
+ 	idr_remove(&clnt->fids, fid->fid);
+ 	spin_unlock_irqrestore(&clnt->lock, flags);
+-	kfree(fid->rdir);
++	kvfree(fid->rdir);
+ 	kfree(fid);
+ }
+ 
 -- 
 2.53.0
 
