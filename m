@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2287A49483F;
-	Mon, 31 Aug 2026 14:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43F8494A02;
+	Mon, 31 Aug 2026 14:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185187; cv=none; b=C1KGJ91g/uA9m+5I7GsUXIRUHlimV8umHgCaCjXTxgaLwY7RcHOoRqjDbFdYicPr79IY6o6a3wxGGVhPnWb1NxefISdIxLUjZCDQS2mA0GSVi7wHe+l+S0EQymQVs5c1rUbliaixaZSLvZNJrrA4yp5oy40BXpPJ47ptq5xHxUY=
+	t=1788185190; cv=none; b=QHEjAuerOzOMQrNcXz7DX+EzptZToxvuEqAxW6l2NH4KSXgnRBJXsDcJvhn77ZFdFdvEzIMUBo6aE3Leyl2WvpSkWE49QeVypbCz01pHitNeVn9SLLiwATc6DziVfJscLwSUxfyxVeoe34oYeHawLu9/ya/wMofEpF8fvygJN3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185187; c=relaxed/simple;
-	bh=9jIsr5ZeOEtRY6iolzN/v3wPSMS5NRhAOGMLsA6q8zM=;
+	s=arc-20240116; t=1788185190; c=relaxed/simple;
+	bh=gbtWjZTTaZhSxb1nj6AKGLuaHc2yf9JBDx8OhUDlSm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFYidMZvUzc3sAe9jtrYzRtED3UHtcMHIlTpust/kKW0ulr7bMmjbAGICObP/qlFZj8odidimFtVmCsepH8mPy2VHrp4DSr2cvDWaCATGKYgKmDG1cubEftwWIs4rUewJ2vBrwDhsSXKUSF2O5giN/iXNXRoPtXQrNOK2E6RdHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDHeOQRj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ts/jB9cQ8cHgBiBhIrcsP5ghsyf0j+GNkRnJ+dCnXky8iFgVa+bxEpXLj8Vo4bEl+tIVfb+0s58JZGRdi8gPBQA5yjjTY82hMUDbJ869U0q4ELQ2yUc0YubIvBihK3HZjdzg07NXWUmu2Ib/ktfWOf+6zGU6v61eVfVeNr9qyMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpIoRtqT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDHeOQRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B7B1F000E9;
-	Mon, 31 Aug 2026 14:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpIoRtqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDAF1F000E9;
+	Mon, 31 Aug 2026 14:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185185;
-	bh=o8oqnJQmez0ORCRexc9g51JUlQX4UKVb1cGBE5gFdPI=;
+	s=korg; t=1788185188;
+	bh=3mQ0QIO8JhADaj5I74d0pSCoVYOiRwSpApixOmm5MNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cDHeOQRjAzRySYrF+OJNx18NWyQFpxpAMnASA9/X4B5O1htMP6R+jZpxOLkWzIJaf
-	 xgJ8oYGXiGMkrDEEC74Nf1+jPBCQFZ5797cbcwAQ/iAZaHzptvGhdjVS5Sky48dH/p
-	 AVBmIc5c9MTju6g8SozpRx8JdCAserH57EHm6OLY=
+	b=gpIoRtqTvrtfodkGNT4CdnLUxIDivhnqJcTGxvVSNiN5kqXkClOJWwi5C7eF+A9oe
+	 WLDyGEtk50LmmKNA6UcGc75G1ZICOxCDhy8yCWrlhqDOkWho8sqeyvFjKVUMbLKoUh
+	 kuhNHmIbPy3pSDnQtUM4YryHTvjxpLcYYNg+YzCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/43] Revert "smb: client: use kvzalloc() for megabyte buffer in simple fallocate"
-Date: Mon, 31 Aug 2026 15:35:22 +0200
-Message-ID: <20260831133359.154636597@linuxfoundation.org>
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Denis Arefev <arefev@swemel.ru>
+Subject: [PATCH 5.10 15/43] ipv4: igmp: Fix potential UAF in igmp_gq_start_timer()
+Date: Mon, 31 Aug 2026 15:35:23 +0200
+Message-ID: <20260831133359.197749902@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -49,37 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit a0c4a3e5387421ae252126a7bc29f3cd95b3cf06.
+From: Eric Dumazet <edumazet@google.com>
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 7b19c0f81ed1fdaec6bc522569be367199a9edf3 upstream.
+
+A race condition exists between device teardown (inetdev_destroy) and
+incoming IGMP query processing (igmp_rcv), leading to a Use-After-Free
+in the IGMP timer callback.
+
+During device destruction, inetdev_destroy() drops the primary reference
+to in_device, which can drop its refcount to 0. The actual freeing of
+in_device memory is deferred via RCU (using call_rcu()).
+
+Concurrently, igmp_rcv() runs under RCU read lock and obtains the
+in_device pointer. Because the memory is RCU-protected, CPU-0 can safely
+dereference in_device even if its refcount has hit 0.
+
+However, if CPU-0 calls igmp_gq_start_timer() and re-arms the timer, it
+attempts to acquire a reference using in_dev_hold(). This increments the
+refcount from 0 to 1, triggering a "refcount_t: addition on 0" warning.
+Since the in_device memory is still scheduled to be freed after the RCU
+grace period (as the free callback does not check the refcount again),
+the device is freed while the timer is still armed. When the timer
+expires, it accesses the freed memory, causing a kernel panic.
+
+Fix this by using refcount_inc_not_zero() (via a new helper
+in_dev_hold_safe()) to prevent acquiring a reference if the device is
+already being destroyed. If the refcount is 0, we do not arm the timer.
+
+A similar issue in IPv6 MLD is fixed in a subsequent patch.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260705181756.963063-2-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[Denis Arefev: adapted for 5.10/5.15: keep prandom_u32(),
+get_random_u32_below() not used here]
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/inetdevice.h |    5 +++++
+ net/ipv4/igmp.c            |   14 +++++++++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index a520e90adf3ec..51f8ea0c89065 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -3568,7 +3568,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	if (rc)
- 		goto out;
+--- a/include/linux/inetdevice.h
++++ b/include/linux/inetdevice.h
+@@ -277,6 +277,11 @@ static inline void in_dev_put(struct in_
+ #define __in_dev_put(idev)  refcount_dec(&(idev)->refcnt)
+ #define in_dev_hold(idev)   refcount_inc(&(idev)->refcnt)
  
--	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
-+	buf = kzalloc(1024 * 1024, GFP_KERNEL);
- 	if (buf == NULL) {
- 		rc = -ENOMEM;
- 		goto out;
-@@ -3635,7 +3635,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
++static inline bool in_dev_hold_safe(struct in_device *idev)
++{
++	return refcount_inc_not_zero(&idev->refcnt);
++}
++
+ #endif /* __KERNEL__ */
  
-  out:
- 	kfree(out_data);
--	kvfree(buf);
-+	kfree(buf);
- 	return rc;
+ static __inline__ __be32 inet_make_mask(int logmask)
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -232,16 +232,20 @@ static void igmp_gq_start_timer(struct i
+ 		return;
+ 
+ 	in_dev->mr_gq_running = 1;
+-	if (!mod_timer(&in_dev->mr_gq_timer, exp))
+-		in_dev_hold(in_dev);
++	if (in_dev_hold_safe(in_dev)) {
++		if (mod_timer(&in_dev->mr_gq_timer, exp))
++			in_dev_put(in_dev);
++	}
  }
  
--- 
-2.53.0
-
+ static void igmp_ifc_start_timer(struct in_device *in_dev, int delay)
+ {
+-	int tv = prandom_u32() % delay;
++	if (in_dev_hold_safe(in_dev)) {
++		int tv = prandom_u32() % delay;
+ 
+-	if (!mod_timer(&in_dev->mr_ifc_timer, jiffies+tv+2))
+-		in_dev_hold(in_dev);
++		if (mod_timer(&in_dev->mr_ifc_timer, jiffies + tv + 2))
++			in_dev_put(in_dev);
++	}
+ }
+ 
+ static void igmp_mod_timer(struct ip_mc_list *im, int max_delay)
 
 
