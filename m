@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8843147ACE6;
-	Mon, 31 Aug 2026 13:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A84843785D;
+	Mon, 31 Aug 2026 13:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184540; cv=none; b=mCZ984aC7bxMn9xELw2F0qRUI6VPPEZu0XsCmb1aDzDnHh69VcfQCymVtQMY644W6FdnjPP2fzUNWqKaNQ3h7fzaf3xNSOHnYjA/KA4BBXQDiLKirR7PEU3bpmL7kMG3/pP+RBDDzi0insHsCO0fUbmdpXia0k3SCKkwhl9DTGk=
+	t=1788184557; cv=none; b=lduQJsrSWBCh0ylc27LI99f4cNDOTycWaWIgr4IkXBayQgl/cRQ3eFcLYWf0b5D2M2mKTDFIMzH+SjYMH5Z5DL+uonh1TkaSBtfIT0fXlFKbGFQ1ZriGWQXfvu2R42SaHgzxjRs7Zwswt6ESqqRntA1jnQM2sGuFzPR1XDOSnDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184540; c=relaxed/simple;
-	bh=bNTcEzX3PR1rmDRyiHm8of/vMdaV0G7zzyX8e0Z2Fa8=;
+	s=arc-20240116; t=1788184557; c=relaxed/simple;
+	bh=EDk/iesbCJS7k60tQ4SdQ/+uPyBa6X5Bld5+GIj6TDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HE64Qpizv4Jxjhz6Ku3PgAI5O2OEmDqFvM/kJZq4un7ToQd/PqxnFNSXO7mJcRdYbwkghrpl6x672wFRD1dzJt9IrDJTAQW30htxi4h9omY4aYMMFzCY2s+gpj8tVvkM1+RJp7fgj5jerd18Rt9m1R+5xluvXSyb+lhBi0f4zcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GTNbugC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GhiEaWc9eOdqOKd4/N6RxciezouZymQ0SjPONWv6ZkQSh7flxo99uRW5Ik9MW8PzKc5gmaMXmKNZErzjWNIzdJhBZ0ByZlK76y6FiTj08Av8AzBhhNVsGPsXR73SYjJO+d+Z1CI62mf8OF8SUmTYHE1uHeJ1T+6n06a0Ev9SF28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NI8uvLO4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GTNbugC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C511F000E9;
-	Mon, 31 Aug 2026 13:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NI8uvLO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F0A1F00A3D;
+	Mon, 31 Aug 2026 13:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184539;
-	bh=XvuejDd9XfAPUjE0sqeYCRgsdMyrBkAVHnNDyL8jVek=;
+	s=korg; t=1788184556;
+	bh=nYXp7ab/dewx1tq9LnfJ1Skwwi0Tydu8BlsnrcgUtg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0GTNbugCzApTQZhV/XT8kTmpNn6GiUkp/Vp6pcOmvrEDue3o3oWABa0eBJX7hGeWR
-	 cHfbF7QlUTEgqt+XCe3kRBjDKO0XkXpeWNmcMndiJzA1l2UsPufOWBPGOKtLKzqGi9
-	 GzkV+LApNjKo1cfgTzKYEbtiQHxEDWQBNpvnlCQA=
+	b=NI8uvLO4f+4lsRpN6icv4nsQ9eOA16yMMTw+/GUDaJJM/IKl7fQ+g7J2UqMT5ZD7y
+	 nM1YBR3Z2MadGnwkRubO9XrpS2S7cf08Lt5X8w4yDjd5bm/qcee1oeCCG+yo1S5WdQ
+	 b+X3dj0Z5rTSZ4w9BrDNznYqWQnnHou+2sovTwAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>,
+	Michael Zaidman <michael.zaidman@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 26/91] Revert "PM: sleep: Use complete() in device_pm_sleep_init()"
-Date: Mon, 31 Aug 2026 15:34:14 +0200
-Message-ID: <20260831133401.030002438@linuxfoundation.org>
+Subject: [PATCH 6.6 49/91] HID: ft260: fix stack-use-after-return write in I2C read race
+Date: Mon, 31 Aug 2026 15:34:37 +0200
+Message-ID: <20260831133402.281734417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -49,39 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 59096e2aa0f66008fab21a3ebf8e097bc026c060.
+From: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
 
+[ Upstream commit bf3e39df3a397fd82967a31d17c4e02c7feab221 ]
+
+ft260_i2c_read() points dev->read_buf at a caller-supplied buffer
+(often an on-stack variable), arms a completion and waits up to five
+seconds for the device to return the data. The HID input callback
+ft260_raw_event() runs in the input/IRQ path, independent of the
+dev->lock mutex held by the read path, and copies the device-supplied
+payload into dev->read_buf after a plain NULL check.
+
+These two paths share read_buf, read_idx and read_len with no
+serialization. If the device delays its response until the read
+times out, ft260_i2c_read() resets the controller, clears read_buf
+and returns, unwinding the stack frame the buffer lived in. A
+response that arrives at that moment lets ft260_raw_event() pass the
+NULL check and then memcpy() the device-controlled payload into the
+now-freed stack location, a bounded but attacker-influenced
+stack-use-after-return write triggerable by malicious or
+malfunctioning hardware.
+
+Add a dedicated spinlock that serializes every access to read_buf,
+read_idx and read_len. ft260_raw_event() now holds it across the
+NULL check, the memcpy and the index update, while the read path
+takes it when arming and when clearing the buffer, so the teardown
+can no longer slip between the check and the copy.
+
+Fixes: 6a82582d9fa4 ("HID: ft260: add usb hid to i2c host bridge driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
+Reviewed-by: Michael Zaidman <michael.zaidman@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/hid/hid-ft260.c |   25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index dc3d30860ef32..ef5157fc8dcc5 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -101,7 +101,7 @@ void device_pm_sleep_init(struct device *dev)
- 	dev->power.is_noirq_suspended = false;
- 	dev->power.is_late_suspended = false;
- 	init_completion(&dev->power.completion);
--	complete(&dev->power.completion);
-+	complete_all(&dev->power.completion);
- 	dev->power.wakeup = NULL;
- 	INIT_LIST_HEAD(&dev->power.entry);
- }
-@@ -238,10 +238,6 @@ static void dpm_wait(struct device *dev, bool async)
- 	if (!dev)
- 		return;
+--- a/drivers/hid/hid-ft260.c
++++ b/drivers/hid/hid-ft260.c
+@@ -240,6 +240,8 @@ struct ft260_device {
+ 	struct mutex lock;
+ 	u8 write_buf[FT260_REPORT_MAX_LENGTH];
+ 	unsigned long need_wakeup_at;
++	/* Protects read_buf, read_idx and read_len against ft260_raw_event() */
++	spinlock_t read_lock;
+ 	u8 *read_buf;
+ 	u16 read_idx;
+ 	u16 read_len;
+@@ -501,6 +503,7 @@ static int ft260_i2c_read(struct ft260_d
+ 	int timeout, ret = 0;
+ 	struct ft260_i2c_read_request_report rep;
+ 	struct hid_device *hdev = dev->hdev;
++	unsigned long irqflags;
+ 	u8 bus_busy = 0;
  
--	/* Devices with no PM support don't use the completion. */
--	if (dev->power.no_pm)
--		return;
--
- 	if (async || (pm_async_enabled && dev->power.async_suspend))
- 		wait_for_completion(&dev->power.completion);
+ 	if ((flag & FT260_FLAG_START_REPEATED) == FT260_FLAG_START_REPEATED)
+@@ -526,9 +529,11 @@ static int ft260_i2c_read(struct ft260_d
+ 
+ 		reinit_completion(&dev->wait);
+ 
++		spin_lock_irqsave(&dev->read_lock, irqflags);
+ 		dev->read_idx = 0;
+ 		dev->read_buf = data;
+ 		dev->read_len = rd_len;
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 
+ 		ret = ft260_hid_output_report(hdev, (u8 *)&rep, sizeof(rep));
+ 		if (ret < 0) {
+@@ -543,7 +548,9 @@ static int ft260_i2c_read(struct ft260_d
+ 			goto ft260_i2c_read_exit;
+ 		}
+ 
++		spin_lock_irqsave(&dev->read_lock, irqflags);
+ 		dev->read_buf = NULL;
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 
+ 		if (flag & FT260_FLAG_STOP)
+ 			bus_busy = FT260_I2C_STATUS_BUS_BUSY;
+@@ -562,7 +569,9 @@ static int ft260_i2c_read(struct ft260_d
+ 	} while (len > 0);
+ 
+ ft260_i2c_read_exit:
++	spin_lock_irqsave(&dev->read_lock, irqflags);
+ 	dev->read_buf = NULL;
++	spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 	return ret;
  }
--- 
-2.53.0
-
+ 
+@@ -1018,6 +1027,7 @@ static int ft260_probe(struct hid_device
+ 		 "FT260 usb-i2c bridge");
+ 
+ 	mutex_init(&dev->lock);
++	spin_lock_init(&dev->read_lock);
+ 	init_completion(&dev->wait);
+ 
+ 	ret = ft260_xfer_status(dev, FT260_I2C_STATUS_BUS_BUSY);
+@@ -1067,6 +1077,7 @@ static int ft260_raw_event(struct hid_de
+ {
+ 	struct ft260_device *dev = hid_get_drvdata(hdev);
+ 	struct ft260_i2c_input_report *xfer = (void *)data;
++	unsigned long irqflags;
+ 
+ 	if (size < offsetof(struct ft260_i2c_input_report, data)) {
+ 		hid_err(hdev, "short report %d\n", size);
+@@ -1075,6 +1086,8 @@ static int ft260_raw_event(struct hid_de
+ 
+ 	if (xfer->report >= FT260_I2C_REPORT_MIN &&
+ 	    xfer->report <= FT260_I2C_REPORT_MAX) {
++		bool complete_read;
++
+ 		ft260_dbg("i2c resp: rep %#02x len %d size %d\n",
+ 			  xfer->report, xfer->length, size);
+ 
+@@ -1085,8 +1098,15 @@ static int ft260_raw_event(struct hid_de
+ 			return -1;
+ 		}
+ 
++		/*
++		 * Hold read_lock so a timed-out ft260_i2c_read() cannot
++		 * clear read_buf between the NULL check and the memcpy.
++		 */
++		spin_lock_irqsave(&dev->read_lock, irqflags);
++
+ 		if ((dev->read_buf == NULL) ||
+ 		    (xfer->length > dev->read_len - dev->read_idx)) {
++			spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 			hid_err(hdev, "unexpected report %#02x, length %d\n",
+ 				xfer->report, xfer->length);
+ 			return -1;
+@@ -1095,8 +1115,11 @@ static int ft260_raw_event(struct hid_de
+ 		memcpy(&dev->read_buf[dev->read_idx], &xfer->data,
+ 		       xfer->length);
+ 		dev->read_idx += xfer->length;
++		complete_read = dev->read_idx == dev->read_len;
++
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 
+-		if (dev->read_idx == dev->read_len)
++		if (complete_read)
+ 			complete(&dev->wait);
+ 
+ 	} else {
 
 
