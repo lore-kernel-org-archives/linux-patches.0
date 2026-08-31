@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A03747A0C0;
-	Mon, 31 Aug 2026 13:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F3C47A0D1;
+	Mon, 31 Aug 2026 13:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184469; cv=none; b=buWYE1d1aa3RLYXLRgYb0o6tVRFmKWcie9fcTWwD0+eb+VyXLrUNKBALG2B3uGAmwyyZ5EZ400xLIKLKIxjACqYGo1mpTGJi08uZdkoQryKGyWZwxVctVHr601XjMTbpJ1UvK3yrrF+KI9Pw1qoCHtoyUknuhNuWBX+T3VDh9fU=
+	t=1788184472; cv=none; b=N7MxsYUbQHGPBB4n788v+OlYE42FwUjro4jLQH96x5R7tzdiAIxtSRjBWVfBem2fpjPyXEQ89zsoBPDqxxv6JwiZZGTdfxfUL2NJYTKLNrZAKiuREyDsUZtBrEaqen1lmUnGnOyDcUE8R1EtvWS7O08DcDHmy2HNJRWs/4ZzG1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184469; c=relaxed/simple;
-	bh=0y7QlxYKNreCKdchK170xUaZ7UvZsGJmGFNt+8X27+w=;
+	s=arc-20240116; t=1788184472; c=relaxed/simple;
+	bh=LcQ+8QKbNNvxE2RH5Bq4hX+kbTHtDHYz0+GWyKR1/ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GhMYj/AsobbrGzCWp2f31gqcQtaPbhfTGu04cHrk8UCAzTAgztCW6HsMe7FrEzlGSXzyYXtrdcJV1W0sO2YfMw8KytMB+38G8Y0+HrjfNAr6i1ZYKKgVAgipocJzfz5q81y5lZL5N/ljjmYcufP307PHpNYqpMPMLfW52/3takU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBoKoM8n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdXBn5K8JJvw8g+lu+9ydkPIT36/ZHeht3BIBqV2qCtC3okjc243/EedaQfezpowBVRnVvEWi270P/RbD0uClx3Y/okYOwgaXK8Kbc0AtVIxTZ2gFEzthQDrAotCpeZ7tujzk0pw63cJCM7Iv0StLGXVT6sdwWCTHC8TOxu6bt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csd8bnMc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBoKoM8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E751F00A3D;
-	Mon, 31 Aug 2026 13:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csd8bnMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B511F000E9;
+	Mon, 31 Aug 2026 13:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184468;
-	bh=3gvj51wbJQZssdjl9CZg7iTJaz/6uR59uswxn8/NNUE=;
+	s=korg; t=1788184471;
+	bh=5HbCOmCz1JdemJf3zdkbTUn5Dj0aWfSmJPVW8vItUxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lBoKoM8nXftjt+CCCL37Ttdw5gpClHi4QTQ92CdSyQoP5e+vEdBxBwlWCD34jqNzt
-	 zERTj82kV1I7sm30bdR0P7Bxc50XlwChP2KssCuDzvUf0iE9DXeFHDDLsbCvLjrKBo
-	 qYIK48v3N5xXRze2u9cCo9+saToEUka6AhaSroiw=
+	b=csd8bnMcOWludm/KHQOzfVJsjO2+VzH0VZZpxy+Y5+4hGowJxz7GvYSu8xGPx4Zvu
+	 Njzb6WIstfLk9VgTxySKcMBRc7F+4/z9+egKHktgVt+CxdFRmuDoWNCbfzengylZnd
+	 KVHCBlsQrMbdpfGYLtPzxvHFres7KtiSx/BDMTNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jinu Kim <kimjw04271234@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 19/91] smc: Fix use-after-free in __pnet_find_base_ndev().
-Date: Mon, 31 Aug 2026 15:34:07 +0200
-Message-ID: <20260831133400.600208664@linuxfoundation.org>
+Subject: [PATCH 6.6 02/91] KVM: x86/mmu: Check write tracking in all address spaces
+Date: Mon, 31 Aug 2026 15:33:50 +0200
+Message-ID: <20260831133359.585006212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -53,210 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Jinu Kim <kimjw04271234@gmail.com>
 
-[ Upstream commit 3d3466878afd8d43ec0ca2facfbc7f03e40d0f79 ]
+commit 0f38453cdb2e17566ccb7c0f3dabd5bd21caca26 upstream.
 
-syzbot reported use-after-free of net_device in __pnet_find_base_ndev(),
-which was called during connect(). [0]
+kvm_gfn_is_write_tracked() checks only the supplied memslot, but page
+tracking is per-address-space and shadow pages are shared across all
+address spaces.  With SMM, a GFN can therefore be write-tracked in one
+address space and appear untracked through the other.
 
-smc_pnet_find_ism_resource() fetches sk_dst_get(sk)->dev and passes
-down to pnet_find_base_ndev(), where RTNL is held.  Then, UAF happened
-at __pnet_find_base_ndev() when the dev is first used.
+Check the supplied slot first, then the slot for the other address space.
+This ensures all callers honor write tracking regardless of the active
+address space.  In particular, it prevents mmu_try_to_unsync_pages() from
+marking an upper-level shadow page unsync and eventually triggering the
+BUG in pte_list_remove().
 
-This means dev had already been freed before acquiring RTNL in
-pnet_find_base_ndev().
-
-While dev is going away, dst->dev could be swapped with blackhole_netdev,
-and the dev's refcnt by dst will be released.
-
-We must hold dev's refcnt before calling smc_pnet_find_ism_resource().
-
-Also, smc_pnet_find_roce_resource() has the same problem.
-
-Let's use __sk_dst_get() and dst_dev_rcu() in the two functions.
-
-[0]:
-BUG: KASAN: use-after-free in __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
-Read of size 1 at addr ffff888036bac33a by task syz.0.3632/18609
-
-CPU: 1 UID: 0 PID: 18609 Comm: syz.0.3632 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
- pnet_find_base_ndev net/smc/smc_pnet.c:946 [inline]
- smc_pnet_find_ism_by_pnetid net/smc/smc_pnet.c:1103 [inline]
- smc_pnet_find_ism_resource+0xef/0x390 net/smc/smc_pnet.c:1154
- smc_find_ism_device net/smc/af_smc.c:1030 [inline]
- smc_find_proposal_devices net/smc/af_smc.c:1115 [inline]
- __smc_connect+0x372/0x1890 net/smc/af_smc.c:1545
- smc_connect+0x877/0xd90 net/smc/af_smc.c:1715
- __sys_connect_file net/socket.c:2086 [inline]
- __sys_connect+0x313/0x440 net/socket.c:2105
- __do_sys_connect net/socket.c:2111 [inline]
- __se_sys_connect net/socket.c:2108 [inline]
- __x64_sys_connect+0x7a/0x90 net/socket.c:2108
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f47cbf8eba9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f47ccdb1038 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 00007f47cc1d5fa0 RCX: 00007f47cbf8eba9
-RDX: 0000000000000010 RSI: 0000200000000280 RDI: 000000000000000b
-RBP: 00007f47cc011e19 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f47cc1d6038 R14: 00007f47cc1d5fa0 R15: 00007ffc512f8aa8
- </TASK>
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888036bacd00 pfn:0x36bac
-flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000000000 ffffea0001243d08 ffff8880b863fdc0 0000000000000000
-raw: ffff888036bacd00 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as freed
-page last allocated via order 2, migratetype Unmovable, gfp_mask 0x446dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO|__GFP_NOWARN|__GFP_RETRY_MAYFAIL|__GFP_COMP), pid 16741, tgid 16741 (syz-executor), ts 343313197788, free_ts 380670750466
- set_page_owner include/linux/page_owner.h:32 [inline]
- post_alloc_hook+0x240/0x2a0 mm/page_alloc.c:1851
- prep_new_page mm/page_alloc.c:1859 [inline]
- get_page_from_freelist+0x21e4/0x22c0 mm/page_alloc.c:3858
- __alloc_frozen_pages_noprof+0x181/0x370 mm/page_alloc.c:5148
- alloc_pages_mpol+0x232/0x4a0 mm/mempolicy.c:2416
- ___kmalloc_large_node+0x5f/0x1b0 mm/slub.c:4317
- __kmalloc_large_node_noprof+0x18/0x90 mm/slub.c:4348
- __do_kmalloc_node mm/slub.c:4364 [inline]
- __kvmalloc_node_noprof+0x6d/0x5f0 mm/slub.c:5067
- alloc_netdev_mqs+0xa3/0x11b0 net/core/dev.c:11812
- tun_set_iff+0x532/0xef0 drivers/net/tun.c:2775
- __tun_chr_ioctl+0x788/0x1df0 drivers/net/tun.c:3085
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:598 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-page last free pid 18610 tgid 18608 stack trace:
- reset_page_owner include/linux/page_owner.h:25 [inline]
- free_pages_prepare mm/page_alloc.c:1395 [inline]
- __free_frozen_pages+0xbc4/0xd30 mm/page_alloc.c:2895
- free_large_kmalloc+0x13a/0x1f0 mm/slub.c:4820
- device_release+0x99/0x1c0 drivers/base/core.c:-1
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x22b/0x480 lib/kobject.c:737
- netdev_run_todo+0xd2e/0xea0 net/core/dev.c:11513
- rtnl_unlock net/core/rtnetlink.c:157 [inline]
- rtnl_net_unlock include/linux/rtnetlink.h:135 [inline]
- rtnl_dellink+0x537/0x710 net/core/rtnetlink.c:3563
- rtnetlink_rcv_msg+0x7cc/0xb70 net/core/rtnetlink.c:6946
- netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2552
- netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
- netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1346
- netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1896
- sock_sendmsg_nosec net/socket.c:714 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:729
- ____sys_sendmsg+0x505/0x830 net/socket.c:2614
- ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2668
- __sys_sendmsg net/socket.c:2700 [inline]
- __do_sys_sendmsg net/socket.c:2705 [inline]
- __se_sys_sendmsg net/socket.c:2703 [inline]
- __x64_sys_sendmsg+0x19b/0x260 net/socket.c:2703
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Memory state around the buggy address:
- ffff888036bac200: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888036bac280: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
->ffff888036bac300: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                                        ^
- ffff888036bac380: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888036bac400: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-
-Fixes: 0afff91c6f5e ("net/smc: add pnetid support")
-Fixes: 1619f770589a ("net/smc: add pnetid support for SMC-D and ISM")
-Reported-by: syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68c237c7.050a0220.3c6139.0036.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 699023e23965 ("KVM: x86: add SMM to the MMU role, support SMRAM address space")
+Assisted-by: Codex:GPT-5
+Signed-off-by: Jinu Kim <kimjw04271234@gmail.com>
+Message-ID: <20260721103512.2136240-2-kimjw04271234@gmail.com>
+[invert direction of the conditional. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ artem: adapt to 6.6, which has neither KVM_MAX_NR_ADDRESS_SPACES nor
+  kvm_arch_nr_memslot_as_ids(); use KVM_ADDRESS_SPACE_NUM instead. That
+  macro is CONFIG_KVM_SMM-conditional in 6.6, so the guard on
+  KVM_ADDRESS_SPACE_NUM > 1 around the peer-slot lookup is retained ]
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_pnet.c | 43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ arch/x86/kvm/mmu/page_track.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
-index d44d7f427fc94..0081d1c6ce466 100644
---- a/net/smc/smc_pnet.c
-+++ b/net/smc/smc_pnet.c
-@@ -1131,37 +1131,38 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
-  */
- void smc_pnet_find_roce_resource(struct sock *sk, struct smc_init_info *ini)
- {
--	struct dst_entry *dst = sk_dst_get(sk);
--
--	if (!dst)
--		goto out;
--	if (!dst->dev)
--		goto out_rel;
-+	struct net_device *dev;
-+	struct dst_entry *dst;
- 
--	smc_pnet_find_roce_by_pnetid(dst->dev, ini);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	dev_hold(dev);
-+	rcu_read_unlock();
- 
--out_rel:
--	dst_release(dst);
--out:
--	return;
-+	if (dev) {
-+		smc_pnet_find_roce_by_pnetid(dev, ini);
-+		dev_put(dev);
-+	}
+diff --git a/arch/x86/kvm/mmu/page_track.c b/arch/x86/kvm/mmu/page_track.c
+index c87da11f3a049..2615074a4bffe 100644
+--- a/arch/x86/kvm/mmu/page_track.c
++++ b/arch/x86/kvm/mmu/page_track.c
+@@ -117,13 +117,23 @@ void __kvm_write_track_remove_gfn(struct kvm *kvm,
+ 	kvm_mmu_gfn_allow_lpage(slot, gfn);
  }
  
- void smc_pnet_find_ism_resource(struct sock *sk, struct smc_init_info *ini)
+-/*
+- * check if the corresponding access on the specified guest page is tracked.
+- */
++static bool __kvm_gfn_is_write_tracked(const struct kvm_memory_slot *slot,
++				       gfn_t gfn)
++{
++	int index;
++
++	if (!slot)
++		return false;
++
++	index = gfn_to_index(gfn, slot->base_gfn, PG_LEVEL_4K);
++	return !!READ_ONCE(slot->arch.gfn_write_track[index]);
++}
++
++/* check if write access is tracked on the specified guest page.  */
+ bool kvm_gfn_is_write_tracked(struct kvm *kvm,
+ 			      const struct kvm_memory_slot *slot, gfn_t gfn)
  {
--	struct dst_entry *dst = sk_dst_get(sk);
-+	struct net_device *dev;
-+	struct dst_entry *dst;
+-	int index;
++	const struct kvm_memory_slot *other_slot;
  
- 	ini->ism_dev[0] = NULL;
--	if (!dst)
--		goto out;
--	if (!dst->dev)
--		goto out_rel;
+ 	if (!slot)
+ 		return false;
+@@ -131,8 +141,18 @@ bool kvm_gfn_is_write_tracked(struct kvm *kvm,
+ 	if (!kvm_page_track_write_tracking_enabled(kvm))
+ 		return false;
  
--	smc_pnet_find_ism_by_pnetid(dst->dev, ini);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	dev_hold(dev);
-+	rcu_read_unlock();
- 
--out_rel:
--	dst_release(dst);
--out:
--	return;
-+	if (dev) {
-+		smc_pnet_find_ism_by_pnetid(dev, ini);
-+		dev_put(dev);
+-	index = gfn_to_index(gfn, slot->base_gfn, PG_LEVEL_4K);
+-	return !!READ_ONCE(slot->arch.gfn_write_track[index]);
++	BUILD_BUG_ON(KVM_ADDRESS_SPACE_NUM > 2);
++
++	if (__kvm_gfn_is_write_tracked(slot, gfn))
++		return true;
++
++	if (KVM_ADDRESS_SPACE_NUM > 1) {
++		other_slot = __gfn_to_memslot(__kvm_memslots(kvm, slot->as_id ^ 1), gfn);
++		if (__kvm_gfn_is_write_tracked(other_slot, gfn))
++			return true;
 +	}
++
++	return false;
  }
  
- /* Lookup and apply a pnet table entry to the given ib device.
+ #ifdef CONFIG_KVM_EXTERNAL_WRITE_TRACKING
 -- 
 2.53.0
 
