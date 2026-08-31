@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1614247F766;
-	Mon, 31 Aug 2026 13:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4178647F2EB;
+	Mon, 31 Aug 2026 13:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184789; cv=none; b=NRcgyB4bdkMcvGfujcrqP4ExwsWaqJES0nF3HnBDcsK3WS8A30Hz6HCgNP7VTDhVxDhrfxC9d+DrHXl2Oyazqm3QuUIg2VnS2ad4u6DhTQ+VvhYgw3mv+Wtz7ad03dSXzqmWvbGdwIepAmirLqvGNo/6aveeiojO2+E2E/s21Ow=
+	t=1788184749; cv=none; b=oFpc4oEOXwT/DcJZ+yIxNwL7meyzskdsujqppOSF6IO/ewoXX2679jgpG6MBHr8QCnD/PGlhW4oPJOToarujRn+BKdK6fsMikl+0h/8fD8w4o+sCUrjD+FyP4aX5aREl2ZkJGzahbnvmMJGwT580wbbd5HvHCF9HlONO5CA59qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184789; c=relaxed/simple;
-	bh=05Whw9uFkoZ0jylku3YFdPd6WdDzvKsh9wtXV9zIqD8=;
+	s=arc-20240116; t=1788184749; c=relaxed/simple;
+	bh=V64Iu0MQJnwz0A3OsEwm0Ygfpa1cCaCM2u/Uj3lQRQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qbk8wM3qmhTY6ee06md/SCcT4uPjdvRCviYJVU6TR9+boPXYhuaLtMWrf1RlnP7BIWaxQeM05So85IzmXzlFx0mcpx+ckJNiBT/giBarX8OnBX7KPF0dX7QUrWhHH2EP3/q5dR3PbAuB9gTp8zHLgScDz7ZXC2hN3iBO58CizKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGHm0Zfy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YP+c+TXAIjiGLnoTo8HRt/m6D+a0HGqKFvRlM5Ue9+mm0Z8KooyEb34JbvfJ6BI0U5BcWJJw9VaPMzfJwLZQMn84/DQfBwh+If1qBjrl4GVwvvjdGlWJfjPtU548fhFG1So/0zp6BovC+jiVhG+ZgQjRJRUD+TajkHPRARWasrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1fHvygB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGHm0Zfy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1261F000E9;
-	Mon, 31 Aug 2026 13:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1fHvygB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B19F1F000E9;
+	Mon, 31 Aug 2026 13:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184788;
-	bh=BJq1Up2vcRpNePJk9aYdzs7PC/EicsKG3p9Vz5lfzS0=;
+	s=korg; t=1788184748;
+	bh=CYZG2aqDmeGA00HB9ptZStmdSaKVzgqmEdj6TQg/3W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KGHm0ZfyXURB5iFp7vgOIcXjS/IWOKzv1vIfG7Bx4gYgfBbtQJ2hHIAROQNZi2o/A
-	 vMV36Zk9sCa66AIPffLk9ZA6EB1L8NVtu4dF9ha/D/Z3H+bzkAy6dSI5RNx5S6SlKG
-	 oJkEbw/hzzRvHxVG1isZmliBCcY8W9CrIlqd7rV8=
+	b=A1fHvygBdb+IcZG8EHwB27FoI/rM734/zQIkGNFmG2DuzOVst9m6BEWBnZ9h84R2s
+	 yeuNVIxlt+3y4FgV5eHSKxi4tbZ5wCBbwQG2gJ6ufl13SbOIntu/jDCX4phLWcbFD2
+	 1Afr7LXJAQQpVH6L03y7KGCN1XNCCecjltjvblwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ziyang Huang <hzyitc@outlook.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 21/92] smc: Fix use-after-free in __pnet_find_base_ndev().
-Date: Mon, 31 Aug 2026 15:34:19 +0200
-Message-ID: <20260831133400.690781986@linuxfoundation.org>
+Subject: [PATCH 6.1 08/92] wifi: ath11k: Add missing hw_ops->get_ring_selector() for IPQ5018
+Date: Mon, 31 Aug 2026 15:34:06 +0200
+Message-ID: <20260831133359.904450963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -53,210 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Ziyang Huang <hzyitc@outlook.com>
 
-[ Upstream commit 3d3466878afd8d43ec0ca2facfbc7f03e40d0f79 ]
+[ Upstream commit ce282d8de71f07f0056ea319541141152c65f552 ]
 
-syzbot reported use-after-free of net_device in __pnet_find_base_ndev(),
-which was called during connect(). [0]
+During sending data after clients connected, hw_ops->get_ring_selector()
+will be called. But for IPQ5018, this member isn't set, and the
+following NULL pointer exception will be occurred:
 
-smc_pnet_find_ism_resource() fetches sk_dst_get(sk)->dev and passes
-down to pnet_find_base_ndev(), where RTNL is held.  Then, UAF happened
-at __pnet_find_base_ndev() when the dev is first used.
+	[   38.840478] 8<--- cut here ---
+	[   38.840517] Unable to handle kernel NULL pointer dereference at virtual address 00000000
+	...
+	[   38.923161] PC is at 0x0
+	[   38.927930] LR is at ath11k_dp_tx+0x70/0x730 [ath11k]
+	...
+	[   39.063264] Process hostapd (pid: 1034, stack limit = 0x801ceb3d)
+	[   39.068994] Stack: (0x856a9a68 to 0x856aa000)
+	...
+	[   39.438467] [<7f323804>] (ath11k_dp_tx [ath11k]) from [<7f314e6c>] (ath11k_mac_op_tx+0x80/0x190 [ath11k])
+	[   39.446607] [<7f314e6c>] (ath11k_mac_op_tx [ath11k]) from [<7f17dbe0>] (ieee80211_handle_wake_tx_queue+0x7c/0xc0 [mac80211])
+	[   39.456162] [<7f17dbe0>] (ieee80211_handle_wake_tx_queue [mac80211]) from [<7f174450>] (ieee80211_probereq_get+0x584/0x704 [mac80211])
+	[   39.467443] [<7f174450>] (ieee80211_probereq_get [mac80211]) from [<7f178c40>] (ieee80211_tx_prepare_skb+0x1f8/0x248 [mac80211])
+	[   39.479334] [<7f178c40>] (ieee80211_tx_prepare_skb [mac80211]) from [<7f179e28>] (__ieee80211_subif_start_xmit+0x32c/0x3d4 [mac80211])
+	[   39.491053] [<7f179e28>] (__ieee80211_subif_start_xmit [mac80211]) from [<7f17af08>] (ieee80211_tx_control_port+0x19c/0x288 [mac80211])
+	[   39.502946] [<7f17af08>] (ieee80211_tx_control_port [mac80211]) from [<7f0fc704>] (nl80211_tx_control_port+0x174/0x1d4 [cfg80211])
+	[   39.515017] [<7f0fc704>] (nl80211_tx_control_port [cfg80211]) from [<808ceac4>] (genl_rcv_msg+0x154/0x340)
+	[   39.526814] [<808ceac4>] (genl_rcv_msg) from [<808cdb74>] (netlink_rcv_skb+0xb8/0x11c)
+	[   39.536446] [<808cdb74>] (netlink_rcv_skb) from [<808ce1d0>] (genl_rcv+0x28/0x34)
+	[   39.544344] [<808ce1d0>] (genl_rcv) from [<808cd234>] (netlink_unicast+0x174/0x274)
+	[   39.551895] [<808cd234>] (netlink_unicast) from [<808cd510>] (netlink_sendmsg+0x1dc/0x440)
+	[   39.559362] [<808cd510>] (netlink_sendmsg) from [<808596e0>] (____sys_sendmsg+0x1a8/0x1fc)
+	[   39.567697] [<808596e0>] (____sys_sendmsg) from [<8085b1a8>] (___sys_sendmsg+0xa4/0xdc)
+	[   39.575941] [<8085b1a8>] (___sys_sendmsg) from [<8085b310>] (sys_sendmsg+0x44/0x74)
+	[   39.583841] [<8085b310>] (sys_sendmsg) from [<80300060>] (ret_fast_syscall+0x0/0x40)
+	...
+	[   39.620734] Code: bad PC value
+	[   39.625869] ---[ end trace 8aef983ad3cbc032 ]---
 
-This means dev had already been freed before acquiring RTNL in
-pnet_find_base_ndev().
-
-While dev is going away, dst->dev could be swapped with blackhole_netdev,
-and the dev's refcnt by dst will be released.
-
-We must hold dev's refcnt before calling smc_pnet_find_ism_resource().
-
-Also, smc_pnet_find_roce_resource() has the same problem.
-
-Let's use __sk_dst_get() and dst_dev_rcu() in the two functions.
-
-[0]:
-BUG: KASAN: use-after-free in __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
-Read of size 1 at addr ffff888036bac33a by task syz.0.3632/18609
-
-CPU: 1 UID: 0 PID: 18609 Comm: syz.0.3632 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- __pnet_find_base_ndev+0x1b1/0x1c0 net/smc/smc_pnet.c:926
- pnet_find_base_ndev net/smc/smc_pnet.c:946 [inline]
- smc_pnet_find_ism_by_pnetid net/smc/smc_pnet.c:1103 [inline]
- smc_pnet_find_ism_resource+0xef/0x390 net/smc/smc_pnet.c:1154
- smc_find_ism_device net/smc/af_smc.c:1030 [inline]
- smc_find_proposal_devices net/smc/af_smc.c:1115 [inline]
- __smc_connect+0x372/0x1890 net/smc/af_smc.c:1545
- smc_connect+0x877/0xd90 net/smc/af_smc.c:1715
- __sys_connect_file net/socket.c:2086 [inline]
- __sys_connect+0x313/0x440 net/socket.c:2105
- __do_sys_connect net/socket.c:2111 [inline]
- __se_sys_connect net/socket.c:2108 [inline]
- __x64_sys_connect+0x7a/0x90 net/socket.c:2108
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f47cbf8eba9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f47ccdb1038 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
-RAX: ffffffffffffffda RBX: 00007f47cc1d5fa0 RCX: 00007f47cbf8eba9
-RDX: 0000000000000010 RSI: 0000200000000280 RDI: 000000000000000b
-RBP: 00007f47cc011e19 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f47cc1d6038 R14: 00007f47cc1d5fa0 R15: 00007ffc512f8aa8
- </TASK>
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888036bacd00 pfn:0x36bac
-flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000000000 ffffea0001243d08 ffff8880b863fdc0 0000000000000000
-raw: ffff888036bacd00 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as freed
-page last allocated via order 2, migratetype Unmovable, gfp_mask 0x446dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO|__GFP_NOWARN|__GFP_RETRY_MAYFAIL|__GFP_COMP), pid 16741, tgid 16741 (syz-executor), ts 343313197788, free_ts 380670750466
- set_page_owner include/linux/page_owner.h:32 [inline]
- post_alloc_hook+0x240/0x2a0 mm/page_alloc.c:1851
- prep_new_page mm/page_alloc.c:1859 [inline]
- get_page_from_freelist+0x21e4/0x22c0 mm/page_alloc.c:3858
- __alloc_frozen_pages_noprof+0x181/0x370 mm/page_alloc.c:5148
- alloc_pages_mpol+0x232/0x4a0 mm/mempolicy.c:2416
- ___kmalloc_large_node+0x5f/0x1b0 mm/slub.c:4317
- __kmalloc_large_node_noprof+0x18/0x90 mm/slub.c:4348
- __do_kmalloc_node mm/slub.c:4364 [inline]
- __kvmalloc_node_noprof+0x6d/0x5f0 mm/slub.c:5067
- alloc_netdev_mqs+0xa3/0x11b0 net/core/dev.c:11812
- tun_set_iff+0x532/0xef0 drivers/net/tun.c:2775
- __tun_chr_ioctl+0x788/0x1df0 drivers/net/tun.c:3085
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:598 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-page last free pid 18610 tgid 18608 stack trace:
- reset_page_owner include/linux/page_owner.h:25 [inline]
- free_pages_prepare mm/page_alloc.c:1395 [inline]
- __free_frozen_pages+0xbc4/0xd30 mm/page_alloc.c:2895
- free_large_kmalloc+0x13a/0x1f0 mm/slub.c:4820
- device_release+0x99/0x1c0 drivers/base/core.c:-1
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x22b/0x480 lib/kobject.c:737
- netdev_run_todo+0xd2e/0xea0 net/core/dev.c:11513
- rtnl_unlock net/core/rtnetlink.c:157 [inline]
- rtnl_net_unlock include/linux/rtnetlink.h:135 [inline]
- rtnl_dellink+0x537/0x710 net/core/rtnetlink.c:3563
- rtnetlink_rcv_msg+0x7cc/0xb70 net/core/rtnetlink.c:6946
- netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2552
- netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
- netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1346
- netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1896
- sock_sendmsg_nosec net/socket.c:714 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:729
- ____sys_sendmsg+0x505/0x830 net/socket.c:2614
- ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2668
- __sys_sendmsg net/socket.c:2700 [inline]
- __do_sys_sendmsg net/socket.c:2705 [inline]
- __se_sys_sendmsg net/socket.c:2703 [inline]
- __x64_sys_sendmsg+0x19b/0x260 net/socket.c:2703
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Memory state around the buggy address:
- ffff888036bac200: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888036bac280: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
->ffff888036bac300: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                                        ^
- ffff888036bac380: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888036bac400: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-
-Fixes: 0afff91c6f5e ("net/smc: add pnetid support")
-Fixes: 1619f770589a ("net/smc: add pnetid support for SMC-D and ISM")
-Reported-by: syzbot+ea28e9d85be2f327b6c6@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68c237c7.050a0220.3c6139.0036.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ba60f2793d3a ("wifi: ath11k: initialize hw_ops for IPQ5018")
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/TYZPR01MB5556D6E3F63EAB5129D11420C953A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_pnet.c | 43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ drivers/net/wireless/ath/ath11k/hw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
-index af12e02152740..adbccaa2f28a0 100644
---- a/net/smc/smc_pnet.c
-+++ b/net/smc/smc_pnet.c
-@@ -1127,37 +1127,38 @@ static void smc_pnet_find_ism_by_pnetid(struct net_device *ndev,
-  */
- void smc_pnet_find_roce_resource(struct sock *sk, struct smc_init_info *ini)
- {
--	struct dst_entry *dst = sk_dst_get(sk);
+diff --git a/drivers/net/wireless/ath/ath11k/hw.c b/drivers/net/wireless/ath/ath11k/hw.c
+index 6b4355a68e266..1e7009743c976 100644
+--- a/drivers/net/wireless/ath/ath11k/hw.c
++++ b/drivers/net/wireless/ath/ath11k/hw.c
+@@ -1175,7 +1175,7 @@ const struct ath11k_hw_ops ipq5018_ops = {
+ 	.mpdu_info_get_peerid = ath11k_hw_ipq8074_mpdu_info_get_peerid,
+ 	.rx_desc_mac_addr2_valid = ath11k_hw_ipq9074_rx_desc_mac_addr2_valid,
+ 	.rx_desc_mpdu_start_addr2 = ath11k_hw_ipq9074_rx_desc_mpdu_start_addr2,
 -
--	if (!dst)
--		goto out;
--	if (!dst->dev)
--		goto out_rel;
-+	struct net_device *dev;
-+	struct dst_entry *dst;
++	.get_ring_selector = ath11k_hw_ipq8074_get_tcl_ring_selector,
+ };
  
--	smc_pnet_find_roce_by_pnetid(dst->dev, ini);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	dev_hold(dev);
-+	rcu_read_unlock();
- 
--out_rel:
--	dst_release(dst);
--out:
--	return;
-+	if (dev) {
-+		smc_pnet_find_roce_by_pnetid(dev, ini);
-+		dev_put(dev);
-+	}
- }
- 
- void smc_pnet_find_ism_resource(struct sock *sk, struct smc_init_info *ini)
- {
--	struct dst_entry *dst = sk_dst_get(sk);
-+	struct net_device *dev;
-+	struct dst_entry *dst;
- 
- 	ini->ism_dev[0] = NULL;
--	if (!dst)
--		goto out;
--	if (!dst->dev)
--		goto out_rel;
- 
--	smc_pnet_find_ism_by_pnetid(dst->dev, ini);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	dev_hold(dev);
-+	rcu_read_unlock();
- 
--out_rel:
--	dst_release(dst);
--out:
--	return;
-+	if (dev) {
-+		smc_pnet_find_ism_by_pnetid(dev, ini);
-+		dev_put(dev);
-+	}
- }
- 
- /* Lookup and apply a pnet table entry to the given ib device.
+ #define ATH11K_TX_RING_MASK_0 BIT(0)
 -- 
 2.53.0
 
