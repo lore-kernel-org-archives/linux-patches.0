@@ -1,51 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F46A426408;
-	Mon, 31 Aug 2026 13:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3025D46EF98;
+	Mon, 31 Aug 2026 13:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183304; cv=none; b=t/V4Y8Bv7hYyeV28W2xKU0HoQOcXnL2aWMPsurfPO5ltEoPBJkDS/mwJ7EMt8hn0RPUo/ToApVlCP9+NEhUOWLJl3W+Ghp2+Fs8OBHdWa/eqCRletbwIjQPxoFXWEddx2poL1FQgJVPwKwxhuLJVtkmwtXcoTDEiXB5IpP6FMVw=
+	t=1788183306; cv=none; b=Mkqv4WSqARIznsR3PKxERmNQJb8VAPvEmOANeTtAXwmRDKGC+TZItb/YVL/0nbB+qPjw++hX/bLl+QO0uU7BliJr8BZL5PxL3YR8W0CVcygzKNvm8EZeddJjt0YWCPxmlahOARd0SSJxuHbM0qPfT8y6MZCsJpFyAI2GatY5AuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183304; c=relaxed/simple;
-	bh=bndRr2yih9ehv2BaHd34aIU21J9MIKGVS4Ua3gwTt1U=;
+	s=arc-20240116; t=1788183306; c=relaxed/simple;
+	bh=IIJJnT5rq24O4eQc43ogTdi47H7LtfQXMj6dsHdaS8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jQxnfLd0lOdtfM8scHKaczP8wMZxAYvFVFXce9QDfuPbyts7oianmIS2tcdiyGnPXYwghWZTAx2SON8+hqHWC1cmOMuPYFxgXDlu7LCYqN6Y0PasELF9PNkrroVRtt+Bo5Jag9mZa5c7T909k1wxa8dM8fHDXYz/8zLWOKE1QFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZIiwXdfn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dJGonHryyAOcDAHEohsMH53P7NkND6F4MYDZfYzPfvLar6FGtr95mzoca3b28/UGpo9P4BysbMHkY8sRB9vYAQ4jbJQg/hN6m5633ndybaoHae6YJqwxEjEBq/2q//AYZMfjs7rPQu65Tttoz7Qo++n5kO3K0Mi2Q1IlxpjV3KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3MsK+SC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZIiwXdfn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4754D1F00A3F;
-	Mon, 31 Aug 2026 13:35:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3MsK+SC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868421F000E9;
+	Mon, 31 Aug 2026 13:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183302;
-	bh=+rzxmqvMLiTzDYyaBHgsvbWHJ8M1I8wwtkBuvaPp0EA=;
+	s=k20260515; t=1788183303;
+	bh=0Pt20Ngb6iAONZKq2t2fx67wf1zvZDiz2qMZDURnkOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIiwXdfnJ3FQlD0c+xAVLwF3PThDPtTBlU+2MDAcppTUMJP+t+by+tS26cZGSCRGM
-	 g/fi6GySKPS8Jynb+yfc8W5WM0p6ODlA5o/AXVz44Z1l+Cgj1IWOR9akKdb/KxU5w8
-	 y9mbj6V+SWvITjUrR0OW8TLP0I88RppUt5h0xIrssAAw2Rc/DsYn0DYSkNA+oGhA64
-	 1nNIMjYf/drR2t40bSj4vUNaRvKdCcd9DO91SNE0K+EIr28OSxosbM/UPqECelVsOC
-	 sz4j4dGsfh+VtfJgaocGlXbdt74xXHAxp2PwCwZKK6kUEE+XRzZ7Ypous1B8RjAotW
-	 vOEq6X2R3FuXQ==
+	b=b3MsK+SC2yZ1ojLcAL5v8nqFq5d8ppS9KFe2C2Vckps6Jqey+s9Kg5zBUQlvT0NiU
+	 p4x8bX+BQ8Afo1uIA8tDH8tWG20GBGeP17JeBxaAH6LLjn6eaCdSU4xZPDnG6JsVr+
+	 DwfbPvwxxyv6IVws5ngq1JaUUd6Q56FDykTklrZ64bI5VHUFE1gZM1QBUF7OYbw8Jv
+	 YtuwUwRVRDix4MFiA0bh4vVqE4DwPAb0LsUYM4sEcubMzbA19ZWSmjbUQYpb0XXHWu
+	 bCq8bBkf4m1lLypQS3QOpAOcSOf6QKNdPFWCzgB+2FB8N+jDn+mwyh/eGSsXZuXmQ5
+	 W3cmRpHiO/Gng==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Samson Tam <Samson.Tam@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: =?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/display: Check for sharpening case when calculating max vtaps for scaler
-Date: Mon, 31 Aug 2026 09:21:35 -0400
-Message-ID: <20260831133314.4125787-67-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: usb-audio: Propagate write errors in generic mixer put callbacks
+Date: Mon, 31 Aug 2026 09:21:36 -0400
+Message-ID: <20260831133314.4125787-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,353 +48,451 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samson Tam <Samson.Tam@amd.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 4d8cfd570386eb0b6cb8aa0ca9e9db60a0404337 ]
+[ Upstream commit 87a6f2fa6e6c69bb649fa327635a0bd977724603 ]
 
-[Why & How]
-- calc_lb_num_partitions has check when scaler is not enabled to use
- larger LB in calculations for max vtaps based on viewport being 1:1
-- however, scaler is forced on when sharpening is enabled, so need
- to consider this in check
-- taps is predetermined in spl_get_optimal_number_of_taps prior to
- calc_lb_num_partitions.  Add check for taps not 1 to handle
- sharpening case
+mixer_ctl_feature_put(), mixer_ctl_procunit_put(), and
+mixer_ctl_selector_put() ignore failures from their SET_CUR helper
+routines and report the control as changed whenever the requested
+value differs from the current one.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Samson Tam <Samson.Tam@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+If the device rejects the write, userspace still sees success although
+the hardware state did not change. Propagate write failures instead,
+using filter_error() so ignore_ctl_error keeps the same semantics as
+the existing get paths.
+
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-1-5a3bd4a673ae@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: ALSA usb-audio generic mixer put error
+propagation
 
-**Step 1.1 — Subject line**
-Record: `[drm/amd/display]` `[Check]` — verify sharpening when computing
-max vertical taps for the DCN401 scaler line-buffer partition
-calculation.
+**Local tree:** Linux **6.18.43** (`git describe HEAD` → `v6.18.43`,
+Makefile `6.18.43`)
 
-**Step 1.2 — Tags**
-Record:
-- `Reviewed-by: Charlene Liu <charlene.liu@amd.com>`
-- `Signed-off-by: Samson Tam <Samson.Tam@amd.com>`
-- `Signed-off-by: Ray Wu <ray.wu@amd.com>`
-- `Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>`
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`
-- No `Fixes:`, `Reported-by:`, `Link:`, or `Cc: stable@vger.kernel.org`
-  (expected for manual review)
-- Notable: AMD internal review + `Tested-by` from AMD QA; no syzbot or
-  public bug report
-
-**Step 1.3 — Body analysis**
-Record:
-- **Bug:** `dscl401_spl_calc_lb_num_partitions()` treats a 1:1 viewport
-  as “scaler disabled” and uses an inflated line-buffer (LB) size for
-  max-vtap math, but sharpening forces the scaler on at 1:1.
-- **Symptom:** Overestimated max vertical taps → scaler programmed
-  beyond real LB capacity → display corruption/underflow risk on DCN401
-  with sharpening at native resolution.
-- **Root cause:** `spl_get_optimal_number_of_taps()` sets `taps > 1`
-  before calling `spl_calc_lb_num_partitions()`, but the LB-size branch
-  only checked viewport 1:1, not taps.
-- **Version info:** None in the message.
-
-**Step 1.4 — Hidden bug fix?**
-Record: Yes. Despite no “fix” in the subject, this is a hardware-
-programming correctness bug in the display scaler path, not a cleanup.
+**Upstream commit:** `87a6f2fa6e6c6` (exists in mainline; **not** yet in
+this 6.18.y tree)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
-Record:
-- 1 file: `drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c` (+6 /
-  −2)
-- Function: `dscl401_spl_calc_lb_num_partitions()`
-- Scope: single-file, surgical (two conditionals in two `lb_config`
-  branches)
+### Step 1.1: Subject line
+**Record:** `[ALSA: usb-audio]` `[Propagate]` — propagate SET_CUR write
+failures from generic mixer put callbacks to userspace.
 
-**Step 2.2 — Code flow change**
-Record:
-- **Before:** `viewport.width == h_active && viewport.height ==
-  v_active` → use enlarged LB constants (e.g. `970+1290+1170` vs
-  `970+1290+484`).
-- **After:** Same enlarged LB only when viewport is 1:1 **and** `h_taps
-  == 1 && v_taps == 1` (scaler truly off).
-- **Path:** `spl_get_optimal_number_of_taps()` →
-  `spl_calc_lb_num_partitions()` →
-  `dscl401_spl_calc_lb_num_partitions()` during mode/plane setup on
-  DCN401.
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Cássio Gabriel `<cassiogabrielcontato@gmail.com>`
+  (author)
+- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer)
+- **Link:** `https://patch.msgid.link/20260419-usb-write-error-
+  propagation-v1-1-5a3bd4a673ae@gmail.com` (patch series v1, part 1)
+- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or
+  Cc: stable in the upstream commit message
+- Notable pattern: this is **patch 1/3** of a write-error-propagation
+  series; parts 2 and 3 are already in this tree (see Phase 6)
 
-**Step 2.3 — Bug mechanism**
-Record: **Logic / hardware correctness fix.**
-When sharpening is enabled at 1:1, taps are already 6 (EASF path) before
-LB calculation, but the old code still assumed scaler-off and inflated
-LB size by ~25% (RGB) or ~55% (YUV420), inflating `num_part_y` and
-`max_taps_y`.
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `mixer_ctl_feature_put()`, `mixer_ctl_procunit_put()`, and
+  `mixer_ctl_selector_put()` call SET_CUR helpers but ignore their
+  return values. If the requested value differs from current, they
+  report success (`changed=1`) even when the USB write failed.
+- **Symptom:** Userspace (alsamixer, PipeWire, PulseAudio) believes a
+  mixer control was applied; hardware state is unchanged.
+- **Root cause:** Asymmetric error handling — get paths already use
+  `filter_error()` on read failures; put paths did not check write
+  failures.
+- **Version info:** None in message.
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct and minimal. Uses taps already set before the
-LB call as the scaler-enabled indicator. Low regression risk; only
-narrows the enlarged-LB fast path.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record: Buggy viewport-only check introduced in `70839da636050` (“Add
-new DCN401 sources”, 2024-04-26). Present in v6.18.44.
-
-**Step 3.2 — Fixes: tag**
-Record: N/A — no `Fixes:` tag.
-
-**Step 3.3 — Related file history**
-Record: DCN401 added in `70839da636050`; ISHARP for DCN401 in
-`2998bccfa4197` (2024-05-29). Related DCN401 corruption fix:
-`5d74be8c3a941` (YUV color corruption). Standalone one-commit fix.
-
-**Step 3.4 — Author context**
-Record: Samson Tam is an active AMD display contributor; same author as
-`5d74be8c3a941`.
-
-**Step 3.5 — Dependencies**
-Record: None. Only needs `scl_data->taps` fields already used in this
-tree. `git apply --check` on mainline commit `4d8cfd570386e` succeeds
-cleanly.
+### Step 1.4: Hidden bug fix?
+**Record:** No — this is an explicit correctness bug fix, not disguised
+cleanup. The commit message clearly describes incorrect success
+reporting on failed hardware writes.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c 4d8cfd570386e` found no lore.kernel.org match (likely
-direct AMD/DRM tree path). lore.kernel.org search blocked by Anubis.
+### Step 2.1: Inventory
+**Record:**
+- **File:** `sound/usb/mixer.c` only (+13 / -4 lines)
+- **Functions modified:** `mixer_ctl_feature_put()`,
+  `mixer_ctl_procunit_put()`, `mixer_ctl_selector_put()`
+- **Scope:** Single-file, surgical fix (3 call sites, 4 error-check
+  blocks)
 
-**Step 4.2 — Reviewers**
-Record: `b4 dig -w` also found nothing. Commit has `Reviewed-by`
-(Charlene Liu), `Tested-by` (Daniel Wheeler), and Alex Deucher as
-committer.
+### Step 2.2: Code flow per hunk
 
-**Step 4.3 — Bug report**
-Record: N/A — no `Reported-by:` or `Link:` tags.
+| Hunk | Before | After |
+|------|--------|-------|
+| `mixer_ctl_feature_put` (per-channel + master) |
+`snd_usb_set_cur_mix_value(...)` called, return ignored; `changed=1`
+always set | Capture `err`; on `err < 0`, `return filter_error(cval,
+err)`; only set `changed=1` on success |
+| `mixer_ctl_procunit_put` | `set_cur_ctl_value(...)` ignored; always
+`return 1` | Check `err`; propagate via `filter_error()` on failure |
+| `mixer_ctl_selector_put` | Same as procunit | Same fix |
 
-**Step 4.4 — Series context**
-Record: Standalone; not part of a multi-patch series.
+**Record:** Affects the normal userspace write path for generic USB
+Audio Class mixer controls (feature, processing/extension, selector
+units).
 
-**Step 4.5 — Stable list history**
-Record: Not searched successfully on lore (bot protection). No evidence
-of prior stable rejection.
+### Step 2.3: Bug mechanism
+**Record:** **Logic/correctness fix** — ignored error return from USB
+control URB path (`snd_usb_mixer_set_ctl_value()` can return `-EINVAL`,
+`-ETIMEDOUT`, `-EIO`). Put callbacks violated ALSA semantics by
+reporting change on failure.
 
----
+`filter_error()` preserves `ignore_ctl_error` quirk semantics matching
+get paths:
 
-## Phase 5: Code Semantic Analysis
+```129:130:sound/usb/mixer.c
+#define filter_error(cval, err) \
+        ((cval)->head.mixer->ignore_ctl_error ? 0 : (err))
+```
 
-**Step 5.1 — Key functions**
-Record: `dscl401_spl_calc_lb_num_partitions()`, called via SPL callbacks
-from `spl_get_optimal_number_of_taps()`.
+On write failure with `ignore_ctl_error`, returning 0 ("no change") is
+consistent — hardware did not change.
 
-**Step 5.2 — Callers**
-Record:
-- `spl_get_optimal_number_of_taps()` (dc_spl.c:1033)
-- `spl_calculate_number_of_taps()` → `spl_calculate_scaler_params()` —
-  display mode/plane configuration on DCN401
-
-**Step 5.3 — Callees**
-Record: Arithmetic on LB memory constants; sets `num_part_y` /
-`num_part_c` used to derive `max_taps_y` / `max_taps_c`.
-
-**Step 5.4 — Reachability**
-Record: Reachable on normal display use when DCN401 + adaptive
-sharpening (ISHARP) at 1:1 scaling. Userspace can enable sharpening via
-amdgpu display stack; not an obscure debug-only path.
-
-**Step 5.5 — Similar patterns**
-Record: `dscl32_spl_calc_lb_num_partitions()` has the same viewport-only
-check without taps check, but this commit targets DCN401 only.
-`dscl401_calc_lb_num_partitions()` (non-SPL) unchanged; SPL path is the
-sharpening path (`use_spl`).
-
----
-
-## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.**
-`drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c` lines 391–406
-lack the taps check. Fix commit `4d8cfd570386e` is **not** in this tree
-(`git merge-base --is-ancestor` fails).
-
-**Step 6.2 — Backport complications**
-Record: Clean apply verified (`git show 4d8cfd570386e | git apply
---check`). No conflicts expected.
-
-**Step 6.3 — Related fixes already present?**
-Record: No equivalent taps check. DCN401 and ISHARP support are both
-present.
+### Step 2.4: Fix quality
+**Record:**
+- **Obviously correct:** Mirrors existing get-path pattern and already-
+  backported sibling fixes in this tree.
+- **Minimal:** Only adds error checks; no structural changes.
+- **Regression risk:** Very low. Worst case: userspace now sees errors
+  it previously missed — intended behavior.
+  `snd_usb_set_cur_mix_value()` only updates cache on success (lines
+  528–532), so no new cache corruption.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 7.1 — Subsystem**
-Record: `drivers/gpu/drm/amd/display` — AMDGPU display (DCN401 DPP
-scaler). Criticality: **IMPORTANT** (display output for DCN401 hardware
-users).
+### Step 3.1: Blame
+**Record:** Buggy put-path code in `mixer_ctl_feature_put` dates to
+long-standing code in this tree (blame shows `19eef1d98eeda` as tip-of-
+history marker — bulk history import, not the bug introduction). The
+asymmetry (get checks errors, put does not) has been present since
+generic mixer support existed in this file.
 
-**Step 7.2 — Activity**
-Record: Actively maintained; multiple DCN401 fixes in this tree (NULL
-deref, color corruption, signal checks).
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag in commit message.
+
+### Step 3.3: Related file history
+**Record:** Same author recently landed a coordinated write-error fix
+series in this tree:
+- `bfd28b07541e5` — Scarlett enum put (series v1-2, **already in
+  6.18.43**)
+- `3061b6c114458` — US-16x08 put callbacks (series v1-3, **already in
+  6.18.43**)
+- `f3e8a6cca15b8` — quirk cache rollback on write errors (related
+  follow-up, **already in 6.18.43**)
+- `54c448e4f26a7`, `afc90150551dd` — further cache-shadow fixes after
+  successful writes
+
+**This commit (series v1-1) is the missing piece** of an already-
+partially-backported series.
+
+### Step 3.4: Author context
+**Record:** Cássio Gabriel is an active ALSA/usb-audio contributor with
+multiple stable backports already merged into this tree by Greg Kroah-
+Hartman. Takashi Iwai (maintainer) signed off.
+
+### Step 3.5: Dependencies
+**Record:** **Standalone.** No prerequisite commits. Uses existing
+`filter_error()` macro and existing SET_CUR helpers. `git apply --check`
+of upstream patch against current tree: **applies cleanly**.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 8.1 — Who is affected**
-Record: Users of DCN401-based AMD GPUs (discrete/APU) on 6.18.y with
-adaptive sharpening at native (1:1) resolution. Driver-specific, not
-universal.
+### Step 4.1: Original discussion
+**Record:** `b4 dig -c` could not be used (commit not in HEAD).
+Lore/patch.msgid.link fetch blocked by Anubis bot protection. Patch
+identified as **v1-1** of `usb-write-error-propagation` series from Link
+tag. Sibling patches v1-2/v1-3 were backported with explicit `Cc:
+stable@vger.kernel.org`.
 
-**Step 8.2 — Trigger conditions**
-Record: DCN401 + sharpening enabled + 1:1 viewport. Common for desktop
-use at native panel resolution with sharpening on. Unprivileged users
-can trigger via normal display configuration.
+### Step 4.2: Reviewers
+**Record:** UNVERIFIED for full thread. Verified: Takashi Iwai merged
+upstream; Greg K-H backported siblings to this tree.
 
-**Step 8.3 — Failure mode severity**
-Record: Incorrect max-vtap calculation → scaler programmed beyond LB
-capacity → **display corruption / underflow** (MEDIUM–HIGH for affected
-hardware; not a kernel oops, but user-visible and similar to accepted
-DCN401 corruption fixes).
+### Step 4.3: Bug report
+**Record:** No external bug report or syzbot link. Bug identified by
+code review / series author.
 
-**Step 8.4 — Risk/benefit**
-Record:
-- **Benefit:** MEDIUM–HIGH for DCN401 + sharpening users
-- **Risk:** VERY LOW (8-line logic fix, tested, reviewed)
-- **Ratio:** Favorable for backport
+### Step 4.4: Series context
+**Record:** 3-patch series from 2026-04-19:
+1. **v1-1** — generic mixer put (this commit) — **NOT in 6.18.43**
+2. **v1-2** — Scarlett — **IN 6.18.43**
+3. **v1-3** — US-16x08 — **IN 6.18.43**
+
+### Step 4.5: Stable list history
+**Record:** UNVERIFIED (lore blocked). Strong indirect evidence:
+siblings explicitly `Cc: stable` and merged by stable maintainer.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 9.1 — Evidence**
+### Step 5.1: Key functions
+**Record:** `mixer_ctl_feature_put`, `mixer_ctl_procunit_put`,
+`mixer_ctl_selector_put`
 
-*For backport:*
-- Real bug in v6.18.44 DCN401 SPL scaler LB calculation
-- Causes overestimated max vtaps when sharpening forces scaler at 1:1
-- Small, reviewed, tested, applies cleanly
-- Precedent: `5d74be8c3a941` (DCN401 display corruption) is already in
-  this tree
-- DCN401 + ISHARP both present since 2024
+### Step 5.2: Callers / registration
+**Record:** Registered as `.put` handlers in:
+- `usb_feature_unit_ctl` / `usb_feature_unit_ctl_ro` — used for standard
+  UAC feature-unit mixer controls on essentially all USB audio devices
+- `mixer_procunit_ctl` — processing/extension unit controls
+- `mixer_selectunit_ctl` — selector unit controls
 
-*Against backport:*
-- No public bug report or syzbot finding
-- Narrow hardware/feature scope (DCN401 + sharpening at 1:1)
-- Display corruption, not documented kernel crash
-- No lore discussion found
+Created via `snd_ctl_new1()` at lines ~1730, 2207, 2601, 2830 in
+`mixer.c`.
 
-*Unresolved:*
-- No public user reports found
-- Exact visual failure modes not documented in the commit message
+### Step 5.3: Callees
+**Record:**
+- `snd_usb_set_cur_mix_value()` → `snd_usb_mixer_set_ctl_value()` → USB
+  control URB (`snd_usb_ctl_msg`)
+- `set_cur_ctl_value()` → same URB path
+- `filter_error()` for quirk-aware error suppression
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — logic matches commit
-   explanation; `Tested-by` + `Reviewed-by`
-2. Fixes a real user-affecting bug? **PASS** — incorrect HW scaler
-   config on reachable path
-3. Important issue? **PASS** — display corruption on affected hardware
-   (same class as prior DCN401 stable fix)
-4. Small and contained? **PASS** — 8 lines, one function, one file
-5. No new features/APIs? **PASS** — correctness fix only
-6. Can apply to local tree? **PASS** — verified clean apply
+### Step 5.4: Reachability
+**Record:** Userspace → `SNDRV_CTL_IOCTL_ELEM_WRITE` → ALSA core →
+kcontrol `.put` callback. **Reachable by any unprivileged user** with
+access to the audio device. Triggered on every mixer
+volume/route/selector change for generic UAC controls. Very common path.
 
-**Step 9.3 — Exception category**
-Record: Hardware workaround / driver correctness fix for existing DCN401
-hardware support (not a new device ID).
+### Step 5.5: Similar patterns
+**Record:** Scarlett fix in this tree already does the same for
+`snd_usb_set_cur_mix_value()`:
 
-**Step 9.4 — Decision rationale**
-For **linux-6.18.y (v6.18.44)**: the buggy code exists, prerequisites
-(DCN401, ISHARP, SPL) are present, the fix is minimal and low-risk, and
-it prevents display corruption on a real use case (sharpening at native
-resolution). This matches the class of AMDGPU display corruption fixes
-already carried in this stable tree.
+```442:444:sound/usb/mixer_scarlett.c
+                err = snd_usb_set_cur_mix_value(elem, 0, 0, val);
+                if (err < 0)
+                        return err;
+```
+
+Generic paths were the omission.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.43)
+
+### Step 6.1: Buggy code present?
+**Record:** **YES.** All three functions in `sound/usb/mixer.c` ignore
+write return values at lines 1472, 1487, 2353, 2717. Bug is long-
+standing in this tree.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply** — `git apply --check` of upstream
+`87a6f2fa6e6c6` patch succeeded with no conflicts. Line numbers differ
+slightly from upstream (expected for stable tree) but hunks match.
+
+### Step 6.3: Related fixes already present?
+**Record:** Siblings v1-2 and v1-3 backported; **this generic fix is
+NOT**. Leaving it out creates inconsistent behavior: device-specific put
+callbacks report errors, generic ones still lie to userspace.
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **sound/usb** (ALSA USB audio driver) — **IMPORTANT**. USB
+audio is widely used on desktops, laptops, and pro-audio gear.
+
+### Step 7.2: Activity
+**Record:** Actively maintained; multiple usb-audio stable fixes landed
+recently in this tree (write-error series, UAF fixes, quirk updates).
+
+---
+
+## PHASE 8: IMPACT AND RISK
+
+### Step 8.1: Who is affected
+**Record:** All users of USB audio devices using standard UAC mixer
+controls (feature units, selector units, processing units) — a large
+fraction of USB sound cards, headsets, and DACs.
+
+### Step 8.2: Trigger conditions
+**Record:** Any mixer control write where the device rejects or fails
+the SET_CUR URB (device disconnect mid-write, USB STALL, timeout, power-
+management race, flaky firmware). Common during hot-unplug or device
+errors.
+
+### Step 8.3: Failure severity
+**Record:** Userspace reports success when hardware unchanged →
+volume/routing UI out of sync with actual audio path. **Severity:
+MEDIUM** (not kernel oops/UAF, but real functional incorrectness;
+qualifies as "oh, that's not good" per stable rules). No kernel crash or
+data corruption.
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** HIGH for correctness — fixes the broadest code path in
+  the series (generic mixer, all devices); completes an already-started
+  stable backport series.
+- **Risk:** VERY LOW — 13-line additive error checks, matches proven
+  pattern.
+- **Ratio:** Strongly favors backport.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Real bug: false success to userspace on failed hardware writes
+- Upstream commit `87a6f2fa6e6c6` exists in mainline (stable rule
+  satisfied)
+- Tiny, obviously correct, applies cleanly
+- Affects common userspace path for all generic USB mixer controls
+- Series parts 2 and 3 already backported to **this** 6.18.43 tree with
+  `Cc: stable`
+- ALSA maintainer (Iwai) signed off; stable maintainer (Greg K-H) merged
+  siblings
+- Completes incomplete backport of a coordinated fix series
+
+**AGAINST backport:**
+- Not a crash/security/data-corruption issue
+- No user bug report or fuzzer finding
+- Upstream commit lacks explicit `Cc: stable` (siblings have it)
+
+**Unresolved:**
+- Full lore review thread (blocked by bot protection)
+- No independent Tested-by
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — mirrors get-path and sibling
+   fixes; maintainer-reviewed
+2. Fixes real bug affecting users? **PASS** — userspace gets incorrect
+   success on write failure
+3. Important issue? **PASS (MEDIUM)** — functional correctness on
+   widely-used path; "oh, that's not good"
+4. Small and contained? **PASS** — 13 lines, one file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — clean apply verified
+
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
+
+### Step 9.4: Decision rationale
+
+This tree already backported two of three patches from the same April
+2026 write-error-propagation series. The generic mixer fix is the
+broadest of the three — it covers standard UAC controls used by nearly
+every USB audio device — yet it is the only one still missing. Leaving
+it out means Scarlett and US-16x08 users get correct error reporting
+while everyone else on generic mixer controls still gets silent write
+failures.
+
+The fix is minimal, upstream-merged, applies cleanly, and follows
+established patterns already present in this tree.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit `4d8cfd570386e` message and tags from `git
-  show`
-- [Phase 2] Read diff and current `dcn401_dpp.c` lines 357–428;
-  confirmed missing taps check
-- [Phase 2] Traced `spl_get_optimal_number_of_taps()` at
-  dc_spl.c:1006–1034 — taps set before LB calc
-- [Phase 2] Read sharpening logic at dc_spl.c:1121–1140 and
-  dml21_translation_helper.c:558–563
-- [Phase 3] `git blame` lines 390–416 → `70839da636050` (2024-04-26)
-- [Phase 3] `git log -S "use increased LB size..."` → introduced with
-  DCN401
-- [Phase 3] `2998bccfa4197` ISHARP support confirmed ancestor of HEAD
-- [Phase 3] `git show 4d8cfd570386e | git apply --check` → clean apply
-- [Phase 4] `b4 dig -c 4d8cfd570386e` → no lore match
-- [Phase 4] `b4 dig -c 4d8cfd570386e -w` and `-a` → no results
-- [Phase 4] lore.kernel.org WebFetch → blocked by Anubis
-- [Phase 5] Grep callers: `spl_get_optimal_number_of_taps` →
-  `spl_calculate_number_of_taps` → display setup
-- [Phase 6] `git describe HEAD` → v6.18.44
-- [Phase 6] `git merge-base --is-ancestor 4d8cfd570386e HEAD` → fix NOT
-  in tree
-- [Phase 6] Buggy viewport-only conditions confirmed at lines 391–392
-  and 405–406
-- [Phase 7] `git log --grep=dcn401` shows active DCN401 maintenance
-  including `5d74be8c3a941`
-- [Phase 8] Quantified LB overestimate: 3430 vs 2744 (RGB), 5770 vs 3712
-  (YUV420)
+- [Phase 1] Parsed subject, tags, body from provided commit message and
+  `git show 87a6f2fa6e6c6`
+- [Phase 2] Diff analysis: 3 functions, 4 error-check sites, +13/-4
+  lines in `sound/usb/mixer.c`
+- [Phase 2] Read `filter_error`, `snd_usb_set_cur_mix_value`,
+  `set_cur_ctl_value` — cache only updated on success
+- [Phase 3] `git blame` on lines 1470–1490: long-standing code
+- [Phase 3] Found upstream commit `87a6f2fa6e6c6` adjacent to siblings
+  `0f25cf1f02e3`, `3c06aec8abda6`
+- [Phase 3] Siblings `bfd28b07541e5`, `3061b6c114458` confirmed in
+  6.18.43 with `Cc: stable`
+- [Phase 3] `git merge-base --is-ancestor 87a6f2fa6e6c6 HEAD` → exit 1
+  (fix NOT in tree)
+- [Phase 3] `git apply --check` of upstream patch → applies cleanly
+- [Phase 4] UNVERIFIED: lore/patch.msgid.link blocked by Anubis; `b4 dig
+  -c` N/A (commit not in HEAD)
+- [Phase 4] Verified series structure via upstream commit ordering and
+  sibling Link URLs
+- [Phase 5] Grep: three `.put` handlers registered via `snd_ctl_new1`
+  for feature/procunit/selector units
+- [Phase 5] Read `scarlett_ctl_enum_put` — same error-propagation
+  pattern already backported
+- [Phase 6] `git describe HEAD` → v6.18.43; buggy code confirmed at
+  lines 1472, 1487, 2353, 2717
+- [Phase 6] No duplicate fix found in tree
+- [Phase 8] Failure mode: false success to userspace, severity MEDIUM
+- [Phase 8] Trigger: any failed SET_CUR on generic mixer controls,
+  reachable from userspace
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/usb/mixer.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
-index b62bbadb0d440..029f59a58c780 100644
---- a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
-+++ b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp.c
-@@ -389,9 +389,11 @@ void dscl401_spl_calc_lb_num_partitions(
- 		lb_memory_size_a = 1290;
- 	} else if (lb_config == LB_MEMORY_CONFIG_3) {
- 		if (scl_data->viewport.width  == scl_data->h_active &&
--			scl_data->viewport.height == scl_data->v_active) {
-+			scl_data->viewport.height == scl_data->v_active &&
-+			scl_data->taps.h_taps == 1 && scl_data->taps.v_taps == 1) {
- 			/* 420 mode: luma using all 3 mem from Y, plus 3rd mem from Cr and Cb */
- 			/* use increased LB size for calculation only if Scaler not enabled */
-+			/* Scaler is forced on when sharpening is on. Add check for taps = 1 */
- 			lb_memory_size = 970 + 1290 + 1170 + 1170 + 1170;
- 			lb_memory_size_c = 970 + 1290;
- 			lb_memory_size_a = 970 + 1290 + 1170;
-@@ -403,8 +405,10 @@ void dscl401_spl_calc_lb_num_partitions(
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 0765250f3a56d..871abd957c241 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1469,7 +1469,10 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 				return -EINVAL;
+ 			val = get_abs_value(cval, val);
+ 			if (oval != val) {
+-				snd_usb_set_cur_mix_value(cval, c + 1, cnt, val);
++				err = snd_usb_set_cur_mix_value(cval, c + 1,
++								cnt, val);
++				if (err < 0)
++					return filter_error(cval, err);
+ 				changed = 1;
+ 			}
+ 			cnt++;
+@@ -1484,7 +1487,9 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 			return -EINVAL;
+ 		val = get_abs_value(cval, val);
+ 		if (val != oval) {
+-			snd_usb_set_cur_mix_value(cval, 0, 0, val);
++			err = snd_usb_set_cur_mix_value(cval, 0, 0, val);
++			if (err < 0)
++				return filter_error(cval, err);
+ 			changed = 1;
  		}
- 	} else {
- 		if (scl_data->viewport.width  == scl_data->h_active &&
--			scl_data->viewport.height == scl_data->v_active) {
-+			scl_data->viewport.height == scl_data->v_active &&
-+			scl_data->taps.h_taps == 1 && scl_data->taps.v_taps == 1) {
- 			/* use increased LB size for calculation only if Scaler not enabled */
-+			/* Scaler is forced on when sharpening is on. Add check for taps = 1 */
- 			lb_memory_size = 970 + 1290 + 1170;
- 			lb_memory_size_c = 970 + 1290 + 1170;
- 			lb_memory_size_a = 970 + 1290 + 1170;
+ 	}
+@@ -2350,7 +2355,9 @@ static int mixer_ctl_procunit_put(struct snd_kcontrol *kcontrol,
+ 		return -EINVAL;
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+-		set_cur_ctl_value(cval, cval->control << 8, val);
++		err = set_cur_ctl_value(cval, cval->control << 8, val);
++		if (err < 0)
++			return filter_error(cval, err);
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -2714,7 +2721,9 @@ static int mixer_ctl_selector_put(struct snd_kcontrol *kcontrol,
+ 		return -EINVAL;
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+-		set_cur_ctl_value(cval, cval->control << 8, val);
++		err = set_cur_ctl_value(cval, cval->control << 8, val);
++		if (err < 0)
++			return filter_error(cval, err);
+ 		return 1;
+ 	}
+ 	return 0;
 -- 
 2.53.0
 
