@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D584B66F7;
-	Mon, 31 Aug 2026 13:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6BE5AEC42;
+	Mon, 31 Aug 2026 13:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184398; cv=none; b=IB4cU1F+rRdhYMS+1FXSqw4WEuGH8MEjnEkSPefUw1/FDn27RUMC1IgDT7JdclMvyv0d0xiTkFr+1AWzz9P3rt5xlwn0mO5Mh5/JNUW0VeJf/h2PWD96Q0c6+EF/1P8VY3e3RND1C03bViCg7EjUfIX5reHUTv53GcCiUcsRl4g=
+	t=1788184401; cv=none; b=COjEpB5vgnkEl/5Hht0TEzstWmGSjpx9SlsRZvnpIAEtJFVXGNfYme5otcLXWgmUVAhUmL7xrQdGYL6xiTnB1YIyV/gsoex7d6fCcDe4PlFkq1BJRrJIZfhW7FHaKaNbfhJrUc2JFYtBECYlOvt4K+mVv54l7dT7hDQN0GrkkBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184398; c=relaxed/simple;
-	bh=zV3qjFTXOM0UjiHALh7GcbEWtx8ePi0f4lx1SWaEDmg=;
+	s=arc-20240116; t=1788184401; c=relaxed/simple;
+	bh=v+DnHHf0wGbIEGF7k+cwqeu3ZCNTmCiNgTJB6HkLHf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a670rsB2yTaPOL65pqUrdF7+LsMm1XuZwdYcrJISwKhG1+EBSDgVOGMMVEK72JwSH8hIymeyzSE30NIj2/GQL0NnjrybZBa/CfXUXpA1AtyGlhLUIIjZ7Rdq/n4CTVvcjoAtAOc7UH7VhgB4Hs0LA6co8iapcMxjMdO74o86/4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0M3Czr4Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RhsiP+PEjNzxVTwzrRgKCDlWktaTZT2EnfdQLRm4GAqihSEpMwd3FX9dge7MnkO01ae5VYZgpDH5f2+XDBeE4Sqrfs4vCJJl8nNG/l6sQ1/nKtlqrmQhPR+FY5a6r+SbRcKS7HoD40nemj9OQZCc56Rc77Dv3yQRvhfNIQ95Isc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCNbyhSV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0M3Czr4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B85F1F000E9;
-	Mon, 31 Aug 2026 13:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCNbyhSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7991F000E9;
+	Mon, 31 Aug 2026 13:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184397;
-	bh=ZwXtZTArcLCRSGfIHZIhpikG4nazY+ZSw/MrmzDg9RU=;
+	s=korg; t=1788184400;
+	bh=S5MVaHUWvr9I2b0Gv/BZoFFc5EXwXYCnSENhe4/Z0uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0M3Czr4Zoif/93k84H01m7sA07LaHOie9pg639Ow6m4p73N8o+gBDN2QdNPLMT7rZ
-	 bIivz+fRgDMO/K05CIYyzURVBJS4U6bLUpGwDrmqaSGDaU/v9x3r1E5+QU4VzLrxNI
-	 fNwujDws4XC2keM94ngmdD2RIZ5Dev7OPra2oTIo=
+	b=rCNbyhSVyhmS/ZDxheEm4rmRBC1lncY7fWGdp6fIxQc/6ffQBHYNCV3GdWVachwMo
+	 KscgGZe17rrN5u50Mggq0mEUJLiLuwOn48Y1jQtWQNc4m+j6m3u2M5wUUG1ibMPM9x
+	 r8duVVWmfLvBbFuXpMjvZ0Dp0bIOMx1IttRNY+2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 6.12 92/99] usb: core: Strengthen error handling in hub_hub_status()
-Date: Mon, 31 Aug 2026 15:35:01 +0200
-Message-ID: <20260831133404.340742611@linuxfoundation.org>
+	Marouane El Moufid <eun0us@espilon.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 93/99] ALSA: usb-audio: fix OOB write in snd_usbmidi_novation_output()
+Date: Mon, 31 Aug 2026 15:35:02 +0200
+Message-ID: <20260831133404.377131039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
 References: <20260831133359.740409777@linuxfoundation.org>
@@ -49,45 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Marouane El Moufid <eun0us@espilon.net>
 
-commit a29496745aa335d97f617385809583241e118610 upstream.
+commit 1035a8f63bae28e498b0e7b5ac91d749844a7158 upstream.
 
-Add additional error handling after the call to get_hub_status() in
-hub_hub_status().
+snd_usbmidi_novation_output() lays out a two-byte header at
+transfer_buffer[0..1] and passes &transfer_buffer[2] together with a
+length of ep->max_transfer - 2 to snd_rawmidi_transmit():
 
-get_hub_status() uses usb_control_msg() which does not verify that the
-message is the correct length, substituting it for
-usb_control_msg_recv() would also solve this issue but increase memory
-allocations.
+	count = snd_rawmidi_transmit(ep->ports[0].substream,
+				     &transfer_buffer[2],
+				     ep->max_transfer - 2);
 
-Instead, error handling is copied from the method used in
-hub_ext_port_status(), which shares the same flow of logic as
-hub_hub_status().
+ep->max_transfer comes from the output endpoint's wMaxPacketSize via
+usb_maxpacket(). A malformed or malicious device can advertise a bulk
+OUT endpoint with a wMaxPacketSize of 1 - the USB core only clamps this
+value downwards - so ep->max_transfer becomes 1 and the count argument
+becomes -1.
 
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://patch.msgid.link/20260722-usb_core_patches_2-v3-1-87622252bfdd@kroah.com
+snd_rawmidi_transmit() passes the negative count on to
+__snd_rawmidi_transmit_peek(), where "if (count1 > count) count1 = count"
+leaves count1 negative; get_aligned_size() keeps it negative for a
+byte-stream substream, so the following memcpy(buffer, ..., count1) runs
+with a (size_t)-1 length and writes far past the transfer buffer, which
+was allocated with usb_alloc_coherent(ep->max_transfer).
+
+This is the same class of bug that was fixed for snd_usbmidi_akai_output()
+in commit 0970274613fb ("ALSA: usb-audio: fix OOB write in
+snd_usbmidi_akai_output()"); the novation output routine was left
+unguarded. Bail out when the endpoint cannot hold the two-byte header
+plus at least one payload byte.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Marouane El Moufid <eun0us@espilon.net>
+Link: https://patch.msgid.link/178749334830.543645.13722252148340572274@espilon.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/midi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -997,10 +997,12 @@ static int hub_hub_status(struct usb_hub
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -878,6 +878,8 @@ static void snd_usbmidi_novation_output(
  
- 	mutex_lock(&hub->status_mutex);
- 	ret = get_hub_status(hub->hdev, &hub->status->hub);
--	if (ret < 0) {
-+	if (ret < (int)sizeof(hub->status->hub)) {
- 		if (ret != -ENODEV)
- 			dev_err(hub->intfdev,
- 				"%s failed (err = %d)\n", __func__, ret);
-+		if (ret >= 0)
-+			ret = -EIO;
- 	} else {
- 		*status = le16_to_cpu(hub->status->hub.wHubStatus);
- 		*change = le16_to_cpu(hub->status->hub.wHubChange);
+ 	if (!ep->ports[0].active)
+ 		return;
++	if (ep->max_transfer < 3)
++		return;
+ 	transfer_buffer = urb->transfer_buffer;
+ 	count = snd_rawmidi_transmit(ep->ports[0].substream,
+ 				     &transfer_buffer[2],
 
 
