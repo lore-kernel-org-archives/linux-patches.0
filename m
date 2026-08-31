@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921E24A3D4A;
-	Mon, 31 Aug 2026 13:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E742850AC27;
+	Mon, 31 Aug 2026 13:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183762; cv=none; b=oN7rwICV+5kkU/jY24uaww3db//Kvp7yE3rmAvCaeITA3uVOwOimyYIB8U8lFdWNB7m6rAMhlKLhKEp4/m/tKTSrxaz5qGAjL0ZRQBJZwkAfexX4tn3Vek7QF4EAKFv8h5az+J56MFHGRCMzMwos8ygJ24dklte7QxNkb5U9j74=
+	t=1788183763; cv=none; b=Uiw0yO+DveHKWGXD8WY8iRy7HHQp4AuptNTLpKrO1JL3MYkzp950azFfiGcCtfbaudXra54JXDoZJfRtRQYjchrICeAN0k2tGwd93E7qBBk7JXaxrjHo+AIqDDHISCZ9VkjzNQPXcP3MqubPcTy/zprpxA88HcYQm/r3vj1Qau0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183762; c=relaxed/simple;
-	bh=3iGBA8GPAyEAcjrSEst6g140fbLvyvhiHxE/6wa8oXs=;
+	s=arc-20240116; t=1788183763; c=relaxed/simple;
+	bh=vzeNr51d31NGUYRp+WNAmgyOiDvaDwMpl+YzU6OB0zU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R1EcJzyE4tYjziFD8PK5bUamLjZxGLT4PMvJozoFvmphCgWytPps6Mhqjj90OcNMoPIb/2OQrQ+K9JNt+94cUUD6BJOR79TYT4YeEYpim670NWo38ExQLL6ptd8aBOB1MFNsqRcw6gr8UYieMy/pqsRtDTnPsun6YMAj0RZw1iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lvaoBYoc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VBQYAOGDoZ2EetPkIgY4UmP29fBDNFpjNVzoEV3TL/ntd+G40JYT3ShfhweNoPbb79mZI0yXffgMybnulqQQ7EfpdKYbHz+x1iFMCFk20KOXN+yysyjvHxsHT8pYXzfROCUFWYwExjlakmBGmWVIQJqMqCwKYxmDXlP5HdBFEy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FQAdzTjM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lvaoBYoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB501F000E9;
-	Mon, 31 Aug 2026 13:42:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FQAdzTjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AD41F00A3E;
+	Mon, 31 Aug 2026 13:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183759;
-	bh=zz/5QezpqgGOOoE/n7i7SwncuG4gpF25aapWSTCVBqw=;
+	s=k20260515; t=1788183760;
+	bh=0OIU93BJMp8r0dcMIgJaZttBr6h0amJH1O2NySn/5CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lvaoBYocZlNbT1XB7fjauyiqWRS0RGGC8kGI1YDn31up3AlbXN5v237o/sVfeB/8t
-	 2Uuf5uXpsfMJOCrFmKdxcQ1lkMODIpvefO1Ht8Glqb8rkdu9JeR23YPgpTqKQp01Fs
-	 1hyTHuUUuUfzWHPJsPwLS4nFcFWlK/E4ozsu+MJvTdFti64JOBP+bv31zXhy9j6KML
-	 7NLfo/Pps/MhKBxSA+SFM5SQ1wzPpnvI5qNGoChrm+p/Em/KlFIxedTy4XGRHPhdYs
-	 Zjg/3zRa5ZBOm02Cc57R1OnJVfIVPJ9y4TDk9JReIx/zl7mSWbvhoZvFY2FGvdOuP/
-	 dbBkTC7X3p/Rw==
+	b=FQAdzTjMLvMo70e1IrwTTJE/oiijklF/5x5BTnAU08g9m36zsxJol3VJRXKSMtxfY
+	 4qRI9ujQC5JkNlbTGTg8h5VXDYyklZTYhLBW65V1JYrJY905KdvAMZoECHMcFcrSlZ
+	 39LxCb6FKjC0umfm8ZkcB6sQ1g6iP2tZdO+uzhrj49mbaWLw8HfIa3Y6KVwrsHTAkc
+	 55wUJ7wJsS1VxrqknhllDzgeGRqBOp0MYMojwIbLuIUrvTCDOIJk79HjpvmALMrem/
+	 yuxQO04mefs1bxpQSZu0wwdlrgpj5t9AjaIyX5YZd+Xxwkj+x6aHOTnI51AWhnEMFZ
+	 NZPBwMltNCJ6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-hwmon@vger.kernel.org,
+	shaggy@kernel.org,
+	jfs-discussion@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] hwmon: (corsair-psu) Fix linear11 calculation
-Date: Mon, 31 Aug 2026 09:25:15 -0400
-Message-ID: <20260831133314.4125787-287-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] jfs: handle set_blocksize failures
+Date: Mon, 31 Aug 2026 09:25:16 -0400
+Message-ID: <20260831133314.4125787-288-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,500 +53,374 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c6c4234928d2eb4f61fecb61067e612d9bdbd2ff ]
+[ Upstream commit 05107f5602751fcfd3d108c1f579eb45aabead52 ]
 
-In corsairpsu_linear11_to_int(), the mantissa is extracted using bitwise
-operations and cast to s16 before being shifted left:
+jfs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting we will hit the
 
-static int corsairpsu_linear11_to_int(const u16 val, const int scale)
-{
-    ...
-    const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
-    ...
-}
+        BUG_ON(offset >= folio_size(folio));
 
-Due to C integer promotion rules, the masked value (which is always
-positive) is promoted to a 32-bit integer before the left shift. As a
-result, the sign bit is never extended to bit 31 of the promoted integer.
+in folio_set_bh on the first __bread_gfp call.
 
-When the device hardware reports a negative temperature in Linear11 format
-(such as an ambient temperature probe reporting sub-zero), the negative
-mantissa is parsed incorrectly as a massive positive value. For example,
--1 becomes 2047, which scales to 2047 degrees Celsius.
-
-Fix the problem by type casting the result of the left shift operation
-to s16.
-
-Another problem is left-shifting of negative values. In C, the result of
-left-shifting negative values is undefined. Use a multiplication instead
-to avoid the problem.
-
-Also use a local s64 variable to store temporary results, change
-the return value type from int to long, and clamp the final value
-to LONG_MIN and LONG_MAX to avoid under- and overflow issues while
-retaining as much information as possible.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Cc: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/20260804034811.2385506-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-5-hch@lst.de
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `hwmon: (corsair-psu) Fix linear11
-calculation`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (linux-6.18.y, `VERSION = 6`, `PATCHLEVEL =
-18`, `SUBLEVEL = 44`)
-**Upstream fix commit:** `c6c4234928d2e` (on `master`, not yet in this
-tree)
+**Step 1.1 — Subject line**
 
----
+Record: `[jfs]` `[handle]` — Handle `sb_set_blocksize()` failures during
+JFS mount.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.2 — Tags**
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[hwmon: (corsair-psu)] [fix] [correct LINEAR11 mantissa
-sign-extension and exponent handling in sensor value conversion]`
+Record:
+- **Signed-off-by:** Christoph Hellwig `<hch@lst.de>` (author)
+- **Signed-off-by:** Christian Brauner (Amutable) `<brauner@kernel.org>`
+  (merger)
+- **Link:** https://patch.msgid.link/20260511071701.2456211-5-hch@lst.de
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc: stable
+- Part of series **"[PATCH 04/10] jfs: handle set_blocksize failures"**
+  in *"fix crashes when mounting legacy file system with sector size >
+  PAGE_SIZE"*
 
-### Step 1.2: Parse All Commit Message Tags
-**Record:**
-| Tag | Value |
-|-----|-------|
-| Reported-by | Sashiko \<sashiko-bot@kernel.org\> (AI code review bot,
-not a user crash report) |
-| Cc | Wilken Gottwalt \<wilken.gottwalt@posteo.net\> (driver author) |
-| Signed-off-by | Guenter Roeck \<linux@roeck-us.net\> (hwmon subsystem
-maintainer) |
-| Tested-by | Wilken Gottwalt \<wilken.gottwalt@posteo.net\> |
-| Link | https://lore.kernel.org/r/20260804034811.2385506-1-linux@roeck-
-us.net |
-| Fixes: | **Absent** (expected for manual review) |
-| Cc: stable | **Absent** (expected) |
+**Step 1.3 — Body analysis**
 
-**Notable patterns:** Maintainer-authored fix with hardware-expert
-Tested-by. Reported-by is an automated AI reviewer, not syzbot or a user
-bug report.
+Record:
+- **Bug:** JFS ignores `sb_set_blocksize(sb, PSIZE)` failure and
+  continues mounting.
+- **Symptom:** Kernel `BUG_ON(offset >= folio_size(folio))` in
+  `folio_set_bh()` on the first `__bread_gfp()` call during mount.
+- **Root cause:** JFS uses buffer_heads, which do not handle block sizes
+  > `PAGE_SIZE`. When `sb_set_blocksize()` fails (e.g. device logical
+  block size is 64K and JFS tries to set 4K), `sb->s_blocksize` stays at
+  the device size from `setup_bdev_super()`. Mount proceeds and buffer
+  allocation crashes.
+- **Trigger context (cover letter):** Mount/probe on a 64K-sector loop
+  device with JFS built-in.
 
-### Step 1.3: Analyze Commit Body
-**Record:**
-- **Bug description:** `corsairpsu_linear11_to_int()` incorrectly
-  extracts the signed 11-bit LINEAR11 mantissa. Casting `(val & 0x7ff)`
-  to `s16` before left-shift fails because the masked value is always
-  non-negative and gets promoted to a 32-bit int without sign extension.
-- **Symptom:** Negative temperatures (e.g., sub-zero ambient probe)
-  parse as huge positive values. Example: -1°C → 2047°C.
-- **Secondary issues:** Left-shifting negative values is undefined
-  behavior in C; exponent scaling can overflow `int`.
-- **Root cause:** Integer promotion rules + incorrect cast order in
-  mantissa extraction (introduced in 2021 refactor).
-- **Version info:** None explicit; bug has existed since Feb 2021.
+**Step 1.4 — Hidden bug fix?**
 
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not disguised — explicitly labeled and described as a fix.
-The overflow/clamp and UB avoidance are genuine correctness improvements
-bundled with the sign-extension fix.
+Record: **Yes.** Despite the neutral "handle" wording, this is a real
+crash fix, not cleanup. Same pattern as ext4, UFS, minix, etc.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory the Changes
-**Record:**
-- **File:** `drivers/hwmon/corsair-psu.c` — +14 / -9 lines (23 lines
-  total with context)
-- **Functions modified:** `corsairpsu_linear11_to_int()` → renamed
-  `corsairpsu_linear11_to_long()`; call sites in
-  `corsairpsu_get_value()`
-- **Scope:** Single-file surgical fix
+**Step 2.1 — Inventory**
 
-### Step 2.2: Code Flow Change (per hunk)
+Record:
+- **File:** `fs/jfs/super.c` (+2 / −1)
+- **Function:** `jfs_fill_super()`
+- **Scope:** Single-file, surgical (3-line hunk)
 
-**Hunk 1 — `corsairpsu_linear11_to_long()`:**
-- **Before:** Mantissa `(((s16)(val & 0x7ff)) << 5) >> 5` — sign never
-  propagated for negative mantissas; exponent applied via bit-shift on
-  `int`; returns `int`.
-- **After:** Mantissa `((s16)((val & 0x7ff) << 5)) >> 5` — sign
-  extension works; exponent via multiplication/division on `s64`; result
-  clamped to `LONG_MIN`/`LONG_MAX`; returns `long`.
+**Step 2.2 — Code flow change**
 
-**Hunk 2 — `corsairpsu_get_value()` call sites:**
-- **Before:** Calls `corsairpsu_linear11_to_int()` for temps, fan, PWM,
-  watts.
-- **After:** Calls `corsairpsu_linear11_to_long()` — same call paths,
-  corrected return type.
+Record:
+- **Before:** `sb_set_blocksize(sb, PSIZE);` — return value ignored;
+  mount continues on failure.
+- **After:** `if (!sb_set_blocksize(sb, PSIZE)) goto out_unload;` —
+  failed blocksize setup aborts mount via existing cleanup path.
+- **Path affected:** Mount initialization, before `jfs_mount()` →
+  `readSuper()` → `sb_bread()`.
 
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Logic/correctness fix (type promotion bug) +
-  initialization/overflow hardening
-- **Mechanism:** For LINEAR11 value `0xFFFF` (mantissa -1): `val &
-  0x7ff` = `0x7FF` (2047). Old code: `(s16)2047 << 5 >> 5` = 2047. Fixed
-  code: `(s16)(2047 << 5) >> 5` = `(s16)0xFFE0 >> 5` = -1. Affects all
-  LINEAR11 conversions; primary real-world impact is temperature sysfs
-  readings at sub-zero ambient.
+**Step 2.3 — Bug mechanism**
 
-### Step 2.4: Fix Quality Assessment
-**Record:**
-- Fix is obviously correct by inspection; matches standard LINEAR11
-  sign-extension pattern.
-- Minimal, self-contained; no API changes visible to userspace (still
-  `long` hwmon values).
-- **Regression risk:** Very low. Positive values unchanged; only
-  negative mantissa paths and overflow edge cases differ.
+Record: **Logic / error-path fix.** Category: missing error handling
+leading to **kernel BUG**.
+- `sb_set_blocksize()` returns 0 on failure (`block/bdev.c:220-229`).
+- On failure, `sb->s_blocksize` is not updated to `PSIZE` (4096).
+- `sb_bread()` uses `sb->s_blocksize`
+  (`include/linux/buffer_head.h:346`).
+- Buffer allocation reaches `folio_set_bh()` with invalid offset vs
+  folio size → `BUG_ON` (`fs/buffer.c:1582`).
+
+**Step 2.4 — Fix quality**
+
+Record: **Obviously correct.** Matches ext4/ufs/minix pattern. Minimal
+risk; `out_unload` already exists and returns `ret = -EINVAL`. No new
+locks or APIs.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame the Changed Lines
-**Record:**
-- Buggy mantissa line introduced by **918f22104d64d** (Wilken Gottwalt,
-  2021-02-27): `hwmon: (corsair-psu) Update calculation of LINEAR11
-  values`
-- Function shell from **d115b51e0e5671** (2020-10-27): original driver
-  introduction
-- Bug present since kernel ~5.12 era; definitely present in this 6.18.y
-  tree
+**Step 3.1 — Blame**
 
-### Step 3.2: Follow Fixes: Tag
-**Record:** No `Fixes:` tag present. Bug introduced by 918f22104d64d,
-which is an ancestor of HEAD — confirmed with `git merge-base --is-
-ancestor`.
+Record: Unchecked `sb_set_blocksize(sb, PSIZE)` dates to initial JFS
+import (`1da177e4c3f4`, 2005). Bug has been present for the lifetime of
+JFS in-tree.
 
-### Step 3.3: File History for Related Changes
-**Record:** Recent corsair-psu changes in this tree include UAF fix
-(`ec477af3a7e8d`), probe error handling, device ID additions. On master
-after v6.18.44: additional corsair-psu fixes (debugfs serialization,
-string termination, this linear11 fix). **Standalone** — no series
-dependency.
+**Step 3.2 — Fixes: tag**
 
-### Step 3.4: Author's Other Commits
-**Record:** Guenter Roeck is hwmon subsystem maintainer. Wilken Gottwalt
-is the primary corsair-psu driver author (multiple commits in this
-file). High subsystem expertise.
+Record: N/A — no Fixes: tag.
 
-### Step 3.5: Prerequisites
-**Record:** No dependencies. Patch applies cleanly to current tree (`git
-apply --check` → `APPLIES_CLEANLY`). Fix commit `c6c4234928d2e` is NOT
-an ancestor of HEAD (`fix_NOT_in_tree`).
+**Step 3.3 — Related file history**
+
+Record: Recent `fs/jfs/super.c` changes are mount-API and cleanup only;
+none address this. Mainline merge `d90e60ced4c3c` ("fix crashes when
+mounting legacy file system with sector size > PAGE_SIZE") contains this
+fix but is **not** an ancestor of this tree's HEAD.
+
+**Step 3.4 — Author context**
+
+Record: Christoph Hellwig — senior VFS/filesystem developer. Series
+merged by VFS maintainer Christian Brauner. Jan Kara reviewed sibling
+patches in the series.
+
+**Step 3.5 — Dependencies**
+
+Record: **Standalone.** Patch 4/10 is independent per filesystem. No
+prerequisite commits required for the JFS hunk. Applies cleanly to
+current `fs/jfs/super.c` at line 494.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original Patch Discussion
-**Record:**
-- **URL:**
-  https://patch.msgid.link/20260804034811.2385506-1-linux@roeck-us.net
-- **Series:** v1 (RESEND, 2026-08-03) → v2 (2026-08-03, applied
-  version). v2 change: "Skip handling right-shift of negative values"
-- **Reviewer feedback:** Sashiko AI bot: "found no issues." Wilken
-  Gottwalt: "Don't see any anomalies," gave Tested-by; noted he cannot
-  simulate negative temps but PSU operating range is 0–50°C.
-- **Stable nominations:** None found in thread.
-- **NAKs:** None.
+**Step 4.1 — Original discussion**
 
-### Step 4.2: Who Reviewed
-**Record:** CC'd to `linux-hwmon@vger.kernel.org`, Sashiko bot, Wilken
-Gottwalt (driver author). Maintainer self-submitted.
+Record: Series cover at https://ratatoskr.run/linux-
+fsdevel/2026/05/8994157. JFS patch at https://ratatoskr.run/linux-
+fsdevel/2026/05/8994161 / spinics msg338004. `b4 dig -c` could not be
+used (commit not in this tree). lore.kernel.org blocked by bot
+protection.
 
-### Step 4.3: Bug Report
-**Record:** No user bug report, syzbot, or KASAN report. Found via code
-review (Sashiko AI). Concrete failure example provided in commit message
-(-1 → 2047°C).
+**Step 4.2 — Reviewers**
 
-### Step 4.4: Related Patches
-**Record:** Standalone 1-patch series. No other patches required.
+Record: Christian Brauner merged the series. Jan Kara reviewed
+minix/isofs/bfs patches. David Sterba reviewed affs. No NAKs found.
 
-### Step 4.5: Stable Mailing List History
-**Record:** Not searched separately; no stable nomination in the patch
-thread.
+**Step 4.3 — Bug report**
 
----
+Record: Author-reproduced crash during FS probe on 64K loop device. No
+syzbot report. Real, reproducible trigger described in cover letter.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.4 — Series context**
 
-### Step 5.1: Key Functions
-**Record:** `corsairpsu_linear11_to_long()` (was `_to_int`), called from
-`corsairpsu_get_value()`.
+Record: 10-patch series, one filesystem each. JFS patch is self-
+contained; other patches not required for this fix.
 
-### Step 5.2: Trace Callers
-**Record:** `corsairpsu_get_value()` called from:
-- `corsairpsu_get_criticals()` — critical threshold reads at probe
-- `corsairpsu_hwmon_temp_read()` — **TEMP0/TEMP1** (primary bug impact)
-- `corsairpsu_hwmon_fan_read()`, `corsairpsu_hwmon_power_read()`,
-  `corsairpsu_hwmon_in_read()`, `corsairpsu_hwmon_curr_read()`
-- debugfs read paths
+**Step 4.5 — Stable list**
 
-All ultimately reachable from userspace via sysfs hwmon reads
-(`corsairpsu_hwmon_ops_read`).
-
-### Step 5.3: Key Callees
-**Record:** `corsairpsu_request()` (USB HID I/O), `clamp()` macro. No
-locking changes.
-
-### Step 5.4: Call Chain / Reachability
-**Record:** Userspace reads `/sys/class/hwmon/hwmonN/tempN_input` →
-`corsairpsu_hwmon_ops_read()` → `corsairpsu_hwmon_temp_read()` →
-`corsairpsu_get_value()` → `corsairpsu_linear11_to_long()`. **Reachable
-from userspace** on systems with `CONFIG_SENSORS_CORSAIR_PSU` enabled
-and a supported Corsair PSU connected.
-
-### Step 5.5: Similar Patterns
-**Record:** Other hwmon drivers in this tree have had LINEAR11 fixes
-backported (e.g., `pmbus/fsp-3y` non-compliant linear11 vout encoding).
-Same class of sensor-parsing correctness bug.
+Record: No stable-list discussion found. Not a negative signal per
+instructions.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Does Buggy Code Exist?
-**Record:** **YES.** Current tree at lines 143–149 has the exact buggy
-code:
+**Step 5.1 — Key functions**
 
-```143:149:drivers/hwmon/corsair-psu.c
-static int corsairpsu_linear11_to_int(const u16 val, const int scale)
-{
-        const int exp = ((s16)val) >> 11;
-        const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
-        const int result = mant * scale;
+Record: `jfs_fill_super()`, `sb_set_blocksize()`, `jfs_mount()` →
+`readSuper()` → `sb_bread()` → `__bread_gfp()` → `bdev_getblk()` →
+`grow_buffers()` → `folio_alloc_buffers()` → `folio_set_bh()`.
 
-        return (exp >= 0) ? (result << exp) : (result >> -exp);
-```
+**Step 5.2 — Callers**
 
-Driver present since driver intro commit `d115b51e0e5671`; buggy
-mantissa since `918f22104d64d`.
+Record: `jfs_fill_super()` called from `get_tree_bdev()`
+(`fs/jfs/super.c:635`) during `mount(2)` or filesystem probe. Reachable
+from userspace.
 
-### Step 6.2: Backport Complications
-**Record:** **Clean apply** — verified with `git apply --check`. No
-conflicting changes in the affected region.
+**Step 5.3 — Callees**
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** Other corsair-psu fixes are present (UAF fix
-`ec477af3a7e8d`, probe fixes), but this linear11 fix is **not** yet in
-v6.18.44.
+Record: `sb_set_blocksize()` → `set_blocksize()` →
+`bdev_validate_blocksize()`. Fails when requested size < device logical
+block size.
 
----
+**Step 5.4 — Call chain / reachability**
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Record: `mount`/`fsopen` → `jfs_get_tree` → `get_tree_bdev` →
+`setup_bdev_super` (sets device blocksize) → `jfs_fill_super` →
+`jfs_mount` → `sb_bread`. **Userspace-reachable** when `CONFIG_JFS_FS`
+is enabled (built-in or module).
 
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/hwmon/` — **PERIPHERAL** (optional tristate module
-`CONFIG_SENSORS_CORSAIR_PSU`, Corsair PSU HID hardware only).
+**Step 5.5 — Similar patterns**
 
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained. Recent 6.18.y stable queue includes
-multiple hwmon sensor-correctness and crash fixes (adt7470, ina2xx,
-ltc4282, sht3x).
+Record: ext4 (`fs/ext4/super.c:5128`), ufs (`fs/ufs/super.c:927`),
+minix, romfs, ocfs2, f2fs all check `sb_set_blocksize()` return value.
+JFS was an outlier.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
 
-### Step 8.1: Who Is Affected
-**Record:** **Driver-specific** — users with supported Corsair PSUs
-(RM/HX series with HID interface) who have `CONFIG_SENSORS_CORSAIR_PSU`
-built-in or loaded as module.
+**Step 6.1 — Buggy code present?**
 
-### Step 8.2: Trigger Conditions
-**Record:** PSU firmware reports a negative LINEAR11 mantissa, most
-plausibly on temperature sensors in sub-zero ambient conditions.
-Unprivileged users can trigger sysfs reads but cannot inject the
-hardware value. **Uncommon** but realistic in cold environments; driver
-author notes PSU spec is 0–50°C continuous.
+Record: **Yes.** Current tree at `fs/jfs/super.c:494` has unchecked
+`sb_set_blocksize(sb, PSIZE);`. `folio_set_bh()` BUG_ON present since
+`465e5e6a1698f` (in this tree). `sb_set_blocksize()` failure semantics
+unchanged in `block/bdev.c:220-229`.
 
-### Step 8.3: Failure Mode Severity
-**Record:**
-- **Failure mode:** Incorrect sysfs sensor readings (e.g., 2047°C
-  instead of -1°C); could cause false monitoring alerts or fan-control
-  script misfires if tied to PSU temps.
-- **NOT:** kernel crash, oops, hang, deadlock, data corruption, or
-  security issue.
-- **Severity: MEDIUM** — real user-visible incorrect data, but no kernel
-  instability.
+**Step 6.2 — Backport complications**
 
-### Step 8.4: Risk-Benefit Ratio
-**Record:**
-- **Benefit:** Correct temperature/voltage/power readings for affected
-  hardware; eliminates absurd 2047°C values.
-- **Risk:** Very low — 23-line change, maintainer-authored, tested,
-  clean apply.
-- **Ratio:** Moderate benefit, very low risk. Appropriate for 6.18.y
-  where the driver and bug both exist.
+Record: **Clean apply expected.** Only the 3-line hunk at line 494; no
+conflicts with recent stable changes in this file.
+
+**Step 6.3 — Related fixes already present?**
+
+Record: **No.** `git merge-base --is-ancestor d90e60ced4c3c HEAD` → not
+ancestor. Sibling fixes in hpfs/bfs also absent. Fix not yet in 6.18.y.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 9.1: Evidence Summary
+**Step 7.1 — Subsystem**
 
-**FOR backport:**
-- Real, reproducible parsing bug with concrete example (-1 → 2047°C)
-- Bug present in this tree since 2021
-- Fix from hwmon maintainer (Guenter Roeck), Tested-by from driver
-  author
-- Small (23 lines), single file, applies cleanly
-- Precedent: similar hwmon sensor-reading correctness fixes already in
-  6.18.y stable queue
-- Fixes undefined behavior (left-shift of negative values)
+Record: **fs/jfs** — legacy filesystem driver. Criticality:
+**IMPORTANT** (not core VFS, but mount path can kernel-BUG the system).
 
-**AGAINST backport:**
-- Niche optional driver; small user population
-- No crash/corruption/security impact
-- Trigger requires sub-zero ambient (edge case per driver author)
-- Reported-by is AI review bot, not a user bug report
-- Does not meet the strongest stable signals (oops, UAF, syzbot)
+**Step 7.2 — Activity**
 
-**Unresolved:** No independent user reports of the 2047°C symptom found.
+Record: Low churn; mature driver. Bug is long-standing, exposed when
+large-sector devices are probed.
 
-### Step 9.2: Stable Rules Checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — clear C promotion fix;
-Tested-by from driver author |
-| 2. Fixes a real bug affecting users? | **PASS** — wrong sysfs sensor
-values for Corsair PSU users |
-| 3. Important issue? | **PASS (borderline)** — "oh, that's not good"
-per stable-kernel-rules.rst; not crash-level but clearly wrong
-monitoring data |
-| 4. Small and contained? | **PASS** — 23 lines, 1 file |
-| 5. No new features/APIs? | **PASS** — bug fix only |
-| 6. Can apply to local tree? | **PASS** — verified clean apply |
+---
 
-### Step 9.3: Exception Categories
-**Record:** None (not device ID, quirk, DT, build fix, or docs fix).
-Qualifies as a hardware-monitoring correctness bug fix.
+## Phase 8: Impact and Risk Assessment
 
-### Step 9.4: Decision Rationale
+**Step 8.1 — Who is affected**
 
-For **linux-6.18.y at v6.18.44**: the corsair-psu driver and the buggy
-LINEAR11 code are both present. The fix is maintainer-quality, tested,
-minimal, and applies cleanly. While the impact is limited to a niche
-driver and cold-ambient edge cases (wrong sysfs readings, not kernel
-crashes), stable-kernel-rules explicitly include fixes for real bugs
-that bother users and "oh, that's not good" issues. This tree already
-backports similar hwmon sensor-correctness fixes. The risk of regression
-is negligible.
+Record: Users with `CONFIG_JFS_FS` enabled (built-in or module) mounting
+or probing JFS on block devices whose logical sector size prevents
+setting 4K (e.g. 64K sectors).
+
+**Step 8.2 — Trigger conditions**
+
+Record: Mount or auto-probe of JFS on device with sector size >
+`PAGE_SIZE` or where `sb_set_blocksize(4096)` fails. Unprivileged users
+can trigger via `mount` if permitted, or during blkid/probe workflows.
+Not extremely common hardware, but loop devices and some storage make it
+realistic.
+
+**Step 8.3 — Failure mode severity**
+
+Record: **Kernel BUG()** — system crash/oops. Severity: **CRITICAL**.
+
+**Step 8.4 — Risk vs benefit**
+
+Record:
+- **Benefit:** HIGH — prevents kernel crash; graceful mount failure with
+  `-EINVAL`.
+- **Risk:** VERY LOW — 2 lines, established pattern, existing cleanup
+  path.
+- **Ratio:** Strongly favors backport.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Evidence FOR:**
+- Real, author-verified kernel BUG on mount/probe
+- Long-standing bug in widely shipped legacy FS
+- Surgical 2-line fix, obviously correct
+- Matches pattern already used by ext4, ufs, etc. in this tree
+- Merged to mainline by VFS maintainer
+- Buggy code confirmed present in v6.18.44
+- Clean apply, no dependencies
+
+**Evidence AGAINST:**
+- JFS is a legacy/rare filesystem → lower population
+- Trigger requires specific block-device geometry
+- None of these outweigh a kernel BUG fix
+
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** (mainline merged; author
+   tested crash scenario)
+2. Fixes real user-affecting bug? **PASS**
+3. Important issue? **PASS** (kernel BUG / crash)
+4. Small and contained? **PASS** (3 lines, 1 file)
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS**
+
+**Exception category:** N/A (standard bug fix, not device-
+ID/quirk/build/doc).
+
+---
+
+## Problem Summary for Stable Users
+
+When JFS mount calls `sb_set_blocksize(sb, 4096)` on a device whose
+logical sector size is larger (e.g. 64K loop device), the call fails
+silently. Mount continues with the device's block size. The first
+`sb_bread()` during `jfs_mount()` hits `BUG_ON(offset >=
+folio_size(folio))` in `folio_set_bh()`, crashing the kernel. The fix
+checks the return value and aborts mount through the existing
+`out_unload` path, returning `-EINVAL` instead of crashing.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message tags from `git show c6c4234928d2e`
-- **[Phase 2]** Diff analysis: 23 lines changed in
-  `drivers/hwmon/corsair-psu.c`; verified buggy mantissa at lines
-  143–149
-- **[Phase 3]** `git blame`: buggy line from 918f22104d64d (2021-02-27);
-  driver from d115b51e0e5671 (2020-10-27)
-- **[Phase 3]** `git merge-base --is-ancestor`: driver and buggy code
-  both in tree; fix commit NOT in tree
-- **[Phase 3]** `git log --oneline -20 -- drivers/hwmon/corsair-psu.c`:
-  history reviewed
-- **[Phase 4]** `b4 dig -c c6c4234928d2e`: found v1→v2 series at lore
-  URL above
-- **[Phase 4]** `b4 dig -c c6c4234928d2e -w`: CC'd linux-hwmon, Sashiko,
-  Wilken Gottwalt
-- **[Phase 4]** `b4 dig -m /tmp/corsair_linear11.mbox`: read thread;
-  Tested-by from Wilken; no stable nomination; no NAKs
-- **[Phase 5]** `grep corsairpsu_get_value`: traced callers to hwmon
-  sysfs read path
-- **[Phase 6]** `git describe HEAD`: v6.18.44
-- **[Phase 6]** `git apply --check`: patch applies cleanly
-- **[Phase 6]** Read current `corsairpsu_linear11_to_int()` — buggy code
-  confirmed present
-- **[Phase 7]** `CONFIG_SENSORS_CORSAIR_PSU` in `drivers/hwmon/Kconfig`
-  — tristate optional module
-- **[Phase 8]** Assessed severity as MEDIUM (wrong sysfs data, no kernel
-  crash)
+- **[Phase 1]** Parsed subject, tags, body; identified series context
+  via ratatoskr/spinics
+- **[Phase 2]** Diff: 3-line error-check in `jfs_fill_super()`;
+  classified as missing error handling → BUG
+- **[Phase 3]** `git blame`: unchecked call since 2005 (`1da177e4c3f4`)
+- **[Phase 3]** `git merge-base --is-ancestor d90e60ced4c3c HEAD` → not
+  ancestor (fix absent from 6.18.y)
+- **[Phase 3]** `git show d90e60ced4c3c:fs/jfs/super.c` → confirms
+  mainline has the fix
+- **[Phase 3]** `git diff d90e60ced4c3c -- fs/jfs/super.c` → only
+  relevant hunk is the sb_set_blocksize check
+- **[Phase 4]** Series cover and patch content from ratatoskr.run;
+  Christian Brauner merge confirmed
+- **[Phase 4]** lore.kernel.org / patch.msgid.link blocked; b4 dig
+  unusable without commit in tree
+- **[Phase 5]** Traced call chain: `jfs_fill_super` → `jfs_mount` →
+  `readSuper` → `sb_bread` → `__bread_gfp`
+- **[Phase 5]** Read `sb_set_blocksize()` at `block/bdev.c:220-229`
+  (returns 0 on failure)
+- **[Phase 5]** Read `folio_set_bh()` BUG_ON at `fs/buffer.c:1582`
+- **[Phase 5]** Read `sb_bread` macro at
+  `include/linux/buffer_head.h:344-346`
+- **[Phase 5]** Compared ext4 pattern at `fs/ext4/super.c:5128`
+- **[Phase 6]** `git describe HEAD` → v6.18.44; buggy code at
+  `fs/jfs/super.c:494`
+- **[Phase 6]** `folio_set_bh` ancestor check: `465e5e6a1698f` is in
+  tree
+- **[Phase 6]** hpfs/bfs sibling fixes also absent (confirming series
+  not backported)
+- **[Phase 8]** Failure mode: kernel BUG; severity CRITICAL
 
----
+**YES**The background checks confirmed what the analysis relied on:
 
-**YES**The background lookups are done and match what the analysis
-already used:
+- **Grep for related commits** in this tree’s history returned nothing —
+  the “handle set_blocksize failures” fix isn’t already in 6.18.y.
+- **Merge commit `d90e60c`** (the mainline series that includes this JFS
+  patch) exists in the repo but is **not an ancestor of HEAD**
+  (v6.18.44). Mainline has the fix; this stable tree still has the
+  unchecked `sb_set_blocksize(sb, PSIZE)` at `fs/jfs/super.c:494`.
 
-- **b4 dig** found the patch thread: [PATCH v2] hwmon: (corsair-psu) Fix
-  linear11 calculation (v1 → v2, Tested-by from Wilken Gottwalt).
-- **`git log --grep="Fix linear11"`** hung and was stopped; the fix was
-  already located on `master` as `c6c4234928d2e`.
-- **`git log --grep="linear11"`** returned unrelated hwmon LINEAR11
-  commits in other drivers (pmbus/fsp-3y, etc.), not this corsair-psu
-  fix.
+That supports the **YES** backport recommendation: the bug is present
+here, the fix is small and self-contained, and it should apply cleanly.
 
-Nothing else is needed from those tasks. The backport recommendation for
-**linux-6.18.y (v6.18.44)** remains **YES** — small maintainer fix for
-wrong sub-zero temperature readings, applies cleanly, and the buggy code
-is present in this tree.
+ fs/jfs/super.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- drivers/hwmon/corsair-psu.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 4681af6843596..d56a6cd76ff26 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -140,13 +140,18 @@ struct corsairpsu_data {
- };
+diff --git a/fs/jfs/super.c b/fs/jfs/super.c
+index 3cfb86c5a36e8..20b66fb022244 100644
+--- a/fs/jfs/super.c
++++ b/fs/jfs/super.c
+@@ -491,7 +491,8 @@ static int jfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	/*
+ 	 * Initialize blocksize to 4K.
+ 	 */
+-	sb_set_blocksize(sb, PSIZE);
++	if (!sb_set_blocksize(sb, PSIZE))
++		goto out_unload;
  
- /* some values are SMBus LINEAR11 data which need a conversion */
--static int corsairpsu_linear11_to_int(const u16 val, const int scale)
-+static long corsairpsu_linear11_to_long(const u16 val, const int scale)
- {
- 	const int exp = ((s16)val) >> 11;
--	const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
--	const int result = mant * scale;
-+	const int mant = ((s16)((val & 0x7ff) << 5)) >> 5;
-+	s64 result = mant * scale;
- 
--	return (exp >= 0) ? (result << exp) : (result >> -exp);
-+	if (exp >= 0)
-+		result *= (int)(1UL << exp);
-+	else
-+		result >>= -exp;
-+
-+	return clamp(result, LONG_MIN, LONG_MAX);
- }
- 
- /* the micro-controller uses percentage values to control pwm */
-@@ -271,13 +276,13 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
- 	case PSU_CMD_RAIL_AMPS:
- 	case PSU_CMD_TEMP0:
- 	case PSU_CMD_TEMP1:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000);
- 		break;
- 	case PSU_CMD_FAN:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		break;
- 	case PSU_CMD_FAN_PWM_ENABLE:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		/*
- 		 * 0 = automatic mode, means the micro-controller controls the fan using a plan
- 		 *     which can be modified, but changing this plan is not supported by this
-@@ -291,12 +296,12 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
- 			*val = 2;
- 		break;
- 	case PSU_CMD_FAN_PWM:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		*val = corsairpsu_dutycycle_to_pwm(*val);
- 		break;
- 	case PSU_CMD_RAIL_WATTS:
- 	case PSU_CMD_TOTAL_WATTS:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000000);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000000);
- 		break;
- 	case PSU_CMD_TOTAL_UPTIME:
- 	case PSU_CMD_UPTIME:
+ 	/*
+ 	 * Set method vectors.
 -- 
 2.53.0
 
