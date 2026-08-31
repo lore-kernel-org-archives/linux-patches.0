@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9034847AF6D;
-	Mon, 31 Aug 2026 13:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1AF46C4B7;
+	Mon, 31 Aug 2026 13:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183356; cv=none; b=ULtPXtfqaeyhz5TxzCjOls1FdgBgWfpjqe+QCYug48hxPU8BqgGxvOYU7wboLDqUaQdLR8i+a9725IPeVvtmmboFMp5deHwcfdrw50D2R8iEDEhZENK1zouMdl9NBXwxHhKpc6s+raX3ohm70K1Ix1EVgHWKA0xnCHp6B1T1+/M=
+	t=1788183357; cv=none; b=FSD9Z8OB9iBmEdrBgHEfrs+r5jEmXXU9yjH9CtrL2rH7rKEAjjNvrsOzNZoIM4nct9lrr7wEaD8KS47TdYGcbm8YTcQuFqTchbKCCGwasZ9RJdAzCFPLwk2EOdVY6cml9js8R/X8621UPQ0vUhiSk4rKh5tLVR7S5eU1o/8ZQUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183356; c=relaxed/simple;
-	bh=kXbKb5kc9ITPSUqllwtRiC9x2pc6HjWC0xoK++Rug6s=;
+	s=arc-20240116; t=1788183357; c=relaxed/simple;
+	bh=3A4FVolA00nAP8gk9Bxd9YuRycb4nXSTHeyrH4Ml1EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dz8YPIgG/dIpuwTtUlvytgX4rOKALwQmG9I6uYuWZHSE05uhfh2Cuu5HjEkL6qf0pYty8G97ztuFS3l/sb3K1gg1377NohaBhEBKy6tB64+SRLpECqu1U9kfzFTsH9HmxgVEaITdyClIaUz4ji39yNmRKSJ8Zi6qbhxmQ3MX9Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OrhEoctW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EBGsAe5l1BQ34zpqjTAeCqdIUTvAh958DCrLCD71ORgjsJHQUTswoBSJFUfMu7WWkGmmF9+9YS6CwsGKb0WJALeTbQ//qyihZaFL4OHNcQkbKvL5z44Sksunktf6m4HYSeWRTGAvMF+xNtFQ5IqglkGWB/fD4YT3Uhnm/JcSCto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KSHzDxJc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OrhEoctW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0F41F00A3F;
-	Mon, 31 Aug 2026 13:35:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KSHzDxJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24161F00ACA;
+	Mon, 31 Aug 2026 13:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183354;
-	bh=HSkhL9GEPh+pjRNfJc8hLKIsYQDXSRpdkikCUwYosQc=;
+	s=k20260515; t=1788183356;
+	bh=WLCMYHGlgDcQ0hHc9ny4W/wCz2evM43glNhXYSXd8No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OrhEoctWOCtSw/GE1uNv1080RfJV4OHV2RZ849wX1Ci21F+GX5gbIXe0i7VURno4w
-	 qpcgCCOcD12jrbU+bUdiTR+WfbfGK8UeD9R8w69X05ceL10VRaJRwhhGRmDZ1X4ION
-	 DU1JnyOjOEA+ZN/rSlniF6a4mT3IE3n4d/f6zhEPM22dB793to495yq2u8vCmHDJVc
-	 BgryyxGypF44z3datQstHbxD/Fzke1NI5ctiubMzCE+awUJzLJIX06fNKJ0mt5UGPN
-	 KVsG8KfVGc3DAtbyns2y4wqg+XPNQamRmDjIJfwj/mLMlguNaVm7kLDAvlnwtLie7U
-	 BCcoxpA1g9xmg==
+	b=KSHzDxJc+hvYCUGT3iVR43s2is6VhZvh7OPeUU0j9t/DyeEkX1UlyXbbQgjx35xGA
+	 FA5A4H+my0i4haS8kFuR0wRXNPT1OoLAKD45HvcC34WC1kkkEAEVzXeehr9/E3BvfR
+	 uIOrG7JO6iQ0JLlWEdBk8IOeUDqPckb/QVbDPrSwMWfgCcLhn7XE2cGp5bjNln+DSg
+	 dj+vHcdLMTkFbGOYHO3zVe7QHK9IjecAwmjluZ8r4RMxHt4aYEX/tjs6PVvszgg/Re
+	 CmTaLc6Z63lsjpTSmcf3hhDzHJWROCwTZfeozaGU/Ufcb7eWrLblf0g0e6rnp0YFyA
+	 2fwgm+xSIMbtA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+Cc: GuoHan Zhao <zhaoguohan@kylinos.cn>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	xen-devel@lists.xenproject.org,
+	miklos@szeredi.hu,
+	fuse-devel@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] xen/front-pgdir-shbuf: free grant reference head on errors
-Date: Mon, 31 Aug 2026 09:22:06 -0400
-Message-ID: <20260831133314.4125787-98-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] fuse: use current creds for backing files
+Date: Mon, 31 Aug 2026 09:22:07 -0400
+Message-ID: <20260831133314.4125787-99-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,396 +55,377 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-[ Upstream commit 678d59219ce0ae883f04c96936222c6168ef1164 ]
+[ Upstream commit c51248524a0f546b9a9b44710038f5663688ed10 ]
 
-grant_references() allocates a private grant-reference head before
-claiming references for the page directory and, for guest-owned buffers,
-the data pages. The success path frees the remaining head, but claim
-failures and grant_refs_for_buffer() errors return immediately.
+FUSE backing files only need a stable snapshot of the current credentials
+for later backing-file I/O. prepare_creds() allocates a mutable copy and
+can fail, but this code never modifies or commits the result.
 
-Unwind through a common exit path so the private grant-reference head is
-released even when granting fails part-way through setup. The caller
-still tears down any references already stored in buf->grefs.
+Use get_current_cred() instead and store it as a const pointer. This
+matches the rest of the backing-file helpers and avoids an unnecessary
+allocation and failure path.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260629160517.29340-1-alhouseenyousef@gmail.com>
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `xen/front-pgdir-shbuf: free grant reference
-head on errors`
+# Stable Backport Analysis: `fuse: use current creds for backing files`
 
-**Local tree:** Linux 6.18.44 (`v6.18.44-1-g2736c32da98b9`)
-**Fix commit (mainline):** `678d59219ce0a` — not an ancestor of this
-tree; buggy code is still present.
+**Local tree:** `v6.18.44` (`HEAD` detached from `stable/linux-6.18.y`,
+`VERSION = 6`, `PATCHLEVEL = 18`, `SUBLEVEL = 44`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[xen/front-pgdir-shbuf]` `[free]` — fix missing cleanup of
-a private grant-reference head on error paths in `grant_references()`.
+### Step 1.1: Subject line
+**Record:** `[fuse]` — change API usage — use current credentials
+snapshot for backing files instead of `prepare_creds()`.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Yousef Alhouseen `<alhouseenyousef@gmail.com>`
-  (author)
-- **Reviewed-by:** Stefano Stabellini `<sstabellini@kernel.org>` (Xen
+- `Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>` (author)
+- `Reviewed-by: Amir Goldstein <amir73il@gmail.com>` (FUSE maintainer)
+- `Acked-by: Christian Brauner <brauner@kernel.org>` (VFS maintainer)
+- `Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>` (FUSE tree
   maintainer)
-- **Signed-off-by:** Juergen Gross `<jgross@suse.com>` (Xen maintainer,
-  committer)
-- **Message-ID:** `<20260629160517.29340-1-alhouseenyousef@gmail.com>`
-- No Fixes:, Reported-by:, Tested-by:, Link:, or Cc: stable tags
-- Notable: Reviewed by a Xen subsystem maintainer; committed by Xen tree
-  maintainer
+- No `Fixes:` tag (expected for manual review)
+- No `Reported-by:` / `Link:` / syzbot
+- No `Cc: stable@vger.kernel.org` in original submission
+- Ignore pipeline `Signed-off-by: Sasha Levin`
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `grant_references()` allocates a private grant-reference list
-  (`priv_gref_head`) via `gnttab_alloc_grant_references()`. On success,
-  unclaimed entries are returned via `gnttab_free_grant_references()`.
-  On two error paths (`gnttab_claim_grant_reference()` failure and
-  `grant_refs_for_buffer()` failure), the function returned immediately
-  without freeing `priv_gref_head`.
-- **Symptom:** Unclaimed grant references remain off the global free
-  list — a resource leak in the Xen grant table.
-- **Root cause:** Missing common error-exit cleanup; caller
-  `xen_front_pgdir_shbuf_free()` only tears down refs already stored in
-  `buf->grefs`, not the private head list.
-- **Version info:** None in the message.
+- **Bug:** `prepare_creds()` allocates a mutable cred copy that is never
+  modified or committed; its return value is not checked, so it can fail
+  silently.
+- **Symptom:** Under memory pressure, backing-file open can proceed with
+  a NULL credential, breaking later passthrough I/O.
+- **Root cause:** Wrong API — only a pinned snapshot of current creds is
+  needed; `get_current_cred()` is the correct, non-allocating primitive.
+- **Versions:** FUSE passthrough backing files exist in this tree since
+  commit `44350256ab943` (Sep 2023).
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised — this is an explicit error-path resource-leak
-fix, though described without a crash report.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes. Described as API cleanup, but it fixes an unchecked
+`prepare_creds()` failure that can leave `fb->cred == NULL` while
+registration succeeds.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS — LINE BY LINE
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
+### Step 2.1: Inventory
 **Record:**
-- **File:** `drivers/xen/xen-front-pgdir-shbuf.c` (+8 / −4 lines)
-- **Function modified:** `grant_references()` only
-- **Scope:** Single-file surgical fix
+- `fs/fuse/backing.c`: 1 line changed (`prepare_creds()` →
+  `get_current_cred()`)
+- `fs/fuse/fuse_i.h`: 1 line changed (`struct cred *cred` → `const
+  struct cred *cred`)
+- Functions: `fuse_backing_open()`; `struct fuse_backing`
+- **Scope:** Single-file surgical fix, 2 lines total
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+### Step 2.2: Code flow change
 **Record:**
-- **Hunk 1 (claim failure in directory loop):** Before: `return cur_ref`
-  leaked `priv_gref_head`. After: `ret = cur_ref; goto out_free_refs`.
-- **Hunk 2 (`grant_refs_for_buffer` failure):** Before: `return ret`
-  leaked head. After: `goto out_free_refs`.
-- **Hunk 3 (success path restructured):** Before: free head, `return 0`.
-  After: `ret = 0; out_free_refs:
-  gnttab_free_grant_references(priv_gref_head); return ret` — same
-  success behavior, unified cleanup on all paths after allocation.
+- **Before:** `fuse_backing_open()` calls `prepare_creds()`, which
+  kmalloc's a cred struct; return unchecked; on ENOMEM, `fb->cred =
+  NULL`.
+- **After:** `get_current_cred()` pins current cred via refcount
+  increment; cannot fail; `const` reflects read-only usage.
+- **Path affected:** `FUSE_DEV_IOC_BACKING_OPEN` ioctl →
+  `fuse_backing_open()` error/success path.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:**
-- **Category:** Error-path resource leak (grant reference leak)
-- **Mechanism:** `gnttab_alloc_grant_references()` removes entries from
-  the global grant free pool into a private linked list. Claimed refs
-  are removed from that list and stored in `buf->grefs`. Unclaimed refs
-  remain in `priv_gref_head` and must be returned via
-  `gnttab_free_grant_references()`. Early returns skipped that free,
-  permanently shrinking the grant table pool.
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Missing error handling / wrong API / potential
+NULL pointer dereference.
 
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:**
-- **Quality:** Obviously correct; mirrors the established pattern in
-  `gntdev-dmabuf.c` (`out:` label + `gnttab_free_grant_references()`).
-- **Regression risk:** Very low. `gnttab_free_grant_references()` only
-  frees refs still linked in `priv_gref_head`; already-claimed refs in
-  `buf->grefs` are untouched and still cleaned up by the caller on
-  failure.
+Verified chain when `prepare_creds()` returns NULL
+(`kernel/cred.c:213-214`):
+1. `fb->cred = NULL` (line 121, unchecked)
+2. `fuse_backing_id_alloc()` may still succeed
+3. ioctl returns success with valid `backing_id`
+4. Later `fuse_passthrough_open()` → `ff->cred = get_cred(fb->cred)` →
+   `get_cred(NULL)` returns NULL (safe)
+5. Passthrough I/O → `backing_file_read_iter()` etc. →
+   `override_creds(ctx->cred)` → `override_creds(NULL)` sets
+   `current->cred = NULL` (`include/linux/cred.h:180-182`)
+6. Subsequent credential access in that task can oops
+
+### Step 2.4: Fix quality
+**Record:** Obviously correct. `get_current_cred()` matches NFS and
+other backing-file callers. `put_cred()` in `fuse_backing_free()`
+already handles const creds. No new locks or API changes. Regression
+risk: very low.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** `grant_references()` introduced in `b3383974fee27`
-(Oleksandr Andrushchenko, 2018-11-30) — "xen: Introduce shared buffer
-helpers for page directory based frontends." The missing error-path
-cleanup has existed since introduction (~kernel 5.0 era).
+### Step 3.1: Blame
+**Record:** `prepare_creds()` introduced in `c4331e19a6b0f` (Sep 2025,
+code move) and originally in `44350256ab943` (Sep 2023). Bug present
+since FUSE passthrough backing files were added.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** No Fixes: tag present — N/A.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:** Related prior fix `53f131c284e83` (2021): "don't record
-wrong grant handle upon error" — different issue (invalid handle on
-error), already in this tree. No prerequisite commits needed; standalone
-single-patch series (v1 only per b4).
+### Step 3.3: Related changes
+**Record:** Standalone single-patch series (v1 only). No prerequisites.
+Related file history: `c4331e19a6b0f` (move to `backing.c`),
+`e9c8da670e749` (non-regular file check).
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Yousef Alhouseen is a contributor; this is their Xen front-
-pgdir-shbuf fix. Reviewed/committed by Xen maintainers (Stabellini,
-Gross).
+### Step 3.4: Author context
+**Record:** GuoHan Zhao — contributor fix. Reviewed/acked by FUSE and
+VFS maintainers. Miklos applied with "Applied, thanks."
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** No dependencies. `git apply --check` on the fix diff
-succeeds cleanly against this tree's file. Standalone.
+### Step 3.5: Dependencies
+**Record:** None. `get_current_cred()` and `const struct cred *` exist
+in this tree. Applies cleanly to current `backing.c` and `fuse_i.h`.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:** `b4 dig -c 678d59219ce0a` → https://patch.msgid.link/2026062
-9160517.29340-1-alhouseenyousef@gmail.com
-Single v1 submission (2026-06-29). Lore page fetch blocked by bot
-protection; thread content not directly readable.
+### Step 4.1: Original discussion
+**Record:**
+https://patch.msgid.link/20260510145437.321141-1-zhaoguohan@kylinos.cn —
+v1 only, applied by Miklos. No NAKs. No stable nomination in thread.
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** `b4 dig -w`: To/Cc included Juergen Gross, Stefano
-Stabellini, xen-devel@lists.xenproject.org, linux-
-kernel@vger.kernel.org. Stefano Stabellini Reviewed-by on committed
-version.
+### Step 4.2: Reviewers
+**Record:** CC'd: `linux-fsdevel@vger.kernel.org`, `linux-
+kernel@vger.kernel.org`, Miklos Szeredi. Reviewed-by Goldstein, Acked-by
+Brauner.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** No Reported-by or bug-report Link tags. Bug identified via
-code-path analysis (missing cleanup), not a syzbot/fuzzer report.
+### Step 4.3: Bug reports
+**Record:** None. No syzbot, no user crash reports. Bug identified by
+code review.
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Standalone 1/1 patch; no series dependencies.
+### Step 4.4: Series context
+**Record:** Standalone 1/1 patch. No sibling patches required.
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** Not searched (no stable-list nomination found in commit;
-lore stable search not performed due to limited external access).
-Absence of Cc: stable is expected per review instructions.
+### Step 4.5: Stable list
+**Record:** Not searched separately; no stable nomination found in lore
+thread.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `grant_references()` (modified);
-`guest_grant_refs_for_buffer()` (error source via ops callback,
-unchanged).
+### Step 5.1: Key functions
+**Record:** `fuse_backing_open()`, `fuse_backing_free()`,
+`fuse_passthrough_open()`, `backing_file_open()`,
+`backing_file_read_iter()`
 
-### Step 5.2: TRACE CALLERS
-**Record:** `grant_references()` is called only from
-`xen_front_pgdir_shbuf_alloc()` (line 534). Callers of
-`xen_front_pgdir_shbuf_alloc()`:
-- `drivers/gpu/drm/xen/xen_drm_front.c` — Xen PV DRM frontend
-- `sound/xen/xen_snd_front_alsa.c` — Xen PV sound frontend
-Both run during device/buffer setup on Xen PV guests.
+### Step 5.2: Callers
+**Record:**
+- `fuse_backing_open()` ← `fuse_dev_ioctl_backing_open()` ←
+  `fuse_dev_ioctl()` (`fs/fuse/dev.c`)
+- Requires `CONFIG_FUSE_PASSTHROUGH`, `fc->passthrough`, and
+  `CAP_SYS_ADMIN`
+- `fb->cred` consumed in `fuse_passthrough_open()` → all passthrough
+  read/write/splice/mmap paths
 
-### Step 5.3: TRACE CALLEES
-**Record:** `gnttab_alloc_grant_references()`,
-`gnttab_claim_grant_reference()`, `gnttab_grant_foreign_access_ref()`,
-`buf->ops->grant_refs_for_buffer()` (guest:
-`guest_grant_refs_for_buffer()`), `gnttab_free_grant_references()`.
+### Step 5.3: Callees
+**Record:** `prepare_creds()` / `get_current_cred()`, `put_cred()`,
+`fuse_backing_id_alloc()`, `backing_file_open()`, `override_creds()`
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** Xen guest driver probe → buffer alloc → `grant_references()`
-→ on failure, `xen_front_pgdir_shbuf_free()` cleans `buf->grefs` but not
-`priv_gref_head`. Reachable during normal Xen PV driver initialization;
-not a syscall path, but triggered by guest driver operations
-(potentially from userspace opening DRM/audio devices).
+### Step 5.4: Reachability
+**Record:** Reachable from userspace via
+`ioctl(FUSE_DEV_IOC_BACKING_OPEN)` on `/dev/fuse` by privileged FUSE
+daemon. Passthrough I/O is a normal post-setup path. Trigger needs
+memory pressure at open time plus later passthrough use.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** Correct pattern already used in `drivers/xen/gntdev-
-dmabuf.c` lines 509–511 (`out:
-gnttab_free_grant_references(priv_gref_head)`). `drivers/usb/host/xen-
-hcd.c` and `drivers/net/xen-netfront.c` also use alloc/free pairs. This
-file was the outlier missing error-path free.
+### Step 5.5: Similar patterns
+**Record:** NFS (`fs/nfs/inode.c`, `fs/nfs/unlink.c`) and NFSd use
+`get_current_cred()` for similar backing/credential snapshots. Overlayfs
+uses `prepare_creds()` only where creds are actually modified before
+commit.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** **Yes.** `drivers/xen/xen-front-pgdir-shbuf.c` lines 449–451
-and 461–462 still have bare `return` on error without freeing
-`priv_gref_head`. Bug present since 2018 introduction (`b3383974fee27`).
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** `fs/fuse/backing.c:121` still has `fb->cred =
+prepare_creds();`. Upstream fix `c51248524a0f5` and stable backport
+`f47958748ee86` are **not** ancestors of `HEAD` or
+`stable/linux-6.18.y`. Feature `44350256ab943` **is** present.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** **Clean apply expected.** `git apply --check` on commit
-`678d59219ce0a` diff passes with no conflicts on this tree.
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — 2-line change, no conflicts.
+`stable/linux-6.18.y:fs/fuse/backing.c` has identical `prepare_creds()`
+line.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** Fix `678d59219ce0a` is **not** in this tree (`git merge-base
---is-ancestor` returns 1). Prior related fix `53f131c284e83` is present.
-No duplicate fix applied.
+### Step 6.3: Related fixes already present?
+**Record:** None for this issue.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** **Subsystem:** Xen grant-table / shared-buffer
-infrastructure (`drivers/xen/`). **Criticality:** IMPORTANT — grant
-references are a finite global resource shared by all Xen PV drivers
-(net, block, USB, DRM, sound, etc.). Leaks affect the whole guest.
+### Step 7.1: Subsystem criticality
+**Record:** `fs/fuse` — **IMPORTANT**. FUSE is widely used (virtiofs,
+user filesystems). Passthrough is opt-in at runtime but
+`CONFIG_FUSE_PASSTHROUGH` defaults to `y`.
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** Moderate activity; file last touched in-tree by
-`50e865a56876b` (2023, kernel-doc cleanup). Core logic stable since
-2018.
+### Step 7.2: Activity
+**Record:** Actively developed; passthrough added in 6.8 era, refined
+through 6.18.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** Xen PV guests with `CONFIG_XEN_FRONT_PGDIR_SHBUF` (selected
-by `CONFIG_DRM_XEN` and Xen sound). Affects DRM and audio buffer setup
-on Xen; grant-table exhaustion can impact all Xen drivers in the guest.
+### Step 8.1: Who is affected
+**Record:** Users of FUSE passthrough with `CONFIG_FUSE_PASSTHROUGH=y`
+(default). Requires privileged FUSE daemon (`CAP_SYS_ADMIN`). Not
+universal, but real production users (virtiofs passthrough setups).
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-**Record:** Triggered when `grant_references()` fails after
-`gnttab_alloc_grant_references()` succeeds — specifically
-`gnttab_claim_grant_reference()` returning negative, or
-`guest_grant_refs_for_buffer()` failing. Uncommon in steady state
-(allocation size matches claim count), but possible under resource
-pressure, accounting edge cases, or repeated alloc/free retry loops. Not
-unprivileged-direct, but reachable through Xen frontend driver usage.
+### Step 8.2: Trigger conditions
+**Record:** Memory pressure during `FUSE_DEV_IOC_BACKING_OPEN` so
+`prepare_creds()` returns NULL while `idr_alloc` succeeds; later
+passthrough open and I/O. Uncommon but realistic under OOM. Privileged
+caller only — not a direct unprivileged attack vector, but daemon crash
+affects all mount users.
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** **Failure mode:** Grant reference leak → progressive
-depletion of global grant free pool → `-ENOSPC` on subsequent grant
-operations across the guest (network, block, console, etc.).
-**Severity:** HIGH (resource exhaustion degrading entire Xen guest; not
-an immediate oops, but can render the guest unusable over time or after
-repeated failures).
+### Step 8.3: Failure severity
+**Record:** `override_creds(NULL)` during I/O → **CRITICAL** (kernel
+oops in FUSE daemon context). Also incorrect security context if partial
+failure occurs without immediate crash.
 
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Prevents grant-table leaks on error paths; protects all
-  Xen PV functionality
-- **Risk:** Very low — 8-line surgical change, maintainer-reviewed,
-  matches existing codebase pattern
-- **Ratio:** Strong benefit, minimal risk
+- **Benefit:** MEDIUM — prevents rare but severe crash in passthrough
+  path; removes unnecessary allocation
+- **Risk:** VERY LOW — 2-line API correction, maintainer-reviewed
+- **Ratio:** Favorable
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence compile
 
-**FOR backporting:**
-- Real resource leak on error paths (grant references never returned to
-  free pool)
-- Bug present in this 6.18.y tree since 2018
-- Fix is small, obviously correct, maintainer-reviewed
-- Applies cleanly to this tree
-- Grant-table exhaustion is a serious Xen guest-wide failure mode
-- Matches established cleanup pattern in sibling Xen code (`gntdev-
-  dmabuf.c`)
+**FOR backport:**
+- Real bug: unchecked `prepare_creds()` failure → NULL cred →
+  `override_creds(NULL)` on I/O
+- Potential kernel crash (CRITICAL severity if triggered)
+- Trivial, obviously correct fix
+- Reviewed by FUSE maintainer, acked by VFS maintainer
+- Bug present since feature introduction in this tree
+- Applies cleanly to 6.18.y
 
-**AGAINST backporting:**
-- No user crash report or syzbot reproduction
-- Error path may be rarely exercised in production
-- Affects only Xen PV guests with specific drivers enabled
+**AGAINST backport:**
+- No reported crashes or syzbot findings
+- Narrow trigger (OOM + passthrough + CAP_SYS_ADMIN)
+- FUSE passthrough is relatively new
+- Primarily framed as API correctness / allocation avoidance
 
-**Unresolved:** Exact production trigger frequency; lore thread
-discussion content (bot-blocked).
+**Unresolved:** No production crash reports found; severity is
+analytically derived, not empirically confirmed.
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — standard goto cleanup;
-   Reviewed-by Xen maintainer
-2. Fixes a real bug? **PASS** — grant ref leak on error paths
-3. Important issue? **PASS** — grant table exhaustion (HIGH severity for
-   Xen guests)
-4. Small and contained? **PASS** — 1 file, ~12 lines
-5. No new features or APIs? **PASS** — error-path cleanup only
-6. Can apply to local tree? **PASS** — `git apply --check` succeeds
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — correct API per maintainer
+   review; no runtime tests cited
+2. Fixes a real bug? **PASS** — unchecked `prepare_creds()` NULL return
+   verified in code
+3. Important issue? **PASS** — potential kernel oops via
+   `override_creds(NULL)` (CRITICAL if triggered)
+4. Small and contained? **PASS** — 2 lines, 2 files
+5. No new features or APIs? **PASS** — behavior correction only
+6. Can apply to local tree? **PASS** — buggy code present, fix not yet
+   applied
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-bug-fix category.
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs fix).
+Qualifies on bug-fix merits.
 
-### Step 9.4: DECISION RATIONALE
-This fix closes a long-standing error-path leak in Xen grant-reference
-management. While the trigger may be uncommon, leaked grant references
-are a finite, guest-wide resource — exhaustion can break networking,
-storage, and other PV devices. The patch is minimal, reviewed by Xen
-maintainers, applies cleanly to Linux 6.18.44, and introduces no new
-behavior on success paths.
+### Step 9.4: Decision rationale
+
+This commit fixes a genuine error-handling bug in FUSE passthrough
+backing-file setup. Using `prepare_creds()` where credentials are never
+modified was always wrong; the unchecked failure path can register a
+backing file with NULL credentials and later invoke
+`override_creds(NULL)` during passthrough I/O, which can crash the
+kernel. The fix is minimal, maintainer-endorsed, and applies cleanly to
+the local 6.18.44 stable tree where the buggy code is present.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit `678d59219ce0a` message and tags:
-  Reviewed-by Stefano Stabellini; Signed-off-by Juergen Gross
-- **[Phase 2]** Diff analysis: 3 error-path changes in
-  `grant_references()`, adds `out_free_refs` unified cleanup
-- **[Phase 3]** `git blame`: buggy code from `b3383974fee27`
-  (2018-11-30), present in tree
-- **[Phase 3]** `git log -20 -- drivers/xen/xen-front-pgdir-shbuf.c`:
-  related fix `53f131c284e83` present; this fix absent
-- **[Phase 3]** `git merge-base --is-ancestor 678d59219ce0a HEAD`: exit
-  1 — fix not in tree
-- **[Phase 3]** `git apply --check` on fix diff: passes cleanly
-- **[Phase 4]** `b4 dig -c 678d59219ce0a`: lore URL found
-- **[Phase 4]** `b4 dig -a`: single v1 patch, no series
-- **[Phase 4]** `b4 dig -w`: Juergen Gross, Stefano Stabellini, xen-
-  devel CC'd
-- **[Phase 4]** WebFetch lore thread: blocked (bot protection) — review
-  discussion unverified
-- **[Phase 5]** `grep grant_references`: single caller
-  `xen_front_pgdir_shbuf_alloc()`
-- **[Phase 5]** `grep xen_front_pgdir_shbuf_alloc`: callers in
-  `xen_drm_front.c`, `xen_snd_front_alsa.c`
-- **[Phase 5]** Read `gntdev-dmabuf.c` 509–511: confirms correct error-
-  path pattern
-- **[Phase 5]** Read `grant-table.c` 619–658, 685–692: confirmed
-  alloc/claim/free semantics
-- **[Phase 6]** `git describe HEAD`: v6.18.44; `Makefile`: 6.18.44
-- **[Phase 6]** Read `xen-front-pgdir-shbuf.c` 430–467: confirmed buggy
-  early returns present
-- **[Phase 6]** Read `xen_front_pgdir_shbuf_free()` 131–142: caller
-  cleans `buf->grefs` only, not `priv_gref_head`
-- **[Phase 8]** Grant ref leak → pool exhaustion → `-ENOSPC` for all Xen
-  grant users: severity HIGH
+- [Phase 1] Parsed subject, tags, body; no syzbot/Reported-by
+- [Phase 2] Diff: 2 lines in `backing.c` + `fuse_i.h`; verified
+  `prepare_creds()` NULL path and `override_creds(NULL)` chain
+- [Phase 3] `git blame`: bug since `44350256ab943`/`c4331e19a6b0f`;
+  standalone patch
+- [Phase 3] `git merge-base --is-ancestor c51248524a0f5 HEAD` → exit 1
+  (fix not in tree)
+- [Phase 3] `stable/linux-6.18.y:fs/fuse/backing.c` still has
+  `prepare_creds()`
+- [Phase 4] `b4 dig -c c51248524a0f5`: lore URL found; v1 only; Miklos
+  applied; Goldstein Reviewed-by; Brauner Acked-by; no stable CC
+- [Phase 4] `b4 dig -m /tmp/fuse-cred-thread.mbox`: thread downloaded
+  and reviewed
+- [Phase 5] Call chain: `fuse_dev_ioctl` → `fuse_backing_open` → later
+  `fuse_passthrough_open` → `backing_file_*` →
+  `override_creds(ctx->cred)`
+- [Phase 5] `get_current_cred()` usage confirmed in NFS
+  (`fs/nfs/inode.c:1221`)
+- [Phase 6] `git describe HEAD` → v6.18.44; buggy code at
+  `backing.c:121`
+- [Phase 6] `CONFIG_FUSE_PASSTHROUGH` default `y` in
+  `fs/fuse/Kconfig:59`
+- [Phase 8] Failure mode: `override_creds(NULL)` → CRITICAL; trigger
+  rare but realistic under OOM
 
-**YES**
+**YES**Those background lookups finished and match the earlier analysis:
 
- drivers/xen/xen-front-pgdir-shbuf.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+- **Commit IDs:** upstream fix is `c51248524a0f5`; stable backport form
+  is `f47958748ee86`.
+- **Tree state:** neither `HEAD` (v6.18.44) nor `stable/linux-6.18.y`
+  contains the fix yet — both still use `prepare_creds()` in
+  `fs/fuse/backing.c`.
 
-diff --git a/drivers/xen/xen-front-pgdir-shbuf.c b/drivers/xen/xen-front-pgdir-shbuf.c
-index 223870a0111b2..e7fb06f607711 100644
---- a/drivers/xen/xen-front-pgdir-shbuf.c
-+++ b/drivers/xen/xen-front-pgdir-shbuf.c
-@@ -447,8 +447,10 @@ static int grant_references(struct xen_front_pgdir_shbuf *buf)
- 		unsigned long frame;
+**Verdict remains YES** for backport to this 6.18.y tree: real
+unchecked-failure bug, small maintainer-reviewed fix, applies cleanly.
+
+ fs/fuse/backing.c | 2 +-
+ fs/fuse/fuse_i.h  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/fuse/backing.c b/fs/fuse/backing.c
+index 4afda419dd141..c924e38646db4 100644
+--- a/fs/fuse/backing.c
++++ b/fs/fuse/backing.c
+@@ -118,7 +118,7 @@ int fuse_backing_open(struct fuse_conn *fc, struct fuse_backing_map *map)
+ 		goto out_fput;
  
- 		cur_ref = gnttab_claim_grant_reference(&priv_gref_head);
--		if (cur_ref < 0)
--			return cur_ref;
-+		if (cur_ref < 0) {
-+			ret = cur_ref;
-+			goto out_free_refs;
-+		}
+ 	fb->file = file;
+-	fb->cred = prepare_creds();
++	fb->cred = get_current_cred();
+ 	refcount_set(&fb->count, 1);
  
- 		frame = xen_page_to_gfn(virt_to_page(buf->directory +
- 						     PAGE_SIZE * i));
-@@ -459,11 +461,13 @@ static int grant_references(struct xen_front_pgdir_shbuf *buf)
- 	if (buf->ops->grant_refs_for_buffer) {
- 		ret = buf->ops->grant_refs_for_buffer(buf, &priv_gref_head, j);
- 		if (ret)
--			return ret;
-+			goto out_free_refs;
- 	}
+ 	res = fuse_backing_id_alloc(fc, fb);
+diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
+index c288f28f6c6ea..b5bd676997874 100644
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -99,7 +99,7 @@ struct fuse_submount_lookup {
+ /** Container for data related to mapping to backing file */
+ struct fuse_backing {
+ 	struct file *file;
+-	struct cred *cred;
++	const struct cred *cred;
  
-+	ret = 0;
-+out_free_refs:
- 	gnttab_free_grant_references(priv_gref_head);
--	return 0;
-+	return ret;
- }
- 
- /*
+ 	/** refcount */
+ 	refcount_t count;
 -- 
 2.53.0
 
