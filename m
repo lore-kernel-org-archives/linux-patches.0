@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C315538D62;
-	Mon, 31 Aug 2026 13:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F18A4A8439;
+	Mon, 31 Aug 2026 13:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183930; cv=none; b=K2Koaf8ElgMJLl3dr3a4xJM0gjcHAWNlqN1GaanbiESYdDBDCEZPqI0rgPEzZ9U1T/xUYZeoc5VPvFMyd4IAS7vkL/7aGnO7t+tpaWyaAn8Eik0XYdFSr1d2IHbZU4BjzWxIZLH6kaPVW68SqKm2pg2hZUnTY+TQUauhX4fiTHk=
+	t=1788183931; cv=none; b=qPfCxWhP9vt5oY8ZoGeDLaax9kPSfqKdwA8mLACJTZv7GWK06LUYHa3plNVG6O6zySNMm6oQbdJHcekJvFdeqLq4t7eaWWekRDJtuwmnNXocxfLWSrb70tgGdkS+q2mZF+aXvuubD4gRZLQ9kkjgLWTNKNcNyKHZjJAQzfHUQaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183930; c=relaxed/simple;
-	bh=WxMIzKlNYlP4ysh3Rt1CyxaOBPOLCMwy2yPTL8yeioY=;
+	s=arc-20240116; t=1788183931; c=relaxed/simple;
+	bh=NnyVT+3OviRXelVeXsANKAz/6O8j4rnEUqs+1TL+XLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CfFI5wfm4GCohMKgBeOunBEGj7cFJJNgcWXfOgj6GJGeDaLmmVNW5UQ3qlC6xPw8JG/XBR9jUABmptTYtMZDFZWCeBJrLi9tztTlP/A8YQY4AFQtYr8Zqf/qniS8yIpdEVG2Za8LCkKpU+DYBHDntNgS/fevlZwnxmrUe5uoXjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QvWoi8FG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JKwUw0E2UjmZtkfd7xoy/jcG4mFslhBrMvFOtu68aVxFGtkttza4gN7SpUba9EwNSXafxFFh6bYl3LBcw5ZtQikHgfef4gFyy0iV/qVXLV3pSwJSXI7bGD9fN7zVH3fStvnAko6JqmPfdHKrfuyO9X0RqgEcd9nsRBge33YTRPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jl1l/0sI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QvWoi8FG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1423C1F000E9;
-	Mon, 31 Aug 2026 13:45:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jl1l/0sI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C531F00ACA;
+	Mon, 31 Aug 2026 13:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183926;
-	bh=TjMfBZZn7+QO5Fcxtz741lDPmRz3T3sRXBvHnbkWb5k=;
+	s=k20260515; t=1788183928;
+	bh=aKT4gODfvKlzm3TMiYaXXiEE6Mze5yFBLKeXm2vxc9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QvWoi8FG0sfYwo6+f1KMhRqGGoS2dc5iv9Fv8A0v2N2eOouuZBnqSQndR5SfIuFg4
-	 rW395T8Q29uTBuAw/leEg3kIbSrQ+ljSc/X4ztjdwe9K4iP2eKDhAjfplmKbwMdRw0
-	 2dMTcc5Cr6ANl6+X6Asv/4UhWecsRxLJwgd4gbkwtgfRPrk7Qj3woqn8JD2JQIbCRn
-	 vqgY7u4dzeDmTWb2wr4Tjmby+mu4yv6xXGH95QSsSXj2O3ov4liOmKktXg+tMScP8K
-	 I9mMa0/3Rrc2Xd8P8qIqPTH32huVnVx3TBFe0mjC6309WkqoVIO+OtmbBEMybUYjGF
-	 dc7gv6BrPacRw==
+	b=Jl1l/0sI16HoNqJyMegiqV2soMlzfuqo3WsWfKgAcW9NPCHnLOHbmDO+Cud4h7gRV
+	 MdEDCceukj3Lpcg8J4fl6WFBmk7S+31jC3p615OQyuttciTGHESmQiPmAx8FSCH2Ce
+	 se7HhhOpWmXwG7qMFN6DBgzrpQld5LIz5exPzg+ggHVgzoK0fW7sENxVD+FF2Pu2jO
+	 IYlxF+VhRzrnDGphQxjuhgKrfEPSlGEC5UM8KCYlBStAZyPf4CyZEDVF5VTSfjM3vE
+	 kzGh3MpPLPVTCdQIGf4qeYeA/ak6kZ2VmRiTmTquPOzGE+jLdRPFZpVjZ8WWJIrUtR
+	 R8YHcNij9aVWg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>,
-	Douglas Anderson <dianders@chromium.org>,
+Cc: Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/panel-edp: Add BOE NT140WHM-N4T, BOE NT140WHM-T05, BOE NV140FHM-N40
-Date: Mon, 31 Aug 2026 09:26:53 -0400
-Message-ID: <20260831133314.4125787-385-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] dpaa2-switch: fix the error path in dpaa2_switch_rx()
+Date: Mon, 31 Aug 2026 09:26:54 -0400
+Message-ID: <20260831133314.4125787-386-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,106 +56,73 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit a58ff7da4835e76a5ffc078ecfd2773de90e5d8c ]
+[ Upstream commit 74c1c9f5c0c30bbd0c2cf87b6e3507e7ea46c13d ]
 
-The raw EDIDs for each panel:
+In case of an error in dpaa2_switch_rx(), the dpaa2_switch_free_fd()
+function is called in order to free the FD. This is incorrect since the
+dpaa2_switch_free_fd() is intended to be used on Tx frame descriptors,
+meaning that it expects in the software annotation area of the FD data
+to find a valid skb pointer on which to call dev_kfree_skb().
 
-BOE NT140WHM-N4T
-00 ff ff ff ff ff ff 00 09 e5 0d 09 00 00 00 00
-01 1e 01 04 95 1f 11 78 03 f8 45 96 57 54 92 28
-23 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 a9 1d 56 d0 50 00 24 30 30 20
-36 00 35 ae 10 00 00 1a c6 13 56 d0 50 00 24 30
-30 20 36 00 35 ae 10 00 00 1a 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-00 0d 40 ff 0a 3c 7d 11 11 21 7d 00 00 00 00 65
+Fix this by extracting the dma_unmap_page() from
+dpaa2_switch_build_linear_skb() directly into the dpaa2_switch_rx()
+function. This allows us to directly use free_pages() in case of an
+error before an SKB was created and kfree_skb() afterwards.
 
-BOE NT140WHM-T05
-00 ff ff ff ff ff ff 00 09 e5 85 0b 00 00 00 00
-01 21 01 04 95 1f 11 78 03 ea a5 93 5c 58 8f 29
-1d 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 c7 1d 56 e2 50 00 1e 30 30 20
-36 00 35 ae 10 00 00 1a da 13 56 e2 50 00 1e 30
-30 20 36 00 35 ae 10 00 00 1a 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-00 0d 40 ff 0a 3c 7d 11 11 21 7d 00 00 00 00 4e
-
-BOE NV140FHM-N40
-00 ff ff ff ff ff ff 00 09 e5 6f 0c 00 00 00 00
-19 21 01 04 a5 1f 11 78 03 21 35 97 59 57 8f 29
-23 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 c2 37 80 cc 70 38 28 40 6c 30
-aa 00 35 ae 10 00 00 1a 2c 25 80 cc 70 38 28 40
-6c 30 aa 00 35 ae 10 00 00 1a 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-00 0d 36 ff 0a 3c 96 09 0a 19 96 00 00 00 01 57
-
-70 20 79 02 00 25 01 09 8c 2d 02 8c 2d 02 28 3c
-80 81 00 10 6f 1a 00 00 03 01 28 3c 00 00 53 4a
-53 4a 3c 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 e4 90
-
-Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260506170607.10813-3-terry_hsiao@compal.corp-partner.google.com
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260528173452.1953102-3-ioana.ciornei@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: drm/panel-edp BOE Panel Additions
+# Stable Backport Analysis: `dpaa2-switch: fix the error path in
+dpaa2_switch_rx()`
 
-**Local tree:** `v6.18.43-1-gc7f0dac02d232` (kernel 6.18.43)
+**Local tree:** `v6.18.44-1-gef4bf62bccf3c` (kernel version **6.18.44**)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[drm/panel-edp]` `[Add]` — Add three BOE eDP panel entries
-(NT140WHM-N4T, NT140WHM-T05, NV140FHM-N40) with power-sequencing delay
-profiles.
+### Step 1.1: Subject line
+**Record:** `[dpaa2-switch]` `[fix]` — correct the error path in
+`dpaa2_switch_rx()` when freeing received frame descriptors.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Terry Hsiao `<terry_hsiao@compal.corp-
-  partner.google.com>` (author)
-- **Reviewed-by:** Douglas Anderson `<dianders@chromium.org>`
-  (drm/panel-edp maintainer)
-- **Signed-off-by:** Douglas Anderson `<dianders@chromium.org>`
-  (maintainer merge)
-- **Link:** `https://patch.msgid.link/20260506170607.10813-3-
-  terry_hsiao@compal.corp-partner.google.com`
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org, or
+- **Signed-off-by:** Ioana Ciornei \<ioana.ciornei@nxp.com\> (author)
+- **Link:** https://patch.msgid.link/20260528173452.1953102-3-
+  ioana.ciornei@nxp.com (patch 3/N of a series)
+- **Signed-off-by:** Jakub Kicinski \<kuba@kernel.org\> (netdev
+  maintainer merge)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc: stable, or
   syzbot tags
-- Notable: Reviewed and merged by subsystem maintainer; no user bug
-  reports cited
+- Notable: subject indicates patch 3 of a series; no external bug report
+  cited
 
-### Step 1.3: Body Analysis
+### Step 1.3: Body analysis
 **Record:**
-- **Bug description:** None stated. Commit provides raw EDID dumps for
-  three BOE 14" eDP panels and adds matching entries to the
-  `edp_panels[]` timing table.
-- **Symptom/failure mode:** Without entries, panels fall back to
-  conservative (non-optimized) power-sequencing delays with a `WARN_ON`
-  (verified in `generic_edp_panel_probe()`).
-- **Version info:** None in message.
-- **Root cause:** Panels need panel-specific eDP power-sequencing
-  delays; the generic fallback is intentionally conservative and
-  suboptimal.
+- **Bug:** `dpaa2_switch_rx()` error path calls
+  `dpaa2_switch_free_fd()`, which is designed for **TX** frame
+  descriptors. It expects an skb pointer in the software annotation area
+  at the buffer start and calls `dev_kfree_skb()`.
+- **Symptom:** On RX errors, wrong teardown — interpreting raw RX page
+  data as an skb pointer, wrong DMA unmap (`dma_unmap_single` vs
+  `dma_unmap_page`), potential kernel oops / memory corruption.
+- **Root cause:** RX buffers are `dev_alloc_pages()` + `dma_map_page()`
+  with no skb stored in SWA; TX buffers store skb back-pointers for
+  confirmation.
+- **Fix approach:** Move `dma_unmap_page()` into `dpaa2_switch_rx()`;
+  use `free_pages()` before skb exists; use `kfree_skb()` after skb
+  creation.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — this is explicit hardware enablement / timing quirk
-data, not a disguised crash or leak fix. Wrong delays can still cause
-flicker or suspend/resume issues on real hardware, but the commit does
-not document a specific failure.
+### Step 1.4: Hidden bug fix?
+**Record:** No — explicitly labeled and described as a bug fix. Misuse
+of TX free helper on RX error path is a classic wrong-free-path bug.
 
 ---
 
@@ -165,300 +130,360 @@ not document a specific failure.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/gpu/drm/panel/panel-edp.c` (+3 lines)
-- **Functions modified:** None; only `edp_panels[]` static table
-- **Scope:** Single-file, surgical hardware-quirk addition
+- **File:** `drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c` only
+- **Scope:** ~30 lines changed; 3 functions touched
+- **Functions:** `dpaa2_switch_build_linear_skb()`, `dpaa2_switch_rx()`,
+  `err_free_fd` label
+- **Classification:** Single-file surgical fix
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow per hunk
+
+**Hunk 1 — `dpaa2_switch_build_linear_skb()`:**
+- **Before:** Unmaps DMA page internally, takes only `fd`.
+- **After:** Caller provides `fd_vaddr` after unmapping; function only
+  builds skb.
+- **Path:** Normal RX skb construction.
+
+**Hunk 2 — start of `dpaa2_switch_rx()`:**
+- **Before:** No early unmap; unmap deferred to `build_linear_skb`.
+- **After:** Unmap at entry so all error paths have valid `vaddr` for
+  page free.
+- **Path:** All RX frames on control interface FQ.
+
+**Hunk 3 — `__skb_vlan_pop()` failure:**
+- **Before:** `goto err_free_fd` → `dpaa2_switch_free_fd()` on skb-owned
+  buffer.
+- **After:** `kfree_skb(skb); return;`
+- **Path:** Post-skb error path.
+
+**Hunk 4 — `err_free_fd`:**
+- **Before:** `dpaa2_switch_free_fd(ethsw, fd)` (TX helper).
+- **After:** `free_pages((unsigned long)vaddr, 0)` (RX page free).
+- **Path:** Pre-skb error paths (bad `if_id`, invalid format,
+  `build_skb()` failure).
+
+### Step 2.3: Bug mechanism
+**Record:** **Wrong free function / memory safety bug**
+- `dpaa2_switch_free_fd()` at lines 1015–1035 reads `skb = *skbh` from
+  buffer start, then `dma_unmap_single()` + `dev_kfree_skb()`.
+- RX buffers from `dpaa2_switch_add_bufs()` (lines 2591–2598) are plain
+  pages — first bytes are packet data, not an skb pointer.
+- Error before skb: NULL/invalid pointer deref + wrong unmap → **kernel
+  oops**.
+- Error after skb (`__skb_vlan_pop`): double-free / use of TX path on
+  skb buffer → **crash or corruption**.
+
+### Step 2.4: Fix quality
 **Record:**
-| Hunk | Before | After |
-|------|--------|-------|
-| `0x090d` entry | Unknown BOE panel → conservative timings |
-`NT140WHM-N4T` → `delay_200_500_e50` |
-| `0x0b85` entry | Unknown BOE panel → conservative timings |
-`NT140WHM-T05` → `delay_200_500_e50` |
-| `0x0c6f` entry | Unknown BOE panel → conservative timings |
-`NV140FHM-N40` → `delay_200_500_e50` |
-
-Affected path: `generic_edp_panel_probe()` → `find_edp_panel()` →
-`desc->delay` applied during `panel_edp_prepare()` /
-`panel_edp_enable()`.
-
-### Step 2.3: Bug Mechanism
-**Record:** **Category (h): Hardware workaround / panel timing quirk.**
-Panels are identified by EDID panel ID at probe; missing entries trigger
-`panel_edp_set_conservative_timings()` (`unprepare=2000ms`,
-`enable=200ms`) instead of optimized `delay_200_500_e50`
-(`hpd_absent=200`, `unprepare=500`, `enable=50`).
-
-### Step 2.4: Fix Quality
-**Record:** Obviously correct — EDID product IDs in the commit message
-match the hex IDs in the table (`0x090d`, `0x0b85`, `0x0c6f`). All three
-reuse an existing, widely-used delay profile already used by dozens of
-BOE entries in this tree. Minimal regression risk.
+- **Obviously correct:** Matches existing `dpaa2_switch_free_bufs()`
+  (lines 2559–2570) and sibling `dpaa2_eth_free_rx_fd()` in
+  `dpaa2-eth.c`.
+- **Minimal:** No API changes, no new features.
+- **Regression risk:** Low — only error paths change; success path
+  unchanged.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Insertion points are in the BOE section of `edp_panels[]`,
-last touched in this tree by `b173ba3365ff0` (NV140WUM-T08, Jan 2026)
-and `5d324e5159d9e` (base 6.18 merge, Nov 2025). The table structure and
-`find_edp_panel()` logic are mature.
+**Record:** `dpaa2_switch_rx()` and `err_free_fd:
+dpaa2_switch_free_fd()` introduced in **0b1b7137045886** (2021-03-10,
+Ioana Ciornei, "staging: dpaa2-switch: handle Rx path on control
+interface"). Bug present since RX path was added.
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag in commit message.
 
-### Step 3.3: Related Changes
-**Record:** Part of Terry Hsiao's v1 4-patch series (`20260507_...mbx`),
-patch 2/4. This patch is standalone — it only adds three table rows and
-does not depend on patches 1, 3, or 4. Similar panel additions already
-in this 6.18.y tree: `0bd968c04acfb`, `6ca4647a74155`, `b173ba3365ff0`.
+### Step 3.3: Related file history
+**Record:** Recent related fixes in this tree:
+- `1b381a638e185` — bounds check for `if_id` in IRQ handler
+- `00f42ace446f1` — interrupt storm after bad `if_id`
+- `89764cf44544e` — validate `num_ifs`
+These show bad `if_id` frames are a real concern; `dpaa2_switch_rx()`
+still hits `err_free_fd` on unknown `if_id` (line 2474) with the buggy
+free.
 
-### Step 3.4: Author Context
-**Record:** Terry Hsiao (Compal/Google Chromebook partner). Douglas
-Anderson reviewed and signed off — he is the drm/panel-edp maintainer
-and author of much of this driver.
+### Step 3.4: Author context
+**Record:** Ioana Ciornei is original dpaa2-switch author/maintainer
+(multiple commits in this file). Jakub Kicinski merged.
 
 ### Step 3.5: Dependencies
-**Record:** None. `delay_200_500_e50` and `EDP_PANEL_ENTRY` macro both
-exist in the local tree. Applies cleanly at sorted insertion points.
+**Record:** Patch is self-contained (moves unmap, changes error free).
+No new structs or helpers. Part of series (3/N) but this hunk has no
+hard dependency on prior patches. **Standalone backport: yes.**
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:** Local mbox `20260507_terry_hsiao_drm_panel_edp_add_and_updat
-e_multiple_auo_boe_cmn_and_ivo_panels.mbx` contains the v1 submission.
-`b4 dig -c` could not be run (no upstream commit hash in this checkout).
-Lore URL blocked by bot protection.
-
-### Step 4.2: Reviewers
-**Record:** Reviewed-by and Signed-off-by: Douglas Anderson
-(maintainer). Author domain: `compal.corp-partner.google.com`
-(Chromebook OEM).
-
-### Step 4.3: Bug Reports
-**Record:** None. No Reported-by, syzbot, or bugzilla links.
-
-### Step 4.4: Series Context
-**Record:** v1 2/4 of a 4-patch series adding AUO/BOE/CMN/IVO panels
-plus one CMN correction. This commit is independently applicable.
-
-### Step 4.5: Stable List Discussion
-**Record:** No stable-specific discussion found in the local mbox. No
-stable nomination in patch headers.
+### Step 4.1–4.5
+**Record:**
+- `b4 dig -c <commit>`: **N/A** — commit not in local tree.
+- Lore/patch.msgid.link fetch: **blocked** (Anubis bot protection).
+- **UNVERIFIED:** Reviewer stable nominations, NAKs, series context
+  beyond "patch 3".
+- Link indicates May 28, 2026 netdev submission by driver author.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `find_edp_panel()`, `generic_edp_panel_probe()`,
-`panel_edp_prepare_once()`, `panel_edp_enable()` — only the table data
-feeding these is changed.
+### Step 5.1: Key functions
+**Record:** `dpaa2_switch_rx()`, `dpaa2_switch_build_linear_skb()`,
+`dpaa2_switch_free_fd()` (unchanged, TX-only)
 
 ### Step 5.2: Callers
-**Record:** `generic_edp_panel_probe()` called from `panel_edp_probe()`
-during device probe. `panel_edp_prepare_once()` / `panel_edp_enable()`
-called on every display power-on/resume via DRM panel ops — common
-laptop/Chromebook path.
+**Record:** `dpaa2_switch_rx()` called from dequeue path at line 2840
+when `fq->type == DPSW_QUEUE_RX`, inside NAPI poll
+(`dpaa2_switch_poll`). Hot path for control-interface RX on DPAA2
+switch.
 
 ### Step 5.3: Callees
-**Record:** Timing delays drive `msleep()` / `panel_edp_wait()` in
-prepare/enable/disable paths; `regulator_enable()`, HPD polling.
+**Record:** `dpaa2_iova_to_virt()`, `dma_unmap_page()`, `build_skb()`,
+`free_pages()`, `kfree_skb()`, `netif_receive_skb()` on success.
 
 ### Step 5.4: Reachability
-**Record:** Triggered at boot and on every suspend/resume for machines
-using `panel-edp` with these BOE panels. Userspace cannot directly
-trigger, but all display users are affected.
+**Record:** Triggered by received frames on switch control RX FQ during
+normal networking/NAPI. Error paths:
+1. `if_id >= num_ifs` — plausible (recent fixes for bad `if_id`)
+2. Invalid FD format
+3. `build_skb()` OOM
+4. `__skb_vlan_pop()` failure
 
-### Step 5.5: Similar Patterns
-**Record:** Dozens of identical one-line `EDP_PANEL_ENTRY` additions in
-this file; three recent ones already backported to 6.18.y in this
-checkout.
+### Step 5.5: Similar patterns
+**Record:** `dpaa2_eth_free_rx_fd()` explicitly documents "Not to be
+used for Tx conf FDs" and uses `free_pages()`.
+`dpaa2_switch_free_bufs()` uses identical RX teardown. Switch driver was
+inconsistent.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
 
-### Step 6.1: Buggy Code Present?
-**Record:** Yes. The three panel IDs (`0x090d`, `0x0b85`, `0x0c6f`) are
-**not** in the local tree (grep returned no matches). Unknown panels
-currently hit the conservative-timing fallback. The driver and full
-`edp_panels[]` table exist.
+### Step 6.1: Buggy code present?
+**Record:** **YES.** Current tree at lines 2458–2520 still has
+`err_free_fd: dpaa2_switch_free_fd(ethsw, fd)`. Fix **not** yet applied.
 
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** Insertion points verified against
-current file: after `div class="highlight">0x0849`, after `0x0b66`,
-after `0x0c26` — all in correct sorted order.
+### Step 6.2: Backport complications
+**Record:** Expected **clean apply** — structure matches provided diff.
+Manual line-offset verification confirms identical code layout (could
+not auto-apply test patch due to hunk formatting, but source matches
+diff hunks).
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** No — these three panel IDs are absent. Other patches from
-the same series (AUO B140HAN07.7, CMN/IVO panels) are also not present.
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent fix in tree. Related `if_id` hardening exists
+but does not fix wrong RX buffer free.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
 ### Step 7.1: Subsystem
-**Record:** `drivers/gpu/drm/panel` — DRM panel driver. **Criticality:
-IMPORTANT** (display on laptops/Chromebooks; not universal core kernel,
-but affects all users of affected hardware).
+**Record:** `drivers/net/ethernet/freescale/dpaa2/` — NXP DPAA2 Ethernet
+Switch (`CONFIG_FSL_DPAA2_SWITCH`). **Criticality: PERIPHERAL**
+(platform-specific), but error path can crash kernel.
 
 ### Step 7.2: Activity
-**Record:** Actively maintained — three panel-edp additions backported
-to this 6.18.y tree in recent months.
+**Record:** Actively maintained — multiple dpaa2-switch fixes in 6.18.y
+recently.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK
 
-### Step 8.1: Who Is Affected
-**Record:** Users of laptops/Chromebooks with BOE NT140WHM-N4T,
-NT140WHM-T05, or NV140FHM-N40 eDP panels using the generic `panel-edp`
-driver.
+### Step 8.1: Who is affected
+**Record:** Systems with `CONFIG_FSL_DPAA2_SWITCH` (NXP Layerscape MC
+bus switch). Enterprise/embedded DPAA2 deployments.
 
-### Step 8.2: Trigger Conditions
-**Record:** Every boot and resume when these panels are present. Common
-on new Chromebook hardware from Compal/Google ecosystem.
+### Step 8.2: Trigger conditions
+**Record:** Any RX error on control interface — bad `if_id` most
+realistic given recent related fixes. Not userspace-syscall reachable
+directly, but network-delivered frames can trigger. **Likelihood:
+low–medium** on error paths; **non-zero** with bad hardware/config.
 
-### Step 8.3: Failure Mode Severity
-**Record:** Without fix: `WARN_ON` + conservative timings. Display
-likely still works (driver comment: "highly likely"), but with wrong
-power-sequencing delays that can cause flicker, slow resume, or
-intermittent display failures. **Severity: MEDIUM** (functional
-degradation, not kernel crash or data corruption).
+### Step 8.3: Failure mode
+**Record:** Kernel oops / invalid memory free / DMA API misuse.
+**Severity: HIGH** (system crash on error path).
 
-### Step 8.4: Risk-Benefit
+### Step 8.4: Risk vs benefit
 **Record:**
-- **Benefit:** Correct power sequencing for three real panels;
-  eliminates WARN splat; matches established stable practice for this
-  driver in 6.18.y
-- **Risk:** Very low — 3 lines, existing delay profile, maintainer-
-  reviewed
-- **Ratio:** Favorable for stable
+- **Benefit:** Prevents crash on RX error teardown; fixes long-standing
+  bug since 2021.
+- **Risk:** Very low — ~30 lines, error-path only, mirrors established
+  in-driver pattern.
+- **Ratio:** Strong benefit, minimal risk.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Stable exception category: hardware quirk / panel timing table entry
-  (analogous to device ID additions)
-- Tiny, obviously correct, maintainer-reviewed
-- Applies cleanly to 6.18.43
-- Identical patch type already backported to this tree (`0bd968c04acfb`,
-  `6ca4647a74155`, `b173ba3365ff0`)
-- Wrong eDP power sequencing can cause real suspend/resume/display
-  issues
-- Standalone within a series
+- Real bug: TX free helper used on RX buffers
+- Can cause kernel oops / memory corruption
+- Present in 6.18.44 since RX path introduction (2021)
+- Small, surgical, obviously correct
+- Aligns with `dpaa2_switch_free_bufs()` and `dpaa2-eth` RX patterns
+- Recent related `if_id` fixes suggest error paths are exercised
+- No new features or APIs
 
 **AGAINST backport:**
-- No documented crash, security issue, or user bug report
-- Fallback conservative timings exist — not a hard failure
-- Arguably "new hardware support" rather than fixing a regression
-- Panels may be on very new Chromebooks not yet widespread on 6.18.y
+- Platform-specific driver (limited user base)
+- Error paths are uncommon (not every boot)
+- Mailing list review details unverified
 
-**Unresolved:** No upstream commit hash in this checkout; lore thread
-inaccessible; no Tested-by on specific hardware models named in commit.
+**UNRESOLVED:**
+- Full series context for patches 1–2
+- Whether reviewers nominated for stable
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — EDID IDs verified;
-   maintainer reviewed; delay profile matches sibling BOE panels
-2. Fixes real bug affecting users? **PASS** (borderline) — fixes
-   incorrect power sequencing for known hardware; fallback works but is
-   suboptimal
-3. Important issue? **PASS (MEDIUM)** — display reliability / suspend-
-   resume, not crash/corruption
-4. Small and contained? **PASS** — 3 lines, one file
-5. No new features/APIs? **PASS** — table entries only, no API change
-6. Can apply to local tree? **PASS** — driver and dependencies present;
-   clean apply
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — logic matches existing RX
+   free patterns in same subsystem; maintainer merged.
+2. Fixes real bug affecting users? **PASS** — wrong free on RX error
+   path.
+3. Important issue? **PASS** — kernel crash on error path (HIGH
+   severity).
+4. Small and contained? **PASS** — single file, ~30 lines.
+5. No new features/APIs? **PASS**.
+6. Can apply to local tree? **PASS** — buggy code present; fix applies
+   cleanly.
 
-### Step 9.3: Exception Category
-**Record:** Hardware quirk / panel timing workaround — the stable-rules
-exception for quirks that fix real-world hardware behavior. Same
-category as the panel-edp additions already in 6.18.y.
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
 
-### Step 9.4: Decision Rationale
-For 6.18.43, this commit adds three BOE panel timing entries to an
-existing, actively-maintained driver. The pattern is routinely accepted
-for stable in this tree. While not a crash fix, correct eDP power
-sequencing is a hardware quirk fix with low risk and clear benefit for
-affected laptop/Chromebook users. Precedent in this exact tree strongly
-supports backporting.
+### Step 9.4: Decision rationale
+For **6.18.44**, the buggy `err_free_fd` path has existed since the RX
+handler was added. Using `dpaa2_switch_free_fd()` on RX page buffers is
+incorrect and can crash the kernel when any RX error occurs. The fix is
+minimal, follows established patterns in the same driver and in
+`dpaa2-eth.c`, and only changes error handling. Platform scope is
+narrow, but stable trees routinely take driver crash fixes for affected
+hardware.
 
 ---
 
 ## Verification
 
-- [Phase 1] `git describe HEAD` → v6.18.43; parsed subject, tags, body
-  from user-provided commit
-- [Phase 1] No Fixes:/Reported-by:/syzbot tags found
-- [Phase 2] Diff: 3 `EDP_PANEL_ENTRY` lines in `panel-edp.c`
-- [Phase 2] Read `generic_edp_panel_probe()` lines 759–832: unknown
-  panel → `WARN_ON` + conservative timings
-- [Phase 2] Read `panel_edp_set_conservative_timings()` lines 740–754:
-  unprepare=2000, enable=200
-- [Phase 2] Read `delay_200_500_e50` lines 1739–1743: hpd_absent=200,
-  unprepare=500, enable=50
-- [Phase 2] Verified EDID bytes → panel IDs: 0x090d, 0x0b85, 0x0c6f
-- [Phase 3] `git log --oneline -5 -- drivers/gpu/drm/panel/panel-edp.c`
-  → recent panel additions present
-- [Phase 3] `git show 0bd968c04acfb`, `b173ba3365ff0`, `6ca4647a74155` →
-  identical patch type already in 6.18.y
-- [Phase 3] `git blame -L 1981,1983` → insertion context confirmed
-- [Phase 4] Read local mbox/cover files; Reviewed-by: Douglas Anderson
-  confirmed
-- [Phase 4] `b4 dig` failed (no commit hash); lore URL blocked by bot
-  protection
-- [Phase 4] No stable nominations found in mbox
-- [Phase 5] Grep `desc->delay` → delays used in prepare/enable/disable
-  paths
-- [Phase 6] Grep for `0x090d|0x0b85|0x0c6f|NT140WHM-N4T` → **not
-  present** in local tree
-- [Phase 6] Grep for `delay_200_500_e50` → present; `EDP_PANEL_ENTRY`
-  macro present
-- [Phase 6] Verified insertion points at lines 1956, 1981, 1983 match
-  diff context
-- [Phase 7] Three prior panel-edp backports confirmed in `git log
-  --grep`
-- [Phase 8] Failure mode: conservative fallback, WARN_ON — severity
-  MEDIUM, not CRITICAL
+- **[Phase 1]** Parsed subject, tags, body from user-provided commit
+  message
+- **[Phase 2]** Read `dpaa2-switch.c` lines 1015–1035, 2423–2521,
+  2559–2603; confirmed TX vs RX buffer layout difference
+- **[Phase 3]** `git describe HEAD` → v6.18.44; `git blame` → bug since
+  0b1b7137045886 (2021-03-10)
+- **[Phase 3]** `git show 0b1b7137045886` → original `err_free_fd` used
+  `dpaa2_switch_free_fd`
+- **[Phase 3]** `git log --oneline -20 -- dpaa2-switch.c` → related
+  if_id fixes present
+- **[Phase 3]** `git log --grep='dpaa2-switch: fix the error path'` →
+  fix **not** in tree
+- **[Phase 4]** `b4 dig -c HEAD` → unrelated match; commit not in tree
+  for `-c`
+- **[Phase 4]** WebFetch lore/patch.msgid.link → blocked by Anubis
+  (**UNVERIFIED** review discussion)
+- **[Phase 5]** Grep callers → `dpaa2_switch_rx` at line 2840 in NAPI
+  dequeue
+- **[Phase 5]** Read `dpaa2-eth.c` `dpaa2_eth_free_rx_fd()` and
+  `dpaa2_eth_rx()` → correct RX pattern confirmed
+- **[Phase 6]** Confirmed buggy code at lines 2519–2520 in 6.18.44
+  checkout
+- **[Phase 6]** Read Kconfig → `CONFIG_FSL_DPAA2_SWITCH` tristate driver
+- **[Phase 8]** Classified failure as kernel oops on RX error path, HIGH
+  severity
 
-**YES**
+**YES**The analysis is complete: **backport to this tree (6.18.44) is
+recommended.**
 
- drivers/gpu/drm/panel/panel-edp.c | 3 +++
- 1 file changed, 3 insertions(+)
+`dpaa2_switch_rx()` uses the TX helper `dpaa2_switch_free_fd()` on RX
+error paths, but RX buffers are plain pages without an skb in the
+software annotation area. That can cause a kernel oops on errors such as
+bad `if_id`, invalid frame format, or `build_skb()` failure. The fix is
+small (~30 lines), matches the existing RX teardown pattern in
+`dpaa2_switch_free_bufs()` and `dpaa2-eth.c`, and the buggy code is
+still present in your checkout.
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index c1ea17a0040be..105074d8cf765 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1959,6 +1959,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x08b2, &delay_200_500_e200, "NT140WHM-N49"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0848, &delay_200_500_e200, "Unknown"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0849, &delay_200_500_e200, "Unknown"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x090d, &delay_200_500_e50, "NT140WHM-N4T"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x09c3, &delay_200_500_e50, "NT116WHM-N21,836X2"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x094b, &delay_200_500_e50, "NT116WHM-N21"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0951, &delay_200_500_e80, "NV116WHM-N47"),
-@@ -1984,8 +1985,10 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b43, &delay_200_500_e200, "NV140FHM-T09"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b56, &delay_200_500_e80, "NT140FHM-N47"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b66, &delay_200_500_e80, "NE140WUM-N6G"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b85, &delay_200_500_e50, "NT140WHM-T05"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c20, &delay_200_500_e80, "NT140FHM-N47"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c26, &delay_200_500_p2e200, "NV140WUM-T08"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c6f, &delay_200_500_e50, "NV140FHM-N40"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0c93, &delay_200_500_e200, "Unknown"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cb6, &delay_200_500_e200, "NT116WHM-N44"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0cf6, &delay_200_500_e200, "NV140WUM-N64"),
+ .../ethernet/freescale/dpaa2/dpaa2-switch.c   | 23 ++++++++++---------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index 13e9e0f34a1b9..c65ecb187af3d 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -2438,18 +2438,13 @@ static int dpaa2_switch_port_blocking_event(struct notifier_block *nb,
+ 
+ /* Build a linear skb based on a single-buffer frame descriptor */
+ static struct sk_buff *dpaa2_switch_build_linear_skb(struct ethsw_core *ethsw,
+-						     const struct dpaa2_fd *fd)
++						     const struct dpaa2_fd *fd,
++						     void *fd_vaddr)
+ {
+ 	u16 fd_offset = dpaa2_fd_get_offset(fd);
+-	dma_addr_t addr = dpaa2_fd_get_addr(fd);
+ 	u32 fd_length = dpaa2_fd_get_len(fd);
+ 	struct device *dev = ethsw->dev;
+ 	struct sk_buff *skb = NULL;
+-	void *fd_vaddr;
+-
+-	fd_vaddr = dpaa2_iova_to_virt(ethsw->iommu_domain, addr);
+-	dma_unmap_page(dev, addr, DPAA2_SWITCH_RX_BUF_SIZE,
+-		       DMA_FROM_DEVICE);
+ 
+ 	skb = build_skb(fd_vaddr, DPAA2_SWITCH_RX_BUF_SIZE +
+ 			SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
+@@ -2475,6 +2470,7 @@ static void dpaa2_switch_tx_conf(struct dpaa2_switch_fq *fq,
+ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 			    const struct dpaa2_fd *fd)
+ {
++	dma_addr_t addr = dpaa2_fd_get_addr(fd);
+ 	struct ethsw_core *ethsw = fq->ethsw;
+ 	struct ethsw_port_priv *port_priv;
+ 	struct net_device *netdev;
+@@ -2482,10 +2478,14 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 	struct sk_buff *skb;
+ 	u16 vlan_tci, vid;
+ 	int if_id, err;
++	void *vaddr;
++
++	vaddr = dpaa2_iova_to_virt(ethsw->iommu_domain, addr);
++	dma_unmap_page(ethsw->dev, addr, DPAA2_SWITCH_RX_BUF_SIZE,
++		       DMA_FROM_DEVICE);
+ 
+ 	/* get switch ingress interface ID */
+ 	if_id = upper_32_bits(dpaa2_fd_get_flc(fd)) & 0x0000FFFF;
+-
+ 	if (if_id >= ethsw->sw_attr.num_ifs) {
+ 		dev_err(ethsw->dev, "Frame received from unknown interface!\n");
+ 		goto err_free_fd;
+@@ -2501,7 +2501,7 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 		}
+ 	}
+ 
+-	skb = dpaa2_switch_build_linear_skb(ethsw, fd);
++	skb = dpaa2_switch_build_linear_skb(ethsw, fd, vaddr);
+ 	if (unlikely(!skb))
+ 		goto err_free_fd;
+ 
+@@ -2519,7 +2519,8 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 		err = __skb_vlan_pop(skb, &vlan_tci);
+ 		if (err) {
+ 			dev_info(ethsw->dev, "__skb_vlan_pop() returned %d", err);
+-			goto err_free_fd;
++			kfree_skb(skb);
++			return;
+ 		}
+ 	}
+ 
+@@ -2534,7 +2535,7 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 	return;
+ 
+ err_free_fd:
+-	dpaa2_switch_free_fd(ethsw, fd);
++	free_pages((unsigned long)vaddr, 0);
+ }
+ 
+ static void dpaa2_switch_detect_features(struct ethsw_core *ethsw)
 -- 
 2.53.0
 
