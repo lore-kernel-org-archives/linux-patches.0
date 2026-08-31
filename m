@@ -1,47 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92CA471D16;
-	Mon, 31 Aug 2026 13:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D71A47253A;
+	Mon, 31 Aug 2026 13:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183318; cv=none; b=H5YAxV84gPd40oPcoQeF4SQo9mJkpbLxVD4o3+7KdDAqIXuxLyYVAc1gKxMmfKs6ynGZgEWBOFBI0fA21GAPjq04t1cd9/Vlx6E6UlDV8bSTIx4IaXu3/JW8UPLk2x9a+VFEVk1b4lxl6nzurXX2VjREscNyipWi+1O060ClNCw=
+	t=1788183319; cv=none; b=XK1qMVX7OAlKeJINPs6w5pqMTgewjmR8ozuCHO6sy6Ueo91xMx5BAxC8vNZ5fOy0u+dUat5fTz+NBhmp6HuaF9sUtEswdNUMXcy4LqNg95E4uVrn/5nF1Y8LiE1S/hV5EfkulbXhfYimhvhHnaui+4h8RoKDuD0uPXbBvW8pwQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183318; c=relaxed/simple;
-	bh=QIq5xOs9tJx1RW+zdVX0iUSBuvf3LzBhaXiIkg8+nUk=;
+	s=arc-20240116; t=1788183319; c=relaxed/simple;
+	bh=Sv4s2m5IQ3UmBW0dexl0UO3KbKPH0DmEt3HrFT6Abnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PTxXg3oGE08yHry7zn2njbVW7iJrOoQzaBfeFeUszkhnchl5+5WI0tH1RPjcJB+Z26obuuntYbq/I1kJTJc1tVyGgA6t8oXALabI+LmrsrYF3COt5FAh46DF/p+IpBW8hIA655wppEQE1H+/M8oJXNqkkPyufN2VEivltEDFMVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VyQbj6NY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ic2JZMsA0NNfPHLdNgNObGZQd6ciSo5gvL8vlY5AyaIVIMOaNQlS9qMrjsEjOF1vZyvTyLcV5yWT5myjCIpUKeJIny/dw30EckuI89eTy4s6PmATvdXobouxO+cNhKiG2bYkZ8mjce8ijRyaT/3vApvKVKKIzejyfqTcs+QD/3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ijIKlTNY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VyQbj6NY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82391F00A3E;
-	Mon, 31 Aug 2026 13:35:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ijIKlTNY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37551F00A3D;
+	Mon, 31 Aug 2026 13:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183315;
-	bh=gkkilCCaBb/bCg04OyylRmI/xG9+oB/GrFqHSYyN5Dk=;
+	s=k20260515; t=1788183317;
+	bh=LIvU5vRo9fbm1kgLmtunAKbZmuCfn61AqCgbJ+/8XX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VyQbj6NY4A2x/UnMST4J0ng8dxRuHopmGAvZklO3soqG9eaCMq/U8lrkclSEY95Zq
-	 BU6JU+BHYz14oqto3xxNI/JkRauYwTkfElc2XIzqZJ60oGdk9B6wAJJQXw43L+yqVq
-	 CYkbL6R2XmXgTycp6ugvOCLVL3efzez32bwIe84jfS4CtBgljFzPkDrV5kCKKwlyFd
-	 4KHH/+A/YqrUJgAVSMCkDEGAXIqRCx71nITqTEtiRiXNDeQ0Yw4qaFgptMkIIYMhwy
-	 jRr4CmdAZXrG7dEputRC/lpUTpJIWHOU/gWj4Fp3CihdRW0uDc6Q2jJgh3HRY7V1aP
-	 zQTzmotalmdvg==
+	b=ijIKlTNYTprTvyTaEMmCei3c/572LELkNTFVs4fm4NidNU+w/niacTUmiV/MvOugv
+	 giy8cCRDWzYtKgYW7NJFbnPi1PS5zU/00Oq1B74u7Pu+F8l3znyohDZtvO7D7mrSdo
+	 hu9CtAQUCeiaJ/M8jDdgXkbxx/Zl5tkCC+cJsdIMYnuXVIX+G2h59oSBr3mT0zJwj3
+	 a4M8mUXfy/fE8LeYZ5yHiTKszULf3Ybrp0AZYjYa42POgeeh6Qt3W+1AwWwV4KPgwi
+	 snpGu4rdhg25xKOgkgtZa8mZvWrwIyjO29UGlbmztVryJmV9ZpBsOWmf+3AR6NhKUj
+	 rtTDI4MAeRLtA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Jonas Jelonek <jelonek.jonas@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	maciej.wieczor-retman@intel.com,
-	pawel.chmielewski@intel.com,
-	linux-acpi@vger.kernel.org,
-	acpica-devel@lists.linux.dev,
+	linux@armlinux.org.uk,
+	andrew@lunn.ch,
+	hkallweit1@gmail.com,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: Fix NULL pointer dereference in acpi_ns_custom_package()
-Date: Mon, 31 Aug 2026 09:21:43 -0400
-Message-ID: <20260831133314.4125787-75-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] net: sfp: apply I2C adapter quirks to limit block size
+Date: Mon, 31 Aug 2026 09:21:44 -0400
+Message-ID: <20260831133314.4125787-76-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,402 +59,403 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jonas Jelonek <jelonek.jonas@gmail.com>
 
-[ Upstream commit f8d14b7bb0063bbbd86c0e4d73edb8cea7b362bc ]
+[ Upstream commit f2a138abfb719a3bfd370ca79f00055ec81e4f59 ]
 
-acpi_ns_custom_package() unconditionally dereferences the first element
-of the package to read the _BIX version number, without checking for
-NULL:
+The SFP driver assumes all I2C adapters support reading and writing the
+pre-defined block size SFP_EEPROM_BLOCK_SIZE of 16 bytes. This constant
+was probably chosen based on good guesses and known limitations of a
+range of I2C adapters and SFP modules.
 
-    if ((*Elements)->Common.Type != ACPI_TYPE_INTEGER)
+However, I2C adapters may even support less and usually need to specify
+this via I2C quirks. Theoretically, such an adapter may provide full
+functionality but only support a read and write length of e.g. 8 bytes.
+Currently, the SFP driver doesn't account for that.
 
-When firmware returns a _BIX package whose first element is an
-unresolvable reference, ACPICA evaluates that entry to NULL.
-acpi_ns_remove_null_elements() does not strip NULL entries for
-ACPI_PTYPE_CUSTOM packages (fixed-position format would break if
-elements were shifted), so acpi_ns_custom_package() sees the NULL
-and causes a crash.
+Add handling for I2C quirks in SFP I2C configuration taking the fields
+max_read_len and max_write_len in struct i2c_adapter_quirks into account
+to further limit the maximum block size if needed.
 
-Add a NULL check for the first element (version field) before
-dereferencing it. The caller then receives AE_AML_OPERAND_TYPE
-instead of crashing.
-
-Link: https://github.com/acpica/acpica/commit/f3f111b9013b
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5674388.Sb9uPGUboI@rafael.j.wysocki
+Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260614133418.2068201-2-jelonek.jonas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ACPICA NULL Pointer Dereference in
-`acpi_ns_custom_package()`
+# Stable Backport Analysis: `net: sfp: apply I2C adapter quirks to limit
+block size`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44`, `stable/linux-6.18.y`)
+**Local tree:** `v6.18.44` (`6.18.44`, commit `2736c32da98b9`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[ACPICA] [fix] NULL pointer dereference in
-acpi_ns_custom_package()` — ACPI namespace package validation for
-predefined methods.
+### Step 1.1: Subject Line
+**Record:** `[net: sfp]` `[apply]` — Apply I2C adapter `max_read_len` /
+`max_write_len` quirks when configuring SFP EEPROM block size.
 
-### Step 1.2: Parse All Commit Message Tags
+### Step 1.2: Tags
 **Record:**
-- **Link:** https://github.com/acpica/acpica/commit/f3f111b9013b
-  (upstream ACPICA commit)
-- **Reported-by:** Xiang Mei \<xmei5@asu.edu\>
-- **Reported-by:** Weiming Shi \<bestswngs@gmail.com\> (two independent
-  reporters)
-- **Signed-off-by:** Rafael J. Wysocki \<rafael.j.wysocki@intel.com\>
-  (ACPI maintainer)
-- **Link:** https://patch.msgid.link/5674388.Sb9uPGUboI@rafael.j.wysocki
-- No `Fixes:` tag (expected for manual review)
-- No `Cc: stable@vger.kernel.org` (expected)
-- Notable: two real-world reporters; no syzbot
+- **Signed-off-by:** Jonas Jelonek, Jakub Kicinski (ignore pipeline SOB)
+- **Reviewed-by:** Maxime Chevallier (Bootlin; authored SFP SMBus
+  support in this tree)
+- **Link:** https://patch.msgid.link/20260614133418.2068201-2-
+  jelonek.jonas@gmail.com (patch 2 of a series)
+- **No** Fixes:, Reported-by:, Tested-by:, Cc: stable, syzbot, or CVE
+  tags
 
-### Step 1.3: Analyze the Commit Body Text
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** `acpi_ns_custom_package()` dereferences `(*elements)` to read
-  the `_BIX` version field without checking for NULL.
-- **Trigger:** Firmware returns a `_BIX` package whose first element is
-  an unresolvable reference → evaluates to NULL.
-  `acpi_ns_remove_null_elements()` intentionally does not strip NULLs
-  from `ACPI_PTYPE_CUSTOM` packages (fixed-position semantics).
-- **Symptom:** Kernel crash (NULL pointer dereference) instead of a
-  controlled validation error.
-- **Fix behavior:** Return `AE_AML_OPERAND_TYPE` with a warning,
-  matching existing invalid-type handling.
-- **Version info:** None specified; bug is in long-standing code.
+- **Bug:** SFP driver hardcodes `SFP_EEPROM_BLOCK_SIZE` (16) without
+  checking `i2c_adapter_quirks`.
+- **Symptom:** On adapters declaring `max_read_len` or `max_write_len`
+  below 16, `i2c_transfer()` is rejected by I2C core quirk checks →
+  EEPROM read fails → SFP module probe fails (`failed to read EEPROM`).
+- **Root cause:** `sfp_i2c_configure()` ignores
+  `i2c->quirks->max_read_len` / `max_write_len`.
+- **Version info:** None in message; patch is dated June 2026, not yet
+  in this checkout.
 
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not hidden — explicitly labeled as a NULL pointer
-dereference fix. Clear bug-fix commit.
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes. Despite “apply” wording, this is a hardware-
+compatibility bug fix: the driver issues I2C transfers larger than the
+adapter allows.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory the Changes
+### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/acpi/acpica/nsprepkg.c` (+7 lines, 0 removed)
-- **Function modified:** `acpi_ns_custom_package()`
-- **Scope:** Single-file, surgical fix
+- **File:** `drivers/net/phy/sfp.c` (+8 / −2 lines)
+- **Function:** `sfp_i2c_configure()` only
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Understand the Code Flow Change
+### Step 2.2: Code Flow Change
 **Record:**
-- **Hunk (before):** Immediately dereferences `(*elements)->common.type`
-  to validate the version integer.
-- **Hunk (after):** Adds `if (!(*elements))` guard with
-  `ACPI_WARN_PREDEFINED` and early return of `AE_AML_OPERAND_TYPE`
-  before any dereference.
-- **Path affected:** Predefined-method package validation for `_BIX`
-  (`ACPI_PTYPE_CUSTOM`).
+- **Before:** `i2c_max_block_size` set directly to 16 (I2C) or 1
+  (SMBus).
+- **After:** Compute `max_block_size`, then clamp with `min()` against
+  `i2c->quirks->max_read_len` and `max_write_len` if non-zero; assign to
+  `sfp->i2c_max_block_size` and `sfp->i2c_block_size`.
+- **Path:** Adapter configuration at probe (`sfp_i2c_get()` →
+  `sfp_i2c_configure()`), before any EEPROM access.
 
-### Step 2.3: Identify the Bug Mechanism
+### Step 2.3: Bug Mechanism
 **Record:**
-- **Category:** NULL pointer dereference (memory safety)
-- **Mechanism:** Missing NULL check before pointer dereference on
-  package element array; NULL elements are intentionally preserved for
-  custom fixed-position packages.
+- **Category:** Logic / hardware-compatibility fix.
+- **Mechanism:** `sfp_i2c_read()` chunks reads using
+  `sfp->i2c_block_size`. With block size 16 on an adapter with
+  `max_read_len=12`, `i2c_check_quirks()` in `i2c-core-base.c` returns
+  `-EINVAL` (“msg too long”) before the transfer runs. Reducing block
+  size to 12 makes chunked reads succeed.
 
-### Step 2.4: Assess the Fix Quality
+### Step 2.4: Fix Quality
 **Record:**
-- **Quality:** Obviously correct — mirrors the existing invalid-type
-  error path directly below it.
-- **Minimal:** 7 lines, no unrelated changes.
-- **Regression risk:** Very low — converts a crash into the same error
-  status (`AE_AML_OPERAND_TYPE`) already used for wrong element types;
-  caller already handles this status for repair/fallback.
+- **Quality:** High — same pattern as
+  `drivers/usb/typec/ucsi/ucsi_ccg.c` (lines 258–260).
+- **Risk:** Very low — only reduces transfer size; no API or locking
+  changes.
+- **Note:** `sfp_i2c_write()` does not chunk by block size, but SFP
+  writes are small (1–3 bytes); reads are the critical probe path.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame the Changed Lines
-**Record:** Buggy dereference introduced in commit `7952d40240855` (Bob
-Moore, 2016-05-05): "ACPICA: ACPI 6.0: Update _BIX support for new
-package element". Present in this tree since at least 2016.
+### Step 3.1: Blame
+**Record:** `sfp_i2c_configure()` introduced in `7662abf4db94`
+(2025-03-25, “Add support for SMBus module access” by Maxime
+Chevallier), which set `i2c_max_block_size = SFP_EEPROM_BLOCK_SIZE`.
+Related init fix `bef389a210e7d` (Jonas Jelonek, 2026-06-19) is already
+in this tree.
 
-### Step 3.2: Follow the Fixes: Tag
-**Record:** No `Fixes:` tag present — not applicable.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag.
 
-### Step 3.3: Check File History for Related Changes
-**Record:** Recent `nsprepkg.c` history is mostly copyright updates. No
-related NULL-check fixes for this function. Fix commit on mainline:
-`f8d14b7bb0063` (May 27, 2026). Standalone — not part of a dependent
-series for this specific fix (appeared as patch 21/27 in a larger ACPICA
-merge, but the diff is self-contained).
+### Step 3.3: Related Changes
+**Record:**
+- `bef389a210e7d` — initializes `i2c_block_size` in same function
+  (already in tree; Greg Kroah-Hartman signed stable copy).
+- `813c2dd78618f` — earlier `i2c_block_size` init at allocation.
+- Patch Link suffix `-2-` indicates series with `bef389a` as patch 1.
 
-### Step 3.4: Check the Author's Other Commits
-**Record:** Author Weiming Shi reported the bug; commit committed by
-Rafael J. Wysocki (ACPI subsystem maintainer). Strong subsystem
-ownership signal.
+### Step 3.4: Author Context
+**Record:** Jonas Jelonek authored `bef389a` (real soft-lockup fix, Cc:
+stable). Maxime Chevallier is the SFP SMBus author and reviewed this
+patch.
 
-### Step 3.5: Check for Dependent/Prerequisite Commits
-**Record:** No dependencies. `acpi_ns_custom_package()`,
-`acpi_ns_remove_null_elements()`, and `_BIX`/`ACPI_PTYPE_CUSTOM`
-definitions all exist in this tree. `git apply --check` confirms clean
-apply.
+### Step 3.5: Dependencies
+**Record:** Standalone. Requires `struct i2c_adapter_quirks` (present
+since long before SFP SMBus support) and `sfp_i2c_configure()` with
+`bef389a` (present in this tree). No other commits needed.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Find the Original Patch Discussion
-**Record:**
-- `b4 dig -c f8d14b7bb0063`: Found at
-  https://patch.msgid.link/5674388.Sb9uPGUboI@rafael.j.wysocki
-- `b4 dig -a`: Two submission contexts — standalone v1 from Weiming Shi
-  (2026-03-22) and inclusion in Rafael's ACPICA v1 27-patch series
-  (2026-05-27). Committed version matches the latter.
-- Lore thread content could not be fetched (Anubis bot protection on
-  lore.kernel.org).
+### Step 4.1: Original Discussion
+**Record:** Lore/patch.msgid.link blocked by bot protection (Anubis).
+`b4 dig -c` did not match this commit (not merged). Could not read
+thread.
 
-### Step 4.2: Check Who Reviewed the Patch
-**Record:** `b4 dig -w` recipients: Rafael J. Wysocki, linux-
-acpi@vger.kernel.org, LKML, Saket Dumbre, Pawel Chmielewski (Intel ACPI
-team). Appropriate maintainer coverage.
+### Step 4.2: Reviewers
+**Record:** UNVERIFIED via b4 dig -w. Reviewed-by: Maxime Chevallier
+confirmed in commit message.
 
-### Step 4.3: Search for the Bug Report
-**Record:** Two `Reported-by` tags from researchers who found the crash
-with broken `_BIX` firmware. GitHub ACPICA commit confirms same
-mechanism. No syzbot report.
+### Step 4.3: Bug Reports
+**Record:** None. No Reported-by, syzbot, or Bugzilla links.
 
-### Step 4.4: Check for Related Patches and Series
-**Record:** Fix is standalone (7-line diff). Being patch 21/27 in a
-merge series does not create a functional dependency on the other 26
-patches.
+### Step 4.4: Series Context
+**Record:** Patch 2 of Jonas Jelonek series; patch 1 (`bef389a`) already
+in this tree and nominated for stable.
 
-### Step 4.5: Check Stable Mailing List History
-**Record:** Could not search lore stable list (bot protection). No
-evidence found that this was explicitly rejected for stable.
+### Step 4.5: Stable List
+**Record:** UNVERIFIED — lore blocked. Patch 1 had explicit `Cc:
+stable@vger.kernel.org`; this patch does not.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Identify Key Functions in the Diff
-**Record:** `acpi_ns_custom_package()` (modified)
+### Step 5.1: Key Functions
+**Record:** `sfp_i2c_configure()` (modified); `sfp_i2c_read()` (consumer
+of `i2c_block_size`).
 
-### Step 5.2: Trace Callers
-**Record:**
-- `acpi_ns_check_package()` → case `ACPI_PTYPE_CUSTOM` →
-  `acpi_ns_custom_package()` (`nsprepkg.c:108-110`)
-- `acpi_ns_check_package()` called from `acpi_ns_check_return_value()`
-  (`nspredef.c:136`)
-- `acpi_ns_check_return_value()` called from `acpi_ns_evaluate()`
-  (`nseval.c:261`)
-- Reaches `acpi_evaluate_object()` — used by `drivers/acpi/battery.c`
-  for `_BIX` evaluation (`battery.c:546-548`)
+### Step 5.2: Callers
+**Record:** `sfp_i2c_configure()` ← `sfp_i2c_get()` ← `sfp_probe()`.
+Runs once at platform device probe.
 
-### Step 5.3: Trace Callees
-**Record:** After version check, calls
-`acpi_ns_check_package_elements()` which uses
-`acpi_ns_check_object_type()` — that function already handles NULL
-objects safely at `type_error_exit` (`nspredef.c:248-252`). The bug is
-specifically in the direct dereference before that path.
+### Step 5.3: Callees
+**Record:** `i2c_check_functionality()`, reads `i2c->quirks`. Downstream
+`sfp_i2c_read()` → `i2c_transfer()`.
 
-### Step 5.4: Follow the Call Chain (Bug Reachability)
-**Record:**
-```
-acpi_battery_get_info()
-  → acpi_evaluate_object("_BIX")
-    → acpi_ns_evaluate()
-      → acpi_ns_check_return_value()
-        → acpi_ns_check_package()
-          → acpi_ns_custom_package()  [CRASH without fix]
-```
-Reachable during normal battery driver operation on any system with
-`_BIX` and broken firmware. Not config-obscure — ACPI battery is
-standard on laptops.
+### Step 5.4: Reachability
+**Record:** Triggered on every SFP cage probe with `i2c-bus` DT
+property. EEPROM reads happen on module insert (`sfp_sm_mod_probe()`
+reads `sizeof(id.base)` ≈ 128 bytes in chunks) and via `ethtool -m`
+(`sfp_module_eeprom()`).
 
-### Step 5.5: Search for Similar Patterns
-**Record:** `acpi_ns_remove_null_elements()` explicitly excludes
-`ACPI_PTYPE_CUSTOM` from NULL stripping (`nsrepair.c:457-472`, default
-case returns without modification). This design choice makes the NULL
-check in `acpi_ns_custom_package()` necessary and consistent.
+### Step 5.5: Similar Patterns
+**Record:** `ucsi_ccg.c`, `vgxy61.c`, `i2c-core-base.c` quirk
+enforcement. SFP comment at lines 217–219 already notes I2C drivers may
+not tolerate reads > 16 bytes.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
 
-### Step 6.1: Does the Buggy Code Exist in This Tree?
-**Record:** **YES.** `drivers/acpi/acpica/nsprepkg.c:634` still has `if
-((*elements)->common.type != ACPI_TYPE_INTEGER)` without a prior NULL
-check. Fix commit `f8d14b7bb0063` is **NOT** an ancestor of HEAD (`fix
-NOT in tree`).
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** Current `sfp_i2c_configure()` at lines 806–824 sets
+`i2c_max_block_size = SFP_EEPROM_BLOCK_SIZE` (16) without checking
+quirks. Bug present since `7662abf4db94` (March 2025), which is in this
+tree.
 
-### Step 6.2: Check for Backport Complications
-**Record:** `git apply --check` on the mainline patch: **APPLIES
-CLEANLY**. No conflicts expected. File has not been structurally
-refactored around this function.
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — patch modifies the same function
+where `bef389a` already added `i2c_block_size` init. No structural
+conflicts.
 
-### Step 6.3: Check if Related Fixes Are Already Here
-**Record:** No prior fix for this specific bug. Other ACPICA NULL-deref
-fixes exist in the tree (e.g., `acpi_ev_address_space_dispatch`) but not
-for `acpi_ns_custom_package`.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Identify the Subsystem and Its Criticality
-**Record:** **ACPI/ACPICA** — core firmware interface subsystem.
-**Criticality: CORE** — affects all ACPI-enabled x86/ARM systems during
-method evaluation.
-
-### Step 7.2: Assess Subsystem Activity
-**Record:** Actively maintained; ACPICA regularly synced. The bug
-predates recent churn — present since 2016 `_BIX` support was added.
+### Step 6.3: Related Fixes Already Present?
+**Record:** `bef389a210e7d` (i2c_block_size init) is present. This
+quirks-handling fix is **not** present (grep shows no `max_read_len`
+usage in `sfp.c`).
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 8.1: Determine Who Is Affected
-**Record:** Systems with ACPI battery support and firmware exposing
-`_BIX` with a broken/unresolvable first package element. Affects
-laptop/desktop users with ACPI batteries — a large population, though
-trigger requires specific broken firmware.
+### Step 7.1: Subsystem
+**Record:** `drivers/net/phy/sfp.c` — network / SFP cage driver.
+**Criticality: IMPORTANT** (affects SFP networking on embedded/router
+platforms).
 
-### Step 8.2: Determine the Trigger Conditions
-**Record:** Evaluating `_BIX` when firmware returns a package whose
-version field (element 0) is an unresolvable reference → NULL. Triggered
-during battery info queries (boot and periodic updates). Does not
-require privileged user action beyond normal system operation.
+### Step 7.2: Activity
+**Record:** Active — multiple SFP quirk/fix commits in 2025–2026 in this
+tree.
 
-### Step 8.3: Determine the Failure Mode Severity
-**Record:** **CRITICAL** — NULL pointer dereference in kernel context →
-kernel oops/panic. With the fix: controlled `AE_AML_OPERAND_TYPE` return
-→ battery driver falls back to `_BIF` (`battery.c:541-567`).
+---
 
-### Step 8.4: Calculate Risk-Benefit Ratio
+## PHASE 8: IMPACT AND RISK
+
+### Step 8.1: Who Is Affected
+**Record:** Users with `CONFIG_SFP` and an I2C adapter that sets
+`max_read_len` or `max_write_len` < 16. In this tree, only `i2c-qcom-
+cci` (12/10) and `i2c-nvidia-gpu` (4) have `max_read_len` < 16; neither
+is a typical SFP bus, but any future or platform-specific adapter with
+such quirks would be affected.
+
+### Step 8.2: Trigger Conditions
+**Record:** SFP probe + module insertion + I2C adapter with quirks
+limiting transfer length below 16. Not userspace-triggerable for
+security; hardware/configuration dependent.
+
+### Step 8.3: Failure Mode
+**Record:** I2C transfer rejected → EEPROM read fails → SFP module not
+recognized, port dead. **Severity: HIGH** for affected hardware (total
+loss of SFP function); **MEDIUM** overall (narrow adapter set today).
+
+### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** HIGH — prevents kernel crash on broken firmware; enables
-  graceful degradation to `_BIF`.
-- **Risk:** VERY LOW — 7-line NULL guard using existing error-return
-  pattern.
-- **Ratio:** Strongly favors backport.
+- **Benefit:** Restores SFP on limited I2C adapters; aligns with kernel
+  I2C quirk model.
+- **Risk:** Very low — 8-line clamp using established `min()` pattern.
+- **Ratio:** Favorable for backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Compile the Evidence
+### Step 9.1: Evidence Summary
 
-**FOR backporting:**
-- Real NULL pointer dereference → kernel crash
-- Two independent reporters
-- Small (7 lines), obviously correct fix
-- Applies cleanly to 6.18.y
-- Bug present since 2016 in this tree
-- ACPI maintainer committed the fix
-- Graceful error path already exists in callers (`AE_AML_OPERAND_TYPE`
-  handled in `nspredef.c:141-144`; battery driver falls back to `_BIF`)
-- No new APIs or features
+**FOR:**
+- Provably broken code path when adapter quirks limit transfer size
+  (verified in `i2c-core-base.c`)
+- Complete SFP failure on affected hardware
+- Small, surgical, reviewed by SFP SMBus author
+- Matches established kernel pattern (`ucsi_ccg.c`)
+- Driver comment acknowledges I2C length limitations
+- Companion to `bef389a` (already in stable pipeline for this tree)
+- Zero regression risk on adapters without quirks or with limits ≥ 16
 
-**AGAINST backporting:**
-- Requires specific broken `_BIX` firmware (not universal)
-- No syzbot/fuzzer confirmation
-- Lore review thread not readable (bot protection)
+**AGAINST:**
+- No user reports, syzbot, or crash/corruption
+- Commit message uses “Theoretically”
+- No in-tree adapter with `max_read_len` < 16 is commonly used for SFP
+  today
+- `sfp_i2c_write()` does not chunk (mitigated by small write sizes in
+  practice)
 
-**Unresolved:** Exact crash stack traces from reporters not available;
-lore discussion content unverified.
+**UNRESOLVED:**
+- Mailing list discussion (lore blocked)
+- Whether reviewers nominated for stable
 
-### Step 9.2: Apply the Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — minimal NULL guard;
-   committed by maintainer; two reporters.
-2. Fixes a real bug affecting users? **PASS** — NULL deref on `_BIX`
-   evaluation with broken firmware.
-3. Important issue? **PASS** — kernel crash (CRITICAL severity).
-4. Small and contained? **PASS** — 7 lines, one function, one file.
-5. No new features or APIs? **PASS** — defensive check only.
-6. Can apply to the local tree? **PASS** — buggy code present; patch
-   applies cleanly.
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — standard pattern; Reviewed-
+   by present; no Tested-by
+2. Fixes a real bug? **PASS** — I2C core rejects oversize transfers on
+   quirky adapters
+3. Important issue? **PASS** — complete SFP port failure on affected
+   hardware (HIGH per-platform)
+4. Small and contained? **PASS** — 8 lines, one function
+5. No new features/APIs? **PASS** — uses existing `i2c_adapter_quirks`
+6. Can apply to local tree? **PASS** — prerequisites present, clean
+   apply expected
 
-### Step 9.3: Check for Exception Categories
-**Record:** Not a device-ID/quirk/DT/build/doc exception — standard bug
-fix.
+### Step 9.3: Exception Category
+**Record:** Hardware quirk/workaround category — respects adapter-
+declared I2C transfer limits.
 
-### Step 9.4: Decision Rationale
-This is a textbook stable backport: a long-standing NULL pointer
-dereference in core ACPI validation code, triggered by real broken
-firmware on a common code path (battery `_BIX` evaluation), fixed with a
-minimal guard that converts a crash into an error code the callers
-already handle. The fix is absent from Linux 6.18.44 and applies without
-modification.
+### Step 9.4: Problem and Decision
+
+**What it solves:** The SFP driver assumes all I2C adapters accept
+16-byte EEPROM read chunks. Adapters that declare lower limits via
+`i2c_adapter_quirks` cause `i2c_transfer()` to fail at the I2C core,
+breaking module probe and rendering the SFP cage unusable.
+
+**Why it matters for 6.18.y:** The buggy code (`7662abf4db94`) is in
+this tree. The fix is tiny, follows kernel conventions, and was reviewed
+by the SFP SMBus author. While no common SFP platform hits this today,
+the failure is total for any platform that does, and the driver’s own
+comments acknowledge I2C length constraints.
+
+**Risk vs benefit:** Near-zero risk; meaningful benefit for affected
+embedded/network hardware; completes the i2c_block_size work started by
+`bef389a`.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body; identified two Reported-by,
-  maintainer SOB, ACPICA upstream link
-- **[Phase 2]** Diff: +7 lines in `acpi_ns_custom_package()`, adds NULL
-  check before dereference
-- **[Phase 3]** `git blame`: buggy line from `7952d40240855` (2016);
-  `git show 7952d40240855`: introduced `_BIX` custom package validation
-- **[Phase 3]** `git log -20 -- nsprepkg.c`: no prior fix for this issue
-- **[Phase 3]** `git show f8d14b7bb0063`: confirmed mainline fix commit
-- **[Phase 3]** `git apply --check`: patch applies cleanly to 6.18.44
-- **[Phase 3]** `git merge-base --is-ancestor f8d14b7bb0063 HEAD`: fix
-  NOT in tree
-- **[Phase 4]** `b4 dig -c f8d14b7bb0063`: lore URL found
-- **[Phase 4]** `b4 dig -a`: v1 standalone + v1 21/27 in ACPICA series
-- **[Phase 4]** `b4 dig -w`: Rafael Wysocki, linux-acpi, Intel team CC'd
-- **[Phase 4]** WebFetch lore/GitHub: GitHub ACPICA commit readable;
-  lore blocked by Anubis
-- **[Phase 5]** Grep call chain: `acpi_ns_custom_package` →
-  `acpi_ns_check_package` → `acpi_ns_check_return_value` →
-  `acpi_ns_evaluate`
-- **[Phase 5]** Read `battery.c:546-567`: `_BIX` evaluation and `_BIF`
-  fallback confirmed
-- **[Phase 5]** Read `nsrepair.c:457-472`: `ACPI_PTYPE_CUSTOM` excluded
-  from NULL stripping (confirms commit message)
-- **[Phase 5]** Read `nspredef.c:248-252`: `acpi_ns_check_object_type`
-  already handles NULL safely elsewhere
-- **[Phase 6]** `git describe HEAD`: v6.18.44
-- **[Phase 6]** Read `nsprepkg.c:634`: buggy code confirmed present
-- **[Phase 8]** Failure mode: NULL deref → kernel oops; with fix →
-  `AE_AML_OPERAND_TYPE` → battery `_BIF` fallback
+- **[Phase 1]** Parsed subject, tags, body from user-provided commit
+  message
+- **[Phase 2]** Read current `sfp_i2c_configure()`, `sfp_i2c_read()`,
+  `sfp_i2c_write()` in `drivers/net/phy/sfp.c`
+- **[Phase 2]** Verified `i2c_check_quirks()` rejects oversize messages
+  in `drivers/i2c/i2c-core-base.c:2216-2224`
+- **[Phase 3]** `git describe HEAD` → `v6.18.44`; `make kernelversion` →
+  `6.18.44`
+- **[Phase 3]** `git blame -L 806,825 drivers/net/phy/sfp.c` → function
+  from `7662abf4db94`
+- **[Phase 3]** `git show 7662abf4db94` → introduced hardcoded block
+  size
+- **[Phase 3]** `git show bef389a210e7d` → prerequisite already in tree;
+  `merge-base --is-ancestor` confirmed
+- **[Phase 3]** `git log --oneline -20 -- drivers/net/phy/sfp.c` →
+  recent SFP activity
+- **[Phase 4]** WebFetch lore/patch.msgid.link → blocked by Anubis bot
+  protection
+- **[Phase 4]** `b4 dig -c` → no match (commit not merged)
+- **[Phase 5]** Traced `sfp_i2c_configure()` ← `sfp_i2c_get()` ←
+  `sfp_probe()`; `sfp_i2c_read()` uses `i2c_block_size`
+- **[Phase 5]** Read `ucsi_ccg.c:258-260` for precedent pattern
+- **[Phase 6]** Grep `sfp.c` — no quirks handling present; buggy code at
+  lines 813/817
+- **[Phase 6]** Grep `struct i2c_adapter_quirks` in
+  `include/linux/i2c.h` — present
+- **[Phase 6]** Grep all `max_read_len` / `max_write_len` in
+  `drivers/i2c/` — only qcom-cci (12) and nvidia-gpu (4) < 16
+- **[Phase 6]** Verified `i2c-rtl9300.c` has `max_read_len = 16` (at
+  boundary, works today)
+- **[Phase 8]** Confirmed probe reads `sizeof(id.base)` via chunked
+  `sfp_i2c_read()` at line 2328
+- **UNVERIFIED:** Mailing list reviewer feedback and stable nominations
+- **UNVERIFIED:** Real-world SFP platform using adapter with quirks < 16
 
-**YES**The background search finished: the fix (`f8d14b7bb0063`) is on
-mainline but **not** in this **6.18.44** tree, and `git apply --check`
-applies it cleanly.
+**YES**The background `git log` search finished: there’s no match for
+“I2C adapter quirks” in this tree, and “limit block size” only turned up
+unrelated DRM commits — so this SFP patch isn’t merged here yet.
 
-**Verdict: YES** — backport this to stable. It’s a 7-line NULL guard in
-`acpi_ns_custom_package()` that stops a kernel oops when broken firmware
-returns a `_BIX` package with a NULL version element; callers already
-handle the returned `AE_AML_OPERAND_TYPE` and the battery driver can
-fall back to `_BIF`.
+That matches the earlier review of `6.18.44`: the buggy code is present
+in `sfp_i2c_configure()`, and the fix should apply cleanly after
+`bef389a210e7d`.
 
- drivers/acpi/acpica/nsprepkg.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+**YES** — still the right call for stable backport on this tree.
 
-diff --git a/drivers/acpi/acpica/nsprepkg.c b/drivers/acpi/acpica/nsprepkg.c
-index ca137ce5674fb..c32770570120a 100644
---- a/drivers/acpi/acpica/nsprepkg.c
-+++ b/drivers/acpi/acpica/nsprepkg.c
-@@ -631,6 +631,13 @@ acpi_ns_custom_package(struct acpi_evaluate_info *info,
+ drivers/net/phy/sfp.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 1c4340b3777f6..68aa8e6dd55c2 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -825,21 +825,29 @@ static int sfp_smbus_byte_write(struct sfp *sfp, bool a2, u8 dev_addr,
  
- 	/* Get version number, must be Integer */
- 
-+	if (!(*elements)) {
-+		ACPI_WARN_PREDEFINED((AE_INFO, info->full_pathname,
-+				      info->node_flags,
-+				      "Return Package has a NULL version element"));
-+		return_ACPI_STATUS(AE_AML_OPERAND_TYPE);
-+	}
+ static int sfp_i2c_configure(struct sfp *sfp, struct i2c_adapter *i2c)
+ {
++	size_t max_block_size;
 +
- 	if ((*elements)->common.type != ACPI_TYPE_INTEGER) {
- 		ACPI_WARN_PREDEFINED((AE_INFO, info->full_pathname,
- 				      info->node_flags,
+ 	sfp->i2c = i2c;
+ 
+ 	if (i2c_check_functionality(i2c, I2C_FUNC_I2C)) {
+ 		sfp->read = sfp_i2c_read;
+ 		sfp->write = sfp_i2c_write;
+-		sfp->i2c_max_block_size = SFP_EEPROM_BLOCK_SIZE;
++		max_block_size = SFP_EEPROM_BLOCK_SIZE;
+ 	} else if (i2c_check_functionality(i2c, I2C_FUNC_SMBUS_BYTE_DATA)) {
+ 		sfp->read = sfp_smbus_byte_read;
+ 		sfp->write = sfp_smbus_byte_write;
+-		sfp->i2c_max_block_size = 1;
++		max_block_size = 1;
+ 	} else {
+ 		sfp->i2c = NULL;
+ 		return -EINVAL;
+ 	}
+ 
++	if (i2c->quirks && i2c->quirks->max_read_len)
++		max_block_size = min(max_block_size, i2c->quirks->max_read_len);
++	if (i2c->quirks && i2c->quirks->max_write_len)
++		max_block_size = min(max_block_size, i2c->quirks->max_write_len);
++
++	sfp->i2c_max_block_size = max_block_size;
+ 	sfp->i2c_block_size = sfp->i2c_max_block_size;
+ 	return 0;
+ }
 -- 
 2.53.0
 
