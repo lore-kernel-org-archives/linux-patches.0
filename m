@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9558343F08D;
-	Mon, 31 Aug 2026 13:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7262C43991A;
+	Mon, 31 Aug 2026 13:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184740; cv=none; b=AEzKRKAuW/tELbgaV9y/ZLOVZuFDWEGUwHtbv1u30TuOxdi6Mx4InY/+UfcPOgmMqPhNx0kDHdPmO7sb5X+bGI4SPfy06+uDsyIFLJcWwPIBETr15G4tU69UOaQs+96aDkQ7nDBiV6HK2FdC2arJXT1AvODjkOhEFwDDfcrak/0=
+	t=1788184744; cv=none; b=swnnff9Fm2OQIXKfhTBwU12lJuM2lvUGMqpNaS7Wiq3hiW7xDTAHiZqXPllCW2pKNREwBYcKWS+RPcAEt27cze108Uk7WIWXOWOoAJyZRK1K14Zj+Fp6PxDazkmT3hGYvaS52cV80THF3qNvoqWo+6VSi2Aslg8siw6VMLkSqIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184740; c=relaxed/simple;
-	bh=IxgN+JHJ+yrhvv+Xn6ibeXvFDU+nB1nTr5YkgMyLdn4=;
+	s=arc-20240116; t=1788184744; c=relaxed/simple;
+	bh=3ukteNYGzVgMxlyFp4WZqmVpsEWqj21F92cAFZpFDbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDCfaIquqy/F8/1pfRcXPAMY7mcCHvMJs/Ub3FoA1mrnibwYfDJtCPmhtby+lENKqfNTdMLQ+fxgjeSAFCDYP8ks1RNOn+6SseAN3YHZzb/0XJOfmd633K2KnWmyvlM0vPJvKa21Z9Q1nRNmX9LvZU12WD3plrualk7BoTHm8WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct6fnD30; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oT5udb7XA0hX2BF+VtgIEUoPwrvWkRZqwFRyJWJQd/gGtyDh8HibPm5us1azUT0R2/2hWut/9LD548eviRIH4Shc5RlUx3uF0KZYpWl084Sisb8ZgQyVJYQntTsjje1xjQL9zbUW5/oJd7rl1YpXHZGD2KZHm+qGaXft2l4mZjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cr4iNrHa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct6fnD30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8141F00A3D;
-	Mon, 31 Aug 2026 13:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cr4iNrHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFE31F000E9;
+	Mon, 31 Aug 2026 13:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184739;
-	bh=YVgKiyrFCmB5GQQVcaibRXYj9lSykslaZueJKcp36Hk=;
+	s=korg; t=1788184742;
+	bh=KB7lhYhksb27sqDqjMlLX/bFUuQg5jZ6L9RPZuFW8Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ct6fnD30bNYdwuv3wEXXwwpvtBl/FnY3/j8Tz23TIORBIuxZmcAq8RLUKj4gytWz3
-	 MBVPNYlvAQkfoYoTItN06Iy8exQC4jWIzxNn2awc70Uqph8JSJXrllQ8tt9c+3Wjee
-	 fQUShnY7+E/vMtNHcj9YVnYjZOD6y/N1+EnhHRFs=
+	b=cr4iNrHaG2r3fSTQrPycnO+oCHm/Q2EKBEkxZSCyATGylHOqmiZpp3hi+gj+w2+PT
+	 7jM4OsUBszzwq6ZPCf/9ndogua7zmBIWzVBgZr4eYVODNixiSeV/XQvHapd/itcU7X
+	 3jk/soglqXvPI0estGLFegO8QUFFgizr5jPQlTqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Vishnu Razdan <vrazdan@openai.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
+	Denis Arefev <arefev@swemel.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 05/92] io_uring/io-wq: fix worker accounting when canceling creation callbacks
-Date: Mon, 31 Aug 2026 15:34:03 +0200
-Message-ID: <20260831133359.748364699@linuxfoundation.org>
+Subject: [PATCH 6.1 06/92] ipvs: reload ip header after head reallocation
+Date: Mon, 31 Aug 2026 15:34:04 +0200
+Message-ID: <20260831133359.797334965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,61 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Razdan <vrazdan@openai.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 297b5ccea4acacaa47c150f043bce695202afbf1 upstream.
+commit a2f57827bf7c695b8c72dc4511cae8e86582369d upstream.
 
-create_worker_cb() reserves an io-wq worker slot only after its
-task-work callback runs. If the callback is canceled before then,
-io_worker_cancel_cb() still decrements acct->nr_workers. When an
-existing worker retires with its creation callback pending, that
-worker has already decremented the same account's worker count.
+__ip_vs_get_out_rt() calls skb_ensure_writable() which may
+reallocate skb->head.
 
-The resulting undercount permits worker creation beyond the account's
-configured limit. On an AST2600 OpenBMC system, an unchanged sensor
-daemon reached 4,291 threads with the original kernel. With an
-equivalent downstream fix, 25 passive samples under its normal
-workload showed 6-9 threads.
-
-Decrement nr_workers only when the canceled callback is not
-create_worker_cb(). Continuation callbacks still release their reserved
-slot, and both callback types retain the existing running-count,
-reference-count, and create-state cleanup.
-
-[ Backport: retain the existing worker->wqe->lock protecting worker
-  accounting. ]
-
-Fixes: 1d5f5ea7cb7d ("io-wq: remove worker to owner tw dependency")
+Fixes: 8d8e20e2d7bb ("ipvs: Decrement ttl")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260811-vrazdan-io-wq-b4-submit-v1-1-719ced16c921@openai.com
-Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
+Assisted-by: Claude:claude-sonnet-4-6
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[Denis Arefev: adapted for 5.10/6.1: keep EnterFunction/LeaveFunction
+instrumentation]
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/netfilter/ipvs/ip_vs_xmit.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 66fdd69fd6cb4..0c3de2fead81c 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -201,9 +201,12 @@ static void io_worker_cancel_cb(struct io_worker *worker)
- 	struct io_wq *wq = wqe->wq;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index 63dd0a3d251f8..79d6e3b4e2c03 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -707,15 +707,13 @@ int
+ ip_vs_bypass_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
+ 		  struct ip_vs_protocol *pp, struct ip_vs_iphdr *ipvsh)
+ {
+-	struct iphdr  *iph = ip_hdr(skb);
+-
+ 	EnterFunction(10);
  
- 	atomic_dec(&acct->nr_running);
--	raw_spin_lock(&worker->wqe->lock);
--	acct->nr_workers--;
--	raw_spin_unlock(&worker->wqe->lock);
-+	/* create_worker_cb() has not reserved a worker slot yet. */
-+	if (worker->create_work.func != create_worker_cb) {
-+		raw_spin_lock(&worker->wqe->lock);
-+		acct->nr_workers--;
-+		raw_spin_unlock(&worker->wqe->lock);
-+	}
- 	io_worker_ref_put(wq);
- 	clear_bit_unlock(0, &worker->create_state);
- 	io_worker_release(worker);
+-	if (__ip_vs_get_out_rt(cp->ipvs, cp->af, skb, NULL, iph->daddr,
++	if (__ip_vs_get_out_rt(cp->ipvs, cp->af, skb, NULL, ip_hdr(skb)->daddr,
+ 			       IP_VS_RT_MODE_NON_LOCAL, NULL, ipvsh) < 0)
+ 		goto tx_error;
+ 
+-	ip_send_check(iph);
++	ip_send_check(ip_hdr(skb));
+ 
+ 	/* Another hack: avoid icmp_send in ip_fragment */
+ 	skb->ignore_df = 1;
 -- 
 2.53.0
 
