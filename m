@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7073443D501;
-	Mon, 31 Aug 2026 13:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A8047DF86;
+	Mon, 31 Aug 2026 13:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183457; cv=none; b=Wl+/O5P0lTpJ7Qt4/de2CV27je/IMSC6o++Z5GF0H9/1JQFJDM83QuP/Kb0uDQW6apN9AjX1EJZnUwy2NrBSkLnnSJrE7eKvZvbOj/FAJGeGUvgGc923ke8u62JHXDlhYciB04NcfiwcGMrBjPzdqw+uIij5xUXjeZw2Be1iMNI=
+	t=1788183458; cv=none; b=HnPtJ49THqVWc32flmgXKszAHQKOezJVpPT5JNEqLiTr8uSQqvaNiie5+8BXJz5KxN+9Bb55kXoMWlQ11XViSK2DOK6BP20GW0SYVxJ5cYzIZN0mFAhnEv3MpdnZ8CCpfPKm5JkEXnPKrKJ7MtjGNB/YiRi+YQFuv/7NMN7nGLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183457; c=relaxed/simple;
-	bh=dLzeRbxNBKsm19Gk9l6YYc+DRokhsNN+nnG7Lq3bBhE=;
+	s=arc-20240116; t=1788183458; c=relaxed/simple;
+	bh=+hBV3VC8oghTFATaE06fBctpbwHYg/11NE4p8sUtRwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZpLwmSHQGKmHHznzCPmFrlrNIoYxHBP6MbT4ijKYQXwyf8SifgPlM0DLkccfTwQp2Df0soIjmGTvivm64/526eeyZTGGiiy19gsO2gjBrreLd9Wq4R1D4pcKln8WdCPrYCb9Hr4R+49AGC46egTQmu0AGDYfIbLyq6jb6dQl83g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e6VkjY5w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LhrM2RUfGgsze2WBDEiK8kgRNb9Etc1hG46qaCkolIBT5QjFDVv9Ct8jjVIBuqauYaSf5wH6XH4Z+1jdHEGLR959qHRdxy7A6mbh4HaZlhz3YT48rUGW5gWfPtIRZRPQ2nl1uxy/A/RhUFAm6oOOHjvQjIZ+jL7+7UZoe5SowBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPCkp9kJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e6VkjY5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455451F00A3F;
-	Mon, 31 Aug 2026 13:37:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPCkp9kJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425731F000E9;
+	Mon, 31 Aug 2026 13:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183454;
-	bh=WBA9T8SQtuTJbVa0s3dfG2rAFzmZzFX9rU5YRvEEfoM=;
+	s=k20260515; t=1788183456;
+	bh=hp0zo/g+UZnqTLyekrqgz6rWmUrXHOudIzqku7WJKes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e6VkjY5wHoHdkF7vv78FewB912PpL3kf5OSAkVRiCmSouGKwwXycl4Gciykfaj0l/
-	 FBnLXtP61F+sFvshodv40zR24cMFdPw1eQ+UwdlJxjgiMwgsZoBqxuAje21WTAXnSD
-	 A8KzIW1kh4SnctFQP7x21TV3T/4wVSUo6t8Vfe3IPVgZ5qMArncnzEyM/JrqpM/FnU
-	 DUdZ0MFpellDAo/sPH9T1wCnxpWa9Ueo3e7s3DCqnrfp77hen75B8dV+elssnPwNf5
-	 7sbgjAcGPSyuJ02EOT+SauBv8cK3Gt0p+yQGnMWJW6rkHcnDKAi/YEx35HkXWc2K5v
-	 5vod1mbcir+iQ==
+	b=cPCkp9kJ4jh0YSbsWckfQ9iarRPGisC5SS8JjKZPDVgEAPs/IANTa/lROLfHnS1xp
+	 MSZm+irJzp+tb5cjND0oDq0+4UWNq2cGodD1YW/K9V/Qh548bYcuuhvqb2t+eplvQf
+	 7Tb8+DeXRWZpruM+OB3EpTfx7Iv88ecEspgLFqfNQhz84y/iux2O2oncAeQZ8skZDj
+	 X9+4cJhq+3ic0aNHdNckt97fP7+HL1t5nZ0Atnmm+b1v1G0UpKmdnZi7jP8xQSlLcY
+	 7g2+WgppuC4QfPQjQQCwlyWVAU1P6PbhZpomGro4fN9DWKYKgUQisuhgmzDPt/M4YX
+	 gbnbae7RWMO6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuho Choi <dbgh9129@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Karl Mehltretter <kmehltretter@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcelo.leitner@gmail.com,
-	lucien.xin@gmail.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	linux-sctp@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] sctp: Unwind address notifier registration on failure
-Date: Mon, 31 Aug 2026 09:22:14 -0400
-Message-ID: <20260831133314.4125787-106-sashal@kernel.org>
+	mhiramat@kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] tracing: Disable KCOV instrumentation for trace_irqsoff.o
+Date: Mon, 31 Aug 2026 09:22:15 -0400
+Message-ID: <20260831133314.4125787-107-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,21 +53,51 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c8459ee2fef502d6ef6c063751c33d9ac7943eab ]
+[ Upstream commit 01046072880b654dbadf71be2f645aad4a7b5d87 ]
 
-sctp_v4_add_protocol() and sctp_v6_add_protocol() register their
-address notifiers before registering the SCTP protocol handlers. If
-protocol registration fails, the functions return without unregistering
-the notifiers.
+When KCOV runs its boot selftest with whole-kernel instrumentation
+enabled, it sets current->kcov_mode to KCOV_MODE_TRACE_PC without
+installing a coverage area. Any instrumented code accepted as task-context
+coverage in that window dereferences current->kcov_area and crashes.
 
-Unregister the notifiers on the protocol registration failure paths.
-Also propagate notifier registration failures instead of ignoring them.
+On ARMv5 Versatile PB with CONFIG_KCOV_SELFTEST=y,
+CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y, boot hits a
+NULL pointer fault during the selftest:
 
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260608162230.46644-1-dbgh9129@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  kcov: running self test
+  Internal error: Oops: 5 [#1] ARM
+  PC is at __sanitizer_cov_trace_pc+0x4c/0x90
+  Kernel panic - not syncing: Fatal exception
+
+A diagnostic run showed the unwanted coverage comes from the IRQs-off
+tracer callbacks reached from ARM IRQ entry before hardirq context is
+visible to KCOV:
+
+  __sanitizer_cov_trace_pc from tracer_hardirqs_off+0x18/0x1cc
+  tracer_hardirqs_off from trace_hardirqs_off+0x34/0x54
+  trace_hardirqs_off from __irq_svc+0x58/0xb0
+  __irq_svc from kcov_init+0x7c/0xdc
+
+and similarly through tracer_hardirqs_on().
+
+trace_preemptirq.o is already excluded because this tracing path can run
+from early interrupt code and produce coverage unrelated to syscall
+inputs. Exclude trace_irqsoff.o as well, instead of requiring users to
+turn off CONFIG_KCOV_INSTRUMENT_ALL=y, which is the default whole-kernel
+KCOV mode.
+
+With the exclusion in place, the same ARMv5 Versatile PB QEMU test boots
+through the KCOV selftest and reaches userspace.
+
+Tested on ARMv5 Versatile PB QEMU with CONFIG_KCOV_SELFTEST=y,
+CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y.
+
+Link: https://patch.msgid.link/20260525170428.67211-1-kmehltretter@gmail.com
+Assisted-by: Codex:gpt-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,384 +105,364 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-**Step 1.1: Subject line**
+### Step 1.1: Subject line
+**Record:** `[tracing] [disable] Disable KCOV instrumentation for
+trace_irqsoff.o` — tracing subsystem; disables KCOV instrumentation on
+one object file to prevent a boot crash.
 
-Record: `[sctp]` `[Unwind]` — SCTP subsystem; unwind/cleanup on failure
-in `sctp_v4_add_protocol()` and `sctp_v6_add_protocol()`.
-
-**Step 1.2: Tags**
-
-Record:
-- **Signed-off-by:** Yuho Choi `<dbgh9129@gmail.com>` (author)
+### Step 1.2: Tags
+**Record:**
 - **Link:**
-  https://patch.msgid.link/20260608162230.46644-1-dbgh9129@gmail.com
-- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (net maintainer
-  merge)
+  https://patch.msgid.link/20260525170428.67211-1-kmehltretter@gmail.com
+- **Assisted-by:** Codex:gpt-5
+- **Signed-off-by:** Karl Mehltretter `<kmehltretter@gmail.com>`
+- **Signed-off-by:** Steven Rostedt `<rostedt@goodmis.org>` (tracing
+  maintainer)
 - No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
   stable tags
-- Notable: netdev maintainer merge; no syzbot or user bug report
+- Notable: maintainer sign-off; tested configuration described in body;
+  no syzbot report
 
-**Step 1.3: Body**
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** With `CONFIG_KCOV_SELFTEST=y`,
+  `CONFIG_KCOV_INSTRUMENT_ALL=y`, and `CONFIG_IRQSOFF_TRACER=y`, KCOV
+  boot selftest sets `current->kcov_mode = KCOV_MODE_TRACE_PC` without
+  installing a coverage area. Instrumented IRQ-off tracer code reached
+  from ARM IRQ entry can call `__sanitizer_cov_trace_pc()`, which
+  dereferences NULL `current->kcov_area`.
+- **Symptom:** NULL pointer fault / kernel panic during boot on ARMv5
+  Versatile PB QEMU: `PC is at __sanitizer_cov_trace_pc`, panic during
+  `kcov: running self test`.
+- **Root cause:** `trace_irqsoff.o` is still KCOV-instrumented while
+  `trace_preemptirq.o` was already excluded; `tracer_hardirqs_off()` /
+  `tracer_hardirqs_on()` live in `trace_irqsoff.c` and run from IRQ
+  entry before hardirq context is visible to KCOV’s `in_task()`
+  filtering.
+- **Stack trace (from message):** `__sanitizer_cov_trace_pc` ←
+  `tracer_hardirqs_off` ← `trace_hardirqs_off` ← `__irq_svc` ←
+  `kcov_init`.
 
-Record:
-- **Bug:** Address notifiers are registered before protocol handlers; if
-  `inet_add_protocol()` / `inet6_add_protocol()` fails, notifiers are
-  not unregistered.
-- **Symptom:** Leaked notifier registrations on SCTP module init failure
-  paths.
-- **Root cause:** Missing error-path cleanup in `sctp_v4_add_protocol()`
-  and `sctp_v6_add_protocol()`; notifier registration return values
-  ignored.
-- **Version info:** None in the message.
-
-**Step 1.4: Hidden bug fix?**
-
-Record: **Yes.** Described as cleanup, but it fixes a real error-path
-bug: dangling notifier registrations that can outlive a failed SCTP
-module load and point at freed module text/data.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes. Although framed as instrumentation exclusion, this is a
+real boot crash fix for a valid Kconfig combination, completing the same
+class of fix already applied to `trace_preemptirq.o` in commit
+`bb5eb8f3b3297` (2022).
 
 ---
 
 ## Phase 2: Diff Analysis
 
-**Step 2.1: Inventory**
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `kernel/trace/Makefile` only (+3/-2 lines net)
+- **Change:** Add `KCOV_INSTRUMENT_trace_irqsoff.o := n`; broaden
+  comment from “this file” to “these files”
+- **Scope:** Single-file, surgical Makefile change
 
-Record:
-- `net/sctp/protocol.c`: +6/−2 (10 net lines in mainline commit)
-- `net/sctp/ipv6.c`: +6/−2
-- **Functions:** `sctp_v4_add_protocol()`, `sctp_v6_add_protocol()`
-- **Scope:** Small, two-file, symmetric fix
+### Step 2.2: Code flow
+**Record:**
+- **Before:** Only `trace_preemptirq.o` excluded from KCOV;
+  `trace_irqsoff.o` remains instrumented when
+  `CONFIG_KCOV_INSTRUMENT_ALL=y`.
+- **After:** Both `trace_preemptirq.o` and `trace_irqsoff.o` excluded.
+- **Affected path:** IRQ entry/exit →
+  `trace_hardirqs_off()`/`trace_hardirqs_on()` (uninstrumented wrapper
+  in `trace_preemptirq.c`) →
+  `tracer_hardirqs_off()`/`tracer_hardirqs_on()` (instrumented
+  implementation in `trace_irqsoff.c`) → `__sanitizer_cov_trace_pc()`.
 
-**Step 2.2: Code flow**
+### Step 2.3: Bug mechanism
+**Record:** **Category:** NULL pointer dereference / boot crash in debug
+instrumentation path.
+- `kcov_init()` selftest sets `kcov_mode` without `kcov_area` (verified
+  in `kernel/kcov.c:1097-1098`).
+- `check_kcov_mode()` allows tracing when `in_task()` is true
+  (`kernel/kcov.c:183-184`); during early ARM IRQ handling,
+  `preempt_count` may not yet reflect hardirq context
+  (`include/linux/preempt.h:130`).
+- Instrumented `tracer_hardirqs_*()` in `trace_irqsoff.o` calls
+  `__sanitizer_cov_trace_pc()` which dereferences `t->kcov_area` at line
+  220 without NULL guard.
 
-Record:
-- **Hunk 1 (`sctp_v4_add_protocol`):** Before —
-  `register_inetaddr_notifier()` return ignored; on
-  `inet_add_protocol()` failure, return `-EAGAIN` with notifier still
-  registered. After — check notifier registration; on protocol
-  registration failure, call `unregister_inetaddr_notifier()`.
-- **Hunk 2 (`sctp_v6_add_protocol`):** Same pattern with
-  `register_inet6addr_notifier()` / `unregister_inet6addr_notifier()` /
-  `inet6_add_protocol()`.
-- **Paths affected:** SCTP module init error paths only.
-
-**Step 2.3: Bug mechanism**
-
-Record: **Category:** Error-path resource leak / dangling notifier
-registration.
-- `sctp_inetaddr_notifier` and `sctp_inet6addr_notifier` are static
-  `notifier_block` structures in the SCTP module.
-- `sctp_init()` calls these functions during `module_init`; on failure
-  it unwinds other resources but does **not** call
-  `sctp_v4_del_protocol()` from `err_add_protocol`, and
-  `err_v6_add_protocol` only calls `sctp_v4_del_protocol()` (not v6
-  notifier cleanup).
-- A failed `module_init` unloads the module while a leaked notifier
-  remains on the global inet/inet6 notifier chains → callbacks can run
-  into freed module memory.
-
-**Step 2.4: Fix quality**
-
-Record: **Obviously correct**, minimal, mirrors the existing
-`sctp_v4_del_protocol()` / `sctp_v6_del_protocol()` unwind pattern and
-the mac80211 notifier registration pattern in `ieee80211_register_hw()`.
-**Regression risk:** Very low; only affects failure paths.
+### Step 2.4: Fix quality
+**Record:** Obviously correct; mirrors existing
+`KCOV_INSTRUMENT_trace_preemptirq.o := n` pattern from `bb5eb8f3b3297`.
+Minimal, no API changes. Regression risk very low — only disables KCOV
+on code that should never contribute syscall-relevant coverage anyway.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-**Step 3.1: Blame**
+### Step 3.1: Blame
+**Record:** Lines 34-36 in `kernel/trace/Makefile` introduced by
+`bb5eb8f3b3297` (Congyu Liu, 2022-05-23) — preemptirq exclusion only.
+`trace_irqsoff.c` has existed since `81d68a96a3984` (2008). The gap
+(preemptirq excluded, irqsoff not) has been present since the 2022 fix.
 
-Record:
-- `sctp_v4_add_protocol()` notifier pattern: commit `270637abff0cd`
-  (Vlad Yasevich, 2008-03-20) — present since ~2.6 era.
-- `sctp_v6_add_protocol()` notifier pattern: commit `827bf12236fbaf`
-  (Sridhar Samudrala, 2007-05-04).
-- Bug has existed in this code for many years.
+### Step 3.2: Fixes: tag
+**Record:** Not applicable — no Fixes: tag in commit message.
 
-**Step 3.2: Fixes: tag**
+### Step 3.3: Related file history
+**Record:** Recent `trace_irqsoff.c` changes are unrelated tracer fixes
+(e.g. `c834a97962c70`). No prerequisite series; standalone one-line
+Makefile fix. The candidate commit is not yet in this tree (fix absent
+from current `kernel/trace/Makefile`).
 
-Record: N/A — no Fixes: tag.
+### Step 3.4: Author context
+**Record:** Steven Rostedt signed off (tracing maintainer). Prior
+related fix `bb5eb8f3b3297` was Acked-by Dmitry Vyukov (KCOV author).
+Karl Mehltretter appears to be reporting/fixing a gap in the 2022
+exclusion.
 
-**Step 3.3: File history**
-
-Record: Recent SCTP changes in this tree are unrelated (netns teardown,
-UAF fixes, races). No duplicate fix for this notifier issue. Fix commit
-on master: `c8459ee2fef50` (2026-06-10); **not** in current HEAD
-(`6.18.44`).
-
-**Step 3.4: Author**
-
-Record: Yuho Choi — active contributor of similar error-path cleanup
-fixes (watchdog PM notifier, OF node leaks, etc.). SCTP maintainers
-(Marcelo Leitner, Xin Long) were CC'd per `b4 dig -w`.
-
-**Step 3.5: Dependencies**
-
-Record: **Standalone.** No series dependencies; single v1 patch merged
-to net. `git apply --check` against current tree succeeds.
+### Step 3.5: Dependencies
+**Record:** No dependencies. Uses standard `KCOV_INSTRUMENT_<stem>.o`
+mechanism in `scripts/Makefile.lib:84-90`. Applies standalone.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-**Step 4.1: Original discussion**
+### Step 4.1: Original discussion
+**Record:** UNVERIFIED — `b4 shazam` could not find the message-id;
+lore.kernel.org returns 403/bot protection via WebFetch and curl. Link
+from commit message could not be fetched.
 
-Record: `b4 dig -c c8459ee2fef50` →
-https://patch.msgid.link/20260608162230.46644-1-dbgh9129@gmail.com
-`b4 dig -a`: single v1 revision only. Lore fetch blocked by bot
-protection; could not read thread replies.
+### Step 4.2: Reviewers
+**Record:** UNVERIFIED via b4 dig -w (could not locate thread). Steven
+Rostedt SOB confirms maintainer acceptance.
 
-**Step 4.2: Reviewers**
+### Step 4.3: Bug report
+**Record:** Reproduced by author on ARMv5 Versatile PB QEMU with
+documented Kconfig. No syzbot/bugzilla link. Severity: boot panic during
+KCOV selftest.
 
-Record: `b4 dig -w` CC'd Marcelo Ricardo Leitner, Xin Long, David S.
-Miller, Eric Dumazet, Jakub Kicinski, Paolo Abeni, Simon Horman, linux-
-sctp@, netdev@.
+### Step 4.4: Related patches
+**Record:** Direct predecessor: `bb5eb8f3b3297 tracing: Disable kcov on
+trace_preemptirq.c` — same rationale, incomplete because tracer
+implementation lives in separate `trace_irqsoff.o`.
 
-**Step 4.3: Bug report**
-
-Record: No external bug report or syzbot link.
-
-**Step 4.4: Related patches**
-
-Record: Standalone; not part of a multi-patch series.
-
-**Step 4.5: Stable list**
-
-Record: Could not search stable@ lore (blocked). No stable nomination
-verified from available sources.
+### Step 4.5: Stable list history
+**Record:** UNVERIFIED — could not search lore stable archive due to
+access restrictions.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-**Step 5.1: Key functions**
+### Step 5.1: Key functions
+**Record:** `tracer_hardirqs_off()`, `tracer_hardirqs_on()` in
+`trace_irqsoff.c`; `trace_hardirqs_off()`, `trace_hardirqs_on()` in
+`trace_preemptirq.c`; `__sanitizer_cov_trace_pc()`, `check_kcov_mode()`,
+`selftest()`, `kcov_init()` in `kcov.c`.
 
-Record: `sctp_v4_add_protocol()`, `sctp_v6_add_protocol()`, callbacks
-`sctp_inetaddr_event()`, `sctp_inet6addr_event()`.
+### Step 5.2: Callers
+**Record:** `trace_hardirqs_off`/`on` called from ARM entry code
+(`arch/arm/kernel/entry-header.S:208,215,217` via `svc_exit`;
+`arch/arm/kernel/entry-armv.S:210`). Exported symbols used broadly
+across architectures for IRQ flag tracing. `kcov_init` is
+`device_initcall` — runs during boot with interrupts enabled.
 
-**Step 5.2: Callers**
+### Step 5.3: Callees
+**Record:** `tracer_hardirqs_off()` → `start_critical_timing()`; KCOV-
+instrumented code in `trace_irqsoff.o` inserts calls to
+`__sanitizer_cov_trace_pc()`.
 
-Record:
-- `sctp_v4_add_protocol()` — called from `sctp_init()` (`module_init`)
-- `sctp_v6_add_protocol()` — called from `sctp_init()` after v4 succeeds
-- Not hot-path; module initialization only.
+### Step 5.4: Reachability
+**Record:** Triggered during boot when KCOV selftest runs
+(`device_initcall`) and a timer interrupt fires during the 300ms wait
+loop. Reachable with `CONFIG_KCOV=y`, `CONFIG_KCOV_SELFTEST=y`,
+`CONFIG_KCOV_INSTRUMENT_ALL=y` (default **y** per
+`lib/Kconfig.debug:2149`), and `CONFIG_IRQSOFF_TRACER=y` or
+`CONFIG_PREEMPT_TRACER=y` (both build `trace_irqsoff.o`).
 
-**Step 5.3: Callees**
-
-Record: `register_inetaddr_notifier()` →
-`blocking_notifier_chain_register()`; `register_inet6addr_notifier()` →
-`atomic_notifier_chain_register()`; `inet_add_protocol()` /
-`inet6_add_protocol()` use `cmpxchg` and return `-1` if the protocol
-slot is already occupied.
-
-**Step 5.4: Reachability**
-
-Record: Trigger requires SCTP module init failure after notifier
-registration — uncommon but possible (e.g. `inet6_add_protocol()` fails
-after v4 succeeds; `inet_add_protocol()` fails on occupied
-`IPPROTO_SCTP` slot). After failure, any subsequent IPv4/IPv6 address
-event can invoke the leaked notifier → **reachable from normal network
-interface activity**.
-
-**Step 5.5: Similar patterns**
-
-Record: `net/mac80211/main.c` correctly unwinds notifier registration on
-failure (`fail_ifa6` → `unregister_inetaddr_notifier`). SCTP lacked the
-same pattern.
+### Step 5.5: Similar patterns
+**Record:** Extensive KCOV exclusions across tree (mm/, lib/, kernel/,
+arch/*/entry/, `kernel/trace/Makefile` for preemptirq). This fix fills
+an obvious gap in the same file/pattern.
 
 ---
 
 ## Phase 6: Cross-Reference Against Local Tree
 
-**Step 6.1: Buggy code present?**
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Local tree is **Linux 6.18.44** (`git describe
+HEAD` → `v6.18.44`). `kernel/trace/Makefile` has only:
+```34:36:kernel/trace/Makefile
+# Functions in this file could be invoked from early interrupt
+# code and produce random code coverage.
+KCOV_INSTRUMENT_trace_preemptirq.o := n
+```
+`trace_irqsoff.o` is built (lines 62-63) but not excluded. All
+KCOV/selftest infrastructure present (`lib/Kconfig.debug`,
+`kernel/kcov.c`).
 
-Record: **Yes.** Tree is `v6.18.44` (`stable/linux-6.18.y`, detached
-HEAD). Current code at `net/sctp/protocol.c:1298-1307` and
-`net/sctp/ipv6.c:1226-1234` matches the pre-fix state. Fix
-`c8459ee2fef50` is **not** an ancestor of HEAD.
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — exact context matches the proposed
+diff. No conflicting changes in this area.
 
-**Step 6.2: Backport complications**
-
-Record: **Clean apply** — `git show c8459ee2fef50 | git apply --check`
-passes with no conflicts.
-
-**Step 6.3: Related fixes already present?**
-
-Record: None for this notifier unwind issue.
+### Step 6.3: Related fixes already present?
+**Record:** Partial fix `bb5eb8f3b3297` is present (preemptirq only).
+This specific irqsoff exclusion is **not** present. No duplicate fix
+found.
 
 ---
 
-## Phase 7: Subsystem Context
+## Phase 7: Subsystem and Maintainer Context
 
-**Step 7.1: Subsystem**
+### Step 7.1: Subsystem criticality
+**Record:** **tracing + KCOV** — IMPORTANT for kernel developers,
+fuzzers (syzkaller per `KCOV_INSTRUMENT_ALL` help text), and CI systems
+using KCOV selftest. Not universal production path, but KCOV is
+security-relevant infrastructure.
 
-Record: **net/sctp** — networking protocol (IMPORTANT; used in
-telecom/enterprise, optional `CONFIG_IP_SCTP` module).
-
-**Step 7.2: Activity**
-
-Record: SCTP in 6.18.y receives active stable fixes (UAF, races, netns
-teardown); mature subsystem with ongoing maintenance.
+### Step 7.2: Subsystem activity
+**Record:** tracing subsystem actively maintained in 6.18.y (recent
+irqsoff tracer fixes in 2025).
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-**Step 8.1: Who is affected**
+### Step 8.1: Who is affected
+**Record:** Config-specific — users/distributions building with KCOV
+enabled, especially `KCOV_SELFTEST` (Kconfig says “Recommended to be
+enabled”) and whole-kernel instrumentation (`KCOV_INSTRUMENT_ALL`,
+default y). Affects fuzzing/CI/boot-validation workflows, not typical
+end-user kernels without KCOV.
 
-Record: Systems with SCTP built as a module (`CONFIG_IP_SCTP=m`) where
-module initialization fails after notifier registration but before full
-protocol registration completes.
+### Step 8.2: Trigger conditions
+**Record:** Boot-time, with KCOV selftest + instrument-all +
+irqsoff/preempt tracer enabled; timer interrupt during selftest wait
+loop. Not userspace-triggerable on production kernels without KCOV, but
+reliably reproducible in the described test config.
 
-**Step 8.2: Trigger conditions**
+### Step 8.3: Failure mode severity
+**Record:** NULL pointer dereference → kernel oops → **panic during
+boot**. Severity: **CRITICAL** for affected configurations (system does
+not reach userspace).
 
-Record:
-- `register_*addr_notifier()` succeeds, then `inet*_add_protocol()`
-  fails (returns `-EAGAIN`)
-- More plausible v6 path: v4 fully registered, v6 notifier registered,
-  v6 protocol registration fails → `err_v6_add_protocol` cleans v4 but
-  leaves v6 notifier registered
-- **Likelihood:** Low on typical systems; **not** user-triggerable in
-  normal operation, but possible on init failure/retry scenarios
-
-**Step 8.3: Failure mode severity**
-
-Record: Leaked notifier on global chain after failed module unload →
-callback into freed module memory on address events → **kernel oops /
-use-after-free**. Severity when triggered: **HIGH (CRITICAL)**. Trigger
-rarity: **LOW**.
-
-**Step 8.4: Risk-benefit**
-
-Record:
-- **Benefit:** Prevents dangling notifier / UAF on error paths; enables
-  clean SCTP module reload after init failure
-- **Risk:** Very low — 16 lines, error-path only, mirrors established
-  kernel patterns
-- **Ratio:** Favorable for stable despite rare trigger
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** Prevents deterministic boot panic for valid, documented
+  Kconfig used in fuzzing/CI; completes incomplete 2022 fix.
+- **Risk:** Very low — one Makefile line, established exclusion
+  mechanism, no behavior change except suppressing inappropriate KCOV
+  callbacks.
+- **Ratio:** Favorable for backport.
 
 ---
 
 ## Phase 9: Final Synthesis
 
-**Evidence FOR backport:**
-- Real bug in long-standing code (since 2007/2008)
-- Can cause UAF/kernel crash if module init fails and addresses change
-  afterward
-- Small, obviously correct, applies cleanly to 6.18.44
-- Merged to net with maintainer sign-off
-- Matches established notifier registration cleanup patterns (mac80211,
-  nf_nat_masquerade)
+### Step 9.1: Evidence summary
 
-**Evidence AGAINST backport:**
-- No user reports or syzbot reproduction
-- Trigger path is SCTP module init failure — uncommon in production
-- Impact limited to systems using SCTP as a module
+**FOR backport:**
+- Real boot crash (NULL deref in `__sanitizer_cov_trace_pc`)
+- Small, surgical, obviously correct fix following existing pattern
+- Bug exists in 6.18.44 tree; fix not yet applied
+- `KCOV_INSTRUMENT_ALL` defaults to y; `KCOV_SELFTEST` recommended in
+  Kconfig
+- Maintainer (Rostedt) signed off
+- Completes gap left by `bb5eb8f3b3297`
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — logic is straightforward; no
-   Tested-by, but maintainer-merged
-2. Fixes a real bug? **PASS** — notifier leak on error path
-3. Important issue? **PASS** — UAF/crash potential (HIGH when triggered)
-4. Small and contained? **PASS** — 2 files, ~16 lines
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — clean apply verified
+**AGAINST backport:**
+- Only affects KCOV debug/fuzzing configurations, not typical production
+  kernels
+- No syzbot/CVE report
+- Mailing list review details unverified
 
-**Exception category:** Error-path cleanup (not device ID/quirk/docs).
+**Unresolved:** Full lore thread content; whether reviewers explicitly
+nominated for stable.
 
-**Decision rationale for 6.18.y:** The buggy code is present, the fix is
-minimal and correct, and the failure mode (dangling notifier → UAF on
-address events after failed module load) is serious enough for stable
-despite low trigger frequency. This is standard stable material for
-error-path resource cleanup.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — author tested on ARMv5 QEMU;
+   mechanism verified in code; mirrors prior accepted fix.
+2. Fixes a real bug? **PASS** — boot panic with documented Kconfig.
+3. Important issue? **PASS** — boot crash (CRITICAL for affected
+   config); KCOV is fuzzing/security infrastructure.
+4. Small and contained? **PASS** — 1 line + comment, single Makefile.
+5. No new features/APIs? **PASS** — build-time instrumentation exclusion
+   only.
+6. Can apply to local tree? **PASS** — code present, clean apply
+   expected.
+
+### Step 9.3: Exception categories
+**Record:** Build/instrumentation fix for valid kernel configuration —
+analogous to existing KCOV exclusion pattern (similar to build-fix
+category for instrumented builds).
+
+### Step 9.4: Decision rationale
+
+For **Linux 6.18.44**, this commit should be backported. The tree has
+the incomplete 2022 preemptirq KCOV exclusion but not the irqsoff one,
+leaving `tracer_hardirqs_*()` instrumented. Combined with KCOV selftest
+(which deliberately enables tracing without a coverage area), this
+causes a deterministic boot panic on interrupt during `kcov_init()`. The
+fix is minimal, follows an established in-tree pattern, is signed by the
+tracing maintainer, and has very low regression risk while preventing a
+hard boot failure for KCOV/fuzzing configurations that stable trees are
+expected to support.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from user-provided diff and
-  `git show c8459ee2fef50`
-- [Phase 2] Read current `sctp_v4_add_protocol()` /
-  `sctp_v6_add_protocol()` in tree; confirmed pre-fix state
-- [Phase 2] Read `sctp_init()` error paths (`err_add_protocol`,
-  `err_v6_add_protocol`) — v4 notifier not unwound on v4 failure; v6
-  notifier not unwound on v6 failure
-- [Phase 3] `git describe HEAD` → `v6.18.44`; `make kernelversion` →
-  `6.18.44`
-- [Phase 3] `git blame` on changed lines — bug present since 2007/2008
-- [Phase 3] `merge-base --is-ancestor c8459ee2fef50 HEAD` → fix NOT in
-  current tree
-- [Phase 3] `git apply --check` with mainline patch → applies cleanly
-- [Phase 4] `b4 dig -c c8459ee2fef50` → lore URL found
-- [Phase 4] `b4 dig -a` → v1 only
-- [Phase 4] `b4 dig -w` → SCTP/netdev maintainers CC'd
-- [Phase 4] UNVERIFIED: Lore thread content (Anubis bot blocked fetch)
-- [Phase 5] Read `register_inetaddr_notifier()` / `inet_add_protocol()`
-  implementations
-- [Phase 5] Read `sctp_inetaddr_event()` / notifier block definitions
-- [Phase 5] Compared with mac80211 notifier unwind pattern
-- [Phase 6] Confirmed buggy code exists at current line numbers in
-  6.18.44
-- [Phase 8] Assessed failure mode: leaked notifier after failed
-  `module_init` → UAF on address events
+- [Phase 1] Parsed subject, tags, body; identified boot panic bug and
+  maintainer SOB
+- [Phase 2] Diff: 1 Makefile line added; verified call chain preemptirq
+  wrapper → irqsoff tracer → `__sanitizer_cov_trace_pc`
+- [Phase 3] `git describe HEAD`: v6.18.44 / 6.18.44
+- [Phase 3] `git blame kernel/trace/Makefile:34-36`: `bb5eb8f3b3297`
+  (2022-05-23)
+- [Phase 3] `git show bb5eb8f3b3297`: prior preemptirq-only exclusion
+  confirmed
+- [Phase 3] `trace_irqsoff.c` exists since 2008 (`81d68a96a3984`)
+- [Phase 3] Fix commit not in tree; `KCOV_INSTRUMENT_trace_irqsoff.o`
+  absent
+- [Phase 4] UNVERIFIED: lore/b4 thread inaccessible (403/bot protection,
+  message-id not found)
+- [Phase 5] Read `kernel/kcov.c:174-220,1080-1132`: selftest sets mode
+  without area; `check_kcov_mode` + NULL `kcov_area` deref confirmed
+- [Phase 5] Read `kernel/trace/trace_irqsoff.c:643-647`,
+  `trace_preemptirq.c:102-109`: tracer in irqsoff.o, wrapper in
+  preemptirq.o
+- [Phase 5] Read `arch/arm/kernel/entry-header.S:202-218`:
+  `trace_hardirqs_off/on` called from `svc_exit` during IRQ handling
+- [Phase 5] Read `include/linux/preempt.h:130`: `in_task()` based on
+  preempt_count hardirq bits
+- [Phase 5] Read `scripts/Makefile.lib:84-90`:
+  `KCOV_INSTRUMENT_<stem>.o` mechanism confirmed
+- [Phase 6] Current `kernel/trace/Makefile` missing irqsoff exclusion;
+  `trace_irqsoff.o` built at lines 62-63
+- [Phase 6] `lib/Kconfig.debug:2146-2172`: `KCOV_INSTRUMENT_ALL` default
+  y; `KCOV_SELFTEST` recommended
+- [Phase 8] Failure mode: boot panic, severity CRITICAL for affected
+  Kconfig
 
 **YES**
 
- net/sctp/ipv6.c     | 10 ++++++++--
- net/sctp/protocol.c | 10 ++++++++--
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ kernel/trace/Makefile | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/ipv6.c b/net/sctp/ipv6.c
-index 7434309785cc5..922b19982d4fe 100644
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -1225,11 +1225,17 @@ void sctp_v6_protosw_exit(void)
- /* Register with inet6 layer. */
- int sctp_v6_add_protocol(void)
- {
-+	int ret;
-+
- 	/* Register notifier for inet6 address additions/deletions. */
--	register_inet6addr_notifier(&sctp_inet6addr_notifier);
-+	ret = register_inet6addr_notifier(&sctp_inet6addr_notifier);
-+	if (ret)
-+		return ret;
+diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
+index dcb4e02afc5f4..36b3ed5251f46 100644
+--- a/kernel/trace/Makefile
++++ b/kernel/trace/Makefile
+@@ -31,9 +31,10 @@ ifdef CONFIG_GCOV_PROFILE_FTRACE
+ GCOV_PROFILE := y
+ endif
  
--	if (inet6_add_protocol(&sctpv6_protocol, IPPROTO_SCTP) < 0)
-+	if (inet6_add_protocol(&sctpv6_protocol, IPPROTO_SCTP) < 0) {
-+		unregister_inet6addr_notifier(&sctp_inet6addr_notifier);
- 		return -EAGAIN;
-+	}
+-# Functions in this file could be invoked from early interrupt
+-# code and produce random code coverage.
++# Functions in these files can run from IRQ entry before hardirq context
++# is visible to KCOV, and produce coverage unrelated to syscall inputs.
+ KCOV_INSTRUMENT_trace_preemptirq.o := n
++KCOV_INSTRUMENT_trace_irqsoff.o := n
  
- 	return 0;
- }
-diff --git a/net/sctp/protocol.c b/net/sctp/protocol.c
-index 5718328cb8a79..c718dc066f3a9 100644
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -1297,12 +1297,18 @@ static void sctp_v4_protosw_exit(void)
+ CFLAGS_bpf_trace.o := -I$(src)
  
- static int sctp_v4_add_protocol(void)
- {
-+	int ret;
-+
- 	/* Register notifier for inet address additions/deletions. */
--	register_inetaddr_notifier(&sctp_inetaddr_notifier);
-+	ret = register_inetaddr_notifier(&sctp_inetaddr_notifier);
-+	if (ret)
-+		return ret;
- 
- 	/* Register SCTP with inet layer.  */
--	if (inet_add_protocol(&sctp_protocol, IPPROTO_SCTP) < 0)
-+	if (inet_add_protocol(&sctp_protocol, IPPROTO_SCTP) < 0) {
-+		unregister_inetaddr_notifier(&sctp_inetaddr_notifier);
- 		return -EAGAIN;
-+	}
- 
- 	return 0;
- }
 -- 
 2.53.0
 
