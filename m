@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F094BD0E7;
-	Mon, 31 Aug 2026 14:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F5A43A80C;
+	Mon, 31 Aug 2026 14:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185086; cv=none; b=MTDsOusjigdrXM1jA6X2v97BIbiV9+ryyqu1Ry+cvKl4MTHp5CWsdnLRmRklOUuDWr7KZiNaeAubRcuhgrGBNeDPltt1sGHiS39GY4meoHKcSfnZnhy9hFQ+KE/qk8OuOy66ijYT7diAQQBJjzK+9ii2bXbCULzi+iSmXRSmAKc=
+	t=1788185120; cv=none; b=UUO5BThS12QUbEC1kKSgHIG5Nq+Lfmbiocr0N8FOa7dWiq2T5In1ckfWUpkz0KfESj+lSnoDInkvHbvaa2jIArXhCp/CVk2Sg9axPN3Xkq6uGFpBoWGjDHMSUIpYdFgR6pP0OAezjD1Yw7QVuCeiLm2ClUPICJO/m4tMrBEp9rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185086; c=relaxed/simple;
-	bh=L5uzHJjZKPStT7FCFArwJsnvpE9gKQU3dJNuz0Wvh0A=;
+	s=arc-20240116; t=1788185120; c=relaxed/simple;
+	bh=ZmrFgR5kXcVhFOztXdV8w+rmIYJ8NxKb6F0RlIxrc28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KX/u0xy4RcskEfbG3Kh8tD8m7Uj4lkNj7pRStSginJp7l0obNtM6dWNocPWHhklfmKOjG/2fHuHLbNpvCNy9BbKuDQld805K6brZmk5wHxM+pOvm50AkjfaggNFNBzLSf6L3PEDH6XwUSJ/cGH+RwCAPi1H0lz485Ec61w5Hlpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEKLnS5X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PKkkEhgDRSRrptfZ+jKAzdhQFdwkWWuhkxszWUutDwIP4bJIBBhL+v/u5fSoxbwneqJrQXwyhUraUUbwuxRsKrYeilnXYUAHeELSDEqsxbp4epadr2DhFHrQ1ZcftVsyhCrmBqeL6XLnHWWHUpTueMXOJ/e7QOvdP2VgtOaFUZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/OolYQl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEKLnS5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169D21F000E9;
-	Mon, 31 Aug 2026 14:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/OolYQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1DE1F000E9;
+	Mon, 31 Aug 2026 14:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185084;
-	bh=FJzbWwSU310fCWaqksIJsary6cEgETOFnubHjciq02E=;
+	s=korg; t=1788185118;
+	bh=242lQfWEo2ZZN2OOrXo2mOwC1cMXttFfZYMdxM8n7zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tEKLnS5XY4IXKJIDb7vf91H1KFN1zAp4DEMZuJGiQ6AhtiPdqMkoVMiML49ObV+I5
-	 J2BA1oLoGw76tx3mdkxUhOCFrFnB0s8W+ol1R0haTAk0AhQjxwnAU04LWXTNg+QyNH
-	 o0OBQb0ckLozvBQhDxC1hGY4AwMlGjdQf+1CIwwI=
+	b=F/OolYQlxYf95O4b73Kjx/U2Eqf005sDlzQSo8RxNE1646K/KdFcAWD1vYtpgcG54
+	 VFA0pHmrFERd3ArqiEbaIMi63ab3/HcfZyIVsQ7iyo7f/6XKYx7gbkXKKa47NXTx3U
+	 MvJniWap7qVYJaQGBHy+wwAa7MuOqQZS23C8K/9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	syzbot@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 48/69] usb: usbtest: disable dynamic ID support
-Date: Mon, 31 Aug 2026 15:35:21 +0200
-Message-ID: <20260831133401.051160157@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Frank Li <Frank.Li@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 59/69] crypto: mxs-dcp - fix source scatterlist length access
+Date: Mon, 31 Aug 2026 15:35:32 +0200
+Message-ID: <20260831133401.693859712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -51,54 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 00e2071f6d5621a5ddea311a5e6b143ae6e474af upstream.
+commit c5bcb084a9871e5b62afb5f48b60adfa13b5d9f8 upstream.
 
-The usbtest driver relies on the driver_info field of struct usb_device_id
-to point to a valid struct usbtest_info descriptor. This structure contains
-essential test configurations, such as endpoint addresses and test modes,
-which are required during probe.
+mxs_dcp_aes_block_crypt() uses sg_dma_len() without mapping the source
+scatterlist with dma_map_sg() first. Therefore, sg_dma_len() is invalid
+and could return zero or a stale DMA length, causing encryption and
+decryption to process the wrong number of bytes when
+CONFIG_NEED_SG_DMA_LENGTH=y.
 
-When a user dynamically adds a new device ID via the sysfs new_id
-interface without specifying a reference device, the USB core initializes
-driver_info to 0 (NULL). When a matching device is subsequently probed,
-usbtest_probe() unconditionally casts driver_info to a struct usbtest_info
-pointer and dereferences it, leading to a NULL pointer dereference crash:
+Use the original scatterlist length instead.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:usbtest_probe+0x3b9/0x1280 drivers/usb/misc/usbtest.c:2822
-
-Because usbtest strictly requires pre-defined usbtest_info descriptors
-to function, dynamic ID binding via sysfs is fundamentally unsupported
-for this driver.
-
-Fix this by setting .no_dynamic_id = 1 on usbtest_driver. This instructs
-the USB core to skip creating the new_id and remove_id sysfs interfaces
-for usbtest, preventing invalid dynamic ID entries from being created.
-
+Fixes: 15b59e7c3733 ("crypto: mxs - Add Freescale MXS DCP driver")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7e1e5911f9eac50bedc7
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260806152651.2370795-1-nogikh@google.com
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/usbtest.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/mxs-dcp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/misc/usbtest.c
-+++ b/drivers/usb/misc/usbtest.c
-@@ -3053,6 +3053,7 @@ static struct usb_driver usbtest_driver
- 	.disconnect =	usbtest_disconnect,
- 	.suspend =	usbtest_suspend,
- 	.resume =	usbtest_resume,
-+	.no_dynamic_id = 1,
- };
+--- a/drivers/crypto/mxs-dcp.c
++++ b/drivers/crypto/mxs-dcp.c
+@@ -333,7 +333,7 @@ static int mxs_dcp_aes_block_crypt(struc
  
- /*-------------------------------------------------------------------------*/
+ 	for_each_sg(req->src, src, sg_nents(req->src), i) {
+ 		src_buf = sg_virt(src);
+-		len = sg_dma_len(src);
++		len = src->length;
+ 		tlen += len;
+ 		limit_hit = tlen > req->cryptlen;
+ 
 
 
