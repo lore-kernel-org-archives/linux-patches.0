@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D975053EC;
-	Mon, 31 Aug 2026 13:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B9050540F;
+	Mon, 31 Aug 2026 13:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183735; cv=none; b=p9j0367/v1EqVA3zQO0LbwvZMSsiYp571Jwqo8fj1W6qRaJrzkHGL3FYqryVOYjk5Gqn48SJibGXTV3yaYz11GM3KKpHjDtBkW0eWnnAByQN7yj5R4HvDgk4VzeuBUpXYsZQYnViCFSqRKHIj/+9DxMn5sK92+1t7mZBvG9Q/Tg=
+	t=1788183737; cv=none; b=bY0rFHv1y9i0oWCRywNK64BSqvXBfR8si85PBn6+i1p1YNJI9T1BhF7NG1XuyVmVJDjjE0z3h+oSVKCt61/WNTFzcv0XntIUI1rHraOc1T5tIVDdIAbcBuvGQuQTP3w0eLUUqAFSwlL462myxEDVN5OKiMDmWFmSDsH2zUetEaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183735; c=relaxed/simple;
-	bh=T4pQVF0gppIWRQs+z05Dgb1ezZ53EVDpIf69+u6LnSQ=;
+	s=arc-20240116; t=1788183737; c=relaxed/simple;
+	bh=YIsRDDqkd1ouO8Zp64aXbm02JghdIwvgDBPhR61qO7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s6XaI8hzibckMNqb5L7VCg1e/Yj2IgM/w4XoisF1Qt4E9N3eS0xCfs3d1RScyMOXX17AYwv0G7KuK5Vugj0W9Ex5yHY+1O9nvzgK2Ds12MT43rZkbxIeBN7q+X2soszGDzdUDVr+6vrWjvZpoS8TYdJY/m9VUInlGflKp5ifG2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFXdORCK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=H49ObIalGVvEzEBiIbb8V4VkRof1gh+AYxALonFMj4w6TN1HXfbeSZ2Bdxf93OCfMhfuTvqz4eVF69b2F66bKvshGYmJ150Akti5g+al0KOX2/uzH407C3eYP8/wFUP2fDBWNb/9JBVAcWyiVcp+yHG1BPiHZGHqGszStlfrXQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aMdZlohG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFXdORCK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936151F00A3E;
-	Mon, 31 Aug 2026 13:42:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aMdZlohG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9411F000E9;
+	Mon, 31 Aug 2026 13:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183733;
-	bh=jellvt5BpGCHjTqc0FikT8p18tua4sXlDCfnakxaaTQ=;
+	s=k20260515; t=1788183734;
+	bh=DlK6rkYW0O/pcFDpTiFkQ9/wFopvtWdHJc9XGCyn5iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFXdORCKh6RlrJmeGYaV2cEB8qRW0tmGiHtTRBDoRJ0d91OvFPmlhtEhz5/I7d/uN
-	 A1QVkwZ3a/KS9YPU3zf/LHW9VVtIG/r4PvhuRUlsbZ5VXTWdzDZ82hgp4sRA2qXzi0
-	 HnHImqObsb90fE1viUvcaP5SwlnJ5LLuqLfPYO5cGGd5wBr0bQF+yQRlDzbz+erqHT
-	 Pu8rtBvo9bbLklhffvu/sNKhjof7i9deGgEnUrilFNXjmlZdK4/YUxv/YI7yWsWC5o
-	 dClVlNdByqeQfnW5OGvANW+2fnwbD1RXq/ZKnTQivHJtwDYoj5CypbKqN1YFyFmjPP
-	 Z3rWT0msJXGfg==
+	b=aMdZlohGY0YIwaqHtEkzMNTou5RxiBILpzY6J2Ewpwy2t5j0yKhxF3SaTIG+Jrm/+
+	 BNNJMEhFvTBvm8AcsFlartRJ8R1JZR73NydqHkZSHqMOV62iebywYYfA5xBhd+ltv0
+	 i9XLGmIi+1WzZe18VprfSTM67fJZpDtZTLUs+rwIx3DbFbQcpfhiY85hiH5lEBEWbW
+	 VMeAv/Rc798nwpDfSbdAu+q6nqaejgeSyVpGI2dMzzYbPmMuZ5IfL0s33/00WehJu5
+	 R1l831+8h6koDUolVdxG+XEKk0ajGEbJQNueDtRk3xlNUu83a94owgIJdGZgEyHiUL
+	 GTMD4URxklFbw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pc@manguebit.org,
-	linkinjeon@kernel.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] smb/client: reduce fallocate zero buffer allocation
-Date: Mon, 31 Aug 2026 09:24:59 -0400
-Message-ID: <20260831133314.4125787-271-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] dpaa2-switch: fix handling of NAPI on the remove path
+Date: Mon, 31 Aug 2026 09:25:00 -0400
+Message-ID: <20260831133314.4125787-272-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,397 +56,434 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 9e4ec3be67af41ab859302d7109b34976efd9258 ]
+[ Upstream commit e23d7c8c1d4ba435c457d7ffb2669175ec819b07 ]
 
-The fallocate emulation allocates a 1 MiB zero-filled buffer even
-though each SMB2_write request is limited to SMB2_MAX_BUFFER_SIZE,
-which is 64 KiB. A high-order 1 MiB allocation is more likely to
-fail on a fragmented system.
+All the NAPI instances for a DPSW device are attached to the first
+switch port's net_device but shared by all ports. The NAPI instances get
+disabled only once the last port goes down.
 
-Allocate only the smaller of the requested range and SMB2_MAX_BUFFER_SIZE,
-and reuse that zero-filled buffer for every write request. Also reject
-a successful write that makes no progress to avoid looping indefinitely.
+This causes an issue on the .remove() path where each port is
+unregistered and freed one at a time, causing the NAPI instances to be
+deleted even though they are not disabled.
 
-This reduces the contiguous allocation required by fallocate emulation
-without changing the written data or range semantics.
+In order to avoid this, split up the unregister_netdev() calls from the
+free_netdev() so that we make sure all ports go down before we attempt
+a deletion of NAPI instances. Also, make the netif_napi_del() explicit
+as it is on the .probe() path.
 
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260528173452.1953102-6-ioana.ciornei@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `dpaa2-switch: fix handling of NAPI on the
+remove path`
 
-**Step 1.1 — Subject line**
-Record: `[smb/client]` `[reduce]` — Reduce the zero-filled buffer size
-used by SMB3 fallocate emulation.
-
-**Step 1.2 — Tags**
-Record:
-- `Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>` (author)
-- `Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>`
-- `Signed-off-by: Steve French <stfrench@microsoft.com>` (subsystem
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc:
-  stable@vger.kernel.org`, or `Link:` tags
-- Notable: maintainer review chain present; no explicit reporter or
-  stable nomination
-
-**Step 1.3 — Body analysis**
-Record:
-- **Bug:** `smb3_simple_fallocate_range()` allocates a 1 MiB zero buffer
-  even though each `SMB2_write` is capped at `SMB2_MAX_BUFFER_SIZE` (64
-  KiB). Large contiguous allocations are more likely to fail on
-  fragmented systems.
-- **Symptom:** `fallocate()` on CIFS/SMB mounts can return `-ENOMEM`
-  unnecessarily; successful writes reporting 0 bytes can spin forever.
-- **Root cause:** Over-allocation relative to per-write limit; buffer
-  pointer advanced across a shrinking reusable zero buffer; no guard
-  against zero-progress writes.
-- **Version info:** None in the message.
-
-**Step 1.4 — Hidden bug fix detection**
-Record: **Yes.** Besides the allocation-size issue, it adds `if
-(!nbytes) return -EIO;` to stop an infinite loop when `SMB2_write()`
-succeeds but reports 0 bytes written, and removes `buf += nbytes` so a
-smaller reused zero buffer stays valid.
+**Local tree:** `v6.18.44` (`6.18.44`) — verdict applies to this tree
+only.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
-Record:
-- `fs/smb/client/smb2ops.c`: +4 / −3 lines (7-line net change)
-- Functions: `smb3_simple_fallocate_write_range()`,
-  `smb3_simple_fallocate_range()`
-- Scope: single-file surgical fix
+### Step 1.1: Subject line
+- **Record:** `[dpaa2-switch]` **`fix`** — correct NAPI teardown
+  ordering on the driver `.remove()` path.
 
-**Step 2.2 — Code flow changes**
-Record:
-- **Hunk 1 (`smb3_simple_fallocate_write_range`):**
-  - Before: `nbytes` was `int`; loop advanced `buf` on each write; no
-    zero-progress check.
-  - After: `nbytes` is `unsigned int`; zero-progress write returns
-    `-EIO`; `buf` is not advanced (buffer reused).
-- **Hunk 2 (`smb3_simple_fallocate_range`):**
-  - Before: `kvzalloc(1024 * 1024, GFP_KERNEL)`
-  - After: `kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE),
-    GFP_KERNEL)`
+### Step 1.2: Tags
+- **Signed-off-by:** Ioana Ciornei `<ioana.ciornei@nxp.com>`
+- **Link:** https://patch.msgid.link/20260528173452.1953102-6-
+  ioana.ciornei@nxp.com
+- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (net maintainer
+  merge)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
+  by:`, or `Reviewed-by:` tags.
+- **Record:** Maintainer merge present; no explicit stable nomination or
+  fuzzer report. Absence of `Cc: stable` is expected and not a negative
+  signal.
 
-**Step 2.3 — Bug mechanism**
-Record:
-- **Category:** Resource allocation failure + logic/infinite-loop bug
-- **Mechanism:** A 1 MiB buffer was allocated though writes are chunked
-  to 64 KiB. After the prior `kvzalloc()` backport, kmalloc can still
-  fail first and vmalloc fallback is heavier than needed. If
-  `SMB2_write()` returns success with `DataLength == 0`, `while (len)`
-  never advances and the syscall hangs.
+### Step 1.3: Body analysis
+- **Bug:** NAPI instances are attached to port 0’s `net_device` but
+  shared by all switch ports. NAPI is disabled only when the last port
+  goes down (`napi_users` refcount).
+- **Symptom:** On `.remove()`, each port is `unregister_netdev()`’d and
+  `free_netdev()`’d in the same loop iteration. Freeing port 0’s netdev
+  deletes shared NAPI while other ports may still be up and NAPI still
+  enabled.
+- **Root cause:** Interleaved unregister + free prevents all ports from
+  going down before NAPI deletion.
+- **Fix:** Unregister all netdevs first, explicitly `netif_napi_del()`
+  all NAPI instances, then free ports.
+- **Record:** Real teardown-ordering bug on driver removal; affects
+  multi-port switches with active interfaces.
 
-**Step 2.4 — Fix quality**
-Record: Fix is minimal and correct. Reusing the start of a zero-filled
-buffer is semantically equivalent. Removing `buf += nbytes` is required
-once the buffer shrinks below cumulative write size. Regression risk is
-low.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record:
-- 1 MiB allocation introduced with fallocate emulation (commit
-  `966a3cb7c7db`, Jun 2021: "cifs: improve fallocate emulation")
-- Current 1 MiB line changed to `kvzalloc` by `6cc1518357369` (Jul
-  2026), already in this tree
-- Write loop logic dates to merge `5d324e5159d9e` (Nov 2025)
-
-**Step 3.2 — Fixes: tag**
-Record: Not applicable — no `Fixes:` tag.
-
-**Step 3.3 — Related file history**
-Record:
-- `6cc1518357369` — `kzalloc` → `kvzalloc` for same 1 MiB buffer (ENOMEM
-  on fragmented systems, xfstests generic/013)
-- `7e08ab7a061b1` — overlapping allocated ranges in fallocate (already
-  in this tree)
-- Target commit `9e4ec3be67af4` is **not** in this tree yet
-- Standalone within a larger series (v8 3/5); does not require other
-  series patches
-
-**Step 3.4 — Author context**
-Record: Huiwen He authored multiple SMB fallocate fixes; Steve French
-(maintainer) committed. Same author area as `7e08ab7a061b1` already
-backported here.
-
-**Step 3.5 — Dependencies**
-Record: No prerequisites beyond code already present. `git apply
---check` on `9e4ec3be67af4` against current tree succeeds.
-`SMB2_MAX_BUFFER_SIZE` is 65536 in `fs/smb/common/smb2pdu.h`.
+### Step 1.4: Hidden bug fix?
+- **Record:** No — this is an explicit bug fix, not disguised cleanup.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Original discussion**
-Record:
-- `b4 dig -c 9e4ec3be67af4`:
-  https://patch.msgid.link/20260703053300.913371-4-huiwen.he@linux.dev
-- Matched as `[PATCH v8 3/5] smb/client: reduce fallocate zero buffer
-  allocation`
-- `b4 dig -a`: v1 through v8 revisions (Jun 23 – Jul 3, 2026); committed
-  version is latest (v8)
+### Step 2.1: Inventory
+- **File:** `drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c` (+10 /
+  −5)
+- **Function:** `dpaa2_switch_remove()`
+- **Record:** Single-file, surgical change; one function modified.
 
-**Step 4.2 — Reviewers**
-Record: `b4 dig -w` CC'd Steve French, Ronnie Sahlberg, linux-
-cifs@vger.kernel.org, and other SMB maintainers/reviewers.
+### Step 2.2: Code flow change
 
-**Step 4.3 — Bug reports**
-Record: No direct bug report in this commit. Related prior fix
-`6cc1518357369` documented xfstests generic/013 ENOMEM with stack trace
-through `smb3_simple_falloc`.
-
-**Step 4.4 — Series context**
-Record: Part of Huiwen He's fallocate series, but this hunk is self-
-contained and applies independently.
-
-**Step 4.5 — Stable list history**
-Record: No stable-list discussion found for this specific patch. Prior
-related `6cc1518357369` explicitly had `Cc: stable@vger.kernel.org` and
-was backported here.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-Record: `smb3_simple_fallocate_write_range()`,
-`smb3_simple_fallocate_range()`, caller `smb3_simple_falloc()`
-
-**Step 5.2 — Callers**
-Record:
-- `cifs_fallocate()` → `server->ops->fallocate()` →
-  `smb3_simple_falloc()` → `smb3_simple_fallocate_range()` when `len <=
-  1 MiB` on sparse internal regions
-- Reachable from `fallocate()` syscall on CIFS/SMB mounts
-
-**Step 5.3 — Callees**
-Record: `SMB2_write()`, `SMB2_ioctl(FSCTL_QUERY_ALLOCATED_RANGES)`,
-`kvzalloc()`, `kvfree()`
-
-**Step 5.4 — Reachability**
-Record: Userspace `fallocate()` on mounted SMB/CIFS shares with sparse
-files and internal-hole preallocation (`len <= 1 MiB`). Unprivileged
-users with write access can trigger it.
-
-**Step 5.5 — Similar patterns**
-Record: `6cc1518357369` addressed the same allocation site with
-`kvzalloc()` fallback. This commit further right-sizes the buffer to the
-actual per-write maximum.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** Local tree is **v6.18.44** (`git describe HEAD`).
-Current code at line 3564:
-
-```3564:3564:fs/smb/client/smb2ops.c
-        buf = kvzalloc(1024 * 1024, GFP_KERNEL);
+**Before:**
+```c
+for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
+    unregister_netdev(port_priv->netdev);
+    dpaa2_switch_remove_port(ethsw, i);  // calls free_netdev()
+}
 ```
 
-Write loop still has `buf += nbytes` and no zero-progress guard. Bug
-dates to 2021 fallocate emulation; partially mitigated by
-`6cc1518357369`, not fully fixed.
+**After:**
+```c
+for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
+    unregister_netdev(ethsw->ports[i]->netdev);
 
-**Step 6.2 — Backport complications**
-Record: Clean apply verified with `git apply --check`. No conflicts
-expected.
+for (i = 0; i < DPAA2_SWITCH_RX_NUM_FQS; i++)
+    netif_napi_del(&ethsw->fq[i].napi);
 
-**Step 6.3 — Related fixes already present**
-Record:
-- `6cc1518357369` (`kvzalloc` for 1 MiB) — present
-- `7e08ab7a061b1` (overlapping ranges) — present
-- `9e4ec3be67af4` (this commit) — **not** present
+for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
+    dpaa2_switch_remove_port(ethsw, i);
+```
 
----
+- **Record:**
+  - Hunk 1: All ports brought down before any `free_netdev()`.
+  - Hunk 2: Explicit NAPI removal after all `ndo_stop` paths have run.
+  - Hunk 3: Port teardown/free happens only after NAPI is properly
+    disabled and deleted.
 
-## Phase 7: Subsystem and Maintainer Context
+### Step 2.3: Bug mechanism
+- **Category:** Teardown-ordering / resource-lifecycle bug (NAPI deleted
+  while still enabled).
+- **Mechanism:**
+  1. `netif_napi_add()` attaches NAPI to `ethsw->ports[0]->netdev`
+     (probe path, lines 3460–3462).
+  2. `dpaa2_switch_enable_ctrl_if_napi()` /
+     `dpaa2_switch_disable_ctrl_if_napi()` refcount via `napi_users`;
+     NAPI disabled only when last port stops (lines 649–681).
+  3. `free_netdev()` calls `netdev_napi_exit()` →
+     `__netif_napi_del_locked()`, which warns if NAPI is not disabled:
 
-**Step 7.1 — Subsystem criticality**
-Record: `fs/smb/client` — IMPORTANT (filesystem client, affects CIFS/SMB
-users; not universal core)
+```7608:7609:net/core/dev.c
+        /* Make sure NAPI is disabled (or was never enabled). */
+        WARN_ON(!test_bit(NAPI_STATE_SCHED, &napi->state));
+```
 
-**Step 7.2 — Subsystem activity**
-Record: Active — multiple fallocate and client fixes recently backported
-to this 6.18.y tree.
+  4. With `num_ifs > 1` and ports up, unregistering/freeing port 0 first
+     deletes NAPI while `napi_users > 0` and NAPI still enabled.
+- **Record:** Confirmed WARN/crash path on multi-port switch removal.
 
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 — Who is affected**
-Record: Users of CIFS/SMB mounts performing `fallocate()` on sparse
-files (internal hole zero-fill path, `len <= 1 MiB`).
-
-**Step 8.2 — Trigger conditions**
-Record:
-- Sparse SMB file + fallocate on internal unallocated range ≤ 1 MiB
-- Allocation failure more likely under memory pressure/fragmentation
-  (reduced but not eliminated by prior `kvzalloc` fix)
-- Infinite loop if server returns successful write with `DataLength ==
-  0` (unusual but possible misbehavior)
-
-**Step 8.3 — Failure mode severity**
-Record:
-- `-ENOMEM` on fallocate: **MEDIUM** (syscall failure, no kernel crash)
-- Infinite loop on zero-progress write: **CRITICAL** (hung `fallocate()`
-  syscall / unkillable task)
-
-**Step 8.4 — Risk-benefit**
-Record:
-- **Benefit:** HIGH for hang prevention; MEDIUM for allocation
-  reliability and memory use
-- **Risk:** VERY LOW (7-line change, maintainer-reviewed, applies
-  cleanly)
-- **Ratio:** Favorable
+### Step 2.4: Fix quality
+- **Record:** Fix is minimal, mirrors standard netdev teardown ordering,
+  and matches the probe-side explicit `netif_napi_add()`. Low regression
+  risk; no API or locking changes.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 9.1 — Evidence compile**
+### Step 3.1: Blame
+- Remove loop structure: `44baaa43d7cc` (2018-03-14, original staging
+  ethsw driver).
+- `dpaa2_switch_remove_port()` split: `860fe1f87eca` (2021-08-19).
+- Shared NAPI design: `0b1b713704588` (2021-03-10, Ioana Ciornei).
+- **Record:** Bug latent since shared NAPI was introduced in 2021;
+  remove path never updated for shared-NAPI lifecycle.
 
-FOR backport:
-- Fixes real hang (infinite loop on zero-progress `SMB2_write`)
-- Reduces fallocate buffer from 1 MiB to at most 64 KiB on a path
-  already deemed stable-worthy
-- Small, surgical, maintainer-reviewed
-- Applies cleanly to v6.18.44
-- Complements existing `6cc1518357369` backport rather than duplicating
-  it
-- Userspace-reachable via `fallocate()`
+### Step 3.2: Fixes: tag
+- **Record:** Not applicable — no `Fixes:` tag present.
 
-AGAINST backport:
-- Primary ENOMEM issue partially addressed by `6cc1518357369` already in
-  tree
-- No explicit user report, syzbot, or `Cc: stable` on this commit
-- Zero-progress write scenario may be rare
+### Step 3.3: Related file history
+- Recent dpaa2-switch fixes in this tree include IRQ validation,
+  refcount leaks, buffer pool seeding — all independent.
+- Patch is **5/5** of series “dpaa2-switch: various improvements”
+  (patches 1–4 cover FDB, RX error path, VLAN). Patch 5 only touches
+  `dpaa2_switch_remove()` and is **standalone**.
+- **Record:** No prerequisite commits required for this fix.
 
-UNRESOLVED:
-- No independent confirmation of a production server returning
-  `DataLength == 0` on success (defensive fix is still sound)
+### Step 3.4: Author context
+- Ioana Ciornei is the original author of shared NAPI management and an
+  active dpaa2-switch contributor.
+- **Record:** Author has deep subsystem knowledge; fix is credible.
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — logic is clear; `Reviewed-
-   by` present; no `Tested-by`
-2. Fixes a real bug affecting users? **PASS** — hang + unnecessary
-   allocation failures on `fallocate()`
-3. Important issue? **PASS** — hang is critical; ENOMEM is medium
-4. Small and contained? **PASS** — 7 lines, one file
-5. No new features or APIs? **PASS**
-6. Can apply to local tree? **PASS** — verified clean apply
+### Step 3.5: Dependencies
+- Uses `DPAA2_SWITCH_RX_NUM_FQS` (defined as 2 in `dpaa2-switch.h`),
+  `netif_napi_del()`, and existing `dpaa2_switch_remove_port()` — all
+  present in this tree.
+- **Record:** Applies standalone; no structural dependencies on unmerged
+  series patches 1–4.
 
-**Step 9.3 — Exception categories**
-Record: Not a device-ID/quirk/DT/docs exception; standard bug fix.
+---
 
-**Step 9.4 — Decision rationale**
-This tree (6.18.44) still allocates 1 MiB for fallocate zero-fill
-despite 64 KiB write chunks, and lacks protection against a zero-
-progress write loop. The prior `kvzalloc()` backport mitigated physical-
-contiguity failures but did not right-size the buffer or fix the loop.
-The patch is tiny, low-risk, maintainer-approved, and addresses a
-userspace-visible stability issue on a code path already receiving
-stable backports.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Original discussion
+- **Series:** `[PATCH net-next 0/5] dpaa2-switch: various improvements`
+  (Ioana Ciornei, 2026-05-28).
+- **Patch:** `[PATCH net-next 5/5] dpaa2-switch: fix handling of NAPI on
+  the remove path`
+- **URLs:** lkml.iu.edu/2605.3/08494.html, patchew.org series page.
+- Cover letter notes these are long-standing bugs found during LAG
+  support review.
+- **Record:** Patch 5 is independently committable; no NAKs found in
+  available sources.
+
+### Step 4.2: Reviewers
+- **To:** netdev maintainers (Andrew Lunn, David Miller, Jakub Kicinski,
+  Paolo Abeni, etc.)
+- Merged by Jakub Kicinski.
+- **Record:** Standard netdev review path; maintainer merge confirmed.
+
+### Step 4.3: Bug report
+- No syzbot or user crash report; bug found during code review.
+- **Record:** Review-discovered but mechanism is verifiable in code.
+
+### Step 4.4: Series context
+- Patches 1–4: FDB management, RX error path, VLAN dedup, VLAN flag
+  changes — unrelated to NAPI teardown.
+- **Record:** Patch 5 can be backported alone.
+
+### Step 4.5: Stable list history
+- No stable-list discussion found for this specific fix.
+- **Record:** Not previously nominated for stable (expected).
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key functions
+- `dpaa2_switch_remove()` — modified
+- `dpaa2_switch_remove_port()` — called after fix (unchanged)
+- `dpaa2_switch_disable_ctrl_if_napi()` — called via `ndo_stop` during
+  unregister
+- `netdev_napi_exit()` / `__netif_napi_del_locked()` — core NAPI
+  deletion
+
+### Step 5.2: Callers
+- `dpaa2_switch_remove()` is the `.remove` callback for the DPAA2 switch
+  MC device driver (line 3529).
+- **Record:** Triggered on device unbind, module unload, or hot-unplug
+  of DPSW object.
+
+### Step 5.3: Callees
+- `unregister_netdev()` → `ndo_stop` → `dpaa2_switch_port_stop()` →
+  `dpaa2_switch_disable_ctrl_if_napi()`
+- `netif_napi_del()` → `__netif_napi_del_locked()`
+- `dpaa2_switch_remove_port()` → `free_netdev()` → `netdev_napi_exit()`
+- **Record:** Fix ensures correct ordering across these teardown
+  primitives.
+
+### Step 5.4: Reachability
+- **Trigger:** Removal of a DPAA2 switch with 2+ ports where at least
+  one port was brought up (NAPI enabled).
+- **Record:** Reachable on normal driver unload / device removal on NXP
+  DPAA2 platforms (LS1088, LX2160, etc.); not userspace-syscall
+  reachable, but real admin/PM path.
+
+### Step 5.5: Similar patterns
+- Probe error path (`err_unregister_ports` then `err_free_netdev`)
+  already separates unregister from free — remove path was the outlier.
+- **Record:** Fix aligns remove path with the safer pattern already used
+  on probe error.
+
+---
+
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
+
+### Step 6.1: Buggy code present?
+- **Record:** YES. Current `dpaa2_switch_remove()` at lines 3304–3308
+  still interleaves `unregister_netdev()` and
+  `dpaa2_switch_remove_port()` in one loop. Shared NAPI code present
+  since `0b1b713704588` (ancestor of HEAD).
+
+### Step 6.2: Backport complications
+- Diff applies cleanly against current file; line numbers match commit
+  base (`505ccaa93ee41`).
+- **Record:** Clean apply expected; no rework needed.
+
+### Step 6.3: Related fixes already present?
+- No existing fix for this NAPI teardown issue in tree.
+- **Record:** Fix not yet applied; still needed.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem
+- **Subsystem:** `drivers/net/ethernet/freescale/dpaa2/` — DPAA2
+  Ethernet switch driver (`CONFIG_FSL_DPAA2_SWITCH`)
+- **Criticality:** IMPORTANT (platform-specific networking driver, not
+  core kernel)
+
+### Step 7.2: Activity
+- dpaa2-switch actively maintained with multiple recent stable-worthy
+  fixes (IRQ bounds, refcount leaks, buffer pool).
+- **Record:** Mature driver with ongoing maintenance.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+- Users of NXP Layerscape SoCs with DPAA2 switch
+  (`FSL_DPAA2_SWITCH=y/m`).
+- **Record:** Platform-specific but affects all multi-port switch
+  teardown on those systems.
+
+### Step 8.2: Trigger conditions
+- Switch device removal/unbind with `num_ifs >= 2` and ports that were
+  opened (NAPI enabled).
+- **Record:** Common on module unload or firmware/MC object teardown;
+  not exotic.
+
+### Step 8.3: Failure severity
+- `WARN_ON` in `__netif_napi_del_locked()` when deleting enabled NAPI.
+- Potential use-after-free or crash if NAPI poll runs against freed
+  structures.
+- **Record:** Severity **HIGH** (kernel WARN/oops on driver removal);
+  not data corruption, but can leave system in bad state during
+  teardown.
+
+### Step 8.4: Risk-benefit
+- **Benefit:** HIGH for affected DPAA2 switch users — prevents broken
+  teardown.
+- **Risk:** VERY LOW — 15-line reordering in one function, no new APIs.
+- **Record:** Strong benefit/risk ratio.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Fixes a real, verifiable bug in driver removal path
+- Bug present since 2021 shared-NAPI design; affects this 6.18.y tree
+- Small, surgical, obviously correct fix
+- Maintainer-merged; standalone (no series dependencies)
+- Prevents WARN/oops on multi-port switch teardown
+- Aligns remove path with safer probe-error pattern
+
+**AGAINST backport:**
+- Platform-specific driver (limited user base vs. core subsystems)
+- No syzbot report or user crash report (review-discovered)
+- Only triggers on device removal, not steady-state operation
+
+**Unresolved:** None that affect the decision.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — logic verified against NAPI
+   refcount design; maintainer merged.
+2. Fixes a real bug? **PASS** — multi-port remove path deletes enabled
+   shared NAPI.
+3. Important issue? **PASS** — WARN/oops on driver removal (HIGH
+   severity for teardown).
+4. Small and contained? **PASS** — one function, +10/−5 lines.
+5. No new features or APIs? **PASS** — teardown ordering fix only.
+6. Can apply to local tree? **PASS** — buggy code present; clean apply
+   expected.
+
+### Step 9.3: Exception categories
+- **Record:** None (not a quirk/ID/DT/build/doc fix) — standard bug fix.
+
+### Step 9.4: Decision rationale
+This commit fixes a long-standing teardown bug in the DPAA2 switch
+driver where shared NAPI instances attached to port 0 are deleted via
+`free_netdev()` before all ports are brought down. The fix is minimal,
+self-contained, applies cleanly to the 6.18.44 tree, and prevents kernel
+warnings/crashes during driver removal on multi-port switches — a path
+that stable enterprise/embedded users hit during upgrades, module
+reloads, and device hot-unplug.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit `9e4ec3be67af4` message and tags via `git
-  show`
-- [Phase 2] Analyzed full diff via `git show 9e4ec3be67af4 -p`
-- [Phase 3] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`;
-  `VERSION=6 PATCHLEVEL=18 SUBLEVEL=44`
-- [Phase 3] `git blame` on lines 3521–3537 and 3564 of `smb2ops.c`
-- [Phase 3] `git show 966a3cb7c7db` — fallocate emulation origin (2021)
-- [Phase 3] `git show 6cc1518357369` — prior `kvzalloc` fix with
-  xfstests ENOMEM trace, `Cc: stable`
-- [Phase 3] `git log --oneline` on `fs/smb/client/smb2ops.c` — related
-  fallocate commits present
-- [Phase 3] `git apply --check` on patch — applies cleanly
-- [Phase 4] `b4 dig -c 9e4ec3be67af4` — lore URL found
-- [Phase 4] `b4 dig -a` — v1–v8 series revisions listed
-- [Phase 4] `b4 dig -w` — maintainers CC'd (Steve French, linux-cifs,
-  etc.)
-- [Phase 4] `b4 dig -m /tmp/fallocate_thread.mbox` — thread saved; no
-  stable nomination found for this patch
-- [Phase 5] Read `SMB2_write()` in `smb2pdu.c` — sets `*nbytes =
-  le32_to_cpu(rsp->DataLength)` on success (lines 5208–5209)
-- [Phase 5] Traced call chain: `cifs_fallocate()` →
-  `smb3_simple_falloc()` → `smb3_simple_fallocate_range()`
-- [Phase 5] `SMB2_MAX_BUFFER_SIZE` = 65536 in `fs/smb/common/smb2pdu.h`
-- [Phase 6] Confirmed buggy `kvzalloc(1024 * 1024)` at line 3564 in
-  current tree
-- [Phase 6] Confirmed commit `9e4ec3be67af4` not in current tree (`git
-  log --grep` empty on HEAD)
-- [Phase 6] Confirmed `6cc1518357369` and `7e08ab7a061b1` already in
-  tree
-- [Phase 8] Failure modes: ENOMEM (medium), infinite loop (critical)
+- **[Phase 1]** `git describe HEAD` → `v6.18.44`; parsed subject, tags,
+  body from provided commit message
+- **[Phase 2]** Read `dpaa2_switch_remove()` (lines 3290–3321),
+  `dpaa2_switch_remove_port()` (3006–3014), NAPI enable/disable
+  (649–681), probe NAPI add (3460–3462)
+- **[Phase 2]** Read `free_netdev()` / `netdev_napi_exit()` /
+  `__netif_napi_del_locked()` in `net/core/dev.c` (12066–12116,
+  7601–7628)
+- **[Phase 3]** `git blame` on remove loop (lines 3304–3308) → original
+  2018 code; `860fe1f87eca` added `remove_port`; `0b1b713704588`
+  introduced shared NAPI
+- **[Phase 3]** `git merge-base --is-ancestor 0b1b713704588 HEAD` →
+  shared NAPI commit is in tree
+- **[Phase 3]** `git log --oneline -20 --
+  drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c` → no duplicate
+  NAPI fix present
+- **[Phase 4]** Web search + lkml.iu.edu/2605.3/08494.html → confirmed
+  patch 5/5 of “various improvements” series; standalone
+- **[Phase 4]** Patchew/Ratatoskr → series patches 1–4 are FDB/VLAN/RX
+  fixes, independent of patch 5
+- **[Phase 4]** lore.kernel.org fetch blocked (Anubis); used lkml.iu.edu
+  mirror instead
+- **[Phase 5]** Confirmed `.remove` callback at line 3529; traced
+  `ndo_stop` → `dpaa2_switch_disable_ctrl_if_napi()`
+- **[Phase 6]** Buggy interleaved loop confirmed at lines 3304–3308 in
+  local tree
+- **[Phase 6]** `DPAA2_SWITCH_RX_NUM_FQS` = 2 in `dpaa2-switch.h`;
+  `netif_napi_del` available in `include/linux/netdevice.h`
+- **[Phase 6]** No `netif_napi_del` in current file — fix adds needed
+  explicit deletion
+- **[Phase 7]** `CONFIG_FSL_DPAA2_SWITCH` in
+  `drivers/net/ethernet/freescale/dpaa2/Kconfig`
+- **[Phase 8]** Failure mode: `WARN_ON` in `__netif_napi_del_locked`
+  when NAPI still enabled; severity HIGH for teardown
 
-**YES**The master-branch search finished successfully. It found commit
-`9e4ec3be67af4` ("smb/client: reduce fallocate zero buffer allocation")
-on `master`, merged via `fce2dfa773ced`.
+**YES**
 
-For this **6.18.44** tree, the verdict stands: **YES** for stable
-backport. The patch is small, applies cleanly, and fixes a real
-`fallocate()` hang risk (zero-progress `SMB2_write` loop) while right-
-sizing the zero buffer from 1 MiB to at most 64 KiB — a useful follow-up
-to the `kvzalloc()` fix already in this tree.
+ .../net/ethernet/freescale/dpaa2/dpaa2-switch.c   | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
- fs/smb/client/smb2ops.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 5bbe98dc0529b..4b7bc048854d1 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3508,7 +3508,7 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
- 					     char *buf)
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index c65ecb187af3d..ff187e2202966 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -3307,7 +3307,6 @@ static void dpaa2_switch_teardown(struct fsl_mc_device *sw_dev)
+ 
+ static void dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
  {
- 	struct cifs_io_parms io_parms = {0};
--	int nbytes;
-+	unsigned int nbytes;
- 	int rc = 0;
- 	struct kvec iov[2];
+-	struct ethsw_port_priv *port_priv;
+ 	struct ethsw_core *ethsw;
+ 	struct device *dev;
+ 	int i;
+@@ -3319,11 +3318,17 @@ static void dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
  
-@@ -3529,9 +3529,10 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
- 		rc = SMB2_write(xid, &io_parms, &nbytes, iov, 1);
- 		if (rc)
- 			break;
-+		if (!nbytes)
-+			return -EIO;
- 		if (nbytes > len)
- 			return -EINVAL;
--		buf += nbytes;
- 		off += nbytes;
- 		len -= nbytes;
- 	}
-@@ -3561,7 +3562,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	if (rc)
- 		goto out;
+ 	dpsw_disable(ethsw->mc_io, 0, ethsw->dpsw_handle);
  
--	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
-+	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
- 	if (buf == NULL) {
- 		rc = -ENOMEM;
- 		goto out;
+-	for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
+-		port_priv = ethsw->ports[i];
+-		unregister_netdev(port_priv->netdev);
++	/* Unregister all the netdevs so that they are brought down and the
++	 * shared NAPI instances gets disabled.
++	 */
++	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
++		unregister_netdev(ethsw->ports[i]->netdev);
++
++	for (i = 0; i < DPAA2_SWITCH_RX_NUM_FQS; i++)
++		netif_napi_del(&ethsw->fq[i].napi);
++
++	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
+ 		dpaa2_switch_remove_port(ethsw, i);
+-	}
+ 
+ 	kfree(ethsw->fdbs);
+ 	kfree(ethsw->filter_blocks);
 -- 
 2.53.0
 
