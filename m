@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69EF495519;
-	Mon, 31 Aug 2026 14:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBAE48C8CE;
+	Mon, 31 Aug 2026 14:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185235; cv=none; b=HdHgYsNavh96rD5Gz55Iw/26sC3q5c8kj3hiV4KpkVUQ0d0XFknxjTfsRM9q8T/IkFZy3IoUfTZSKbEvZfYOqA9OVIGCHR9bomYpVYXbiuBeLFpgg2UklI5QAOoVBrLex424R5d0DSc/An3DPLa4p+KwO9uUr8vRntcqYA7TMl0=
+	t=1788185216; cv=none; b=tsGslFqJkjgaOCoMHiuaBoHmPleokb7WaWrtpc7eJFHJW7txMnWS0pmefHs3iiond8hiSaXSjd5d73PBFrEhNuofCEpRLcZSa9Pt4SatvtgLfnmdbL+4QKVsI1g1Iywf6J9pdQvhZbTFiOHDh2Wt/lVoBweqxePcG05qy8csayw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185235; c=relaxed/simple;
-	bh=z2/mW9rI1zvToAFFzsie4ne7WRdsGyRX5seKxDjwgIc=;
+	s=arc-20240116; t=1788185216; c=relaxed/simple;
+	bh=8Vvi4gumPc/aACyVyoEjIMIQd9Iwch57//GklqQSybo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jz+X0msXK1Wo4wcP21fJgpW547I8HCjmcPfRtjrPgI/Y+LcZP8kHPEJUXBsUdrejE0OiGA1gwYjvntT2RHiayvKxt+ITqondYb8mDgoNeEq8LhJimxGO61i5M5fNyetSdqERCref55WMRBzn6GlMElwsgLvUgX677l4unsLs6eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaTCwtGX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mj9EIsMsILjervQUVCI0ZN/97l06uO91TzJRn8lnwFYWhmHlEEbiS59K2cFv2a3wXoo+6vFkDjJZkVuBat5krbzUD27+VIX15ICeflQyjnE/12/MNcjP64Dix1Cl0yUZqHIJEs8XX7mNZPXNEbSkaFOOOVAjM0Dj8f/ILWx5WJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxbxHFfT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaTCwtGX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056951F00A3D;
-	Mon, 31 Aug 2026 14:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxbxHFfT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323561F00A3D;
+	Mon, 31 Aug 2026 14:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185234;
-	bh=dNwlptMZmzTovA0cBrIKN60Opi70HmEshPY+KZtZGeM=;
+	s=korg; t=1788185211;
+	bh=z4IM7B6jU4ppq4VGvSwln33A+VjWFlmqOvbdmrsXQqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kaTCwtGXoIJSmUc/9eGY9cJDpn6u9PYEWLZ0F9DNBr4rX7NSLnY/LeDV3vsv1Wh6w
-	 dxJpKKf6oc6wK9WGQcgjI/XfXpUrj/1fdBZrmOwGlBe+0Hnk4RiP2VmDSDKZ3BNUqF
-	 UCW3gNmAPMds4dm29v6OmH1x3wZ7Aia5/FnPNtjE=
+	b=sxbxHFfT/+0V1CPp/j9I3y7uwDaLjGuiXk5ww8sw2sfpUQ3Tkq/LOR/8k8JSRQ3gU
+	 NxeiwP4bsgSIsTmiPsynKqugUicBHsY/RThw0xuF8huZObgTc9zqfuyLwLioKFjreX
+	 aohnEcrls/F7pEkpy4qFJisZBOqKECjCFWMJK1is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Christoph Hellwig <hch@lst.de>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/43] ext4: dont enable DAX on new encrypted files
-Date: Mon, 31 Aug 2026 15:35:11 +0200
-Message-ID: <20260831133358.710146400@linuxfoundation.org>
+Subject: [PATCH 5.10 22/43] nvmet-tcp: bound SGL data length before allocating command buffers
+Date: Mon, 31 Aug 2026 15:35:30 +0200
+Message-ID: <20260831133359.532020492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -54,141 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
+[ Upstream commit 4a3f00262a044e8e15064b1a6860968bf0500bf4 ]
 
-Currently, when a new encrypted regular file is created, the call to
-ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
-before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
-filesystem is mounted with "-o dax=always".
+nvmet_tcp_map_data() reads the host-controlled 32-bit sgl->length
+and, for the in-capsule offset descriptor (type 0x01), checks it
+against port->inline_data_size before use. Any other SGL descriptor
+type -- including the non-inline transport SGL data-block descriptor
+(type (NVME_TRANSPORT_SGL_DATA_DESC << 4) | NVME_SGL_FMT_TRANSPORT_A,
+the type a real host uses for out-of-capsule writes) skips that check
+entirely and falls straight through to:
 
-EXT4_INODE_ENCRYPT then actually gets set a bit later in
-__ext4_new_inode(), when it calls fscrypt_set_context() which calls
-ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
-calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
+	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
 
-This was intended to clear S_DAX as well.  However, this was broken by
-commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
-causes data written to the file to bypass encryption, also causing
-xfstests failures such as generic/548 (when "-o dax=always" is used).
+with len taken directly from the wire, unbounded up to 4 GiB.
 
-Fix this by simplifying the flow by making __ext4_new_inode() set
-EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
-ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
+nvmet_req_init() only parses the command and never inspects
+sgl->length, and nvmet_check_transfer_len() -- the only other place
+transfer_len is validated -- runs later, from req->execute(), after
+the allocation has already happened. For a write command the target
+responds with an R2T and parks the command waiting for the host to
+send the data; if the host (or an unauthenticated peer that simply
+never follows up) never does, the sgl_alloc() buffer stays resident
+for the life of the command. NVMe/TCP has no mandatory authentication
+in the default configuration, so any peer able to reach the target
+portal and complete a Fabrics connect can drive this with a single
+crafted command, repeatable across queues and connections for
+amplification. This is unbounded kernel memory allocation
+triggered by a remote, effectively unauthenticated peer.
 
-Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
-place on new encrypted inodes.  Then it doesn't need to be cleared.
+Validate len against the same NVMET_TCP_MAXH2CDATA ceiling this file
+already uses to bound per-PDU H2C data, for every SGL descriptor type,
+before doing any allocation. This closes the gap for the non-inline
+descriptor while leaving the existing, tighter inline_data_size check
+in place for the in-capsule case.
 
-As a result of these simplifications, ext4_set_context() no longer needs
-to change inode flags or state when 'handle != NULL'.  Remove that too.
+Runtime-verified on a v6.19 KASAN stand: with this bound in place, a
+crafted write command carrying an oversized non-inline SGL length is
+rejected before sgl_alloc() runs, where the same request previously
+drove an unbounded ~256 MiB kernel allocation (up to 4 GiB) that
+stayed resident pending an R2T the host never satisfies.
 
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
-Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ialloc.c |  4 ++++
- fs/ext4/super.c  | 40 ++++++++++++++++++++--------------------
- 2 files changed, 24 insertions(+), 20 deletions(-)
+ drivers/nvme/target/tcp.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index 98bd01483afba..cb69fb7b7b825 100644
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -994,6 +994,8 @@ struct inode *__ext4_new_inode(handle_t *handle, struct inode *dir,
- 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
- 		if (err)
- 			goto out;
-+		if (encrypt)
-+			i_flags |= EXT4_ENCRYPT_FL;
- 	}
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -382,6 +382,19 @@ static int nvmet_tcp_map_data(struct nvm
+ 	if (!len)
+ 		return 0;
  
- 	err = dquot_initialize(inode);
-@@ -1307,6 +1309,8 @@ struct inode *__ext4_new_inode(handle_t *handle, struct inode *dir,
- 	ei->i_extra_isize = sbi->s_want_extra_isize;
- 	ei->i_inline_off = 0;
- 	if (ext4_has_feature_inline_data(sb) &&
-+	    /* Encrypted inodes cannot have inline data */
-+	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
- 	    (!(ei->i_flags & EXT4_DAX_FL) || S_ISDIR(mode)))
- 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
- 	ret = inode;
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index c698dd5816c3a..c1538e61022cb 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1494,7 +1494,13 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 	if (inode->i_ino == EXT4_ROOT_INO)
- 		return -EPERM;
- 
--	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
 +	/*
-+	 * For new encrypted inodes, S_DAX is never set in the first place.
-+	 *
-+	 * For existing inodes, this is called only on empty directories.  ext4
-+	 * never sets S_DAX on directories.
++	 * inline_data_size only bounds the in-capsule (type 0x01) SGL
++	 * descriptor below. A non-inline transport SGL data-block
++	 * descriptor skips that check entirely and would otherwise reach
++	 * sgl_alloc() with an attacker-controlled len of up to 4 GiB,
++	 * pinning that much kernel memory for a command that may never
++	 * complete. Bound every descriptor type here, before allocating
++	 * anything, using the same ceiling this file already applies to
++	 * per-PDU H2C data.
 +	 */
-+	if (WARN_ON_ONCE(IS_DAX(inode)))
- 		return -EINVAL;
- 
- 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
-@@ -1513,21 +1519,18 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 	 */
- 
- 	if (handle) {
--		res = ext4_xattr_set_handle(handle, inode,
--					    EXT4_XATTR_INDEX_ENCRYPTION,
--					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
--					    ctx, len, 0);
--		if (!res) {
--			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--			ext4_clear_inode_state(inode,
--					EXT4_STATE_MAY_INLINE_DATA);
--			/*
--			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--			 * S_DAX may be disabled
--			 */
--			ext4_set_inode_flags(inode, false);
--		}
--		return res;
-+		/*
-+		 * __ext4_new_inode() should have already set the encrypt flag
-+		 * on the inode and avoided enabling inline data.
-+		 */
-+		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
-+			return -EINVAL;
-+		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
-+			return -EINVAL;
-+		return ext4_xattr_set_handle(handle, inode,
-+					     EXT4_XATTR_INDEX_ENCRYPTION,
-+					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
-+					     ctx, len, 0);
- 	}
- 
- 	res = dquot_initialize(inode);
-@@ -1548,10 +1551,7 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 				    ctx, len, 0);
- 	if (!res) {
- 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--		/*
--		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--		 * S_DAX may be disabled
--		 */
-+		/* Update inode->i_flags to set S_ENCRYPTED. */
- 		ext4_set_inode_flags(inode, false);
- 		res = ext4_mark_inode_dirty(handle, inode);
- 		if (res)
--- 
-2.53.0
-
++	if (len > NVMET_TCP_MAXH2CDATA)
++		return NVME_SC_SGL_INVALID_DATA | NVME_SC_DNR;
++
+ 	if (sgl->type == ((NVME_SGL_FMT_DATA_DESC << 4) |
+ 			  NVME_SGL_FMT_OFFSET)) {
+ 		if (!nvme_is_write(cmd->req.cmd))
 
 
