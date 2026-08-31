@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456B44F20E2;
-	Mon, 31 Aug 2026 13:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C754F210E;
+	Mon, 31 Aug 2026 13:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183657; cv=none; b=QUEYnl203ZWphwmQDLsD7IGQRvbgkASFwfUlZT52+tNub3m3Oz6IQUqpSQG66rqIDkqMKqbqTyiL/OyZLF1OB+JaotNpSVSgTxPZ5xk02ilTNyhEt8Zqpdzhqwlw2m0j0ZoqlW1Hqsy4ETr9LsKX5aVuOD0Iye5jnv75fV3NkLI=
+	t=1788183658; cv=none; b=YoZSxWw4ZgperOCLry9ArtlHeXFclOQxftA9bmpmy7RrFhFDDwrmpnKAEu8RuEwJG8eFILIgRnzTaIjdbvsrGKv85QcQQ6rMUA2a3Wy3jd80lEPVedPqBCoEkgchtjT0d0TAVnPX4/zMP/7hA53ot+mrNp2EUZQo8AEgQKtadIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183657; c=relaxed/simple;
-	bh=zEqDHXYanW2nHpJvndVZMnpeEEV2ilg51qXHaFl1dl4=;
+	s=arc-20240116; t=1788183658; c=relaxed/simple;
+	bh=NGygtitpRytc0TLalzd6mxJZJG5Am9qOjNkmlbs+jUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=giL6YH8NU0dR+thOBPO164NfV+e+suz+84BoeaQ0fByJLxheMndEQqT17mNVOvVq0PQdVIrEJzguUKigu3Ox3hnVuisFxLH8wIl5m1Mh8iM6+eM2teFDeMU1VpzJdXJnd327rXcBy8N+x3ptIRpcmUPsjLvPfKTgplXTsYHmGTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P4QrMNFE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=E68hr/xFcxXXtVB8/LNIpZdsQalnFZgTMp2Ow0pA2wydAXGpkF5JsIz/AU4laeqv2vf/GWrYibYfPhnZvFd8afWbOjCaMuxaNIbDmpcNZ2Ex4K7fM2WyquNQKL8zy/87j7SHo0Yi5Gid36YIxU/ZidNFFOM9trcWf3GaYPMbfTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdoMskVk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P4QrMNFE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873E61F00A3E;
-	Mon, 31 Aug 2026 13:40:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdoMskVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4271F00A3F;
+	Mon, 31 Aug 2026 13:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183654;
-	bh=PtQvqlNXGtq66sgWNvsXQTCS7ZRTUVtCQ5YBqjGfQhA=;
+	s=k20260515; t=1788183655;
+	bh=HGOBFmnZOh2RuIqahVn2N5Pz7MRumnhnDhwZFjgMxXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P4QrMNFEOCyJyiKY/UFLzi2EYTAnUtOzGhtlvgEtvSdknviBtykaD17mo8W+9hAvG
-	 NhKJOkgY5GRh2D5D/39YJhHAnMWoz2nngBwEfx0d+LIVsdPgGTFXH+Rv92YO5m7TJK
-	 OlrdyD3nHUcgCouaHBCmCpJEHDJoEW+GTGKilae5samTWTk8Q+peGl9yBvWnOM7by/
-	 lCRapEPr3ynvHV645vjoIssfrzpKb9+EVxMe4d04Hd10JlRmGo+gH4s+IGWlJ6xOHL
-	 jbnhFEv+h56hHajh/oMO1ZPGZsCtM2rRypOSGixDdSc24Ykl5GlrihPXOsuKb1uXUR
-	 JfGrctvgkE8Rw==
+	b=XdoMskVkJG3NCq2C9YAN2WGyYL1VlkX4szGR/kR1onGwwPH2xJ803TF4B+b8no4ye
+	 ae0+uNIOORjPO99m6hEAtxKbfKDcNBfQevy9rABG+zy3+tNQI6SN0z4WI6Eo3YK931
+	 +ARgcFdH470DbH4N0VerP3IJbbFjevUW2CpYndVhTiuIuBDNHygQ9f9/97qQXtZS9/
+	 4FW8la6Onr1Y7hPuD3IWGyrdVvPPCbqj6xROHrVuhBze3AwlfJTuvYw7NHzyPg7nsu
+	 Smt1j4SoyGmTzvcaQquuS4TeQXcT5P/GG+6dDZ+nQI45YOagBTnTWNkbA7nsllJugN
+	 a/aXR/MNgR0BA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ben Maurer <bmaurer@meta.com>,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	David Sterba <dsterba@suse.com>,
+Cc: =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	bmasney+clk@redhat.com,
+	jbrunet+clk@baylibre.com,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] btrfs: use lockless read in nr_cached_objects shrinker callback
-Date: Mon, 31 Aug 2026 09:24:11 -0400
-Message-ID: <20260831133314.4125787-223-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] clk: clk-axi-clkgen: Add support versal timings
+Date: Mon, 31 Aug 2026 09:24:12 -0400
+Message-ID: <20260831133314.4125787-224-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -50,420 +49,424 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Maurer <bmaurer@meta.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 1ba72d847c7aa3c0887f749115af5232fd61b598 ]
+[ Upstream commit 0aef2f0db6db22c2a441e067d8e8458106fb0483 ]
 
-Under heavy memcg-driven slab reclaim with many memcgs and CPUs,
-shrink_slab_memcg() invokes the per-superblock count callback once per
-(memcg, NUMA node) tuple. For btrfs that callback reaches
-percpu_counter_sum_positive() on fs_info->evictable_extent_maps, which
-takes the percpu_counter's raw spinlock with IRQs disabled and walks
-every online CPU. With hundreds of memcgs driving reclaim on a host with
-dozens of CPUs, this counter lock becomes a global serialization point:
-profiles show CPU pinned in the spin_lock_irqsave acquire under
-__percpu_counter_sum, with cross-CPU IPIs hitting csd_lock_wait_toolong
-while waiting for spinning vCPUs.
+Add proper VCO and PFD limits for versal based platforms. For that we
+need to add new Technology and Speed grade defines.
 
-The shrinker count is advisory -- super_cache_count() already notes
-"counts can change between super_cache_count and super_cache_scan, so we
-really don't need locks here." Use percpu_counter_read_positive(), which
-is lockless. Worst-case skew is bounded by batch * num_online_cpus (a
-few thousand), negligible compared to the millions of extent maps a busy
-filesystem accumulates and well within the noise that the shrinker
-already tolerates.
-
-Tested-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Signed-off-by: Ben Maurer <bmaurer@meta.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+# Stable Backport Analysis: `clk: clk-axi-clkgen: Add support versal
+timings`
+
+**Local tree:** `v6.18.43` (`linux-6.18.y` stable, HEAD `7b923c78b50d`)
+
+---
+
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[btrfs]` `[use]` — Replace the locked
-`percpu_counter_sum_positive()` call in the extent-map shrinker count
-callback with the lockless `percpu_counter_read_positive()`.
+### Step 1.1: Subject Line
+**Record:** `[clk: clk-axi-clkgen]` `[Add]` — Add support for Versal
+FPGA VCO/PFD timing limits in the existing AXI clkgen driver.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+### Step 1.2: Commit Message Tags
 **Record:**
-- **Tested-by:** Boris Burkov `<boris@bur.io>` — fix verified on real
-  workload
-- **Reviewed-by:** Qu Wenruo `<wqu@suse.com>` — btrfs maintainer
-- **Reviewed-by:** Shakeel Butt `<shakeel.butt@linux.dev>` — memcg/mm
-  maintainer
-- **Signed-off-by:** Ben Maurer `<bmaurer@meta.com>` — author
-- **Signed-off-by:** David Sterba `<dsterba@suse.com>` — btrfs
-  maintainer
-- No `Fixes:`, `Reported-by:`, `Link:`, or `Cc: stable@vger.kernel.org`
-  tags (expected for manual review)
-- Notable: dual maintainer review (btrfs + memcg), production-scale
-  author (Meta)
+- **Signed-off-by:** Nuno Sá `<nuno.sa@analog.com>` (author)
+- **Reviewed-by:** Brian Masney `<bmasney@redhat.com>`
+- **Signed-off-by:** Stephen Boyd `<sboyd@kernel.org>` (clk maintainer
+  merge)
+- **No** Fixes:, Reported-by:, Tested-by:, Link:, Cc:
+  stable@vger.kernel.org
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Notable: Reviewed by a Red Hat contributor; merged by clk subsystem
+maintainer. No user/fuzzer bug reports in the message.
+
+### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug:** Under heavy memcg-driven slab reclaim with many memcgs and
-  CPUs, `shrink_slab_memcg()` invokes the per-superblock count callback
-  once per (memcg, NUMA node) tuple. For btrfs this reaches
-  `percpu_counter_sum_positive()` on `fs_info->evictable_extent_maps`,
-  which takes a raw spinlock with IRQs disabled and walks every online
-  CPU.
-- **Symptom:** Global serialization — CPUs pinned in `spin_lock_irqsave`
-  under `__percpu_counter_sum`, cross-CPU IPIs hitting
-  `csd_lock_wait_toolong` while waiting for spinning vCPUs.
-- **Root cause:** Using the expensive accurate-sum API in an advisory
-  shrinker count path that explicitly does not require locks or
-  precision.
-- **Fix rationale:** `super_cache_count()` already documents that counts
-  are advisory and locks are unnecessary; use lockless
-  `percpu_counter_read_positive()` instead.
-- **Accuracy bound:** Worst-case skew ≤ `batch * num_online_cpus` (a few
-  thousand), negligible vs. millions of extent maps.
+- **Bug described:** Versal-based platforms need correct VCO and PFD
+  limits; current driver lacks the technology/speed-grade definitions
+  and limit overrides.
+- **Symptom/failure mode:** Without proper limits, the driver either
+  rejects unknown speed grades at probe time or programs the MMCM/PLL
+  with out-of-spec VCO frequency bounds for Versal silicon.
+- **Version info:** None stated.
+- **Root cause:** `axi_clkgen_setup_limits()` handles
+  Series7/Ultrascale/Ultrascale+ but not Versal
+  (`ADI_AXI_FPGA_TECH_VERSAL`) or the Versal-specific
+  `ADI_AXI_FPGA_SPEED_2MP` speed grade.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Yes — described as a performance optimization, but it fixes
-a scalability defect in the memory-reclaim hot path. The VFS shrinker
-framework deliberately avoids locking in `super_cache_count()`; btrfs's
-locked sum undermines that design and can stall reclaim under memory
-pressure. This is a correctness-of-API-usage fix with stability impact,
-not mere throughput tuning.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** **Yes — disguised as "Add support".** The subject says "add
+support," but the change corrects two concrete failures in existing
+code:
+1. Speed grade `2MP` (value 23) falls through the `switch` to `default`
+   → probe returns `-ENODEV`.
+2. Versal technology is not recognized → VCO limits stay at
+   Series7/Ultrascale defaults (e.g. `fvco_min=600000`,
+   `fvco_max≤1600000`) instead of Versal-required `2160000–4320000` kHz.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
+### Step 2.1: Change Inventory
 **Record:**
-- **Files:** `fs/btrfs/super.c` only (+0/-0 net, 1 line changed)
-- **Functions:** `btrfs_nr_cached_objects()`
-- **Scope:** Single-file, single-line surgical fix
+| File | Changes |
+|------|---------|
+| `drivers/clk/clk-axi-clkgen.c` | +4 / -1 (7 lines touched) |
+| `include/linux/adi-axi-common.h` | +2 enum entries |
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Record:**
-- **Hunk (line 2413):** Before:
-  `percpu_counter_sum_positive(&fs_info->evictable_extent_maps)` —
-  acquires `fbc->lock`, iterates all online/dying CPUs, sums per-CPU
-  values. After:
-  `percpu_counter_read_positive(&fs_info->evictable_extent_maps)` —
-  single `READ_ONCE(fbc->count)`, no lock, no cross-CPU walk.
-- **Execution path:** Called from `super_cache_count()` →
-  `sb->s_op->nr_cached_objects()` during `shrink_slab_memcg()` reclaim,
-  potentially once per (memcg, node) per shrinker invocation.
+**Functions modified:** `axi_clkgen_setup_limits()` only.
+**Scope:** Single-function, two-file surgical fix.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:**
-- **Category:** Scalability / lock-contention bug in hot reclaim path
-  (synchronization misuse)
-- **Mechanism:** `__percpu_counter_sum()` in `lib/percpu_counter.c`
-  takes a global raw spinlock and walks every CPU. Invoked repeatedly
-  from memcg-aware superblock shrinker counting. Creates a global
-  serialization point exactly when the system is under memory pressure
-  and needs fast reclaim.
+### Step 2.2: Code Flow Change (per hunk)
 
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:**
-- **Quality:** Obviously correct — direct API substitution; matches VFS
-  shrinker contract and btrfs precedent in `space-info.c` (commit
-  `2cdb3909c9e95`).
-- **Regression risk:** Very low. Under-counting bounded by
-  `percpu_counter_batch` (32) × num_cpus; shrinker counts are advisory
-  per `fs/super.c:247-249`. xfs uses the same estimate-vs-sum pattern
-  (`xfs_estimate_freecounter()`).
-- **No new APIs, no behavior change beyond count approximation in an
-  already-tolerant path.**
+**Hunk 1 — speed grade range (`clk-axi-clkgen.c:524`):**
+- **Before:** `ADI_AXI_FPGA_SPEED_2 ... ADI_AXI_FPGA_SPEED_2LV` (20–22)
+- **After:** `ADI_AXI_FPGA_SPEED_2 ... ADI_AXI_FPGA_SPEED_2MP` (20–23)
+- **Path:** Probe-time limit setup for speed-grade 2 variants.
+
+**Hunk 2 — Versal VCO override (`clk-axi-clkgen.c:546-549`):**
+- **Before:** Only Ultrascale+ gets a technology-specific VCO override.
+- **After:** Versal gets `fvco_min=2160000`, `fvco_max=4320000`.
+- **Path:** Post-switch technology override in
+  `axi_clkgen_setup_limits()`.
+
+**Hunk 3 — header enums (`adi-axi-common.h`):**
+- **Before:** No `ADI_AXI_FPGA_TECH_VERSAL` or `ADI_AXI_FPGA_SPEED_2MP`.
+- **After:** Both defined.
+
+### Step 2.3: Bug Mechanism Classification
+**Record:** **(h) Hardware workaround / correctness fix**
+- Missing enum value → probe failure (`-ENODEV`) for speed grade 23.
+- Missing technology branch → wrong PLL constraint window used by
+  `axi_clkgen_calc_params()` in `set_rate()` and `determine_rate()`.
+
+### Step 2.4: Fix Quality Assessment
+**Record:** Fix is minimal, mirrors the existing Ultrascale+ override
+pattern, and is obviously correct from a hardware-spec perspective.
+Regression risk is very low: only affects platforms reporting Versal
+technology or 2MP speed grade. No lock-order or API changes.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:**
-- `btrfs_nr_cached_objects()` introduced in `956a17d9d0507` ("btrfs: add
-  a shrinker for extent maps", 2024-05-07) by Filipe Manana
-- `percpu_counter_sum_positive()` line from `0d89a15e1a0dcc`
-  (tracepoints commit, 2024-04-09)
-- Bug present since extent-map shrinker landed (~kernel 6.9); confirmed
-  ancestor of current HEAD (6.18.44)
+### Step 3.1: Blame / Introduction of Buggy Code
+**Record:** `axi_clkgen_setup_limits()` exists in `v6.18.0` without
+Versal handling (verified via `git show v6.18:drivers/clk/clk-axi-
+clkgen.c`). Current tree at `v6.18.43` is identical in the affected
+region. The omission has been present since at least the 6.18 release.
+Shallow history in this checkout prevents identifying the original
+introducing commit beyond the squashed import.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** N/A — no `Fixes:` tag present.
+### Step 3.2: Fixes: Tag
+**Record:** Not applicable — no Fixes: tag present.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:**
-- `956a17d9d0507` — added extent map shrinker and
-  `btrfs_nr_cached_objects`
-- `f1d97e7691528` — added `evictable_extent_maps` percpu counter
-- `2cdb3909c9e95` — btrfs already switched `need_preemptive_reclaim()`
-  from `sum_positive` to `read_positive` for same reason (perf/lock
-  avoidance)
-- `15b3b3254d145` — extent map shrinker iput fix
-- Standalone 1-line fix, not part of a series
+### Step 3.3: Related File History
+**Record:** No changes to these files on `v6.18..HEAD` (stable queue).
+The patch diff base blob `fa5ccef73e60d` matches the current file
+content in the affected region — patch applies cleanly.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** No prior commits from Ben Maurer in this tree's btrfs
-history. David Sterba (committer) is btrfs maintainer.
+### Step 3.4: Author Context
+**Record:** Nuno Sá is an active Analog Devices contributor (dma-axi-
+dmac, iio, hwmon commits in this tree). Brian Masney (reviewer) is a
+regular ADI/FPGA driver contributor.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** No dependencies. Requires only `evictable_extent_maps`
-counter and `btrfs_nr_cached_objects()` — both present in 6.18.44.
-Applies cleanly as a single-line change.
+### Step 3.5: Dependencies
+**Record:** **Standalone.** No series dependencies, no prerequisite
+commits required. The driver, `axi_clkgen_setup_limits()`, and
+`ADI_AXI_REG_FPGA_INFO` infrastructure all exist in 6.18.y.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:** UNVERIFIED — commit not yet in this tree (no SHA for `b4 dig
--c`). `b4 dig` subject search not supported. lore.kernel.org returned
-403 (bot protection). Review tags in commit message are the available
-review evidence.
+### Step 4.1: Original Patch Discussion
+**Record:**
+- v1: https://www.spinics.net/lists/kernel/msg6122732.html (2026-03-26)
+- RESEND: https://www.spinics.net/lists/kernel/msg6169958.html
+  (2026-04-24)
+- `b4 dig` could not be run (commit hash not in local tree);
+  lore.kernel.org blocked by bot protection.
+- Follow-ups from Stephen Boyd and Brian Masney are listed on spinics
+  but individual reply bodies were not retrieved.
+- Patch is a single standalone commit (not a series).
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** From commit message: Qu Wenruo (btrfs), Shakeel Butt
-(memcg/mm), David Sterba (btrfs maintainer/committer). Appropriate
-reviewers for this change.
+### Step 4.2: Reviewers
+**Record:** CC'd to `linux-clk@`, Michael Turquette, Stephen Boyd.
+Reviewed-by: Brian Masney in committed version.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** N/A — no `Reported-by:` or `Link:` tags. Issue identified
-via production profiling at Meta (per commit body).
+### Step 4.3: Bug Reports
+**Record:** No Reported-by, syzbot, or bugzilla links. No external user
+crash reports found.
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Standalone fix. Direct precedent: `2cdb3909c9e95` (same
-sum→read change in btrfs `space-info.c`).
+### Step 4.4: Related Patches
+**Record:** Single patch; change-id `20260326-clk-axi-clk-versal-
+support-8eaef1530870`. v1 and RESEND are identical in content.
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** UNVERIFIED — lore.kernel.org inaccessible.
+### Step 4.5: Stable List History
+**Record:** Not searched (no stable nomination found in available patch
+posts). Absence of Cc: stable is expected per review instructions.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `btrfs_nr_cached_objects()` (modified); callers:
-`super_cache_count()` in `fs/super.c`
+### Step 5.1: Key Functions Modified
+**Record:** `axi_clkgen_setup_limits()` (only function changed).
 
-### Step 5.2: TRACE CALLERS
-**Record:**
-- `super_cache_count()` → `shrinker->count_objects` for superblock
-  shrinker (`s->s_shrink`, `SHRINKER_MEMCG_AWARE | SHRINKER_NUMA_AWARE`)
-- Invoked from `do_shrink_slab()` → `shrink_slab_memcg()` →
-  `shrink_slab()` during memory reclaim
-- Hot path under memory pressure; frequency scales with num_memcgs ×
-  num_nodes × num_shrinkers
+### Step 5.2: Callers
+**Record:** Called once from `axi_clkgen_probe()` when
+`ADI_AXI_PCORE_VER_MAJOR(pcore_version) > 0x04`:
 
-### Step 5.3: TRACE CALLEES
-**Record:**
-- Before: `percpu_counter_sum_positive()` → `__percpu_counter_sum()` →
-  `raw_spin_lock_irqsave` + per-CPU iteration
-- After: `percpu_counter_read_positive()` → `READ_ONCE(fbc->count)`
-  (from `include/linux/percpu_counter.h:118-126`)
+```616:619:drivers/clk/clk-axi-clkgen.c
+        if (ADI_AXI_PCORE_VER_MAJOR(pcore_version) > 0x04) {
+                ret = axi_clkgen_setup_limits(axi_clkgen, &pdev->dev);
+                if (ret)
+                        return ret;
+```
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** Memory reclaim (kernel-initiated under pressure, triggered
-by allocation failures or memcg limits) → `shrink_slab` → superblock
-shrinker count → btrfs extent map count. Reachable whenever btrfs is
-mounted and memory reclaim runs. Container hosts with many memcgs are
-the high-impact scenario.
+Probe-time, platform driver init path.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:**
-- btrfs `space-info.c:1031-1032` — already uses `read_positive` for
-  heuristic decisions
-- xfs `xfs_mount.h:733-736` — `xfs_estimate_freecounter()` uses
-  `read_positive` with comment "just provides an estimate"
-- `backing-dev.h`, `mm.h` — same read-vs-sum pattern for hot paths vs.
-  accurate counts
+### Step 5.3: Callees / Downstream Impact
+**Record:** Limits set here are consumed by `axi_clkgen_calc_params()`
+via `axi_clkgen_set_rate()` and `axi_clkgen_determine_rate()`. Wrong
+limits → `-EINVAL` from rate setting or incorrect PLL divider values
+programmed to MMCM registers.
+
+### Step 5.4: Reachability
+**Record:** Triggered at device probe for any platform with `adi,axi-
+clkgen-2.00.a` or `adi,zynqmp-axi-clkgen-2.00.a` compatible and pcore
+version > 4. Requires `CONFIG_COMMON_CLK_AXI_CLKGEN`. No in-tree Versal
+DTS nodes use this compatible string (verified by grep), but the driver
+reads technology directly from FPGA hardware registers — custom ADI
+reference designs on Versal are the target.
+
+### Step 5.5: Similar Patterns
+**Record:** Identical pattern already exists for
+`ADI_AXI_FPGA_TECH_ULTRASCALE_PLUS` in the same function (lines
+545–549). This commit extends that pattern to Versal.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.y)
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** YES. Local tree is **6.18.44** (`git describe HEAD` =
-v6.18.44). `fs/btrfs/super.c:2413` still uses
-`percpu_counter_sum_positive()`. Extent map shrinker present since
-`956a17d9d0507` (May 2024, in 6.18.y ancestry).
+### Step 6.1: Does Buggy Code Exist?
+**Record:** **Yes.** Current tree lacks `ADI_AXI_FPGA_TECH_VERSAL`,
+`ADI_AXI_FPGA_SPEED_2MP`, and the Versal VCO override. Confirmed in both
+HEAD and `v6.18.0`.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** Clean apply expected — single-line substitution, no
-structural changes needed. No recent churn around
-`btrfs_nr_cached_objects()`.
+### Step 6.2: Backport Complications
+**Record:** **Clean apply expected.** Diff base matches current source
+exactly in affected hunks.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** The `space-info.c` precedent fix (`2cdb3909c9e95`) is
-already in tree. This specific shrinker callback fix is NOT yet applied.
+### Step 6.3: Related Fixes Already Present?
+**Record:** **No.** Grep found no `VERSAL` or `2MP` symbols in the tree.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** **btrfs filesystem** / memory reclaim interaction.
-**Criticality: IMPORTANT** — affects memory reclaim behavior for all
-btrfs mounts under memory pressure; severity scales with memcg count.
+### Step 7.1: Subsystem Criticality
+**Record:** **clk** / **PERIPHERAL** — Analog Devices AXI clock
+generator for Xilinx FPGAs (`CONFIG_COMMON_CLK_AXI_CLKGEN`, tristate,
+OF-based). Niche industrial/SDR embedded hardware.
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** btrfs actively maintained in 6.18.y with regular merges from
-for-6.17/6.18 tags. Extent map shrinker is relatively new (2024) but
-stable in tree.
+### Step 7.2: Subsystem Activity
+**Record:** clk subsystem is actively maintained in 6.18.y (many stable
+backports), but this specific driver has seen no stable-queue changes
+since 6.18.0.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** btrfs users under memory pressure, especially:
-- Systems with `CONFIG_MEMCG` and many cgroups (containers/K8s)
-- Multi-socket / many-CPU hosts
-- btrfs root or btrfs data volumes on memory-constrained systems
+### Step 8.1: Who Is Affected
+**Record:** **Driver-specific / platform-specific** — users of Analog
+Devices AXI clkgen IP on Versal FPGAs with pcore version > 4. Not a
+universal kernel path.
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-**Record:** Heavy memcg-driven slab reclaim + btrfs mounted + many
-(memcg, node) tuples. Common on container hosts; not every boot, but
-realistic in production. Unprivileged users can trigger via memory
-allocation within their cgroup.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** Global spinlock contention during reclaim → CPU spinning,
-cross-CPU IPI stalls (`csd_lock_wait_toolong`), severely degraded
-reclaim throughput, potential soft-lockup warnings and system
-unresponsiveness under memory pressure. **Severity: HIGH** (stability
-under memory pressure, not data corruption or security).
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+### Step 8.2: Trigger Conditions
 **Record:**
-- **Benefit:** HIGH for affected deployments — removes global lock from
-  hot reclaim path; aligns btrfs with VFS shrinker design
-- **Risk:** VERY LOW — 1-line change, bounded count imprecision already
-  tolerated by shrinker framework
-- **Ratio:** Strong benefit, minimal risk
+- FPGA info register reports `ADI_AXI_FPGA_TECH_VERSAL`, and/or
+- Speed grade `ADI_AXI_FPGA_SPEED_2MP` (23).
+- Triggered at every probe of matching hardware. Not userspace-
+  triggerable; not a security issue.
+
+### Step 8.3: Failure Mode Severity
+**Record:**
+| Failure | Mode | Severity |
+|---------|------|----------|
+| Speed grade 2MP unrecognized | Probe fails `-ENODEV`, no clock
+provider | **HIGH** for affected hardware (device unusable) |
+| Wrong VCO limits on Versal | Rate requests fail (`-EINVAL`) or PLL
+programmed out of spec | **MEDIUM-HIGH** (functional failure, possible
+peripheral misbehavior) |
+
+Not a kernel oops/panic/data-corruption class bug.
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Enables correct clock operation on Versal ADI designs;
+  fixes hard probe failure for 2MP speed grade. High value for the small
+  affected population.
+- **Risk:** Very low — 7 lines, isolated to Versal detection path,
+  follows proven Ultrascale+ pattern.
+- **Ratio:** Favorable for affected users; negligible risk to everyone
+  else.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence Summary
 
-**FOR backporting:**
-- Real production issue (Meta, profiled lock contention)
-- Reviewed by btrfs and memcg maintainers; Tested-by present
-- 1-line, obviously correct fix
-- VFS explicitly documents shrinker counts need no locks
-  (`fs/super.c:247-249`)
-- Direct btrfs precedent (`2cdb3909c9e95`) and xfs pattern
-  (`xfs_estimate_freecounter`)
-- Bug present in 6.18.44 since extent map shrinker (6.9+)
-- Can cause severe reclaim stalls under memory pressure — stability-
-  relevant per stable rules for perf fixes that prevent lockups
+**FOR backport:**
+- Real, verifiable bugs in existing driver logic (probe failure + wrong
+  PLL limits).
+- Hardware quirk/workaround — same category as existing Ultrascale+
+  override.
+- Tiny, surgical, reviewed, maintainer-merged patch.
+- Applies cleanly to 6.18.y; all prerequisite code present.
+- Fixes broken behavior on hardware the driver is already designed to
+  auto-detect.
 
-**AGAINST backporting:**
-- Primarily a scalability/performance issue, not
-  crash/corruption/security
-- Only affects btrfs + memcg + high-scale configurations
-- Approximate count could theoretically under-report objects (bounded,
-  maintainer-accepted)
+**AGAINST backport:**
+- Framed as "add support" for a new FPGA generation.
+- No bug reports, fuzzer findings, or in-tree DTS users.
+- Very niche hardware (ADI reference designs on Versal).
+- Does not cause kernel crashes or security issues — device-level
+  functional failure.
+- Versal was never supported in 6.18.y (not a regression fix).
 
-**UNRESOLVED:**
-- Mailing list thread and stable-list discussion (lore inaccessible,
-  commit not in tree for b4 dig)
+### Step 9.2: Stable Rules Checklist
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — maintainer-reviewed, Tested-
-   by, matches established API-usage pattern
-2. Fixes a real bug affecting users? **PASS** — lock contention in
-   reclaim path on production workloads
-3. Important issue? **PASS** — HIGH severity stability under memory
-   pressure (reclaim stalls, potential lockup warnings)
-4. Small and contained? **PASS** — 1 line, 1 file
-5. No new features or APIs? **PASS**
-6. Can apply to local tree? **PASS** — buggy code confirmed present,
-   clean apply
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — mirrors Ultrascale+
+pattern; Reviewed-by present; no Tested-by |
+| 2. Fixes a real bug affecting users? | **PASS** — probe failure and
+incorrect PLL limits on Versal hardware |
+| 3. Important issue? | **PASS (borderline)** — device unusable on
+affected Versal platforms; not crash/security class |
+| 4. Small and contained? | **PASS** — 7 lines, 2 files, 1 function |
+| 5. No new features/APIs? | **PASS** — hardware quirk exception; no
+userspace API changes |
+| 6. Can apply to local tree? | **PASS** — code exists, clean apply |
 
-### Step 9.3: EXCEPTION CATEGORIES
-**Record:** N/A — not a device ID, quirk, DT, build, or docs fix.
-Standard bug fix.
+### Step 9.3: Exception Category
+**Record:** **Hardware quirk/workaround** — adding correct timing limits
+for a new FPGA technology variant in an existing driver, analogous to
+the Ultrascale+ VCO override already in stable.
 
-### Step 9.4: DECISION RATIONALE
+### Step 9.4: Decision Rationale
 
-This commit fixes btrfs using the wrong percpu_counter API in a shrinker
-count callback. The VFS shrinker framework deliberately avoids locking
-because counts are advisory; btrfs's use of
-`percpu_counter_sum_positive()` introduces a global spinlock into a path
-invoked repeatedly per (memcg, node) during reclaim. On large container
-hosts this creates a serialization bottleneck during exactly the
-operation (memory reclaim) that must remain fast.
+For **linux-6.18.y**: the driver already reads FPGA technology and speed
+grade from hardware and configures PLL limits accordingly. Versal
+platforms are a real deployment target for Analog Devices IP (per
+Kconfig: "commonly used in Analog Devices' reference designs"). Without
+this patch:
 
-The fix is minimal, maintainer-reviewed, has direct precedent in the
-same btrfs codebase, and carries negligible regression risk. While not a
-traditional crash or corruption bug, it causes serious stability
-degradation under memory pressure — a scenario stable trees must handle
-well.
+1. Versal boards reporting speed grade 2MP fail probe outright.
+2. All Versal boards get VCO limits roughly 2–3× too low, breaking clock
+   rate configuration.
+
+This is a correctness fix in existing auto-detection logic, not a new
+driver. It is small, low-risk, and directly analogous to stable-
+acceptable hardware quirk fixes. The niche audience and lack of bug
+reports lower priority but do not negate technical merit.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message tags: Tested-by, 2× Reviewed-by, 2×
-  Signed-off-by; no Fixes/Reported-by/Link
-- [Phase 2] Diff analysis: 1-line change in `btrfs_nr_cached_objects()`,
-  `sum_positive` → `read_positive`
-- [Phase 2] Read `include/linux/percpu_counter.h:97-126`: confirmed
-  `sum_positive` locks and iterates CPUs; `read_positive` is lockless
-  `READ_ONCE`
-- [Phase 2] Read `lib/percpu_counter.c:159-185`: `__percpu_counter_sum`
-  documented as "more accurate but much slower"
-- [Phase 3] `git describe HEAD`: v6.18.44 / 6.18.44
-- [Phase 3] `git blame fs/btrfs/super.c:2410-2418`: function from
-  `956a17d9d0507` (2024-05-07)
-- [Phase 3] `git merge-base --is-ancestor 956a17d9d0507 HEAD`: shrinker
-  commit in 6.18.y
-- [Phase 3] `git show 2cdb3909c9e95`: btrfs precedent for same API
-  change
-- [Phase 4] UNVERIFIED: `b4 dig` failed (no commit SHA in tree);
-  lore.kernel.org returned 403
-- [Phase 5] Read `fs/super.c:235-262`: `super_cache_count()` explicitly
-  avoids locks, notes counts are advisory
-- [Phase 5] Read `fs/super.c:377-385`: superblock shrinker is
-  `SHRINKER_MEMCG_AWARE | SHRINKER_NUMA_AWARE`
-- [Phase 5] Read `mm/shrinker.c:478-594`: `shrink_slab_memcg()` iterates
-  shrinkers per memcg/node
-- [Phase 5] Read `fs/xfs/xfs_mount.h:729-736`: xfs uses `read_positive`
-  for estimates
-- [Phase 6] `grep fs/btrfs/super.c`: buggy `percpu_counter_sum_positive`
-  confirmed at line 2413
-- [Phase 6] `git log -S evictable_extent_maps`: counter and shrinker
-  both in tree since 2024
-- [Phase 8] `percpu_counter_batch` default = 32
-  (`lib/percpu_counter.c:255`)
+- **[Phase 1]** Parsed subject, tags (SOB, Reviewed-by), body; no
+  Fixes/Reported-by/Link tags.
+- **[Phase 2]** Diff analysis: 7 lines, `axi_clkgen_setup_limits()`
+  only; classified as hardware workaround.
+- **[Phase 3]** `git describe HEAD` → v6.18.43; `git show v6.18:...`
+  confirms buggy code at 6.18.0; no VERSAL/2MP in tree (grep); diff base
+  `fa5ccef73e60d` matches current file; no changes on v6.18..HEAD for
+  these files.
+- **[Phase 4]** Fetched v1 and RESEND from spinics.net; lore.kernel.org
+  blocked; b4 dig not run (commit not in tree); no bug reports in patch
+  posts.
+- **[Phase 5]** Read `axi_clkgen_probe`, `set_rate`, `determine_rate`;
+  traced limits → `axi_clkgen_calc_params`; grep found no in-tree
+  Versal+adi-clkgen DTS.
+- **[Phase 6]** Confirmed `CONFIG_COMMON_CLK_AXI_CLKGEN` and driver
+  exist; patch applies cleanly; no prior fix present.
+- **[Phase 7]** Kconfig confirms peripheral ADI/Xilinx driver.
+- **[Phase 8]** Probe failure = -ENODEV (verified in code); wrong limits
+  affect rate calculation (verified call chain).
+- **UNVERIFIED:** Individual review reply bodies from Brian
+  Masney/Stephen Boyd (listed but not fetched); original commit SHA on
+  mainline; exact kernel version that introduced
+  `axi_clkgen_setup_limits()` (shallow history).
 
 **YES**
 
- fs/btrfs/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-axi-clkgen.c   | 5 ++++-
+ include/linux/adi-axi-common.h | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 9dc399e5dc091..d3661be700810 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2435,7 +2435,7 @@ static int btrfs_show_devname(struct seq_file *m, struct dentry *root)
- static long btrfs_nr_cached_objects(struct super_block *sb, struct shrink_control *sc)
- {
- 	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
--	const s64 nr = percpu_counter_sum_positive(&fs_info->evictable_extent_maps);
-+	const s64 nr = percpu_counter_read_positive(&fs_info->evictable_extent_maps);
+diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
+index fa5ccef73e60d..26f76a6db8202 100644
+--- a/drivers/clk/clk-axi-clkgen.c
++++ b/drivers/clk/clk-axi-clkgen.c
+@@ -521,7 +521,7 @@ static int axi_clkgen_setup_limits(struct axi_clkgen *axi_clkgen,
+ 		axi_clkgen->limits.fvco_max = 1200000;
+ 		axi_clkgen->limits.fpfd_max = 450000;
+ 		break;
+-	case ADI_AXI_FPGA_SPEED_2 ... ADI_AXI_FPGA_SPEED_2LV:
++	case ADI_AXI_FPGA_SPEED_2 ... ADI_AXI_FPGA_SPEED_2MP:
+ 		axi_clkgen->limits.fvco_max = 1440000;
+ 		axi_clkgen->limits.fpfd_max = 500000;
+ 		if (family == ADI_AXI_FPGA_FAMILY_KINTEX || family == ADI_AXI_FPGA_FAMILY_ARTIX) {
+@@ -546,6 +546,9 @@ static int axi_clkgen_setup_limits(struct axi_clkgen *axi_clkgen,
+ 	if (tech == ADI_AXI_FPGA_TECH_ULTRASCALE_PLUS) {
+ 		axi_clkgen->limits.fvco_max = 1600000;
+ 		axi_clkgen->limits.fvco_min = 800000;
++	} else if (tech == ADI_AXI_FPGA_TECH_VERSAL) {
++		axi_clkgen->limits.fvco_max = 4320000;
++		axi_clkgen->limits.fvco_min = 2160000;
+ 	}
  
- 	trace_btrfs_extent_map_shrinker_count(fs_info, nr);
+ 	return 0;
+diff --git a/include/linux/adi-axi-common.h b/include/linux/adi-axi-common.h
+index 37962ba530dfc..e7ba393061ee6 100644
+--- a/include/linux/adi-axi-common.h
++++ b/include/linux/adi-axi-common.h
+@@ -51,6 +51,7 @@ enum adi_axi_fpga_technology {
+ 	ADI_AXI_FPGA_TECH_SERIES7,
+ 	ADI_AXI_FPGA_TECH_ULTRASCALE,
+ 	ADI_AXI_FPGA_TECH_ULTRASCALE_PLUS,
++	ADI_AXI_FPGA_TECH_VERSAL,
+ };
+ 
+ enum adi_axi_fpga_family {
+@@ -71,6 +72,7 @@ enum adi_axi_fpga_speed_grade {
+ 	ADI_AXI_FPGA_SPEED_2    = 20,
+ 	ADI_AXI_FPGA_SPEED_2L   = 21,
+ 	ADI_AXI_FPGA_SPEED_2LV  = 22,
++	ADI_AXI_FPGA_SPEED_2MP  = 23,
+ 	ADI_AXI_FPGA_SPEED_3    = 30,
+ };
  
 -- 
 2.53.0
