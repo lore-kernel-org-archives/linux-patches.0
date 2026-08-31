@@ -1,451 +1,364 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A5A522EC5;
-	Mon, 31 Aug 2026 13:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76637459AD0;
+	Mon, 31 Aug 2026 13:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183856; cv=none; b=twX2vAK8w9PtnzvGNfiFXEv5B+uu4SXwgEvgNDVCwph7YR0PnHGjqm8QPVAzMZ7gqwu9veAShQdgoWF2nmvC0pB5m1+2EIfVbKlfwx7Faqe1sT5Oshg8J3JMRCYKqvg5H5CCWgLo2/uIXkZqEf37RILvlWXEbJEsfH1hthRTJ4U=
+	t=1788183857; cv=none; b=Gu8rgMtopdXa9B+ooaKaXTe5rKlfyEiNhMC7BeZRRWj+KcKRk9PSofMRXv8V/i2dKV/184ac84STju1/Q899ahNmVeFVtXqKV5fji+LE5/k44hOXDTCbMZoM+MVOqi9m6/tJjgQjSH3xbJLBkQeq56sY/oGaq35Ev9R2AzbkVuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183856; c=relaxed/simple;
-	bh=YzomyiaSSYlSEVqtsSwnQ1VSK21Q6sA+HUUrTBdFNvI=;
+	s=arc-20240116; t=1788183857; c=relaxed/simple;
+	bh=pyzY1vtsqUHxg3YeLv4PiCUQaBKkA4uREzPS+/Xhsus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FmgKCBBgrKGE8S8abDY00x+OZY1zvuGfPi1JMCT9K+JdaWRwsp5razy7UugVJqfXfg2/ggjSwn3AUAJPhMCPvY7pWZ05+g//BqPriDPLd1PHo5sOW9iqDMz8zhaU1XylKtkodcrey64HsDjIGpicO5pJnmd9/0dnZ20pfOFqm6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GGrsBYIC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vm25IUBS092PexKCxWzdwKqIiLyV6RZ5QYZBnbuQqtD95ZEC89GUnzed3XKfK1aIQ9JZbufobw04G8KDSaV5lPMGJuconGERSLmp3FQGd0+Qw1UXLQZSbKlpD2RqNgyFFJ2sdiGFPMzp3i437pIddtKEVeMnn538Vxvs8iypFJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fXgEErA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GGrsBYIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC601F000E9;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fXgEErA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FAC1F00A3F;
 	Mon, 31 Aug 2026 13:44:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183853;
-	bh=gey/pA+MqLSign78ltl1Z+G5U1XGzfWV9TBfTmZofj8=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183853;
+	bh=IRBXL+dVgL6djbl6JQK/ZJPFFFDxlfs/VszmIpF9v1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GGrsBYICdmnzHpkk8pJtbeu44an+jR8Ikh6BsEZxLJGuT/MDHDiBD+woyHCTrb7hA
-	 slW6LSry5tFgl84XeZG9vbfMT1IUacGNyCUs7TxpLl6AqSdNWJdCeZK+b4QvJvt2wo
-	 BUVTzANrACxhP4IvMx10MzeZ3918WMd9p900CeXPngHE56tpAg6oU+MBBiZLvI6/Oj
-	 GM2JhSFL4SYLBIB0JbLu6LCrvmbi+t0ebfixcItvQpmDA8vsBzTQIFJwWUNSbXT3lx
-	 zApQkqjM3rdL9BYlZbaROjYG0i5upuZIAOtivjAKH5zI31lpR2IKNzQHEAuF9LNm3x
-	 IYwAGM0D+H3NQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] usb: xhci: Improve Soft Retries after short transfers
-Date: Mon, 31 Aug 2026 09:26:11 -0400
-Message-ID: <20260831133314.4125787-343-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=1fXgEErAGkXB1YSr+5n71o8hvNuRXq24v3R1dJNGvaOuUIN9Kek/PYjX4cI9WY4LT
+	 ywdsQq1x8wO0fkLRCP8yKr9kR+A3chq86oUfoq7KN4W3m1/4KmbXnHf10jkTx41Umv
+	 qn5IBowlGJgj1WNgYeXhtToEc70UOvUTnuNVep6I=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.1 63/76] crypto: iaa - fall back to software for multi-entry scatterlists
+Date: Mon, 31 Aug 2026 15:34:35 +0200
+Message-ID: <20260831133402.692030320@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Pecio <michal.pecio@gmail.com>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit e765ab012f73717238c95ab9c34bfc3c767fa48c ]
+------------------
 
-A short transfer is a successful one, so reset the error count.
-Otherwise, endpoints which always complete short are limited to
-three retries per endpoint life rather than per URB.
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260603091132.1110849-7-mathias.nyman@linux.intel.com
+commit c7fdfd2bee1cf1448e5244da1a734e680f634b02 upstream.
+
+IAA cannot process source or destination scatterlists with more than one
+entry directly. Instead of failing these requests, route them through a
+separate deflate acomp transform and keep the request alive in software.
+
+The IAA driver has never handled multi-entry scatterlists, but the
+limitation was latent until commit e2c3b6b21c77 ("mm: zswap: use SG list
+decompression APIs from zsmalloc") made zswap pass the raw zsmalloc SG
+list directly to crypto drivers, so objects spanning multiple pages now
+reach IAA as multi-entry sources and would otherwise fail decompression.
+
+Fallback to the generic DEFLATE implementation for scatterlists with
+more than one entry. After the multi-entry cases fall back early,
+simplify the DMA mapping path to a single scatterlist entry and fall
+back on mapping failure as well.
+
+Add counters to track the number of requests processed by the software
+implementation on the compression direction.
+
+Fixes: 2ec6761df889 ("crypto: iaa - Add support for deflate-iaa compression algorithm")
+Fixes: e2c3b6b21c77 ("mm: zswap: use SG list decompression APIs from zsmalloc")
+Cc: stable@vger.kernel.org
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-**Step 1.1 – Subject line**
-
-Record: `[usb: xhci]` `[Improve]` – Improve soft-retry error counting
-after short bulk/interrupt transfers.
-
-**Step 1.2 – Tags**
-
-Record:
-- `Signed-off-by: Michal Pecio <michal.pecio@gmail.com>` (author)
-- `Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>` (xHCI
-  maintainer)
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
-  maintainer)
-- `Link: https://patch.msgid.link/20260603091132.1110849-7-
-  mathias.nyman@linux.intel.com` (patch 7/7 in a series)
-- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Tested-by:`, or `Reviewed-
-  by:` tags
-
-**Step 1.3 – Body analysis**
-
-Record:
-- **Bug:** `ep->err_count` is not cleared on `COMP_SHORT_PACKET`, even
-  though a short transfer is a successful completion.
-- **Symptom:** Endpoints that routinely complete short are limited to
-  three soft retries over the endpoint’s lifetime, not per URB/transfer.
-- **Root cause:** `err_count` is reset on `COMP_SUCCESS` but not on
-  `COMP_SHORT_PACKET`, so successful short transfers do not reset the
-  counter.
-- **Version info:** None in the message.
-
-**Step 1.4 – Hidden bug fix?**
-
-Record: **Yes.** Although the subject says “Improve,” this is a
-correctness bug in xHCI soft-retry error accounting, not a cosmetic
-cleanup.
-
----
-
-## Phase 2: Diff Analysis
-
-**Step 2.1 – Inventory**
-
-Record:
-- **Files:** `drivers/usb/host/xhci-ring.c` (+1 line)
-- **Function:** `process_bulk_intr_td()`
-- **Scope:** Single-file, one-line surgical fix
-
-**Step 2.2 – Code flow change**
-
-Record:
-- **Before:** `COMP_SHORT_PACKET` sets `td->status = 0` only;
-  `ep->err_count` is unchanged.
-- **After:** `COMP_SHORT_PACKET` also sets `ep->err_count = 0`, matching
-  `COMP_SUCCESS`.
-- **Path:** Bulk/interrupt transfer completion in
-  `process_bulk_intr_td()`, called from `handle_tx_event()` for non-
-  control, non-isoc endpoints.
-
-**Step 2.3 – Bug mechanism**
-
-Record: **Logic / error-recovery bug.** `MAX_SOFT_RETRY` is 3. On
-`COMP_USB_TRANSACTION_ERROR`, `ep->err_count` is incremented; if it
-exceeds 3, soft retry is skipped and the error path proceeds without
-`xhci_handle_halted_endpoint(..., EP_SOFT_RESET)`. Successful
-completions should reset the counter, but short completions did not.
-
-**Step 2.4 – Fix quality**
-
-Record:
-- **Obviously correct:** Short packet is a successful transfer
-  (`td->status = 0`); resetting `err_count` matches `COMP_SUCCESS` and
-  the design intent.
-- **Minimal:** One line.
-- **Regression risk:** Very low; only resets a counter on a success
-  path.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 – Blame**
-
-Record:
-- Soft retry introduced in `f8f80be501aa2` (2018): `ep_ring->err_count =
-  0` on `COMP_SUCCESS`.
-- `err_count` moved to endpoint in `a1575120972ec` (Nov 2022, backported
-  with `Cc: stable`).
-- `COMP_SHORT_PACKET` handling dates to 2017; never reset `err_count`.
-- Bug present since soft-retry accounting was added (~2018).
-
-**Step 3.2 – Fixes: tag**
-
-Record: N/A – no `Fixes:` tag.
-
-**Step 3.3 – Related file history**
-
-Record:
-- Related short-packet work by Michal Pecio: `9e3a28793d2fd` (“Fix Short
-  Packet handling rework ignoring errors”), affecting UAC, UVC, serial,
-  UAS.
-- This fix is standalone; no dependency on other series patches for
-  correctness.
-
-**Step 3.4 – Author context**
-
-Record: Michal Pecio is an active xHCI contributor; Mathias Nyman is the
-xHCI maintainer. Both signed off.
-
-**Step 3.5 – Dependencies**
-
-Record: **Standalone.** One-line addition; no new symbols or structures.
-Patch 7/7 in submission, but this hunk is self-contained.
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 – Original discussion**
-
-Record: Link points to patch 7/7 in a Mathias Nyman series (2026-06-03).
-`b4 dig` did not find the committed hash (commit not in this tree).
-`patch.msgid.link` and `lore.kernel.org` were blocked (403/Anubis).
-Discussion content could not be fetched.
-
-**Step 4.2 – Reviewers**
-
-Record: UNVERIFIED from lore. Commit has SOBs from author, xHCI
-maintainer, and USB maintainer.
-
-**Step 4.3 – Bug report**
-
-Record: No external bug report or syzbot link. Bug inferred from code
-analysis and commit message.
-
-**Step 4.4 – Series context**
-
-Record: Patch 7/7; this change does not appear to require earlier series
-patches.
-
-**Step 4.5 – Stable list**
-
-Record: UNVERIFIED – could not search lore stable archives due to access
-restrictions.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 – Key functions**
-
-Record: `process_bulk_intr_td()`, caller `handle_tx_event()`.
-
-**Step 5.2 – Callers**
-
-Record: `handle_tx_event()` is the main xHCI transfer-event handler,
-invoked from the xhci interrupt path for every bulk/interrupt transfer
-completion. High-traffic, common path.
-
-**Step 5.3 – Callees**
-
-Record: On transaction error with `err_count <= MAX_SOFT_RETRY`, calls
-`xhci_handle_halted_endpoint(..., EP_SOFT_RESET)`. When limit exceeded,
-soft retry is skipped and `finish_td()` runs with `-EPROTO`.
-
-**Step 5.4 – Reachability**
-
-Record: **Highly reachable.** Any bulk/interrupt endpoint can hit this.
-Critically, in `handle_tx_event()`:
-
-```2707:2712:drivers/usb/host/xhci-ring.c
-        case COMP_SUCCESS:
-                if (EVENT_TRB_LEN(le32_to_cpu(event->transfer_len)) !=
-0) {
-                        trb_comp_code = COMP_SHORT_PACKET;
-                        xhci_dbg(xhci, "Successful completion on short
-TX for slot %u ep %u with last td comp code %d\n",
-                                 slot_id, ep_index,
-ep_ring->old_trb_comp_code);
-                }
-```
-
-Short transfers reported as `COMP_SUCCESS` are converted to
-`COMP_SHORT_PACKET` before `process_bulk_intr_td()` runs. So the
-`COMP_SUCCESS` `err_count` reset does **not** apply to short transfers
-on typical hosts; they go through `COMP_SHORT_PACKET` without resetting
-the counter.
-
-**Step 5.5 – Similar patterns**
-
-Record: `ep->err_count = 0` exists only on `COMP_SUCCESS` in
-`process_bulk_intr_td()`. `handle_transferless_tx_event()` increments
-`err_count` on stream transaction errors but never resets it on success.
-This fix addresses the bulk/intr path only.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree
-
-**Step 6.1 – Buggy code in this tree?**
-
-Record: **Yes.** Local tree is **v6.18.44** (`git describe HEAD`, `make
-kernelversion`). At lines 2572–2574, `COMP_SHORT_PACKET` does not reset
-`ep->err_count`. The candidate commit is not yet applied.
-
-**Step 6.2 – Backport complications**
-
-Record: **Clean apply expected** – single line in a stable function with
-no recent churn at that hunk.
-
-**Step 6.3 – Related fixes already present?**
-
-Record: `git log --grep='Soft Retries'` returned nothing. No equivalent
-fix in this tree.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 – Subsystem**
-
-Record: `drivers/usb/host/` – USB xHCI host controller driver.
-**Criticality: IMPORTANT** (core USB path for most modern systems).
-
-**Step 7.2 – Activity**
-
-Record: Active subsystem; recent xhci fixes include HCE interrupt storm,
-memory leaks, and short-packet handling.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 – Who is affected**
-
-Record: Users of xHCI with bulk/interrupt endpoints that complete short
-(serial, UVC, UAC, storage status pipes, interrupt IN with fixed
-buffers). Essentially all xHCI users with typical USB devices.
-
-**Step 8.2 – Trigger conditions**
-
-Record:
-- Endpoint sees successful short transfers (very common).
-- Plus occasional `COMP_USB_TRANSACTION_ERROR` (transient bus errors).
-- After 3 such errors, `err_count` stays elevated because short
-  successes never reset it.
-- **Likelihood:** Moderate for long-lived endpoints with occasional bus
-  noise.
-
-**Step 8.3 – Failure mode severity**
-
-Record:
-- Soft retry stops after 3 transaction errors over endpoint lifetime.
-- Subsequent errors skip `EP_SOFT_RESET` and proceed to error completion
-  / harder recovery.
-- **Severity: MEDIUM-HIGH** – device malfunction, transfer failures,
-  possible disconnect; not a kernel oops, but real user-visible USB
-  breakage.
-
-**Step 8.4 – Risk vs benefit**
-
-Record:
-- **Benefit:** HIGH for affected endpoints – restores intended per-
-  transfer error accounting.
-- **Risk:** VERY LOW – one line, mirrors existing `COMP_SUCCESS`
-  behavior.
-- **Ratio:** Strong benefit, minimal risk.
-
----
-
-## Phase 9: Final Synthesis
-
-**Step 9.1 – Evidence**
-
-**FOR:**
-- Real, long-standing logic bug in soft-retry accounting
-- Affects a very common path (short bulk/interrupt transfers)
-- `handle_tx_event()` converts success-with-remaining to
-  `COMP_SHORT_PACKET`, so most short transfers hit the buggy path
-- After 3 transaction errors, error recovery degrades permanently for
-  that endpoint
-- One-line, obviously correct fix
-- Signed off by xHCI and USB maintainers
-- Bug present in v6.18.44; fix applies cleanly
-
-**AGAINST:**
-- No syzbot report or user bug report in commit message
-- Failure mode is degraded recovery, not kernel crash
-- Lore discussion could not be verified
-
-**UNRESOLVED:**
-- Full mailing-list review thread inaccessible
-- No explicit stable nomination found
-
-**Step 9.2 – Stable rules checklist**
-
-1. Obviously correct and tested? **PASS** – logic is clear; maintainer
-   SOBs present; no runtime test cited.
-2. Fixes a real bug affecting users? **PASS** – short transfers are
-   routine; error accounting is wrong.
-3. Important issue? **PASS (MEDIUM-HIGH)** – USB communication failures
-   on common device classes.
-4. Small and contained? **PASS** – 1 line, 1 file.
-5. No new features or APIs? **PASS**.
-6. Can apply to local tree? **PASS** – buggy code confirmed in v6.18.44.
-
-**Step 9.3 – Exception categories**
-
-Record: None (not device ID, quirk, DT, build, or docs). Standard bug
-fix.
-
-**Step 9.4 – Decision rationale**
-
-This is a clear correctness bug in xHCI error recovery. Because
-`handle_tx_event()` rewrites success-with-short-data to
-`COMP_SHORT_PACKET`, the existing `err_count` reset on `COMP_SUCCESS`
-does not cover the common short-transfer case. Endpoints that routinely
-short-packet can exhaust their three soft retries permanently after only
-three transient transaction errors, causing degraded USB error recovery.
-The fix is minimal, obviously correct, and low risk.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed subject, tags, and body from provided commit
-  message.
-- **[Phase 2]** Confirmed diff: +1 line `ep->err_count = 0` in
-  `COMP_SHORT_PACKET` case.
-- **[Phase 3]** `git blame -L 2560,2595 drivers/usb/host/xhci-ring.c`:
-  soft retry from 2018, `err_count` on endpoint from 2022.
-- **[Phase 3]** `git show f8f80be501aa2`: original soft retry added
-  `err_count` reset on `COMP_SUCCESS` only.
-- **[Phase 3]** `git show a1575120972ec`: moved `err_count` to endpoint;
-  had `Cc: stable`.
-- **[Phase 3]** `git log --oneline -20 -- drivers/usb/host/xhci-ring.c`:
-  recent xhci activity confirmed.
-- **[Phase 4]** `b4 dig`: no match (commit not in tree).
-  Lore/patch.msgid.link: blocked (403/Anubis). **UNVERIFIED:** review
-  thread content.
-- **[Phase 5]** `grep process_bulk_intr_td`: called from
-  `handle_tx_event()` line 2982.
-- **[Phase 5]** Read `handle_tx_event()` lines 2707–2712: `COMP_SUCCESS`
-  with remaining length converted to `COMP_SHORT_PACKET`.
-- **[Phase 5]** `grep err_count drivers/usb/host/`: only reset on
-  `COMP_SUCCESS` in xhci-ring.c.
-- **[Phase 6]** `git describe HEAD` → v6.18.44; `make kernelversion` →
-  6.18.44.
-- **[Phase 6]** Read lines 2572–2574: bug present (no reset on
-  `COMP_SHORT_PACKET`).
-- **[Phase 6]** `git log --grep='Soft Retries'`: no existing fix in
-  tree.
-- **[Phase 8]** `MAX_SOFT_RETRY` = 3 in `drivers/usb/host/xhci.h` line
-  1272.
-- **[Phase 8]** Read `COMP_USB_TRANSACTION_ERROR` path: when `err_count
-  > 3`, soft retry skipped.
-
-**YES**
-
- drivers/usb/host/xhci-ring.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 2bb7569c95054..3f1a6089a01ce 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2570,6 +2570,7 @@ static void process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
- 		td->status = 0;
- 		break;
- 	case COMP_SHORT_PACKET:
-+		ep->err_count = 0;
- 		td->status = 0;
- 		break;
- 	case COMP_STOPPED_SHORT_PACKET:
+ drivers/crypto/intel/iaa/iaa_crypto_main.c  | 111 +++++++++++---------
+ drivers/crypto/intel/iaa/iaa_crypto_stats.c |   9 ++
+ drivers/crypto/intel/iaa/iaa_crypto_stats.h |   2 +
+ 3 files changed, 71 insertions(+), 51 deletions(-)
+
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index f62b994e18e5..904d9413ba18 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -2,6 +2,7 @@
+ /* Copyright(c) 2021 Intel Corporation. All rights rsvd. */
+ 
+ #include <linux/init.h>
++#include <linux/crypto.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
+@@ -996,6 +997,19 @@ static int deflate_generic_decompress(struct acomp_req *req)
+ 	return ret;
+ }
+ 
++static int deflate_generic_compress(struct acomp_req *req)
++{
++	ACOMP_FBREQ_ON_STACK(fbreq, req);
++	int ret;
++
++	ret = crypto_acomp_compress(fbreq);
++	req->dlen = fbreq->dlen;
++
++	update_total_sw_comp_calls();
++
++	return ret;
++}
++
+ static int iaa_remap_for_verify(struct device *dev, struct iaa_wq *iaa_wq,
+ 				struct acomp_req *req,
+ 				dma_addr_t *src_addr, dma_addr_t *dst_addr);
+@@ -1472,7 +1486,7 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 	struct iaa_compression_ctx *compression_ctx;
+ 	struct crypto_tfm *tfm = req->base.tfm;
+ 	dma_addr_t src_addr, dst_addr;
+-	int nr_sgs, cpu, ret = 0;
++	int cpu, ret = 0;
+ 	struct iaa_wq *iaa_wq;
+ 	struct idxd_wq *wq;
+ 	struct device *dev;
+@@ -1484,11 +1498,15 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 		return -ENODEV;
+ 	}
+ 
+-	if (!req->src || !req->slen) {
+-		pr_debug("invalid src, not compressing\n");
++	if (!req->src || !req->slen || !req->dst) {
++		pr_debug("invalid req, not compressing\n");
+ 		return -EINVAL;
+ 	}
+ 
++	/* Fall back to software if src or dst has multiple sg entries */
++	if (sg_nents(req->src) > 1 || sg_nents(req->dst) > 1)
++		return deflate_generic_compress(req);
++
+ 	cpu = get_cpu();
+ 	wq = wq_table_next_wq(cpu);
+ 	put_cpu();
+@@ -1507,30 +1525,25 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 
+ 	dev = &wq->idxd->pdev->dev;
+ 
+-	nr_sgs = dma_map_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
+-	if (nr_sgs <= 0 || nr_sgs > 1) {
+-		dev_dbg(dev, "couldn't map src sg for iaa device %d,"
+-			" wq %d: ret=%d\n", iaa_wq->iaa_device->idxd->id,
+-			iaa_wq->wq->id, ret);
+-		ret = -EIO;
+-		goto out;
++	if (!dma_map_sg(dev, req->src, 1, DMA_TO_DEVICE)) {
++		dev_dbg(dev, "couldn't map src sg for iaa device %d, wq %d\n",
++			iaa_wq->iaa_device->idxd->id, iaa_wq->wq->id);
++		iaa_wq_put(wq);
++		return deflate_generic_compress(req);
+ 	}
+ 	src_addr = sg_dma_address(req->src);
+-	dev_dbg(dev, "dma_map_sg, src_addr %llx, nr_sgs %d, req->src %p,"
+-		" req->slen %d, sg_dma_len(sg) %d\n", src_addr, nr_sgs,
++	dev_dbg(dev, "map src %llx req->src %p slen %d sg_len %d\n", src_addr,
+ 		req->src, req->slen, sg_dma_len(req->src));
+ 
+-	nr_sgs = dma_map_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+-	if (nr_sgs <= 0 || nr_sgs > 1) {
+-		dev_dbg(dev, "couldn't map dst sg for iaa device %d,"
+-			" wq %d: ret=%d\n", iaa_wq->iaa_device->idxd->id,
+-			iaa_wq->wq->id, ret);
+-		ret = -EIO;
+-		goto err_map_dst;
++	if (!dma_map_sg(dev, req->dst, 1, DMA_FROM_DEVICE)) {
++		dev_dbg(dev, "couldn't map dst sg for iaa device %d, wq %d\n",
++			iaa_wq->iaa_device->idxd->id, iaa_wq->wq->id);
++		dma_unmap_sg(dev, req->src, 1, DMA_TO_DEVICE);
++		iaa_wq_put(wq);
++		return deflate_generic_compress(req);
+ 	}
+ 	dst_addr = sg_dma_address(req->dst);
+-	dev_dbg(dev, "dma_map_sg, dst_addr %llx, nr_sgs %d, req->dst %p,"
+-		" req->dlen %d, sg_dma_len(sg) %d\n", dst_addr, nr_sgs,
++	dev_dbg(dev, "map dst %llx req->dst %p dlen %d sg_len %d\n", dst_addr,
+ 		req->dst, req->dlen, sg_dma_len(req->dst));
+ 
+ 	ret = iaa_compress(tfm, req, wq, src_addr, req->slen, dst_addr,
+@@ -1550,8 +1563,8 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 		if (ret)
+ 			dev_dbg(dev, "asynchronous compress verification failed ret=%d\n", ret);
+ 
+-		dma_unmap_sg(dev, req->dst, sg_nents(req->dst), DMA_TO_DEVICE);
+-		dma_unmap_sg(dev, req->src, sg_nents(req->src), DMA_FROM_DEVICE);
++		dma_unmap_sg(dev, req->dst, 1, DMA_TO_DEVICE);
++		dma_unmap_sg(dev, req->src, 1, DMA_FROM_DEVICE);
+ 
+ 		goto out;
+ 	}
+@@ -1559,9 +1572,8 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 	if (ret)
+ 		dev_dbg(dev, "asynchronous compress failed ret=%d\n", ret);
+ 
+-	dma_unmap_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+-err_map_dst:
+-	dma_unmap_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
++	dma_unmap_sg(dev, req->dst, 1, DMA_FROM_DEVICE);
++	dma_unmap_sg(dev, req->src, 1, DMA_TO_DEVICE);
+ out:
+ 	iaa_wq_put(wq);
+ 
+@@ -1572,7 +1584,7 @@ static int iaa_comp_adecompress(struct acomp_req *req)
+ {
+ 	struct crypto_tfm *tfm = req->base.tfm;
+ 	dma_addr_t src_addr, dst_addr;
+-	int nr_sgs, cpu, ret = 0;
++	int cpu, ret = 0;
+ 	struct iaa_wq *iaa_wq;
+ 	struct device *dev;
+ 	struct idxd_wq *wq;
+@@ -1582,11 +1594,15 @@ static int iaa_comp_adecompress(struct acomp_req *req)
+ 		return -ENODEV;
+ 	}
+ 
+-	if (!req->src || !req->slen) {
+-		pr_debug("invalid src, not decompressing\n");
++	if (!req->src || !req->slen || !req->dst) {
++		pr_debug("invalid req, not decompressing\n");
+ 		return -EINVAL;
+ 	}
+ 
++	/* Fall back to software if src or dst has multiple sg entries */
++	if (sg_nents(req->src) > 1 || sg_nents(req->dst) > 1)
++		return deflate_generic_decompress(req);
++
+ 	cpu = get_cpu();
+ 	wq = wq_table_next_wq(cpu);
+ 	put_cpu();
+@@ -1605,30 +1621,25 @@ static int iaa_comp_adecompress(struct acomp_req *req)
+ 
+ 	dev = &wq->idxd->pdev->dev;
+ 
+-	nr_sgs = dma_map_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
+-	if (nr_sgs <= 0 || nr_sgs > 1) {
+-		dev_dbg(dev, "couldn't map src sg for iaa device %d,"
+-			" wq %d: ret=%d\n", iaa_wq->iaa_device->idxd->id,
+-			iaa_wq->wq->id, ret);
+-		ret = -EIO;
+-		goto out;
++	if (!dma_map_sg(dev, req->src, 1, DMA_TO_DEVICE)) {
++		dev_dbg(dev, "couldn't map src sg for iaa device %d, wq %d\n",
++			iaa_wq->iaa_device->idxd->id, iaa_wq->wq->id);
++		iaa_wq_put(wq);
++		return deflate_generic_decompress(req);
+ 	}
+ 	src_addr = sg_dma_address(req->src);
+-	dev_dbg(dev, "dma_map_sg, src_addr %llx, nr_sgs %d, req->src %p,"
+-		" req->slen %d, sg_dma_len(sg) %d\n", src_addr, nr_sgs,
++	dev_dbg(dev, "map src %llx req->src %p slen %d sg_len %d\n", src_addr,
+ 		req->src, req->slen, sg_dma_len(req->src));
+ 
+-	nr_sgs = dma_map_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+-	if (nr_sgs <= 0 || nr_sgs > 1) {
+-		dev_dbg(dev, "couldn't map dst sg for iaa device %d,"
+-			" wq %d: ret=%d\n", iaa_wq->iaa_device->idxd->id,
+-			iaa_wq->wq->id, ret);
+-		ret = -EIO;
+-		goto err_map_dst;
++	if (!dma_map_sg(dev, req->dst, 1, DMA_FROM_DEVICE)) {
++		dev_dbg(dev, "couldn't map dst sg for iaa device %d, wq %d\n",
++			iaa_wq->iaa_device->idxd->id, iaa_wq->wq->id);
++		dma_unmap_sg(dev, req->src, 1, DMA_TO_DEVICE);
++		iaa_wq_put(wq);
++		return deflate_generic_decompress(req);
+ 	}
+ 	dst_addr = sg_dma_address(req->dst);
+-	dev_dbg(dev, "dma_map_sg, dst_addr %llx, nr_sgs %d, req->dst %p,"
+-		" req->dlen %d, sg_dma_len(sg) %d\n", dst_addr, nr_sgs,
++	dev_dbg(dev, "map dst %llx req->dst %p dlen %d sg_len %d\n", dst_addr,
+ 		req->dst, req->dlen, sg_dma_len(req->dst));
+ 
+ 	ret = iaa_decompress(tfm, req, wq, src_addr, req->slen,
+@@ -1639,10 +1650,8 @@ static int iaa_comp_adecompress(struct acomp_req *req)
+ 	if (ret != 0)
+ 		dev_dbg(dev, "asynchronous decompress failed ret=%d\n", ret);
+ 
+-	dma_unmap_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+-err_map_dst:
+-	dma_unmap_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
+-out:
++	dma_unmap_sg(dev, req->dst, 1, DMA_FROM_DEVICE);
++	dma_unmap_sg(dev, req->src, 1, DMA_TO_DEVICE);
+ 	iaa_wq_put(wq);
+ 
+ 	return ret;
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_stats.c b/drivers/crypto/intel/iaa/iaa_crypto_stats.c
+index f5cc3d29ca19..2f2ed88c8812 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_stats.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_stats.c
+@@ -19,6 +19,7 @@
+ 
+ static atomic64_t total_comp_calls;
+ static atomic64_t total_decomp_calls;
++static atomic64_t total_sw_comp_calls;
+ static atomic64_t total_sw_decomp_calls;
+ static atomic64_t total_comp_bytes_out;
+ static atomic64_t total_decomp_bytes_in;
+@@ -43,6 +44,11 @@ void update_total_decomp_calls(void)
+ 	atomic64_inc(&total_decomp_calls);
+ }
+ 
++void update_total_sw_comp_calls(void)
++{
++	atomic64_inc(&total_sw_comp_calls);
++}
++
+ void update_total_sw_decomp_calls(void)
+ {
+ 	atomic64_inc(&total_sw_decomp_calls);
+@@ -104,6 +110,7 @@ static void reset_iaa_crypto_stats(void)
+ {
+ 	atomic64_set(&total_comp_calls, 0);
+ 	atomic64_set(&total_decomp_calls, 0);
++	atomic64_set(&total_sw_comp_calls, 0);
+ 	atomic64_set(&total_sw_decomp_calls, 0);
+ 	atomic64_set(&total_comp_bytes_out, 0);
+ 	atomic64_set(&total_decomp_bytes_in, 0);
+@@ -174,6 +181,8 @@ static int global_stats_show(struct seq_file *m, void *v)
+ 		   atomic64_read(&total_comp_calls));
+ 	seq_printf(m, "  total_decomp_calls: %llu\n",
+ 		   atomic64_read(&total_decomp_calls));
++	seq_printf(m, "  total_sw_comp_calls: %llu\n",
++		   atomic64_read(&total_sw_comp_calls));
+ 	seq_printf(m, "  total_sw_decomp_calls: %llu\n",
+ 		   atomic64_read(&total_sw_decomp_calls));
+ 	seq_printf(m, "  total_comp_bytes_out: %llu\n",
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_stats.h b/drivers/crypto/intel/iaa/iaa_crypto_stats.h
+index 3787a5f507eb..6e0c6f9939bf 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_stats.h
++++ b/drivers/crypto/intel/iaa/iaa_crypto_stats.h
+@@ -11,6 +11,7 @@ void	iaa_crypto_debugfs_cleanup(void);
+ void	update_total_comp_calls(void);
+ void	update_total_comp_bytes_out(int n);
+ void	update_total_decomp_calls(void);
++void	update_total_sw_comp_calls(void);
+ void	update_total_sw_decomp_calls(void);
+ void	update_total_decomp_bytes_in(int n);
+ void	update_completion_einval_errs(void);
+@@ -29,6 +30,7 @@ static inline void	iaa_crypto_debugfs_cleanup(void) {}
+ static inline void	update_total_comp_calls(void) {}
+ static inline void	update_total_comp_bytes_out(int n) {}
+ static inline void	update_total_decomp_calls(void) {}
++static inline void	update_total_sw_comp_calls(void) {}
+ static inline void	update_total_sw_decomp_calls(void) {}
+ static inline void	update_total_decomp_bytes_in(int n) {}
+ static inline void	update_completion_einval_errs(void) {}
 -- 
-2.53.0
+2.55.0
+
+
 
