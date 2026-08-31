@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE385419AA;
-	Mon, 31 Aug 2026 13:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6EB53FD49;
+	Mon, 31 Aug 2026 13:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183959; cv=none; b=KONKi6RtsI6u7AqVZBJ6qTFTqbcJwDDRw6DSNHcKsvK3hQfQO7yeSwIkqjZa3RXYB1K/dBGKPTDJhCdcV6NiRCmvEphRdG0e+YP3nlezWh0K1+++ZwwYWO9D+uYqDX+ZAz+Dp3azy38lerDzIy7JANhw2trpbfdtrbYRdfGumYU=
+	t=1788183960; cv=none; b=nn2N1EuoHtHX6ma/Uu+2tXx5TQhWEjiL0kNjAzJUl8bqkJA63LnvhPISToifiRv1XlvFKaoWIXtxM1XMgU8aVj6sT9VuAR62s7xZq+YQr9+hQCzloEu9Obg10wqyVrYG1hMhBAla5hzA9EuIPJm1ecFiouLMKLn1T/xYzpqtVDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183959; c=relaxed/simple;
-	bh=zbywMqE66HVsRAx54iF4I8/X8Nz8MgXYoJInsctGmXo=;
+	s=arc-20240116; t=1788183960; c=relaxed/simple;
+	bh=laKgF3T+72TkSASFUL3U0Cf2oE3nNpCWepCuO5U0FpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dU83Twzl8pWuMX1s+dlgLEnTBotWeBSeI1+13xs7+teQKRnZTrJOVhQYCHh4c1jdPEm7OEit+tPvoUehs9o5uxj3dpu4n+hWjKwyX+ekiL8KC7jjlg1ert6yIEX0lD3ZAw2PCJ0qw7+zYbXcjLxfyHn9TdHGiOBQkS7mxCha7CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XtNBZgCR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=N7wEE6n0emD56CJH7775oGDZa8NWoCvCKVrfOobBM4raVOqQraknPUrsoM+cnwGk6Ts3lrzh+jaWF4EJe1FTODswe//kKZs6S83gawEDpbxdGGVP77qvp/0WKEShimE210QdQC4bgjjxssKun9v8LwvZPACEVhq5k/LqW70QqDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VzQAX7+8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtNBZgCR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0609C1F000E9;
-	Mon, 31 Aug 2026 13:45:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VzQAX7+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198E81F00ACF;
+	Mon, 31 Aug 2026 13:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183956;
-	bh=GZJQ16v06Yi0FO07Nrm2/I1nwA5R9x34h9AS1PcYTVM=;
+	s=k20260515; t=1788183958;
+	bh=003shy3L+UXbpB2hQD5Ja9a+UsUsVuBDrZ9w6FGc2aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XtNBZgCRWGB3bzGwWJfbYL60yw8ZyGd/C8xboA7eTElN3zHwyzjZb7pLtCSRvwqHg
-	 S87XjrmkYaIBl7KSp4DSx9lF5tksd2flikYmoIm49obkqJCRqHVbMQ9+y7hxqtpUTK
-	 MXAA6og/GDjRqWMy5493WieVw+BhLU4/zu1dkY4V5L4yLCMZamGylVwVZKTYEpl/OT
-	 S6xcngFs2E+JSBKrMbshLDGTzQE7DB0bJ8rcV2COqjTYZP7xpYaqy/N5X2r2pBagoU
-	 JAAhI8rJJBVbDjA0H1QGT8xc6sVcExdPxhhkNWUMNXKiY71rPwTdwrXtfEMG5mWhD6
-	 KoacA7AV3eP5A==
+	b=VzQAX7+8/g2UzpvGAftUth5m2V1YEPoUGgWmYiUBJApbCc3GyO9oNGBFnmSTuZXc9
+	 2+umK+WRXKEatGblNssGAUqaeFrUIQctRSIY5/sB3mBG3CLJLEPdFioCRbcocKacVS
+	 O68G5/ynSs6Jf6uschZfR60wt6ETzwS1v6VAW1OfGF+9mZPkRR8V/SA2gYVuDbzSVg
+	 283v7BMffx6cFil87jXxTU1KAF1KkvPtOgCvquXOm6QwkBz+KgOYfITzdKVIJTDd53
+	 zsMP/9NFFYW2/0N9eKe+9BzHfw4RA6KDwLD7RFRzWN2GJ1jbDR6I3KLSgat41SrO5s
+	 wWqInNzgnDRvg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Baojun Xu <baojun.xu@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shenghao-ding@ti.com,
-	kevin-lu@ti.com,
-	sen@ti.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ASoC: tas2781: Update default register address to TAS2563
-Date: Mon, 31 Aug 2026 09:27:11 -0400
-Message-ID: <20260831133314.4125787-403-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: rtw89: disable HTC field in AP mode
+Date: Mon, 31 Aug 2026 09:27:12 -0400
+Message-ID: <20260831133314.4125787-404-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,64 +52,68 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 64184f07e7516eb3ac1839387eb7cbe2dbeaa96f ]
+[ Upstream commit 1e53b826d5f8a3ca6d88fa6ed263acf54503214b ]
 
-The previous TAS2781 address is overwritten during calibration,
-so switching to the TAS2563 address is required.
+Disable HE QoS HTC field when operating in AP mode to resolve
+interoperability issues with some stations.
 
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20260625102815.20043-1-baojun.xu@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260424072552.59220-3-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ASoC: tas2781: Update default register
-address to TAS2563
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+# Stable Backport Analysis: `wifi: rtw89: disable HTC field in AP mode`
 
-**Local tree:** `v6.18.44` (`6.18.44`, commit `2736c32da98b9`)
-**Upstream commit:** `64184f07e7516` (mainline, merged Jun 25, 2026)
-**Stable candidate:** `43c6afb999d7e` (on `autosel` branch, not yet in
-HEAD)
+**Local tree:** `v6.18.43` (Linux 6.18.y stable)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[ASoC: tas2781]` `[Update]` — Change default XM calibration
-register addresses from TAS2781 book/page to TAS2563 book/page.
+### Step 1.1: Subject line
+**Record:** `[wifi: rtw89]` `[disable]` — Disable HE QoS HTC field when
+the driver operates in AP mode.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Baojun Xu `<baojun.xu@ti.com>` (TI, driver author)
+- **Signed-off-by:** Dian-Syuan Yang `<dian_syuan0116@realtek.com>`
+  (author)
+- **Signed-off-by:** Ping-Ke Shih `<pkshih@realtek.com>` (Realtek
+  maintainer)
 - **Link:**
-  https://patch.msgid.link/20260625102815.20043-1-baojun.xu@ti.com
-- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (ASoC maintainer)
-- **No** Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org,
-  Acked-by:
-- **Notable:** Maintainer applied with no objections; no syzbot or user
-  bug reports cited.
+  `https://patch.msgid.link/20260424072552.59220-3-pkshih@realtek.com`
+  (patch 3/N of a series, from Message-ID)
+- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or
+  Cc: stable tags
 
-### Step 1.3: Body Analysis
+Notable: vendor-authored fix with maintainer sign-off; no external bug
+report or syzbot reference.
+
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** Default `TASDEVICE_XM_A1_REG` / `TASDEVICE_XM_A2_REG` point
-  to TAS2781 page `0x63`, which is overwritten during speaker
-  calibration.
-- **Symptom:** ALSA controls `"Amp XMA1 Data"` and `"Amp XMA2 Data"`
-  read from wrong registers and return incorrect calibration data.
-- **Root cause:** Hardware/firmware overwrites the TAS2781-specific page
-  during calibration; TAS2563 page `0x02` holds the persistent XM data.
-- **Version info:** None stated; addresses introduced with calibration
-  kcontrols in Sep 2024.
+- **Bug:** HE QoS HTC (High Throughput Control) field is inserted into
+  transmitted QoS data frames; in AP mode this breaks interoperability
+  with some client stations.
+- **Symptom:** Connectivity failures or degraded behavior for certain
+  clients associated to an rtw89 soft-AP/hotspot (not kernel
+  crash/oops).
+- **Root cause (author):** AP-mode frames should not carry the HE QoS
+  HTC field; some stations mishandle it.
+- **Version info:** None stated in the message.
 
-### Step 1.4: Hidden Bug Fix
-**Record:** Yes. Wording is "update address," but this is a functional
-calibration correctness fix — wrong register map causes bad data reads,
-not a cosmetic change.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes. Although the subject says “disable,” this is an
+interoperability/connectivity bug fix, not a feature addition. The
+existing code already has a related AP IOT workaround comment for
+EAPoL/ARP/DHCP; this extends that logic to all AP-mode data traffic.
 
 ---
 
@@ -122,306 +121,300 @@ not a cosmetic change.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `include/sound/tas2781.h` only (+2 / -2 lines)
-- **Functions affected indirectly:** `tasdev_XMA1_data_get()`,
-  `tasdev_XMA2_data_get()` in `sound/soc/codecs/tas2781-i2c.c`
-- **Scope:** Single-file, surgical header fix
+- **File:** `drivers/net/wireless/realtek/rtw89/core.c` (+4 lines)
+- **Function:** `__rtw89_core_tx_check_he_qos_htc()`
+- **Scope:** Single-file, surgical fix
 
-| Macro | Before | After |
-|-------|--------|-------|
-| `TASDEVICE_XM_A1_REG` | `TASDEVICE_REG(0x64, 0x63, 0x3c)` |
-`TASDEVICE_REG(0x64, 0x02, 0x4c)` |
-| `TASDEVICE_XM_A2_REG` | `TASDEVICE_REG(0x64, 0x63, 0x38)` |
-`TASDEVICE_REG(0x64, 0x02, 0x64)` |
-
-New addresses share book `0x64`, page `0x02` with existing
-`TAS2563_RUNTIME_RE_REG` (`0x48`) and `TAS2563_RUNTIME_RE_REG_TF`
-(`0x70`).
-
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change
 **Record:**
-- **Before:** `tasdev_XMA1_data_get()` / `tasdev_XMA2_data_get()`
-  default to page `0x63` when `dspbin_typ == 0`; firmware-provided
-  addresses used when `dspbin_typ != 0`.
-- **After:** Same logic, but defaults point to page `0x02` (TAS2563
-  calibration page).
-- **Path:** ALSA kcontrol read → `calib_data_get()` →
-  `tasdevice_dev_bulk_read()` at corrected register.
+- **Before:** For HE-capable associated stations, QoS data frames could
+  get an HE HTC field inserted on transmit (except EAPoL/ARP/DHCP/ICMP
+  special packets via `pkt_type < PACKET_MAX`).
+- **After:** Same logic, but returns `false` (skip HTC insertion) when
+  `tx_req->vif->type == NL80211_IFTYPE_AP`.
+- **Path affected:** Normal data TX path in AP mode
+  (`RTW89_CORE_TX_TYPE_DATA`).
 
-### Step 2.3: Bug Mechanism
-**Record:** **Category (g): Logic / correctness fix** — wrong hardware
-register map. **Category (h): Hardware workaround** — TAS2781 page
-overwritten during calibration; driver must use TAS2563 addresses for
-persistent XM data.
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Logic / interoperability (hardware quirk–style
+  workaround)
+- **Mechanism:** Driver inserts non-standard or unwanted HE HTC on AP
+  TX; some client firmware rejects or mishandles those frames, breaking
+  association or data connectivity. Fix gates HTC insertion off in AP
+  mode entirely.
 
-### Step 2.4: Fix Quality
-**Record:** Obviously correct and minimal. New addresses align with
-other TAS2563 calibration registers already in the same header. Very low
-regression risk; only changes fallback addresses when firmware does not
-override them.
+### Step 2.4: Fix quality
+**Record:**
+- Fix is minimal and consistent with the existing partial workaround at
+  line 855 (“AP IOT issue with EAPoL, ARP and DHCP”).
+- **Regression risk:** Low. Disabling HTC in AP mode may reduce HE
+  signaling optimizations (e.g. A-CTRL/BSR-related paths) but restores
+  client compatibility; STA mode unchanged.
+- **Concern:** `tx_req->vif` is dereferenced without a NULL check; safe
+  on the DATA TX path where `vif` is always set in
+  `rtw89_core_tx_write_link()`.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Wrong addresses introduced in `49e2e353fb0db` ("ASoC:
-tas2781: Add Calibration Kcontrols for Chromebook", Sep 12, 2024).
-Present in this tree.
+**Record:** `__rtw89_core_tx_check_he_qos_htc()` and related HE QoS HTC
+code are present in this tree (blame attributes to `19eef1d98eeda`, a
+stable-tree history artifact — the function body including the “AP IOT
+issue” comment is present in v6.18.43).
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag in the commit message.
 
-### Step 3.3: Related Commits
-**Record:**
-- `fcc3d77fef02c` — already backported to this tree: wrong SINEGAIN2
-  register in calibration path (same class of fix)
-- `cf86e0ae60a22` — calibration failure fix (register unlock)
-- `2aa13da97e2b9` — calibration stress-test fix
-- `791520a8e54e2` — wrong period fix
-- Standalone; not part of a multi-patch series.
+### Step 3.3: Related file history
+**Record:** Recent rtw89 stable backports in this tree include
+connectivity and hardware workarounds (`98a774e2c58df` MLO probe
+responses, `4b4784394099d` disable EHT by chip cap, `ffbcca93034f1`
+device ID). No prior fix for AP-mode HTC found.
 
-### Step 3.4: Author Context
-**Record:** Baojun Xu is a regular TI contributor to tas2781 (chip ID
-fixes, DT updates, HDA quirks). Mark Brown is ASoC maintainer.
+### Step 3.4: Author context
+**Record:** Ping-Ke Shih is an active rtw89 contributor; several of his
+patches are already in this 6.18.y tree.
 
 ### Step 3.5: Dependencies
-**Record:** None. Self-contained 2-line header change; no prerequisite
-commits.
+**Record:** Message-ID suffix `-3` indicates patch 3 of a series.
+**UNVERIFIED:** patches 1 and 2 could not be retrieved (lore blocked).
+The diff itself is self-contained — only adds an AP-mode guard in one
+function, with no new symbols or structures. Standalone application
+appears feasible.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:**
-- **URL:**
-  https://patch.msgid.link/20260625102815.20043-1-baojun.xu@ti.com
-- **Revisions:** v1 only
-- **Review:** Mark Brown applied to `for-7.2` with no NAKs or change
-  requests
-- **Stable nomination:** None in thread
+### Step 4.1: Original discussion
+**Record:** **UNVERIFIED** — `b4 dig` requires a commit hash (not
+available in this candidate-only review), and
+lore.kernel.org/patch.msgid.link are blocked by bot protection. Could
+not read reviewer feedback or stable nominations.
 
 ### Step 4.2: Reviewers
-**Record:** CC'd: broonie@kernel.org, tiwai@suse.de, alsa-devel, linux-
-sound, shenghao-ding@ti.com, other TI engineers.
+**Record:** **UNVERIFIED** — `b4 dig -w` not run (no commit hash).
 
-### Step 4.3: Bug Reports
-**Record:** No external bug report, syzbot, or Bugzilla link. Issue
-identified internally by TI based on hardware behavior.
+### Step 4.3: Bug reports
+**Record:** None in commit message. No syzbot, bugzilla, or user
+Reported-by.
 
-### Step 4.4: Series Context
-**Record:** Standalone 1/1 patch; no series dependencies.
+### Step 4.4: Series context
+**Record:** **UNVERIFIED** — patch 3/N; content of earlier patches
+unknown. This hunk has no apparent dependency on other series members.
 
-### Step 4.5: Stable List History
-**Record:** Not searched on lore stable list (Anubis blocked web fetch).
-Precedent in this tree: `fcc3d77fef02c` (tas2781 calibration register
-fix) already backported.
+### Step 4.5: Stable list history
+**Record:** **UNVERIFIED** — lore stable search blocked.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `tasdev_XMA1_data_get()`, `tasdev_XMA2_data_get()`,
-`calib_data_get()`
+### Step 5.1: Key functions
+**Record:** `__rtw89_core_tx_check_he_qos_htc()`, called from
+`rtw89_core_tx_update_he_qos_htc()`, called from
+`rtw89_core_tx_update_desc_info()` on `RTW89_CORE_TX_TYPE_DATA`.
 
 ### Step 5.2: Callers
-**Record:** Registered in `tasdevice_cali_controls[]` (lines 925–926),
-added for all chip types via `tasdevice_create_cali_ctrls()`. Invoked
-from userspace ALSA control reads (e.g. Chromebook calibration tooling).
+**Record:**
+- `rtw89_core_tx_update_desc_info()` ← `rtw89_core_tx_write_link()`
+  (data frames, `vif` set at line 1237)
+- `rtw89_core_tx_update_desc_info()` ← `rtw89_h2c_tx()` (FWCMD only;
+  does not hit DATA case / HTC path)
 
 ### Step 5.3: Callees
-**Record:** `calib_data_get()` → `tasdevice_dev_bulk_read()` — 4-byte
-register read under `codec_lock`.
+**Record:** RCU read of `link_sta->he_cap`, frame-type checks,
+`skb_headroom` check, RA fallback check; on success,
+`__rtw89_core_tx_adjust_he_qos_htc()` inserts HTC and sets
+`desc_info->a_ctrl_bsr`.
 
 ### Step 5.4: Reachability
-**Record:** Reachable from userspace via ALSA mixer/control interface.
-Affects calibration data reads, not normal audio playback. Triggered
-when userspace reads `"Amp XMA1 Data"` / `"Amp XMA2 Data"` and
-`dspbin_typ == 0`.
+**Record:** Triggered on every QoS data frame TX to an HE-capable
+station. In AP mode (soft-AP, hostapd), this is a common, user-visible
+path. Not a theoretical/obscure code path.
 
-### Step 5.5: Similar Patterns
-**Record:** `tasdev_tf_data_get()` and `tasdev_re_data_get()` already
-use `TAS2563_RUNTIME_RE_REG*` on page `0x02` for non-TAS2781 chips. This
-fix brings XM defaults in line with that established mapping.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
-
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** `include/sound/tas2781.h` lines 62–64 still have
-page `0x63` addresses. Upstream fix `64184f07e7516` is not in HEAD (`git
-merge-base --is-ancestor` returns exit 1).
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply.** `git cherry-pick --no-commit 43c6afb999d7e`
-succeeds with exit 0 on HEAD.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** `fcc3d77fef02c` (SINEGAIN2 calibration register fix) is
-already in this tree. This XM address fix is not yet present.
+### Step 5.5: Similar patterns
+**Record:** Existing `pkt_type < PACKET_MAX` guard (lines 855–857)
+already disables HTC for EAPoL/ARP/DHCP in AP IOT scenarios. The new
+check generalizes that pattern to all AP-mode frames. Elsewhere in
+rtw89, `NL80211_IFTYPE_AP` is used extensively for AP-specific behavior.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (v6.18.43)
 
-### Step 7.1: Subsystem Criticality
-**Record:** **IMPORTANT** — ASoC tas2781 driver; affects Chromebook
-speaker calibration on TI TAS25xx/TAS27xx/TAS58xx hardware.
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** `__rtw89_core_tx_check_he_qos_htc()` exists at
+lines 845–881 without the AP-mode guard. HE QoS HTC insertion is active
+for AP-mode data frames today.
 
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained; multiple calibration fixes in
-2024–2026, including several already deemed stable-worthy.
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — `struct rtw89_core_tx_request`
+already has `struct ieee80211_vif *vif` (core.h:1198), and the target
+function matches the upstream diff context.
+
+### Step 6.3: Related fixes already present?
+**Record:** Partial workaround for EAPoL/ARP/DHCP exists; full AP-mode
+disable is **not** present.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 8.1: Who Is Affected
-**Record:** Chromebook / embedded systems using tas2781 codec with
-calibration kcontrols. Config-dependent (`CONFIG_SND_SOC_TAS2781_I2C` or
-equivalent). Not universal.
+### Step 7.1: Subsystem / criticality
+**Record:** `drivers/net/wireless/realtek/rtw89` — **IMPORTANT** (WiFi
+driver; affects users of Realtek 8852/8922-series hardware).
 
-### Step 8.2: Trigger Conditions
+### Step 7.2: Activity
+**Record:** Actively maintained in 6.18.y — multiple rtw89 fixes already
+backported to this tree.
+
+---
+
+## PHASE 8: IMPACT AND RISK
+
+### Step 8.1: Who is affected
+**Record:** Users running rtw89 in **AP mode** (soft-AP, WiFi hotspot,
+tethering) with **HE-capable client stations** that mishandle HTC.
+Config: `CONFIG_RTW89` (+ PCI/USB variant). Driver-specific, not
+universal.
+
+### Step 8.2: Trigger conditions
+**Record:** AP mode + HE client + QoS data frame TX (not EAPoL/ARP/DHCP,
+which are already exempt). Common during normal hotspot use. Not a
+security-relevant userspace trigger.
+
+### Step 8.3: Failure mode severity
+**Record:** Client connectivity/interoperability failure — clients may
+fail to pass traffic, associate unreliably, or disconnect. **Severity:
+MEDIUM** (functional, user-visible; not crash, corruption, or deadlock).
+
+### Step 8.4: Risk-benefit
 **Record:**
-- Userspace reads XMA1/XMA2 calibration controls
-- `dspbin_typ == 0` (no firmware binary override)
-- Especially after calibration has run (when page `0x63` is overwritten)
-- Unprivileged users can trigger via ALSA control reads
-
-### Step 8.3: Failure Mode Severity
-**Record:** **Incorrect calibration data returned** — not a crash, oops,
-or data corruption. Severity: **MEDIUM**. Impacts speaker impedance
-calibration accuracy and factory/service tooling.
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** MEDIUM — correct calibration data for real hardware users
-- **Risk:** VERY LOW — 2-line constant change, maintainer-reviewed,
-  consistent with existing TAS2563 register map
-- **Ratio:** Favorable; same rationale as `fcc3d77fef02c` already
-  accepted in this tree
+- **Benefit:** Restores AP-mode usability with affected client devices;
+  complements existing partial IOT workaround.
+- **Risk:** Very low — 4 lines, AP-mode only, disables a signaling
+  optimization.
+- **Ratio:** Favorable for stable; fits the hardware-
+  quirk/interoperability exception category.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real, verified hardware mapping bug (TI author + maintainer)
-- Already in mainline (`64184f07e7516`)
-- Tiny, surgical, applies cleanly to 6.18.44
-- Same fix class as `fcc3d77fef02c` already backported here
-- Hardware quirk / register-map correction per stable-kernel-rules.rst
-- Affects userspace-reachable calibration path on shipping hardware
+- Real interoperability bug with user-visible connectivity impact in AP
+  mode
+- Tiny, obviously correct, vendor-authored fix
+- Buggy code and all prerequisites exist in v6.18.43
+- Extends an existing in-tree AP IOT workaround
+- Low regression risk; similar rtw89 connectivity/hardware fixes already
+  in this stable tree
+- Fits stable exception: hardware/driver interoperability workaround
 
 **AGAINST backport:**
-- No crash, security issue, or data corruption
-- Only affects calibration controls, not normal audio
-- Only default path (`dspbin_typ == 0`); firmware override unaffected
-- Niche hardware (Chromebooks with TI amps)
-- No user bug report or syzbot finding
+- Not crash/security/corruption/deadline
+- No external bug reports or Tested-by in commit message
+- Mailing-list review unverified
+- Patch 3/N series — earlier patches unverified (but this hunk appears
+  standalone)
+- Does not cover `NL80211_IFTYPE_P2P_GO` (only `NL80211_IFTYPE_AP`)
 
-**Unresolved:** No independent user-reported failure case beyond TI's
-hardware analysis.
+**UNRESOLVED:**
+- Mailing-list review and stable nomination discussion
+- Whether patches 1–2 of the series are required
+- Specific client models affected
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — maintainer applied;
-   addresses align with existing TAS2563 map
-2. Fixes real bug affecting users? **PASS** — wrong calibration data on
-   real hardware
-3. Important issue? **PASS (MEDIUM)** — hardware quirk / calibration
-   correctness; not crash-level but real functional impact
-4. Small and contained? **PASS** — 2 lines, 1 file
-5. No new features or APIs? **PASS** — register constant correction only
-6. Can apply to local tree? **PASS** — clean cherry-pick verified
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** (logic is clear; no Tested-by
+   verified)
+2. Fixes a real bug affecting users? **PASS** (AP-mode client
+   interoperability)
+3. Important issue? **PASS** (MEDIUM — serious functional/connectivity
+   impact for AP users, though not crash-level)
+4. Small and contained? **PASS** (+4 lines, one function)
+5. No new features or APIs? **PASS** (disables existing behavior in AP
+   mode)
+6. Can apply to local tree? **PASS** (code present, clean apply
+   expected)
 
-### Step 9.3: Exception Category
-**Record:** **Hardware quirk / workaround** — correcting register
-addresses for hardware that overwrites TAS2781 page during calibration.
+### Step 9.3: Exception category
+**Record:** Hardware/driver interoperability workaround (quirk-style),
+analogous to existing in-driver AP IOT handling.
 
-### Step 9.4: Decision Rationale
-
-This fix corrects wrong default register addresses for speaker
-calibration data reads on TI amplifier chips used in Chromebooks. While
-it does not cause crashes, it is a real hardware-mapping bug in a
-userspace-reachable calibration path. The change is minimal, maintainer-
-reviewed, already in mainline, applies cleanly to 6.18.44, and matches
-the same class of fix (`fcc3d77fef02c`) already backported to this tree.
-Per `stable-kernel-rules.rst`, hardware quirks that fix real-world
-device issues are appropriate for stable.
+### Step 9.4: Decision rationale
+For v6.18.43, the HE QoS HTC insertion code is present and active in AP
+mode. The fix is minimal, vendor-validated, directly addresses a real
+connectivity problem for soft-AP users, and aligns with existing partial
+workarounds already in this tree. Risk is very low. This is appropriate
+stable material under the interoperability/quirk exception, consistent
+with other rtw89 fixes already backported here.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message from `git show 43c6afb999d7e` and
-  upstream `64184f07e7516`
-- **[Phase 1]** Tags: Baojun Xu SOB, Mark Brown SOB, Link tag; no
-  Fixes/Reported-by/Cc:stable
-- **[Phase 2]** Diff: 2 lines in `include/sound/tas2781.h`; verified
-  current values at lines 62–64
-- **[Phase 2]** Computed register values: old A1=`0x3231bc`, new
-  A1=`0x32014c` (same page as `TAS2563_RUNTIME_RE_REG`=`0x320148`)
-- **[Phase 3]** `git blame`: addresses from `49e2e353fb0db` (Sep 2024)
-- **[Phase 3]** `git merge-base --is-ancestor 49e2e353fb0dbe HEAD`:
-  calibration commit is ancestor
-- **[Phase 3]** `git merge-base --is-ancestor 43c6afb999d7e HEAD`: exit
-  1 — fix NOT in HEAD
-- **[Phase 3]** Related: `fcc3d77fef02c` already in tree (SINEGAIN2
-  calibration fix)
-- **[Phase 4]** `b4 dig -c 43c6afb999d7e`: found thread at
-  patch.msgid.link/20260625102815
-- **[Phase 4]** `b4 dig -a`: v1 only
-- **[Phase 4]** `b4 dig -w`: CC'd broonie, tiwai, alsa-devel, linux-
-  sound
-- **[Phase 4]** Downloaded mbox: Mark Brown applied with no objections
-- **[Phase 5]** `grep`: `tasdev_XMA1_data_get`/`tasdev_XMA2_data_get`
-  use macros as defaults; override when `dspbin_typ`
-- **[Phase 5]** `tasdevice_cali_controls[]` registered for all chip
-  types in `tasdevice_create_cali_ctrls()`
-- **[Phase 6]** `git describe HEAD`: v6.18.44
-- **[Phase 6]** Buggy code confirmed present at
-  `include/sound/tas2781.h:62-64`
-- **[Phase 6]** `git cherry-pick --no-commit 43c6afb999d7e`: exit 0
-  (clean apply)
-- **[Phase 8]** Failure mode: wrong calibration data, severity MEDIUM
-  (not crash)
+- [Phase 1] Parsed subject, tags, body from provided commit message
+- [Phase 2] Read current `core.c` lines 844–934, 1120–1130, 1223–1245;
+  confirmed diff context matches
+- [Phase 2] Confirmed `pkt_type < PACKET_MAX` maps to
+  EAPoL/ARP/DHCP/ICMP via `rtw89_core_tx_btc_spec_pkt_notify()`
+- [Phase 3] `git describe HEAD` → `v6.18.43`
+- [Phase 3] `git blame -L 845,885` → HE QoS HTC function present in tree
+- [Phase 3] `git log --oneline -30 --grep="wifi: rtw89"` → prior rtw89
+  stable backports confirmed
+- [Phase 3] No Fixes: tag to follow
+- [Phase 4] `b4 dig` — requires commit hash; not run
+- [Phase 4] lore.kernel.org / patch.msgid.link — blocked (bot
+  protection); **UNVERIFIED**
+- [Phase 4] patchwork.kernel.org search — no patch entries returned;
+  **UNVERIFIED**
+- [Phase 5] `grep rtw89_core_tx_update_he_qos_htc` → single DATA-path
+  call site
+- [Phase 5] `grep tx_req.vif` → set in `rtw89_core_tx_write_link()` line
+  1237
+- [Phase 5] Verified FWCMD path does not reach HTC code (switch on
+  `tx_type`)
+- [Phase 6] `grep NL80211_IFTYPE_AP` in
+  `__rtw89_core_tx_check_he_qos_htc` → not present (fix not yet applied)
+- [Phase 6] `struct rtw89_core_tx_request` has `vif` field in
+  `core.h:1198`
+- [Phase 7] `CONFIG_RTW89` present in Kconfig
+- [Phase 8] Failure mode assessed as MEDIUM connectivity issue, not
+  CRITICAL crash
 
-**YES****ASoC: tas2781: Update default register address to TAS2563** —
-verdict for **6.18.44**: **YES**.
+**YES**
 
-The default XM calibration register addresses in
-`include/sound/tas2781.h` point at a TAS2781 page that gets overwritten
-during calibration, so `"Amp XMA1 Data"` / `"Amp XMA2 Data"` can return
-wrong values when firmware doesn’t override them. The fix is a 2-line
-header change to the TAS2563 addresses (same page as other calibration
-regs), already in mainline, applies cleanly here, and matches the kind
-of tas2781 calibration fix already backported in this tree
-(`fcc3d77fef02c`).
+ drivers/net/wireless/realtek/rtw89/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- include/sound/tas2781.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/include/sound/tas2781.h b/include/sound/tas2781.h
-index 29d15ba65f04d..648fb55073282 100644
---- a/include/sound/tas2781.h
-+++ b/include/sound/tas2781.h
-@@ -59,9 +59,9 @@
- #define TASDEVICE_CHECKSUM_REG		TASDEVICE_REG(0x0, 0x0, 0x7e)
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index d10483210ccca..989c6b09b2706 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -847,6 +847,7 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
+ 				 enum btc_pkt_type pkt_type)
+ {
+ 	struct rtw89_sta_link *rtwsta_link = tx_req->rtwsta_link;
++	struct ieee80211_vif *vif = tx_req->vif;
+ 	struct sk_buff *skb = tx_req->skb;
+ 	struct ieee80211_hdr *hdr = (void *)skb->data;
+ 	struct ieee80211_link_sta *link_sta;
+@@ -878,6 +879,9 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
+ 	if (rtwsta_link && rtwsta_link->ra_report.might_fallback_legacy)
+ 		return false;
  
- /* XM_340 */
--#define	TASDEVICE_XM_A1_REG	TASDEVICE_REG(0x64, 0x63, 0x3c)
-+#define	TASDEVICE_XM_A1_REG	TASDEVICE_REG(0x64, 0x02, 0x4c)
- /* XM_341 */
--#define	TASDEVICE_XM_A2_REG	TASDEVICE_REG(0x64, 0x63, 0x38)
-+#define	TASDEVICE_XM_A2_REG	TASDEVICE_REG(0x64, 0x02, 0x64)
++	if (vif->type == NL80211_IFTYPE_AP)
++		return false;
++
+ 	return true;
+ }
  
- /* Volume control */
- #define TAS2563_DVC_LVL			TASDEVICE_REG(0x00, 0x02, 0x0c)
 -- 
 2.53.0
 
