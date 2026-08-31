@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2742E4908D9;
-	Mon, 31 Aug 2026 14:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CE1441625;
+	Mon, 31 Aug 2026 14:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185264; cv=none; b=iU1KCN5bK2HYxMriLAuWG0JCKh6gsaQqXs9j68R/UIFzhOKUpS5T3nDR01JPhymWhRD9lautMxKEEnJxe+zB8oalo8eqCaKXrb+wnc2qbB6mWEU+IPmwXXwYTZjq9O3c/A2f8D4rL3pTAf8hdMAgr1mDCr50JFDzCk6PFGbNtFw=
+	t=1788185275; cv=none; b=AXL9YGtc85gA5XsmJLJ9sqrjHArhV7XxAvWIjdR3E9a7JE43fng0VIKTn6bgjLLdGmlU35lCzxFp4CSLMYqjLFV3/l1zACWbyME4XOPJWe56t7IyUQf5rsxO6J7byUvuXWsjadFqkc2oFgx0g1WmtfKFMtvM95Jo5ZiPHEYL+xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185264; c=relaxed/simple;
-	bh=qVzVUzhQXDpjC3vo0sq3GAt7f5RDtF0v9UvlMTQ/dHg=;
+	s=arc-20240116; t=1788185275; c=relaxed/simple;
+	bh=3P62eoKvIA090Zzz7X35e54cRZyrznU8sJu1cb68viI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YsCa9s5GDbF01Efkps44qB3X3oDqDlDQB77b8tbpNaETetHCXOrdsAkNO+opm1Y+iWAh3KQph5tQZ6eOrNGNMlMYhkM+C4UTTzMI4hok7u20PLAiX2KyCoFvbZ9Ji+DBDSaiw1WgeuwbxqIkaSxQCQm2BLxW5+kFJNB2hNAwRKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMZYlOxc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p2U+LuPldZp0XMDrCsOMDUu7jlIryJdGG02Qs2jbg4CqaeZvFZI/Q7vYtncOQkbAQ3AUi+/UP/a155uw9VzJl9dRlrB1oz+nWHg/ffNG1EBOpsCMv00mSqr17ehzlOpYA3GNaEgkN3mEjfTxNt4fcprWKCLVRJDhrDkyLGjHuWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3Oj+1oZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMZYlOxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEB01F000E9;
-	Mon, 31 Aug 2026 14:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3Oj+1oZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89651F00A3E;
+	Mon, 31 Aug 2026 14:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185263;
-	bh=bJff/SEO/YpxVGIOkAZ+qsc0+ZWEWVcbQwIfew2HWgg=;
+	s=korg; t=1788185274;
+	bh=Mv8HyX2oumkDVG2CYdUQ3JSiXX6EzFz2p3yPa3vnVn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMZYlOxcWBQ4UDvlr87Tu8UoI8UGGDTf/7II6HmHnizCxPMR0fnMH/Xx289ANewv3
-	 qoliduIMhGFnn0vxdpPmqFKdNk6ts/2dm6zTGhjn4p/km0Qv3dQFwEBujx4xpNj0pW
-	 DS4qllFjsBhZyvxTmfJq5x6YqtiPYaGndcr+oxpU=
+	b=F3Oj+1oZDmWd3kUbJwMUr0fNPOoAePkhUNSatif/FHN82/7wzJyYKJZRbzWwP3nyO
+	 GRt7g9H97u5RO6lK3J7HYYr7BGiGsqkvVhJCoCjJU6togIBQgk3oA0H3i3S5X2glm8
+	 4FWAq3tYBPiZj7I9vZ1ENArMCdpysUMBfUQQAD9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 08/43] jfs: add check read-only before txBeginAnon() call
-Date: Mon, 31 Aug 2026 15:35:16 +0200
-Message-ID: <20260831133358.908445995@linuxfoundation.org>
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 5.10 37/43] usb: core: Add lock to usb_wakeup_notification()
+Date: Mon, 31 Aug 2026 15:35:45 +0200
+Message-ID: <20260831133400.413226431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -52,63 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit 0176e69743ecc02961f2ae1ea42439cd2bf9ed58 ]
+commit e263e18a9e7b1ff3e7301f0801c6ff87c31adfb6 upstream.
 
-Added a read-only check before calling `txBeginAnon` in `extAlloc`
-and `extRecord`. This prevents modification attempts on a read-only
-mounted filesystem, avoiding potential errors or crashes.
+Add a spin lock to usb_wakeup notification to prevent a race condition
+with dereferencing freed memory. This could be hit by the xHCI driver as
+it calls this function from an IRQ and could race with the
+hub_disconnect() function, which properly grabs this lock to protect the
+state of the device.
 
-Call trace:
- txBeginAnon+0xac/0x154
- extAlloc+0xe8/0xdec fs/jfs/jfs_extent.c:78
- jfs_get_block+0x340/0xb98 fs/jfs/inode.c:248
- __block_write_begin_int+0x580/0x166c fs/buffer.c:2128
- __block_write_begin fs/buffer.c:2177 [inline]
- block_write_begin+0x98/0x11c fs/buffer.c:2236
- jfs_write_begin+0x44/0x88 fs/jfs/inode.c:299
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=4e89b5368baba8324e07
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260713-usb_core_patches_1-v1-3-7721c2b33f53@kroah.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_extent.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/usb/core/hub.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/jfs/jfs_extent.c b/fs/jfs/jfs_extent.c
-index d4e063dbb9a0b..d695157df567d 100644
---- a/fs/jfs/jfs_extent.c
-+++ b/fs/jfs/jfs_extent.c
-@@ -77,6 +77,11 @@ extAlloc(struct inode *ip, s64 xlen, s64 pno, xad_t * xp, bool abnr)
- 	int rc;
- 	int xflag;
- 
-+	if (isReadOnly(ip)) {
-+		jfs_error(ip->i_sb, "read-only filesystem\n");
-+		return -EIO;
-+	}
-+
- 	/* This blocks if we are low on resources */
- 	txBeginAnon(ip->i_sb);
- 
-@@ -412,6 +417,11 @@ int extRecord(struct inode *ip, xad_t * xp)
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -714,10 +714,12 @@ void usb_wakeup_notification(struct usb_
  {
- 	int rc;
+ 	struct usb_hub *hub;
+ 	struct usb_port *port_dev;
++	unsigned long flags;
  
-+	if (isReadOnly(ip)) {
-+		jfs_error(ip->i_sb, "read-only filesystem\n");
-+		return -EIO;
-+	}
-+
- 	txBeginAnon(ip->i_sb);
+ 	if (!hdev)
+ 		return;
  
- 	mutex_lock(&JFS_IP(ip)->commit_mutex);
--- 
-2.53.0
-
++	spin_lock_irqsave(&device_state_lock, flags);
+ 	hub = usb_hub_to_struct_hub(hdev);
+ 	if (hub) {
+ 		port_dev = hub->ports[portnum - 1];
+@@ -727,6 +729,7 @@ void usb_wakeup_notification(struct usb_
+ 		set_bit(portnum, hub->wakeup_bits);
+ 		kick_hub_wq(hub);
+ 	}
++	spin_unlock_irqrestore(&device_state_lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(usb_wakeup_notification);
+ 
 
 
