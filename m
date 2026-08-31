@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1525A177C;
-	Mon, 31 Aug 2026 13:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4E55A1797;
+	Mon, 31 Aug 2026 13:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184323; cv=none; b=oXrLra3w8MwW6ibcAj4tZ9Q797IHQN5WrdlT7NPBARKPgwU+2nJNKlOVWqo5aS6NKxB4mIkqbb2Aa395QX7LK73dGEWymyo8fSum+8VB17gY7iNCtCC9jNDcfWVa7Ns+IVmCuCJnjmGbocQyz72DmEgrDtPrD0Xg3fRibGpeJ7s=
+	t=1788184324; cv=none; b=XZ29XtMWgqt4aUy912fG8qUYUccPKaQ2QaForHZsi0QRecdFMWs5eWE/6nXih4ixv9dV8uYi+jtdoLN20Fi9IUEfcDjqvBDJBwVsLM0abFx2tIR+ICrBNArKDneOjmrpxjdtosmrcBhAYhuh5N8eiZp+qALA1O5jbwOodZod1XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184323; c=relaxed/simple;
-	bh=QxjxLciu3eroOLSQJpyh2YQdL0PpnVPxHhKtB5NNSQY=;
+	s=arc-20240116; t=1788184324; c=relaxed/simple;
+	bh=rWomLVEiEZKOUaXEyYX7CewewlPuDfik83UKJ3dHq28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n4dSDv30NE5k5to7P5bKvwu9MqGtsiF1MOO+r3Fp7sbS3v3UUygsxbI0O3kAz04vJLLE8FLW8gS+L4Rm9dLLweLShSgpp30XRdDjA7MMxNJV+5ICQB2MYGTUZzQgk123daeqEy2TsZh3Msxz1BXUCvI68YCkMkftyTf7OWSY6u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjrtjMCm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=K0a9Vm+lNB6gVcI2qbGuHj+pcjKuwvhMITB/wUK2cLnhfwI//RYqK0GTQBq4MO5x6OL000AKik7u0r050sfyPWrDXJebRLNZ7jCtjgj7+Eqo6Ds3/pAPrFZyuvKErW3Vqi5b/9iX+M95sEkWrWtJ2FbVE1/Qtvm3lwPFwFRL47U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G4ussLRv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LjrtjMCm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116051F00ACA;
-	Mon, 31 Aug 2026 13:51:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G4ussLRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D81E1F00ACF;
+	Mon, 31 Aug 2026 13:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184321;
-	bh=xHgyNT8y1eRlrnrTInjWC6nlqnRsgR93A/EkCNDspNg=;
+	s=k20260515; t=1788184322;
+	bh=1zdy6bI3JwOxCFZNpWXii6waiEn2715vzPIx/kZPEDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LjrtjMCmtrR3OY+iSd3mV0iRiStsutCjpR4zH7hqwCG9wRFXFE3J1n9CP5N0oDhnn
-	 YKpJxNC/KDJDHmyPbE7vfvcrtukI7I9qF3F36rA3OIUhMpCeY98FVyDp8GQiJt4qR/
-	 NEBktqmA8vlbF/ruCleu0iKYzwNmNu+nDShuYoB2R5ql0058EHQ+1UAAR5hKv5Ktmi
-	 fZ3yx2f4etXm3L7L/GVbasKSg9iiIMBjZyaHGsHW9/fZjnaxulR1VIdtGyHUetVooP
-	 nQ4cJDG3W1fvrVRoEhyKXPRuVgjIfLK2vbSspzNhymkcHA9e2d0bV16Gy/R6pSjEW/
-	 KiGsaVrrXwLUA==
+	b=G4ussLRvao5JpmV0d5YKsm0pBqPcA7v4l+YGrgxhBuunr34uWDKdBJg1GfkWhcFKa
+	 QhVJh6hLJhAVzXDaf3BI+OsyjAmGMXCivDzxBHvhV6y6qomgKok2tPLXFpgloyOYNo
+	 F+XGENTf1sMWLSGpjppfqhy0GeoFoesWO5ZjmNP0UG1g6Sdtxk0pZdSCwDtrpipKfD
+	 RGv7aodlfxdRVnJYJshZaNIze8TZl8irhu4A7RyMj6qTfyX5akjLlGASseglhP9tBQ
+	 gSQcq9tEAu5zrsqxK4p34HugJHfhRokjvT67oiFyeyfMkzvc88yHlNOUzV8b/Pf+7E
+	 fH3+awveXC5yg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Anand Jain <asj@kernel.org>,
-	David Sterba <dsterba@suse.com>,
+Cc: Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	song@kernel.org,
+	linux-raid@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] btrfs: use on-disk uuid for s_uuid in temp_fsid mounts
-Date: Mon, 31 Aug 2026 09:30:51 -0400
-Message-ID: <20260831133314.4125787-623-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] md/raid5: let stripe batch bm_seq comparison wrap-safe
+Date: Mon, 31 Aug 2026 09:30:52 -0400
+Message-ID: <20260831133314.4125787-624-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,360 +53,366 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anand Jain <asj@kernel.org>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit df84f6c773771fa7b78fe06931709df1aca5907f ]
+[ Upstream commit 00e93faf4cea9e8802ac5dfee0952d84fc95c40f ]
 
-When mounting a cloned filesystem with a temporary fsuuid (temp_fsid),
-layered modules like overlayfs require a persistent identifier.
+Once the 32-bit seq wraps, a newer bm_seq can look smaller
+than old, so .. covert to wrap-safe calculate way.
 
-While internal in-memory fs_devices->fsid must remain unique to
-the kernel module, let s_uuid carry the original on-disk UUID.
-
-Signed-off-by: Anand Jain <asj@kernel.org>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Link: https://patch.msgid.link/20260618025735.915113-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `md/raid5: let stripe batch bm_seq
+comparison wrap-safe`
 
-**Step 1.1 — Subject line**
-- Record: `[btrfs] [use] use on-disk uuid for s_uuid in temp_fsid
-  mounts` — fixes incorrect `sb->s_uuid` assignment when btrfs’s in-
-  memory `temp_fsid` feature is active.
+**Local tree:** `v6.18.44` (6.18.y) — `git describe HEAD` →
+`v6.18.44-1-g2736c32da98b9`
 
-**Step 1.2 — Tags**
-- Record: `Signed-off-by: Anand Jain <asj@kernel.org>`, `Signed-off-by:
-  David Sterba <dsterba@suse.com>`
-- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Tested-by:`, `Reviewed-
-  by:`, or `Link:` tags (expected for manual review candidates).
-- Notable: David Sterba (btrfs maintainer) signed off.
-
-**Step 1.3 — Body analysis**
-- Record: **Bug**: When mounting a cloned btrfs image with `temp_fsid`,
-  `sb->s_uuid` was set from the random in-memory `fs_devices->fsid`, not
-  the on-disk UUID. **Symptom**: Layered filesystems (overlayfs) that
-  rely on a persistent `s_uuid` break — remounting the same image fails
-  origin verification. **Root cause**: `temp_fsid` intentionally
-  randomizes `fs_devices->fsid` for kernel uniqueness, but that value
-  was incorrectly propagated to `sb->s_uuid`. **Fix**: For `temp_fsid`
-  mounts, copy the on-disk UUID from `super_copy->fsid` into
-  `sb->s_uuid`.
-
-**Step 1.4 — Hidden bug fix?**
-- Record: Yes. Despite not using “fix” in the subject, this is a
-  functional correctness bug in how btrfs exposes filesystem identity to
-  the VFS and overlayfs.
+**Commit analyzed:** `00e93faf4cea9` (mainline) / `13cb77aa61c3d`
+(stable-queue variant)
+**Status in this tree:** Buggy code is present; fix is **not** merged
+(`git merge-base --is-ancestor 13cb77aa61c3d HEAD` → exit 1).
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
-- Record: `fs/btrfs/disk-io.c`: +10 / −1 lines. Function:
-  `open_ctree()`. Scope: single-file surgical fix.
+### Step 1.1: Subject line
+**Record:** `[md/raid5]` `[let/fix]` — make stripe-batch `bm_seq`
+comparison wrap-safe when merging bitmap sequence numbers during
+batching.
 
-**Step 2.2 — Code flow change**
-- Record:
-  - **Before**: `memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, ...)`
-    always — for `temp_fsid`, this is a per-mount random UUID.
-  - **After**: If `temp_fsid`, use `fs_info->super_copy->fsid` (on-
-    disk); otherwise unchanged behavior.
-  - **Path**: Normal mount path in `open_ctree()`, after `super_copy` is
-    populated (line 3344) and before chunk root read.
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Chen Cheng `<chencheng@fnnas.com>` (author)
+- **Signed-off-by:** Yu Kuai `<yukuai@fygo.io>` (md maintainer,
+  committer upstream)
+- **Link:**
+  https://patch.msgid.link/20260618025735.915113-1-chencheng@fnnas.com
+- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc:
+  stable@vger.kernel.org
+- Notable: maintainer ack via commit + "Applied to md-7.2" on list; no
+  user/syzbot reports
 
-**Step 2.3 — Bug mechanism**
-- Record: **Logic/correctness fix**. `sb->s_uuid` must reflect
-  persistent filesystem identity; `fs_devices->fsid` is intentionally
-  volatile under `temp_fsid`. Wrong identifier exposed to VFS consumers.
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** After 32-bit `bm_seq` wraps, plain `>` comparison can treat a
+  newer sequence as older.
+- **Symptom:** Batch head may retain a stale (older) `bm_seq` instead of
+  the latest required bitmap batch.
+- **Root cause:** `sh->batch_head->bm_seq > seq` is not wrap-safe;
+  should use subtraction idiom.
+- **Versions:** No explicit version range; bug dates to 2015
+  introduction of this comparison.
 
-**Step 2.4 — Fix quality**
-- Record: Obviously correct — `super_copy` is already populated and
-  validated at this point. Minimal change, no API changes. Low
-  regression risk; non-`temp_fsid` path unchanged.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-- Record: `memcpy(&sb->s_uuid, ...)` introduced by Nikolay Borisov
-  (2018-10-30, commit `de37aa513105f8`). `temp_fsid` introduced by Anand
-  Jain in `a5b8a5f9f8355` (“btrfs: support cloned-device mount
-  capability”, merged Oct 2023, first in **v6.7**). Bug present since
-  v6.7 whenever both features coexist.
-
-**Step 3.2 — Fixes: tag**
-- Record: N/A — no `Fixes:` tag.
-
-**Step 3.3 — Related history**
-- Record: Part of v3 series `[PATCH v3 0/2] fix s_uuid and f_fsid
-  consistency for cloned filesystems`. Companion patch 2/2
-  (`c2a74ed0494c2`) fixes `f_fsid` in `btrfs_statfs()` — separate
-  concern (statfs/fanotify/ima). This commit (patch 1/2) is standalone
-  for the `s_uuid`/overlayfs issue.
-
-**Step 3.4 — Author context**
-- Record: Anand Jain is an active btrfs contributor; David Sterba
-  (maintainer) reviewed and signed off.
-
-**Step 3.5 — Dependencies**
-- Record: Requires `temp_fsid` support (present since v6.7). Requires
-  `fs_info->super_copy` (long-standing). No other commits needed for
-  this hunk. `git apply --check` on the patch against 6.18.44 succeeds.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes — described as wrap-safety, but it is a real correctness
+bug in RAID5 bitmap batch sequencing, not cosmetic cleanup.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Original discussion**
-- Record: b4 dig found `[PATCH v3 1/2]` at https://patch.msgid.link/b4b5
-  637ca4137d71eba368e37c67abcf60df0cab.1777281686.git.asj@kernel.org
-- Series: v1 → v2 → v3 (latest applied version).
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `drivers/md/raid5.c` (+1/-1)
+- **Function:** `stripe_add_to_batch_list()`
+- **Scope:** Single-line, single-function, surgical fix
 
-**Step 4.2 — Reviewers**
-- Record: CC’d to `linux-btrfs@vger.kernel.org`, `dsterba@suse.com`.
-  David Sterba replied on patch 2/2 with changelog corrections (May
-  2026).
+### Step 2.2: Code flow change
+**Record:**
+- **Before:** When merging `STRIPE_BIT_DELAY` state into `batch_head`,
+  take `batch_head->bm_seq` only if `batch_head->bm_seq > seq`.
+- **After:** Use `batch_head->bm_seq - seq > 0` (wrap-safe “is a newer
+  than b?”).
+- **Path:** Normal write/batching path when stripes with pending bitmap
+  updates are merged into a batch.
 
-**Step 4.3 — Bug report**
-- Record: Cover letter references André Almeida’s overlayfs report:
-  https://lore.kernel.org/linux-
-  btrfs/20251014015707.129013-1-andrealmeid@igalia.com
-- **Reproduction** (verified from mbox): `mkfs.btrfs`, clone image,
-  mount twice, use overlayfs with `index=on` — second mount of same
-  image fails because btrfs assigns a new random `temp_fsid` UUID each
-  mount while overlayfs stores/compares `s_uuid` in `overlay.origin`.
-- **dmesg**: `"failed to verify upper root origin"`
-- Christoph Hellwig: “Please fix btrfs to not change uuids, as that
-  completely defeats the point of uuids.”
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Logic/correctness — signed sequence-number comparison
+  across wrap boundary.
+- **Mechanism:** After `bm_seq` (signed 32-bit `int`) wraps past
+  `INT_MAX`, a post-wrap value can be numerically less than a pre-wrap
+  value. The `>` check then fails to propagate the newer sequence to
+  `batch_head->bm_seq`, so the batch may proceed before all required
+  bitmap flushes complete.
 
-**Step 4.4 — Series context**
-- Record: Patch 2/2 (`c2a74ed0494c2`) addresses `f_fsid` via statfs for
-  fanotify/ima — not required for this commit’s overlayfs `s_uuid` fix
-  but addresses related instability.
-
-**Step 4.5 — Stable discussion**
-- Record: No explicit `Cc: stable` found in thread. Not a negative
-  signal.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Modified functions**
-- Record: `open_ctree()` in `fs/btrfs/disk-io.c`.
-
-**Step 5.2 — Callers**
-- Record: `open_ctree()` is called during btrfs mount
-  (`btrfs_fill_super` / `btrfs_get_tree`). Every btrfs mount goes
-  through this path.
-
-**Step 5.3 — Key callees at change site**
-- Record: Uses already-populated `fs_info->super_copy` and
-  `fs_info->fs_devices->temp_fsid`. No new allocations or locks.
-
-**Step 5.4 — Reachability**
-- Record: Triggered by any user mounting a cloned btrfs device while
-  another instance with the same on-disk UUID is already registered —
-  exactly the `temp_fsid` use case (since v6.7). Unprivileged users can
-  trigger via mount namespaces / loop devices.
-
-**Step 5.5 — Similar patterns**
-- Record: Patch 2/2 applies the same `super_copy->fsid` principle to
-  `btrfs_statfs()` `f_fsid`. The `temp_fsid` design in `volumes.h`
-  documents that in-memory `fsid` is random while `metadata_uuid ==
-  sb->fsid`.
+### Step 2.4: Fix quality
+**Record:**
+- Obviously correct; mirrors existing raid5 idiom at line 259:
+  `sh->bm_seq - conf->seq_write > 0` (present since 2006).
+- Minimal risk; no API/struct changes.
+- Sashiko review noted theoretical UBSAN on signed subtraction — same
+  pattern already used in this file for 20 years; author and maintainer
+  accepted it.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (6.18.44)
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 6.1 — Buggy code present?**
-- Record: **Yes.** Tree is `v6.18.44` (`stable/linux-6.18.y`). Line 3428
-  in `disk-io.c` still has the buggy unconditional `memcpy`. `temp_fsid`
-  feature confirmed present (`git merge-base --is-ancestor a5b8a5f9f8355
-  HEAD` → yes, since v6.7).
+### Step 3.1: Blame
+**Record:** Buggy comparison introduced in `2b6b24574256c` (Neil Brown,
+2015-05-21): "md/raid5: ensure whole batch is delayed for all required
+bitmap updates." Present in this 6.18.y tree.
 
-**Step 6.2 — Backport complications**
-- Record: **Clean apply.** `git show df84f6c773771 -- fs/btrfs/disk-io.c
-  | git apply --check` succeeds on current HEAD. No conflicting recent
-  churn at this location.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag. Related context: `ae3c20ccf84c8` (2006)
+introduced wrap-safe `sh->bm_seq - conf->seq_write > 0` in
+`do_release_stripe()` path, but the 2015 batch-merge site was never
+updated.
 
-**Step 6.3 — Related fixes already present?**
-- Record: **No.** Neither `df84f6c773771` (this commit) nor
-  `c2a74ed0494c2` (companion f_fsid fix) are ancestors of HEAD.
+### Step 3.3: Related file history
+**Record:** Recent raid5.c changes are unrelated (batch race fixes, IO
+hangs, llbitmap). Standalone one-patch fix; not part of a series.
 
----
+### Step 3.4: Author context
+**Record:** Chen Cheng has recent md contributions (raid5 batch race
+fixes). Yu Kuai is md maintainer and applied this to md-7.2.
 
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem**
-- Record: `fs/btrfs` — IMPORTANT (widely deployed filesystem, container
-  rootfs stacks).
-
-**Step 7.2 — Activity**
-- Record: btrfs actively maintained in 6.18.y; `temp_fsid` is a shipped
-  feature since 6.7.
+### Step 3.5: Dependencies
+**Record:** No prerequisites. Applies cleanly to current
+`drivers/md/raid5.c` at lines 996–1002.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 8.1 — Who is affected**
-- Record: Users combining btrfs cloned-device mounts (`temp_fsid`) with
-  overlayfs `index=on` (common in container/OCI immutable-root
-  workflows).
+### Step 4.1: Original discussion
+**Record:**
+- **URL:**
+  https://patch.msgid.link/20260618025735.915113-1-chencheng@fnnas.com
+- **Revisions:** v1 only
+- **Feedback:** Sashiko AI flagged UBSAN concern and pre-existing
+  lockless `bm_seq` RMW race; author replied that `a - b > 0` is the
+  long-standing raid5 template (citing `do_release_stripe()`);
+  maintainer applied without requesting changes
+- **Stable nomination:** None explicit in thread
 
-**Step 8.2 — Trigger conditions**
-- Record: Mount same btrfs clone image twice; use overlayfs with
-  `index=on` on second mount. Reproducible, documented. Not timing-
-  dependent.
+### Step 4.2: Reviewers
+**Record:** CC'd `linux-raid@vger.kernel.org`, `yukuai@fygo.io`. Yu Kuai
+committed upstream and applied to md-7.2.
 
-**Step 8.3 — Failure mode severity**
-- Record: **Mount failure** — overlayfs refuses to mount with `"failed
-  to verify upper root origin"`. Breaks remount of unchanged images.
-  Severity: **MEDIUM** (functional breakage, not
-  crash/corruption/security, but breaks a real documented workflow).
+### Step 4.3: Bug reports
+**Record:** No syzbot, bugzilla, or user crash reports.
+Theoretical/latent correctness bug.
 
-**Step 8.4 — Risk-benefit**
-- Record: **Benefit**: HIGH for affected btrfs+overlayfs users (restores
-  expected remount behavior). **Risk**: VERY LOW (10 lines, conditional
-  on `temp_fsid`, non-temp path unchanged). **Ratio**: Favorable.
+### Step 4.4: Related patches
+**Record:** None in series.
+
+### Step 4.5: Stable list history
+**Record:** No stable-list discussion found.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 9.1 — Evidence summary**
+### Step 5.1: Key functions
+**Record:** `stripe_add_to_batch_list()` modified.
 
-FOR backport:
-- Real, documented bug (André Almeida RFC, Oct 2025) with reproduction
-  script
-- Maintainer-signed fix (David Sterba)
-- Small, surgical, applies cleanly to 6.18.44
-- Bug exists in this tree since `temp_fsid` landed (v6.7)
-- Directly fixes overlayfs `s_uuid` comparison in `ovl_decode_real_fh()`
-  / origin verification
-- btrfs maintainer community agreed btrfs should expose stable UUIDs
+### Step 5.2: Callers
+**Record:** Called from raid5 write path at line 6030
+(`stripe_can_batch(sh)` branch) during `add_stripe_bio` processing —
+common RAID5 write path with batching enabled.
 
-AGAINST backport:
-- Not a crash, data corruption, or security issue — functional mount
-  failure only
-- Part of 2-patch series (patch 2/2 for `f_fsid`/statfs is separate;
-  ideally backported too but not a prerequisite for this fix)
-- Affects a specific feature combination (btrfs clone + overlayfs index)
+### Step 5.3: Callees / context
+**Record:** Manages `STRIPE_BIT_DELAY` and `bm_seq` on batch head; ties
+into bitmap unplug sequencing (`conf->seq_flush`, `conf->seq_write`,
+`activate_bit_delay()`).
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — logic is clear; maintainer
-   SOB; applies cleanly.
-2. Fixes a real bug affecting users? **PASS** — documented overlayfs
-   remount failure.
-3. Important issue? **PASS (MEDIUM)** — mount failure breaking overlayfs
-   `index=on` with btrfs clones; not crash/corruption but real user
-   impact.
-4. Small and contained? **PASS** — 10 lines, one file, one function.
-5. No new features or APIs? **PASS** — corrects existing `s_uuid`
-   semantics.
-6. Can apply to local tree? **PASS** — verified clean apply.
+### Step 5.4: Reachability
+**Record:** Reachable on RAID5 arrays with writeback + bitmap enabled +
+stripe batching. Enterprise NAS/server workloads on stable kernels are
+in scope.
 
-**Step 9.3 — Exception categories**
-- Record: None (not device ID, quirk, DT, build, or docs). Standard bug
-  fix.
+### Step 5.5: Similar patterns
+**Record:** Same wrap-safe idiom at line 259; `dm-pcache` uses
+`(s8)(seq1 - seq2) > 0`. The 2015 batch-merge site was the outlier still
+using plain `>`.
 
-**Step 9.4 — Decision rationale**
+---
 
-This commit fixes a real functional regression introduced when btrfs’s
-`temp_fsid` feature (present in 6.18.y since v6.7) started exposing a
-per-mount random UUID via `sb->s_uuid`. Overlayfs with `index=on` stores
-and later verifies that UUID; remounting the same btrfs clone image
-fails with `"failed to verify upper root origin"`. The fix is minimal,
-maintainer-approved, and applies cleanly to the 6.18.44 tree. While not
-a crash or corruption issue, it restores correct behavior for a
-supported btrfs+overlayfs combination that btrfs maintainers explicitly
-addressed.
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE
 
-Note: The companion commit `c2a74ed0494c2` (f_fsid/statfs stability)
-addresses a related but separate symptom and should be evaluated
-independently.
+### Step 6.1: Buggy code present?
+**Record:** Yes — at lines 998–999:
+
+```996:1002:drivers/md/raid5.c
+        if (test_and_clear_bit(STRIPE_BIT_DELAY, &sh->state)) {
+                int seq = sh->bm_seq;
+                if (test_bit(STRIPE_BIT_DELAY, &sh->batch_head->state)
+&&
+                    sh->batch_head->bm_seq > seq)
+                        seq = sh->batch_head->bm_seq;
+                set_bit(STRIPE_BIT_DELAY, &sh->batch_head->state);
+                sh->batch_head->bm_seq = seq;
+```
+
+Bug introduced 2015; predates 6.18 branch.
+
+### Step 6.2: Backport complications
+**Record:** Clean one-line apply expected; no structural conflicts
+observed.
+
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent fix in this tree (`git log --grep="stripe
+batch bm_seq"` on HEAD → empty).
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** `drivers/md/raid5.c` — **IMPORTANT** (RAID5 + bitmap is
+widely used in enterprise/storage on LTS kernels).
+
+### Step 7.2: Activity
+**Record:** md/raid5 actively maintained; recent stable-worthy fixes (IO
+hangs, batch races) landed in 6.18.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of RAID5 with external/internal bitmap and stripe
+write batching — config-specific but common on production md arrays.
+
+### Step 8.2: Trigger conditions
+**Record:**
+- Requires `bm_seq`/`seq_flush` to wrap (~2³¹ bitmap batch increments).
+- Bug manifests when comparing sequences on opposite sides of the wrap
+  boundary during batch merge.
+- **Likelihood:** Low frequency, but realistic on long-uptime, write-
+  heavy arrays (exactly the stable/LTS profile).
+
+### Step 8.3: Failure mode severity
+**Record:** Stale `bm_seq` on batch head → stripe may write before
+required bitmap batch is flushed → per raid5's own BITMAP UNPLUGGING
+comments, missed dirty bits can cause **incorrect recovery after power
+loss** (data integrity). Severity when triggered: **CRITICAL**; overall
+exposure: **LOW** due to rare trigger.
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** Prevents latent bitmap sequencing corruption on long-
+  running RAID5 arrays.
+- **Risk:** Very low — one line, established idiom, maintainer-accepted.
+- **Ratio:** Favorable for stable.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Real correctness bug in bitmap sequencing (potential recovery/data
+  integrity issue)
+- Bug present since 2015 in this tree
+- One-line, obviously correct fix matching 20-year-old raid5 pattern
+- Md maintainer committed and applied to md-7.2
+- Small, contained, no new APIs/features
+- Applies cleanly to v6.18.44
+
+**AGAINST backport:**
+- No user reports or fuzzer findings
+- Trigger requires ~2³¹ bitmap batch increments (very rare)
+- Not an immediate crash/hang; latent correctness issue
+- Sashiko UBSAN note (mitigated: same pattern already in file since
+  2006)
+
+**Unresolved:** No production incident reports confirming the wrap was
+hit in the wild.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — matches existing raid5 wrap-
+   safe idiom; maintainer applied.
+2. Fixes a real bug? **PASS** — incorrect seq comparison after wrap.
+3. Important issue? **PASS** — bitmap sequencing error can cause
+   recovery integrity failure (critical when triggered).
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features/APIs? **PASS**.
+6. Can apply to local tree? **PASS** — buggy code confirmed present; fix
+   not yet applied.
+
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+correctness bug fix.
+
+### Step 9.4: Decision rationale
+
+For **this** 6.18.y tree, the buggy comparison exists and has existed
+for a decade. The fix is minimal, maintainer-vetted, and aligns with
+established raid5 bitmap sequencing practice. While the trigger is rare,
+stable kernels target long-lived, write-heavy storage systems where
+counter wrap is a realistic eventual concern, and the failure mode
+(bitmap bit not recorded before write) is exactly the class of issue
+stable backports exist to prevent.
 
 ---
 
 ## Verification
 
-- [Phase 1] `git show df84f6c773771`: parsed commit message and tags
-- [Phase 2] Diff: 10 insertions, 1 deletion in `open_ctree()`;
-  conditional on `temp_fsid`
-- [Phase 3] `git describe HEAD`: v6.18.44; `git blame` line 3428:
-  `de37aa513105f8` (2018); `temp_fsid` from `a5b8a5f9f8355` (v6.7)
-- [Phase 3] `git merge-base --is-ancestor a5b8a5f9f8355 HEAD`: temp_fsid
-  IS in 6.18.y
-- [Phase 3] `git merge-base --is-ancestor df84f6c773771 HEAD`: patch NOT
-  in tree
-- [Phase 3] `git show df84f6c773771 -- fs/btrfs/disk-io.c | git apply
-  --check`: clean apply
-- [Phase 4] `b4 dig -c df84f6c773771`: found v3 series at
-  lore.kernel.org
-- [Phase 4] `b4 dig -c df84f6c773771 -a`: v1/v2/v3 revisions; patch 1/2
-  of 2-patch series
-- [Phase 4] `b4 dig -c df84f6c773771 -w`: CC linux-btrfs,
-  dsterba@suse.com
-- [Phase 4] curl lore mbox for overlayfs RFC: confirmed reproduction and
-  `"failed to verify upper root origin"` failure mode
-- [Phase 4] Cover letter: references Christoph Hellwig “fix btrfs to not
-  change uuids”
-- [Phase 5] `grep s_uuid fs/overlayfs/`: overlayfs uses
-  `mnt->mnt_sb->s_uuid` in `ovl_decode_real_fh()` (namei.c:176) and
-  copy_up.c:424
-- [Phase 5] `open_ctree()` called on every btrfs mount
-- [Phase 6] Current `disk-io.c:3428`: buggy code confirmed present
-- [Phase 6] `super_copy` populated at line 3344, before s_uuid
-  assignment at 3428
-- [Phase 8] Failure mode: overlayfs mount refusal on remount, severity
-  MEDIUM
+- **[Phase 1]** `git show 00e93faf4cea9` / `13cb77aa61c3d`: parsed
+  message, tags, body
+- **[Phase 1]** Ignored pipeline-only markers per instructions
+- **[Phase 2]** Diff: 1-line change in `stripe_add_to_batch_list()`
+- **[Phase 2]** Read `drivers/md/raid5.c` lines 13–30 (BITMAP UNPLUGGING
+  comment), 258–260, 996–1003, 6802–6811
+- **[Phase 2]** `drivers/md/raid5.h` line 214: `bm_seq` is `int`; line
+  636: `seq_flush, seq_write`
+- **[Phase 3]** `git blame -L 996,1003`: introduced `2b6b24574256c`
+  (2015)
+- **[Phase 3]** `git show 2b6b24574256c`, `d0852df543e5a`,
+  `ae3c20ccf84c8`: history context
+- **[Phase 3]** `git log --oneline -20 -- drivers/md/raid5.c`: recent
+  unrelated changes
+- **[Phase 3]** `git merge-base --is-ancestor 2b6b24574256c HEAD`: buggy
+  code commit in tree
+- **[Phase 3]** `git merge-base --is-ancestor 13cb77aa61c3d HEAD` → exit
+  1: fix NOT in tree
+- **[Phase 4]** `b4 dig -c 13cb77aa61c3d`: found lore thread
+- **[Phase 4]** `b4 dig -c 13cb77aa61c3d -w`: CC'd linux-raid,
+  yukuai@fygo.io
+- **[Phase 4]** `b4 dig -c 13cb77aa61c3d -a`: single v1 revision
+- **[Phase 4]** `b4 dig -m /tmp/bm_seq_thread.mbox`: read thread; Yu
+  Kuai "Applied to md-7.2"; Sashiko review + author reply
+- **[Phase 5]** `grep stripe_add_to_batch_list`: caller at line 6030
+- **[Phase 5]** `grep bm_seq` in raid5.c: wrap-safe pattern at line 259
+  since 2006
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** Confirmed buggy `>` comparison at line 999 in working
+  tree
+- **[Phase 6]** `git log --grep="stripe batch bm_seq" HEAD`: no fix
+  present
+- **[Phase 8]** Assessed trigger rarity (~2³¹ `seq_flush` increments)
+  and failure mode via bitmap sequencing comments
 
-**YES**The background searches finished and matched what the full
-analysis used:
+**YES**
 
-- **Commit identified:** `df84f6c773771` — *btrfs: use on-disk uuid for
-  s_uuid in temp_fsid mounts*
-- **On master, not in 6.18.44:** neither this commit nor its series mate
-  are in the current stable tree
-- **Companion patch:** `c2a74ed0494c2` — *btrfs: derive f_fsid from on-
-  disk fsid and dev_t* (patch 2/2; separate `statfs`/`f_fsid` fix)
+ drivers/md/raid5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-**Verdict for 6.18.y: YES** — small, maintainer-signed fix for overlayfs
-`index=on` remount failures with btrfs cloned mounts; applies cleanly.
-Consider evaluating patch 2/2 separately for `statfs`/`f_fsid`
-stability.
-
- fs/btrfs/disk-io.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 655eed981078b..1664b22961ee0 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3425,7 +3425,16 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
- 	/* Update the values for the current filesystem. */
- 	sb->s_blocksize = sectorsize;
- 	sb->s_blocksize_bits = blksize_bits(sectorsize);
--	memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE);
-+	/*
-+	 * When temp_fsid is active, fs_devices->fsid is assigned a random UUID
-+	 * at mount. This inconsistent UUID causes issues for layered filesystems
-+	 * like OverlayFS. Since metadata_uuid may or may not be set, provide the
-+	 * on-disk UUID directly from the super_copy.
-+	 */
-+	if (fs_info->fs_devices->temp_fsid)
-+		memcpy(&sb->s_uuid, fs_info->super_copy->fsid, BTRFS_FSID_SIZE);
-+	else
-+		memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE);
- 
- 	mutex_lock(&fs_info->chunk_mutex);
- 	ret = btrfs_read_sys_array(fs_info);
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 5c81dbac7eab5..f3951e162762c 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -996,7 +996,7 @@ static void stripe_add_to_batch_list(struct r5conf *conf,
+ 	if (test_and_clear_bit(STRIPE_BIT_DELAY, &sh->state)) {
+ 		int seq = sh->bm_seq;
+ 		if (test_bit(STRIPE_BIT_DELAY, &sh->batch_head->state) &&
+-		    sh->batch_head->bm_seq > seq)
++		    sh->batch_head->bm_seq - seq > 0)
+ 			seq = sh->batch_head->bm_seq;
+ 		set_bit(STRIPE_BIT_DELAY, &sh->batch_head->state);
+ 		sh->batch_head->bm_seq = seq;
 -- 
 2.53.0
 
