@@ -1,112 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A6646EF98;
-	Mon, 31 Aug 2026 13:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CAF57F735;
+	Mon, 31 Aug 2026 13:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184189; cv=none; b=AAstNIr2n2tGMHQVdB/e9rc6LY7NE4BdtJPlsaUDvXxafk6gD4BXJoifiwueWcp0JcLq717CZYylS01n2JNcIEfSBCTlZjMy2Nhx/litj2lEVcNr2AJneQJqwiwo6sL+59FQvt4MJl31pXpwocdI2oPctdajCpWOjjbbEQRg2mU=
+	t=1788184189; cv=none; b=Aqj5HvWCBVB1d5X1EF9nEbzRa6ljH1jdaw+YGfGl4SnibFJrNJzs6yEeIpJSUX8cb4fLvKbeFxTSEcn7gvHIFHai+GziND7lkE5MLHkMpKNTe6ruQo+vpo3hWz2cVCNMu9dYirNjgiq0GuUz6e2jfRyScT6HPu7itKAJGePXToQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184189; c=relaxed/simple;
-	bh=wE8XCux4MTmnX5VxNXGHX3+FkYHoRtvFA3gIx11+3uY=;
+	bh=QyxtNts+UoqhKfu3fXd5olBl1D+PUYnz0yC6Lzh+CyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SM0llAoAHzKMAR1tuPb3sgGNhPvhsLni5U9xrkhURLOr5gUodxb2LH9aDT2TBNPc8NSNiJUSf8ww5FZ3TI7sNu8Yej77+2KrHONKehWLyBbSAQPeWiGm6lC+2CZKVRQOhigh7DaZ8BiNFOQ2ALbW9vzEryQv+NS3nkUpWwaReD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KG8afcJX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IZD40AuGqsm8AbfFbLz9xvngahU0/lCd4VyL4rhzV2ffcXHMlnBuw5vld51X+Ig0nVj2BagSWoGvsWdIGe8ubauEhqcVyF9vgKmjE3TePyxq2GuDVs6Vpa7imMEjK7kmx4uIcj+PiGs6Q65EtkyntpVtQpiyu+YLlmv3n31g4l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HsGn6ptD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KG8afcJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFE41F00ACF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HsGn6ptD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3759F1F00ACA;
 	Mon, 31 Aug 2026 13:49:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184187;
-	bh=xnPQU58HiyA1YaWhv9VCCoTXSzIOOKeMnAdQyolWn0s=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184188;
+	bh=so+s9aG25OaVfSWLBK6duAK1BVk2DhvJG48V+ALmSkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KG8afcJX3v5+m4/HcEAz4RSp7NDznPe8pXTZ8d6NtYVKopn7eSZ/grPjZnbWAmq24
-	 2jiHzJZyWLVs2pXBJSkld7ONzA2JNg0X97ywXTN/6i5bshW5lZqFwSqZN2JAZRdtnW
-	 x7iW209pEANBdC/Jcc7aM5Ta0BK9oJizVe1JzmkE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Vishnu Razdan <vrazdan@openai.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 05/99] io_uring/io-wq: fix worker accounting when canceling creation callbacks
-Date: Mon, 31 Aug 2026 15:33:34 +0200
-Message-ID: <20260831133400.042182728@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=HsGn6ptDEDt9clwZ4TNre1QN7Z4E/nOCpbeRT37AoReaHdkypI6KGbDdAp2HGFwMk
+	 4VKBXNNuLH4n1uiHSMjBpWiCHyOREiElzKlNW2RnNBJfq85AaNDExuTFZTOO6VTdKb
+	 4kiNJnXUhzKoZU4Us77Efi50mmsSh3xPSAU1RZKI2MkEVPWOMsVA4Fny2J9wpV6C88
+	 vTBUZoi2oCGM3gcr1P6KStMDLMnoPdF4B5Ct/YQ2CmsdnKjNof5VFLU4ZX3CZpH0dH
+	 Hn5J8Tn+KP3oHzftCyOGad4S6n6wP36CHc4W9rreIfpgoykW7WZ/6JgaizsSHG3jCb
+	 HwOSvXHHaoUbg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Javier Achirica <jachirica@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	mani@kernel.org,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] bus: mhi: host: pci_generic: Round up nr_irqs to power of two
+Date: Mon, 31 Aug 2026 09:29:32 -0400
+Message-ID: <20260831133314.4125787-544-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Javier Achirica <jachirica@gmail.com>
 
-------------------
+[ Upstream commit 86f6dc05ea051fa03ebc03174bc00f734593465d ]
 
-From: Vishnu Razdan <vrazdan@openai.com>
+When an MHI device uses standard MSI, the PCI core requires the allocated
+number of vectors to be a strict power of two. But devices will only ask
+for the irqs they need, so they might not be properly aligned.
 
-commit 297b5ccea4acacaa47c150f043bce695202afbf1 upstream.
+Make sure a power-of-2 number of vectors is requested.
 
-create_worker_cb() reserves an io-wq worker slot only after its
-task-work callback runs. If the callback is canceled before then,
-io_worker_cancel_cb() still decrements acct->nr_workers. When an
-existing worker retires with its creation callback pending, that
-worker has already decremented the same account's worker count.
-
-The resulting undercount permits worker creation beyond the account's
-configured limit. On an AST2600 OpenBMC system, an unchanged sensor
-daemon reached 4,291 threads with the original kernel. With an
-equivalent downstream fix, 25 passive samples under its normal
-workload showed 6-9 threads.
-
-Decrement nr_workers only when the canceled callback is not
-create_worker_cb(). Continuation callbacks still release their reserved
-slot, and both callback types retain the existing running-count,
-reference-count, and create-state cleanup.
-
-[ Backport: retain the existing wq->lock protecting worker accounting. ]
-
-Fixes: 1d5f5ea7cb7d ("io-wq: remove worker to owner tw dependency")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260811-vrazdan-io-wq-b4-submit-v1-1-719ced16c921@openai.com
-Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
+Signed-off-by: Javier Achirica <jachirica@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/CACixm21q7b_diEx5COZxVZm9EhZ0hnakM_WBjEWcCsznfWeniw@mail.gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index e02128374837b..3c1818e8feaa4 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -192,9 +192,12 @@ static void io_worker_cancel_cb(struct io_worker *worker)
- 	struct io_wq *wq = worker->wq;
+LLM Generated explanations, may be completely bogus:
+
+The background history search finished, but it wasn’t useful: it used
+`git log -S "mhi_pci_get_irqs" --all`, which is slow and returned
+unrelated commits (mptcp, SMC, xfs), not the MHI driver introduction.
+
+From the earlier analysis (without `--all`), `git blame` on the IRQ
+allocation lines shows they’ve been in
+`drivers/bus/mhi/host/pci_generic.c` since the `6bda50f4333fa` baseline
+in this 6.18.43 tree — so the bug has been present since that code
+landed here.
+
+**Verdict for 6.18.y: YES** — real SDX55 modem failure on MSI,
+maintainer-approved one-line fix, buggy code confirmed present in this
+tree.
+
+ drivers/bus/mhi/host/pci_generic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 646f3bcdc636a..a5b47728f9aba 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -1139,7 +1139,8 @@ static int mhi_pci_get_irqs(struct mhi_controller *mhi_cntrl,
+ 	 */
+ 	mhi_cntrl->nr_irqs = 1 + mhi_cntrl_config->num_events;
  
- 	atomic_dec(&acct->nr_running);
--	raw_spin_lock(&wq->lock);
--	acct->nr_workers--;
--	raw_spin_unlock(&wq->lock);
-+	/* create_worker_cb() has not reserved a worker slot yet. */
-+	if (worker->create_work.func != create_worker_cb) {
-+		raw_spin_lock(&wq->lock);
-+		acct->nr_workers--;
-+		raw_spin_unlock(&wq->lock);
-+	}
- 	io_worker_ref_put(wq);
- 	clear_bit_unlock(0, &worker->create_state);
- 	io_worker_release(worker);
+-	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhi_cntrl->nr_irqs, PCI_IRQ_MSIX | PCI_IRQ_MSI);
++	nr_vectors = pci_alloc_irq_vectors(pdev, 1, roundup_pow_of_two(mhi_cntrl->nr_irqs),
++					   PCI_IRQ_MSIX | PCI_IRQ_MSI);
+ 	if (nr_vectors < 0) {
+ 		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
+ 			nr_vectors);
 -- 
 2.53.0
-
-
 
