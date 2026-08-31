@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089B048425A;
-	Mon, 31 Aug 2026 14:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B170A4854EE;
+	Mon, 31 Aug 2026 14:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184980; cv=none; b=jkec685kmIHvlzvXXQqPyV+Swx2yGTeJ/4o1ENK9qd8G1/7VlO1THaqGScsoDQFF62xvj3DTnqiMKBzz/vyLAedj0PBb1dGlUZhnCrYHfC/Qrh/YVqs7YXiivi+qeYCfG4WlQ3DFwEL0AldaxLJ5epFsOQeCASp2vWL8MmvifUQ=
+	t=1788184986; cv=none; b=YxH2gakd8BAV7kJYDG/qhZ4R5R4zWo/UROyHBgbUnJUhZ8Y8ZXnpnLVgSc27Ka8ICFyho+LICaQuB0DufvbmAw7fEj8+cj/xszYJi2eKGEBmvDi/YkxgLqPYaV9QwX8wR161uGz+whvkIOCzTn52eVzTspFG4aIUqs8yNi+MCTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184980; c=relaxed/simple;
-	bh=I75POsHT9aLosLUTJAaDP5xh2j4gmpXgmOtLT+A96As=;
+	s=arc-20240116; t=1788184986; c=relaxed/simple;
+	bh=WgI97qG/4aAe6QnS2SjqS4jof0VVm+VE8fNWOEg1ygU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFVvL/b8XIlgc2NklrFP1O0UYcABq3jMurJwB7HMnXDzZpsvAg51onOgr42Q5p+VD9xLtOgIH7sai8KoY5fky3kOqPcFbmkU0tRjTwqgteNr05j7mneJBIZDvJ9MJkqA2QgEQ93xejoTJc5I00mEwlB7yiU0Yuu2OYTol+hYwdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dnwc6M8f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ih2HRc/YETldyKAElPsCaeqGx2MGbK41SdlQfsaD2TTAqaMdeUVBjJokLwPnQ9yqNaLzckE+1bRukft6HVyb6R64ti9a1ZmqKJ3LPeh4myI6ho5748XE6Gs/4642H9e7Ok9QKUVxx9rXe2S00qPAT7tCPO5jC+9wSUCTuyEu7yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfHSH5uH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dnwc6M8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698C51F000E9;
-	Mon, 31 Aug 2026 14:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfHSH5uH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177261F00A3D;
+	Mon, 31 Aug 2026 14:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184978;
-	bh=aB7dvKglkQAP69lj8h7FwTtYC5MxojnpGnrjG4z4KM8=;
+	s=korg; t=1788184984;
+	bh=P9tsM3r8KVbBHVmasyECK0ie2e1oMEBrpjALWusjAYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dnwc6M8fYA52M43VQY45cAdexdQfeIEiOpkFEppRf27xik5dpz0VhiO/6pkDPNpiC
-	 aaxkwh/7EGSSXmVVZwjXp0Xo8WUvsNr3h2l698nV0UTEISVhkwila26sr+9f+nayIa
-	 FBeL0tAgdVRQe6t7cWPgnbQlxlYWcmBBTccJ8TbQ=
+	b=hfHSH5uHZCl20wgUA80IhvKXYcIdwZLfxRmZViqtg0nDKvhiEm/EDH4CYcBxpX8t1
+	 PUNlADPh/0lySphHpICLSKFEFCBOeWZI/uxL4kptNIzerc4GxH7APwMSz7Lrk/HcD/
+	 IEf9Ex6EW2mEdMU+yVAGRXaiK1a+iy3jIZxkCjr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 12/69] bpf: Fix use-after-free in offloaded map/prog info fill
-Date: Mon, 31 Aug 2026 15:34:45 +0200
-Message-ID: <20260831133359.115522124@linuxfoundation.org>
+Subject: [PATCH 5.15 14/69] smc: Use __sk_dst_get() and dst_dev_rcu() in smc_vlan_by_tcpsk().
+Date: Mon, 31 Aug 2026 15:34:47 +0200
+Message-ID: <20260831133359.195944015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -55,70 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit a0c584fc18056709c8e047a82a6045d6c209f4ce ]
+[ Upstream commit 0b0e4d51c6554e5ecc3f8cc73c2eaf12da21249a ]
 
-When querying info for an offloaded BPF map or program,
-bpf_map_offload_info_fill_ns() and bpf_prog_offload_info_fill_ns()
-obtain the network namespace with get_net(dev_net(offmap->netdev)).
-However, the associated netdev's netns may be racing with teardown
-during netns destruction. If the netns refcount has already reached 0,
-get_net() performs a refcount_t increment on 0, triggering:
+smc_vlan_by_tcpsk() fetches sk_dst_get(sk)->dev before RTNL and
+passes it to netdev_walk_all_lower_dev(), which is illegal.
 
-  refcount_t: addition on 0; use-after-free.
+Also, smc_vlan_by_tcpsk_walk() does not require RTNL at all.
 
-Although rtnl_lock and bpf_devs_lock ensure the netdev pointer remains
-valid, they cannot prevent the netns refcount from reaching zero.
+Let's use __sk_dst_get(), dst_dev_rcu(), and
+netdev_walk_all_lower_dev_rcu().
 
-Fix this by using maybe_get_net() instead of get_net(). maybe_get_net()
-uses refcount_inc_not_zero() and returns NULL if the refcount is already
-zero, which causes ns_get_path_cb() to fail and the caller to return
--ENOENT -- the correct behavior when the netns is being destroyed.
+Note that the returned value of smc_vlan_by_tcpsk() is not used
+in the caller.
 
-Fixes: 675fc275a3a2d ("bpf: offload: report device information for offloaded programs")
-Fixes: 52775b33bb507 ("bpf: offload: report device information about offloaded maps")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Closes: https://lore.kernel.org/bpf/f0aa3678-79c9-47ae-9e8c-02a3d1df160a@hust.edu.cn/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260409023733.168050-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0cfdd8f92cac ("smc: connection and link group creation")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250916214758.650211-5-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/offload.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/smc/smc_core.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
-index fcdd28224f532..b3850bd8a2c5f 100644
---- a/kernel/bpf/offload.c
-+++ b/kernel/bpf/offload.c
-@@ -274,9 +274,8 @@ static struct ns_common *bpf_prog_offload_info_fill_ns(void *private_data)
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 37614dcf19194..f6119f29b44ce 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1612,35 +1612,32 @@ static int smc_vlan_by_tcpsk_walk(struct net_device *lower_dev,
+ /* Determine vlan of internal TCP socket. */
+ int smc_vlan_by_tcpsk(struct socket *clcsock, struct smc_init_info *ini)
+ {
+-	struct dst_entry *dst = sk_dst_get(clcsock->sk);
+ 	struct netdev_nested_priv priv;
+ 	struct net_device *ndev;
++	struct dst_entry *dst;
+ 	int rc = 0;
  
- 	if (aux->offload) {
- 		args->info->ifindex = aux->offload->netdev->ifindex;
--		net = dev_net(aux->offload->netdev);
--		get_net(net);
--		ns = &net->ns;
-+		net = maybe_get_net(dev_net(aux->offload->netdev));
-+		ns = net ? &net->ns : NULL;
- 	} else {
- 		args->info->ifindex = 0;
- 		ns = NULL;
-@@ -501,9 +500,8 @@ static struct ns_common *bpf_map_offload_info_fill_ns(void *private_data)
+ 	ini->vlan_id = 0;
+-	if (!dst) {
+-		rc = -ENOTCONN;
+-		goto out;
+-	}
+-	if (!dst->dev) {
++
++	rcu_read_lock();
++
++	dst = __sk_dst_get(clcsock->sk);
++	ndev = dst ? dst_dev_rcu(dst) : NULL;
++	if (!ndev) {
+ 		rc = -ENODEV;
+-		goto out_rel;
++		goto out;
+ 	}
  
- 	if (args->offmap->netdev) {
- 		args->info->ifindex = args->offmap->netdev->ifindex;
--		net = dev_net(args->offmap->netdev);
--		get_net(net);
--		ns = &net->ns;
-+		net = maybe_get_net(dev_net(args->offmap->netdev));
-+		ns = net ? &net->ns : NULL;
- 	} else {
- 		args->info->ifindex = 0;
- 		ns = NULL;
+-	ndev = dst->dev;
+ 	if (is_vlan_dev(ndev)) {
+ 		ini->vlan_id = vlan_dev_vlan_id(ndev);
+-		goto out_rel;
++		goto out;
+ 	}
+ 
+ 	priv.data = (void *)&ini->vlan_id;
+-	rtnl_lock();
+-	netdev_walk_all_lower_dev(ndev, smc_vlan_by_tcpsk_walk, &priv);
+-	rtnl_unlock();
+-
+-out_rel:
+-	dst_release(dst);
++	netdev_walk_all_lower_dev_rcu(ndev, smc_vlan_by_tcpsk_walk, &priv);
+ out:
++	rcu_read_unlock();
++
+ 	return rc;
+ }
+ 
 -- 
 2.53.0
 
