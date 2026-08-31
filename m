@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97644B127F;
-	Mon, 31 Aug 2026 13:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4C04B129F;
+	Mon, 31 Aug 2026 13:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184239; cv=none; b=T0Ux/cvm4e3fDGtQDPVsEmDHM1GdcxVM36Ed7ZXC1bf32SR8VCjifEuwnnBzqRa+Hq4XrplGfDTV0zuwFfbkZ0UezW4WxPPJ2uUJYedFcuOI/frRNbKJOItyhGjXrKDwFb8VzmLvIRfH6NPzCWNZnG+py6JLYaalkAIWHtwiYvk=
+	t=1788184240; cv=none; b=Fr6SlYxCgtQTj7CQSi27H7m9ziC3QfJY8et7tpdPvBrKpnpVuVNHpBTHkxxevCLF4aWkgwZQA27JlGbkpbjxcOOmVq7rpvsj/rVmWVpqWAw+6OvnvWd0m9GV6zT0om9iEJRCiiP7v4M33dK3x4/Bf9I3TAdsS8UzCZgu1Sf6HJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184239; c=relaxed/simple;
-	bh=DdorWQK8zY5n0ULJKXec3yDgAepE/76fqNCOtSqkwgc=;
+	s=arc-20240116; t=1788184240; c=relaxed/simple;
+	bh=XR9BsfHYeHPnPbZweMGQ328wmefvnjDbXYjhz0Mt+yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OnP+RIbYDDEg1oU2Z3SJmvmBPcCWlC7jlfuNABvcZ8oa9zEdhw8QhYBhOG/9r6M6KayWUNrJNhU9irvm17z1DPcZOjLrYib2an6m9HgKOKmrwQNbPpd9xRb5ITcYlRhVaODpIVCAW5hL86bx+1hnV8lorkNqWZOmDek9l2z8IYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kyZDSMoZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=f0PhMhepl++iZqILBPV+yJyFy/EFBK/kGbNuaGqYrqlDbtRrecB3fh/RZji8XECtuwVn3kn5UpJbCxrq95ACQ7fIh/bOu8ls9B0lpxjkRGV+9/3UhsBqL+tCm83KUiiw/SYvliiI2aacxU0vF2S3e0NeTRT7Au75Fb7ao0VAVww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NZQ4WJUd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kyZDSMoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18BE1F00ACA;
-	Mon, 31 Aug 2026 13:50:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NZQ4WJUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE261F00A3F;
+	Mon, 31 Aug 2026 13:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184236;
-	bh=KWm48LSQm398uOJ1rgE0wfUXzw1hcmIL3hKuUF1xDPg=;
+	s=k20260515; t=1788184237;
+	bh=ch9raEjg1/iri6oz2DDBHo/FFB2+tx/tAbTXb9UEPkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kyZDSMoZ5cpHkFYAC2DLUZ6i7HfFJ2bN2oAF2SnPbK1hA+/G51JSddUXr65Ktm2AU
-	 Cp3jS4KybSy5dsWmcb3LhWvaf94oOVFl3GWEjYFf6aaROrcHeBI+ZSs0qFPYMpEqoZ
-	 kGcVuHoG8GFs3n+6kpDoeEAtYUwsHnZFSSD08+ZflmmBiv2BTBtZfhbogYy+xKkx41
-	 4O4jwngaI4lLXV16mTT/30mf/WQmPlX2WHZjcnjFGCTw6WfwNuWkycZcyd1sAdgsuW
-	 gjdv7chXP876bZAYGPR6OFlA7JySIrqMZ1SdvItGgx3Za7lDLwMniGwSAwLT2Rg/uR
-	 ZbeeBe1HGwo7w==
+	b=NZQ4WJUdhmKEFE6VzWjmR6NKVe6bmxjiLuo8MxrTYUsE3OXf8/Z4Zz+80oW2n+6iz
+	 hxepjNZvyqjAmUtCPuBm8IgOTVCDFy043DNKbGmBE22m6tpImm1Z4ExZ6TgeJIpx1j
+	 qInF2lnM6IssfayTmsEU5pNfzevjS/RvpptYrflMzE2tcnmDJfpOsVxoqIXqVEqCKj
+	 jfw08o1zIHfygpV7a2QMbD0N+dYc+RKIU2TZsiWgvivH0mbNgKENtHxBm3lucE7Oru
+	 Gbb7+RCMJ0Lzn7p4/fUlT/Hw9JD0tx783HCRM2K3p5IAvq4STjC9EG8hWgo2+im/u5
+	 7XVKEdaRqjIOg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+Cc: Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ring-buffer: Skip invalid sub-buffers when rewinding persistent ring buffer
-Date: Mon, 31 Aug 2026 09:30:01 -0400
-Message-ID: <20260831133314.4125787-573-sashal@kernel.org>
+	linux-rdma@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] RDMA/mlx5: Create ODP EQ for non-pinned dmabuf MRs
+Date: Mon, 31 Aug 2026 09:30:02 -0400
+Message-ID: <20260831133314.4125787-574-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,593 +51,407 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c8a7d4b4723a21e7464efe86dcf80627e0b4df33 ]
+[ Upstream commit 93e64c7a33ff6679d4d1c0a03021a2ff0e2b6c98 ]
 
-Skip invalid sub-buffers when rewinding the persistent ring buffer
-instead of stopping the rewinding the ring buffer. The skipped
-buffers are cleared.
+DMABUF generally relies on the ODP EQ mechanism to safely implement the
+move semantics. ODP requires a device-global one time startup of the ODP
+machinery when the first MR is created, and this was missed on the DMABUF
+path.
 
-To ensure the rewinding stops at the unused page, this also clears
-buffer_data_page::time_stamp when tracing resets the buffer. This
-allows us to identify unused pages and empty pages.
+Call mlx5r_odp_create_eq() when creating a ODP'able DMABUF.
 
-Link: https://patch.msgid.link/20260522171051.091265852@kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[ SDR: Have reader_page still get evaluated if header_page fails ]
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+The core code prevents using IB_ACCESS_ON_DEMAND unless the driver
+advertises IB_ODP_SUPPORT, so until now, mlx5r_odp_create_eq() cannot be
+called unless the device has ODP support.
+
+However, DMABUF has no such protection and a second bug was allowing
+DMABUFs to be created on non-ODP capable HW. Add a guard at the start of
+mlx5r_odp_create_eq(). This is necessary here anyhow as the
+dev->odp_eq_mutex is not initialized without IB_ODP_SUPPORT.
+
+Link: https://patch.msgid.link/r/2-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `ring-buffer: Skip invalid sub-buffers when
-rewinding persistent ring buffer`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (Linux 6.18.44, `stable/linux-6.18.y`)
+**Step 1.1 — Subject line**
+Record: `[RDMA/mlx5] [Create] Create ODP EQ for non-pinned dmabuf MRs` —
+mlx5 InfiniBand/RDMA driver; adds missing ODP event-queue initialization
+on the dmabuf registration path.
 
----
+**Step 1.2 — Tags**
+Record:
+- `Link:` https://patch.msgid.link/r/2-v1-29ebd2c229b5+fd5-
+  ib_mr_pd_jgg@nvidia.com
+- `Signed-off-by:` Jason Gunthorpe `<jgg@nvidia.com>`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org` (absence expected for manual review)
+- Notable: patch is `[PATCH 02/10]` in series "Fix races around
+  IB_MR_REREG_PD and mr->pd"; upstream SHA `93e64c7a33ff6`
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** Non-pinned dmabuf MRs use ODP machinery (page-fault EQ, mkey
+  tracking) but never call `mlx5r_odp_create_eq()`, which is required
+  one-time ODP startup since commit ad50294d moved EQ creation out of
+  device init.
+- **Symptom:** ODP page-fault events for dmabuf MRs are not handled;
+  dmabuf move semantics break; RDMA can hang or error on page faults.
+- **Second bug:** dmabuf registration bypasses core
+  `IB_ACCESS_ON_DEMAND` / `IB_ODP_SUPPORT` checks, so non-ODP hardware
+  could reach `mlx5r_odp_create_eq()` and `mutex_lock()` on
+  uninitialized `odp_eq_mutex`.
+- **Root cause:** dmabuf path calls `mlx5r_store_odp_mkey()` without
+  first ensuring ODP EQ exists; no guard in `mlx5r_odp_create_eq()` for
+  non-ODP devices.
 
-### Step 1.1: Subject line
-**Record:** `[ring-buffer]` `[skip]` — When rewinding a persistent ring
-buffer across reboot, skip (and clear) invalid sub-buffers instead of
-stopping the rewind early.
-
-### Step 1.2: Tags
-**Record:**
-- **Link:** https://patch.msgid.link/20260522171051.091265852@kernel.org
-- **Signed-off-by:** Masami Hiramatsu (Google), Steven Rostedt
-- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or
-  Cc: stable in the commit message
-- **Notable:** Patch 2/9 in the v21 series “Making persistent ring
-  buffers robust”; Steven Rostedt note: “Have reader_page still get
-  evaluated if header_page fails”
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** During persistent ring-buffer rewind after reboot, hitting an
-  invalid sub-buffer stops the rewind loop.
-- **Symptom:** Valid older trace data in earlier sub-buffers is not
-  recovered; only data up to the first invalid page is kept.
-- **Root cause (author):** Rewind treated invalid pages as a hard stop;
-  unused pages were not reliably identifiable because `time_stamp` was
-  not cleared on buffer reset.
-- **Fix approach:** Continue rewinding past invalid pages (clearing
-  them), use timestamp boundaries for validation, and clear
-  `buffer_data_page::time_stamp` in `rb_init_page()`.
-
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — described as robustness, but it fixes incorrect
-recovery behavior: premature rewind termination and loss of readable
-trace events after partial buffer corruption (e.g. unsynchronized cache
-across reboot).
+**Step 1.4 — Hidden bug fix?**
+Record: Yes — subject says "Create" but this is a functional bug fix:
+missing initialization + use of uninitialized mutex on unsupported
+hardware.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `kernel/trace/ring_buffer.c` only (~69 insertions, ~38
-  deletions)
-- **Functions modified:** `rb_init_page()`, `rb_validate_buffer()`,
-  `rb_meta_validate_events()`
-- **Scope:** Single-file, focused change in persistent-buffer
-  validation/rewind path
+**Step 2.1 — Inventory**
+Record:
+- `drivers/infiniband/hw/mlx5/mr.c`: +4 lines in `reg_user_mr_dmabuf()`
+- `drivers/infiniband/hw/mlx5/odp.c`: +3 lines in
+  `mlx5r_odp_create_eq()`
+- Functions: `reg_user_mr_dmabuf()`, `mlx5r_odp_create_eq()`
+- Scope: single-subsystem, surgical (7 lines total)
 
-### Step 2.2: Code flow changes
-**Record:**
-| Hunk | Before | After |
-|------|--------|-------|
-| `rb_init_page()` | Clears only `commit` | Also clears `time_stamp` |
-| `rb_validate_buffer()` | Validates commit size + event walk | Adds
-`prev_ts`/`next_ts` bounds; clears invalid pages; sets `entries` |
-| Rewind loop | `break` on invalid page | Skip invalid pages, increment
-`discarded`, continue |
-| Head page handling | Reader validated first | Head validated first;
-rewind skipped only if head invalid |
-| Unused-page detection | Timestamp/commit heuristics | Stop when
-`!time_stamp && commit == 0` |
-| Invalid path cleanup | Manual commit clears | Uses `rb_init_page()` |
+**Step 2.2 — Code flow**
+Record:
+- **Hunk 1 (mr.c):** Before: non-pinned dmabuf goes straight to
+  `mlx5r_store_odp_mkey()`. After: calls `mlx5r_odp_create_eq()` first;
+  on failure jumps to `err_dereg_mr`.
+- **Hunk 2 (odp.c):** Before: `mlx5r_odp_create_eq()` immediately locks
+  `odp_eq_mutex`. After: returns `-EOPNOTSUPP` if
+  `!(dev->odp_caps.general_caps & IB_ODP_SUPPORT)`.
 
-### Step 2.3: Bug mechanism
-**Record:** **Logic/correctness fix** in persistent ring-buffer
-recovery. Invalid sub-buffer during rewind caused early loop exit
-(`break`), leaving older valid pages unrecovered. Timestamp clearing and
-boundary checks improve detection of unused/corrupt pages.
+**Step 2.3 — Bug mechanism**
+Record:
+- **Category:** Initialization bug + logic/correctness bug
+- **Mechanism:** Since ad50294d ("Create ODP EQ only when ODP MR is
+  created"), `create_user_odp_mr()` calls `mlx5r_odp_create_eq()` but
+  `reg_user_mr_dmabuf()` does not. Non-pinned dmabuf MRs store ODP mkeys
+  without creating the page-fault EQ. On non-ODP HW, adding the EQ call
+  without a guard would lock an uninitialized mutex (`mutex_init()` only
+  runs when `IB_ODP_SUPPORT` is set in `mlx5_ib_odp_init_one()`).
 
-### Step 2.4: Fix quality
-**Record:** Fix is logically sound and minimal for its scope. Low
-regression risk: only affects persistent ring-buffer recovery at boot.
-Timestamp clearing on reset is consistent with identifying unused pages.
-**Caveat:** Builds on refactored `rb_validate_buffer()` from
-prerequisite commit `eb3bd277b37cd`.
+**Step 2.4 — Fix quality**
+Record: Obviously correct — mirrors the existing `create_user_odp_mr()`
+pattern. Minimal, no API changes. Low regression risk on ODP-capable
+hardware. On non-ODP hardware, non-pinned dmabuf registration will now
+correctly fail with `-EOPNOTSUPP` instead of silently succeeding with
+broken semantics.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:** Rewind loop with `break` on invalid page introduced by
-`ca296d32ece38` (“tracing: ring_buffer: Rewind persistent ring buffer on
-reboot”, 2025-06-04). That commit **is in this tree** (6.18.y). Base
-validation infrastructure from `5f3b6e839f3ce` (“Validate boot range
-memory events”, 2024-06-12), also in tree.
+**Step 3.1 — Blame**
+Record:
+- `reg_user_mr_dmabuf()` non-pinned ODP mkey path: `de8f847a5114f` (Aug
+  2024, data-direct refactor)
+- `mlx5r_odp_create_eq()`: created in ad50294d4d6b5 (Mar 2021)
+- dmabuf support: `90da7dc8206a5` (Jan 2021)
+- Bug window: since ad50294d (Mar 2021), when EQ creation moved from
+  `mlx5_ib_odp_init_one()` to lazy init on first ODP MR
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no `Fixes:` tag. Bug introduced by ad50294d4d6b5, which is
+in this tree.
 
-### Step 3.3: Related file history
-**Record:** Stable 6.18.y already has persistent ring-buffer fixes:
-- `ca296d32ece38` — rewind on reboot (introduces bug)
-- `b6925774dd15d` — per-subbuf entries fix (backported)
-- `2bc60c175568e` — flush on panic (backported)
-- `6b4bf6519e507` — reader_page double-count fix (backported)
+**Step 3.3 — Related file history**
+Record: Related stable fixes already in tree:
+- `cc668a11e6ac8` — DMABUF MR race → CQE error (Feb 2025)
+- `abb604a1a9c87` — ODP MR race → CQE error
+- Series patches 01/03/05-07 from same submission are already in 6.18.y
+  (`f5657d`, `d4f84b`, `fd284b`, `e123f0`)
 
-**Missing from stable (on master):**
-- `eb3bd277b37cd` — skip invalid sub-buffers when **validating** (patch
-  1/9, prerequisite)
-- `c8a7d4b4723a2` — this commit (patch 2/9)
+**Step 3.4 — Author context**
+Record: Jason Gunthorpe is RDMA maintainer. Recent mlx5 commits in this
+tree include rereg_mr and PD-handling fixes from the same series.
 
-Part of v21 series “Making persistent ring buffers robust”; not
-standalone.
-
-### Step 3.4: Author context
-**Record:** Masami Hiramatsu and Steven Rostedt are tracing/ring-buffer
-maintainers. Multiple related persistent ring-buffer commits in the same
-timeframe.
-
-### Step 3.5: Dependencies
-**Record:**
-- **Requires** `eb3bd277b37cd` (changes `rb_validate_buffer()` signature
-  and per-sub-buffer discard logic).
-- `c8a7d4b4723a2` alone: **merge conflict** on stable.
-- `eb3bd277b37cd` then `c8a7d4b4723a2`: **both apply cleanly** (verified
-  via cherry-pick).
-- Does not require later series patches (tests, display, cleanup) for
-  core fix.
+**Step 3.5 — Dependencies**
+Record: Standalone for backport purposes. `git apply --check` of
+upstream commit against HEAD succeeds. Patch 02/10 was merged
+independently as `93e64c7a33ff6`; other series patches are already
+present.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:**
-- **b4 dig URL:**
-  https://patch.msgid.link/20260522171051.091265852@kernel.org
-- **Series:** v19 → v20 → v21; committed version matches v21 patch 2/9
-- **Cover letter (v21 0/9):** “make the persistent ring buffer more
-  robust when sub-buffers are detected to be corrupted. Instead of
-  invalidating the entire buffer, just invalidate the individual sub-
-  buffers.”
+**Step 4.1 — Original discussion**
+Record:
+- `b4 dig -c 93e64c7a33ff6` →
+  https://patch.msgid.link/2-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com
+- Part of 10-patch series "Fix races around IB_MR_REREG_PD and mr->pd"
+- CC'd: `leon@kernel.org`, `linux-rdma@vger.kernel.org`, Doug Ledford
+- No NAKs found in thread; maintainer reply discusses mr->pd race
+  (separate issue)
+- No explicit `Cc: stable` nomination found in thread
 
-### Step 4.2: Reviewers
-**Record:** CC’d: linux-kernel, linux-trace-kernel, Masami Hiramatsu,
-Mark Rutland, Mathieu Desnoyers, Andrew Morton, Ian Rogers. Reviewed-by
-Masami Hiramatsu on a related thread message in mbox.
+**Step 4.2 — Reviewers**
+Record: `b4 dig -w`: Leon Romanovsky, linux-rdma, Doug Ledford, NVIDIA
+mlx5 team CC'd.
 
-### Step 4.3: Bug report
-**Record:** No syzbot/user bug report. Issue inferred from persistent-
-buffer corruption scenario in companion patch `eb3bd277b37cd`: “cache
-data in memory fails to be synchronized during a reboot.”
+**Step 4.3 — Bug report**
+Record: No syzbot/user bug report. Bug identified internally (commit
+message + series cover letter reference to Sashiko's mr->pd analysis).
+Severity inferred from code path analysis.
 
-### Step 4.4: Related patches
-**Record:** Same series includes validation skip (`eb3bd`), inject test,
-dropped-events display, validation cleanup. Validation + rewind skip are
-the core functional pair.
+**Step 4.4 — Related patches**
+Record: Same series; patches 01/03-07/09-10 address mr->pd races. This
+patch (02) is independent — only touches ODP EQ initialization.
 
-### Step 4.5: Stable list history
-**Record:** No Cc: stable or stable-list discussion found in retrieved
-mbox thread.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
-**Record:** `rb_init_page()`, `rb_validate_buffer()`,
-`rb_meta_validate_events()`
-
-### Step 5.2: Callers
-**Record:** `rb_meta_validate_events()` called from
-`rb_allocate_cpu_buffer()` at line 2399 during CPU ring-buffer
-allocation when persistent/range-mapped meta is present.
-
-### Step 5.3: Callees
-**Record:** `rb_read_data_buffer()`, `rb_page_commit()`,
-`rb_page_size()`, `rb_dec_page()`/`rb_inc_page()`, `local_set()`.
-
-### Step 5.4: Reachability
-**Record:** Triggered at **boot** during ring-buffer init for
-**reserve_mem / range-mapped persistent** trace buffers with valid meta
-from a previous boot. Not a syscall hot path; requires tracing admin
-setup. Not unprivileged.
-
-### Step 5.5: Similar patterns
-**Record:** Stable tree still has related bugs:
-- Rewind: `break` on invalid page (lines 1932–1935)
-- Validation: `goto invalid` resets entire buffer on any invalid page
-  (lines 1899–1901, 2013–2016)
-
-`eb3bd277b37cd` addresses validation; this commit addresses rewind.
+**Step 4.5 — Stable list**
+Record: Not searched (lore 403). Commit `5a6ba1a96f957` exists as a
+stable backport to another tree but is NOT in `stable/linux-6.18.y` at
+6.18.44.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.44)
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current stable code at lines 1932–1935:
+**Step 5.1 — Key functions**
+Record: `reg_user_mr_dmabuf()`, `mlx5r_odp_create_eq()`,
+`mlx5r_store_odp_mkey()`, `mlx5_ib_init_dmabuf_mr()`,
+`mlx5_ib_mr_memory_pfault_handler()`
 
-```1932:1935:kernel/trace/ring_buffer.c
-                /* Stop rewind if the page is invalid. */
-                ret = rb_validate_buffer(head_page->page,
-cpu_buffer->cpu);
-                if (ret < 0)
-                        break;
-```
+**Step 5.2 — Callers**
+Record:
+- `mlx5_ib_reg_user_mr_dmabuf()` → `reg_user_mr_dmabuf()` (userspace via
+  `UVERBS_METHOD_REG_DMABUF_MR` and `UVERBS_METHOD_REG_MR` with fd)
+- `create_user_odp_mr()` already calls `mlx5r_odp_create_eq()` — dmabuf
+  path was the gap
+- Reachable from userspace RDMA uverbs on mlx5 devices with
+  `CONFIG_INFINIBAND_ON_DEMAND_PAGING`
 
-Bug introduced with rewind feature in `ca296d32ece38`, which is in
-6.18.y.
+**Step 5.3 — Callees**
+Record: `mlx5r_odp_create_eq()` creates EQ, workqueue, mempool for page
+faults; `mlx5r_store_odp_mkey()` stores mkey in `odp_mkeys` xarray;
+`mlx5_ib_init_dmabuf_mr()` → `pagefault_dmabuf_mr()` for initial mapping
 
-### Step 6.2: Backport complications
-**Record:** This commit alone does **not** apply cleanly (content
-conflict). With prerequisite `eb3bd277b37cd` first, both apply cleanly.
-Expect minor context differences vs mainline but no structural blocker.
+**Step 5.4 — Call chain / reachability**
+Record: Userspace `reg_dmabuf_mr` uverb → mlx5 dmabuf registration →
+(without fix) ODP mkey stored but no EQ → hardware page faults unhandled
+→ `mlx5_ib_mr_memory_pfault_handler()` never invoked for async faults.
+Userspace-triggerable on mlx5 + dmabuf workloads (GPU/RDMA shared
+memory).
 
-### Step 6.3: Related fixes already present?
-**Record:** No equivalent skip-on-invalid rewind or per-sub-buffer
-validation discard logic in 6.18.44.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** **kernel/trace** (ring buffer) — **IMPORTANT** for
-tracing/debugging; not core MM/net, but persistent buffers target
-crash/post-mortem analysis.
-
-### Step 7.2: Activity
-**Record:** Actively maintained; several persistent ring-buffer fixes
-already backported to 6.18.y.
+**Step 5.5 — Similar patterns**
+Record: `create_user_odp_mr()` at line 1530 correctly calls
+`mlx5r_odp_create_eq()` before `mlx5r_store_odp_mkey()`. dmabuf path at
+line 1682 was the sole missing caller in mr.c.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 8.1: Who is affected
-**Record:** Users of **persistent/reserve_mem ring buffers** who reboot
-after unclean shutdown or partial memory corruption. Config-specific,
-admin-configured.
+**Step 6.1 — Buggy code exists?**
+Record: **YES.** Tree is `stable/linux-6.18.y` at **6.18.44** (`git
+describe HEAD` = v6.18.44). `reg_user_mr_dmabuf()` at lines 1681–1684
+calls `mlx5r_store_odp_mkey()` without prior `mlx5r_odp_create_eq()`.
+`mlx5r_odp_create_eq()` lacks `IB_ODP_SUPPORT` guard. Fix commit
+`93e64c7a33ff6` is NOT an ancestor of HEAD.
 
-### Step 8.2: Trigger conditions
-**Record:** Boot with persistent trace buffer meta from previous boot +
-at least one invalid sub-buffer during rewind. Most likely after
-crash/unclean reboot with unsynced buffer memory. Uncommon but realistic
-for the feature’s purpose.
+**Step 6.2 — Backport complications**
+Record: **Clean apply** — `git apply --check` of upstream patch against
+HEAD succeeds with no conflicts.
 
-### Step 8.3: Failure severity
-**Record:** **Loss of recoverable trace events** (diagnostic data), not
-kernel crash/panic/deadlock. Severity: **MEDIUM** for persistent-tracing
-users; **LOW** for others.
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** MEDIUM — restores trace data that would otherwise be
-  discarded during rewind
-- **Risk:** LOW — boot-time recovery path only; small, maintainer-
-  authored change
-- **Ratio:** Favorable when paired with `eb3bd277b37cd`
+**Step 6.3 — Related fixes already present?**
+Record: Related dmabuf/ODP race fixes (`cc668a11e6ac8`, `abb604a1a9c87`)
+are in tree, but this distinct ODP EQ initialization bug is not fixed.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 9.1: Evidence summary
+**Step 7.1 — Subsystem criticality**
+Record: `drivers/infiniband/hw/mlx5` — IMPORTANT (ConnectX/NVIDIA RDMA;
+HPC, AI/GPU direct RDMA, cloud). Not universal but high value for
+affected deployments.
 
-**FOR backport:**
-- Real bug in shipped 6.18.y feature (persistent ring-buffer rewind)
-- Loses valid trace data on partial corruption — the scenario persistent
-  buffers are meant to survive
-- Small, surgical, maintainer-reviewed
-- Applies cleanly with prerequisite `eb3bd277b37cd` (also clean)
-- Related persistent ring-buffer fixes already in 6.18.y
-- Part of intentional robustness series
+**Step 7.2 — Activity**
+Record: Actively maintained; multiple dmabuf/ODP fixes in 6.18.y
+history.
 
-**AGAINST backport:**
-- Not a kernel crash/security/deadlock
-- Niche feature (reserve_mem persistent tracing)
-- Requires prerequisite commit not yet in stable
-- No explicit Cc: stable or user/syzbot report
-- Patch 2/9 of a series
+---
 
-**Unresolved:** No runtime test results in commit message; no explicit
-stable nomination.
+## Phase 8: Impact and Risk Assessment
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** (logic clear; maintainer
-   authorship; no test tag)
-2. Fixes real bug affecting users? **PASS** (persistent tracing users
-   lose recoverable data)
-3. Important issue? **PASS (borderline)** — diagnostic data loss in
-   crash-recovery path, not kernel instability
-4. Small and contained? **PASS** (~107 lines, one file)
-5. No new features/APIs? **PASS** (fixes recovery behavior)
-6. Can apply to local tree? **PASS with dependency** — needs
-   `eb3bd277b37cd` first; then applies cleanly
+**Step 8.1 — Who is affected**
+Record: Users of mlx5 RDMA with non-pinned dmabuf MRs
+(`CONFIG_INFINIBAND_ON_DEMAND_PAGING`, mlx5 hardware). GPU memory
+sharing, zero-copy RDMA workloads.
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs).
+**Step 8.2 — Trigger conditions**
+Record:
+- **Bug 1:** Register non-pinned dmabuf MR as first "ODP-like" MR (no
+  prior ODP MR) on ODP-capable mlx5 → subsequent page faults / dmabuf
+  moves unhandled
+- **Bug 2:** Register non-pinned dmabuf on non-ODP mlx5 → with fix part
+  1 alone would crash on uninitialized mutex; currently silently
+  succeeds with broken semantics
+- Userspace-triggerable via RDMA uverbs
 
-### Step 9.4: Decision rationale
+**Step 8.3 — Failure mode severity**
+Record:
+- Missing ODP EQ: **HIGH** — RDMA hangs, CQE errors, broken dmabuf move
+  semantics (similar severity to prior backported mlx5 dmabuf/ODP race
+  fixes)
+- Uninitialized mutex (if EQ call added without guard): **CRITICAL** —
+  kernel oops/undefined behavior
+- Severity overall: **HIGH to CRITICAL**
 
-This commit fixes a real correctness bug in persistent ring-buffer
-rewind that exists in 6.18.44. When an invalid sub-buffer is encountered
-during rewind after reboot, the current code stops early and fails to
-recover older valid trace pages. That undermines the purpose of
-persistent tracing across reboots, especially after crashes with partial
-memory corruption.
+**Step 8.4 — Risk-benefit**
+Record:
+- **Benefit:** HIGH for mlx5 dmabuf users — fixes long-standing
+  functional bug since 2021
+- **Risk:** LOW — 7-line surgical fix, mirrors existing pattern, applies
+  cleanly
+- **Ratio:** Strongly favors backport
 
-The fix is small, maintainer-authored, and backports cleanly together
-with its immediate prerequisite `eb3bd277b37cd` (which fixes the
-analogous “discard everything” problem in the validation path). Stable
-6.18.y already carries the rewind feature and other persistent ring-
-buffer fixes; this pair completes that robustness work.
+---
 
-**Backport recommendation:** Apply `eb3bd277b37cd` first, then
-`c8a7d4b4723a2`.
+## Phase 9: Final Synthesis
+
+**Step 9.1 — Evidence summary**
+
+FOR backport:
+- Fixes real, verifiable bug in production mlx5 dmabuf path
+- Missing ODP EQ breaks page-fault handling and dmabuf move semantics
+- Guard prevents mutex use on uninitialized `odp_eq_mutex` on non-ODP HW
+- Small, obviously correct, applies cleanly to 6.18.44
+- Same class of issue as already-backported mlx5 dmabuf/ODP fixes
+- RDMA maintainer-authored fix
+
+AGAINST backport:
+- Part of larger series (mitigated: standalone, applies cleanly, other
+  series patches already in tree)
+- Non-pinned dmabuf on non-ODP HW will now fail registration (correct
+  behavior, not a regression for working setups)
+- No external crash report (mitigated by clear code-path analysis)
+
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct and tested? **PASS** — mirrors
+   `create_user_odp_mr()`; no Tested-by but logic is clear
+2. Fixes real bug affecting users? **PASS** — dmabuf MR page-fault path
+   broken since 2021
+3. Important issue? **PASS** — RDMA hangs/errors, potential kernel crash
+   on non-ODP HW
+4. Small and contained? **PASS** — 7 lines, 2 files
+5. No new features/APIs? **PASS** — initialization/guard only
+6. Can apply to local tree? **PASS** — clean apply verified
+
+**Step 9.3 — Exception category**
+Record: N/A — standard bug fix, not device-ID/quirk/build/doc exception.
+
+**Step 9.4 — Decision rationale**
+This commit fixes a long-standing mlx5 driver bug where non-pinned
+dmabuf memory regions use ODP infrastructure without creating the
+required page-fault event queue. The bug has existed in 6.18.y since
+dmabuf support was combined with lazy ODP EQ creation (2021). Without
+the fix, dmabuf RDMA workloads can hang or error on page faults; with
+only half the fix, non-ODP hardware could hit an uninitialized mutex.
+The patch is minimal, applies cleanly, and matches stable backport
+criteria.
 
 ---
 
 ## Verification
 
-- [Phase 1] `git show c8a7d4b4723a2 -s`: parsed subject, body, Link,
-  Signed-off-by tags
-- [Phase 1] No Fixes:/Reported-by:/Cc: stable in commit message
-- [Phase 2] `git show c8a7d4b4723a2 --stat`: 1 file, +69/-38 lines
-- [Phase 3] `git describe HEAD`: v6.18.44
-- [Phase 3] `git blame -L 1930,1936 kernel/trace/ring_buffer.c`: rewind
-  logic from `ca296d32ece38`
-- [Phase 3] `git merge-base --is-ancestor ca296d32ece38 HEAD`: rewind
-  commit in tree
-- [Phase 3] `git log stable/linux-6.18.y --grep='Skip invalid sub-
-  buffers'`: no matches — fix not in stable
-- [Phase 3] `git log stable/linux-6.18.y..master --
-  kernel/trace/ring_buffer.c | grep -iE 'invalid|rewind'`: both commits
-  missing from stable
-- [Phase 4] `b4 dig -c c8a7d4b4723a2`: lore URL found
-- [Phase 4] `b4 dig -c c8a7d4b4723a2 -a`: v19/v20/v21 series revisions
-- [Phase 4] `b4 dig -c c8a7d4b4723a2 -w`: maintainers CC’d
-- [Phase 4] `grep` on `/tmp/ringbuf_thread.mbox`: cover letter describes
-  corruption robustness; no Cc: stable
-- [Phase 5] `grep rb_meta_validate_events`: caller at line 2399 in
-  `rb_allocate_cpu_buffer()`
-- [Phase 6] Read `kernel/trace/ring_buffer.c` lines 1870–2057: buggy
-  rewind `break` confirmed
-- [Phase 6] `git cherry-pick --no-commit c8a7d4b4723a2`: **CONFLICT**
-- [Phase 6] `git cherry-pick --no-commit eb3bd277b37cd && git cherry-
-  pick --no-commit c8a7d4b4723a2`: **both succeeded** (exit 0)
-- [Phase 6] `git reset --hard HEAD`: tree restored to v6.18.44
-- [Phase 7] `git log --oneline -10 -- kernel/trace/ring_buffer.c`:
-  active persistent ring-buffer maintenance
-- [Phase 8] Failure mode verified from code: premature rewind stop →
-  trace data not recovered; severity MEDIUM
+- [Phase 1] Parsed commit message and tags from user-provided diff and
+  `git show 93e64c7a33ff6`
+- [Phase 2] Read current `mr.c` lines 1628–1697 and `odp.c` lines
+  1814–1820; confirmed missing `mlx5r_odp_create_eq()` call and missing
+  guard
+- [Phase 3] `git blame` on lines 1681–1684 → `de8f847a5114f`; `git log
+  -S mlx5r_odp_create_eq -- mr.c` → only `ad50294d` adds calls (in
+  `create_user_odp_mr`); `git merge-base --is-ancestor ad50294d HEAD` →
+  in tree
+- [Phase 3] `git show 90da7dc8206a5` — original dmabuf support (Jan
+  2021); `git show ad50294d` — lazy ODP EQ creation (Mar 2021)
+- [Phase 3] Series prerequisites `f5657d`, `d4f84b`, `fd284b`, `e123f0`
+  confirmed IN_TREE
+- [Phase 4] `b4 dig -c 93e64c7a33ff6` → lore URL; `b4 dig -m` downloaded
+  mbox; confirmed patch 02/10, CC list, no NAKs
+- [Phase 4] `git show 5a6ba1a96f957` — stable backport exists elsewhere;
+  `git merge-base --is-ancestor 5a6ba1a96f957 HEAD` → NOT_IN_TREE
+- [Phase 5] `grep mlx5_ib_reg_user_mr_dmabuf` — callers in `main.c`,
+  `uverbs_std_types_mr.c`
+- [Phase 5] Read `create_user_odp_mr()` at line 1530 — reference pattern
+  for fix
+- [Phase 5] Read `mlx5_ib_odp_init_one()` —
+  `mutex_init(&dev->odp_eq_mutex)` only when `IB_ODP_SUPPORT`
+- [Phase 5] Read `ib_check_mr_access()` — checks `IB_ACCESS_ON_DEMAND`
+  but dmabuf path does not use that flag
+- [Phase 6] `git describe HEAD` → v6.18.44; branch `stable/linux-6.18.y`
+- [Phase 6] `git apply --check` of upstream patch → clean apply
+- [Phase 6] Confirmed buggy code present at `mr.c:1681-1684`,
+  `odp.c:1814-1819`
+- [Phase 8] Related fixes `cc668a11e6ac8`, `abb604a11a9c87` confirmed in
+  tree via `git log --grep`
 
-**YES**
+**YES**The background git searches finished and line up with the earlier
+analysis:
 
- kernel/trace/ring_buffer.c | 107 ++++++++++++++++++++++++-------------
- 1 file changed, 69 insertions(+), 38 deletions(-)
+- **Fix commit located:** `93e64c7a33ff6` ("RDMA/mlx5: Create ODP EQ for
+  non-pinned dmabuf MRs") — upstream; `5a6ba1a96f957` is a stable
+  backport of it elsewhere.
+- **Not in this tree:** `stable/linux-6.18.y` at 6.18.44 does not
+  include the fix; the bug is still present in `reg_user_mr_dmabuf()`.
+- **Root cause commit in tree:** `ad50294d4d6b5` (Mar 2021) moved ODP EQ
+  creation to lazy init on first ODP MR; the dmabuf path was never
+  updated.
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 631d42281f5b3..cb35aef4c47bd 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -389,6 +389,7 @@ struct buffer_page {
- static void rb_init_page(struct buffer_data_page *bpage)
- {
- 	local_set(&bpage->commit, 0);
-+	bpage->time_stamp = 0;
- }
- 
- static __always_inline unsigned int rb_page_commit(struct buffer_page *bpage)
-@@ -1872,12 +1873,14 @@ static int rb_read_data_buffer(struct buffer_data_page *dpage, int tail, int cpu
- 	return events;
- }
- 
--static int rb_validate_buffer(struct buffer_data_page *dpage, int cpu,
--			      struct ring_buffer_cpu_meta *meta)
-+static int rb_validate_buffer(struct buffer_page *bpage, int cpu,
-+			      struct ring_buffer_cpu_meta *meta, u64 prev_ts, u64 next_ts)
- {
-+	struct buffer_data_page *dpage = bpage->page;
- 	unsigned long long ts;
- 	unsigned long tail;
- 	u64 delta;
-+	int ret;
- 
- 	/*
- 	 * When a sub-buffer is recovered from a read, the commit value may
-@@ -1886,9 +1889,27 @@ static int rb_validate_buffer(struct buffer_data_page *dpage, int cpu,
- 	 * subbuf_size is considered invalid.
- 	 */
- 	tail = local_read(&dpage->commit) & ~RB_MISSED_MASK;
--	if (tail > meta->subbuf_size - BUF_PAGE_HDR_SIZE)
--		return -1;
--	return rb_read_data_buffer(dpage, tail, cpu, &ts, &delta);
-+	if (tail <= meta->subbuf_size - BUF_PAGE_HDR_SIZE)
-+		ret = rb_read_data_buffer(dpage, tail, cpu, &ts, &delta);
-+	else
-+		ret = -1;
+**Verdict remains YES** — small, correct fix for a real mlx5 dmabuf/ODP
+bug; applies cleanly to 6.18.y.
+
+ drivers/infiniband/hw/mlx5/mr.c  | 4 ++++
+ drivers/infiniband/hw/mlx5/odp.c | 3 +++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index bd5a7d1ad14c3..0c8cd84964be0 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -1679,6 +1679,10 @@ reg_user_mr_dmabuf(struct ib_pd *pd, struct device *dma_device,
+ 	atomic_add(ib_umem_num_pages(mr->umem), &dev->mdev->priv.reg_pages);
+ 	umem_dmabuf->private = mr;
+ 	if (!pinned_mode) {
++		err = mlx5r_odp_create_eq(dev, &dev->odp_pf_eq);
++		if (err)
++			goto err_dereg_mr;
 +
-+	/*
-+	 * The timestamp must be greater than @prev_ts and smaller than @next_ts.
-+	 * Since this function works in both forward (verify) and reverse (unwind)
-+	 * loop, we don't know both @prev_ts and @next_ts at the same time.
-+	 * So use the known boundary as the boundary.
-+	 */
-+	if (ret < 0 || (prev_ts && prev_ts > ts) || (next_ts && ts > next_ts)) {
-+		local_set(&bpage->entries, 0);
-+		local_set(&dpage->commit, 0);
-+		dpage->time_stamp = prev_ts ? prev_ts : next_ts;
-+		ret = -1;
-+	} else {
-+		local_set(&bpage->entries, ret);
-+	}
+ 		err = mlx5r_store_odp_mkey(dev, &mr->mmkey);
+ 		if (err)
+ 			goto err_dereg_mr;
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 47bb42576ad5d..5cd1968a33d0d 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -1816,6 +1816,9 @@ int mlx5r_odp_create_eq(struct mlx5_ib_dev *dev, struct mlx5_ib_pf_eq *eq)
+ 	struct mlx5_eq_param param = {};
+ 	int err = 0;
+ 
++	if (!(dev->odp_caps.general_caps & IB_ODP_SUPPORT))
++		return -EOPNOTSUPP;
 +
-+	return ret;
- }
- 
- /* If the meta data has been validated, now validate the events */
-@@ -1899,6 +1920,7 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 	unsigned long entry_bytes = 0;
- 	unsigned long entries = 0;
- 	int discarded = 0;
-+	bool skip = false;
- 	int ret;
- 	u64 ts;
- 	int i;
-@@ -1909,25 +1931,35 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 	orig_head = head_page = cpu_buffer->head_page;
- 	orig_reader = cpu_buffer->reader_page;
- 
--	/* Do the reader page first */
--	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu, meta);
-+	/* Do the head page first */
-+	ret = rb_validate_buffer(head_page, cpu_buffer->cpu, meta, 0, 0);
-+	if (ret < 0) {
-+		pr_info("Ring buffer meta [%d] invalid head page detected\n",
-+			cpu_buffer->cpu);
-+		/* Don't bother rewinding */
-+		skip = true;
-+		ts = 0;
-+	} else {
-+		ts = head_page->page->time_stamp;
-+	}
-+
-+	/* Do the reader page - reader must be previous to head. */
-+	ret = rb_validate_buffer(orig_reader, cpu_buffer->cpu, meta, 0, ts);
- 	if (ret < 0) {
- 		pr_info("Ring buffer meta [%d] invalid reader page detected\n",
- 			cpu_buffer->cpu);
- 		discarded++;
--		/* Instead of discard whole ring buffer, discard only this sub-buffer. */
--		local_set(&orig_reader->entries, 0);
--		local_set(&orig_reader->page->commit, 0);
- 	} else {
- 		entries += ret;
- 		entry_bytes += rb_page_size(orig_reader);
--		local_set(&orig_reader->entries, ret);
-+		ts = orig_reader->page->time_stamp;
- 	}
- 
--	ts = head_page->page->time_stamp;
-+	if (skip)
-+		goto skip_rewind;
- 
- 	/*
--	 * Try to rewind the head so that we can read the pages which already
-+	 * Try to rewind the head so that we can read the pages which are already
- 	 * read in the previous boot.
- 	 */
- 	if (head_page == cpu_buffer->tail_page)
-@@ -1940,26 +1972,27 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 		if (head_page == cpu_buffer->tail_page)
- 			break;
- 
--		/* Ensure the page has older data than head. */
--		if (ts < head_page->page->time_stamp)
-+		/* Rewind until unused page (no timestamp, no commit). */
-+		if (!head_page->page->time_stamp && rb_page_commit(head_page) == 0)
- 			break;
- 
--		ts = head_page->page->time_stamp;
--		/* Ensure the page has correct timestamp and some data. */
--		if (!ts || rb_page_commit(head_page) == 0)
--			break;
--
--		/* Stop rewind if the page is invalid. */
--		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu, meta);
--		if (ret < 0)
--			break;
--
--		/* Recover the number of entries and update stats. */
--		local_set(&head_page->entries, ret);
--		if (ret)
--			local_inc(&cpu_buffer->pages_touched);
--		entries += ret;
--		entry_bytes += rb_page_size(head_page);
-+		/*
-+		 * Skip if the page is invalid, or its timestamp is newer than the
-+		 * previous valid page.
-+		 */
-+		ret = rb_validate_buffer(head_page, cpu_buffer->cpu, meta, 0, ts);
-+		if (ret < 0) {
-+			if (!discarded)
-+				pr_info("Ring buffer meta [%d] invalid buffer page detected\n",
-+					cpu_buffer->cpu);
-+			discarded++;
-+		} else {
-+			entries += ret;
-+			entry_bytes += rb_page_size(head_page);
-+			if (ret > 0)
-+				local_inc(&cpu_buffer->pages_touched);
-+			ts = head_page->page->time_stamp;
-+		}
- 	}
- 	if (i)
- 		pr_info("Ring buffer [%d] rewound %d pages\n", cpu_buffer->cpu, i);
-@@ -2021,6 +2054,7 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 		/* Nothing more to do, the only page is the reader page */
- 		goto done;
- 	}
-+	ts = head_page->page->time_stamp;
- 
- 	/* Iterate until finding the commit page */
- 	for (i = 0; i < meta->nr_subbufs + 1; i++, rb_inc_page(&head_page)) {
-@@ -2029,15 +2063,12 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 		if (head_page == orig_reader)
- 			continue;
- 
--		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu, meta);
-+		ret = rb_validate_buffer(head_page, cpu_buffer->cpu, meta, ts, 0);
- 		if (ret < 0) {
- 			if (!discarded)
- 				pr_info("Ring buffer meta [%d] invalid buffer page detected\n",
- 					cpu_buffer->cpu);
- 			discarded++;
--			/* Instead of discard whole ring buffer, discard only this sub-buffer. */
--			local_set(&head_page->entries, 0);
--			local_set(&head_page->page->commit, 0);
- 		} else {
- 			/* If the buffer has content, update pages_touched */
- 			if (ret)
-@@ -2045,7 +2076,7 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 
- 			entries += ret;
- 			entry_bytes += rb_page_size(head_page);
--			local_set(&head_page->entries, ret);
-+			ts = head_page->page->time_stamp;
- 		}
- 		if (head_page == cpu_buffer->commit_page)
- 			break;
-@@ -2073,12 +2104,12 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 
- 	/* Reset the reader page */
- 	local_set(&cpu_buffer->reader_page->entries, 0);
--	local_set(&cpu_buffer->reader_page->page->commit, 0);
-+	rb_init_page(cpu_buffer->reader_page->page);
- 
- 	/* Reset all the subbuffers */
- 	for (i = 0; i < meta->nr_subbufs - 1; i++, rb_inc_page(&head_page)) {
- 		local_set(&head_page->entries, 0);
--		local_set(&head_page->page->commit, 0);
-+		rb_init_page(head_page->page);
- 	}
- }
- 
+ 	mutex_lock(&dev->odp_eq_mutex);
+ 	if (eq->core)
+ 		goto unlock;
 -- 
 2.53.0
 
