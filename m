@@ -1,441 +1,187 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7F84746AB;
-	Mon, 31 Aug 2026 13:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D164598BE0;
+	Mon, 31 Aug 2026 13:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184290; cv=none; b=HZQtdQ3MUMPEIvO6ynME22naYX+7utksR5JScAvtvGmqaXC9T7lV/DKdyVKglKBSzEh2FlHjtvCwmI4kiIXyOc1WhS4zB9ARTnfA/FJFcN/7WA6Rq/Fzd4Zy47BNZRVDBIdjg0ZUUk0mo/u7vXbaB2JM83AERW5NMw0heeT+z2M=
+	t=1788184291; cv=none; b=GkmaVXJzLcgiysD32KSmi2eGNVeckKqyCy19/EtuCBNR1umE1TRlvnfWeEEii9UH8F+dqalr3taBy+G1uPIMFzR8iX6+G8P/DwMZWZehG1JJHQIuwNEcbww1HPPdWf6X+JooMJAdicUMS102MaFvGv+zScmECKqpkvQChZFW0LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184290; c=relaxed/simple;
-	bh=tv2t9Qi3Md7T4llAZTdrrda9R0abp35jq5QwT9YHbJs=;
+	s=arc-20240116; t=1788184291; c=relaxed/simple;
+	bh=dBfxnAra6AMpoyCG1zjoQtQr86DcnrFnHd7EsXGwhno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QMb2SWBxgwtTj22pGyzM8k4DKVI/wdzOrMxdVhgGS7n4wdVWqjWKu215U/wyJb9jlYApaLR38Ignu/fgzIIOmjWv6LKFnV1fm2GnlwnyvILJrfSMCjbE9fxDLn5ASaZSsIMuihUFzLNrsbcFzGFTf/m/SsbMCeAfTOj2+ZU7gpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnL2iVXJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jgG0Hpvza3p6rmmr9aIkrgNj85YGftuYGsfaz521co3ANkSxODgKZ0k8puxSNGi8FzzvblvsFu9/9okij4HncYWyKuVXxMCIS33DL0wqIMsJl76mMRJtBt3rTvPdDzjihfqeWP/o2dcikZCWxDf903bo7dU34zLiEOfWZIaWpjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGakTlwq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnL2iVXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FF51F00A3D;
-	Mon, 31 Aug 2026 13:51:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184288;
-	bh=mOxVgusYOuBLDF9wnkORRZlaJ14L8gZxA3VUemltWLM=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGakTlwq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36E21F00A3E;
+	Mon, 31 Aug 2026 13:51:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184289;
+	bh=NMyzgQ0+I0p4/wqGnY2Nf7D11++gBztUB6K4wP/ge8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GnL2iVXJ96zQT4MzXcLCkxVSdrhV5Ruju1/MyHsHmRxDLHrNw7GCEiNabEUJ88xH6
-	 IunTdUjga7GwgjT3VNkmnqxggyyvZyEr0UP7DoB9bISwSvba6Z+ze6BgaZPiNwnVMO
-	 vAjIqr4bZGc+O1h2oMp60Ch2McgjMJv4Yf693UzqbDapFqsLeJ7Ij2ABdrjlr/3qhU
-	 ml4WPeW7SRfsuA73gj5/zokLBM5M543UnncwG2Ails4jkYXFsN+De2iuctXXFurJyC
-	 rx7xosh8isD0K9H4GSHFzbhWpRipCHXbIEQ5oV0eEAukZjo5pRR224eesBji1isHuz
-	 LfkiqT3s6nQKg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Evelyn Ali <evelynali99@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: ALC882: Fixup for Clevo P775TM1
-Date: Mon, 31 Aug 2026 09:30:31 -0400
-Message-ID: <20260831133314.4125787-603-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=UGakTlwqOq05K96rjsPqID5rOaBsLs3EiYlkou5UF4x1Zpxd2cWR8QIpwsIeQneNq
+	 CJpucn5MnAP1ff/xBwi2ZErigj/LmAFkNoiGn6b3SMKIcrDuSJE6BxU3nKetRTFb/q
+	 JLESFGT1ZRUW8WnuotIeMuxu0/aJ5oZu+Is2xcow=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 54/99] Bluetooth: hci_sync: Fix accept list UAF during suspend
+Date: Mon, 31 Aug 2026 15:34:23 +0200
+Message-ID: <20260831133402.728108861@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evelyn Ali <evelynali99@gmail.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit def5e78a4e003c83adc9a8b4b72534def3a49641 ]
+------------------
 
-Clevo P775TM1 laptops come with an ESS Sabre HiFi DAC. Setting
-0x1b pin VREF to 80% enables said DAC output.
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-Signed-off-by: Evelyn Ali <evelynali99@gmail.com>
-Link: https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ Upstream commit f57b399c4fa1501b2d5451f52d861ece86bcf3db ]
+
+hci_update_event_filter_sync() walks hdev->accept_list while sending a
+synchronous HCI command for each remote-wakeup device.  The suspend path
+holds hdev->req_lock, but accept-list updates are serialized by hdev->lock.
+Consequently, remove_device() can free the current list entry during the
+controller wait.
+
+The following interleaving causes the use-after-free:
+
+  hci_update_event_filter_sync()    remove_device()
+  fetch accept-list entry
+  hci_set_event_filter_sync()
+    wait for controller response    hci_dev_lock()
+                                    list_del()
+                                    kfree()
+                                    hci_dev_unlock()
+  read the freed list.next
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in hci_suspend_sync+0x835/0x910
+  Read of size 8 at addr ffff88810bec8440 by task kworker/0:1/10
+  Workqueue: events vhci_suspend_work
+  Call Trace:
+   hci_suspend_sync+0x835/0x910
+   hci_suspend_dev+0x182/0x450
+   process_one_work+0x661/0x1090
+   worker_thread+0x45b/0xd10
+
+  Allocated by task 86:
+   hci_bdaddr_list_add_with_flags+0x1a8/0x400
+   add_device+0x381/0x820
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+  Freed by task 91:
+   kfree+0x131/0x3c0
+   remove_device+0x429/0xb70
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+Snapshot the remote-wakeup addresses under hdev->lock.  Release the lock
+before sending HCI commands.  Clear the controller event filter before
+building the snapshot, and skip allocation and the second list traversal
+when there are no matching entries.  This preserves the original filter
+and scan-state updates without retaining an accept-list node across a
+controller wait.
+
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/linux-bluetooth/20260730092331.2069741-1-nicoyip.dev@gmail.com/
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[ALSA: hda/realtek: ALC882]` `[Fixup]` — Add hardware fixup
-quirk for Clevo P775TM1 laptop audio (ALC882/898 codec path).
-
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-**Record:**
-- **Signed-off-by:** Evelyn Ali \<evelynali99@gmail.com\> (author)
-- **Link:**
-  https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com
-- **Signed-off-by:** Takashi Iwai \<tiwai@suse.de\> (ALSA/HDA
-  maintainer, committer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable tags
-- Notable: Maintainer commit; v2 patch on lore; no syzbot/fuzzer
-  involvement
-
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-**Record:**
-- **Bug:** Clevo P775TM1 uses an ESS Sabre HiFi DAC; pin 0x1b VREF must
-  be 80% to enable DAC output
-- **Symptom:** No audio output from the external headphone amp / Sabre
-  DAC without the VREF setting
-- **Version info:** None stated
-- **Root cause:** Hardware requires specific pin VREF configuration not
-  provided by default or generic Clevo quirk
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised — explicit hardware fixup/quirk. Fixes broken
-audio on a specific laptop model, not a crash or memory bug.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: INVENTORY THE CHANGES
-**Record:**
-- **File:** `sound/hda/codecs/realtek/alc882.c` (+22 lines, 0 removed)
-- **Functions modified/added:** `alc898_fixup_clevo_p775tm1()` (new)
-- **Tables modified:** enum fixup IDs, `alc882_fixups[]`,
-  `alc882_fixup_tbl[]`, `alc882_fixup_models[]`
-- **Scope:** Single-file, surgical hardware quirk addition
-
-### Step 2.2: CODE FLOW CHANGE
-**Record:**
-- **Hunk 1 (enum):** Adds `ALC898_FIXUP_CLEVO_P775TM1` fixup ID
-- **Hunk 2 (new function):** On `HDA_FIXUP_ACT_PRE_PROBE`, sets pin 0x1b
-  to `PIN_VREF80` via `snd_hda_set_pin_ctl_cache()` and sets
-  `spec->gen.keep_vref_in_automute = 1` so automute does not clear VREF
-- **Hunk 3 (fixups table):** Registers fixup function, chained to
-  `ALC882_FIXUP_EAPD`
-- **Hunk 4 (quirk table):** `SND_PCI_QUIRK(0x1558, 0x7709, "Clevo
-  P775TM1", ...)` — PCI SSID match
-- **Hunk 5 (model table):** Adds model name `clevo-p775tm1` for manual
-  override
-
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:** **Category (h): Hardware workaround / audio codec quirk.**
-Pin 0x1b VREF at 80% gates the ESS Sabre HiFi DAC; without it the
-external amp stays disabled. `keep_vref_in_automute` prevents the
-generic automute path from stripping VREF during jack events.
-
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:** Fix is minimal and follows established patterns in the same
-file (`alc889_fixup_mbp_vref`, other Clevo fixups). Chaining to
-`ALC882_FIXUP_EAPD` matches other Clevo entries. Low regression risk —
-only affects PCI SSID `0x1558:0x7709`. No lock or API changes.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** Insertion point (between `0x70d1` and `0x7714` Clevo quirks)
-dates to `aeeb85f26c3bb` (2025-07-09, Realtek driver split). No pre-
-existing bug — this is missing hardware support, not a regression from
-prior code.
-
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** N/A — no Fixes: tag present.
-
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:** Local tree at `v6.18.44` has only two commits touching
-`alc882.c`: `e1d695b45fd11` (probe rewrite) and `aeeb85f26c3bb` (driver
-split). Commit `def5e78a4e003` is on `master` but not in
-`stable/linux-6.18.y`. Standalone single-patch fix, not part of a
-series.
-
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Evelyn Ali has no other commits in this tree. Takashi Iwai
-is the ALSA/HDA maintainer and authored the surrounding Clevo quirk
-infrastructure.
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** No dependencies. Required symbols (`PIN_VREF80`,
-`snd_hda_set_pin_ctl_cache`, `keep_vref_in_automute`,
-`ALC882_FIXUP_EAPD`) all exist in this tree. `git apply --check` on the
-patch succeeds cleanly.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:** `b4 dig -c def5e78a4e003` → [v2] thread at
-https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com.
-Only v2 found (no v1 in series list). Maintainer merged without
-objections in thread.
-
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** `b4 dig -w`: To linux-sound@vger.kernel.org, Evelyn Ali,
-Takashi Iwai. Appropriate subsystem list and maintainer CC'd.
-
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** No external bug report or syzbot link. Hardware issue
-reported by patch author on their own hardware.
-
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Standalone 1-patch series. No prerequisites.
-
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** Not searched on lore stable list; no stable nomination found
-in patch thread. Absence of Cc: stable is expected per review
-instructions.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `alc898_fixup_clevo_p775tm1()` (new fixup callback)
-
-### Step 5.2: TRACE CALLERS
-**Record:** Invoked by HDA fixup framework during codec probe for
-matching PCI quirk `0x1558:0x7709`. Called from device enumeration when
-the Realtek codec driver loads — standard driver probe path for affected
-hardware.
-
-### Step 5.3: TRACE CALLEES
-**Record:** `snd_hda_set_pin_ctl_cache(codec, 0x1b, PIN_VREF80)` —
-caches pin control for node 0x1b with 80% VREF. Sets
-`spec->gen.keep_vref_in_automute` read later in
-`sound/hda/codecs/generic.c` automute path.
-
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** PCI device probe → HDA codec driver → quirk table lookup by
-SSID → fixup chain (`ALC898_FIXUP_CLEVO_P775TM1` → `ALC882_FIXUP_EAPD`)
-→ pin configuration at probe. Reachable on boot for matching hardware;
-not userspace-triggerable but affects all audio on that machine.
-
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** Same `keep_vref_in_automute` + VREF pattern in
-`alc889_fixup_mbp_vref()` and `alc889_fixup_mac_pins()` in the same file
-(lines 109–144). Multiple Clevo-specific fixups already present
-(`ALC1220_FIXUP_CLEVO_P950`, `ALC1220_FIXUP_CLEVO_PB51ED`, etc.).
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
-
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** Local tree is **v6.18.44** (`stable/linux-6.18.y`). The fix
-is **absent** — grep finds no `P775TM1`, `0x7709`, or
-`ALC898_FIXUP_CLEVO_P775TM1`. Without the quirk, `0x1558:0x7709` matches
-only the generic `SND_PCI_QUIRK_VENDOR(0x1558, "Clevo laptop",
-ALC882_FIXUP_EAPD)` at line 682, which does not set pin 0x1b VREF. The
-broken behavior (no Sabre DAC output) is present for P775TM1 owners on
-this tree.
-
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** **Clean apply** — `git apply --check` passes with no
-conflicts. File structure matches mainline commit base.
-
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** No duplicate or alternative fix for P775TM1 found. Clevo
-VREF/quirk infrastructure is present from the 2025 driver split.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** **sound/ALSA HDA Realtek codec driver** — IMPORTANT (affects
-audio on specific laptop hardware, not core kernel paths).
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** Actively maintained; frequent laptop quirk additions on
-stable (e.g., `04dd210180575` Clevo mic fix in this tree).
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** **Driver-specific / hardware-specific** — Clevo P775TM1
-laptops with PCI SSID `0x1558:0x7709` and Realtek ALC898-class codec.
-
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-**Record:** Triggers at every boot/probe on matching hardware. Not
-timing-dependent. Unprivileged users cannot trigger it arbitrarily, but
-all users on that laptop are affected.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** **No audio output** from the ESS Sabre HiFi DAC / external
-headphone amp. **Severity: MEDIUM** — serious functional impairment for
-affected users, but no crash, corruption, deadlock, or security impact.
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-**Record:**
-- **Benefit:** Enables working audio on Clevo P775TM1 — real hardware
-  fix for real users
-- **Risk:** Very low — 22 lines, SSID-gated, established pattern
-- **Ratio:** Strong benefit, minimal risk — standard stable quirk
-  material
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: COMPILE THE EVIDENCE
-
-**FOR backporting:**
-- Hardware codec quirk — explicit stable exception category
-- Fixes real user-visible bug (no audio) on Clevo P775TM1
-- Small (22 lines), single file, applies cleanly to v6.18.44
-- Follows established patterns in same file (VREF +
-  `keep_vref_in_automute`, Clevo quirk table)
-- Merged by subsystem maintainer (Takashi Iwai)
-- All prerequisites present in this tree
-- Fix not yet in `stable/linux-6.18.y`
-
-**AGAINST backporting:**
-- Not a crash/security/corruption issue
-- Affects narrow hardware population
-- No Tested-by: tag beyond author/maintainer
-- New laptop model — limited user base on 6.18.y today
-
-**Unresolved:** None material to the decision.
-
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — standard HDA quirk pattern;
-   maintainer-merged v2
-2. Fixes a real bug affecting users? **PASS** — broken audio on P775TM1
-3. Important issue? **PASS** (functional/hardware) — no audio is a
-   significant usability failure for affected hardware, though not
-   CRITICAL severity
-4. Small and contained? **PASS** — 22 lines, one file
-5. No new features or APIs? **PASS** — hardware quirk exception applies
-6. Can apply to the local tree? **PASS** — clean apply verified
-
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-**Record:** **Hardware quirk / audio codec quirk** — automatic stable
-YES category per stable rules.
-
-### Step 9.4: DECISION RATIONALE
-
-For **linux-6.18.y (v6.18.44)**, this commit should be backported. It is
-a textbook HDA Realtek laptop quirk: PCI SSID-specific pin VREF
-configuration enabling an external DAC. The same file already contains
-numerous Clevo fixups using identical infrastructure. The patch is
-absent from this stable tree, applies without modification, and fixes a
-real hardware issue with negligible regression risk.
-
----
-
-## Verification
-
-- [Phase 1] `git show def5e78a4e003`: parsed tags (SOB Evelyn Ali, Link,
-  SOB Takashi Iwai); no Fixes/Reported-by/Tested-by
-- [Phase 1] Subject parsed: ALSA hda/realtek ALC882 fixup for Clevo
-  P775TM1
-- [Phase 2] Diff: +22 lines in `alc882.c`; new
-  `alc898_fixup_clevo_p775tm1()`, quirk `0x1558:0x7709`
-- [Phase 3] `git describe HEAD`: v6.18.44; tree is `stable/linux-6.18.y`
-- [Phase 3] `git log HEAD..master --grep P775TM1`: commit only on
-  master, not in stable branch
-- [Phase 3] `git apply --check` on patch from `def5e78a4e003`: applies
-  cleanly
-- [Phase 3] `git blame` lines 666–668: surrounding Clevo quirks from
-  `aeeb85f26c3bb` (2025-07-09)
-- [Phase 4] `b4 dig -c def5e78a4e003`: lore URL
-  https://patch.msgid.link/20260602214122.78020-1-evelynali99@gmail.com
-- [Phase 4] `b4 dig -a`: v2 only, standalone patch
-- [Phase 4] `b4 dig -w`: CC'd linux-sound@vger.kernel.org and Takashi
-  Iwai
-- [Phase 4] `b4 dig -m /tmp/p775tm1.mbox`: thread saved; maintainer
-  merge reply, no stable nomination or NAK
-- [Phase 5] `grep keep_vref_in_automute`: used in `alc882.c` lines
-  126/143 and `generic.c` line 4412
-- [Phase 5] `grep PIN_VREF80`: defined in `hda_local.h`, used across HDA
-  codecs
-- [Phase 6] `grep P775TM1|0x7709|ALC898_FIXUP`: no matches — fix absent
-  from local tree
-- [Phase 6] Read `alc882.c` line 682: generic Clevo EAPD quirk exists
-  but lacks VREF fix
-- [Phase 6] Read `alc882.c` lines 666–668: gap where `0x7709` quirk
-  should be inserted
-- [Phase 8] Failure mode: no audio from Sabre DAC; severity MEDIUM
-  (functional, not crash)
-
-**YES**
-
- sound/hda/codecs/realtek/alc882.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
-diff --git a/sound/hda/codecs/realtek/alc882.c b/sound/hda/codecs/realtek/alc882.c
-index 529fecd5baa0a..fd466b6985f05 100644
---- a/sound/hda/codecs/realtek/alc882.c
-+++ b/sound/hda/codecs/realtek/alc882.c
-@@ -61,6 +61,7 @@ enum {
- 	ALC887_FIXUP_ASUS_HMIC,
- 	ALCS1200A_FIXUP_MIC_VREF,
- 	ALC888VD_FIXUP_MIC_100VREF,
-+	ALC898_FIXUP_CLEVO_P775TM1,
- };
- 
- static void alc889_fixup_coef(struct hda_codec *codec,
-@@ -236,6 +237,19 @@ static void alc1220_fixup_clevo_pb51ed(struct hda_codec *codec,
- 	alc_fixup_headset_mode_no_hp_mic(codec, fix, action);
- }
- 
-+/* On Clevo P775TM1, VREF of pin 0x1b enables the external headphone amp */
-+static void alc898_fixup_clevo_p775tm1(struct hda_codec *codec,
-+				       const struct hda_fixup *fix, int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	if (action != HDA_FIXUP_ACT_PRE_PROBE)
-+		return;
-+
-+	snd_hda_set_pin_ctl_cache(codec, 0x1b, PIN_VREF80);
-+	spec->gen.keep_vref_in_automute = 1;
-+}
-+
- static void alc887_asus_hp_automute_hook(struct hda_codec *codec,
- 					 struct hda_jack_callback *jack)
+ net/bluetooth/hci_sync.c |   50 ++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 39 insertions(+), 11 deletions(-)
+
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6212,6 +6212,8 @@ static int hci_pause_discovery_sync(stru
+ static int hci_update_event_filter_sync(struct hci_dev *hdev)
  {
-@@ -560,6 +574,12 @@ static const struct hda_fixup alc882_fixups[] = {
- 			{}
- 		}
- 	},
-+	[ALC898_FIXUP_CLEVO_P775TM1] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc898_fixup_clevo_p775tm1,
-+		.chained = true,
-+		.chain_id = ALC882_FIXUP_EAPD,
-+	},
- };
+ 	struct bdaddr_list_with_flags *b;
++	bdaddr_t *accept_list;
++	size_t i, num_entries = 0;
+ 	u8 scan = SCAN_DISABLED;
+ 	bool scanning = test_bit(HCI_PSCAN, &hdev->flags);
+ 	int err;
+@@ -6228,23 +6230,49 @@ static int hci_update_event_filter_sync(
+ 	/* Always clear event filter when starting */
+ 	hci_clear_event_filter_sync(hdev);
  
- static const struct hda_quirk alc882_fixup_tbl[] = {
-@@ -664,6 +684,7 @@ static const struct hda_quirk alc882_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1558, 0x67f1, "Clevo PC70H[PRS]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x67f5, "Clevo PD70PN[NRT]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x70d1, "Clevo PC70[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
-+	SND_PCI_QUIRK(0x1558, 0x7709, "Clevo P775TM1", ALC898_FIXUP_CLEVO_P775TM1),
- 	SND_PCI_QUIRK(0x1558, 0x7714, "Clevo X170SM", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
- 	SND_PCI_QUIRK(0x1558, 0x7715, "Clevo X170KM-G", ALC1220_FIXUP_CLEVO_PB51ED),
- 	SND_PCI_QUIRK(0x1558, 0x9501, "Clevo P950HR", ALC1220_FIXUP_CLEVO_P950),
-@@ -719,6 +740,7 @@ static const struct hda_model_fixup alc882_fixup_models[] = {
- 	{.id = ALC1220_FIXUP_GB_DUAL_CODECS, .name = "dual-codecs"},
- 	{.id = ALC1220_FIXUP_GB_X570, .name = "gb-x570"},
- 	{.id = ALC1220_FIXUP_CLEVO_P950, .name = "clevo-p950"},
-+	{.id = ALC898_FIXUP_CLEVO_P775TM1, .name = "clevo-p775tm1"},
- 	{}
- };
+-	list_for_each_entry(b, &hdev->accept_list, list) {
+-		if (!(b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP))
+-			continue;
+-
+-		bt_dev_dbg(hdev, "Adding event filters for %pMR", &b->bdaddr);
+-
+-		err =  hci_set_event_filter_sync(hdev, HCI_FLT_CONN_SETUP,
+-						 HCI_CONN_SETUP_ALLOW_BDADDR,
+-						 &b->bdaddr,
+-						 HCI_CONN_SETUP_AUTO_ON);
++	hci_dev_lock(hdev);
++
++	list_for_each_entry(b, &hdev->accept_list, list)
++		if (b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)
++			num_entries++;
++
++	if (!num_entries) {
++		hci_dev_unlock(hdev);
++		goto update_scan;
++	}
++
++	accept_list = kmalloc_array(num_entries, sizeof(*accept_list),
++				    GFP_KERNEL);
++	if (!accept_list) {
++		hci_dev_unlock(hdev);
++		return -ENOMEM;
++	}
++
++	i = 0;
++	list_for_each_entry(b, &hdev->accept_list, list)
++		if (b->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)
++			bacpy(&accept_list[i++], &b->bdaddr);
++
++	hci_dev_unlock(hdev);
++
++	for (i = 0; i < num_entries; i++) {
++		bt_dev_dbg(hdev, "Adding event filters for %pMR",
++			   &accept_list[i]);
++
++		err = hci_set_event_filter_sync(hdev, HCI_FLT_CONN_SETUP,
++						HCI_CONN_SETUP_ALLOW_BDADDR,
++					 &accept_list[i],
++					 HCI_CONN_SETUP_AUTO_ON);
+ 		if (err)
+ 			bt_dev_err(hdev, "Failed to set event filter for %pMR",
+-				   &b->bdaddr);
++				   &accept_list[i]);
+ 		else
+ 			scan = SCAN_PAGE;
+ 	}
  
--- 
-2.53.0
++	kfree(accept_list);
++
++update_scan:
+ 	if (scan && !scanning)
+ 		hci_write_scan_enable_sync(hdev, scan);
+ 	else if (!scan && scanning)
+
 
