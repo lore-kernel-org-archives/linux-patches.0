@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6973956C64B;
-	Mon, 31 Aug 2026 13:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE874252AB;
+	Mon, 31 Aug 2026 13:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184108; cv=none; b=jeDeTfIgzpYJjagvm1N31fL8SvrUDnJ6loGJsZ5tH7SPewj3s3DneHpekQKa4H18d4q/no/YI1/9i0k4KQQ3WgBAgX+EH2mW3sMMAMxdiDCKWiO5oN16Eg+PU+U8cm2PDNr7S3sCS49lxR03BnsJmVdzhshi/lEE2EvtHdSjrXk=
+	t=1788184108; cv=none; b=beu/xrNUJJScLdc63rKt4SPOL3UECM0YnH4vYmQltJ7dWJN1UiRE31a79vJN9SqApNFNFN3O19Oen42aLCrHcbHzl2RrIZOwngq308lAubqGVaOTYx8Nr6LybFN4flRMTQw8tMJ9btU2StHsj093AjqWP4g/7jGym0DFfdynKRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184108; c=relaxed/simple;
-	bh=xkXO7Xn9rTOeoxTnAPikfIGYnyGBWrQvEYDXsA/8l80=;
+	bh=HJ5f5hvqDl6EwVDXwY0FTveBmih9YmtAT4PC4dOx/Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aNYtpB/soSC6wxDBgRqOfoXU/NiGuahJtdr/sP+D+RYuqtFXdMp6u9VFYeg/OohHcAKrcXvvAdwRnA14acBSs4uRtDDxq9Ih7d9ylj1pSxhb3mYHa6aMZaeJi5vdi8r4dAjU9rLqT1HDUKykCW+m1z0C+YZfQYjD9inneecssaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ewRK8erH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uhWTeD2avpkj/DleEXSB+xMkq0hplU2vvNAxqRDga2um2IUF+Eb2+OChhdPjl6fyGkRsW1jUAQ/B4LDX19YGs4no9kxojIprLVPgmYJWT+msb5q8+VUWsPO+npN8x/OsQvXDNrviloIRrs3QHOIUwPt5G0A7CFBOf/64Jbw7qHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DXZvhnpB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ewRK8erH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99F51F00ACF;
-	Mon, 31 Aug 2026 13:48:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DXZvhnpB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589711F00A3F;
+	Mon, 31 Aug 2026 13:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184105;
-	bh=mhUV1L2AUmXHJKZbxJWi4kIFg3U6/9Hyhje/cu/Ziks=;
+	s=k20260515; t=1788184106;
+	bh=PakesP/6ouAxBo8uYPsTCDb+PxbcxZLnYhsPuDH6hoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ewRK8erHtjknv9LfeisT86BqkypZ728eVwBcA7BCnKIX2X0y8eiFF33duczP43Nwt
-	 GqPEByOpEumlD5X0+FZueRS61hWVQBrJSOtU2TcSil9PoPEwEQsQOdiIQhcc5blKBv
-	 LVSAp/wG7b27y0dcCyhzLZZ2lEMu8vxxYqlXQorv3gNQFyKqpSPjkDfVtG0spHuHTh
-	 q1IPWMP9VlPcvRj5dawBBAn72x4vL73Y+sYP8YFoFi5f+Vez6rtjzSiWQp6OVTU4ju
-	 WbDhVTIE/8HneNlVMGM6hNMObuDVVKj+iZCXJV6LXC1F3P8BnfY5zjLWGtoFrZs7iW
-	 OcU4/N4/IPUiA==
+	b=DXZvhnpBQy/abusCnQRQTRcX4JpNf42d7mZor9YYz8HVojF0X+SFCMYu1ZfkZzBUn
+	 9AOpbjSdg3wLRG+/WNWVSehGLtWLJpVMLqkX/5UBAo8+ykWYZgteTnjSeylxRIowJX
+	 pabQFXiKl5esAuWMOvxVhhfimcXLmt/AYmHR0HnZwgX7SswFeUUW8z/9Sd0SUtO94Y
+	 C3nNzLV2Z5uKSOTuGT6IlIbumNlRxSavh5EF9kuXQUf/3hELedGCiOVV+LHt+XZPcX
+	 iqil1nYrqbfLEwmMKkmbFnb0+tvWjurHqYeVh0rhBGNCX1g/ET/HqtqCsfa7vDVJIs
+	 UAZZi4x1hWHOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kumar Meiyappan <kumar.meiyappan@microchip.com>,
-	Sagar Biradar <sagar.biradar@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jinpu.wang@cloud.ionos.com,
-	James.Bottomley@HansenPartnership.com,
-	mkp@kernel.org,
-	linux-scsi@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] scsi: pm8001: Reject non-fatal dump when controller is crashed
-Date: Mon, 31 Aug 2026 09:28:41 -0400
-Message-ID: <20260831133314.4125787-493-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: rsi: validate beacon length before fixed buffer copy
+Date: Mon, 31 Aug 2026 09:28:42 -0400
+Message-ID: <20260831133314.4125787-494-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,25 +52,21 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Meiyappan <kumar.meiyappan@microchip.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit aa3b8f56ef27ed72394a752820abdec4608b731c ]
+[ Upstream commit 8ecdeb8b8a33b22c597299043c0dcfce50beb9ea ]
 
-pm80xx_get_non_fatal_dump() can be called even after the controller has
-entered a fatal error state. In that case the forensic memory contents
-are not safe to access for a non-fatal dump request, and attempting to
-do so can trigger a call trace.
+rsi_prepare_beacon() copies the mac80211 beacon frame after
+FRAME_DESC_SZ into a management skb whose usable tailroom may be smaller
+than MAX_MGMT_PKT_SIZE after alignment.
 
-Check controller_fatal_error before reading the non-fatal dump buffer
-and return -EINVAL when the controller is already in a crashed state.
+Validate the beacon length against the actual tailroom before the copy
+and skb_put(). Leave ownership of the management skb with the caller on
+error, matching the existing rsi_send_beacon() cleanup path.
 
-This prevents non-fatal dump collection from running in an invalid
-controller state.
-
-Signed-off-by: Kumar Meiyappan <kumar.meiyappan@microchip.com>
-Signed-off-by: Sagar Biradar <sagar.biradar@microchip.com>
-Link: https://patch.msgid.link/20260416154650.415624-1-sagar.biradar@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -83,261 +75,252 @@ LLM Generated explanations, may be completely bogus:
 ## Phase 1: Commit Message Forensics
 
 ### Step 1.1: Subject Line
-Record: **[scsi: pm8001]** **[Reject]** — Reject non-fatal forensic dump
-collection when the PMC-Sierra PM8001 controller is already in a fatal
-error state.
+**Record:** `[wifi: rsi]` `[validate]` — validate beacon length before
+copying into a fixed-size management skb buffer.
 
-### Step 1.2: Commit Message Tags
-Record:
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** https://patch.msgid.link/20260416154650.415624-1-
-  sagar.biradar@microchip.com
-- **Cc: stable@** — present in original patch submission (verified via
-  `b4 dig -w`)
-- **Signed-off-by:** Kumar Meiyappan, Sagar Biradar, Martin K. Petersen
-  (SCSI maintainer)
+### Step 1.2: Tags
+**Record:**
+- **Fixes:** — absent (expected for manual review)
+- **Reported-by:** — absent
+- **Tested-by:** — absent
+- **Reviewed-by:** — absent
+- **Acked-by:** — absent
+- **Link:**
+  `https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn`
+- **Cc: stable:** — absent
+- **Signed-off-by:** Pengpeng Hou `<pengpeng@iscas.ac.cn>` (author);
+  Johannes Berg `<johannes.berg@intel.com>` (wireless maintainer merge
+  sign-off)
 
-Notable: authors explicitly CC'd `stable@vger.kernel.org`; no syzbot or
-user bug reports.
+Notable: CC to Kees Cook on the mailing list submission (security
+maintainer). No syzbot Reported-by tag.
 
-### Step 1.3: Commit Body Analysis
-Record:
-- **Bug:** `pm80xx_get_non_fatal_dump()` can run after the controller
-  has entered fatal error state.
-- **Symptom:** Attempting to read forensic memory in that state can
-  trigger a kernel call trace.
-- **Root cause:** Missing guard on `controller_fatal_error` before
-  initiating non-fatal dump hardware access.
-- **Fix approach:** Check `controller_fatal_error` and return `-EINVAL`
-  early.
-- **Version info:** none in commit message.
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** `rsi_prepare_beacon()` copies the mac80211 beacon after
+  `FRAME_DESC_SZ` (16 bytes) into an skb allocated for
+  `MAX_MGMT_PKT_SIZE` (512), but usable tailroom can be smaller after
+  dword alignment `skb_pull()` in the caller.
+- **Symptom:** Unchecked `memcpy()` + `skb_put()` can write past skb
+  buffer end → heap buffer overflow.
+- **Version info:** None in commit message.
+- **Root cause:** Caller reduces effective buffer space for alignment;
+  callee assumes full `MAX_MGMT_PKT_SIZE` is available.
 
 ### Step 1.4: Hidden Bug Fix Detection
-Record: **Yes, this is a straightforward bug fix** disguised as "reject"
-rather than "fix", but it clearly prevents unsafe hardware access and
-kernel call traces during error recovery.
+**Record:** Not disguised — explicitly a bounds-validation fix before
+`memcpy()`. Classic buffer-overflow prevention.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Change Inventory
-Record:
-- **Files:** `drivers/scsi/pm8001/pm80xx_hwi.c` (+7 / -0)
-- **Function modified:** `pm80xx_get_non_fatal_dump()`
-- **Scope:** Single-file, surgical fix
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `drivers/net/wireless/rsi/rsi_91x_hal.c` (+8 / -0)
+- **Functions:** `rsi_prepare_beacon()`
+- **Scope:** Single-file, surgical fix in one function
 
 ### Step 2.2: Code Flow Change
-Record:
-- **Before:** After mapping host forensic buffer pointer, function
-  immediately increments `non_fatal_count` and performs MMIO
-  writes/reads to the crashed controller (`pm8001_mw32`, `pm8001_mr32`,
-  `pm8001_cw32`).
-- **After:** If `controller_fatal_error` is true, log debug message and
-  return `-EINVAL` before any controller interaction.
-- **Path affected:** Sysfs read of `non_fatal_log` via
-  `non_fatal_log_show()` → `pm80xx_get_non_fatal_dump()`.
+**Record:**
+- **Hunk 1 (variable):** Adds `unsigned int tailroom`.
+- **Hunk 2 (validation):** Before `memcpy()`:
+  - **Before:** Unconditionally copies `mac_bcn->len` bytes and extends
+    skb.
+  - **After:** Checks `skb_tailroom(skb) >= FRAME_DESC_SZ` and
+    `mac_bcn->len <= tailroom - FRAME_DESC_SZ`; on failure frees
+    `mac_bcn`, returns `-EMSGSIZE`, leaves caller-owned `skb` untouched.
+- **Path affected:** AP/P2P-GO beacon preparation error path (new) and
+  success path (unchanged).
 
 ### Step 2.3: Bug Mechanism
-Record:
-- **Category:** Logic/correctness fix — unsafe hardware access in
-  invalid controller state.
-- **Mechanism:** After fatal firmware error (`controller_fatal_error =
-  true` set in interrupt handler at line 4084), forensic DMA/MMIO
-  operations are unsafe; the function lacked the same state check used
-  elsewhere in the driver.
+**Record:** **Category:** Buffer overflow / out-of-bounds write (memory
+safety).
+
+**Mechanism:**
+1. `rsi_send_beacon()` allocates `dev_alloc_skb(MAX_MGMT_PKT_SIZE)` (512
+   bytes).
+2. For 64-byte alignment, it may `skb_pull(skb, 64 - dword_align_bytes)`
+   — up to 63 bytes, reducing tailroom to as little as ~449 bytes.
+3. `rsi_prepare_beacon()` then does `memcpy(&skb->data[FRAME_DESC_SZ],
+   mac_bcn->data, mac_bcn->len)` without checking fit.
+4. Worst case: safe beacon payload without fix ≈ **433 bytes** (`512 -
+   63 - 16`). Beacons with many IEs (HT/VHT/HE, WPS, vendor IEs) can
+   exceed this.
 
 ### Step 2.4: Fix Quality
-Record:
-- **Quality:** Obviously correct; mirrors existing driver pattern
-  (`pm8001_sas.c` task path, `pm80xx_chip_soft_rst()`).
-- **Regression risk:** Very low — only rejects an operation that should
-  never succeed on a dead controller.
-- **Red flags:** None.
+**Record:**
+- **Quality:** Obviously correct — uses `skb_tailroom()` against actual
+  post-alignment space, not the nominal `MAX_MGMT_PKT_SIZE`.
+- **Minimal:** 8 lines, no unrelated changes.
+- **Error handling:** Correctly frees `mac_bcn` only; caller
+  `rsi_send_beacon()` already frees `skb` on any `rsi_prepare_beacon()`
+  failure.
+- **Regression risk:** Very low. On oversize beacon, AP beacon TX fails
+  gracefully instead of corrupting memory.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame / Introduction
-Record:
-- Buggy function exists in local tree at
-  `drivers/scsi/pm8001/pm80xx_hwi.c:387-503`.
-- Non-fatal dump sysfs feature originally added in `dba2cc03b9db`
-  (2020-03-16, "scsi: pm80xx: sysfs attribute for non fatal dump").
-- `controller_fatal_error` exists at lines 1445, 1650, 4084 in current
-  tree.
-- Local autosel tree has squashed history; per-file `git blame` is not
-  reliable for introduction dating.
+### Step 3.1: Blame
+**Record:** Lines 483–484 (`memcpy`/`skb_put`) blamed to `5d324e5159d9e`
+(Merge tag 'usb-6.18-rc8', 2025-11-28). Local history for this file is
+shallow (only 1 commit in `git log --
+drivers/net/wireless/rsi/rsi_91x_hal.c`). Exact commit that introduced
+the alignment+memcpy pattern is **UNVERIFIED** beyond presence in this
+6.18.y tree.
 
-### Step 3.2: Fixes Tag
-Record: **N/A** — no `Fixes:` tag present.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag.
 
 ### Step 3.3: Related File History
-Record:
-- Sibling upstream commit `2a8fbcfb04aa9` ("scsi: pm8001: Reject
-  firmware update in fatal error state") from same author/date — same
-  pattern, different sysfs path; also **not** in current HEAD.
-- Standalone v1 patch; not part of a multi-patch series.
+**Record:** Shallow history in this checkout. Related mainline commit
+`d06a3e60c8fea` ("wifi: rsi: bound background scan probe request copy")
+exists in repo but is **not** an ancestor of HEAD — separate bounds-
+check fix, not a prerequisite for this patch.
 
 ### Step 3.4: Author Context
-Record: Kumar Meiyappan / Sagar Biradar are Microchip pm8001 driver
-authors. Martin K. Petersen (SCSI maintainer) committed the fix upstream
-as `aa3b8f56ef27`.
+**Record:** Pengpeng Hou submitted security-oriented bounds checks for
+the RSI driver. Johannes Berg (wireless maintainer) merged. Author
+relationship to subsystem: contributor doing targeted hardening.
 
 ### Step 3.5: Dependencies
-Record: **Standalone.** No prerequisite commits required.
-`controller_fatal_error` field and `pm80xx_get_non_fatal_dump()` both
-exist in this tree. Patch applies at line ~403 with clean context
-(verified against upstream diff and local file).
+**Record:** Standalone. No patch series markers. No new structures/APIs.
+Applies cleanly to current `rsi_91x_hal.c` in this tree.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
 ### Step 4.1: Original Discussion
-Record:
-- **URL:** https://patch.msgid.link/20260416154650.415624-1-
-  sagar.biradar@microchip.com
-- **Series:** v1 only (no v2/v3)
-- **Maintainer response:** Martin K. Petersen applied to 7.2/scsi-queue
-  (May 22, 2026)
-- **NAKs/concerns:** None found in thread
-- **Stable nomination:** Authors CC'd `stable@vger.kernel.org` in
-  original submission
+**Record:**
+- `b4 dig` failed in this environment.
+- Openwall archive: https://lists.openwall.net/linux-
+  kernel/2026/07/05/209
+- Patchew:
+  https://patchew.org/linux/20260705084824.68105-1-pengpeng@iscas.ac.cn/
+- lore.kernel.org blocked by bot protection.
+- **Series revisions:** v1 only (Syzbot CI confirms Version 1).
+- **Reviewer feedback:** No replies/NAKs found in accessible archives.
+- **Stable nomination:** None found.
 
 ### Step 4.2: Reviewers
-Record: CC'd Martin K. Petersen, James Bottomley, Jack Wang, linux-scsi,
-stable@, Brian King, Don Brace, and other Microchip engineers.
+**Record:** CC'd to `kees@kernel.org`, `linux-wireless@vger.kernel.org`,
+`linux-kernel@vger.kernel.org`. Merged with Signed-off-by from Johannes
+Berg.
 
 ### Step 4.3: Bug Report
-Record: No external bug report, syzbot, or stack trace in commit
-message. Issue appears internally discovered by driver vendor during
-fatal-error handling review.
+**Record:** No external bug report or syzbot crash report. Syzbot CI
+tested the patch series and reported "All tests passed" — validation
+testing, not a fuzzer-found crash report.
 
 ### Step 4.4: Related Patches
-Record: Related upstream fix `2a8fbcfb04aa9` for
-`pm8001_store_update_fw()` — same failure class, separate commit. Not a
-dependency for this fix.
+**Record:** Same author has a related RSI bounds-check patch for
+background scan probe requests on mainline; independent of this fix.
 
 ### Step 4.5: Stable List History
-Record: Patch was posted directly to stable@ (spinics stable archive).
-No rejection or prior stable discussion found beyond the submission
-itself.
+**Record:** No stable-list discussion found (UNVERIFIED beyond search
+results).
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key Functions
-Record: `pm80xx_get_non_fatal_dump()` (modified), `non_fatal_log_show()`
-(caller), fatal error ISR path setting `controller_fatal_error`.
+**Record:** `rsi_prepare_beacon()` (modified); callers:
+`rsi_send_beacon()` only.
 
 ### Step 5.2: Callers
-Record:
-- `non_fatal_log_show()` in `pm8001_ctl.c:588-591` directly returns
-  result.
-- Exposed as read-only sysfs host attribute `non_fatal_log` in
-  `pm8001_host_attrs[]`.
-- Called during diagnostic collection, typically by root/admin tooling
-  after controller errors.
+**Record:**
+- `rsi_send_beacon()` → `rsi_prepare_beacon()` (`rsi_91x_mgmt.c:1777`)
+- `rsi_send_beacon()` called from `BEACON_EVENT_IND` case
+  (`rsi_91x_mgmt.c:2225`) when AP beaconing is enabled and FSM is in
+  `FSM_MAC_INIT_DONE`
 
 ### Step 5.3: Callees
-Record: `pm8001_mw32()`, `pm8001_mr32()`, `pm8001_cw32()` — MMIO
-register access to potentially dead controller; forensic DMA buffer
-reads from `FORENSIC_MEM`.
+**Record:** `ieee80211_beacon_get_tim()`, `dev_kfree_skb()`, `memcpy()`,
+`skb_put()`, `skb_tailroom()` (added).
 
 ### Step 5.4: Reachability
-Record:
-- **Trigger chain:** Controller fatal firmware error → ISR sets
-  `controller_fatal_error` → admin reads
-  `/sys/class/scsi_host/hostN/non_fatal_log` → unsafe MMIO without
-  guard.
-- **Userspace reachable:** Yes, via sysfs read (requires appropriate
-  permissions, typically root/CAP_SYS_ADMIN).
+**Record:**
+- Triggered by firmware beacon events on RSI hardware in AP/P2P-GO mode.
+- Beacon content comes from mac80211 (host configuration — SSID, IEs,
+  security, etc.).
+- Not directly a syscall path, but reachable from normal AP operation
+  with legitimately large beacon frames.
+- Unprivileged users on the AP host can influence beacon size via
+  network configuration.
 
 ### Step 5.5: Similar Patterns
-Record: Driver already guards fatal-error state in:
-- `pm8001_sas.c:505` — task execution
-- `pm80xx_hwi.c:1650` — soft reset MPI uninit
-- `pm8001_sas.c:237-244` — phy control via `fatal_errors()`
-- `pm8001_init.c:702-704` — NVMD read
-
-This fix fills a gap in the same error-handling model.
+**Record:** Same driver already bounds-checks management frames
+elsewhere (`rsi_91x_hal.c:71` drops pkts `> MAX_MGMT_PKT_SIZE`; `:82-86`
+checks headroom). The beacon path was missing the equivalent tailroom
+check after alignment — inconsistent and buggy.
 
 ---
 
 ## Phase 6: Cross-Reference Against Local Tree
 
 ### Step 6.1: Buggy Code Present?
-Record: **YES.** Local tree is **v6.18.43** (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`, `make kernelversion` → `6.18.43`).
-`pm80xx_get_non_fatal_dump()` at lines 403-404 lacks
-`controller_fatal_error` check. Upstream fix commit `aa3b8f56ef27` is
-**NOT** an ancestor of HEAD.
+**Record:** **YES.** Local tree is **v6.18.44** (`VERSION=6,
+PATCHLEVEL=18, SUBLEVEL=44`). `rsi_prepare_beacon()` at lines 483–484
+performs unchecked `memcpy()`/`skb_put()`. Mainline fix commit
+`8ecdeb8b8a33b` exists in object DB but is **NOT** an ancestor of HEAD —
+fix not yet in this tree.
 
 ### Step 6.2: Backport Complications
-Record: **Clean apply expected.** Local file matches upstream pre-fix
-context at the insertion point. No conflicting changes in that function
-region.
+**Record:** **Clean apply expected.** Target code matches the patch
+base. No conflicting changes in this function. Single hunk insertion.
 
 ### Step 6.3: Related Fixes Already Present?
-Record: **No.** Neither `aa3b8f56ef27` (this fix) nor sibling
-`2a8fbcfb04aa9` (firmware update guard) are in HEAD.
-`non_fatal_log_show()` directly returns `ssize_t` from dump function, so
-`-EINVAL` propagates correctly to sysfs (no need for separate error-code
-fix `1b6f03b`).
+**Record:** No `skb_tailroom` or `-EMSGSIZE` usage in RSI driver. No
+duplicate fix found.
 
 ---
 
 ## Phase 7: Subsystem Context
 
-### Step 7.1: Subsystem Criticality
-Record: **drivers/scsi/pm8001** — PERIPHERAL driver (Microchip/PMC-
-Sierra SAS HBA, `CONFIG_SCSI_PM8001`). Important for deployments using
-this hardware, but not core kernel.
+### Step 7.1: Subsystem
+**Record:** `drivers/net/wireless/rsi/` — Redpine Signals 91x WLAN
+driver (`CONFIG_RSI_91X`). **Criticality: PERIPHERAL** (hardware-
+specific), but memory-safety bug class is kernel-wide in severity.
 
-### Step 7.2: Subsystem Activity
-Record: pm8001 driver is mature; forensic dump sysfs has existed since
-2020. Recent upstream activity includes fatal-error handling hardening
-from Microchip (April 2026).
+### Step 7.2: Activity
+**Record:** Driver present and functional in 6.18.y. Recent mainline
+hardening activity from same author suggests active security review of
+this driver.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who Is Affected
-Record: **Driver-specific** — systems with PM8001/PM80xx SAS HBAs and
-`CONFIG_SCSI_PM8001` enabled.
+**Record:** Users with RSI 91x hardware (USB/SDIO modules) running AP or
+P2P-GO mode. Config-dependent on `CONFIG_RSI_91X` and bus variants.
 
 ### Step 8.2: Trigger Conditions
-Record:
-- Controller must first enter fatal firmware error state (already a
-  serious failure).
-- Then sysfs read of `non_fatal_log` (diagnostic path during triage).
-- **Likelihood:** Uncommon but realistic during failure investigation —
-  exactly when admins collect dumps.
-- **Privilege:** Typically root/admin.
+**Record:**
+- AP mode with beacon enabled.
+- Firmware sends `BEACON_EVENT_IND`.
+- Beacon frame + 16-byte descriptor exceeds post-alignment tailroom.
+- Alignment pull is address-dependent (up to 63 bytes); not every
+  allocation hits worst case, but it will occur in practice.
+- **Unprivileged trigger:** Indirectly yes — AP operator can configure
+  beacon IEs that push frame size over the safe threshold.
 
 ### Step 8.3: Failure Mode Severity
-Record:
-- **Failure mode:** Kernel call trace from unsafe MMIO/DMA on dead
-  controller.
-- **Severity:** **MEDIUM-HIGH** — secondary kernel instability during
-  already-critical failure recovery; not a normal-I/O-path crash, but
-  can produce oops/warnings and complicate diagnostics.
+**Record:** **Heap buffer overflow** past skb allocation → memory
+corruption, kernel oops/panic, potential security impact. **Severity:
+HIGH** (could be CRITICAL depending on exploitability; at minimum causes
+crashes/data corruption).
 
 ### Step 8.4: Risk-Benefit
-Record:
-- **Benefit:** Prevents additional kernel call traces during HBA failure
-  recovery; aligns driver error handling.
-- **Risk:** Very low — 7-line guard, no API changes, no behavior change
-  on healthy controllers.
-- **Ratio:** Favorable for stable backport.
+**Record:**
+- **Benefit:** Prevents real memory corruption on AP beacon TX path for
+  RSI hardware users.
+- **Risk:** Very low — 8-line bounds check on error path only.
+- **Ratio:** Strongly favors backport.
 
 ---
 
@@ -346,118 +329,133 @@ Record:
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real bug with concrete trigger (fatal error + sysfs non_fatal dump
-  read)
-- Prevents kernel call trace / unsafe hardware access
-- Small (7 lines), obviously correct, standalone
-- Buggy code confirmed present in v6.18.43 tree
-- Consistent with existing `controller_fatal_error` checks in same
-  driver
-- Authors CC'd stable@; SCSI maintainer merged upstream
-- Clean apply expected
+- Real, verifiable buffer overflow in kernel code
+- Small, obviously correct fix (+8 lines, 1 file)
+- Bug exists in v6.18.44 tree; fix not yet merged
+- Merged by wireless maintainer; CC'd to security maintainer
+- Consistent with existing bounds-check patterns in same driver
+- Graceful failure path already exists in caller
 
 **AGAINST backport:**
-- Narrow hardware scope (PM8001 SAS HBAs only)
-- Only affects diagnostic sysfs path after controller already failed
-- No syzbot report or public user bug report
-- "Call trace" severity not fully documented with stack trace
+- Affects niche hardware (RSI 91x) only
+- Requires AP mode with sufficiently large beacons
+- No user crash reports or syzbot-found reproducer
+- On failure, AP beacon TX stops (functional degradation vs. crash) —
+  still far better than overflow
 
-**Unresolved:**
-- Exact call trace type (WARN vs oops) not documented in commit message
-- Introduction date of `controller_fatal_error` not determinable from
-  squashed local git history (but field is present in tree)
+**UNRESOLVED:**
+- Exact commit that introduced the alignment-without-bounds-check
+  pattern (shallow history)
+- Whether reviewers explicitly nominated for stable (no discussion
+  found)
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic is clear; maintainer-
-   applied; no Tested-by but low complexity.
-2. Fixes a real bug? **PASS** — unsafe operation on crashed controller.
-3. Important issue? **PASS** — kernel call trace during failure recovery
-   (medium-high severity).
-4. Small and contained? **PASS** — 7 lines, 1 file, 1 function.
-5. No new features/APIs? **PASS** — guard only.
-6. Can apply to local tree? **PASS** — code exists, patch applies
-   cleanly.
+1. Obviously correct and tested? **PASS** — logic is straightforward;
+   Syzbot CI passed on patch.
+2. Fixes a real bug affecting users? **PASS** — buffer overflow on AP
+   beacon path.
+3. Important issue? **PASS** — memory corruption / potential crash or
+   security issue.
+4. Small and contained? **PASS** — 8 lines, 1 file, 1 function.
+5. No new features or APIs? **PASS** — defensive bounds check only.
+6. Can apply to local tree? **PASS** — buggy code present, fix absent,
+   clean apply.
 
 ### Step 9.3: Exception Categories
-Record: **None** — standard driver bug fix.
+**Record:** None of the automatic exception categories (device ID,
+quirk, DT, build fix, docs). This is a straight memory-safety bug fix.
 
 ### Step 9.4: Decision Rationale
-This is a small, vendor-submitted fix for a real gap in fatal-error
-handling. The buggy code is present in the local **6.18.43** tree, the
-fix is minimal and follows established driver patterns, and it prevents
-additional kernel instability during exactly the scenario where
-administrators are collecting diagnostic data from a failed HBA. The
-risk is negligible and the authors explicitly nominated it for stable.
+
+For **v6.18.44**, the buggy code is present: `rsi_send_beacon()` reduces
+skb tailroom via alignment `skb_pull()`, then `rsi_prepare_beacon()`
+blindly copies the full mac80211 beacon. With beacons larger than ~433
+bytes (common for feature-rich APs), this overflows the 512-byte skb.
+The fix validates against actual `skb_tailroom()` before `memcpy()`,
+matching the driver's existing defensive patterns. The patch is minimal,
+self-contained, and prevents kernel memory corruption — exactly the kind
+of fix stable trees should carry.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags; confirmed stable@ CC in original
-  submission via `b4 dig -w`
-- [Phase 1] No Fixes:/Reported-by/syzbot tags
-- [Phase 2] Read full `pm80xx_get_non_fatal_dump()` (lines 387-503);
-  confirmed MMIO access after missing guard
-- [Phase 2] Diff is +7 lines adding `controller_fatal_error` check
-  returning `-EINVAL`
-- [Phase 3] `git describe HEAD` → v6.18.43; `make kernelversion` →
-  6.18.43
-- [Phase 3] `git merge-base --is-ancestor aa3b8f56ef27 HEAD` →
-  NOT_IN_HEAD (fix not yet applied)
-- [Phase 3] `git show aa3b8f56ef27^` at lines 400-415 confirms buggy
-  pre-fix code
-- [Phase 3] `dba2cc03b9db` identified as 2020 introduction of non_fatal
-  dump sysfs
-- [Phase 3] Sibling commit `2a8fbcfb04aa9` found (fw update guard); also
-  NOT_IN_HEAD
-- [Phase 4] `b4 dig -c aa3b8f56ef27` → lore URL found
-- [Phase 4] `b4 dig -a` → v1 only, no later revisions
-- [Phase 4] `b4 dig -w` → stable@, Martin Petersen, James Bottomley CC'd
-- [Phase 4] `b4 dig -m /tmp/pm8001_thread.mbox` → Martin Petersen
-  "Applied to 7.2/scsi-queue"
-- [Phase 5] `grep pm80xx_get_non_fatal_dump` → caller
-  `non_fatal_log_show()` in pm8001_ctl.c:591
-- [Phase 5] `grep controller_fatal_error` → used in pm80xx_hwi.c,
-  pm8001_ctl.c, pm8001_sas.c, pm8001_sas.h
-- [Phase 5] Fatal error set at pm80xx_hwi.c:4084 in interrupt handler
-- [Phase 6] Buggy code confirmed at pm80xx_hwi.c:403-404 without guard
-- [Phase 6] `non_fatal_log_show()` directly returns ssize_t — `-EINVAL`
-  propagation works
-- [Phase 8] CONFIG_SCSI_PM8001 confirmed in drivers/scsi/Kconfig:1494
-- [UNVERIFIED] Exact kernel version when `controller_fatal_error` was
-  introduced (squashed local history)
-- [UNVERIFIED] Full stack trace / oops type from original bug report
-  (not in commit message)
+- **[Phase 1]** Parsed commit message and tags from user-provided diff
+  and `git show 8ecdeb8b8a33b`
+- **[Phase 1]** Openwall list: CC to Kees Cook confirmed at
+  https://lists.openwall.net/linux-kernel/2026/07/05/209
+- **[Phase 2]** Read `rsi_prepare_beacon()` and `rsi_send_beacon()` in
+  local tree
+- **[Phase 2]** Confirmed `FRAME_DESC_SZ=16`, `MAX_MGMT_PKT_SIZE=512` in
+  `rsi_main.h` / `rsi_mgmt.h`
+- **[Phase 2]** Calculated worst-case safe beacon size: 433 bytes (512 -
+  63 - 16)
+- **[Phase 3]** `git blame -L 483,484`: lines from 5d324e5159d9e
+- **[Phase 3]** `git log -- drivers/net/wireless/rsi/rsi_91x_hal.c`:
+  only 1 commit (shallow)
+- **[Phase 3]** `git merge-base --is-ancestor 8ecdeb8b8a33b HEAD`: fix
+  NOT in current branch
+- **[Phase 4]** `b4 dig`: failed
+- **[Phase 4]** Openwall/Patchew/Syzbot CI: patch found, v1 only, CI
+  passed
+- **[Phase 4]** lore.kernel.org: blocked by bot protection
+- **[Phase 5]** `grep rsi_prepare_beacon`: single caller
+  `rsi_send_beacon()`
+- **[Phase 5]** Traced `BEACON_EVENT_IND` → `rsi_send_beacon()` call
+  chain
+- **[Phase 6]** `git describe HEAD`: v6.18.44-1-g2736c32da98b9
+- **[Phase 6]** Confirmed unchecked `memcpy` at lines 483–484 without
+  tailroom validation
+- **[Phase 6]** `grep skb_tailroom/EMSGSIZE` in rsi/: no matches (fix
+  absent)
+- **[Phase 7]** Read `drivers/net/wireless/rsi/Kconfig`: RSI 91x driver
+  config exists
+- **[Phase 8]** Assessed failure mode as heap buffer overflow, severity
+  HIGH
+- **UNVERIFIED:** Exact introduction commit of buggy alignment logic
+  (shallow file history)
+- **UNVERIFIED:** Reviewer stable nominations (no accessible thread
+  replies)
 
-**YES**The background check finished: `aa3b8f56ef27` is **not** in this
-tree (`v6.18.43`), and the buggy code is still present in
-`pm80xx_get_non_fatal_dump()`.
+**YES**The background checks finished and match the earlier analysis:
 
-The backport analysis stands: **YES** — this is a small, low-risk guard
-that prevents kernel call traces when reading `non_fatal_log` on a
-controller already in fatal error state.
+- **Fix commit `8ecdeb8b8a33b`** is in the repo but is **not** on the
+  current branch (`v6.18.44`) — the buggy `memcpy()` path is still
+  present.
+- The patch should apply cleanly; no further investigation is needed.
 
- drivers/scsi/pm8001/pm80xx_hwi.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+**Verdict for this tree: YES** — backport the beacon tailroom validation
+fix.
 
-diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
-index 31960b72c1e92..1ce8226fcd292 100644
---- a/drivers/scsi/pm8001/pm80xx_hwi.c
-+++ b/drivers/scsi/pm8001/pm80xx_hwi.c
-@@ -401,6 +401,13 @@ ssize_t pm80xx_get_non_fatal_dump(struct device *cdev,
- 	char *buf_copy = buf;
+ drivers/net/wireless/rsi/rsi_91x_hal.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
+index 7d26314a3e76a..50f77f3eee92c 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_hal.c
++++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
+@@ -431,6 +431,7 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
+ 	struct ieee80211_vif *vif;
+ 	struct sk_buff *mac_bcn;
+ 	u8 vap_id = 0, i;
++	unsigned int tailroom;
+ 	u16 tim_offset = 0;
  
- 	temp = (u32 *)pm8001_ha->memoryMap.region[FORENSIC_MEM].virt_ptr;
-+
-+	if (pm8001_ha->controller_fatal_error) {
-+		pm8001_dbg(pm8001_ha, FAIL,
-+			   "non-fatal dump not available in fatal error state\n");
-+		return -EINVAL;
+ 	for (i = 0; i < RSI_MAX_VIFS; i++) {
+@@ -480,6 +481,13 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
+ 	if (mac_bcn->data[tim_offset + 2] == 0)
+ 		bcn_frm->frame_info |= cpu_to_le16(RSI_DATA_DESC_DTIM_BEACON);
+ 
++	tailroom = skb_tailroom(skb);
++	if (tailroom < FRAME_DESC_SZ ||
++	    mac_bcn->len > tailroom - FRAME_DESC_SZ) {
++		dev_kfree_skb(mac_bcn);
++		return -EMSGSIZE;
 +	}
 +
- 	if (++pm8001_ha->non_fatal_count == 1) {
- 		if (pm8001_ha->chip_id == chip_8001) {
- 			snprintf(pm8001_ha->forensic_info.data_buf.direct_data,
+ 	memcpy(&skb->data[FRAME_DESC_SZ], mac_bcn->data, mac_bcn->len);
+ 	skb_put(skb, mac_bcn->len + FRAME_DESC_SZ);
+ 
 -- 
 2.53.0
 
