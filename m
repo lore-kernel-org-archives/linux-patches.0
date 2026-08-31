@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B4843F8B8;
-	Mon, 31 Aug 2026 14:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB5C49503B;
+	Mon, 31 Aug 2026 14:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185204; cv=none; b=d6Me8E/8pfu9GusfQJ2ngnA3TtP0Z+gVY94/riVwYp1zvXmMne2xcfWjuWMti4/njeQdvve5pksJQUxfmCciSnnJdssAZ4U5p2TC25jZNEMZ38aMf4VJV/498j7wPSEKXr0nUepIFqMaSq8/gttHnwx5Q+qT5rpFOqhZ5iFXpOM=
+	t=1788185228; cv=none; b=uT/fbpnbhCGpsGqpgUfODN49IN6ASTsbWwEw8oAeBY/Pkw3qR2zUNVZsW4xx1afBS9Ec0dlPYINtvpDRr6qt9QcIuVBTlhz11hTaYSk/T/SAIkx+wOTLCx3BIS7KnXeJvsgp/b/FuQMwhYKNV/9NBOW+bjQ/bTV6n5LD2XTEUqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185204; c=relaxed/simple;
-	bh=bBeZJrrNJSNSOTh6AMUZz6E6b1wZ03Qn/K/2Pmyu+3w=;
+	s=arc-20240116; t=1788185228; c=relaxed/simple;
+	bh=0lIkpo3YQ+dKuGT0n7IW85blA0NF3nfmfVhgxbO2yXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZPQzGy+ZoBaZqx37zDWPV4ilQTiWou86KiP2KrXWoU6pG2erTSN52/FtW9KTffmrY9yUi3hWsEOF3zNehpgmrtBsixErSq7oK0EELQkDiOi9WJjZ9MHS7auUyx/1nMINfvFrMWssj99T4aQwO/gL0ttmoEbnDA1ePZSCoiSzRmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyKpHLx/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oZmwv7HXV0RQD/B1k5XNlLvbRDIRmcwUNfdI4ynuegwXu9AH4jgOwdJm9pC/CV9n6VRpAwKrR+MOTH9zskbvQRCgpBLMlcDwRYLltc7xy3WwSWUl9WqMRQFrGiVw0tX4VuCsRJshdmsi/fu4ICTP0Eu/2vublJHq850ahLtLnCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNKF50pt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyKpHLx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07E01F00A3D;
-	Mon, 31 Aug 2026 14:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNKF50pt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A56C1F000E9;
+	Mon, 31 Aug 2026 14:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185203;
-	bh=RareF75qgrrHe4QXRkCOoiYm0nGsgKw/8Yxr6yyB9g0=;
+	s=korg; t=1788185226;
+	bh=cg62WPmjld0rd5flEZ77FAimtZvZjKTNeyv6hTFWPQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lyKpHLx/QnApeuJ495bR/YlQjNVgoDuCJEsb0ooWSVqC5d/1UNZdQ/RZ9golQADqL
-	 EIzegNWP+qZGSrH+04Ee8C/AKOukADQYkLDEpm70XL+9UCIgXkF4n2ImEKSX0PPqyG
-	 Yi6KyK+LOFT4fHqTxHWr3XSbJo6oj9yLfRuGiRG0=
+	b=dNKF50ptDr7ILinbUQWHKHDU06UEVRWJN1CGT2/n28WXXXIXyKf7LhaI5QwHqkSGT
+	 mh25g5AkJWWben6BTcygKEX97JW8U2Y0SKGeVA0XiPMX2wgy0r2QVTd2ITP6VHKLo2
+	 s+n9w4qgjRiUk+SUjxlA8AfA/ZK79+DE4xo+I/v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Lin <leo@depthfirst.com>,
-	David Ahern <dahern@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Roman Demidov <roman.demidov.nn@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 02/43] ipv6: mcast: Fix use-after-free when processing MLD queries
-Date: Mon, 31 Aug 2026 15:35:10 +0200
-Message-ID: <20260831133358.672335586@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 5.10 27/43] usb: gadget: f_tcm: keep port count until LUN teardown completes
+Date: Mon, 31 Aug 2026 15:35:35 +0200
+Message-ID: <20260831133359.816232061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -56,109 +49,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit 791c91dc7a9dfb2457d5e29b8216a6484b9c4b40 upstream.
+commit c39d0916da47d94909391876c9e5bd429ea7b1b9 upstream.
 
-When processing an MLD query, a pointer to the multicast group address
-is retrieved when initially parsing the packet. This pointer is later
-dereferenced without being reloaded despite the fact that the skb header
-might have been reallocated following the pskb_may_pull() calls, leading
-to a use-after-free [1].
+tcm_usbg_drop_nexus() permits session removal once tpg_port_count
+reaches zero. However, usbg_port_unlink() currently decrements that
+count from the fabric_pre_unlink() callback, before core_dev_del_lun()
+waits for active se_lun references to drain.
 
-Fix by copying the multicast group address when the packet is initially
-parsed.
+If removal of the last LUN races a nexus removal, the latter can observe
+a zero port count and call target_remove_session(). This frees
+sess_cmd_map while an in-flight struct usbg_cmd, including its work item,
+can still be accessed.
 
-[1]
-BUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)
-Read of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118
+Overlapping the last-LUN unlink with nexus removal reproduces this
+lifetime violation as a DEBUG_OBJECTS "free active" warning for
+usbg_cmd_work, followed by a target-core BUG/Oops.
 
-Workqueue: mld mld_query_work
-Call Trace:
-<TASK>
-dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-print_address_description.constprop.0 (mm/kasan/report.c:378)
-print_report (mm/kasan/report.c:482)
-kasan_report (mm/kasan/report.c:595)
-__mld_query_work (net/ipv6/mcast.c:1512)
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-</TASK>
+The generic target-core unlink path has no callback after
+core_dev_del_lun() completes. Add an optional fabric_post_unlink()
+callback and use it for the f_tcm port count. The count now remains
+nonzero until core_dev_del_lun() has finished draining active LUN
+references, preventing nexus removal from freeing the session during
+command completion.
 
-[...]
-
-Freed by task 118:
-kasan_save_stack (mm/kasan/common.c:57)
-kasan_save_track (mm/kasan/common.c:78)
-kasan_save_free_info (mm/kasan/generic.c:584)
-__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)
-pskb_expand_head (net/core/skbuff.c:2335)
-__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))
-__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Fixes: 97300b5fdfe2 ("[MCAST] IPv6: Check packet size when process Multicast")
-Reported-by: Leo Lin <leo@depthfirst.com>
-Reviewed-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260603101811.612594-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260807060733.3186624-1-shuangpeng.kernel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/target/target_core_fabric_configfs.c |    8 ++++++++
+ drivers/usb/gadget/function/f_tcm.c          |    2 +-
+ include/target/target_core_fabric.h          |    2 ++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index e15c3e2318d77..c4a9866ea45b6 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -1414,9 +1414,9 @@ void igmp6_event_query(struct sk_buff *skb)
- static void __mld_query_work(struct sk_buff *skb)
- {
- 	struct mld2_query *mlh2 = NULL;
--	const struct in6_addr *group;
- 	unsigned long max_delay;
- 	struct inet6_dev *idev;
-+	struct in6_addr group;
- 	struct ifmcaddr6 *ma;
- 	struct mld_msg *mld;
- 	int group_type;
-@@ -1448,8 +1448,8 @@ static void __mld_query_work(struct sk_buff *skb)
- 		goto kfree_skb;
+--- a/drivers/target/target_core_fabric_configfs.c
++++ b/drivers/target/target_core_fabric_configfs.c
+@@ -689,6 +689,14 @@ static void target_fabric_port_unlink(
+ 	}
  
- 	mld = (struct mld_msg *)icmp6_hdr(skb);
--	group = &mld->mld_mca;
--	group_type = ipv6_addr_type(group);
-+	group = mld->mld_mca;
-+	group_type = ipv6_addr_type(&group);
+ 	core_dev_del_lun(se_tpg, lun);
++
++	if (tf->tf_ops->fabric_post_unlink) {
++		/*
++		 * Allow fabrics to release state that must remain valid until
++		 * core_dev_del_lun() has drained all active LUN references.
++		 */
++		tf->tf_ops->fabric_post_unlink(se_tpg, lun);
++	}
+ }
  
- 	if (group_type != IPV6_ADDR_ANY &&
- 	    !(group_type&IPV6_ADDR_MULTICAST))
-@@ -1501,7 +1501,7 @@ static void __mld_query_work(struct sk_buff *skb)
- 		}
- 	} else {
- 		for_each_mc_mclock(idev, ma) {
--			if (!ipv6_addr_equal(group, &ma->mca_addr))
-+			if (!ipv6_addr_equal(&group, &ma->mca_addr))
- 				continue;
- 			if (ma->mca_flags & MAF_TIMER_RUNNING) {
- 				/* gsquery <- gsquery && mark */
--- 
-2.53.0
-
+ static void target_fabric_port_release(struct config_item *item)
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1732,7 +1732,7 @@ static const struct target_core_fabric_o
+ 	.fabric_make_tpg		= usbg_make_tpg,
+ 	.fabric_drop_tpg		= usbg_drop_tpg,
+ 	.fabric_post_link		= usbg_port_link,
+-	.fabric_pre_unlink		= usbg_port_unlink,
++	.fabric_post_unlink		= usbg_port_unlink,
+ 	.fabric_init_nodeacl		= usbg_init_nodeacl,
+ 
+ 	.tfc_wwn_attrs			= usbg_wwn_attrs,
+--- a/include/target/target_core_fabric.h
++++ b/include/target/target_core_fabric.h
+@@ -94,6 +94,8 @@ struct target_core_fabric_ops {
+ 				struct se_lun *);
+ 	void (*fabric_pre_unlink)(struct se_portal_group *,
+ 				struct se_lun *);
++	void (*fabric_post_unlink)(struct se_portal_group *se_tpg,
++				   struct se_lun *lun);
+ 	struct se_tpg_np *(*fabric_make_np)(struct se_portal_group *,
+ 				struct config_group *, const char *);
+ 	void (*fabric_drop_np)(struct se_tpg_np *);
 
 
