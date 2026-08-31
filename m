@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151C84302E6;
-	Mon, 31 Aug 2026 13:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564D0430CE2;
+	Mon, 31 Aug 2026 13:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183226; cv=none; b=D+VmDt1bSqIQTt/W8wS31WVGxcsrIO0cTSMgLfcEQ5sTTayyXSsgt/sUKiE9iwuw7s6AvEnJwPAJFul3SlPJCyDycCKgbgQqjNcXkn9v/RBaOjswdL9o4yXyBRvmixvj3675v6V6iHqwtDqjuCxNzWCJPrqgwOwSZqAJPVNX20s=
+	t=1788183228; cv=none; b=U8MkxdHMhW19W4DnDPs7+PN86weW/HYhZHeBYhuKVmFaGLnTHXuZzSh/2tMtIWAR6APGK6riWulfKDgh6HfkhqlgowL6tiSN2xqaW/B+mj49QKpha6+q7mjvqlTghLZftC80Hmv0Bwc6Bgr5HXmte5RgBrFGLN6t291TcDh2Ksg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183226; c=relaxed/simple;
-	bh=5lVvHXIAUsKrO0pyLf/HW3pkVaqBJ8tAE+mm6jRn8H4=;
+	s=arc-20240116; t=1788183228; c=relaxed/simple;
+	bh=quJOMTBW9ktBoQlH5FST6viD+tspK9PxgqKvdSjcdTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RM0w4tZztsd/+vSbX/P7MWFmpCrGdFULw3v1OIxOZ2fJAE/KfymWvplm5fp1vcGXvmLC912WUzC+JD2MLxRuq52wPt1h80If1cShHoOaYoE4KmPTr2j4JQu8LL5W7DgMuBNjEGNTwul7AdeeSV42lSYLo3JVmBua1Rj8JuY0f9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xr7lewpm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PKpsgH2NkgH3xhYJfX+HN2JeTEZxsiVvdKIPeQAu6avNSzPzECLFAxWMlYNBlFPLmyBSFbJmXbOMFd+jQQ/fn9We0tm3+WaOrMp45P57uvgAPdGxNG+jjANCIcruGEltPM5MXPvGgr90u0RnTuGHPxaFEIpOw2SgKvs0Rdx2oWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cTCgVfMM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xr7lewpm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F401F00A3D;
-	Mon, 31 Aug 2026 13:33:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cTCgVfMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCBD1F00A3F;
+	Mon, 31 Aug 2026 13:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183224;
-	bh=fCErg2Hrtok/522CbFYTLLln1nhr7kRsQGC5jRupeks=;
+	s=k20260515; t=1788183225;
+	bh=7XE0qIhiBUqZOs40ocefX7K8S4wpxgfYOn/qG3B+V3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xr7lewpmztG8pX+8qXqZhOdaBvc2GCj87P4z4uJ5bJwNV3zCF01DC8/kmuon+wOAR
-	 LaU/5DxR20mN6N2gzhcgQKC52156B37ndvunCUfpDDmaGhUH628dy0QVZuo3SbcwLX
-	 ckyOGRTd/Y4rqU7sqmM/SSjJDqBk8iVQJoP6ksNVm8kBguPor0yrXF+bGdlgFEumKP
-	 KUW3btnt1q6IZTdY6W8DTKwbPUTTSbn+zzEmn8oDLR5u8gLz/KLTEGlOJLTlzJNtth
-	 HO4IlqW1IjIXL71YJyYRg90zFFFyWXkgrSIFrFhe9U1qe7BLrWy4gMD5SwKe7lwO1B
-	 zDKdSCjSnLBXA==
+	b=cTCgVfMMWMQVEzk2RJsBs9JGWVMXooB0G3KSqgSKHHx5QoY/9Dp8TANv+xUyZrvFD
+	 fq63sUQY+j/bV/+Cq96CqtXNsNV14ydcOnBenj+T7XxjGV0vq2R6wqpTWNItubeuH6
+	 +PlUIspAqojv0jWsl5R4Ba8BHP58/B518E80nlKbVCBLhZXbE/Vmc0QBotak7VvtiL
+	 asZHWSsjMA/RaJk5kJZzxwldQ9vTfW8XzK/DFwD8jRyk5vXOBr++BtLYAGiMGKN2Fw
+	 p6mOGGicLvPDFuWL6N6j4bobSP4UwyDBzO+icqVuoptawTqwaGHWgqYiwpS7tkOQIK
+	 AQQDRAkszLOKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: KangNing Liao <lkangn.kernel@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Vamsi Attunuru <vattunuru@marvell.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	jasowangio@gmail.com,
+	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] btrfs: protect sb_write_pointer() with invalidate lock
-Date: Mon, 31 Aug 2026 09:20:47 -0400
-Message-ID: <20260831133314.4125787-19-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] vdpa/octeon_ep: Use 4 bytes for mailbox signature
+Date: Mon, 31 Aug 2026 09:20:48 -0400
+Message-ID: <20260831133314.4125787-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,73 +53,64 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: KangNing Liao <lkangn.kernel@gmail.com>
+From: Vamsi Attunuru <vattunuru@marvell.com>
 
-[ Upstream commit 123b9a545f4d0348e81f558a032bf2a93ee5722f ]
+[ Upstream commit d42eadf7969e2217fceb84317d3fd28a7bdbd96e ]
 
-sb_write_pointer() reads the super block from the block device page cache
-using read_cache_page_gfp(). This has the same race with BLKBSZSET as the
-one fixed by commit 3f29d661e568 ("btrfs: sync read disk super and set
-block size").
+The upper 4 bytes are reserved by the firmware for
+storing meta data. Use only lower 4 bytes to update
+the signature details.
 
-Take the mapping invalidate lock around read_cache_page_gfp() to
-serialize the read against block size changes.
-
-Signed-off-by: KangNing Liao <lkangn.kernel@gmail.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Vamsi Attunuru <vattunuru@marvell.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260224095226.1001151-3-schalla@marvell.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `btrfs: protect sb_write_pointer() with
-invalidate lock`
+# Stable Backport Analysis: `vdpa/octeon_ep: Use 4 bytes for mailbox
+signature`
 
-**Tree under review:** `v6.18.44` (`stable/linux-6.18.y`, detached HEAD)
-
-**Commit analyzed:** `123b9a545f4d0` (not yet in this tree; applies
-cleanly)
+**Local tree:** Linux **6.18.44** (`stable/linux-6.18.y`, `git describe
+HEAD` → `v6.18.44`)
+**Upstream commit:** `d42eadf7969e2217fceb84317d3fd28a7bdbd96e` (not yet
+in this tree)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[btrfs]` `[protect]` — Add invalidate-lock protection
-around superblock page-cache reads in `sb_write_pointer()` for zoned
-btrfs.
+### Step 1.1: Subject Line
+**Record:** `[vdpa/octeon_ep]` `[Use]` — driver correctness fix for
+mailbox signature access width.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** KangNing Liao `<lkangn.kernel@gmail.com>` (author)
-- **Reviewed-by:** Qu Wenruo `<wqu@suse.com>` (btrfs maintainer)
-- **Signed-off-by:** David Sterba `<dsterba@suse.com>` (btrfs
+- `Signed-off-by: Vamsi Attunuru <vattunuru@marvell.com>`
+- `Signed-off-by: Michael S. Tsirkin <mst@redhat.com>` (vhost/vDPA
   maintainer)
-- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable`, or `Tested-by:`
-  tags
-- Notable: References upstream commit `3f29d661e568` as the prior fix
-  for the same race class
+- `Message-ID: <20260224095226.1001151-3-schalla@marvell.com>`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, `Cc: stable@vger.kernel.org`, or `Link:` tags.
 
-### Step 1.3: Body analysis
+Notable: maintainer sign-off from Michael S. Tsirkin; part of a 4-patch
+series (`[PATCH 2/4]`).
+
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** `sb_write_pointer()` calls `read_cache_page_gfp()` without
-  synchronizing against `BLKBSZSET` block-size changes on the block
-  device mapping.
-- **Symptom:** Same race as the syzbot-reported crash fixed in
-  `3f29d661e568` / stable `ccb3c75d57039`: folio order vs.
-  `mapping_min_folio_order()` mismatch → `VM_BUG_ON_FOLIO` or NULL
-  pointer dereference in `create_empty_buffers()`.
-- **Root cause:** Block-size change via `BLKBSZSET` alters
-  `mapping->flags` while a folio is being allocated/read.
-- **Fix:** Wrap `read_cache_page_gfp()` with `filemap_invalidate_lock()`
-  / `filemap_invalidate_unlock()`.
+- **Bug:** Driver uses 64-bit `readq`/`writeq` on a mailbox signature
+  register; firmware reserves the upper 4 bytes for metadata.
+- **Symptom:** Incorrect signature read/write corrupts firmware metadata
+  or prevents signature match.
+- **Root cause:** Access width mismatch with hardware/firmware register
+  layout.
+- **Version info:** None in commit message.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — despite “protect” wording rather than “fix”, this is a
-real concurrency/crash bug fix, not cleanup. It completes the same
-protection pattern already applied to `btrfs_read_disk_super()` in this
-tree.
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes — despite no "fix" in the subject, this is a hardware-
+interface bug fix disguised as a register-width correction. Not cosmetic
+cleanup.
 
 ---
 
@@ -128,35 +118,45 @@ tree.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `fs/btrfs/zoned.c` only (+2 lines)
-- **Functions:** `sb_write_pointer()` only
-- **Scope:** Single-file, surgical fix (2 insertions)
+- **File:** `drivers/vdpa/octeon_ep/octep_vdpa_main.c` (+3/−3 lines, 6
+  lines touched)
+- **Functions:** `get_device_ready_status()`, `octep_sriov_enable()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code flow per hunk
-**Record:**
-- **Before:** In the `full[0] && full[1]` branch (both superblock log
-  zones full), loop calls `read_cache_page_gfp()` unlocked to compare
-  superblock generations.
-- **After:** Same path, but `read_cache_page_gfp()` is serialized
-  against block-size invalidation via `filemap_invalidate_lock/unlock`.
-- **Affected path:** Error and success paths unchanged; only the page-
-  cache read is synchronized.
+### Step 2.2: Code Flow Changes
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Race condition / memory safety (folio order mismatch)
-- **Mechanism:** Concurrent `BLKBSZSET` changes
-  `mapping_min_folio_order()` after folio allocation begins but before
-  `filemap_add_folio()` completes, producing kernel BUG or NULL deref —
-  identical to the already-backported `btrfs_read_disk_super()` bug.
+**Hunk 1 — `get_device_ready_status()` (VF path):**
+- **Before:** `readq()` reads 64 bits; compares to
+  `OCTEP_DEV_READY_SIGNATURE` (0xBABABABA); clears with `writeq(0)`.
+- **After:** `readl()` reads lower 32 bits only; clears with
+  `writel(0)`.
+- **Path:** VF BAR-init polling loop in `octep_vdpa_setup_task()`.
 
-### Step 2.4: Fix quality
+**Hunk 2 — `octep_sriov_enable()` (PF path):**
+- **Before:** `writeq(OCTEP_DEV_READY_SIGNATURE, ...)` writes 64 bits
+  per VF.
+- **After:** `writel(OCTEP_DEV_READY_SIGNATURE, ...)` writes lower 32
+  bits only.
+- **Path:** SR-IOV enable when all VFs are assigned bar space.
+
+### Step 2.3: Bug Mechanism
+**Record:** **Hardware interface / logic correctness bug**
+- `OCTEP_DEV_READY_SIGNATURE` is `0xBABABABA` (32-bit, in
+  `octep_vdpa.h`).
+- If firmware places metadata in upper 32 bits:
+  - `readq()` returns a value ≠ `0xBABABABA` → ready check never
+    succeeds.
+  - `writeq()` overwrites/clears upper 32 bits → firmware metadata
+    corruption.
+- Rest of mailbox code in `octep_vdpa_hw.c` already uses 32-bit
+  `ioread32`/`iowrite32`.
+
+### Step 2.4: Fix Quality
 **Record:**
-- **Quality:** Obviously correct — mirrors the exact pattern already in
-  `btrfs_read_disk_super()` at `fs/btrfs/volumes.c:1368-1370`.
-- **Regression risk:** Very low; `filemap_invalidate_lock` is the
-  established synchronization primitive for this race.
-- **No new APIs, no behavior change beyond preventing the race.**
+- Fix is obviously correct and minimal.
+- Matches existing 32-bit mailbox access patterns in the same driver.
+- **Regression risk:** Very low — only narrows access to the documented
+  32-bit signature field.
 
 ---
 
@@ -164,277 +164,296 @@ tree.
 
 ### Step 3.1: Blame
 **Record:**
-- `read_cache_page_gfp()` in `sb_write_pointer()` introduced in
-  `12659251ca5df` (Nov 2020, “implement log-structured superblock for
-  ZONED mode”).
-- Loop structure updated in `02ca9e6fb5f66a` / `d2715d1db455e`
-  (2023–2024).
-- Buggy unlocked read has been present since zoned superblock logging
-  was added.
+- Buggy `readq`/`writeq` in `get_device_ready_status()` introduced in
+  `8b6c724cdab85` (Jun 14, 2024) — initial driver commit.
+- Buggy `writeq` in `octep_sriov_enable()` same commit; address
+  calculation around it fixed later in `54556d5394382`.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag. Referenced commit `3f29d661e568`
-exists in repo; equivalent backport `ccb3c75d57039` **is** in this tree
-(committed by Greg K-H, Feb 2026).
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag. Bug introduced by `8b6c724cdab85`
+("virtio: vdpa: vDPA driver for Marvell OCTEON DPU devices"), which is
+present in this tree.
 
-### Step 3.3: Related file history
-**Record:**
-- `ccb3c75d57039` backported the `btrfs_read_disk_super()` fix to
-  6.18.y.
-- `123b9a545f4d0` is on `master` but not yet on `stable/linux-6.18.y`.
-- Standalone single-patch series (v1 only per `b4 dig -a`).
+### Step 3.3: Related File History
+**Record:** Recent `drivers/vdpa/octeon_ep/` history in 6.18.y:
+1. `54556d5394382` — Fix PF->VF mailbox data address calculation (series
+   patch 1/4, already backported)
+2. `3ef0cfa77a3d5` — fix IRQ-to-ring mapping (series patch 4/4, already
+   backported)
+3. `8716a841d1da4` — refcount leak fix
 
-### Step 3.4: Author context
-**Record:** KangNing Liao has prior btrfs zoned contributions. Patch
-reviewed by Qu Wenruo (active btrfs maintainer).
+Patches 2/4 (this commit) and 3/4 (event handling) are **not** in 6.18.y
+yet.
+
+### Step 3.4: Author Context
+**Record:** Vamsi Attunuru (Marvell). Michael S. Tsirkin committed.
+Srujana Challa submitted the series. Active contributors to this driver.
 
 ### Step 3.5: Dependencies
 **Record:**
-- References `3f29d661e568` conceptually; stable tree has
-  `ccb3c75d57039` (same fix, different hash).
-- No structural dependencies — patch applies cleanly (`git apply
-  --check` succeeded).
-- Standalone; does not require other commits from the series.
+- Part of 4-patch series, but **this patch is standalone** — only
+  changes access width.
+- Prerequisite patch 1 (`54556d5394382`, mailbox address calc) is
+  already in 6.18.y.
+- Does **not** require patch 3/4 (event handling — separate feature).
+- `git apply --check` against current tree: **applies cleanly**.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
+### Step 4.1: Original Discussion
 **Record:**
-- **URL:** https://patch.msgid.link/20260521122945.524890-1-
-  lkangn.kernel@gmail.com
-- **Series:** v1 only (2026-05-21)
-- **Reviewer feedback:** Qu Wenruo replied with `Reviewed-by:` and
-  “Thanks” — no NAKs or concerns
-- **Stable nomination:** None found in thread
+- `b4 dig -c d42eadf7969e2`:
+  https://patch.msgid.link/20260224095226.1001151-3-schalla@marvell.com
+- Series: v1, 4 patches from Srujana Challa, Feb 24, 2026.
+- No reviewer replies or stable nominations found in saved mbox for this
+  specific patch.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` shows CC to `linux-btrfs@vger.kernel.org`, David
-Sterba, Edward Davis (author of the original BLKBSZSET fix), Filipe
-Manana’s address not listed but David Sterba committed.
+**Record:** `b4 dig -w` CC'd: `virtualization@lists.linux.dev`,
+`mst@redhat.com`, `jasowang@redhat.com`, Marvell developers. No explicit
+`Reviewed-by` in thread.
 
-### Step 4.3: Bug report
-**Record:** No direct syzbot report for this path. Indirect evidence
-from `ccb3c75d57039` syzbot report (`b4a2af3000eaa84d95d5`) documenting
-identical failure mode in `btrfs_read_disk_super()`.
+### Step 4.3: Bug Reports
+**Record:** N/A — no external bug report links. Bug inferred from
+firmware register layout and code analysis.
 
-### Step 4.4: Related patches
-**Record:** Companion to `ccb3c75d57039` — same race, different code
-path in zoned superblock handling.
+### Step 4.4: Related Patches
+**Record:** 4-patch series:
+1. Fix PF->VF mailbox address — **in 6.18.y**
+2. Use 4 bytes for mailbox signature — **this commit**
+3. Add vDPA device event handling — not in 6.18.y (new functionality)
+4. fix IRQ-to-ring mapping — **in 6.18.y**
 
-### Step 4.5: Stable list
-**Record:** Lore fetch blocked by bot protection for full thread; mbox
-download via `b4 dig -m` succeeded. No stable-list discussion found in
-mbox content.
+### Step 4.5: Stable List History
+**Record:** No stable-list discussion found for this specific patch. Two
+other patches from the same series were already backported to 6.18.y.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `sb_write_pointer()` (modified)
+### Step 5.1: Key Functions
+**Record:** `get_device_ready_status()`, `octep_sriov_enable()`
 
 ### Step 5.2: Callers
 **Record:**
-- `sb_log_location()` → `sb_write_pointer()`
-- `btrfs_sb_log_location_bdev()` → `sb_log_location()` — called from
-  `btrfs_read_disk_super()` (`fs/btrfs/volumes.c:1346`)
-- `btrfs_sb_log_location()` → `sb_log_location()` — called from `disk-
-  io.c` (super write/read), `scrub.c`, and zoned device validation
-  (`zoned.c:585`)
+- `get_device_ready_status()` ← `octep_vdpa_setup_task()` (work item,
+  polls up to 5s during VF init)
+- `octep_sriov_enable()` ← `octep_vdpa_sriov_configure()` ← sysfs SR-IOV
+  interface (`echo N > sriov_numvfs`)
 
 ### Step 5.3: Callees
-**Record:** `filemap_invalidate_lock()`, `read_cache_page_gfp()`,
-`filemap_invalidate_unlock()`, `btrfs_release_disk_super()`
+**Record:** `readl`/`writel`/`readq` (unchanged for `OCTEP_EPF_RINFO`),
+PCI SR-IOV helpers.
 
 ### Step 5.4: Reachability
 **Record:**
-- Triggered on zoned block devices (`bdev_is_zoned()`) when both
-  superblock log zones are full.
-- Reachable during **mount** (`btrfs_read_disk_super` →
-  `btrfs_sb_log_location_bdev`), **superblock writes**, **scrub**, and
-  **device validation**.
-- `BLKBSZSET` requires privileged access to the block device; syzbot
-  demonstrated the race is reachable from userspace with appropriate
-  privileges.
+- VF init path: triggered when Octeon DPU VF probes with
+  `CONFIG_OCTEONEP_VDPA=m`.
+- PF SR-IOV path: triggered by admin enabling VFs.
+- Requires Marvell Octeon DPU hardware/emulation; not universal, but
+  reachable on deployed systems using this driver.
 
-### Step 5.5: Similar patterns
-**Record:** Identical lock pattern already present in
-`btrfs_read_disk_super()` in this tree (`volumes.c:1368-1370`). This
-path was simply missed when that fix was backported.
+### Step 5.5: Similar Patterns
+**Record:** `octep_vdpa_hw.c` mailbox protocol consistently uses 32-bit
+`ioread32`/`iowrite32`. Only the signature handshake incorrectly used
+64-bit access.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.y)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** `fs/btrfs/zoned.c:133-134` calls
-`read_cache_page_gfp()` without invalidate lock. Bug present since zoned
-superblock logging (2020).
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** Current tree at
+`drivers/vdpa/octeon_ep/octep_vdpa_main.c`:
+- Line 585: `u64 signature = readq(...)`
+- Line 588: `writeq(0, ...)`
+- Line 760: `writeq(OCTEP_DEV_READY_SIGNATURE, ...)`
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply** — `git apply --check` passed with zero
-conflicts.
+Driver present since `8b6c724cdab85` (Jul 2024). Bug present since
+driver introduction.
 
-### Step 6.3: Related fixes already present?
-**Record:** **Partial.** `ccb3c75d57039` fixed `btrfs_read_disk_super()`
-in this tree but left `sb_write_pointer()` unprotected. This commit
-closes that gap.
+### Step 6.2: Backport Complications
+**Record:** **Clean apply** — verified with `git apply --check`. No
+conflicts expected.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** Series patches 1 and 4 already backported. This specific fix
+is **not** present. No alternate fix for the access-width bug.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem
-**Record:** `fs/btrfs` — filesystem, zoned-mode superblock handling.
-**Criticality: IMPORTANT** (filesystem mount/write path; not universal
-like VFS core, but crash on mount/write for zoned btrfs users).
+**Record:** `drivers/vdpa/octeon_ep/` — vDPA driver for Marvell Octeon
+DPU. **Criticality: PERIPHERAL** (hardware-specific, module-only:
+`CONFIG_OCTEONEP_VDPA`).
 
 ### Step 7.2: Activity
-**Record:** Actively maintained; recent zoned fixes in 6.18.y
-(`deddd28fd83c2`, `4d4ef6627304a`, etc.).
+**Record:** Actively maintained; multiple fixes backported to 6.18.y in
+2026 from the same patch series.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** Users of **zoned btrfs** on host-managed zoned block devices
-(SMR/ZNS SSDs). Config: btrfs with zoned devices enabled at format/mount
-time.
+### Step 8.1: Who Is Affected
+**Record:** Users of Marvell Octeon DPU devices with the `octep_vdpa`
+module (enterprise DPU / SmartNIC deployments). Config-specific, not
+universal.
 
-### Step 8.2: Trigger conditions
+### Step 8.2: Trigger Conditions
 **Record:**
-- Zoned btrfs with both superblock log zones full (normal steady-state
-  after superblock updates)
-- Concurrent `BLKBSZSET` on the same block device
-- Uncommon in production but proven reachable (syzbot for sibling path);
-  mount-time scenario explicitly described in `ccb3c75d57039`
+- Every VF probe runs the signature poll loop.
+- Every SR-IOV enable writes the ready signature.
+- Trigger is deterministic when firmware uses upper 32 bits for metadata
+  (as documented in commit message).
+- Requires root/admin for SR-IOV; VF init happens automatically on
+  probe.
 
-### Step 8.3: Failure mode
-**Record:** Kernel `VM_BUG_ON_FOLIO` or KASAN NULL pointer dereference
-in buffer-head setup → **CRITICAL** (oops/panic during mount or
-superblock I/O).
-
-### Step 8.4: Risk-benefit
+### Step 8.3: Failure Mode
 **Record:**
-- **Benefit:** HIGH for zoned btrfs users — prevents kernel crash;
-  completes already-backported fix family
-- **Risk:** VERY LOW — 2 lines, identical to proven pattern already in
-  tree
-- **Ratio:** Strongly favors backport
+- **VF init failure:** 5-second timeout, `"BAR initialization is timed
+  out"` — vDPA device never comes up. **Severity: HIGH** for affected
+  hardware.
+- **Firmware metadata corruption:** `writeq` clobbers upper 32 bits.
+  **Severity: HIGH** (undefined firmware behavior).
+- Not a generic kernel crash, but complete functional breakage on
+  affected hardware.
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** HIGH for Octeon DPU users — restores working VF init and
+  correct firmware handshake.
+- **Risk:** VERY LOW — 6-line change, obviously correct, matches driver
+  conventions.
+- **Ratio:** Strong benefit for affected users, negligible risk.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real race bug with documented crash mechanism (syzbot for same pattern
-  in `btrfs_read_disk_super`)
-- Partial fix already in 6.18.y (`ccb3c75d57039`); this closes the
-  remaining hole
-- Kernel crash severity (CRITICAL)
-- Tiny, surgical, obviously correct
-- Reviewed by btrfs maintainer (Qu Wenruo)
+- Real hardware-interface bug present since driver introduction
+- Causes VF initialization failure and potential firmware metadata
+  corruption
+- Small, surgical, obviously correct fix
 - Applies cleanly to 6.18.y
+- Prerequisite from same series already backported
+- Other fixes from same series already in 6.18.y
+- Consistent with existing 32-bit mailbox access in the driver
+- vDPA maintainer sign-off
 
 **AGAINST backport:**
-- Affects only zoned btrfs (niche subset of btrfs users)
-- No direct syzbot report for this exact function (indirect evidence
-  only)
-- Requires privileged `BLKBSZSET` concurrent with superblock read
+- Hardware-specific; affects niche Marvell Octeon DPU deployments only
+- No syzbot report or user bug report attached
+- Patch 3/4 (event handling) not backported — but this patch does not
+  depend on it
 
-**Unresolved:** None material to the decision.
+**Unresolved:** No runtime test evidence or user bug reports in mailing
+list thread.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — mirrors in-tree fix;
-   maintainer reviewed
-2. Fixes a real bug? **PASS** — race with `BLKBSZSET` on page-cache read
-3. Important issue? **PASS** — kernel crash (BUG/null deref)
-4. Small and contained? **PASS** — 2 lines, 1 file, 1 function
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — clean apply verified;
-   prerequisite fix already present
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logically correct;
+   maintainer SOB; no Tested-by but change is trivial.
+2. Fixes a real bug? **PASS** — 64-bit access violates firmware register
+   layout.
+3. Important issue? **PASS** — device init failure on affected hardware
+   (HIGH for those users).
+4. Small and contained? **PASS** — 6 lines, 1 file.
+5. No new features or APIs? **PASS** — behavior correction only.
+6. Can apply to local tree? **PASS** — clean apply verified; buggy code
+   confirmed present.
 
-### Step 9.3: Exception category
-**Record:** N/A (standard bug fix, not device-ID/quirk/DT/docs
-exception)
+### Step 9.3: Exception Categories
+**Record:** Hardware workaround / driver correctness fix for existing
+hardware — qualifies under stable exception for hardware-specific fixes.
 
-### Step 9.4: Decision rationale
+### Step 9.4: Decision Rationale
 
-This tree (`6.18.44`) already backported the `BLKBSZSET` vs.
-`read_cache_page_gfp()` race fix for `btrfs_read_disk_super()`, but
-`sb_write_pointer()` — called from the same mount and superblock I/O
-paths on zoned devices — still performs the identical unlocked read when
-both superblock log zones are full. Leaving this unprotected means the
-backport is incomplete: zoned btrfs users can still hit the same crash
-class the stable tree already decided was worth fixing. The patch is
-minimal, follows the established pattern already in `volumes.c`, and
-applies without modification.
+This commit fixes a genuine firmware handshake bug in the Marvell Octeon
+vDPA driver that has been present since the driver landed in 6.18.y.
+Using 64-bit accesses on a register where only the lower 32 bits hold
+the signature can prevent VF ready detection (leading to init timeout)
+and corrupt firmware metadata in the upper 32 bits. The fix is minimal,
+matches the driver's existing 32-bit mailbox conventions, applies
+cleanly, and two other patches from the same series are already in
+6.18.y — indicating this driver is actively maintained in stable. For
+Octeon DPU users on 6.18.y, this is an important functional fix with
+negligible regression risk.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** `git show 123b9a545f4d0 --format=fuller`: parsed
-  subject, body, tags
-- **[Phase 1]** No syzbot/Fixes tags on this commit; references
-  `3f29d661e568`
-- **[Phase 2]** Diff: +2 lines in `sb_write_pointer()`,
-  `filemap_invalidate_lock/unlock` around `read_cache_page_gfp()`
-- **[Phase 2]** Read `fs/btrfs/zoned.c:88-159`: confirmed buggy unlocked
-  read in `full[0] && full[1]` branch
-- **[Phase 2]** Read `fs/btrfs/volumes.c:1368-1370`: confirmed identical
-  fix pattern already in tree
-- **[Phase 3]** `git describe HEAD`: `v6.18.44`
-- **[Phase 3]** `git blame -L 128,140 fs/btrfs/zoned.c`:
-  `read_cache_page_gfp` since `12659251ca5df` (2020)
-- **[Phase 3]** `git merge-base --is-ancestor ccb3c75d57039 HEAD`:
-  prerequisite fix **in tree**
-- **[Phase 3]** `git merge-base --is-ancestor 123b9a545f4d0 HEAD`: fix
-  commit **not in tree**
-- **[Phase 3]** `git show ccb3c75d57039`: stable backport of BLKBSZSET
-  race fix with syzbot stack trace
-- **[Phase 3]** `git apply --check` on patch: **applies cleanly**
-- **[Phase 4]** `b4 dig -c 123b9a545f4d0`: lore URL found
-- **[Phase 4]** `b4 dig -a`: v1 only, no revisions
-- **[Phase 4]** `b4 dig -w`: CC to linux-btrfs, dsterba, eadavis
-- **[Phase 4]** `b4 dig -m /tmp/sb_write_pointer.mbox`: Qu Wenruo
-  `Reviewed-by`, no NAKs, no stable CC
-- **[Phase 5]** `grep btrfs_sb_log_location`: callers in `volumes.c`,
-  `disk-io.c`, `scrub.c`, `zoned.c`
-- **[Phase 5]** Traced mount path: `btrfs_read_disk_super` →
-  `btrfs_sb_log_location_bdev` → `sb_write_pointer`
-- **[Phase 6]** Confirmed `v6.18.44` tree has unlocked
-  `read_cache_page_gfp` at `zoned.c:133-134`
-- **[Phase 6]** Confirmed `ccb3c75d57039` already protects
-  `btrfs_read_disk_super()` read
-- **[Phase 8]** Failure mode from `ccb3c75d57039` message: KASAN null-
-  ptr-deref / VM_BUG_ON — CRITICAL
+- **[Phase 1]** Parsed commit `d42eadf7969e2` message and tags from `git
+  show`
+- **[Phase 2]** Diff analysis: 3 `readq`/`writeq` → `readl`/`writel`
+  changes in 2 functions
+- **[Phase 3]** `git blame`: buggy code from `8b6c724cdab85`
+  (2024-06-14)
+- **[Phase 3]** `git log stable/linux-6.18.y --
+  drivers/vdpa/octeon_ep/`: patches 1 and 4 of series already present;
+  this fix absent
+- **[Phase 3]** `git merge-base --is-ancestor`: driver and prerequisite
+  patch 1 confirmed in tree
+- **[Phase 3]** `git apply --check`: patch applies cleanly
+- **[Phase 4]** `b4 dig -c d42eadf7969e2`: lore URL found
+- **[Phase 4]** `b4 dig -a`: v1 series, 4 patches identified
+- **[Phase 4]** `b4 dig -w`: maintainers CC'd (mst, jasowang)
+- **[Phase 4]** mbox saved to `/tmp/octeon_mbox_thread.mbox`: no stable
+  nomination or NAKs found
+- **[Phase 5]** `grep` call chain: `get_device_ready_status` ←
+  `octep_vdpa_setup_task`; `octep_sriov_enable` ←
+  `octep_vdpa_sriov_configure`
+- **[Phase 5]** `octep_vdpa_hw.c`: confirmed 32-bit mailbox access
+  pattern elsewhere
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** Read current `octep_vdpa_main.c` lines 583-593, 758-761:
+  buggy `readq`/`writeq` confirmed present
+- **[Phase 6]** `git log master`: commit exists on master, not on stable
+  branch
+- **[Phase 7]** Kconfig: `CONFIG_OCTEONEP_VDPA` module for Marvell
+  Octeon DPU
+- **[Phase 8]** Read timeout path at line 631-633: failure produces
+  `"BAR initialization is timed out"`
 
 **YES**
 
- fs/btrfs/zoned.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/vdpa/octeon_ep/octep_vdpa_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 0dfbb28b7445c..6ca5816a67381 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -130,8 +130,10 @@ static int sb_write_pointer(struct block_device *bdev, struct blk_zone *zones,
- 			u64 bytenr = ALIGN_DOWN(zone_end, BTRFS_SUPER_INFO_SIZE) -
- 						BTRFS_SUPER_INFO_SIZE;
+diff --git a/drivers/vdpa/octeon_ep/octep_vdpa_main.c b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
+index df8af6c1454cc..9aac6dbdaf3aa 100644
+--- a/drivers/vdpa/octeon_ep/octep_vdpa_main.c
++++ b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
+@@ -582,10 +582,10 @@ static const struct vdpa_mgmtdev_ops octep_vdpa_mgmt_dev_ops = {
  
-+			filemap_invalidate_lock(mapping);
- 			page[i] = read_cache_page_gfp(mapping,
- 					bytenr >> PAGE_SHIFT, GFP_NOFS);
-+			filemap_invalidate_unlock(mapping);
- 			if (IS_ERR(page[i])) {
- 				if (i == 1)
- 					btrfs_release_disk_super(super[0]);
+ static bool get_device_ready_status(u8 __iomem *addr)
+ {
+-	u64 signature = readq(addr + OCTEP_VF_MBOX_DATA(0));
++	u32 signature = readl(addr + OCTEP_VF_MBOX_DATA(0));
+ 
+ 	if (signature == OCTEP_DEV_READY_SIGNATURE) {
+-		writeq(0, addr + OCTEP_VF_MBOX_DATA(0));
++		writel(0, addr + OCTEP_VF_MBOX_DATA(0));
+ 		return true;
+ 	}
+ 
+@@ -757,7 +757,7 @@ static int octep_sriov_enable(struct pci_dev *pdev, int num_vfs)
+ 	rpvf = FIELD_GET(GENMASK_ULL(35, 32), val);
+ 	if (done) {
+ 		for (i = 0; i < pf->enabled_vfs; i++)
+-			writeq(OCTEP_DEV_READY_SIGNATURE, addr + OCTEP_PF_MBOX_DATA(i * rpvf));
++			writel(OCTEP_DEV_READY_SIGNATURE, addr + OCTEP_PF_MBOX_DATA(i * rpvf));
+ 	}
+ 
+ 	return num_vfs;
 -- 
 2.53.0
 
