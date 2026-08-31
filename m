@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D31B47FB0F;
-	Mon, 31 Aug 2026 14:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD30F43F0B3;
+	Mon, 31 Aug 2026 14:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184859; cv=none; b=ZrqKUl9dHFAAjwoXyh+gVUCPmxE4yrgkEtnB7lY3YDiFQlEGxlecNRDLSFtqnyjGHREYyqTp6J/uisczZZbP0AR+/NMKze+g/nWT+SPk9p415tL828qPQ64fhssnjJPdFyiFnlnOrrCqRt6cEcnjF2RXGte2dM/vdSsO/pxGvig=
+	t=1788184867; cv=none; b=L4/LYqvINFJlqCY3Zhwn9sgH3VTlF3Tkbsm+hwDhUfX0QyA+d4AFeYTqm6P40x1SMKNIduft94pTT0S0xDfQfa3dCEvPkHUhyNT4VF8Z90RjNh2Rcfz7uK2Q5mM2YzaJrZhaN6MhnQXFHwtcvy/wwvQ6ISE6zJdM2VnVq4Vrrmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184859; c=relaxed/simple;
-	bh=zqxHo12corpSBpjKTVPlxiQ7b3dHabaWlAQB3lUQY94=;
+	s=arc-20240116; t=1788184867; c=relaxed/simple;
+	bh=hcV962f0xL8PYT903ThPZpoWdUCfYLVUoaeT5ET1sqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KXIj9JZHNXQ5u+3rpupgPRh2oCEGUpTtmAxEJP86GMyR0F8AfszA9HrAKftsoKfm9ySOipS/5x8X6qix8Ho3bcmY+TZyzZUw5mrMuGDpM02hPH0u8/YIr6MUfBOnEkylStrGiRgcaKAqjM+TwKVijwb/XDe24xb8U4Vy+4xd5jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rv1dZ7V7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QsyhaHo9BzjNHKx9+lvbxRjUu59Rggsl1g/uMBCeZv/oKQBSgLp3DZlOCcZm0J0demaxS/hGIR4BCxF5nr0Zjol9ATeWi/rvnNaqbgoMu7mzDb17PFuJAh4QR+noZqEouX6v4+Dj90cnwaMm6I1bctpgqDIJfNT9sGp0IrVYpcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKFwxBBS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rv1dZ7V7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283CC1F00A3D;
-	Mon, 31 Aug 2026 14:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKFwxBBS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD52E1F000E9;
+	Mon, 31 Aug 2026 14:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184857;
-	bh=PwuWtTNSGNb8WjgjNRgVhK3UVCAZj9RhNW7WGoF0qos=;
+	s=korg; t=1788184866;
+	bh=KHXpQAHFad/+zd7z6AB5g1ncurKiKW6gZ5wWG+grRT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rv1dZ7V7ukMF5VkC1ePSEh9cK/dMiZnGL6SzmNzxcC4rN/RFmLCQrXzGQiSD1OJ6o
-	 krY5oit68exDRcq/qtVO7dYIWBSZ+HpcUW+dQDPeJ4QZHL5Z6AbuGol9Y0ZFmrW223
-	 mgYZ0LmzB6z3+phbgiPnllRySdgvMlEMGs0MVUS0=
+	b=WKFwxBBSGOJtsXyEpPUmDyjyDkd4wkPlnbgza2QkcE7OX1yvNlf+S1hAVWbcPmHmn
+	 xUaZYKJV1A2BHDaNs2VWHyQrzLR1RA6hDDWBOB3liOa5JOkSzBzB95f+gFiegcsx68
+	 /RJdWlaXCxnmonpYJo10yaEnBquUm21iMxp4pcmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Neuling <mikey@neuling.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 24/92] smc: Use __sk_dst_get() and dst_dev_rcu() in smc_clc_prfx_match().
-Date: Mon, 31 Aug 2026 15:34:22 +0200
-Message-ID: <20260831133400.877961311@linuxfoundation.org>
+Subject: [PATCH 6.1 27/92] riscv: Fix register corruption from uninitialized cregs on error
+Date: Mon, 31 Aug 2026 15:34:25 +0200
+Message-ID: <20260831133401.060530343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -52,74 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Michael Neuling <mikey@neuling.org>
 
-[ Upstream commit 235f81045c008169cc4e1955b4a64e118eebe61b ]
+[ Upstream commit 6ebcbb53fc9bc30843054ed99fd60b8e542628f4 ]
 
-smc_clc_prfx_match() is called from smc_listen_work() and
-not under RCU nor RTNL.
+compat_riscv_gpr_set() calls cregs_to_regs() unconditionally, even when
+user_regset_copyin() fails. Since cregs is an uninitialized stack
+variable, a copyin failure causes uninitialized stack data to be written
+into the target task's pt_regs, corrupting its register state and
+potentially leaking kernel stack contents.
 
-Using sk_dst_get(sk)->dev could trigger UAF.
+compat_restore_sigcontext() has the same issue: it calls cregs_to_regs()
+even when __copy_from_user() fails, leading to the same corruption of
+the signal-returning task's register state on error.
 
-Let's use __sk_dst_get() and dst_dev_rcu().
+Only call cregs_to_regs() when the user copy succeeds.
 
-Note that the returned value of smc_clc_prfx_match() is not
-used in the caller.
-
-Fixes: a046d57da19f ("smc: CLC handshake (incl. preparation steps)")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-4-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4608c159594f ("riscv: compat: ptrace: Add compat_arch_ptrace implement")
+Fixes: 7383ee05314b ("riscv: compat: signal: Add rt_frame implementation")
+Signed-off-by: Michael Neuling <mikey@neuling.org>
+Assisted-by: Cursor:claude-4.6-opus-high-thinking
+Link: https://patch.msgid.link/20260501062320.2339562-1-mikey@neuling.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_clc.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ arch/riscv/kernel/compat_signal.c | 2 ++
+ arch/riscv/kernel/ptrace.c        | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index d6fe5dede1f79..ad1120a43dbd9 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -636,26 +636,26 @@ static int smc_clc_prfx_match6_rcu(struct net_device *dev,
- int smc_clc_prfx_match(struct socket *clcsock,
- 		       struct smc_clc_msg_proposal_prefix *prop)
- {
--	struct dst_entry *dst = sk_dst_get(clcsock->sk);
-+	struct net_device *dev;
-+	struct dst_entry *dst;
- 	int rc;
+diff --git a/arch/riscv/kernel/compat_signal.c b/arch/riscv/kernel/compat_signal.c
+index 6ec4e34255a9a..cf3eb33a11e46 100644
+--- a/arch/riscv/kernel/compat_signal.c
++++ b/arch/riscv/kernel/compat_signal.c
+@@ -107,6 +107,8 @@ static long compat_restore_sigcontext(struct pt_regs *regs,
  
--	if (!dst) {
--		rc = -ENOTCONN;
--		goto out;
--	}
--	if (!dst->dev) {
-+	rcu_read_lock();
-+
-+	dst = __sk_dst_get(clcsock->sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	if (!dev) {
- 		rc = -ENODEV;
--		goto out_rel;
-+		goto out;
- 	}
--	rcu_read_lock();
-+
- 	if (!prop->ipv6_prefixes_cnt)
--		rc = smc_clc_prfx_match4_rcu(dst->dev, prop);
-+		rc = smc_clc_prfx_match4_rcu(dev, prop);
- 	else
--		rc = smc_clc_prfx_match6_rcu(dst->dev, prop);
--	rcu_read_unlock();
--out_rel:
--	dst_release(dst);
-+		rc = smc_clc_prfx_match6_rcu(dev, prop);
- out:
-+	rcu_read_unlock();
-+
- 	return rc;
+ 	/* sc_regs is structured the same as the start of pt_regs */
+ 	err = __copy_from_user(&cregs, &sc->sc_regs, sizeof(sc->sc_regs));
++	if (unlikely(err))
++		return err;
+ 
+ 	cregs_to_regs(&cregs, regs);
+ 
+diff --git a/arch/riscv/kernel/ptrace.c b/arch/riscv/kernel/ptrace.c
+index 2ae8280ae4759..4be6fa82453aa 100644
+--- a/arch/riscv/kernel/ptrace.c
++++ b/arch/riscv/kernel/ptrace.c
+@@ -291,8 +291,8 @@ static int compat_riscv_gpr_set(struct task_struct *target,
+ 	struct compat_user_regs_struct cregs;
+ 
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &cregs, 0, -1);
+-
+-	cregs_to_regs(&cregs, task_pt_regs(target));
++	if (!ret)
++		cregs_to_regs(&cregs, task_pt_regs(target));
+ 
+ 	return ret;
  }
- 
 -- 
 2.53.0
 
