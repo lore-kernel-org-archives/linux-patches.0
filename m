@@ -1,103 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158BD51E43C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04B551E44A;
 	Mon, 31 Aug 2026 13:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183829; cv=none; b=EIqn/FuTN58z1twtspIn/hdQLQ1LRTLZO6qfEnwOm7CTNIgrrNzY6w0tp3NzeVOqWA5O7wIxh5kBIHe8WEvGgsoJ9mdvVlOyMlPAyJ2pDWXtwvJ7rU5lMlpLzTIVyW1OAS5UqWQ6Nyu1CQkS7lH3ZT3d/QVO5UaysHCEaK0XZzU=
+	t=1788183830; cv=none; b=LBLGXf+m60JoosGAaLQAIbSOSo35PbqG32qfLZ0unnEwEhPDHAxdmdaoSbzJh4cKJDPikWnZHOz+ifadd+JFl4Y5lvPdWPO3sVlXJjZIGsUcrlIA/rw3ur2DYiq/rMjb9OrljdmwI1hY3U6vMxKQK7JH506MzBKO901usNSMjPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183829; c=relaxed/simple;
-	bh=0YB707UxztxsX/xkAzuDdGmYNJHFkL2UvxORduJb4Gk=;
+	s=arc-20240116; t=1788183830; c=relaxed/simple;
+	bh=tWcYTEq+Nl25O6YTOwT+jZHdQ3ULqDzJsPxPZiVqLYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DoH1jTeZkexnKpKEVbJxbhXp8HfLAv+yUnb3IvnArJHjiSZlP8kgi/1AxRB5GR8Q++tERnaBkDsHoOjPqbSM5n+S/JFtR//6pDCuXTrlGOrsJIQByE8hkBgmozn9IajdxoQR5gbZ9BU+9p+eOkCH2tVfMlYB9MO8lckPz7BAufg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whPp72XO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YRAPlJz/Nxz88NcDs+J56FojJXe9OSq4mc8UsOY7/enG4IAtcEb9joOfZ6Imb0NMX/Lw6z1ldKTmCfcplO+rMs4AedLx/0yeevv3gY8PHRzfgsMMVVlJOYJqZ82zDcDzV8U0O6n5NeB/VX31+I0Dlp9q1gtygIK4qy83fth6n64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hMjBNYCQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whPp72XO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6244A1F00ADB;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hMjBNYCQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624371F00ACF;
 	Mon, 31 Aug 2026 13:43:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183827;
-	bh=Car5vW+6pLAj9Er86RnIfM+CPFztrLXhnb9DT2b/DYk=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183828;
+	bh=FrC4tyM01XfC74y3iCYXDeh4k761i06gexhwjbMakV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=whPp72XOYIFe7JcOlBksw3fijHN3TZP2aE+FKC1J+/xAdfmRc0mtRvw5kQahcgioc
-	 5pYRjNuTWx7vKxX+Rdr0TtYal0X0I6QHjycK70kOqA0k+sNslDdz6M70awqBgl6chQ
-	 uMRCSCTP2DVNUIA9aM4UwfY4duWMLK0K0Ixt4P3A=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	David Gow <david@davidgow.net>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.1 55/76] kunit: irq: Continue increasing hrtimer interval for longer
-Date: Mon, 31 Aug 2026 15:34:27 +0200
-Message-ID: <20260831133402.279591337@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
-References: <20260831133359.185608553@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=hMjBNYCQ+/X9I2qHIroHfyPBdwTvKul9ae7+zZP4u/NqxFW9r3SoXY2c9OTMMVJdE
+	 X0fgBDtQa38fBXAXJ3Rsloi/U9yYPSy1neGNeUOGT2nULDH/xrdvJodcM9q6/o40oi
+	 sEY1WacIi8zFC3cWOHfNBJz7tDPdU32yG0BY9T2ZLi+tkxp3vrGmOSTQIzMiWRDU1Y
+	 s8bERlvjqN411bHzMgF9R1SG40mWUVxbbB7mPRG6EICTJVicusIhkHKOz4uyljOVaJ
+	 +qlNNMP3GREx6oyH7FUYnME4Z/rEc1JGgDTyGC5Dii9I1JLqTMFRddVlKKzgaAxtGu
+	 pHi7OsnuZAP0A==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Daeho Jeong <daehojeong@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	chao@kernel.org,
+	linux-f2fs-devel@lists.sourceforge.net,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] f2fs: optimize representative type determination in GC
+Date: Mon, 31 Aug 2026 09:25:57 -0400
+Message-ID: <20260831133314.4125787-329-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+From: Daeho Jeong <daehojeong@google.com>
 
-------------------
+[ Upstream commit 5dfb768326b95c6dd6554f34dec71b44a01a0bc8 ]
 
-From: Eric Biggers <ebiggers@kernel.org>
+In large section mode, do_garbage_collect() previously determined the
+section's representative type by looking only at the first segment of
+the section. However, if data was fsynced into an area previously used
+as a node section, and this area is recovered during roll-forward
+recovery after sudden power off (SPO), GC would incorrectly assume the
+section's type based on an empty or obsolete first segment. This caused
+the recovered data segment to be misunderstood as being stuck inside a
+node section, triggering false inconsistency panics (Inconsistent
+segment type in SSA and SIT) and subsequent mount failures.
 
-commit faa6c4c4e4ac69926564688a926105621295d613 upstream.
+This patch optimizes do_garbage_collect() to determine the section's
+representative type by identifying the first segment that actually
+contains valid blocks (valid_blocks > 0) during the main GC loop. This
+eliminates false alarms from empty/obsolete leading segments while
+maintaining strict section-level type consistency checks for genuine
+corruption.
 
-Currently, kunit_irq_test_timer_func() stops increasing the hrtimer
-interval as soon as some forward progress is made in each of softirq and
-task context.  Update it to use a more aggressive strategy: increase the
-interval as long as the hrtimer is running significantly faster than
-either context.
-
-This resolves an occasional hang in the CRC and crypto library tests
-under qemu-system-s390x.  It was exposed by the change in the default
-preemption model on s390 from NONE to LAZY.  That seems to have exposed
-the issue by allowing some forward progress to be made while the actual
-system timer tick is still starved, preventing jiffies from increasing
-or the task context from making much progress towards max_iterations.
-
-Fixes: 201ceb94aa1d ("kunit: irq: Ensure timer doesn't fire too frequently")
-Cc: stable@vger.kernel.org
-Reviewed-by: David Gow <david@davidgow.net>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20260803181842.44648-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/kunit/run-in-irq-context.h |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/include/kunit/run-in-irq-context.h
-+++ b/include/kunit/run-in-irq-context.h
-@@ -38,11 +38,13 @@ static enum hrtimer_restart kunit_irq_te
- 	softirq_calls = atomic_read(&state->softirq_func_calls);
- 
- 	/*
--	 * If the timer is firing too often for the softirq or task to ever have
--	 * a chance to run, increase the timer interval.  This is needed on very
--	 * slow systems.
-+	 * If the hrtimer is running much faster than the bh_work or the task,
-+	 * then it is firing too fast and might be starving those contexts as
-+	 * well as the actual system timer tick.  Increase the interval.
- 	 */
--	if (hardirq_calls >= 20 && (softirq_calls == 0 || task_calls == 0))
-+	if (hardirq_calls >= 20 &&
-+	    (hardirq_calls / 2 > softirq_calls ||
-+	     hardirq_calls / 2 > task_calls))
- 		state->interval = ktime_add_ns(state->interval, 250);
- 
- 	if (!state->func(state->test_specific_state))
+LLM Generated explanations, may be completely bogus:
 
+The background git searches finished and line up with the earlier
+analysis:
+
+- **`origin/master`** has the fix as `5dfb768326b95` ("f2fs: optimize
+  representative type determination in GC"), merged via the f2fs-
+  for-7.1-rc1 tag.
+- **Current HEAD (v6.18.44)** does not contain it — subject grep on HEAD
+  returned nothing, and recent `fs/f2fs/gc.c` history shows no sign of
+  this patch.
+
+That supports the **YES** backport recommendation for this 6.18.y tree:
+the bug is still present here, the fix is on mainline, and it applies
+cleanly.
+
+ fs/f2fs/gc.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 3d41c6348b3c1..e56c7ccecaff5 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1769,9 +1769,8 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 	unsigned int end_segno = start_segno + SEGS_PER_SEC(sbi);
+ 	unsigned int sec_end_segno;
+ 	int seg_freed = 0, migrated = 0;
+-	unsigned char type = IS_DATASEG(get_seg_entry(sbi, segno)->type) ?
+-						SUM_TYPE_DATA : SUM_TYPE_NODE;
+-	unsigned char data_type = (type == SUM_TYPE_DATA) ? DATA : NODE;
++	unsigned char type;
++	unsigned char data_type;
+ 	int submitted = 0, sum_blk_cnt;
+ 
+ 	if (__is_large_section(sbi)) {
+@@ -1870,6 +1869,12 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 					migrated >= sbi->migration_granularity)
+ 				continue;
+ 
++			if (migrated == 0) {
++				type = IS_DATASEG(get_seg_entry(sbi, cur_segno)->type) ?
++							SUM_TYPE_DATA : SUM_TYPE_NODE;
++				data_type = (type == SUM_TYPE_DATA) ? DATA : NODE;
++			}
++
+ 			sum = SUM_BLK_PAGE_ADDR(sbi, sum_folio, cur_segno);
+ 			if (type != GET_SUM_TYPE(sum_footer(sbi, sum))) {
+ 				f2fs_err(sbi, "Inconsistent segment (%u) type "
+-- 
+2.53.0
 
