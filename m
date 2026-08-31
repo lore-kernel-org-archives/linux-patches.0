@@ -1,49 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EF64B5CA2;
-	Mon, 31 Aug 2026 13:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6011D4B5CD1;
+	Mon, 31 Aug 2026 13:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184371; cv=none; b=F/IUYmo11o7tN5+EQLrZqcdUszFw9xpqx/8Dc4ev29FA9nSM8L/tn2HJvfy6IaKZgcDw7ChfAiCybWD+KULDMpjXlDhgrQBgprqFnA4cADGJxlu76ZiZFdiUwYr9VYu6K/wMXFxgqniXjbfFvP+4vLKMWfJK1yV7rDdPLNoflBM=
+	t=1788184379; cv=none; b=h+QfPwogCYbK6l3rCIZ4jmM113Me1Rh8hdl/jDCdRuPAGei7kbOQnWwmFt4WohXqJAy+v9FNUqEdFnK8z5EP+BrcbWhkoifQKyWJqMTIG6+6us6k4Y2g4VgBo7lmAkQ8Xi9lpEgdAU/lHKuA4lsjsNrHzIdAHXohKj5ZaQQpD0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184371; c=relaxed/simple;
-	bh=/9UqlPhhe7+ygd1GkSO3VgeE+YarX18Xs1szpJ0i2Ak=;
+	s=arc-20240116; t=1788184379; c=relaxed/simple;
+	bh=vPZwDHvCl0UvoVa6vZba7WM0FsaIr4gjgJ5uDGtZu6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IDsoUMW72hLYy9QvClSqJBO+AvjV+k4GnLYrx3O77Avc4bHzZ3yA123e245q2gTk84PkKds2fj20HcQyPo3NjMCk0LWaQ2eOjWrCpkfk7kBHz3bsyElapbWU12lKiOd/GkqASPwHMhT8m736URje220jJ/UhEGJUnMpRdTruXi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iv1p65Vb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eHogdKJpdtF1rqncGqOsrb6sJywq63YK9c1Qy33YIDB1JLLNGJm7zI7RLYQ/k+PPcU/UZcPd9f0rWqQEflAZyNq+sGP4pqcSnB4VGfPGTe4l05rHAXkGg+s80bYxMc34LiFvdpF4bGfaJefNCHmm8+SkviaCMpRK+Janv7gUqf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fFaniP5O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iv1p65Vb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30E71F00A3D;
-	Mon, 31 Aug 2026 13:52:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fFaniP5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BBE1F000E9;
+	Mon, 31 Aug 2026 13:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184368;
-	bh=xHZ8Z3uhEE9sHeEynKza9pRWytrjKi05lYcLTcYnbwI=;
+	s=k20260515; t=1788184377;
+	bh=DtZxmLvCsMtoIG8f2Rt3cQyCzEDVhJyq6BhHLkq4LkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iv1p65Vbq2pF/wgGrCiQrfYZ6sl4g911WdYG3kium1pLBr7X3BjR9cEDdQocthcxU
-	 /orkQgWQVEUojHy2Cz/E8rhRPS0uswF217WFG/sccGTtn+lxmtWYLslRJScWXm+8D1
-	 tDADhF2RNVh4rC8yU5OzYRGC8g7qovXLqxapTENvGibdV23Fvj5XnpF+PoDokmUfN1
-	 mrDUgJKB4Qirqqjv6RPeSbsyojq/7/MmCzQKUzHdR5blgR6ouJOqXTuOO8kBImbfqy
-	 CCooONVt+4dVZMMKncUwyD0D9KUl3jlV7bOWUxpZ3wZIsGDAL+fu/MTUrv7ue4bk/p
-	 OjFfHJk0AdLUg==
+	b=fFaniP5ORkDm3qpNhb/I3fYfQWNehDvhlZczoYbg2YWgK0h+SvMVooeW8MF4uQlLu
+	 FC4FqdAUFtGhJTLcTcuUNPUmleGuVEnsKIfEMqcTFKVX7dK6YFH6uzjj9J8k3S/QPE
+	 CXjcq8yrfB9FiRgMrEYaLW2GzmD0slnVVGa1l2vKUGQTNISScLWkPUU5vApamkbs4D
+	 2HTRvo9oddZg8dTEGtUFxEh3K6etm/Bq5WffTkT1rKJUJfczP7fe63V0TYIXH9tbBU
+	 ToMowI2RR3edqneK0znhcDgomwIbhyQnoRIPYbIHg3seAieW9LGTYAIoNTMgAdG0ce
+	 aSwQTNeBvhe5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linus Walleij <linusw@kernel.org>,
-	=?UTF-8?q?Micha=C5=82=20K=C4=99pie=C5=84?= <kernel@kempniu.pl>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	albeu@free.fr,
-	brgl@kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: ath9k: Obtain system GPIOS from descriptors
-Date: Mon, 31 Aug 2026 09:31:20 -0400
-Message-ID: <20260831133314.4125787-652-sashal@kernel.org>
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	rjui@broadcom.com,
+	sbranden@broadcom.com,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] PCI: iproc: Protect root bus removal with rescan lock
+Date: Mon, 31 Aug 2026 09:31:25 -0400
+Message-ID: <20260831133314.4125787-657-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,648 +52,357 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linusw@kernel.org>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 34a5329beee86a22a446e27eb37f06caa63479ca ]
+[ Upstream commit a6a64e150f12ad5391e0a0d60f6a3d119b06ce50 ]
 
-The ath9k has an odd use of system-wide GPIOs: if the chip
-does not have internal GPIO capability, it will try to obtain a
-GPIO line from the system GPIO controller:
+Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
+to avoid racing with concurrent rescan or hotplug operations triggered via
+sysfs.  Such races may lead to use-after-free issues or system crashes.
 
-  if (BIT(gpio) & ah->caps.gpio_mask)
-        ath9k_hw_gpio_cfg_wmac(...);
-  else if (AR_SREV_SOC(ah))
-        ath9k_hw_gpio_cfg_soc(ah, gpio, out, label);
-
-Where ath9k_hw_gpio_cfg_soc() will attempt to issue
-gpio_request_one() passing the local GPIO number of the controller
-(0..31) to gpio_request_one().
-
-This is somewhat peculiar and possibly even dangerous: there is
-nowadays no guarantee of the numbering of these system-wide
-GPIOs, and assuming that GPIO 0..31 as used by ath9k would
-correspond to GPIOs 0..31 on the system as a whole seems a bit
-wild.
-
-Register all 32 GPIOs at index 0..31 directly in the ATH79K
-GPIO driver and associate with the NULL device (making them
-widely available) if and only if we are probing ATH79K wifi
-from the AHB bus (used for SoCs). We obtain these offsets from
-the NULL device if necessary.
-
-These GPIOs should ideally be defined in the device tree
-instead, but we have no control over that for the legacy
-code path.
-
-Testcompiled with the ath79 defconfig.
-
-Reported-by: Michał Kępień <kernel@kempniu.pl>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Michał Kępień <kernel@kempniu.pl>
-Link: https://patch.msgid.link/20260317-descriptors-wireless-v6-1-b19ecff9cd2b@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260521161822.132996-6-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 2)...
-Retry attempt 2...
-# Stable Backport Analysis: `wifi: ath9k: Obtain system GPIOS from
-descriptors`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.43** (`git describe HEAD` → `v6.18.43`,
-`make kernelversion` → `6.18.43`)
+### Step 1.1: Subject Line
+**Record:** `[PCI: iproc]` `[Protect]` — Add missing
+`pci_rescan_remove_lock` protection around root bus teardown in
+`iproc_pcie_remove()`.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[wifi: ath9k]` `[obtain]` — Switch ath9k SoC GPIO handling
-from legacy global GPIO numbers to GPIO descriptors obtained via lookup
-tables.
-
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+### Step 1.2: Commit Message Tags
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Reported-by | Michał Kępień \<kernel@kempniu.pl\> |
-| Tested-by | Michał Kępień \<kernel@kempniu.pl\> |
-| Acked-by | Toke Høiland-Jørgensen, Bartosz Golaszewski |
-| Reviewed-by | Andy Shevchenko |
-| Signed-off-by | Linus Walleij, Jeff Johnson |
-| Link | https://patch.msgid.link/20260317-descriptors-
-wireless-v6-1-b19ecff9cd2b@kernel.org |
-| Fixes: | Not present (expected) |
-| Cc: stable | Not present (expected) |
+- **Link:**
+  `https://patch.msgid.link/20260521161822.132996-6-18255117159@163.com`
+- **Signed-off-by:** Hans Zhang, Manivannan Sadhasivam, Bjorn Helgaas
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
+  by:`, or `Reviewed-by:` tags
+- Notable: absence of `Fixes:`/`Cc: stable` is expected for manual
+  review; not a negative signal
 
-**Notable patterns:** Real-world reporter who also tested the fix; GPIO
-subsystem maintainer (Bartosz Golaszewski) and GPIO expert (Andy
-Shevchenko) reviewed/acked. No syzbot report.
-
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug description:** On ath79 SoC platforms, when ath9k lacks internal
-  GPIO capability for a line, `ath9k_hw_gpio_cfg_soc()` calls
-  `gpio_request_one()` with chip-local offsets (0–31), assuming they map
-  to global GPIO numbers 0–31. That assumption is invalid with modern
-  dynamic GPIO base allocation.
-- **Symptom/failure mode:** GPIO request fails or maps to the wrong
-  system GPIO line; LED, rfkill, and other SoC GPIO-dependent features
-  break.
-- **Root cause:** Legacy global GPIO API used with dynamically allocated
-  GPIO chip bases after gpio-ath79 moved to `gpio_generic_chip`.
-- **Fix approach:** Register a `gpiod_lookup_table` in gpio-ath79 (when
-  `CONFIG_ATH9K_AHB`) and obtain descriptors via `gpiod_get_index(NULL,
-  "ath9k", gpio, flags)` in ath9k.
+- **Bug:** `iproc_pcie_remove()` calls `pci_stop_root_bus()` /
+  `pci_remove_root_bus()` without holding the global PCI rescan/remove
+  mutex
+- **Symptom:** Race with concurrent sysfs-triggered PCI rescan or
+  hotplug → use-after-free or system crash
+- **Root cause:** Driver teardown and sysfs rescan/remove paths can run
+  concurrently on the same bus hierarchy without synchronization
+- **Version info:** None in commit message
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised cleanup — explicitly a correctness fix for
-broken GPIO mapping on ath79/ath9k AHB SoCs. Falls under the hardware
-quirk/workaround exception category.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Not disguised — explicitly a synchronization bug fix.
+Matches a well-established PCI core pattern (`pci_lock_rescan_remove()`
+/ `pci_unlock_rescan_remove()`).
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: INVENTORY THE CHANGES
+### Step 2.1: Change Inventory
 **Record:**
-| File | +/- | Functions modified |
-|------|-----|-------------------|
-| `drivers/gpio/gpio-ath79.c` | +56/-1 |
-`ath79_gpio_register_wifi_descriptors()` (new), `ath79_gpio_probe()` |
-| `drivers/net/wireless/ath/ath9k/hw.c` | +22/-11 |
-`ath9k_hw_gpio_cfg_soc()`, `ath9k_hw_gpio_free()`,
-`ath9k_hw_gpio_get()`, `ath9k_hw_set_gpio()` |
-| `drivers/net/wireless/ath/ath9k/hw.h` | +2/-1 | `struct ath_hw`,
-`struct ath9k_hw_capabilities` |
+- **File:** `drivers/pci/controller/pcie-iproc.c` (+2 lines)
+- **Function:** `iproc_pcie_remove()`
+- **Scope:** Single-file, surgical fix (2 insertions)
 
-**Scope:** Multi-file but surgical (~80 lines total). Self-contained
-within gpio-ath79 + ath9k.
-
-### Step 2.2: CODE FLOW CHANGE (per hunk)
+### Step 2.2: Code Flow Change
 **Record:**
-1. **gpio-ath79.c probe:** After `devm_gpiochip_add_data()`, register 32
-   lookup entries mapping chip offsets 0–31 to consumer `"ath9k"`
-   indices 0–31 on the NULL device.
-2. **ath9k_hw_gpio_cfg_soc():** `devm_gpio_request_one(ah->dev, gpio,
-   ...)` → `gpiod_get_index(NULL, "ath9k", gpio, flags)`; store in
-   `ah->gpiods[gpio]`.
-3. **ath9k_hw_gpio_get/set_gpio():** `gpio_get_value(gpio)` /
-   `gpio_set_value(gpio, val)` → `gpiod_get_value()` /
-   `gpiod_set_value()` on stored descriptors.
-4. **ath9k_hw_gpio_free():** Clear bit in `gpio_requested` →
-   `gpiod_put()` and NULL the descriptor.
-5. **hw.h:** Replace `caps.gpio_requested` bitmask with `struct
-   gpio_desc *gpiods[32]`.
+- **Before:** `pci_stop_root_bus()` → `pci_remove_root_bus()` with no
+  lock
+- **After:** `pci_lock_rescan_remove()` → stop/remove →
+  `pci_unlock_rescan_remove()`
+- **Path:** Driver remove (platform unbind, BCMA remove, module unload)
 
-### Step 2.3: BUG MECHANISM
-**Record:** **Category:** Logic/correctness + hardware workaround.
-- **Broken:** `gpio_request_one()` and
-  `gpio_get_value()`/`gpio_set_value()` used chip-local GPIO indices as
-  global GPIO numbers.
-- **With dynamic bases** (gpio-ath79 uses `gpio_generic_chip` in this
-  tree), local offset 11 ≠ global GPIO 523 (512+11 as seen on OpenWrt).
-- **Fix:** Descriptor-based GPIO via lookup table bridges ath9k consumer
-  to the correct ath79 GPIO chip lines.
-
-### Step 2.4: FIX QUALITY
-**Record:** Fix is obviously correct for the stated problem. Minimal,
-follows established `gpiod_add_lookup_table()` patterns. Uses non-devm
-`gpiod_get_index()` with manual `gpiod_put()` — appropriate for NULL-
-device legacy lookup. Low regression risk; guarded by `CONFIG_ATH9K_AHB`
-in gpio-ath79. v6 incorporated reporter feedback from v2 (NULL device
-matching, correct `GPIO_LOOKUP_IDX` offsets).
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** `git blame` on `hw.c:2719–2735` attributes all lines to
-merge commit `5d324e5159d9e` (stable tree squash). Limited per-line
-history in this checkout. Buggy `devm_gpio_request_one()` pattern is
-present in current 6.18.43 tree at line 2727.
-
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** No `Fixes:` tag. N/A.
-
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:** `git log --oneline -20 -- hw.c` and `gpio-ath79.c` only show
-merge commits in this stable checkout (shallow/squashed history). Patch
-evolved v1→v2→v3→v4→v6 per `b4 dig -a`; v6 is the committed/applied
-version. Standalone — not dependent on other patches in the original 1/6
-series.
-
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Linus Walleij is GPIO subsystem maintainer. Long-running
-effort to remove global GPIO numbers from ath9k (since v1 in Jan 2024).
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** Requires gpio-ath79 `gpio_generic_chip` refactor (already
-present in 6.18.43). Requires `linux/gpio/machine.h`, `gpiod_get_index`,
-`gpiod_set_consumer_name`, `struct_size` — all verified present. Uses
-`ctrl->chip.gc.label` which matches current gpio-ath79 structure. **Can
-apply standalone.**
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: ORIGINAL PATCH DISCUSSION
+### Step 2.3: Bug Mechanism
 **Record:**
-- **URL:** https://patch.msgid.link/20260317-descriptors-
-  wireless-v6-1-b19ecff9cd2b@kernel.org
-- **Series:** v1 (2024-01-31) → v2 (2024-04-23) → v3/v4 (2026-03) → **v6
-  (2026-03-17, final)**
-- **Key reviewer feedback (v2, Michał Kępień):** Original v2 had wrong
-  lookup table `dev_id` and `chip_hwnum`; suggested NULL-device +
-  `"ath9k"` con_id matching — incorporated in final patch.
-- **Stable nominations:** None found in saved mbox thread.
+- **Category:** Race condition / potential UAF
+- **Mechanism:** `pci-sysfs.c` rescan/remove handlers (`rescan_store`,
+  `dev_rescan_store`, `remove_store`, `bus_rescan_store`) hold
+  `pci_rescan_remove_lock`. `iproc_pcie_remove()` did not. Concurrent
+  sysfs operations and driver removal can corrupt or free PCI bus/device
+  structures still in use.
 
-### Step 4.2: WHO REVIEWED
-**Record (`b4 dig -w`):** Linus Walleij, Jeff Johnson, Andy Shevchenko,
-Arnd Bergmann, Alban Bedel, Bartosz Golaszewski, Toke Høiland-Jørgensen,
-Michał Kępień; CC'd linux-wireless@, linux-gpio@.
-
-### Step 4.3: BUG REPORT
+### Step 2.4: Fix Quality
 **Record:**
-- **OpenWrt issue:** Mikrotik RouterBOARD 951Ui-2HnD (AR9344) WLAN LED
-  broken since ath79 switched to dynamic GPIO base allocation (July
-  2024). Reporter confirmed GPIO chip works at global offset 523
-  (=512+11) but ath9k driver could not reach it via legacy API.
-- **Severity:** Functional hardware breakage on ath79 routers; not a
-  kernel crash.
-
-### Step 4.4: RELATED PATCHES
-**Record:** Part of a longer ath9k GPIO-descriptor migration series, but
-this commit is self-contained for the ath79 AHB legacy path.
-
-### Step 4.5: STABLE MAILING LIST
-**Record:** No stable-specific discussion found.
+- Obviously correct — identical to `pci_host_common_remove()`, `pci-
+  aardvark`, `pci-mvebu`, `pcie-mediatek-gen3`, `pci-hyperv`, and others
+- Minimal, no API changes
+- **Regression risk:** Very low; only serializes an already-required
+  critical section
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 3: Git History Investigation
 
-### Step 5.1: KEY FUNCTIONS
-**Record:** `ath79_gpio_register_wifi_descriptors()`,
-`ath9k_hw_gpio_cfg_soc()`, `ath9k_hw_gpio_get()`, `ath9k_hw_set_gpio()`,
-`ath9k_hw_gpio_free()`, `ath9k_hw_gpio_request()`.
-
-### Step 5.2: TRACE CALLERS
-**Record:** `ath9k_hw_gpio_request_{in,out}()` called from:
-- `gpio.c` — WLAN LED (`ath_fill_led_pin`, led on/off)
-- `gpio.c` — rfkill GPIO read
-- `btcoex.c` — Bluetooth coexistence GPIOs
-- `main.c` — LED pin setup
-- `hw.c` — rfkill init, chainmask GPIO read
-
-**Context:** Device probe and runtime on ath79 SoC routers with
-`CONFIG_ATH9K_AHB`.
-
-### Step 5.3: TRACE CALLEES
-**Record:** `gpiod_get_index()`, `gpiod_get_value()`,
-`gpiod_set_value()`, `gpiod_put()`, `gpiod_add_lookup_table()`,
-`GPIO_LOOKUP_IDX()`.
-
-### Step 5.4: CALL CHAIN / REACHABILITY
-**Record:** Triggered during ath9k AHB WiFi driver probe and
-LED/rfkill/btcoex operation on AR9340/AR9531/AR9550/AR9561 SoCs
-(`AR_SREV_SOC`). GPIOs outside `gpio_mask` (e.g., AR9340 mask = `0xF`,
-LED on GPIO 11) take the broken `ath9k_hw_gpio_cfg_soc()` path.
-**Reachable on every boot** for affected ath79 boards with external GPIO
-lines.
-
-### Step 5.5: SIMILAR PATTERNS
-**Record:** Other drivers use `gpiod_add_lookup_table()` +
-`GPIO_LOOKUP_IDX()` for board-specific GPIO wiring (e.g.,
-`sound/soc/samsung/speyside.c`, `drivers/usb/dwc3/dwc3-pci.c`). Same
-established pattern.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.43)
-
-### Step 6.1: DOES THE BUGGY CODE EXIST?
-**Record:** **YES.** Current tree has:
-- `devm_gpio_request_one(ah->dev, gpio, ...)` at `hw.c:2727`
-- `gpio_get_value(gpio)` / `gpio_set_value(gpio, val)` at
-  `hw.c:2826,2850`
-- `gpio-ath79.c` already uses `gpio_generic_chip` (dynamic GPIO bases)
-- `CONFIG_ATH9K_AHB` exists in Kconfig; enabled in
-  `arch/mips/configs/ath79_defconfig`
-
-The fix is **not** yet in 6.18.43 (mainline commit `34a5329`, dated
-2026-03-17).
-
-### Step 6.2: BACKPORT COMPLICATIONS
-**Record:** **Clean apply expected.** Current gpio-ath79 structure
-(`ctrl->chip.gc.label`, `gpio_generic_chip_init`) matches the patch. No
-conflicting changes detected.
-
-### Step 6.3: RELATED FIXES ALREADY PRESENT?
-**Record:** `git log --grep` found no related fix already in this tree.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: SUBSYSTEM AND CRITICALITY
-**Record:** **Subsystem:** `drivers/gpio` +
-`drivers/net/wireless/ath/ath9k` — **IMPORTANT** (embedded router
-WiFi/GPIO, not core kernel path).
-
-### Step 7.2: SUBSYSTEM ACTIVITY
-**Record:** gpio-ath79 recently refactored to `gpio_generic_chip`
-(dynamic bases), which exposed this long-standing ath9k assumption.
-Active area for ath79/OpenWrt platforms.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: WHO IS AFFECTED
-**Record:** **Platform-specific:** MIPS ath79 SoC devices with built-in
-ath9k WiFi (`CONFIG_ATH9K_AHB=y`). Common in OpenWrt routers (TP-Link,
-Mikrotik, etc.). Not universal.
-
-### Step 8.2: TRIGGER CONDITIONS
-**Record:** Boot with ath9k AHB on AR9340/AR9531/AR9550/AR9561 when a
-GPIO line outside the chip's internal `gpio_mask` is needed (WLAN LED,
-rfkill, btcoex). **Common on affected hardware.** Not a userspace-
-triggerable security issue.
-
-### Step 8.3: FAILURE MODE SEVERITY
+### Step 3.1: Blame
 **Record:**
-- GPIO request failure → WLAN LED non-functional, rfkill/btcoex GPIO
-  broken
-- Wrong GPIO mapping → could toggle unrelated hardware lines (author:
-  "possibly even dangerous")
-- **Severity: MEDIUM-HIGH** for affected platforms (functional breakage
-  + potential wrong-pin control); **not CRITICAL** (no crash,
-  corruption, or security CVE)
+- `iproc_pcie_remove()` dates to Ray Jui (2015); `pci_stop_root_bus()` /
+  `pci_remove_root_bus()` added in `81ce3cf4a246d` (2020, "PCI: iproc:
+  Use pci_host_probe()")
+- Unprotected removal pattern present since 2020 in this tree
 
-### Step 8.4: RISK-BENEFIT
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag
+
+### Step 3.3: Related File History
 **Record:**
-- **Benefit:** Restores correct GPIO operation on ath79 routers; fixes
-  user-reported OpenWrt breakage; eliminates dangerous wrong-GPIO
-  mapping
-- **Risk:** Very low — ~80 lines, well-reviewed, compile-time gated,
-  established API pattern
-- **Ratio:** Strong benefit for affected users, minimal risk
+- Part of 9-patch series "[PATCH 0/9] PCI: controller: Add missing
+  rescan lock around root bus removal"
+- Cover letter states each patch is independent
+- Same missing-lock pattern exists in several sibling drivers (cadence,
+  dwc, altera, brcmstb, mediatek, rockchip, vmd, plda) — not yet fixed
+  in this 6.18.44 tree
+
+### Step 3.4: Author Context
+**Record:** Hans Zhang is an active PCI contributor (cadence/dwc
+capability search, etc.). Patch signed by PCI maintainer Bjorn Helgaas.
+
+### Step 3.5: Dependencies
+**Record:** None. `pci_lock_rescan_remove()` /
+`pci_unlock_rescan_remove()` exist in this tree since commit
+`9d16947b75831` (2014). `pcie-iproc.c` already includes `<linux/pci.h>`.
+Standalone backport.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 4: Mailing List and External Research
 
-### Step 9.1: EVIDENCE SUMMARY
+### Step 4.1: Original Discussion
+**Record:**
+- Commit not in local tree; `b4 dig -c` could not match it
+- Local mbox/cover files available in workspace
+- Cover letter lore reference: `https://lore.kernel.org/linux-
+  pci/20260519132017.63E1BC2BCB3@smtp.kernel.org/` (sashiko-bot review
+  flagging the missing-lock pattern)
+- Series: v1, 9 independent patches, May 22 2026
+- **UNVERIFIED:** Full lore thread replies (Anubis blocked WebFetch on
+  lore.kernel.org)
+
+### Step 4.2: Reviewers
+**Record:** Cover letter references automated sashiko-bot review
+identifying the race. Bjorn Helgaas committed. **UNVERIFIED:** Full
+recipient list via `b4 dig -w` (commit not in tree).
+
+### Step 4.3: Bug Reports
+**Record:** No syzbot or user bug reports. Issue identified via code
+review / pattern analysis (same class of bug Rafael Wysocki documented
+in `9d16947b75831`).
+
+### Step 4.4: Related Patches
+**Record:** 8 sibling patches in the same series for other host
+controllers; each independent.
+
+### Step 4.5: Stable List History
+**Record:** **UNVERIFIED** — could not search lore stable list
+(blocked). No stable nomination found in local cover letter.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+**Record:** `iproc_pcie_remove()` (modified)
+
+### Step 5.2: Callers
+**Record:**
+- `iproc_pltfm_pcie_remove()` in `pcie-iproc-platform.c` (platform
+  driver `.remove`)
+- `iproc_bcma_pcie_remove()` in `pcie-iproc-bcma.c` (BCMA driver
+  `.remove`)
+- Triggered on device unbind, module unload, shutdown
+
+### Step 5.3: Callees
+**Record:** `pci_lock_rescan_remove()`, `pci_stop_root_bus()`,
+`pci_remove_root_bus()`, `pci_unlock_rescan_remove()`, then MSI/PHY
+cleanup
+
+### Step 5.4: Reachability
+**Record:**
+- Driver remove is reachable on Broadcom iProc platforms
+  (`CONFIG_PCIE_IPROC_PLATFORM`, `CONFIG_PCIE_IPROC_BCMA`)
+- Concurrent sysfs PCI rescan/remove requires appropriate privileges
+  (typically root), but is realistic during admin operations, hotplug
+  testing, or scripted teardown
+- Race window is real when both paths run concurrently
+
+### Step 5.5: Similar Patterns
+**Record:** Multiple controllers already use this lock pattern. `pcie-
+iproc.c` is an outlier. `pci_stop_and_remove_bus_device()` asserts
+`lockdep_assert_held(&pci_rescan_remove_lock)` — sysfs remove uses the
+locked variant; host driver remove did not.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
+
+### Step 6.1: Buggy Code Exists?
+**Record:** **YES.** At lines 1543–1544 of `drivers/pci/controller/pcie-
+iproc.c`, `iproc_pcie_remove()` calls `pci_stop_root_bus()` /
+`pci_remove_root_bus()` without the lock. Fix is **not** yet applied in
+this tree (`git describe HEAD` → `v6.18.44-1-g2736c32da98b9`).
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — 2-line addition, no structural
+conflicts. `pci_lock_rescan_remove` API unchanged.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** No equivalent fix for iproc in this tree. `pci-host-
+common.c`, `pci-aardvark.c`, `pci-mvebu.c`, `pcie-mediatek-gen3.c`
+already hold the lock.
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem and Criticality
+**Record:** `drivers/pci/controller/` — **IMPORTANT** (PCI host
+controller; affects platform-specific hardware but uses core PCI
+infrastructure shared with sysfs paths)
+
+### Step 7.2: Subsystem Activity
+**Record:** Actively maintained; recent iproc commit `f37f2f804796e` in
+this tree.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users of Broadcom iProc PCIe (`ARCH_BCM_IPROC`, BCM5301X
+BCMA). Not universal, but real production embedded/SoC deployments.
+
+### Step 8.2: Trigger Conditions
+**Record:** Driver remove/unbind concurrent with sysfs PCI rescan or
+device removal. Uncommon but plausible under admin maintenance, module
+reload, or testing. Requires privileges for sysfs side.
+
+### Step 8.3: Failure Mode Severity
+**Record:** Use-after-free / kernel crash — **HIGH** (potential
+**CRITICAL** if exploited, though sysfs access limits practical
+exploitability)
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Prevents real race/UAF during teardown on affected
+  hardware
+- **Risk:** Minimal — 2 lines matching established PCI convention
+- **Ratio:** Strongly favorable
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real user-reported bug (Michał Kępień / OpenWrt, Mikrotik AR9344)
-- Tested-by reporter on real hardware
-- Reviewed by GPIO and wireless maintainers
-- Buggy code confirmed present in 6.18.43
-- gpio-ath79 already uses dynamic GPIO bases — legacy ath9k code is
-  broken
-- Small, surgical, self-contained fix
-- Hardware quirk/workaround exception applies
-- Wrong GPIO line control is a safety concern on embedded hardware
+- Fixes a real synchronization bug (race with sysfs PCI operations)
+- Failure mode is UAF/system crash
+- Fix is 2 lines, obviously correct, matches multiple existing drivers
+  in this tree
+- Bug has existed since 2020 when iproc adopted `pci_remove_root_bus()`
+- No dependencies; API present since 2014
+- Buggy code confirmed present in 6.18.44
+- PCI maintainer committed the patch
 
 **AGAINST backport:**
-- Only affects ath79 + ATH9K_AHB platforms (niche vs. entire kernel)
-- Primary visible symptom is WLAN LED / GPIO features, not crashes
-- No explicit stable nomination in review thread
-- Part of a longer GPIO-descriptor migration (though this patch stands
-  alone)
+- No syzbot/user crash report (theoretical/code-review finding)
+- Affects specific hardware platform only
+- Part of a 9-patch series (but explicitly independent)
 
-**Unresolved:** Exact kernel version when gpio-ath79 gained
-`gpio_generic_chip` cannot be determined from this stable tree's git
-history (squashed).
+**Unresolved:**
+- Full lore review thread and stable-list discussion (WebFetch blocked)
 
-### Step 9.2: STABLE RULES CHECKLIST
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — Reviewed by GPIO
-maintainers; Tested-by reporter |
-| 2. Fixes a real bug affecting users? | **PASS** — OpenWrt/ath79 router
-GPIO breakage confirmed |
-| 3. Important issue? | **PASS** — Functional hardware breakage + wrong
-GPIO mapping risk on embedded platforms |
-| 4. Small and contained? | **PASS** — ~80 lines, 3 files |
-| 5. No new features/APIs? | **PASS** — Uses existing gpiod lookup
-infrastructure; legacy workaround only |
-| 6. Can apply to local tree? | **PASS** — Code matches; prerequisites
-present |
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — matches established pattern;
+   no functional change beyond serialization
+2. Fixes a real bug? **PASS** — documented race with sysfs PCI paths
+3. Important issue? **PASS** — UAF/crash severity HIGH
+4. Small and contained? **PASS** — 2 lines, one function
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
+   expected
 
-### Step 9.3: EXCEPTION CATEGORY
-**Record:** **Hardware quirk/workaround** — legacy ath79/ath9k GPIO path
-fix for SoCs where device tree does not describe these lines.
+### Step 9.3: Exception Categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
 
-### Step 9.4: DECISION RATIONALE
+### Step 9.4: Decision Rationale
 
-For **Linux 6.18.43**, this commit should be backported. The buggy
-legacy GPIO code is present, gpio-ath79 already uses dynamic GPIO
-numbering that breaks the old assumptions, and real users on ath79
-routers (OpenWrt, Mikrotik, etc.) have confirmed WLAN LED and related
-GPIO functionality is broken without this fix. The patch is small, well-
-reviewed, tested on hardware, and applies cleanly to the current tree
-structure.
+For Linux **6.18.44**, `iproc_pcie_remove()` lacks the PCI rescan/remove
+lock that sysfs PCI operations already use. This is a long-standing
+oversight relative to the locking contract introduced in 2014 and
+followed by `pci-host-common` and several other host drivers in this
+tree. The fix is minimal, self-contained, and prevents a realistic race
+during driver teardown that can cause use-after-free or crashes. It
+meets all stable kernel criteria.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reported-by/Tested-by Michał Kępień; Reviewed-
-  by Andy Shevchenko; Acked-by Bartosz Golaszewski, Toke Høiland-
-  Jørgensen
-- [Phase 1] No Fixes:/Cc: stable tags (expected)
-- [Phase 2] Diff: 3 files, ~+80/-13; gpio lookup table + gpiod
-  descriptor migration in ath9k
-- [Phase 2] Verified buggy code: `devm_gpio_request_one()` at hw.c:2727,
-  `gpio_get_value(gpio)` at hw.c:2826
-- [Phase 3] `git describe HEAD`: v6.18.43; `make kernelversion`: 6.18.43
-- [Phase 3] `git blame hw.c:2719-2735`: lines present with legacy API
-  (history squashed to merge commit)
-- [Phase 3] No Fixes: tag to follow
-- [Phase 4] `b4 dig -c 34a5329`: matched v6 thread at
-  patch.msgid.link/20260317-descriptors-
-  wireless-v6-1-b19ecff9cd2b@kernel.org
-- [Phase 4] `b4 dig -a`: v1→v2→v3→v4→v6 series; v6 is latest
-- [Phase 4] `b4 dig -w`: GPIO and wireless maintainers CC'd
-- [Phase 4] Spinics v2 reply from Michał Kępień: documents OpenWrt
-  breakage and lookup table fixes
-- [Phase 4] OpenWrt PR #17402: Mikrotik AR9344 WLAN LED broken since
-  dynamic GPIO bases
-- [Phase 4] No stable nomination found in mbox thread
-- [Phase 5] Callers verified via grep: gpio.c, btcoex.c, main.c, hw.c
-- [Phase 5] AR9340_GPIO_MASK = 0xF — GPIO 11 (reported LED pin) uses soc
-  path outside mask
-- [Phase 6] Buggy code confirmed present; fix NOT present in 6.18.43
-- [Phase 6] gpio-ath79 uses `gpio_generic_chip` in current tree
-- [Phase 6] `CONFIG_ATH9K_AHB` exists; `linux/gpio/machine.h` and
-  `gpiod_*` APIs present
-- [Phase 6] Patch uses `ctrl->chip.gc.label` matching current gpio-ath79
-  structure
-- [Phase 8] Failure mode: GPIO misrouting / LED-rfkill-btcoex breakage
-  on ath79 SoCs; severity MEDIUM-HIGH for affected hardware
-- UNVERIFIED: Exact upstream commit that introduced gpio-ath79
-  `gpio_generic_chip` refactor (stable tree history is squashed)
+- **[Phase 1]** Parsed subject, tags, body from user-provided commit
+  message and local mbox
+- **[Phase 2]** Confirmed diff: +2 lines in `iproc_pcie_remove()`
+  wrapping stop/remove with lock
+- **[Phase 3]** `git describe HEAD`: v6.18.44; `git blame`: unprotected
+  pattern since `81ce3cf4a246d` (2020)
+- **[Phase 3]** `git show 9d16947b75831`: `pci_lock_rescan_remove()`
+  introduced 2014, present in tree
+- **[Phase 3]** Read local cover letter: 9-patch independent series,
+  sashiko-bot flagged race
+- **[Phase 4]** `b4 dig -c HEAD`: no match (commit not in tree)
+- **[Phase 4]** Read `20260522_...rescan_lock...cover` and `.mbx`:
+  series context and bot review
+- **[Phase 4]** WebFetch lore/patch.msgid.link: blocked by Anubis —
+  **UNVERIFIED** thread replies
+- **[Phase 5]** `grep iproc_pcie_remove`: callers in `pcie-iproc-
+  platform.c`, `pcie-iproc-bcma.c`
+- **[Phase 5]** Read `pci-sysfs.c`: rescan/remove paths hold
+  `pci_lock_rescan_remove()`
+- **[Phase 5]** Read `pci-host-common.c`, `pci-aardvark.c`, `pci-
+  mvebu.c`: established lock pattern
+- **[Phase 5]** Read `remove.c`: `pci_stop_and_remove_bus_device()`
+  asserts lock held
+- **[Phase 6]** Read `pcie-iproc.c` lines 1539–1549: buggy code
+  confirmed, fix absent
+- **[Phase 6]** `grep CONFIG_PCIE_IPROC` in Kconfig: Broadcom iProc
+  platforms
+- **[Phase 8]** Assessed severity: UAF/crash, HIGH
 
 **YES**
 
- drivers/gpio/gpio-ath79.c           | 57 ++++++++++++++++++++++++++++-
- drivers/net/wireless/ath/ath9k/hw.c | 33 +++++++++++------
- drivers/net/wireless/ath/ath9k/hw.h |  3 +-
- 3 files changed, 80 insertions(+), 13 deletions(-)
+ drivers/pci/controller/pcie-iproc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-ath79.c b/drivers/gpio/gpio-ath79.c
-index 2ad9f6ac66362..85bd994d15d48 100644
---- a/drivers/gpio/gpio-ath79.c
-+++ b/drivers/gpio/gpio-ath79.c
-@@ -11,6 +11,7 @@
- #include <linux/device.h>
- #include <linux/gpio/driver.h>
- #include <linux/gpio/generic.h>
-+#include <linux/gpio/machine.h> /* For WLAN GPIOs */
- #include <linux/interrupt.h>
- #include <linux/irq.h>
- #include <linux/mod_devicetable.h>
-@@ -214,6 +215,56 @@ static const struct of_device_id ath79_gpio_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, ath79_gpio_of_match);
- 
-+#if IS_ENABLED(CONFIG_ATH9K_AHB)
-+/*
-+ * This registers all of the ath79k GPIOs as descriptors to be picked
-+ * directly from the ATH79K wifi driver if the two are jitted together
-+ * in the same SoC.
-+ */
-+#define ATH79K_WIFI_DESCS 32
-+static int ath79_gpio_register_wifi_descriptors(struct device *dev,
-+						const char *label)
-+{
-+	struct gpiod_lookup_table *lookup;
-+	int i;
-+
-+	/* Create a gpiod lookup using gpiochip-local offsets + 1 for NULL */
-+	lookup = devm_kzalloc(dev,
-+			      struct_size(lookup, table, ATH79K_WIFI_DESCS + 1),
-+			      GFP_KERNEL);
-+	if (!lookup)
-+		return -ENOMEM;
-+
-+	/*
-+	 * Ugly system-wide lookup for the NULL device: we know this
-+	 * is already NULL but explicitly assign it here for people to
-+	 * know what is going on. (Yes this is an ugly legacy hack, live
-+	 * with it.)
-+	 */
-+	lookup->dev_id = NULL;
-+
-+	for (i = 0; i < ATH79K_WIFI_DESCS; i++) {
-+		lookup->table[i] =
-+			/*
-+			 * Set the HW offset on the chip and the lookup
-+			 * index to the same value, so looking up index 0
-+			 * will get HW offset 0, index 1 HW offset 1 etc.
-+			 */
-+			GPIO_LOOKUP_IDX(label, i, "ath9k", i, GPIO_ACTIVE_HIGH);
-+	}
-+
-+	gpiod_add_lookup_table(lookup);
-+
-+	return 0;
-+}
-+#else
-+static int ath79_gpio_register_wifi_descriptors(struct device *dev,
-+						const char *label)
-+{
-+	return 0;
-+}
-+#endif
-+
- static int ath79_gpio_probe(struct platform_device *pdev)
+diff --git a/drivers/pci/controller/pcie-iproc.c b/drivers/pci/controller/pcie-iproc.c
+index 5aa677f81e4fa..61dcb232757fb 100644
+--- a/drivers/pci/controller/pcie-iproc.c
++++ b/drivers/pci/controller/pcie-iproc.c
+@@ -1540,8 +1540,10 @@ void iproc_pcie_remove(struct iproc_pcie *pcie)
  {
- 	struct gpio_generic_chip_config config;
-@@ -276,7 +327,11 @@ static int ath79_gpio_probe(struct platform_device *pdev)
- 		girq->handler = handle_simple_irq;
- 	}
+ 	struct pci_host_bridge *host = pci_host_bridge_from_priv(pcie);
  
--	return devm_gpiochip_add_data(dev, &ctrl->chip.gc, ctrl);
-+	err = devm_gpiochip_add_data(dev, &ctrl->chip.gc, ctrl);
-+	if (err)
-+		return err;
-+
-+	return ath79_gpio_register_wifi_descriptors(dev, ctrl->chip.gc.label);
- }
++	pci_lock_rescan_remove();
+ 	pci_stop_root_bus(host->bus);
+ 	pci_remove_root_bus(host->bus);
++	pci_unlock_rescan_remove();
  
- static struct platform_driver ath79_gpio_driver = {
-diff --git a/drivers/net/wireless/ath/ath9k/hw.c b/drivers/net/wireless/ath/ath9k/hw.c
-index 14de62c1a32bd..9a32cf683c4fd 100644
---- a/drivers/net/wireless/ath/ath9k/hw.c
-+++ b/drivers/net/wireless/ath/ath9k/hw.c
-@@ -21,7 +21,7 @@
- #include <linux/time.h>
- #include <linux/bitops.h>
- #include <linux/etherdevice.h>
--#include <linux/gpio.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/unaligned.h>
+ 	iproc_pcie_msi_disable(pcie);
  
- #include "hw.h"
-@@ -2719,19 +2719,28 @@ static void ath9k_hw_gpio_cfg_output_mux(struct ath_hw *ah, u32 gpio, u32 type)
- static void ath9k_hw_gpio_cfg_soc(struct ath_hw *ah, u32 gpio, bool out,
- 				  const char *label)
- {
-+	enum gpiod_flags flags = out ? GPIOD_OUT_LOW : GPIOD_IN;
-+	struct gpio_desc *gpiod;
- 	int err;
- 
--	if (ah->caps.gpio_requested & BIT(gpio))
-+	if (ah->gpiods[gpio])
- 		return;
- 
--	err = devm_gpio_request_one(ah->dev, gpio, out ? GPIOF_OUT_INIT_LOW : GPIOF_IN, label);
-+	/*
-+	 * Obtains a system specific GPIO descriptor from another GPIO controller.
-+	 * Ideally this should come from the device tree, this is a legacy code
-+	 * path.
-+	 */
-+	gpiod = gpiod_get_index(NULL, "ath9k", gpio, flags);
-+	err = PTR_ERR_OR_ZERO(gpiod);
- 	if (err) {
- 		ath_err(ath9k_hw_common(ah), "request GPIO%d failed:%d\n",
- 			gpio, err);
- 		return;
- 	}
- 
--	ah->caps.gpio_requested |= BIT(gpio);
-+	gpiod_set_consumer_name(gpiod, label);
-+	ah->gpiods[gpio] = gpiod;
- }
- 
- static void ath9k_hw_gpio_cfg_wmac(struct ath_hw *ah, u32 gpio, bool out,
-@@ -2791,10 +2800,12 @@ void ath9k_hw_gpio_free(struct ath_hw *ah, u32 gpio)
- 	if (!AR_SREV_SOC(ah))
- 		return;
- 
--	WARN_ON(gpio >= ah->caps.num_gpio_pins);
-+	if (ah->gpiods[gpio]) {
-+		gpiod_put(ah->gpiods[gpio]);
-+		ah->gpiods[gpio] = NULL;
-+	}
- 
--	if (ah->caps.gpio_requested & BIT(gpio))
--		ah->caps.gpio_requested &= ~BIT(gpio);
-+	WARN_ON(gpio >= ah->caps.num_gpio_pins);
- }
- EXPORT_SYMBOL(ath9k_hw_gpio_free);
- 
-@@ -2822,8 +2833,8 @@ u32 ath9k_hw_gpio_get(struct ath_hw *ah, u32 gpio)
- 			val = REG_READ(ah, AR_GPIO_IN(ah)) & BIT(gpio);
- 		else
- 			val = MS_REG_READ(AR, gpio);
--	} else if (BIT(gpio) & ah->caps.gpio_requested) {
--		val = gpio_get_value(gpio) & BIT(gpio);
-+	} else if (ah->gpiods[gpio]) {
-+		val = gpiod_get_value(ah->gpiods[gpio]);
- 	} else {
- 		WARN_ON(1);
- 	}
-@@ -2846,8 +2857,8 @@ void ath9k_hw_set_gpio(struct ath_hw *ah, u32 gpio, u32 val)
- 			AR7010_GPIO_OUT : AR_GPIO_IN_OUT(ah);
- 
- 		REG_RMW(ah, out_addr, val << gpio, BIT(gpio));
--	} else if (BIT(gpio) & ah->caps.gpio_requested) {
--		gpio_set_value(gpio, val);
-+	} else if (ah->gpiods[gpio]) {
-+		gpiod_set_value(ah->gpiods[gpio], val);
- 	} else {
- 		WARN_ON(1);
- 	}
-diff --git a/drivers/net/wireless/ath/ath9k/hw.h b/drivers/net/wireless/ath/ath9k/hw.h
-index eaa07d6dbde00..d9d2f64c55700 100644
---- a/drivers/net/wireless/ath/ath9k/hw.h
-+++ b/drivers/net/wireless/ath/ath9k/hw.h
-@@ -19,6 +19,7 @@
- 
- #include <linux/if_ether.h>
- #include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/io.h>
- #include <linux/firmware.h>
- 
-@@ -302,7 +303,6 @@ struct ath9k_hw_capabilities {
- 	u8 max_rxchains;
- 	u8 num_gpio_pins;
- 	u32 gpio_mask;
--	u32 gpio_requested;
- 	u8 rx_hp_qdepth;
- 	u8 rx_lp_qdepth;
- 	u8 rx_status_len;
-@@ -783,6 +783,7 @@ struct ath_hw {
- 	struct ath9k_hw_capabilities caps;
- 	struct ath9k_channel channels[ATH9K_NUM_CHANNELS];
- 	struct ath9k_channel *curchan;
-+	struct gpio_desc *gpiods[32];
- 
- 	union {
- 		struct ar5416_eeprom_def def;
 -- 
 2.53.0
 
