@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C9C47CA76;
-	Mon, 31 Aug 2026 13:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE9E43B6ED;
+	Mon, 31 Aug 2026 13:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184624; cv=none; b=QihZPq3a1wVpSSRSIX3ZNELD+K2ThHJxN4Ym+Rq/DAa7QdArxOhczUn3lAfBbwkiCsiu1M82A7ShYwAldh3RCGZ0BC5IqWgIGsnsTWl7ly1v0FR6+12JIKIknELgFd/6MH7Q6ZlAtwLEU+C7KMEnrQHyekcdDU64Sc+SP+pzX9g=
+	t=1788184627; cv=none; b=cajasALidPHjmPAte8xOPqHWInEvyQSkaKva/DqnPiXhsE5u+siPLaF5PSXBpb1z4ly8Lii3pDFeI0OGbRUYY6EDNtMj0FqKzHHx8AstkumJaUmnOh9FA57z/EU1oz/u6QoiCdXhKMEqXzNoNt9bYiCFR4Vcup3Qd9s+v5mYlWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184624; c=relaxed/simple;
-	bh=PHVtTD3wwu/OG+dU2/Wtqzx8S3u9WeQ8HqPqWrRCGqQ=;
+	s=arc-20240116; t=1788184627; c=relaxed/simple;
+	bh=GelwQdPXAYJAGhtj/81x6azLyrhc68kFy1+rO5YqCwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/WzfNSQTDQffsoNSAvdX/X8riPgHTvK/1FWDVwL5bTwuXg5WdyYiDTDv/J3414jK6Ktv9pP34MecTLQH2JP8CCx630i7MiEMYZOLW2eb5bT3we8jnO83ZNEdcXKpb6OPwMJpP6cdk/O+SKWk5uB7fLje4XkhuIS62iL6UpttWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA2Wf/mY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lDiHT6xSEHblN8ktxGBdl/5GPV4P3Tcmr6QAFEnXhjxystw6O2gnYVqe0lOetEzBQKUA9ggSY7lwXzg6mbPgK2yeV3D/X3v6MkylC76Vydc3qRJuWwHzTw3p5VdhQlxLyiEiPY+A85SROF/08LJlKS7QFip0uH15VUS/GzA4H8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHO5JDYz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA2Wf/mY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9A61F000E9;
-	Mon, 31 Aug 2026 13:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHO5JDYz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E201F000E9;
+	Mon, 31 Aug 2026 13:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184623;
-	bh=OACPLSKY/Mk41WY7/iZTkdFaRXQmWMLfUSwHzZp+t/c=;
+	s=korg; t=1788184626;
+	bh=7AYrrHjuVbxcv9FXyYKA9WbotvVu0bDXL+fDWIVNAzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SA2Wf/mYLKfrbFeH0SXXtVmqFiGFlRt+Zs0L6xMOhf9ELW/mDtfNdBr51n8CGGaVC
-	 4HCLHbwLgEdSXz6sK9QoFPSQs84z/Nq+Kf8Rjt4i/VCDfOTVEUVp9E0rnttTTM/cY0
-	 /G9bgBghGeSIjA3eHTDoCkAww7JN33U6tIuDMyZo=
+	b=iHO5JDYzSW9aCk3VyggR0HTPmxGh7UZ7SZkm+DJsaStQvwL05ExEqv5eZ7gj2RoGL
+	 mBSs7nzE9FL0F3JVXWGzLTiH/fpYmjvatGFOhK5iLOXnf5RRHJZ7Sa9n6Pyaik6Wvm
+	 bWQyFNHPixwxTG7oMM3OMYL4xX4yzJ3TjCtftA1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 6.6 65/91] usb: gadget: f_tcm: keep port count until LUN teardown completes
-Date: Mon, 31 Aug 2026 15:34:53 +0200
-Message-ID: <20260831133403.080155735@linuxfoundation.org>
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.6 74/91] xfrm: ah6: validate routing header segments_left
+Date: Mon, 31 Aug 2026 15:35:02 +0200
+Message-ID: <20260831133403.474063310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -49,80 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit c39d0916da47d94909391876c9e5bd429ea7b1b9 upstream.
+commit 7bad4bda74dc4713f398d3b7624ff05478e3a568 upstream.
 
-tcm_usbg_drop_nexus() permits session removal once tpg_port_count
-reaches zero. However, usbg_port_unlink() currently decrements that
-count from the fabric_pre_unlink() callback, before core_dev_del_lun()
-waits for active se_lun references to drain.
+AH6 rearranges routing-header addresses before computing or verifying the
+ICV. ipv6_rearrange_rthdr() assumes that segments_left is not larger than
+the number of addresses described by the routing header's hdrlen field.
 
-If removal of the last LUN races a nexus removal, the latter can observe
-a zero port count and call target_remove_session(). This frees
-sess_cmd_map while an in-flight struct usbg_cmd, including its work item,
-can still be accessed.
+That assumption does not hold for raw IPv6 HDRINCL packets. A packet with
+hdrlen equal to 2 describes one address, but can carry an arbitrary
+segments_left value. With segments_left equal to 255, the function moves
+its address pointer 4,064 bytes backwards and passes a 4,064-byte length to
+memmove(), resulting in an out-of-bounds access.
 
-Overlapping the last-LUN unlink with nexus removal reproduces this
-lifetime violation as a DEBUG_OBJECTS "free active" warning for
-usbg_cmd_work, followed by a target-core BUG/Oops.
+Validate the invariant locally before modifying the routing header or
+performing any address-pointer arithmetic, and propagate malformed-header
+errors to the existing AH6 input and output error paths.
 
-The generic target-core unlink path has no callback after
-core_dev_del_lun() completes. Add an optional fabric_post_unlink()
-callback and use it for the f_tcm port count. The count now remains
-nonzero until core_dev_del_lun() has finished draining active LUN
-references, preventing nexus removal from freeing the session during
-command completion.
-
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260807060733.3186624-1-shuangpeng.kernel@gmail.com
+Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_fabric_configfs.c |    8 ++++++++
- drivers/usb/gadget/function/f_tcm.c          |    2 +-
- include/target/target_core_fabric.h          |    2 ++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ net/ipv6/ah6.c |   29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
---- a/drivers/target/target_core_fabric_configfs.c
-+++ b/drivers/target/target_core_fabric_configfs.c
-@@ -690,6 +690,14 @@ static void target_fabric_port_unlink(
- 	}
+--- a/net/ipv6/ah6.c
++++ b/net/ipv6/ah6.c
+@@ -232,26 +232,28 @@ static void ipv6_rearrange_destopt(struc
+  *	Rearrange the destination address in @iph and the addresses in @rthdr
+  *	so that they appear in the order they will at the final destination.
+  *	See Appendix A2 of RFC 2402 for details.
++ *
++ * Return: 0 on success, -EINVAL if segments_left exceeds the number of
++ * addresses described by hdrlen.
+  */
+-static void ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
++static int ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
+ {
+-	int segments, segments_left;
++	unsigned int segments, segments_left;
+ 	struct in6_addr *addrs;
+ 	struct in6_addr final_addr;
  
- 	core_dev_del_lun(se_tpg, lun);
+ 	segments_left = rthdr->segments_left;
+ 	if (segments_left == 0)
+-		return;
+-	rthdr->segments_left = 0;
++		return 0;
+ 
+-	/* The value of rthdr->hdrlen has been verified either by the system
+-	 * call if it is locally generated, or by ipv6_rthdr_rcv() for incoming
+-	 * packets.  So we can assume that it is even and that segments is
+-	 * greater than or equal to segments_left.
+-	 *
+-	 * For the same reason we can assume that this option is of type 0.
++	/* Raw locally generated packets can reach AH6 without the invariant
++	 * required by the rt0-style address rearrangement below.
+ 	 */
+ 	segments = rthdr->hdrlen >> 1;
++	if (segments_left > segments)
++		return -EINVAL;
 +
-+	if (tf->tf_ops->fabric_post_unlink) {
-+		/*
-+		 * Allow fabrics to release state that must remain valid until
-+		 * core_dev_del_lun() has drained all active LUN references.
-+		 */
-+		tf->tf_ops->fabric_post_unlink(se_tpg, lun);
-+	}
++	rthdr->segments_left = 0;
+ 
+ 	addrs = ((struct rt0_hdr *)rthdr)->addr;
+ 	final_addr = addrs[segments - 1];
+@@ -261,6 +263,8 @@ static void ipv6_rearrange_rthdr(struct
+ 
+ 	addrs[0] = iph->daddr;
+ 	iph->daddr = final_addr;
++
++	return 0;
  }
  
- static void target_fabric_port_release(struct config_item *item)
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1678,7 +1678,7 @@ static const struct target_core_fabric_o
- 	.fabric_enable_tpg		= usbg_enable_tpg,
- 	.fabric_drop_tpg		= usbg_drop_tpg,
- 	.fabric_post_link		= usbg_port_link,
--	.fabric_pre_unlink		= usbg_port_unlink,
-+	.fabric_post_unlink		= usbg_port_unlink,
- 	.fabric_init_nodeacl		= usbg_init_nodeacl,
+ static int ipv6_clear_mutable_options(struct ipv6hdr *iph, int len, int dir)
+@@ -273,6 +277,7 @@ static int ipv6_clear_mutable_options(st
+ 	} exthdr = { .iph = iph };
+ 	char *end = exthdr.raw + len;
+ 	int nexthdr = iph->nexthdr;
++	int err;
  
- 	.tfc_wwn_attrs			= usbg_wwn_attrs,
---- a/include/target/target_core_fabric.h
-+++ b/include/target/target_core_fabric.h
-@@ -95,6 +95,8 @@ struct target_core_fabric_ops {
- 				struct se_lun *);
- 	void (*fabric_pre_unlink)(struct se_portal_group *,
- 				struct se_lun *);
-+	void (*fabric_post_unlink)(struct se_portal_group *se_tpg,
-+				   struct se_lun *lun);
- 	struct se_tpg_np *(*fabric_make_np)(struct se_portal_group *,
- 				struct config_group *, const char *);
- 	void (*fabric_drop_np)(struct se_tpg_np *);
+ 	exthdr.iph++;
+ 
+@@ -292,7 +297,9 @@ static int ipv6_clear_mutable_options(st
+ 			break;
+ 
+ 		case NEXTHDR_ROUTING:
+-			ipv6_rearrange_rthdr(iph, exthdr.rth);
++			err = ipv6_rearrange_rthdr(iph, exthdr.rth);
++			if (err)
++				return err;
+ 			break;
+ 
+ 		default:
 
 
