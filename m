@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E78A42E43F;
-	Mon, 31 Aug 2026 13:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEF75AEC7C;
+	Mon, 31 Aug 2026 13:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184492; cv=none; b=sgB+nS2IwbrZAFj3H/aH3QlIh+/qCw/f2929mf85XCo7QZtUg6MY2mxixcc4K2wDKvhk77/q1zsIHJ7tP/hAztv9xQvoaTqbH/YjhwWwIi1RzyFfgsWX/e3HKxvJBOfz+0NxXT08G3GFAWNidgf+MlVEg5F18rjsDFeGJJLH8O8=
+	t=1788184502; cv=none; b=YvMdxr3N7haSwfdLs7yu2PLoJSphdAc6dziqqUXXCFV9mSOFFpzPmpC3H0ewiD8QurpSpe5DkmUhutUnWZ7zMQz3/sdeLFntcrDzciCRmDrPALZBRzRADYwbiGwJPsz7oOk64Qri3Ll3aESNds0KkIbn/yRyD/9OipIHa/Bm51I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184492; c=relaxed/simple;
-	bh=VnxZnaAjODe6Vniv0gAJUEgt2/pHZbGu0djXJUfIGqQ=;
+	s=arc-20240116; t=1788184502; c=relaxed/simple;
+	bh=YcybwtaTK9GC60DguMRDIY5FeMYbP28Nct8FtZZrmT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dFgNMBe/1F0vEEOTj3ZlGNCddREzDs419HdTD0ovfYPSdzFHqGYGDvlFfVn37ofCWoXUCUxjQAhjKltG+bwXUSZC1lWQdD026ACDAsLR/7sg7E39HEpUR7ojcgBJUd4naxpXeYFVPrjqt2ksyI91+j8sjpl8ivwthEAKXEfUCok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ft3x2iPO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YzWnNluo0bXB1CiU2agcfaH+eQX145XFtEN3mL2kD7IE1ukGf0NDaWWl569hgG/+76Th+5M6SvbGEiUKCVKdhnAG5CIk551ORmD6oUBqCTN9mN1jpbaRBwlgQKcrKXOY6jCX1wnoVYZkjx4irjpbtYhk/tEW/wP8vYSKnXb+9+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxKTrP9Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ft3x2iPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9156E1F000E9;
-	Mon, 31 Aug 2026 13:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxKTrP9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5281F000E9;
+	Mon, 31 Aug 2026 13:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184491;
-	bh=JVUPwsdtOGQXSMUm6aBIXoXaGgyBbOXi26w1JEEGC+g=;
+	s=korg; t=1788184499;
+	bh=0u+H4olGJmEUu0/hdhVFIU47Q4kjCxm9VO2Bh1JGyQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ft3x2iPOWR37MF484mHNws1B1n3v1Ie2C0pjEeUHm3E7A9x5ro7zlfyUZxWb9GdhZ
-	 NiBLWwDv1oOHB9AyD3Z0SG+xZgv4YcJqoqPLBHEHU9/kchyA+m8N3g6sVtItUbck2y
-	 ZIHvdWynMyPIZ7433S1UYo+mL+2mnKHRvIQZ0yQ0=
+	b=LxKTrP9Q29AJO9/jwJ9pAdr3CcuMDv8PGK6SURM4hkCGF68Qc213xC+mfvU9/HiRe
+	 1OVd9E6nU7iJMDwa6uUw84AjYNswvXEcPaeavqFxEvZl/1ZbovGWR7uABR5hFOcOXq
+	 4xagNUrWrpdTx3MbmY8k15y2vpprjPNphd9Mzdfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 05/91] Revert "usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal"
-Date: Mon, 31 Aug 2026 15:33:53 +0200
-Message-ID: <20260831133359.750156338@linuxfoundation.org>
+Subject: [PATCH 6.6 08/91] bpf: Remove tst_run from lwt_seg6local_prog_ops.
+Date: Mon, 31 Aug 2026 15:33:56 +0200
+Message-ID: <20260831133359.939415816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -50,39 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-This reverts commit 319f7a85b3c4e34ac2fe083eb146fe129a556317.
+[ Upstream commit c13fda93aca118b8e5cd202e339046728ee7dddb ]
 
-The reverted commit uses disable_delayed_work_sync, which was introduced
-by commit 86898fa6b8cd ("workqueue: Implement disable/enable for
-(delayed) work items") in v6.10. The function is therefore unavailable
-in 6.6.y, causing configurations that enable CONFIG_FSL_USB2_OTG to fail
-to build.
+The syzbot reported that the lwt_seg6 related BPF ops can be invoked
+via bpf_test_run() without without entering input_action_end_bpf()
+first.
 
-The upstream commit is unaffected; only its incompatible stable backport
-is being reverted.
+Martin KaFai Lau said that self test for BPF_PROG_TYPE_LWT_SEG6LOCAL
+probably didn't work since it was introduced in commit 04d4b274e2a
+("ipv6: sr: Add seg6local action End.BPF"). The reason is that the
+per-CPU variable seg6_bpf_srh_states::srh is never assigned in the self
+test case but each BPF function expects it.
 
-Fixes: 319f7a85b3c4 ("usb: phy: fsl-usb: Fix use-after-free in delayed work during device removal")
-Link: https://lore.kernel.org/stable/20260827154302.706689-1-ralf@mandelbit.com/
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Remove test_run for BPF_PROG_TYPE_LWT_SEG6LOCAL.
+
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Reported-by: syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com
+Fixes: d1542d4ae4df ("seg6: Use nested-BH locking for seg6_bpf_srh_states.")
+Fixes: 004d4b274e2a ("ipv6: sr: Add seg6local action End.BPF")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20240710141631.FbmHcQaX@linutronix.de
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/phy/phy-fsl-usb.c | 1 -
+ net/core/filter.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/usb/phy/phy-fsl-usb.c b/drivers/usb/phy/phy-fsl-usb.c
-index 552899fa985ed..79617bb0a70e8 100644
---- a/drivers/usb/phy/phy-fsl-usb.c
-+++ b/drivers/usb/phy/phy-fsl-usb.c
-@@ -987,7 +987,6 @@ static void fsl_otg_remove(struct platform_device *pdev)
- {
- 	struct fsl_usb2_platform_data *pdata = dev_get_platdata(&pdev->dev);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 62d21a961e5ec..23e9deba098c9 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -11117,7 +11117,6 @@ const struct bpf_verifier_ops lwt_seg6local_verifier_ops = {
+ };
  
--	disable_delayed_work_sync(&fsl_otg_dev->otg_event);
- 	usb_remove_phy(&fsl_otg_dev->phy);
- 	free_irq(fsl_otg_dev->irq, fsl_otg_dev);
+ const struct bpf_prog_ops lwt_seg6local_prog_ops = {
+-	.test_run		= bpf_prog_test_run_skb,
+ };
  
+ const struct bpf_verifier_ops cg_sock_verifier_ops = {
 -- 
 2.53.0
 
