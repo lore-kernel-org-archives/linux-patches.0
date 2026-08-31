@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4E74734C0;
-	Mon, 31 Aug 2026 13:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFD04B1B40;
+	Mon, 31 Aug 2026 13:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184256; cv=none; b=X0UnK/rIOkcrumH8HwPFN6OVAiJ+QcFIXcW+oUachDxMus0XZYHutPTwV6lGfhavJJQPcnR7ruWPfR8A49MhcOaVioX36XKmlv1rTtpmbWKemd7u8wdMiQZtE9H5wDLy5h4TLgzstVwLEHm2vzOL10BYgaJ5Uu+hH+v5P9ZhPss=
+	t=1788184257; cv=none; b=rjt9J/5USazJtgpyaB+2lCHU3QaECgSc2Ad2sNmLxwK2ooJqbStG18imCCuDvaCxoATaW4oo3AF47gogjLiN4H6TMtY82eM60qFjuKxDZzJQBT9wwkxSH/1qMPwAyIskuAOR52DwVftFnn3tey/9aLWdVUrUrNNAQAKMmd1vyo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184256; c=relaxed/simple;
-	bh=wNpRLIMNxg6h25O17HXeJEaRPRi2PG0SDh5iMyL9ldE=;
+	s=arc-20240116; t=1788184257; c=relaxed/simple;
+	bh=+eSNSs3ChmeOq7/FGRCxinLEQbg1Ni6LIAwdXjUJQBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TU3RljkUvoh0tJs4UEJt4eUqYgCM7BOn32NsteTzcyDOfS9DMevA3NfVMsjWutt91lGOC1pKEgfrTaw04FLtaF1VNizBiJ15bwm1Wh4hPn1xVIrWZbLuDS/CWzzXsGvrq7D3tgHaZJpZT7EF0qN7au96R8/XxPOYwj4iu4HPvhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nl0HyGdz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TnmwV9IsJKz02fYK7kRir64AwDGAAbIwQmALNVI1lqx3JHwInwh3kAcyUNK8cO8ojUhol2LNHvLPzrFXJomc7d23xUlza4GFS2F7/Ydk61eo+qP5T1c85UWryxzW0zLZwdlFeBN2MtiK+ic0bDyO/Z3wIBB3mK6gcsNdYDX9amc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GBPfp00V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nl0HyGdz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30801F00A3E;
-	Mon, 31 Aug 2026 13:50:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GBPfp00V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690DB1F000E9;
+	Mon, 31 Aug 2026 13:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184254;
-	bh=zM/idayx0HjalNQMFo2rfpy+0qt2uCjMLtsJ8zOF8Kw=;
+	s=k20260515; t=1788184255;
+	bh=CUXCA1AVcBmekaYl2KvyNrJjaOnT+ATPgyf3nqmXHi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nl0HyGdzjuFkyUt26mNoALnOglhYPwDH7V/PXxgjmFuqPRvCED5aav/PEE8FyatUm
-	 PpL71kQzx2Bub9jmS65skzgWCCcgcLAdTSgDPQAcsgvUuZv8LXtHRaRfK6Ea0CT0/+
-	 F+inaANlo/H3zVg664A0ov+2V0cMHXJ6P9Tyi1KuexI+nqhMFlgD/2EheKDkIK12Jj
-	 51wgKEhIEIAC0Mi1maRie22ZoAc2JsdQukQ/z3I3s88A7oK0O0kE3/D9WqwIuFQ9Ug
-	 ysR2W5Y3dT4qiB6y5yVjAOJ11/p16P2lJmp9nwhoTiGklMCnU4ERKPCYeQAZx9lf48
-	 wuB11qrj0Ei8g==
+	b=GBPfp00V5rWO5M7EAInMPU/KB0YhX56sXCHGxyTcbJ36WwBYUfzV4MalYRf/DnBFW
+	 R6tFuto2JFk6JXhRnYvSG2GwoKYnKasH11ufqssRNbGTFtTgPDegaP9xeQFWrTlb95
+	 mqCtxEw8X3xjd4nXC7BG9JajBVzlcrQ0pfpi7G8+5xV1dfQM84hBbL29Iw/45msO/6
+	 5LyYMGLkwP2JwIdbr2OweyxUd60b4CWqu48mTg3xmIi8njrUASW0Jn+mIuf9wUqC37
+	 D5HtxepKr2Yxho68bkvTE3cmlvYtkmKebm+2riTHIsI8O2NTiYedzoZAbWK3ufJOnH
+	 Or6rCQRQXNmew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alessandro Schino <7991aleschino@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ntfs3: fix out-of-bounds read in ntfs_dir_emit() and hdr_find_e()
-Date: Mon, 31 Aug 2026 09:30:11 -0400
-Message-ID: <20260831133314.4125787-583-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] firmware: arm_scmi: Validate BASE_ERROR_EVENT payload size
+Date: Mon, 31 Aug 2026 09:30:12 -0400
+Message-ID: <20260831133314.4125787-584-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,42 +52,19 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alessandro Schino <7991aleschino@gmail.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit aa1bdbb39f49c5bc9779316891c40005517842a5 ]
+[ Upstream commit 56e7e64cdd0e7209a58c8ec66028d63387402919 ]
 
-The bounds check in ntfs_dir_emit() compares fname->name_len (a
-character count) against e->size (a byte count) without accounting
-for the 2-byte-per-character UTF-16LE encoding or the ATTR_FILE_NAME
-header size:
+BASE_ERROR_EVENT carries a variable number of message reports,
+with the count encoded in error_status. The notification parser used
+that count without checking whether the received payload contained all
+reported entries.
 
-  if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
+Reject truncated payloads before copying the report array.
 
-This computes: name_len + 16 > e_size
-
-The correct check must account for the ATTR_FILE_NAME header (66 bytes
-before the name) and the UTF-16LE character size (2 bytes each):
-
-  sizeof(NTFS_DE) + offsetof(ATTR_FILE_NAME, name) +
-  name_len * sizeof(short) > e_size
-
-Which computes: 16 + 66 + name_len * 2 > e_size
-
-The correct calculation already exists as fname_full_size() in ntfs.h
-and is used in cmp_fnames(), namei.c, and fslog.c, but was not used
-in the readdir path.
-
-A crafted NTFS image with an index entry containing a small e->size
-but large fname->name_len bypasses the current check, causing
-ntfs_utf16_to_nls() to read past the entry boundary.
-
-Additionally, add a key_size validation in hdr_find_e() to ensure the
-declared key_size does not exceed the available entry data, preventing
-comparison functions from reading past entry boundaries on the lookup
-path.
-
-Signed-off-by: Alessandro Schino <7991aleschino@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-2-d86daec4defd@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -95,244 +72,239 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[ntfs3]` `[fix]` — Correct out-of-bounds read bounds checks
-in `ntfs_dir_emit()` and `hdr_find_e()`.
+### Step 1.1: Subject Line
+**Record:** `[firmware: arm_scmi]` `[Validate]` — Validate that
+`BASE_ERROR_EVENT` notification payloads are large enough for the number
+of error reports claimed in `error_status`.
 
-### Step 1.2: Parse All Commit Message Tags
+### Step 1.2: Commit Message Tags
 **Record:**
-- **Fixes:** — none
-- **Reported-by:** — none (the underlying syzbot issue was reported on
-  the earlier incomplete fix `e841ecb`)
-- **Tested-by:** — none
-- **Reviewed-by / Acked-by / Link / Cc: stable:** — none
-- **Signed-off-by:** Alessandro Schino, Konstantin Komarov (ignore
-  pipeline-added SOBs)
+- **Link:** `https://patch.msgid.link/20260517-scmi_fixes-v1-2-
+  d86daec4defd@kernel.org`
+- **Signed-off-by:** Sudeep Holla `<sudeep.holla@kernel.org>` (author;
+  SCMI maintainer)
+- **Reviewed-by:** Cristian Marussi `<cristian.marussi@arm.com>` (from
+  mbox; SCMI co-maintainer)
+- **No Fixes:, Reported-by:, Tested-by:, Cc: stable@** on this specific
+  patch
+- **Series context:** Patch 2/4 of `scmi_fixes-v1` (`20260517_sudeep_hol
+  la_firmware_arm_scmi_fix_protocol_parsing_and_validation.mbx`)
 
-Notable pattern: no syzbot tag on this commit itself, but it corrects an
-incomplete syzbot-driven fix.
-
-### Step 1.3: Analyze Commit Body
+### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug:** `ntfs_dir_emit()` compares `fname->name_len` (UTF-16
-  character count) directly against `e->size` (bytes), ignoring the
-  66-byte `ATTR_FILE_NAME` header and 2-byte-per-character encoding.
-- **Symptom:** A crafted NTFS index entry with small `e->size` but large
-  `fname->name_len` bypasses the check; `ntfs_utf16_to_nls()` reads past
-  the directory entry boundary.
-- **Second bug:** `hdr_find_e()` passes `e_key_len` to comparison
-  callbacks without verifying it fits in the entry, so lookup paths can
-  also read past the entry.
-- **Root cause:** The readdir path used a wrong formula; the correct one
-  already exists as `fname_full_size()` and is used elsewhere
-  (`cmp_fnames()`, `namei.c`, `fslog.c`).
-- **Version info:** none in the commit message.
+- **Bug:** `BASE_ERROR_EVENT` has a variable-length payload;
+  `error_status` encodes how many `msg_reports[]` entries follow, but
+  the parser used that count without verifying the received `payld_sz`
+  covered all entries.
+- **Symptom:** Truncated notifications are parsed anyway; the loop
+  copies `msg_reports[i]` beyond the valid received bytes.
+- **Root cause:** Only an upper-bound check existed (`payld_sz <=
+  sizeof(*p)`); no lower-bound check based on `cmd_count`.
+- **Version info:** None in the commit message.
 
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not hidden — this is an explicit memory-safety bug fix,
-correcting an earlier incomplete bounds check (`e841ecb`).
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Not disguised — this is an explicit validation/hardening fix
+for out-of-bounds reads on a variable-length protocol payload.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory the Changes
+### Step 2.1: Change Inventory
 **Record:**
-- `fs/ntfs3/dir.c`: +3 / -1 lines
-- `fs/ntfs3/index.c`: +4 lines
-- **Functions modified:** `ntfs_dir_emit()`, `hdr_find_e()`
-- **Scope:** Single-subsystem, two-file surgical fix (~7 lines net)
+- **File:** `drivers/firmware/arm_scmi/base.c` (+13 / -2 per mbox;
+  user's diff is equivalent)
+- **Function modified:** `scmi_base_fill_custom_report()`
+- **Scope:** Single-file, surgical fix (~15 lines)
 
 ### Step 2.2: Code Flow Change
 **Record:**
-- **Hunk 1 (`ntfs_dir_emit`):** Before: `name_len + sizeof(NTFS_DE) >
-  e->size` (wrong units). After: `sizeof(NTFS_DE) +
-  offsetof(ATTR_FILE_NAME, name) + name_len * sizeof(short) > e->size`
-  (equivalent to `sizeof(NTFS_DE) + fname_full_size(fname)`). Affected
-  path: directory enumeration before UTF-16→NLS conversion.
-- **Hunk 2 (`hdr_find_e`):** Before: `e_key_len` used immediately in
-  `(*cmp)()`. After: return `NULL` if `e_key_len > e->size -
-  sizeof(NTFS_DE)`. Affected path: index binary search on lookup.
+- **Hunk 1 (before):** After checking `payld_sz` is not larger than the
+  max struct, immediately read `error_status`, derive `cmd_count`, and
+  loop over `p->msg_reports[i]`.
+- **Hunk 1 (after):** Compute minimum size for header fields; reject if
+  `payld_sz` too small; then derive `cmd_count`; compute `expected_sz +=
+  cmd_count * sizeof(msg_reports[0])`; reject truncated payloads; only
+  then copy reports.
+- **Path affected:** Deferred notification worker path for
+  `SCMI_EVENT_BASE_ERROR_EVENT`.
 
 ### Step 2.3: Bug Mechanism
 **Record:**
-- **Category:** Buffer overflow / out-of-bounds read (memory safety)
-- **Mechanism:** Unit confusion (characters vs bytes) plus missing
-  header-size accounting in readdir; missing `key_size` cap in index
-  lookup. Crafted on-disk metadata passes the weak check and drives
-  reads beyond the kmalloc’d index buffer.
+- **Category:** Buffer over-read / out-of-bounds access on variable-
+  length payload (memory safety).
+- **Mechanism:** `ERROR_CMD_COUNT(error_status)` can claim N report
+  entries while `payld_sz` only contains the fixed header (8 bytes) or a
+  partial array. The loop reads `p->msg_reports[i]` past the valid
+  received message boundary.
 
 ### Step 2.4: Fix Quality
-**Record:** Obviously correct — mirrors `fname_full_size()` already used
-in `cmp_fnames()` and other ntfs3 paths. Minimal, no API changes. Low
-regression risk: only tightens validation on corrupted/crafted images;
-legitimate entries already satisfy the stronger check.
+**Record:**
+- **Quality:** Obviously correct; mirrors existing SCMI validation style
+  (e.g. `scmi_system_fill_custom_report()`).
+- **Regression risk:** Very low — well-formed firmware messages are
+  unchanged; malformed ones are rejected (return `NULL`, event dropped
+  with existing error logging in `scmi_process_event_payload()`).
+- **Note:** Mbox uses `sizeof(p->agent_id) + sizeof(p->error_status)`;
+  user's diff uses `offsetof(typeof(*p), msg_reports)` — functionally
+  equivalent.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame the Changed Lines
-**Record:** The weak check in `ntfs_dir_emit()` was introduced by
-`e841ecb1393396` ("fs/ntfs3: Add sanity check for file name",
-2025-06-06, Lizhi Xu), which itself was a syzbot-driven incomplete fix.
-`hdr_find_e()` binary-search path dates to 2021 (`162333efa8dc49`)
-without `key_size` validation.
+### Step 3.1: Blame
+**Record:** Buggy logic introduced in `585dfab3fb80e` ("firmware:
+arm_scmi: Add base notifications support", 2020-07-01, Cristian
+Marussi). Confirmed ancestor of current HEAD.
 
-### Step 3.2: Follow Fixes: Tag
-**Record:** N/A — no `Fixes:` tag. The introducing commit for the weak
-readdir check is `e841ecb`, which **is** in this tree.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag on this commit.
 
-### Step 3.3: File History for Related Changes
-**Record:** Recent ntfs3 OOB fixes in this tree include `f3624cc`
-(split-point offset), `aaa1f956` (to_move bound), `908c9243` (depth
-limit). This fix is standalone and complementary. On `master`, it landed
-via merge `f0e6f20cb52b1` (ntfs3_for_7.2 tag); it is **not** in current
-`HEAD`.
+### Step 3.3: Related File History
+**Record:**
+- `3b0041f6e10e5` — "Validate BASE_DISCOVER_LIST_PROTOCOLS response"
+  (same subsystem, same validation pattern; already in this tree)
+- `11daac2817dca` — "Fix OOB in scmi_power_name_get()" (already
+  backported to this 6.18.y tree)
+- `bac3e70c2fb10` — patch 1/4 of the same series (sensor config width
+  fix) is already in this tree; **patch 2/4 (this fix) is not**
 
-### Step 3.4: Author's Other Commits
-**Record:** Alessandro Schino has no other ntfs3 commits in this
-checkout. Konstantin Komarov is the ntfs3 maintainer (Paragon) with a
-long history of ntfs3 security/bounds fixes.
+### Step 3.4: Author Context
+**Record:** Sudeep Holla is the SCMI subsystem maintainer. Recent SCMI
+commits in this tree include multiple validation and OOB fixes.
 
-### Step 3.5: Prerequisites
-**Record:** No dependencies. `fname_full_size()`, `offsetof(struct
-ATTR_FILE_NAME, name)` (0x42), and `sizeof(struct NTFS_DE)` (0x10) all
-exist in this tree. `git show aa1bdbb39f49c -- fs/ntfs3/dir.c
-fs/ntfs3/index.c | git apply --check` succeeds on `HEAD`.
+### Step 3.5: Dependencies
+**Record:** Standalone — only touches `base.c`. Does not depend on patch
+1/4 (sensors), 3/4, or 4/4. Applies independently.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original Patch Discussion
-**Record:** `b4 dig -c aa1bdbb39f49c` →
-https://patch.msgid.link/20260511181516.220-1-7991aleschino@gmail.com.
-Single v1 submission (no v2/v3). Lore thread fetch blocked by bot
-protection; could not read inline review replies.
+### Step 4.1: Original Discussion
+**Record:** `b4 dig` could not be used (commit not in tree).
+Lore/patch.msgid.link fetch blocked (403/bot protection). Used local
+mbox: `20260517_sudeep_holla_firmware_arm_scmi_fix_protocol_parsing_and_
+validation.mbx`. Series v1, patch 2/4.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` CC'd: `ntfs3@lists.linux.dev`, Konstantin
-Komarov, `linux-kernel@vger.kernel.org`.
+**Record:** Reviewed-by Cristian Marussi on patch 2/4. Cover letter Cc's
+`arm-scmi@vger.kernel.org`, `linux-arm-kernel@lists.infradead.org`.
 
 ### Step 4.3: Bug Report
-**Record:** Related syzbot issue
-https://syzkaller.appspot.com/bug?extid=598057afa0f49e62bd23 — **KASAN:
-slab-out-of-bounds Read in `ntfs_utf16_to_nls`**, triggered via
-`getdents64` → `ntfs_readdir` → `ntfs_dir_emit`. Marked "fixed" by
-`e841ecb`, but that fix used the wrong formula and remains bypassable.
+**Record:** No external bug report or syzbot link. Issue found during
+spec-compliance review per cover letter ("checking the driver message
+layouts against the SCMI specification").
 
-### Step 4.4: Related Patches/Series
-**Record:** Standalone 1-patch series; not part of a multi-patch
-dependency chain.
+### Step 4.4: Series Context
+**Record:** 4-patch series; each patch is independently valuable. Patch
+1 already present in tree; patches 2–4 are separate fixes.
 
-### Step 4.5: Stable Mailing List
-**Record:** Not searched separately; no stable-list nomination found via
-b4.
+### Step 4.5: Stable List History
+**Record:** Not searched (lore blocked). Cover letter does not
+explicitly request stable, but that is not a negative signal per
+instructions.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key Functions
-**Record:** `ntfs_dir_emit()`, `hdr_find_e()`, `ntfs_utf16_to_nls()`,
-`fname_full_size()`, `cmp_fnames()`.
+**Record:** `scmi_base_fill_custom_report()` (modified); callers via
+`REVT_FILL_REPORT` macro.
 
 ### Step 5.2: Callers
-**Record:**
-- `ntfs_dir_emit()` ← `ntfs_read_hdr()` ← `ntfs_readdir()`
-  (`file_operations::iterate_shared`)
-- `hdr_find_e()` ← `hdr_insert_de()`, `indx_find()` (index lookup for
-  create/delete/rename paths)
+**Record:** Called from `scmi_process_event_payload()` in `notify.c`
+(line 495), which runs in a workqueue context after `scmi_notify()`
+queues firmware events from interrupt context.
 
 ### Step 5.3: Callees
-**Record:** `ntfs_utf16_to_nls()` reads `fname->name` for `name_len`
-UTF-16 code units (2 bytes each). `(*cmp)()` in `hdr_find_e()` reads `e
-+ 1` for `e_key_len` bytes.
+**Record:** `le32_to_cpu()`, `le64_to_cpu()`, `IS_FATAL_ERROR()`,
+`ERROR_CMD_COUNT()`, field access on `payld` and `report` buffers.
 
 ### Step 5.4: Reachability
-**Record:** **Userspace-reachable.** Malicious NTFS image mounted (loop
-device) + `readdir`/`getdents64` triggers the `ntfs_dir_emit` path.
-Index lookup paths are reachable on file/directory operations against
-the same crafted image. Syzbot stack trace confirms syscall
-reachability.
+**Record:**
+- `scmi_notify()` ← SCMI transport RX path (firmware/platform
+  notifications)
+- Not directly userspace-syscall reachable, but triggered by SCMI
+  platform firmware on ARM systems using SCMI
+- Affects any platform where `BASE_ERROR_EVENT` notifications are
+  enabled
 
 ### Step 5.5: Similar Patterns
-**Record:** `cmp_fnames()` already uses `fname_full_size(f2)` and checks
-`l2 < fsize2`. `namei.c`, `fslog.c`, and `frecord.c` use
-`fname_full_size()` correctly. Only readdir and `hdr_find_e` were
-missing equivalent validation.
+**Record:** `scmi_system_fill_custom_report()` already validates
+`payld_sz == expected_sz`. `3b0041f6e10e5` validates variable-length
+protocol list responses. Same hardening pattern.
 
 ---
 
-## Phase 6: Cross-Referencing Against the Local Tree
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Does the Buggy Code Exist?
-**Record:** **Yes.** Local tree: `v6.18.44` (`git describe HEAD` →
-`v6.18.44-1-gef4bf62bccf3c`, `make kernelversion` → `6.18.44`), detached
-from `stable/linux-6.18.y`.
-
-Current buggy check at line 307 of `fs/ntfs3/dir.c`:
-
-```307:308:fs/ntfs3/dir.c
-        if (fname->name_len + sizeof(struct NTFS_DE) >
-le16_to_cpu(e->size))
-                return true;
-```
-
-`hdr_find_e()` at line 760 has no `key_size` validation before calling
-`(*cmp)()`. Fix commit `aa1bdbb39f49c` is **not** an ancestor of `HEAD`;
-introducing commit `e841ecb` **is**.
+### Step 6.1: Buggy Code Exists?
+**Record:** **Yes.** Local tree is **v6.18.44** (`git describe HEAD`).
+`scmi_base_fill_custom_report()` at lines 322–350 in `base.c` lacks
+`expected_sz` validation. Bug present since v5.7-era introduction
+(2020).
 
 ### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** `git apply --check` of the fix
-diff against `HEAD` passes with no conflicts.
+**Record:** Expected **clean apply** — current `base.c` matches the
+patch context exactly. No `expected_sz` present. Mbox patch context
+matches current file structure.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** The incomplete fix `e841ecb` is present. No correct fix for
-this specific bug found in `HEAD`.
+**Record:** Patch 1/4 (`bac3e70c2fb10`) is in tree. This specific
+BASE_ERROR_EVENT validation is **not** present. No duplicate fix found.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## Phase 7: Subsystem Context
 
 ### Step 7.1: Subsystem Criticality
-**Record:** **fs/ntfs3** — filesystem driver. **IMPORTANT** (not core
-VFS, but any user mounting NTFS3 volumes; security-relevant via crafted
-images).
+**Record:** `drivers/firmware/arm_scmi/` — **IMPORTANT** subsystem for
+ARM/ARM64 platforms (servers, embedded, mobile SoCs using SCMI to talk
+to SCP/EL3 firmware).
 
 ### Step 7.2: Subsystem Activity
-**Record:** Actively maintained; multiple recent bounds-check and
-validation commits in this tree’s ntfs3 history.
+**Record:** Actively maintained; recent commits include OOB fixes, NULL
+deref fixes, and validation hardening.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who Is Affected
-**Record:** Users with `CONFIG_NTFS3_FS` enabled who mount untrusted or
-corrupted NTFS volumes (USB drives, downloaded images, fuzzer-generated
-images).
+**Record:** Platforms using SCMI with `BASE_ERROR_EVENT` notifications
+enabled (`CONFIG_ARM_SCMI_PROTOCOL`). Driver-specific / platform-
+specific, but SCMI is widespread on modern ARM hardware.
 
 ### Step 8.2: Trigger Conditions
-**Record:** Mount crafted NTFS + directory read (`ls`, `getdents64`) or
-index lookup. Common for malicious/removable media scenarios.
-Unprivileged users need mount permission, but the attack surface is
-standard for filesystem fuzzing/CVE class.
+**Record:** Firmware sends a `BASE_ERROR_EVENT` where `error_status`
+claims more `msg_reports` than the actual payload contains. Can result
+from buggy firmware, transport corruption, or malformed messages. Not
+directly triggerable by unprivileged userspace, but firmware input is
+treated as untrusted in hardening contexts.
 
 ### Step 8.3: Failure Mode Severity
-**Record:** **Slab out-of-bounds read** (KASAN-confirmed on related
-bug). Severity: **HIGH** — kernel memory safety violation; potential
-info leak or further exploitation depending on layout. Not merely a
-WARN.
+**Record:**
+- **Without fix:** Reads beyond valid received payload into the pre-
+  allocated scratch buffer (`pd->eh`, sized to max payload). This can
+  return **stale/uninitialized kernel data** as error reports to
+  registered event handlers — information leak and incorrect error
+  reporting.
+- **With fix:** Returns `NULL`; event is dropped with `"report not
+  available"` error (existing path).
+- **Severity:** **HIGH** (out-of-bounds read / info leak pattern); crash
+  is less likely because scratch buffer is pre-allocated to max size,
+  but corrupted reports are a real correctness and security concern.
 
 ### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** HIGH — closes a bypassable OOB read on a common operation
-  (directory listing) and hardens index lookup.
-- **Risk:** VERY LOW — 7-line validation tightening using an established
-  formula.
-- **Ratio:** Strongly favors backport.
+- **Benefit:** HIGH for affected ARM SCMI platforms — prevents parsing
+  truncated firmware notifications and leaking stale data.
+- **Risk:** VERY LOW — small, obviously correct validation; no behavior
+  change for well-formed messages.
+- **Ratio:** Strong benefit, minimal risk.
 
 ---
 
@@ -341,117 +313,144 @@ WARN.
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real, reproducible memory-safety bug (syzbot KASAN on same code path)
-- Crafted filesystem image trigger via `getdents64`
-- Incomplete prior fix (`e841ecb`) is in 6.18.y and still bypassable
-- Fix is tiny, obviously correct, matches existing `fname_full_size()`
-  logic
-- Applies cleanly to this tree
-- ntfs3 driver and all required symbols exist in 6.18.44
+- Real memory-safety bug in variable-length notification parsing
+- Long-standing (since 2020), present in v6.18.44
+- Small, surgical, maintainer-reviewed fix
+- Matches established SCMI validation pattern already in this tree
+- Precedent: similar SCMI OOB/validation fixes already backported here
+  (`11daac2817dca`, `3b0041f6e10e5`)
+- Standalone — no series dependencies
+- No functional change for correct firmware
 
 **AGAINST backport:**
-- ntfs3 is config-optional (`CONFIG_NTFS3_FS`)
-- No explicit syzbot/Reported-by on this specific commit (but mechanism
-  is verified)
+- Trigger requires malformed firmware notification (not common in
+  production, but possible)
+- Not syzbot-reported or user-reported with crash trace
+- Patch 2/4 lacks the extensive `Tested-by:` list that patch 1/4 has
+  (though it has `Reviewed-by`)
 
-**Unresolved:** Full lore review thread content (bot-blocked); no
-independent runtime test in this environment.
+**Unresolved:**
+- Could not access lore.kernel.org directly (403/bot protection)
+- `b4 dig` not usable without commit in tree
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — formula matches
-   `fname_full_size()`; maintainer SOB; clean apply.
-2. Fixes a real bug affecting users? **PASS** — crafted NTFS → OOB read
-   on readdir/lookup.
-3. Important issue? **PASS** — memory safety / HIGH severity.
-4. Small and contained? **PASS** — 2 files, ~7 lines.
-5. No new features or APIs? **PASS** — validation only.
-6. Can apply to local tree? **PASS** — `git apply --check` succeeded.
+1. Obviously correct and tested? **PASS** — logic is straightforward;
+   Reviewed-by subsystem co-maintainer
+2. Fixes a real bug affecting users? **PASS** — truncated payload
+   parsing on real ARM SCMI hardware
+3. Important issue? **PASS** — out-of-bounds read / stale data leak
+   (HIGH)
+4. Small and contained? **PASS** — ~15 lines, one file, one function
+5. No new features or APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code confirmed present;
+   patch is standalone
 
 ### Step 9.3: Exception Categories
-**Record:** N/A (security/bug fix, not device-ID/quirk/build/doc
-exception).
+**Record:** N/A — standard bug fix, not a device-ID/quirk/DT/build/docs
+exception.
 
-### Step 9.4: Problem and Decision
+### Step 9.4: Problem Summary for Stable Users
 
-This commit fixes a **unit-mismatch bounds check** in `ntfs_dir_emit()`
-that leaves a slab out-of-bounds read reachable when enumerating
-directories on a crafted NTFS image. The weak check was added in
-`e841ecb` after syzbot found the original missing-check bug, but the
-formula `name_len + 16 > e_size` still allows `name_len` up to roughly
-twice what the entry can hold (e.g., `e_size=82` permits `name_len=66`
-while only ~33 characters fit). It also adds missing `key_size`
-validation in `hdr_find_e()` for the index lookup path.
+On ARM systems using SCMI, `BASE_ERROR_EVENT` notifications report
+firmware errors with a variable number of 64-bit report words. The
+kernel driver trusted the count in `error_status` without verifying the
+received message was large enough. A truncated notification could cause
+the driver to read beyond the valid payload into scratch-buffer memory
+and forward garbage/stale data to event handlers.
 
-For **linux-6.18.y (6.18.44)**: the ntfs3 driver is present, the buggy
-code is present, the fix is absent, and the patch applies cleanly. This
-is appropriate stable material.
+The fix adds minimum-size checks before parsing — the same defensive
+pattern already used elsewhere in SCMI (e.g. system power-state
+notifications, protocol list discovery). It is small, maintainer-
+reviewed, and appropriate for the v6.18.y stable tree where the
+vulnerable code is present.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit `aa1bdbb39f49c`: subject, body, tags (no
-  Fixes/Reported-by/syzbot on this commit)
-- [Phase 2] Read diff: 7 lines across `dir.c` and `index.c`; bounds-
-  check correction + `key_size` validation
-- [Phase 3] `git blame` line 307 → `e841ecb` (2025-06-06); `hdr_find_e`
-  binary_search from 2021
-- [Phase 3] `git merge-base --is-ancestor`: `e841ecb` IN HEAD;
-  `aa1bdbb39f49c` NOT IN HEAD
-- [Phase 3] `git apply --check` of fix patch on HEAD: **success**
-- [Phase 4] `b4 dig -c aa1bdbb39f49c`: lore URL found; v1 only
-- [Phase 4] `b4 dig -w`: ntfs3 list + Komarov CC'd
-- [Phase 4] Syzkaller bug 598057afa0f49e62bd23: KASAN slab OOB in
-  `ntfs_utf16_to_nls`, getdents64 path; prior fix `e841ecb` noted
-- [Phase 5] Call chain: `ntfs_readdir` → `ntfs_read_hdr` →
-  `ntfs_dir_emit` → `ntfs_utf16_to_nls`
-- [Phase 5] `fname_full_size()` at `ntfs.h:586-591`;
-  `offsetof(ATTR_FILE_NAME, name)==0x42`; `sizeof(NTFS_DE)==0x10`
-- [Phase 5] `cmp_fnames()` already uses `fname_full_size()` with `l2 <
-  fsize2` check
-- [Phase 6] `git describe HEAD` → v6.18.44; `make kernelversion` →
-  6.18.44
-- [Phase 6] Buggy code confirmed at `fs/ntfs3/dir.c:307` and missing
-  validation at `fs/ntfs3/index.c:760-762`
-- [Phase 8] Failure mode: slab OOB read, HIGH severity, userspace-
-  triggerable via directory read on mounted image
+- **[Phase 1]** Parsed subject, tags, body from user-provided commit and
+  local mbox `20260517_sudeep_holla_firmware_arm_scmi_fix_protocol_parsi
+  ng_and_validation.mbx`
+- **[Phase 1]** Found Reviewed-by: Cristian Marussi in mbox patch 2/4
+- **[Phase 2]** Read current `scmi_base_fill_custom_report()` at lines
+  322–350 in `drivers/firmware/arm_scmi/base.c` — missing validation
+- **[Phase 2]** Confirmed `SCMI_BASE_MAX_CMD_ERR_COUNT` = 1024, struct
+  layout with variable reports
+- **[Phase 3]** `git blame -L 322,350`: buggy code from `585dfab3fb80e`
+  (2020-07-01)
+- **[Phase 3]** `git merge-base --is-ancestor 585dfab3fb80e HEAD`:
+  confirmed in tree
+- **[Phase 3]** `git log --oneline -20 --
+  drivers/firmware/arm_scmi/base.c`: related validation commit
+  `3b0041f6e10e5` present
+- **[Phase 3]** Confirmed `bac3e70c2fb10` (series patch 1/4) in tree;
+  patch 2/4 not in tree
+- **[Phase 4]** `b4 dig -c HEAD`: failed (commit not in tree)
+- **[Phase 4]** WebFetch lore/patch.msgid.link: blocked (403/bot
+  protection)
+- **[Phase 4]** Read local mbox cover letter and patch 2/4 content
+- **[Phase 5]** Traced call chain: `scmi_notify()` → workqueue →
+  `scmi_process_event_payload()` → `REVT_FILL_REPORT()` →
+  `scmi_base_fill_custom_report()`
+- **[Phase 5]** Read `scmi_process_event_payload()` NULL-report handling
+  at lines 498–502 in `notify.c`
+- **[Phase 5]** Read `scmi_system_fill_custom_report()` validation
+  pattern in `system.c`
+- **[Phase 5]** Read scratch buffer allocation in
+  `scmi_allocate_registered_events_desc()` — `eh_sz` = max payload +
+  header
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** `grep expected_sz drivers/firmware/arm_scmi/base.c`: no
+  matches — fix not applied
+- **[Phase 6]** Patch context in mbox matches current `base.c` structure
+- **[Phase 7]** Confirmed SCMI is active subsystem with recent security
+  fixes in this tree
+- **[Phase 8]** Assessed failure mode: OOB read of stale scratch-buffer
+  data, not typical kmalloc overflow
+- **UNVERIFIED:** Direct lore.kernel.org thread content (blocked)
+- **UNVERIFIED:** Whether this exact commit SHA exists on mainline
+  (evaluated from patch content against local tree)
 
 **YES**
 
- fs/ntfs3/dir.c   | 4 +++-
- fs/ntfs3/index.c | 4 ++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/base.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index d41d02372c747..a68eff8cf1d66 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -304,7 +304,9 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
- 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
- 		return true;
+diff --git a/drivers/firmware/arm_scmi/base.c b/drivers/firmware/arm_scmi/base.c
+index 86b376c50a13f..25aa52746bd10 100644
+--- a/drivers/firmware/arm_scmi/base.c
++++ b/drivers/firmware/arm_scmi/base.c
+@@ -325,6 +325,8 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 					  void *report, u32 *src_id)
+ {
+ 	int i;
++	u32 error_status;
++	size_t expected_sz;
+ 	const struct scmi_base_error_notify_payld *p = payld;
+ 	struct scmi_base_error_report *r = report;
  
--	if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
-+	if (sizeof(struct NTFS_DE) +
-+	    offsetof(struct ATTR_FILE_NAME, name) +
-+	    fname->name_len * sizeof(short) > le16_to_cpu(e->size))
- 		return true;
+@@ -338,10 +340,19 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 	if (evt_id != SCMI_EVENT_BASE_ERROR_EVENT || sizeof(*p) < payld_sz)
+ 		return NULL;
  
- 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index dd54c966babca..edfcd28573ef9 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -794,6 +794,10 @@ static struct NTFS_DE *hdr_find_e(const struct ntfs_index *indx,
- binary_search:
- 	e_key_len = le16_to_cpu(e->key_size);
- 
-+	/* Validate key_size fits within the entry data area. */
-+	if (e_key_len > le16_to_cpu(e->size) - sizeof(struct NTFS_DE))
++	expected_sz = offsetof(typeof(*p), msg_reports);
++	if (payld_sz < expected_sz)
 +		return NULL;
 +
- 	diff2 = (*cmp)(key, key_len, e + 1, e_key_len, ctx);
- 	if (diff2 > 0) {
- 		if (found) {
+ 	r->timestamp = timestamp;
+ 	r->agent_id = le32_to_cpu(p->agent_id);
+-	r->fatal = IS_FATAL_ERROR(le32_to_cpu(p->error_status));
+-	r->cmd_count = ERROR_CMD_COUNT(le32_to_cpu(p->error_status));
++	error_status = le32_to_cpu(p->error_status);
++	r->fatal = IS_FATAL_ERROR(error_status);
++	r->cmd_count = ERROR_CMD_COUNT(error_status);
++	expected_sz += r->cmd_count * sizeof(p->msg_reports[0]);
++	if (payld_sz < expected_sz)
++		return NULL;
++
+ 	for (i = 0; i < r->cmd_count; i++)
+ 		r->reports[i] = le64_to_cpu(p->msg_reports[i]);
+ 	*src_id = 0;
 -- 
 2.53.0
 
