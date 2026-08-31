@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20455445ACD;
-	Mon, 31 Aug 2026 13:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04104457DB;
+	Mon, 31 Aug 2026 13:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183241; cv=none; b=KXFM+ZWMlYrvaPkEsUtd5t+boopb9H1eQwHr5ADOIFzGz5Ib3a47RHJyz9pYfIWhqDy9AU4wNf3DNDeAKVcJNOtNurCqz+QRbLEuBz79cAEItJ5XKhFaj+YJ5LYRoH2xKGwXmnFzdeyUoTrlixD2sWU3dt6LpOdQMJqKYvym/zk=
+	t=1788183242; cv=none; b=bj7PRDAfPQ+BAUUagG0DyDSOLUdc08dBGtl7TM10jXcMk4tQ2GPmW5rDISQ++cTU92d/Ub8gWOV0qx1/xXJegUPtd2oSZpZImmn1lVBw/D+wDseVpg7XYsQ7sAuX4Ru3wSPAxjCfXyedUUjJcSUzp5h2Q6jT4ZD5IngYIhyJgMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183241; c=relaxed/simple;
-	bh=siC7b/RXQMD9zWiCVLMtyOflobjo0LftJv+JgUlGYYI=;
+	s=arc-20240116; t=1788183242; c=relaxed/simple;
+	bh=XEufWIAB4YMVpvaMrO68QTX1Mx8aWllkAEtzs6FGVX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fwZw1dwNPtnpT7oOQZwV73E/q9QFoBmyp438PJ/vqGKE09cRJ30lGcdW9yDt4Wc6ak/1VI/WbRRPj3Jw/nwJZAjEVeBZw0ZI5Qio0msommhyYZrrcyNo1axXF5zCqGQJbKdzw9B08tq1ac5H0/TqhFq4KuHMeODs4DG5fW3P4fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DwhXxJzF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=F2QGcKB0a5dLlz8ioIgp39GELJ+2Vkk1OtiI/ujKbBeceSeLtGBe8MM6TTEoJLKAa0Ob2g2qAgCOP6dqr2GNRVl36xcGeJwq4JW/1Hd6FEy2Pl0SFBwwMTQHs1L5KbvDinbkM5J/jWTg1Fsx8DQZhZG2vyuK3x3LXBwcrP/AqrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GUx5Nhfe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DwhXxJzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2521F000E9;
-	Mon, 31 Aug 2026 13:33:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GUx5Nhfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3209D1F00A3D;
+	Mon, 31 Aug 2026 13:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183238;
-	bh=HFhRf0/FmP6ds4GoQQqyvgeK2pUF/4KOa974VNOLQhg=;
+	s=k20260515; t=1788183240;
+	bh=mQLVFedAryXzf4R4Gw7lLwMqOlxpZk+6H8r98aGlBu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DwhXxJzFMotJFoJSxvhlCg3VCACmdBJ7q3ybQXQb6dUPlVDOBUXJK+dBZvfm9fVbI
-	 0K4LD5NhD8qwCMc5/s42SkvGfZQ/oLOC9bhuOh7Jk8ZJQRosKjfONJgQwc7rtmQk5Z
-	 hFltrlMJ+5x+GT0lr9Etg0hSQCrWZc2kKB9sqMIuEG7/dQS6WeG3QAgYafB6zY/rwj
-	 paBxwCv1EjrKNUCF7mKQCqM5SKFECJQws+NnYg8sSDhs0Gk9r3AOd/x4brJhCR1q3L
-	 3seYI7wVzcz5cefST+XGdlNQLR1ToERetcGfG8BIrPOtdnDuFpHBCgHKvwZ1OVqQ0c
-	 Vf1+CcTisb0Rw==
+	b=GUx5NhfeBh+xesf3UU+jw69ZR4jAx+bwgFZYGFJlRGULg/mHc8OwZrphLYdCRzi/0
+	 D2L+rO9Pzpjsn+DUhew5DJWuBDyLkXbUi7RvW+eplEsAbKBUHzM3M2dZvn+Xh5oVID
+	 u9DZ4eI3s4lOK+IwjmIYrE1vw7Yhag15h1DMP3EjFxvSZPX35rfsL8VdkeVLe6klxi
+	 3X2enrYaj6YQ2qU2FKQIMS7Z8C+JrVFKOuiod+qQtIoj24vordzAa3sgndVQi+hKGg
+	 L5jA97sJgl08gNIw3j3vv4OqbX9ZEMEBq1jezsNECVQqTgWEfTxaSjE4eOnzy7UNrf
+	 3ilJ8sbAMhOLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lukas Wunner <lukas@wunner.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	linux-crypto@vger.kernel.org,
+	rafael@kernel.org,
+	maciej.wieczor-retman@intel.com,
+	pawel.chmielewski@intel.com,
+	linux-acpi@vger.kernel.org,
+	acpica-devel@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] crypto: ecc - Unbreak the build on arm with CONFIG_KASAN_STACK=y
-Date: Mon, 31 Aug 2026 09:20:56 -0400
-Message-ID: <20260831133314.4125787-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: Prevent adding invalid references
+Date: Mon, 31 Aug 2026 09:20:57 -0400
+Message-ID: <20260831133314.4125787-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,113 +56,72 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit c64ba13e2033c3c6dc1a097bf35f9f1fe457c3f7 ]
+[ Upstream commit 6e8c55e13a5e3a9f38921d62924f18ceba3330eb ]
 
-Andrew reports build breakage of arm allmodconfig, reproducible with gcc
-14.2.0 and 15.2.0:
+Prevent adding references for local, argument, and debug objects
+in acpi_ut_copy_simple_object().
 
-  crypto/ecc.c: In function 'ecc_point_mult':
-  crypto/ecc.c:1380:1: error: the frame size of 1360 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
-
-gcc aggressively inlines functions called by ecc_point_mult() (without
-there being any explicit inline declarations), which pushes stack usage
-close to the limit imposed by CONFIG_FRAME_WARN.  allmodconfig implies
-CONFIG_KASAN_STACK=y, which increases the stack above that limit.
-
-In the bugzilla entry linked below, gcc maintainers explain that gcc
-estimates extra stack usage caused by inlining, but ASAN instrumentation
-is added in post-IPA passes and thus the inlining heuristics cannot
-account for it.
-
-It could be argued that -Werror=frame-larger-than=1280 instructs the
-compiler to avoid inlining beyond that limit lest the build breaks,
-which would imply gcc behaves incorrectly.  But gcc maintainers reject
-this notion and believe that a warning switch should never affect code
-generation, even if it is promoted to an error.
-
-One way to unbreak the build is to limit inlining via -finline-limit=100
-or by explicitly declaring some functions noinline.  However while it
-does keep stack usage of individual functions below the limit, *total*
-stack usage increases.
-
-A longterm solution is to refactor ecc.c for reduced stack usage.  It
-currently performs ECC point multiplication with a Montgomery ladder
-which uses co-Z (conjugate) addition to trade off memory for speed.
-The algorithm is susceptible to timing attacks and needs to be replaced
-with a constant time Montgomery ladder, which should consume less memory
-and thus resolve the stack usage issue as a side effect.
-
-In the interim, raise the limit for ecc.c, as is already done for
-several other files in the source tree.
-
-Constrain to gcc because clang 19.1.7 does not exhibit the issue.  It
-makes do with a 724 bytes stack frame even though it inlines almost the
-same functions as gcc.
-
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
-Reported-by: Andrew Morton <akpm@linux-foundation.org> # off-list
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://github.com/acpica/acpica/commit/f576898d7814
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4511989.ejJDZkT8p0@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `crypto: ecc - Unbreak the build on arm with
-CONFIG_KASAN_STACK=y`
+# Stable Backport Analysis: ACPICA: Prevent adding invalid references
 
-**Local tree:** Linux **6.18.43** (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`)
+## Tree Context
+
+Local checkout: **v6.18.44** (6.18.44). The fix is **not** present in
+this tree; the buggy code remains at `drivers/acpi/acpica/utcopy.c:734`.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[crypto/ecc] [unbreak/fix build] [raise frame-size warning
-limit for ecc.o on arm+KASAN_STACK+gcc to fix allmodconfig build
-failure]`
+### Step 1.1: Subject Line
+**Record:** `[ACPICA] [prevent] — Prevent adding invalid references in
+acpi_ut_copy_simple_object() when copying LOCAL/ARG/DEBUG reference
+objects.`
 
 ### Step 1.2: Tags
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Link | https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949 |
-| Reported-by | Andrew Morton \<akpm@linux-foundation.org\> (off-list) |
-| Signed-off-by | Lukas Wunner \<lukas@wunner.de\> |
-| Acked-by | Andy Shevchenko \<andriy.shevchenko@linux.intel.com\> |
-| Reviewed-by | Andy Shevchenko \<andriy.shevchenko@linux.intel.com\> |
-| Signed-off-by | Herbert Xu \<herbert@gondor.apana.org.au\> (crypto
-maintainer) |
-| Fixes: | absent (expected) |
-| Cc: stable | absent (expected) |
+- **Link:** https://github.com/acpica/acpica/commit/f576898d7814
+  (upstream ACPICA commit)
+- **Link:** https://patch.msgid.link/4511989.ejJDZkT8p0@rafael.j.wysocki
+  (kernel submission; fetch blocked by bot protection)
+- **Signed-off-by:** ikaros <void0red@gmail.com> (author)
+- **Signed-off-by:** Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+  (ACPI maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc: stable@
+- Notable: Submitted as **[PATCH v1 15/27] ACPI: ACPICA 20260408**
+  series (May 27, 2026)
 
-**Notable:** Reported by Andrew Morton; crypto maintainer sign-off; gcc
-bugzilla link; no syzbot.
-
-### Step 1.3: Body analysis
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** `arm allmodconfig` fails to build with gcc 14.2.0/15.2.0 when
-  `CONFIG_KASAN_STACK=y`.
-- **Symptom:** `-Werror=frame-larger-than` error in `ecc_point_mult()` —
-  frame 1360 bytes > 1280-byte limit.
-- **Root cause:** GCC aggressively inlines into `ecc_point_mult()`;
-  KASAN stack instrumentation is added post-IPA and is not accounted for
-  in inlining heuristics.
-- **Fix approach:** Interim workaround — raise per-object `-Wframe-
-  larger-than` to 1536 for `ecc.o` under `CONFIG_ARM &&
-  CONFIG_KASAN_STACK && CONFIG_CC_IS_GCC`.
-- **Version info:** Triggered by newer gcc (14/15); clang 19.1.7 not
-  affected.
+- **Bug:** `acpi_ut_copy_simple_object()` unconditionally calls
+  `acpi_ut_add_reference(source_desc->reference.object)` for all
+  reference classes except `ACPI_REFCLASS_TABLE`.
+- **Problem:** LOCAL, ARG, and DEBUG references do not have a valid
+  operand-object pointer in `reference.object`.
+- **Symptom:** Use-after-free when `acpi_ut_add_reference()` →
+  `acpi_ut_valid_internal_object()` reads freed memory (confirmed in
+  ACPICA issue #1127 with ASAN stack trace).
+- **Root cause:** LOCAL/ARG use `reference.value` (and may store a
+  namespace-node pointer in `object` via cast); DEBUG sets only
+  `reference.class` with no valid `object`. Calling
+  `acpi_ut_add_reference()` on these is semantically wrong and can
+  dereference stale/freed pointers.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Not a hidden runtime bug fix. This is an explicit **build
-fix** — a Makefile-only workaround for a compiler/KASAN interaction. No
-runtime behavior change.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Yes — despite the neutral "prevent" wording, this is a real
+memory-safety bug fix (UAF), not cleanup. It extends the existing 2008
+`ACPI_REFCLASS_TABLE` exemption pattern to the three other reference
+classes that similarly lack a valid operand-object pointer.
 
 ---
 
@@ -169,35 +129,37 @@ runtime behavior change.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `crypto/Makefile` only (+5 lines)
-- **Functions modified:** none (build flags only)
-- **Scope:** Single-file, surgical Makefile change
+- **Files:** `drivers/acpi/acpica/utcopy.c` (+9, -1)
+- **Function:** `acpi_ut_copy_simple_object()`
+- **Scope:** Single-file, surgical fix in one `case
+  ACPI_TYPE_LOCAL_REFERENCE:` block
 
-### Step 2.2: Code flow per hunk
+### Step 2.2: Code Flow Change
 **Record:**
-- **Before:** Global `CONFIG_FRAME_WARN` (1280 on 32-bit) applies to
-  `ecc.o`; gcc+KASAN_STACK can push `ecc_point_mult()` past that limit →
-  build error with `-Werror`.
-- **After:** When `CONFIG_ARM=y`, `CONFIG_KASAN_STACK=y`, and
-  `CONFIG_CC_IS_GCC=y`, add `CFLAGS_ecc.o += -Wframe-larger-than=1536`
-  for that object only.
-- **Path affected:** Compile-time only; no execution-path change.
+- **Before:** After exempting `ACPI_REFCLASS_TABLE`, always call
+  `acpi_ut_add_reference(source_desc->reference.object)`.
+- **After:** Also skip `acpi_ut_add_reference()` for
+  `ACPI_REFCLASS_LOCAL`, `ACPI_REFCLASS_ARG`, and `ACPI_REFCLASS_DEBUG`.
+- **Path affected:** Object-copy path used when duplicating ACPI
+  internal objects (packages, CopyObject opcode, store operations).
 
-### Step 2.3: Bug mechanism
-**Record:** **Build fix / toolchain interaction** — not UAF, leak, race,
-etc. GCC stack-frame estimate plus KASAN instrumentation exceeds the
-kernel’s default 32-bit `FRAME_WARN` (1280), promoted to error under
-`WERROR`/allmodconfig.
-
-### Step 2.4: Fix quality
+### Step 2.3: Bug Mechanism
 **Record:**
-- **Quality:** High — matches existing pattern in the same Makefile
-  (`CFLAGS_blake2b_generic.o := -Wframe-larger-than=4096`).
-- **Regression risk:** Very low — only relaxes a compile-time warning
-  threshold for one object under a narrow config triple; no code
-  generation change intended.
-- **Caveat:** Does not reduce actual stack use; silences the warning
-  until a future ECC refactor.
+- **Category:** Use-after-free / invalid pointer dereference
+- **Mechanism:** For LOCAL/ARG/DEBUG references, `reference.object` is
+  not a valid `union acpi_operand_object *`. `acpi_ut_add_reference()`
+  calls `acpi_ut_valid_internal_object()` which reads
+  `ACPI_GET_DESCRIPTOR_TYPE(object)` from that pointer — triggering UAF
+  when the pointer is stale (e.g., freed walk-state memory per ACPICA
+  issue #1127 ASAN report).
+
+### Step 2.4: Fix Quality
+**Record:**
+- Obviously correct: mirrors the existing TABLE exemption and matches
+  how `exresolv.c` treats these classes ("do not dereference").
+- Minimal, no unrelated changes.
+- Low regression risk: only skips refcount increment that should never
+  have happened for these three classes.
 
 ---
 
@@ -205,288 +167,301 @@ kernel’s default 32-bit `FRAME_WARN` (1280), promoted to error under
 
 ### Step 3.1: Blame
 **Record:**
-- `ecc_point_mult()` at `crypto/ecc.c:1338` — present at Linux 6.18.43
-  tag (`7b923c78b50d2`).
-- `CFLAGS_blake2b_generic.o` precedent at `crypto/Makefile:87` — same
-  gcc frame-size workaround pattern already in this tree.
-- Blame on this stable checkout points at bulk import commit
-  `a112b91dd6349`; per-file history is not granular here.
+- Reference-handling case dates to **2005** (initial ACPICA import).
+- `acpi_ut_add_reference()` call: **2005** (Len Brown).
+- `ACPI_REFCLASS_TABLE` exemption: **2008** (Bob Moore, commit
+  `1044f1f65b7df2`) — LOCAL/ARG/DEBUG were never added.
+- Bug has been present since ~2005; TABLE partial fix since 2008.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag. Upstream ACPICA issue #1127 references
+commit f576898.
 
-### Step 3.3: Related file history
+### Step 3.3: Related File History
 **Record:**
-- `crypto/Makefile` at 6.18.43 has `obj-$(CONFIG_CRYPTO_ECC) += ecc.o`
-  with **no** `CFLAGS_ecc.o` workaround — fix is **not** present.
-- Commit under review **not found** in local `master` or current HEAD
-  via grep/log search — likely newer mainline crypto work being
-  evaluated for stable.
+- `470188b09e92d` (2022): Fixed a separate UAF in
+  `acpi_ut_copy_ipackage_to_ipackage()` in the same file — shows this
+  code path is security-relevant and prior UAF fixes were backported.
+- `b6a163875935c` (2008): Warn on invalid package references — related
+  defensive work in ACPI reference handling.
+- This fix is **standalone** (patch 15/27 of ACPICA bulk update, but
+  functionally independent).
 
-### Step 3.4: Author context
-**Record:** Lukas Wunner is a regular kernel contributor; Herbert Xu
-(crypto maintainer) merged. Andy Shevchenko acked/reviewed.
+### Step 3.4: Author Context
+**Record:** ikaros reported the bug to ACPICA upstream. Rafael J.
+Wysocki (ACPI maintainer) signed off and submitted to linux-acpi. Author
+has prior kernel commits (null-check fixes).
 
 ### Step 3.5: Dependencies
-**Record:** Standalone — no series, no prerequisite commits, no new
-APIs. Applies after `obj-$(CONFIG_CRYPTO_ECC) += ecc.o` line in
-Makefile.
+**Record:** No dependencies. Self-contained 8-line conditional. All
+referenced symbols (`ACPI_REFCLASS_LOCAL/ARG/DEBUG`) exist in this
+tree's `acobject.h`.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Patch discussion
-**Record:** `b4 dig -c <hash>` could not run — commit hash not in this
-repository. Lore and gcc bugzilla returned HTTP 403 from this
-environment.
+### Step 4.1: Original Discussion
+**Record:**
+- `b4 dig -c f576898d7814`: Failed (ACPICA upstream SHA, not in Linux
+  git).
+- Web search found submission: **[PATCH v1 15/27] ACPICA: Prevent adding
+  invalid references** at lkml.iu.edu (May 27, 2026), part of ACPI:
+  ACPICA 20260408 series by Rafael J. Wysocki.
+- ACPICA GitHub issue #1127: ASAN heap-use-after-free in
+  `AcpiUtValidInternalObject` via `AcpiUtAddReference` →
+  `AcpiUtCopySimpleObject`, reproduced with `acpiexec -m issue11.aml`.
 
 ### Step 4.2: Reviewers
-**Record:** UNVERIFIED via b4 -w. From commit message: Andy Shevchenko
-(Acked-by + Reviewed-by), Herbert Xu (merge SOB).
+**Record:** Rafael J. Wysocki submitted and signed off — ACPI subsystem
+maintainer endorsement. Full recipient list unavailable (b4 dig failed;
+lore blocked).
 
-### Step 4.3: Bug report
-**Record:** Andrew Morton off-list report (high credibility for
-allmodconfig breakage). gcc BZ #124949 explains gcc/KASAN stack-
-estimation mismatch — URL not fetchable here.
+### Step 4.3: Bug Report
+**Record:**
+- ACPICA issue #1127: **heap-use-after-free**, READ of size 1 in
+  `acpi_ut_valid_internal_object`.
+- Call chain: `acpi_ut_copy_simple_object` → `acpi_ut_add_reference` →
+  `acpi_ut_valid_internal_object`.
+- Triggered during AML parsing/execution (`acpi_ps_parse_aml`, table
+  load).
+- Severity: memory safety, potential crash/corruption.
 
-### Step 4.4: Related patches
-**Record:** Commit references long-term ECC constant-time refactor; this
-patch is explicitly interim. No other patches required for this fix to
-work.
+### Step 4.4: Series Context
+**Record:** Part of 27-patch ACPICA 20260408 update. This patch is
+standalone; does not require other series patches.
 
-### Step 4.5: Stable list
-**Record:** UNVERIFIED — lore 403 blocked search.
+### Step 4.5: Stable List History
+**Record:** UNVERIFIED — could not search lore.kernel.org/stable (bot
+protection). No evidence against stable nomination.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** No functions modified. Affected compile unit: `ecc.o` →
-contains `ecc_point_mult()` and ECC helpers.
+### Step 5.1: Key Functions
+**Record:** `acpi_ut_copy_simple_object()` (modified); callers:
+`acpi_ut_copy_ielement_to_ielement()`,
+`acpi_ut_copy_iobject_to_iobject()`.
 
 ### Step 5.2: Callers
-**Record:** `ecc_point_mult()` is called from `ecc_point_mult_shamir()`,
-key generation, and scalar-multiply paths in `crypto/ecc.c` (lines 1593,
-1661, 1708). Used when `CONFIG_CRYPTO_ECC` and dependent algorithms
-(ECDH, ECDSA, ECRDSA) are enabled.
+**Record:**
+- `acpi_ut_copy_iobject_to_iobject()` called from:
+  - `exoparg1.c` — `AML_COPY_OBJECT_OP`
+  - `exstore.c`, `exstoren.c` — store operations
+  - `dsutils.c`, `dsmthdat.c` — dispatcher/method data
+- All are core ACPI AML execution paths, active during boot and runtime
+  ACPI method evaluation.
 
 ### Step 5.3: Callees
-**Record:** Montgomery-ladder ECC math (`xycz_add`, `vli_mod_mult_fast`,
-etc.) — large on-stack `u64` arrays (`ECC_MAX_DIGITS` = 9 → 72 bytes per
-array; multiple arrays in `ecc_point_mult`).
+**Record:** `acpi_ut_add_reference()` →
+`acpi_ut_valid_internal_object()` → reads descriptor type from pointer.
+For invalid `reference.object`, this is the UAF site.
 
 ### Step 5.4: Reachability
-**Record:** Runtime path is reachable via crypto/KPP when ECC is
-enabled. **The patch does not change this** — only whether the object
-compiles under arm+KASAN+gcc+WERROR.
+**Record:**
+- Triggered when copying packages or objects containing LOCAL/ARG/DEBUG
+  references.
+- ASAN reproducer uses AML table execution during namespace load.
+- Reachable on every ACPI-enabled system during DSDT/SSDT evaluation and
+  method execution. Not limited to obscure configs.
 
-### Step 5.5: Similar patterns
-**Record:** Same Makefile already has:
-- `CFLAGS_blake2b_generic.o := -Wframe-larger-than=4096` (gcc BZ 105930)
-- `arch/arm/boot/compressed/Makefile` per-object frame limit override
-- `arch/powerpc/xmon/Makefile` clang frame override
+### Step 5.5: Similar Patterns
+**Record:**
+- `utcopy.c:730`: `ACPI_REFCLASS_TABLE` already exempted (same
+  rationale).
+- `exresolv.c:208-212`: DEBUG/TABLE/REFOF — "Just leave the object as-
+  is, do not dereference."
+- `dsobject.c:471-522`: LOCAL/ARG set `reference.value`; DEBUG sets only
+  `reference.class` — confirms `object` is not a refcountable operand
+  object.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.43)
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (v6.18.44)
 
-### Step 6.1: Buggy code present?
-**Record:** **YES.** `crypto/ecc.c` with `ecc_point_mult()` exists at
-6.18.43. Relevant Kconfig exists:
-- `CONFIG_FRAME_WARN` default **1280** for `!64BIT`
-  (`lib/Kconfig.debug:448`)
-- `CONFIG_KASAN_STACK` default **y** for GCC (`lib/Kconfig.kasan:167`)
-- Global `-Wframe-larger-than=$(CONFIG_FRAME_WARN)` in
-  `scripts/Makefile.extrawarn:25`
-- `CONFIG_CRYPTO_ECC` / `ecc.o` build in `crypto/Makefile:183`
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** At `drivers/acpi/acpica/utcopy.c:721-735`,
+unconditional `acpi_ut_add_reference(source_desc->reference.object)`
+after only TABLE exemption. Fix text not found via grep.
 
-Fix is **not** yet in this tree.
+### Step 6.2: Backport Complications
+**Record:** **Clean apply expected.** Index context matches submitted
+patch (line ~731). No conflicting recent changes to this hunk. Only
+copyright-year churn in file history.
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected** — 5 lines inserted immediately
-after `obj-$(CONFIG_CRYPTO_ECC) += ecc.o`. No conflicting changes at
-that location in 6.18.43.
-
-### Step 6.3: Related fixes already present?
-**Record:** **NO** — `grep CFLAGS_ecc` returns nothing. Blake2b
-precedent exists; ecc-specific workaround does not.
+### Step 6.3: Related Fixes Already Present?
+**Record:** `470188b09e92d` (UAF in `acpi_ut_copy_ipackage_to_ipackage`)
+is present. No duplicate fix for LOCAL/ARG/DEBUG reference handling.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** **crypto** — IMPORTANT subsystem. This patch affects
-buildability, not runtime crypto behavior.
+### Step 7.1: Subsystem
+**Record:** **ACPI/ACPICA** — **CORE** subsystem. Affects all x86
+systems and ARM64 systems using ACPI.
 
 ### Step 7.2: Activity
-**Record:** `crypto/ecc.c` is mature, relatively stable code. Issue is
-toolchain-driven (gcc 14/15 + KASAN), not a recent kernel regression in
-ECC logic.
+**Record:** Actively maintained; recent ACPICA fixes in this tree
+include UAF, NULL deref, and AML safety patches.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK
 
-### Step 8.1: Who is affected
-**Record:** **Config-specific builders** — developers/CI running
-**32-bit ARM** (`CONFIG_ARM`) **allmodconfig** (or similar) with
-**GCC**, **KASAN** (`CONFIG_KASAN_STACK=y`), and **WERROR**. Not typical
-production distro arm32 kernels (KASAN usually off).
+### Step 8.1: Who Is Affected
+**Record:** All users with ACPI enabled (essentially all PCs, servers,
+many ARM laptops). Driver-specific? No — core ACPI interpreter.
 
-### Step 8.2: Trigger conditions
+### Step 8.2: Trigger Conditions
+**Record:** Copying ACPI internal objects (packages, CopyObject) that
+contain LOCAL, ARG, or DEBUG reference elements. Can be triggered by
+ACPI AML in firmware tables. Timing-dependent UAF when
+`reference.object` holds stale pointer. Unprivileged users cannot
+directly trigger, but firmware/ACPI tables are the attack surface.
+
+### Step 8.3: Failure Mode
+**Record:** **Heap use-after-free** in `acpi_ut_valid_internal_object`.
+Severity: **HIGH** (crash, potential memory corruption). Could manifest
+as oops during boot, suspend/resume, or device hotplug ACPI methods.
+
+### Step 8.4: Risk-Benefit
 **Record:**
-- `CONFIG_ARM=y` (32-bit, not arm64)
-- `CONFIG_CC_IS_GCC=y`
-- `CONFIG_KASAN_STACK=y` (default y for GCC)
-- gcc 14.2+ with aggressive inlining
-- `CONFIG_FRAME_WARN=1280` (32-bit default) + warnings-as-errors
-
-**Likelihood:** Low for end users; **high** for kernel compile-test/CI
-on arm allmodconfig. Andrew Morton’s report indicates it blocks a
-standard maintainer build configuration.
-
-### Step 8.3: Failure mode severity
-**Record:** **Build failure** (compiler error). Severity for runtime
-users: **NONE**. Severity for kernel development/CI: **MEDIUM** (blocks
-full config testing).
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Unblocks arm allmodconfig builds with modern gcc;
-  restores parity with existing blake2b workaround pattern; zero runtime
-  change.
-- **Risk:** Very low — Makefile-only, narrow `ifeq` guard, per-object
-  flag.
-- **Ratio:** Favorable for stable as a **build-fix exception**,
-  especially with Andrew Morton report and maintainer acks.
+- **Benefit:** HIGH — prevents UAF in core ACPI object-copy path on all
+  ACPI systems.
+- **Risk:** VERY LOW — 8-line conditional extending an established
+  pattern; no API/behavior change for valid reference types (REFOF,
+  INDEX, NAME still get refcounted).
+- **Ratio:** Strongly favors backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Explicit build fix; fits documented stable exception category
-- Andrew Morton reported arm allmodconfig breakage
-- Herbert Xu merged; Andy Shevchenko acked/reviewed
-- Tiny (5 lines), precedented in same `crypto/Makefile`
-- Buggy build conditions exist in 6.18.43; fix not yet applied
-- Clean apply expected; no dependencies
-- Enables kernel-wide compile testing on arm with modern gcc
+- Confirmed UAF (ASAN report in ACPICA #1127)
+- Long-standing bug (since 2005; TABLE partial fix since 2008)
+- Buggy code present in v6.18.44
+- Core ACPI path (boot, AML execution)
+- Small, surgical, obviously correct fix
+- Matches existing TABLE exemption and exresolv.c semantics
+- ACPI maintainer (Rafael Wysocki) signed off and submitted
+- Prior UAF fix in same file was backported to stable
 
 **AGAINST backport:**
-- No runtime bug — production kernels rarely use KASAN+allmodconfig on
-  arm32
-- Workaround, not a reduction of actual stack usage
-- Very narrow config intersection (arm32 + gcc + KASAN_STACK)
-- Commit not yet in local `master` (timing/unverified upstream merge
-  status)
-- External discussion (lore, gcc BZ) not accessible from this
-  environment
+- No kernel runtime reproducer in commit message (only acpiexec/AML test
+  case)
+- Part of larger ACPICA bulk update (but this patch is standalone)
+- Not yet merged into this 6.18.44 tree (candidate evaluation)
 
 **Unresolved:**
-- Full lore review thread unavailable (403)
-- gcc BZ #124949 details not fetchable (403)
-- Exact upstream commit SHA not in this repo
+- Lore stable-list discussion (site blocked)
+- Exact frequency in production firmware (unverified, but bug mechanism
+  is clear)
 
-### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — Makefile pattern proven
-by blake2b entry; maintainer reviewed |
-| 2. Fixes real bug affecting users? | **PASS** — real build failure for
-arm allmodconfig; builder/CI impact |
-| 3. Important issue? | **PASS (build/CI)** — not crash/security; blocks
-standard compile-test config |
-| 4. Small and contained? | **PASS** — 5 lines, one file |
-| 5. No new features/APIs? | **PASS** — compiler flag only |
-| 6. Applies to local tree? | **PASS** — ecc.c and Kconfig preconditions
-present; fix absent |
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logic mirrors TABLE
+   exemption; ASAN-verified upstream; maintainer SOB.
+2. Fixes a real bug? **PASS** — UAF in object copy.
+3. Important issue? **PASS** — UAF/memory corruption in core ACPI,
+   severity HIGH.
+4. Small and contained? **PASS** — 9 lines, one file, one function.
+5. No new features/APIs? **PASS** — defensive guard only.
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
+   expected.
 
-### Step 9.3: Exception category
-**Record:** **BUILD FIX** — compilation failure under `CONFIG_ARM` +
-`CONFIG_KASAN_STACK` + GCC + `-Werror=frame-larger-than`.
+### Step 9.3: Exception Categories
+**Record:** N/A (not device ID, quirk, DT, build, or docs — standard bug
+fix).
 
-### Step 9.4: Decision rationale
-
-For **Linux 6.18.43**, this commit should be backported. The ECC code
-and all triggering Kconfig defaults exist in this tree, the fix is
-absent, and the patch is a minimal Makefile workaround following an
-established pattern already present in `crypto/Makefile`. While it does
-not fix a runtime crash or security issue, it unblocks a standard kernel
-build configuration (arm allmodconfig with modern gcc and KASAN)
-reported by Andrew Morton, with crypto maintainer approval — exactly the
-kind of contained build fix stable trees routinely carry.
+### Step 9.4: Decision Rationale
+This commit fixes a verified use-after-free in the ACPICA object-copy
+path that has existed since the code was written. LOCAL, ARG, and DEBUG
+references never had valid operand-object pointers in `reference.object`
+— the 2008 TABLE exemption proves the developers knew some reference
+classes must skip `acpi_ut_add_reference()`. The fix is minimal, follows
+established patterns in the same file and in `exresolv.c`, and protects
+all ACPI-enabled systems during AML execution. For v6.18.44, the buggy
+code is present and the fix applies cleanly.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message
-- **[Phase 2]** Analyzed provided diff: +5 lines in `crypto/Makefile`
-  only
-- **[Phase 3]** `git describe HEAD` → v6.18.43; `make kernelversion` →
-  6.18.43
-- **[Phase 3]** `git log --grep` for commit subject/hash — not found in
-  tree
-- **[Phase 3]** `git show 7b923c78b50d2:crypto/ecc.c` — `ecc_point_mult`
-  at line 1338 confirmed
-- **[Phase 3]** `git show 7b923c78b50d2:crypto/Makefile` — no
-  `CFLAGS_ecc.o` workaround
-- **[Phase 3]** `git blame crypto/Makefile:87` — blake2b frame-larger
-  precedent present
-- **[Phase 4]** `b4 dig` — failed (no commit hash in repo)
-- **[Phase 4]** lore.kernel.org curl — HTTP 403
-- **[Phase 4]** gcc.gnu.org bugzilla #124949 — HTTP 403
-- **[Phase 5]** Read `crypto/ecc.c:1338-1398` — large on-stack arrays in
-  `ecc_point_mult`
-- **[Phase 5]** `grep ecc_point_mult crypto/ecc.c` — callers at 1593,
-  1661, 1708
-- **[Phase 5]** `include/crypto/internal/ecc.h:37` — `ECC_MAX_DIGITS =
-  DIV_ROUND_UP(521, 64)` (= 9)
-- **[Phase 6]** `grep CFLAGS_ecc / KASAN_STACK / Wframe-larger-than`
-  across tree
-- **[Phase 6]** Read `lib/Kconfig.debug:441-453` — FRAME_WARN default
-  1280 for !64BIT
-- **[Phase 6]** Read `lib/Kconfig.kasan:163-179` — KASAN_STACK default y
-  for GCC
-- **[Phase 6]** Read `init/Kconfig:227-232` — WERROR defaults to
-  COMPILE_TEST
-- **[Phase 6]** Read `scripts/Makefile.extrawarn:24-26` — global frame-
-  larger-than flag
-- **[Phase 6]** Read `crypto/Makefile:183-184` — ECC object build rule,
-  no workaround yet
-- **UNVERIFIED:** Full mailing-list review thread and gcc BZ discussion
-  text (HTTP 403)
-- **UNVERIFIED:** Whether commit is already merged to mainline outside
-  this checkout
+- [Phase 1] Parsed subject, tags, body; identified UAF bug from ACPICA
+  issue #1127
+- [Phase 1] Web search: found [PATCH v1 15/27] on lkml (May 27, 2026),
+  Rafael Wysocki submission
+- [Phase 2] Read diff: +9/-1 in `acpi_ut_copy_simple_object()`,
+  LOCAL/ARG/DEBUG guard added
+- [Phase 2] Read `acobject.h:340-365`: LOCAL/ARG use `value`, DEBUG has
+  no valid `object`
+- [Phase 2] Read `dsobject.c:462-522`: LOCAL/ARG/DEBUG creation confirms
+  no operand-object in `reference.object`
+- [Phase 2] Read `utdelete.c:677-696`: `acpi_ut_add_reference()` calls
+  `acpi_ut_valid_internal_object()`
+- [Phase 2] Read `utobject.c:305-335`: `acpi_ut_valid_internal_object()`
+  reads descriptor type (UAF site)
+- [Phase 3] `git blame -L 721,735`: buggy code from 2005; TABLE
+  exemption from 2008 (`1044f1f65b7df2`)
+- [Phase 3] `git log -20 -- utcopy.c`: related UAF fix `470188b09e92d`
+  present in tree
+- [Phase 3] `git show 1044f1f65b7df2`: TABLE exemption rationale
+  documented
+- [Phase 3] `git show 470188b09e92d`: prior UAF in same file, backported
+  class of bug
+- [Phase 4] `b4 dig -c f576898d7814`: failed (ACPICA SHA not in Linux
+  git) — used web search instead
+- [Phase 4] ACPICA GitHub issue #1127: ASAN UAF stack trace, acpiexec
+  reproducer
+- [Phase 4] ACPICA GitHub commit f576898: confirms fix details
+- [Phase 4] UNVERIFIED: lore.kernel.org and patch.msgid.link blocked by
+  bot protection
+- [Phase 5] `grep acpi_ut_copy_simple_object`: callers in utcopy.c,
+  exoparg1.c, exstore.c, dsutils.c, dsmthdat.c
+- [Phase 5] Read `exresolv.c:208-212`: DEBUG/TABLE/REFOF not
+  dereferenced — consistent with fix
+- [Phase 5] Read `exoparg1.c:465-469`: CopyObject opcode uses
+  `acpi_ut_copy_iobject_to_iobject`
+- [Phase 6] `git describe HEAD`: v6.18.44
+- [Phase 6] Read `utcopy.c:721-735`: buggy unconditional
+  `acpi_ut_add_reference` confirmed
+- [Phase 6] `grep "Local/Arg/Debug references"`: fix NOT in tree
+- [Phase 8] ACPICA #1127 ASAN: heap-use-after-free, severity HIGH
 
-**YES**
+**YES**The background `git log --grep` check finished: it found **no
+commit** matching “Prevent adding invalid” or “invalid references” in
+this tree. That matches what we already saw in `utcopy.c` — the
+LOCAL/ARG/DEBUG guard is still missing, so the backport analysis stands
+as **YES** for v6.18.44.
 
- crypto/Makefile | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/acpi/acpica/utcopy.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/Makefile b/crypto/Makefile
-index e430e6e99b6a2..ef963cc03a038 100644
---- a/crypto/Makefile
-+++ b/crypto/Makefile
-@@ -183,6 +183,11 @@ obj-$(CONFIG_CRYPTO_ZSTD) += zstd.o
- obj-$(CONFIG_CRYPTO_ECC) += ecc.o
- obj-$(CONFIG_CRYPTO_ESSIV) += essiv.o
+diff --git a/drivers/acpi/acpica/utcopy.c b/drivers/acpi/acpica/utcopy.c
+index 80458e70ac2bf..9ecf5c3f49ba6 100644
+--- a/drivers/acpi/acpica/utcopy.c
++++ b/drivers/acpi/acpica/utcopy.c
+@@ -731,7 +731,15 @@ acpi_ut_copy_simple_object(union acpi_operand_object *source_desc,
+ 			break;
+ 		}
  
-+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
-+ifeq ($(CONFIG_ARM)$(CONFIG_KASAN_STACK)$(CONFIG_CC_IS_GCC),yyy)
-+CFLAGS_ecc.o += $(call cc-option,-Wframe-larger-than=1536)
-+endif
-+
- ecdh_generic-y += ecdh.o
- ecdh_generic-y += ecdh_helper.o
- obj-$(CONFIG_CRYPTO_ECDH) += ecdh_generic.o
+-		acpi_ut_add_reference(source_desc->reference.object);
++		/*
++		 * Local/Arg/Debug references do not have a valid Object pointer
++		 * that can be referenced
++		 */
++		if ((source_desc->reference.class != ACPI_REFCLASS_LOCAL) &&
++		    (source_desc->reference.class != ACPI_REFCLASS_ARG) &&
++		    (source_desc->reference.class != ACPI_REFCLASS_DEBUG)) {
++			acpi_ut_add_reference(source_desc->reference.object);
++		}
+ 		break;
+ 
+ 	case ACPI_TYPE_REGION:
 -- 
 2.53.0
 
