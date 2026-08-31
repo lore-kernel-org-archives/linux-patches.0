@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0A14F9C59;
-	Mon, 31 Aug 2026 13:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6034F9C7C;
+	Mon, 31 Aug 2026 13:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183685; cv=none; b=bF+38o1/i8W3H/sVtf6Q6PSKstP9aS+U7MDd0RTy5f7GAasdTkpk8RQkiITlChOzPYrp/297wNX9G9cAMGXeHeraLr52J2a10OyrF/2+1k/gkK/HJxJm/fO87H+9X8RQRejRrbCrf5gBzvTTY+9dE5AFqlXWmPezOAvsydXeH48=
+	t=1788183685; cv=none; b=gWNmEGHt1G8NzV3sRTlPty8V4x9V322+eIfyxKJ4abTqh551ND5a39OvVDVdY4D4zPpzpCk8D0QseSymb8GnrJRpWdvPi0BkaWlpLN6hcilbWUNA0ByEmfsYjI8013cvXxfzfS6NBUNy/SzqacsQ/8BRv355g3diVWyt7Ae2Gfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183685; c=relaxed/simple;
-	bh=Y8dCegj07B7euELog3kJEI9tthNoN/0BVGnEnwhZ7Z4=;
+	bh=DB0Tukm1teGstjgzYUkOET9cw3v8J72MQ1+1ieAPynE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WXv4OTjNwF797MYYCOWOxzuClXiT3C9vJSSe/QCQpc5XHa5atU0enE3ASl/hOPW5rUaFowT5ABY7fQNvnSzF3z8f7xcZNR5RYU/fAERrKT6C+dUOOiRDBK++7Ncge/A897WVinv0iQ0KofTGCIjHCsqpvomxi3fzWlG/bKZvtcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jEiN8FXY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dGkQ8ezyHVG+s7V2gWsRrATQOCql+K3ZLLGGM1m12Q2cAiURjOvxSULUEvvoxL4TY37ft9Q4CWiwR50TKGK1+VcOfwOp62B18COWzaBEPzAonJ6tqjJmOXcIARMEAjNyEd5Fkz9gvr+fYqkrgs8nchUAnPDh3wLplG0EolkzDFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e0wRlrKE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jEiN8FXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34701F00ACA;
-	Mon, 31 Aug 2026 13:41:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e0wRlrKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497B51F00A3F;
+	Mon, 31 Aug 2026 13:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183681;
-	bh=8Cxx+Cx6ZoOKmjmysVGpWX0i/NLrpcbN0wj0rLzZ+fs=;
+	s=k20260515; t=1788183683;
+	bh=t9NjzSVvUiK3gayp1XaXxHEpLml92T0c2xxi6CPFnHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jEiN8FXYhNq6GdXhi901pIQjgcNNXNlpeMRGBM20ehzmPa/DfXB73ZgcQddYKBkM1
-	 FzUOm7YF/3OWaNNvLO+6JPHtvysW41ssFLspdtR3pzFJF8OKSy9FEfgu0LO9J2sgc6
-	 6oYuSsUyy7Fmm9nwBLXW9YQh7vpuuB7RAK7NS4droZ9NaodtlBOpRCzSC3GXz/a1m/
-	 3VZa4ThM4mVF8kMf2UZy7M8sA26gmPeGTnzooz7oECjyo3wlQJCIfEfcS5vXS6KTei
-	 Ja+ifJTQNvm/ThhhFsl7QNWeeH7HqCpPSLk0KZ95VhURm9XyU40lOBdkByPYEbY/Fz
-	 MSUOvokucNtyQ==
+	b=e0wRlrKErUVDJTAUuxmDF+qkwIgNWTtkYZSb/XVEpOJEiKoamOkdq/FZi5K5vUY/a
+	 fU3+G1q8E2Hiq02mHCLEi6HTn24OVCAs8FJY1M5m20l93YY9Md+iXq6ecr10MTzptF
+	 LV0BhieFqvztq5TEX2pmpX9u3Ae2LQ1ymMWfoV031HWXCLSjFDYfnDwp51wYKAMeR/
+	 C5nc7GZN6x5Je7xDJAXGTjvfQ4xCE0x366xDDIMZgURRuuh+fiz/qexjbAbavznSFR
+	 LRG8juTiYLQyRB4IFVxAW6X5c1k2FFegP/UghbXiuLVdEsQdf2+CvX6sQm6uCGhLdF
+	 k6Gym0z8QKOsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: shayderrr <darknessshayder@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	thierry.reding@kernel.org,
+	mperttunen@nvidia.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: mld: purge async notifications upon nic error
-Date: Mon, 31 Aug 2026 09:24:29 -0400
-Message-ID: <20260831133314.4125787-241-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] host1x: bus: Fix missing ops null check in error teardown
+Date: Mon, 31 Aug 2026 09:24:30 -0400
+Message-ID: <20260831133314.4125787-242-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,425 +57,357 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: shayderrr <darknessshayder@gmail.com>
 
-[ Upstream commit a40ad60a47f7c904b75a9ff83b39edebf3961c85 ]
+[ Upstream commit 71d25f668bc5c0f36ea843462e12307dea45aaa3 ]
 
-This fixes a kernel panic in reconfig failure:
+In host1x_device_init(), the error teardown paths do not check
+client->ops before dereferencing it, unlike the forward init paths
+which correctly guard with 'client->ops &&'. This can result in a
+NULL pointer dereference if client->ops is NULL.
 
-1. we have a BSS connection
-2. we have a NAN connection
-3. FW error occurs
-4. reconfig restores the BSS connection
-5. however, restoring the NAN connection fails due to a FW error.
-6. erroneously, ieee80211_handle_reconfig_failure is called and marks all
-   interfaces as not-in-driver (will be fixed in a different patch).
-7. mac80211 frees the links of the BSS connection but doesn't tell the
-   driver about that, as it thinks that this vif is not in the driver.
-8. in ieee80211_stop_device, *ALL* wiphy works are getting flushed
-   (erroneously?)
-9. Therefore, async_handlers_wk is being executed, processing the
-   statistics notification that was received after we restored the BSS
-   connection.
-10. the notification handler dereferences fw_id_to_bss_conf[id], which is
-    now a dangling pointer, as mac80211 already freed this link in (7).
-11. On the first access to one of the links fields, we panic.
+Fix by adding the missing client->ops check in both the teardown
+and teardown_late labels.
 
-While this can and should be fixed by removing the call to
-ieee80211_handle_reconfig_failure in (6), it is also not a good idea to
-carry and maybe handle notifications from a dead FW.
-
-We do purge the notifications when we stop the FW, but in reconfig
-failure we stop the FW too late, after the notifications are processed.
-In addition, async_handlers_wk can always be scheduled before the
-reconfig work.
-
-Purge the notifications immediately when transport notifies about a nic
-error.
-
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20260517100550.4414228bf1d1.I1926a2b2e7827eaac22882699880ec04a3cb95f0@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: shayderrr <darknessshayder@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260517170456.84927-1-darknessshayder@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: iwlwifi: mld: purge async
-notifications upon nic error`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, `VERSION = 6`,
-`PATCHLEVEL = 18`, `SUBLEVEL = 44`)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[wifi: iwlwifi: mld]` **`purge`** — purge stale async FW
-notifications when the NIC reports a firmware error.
+### Step 1.1: Subject Line
+**Record:** `[host1x: bus]` `[Fix]` — Add missing `client->ops` NULL
+checks in `host1x_device_init()` error teardown paths.
 
 ### Step 1.2: Tags
 **Record:**
-- **Reviewed-by:** Johannes Berg `<johannes.berg@intel.com>` (mac80211 /
-  iwlwifi maintainer)
-- **Link:** `https://patch.msgid.link/20260517100550...` (patch
-  submission thread)
-- **Signed-off-by:** Miri Korenblit
-  `<miriam.rachel.korenblit@intel.com>` (author)
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org
-- Notable: maintainer review; no syzbot/user crash report tags
+- **Signed-off-by:** shayderrr \<darknessshayder@gmail.com\> (author)
+- **Signed-off-by:** Thierry Reding \<treding@nvidia.com\> (host1x/Tegra
+  maintainer)
+- **Link:** https://patch.msgid.link/20260517170456.84927-1-
+  darknessshayder@gmail.com
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable tags
+- Notable: maintainer sign-off is a strong quality signal; no
+  syzbot/user bug report
 
-### Step 1.3: Body analysis
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** After a FW error during HW reconfig/recovery, stale async
-  statistics notifications can still run via `async_handlers_wk` after
-  mac80211 has freed BSS link state. The stats handler dereferences
-  `fw_id_to_bss_conf[id]`, which is now dangling → **kernel panic**.
-- **Symptom:** Kernel panic on reconfig failure with BSS + NAN (or
-  similar multi-interface) setup.
-- **Root cause:** `iwl_mld_cancel_async_notifications()` is only called
-  in `iwl_mld_stop_fw()`, which runs too late; `async_handlers_wk` can
-  be scheduled/executed before restart cleanup.
-- **Fix approach:** Call `iwl_mld_cancel_async_notifications(mld)`
-  immediately in `iwl_mld_nic_error()` when transport reports FW death.
-- **Version info:** None stated; commit references a separate mac80211
-  fix for `ieee80211_handle_reconfig_failure` behavior.
+- **Bug:** `host1x_device_init()` teardown (`teardown`, `teardown_late`)
+  dereferences `client->ops` without a NULL guard; forward init paths
+  already use `client->ops &&`.
+- **Symptom:** NULL pointer dereference during error recovery when
+  initialization fails.
+- **Root cause:** Oversight when teardown was added (2017) and when
+  `teardown_late` was added (2021); `host1x_device_exit()` and other
+  paths in the same file already guard correctly.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — described as a purge/cleanup, but it fixes a **use-
-after-free / dangling pointer → kernel panic** on the FW error recovery
-path.
+### Step 1.4: Hidden Bug Fix?
+**Record:** No — this is an explicit NULL-deref fix on an error path,
+not disguised cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/net/wireless/intel/iwlwifi/mld/mld.c` (+9 lines, 0
-  removed)
-- **Function modified:** `iwl_mld_nic_error()`
-- **Scope:** Single-file, surgical fix
+- **File:** `drivers/gpu/host1x/bus.c` (+2 / -2 lines)
+- **Function:** `host1x_device_init()`
+- **Scope:** Single-file, surgical (2-line change)
 
-### Step 2.2: Code flow change
+### Step 2.2: Code Flow Change
 **Record:**
-- **Hunk (iwl_mld_nic_error):** After setting `in_hw_restart`,
-  **before** return:
-  - **Before:** FW error recorded; scan aborted; `in_hw_restart` set;
-    async notification queue untouched until later `iwl_mld_stop_fw()`.
-  - **After:** Same, plus immediate
-    `iwl_mld_cancel_async_notifications(mld)` to cancel
-    `async_handlers_wk` and purge queued async RX handlers.
-- **Path affected:** FW error / NIC error path (IRQ and other transport
-  error entry points).
+- **Hunk 1 (`teardown`):** `if (client->ops->exit)` → `if (client->ops
+  && client->ops->exit)`
+- **Hunk 2 (`teardown_late`):** `if (client->ops->late_exit)` → `if
+  (client->ops && client->ops->late_exit)`
+- **Before:** Error teardown could dereference NULL `client->ops`.
+- **After:** Clients without `ops` are skipped, matching forward init
+  and `host1x_device_exit()`.
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Memory safety — dangling pointer / UAF-class bug
-- **Mechanism:** `STATISTICS_OPER_NOTIF` is registered as
-  `RX_HANDLER_ASYNC` and handled in `iwl_mld_handle_stats_oper_notif()`
-  → `iwl_mld_process_per_link_stats()`, which dereferences
-  `mld->fw_id_to_bss_conf[fw_id]`. On reconfig failure, mac80211 can
-  free link state while queued async notifications remain;
-  `async_handlers_wk` then runs against freed `bss_conf` pointers.
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** NULL pointer dereference (memory safety).
+**Mechanism:** On `early_init`/`init` failure, reverse iteration calls
+`client->ops->exit` / `client->ops->late_exit` even when `client->ops`
+is NULL — a client skipped in the forward path can still be visited in
+teardown.
 
-### Step 2.4: Fix quality
-**Record:**
-- **Obviously correct:** Yes — reuses existing
-  `iwl_mld_cancel_async_notifications()` already called from
-  `iwl_mld_stop_fw()` and `d3.c`.
-- **Minimal:** 9 lines, one call site.
-- **Regression risk:** Low-medium —
-  `iwl_mld_cancel_async_notifications()` asserts wiphy lock
-  (`lockdep_assert_wiphy`), while `nic_error` op_mode callback is
-  documented as atomic; see Phase 5/8 notes. Maintainer reviewed.
+### Step 2.4: Fix Quality
+**Record:** Obviously correct; mirrors existing patterns at lines
+196–207, 257–271, and 815–836 in the same file. Minimal regression risk.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** `git blame` on `iwl_mld_nic_error()` shows all lines
-attributed to `7e22de67e545d` (unrelated amdgpu commit) — indicates
-**shallow/truncated history** in this checkout, not reliable for
-introduction dating. Function and buggy pattern are present in current
-tree.
+**Record:**
+- `teardown` without NULL check: introduced in `8f7da1578e90b` (Thierry
+  Reding, 2017-11-08) — "gpu: host1x: Cleanup on initialization failure"
+- `teardown_late` without NULL check: introduced in `933deb8c7b8e3f`
+  (Thierry Reding, 2021-03-26) — "gpu: host1x: Add early init and late
+  exit callbacks"
+- Forward paths have had `client->ops &&` since original
+  `host1x_device_init()` (2013)
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in commit message.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag.
 
-### Step 3.3: Related file history
-**Record:** `git log -- drivers/net/wireless/intel/iwlwifi/mld/` returns
-only the amdgpu commit — history too shallow for series/prerequisite
-analysis. `iwl_mld_cancel_async_notifications()` **already exists** in
-this tree (`notif.c`, `fw.c`, `d3.c`).
+### Step 3.3: Related File History
+**Record:** Recent host1x stable-style fixes in this tree include UAF
+(`5f4de3c717d34`), reference leak (`c4d6442ac3ed0`), and syncpt race
+(`79197c6007f2a`). Standalone fix; not part of a series.
 
-### Step 3.4: Author commits
-**Record:** `git log --author=Korenblit -- mld/` returns empty (shallow
-history). Author is Intel iwlwifi developer; Johannes Berg reviewed.
+### Step 3.4: Author Context
+**Record:** shayderrr is a contributor; Thierry Reding (maintainer)
+signed off. Author is not the subsystem maintainer but patch was
+accepted by one.
 
 ### Step 3.5: Dependencies
-**Record:** **Standalone** — only adds a call to an existing function.
-Commit mentions a related mac80211 fix for
-`ieee80211_handle_reconfig_failure`, but this patch is independently
-valuable as defensive cleanup on FW death. No patch X/Y series
-indicator.
+**Record:** No prerequisites. Applies to code present since 2017/2021.
+Self-contained.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c <sha>` not possible — commit SHA not provided.
-`WebFetch` of Link URL blocked (Anubis bot protection). Patch text not
-found in local `.mbx` files. **Could not retrieve lore thread.**
-
-### Step 4.2: Reviewers
-**Record:** Reviewed-by Johannes Berg confirmed in commit message. `b4
-dig -w` not run (no commit SHA).
-
-### Step 4.3: Bug report
-**Record:** No external bug report tags. Bug described in detail in
-commit message with step-by-step reproduction (FW error + reconfig
-failure + BSS/NAN).
-
-### Step 4.4: Related patches
-**Record:** Commit references a separate fix for erroneous
-`ieee80211_handle_reconfig_failure` call; this patch is complementary
-defensive fix, not dependent on it.
-
-### Step 4.5: Stable list history
-**Record:** Not searched (lore unavailable). No Cc: stable in commit
-(expected for manual review pipeline).
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
+### Step 4.1–4.5
 **Record:**
-- Modified: `iwl_mld_nic_error()`
-- Called helper: `iwl_mld_cancel_async_notifications()`
-- Affected handler: `iwl_mld_handle_stats_oper_notif()` →
-  `iwl_mld_process_per_link_stats()`
+- `b4 dig` by commit hash and subject: no match (commit not in this
+  checkout)
+- Lore/patch.msgid.link: blocked by Anubis bot protection — could not
+  read thread
+- **UNVERIFIED:** Reviewer feedback, stable nominations, series
+  revisions
 
-### Step 5.2: Callers of `iwl_mld_nic_error`
-**Record:** Registered as `.nic_error` in `iwl_mld_ops`; invoked via
-`iwl_op_mode_nic_error()` from:
-- `iwl_trans_fw_error()` (IRQ error path in `pcie/gen1_2/rx.c`)
-- Command queue full (`tx.c`, `tx-gen2.c`)
-- Debugfs-triggered errors (`trans.c`)
-- Reset timeout / TOP reset failure (`trans-gen2.c`)
-- NMI path (`iwl-io.c`)
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+**Record:** `host1x_device_init()` — only function modified.
+
+### Step 5.2: Callers
+**Record:** `host1x_device_init()` is called from:
+- `drivers/gpu/drm/tegra/drm.c` (Tegra DRM probe)
+- `drivers/crypto/tegra/tegra-se-main.c` (Tegra SE)
+- `drivers/staging/media/tegra-video/video.c` (staging Tegra video)
+
+All are device-probe initialization paths on Tegra (or COMPILE_TEST).
 
 ### Step 5.3: Callees
-**Record:** `iwl_mld_cancel_async_notifications()` calls
-`wiphy_work_cancel()` + spinlock-protected list purge of
-`async_handlers_list`.
+**Record:** `client->ops->exit`, `client->ops->late_exit`,
+`mutex_lock/unlock`, list iteration macros.
 
 ### Step 5.4: Reachability
-**Record:** **Reachable** on any FW/HW error on IWLMLD devices —
-transport calls `iwl_trans_fw_error()` from IRQ on microcode errors. FW
-errors are a normal operational event on iwlwifi hardware. Panic occurs
-during subsequent recovery/reconfig, not on every error, but the stale-
-notification race is plausible whenever FW dies with queued async
-notifications.
+**Record:**
+1. Tegra clients register via `host1x_client_register()` /
+   `__host1x_client_register()`.
+2. `host1x_device_init()` runs when the composite host1x device driver
+   probes.
+3. If any client's `init`/`early_init` fails, teardown runs.
+4. Forward path skips clients with `client->ops == NULL`; teardown does
+   not — inconsistent and unsafe.
+5. In-tree drivers set `ops` before register, but the API explicitly
+   allows NULL `ops` (forward guards prove intent). A client with NULL
+   `ops` on `device->clients` plus a later init failure triggers the
+   bug.
 
-### Step 5.5: Similar patterns
-**Record:** MVM purges async handlers in restart path
-(`iwl_mvm_async_handlers_purge()` in `mvm/mac80211.c`), not in
-`nic_error`. MLD lacked the early purge that MVM's restart path provides
-implicitly; this patch closes that gap at the earliest safe point (FW
-death notification).
+**Userspace trigger:** Indirect — probe failure during boot/driver load
+on Tegra systems with `CONFIG_TEGRA_HOST1X` and dependent drivers.
 
----
-
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
-
-### Step 6.1: Buggy code exists?
-**Record:** **YES.** Current `iwl_mld_nic_error()` (lines 643–674 in
-`mld.c`) does **not** call `iwl_mld_cancel_async_notifications()`. The
-helper exists and is used in `iwl_mld_stop_fw()` (`fw.c:373`).
-`fw_id_to_bss_conf` dereference in stats path confirmed
-(`stats.c:409–417`). IWLMLD driver fully present (65 files under
-`mld/`).
-
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected** — single hunk, no structural
-conflicts. Fix not already present. Git history too shallow to assess
-merge conflicts beyond reading current file.
-
-### Step 6.3: Related fixes already present?
-**Record:** **No.** `grep` for `cancel_async` / `FW is dead` in `mld.c`
-returns nothing. No equivalent early-purge in `iwl_mld_nic_error()`.
+### Step 5.5: Similar Patterns
+**Record:** Same `client->ops &&` pattern used in
+`host1x_device_exit()`, `host1x_client_suspend()`, and
+`host1x_client_resume()` in the same file. Teardown paths are the
+outlier.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 7.1: Subsystem criticality
-**Record:** **IMPORTANT** — `drivers/net/wireless/intel/iwlwifi/mld/`
-(Intel WiFi, IWLMLD firmware path). Not universal core code, but iwlwifi
-is widely deployed on laptops/desktops with recent Intel WiFi hardware
-using MLD opmode.
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** Local tree is **v6.18.44** (Makefile: 6.18.44).
+Buggy code at lines 224 and 232 in `drivers/gpu/host1x/bus.c` — fix not
+yet applied.
+
+### Step 6.2: Backport Complications
+**Record:** **Clean apply expected** — two identical one-line changes.
+No conflicting recent churn in this function.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** No existing fix for this issue in this tree.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+### Step 7.1: Subsystem
+**Record:** `drivers/gpu/host1x/` — Tegra display/multimedia bus
+infrastructure. **Criticality:** IMPORTANT for Tegra/embedded;
+PERIPHERAL globally (requires `CONFIG_TEGRA_HOST1X`, `ARCH_TEGRA` or
+`COMPILE_TEST`).
 
 ### Step 7.2: Activity
-**Record:** IWLMLD is actively developed (full MLO, stats, reconfig
-support in tree). Shallow git history prevents trend analysis.
+**Record:** Actively maintained; multiple bugfix commits in recent
+history on this subsystem.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 8: Impact and Risk Assessment
 
-### Step 8.1: Who is affected
-**Record:** Users with **CONFIG_IWLMLD** devices (Intel BZ/SC/DR-family
-hardware using MLD opmode). Not all iwlwifi users (IWLMVM/IWLDVM
-unaffected).
+### Step 8.1: Who Is Affected
+**Record:** Tegra platform users with host1x clients (DRM, crypto,
+staging video). Not universal x86/ARM server impact.
 
-### Step 8.2: Trigger conditions
+### Step 8.2: Trigger Conditions
 **Record:**
-- FW/HW error occurs
-- Recovery/reconfig attempted (e.g., `ieee80211_restart_hw` path)
-- Partial reconfig failure leaves stale async notifications (especially
-  statistics)
-- `async_handlers_wk` runs after link `bss_conf` freed
-- **Likelihood:** Uncommon (requires FW error + reconfig failure), but
-  FW errors themselves are not rare
-- **Unprivileged trigger:** Indirectly — normal WiFi usage; no special
-  syscall needed
+- `host1x_device_init()` called during probe
+- A client `init`/`early_init` fails
+- Teardown visits a client with `client->ops == NULL` (skipped during
+  forward init)
+- **Likelihood:** Low-to-medium on error paths; requires init failure
+  plus NULL-ops client on the list
 
-### Step 8.3: Failure mode severity
-**Record:** **Kernel panic** (dereference of freed `bss_conf` via
-`fw_id_to_bss_conf`) — **CRITICAL**
+### Step 8.3: Failure Mode Severity
+**Record:** Kernel oops (NULL dereference) during error recovery instead
+of clean `-errno` return. **Severity: HIGH** for affected path (turns
+recoverable probe failure into crash).
 
-### Step 8.4: Risk-benefit
+### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** HIGH for affected hardware — prevents crash during FW
-  error recovery
-- **Risk:** LOW — 9-line addition, reuses existing tested helper,
-  maintainer-reviewed
-- **Locking nuance:** `iwl_mld_cancel_async_notifications()` asserts
-  wiphy held; `nic_error` is atomic per op_mode contract.
-  `wiphy_work_cancel()` functionally uses internal spinlock; maintainer
-  approved. Possible lockdep warnings in debug builds — noted but not
-  blocking given review.
-- **Ratio:** Strong benefit, low risk
+- **Benefit:** Prevents crash on init-failure teardown; makes error
+  recovery robust
+- **Risk:** Very low — 2-line change matching established pattern
+- **Ratio:** Favorable for Tegra stable users
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence compile
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Fixes real kernel panic (dangling pointer in stats async handler)
-- Small, surgical, obviously correct intent
-- Reuses existing `iwl_mld_cancel_async_notifications()`
-- Reviewed by Johannes Berg (subsystem maintainer)
-- Buggy code confirmed present in 6.18.44
-- No new APIs or features
-- Defensive fix valuable even if related mac80211 bug is fixed
-  separately
+- Real NULL-deref bug on error path
+- Trivial, obviously correct 2-line fix
+- Matches existing code in same function/file
+- Maintainer (Thierry Reding) signed off
+- Bug present since 2017/2021; affects this v6.18.44 tree
+- Error-path crash is worse than the original init failure
 
 **AGAINST backport:**
-- Affects only IWLMLD hardware (subset of iwlwifi users)
-- Trigger requires FW error + reconfig failure (not everyday)
-- Locking context mismatch between atomic `nic_error` and wiphy-locked
-  cancel helper (mitigated by maintainer review)
-- Related mac80211 fix mentioned but not included (this patch still has
-  standalone value)
+- Platform-specific (Tegra only)
+- Requires init failure (uncommon)
+- No user/syzbot report documented
+- In-tree drivers appear to always set `ops` before register (trigger
+  may be rare in practice)
 
-**Unresolved:**
-- Exact mainline commit SHA and lore discussion (tools blocked / not
-  available)
-- When iwl MLD was first introduced (git history shallow)
-- Whether lockdep fires in practice from IRQ `nic_error` path
+**UNRESOLVED:**
+- Mailing list review thread (Anubis blocked)
+- No confirmed in-tree reproduction with current drivers
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — reuses existing purge
-   function; maintainer reviewed
-2. Fixes real bug affecting users? **PASS** — kernel panic on FW error
-   recovery
-3. Important issue? **PASS** — CRITICAL (kernel panic)
-4. Small and contained? **PASS** — 9 lines, one file
+The unresolved items do not outweigh the clear correctness fix: forward
+paths already treat NULL `ops` as valid; teardown must match.
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — mirrors existing guards;
+   maintainer SOB; no logic change beyond NULL safety
+2. Fixes a real bug? **PASS** — NULL deref on error teardown
+3. Important issue? **PASS** — kernel oops on probe error recovery (HIGH
+   for affected users)
+4. Small and contained? **PASS** — 2 lines, 1 file
 5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — code and helper exist; fix not
-   yet applied
+6. Can apply to local tree? **PASS** — buggy code confirmed in v6.18.44
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build fix, or docs).
-Standard bug fix.
+### Step 9.3: Exception Categories
+**Record:** None (standard bug fix).
 
-### Step 9.4: Decision rationale
-This commit fixes a confirmed kernel panic on the IWLMLD FW error
-recovery path in a tree where the iwlwifi MLD driver, the dangling-
-pointer bug, and `iwl_mld_cancel_async_notifications()` all exist. The
-fix is minimal, maintainer-reviewed, and prevents processing
-notifications from a dead firmware after BSS link state may have been
-torn down. For **linux-6.18.y (v6.18.44)**, this meets stable kernel
-criteria.
+### Step 9.4: Decision Rationale
+This is a conservative, surgical fix for an inconsistent NULL check that
+can kernel-oops during `host1x_device_init()` error recovery on Tegra
+systems. The fix aligns teardown with forward init and
+`host1x_device_exit()`, carries negligible regression risk, and the
+buggy code is present in this v6.18.44 tree.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags (Reviewed-by: Johannes Berg, Link:,
-  SOB); no Fixes/Reported-by
-- [Phase 1] Identified hidden UAF/panic fix from commit body
-- [Phase 2] Diff: +9 lines in `mld.c`, `iwl_mld_nic_error()` only
-- [Phase 2] Confirmed stats handler uses `fw_id_to_bss_conf`
-  (`stats.c:409-417`)
-- [Phase 2] Confirmed `STATISTICS_OPER_NOTIF` is `RX_HANDLER_ASYNC`
-  (`notif.c:417-418`)
-- [Phase 3] `git describe HEAD`: v6.18.44
-- [Phase 3] `git blame iwl_mld_nic_error`: shallow history (unreliable)
-- [Phase 3] `iwl_mld_cancel_async_notifications` exists in tree
-  (`notif.c:671`, `fw.c:373`, `d3.c:1431`)
-- [Phase 4] `b4 dig -c HEAD`: no match for release commit
-- [Phase 4] WebFetch lore Link: blocked by bot protection
-- [Phase 4] UNVERIFIED: Full lore review thread and stable nominations
-- [Phase 5] Traced `iwl_op_mode_nic_error` callers via grep (IRQ, reset,
-  debugfs paths)
-- [Phase 5] Confirmed `iwl_mld_async_handlers_wk` processes async
-  notification list (`notif.c:648-668`)
-- [Phase 5] Confirmed `wiphy_work_cancel` requires wiphy mtx
-  (`core.c:1710`)
-- [Phase 6] `git describe`: v6.18.44 on `stable/linux-6.18.y`
-- [Phase 6] Buggy code present: `iwl_mld_nic_error` lacks cancel call
-  (read `mld.c:643-674`)
-- [Phase 6] Fix not present: grep for `cancel_async` in `mld.c` — no
-  matches
-- [Phase 6] IWLMLD Kconfig and full `mld/` directory present
-- [Phase 7] Subsystem: iwlwifi MLD driver (IMPORTANT, driver-specific)
-- [Phase 8] Failure mode: kernel panic — CRITICAL
-- [Phase 8] Affected population: CONFIG_IWLMLD users
+- **[Phase 1]** Parsed commit message and tags from user query
+- **[Phase 2]** Confirmed diff: 2 lines in `host1x_device_init()`
+  teardown paths
+- **[Phase 3]** `git describe HEAD`: v6.18.44; Makefile confirms 6.18.44
+- **[Phase 3]** `git blame -L 222,236`: teardown from 2017
+  (`8f7da1578e90b`), teardown_late from 2021 (`933deb8c7b8e3f`)
+- **[Phase 3]** `git show 8f7da1578e90bf`: original teardown added
+  without NULL check while forward path had one
+- **[Phase 3]** `git log -p -S 'if (client->ops->exit)'`: confirmed 2017
+  introduction of unguarded teardown
+- **[Phase 3]** `git log --oneline -15 -- drivers/gpu/host1x/bus.c`:
+  recent related fixes; no duplicate fix
+- **[Phase 4]** `b4 dig`: no results (commit not in tree)
+- **[Phase 4]** WebFetch lore/patch.msgid.link: blocked by Anubis —
+  **UNVERIFIED** review discussion
+- **[Phase 5]** `grep host1x_device_init`: callers in tegra drm, tegra-
+  se, tegra-video
+- **[Phase 5]** Read `host1x_device_init()`, `host1x_device_exit()`,
+  suspend/resume: confirmed `client->ops &&` pattern elsewhere
+- **[Phase 5]** Read tegra driver probes (dc.c, gr3d.c, sor.c, tegra-
+  se): ops set before register
+- **[Phase 6]** Read current `bus.c` lines 224, 232: buggy code present
+  (no NULL check)
+- **[Phase 6]** Kconfig: `CONFIG_TEGRA_HOST1X` depends on `ARCH_TEGRA ||
+  COMPILE_TEST`
+- **[Phase 8]** Failure mode: NULL deref → oops on init-failure teardown
 
-**YES**
+**YES**The backport analysis is done.
 
- drivers/net/wireless/intel/iwlwifi/mld/mld.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+**Commit:** `host1x: bus: Fix missing ops null check in error teardown`
+**Tree:** v6.18.44 — the bug is still present (unguarded `client->ops`
+derefs at lines 224 and 232 in `drivers/gpu/host1x/bus.c`).
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-index 48b8ec6a5a12d..49e46babf8221 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-@@ -670,6 +670,15 @@ iwl_mld_nic_error(struct iwl_op_mode *op_mode,
- 	if (type != IWL_ERR_TYPE_RESET_HS_TIMEOUT &&
- 	    mld->fw_status.running)
- 		mld->fw_status.in_hw_restart = true;
-+
-+	/* FW is dead. We don't want to process its notifications.
-+	 * Right, we cancel them also in iwl_mld_stop_fw, but
-+	 * iwl_mld_async_handlers_wk might be executed before
-+	 * ieee80211_restart_work.
-+	 * In addition, in case of an error during recovery,
-+	 * iwl_mld_stop_fw might be too late.
-+	 */
-+	iwl_mld_cancel_async_notifications(mld);
- }
+**Summary:** On Tegra, if `host1x_device_init()` fails partway through,
+the teardown paths can NULL-deref `client->ops` while forward init and
+`host1x_device_exit()` already guard against that. The fix is two lines,
+matches existing patterns, and is signed off by host1x maintainer
+Thierry Reding.
+
+**Verdict: YES** — backport to this tree.
+
+A background `git log --grep` search timed out; it wasn’t needed for the
+decision since the buggy code and history were already confirmed
+directly.
+
+ drivers/gpu/host1x/bus.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
+index 3313ead8bfcc2..06aa7fcd367e1 100644
+--- a/drivers/gpu/host1x/bus.c
++++ b/drivers/gpu/host1x/bus.c
+@@ -221,7 +221,7 @@ int host1x_device_init(struct host1x_device *device)
  
- static void iwl_mld_dump_error(struct iwl_op_mode *op_mode,
+ teardown:
+ 	list_for_each_entry_continue_reverse(client, &device->clients, list)
+-		if (client->ops->exit)
++		if (client->ops && client->ops->exit)
+ 			client->ops->exit(client);
+ 
+ 	/* reset client to end of list for late teardown */
+@@ -229,7 +229,7 @@ int host1x_device_init(struct host1x_device *device)
+ 
+ teardown_late:
+ 	list_for_each_entry_continue_reverse(client, &device->clients, list)
+-		if (client->ops->late_exit)
++		if (client->ops && client->ops->late_exit)
+ 			client->ops->late_exit(client);
+ 
+ 	mutex_unlock(&device->clients_lock);
 -- 
 2.53.0
 
