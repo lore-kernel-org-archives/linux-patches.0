@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20A347F78A;
-	Mon, 31 Aug 2026 13:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29E547D448;
+	Mon, 31 Aug 2026 13:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184796; cv=none; b=Dw+N/9g10bUA2/OhmHGOnZwijGoXOJNhviIYVM4jfbcAVbISxQUHOMKWQAmz16+nES/xN9Tds4ZdHeLga2VL3tNt6J8EqoI7zsaiK1AP/kKBdcnJ2xTxJLzYfyDzGsITT69wzSLUOL1IeaQvjMLjlnqRDTMG4atamPmw+kEIzF0=
+	t=1788184792; cv=none; b=esRxFt2WgS2rfCVElE4QOgKzAL9Rbvk8IJ+8Uspoocop7DvftW3vwj6YIRfgsEt0KDO9mL7WGw74XneNDXQjNu5MUr1bCqmV9wSF70yO45r0pTyteu8Aur250WRERhfNFuC0YBI9okqbjvBaV9Qqc/Y51+wZF1q0l2dlrUx2RDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184796; c=relaxed/simple;
-	bh=BBkx0e4k4cEKOtdwtkb/vfhDtCIfPRbMPARKC7qsFhY=;
+	s=arc-20240116; t=1788184792; c=relaxed/simple;
+	bh=2nBNSWX7ZcUEeBpTvKXlt7e+g9sQ7FmGZNQsC9rqrGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dUWNsY8VcWu5+QbRjdnVILn06VOYaFyUZ1FE/XZrlxuV3lxapDemvCnbqb6sTmHdPENObn/CiyKWgipyJx0DbKLZJP6lNEVXtBpSEjHuHGeYLdzPsrDCX0A8TWMY83qyQWjC2cczz+/zop0ld3diefhy0oO8iVrpn091V9qMxsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXt7oMQK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J56xvRw4LMufBj6/QnymF8nwiNLN8q4nRCMF5Pv3BZt8ZgberGndiCjjoAia8eOnTS2I7kV6FChnAEnV07VFo71Uc6/dxO8oCJzShmxLD9D2XrEDyO5Qh6KoKaWahwaR0J0YdGG7+tLHX5wfcsfzGU4ok5dSHDpC27e6WJQVDh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clFMNZrl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXt7oMQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185891F000E9;
-	Mon, 31 Aug 2026 13:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clFMNZrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429A81F000E9;
+	Mon, 31 Aug 2026 13:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184793;
-	bh=n+sjG4wm50d6x3jN1ZNzq9tQaIXI8xA1gCpV6v2m76I=;
+	s=korg; t=1788184790;
+	bh=v7xjXqB8EqcBuL/t4p/W+lec3B9g0g2uaWM2+XjOwr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uXt7oMQKeoLhqqboWVxZs3qNoipxG+4PMj/IRYLU5AlAk437WhlLgSMIUWIyQ9AA8
-	 VzGxI04gqmR6IhlW2t4CZK2ZD4E/GbHVEAIu7eJehTClYWXW7BSkkJvoanvn1YVwqa
-	 j59lTnlK2N+8BJzOLtVhDAdgiRZzi/V+wf8B5UfI=
+	b=clFMNZrlUU94J+Qaf42Vaa48EOeLM2IN8oAHxEniz67LkUTsp5ANSubuYsV77w8gL
+	 bYpVin3E1oe5Hb5IWKPl/SYsixrV7T7NX1j1AHiULeBv+8N1rPXgV6KM+zDvsfcQpv
+	 Ih5ResIpXXTvvQ5AfD4LgjddbywxJg7KYePdWbkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	David Heidelberg <david@ixit.cz>,
+	syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com,
+	wuyankun <wuyankun@uniontech.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 40/92] nfc: nci: add data_len bound checks to activation parameter extractors
-Date: Mon, 31 Aug 2026 15:34:38 +0200
-Message-ID: <20260831133401.787295619@linuxfoundation.org>
+Subject: [PATCH 6.1 39/92] nilfs2: reject invalid block index in GC ioctl
+Date: Mon, 31 Aug 2026 15:34:37 +0200
+Message-ID: <20260831133401.731590978@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,132 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 0428fa2c22e2ba0cff766d3b80d461e149102045 ]
+[ Upstream commit a1735eae55448bc79c2da6593455791e886f6ed8 ]
 
-nci_extract_activation_params_iso_dep() and
-nci_extract_activation_params_nfc_dep() read an inner length byte from
-the NCI RF_INTF_ACTIVATED_NTF payload and use it to memcpy() into fixed
-kernel buffers, but neither function receives the caller-validated
-activation_params_len.  A crafted NCI notification with
-activation_params_len=1 and an inner length byte of up to 20 (NFC-A) or
-50 (NFC-B) causes memcpy() to read that many bytes past the one valid
-byte in the activation params region -- a slab out-of-bounds read of
-kernel memory adjacent to the NCI skb.
+Syzbot reported list corruption caused by a double list_add_tail() call on
+bh->b_assoc_buffers within nilfs_lookup_dirty_data_buffers().
 
-The sibling nci_extract_rf_params_*() family was given equivalent
-protection by commit 571dcbeb8e63 ("net: nfc: nci: Fix parameter
-validation for packet data"), but the two activation parameter
-extractors were not updated at that time.
+Analysis revealed that the root cause was the insertion of a page/folio
+with a page index of ULONG_MAX into the page cache via the GC ioctl.
+filemap_get_folios_tag(), called by nilfs_lookup_dirty_data_buffers(),
+repeatedly detects a dirty folio with a page index of ULONG_MAX due to
+index wrap-around, leading to duplicate processing of dirty buffers.
 
-Add a data_len parameter to both functions, guard against an empty
-region before consuming the inner length byte, decrement the remaining
-count after consuming it, and clamp the copy length to what is actually
-available.  Update both call sites to pass ntf.activation_params_len,
-which is already validated against the skb at ntf.c:801.
+As a preparatory step, the GC ioctl loads the page/folio of the block to
+be moved during GC and inserts it into the page cache based on information
+in the nilfs_vdesc structure passed as an argument.  Normally, this does
+not cause issues because the user-space GC library configures the
+nilfs_vdesc structure properly.  However, since there is no range check on
+the parameters determining the page index, a request with artificially
+crafted parameters -- such as those generated by Syzbot -- can result in a
+page/folio being inserted with a page index of ULONG_MAX, triggering the
+above problem.
 
-Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
+This resolves the issue by checking the ranges of 'vd_offset' and
+'vd_vblocknr' in the nilfs_vdesc structure that determine the page index,
+thereby preventing the invalid page/folio insertions.
+
+Reported-by: syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c37bed40868932d790e9
+Fixes: 7942b919f732 ("nilfs2: ioctl operations")
+Cc: wuyankun <wuyankun@uniontech.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260612-b4-disp-6d52d8b0-v3-1-e26221f8826d@proton.me
-Signed-off-by: David Heidelberg <david@ixit.cz>
-[ Replaced `NFC_ATS_MAXSIZE` with the literal `20` since that macro doesn't exist in this tree. ]
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/ntf.c |   26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ fs/nilfs2/ioctl.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -525,15 +525,19 @@ static int nci_rf_discover_ntf_packet(st
- 
- static int nci_extract_activation_params_iso_dep(struct nci_dev *ndev,
- 						 struct nci_rf_intf_activated_ntf *ntf,
--						 const __u8 *data)
-+						 const __u8 *data, __u8 data_len)
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -513,6 +513,7 @@ static int nilfs_ioctl_get_bdescs(struct
+  * Return: 0 on success, or one of the following negative error codes on
+  * failure:
+  * * %-EEXIST	- Block conflict detected.
++ * * %-EINVAL	- Invalid virtual block descriptor.
+  * * %-EIO	- I/O error.
+  * * %-ENOENT	- Requested block doesn't exist.
+  * * %-ENOMEM	- Insufficient memory available.
+@@ -522,15 +523,30 @@ static int nilfs_ioctl_move_inode_block(
+ 					struct list_head *buffers)
  {
- 	struct activation_params_nfca_poll_iso_dep *nfca_poll;
- 	struct activation_params_nfcb_poll_iso_dep *nfcb_poll;
+ 	struct buffer_head *bh;
++	__u64 limit_blkidx = (__u64)inode->i_sb->s_maxbytes >> inode->i_blkbits;
+ 	int ret;
  
- 	switch (ntf->activation_rf_tech_and_mode) {
- 	case NCI_NFC_A_PASSIVE_POLL_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		nfca_poll = &ntf->activation_params.nfca_poll_iso_dep;
- 		nfca_poll->rats_res_len = min_t(__u8, *data++, 20);
-+		data_len--;
-+		nfca_poll->rats_res_len = min_t(__u8, nfca_poll->rats_res_len, data_len);
- 		pr_debug("rats_res_len %d\n", nfca_poll->rats_res_len);
- 		if (nfca_poll->rats_res_len > 0) {
- 			memcpy(nfca_poll->rats_res,
-@@ -542,8 +546,12 @@ static int nci_extract_activation_params
- 		break;
+-	if (vdesc->vd_flags == 0)
++	/*
++	 * vblocknr 0 is reserved as an invalid pointer.  Also, limit_blkidx
++	 * ensures that the page index converted from vd_vblocknr never
++	 * overflows the page cache limit and respects the architecture's bmap
++	 * key width.
++	 */
++	if (unlikely(vdesc->vd_vblocknr == 0 ||
++			vdesc->vd_vblocknr >= limit_blkidx))
++		return -EINVAL;
++
++	if (vdesc->vd_flags == 0) {
++		if (unlikely(vdesc->vd_offset >= limit_blkidx))
++			return -EINVAL;
++
+ 		ret = nilfs_gccache_submit_read_data(
+ 			inode, vdesc->vd_offset, vdesc->vd_blocknr,
+ 			vdesc->vd_vblocknr, &bh);
+-	else
++	} else {
+ 		ret = nilfs_gccache_submit_read_node(
+ 			inode, vdesc->vd_blocknr, vdesc->vd_vblocknr, &bh);
++	}
  
- 	case NCI_NFC_B_PASSIVE_POLL_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		nfcb_poll = &ntf->activation_params.nfcb_poll_iso_dep;
- 		nfcb_poll->attrib_res_len = min_t(__u8, *data++, 50);
-+		data_len--;
-+		nfcb_poll->attrib_res_len = min_t(__u8, nfcb_poll->attrib_res_len, data_len);
- 		pr_debug("attrib_res_len %d\n", nfcb_poll->attrib_res_len);
- 		if (nfcb_poll->attrib_res_len > 0) {
- 			memcpy(nfcb_poll->attrib_res,
-@@ -562,7 +570,7 @@ static int nci_extract_activation_params
- 
- static int nci_extract_activation_params_nfc_dep(struct nci_dev *ndev,
- 						 struct nci_rf_intf_activated_ntf *ntf,
--						 const __u8 *data)
-+						 const __u8 *data, __u8 data_len)
- {
- 	struct activation_params_poll_nfc_dep *poll;
- 	struct activation_params_listen_nfc_dep *listen;
-@@ -570,9 +578,13 @@ static int nci_extract_activation_params
- 	switch (ntf->activation_rf_tech_and_mode) {
- 	case NCI_NFC_A_PASSIVE_POLL_MODE:
- 	case NCI_NFC_F_PASSIVE_POLL_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		poll = &ntf->activation_params.poll_nfc_dep;
- 		poll->atr_res_len = min_t(__u8, *data++,
- 					  NFC_ATR_RES_MAXSIZE - 2);
-+		data_len--;
-+		poll->atr_res_len = min_t(__u8, poll->atr_res_len, data_len);
- 		pr_debug("atr_res_len %d\n", poll->atr_res_len);
- 		if (poll->atr_res_len > 0)
- 			memcpy(poll->atr_res, data, poll->atr_res_len);
-@@ -580,9 +592,13 @@ static int nci_extract_activation_params
- 
- 	case NCI_NFC_A_PASSIVE_LISTEN_MODE:
- 	case NCI_NFC_F_PASSIVE_LISTEN_MODE:
-+		if (data_len < 1)
-+			return NCI_STATUS_RF_PROTOCOL_ERROR;
- 		listen = &ntf->activation_params.listen_nfc_dep;
- 		listen->atr_req_len = min_t(__u8, *data++,
- 					    NFC_ATR_REQ_MAXSIZE - 2);
-+		data_len--;
-+		listen->atr_req_len = min_t(__u8, listen->atr_req_len, data_len);
- 		pr_debug("atr_req_len %d\n", listen->atr_req_len);
- 		if (listen->atr_req_len > 0)
- 			memcpy(listen->atr_req, data, listen->atr_req_len);
-@@ -790,12 +806,14 @@ static int nci_rf_intf_activated_ntf_pac
- 		switch (ntf.rf_interface) {
- 		case NCI_RF_INTERFACE_ISO_DEP:
- 			err = nci_extract_activation_params_iso_dep(ndev,
--								    &ntf, data);
-+								    &ntf, data,
-+								    ntf.activation_params_len);
- 			break;
- 
- 		case NCI_RF_INTERFACE_NFC_DEP:
- 			err = nci_extract_activation_params_nfc_dep(ndev,
--								    &ntf, data);
-+								    &ntf, data,
-+								    ntf.activation_params_len);
- 			break;
- 
- 		case NCI_RF_INTERFACE_FRAME:
+ 	if (unlikely(ret < 0)) {
+ 		if (ret == -ENOENT)
 
 
