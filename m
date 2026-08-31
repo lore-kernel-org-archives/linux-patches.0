@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91444A0EF4;
-	Mon, 31 Aug 2026 13:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6024A0927;
+	Mon, 31 Aug 2026 13:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183697; cv=none; b=ZuvO3M6cCjFhrxYl5vgxyFfW0A10ZnVfBz6tyDhmqPFE9ryG2e47IEd65vXdf0aXKzrEybzycy5G/umxotSu7Ndx5DKhK+IXfmAMHW//sFvzoALmsb9YQ8AvFh+PfaQNTT+e7GhgEIbmYO7rz2IpkLUbxQk73IvI0jevUR4IGzk=
+	t=1788183699; cv=none; b=BA/PUtgTzsKV4Rhfgo7ohOwjxto9i9qHI/MEEiBv/0/PT/YSVFZHIKSobcGm2vqqbifniFJT8WaIPPjblzZWrVoUqWgg+QSh3pUSwgEIS1UXJnmqibYeWhvb/RW8ZxHkNB4Cs/sdPHe5em63p7k/GV/HJFzKxb4XNzYJK5XENZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183697; c=relaxed/simple;
-	bh=DvVYIa6XHfFGk5xz1GNwQ0b62seIBYUgOSMzfiRGL8U=;
+	s=arc-20240116; t=1788183699; c=relaxed/simple;
+	bh=ltuDfQ7QZqiRAgvpyktmmDEDKuVQA87KA5z0eue77zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hXbAyeh+pPkJz42yFy9nXt9Oq/3urOoifQe+AFHOQqIuKFtZw4HcxhAzixE/nBp0vWI+R7FylnmARY4q1Yd/2gqeV/FspNLXiiN3tj1shabquTubjhn53udOKi4vXKZ7OSX+UKGSFozrpqOsPLe3f+ZJVYEtSQ8INrCIL+z+de8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mqhxRlVG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J0O+0kCw0OBGyBa1DJhvijFNMlOlSuPNbxSuW6qAeJwiFlkderyr4m+TU2JxgyQ2tCnNU1grdO81eBSJNEbJ4KmS2svVpatbqOj9Xgsy17XvNAhTTeazm9WG92T68FSaB2NRWn5m3ZCJV9L4/R2f2FMSdabGCVWoYvxC2o2MNjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5f7yPAV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mqhxRlVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547AA1F000E9;
-	Mon, 31 Aug 2026 13:41:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5f7yPAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462B31F00A3E;
+	Mon, 31 Aug 2026 13:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183694;
-	bh=peNhPP3wjy3UUT0USk5sWo3K5yqQeatO03tTDXSpSEg=;
+	s=k20260515; t=1788183696;
+	bh=4aA/mw8wPBGPJo8tBTr0TR4w7ObCSJFfJDmxuWAwlWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mqhxRlVGFoGyzndoulZ7BSzcSM5Q8QFzwQRCPEZzEYMl4L0YQWk9Lrj2wCFJfZ5C7
-	 Gzxbq4JITjmmpQ3Qr5Bxm1eEJdjTAaFAOU9l2+xXoSDR291oH97YWMGU5kgepcrO2P
-	 qpOCXC+Idsup3FiZqCig0m4BKARk1fdCLw+b5EW1EdiKAn2JR8Qr8D8Hb/F1/X+85m
-	 1uys+/1TI2394KXTZICee9DBIhq8gLfsOLm1Zi0tEiZEoWWJ0ej37279KpkWrGw81H
-	 +0d7uQ4T3BhwmJIH4XIETdxnpRY9WnG6TgAmPQibPGeTdpb9zxohZvx2CX5hCJS8YK
-	 oLpV3somx1rvA==
+	b=M5f7yPAVoLwc5zPj89XaGgsvvjU9bNzaIAy2ImrEJ9XshNBBf2+jaNCjfQU6KClmv
+	 6aQ78KKMOThjX2O5fcqm2Bh2PMy1mANqh2+5hc3TU32MwdAOMWnDJevqGNiBOaZrZS
+	 hYGfjL9WxwWoUnGjLpLWRE50zqmAinjHDyUFRC6h2DCaXZzWRQcLGXXj+dMzJEZLNj
+	 WgPuvzYpG45OX1UVViR7hHeUV90u3WwjsVdDKjh5OFZQwBG0kPIfBSbxyUZyuaA2cV
+	 cpI3OZUBsHaE9Z/l0D39yxfvU1FtrYL7zLXG7ENYsddaCMMa4kr772jr9NeWv5Hkt/
+	 oQD9DFaQOFDWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: =?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	andrew@lunn.ch,
+	olteanv@gmail.com,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: seq: oss: Reject reads that cannot fit the next event
-Date: Mon, 31 Aug 2026 09:24:37 -0400
-Message-ID: <20260831133314.4125787-249-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] net: dsa: mv88e6xxx: enable .rmu_disable() for 6320 family
+Date: Mon, 31 Aug 2026 09:24:38 -0400
+Message-ID: <20260831133314.4125787-250-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,391 +57,402 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 611f538253d970f4d152003841544e875828d015 ]
+[ Upstream commit e0fdb4157a85056bd256a7aebac4a3a2f580b201 ]
 
-snd_seq_oss_read() checks whether the next queued OSS sequencer event
-fits in the remaining userspace buffer before removing it from the read
-queue.
+Commit 9e5baf9b3636 ("net: dsa: mv88e6xxx: add RMU disable op") did not
+add the .rmu_disable() method for the 6320 family. Add it now.
 
-The check is inverted. It currently stops when the event is smaller than
-the remaining buffer, so a normal 4-byte event is not copied for an
-8-byte read buffer. Conversely, an 8-byte event can be copied for a
-smaller read count.
-
-Break only when the remaining userspace buffer is smaller than the next
-event, and report -EINVAL if no complete event has been copied. This
-prevents an undersized read from looking like end-of-file while leaving
-the event queued for a later read with a large enough buffer.
-
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260602-alsa-seq-oss-read-size-check-v1-1-10e59b1742e0@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Link: https://patch.msgid.link/20260504153227.1390546-5-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ALSA seq OSS read size check
+# Stable Backport Analysis: `net: dsa: mv88e6xxx: enable .rmu_disable()
+for 6320 family`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-gef4bf62bccf3c`, detached
-from `stable/linux-6.18.y`)
-
-**Mainline fix commit:** `611f538253d97` (not yet in this stable tree;
-`git apply --check` passes cleanly)
+**Local tree:** Linux 6.18.43 (`v6.18.43-1-gc7f0dac02d232`, `VERSION =
+6`, `PATCHLEVEL = 18`, `SUBLEVEL = 43`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[ALSA: seq: oss]` `[Reject]` — fixes inverted buffer-size
-check in `snd_seq_oss_read()` so reads that cannot hold the next
-complete event are rejected instead of mishandled.
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[net: dsa: mv88e6xxx]` `[enable]` — add the missing
+`.rmu_disable()` callback to the MV88E6320/MV88E6321 ops tables.
 
-### Step 1.2: Tags
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Signed-off-by | Cássio Gabriel \<cassiogabrielcontato@gmail.com\> |
-| Link | https://patch.msgid.link/20260602-alsa-seq-oss-read-size-
-check-v1-1-10e59b1742e0@gmail.com |
-| Signed-off-by | Takashi Iwai \<tiwai@suse.de\> (committer) |
+- **Fixes:** — absent (expected for manual review)
+- **Reported-by:** — absent
+- **Tested-by:** — absent
+- **Reviewed-by:** — absent
+- **Acked-by:** — absent
+- **Link:**
+  `https://patch.msgid.link/20260504153227.1390546-5-kabel@kernel.org`
+  (patch 5/N of a series by Marek Behún)
+- **Cc: stable:** — absent (not a negative signal)
+- **Signed-off-by:** Marek Behún `<kabel@kernel.org>`, Jakub Kicinski
+  `<kuba@kernel.org>` (net maintainer)
 
-**Notable patterns:** No Fixes:, Reported-by:, Tested-by:, Reviewed-by:,
-or Cc: stable. Maintainer (Iwai) committed the patch. No syzbot report.
+No syzbot, no user bug reports, no explicit stable nomination.
 
-### Step 1.3: Body analysis
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 **Record:**
-- **Bug:** `snd_seq_oss_read()` uses `if (ev_len < count)` instead of
-  `if (count < ev_len)` to decide whether the next queued event fits in
-  the remaining userspace buffer.
-- **Symptom 1:** A normal 4-byte short event is **not** copied when the
-  read buffer is larger (e.g. 8 bytes); loop breaks with `result == 0`
-  and `err == 0` → `read()` returns 0 (EOF semantics).
-- **Symptom 2:** An 8-byte long event **can** be copied when `count` is
-  smaller (e.g. 4), writing past the bytes the user requested for this
-  read.
-- **Fix:** Break only when `count < ev_len`; set `err = -EINVAL` so
-  undersized reads return an error instead of false EOF, leaving the
-  event queued.
-- **Root cause:** Inverted comparison operator.
+- **Bug description:** When MV88E6320/MV88E6321 ops tables were created,
+  `.rmu_disable` was omitted. Commit `9e5baf9b3636` (May 2018)
+  introduced the RMU-disable infrastructure for other Marvell switch
+  families; these two new 6320-family chip IDs were not wired up.
+- **Symptom/failure mode:** During driver setup, `mv88e6xxx_rmu_setup()`
+  silently does nothing for MV88E6320/6321 because the ops pointer is
+  NULL. The switch's Remote Management Unit (RMU) mode bits in Global
+  Control 2 are never cleared to `RMU_MODE_DISABLED`.
+- **Version information:** None stated.
+- **Root cause:** Ops-table omission when MV88E6320/MV88E6321 chip
+  entries were added.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — described as a size-check correction, but it fixes
-both functional breakage (reads never succeed when buffer > event size)
-and a userspace buffer overrun on undersized reads for long events.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Yes — described as "enable," but it is a hardware-
+initialization bug fix. Without it, RMU may remain enabled on a port
+(per `MV88E6352_G1_CTL2_RMU_MODE_PORT_*` values in `global1.h`),
+diverging from every other 6352-layout chip that sets `.rmu_disable =
+mv88e6352_g1_rmu_disable`.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: INVENTORY THE CHANGES
 **Record:**
-- **File:** `sound/core/seq/oss/seq_oss_rw.c` (+2 / −1)
-- **Function:** `snd_seq_oss_read()`
-- **Scope:** Single-file, surgical fix (3 net lines)
+- **Files:** `drivers/net/dsa/mv88e6xxx/chip.c` only (+2 lines)
+- **Functions modified:** `mv88e6320_ops`, `mv88e6321_ops` (static const
+  struct initializers)
+- **Scope:** Single-file, surgical, 2-line fix
 
-### Step 2.2: Code flow per hunk
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 **Record:**
-| Before | After |
-|--------|-------|
-| `if (ev_len < count)` → break when event is **smaller** than buffer |
-`if (count < ev_len)` → break when buffer is **smaller** than event |
-| On break: `err` unchanged (stays 0) | On break: `err = -EINVAL` |
-| Event dequeued and copied even when `count < ev_len` | Event stays
-queued; no copy attempted |
+- **Hunk 1 (`mv88e6320_ops`):** Before: after `.reset =
+  mv88e6352_g1_reset`, setup proceeds to VTU ops with no RMU handling.
+  After: `.rmu_disable = mv88e6352_g1_rmu_disable` is registered, so
+  `mv88e6xxx_rmu_setup()` will call it during `mv88e6xxx_setup()`.
+- **Hunk 2 (`mv88e6321_ops`):** Identical change.
+- **Path affected:** Normal probe/setup path, called once per switch at
+  initialization.
 
-**Affected path:** Normal blocking/non-blocking `read()` on OSS
-sequencer device (`odev_read()` → `snd_seq_oss_read()`).
-
-### Step 2.3: Bug mechanism
+### Step 2.3: IDENTIFY THE BUG MECHANISM
 **Record:**
-- **Category:** Logic/correctness bug + userspace buffer overrun
-- **Mechanism:** With `ev_len=4, count=8`: `4 < 8` is true → break
-  without copying → returns 0 (false EOF). With `ev_len=8, count=4`: `8
-  < 4` is false → `copy_to_user(buf, &rec, 8)` writes 8 bytes when only
-  4 were requested — userspace overrun.
+- **Bug category:** Logic / hardware-initialization correctness
+- **Mechanism:** `mv88e6xxx_rmu_setup()` at line 1675 checks
+  `chip->info->ops->rmu_disable`; if NULL, returns 0 without touching
+  hardware. MV88E6320/6321 use `mv88e6352_g1_reset` and the 6352-family
+  G1 CTL2 register layout but lacked the matching
+  `mv88e6352_g1_rmu_disable` callback. The fix wires the existing,
+  correct disable function.
 
-### Step 2.4: Fix quality
-**Record:** Obviously correct — flips the comparison to match the stated
-intent and matches the write-side pattern (`if (count < ev_size) break;`
-at line 116). Minimal regression risk; `-EINVAL` is appropriate for
-invalid read size.
+### Step 2.4: ASSESS THE FIX QUALITY
+**Record:**
+- **Fix quality:** Obviously correct — identical to `mv88e6352_ops`,
+  `mv88e6172_ops`, `mv88e6240_ops`, etc.
+- **Regression risk:** Very low — adds a single register mask write
+  during init, same as 15 other chip variants already do.
+- **Red flags:** None.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** Buggy lines introduced in `1da177e4c3f41` (Linux-2.6.12-rc2
-import, April 2005). Present unchanged in this 6.18.44 tree at lines
-60–62.
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:** `mv88e6320_ops` / `mv88e6321_ops` and
+`[MV88E6320]`/`[MV88E6321]` chip table entries blame to `5d324e5159d9e`
+(2025-11-28 merge). Repository is shallow (`git rev-parse --is-shallow-
+repository` → `true`), limiting deeper history. The ops tables without
+`rmu_disable` are present in this 6.18.43 tree.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in commit message.
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** No `Fixes:` tag. Referenced commit `9e5baf9b3636` ("net:
+dsa: mv88e6xxx: add RMU disable op", May 2018) is in this tree and added
+`mv88e6xxx_rmu_setup()` plus `.rmu_disable` for contemporary chip
+families. MV88E6320/MV88E6321 as distinct chip IDs with dedicated ops
+tables are a later addition; the omission is in those newer tables, not
+in the 2018 commit itself.
 
-### Step 3.3: File history
-**Record:** Recent stable-tree changes to this file include UAF fix
-(`6dc781778b595`), SEQ_FULLSIZE write fix (`33074b1e6c18f`). No prior
-fix for this read-size issue. Standalone single-patch submission (v1
-only per `b4 dig -a`).
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:** Shallow history shows only 2 commits touching `chip.c` on
+HEAD. This fix appears to be patch 5 of a Marek Behún series (message-id
+suffix `-5`). Standalone — no other patches required;
+`mv88e6352_g1_rmu_disable` already exists in `global1.c`.
 
-### Step 3.4: Author context
-**Record:** Cássio Gabriel has one prior OSS seq commit in this tree
-(`33074b1e6c18f`). Patch committed by ALSA maintainer Takashi Iwai.
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** No Marek Behún commits found in shallow history for this
+path. Jakub Kicinski (net maintainer) signed off.
 
-### Step 3.5: Dependencies
-**Record:** None. Self-contained; no prerequisite commits or series
-dependencies.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:** No dependencies. `mv88e6352_g1_rmu_disable`,
+`mv88e6xxx_rmu_setup()`, and MV88E6320/MV88E6321 chip entries all exist
+in this tree. Applies standalone.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:**
-- **URL:** https://patch.msgid.link/20260602-alsa-seq-oss-read-size-
-  check-v1-1-10e59b1742e0@gmail.com
-- **Series:** v1 only (no revisions)
-- **Reviewer feedback:** Takashi Iwai replied "Applied to for-next
-  branch now. Thanks." No NAKs, no stable nomination in thread.
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:** `b4 dig -c HEAD` matched unrelated commit. `b4 shazam` for
+subject and message-id returned "not known." `patch.msgid.link` and
+`lore.kernel.org` blocked by Anubis bot protection. **Could not retrieve
+mailing list discussion.**
 
-### Step 4.2: Reviewers (b4 dig -w)
-**Record:** CC'd: Takashi Iwai, Jaroslav Kysela, linux-
-sound@vger.kernel.org, linux-kernel@vger.kernel.org. Appropriate
-subsystem coverage; maintainer applied.
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** UNVERIFIED — `b4 dig -w` not usable without matching commit
+hash on lore.
 
-### Step 4.3: Bug report
-**Record:** No external bug report, syzbot link, or user Reported-by.
-Author discovered via code review.
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** No `Reported-by:` or bugzilla/syzbot links. No external bug
+report found.
 
-### Step 4.4: Related patches
-**Record:** Standalone; not part of a multi-patch series.
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** Message-id `...-5-...` indicates patch 5 of a series (likely
+MV88E6320/MV88E6321 support). This fix completes ops-table wiring for
+chips already present in 6.18.43. Other patches in the series not
+verified.
 
-### Step 4.5: Stable list
-**Record:** Not searched separately; no stable discussion found in the
-patch thread.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** UNVERIFIED — lore.kernel.org inaccessible.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `snd_seq_oss_read()` (modified); helpers: `ev_length()`,
-`snd_seq_oss_readq_pick()`, `snd_seq_oss_readq_free()`,
-`copy_to_user()`.
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** `mv88e6320_ops`, `mv88e6321_ops` (data),
+`mv88e6352_g1_rmu_disable` (existing callee), `mv88e6xxx_rmu_setup`
+(caller during init).
 
-### Step 5.2: Callers
-**Record:** `odev_read()` in `sound/core/seq/oss/seq_oss.c:152` —
-standard `read()` file operation on `/dev/sequencer` and `/dev/music`
-(OSS sequencer minors). Reachable from any userspace process with device
-access.
+### Step 5.2: TRACE CALLERS
+**Record:** `mv88e6xxx_rmu_setup()` called from `mv88e6xxx_setup()`
+(line 4051), which is the DSA switch setup callback during device probe.
+Every MV88E6320/6321 boot triggers this path.
 
-### Step 5.3: Callees
-**Record:** Queue lock/pick/free/wait, `ev_length()` (4 or 8 bytes via
-`SHORT_EVENT_SIZE`/`LONG_EVENT_SIZE`), `copy_to_user()`.
+### Step 5.3: TRACE CALLEES
+**Record:** `mv88e6352_g1_rmu_disable()` → `mv88e6xxx_g1_ctl2_mask(chip,
+MV88E6352_G1_CTL2_RMU_MODE_MASK, MV88E6352_G1_CTL2_RMU_MODE_DISABLED)` —
+clears RMU mode bits in Global Control 2.
 
-### Step 5.4: Call chain / reachability
-**Record:** `read(2)` → `odev_read()` → `snd_seq_oss_read()` → queue
-pick + `copy_to_user()`. **Userspace-reachable** when
-`CONFIG_SND_SEQUENCER_OSS` is enabled (tristate module `snd-seq-oss`).
+### Step 5.4: FOLLOW THE CALL CHAIN
+**Record:** Device probe → `mv88e6xxx_setup()` → `mv88e6xxx_rmu_setup()`
+→ (currently no-op for 6320/6321) → should call
+`mv88e6352_g1_rmu_disable()`. Reachable on every boot with
+MV88E6320/6321 hardware; not userspace-triggerable but always runs for
+affected devices.
 
-### Step 5.5: Similar patterns
-**Record:** Write path in the same file correctly uses `if (count <
-ev_size) break;` (line 116). Read path was the lone inverted check.
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** Of 28 `mv88e6xxx_ops` structs, 15 have `.rmu_disable`. Among
+chips using `mv88e6352_g1_reset`, some older variants (e.g.
+`mv88e6161_ops`, `mv88e6351_ops`) also lack it — but `mv88e6352_ops`,
+`mv88e6172_ops`, `mv88e6341_ops`, and other newer 6352-layout chips do
+have it. MV88E6320/6321 are the only chips using dedicated
+`mv88e6320_ops`/`mv88e6321_ops` and are clearly intended to follow the
+6352-family pattern (they already use `mv88e6352_g1_reset`,
+`mv88e6352_gpio_ops`, etc.).
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current tree at
-`sound/core/seq/oss/seq_oss_rw.c:60`:
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:** **YES.** `mv88e6320_ops` (line 5181) and `mv88e6321_ops`
+(line 5233) have `.reset = mv88e6352_g1_reset` but no `.rmu_disable`.
+`[MV88E6320]` and `[MV88E6321]` chip entries exist at lines 6247 and
+6275.
 
-```60:62:sound/core/seq/oss/seq_oss_rw.c
-                if (ev_len < count) {
-                        snd_seq_oss_readq_unlock(readq, flags);
-                        break;
-```
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** **Clean apply expected** — 2 identical lines inserted after
+`.reset` in each ops struct. No conflicting changes in recent `chip.c`
+history.
 
-Bug present since 2.6.12 import; not introduced after 6.18 branch point.
-
-### Step 6.2: Backport complications
-**Record:** **Clean apply** — `git show 611f538253d97 | git apply
---check` succeeds with no conflicts. No refactoring divergence in this
-hunk between stable and mainline.
-
-### Step 6.3: Related fixes already present?
-**Record:** No. `git log stable/linux-6.18.y --grep="Reject reads"`
-returns nothing. Fix exists on `master` (`611f538253d97`) but not on
-`stable/linux-6.18.y`.
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** No existing fix. `git log --grep="rmu_disable"` and
+`--grep="6320 family"` return nothing on this tree.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** **ALSA / sound** — OSS sequencer emulation
-(`CONFIG_SND_SEQUENCER_OSS`). **PERIPHERAL** (legacy API), but syscall-
-reachable for users of `/dev/sequencer`.
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** `drivers/net/dsa/mv88e6xxx` — DSA Ethernet switch driver.
+**IMPORTANT** (networking infrastructure on embedded/industrial
+hardware; not core kernel, but affects connectivity for specific
+platforms).
 
-### Step 7.2: Subsystem activity
-**Record:** Actively maintained in 6.18.y — recent stable backports
-include UAF fix (`6dc781778b595`), readq locking (`287d506d4e086` on
-mainline).
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** Actively maintained; MV88E6320/MV88E6321 are recent
+additions. Marek Behún is a regular mv88e6xxx contributor; Jakub
+Kicinski signed off.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** Users of OSS sequencer API (`snd-seq-oss` module): legacy
-MIDI/sequencer applications reading from `/dev/sequencer` or
-`/dev/music`. Config-specific (`CONFIG_SND_SEQUENCER_OSS`), but commonly
-enabled on desktop distros.
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** **Driver-specific / hardware-specific** — only systems with
+Marvell 88E6320 or 88E6321 DSA switches (embedded/industrial routers,
+automotive, etc.).
 
-### Step 8.2: Trigger conditions
-**Record:**
-- **Common case:** `read()` with `count > 4` and a 4-byte short event
-  queued → always returns 0 (broken).
-- **Overflow case:** `read()` with `count == 4` and an 8-byte long event
-  (`code >= 128`) queued → copies 8 bytes into a 4-byte read window.
-- Any unprivileged user with read access to the device node can trigger.
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Record:** Triggers on every driver probe (boot, module load). Not
+timing-dependent. Requires `CONFIG_NET_DSA_MV88E6XXX` and MV88E6320/6321
+hardware. Common for affected hardware (every boot).
 
-### Step 8.3: Failure mode severity
-**Record:**
-- False EOF (return 0): **HIGH** functional breakage — OSS sequencer
-  input effectively unusable for typical read buffer sizes.
-- Userspace buffer overrun on long events: **MEDIUM-HIGH** — kernel
-  writes past userspace buffer bounds (userspace corruption; potential
-  security impact for setuid readers).
-- No kernel oops/panic.
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:** RMU may remain enabled, routing management frames to an
+unexpected port. Potential networking misbehavior or unexpected
+management exposure. **Severity: MEDIUM** — functional hardware
+misconfiguration, not a kernel oops/UAF/corruption. No crash reports
+documented.
 
-### Step 8.4: Risk-benefit
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
 **Record:**
-- **Benefit:** Restores working read path; prevents userspace overrun;
-  fixes 20-year-old logic error.
-- **Risk:** Very low — 2-line logic flip + explicit `-EINVAL`; mirrors
-  existing write-side logic.
-- **Ratio:** Clear benefit, minimal risk.
+- **Benefit:** Correct switch initialization for MV88E6320/6321; aligns
+  with peer 6352-family chips; prevents incorrect RMU state on every
+  boot.
+- **Risk:** Minimal — 2 lines, existing tested function, same pattern as
+  15 other variants.
+- **Ratio:** Moderate benefit, very low risk. Appropriate for stable.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: COMPILE THE EVIDENCE
 
 **FOR backport:**
-- Objectively inverted comparison (verified in tree and since 2.6.12)
-- Breaks normal reads when buffer > event size (returns false EOF)
-- Allows `copy_to_user()` beyond requested read size for long events
-- Minimal, maintainer-committed fix; applies cleanly to 6.18.44
-- Buggy code confirmed present; fix not yet in stable branch
+- Real omission bug in hardware init path for MV88E6320/6321
+- Buggy code confirmed present in Linux 6.18.43
+- Obviously correct, 2-line fix using existing
+  `mv88e6352_g1_rmu_disable`
+- Called on every probe for affected hardware
+- Net maintainer (Jakub Kicinski) signed off
+- Zero regression risk
+- Completes support for chips already in this stable tree
 
 **AGAINST backport:**
-- Legacy OSS API with limited user base
-- No user reports or fuzzer findings
-- Bug latent since 2005 (apps may use exact 4-byte reads)
-- Failure is userspace corruption, not kernel crash
+- No user bug reports, syzbot, or crash traces
+- Failure mode is incorrect hardware config, not kernel
+  crash/security/CVE
+- Several older 6352-reset chips also lack `rmu_disable` without known
+  fallout
+- Mailing list discussion unverified
 
-**Unresolved:** No runtime test results or user bug reports beyond
-author analysis.
+**UNRESOLVED:**
+- Full patch series context and reviewer stable nominations (lore
+  inaccessible)
+- Whether users have reported observable symptoms
 
-### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — logic fix is self-
-evident; maintainer applied; no formal Tested-by |
-| 2. Fixes a real bug affecting users? | **PASS** — breaks OSS sequencer
-reads; userspace overrun on long events |
-| 3. Important issue? | **PASS** — HIGH functional breakage; MEDIUM-HIGH
-userspace safety |
-| 4. Small and contained? | **PASS** — 3 lines, one file |
-| 5. No new features/APIs? | **PASS** — corrects existing behavior only
-|
-| 6. Can apply to local tree? | **PASS** — clean apply verified |
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — mirrors `mv88e6352_ops`;
+   maintainer signed off; no Tested-by.
+2. Fixes a real bug that affects users? **PASS** — ops-table omission
+   leaves RMU enabled on MV88E6320/6321.
+3. Important issue? **PASS (borderline)** — networking misconfiguration
+   on affected hardware at every boot; not a crash but real functional
+   impact.
+4. Small and contained? **PASS** — 2 lines, 1 file.
+5. No new features or APIs? **PASS** — wires existing callback only.
+6. Can apply to the local tree? **PASS** — prerequisite code present;
+   clean apply.
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs fix).
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+**Record:** Hardware workaround / quirk — corrects missing hardware
+initialization for specific Marvell switch chips. Falls under the
+hardware-quirk exception category.
 
-### Step 9.4: Decision rationale
-
-For **Linux 6.18.y**, this commit should be backported. The inverted
-comparison is an unambiguous logic error that makes the OSS sequencer
-read path fail for the common case (read buffer larger than a 4-byte
-event) and permits writing more data to userspace than the read
-requested for 8-byte events. The fix is tiny, obviously correct, matches
-the write-side pattern in the same file, was committed by the ALSA
-maintainer, and applies cleanly to the checked-out 6.18.44 tree where
-the buggy code is still present.
+### Step 9.4: DECISION RATIONALE
+This is a small, obviously correct completion of MV88E6320/MV88E6321
+driver support already present in 6.18.43. The RMU-disable step runs on
+every probe and is standard for 6352-layout chips in this driver. The
+fix is low-risk and addresses a real hardware-initialization omission
+that can cause incorrect switch behavior. It meets stable criteria.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message from user query and `git show
-  611f538253d97`
-- **[Phase 1]** Tags: Signed-off-by (author + Iwai), Link to lore; no
-  Fixes/Reported-by/syzbot
-- **[Phase 2]** Diff: 3-line change in `snd_seq_oss_read()`; inverted
-  `ev_len < count` → `count < ev_len` + `err = -EINVAL`
-- **[Phase 2]** Read current buggy code at `seq_oss_rw.c:60-62`;
-  verified return path `return result > 0 ? result : err` yields 0 on
-  buggy break
-- **[Phase 2]** `ev_length()` macro: 4 or 8 bytes
-  (`seq_oss_event.h:92`); `SHORT_EVENT_SIZE=4`, `LONG_EVENT_SIZE=8`
-- **[Phase 3]** `git blame -L 59,63`: bug since `1da177e4c3f41`
-  (Linux-2.6.12-rc2)
-- **[Phase 3]** `git log -20 -- sound/core/seq/oss/seq_oss_rw.c`: no
-  prior read-size fix
-- **[Phase 3]** `git show 1da177e4c3f41:...`: original code had same
-  inverted check
-- **[Phase 4]** `b4 dig -c 611f538253d97`: found thread at
-  patch.msgid.link URL
-- **[Phase 4]** `b4 dig -a`: v1 only, no revisions
-- **[Phase 4]** `b4 dig -w`: Iwai, Kysela, linux-sound CC'd
-- **[Phase 4]** Read `/tmp/alsa_seq_oss_read_fix.mbx`: Iwai applied to
-  for-next; no NAKs or stable CC
-- **[Phase 5]** `grep snd_seq_oss_read`: caller is `odev_read()` in
-  `seq_oss.c:152`
-- **[Phase 5]** Write-side pattern at `seq_oss_rw.c:116`: `if (count <
-  ev_size) break;` (correct)
-- **[Phase 6]** `git describe HEAD`: v6.18.44-1-gef4bf62bccf3c; Makefile
-  6.18.44
-- **[Phase 6]** Buggy code present at lines 60-62 (verified by Read
-  tool)
-- **[Phase 6]** `git show 611f538253d97 | git apply --check`: clean
-  apply
-- **[Phase 6]** `git log stable/linux-6.18.y --grep="Reject reads"`:
-  empty; fix not in stable
-- **[Phase 6]** `git branch --contains 611f538253d97`: master/all-next
-  only, not stable
-- **[Phase 7]** `CONFIG_SND_SEQUENCER_OSS` in
-  `sound/core/seq/Kconfig:29` (tristate OSS sequencer module)
-- **[Phase 8]** Traced failure modes: false EOF (count=8, ev_len=4) and
-  overrun (count=4, ev_len=8) from verified code paths
+- [Phase 1] Parsed subject, tags: Link present; no Reported-by/syzbot;
+  SOB from Behún and Kicinski
+- [Phase 1] Commit body references `9e5baf9b3636` as RMU infrastructure
+  origin
+- [Phase 2] Diff: +2 lines in `chip.c`, both `.rmu_disable =
+  mv88e6352_g1_rmu_disable`
+- [Phase 2] Confirmed `mv88e6xxx_rmu_setup()` no-ops when callback is
+  NULL (lines 1675–1680)
+- [Phase 2] Confirmed `mv88e6352_g1_rmu_disable()` exists in `global1.c`
+  (lines 539–543)
+- [Phase 3] `git describe HEAD`: v6.18.43; `make kernelversion`
+  equivalent from Makefile: 6.18.43
+- [Phase 3] `git show 9e5baf9b3636`: May 2018 commit added RMU disable
+  infrastructure
+- [Phase 3] Shallow repo confirmed; limited `git log` on `chip.c`
+- [Phase 3] `git blame` on MV88E6320 entry and `.reset` line: present
+  since `5d324e5159d9e`
+- [Phase 4] `b4 dig -c HEAD`: no match for this commit
+- [Phase 4] `b4 shazam`: lore lookup failed (message not known)
+- [Phase 4] `patch.msgid.link` and `lore.kernel.org`: blocked by Anubis
+  — **UNVERIFIED** discussion/reviewer feedback
+- [Phase 5] `mv88e6xxx_rmu_setup()` caller: `mv88e6xxx_setup()` line
+  4051
+- [Phase 5] Python scan: `mv88e6320_ops` and `mv88e6321_ops` are only
+  ops using `mv88e6352_g1_reset` without `rmu_disable` among 6320-family
+  dedicated tables
+- [Phase 6] Confirmed `mv88e6320_ops`/`mv88e6321_ops` lack `rmu_disable`
+  at lines 5181–5182 and 5233–5234
+- [Phase 6] Confirmed `[MV88E6320]`/`[MV88E6321]` chip entries at lines
+  6247–6300
+- [Phase 6] No DT bindings referencing 88E6320/6321 in this tree (no
+  `.dts` matches)
+- [Phase 8] Failure mode: RMU not disabled → MEDIUM severity hardware
+  misconfiguration
+
+**YES**The background history search didn’t finish cleanly — the repo is
+shallow, so `git log -S "MV88E6320]"` mostly surfaced merge commits and
+wasn’t useful for pinpointing when 6320 support landed.
+
+What we could verify from blame: the `MV88E6320`/`MV88E6321` chip
+entries and their ops tables are already in this **6.18.43** tree, and
+both `mv88e6320_ops` / `mv88e6321_ops` are missing `.rmu_disable` while
+using `mv88e6352_g1_reset`.
+
+That doesn’t change the earlier verdict: this is a small, correct
+hardware-init fix for chips already supported here.
 
 **YES**
 
- sound/core/seq/oss/seq_oss_rw.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/core/seq/oss/seq_oss_rw.c b/sound/core/seq/oss/seq_oss_rw.c
-index 111c792bc72ca..b7147ac78ee8b 100644
---- a/sound/core/seq/oss/seq_oss_rw.c
-+++ b/sound/core/seq/oss/seq_oss_rw.c
-@@ -57,7 +57,8 @@ snd_seq_oss_read(struct seq_oss_devinfo *dp, char __user *buf, int count)
- 			break;
- 		}
- 		ev_len = ev_length(&rec);
--		if (ev_len < count) {
-+		if (count < ev_len) {
-+			err = -EINVAL;
- 			snd_seq_oss_readq_unlock(readq, flags);
- 			break;
- 		}
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index f324b88450427..7e294f2104b86 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -5179,6 +5179,7 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
+ 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
+ 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
++	.rmu_disable = mv88e6352_g1_rmu_disable,
+ 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
+ 	.stu_getnext = mv88e6352_g1_stu_getnext,
+@@ -5232,6 +5233,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
+ 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
++	.rmu_disable = mv88e6352_g1_rmu_disable,
+ 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
+ 	.stu_getnext = mv88e6352_g1_stu_getnext,
 -- 
 2.53.0
 
