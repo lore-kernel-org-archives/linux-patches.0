@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A845F43F8B1;
-	Mon, 31 Aug 2026 14:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FB443031A;
+	Mon, 31 Aug 2026 14:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184822; cv=none; b=iKehvuljU8xaF80r9vwDziVkiS3cyrdVPg/ubOzSx0mCemXThAcpITBaK4XbtGN/XqTONVYMfLdo4qtOJAKbuBJHCyYL71vYx/vHn0oQeCwmhnhn+GOIBnHq3cRi9hh+ChBV3f1SO4WaN8vd4W1b4h/Y8vkkKL35Ht6HDzT7Wrw=
+	t=1788184826; cv=none; b=e5QQjT3XIG/aw3Xx4ABC3Cqz7Wz1RPqwynwu6NQvoOMSmLLBjUXeq1GQe16yPr1JOuJwr3Y2fIh4CfYfbOY+ZN+WHe3UZWm43zzwRxwSznMY/5Zsb3otDNXNVHj9OgghB8WVj3EbJfIFSZ/HkG7i7AwVdsB6QWYrPidZNr0F+a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184822; c=relaxed/simple;
-	bh=BinzQEXbMxMGY1Zbsn1ZoCFoH/djNpmdhTSDttgpQ5s=;
+	s=arc-20240116; t=1788184826; c=relaxed/simple;
+	bh=tir5Av/jLGPySpnRf46dQuHItAlqXRWn58tywyM/1b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EojbxJVQo/Qf/2bGPkOPbU4RHjfJC0OR8z0QdAxdD2OxXzms7Js9Blv35wjkbK4cYOaXFS6mcYrRFafPZO3SXzNB6/JaGc0siNcQt5kLKFpUH1bRXFNZ/b1HUwDHWXViJJ8z7lohniM8zqOvB8e3c5sSzvXidG4a2EqPl7nuTJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzlRqb/n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J7oXD+wdHiO5SvuoaW31uHYvf/ulVxcxvKZnWNspQhi7ssZXPHSGy9YOj9QBAzas+AXW/wAzMQtlCaaN4X0+VqVTHMuo4Cg6Ns1pDqwgpN2AE8v07G3YVOrj7IaWV2YTZkVMqT32LyA4/fzRQZv89zqPNAnG3Z8lxMHLuuRZh2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVekFSOR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzlRqb/n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5D31F00A3D;
-	Mon, 31 Aug 2026 14:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVekFSOR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E257F1F00A3E;
+	Mon, 31 Aug 2026 14:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184820;
-	bh=gWlY9Jp80kJ5qfk7OHp7NtBxJk20TWGtKGWEXGQ1Dl8=;
+	s=korg; t=1788184823;
+	bh=w2MZRfUwKtK+uh0gILeD7NiMXwP1ygj9/rzXY3xSny8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SzlRqb/nns8YnTb+hcTU5GURx9gYpdz0Esc8vLiTr7kXyJhC5mfViwC7Gpci7kt5l
-	 PSyJJGnTUjJ8QT0NGB/30o3uwRGZh6uKjn8tIQ8/Ep5bZ89sTWpB0aWPH7HGAWf5I2
-	 D2dGPMaZVd14ouo37+9rWFORPfAmfZjCfxrL5jqY=
+	b=rVekFSORAQ3gEWNTKHr/fd5AvzB1VKxNxuzXtMp3dfLPcYtaFjs1qjZfqq8nj3/Rg
+	 /+EEY9HUtcVVcWNX96gWwytURYPF7cUk1ZjZ00ETdo3lLp7Pvzl4U979586bA2NKeL
+	 zIN1QXzhOkvDMopu5OzT+3GjNuH35Joz5/m12GzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Enrik Berkhan <Enrik.Berkhan@inka.de>,
+	Michael Zaidman <michael.zaidman@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 22/92] KVM: arm64: Prevent access to vCPU events before init
-Date: Mon, 31 Aug 2026 15:34:20 +0200
-Message-ID: <20260831133400.752848191@linuxfoundation.org>
+Subject: [PATCH 6.1 49/92] HID: ft260: improve i2c large reads performance
+Date: Mon, 31 Aug 2026 15:34:47 +0200
+Message-ID: <20260831133402.261917162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,91 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Michael Zaidman <michael.zaidman@gmail.com>
 
-[ Upstream commit 0aa1b76fe1429629215a7c79820e4b96233ac4a3 ]
+[ Upstream commit 54410c14800ad652c77e5c6fc5c17baad6e42cb6 ]
 
-Another day, another syzkaller bug. KVM erroneously allows userspace to
-pend vCPU events for a vCPU that hasn't been initialized yet, leading to
-KVM interpreting a bunch of uninitialized garbage for routing /
-injecting the exception.
+The patch increases the read buffer size to 180 bytes. It reduces
+the number of ft260_i2c_read() calls by three, improving the big
+reads performance.
 
-In one case the injection code and the hyp disagree on whether the vCPU
-has a 32bit EL1 and put the vCPU into an illegal mode for AArch64,
-tripping the BUG() in exception_target_el() during the next injection:
+$ sudo i2ctransfer -y -f 13 w2@0x51 0x0 0x0 r180
 
-  kernel BUG at arch/arm64/kvm/inject_fault.c:40!
-  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-  CPU: 3 UID: 0 PID: 318 Comm: repro Not tainted 6.17.0-rc4-00104-g10fd0285305d #6 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  pstate: 21402009 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-  pc : exception_target_el+0x88/0x8c
-  lr : pend_serror_exception+0x18/0x13c
-  sp : ffff800082f03a10
-  x29: ffff800082f03a10 x28: ffff0000cb132280 x27: 0000000000000000
-  x26: 0000000000000000 x25: ffff0000c2a99c20 x24: 0000000000000000
-  x23: 0000000000008000 x22: 0000000000000002 x21: 0000000000000004
-  x20: 0000000000008000 x19: ffff0000c2a99c20 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000 x15: 00000000200000c0
-  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-  x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-  x8 : ffff800082f03af8 x7 : 0000000000000000 x6 : 0000000000000000
-  x5 : ffff800080f621f0 x4 : 0000000000000000 x3 : 0000000000000000
-  x2 : 000000000040009b x1 : 0000000000000003 x0 : ffff0000c2a99c20
-  Call trace:
-   exception_target_el+0x88/0x8c (P)
-   kvm_inject_serror_esr+0x40/0x3b4
-   __kvm_arm_vcpu_set_events+0xf0/0x100
-   kvm_arch_vcpu_ioctl+0x180/0x9d4
-   kvm_vcpu_ioctl+0x60c/0x9f4
-   __arm64_sys_ioctl+0xac/0x104
-   invoke_syscall+0x48/0x110
-   el0_svc_common.constprop.0+0x40/0xe0
-   do_el0_svc+0x1c/0x28
-   el0_svc+0x34/0xf0
-   el0t_64_sync_handler+0xa0/0xe4
-   el0t_64_sync+0x198/0x19c
-  Code: f946bc01 b4fffe61 9101e020 17fffff2 (d4210000)
+Before:
 
-Reject the ioctls outright as no sane VMM would call these before
-KVM_ARM_VCPU_INIT anyway. Even if it did the exception would've been
-thrown away by the eventual reset of the vCPU's state.
+[  +4.071878] ft260_i2c_write_read: off 0x0 rlen 180 wlen 2
+[  +0.000005] ft260_i2c_write: rep 0xd0 addr 0x51 off 0 len 2 wlen 2 flag 0x2 d[0] 0x0
+[  +0.001097] ft260_xfer_status: bus_status 0x41, clock 100
+[  +0.000175] ft260_xfer_status: bus_status 0x40, clock 100
+[  +0.000004] ft260_i2c_read: rep 0xc2 addr 0x51 len 180 rlen 60 flag 0x3
+[  +0.008579] ft260_raw_event: i2c resp: rep 0xde len 60
+[  +0.000208] ft260_xfer_status: bus_status 0x40, clock 100
+[  +0.000001] ft260_i2c_read: rep 0xc2 addr 0x51 len 120 rlen 60 flag 0x0
+[  +0.008794] ft260_raw_event: i2c resp: rep 0xde len 60
+[  +0.000181] ft260_xfer_status: bus_status 0x40, clock 100
+[  +0.000002] ft260_i2c_read: rep 0xc2 addr 0x51 len 60 rlen 60 flag 0x4
+[  +0.008817] ft260_raw_event: i2c resp: rep 0xde len 60
+[  +0.000223] ft260_xfer_status: bus_status 0x20, clock 100
 
-Cc: stable@vger.kernel.org # 6.17
-Fixes: b7b27facc7b5 ("arm/arm64: KVM: Add KVM_GET/SET_VCPU_EVENTS")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+After:
+
+[ +11.611642] ft260_i2c_write_read: off 0x0 rlen 180 wlen 2
+[  +0.000005] ft260_i2c_write: rep 0xd0 addr 0x51 off 0 len 2 wlen 2 flag 0x2 d[0] 0x0
+[  +0.008001] ft260_xfer_status: bus_status 0x20, clock 100
+[  +0.000001] ft260_i2c_read: rep 0xc2 addr 0x51 len 180 rlen 180 flag 0x7
+[  +0.008994] ft260_raw_event: i2c resp: rep 0xde len 60
+[  +0.007987] ft260_raw_event: i2c resp: rep 0xde len 60
+[  +0.007992] ft260_raw_event: i2c resp: rep 0xde len 60
+[  +0.000206] ft260_xfer_status: bus_status 0x20, clock 100
+
+Suggested-by: Enrik Berkhan <Enrik.Berkhan@inka.de>
+Signed-off-by: Michael Zaidman <michael.zaidman@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Stable-dep-of: bf3e39df3a39 ("HID: ft260: fix stack-use-after-return write in I2C read race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-ft260.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 672684d67e399..b589ed95c89e6 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1414,6 +1414,9 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
- 	case KVM_GET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
+--- a/drivers/hid/hid-ft260.c
++++ b/drivers/hid/hid-ft260.c
+@@ -30,12 +30,19 @@ MODULE_PARM_DESC(debug, "Toggle FT260 de
  
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
+ #define FT260_REPORT_MAX_LENGTH (64)
+ #define FT260_I2C_DATA_REPORT_ID(len) (FT260_I2C_REPORT_MIN + (len - 1) / 4)
 +
- 		if (kvm_arm_vcpu_get_events(vcpu, &events))
- 			return -EINVAL;
+ /*
+- * The input report format assigns 62 bytes for the data payload, but ft260
+- * returns 60 and 2 in two separate transactions. To minimize transfer time
+- * in reading chunks mode, set the maximum read payload length to 60 bytes.
+- */
+-#define FT260_RD_DATA_MAX (60)
++ * The ft260 input report format defines 62 bytes for the data payload, but
++ * when requested 62 bytes, the controller returns 60 and 2 in separate input
++ * reports. To achieve better performance with the multi-report read data
++ * transfers, we set the maximum read payload length to a multiple of 60.
++ * With a 100 kHz I2C clock, one 240 bytes read takes about 1/27 second,
++ * which is excessive; On the other hand, some higher layer drivers like at24
++ * or optoe limit the i2c reads to 128 bytes. To not block other drivers out
++ * of I2C for potentially troublesome amounts of time, we select the maximum
++ * read payload length to be 180 bytes.
++*/
++#define FT260_RD_DATA_MAX (180)
+ #define FT260_WR_DATA_MAX (60)
  
-@@ -1425,6 +1428,9 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
- 	case KVM_SET_VCPU_EVENTS: {
- 		struct kvm_vcpu_events events;
- 
-+		if (!kvm_vcpu_initialized(vcpu))
-+			return -ENOEXEC;
-+
- 		if (copy_from_user(&events, argp, sizeof(events)))
- 			return -EFAULT;
- 
--- 
-2.53.0
-
+ /*
 
 
