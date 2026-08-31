@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033CC48C3E5;
-	Mon, 31 Aug 2026 14:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41B74A92E8;
+	Mon, 31 Aug 2026 14:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185041; cv=none; b=Nv8KzBmiRsRgIKblwE5mUlBSfMYnjmZYPXvJ2kZx9HjKVX+T5Y7yorwdbuNABfC9iDqo+Vsuw+mAu1VPPiasYGnLs/0dT+EBBgNAPfaj03ldyc5yHdCEEI9sjAlFtGARPcKdDxI6dB4aYg8xfVSd+L3voQuClsZ3ZvbUQlHI0KI=
+	t=1788184951; cv=none; b=nzbDwfuhnFrVGNnNe2o+5fQiO497nf1OOK7CTMTORfhLGyukIZfB0MYsdwLf1IjDN0Tw6Bappen0oOW73j/32fw6HHJGOtosukFKGCDKsUktLECQf5uH7uXqiHddUAXV3MA7qLR9+plX2V6WILd3SAII7VXlApf3rsnC4NqgSDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185041; c=relaxed/simple;
-	bh=8LEVLYL8IczxKt+zkDXclWfmPp0nMHkoagbQTofl0BE=;
+	s=arc-20240116; t=1788184951; c=relaxed/simple;
+	bh=t60dfad6jus/XPIFfoeVwUbcOu7Xzb1+xBXGLOLRc50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YghyyEfm1SqO3aO1qT03fsnyYZMNXxvvJi6XJXto9aQZs3n+ugM4P7cjlEEArpHO9DpjU+n9+JfIAi2uNUTuXqB9qqqT1eTkXjZu1fvQV/h/2x/pAbn5HTFFo9lET8DJDtBS2Zncba/REklEEXoKYknFVic6RSZk3FQT37H+9Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veJK9H8P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QDrBQMsPryiwH9NESrjpa0fokNDw4jIhoESqHrXtO4kfvHwr2nRMzNQTWXtjquVOs3sSWucjaHdWvz2nfLmxVBjlWS5YzT8qJwF3UiNWOtRidy7Q9XR4rVMqafO6C6wG0ANt1eq4wAINc8RuMwH7w5wSr4vjkBM50+Oe7XTpn00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5eU/gEg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veJK9H8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0861F000E9;
-	Mon, 31 Aug 2026 14:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5eU/gEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B15A1F000E9;
+	Mon, 31 Aug 2026 14:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185038;
-	bh=+o4a0tzS4vm8wK/5EHUXyKm/fKtg8i8g28IqE+8J0Vo=;
+	s=korg; t=1788184950;
+	bh=xpiafOH+OvjxcZhQfkGHqlIMDHqrud5KfjCS23z5G4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=veJK9H8Pe4+WyUZ78eIWGGi5PguWkiwy1qywa72uKKJ906YkdEz+CnJ3ZGDe46Rra
-	 CXKBMVhgixzD9BGeGEkFTyLs7254a9Ujw99EtEmHj9neVs6x5pgf/iEStlq7ohlvRS
-	 7hKnw9bbVeebFPMsbTGiquut/JFGrwq9xLA6+ZkI=
+	b=J5eU/gEgHqU4FqVpidYYkJz1eKle+cg10fFOycyMRuzKzsu4YwgytNoLO/XvBfpLv
+	 2ahxzU5GEJgpqVLfItI8QLyYaI/liiBewdJMgCnVSvLk5Un9uSJlFcPcUFatr8IVDV
+	 3SOQx0zFxpt69RQGwf4n+CQ9eXjkRQAgeAnRnN8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 25/69] ext4: propagate errors from fast commit range replay
-Date: Mon, 31 Aug 2026 15:34:58 +0200
-Message-ID: <20260831133359.694422014@linuxfoundation.org>
+	Semih Baskan <strst.gs@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 64/92] usb: xhci: Handle USB3 port events when there is one roothub
+Date: Mon, 31 Aug 2026 15:35:02 +0200
+Message-ID: <20260831133402.978217559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
-References: <20260831133358.601894154@linuxfoundation.org>
+In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
+References: <20260831133359.482388899@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,83 +46,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Semih Baskan <strst.gs@gmail.com>
 
-[ Upstream commit d8b8dd3530bf41e14b118702cdaf9de64bb96885 ]
+commit 3e91ec3e7d80a327fb558207613c80415d3bf756 upstream.
 
-ext4_fc_replay() stops replaying fast commit tags only when a tag
-handler returns a negative error. However, ext4_fc_replay_add_range()
-and ext4_fc_replay_del_range() currently return 0 from their common
-exit paths even after internal failures.
+handle_port_status() drops every USB3 port event when xhci->shared_hcd is
+NULL. The check dates from a time when xhci-plat always created a shared
+hcd, so a NULL one could only mean the hcd had been removed.
 
-This hides errors from ext4_fc_record_modified_inode(),
-ext4_map_blocks(), ext4_find_extent(), ext4_ext_insert_extent(),
-ext4_ext_replay_update_ex(), and ext4_ext_remove_space(). As a result,
-a failed ADD_RANGE or DEL_RANGE replay can be treated as successful and
-the replay code may continue with subsequent fast commit tags.
+Since commit 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if
+either root hub has no ports") that is no longer true. A controller whose
+USB2 root hub has no ports gets a single roothub, the USB3 rhub is served
+by the main hcd, and shared_hcd stays NULL for the lifetime of the device.
+Every SuperSpeed port event is then thrown away as bogus behind a debug
+message, so devices never enumerate even though the port sees the device
+and its change bits stay set:
 
-This is particularly problematic for DEL_RANGE because it may already
-have marked blocks as free before ext4_ext_remove_space() fails. If the
-error is swallowed, replay may continue from a partially applied range
-operation.
+  0x006a1203 Powered Connected Enabled Link:U0 PortSpeed:4
+  Change: CSC WRC PRC PLC
 
-Return the saved error from the common exit paths and make the
-ERR_PTR() cases in ADD_RANGE store PTR_ERR() before jumping to out.
+Broadcom Northstar is such a controller. USB3 works there up to 5.15 and
+stops working from 5.19 onwards.
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Ask xhci_get_usb3_hcd() instead. It returns the shared hcd when there is
+one, the main hcd when the USB2 root hub has no ports, and NULL once the
+shared hcd is gone, which keeps the original meaning of the check.
+
+Tested on an Asus RT-N18U (BCM47081), which has a single roothub. Before
+the change nothing enumerates on the USB3 port; after it SuperSpeed
+devices enumerate normally over repeated connect and disconnect cycles,
+the change bits shown above clear, and USB2 is unaffected on both ports.
+
+Fixes: 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if either root hub has no ports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_E3622146846A84C75C31C7D32AC4D5AD0605@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-[ kept the existing `ext4_find_extent(inode, cur, NULL, 0)` call and dropped the `ext4_ext_insert_extent()` error-capture hunk, since this tree's extents API predates the ppath rework and already returns errors via `int` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Semih Baskan <strst.gs@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260806142113.2436238-17-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-ring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1780,8 +1780,10 @@ static int ext4_fc_replay_add_range(stru
- 		if (ret == 0) {
- 			/* Range is not mapped */
- 			path = ext4_find_extent(inode, cur, NULL, 0);
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
- 				goto out;
-+			}
- 			memset(&newex, 0, sizeof(newex));
- 			newex.ee_block = cpu_to_le32(cur);
- 			ext4_ext_store_pblock(
-@@ -1843,9 +1845,10 @@ next:
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1965,7 +1965,7 @@ static void handle_port_status(struct xh
  	}
- 	ext4_ext_replay_shrink_inode(inode, i_size_read(inode) >>
- 					sb->s_blocksize_bits);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
  
- /* Replay DEL_RANGE tag */
-@@ -1906,9 +1909,10 @@ ext4_fc_replay_del_range(struct super_bl
- 	ext4_ext_replay_shrink_inode(inode,
- 		i_size_read(inode) >> sb->s_blocksize_bits);
- 	ext4_mark_inode_dirty(NULL, inode);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
- 
- static void ext4_fc_set_bitmaps_and_counters(struct super_block *sb)
+ 	/* We might get interrupts after shared_hcd is removed */
+-	if (port->rhub == &xhci->usb3_rhub && xhci->shared_hcd == NULL) {
++	if (port->rhub == &xhci->usb3_rhub && xhci_get_usb3_hcd(xhci) == NULL) {
+ 		xhci_dbg(xhci, "ignore port event for removed USB3 hcd\n");
+ 		bogus_port_status = true;
+ 		goto cleanup;
 
 
