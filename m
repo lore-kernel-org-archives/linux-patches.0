@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACD1438013;
-	Mon, 31 Aug 2026 13:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D659439F78;
+	Mon, 31 Aug 2026 13:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184613; cv=none; b=lKsQ2jxLE8bbFJasL9BliUcHfRYXr86traFHRCdFNPDCC3N/G96983FTVlLP4iDuj7Mh2K/9Vw81UzlZ3d55RvEN2U41rp5kkt1TX37aWuS7jGSXceqZ1IQUeWSUf1hGrog1rkeljF4/r/dDThrMtxbDjkbfp1/+xgpLQwoywHc=
+	t=1788184617; cv=none; b=aLvoI/3SHFJFeZjnNwGCQmoRvhH38mwc6scnIZdx1HT3PPGSG+bRm/AyDMyPaI3VqfoG53Xjue71qMdwyrpgPQ3BRwBsV9My2uG+f890e2sV39215yvWj0mRfJP13an8IRjf+rakl8Wd2C6iGbF9LQMw42N58FNzpwx9BldZp7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184613; c=relaxed/simple;
-	bh=OOIkjxlAIkMp0uSYcCBqcU5UDYzqh6qJl2TU/T7iQ4k=;
+	s=arc-20240116; t=1788184617; c=relaxed/simple;
+	bh=7lqxPW8aUOK5YRtWRDtewCUptk2FR+7C7aBgOEdkWlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsEMdn2zEBnBQ0mFA2tuiOiTHbhsxk+n0kEFvqr2Nz43AzEQm1v3UqMhESgElME0RIeXh05Tn7gtiHk0iMdSpfLyYXTiIRWGwEauLht6H1Ar+b9KxLE2RdOpnEtZx+OQTeT5DAQIfqy0VVWJ7bldHOddEMg9ovUzG2w29AdcviI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZ55Ux4o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=doKONCqDvxnPjtEvTQHG4B4xvx9smyQxyC/B7Av4KW34pwsZupggfhujMGkWS//s0nXBpYOttrvts4vhdxd1NJ4vHNJ8KPcFPOsyLLLIciUPQn0QDeWP93zsFECrXhOHecEjg/TP3k9lUKEJp6JAnHcIXj+rQ/P3mYBwU1s0FXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TA0zo2e7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZ55Ux4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831E81F000E9;
-	Mon, 31 Aug 2026 13:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TA0zo2e7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653091F000E9;
+	Mon, 31 Aug 2026 13:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184612;
-	bh=LI4J6AOCU0kjC8BrW/89/VzFes45ylq14BHR/0KA4V0=;
+	s=korg; t=1788184614;
+	bh=UaR/alAFNE2dSQ+eQL6nYcn6OuBsnfj1cKE0r2u+AfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZ55Ux4oxtE0HkCAAE0s0SiW0xTI8i0veBvN3Na9vjsh9dtcrbcZP61Gz+ptiNzc1
-	 ArCV5yiDPliotvJ7pAg+/ioaEJHl2Za9tGoeBeoqTaFMGphHHAS7YQOZGkPGoLqubF
-	 rVUOhl9yLWqnjpcQPyiQZlZKCPiRnVkNB5cXO6jk=
+	b=TA0zo2e7HvwiSuc6cqoj5J36pFy+BSh/h8/JJrPdMmY0UCGS8qqKdrMxyZCuLuN9v
+	 L6Sib+OqJhGCknd0jMviJJvtKxkmGZQuj3QofT2WYIUlvqu7lSUWNzDA8tud4B0HWo
+	 hEnWbD5mOZgKZmEjhouBpizfpb43ZzTZ2xaPAohk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/91] net/sched: initialize noop_qdisc owner
-Date: Mon, 31 Aug 2026 15:34:19 +0200
-Message-ID: <20260831133401.329986125@linuxfoundation.org>
+Subject: [PATCH 6.6 32/91] powerpc/hv-gpci: fix preempt count leak in sysfs show paths
+Date: Mon, 31 Aug 2026 15:34:20 +0200
+Message-ID: <20260831133401.410576613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -52,43 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit 44180feaccf266d9b0b28cc4ceaac019817deb5c ]
+[ Upstream commit dbc30a57bd8e026995e9fa8e8c31cffd18542c01 ]
 
-When the noop_qdisc owner isn't initialized, then it will be 0,
-so packets will erroneously be regarded as having been subject
-to recursion as long as only CPU 0 queues them. For non-SMP,
-that's all packets, of course. This causes a change in what's
-reported to userspace, normally noop_qdisc would drop packets
-silently, but with this change the syscall returns -ENOBUFS if
-RECVERR is also set on the socket.
+Four sysfs show() callbacks in hv-gpci take get_cpu_var(hv_gpci_reqb)
+(which calls preempt_disable()) but only call the matching put_cpu_var()
+on the error path under the 'out:' label. Every successful read leaks
+one preempt_disable():
 
-Fix this by initializing the owner field to -1, just like it
-would be for dynamically allocated qdiscs by qdisc_alloc().
+  processor_bus_topology_show()
+  processor_config_show()
+  affinity_domain_via_virtual_processor_show()
+  affinity_domain_via_domain_show()
 
-Fixes: 0f022d32c3ec ("net/sched: Fix mirred deadlock on device recursion")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240607175340.786bfb938803.I493bf8422e36be4454c08880a8d3703cea8e421a@changeid
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(affinity_domain_via_partition_show() was already correct.)
+
+On a CONFIG_PREEMPT=y kernel, repeated reads raise preempt_count and
+eventually return to userspace with preemption still disabled. The
+next user-mode page fault then hits faulthandler_disabled() == 1,
+gets forced to SIGSEGV, and the resulting coredump trips
+'BUG: scheduling while atomic' in call_usermodehelper_exec ->
+wait_for_completion_state -> schedule:
+
+  BUG: scheduling while atomic: <task>/<pid>/0x00000004
+  ...
+  __schedule_bug+0x6c/0x90
+  __schedule+0x58c/0x13a0
+  schedule+0x48/0x1a0
+  schedule_timeout+0x104/0x170
+  wait_for_completion_state+0x16c/0x330
+  call_usermodehelper_exec+0x254/0x2d0
+  vfs_coredump+0x1050/0x2590
+  get_signal+0xb9c/0xc80
+  do_notify_resume+0xf8/0x470
+
+Add an out_success label that calls put_cpu_var() before returning
+the byte count, mirroring affinity_domain_via_partition_show().
+
+Fixes: 71f1c39647d8 ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show processor bus topology information")
+Fixes: 1a160c2a13c6 ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show processor config information")
+Fixes: 71a7ccb478fc ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show affinity domain via virtual processor information")
+Fixes: a69a57cac1ec ("powerpc/hv_gpci: Add sysfs file inside hv_gpci device to show affinity domain via domain information")
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260508041256.3447113-1-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_generic.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/perf/hv-gpci.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 1bb8862698030..65561ecae516b 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -684,6 +684,7 @@ struct Qdisc noop_qdisc = {
- 		.qlen = 0,
- 		.lock = __SPIN_LOCK_UNLOCKED(noop_qdisc.skb_bad_txq.lock),
- 	},
-+	.owner = -1,
- };
- EXPORT_SYMBOL(noop_qdisc);
+diff --git a/arch/powerpc/perf/hv-gpci.c b/arch/powerpc/perf/hv-gpci.c
+index 241551d1282f8..0ec0bd3110652 100644
+--- a/arch/powerpc/perf/hv-gpci.c
++++ b/arch/powerpc/perf/hv-gpci.c
+@@ -210,7 +210,7 @@ static ssize_t processor_bus_topology_show(struct device *dev, struct device_att
+ 			0, 0, buf, &n, arg);
  
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -244,12 +244,14 @@ static ssize_t processor_bus_topology_show(struct device *dev, struct device_att
+ 				starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -278,7 +280,7 @@ static ssize_t processor_config_show(struct device *dev, struct device_attribute
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -312,12 +314,14 @@ static ssize_t processor_config_show(struct device *dev, struct device_attribute
+ 				starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -346,7 +350,7 @@ static ssize_t affinity_domain_via_virtual_processor_show(struct device *dev,
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -382,12 +386,14 @@ static ssize_t affinity_domain_via_virtual_processor_show(struct device *dev,
+ 				starting_index, secondary_index, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
+@@ -416,7 +422,7 @@ static ssize_t affinity_domain_via_domain_show(struct device *dev, struct device
+ 			0, 0, buf, &n, arg);
+ 
+ 	if (!ret)
+-		return n;
++		goto out_success;
+ 
+ 	if (ret != H_PARAMETER)
+ 		goto out;
+@@ -448,12 +454,14 @@ static ssize_t affinity_domain_via_domain_show(struct device *dev, struct device
+ 					starting_index, 0, buf, &n, arg);
+ 
+ 		if (!ret)
+-			return n;
++			goto out_success;
+ 
+ 		if (ret != H_PARAMETER)
+ 			goto out;
+ 	}
+ 
++out_success:
++	put_cpu_var(hv_gpci_reqb);
+ 	return n;
+ 
+ out:
 -- 
 2.53.0
 
