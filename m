@@ -1,142 +1,165 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E07D4A2E15;
-	Mon, 31 Aug 2026 13:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A276A4ADDA9;
+	Mon, 31 Aug 2026 13:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183531; cv=none; b=HqsgXodvjRN3YdHLXvtL0solMnDSbsxMPE9wwbbMEjgW/Zv1xjfTFhzu7G6JZexZC8rnilq8zpxmOSExnVq8qKVjXgKTjZKGhKCN14qEJ5cuQ8+7hBLXYXG00IjJo+M7wk9tJFjLPXnPlYdhPh4bzI4BpDSrClYmUHHdJM5XEIA=
+	t=1788183533; cv=none; b=Sp0DB6QZSx2LHjqkwvI4JWyMzTkjK9UINOKW90xvYchk6DwlAEIY6FpqGZWqlqhIPwkQLDOpoPJnDK03YZ+8rfLOi7khwtHQ8UG4TDwj+kTgx/I7PHLISjoq4tuWHK7+m3btvzA4qD1G7NVJX8GIuiJ6By/sftS659yU2QeyGQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183531; c=relaxed/simple;
-	bh=D9DE+sJkjHIn3nv+40ecKpOX+1H5Xdwxr96Kismmg5w=;
+	s=arc-20240116; t=1788183533; c=relaxed/simple;
+	bh=47CJt8FsphEI5XAdVeWwfUAITXnmQX63QZ0KCqoF9RY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkaFuEl0e6dVupN05Vp4RW90SAq/+Z6SrvFQyMUSGVuWE6RMYfaRfU2Fgrni52T0JpuZfBj9HLg4fLr+BHDswPBieZfsym71JDy2HnWfEa7Y1dsdr5chynXbLApk8lQgpNuxBPWPJ35P2esvg5x4U9KJhD5JOBpzi2jcUZbnx6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exnAH3J6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M5wRX7Ubdwu4rWXdl+P2XfKJNkQYii55mVeaeCM95/JoAdz/ETUOQMLsAViOELe8FSpNinKTC6KifI676B78+8nHoI5PL/SwqfvhWDM3ZGuUQo4Chsov9m+1yR/O72i3O4dI3d1/SSH8lpGRAz68OH4sqzNJ+oE+0lD2zaNwiAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YJobQPL/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exnAH3J6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F131F00A3E;
-	Mon, 31 Aug 2026 13:38:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183529;
-	bh=fYNcRUJ9Q+U0s8PYhS/zgy9tejSa90UJd8o/hIGPmYw=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YJobQPL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1011F00ACA;
+	Mon, 31 Aug 2026 13:38:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183531;
+	bh=apSjMvKiCEyS+e2I85zG/RqA27rRl3uB19F5hzc84+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=exnAH3J67OvMtVAC5Ib/kYgOxhiaLu3WNrAhcYcID0h2HqQMEZR95JzNAfnYalY/L
-	 1g/0xDktT73m0GTJEA0oxAsJKlUEFrDT9HHQnUmisvVlM5vToOvz5mImCPjP0VYfvT
-	 CfJ6r15OrpWt4ly/CfvFHb0xtyxHmYPHRNfqoKPo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 29/71] tcp: fix AO info use-after-free in tcp_ao_connect_init()
-Date: Mon, 31 Aug 2026 15:33:54 +0200
-Message-ID: <20260831133400.573749642@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
-References: <20260831133359.055927882@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=YJobQPL/0GseKC17DpAbMh+16Domn6UNOtKpOcUIzXbs2ftj6gCLUlY68UH+7b/WY
+	 8PfaQ1Q55UsFOFMmx647BaD6QuHAkgNnbin46C+RGDPS87Tf5HxxJX5QNjlbbGn1n3
+	 blh+RMyWV36o51W079E9yh+5eD9IIZR5WlIoksl0ht65uMUKkn4Oh3QUJBK5FOW3Fz
+	 vgkiMQm3TDmIxnSUS7aIZh8T6JYHB8MPT+a9422qMPf3039yPor6TkegKSbVhh8vfG
+	 vCLYHnMcO6NbVkKW4jItL1WnE/dygdyBuyhXIClVidNq+pvCU4oLNFBejlyjxqxot5
+	 fMHAplcEho7WQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Marco Elver <elver@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>,
+	kasan-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] kcsan: Silence -Wmaybe-uninitialized when calling __kcsan_check_access()
+Date: Mon, 31 Aug 2026 09:23:00 -0400
+Message-ID: <20260831133314.4125787-152-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+From: Marco Elver <elver@google.com>
 
-------------------
+[ Upstream commit 07a1a6562ce29e2e0c134a57882d6e52e8758492 ]
 
-From: Qing Ming <a0yami@mailbox.org>
+Some subsystems enable -Wmaybe-uninitialized [1], which can trigger
+false positives when KCSAN is enabled. Specifically, passing an
+uninitialized variable to functions that instrument accesses (e.g.,
+copy_from_user()) results in calls to __kcsan_check_access().
 
-commit ea30dc5267e367b8a5e1e06cc074f813bcbf18b2 upstream.
+Because __kcsan_check_access() takes a `const volatile void *ptr`, GCC
+infers that the function may only read the memory location, and thus
+warns if the passed variable is uninitialized.
 
-tcp_v4_connect() adds a SYN-SENT socket to the ehash before calling
-tcp_connect().  If TCP-AO is configured, tcp_connect() first verifies that
-a key matches the peer and the bound device's current L3 master.
-tcp_ao_connect_init() later resolves the L3 master again and removes keys
-which do not match it.
+However, KCSAN is a dynamic analysis tool for data race detection; while
+it does read the memory location to detect concurrent modifications, the
+"initialized'ness" of the memory location is irrelevant for its analysis.
 
-The socket lock does not stabilize the bound device's VRF membership.
-Detaching the device from its VRF between the initial validation and the
-L3-master calculation in tcp_ao_connect_init() can therefore make the
-validation succeed while initialization observes the default L3 domain and
-removes the only key.  The subsequent AO lookup then fails, so the no-key
-path clears tp->ao_info and frees it directly.
+Use absolute_pointer() in __kcsan_check_write(), kcsan_check_write(),
+and kcsan_check_atomic_write() to hide the pointer from the compiler,
+preventing it from concluding that the pointer passed points to
+uninitialized memory.
 
-The receive path can find the socket in the ehash and load tp->ao_info
-under RCU before acquiring the socket lock.  A reader which loaded the old
-pointer can thus continue into tcp_inbound_ao_hash() after the direct free.
+This fixes warnings like:
 
-The issue was found during a static audit of TCP-AO object lifetime.  An
-unprivileged reproducer in self-created user and network namespaces raced
-connect() with detaching a veth from its VRF while sending TCP-AO segments.
-It triggered the same KASAN report on two fresh boots:
+|   CC      fs/ntfs3/file.o
+| In file included from include/asm-generic/rwonce.h:27,
+|                  from arch/arm64/include/asm/rwonce.h:81,
+|                  from include/linux/compiler.h:369,
+|                  from include/linux/array_size.h:5,
+|                  from include/linux/kernel.h:16,
+|                  from include/linux/backing-dev.h:12,
+|                  from fs/ntfs3/file.c:10:
+| In function 'instrument_copy_from_user_before',
+|     inlined from '_inline_copy_from_user' at include/linux/uaccess.h:184:2,
+|     inlined from 'copy_from_user' at include/linux/uaccess.h:221:9,
+|     inlined from 'ntfs_ioctl_fitrim' at fs/ntfs3/file.c:77:6,
+|     inlined from 'ntfs_ioctl' at fs/ntfs3/file.c:164:10:
+| include/linux/kcsan-checks.h:220:28: error: 'range' may be used uninitialized [-Werror=maybe-uninitialized]
+|   220 | #define kcsan_check_access __kcsan_check_access
+|       |                            ^
+| include/linux/kcsan-checks.h:311:9: note: in expansion of macro 'kcsan_check_access'
+|   311 |         kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
+|       |         ^~~~~~~~~~~~~~~~~~
+| include/linux/instrumented.h:147:9: note: in expansion of macro 'kcsan_check_write'
+|   147 |         kcsan_check_write(to, n);
+|       |         ^~~~~~~~~~~~~~~~~
+| include/linux/kcsan-checks.h: In function 'ntfs_ioctl':
+| include/linux/kcsan-checks.h:37:6: note: by argument 1 of type 'const volatile void *' to '__kcsan_check_access' declared here
+|    37 | void __kcsan_check_access(const volatile void *ptr, size_t size, int type);
+|       |      ^~~~~~~~~~~~~~~~~~~~
+| fs/ntfs3/file.c:65:29: note: 'range' declared here
+|    65 |         struct fstrim_range range;
+|       |                             ^~~~~
 
-  BUG: KASAN: slab-use-after-free in tcp_inbound_ao_hash+0x585/0x19f0
-  Write of size 8 at addr ffff88800bf88128 by task tcp_ao_vrf_race/232
-
-  Call Trace:
-   tcp_inbound_ao_hash+0x585/0x19f0
-   tcp_inbound_hash+0x677/0xa80
-   tcp_v4_rcv+0x1c3e/0x3ab0
-
-  Allocated by task 235:
-   tcp_ao_alloc_info+0x43/0xf0
-   tcp_ao_add_cmd+0xdf7/0x13b0
-   do_tcp_setsockopt+0x168c/0x2640
-
-  Freed by task 235:
-   kfree+0x1b8/0x550
-   tcp_connect+0x252/0x4f00
-   tcp_v4_connect+0x1114/0x1720
-
-The bad address is 40 bytes inside the freed 128-byte object, matching the
-tcp_ao_info counters.key_not_found field.  The two runs used 1000 attempts
-each, reached the no-key path 366 and 411 times, and produced one and two
-KASAN reports respectively.  With this change, the same reproducer reached
-the no-key path 366 times in 1000 attempts without a KASAN report or oops.
-
-Use tcp_ao_destroy_sock() for the no-key path.  It unpublishes the AO info,
-updates the socket memory and static-key accounting, and defers the free
-until after an RCU grace period.
-
-Also drop the WARN_ON_ONCE() and its stale comment.  The VRF detach race
-makes the no-key state reachable during normal operation, so it is a
-handled condition rather than an impossible assertion.  On panic_on_warn
-kernels the WARN would turn this handled race into a kernel panic.
-
-Fixes: 248411b8cb89 ("net/tcp: Wire up l3index to TCP-AO")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260825072033.6921-1-a0yami@mailbox.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/5da10cca-875b-418d-b54e-6be3ea32c266@app.fastmail.com/ [1]
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ao.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/net/ipv4/tcp_ao.c
-+++ b/net/ipv4/tcp_ao.c
-@@ -1187,12 +1187,7 @@ void tcp_ao_connect_init(struct sock *sk
- 		ao_info->lisn = htonl(tp->write_seq);
- 		ao_info->snd_sne = 0;
- 	} else {
--		/* Can't happen: tcp_connect() verifies that there's
--		 * at least one tcp-ao key that matches the remote peer.
--		 */
--		WARN_ON_ONCE(1);
--		rcu_assign_pointer(tp->ao_info, NULL);
--		kfree(ao_info);
-+		tcp_ao_destroy_sock(sk, false);
- 	}
- }
+LLM Generated explanations, may be completely bogus:
+
+The background git history searches finished. They show `kcsan-checks.h`
+has been in this 6.18 tree since at least `ac3fd01e4c1ef` (Linux
+6.18-rc7), with the buggy write-check macros present and the
+`absolute_pointer()` fix still missing.
+
+That lines up with the earlier analysis: this is a small, low-risk build
+fix for KCSAN + `-Werror` configurations, and it should be backported to
+6.18.y.
+
+**YES**
+
+ include/linux/kcsan-checks.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/kcsan-checks.h b/include/linux/kcsan-checks.h
+index 92f3843d9ebb8..e135dacaa90f3 100644
+--- a/include/linux/kcsan-checks.h
++++ b/include/linux/kcsan-checks.h
+@@ -282,7 +282,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
+  */
+ #define __kcsan_check_write(ptr, size)                                         \
+-	__kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	__kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
  
-
+ /**
+  * __kcsan_check_read_write - check regular read-write access for races
+@@ -308,7 +308,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
+  */
+ #define kcsan_check_write(ptr, size)                                           \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
+ 
+ /**
+  * kcsan_check_read_write - check regular read-write access for races
+@@ -331,7 +331,7 @@ static inline void __kcsan_disable_current(void) { }
+ #define kcsan_check_atomic_read(ptr, size)                                     \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC)
+ #define kcsan_check_atomic_write(ptr, size)                                    \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
+ #define kcsan_check_atomic_read_write(ptr, size)                               \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE | KCSAN_ACCESS_COMPOUND)
+ #endif
+-- 
+2.53.0
 
