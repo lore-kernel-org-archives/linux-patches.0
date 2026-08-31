@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67717459AFC;
-	Mon, 31 Aug 2026 13:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543194570EC;
+	Mon, 31 Aug 2026 13:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183282; cv=none; b=XSqSvuz7XLGMbz7/xIlCUMRkNh3mtja4g8KOgOA14/0tcPHQR+BNWLbnuGHrPW4iu+Q8/PFUAZEINZerKLlGUXB63jn1w6bn4jrgBWSFxfQxFDey1m0c8dRhY6eGHHnxSpfG4rU5a5hwdZfWfUFqoVSAD6vO9dNt8JfdHovMCLk=
+	t=1788183283; cv=none; b=QBo4yy638b/gWhd4PP/FSTxpSNtnR2iaT/vjcjLK2/XIP6I2AOsYYO+u83WtBnWQcXJKRVVUlLn/Vk0QswHQdtsvrqQeoryGejVSDYH2cJZAYYAb1tLAhWTEdzAnDacqGakwxw7vpBAefua8Sz72XSGAI8nLdr5R2EGBaNb46DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183282; c=relaxed/simple;
-	bh=27oT7w6t2dSYoITnOB5E4HZ0ceriHpXM6Thk4gqkeOI=;
+	s=arc-20240116; t=1788183283; c=relaxed/simple;
+	bh=nc905L7O2isCtGXYoIvxxMHbhZ8IjiW+2nWM37+TWEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fix1Ms4ymvN0zz3+673Q2jpY9acSk/+MRWeSBpJ8CgeF4PnoG592Nf1sUTZPfyGFrGWf+ui7v0NEo13vX8me6ghwoaWtwRqZAITafA0af5JuodYXxaPG3M/XGmUaygQvxhm1F1Doa5qbONxxVJJPVDE/gFzcB1u+8+yxAY/dwfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=esSugd6T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jHaZMwKx6ShbWkPy5KZPFwmWo7gXoSKbEu/SQ2TzOJ3s1jlT5/vKa04casglfiTXNSdEf0rEZVygdNs73DxNAjXJj06MhqNW3YcrI3Sq9qzGQQAA3W+qt10Qvc0L+dfLsM1tUvWAaxV9EarrAGtWW/6ZfHan4rIkg7zadp8Mgc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LkX6jknh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="esSugd6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E071F00A3E;
-	Mon, 31 Aug 2026 13:34:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LkX6jknh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477771F00ADF;
+	Mon, 31 Aug 2026 13:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183278;
-	bh=hIDmP07IiHCoCW6q2VONui3+T4zKv9c35+YdyipWHtg=;
+	s=k20260515; t=1788183280;
+	bh=suBB6sMnaRiFD/+vEeFBmjXPBsbA6V2QiMRWp064h8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=esSugd6TJONRShZd19t0s+N+b2xHl8Fj40HCNZWQyeOHLlq6iUJoLygRrh4nEBiBi
-	 bS/DnCmc6Yn7YwVAHB10JO2N7S4fPiaT+IVfm3eFs5IJ8bfM7OUluSCMWON3ttDOsf
-	 IiG8RqEtNax04/eZV86yNLm5lyzINRHGjqydhbnumxIl4k+gTDj4OvxxwQNe8K+ocT
-	 W5BciP4QTlDWNFyaabfZwoKMe86aFoLAlpTGQeyoqorLWJcQxj0AZ+hOJZANrMSPMv
-	 mP0F9OOdQG/wZYFp3poFxEuoVMJcQdRAxtYqHPfvR9LE2a7I9jLzO450ZTlYag+ZWK
-	 x4E/5q9dHIFWQ==
+	b=LkX6jknhSgKIfTdQ1vm9tpy+L9A+0qjlmV+Z8AanhpK55nFFvQQxyP45Al6LMAQR3
+	 cuBuDK3kC3LtjhX0wFk9fEV8kRrkWohELRnTfhPrMoq7o0wlhNAP+iarmUeXyNqm1T
+	 GF2JM4A32W/5+hQ3VoVHMyhU2xT6VcdDVy6RqCjTCCh0DsQyYJ50dcYNhOvHfXhf0U
+	 w6puUhkmxBJLneahWJdAMPXjVoF6d62xDk88hiQ+anW+K/aYYcdnidUnGy8Bq6kKlN
+	 XAgE4kpCKzVSo9CY+tDYpeQBoR+JPLjckNeKFh+KI3IPHCj/P5WifFelru04GrzLKV
+	 SZBccebv5s9Rw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+Cc: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dsterba@suse.com,
-	linux-fsdevel@vger.kernel.org,
+	jjohnson@kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath12k@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] affs: handle set_blocksize failures
-Date: Mon, 31 Aug 2026 09:21:20 -0400
-Message-ID: <20260831133314.4125787-52-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] wifi: ath12k: Prevent incorrect vif chanctx switch when handling multi-radio contexts
+Date: Mon, 31 Aug 2026 09:21:21 -0400
+Message-ID: <20260831133314.4125787-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,20 +57,40 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
 
-[ Upstream commit 0861182af5983a39bd2a891966436c5679b74a45 ]
+[ Upstream commit 675aa75bfc29fb18c6e4d58904a91c1d37228217 ]
 
-affs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting we will hit the
+When multiple links switch channel contexts around the same time, mac80211
+may complete CSA for several links together and invoke
+ath12k_mac_op_switch_vif_chanctx() with an array of vifs spanning more than
+one underlying radio in a single-wiphy configuration.
 
-        BUG_ON(offset >= folio_size(folio));
+The driver currently assumes that all entries in the vifs array belong to the
+same radio and derives the radio context from the first element. On multi-radio
+hardware, this can lead to incorrect vdev selection/updates and may corrupt
+driver state when the number of vifs exceeds what a single radio supports.
 
-in folio_set_bh on the first __bread_gfp call.
+Fix this by validating each vif's switch request and then processing vifs
+grouped by their associated radio. For each vif, ensure the band does not
+change across the switch and that both old/new channel contexts resolve to a
+valid ath12k device. Reject attempts to move a vif between radios (not
+supported for now) and return -EOPNOTSUPP to upper layers.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-7-hch@lst.de
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Then, iterate through the input vifs, collect all unprocessed entries that map
+to the same radio, and invoke ath12k_mac_update_vif_chan() separately for each
+radio group. This removes any reliance on mac80211 providing the array grouped
+by radio or sharing old_ctx pointers across vifs.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Co-developed-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
+Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260522091828.3199584-1-maharaja.kennadyrajan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -74,294 +98,481 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-**Step 1.1 — Subject:** `[affs]` `[handle]` — handle `set_blocksize`
-failures in AFFS mount path.
+### Step 1.1: Subject Line
+**Record:** `[wifi: ath12k]` `[Prevent]` — Prevent incorrect vif chanctx
+switch when handling multi-radio contexts.
 
-**Step 1.2 — Tags:**
-- Signed-off-by: Christoph Hellwig \<hch@lst.de\>
-- Link: https://patch.msgid.link/20260511071701.2456211-7-hch@lst.de
-- Signed-off-by: Christian Brauner \<brauner@kernel.org\>
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable, or syzbot tags
-- Mailing list: Acked-by: David Sterba \<dsterba@suse.com\> (from
-  thread)
+### Step 1.2: Tags
+**Record:**
+- **Tested-on:** QCN9274 hw2.0 PCI
+  WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
+- **Signed-off-by:** Aditya Kumar Singh, Maharaja Kennadyrajan, Jeff
+  Johnson
+- **Co-developed-by:** Maharaja Kennadyrajan
+- **Reviewed-by:** Baochen Qiang, Rameshkumar Sundaram (Qualcomm ath12k
+  developers)
+- **Link:** https://patch.msgid.link/20260522091828.3199584-1-
+  maharaja.kennadyrajan@oss.qualcomm.com
+- No Fixes:, Reported-by:, Cc: stable, or syzbot tags
+- Notable: Hardware-tested on real QCN9274; dual Reviewed-by from
+  subsystem developers
 
-**Step 1.3 — Body:** AFFS uses buffer_heads, which cannot safely use
-block sizes larger than `PAGE_SIZE`. If `sb_set_blocksize()` fails and
-the code continues, the first `__bread_gfp()` call hits `BUG_ON(offset
->= folio_size(folio))` in `folio_set_bh()`. Symptom: kernel BUG/panic
-during mount (including filesystem auto-probe).
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** `ath12k_mac_op_switch_vif_chanctx()` assumes all entries in
+  the `vifs` array belong to the same radio, deriving the radio (`ar`)
+  from `vifs[0]` only. When mac80211 completes CSA for multiple links
+  simultaneously across radios in a single-wiphy multi-radio
+  configuration, vifs from different radios are passed in one array.
+- **Symptom:** Incorrect vdev selection/updates; driver state corruption
+  when vif count exceeds single-radio capacity.
+- **Root cause:** Reliance on mac80211 grouping vifs by radio or sharing
+  old_ctx pointers across vifs — neither is guaranteed.
+- **Fix approach:** Validate each vif individually, group by radio,
+  process each group with the correct `ar`. Reject unsupported band
+  changes and cross-radio moves with `-EOPNOTSUPP`.
 
-**Step 1.4 — Hidden bug fix?** No — this is an explicit mount-path bug
-fix, not disguised cleanup.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Yes — explicitly a bug fix despite "Prevent" wording. Also
+adds `WARN_ON(!arvif)` in `ath12k_mac_update_vif_chan()` which prevents
+a NULL dereference before `arvif->vdev_id` is accessed (current code
+dereferences `arvif` at line 10893 before the `is_started` check at
+10899, with no NULL guard).
 
 ---
 
 ## Phase 2: Diff Analysis
 
-**Step 2.1 — Inventory:**
-- `fs/affs/affs.h`: −5 lines (removes `affs_set_blocksize()` wrapper)
-- `fs/affs/super.c`: +4/−2 lines
-- Functions: `affs_fill_super()` only
-- Scope: single-subsystem, surgical (~11 lines net)
+### Step 2.1: Inventory
+**Record:**
+- **File:** `drivers/net/wireless/ath/ath12k/mac.c` only
+- **Scope:** ~3 lines added in `ath12k_mac_update_vif_chan()`, ~70 lines
+  changed in `ath12k_mac_op_switch_vif_chanctx()`
+- **Functions modified:** `ath12k_mac_update_vif_chan()`,
+  `ath12k_mac_op_switch_vif_chanctx()`
+- **Classification:** Single-file, focused driver fix
 
-**Step 2.2 — Code flow:**
-- **Before:** `affs_set_blocksize()` called `sb_set_blocksize()` and
-  ignored its return value.
-- **After:** Direct `sb_set_blocksize()` calls with failure checks;
-  mount returns `-EINVAL` on failure at both the initial `PAGE_SIZE`
-  setup and each blocksize-probe iteration.
+### Step 2.2: Code Flow Changes
+**Record:**
+- **Hunk 1 (`ath12k_mac_update_vif_chan`):** Before → dereferences
+  `arvif->vdev_id` in debug print without NULL check. After →
+  `WARN_ON(!arvif); continue;` added before dereference.
+- **Hunk 2 (`ath12k_mac_op_switch_vif_chanctx`):** Before → gets `ar`
+  from `vifs[0].old_ctx`, validates only first vif's old/new ctx match
+  same radio, calls `ath12k_mac_update_vif_chan(ar, vifs, n_vifs)` for
+  entire array. After → validates each vif's band/old/new ctx/radio,
+  builds `ar_map[]`, groups vifs by radio, calls
+  `ath12k_mac_update_vif_chan(group_ar, group_vifs, count)` per radio
+  group.
 
-**Step 2.3 — Bug mechanism:** Missing error-path handling. When
-`sb_set_blocksize()` returns 0 (failure — e.g. requested size >
-`PAGE_SIZE` on a non-`FS_LBS` filesystem, or `set_blocksize()` failure
-on an incompatible block device), mount continued and issued buffer-head
-I/O that triggers `folio_set_bh()`'s `BUG_ON`.
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** Logic/correctness bug + potential NULL pointer
+dereference. **Mechanism:** WMI vdev restart/stop/start commands are
+sent via the `ar` (radio) context. Using radio A's `ar` to process vifs
+belonging to radio B sends vdev operations to the wrong pdev/firmware,
+corrupting driver state. The `WARN_ON(!arvif)` addition fixes a
+secondary NULL deref when `arvif` lookup fails for a vif on the wrong
+radio.
 
-**Step 2.4 — Fix quality:** Obviously correct; mirrors patterns already
-used in this tree by ext4, ufs, udf, minix (initial call), etc. Minimal
-regression risk.
+### Step 2.4: Fix Quality
+**Record:** Fix is obviously correct — mirrors the per-vif iteration
+pattern used by rtw89's `rtw89_ops_switch_vif_chanctx()`. Minimal
+regression risk: only affects the multi-vif chanctx switch path, adds
+proper validation, uses existing allocation patterns (`kzalloc_objs`,
+`__free(kfree)`) already present in ath12k. Early returns on error
+prevent partial corruption.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-**Step 3.1 — Blame:** Buggy ignore-return-value pattern dates to Linux
-2.6.12 (`1da177e4c3f41`). Present throughout AFFS history in this tree.
+### Step 3.1: Blame
+**Record:** `ath12k_mac_op_switch_vif_chanctx()` introduced in
+`d889913205cf7` (Kalle Valo, 2022-11-28, "wifi: ath12k: driver for
+Qualcomm Wi-Fi 7 devices"). Radio lookup from `vifs->old_ctx` added in
+`314876885bdcc3` (Sriram R, 2024-04-09, "wifi: ath12k: vdev statemachine
+changes for single wiphy") — this is when the bug was introduced. Both
+commits are ancestors of HEAD.
 
-**Step 3.2 — Fixes: tag:** Not present (expected for manual review).
+### Step 3.2: Fixes Tag
+**Record:** N/A — no Fixes: tag in commit message.
 
-**Step 3.3 — Related commits:**
-- `a64e5a596067b` (2025-03-07): re-added `PAGE_SIZE` validation to
-  `sb_set_blocksize()` — **in this tree**
-- `465e5e6a1698f` (2023): added `folio_set_bh()` with `BUG_ON` — **in
-  this tree**
-- Mainline commit: `0861182af5983` — **NOT in this tree**
-- Part of 10-patch series merged as `d90e60ced4c3c` ("fix crashes when
-  mounting legacy file system with sector size > PAGE_SIZE")
+### Step 3.3: Related File History
+**Record:** Recent ath12k/mac.c commits include other stable-worthy
+fixes (NULL deref, deadlock, scan state). No related chanctx fix already
+present. `git log -S "ar_map"` returns empty — fix not yet applied to
+this tree.
 
-**Step 3.4 — Author:** Christoph Hellwig; series merged by VFS
-maintainer Christian Brauner.
+### Step 3.4: Author Context
+**Record:** Authors are active Qualcomm ath12k contributors (Aditya
+Kumar Singh, Maharaja Kennadyrajan). Multiple prior ath12k fixes in tree
+from same team. Reviewed by Baochen Qiang and Rameshkumar Sundaram.
 
-**Step 3.5 — Dependencies:** Standalone; patch 6/10 in series but self-
-contained for AFFS. No prerequisite commits required beyond code already
-in 6.18.y.
+### Step 3.5: Dependencies
+**Record:** Uses `kzalloc_objs()` and `__free(kfree)` — both present in
+this tree (`3bf5e19c804d0` for kzalloc_objs; `__free(kfree)` already
+used extensively in ath12k/mac.c). Uses `ath12k_generic_dbg()` — present
+in debug.h. No series dependencies; standalone fix. Can apply
+standalone.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-**Step 4.1 — Thread:**
-https://patch.msgid.link/20260511071701.2456211-7-hch@lst.de (b4 dig
-confirmed). Series v1, 10 patches.
+### Step 4.1: Original Discussion
+**Record:** `b4 dig -c <hash>` not possible — commit not merged into
+this tree. `b4 dig` with message-id failed (wrong invocation).
+lore.kernel.org and patch.msgid.link blocked by Anubis bot protection
+(curl and WebFetch both returned challenge page). **UNVERIFIED:** Full
+mailing list review thread content.
 
-**Step 4.2 — Reviewers:** CC'd to linux-fsdevel, Alexander Viro,
-Christian Brauner, filesystem maintainers. David Sterba Acked-by on affs
-patch.
+### Step 4.2: Reviewers
+**Record:** **UNVERIFIED** via b4 dig -w. Commit message shows Reviewed-
+by from two Qualcomm ath12k developers and Signed-off-by from Jeff
+Johnson (ath maintainer).
 
-**Step 4.3 — Bug report:** Cover letter (`2456211-1-hch@lst.de`): author
-reproduced crashes probing built-in filesystems on a 64K-sector loop
-device; affs was among filesystems that actually crashed.
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link. Bug identified
+through code analysis and hardware testing (Tested-on: QCN9274).
 
-**Step 4.4 — Series context:** 10 filesystems fixed with same pattern;
-affs patch is independent of the others.
+### Step 4.4: Related Patches
+**Record:** Standalone patch, not part of a series (no "patch X/Y" in
+subject). No dependencies on other patches.
 
-**Step 4.5 — Stable list:** No stable-specific discussion found; not a
-negative signal.
+### Step 4.5: Stable List History
+**Record:** **UNVERIFIED** — could not access lore.kernel.org/stable due
+to bot protection.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-**Step 5.1 — Functions:** `affs_fill_super()`, inline `affs_bread()`
-(unchanged).
+### Step 5.1: Key Functions
+**Record:** `ath12k_mac_op_switch_vif_chanctx()` (mac80211 driver op),
+`ath12k_mac_update_vif_chan()` (internal helper),
+`ath12k_get_ar_by_ctx()` (radio lookup by channel context).
 
-**Step 5.2 — Callers:** `affs_fill_super()` called from
-`get_tree_bdev()` during `mount(2)` / filesystem probe.
+### Step 5.2: Callers
+**Record:** `ath12k_mac_op_switch_vif_chanctx` registered at mac.c:13056
+as `.switch_vif_chanctx` in `ieee80211_ops`. Called from mac80211 via
+`drv_switch_vif_chanctx()` in `net/mac80211/driver-ops.c:414`. mac80211
+invokes this during channel context switches in `net/mac80211/chan.c` —
+both single-vif (`ieee80211_chsw_switch_vif`, line 1389) and multi-vif
+(`ieee80211_chsw_switch_vifs`, line 1537) paths. Multi-vif path collects
+ALL links with in-place reservations across all replacing chanctxs.
 
-**Step 5.3 — Callees:** `sb_set_blocksize()` → `set_blocksize()`; on
-success, `affs_bread()` → `sb_bread()` → `__bread_gfp()` →
-`folio_alloc_buffers()` → `folio_set_bh()`.
+### Step 5.3: Callees
+**Record:** `ath12k_get_ar_by_ctx()` → `ath12k_mac_get_ar_by_chan()`
+(maps channel frequency to radio in multi-radio mode).
+`ath12k_mac_update_vif_chan()` → `ath12k_mac_vdev_restart()`,
+`ath12k_mac_vdev_stop()`, `ath12k_mac_vdev_start()` — all send WMI
+commands to firmware via the `ar` pdev.
 
-**Step 5.4 — Reachability:** Reachable from userspace mount and blkid-
-style filesystem probing on block devices with large logical sector
-sizes or on systems where `PAGE_SIZE` > AFFS's supported 4K blocks.
+### Step 5.4: Reachability
+**Record:** Triggered during CSA (Channel Switch Announcement) when
+mac80211 swaps channel contexts. Reachable from AP channel switches, DFS
+events, and MLO multi-link simultaneous CSA. Requires `CONFIG_ATH12K`
+with multi-radio hardware (`ah->num_radio > 1`). Userspace triggers via
+normal WiFi operations (hostapd channel changes, etc.).
 
-**Step 5.5 — Similar patterns:** 15+ filesystems in this tree already
-check `sb_set_blocksize()` return value; AFFS is an outlier.
+### Step 5.5: Similar Patterns
+**Record:** rtw89's `rtw89_ops_switch_vif_chanctx()` (mac80211.c:1369)
+iterates each vif individually with per-vif link lookup — the correct
+pattern. ath12k's pre-fix code was an outlier assuming single-radio
+batch processing.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## Phase 6: Cross-Referencing Against Local Tree
 
-**Tree:** `v6.18.44` (6.18.y stable)
+### Step 6.1: Buggy Code Exists?
+**Record:** **YES.** Local tree is **v6.18.44** (`git describe HEAD`).
+Buggy code confirmed at mac.c:11635-11646 — uses `vifs->old_ctx` for
+single `ar`, processes all `n_vifs` with that `ar`. Bug introduced by
+`314876885bdcc3` (April 2024, present since ~v6.9). Multi-radio single-
+wiphy support fully present (`ah->num_radio`, `wiphy->n_radio`, MLO
+capable hardware registration at mac.c:14395+).
 
-**Step 6.1 — Buggy code exists:** Yes — `fs/affs/super.c` lines 360 and
-376 still call `affs_set_blocksize()` without checking return value.
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected. File structure matches diff context.
+`kzalloc_objs`, `__free(kfree)`, `ath12k_generic_dbg` all available. No
+conflicting changes in recent history. Expected difficulty: **clean
+apply**.
 
-**Step 6.2 — Backport difficulty:** Clean apply expected; no conflicting
-changes in this file.
-
-**Step 6.3 — Related fixes already present:** No equivalent AFFS fix.
-Prerequisites (`folio_set_bh` BUG_ON, `sb_set_blocksize` PAGE_SIZE
-check) are both present, making the bug reachable.
+### Step 6.3: Related Fixes Already Present?
+**Record:** No — `git log -S "ar_map"` and `git grep "Prevent incorrect
+vif chanctx"` return nothing. Fix not yet in tree.
 
 ---
 
-## Phase 7: Subsystem Context
+## Phase 7: Subsystem and Maintainer Context
 
-**Step 7.1:** AFFS filesystem (`fs/affs/`). Criticality: PERIPHERAL
-(Amiga/legacy FS), but mount path is security-relevant (unprivileged
-mount with privileges).
+### Step 7.1: Subsystem Criticality
+**Record:** **drivers/net/wireless/ath/ath12k** — IMPORTANT. WiFi 7
+driver for Qualcomm hardware (QCN9274, WCN7850, etc.). Not core kernel,
+but affects all users of supported WiFi 7 hardware.
 
-**Step 7.2:** Low recent churn; mature legacy driver.
+### Step 7.2: Subsystem Activity
+**Record:** Actively developed — 20+ commits to ath12k/mac.c in recent
+history. ath12k is a relatively young but production driver in v6.18.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-**Step 8.1 — Affected users:** Users with `CONFIG_AFFS_FS` who mount or
-auto-probe AFFS on block devices where `sb_set_blocksize()` fails.
+### Step 8.1: Who Is Affected
+**Record:** Users of multi-radio ath12k hardware in single-wiphy MLO
+configuration (`CONFIG_ATH12K=y/m`). Specifically QCN9274 and similar
+WiFi 7 chipsets with 2+ radios. Not universal, but growing hardware
+segment.
 
-**Step 8.2 — Trigger:** Mount/probe on devices with sector size >
-`PAGE_SIZE`, or blocksize/LBA mismatches; more likely on large-page
-architectures or during multi-FS probe on unusual block devices.
+### Step 8.2: Trigger Conditions
+**Record:** Simultaneous CSA across multiple links spanning more than
+one radio. Occurs when mac80211 calls `ieee80211_chsw_switch_vifs()`
+with `n_vifs > 1` and vifs map to different radios. Realistic on MLO
+AP/STA setups during channel switches. Not timing-dependent race —
+deterministic logic bug. Unprivileged users can trigger indirectly via
+WiFi management (e.g., AP channel change affecting multiple MLO links).
 
-**Step 8.3 — Failure mode:** Kernel `BUG()` in `folio_set_bh()` —
-**CRITICAL** severity when triggered.
+### Step 8.3: Failure Mode Severity
+**Record:** **HIGH** — Driver state corruption. Wrong vdev IDs sent to
+wrong radio's firmware via WMI. Can cause WiFi disconnects, firmware
+communication errors, potential kernel warnings/crashes. The added
+`WARN_ON(!arvif)` path prevents NULL dereference when vif doesn't
+resolve on the wrong radio. Not silent data corruption, but functional
+breakage of wireless connectivity.
 
-**Step 8.4 — Risk/benefit:**
-- Benefit: Prevents kernel panic; converts crash to clean `-EINVAL`
-  mount failure
-- Risk: Very low (2 error checks + wrapper removal)
-- Ratio: Strongly favorable
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** HIGH for affected hardware — prevents state corruption
+  during CSA on multi-radio WiFi 7 devices
+- **Risk:** LOW — contained to one function's error handling path, uses
+  established patterns, adds validation before processing
+- **Ratio:** Strong benefit outweighs minimal risk
 
 ---
 
 ## Phase 9: Final Synthesis
 
-**Evidence FOR:**
-- Real, reproduced crash (author's 64K loop-device probe testing)
-- Kernel BUG/panic on mount
-- Small, obviously correct fix
-- Matches established patterns in this tree
-- Prerequisites present in 6.18.y
-- Reviewed (Acked-by David Sterba) and merged to mainline
-- Bug present since 2.6 in code that exists in this tree
+### Step 9.1: Evidence Summary
 
-**Evidence AGAINST:**
-- AFFS is rarely used (niche legacy FS)
-- Trigger conditions are uncommon on typical 4K-page desktops
-- Not a security CVE, but mount-triggered BUG is still serious
+**FOR backporting:**
+- Fixes real, reproducible logic bug in multi-radio chanctx switching
+- Can corrupt driver state / break WiFi on QCN9274-class hardware
+- Hardware-tested (Tested-on: QCN9274)
+- Reviewed by two Qualcomm ath12k developers
+- Small, single-file, self-contained fix
+- Bug present since April 2024 single-wiphy support (`314876885bdcc3`)
+- Buggy code confirmed in v6.18.44
+- Adds NULL safety guard preventing potential oops
+- Follows pattern used by other WiFi drivers (rtw89)
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — author tested; reviewer
-   acked
-2. Fixes real bug affecting users? **PASS** — confirmed crash on mount
-   probe
-3. Important issue? **PASS** — kernel BUG/panic (CRITICAL)
-4. Small and contained? **PASS** — ~11 lines, 2 files
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — clean apply expected
+**AGAINST backporting:**
+- Only affects multi-radio ath12k hardware (not all users)
+- No syzbot report or user bug report (identified proactively)
+- CSA across multiple radios may be less common than single-radio
+  operations
 
-**Exception category:** None (standard bug fix).
+**UNRESOLVED:**
+- Full lore.kernel.org review thread (bot protection blocked access)
+- Whether reviewers explicitly nominated for stable
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logic is sound, QCN9274
+   tested, dual Reviewed-by
+2. Fixes a real bug? **PASS** — incorrect radio selection with state
+   corruption
+3. Important issue? **PASS** — driver state corruption / connectivity
+   loss (HIGH severity)
+4. Small and contained? **PASS** — one file, ~75 lines, focused change
+5. No new features or APIs? **PASS** — bug fix only, returns existing
+   error codes
+6. Can apply to local tree? **PASS** — all dependencies present, clean
+   apply expected
+
+### Step 9.3: Exception Categories
+**Record:** N/A — standard driver bug fix, not a quirk/DT/build/doc
+exception.
+
+### Step 9.4: Decision Rationale
+
+This commit fixes a deterministic bug in ath12k's channel context switch
+handler for multi-radio single-wiphy configurations. The local tree
+(v6.18.44) contains the buggy code introduced in April 2024 and lacks
+this fix. When mac80211 passes vifs spanning multiple radios during
+simultaneous CSA, the driver sends vdev WMI commands to the wrong radio,
+corrupting driver state. The fix correctly groups vifs by radio and
+validates each entry — a minimal, obviously correct change tested on
+real hardware. While the affected hardware population is narrower than a
+core kernel bug, WiFi 7 multi-radio devices are production hardware in
+v6.18, and driver state corruption during channel switches is a serious
+functional defect appropriate for stable.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from provided diff and `git
-  show 0861182af5983`
-- [Phase 2] Diff analysis: 2 files, `affs_fill_super()` only; adds
-  `sb_set_blocksize()` failure checks
-- [Phase 3] `git describe HEAD`: v6.18.44
-- [Phase 3] `git blame` lines 360–376: bug since `1da177e4c3f41`
-  (2.6.12)
-- [Phase 3] `git merge-base --is-ancestor 0861182af5983 HEAD`: NOT in
-  tree
-- [Phase 3] `git merge-base --is-ancestor a64e5a596067b HEAD`: PAGE_SIZE
-  check present
-- [Phase 3] `git merge-base --is-ancestor 465e5e6a1698f HEAD`:
-  `folio_set_bh` BUG_ON present
-- [Phase 3] Read `block/bdev.c:220-230`: `sb_set_blocksize()` returns 0
-  on failure
-- [Phase 3] Read `fs/buffer.c:1578-1582`: `folio_set_bh()` BUG_ON
-  confirmed
-- [Phase 4] `b4 dig -c 0861182af5983`: thread at
-  patch.msgid.link/20260511071701.2456211-7-hch@lst.de
-- [Phase 4] `b4 dig -a`: v1 series, patch 6/10
-- [Phase 4] `b4 dig -w`: Viro, Brauner, fsdevel CC'd
-- [Phase 4] Mbox: cover letter confirms 64K loop-device crash during FS
-  probe; David Sterba Acked-by
-- [Phase 5] `affs_fill_super` called from `get_tree_bdev()` at
-  `fs/affs/super.c:583`
-- [Phase 5] `sb_bread` → `__bread_gfp` uses `sb->s_blocksize` per
-  `include/linux/buffer_head.h:344-346`
-- [Phase 6] Buggy `affs_set_blocksize()` wrapper confirmed at
-  `fs/affs/affs.h:228-232`
-- [Phase 6] AFFS lacks `FS_LBS` flag (`fs/affs/super.c:651`)
-- [Phase 8] Failure mode: BUG_ON in `folio_set_bh` — CRITICAL
+- **[Phase 1]** Parsed commit message: subject, tags (Tested-on,
+  Reviewed-by x2, Link), body analysis
+- **[Phase 2]** Diff analysis: 2 functions in mac.c, logic bug + NULL
+  guard, ~75 lines
+- **[Phase 3]** `git blame -L 11625,11649`: function from d889913
+  (2022), radio lookup from 314876885bdcc3 (2024-04-09)
+- **[Phase 3]** `git show 314876885bdcc3`: confirmed single-wiphy commit
+  introduced the assumption
+- **[Phase 3]** `git merge-base --is-ancestor`: both d889913 and
+  314876885bdcc3 are in tree
+- **[Phase 3]** `git log -S "ar_map"`: empty — fix not applied
+- **[Phase 3]** `git log --oneline -20 --
+  drivers/net/wireless/ath/ath12k/mac.c`: recent active development
+- **[Phase 4]** `b4 dig -c HEAD`: failed (commit not in tree)
+- **[Phase 4]** lore.kernel.org/patch.msgid.link: blocked by Anubis
+  (UNVERIFIED: review thread)
+- **[Phase 5]** `grep switch_vif_chanctx`: mac80211 chan.c:1537 calls
+  with n_vifs spanning all reserved links
+- **[Phase 5]** Read rtw89 mac80211.c:1369-1414: per-vif iteration
+  pattern (comparison)
+- **[Phase 5]** Read ath12k mac.c:10878-10907: confirmed NULL deref risk
+  before fix
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** Read mac.c:11625-11649: buggy code present (uses vifs[0]
+  only)
+- **[Phase 6]** `git merge-base --is-ancestor 3bf5e19c804d0 HEAD`:
+  kzalloc_objs available
+- **[Phase 6]** `grep __free(kfree)`: pattern already used in
+  ath12k/mac.c
+- **[Phase 6]** `grep ath12k_generic_dbg`: present in debug.h
+- **[Phase 8]** Failure mode: driver state corruption on multi-radio
+  CSA, severity HIGH
 
-This fix prevents a kernel BUG during AFFS mount when
-`sb_set_blocksize()` fails — a scenario the author reproduced during
-filesystem probing on a 64K-sector block device. The change is minimal,
-matches patterns already used by other filesystems in 6.18.y, and all
-prerequisites are present in this tree.
+**YES**The background search finished: the commit isn’t in this tree yet
+(no matches for “Prevent incorrect vif chanctx” or “multi-radio
+contexts”), which matches evaluating it as a new backport candidate.
 
-**YES**The background search finished while the AFFS backport analysis
-was already done. It didn’t turn up the `affs: handle set_blocksize
-failures` commit in this tree (expected — it’s only on mainline as
-`0861182af5983`), and the mbox search didn’t find a local copy of the
-patch thread.
+**Summary for v6.18.44:** **YES** — backport this fix.
 
-**Verdict from the analysis: YES** — the fix should be backported to
-this 6.18.y tree. It’s a small, low-risk change that prevents a kernel
-BUG during AFFS mount when `sb_set_blocksize()` fails, and the buggy
-code is still present here.
+The bug is real and present: on multi-radio ath12k hardware,
+`ath12k_mac_op_switch_vif_chanctx()` picks the radio from `vifs[0]` but
+processes the whole batch, so simultaneous CSA across radios can send
+vdev WMI commands to the wrong radio and corrupt driver state. The patch
+groups vifs by radio, validates each one, and adds a NULL guard in
+`ath12k_mac_update_vif_chan()`. It’s a small, single-file change, tested
+on QCN9274, and should apply cleanly here.
 
- fs/affs/affs.h  | 5 -----
- fs/affs/super.c | 6 ++++--
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 87 +++++++++++++++++++++++----
+ 1 file changed, 76 insertions(+), 11 deletions(-)
 
-diff --git a/fs/affs/affs.h b/fs/affs/affs.h
-index ac4e9a02910b7..99e54e3453ac1 100644
---- a/fs/affs/affs.h
-+++ b/fs/affs/affs.h
-@@ -225,11 +225,6 @@ static inline bool affs_validblock(struct super_block *sb, int block)
- 	       block < AFFS_SB(sb)->s_partition_size);
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 4bb4482e27343..2f47054efa44e 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -10888,6 +10888,9 @@ ath12k_mac_update_vif_chan(struct ath12k *ar,
+ 			continue;
+ 		}
+ 
++		if (WARN_ON(!arvif))
++			continue;
++
+ 		ath12k_dbg(ab, ATH12K_DBG_MAC,
+ 			   "mac chanctx switch vdev_id %i freq %u->%u width %d->%d\n",
+ 			   arvif->vdev_id,
+@@ -11628,23 +11631,85 @@ ath12k_mac_op_switch_vif_chanctx(struct ieee80211_hw *hw,
+ 				 int n_vifs,
+ 				 enum ieee80211_chanctx_switch_mode mode)
+ {
+-	struct ath12k *ar;
++	struct ath12k *curr_ar, *new_ar, *group_ar;
++	struct ieee80211_vif_chanctx_switch *v;
++	int i, j, count = 0;
+ 
+ 	lockdep_assert_wiphy(hw->wiphy);
+ 
+-	ar = ath12k_get_ar_by_ctx(hw, vifs->old_ctx);
+-	if (!ar)
+-		return -EINVAL;
++	if (n_vifs == 0)
++		return 0;
+ 
+-	/* Switching channels across radio is not allowed */
+-	if (ar != ath12k_get_ar_by_ctx(hw, vifs->new_ctx))
+-		return -EINVAL;
++	struct ath12k **ar_map __free(kfree) = kzalloc_objs(*ar_map, n_vifs);
+ 
+-	ath12k_dbg(ar->ab, ATH12K_DBG_MAC,
+-		   "mac chanctx switch n_vifs %d mode %d\n",
+-		   n_vifs, mode);
+-	ath12k_mac_update_vif_chan(ar, vifs, n_vifs);
++	if (!ar_map)
++		return -ENOMEM;
++
++	for (i = 0; i < n_vifs; i++) {
++		v = &vifs[i];
++
++		if (v->old_ctx->def.chan->band != v->new_ctx->def.chan->band) {
++			ath12k_generic_dbg(ATH12K_DBG_MAC,
++					   "mac chanctx switch band change not supported\n");
++			return -EOPNOTSUPP;
++		}
++
++		curr_ar = ath12k_get_ar_by_ctx(hw, v->old_ctx);
++		new_ar = ath12k_get_ar_by_ctx(hw, v->new_ctx);
++
++		if (!curr_ar || !new_ar) {
++			ath12k_generic_dbg(ATH12K_DBG_MAC,
++					   "unable to determine device for the passed channel ctx\n");
++			ath12k_generic_dbg(ATH12K_DBG_MAC,
++					   "Old freq %d MHz (device %s) to new freq %d MHz (device %s)\n",
++					   v->old_ctx->def.chan->center_freq,
++					   curr_ar ? "valid" : "invalid",
++					   v->new_ctx->def.chan->center_freq,
++					   new_ar ? "valid" : "invalid");
++			return -EINVAL;
++		}
+ 
++		/* Switching a vif between two radios is not allowed */
++		if (curr_ar != new_ar) {
++			ath12k_dbg(curr_ar->ab, ATH12K_DBG_MAC,
++				   "mac chanctx switch to another radio not supported\n");
++			return -EOPNOTSUPP;
++		}
++
++		ar_map[i] = curr_ar;
++	}
++
++	/* Group vifs by radio (ar) and process each group independently. */
++	bool *processed __free(kfree) = kzalloc_objs(*processed, n_vifs);
++
++	if (!processed)
++		return -ENOMEM;
++
++	struct ieee80211_vif_chanctx_switch *group_vifs __free(kfree) =
++						kzalloc_objs(*group_vifs, n_vifs);
++
++	if (!group_vifs)
++		return -ENOMEM;
++
++	for (i = 0; i < n_vifs; i++) {
++		if (processed[i])
++			continue;
++
++		group_ar = ar_map[i];
++
++		count = 0;
++		for (j = 0; j < n_vifs; j++) {
++			if (!processed[j] && ar_map[j] == group_ar) {
++				group_vifs[count++] = vifs[j];
++				processed[j] = true;
++			}
++		}
++
++		ath12k_dbg(group_ar->ab, ATH12K_DBG_MAC,
++			   "mac chanctx switch n_vifs %d mode %d\n",
++			   count, mode);
++		ath12k_mac_update_vif_chan(group_ar, group_vifs, count);
++	}
+ 	return 0;
  }
  
--static inline void
--affs_set_blocksize(struct super_block *sb, int size)
--{
--	sb_set_blocksize(sb, size);
--}
- static inline struct buffer_head *
- affs_bread(struct super_block *sb, int block)
- {
-diff --git a/fs/affs/super.c b/fs/affs/super.c
-index 44f8aa883100e..994f1199beaf1 100644
---- a/fs/affs/super.c
-+++ b/fs/affs/super.c
-@@ -357,7 +357,8 @@ static int affs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	size = bdev_nr_sectors(sb->s_bdev);
- 	pr_debug("initial blocksize=%d, #blocks=%d\n", 512, size);
- 
--	affs_set_blocksize(sb, PAGE_SIZE);
-+	if (!sb_set_blocksize(sb, PAGE_SIZE))
-+		return -EINVAL;
- 	/* Try to find root block. Its location depends on the block size. */
- 
- 	i = bdev_logical_block_size(sb->s_bdev);
-@@ -373,7 +374,8 @@ static int affs_fill_super(struct super_block *sb, struct fs_context *fc)
- 		if (ctx->root_block < 0)
- 			sbi->s_root_block = (ctx->reserved + size - 1) / 2;
- 		pr_debug("setting blocksize to %d\n", blocksize);
--		affs_set_blocksize(sb, blocksize);
-+		if (!sb_set_blocksize(sb, blocksize))
-+			return -EINVAL;
- 		sbi->s_partition_size = size;
- 
- 		/* The root block location that was calculated above is not
 -- 
 2.53.0
 
