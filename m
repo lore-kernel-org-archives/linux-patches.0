@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662694D8D81;
-	Mon, 31 Aug 2026 13:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85FB4D8DAF;
+	Mon, 31 Aug 2026 13:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183554; cv=none; b=iMFOt05i3tm9hLRxQlos+K5ukTKy+VDC2fc3BQn5oE69EpIIIocunbROjjjoo30OH8/DeqTelElXEXfhh8ZqHF9+HxTm6XRs1k22B1viITFFntZgOkEnUrE/Zt88quyf8rxgaHfyP/KZsLbrjyRgo3URKg7TI6IlMKC9ZAxFGEQ=
+	t=1788183555; cv=none; b=fQTzDOof/0dlv5jK4B2h90VbY1LIw8uO7flTcS/k7AdNlWwt8qGvSRfjqnjIDBG7AHLuQOorWAiN77rt8aEJtWiggfHEC4v/mNOcWoxDkjpUOojTCWs9wy9DhIuk3leTwsUDycsRlzJc06dy1SxBSmFr8yqe39lqmS6NIpldfDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183554; c=relaxed/simple;
-	bh=pH85IFwcUM8Vgxhp5SzV4lIuGOOnB3TkJK9q0OniOJA=;
+	s=arc-20240116; t=1788183555; c=relaxed/simple;
+	bh=lyvCDatf+oYsojCfkpe8tbqrRpEMqXfeyOEyLBHr0E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SNUtAsq/RbwATFXfUD71lby7Fw6du+31oKSnNxxILwgy3CW7JlOOtOjUua+MgbgengzEAhN2fkA3Z7q79hRxE/nyuRe2iYd03LDCz4FxPnTgp38F6ZDvvyyVkXDZScdUJLribHIsy7+GC8nGTxSTO1lV6Q6XMTgI8u7GmwrO+M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SN8GCFax; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iI5b4JKLq968X88YoAPsZ8IybE8HKKwlV0LoDxGeajjqp5sVlGGtYtHcV/QvLy5E339CbSXH0dQS0gK3Y+2SziKt4tX9Dxa5TxzYsaal0Y8jaMb/66yVzSjZkjxqCQUGXR1YgcDJtBhyYjA4V3sNv4zxpRJ2bagMnLJcH6CWR1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aMJaEw1B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SN8GCFax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ACE1F00A3D;
-	Mon, 31 Aug 2026 13:39:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aMJaEw1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CB91F00ADB;
+	Mon, 31 Aug 2026 13:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183551;
-	bh=WOWBYPK6q7JjIJso29ptfLcsRUeOB72elJec9hfJWA4=;
+	s=k20260515; t=1788183552;
+	bh=cEBSzX+d6hFnn7uTSuomyYuIaCgNNKnHO+PUmb2dsLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SN8GCFaxcUrKJ/UI+RQigxj1IMs3yoDckZWXSPWnAU99OUbvEAB3YAku6JGzbkACC
-	 lW/BQbLFVVlsBkgw3zNCEmit+o+/BDeMVBUCaLD77ULX52Im40NHkU9v9eCTZhOCeK
-	 A3iFTAta+RL1KdNj0XOUAkei7p8K4Th29hO+RlYRS8NX/HQDRdyRwCx6bgQaUertGs
-	 BYB6wja80PjpzKAJj/fCMEhfZH562PYlNgeSz8y+e9BxHQ6qfk48WRaAMCXKU2TE4a
-	 zRKCOu4kzcW9LKT4MN7qdVv7MQfnftVMYlu2wKAhBi5DAyyraIYahaGb6STw/2Tssq
-	 zslbezFvMqQPA==
+	b=aMJaEw1BMIDISV0hNxfJuDoOUZ50rd2uy7BrQwhWGOYq4RIp3RdJvL+hSjqzPuz9O
+	 jl1wAsbiurBpiuQne39JMEUMBfgm4uApPHHkITkXSscYmXz4sYyRtJmeBi5wijFc/7
+	 48lWr3igdOTbdzfSxfnrU/Otv+ioB2ixjrbi9k+ixT2HH93c8H7kFaUFNV3DlFB2IL
+	 XJsS+cZxT9mF3FT8yAjVfDDpRA2T1XQne8myJqfaJffS/OyuRz1kbK9iYQMGxXcDyl
+	 8Sc6TLvd9mj6dS1v9zsuBf6JknIZ/DjP0lhEy3kiR3+pe0SJq4ImLLtNKDTvj8/F1U
+	 p+wUwG/iQzszA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Anand Jain <asj@kernel.org>,
-	David Sterba <dsterba@suse.com>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] btrfs: derive f_fsid from on-disk fsid and dev_t
-Date: Mon, 31 Aug 2026 09:23:12 -0400
-Message-ID: <20260831133314.4125787-164-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] wifi: iwlwifi: acpi: validate WGDS table revision index
+Date: Mon, 31 Aug 2026 09:23:13 -0400
+Message-ID: <20260831133314.4125787-165-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,457 +52,368 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anand Jain <asj@kernel.org>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit c2a74ed0494c2736486b49c52767b2f50b83425f ]
+[ Upstream commit 954e821f42aaca56073ca830c5fd4bcf1a89048c ]
 
-The f_fsid was originally derived from fs_devices->fsid and the
-subvolume root ID. However, when temp_fsid is active, fs_devices->fsid
-is randomized, making the standard derivation inconsistent.
+Check tbl_rev bounds before BIT(tbl_rev) to avoid undefined shifts when
+firmware reports an invalid revision value.
 
-Since metadata_uuid is optional, it is not a reliable alternative.  This
-patch instead retrieves the on-disk UUID from fs_info->super_copy->fsid.
-
-To prevent f_fsid collisions between original and cloned filesystems,
-this implementation hashes the dev_t for single-device btrfs filesystems
-to ensure uniqueness. This is limited to single-device filesystems as
-cloned mounts are currently only supported for that configuration. Note
-that f_fsid will change if the device is replaced.
-
-Additionally, since the kernel cannot distinguish between the original
-and the cloned filesystem, this new f_fsid derivation is applied to
-both.
-
-Link: https://lore.kernel.org/linux-btrfs/cover.1772095546.git.asj@kernel.org/
-Link: https://lore.kernel.org/linux-btrfs/cover.1774092915.git.asj@kernel.org/
-Signed-off-by: Anand Jain <asj@kernel.org>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Assisted-by: GitHubCopilot:GPT-5.3-Codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260717173215.52a01f841f2a.Ic0131eaac31d9ff71b169138d9b0865cb39b44a9@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `btrfs: derive f_fsid from on-disk fsid and
-dev_t`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (6.18.44)
-**Upstream commit:** `c2a74ed0494c2736486b49c52767b2f50b83425f`
-(2026-06-09)
-**Status in this tree:** Fix **not** present; buggy code **is** present
-in `fs/btrfs/super.c`
+**Step 1.1 — Subject line**
+Record: `[wifi: iwlwifi: acpi]` `[validate]` — Validate WGDS ACPI table
+revision index before using it in a bit-shift.
 
----
+**Step 1.2 — Tags**
+Record:
+- **Fixes:** — none
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Cc: stable@vger.kernel.org:** — none
+- **Link:** https://patch.msgid.link/20260717173215.52a01f841f2a.Ic0131e
+  aac31d9ff71b169138d9b0865cb39b44a9@changeid
+- **Signed-off-by:** Emmanuel Grumbach `<emmanuel.grumbach@intel.com>`,
+  Miri Korenblit `<miriam.rachel.korenblit@intel.com>`
+- **Assisted-by:** GitHubCopilot:GPT-5.3-Codex
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Notable: no fuzzer report, no user report, no explicit stable
+nomination.
 
-### Step 1.1: Subject line
-**Record:** `[btrfs] [derive] — Change `f_fsid` derivation to use on-
-disk FSID and `dev_t` for stability/uniqueness with `temp_fsid` cloned
-mounts.`
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** `tbl_rev` is used in `BIT(tbl_rev)` without validating it is
+  a valid bit index for the `u8 revisions` mask.
+- **Symptom:** Undefined left-shift if ACPI reports an out-of-range
+  revision (commit message says “firmware”; in code the value comes from
+  the ACPI WGDS package revision field).
+- **Root cause:** `iwl_acpi_get_wifi_pkg_range()` copies the ACPI
+  integer into `*tbl_rev` but does not bound-check it;
+  `iwl_acpi_get_wgds_table()` then does `BIT(tbl_rev) &
+  rev_data[idx].revisions`.
 
-### Step 1.2: Tags
-**Record:**
-- **Link:** `https://lore.kernel.org/linux-
-  btrfs/cover.1772095546.git.asj@kernel.org/`
-- **Link:** `https://lore.kernel.org/linux-
-  btrfs/cover.1774092915.git.asj@kernel.org/`
-- **Signed-off-by:** Anand Jain `<asj@kernel.org>`
-- **Signed-off-by:** David Sterba `<dsterba@suse.com>` (btrfs
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Tested-by:`, or `Reviewed-
-  by:` tags
-- No syzbot/sanitizer indicators
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** `f_fsid` was derived from `fs_devices->fsid`, which is
-  randomized when `temp_fsid` is active (cloned-device mount support).
-- **Symptom:** `f_fsid` is inconsistent across mount cycles for cloned
-  btrfs filesystems; original and cloned mounts can also collide on
-  `f_fsid`.
-- **Root cause:** `temp_fsid` assigns a random in-memory UUID to
-  `fs_devices->fsid`; `metadata_uuid` is optional and unreliable.
-- **Fix approach:** Use on-disk `super_copy->fsid` when `temp_fsid` is
-  active; XOR in `dev_t` (via `huge_encode_dev`) for all single-device
-  btrfs to ensure uniqueness between original and clone.
-- **Version info:** None explicit; `temp_fsid` landed in this tree since
-  v6.10.
-
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — described as derivation change, but it fixes (1) non-
-persistent `f_fsid` across remounts with `temp_fsid`, and (2) `f_fsid`
-collisions between original and cloned single-device btrfs.
+**Step 1.4 — Hidden bug fix?**
+Record: No — this is an explicit defensive validation fix, not cleanup
+disguised as a bug fix.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `fs/btrfs/super.c` (+33 / -8 lines)
-- **Function:** `btrfs_statfs()`
-- **Scope:** Single-file surgical fix
+**Step 2.1 — Inventory**
+Record:
+- **Files:** `drivers/net/wireless/intel/iwlwifi/fw/acpi.c` (+5 / -0)
+- **Function:** `iwl_acpi_get_wgds_table()`
+- **Scope:** Single-file, surgical fix in one loop body
 
-### Step 2.2: Code flow changes
-**Record:**
-- **Hunk 1:** Defer `fsid` pointer assignment; add local `f_fsid`
-  accumulator.
-- **Hunk 2 (before → after):**
-  - Before: Always use `fs_devices->fsid`; write directly to
-    `buf->f_fsid`.
-  - After: If `temp_fsid`, use `super_copy->fsid`; else
-    `fs_devices->fsid`. Compute into local `f_fsid`, XOR root ID,
-    optionally XOR `dev_t` hash for single-device FS, then `memcpy` to
-    `buf->f_fsid`.
+**Step 2.2 — Code flow change**
+Record:
+- **Before:** On successful `iwl_acpi_get_wifi_pkg_range()`, code
+  immediately evaluates `BIT(tbl_rev) & rev_data[idx].revisions`.
+- **After:** Rejects `tbl_rev < 0` or `tbl_rev >= 8` (`BITS_PER_BYTE *
+  sizeof(u8)`) and `continue`s to the next `rev_data[]` entry.
+- **Path affected:** ACPI WGDS table parsing during driver
+  regulatory/SAR init (normal probe path, not error-only).
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic/correctness fix (filesystem identification)
-- **Mechanism:** Randomized `fs_devices->fsid` under `temp_fsid` made
-  `statfs()` `f_fsid` non-deterministic; identical on-disk FSID + root
-  ID between original and clone caused collisions. Fix uses stable on-
-  disk UUID and mixes in `dev_t` for disambiguation.
+**Step 2.3 — Bug mechanism**
+Record:
+- **Category:** Memory safety / undefined behavior (invalid shift),
+  logic/correctness.
+- **Mechanism:** `tbl_rev` is assigned from a 64-bit ACPI integer into
+  an `int` (`acpi.c:249`). Large values can truncate to negative; large
+  positive values can be `>= BITS_PER_LONG`. `BIT(nr)` is `(UL(1) <<
+  (nr))` (`include/vdos/bits.h`), so out-of-range shifts are undefined
+  in C. The `revisions` field is `u8`, so only bits 0–7 are meaningful.
 
-### Step 2.4: Fix quality
-**Record:**
-- Fix is minimal, readable, and matches existing patterns
-  (`u64_to_fsid`, `huge_encode_dev` used elsewhere e.g. xfs).
-- **Regression risk:** Low for crashes; **medium** for userspace-visible
-  semantics — `f_fsid` changes for all single-device btrfs (not only
-  `temp_fsid` mounts), by design.
-- `latest_dev->bdev` is valid when `total_devices == 1` and mount
-  succeeded (verified: `latest_dev` set during device open in
-  `volumes.c`).
+**Step 2.4 — Fix quality**
+Record:
+- Fix is minimal and matches an existing pattern in the same file
+  (`iwl_acpi_get_tas_table()` already checks `tbl_rev < 0 || tbl_rev >
+  2` at line 304).
+- Regression risk is very low: invalid revisions are skipped instead of
+  provoking UB.
+- No API or behavior change for valid ACPI tables.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:**
-- `f_fsid` base computation dates to 2008 (`9d03632e26e1a`).
-- Root ID masking added 2024 (`e094f48040cda6`).
-- Buggy `fs_devices->fsid` usage at line 1738 is pre-`temp_fsid`; bug
-  activated when `temp_fsid` was introduced in `a5b8a5f9f8355`
-  (2023-10-12, first in v6.10).
+**Step 3.1 — Blame**
+Record: The vulnerable `BIT(tbl_rev)` line is at `acpi.c:764` in this
+tree. `git blame` attributes it to merge commit `5d324e5159d9e` (shallow
+history artifact). The same `rev_data` + `BIT(tbl_rev)` pattern is
+present in tag `v6.18`, so the bug exists since the 6.18 release in this
+series.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag. Introducing commit for the underlying
-feature: `a5b8a5f9f8355` ("btrfs: support cloned-device mount
-capability"), confirmed present in this tree.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no `Fixes:` tag.
 
-### Step 3.3: Related file history
-**Record:**
-- Companion patch in same series: `df84f6c773771` ("btrfs: use on-disk
-  uuid for s_uuid in temp_fsid mounts") — **not** in this tree.
-- This `f_fsid` fix is standalone (only touches `super.c`); does not
-  depend on the `s_uuid` patch.
-- No "patch X/Y" marker; two-commit series addressing related
-  `temp_fsid` identification issues.
+**Step 3.3 — Related file history**
+Record:
+- Commit `954e821f42aac` is on `master` but not in stable `HEAD`
+  (6.18.44).
+- Related mainline-only WGDS work (`f951689793e6c`, `c5cc3d3717783`) is
+  **not** in this 6.18.y tree.
+- This fix is patch **3/5** of an iwlwifi-fixes series, but the 5-line
+  hunk is standalone and does not depend on the other series members for
+  correctness.
 
-### Step 3.4: Author context
-**Record:** Anand Jain is an active btrfs contributor; David Sterba
-(maintainer) signed off. Author has multiple `temp_fsid`-related commits
-in this tree.
+**Step 3.4 — Author context**
+Record: Emmanuel Grumbach is a senior Intel iwlwifi developer; Miri
+Korenblit committed it. No other recent acpi.c commits from this author
+in the shallow stable history.
 
-### Step 3.5: Dependencies
-**Record:** No prerequisites. `u64_to_fsid` exists in
-`include/linux/statfs.h`; `temp_fsid`, `total_devices`, `latest_dev`,
-`super_copy` all exist in this tree. Applies cleanly against current
-`super.c`.
+**Step 3.5 — Dependencies**
+Record: No prerequisites. `git cherry-pick --no-commit 954e821f42aac`
+auto-merged cleanly on stable `HEAD` (5 lines added, 1 file).
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c c2a74ed0494c2` returned no match (commit likely
-too recent for b4 cache). Lore URLs blocked by Anubis bot protection —
-could not read thread. No matching `.mbx` files in workspace.
+**Step 4.1 — Original discussion**
+Record:
+- `b4 dig -c 954e821f42aac` → https://patch.msgid.link/20260717173215.52
+  a01f841f2a.Ic0131eaac31d9ff71b169138d9b0865cb39b44a9@changeid
+- Part of `[PATCH iwlwifi-fixes 3/5]` series (v1 only in b4 `-a`
+  output).
+- Mbox saved to `/tmp/wgds_thread.mbox`; thread contains patch
+  submissions only — no review replies, no stable nominations, no NAKs
+  found.
 
-### Step 4.2: Reviewers
-**Record:** `b4 dig -w` also failed. Maintainer sign-off from David
-Sterba verified via commit metadata.
+**Step 4.2 — Reviewers**
+Record: `b4 dig -w` shows To/Cc: Miri Korenblit,
+johannes@sipsolutions.net, linux-wireless@vger.kernel.org, Emmanuel
+Grumbach. No `Reviewed-by:` in the committed version.
 
-### Step 4.3: Bug reports
-**Record:** No external bug report links beyond series cover letters
-(unreadable). No syzbot/fuzzer reports.
+**Step 4.3 — Bug report**
+Record: N/A — no external bug report linked.
 
-### Step 4.4: Related patches
-**Record:** Two-patch series: (1) `s_uuid` fix in `disk-io.c`, (2) this
-`f_fsid` fix. Only this patch is needed for the `statfs`/`f_fsid` bug;
-`s_uuid` fix addresses a separate overlayfs identification issue.
+**Step 4.4 — Series context**
+Record: 5-patch iwlwifi-fixes series (FW parser bounds, PNVM, this WGDS
+fix, SEC_RT TLV, etc.). This patch is independently applicable.
 
-### Step 4.5: Stable list
-**Record:** Could not search lore stable list (blocked). No evidence
-found of prior stable nomination or rejection.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
-**Record:** `btrfs_statfs()` (modified)
-
-### Step 5.2: Callers
-**Record:** `btrfs_statfs` registered as `sb->s_op->statfs` at line
-2441. Reachable via:
-- `vfs_statfs()` / `statfs()` syscall
-- `vfs_get_fsid()` in `fs/statfs.c` (used by fanotify)
-
-### Step 5.3: Callees
-**Record:** `be32_to_cpu`, `btrfs_root_id`, `u64_to_fsid`,
-`huge_encode_dev`, `memcpy` — all standard, available in-tree.
-
-### Step 5.4: Reachability
-**Record:** Any userspace `statfs()` on btrfs, and fanotify mark setup
-(`fanotify_test_fsid()` in `fs/notify/fanotify/fanotify_user.c` calls
-`vfs_get_fsid()`). Reachable from unprivileged userspace via syscalls.
-`temp_fsid` triggers only when mounting a cloned single-device btrfs
-while the original is already mounted.
-
-### Step 5.5: Similar patterns
-**Record:** Same `u64_to_fsid(huge_encode_dev(...))` pattern used in
-`fs/xfs/xfs_super.c`. VFS fanotify work (v6.7) added `f_fsid`
-requirements across filesystems (`freevxfs`, `gfs2`, simple
-filesystems).
+**Step 4.5 — Stable list**
+Record: No stable-list discussion found (WebFetch to lore blocked by bot
+protection; mbox grep found no “stable” mentions).
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current code at lines 1738 and 1828–1832 uses
-`fs_devices->fsid` unconditionally. `temp_fsid` support confirmed
-present (`a5b8a5f9f8355` is ancestor of HEAD). Bug has existed since
-v6.10 in this series.
+**Step 5.1 — Key functions**
+Record: `iwl_acpi_get_wgds_table()`, called via
+`iwl_acpi_get_wifi_pkg_range()`.
 
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — target code matches upstream diff
-base. No conflicting recent changes to `f_fsid` block in `super.c`.
+**Step 5.2 — Callers**
+Record:
+- `iwl_bios_get_wgds_table()` — macro-generated in `fw/regulatory.c:35`,
+  tries UEFI then ACPI.
+- Called from:
+  - `mvm/fw.c:1231,1252` during MVM firmware/SAR table load
+  - `mld/regulatory.c:39,58` during MLD regulatory init
 
-### Step 6.3: Related fixes already present?
-**Record:** No — `git merge-base --is-ancestor c2a74ed0494c2 HEAD`
-returns false. Companion `s_uuid` fix (`df84f6c773771`) also absent.
+**Step 5.3 — Callees**
+Record: `iwl_acpi_get_object()`, `iwl_acpi_get_wifi_pkg_range()`, ACPI
+package parsing, `kfree()` on exit.
 
----
+**Step 5.4 — Reachability**
+Record: Reachable at Intel WiFi driver probe/init on ACPI platforms
+(`CONFIG_ACPI`, `CONFIG_IWLMVM` or `CONFIG_IWLMLD`). Trigger requires
+malformed WGDS ACPI data, not a direct syscall — but it runs on every
+boot for affected hardware.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** btrfs filesystem (`fs/btrfs/`) — **IMPORTANT** (widely
-deployed filesystem; core VFS statfs path).
-
-### Step 7.2: Subsystem activity
-**Record:** Actively maintained; recent commits in `super.c` include
-leak fixes and statfs improvements.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Who is affected
-**Record:** btrfs users, specifically those using cloned-device
-(`temp_fsid`) mounts. Also fanotify users on btrfs. All single-device
-btrfs get changed `f_fsid` values (broader but intentional).
-
-### Step 8.2: Trigger conditions
-**Record:**
-- Primary bug: mount cloned btrfs image while original is mounted
-  (`temp_fsid` active) → randomized `f_fsid` each mount.
-- Collision bug: original + clone mounted simultaneously without `dev_t`
-  disambiguation.
-- Trigger is config/use-case specific (not every boot), but reproducible
-  when cloning workflow is used.
-
-### Step 8.3: Failure mode severity
-**Record:**
-- **Failure mode:** Incorrect/non-persistent `f_fsid`; possible ID
-  collision between distinct mounts.
-- **Impact:** Breaks filesystem identification for `statfs()` consumers
-  and fanotify (`vfs_get_fsid`). No crash, corruption, deadlock, or
-  security vulnerability.
-- **Severity: MEDIUM** (functional correctness, fanotify compatibility)
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Restores stable, unique `f_fsid` for btrfs clones; aligns
-  with VFS fanotify `f_fsid` requirements.
-- **Risk:** Low implementation risk (small, maintainer-reviewed);
-  moderate semantic risk (`f_fsid` value changes for all single-device
-  btrfs).
-- **Ratio:** Favorable for users of `temp_fsid`/fanotify; acceptable
-  risk given small diff and maintainer authorship.
+**Step 5.5 — Similar patterns**
+Record: `iwl_acpi_get_tas_table()` already validates `tbl_rev` bounds
+(`acpi.c:304`). This fix brings WGDS parsing in line with that
+precedent.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 9.1: Evidence summary
+**Step 6.1 — Buggy code present?**
+Record: **Yes.** Local tree is **6.18.44** (`git describe HEAD` →
+`v6.18.44-2-g1b9e1abadee04`, `make kernelversion` → `6.18.44`), detached
+from `stable/linux-6.18.y`. Vulnerable line confirmed at `acpi.c:764`:
 
-**FOR backport:**
-- Real bug in shipped `temp_fsid` feature (present since v6.10 in this
-  tree)
-- Non-persistent `f_fsid` across remounts breaks `statfs()` and fanotify
-  identification
-- `f_fsid` collision between original and clone without `dev_t` mixing
-- Small (41 lines), single-file, maintainer-signed fix
-- Applies cleanly; no dependencies
-- Consistent with broader VFS `f_fsid`/fanotify work already in tree
+```764:765:drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+                        if (!(BIT(tbl_rev) & rev_data[idx].revisions))
+                                continue;
+```
 
-**AGAINST backport:**
-- Not a crash, corruption, deadlock, or security issue
-- `temp_fsid`/cloned mounts are a niche workflow
-- Changes `f_fsid` semantics for all single-device btrfs (userspace-
-  visible)
-- Companion `s_uuid` patch not included (separate concern for overlayfs)
-- No fuzzer report or explicit stable nomination found
-- Lore discussion unverified
+**Step 6.2 — Backport complications**
+Record: **Clean apply** — verified by test cherry-pick. No conflicts.
 
-**Unresolved:** Full mailing list review thread; whether reviewers
-nominated for stable.
+**Step 6.3 — Fix already present?**
+Record: **No.** `git log HEAD --grep="validate WGDS"` returns nothing;
+bounds check not in current `acpi.c`.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic is clear; maintainer
-   SOB; no Tested-by but straightforward.
-2. Fixes a real bug affecting users? **PASS** — inconsistent `f_fsid`
-   with `temp_fsid`; clone/original collision.
-3. Important issue? **PASS (borderline)** — MEDIUM severity
-   functional/fanotify correctness, not crash-class.
-4. Small and contained? **PASS** — 1 file, ~33 lines added.
-5. No new features or APIs? **PASS** — fixes existing `statfs` behavior.
-6. Can apply to local tree? **PASS** — buggy code present, helpers
-   available, clean apply.
+---
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs fix).
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 9.4: Decision rationale
+**Step 7.1 — Subsystem**
+Record: `drivers/net/wireless/intel/iwlwifi` — **IMPORTANT** (Intel
+WiFi, widely deployed on laptops).
 
-This fix addresses a real correctness bug in the `temp_fsid` cloned-
-mount feature that has been in this 6.18.y tree since v6.10. Without it,
-`statfs()` returns a different `f_fsid` on every remount of a cloned
-btrfs, and original/clone mounts can collide — both break
-`vfs_get_fsid()` users including fanotify. The patch is small, self-
-contained, and authored/signed by the btrfs maintainer. The severity is
-functional rather than crash-class, but stable trees routinely take such
-fixes for filesystem identification correctness, especially where
-fanotify integration depends on stable `f_fsid`. The intentional
-`f_fsid` value change for all single-device btrfs is a minor stable risk
-but necessary to prevent clone/original collisions.
+**Step 7.2 — Activity**
+Record: Active stable backports in this tree include several recent
+iwlwifi validation fixes (`eae7fdf7d4469`, `a076b0c457c71`,
+`1de92789ce31e`, etc.).
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 — Who is affected**
+Record: Intel WiFi users on ACPI platforms (laptops/desktops) during
+driver initialization.
+
+**Step 8.2 — Trigger conditions**
+Record: ACPI WGDS table with revision integer outside 0–7 (or negative
+due to truncation). Uncommon but plausible with buggy OEM ACPI. Not
+user-triggerable via normal syscalls; ACPI is the input source.
+
+**Step 8.3 — Failure mode severity**
+Record: **HIGH** potential (undefined behavior → possible oops/panic at
+probe); **MEDIUM** likelihood (requires bad ACPI). Not data corruption,
+but can prevent WiFi from loading or crash the kernel during probe.
+
+**Step 8.4 — Risk vs benefit**
+Record:
+- **Benefit:** Eliminates UB on a real probe path; aligns with existing
+  in-file validation style.
+- **Risk:** Very low — 5 lines, skip-invalid-and-continue semantics.
+- **Ratio:** Favorable for stable.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Step 9.1 — Evidence summary**
+
+FOR backport:
+- Real UB bug in production code present since 6.18.0
+- Probe-time path on common hardware
+- Tiny, obviously correct, applies cleanly
+- Consistent with existing `tbl_rev` validation elsewhere in same file
+- iwlwifi stable tree already accepts similar validation fixes
+
+AGAINST backport:
+- No syzbot/user report
+- Requires malformed ACPI (uncommon)
+- Part of a larger series (though this hunk is independent)
+- Commit message slightly mislabels ACPI revision as “firmware”
+
+Unresolved: No runtime crash report confirming the bug was hit in the
+field.
+
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct and tested? **PASS** — logic is clear; no Tested-by
+   but pattern is established in-file.
+2. Fixes a real bug? **PASS** — C undefined shift on invalid index.
+3. Important issue? **PASS** — probe-time UB with potential kernel
+   crash.
+4. Small and contained? **PASS** — 5 lines, 1 file.
+5. No new features/APIs? **PASS** — pure validation.
+6. Can apply to local tree? **PASS** — verified clean cherry-pick.
+
+**Step 9.3 — Exception categories**
+Record: None (not device ID, quirk, DT, build, or docs).
+
+**Step 9.4 — Problem and decision**
+
+This commit adds a bounds check on `tbl_rev` before `BIT(tbl_rev)` in
+`iwl_acpi_get_wgds_table()`. Without it, a malformed ACPI WGDS revision
+field can cause undefined bit-shifts during Intel WiFi driver
+initialization on 6.18.y systems. The fix is minimal, self-contained,
+matches existing validation in the same driver file, and applies cleanly
+to the checked-out **linux-6.18.y (6.18.44)** tree where the vulnerable
+code is present and the fix is not yet applied.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message from `git show c2a74ed0494c2`:
-  subject, body, tags, links, SOBs
-- **[Phase 2]** Full diff reviewed via `git show c2a74ed0494c2 -p`; 1
-  file, `btrfs_statfs()` modified
-- **[Phase 3]** `git describe HEAD` → v6.18.44; `make kernelversion` →
-  6.18.44
-- **[Phase 3]** `git blame -L 1825,1832 fs/btrfs/super.c` → f_fsid code
-  from 2008/2024
-- **[Phase 3]** `git merge-base --is-ancestor a5b8a5f9f8355 HEAD` →
-  temp_fsid present
-- **[Phase 3]** `git merge-base --is-ancestor c2a74ed0494c2 HEAD` → fix
-  NOT present
-- **[Phase 3]** `git show a5b8a5f9f8355` → temp_fsid introduced
-  2023-10-12; first tag v6.10
-- **[Phase 3]** `git log --oneline df84f6c773771^..c2a74ed0494c2` →
-  2-patch series identified
-- **[Phase 3]** `git merge-base --is-ancestor df84f6c773771 HEAD` →
-  s_uuid companion NOT in tree
-- **[Phase 4]** `b4 dig -c c2a74ed0494c2` → no match (exit 1)
-- **[Phase 4]** WebFetch lore cover URL → blocked by Anubis
-- **[Phase 4]** Grep `*.mbx` for patch subject → no matches
-- **[Phase 5]** Read `fs/statfs.c` `vfs_get_fsid()` → calls
-  `statfs_by_dentry` → `btrfs_statfs`
-- **[Phase 5]** Read `fanotify_user.c` `fanotify_test_fsid()` → uses
-  `vfs_get_fsid`
-- **[Phase 5]** Grep `u64_to_fsid` in `include/linux/statfs.h` → helper
-  exists
-- **[Phase 5]** Grep `latest_dev` in `fs/btrfs/volumes.c` → set during
-  device open
-- **[Phase 6]** Read current `fs/btrfs/super.c:1738,1828-1832` → buggy
-  code confirmed
-- **[Phase 6]** Grep `temp_fsid` in `fs/btrfs/` → feature fully present
-- **[Phase 6]** Read `fs/btrfs/disk-io.c:3428` → `s_uuid` still uses
-  `fs_devices->fsid` (companion fix absent)
-- **[Phase 7]** David Sterba SOB on commit verified
-- **UNVERIFIED:** Mailing list review feedback and stable nominations
-  (lore inaccessible, b4 failed)
+- [Phase 1] Parsed commit `954e821f42aac`: subject, body, Link tag,
+  SOBs; no Reported-by/syzbot/Fixes/stable tags
+- [Phase 2] Read diff: +5 lines in `iwl_acpi_get_wgds_table()` before
+  `BIT(tbl_rev)`
+- [Phase 2] Read `iwl_acpi_get_wifi_pkg_range()` at `acpi.c:249`:
+  `*tbl_rev = data->package.elements[0].integer.value`
+- [Phase 2] Confirmed `BIT()` definition in `include/vdso/bits.h`:
+  `(UL(1) << (nr))`
+- [Phase 3] `git describe HEAD` → `v6.18.44-2-g1b9e1abadee04`; `make
+  kernelversion` → `6.18.44`
+- [Phase 3] `git log HEAD..master --
+  drivers/net/wireless/intel/iwlwifi/fw/acpi.c` → fix commit
+  `954e821f42aac` not in stable HEAD
+- [Phase 3] `git show v6.18:.../acpi.c | grep rev_data` → buggy pattern
+  present in v6.18.0
+- [Phase 3] Cherry-pick test: clean auto-merge, 5 lines added
+- [Phase 3] `f951689793e6c`, `c5cc3d3717783` confirmed **NOT** in
+  v6.18/HEAD (mainline-only related work)
+- [Phase 4] `b4 dig -c 954e821f42aac` → lore URL found; patch 3/5 of
+  iwlwifi-fixes series
+- [Phase 4] `b4 dig -a`, `b4 dig -w` → v1 series; CC list includes
+  linux-wireless and Johannes
+- [Phase 4] Mbox grep: no stable/Reviewed/Acked/Tested replies in thread
+- [Phase 5] `grep iwl_bios_get_wgds_table` → callers in `mvm/fw.c`,
+  `mld/regulatory.c`; loader in `fw/regulatory.c:35`
+- [Phase 5] Existing precedent: `acpi.c:304` validates `tbl_rev` for
+  WTAS table
+- [Phase 6] Confirmed vulnerable code at `acpi.c:764` in current tree;
+  fix absent
+- [Phase 8] Assessed severity: UB at probe, ACPI-triggered, Intel WiFi
+  laptops
 
-**YES**
+**YES**The background checks finished and line up with the earlier
+analysis:
 
- fs/btrfs/super.c | 41 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 33 insertions(+), 8 deletions(-)
+- **`iwl_acpi_get_wgds_table()`** goes back to the UEFI/SAR table work
+  (e.g. `427661e4c4888` / `2594e4d9e1a2d`); the `rev_data` +
+  `BIT(tbl_rev)` path is already in **6.18.y**.
+- Related mainline WGDS commits (`f951689793e6c`, `c5cc3d3717783`,
+  `f863093a914c4`) are **not** in this **6.18.44** tree — only the small
+  bounds-check fix is needed here.
+- This checkout is **detached from `stable/linux-6.18.y`** at
+  **6.18.44**, well behind `master`.
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 157d551344707..9dc399e5dc091 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1735,12 +1735,13 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	u64 total_free_data = 0;
- 	u64 total_free_meta = 0;
- 	u32 bits = fs_info->sectorsize_bits;
--	__be32 *fsid = (__be32 *)fs_info->fs_devices->fsid;
-+	__be32 *fsid;
- 	unsigned factor = 1;
- 	struct btrfs_block_rsv *block_rsv = &fs_info->global_block_rsv;
- 	int ret;
- 	u64 thresh = 0;
- 	int mixed = 0;
-+	__kernel_fsid_t f_fsid;
+**Verdict unchanged: YES** — backport `954e821f42aac`; it applies
+cleanly and fixes real undefined-shift behavior on the ACPI WGDS probe
+path.
+
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index 52edc19d8cdd5..852c5ac36c221 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -761,6 +761,11 @@ int iwl_acpi_get_wgds_table(struct iwl_fw_runtime *fwrt)
+ 						       min_size, max_size,
+ 						       &tbl_rev);
+ 		if (!IS_ERR(wifi_pkg)) {
++			if (tbl_rev < 0 ||
++			    tbl_rev >= BITS_PER_BYTE *
++			    sizeof(rev_data[idx].revisions))
++				continue;
++
+ 			if (!(BIT(tbl_rev) & rev_data[idx].revisions))
+ 				continue;
  
- 	list_for_each_entry(found, &fs_info->space_info, list) {
- 		if (found->flags & BTRFS_BLOCK_GROUP_DATA &&
-@@ -1822,14 +1823,38 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	buf->f_bsize = fs_info->sectorsize;
- 	buf->f_namelen = BTRFS_NAME_LEN;
- 
--	/* We treat it as constant endianness (it doesn't matter _which_)
--	   because we want the fsid to come out the same whether mounted
--	   on a big-endian or little-endian host */
--	buf->f_fsid.val[0] = be32_to_cpu(fsid[0]) ^ be32_to_cpu(fsid[2]);
--	buf->f_fsid.val[1] = be32_to_cpu(fsid[1]) ^ be32_to_cpu(fsid[3]);
-+	/*
-+	 * fs_devices->fsid is dynamically generated when temp_fsid is active
-+	 * to support cloned filesystems. Use the original on-disk fsid instead,
-+	 * as it remains consistent across mount cycles.
-+	 */
-+	if (fs_info->fs_devices->temp_fsid)
-+		fsid = (__be32 *)fs_info->super_copy->fsid;
-+	else
-+		fsid = (__be32 *)fs_info->fs_devices->fsid;
-+
-+	/*
-+	 * We treat it as constant endianness (it doesn't matter _which_)
-+	 * because we want the fsid to come out the same whether mounted
-+	 * on a big-endian or little-endian host.
-+	 */
-+	f_fsid.val[0] = be32_to_cpu(fsid[0]) ^ be32_to_cpu(fsid[2]);
-+	f_fsid.val[1] = be32_to_cpu(fsid[1]) ^ be32_to_cpu(fsid[3]);
-+
- 	/* Mask in the root object ID too, to disambiguate subvols */
--	buf->f_fsid.val[0] ^= btrfs_root_id(BTRFS_I(d_inode(dentry))->root) >> 32;
--	buf->f_fsid.val[1] ^= btrfs_root_id(BTRFS_I(d_inode(dentry))->root);
-+	f_fsid.val[0] ^= btrfs_root_id(BTRFS_I(d_inode(dentry))->root) >> 32;
-+	f_fsid.val[1] ^= btrfs_root_id(BTRFS_I(d_inode(dentry))->root);
-+
-+	/* Hash dev_t to avoid f_fsid collision with cloned filesystems. */
-+	if (fs_info->fs_devices->total_devices == 1) {
-+		__kernel_fsid_t dev_fsid =
-+			u64_to_fsid(huge_encode_dev(fs_info->fs_devices->latest_dev->bdev->bd_dev));
-+
-+		f_fsid.val[0] ^= dev_fsid.val[1];
-+		f_fsid.val[1] ^= dev_fsid.val[0];
-+	}
-+
-+	memcpy(&buf->f_fsid, &f_fsid, sizeof(f_fsid));
- 
- 	return 0;
- }
 -- 
 2.53.0
 
