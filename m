@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1AD47B425;
-	Mon, 31 Aug 2026 13:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD0A47A899;
+	Mon, 31 Aug 2026 13:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184552; cv=none; b=ijdixg+77+5ZskgJMdr9Pxv94LnvsZ/wM7BnTZpS6WcE+dLlJDUQTdqDcpOKFVpkTSAPvjOIbF+dZjFqnzgTaHm9mtuHhGotH6/H4XR3CtT1rYsoNOSv5ki0Vmv/j27LuLF7/7bJo8AvPe7RXmY4AyPoZ94dfTSnVu5rZybCbMY=
+	t=1788184535; cv=none; b=VUChfuecT+NMTOtJcv6emO/gpGxBN4hNwCON3tIK2XhfzfAG9UodJtt1/r1ckzrdb7PVG7BmT6tiahk9QYOQEXnPcRKaZuavmoODtn9pWKQOt1mslm9BWaRNc7vkFaVI1FRXUdbuY90GefKfqnSF852odLaw8IwRfMvP2UWout4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184552; c=relaxed/simple;
-	bh=pOoi1MgJsxmoMjhDxo6zs9ZSpWwoxoQr15+TVQ6jqKw=;
+	s=arc-20240116; t=1788184535; c=relaxed/simple;
+	bh=DL3rK8XAd91xU3aGxxkJ9FeF5veHsAxSfYZt3Kxz/4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fI/znuizcW4M+qSVJ3QzWY/naKG3hhD5ay7vupwHHkw38K2GcGoT76dl2hH4AJQkSaryXw5SG4992E/emWyK2SDUAvEDIcJVsXsWE8xpjYVNLjPzdJR0WbjIn1MLVxn6bykmF/IMPrXWtwxvaz1BAREw22NmdJAKFKumNy4tKbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pq4RTdj4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=l8evnRlBXRYAqk4clxYPysv9FNKPDbQI/iRZmSS3h2wXlQUSRSGf0+HBRkkZ5BtoHwX1VqBPKf6kPpmu/xC3Naodisz3iovbc2dCENVBFfS0LJo9SSmekMHWc7TENdrE9NFHLzl6QIwTHdmsVb66nFWFoOWx/mOwjblGY3NkE8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oW7VLJoX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pq4RTdj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E1C1F00A3D;
-	Mon, 31 Aug 2026 13:55:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oW7VLJoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370C11F000E9;
+	Mon, 31 Aug 2026 13:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184550;
-	bh=8dz+K2fwCtBZ+yY5cmUuMDgeXENjBzWl/g26IoHWeAM=;
+	s=korg; t=1788184533;
+	bh=LXahBWCTvGkLAdJgo4jTfftS98+v2zfzzOSuHdzQTWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pq4RTdj48Fyr7cGbiRa1xgkwAcWkXXcM+D7bA2HQux7MSCSTjTgJbz2C3ozxPKgQS
-	 7LBRG06DmULQ1uMmcJV/d0gw97U9Yhd+1Mw+9RcFXK5dQzIrBQve2Y0Yrs8oshKzDf
-	 snXV1I68rp6918CAx6WjMCd83dqr69g4LKFPkvF0=
+	b=oW7VLJoX3kdzDcXBCLYn+TCvMj/ddzUhKihbv5y9/a9a3x18cEgzcPuVnIA1lDUBs
+	 Caw3iPiA8uLgCGk+uLYRTgtadOoMJru8z772pM3QE8hfCl7VxmdXOxJfL9dv04XlJf
+	 B8z4ilzDRCTQ59X4KG6UFDkF1es3WHs8ipGjLecE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
+	Alec Hall <signshop.alec@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 47/91] HID: nintendo: stop device IO before hid_hw_stop on probe failure
-Date: Mon, 31 Aug 2026 15:34:35 +0200
-Message-ID: <20260831133402.176127479@linuxfoundation.org>
+Subject: [PATCH 6.6 42/91] HID: magicmouse: prevent unbounded recursion in magicmouse_raw_event()
+Date: Mon, 31 Aug 2026 15:34:30 +0200
+Message-ID: <20260831133401.917501077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -45,90 +46,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
 
-[ Upstream commit 1f74d3bff6fe04a64e02ab3661d2e0d554565aa6 ]
+[ Upstream commit db8d634128d2ba88d79c0b601e983ebe14bb0519 ]
 
-nintendo_hid_probe() calls hid_device_io_start() before joycon_init()
-and joycon_leds_create().  If either fails, the error path jumps to
-err_close which calls hid_hw_close()/hid_hw_stop() without first calling
-hid_device_io_stop().
+magicmouse_raw_event() handles DOUBLE_REPORT_ID (0xf7) packets, which pack
+two touch reports into one, by splitting the packet and calling itself on
+each half. The only guard against runaway recursion is a "size < 1" check,
+which stops zero-sized calls but does not bound the recursion depth.
 
-hid_hw_stop() does not stop device IO, so hid_input_report() may still
-run and access driver data that is being torn down, resulting in a
-use-after-free.
+A malicious HID device that matches this driver can send a report starting
+with DOUBLE_REPORT_ID and filled with the sequence [0xf7, 0x00]. Each level
+consumes two bytes and recurses on the remainder, so an incoming report of
+up to HID_MAX_BUFFER_SIZE (16 KiB) drives roughly 8000 nested calls. That
+easily exhausts the 16 KiB kernel stack, leading to a stack overflow: a
+panic with CONFIG_VMAP_STACK, or memory corruption without it.
 
-Add an err_io_stop label that calls hid_device_io_stop() before
-hid_hw_close(), and point the two post-io_start error paths at it.
+A double report only ever wraps two normal reports; it is never
+legitimately nested. Refuse to re-enter the DOUBLE_REPORT_ID case from a
+recursive call so the recursion depth is bounded to two, while all valid
+packets keep being parsed exactly as before.
 
-Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
+Fixes: a462230e16ac ("HID: magicmouse: enable Magic Trackpad support")
+Link: https://lore.kernel.org/linux-input/20260706181347.700DB1F00A3F@smtp.kernel.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+Reviewed-by: Alec Hall <signshop.alec@gmail.com>
+Tested-by: Alec Hall <signshop.alec@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ dropped the absent `err_ida:`/`ida_free()` context and retargeted all five `goto err_close` paths to the new `err_io_stop` label ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-nintendo.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/hid/hid-magicmouse.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -2350,34 +2350,34 @@ static int nintendo_hid_probe(struct hid
- 	ret = joycon_init(hdev);
- 	if (ret) {
- 		hid_err(hdev, "Failed to initialize controller; ret=%d\n", ret);
--		goto err_close;
-+		goto err_io_stop;
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -377,8 +377,8 @@ static void magicmouse_emit_touch(struct
  	}
+ }
  
- 	ret = joycon_read_info(ctlr);
- 	if (ret) {
- 		hid_err(hdev, "Failed to retrieve controller info; ret=%d\n",
- 			ret);
--		goto err_close;
-+		goto err_io_stop;
- 	}
+-static int magicmouse_raw_event(struct hid_device *hdev,
+-		struct hid_report *report, u8 *data, int size)
++static int __magicmouse_raw_event(struct hid_device *hdev,
++		struct hid_report *report, u8 *data, int size, bool nested)
+ {
+ 	struct magicmouse_sc *msc = hid_get_drvdata(hdev);
+ 	struct input_dev *input = msc->input;
+@@ -489,6 +489,15 @@ static int magicmouse_raw_event(struct h
+ 		 * packet.
+ 		 */
  
- 	/* Initialize the leds */
- 	ret = joycon_leds_create(ctlr);
- 	if (ret) {
- 		hid_err(hdev, "Failed to create leds; ret=%d\n", ret);
--		goto err_close;
-+		goto err_io_stop;
- 	}
++		/*
++		 * A double report only ever wraps two normal reports, so it is
++		 * never nested. Refuse to recurse a second time; otherwise a
++		 * malicious device could chain DOUBLE_REPORT_ID packets to drive
++		 * unbounded recursion and overflow the kernel stack.
++		 */
++		if (nested)
++			return 0;
++
+ 		/* Ensure that we have at least 2 elements (report type and size) */
+ 		if (size < 2)
+ 			return 0;
+@@ -500,9 +509,9 @@ static int magicmouse_raw_event(struct h
+ 			return 0;
+ 		}
  
- 	/* Initialize the battery power supply */
- 	ret = joycon_power_supply_create(ctlr);
- 	if (ret) {
- 		hid_err(hdev, "Failed to create power_supply; ret=%d\n", ret);
--		goto err_close;
-+		goto err_io_stop;
- 	}
+-		magicmouse_raw_event(hdev, report, data + 2, data[1]);
+-		magicmouse_raw_event(hdev, report, data + 2 + data[1],
+-			size - 2 - data[1]);
++		__magicmouse_raw_event(hdev, report, data + 2, data[1], true);
++		__magicmouse_raw_event(hdev, report, data + 2 + data[1],
++			size - 2 - data[1], true);
+ 		return 0;
+ 	default:
+ 		return 0;
+@@ -527,6 +536,12 @@ static int magicmouse_raw_event(struct h
+ 	return 1;
+ }
  
- 	ret = joycon_input_create(ctlr);
- 	if (ret) {
- 		hid_err(hdev, "Failed to create input device; ret=%d\n", ret);
--		goto err_close;
-+		goto err_io_stop;
- 	}
- 
- 	ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
-@@ -2385,7 +2385,8 @@ static int nintendo_hid_probe(struct hid
- 	hid_dbg(hdev, "probe - success\n");
- 	return 0;
- 
--err_close:
-+err_io_stop:
-+	hid_device_io_stop(hdev);
- 	hid_hw_close(hdev);
- err_stop:
- 	hid_hw_stop(hdev);
++static int magicmouse_raw_event(struct hid_device *hdev,
++		struct hid_report *report, u8 *data, int size)
++{
++	return __magicmouse_raw_event(hdev, report, data, size, false);
++}
++
+ static int magicmouse_event(struct hid_device *hdev, struct hid_field *field,
+ 		struct hid_usage *usage, __s32 value)
+ {
 
 
