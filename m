@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB1F471267;
-	Mon, 31 Aug 2026 13:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92CA471D16;
+	Mon, 31 Aug 2026 13:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183315; cv=none; b=Ush3w64kSqsR88s2HPuUMgT1/ARAdikc27rlrRrCg/8fmfANbK2EpqRi0zzuUAmGIOayO7XnpgMV9IDcH2zSELVpKbkb2J3Yz5oyQTDup2sHdM41atCmFwWX8xro+GDdYBrE4Ix01woLbTrlL99P20Cv0vNvcqGj9b6WmHI9lfo=
+	t=1788183318; cv=none; b=H5YAxV84gPd40oPcoQeF4SQo9mJkpbLxVD4o3+7KdDAqIXuxLyYVAc1gKxMmfKs6ynGZgEWBOFBI0fA21GAPjq04t1cd9/Vlx6E6UlDV8bSTIx4IaXu3/JW8UPLk2x9a+VFEVk1b4lxl6nzurXX2VjREscNyipWi+1O060ClNCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183315; c=relaxed/simple;
-	bh=AakF8LDHJZeo4tBbW/euG0jWc1cCwijduuKREC6b2J8=;
+	s=arc-20240116; t=1788183318; c=relaxed/simple;
+	bh=QIq5xOs9tJx1RW+zdVX0iUSBuvf3LzBhaXiIkg8+nUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qh0r/IYNAaKpf5xpbptwuGfNZxVUOp8rlmc68O3RFmhM8u+xrvG1mDDiv4I6AelPHBn9+hppq7o8OaKViLI2WoCyp4MrhTnPaUF+CcnouQgJtFDTCUvD6aEM3c0AWGmaxRcwd0GE3rIroKbQELcYJho90PBL6N+yD32oaJNEC9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nW8QvC/O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PTxXg3oGE08yHry7zn2njbVW7iJrOoQzaBfeFeUszkhnchl5+5WI0tH1RPjcJB+Z26obuuntYbq/I1kJTJc1tVyGgA6t8oXALabI+LmrsrYF3COt5FAh46DF/p+IpBW8hIA655wppEQE1H+/M8oJXNqkkPyufN2VEivltEDFMVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VyQbj6NY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nW8QvC/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD02F1F000E9;
-	Mon, 31 Aug 2026 13:35:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VyQbj6NY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82391F00A3E;
+	Mon, 31 Aug 2026 13:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183313;
-	bh=M8D7M6mBkwqRnkgUEWH3JD0GscwuBauOD2KpapZTNyQ=;
+	s=k20260515; t=1788183315;
+	bh=gkkilCCaBb/bCg04OyylRmI/xG9+oB/GrFqHSYyN5Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nW8QvC/O2yBWJNQEW1NYWsFErxSwym1l/pZKKLxrREuPJuOwfyfBB+DhLmmQkA6EJ
-	 yXvI03sbRZmu4Hix9L4A7+HEx+UnNGfRLbuUreQasrn6FRrfZmkmaPRkCAO+z8QSAf
-	 V38vm7LUEnTcGEnlJr+GIqWjRnPO/dN01n5j2YDWaq+fhjitO37guAVIKVxLOLh3TD
-	 +WDAgey2TxF9dUaDUKXwMBJdbunIVYYwZuYBuI2+rqSgsdIxXjoejrye45O0LbfSml
-	 O0DnIUCfqsV2c+0f/+b9YOuNdJmLGwjpJ/tV56c2B0ol4WKxcStYw88h+uc5ip9YIF
-	 Ey0iF5IO8IXNQ==
+	b=VyQbj6NY4A2x/UnMST4J0ng8dxRuHopmGAvZklO3soqG9eaCMq/U8lrkclSEY95Zq
+	 BU6JU+BHYz14oqto3xxNI/JkRauYwTkfElc2XIzqZJ60oGdk9B6wAJJQXw43L+yqVq
+	 CYkbL6R2XmXgTycp6ugvOCLVL3efzez32bwIe84jfS4CtBgljFzPkDrV5kCKKwlyFd
+	 4KHH/+A/YqrUJgAVSMCkDEGAXIqRCx71nITqTEtiRiXNDeQ0Yw4qaFgptMkIIYMhwy
+	 jRr4CmdAZXrG7dEputRC/lpUTpJIWHOU/gWj4Fp3CihdRW0uDc6Q2jJgh3HRY7V1aP
+	 zQTzmotalmdvg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Bowen <hicbowen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	rafael@kernel.org,
+	maciej.wieczor-retman@intel.com,
+	pawel.chmielewski@intel.com,
+	linux-acpi@vger.kernel.org,
+	acpica-devel@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Fix speakers on MECHREVO WUJIE Series
-Date: Mon, 31 Aug 2026 09:21:42 -0400
-Message-ID: <20260831133314.4125787-74-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: Fix NULL pointer dereference in acpi_ns_custom_package()
+Date: Mon, 31 Aug 2026 09:21:43 -0400
+Message-ID: <20260831133314.4125787-75-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,395 +57,402 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Bowen <hicbowen@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 9064637fb2a80b43105900a47d414997630e5b6b ]
+[ Upstream commit f8d14b7bb0063bbbd86c0e4d73edb8cea7b362bc ]
 
-The internal speakers on the MECHREVO WUJIE Series are silent,
-while the headphone output works correctly.
+acpi_ns_custom_package() unconditionally dereferences the first element
+of the package to read the _BIX version number, without checking for
+NULL:
 
-The BIOS reports NID 0x1b on the Realtek ALC233 codec as
-unconnected with pin configuration 0x411111f0. However, the pin
-is connected to an internal speaker.
+    if ((*Elements)->Common.Type != ACPI_TYPE_INTEGER)
 
-Overriding NID 0x1b with 0x90170150 makes the HDA generic parser
-detect both 0x14 and 0x1b as speaker outputs and restores internal
-speaker playback.
+When firmware returns a _BIX package whose first element is an
+unresolvable reference, ACPICA evaluates that entry to NULL.
+acpi_ns_remove_null_elements() does not strip NULL entries for
+ACPI_PTYPE_CUSTOM packages (fixed-position format would break if
+elements were shifted), so acpi_ns_custom_package() sees the NULL
+and causes a crash.
 
-Add a pin configuration fixup for the affected PCI SSID c011:1d05.
+Add a NULL check for the first element (version field) before
+dereferencing it. The caller then receives AE_AML_OPERAND_TYPE
+instead of crashing.
 
-Tested on a MECHREVO WUJIE Series laptop with board
-WUJIE Series-Lark4-LNL and firmware EM_LNL326_V1.0.23.
-
-Signed-off-by: Chen Bowen <hicbowen@gmail.com>
-Link: https://patch.msgid.link/20260710133409.16641-1-hicbowen@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://github.com/acpica/acpica/commit/f3f111b9013b
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5674388.Sb9uPGUboI@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ALSA: hda/realtek: Fix speakers on MECHREVO
-WUJIE Series
+# Stable Backport Analysis: ACPICA NULL Pointer Dereference in
+`acpi_ns_custom_package()`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
+**Local tree:** Linux **6.18.44** (`v6.18.44`, `stable/linux-6.18.y`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[ALSA: hda/realtek]` `[Fix]` — Restore internal speaker
-playback on MECHREVO WUJIE Series laptops with Realtek ALC233 codec.
+### Step 1.1: Parse the Subject Line
+**Record:** `[ACPICA] [fix] NULL pointer dereference in
+acpi_ns_custom_package()` — ACPI namespace package validation for
+predefined methods.
 
-### Step 1.2: Tags
+### Step 1.2: Parse All Commit Message Tags
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Signed-off-by | Chen Bowen \<hicbowen@gmail.com\> (author) |
-| Link |
-https://patch.msgid.link/20260710133409.16641-1-hicbowen@gmail.com |
-| Signed-off-by | Takashi Iwai \<tiwai@suse.de\> (ALSA/HDA maintainer) |
+- **Link:** https://github.com/acpica/acpica/commit/f3f111b9013b
+  (upstream ACPICA commit)
+- **Reported-by:** Xiang Mei \<xmei5@asu.edu\>
+- **Reported-by:** Weiming Shi \<bestswngs@gmail.com\> (two independent
+  reporters)
+- **Signed-off-by:** Rafael J. Wysocki \<rafael.j.wysocki@intel.com\>
+  (ACPI maintainer)
+- **Link:** https://patch.msgid.link/5674388.Sb9uPGUboI@rafael.j.wysocki
+- No `Fixes:` tag (expected for manual review)
+- No `Cc: stable@vger.kernel.org` (expected)
+- Notable: two real-world reporters; no syzbot
 
-**Notable absences (expected, not negative):** No `Fixes:`, no `Cc:
-stable@vger.kernel.org`, no `Reported-by:`, no syzbot link.
-
-### Step 1.3: Body Analysis
+### Step 1.3: Analyze the Commit Body Text
 **Record:**
-- **Bug:** BIOS reports NID 0x1b on ALC233 as unconnected
-  (`0x411111f0`), but pin is wired to internal speakers.
-- **Symptom:** Internal speakers silent; headphone output works.
-- **Root cause:** HDA generic parser skips misreported pin; speaker
-  outputs not detected.
-- **Fix:** Override NID 0x1b with `0x90170150` via PCI SSID quirk
-  `c011:1d05`.
-- **Testing:** Verified on MECHREVO WUJIE Series, board `WUJIE Series-
-  Lark4-LNL`, firmware `EM_LNL326_V1.0.23`.
+- **Bug:** `acpi_ns_custom_package()` dereferences `(*elements)` to read
+  the `_BIX` version field without checking for NULL.
+- **Trigger:** Firmware returns a `_BIX` package whose first element is
+  an unresolvable reference → evaluates to NULL.
+  `acpi_ns_remove_null_elements()` intentionally does not strip NULLs
+  from `ACPI_PTYPE_CUSTOM` packages (fixed-position semantics).
+- **Symptom:** Kernel crash (NULL pointer dereference) instead of a
+  controlled validation error.
+- **Fix behavior:** Return `AE_AML_OPERAND_TYPE` with a warning,
+  matching existing invalid-type handling.
+- **Version info:** None specified; bug is in long-standing code.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Not disguised — this is an explicit hardware/BIOS quirk fix.
-Same class as other "Fix speakers on …" commits in this file.
+### Step 1.4: Detect Hidden Bug Fixes
+**Record:** Not hidden — explicitly labeled as a NULL pointer
+dereference fix. Clear bug-fix commit.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Inventory the Changes
 **Record:**
-- **File:** `sound/hda/codecs/realtek/alc269.c` only
-- **Scope:** ~15 lines added, 0 removed — single-file surgical quirk
-- **Changes:**
-  1. New enum `ALC233_FIXUP_WUJIE_SPEAKERS`
-  2. New `hda_fixup` entry (`HDA_FIXUP_PINS`, pin 0x1b → `0x90170150`)
-  3. New `SND_PCI_QUIRK(0xc011, 0x1d05, …)` table entry
+- **Files:** `drivers/acpi/acpica/nsprepkg.c` (+7 lines, 0 removed)
+- **Function modified:** `acpi_ns_custom_package()`
+- **Scope:** Single-file, surgical fix
 
-### Step 2.2: Code Flow
+### Step 2.2: Understand the Code Flow Change
 **Record:**
-- **Before:** On SSID `c011:1d05`, codec probe uses BIOS pin config; NID
-  0x1b treated as disconnected → no internal speaker PCM device.
-- **After:** Quirk table match applies pin override at probe; parser
-  detects 0x14 and 0x1b as speaker outputs → internal speaker playback
-  works.
-- **Path:** Normal device probe / initialization only.
+- **Hunk (before):** Immediately dereferences `(*elements)->common.type`
+  to validate the version integer.
+- **Hunk (after):** Adds `if (!(*elements))` guard with
+  `ACPI_WARN_PREDEFINED` and early return of `AE_AML_OPERAND_TYPE`
+  before any dereference.
+- **Path affected:** Predefined-method package validation for `_BIX`
+  (`ACPI_PTYPE_CUSTOM`).
 
-### Step 2.3: Bug Mechanism
-**Record:** **Category (h): Hardware workaround / codec quirk.**
-Incorrect BIOS pin configuration prevents speaker detection. Pin-table
-override is the standard Realtek HDA fix pattern.
-
-### Step 2.4: Fix Quality
+### Step 2.3: Identify the Bug Mechanism
 **Record:**
-- **Obviously correct:** Yes — identical mechanism to existing quirks in
-  this file.
-- **Minimal:** Yes — enum + fixup struct + one quirk line.
-- **Regression risk:** Very low — quirk matches only PCI SSID
-  `0xc011:0x1d05`; no global behavior change.
+- **Category:** NULL pointer dereference (memory safety)
+- **Mechanism:** Missing NULL check before pointer dereference on
+  package element array; NULL elements are intentionally preserved for
+  custom fixed-position packages.
+
+### Step 2.4: Assess the Fix Quality
+**Record:**
+- **Quality:** Obviously correct — mirrors the existing invalid-type
+  error path directly below it.
+- **Minimal:** 7 lines, no unrelated changes.
+- **Regression risk:** Very low — converts a crash into the same error
+  status (`AE_AML_OPERAND_TYPE`) already used for wrong element types;
+  caller already handles this status for repair/fallback.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** Insertion point (`ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY`
-area) dates to v6.18 merge base (Nov 2025). The "bug" is BIOS
-misconfiguration, not a kernel regression — present since hardware
-shipped.
+### Step 3.1: Blame the Changed Lines
+**Record:** Buggy dereference introduced in commit `7952d40240855` (Bob
+Moore, 2016-05-05): "ACPICA: ACPI 6.0: Update _BIX support for new
+package element". Present in this tree since at least 2016.
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no `Fixes:` tag. Bug is firmware/BIOS reporting error,
-not introduced by a specific kernel commit.
+### Step 3.2: Follow the Fixes: Tag
+**Record:** No `Fixes:` tag present — not applicable.
 
-### Step 3.3: Related File History
-**Record:** Recent analogous stable commits in this tree:
-- `2ec8f95a08fed` — "Fix speakers on Lunnen Ground 14" — **same pin** `{
-  0x1b, 0x90170150 }`, backported (`Cc: stable`, Greg K-H SOB)
-- `6b2c0cd5f9689` — Legion Pro 7 speaker fix
-- `6441` area — `ALC233_FIXUP_MEDION_MTL_SPK` — ALC233 speaker pin
-  override on 0x1b
+### Step 3.3: Check File History for Related Changes
+**Record:** Recent `nsprepkg.c` history is mostly copyright updates. No
+related NULL-check fixes for this function. Fix commit on mainline:
+`f8d14b7bb0063` (May 27, 2026). Standalone — not part of a dependent
+series for this specific fix (appeared as patch 21/27 in a larger ACPICA
+merge, but the diff is self-contained).
 
-Standalone fix; not part of a series.
+### Step 3.4: Check the Author's Other Commits
+**Record:** Author Weiming Shi reported the bug; commit committed by
+Rafael J. Wysocki (ACPI subsystem maintainer). Strong subsystem
+ownership signal.
 
-### Step 3.4: Author Context
-**Record:** Chen Bowen — no prior commits in this tree's `sound/hda/`.
-Patch carries Takashi Iwai's maintainer `Signed-off-by`, indicating ALSA
-maintainer acceptance.
-
-### Step 3.5: Dependencies
-**Record:** **None.** Uses existing `HDA_FIXUP_PINS`, `hda_pintbl`, and
-`SND_PCI_QUIRK` infrastructure. No prerequisite commits required.
+### Step 3.5: Check for Dependent/Prerequisite Commits
+**Record:** No dependencies. `acpi_ns_custom_package()`,
+`acpi_ns_remove_null_elements()`, and `_BIX`/`ACPI_PTYPE_CUSTOM`
+definitions all exist in this tree. `git apply --check` confirms clean
+apply.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:** Commit provides Link to patch.msgid.link thread
-(`20260710133409.16641-1-hicbowen@gmail.com`). `b4 dig -c` could not
-match — commit not present in local tree. lore.kernel.org fetch blocked
-by bot protection. **UNVERIFIED:** Full review thread content.
+### Step 4.1: Find the Original Patch Discussion
+**Record:**
+- `b4 dig -c f8d14b7bb0063`: Found at
+  https://patch.msgid.link/5674388.Sb9uPGUboI@rafael.j.wysocki
+- `b4 dig -a`: Two submission contexts — standalone v1 from Weiming Shi
+  (2026-03-22) and inclusion in Rafael's ACPICA v1 27-patch series
+  (2026-05-27). Committed version matches the latter.
+- Lore thread content could not be fetched (Anubis bot protection on
+  lore.kernel.org).
 
-### Step 4.2: Reviewers
-**Record:** Takashi Iwai (ALSA/HDA maintainer) signed off.
-**UNVERIFIED:** Full recipient list via `b4 dig -w`.
+### Step 4.2: Check Who Reviewed the Patch
+**Record:** `b4 dig -w` recipients: Rafael J. Wysocki, linux-
+acpi@vger.kernel.org, LKML, Saket Dumbre, Pawel Chmielewski (Intel ACPI
+team). Appropriate maintainer coverage.
 
-### Step 4.3: Bug Report
-**Record:** No external bug report links. Author tested on physical
-hardware (strong signal for hardware quirks).
+### Step 4.3: Search for the Bug Report
+**Record:** Two `Reported-by` tags from researchers who found the crash
+with broken `_BIX` firmware. GitHub ACPICA commit confirms same
+mechanism. No syzbot report.
 
-### Step 4.4: Related Patches
-**Record:** Related MECHREVO Wujie fix exists for **Conexant** codec
-(`06d929be11327`, SSID `0x1d05:0x3012`) — different hardware variant,
-same product line pattern.
+### Step 4.4: Check for Related Patches and Series
+**Record:** Fix is standalone (7-line diff). Being patch 21/27 in a
+merge series does not create a functional dependency on the other 26
+patches.
 
-### Step 4.5: Stable List History
-**Record:** **UNVERIFIED** — could not search lore stable list.
-Precedent: nearly identical Lunnen Ground 14 fix was explicitly
-nominated and backported to this tree.
+### Step 4.5: Check Stable Mailing List History
+**Record:** Could not search lore stable list (bot protection). No
+evidence found that this was explicitly rejected for stable.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions/Structures
-**Record:** `alc269_fixups[]`, `alc269_fixup_tbl[]`, enum fixup IDs. No
-function body changes — data-table only.
+### Step 5.1: Identify Key Functions in the Diff
+**Record:** `acpi_ns_custom_package()` (modified)
 
-### Step 5.2: Callers
-**Record:** `alc269_fixup_tbl` consumed during HDA codec probe
-(`snd_hda_pick_fixup` / `snd_hda_apply_fixup` path). Runs once per
-matching codec at driver bind.
+### Step 5.2: Trace Callers
+**Record:**
+- `acpi_ns_check_package()` → case `ACPI_PTYPE_CUSTOM` →
+  `acpi_ns_custom_package()` (`nsprepkg.c:108-110`)
+- `acpi_ns_check_package()` called from `acpi_ns_check_return_value()`
+  (`nspredef.c:136`)
+- `acpi_ns_check_return_value()` called from `acpi_ns_evaluate()`
+  (`nseval.c:261`)
+- Reaches `acpi_evaluate_object()` — used by `drivers/acpi/battery.c`
+  for `_BIX` evaluation (`battery.c:546-548`)
 
-### Step 5.3: Callees
-**Record:** `HDA_FIXUP_PINS` applies pin configuration verbs during
-codec initialization.
+### Step 5.3: Trace Callees
+**Record:** After version check, calls
+`acpi_ns_check_package_elements()` which uses
+`acpi_ns_check_object_type()` — that function already handles NULL
+objects safely at `type_error_exit` (`nspredef.c:248-252`). The bug is
+specifically in the direct dereference before that path.
 
-### Step 5.4: Reachability
-**Record:** Triggered at boot/module load when PCI audio device with
-SSID `c011:1d05` is enumerated. Affects laptop owners with this hardware
-— not userspace-triggerable, but affects every boot.
+### Step 5.4: Follow the Call Chain (Bug Reachability)
+**Record:**
+```
+acpi_battery_get_info()
+  → acpi_evaluate_object("_BIX")
+    → acpi_ns_evaluate()
+      → acpi_ns_check_return_value()
+        → acpi_ns_check_package()
+          → acpi_ns_custom_package()  [CRASH without fix]
+```
+Reachable during normal battery driver operation on any system with
+`_BIX` and broken firmware. Not config-obscure — ACPI battery is
+standard on laptops.
 
-### Step 5.5: Similar Patterns
-**Record:** Pin `0x1b` → `0x90170150` already used in this tree for:
-- `ALC269VC_FIXUP_LUNNEN_GROUND_14` (line 4190) — **identical fix**
-- `ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO` (line 4198)
-- Multiple other speaker fixups
+### Step 5.5: Search for Similar Patterns
+**Record:** `acpi_ns_remove_null_elements()` explicitly excludes
+`ACPI_PTYPE_CUSTOM` from NULL stripping (`nsrepair.c:457-472`, default
+case returns without modification). This design choice makes the NULL
+check in `acpi_ns_custom_package()` necessary and consistent.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-### Step 6.1: Does Buggy Code Exist?
-**Record:** **Yes.** Generic HDA Realtek parser and ALC233 support
-exist. Without this quirk, affected hardware gets silent speakers.
-`ALC233_FIXUP_WUJIE_SPEAKERS` and `0xc011:0x1d05` quirk are **not yet**
-in this tree (confirmed by grep).
+### Step 6.1: Does the Buggy Code Exist in This Tree?
+**Record:** **YES.** `drivers/acpi/acpica/nsprepkg.c:634` still has `if
+((*elements)->common.type != ACPI_TYPE_INTEGER)` without a prior NULL
+check. Fix commit `f8d14b7bb0063` is **NOT** an ancestor of HEAD (`fix
+NOT in tree`).
 
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** Enum insertion point
-(`ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY` at line 3784), fixup table
-structure, and quirk table position (after `0x8086:0x3038`, before
-`0xf111:0x0001` at lines 7591–7592) all match the patch context.
+### Step 6.2: Check for Backport Complications
+**Record:** `git apply --check` on the mainline patch: **APPLIES
+CLEANLY**. No conflicts expected. File has not been structurally
+refactored around this function.
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** No duplicate WUJIE/MECHREVO Realtek quirk. Lunnen Ground 14
-fix (same pin value, same bug class) already backported.
+### Step 6.3: Check if Related Fixes Are Already Here
+**Record:** No prior fix for this specific bug. Other ACPICA NULL-deref
+fixes exist in the tree (e.g., `acpi_ev_address_space_dispatch`) but not
+for `acpi_ns_custom_package`.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**Record:** `sound/hda/codecs/realtek` — **IMPORTANT** (audio subsystem,
-laptop users). Device-specific quirk, not core kernel.
+### Step 7.1: Identify the Subsystem and Its Criticality
+**Record:** **ACPI/ACPICA** — core firmware interface subsystem.
+**Criticality: CORE** — affects all ACPI-enabled x86/ARM systems during
+method evaluation.
 
-### Step 7.2: Subsystem Activity
-**Record:** **Highly active** — frequent speaker/quirk commits in
-`alc269.c` (20+ recent entries). Hardware quirk additions are routine
-stable material for this file.
+### Step 7.2: Assess Subsystem Activity
+**Record:** Actively maintained; ACPICA regularly synced. The bug
+predates recent churn — present since 2016 `_BIX` support was added.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** Owners of MECHREVO WUJIE Series laptops with Realtek ALC233
-and PCI SSID `c011:1d05`. Narrow hardware scope, but complete audio
-failure (speakers) for those users.
+### Step 8.1: Determine Who Is Affected
+**Record:** Systems with ACPI battery support and firmware exposing
+`_BIX` with a broken/unresolvable first package element. Affects
+laptop/desktop users with ACPI batteries — a large population, though
+trigger requires specific broken firmware.
 
-### Step 8.2: Trigger Conditions
-**Record:** Every boot/probe on matching hardware. Deterministic — not a
-race. Unprivileged users cannot trigger on non-matching hardware.
+### Step 8.2: Determine the Trigger Conditions
+**Record:** Evaluating `_BIX` when firmware returns a package whose
+version field (element 0) is an unresolvable reference → NULL. Triggered
+during battery info queries (boot and periodic updates). Does not
+require privileged user action beyond normal system operation.
 
-### Step 8.3: Failure Mode Severity
-**Record:** **MEDIUM** — silent internal speakers (functional
-impairment, not crash/corruption/security). Headphones still work.
-Significant UX impact for affected laptop owners.
+### Step 8.3: Determine the Failure Mode Severity
+**Record:** **CRITICAL** — NULL pointer dereference in kernel context →
+kernel oops/panic. With the fix: controlled `AE_AML_OPERAND_TYPE` return
+→ battery driver falls back to `_BIF` (`battery.c:541-567`).
 
-### Step 8.4: Risk-Benefit
+### Step 8.4: Calculate Risk-Benefit Ratio
 **Record:**
-- **Benefit:** Restores speaker audio on affected laptops; proven quirk
+- **Benefit:** HIGH — prevents kernel crash on broken firmware; enables
+  graceful degradation to `_BIF`.
+- **Risk:** VERY LOW — 7-line NULL guard using existing error-return
   pattern.
-- **Risk:** Minimal — SSID-scoped, ~15 lines, no logic changes.
-- **Ratio:** Strong benefit for affected users, negligible risk to
-  others. Matches established stable practice for HDA codec quirks.
+- **Ratio:** Strongly favors backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Compile the Evidence
 
-**FOR backport:**
-- Real hardware bug (silent speakers) with author hardware testing
-- Textbook HDA codec quirk — explicit stable exception category
-- Identical pattern to `ALC269VC_FIXUP_LUNNEN_GROUND_14` already
-  backported to this 6.18.y tree
-- Small, single-file, SSID-scoped change
-- ALSA maintainer (Takashi Iwai) signed off
-- Applies cleanly to current `alc269.c`
-- No dependencies
+**FOR backporting:**
+- Real NULL pointer dereference → kernel crash
+- Two independent reporters
+- Small (7 lines), obviously correct fix
+- Applies cleanly to 6.18.y
+- Bug present since 2016 in this tree
+- ACPI maintainer committed the fix
+- Graceful error path already exists in callers (`AE_AML_OPERAND_TYPE`
+  handled in `nspredef.c:141-144`; battery driver falls back to `_BIF`)
+- No new APIs or features
 
-**AGAINST backport:**
-- Device-specific — narrow user base
-- Not crash/security/data-corruption (functional audio only)
-- No `Cc: stable` nomination (not a negative per review rules)
+**AGAINST backporting:**
+- Requires specific broken `_BIX` firmware (not universal)
+- No syzbot/fuzzer confirmation
+- Lore review thread not readable (bot protection)
 
-**UNRESOLVED:**
-- Full lore review thread (bot protection)
-- Whether maintainer explicitly nominated for stable
+**Unresolved:** Exact crash stack traces from reporters not available;
+lore discussion content unverified.
 
-### Step 9.2: Stable Rules Checklist
+### Step 9.2: Apply the Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — minimal NULL guard;
+   committed by maintainer; two reporters.
+2. Fixes a real bug affecting users? **PASS** — NULL deref on `_BIX`
+   evaluation with broken firmware.
+3. Important issue? **PASS** — kernel crash (CRITICAL severity).
+4. Small and contained? **PASS** — 7 lines, one function, one file.
+5. No new features or APIs? **PASS** — defensive check only.
+6. Can apply to the local tree? **PASS** — buggy code present; patch
+   applies cleanly.
 
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — maintainer merged;
-hardware tested; proven pin value |
-| 2. Fixes real bug affecting users? | **PASS** — silent speakers on
-specific laptop |
-| 3. Important issue? | **PASS** (hardware quirk exception) — functional
-audio failure for affected hardware |
-| 4. Small and contained? | **PASS** — ~15 lines, one file |
-| 5. No new features/APIs? | **PASS** — quirk table entry only |
-| 6. Can apply to local tree? | **PASS** — infrastructure present, clean
-apply |
-
-### Step 9.3: Exception Category
-**Record:** **Hardware quirk/workaround** — PCI SSID-matched pin
-configuration fix for broken BIOS reporting. This is one of the most
-common and accepted stable backport categories for
-`sound/hda/realtek/alc269.c`.
+### Step 9.3: Check for Exception Categories
+**Record:** Not a device-ID/quirk/DT/build/doc exception — standard bug
+fix.
 
 ### Step 9.4: Decision Rationale
-
-This commit fixes a real, user-visible problem (no internal speaker
-audio) caused by incorrect BIOS pin reporting on MECHREVO WUJIE Series
-laptops. The fix is a minimal, SSID-scoped pin override using the exact
-same mechanism and pin value (`0x1b` → `0x90170150`) as the Lunnen
-Ground 14 fix already backported to this 6.18.y tree. It requires no
-prerequisites, poses negligible regression risk, and falls squarely
-within the hardware-quirk exception for stable kernels.
+This is a textbook stable backport: a long-standing NULL pointer
+dereference in core ACPI validation code, triggered by real broken
+firmware on a common code path (battery `_BIX` evaluation), fixed with a
+minimal guard that converts a crash into an error code the callers
+already handle. The fix is absent from Linux 6.18.44 and applies without
+modification.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Confirmed no syzbot/Reported-by; Takashi Iwai maintainer
-  SOB present
-- **[Phase 2]** Diff analysis: 3 hunks in `alc269.c` — enum, fixup
-  struct, quirk table entry
-- **[Phase 2]** Pin override `0x1b → 0x90170150` matches Lunnen Ground
-  fix pattern
-- **[Phase 3]** `git describe HEAD`: v6.18.44-1-g2736c32da98b9 (6.18.y
-  stable tree)
-- **[Phase 3]** `git show 2ec8f95a08fed`: Lunnen Ground 14 — identical
-  pin fix, backported with `Cc: stable`
-- **[Phase 3]** `git log --oneline -20 -- alc269.c`: multiple recent
-  speaker quirk commits
-- **[Phase 3]** `git blame -L 3784,3786`: enum area present since v6.18
-  merge
-- **[Phase 3]** `git show 06d929be11327`: related MECHREVO Wujie
-  conexant quirk (different codec/SSID)
-- **[Phase 4]** `b4 dig -c HEAD`: no match (commit not in tree) —
-  UNVERIFIED lore thread
-- **[Phase 4]** WebFetch patch.msgid.link and lore.kernel.org: blocked
-  by bot protection — UNVERIFIED
-- **[Phase 5]** `grep 0x90170150 alc269.c`: 8 existing uses, including
-  Lunnen Ground at line 4190
-- **[Phase 5]** `grep alc269_fixup_tbl`: standard HDA quirk application
-  path confirmed
-- **[Phase 6]** `grep WUJIE|0xc011|ALC233_FIXUP_WUJIE`: no matches — fix
-  not yet in tree
-- **[Phase 6]** Verified insertion points at lines 3784–3785 (enum) and
-  7591–7592 (quirk table) match patch context
-- **[Phase 6]** `ALC233_FIXUP_MEDION_MTL_SPK` at line 6441: precedent
-  for ALC233 speaker pin fixup
-- **[Phase 6]** `grep 0xc011 sound/hda`: no existing quirks for this
-  vendor — no conflict
-- **[Phase 7]** `git log --oneline -5 --grep=speaker -- alc269.c`:
-  active quirk maintenance
-- **[Phase 8]** Failure mode assessed: silent speakers, MEDIUM severity;
-  SSID-scoped, low risk
+- **[Phase 1]** Parsed subject, tags, body; identified two Reported-by,
+  maintainer SOB, ACPICA upstream link
+- **[Phase 2]** Diff: +7 lines in `acpi_ns_custom_package()`, adds NULL
+  check before dereference
+- **[Phase 3]** `git blame`: buggy line from `7952d40240855` (2016);
+  `git show 7952d40240855`: introduced `_BIX` custom package validation
+- **[Phase 3]** `git log -20 -- nsprepkg.c`: no prior fix for this issue
+- **[Phase 3]** `git show f8d14b7bb0063`: confirmed mainline fix commit
+- **[Phase 3]** `git apply --check`: patch applies cleanly to 6.18.44
+- **[Phase 3]** `git merge-base --is-ancestor f8d14b7bb0063 HEAD`: fix
+  NOT in tree
+- **[Phase 4]** `b4 dig -c f8d14b7bb0063`: lore URL found
+- **[Phase 4]** `b4 dig -a`: v1 standalone + v1 21/27 in ACPICA series
+- **[Phase 4]** `b4 dig -w`: Rafael Wysocki, linux-acpi, Intel team CC'd
+- **[Phase 4]** WebFetch lore/GitHub: GitHub ACPICA commit readable;
+  lore blocked by Anubis
+- **[Phase 5]** Grep call chain: `acpi_ns_custom_package` →
+  `acpi_ns_check_package` → `acpi_ns_check_return_value` →
+  `acpi_ns_evaluate`
+- **[Phase 5]** Read `battery.c:546-567`: `_BIX` evaluation and `_BIF`
+  fallback confirmed
+- **[Phase 5]** Read `nsrepair.c:457-472`: `ACPI_PTYPE_CUSTOM` excluded
+  from NULL stripping (confirms commit message)
+- **[Phase 5]** Read `nspredef.c:248-252`: `acpi_ns_check_object_type`
+  already handles NULL safely elsewhere
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** Read `nsprepkg.c:634`: buggy code confirmed present
+- **[Phase 8]** Failure mode: NULL deref → kernel oops; with fix →
+  `AE_AML_OPERAND_TYPE` → battery `_BIF` fallback
 
-**YES**
+**YES**The background search finished: the fix (`f8d14b7bb0063`) is on
+mainline but **not** in this **6.18.44** tree, and `git apply --check`
+applies it cleanly.
 
- sound/hda/codecs/realtek/alc269.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+**Verdict: YES** — backport this to stable. It’s a 7-line NULL guard in
+`acpi_ns_custom_package()` that stops a kernel oops when broken firmware
+returns a `_BIX` package with a NULL version element; callers already
+handle the returned `AE_AML_OPERAND_TYPE` and the battery driver can
+fall back to `_BIF`.
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 1bbaabbe99263..df2d597bcf95e 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3782,6 +3782,7 @@ enum {
- 	ALC275_FIXUP_DELL_XPS,
- 	ALC293_FIXUP_LENOVO_SPK_NOISE,
- 	ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY,
-+	ALC233_FIXUP_WUJIE_SPEAKERS,
- 	ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED,
- 	ALC255_FIXUP_DELL_SPK_NOISE,
- 	ALC225_FIXUP_DISABLE_MIC_VREF,
-@@ -4034,6 +4035,13 @@ static void alc287_fixup_lenovo_yoga_book_9i(struct hda_codec *codec,
- }
+ drivers/acpi/acpica/nsprepkg.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/acpi/acpica/nsprepkg.c b/drivers/acpi/acpica/nsprepkg.c
+index ca137ce5674fb..c32770570120a 100644
+--- a/drivers/acpi/acpica/nsprepkg.c
++++ b/drivers/acpi/acpica/nsprepkg.c
+@@ -631,6 +631,13 @@ acpi_ns_custom_package(struct acpi_evaluate_info *info,
  
- static const struct hda_fixup alc269_fixups[] = {
-+	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1b, 0x90170150 }, /* internal speaker */
-+			{ }
-+		},
-+	},
- 	[ALC269_FIXUP_GPIO2] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc_fixup_gpio2,
-@@ -7615,6 +7623,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
- 	SND_PCI_QUIRK(0x8086, 0x3038, "Intel NUC 13", ALC295_FIXUP_CHROME_BOOK),
-+	SND_PCI_QUIRK(0xc011, 0x1d05, "MECHREVO WUJIE Series", ALC233_FIXUP_WUJIE_SPEAKERS),
- 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	/* Get version number, must be Integer */
+ 
++	if (!(*elements)) {
++		ACPI_WARN_PREDEFINED((AE_INFO, info->full_pathname,
++				      info->node_flags,
++				      "Return Package has a NULL version element"));
++		return_ACPI_STATUS(AE_AML_OPERAND_TYPE);
++	}
++
+ 	if ((*elements)->common.type != ACPI_TYPE_INTEGER) {
+ 		ACPI_WARN_PREDEFINED((AE_INFO, info->full_pathname,
+ 				      info->node_flags,
 -- 
 2.53.0
 
