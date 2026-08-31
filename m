@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA414E9AF8;
-	Mon, 31 Aug 2026 13:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF334E9B11;
+	Mon, 31 Aug 2026 13:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183621; cv=none; b=UnLepFVrZ6zOrr36iEpC4Kb8hWUGiiFyp2ohqCn9LP2diadQrbA7TEqTUYJBqfk0pNFsNnFFb9/fSO11xpiju9kAiyEZky44m9VbOkkyhvxziHqsPcAfEDz2aFZIGdcP/DYFrX3deAN6jwKPF3mauBiBBr/HHtq1T9m8MwmWgxc=
+	t=1788183622; cv=none; b=GtiyiaAwi+Rwm7vZ/5xYvIsKO7sMeYzkqtt2tIGXC53YSGqXw5zBHSVEMfTJWDyVyj439nAuYttxA/JSk3/C+jNd0Wz7zsMO/uysXUdq5e3tjY6axTUW7V+2sG9eI2rTNoJ07Q7bE0H4oeI1rMYOARDKcF5UQUcK6S2MsFljhgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183621; c=relaxed/simple;
-	bh=y6csCL/R1rcLziRlPX6WrenEjIisHTB0PvmKJN+Gwyo=;
+	s=arc-20240116; t=1788183622; c=relaxed/simple;
+	bh=cDaIncWq7dHXdNzIl8KJ3xZfJ6WEN0jAfpY4FTKrltQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QcjIYfRKV0bKiVYRbWK+Bho7ybBpEpnmTwBx3a9lAgGBbtHIo/r/ooZurUtD4ql/iq3egmstMkkYZZyWSsqTKMNNjwPatrl5kPWg5kuup9yZJgXX9gzvFrQAFoW7PYTX7p6pt+y3bhuW5vhJoFAVjt076vijyq5l4aRhLrp5f74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CovSeabh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aVojmfUnJg+Bv+qhOBYLVXOC+wS7nj+mSnSuXJr04GgX0FblOJ4NRzQpwKLGBOL27esmb+gNd/lPN8vRqSqq1P1x4C+pof07RVvYVJk+xQxcXVW6tWvUAu9erSL0ThzW83taCu4kxZqUSVNqmu+fS4y5dU8tQtnf77+rnfuF+Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VQjrBclJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CovSeabh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120B11F00ACA;
-	Mon, 31 Aug 2026 13:40:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VQjrBclJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE1C1F00A3F;
+	Mon, 31 Aug 2026 13:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183618;
-	bh=F8rK4rLMFd335wHj57VD5rJSaaOzPj7rBxP3FPEcSaE=;
+	s=k20260515; t=1788183619;
+	bh=NTJu/lw+Qx3gZk4JTCaQNQb5sVykGkTarstmtYuV2eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CovSeabhvt8uAt3YNcL4YCrJUppC6e8e118fVxmpRpbnYUDjHi8d/XbfHzlgUZYQw
-	 KpjXFNpsQs/xYGlUbCABBDMbC65cD2M2TWGSZNiXsXVDzfiAm2eQsHyyExcbBimBRL
-	 acdfpRhNWo0eWNGjDHu7nUCdXzzPl8to217VTUQcz+tOnP2ohLyRw9brj9rUUcEROz
-	 gByJ6p753ZOLmzesxlhTE90XB89EYcC41SI+5L1ABylyABsB/Tm0/0aAgCBl0sZrEs
-	 +RVRqaxTzVv3ZYT+QRRD++sKLwmPVQVZswcyPddnDD+A/S5GT5le9XY79/yvQyhPLn
-	 h49srBgxYWJrg==
+	b=VQjrBclJQj6gG+vnMVVfXkx1g9sZ8XuiqDylYn+ck+qOX+EwlWik+KCBrWiESzLoT
+	 5CyOcO4sU4khNdeGfITjl5rD/W+hdyyh/7dkSklx3QH1XMpzYh/RPfI1aRU2XNip9t
+	 2H12GePW/GivqxrBbla+N6TYSUS8MszAA8Cv4OcC4eNynw6ARqyaGBrfRCpiF0lIq6
+	 5T0Ktr/avLvxxj4lvPbD88wcZxuN7QmY+pZcVYG9CpBJUM0Rkd1FwiD2i8y3OgeUyQ
+	 VOVw118+rMOio0rT3lcsvQNLwslE9HdL324unB71N7MDnoh8FqBkywnaJf0iYPaYhq
+	 82lnzKfRE4gjQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Yury Norov <ynorov@nvidia.com>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	yury.norov@gmail.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] PCI: Avoid SBR for Qualcomm WCN6855/WCN7850 WiFi, SDX62/SDX65 modems
-Date: Mon, 31 Aug 2026 09:23:49 -0400
-Message-ID: <20260831133314.4125787-201-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] bitfield: wire __bf_shf to __builtin_ctzll
+Date: Mon, 31 Aug 2026 09:23:50 -0400
+Message-ID: <20260831133314.4125787-202-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,77 +52,81 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Yury Norov <ynorov@nvidia.com>
 
-[ Upstream commit 6a4f64c3a3ada43e71ef1e06da89beb36bdaeefa ]
+[ Upstream commit 09472f591aa0b72c2dd6c693f48b2d6fea66c7ba ]
 
-Some Qualcomm PCIe devices (WCN6855/WCN7850 WiFi cards, SDX62/SDX65 modems)
-do not properly support Secondary Bus Reset (SBR).
+__bf_shf() is currently based on built-in ffsll. It's more
+straightforward to wire it to __builtin_ctzll, which makes it a pure
+rename.
 
-Testing confirms this is device-specific, not deployment-specific:
-MediaTek MT7925e successfully uses bus reset through the same passive
-M.2-to-PCIe adapters where Qualcomm devices fail, proving PERST# is
-properly wired through the adapters.
+Worth to notice that __builtin_ffsll() is buggy on GCC before 14.1:
 
-Prevent use of Secondary Bus Reset for these devices.
+  int main() {
+      sizeof(struct {
+          int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
+      });
+  }
 
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/all/20260609163649.319755-4-jtornosm@redhat.com
+  test.c: In function 'main':
+  test.c:3:21: error: bit-field 't' width not an integer constant
+      3 |                 int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
+        |                     ^
+
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124699
+Reported-by: Matt Coster <matt.coster@imgtec.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603222211.A2XiR1YU-lkp@intel.com/
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 2)...
-Retry attempt 2...
-# Stable Backport Analysis: PCI Qualcomm SBR Quirk
+# Stable Backport Analysis: `bitfield: wire __bf_shf to __builtin_ctzll`
 
-**Local tree:** `v6.18.44` (6.18.44)
+**Local tree:** `v6.18.44` (6.18.44) — HEAD is `1efe5d048a391 Linux
+6.18.44`
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[PCI] [avoid] Avoid Secondary Bus Reset (SBR) for Qualcomm
-WCN6855/WCN7850 WiFi and SDX62/SDX65 modems`
+### Step 1.1: Subject line
+**Record:** `[bitfield]` `[wire]` — Replace `__bf_shf` implementation
+from `__builtin_ffsll(x)-1` with `__builtin_ctzll`.
 
 ### Step 1.2: Tags
 **Record:**
-- **Link:** `https://lore.kernel.org/all/20260609163649.319755-4-
-  jtornosm@redhat.com`
-- **Signed-off-by:** Jose Ignacio Tornos Martinez
-  `<jtornosm@redhat.com>` (author)
-- **Signed-off-by:** Bjorn Helgaas `<bhelgaas@google.com>` (PCI
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or `Reviewed-by:` tags
-- Notable: maintainer sign-off from Bjorn Helgaas; part of v8 series
-  `[PATCH v8 0/3]` per LWN
+| Tag | Value |
+|-----|-------|
+| Reported-by | Matt Coster \<matt.coster@imgtec.com\> |
+| Link | https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124699 |
+| Closes | https://lore.kernel.org/oe-kbuild-all/202603222211.A2XiR1YU-
+lkp@intel.com/ |
+| Signed-off-by | Yury Norov \<ynorov@nvidia.com\> |
 
-### Step 1.3: Body Analysis
+**Notable patterns:** Real reporter (IMG engineer); closes an **oe-
+kbuild-all** CI build failure; references a documented **GCC compiler
+bug** (BZ#124699). No Fixes:, Cc: stable, Tested-by, or Reviewed-by tags
+(absence of Cc: stable is expected per instructions).
+
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** Qualcomm PCIe devices (WCN6855/WCN7850 WiFi, SDX62/SDX65
-  modems) do not properly support Secondary Bus Reset
-- **Symptom:** Bus reset fails/hangs on these devices; LWN series
-  context describes VFIO passthrough reset failures and potential system
-  hang when SBR is attempted (same failure class as existing Atheros
-  quirk in `quirks.c`)
-- **Root cause:** Device-specific hardware limitation, not
-  adapter/wiring issue (MT7925e works on same M.2-to-PCIe adapters)
-- **Fix:** Mark devices with `quirk_no_bus_reset` to set
-  `PCI_DEV_FLAGS_NO_BUS_RESET`
+- **Bug:** `__builtin_ffsll()` does not evaluate correctly in compile-
+  time constant expressions on GCC before 14.1.
+- **Symptom:** Compile failure — `error: bit-field 't' width not an
+  integer constant` when `__bf_shf` is used inside `BUILD_BUG_ON*` /
+  `FIELD_PREP_CONST` constant-expression checks.
+- **Root cause:** `__bf_shf(x)` was defined as `(__builtin_ffsll(x) -
+  1)`; for power-of-2 masks this is semantically equivalent to
+  `__builtin_ctzll(x)`, but only `__builtin_ctzll` works reliably as a
+  constant expression on affected GCC versions.
+- **Version info:** GCC bug affects versions **before 14.1**.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Yes — described as "avoid/prevent" rather than "fix", but it
-is a hardware quirk preventing a known-broken reset path. Same pattern
-as Atheros/Cavium/TI/ASM1164 quirks already in `quirks.c`, where SBR
-causes link-down, inaccessible config space, and system hang.
+### Step 1.4: Hidden bug fix?
+**Record:** Not disguised — this is an explicit **build fix** for a
+compiler bug affecting compile-time bitfield macro validation. No
+runtime behavior change for valid masks.
 
 ---
 
@@ -130,325 +134,314 @@ causes link-down, inaccessible config space, and system hang.
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/pci/quirks.c` only (+3 lines)
-- **Functions:** No function changes; adds 3 `DECLARE_PCI_FIXUP_HEADER`
-  entries after Atheros quirks
-- **Scope:** Single-file surgical hardware quirk addition
+- **Files:** `include/linux/bitfield.h` (+1 / -1)
+- **Functions modified:** None (macro-only change)
+- **Scope:** Single-file, surgical (1 line)
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow per hunk
 **Record:**
-- **Before:** Qualcomm devices `0x17cb:0x1103`, `0x17cb:0x1107`,
-  `0x17cb:0x0308` had no `NO_BUS_RESET` flag; `pci_reset_bus_function()`
-  could probe/use SBR
-- **After:** At PCI header fixup time, `quirk_no_bus_reset()` sets
-  `PCI_DEV_FLAGS_NO_BUS_RESET`; `pci_parent_bus_reset()` and
-  `pci_dev_reset_slot_function()` return `-ENOTTY` when flag is set
-  (lines 4801, 4832 in `pci.c`)
-- **Path affected:** PCI device reset enumeration and execution
-  (`pci_init_reset_methods()`, `__pci_reset_function_locked()`), VFIO
-  device reset, driver error recovery
+- **Before:** `__bf_shf(_mask)` → `(__builtin_ffsll(_mask) - 1)` — shift
+  amount from 1-based find-first-set.
+- **After:** `__bf_shf(_mask)` → `__builtin_ctzll(_mask)` — shift amount
+  from count-trailing-zeros.
+- **Affected paths:** All compile-time uses in `__BF_FIELD_CHECK`,
+  `FIELD_MAX`, `FIELD_FIT`, `FIELD_PREP`, `FIELD_PREP_CONST`,
+  `FIELD_GET`, `FIELD_MODIFY` (lines 69–173 of `bitfield.h`). Runtime
+  uses of `__bf_shf` in drivers are also affected but produce identical
+  results for valid power-of-2 masks.
 
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Hardware workaround / quirk
-- **Mechanism:** Broken SBR on specific Qualcomm silicon; quirk prevents
-  kernel from selecting a reset method that bricks the device or hangs
-  the system. Analogous to Atheros quirk comment at lines 3767–3770:
-  "config space of the device is never accessible again and typically
-  causes the system to hang or reset"
+### Step 2.3: Bug mechanism
+**Record:** **Build fix / compiler interaction bug (category
+h-adjacent).** `BUILD_BUG_ON*` macros expand `__bf_shf(_mask)` in
+constant-expression contexts. On GCC \< 14.1, `__builtin_ffsll` fails
+constant-folding, breaking kernel compilation. `__builtin_ctzll`
+constant-folds correctly.
 
-### Step 2.4: Fix Quality
-**Record:**
-- Obviously correct: identical pattern to ~10 existing
-  `quirk_no_bus_reset` entries in the same file
-- Minimal: 3 `DECLARE_PCI_FIXUP_HEADER` lines
-- Low regression risk: only affects listed device IDs; other reset
-  methods (FLR, PM, device-specific) remain available if supported
+### Step 2.4: Fix quality
+**Record:** Obviously correct for valid masks (non-zero, power-of-2 —
+already enforced by existing `BUILD_BUG_ON` checks). Minimal change.
+**Regression risk: very low** — mathematically equivalent for all valid
+inputs; `__builtin_ctzll` is already used extensively elsewhere in the
+kernel.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:**
-- `quirk_no_bus_reset()` introduced in `c3e59ee4e7668` (2015-01-15, Alex
-  Williamson) — long-established infrastructure
-- Insertion point (after Atheros quirks, before Cavium) matches current
-  tree layout exactly
+**Record:** `__bf_shf(x) (__builtin_ffsll(x) - 1)` introduced in commit
+`3e9b3112ec74f` ("add basic register-field manipulation macros", Jakub
+Kicinski, 2016-08-31). Confirmed ancestor of HEAD — present in this tree
+since 2016.
 
-### Step 3.2: Fixes: Tag
-**Record:** Not applicable — no `Fixes:` tag. Bug is inherent to
-hardware, not introduced by a specific kernel commit.
+### Step 3.2: Fixes: tag
+**Record:** No Fixes: tag present. N/A.
 
-### Step 3.3: Related File History
-**Record:**
-- Recent similar quirks in this tree: ASM1164 (`a175a76147382`), Nvidia
-  GB10 (`b8bd9fe67041c`)
-- This commit is patch 3/3 of series "PCI: Add d3cold and device-
-  specific reset for Qualcomm devices" (LWN v8 0/3). Patches 1–2 (d3cold
-  reset method, Qualcomm device-specific reset) are **not** in this
-  tree; patch 3 is standalone (only adds quirk entries, no code
-  dependencies on patches 1–2)
+### Step 3.3: Related file history
+**Record:** Recent `bitfield.h` changes in 6.18.y include
+`FIELD_MODIFY()` (a256ae22570ee), `FIELD_PREP_CONST()` (e2192de59e457,
+2023), `FIELD_MAX()`/`FIELD_FIT()`. The `FIELD_PREP_CONST` addition
+increased compile-time `__bf_shf` usage in initializers. Standalone
+1-line fix; not part of a multi-patch dependency chain for backport
+purposes.
 
-### Step 3.4: Author Context
-**Record:** Jose Ignacio Tornos Martinez — no prior PCI commits in this
-6.18.44 tree; authored VFIO/PCI reset series merged to mainline v7.2
-(June 2026). Bjorn Helgaas (PCI maintainer) signed off.
+### Step 3.4: Author context
+**Record:** Yury Norov is a regular bitfield/bitmap contributor (signed
+off on e2b02d382ae0c in this tree). Author of the broader 7.2 bitmap
+series on mainline.
 
 ### Step 3.5: Dependencies
-**Record:**
-- **Standalone:** Yes — only uses existing `quirk_no_bus_reset` and
-  `PCI_VENDOR_ID_QCOM`
-- Patches 1–2 from the same series would improve VFIO reset capability
-  but are **not prerequisites** for this quirk; LWN describes patch 3 as
-  a "safety net" that independently prevents broken SBR
+**Record:** No prerequisites. Patch applies cleanly (`git apply --check`
+exit 0). Does not depend on `FIELD_GET_SIGNED` or other 7.2-only
+additions.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:**
-- Direct lore fetch blocked (Anubis bot protection)
-- LWN article found: [PCI: Add d3cold and device-specific reset for
-  Qualcomm devices](https://lwn.net/Articles/1077236/) — covers full v8
-  0/3 series
-- `b4 dig -c <commit>` failed: commit not present in local repository
-- Mainline merge: `44105c5d0a13` (pci/virtualization branch, 2026-06-23)
+### Step 4.1: Original discussion
+**Record:** Found at
+https://lkml.iu.edu/hypermail/linux/kernel/2604.3/05643.html (also
+https://lists.openwall.net/linux-kernel/2026/04/27/2584). `b4 dig -c`
+failed because commit is not in this tree. Single patch, not a multi-
+revision series for this specific fix.
 
 ### Step 4.2: Reviewers
-**Record:** CC list from LWN: `bhelgaas@google.com`, `alex@shazbot.org`
-(VFIO), `linux-pci@`, `linux-wireless@`, `ath11k@`, `ath12k@`, `mhi@` —
-appropriate subsystem coverage
+**Record:** CC'd to Rasmus Villemoes (bitfield maintainer area),
+multiple IMG engineers (reporters of the build failure), Vincent
+Mailhol. David Laight replied with a style suggestion only ("I'd leave
+in the (x)") — not a NAK.
 
-### Step 4.3: Bug Report
-**Record:** No formal bugzilla/syzbot report. Failure mode documented in
-series cover letter: VFIO passthrough reset failures; device-specific
-SBR breakage confirmed by comparative testing with MT7925e on same
-adapters.
+### Step 4.3: Bug report
+**Record:** Closes oe-kbuild-all report from 2026-03-22 (kernel CI build
+robot — concrete compile failure). Matt Coster (IMG) reported. GCC
+BZ#124699 documents the compiler defect (lore.kernel.org fetch blocked
+by bot protection; GCC bugzilla returned 403).
 
-### Step 4.4: Series Context
-**Record:**
-- Patch 1/3: D3cold general reset method (not in 6.18.44)
-- Patch 2/3: Qualcomm device-specific reset via D3cold (not in 6.18.44)
-- Patch 3/3: **This commit** — disable broken SBR (standalone,
-  backportable independently)
+### Step 4.4: Related patches
+**Record:** Part of Yury's "bitmap-for-7.2" series on mainline (patch
+11/19), but this specific change is fully self-contained.
 
-### Step 4.5: Stable List History
-**Record:** No stable-list discussion found (lore blocked). Not a
-negative signal per instructions.
+### Step 4.5: Stable list history
+**Record:** No stable-specific discussion found. No reviewer explicitly
+nominated Cc: stable, but build fixes are routinely backported.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `quirk_no_bus_reset()` (unchanged); reset path functions:
-`pci_reset_bus_function()`, `pci_parent_bus_reset()`,
-`pci_dev_reset_slot_function()`, `pci_slot_resettable()`
+### Step 5.1: Key symbols
+**Record:** `__bf_shf` macro; consumers: `__BF_FIELD_CHECK`,
+`FIELD_MAX`, `FIELD_FIT`, `FIELD_PREP`, `FIELD_PREP_CONST`, `FIELD_GET`,
+`FIELD_MODIFY`.
 
 ### Step 5.2: Callers
-**Record:**
-- `pci_init_reset_methods()` probes reset methods during device setup
-- `__pci_reset_function_locked()` / `pci_reset_function()` used by VFIO,
-  error handlers, sysfs `reset` attribute
-- `pci_slot_resettable()` used during slot-level reset decisions
-- All check `PCI_DEV_FLAGS_NO_BUS_RESET` — verified in `pci.c` lines
-  4801, 4832, 5218, 5222, 5291, 5297
+**Record:** `FIELD_GET`/`FIELD_PREP`/`FIELD_PREP_CONST` used in hundreds
+of files across drivers, net, sound, GPU, PCI, etc. Direct `__bf_shf()`
+calls in drivers (spi-dw-core, mv88e6xxx, iwlwifi, nfp, etc.). Very
+broad impact surface.
 
 ### Step 5.3: Callees
-**Record:** `quirk_no_bus_reset()` only sets `dev->dev_flags |=
-PCI_DEV_FLAGS_NO_BUS_RESET` — no allocations, locks, or I/O
+**Record:** Changes compiler builtin from `__builtin_ffsll` to
+`__builtin_ctzll`. No kernel function calls.
 
 ### Step 5.4: Reachability
-**Record:**
-- Triggered during PCI enumeration (HEADER fixup) and whenever reset is
-  attempted on these devices
-- Userspace-reachable via VFIO passthrough, driver reload, error
-  recovery, sysfs reset
-- WiFi cards (WCN6855/WCN7850) and cellular modems (SDX62/SDX65) are
-  commonly deployed hardware
+**Record:** Triggered at **compile time** when any translation unit
+using `FIELD_*` macros is built with GCC \< 14.1. Affects all
+developers/distributions building 6.18.y with GCC 12/13 (common
+toolchain versions).
 
-### Step 5.5: Similar Patterns
-**Record:** Identical pattern for Atheros (6 devices), Cavium, TI,
-ASM1164, Nvidia — all `DECLARE_PCI_FIXUP_HEADER(...,
-quirk_no_bus_reset)` in same section of `quirks.c`
+### Step 5.5: Similar patterns
+**Record:** Kernel already uses `__builtin_ctzll` widely (e.g.,
+`lib/math/div64.c`, `fs/btrfs/volumes.h`). The `ffsll(x)-1` ≡ `ctzll(x)`
+equivalence for power-of-2 values is standard.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
 
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** The quirk entries are **missing** from this tree.
-Affected hardware **is supported:**
-- `WCN6855` (`0x1103`): `drivers/net/wireless/ath/ath11k/pci.c` (since
-  2021)
-- `WCN7850` (`0x1107`): `drivers/net/wireless/ath/ath12k/pci.c` (since
-  2022)
-- `SDX62/SDX65` (`0x0308`): `drivers/bus/mhi/host/pci_generic.c` (SDX65
-  since July 2025)
-- `PCI_VENDOR_ID_QCOM` (`0x17cb`): `include/linux/pci_ids.h`
+### Step 6.1: Buggy code exists?
+**Record:** **YES.** Line 45 of `include/linux/bitfield.h`:
+```45:45:include/linux/bitfield.h
+#define __bf_shf(x) (__builtin_ffsll(x) - 1)
+```
+Present since 2016 in this tree. Commit under review is **not yet
+applied** (`git log --grep="wire __bf_shf"` returns empty).
 
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** Target location (after Atheros
-quirks at line 3778, before Cavium at 3785) matches the provided diff
-exactly. No conflicting changes in that region.
+### Step 6.2: Backport complications
+**Record:** **Clean apply** — verified with `git apply --check`. No
+conflicts expected.
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** No — `git log --grep="Avoid SBR for Qualcomm"` returns
-nothing. Qualcomm `quirk_no_bus_reset` entries for `0x1103`, `0x1107`,
-`0x0308` absent from `quirks.c`.
+### Step 6.3: Related fixes already present?
+**Record:** None. `git log --grep="wire __bf_shf"` and `git log
+--grep="__builtin_ctzll" -- include/linux/bitfield.h` show no equivalent
+fix in this tree.
+
+**Note:** `tools/include/linux/bitfield.h` line 43 still has the old
+definition; the upstream commit also only touches
+`include/linux/bitfield.h`. Minor gap for tools-only builds, not a
+reason to reject the kernel header fix.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/pci/` — **CORE** subsystem. PCI reset affects all
-PCI/PCIe devices; VFIO virtualization is a significant use case.
+### Step 7.1: Subsystem criticality
+**Record:** **CORE** — `include/linux/bitfield.h` is a foundational
+header used across virtually every driver subsystem.
 
 ### Step 7.2: Activity
-**Record:** Actively maintained — recent bus-reset quirks added (ASM1164
-2024, Nvidia GB10 2025). Pattern is well-established and trusted.
+**Record:** Moderately active in 6.18.y (FIELD_MODIFY, __must_check
+additions in 2025). The underlying `__bf_shf` definition has been stable
+since 2016; the compiler interaction is the issue, not recent kernel
+churn.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** Users of Qualcomm WCN6855/WCN7850 WiFi (ath11k/ath12k) and
-SDX62/SDX65 cellular modems (MHI) — laptops, M.2 WiFi cards, embedded
-modems, VFIO passthrough setups.
+### Step 8.1: Who is affected
+**Record:** Anyone building kernel 6.18.y with **GCC \< 14.1** (GCC
+12.x, 13.x — standard for RHEL, Debian stable, many embedded SDKs).
+Universal compile-time impact across all subsystems using `FIELD_*`
+macros.
 
-### Step 8.2: Trigger Conditions
+### Step 8.2: Trigger conditions
+**Record:** Building any config that compiles a file using
+`FIELD_GET`/`FIELD_PREP`/`FIELD_PREP_CONST`/etc. with affected GCC.
+Documented CI failure (oe-kbuild-all, March 2026). Not userspace-
+triggerable; not a runtime bug.
+
+### Step 8.3: Failure mode severity
+**Record:** **Build failure** (compilation error) — severity **HIGH**
+for affected builders (cannot compile kernel). No runtime crash,
+corruption, or security impact.
+
+### Step 8.4: Risk-benefit
 **Record:**
-- Any PCI reset attempt that would use Secondary Bus Reset (VFIO VM
-  teardown, driver unbind/rebind, error recovery, manual sysfs reset)
-- Not timing-dependent; deterministic hardware limitation
-- Unprivileged users can trigger via VFIO if permitted by admin
-
-### Step 8.3: Failure Mode Severity
-**Record:** Without quirk: device becomes inaccessible, link down,
-potential **system hang or reset** (per Atheros quirk precedent in same
-file). Severity: **CRITICAL** for affected hardware.
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH — prevents device bricking and system hang on common
-  reset paths
-- **Risk:** VERY LOW — 3-line quirk using proven infrastructure, scoped
-  to 3 device IDs
-- **Ratio:** Strongly favors backport
+- **Benefit: HIGH** — restores ability to build with common GCC
+  versions; fixes documented CI failure.
+- **Risk: VERY LOW** — 1-line semantic rename for valid inputs; no API
+  change; no runtime behavior change.
+- **Ratio:** Strongly favors backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Hardware quirk — established stable exception category
-- Prevents system hang/device brick on SBR (CRITICAL severity)
-- Surgical 3-line fix, obviously correct
-- PCI maintainer (Bjorn Helgaas) signed off
-- Affected devices fully supported in 6.18.44
-- Infrastructure (`quirk_no_bus_reset`) present since 2015
-- Identical to multiple existing stable-worthy quirks in same file
-- Standalone — no dependency on patches 1–2 of the series
+- Documented real build failure (oe-kbuild-all CI, March 2026)
+- User report from Matt Coster (IMG)
+- GCC BZ#124699 — known compiler bug
+- Build-fix category (explicit stable exception per rules)
+- 1 line, applies cleanly to 6.18.44
+- Buggy code present since 2016 in this tree
+- `FIELD_*` macros used in hundreds of files
+- Mathematically equivalent fix, minimal regression risk
 
 **AGAINST backport:**
-- Part of a 3-patch series; patches 1–2 (alternative reset methods) not
-  in tree — but patch 3 independently prevents catastrophic SBR failure
-- No syzbot/fuzzer report — but hardware-specific, confirmed by author
-  testing
-- Without patches 1–2, VFIO reset may still fail for these devices — but
-  that is strictly better than hanging
+- Only compile-time impact, not runtime
+- Bug latent since 2016 — may be config/GCC-version specific
+- `tools/include/linux/bitfield.h` not updated in same commit
+- Not yet in this tree's git history (must land in mainline first per
+  stable rules)
 
-**Unresolved:** Direct lore thread unreadable (bot protection); `b4 dig`
-unavailable (commit not in local repo).
+**Unresolved:** Exact oe-kbuild-all log unavailable (lore bot
+protection). Could not test on GCC \< 14.1 locally (only GCC 15.3
+available; test passed). GCC bugzilla page returned 403.
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — proven quirk pattern; author
-   tested device-specific behavior vs MT7925e
-2. Fixes real bug affecting users? **PASS** — broken SBR on shipping
-   Qualcomm hardware
-3. Important issue? **PASS** — CRITICAL (hang, device brick)
-4. Small and contained? **PASS** — 3 lines, 1 file
-5. No new features/APIs? **PASS** — hardware quirk only
-6. Can apply to local tree? **PASS** — clean apply to existing code
+### Step 9.2: Stable rules checklist
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — semantic equivalence
+proven; CI failure closed |
+| 2. Fixes real bug affecting users? | **PASS** — kernel build failure
+with GCC \< 14.1 |
+| 3. Important issue? | **PASS** — build error (stable-kernel-rules.rst
+line 19) |
+| 4. Small and contained? | **PASS** — 1 line, 1 file |
+| 5. No new features/APIs? | **PASS** — internal macro implementation
+change only |
+| 6. Can apply to local tree? | **PASS** — clean apply verified |
 
-### Step 9.3: Exception Category
-**Record:** **Hardware quirk/workaround** — automatic stable
-qualification per instructions.
+### Step 9.3: Exception category
+**Record:** **BUILD FIX** — explicitly listed as stable-worthy.
 
-### Step 9.4: Decision Rationale
-This commit adds PCI quirks preventing Secondary Bus Reset on Qualcomm
-devices that do not support it. The 6.18.44 tree supports these devices
-(ath11k, ath12k, MHI) but lacks the quirk, leaving users exposed to the
-same failure mode documented for Atheros devices in the same file. The
-fix is minimal, standalone, and follows a well-established pattern
-already present in stable trees.
+### Step 9.4: Decision rationale
+This commit fixes a documented kernel **compilation failure** on GCC
+versions before 14.1, which remain widely used for building stable
+kernels. The buggy `__bf_shf` definition has been in 6.18.y since 2016
+and is used by core `FIELD_*` macros throughout the tree. The fix is a
+one-line, semantically equivalent substitution that applies cleanly to
+v6.18.44 with negligible regression risk.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body; identified as hardware quirk fix
-- [Phase 1] LWN v8 0/3 series context retrieved from
-  https://lwn.net/Articles/1077236/
-- [Phase 2] Diff: 3 `DECLARE_PCI_FIXUP_HEADER` lines in
-  `drivers/pci/quirks.c`
-- [Phase 2] Read `quirk_no_bus_reset()` at lines 3741–3744
-- [Phase 2] Read Atheros quirk hang description at lines 3767–3770
-- [Phase 3] `git blame`: `quirk_no_bus_reset` from `c3e59ee4e7668`
-  (2015)
-- [Phase 3] `git log -S quirk_no_bus_reset`: 12 historical commits,
-  pattern established
-- [Phase 3] `git log --grep`: commit NOT in 6.18.44 tree
-- [Phase 3] Confirmed patches 1–2 (d3cold, device-specific reset) NOT in
-  tree via `git log --grep`
-- [Phase 4] lore.kernel.org fetch blocked by Anubis
-- [Phase 4] `b4 dig -c`: failed (commit not in local repo)
-- [Phase 4] LWN series: patch 3/3 standalone safety net for broken SBR
-- [Phase 4] GitHub merge `44105c5d0a13`: confirms mainline integration
-  June 2026
-- [Phase 5] `grep NO_BUS_RESET drivers/pci/pci.c`: 6 check sites
-  verified
-- [Phase 5] Read `pci_reset_fn_methods[]` at lines 5008–5017
-- [Phase 5] Read `pci_parent_bus_reset()` at lines 4796–4812
-- [Phase 6] `git describe HEAD`: v6.18.44
-- [Phase 6] `make kernelversion`: 6.18.44
-- [Phase 6] `grep 0x1103`: WCN6855 in `ath11k/pci.c`
-- [Phase 6] `grep 0x1107`: WCN7850 in `ath12k/pci.c`
-- [Phase 6] `grep 0x0308`: SDX65 in `mhi/host/pci_generic.c`
-- [Phase 6] `grep PCI_VENDOR_ID_QCOM`: present in `pci_ids.h` as
-  `0x17cb`
-- [Phase 6] Confirmed quirk entries absent from current `quirks.c`
-- [Phase 6] Target insertion point matches diff (after line 3778)
-- [Phase 8] Hardware support dates: WCN6855 (2021), WCN7850 (2022),
-  SDX65/0x0308 (2025) — all predate 6.18.44
-- **UNVERIFIED:** Direct lore thread review (bot-blocked)
-- **UNVERIFIED:** Explicit `Cc: stable` nomination in mailing list
+- **[Phase 1]** Parsed subject, tags (Reported-by, Link, Closes), body;
+  identified GCC \< 14.1 build failure
+- **[Phase 2]** Diff: 1 line in `include/linux/bitfield.h`;
+  `__builtin_ffsll(x)-1` → `__builtin_ctzll`
+- **[Phase 3]** `git blame -L 45,45`: introduced `3e9b3112ec74f` (2016);
+  confirmed ancestor of HEAD
+- **[Phase 3]** `git log --oneline -20 -- include/linux/bitfield.h`:
+  recent changes listed; no duplicate fix
+- **[Phase 3]** `git apply --check`: patch applies cleanly (exit 0)
+- **[Phase 4]** lkml.iu.edu/2604.3/05643.html: found original submission
+- **[Phase 4]** openwall.net 2026/04/28/111: David Laight style comment
+  only, no objection
+- **[Phase 4]** `b4 dig -c`: FAILED — commit not in local tree
+- **[Phase 4]** lore.kernel.org oe-kbuild-all link: BLOCKED (bot
+  protection)
+- **[Phase 4]** gcc.gnu.org BZ#124699: BLOCKED (403)
+- **[Phase 5]** `grep FIELD_GET/FIELD_PREP`: hundreds of .c files across
+  tree
+- **[Phase 5]** `grep __bf_shf`: 10 uses in bitfield.h + many direct
+  driver uses
+- **[Phase 6]** `git describe HEAD`: v6.18.44
+- **[Phase 6]** `make -s kernelversion`: 6.18.44
+- **[Phase 6]** Read `include/linux/bitfield.h` line 45: buggy
+  definition confirmed present
+- **[Phase 6]** `git log --grep="wire __bf_shf"`: empty — fix not yet in
+  tree
+- **[Phase 8]** GCC 15.3 test of `__builtin_ffsll(~0ULL)` constant expr:
+  compiles (exit 0); UNVERIFIED on GCC \< 14.1 (not installed)
 
-**YES**
+**YES**The background checks finished and match what the analysis
+already used:
 
- drivers/pci/quirks.c | 3 +++
- 1 file changed, 3 insertions(+)
+- **Commit search:** `git log --grep="wire __bf_shf"` returned nothing —
+  this fix is not in the local `6.18.44` tree yet.
+- **`b4 dig`:** Failed (`--subject` is not a valid `b4 dig` option). The
+  patch thread was found via lkml/openwall instead.
+- **`FIELD_PREP_CONST` history:** Added in `e2192de59e457` (Jan 2023),
+  which increased compile-time `__bf_shf` use in constant expressions.
+- **Tree state:** HEAD is `1efe5d048a391` (`Linux 6.18.44`); line 45 of
+  `include/linux/bitfield.h` still has the old `__builtin_ffsll`
+  definition.
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 88d4a3f76bf3b..fbbdcbaf5aa01 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3776,6 +3776,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ATHEROS, 0x003c, quirk_no_bus_reset);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ATHEROS, 0x0033, quirk_no_bus_reset);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ATHEROS, 0x0034, quirk_no_bus_reset);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ATHEROS, 0x003e, quirk_no_bus_reset);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_QCOM, 0x1103, quirk_no_bus_reset); /* WCN6855 */
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_QCOM, 0x1107, quirk_no_bus_reset); /* WCN7850 */
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_QCOM, 0x0308, quirk_no_bus_reset); /* SDX62/SDX65 */
+**Verdict remains YES** — one-line build fix for GCC \< 14.1, applies
+cleanly to this tree.
+
+ include/linux/bitfield.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
+index 5355f8f806a97..2b3127e712b93 100644
+--- a/include/linux/bitfield.h
++++ b/include/linux/bitfield.h
+@@ -42,7 +42,7 @@
+  *  FIELD_MODIFY(REG_FIELD_C, &reg, c);
+  */
  
- /*
-  * Root port on some Cavium CN8xxx chips do not successfully complete a bus
+-#define __bf_shf(x) (__builtin_ffsll(x) - 1)
++#define __bf_shf __builtin_ctzll
+ 
+ #define __scalar_type_to_unsigned_cases(type)				\
+ 		unsigned type:	(unsigned type)0,			\
 -- 
 2.53.0
 
