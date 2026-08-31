@@ -1,259 +1,428 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E249592D33;
-	Mon, 31 Aug 2026 13:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF1C592D2A;
+	Mon, 31 Aug 2026 13:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184264; cv=none; b=R+b6phVObefw+rItPR3JbXRv8ZLIFN0VhcwcSZ1TbNB5RHC+hIPW+OCj4snYBn8F06JcQA7pYMFAkYp1UNxfY8dWSfquyBrC8kE0vT9hwsN5wiO+hD/LHC+R6gjRSbd/w90l8Ll4fbLEaFau8W7Rd84zrve/w68RYZr6t0GKFi4=
+	t=1788184265; cv=none; b=o0Tq3t/l2gT9kv4tRsv9arU7H/5zlr2arL8HOHKQRvN6W80DSDGXMaAAZP4n31RTRtO3vYngXxuTkBJZwxjLSCTeEFJu7XJnkrXFUXkvZJidPnLlYdE0u82BaXRK/AxWErXRKLUNPWQpqvUZH2GkA3h4vExKJgMHWy3Js+e0tlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184264; c=relaxed/simple;
-	bh=AInOx9p6hCE5FZLwG+CtZz13j2YIGb2WKsUiehLMjYo=;
+	s=arc-20240116; t=1788184265; c=relaxed/simple;
+	bh=yxqkIkNzBeXbzEpMTSYg/M2+18HCXWAGMciGKgJmASk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pJJpxO1zLZjd16gLIXDVNg6T2nDsNpXHiNZSUBl53iKcRQBNK3ecJe+k78xtUGyiVvS5YaaBzXLpM1bE6/s8t3i2whAah6psnRrb4wKpnshjM0kDbBwjkOMLGpJJDz9wZkHIl44paclX5EoQ6Nlr66ldYu0QAP9v895+umniiV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZLGTMIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=a2x7mkPwyXM+ZsUj/3lDRH1QKxZKmwhv9VIxSaRb5hvixpzkg54rk5hzHvj7oAbA2nWqYI47CqDoPDV65MIQokmdehU1Aoszl/CGAgggB1cxYBqnubIUIej2l2Cv4GzkXLKdr/WFipIwGjNCwKOi2YlFt85kGpKmhhLx3JmQU6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EJuHqBHC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZLGTMIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF761F000E9;
-	Mon, 31 Aug 2026 13:51:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184261;
-	bh=LqLUIgNEcfG2nn9jwBE5FSL/PpQJa4/USxC4mOWqlko=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EJuHqBHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D971F00A3E;
+	Mon, 31 Aug 2026 13:51:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184261;
+	bh=61M7A9M45q/4EFC9xsc0Tf/RGm1cpKzoAjzhET2BHsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZLGTMISSPLh/nnY/xmNCF5KZRsfrchsUBCxvnuQRsIhjj/gkpnnmKEsgsu53fzb7
-	 I4+agCmmGLY4fo/MjNwqdiO5rABpxe1A0BPOm8qUUzTi7mMLdSAA5xrnKvuZ5YCTGe
-	 tJGEkdCygzHYHIw6dJdxUJPfDHWM7wEguRqDR5GI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 46/99] HID: pidff: clang-format pass
-Date: Mon, 31 Aug 2026 15:34:15 +0200
-Message-ID: <20260831133402.350359277@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=EJuHqBHCYBejhqSe8q8BEzAXg2s1j7Bec5SWD/avF2Zfv9VzTpxy14/HI6MC6/+yA
+	 OQV3KN7zb8eYT1eOAlyUzC4PD/Vn4G86uAcw9xeLAfuPVSwGjE2+uijz4K53e4H4re
+	 IAGrbzgBr2Q8DPnaj1IbkABv7kRYfGPvuU+uM+aYWGPK/2E+F6SQAwd22z2aZUZ5i8
+	 ED799a9frnk/WM0BhXVaBt4Nvvuj4NaHRDlpf4OPuXW7iL8eTt4z3cInELnuSstxOg
+	 /WbMCtYCXvaQA4s57NDHI1FZqMTFRdV4M091SXCByn87BEjkY21fnBNGZ7W50VWeuL
+	 o8k2j64Yzamzw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Shubham Nayak <shubhamnayak392reborn@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Add quirk for HP Victus 16-e0xxx (88EE) to enable mute LED
+Date: Mon, 31 Aug 2026 09:30:16 -0400
+Message-ID: <20260831133314.4125787-588-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Shubham Nayak <shubhamnayak392reborn@gmail.com>
 
-------------------
+[ Upstream commit 6c18817c01f6f76d9e2739903abde4d69397f2c6 ]
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+The mute LED on the HP Victus 16-e0xxx (board ID 88EE, ALC245 codec)
+does not function by default. Add the ALC245_FIXUP_HP_MUTE_LED_COEFBIT
+quirk to enable it. Tested on my HP Victus 16-e0xxx with kernel 7.1.2.
 
-[ Upstream commit ae42428fb4e3d2eed344f0d6fcfa778bc8b8f80a ]
-
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: 67bb1074e3d2 ("HID: pidff: fix OOB write when hid->inputs is empty")
+Signed-off-by: Shubham Nayak <shubhamnayak392reborn@gmail.com>
+Link: https://patch.msgid.link/20260629-hp-victus-16-mute-led-v1-1-ab0f4a8a533b@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c |   55 +++++++++++++++++++----------------------
- 1 file changed, 26 insertions(+), 29 deletions(-)
 
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -9,12 +9,11 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include "hid-pidff.h"
-+#include <linux/hid.h>
- #include <linux/input.h>
-+#include <linux/minmax.h>
- #include <linux/slab.h>
- #include <linux/usb.h>
--#include <linux/hid.h>
--#include <linux/minmax.h>
--
- 
- #define	PID_EFFECTS_MAX		64
- #define	PID_INFINITE		U16_MAX
-@@ -285,7 +284,7 @@ static s32 pidff_clamp(s32 i, struct hid
- static int pidff_rescale(int i, int max, struct hid_field *field)
- {
- 	return i * (field->logical_maximum - field->logical_minimum) / max +
--		field->logical_minimum;
-+	       field->logical_minimum;
- }
- 
- /*
-@@ -329,18 +328,18 @@ static void pidff_set_signed(struct pidf
- 	else {
- 		if (value < 0)
- 			usage->value[0] =
--			    pidff_rescale(-value, -S16_MIN, usage->field);
-+				pidff_rescale(-value, -S16_MIN, usage->field);
- 		else
- 			usage->value[0] =
--			    pidff_rescale(value, S16_MAX, usage->field);
-+				pidff_rescale(value, S16_MAX, usage->field);
- 	}
- 	pr_debug("calculated from %d to %d\n", value, usage->value[0]);
- }
- 
- static void pidff_set_time(struct pidff_usage *usage, u16 time)
- {
--	usage->value[0] = pidff_clamp(
--		pidff_rescale_time(time, usage->field), usage->field);
-+	usage->value[0] = pidff_clamp(pidff_rescale_time(time, usage->field),
-+				      usage->field);
- }
- 
- static void pidff_set_duration(struct pidff_usage *usage, u16 duration)
-@@ -463,11 +462,11 @@ static void pidff_set_effect_report(stru
- 		pidff_get_effect_type_id(pidff, effect);
- 
- 	pidff_set_duration(&pidff->set_effect[PID_DURATION],
--		effect->replay.length);
-+			   effect->replay.length);
- 
- 	pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = effect->trigger.button;
- 	pidff_set_time(&pidff->set_effect[PID_TRIGGER_REPEAT_INT],
--			effect->trigger.interval);
-+		       effect->trigger.interval);
- 	pidff->set_effect[PID_GAIN].value[0] =
- 		pidff->set_effect[PID_GAIN].field->logical_maximum;
- 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
-@@ -477,10 +476,10 @@ static void pidff_set_effect_report(stru
- 	/* Omit setting delay field if it's missing */
- 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
- 		pidff_set_time(&pidff->set_effect[PID_START_DELAY],
--				effect->replay.delay);
-+			       effect->replay.delay);
- 
- 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_EFFECT],
--			HID_REQ_SET_REPORT);
-+		       HID_REQ_SET_REPORT);
- }
- 
- /*
-@@ -510,10 +509,10 @@ static void pidff_set_periodic_report(st
- 			 effect->u.periodic.offset);
- 	pidff_set(&pidff->set_periodic[PID_PHASE], effect->u.periodic.phase);
- 	pidff_set_time(&pidff->set_periodic[PID_PERIOD],
--			effect->u.periodic.period);
-+		       effect->u.periodic.period);
- 
- 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_PERIODIC],
--			HID_REQ_SET_REPORT);
-+		       HID_REQ_SET_REPORT);
- }
- 
- /*
-@@ -560,7 +559,7 @@ static void pidff_set_condition_report(s
- 		pidff_set(&pidff->set_condition[PID_DEAD_BAND],
- 			  effect->u.condition[i].deadband);
- 		hid_hw_request(pidff->hid, pidff->reports[PID_SET_CONDITION],
--				HID_REQ_SET_REPORT);
-+			       HID_REQ_SET_REPORT);
- 	}
- }
- 
-@@ -623,7 +622,7 @@ static void pidff_set_gain_report(struct
- 
- 	pidff_set(&pidff->device_gain[PID_DEVICE_GAIN_FIELD], gain);
- 	hid_hw_request(pidff->hid, pidff->reports[PID_DEVICE_GAIN],
--			HID_REQ_SET_REPORT);
-+		       HID_REQ_SET_REPORT);
- }
- 
- /*
-@@ -717,21 +716,19 @@ static void pidff_fetch_pool(struct pidf
-  */
- static int pidff_request_effect_upload(struct pidff_device *pidff, int efnum)
- {
--	int j;
--
- 	pidff->create_new_effect_type->value[0] = efnum;
- 	hid_hw_request(pidff->hid, pidff->reports[PID_CREATE_NEW_EFFECT],
--			HID_REQ_SET_REPORT);
-+		       HID_REQ_SET_REPORT);
- 	hid_dbg(pidff->hid, "create_new_effect sent, type: %d\n", efnum);
- 
- 	pidff->block_load[PID_EFFECT_BLOCK_INDEX].value[0] = 0;
- 	pidff->block_load_status->value[0] = 0;
- 	hid_hw_wait(pidff->hid);
- 
--	for (j = 0; j < 60; j++) {
-+	for (int i = 0; i < 60; i++) {
- 		hid_dbg(pidff->hid, "pid_block_load requested\n");
- 		hid_hw_request(pidff->hid, pidff->reports[PID_BLOCK_LOAD],
--				HID_REQ_GET_REPORT);
-+			       HID_REQ_GET_REPORT);
- 		hid_hw_wait(pidff->hid);
- 		if (pidff->block_load_status->value[0] ==
- 		    pidff->status_id[PID_BLOCK_LOAD_SUCCESS]) {
-@@ -808,8 +805,8 @@ static int pidff_erase_effect(struct inp
- 	struct pidff_device *pidff = dev->ff->private;
- 	int pid_id = pidff->pid_id[effect_id];
- 
--	hid_dbg(pidff->hid, "starting to erase %d/%d\n",
--		effect_id, pidff->pid_id[effect_id]);
-+	hid_dbg(pidff->hid, "starting to erase %d/%d\n", effect_id,
-+		pidff->pid_id[effect_id]);
- 
- 	/*
- 	 * Wait for the queue to clear. We do not want
-@@ -929,7 +926,7 @@ static void pidff_autocenter(struct pidf
- 		pidff->set_effect[PID_START_DELAY].value[0] = 0;
- 
- 	hid_hw_request(pidff->hid, pidff->reports[PID_SET_EFFECT],
--			HID_REQ_SET_REPORT);
-+		       HID_REQ_SET_REPORT);
- }
- 
- /*
-@@ -1196,7 +1193,7 @@ static int pidff_find_special_fields(str
- 
- 	if (PIDFF_FIND_SPECIAL_KEYS(status_id, block_load_status,
- 				    block_load_status) !=
--			ARRAY_SIZE(pidff_block_load_status)) {
-+	    ARRAY_SIZE(pidff_block_load_status)) {
- 		hid_err(pidff->hid,
- 			"block load status identifiers not found\n");
- 		return -1;
-@@ -1204,7 +1201,7 @@ static int pidff_find_special_fields(str
- 
- 	if (PIDFF_FIND_SPECIAL_KEYS(operation_id, effect_operation_status,
- 				    effect_operation_status) !=
--			ARRAY_SIZE(pidff_effect_operation_status)) {
-+	    ARRAY_SIZE(pidff_effect_operation_status)) {
- 		hid_err(pidff->hid, "effect operation identifiers not found\n");
- 		return -1;
- 	}
-@@ -1408,8 +1405,8 @@ static int pidff_check_autocenter(struct
- int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
- {
- 	struct pidff_device *pidff;
--	struct hid_input *hidinput = list_entry(hid->inputs.next,
--						struct hid_input, list);
-+	struct hid_input *hidinput =
-+		list_entry(hid->inputs.next, struct hid_input, list);
- 	struct input_dev *dev = hidinput->input;
- 	struct ff_device *ff;
- 	int max_effects;
-@@ -1496,7 +1493,7 @@ int hid_pidff_init_with_quirks(struct hi
- 
- 	return 0;
- 
-- fail:
-+fail:
- 	hid_device_io_stop(hid);
- 
- 	kfree(pidff);
+LLM Generated explanations, may be completely bogus:
 
+# Stable Backport Analysis: ALSA hda/realtek HP Victus 16-e0xxx (88EE)
+mute LED quirk
+
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[ALSA: hda/realtek]` `[Add]` — Add quirk for HP Victus
+16-e0xxx (88EE) to enable mute LED
+
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Shubham Nayak (author), Takashi Iwai (ALSA
+  maintainer)
+- **Link:** https://patch.msgid.link/20260629-hp-victus-16-mute-
+  led-v1-1-ab0f4a8a533b@gmail.com
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc:
+  stable@vger.kernel.org
+
+Notable: Maintainer (Takashi Iwai) Signed-off-by is a strong quality
+signal. Author reports hardware testing on kernel 7.1.2.
+
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** Mute LED on HP Victus 16-e0xxx with board ID 88EE and ALC245
+  codec does not function by default.
+- **Symptom:** Keyboard mute LED does not toggle with microphone mute
+  state.
+- **Root cause:** Missing PCI subsystem ID quirk entry; hardware needs
+  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` to configure coefficient-bit-based
+  mute LED control.
+- **Version info:** Tested on kernel 7.1.2; no crash or corruption
+  described.
+
+### Step 1.4: Hidden bug fix?
+**Record:** Not a hidden crash/leak fix. This is an explicit hardware
+quirk addition for a non-functional mute LED — a well-known Realtek HDA
+pattern in this driver.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory
+**Record:**
+- **File:** `sound/hda/codecs/realtek/alc269.c` (+1 line)
+- **Change:** One `SND_PCI_QUIRK` table entry
+- **Scope:** Single-file, surgical hardware quirk addition
+
+### Step 2.2: Code flow
+**Record:**
+- **Before:** HP Victus 16-e0xxx with SSID `0x103c:0x88ee` matches no
+  quirk; mute LED coefficients are never configured.
+- **After:** Matching hardware gets `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`,
+  which runs `alc245_fixup_hp_mute_led_coefbit()` at probe time to set
+  coefficient index/mask/on/off values and register the mute LED cdev.
+- **Path:** Codec probe → `snd_hda_pick_fixup()` → quirk table lookup →
+  fixup applied at `HDA_FIXUP_ACT_PRE_PROBE`.
+
+### Step 2.3: Bug mechanism
+**Record:** **[h] Hardware workaround** — Missing PCI SSID-to-fixup
+mapping for a variant of an already-quirked laptop family. The sibling
+entry `0x88eb` uses `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` (different
+coefficient bits); `0x88ee` needs the older
+`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` variant.
+
+### Step 2.4: Fix quality
+**Record:**
+- Obviously correct: one-line quirk using an existing, well-tested fixup
+  already applied to many other HP Victus models in this tree.
+- Minimal scope; no logic changes.
+- Regression risk: negligible — only affects systems with exact PCI SSID
+  `0x103c:0x88ee`. Wrong fixup on wrong hardware would only affect LED
+  behavior, not audio playback.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+**Record:**
+- Insertion point is between `0x88eb` (added by `9745c2561e55f`, Jan
+  2026) and `0x8902` (present since Realtek driver split
+  `aeeb85f26c3bbe`, Jul 2025).
+- `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` and
+  `alc245_fixup_hp_mute_led_coefbit()` introduced in `aeeb85f26c3bbe`
+  (Jul 2025, driver split from monolithic `patch_realtek.c`).
+
+### Step 3.2: Fixes: tag
+**Record:** Not applicable — no Fixes: tag present.
+
+### Step 3.3: Related file history
+**Record:**
+- `9745c2561e55f` — added `0x88eb` quirk for same laptop model with
+  `ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT` (already in this tree).
+- Multiple similar mute LED quirk commits in 6.18.y: `89ed38540e6be`,
+  `7556bd5cd8ef3`, `a424946e00f2e`, etc.
+- Standalone one-line patch; no series dependency.
+
+### Step 3.4: Author context
+**Record:** Shubham Nayak is a hardware reporter/contributor. Takashi
+Iwai (ALSA/HDA maintainer) accepted the patch. Pattern consistent with
+community-submitted HP quirk reports.
+
+### Step 3.5: Dependencies
+**Record:** No dependencies. Requires only
+`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup enum, its fixup function, and
+`alc269_fixup_tbl[]` — all verified present in 6.18.44. Applies
+standalone.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Original discussion
+**Record:** Lore/patch.msgid.link fetch blocked by Anubis bot
+protection. `b4 dig -c` could not be run (commit hash not in this tree).
+Could not read review thread directly.
+
+### Step 4.2: Reviewers
+**Record:** UNVERIFIED via b4 dig -w. Takashi Iwai maintainer SOB
+confirms acceptance.
+
+### Step 4.3: Bug report
+**Record:** Author self-reported on own hardware. No syzbot, bugzilla,
+or multi-user reports. Severity: cosmetic/UX (mute LED non-functional).
+
+### Step 4.4: Related patches
+**Record:** Directly related to `9745c2561e55f` (0x88eb, same model,
+different motherboard, different fixup variant). This patch completes
+coverage for another MB variant.
+
+### Step 4.5: Stable list
+**Record:** UNVERIFIED — lore.kernel.org inaccessible. However,
+`9745c2561e55f` (related Victus 16-e0xxx quirk) is already in this
+6.18.y tree, establishing precedent.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key functions
+**Record:** `alc269_fixup_tbl[]` (modified),
+`alc245_fixup_hp_mute_led_coefbit()` (existing, invoked via fixup),
+`snd_hda_pick_fixup()` (caller at probe).
+
+### Step 5.2: Callers
+**Record:** `snd_hda_pick_fixup()` called from Realtek codec probe path
+in `alc269.c` (~line 8471) during HDA codec initialization at
+boot/module load. Every Realtek HDA codec goes through this, but the
+quirk only activates on SSID match.
+
+### Step 5.3: Callees
+**Record:** Fixup sets `spec->mute_led_coef` fields and calls
+`snd_hda_gen_add_mute_led_cdev()` to wire LED control to mute state.
+
+### Step 5.4: Reachability
+**Record:** Triggered automatically at codec probe on matching HP Victus
+16-e0xxx (MB 88EE) hardware. Not userspace-triggerable beyond owning the
+hardware. Common laptop audio path.
+
+### Step 5.5: Similar patterns
+**Record:** At least 12 other HP Victus models in this tree already use
+`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` (e.g., `0x8a25`, `0x8a26`, `0x8c99`,
+`0x8dcd`). Same pattern, different SSID.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+
+### Step 6.1: Buggy code exists?
+**Record:** **YES.** `0x88eb` quirk exists at line 6809, but `0x88ee` is
+**absent** — confirmed by grep. Users with MB 88EE get no mute LED
+quirk. `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` infrastructure has been
+present since Jul 2025.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected.** Single-line insertion after
+`0x88eb` entry. No refactoring conflicts in recent `alc269.c` history.
+
+### Step 6.3: Related fixes already present?
+**Record:** `0x88eb` quirk (`9745c2561e55f`) already in tree. No
+duplicate `0x88ee` entry. This is the missing complementary quirk for a
+different motherboard variant.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** `sound/hda/realtek` — IMPORTANT (audio driver, affects
+laptop users with this specific HP hardware). Not CORE, but widely
+deployed.
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained — frequent HP mute LED quirk additions
+in 6.18.y (10+ in recent history). Standard maintenance pattern for
+Realtek HDA.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** HP Victus 16-e0xxx laptops with PCI SSID `0x103c:0x88ee` and
+ALC245 codec. Driver-specific, hardware-specific population.
+
+### Step 8.2: Trigger conditions
+**Record:** Every boot/probe on matching hardware. Automatic, not
+privilege-dependent. Very likely for affected owners (100% on matching
+hardware).
+
+### Step 8.3: Failure mode severity
+**Record:** Mute LED does not reflect microphone mute state. Audio
+itself works; only the LED indicator is broken. **Severity: LOW**
+(cosmetic/UX). No crash, corruption, security, or deadlock.
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** LOW-MEDIUM — restores expected laptop mute LED behavior
+  for affected HP Victus owners.
+- **Risk:** VERY LOW — one-line SSID-specific quirk using existing
+  fixup; cannot affect other hardware.
+- **Ratio:** Favorable. Matches established stable practice for HP
+  Realtek mute LED quirks.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Hardware quirk exception category (audio codec quirk for broken LED
+  behavior)
+- One-line, surgical, uses existing fixup — zero new code paths
+- Hardware-tested by reporter; maintainer (Iwai) Signed-off-by
+- All prerequisites present in 6.18.44
+- Direct precedent: related `0x88eb` quirk already in this stable tree
+- Many identical-pattern HP Victus mute LED quirks already in 6.18.y
+- Clean apply expected
+
+**AGAINST backport:**
+- Not a crash, security, corruption, or deadlock fix
+- Low severity (cosmetic mute LED only)
+- Single reporter, no syzbot/fuzzer signal
+- Mailing list discussion not verified
+
+**UNRESOLVED:**
+- Full lore review thread inaccessible
+- No explicit stable nomination found in review
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — one-line quirk, hardware-
+   tested, maintainer-approved
+2. Fixes real bug affecting users? **PASS** — mute LED non-functional on
+   real hardware
+3. Important issue? **PASS (via quirk exception)** — not crash-level,
+   but hardware quirk fixes for broken laptop features are standard
+   stable material in this subsystem
+4. Small and contained? **PASS** — 1 line
+5. No new features/APIs? **PASS** — existing fixup enum/function only
+6. Can apply to local tree? **PASS** — all infrastructure present, clean
+   insertion point verified
+
+### Step 9.3: Exception category
+**Record:** **Hardware quirk / audio codec quirk** — adding PCI SSID
+entry to enable mute LED on specific HP laptop motherboard variant.
+
+### Step 9.4: Decision rationale
+
+This commit adds a single `SND_PCI_QUIRK` entry for HP Victus 16-e0xxx
+motherboard 88EE, mapping it to the already-present
+`ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup. The sibling variant `0x88eb`
+is already quirked in 6.18.44 with a different fixup (`V2_COEFBIT`),
+confirming this is a multi-motherboard laptop family needing per-SSID
+tuning.
+
+While mute LED failure is low severity (no audio breakage, no crash),
+the Linux stable trees routinely accept these HP Realtek HDA quirk
+additions. The fix is trivial, hardware-specific, uses no new code, and
+carries essentially zero regression risk. It directly benefits 6.18.y
+users with this laptop who currently have a non-functional mute LED.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed commit message: subject, SOB tags (Nayak, Iwai),
+  Link tag; no Fixes/Reported-by/Cc:stable
+- **[Phase 2]** Diff analysis: +1 line `SND_PCI_QUIRK(0x103c, 0x88ee,
+  ...)` in `alc269_fixup_tbl[]`
+- **[Phase 2]** Read `alc245_fixup_hp_mute_led_coefbit()` at lines
+  1566–1580: configures coef 0x0b bits for mute LED
+- **[Phase 3]** `git describe HEAD`: v6.18.44-1-g2736c32da98b9; `make
+  kernelversion`: 6.18.44
+- **[Phase 3]** `git blame -L 6807,6812`: 0x88eb from `9745c2561e55f`,
+  surrounding entries from Jul 2025 split
+- **[Phase 3]** `git log -S ALC245_FIXUP_HP_MUTE_LED_COEFBIT`: fixup
+  present since `aeeb85f26c3bbe` (Jul 2025)
+- **[Phase 3]** `git log -S 0x88ee`: no results — entry not yet in tree
+- **[Phase 3]** `git show 9745c2561e55f`: related 0x88eb quirk already
+  in 6.18.y
+- **[Phase 4]** WebFetch lore/patch.msgid.link: BLOCKED (Anubis bot
+  protection)
+- **[Phase 4]** `b4 dig`: could not match commit (not in tree); URL form
+  not accepted
+- **[Phase 5]** `grep alc269_fixup_tbl`: table at line 6510, used at
+  line 8471 via `snd_hda_pick_fixup()`
+- **[Phase 5]** Grep: 12+ existing HP Victus entries using
+  `ALC245_FIXUP_HP_MUTE_LED_COEFBIT`
+- **[Phase 6]** Grep `0x88ee`: not present; `0x88eb` present at line
+  6809
+- **[Phase 6]** Read lines 6807–6812: confirmed insertion point and
+  neighbor quirks
+- **[Phase 6]** Verified `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` enum, fixup
+  struct, and function all exist
+- **[Phase 7]** `git log --oneline -20 --grep="mute LED"`: 10+ similar
+  quirk commits in tree history
+- **[Phase 8]** Failure mode assessed as LOW severity (LED only, no
+  audio impact)
+- **UNVERIFIED:** Full mailing list review thread and any explicit Cc:
+  stable nomination in review
+
+**YES**The analysis is complete for the HP Victus 16-e0xxx (88EE) mute
+LED quirk on **Linux 6.18.44**.
+
+**Verdict: YES** — backport to this stable tree.
+
+It’s a one-line hardware quirk that maps PCI SSID `0x103c:0x88ee` to the
+existing `ALC245_FIXUP_HP_MUTE_LED_COEFBIT` fixup. The related `0x88eb`
+variant is already quirked in this tree; this adds the missing
+motherboard variant. Risk is very low, and it matches the usual pattern
+for HP Realtek mute LED fixes in stable.
+
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index a06acaf9ba6a0..36d5dfa9e1db8 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6807,6 +6807,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x88d1, "HP Pavilion 15-eh1xxx (mainboard 88D1)", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x88dd, "HP Pavilion 15z-ec200", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x88eb, "HP Victus 16-e0xxx", ALC245_FIXUP_HP_MUTE_LED_V2_COEFBIT),
++	SND_PCI_QUIRK(0x103c, 0x88ee, "HP Victus 16-e0xxx (MB 88EE)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x890e, "HP 255 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8919, "HP Pavilion Aero Laptop 13-be0xxx", ALC287_FIXUP_HP_GPIO_LED),
+-- 
+2.53.0
 
