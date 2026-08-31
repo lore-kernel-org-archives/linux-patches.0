@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7CA5970D5;
-	Mon, 31 Aug 2026 13:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C3C4B26E0;
+	Mon, 31 Aug 2026 13:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184286; cv=none; b=sIrOqT6ILs5wKiM2giD9QVJM8261Hw9NsX2/pJboLDPP+XAeVbqd15C946WwSuRX/L/cXRWBEn0XeLQ13oy1Q0khNuNbnxSUhZkPpy7BfVSAoTlKYS4RORU+OqF5aCZSSuLyEs6bz5DWbfqCbbCIDPYWhsoniqtDJSh7ihjN3ac=
+	t=1788184287; cv=none; b=ShkWxTrUoeWJ46C8Dgg/QSD2fecVaM5FGtxQeBfOG4YwcfGxlfHmE2caErMt3qlZqqGc4ibiAFYyMhAYeAWyv2w8D+MfyPXAi5Jry+yMVnn2Enih3eh7sMOXtqQcg28fW+3yhPblL28FpvI52rTPjq3ju6r6Xu/xIrab7YxfHEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184286; c=relaxed/simple;
-	bh=b1+7sDCFr7Lzi605lxCk+6E6GtmibPSn9uWdStIKDrI=;
+	s=arc-20240116; t=1788184287; c=relaxed/simple;
+	bh=L3h44K28RxRDCXPTqoVMMS/eE84caZ2gqB2JXtvtrIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iX1hvsYqw1xEMqk1We6og8XxrvAF2JA4sTpK4dsyTzUrkdGpzf5DNLXALSsbL3IW0xGjLC8sg0vEJ5zOddInwelbbD7MrYN9ql9qmR0cgojhxzux1MEprKvqiQGjCwc80wt5CRLFI960DaGx6PaJcVTi6kKrEGh1xHJzA8aXzNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fX6tVGFI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bC/jjqualkk8qFBPYn2VSldPKhN4BDK9Fsvww6kokyUM/AXWkv5OoHAe2ezBcLapAXjuTu+8qTZacIKyKYQn1S5xKDLnSbVDDfV9izyV72uU0myIlDwuz0axj4if97zryRnugBpH2/hkGNeM+k0kbwU70MJyMADSqnrp6n9TBf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YxPe1VzG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fX6tVGFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140531F000E9;
-	Mon, 31 Aug 2026 13:51:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YxPe1VzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8135B1F00A3E;
+	Mon, 31 Aug 2026 13:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184283;
-	bh=Ry5bGhee1+Y43sY8l3F1gxSiDytd52XG4ku7HJvav4U=;
+	s=k20260515; t=1788184284;
+	bh=gYJ+8ErtlC4Y7RCEVbiGQklUCpLaTHQjEs8L+d++bJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fX6tVGFIvQ8/hpjgcPv0/wUE/qh3r8NtXudfpCEDAmcDhXryO2+3tyQ/kbUx3HvWE
-	 PiXUtERzgW6suLfB8bsUPZHTTmbATAaciSHKpIEHN+qX/hGBd+YJYIw17Spt1mBXfB
-	 /+xH5vXwJyFaJuQ0gcdKJGrltZSkNxAdQ3/5w9l6H7GHUi24Lp6OwojiaQmKd3IbD5
-	 lUdAZ4Yg2W/wy2/PHWXuNBsn8o6ynCBiIYX54+p2p64Wxif/JxiXB6dzunskDH8wdd
-	 B/qUG1SvI/RvjD7jN7UJxsDqs3UqcEkYfANCdWaZeuYMhY8lg5elH4a8wv48fisw3+
-	 lZIyGJm0Lvqng==
+	b=YxPe1VzGTs0HfNpujDQVIPL8TWDmNmUtO9HU1CmIMV3arJqj+nSr9g7RQZshSSzEQ
+	 VXGwFX3Eoe8w3qA/XHvMerGUOu4D0J1d4ba4gD0gqR96nxv3zu8Ew7xQrS4k8qbXsD
+	 V99+aFVu+wT7jTH/j4L6OfLvVR+0YvcDICvDxH6WsDY9oN6YLA3bIdtDQq0k0bbK6S
+	 OycZrRiWMX7wdslySaWZcKy4oZh8RNnVnevokWcRtnlWc6+HKHGD/ZwEOIMTJENYvm
+	 J+XgUKXK2mmb5M7Ff9DTlmDfNGrDlQqkmGqwdATdYmhNsZuIEq/9vyTadQF7dqjTa0
+	 1FgBDFJuruJ4A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Sergey Lebedev <lsa.uz@pm.me>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	oder_chiou@realtek.com,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] soundwire: intel: Move suspend tracking from trigger to pm suspend
-Date: Mon, 31 Aug 2026 09:30:28 -0400
-Message-ID: <20260831133314.4125787-600-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ASoC: rt1320: run the initialisation preset on the first hardware init
+Date: Mon, 31 Aug 2026 09:30:29 -0400
+Message-ID: <20260831133314.4125787-601-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,504 +56,379 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Sergey Lebedev <lsa.uz@pm.me>
 
-[ Upstream commit acf676b9de0c86bc735a7f04962d3d688e156ffc ]
+[ Upstream commit 9b30521074f01aff856f539c1241a48342b69f7c ]
 
-Mark all open DAI runtimes as suspended in the component .suspend
-callback instead of relying on SNDRV_PCM_TRIGGER_SUSPEND, which is
-not delivered during PAUSE or xrun states.
+rt1320_io_init() applies the vendor initialisation preset only when the
+amplifier's SDCA function status has FUNCTION_NEEDS_INITIALIZATION set:
 
-If during system suspend a dai is open it means that it is in either in
-SUSPENDED, PAUSED or STOPPED  (due to xrun) state and they will need to be
-re-initialized during resume (which is done in .prepare callback).
+	if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION)) {
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260508101755.1247039-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Its two sibling drivers guard the same write differently, also running
+the preset on the first hardware init:
+
+  rt712-sdca.c:  if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION) ||
+                     (!rt712->first_hw_init)) {
+  rt722-sdca.c:  if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION) ||
+                     (!rt722->first_hw_init)) {
+
+On the Microsoft Surface Pro 11 (Intel) the RT1320 never sets that bit.
+Its function status reads back 0x41 on every boot, cold or warm:
+
+  rt1320-sdca sdw:0:0:025d:1320:01: rt1320_io_init amp func_status=0x41
+
+which is NEWLY_ATTACHED | FUNCTION_HAS_BEEN_RESET: the function reports
+that it has been reset and does not consider itself in need of
+initialisation. Bit 5 is never set, so the preset never runs,
+rt1320_vc_preset() and the MCU patch load are skipped, and the amplifier
+is left unprogrammed. rt712 and rt722 would have run it via their
+first_hw_init fallback.
+
+Add the same fallback. With it rt1320_vc_preset() executes and the
+amplifier reports RT1320_KR0_INT_READY=0x1f where previously it did not.
+
+Signed-off-by: Sergey Lebedev <lsa.uz@pm.me>
+Link: https://patch.msgid.link/20260804225853.31585-2-lsa.uz@pm.me
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `soundwire: intel: Move suspend tracking
-from trigger to pm suspend`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux 6.18.43 (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`)
+### Step 1.1: Subject line
+**Record:** `[ASoC: rt1320]` `[run]` — run the vendor initialization
+preset on first hardware init.
+
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Sergey Lebedev `<lsa.uz@pm.me>` (author)
+- **Link:** https://patch.msgid.link/20260804225853.31585-2-lsa.uz@pm.me
+- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (ASoC maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable@vger.kernel.org`
+- Notable: maintainer sign-off; real hardware report (Surface Pro 11);
+  no syzbot/fuzzer involvement
+
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `rt1320_io_init()` only runs the vendor preset when
+  `FUNCTION_NEEDS_INITIALIZATION` is set; on Surface Pro 11 RT1320
+  reports `0x41` (`NEWLY_ATTACHED | FUNCTION_HAS_BEEN_RESET`), never bit
+  5
+- **Symptom:** `rt1320_vc_preset()` and MCU patch load are skipped;
+  amplifier stays unprogrammed; speakers silent
+- **Root cause:** RT1320 lacks the `first_hw_init` fallback that sibling
+  drivers `rt712-sdca` and `rt722-sdca` already use
+- **Version info:** Surface Pro 11 (Intel, Lunar Lake); tested on
+  7.1.0-rc7 per cover letter
+
+### Step 1.4: Hidden bug fix?
+**Record:** Yes — not disguised cleanup. This is a clear
+logic/correctness fix restoring driver behavior that existed at
+introduction and was accidentally dropped.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff Analysis
 
-### Step 1.1: Subject Line
-**Record:** `[soundwire: intel]` `[move]` — Relocate suspend-state
-tracking from PCM trigger callback to component PM suspend callback.
-
-### Step 1.2: Commit Message Tags
+### Step 2.1: Inventory
 **Record:**
-- **Signed-off-by:** Peter Ujfalusi, Bard Liao, Vinod Koul (subsystem
-  maintainer)
-- **Link:** https://patch.msgid.link/20260508101755.1247039-1-yung-
-  chuan.liao@linux.intel.com
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable@vger.kernel.org
-- Notable: Maintainer (Vinod Koul) signed off; no syzbot/fuzzer report
+- **Files:** `sound/soc/codecs/rt1320-sdw.c` (+1 / -1)
+- **Function:** `rt1320_io_init()`
+- **Scope:** Single-file, one-line surgical fix
 
-### Step 1.3: Commit Body Analysis
+### Step 2.2: Code flow change
 **Record:**
-- **Bug:** Suspend tracking relied on `SNDRV_PCM_TRIGGER_SUSPEND`, which
-  ALSA does not deliver when a stream is in PAUSE or xrun (STOPPED)
-  state at system-suspend time.
-- **Symptom:** On resume, `.prepare()` does not reinitialize SHIM/DMA
-  hardware because `dai_runtime->suspended` was never set; audio fails
-  after suspend/resume.
-- **Root cause:** `TRIGGER_SUSPEND` is only sent when
-  `snd_pcm_running()` is true (RUNNING/DRAINING only).
-- **Fix approach:** Mark all open DAIs suspended in the component
-  `.suspend` callback, which runs during system PM suspend after PCM
-  suspend.
+- **Before:** Preset runs only if `amp_func_status &
+  FUNCTION_NEEDS_INITIALIZATION`
+- **After:** Also runs when `!rt1320->first_hw_init` (first hardware
+  init)
+- **Path:** Normal probe via `rt1320_update_status()` →
+  `rt1320_io_init()` on `SDW_SLAVE_ATTACHED`
 
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Yes — described as a refactor (“move”), but it fixes a real
-suspend/resume correctness bug. The `suspended` flag gates hardware
-reinit in `intel_prepare()`.
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Logic/correctness (hardware workaround)
+- **Mechanism:** Some RT1320 parts never set
+  `FUNCTION_NEEDS_INITIALIZATION`; without the `first_hw_init` fallback,
+  `rt1320_vc_preset()` / `rt1320_load_mcu_patch()` never execute and the
+  amp is left uninitialized
+
+### Step 2.4: Fix quality
+**Record:**
+- Obviously correct: matches `rt712-sdca.c` and `rt722-sdca.c`, and
+  restores original `rt1320` behavior from `bad0a07a7e61a`
+- Minimal, no unrelated changes
+- **Regression risk:** Very low — restores long-standing pattern; only
+  affects first init
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Change Inventory
-**Record:**
-- `drivers/soundwire/intel.c`: ~17 lines removed, ~10 modified (net −7)
-- `drivers/soundwire/intel_ace2x.c`: ~14 lines removed, ~27 added (new
-  `intel_component_dais_suspend`, `.suspend` hook)
-- **Functions modified:** `intel_trigger()`,
-  `intel_component_dais_suspend()` (intel.c); `intel_trigger()`, new
-  `intel_component_dais_suspend()` (intel_ace2x.c)
-- **Scope:** Single-subsystem, two related driver files; surgical fix
-
-### Step 2.2: Code Flow Change
-**Record:**
-
-| Hunk | Before | After |
-|------|--------|-------|
-| `intel_trigger()` (both files) | On `SNDRV_PCM_TRIGGER_SUSPEND`, set
-`dai_runtime->suspended = true` | `TRIGGER_SUSPEND` case removed; only
-pause tracking remains |
-| `intel_component_dais_suspend()` (intel.c) | Only set `suspended` if
-`paused && !suspended` | Set `suspended = true` for every open
-`dai_runtime` |
-| `intel_ace2x.c` component driver | No `.suspend` callback | Adds
-`intel_component_dais_suspend` + `.suspend` hook |
-
-**Execution path affected:** System suspend (S3/runtime suspend) → ASoC
-card suspend → PCM suspend → component suspend → resume → `.prepare()`.
-
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Logic/correctness — suspend-state tracking bug
-- **Mechanism:** `snd_pcm_do_suspend()` in `sound/core/pcm_native.c`
-  skips `TRIGGER_SUSPEND` when `!snd_pcm_running()`. PAUSED and XRUN
-  streams are not “running,” so the driver never sets
-  `dai_runtime->suspended`. `intel_prepare()` only reinitializes
-  SHIM/ALH when `dai_runtime->suspended` is true.
-
-Verified in tree:
-
-```1713:1721:sound/core/pcm_native.c
-static int snd_pcm_do_suspend(struct snd_pcm_substream *substream,
-                              snd_pcm_state_t state)
-{
-        struct snd_pcm_runtime *runtime = substream->runtime;
-        if (runtime->trigger_master != substream)
-                return 0;
-        if (! snd_pcm_running(substream))
-                return 0;
-        substream->ops->trigger(substream, SNDRV_PCM_TRIGGER_SUSPEND);
-```
-
-```711:716:include/sound/pcm.h
-static inline int snd_pcm_running(struct snd_pcm_substream *substream)
-{
-        return (substream->runtime->state == SNDRV_PCM_STATE_RUNNING ||
-                (substream->runtime->state == SNDRV_PCM_STATE_DRAINING
-&&
-                 substream->stream == SNDRV_PCM_STREAM_PLAYBACK));
-}
-```
-
-### Step 2.4: Fix Quality
-**Record:**
-- Fix is minimal and matches the PM lifecycle; component suspend runs
-  after `snd_pcm_suspend_all()` in `snd_soc_suspend()`.
-- `intel.c` had a partial PAUSE workaround; this generalizes it to all
-  open streams.
-- `intel_ace2x.c` had no component suspend at all — worse for PAUSE and
-  XRUN.
-- **Regression risk:** Low. Setting `suspended` on already-suspended
-  streams is idempotent; open streams need reinit after system sleep
-  regardless.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** `git blame` shows suspend-tracking code in `intel.c` at the
-tree’s base commit (`a112b91dd6349`). History is shallow in this
-checkout; exact introduction commit not determinable. Buggy code is
-present in 6.18.43.
+**Record:**
+- Buggy condition from `f465d10cd7318` (Sep 2, 2024, "ASoC: rt1320: Add
+  support for version C")
+- That commit **removed** `|| (!rt1320->first_hw_init)` that existed
+  since `bad0a07a7e61a` (May 21, 2024)
+- Regression present since v6.12 (first tag containing `f465d10`)
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag. Regression commit is `f465d10cd7318`,
+confirmed in this tree.
 
-### Step 3.3: Related File History
-**Record:** `git log --oneline -- drivers/soundwire/intel.c` returns
-only the tree base commit (shallow history). Both `intel.c` and
-`intel_ace2x.c` exist and are built via `soundwire-intel-y` in
-`drivers/soundwire/Makefile`.
+### Step 3.3: Related file history
+**Record:**
+- Part of a 3-patch series: "ASoC: fix audio on the Microsoft Surface
+  Pro 11 (Intel)"
+- Patches 2/3 and 3/3 address phantom ACPI entries; **this patch is
+  standalone** for RT1320 init
+- Recent rt1320 fixes in tree: mute issue, speaker noise, RT1321 support
+  — unrelated
 
-### Step 3.4: Author Context
-**Record:** Peter Ujfalusi and Bard Liao are regular Intel SoundWire
-contributors. Vinod Koul (SoundWire maintainer) committed. Standalone
-fix, not part of a multi-patch series in the message.
+### Step 3.4: Author context
+**Record:** Sergey Lebedev — Surface Pro 11 reporter/fixer; no prior
+sound commits in this tree. Mark Brown committed upstream.
 
 ### Step 3.5: Dependencies
-**Record:** No prerequisites. Uses existing `for_each_component_dais`,
-`dai_runtime_array`, and `intel_component_dais_suspend` pattern from
-`intel.c`. Applies standalone to this tree.
+**Record:** None for this change. `first_hw_init` already exists in
+`rt1320_sdw_priv` and is initialized to `false` at probe. Applies
+standalone.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original Discussion
-**Record:** Lore/patch.msgid.link blocked (403/Anubis). `b4 dig` could
-not match this commit (not in local history). **UNVERIFIED:** reviewer
-feedback and stable nominations.
+### Step 4.1: Original discussion
+**Record:**
+- **URL:** https://patch.msgid.link/20260804225853.31585-2-lsa.uz@pm.me
+- **Series:** v1 only (no v2/v3)
+- Cover letter: full Surface Pro 11 audio needs all 3 patches; patch 1/3
+  is codec-specific and one line
+- No explicit stable nomination in thread
+- No NAKs found in mbox
 
 ### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** — `b4 dig -w` not usable without matching
-commit.
+**Record:** CC'd to Mark Brown, Liam Girdwood, Jaroslav Kysela, Takashi
+Iwai, Realtek/Intel SOF maintainers, `linux-sound@`, `sound-open-
+firmware@`, `linux-kernel@`
 
-### Step 4.3: Bug Reports
-**Record:** No external bug report tags. Mechanism verified from ALSA
-core + driver code.
+### Step 4.3: Bug report
+**Record:** Hardware testing on Surface Pro 11 for Business (Intel Core
+Ultra 7 268V, Lunar Lake). Symptom: silent speakers despite successful
+probe. Severity: complete audio failure on affected hardware.
 
-### Step 4.4: Related Patches
-**Record:** Similar pattern in `sound/soc/sof/intel/hda-dai.c`
-(`hda_dsp_dais_suspend`) documents the same ALSA `TRIGGER_SUSPEND`
-limitation during PAUSE.
+### Step 4.4: Related patches
+**Record:** Patches 2/3 (`sdw_utils`) and 3/3 (SOF Intel HDA amp
+indexing) are separate; needed for full SP11 fix but not prerequisites
+for this one-line driver fix.
 
-### Step 4.5: Stable List History
-**Record:** **UNVERIFIED** — lore blocked.
+### Step 4.5: Stable list
+**Record:** No stable-specific discussion found in mbox.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key Functions
-**Record:** `intel_trigger()`, `intel_component_dais_suspend()`,
-`intel_prepare()`, `cdns_set_sdw_stream()`
+### Step 5.1: Key functions
+**Record:** `rt1320_io_init()`, `rt1320_vc_preset()`,
+`rt1320_update_status()`
 
 ### Step 5.2: Callers
 **Record:**
-- `intel_trigger()` — ALSA/ASoC PCM trigger path
-- `intel_component_dais_suspend()` — `snd_soc_component_suspend()` from
-  `snd_soc_suspend()` during system suspend
-- `intel_prepare()` — PCM prepare before start/resume after system sleep
+- `rt1320_update_status()` — SoundWire slave status callback
+  (`.update_status` in `rt1320_sdw_slave_driver`)
+- Triggered on `SDW_SLAVE_ATTACHED` during SoundWire enumeration
+- Common device probe path for RT1320-equipped Intel SOF machines
 
 ### Step 5.3: Callees
-**Record:** `intel_prepare()` calls `intel_pdi_shim_configure()`,
-`intel_pdi_alh_configure()`, `sdw_cdns_config_stream()`,
-`intel_params_stream()` when `dai_runtime->suspended` is true.
+**Record:** `rt1320_vab_preset()`, `rt1320_vc_preset()`,
+`rt1321_preset()`, `regmap_read/write`, `rt1320_load_mcu_patch()`
+(inside `rt1320_vc_preset()`)
 
 ### Step 5.4: Reachability
-**Record:** Triggered by system suspend/resume on machines with
-`CONFIG_SND_SOC_SOF` + Intel SoundWire (`soundwire-intel` module).
-Common on modern Intel laptops. Userspace does not need special
-privileges beyond having audio open during suspend.
+**Record:** Reachable on every boot for RT1320 SoundWire devices when
+`CONFIG_SND_SOC_RT1320_SDW` is enabled (implied by Intel SOF ACPI
+matches). Not userspace-triggered, but affects all audio on affected
+machines.
 
-### Step 5.5: Similar Patterns
-**Record:** SOF Intel HDA has the same PAUSE/`TRIGGER_SUSPEND`
-workaround comment. Confirms this is a known ALSA limitation, not
-driver-specific imagination.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.43)
-
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Verified:
-- `intel.c`: `TRIGGER_SUSPEND` in `intel_trigger()` (line 910); partial
-  `intel_component_dais_suspend()` (only handles `paused`)
-- `intel_ace2x.c`: `TRIGGER_SUSPEND` in `intel_trigger()` (line 825);
-  **no** `.suspend` callback
-- `dai_runtime->suspended` used in `intel_prepare()` in both files
-
-### Step 6.2: Backport Complications
-**Record:** Expected clean apply. Current code matches the patch
-context. No conflicting refactors observed.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** Partial PAUSE-only workaround exists in `intel.c` only. No
-fix for XRUN; `intel_ace2x.c` unprotected. This commit not yet applied.
+### Step 5.5: Similar patterns
+**Record:** Identical `first_hw_init` fallback in `rt712-sdca.c:1837`
+and `rt722-sdca.c:1400`. Original `rt1320` driver at
+`bad0a07a7e61a:1699` had the same pattern.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/soundwire/` — IMPORTANT (Intel laptop audio via
-SoundWire). Not core kernel, but affects many production systems.
-
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained Intel audio path. `intel_ace2x.c` is
-part of current `soundwire-intel` build.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Who Is Affected
-**Record:** Users of Intel SoundWire audio (Tiger Lake and newer Intel
-platforms with SOF + SoundWire codecs). Config: `CONFIG_SOUNDWIRE` /
-`soundwire-intel` module.
-
-### Step 8.2: Trigger Conditions
+### Step 6.1: Buggy code exists?
 **Record:**
-- System suspend while audio stream is open and PAUSED, or
-- System suspend while stream is in xrun (STOPPED) state
-- Moderately common: paused music/video, buffer underrun before lid-
-  close
-- Unprivileged user with open PCM device
+- **Tree:** `stable/linux-6.18.y` at `v6.18.44`
+- **Buggy line present:** `sound/soc/codecs/rt1320-sdw.c:941` — `if
+  ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION))`
+- RT1320 driver (`bad0a07a7e61a`) and version C support
+  (`f465d10cd7318`) are both ancestors of HEAD
+- Fix (`9b30521074f01` / `4ff3319b43e07`) is **not** in this tree
 
-### Step 8.3: Failure Mode Severity
-**Record:** Audio broken after resume until full PCM teardown/reopen.
-**Severity: HIGH** (functional breakage on suspend/resume, not a kernel
-oops, but serious UX impact on laptops).
+### Step 6.2: Backport complications
+**Record:** Clean one-line apply at line 941; no conflicts expected.
+Stable tree file matches autosel backport diff base.
 
-### Step 8.4: Risk-Benefit
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent fix found. Other rt1320 fixes (mute, noise)
+address different issues.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+### Step 7.1: Subsystem criticality
+**Record:** `sound/soc/codecs` — ASoC codec driver. **IMPORTANT** for
+Intel SOF + SoundWire laptop users (LNL/PTL/ARL platforms with RT1320).
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained; multiple rt1320 ACPI machine entries
+and driver fixes in 6.18.y.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who is affected
+**Record:** Users with RT1320 amplifiers on Intel SOF SoundWire
+platforms where the chip does not set `FUNCTION_NEEDS_INITIALIZATION` —
+confirmed on Surface Pro 11; potentially any RT1320 since the v6.12
+regression. Config-specific: `CONFIG_SND_SOC_RT1320_SDW`.
+
+### Step 8.2: Trigger conditions
+**Record:** Every cold/warm boot on affected hardware. Not timing-
+dependent. Unprivileged users cannot trigger directly, but all users on
+affected machines lose speaker output.
+
+### Step 8.3: Failure mode severity
+**Record:** Amplifier never initialized → **silent speakers** (complete
+audio failure on affected machines). Severity: **HIGH** for affected
+hardware (not a kernel crash, but total loss of primary audio output).
+
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** HIGH — fixes real suspend/resume audio failure
-- **Risk:** LOW — ~50 lines, idempotent flag set, no API changes
+- **Benefit:** HIGH for RT1320 users — restores working audio
+- **Risk:** VERY LOW — one-line restoration of original + sibling-driver
+  pattern
 - **Ratio:** Strongly favors backport
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real bug with verified ALSA mechanism (`snd_pcm_running()` gate)
-- User-visible suspend/resume audio failure
-- Small, surgical, maintainer-reviewed fix
-- Buggy code present in 6.18.43 (both `intel.c` and `intel_ace2x.c`)
-- `intel_ace2x.c` completely lacks component suspend today
-- Same class of fix as existing SOF HDA workaround
+- Real regression introduced by `f465d10` (removed `first_hw_init`
+  fallback present since driver introduction)
+- Confirmed hardware impact (Surface Pro 11 — silent speakers)
+- One-line fix matching proven rt712/rt722 pattern
+- Self-contained, no dependencies
+- ASoC maintainer sign-off
+- RT1320 driver and platform ACPI support present in 6.18.y
 
 **AGAINST backport:**
-- Driver-specific (not universal)
-- No fuzzer/CVE report
-- Lore review discussion unverified
+- Full Surface Pro 11 audio may also need patches 2/3 and 3/3 (separate
+  commits)
+- No explicit stable nomination or `Fixes:` tag (expected for manual
+  review)
 
-**UNRESOLVED:**
-- Original mailing-list review thread
-- Exact mainline commit SHA in this checkout
+**Unresolved:** Whether other RT1320 platforms besides Surface Pro 11
+hit this path (likely, given regression since v6.12).
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic matches ALSA PM
-   behavior; maintainer SOB
-2. Fixes a real user-affecting bug? **PASS**
-3. Important issue? **PASS** — suspend/resume audio failure (HIGH)
-4. Small and contained? **PASS** — ~50 lines, 2 files
-5. No new features/APIs? **PASS** — moves existing tracking to correct
-   callback
-6. Can apply to local tree? **PASS** — code present, structure matches
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — restores original logic;
+   tested on real hardware per cover letter
+2. Fixes a real bug? **PASS** — amplifier left unprogrammed
+3. Important issue? **PASS** — complete audio failure on affected
+   laptops
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features/APIs? **PASS** — behavior restoration only
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
 
-### Step 9.3: Exception Categories
-**Record:** N/A — standard bug fix, not device-ID/quirk/DT/build/doc
-exception.
+### Step 9.3: Exception category
+**Record:** Hardware workaround / quirk — RT1320 does not set
+`FUNCTION_NEEDS_INITIALIZATION`; driver must initialize on first hw init
+regardless.
 
-### Step 9.4: Decision Rationale
-For Linux 6.18.43, the suspend-tracking bug exists in both Intel
-SoundWire driver files. The ALSA core deliberately does not send
-`TRIGGER_SUSPEND` for PAUSED or xrun streams, so the current trigger-
-based tracking is incomplete. Without `dai_runtime->suspended`,
-`intel_prepare()` skips hardware reinit after system resume, leaving
-audio broken. The fix is small, correct, and addresses a realistic
-laptop suspend scenario.
+### Step 9.4: Decision rationale
+
+For **linux-6.18.y** (`v6.18.44`): this is a regression fix restoring
+driver behavior accidentally removed in v6.12. The RT1320 driver, the
+buggy code, and affected platform support are all present. The fix is
+one line, matches sibling drivers, and fixes silent speakers on real
+hardware. It is self-contained and low risk.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Identified hidden bug fix (suspend/resume correctness)
-- **[Phase 2]** Diff: 2 files, `intel_trigger` +
-  `intel_component_dais_suspend` changes
-- **[Phase 2]** Read `snd_pcm_do_suspend()` — confirmed
-  `TRIGGER_SUSPEND` skipped when `!snd_pcm_running()`
-- **[Phase 2]** Read `snd_pcm_running()` — only RUNNING/DRAINING return
-  true
-- **[Phase 2]** Read `intel_prepare()` in `intel.c` and `intel_ace2x.c`
-  — reinit gated on `dai_runtime->suspended`
-- **[Phase 3]** `git describe HEAD` → v6.18.43
-- **[Phase 3]** `git blame` on `intel.c:910-980` — code at tree base
-- **[Phase 3]** Shallow history: only base commit for soundwire files
-- **[Phase 4]** WebFetch lore/patch.msgid.link — blocked (Anubis/403)
-- **[Phase 4]** `curl` lore raw — 403 Forbidden
-- **[Phase 4]** `b4 dig -c HEAD` — no match for this commit
-- **[Phase 4]** Found analogous SOF HDA comment in `hda-dai.c:935-941`
-- **[Phase 5]** Traced suspend path: `snd_soc_suspend()` →
-  `snd_pcm_suspend_all()` then `snd_soc_component_suspend()`
-- **[Phase 5]** Verified `for_each_component_dais` in
-  `include/sound/soc-component.h`
-- **[Phase 5]** Verified `dai_runtime_array` allocated in
-  `cdns_set_sdw_stream()` when stream is set
-- **[Phase 6]** Confirmed buggy code in `intel.c` (partial PAUSE fix, no
-  XRUN fix)
-- **[Phase 6]** Confirmed `intel_ace2x.c` has no `.suspend` callback
-- **[Phase 6]** Confirmed both files built via
-  `drivers/soundwire/Makefile`
-- **[Phase 8]** Failure mode: audio broken after suspend/resume — HIGH
-  severity
-- **UNVERIFIED:** Mailing-list reviewer feedback and stable nominations
-- **UNVERIFIED:** Mainline commit SHA in this checkout
+- [Phase 1] Parsed subject, tags, body from commit `9b30521074f01` /
+  `4ff3319b43e07`
+- [Phase 2] Diff: 1-line change in `rt1320_io_init()` at line 941
+- [Phase 3] `git blame`: regression in `f465d10cd7318`; original
+  fallback in `bad0a07a7e61a`
+- [Phase 3] `git show f465d10`: confirmed removal of `||
+  (!rt1320->first_hw_init)`
+- [Phase 3] `git show bad0a07a7e61a`: confirmed original driver had
+  fallback
+- [Phase 3] `git merge-base --is-ancestor`: driver, version C, and fix
+  presence verified
+- [Phase 4] `b4 dig -c 4ff3319b43e07`: found lore thread; v1 series;
+  cover letter read from mbox
+- [Phase 4] `b4 dig -w`: Mark Brown and sound maintainers CC'd
+- [Phase 4] No stable/Reviewed-by/Tested-by in mbox
+- [Phase 5] `grep rt1320_io_init`: called from `rt1320_update_status()`
+  on attach
+- [Phase 5] Compared with `rt712-sdca.c:1837` and `rt722-sdca.c:1400`
+  patterns
+- [Phase 6] `git describe HEAD`: `v6.18.44` on `stable/linux-6.18.y`
+- [Phase 6] Buggy code at `rt1320-sdw.c:941`; fix not in tree
+- [Phase 6] `git show 4ff3319b43e07 -p`: clean apply to current tree
+- [Phase 7] RT1320 ACPI matches present in `soc-acpi-intel-lnl-match.c`,
+  `ptl-match.c`, `arl-match.c`
+- [Phase 8] Failure mode: unprogrammed amplifier → silent speakers
 
-**YES**The background history search finished. In this 6.18.43 checkout,
-`git log -S 'intel_component_dais_suspend'` only turns up the tree base
-commit (`a112b91dd6349`), so the shallow history here doesn’t show when
-suspend tracking was originally added.
+**YES**The analysis is complete for **linux-6.18.y** (`v6.18.44`).
 
-That doesn’t change the backport call: the buggy code is present in both
-`intel.c` and `intel_ace2x.c`, and the fix still looks appropriate for
-this tree.
+This is a one-line regression fix: `f465d10` ("Add support for version
+C") dropped the `first_hw_init` fallback that existed since the RT1320
+driver was introduced. On hardware like the Surface Pro 11, the amp
+never sets `FUNCTION_NEEDS_INITIALIZATION`, so the preset and MCU patch
+load are skipped and speakers stay silent. The fix restores the same
+pattern already used in `rt712-sdca` and `rt722-sdca`.
+
+The buggy code is present in this tree, the patch applies cleanly, and
+it is self-contained (patches 2/3 and 3/3 in the series are separate
+Surface Pro 11 ACPI issues).
 
 **YES**
 
- drivers/soundwire/intel.c       | 31 ++++++--------------------
- drivers/soundwire/intel_ace2x.c | 39 ++++++++++++++++++++++-----------
- 2 files changed, 33 insertions(+), 37 deletions(-)
+ sound/soc/codecs/rt1320-sdw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/intel.c b/drivers/soundwire/intel.c
-index 9db78f3d76152..a83371233603b 100644
---- a/drivers/soundwire/intel.c
-+++ b/drivers/soundwire/intel.c
-@@ -907,19 +907,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
- 	}
+diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
+index e1bd991a823a4..a08e20bfe9c86 100644
+--- a/sound/soc/codecs/rt1320-sdw.c
++++ b/sound/soc/codecs/rt1320-sdw.c
+@@ -938,7 +938,7 @@ static int rt1320_io_init(struct device *dev, struct sdw_slave *slave)
+ 	dev_dbg(dev, "%s amp func_status=0x%x\n", __func__, amp_func_status);
  
- 	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_SUSPEND:
--
--		/*
--		 * The .prepare callback is used to deal with xruns and resume operations.
--		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
--		 * but for resume operations the DMAs and SHIM registers need to be initialized.
--		 * the .trigger callback is used to track the suspend case only.
--		 */
--
--		dai_runtime->suspended = true;
--
--		break;
--
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		dai_runtime->paused = true;
- 		break;
-@@ -956,10 +943,12 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
- 	struct snd_soc_dai *dai;
- 
- 	/*
--	 * In the corner case where a SUSPEND happens during a PAUSE, the ALSA core
--	 * does not throw the TRIGGER_SUSPEND. This leaves the DAIs in an unbalanced state.
--	 * Since the component suspend is called last, we can trap this corner case
--	 * and force the DAIs to release their resources.
-+	 * Mark all open streams as suspended.
-+	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
-+	 * state and during prepare the DMAs and SHIM registers need to be
-+	 * initialized for them.
-+	 * The STOPPED state is a special corner case which can happen if audio
-+	 * experiences xrun at suspend time.
- 	 */
- 	for_each_component_dais(component, dai) {
- 		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
-@@ -967,13 +956,7 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
- 
- 		dai_runtime = cdns->dai_runtime_array[dai->id];
- 
--		if (!dai_runtime)
--			continue;
--
--		if (dai_runtime->suspended)
--			continue;
--
--		if (dai_runtime->paused)
-+		if (dai_runtime)
- 			dai_runtime->suspended = true;
- 	}
- 
-diff --git a/drivers/soundwire/intel_ace2x.c b/drivers/soundwire/intel_ace2x.c
-index 63aef98361467..f0e0a79b30b0e 100644
---- a/drivers/soundwire/intel_ace2x.c
-+++ b/drivers/soundwire/intel_ace2x.c
-@@ -822,19 +822,6 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
- 	}
- 
- 	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_SUSPEND:
--
--		/*
--		 * The .prepare callback is used to deal with xruns and resume operations.
--		 * In the case of xruns, the DMAs and SHIM registers cannot be touched,
--		 * but for resume operations the DMAs and SHIM registers need to be initialized.
--		 * the .trigger callback is used to track the suspend case only.
--		 */
--
--		dai_runtime->suspended = true;
--
--		break;
--
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		dai_runtime->paused = true;
- 		break;
-@@ -858,8 +845,34 @@ static const struct snd_soc_dai_ops intel_pcm_dai_ops = {
- 	.get_stream = intel_get_sdw_stream,
- };
- 
-+static int intel_component_dais_suspend(struct snd_soc_component *component)
-+{
-+	struct snd_soc_dai *dai;
-+
-+	/*
-+	 * Mark all open streams as suspended.
-+	 * Open streams at this point can be in SUSPENDED, PAUSED or STOPPED
-+	 * state and during prepare the DMAs and SHIM registers need to be
-+	 * initialized for them.
-+	 * The STOPPED state is a special corner case which can happen if audio
-+	 * experiences xrun at suspend time.
-+	 */
-+	for_each_component_dais(component, dai) {
-+		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
-+		struct sdw_cdns_dai_runtime *dai_runtime;
-+
-+		dai_runtime = cdns->dai_runtime_array[dai->id];
-+
-+		if (dai_runtime)
-+			dai_runtime->suspended = true;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct snd_soc_component_driver dai_component = {
- 	.name			= "soundwire",
-+	.suspend		= intel_component_dais_suspend,
- };
- 
- /*
+ 	/* initialization write */
+-	if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION)) {
++	if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION) || !rt1320->first_hw_init) {
+ 		switch (rt1320->dev_id) {
+ 		case RT1320_DEV_ID:
+ 			if (rt1320->version_id < RT1320_VC)
 -- 
 2.53.0
 
