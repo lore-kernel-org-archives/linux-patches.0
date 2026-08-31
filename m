@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B170A4854EE;
-	Mon, 31 Aug 2026 14:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A8B43F4A6;
+	Mon, 31 Aug 2026 14:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184986; cv=none; b=YxH2gakd8BAV7kJYDG/qhZ4R5R4zWo/UROyHBgbUnJUhZ8Y8ZXnpnLVgSc27Ka8ICFyho+LICaQuB0DufvbmAw7fEj8+cj/xszYJi2eKGEBmvDi/YkxgLqPYaV9QwX8wR161uGz+whvkIOCzTn52eVzTspFG4aIUqs8yNi+MCTM=
+	t=1788185014; cv=none; b=aGsH/QxBaAdaC1NsxT+OE6cyBxIOzjiyvhGMTQvozPAFGQht+k61rM9vOumymg8OvVj3CBxWakQCFRbmmJB6eSjVUlwTBoQILd7JnX1q7yymhvq0rQi0d0QUlWg8mSszzsDXW9NfpvW2i6Mxt1eZyY12i6+cvUdu64Afd/CV7EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184986; c=relaxed/simple;
-	bh=WgI97qG/4aAe6QnS2SjqS4jof0VVm+VE8fNWOEg1ygU=;
+	s=arc-20240116; t=1788185014; c=relaxed/simple;
+	bh=jSjiVDU8/CHCSNDdOzzVxAIj0PFXG7whD+Xps0eGN0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ih2HRc/YETldyKAElPsCaeqGx2MGbK41SdlQfsaD2TTAqaMdeUVBjJokLwPnQ9yqNaLzckE+1bRukft6HVyb6R64ti9a1ZmqKJ3LPeh4myI6ho5748XE6Gs/4642H9e7Ok9QKUVxx9rXe2S00qPAT7tCPO5jC+9wSUCTuyEu7yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfHSH5uH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L/xafo5mIRMKZkc5fXxNFfRi2HBZITYWEOw/X5DXohFh5YF8DxxWw+viVzbzO+jiAPaCw2/FTiEN9sSBnBFMyZErHhIYBr39yYb8GP2FEC7MVdcyKid7nO9pW27ujFFp9KrVfg1TiW60Nwyy/gWc2SKiRB8E2ndfB3tJcaqG9rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+CQ1Y+0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfHSH5uH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177261F00A3D;
-	Mon, 31 Aug 2026 14:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+CQ1Y+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15D21F000E9;
+	Mon, 31 Aug 2026 14:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184984;
-	bh=P9tsM3r8KVbBHVmasyECK0ie2e1oMEBrpjALWusjAYE=;
+	s=korg; t=1788185013;
+	bh=lhP8yIOSpCAo+kYXcgBJHY8e+8q9DvGIEAixyylrlh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hfHSH5uHZCl20wgUA80IhvKXYcIdwZLfxRmZViqtg0nDKvhiEm/EDH4CYcBxpX8t1
-	 PUNlADPh/0lySphHpICLSKFEFCBOeWZI/uxL4kptNIzerc4GxH7APwMSz7Lrk/HcD/
-	 IEf9Ex6EW2mEdMU+yVAGRXaiK1a+iy3jIZxkCjr0=
+	b=o+CQ1Y+00zOGs9QZheGIYJoLK/60saqu9jNDaciFE/9TxHl1aYIctrNeDrN4NgTB2
+	 Pdu0hCvJajbCT7lFy6z5zgQa2CRrlJh815xQV5BXfMpYl0/yD4ztuGwem7P59yfHl3
+	 zNj11EmwEj+t8zeyEvEejW4ac9EYLT/plNaXPC9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Clark Williams <williams@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/69] smc: Use __sk_dst_get() and dst_dev_rcu() in smc_vlan_by_tcpsk().
-Date: Mon, 31 Aug 2026 15:34:47 +0200
-Message-ID: <20260831133359.195944015@linuxfoundation.org>
+Subject: [PATCH 5.15 23/69] kcov: replace local_irq_save() with a local_lock_t
+Date: Mon, 31 Aug 2026 15:34:56 +0200
+Message-ID: <20260831133359.591784518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -52,85 +57,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 0b0e4d51c6554e5ecc3f8cc73c2eaf12da21249a ]
+[ Upstream commit d5d2c51f1e5f56ed01d2c773974630c007e5e5f5 ]
 
-smc_vlan_by_tcpsk() fetches sk_dst_get(sk)->dev before RTNL and
-passes it to netdev_walk_all_lower_dev(), which is illegal.
+The kcov code mixes local_irq_save() and spin_lock() in
+kcov_remote_{start|end}().  This creates a warning on PREEMPT_RT because
+local_irq_save() disables interrupts and spin_lock_t is turned into a
+sleeping lock which can not be acquired in a section with disabled
+interrupts.
 
-Also, smc_vlan_by_tcpsk_walk() does not require RTNL at all.
+The kcov_remote_lock is used to synchronize the access to the hash-list
+kcov_remote_map.  The local_irq_save() block protects access to the
+per-CPU data kcov_percpu_data.
 
-Let's use __sk_dst_get(), dst_dev_rcu(), and
-netdev_walk_all_lower_dev_rcu().
+There is no compelling reason to change the lock type to raw_spin_lock_t
+to make it work with local_irq_save().  Changing it would require to
+move memory allocation (in kcov_remote_add()) and deallocation outside
+of the locked section.
 
-Note that the returned value of smc_vlan_by_tcpsk() is not used
-in the caller.
+Adding an unlimited amount of entries to the hashlist will increase the
+IRQ-off time during lookup.  It could be argued that this is debug code
+and the latency does not matter.  There is however no need to do so and
+it would allow to use this facility in an RT enabled build.
 
-Fixes: 0cfdd8f92cac ("smc: connection and link group creation")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250916214758.650211-5-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Using a local_lock_t instead of local_irq_save() has the befit of adding
+a protection scope within the source which makes it obvious what is
+protected.  On a !PREEMPT_RT && !LOCKDEP build the local_lock_irqsave()
+maps directly to local_irq_save() so there is overhead at runtime.
+
+Replace the local_irq_save() section with a local_lock_t.
+
+Link: https://lkml.kernel.org/r/20210923164741.1859522-6-bigeasy@linutronix.de
+Link: https://lore.kernel.org/r/20210830172627.267989-6-bigeasy@linutronix.de
+Reported-by: Clark Williams <williams@redhat.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Dmitry Vyukov <dvyukov@google.com>
+Acked-by: Marco Elver <elver@google.com>
+Tested-by: Marco Elver <elver@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 2eed77fdcb0c ("kcov: fix data corruption and race conditions on PREEMPT_RT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_core.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ kernel/kcov.c |   32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index 37614dcf19194..f6119f29b44ce 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1612,35 +1612,32 @@ static int smc_vlan_by_tcpsk_walk(struct net_device *lower_dev,
- /* Determine vlan of internal TCP socket. */
- int smc_vlan_by_tcpsk(struct socket *clcsock, struct smc_init_info *ini)
- {
--	struct dst_entry *dst = sk_dst_get(clcsock->sk);
- 	struct netdev_nested_priv priv;
- 	struct net_device *ndev;
-+	struct dst_entry *dst;
- 	int rc = 0;
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -88,6 +88,7 @@ static struct list_head kcov_remote_area
  
- 	ini->vlan_id = 0;
--	if (!dst) {
--		rc = -ENOTCONN;
--		goto out;
--	}
--	if (!dst->dev) {
-+
-+	rcu_read_lock();
-+
-+	dst = __sk_dst_get(clcsock->sk);
-+	ndev = dst ? dst_dev_rcu(dst) : NULL;
-+	if (!ndev) {
- 		rc = -ENODEV;
--		goto out_rel;
-+		goto out;
+ struct kcov_percpu_data {
+ 	void			*irq_area;
++	local_lock_t		lock;
+ 
+ 	unsigned int		saved_mode;
+ 	unsigned int		saved_size;
+@@ -96,7 +97,9 @@ struct kcov_percpu_data {
+ 	int			saved_sequence;
+ };
+ 
+-static DEFINE_PER_CPU(struct kcov_percpu_data, kcov_percpu_data);
++static DEFINE_PER_CPU(struct kcov_percpu_data, kcov_percpu_data) = {
++	.lock = INIT_LOCAL_LOCK(lock),
++};
+ 
+ /* Must be called with kcov_remote_lock locked. */
+ static struct kcov_remote *kcov_remote_find(u64 handle)
+@@ -834,7 +837,7 @@ void kcov_remote_start(u64 handle)
+ 	if (!in_task() && !in_softirq_really())
+ 		return;
+ 
+-	local_irq_save(flags);
++	local_lock_irqsave(&kcov_percpu_data.lock, flags);
+ 
+ 	/*
+ 	 * Check that kcov_remote_start() is not called twice in background
+@@ -842,7 +845,7 @@ void kcov_remote_start(u64 handle)
+ 	 */
+ 	mode = READ_ONCE(t->kcov_mode);
+ 	if (WARN_ON(in_task() && kcov_mode_enabled(mode))) {
+-		local_irq_restore(flags);
++		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 		return;
+ 	}
+ 	/*
+@@ -851,14 +854,15 @@ void kcov_remote_start(u64 handle)
+ 	 * happened while collecting coverage from a background thread.
+ 	 */
+ 	if (WARN_ON(in_serving_softirq() && t->kcov_softirq)) {
+-		local_irq_restore(flags);
++		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 		return;
  	}
  
--	ndev = dst->dev;
- 	if (is_vlan_dev(ndev)) {
- 		ini->vlan_id = vlan_dev_vlan_id(ndev);
--		goto out_rel;
-+		goto out;
+ 	spin_lock(&kcov_remote_lock);
+ 	remote = kcov_remote_find(handle);
+ 	if (!remote) {
+-		spin_unlock_irqrestore(&kcov_remote_lock, flags);
++		spin_unlock(&kcov_remote_lock);
++		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 		return;
+ 	}
+ 	kcov_debug("handle = %llx, context: %s\n", handle,
+@@ -879,19 +883,19 @@ void kcov_remote_start(u64 handle)
+ 		size = CONFIG_KCOV_IRQ_AREA_SIZE;
+ 		area = this_cpu_ptr(&kcov_percpu_data)->irq_area;
+ 	}
+-	spin_unlock_irqrestore(&kcov_remote_lock, flags);
++	spin_unlock(&kcov_remote_lock);
+ 
+ 	/* Can only happen when in_task(). */
+ 	if (!area) {
++		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 		area = vmalloc(size * sizeof(unsigned long));
+ 		if (!area) {
+ 			kcov_put(kcov);
+ 			return;
+ 		}
++		local_lock_irqsave(&kcov_percpu_data.lock, flags);
  	}
  
- 	priv.data = (void *)&ini->vlan_id;
--	rtnl_lock();
--	netdev_walk_all_lower_dev(ndev, smc_vlan_by_tcpsk_walk, &priv);
--	rtnl_unlock();
+-	local_irq_save(flags);
 -
--out_rel:
--	dst_release(dst);
-+	netdev_walk_all_lower_dev_rcu(ndev, smc_vlan_by_tcpsk_walk, &priv);
- out:
-+	rcu_read_unlock();
-+
- 	return rc;
- }
+ 	/* Reset coverage size. */
+ 	*(u64 *)area = 0;
  
--- 
-2.53.0
-
+@@ -901,7 +905,7 @@ void kcov_remote_start(u64 handle)
+ 	}
+ 	kcov_start(t, kcov, size, area, mode, sequence);
+ 
+-	local_irq_restore(flags);
++	local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 
+ }
+ EXPORT_SYMBOL(kcov_remote_start);
+@@ -975,12 +979,12 @@ void kcov_remote_stop(void)
+ 	if (!in_task() && !in_softirq_really())
+ 		return;
+ 
+-	local_irq_save(flags);
++	local_lock_irqsave(&kcov_percpu_data.lock, flags);
+ 
+ 	mode = READ_ONCE(t->kcov_mode);
+ 	barrier();
+ 	if (!kcov_mode_enabled(mode)) {
+-		local_irq_restore(flags);
++		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 		return;
+ 	}
+ 	/*
+@@ -988,12 +992,12 @@ void kcov_remote_stop(void)
+ 	 * actually found the remote handle and started collecting coverage.
+ 	 */
+ 	if (in_serving_softirq() && !t->kcov_softirq) {
+-		local_irq_restore(flags);
++		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 		return;
+ 	}
+ 	/* Make sure that kcov_softirq is only set when in softirq. */
+ 	if (WARN_ON(!in_serving_softirq() && t->kcov_softirq)) {
+-		local_irq_restore(flags);
++		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 		return;
+ 	}
+ 
+@@ -1023,7 +1027,7 @@ void kcov_remote_stop(void)
+ 		spin_unlock(&kcov_remote_lock);
+ 	}
+ 
+-	local_irq_restore(flags);
++	local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 
+ 	/* Get in kcov_remote_start(). */
+ 	kcov_put(kcov);
 
 
