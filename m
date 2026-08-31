@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CA0440644;
-	Mon, 31 Aug 2026 13:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B9B440A0B;
+	Mon, 31 Aug 2026 13:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183231; cv=none; b=FPZX1w+uiWWEVE9tXGeRWozdReTx16EkpgWc3dNsMOfWas95sSvtk4ol8gosFCulPil39RELFcJK6tucbgdh0wUYykdhWhwLOQHsqQuYztNqg96oy8QmEJuN+183TsqA25esaUHXEsKh/6938yC+etga8naZSI81VOuuJB0wzEY=
+	t=1788183231; cv=none; b=VoNUlyPrcrscex72COuBCWfj1TRU1Dzu0zd3qjCp99QSwjyicjGGLKWwdG0ISEdnpGVaB/0LhEQLvYSiGJSSyZZKSFSrD/q1hUCv4/f2EaVN4k089V5H+Jn1m8KC7OR1pJ1Rw+km7Raky4cSjmDeepfibR37FByjED0l8KShdu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183231; c=relaxed/simple;
-	bh=YfnjULeoCIyTH+gFVKi8rUa87evviCfdX3+NyNtMil8=;
+	bh=tkpHD4DSeyuTAZYFKCHQdx8RPdkHr/iEr5XjPh7Q5q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bJwxik5sLclTnS5kIH05hDq9oWGU1deceI4kw9duTBQYfgCKBQipX4/8+7eSi0q0TlNrwCNjijZp6Xydf4Wt9IZWPu6vwZY0TBjYIiqiMWFVG6YpxMGIZ0u0wbUQuw76wd24s5aEKnfyNjbXFPkt4kYKt9VvN1UIwQ7nKO23E8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f4Viux0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZAUgFKj0Dc99Sy7l1gqGY09p6i/YSmvVnzP4UNmS7RUqCAi/tSbtslZX3D/Oe9FZFYNs79o3GgG/T5vXYPXXngURHE09d1Oae5Fdu1IDguOQtbRWZB3sl3H3hUs7lMlRqkSGqsfASsH/Kk5HRjcAqp4jyL/sHzt6H/HOZB+JgGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QfpgBCww; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f4Viux0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C061F00ACA;
-	Mon, 31 Aug 2026 13:33:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QfpgBCww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B3F1F000E9;
+	Mon, 31 Aug 2026 13:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183228;
-	bh=HJcpBxG0WxAHgLKFkKvOzBL2KDDtVHpZPlJTJFGdmsw=;
+	s=k20260515; t=1788183229;
+	bh=aDQ7Idb1BacoK/e+5mo9Tq1bAJsZONh8HmTGjZmF8bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f4Viux0a0H9cGo8COU+TD6QHnPrl0UJ6P5jz98GSMOWnMJU6MRF2AfZkZ5nDZddFC
-	 GNZOromcnGBfGVBr3WJXAxD0iAmi+pp6khlt5mxOFfsSJZhzPc/fzsHZiSMHO9lUfj
-	 zL2bKldJ0caBbLupYSazSIl6GDZj/Lb2F8ZE7SsoYes3JXUIul4Nj8uHmXk0w0+aLr
-	 k/9SEHN8smmIwR8lcrIoV8H5I0j6Tvx2mnzpjtdfRAl4+KYzXHjfs7uALNW4QOf06P
-	 C3Euc1tOHyJ3fgmYN5rpMc7ovprcR6eaL3s4cv3lZw3L/XHilTAj9iVqpZe/cyvO7x
-	 EWy5ZmOwiI8Fg==
+	b=QfpgBCwwPBXFoyB6mF/aLL0snxTkADOw32ytUu5IxWaicl7yvO6R+9l1LMJ5H/SQ2
+	 fJObvTMgmED2JQ5N/XwXFy1LRAWufR+WO9ufLLK75KhBYYpPCOpLd4buFQgzvkJw0G
+	 qf15pxcOF+P3OooAiTE+ogCQnvYdSk7cE3ODeAT0Z9hH5vfV3DSoX2/wgroeS8Dl4v
+	 X2rr9PbrzXC4v5xlruSlFz70WwlMMhSF4TeGnuICvraD/Rb3HsTIUHNVzvXofg+NKD
+	 Y0oA4UbhePQa3zd1CiNqHbsSIynXYVdGrjnZ07SRqqyQ149ZYOwxduDezo+etyqYs/
+	 6lCqeCKkHZ0Lg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "chunzhi.lin" <linchunzhi0@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Zizhi Wo <wozizhi@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Frank.Sae@motor-comm.com,
-	hkallweit1@gmail.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	James.Bottomley@HansenPartnership.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] net: phy: motorcomm: use device properties for firmware tuning
-Date: Mon, 31 Aug 2026 09:20:50 -0400
-Message-ID: <20260831133314.4125787-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] scsi: core: Do not block on tag allocation in scsi_eh_lock_door()
+Date: Mon, 31 Aug 2026 09:20:51 -0400
+Message-ID: <20260831133314.4125787-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,586 +54,346 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "chunzhi.lin" <linchunzhi0@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit fffedfece2b46bb99b00740697f6c0c874de3cf4 ]
+[ Upstream commit 732cb6bb37fd26863d5786522fb1997e7f5865b4 ]
 
-The Motorcomm PHY driver reads optional firmware properties via
-of_property_read_*() from phydev->mdio.dev.of_node. This works for
-Device Tree based systems, but causes ACPI platforms to ignore the same
-properties when they are supplied through _DSD.
+scsi_eh_lock_door() is called from scsi_restart_operations() while the
+host is still in the SHOST_RECOVERY state, i.e. before the host is
+switched back to SHOST_RUNNING and scsi_run_host_queues() restarts the
+queues. It allocates a request via scsi_alloc_request() with no flags,
+so blk_mq_get_tag() may block waiting for a free sched tag when all tags
+are already in use.
 
-As a result, ACPI-described Motorcomm PHY devices fall back to default
-settings instead of applying firmware-provided tuning such as
-rx/tx internal delay, drive strength, clock output frequency, and
-optional boolean controls like auto-sleep-disabled,
-keep-pll-enabled, and tx clock inversion.
+Those tags can be held by commands that were just requeued by
+scsi_eh_flush_done_q() during error handling. Such commands cannot be
+dispatched until the host leaves SHOST_RECOVERY and
+scsi_run_host_queues() is called - which only happens *after*
+scsi_eh_lock_door() returns.
 
-Switch these lookups to device_property_read_*() so the driver uses the
-generic firmware node interface and can consume the same property names
-from either Device Tree or ACPI.
+This forms a circular dependency:
 
-This keeps the existing DT behavior unchanged while allowing ACPI
-platforms to honor PHY configuration from firmware.
+  - scsi_eh_lock_door(), running in the SCSI error handler thread, waits
+    for a sched tag held by a requeued command;
 
-We have completed testing on Sophgo RISC-V architecture server SD3-10.
-This server has a 64-core Thead C920 CPU whose DWMAC is connected to
-Motorcomm's PHY YT8531. This server supports UEFI boot and it would like
-to use the ACPI table.
+  - the requeued command cannot complete and release its sched tag until
+    the error handler thread leaves scsi_restart_operations() and restart
+    the queues.
 
-Signed-off-by: chunzhi.lin <linchunzhi0@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260507040221.3679454-2-linchunzhi0@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For devices with a single driver tag (e.g. USB storage) it is a
+guaranteed deadlock and I/O that can never be submitted. This problem
+has also been reproduced in our environment.
+
+Locking the door is a best-effort operation, and scsi_eh_lock_door()
+already returns silently when the request allocation fails. Pass
+BLK_MQ_REQ_NOWAIT to scsi_alloc_request() so the allocation fails
+instead of blocking when no tag is available. This breaks the circular
+dependency and allows the error handler to finish restarting the queues,
+after which the pending commands are dispatched normally.
+
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260723041238.1584632-1-wozizhi@huaweicloud.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `net: phy: motorcomm: use device properties
-for firmware tuning`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.43** (`v6.18.43-1-gc7f0dac02d232`)
+**Step 1.1 — Subject line**
+- Record: `[scsi: core]` `[prevent/block]` — Do not block on tag
+  allocation in `scsi_eh_lock_door()`.
 
----
+**Step 1.2 — Tags**
+- Record:
+  - `Signed-off-by`: Zizhi Wo `<wozizhi@huawei.com>` (author)
+  - `Reviewed-by`: Bart Van Assche `<bvanassche@acm.org>` (SCSI
+    maintainer)
+  - `Link`: https://patch.msgid.link/20260723041238.1584632-1-
+    wozizhi@huaweicloud.com
+  - `Signed-off-by`: Martin K. Petersen (Oracle) `<mkp@kernel.org>`
+    (committer)
+  - No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or
+    `Tested-by:` tags.
+  - Notable: maintainer review present; author reports reproduction in
+    their environment.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.3 — Body analysis**
+- Record:
+  - **Bug**: Circular dependency during SCSI error recovery —
+    `scsi_eh_lock_door()` blocks in `blk_mq_get_tag()` while host is
+    still in `SHOST_RECOVERY`, but tags are held by commands requeued by
+    `scsi_eh_flush_done_q()` that cannot dispatch until
+    `scsi_run_host_queues()` runs *after* `scsi_eh_lock_door()` returns.
+  - **Symptom**: Guaranteed deadlock on single-tag devices (e.g. USB
+    storage); I/O permanently stuck.
+  - **Root cause**: Blocking tag allocation during recovery restart.
+  - **Fix**: Pass `BLK_MQ_REQ_NOWAIT` so allocation fails fast; door-
+    lock is already best-effort (silent return on failure).
 
-### Step 1.1: Subject line
-**Record:** `[net: phy: motorcomm]` `[use]` — Switch Motorcomm PHY
-firmware property lookups from Open Firmware–only APIs to the generic
-device property interface so ACPI `_DSD` properties are honored.
-
-### Step 1.2: Tags
-**Record:**
-| Tag | Value |
-|-----|-------|
-| Signed-off-by | chunzhi.lin \<linchunzhi0@gmail.com\> (author) |
-| Reviewed-by | Andrew Lunn \<andrew@lunn.ch\> (PHY maintainer) |
-| Link |
-https://patch.msgid.link/20260507040221.3679454-2-linchunzhi0@gmail.com
-|
-| Signed-off-by | Jakub Kicinski \<kuba@kernel.org\> (net maintainer
-merge) |
-
-**Notable patterns:** Maintainer review present. No `Fixes:`, `Reported-
-by:`, `Cc: stable`, or syzbot tags (absence of stable tag is expected
-per pipeline rules).
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** Driver reads optional PHY tuning properties via
-  `of_property_read_*()` on `phydev->mdio.dev.of_node`, which is NULL on
-  ACPI systems; ACPI `_DSD` properties are never seen.
-- **Symptom:** ACPI-described Motorcomm PHYs ignore firmware tuning
-  (RGMII internal delays, drive strength, clock output frequency, auto-
-  sleep, keep-PLL, TX clock inversion) and use driver defaults.
-- **Failure mode:** Incorrect or missing PHY configuration; on ACPI
-  platforms that depend on non-default tuning, Ethernet may fail to link
-  or be unreliable.
-- **Root cause:** OF-only property access instead of generic
-  `device_property_*()` via `dev->fwnode`.
-- **Testing:** Verified on Sophgo SD3-10 (64-core RISC-V, YT8531 PHY,
-  UEFI/ACPI boot).
-- **Version info:** None stated; ACPI impact is platform-specific.
-
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Although phrased as an interface switch, this is a
-functional bug fix: firmware-provided board configuration is silently
-dropped on ACPI, which can break networking on affected hardware.
+**Step 1.4 — Hidden bug fix?**
+- Record: No — this is an explicit deadlock fix, not disguised cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/net/phy/motorcomm.c` only (~30 lines changed)
-- **Scope:** Single-file, surgical mechanical replacement
-- **Functions modified:**
-  - `ytphy_get_delay_reg_value()`
-  - `yt8531_set_ds()`
-  - `yt8521_probe()` (removes unused `node`)
-  - `yt8531_probe()`
-  - `yt8521_config_init()`
-  - `yt8531_config_init()`
-  - `yt8531_link_change_notify()`
-- **Include change:** `#include <linux/of.h>` → `#include
-  <linux/property.h>`
+**Step 2.1 — Inventory**
+- Record: 1 file (`drivers/scsi/scsi_error.c`), 1 line changed (+1/-1).
+  Function: `scsi_eh_lock_door()`. Scope: single-file surgical fix.
 
-### Step 2.2: Code flow per hunk
-**Record:**
-| Location | Before | After |
-|----------|--------|-------|
-| All property reads | `of_property_read_*(&phydev->mdio.dev.of_node,
-...)` | `device_property_read_*(&phydev->mdio.dev, ...)` |
-| DT systems | Reads from `of_node` | `dev_fwnode()` prefers `of_node`
-when present — same source |
-| ACPI systems | `of_node == NULL` → read fails → defaults |
-`dev->fwnode` (ACPI `_DSD`) consulted → firmware values applied |
+**Step 2.2 — Code flow change**
+- Record:
+  - **Before**: `scsi_alloc_request(..., 0)` → `blk_mq_get_tag()` may
+    block indefinitely waiting for a sched tag.
+  - **After**: `scsi_alloc_request(..., BLK_MQ_REQ_NOWAIT)` → returns
+    `ERR_PTR(-EWOULDBLOCK)` immediately when no tag is available;
+    existing `IS_ERR(req) return;` path handles it.
 
-Affected paths: PHY probe and `config_init` during device bring-up;
-`link_change_notify` on link/speed changes.
+**Step 2.3 — Bug mechanism**
+- Record: **Deadlock / lock ordering** — error-handler thread blocks on
+  tag allocation while holding recovery state that prevents requeued
+  commands from releasing tags. Category: synchronization deadlock in EH
+  restart path.
 
-### Step 2.3: Bug mechanism
-**Record:** **Category:** Logic/correctness — firmware configuration
-path bug.
-
-On ACPI, `of_property_read_u32(NULL, ...)` returns `-EINVAL` (via
-`of_find_property()` on NULL node), so optional properties are skipped
-and defaults used. Properties supplied through ACPI `_DSD` are on
-`dev->fwnode`, reachable only through `device_property_read_*()`.
-
-Properties affected include `rx-internal-delay-ps`, `tx-internal-delay-
-ps`, `motorcomm,clk-out-frequency-hz`, `motorcomm,rx-clk-drv-microamp`,
-`motorcomm,rx-data-drv-microamp`, `motorcomm,auto-sleep-disabled`,
-`motorcomm,keep-pll-enabled`, and TX clock inversion properties.
-
-### Step 2.4: Fix quality
-**Record:**
-- **Correctness:** High — matches established PHY subsystem pattern
-  (`adin.c`, `dp83822.c`, `nxp-c45-tja11xx.c`, `phy_device.c`).
-- **Minimal:** Pure API substitution; no logic changes.
-- **Regression risk:** Very low for DT (verified: `dev_fwnode()` returns
-  OF fwnode when `of_node` is set).
-- **Red flags:** None — no API changes, no refactoring, no cross-
-  subsystem impact.
+**Step 2.4 — Fix quality**
+- Record: Obviously correct. Minimal one-line change. Low regression
+  risk — door locking is documented as best-effort; failure path already
+  existed. Reviewed by SCSI maintainer.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:** Changed lines in `ytphy_get_delay_reg_value()` trace to
-`5d324e5159d9e` (v6.18 merge base, Nov 2025). All 13
-`of_property_read_*` uses are present in current tree. Bug present since
-property support was added to this driver revision.
+**Step 3.1 — Blame**
+- Record: `scsi_eh_lock_door()` exists since kernel 2.6 (commit
+  `1da177e`). Blocking allocation introduced in `68ec3b819a5d6` ("scsi:
+  add a scsi_alloc_request helper", 2021-10-22, first in v5.16). Present
+  in this tree.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag in commit message.
+**Step 3.2 — Fixes: tag**
+- Record: N/A — no `Fixes:` tag. Buggy behavior introduced by
+  `68ec3b819a5d6`, which is an ancestor of HEAD.
 
-### Step 3.3: Related file history
-**Record:**
-- `git log --oneline -- drivers/net/phy/motorcomm.c` shows 2 commits in
-  this tree: merge base + `d441696397088` (LED duplex fix, Jan 2026).
-- Candidate commit is **not** in this tree yet.
-- Standalone one-patch fix; not part of a multi-patch series.
+**Step 3.3 — Related file history**
+- Record: Recent `scsi_error.c` changes in 6.18.y include EH wake
+  reliability fixes (`c7a1509123720`, `219f009ebfd1e`) but nothing
+  addressing this deadlock. Standalone fix, not part of a series.
 
-### Step 3.4: Author context
-**Record:** Author chunzhi.lin has no other commits in this tree's
-motorcomm history. Patch reviewed by Andrew Lunn (PHY maintainer).
+**Step 3.4 — Author context**
+- Record: Zizhi Wo is not a regular SCSI maintainer (other work in blk-
+  throttle, xfs, tty). This is a targeted bug report/fix.
 
-### Step 3.5: Dependencies
-**Record:** No dependencies. `device_property_read_*()` and
-`<linux/property.h>` exist in 6.18. Patch applies cleanly as a
-mechanical substitution. Self-contained.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c HEAD` matched an unrelated Qualcomm commit (wrong
-target). Subject-based `b4 dig` returned empty. Link fetch to
-patch.msgid.link and lore.kernel.org blocked by Anubis bot protection.
-**Could not read mailing list thread.**
-
-### Step 4.2: Reviewers
-**Record:** Commit message includes `Reviewed-by: Andrew Lunn`. `b4 dig
--w` not usable without valid commitish in tree.
-
-### Step 4.3: Bug report
-**Record:** No external bug report linked. Author reports real-hardware
-testing on Sophgo SD3-10 ACPI server.
-
-### Step 4.4: Related patches
-**Record:** No series indicated. Single patch.
-
-### Step 4.5: Stable list history
-**Record:** Lore search blocked. No stable-list discussion verified.
+**Step 3.5 — Dependencies**
+- Record: None. `BLK_MQ_REQ_NOWAIT`, `scsi_alloc_request()` flags
+  parameter, and `IS_ERR` handling all exist in this tree. `git apply
+  --check` on the patch succeeds cleanly.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 4: Mailing List and External Research
 
-### Step 5.1: Key functions
-**Record:** `ytphy_get_delay_reg_value`, `yt8531_set_ds`,
-`yt8521_probe`, `yt8531_probe`, `yt8521_config_init`,
-`yt8531_config_init`, `yt8531_link_change_notify`.
+**Step 4.1 — Original discussion**
+- Record: `b4 dig -c 732cb6bb37fd2` found v1 only at https://patch.msgid
+  .link/20260723041238.1584632-1-wozizhi@huaweicloud.com. Bart Van
+  Assche replied with `Reviewed-by`. No NAKs or objections in thread.
 
-### Step 5.2: Callers
-**Record:**
-- `yt8521_probe` / `yt8531_probe` — PHY driver `.probe` during MDIO
-  enumeration
-- `yt8521_config_init` / `yt8531_config_init` — `.config_init` during
-  PHY initialization
-- `ytphy_rgmii_clk_delay_config` → called from `config_init` paths
-- `yt8531_link_change_notify` — `.link_change_notify` on link state
-  changes
-- All are standard PHY bring-up paths for YT8521/YT8531 hardware
+**Step 4.2 — Reviewers**
+- Record: `b4 dig -w` shows CC to James Bottomley, Martin Petersen, Bart
+  Van Assche, linux-scsi, linux-kernel. Appropriate maintainers
+  included.
 
-### Step 5.3: Callees
-**Record:** Property reads via `fwnode_property_read_*` through
-`dev_fwnode()`; PHY register modify helpers unchanged.
+**Step 4.3 — Bug report**
+- Record: Author states "reproduced in our environment." No
+  syzbot/bugzilla link. Real-world reproduction claimed.
 
-### Step 5.4: Reachability
-**Record:** Triggered during kernel boot / network interface bring-up on
-systems with Motorcomm YT8521/YT8531 PHYs. ACPI path reachable on
-UEFI/ACPI servers (e.g., Sophgo SD3-10). Not userspace-triggered, but
-affects every boot on affected hardware.
+**Step 4.4 — Series context**
+- Record: `b4 dig -a` shows single v1 patch — standalone, no series
+  dependencies.
 
-### Step 5.5: Similar patterns
-**Record:** Multiple PHY drivers in this tree already use
-`device_property_read_*()` instead of `of_property_read_*()` on
-`of_node`. `motorcomm.c` is inconsistent with subsystem practice.
+**Step 4.5 — Stable list discussion**
+- Record: No stable-specific discussion found in mbox thread (no "Cc:
+  stable" mentions). Absence is neutral per instructions.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (6.18.43)
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Verified 13 `of_property_read_*` calls on
-`phydev->mdio.dev.of_node` in `drivers/net/phy/motorcomm.c`. Zero
-`device_property_read_*` calls. Fix not yet applied.
+**Step 5.1 — Key functions**
+- Record: `scsi_eh_lock_door()`, called from
+  `scsi_restart_operations()`, which is called from
+  `scsi_error_handler()`.
 
-### Step 6.2: Backport complications
-**Record:** **Clean apply expected.** Mechanical replacement in one
-file. No conflicting changes in recent motorcomm history. Only post-
-merge change is unrelated LED duplex fix (`d441696397088`).
+**Step 5.2 — Callers**
+- Record: `scsi_restart_operations()` ← `scsi_error_handler()` (EH
+  kernel thread, process context). Triggered on SCSI I/O
+  failures/timeouts — common path for all SCSI block devices.
 
-### Step 6.3: Related fixes already present?
-**Record:** No equivalent fix found. `git log --grep="device propert" --
-drivers/net/phy/motorcomm.c` returns nothing.
+**Step 5.3 — Callees**
+- Record: `scsi_alloc_request()` → `blk_mq_alloc_request()` →
+  `blk_mq_get_tag()`. On failure with NOWAIT: `ERR_PTR(-EWOULDBLOCK)`.
+  On success: `blk_execute_rq_nowait()`.
 
----
+**Step 5.4 — Reachability**
+- Record: Trigger requires SCSI EH after device reset with door locked
+  (`sdev->was_reset && sdev->locked`). Verified in
+  `scsi_restart_operations()` at line 2200. Host stays in
+  `SHOST_RECOVERY` until line 2215
+  (`scsi_host_set_state(SHOST_RUNNING)`), which is *after*
+  `scsi_eh_lock_door()`. Requeued commands from `scsi_eh_flush_done_q()`
+  use `blk_mq_requeue_request(..., !scsi_host_in_recovery(...))` —
+  during recovery, `kick_requeue_list` is false, so they cannot
+  dispatch. Reachable from normal block I/O error paths.
 
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/net/phy/` — **IMPORTANT** (network PHY driver).
-Affects Ethernet connectivity on platforms using Motorcomm PHYs.
-
-### Step 7.2: Subsystem activity
-**Record:** Active — recent stable commits in PHY subsystem include
-marvell, realtek, sfp, micrel fixes. Motorcomm driver is mature with
-extensive property support documented in
-`Documentation/devicetree/bindings/net/motorcomm,yt8xxx.yaml`.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Who is affected
-**Record:** **Platform-specific** — systems booting with ACPI (not DT)
-that have Motorcomm YT8521/YT8531 PHYs with `_DSD` property tables.
-Known case: Sophgo SD3-10 RISC-V server. DT-based systems are unaffected
-(behavior unchanged).
-
-### Step 8.2: Trigger conditions
-**Record:**
-- **Trigger:** Boot with ACPI firmware describing Motorcomm PHY
-  properties via `_DSD`
-- **Likelihood:** Uncommon globally, but deterministic on affected ACPI
-  platforms
-- **Unprivileged trigger:** No — hardware/platform configuration issue,
-  not a syscall attack vector
-
-### Step 8.3: Failure mode severity
-**Record:**
-- **Failure:** Wrong RGMII internal delays, drive strength, clock
-  output, or power-management settings → link failure, unreliable
-  Ethernet, or incorrect clock output to dependent hardware
-- **Severity:** **HIGH** for affected ACPI platforms (complete loss of
-  network functionality possible); **NONE** for DT platforms
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH for affected ACPI hardware; enables firmware-
-  intended PHY operation
-- **Risk:** VERY LOW — small, reviewed, DT behavior preserved via
-  `dev_fwnode()` semantics
-- **Ratio:** Favorable for backport to this tree
+**Step 5.5 — Similar patterns**
+- Record: Historical USB SCSI EH deadlocks fixed in `7daf480483e60` and
+  `c69e6f812bab0` (same file, same subsystem concern).
+  `BLK_MQ_REQ_NOWAIT` already used elsewhere in SCSI (`sg.c` documents
+  why it avoids NOWAIT for userspace). This is the correct use case for
+  NOWAIT.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 6: Cross-Referencing Against Local Tree
 
-### Step 9.1: Evidence summary
+**Step 6.1 — Buggy code exists?**
+- Record: **YES.** Local tree is `v6.18.44` (`linux-6.18.y`). Current
+  code at line 2160 still has `scsi_alloc_request(sdev->request_queue,
+  REQ_OP_DRV_IN, 0)`. Fix commit `732cb6bb37fd2` is on mainline but
+  **not** in this tree.
 
-**FOR backport:**
-- Real bug: ACPI `_DSD` properties unreachable via `of_node`
-- Can break Ethernet on ACPI Motorcomm platforms (tested Sophgo server)
-- Small, surgical, maintainer-reviewed fix
-- Matches established PHY driver pattern in this tree
-- Zero DT regression risk (verified `dev_fwnode()` behavior)
-- Documented properties in `motorcomm,yt8xxx.yaml` should work on all
-  firmware types
-- Buggy code confirmed present in 6.18.43
+**Step 6.2 — Backport complications**
+- Record: Clean apply confirmed via `git apply --check`. No conflicts
+  expected.
 
-**AGAINST backport:**
-- Not a crash, security, corruption, or deadlock
-- Affects niche hardware population (ACPI + Motorcomm PHY)
-- Properties are optional with documented defaults — some boards may
-  work without fix
-- Could be framed as ACPI enablement rather than universal bug fix
-- Mailing list discussion not verified (lore blocked)
+**Step 6.3 — Related fixes already present?**
+- Record: No — `git log -S"BLK_MQ_REQ_NOWAIT" --
+  drivers/scsi/scsi_error.c` returns nothing. Fix not yet backported.
 
-**Unresolved:** Full reviewer thread content; extent of other ACPI
-Motorcomm deployments beyond Sophgo.
+---
 
-### Step 9.2: Stable rules checklist
+## Phase 7: Subsystem and Maintainer Context
 
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — standard API, maintainer
-reviewed, hardware tested |
-| 2. Fixes real bug affecting users? | **PASS** — ACPI firmware config
-silently ignored |
-| 3. Important issue? | **PASS** — network failure on affected ACPI
-servers (HIGH for those users) |
-| 4. Small and contained? | **PASS** — one file, ~30 lines |
-| 5. No new features/APIs? | **PASS** — same property names, same
-behavior on DT |
-| 6. Can apply to local tree? | **PASS** — buggy code present, clean
-apply expected |
+**Step 7.1 — Subsystem criticality**
+- Record: `drivers/scsi/scsi_error.c` — SCSI core error handling.
+  **CORE/IMPORTANT** — affects all SCSI block storage (disks, USB
+  storage, optical drives).
 
-### Step 9.3: Exception categories
-**Record:** Closest match: **hardware workaround / platform
-configuration fix** — firmware-provided PHY tuning (RGMII delays, drive
-strength) is board-specific configuration analogous to documented
-quirk/workaround fixes accepted in stable.
+**Step 7.2 — Subsystem activity**
+- Record: Actively maintained in 6.18.y with recent EH fixes
+  (`c7a1509123720`, etc.).
 
-### Step 9.4: Decision rationale
-For **Linux 6.18.43**, the Motorcomm PHY driver with full property
-support is present and uses OF-only property reads that definitively
-fail on ACPI (`of_node == NULL`). This prevents firmware from supplying
-board-critical RGMII timing and electrical tuning, which can render
-Ethernet non-functional on ACPI platforms such as the tested Sophgo
-server. The fix is minimal, maintainer-reviewed, follows existing PHY
-subsystem conventions, and poses negligible regression risk to DT users.
-While the affected population is smaller than a core-kernel crash fix,
-the functional impact on those platforms is severe (no networking),
-meeting stable criteria for an important hardware-configuration bug.
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 — Who is affected**
+- Record: Users of SCSI block devices undergoing error recovery,
+  especially USB storage (single tag) and optical media with door-lock
+  after reset. Universal for SCSI-enabled kernels.
+
+**Step 8.2 — Trigger conditions**
+- Record: SCSI EH after reset on a device with locked door, with
+  requeued commands occupying all queue tags. Reproducible per author;
+  guaranteed on single-tag devices. Unprivileged users can trigger via
+  normal I/O to removable media.
+
+**Step 8.3 — Failure mode severity**
+- Record: **CRITICAL** — permanent deadlock of EH thread; all I/O to
+  affected device/host stuck indefinitely.
+
+**Step 8.4 — Risk-benefit**
+- Record: Benefit **very high** (prevents unrecoverable I/O hang). Risk
+  **very low** (1-line change, existing failure path, best-effort
+  operation). Strong positive ratio.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Evidence FOR backport:**
+- Real, reproducible deadlock in SCSI EH restart path
+- CRITICAL severity (permanent I/O hang)
+- One-line, obviously correct fix
+- Reviewed by SCSI maintainer (Bart Van Assche)
+- Applies cleanly to 6.18.44
+- Bug present since v5.16 (`scsi_alloc_request` migration)
+- No dependencies or new APIs
+- Historical precedent for USB/EH deadlock fixes in stable
+
+**Evidence AGAINST backport:**
+- None significant. Door-lock skip on tag exhaustion is acceptable
+  (best-effort by design).
+
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** — maintainer reviewed; author
+   reproduced bug.
+2. Fixes real bug? **PASS** — deadlock with concrete trigger.
+3. Important issue? **PASS** — CRITICAL deadlock.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features/APIs? **PASS**.
+6. Can apply to local tree? **PASS** — clean apply verified.
+
+**Exception category:** N/A (not a quirk/DT/build fix — standard bug
+fix).
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Confirmed Reviewed-by: Andrew Lunn; no Fixes:/Reported-
-  by:/Cc: stable
-- **[Phase 2]** Diff analysis: 13 `of_property_read_*` →
-  `device_property_read_*` in 7 functions, one file
-- **[Phase 2]** Verified include swap: `linux/of.h` → `linux/property.h`
-- **[Phase 3]** `git describe HEAD`: v6.18.43-1-gc7f0dac02d232; Makefile
-  VERSION=6 PATCHLEVEL=18 SUBLEVEL=43
-- **[Phase 3]** `git blame -L 845,855`: buggy lines from 5d324e5159d9e
-- **[Phase 3]** `git log --oneline -- drivers/net/phy/motorcomm.c`: 2
-  commits; fix not present
-- **[Phase 3]** `git log -S 'of_property_read_u32' --
-  drivers/net/phy/motorcomm.c`: present since merge base
-- **[Phase 4]** `b4 dig -c HEAD`: returned unrelated Qualcomm URL (no
-  valid commitish in tree)
-- **[Phase 4]** `b4 dig` by subject: empty result
-- **[Phase 4]** WebFetch patch.msgid.link and lore.kernel.org: blocked
-  by Anubis — **UNVERIFIED** mailing list discussion
-- **[Phase 5]** `grep of_property_read_ drivers/net/phy/motorcomm.c`: 13
-  matches confirmed
-- **[Phase 5]** `grep device_property_read_
-  drivers/net/phy/motorcomm.c`: 0 matches (fix absent)
-- **[Phase 5]** `grep device_property_read_ drivers/net/phy/`: 10 other
-  PHY files use same pattern
-- **[Phase 5]** Read `drivers/base/property.c`:
-  `device_property_read_u32` →
-  `fwnode_property_read_u32(dev_fwnode(dev), ...)`
-- **[Phase 5]** Read `dev_fwnode()`: prefers `of_node` when CONFIG_OF
-  and of_node set; else `dev->fwnode`
-- **[Phase 5]** Read `of_find_property_value_of_size()`: NULL np →
-  `-EINVAL`
-- **[Phase 5]** Traced PHY driver ops table:
-  probe/config_init/link_change_notify on YT8521/YT8531
-- **[Phase 6]** Confirmed buggy code exists in local tree at lines 851,
-  1000, 1017, 1100, 1172, 1679, 1687, 1807, 1816, 1851, 1857, 1859, 1861
-- **[Phase 6]** Read
-  `Documentation/devicetree/bindings/net/motorcomm,yt8xxx.yaml`:
-  documents all affected properties with defaults
-- **[Phase 6]** `git log --grep` for related fix in motorcomm.c: none
-  found
-- **[Phase 8]** Failure mode: ACPI property ignore → wrong PHY config →
-  potential link failure; severity HIGH for affected platforms
+- [Phase 1] `git show 732cb6bb37fd2`: parsed full commit message and
+  tags
+- [Phase 2] Diff: confirmed single-line `BLK_MQ_REQ_NOWAIT` change in
+  `scsi_eh_lock_door()`
+- [Phase 3] `git describe HEAD`: v6.18.44; `git blame` line 2160:
+  blocking call from `68ec3b819a5d6` (v5.16)
+- [Phase 3] `git merge-base --is-ancestor 68ec3b819a5d6 HEAD`: confirmed
+  buggy code ancestor present
+- [Phase 3] `git merge-base --is-ancestor 732cb6bb37fd2 HEAD`: fix NOT
+  in tree
+- [Phase 3] `git apply --check`: patch applies cleanly
+- [Phase 4] `b4 dig -c 732cb6bb37fd2`: found lore thread
+- [Phase 4] `b4 dig -w`: maintainers CC'd (Bottomley, Petersen, Van
+  Assche)
+- [Phase 4] `b4 dig -a`: single v1 patch, no series
+- [Phase 4] mbox: Bart Van Assche `Reviewed-by`; no NAKs, no stable
+  nomination
+- [Phase 5] Read `scsi_restart_operations()`, `scsi_unjam_host()`,
+  `scsi_eh_flush_done_q()`, `__scsi_queue_insert()`: confirmed recovery-
+  state ordering and requeue behavior
+- [Phase 5] Read `scsi_host_in_recovery()` in
+  `include/scsi/scsi_host.h`: checks `SHOST_RECOVERY` etc.
+- [Phase 5] Read `blk_mq_alloc_request()` / `blk_mq_get_tag()`: NOWAIT
+  returns `ERR_PTR(-EWOULDBLOCK)` on no tag
+- [Phase 6] Grep current tree line 2160: still uses flags `0` (buggy)
+- [Phase 8] Confirmed `sdev->was_reset` set in
+  `__scsi_report_device_reset()` during EH reset path
+
+This commit fixes a real SCSI error-handler deadlock that can
+permanently hang I/O — especially on single-tag USB storage — and the
+fix is a minimal, reviewed, cleanly-applicable one-liner appropriate for
+the 6.18.y stable tree.
 
 **YES**
 
- drivers/net/phy/motorcomm.c | 41 ++++++++++++++++++-------------------
- 1 file changed, 20 insertions(+), 21 deletions(-)
+ drivers/scsi/scsi_error.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/motorcomm.c b/drivers/net/phy/motorcomm.c
-index b49897500a592..b76011b227c46 100644
---- a/drivers/net/phy/motorcomm.c
-+++ b/drivers/net/phy/motorcomm.c
-@@ -10,7 +10,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/phy.h>
--#include <linux/of.h>
-+#include <linux/property.h>
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 13d46b6e0359e..857c2acc99645 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -2157,7 +2157,7 @@ static void scsi_eh_lock_door(struct scsi_device *sdev)
+ 	struct scsi_cmnd *scmd;
+ 	struct request *req;
  
- #define PHY_ID_YT8511		0x0000010a
- #define PHY_ID_YT8521		0x0000011a
-@@ -843,12 +843,12 @@ static u32 ytphy_get_delay_reg_value(struct phy_device *phydev,
- 				     u16 *rxc_dly_en,
- 				     u32 dflt)
- {
--	struct device_node *node = phydev->mdio.dev.of_node;
-+	struct device *dev = &phydev->mdio.dev;
- 	int tb_size_half = tb_size / 2;
- 	u32 val;
- 	int i;
- 
--	if (of_property_read_u32(node, prop_name, &val))
-+	if (device_property_read_u32(dev, prop_name, &val))
- 		goto err_dts_val;
- 
- 	/* when rxc_dly_en is NULL, it is get the delay for tx, only half of
-@@ -992,12 +992,12 @@ static int yt8531_get_ds_map(struct phy_device *phydev, u32 cur)
- 
- static int yt8531_set_ds(struct phy_device *phydev)
- {
--	struct device_node *node = phydev->mdio.dev.of_node;
-+	struct device *dev = &phydev->mdio.dev;
- 	u32 ds_field_low, ds_field_hi, val;
- 	int ret, ds;
- 
- 	/* set rgmii rx clk driver strength */
--	if (!of_property_read_u32(node, "motorcomm,rx-clk-drv-microamp", &val)) {
-+	if (!device_property_read_u32(dev, "motorcomm,rx-clk-drv-microamp", &val)) {
- 		ds = yt8531_get_ds_map(phydev, val);
- 		if (ds < 0)
- 			return dev_err_probe(&phydev->mdio.dev, ds,
-@@ -1014,7 +1014,7 @@ static int yt8531_set_ds(struct phy_device *phydev)
- 		return ret;
- 
- 	/* set rgmii rx data driver strength */
--	if (!of_property_read_u32(node, "motorcomm,rx-data-drv-microamp", &val)) {
-+	if (!device_property_read_u32(dev, "motorcomm,rx-data-drv-microamp", &val)) {
- 		ds = yt8531_get_ds_map(phydev, val);
- 		if (ds < 0)
- 			return dev_err_probe(&phydev->mdio.dev, ds,
-@@ -1047,7 +1047,6 @@ static int yt8531_set_ds(struct phy_device *phydev)
-  */
- static int yt8521_probe(struct phy_device *phydev)
- {
--	struct device_node *node = phydev->mdio.dev.of_node;
- 	struct device *dev = &phydev->mdio.dev;
- 	struct yt8521_priv *priv;
- 	int chip_config;
-@@ -1097,7 +1096,7 @@ static int yt8521_probe(struct phy_device *phydev)
- 			return ret;
- 	}
- 
--	if (of_property_read_u32(node, "motorcomm,clk-out-frequency-hz", &freq))
-+	if (device_property_read_u32(dev, "motorcomm,clk-out-frequency-hz", &freq))
- 		freq = YTPHY_DTS_OUTPUT_CLK_DIS;
- 
- 	if (phydev->drv->phy_id == PHY_ID_YT8521) {
-@@ -1165,11 +1164,11 @@ static int yt8521_probe(struct phy_device *phydev)
- 
- static int yt8531_probe(struct phy_device *phydev)
- {
--	struct device_node *node = phydev->mdio.dev.of_node;
-+	struct device *dev = &phydev->mdio.dev;
- 	u16 mask, val;
- 	u32 freq;
- 
--	if (of_property_read_u32(node, "motorcomm,clk-out-frequency-hz", &freq))
-+	if (device_property_read_u32(dev, "motorcomm,clk-out-frequency-hz", &freq))
- 		freq = YTPHY_DTS_OUTPUT_CLK_DIS;
- 
- 	switch (freq) {
-@@ -1661,7 +1660,7 @@ static int yt8521_resume(struct phy_device *phydev)
-  */
- static int yt8521_config_init(struct phy_device *phydev)
- {
--	struct device_node *node = phydev->mdio.dev.of_node;
-+	struct device *dev = &phydev->mdio.dev;
- 	int old_page;
- 	int ret = 0;
- 
-@@ -1676,7 +1675,7 @@ static int yt8521_config_init(struct phy_device *phydev)
- 			goto err_restore_page;
- 	}
- 
--	if (of_property_read_bool(node, "motorcomm,auto-sleep-disabled")) {
-+	if (device_property_read_bool(dev, "motorcomm,auto-sleep-disabled")) {
- 		/* disable auto sleep */
- 		ret = ytphy_modify_ext(phydev, YT8521_EXTREG_SLEEP_CONTROL1_REG,
- 				       YT8521_ESC1R_SLEEP_SW, 0);
-@@ -1684,7 +1683,7 @@ static int yt8521_config_init(struct phy_device *phydev)
- 			goto err_restore_page;
- 	}
- 
--	if (of_property_read_bool(node, "motorcomm,keep-pll-enabled")) {
-+	if (device_property_read_bool(dev, "motorcomm,keep-pll-enabled")) {
- 		/* enable RXC clock when no wire plug */
- 		ret = ytphy_modify_ext(phydev, YT8521_CLOCK_GATING_REG,
- 				       YT8521_CGR_RX_CLK_EN, 0);
-@@ -1797,14 +1796,14 @@ static int yt8521_led_hw_control_get(struct phy_device *phydev, u8 index,
- 
- static int yt8531_config_init(struct phy_device *phydev)
- {
--	struct device_node *node = phydev->mdio.dev.of_node;
-+	struct device *dev = &phydev->mdio.dev;
- 	int ret;
- 
- 	ret = ytphy_rgmii_clk_delay_config_with_lock(phydev);
- 	if (ret < 0)
- 		return ret;
- 
--	if (of_property_read_bool(node, "motorcomm,auto-sleep-disabled")) {
-+	if (device_property_read_bool(dev, "motorcomm,auto-sleep-disabled")) {
- 		/* disable auto sleep */
- 		ret = ytphy_modify_ext_with_lock(phydev,
- 						 YT8521_EXTREG_SLEEP_CONTROL1_REG,
-@@ -1813,7 +1812,7 @@ static int yt8531_config_init(struct phy_device *phydev)
- 			return ret;
- 	}
- 
--	if (of_property_read_bool(node, "motorcomm,keep-pll-enabled")) {
-+	if (device_property_read_bool(dev, "motorcomm,keep-pll-enabled")) {
- 		/* enable RXC clock when no wire plug */
- 		ret = ytphy_modify_ext_with_lock(phydev,
- 						 YT8521_CLOCK_GATING_REG,
-@@ -1840,7 +1839,7 @@ static int yt8531_config_init(struct phy_device *phydev)
-  */
- static void yt8531_link_change_notify(struct phy_device *phydev)
- {
--	struct device_node *node = phydev->mdio.dev.of_node;
-+	struct device *dev = &phydev->mdio.dev;
- 	bool tx_clk_1000_inverted = false;
- 	bool tx_clk_100_inverted = false;
- 	bool tx_clk_10_inverted = false;
-@@ -1848,17 +1847,17 @@ static void yt8531_link_change_notify(struct phy_device *phydev)
- 	u16 val = 0;
- 	int ret;
- 
--	if (of_property_read_bool(node, "motorcomm,tx-clk-adj-enabled"))
-+	if (device_property_read_bool(dev, "motorcomm,tx-clk-adj-enabled"))
- 		tx_clk_adj_enabled = true;
- 
- 	if (!tx_clk_adj_enabled)
+-	req = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_IN, 0);
++	req = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_IN, BLK_MQ_REQ_NOWAIT);
+ 	if (IS_ERR(req))
  		return;
- 
--	if (of_property_read_bool(node, "motorcomm,tx-clk-10-inverted"))
-+	if (device_property_read_bool(dev, "motorcomm,tx-clk-10-inverted"))
- 		tx_clk_10_inverted = true;
--	if (of_property_read_bool(node, "motorcomm,tx-clk-100-inverted"))
-+	if (device_property_read_bool(dev, "motorcomm,tx-clk-100-inverted"))
- 		tx_clk_100_inverted = true;
--	if (of_property_read_bool(node, "motorcomm,tx-clk-1000-inverted"))
-+	if (device_property_read_bool(dev, "motorcomm,tx-clk-1000-inverted"))
- 		tx_clk_1000_inverted = true;
- 
- 	if (phydev->speed < 0)
+ 	scmd = blk_mq_rq_to_pdu(req);
 -- 
 2.53.0
 
