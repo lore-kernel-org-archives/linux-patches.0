@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A583854B1BA;
-	Mon, 31 Aug 2026 13:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DB154CF5B;
+	Mon, 31 Aug 2026 13:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184001; cv=none; b=JKvvWdf6n0PctWGnyUqcNcux4EgQw3fH1vdjTVMB1qXc5tjB+AEyTyrDAWz1iwKQy+0rORhCBKfKsKZ0jfzAxu39x89jA/j4PNa/2krMrmUSo+YzspfSEA76QmfIpf8yMmDFytEyOsWPxTWhI0bWcP0tDouYOwbMo/YfcuQTlzQ=
+	t=1788184001; cv=none; b=V6hSQmzsaT8GgBCGpX1CgpHs0L0c66Qo1qw/new2QkCkum0RLOB1TEhnY+mSBCZaBvOkJBRBy4owtVBLof7k+XQomC2xLvLFqEycg/WGx2ZWERTAgwycduKkCXV/K7urBpEBr5d6vIWiS3YM6NMijuaaWC8uj9uQhaONUl9xGuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184001; c=relaxed/simple;
-	bh=vAFPF4RBJuAmgl5+GNm+lH/H/g5c+GTRp9uuBF+y6tI=;
+	bh=pxckBbMAwnrziBb9YEEKL2ash6C2sAm7kF8uSqcUa24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oAFRsA1zJdrElhiX3yQbJG5vLvyCS/fylW4W6LH1cMA3BMcxogcnQZAbARJj/uSUwF0TP55CvFKiVXXTrihlt69W+RvDxuLfpE3yA84Jk+XNofuAPepgIUl+y28fx/aU2zWKUD4pQIklzbgblCnxWFGQ0F6Nqy0dD9vi/CnuRJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lGmTErtp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aCwLZl9A2ZgVgJte83yFVvlp14NpfCNYAAQCqASDSVFAH0lN+zQ5piJyUVyBvcj6Rv5dWivXGndRK8Ugm6twmkxT+178kptLM6jlwMoNLATOBLQ4iIPVMwVMsWcMZfGrQlABV0w06sdNW2P/njdGLKKxv0ca3VBH22pohIG5pzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZLVk24q0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lGmTErtp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5885D1F00ACF;
-	Mon, 31 Aug 2026 13:46:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZLVk24q0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A2A1F0155A;
+	Mon, 31 Aug 2026 13:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183996;
-	bh=DzqnDHpy5EDQ4ZskrnbD5c5j0txZMhrATyfjSFeySh4=;
+	s=k20260515; t=1788183998;
+	bh=e0pX5ziS2hiD4/DaS76z4oauIogFLF+1YP36epXdZfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGmTErtpwhATIlZMsW/Ic2I3yVJj12Pdag0Vw7tqPaaGqsJ+Lf3fBHj3zvfbmF2Ae
-	 BIbWusewvFNKCnkbrfOWW2LYyqTi17MMyTPWnj69W5RxEyEMH7lG5xzQTcE3dDf3+0
-	 QU1rfPQPiLr192Q+gIX9XuKXUmu/O2A2sxjv8+6miNthMworCM+CdLgRY6n5tqPp6C
-	 LS0k6tspvTS28FGb1InZMMDGsxJAGD5zpUBjKXsrqrR9tV80x26t2XOPx6nYVr7fgk
-	 GUFxH7pTYaUYM7ZYYjbHCyaClqNQIC2ZNq7ZoPxbXUxCsTtmhUu+yPgytI2ib9P3ph
-	 oRy8dmfguph/g==
+	b=ZLVk24q0qj5IaGz5fEnbqSDc5sFH5hIhp66u0gQ3Zswd0VanQiZDViNwOaexLO93p
+	 A8vbageLPspRDyS48FXdggygXS5uLOFbTHePxSHiTHTV4j6jHRJpL3/C/3a5UEocaR
+	 EI6d897epLZCvaTPeeej3voSPOeydjtRUAOUf8woehWkpsqhq+9uvL5qq3D5ssofpz
+	 mpPXvdG13LnAqqr93XaK3SGW89bnjxsbPSOTZ/E0pp4aPZfdcjEjsK9yzqGmCYZHu6
+	 jYcB/7K84/EZ1LBl50FWSm4m9cPq8fQkZDwJ6AK9O95xWNdpOlihfI3Z4l0U9Z7Ju3
+	 7owT8xG04+HBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Antony Antony <antony.antony@secunet.com>,
-	Yan Yan <evitayan@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+Cc: Chris Lu <chris.lu@mediatek.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] xfrm: allow migration from UDP encapsulated to non-encapsulated ESP
-Date: Mon, 31 Aug 2026 09:27:36 -0400
-Message-ID: <20260831133314.4125787-428-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: MT7922: Add VID/PID 0e8d/223c
+Date: Mon, 31 Aug 2026 09:27:37 -0400
+Message-ID: <20260831133314.4125787-429-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -58,65 +55,91 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Antony Antony <antony.antony@secunet.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit b8addb8884f2dc1b13cf3e4fa0265ecd0bc58b69 ]
+[ Upstream commit fd5dc066b43eb8ae63f713aef704385c686b16e3 ]
 
-The current code prevents migrating an SA from UDP encapsulation to
-plain ESP. This is needed when moving from a NATed path to a non-NATed
-one, for example when switching from IPv4+NAT to IPv6.
+Add VID 0e8d & PID 223c for MediaTek MT7922 USB Bluetooth chip.
 
-Only copy the existing encapsulation during migration if the encap
-attribute is explicitly provided.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-Note: PF_KEY's SADB_X_MIGRATE always passes encap=NULL and never
-supported encapsulation in migration. PF_KEY is deprecated and was
-in feature freeze when UDP encapsulation was added to xfrm.
+T:  Bus=07 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=223c Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-Tested-by: Yan Yan <evitayan@google.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Antony Antony <antony.antony@secunet.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The branch check finished. Commit `b8addb8884f2d` is in mainline and
-several `-next` trees (via the `ipsec-next-2026-06-12` merge), but not
-in `stable/linux-6.18.y` — which matches the earlier analysis.
+The background git searches finished and match the earlier analysis:
 
-**Summary:** Backport to 6.18.y is warranted. The buggy encap-
-inheritance code is still present, the adapted patch applies cleanly on
-top of the already-backported `b64120d`, and this completes the MOBIKE
-NAT→non-NAT migration fix that partial stable work started.
+- **`0e8d/223c` is not in this 6.18.44 tree** — subject and message
+  searches returned no matches; `git merge-base --is-ancestor fd5dc066`
+  also shows it isn’t merged here yet.
+- **The patch applies cleanly** at the existing MT7922 quirk block
+  (after `0x04ca:0x38e4`).
 
-**YES**
+**Verdict unchanged: YES** for backport to this tree — a standard 2-line
+USB ID addition for MT7922 hardware the driver already supports, same
+pattern as `c5f173e20fdd7` (0489/e170) already present in 6.18.y.
 
- net/xfrm/xfrm_state.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index b9049c2297bd5..0a629fce0a00f 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2017,14 +2017,8 @@ static struct xfrm_state *xfrm_state_clone_and_setup(struct xfrm_state *orig,
- 	}
- 	x->props.calgo = orig->props.calgo;
- 
--	if (encap || orig->encap) {
--		if (encap)
--			x->encap = kmemdup(encap, sizeof(*x->encap),
--					GFP_KERNEL);
--		else
--			x->encap = kmemdup(orig->encap, sizeof(*x->encap),
--					GFP_KERNEL);
--
-+	if (encap) {
-+		x->encap = kmemdup(encap, sizeof(*x->encap), GFP_KERNEL);
- 		if (!x->encap)
- 			goto error;
- 		x->mapping_maxage = orig->mapping_maxage;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index cb8f14b9cae80..430e50388864c 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -707,6 +707,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0e8d, 0x223c), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3584), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.53.0
 
