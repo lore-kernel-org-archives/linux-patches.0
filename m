@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B1247DF8B;
-	Mon, 31 Aug 2026 13:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9558343F08D;
+	Mon, 31 Aug 2026 13:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184739; cv=none; b=jpWQd38f8bcj4QdasMSDmcJMraOBDvAMLGDBojiHC/0vkpA/pcjx3YemRfu6gmcscq+qj89lbm8YOpPP+OvGvhB8KcXm6i1xlMYr+fabfV3AMtTMuqzXAEhTZr/9DZnCKWnEuU6hNmqA12cxiHrrKJOwBDxVeNRQR2Av7QXPjB4=
+	t=1788184740; cv=none; b=AEzKRKAuW/tELbgaV9y/ZLOVZuFDWEGUwHtbv1u30TuOxdi6Mx4InY/+UfcPOgmMqPhNx0kDHdPmO7sb5X+bGI4SPfy06+uDsyIFLJcWwPIBETr15G4tU69UOaQs+96aDkQ7nDBiV6HK2FdC2arJXT1AvODjkOhEFwDDfcrak/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184739; c=relaxed/simple;
-	bh=a3XZ4GyW+pdnDUAGj59o2L1PGq+VsykoND/1kzGUniA=;
+	s=arc-20240116; t=1788184740; c=relaxed/simple;
+	bh=IxgN+JHJ+yrhvv+Xn6ibeXvFDU+nB1nTr5YkgMyLdn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZOumaDHtgIhQyvFpqII+H4zbYm79gq2d/hgZj60lDMJ9cI/fHKC9aAKX/IbA0Q1XrJYPN8anIsc5uBl25TDYc9XSz5yJY0VauRAwZEXoFe5lc40xdd8ktFl22Lb2TQdDhnNC7N9tqPtWaPtECjWwTaAaLu+qRDydpHIQuKAxwYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXLypVoW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sDCfaIquqy/F8/1pfRcXPAMY7mcCHvMJs/Ub3FoA1mrnibwYfDJtCPmhtby+lENKqfNTdMLQ+fxgjeSAFCDYP8ks1RNOn+6SseAN3YHZzb/0XJOfmd633K2KnWmyvlM0vPJvKa21Z9Q1nRNmX9LvZU12WD3plrualk7BoTHm8WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct6fnD30; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXLypVoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BEC1F000E9;
-	Mon, 31 Aug 2026 13:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct6fnD30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8141F00A3D;
+	Mon, 31 Aug 2026 13:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184736;
-	bh=BiuwtLzbJLataVvL3qrdzoKuTLqFC9SdmkMWG3Zuujk=;
+	s=korg; t=1788184739;
+	bh=YVgKiyrFCmB5GQQVcaibRXYj9lSykslaZueJKcp36Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZXLypVoWQ0pFhxJjCynY/ndEYLC6QP3tM8rbEMhRS0gkrnrMyte5tMING4K0SoOZi
-	 2mlN9oIFbL8/a94jfGHP53nF0HTTnOu06Tev8alml3Ajbcf2LTQShJa/6UuN8DBuip
-	 u5+kBG4LU1GeFwMwDWERMgLrrKj9dNrJBQFYKNBw=
+	b=ct6fnD30bNYdwuv3wEXXwwpvtBl/FnY3/j8Tz23TIORBIuxZmcAq8RLUKj4gytWz3
+	 MBVPNYlvAQkfoYoTItN06Iy8exQC4jWIzxNn2awc70Uqph8JSJXrllQ8tt9c+3Wjee
+	 fQUShnY7+E/vMtNHcj9YVnYjZOD6y/N1+EnhHRFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Vishnu Razdan <vrazdan@openai.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 04/92] ext4: dont enable DAX on new encrypted files
-Date: Mon, 31 Aug 2026 15:34:02 +0200
-Message-ID: <20260831133359.701881832@linuxfoundation.org>
+Subject: [PATCH 6.1 05/92] io_uring/io-wq: fix worker accounting when canceling creation callbacks
+Date: Mon, 31 Aug 2026 15:34:03 +0200
+Message-ID: <20260831133359.748364699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -54,146 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Vishnu Razdan <vrazdan@openai.com>
 
-commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
+commit 297b5ccea4acacaa47c150f043bce695202afbf1 upstream.
 
-Currently, when a new encrypted regular file is created, the call to
-ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
-before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
-filesystem is mounted with "-o dax=always".
+create_worker_cb() reserves an io-wq worker slot only after its
+task-work callback runs. If the callback is canceled before then,
+io_worker_cancel_cb() still decrements acct->nr_workers. When an
+existing worker retires with its creation callback pending, that
+worker has already decremented the same account's worker count.
 
-EXT4_INODE_ENCRYPT then actually gets set a bit later in
-__ext4_new_inode(), when it calls fscrypt_set_context() which calls
-ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
-calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
+The resulting undercount permits worker creation beyond the account's
+configured limit. On an AST2600 OpenBMC system, an unchanged sensor
+daemon reached 4,291 threads with the original kernel. With an
+equivalent downstream fix, 25 passive samples under its normal
+workload showed 6-9 threads.
 
-This was intended to clear S_DAX as well.  However, this was broken by
-commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
-causes data written to the file to bypass encryption, also causing
-xfstests failures such as generic/548 (when "-o dax=always" is used).
+Decrement nr_workers only when the canceled callback is not
+create_worker_cb(). Continuation callbacks still release their reserved
+slot, and both callback types retain the existing running-count,
+reference-count, and create-state cleanup.
 
-Fix this by simplifying the flow by making __ext4_new_inode() set
-EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
-ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
+[ Backport: retain the existing worker->wqe->lock protecting worker
+  accounting. ]
 
-Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
-place on new encrypted inodes.  Then it doesn't need to be cleared.
-
-As a result of these simplifications, ext4_set_context() no longer needs
-to change inode flags or state when 'handle != NULL'.  Remove that too.
-
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
-Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
+Fixes: 1d5f5ea7cb7d ("io-wq: remove worker to owner tw dependency")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Assisted-by: Codex:gpt-5.6-sol
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://patch.msgid.link/20260811-vrazdan-io-wq-b4-submit-v1-1-719ced16c921@openai.com
+Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/crypto.c | 40 ++++++++++++++++++++--------------------
- fs/ext4/ialloc.c |  4 ++++
- 2 files changed, 24 insertions(+), 20 deletions(-)
+ io_uring/io-wq.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/crypto.c b/fs/ext4/crypto.c
-index 8292494a9b6c8..8497f6125a8eb 100644
---- a/fs/ext4/crypto.c
-+++ b/fs/ext4/crypto.c
-@@ -150,7 +150,13 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 	if (inode->i_ino == EXT4_ROOT_INO)
- 		return -EPERM;
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index 66fdd69fd6cb4..0c3de2fead81c 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -201,9 +201,12 @@ static void io_worker_cancel_cb(struct io_worker *worker)
+ 	struct io_wq *wq = wqe->wq;
  
--	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
-+	/*
-+	 * For new encrypted inodes, S_DAX is never set in the first place.
-+	 *
-+	 * For existing inodes, this is called only on empty directories.  ext4
-+	 * never sets S_DAX on directories.
-+	 */
-+	if (WARN_ON_ONCE(IS_DAX(inode)))
- 		return -EINVAL;
- 
- 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
-@@ -169,6 +175,14 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 	 */
- 
- 	if (handle) {
-+		/*
-+		 * __ext4_new_inode() should have already set the encrypt flag
-+		 * on the inode and avoided enabling inline data.
-+		 */
-+		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
-+			return -EINVAL;
-+		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
-+			return -EINVAL;
- 		/*
- 		 * Since the inode is new it is ok to pass the
- 		 * XATTR_CREATE flag. This is necessary to match the
-@@ -176,21 +190,10 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 		 * function with the credits allocated for the new
- 		 * inode.
- 		 */
--		res = ext4_xattr_set_handle(handle, inode,
--					    EXT4_XATTR_INDEX_ENCRYPTION,
--					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
--					    ctx, len, XATTR_CREATE);
--		if (!res) {
--			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--			ext4_clear_inode_state(inode,
--					EXT4_STATE_MAY_INLINE_DATA);
--			/*
--			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--			 * S_DAX may be disabled
--			 */
--			ext4_set_inode_flags(inode, false);
--		}
--		return res;
-+		return ext4_xattr_set_handle(handle, inode,
-+					     EXT4_XATTR_INDEX_ENCRYPTION,
-+					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
-+					     ctx, len, XATTR_CREATE);
- 	}
- 
- 	res = dquot_initialize(inode);
-@@ -211,10 +214,7 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 				    ctx, len, 0);
- 	if (!res) {
- 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--		/*
--		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--		 * S_DAX may be disabled
--		 */
-+		/* Update inode->i_flags to set S_ENCRYPTED. */
- 		ext4_set_inode_flags(inode, false);
- 		res = ext4_mark_inode_dirty(handle, inode);
- 		if (res)
-diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index be057f7ddc24d..7e6555fb650db 100644
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -996,6 +996,8 @@ struct inode *__ext4_new_inode(struct user_namespace *mnt_userns,
- 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
- 		if (err)
- 			goto out;
-+		if (encrypt)
-+			i_flags |= EXT4_ENCRYPT_FL;
- 	}
- 
- 	err = dquot_initialize(inode);
-@@ -1311,6 +1313,8 @@ struct inode *__ext4_new_inode(struct user_namespace *mnt_userns,
- 	ei->i_extra_isize = sbi->s_want_extra_isize;
- 	ei->i_inline_off = 0;
- 	if (ext4_has_feature_inline_data(sb) &&
-+	    /* Encrypted inodes cannot have inline data */
-+	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
- 	    (!(ei->i_flags & EXT4_DAX_FL) || S_ISDIR(mode)))
- 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
- 	ret = inode;
+ 	atomic_dec(&acct->nr_running);
+-	raw_spin_lock(&worker->wqe->lock);
+-	acct->nr_workers--;
+-	raw_spin_unlock(&worker->wqe->lock);
++	/* create_worker_cb() has not reserved a worker slot yet. */
++	if (worker->create_work.func != create_worker_cb) {
++		raw_spin_lock(&worker->wqe->lock);
++		acct->nr_workers--;
++		raw_spin_unlock(&worker->wqe->lock);
++	}
+ 	io_worker_ref_put(wq);
+ 	clear_bit_unlock(0, &worker->create_state);
+ 	io_worker_release(worker);
 -- 
 2.53.0
 
