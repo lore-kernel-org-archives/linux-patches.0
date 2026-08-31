@@ -1,514 +1,592 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721D94AD7F5;
-	Mon, 31 Aug 2026 13:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEB956C641;
+	Mon, 31 Aug 2026 13:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184106; cv=none; b=Wd3lssfJYcp/I10zjBVAWyIraTZQNybE5vS05w6OS6VamwmE9BlS4poA+OVHh0UnNo4GLv31fWW3iP+GbvxX1m7fgVvzEI8jVDm3elKmnaSUBl1Ezw2yOLo4TTXipNMYoo2OMe6Fo7Errph7laFoibk/rmW42n/vVLURFu0hEsU=
+	t=1788184107; cv=none; b=iCswuukRKvoMm6cMH7lyg9BSAKPhx/WE6ampBFmA/jkJbgqJZVZ9zNp0hd2XTAC3lPnm5EcalK0AhzO4qjxNpIwCxFfo/cua+R62N34pkXiMp7dOri+MYs16UYZxWB3d1UGiN0g7it9x2834ZN9k6B1SMdx+aev12QCYeYrZcr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184106; c=relaxed/simple;
-	bh=Uk3deyNc6IyZ9UHG1tRiGfESvAEVt3YX1B0xoBuDCQw=;
+	s=arc-20240116; t=1788184107; c=relaxed/simple;
+	bh=8GTDpNh+FLCREWSu/x7mc/+P/rgXU9F5NxWP9AKXhNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AFldOQYZ4iQ1QaudgeSOVxO4rChmU7LNMBUz1Bs+Uympqr36jazf1OScLBJaH+NcJ+tVInL2YL9aCdThwybCX7rmEp3P7LB/wS+7AdkVGh9e1B0KkbVeKd5asvrHNcT3LZ3UFSGGdJG3+TJQwwm+2doBuqfk3E2fmIau5oNXspw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PrOk3PGc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CxhUuGBZjBRyJXTyygYrwXFVam7fmolfMxbkzs3+arALFRU1od2al7pSHsilCRTF0TdZYTEYkChUCSjb8Fblsfsy2zyhhj36FZcDhmmZXB2lSUqW9O5cNiiIKrYKuH83tpbFl76hnOh4xIl/zMvn9QzCZel0ztxJBZjKlHpadBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AomWA3Eg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PrOk3PGc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BFA1F000E9;
-	Mon, 31 Aug 2026 13:48:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184103;
-	bh=mxb+OX744UctfYKRoE/CDKw5ggMM/hQGuQfvjfOr9/k=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AomWA3Eg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546971F00A3E;
+	Mon, 31 Aug 2026 13:48:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184104;
+	bh=TBBvKLY4y6pIq/NckEYq5sSo08dWbJJi+ROdqTonWtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PrOk3PGcCt8peackB4lQTkQIsc+DrEFBaSbzQnU7dZR1xIThUDNgW4EIYdPR6L0le
-	 WvIinX3hj4rJQ/0Eh7dQI0Lon7x40WB+mXgLy5MD5/cnXslO3eCwPjUc+gZpZFxuAb
-	 FZDxIHkkb1Ujxinl/h9LOABe0SQXDJWNg+JWjr2FyxWpBhnT+ncUK8DZkkDtZZ0053
-	 59RMlZgW6Dh/+dpPhlISY4e/d+R2slB3stCebyltloniTALGp6b1ge1tYQrxWdZSyF
-	 /2vOHKA8NYS9sPmiWEubM8Rq++/NBguq8EtAE2ztMlOzzfIXufCV8CYBSmJMk9ncG2
-	 zx0QF1OgNmXuQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Baojun Xu <baojun.xu@ti.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	shenghao-ding@ti.com,
-	kevin-lu@ti.com,
-	sen@ti.com,
-	lgirdwood@gmail.com,
-	broonie@kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/tas2781: Fix device-0 reset issue and handle -EXDEV in block data processing
-Date: Mon, 31 Aug 2026 09:28:40 -0400
-Message-ID: <20260831133314.4125787-492-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=AomWA3EgY4JRPpiXBDnnbONAWQQzAN9aoEeFpt82JCbo9CaWaimk0aMal5WOZ52hi
+	 uW+Krw8+Qank7hdt6NSYHwcH0L9aiyg4ganO4AJmsbODUSouZZDLE+FxClTpStKJ0B
+	 Y08KBrxEU+gcPsSOGQgnonqGKhYhih8y1/uKIQzQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Eric Biggers <ebiggers@kernel.org>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 73/83] crypto: qce - Remove unsafe/deprecated algorithms
+Date: Mon, 31 Aug 2026 15:34:49 +0200
+Message-ID: <20260831133403.174193604@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Baojun Xu <baojun.xu@ti.com>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 513480da5e9c8f55b4f8f5e89f386e26188fbb3f ]
+------------------
 
-Fix reset for device-0:‌ In older projects (e.g., Merino), the hardware
-reset pin for the first SPI device (device-0) is ineffective, causing
-initialization failures. Added a software reset sequence for device-0
-to ensure proper initialization.
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-‌Handle -EXDEV correctly:‌ When processing block data, if the data does
-not belong to the current SPI device, the driver returned -EXDEV.
-This error code is now ignored to allow the driver to continue iterating
-through the block data and correctly calculate the total block size.
+commit 7e28b0a5c4b7d075b98ce6d8f5290a9d3deb5b92 upstream.
 
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20260609105253.19510-1-baojun.xu@ti.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Remove algorithms that are either unsafe or deprecated and have no
+in-kernel users that cannot be served by the ARM CE implementations.
+
+AES-ECB reveals plaintext patterns (identical plaintext blocks produce
+identical ciphertext blocks) and should not be exposed as a hardware-
+accelerated primitive. DES, Triple DES and HMAC-SHA1 have been
+deprecated for years.
+
+Remove sha1, ecb(aes), ecb(des), cbc(des), ecb(des3_ede), cbc(des3_ede),
+hmac(sha1) and all AEAD variants built on these primitives as well as
+authenc(hmac(sha256),cbc(des)). Also clean up the - now dead - code,
+flags and constants.
+
+Cc: stable@vger.kernel.org
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-# Stable Backport Analysis: ALSA: hda/tas2781: Fix device-0 reset issue
-and handle -EXDEV in block data processing
-
-**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`,
-Makefile `VERSION.PATCHLEVEL.SUBLEVEL` = 6.18.44)
-
-**Commit under review:** `513480da5e9c8` (on `master`, **not** in this
-6.18.44 tree)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Parse Subject Line
-**Record:** `[ALSA: hda/tas2781]` `[Fix]` — Fix device-0 reset issue and
-handle `-EXDEV` in block data processing.
-
-### Step 1.2: Parse All Commit Message Tags
-**Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:**
-  `https://patch.msgid.link/20260609105253.19510-1-baojun.xu@ti.com`
-- **Cc: stable:** — none
-- **Signed-off-by:** Baojun Xu `<baojun.xu@ti.com>` (author), Takashi
-  Iwai `<tiwai@suse.de>` (ALSA maintainer merge)
-- **Notable:** No syzbot; HP/Canonical contacts on original patch CC
-  list (verified via `b4 dig -w`)
-
-### Step 1.3: Analyze Commit Body
-**Record:**
-- **Bug 1 (reset):** On older HP projects (e.g., Merino), the hardware
-  reset GPIO for SPI device-0 is ineffective. Driver only performed
-  software reset when no GPIO was present, so device-0 could fail to
-  initialize.
-- **Bug 2 (-EXDEV):** During firmware block processing, writes to
-  channels not owned by the current SPI device intentionally return
-  `-EXDEV` from `tasdevice_spi_change_chn_book()`.
-  `tasdevice_process_block()` treated this as a real error, breaking
-  firmware parsing/loading.
-- **Symptom:** Amplifier initialization / firmware download failures →
-  no audio on affected HP laptops.
-- **Root cause:** Incorrect reset sequencing (HW-only when GPIO present)
-  and mishandling of intentional `-EXDEV` in shared fmwlib code.
-
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not disguised — explicitly described as fixes. Both are real
-functional bugs (hardware quirk + error-handling logic), not cleanup.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory Changes
-**Record:**
-- `sound/hda/codecs/side-codecs/tas2781_hda_spi.c`: ~16 lines changed
-  (reset logic restructured)
-- `sound/soc/codecs/tas2781-fmwlib.c`: 3 error checks modified (+3 lines
-  net)
-- **Functions:** `tas2781_spi_reset()`, `tasdevice_process_block()`
-- **Scope:** Single-file surgical fix in SPI driver + 3 guarded
-  conditions in shared fmwlib
-
-### Step 2.2: Code Flow Change (per hunk)
-
-**Hunk 1 — `tas2781_spi_reset()`:**
-- **Before:** If `tas_dev->reset` GPIO exists → HW reset only; else → SW
-  reset via register write.
-- **After:** If GPIO exists → HW reset, **then always** SW reset via
-  `TASDEVICE_REG_SWRESET`.
-- **Path:** Called before firmware download in `tascodec_spi_fw_load()`
-  (line 680).
-
-**Hunk 2-4 — `tasdevice_process_block()`:**
-- **Before:** Any `rc < 0` from write/bulk_write/update_bits → `is_err =
-  true` → error log + potential `cur_prog`/`cur_conf` reset.
-- **After:** `-EXDEV` ignored when `tas_priv->isspi` is true; other
-  errors still handled.
-- **Path:** Firmware block loading during `tasdevice_prmg_load()` /
-  `tasdevice_select_cfg_blk()`.
-
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category (a):** Hardware workaround — ineffective reset GPIO on
-  device-0
-- **Category (g):** Logic/correctness — intentional `-EXDEV`
-  misclassified as failure
-- **Mechanism:** `tasdevice_spi_change_chn_book()` returns `-EXDEV` when
-  `chn != p->index` (lines 179-183 of current tree), with `dev_dbg("Not
-  error...")`. Without the fix, `is_err` triggers state corruption at
-  lines 989-994 of `tas2781-fmwlib.c`.
-
-### Step 2.4: Fix Quality
-**Record:**
-- Fix is minimal and obviously correct.
-- SW reset after HW reset is low risk (TI author, HP-validated
-  hardware).
-- `-EXDEV` guard is narrowly scoped to `isspi && rc == -EXDEV`; I2C path
-  unchanged.
-- **Regression risk:** Very low.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame Changed Lines
-**Record:**
-- `tas2781_spi_reset()` HW/SW if-else: introduced in `9fa6a693ad8dc`
-  (2025-04-29, refactor to shared fmwlib); original function from
-  `bb5f86ea50ffb` (2024-12-16).
-- `tasdevice_process_block()` error check: from `915f5eadebd29b`
-  (2023-06-18, original fmwlib).
-- Buggy reset logic present since April 2025 refactor; EXDEV mishandling
-  since fmwlib creation.
-
-### Step 3.2: Follow Fixes: Tag
-**Record:** No `Fixes:` tag — N/A.
-
-### Step 3.3: File History
-**Record:** Recent stable backports to this tree for same driver:
-- `16b65c8ca3160` — Ignore reset check for SPI device (already in
-  6.18.y)
-- `24c22c644ea53` — Fix incorrect bit update for SPI
-- `f8272331da877` — Cancel async firmware request at unbind
-
-Shows active stable maintenance of this driver. Standalone fix, not part
-of a series.
-
-### Step 3.4: Author Context
-**Record:** Baojun Xu is the TAS2781 HDA SPI driver author (TI). Takashi
-Iwai merged. Related stable fix `16b65c8ca3160` by same author already
-backported here.
-
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Uses existing `isspi` field (set at line
-240 of `tas2781_hda_spi.c`) and existing `-EXDEV` return in
-`tasdevice_spi_change_chn_book()`. Applies standalone.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original Patch Discussion
-**Record:**
-- `b4 dig -c 513480da5e9c8` → v1 only:
-  `https://patch.msgid.link/20260609105253.19510-1-baojun.xu@ti.com`
-- Lore thread fetch blocked (Anubis bot protection) — could not read
-  inline review replies.
-
-### Step 4.2: Reviewers
-**Record:** `b4 dig -w` CC list includes `tiwai@suse.de`,
-`broonie@kernel.org`, `linux-sound@vger.kernel.org`, HP contacts
-(`letitia.tsai@hp.com`, `pin-hao.huang@hp.com`), Canonical
-(`bill.yu@canonical.com`). Appropriate subsystem coverage.
-
-### Step 4.3: Bug Report
-**Record:** No formal bug report or syzbot link. Hardware issue
-described in commit message referencing Merino project; HP PCI quirks in
-tree confirm real hardware (`alc269.c` lines 7004-7042).
-
-### Step 4.4: Related Patches
-**Record:** Single-patch series (v1 only). Related prior fix
-`16b65c8ca3160` already in this tree — complementary, not a dependency.
-
-### Step 4.5: Stable Mailing List
-**Record:** Not searched (lore blocked). No stable nomination found via
-b4.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key Functions
-**Record:** `tas2781_spi_reset()`, `tasdevice_process_block()`, callers
-`tascodec_spi_fw_load()`, `tasdevice_select_cfg_blk()`,
-`tasdevice_load_block_kernel()`.
-
-### Step 5.2: Callers
-**Record:**
-- `tas2781_spi_reset()` → called from firmware load path before
-  `tasdevice_prmg_load()` (probe/init path for SPI codec).
-- `tasdevice_process_block()` → firmware loading during driver
-  initialization and profile switching.
-- Triggered when HP laptop with `ALC245_FIXUP_TAS2781_SPI_2` quirk loads
-  TAS2781 SPI amplifier.
-
-### Step 5.3: Callees
-**Record:** `tasdevice_dev_write()`, `gpiod_set_value_cansleep()`,
-`fsleep()` — standard register/GPIO operations.
-
-### Step 5.4: Reachability
-**Record:** Reachable on boot for affected HP Gemtree/Merino laptops
-(PCI IDs `0x103c:0x8de8-0x8de9`, `0x103c:0x8ed5-0x8eda`). Requires
-`CONFIG_SND_HDA_SCODEC_TAS2781_SPI`. User-visible: speakers don't work
-without fix.
-
-### Step 5.5: Similar Patterns
-**Record:** `-EXDEV` intentionally used only in SPI `change_chn_book`
-callback; `dev_dbg` already says "Not error". Fix aligns fmwlib with SPI
-driver's intent.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
-
-### Step 6.1: Does Buggy Code Exist?
-**Record:** **YES.** Current tree at HEAD has:
-- `tas2781_spi_reset()` with if/else (HW-only when GPIO present) — lines
-  192-204
-- `tasdevice_process_block()` treating all `rc < 0` as errors — lines
-  908, 940, 978
-- `git merge-base --is-ancestor 513480da5e9c8 HEAD` → exit 1 (fix
-  **not** present)
-- Driver present: `git merge-base --is-ancestor bb5f86ea50ffb HEAD` →
-  exit 0
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply verified** — `git cherry-pick --no-commit
-513480da5e9c8` auto-merged both files without conflicts on 6.18.44.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** `16b65c8ca3160` (reset check ignore) already backported.
-This commit is the next logical fix for the same driver/hardware — not a
-duplicate.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem Criticality
-**Record:** `sound/hda` + `sound/soc/codecs` — **IMPORTANT** (audio on
-specific laptops, not core kernel).
-
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained in 6.18.y — 3 tas2781 SPI commits since
-v6.18 tag.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Who Is Affected
-**Record:** Users of HP Gemtree and Merino laptops with TAS2781 SPI
-amplifiers (`CONFIG_SND_HDA_SCODEC_TAS2781_SPI`). Driver-specific, not
-universal.
-
-### Step 8.2: Trigger Conditions
-**Record:** Every boot / driver probe on affected hardware. Not timing-
-dependent. Unprivileged users cannot trigger directly, but all users on
-these machines lose audio.
-
-### Step 8.3: Failure Mode Severity
-**Record:**
-- Reset failure → firmware download fails → **no audio** (functional
-  breakage, HIGH for affected users)
-- EXDEV mishandling → false errors, `cur_prog`/`cur_conf` reset →
-  **broken amplifier config** (HIGH for affected users)
-- Not a kernel crash/oops, but complete loss of audio is user-visible
-  and important.
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH for HP Merino/Gemtree users (audio works)
-- **Risk:** LOW — 23-line change, narrowly scoped, hardware quirk
-  pattern
-- **Ratio:** Strongly favors backport
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence Summary
-
-**FOR backport:**
-- Fixes real hardware bugs on HP laptops already quirked in this tree
-- Initialization failure = no audio (important user impact)
-- Small, surgical, applies cleanly to 6.18.44
-- Same author's related fix already backported to this tree
-- Hardware quirk workaround (ineffective reset GPIO) — classic stable
-  material
-- Merged by ALSA maintainer Takashi Iwai
-- HP engineers on original patch CC list
-
-**AGAINST backport:**
-- Driver is relatively new (but present since 6.18.0 in this tree)
-- Only affects SPI TAS2781 HDA path (limited audience)
-- No syzbot/crash report (functional bug, not security)
-
-**Unresolved:** Lore review thread content (bot-blocked); no explicit
-Tested-by in commit.
-
-### Step 9.2: Stable Rules Checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — logic clear; HP CC'd on
-patch |
-| 2. Fixes real bug affecting users? | **PASS** — audio init failure on
-Merino/Gemtree |
-| 3. Important issue? | **PASS** — complete audio failure on affected
-laptops |
-| 4. Small and contained? | **PASS** — 2 files, ~23 lines |
-| 5. No new features/APIs? | **PASS** — hardware workaround + error
-handling |
-| 6. Can apply to local tree? | **PASS** — clean cherry-pick verified |
-
-### Step 9.3: Exception Categories
-**Record:** **Hardware quirk/workaround** — ineffective reset GPIO on
-device-0; always perform software reset.
-
-### Step 9.4: Decision Rationale
-
-This commit fixes two real bugs in the TAS2781 HDA SPI driver that cause
-amplifier initialization and firmware loading failures on HP Merino and
-Gemtree laptops — hardware already supported via PCI quirks in
-`alc269.c` in this 6.18.44 tree. The driver and buggy code are both
-present; the fix is absent. The patch is small, self-contained, applies
-cleanly, and follows the established pattern of tas2781 fixes already
-backported to 6.18.y. While not a crash or security issue, complete loss
-of audio on shipping laptop hardware meets stable criteria for an
-important functional bug fix in an existing driver.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed commit `513480da5e9c8` message and tags via `git
-  show`
-- **[Phase 1]** Confirmed no Fixes:/Reported-by:/Tested-by: tags
-- **[Phase 2]** Read current buggy code in `tas2781_hda_spi.c` lines
-  188-205 and `tas2781-fmwlib.c` lines 860-998
-- **[Phase 2]** Verified `-EXDEV` return path in
-  `tasdevice_spi_change_chn_book()` lines 163-186
-- **[Phase 2]** Verified `is_err` side effects at lines 989-994 of
-  fmwlib
-- **[Phase 3]** `git blame` on reset function and error checks
-- **[Phase 3]** `git log --oneline -20` on both modified files
-- **[Phase 3]** `git merge-base --is-ancestor` — fix NOT in HEAD, driver
-  IS in HEAD
-- **[Phase 4]** `b4 dig -c 513480da5e9c8` — found v1 patch URL
-- **[Phase 4]** `b4 dig -w` — confirmed maintainer/HP CC list
-- **[Phase 4]** `b4 dig -a` — single v1 revision only
-- **[Phase 4]** UNVERIFIED: Lore thread review content (Anubis bot
-  protection on fetch)
-- **[Phase 5]** `grep` traced callers of `tasdevice_process_block` and
-  `tas2781_spi_reset`
-- **[Phase 5]** Verified `tas_priv->isspi = true` at line 240 of SPI
-  driver
-- **[Phase 5]** Grep found HP Merino/Gemtree PCI quirks in `alc269.c`
-  lines 7004-7042
-- **[Phase 6]** `git describe HEAD` → v6.18.44; Makefile confirms
-  6.18.44
-- **[Phase 6]** `git cherry-pick --no-commit 513480da5e9c8` — clean
-  auto-merge
-- **[Phase 6]** Confirmed fix not already in tree
-- **[Phase 7]** `git log v6.18..HEAD` — 3 prior tas2781 SPI stable
-  backports
-- **[Phase 8]** Assessed impact on HP laptop users with TAS2781 SPI
-  config
-
-**YES**
-
- sound/hda/codecs/side-codecs/tas2781_hda_spi.c | 16 ++++++++--------
- sound/soc/codecs/tas2781-fmwlib.c              |  7 ++++---
- 2 files changed, 12 insertions(+), 11 deletions(-)
-
-diff --git a/sound/hda/codecs/side-codecs/tas2781_hda_spi.c b/sound/hda/codecs/side-codecs/tas2781_hda_spi.c
-index ab2a2472d7bdc..30393ae09dcc3 100644
---- a/sound/hda/codecs/side-codecs/tas2781_hda_spi.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda_spi.c
-@@ -193,15 +193,15 @@ static void tas2781_spi_reset(struct tasdevice_priv *tas_dev)
- 		gpiod_set_value_cansleep(tas_dev->reset, 0);
- 		fsleep(800);
- 		gpiod_set_value_cansleep(tas_dev->reset, 1);
--	} else {
--		ret = tasdevice_dev_write(tas_dev, tas_dev->index,
--			TASDEVICE_REG_SWRESET, TASDEVICE_REG_SWRESET_RESET);
--		if (ret < 0) {
--			dev_err(tas_dev->dev, "dev sw-reset fail, %d\n", ret);
--			return;
--		}
--		fsleep(1000);
+ drivers/crypto/qce/aead.c     |   56 ------------------------
+ drivers/crypto/qce/common.c   |   55 +++++------------------
+ drivers/crypto/qce/common.h   |   16 +-----
+ drivers/crypto/qce/regs-v5.h  |    4 -
+ drivers/crypto/qce/sha.c      |   30 ------------
+ drivers/crypto/qce/sha.h      |    1 
+ drivers/crypto/qce/skcipher.c |   97 ------------------------------------------
+ 7 files changed, 20 insertions(+), 239 deletions(-)
+
+--- a/drivers/crypto/qce/aead.c
++++ b/drivers/crypto/qce/aead.c
+@@ -8,8 +8,6 @@
+ #include <crypto/gcm.h>
+ #include <crypto/authenc.h>
+ #include <crypto/internal/aead.h>
+-#include <crypto/internal/des.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ #include <crypto/scatterwalk.h>
+ #include "aead.h"
+@@ -597,7 +595,6 @@ static int qce_aead_setkey(struct crypto
+ 	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+ 	struct crypto_authenc_keys authenc_keys;
+ 	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
+-	u32 _key[6];
+ 	int err;
+ 
+ 	err = crypto_authenc_extractkeys(&authenc_keys, key, keylen);
+@@ -608,26 +605,7 @@ static int qce_aead_setkey(struct crypto
+ 	    authenc_keys.authkeylen > QCE_MAX_KEY_SIZE)
+ 		return -EINVAL;
+ 
+-	if (IS_DES(flags)) {
+-		err = verify_aead_des_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-	} else if (IS_3DES(flags)) {
+-		err = verify_aead_des3_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-		/*
+-		 * The crypto engine does not support any two keys
+-		 * being the same for triple des algorithms. The
+-		 * verify_skcipher_des3_key does not check for all the
+-		 * below conditions. Schedule fallback in this case.
+-		 */
+-		memcpy(_key, authenc_keys.enckey, DES3_EDE_KEY_SIZE);
+-		if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-		    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-		    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-			ctx->need_fallback = true;
+-	} else if (IS_AES(flags)) {
++	if (IS_AES(flags)) {
+ 		/* No random key sizes */
+ 		if (authenc_keys.enckeylen != AES_KEYSIZE_128 &&
+ 		    authenc_keys.enckeylen != AES_KEYSIZE_192 &&
+@@ -699,38 +677,6 @@ struct qce_aead_def {
+ 
+ static const struct qce_aead_def aead_def[] = {
+ 	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+ 		.flags          =  QCE_ALG_AES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+ 		.name           = "authenc(hmac(sha256),cbc(aes))",
+ 		.drv_name       = "authenc-hmac-sha256-cbc-aes-qce",
+--- a/drivers/crypto/qce/common.c
++++ b/drivers/crypto/qce/common.c
+@@ -8,7 +8,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/types.h>
+ #include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+ #include "cipher.h"
+@@ -115,18 +114,16 @@ static u32 qce_auth_cfg(unsigned long fl
+ 			cfg |= AUTH_KEY_SZ_AES256 << AUTH_KEY_SIZE_SHIFT;
  	}
-+
-+	ret = tasdevice_dev_write(tas_dev, tas_dev->index,
-+		TASDEVICE_REG_SWRESET, TASDEVICE_REG_SWRESET_RESET);
-+	if (ret < 0) {
-+		dev_err(tas_dev->dev, "dev sw-reset fail, %d\n", ret);
-+		return;
-+	}
-+	fsleep(1000);
+ 
+-	if (IS_SHA1(flags) || IS_SHA1_HMAC(flags))
+-		cfg |= AUTH_SIZE_SHA1 << AUTH_SIZE_SHIFT;
+-	else if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
++	if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
+ 		cfg |= AUTH_SIZE_SHA256 << AUTH_SIZE_SHIFT;
+ 	else if (IS_CMAC(flags))
+ 		cfg |= AUTH_SIZE_ENUM_16_BYTES << AUTH_SIZE_SHIFT;
+ 	else if (IS_CCM(flags))
+ 		cfg |= (auth_size - 1) << AUTH_SIZE_SHIFT;
+ 
+-	if (IS_SHA1(flags) || IS_SHA256(flags))
++	if (IS_SHA256(flags))
+ 		cfg |= AUTH_MODE_HASH << AUTH_MODE_SHIFT;
+-	else if (IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
++	else if (IS_SHA256_HMAC(flags))
+ 		cfg |= AUTH_MODE_HMAC << AUTH_MODE_SHIFT;
+ 	else if (IS_CCM(flags))
+ 		cfg |= AUTH_MODE_CCM << AUTH_MODE_SHIFT;
+@@ -191,7 +188,7 @@ static int qce_setup_regs_ahash(struct c
+ 	else
+ 		qce_cpu_to_be32p_array(auth, rctx->digest, digestsize);
+ 
+-	iv_words = (IS_SHA1(rctx->flags) || IS_SHA1_HMAC(rctx->flags)) ? 5 : 8;
++	iv_words = 8;
+ 	qce_write_array(qce, REG_AUTH_IV0, (u32 *)auth, iv_words);
+ 
+ 	if (rctx->first_blk)
+@@ -243,19 +240,8 @@ static u32 qce_encr_cfg(unsigned long fl
+ 
+ 	if (IS_AES(flags))
+ 		cfg |= ENCR_ALG_AES << ENCR_ALG_SHIFT;
+-	else if (IS_DES(flags) || IS_3DES(flags))
+-		cfg |= ENCR_ALG_DES << ENCR_ALG_SHIFT;
+-
+-	if (IS_DES(flags))
+-		cfg |= ENCR_KEY_SZ_DES << ENCR_KEY_SZ_SHIFT;
+-
+-	if (IS_3DES(flags))
+-		cfg |= ENCR_KEY_SZ_3DES << ENCR_KEY_SZ_SHIFT;
+ 
+ 	switch (flags & QCE_MODE_MASK) {
+-	case QCE_MODE_ECB:
+-		cfg |= ENCR_MODE_ECB << ENCR_MODE_SHIFT;
+-		break;
+ 	case QCE_MODE_CBC:
+ 		cfg |= ENCR_MODE_CBC << ENCR_MODE_SHIFT;
+ 		break;
+@@ -340,13 +326,7 @@ static int qce_setup_regs_skcipher(struc
+ 
+ 	encr_cfg = qce_encr_cfg(flags, keylen);
+ 
+-	if (IS_DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 2;
+-	} else if (IS_3DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 6;
+-	} else if (IS_AES(flags)) {
++	if (IS_AES(flags)) {
+ 		if (IS_XTS(flags))
+ 			qce_xtskey(qce, ctx->enc_key, ctx->enc_keylen,
+ 				   rctx->cryptlen);
+@@ -357,14 +337,12 @@ static int qce_setup_regs_skcipher(struc
+ 
+ 	qce_write_array(qce, REG_ENCR_KEY0, (u32 *)enckey, enckey_words);
+ 
+-	if (!IS_ECB(flags)) {
+-		if (IS_XTS(flags))
+-			qce_xts_swapiv(enciv, rctx->iv, ivsize);
+-		else
+-			qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
++	if (IS_XTS(flags))
++		qce_xts_swapiv(enciv, rctx->iv, ivsize);
++	else
++		qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
+ 
+-		qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
+-	}
++	qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
+ 
+ 	if (IS_ENCRYPT(flags))
+ 		encr_cfg |= BIT(ENCODE_SHIFT);
+@@ -393,10 +371,6 @@ static int qce_setup_regs_skcipher(struc
+ #endif
+ 
+ #ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+ static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+ 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+ 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+@@ -473,13 +447,8 @@ static int qce_setup_regs_aead(struct cr
+ 	/* Write initial authentication IV only for HMAC algorithms */
+ 	if (IS_SHA_HMAC(rctx->flags)) {
+ 		/* Write default authentication iv */
+-		if (IS_SHA1_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA1_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha1, auth_ivsize);
+-		} else if (IS_SHA256_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA256_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha256, auth_ivsize);
+-		}
++		auth_ivsize = SHA256_DIGEST_SIZE;
++		memcpy(authiv, std_iv_sha256, auth_ivsize);
+ 		authiv_words = auth_ivsize / sizeof(u32);
+ 		qce_write_array(qce, REG_AUTH_IV0, (u32 *)authiv, authiv_words);
+ 	} else if (IS_CCM(rctx->flags)) {
+--- a/drivers/crypto/qce/common.h
++++ b/drivers/crypto/qce/common.h
+@@ -22,7 +22,7 @@
+ 
+ /* IV length in bytes */
+ #define QCE_AES_IV_LENGTH		AES_BLOCK_SIZE
+-/* max of AES_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE */
++/* max of AES_BLOCK_SIZE */
+ #define QCE_MAX_IV_SIZE			AES_BLOCK_SIZE
+ 
+ /* maximum nonce bytes  */
+@@ -33,14 +33,10 @@
+ #define QCE_MAX_ALIGN_SIZE		64
+ 
+ /* cipher algorithms */
+-#define QCE_ALG_DES			BIT(0)
+-#define QCE_ALG_3DES			BIT(1)
+ #define QCE_ALG_AES			BIT(2)
+ 
+ /* hash and hmac algorithms */
+-#define QCE_HASH_SHA1			BIT(3)
+ #define QCE_HASH_SHA256			BIT(4)
+-#define QCE_HASH_SHA1_HMAC		BIT(5)
+ #define QCE_HASH_SHA256_HMAC		BIT(6)
+ #define QCE_HASH_AES_CMAC		BIT(7)
+ 
+@@ -58,21 +54,15 @@
+ #define QCE_ENCRYPT			BIT(30)
+ #define QCE_DECRYPT			BIT(31)
+ 
+-#define IS_DES(flags)			(flags & QCE_ALG_DES)
+-#define IS_3DES(flags)			(flags & QCE_ALG_3DES)
+ #define IS_AES(flags)			(flags & QCE_ALG_AES)
+ 
+-#define IS_SHA1(flags)			(flags & QCE_HASH_SHA1)
+ #define IS_SHA256(flags)		(flags & QCE_HASH_SHA256)
+-#define IS_SHA1_HMAC(flags)		(flags & QCE_HASH_SHA1_HMAC)
+ #define IS_SHA256_HMAC(flags)		(flags & QCE_HASH_SHA256_HMAC)
+ #define IS_CMAC(flags)			(flags & QCE_HASH_AES_CMAC)
+-#define IS_SHA(flags)			(IS_SHA1(flags) || IS_SHA256(flags))
+-#define IS_SHA_HMAC(flags)		\
+-		(IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
++#define IS_SHA(flags)			IS_SHA256(flags)
++#define IS_SHA_HMAC(flags)		IS_SHA256_HMAC(flags)
+ 
+ #define IS_CBC(mode)			(mode & QCE_MODE_CBC)
+-#define IS_ECB(mode)			(mode & QCE_MODE_ECB)
+ #define IS_CTR(mode)			(mode & QCE_MODE_CTR)
+ #define IS_XTS(mode)			(mode & QCE_MODE_XTS)
+ #define IS_CCM(mode)			(mode & QCE_MODE_CCM)
+--- a/drivers/crypto/qce/regs-v5.h
++++ b/drivers/crypto/qce/regs-v5.h
+@@ -203,7 +203,6 @@
+ 
+ #define AUTH_SIZE_SHIFT			9
+ #define AUTH_SIZE_MASK			GENMASK(13, 9)
+-#define AUTH_SIZE_SHA1			0
+ #define AUTH_SIZE_SHA256		1
+ #define AUTH_SIZE_ENUM_1_BYTES		0
+ #define AUTH_SIZE_ENUM_2_BYTES		1
+@@ -284,15 +283,12 @@
+ 
+ #define ENCR_KEY_SZ_SHIFT		3
+ #define ENCR_KEY_SZ_MASK		GENMASK(5, 3)
+-#define ENCR_KEY_SZ_DES			0
+-#define ENCR_KEY_SZ_3DES		1
+ #define ENCR_KEY_SZ_AES128		0
+ #define ENCR_KEY_SZ_AES256		2
+ 
+ #define ENCR_ALG_SHIFT			0
+ #define ENCR_ALG_MASK			GENMASK(2, 0)
+ #define ENCR_ALG_NONE			0
+-#define ENCR_ALG_DES			1
+ #define ENCR_ALG_AES			2
+ #define ENCR_ALG_KASUMI			4
+ #define ENCR_ALG_SNOW_3G		5
+--- a/drivers/crypto/qce/sha.c
++++ b/drivers/crypto/qce/sha.c
+@@ -24,10 +24,6 @@ struct qce_sha_saved_state {
+ 
+ static LIST_HEAD(ahash_algs);
+ 
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+ static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+ 	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+ 	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+@@ -348,9 +344,7 @@ static int qce_ahash_hmac_setkey(struct
+ 		return 0;
+ 	}
+ 
+-	if (digestsize == SHA1_DIGEST_SIZE)
+-		alg_name = "sha1-qce";
+-	else if (digestsize == SHA256_DIGEST_SIZE)
++	if (digestsize == SHA256_DIGEST_SIZE)
+ 		alg_name = "sha256-qce";
+ 	else
+ 		return -EINVAL;
+@@ -412,15 +406,6 @@ struct qce_ahash_def {
+ 
+ static const struct qce_ahash_def ahash_def[] = {
+ 	{
+-		.flags		= QCE_HASH_SHA1,
+-		.name		= "sha1",
+-		.drv_name	= "sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+ 		.flags		= QCE_HASH_SHA256,
+ 		.name		= "sha256",
+ 		.drv_name	= "sha256-qce",
+@@ -430,15 +415,6 @@ static const struct qce_ahash_def ahash_
+ 		.std_iv		= std_iv_sha256,
+ 	},
+ 	{
+-		.flags		= QCE_HASH_SHA1_HMAC,
+-		.name		= "hmac(sha1)",
+-		.drv_name	= "hmac-sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+ 		.flags		= QCE_HASH_SHA256_HMAC,
+ 		.name		= "hmac(sha256)",
+ 		.drv_name	= "hmac-sha256-qce",
+@@ -475,9 +451,7 @@ static int qce_ahash_register_one(const
+ 	alg->halg.digestsize = def->digestsize;
+ 	alg->halg.statesize = def->statesize;
+ 
+-	if (IS_SHA1(def->flags))
+-		tmpl->hash_zero = sha1_zero_message_hash;
+-	else if (IS_SHA256(def->flags))
++	if (IS_SHA256(def->flags))
+ 		tmpl->hash_zero = sha256_zero_message_hash;
+ 
+ 	base = &alg->halg.base;
+--- a/drivers/crypto/qce/sha.h
++++ b/drivers/crypto/qce/sha.h
+@@ -7,7 +7,6 @@
+ #define _SHA_H_
+ 
+ #include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+ #include "common.h"
+--- a/drivers/crypto/qce/skcipher.c
++++ b/drivers/crypto/qce/skcipher.c
+@@ -10,7 +10,6 @@
+ #include <linux/types.h>
+ #include <linux/errno.h>
+ #include <crypto/aes.h>
+-#include <crypto/internal/des.h>
+ #include <crypto/internal/skcipher.h>
+ 
+ #include "cipher.h"
+@@ -208,51 +207,6 @@ static int qce_skcipher_setkey(struct cr
+ 	return ret;
  }
  
- static int tascodec_spi_init(struct tasdevice_priv *tas_priv,
-diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
-index 2f6522f76df9b..0bcd8c131623a 100644
---- a/sound/soc/codecs/tas2781-fmwlib.c
-+++ b/sound/soc/codecs/tas2781-fmwlib.c
-@@ -905,7 +905,8 @@ static int tasdevice_process_block(void *context, unsigned char *data,
- 						data[subblk_offset + 1],
- 						data[subblk_offset + 2]),
- 					data[subblk_offset + 3]);
--				if (rc < 0) {
-+				if (rc < 0 &&
-+				    !(tas_priv->isspi && rc == -EXDEV)) {
- 					is_err = true;
- 					dev_err(tas_priv->dev,
- 					"process_block: single write error\n");
-@@ -937,7 +938,7 @@ static int tasdevice_process_block(void *context, unsigned char *data,
- 				data[subblk_offset + 1],
- 				data[subblk_offset + 2]),
- 				&(data[subblk_offset + 4]), len);
--			if (rc < 0) {
-+			if (rc < 0 && !(tas_priv->isspi && rc == -EXDEV)) {
- 				is_err = true;
- 				dev_err(tas_priv->dev,
- 					"%s: bulk_write error = %d\n",
-@@ -975,7 +976,7 @@ static int tasdevice_process_block(void *context, unsigned char *data,
- 				data[subblk_offset + 4]),
- 				data[subblk_offset + 1],
- 				data[subblk_offset + 5]);
--			if (rc < 0) {
-+			if (rc < 0 && !(tas_priv->isspi && rc == -EXDEV)) {
- 				is_err = true;
- 				dev_err(tas_priv->dev,
- 					"%s: update_bits error = %d\n",
--- 
-2.53.0
+-static int qce_des_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			  unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	int err;
+-
+-	err = verify_skcipher_des_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+-static int qce_des3_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			   unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	u32 _key[6];
+-	int err;
+-
+-	err = verify_skcipher_des3_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	/*
+-	 * The crypto engine does not support any two keys
+-	 * being the same for triple des algorithms. The
+-	 * verify_skcipher_des3_key does not check for all the
+-	 * below conditions. Return -ENOKEY in case any two keys
+-	 * are the same. Revisit to see if a fallback cipher
+-	 * is needed to handle this condition.
+-	 */
+-	memcpy(_key, key, DES3_EDE_KEY_SIZE);
+-	if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-	    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-	    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-		return -ENOKEY;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+ static int qce_skcipher_crypt(struct skcipher_request *req, int encrypt)
+ {
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+@@ -275,7 +229,7 @@ static int qce_skcipher_crypt(struct skc
+ 	 * ECB and CBC algorithms require message lengths to be
+ 	 * multiples of block size.
+ 	 */
+-	if (IS_ECB(rctx->flags) || IS_CBC(rctx->flags))
++	if (IS_CBC(rctx->flags))
+ 		if (!IS_ALIGNED(req->cryptlen, blocksize))
+ 			return -EINVAL;
+ 
+@@ -359,15 +313,6 @@ struct qce_skcipher_def {
+ 
+ static const struct qce_skcipher_def skcipher_def[] = {
+ 	{
+-		.flags		= QCE_ALG_AES | QCE_MODE_ECB,
+-		.name		= "ecb(aes)",
+-		.drv_name	= "ecb-aes-qce",
+-		.blocksize	= AES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= AES_MIN_KEY_SIZE,
+-		.max_keysize	= AES_MAX_KEY_SIZE,
+-	},
+-	{
+ 		.flags		= QCE_ALG_AES | QCE_MODE_CBC,
+ 		.name		= "cbc(aes)",
+ 		.drv_name	= "cbc-aes-qce",
+@@ -395,42 +340,6 @@ static const struct qce_skcipher_def skc
+ 		.min_keysize	= AES_MIN_KEY_SIZE * 2,
+ 		.max_keysize	= AES_MAX_KEY_SIZE * 2,
+ 	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_ECB,
+-		.name		= "ecb(des)",
+-		.drv_name	= "ecb-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_CBC,
+-		.name		= "cbc(des)",
+-		.drv_name	= "cbc-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= DES_BLOCK_SIZE,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_ECB,
+-		.name		= "ecb(des3_ede)",
+-		.drv_name	= "ecb-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_CBC,
+-		.name		= "cbc(des3_ede)",
+-		.drv_name	= "cbc-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= DES3_EDE_BLOCK_SIZE,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+ };
+ 
+ static int qce_skcipher_register_one(const struct qce_skcipher_def *def,
+@@ -455,9 +364,7 @@ static int qce_skcipher_register_one(con
+ 	alg->ivsize			= def->ivsize;
+ 	alg->min_keysize		= def->min_keysize;
+ 	alg->max_keysize		= def->max_keysize;
+-	alg->setkey			= IS_3DES(def->flags) ? qce_des3_setkey :
+-					  IS_DES(def->flags) ? qce_des_setkey :
+-					  qce_skcipher_setkey;
++	alg->setkey			= qce_skcipher_setkey;
+ 	alg->encrypt			= qce_skcipher_encrypt;
+ 	alg->decrypt			= qce_skcipher_decrypt;
+ 
+
 
