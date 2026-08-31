@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B2D4A5C5F;
-	Mon, 31 Aug 2026 13:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3327524B0D;
+	Mon, 31 Aug 2026 13:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183859; cv=none; b=cfnZjeeesZg+QIHyFlA4V5hJP8mIOe8lcKUg34xUhgBpXYavOZ1Q4niQ7fCxFWdxW7+yb6iZ4CDc2mX+xWA65iM6ic1sEsaEPg3jfsqPJniMLVcBvlG9WxfHUmD239wMn2bVzMFXqwJRwuHG3dh5gtHbSyOaCeX81Sy8kgZjH+s=
+	t=1788183861; cv=none; b=aNE16RRD60MyD96OQ35PXv+vBxuZIn6GhIdXF1bpSfJse+Zpryi2vDRFA1JiGulizAvhabDwiLnpTaT78j9XTl2Q9dLcfA4cziXSDqjBiY5pMgBJxhrGbleecP08DCkYWHmPbMMrucpHYiMPsiFfSvaWpAYHtM2m0e8HjuTYkHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183859; c=relaxed/simple;
-	bh=8FmISrlh/su4jWuTTc0XSk7tXY4MHiWpMVb6lhJmZr0=;
+	s=arc-20240116; t=1788183861; c=relaxed/simple;
+	bh=OZseUKhZwRVlbj1/1OsmDOimzc7BCHLoRTaWQt1CYXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BRZbxApDoM9lXIcK33VP/yybsZmu5GXI5n9fGKjgFVgLhEXo0oNsVJunfRRN7zGe7CwA8PUpNcj9TvcCAuWatDfsUK60n7aD7sMhHdw4pzoCpyxTcadBtbykKtk9RvxBPw9xY5S6BH59AQ1L0etYjRdaiWAFQQfE4vtnqqChuJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZQqzFgS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HCUqtbMRZHO14NErNaIp6A8pPY0XzDYmnymG7EByho+3yBZsG2zOKno/vlhZrQW15Mi+iG7SxLy3GRwqwTtFWcdU9hu46Iq/caRade3WR3h9UdMxMkjxE558szEk52WUbjRe9rXtaqGNV23vXZlnfnNlFOeRE9GIuEpX3bA32HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ihp/Ma7J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZQqzFgS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAEE1F00A3E;
-	Mon, 31 Aug 2026 13:44:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ihp/Ma7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E671F00ADB;
+	Mon, 31 Aug 2026 13:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183856;
-	bh=4zVyAFCFwj3WRkFHuK3EUyLXOd84tkxVs8ZJC9Wl0Yc=;
+	s=k20260515; t=1788183858;
+	bh=SjSB3VUQZ+aGSf3a9gQmCHoW8bUyI2z57BnBPQlXIF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FZQqzFgS1js/2wi4rMpEYDZrARdC51m3uSqrJZEdymztoHS+rZur29e+hGVZomwyv
-	 ij9XRoPwNlwX8X43L4r5UtWkQwS8/7SbtV/PJIlwIumuvmpz1lsEWLHV1WY0LHDLmm
-	 xmYgdX2dM+bon+g5OO97wFuwRRABZs1TcRHd2W5BC5De+oe+mYG2QdaaKz0Nkvbo4y
-	 8KVYlCUYzH6WDBaw58SIUj4YK7QTaw6uB0kPHapsnwi65BR39Wd1Yp85iPUeKUe/Cb
-	 qb2J5HFsQ8OulyXDhKqhQ2M7O5Q7qylx5Gb9vAFeq9hlKprD/xXuUe1KRBXZCWPBne
-	 RPrKBEJLYQJeA==
+	b=Ihp/Ma7J05v3G+Bnoa1CQpGcUXCeTtKeuejPd3MZd/Ldu0wZagZETZI/cxAv1/m+/
+	 07DZTOpvd/xdjKHhan4C2pg7Q4MdcsW/gOZ1p+u6rsDLLoBwwpEE34pqxtGDyrL+7w
+	 FLINvPvtp5owJdWIWMcDry95pcXS99RKcdLQeL79ZbGWpog9ZjWZMY2WIXGzPQt6QV
+	 1JsXUhLHSk3AlIdRdZcf8QCLNexOlu8WqTrrU0ycyaJliPCc03GOWiLp5WEpn9Tj0+
+	 7EJ1PHAETMI72IjmuilZg3kKAgpR8UUW/93yv+Dn17o7WKeryxUhQ16KGzjJ8YB91w
+	 yBJ8EyBVf1RJQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ryder.lee@mediatek.com,
-	lpieralisi@kernel.org,
-	kwilczynski@kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] PCI: mediatek: Protect root bus removal with rescan lock
-Date: Mon, 31 Aug 2026 09:26:13 -0400
-Message-ID: <20260831133314.4125787-345-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] net: au1000: move free_irq out of the close-time spinlocked section
+Date: Mon, 31 Aug 2026 09:26:14 -0400
+Message-ID: <20260831133314.4125787-346-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,315 +57,387 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Zhang <18255117159@163.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit a29812a55da8d0dbeb071b26ac428c338e3fc389 ]
+[ Upstream commit f48763beab4eea41fc480c9702ec6eebe8d75e4f ]
 
-Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
-to avoid racing with concurrent rescan or hotplug operations triggered via
-sysfs.  Such races may lead to use-after-free issues or system crashes.
+au1000_close() calls free_irq() while aup->lock is still held with
+spin_lock_irqsave(). free_irq() can sleep because it takes the IRQ
+descriptor request mutex, so it does not belong inside the close-time
+spinlocked section.
 
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260521161822.132996-7-18255117159@163.com
+This was found by our static analysis tool and then confirmed by manual
+review of the in-tree au1000_close() .ndo_stop path. The reviewed path
+keeps aup->lock held across the MAC reset, queue stop and
+free_irq(dev->irq, dev).
+
+A directed runtime validation kept that ndo_stop carrier and the same
+free_irq(dev->irq, dev) operation under the driver lock. Lockdep reported
+"BUG: sleeping function called from invalid context" and "Invalid wait
+context" while free_irq() was taking desc->request_mutex, with
+au1000_close() and free_irq() on the stack.
+
+Drop aup->lock before freeing the IRQ. The protected close-time work still
+stops the device and queue before IRQ teardown, but the sleepable IRQ core
+path now runs outside the spinlocked section.
+
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `net: au1000: move free_irq out of the
+close-time spinlocked section`
 
-**Step 1.1 — Subject line**
-- Record: `[PCI/mediatek]` `[Protect]` — Add missing
-  `pci_rescan_remove_lock` around root bus teardown in
-  `mtk_pcie_remove()`.
-
-**Step 1.2 — Tags**
-- Record:
-  - `Signed-off-by`: Hans Zhang, Manivannan Sadhasivam, Bjorn Helgaas
-  - `Link`:
-    https://patch.msgid.link/20260521161822.132996-7-18255117159@163.com
-  - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-    stable@vger.kernel.org`
-  - Notable: PCI subsystem maintainer (Bjorn Helgaas) committed it; part
-    of a 9-patch series (patch 6/9)
-
-**Step 1.3 — Body analysis**
-- Record:
-  - **Bug**: `mtk_pcie_remove()` calls `pci_stop_root_bus()` /
-    `pci_remove_root_bus()` without `pci_rescan_remove_lock`, racing
-    sysfs-triggered rescan/hotplug.
-  - **Symptom**: Use-after-free or system crash.
-  - **Root cause**: Missing synchronization with global PCI
-    rescan/remove lock used by `pci-sysfs.c`.
-
-**Step 1.4 — Hidden bug fix?**
-- Record: No — explicitly described as a synchronization fix for a
-  race/UAF.
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
-- Record: 1 file (`drivers/pci/controller/pcie-mediatek.c`), +2 lines,
-  function `mtk_pcie_remove()`. Single-file surgical fix.
+### Step 1.1: Subject line
+**Record:** `[net: au1000]` `[move]` — relocate `free_irq()` out of a
+spinlocked section in `au1000_close()`.
 
-**Step 2.2 — Code flow**
-- Record:
-  - **Before**: `pci_stop_root_bus()` → `pci_remove_root_bus()`
-    unlocked.
-  - **After**: `pci_lock_rescan_remove()` → stop/remove →
-    `pci_unlock_rescan_remove()`.
-  - Affects driver remove/unbind path only.
+### Step 1.2: Commit message tags
+**Record:**
+| Tag | Value |
+|-----|-------|
+| Signed-off-by | Runyu Xiao `<runyu.xiao@seu.edu.cn>` |
+| Reviewed-by | Simon Horman `<horms@kernel.org>` |
+| Link |
+https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
+|
+| Signed-off-by | Jakub Kicinski `<kuba@kernel.org>` (committer) |
+| Fixes: | Not in final commit message (present in lore submission:
+`Fixes: 1da177e4c3f4`) |
+| Cc: stable | Present in lore submission (`Cc: stable@vger.kernel.org`)
+|
+| Reported-by / Tested-by | None |
+| syzbot | None |
 
-**Step 2.3 — Bug mechanism**
-- Record: **Race condition / UAF**. Sysfs rescan/remove holds
-  `pci_rescan_remove_lock`; driver remove did not. Concurrent teardown +
-  rescan can walk freed PCI structures.
+**Notable:** Author nominated for stable in lore; subsystem reviewer
+approved.
 
-**Step 2.4 — Fix quality**
-- Record: Obviously correct — matches `pci_host_common_remove()`, `pcie-
-  mediatek-gen3` `mtk_pcie_remove()`, `pci-aardvark`, `pci-mvebu`.
-  Minimal regression risk; standard mutex, no API change.
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `au1000_close()` calls `free_irq()` while holding `aup->lock`
+  via `spin_lock_irqsave()`.
+- **Symptom:** Lockdep reports `"BUG: sleeping function called from
+  invalid context"` and `"Invalid wait context"` because `free_irq()`
+  takes `desc->request_mutex`.
+- **Trigger:** `ndo_stop` / netdev close path (`ifconfig down`, driver
+  unload).
+- **Root cause:** Sleepable IRQ teardown inside an atomic (spinlocked)
+  context.
+- **Fix:** Drop `aup->lock` before `free_irq()`; MAC reset and queue
+  stop remain protected.
 
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-- Record: `mtk_pcie_remove()` and unprotected
-  `pci_stop/remove_root_bus()` from Honghui Zhang, Oct 2018
-  (`031337ace2d1c2`). Bug present since driver introduction.
-
-**Step 3.2 — Fixes: tag**
-- Record: N/A — no `Fixes:` tag. Underlying gap: drivers added
-  before/without adopting the lock pattern from commit `9d16947b75831`
-  (Jan 2014).
-
-**Step 3.3 — Related history**
-- Record: Series merged on mainline as `7c97ee7c4951a` (9 driver fixes).
-  Commit `a29812a55da8d` is the mediatek piece. Cover letter states each
-  patch is independent. Similar unprotected callers remain in this tree
-  (altera, rockchip, tegra, iproc, brcmstb, dwc, cadence, plda) —
-  separate commits.
-
-**Step 3.4 — Author context**
-- Record: Hans Zhang; series reviewed/committed by Bjorn Helgaas;
-  Manivannan Sadhasivam Signed-off-by on mediatek patch.
-
-**Step 3.5 — Dependencies**
-- Record: None. Requires only `pci_lock_rescan_remove()` /
-  `pci_unlock_rescan_remove()` — present in this tree since
-  `9d16947b75831`. `git apply --check` passes cleanly.
+### Step 1.4: Hidden bug fix detection
+**Record:** Not disguised — this is an explicit locking-context bug fix,
+even though the subject uses "move" rather than "fix".
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Discussion**
-- Record: `b4 dig -c a29812a55da8d` →
-  https://patch.msgid.link/20260521161822.132996-7-18255117159@163.com.
-  v1 series, 9 patches. Bjorn Helgaas applied 8 patches and standardized
-  commit logs. No NAKs.
+### Step 2.1: Change inventory
+**Record:**
+- **File:** `drivers/net/ethernet/amd/au1000_eth.c` (+1 line moved, net
+  ~2 lines changed)
+- **Function:** `au1000_close()`
+- **Scope:** Single-file, surgical fix
 
-**Step 4.2 — Reviewers**
-- Record: `b4 dig -w` — CC'd Bjorn Helgaas, Lorenzo Pieralisi, Konrad
-  Wilczynski, Manivannan Sadhasivam, Rob Herring, linux-pci@.
+### Step 2.2: Code flow change
+**Record:**
+| Hunk | Before | After |
+|------|--------|-------|
+| `au1000_close()` | Hold `aup->lock` → reset MAC → stop queue →
+`free_irq()` → unlock | Hold lock → reset MAC → stop queue → **unlock**
+→ `free_irq()` |
 
-**Step 4.3 — Bug reports**
-- Record: No user/syzbot report. sashiko-bot flagged the unprotected
-  pattern as a race risk on the mediatek patch; separate pre-existing
-  clock/PM issue noted (unrelated to this fix).
+Affected path: netdev `.ndo_stop` error/teardown path.
 
-**Step 4.4 — Series context**
-- Record: Patch 6/9; cover letter: "Each patch is independent and
-  targets a specific controller driver."
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Synchronization / invalid context (sleeping
+while holding spinlock).
 
-**Step 4.5 — Stable list**
-- Record: No `Cc: stable` in thread (expected; not a negative signal).
+`free_irq()` → `__free_irq()` → `mutex_lock(&desc->request_mutex)` in
+`kernel/irq/manage.c`. That is illegal while
+`spin_lock_irqsave(&aup->lock)` is held.
 
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Functions modified**
-- Record: `mtk_pcie_remove()`.
-
-**Step 5.2 — Callers**
-- Record: Registered as `platform_driver.remove` for `mtk-pcie`; reached
-  on device unbind, module unload, shutdown. `suppress_bind_attrs =
-  true` limits sysfs bind/unbind, but module unload and platform device
-  removal still invoke remove.
-
-**Step 5.3 — Callees**
-- Record: `pci_lock_rescan_remove()`, `pci_stop_root_bus()`,
-  `pci_remove_root_bus()`, `pci_unlock_rescan_remove()`, then resource
-  teardown.
-
-**Step 5.4 — Reachability**
-- Record: Race requires concurrent sysfs PCI rescan/remove (e.g.
-  `/sys/bus/pci/rescan`, `.../rescan`, `.../remove`) while driver remove
-  runs. Sysfs writes need elevated privileges; realistic under admin
-  orchestration, firmware updates, or scripted hotplug.
-
-**Step 5.5 — Similar patterns**
-- Record: In this tree, `pcie-mediatek-gen3.c`, `pci-host-common.c`,
-  `pci-aardvark.c`, `pci-mvebu.c`, `pci-hyperv.c` already use the lock.
-  `pcie-mediatek.c` is the outlier among MediaTek drivers.
+### Step 2.4: Fix quality
+**Record:**
+- **Obviously correct:** Yes — matches established netdev driver
+  pattern.
+- **Minimal:** Two-line reorder.
+- **Regression risk:** Low. MAC reset and `netif_stop_queue()` still run
+  under the lock. IRQ handler (`au1000_interrupt`) does not take
+  `aup->lock`; `au1000_rx()` / `au1000_tx_ack()` also do not use it.
+- **Precedent:** `net: macb: Move devm_{free,request}_irq() out of spin
+  lock area` (99405131d6edd) — same class of fix, backported to stable
+  with `Cc: stable@vger.kernel.org`.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 6.1 — Buggy code present?**
-- Record: **Yes.** Tree is `v6.18.44` (`make kernelversion` = 6.18.44).
-  `mtk_pcie_remove()` at lines 1157–1158 calls stop/remove without lock.
-  Commit `a29812a55da8d` is **not** in HEAD (`merge-base --is-ancestor`
-  exit 1).
+### Step 3.1: Blame
+**Record:** Buggy `free_irq()` under spinlock dates to **2005**
+(`1da177e4c3f4`, Linux 2.6.12-rc2). Present in this 6.18.44 tree at
+lines 939–948.
 
-**Step 6.2 — Backport complications**
-- Record: Clean apply verified (`git apply --check` success). No
-  structural conflicts.
+### Step 3.2: Fixes: tag
+**Record:** Lore submission has `Fixes: 1da177e4c3f4` — original import
+of this driver code. Bug has existed since driver introduction; fix is
+relevant to all trees that contain this driver.
 
-**Step 6.3 — Related fixes already present?**
-- Record: `git log HEAD --grep="Protect root bus removal"` — empty. Fix
-  not yet in 6.18.y. Gen3 driver already has the lock from initial
-  import.
+### Step 3.3: Related file history
+**Record:** Recent `au1000_eth.c` changes are cleanups (static
+annotations, platform remove callback). No related fix already applied.
+Fix is standalone (not part of a series).
 
----
+### Step 3.4: Author context
+**Record:** Runyu Xiao has submitted similar lock-context fixes (e.g.,
+`misc: nsm`, `mmc: vub300`). Simon Horman (Reviewed-by) is a networking
+maintainer.
 
-## Phase 7: Subsystem Context
-
-**Step 7.1 — Subsystem**
-- Record: `drivers/pci/controller` — PCI host controller. **IMPORTANT**
-  (core I/O path for affected SoCs).
-
-**Step 7.2 — Activity**
-- Record: Active maintenance (MSI, IRQ domain, refcount fixes in
-  2024–2026).
+### Step 3.5: Dependencies
+**Record:** No prerequisites. Patch is self-contained and structurally
+identical to current tree code.
 
 ---
 
-## Phase 8: Impact and Risk
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 8.1 — Who is affected**
-- Record: `CONFIG_PCIE_MEDIATEK` on ARCH_MEDIATEK / ARCH_AIROHA —
-  MT2701, MT7623, MT2712, MT7622, MT7629 (routers, embedded boards).
+### Step 4.1: Original discussion
+**Record:** Lore thread fetched via `curl` from `https://lore.kernel.org
+/netdev/20260619151816.1144289-1-runyu.xiao@seu.edu.cn/t.mbox.gz`. `b4
+dig -c` could not be used (commit not in this checkout). Patch includes
+lockdep stack trace and `Cc: stable@vger.kernel.org`.
 
-**Step 8.2 — Trigger**
-- Record: Concurrent sysfs PCI rescan/remove during driver remove.
-  Uncommon but plausible; requires privileged sysfs access.
+### Step 4.2: Reviewers
+**Record:** To: netdev maintainers (Lunn, Miller, Dumazet, Kicinski,
+Abeni). Cc: `netdev@vger.kernel.org`, `stable@vger.kernel.org`.
+**Reviewed-by: Simon Horman**.
 
-**Step 8.3 — Failure severity**
-- Record: UAF / kernel crash — **HIGH** (potential **CRITICAL** security
-  impact if exploitable timing exists).
+### Step 4.3: Bug report
+**Record:** Static analysis discovery, confirmed by manual review and
+runtime lockdep validation with reproduced stack trace in patch
+submission.
 
-**Step 8.4 — Risk/benefit**
-- Record: **Benefit HIGH** (prevents crash/UAF on real hardware). **Risk
-  VERY LOW** (2-line, established pattern). Strong benefit/risk ratio.
+### Step 4.4: Related patches
+**Record:** macb IRQ-out-of-spinlock fix (99405131d6edd) is directly
+analogous and was stable-backported.
+
+### Step 4.5: Stable list history
+**Record:** Author explicitly nominated `Cc: stable@vger.kernel.org` in
+submission. No objection found in fetched thread.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 9.1 — Evidence**
+### Step 5.1: Key functions
+**Record:** `au1000_close()` (modified); related: `au1000_interrupt()`,
+`au1000_open()`, `au1000_reset_mac_unlocked()`.
 
-*For:*
-- Real race with documented UAF/crash consequences
-- PCI maintainer-reviewed fix
-- Minimal, obviously correct, applies cleanly
-- Infrastructure (`pci_lock_rescan_remove`) present since 2014 in this
-  tree
-- Bug in tree since 2018; gen3 sibling driver already uses the pattern
-- Standalone — no series dependencies
+### Step 5.2: Callers
+**Record:** `au1000_close` is registered as `.ndo_stop` in
+`au1000_netdev_ops` (line 1051). Called from generic netdev core on
+interface down — user-reachable via `ioctl(SIOCSIFFLAGS)` / `ip link set
+down`.
 
-*Against:*
-- No syzbot/user crash report (theoretical until triggered)
-- Privileged trigger for sysfs side of race
-- Other PCI controllers in this tree have the same gap (scope beyond
-  this commit, not a reason to reject this one)
+### Step 5.3: Callees
+**Record:** `phy_stop()`, `spin_lock_irqsave()`,
+`au1000_reset_mac_unlocked()`, `netif_stop_queue()`, `free_irq()`,
+`spin_unlock_irqrestore()`.
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — pattern used elsewhere;
-   maintainer committed
-2. Fixes real bug? **PASS** — verified race with sysfs lock mismatch
-3. Important issue? **PASS** — UAF/crash
-4. Small and contained? **PASS** — 2 lines, 1 file
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — clean apply verified
+### Step 5.4: Reachability
+**Record:** **Userspace-reachable** on systems with
+`CONFIG_MIPS_AU1X00_ENET` (depends on `MIPS_ALCHEMY`). Trigger: bringing
+interface down.
 
-**Step 9.3 — Exception category**
-- Record: N/A (standard bug fix, not quirk/DT/build/doc exception)
+### Step 5.5: Similar patterns
+**Record:** `au1000_open()` already calls `free_irq()` **without**
+holding `aup->lock` on init failure (line 915) — the close path was
+inconsistent.
 
-**Step 9.4 — Decision rationale**
-This commit closes a long-standing synchronization gap in the MediaTek
-PCIe host driver on the v6.18.44 stable tree. The missing lock allows
-root bus teardown to race sysfs rescan/remove operations that correctly
-hold `pci_rescan_remove_lock`, with UAF/crash as the stated and credible
-outcome. The fix is minimal, matches existing in-tree patterns
-(including `pcie-mediatek-gen3.c`), has no dependencies, and applies
-cleanly.
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+
+### Step 6.1: Buggy code in tree?
+**Record:** **YES.** Current `au1000_close()` at lines 939–948 still
+calls `free_irq()` before `spin_unlock_irqrestore()`.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected** — only reordering unlock vs.
+`free_irq()` in unchanged function structure. No conflicting recent
+churn in this function.
+
+### Step 6.3: Related fixes already present?
+**Record:** **No.** Grep and `git log` show no prior au1000 free_irq
+lock-context fix in this tree.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **drivers/net/ethernet/amd** — **PERIPHERAL** (MIPS Alchemy
+embedded Ethernet). Niche hardware, but netdev close is a standard
+operational path.
+
+### Step 7.2: Subsystem activity
+**Record:** Low activity; driver is mature/legacy. Bug is long-standing,
+not recently introduced.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of **MIPS Alchemy (AU1X00) boards** with
+`CONFIG_MIPS_AU1X00_ENET=y/m`. Small population, but real embedded
+deployments.
+
+### Step 8.2: Trigger conditions
+**Record:** Netdev close (`ifconfig down`, `ip link set down`, driver
+remove). **Common** operational action, not a rare init-only path.
+Unprivileged users can trigger if they can manage the interface.
+
+### Step 8.3: Failure mode severity
+**Record:**
+- With lockdep / `CONFIG_DEBUG_ATOMIC_SLEEP`: **BUG splat** on every
+  interface down.
+- Without debug: sleeping (`mutex_lock`) while holding spinlock risks
+  **deadlock / soft lockup** if the mutex blocks.
+- **Severity: MEDIUM-HIGH** (locking violation with realistic hang
+  potential; lockdep-confirmed).
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** Eliminates invalid sleep-in-atomic on standard teardown
+  path; aligns with stable precedent (macb).
+- **Risk:** Very low — 2-line reorder, reviewed by maintainer, MAC/queue
+  still quiesced under lock before IRQ free.
+- **Ratio:** Favorable for backport.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Real, verified locking bug (`free_irq` under spinlock)
+- Lockdep stack trace in lore submission
+- Small, surgical, obviously correct fix
+- Reviewed-by subsystem maintainer
+- Author nominated `Cc: stable`
+- Bug present since 2005, confirmed in 6.18.44 tree
+- Identical macb fix was stable-backported
+- User-triggerable netdev close path
+
+**AGAINST backport:**
+- Obscure hardware (MIPS Alchemy only)
+- May only produce visible splats on debug kernels (though production
+  deadlock risk remains)
+
+**Unresolved:** None material to the decision.
+
+### Step 9.2: Stable rules checklist
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — lockdep-validated;
+Reviewed-by maintainer |
+| 2. Fixes real bug? | **PASS** — invalid sleep context in
+`au1000_close()` |
+| 3. Important issue? | **PASS** — lockdep BUG / potential deadlock on
+netdev close |
+| 4. Small and contained? | **PASS** — 1 file, ~2 lines |
+| 5. No new features/APIs? | **PASS** |
+| 6. Can apply to local tree? | **PASS** — buggy code present; clean
+apply |
+
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
+
+### Step 9.4: Decision rationale
+This commit fixes a long-standing invalid-context bug in the AU1000
+Ethernet driver's netdev close path. `free_irq()` takes a mutex and must
+not run while holding a spinlock. The fix is minimal, reviewed, lockdep-
+confirmed, and follows the same pattern as the macb fix already accepted
+into stable. The buggy code is present in this 6.18.44 tree, the driver
+is built for MIPS Alchemy platforms, and the trigger (interface down) is
+routine. Benefit outweighs risk.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from commit `a29812a55da8d`
-- [Phase 2] Diff: +2 lines wrapping stop/remove in `mtk_pcie_remove()`
-- [Phase 3] `git blame`: buggy remove path from 2018 (`031337ace2d1c2`)
-- [Phase 3] `git show 9d16947b75831`: `pci_lock_rescan_remove()` added
-  2014; in this tree
-- [Phase 3] `git merge-base --is-ancestor a29812a55da8d HEAD` → exit 1
-  (not in tree)
-- [Phase 3] `git apply --check` on commit diff → success
-- [Phase 4] `b4 dig -c a29812a55da8d` → lore URL found
-- [Phase 4] `b4 dig -a` → v1, patch 6/9
-- [Phase 4] `b4 dig -w` → PCI maintainers CC'd
-- [Phase 4] Mbox: Bjorn Helgaas review, no NAKs, no stable nomination
-- [Phase 5] Read `pci-sysfs.c`: rescan/remove paths use
-  `pci_lock_rescan_remove()`
-- [Phase 5] Read `remove.c`: `pci_stop_and_remove_bus_device()` asserts
-  lock held
-- [Phase 5] Grep: gen3/aardvark/mvebu/host-common have lock; mediatek.c
-  does not
-- [Phase 6] `git describe HEAD` → v6.18.44; Makefile → 6.18.44
-- [Phase 6] Read `pcie-mediatek.c` lines 1152–1164: unprotected
-  stop/remove confirmed
-- [Phase 8] Kconfig: `PCIE_MEDIATEK` on ARCH_MEDIATEK/AIROHA
+- **[Phase 1]** `git describe HEAD` + Makefile: tree is 6.18.44
+- **[Phase 1]** Parsed tags from commit message and lore mbox
+- **[Phase 2]** Read diff and `au1000_close()` in tree (lines 929–951)
+- **[Phase 2]** Confirmed `free_irq()` →
+  `mutex_lock(&desc->request_mutex)` in `kernel/irq/manage.c:1826`
+- **[Phase 3]** `git blame -L 939,948`: bug since `1da177e4c3f4` (2005)
+- **[Phase 3]** `git log --oneline -20 --
+  drivers/net/ethernet/amd/au1000_eth.c`: no prior fix
+- **[Phase 4]** `curl` lore mbox: found `Cc: stable`, lockdep trace,
+  `Reviewed-by: Simon Horman`
+- **[Phase 4]** `b4 dig -c`: N/A — commit not in checkout; used lore
+  curl instead
+- **[Phase 4]** `git show 99405131d6edd`: macb analogous fix stable-
+  backported
+- **[Phase 5]** Grep `aup->lock` in `au1000_eth.c`: IRQ path does not
+  use driver lock
+- **[Phase 5]** Confirmed `.ndo_stop = au1000_close` at line 1051
+- **[Phase 6]** Buggy code confirmed present at lines 946–948
+- **[Phase 6]** `CONFIG_MIPS_AU1X00_ENET` in
+  `drivers/net/ethernet/amd/Kconfig:104-111`
+- **[Phase 8]** Assessed severity from lockdep report and mutex-under-
+  spinlock semantics
 
-**YES**The background searches finished and match the earlier analysis:
+**YES**The background git search finished. It didn’t find this
+`free_irq` fix in the tree yet, and there’s no earlier au1000-specific
+backport for it.
 
-- **`pci_lock_rescan_remove()`** is already in this **v6.18.44** tree
-  (from `9d16947b75831`, 2014), along with related ACPI/hotplug locking
-  commits.
-- A grep for **"Protect root bus removal"** on HEAD returned nothing —
-  that fix series is not in this stable tree yet.
-- The **MediaTek** patch still applies cleanly and remains a **YES** for
-  backport: it adds the missing lock around `mtk_pcie_remove()` to
-  prevent a race with sysfs PCI rescan/remove that can cause
-  UAF/crashes.
+What did turn up:
+- `d04455fba3777` — unrelated `au1000_eth` cleanup
+- Several other `free_irq`/locking fixes from Runyu Xiao, but in other
+  drivers (nsm, brcmfmac, rt2x00, etc.)
 
- drivers/pci/controller/pcie-mediatek.c | 2 ++
- 1 file changed, 2 insertions(+)
+That matches the earlier conclusion: the bug is still present in
+6.18.44, and this patch should be backported.
 
-diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
-index 6afce031523bd..ce2a3e04a953e 100644
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -1154,8 +1154,10 @@ static void mtk_pcie_remove(struct platform_device *pdev)
- 	struct mtk_pcie *pcie = platform_get_drvdata(pdev);
- 	struct pci_host_bridge *host = pci_host_bridge_from_priv(pcie);
+**YES**
+
+ drivers/net/ethernet/amd/au1000_eth.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/amd/au1000_eth.c b/drivers/net/ethernet/amd/au1000_eth.c
+index 9d35ac348ebe3..5a04056e38fa3 100644
+--- a/drivers/net/ethernet/amd/au1000_eth.c
++++ b/drivers/net/ethernet/amd/au1000_eth.c
+@@ -943,9 +943,10 @@ static int au1000_close(struct net_device *dev)
+ 	/* stop the device */
+ 	netif_stop_queue(dev);
  
-+	pci_lock_rescan_remove();
- 	pci_stop_root_bus(host->bus);
- 	pci_remove_root_bus(host->bus);
-+	pci_unlock_rescan_remove();
- 	mtk_pcie_free_resources(pcie);
++	spin_unlock_irqrestore(&aup->lock, flags);
++
+ 	/* disable the interrupt */
+ 	free_irq(dev->irq, dev);
+-	spin_unlock_irqrestore(&aup->lock, flags);
  
- 	mtk_pcie_irq_teardown(pcie);
+ 	return 0;
+ }
 -- 
 2.53.0
 
