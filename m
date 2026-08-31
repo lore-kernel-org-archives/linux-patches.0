@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F6C44C661;
-	Mon, 31 Aug 2026 13:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24E1502B72;
+	Mon, 31 Aug 2026 13:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183719; cv=none; b=Ipoy+OCCIUHEZA9OvsPw2+vLU4UeG5JiIzpEEPxnqB2RqvG5UG4bbtgQ3oy+Ti+wcxHF8rKGC1ya9DGMPbq3gvWbQRv0SYkeSkDUe9i2bqd57hVXAbPz09DE8N9OJKHVsT2PLjnXNTwL/Vsk2tqfG/DTxhwwVYCVo6kgzwevNP8=
+	t=1788183720; cv=none; b=B+O9d4PEiqHfluZwqb15WD14mGmTQdj8s0YAPczjjtzMekEjFTj7Gi0oZ1MLDBvMj68a+0OhFf2n9HIGso1qFJl4fHRb4nj3drpFmjvExTK5djpTvymSarAGYTXxcKa41VqmG682QA4/7thzaaS5eoaiA6b+hxPc9D+L4iI1YUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183719; c=relaxed/simple;
-	bh=t5p6h4sHwiice89Cbl+eDokuMQZamDoWSrdz3mbcHRM=;
+	s=arc-20240116; t=1788183720; c=relaxed/simple;
+	bh=jI3MifJvURhCMhe5llb9pFhFuFsESKWsNnvxvx/pKxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ov4wXmhWuhY6jwqyKVPYgNEVaFYGZWTQMOVKPYyTZtiLDMrY0Z0wKSlJbwmaVNwUjmOAdJwsD0VJDAhLs6vpmJxXJVGsArjZAKu5HErgnEOGDY4Kyov6SVOmCOwWLKsUD8yaZglOYqI2nYY+p3A1WKktKmFE2B3HfDK6SlNy3mI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6tjZme/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TuG4tNVDcxEqDgFJ8x5kWa610cdcouL+3xnLHcBiJpSREvVJT2xH6vgTwlgSe9sEWwUro76b5lFpxTa3XDJbcimR5wQb9H5SUqNuiquO+NjeDaQai3Ck0e+PSbx2aK1x7swDSlcmWvJeK18vsj4pEJTyoo65aYgYzHKVte3s32g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iBpwFlKx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6tjZme/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6821F00A3E;
-	Mon, 31 Aug 2026 13:41:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iBpwFlKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D591F00ACA;
+	Mon, 31 Aug 2026 13:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183716;
-	bh=9waQiWmGIRreL2pS/vRF0HC/WvchDTgVV64118m7PDE=;
+	s=k20260515; t=1788183718;
+	bh=nhkSkPNfquyN3SBcKGraIf5P7Jf9eFxdbKaoJ3lQBq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6tjZme/UAej6dvIG6QuzVr1jWsV90B4VaEnkEcq2Tf8qbmXh290HH01n19CFD4A4
-	 ILrLC1BQaZm1YSoiUVRvqMEOXFw32KuUfn2IFK5q6bhkymzIudVBj8owDBd0J3CNAL
-	 /BqmnbFJWSnnTJ3emtUQAar50ff/lU/OhzHt4ZeHEWKlX1TqzlJd94VZDA6a9YvcjY
-	 2GbCwIBi4KQcLLbWUxoqIrdADLbQjluOr7+++7NtJ3KbxYFH/kKbD/McQyeaxJZack
-	 u44/Z7SinV00sioB/5HoiyfHnJp+tKV2aJqGPjGlmA+/Y+Fwa0+drqDIZQ93HDiKn+
-	 hilyNxLhxitMg==
+	b=iBpwFlKxVIh4sthzIeKV7O5n8YPDNDAQDTQT0qsFv8XgaQ6KOmmG2qRIgAPRvXh9u
+	 BQc9SXJpbMMfzAcznkgov/48hXl4g/4TdK3NQURi/F2nmrdZwz/UW0x1QFD4utxwrW
+	 c9AskacBvSQyhpejgEitLAk0M/+qkJfWKtJFSuNXqFhoHCaWlvRjp3NKH/qu/clkhQ
+	 kdVo344bkzs1jxJMH/d/11I9YikvcYBeLx2TXauIskBkDWe55SbSwyfifbJpqWVLKL
+	 0sc1eOyLww6IRqbBGfV8JnrvMgFiSiHDbFA/LRTTSbeZ5Y/ELeb8FfeEPbz+dSOmKp
+	 vcyjKHm78QvGA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	p.zabel@pengutronix.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	matthias.bgg@gmail.com,
-	dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/mediatek: dsi: Add compatible for mt8167-dsi
-Date: Mon, 31 Aug 2026 09:24:50 -0400
-Message-ID: <20260831133314.4125787-262-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] ksmbd: start file id allocation at 1
+Date: Mon, 31 Aug 2026 09:24:51 -0400
+Message-ID: <20260831133314.4125787-263-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -60,391 +53,407 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 6428eaf0c1f39815b08d57054895c1934d5782f3 ]
+[ Upstream commit 6b375be0b4e1be89e9a817880515311503a19114 ]
 
-The mt8167 DSI controller is fully compatible with the one found in
-mt2701. Unfortunately the device tree has a dedicated compatible for
-mt8167 since 2022 and it cannot be changed with a fallback nor removed at
-this point. The only way to get the device to work is to add the
-compatible to the driver.
+ksmbd allocates both the volatile id (per-session file table) and the
+persistent id (global file table) with idr_alloc_cyclic() starting at 0.
+The first open after the module loads therefore gets volatile id 0 and
+persistent id 0, and ksmbd returns an SMB2 FileId of {0, 0} in the create
+response.
 
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20260505214541.333657-3-l.scorcia@gmail.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Clients treat an all-zero FileId as a null handle. smbtorture's
+smb2_util_handle_empty() considers {0, 0} empty, so tests that guard the
+close with it (e.g. smb2.oplock.statopen1, smb2.lease.statopen*) never
+close that first handle. The leaked open keeps the inode's oplock count
+non-zero, so a later batch oplock request on the same file is downgraded
+to level II and the test fails.
+
+Start the id allocation at 1 (KSMBD_START_FID) so no handle is ever
+assigned a {0, 0} FileId, matching the behaviour of other SMB servers.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: drm/mediatek: dsi: Add compatible for
-mt8167-dsi
+# Stable Backport Analysis: `ksmbd: start file id allocation at 1`
 
-**Local tree:** `v6.18.43` (Makefile: 6.18.43)
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`,
+`VERSION=6`, `PATCHLEVEL=18`, `SUBLEVEL=44`)
+
+**Commit under review:** `6b375be0b4e1be89e9a817880515311503a19114` (not
+yet in this tree)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[drm/mediatek: dsi]` `[Add]` — Add `mediatek,mt8167-dsi`
-compatible string to the existing MediaTek DSI platform driver so MT8167
-boards can bind.
+### Step 1.1: Parse the subject line
+**Record:** `[ksmbd]` `[start]` — Change SMB2 file ID allocation so the
+first assigned ID is 1 instead of 0.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Signed-off-by:** Luca Leonardo Scorcia `<l.scorcia@gmail.com>`
-  (author)
-- **Reviewed-by:** AngeloGioacchino Del Regno
-  `<angelogioacchino.delregno@collabora.com>`
-- **Reviewed-by:** CK Hu `<ck.hu@mediatek.com>` (MediaTek maintainer)
-- **Link:** https://patchwork.kernel.org/project/dri-
-  devel/patch/20260505214541.333657-3-l.scorcia@gmail.com/
-- **Signed-off-by:** Chun-Kuang Hu `<chunkuang.hu@kernel.org>` (applied
-  to mediatek-drm-next)
-- No Fixes:, Reported-by:, Cc: stable, or syzbot tags
-- Notable: two subsystem Reviewed-by tags, including MediaTek maintainer
+- **Fixes:** — none
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:** — none
+- **Cc: stable@vger.kernel.org:** — none (expected for manual review)
+- **Signed-off-by:** Namjae Jeon `<linkinjeon@kernel.org>`
+  (author/maintainer), Steve French `<stfrench@microsoft.com>` (SMB
+  maintainer)
+- No syzbot, no user bug reports, no explicit stable nomination in the
+  commit message.
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+### Step 1.3: Analyze commit body
 **Record:**
-- **Bug:** MT8167 DSI hardware is register-compatible with MT2701, but
-  the DSI platform driver’s `of_match` table lacks
-  `mediatek,mt8167-dsi`.
-- **Symptom:** DSI platform device does not probe; display pipeline
-  cannot complete on MT8167 boards whose DT uses `mediatek,mt8167-dsi`.
-- **Root cause:** DT binding has listed `mediatek,mt8167-dsi` since
-  2022; that compatible cannot be removed or replaced with a fallback;
-  driver was never updated to match.
-- **Version info:** Binding present since 2022; fix is May 2026.
+- **Bug:** `idr_alloc_cyclic()` starts at 0 for both volatile (per-
+  session) and persistent (global) file IDs. The first open after module
+  load returns SMB2 FileId `{0, 0}`.
+- **Symptom:** Clients treat `{0, 0}` as a null handle and skip `CLOSE`.
+  The server leaks the open; oplock counts stay elevated, breaking batch
+  oplock behavior.
+- **Root cause:** ID allocation starts at 0; `{0, 0}` is semantically a
+  null handle in the SMB ecosystem.
+- **Fix:** Set `KSMBD_START_FID` to 1 and pass it to
+  `idr_alloc_cyclic()`, matching Samba/Windows behavior.
+- **Version info:** None in the message.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised as cleanup. This is explicit hardware-
-enablement: a missing `of_device_id` entry leaves DSI non-functional on
-affected hardware. Functionally a driver/DT mismatch bug, not a new
-feature API.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised as cleanup — this is an explicit protocol-
+correctness and resource-management fix. The leak is real: clients that
+treat `{0, 0}` as empty never send `CLOSE`, so `__ksmbd_close_fd()` and
+`fd_limit_close()` are never called for that handle.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
+### Step 2.1: Inventory the changes
 **Record:**
-- **Files:** `drivers/gpu/drm/mediatek/mtk_dsi.c` (+1 line)
-- **Functions/areas:** `mtk_dsi_of_match[]` static table
-- **Scope:** Single-file, one-line surgical change
+- `fs/smb/server/vfs_cache.h`: +6 / -1 (comment + `KSMBD_START_FID` 0 →
+  1)
+- `fs/smb/server/vfs_cache.c`: +2 / -1 (`idr_alloc_cyclic` start `0` →
+  `KSMBD_START_FID`)
+- **Functions modified:** `__open_id()` (indirectly via macro)
+- **Scope:** Single-subsystem, 2-file surgical fix (~8 lines net)
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+### Step 2.2: Code flow change
 **Record:**
-- **Before:** `mtk_dsi_probe()` only runs for `mt2701-dsi`,
-  `mt8173-dsi`, `mt8183-dsi`, `mt8186-dsi`, `mt8188-dsi` compatibles.
-- **After:** Also runs for `mediatek,mt8167-dsi`, using
-  `mt2701_dsi_driver_data` (same register offsets as MT2701).
-- **Path affected:** Platform probe → `of_device_get_match_data()` → DSI
-  host/bridge registration → DRM component bind.
+- **Hunk 1 (`vfs_cache.h`):** `KSMBD_START_FID` was defined as `0` but
+  unused; now `1` with documentation.
+- **Hunk 2 (`vfs_cache.c`):** `idr_alloc_cyclic(ft->idr, fp, 0, ...)` →
+  `idr_alloc_cyclic(ft->idr, fp, KSMBD_START_FID, ...)`.
+- **Before:** First allocated volatile and persistent IDs are 0; CREATE
+  response is `{PersistentFileId=0, VolatileFileId=0}`.
+- **After:** First IDs are 1; CREATE response is never `{0, 0}`.
+- **Path affected:** Every file open via `ksmbd_open_fd()` →
+  `__open_id()` and durable opens via `ksmbd_open_durable_fd()`.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
+### Step 2.3: Bug mechanism
 **Record:**
-- **Category:** Logic/correctness — missing hardware identification
-  entry (compatible-string quirk).
-- **Mechanism:** `mtk_drm_drv.c` already recognizes
-  `mediatek,mt8167-dsi` in `mtk_ddp_comp_dt_ids[]` and adds a component
-  match, but `mtk_dsi_driver` never probes the device without a matching
-  `of_match` entry. DRM bind stalls or fails for the DSI component.
+- **Category:** Resource leak + logic/protocol correctness
+- **Mechanism:** Server assigns ID 0 and considers it valid
+  (`has_file_id(0)` is true). Clients treat `{0, 0}` as null and never
+  close. Server leaks `ksmbd_file` entries and fd-limit budget; oplock
+  state becomes incorrect for affected inodes.
 
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:**
-- Obviously correct: reuses existing `mt2701_dsi_driver_data`; author
-  and reviewers confirm hardware identity.
-- Minimal, no unrelated changes.
-- Regression risk: very low — only adds a new match entry pointing at
-  proven driver data.
-- No API, structure, or locking changes.
+### Step 2.4: Fix quality
+**Record:** Obviously correct — uses an existing macro name, one-line
+behavioral change, matches other SMB servers. Very low regression risk;
+no API or locking changes.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** In this checkout, `git blame` on `mtk_dsi_of_match[]`
-attributes all lines to a single squashed base commit (`a112b91dd6349`);
-per-file history is not useful for dating the omission. The omission is
-the absence of `mt8167-dsi` while other MT8167 compatibles exist
-elsewhere in the same driver tree.
-
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** N/A — no `Fixes:` tag in the commit message.
-
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+### Step 3.1: Blame changed lines
 **Record:**
-- Patch is **v4, 2/2** of series “Add support for mt8167 display
-  blocks”.
-- **v4, 1/2:** `arm64: dts: mediatek: mt8167: Add DRM nodes` (adds DSI
-  and other display nodes to `mt8167.dtsi`).
-- This driver patch is standalone: it only needs a DT node with
-  `mediatek,mt8167-dsi`, which the binding has documented since 2022 and
-  which `mtk_drm_drv.c` already handles.
+- `idr_alloc_cyclic(..., 0, ...)` introduced in `3867369ef8f760`
+  (2021-07-08, Namjae Jeon): `ksmbd: change data type of
+  volatile/persistent id to u64`
+- `KSMBD_START_FID` defined as `0` since `1a93084b9a898` (2021-06-28):
+  `ksmbd: move fs/cifsd to fs/ksmbd`
+- Bug present since ksmbd inception; long-lived in this tree.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Luca Leonardo Scorcia is an active MT8167 display
-contributor. Maintainer Chun-Kuang Hu applied the patch to `mediatek-
-drm-next`. Git history in this tree is too squashed to enumerate author
-commits locally.
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:**
-- No kernel-code prerequisites beyond existing `mt2701_dsi_driver_data`
-  and `mtk_dsi` driver (both present in 6.18.43).
-- DTS patch 1/2 is **not** required for the driver fix to apply cleanly;
-  it is required for in-tree `mt8167.dtsi` to expose a DSI node.
-  Vendor/out-of-tree DTS may already use `mediatek,mt8167-dsi`.
-- **Can apply standalone:** PASS for the driver change.
+### Step 3.3: File history for related changes
+**Record:** Recent `vfs_cache.c` history is active (UAF fixes, durable-
+handle races, fd management). No prior fix for ID-0 allocation. Part of
+a 29-patch series (`[PATCH 27/29]`), but this patch is standalone — no
+dependency on other series commits.
+
+### Step 3.4: Author's other commits
+**Record:** Namjae Jeon is the ksmbd maintainer; recent commits in this
+tree include multiple UAF and race fixes in the same subsystem. Steve
+French committed the merge.
+
+### Step 3.5: Prerequisites
+**Record:** No prerequisites. `KSMBD_START_FID` already exists in this
+tree; patch applies cleanly with no structural dependencies.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+### Step 4.1: Original patch discussion
 **Record:**
-- `b4 dig -c <sha>` failed (commit not in this repo).
-- Patchwork: https://patchwork.kernel.org/project/dri-
-  devel/patch/20260505214541.333657-3-l.scorcia@gmail.com/
-- Series: v4, 2/2; v4, 1/2 adds DRM DT nodes.
-- Reviewed-by from AngeloGioacchino Del Regno and CK Hu on list.
-- Chun-Kuang Hu: “Applied to mediatek-drm-next”.
-- No stable nomination or NAK found in thread.
-- lore.kernel.org fetch blocked (bot protection).
+- `b4 dig -c 6b375be0b4e1b`:
+  https://patch.msgid.link/20260621124844.6235-27-linkinjeon@kernel.org
+- Series: v1, 29 patches, dated 2026-06-21
+- Lore page blocked by bot protection; could not read thread replies
+- No stable nomination verified from lore
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** CC list included `linux-mediatek`, `dri-devel`,
-`devicetree`, `chunkuang.hu@kernel.org`, `ck.hu@mediatek.com`, and other
-DRM/DT maintainers. MediaTek maintainer reviewed and applied.
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w`: CC'd to `linux-cifs@vger.kernel.org`, Steve
+French, and other SMB reviewers. Maintainer involvement confirmed.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** No formal bug report or syzbot link. Impact inferred from
-incomplete driver/DT binding alignment and partial MT8167 DRM support
-already in-tree.
+### Step 4.3: Bug report search
+**Record:** No external bug report. Evidence is smbtorture failure
+(`smb2.oplock.statopen1`, `smb2.lease.statopen*`) and maintainer
+knowledge of client behavior.
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Companion patch adds DSI node to `mt8167.dtsi`. In **this**
-tree, `mt8167.dtsi` has mmsys/SMI nodes but **no DSI node**;
-`mt8167-pumpkin.dts` also has no display nodes. Driver fix still matters
-for downstream/vendor DTS and for when patch 1/2 lands.
+### Step 4.4: Related patches
+**Record:** Patch 27/29 in a larger ksmbd series; this change is
+independent.
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** Not searched (lore blocked). No stable discussion found on
-Patchwork.
+### Step 4.5: Stable mailing list
+**Record:** Not searched (lore blocked); no stable discussion found.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `mtk_dsi_of_match[]`, `mtk_dsi_probe()`, `mtk_dsi_driver`
-(platform driver registration via `mtk_drm_init()`).
+### Step 5.1: Key functions
+**Record:** `__open_id()`, `ksmbd_open_fd()`, `ksmbd_open_durable_fd()`,
+`has_file_id()`
 
-### Step 5.2: TRACE CALLERS
+### Step 5.2: Callers
 **Record:**
-- `mtk_dsi_driver` registered in `mtk_drm_init()` →
-  `platform_register_drivers()`.
-- `mtk_drm_probe()` iterates MMSYS children, matches
-  `mediatek,mt8167-dsi` via `mtk_ddp_comp_dt_ids[]`, calls
-  `drm_of_component_match_add()` for DSI nodes.
-- Without `mtk_dsi` probe, component bind cannot succeed.
+- `__open_id()` called from `ksmbd_open_fd()` (normal opens) and
+  `ksmbd_open_durable_fd()` (persistent IDs)
+- `ksmbd_open_fd()` is on the hot SMB2 CREATE path for every file open
+- Reachable from userspace over the network (SMB client CREATE)
 
-### Step 5.3: TRACE CALLEES
-**Record:** `mtk_dsi_probe()` uses `of_device_get_match_data()`,
-clock/PHY/IRQ setup, `mipi_dsi_host_register()`, DRM bridge setup — all
-standard, unchanged by this patch.
+### Step 5.3: Callees
+**Record:** `idr_alloc_cyclic()`, `idr_preload()`,
+`fd_limit_depleted()`, `__open_id_set()`, `write_lock/unlock`
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** Boot → DT populates DSI platform device → `mtk_dsi_probe()`
-(needs `of_match`) → component bind in `mtk_drm_bind()` → display
-pipeline. Reachable on any MT8167 board with a DSI DT node; not a
-syscall path, but normal embedded boot/display init.
+### Step 5.4: Call chain / reachability
+**Record:** SMB client CREATE → `ksmbd_open_fd()` → `__open_id()` → ID 0
+on first open after module load. **Userspace-reachable** via SMB
+protocol; triggers on every server's first file open after (re)start.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** `mtk_drm_drv.c` already lists many `mediatek,mt8167-*`
-compatibles (mmsys, ovl, rdma, **dsi**, etc.) while `mtk_dsi.c` lacked
-the DSI entry — clear inconsistency, same pattern as other SoC-specific
-compat strings in `mtk_dsi_of_match[]`.
+### Step 5.5: Similar patterns
+**Record:** `has_file_id()` treats `0` as valid (`id < KSMBD_NO_FID`),
+but SMB clients treat `{0, 0}` as null — server/client semantic
+mismatch. No other instances of this pattern found in ksmbd.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE (6.18.43)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** **YES.**
-- `mtk_dsi.c` lines 1303–1309: `mtk_dsi_of_match[]` has no `mt8167-dsi`.
-- `mtk_drm_drv.c` line 813: `mediatek,mt8167-dsi` **is** in
-  `mtk_ddp_comp_dt_ids[]`.
-- `Documentation/devicetree/bindings/display/mediatek/mediatek,dsi.yaml`
-  line 28: `mt8167-dsi` documented.
-- `mt2701_dsi_driver_data` exists at line 1271.
-- Partial MT8167 DRM support is already in 6.18.43; DSI driver match is
-  the missing piece.
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** In this 6.18.44 tree:
+- `KSMBD_START_FID` is `0` in `fs/smb/server/vfs_cache.h:26`
+- `idr_alloc_cyclic(ft->idr, fp, 0, INT_MAX - 1, GFP_NOWAIT)` at
+  `vfs_cache.c:676`
+- Fix commit `6b375be0b4e1b` is **not** an ancestor of HEAD
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** **Clean apply** — single line insertion after the
-`mt2701-dsi` entry. No structural conflicts observed; table layout
-matches the upstream diff context.
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — identical code structure, macro
+already present. No conflicts anticipated.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** No existing commit in this tree adds `mt8167-dsi` to
-`mtk_dsi.c`. `git log --grep="mt8167-dsi"` returned nothing.
+### Step 6.3: Related fixes already present?
+**Record:** No duplicate fix found. `git log --grep="start file id"`
+returns nothing in this tree.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** `drivers/gpu/drm/mediatek` — **IMPORTANT** (embedded/display
-on MediaTek SoCs; not core kernel, but user-visible on affected
-hardware).
+### Step 7.1: Subsystem criticality
+**Record:** `fs/smb/server/` (ksmbd, `CONFIG_SMB_SERVER`) —
+**IMPORTANT** for deployments using the in-kernel SMB server; not core
+kernel, but file-serving correctness matters for those users.
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** MT8167 display support is actively being completed (v4
-series, May 2026). 6.18.43 already carries substantial MT8167 DRM driver
-data, indicating the platform is in scope for this stable series.
+### Step 7.2: Subsystem activity
+**Record:** Highly active — 239 ksmbd commits since 2025-01-01 in this
+tree; ongoing maintenance and bug fixes.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** Users of MT8167-based devices with DSI panels (tablets,
-embedded boards such as Pumpkin, vendor trees using
-`mediatek,mt8167-dsi`). Config-dependent on `CONFIG_DRM_MEDIATEK` and
-MT8167 DT support.
+### Step 8.1: Who is affected
+**Record:** Users with `CONFIG_SMB_SERVER` (ksmbd) enabled. Every
+deployment hits this on the first file open after module load or server
+restart.
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-**Record:** Boot on MT8167 hardware with a DSI node using `compatible =
-"mediatek,mt8167-dsi"`. Common on intended display bring-up; not
-userspace-triggered. Likelihood: **certain** on any such board without
-this fix.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-**Record:** DSI driver does not probe → display does not work (no
-framebuffer/DRM output). **Severity: MEDIUM** — hardware broken for
-display use, but not a crash, security issue, or data corruption.
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+### Step 8.2: Trigger conditions
 **Record:**
-- **Benefit:** Enables DSI display on MT8167; fixes inconsistency with
-  binding and `mtk_drm_drv.c`.
-- **Risk:** One line, existing driver data, maintainer-reviewed — **very
-  low**.
-- **Ratio:** Favorable for stable; fits the “compatible / device ID
-  addition to existing driver” exception.
+- **When:** First SMB2 CREATE after ksmbd module load/restart (per
+  session for volatile ID; globally for persistent ID)
+- **Likelihood:** Certain on every restart
+- **Privilege:** Any SMB client with access to a share
+
+### Step 8.3: Failure mode severity
+**Record:**
+- Leaked `ksmbd_file` entry (never closed by client)
+- `fd_limit` counter permanently decremented (`fd_limit_depleted()` on
+  open, no matching `fd_limit_close()` on client-driven close) — can
+  eventually cause `-EMFILE` for new opens
+- Incorrect oplock state (elevated oplock count blocks proper batch
+  oplocks)
+- **Severity: MEDIUM-HIGH** for ksmbd users — not a kernel oops, but a
+  real resource leak with functional impact on a common path
+
+### Step 8.4: Risk-benefit ratio
+**Record:**
+- **Benefit:** Fixes protocol non-compliance and per-restart resource
+  leak affecting all ksmbd deployments; aligns with Samba/Windows
+- **Risk:** Very low — 8-line constant change, no new APIs, no locking
+  changes
+- **Ratio:** Strong benefit, minimal risk for `CONFIG_SMB_SERVER` users
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence compiled
 
 **FOR backport:**
-- Fixes real broken display on MT8167 when DT uses `mediatek,mt8167-dsi`
-- One-line, obviously correct; reviewed by MediaTek maintainer
-- Reuses `mt2701_dsi_driver_data` — no new APIs or logic
-- Binding and `mtk_drm_drv.c` already expect this compatible in 6.18.43
-- Classic stable exception: compatible-string addition to existing
-  driver
-- Very low regression risk
+- Real bug: resource leak + broken oplock semantics on first open after
+  restart
+- Affects every ksmbd deployment on a common path
+- Tiny, obviously correct fix from subsystem maintainers
+- Bug present since ksmbd was added (~2021)
+- Buggy code confirmed in this 6.18.44 tree; fix not yet applied
+- Clean backport with no dependencies
+- Progressive fd-limit depletion from leaked handles
 
 **AGAINST backport:**
-- Could be framed as “new hardware enablement” rather than crash fix
-- In-tree `mt8167.dtsi` in 6.18.43 still lacks DSI nodes (patch 1/2 not
-  merged)
-- No syzbot/user crash reports
-- Display failure is functional, not a kernel oops
+- No user bug reports — discovered via smbtorture
+- Not a crash, UAF, security issue, or data corruption
+- `CONFIG_SMB_SERVER` is optional; smaller user base than core
+  subsystems
+- Lore review thread not accessible for stable nomination confirmation
 
-**UNRESOLVED:**
-- Exact mainline commit SHA not in this repo (`b4 dig` failed)
-- lore.kernel.org thread not readable (403)
-- When `mt8167-dsi` first entered the DT binding in mainline history
-  (squashed git in this checkout)
+**Unresolved:**
+- Could not verify lore review comments (bot protection)
+- No independent confirmation that Windows clients skip CLOSE for `{0,
+  0}` beyond maintainer statement and smbtorture behavior
 
-Neither unresolved item changes the technical conclusion for 6.18.43.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — trivial constant change;
+   maintainer-signed; part of tested series
+2. Fixes a real bug? **PASS** — handle leak and oplock breakage
+3. Important issue? **PASS** — resource leak on common path with
+   functional impact (oplocks, fd limits); not crash-level but
+   materially affects file-server operation
+4. Small and contained? **PASS** — 8 lines, 2 files
+5. No new features or APIs? **PASS** — behavior correction only
+6. Can apply to local tree? **PASS** — clean apply, no prerequisites
 
-### Step 9.2: STABLE RULES CHECKLIST
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — maintainer Reviewed-by;
-maps to known-good MT2701 data |
-| 2. Fixes a real bug affecting users? | **PASS** — DSI cannot probe
-without this entry |
-| 3. Important issue? | **PASS (MEDIUM)** — display non-functional on
-affected hardware |
-| 4. Small and contained? | **PASS** — 1 line, 1 file |
-| 5. No new features/APIs? | **PASS** — compatible quirk only; exception
-applies |
-| 6. Can apply to local tree? | **PASS** — clean one-line apply;
-prerequisites present |
+### Step 9.3: Exception categories
+**Record:** None (not a device ID, quirk, DT, build, or docs fix).
+Qualifies on merit as a protocol/resource-management bug fix.
 
-### Step 9.3: EXCEPTION CATEGORIES
-**Record:** **Hardware quirk / device compatible addition** — adding
-`mediatek,mt8167-dsi` to an existing driver’s `of_match` table, reusing
-established `mt2701_dsi_driver_data`. Explicitly allowed for stable.
-
-### Step 9.4: DECISION RATIONALE
-
-For **6.18.43**, MT8167 DRM support is already partially merged:
-`mtk_drm_drv.c` recognizes `mediatek,mt8167-dsi` and builds an MT8167
-display pipeline, but `mtk_dsi.c` omits the compatible. That is a clear
-driver bug/oversight, not greenfield feature work. The fix is one line,
-low risk, maintainer-reviewed, and aligns driver behavior with the DT
-binding that has documented `mt8167-dsi` since 2022. Stable trees
-routinely take such compatible-string additions for existing drivers.
+### Step 9.4: Decision rationale
+For this **6.18.y** tree, ksmbd is present and the buggy code is live.
+Every server restart leaks the first opened handle from compliant SMB
+clients, permanently consumes fd-limit budget, and corrupts oplock
+state. The fix is minimal, maintainer-authored, and matches established
+SMB server practice. The issue is below crash/security severity but
+clearly meets stable criteria as a real, user-visible resource leak on a
+guaranteed code path.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message and Patchwork
-- **[Phase 2]** Confirmed diff: +1 line in `mtk_dsi_of_match[]` pointing
-  to `mt2701_dsi_driver_data`
-- **[Phase 3]** `git describe HEAD` → `v6.18.43`; `git blame` on
-  `mtk_dsi.c:1303-1310` and `mtk_drm_drv.c:813-814`
-- **[Phase 3]** `git log --grep="mt8167-dsi"` → no results in this tree
-- **[Phase 4]** Patchwork fetch: v4 2/2 series, Reviewed-by, applied to
-  mediatek-drm-next
-- **[Phase 4]** `b4 dig -c 2257966bbaa9a` → commit not found in repo
-- **[Phase 4]** lore.kernel.org → 403 Forbidden
-- **[Phase 5]** Read `mtk_dsi_probe()`, `mtk_drm_probe()`,
-  `mtk_drm_init()` registration path
-- **[Phase 5]** `grep mt8167` in `drivers/gpu/drm/mediatek/` → extensive
-  MT8167 support in `mtk_drm_drv.c`, HDMI in `mtk_hdmi.c`
-- **[Phase 6]** `grep mt8167-dsi` → present in `mtk_drm_drv.c` and
-  binding; **absent** in `mtk_dsi.c`
-- **[Phase 6]** Read `mt8167.dtsi`, `mt8167-pumpkin.dts` → no DSI node
-  in-tree yet
-- **[Phase 6]** Confirmed `mt2701_dsi_driver_data` exists at
-  `mtk_dsi.c:1271-1275`
-- **[Phase 7]** Identified subsystem as DRM/MediaTek display driver
-- **[Phase 8]** Assessed failure as non-probing DSI / no display (MEDIUM
-  severity)
+- **[Phase 1]** Parsed commit `6b375be0b4e1b`: only Signed-off-by tags;
+  no Fixes/Reported-by/Link/Cc: stable
+- **[Phase 2]** Diff: 2 files, ~8 lines; `KSMBD_START_FID` 0→1;
+  `idr_alloc_cyclic` start 0→`KSMBD_START_FID`
+- **[Phase 3]** `git describe HEAD`: v6.18.44; `git blame` line 676:
+  `idr_alloc_cyclic` with start 0 since 2021
+- **[Phase 3]** `git merge-base --is-ancestor 6b375be0b4e1b HEAD`: exit
+  1 — fix NOT in tree
+- **[Phase 3]** `git log -S KSMBD_START_FID`: macro introduced
+  2021-06-28
+- **[Phase 4]** `b4 dig -c 6b375be0b4e1b`: lore URL found; patch 27/29
+  in v1 series
+- **[Phase 4]** `b4 dig -w`: maintainers CC'd (linux-cifs, smfrench)
+- **[Phase 4]** UNVERIFIED: Lore thread content (bot protection on
+  patch.msgid.link)
+- **[Phase 5]** `grep has_file_id`: `has_file_id(0)` returns true (`id <
+  KSMBD_NO_FID`); CREATE sets `rsp->PersistentFileId`/`VolatileFileId`
+  from fp IDs at `smb2pdu.c:3649-3650`
+- **[Phase 5]** `fd_limit_depleted()`/`fd_limit_close()` at
+  `vfs_cache.c:48-61`: leaked handle prevents limit restoration
+- **[Phase 6]** `grep KSMBD_START_FID`: only in header, value 0;
+  `idr_alloc_cyclic` uses literal 0 at line 676
+- **[Phase 6]** `CONFIG_SMB_SERVER` in `fs/smb/server/Kconfig`
+- **[Phase 7]** 239 ksmbd commits since 2025-01-01 in this tree
+- **[Phase 8]** Failure mode: resource leak + oplock corruption + fd-
+  limit depletion; severity MEDIUM-HIGH for ksmbd users
+
+**YES**The background search finished: the fix is commit `6b375be0b4e1b`
+on master (merged via the v7.2 SMB3 server fixes tag). It is not in this
+6.18.44 tree yet.
+
+That matches the earlier analysis: the buggy `{0, 0}` FileId allocation
+is still present here, and the fix is a small, low-risk protocol
+correction that stops handle leaks and oplock issues on the first open
+after ksmbd starts.
 
 **YES**
 
- drivers/gpu/drm/mediatek/mtk_dsi.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/vfs_cache.c | 3 ++-
+ fs/smb/server/vfs_cache.h | 7 ++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
-index acee2227275b7..6845bb8043254 100644
---- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-@@ -1302,6 +1302,7 @@ static const struct mtk_dsi_driver_data mt8188_dsi_driver_data = {
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index aee974a264d51..7b8d3b5ad1c2d 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -698,7 +698,8 @@ static int __open_id(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
  
- static const struct of_device_id mtk_dsi_of_match[] = {
- 	{ .compatible = "mediatek,mt2701-dsi", .data = &mt2701_dsi_driver_data },
-+	{ .compatible = "mediatek,mt8167-dsi", .data = &mt2701_dsi_driver_data },
- 	{ .compatible = "mediatek,mt8173-dsi", .data = &mt8173_dsi_driver_data },
- 	{ .compatible = "mediatek,mt8183-dsi", .data = &mt8183_dsi_driver_data },
- 	{ .compatible = "mediatek,mt8186-dsi", .data = &mt8186_dsi_driver_data },
+ 	idr_preload(KSMBD_DEFAULT_GFP);
+ 	write_lock(&ft->lock);
+-	ret = idr_alloc_cyclic(ft->idr, fp, 0, INT_MAX - 1, GFP_NOWAIT);
++	ret = idr_alloc_cyclic(ft->idr, fp, KSMBD_START_FID, INT_MAX - 1,
++			       GFP_NOWAIT);
+ 	if (ret >= 0) {
+ 		id = ret;
+ 		ret = 0;
+diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
+index ad7a487a21bb0..955bbf11f1926 100644
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -23,7 +23,12 @@
+ #define	FILE_GENERIC_WRITE	0x120116
+ #define	FILE_GENERIC_EXECUTE	0X1200a0
+ 
+-#define KSMBD_START_FID		0
++/*
++ * Start volatile/persistent file id allocation at 1. A file id of 0 yields an
++ * SMB2 FileId of {0, 0}, which clients (e.g. Windows, Samba) treat as a null
++ * handle and never close, leaking the open on the server.
++ */
++#define KSMBD_START_FID		1
+ #define KSMBD_NO_FID		(INT_MAX)
+ #define SMB2_NO_FID		(0xFFFFFFFFFFFFFFFFULL)
+ 
 -- 
 2.53.0
 
