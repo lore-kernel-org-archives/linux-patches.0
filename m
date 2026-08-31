@@ -1,458 +1,196 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B734BCACA;
-	Mon, 31 Aug 2026 13:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44A94C6EED;
+	Mon, 31 Aug 2026 13:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183539; cv=none; b=QQnDNkRpzDk6PKpFdFgg3npGbxY7QeEe/H3UeNhuLyXQaDNVzyKFs6vaIyBhE1bVm3E5EbetUeiILI66LqCBfrCRFNvtkKfqhA2X7JhzPCr4TCN2ApWAbSIuxbd3k053HGAxJZyGaTmTtEa4StR508H+7VsgIu8GP46PaizF9LQ=
+	t=1788183540; cv=none; b=j0p7BpZ3GjO5SIDLRLtkOAw0HADKfOzu/n7kLTQhfqpmlh7BtTRIN8DPDyyvQYO3KvrksAg3CDVPKje+S0zSBSi7dRA3AAgH42m01NuDydCHaP5qQeAcZfBZjIbc37CTgfwzT2DxRdsorX3mT1Mjly/8TWG7bA3GHYS+eQl0PI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183539; c=relaxed/simple;
-	bh=UE+NdVnIkweEAuxI6ridtErApdFrI8hQmc1IsUupI84=;
+	s=arc-20240116; t=1788183540; c=relaxed/simple;
+	bh=3dwp+JVTARwNSkXPzZJkyoNSyB5qnNmaOWcnYCOu4pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PUMw3aIJg1HqusevNhB62c5kI6+fuYjlw/nZbbkZ8Q0x9JbGn+zizgCj+Y3I4J+lTfgw6T4UmdC4GyRz2LoDZDS5D4PoGjgcejyRs8AfsZNVNbs22dmJTApihRlD///BPJpoDZFnFSw9Tx8SFtb9myaX4ele4f8ObxWiLJO3Bo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ksd0zHQm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OQRE6uVC4gI2iv4tyRxxI/dCaAKtz2WgF6Lz4pfO/q5JYdzrF2drTPMHKQl6u4l+m/SveTPY4icvy7D9P9onaBViFoxxj9jGxs+fpZogBdo4BSLMHWgdlh3HI52IbyF99fa13x/+THFfd1OvlbT2ZbYNzws3/6dqVEFjOo/yW7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6nlG4fN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ksd0zHQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C151F00ACA;
-	Mon, 31 Aug 2026 13:38:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183536;
-	bh=i1r2weoEmOco69zx8/TYt1CBtAw9qoWCTQIKGW9E1tg=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6nlG4fN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D8C1F00A3E;
+	Mon, 31 Aug 2026 13:38:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183538;
+	bh=cVRLpJ0i5TDJBV32RTP2HKHAJiR4rqstrbyQiruYUsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ksd0zHQmV1a57AGWyKORbF8QsNeaSHwD8y//Q5ZmJL1ebJmXBGadMAEFOnElVaRjs
-	 FZXuT1eTDVUwVqmHrU2WuCL/AFbYMHE51dJR/nuFeiwADyW3kMg/rawGvae9c6YH8E
-	 OD6ayS+7UCPPOKLhJkwWIbS3UyhuM4Jo+WhNOeHwCWZQMmMaEgal0w4jmIsV/jDqTK
-	 2i8rtaA2zHHCpV88cTzksGPeZiprVgY74Yl7v48pGLZUYo5JHjm4sfy/qZKKI7LfH4
-	 mj5yvI79JfzO36IAFK5tFONHFa+s75GWOWVDAraR+cFK4WQ1mcdqn5JDEy5rmdnWhC
-	 QJtzfsLSeBkow==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	cezary.rojewski@intel.com,
-	liam.r.girdwood@linux.intel.com,
-	peter.ujfalusi@linux.intel.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ASoC: Intel: sof_sdw: append dai type to dai link name unconditionally
-Date: Mon, 31 Aug 2026 09:23:03 -0400
-Message-ID: <20260831133314.4125787-155-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=M6nlG4fNpLRuWSvr9YinnyE8YmxDfiZIPr7ZELoz85zx/6CZ+1W1rpN2mDmUsmC8g
+	 T8KqzZzZhShjxRbrkbOo1vpDy7fUep4u/2Fl5pvOfpoKrOAhNv+wrw4cM1SNY0Xcz4
+	 yVr7TIw2BFm0eeOzy6+5SDviZdrk1SD7NXTFihMk=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 31/71] net: advertise TCP MSS from the configured MTU, not the learned PMTU
+Date: Mon, 31 Aug 2026 15:33:56 +0200
+Message-ID: <20260831133400.690698875@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit c84179a1d36bebe99d9694502737ae9f3a90d2bc ]
+------------------
 
-The dai_type is used to select function topologies. Since the topology
-stream name and DAI link name use partial matching, unconditionally
-appending the dai_type provides necessary selection metadata
-without breaking existing topologies.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20260515083043.1864426-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 2640e64195948a601430d230c9864f5426574cde upstream.
+
+The MSS a host puts in its SYN tells the peer how big a segment it may
+send us. Right now we can shrink it with a PMTU we learned on our own
+send path, which is the wrong direction entirely.
+
+On asymmetric paths this bites - think DSR load balancers, where the
+request side goes through a smaller-MTU overlay. We learn a small PMTU
+going out, then advertise a small MSS, and the peer stays capped for the
+whole connection even though its path back to us is wide. MSS only shows
+up in the SYN and never grows back.
+
+On symmetric paths we lose nothing by dropping it either: the peer runs
+its own PMTU discovery and usually already knows the real path MTU.
+
+So work out the advertised MSS from the configured route or device MTU
+and ignore the learned PMTU. Our send side is unchanged, still clamped by
+tcp_current_mss(). Add ip_dst_mtu_configured()/ip6_dst_mtu_configured()
+and use them from the two default_advmss() paths.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 164a5e7ad531 ("ipv4: ipv4_default_advmss() should use route mtu")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260815070413.294559-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ include/net/ip.h        |   25 +++++++++++++++++++++++++
+ include/net/ip6_route.h |   37 +++++++++++++++++++++++++++++++++++++
+ net/ipv4/route.c        |    4 ++--
+ net/ipv6/route.c        |    2 +-
+ 4 files changed, 65 insertions(+), 3 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-**Step 1.1 — Subject line**
-Record: `[ASoC: Intel: sof_sdw]` `[append]` — unconditionally append DAI
-type to DAI link names for SoundWire/Intel SOF board driver.
-
-**Step 1.2 — Tags**
-Record:
-- **Signed-off-by:** Bard Liao `<yung-chuan.liao@linux.intel.com>`
-  (author)
-- **Reviewed-by:** Kai Vehmanen `<kai.vehmanen@linux.intel.com>`
-- **Reviewed-by:** Liam Girdwood `<liam.r.girdwood@intel.com>`
-- **Link:** https://patch.msgid.link/20260515083043.1864426-1-yung-
-  chuan.liao@linux.intel.com
-- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (ASoC maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org, or
-  syzbot tags
-- Notable: reviewed by Intel SOF maintainers; Dell engineer
-  (`Deep.Harsora@Dell.com`) CC’d on submission
-
-**Step 1.3 — Body analysis**
-Record:
-- **Bug:** `dai_type` metadata is required for function-topology
-  selection, but is only appended when `ctx->append_dai_type` is true.
-- **Symptom:** Function topologies cannot be selected on machines where
-  `append_dai_type` stays false (common single-dailink configs).
-- **Mechanism:** Topology stream names and DAI link names use partial
-  matching; without the type suffix (`SimpleJack`, `SmartAmp`,
-  `SmartMic`), selection fails.
-- **Claim:** Unconditional append is safe because partial matching
-  preserves compatibility with existing topologies.
-- No explicit crash/oops; this is an audio/topology correctness bug.
-
-**Step 1.4 — Hidden bug fix?**
-Record: **Yes.** Although the subject uses “append” rather than “fix”,
-this corrects broken function-topology selection logic, not a cosmetic
-cleanup.
-
----
-
-## Phase 2: Diff Analysis
-
-**Step 2.1 — Inventory**
-Record:
-- **Files:** `sound/soc/intel/boards/sof_sdw.c` only (+12 / -11)
-- **Function modified:** `create_sdw_dailink()`
-- **Scope:** Single-file surgical fix in Intel SOF SoundWire board
-  driver
-
-**Step 2.2 — Code flow change**
-Record:
-- **Before:** `sdw_stream_name[]` had both plain (`"SDW%d-Playback"`)
-  and typed (`"SDW%d-Playback-%s"`) formats; typed suffix used only when
-  `ctx->append_dai_type` was true.
-- **After:** Always uses typed format; sets `ctx->append_dai_type =
-  true`; removes conditional branch.
-- **Path affected:** DAI link / stream name creation during card probe
-  for all SDW streams.
-
-**Step 2.3 — Bug mechanism**
-Record:
-- **Category:** Logic / correctness fix for topology selection metadata.
-- **Mechanism:** `ctx->append_dai_type` is set in
-  `asoc_sdw_parse_sdw_endpoints()` only when `num_link_dailinks > 1`.
-  For common single-dailink machines, names become `"SDW0-Playback"`
-  with no type token. `sof_sdw_get_tplg_files()` matches
-  `dai_link->name` via `strstr(...,
-  "SimpleJack"/"SmartAmp"/"SmartMic")`, so selection fails and the
-  callback returns 0.
-
-**Step 2.4 — Fix quality**
-Record:
-- Fix is minimal and logically consistent with
-  `sof_sdw_get_tplg_files()`.
-- Reviewed by ASoC maintainer and Intel SOF maintainers.
-- Low regression risk: commit explicitly states partial matching keeps
-  existing topologies working; only Intel `sof_sdw.c` is touched (AMD
-  paths unchanged).
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record: In this checkout, `git blame` attributes the conditional block
-to the tree root commit (`a112b91dd6349`) because history is flattened.
-The conditional `ctx->append_dai_type` code is present at lines 899–907
-in current `sof_sdw.c`.
-
-**Step 3.2 — Fixes: tag**
-Record: N/A — no Fixes: tag in commit message.
-
-**Step 3.3 — Related file history**
-Record: `git log` on `sof_sdw.c` / `soc_sdw_utils.c` is not useful here
-(single synthetic root commit). Related infrastructure verified present
-in tree:
-- `include/sound/soc_sdw_utils.h`: `append_dai_type` field
-- `sound/soc/sdw_utils/soc_sdw_utils.c`: sets `ctx->append_dai_type |=
-  (num_link_dailinks > 1)`
-- `sound/soc/intel/common/sof-function-topology-lib.c`: function-
-  topology selection via `strstr(dai_link->name, ...)`
-- Many machine entries in MTL/PTL/ARL/LNL ACPI match files use
-  `.get_function_tplg_files = sof_sdw_get_tplg_files`
-
-**Step 3.4 — Author context**
-Record: Bard Liao is an Intel SOF/ASoC contributor. Patch
-reviewed/applied by Mark Brown (ASoC maintainer).
-
-**Step 3.5 — Dependencies**
-Record: Standalone one-patch fix. All required code exists in v6.18.43:
-- `append_dai_type` logic
-- `sof_sdw_get_tplg_files()`
-- `get_function_tplg_files` machine hooks
-- Fix commit `c84179a1d36b` exists in repo but is **not** in current
-  HEAD (`NOT IN HEAD`).
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 — Original discussion**
-Record:
-- **URL:** https://lore.kernel.org/all/20260515083043.1864426-1-yung-
-  chuan.liao@linux.intel.com/
-- Thread has 2 messages (patch + Mark Brown “Applied”)
-- No reviewer objections, NAKs, or explicit stable nominations
-- Mark Brown applied to `broonie/sound` for-7.2; noted it may merge
-  sooner if it is a bug fix
-
-**Step 4.2 — Reviewers**
-Record: CC’d to `broonie@kernel.org`, `tiwai@suse.de`, `linux-
-sound@vger.kernel.org`, Intel maintainers, and `Deep.Harsora@Dell.com`.
-
-**Step 4.3 — Bug report**
-Record: No external bug report, syzbot link, or stack trace. Impact
-inferred from code path and commit description.
-
-**Step 4.4 — Series context**
-Record: Standalone `[PATCH]` (1/1), not part of a multi-patch series.
-
-**Step 4.5 — Stable list history**
-Record: Not searched separately; no stable nomination found in the
-thread.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-Record: `create_sdw_dailink()`, `asoc_sdw_init_dai_link()`,
-`sof_sdw_get_tplg_files()`, `snd_sof_load_topology()`,
-`asoc_sdw_parse_sdw_endpoints()`
-
-**Step 5.2 — Callers**
-Record:
-- `create_sdw_dailink()` ← `create_sdw_dailinks()` ← card setup in
-  `sof_sdw.c` during machine probe
-- `sof_sdw_get_tplg_files()` ← machine `.get_function_tplg_files` hooks
-  on MTL/PTL/ARL/LNL ACPI tables
-- `snd_sof_load_topology()` called during SOF component probe
-
-**Step 5.3 — Callees**
-Record: `devm_kasprintf()`, `asoc_sdw_init_dai_link()` (sets
-`dai_links->name` and `dai_links->stream_name`), firmware lookup in
-topology loader.
-
-**Step 5.4 — Reachability**
-Record: Triggered at boot/probe on Intel laptops/desktops using
-`sof_sdw` with SoundWire codecs and function-topology-enabled machine
-tables. Common user-visible path for affected hardware.
-
-**Step 5.5 — Similar patterns**
-Record: AMD ACP SDW machine drivers (`acp-sdw-sof-mach.c`, `acp-sdw-
-legacy-mach.c`) still use the same conditional `ctx->append_dai_type`
-pattern, but this commit only fixes Intel `sof_sdw.c`.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree (v6.18.43)
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** Current `sof_sdw.c` still has the conditional at lines
-899–907 and plain name formats at lines 870–872. Function-topology
-infrastructure is also present.
-
-**Step 6.2 — Backport complications**
-Record: **Clean apply expected** — one file, localized hunk. No
-conflicting local changes observed.
-
-**Step 6.3 — Related fixes already present?**
-Record: **No.** `git merge-base --is-ancestor c84179a1d36b HEAD` → `NOT
-IN HEAD`.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem / criticality**
-Record: **sound / ASoC / Intel SOF SoundWire board driver** — IMPORTANT
-for Intel laptop/desktop audio users, not core-kernel-wide.
-
-**Step 7.2 — Activity**
-Record: Intel SOF SoundWire and function-topology support is actively
-developed in this tree (2025 copyright on `sof-function-topology-lib.c`,
-many recent machine entries).
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 — Who is affected**
-Record: Users of Intel SOF + SoundWire machines with
-`.get_function_tplg_files = sof_sdw_get_tplg_files` (MTL, PTL, ARL, LNL,
-and related platforms), especially single-dailink configurations
-(`link_mask = BIT(0)` etc.).
-
-**Step 8.2 — Trigger conditions**
-Record:
-- Boot/probe of supported Intel SOF SDW hardware
-- Function topologies enabled (default unless overridden)
-- `num_link_dailinks <= 1` → `append_dai_type` remains false without
-  this fix
-- Common on simple laptop configs (single codec/link)
-
-**Step 8.3 — Failure mode / severity**
-Record:
-- Without fix: `sof_sdw_get_tplg_files()` hits the unsupported-link path
-  and returns 0 when `dai_link->name` lacks
-  `SimpleJack`/`SmartAmp`/`SmartMic`.
-- `snd_sof_load_topology()` then falls back to monolithic topology.
-- **Severity: MEDIUM–HIGH for affected hardware** — function-topology
-  feature is effectively broken for the common single-dailink case;
-  users may get wrong/missing audio functionality depending on whether
-  monolithic fallback is complete for their platform/firmware. Not a
-  kernel crash, but real hardware audio breakage risk.
-
-**Step 8.4 — Risk vs benefit**
-Record:
-- **Benefit:** HIGH for affected Intel SOF SDW users — restores intended
-  function-topology selection.
-- **Risk:** LOW — ~20 lines, one file, maintainer-reviewed, behavior
-  change aligns with existing partial-matching design.
-- **Ratio:** Favorable for backport.
-
----
-
-## Phase 9: Final Synthesis
-
-### Evidence FOR backport
-- Real logic bug: function-topology selection cannot work when DAI names
-  lack type suffix.
-- Affects common Intel laptop/desktop SOF SoundWire configurations.
-- Small, surgical, maintainer-reviewed fix.
-- All prerequisite code exists in v6.18.43; fix not yet present.
-- Hardware-relevant (Dell CC, Intel maintainers reviewed).
-
-### Evidence AGAINST backport
-- No explicit user bug report, CVE, or crash trace.
-- Monolithic topology fallback may mask issue on some machines.
-- Function topologies are relatively new infrastructure.
-
-### Unresolved questions
-- Whether every affected machine fails audibly without the fix, or only
-  when function-only firmware/topologies are required (not directly
-  testable from kernel tree alone).
-
-### Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic matches
-   `sof_sdw_get_tplg_files()`; reviewed by subsystem maintainers.
-2. Fixes a real bug affecting users? **PASS** — broken function-topology
-   selection on common configs.
-3. Important issue? **PASS** — hardware audio functionality on widely
-   used Intel platforms (MEDIUM–HIGH).
-4. Small and contained? **PASS** — one file, ~23 lines changed.
-5. No new features/APIs? **PASS** — corrects existing function-topology
-   behavior.
-6. Can apply to local tree? **PASS** — buggy code and dependencies
-   present in v6.18.43.
-
-### Exception category
-Record: N/A (not device ID/quirk/DT/docs/build fix; this is a driver
-correctness bug fix).
-
-### Problem summary for stable users
-On v6.18.43, Intel SOF SoundWire machines that rely on function
-topologies often generate DAI link names like `"SDW0-Playback"` without
-the codec-function suffix. `sof_sdw_get_tplg_files()` requires
-substrings such as `"SimpleJack"` in `dai_link->name`, so function-
-topology loading fails for the common single-dailink case. The patch
-unconditionally appends the DAI type, restoring correct topology
-selection without changing unrelated subsystems.
-
----
-
-## Verification
-
-- [Phase 1] Parsed subject, tags, and body from provided commit and
-  fetched lore mbox.
-- [Phase 2] Diff analysis: conditional removed in
-  `create_sdw_dailink()`, `ctx->append_dai_type = true` added.
-- [Phase 3] `git describe HEAD` → `v6.18.43-1-gc7f0dac02d232`; Makefile
-  → 6.18.43.
-- [Phase 3] `git merge-base --is-ancestor c84179a1d36b HEAD` → NOT IN
-  HEAD.
-- [Phase 3] Verified `append_dai_type` set in `soc_sdw_utils.c:1494`.
-- [Phase 3] Read current buggy code in `sof_sdw.c:868-907`.
-- [Phase 4] `b4 mbox 20260515083043.1864426-1-yung-
-  chuan.liao@linux.intel.com` → 2-message thread saved; Mark Brown
-  applied, no objections.
-- [Phase 4] lore web fetch blocked by bot protection; used b4 mbox
-  instead.
-- [Phase 5] Traced `sof_sdw_get_tplg_files()` `strstr()` matching at
-  `sof-function-topology-lib.c:54-81`.
-- [Phase 5] Traced fallback in `topology.c:2512-2534` when callback
-  returns 0.
-- [Phase 5] Confirmed `get_function_tplg_files` hooks in MTL/PTL/ARL/LNL
-  ACPI match files.
-- [Phase 6] Confirmed buggy conditional present in local tree.
-- [Phase 6] Confirmed fix commit exists (`c84179a1d36b`) but is absent
-  from HEAD.
-- [Phase 8] Failure mode inferred from verified code path; exact user-
-  visible severity per machine model UNVERIFIED without
-  hardware/firmware testing.
-
-**YES**The background check finished: commit `c84179a1d36b` is **not**
-in the current `v6.18.43` tree, so the buggy conditional
-`append_dai_type` logic is still present in `sof_sdw.c`. That supports
-backporting the fix to this stable tree.
-
- sound/soc/intel/boards/sof_sdw.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
-
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 465bf5fafecf7..c9f4fe84c7eed 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -865,10 +865,16 @@ static int create_sdw_dailink(struct snd_soc_card *card,
- 		}
- 	}
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -506,6 +506,31 @@ out:
+ 	return res;
+ }
  
-+	/*
-+	 * The dai_type is used to select function topologies. Since the topology stream name
-+	 * and DAI link name use partial matching, unconditionally appending the dai_type provides
-+	 * necessary selection metadata without breaking existing topologies. Although
-+	 * ctx->append_dai_type is not checked here, we overwrite it to ensure consistency in case
-+	 * it is referenced elsewhere.
++/* Configured/administrative MTU of a route, for advertising the TCP MSS.
++ *
++ * Unlike ip_dst_mtu_maybe_forward(), this deliberately ignores the
++ * ICMP-learned path MTU (rt->rt_pmtu).  The advertised MSS bounds what the
++ * peer may send to us and must reflect our receive capability (the device or
++ * route-configured MTU), not a path MTU learned on the reverse (send)
++ * direction, which may not apply to the peer->us path and outlives the fnhe
++ * for the whole connection.  See RFC 2923 section 2.3 and the comment above
++ * tcp_advertise_mss().
++ */
++static inline unsigned int ip_dst_mtu_configured(const struct dst_entry *dst)
++{
++	unsigned int mtu, res;
++
++	rcu_read_lock();
++	mtu = dst_metric_raw(dst, RTAX_MTU);
++	if (!mtu)
++		mtu = READ_ONCE(dst_dev_rcu(dst)->mtu);
++	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
++	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
++	rcu_read_unlock();
++
++	return res;
++}
++
+ static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
+ 					  const struct sk_buff *skb)
+ {
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -385,6 +385,43 @@ out:
+ 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
+ }
+ 
++/* Configured/administrative MTU of a route, for advertising the TCP MSS.
++ *
++ * Unlike ip6_dst_mtu_maybe_forward(), this ignores any ICMPv6-learned path
++ * MTU (which is kept on the RTF_CACHE exception route) and returns the MTU of
++ * the underlying route (fib6_pmtu) or the egress device.  The advertised MSS
++ * bounds what the peer may send to us and must reflect our receive
++ * capability, not a path MTU learned on the reverse (send) direction.  See
++ * RFC 2923 section 2.3 and the comment above tcp_advertise_mss().
++ */
++static inline unsigned int ip6_dst_mtu_configured(const struct dst_entry *dst)
++{
++	const struct rt6_info *rt = dst_rt6_info(dst);
++	const struct fib6_info *from;
++	struct inet6_dev *idev;
++	unsigned int mtu = 0;
++
++	rcu_read_lock();
++	/* IPv6 keeps the learned PMTU and the configured MTU in the same
++	 * RTAX_MTU slot: the learned value sits on this (possibly RTF_CACHE)
++	 * dst, the configured one on the underlying route.  Reach the latter
++	 * via ->from (fib6_pmtu), populated by ip6_route_info_create().
 +	 */
-+	ctx->append_dai_type = true;
- 	for_each_pcm_streams(stream) {
- 		static const char * const sdw_stream_name[] = {
--			"SDW%d-Playback",
--			"SDW%d-Capture",
- 			"SDW%d-Playback-%s",
- 			"SDW%d-Capture-%s",
- 		};
-@@ -896,15 +902,10 @@ static int create_sdw_dailink(struct snd_soc_card *card,
- 		}
++	from = rcu_dereference(rt->from);
++	if (from)
++		mtu = from->fib6_pmtu;
++	if (!mtu) {
++		mtu = IPV6_MIN_MTU;
++		idev = __in6_dev_get(dst_dev_rcu(dst));
++		if (idev)
++			mtu = max_t(unsigned int, mtu, READ_ONCE(idev->cnf.mtu6));
++	}
++	rcu_read_unlock();
++
++	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
++	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
++}
++
+ u32 ip6_mtu_from_fib6(const struct fib6_result *res,
+ 		      const struct in6_addr *daddr,
+ 		      const struct in6_addr *saddr);
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1358,8 +1358,8 @@ static unsigned int ipv4_default_advmss(
  
- 		/* create stream name according to first link id */
--		if (ctx->append_dai_type)
--			name = devm_kasprintf(dev, GFP_KERNEL,
--					      sdw_stream_name[stream + 2],
--					      ffs(sof_end->link_mask) - 1,
--					      type_strings[sof_end->dai_info->dai_type]);
--		else
--			name = devm_kasprintf(dev, GFP_KERNEL,
--					      sdw_stream_name[stream],
--					      ffs(sof_end->link_mask) - 1);
-+		name = devm_kasprintf(dev, GFP_KERNEL,
-+				      sdw_stream_name[stream],
-+				      ffs(sof_end->link_mask) - 1,
-+				      type_strings[sof_end->dai_info->dai_type]);
- 		if (!name)
- 			return -ENOMEM;
+ 	rcu_read_lock();
+ 	net = dst_dev_net_rcu(dst);
+-	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
+-				   net->ipv4.ip_rt_min_advmss);
++	advmss = max_t(unsigned int, ip_dst_mtu_configured(dst) - header_size,
++		       net->ipv4.ip_rt_min_advmss);
+ 	rcu_read_unlock();
  
--- 
-2.53.0
+ 	return min(advmss, IPV4_MAX_PMTU - header_size);
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3261,7 +3261,7 @@ void ip6_sk_redirect(struct sk_buff *skb
+ 
+ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ {
+-	unsigned int mtu = dst6_mtu(dst);
++	unsigned int mtu = ip6_dst_mtu_configured(dst);
+ 	struct net *net;
+ 
+ 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
+
 
