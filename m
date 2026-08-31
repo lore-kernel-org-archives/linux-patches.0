@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981A247ECFE;
-	Mon, 31 Aug 2026 13:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B5C47F2E3;
+	Mon, 31 Aug 2026 13:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183460; cv=none; b=L+fY9Oieq+pnjIBg01lED7uTQPeWGFGK+3M5UGKzNZuJOPgiT0gTP0okD+QOaZ0gbtlfuMtZAxyJ249ssfIixE8vY/cUQMa7FFLQLxuzOwg8K1xP7S8vOiRAcSalZ7P32TI9CucsoK+0aKhRpV9QvSfEhtVTovfKBRnSYbx500M=
+	t=1788183461; cv=none; b=leiKV9hNWPD06U0Dm05xezrOZp1GNJBLzAR9bsFh85IFz5hoNX5aWsIpURQAZ/CHHlN9eo02nHlG250shee1gtT32L68Vce5fdUV/zNygPqfudqYysr8H/DerqFyBWX1S8j+8stEDVCEia7XLRKrYmkLHf5cAXedH9u6EUYCviM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183460; c=relaxed/simple;
-	bh=B+L8thju9wU+r8u6ipoag1HmMC/oYkI2acABse7f66M=;
+	s=arc-20240116; t=1788183461; c=relaxed/simple;
+	bh=8VPxtfSlRUHY5G+fPIFqRw1vaMMoRz+Tfff0qauBYzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KblTAv9QTp0Jgf9qxETk/L3ZbFXNCo56tw73SMH/sPVWs4r93aUHxvWbg/IsB7idCIpGsfUgm2gM/pC/cRr1oq1cXq9xZPy9/HOW/vBs4xEfVKsz9kmt154nVVBhtEKACfvLybM/Lpu4+fRAouxke/JW6abVPwuDRbpSXVMyN4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UXnV7LZ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=diJKKzqLn8jEpBybOT2T0cd5TZLyCp+oOBKM0RpUGcG2o48ChaoXk7MhICCrRih1D7A3UU07YtZyQmw8wZoyWciAEnhHD5xSH0XWEWNBDcMtPCtOqGpmWbu0/PugjYtx2J5B+gNTsZTSAwTg4lCR47DsAcgdYyxtAY7IEoAeMnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IxV5sCBt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UXnV7LZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB62B1F00A3D;
-	Mon, 31 Aug 2026 13:37:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IxV5sCBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9538D1F00A3F;
+	Mon, 31 Aug 2026 13:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183458;
-	bh=ZjJY1vX9s+jaimzcKtacl9O7Y1PhJM7bV1ZBdpqFekQ=;
+	s=k20260515; t=1788183459;
+	bh=cKW1lC59ijxXc2RsUKC7oPoZoJx3cUcjjgpppx5Ff4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXnV7LZ7w1rb+IA2AfhAuIj0vhGqSPTHjLTP3anB697m7fU50iT2n0w6Z3u1oOL0b
-	 2ON/595V5Lmn+LDpVbzrR0zqcYpXpO8UGN9xMC4zpFRqNsexANV3haYSZsfoTDOQgW
-	 KUq0qtwaeWT1RV8SbI5FX58Oo4JYL/Ov1vkFLa35t8o5NqXmTUp49RyICojLa31MsP
-	 qJj0uBCGbFxueJCU4e0bQwOqoBZV8T+WeDWAegfKDVTIIsSdbXrMZ1beWoMWSPJ/96
-	 z7MCvmR+R6WJmikBuJYkRa6KqgCrgG7z6cCVqt8hHDH+b1iy5qaDeHEQKwvbvpNCsZ
-	 gHbvRRqxwRAKQ==
+	b=IxV5sCBtTQ5AYgl4p50StEfI70d8Aemd+jMfnIhpwPkJmn17EmvryUfWPI7XsLHUh
+	 OzxzKLlTrikKdfjUomaLeoed9WUF6OeAkynxsiC/y2OqAckuM1X7fpOlB3olATL6uQ
+	 vV8ND2dG0Mr5TPSL15+0B7EGTdMJJYOfmgqJcBYDF87XK66ND5KFbsLeAHF4z8KXXB
+	 b+mjiwKgjnY01GSQbDf1F98xxQyC+u8j85/x09oZrmJD8G24vrStbOfaZAWQwkCM+9
+	 hfwlVqob89ejKR4VA7oUyy8ZDJ+oT/h2RjoX/Bfc+F5wh+4jihEJsVMvlRg6SBZQkH
+	 z0pFuUb1dD/cw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+Cc: Evgenii Burenchev <evg28bur@yandex.ru>,
+	Jason Wang <jasowang@redhat.com>,
+	Zhu Lingshan <lingshan.zhu@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	jasowangio@gmail.com,
+	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] drm/arm/malidp: use clk_bulk API in runtime PM resume and suspend
-Date: Mon, 31 Aug 2026 09:22:16 -0400
-Message-ID: <20260831133314.4125787-108-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] vdpa/ifcvf: handle dev_set_name() failure in ifcvf_vdpa_dev_add()
+Date: Mon, 31 Aug 2026 09:22:17 -0400
+Message-ID: <20260831133314.4125787-109-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -51,439 +49,398 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+From: Evgenii Burenchev <evg28bur@yandex.ru>
 
-[ Upstream commit 46f715a16989f4e7bbbc2eb41447051874b027f3 ]
+[ Upstream commit 4c653e85857b41a7148917f2628fae1d04a9c251 ]
 
-malidp_runtime_pm_resume() calls clk_prepare_enable() three times
-without checking the return value. If any clock fails to enable, the
-driver silently proceeds with unclocked hardware, leading to undefined
-behavior.
+dev_set_name() may fail and return an error, but its return value
+is currently ignored and overwritten by _vdpa_register_device().
 
-Convert both the resume and suspend paths to use the clk_bulk API:
-clk_bulk_prepare_enable() in resume checks the return value and rolls
-back any successfully enabled clocks on failure;
-clk_bulk_disable_unprepare() in suspend keeps the two paths symmetric.
+Abort device creation if dev_set_name() fails and release the
+device reference to avoid continuing with an improperly initialized
+struct device.
 
-This issue was found by code review without access to Mali DP hardware.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Zhu Lingshan <lingshan.zhu@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260226152924.38790-1-evg28bur@yandex.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `vdpa/ifcvf: handle dev_set_name() failure
+in ifcvf_vdpa_dev_add()`
 
-**Step 1.1 — Subject line**
-Record: `[drm/arm/malidp]` `[use]` — Convert runtime PM resume/suspend
-clock handling to `clk_bulk` API with proper error checking.
-
-**Step 1.2 — Tags**
-Record:
-- **Fixes:** none
-- **Reported-by:** none
-- **Tested-by:** none
-- **Reviewed-by:** Liviu Dudau `<liviu.dudau@arm.com>` (Mali DP driver
-  maintainer/original author)
-- **Acked-by:** none
-- **Link:**
-  https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
-- **Cc: stable:** none (expected for manual review)
-- **Signed-off-by:** Gustavo Kenji Mendonça Kaneko, Liviu Dudau (ignore
-  pipeline-added SOBs)
-
-Notable: maintainer Reviewed-by; no user/fuzzer reports.
-
-**Step 1.3 — Body analysis**
-Record:
-- **Bug:** `malidp_runtime_pm_resume()` calls `clk_prepare_enable()`
-  three times without checking return values.
-- **Symptom/failure mode:** On clock-enable failure, driver continues
-  with unclocked or partially clocked hardware → undefined behavior;
-  then sets `pm_suspended = false` and runs IRQ hardware init.
-- **Version info:** none stated.
-- **Root cause:** Missing error handling on runtime PM resume clock
-  enables; partial enable not rolled back.
-
-**Step 1.4 — Hidden bug fix?**
-Record: **Yes.** Subject says "use clk_bulk API," but the substantive
-fix is ignored `clk_prepare_enable()` errors on the PM resume path — a
-real correctness/robustness bug, not mere style.
+**Local tree:** `v6.18.44` (Makefile: VERSION=6, PATCHLEVEL=18,
+SUBLEVEL=44)
+**Upstream fix commit:** `4c653e85857b41a7148917f2628fae1d04a9c251` (on
+`origin/master`, **not** in this checkout)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
-Record:
-- **File:** `drivers/gpu/drm/arm/malidp_drv.c` (+16 / −6)
-- **Functions:** `malidp_runtime_pm_suspend()`,
-  `malidp_runtime_pm_resume()`
-- **Scope:** Single-file surgical fix
+### Step 1.1: Parse the subject line
+**Record:** `[vdpa/ifcvf]` `[handle]` — handle `dev_set_name()` failure
+in `ifcvf_vdpa_dev_add()`.
 
-**Step 2.2 — Code flow per hunk**
+### Step 1.2: Parse all commit message tags
+**Record:**
+- **Signed-off-by:** Evgenii Burenchev `<evg28bur@yandex.ru>` (author)
+- **Acked-by:** Jason Wang `<jasowang@redhat.com>` (vDPA maintainer)
+- **Acked-by:** Zhu Lingshan `<lingshan.zhu@kernel.org>` (ifcvf
+  author/maintainer)
+- **Signed-off-by:** Michael S. Tsirkin `<mst@redhat.com>` (vDPA
+  maintainer)
+- **Message-ID:** `<20260226152924.38790-1-evg28bur@yandex.ru>`
+- No `Fixes:` tag (expected for manual review)
+- No `Reported-by:` tag
+- No `Cc: stable@vger.kernel.org` in commit message (present in patch
+  submission recipients)
+- Notable: Found by Linux Verification Center (linuxtesting.org) with
+  SVACE static analysis
 
-| Hunk | Before | After |
-|------|--------|-------|
-| Suspend | Three individual `clk_disable_unprepare()` calls
-(mclk→aclk→pclk) | `clk_bulk_disable_unprepare()` on `[pclk, aclk,
-mclk]` array |
-| Resume | Three `clk_prepare_enable()` calls, return values ignored |
-`clk_bulk_prepare_enable()` with error check; return error on failure |
+### Step 1.3: Analyze commit body
+**Record:**
+- **Bug:** `dev_set_name()` can return an error, but its return value is
+  overwritten by the subsequent `_vdpa_register_device()` call.
+- **Symptom:** Device creation continues after a name-setting failure;
+  callers may see success when renaming failed, or error codes from
+  registration mask the real `dev_set_name()` failure.
+- **Root cause:** Missing check between `dev_set_name()` and
+  `_vdpa_register_device()`.
+- **Fix approach:** Check `dev_set_name()` return value, abort on
+  failure, and consolidate cleanup via a shared `err:` label calling
+  `put_device()`.
 
-Record: Suspend path is symmetric refactor only (bulk disable runs in
-reverse order, matching old behavior). Resume path adds error
-propagation and rollback on partial failure.
-
-**Step 2.3 — Bug mechanism**
-Record: **Error-path / logic correctness fix.** Category: ignored return
-values + partial resource state on failure. If `aclk` fails after `pclk`
-succeeds, old code leaves `pclk` enabled, ignores failure, and proceeds
-to `malidp_de_irq_hw_init()` / `malidp_se_irq_hw_init()` on mis-clocked
-hardware.
-
-**Step 2.4 — Fix quality**
-Record: Fix is minimal and idiomatic. `clk_bulk_disable()` /
-`clk_bulk_unprepare()` iterate in reverse order, so suspend behavior
-matches the old manual sequence. Resume rollback via
-`clk_bulk_prepare_enable()` is standard. Low regression risk; maintainer
-requested v2 suspend symmetry change.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record: Buggy `clk_prepare_enable()` calls introduced in
-`85f6421889eca6` ("drm: mali-dp: Enable power management for the
-device.", 2017-03-22, Liviu Dudau). Present in this tree since driver PM
-was added.
-
-**Step 3.2 — Fixes: tag**
-Record: N/A — no Fixes: tag.
-
-**Step 3.3 — Related file history**
-Record: Recent `malidp_drv.c` changes are unrelated DRM API cleanups.
-Standalone patch; v2 incorporated maintainer feedback (suspend
-symmetry). No prerequisite commits required.
-
-**Step 3.4 — Author context**
-Record: Gustavo Kenji Mendonça Kaneko is a contributor; Liviu Dudau is
-the Mali DP maintainer and original driver author. Maintainer reviewed
-and merged to `drm-misc-fixes`.
-
-**Step 3.5 — Dependencies**
-Record: No dependencies. `clk_bulk_prepare_enable()` /
-`clk_bulk_disable_unprepare()` exist in `include/linux/clk.h` in this
-tree. Patch is self-contained.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Yes — described as error handling, but it is a real bug fix:
+ignored return value on an allocation path (`dev_set_name()` →
+`kobject_set_name_vargs()` → `kvasprintf`, which can return `-ENOMEM`).
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Original discussion**
-Record:
-- **URL:**
-  https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
-- **Series:** v1 (resume only) → v2 (resume + suspend symmetry, per
-  Liviu Dudau)
-- **Reviewer feedback:** Liviu Dudau requested suspend conversion and
-  commit-message correction in v2
-- **Stable nomination:** none found in thread
-- **NAKs:** none
+### Step 2.1: Inventory the changes
+**Record:**
+- **File:** `drivers/vdpa/ifcvf/ifcvf_main.c` (+9 / -2 lines)
+- **Function modified:** `ifcvf_vdpa_dev_add()`
+- **Scope:** Single-file, surgical error-path fix
 
-**Step 4.2 — Reviewers (b4 dig -w)**
-Record: CC'd dri-devel, Liviu Dudau, DRM maintainers (Lankhorst, Ripard,
-Zimmermann, Airlie, Vetter), linux-kernel.
+### Step 2.2: Code flow change per hunk
+**Record:**
+- **Hunk 1 (after `dev_set_name`):** Before → return value ignored,
+  immediately overwritten. After → check `ret`, log error, `goto err`.
+- **Hunk 2 (`_vdpa_register_device` failure):** Before → inline
+  `put_device()` + `return ret`. After → `goto err` (same cleanup,
+  unified path).
+- **Hunk 3 (new `err:` label):** `put_device(&adapter->vdpa.dev); return
+  ret;`
 
-**Step 4.3 — Bug report**
-Record: No external bug report. Author states issue found by code review
-without Mali DP hardware access.
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Error-path / resource-management fix.
+**Mechanism:** `dev_set_name()` failure (typically `-ENOMEM`) was
+masked. Without the fix, registration may proceed and return `0` even
+when a user-requested rename failed, leaving a device with the auto-
+generated name from `vdpa_alloc_device()` instead of the requested name.
+The fix aborts creation and releases the device reference via
+`put_device()`.
 
-**Step 4.4 — Related patches**
-Record: v1 was `[PATCH 1/2] drm/arm/malidp: fix ignored
-clk_prepare_enable() in runtime PM resume`; v2 is the committed version.
-
-**Step 4.5 — Stable list**
-Record: No stable-specific discussion found.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-Record: `malidp_runtime_pm_resume()`, `malidp_runtime_pm_suspend()`
-
-**Step 5.2 — Callers**
-
-| Caller | Context |
-|--------|---------|
-| `SET_RUNTIME_PM_OPS` | PM core runtime suspend/resume |
-| `pm_runtime_get_sync()` in `malidp_bind()`, atomic commit, unbind |
-Hot display paths |
-| `malidp_pm_resume_early()` | System sleep early resume — **still
-ignores return value** (pre-existing) |
-| Direct call when PM runtime disabled | Probe fallback |
-
-Record: Reachable on every runtime PM resume and system sleep resume on
-Mali DP hardware.
-
-**Step 5.3 — Callees**
-Record: `clk_bulk_prepare_enable()`, `clk_bulk_disable_unprepare()`,
-`malidp_de_irq_hw_init()`, `malidp_se_irq_hw_init()`
-
-**Step 5.4 — Reachability**
-Record: Triggered during device probe, display atomic commits
-(`pm_runtime_get_sync` in `malidp_atomic_commit_tail`), system
-suspend/resume, and module teardown. Users with
-`CONFIG_DRM_MALI_DISPLAY` on ARM/ARM64 platforms (e.g. NXP LS1028A) are
-affected.
-
-**Step 5.5 — Similar patterns**
-Record: Komeda driver in the same tree also has unchecked
-`clk_prepare_enable()` calls — separate issue; this fix is Mali-DP-
-specific.
+### Step 2.4: Fix quality assessment
+**Record:** Obviously correct; mirrors the pattern already used in
+`__vdpa_alloc_device()` in `drivers/vdpa/vdpa.c` (lines 160–165).
+Minimal diff, no API changes. Regression risk is very low — only adds an
+earlier error exit with proper cleanup.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 6.1 — Buggy code in tree?**
-Record: **Yes.** Local tree is **v6.18.44** (`make kernelversion` =
-6.18.44). Buggy code at lines 679–694 of `malidp_drv.c`. Present since
-2017. Mainline fix commit `46f715a16989f4e7bbbc2eb41447051874b027f3` is
-**not** an ancestor of HEAD.
+### Step 3.1: Blame the changed lines
+**Record:** `dev_set_name()` calls introduced in commit `378b2e956820ff`
+(Zhu Lingshan, 2022-07-22, "vDPA/ifcvf: support userspace to query
+features and MQ of a management device"). The ignored-return-value
+pattern has been present since then. `ifcvf_vdpa_dev_add()` itself dates
+to 2020.
 
-**Step 6.2 — Backport complications**
-Record: Expected clean apply — structure matches mainline diff context.
-No conflicting recent PM changes in this file.
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-**Step 6.3 — Related fixes already present?**
-Record: None. `git log -S 'clk_bulk_prepare_enable' --
-drivers/gpu/drm/arm/malidp_drv.c` returns empty.
+### Step 3.3: File history for related changes
+**Record:** Recent `ifcvf_main.c` changes are feature work (map ops, vq
+accessors). No prior fix for this specific issue. Standalone patch (not
+part of a series).
 
----
+### Step 3.4: Author's other commits
+**Record:** Evgenii Burenchev has no other commits in `drivers/vdpa/` in
+this tree. This appears to be a one-off static-analysis-driven fix,
+acked by subsystem maintainers.
 
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem**
-Record: `drivers/gpu/drm/arm/` — DRM display driver for ARM Mali
-DP500/550/650. **Criticality: PERIPHERAL** (platform-specific
-embedded/display hardware via `CONFIG_DRM_MALI_DISPLAY`).
-
-**Step 7.2 — Activity**
-Record: Driver is mature with infrequent changes; PM code largely
-unchanged since 2017.
+### Step 3.5: Dependencies
+**Record:** No dependencies. Self-contained; uses existing
+`put_device()` / `IFCVF_ERR()` patterns. `git apply --check` against
+upstream patch succeeds on this tree.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 8.1 — Who is affected**
-Record: Users with Mali Display Processor hardware on ARM/ARM64
-(DP500/550/650), typically embedded (NXP LS1028A, ARM Juno, etc.).
-Config-specific: `CONFIG_DRM_MALI_DISPLAY=m/y`.
+### Step 4.1: Original patch discussion
+**Record:** `b4 dig -c 4c653e85857b4` →
+https://patch.msgid.link/20260226152924.38790-1-evg28bur@yandex.ru
+Single v1 patch, no revisions. Thread saved to
+`/tmp/ifcvf_dev_set_name.mbox`.
 
-**Step 8.2 — Trigger conditions**
-Record: Any `clk_prepare_enable()` failure during runtime PM resume —
-most plausible after system suspend/resume or power-domain transitions
-when clock framework state changes. Rare in practice (clocks succeed at
-probe), but realistic on resume paths. Not a direct userspace attack
-vector.
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w` recipients include `stable@vger.kernel.org`,
+Greg Kroah-Hartman, Jason Wang, Zhu Lingshan, Michael Tsirkin,
+virtualization@lists.linux.dev. Zhu Lingshan and Jason Wang both Acked-
+by on the thread.
 
-**Step 8.3 — Failure mode severity**
-Record: Undefined hardware behavior — possible bus hang, kernel oops, or
-corrupted display state when IRQ/block init runs without clocks.
-**Severity: HIGH** (potential crash/hang), though **unreported in the
-field**.
+### Step 4.3: Bug report
+**Record:** Found by SVACE static analysis (Linux Verification Center).
+No syzbot/KASAN report, no user crash report. Failure mode is `-ENOMEM`
+on name allocation under memory pressure.
 
-**Step 8.4 — Risk-benefit**
-Record:
-- **Benefit:** Prevents proceeding with broken clock state; propagates
-  errors to `pm_runtime_get_sync()` callers; rolls back partial enables.
-- **Risk:** Very low — 22-line change, maintainer-reviewed, suspend
-  order preserved by bulk API semantics.
-- **Ratio:** Favorable for affected hardware users.
+### Step 4.4: Related patches
+**Record:** `octep_vdpa_main.c` has the same unchecked pattern (lines
+557–561), but that is out of scope for this commit. `vduse_dev.c`
+already checks `dev_set_name()` failure correctly.
 
----
-
-## Phase 9: Final Synthesis
-
-**Evidence FOR backport:**
-- Real, verifiable bug (ignored error returns) present since 2017 in
-  this tree
-- Serious failure mode if triggered (unclocked HW + IRQ init)
-- Small, self-contained, maintainer-reviewed fix
-- Uses existing `clk_bulk` API already in 6.18
-- Improves error propagation to `pm_runtime_get_sync()` paths used
-  during display commits
-
-**Evidence AGAINST backport:**
-- No user reports, syzbot, or hardware testing
-- Niche driver affecting limited embedded platforms
-- `malidp_pm_resume_early()` still ignores resume errors (incomplete for
-  system-sleep path; pre-existing call-site issue)
-- Clock failures after successful probe are uncommon
-
-**Unresolved questions:**
-- No confirmed production crash from this bug
-- No runtime test on actual Mali DP hardware
-
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — standard API, maintainer
-   Reviewed-by; no hardware Tested-by
-2. Fixes a real bug? **PASS** — objectively ignores
-   `clk_prepare_enable()` errors
-3. Important issue? **PASS** — undefined behavior / potential crash on
-   PM resume (HIGH if triggered, rare trigger)
-4. Small and contained? **PASS** — 1 file, ~22 lines
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — buggy code present, APIs
-   available
-
-**Exception category:** None (not device ID, quirk, DT, build, or docs
-fix — straight driver bug fix).
+### Step 4.5: Stable mailing list history
+**Record:** Patch was submitted with `Cc: stable@vger.kernel.org`. Zhu
+Lingshan replied on the stable list with Acked-by. No NAKs found in the
+mbox thread.
 
 ---
 
-## Problem Summary for Stable Users
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-On Linux **6.18.44**, the Mali DP driver's runtime PM resume enables
-three clocks (`pclk`, `aclk`, `mclk`) without checking for failure. If
-any enable fails (e.g. during resume from suspend), the driver
-continues, marks the device active, and initializes display IRQ hardware
-on potentially unclocked silicon. The fix uses
-`clk_bulk_prepare_enable()` to check errors and roll back partial
-enables, and makes suspend symmetric via `clk_bulk_disable_unprepare()`.
+### Step 5.1: Key functions modified
+**Record:** `ifcvf_vdpa_dev_add()` only.
 
-For stable trees carrying Mali DP since 2017, this closes a long-
-standing PM robustness hole. Impact is limited to
-`CONFIG_DRM_MALI_DISPLAY` users, but the consequence of triggering is
-severe enough to warrant backport: small fix, low risk, prevents
-potential hangs/crashes on resume.
+### Step 5.2: Trace callers
+**Record:** `ifcvf_vdpa_dev_add` is registered as `.dev_add` in
+`ifcvf_vdpa_mgmt_dev_ops` (line 758). Called from
+`vdpa_nl_cmd_dev_set_doit()` in `drivers/vdpa/vdpa.c` (line 663) under
+`vdpa_dev_lock`, triggered by netlink when userspace creates a vDPA
+device on an IFCVF management device.
 
-**Concern:** Fix does not address `malidp_pm_resume_early()` ignoring
-the return value — a follow-up could improve system-sleep resume, but
-that does not diminish the value of fixing the runtime PM callback
-itself.
+### Step 5.3: Trace callees
+**Record:** `vdpa_alloc_device()` (already calls `dev_set_name()` once
+with auto name), `dev_set_name()` (may return `-ENOMEM`),
+`_vdpa_register_device()` → `device_add()`, `put_device()` →
+`vdpa_release_dev()` → `kfree()`.
+
+### Step 5.4: Call chain / reachability
+**Record:** Userspace (CAP_NET_ADMIN) → netlink `VDPA_CMD_DEV_NEW` →
+`vdpa_nl_cmd_dev_set_doit()` → `ifcvf_vdpa_dev_add()`. Reachable from
+userspace on systems with `CONFIG_IFCVF` and IFCVF hardware present.
+
+### Step 5.5: Similar patterns
+**Record:** `__vdpa_alloc_device()` correctly checks `dev_set_name()`
+failure (vdpa.c:164–165). ifcvf redundantly calls `dev_set_name()` again
+in `dev_add()` to apply a user-provided name — that second call was
+unchecked.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+### Step 6.1: Does the buggy code exist?
+**Record:** **Yes.** In `drivers/vdpa/ifcvf/ifcvf_main.c` lines 733–738,
+`dev_set_name()` return value is immediately overwritten by
+`_vdpa_register_device()`. Bug present since 2022 in this tree. Fix
+commit `4c653e85857b4` is **not** an ancestor of HEAD.
+
+### Step 6.2: Backport complications
+**Record:** Clean apply verified (`git apply --check` passes). No
+refactoring conflicts expected.
+
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent fix found in this tree (`git grep` for this
+subject returned nothing).
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem and criticality
+**Record:** **Subsystem:** `drivers/vdpa/ifcvf` (Intel IFC VF vDPA
+driver). **Criticality:** PERIPHERAL — hardware-specific, `CONFIG_IFCVF`
+tristate module.
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained in 6.18.y (recent commits for map ops,
+vq accessors, MODULE_DESCRIPTION). Driver has been in-tree since ~2020.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of Intel IFC VF vDPA hardware who create vDPA devices
+via netlink. Config-specific (`CONFIG_IFCVF`), not universal.
+
+### Step 8.2: Trigger conditions
+**Record:** `dev_set_name()` fails (typically `-ENOMEM` under memory
+pressure) during device creation with a user-specified name. Uncommon
+but realistic. Requires `CAP_NET_ADMIN` to trigger the netlink path.
+
+### Step 8.3: Failure mode severity
+**Record:** Without fix: silent success with wrong device name, or
+masked error code. Not a crash, UAF, or data corruption in the analyzed
+path. **Severity: MEDIUM** (incorrect error handling / improper device
+state reporting). Resource cleanup on `dev_set_name()` failure is also
+incorrect without the fix — registration is attempted instead of
+aborting with `put_device()`.
+
+### Step 8.4: Risk-benefit ratio
+**Record:**
+- **Benefit:** MEDIUM — correct error propagation and cleanup on a real,
+  reachable error path; maintainer-approved.
+- **Risk:** VERY LOW — 9-line localized change, no behavior change on
+  success path.
+- **Ratio:** Favorable for backport.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence compile
+
+**FOR backport:**
+- Real bug: ignored `dev_set_name()` return value (verified in tree)
+- Small, surgical, obviously correct fix
+- Acked by Jason Wang and Zhu Lingshan (subsystem maintainers)
+- Submitted to stable list with maintainer ack
+- Applies cleanly to v6.18.44
+- Found by static analysis (SVACE) — legitimate defect pattern
+- Matches established pattern in core vDPA code
+
+**AGAINST backport:**
+- Failure requires memory pressure (`-ENOMEM`) — rare
+- No crash, security issue, or data corruption demonstrated
+- Niche driver (`CONFIG_IFCVF`, Intel IFC VF hardware only)
+- Impact is incorrect error reporting / masked failure, not system
+  instability
+
+**Unresolved:** No runtime crash report or user-reported production
+incident.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — logic is straightforward;
+   maintainer acked; no Tested-by but pattern is standard.
+2. Fixes a real bug? **PASS** — ignored error return on allocation path.
+3. Important issue? **PASS (borderline)** — error-path resource
+   management on a userspace-reachable path; not crash-level but real
+   defect with incorrect success reporting.
+4. Small and contained? **PASS** — 1 file, 9 lines added.
+5. No new features or APIs? **PASS**.
+6. Can apply to local tree? **PASS** — verified clean apply.
+
+### Step 9.3: Exception categories
+**Record:** N/A — not a device ID, quirk, DT, build fix, or
+documentation fix. Standard error-handling bug fix.
+
+### Step 9.4: Decision rationale
+
+For **v6.18.44**, the buggy code is present, the driver is supported,
+and the fix is minimal and maintainer-endorsed. While severity is
+moderate rather than critical, this is exactly the kind of small,
+obviously-correct error-path fix stable trees routinely accept —
+especially with maintainer acks and stable-list nomination. The fix
+prevents masking `dev_set_name()` failures and ensures proper
+`put_device()` cleanup when renaming fails, rather than proceeding to
+registration with an improperly set name.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags from user-provided content
-  and mainline commit `46f715a`
-- [Phase 1] Confirmed no Reported-by/syzbot; found Reviewed-by: Liviu
-  Dudau
-- [Phase 2] Verified diff: +16/−6 in `malidp_drv.c`, two functions
-  modified
-- [Phase 2] Read `clk_bulk_disable()` in `drivers/clk/clk-bulk.c`:
-  disables in reverse order (lines 214–215), matching old suspend
-  sequence
-- [Phase 2] Read `clk_bulk_prepare_enable()` in `include/linux/clk.h`
-  (lines 1164–1175): prepare+enable with rollback
-- [Phase 3] `git blame -L 686,700`: buggy code from `85f6421889eca6`
-  (2017-03-22)
-- [Phase 3] `git log -S 'clk_prepare_enable(hwdev->pclk)'`: introduced
-  in `ad49f8602fe88` (initial driver)
-- [Phase 3] `git merge-base --is-ancestor 46f715a HEAD`: commit NOT in
-  current tree
-- [Phase 4] `b4 dig -c 46f715a`: found thread at
-  https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
-- [Phase 4] `b4 dig -a`: v2 is latest revision
-- [Phase 4] `b4 dig -w`: dri-devel + DRM maintainers CC'd
-- [Phase 4] Saved mbox; Liviu Dudau Reviewed-by + merge confirmation; no
-  stable nomination
-- [Phase 4] Fetched lkml.iu.edu mirror of patch thread
-- [Phase 5] Grep callers: `pm_runtime_get_sync` at lines 242, 761, 862,
-  892; `SET_RUNTIME_PM_OPS` at line 985
-- [Phase 5] Read `malidp_pm_resume_early()` (lines 975–979): ignores
-  return value (not fixed by this patch)
-- [Phase 6] `git describe HEAD` = v6.18.44-1-g2736c32da98b9; `make
-  kernelversion` = 6.18.44
-- [Phase 6] Read current `malidp_drv.c` lines 667–700: buggy code
-  confirmed present
-- [Phase 6] `git log -S 'clk_bulk_prepare_enable' -- malidp_drv.c`:
-  empty (fix not present)
-- [Phase 7] Read `drivers/gpu/drm/arm/Kconfig`:
-  `CONFIG_DRM_MALI_DISPLAY` for DP500/550/650
-- [Phase 8] Grep DTS: Mali DP references in `fsl-ls1028a.dtsi` (limited
-  platform footprint)
+- [Phase 1] Parsed subject, tags, body; identified SVACE static-analysis
+  origin
+- [Phase 1] Confirmed no `Fixes:` tag; ignored pipeline SOB markers per
+  instructions
+- [Phase 2] Read diff: +9/-2 lines in `ifcvf_vdpa_dev_add()`, unified
+  `err:` cleanup
+- [Phase 2] Read `dev_set_name()` in `drivers/base/core.c:3553-3561` —
+  returns `kobject_set_name_vargs()` error
+- [Phase 2] Read `kobject_set_name_vargs()` in `lib/kobject.c:266-296` —
+  returns `-ENOMEM` on allocation failure
+- [Phase 3] `git blame`: `dev_set_name` calls introduced in
+  `378b2e956820ff` (2022-07-22)
+- [Phase 3] `git log -20 -- drivers/vdpa/ifcvf/ifcvf_main.c`: no prior
+  fix for this issue
+- [Phase 3] `git apply --check` on upstream patch: **passes cleanly**
+- [Phase 4] `b4 dig -c 4c653e85857b4`: lore URL found
+- [Phase 4] `b4 dig -w`: stable@vger.kernel.org CC'd; maintainers on
+  recipient list
+- [Phase 4] `b4 dig -a`: single v1 patch, no later revisions
+- [Phase 4] `b4 dig -m /tmp/ifcvf_dev_set_name.mbox`: Zhu Lingshan
+  Acked-by on stable thread; Jason Wang Acked-by in thread
+- [Phase 5] Traced caller: `vdpa_nl_cmd_dev_set_doit()` →
+  `mdev->ops->dev_add()` at `vdpa.c:663`
+- [Phase 5] Compared with `__vdpa_alloc_device()` error handling at
+  `vdpa.c:160-165`
+- [Phase 5] Found same unchecked pattern in `octep_vdpa_main.c:557-561`
+  (separate driver)
+- [Phase 6] `git describe HEAD`: v6.18.44
+- [Phase 6] Confirmed buggy code at `ifcvf_main.c:733-738` in current
+  checkout
+- [Phase 6] `git merge-base --is-ancestor 4c653e85857b4 HEAD`: exit 1 —
+  fix **not** in tree
+- [Phase 6] `git merge-base --is-ancestor 378b2e956820ff HEAD`: buggy
+  code **is** in tree
+- [Phase 7] `CONFIG_IFCVF` exists in `drivers/vdpa/Kconfig:44-51`
+- [Phase 8] Failure mode: `-ENOMEM` on rename, masked error / silent
+  wrong name; severity MEDIUM
 
-**YES****Verdict: YES** — backport to this tree (Linux **6.18.44**).
+**YES**
 
-The Mali DP driver’s runtime PM resume has ignored
-`clk_prepare_enable()` failures since 2017. On failure it can still
-bring up IRQs on unclocked hardware. The fix is small (one file, ~22
-lines), uses the existing `clk_bulk` API, and was **Reviewed-by** Liviu
-Dudau (driver maintainer). The buggy code is present here; mainline
-commit `46f715a` is not in this tree yet.
+ drivers/vdpa/ifcvf/ifcvf_main.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-**Caveat:** No field reports or hardware testing — found by code review
-only. `malidp_pm_resume_early()` still ignores the resume return value;
-that’s a separate follow-up, not a reason to skip this fix.
-
- drivers/gpu/drm/arm/malidp_drv.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
-index bc5f5e9798c32..2bf4a647e4b28 100644
---- a/drivers/gpu/drm/arm/malidp_drv.c
-+++ b/drivers/gpu/drm/arm/malidp_drv.c
-@@ -669,6 +669,11 @@ static int malidp_runtime_pm_suspend(struct device *dev)
- 	struct drm_device *drm = dev_get_drvdata(dev);
- 	struct malidp_drm *malidp = drm_to_malidp(drm);
- 	struct malidp_hw_device *hwdev = malidp->dev;
-+	struct clk_bulk_data clks[] = {
-+		{ .clk = hwdev->pclk },
-+		{ .clk = hwdev->aclk },
-+		{ .clk = hwdev->mclk },
-+	};
+diff --git a/drivers/vdpa/ifcvf/ifcvf_main.c b/drivers/vdpa/ifcvf/ifcvf_main.c
+index 6658dc74d9150..56ed03dc918db 100644
+--- a/drivers/vdpa/ifcvf/ifcvf_main.c
++++ b/drivers/vdpa/ifcvf/ifcvf_main.c
+@@ -734,15 +734,22 @@ static int ifcvf_vdpa_dev_add(struct vdpa_mgmt_dev *mdev, const char *name,
+ 		ret = dev_set_name(&vdpa_dev->dev, "%s", name);
+ 	else
+ 		ret = dev_set_name(&vdpa_dev->dev, "vdpa%u", vdpa_dev->index);
++	if (ret) {
++		IFCVF_ERR(pdev, "Failed to set device name");
++		goto err;
++	}
  
- 	/* we can only suspend if the hardware is in config mode */
- 	WARN_ON(!hwdev->hw->in_config_mode(hwdev));
-@@ -676,9 +681,7 @@ static int malidp_runtime_pm_suspend(struct device *dev)
- 	malidp_se_irq_fini(hwdev);
- 	malidp_de_irq_fini(hwdev);
- 	hwdev->pm_suspended = true;
--	clk_disable_unprepare(hwdev->mclk);
--	clk_disable_unprepare(hwdev->aclk);
--	clk_disable_unprepare(hwdev->pclk);
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(clks), clks);
+ 	ret = _vdpa_register_device(&adapter->vdpa, vf->nr_vring);
+ 	if (ret) {
+-		put_device(&adapter->vdpa.dev);
+ 		IFCVF_ERR(pdev, "Failed to register to vDPA bus");
+-		return ret;
++		goto err;
+ 	}
  
  	return 0;
- }
-@@ -688,10 +691,17 @@ static int malidp_runtime_pm_resume(struct device *dev)
- 	struct drm_device *drm = dev_get_drvdata(dev);
- 	struct malidp_drm *malidp = drm_to_malidp(drm);
- 	struct malidp_hw_device *hwdev = malidp->dev;
-+	struct clk_bulk_data clks[] = {
-+		{ .clk = hwdev->pclk },
-+		{ .clk = hwdev->aclk },
-+		{ .clk = hwdev->mclk },
-+	};
-+	int err;
 +
-+	err = clk_bulk_prepare_enable(ARRAY_SIZE(clks), clks);
-+	if (err)
-+		return err;
++err:
++	put_device(&adapter->vdpa.dev);
++	return ret;
+ }
  
--	clk_prepare_enable(hwdev->pclk);
--	clk_prepare_enable(hwdev->aclk);
--	clk_prepare_enable(hwdev->mclk);
- 	hwdev->pm_suspended = false;
- 	malidp_de_irq_hw_init(hwdev);
- 	malidp_se_irq_hw_init(hwdev);
+ static void ifcvf_vdpa_dev_del(struct vdpa_mgmt_dev *mdev, struct vdpa_device *dev)
 -- 
 2.53.0
 
