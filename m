@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBB442E425;
-	Mon, 31 Aug 2026 13:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E0B43B48D;
+	Mon, 31 Aug 2026 13:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183217; cv=none; b=DBCWm4ZPdQdFQwWA9qA/fMQmby84n5vXiSIArM85SJZeQhIdn5fDWDW1ZegUg1Zi8nRUJ6dghYbSiFZ97cazNnkwcUKyybLryadxsJHW05aZlZx9ievaMUoCG4Ptq/6iLr4w/B1XnDkVV+adbnlFbYT8Gg7KwHnSOHbJht50kAA=
+	t=1788183219; cv=none; b=UOmDzq3ju3GV4TPMH0kv2hhOR+PO1nWmbYMO74P3FpJEKJFfyumTwKUsF3Svm3YNVnRRcXY/MqHZwHlsGiUCBWtdqV4uOi52xbUZB1OvYJZnfKSpCEAxWNBUjSZCOyzkFX8y0kHYn6tel14lplg/E4Qn76zP14p/t3MniT12LwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183217; c=relaxed/simple;
-	bh=te9lBsObeD2HvG+eVSNqGwRxdEUCCwxOLWUiuE/QCkQ=;
+	s=arc-20240116; t=1788183219; c=relaxed/simple;
+	bh=p1qATjbL3auARJbN7KAqGjdc/w7Xup74OTjUZ56BNqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OIdeAn+9Bz7orPfNH60dCgYALuYiG2/ik/vCSjgx+57+CmyJseRsZOZUHD3r3UF0jcxIPm39VXQEIE8stOHbsL509Ht3NJksHWW/4BSCjwDwTVxaOkEsyconNJw+LF+O5ltfJU9uCcnHTujeLJ1DIUKGJz0KaHqBzKKwtHNBvJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G8K2SMBy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GYs/cFm1HRnBOhIW4Vhv0U6GPPQaVxVGC5aOy+pmkts8Ou7i6wedQvM9PAEY0cYQ7qgwkwHvmfTrmGXSd1vraGGsiELg1Hf1MUyXR7HacyAL5N3JbFYJ7waPMWArcI14raZH/DPnSCm0wARVOjINS0WmweTBfs+JGOh8MINlufg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CKHJP/Kc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G8K2SMBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8B11F00A3D;
-	Mon, 31 Aug 2026 13:33:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CKHJP/Kc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066131F00A3F;
+	Mon, 31 Aug 2026 13:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183214;
-	bh=pNF0DMU5ekme0mlE1jwe1Y2+gkGX3ce/3LSBh3uopR0=;
+	s=k20260515; t=1788183215;
+	bh=2PQ4t6svgmCFZdaM/dcvEVvPOrzQymWTx+ThL75m5uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8K2SMByOS+WBVBAEFkc+VmcOgHnwxyCFZIWbSc6J8fOx1UrIjHecDWk+XeKaABoa
-	 fSEL+1SFth+TYwE4PmllcCcfer0eSbPCYcmS4jIfFChfyevKIpKr+Nrdi8++cL6De/
-	 /5rThEDaKkkGsELksB64nEZ2C/AjXzfjYPG6HSwoTmqawTQ1Lpk2EH7gXEPvSb2sAG
-	 tVMNVvdSS5mzlYtL7KcjF8afyt+QJl7QgaVEaWoIgEZl8eqEMS/72rlGhIF6355Xd1
-	 M0xcMexd451DCJPLLh+oqJF4Awdvz1pxLU8zwSGJLJhtnCYQ+czNgXkudylPx7lD9z
-	 pyo21ceOJWb2A==
+	b=CKHJP/Kcgeoai/bpR8n8MMIfUFMW90jdwJtjQoKHbvGyVoizJDLTwMrL4klQDtuMy
+	 kUdXFgpNchQoPE/NxLtjt0wU+Xi1pIS9L2V3F9OpHkfENRVe2WtUszGIGfnO8E3UOA
+	 OnK6sMaBmTpF/F0labnRmW14KtiEJjp+tGvk04j2hR1WfyJ4XbK67izhS63E+GnIQj
+	 fKNhf9DOptM66y/v3v8CoTH/Xn25flwK3CqNQA8YhFlZ+4nMELdxW0pJcMo3WsEC24
+	 AHWSHZIy9dEw2xopsXjuZYYvc6lKsVBfpLE/2hj3XZWbyGDXxunHkHEu4k+blhO356
+	 y2vYklQpsnaeQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Lin <thomas_lin@lecomputing.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] spi: dw-mmio: Add ACPI ID LECA0002 for LECARC SoCs
-Date: Mon, 31 Aug 2026 09:20:41 -0400
-Message-ID: <20260831133314.4125787-13-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] hfs: rework hfsplus_readdir() logic
+Date: Mon, 31 Aug 2026 09:20:42 -0400
+Message-ID: <20260831133314.4125787-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,419 +53,598 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Lin <thomas_lin@lecomputing.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 019947c495850461242fdcc0780258805595036c ]
+[ Upstream commit 7fde7e806657fbe0d33f489521b488eed94f9b39 ]
 
-This ID requires a custom initialization function
-dw_spi_hssi_no_dma_init() that sets dws->dws.ip to DW_HSSI_ID.
+The xfstests' test-case generic/637 fails with error:
 
-Signed-off-by: Thomas Lin <thomas_lin@lecomputing.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260521-lecarc-acpi-ids-v1-2-ae0ae90b2817@lecomputing.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+FSTYP -- hfs
+PLATFORM -- Linux/x86_64 kvm-xfstests 6.15.0-rc4-xfstests-g00b827f0cffa #1 SMP PREEMPT_DYNAMIC Fri May 25
+MKFS_OPTIONS -- /dev/vdc
+MOUNT_OPTIONS -- /dev/vdc /vdc
+
+QA output created by 637
+entries 7 and 8 have duplicate d_off 8
+Found unlinked files in open dir (see xfstests-dev/results//generic/637.full for details)
+
+Likewise HFS+, currently, HFS has very complicated and
+fragile logic of rd->file->f_pos correction in hfs_delete_cat().
+This patch removes this logic and it stores the current
+pos into hfs_readdir_data. Finally, if rd->pos == ctx->pos
+then hfs_readdir() tries to find the position in
+b-tree's node by means of hfs_cat_key. This position is
+used to re-start the folder's content traversal.
+
+sudo ./check generic/637
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.1.0-rc1+ #55 SMP PREEMPT_DYNAMIC Tue May 19 15:18:02 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/637  32s ...  31s
+Ran: generic/637
+Passed all 1 tests
+
+Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/65
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260519222811.1311071-2-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-# Stable Backport Analysis: `spi: dw-mmio: Add ACPI ID LECA0002 for
-LECARC SoCs`
+# Stable Backport Analysis: `hfs: rework hfsplus_readdir() logic`
 
-**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, detached HEAD at
-`1efe5d048a391`)
+**Local tree:** `v6.18.44` (Makefile: VERSION=6, PATCHLEVEL=18,
+SUBLEVEL=44)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[spi: dw-mmio]` `[Add]` — Add ACPI ID `LECA0002` for LECARC
-SoCs SPI controller enablement on ACPI/ARM64 platforms.
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[hfs] [rework] Rework directory readdir resume logic
+(subject incorrectly references hfsplus_readdir; diff is HFS-only)`
 
-### Step 1.2: Tags
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 **Record:**
-- **Signed-off-by:** Thomas Lin \<thomas_lin@lecomputing.com\> (author)
-- **Reviewed-by:** Andy Shevchenko \<andriy.shevchenko@linux.intel.com\>
-- **Link:** https://patch.msgid.link/20260521-lecarc-acpi-
-  ids-v1-2-ae0ae90b2817@lecomputing.com
-- **Signed-off-by:** Mark Brown \<broonie@kernel.org\> (SPI maintainer
-  merge tag in final commit)
-- **Acked-by:** Mark Brown (in v1 mbox submission)
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable@
-- Notable: subsystem maintainer ack; no syzbot/user bug reports
+- **Fixes:** — absent (expected for manual review)
+- **Reported-by:** — absent
+- **Tested-by:** — absent
+- **Reviewed-by / Acked-by:** — absent
+- **Link:**
+  https://lore.kernel.org/r/20260519222811.1311071-2-slava@dubeyko.com
+- **Closes:** https://github.com/hfs-linux-kernel/hfs-linux-
+  kernel/issues/65
+- **cc:** John Paul Adrian Glaubitz, Yangtao Li, linux-
+  fsdevel@vger.kernel.org
+- **Signed-off-by:** Viacheslav Dubeyko (author)
+- **Notable:** Message-ID suffix `-2-` indicates patch 2 of a series;
+  companion patch 1 fixes HFS+ separately. No syzbot, no Cc: stable tag.
 
-### Step 1.3: Body text
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 **Record:**
-- **Bug description:** LECARC SoCs expose SPI via ACPI HID `LECA0002`;
-  without this ID the existing `dw_spi_mmio` driver does not bind.
-- **Symptom:** SPI controller non-functional on LECARC ACPI boots (no
-  driver probe).
-- **Root cause:** Missing ACPI ID in `acpi_apd.c` (clock/platform device
-  creation) and `spi-dw-mmio.c` (driver match + HSSI init).
-- **Init requirement:** Must use `dw_spi_hssi_no_dma_init()` to set
-  `dws->ip = DW_HSSI_ID` (HSSI register layout, no DMA).
-- **Version info:** None explicit; part of v5 series dated 2026-05-21.
+- **Bug:** xfstests `generic/637` fails on HFS with `entries 7 and 8
+  have duplicate d_off 8` and `Found unlinked files in open dir`.
+- **Symptom:** Incorrect `getdents`/`readdir` results — duplicate
+  directory offsets and deleted entries visible in an open directory.
+- **Root cause (author):** Fragile `rd->file->f_pos--` correction in
+  `hfs_cat_delete()` when entries are removed while a directory is open
+  for reading.
+- **Fix approach:** Store `ctx->pos` and catalog key in
+  `hfs_readdir_data`; on resume, if `rd->pos == ctx->pos`, locate
+  position via `hfs_cat_key` instead of positional `hfs_brec_goto()`.
+- **Testing:** Author reports `generic/637` passes after fix.
 
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is hardware enablement (ACPI ID addition), not a
-regression fix. The function rename (`dw_spi_intel_init` →
-`dw_spi_hssi_no_dma_init`) is cosmetic; behavior is unchanged. Without
-the ACPI entry, hardware simply does not probe; there is no pre-existing
-broken path for current 6.18.y users.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not disguised — this is an explicit correctness fix for
+directory enumeration, though the subject says "rework" rather than
+"fix".
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: INVENTORY THE CHANGES
 **Record:**
-| File | Changes |
-|------|---------|
-| `drivers/acpi/acpi_apd.c` | +6 lines (new `leca_spi_desc`, table
-entry) |
-| `drivers/spi/spi-dw-mmio.c` | +2 lines net (rename + ACPI entry) |
-| **Total:** ~15 lines | **Functions:** none structurally changed;
-rename only |
-| **Scope:** Single-subsystem, surgical ACPI ID addition |
+| File | Change |
+|------|--------|
+| `fs/hfs/catalog.c` | -9 lines (remove f_pos correction loop) |
+| `fs/hfs/dir.c` | ~28 lines changed (key-based resume, simplify
+release) |
+| `fs/hfs/hfs.h` | struct `hfs_readdir_data` simplified |
+| `fs/hfs/hfs_fs.h` | remove `open_dir_list`, `open_dir_lock` |
+| `fs/hfs/inode.c` | -4 lines (remove list/lock init) |
 
-### Step 2.2: Code flow per hunk
+**Functions modified:** `hfs_cat_delete()`, `hfs_readdir()`,
+`hfs_dir_release()`, `hfs_new_inode()`, `hfs_read_inode()`
+
+**Scope:** Single-subsystem, 5 files, net -22 lines (12 insertions, 34
+deletions). Surgical refactor that fixes a bug.
+
+### Step 2.2: CODE FLOW CHANGE
 **Record:**
-1. **`acpi_apd.c` — `leca_spi_desc`:** Adds APD descriptor with
-   `fixed_clk_rate = 400000000` so ACPI scan creates a platform device
-   with correct clock for `LECA0002`.
-2. **`acpi_apd.c` — device ID table:** Maps `"LECA0002"` →
-   `leca_spi_desc` under `CONFIG_ARM64`.
-3. **`spi-dw-mmio.c` — rename:** `dw_spi_intel_init` →
-   `dw_spi_hssi_no_dma_init`; identical body (sets `DW_HSSI_ID`, no DMA
-   setup).
-4. **`spi-dw-mmio.c` — OF table:** Updates `intel,keembay-ssi` to use
-   renamed init (no behavior change).
-5. **`spi-dw-mmio.c` — ACPI table:** Adds `{"LECA0002",
-   dw_spi_hssi_no_dma_init}` so driver probes and configures HSSI IP
-   correctly.
 
-**Before → After:** LECARC SPI ACPI node ignored → platform device
-created + `dw_spi_mmio` probes with HSSI register programming.
+**Hunk 1 — `hfs_cat_delete()`:** BEFORE: on delete, iterate all open
+readdir handles and decrement `f_pos` for entries after the deleted key.
+AFTER: no f_pos manipulation.
 
-### Step 2.3: Bug mechanism
-**Record:** **Category:** Hardware enablement / ACPI ID addition
-(exception category, not crash/leak/race fix). **Mechanism:** Without
-ACPI match, `dw_spi_mmio` never probes; with probe but wrong IP type
-(`dws->ip` defaults to 0 = PSSI via `devm_kzalloc`),
-`dw_spi_update_config()` would use PSSI register field masks instead of
-HSSI — incorrect SPI operation. The init function prevents that.
+**Hunk 2 — `hfs_readdir()` resume:** BEFORE: always `hfs_brec_goto(&fd,
+ctx->pos - 1)`. AFTER: if saved `rd->pos == ctx->pos`, use stored
+`hfs_cat_key` with `hfs_brec_find()` (fallback `hfs_brec_goto(&fd, 1)`
+on `-ENOENT`); else positional goto.
 
-### Step 2.4: Fix quality
-**Record:** Obviously correct — follows existing `HISI0173` pattern in
-both `acpi_apd.c` and `spi-dw-mmio.c`. Reuses proven `dw_spi_intel_init`
-logic. Minimal risk; rename is zero functional change. No API changes.
+**Hunk 3 — `hfs_readdir()` state save:** BEFORE: track open dirs in per-
+inode linked list with spinlock; save only key. AFTER: save `rd->pos =
+ctx->pos` and key in per-file `private_data`.
+
+**Hunk 4 — `hfs_dir_release()`:** BEFORE: remove from linked list under
+spinlock, then kfree. AFTER: simple kfree.
+
+**Hunk 5 — struct cleanup:** Remove `list`, `file` from
+`hfs_readdir_data`; add `loff_t pos`. Remove
+`open_dir_list`/`open_dir_lock` from `hfs_inode_info`.
+
+### Step 2.3: BUG MECHANISM
+**Record:** **Category:** Logic/correctness fix in directory
+enumeration.
+
+**Mechanism:** When `readdir` is interrupted mid-directory (e.g., small
+userspace buffer), the saved position and the catalog key can diverge
+from a naïve positional index after concurrent unlinks. The old
+`f_pos--` hack in `hfs_cat_delete()` fails to maintain consistency,
+causing:
+1. Duplicate `d_off` values returned to userspace
+2. Deleted ("unlinked") files appearing in directory listings
+
+The companion HFS+ patch (`fc30ae43b8b5b`) documents the exact failure
+sequence with debug output confirming this mechanism.
+
+### Step 2.4: FIX QUALITY
+**Record:**
+- **Obviously correct:** Yes — key-based resume is the standard
+  approach; removes complex cross-file f_pos tracking.
+- **Minimal:** Yes — net code reduction, no unrelated changes.
+- **Regression risk:** Low — simplifies locking (removes spinlock/list
+  entirely for this path). The `-ENOENT` → `hfs_brec_goto(&fd, 1)`
+  fallback handles deleted-key edge case.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** `dw_spi_intel_init` introduced in `dc4e6d9fbf9a3`
-(2022-07-13, Intel Keem Bay). ACPI SPI support since `32215a6c6beb8`
-(2018-12-03, `HISI0173`). All prerequisite code long present in 6.18.y.
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:**
+- `f_pos--` logic in `hfs_cat_delete()`: original git import
+  (`1da177e4c3f4`, 2005)
+- `open_dir_lock`/`list_for_each_entry`: Al Viro, `9717a91b01feda`
+  ("hfs: switch to ->iterate_shared()", 2016)
+- Bug has been present essentially since HFS support was added; not a
+  recent regression.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** No `Fixes:` tag present — N/A.
 
-### Step 3.3: Related file history
-**Record:** Recent changes to `spi-dw-mmio.c` in 6.18.y include reset
-error handling (`18a5f1af596e6`), `remove` callback conversion —
-unrelated to this hunk. Standalone patch; companion GPIO patch
-(`LECA0001`) is separate subsystem.
+### Step 3.3: FILE HISTORY FOR RELATED CHANGES
+**Record:**
+- `eec11535ca3d3` — prior `hfs: fix hfs_readdir()` (memcpy bug in key
+  save, reviewed by Dubeyko)
+- `9717a91b01feda` — iterate_shared conversion added open_dir_list
+  mechanism
+- `956b1d8051cfa`, `54694417d4384` — same author's HFS+ xfstests fixes
+  already in this 6.18.y tree
+- Fix commit `7fde7e806657f` exists locally on `autosel` branch but is
+  **not** an ancestor of HEAD (6.18.44)
 
-### Step 3.4: Author history
-**Record:** No prior Thomas Lin commits in `drivers/spi/` or
-`drivers/acpi/` in this tree. First-time contributor for this platform;
-patch reviewed/acked by SPI maintainer.
+### Step 3.4: AUTHOR'S OTHER COMMITS
+**Record:** Viacheslav Dubeyko is an active HFS/HFS+ maintainer with
+multiple xfstests-driven fixes backported to stable (generic/498,
+generic/480, generic/101, etc.).
 
-### Step 3.5: Dependencies
-**Record:** No code dependencies on other commits. Part of 2-patch
-series (GPIO + SPI) for full LECARC ACPI support, but SPI patch is self-
-contained. `DW_HSSI_ID`, `dw_spi_intel_init`, ACPI framework all
-present. Applies standalone.
+### Step 3.5: DEPENDENT/PREREQUISITE COMMITS
+**Record:** Standalone for HFS. Companion `hfsplus: rework
+hfsplus_readdir() logic` is a separate commit for HFS+; this HFS patch
+does not depend on it. Applies cleanly to current tree (`git apply
+--check` passed).
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:** `b4 am -l '20260521-lecarc-acpi-
-ids-v1-2-ae0ae90b2817@lecomputing.com'` — thread found (v5, 2 patches).
-Cover: `arm64: Add LECARC ACPI IDs for DesignWare GPIO, SPI`. SPI patch
-acked by Mark Brown, reviewed by Andy Shevchenko. No stable nomination
-found in cover or patch. No NAKs in retrieved thread.
+### Step 4.1: ORIGINAL PATCH DISCUSSION
+**Record:**
+- **b4 dig -c 7fde7e806657f:**
+  https://patch.msgid.link/20260519222811.1311071-2-slava@dubeyko.com
+- **Series revisions (b4 dig -a):** v1 only (single revision)
+- **Review feedback:** Mbox contains only the patch submission — no
+  replies, no stable nominations, no NAKs in thread
 
-### Step 4.2: Reviewers
-**Record:** Andy Shevchenko (Reviewed-by), Mark Brown (Acked-by/Signed-
-off-by), Bartosz Golaszewski reviewed GPIO patch. Appropriate subsystem
-coverage.
+### Step 4.2: WHO REVIEWED
+**Record (b4 dig -w):** CC'd: Viacheslav Dubeyko, glaubitz@physik.fu-
+berlin.de, linux-fsdevel@vger.kernel.org, frank.li@vivo.com,
+Slava.Dubeyko@ibm.com. No explicit Reviewed-by in commit or thread.
 
-### Step 4.3: Bug reports
-**Record:** None — no user/syzbot reports. Enablement for new LE
-Computing LECARC SoC platform.
+### Step 4.3: BUG REPORT
+**Record:**
+- **GitHub issue #65:** 100% failure rate on `generic/637` for HFS (5/5
+  runs), kernel 6.15.0-rc4-xfstests. Closed after fix reference.
+- **Failure:** duplicate d_off, unlinked files in open directory —
+  reproducible, concrete.
 
-### Step 4.4: Series context
-**Record:** Patch 2/2 of series. Patch 1 adds `LECA0001` to `gpio-
-dwapb.c` (not in 6.18.44 tree). Full platform needs both; SPI patch
-independently valuable.
+### Step 4.4: RELATED PATCHES AND SERIES
+**Record:** 2-patch series sent separately:
+1. `hfsplus: rework hfsplus_readdir() logic` (upstream `4b04964328446`)
+2. `hfs: rework hfsplus_readdir() logic` (upstream `7fde7e806657f`) —
+   **this commit**
 
-### Step 4.5: Stable list
-**Record:** Could not search lore stable list (bot protection). No
-stable discussion found in retrieved mbox.
+Each is self-contained for its respective filesystem.
+
+### Step 4.5: STABLE MAILING LIST HISTORY
+**Record:** Lore fetch blocked by bot protection; no stable-list
+discussion found via b4 or GitHub.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `dw_spi_hssi_no_dma_init()` (renamed from
-`dw_spi_intel_init`), `acpi_apd_create_device()`, `dw_spi_mmio_probe()`,
-`dw_spi_update_config()` (uses `dw_spi_ip_is()`).
+### Step 5.1: KEY FUNCTIONS
+**Record:** `hfs_readdir()`, `hfs_cat_delete()`, `hfs_dir_release()`
 
-### Step 5.2: Callers
-**Record:** Init called from `dw_spi_mmio_probe()` via
-`device_get_match_data()` when ACPI/OF matches.
-`acpi_apd_create_device()` called during ACPI scan at boot. Boot-time
-device enumeration path.
+### Step 5.2: TRACE CALLERS
+**Record:**
+- `hfs_readdir()` — VFS `iterate_shared` callback; reachable from
+  `getdents`/`readdir` syscalls on HFS mounts
+- `hfs_cat_delete()` — called from `hfs_remove()` (unlink/rmdir),
+  reachable from `unlink`/`rmdir` syscalls
+- **Trigger path:** open directory → partial readdir → concurrent unlink
+  → resume readdir
 
-### Step 5.3: Callees
-**Record:** Init only sets `dwsmmio->dws.ip = DW_HSSI_ID`. Probe
-continues to `dw_spi_add_host()`. `dw_spi_update_config()` branches on
-`dw_spi_ip_is(dws, PSSI)` vs HSSI paths.
+### Step 5.3: TRACE CALLEES
+**Record:** `hfs_brec_goto()`, `hfs_brec_find()`, `hfs_brec_remove()`,
+`dir_emit()`, `kmalloc()`, `kfree()`, `hfs_find_init()/exit()`
 
-### Step 5.4: Reachability
-**Record:** Triggered at boot on LECARC hardware with ACPI +
-`CONFIG_ARM64` + SPI enabled. Not userspace-triggered; affects platform
-bring-up only.
+### Step 5.4: CALL CHAIN / REACHABILITY
+**Record:** Fully reachable from userspace via standard VFS syscalls on
+`CONFIG_HFS_FS` mounts. Not init-only or obscure kernel-internal path.
 
-### Step 5.5: Similar patterns
-**Record:** `HISI0173` uses identical dual-registration pattern
-(`acpi_apd.c` + `spi-dw-mmio.c`). `intel,keembay-ssi` already uses same
-init via OF. LECA0002 mirrors Keem Bay HSSI-no-DMA pattern.
+### Step 5.5: SIMILAR PATTERNS
+**Record:** Identical `f_pos--` pattern exists in `fs/hfsplus/catalog.c`
+(lines 394-402) — fixed by companion patch. Same structural bug in both
+filesystems.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy/missing code exists?
-**Record:** **YES — code is missing.** `LECA0002` absent from both
-`acpi_apd.c` and `spi-dw-mmio.c`. `dw_spi_intel_init` present (line
-231). `LECA0001` also absent from `gpio-dwapb.c`. Infrastructure fully
-present since 2018–2022.
+### Step 6.1: DOES THE BUGGY CODE EXIST?
+**Record:** **YES.** Current 6.18.44 tree has:
+- `f_pos--` loop in `hfs_cat_delete()` at `fs/hfs/catalog.c:369-375`
+- `open_dir_list`/`open_dir_lock` in `hfs_inode_info`
+- Positional-only resume in `hfs_readdir()` at `fs/hfs/dir.c:100`
 
-### Step 6.2: Backport complications
-**Record:** **`git apply --check` PASS** — patch applies cleanly to
-6.18.44 without modification. Minor line-number offset only
-(`dw_spi_remove_host` vs mainline `dw_spi_remove_controller` not in
-hunks).
+Bug present since original HFS code (~2005).
 
-### Step 6.3: Related fixes already present?
-**Record:** None. `git log --grep=LECA0002` and `git log --grep=lecarc`
-return no matches in this tree.
+### Step 6.2: BACKPORT COMPLICATIONS
+**Record:** **Clean apply expected.** `git apply --check` against
+`7470b727ac4b2` diff succeeded with no conflicts. Uses
+`kmalloc(sizeof(...))` matching current tree (not `kmalloc_obj` from the
+candidate diff text).
+
+### Step 6.3: RELATED FIXES ALREADY PRESENT?
+**Record:** No — fix not in 6.18.44. Related HFS+ xfstests fixes from
+same author (generic/498, etc.) are present, establishing precedent for
+this class of fix.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/spi/` + `drivers/acpi/` — **IMPORTANT** (common
-infrastructure), but fix affects only LECARC ARM64 ACPI platform users.
+### Step 7.1: SUBSYSTEM AND CRITICALITY
+**Record:** **Filesystem (HFS)** — IMPORTANT for HFS users; PERIPHERAL
+in overall kernel scope (legacy Mac filesystem, niche but real user
+base).
 
-### Step 7.2: Activity
-**Record:** `spi-dw-mmio` actively maintained; recent stable-relevant
-fixes (reset handling). Mature driver with established ACPI ID pattern.
+### Step 7.2: SUBSYSTEM ACTIVITY
+**Record:** Active maintenance by Dubeyko — multiple recent xfstests-
+driven fixes in 6.18.y.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected
-**Record:** LECARC SoC users booting 6.18.y with ACPI on ARM64. Very
-small, platform-specific population. No impact on existing hardware.
+### Step 8.1: WHO IS AFFECTED
+**Record:** Users with HFS filesystems mounted (`CONFIG_HFS_FS`).
+Includes legacy media, cross-platform data exchange, testing
+environments.
 
-### Step 8.2: Trigger conditions
-**Record:** Boot on LECARC with `LECA0002` ACPI node. Deterministic for
-that hardware. Not triggerable by unprivileged users on other platforms.
-
-### Step 8.3: Failure mode severity
-**Record:** Without patch: SPI does not work (hardware non-functional) —
-**MEDIUM** for affected users (platform bring-up blocked), **NONE** for
-everyone else. Not a crash/corruption on existing systems.
-
-### Step 8.4: Risk-benefit
+### Step 8.2: TRIGGER CONDITIONS
 **Record:**
-- **Benefit:** Enables SPI on LECARC for 6.18.y distributors shipping
-  that hardware — aligns with official stable rule allowing device ID
-  additions.
-- **Risk:** Very low — ~15 lines, table entries only, no logic changes
-  beyond rename.
-- **Ratio:** High benefit for LECARC users, negligible risk for all
-  others.
+- Directory open for reading
+- Partial `readdir`/`getdents` (buffer fills before directory exhausted)
+- Concurrent file deletion in same directory
+- **Likelihood:** Moderate for backup tools, file managers, `find`-like
+  utilities
+- **Unprivileged trigger:** Yes — any user with directory access
+
+### Step 8.3: FAILURE MODE SEVERITY
+**Record:**
+- **Failure:** Wrong directory entries (duplicate offsets, deleted files
+  visible)
+- **Severity:** **HIGH** for filesystem semantics — not a kernel oops,
+  but violates POSIX directory consistency expectations; can cause
+  application-level data handling errors
+- Comparable to other xfstests generic/ fixes backported from this
+  subsystem
+
+### Step 8.4: RISK-BENEFIT RATIO
+**Record:**
+- **Benefit:** HIGH for HFS users — fixes reproducible xfstests failure
+  and real directory listing corruption
+- **Risk:** LOW — net code simplification, removes locking, tested with
+  xfstests
+- **Ratio:** Strongly favorable
+
+**Minor note:** Full patch with context is ~137 lines; stable rules
+mention 100-line guideline, but actual changed lines are only 46 with
+net reduction.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence compile
+### Step 9.1: EVIDENCE COMPILED
 
 **FOR backport:**
-- Official `stable-kernel-rules.rst` line 15: *"must either fix a real
-  bug … or **just add a device ID**"*
-- ACPI ID addition to existing `dw_spi_mmio` and `acpi_apd` drivers —
-  textbook stable exception
-- Small (~15 lines), reviewed, maintainer-acked
-- Applies cleanly to 6.18.44
-- Follows established `HISI0173` pattern
-- Correct HSSI init prevents wrong register programming if probed
+- Reproducible xfstests `generic/637` failure (100% repro rate in GitHub
+  issue)
+- Real user-visible directory listing bug (duplicate d_off, ghost
+  entries)
+- Bug present in 6.18.44 tree since ~2005
+- Small, obviously correct fix (key-based resume)
+- Applies cleanly to local tree
+- Tested by author with xfstests
+- Same author's similar HFS+ xfstests fixes already in 6.18.y
+- Reachable from userspace syscalls
+- Net code simplification reduces regression surface
 
 **AGAINST backport:**
-- Not a bug fix for existing 6.18.y users
-- Very niche hardware (LECARC)
-- Companion GPIO patch (`LECA0001`) also needed for full platform
-- Must land in mainline first (procedural stable requirement)
-- No user bug reports or crash reports
+- HFS is niche (limited user base)
+- No formal Reviewed-by or stable nomination in mailing list thread
+- Not a crash/oops — semantics bug rather than kernel panic
+- Patch context slightly exceeds 100-line stable guideline (borderline)
+- HFS+ companion patch needed separately for full generic/637 coverage
+  on HFS+
 
-**Unresolved:** Whether commit is merged to mainline yet (not in
-6.18.44); lore stable-list search blocked.
+**UNRESOLVED:**
+- No mailing list review replies found (thread had no responses in saved
+  mbox)
+- Could not fetch lore directly (bot protection)
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — maintainer ack, reviewer
-   sign-off, mirrors existing IDs
-2. Fixes real bug affecting users? **PASS** — via device-ID exception;
-   SPI non-functional without it on LECARC
-3. Important issue? **PASS (qualified)** — platform hardware enablement
-   for affected users; not crash/security
-4. Small and contained? **PASS** — ~15 lines, 2 files
-5. No new features/APIs? **PASS** — ACPI ID only; no new uapi
-6. Can apply to local tree? **PASS** — verified clean apply
+### Step 9.2: STABLE RULES CHECKLIST
 
-### Step 9.3: Exception category
-**Record:** **NEW DEVICE ID (ACPI ID)** — explicitly permitted by
-stable-kernel-rules.rst and analysis guidelines.
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — xfstests generic/637,
+clear mechanism |
+| 2. Fixes real bug affecting users? | **PASS** — reproducible directory
+listing corruption |
+| 3. Important issue? | **PASS** — filesystem correctness, HIGH severity
+for HFS users |
+| 4. Small and contained? | **PASS** — 46 lines changed, 5 files, net
+-22 lines |
+| 5. No new features/APIs? | **PASS** — internal restructuring only |
+| 6. Can apply to local tree? | **PASS** — clean apply verified |
 
-### Step 9.4: Decision rationale
+### Step 9.3: EXCEPTION CATEGORIES
+**Record:** None — standard bug fix, not device ID/quirk/build fix.
 
-For **Linux 6.18.y**, this commit adds an ACPI HID to two existing,
-mature drivers so LECARC SPI hardware can probe and operate correctly.
-It does not fix a regression affecting current users, but stable rules
-explicitly allow backports that *"just add a device ID."* The change is
-minimal, maintainer-reviewed, applies cleanly, and reuses existing init
-logic. Distributors shipping LECARC on 6.18.y need this patch.
+### Step 9.4: DECISION RATIONALE
+
+For **6.18.44**, this commit fixes a long-standing, reproducible
+directory enumeration bug in the HFS driver. The failure mode —
+duplicate `d_off` values and deleted files appearing in open directory
+listings — is a real filesystem correctness issue validated by xfstests
+and a tracked GitHub issue. The fix is surgical, simplifies the code by
+removing fragile `f_pos` manipulation, applies cleanly, and follows the
+established pattern of xfstests-driven HFS/HFS+ fixes from this
+maintainer already present in the 6.18.y tree.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit and
-  mbox
-- **[Phase 2]** Diff analysis: 2 files, ~15 lines; rename verified
-  identical to `dw_spi_intel_init`
-- **[Phase 3]** `git describe HEAD` → v6.18.44; `git blame` on lines
-  231–237 → `dc4e6d9fbf9a3` (2022); ACPI support `32215a6c6beb8` (2018)
-- **[Phase 3]** `git log --oneline -15 -- drivers/spi/spi-dw-mmio.c
-  drivers/acpi/acpi_apd.c` — no LECA commits
-- **[Phase 3]** `git log --grep=LECA0002` / `--grep=lecarc` — no matches
-  in tree
-- **[Phase 4]** `b4 am -l` on msgid — v5 series, 2 patches, Mark Brown
-  Acked-by
-- **[Phase 4]** Read cover letter and mbox — platform enablement, no
-  stable Cc
-- **[Phase 4]** lore.kernel.org WebFetch — blocked by bot protection
-- **[Phase 5]** `grep dw_spi_ip_is` — IP type controls register
-  programming in `spi-dw-core.c`
-- **[Phase 5]** `dw_spi_mmio_probe` — init via `device_get_match_data()`
-  at line 376
-- **[Phase 6]** `grep LECA0002` — not present in tree
-- **[Phase 6]** `grep dw_spi_intel_init` — present at lines 231, 416
-- **[Phase 6]** `git apply --check` — **clean apply confirmed**
-- **[Phase 6]** `grep LECA0001` in gpio-dwapb — not present (companion
-  patch missing)
-- **[Phase 7]** Read `Documentation/process/stable-kernel-rules.rst`
-  line 15 — device ID exception confirmed
-- **[Phase 8]** Impact: platform-specific SPI enablement only
+- **[Phase 1]** Parsed commit message: subject, Link, Closes, cc tags;
+  no Fixes:/Reported-by:/Reviewed-by:
+- **[Phase 1]** GitHub issue #65 fetched: 100% generic/637 failure on
+  HFS, duplicate d_off 8, unlinked files
+- **[Phase 2]** Read current `fs/hfs/dir.c`, `fs/hfs/catalog.c`,
+  `fs/hfs/hfs.h`, `fs/hfs/hfs_fs.h` — confirmed buggy code
+- **[Phase 2]** Diff analysis: 5 files, 12+/34-, functions identified
+- **[Phase 3]** `git describe HEAD`: v6.18.44
+- **[Phase 3]** `git blame fs/hfs/catalog.c:369-375`: f_pos-- from 2005,
+  lock from Al Viro 2016
+- **[Phase 3]** `git log --oneline -30 -- fs/hfs/dir.c`: recent history
+  reviewed
+- **[Phase 3]** `git merge-base --is-ancestor 7470b727ac4b2 HEAD`: exit
+  1 — fix NOT in tree
+- **[Phase 3]** `git show 956b1d8051cfa`: prior xfstests fix from same
+  author in tree
+- **[Phase 4]** `b4 dig -c 7fde7e806657f`: found lore thread, v1 only
+- **[Phase 4]** `b4 dig -c 7fde7e806657f -w`: recipients listed, no
+  Reviewed-by
+- **[Phase 4]** `b4 dig -c 7fde7e806657f -m /tmp/hfs637.mbox`: saved, no
+  review replies
+- **[Phase 4]** Lore.kernel.org WebFetch: blocked by bot protection
+- **[Phase 5]** `grep hfs_cat_delete/hfs_readdir`: callers traced to VFS
+  syscall paths
+- **[Phase 5]** Read `fs/hfsplus/catalog.c:394-402`: confirmed identical
+  bug pattern in HFS+
+- **[Phase 6]** `grep open_dir_list` in fs/hfs/: buggy code confirmed
+  present
+- **[Phase 6]** `git apply --check` against fix diff: **clean apply**
+- **[Phase 6]** `git show 7470b727ac4b2:fs/hfs/dir.c | rg kmalloc`: uses
+  `kmalloc(sizeof(...))` matching tree
+- **[Phase 8]** Failure mode: directory listing corruption, HIGH
+  severity for HFS users
 
----
+**YES**The background search finished successfully. It found the fix on
+the `autosel` branch (`7470b727ac4b2` for HFS, `fc30ae43b8b5b` for
+HFS+), but neither commit is in the current **6.18.44** tree — the buggy
+`f_pos--` logic is still present there.
 
-**YES**The background git searches finished: there are **no commits** in
-this 6.18.44 tree matching `LECA0002`, `lecarc`, or `dw_spi_intel_init`
-in commit messages. That confirms the LECARC SPI ACPI support isn’t
-present yet and nothing equivalent was already backported.
+The analysis stands: **YES** for backporting this HFS commit to 6.18.y.
+It fixes a real `generic/637` directory listing bug, applies cleanly,
+and the HFS+ companion patch would need a separate backport decision.
 
-That lines up with the earlier analysis: the patch applies cleanly here
-and is a good stable candidate under the ACPI device-ID exception. The
-companion GPIO patch (`LECA0001`) is also still missing from this tree
-if full LECARC ACPI bring-up is needed.
+ fs/hfs/catalog.c |  9 ---------
+ fs/hfs/dir.c     | 28 +++++++++++-----------------
+ fs/hfs/hfs.h     |  3 +--
+ fs/hfs/hfs_fs.h  |  2 --
+ fs/hfs/inode.c   |  4 ----
+ 5 files changed, 12 insertions(+), 34 deletions(-)
 
- drivers/acpi/acpi_apd.c   | 7 +++++++
- drivers/spi/spi-dw-mmio.c | 7 ++++---
- 2 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/acpi/acpi_apd.c b/drivers/acpi/acpi_apd.c
-index 49539f7528c64..cd0fcfaeafc75 100644
---- a/drivers/acpi/acpi_apd.c
-+++ b/drivers/acpi/acpi_apd.c
-@@ -181,6 +181,12 @@ static const struct apd_device_desc hip08_spi_desc = {
- 	.setup = acpi_apd_setup,
- 	.fixed_clk_rate = 250000000,
- };
-+
-+static const struct apd_device_desc leca_spi_desc = {
-+	.setup = acpi_apd_setup,
-+	.fixed_clk_rate = 400000000,
-+};
-+
- #endif /* CONFIG_ARM64 */
+diff --git a/fs/hfs/catalog.c b/fs/hfs/catalog.c
+index b80ba40e38776..ccdbbffaaf7c1 100644
+--- a/fs/hfs/catalog.c
++++ b/fs/hfs/catalog.c
+@@ -340,7 +340,6 @@ int hfs_cat_delete(u32 cnid, struct inode *dir, const struct qstr *str)
+ {
+ 	struct super_block *sb;
+ 	struct hfs_find_data fd;
+-	struct hfs_readdir_data *rd;
+ 	int res, type;
  
- #endif
-@@ -251,6 +257,7 @@ static const struct acpi_device_id acpi_apd_device_ids[] = {
- 	{ "HISI02A2", APD_ADDR(hip08_i2c_desc) },
- 	{ "HISI02A3", APD_ADDR(hip08_lite_i2c_desc) },
- 	{ "HISI0173", APD_ADDR(hip08_spi_desc) },
-+	{ "LECA0002", APD_ADDR(leca_spi_desc) },
- 	{ "NXP0001", APD_ADDR(nxp_i2c_desc) },
- #endif
- 	{ }
-diff --git a/drivers/spi/spi-dw-mmio.c b/drivers/spi/spi-dw-mmio.c
-index 7a5197586919c..8f7afe0e49aea 100644
---- a/drivers/spi/spi-dw-mmio.c
-+++ b/drivers/spi/spi-dw-mmio.c
-@@ -228,8 +228,8 @@ static int dw_spi_hssi_init(struct platform_device *pdev,
+ 	hfs_dbg("name %s, cnid %u\n", str ? str->name : NULL, cnid);
+@@ -366,14 +365,6 @@ int hfs_cat_delete(u32 cnid, struct inode *dir, const struct qstr *str)
+ 		}
+ 	}
+ 
+-	/* we only need to take spinlock for exclusion with ->release() */
+-	spin_lock(&HFS_I(dir)->open_dir_lock);
+-	list_for_each_entry(rd, &HFS_I(dir)->open_dir_list, list) {
+-		if (fd.tree->keycmp(fd.search_key, (void *)&rd->key) < 0)
+-			rd->file->f_pos--;
+-	}
+-	spin_unlock(&HFS_I(dir)->open_dir_lock);
+-
+ 	res = hfs_brec_remove(&fd);
+ 	if (res)
+ 		goto out;
+diff --git a/fs/hfs/dir.c b/fs/hfs/dir.c
+index 86a6b317b474a..130c2f3a417f0 100644
+--- a/fs/hfs/dir.c
++++ b/fs/hfs/dir.c
+@@ -97,7 +97,15 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+ 	}
+ 	if (ctx->pos >= inode->i_size)
+ 		goto out;
+-	err = hfs_brec_goto(&fd, ctx->pos - 1);
++	rd = file->private_data;
++	if (rd && rd->pos == ctx->pos) {
++		memcpy(fd.search_key, &rd->key, sizeof(struct hfs_cat_key));
++		err = hfs_brec_find(&fd);
++		if (err == -ENOENT)
++			err = hfs_brec_goto(&fd, 1);
++	} else {
++		err = hfs_brec_goto(&fd, ctx->pos - 1);
++	}
+ 	if (err)
+ 		goto out;
+ 
+@@ -146,7 +154,6 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+ 		if (err)
+ 			goto out;
+ 	}
+-	rd = file->private_data;
+ 	if (!rd) {
+ 		rd = kmalloc(sizeof(struct hfs_readdir_data), GFP_KERNEL);
+ 		if (!rd) {
+@@ -154,15 +161,8 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+ 			goto out;
+ 		}
+ 		file->private_data = rd;
+-		rd->file = file;
+-		spin_lock(&HFS_I(inode)->open_dir_lock);
+-		list_add(&rd->list, &HFS_I(inode)->open_dir_list);
+-		spin_unlock(&HFS_I(inode)->open_dir_lock);
+ 	}
+-	/*
+-	 * Can be done after the list insertion; exclusion with
+-	 * hfs_delete_cat() is provided by directory lock.
+-	 */
++	rd->pos = ctx->pos;
+ 	memcpy(&rd->key, &fd.key->cat, sizeof(struct hfs_cat_key));
+ out:
+ 	hfs_find_exit(&fd);
+@@ -171,13 +171,7 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+ 
+ static int hfs_dir_release(struct inode *inode, struct file *file)
+ {
+-	struct hfs_readdir_data *rd = file->private_data;
+-	if (rd) {
+-		spin_lock(&HFS_I(inode)->open_dir_lock);
+-		list_del(&rd->list);
+-		spin_unlock(&HFS_I(inode)->open_dir_lock);
+-		kfree(rd);
+-	}
++	kfree(file->private_data);
  	return 0;
  }
  
--static int dw_spi_intel_init(struct platform_device *pdev,
--			     struct dw_spi_mmio *dwsmmio)
-+static int dw_spi_hssi_no_dma_init(struct platform_device *pdev,
-+				   struct dw_spi_mmio *dwsmmio)
- {
- 	dwsmmio->dws.ip = DW_HSSI_ID;
+diff --git a/fs/hfs/hfs.h b/fs/hfs/hfs.h
+index 6f194d0768b6f..f46d12ce04a3f 100644
+--- a/fs/hfs/hfs.h
++++ b/fs/hfs/hfs.h
+@@ -281,8 +281,7 @@ struct hfs_mdb {
+ /*======== Data structures kept in memory ========*/
  
-@@ -413,7 +413,7 @@ static const struct of_device_id dw_spi_mmio_of_match[] = {
- 	{ .compatible = "amazon,alpine-dw-apb-ssi", .data = dw_spi_alpine_init},
- 	{ .compatible = "renesas,rzn1-spi", .data = dw_spi_pssi_init},
- 	{ .compatible = "snps,dwc-ssi-1.01a", .data = dw_spi_hssi_init},
--	{ .compatible = "intel,keembay-ssi", .data = dw_spi_intel_init},
-+	{ .compatible = "intel,keembay-ssi", .data = dw_spi_hssi_no_dma_init},
- 	{
- 		.compatible = "intel,mountevans-imc-ssi",
- 		.data = dw_spi_mountevans_imc_init,
-@@ -428,6 +428,7 @@ MODULE_DEVICE_TABLE(of, dw_spi_mmio_of_match);
- #ifdef CONFIG_ACPI
- static const struct acpi_device_id dw_spi_mmio_acpi_match[] = {
- 	{"HISI0173", (kernel_ulong_t)dw_spi_pssi_init},
-+	{"LECA0002", (kernel_ulong_t)dw_spi_hssi_no_dma_init},
- 	{},
+ struct hfs_readdir_data {
+-	struct list_head list;
+-	struct file *file;
++	loff_t pos;
+ 	struct hfs_cat_key key;
  };
- MODULE_DEVICE_TABLE(acpi, dw_spi_mmio_acpi_match);
+ 
+diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
+index 38854df4c1b42..d9665226f5474 100644
+--- a/fs/hfs/hfs_fs.h
++++ b/fs/hfs/hfs_fs.h
+@@ -37,8 +37,6 @@ struct hfs_inode_info {
+ 
+ 	struct hfs_cat_key cat_key;
+ 
+-	struct list_head open_dir_list;
+-	spinlock_t open_dir_lock;
+ 	struct inode *rsrc_inode;
+ 
+ 	struct mutex extents_lock;
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index cd43eff72d13d..cd3dd5bd456e0 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -192,8 +192,6 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
+ 		return NULL;
+ 
+ 	mutex_init(&HFS_I(inode)->extents_lock);
+-	INIT_LIST_HEAD(&HFS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFS_I(inode)->open_dir_lock);
+ 	hfs_cat_build_key(sb, (btree_key *)&HFS_I(inode)->cat_key, dir->i_ino, name);
+ 	next_id = atomic64_inc_return(&HFS_SB(sb)->next_id);
+ 	BUG_ON(next_id > U32_MAX);
+@@ -334,8 +332,6 @@ static int hfs_read_inode(struct inode *inode, void *data)
+ 	HFS_I(inode)->flags = 0;
+ 	HFS_I(inode)->rsrc_inode = NULL;
+ 	mutex_init(&HFS_I(inode)->extents_lock);
+-	INIT_LIST_HEAD(&HFS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFS_I(inode)->open_dir_lock);
+ 
+ 	/* Initialize the inode */
+ 	inode->i_uid = hsb->s_uid;
 -- 
 2.53.0
 
