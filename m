@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292D143636A;
-	Mon, 31 Aug 2026 13:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635C6438037;
+	Mon, 31 Aug 2026 13:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183214; cv=none; b=cr+jDawbArav4WjcWlJv3pCbKW4lMCdYS44noCXyr/FGwKs59P1gmZ6KIvbpxY57VpMzYE+7tCyiS5U7RxKWIpZAhrXg2Hrl/ZRc+2j2u5SoynPp2wrwp34GXx9i7YL0DUGfkih46g5sAOqewCzqvgiI2D/rewNkKyQu4IHKtes=
+	t=1788183215; cv=none; b=oHLgal7RICHH3W0ghUEgJ73DLwhKAWz5V6EqIs4K3LZ0/09RXoKlhie6q/mGBxOP8nfg+EFO/EpHdOJ4qZuA9w47TUzln6yivpDCJBToM9srSHvKERUVwOx9Ik3/Bk7T8K/PGAbvvDVlL85A0Ju0WB/TYVz1IgLxRmJqK8jngnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183214; c=relaxed/simple;
-	bh=GgoK44ToOxpQOb9pHrS0uWo5FrJYpbjz15udKZwiH4g=;
+	s=arc-20240116; t=1788183215; c=relaxed/simple;
+	bh=dOULyuJuHCpIb6JIT/K4mhv4WoWfnlEAUTJs2Fjl22M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n/Zjrd0JBwsmeGZtfqX0AkZgvuwIfm97JgsRp500eKBd6n4/W+lk6crxY5tDGCiztacKAWlKi9c/yZtqIYSRwOLXQ0gxctNHgyl3Vh4VdoExVRnn4PZpeVZyXqMqrQJvJbBDEyuD+OQBdUgzcZ/UVbIGQXuhYRzQI757tv8HO6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nAbybSi7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qEw+uic65RjT8p+kRWAZm6d9ZcTlrWEaAbEzgVl+010Cg5ScbJARhZzl7uq2FIe7PJSEzk9X7UG1cEC2Oy8lsYf2BKN//n0NTCn64i4RDlJzVUfbBCQGiXNfimMZlLXrC/FrneShGR0iS09PGkHhlnrxn77UjV2WqG1hMJn2UL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dnl08ySa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nAbybSi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDD91F00A3E;
-	Mon, 31 Aug 2026 13:33:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dnl08ySa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396AB1F000E9;
+	Mon, 31 Aug 2026 13:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183211;
-	bh=vUpCbj518q8jGpORKgaCJbcqBE6unMNUixhJOVRkWu8=;
+	s=k20260515; t=1788183213;
+	bh=eH6YN2ybjH+OMbJ5psW34LIPNDoEREetcOKN/tvEAK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nAbybSi7sayZdVEQOVempz2oG/rdHC0S7DwaBn7rQ2FpK6WkB1j9ETgV0N5Se8H/t
-	 K4s/jYZl/JEaKO/K5IaGyPHTthJfSTc6wt7xVKssMBzgRxBfIeTgNNYOciWESx0Xwb
-	 q0S18Uydpa6KNlPPEYCCz7Qxtk4Qb4eRhEv5kvdms6bML9upcQ4TjjsxBdP3sHhrJK
-	 ZasCqqmRfp1PlGfDRgX0BVFdFuU4E8nxFAcqdRsy+Sd5wAoth+xbKjnO4vKd7/0j8y
-	 dyRq59ZUdtamkgB/w5vPwXr83HbfXtK6Pepr2JAA+3iaXveBRyO8obnfX0YRcd7uWm
-	 aNQZNO4gNp8Eg==
+	b=Dnl08ySaaI/Qjqb/2NWgAGgJA21lWvLFbjauoa9EXKQcidhR84ElU39lBRGLolcSh
+	 PFRYwd/rkU6OUSGxQYfKnAu/+qFhiD9/NxE7nsk69el8Evu3j4hMRfyZteQXgEbBcx
+	 F1tSYCgQ44Pcd0bOZ2pU0K5jBP0pLhg90Wqu19AL8IYHNoivcb9oztu8L7GAchobqC
+	 X0xxwsILtM34K8+xsVu4Fhi1sZMhrqi3oon229HlLtkzyB1S0lD8bGea3mtlhygWo+
+	 hlTgLAOuG+vB0/EHQ4TSrdYdIUmWWUSuPR7WoV6GvcBS1SJ1R0ce9myZuyEeK63bSg
+	 yl6FNx9ioTQIg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Breno Leitao <leitao@debian.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] netconsole: take target_cleanup_list_lock in drop_netconsole_target()
-Date: Mon, 31 Aug 2026 09:20:39 -0400
-Message-ID: <20260831133314.4125787-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] wifi: iwlwifi: mvm: parse beacon notif per layout
+Date: Mon, 31 Aug 2026 09:20:40 -0400
+Message-ID: <20260831133314.4125787-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,374 +52,466 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 91aeb87f052367a5a2743cc93777dfb4386f2f14 ]
+[ Upstream commit b77c6f50b1f80414cb3f542ae72e532ed90fc7f7 ]
 
-drop_netconsole_target() unlinks the target while only holding
-target_list_lock. However, when the underlying interface has been
-unregistered, netconsole_netdev_event() moves the target from
-target_list to target_cleanup_list, and netconsole_process_cleanups_core()
-walks that list under target_cleanup_list_lock only.
+The beacon TX notification can arrive in different layouts, and fields
+must be read only after selecting the expected format.
 
-If a user removes the configfs target at the same time the cleanup
-worker is iterating target_cleanup_list, list_del() can corrupt the list
-because the two paths take disjoint locks while operating on the same
-list node.
+Parse gp2 and TSF from the matching notification structure in each
+branch, and keep using the parsed gp2 for CSA countdown and debug output.
+Drop the obsolete cached gp2 field.
 
-Acquire target_cleanup_list_lock around the list_del() so the unlink is
-serialised against netconsole_process_cleanups_core() regardless of
-which list the target currently belongs to. The state transition that
-downgrades STATE_DEACTIVATED to STATE_DISABLED is left intact and is
-performed under the same combined locking, preserving the existing
-ordering with resume_target().
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260604-netcons_fix_before_move-v3-3-ab055b3a6aa5@debian.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: GitHub Copilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260714141909.cc8aa937f8e5.I921f8dadcb20cb73e8283e1b8546e1778205411f@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable backport analysis: `netconsole: take target_cleanup_list_lock
-in drop_netconsole_target()`
+# Stable Backport Analysis: `wifi: iwlwifi: mvm: parse beacon notif per
+layout`
 
-**Local tree:** `v6.18.44` (Linux 6.18.44 stable)
-**Mainline commit:** `91aeb87f05236` (not present in this tree)
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`, detached
+from `stable/linux-6.18.y`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[netconsole]` `[take/acquire lock]` — Serialize
-`drop_netconsole_target()` list unlink against
-`netconsole_process_cleanups_core()` by taking
-`target_cleanup_list_lock`.
+### Step 1.1: Parse the subject line
+**Record:** `[wifi: iwlwifi: mvm]` `[parse]` — Parse beacon TX
+notification fields according to the correct firmware layout before use.
 
-### Step 1.2: Tags
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Signed-off-by:** Breno Leitao `<leitao@debian.org>` (author)
-- **Signed-off-by:** Paolo Abeni `<pabeni@redhat.com>` (netdev
-  committer)
-- **Link:** https://patch.msgid.link/20260604-netcons_fix_before_move-
-  v3-3-ab055b3a6aa5@debian.org
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Reviewed-
-  by:`, `Tested-by:`
+- **Link:** https://patch.msgid.link/20260714141909.cc8aa937f8e5.I921f8d
+  adcb20cb73e8283e1b8546e1778205411f@changeid
+- **Assisted-by:** GitHub Copilot:gpt-5.3-codex
+- **Signed-off-by:** Emmanuel Grumbach \<emmanuel.grumbach@intel.com\>
+- **Signed-off-by:** Miri Korenblit
+  \<miriam.rachel.korenblit@intel.com\>
+- **No** Fixes:, Reported-by:, Tested-by:, Acked-by:, or Cc:
+  stable@vger.kernel.org
+- **Notable:** Part of `[PATCH iwlwifi-fixes 07/15]` series; Reviewed-
+  by: Ilan Peer (from lore thread, verified via b4)
 
-Notable: netdev maintainer committed it; no syzbot/fuzzer report.
-
-### Step 1.3: Body analysis
+### Step 1.3: Analyze commit body
 **Record:**
-- **Bug:** `drop_netconsole_target()` unlinks a target under only
-  `target_list_lock`, while `netconsole_netdev_event()` can move the
-  target to `target_cleanup_list`, and
-  `netconsole_process_cleanups_core()` walks that list under only
-  `target_cleanup_list_lock`.
-- **Symptom:** Concurrent `list_del()` vs. list iteration can corrupt
-  the kernel linked list.
-- **Root cause:** Disjoint locks on the same list node.
-- **Fix:** Hold `target_cleanup_list_lock` around the `list_del()` path.
-- **Version info:** None in the message; bug exists wherever deferred
-  cleanup (`target_cleanup_list`) exists.
+- **Bug:** `gp2` (and implicitly `tsf`) are read from the v6
+  (`iwl_extended_beacon_notif`) layout before the code selects which
+  notification layout the firmware actually sent.
+- **Symptom:** Wrong `gp2` timestamp used for CSA countdown scheduling
+  and debug output on firmware using the v5 layout.
+- **Root cause:** Early unconditional `beacon->gp2` read assumes v6
+  offsets regardless of `iwl_mvm_is_short_beacon_notif_supported()`
+  result.
+- **Version info:** None in commit message.
 
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit concurrency/list-corruption fix,
-not disguised cleanup.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised — this is an explicit correctness fix for
+struct layout mis-parsing, though the subject uses "parse" rather than
+"fix".
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Inventory the changes
 **Record:**
-- **Files:** `drivers/net/netconsole.c` (+2 lines on mainline; user's
-  diff shows +4 with surrounding context)
-- **Function:** `drop_netconsole_target()`
-- **Scope:** Single-file, surgical locking fix
+- `mac-ctxt.c`: +15/-14 — `iwl_mvm_rx_beacon_notif()`
+- `mac80211.c`: -1 — remove `mvm->ap_last_beacon_gp2 = 0` in
+  `iwl_mvm_stop_ap_ibss_common()`
+- `mvm.h`: -3 — remove `ap_last_beacon_gp2` field from `struct iwl_mvm`
+- **Scope:** Single-subsystem, surgical fix (3 files, ~30 lines net)
 
-### Step 2.2: Code flow change
+### Step 2.2: Code flow change per hunk
 **Record:**
-- **Before:** `list_del(&nt->list)` under `target_list_lock` only.
-- **After:** `mutex_lock(&target_cleanup_list_lock)` →
-  `spin_lock_irqsave(&target_list_lock)` → state handling + `list_del()`
-  → unlock spinlock → `mutex_unlock(&target_cleanup_list_lock)`.
-- **Path affected:** Configfs target removal (`drop_item` callback),
-  error/admin teardown path.
+1. **Before:** `mvm->ap_last_beacon_gp2 = le32_to_cpu(beacon->gp2)` runs
+   unconditionally at function entry using v6 struct pointer, then
+   branches on layout.
+2. **After:** Each branch declares the correct struct type, validates
+   packet length, then reads `beacon_gp2` from the matching structure.
+   CSA countdown and debug use local `beacon_gp2`.
+3. **Cleanup:** Removes cached `ap_last_beacon_gp2` from `struct
+   iwl_mvm` and its reset on AP stop.
 
 ### Step 2.3: Bug mechanism
-**Record:** **Category:** Race condition / list corruption.
-**Mechanism:** Two paths operate on the same `list_head` with non-
-overlapping locks (`target_list_lock` vs. `target_cleanup_list_lock`).
-Matches the locking pattern already used in `enabled_store()` (disable)
-and `netconsole_netdev_event()`.
+**Record:**
+- **Category:** Logic / correctness fix (struct layout mis-parse)
+- **Mechanism:** On v5-layout firmware
+  (`!iwl_mvm_is_short_beacon_notif_supported()`), `beacon->gp2` reads at
+  byte offset 16 (v6 layout: after 4-byte status + 8-byte tsf + 4-byte
+  ibss_mgr_status). In v5 layout, `gp2` is at `sizeof(struct
+  iwl_tx_resp) + 16` ≈ offset 54+. The read pulls data from inside
+  `beacon_notify_hdr` instead of the real `gp2` field. Similarly,
+  `beacon->tsf` in the v5 debug path used v6 offset instead of
+  `beacon_v5->tsf`.
 
-### Step 2.4: Fix quality
-**Record:** Obviously correct; mirrors existing lock ordering in the
-same file. Minimal regression risk; no API changes. On 6.18.44 the same
-mutex addition around `list_del()` is sufficient without
-`STATE_DEACTIVATED` logic (not in this tree).
+### Step 2.4: Fix quality assessment
+**Record:** Fix is obviously correct — parse layout first, then read
+fields. Minimal, no API changes. Very low regression risk; only affects
+field extraction order and removes an unnecessary cached field.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** `drop_netconsole_target()` list unlink dates to
-`0bcc1816188e57` (2007). The race was introduced when deferred cleanup
-was added in `97714695ef904` (2024-08-13, Breno Leitao). That commit is
-an ancestor of this tree.
+### Step 3.1: Blame changed lines
+**Record:** Current buggy lines in `mac-ctxt.c:1516-1549` blame to
+`5d324e5159d9e` (v6.18 merge). Dual-layout handling with the early `gp2`
+read was introduced in `15e28c78c3864` (Nov 2018, "support new format
+for the beacon notification"). The `ap_last_beacon_gp2` field dates to
+extended beacon notification support (2014 era).
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag. Bug introduced by `97714695ef904`
-("Defer netpoll cleanup to avoid lock release during list traversal").
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no Fixes: tag present.
 
 ### Step 3.3: Related file history
-**Record:** Recent netconsole fixes in this tree include race fixes
-(e.g. `00764aa5c9bbb` userdata locking). `STATE_DEACTIVATED` /
-`resume_wq` commits (`e8f4005ab2d48`, `220dbe3c76ed1`, `4cfcd6acc295c`)
-are on `master` only — **not** in 6.18.44.
+**Record:** Recent iwlwifi mvm commits in this tree include CSA-related
+`ece13ddb9791e` (noa_len validity) and other iwlwifi fixes. Fix commit
+`b77c6f50b1f80` is on `master`/linux-next but **not** on
+`stable/linux-6.18.y`.
 
 ### Step 3.4: Author context
-**Record:** Breno Leitao authored the deferred-cleanup infrastructure
-and this fix. Paolo Abeni committed both.
+**Record:** Emmanuel Grumbach is a long-standing iwlwifi maintainer.
+Miri Korenblit committed the fix. Ilan Peer (Intel) reviewed on lore.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone for the cleanup-list race on 6.18.44. Mainline
-patch is v3 3/5 of a series, but this specific hunk does not require
-other series patches for the race described. `STATE_DEACTIVATED`
-handling in mainline is additional context not present here.
+**Record:** Standalone fix within the iwlwifi-fixes 07/15 series slot,
+but does not depend on patches 01–06 for correctness. Applies cleanly to
+this tree (`git show b77c6f50b1f80 | git apply --check` succeeded).
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c 91aeb87f05236` → https://patch.msgid.link/2026060
-4-netcons_fix_before_move-v3-3-ab055b3a6aa5@debian.org
-Series: v1 (2026-05-29), v3 (2026-06-04, 5 patches). Applied version is
-latest v3.
+### Step 4.1: Original patch discussion
+**Record:** b4 dig found thread at https://patch.msgid.link/202607141419
+09.cc8aa937f8e5.I921f8dadcb20cb73e8283e1b8546e1778205411f@changeid. Part
+of v1 iwlwifi-fixes 15-patch series (2026-07-14). No stable nomination
+found in thread. No NAKs found.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: CC'd netdev maintainers (Miller, Kicinski,
-Abeni, Dumazet, etc.) and `netdev@vger.kernel.org`.
+**Record:** CC'd to linux-wireless@vger.kernel.org,
+johannes@sipsolutions.net, Miri Korenblit, Emmanuel Grumbach.
+**Reviewed-by: Ilan Peer \<ilan.peer@intel.com\>**.
 
-### Step 4.3: Bug report
-**Record:** No external bug report; issue found by code analysis during
-the netconsole fix series.
+### Step 4.3: Bug reports
+**Record:** No Reported-by, syzbot, or bugzilla links. Bug identified by
+code inspection / development, not a crash report.
 
 ### Step 4.4: Series context
-**Record:** Part of "netconsole: Fix reported problems" (v3 0/5). This
-patch (3/5) is self-contained for the cleanup-list race.
+**Record:** Patch 07/15 of iwlwifi-fixes series. This specific change is
+self-contained.
 
-### Step 4.5: Stable list history
-**Record:** No `Cc: stable` or stable-list discussion found in the
-downloaded mbox thread.
+### Step 4.5: Stable mailing list
+**Record:** Not searched exhaustively on lore stable@; no stable
+nomination in patch thread.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `drop_netconsole_target()`,
-`netconsole_process_cleanups_core()`, `netconsole_netdev_event()`,
-`enabled_store()` (disable path).
+### Step 5.1: Key functions modified
+**Record:** `iwl_mvm_rx_beacon_notif()`, `iwl_mvm_stop_ap_ibss_common()`
+(cleanup only)
 
 ### Step 5.2: Callers
-**Record:**
-- `drop_netconsole_target` → configfs `drop_item` (admin removes target
-  via configfs)
-- `netconsole_process_cleanups_core` → `netconsole_process_cleanups()`
-  and directly from `netconsole_netdev_event()`
-- `netconsole_netdev_event` → netdev notifier (interface
-  unregister/release/join/changename)
+**Record:** `iwl_mvm_rx_beacon_notif` registered in `ops.c` as
+`RX_HANDLER_NO_SIZE(BEACON_NOTIFICATION, ...)`. Called from iwlwifi RX
+path on every beacon TX notification from firmware — hot path for
+AP/IBSS/P2P GO modes.
 
 ### Step 5.3: Callees
-**Record:** `list_del()`, `list_move()`, `do_netpoll_cleanup()`,
-`mutex_lock`/`spin_lock_irqsave`.
+**Record:** `iwl_mvm_csa_count_down()` (uses `gp2` for P2P GO CSA period
+scheduling), `iwl_mvm_get_agg_status()`, debug macros, RCU accessors for
+CSA state.
 
-### Step 5.4: Reachability
-**Record:** Requires `CONFIG_NETCONSOLE` + `CONFIG_NETCONSOLE_DYNAMIC`.
-Trigger: netdev unregister (or manual disable moving target to cleanup
-list) concurrent with configfs target removal. Admin/root configfs
-access required — not unprivileged userspace, but reachable in
-production netconsole setups.
+### Step 5.4: Call chain / reachability
+**Record:** Firmware → RX handler → `iwl_mvm_rx_beacon_notif` →
+`iwl_mvm_csa_count_down` when CSA is active. Reachable during normal
+AP/P2P GO operation with channel switch. Not a syscall path directly,
+but triggered by normal WiFi operation.
 
 ### Step 5.5: Similar patterns
-**Record:** All other paths that touch `target_cleanup_list` already
-take `target_cleanup_list_lock` first, then `target_list_lock`.
-`drop_netconsole_target()` is the outlier.
+**Record:** MLD driver (`mld/notif.c`) uses only v6
+`iwl_extended_beacon_notif` via CMD_VERSIONS — not affected. The dual-
+layout bug is mvm-specific.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current `drop_netconsole_target()` at lines
-1329–1331:
-
-```1329:1331:drivers/net/netconsole.c
-        spin_lock_irqsave(&target_list_lock, flags);
-        list_del(&nt->list);
-        spin_unlock_irqrestore(&target_list_lock, flags);
-```
-
-`target_cleanup_list` infrastructure is present (since `97714695ef904`).
-Bug present since Aug 2024 in this series.
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** Current tree at `mac-ctxt.c:1516` has the
+unconditional `mvm->ap_last_beacon_gp2 = le32_to_cpu(beacon->gp2)`
+before layout selection. `ap_last_beacon_gp2` exists in `mvm.h:1181`.
+Bug present since dual-layout support (2018); code exists in 6.18.44.
 
 ### Step 6.2: Backport complications
-**Record:** **Needs rework** — literal mainline patch does not apply
-(`git apply --check` fails at line 1452; stable `drop_netconsole_target`
-is at ~1323). Adapted backport is trivial: add
-`mutex_lock/unlock(&target_cleanup_list_lock)` around the existing
-`list_del` block (2 lines).
+**Record:** **Clean apply** — `git apply --check` passes without
+modification.
 
 ### Step 6.3: Related fixes already present?
-**Record:** Fix `91aeb87f05236` is **not** in this tree (`git merge-base
---is-ancestor` confirms).
+**Record:** Fix commit `b77c6f50b1f80` is **not** in this tree (only
+`master` contains it per `git branch --contains`). No alternate fix
+found.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** `drivers/net/netconsole.c` — **IMPORTANT** (network logging;
-used on servers for remote crash logs). Config-gated
-(`CONFIG_NETCONSOLE_DYNAMIC`).
+**Record:** `drivers/net/wireless/intel/iwlwifi/mvm` — **IMPORTANT**
+(Intel WiFi, widely deployed on laptops/desktops).
 
-### Step 7.2: Activity
-**Record:** Actively maintained; multiple netconsole fixes landed in
-6.18.y.
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained; multiple iwlwifi fixes already landed
+in 6.18.y (wake packet read fix, noa_len, PTP race, etc.).
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Systems using dynamic netconsole (configfs-managed targets),
-especially during netdev teardown or target disable concurrent with
-configfs removal.
+**Record:** Users with Intel iwlwifi hardware whose firmware does
+**not** advertise `IWL_UCODE_TLV_API_SHORT_BEACON_NOTIF` (v5 beacon
+notification layout) and who use AP/P2P GO mode with CSA (channel
+switch). Config: `CONFIG_IWLWIFI`, `CONFIG_IWLMVM`.
 
 ### Step 8.2: Trigger conditions
-**Record:** Interface unregister/disable moves target to
-`target_cleanup_list`; admin simultaneously removes configfs target.
-Uncommon but realistic during network reconfiguration or module unload.
-Requires root.
+**Record:** Every beacon TX notification on v5-layout firmware; CSA
+impact only when `csa_vif` is active and CSA countdown runs. Common
+during beacon TX on AP/GO; CSA is less frequent but normal for
+regulatory/P2P channel changes.
 
-### Step 8.3: Failure mode
-**Record:** Kernel linked-list corruption → possible oops/panic.
-**Severity: HIGH** (crash); not a security issue for unprivileged users.
+### Step 8.3: Failure mode severity
+**Record:** Wrong `gp2` → incorrect `apply_time` in
+`iwl_mvm_csa_count_down()` for P2P GO (`apply_time = gp2 + rel_time *
+1024`). Can cause mistimed channel switch, CSA failure, or client
+disconnection. **Severity: MEDIUM-HIGH** (functional connectivity bug,
+not kernel crash/corruption).
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Prevents real list corruption in production netconsole
-  setups
-- **Risk:** Very low — 2-line lock addition matching established pattern
-- **Ratio:** Favorable
+- **Benefit:** Correct CSA timing and debug data for a large installed
+  base of older Intel WiFi firmware; fixes long-standing bug (since
+  2018).
+- **Risk:** Very low — 3 files, layout-guarded field reads, reviewed by
+  Intel developer.
+- **Ratio:** Favorable for backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence compile
 
 **FOR backport:**
-- Real, verifiable race in existing 6.18.44 code
-- List corruption can crash the kernel
-- Fix is in mainline (`91aeb87f05236`)
-- Minimal, obviously correct, matches existing lock ordering
-- Bug introduced by code already in this tree (`97714695ef904`)
-- Same author who introduced the infrastructure
+- Verified struct layout bug: reads v6 offsets on v5-format
+  notifications
+- Affects CSA countdown timing on P2P GO — real user-visible WiFi
+  failure mode
+- Bug present in 6.18.44 since 2018 dual-layout introduction
+- Small, surgical, reviewed (Ilan Peer), authored by iwlwifi maintainer
+- Applies cleanly to this tree
+- Similar CSA-related iwlwifi fixes already in 6.18.y (e.g., noa_len)
 
 **AGAINST backport:**
-- Narrow audience (`CONFIG_NETCONSOLE_DYNAMIC`)
-- Requires admin/configfs action
-- Literal patch does not apply cleanly (needs simple adaptation)
-- No user/fuzzer report
+- No user crash reports or syzbot findings
+- Only affects v5-layout firmware (not newest devices)
+- CSA is not the most common WiFi operation
+- No explicit stable nomination
 
-**Unresolved:** No runtime crash report; no explicit stable nomination
-in lore thread.
+**Unresolved:** Exact count of devices still on v5 layout in production
+(qualitatively: many pre-recent firmware generations).
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — lock ordering matches
-   sibling paths; committed to mainline by netdev maintainer.
-2. Fixes real bug affecting users? **PASS** — concrete list-corruption
-   race on configfs removal.
-3. Important issue? **PASS** — kernel crash (HIGH severity, niche
-   config).
-4. Small and contained? **PASS** — 2 lines effective change on this
-   tree.
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS with adaptation** — core fix applies;
-   literal hunk does not (`git apply --check` fails).
+1. Obviously correct and tested? **PASS** — logic is clear; Reviewed-by
+   present; no Tested-by
+2. Fixes a real bug affecting users? **PASS** — wrong firmware field
+   parsing on v5 layout
+3. Important issue? **PASS** — CSA timing failure causes connectivity
+   loss (MEDIUM-HIGH)
+4. Small and contained? **PASS** — 3 files, ~30 lines
+5. No new features or APIs? **PASS** — correctness fix only
+6. Can apply to local tree? **PASS** — clean apply verified
 
 ### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs).
+**Record:** None applicable (not device ID, quirk, DT, build, or docs).
 
-### Step 9.4: Decision rationale
-This is a real concurrency bug in code present in Linux 6.18.44 since
-deferred cleanup was added. The fix is minimal, follows the file's
-established locking discipline, and is already in mainline. While the
-audience is limited to dynamic-netconsole users, list corruption is a
-serious failure mode. The patch needs a small backport adjustment for
-6.18.44's simpler `drop_netconsole_target()`, but the fix itself is
-independent of the `STATE_DEACTIVATED` machinery that exists only on
-newer mainline.
+### Step 9.4: Problem summary for stable users
+
+On Intel iwlwifi hardware using the older v5 beacon notification layout,
+the driver reads the `gp2` timestamp from the wrong byte offset in every
+beacon TX notification. When a P2P GO (or AP) performs a channel switch
+announcement (CSA), the driver uses this garbage timestamp to schedule
+the switch, potentially causing mistimed or failed channel switches and
+client disconnections. The fix reads `gp2` (and `tsf`) only after
+selecting the correct notification structure for the firmware layout.
+This is a long-standing bug (since 2018) affecting real hardware still
+supported in 6.18.y.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-  and `git show 91aeb87f05236`
-- **[Phase 2]** Diff analysis: +2 lines on mainline; race between
-  `drop_netconsole_target` and `netconsole_process_cleanups_core`
-- **[Phase 3]** `git describe HEAD` → v6.18.44
-- **[Phase 3]** `git blame` on `drop_netconsole_target`: base from 2007;
-  race introduced `97714695ef904` (2024-08-13)
-- **[Phase 3]** `97714695ef904` is ancestor of HEAD
-- **[Phase 3]** `STATE_DEACTIVATED` commits not in tree
-- **[Phase 3]** Fix `91aeb87f05236` not in tree
-- **[Phase 4]** `b4 dig -c 91aeb87f05236`: lore URL found
-- **[Phase 4]** `b4 dig -a`: v1 and v3 series; v3 is latest
-- **[Phase 4]** `b4 dig -w`: netdev maintainers CC'd
-- **[Phase 4]** Mbox thread: no stable nomination or Reviewed-by found
-- **[Phase 5]** `grep` confirmed all `target_cleanup_list_lock` users
-  except `drop_netconsole_target`
-- **[Phase 5]** Read `netconsole_netdev_event`, `enabled_store`,
-  `netconsole_process_cleanups_core`
-- **[Phase 6]** Buggy code confirmed at lines 1329–1331 in local tree
-- **[Phase 6]** `git apply --check` on mainline patch: **fails** (needs
-  adaptation)
-- **[Phase 6]** `git log --oneline -20 -- drivers/net/netconsole.c`:
-  active subsystem
-- **[Phase 8]** Failure mode: list corruption → crash, HIGH severity,
-  config-specific
+- [Phase 1] Parsed commit message and tags from user-provided diff and
+  `git show b77c6f50b1f80`
+- [Phase 2] Diff analysis: 3 files, `iwl_mvm_rx_beacon_notif()`
+  restructured; `ap_last_beacon_gp2` removed
+- [Phase 3] `git describe HEAD`: v6.18.44; tree is 6.18.y stable
+- [Phase 3] `git blame -L 1514,1520 mac-ctxt.c`: buggy lines at
+  5d324e5159d9e
+- [Phase 3] `git show 15e28c78c3864`: dual-layout code introduced early
+  unconditional `beacon->gp2` read in 2018
+- [Phase 3] `git show b77c6f50b1f80 | git apply --check`: applies
+  cleanly
+- [Phase 3] `git branch --contains b77c6f50b1f80`: only `master`, not
+  stable branch
+- [Phase 4] `b4 dig -c b77c6f50b1f80`: found lore thread, patch 07/15
+- [Phase 4] `b4 dig -w`: CC linux-wireless, johannes, Intel authors
+- [Phase 4] `b4 dig -a`: v1 series, 15 patches
+- [Phase 4] `b4 dig -m /tmp/iwlwifi_beacon_thread.mbox`: Reviewed-by
+  Ilan Peer confirmed; no stable CC
+- [Phase 5] `grep iwl_mvm_rx_beacon_notif`: registered in `ops.c` RX
+  handler table
+- [Phase 5] Read `iwl_mvm_csa_count_down()`: `gp2` used for P2P GO
+  `apply_time` calculation
+- [Phase 5] Read struct definitions in `fw/api/tx.h`: v5 has
+  `iwl_tx_resp` prefix, v6 has 4-byte status prefix
+- [Phase 6] `grep ap_last_beacon_gp2`: field present in current tree
+  (mvm.h, mac-ctxt.c, mac80211.c)
+- [Phase 6] Read `mac-ctxt.c:1502-1550`: confirmed buggy unconditional
+  read before layout branch
+- [Phase 6] `iwl_mvm_is_short_beacon_notif_supported()` in mvm.h: checks
+  `IWL_UCODE_TLV_API_SHORT_BEACON_NOTIF`
+- [Phase 8] Offset analysis: v6 gp2 at offset 16; v5 gp2 at ~offset 54+
+  (after `iwl_tx_resp`); reading v6 offset on v5 data is verified wrong
+  by struct layout inspection
+- [Phase 8] Fix not yet in stable/linux-6.18.y per `git branch
+  --contains`
 
----
+**YES**The background git searches finished and line up with the earlier
+analysis:
 
-**YES**
+- **Beacon gp2 history:** The early unconditional `beacon->gp2` read
+  traces to the 2018 dual-layout change; `ap_last_beacon_gp2` has been
+  in the driver since extended beacon notifications were added.
+- **Fix location:** The fix is commit `b77c6f50b1f80` (`wifi: iwlwifi:
+  mvm: parse beacon notif per layout`) on mainline/linux-next.
+- **Stable status:** That commit is only on `master` — it is **not** in
+  `stable/linux-6.18.y` yet, and it applies cleanly to the current
+  6.18.44 tree.
 
- drivers/net/netconsole.c | 2 ++
- 1 file changed, 2 insertions(+)
+That supports the **YES** backport recommendation: real layout-parsing
+bug on v5-format firmware, CSA timing impact, small reviewed fix, not
+yet in stable.
 
-diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
-index 06345487d6aac..fec111d64f611 100644
---- a/drivers/net/netconsole.c
-+++ b/drivers/net/netconsole.c
-@@ -1326,9 +1326,11 @@ static void drop_netconsole_target(struct config_group *group,
- 	unsigned long flags;
- 	struct netconsole_target *nt = to_target(item);
+ .../net/wireless/intel/iwlwifi/mvm/mac-ctxt.c | 25 +++++++++++--------
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c |  1 -
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |  3 ---
+ 3 files changed, 15 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
+index 44380ebfe09d0..cee6bde6ec822 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
+@@ -1504,49 +1504,54 @@ void iwl_mvm_rx_beacon_notif(struct iwl_mvm *mvm,
+ {
+ 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
+ 	unsigned int pkt_len = iwl_rx_packet_payload_len(pkt);
+-	struct iwl_extended_beacon_notif *beacon = (void *)pkt->data;
+-	struct iwl_extended_beacon_notif_v5 *beacon_v5 = (void *)pkt->data;
+ 	struct ieee80211_vif *csa_vif;
+ 	struct ieee80211_vif *tx_blocked_vif;
+ 	struct agg_tx_status *agg_status;
++	u32 beacon_gp2;
+ 	u16 status;
  
-+	mutex_lock(&target_cleanup_list_lock);
- 	spin_lock_irqsave(&target_list_lock, flags);
- 	list_del(&nt->list);
- 	spin_unlock_irqrestore(&target_list_lock, flags);
-+	mutex_unlock(&target_cleanup_list_lock);
+ 	lockdep_assert_held(&mvm->mutex);
  
- 	/*
- 	 * The target may have never been enabled, or was manually disabled
+-	mvm->ap_last_beacon_gp2 = le32_to_cpu(beacon->gp2);
+-
+ 	if (!iwl_mvm_is_short_beacon_notif_supported(mvm)) {
++		struct iwl_extended_beacon_notif_v5 *beacon = (void *)pkt->data;
+ 		struct iwl_tx_resp *beacon_notify_hdr =
+-			&beacon_v5->beacon_notify_hdr;
++			&beacon->beacon_notify_hdr;
+ 
+-		if (unlikely(pkt_len < sizeof(*beacon_v5)))
++		if (unlikely(pkt_len < sizeof(*beacon)))
+ 			return;
+ 
+-		mvm->ibss_manager = beacon_v5->ibss_mgr_status != 0;
++		beacon_gp2 = le32_to_cpu(beacon->gp2);
++
++		mvm->ibss_manager = beacon->ibss_mgr_status != 0;
+ 		agg_status = iwl_mvm_get_agg_status(mvm, beacon_notify_hdr);
+ 		status = le16_to_cpu(agg_status->status) & TX_STATUS_MSK;
+ 		IWL_DEBUG_RX(mvm,
+ 			     "beacon status %#x retries:%d tsf:0x%016llX gp2:0x%X rate:%d\n",
+ 			     status, beacon_notify_hdr->failure_frame,
+ 			     le64_to_cpu(beacon->tsf),
+-			     mvm->ap_last_beacon_gp2,
++			     beacon_gp2,
+ 			     le32_to_cpu(beacon_notify_hdr->initial_rate));
+ 	} else {
++		const struct iwl_extended_beacon_notif *beacon =
++			(void *)pkt->data;
++
+ 		if (unlikely(pkt_len < sizeof(*beacon)))
+ 			return;
+ 
++		beacon_gp2 = le32_to_cpu(beacon->gp2);
++
+ 		mvm->ibss_manager = beacon->ibss_mgr_status != 0;
+ 		status = le32_to_cpu(beacon->status) & TX_STATUS_MSK;
+ 		IWL_DEBUG_RX(mvm,
+ 			     "beacon status %#x tsf:0x%016llX gp2:0x%X\n",
+ 			     status, le64_to_cpu(beacon->tsf),
+-			     mvm->ap_last_beacon_gp2);
++			     beacon_gp2);
+ 	}
+ 
+ 	csa_vif = rcu_dereference_protected(mvm->csa_vif,
+ 					    lockdep_is_held(&mvm->mutex));
+ 	if (unlikely(csa_vif && csa_vif->bss_conf.csa_active))
+-		iwl_mvm_csa_count_down(mvm, csa_vif, mvm->ap_last_beacon_gp2,
++		iwl_mvm_csa_count_down(mvm, csa_vif, beacon_gp2,
+ 				       (status == TX_STATUS_SUCCESS));
+ 
+ 	tx_blocked_vif = rcu_dereference_protected(mvm->csa_tx_blocked_vif,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 92471bc7b505b..83fb3f9af4745 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -3100,7 +3100,6 @@ void iwl_mvm_stop_ap_ibss_common(struct iwl_mvm *mvm,
+ 	}
+ 
+ 	mvmvif->ap_ibss_active = false;
+-	mvm->ap_last_beacon_gp2 = 0;
+ 
+ 	if (vif->type == NL80211_IFTYPE_AP && !vif->p2p) {
+ 		iwl_mvm_vif_set_low_latency(mvmvif, false,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index 2628361332895..319301504b7eb 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -1180,9 +1180,6 @@ struct iwl_mvm {
+ 	struct ieee80211_vif __rcu *csa_tx_blocked_vif;
+ 	u8 csa_tx_block_bcn_timeout;
+ 
+-	/* system time of last beacon (for AP/GO interface) */
+-	u32 ap_last_beacon_gp2;
+-
+ 	/* indicates that we transmitted the last beacon */
+ 	bool ibss_manager;
+ 
 -- 
 2.53.0
 
