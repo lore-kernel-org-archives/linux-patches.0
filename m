@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564D0430CE2;
-	Mon, 31 Aug 2026 13:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08E0430CE6;
+	Mon, 31 Aug 2026 13:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183228; cv=none; b=U8MkxdHMhW19W4DnDPs7+PN86weW/HYhZHeBYhuKVmFaGLnTHXuZzSh/2tMtIWAR6APGK6riWulfKDgh6HfkhqlgowL6tiSN2xqaW/B+mj49QKpha6+q7mjvqlTghLZftC80Hmv0Bwc6Bgr5HXmte5RgBrFGLN6t291TcDh2Ksg=
+	t=1788183229; cv=none; b=ngDzB3rA+hEgogfi0yeVmKfAKSxaoGUxJpDzBk/aWHk13WVn6Y0ftrJ7gPNehoQY3sACgliRcj0DsncRSu37vcU7c3AKuVUWiqxI/rUnQtGUKy0UaZViV8FRqqs63HQwg1r7idstg6ljHXo+EgAHQMAIjtLxQSKJXSeqFr3xY3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183228; c=relaxed/simple;
-	bh=quJOMTBW9ktBoQlH5FST6viD+tspK9PxgqKvdSjcdTg=;
+	s=arc-20240116; t=1788183229; c=relaxed/simple;
+	bh=ncOw5D6/e8S0ejtclzOxXRHGZZDqI655tdb+9GwJK8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PKpsgH2NkgH3xhYJfX+HN2JeTEZxsiVvdKIPeQAu6avNSzPzECLFAxWMlYNBlFPLmyBSFbJmXbOMFd+jQQ/fn9We0tm3+WaOrMp45P57uvgAPdGxNG+jjANCIcruGEltPM5MXPvGgr90u0RnTuGHPxaFEIpOw2SgKvs0Rdx2oWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cTCgVfMM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NvxrE++MFWbzN3BcFH2O8Jqcj+u0umSCHnybrEKJoaHi+b8jLOOX/2I2RFh2GhMtnxRBgm4m5lpoHatEyjE16gb4zkUvo7FBs7K9xvFjP6p8KQKLba9/uba9YPBbAFtr0t8B6PYP+wozs9iZHynQhIxeyX31xMqkGt8f4mjfkr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VfRIoilB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cTCgVfMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCBD1F00A3F;
-	Mon, 31 Aug 2026 13:33:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VfRIoilB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD851F00A3E;
+	Mon, 31 Aug 2026 13:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183225;
-	bh=7XE0qIhiBUqZOs40ocefX7K8S4wpxgfYOn/qG3B+V3M=;
+	s=k20260515; t=1788183226;
+	bh=h0/09us6WyDiR1m51ogWN0HbVCXO7FYBwv/l5okE+GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cTCgVfMMWMQVEzk2RJsBs9JGWVMXooB0G3KSqgSKHHx5QoY/9Dp8TANv+xUyZrvFD
-	 fq63sUQY+j/bV/+Cq96CqtXNsNV14ydcOnBenj+T7XxjGV0vq2R6wqpTWNItubeuH6
-	 +PlUIspAqojv0jWsl5R4Ba8BHP58/B518E80nlKbVCBLhZXbE/Vmc0QBotak7VvtiL
-	 asZHWSsjMA/RaJk5kJZzxwldQ9vTfW8XzK/DFwD8jRyk5vXOBr++BtLYAGiMGKN2Fw
-	 p6mOGGicLvPDFuWL6N6j4bobSP4UwyDBzO+icqVuoptawTqwaGHWgqYiwpS7tkOQIK
-	 AQQDRAkszLOKQ==
+	b=VfRIoilBk7AYO8LOnsTkgYsDjGAJPs0QOC9opvC/PPox8zjw5z99TI/XWvYxbs6re
+	 pszRq6NzUk8Lwf6vitr7PZIEmu6WmQp77g8XP+KB8PkapNSJJnYoJe7WFVVVVlmvWO
+	 pRGHMkV6Zy1UXsUZ5GVgfrZrqN739QWCjzXexDTMO3DoCQ7kn2WJipKW9WcMhkDBg/
+	 1FNIRee5BBEfM5pDcCEwxPqS9LrgFPZQ4SmHt9/XgWEq7vzgtnCllOk4or8f8w3o7z
+	 aMBnVTx2kM4+ORw1er8WZ+CE1OuiZvJcTOfLz77kkPXwH17udzM1rQx5r1TwmHckCU
+	 EDt9EFFTDYxag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vamsi Attunuru <vattunuru@marvell.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jasowangio@gmail.com,
-	virtualization@lists.linux.dev,
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] vdpa/octeon_ep: Use 4 bytes for mailbox signature
-Date: Mon, 31 Aug 2026 09:20:48 -0400
-Message-ID: <20260831133314.4125787-20-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] ksmbd: fix outstanding credit leak on abort and error paths
+Date: Mon, 31 Aug 2026 09:20:49 -0400
+Message-ID: <20260831133314.4125787-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,407 +53,531 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vamsi Attunuru <vattunuru@marvell.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d42eadf7969e2217fceb84317d3fd28a7bdbd96e ]
+[ Upstream commit 4a0b7826615a01c47924334a2e8a9dbd84a598b2 ]
 
-The upper 4 bytes are reserved by the firmware for
-storing meta data. Use only lower 4 bytes to update
-the signature details.
+smb2_validate_credit_charge() adds the request's CreditCharge to
+conn->outstanding_credits when an SMB2 PDU is received, and
+smb2_set_rsp_credits() subtracts it again when the response is built.
+However smb2_set_rsp_credits() only runs on the normal response path:
 
-Signed-off-by: Vamsi Attunuru <vattunuru@marvell.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260224095226.1001151-3-schalla@marvell.com>
+  - __process_request() returning SERVER_HANDLER_ABORT (unimplemented
+    command, command index out of range, signature check failure, or a
+    handler that sets send_no_response such as a cancelled blocking
+    lock) breaks out of the processing loop before set_rsp_credits() is
+    called;
+  - smb2_set_rsp_credits() itself returns early with -EINVAL (total
+    credit overflow or insufficient credits) before the subtraction.
+
+On all of these paths the charge added at receive time is never
+returned, so conn->outstanding_credits only grows. Because a client can
+repeatedly trigger them (e.g. by sending unimplemented commands or by
+issuing and cancelling blocking locks), outstanding_credits eventually
+reaches total_credits and smb2_validate_credit_charge() then rejects
+every subsequent request, wedging the connection.
+
+Record the charge that was added in work->credit_charge and release any
+charge still pending at the single send. exit point of
+__handle_ksmbd_work(), which all abort and error paths fall through to.
+smb2_set_rsp_credits() clears work->credit_charge once it has returned
+the charge so the response path is unchanged and the credit is never
+released twice. Paths that never charged a credit (no multi-credit
+support, validation failure) leave work->credit_charge at zero and are
+unaffected.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `vdpa/octeon_ep: Use 4 bytes for mailbox
-signature`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.44** (`stable/linux-6.18.y`, `git describe
-HEAD` → `v6.18.44`)
-**Upstream commit:** `d42eadf7969e2217fceb84317d3fd28a7bdbd96e` (not yet
-in this tree)
+### Step 1.1: Parse the Subject Line
+**Record:** `[ksmbd] [fix] outstanding credit leak on abort and error
+paths` — subsystem is ksmbd (SMB3 in-kernel server); action verb is
+"fix"; claimed intent is repairing a credit accounting leak.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject Line
-**Record:** `[vdpa/octeon_ep]` `[Use]` — driver correctness fix for
-mailbox signature access width.
-
-### Step 1.2: Tags
-**Record:**
-- `Signed-off-by: Vamsi Attunuru <vattunuru@marvell.com>`
-- `Signed-off-by: Michael S. Tsirkin <mst@redhat.com>` (vhost/vDPA
+### Step 1.2: Parse All Commit Message Tags
+**Record:** Tags present:
+- `Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>` (author, ksmbd
   maintainer)
-- `Message-ID: <20260224095226.1001151-3-schalla@marvell.com>`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Cc: stable@vger.kernel.org`, or `Link:` tags.
+- `Signed-off-by: Steve French <stfrench@microsoft.com>` (committer,
+  CIFS/ksmbd maintainer)
 
-Notable: maintainer sign-off from Michael S. Tsirkin; part of a 4-patch
-series (`[PATCH 2/4]`).
+Notable absences (expected for manual review pipeline):
+- No `Fixes:` tag
+- No `Reported-by:` / `Tested-by:` / `Reviewed-by:` / `Cc:
+  stable@vger.kernel.org` / `Link:`
 
-### Step 1.3: Body Analysis
+### Step 1.3: Analyze Commit Body
 **Record:**
-- **Bug:** Driver uses 64-bit `readq`/`writeq` on a mailbox signature
-  register; firmware reserves the upper 4 bytes for metadata.
-- **Symptom:** Incorrect signature read/write corrupts firmware metadata
-  or prevents signature match.
-- **Root cause:** Access width mismatch with hardware/firmware register
-  layout.
-- **Version info:** None in commit message.
+- **Bug:** `smb2_validate_credit_charge()` increments
+  `conn->outstanding_credits` at PDU receive time;
+  `smb2_set_rsp_credits()` is supposed to decrement it when building the
+  response, but is skipped on abort/error paths.
+- **Symptom:** `outstanding_credits` monotonically grows; once it
+  reaches `total_credits`, all further requests are rejected — the SMB
+  connection is wedged.
+- **Trigger:** Repeatable by clients sending unimplemented commands,
+  cancelling blocking locks (`send_no_response`), signature failures, or
+  hitting `-EINVAL` inside `smb2_set_rsp_credits()`.
+- **Root cause:** No cleanup of the receive-time charge when the normal
+  response credit path is bypassed.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Yes — despite no "fix" in the subject, this is a hardware-
-interface bug fix disguised as a register-width correction. Not cosmetic
-cleanup.
+### Step 1.4: Detect Hidden Bug Fixes
+**Record:** Not disguised — this is an explicit bug fix for a resource-
+accounting leak with a documented denial-of-service failure mode.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
+### Step 2.1: Inventory the Changes
 **Record:**
-- **File:** `drivers/vdpa/octeon_ep/octep_vdpa_main.c` (+3/−3 lines, 6
-  lines touched)
-- **Functions:** `get_device_ready_status()`, `octep_sriov_enable()`
-- **Scope:** Single-file surgical fix
+| File | Changes | Functions touched |
+|------|---------|-------------------|
+| `fs/smb/server/ksmbd_work.h` | +7 lines | struct `ksmbd_work` |
+| `fs/smb/server/server.c` | +14 lines | `__handle_ksmbd_work()` |
+| `fs/smb/server/smb2misc.c` | +6 / -3 lines |
+`smb2_validate_credit_charge()`, `ksmbd_smb2_check_message()` |
+| `fs/smb/server/smb2pdu.c` | +1 line | `smb2_set_rsp_credits()` |
 
-### Step 2.2: Code Flow Changes
+**Total:** 28 insertions, 3 deletions across 4 files. **Scope:** single-
+subsystem, surgical fix.
 
-**Hunk 1 — `get_device_ready_status()` (VF path):**
-- **Before:** `readq()` reads 64 bits; compares to
-  `OCTEP_DEV_READY_SIGNATURE` (0xBABABABA); clears with `writeq(0)`.
-- **After:** `readl()` reads lower 32 bits only; clears with
-  `writel(0)`.
-- **Path:** VF BAR-init polling loop in `octep_vdpa_setup_task()`.
+### Step 2.2: Code Flow Change (per hunk)
 
-**Hunk 2 — `octep_sriov_enable()` (PF path):**
-- **Before:** `writeq(OCTEP_DEV_READY_SIGNATURE, ...)` writes 64 bits
-  per VF.
-- **After:** `writel(OCTEP_DEV_READY_SIGNATURE, ...)` writes lower 32
-  bits only.
-- **Path:** SR-IOV enable when all VFs are assigned bar space.
+**Hunk 1 (`ksmbd_work.h`):** Adds `credit_charge` field to track pending
+receive-time charge.
+
+**Hunk 2 (`smb2misc.c`):** When credit is successfully charged to
+`outstanding_credits`, also records it in `work->credit_charge`.
+
+**Hunk 3 (`smb2pdu.c`):** On normal response path, clears
+`work->credit_charge` after decrementing `outstanding_credits` —
+prevents double-release.
+
+**Hunk 4 (`server.c`):** At the common `send:` exit of
+`__handle_ksmbd_work()`, if `work->credit_charge` is still non-zero,
+subtract it from `outstanding_credits` under `credits_lock`.
+
+**Record:**
+- **Before:** Charge at receive, release only if
+  `smb2_set_rsp_credits()` runs to completion.
+- **After:** Charge at receive, release on normal path via
+  `smb2_set_rsp_credits()` OR on any exit via `send:` label.
+- **Affected paths:** Abort (`SERVER_HANDLER_ABORT`),
+  `set_rsp_credits()` early `-EINVAL`, and any path that reaches `send:`
+  without clearing the charge.
 
 ### Step 2.3: Bug Mechanism
-**Record:** **Hardware interface / logic correctness bug**
-- `OCTEP_DEV_READY_SIGNATURE` is `0xBABABABA` (32-bit, in
-  `octep_vdpa.h`).
-- If firmware places metadata in upper 32 bits:
-  - `readq()` returns a value ≠ `0xBABABABA` → ready check never
-    succeeds.
-  - `writeq()` overwrites/clears upper 32 bits → firmware metadata
-    corruption.
-- Rest of mailbox code in `octep_vdpa_hw.c` already uses 32-bit
-  `ioread32`/`iowrite32`.
+**Record:** **Category:** Resource leak (credit accounting) leading to
+connection-level DoS.
 
-### Step 2.4: Fix Quality
+**Mechanism verified in current tree:**
+
+```214:215:fs/smb/server/server.c
+                if (rc == SERVER_HANDLER_ABORT)
+                        break;
+```
+
+This `break` skips `set_rsp_credits()` at lines 221–229.
+
+```337:352:fs/smb/server/smb2pdu.c
+        if (conn->total_credits > conn->vals->max_credits) {
+                hdr->CreditRequest = 0;
+                pr_err("Total credits overflow: %d\n",
+conn->total_credits);
+                return -EINVAL;
+        }
+        // ...
+        conn->total_credits -= credit_charge;
+        conn->outstanding_credits -= credit_charge;
+```
+
+`-EINVAL` returns occur **before** the `outstanding_credits`
+subtraction.
+
+```349:361:fs/smb/server/smb2misc.c
+        spin_lock(&conn->credits_lock);
+        // ...
+        } else
+                conn->outstanding_credits += credit_charge;
+```
+
+Charge happens at receive with no corresponding guaranteed release.
+
+### Step 2.4: Fix Quality Assessment
 **Record:**
-- Fix is obviously correct and minimal.
-- Matches existing 32-bit mailbox access patterns in the same driver.
-- **Regression risk:** Very low — only narrows access to the documented
-  32-bit signature field.
+- **Obviously correct:** Yes — classic "track pending resource, release
+  at unified exit" pattern.
+- **Minimal:** Yes — 28 lines, no refactoring.
+- **Regression risk:** Very low. `kmem_cache_zalloc()` zero-initializes
+  work structs; paths that never charge leave `credit_charge == 0`;
+  normal path clears the field in `smb2_set_rsp_credits()` before
+  reaching `send:`.
+- **Locking:** Uses existing `credits_lock`, consistent with surrounding
+  credit code.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:**
-- Buggy `readq`/`writeq` in `get_device_ready_status()` introduced in
-  `8b6c724cdab85` (Jun 14, 2024) — initial driver commit.
-- Buggy `writeq` in `octep_sriov_enable()` same commit; address
-  calculation around it fixed later in `54556d5394382`.
+### Step 3.1: Blame the Changed Lines
+**Record:** `outstanding_credits += credit_charge` in `smb2misc.c`
+(lines 356–361) blames to merge commit `5d324e5159d9e` (v6.18-rc8,
+2025-11-28). The credit validation logic is present in this 6.18.44
+tree. Fix commit `4a0b7826615a0` is **not** an ancestor of HEAD.
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no `Fixes:` tag. Bug introduced by `8b6c724cdab85`
-("virtio: vdpa: vDPA driver for Marvell OCTEON DPU devices"), which is
-present in this tree.
+### Step 3.2: Follow Fixes: Tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-### Step 3.3: Related File History
-**Record:** Recent `drivers/vdpa/octeon_ep/` history in 6.18.y:
-1. `54556d5394382` — Fix PF->VF mailbox data address calculation (series
-   patch 1/4, already backported)
-2. `3ef0cfa77a3d5` — fix IRQ-to-ring mapping (series patch 4/4, already
-   backported)
-3. `8716a841d1da4` — refcount leak fix
+### Step 3.3: File History for Related Changes
+**Record:** Recent ksmbd fixes in this tree include UAF fixes, session
+handling, and validation hardening (`9be4a66f019ea`, `a60b5da05e318`,
+etc.). Prior related fix: `85bf0a73831cc` ("smb: server: fix last send
+credit problem causing disconnects"). **Standalone** — not part of a
+multi-patch series.
 
-Patches 2/4 (this commit) and 3/4 (event handling) are **not** in 6.18.y
-yet.
+### Step 3.4: Author's Other Commits
+**Record:** Namjae Jeon is the primary ksmbd maintainer with numerous
+recent fixes in `fs/smb/server/`. Steve French committed the patch. High
+subsystem trust.
 
-### Step 3.4: Author Context
-**Record:** Vamsi Attunuru (Marvell). Michael S. Tsirkin committed.
-Srujana Challa submitted the series. Active contributors to this driver.
-
-### Step 3.5: Dependencies
-**Record:**
-- Part of 4-patch series, but **this patch is standalone** — only
-  changes access width.
-- Prerequisite patch 1 (`54556d5394382`, mailbox address calc) is
-  already in 6.18.y.
-- Does **not** require patch 3/4 (event handling — separate feature).
-- `git apply --check` against current tree: **applies cleanly**.
+### Step 3.5: Dependent/Prerequisite Commits
+**Record:** No dependencies. `git show 4a0b7826615a0 -- . | git apply
+--check` succeeds on current HEAD — patch applies cleanly with no
+prerequisites.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original Discussion
-**Record:**
-- `b4 dig -c d42eadf7969e2`:
-  https://patch.msgid.link/20260224095226.1001151-3-schalla@marvell.com
-- Series: v1, 4 patches from Srujana Challa, Feb 24, 2026.
-- No reviewer replies or stable nominations found in saved mbox for this
-  specific patch.
+### Step 4.1: Original Patch Discussion
+**Record:** `b4 dig -c 4a0b7826615a0` returned no match on
+lore.kernel.org. `b4 dig -a` and `b4 dig -w` also failed. Likely
+committed directly via maintainer tree (`Merge tag
+'v7.2-rc1-smb3-server-fixes'`). Lore search blocked by bot protection.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` CC'd: `virtualization@lists.linux.dev`,
-`mst@redhat.com`, `jasowang@redhat.com`, Marvell developers. No explicit
-`Reviewed-by` in thread.
+**Record:** UNVERIFIED from lore — commit signed off by author and
+committed by subsystem maintainer (Steve French).
 
-### Step 4.3: Bug Reports
-**Record:** N/A — no external bug report links. Bug inferred from
-firmware register layout and code analysis.
+### Step 4.3: Bug Report
+**Record:** No external bug report referenced. Bug mechanism is
+explained in detail in the commit message and verifiable from code.
 
-### Step 4.4: Related Patches
-**Record:** 4-patch series:
-1. Fix PF->VF mailbox address — **in 6.18.y**
-2. Use 4 bytes for mailbox signature — **this commit**
-3. Add vDPA device event handling — not in 6.18.y (new functionality)
-4. fix IRQ-to-ring mapping — **in 6.18.y**
+### Step 4.4: Related Patches/Series
+**Record:** Standalone fix, not part of a series.
 
-### Step 4.5: Stable List History
-**Record:** No stable-list discussion found for this specific patch. Two
-other patches from the same series were already backported to 6.18.y.
+### Step 4.5: Stable Mailing List History
+**Record:** UNVERIFIED — lore search unavailable; no stable-list
+discussion found.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key Functions
-**Record:** `get_device_ready_status()`, `octep_sriov_enable()`
+**Record:** `smb2_validate_credit_charge()`, `smb2_set_rsp_credits()`,
+`__handle_ksmbd_work()`, `__process_request()`,
+`ksmbd_smb2_check_message()`, `ksmbd_verify_smb_message()`.
 
-### Step 5.2: Callers
+### Step 5.2: Trace Callers
 **Record:**
-- `get_device_ready_status()` ← `octep_vdpa_setup_task()` (work item,
-  polls up to 5s during VF init)
-- `octep_sriov_enable()` ← `octep_vdpa_sriov_configure()` ← sysfs SR-IOV
-  interface (`echo N > sriov_numvfs`)
+- `ksmbd_smb2_check_message()` ← `ksmbd_verify_smb_message()` ←
+  `__process_request()` ← `__handle_ksmbd_work()` ←
+  `handle_ksmbd_work()` (kworker)
+- Every incoming SMB2 work item on connections with
+  `SMB2_GLOBAL_CAP_LARGE_MTU` goes through this path.
+- `SMB2_GLOBAL_CAP_LARGE_MTU` is set for all SMB 2.1+ protocol versions
+  in `fs/smb/server/smb2ops.c`.
 
-### Step 5.3: Callees
-**Record:** `readl`/`writel`/`readq` (unchanged for `OCTEP_EPF_RINFO`),
-PCI SR-IOV helpers.
+### Step 5.3: Key Callees
+**Record:** Credit paths use `spin_lock(&conn->credits_lock)` around
+`outstanding_credits` / `total_credits` mutations.
 
-### Step 5.4: Reachability
-**Record:**
-- VF init path: triggered when Octeon DPU VF probes with
-  `CONFIG_OCTEONEP_VDPA=m`.
-- PF SR-IOV path: triggered by admin enabling VFs.
-- Requires Marvell Octeon DPU hardware/emulation; not universal, but
-  reachable on deployed systems using this driver.
+### Step 5.4: Call Chain / Reachability
+**Record:** Any networked SMB client that can send SMB2 requests to
+ksmbd can trigger abort paths (unimplemented commands, signature
+failures, cancelled blocking locks). **Reachable from remote clients**
+on any ksmbd-enabled system (`CONFIG_SMB_SERVER`).
 
 ### Step 5.5: Similar Patterns
-**Record:** `octep_vdpa_hw.c` mailbox protocol consistently uses 32-bit
-`ioread32`/`iowrite32`. Only the signature handshake incorrectly used
-64-bit access.
+**Record:** Prior credit accounting bug fixed in `85bf0a73831cc` (SMB
+Direct send credits). Same subsystem, same class of problem.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 6: Cross-Referencing Against Local Tree
 
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Current tree at
-`drivers/vdpa/octeon_ep/octep_vdpa_main.c`:
-- Line 585: `u64 signature = readq(...)`
-- Line 588: `writeq(0, ...)`
-- Line 760: `writeq(OCTEP_DEV_READY_SIGNATURE, ...)`
-
-Driver present since `8b6c724cdab85` (Jul 2024). Bug present since
-driver introduction.
+### Step 6.1: Does the Buggy Code Exist?
+**Record:** **Yes.** Local tree is **Linux 6.18.44** (`git describe
+HEAD` → `v6.18.44-1-g2736c32da98b9`). Buggy code confirmed at
+`smb2misc.c:361`, `server.c:214-215`, `smb2pdu.c:337-352`. No
+`credit_charge` field in `ksmbd_work.h`. Fix commit `4a0b7826615a0` is
+**not** in HEAD.
 
 ### Step 6.2: Backport Complications
-**Record:** **Clean apply** — verified with `git apply --check`. No
-conflicts expected.
+**Record:** **Clean apply** — `git apply --check` passes without
+modification. No `compress_response` code in this 6.18 tree (present in
+newer mainline context lines of the patch), so the `send:` hunk applies
+against the simpler local `server.c`.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** Series patches 1 and 4 already backported. This specific fix
-is **not** present. No alternate fix for the access-width bug.
+**Record:** No equivalent fix found. `git log --grep="outstanding credit
+leak"` returns nothing on this branch.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 7.1: Subsystem
-**Record:** `drivers/vdpa/octeon_ep/` — vDPA driver for Marvell Octeon
-DPU. **Criticality: PERIPHERAL** (hardware-specific, module-only:
-`CONFIG_OCTEONEP_VDPA`).
+### Step 7.1: Subsystem Criticality
+**Record:** **Subsystem:** `fs/smb/server` (ksmbd /
+`CONFIG_SMB_SERVER`). **Criticality:** IMPORTANT — optional but
+production-relevant for users running the in-kernel SMB3 server; not
+core kernel, but file-server availability is business-critical for those
+deployments.
 
-### Step 7.2: Activity
-**Record:** Actively maintained; multiple fixes backported to 6.18.y in
-2026 from the same patch series.
+### Step 7.2: Subsystem Activity
+**Record:** Actively maintained — multiple ksmbd fixes landed in this
+6.18.y tree in 2026.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who Is Affected
-**Record:** Users of Marvell Octeon DPU devices with the `octep_vdpa`
-module (enterprise DPU / SmartNIC deployments). Config-specific, not
-universal.
+**Record:** Users with `CONFIG_SMB_SERVER` enabled (module `ksmbd` or
+built-in), using SMB 2.1+ (LARGE_MTU). Not universal, but affects all
+ksmbd server deployments.
 
 ### Step 8.2: Trigger Conditions
 **Record:**
-- Every VF probe runs the signature poll loop.
-- Every SR-IOV enable writes the ready signature.
-- Trigger is deterministic when firmware uses upper 32 bits for metadata
-  (as documented in commit message).
-- Requires root/admin for SR-IOV; VF init happens automatically on
-  probe.
+- Client sends requests that hit `SERVER_HANDLER_ABORT` (unimplemented
+  command, bad signature, `send_no_response`, command index out of
+  range).
+- Or `smb2_set_rsp_credits()` returns `-EINVAL`.
+- Repeated triggers exhaust the credit window.
+- **Likelihood:** Moderate — unimplemented commands and lock cancel are
+  normal SMB client behaviors; a buggy or malicious client can wedge the
+  connection deliberately.
 
-### Step 8.3: Failure Mode
-**Record:**
-- **VF init failure:** 5-second timeout, `"BAR initialization is timed
-  out"` — vDPA device never comes up. **Severity: HIGH** for affected
-  hardware.
-- **Firmware metadata corruption:** `writeq` clobbers upper 32 bits.
-  **Severity: HIGH** (undefined firmware behavior).
-- Not a generic kernel crash, but complete functional breakage on
-  affected hardware.
+### Step 8.3: Failure Mode Severity
+**Record:** Connection wedge — all subsequent SMB requests rejected once
+credits exhaust. **Severity: HIGH** for affected deployments (complete
+loss of SMB service on that connection; requires reconnect/restart). Not
+a kernel oops/panic, but a reproducible availability failure.
 
-### Step 8.4: Risk-Benefit
+### Step 8.4: Risk-Benefit Ratio
 **Record:**
-- **Benefit:** HIGH for Octeon DPU users — restores working VF init and
-  correct firmware handshake.
-- **Risk:** VERY LOW — 6-line change, obviously correct, matches driver
-  conventions.
-- **Ratio:** Strong benefit for affected users, negligible risk.
+- **Benefit:** HIGH for ksmbd users — prevents progressive credit leak
+  and connection DoS.
+- **Risk:** VERY LOW — 28-line, obviously correct accounting fix using
+  existing locks; applies cleanly.
+- **Ratio:** Strongly favors backport.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real hardware-interface bug present since driver introduction
-- Causes VF initialization failure and potential firmware metadata
-  corruption
-- Small, surgical, obviously correct fix
-- Applies cleanly to 6.18.y
-- Prerequisite from same series already backported
-- Other fixes from same series already in 6.18.y
-- Consistent with existing 32-bit mailbox access in the driver
-- vDPA maintainer sign-off
+- Real, verifiable resource leak in credit accounting
+- Leads to connection wedge (availability DoS)
+- Triggerable by remote SMB clients
+- Small, surgical, maintainer-authored fix
+- Applies cleanly to 6.18.44
+- Buggy code present; fix not yet applied
+- Prior similar credit fixes exist in this subsystem
 
 **AGAINST backport:**
-- Hardware-specific; affects niche Marvell Octeon DPU deployments only
-- No syzbot report or user bug report attached
-- Patch 3/4 (event handling) not backported — but this patch does not
-  depend on it
+- Only affects `CONFIG_SMB_SERVER` users (optional, default disabled)
+- No kernel crash/panic — connection-level rather than system-level
+  failure
+- No external bug report or syzbot finding
 
-**Unresolved:** No runtime test evidence or user bug reports in mailing
-list thread.
+**Unresolved:** Lore discussion and stable-list nomination not found (b4
+dig failed; lore blocked).
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logically correct;
-   maintainer SOB; no Tested-by but change is trivial.
-2. Fixes a real bug? **PASS** — 64-bit access violates firmware register
-   layout.
-3. Important issue? **PASS** — device init failure on affected hardware
-   (HIGH for those users).
-4. Small and contained? **PASS** — 6 lines, 1 file.
-5. No new features or APIs? **PASS** — behavior correction only.
-6. Can apply to local tree? **PASS** — clean apply verified; buggy code
-   confirmed present.
+1. Obviously correct and tested? **PASS** — logic is clear; committed by
+   subsystem maintainer (testing implied by maintainer merge, but no
+   explicit Tested-by).
+2. Fixes a real bug affecting users? **PASS** — credit leak wedges SMB
+   connections.
+3. Important issue? **PASS** — connection-level DoS for file server
+   users (HIGH severity for that subsystem).
+4. Small and contained? **PASS** — 4 files, 28 lines.
+5. No new features or APIs? **PASS** — internal accounting field only.
+6. Can apply to local tree? **PASS** — clean `git apply --check`.
 
 ### Step 9.3: Exception Categories
-**Record:** Hardware workaround / driver correctness fix for existing
-hardware — qualifies under stable exception for hardware-specific fixes.
+**Record:** N/A — standard bug fix, not device ID/quirk/build/doc
+exception.
 
 ### Step 9.4: Decision Rationale
 
-This commit fixes a genuine firmware handshake bug in the Marvell Octeon
-vDPA driver that has been present since the driver landed in 6.18.y.
-Using 64-bit accesses on a register where only the lower 32 bits hold
-the signature can prevent VF ready detection (leading to init timeout)
-and corrupt firmware metadata in the upper 32 bits. The fix is minimal,
-matches the driver's existing 32-bit mailbox conventions, applies
-cleanly, and two other patches from the same series are already in
-6.18.y — indicating this driver is actively maintained in stable. For
-Octeon DPU users on 6.18.y, this is an important functional fix with
-negligible regression risk.
+This commit fixes a genuine credit accounting leak in ksmbd that allows
+remote clients to progressively exhaust `outstanding_credits` and wedge
+the SMB connection. The bug exists in Linux 6.18.44, the fix is minimal
+and applies cleanly, and the failure mode is a complete loss of SMB
+service on the affected connection. While ksmbd is optional, stable
+trees routinely accept such fixes for optional but production-used
+server subsystems — especially when the fix is this small and the
+mechanism is clearly correct.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit `d42eadf7969e2` message and tags from `git
-  show`
-- **[Phase 2]** Diff analysis: 3 `readq`/`writeq` → `readl`/`writel`
-  changes in 2 functions
-- **[Phase 3]** `git blame`: buggy code from `8b6c724cdab85`
-  (2024-06-14)
-- **[Phase 3]** `git log stable/linux-6.18.y --
-  drivers/vdpa/octeon_ep/`: patches 1 and 4 of series already present;
-  this fix absent
-- **[Phase 3]** `git merge-base --is-ancestor`: driver and prerequisite
-  patch 1 confirmed in tree
-- **[Phase 3]** `git apply --check`: patch applies cleanly
-- **[Phase 4]** `b4 dig -c d42eadf7969e2`: lore URL found
-- **[Phase 4]** `b4 dig -a`: v1 series, 4 patches identified
-- **[Phase 4]** `b4 dig -w`: maintainers CC'd (mst, jasowang)
-- **[Phase 4]** mbox saved to `/tmp/octeon_mbox_thread.mbox`: no stable
-  nomination or NAKs found
-- **[Phase 5]** `grep` call chain: `get_device_ready_status` ←
-  `octep_vdpa_setup_task`; `octep_sriov_enable` ←
-  `octep_vdpa_sriov_configure`
-- **[Phase 5]** `octep_vdpa_hw.c`: confirmed 32-bit mailbox access
-  pattern elsewhere
-- **[Phase 6]** `git describe HEAD`: v6.18.44
-- **[Phase 6]** Read current `octep_vdpa_main.c` lines 583-593, 758-761:
-  buggy `readq`/`writeq` confirmed present
-- **[Phase 6]** `git log master`: commit exists on master, not on stable
-  branch
-- **[Phase 7]** Kconfig: `CONFIG_OCTEONEP_VDPA` module for Marvell
-  Octeon DPU
-- **[Phase 8]** Read timeout path at line 631-633: failure produces
-  `"BAR initialization is timed out"`
+- [Phase 1] Parsed commit `4a0b7826615a0` message: fix for credit leak
+  on abort/error paths; SOBs from Namjae Jeon and Steve French only
+- [Phase 2] Read current `server.c:214-215` — `SERVER_HANDLER_ABORT`
+  breaks before `set_rsp_credits()`
+- [Phase 2] Read current `smb2pdu.c:337-352` — `-EINVAL` returns before
+  `outstanding_credits` decrement
+- [Phase 2] Read current `smb2misc.c:349-361` — charge added at receive
+  without guaranteed release
+- [Phase 2] Read `ksmbd_work.c:21` — `kmem_cache_zalloc()` confirms
+  zero-init of new `credit_charge` field
+- [Phase 3] `git describe HEAD` → v6.18.44; Makefile confirms 6.18.44
+- [Phase 3] `git merge-base --is-ancestor 4a0b7826615a0 HEAD` → fix NOT
+  in HEAD
+- [Phase 3] `git blame smb2misc.c:356-361` → credit code present since
+  6.18-rc8 merge
+- [Phase 3] `git show 4a0b7826615a0 -- . | git apply --check` → applies
+  cleanly
+- [Phase 4] `b4 dig -c/-a/-w 4a0b7826615a0` → no lore match found
+- [Phase 5] Grep `SMB2_GLOBAL_CAP_LARGE_MTU` in
+  `fs/smb/server/smb2ops.c` → all SMB2.1+ server versions use LARGE_MTU
+- [Phase 5] Traced `__process_request()` abort paths at
+  `server.c:118-159` — signature failure, unimplemented command,
+  `send_no_response`
+- [Phase 6] Grep `credit_charge` in tree → field absent (bug present,
+  fix absent)
+- [Phase 6] Read `fs/smb/server/Kconfig` → `CONFIG_SMB_SERVER` (ksmbd),
+  default `n`
+- [Phase 7] `git log --author=Namjae -- fs/smb/server/` → active
+  maintainer with recent fixes
+- [Phase 8] Confirmed failure mode: `outstanding_credits` exhaustion
+  blocks all further requests per commit message and
+  `smb2_validate_credit_charge()` logic at lines 356-359
+- [UNVERIFIED] Lore/stable-list reviewer discussion (b4 dig and web
+  fetch unavailable)
+- [UNVERIFIED] Explicit runtime testing evidence (no Tested-by tag)
 
-**YES**
+**YES**The background check finished: commit `4a0b7826615a0` is **not**
+in this tree (Linux **6.18.44**), and the buggy credit-accounting code
+is still present.
 
- drivers/vdpa/octeon_ep/octep_vdpa_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+**Verdict: YES** — backport this fix. It’s a small, clean patch that
+stops a credit leak on abort/error paths, which can wedge ksmbd SMB
+connections until they’re restarted. It applies cleanly to the current
+checkout.
 
-diff --git a/drivers/vdpa/octeon_ep/octep_vdpa_main.c b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-index df8af6c1454cc..9aac6dbdaf3aa 100644
---- a/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-+++ b/drivers/vdpa/octeon_ep/octep_vdpa_main.c
-@@ -582,10 +582,10 @@ static const struct vdpa_mgmtdev_ops octep_vdpa_mgmt_dev_ops = {
+ fs/smb/server/ksmbd_work.h |  7 +++++++
+ fs/smb/server/server.c     | 14 ++++++++++++++
+ fs/smb/server/smb2misc.c   |  9 ++++++---
+ fs/smb/server/smb2pdu.c    |  1 +
+ 4 files changed, 28 insertions(+), 3 deletions(-)
+
+diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
+index 45eea779bd962..ffac059306966 100644
+--- a/fs/smb/server/ksmbd_work.h
++++ b/fs/smb/server/ksmbd_work.h
+@@ -64,6 +64,13 @@ struct ksmbd_work {
+ 	/* Number of granted credits */
+ 	unsigned int			credits_granted;
  
- static bool get_device_ready_status(u8 __iomem *addr)
++	/*
++	 * Credit charge added to conn->outstanding_credits at receive time
++	 * for the SMB2 PDU currently being processed, pending release.  Zero
++	 * once the charge has been returned (on the response or error path).
++	 */
++	unsigned short			credit_charge;
++
+ 	/* response smb header size */
+ 	unsigned int                    response_sz;
+ 
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index b78126bb23711..c729d47f9932b 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -238,6 +238,20 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
+ 	} while (is_chained == true);
+ 
+ send:
++	/*
++	 * Release any credit charge still outstanding for this request.  On
++	 * the normal path smb2_set_rsp_credits() already returned it, but the
++	 * abort, error and send-no-response paths skip that call, so the
++	 * charge would otherwise leak and eventually exhaust the connection's
++	 * outstanding credit window.
++	 */
++	if (work->credit_charge) {
++		spin_lock(&conn->credits_lock);
++		conn->outstanding_credits -= work->credit_charge;
++		work->credit_charge = 0;
++		spin_unlock(&conn->credits_lock);
++	}
++
+ 	if (work->tcon)
+ 		ksmbd_tree_connect_put(work->tcon);
+ 	smb3_preauth_hash_rsp(work);
+diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
+index b11d854d3fcfb..d8913d2008748 100644
+--- a/fs/smb/server/smb2misc.c
++++ b/fs/smb/server/smb2misc.c
+@@ -298,9 +298,10 @@ static inline int smb2_ioctl_resp_len(struct smb2_ioctl_req *h)
+ 		le32_to_cpu(h->MaxOutputResponse);
+ }
+ 
+-static int smb2_validate_credit_charge(struct ksmbd_conn *conn,
++static int smb2_validate_credit_charge(struct ksmbd_work *work,
+ 				       struct smb2_hdr *hdr)
  {
--	u64 signature = readq(addr + OCTEP_VF_MBOX_DATA(0));
-+	u32 signature = readl(addr + OCTEP_VF_MBOX_DATA(0));
++	struct ksmbd_conn *conn = work->conn;
+ 	unsigned int req_len = 0, expect_resp_len = 0, calc_credit_num, max_len;
+ 	unsigned short credit_charge = le16_to_cpu(hdr->CreditCharge);
+ 	void *__hdr = hdr;
+@@ -357,8 +358,10 @@ static int smb2_validate_credit_charge(struct ksmbd_conn *conn,
+ 		ksmbd_debug(SMB, "Limits exceeding the maximum allowable outstanding requests, given : %u, pending : %u\n",
+ 			    credit_charge, conn->outstanding_credits);
+ 		ret = 1;
+-	} else
++	} else {
+ 		conn->outstanding_credits += credit_charge;
++		work->credit_charge = credit_charge;
++	}
  
- 	if (signature == OCTEP_DEV_READY_SIGNATURE) {
--		writeq(0, addr + OCTEP_VF_MBOX_DATA(0));
-+		writel(0, addr + OCTEP_VF_MBOX_DATA(0));
- 		return true;
- 	}
+ 	spin_unlock(&conn->credits_lock);
  
-@@ -757,7 +757,7 @@ static int octep_sriov_enable(struct pci_dev *pdev, int num_vfs)
- 	rpvf = FIELD_GET(GENMASK_ULL(35, 32), val);
- 	if (done) {
- 		for (i = 0; i < pf->enabled_vfs; i++)
--			writeq(OCTEP_DEV_READY_SIGNATURE, addr + OCTEP_PF_MBOX_DATA(i * rpvf));
-+			writel(OCTEP_DEV_READY_SIGNATURE, addr + OCTEP_PF_MBOX_DATA(i * rpvf));
- 	}
+@@ -466,7 +469,7 @@ int ksmbd_smb2_check_message(struct ksmbd_work *work)
  
- 	return num_vfs;
+ validate_credit:
+ 	if ((work->conn->vals->req_capabilities & SMB2_GLOBAL_CAP_LARGE_MTU) &&
+-	    smb2_validate_credit_charge(work->conn, hdr))
++	    smb2_validate_credit_charge(work, hdr))
+ 		return 1;
+ 
+ 	return 0;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index da114b2b39ea3..55ac0ee338dae 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -350,6 +350,7 @@ int smb2_set_rsp_credits(struct ksmbd_work *work)
+ 
+ 	conn->total_credits -= credit_charge;
+ 	conn->outstanding_credits -= credit_charge;
++	work->credit_charge = 0;
+ 	credits_requested = max_t(unsigned short,
+ 				  le16_to_cpu(req_hdr->CreditRequest), 1);
+ 
 -- 
 2.53.0
 
