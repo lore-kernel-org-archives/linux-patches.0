@@ -1,222 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07909563FD3;
-	Mon, 31 Aug 2026 13:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F6C563FBA;
+	Mon, 31 Aug 2026 13:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184072; cv=none; b=N7IBIYHKzvQ4aqQ+5Z+jeAn0p5H9caL4LLO3WRJS22AJb0XDIFGzzNWWPcgcbUA+rRk17ytZm1yZT2K3dq/EGm/iIptB+l4u5PZk8iLBatlu7pbuPWSfMKMzhX/T6HA73D83eF0vagGh4c5ULrdxBGxVgcdI7xantv04WFlNlaM=
+	t=1788184073; cv=none; b=tZUzVF49iUAqGy4B3H7yXwrD4aDONT+pG6KJB1LpUj+67eZD0ExlLQPYTHWrDx0Z1onjGnuTS8CWXZHbSGsqsnNemrQPvb3dDJ/he8/JLNLKUAplw9sFLXgJz6ryuF6xQVWPkul6E56YLeUWs0SBxGA13leoyvO+ScL2GXK042k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184072; c=relaxed/simple;
-	bh=+yqbVGw43hAZuvwWMnZd1S8hpHaaYvRl/Lq/O2V5JBI=;
+	s=arc-20240116; t=1788184073; c=relaxed/simple;
+	bh=ItkKW4mkuQhkIHYtvu7+qMQsBPQDggLoeRB0eTfgntk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXArubxZHb7rIOZ2EwOzNhp4cvHoSIWC4OEOsYCGOAhcrHsV0Xknlr0MN8f+gpsEkmyjh70bvH5N62L6xj1tnq8louQlSQOGe8g1GdimPpu7BaNadnQFfxpmuKEdethjS0yXVSMwCgurgJEZ6QE1UueITuGRr+6UuSQmNNFh5qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKFhMjDV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sW7BsMOvNVG/sFUhpdxgN1vtjwe290iYnLuugHYxwahXdoMz7/kn2Q8L6V9aned0fftUvkYkgMos01uNLQkfYv3Tcstk38RjlD4yk1uszehbL0QmM2RQcv3lzxzNpx9nhTIBEMvv+rwLtxG12KR58MsEj2ZbfWKWdR/0X9KXCuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hjGAM2kj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKFhMjDV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5DB1F000E9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hjGAM2kj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCAF91F00A3F;
 	Mon, 31 Aug 2026 13:47:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184070;
-	bh=zvI0N4Gc8zasiPE1y+cwtZO4rqZkDvw69VwIwVD7lqo=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184072;
+	bh=bFaIR2jhArVbjKiTHHUfd4qRTiCX8wyA6IHrm3cPzss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZKFhMjDVsSea9w2W+83jzNXqBt9BaUBmuAi7Fq7k/PWqUiwB0aGLK9m2ck3RBAG+i
-	 NcvUBPw151lSho3hfnZ31SLPJ1yOh2BDJHQQPi3LrmfrphSgh2zub+4/TGmJJvGhcW
-	 Ca6m6aRuKk7D/jmr62CMEM4PuBSvdU4gXNztgoqw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.18 62/83] netfilter: nf_tables: dont queue packet path object notifications
-Date: Mon, 31 Aug 2026 15:34:38 +0200
-Message-ID: <20260831133402.678569879@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
-References: <20260831133359.207714926@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=hjGAM2kjEdVW9tGWOPLzxmy/ZbVF2O1/vLQuI268/IXFvl276zu1P4kqiWVH1C/0q
+	 vuOS1l0OjOngcecJOvzxGI5R7A5EHRIpyUzpTFTOwQf7WXr9iGUF1NAM26VwlvR9n2
+	 +ApUD2KXiPPvxF0/O6tpi2e4bs4Z768LhGynmJVHPSl5tGQw+3ExOKbQVsbD1pHrJl
+	 2ZfyKHQioztr+ipN/VDrRapOSsexpXhngVHla2MHGqS+syNzz3IXWWG2qqgBebhrhi
+	 Z4ZmNZXQuqSxGKBfH1Mh0aWUPinv4v4jhXapzhbHD5xIQL7MCOitUckHLmuDPfBmQM
+	 csxwXldmeDuCQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Chen Pei <cp0613@linux.alibaba.com>,
+	"Dan Williams (nvidia)" <djbw@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	bhelgaas@google.com,
+	rafael@kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.15] ACPI: PCI: Clear _DEP dependencies after PCI root bridge attach
+Date: Mon, 31 Aug 2026 09:28:22 -0400
+Message-ID: <20260831133314.4125787-474-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-------------------
+[ Upstream commit 3a59c3b772e5dc0cedecce8e7fbf7c2d6245b643 ]
 
-From: Fourie Zhang <littleddfu@gmail.com>
+PCI root bridges enumerated by acpi_pci_root_add() can be the _DEP
+supplier for other ACPI consumers, most notably ACPI0017 CXL root
+devices whose probe path depends on acpi_pci_find_root() succeeding.
+Once the root bus has been added, those consumers can safely be
+enumerated, so notify them by clearing the dependency.
 
-commit 7904b94768e983bcb2be34a8d6d1f3450f5b838b upstream.
+Call acpi_dev_clear_dependencies() at the end of acpi_pci_root_add(),
+after pci_bus_add_devices(), following the same pattern used by other
+ACPI suppliers such as the EC (drivers/acpi/ec.c) and the ACPI PCI
+Link device (drivers/acpi/pci_link.c). The clear is intentionally
+done only on the success path; on the error paths the supplier did
+not attach and consumers must keep dep_unmet set.
 
-All file:line references below are against v7.2-rc4 (ac5b0e5651b1). The
-trace was captured on 7.2.0-rc6-kasan72rc6 (075b74841bd0), where the same
-lines apply.
+This is a prerequisite for honoring _DEP on ACPI0016 host bridges,
+which matters on architectures where the probe order of acpi_pci_root
+relative to cxl_acpi is not guaranteed (e.g. RISC-V).
 
-nft_obj_notify() is exported and reached from the packet path. Its only
-in-tree caller is nft_quota_obj_eval() (net/netfilter/nft_quota.c:68),
-which notifies with GFP_ATOMIC while evaluating a rule for a transiting
-packet, holding no mutex.
-
-Since commit 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple
-notifications into one skbuff") that notification is no longer sent
-immediately. __nft_obj_notify() queues it onto nft_net->notify_list via
-nft_notify_enqueue() (net/netfilter/nf_tables_api.c:1211), which is a bare
-list_add_tail(). notify_list has no lock of its own
-(include/net/netfilter/nf_tables.h:1951), it is serialised by commit_mutex:
-the six other enqueue sites all run inside a netlink transaction, and the
-drain in nft_commit_notify() (net/netfilter/nf_tables_api.c:10746) does
-list_del() + kfree_skb() from nf_tables_commit() with commit_mutex held.
-
-Sending packets through a chain that references a depleted quota object
-therefore races an unlocked list_add_tail() against list_del() +
-kfree_skb() on another CPU. The WRITE_ONCE(prev->next, new) in __list_add()
-then stores through an sk_buff that has already been freed:
-
-  BUG: KASAN: slab-use-after-free in __nft_obj_notify+0x2c5/0x2d0
-  Write of size 8 at addr ff110001047183c0 by task poc/76
-  CPU: 0 UID: 1000 PID: 76 Comm: poc Tainted: G  W  7.2.0-rc6-kasan72rc6 #4
-  Call Trace:
-   <IRQ>
-   __nft_obj_notify (include/linux/list.h:164 include/linux/list.h:191
-                     net/netfilter/nf_tables_api.c:1211
-                     net/netfilter/nf_tables_api.c:8743)
-   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
-   nft_do_chain_inet
-   nf_hook_slow
-   __ip_local_out
-   ip_push_pending_frames
-   udp_send_skb
-   udp_sendmsg
-   __x64_sys_sendto
-
-  Allocated by task 77:
-   __alloc_skb (net/core/skbuff.c:704)
-   __nft_obj_notify (include/net/netlink.h:1055
-                     net/netfilter/nf_tables_api.c:8731)
-   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
-   nft_do_chain
-
-  Freed by task 79:
-   nf_tables_commit (include/linux/skbuff.h:1332
-                     net/netfilter/nf_tables_api.c:10759
-                     net/netfilter/nf_tables_api.c:11185)
-   nfnetlink_rcv_batch (net/netfilter/nfnetlink.c:574)
-   netlink_unicast
-   netlink_sendmsg
-
-  The buggy address belongs to the cache skbuff_head_cache of size 232
-
-Queueing from the packet path is wrong even leaving the race aside:
-notify_list is only drained by nft_commit_notify() from nf_tables_commit()
-(:11185), so a notification enqueued outside a transaction is not sent
-until some later netlink batch commits, if one ever does.
-
-The gfp argument that nft_obj_notify() still takes is a leftover of the
-pre-67cc570edaa0 behaviour, where this path called nfnetlink_send()
-directly. Restore that: split the message construction out into
-nft_obj_notify_alloc() and let each caller decide what to do with the skb.
-nft_obj_notify(), the exported one reached from the packet path, sends it
-straight away; nf_tables_obj_notify(), which runs under commit_mutex, keeps
-queueing it, so transaction notifications are still coalesced.
-
-Fixes: 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple notifications into one skbuff")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Suggested-by: Dan Williams (nvidia) <djbw@kernel.org>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260526025118.38935-2-cp0613@linux.alibaba.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |   36 +++++++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 13 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8585,18 +8585,17 @@ static int nf_tables_delobj(struct sk_bu
- 	return nft_delobj(&ctx, obj);
- }
- 
--static void
--__nft_obj_notify(struct net *net, const struct nft_table *table,
--		 struct nft_object *obj, u32 portid, u32 seq, int event,
--		 u16 flags, int family, int report, gfp_t gfp)
-+static struct sk_buff *
-+nft_obj_notify_alloc(struct net *net, const struct nft_table *table,
-+		     struct nft_object *obj, u32 portid, u32 seq, int event,
-+		     u16 flags, int family, int report, gfp_t gfp)
- {
--	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct sk_buff *skb;
- 	int err;
- 
- 	if (!report &&
- 	    !nfnetlink_has_listeners(net, NFNLGRP_NFTABLES))
--		return;
-+		return NULL;
- 
- 	skb = nlmsg_new(NLMSG_GOODSIZE, gfp);
- 	if (skb == NULL)
-@@ -8610,10 +8609,10 @@ __nft_obj_notify(struct net *net, const
- 		goto err;
- 	}
- 
--	nft_notify_enqueue(skb, report, &nft_net->notify_list);
--	return;
-+	return skb;
- err:
- 	nfnetlink_set_err(net, portid, NFNLGRP_NFTABLES, -ENOBUFS);
-+	return NULL;
- }
- 
- void nft_obj_notify(struct net *net, const struct nft_table *table,
-@@ -8622,6 +8621,7 @@ void nft_obj_notify(struct net *net, con
- {
- 	char *buf = kasprintf(gfp, "%s:%u",
- 			      table->name, nft_base_seq(net));
-+	struct sk_buff *skb;
- 
- 	audit_log_nfcfg(buf,
- 			family,
-@@ -8632,17 +8632,27 @@ void nft_obj_notify(struct net *net, con
- 			gfp);
- 	kfree(buf);
- 
--	__nft_obj_notify(net, table, obj, portid, seq, event,
--			 flags, family, report, gfp);
-+	/* Called from the packet path, holding no mutex: notify_list is
-+	 * serialised by commit_mutex, so send this notification directly.
-+	 */
-+	skb = nft_obj_notify_alloc(net, table, obj, portid, seq, event,
-+				   flags, family, report, gfp);
-+	if (skb)
-+		nfnetlink_send(skb, net, portid, NFNLGRP_NFTABLES, report, gfp);
- }
- EXPORT_SYMBOL_GPL(nft_obj_notify);
- 
- static void nf_tables_obj_notify(const struct nft_ctx *ctx,
- 				 struct nft_object *obj, int event)
- {
--	__nft_obj_notify(ctx->net, ctx->table, obj, ctx->portid,
--			 ctx->seq, event, ctx->flags, ctx->family,
--			 ctx->report, GFP_KERNEL);
-+	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
-+	struct sk_buff *skb;
+LLM Generated explanations, may be completely bogus:
+
+The background searches finished and match the earlier analysis:
+
+- **Commit located**: `b52e0117014b6` (stable prep) and upstream
+  `3a59c3b772e5d` — on `autosel` / `all-next`, not in current `v6.18.44`
+  HEAD.
+- **Companion patch**: `82dbacca5220e` (“Honor _DEP for ACPI0016”) is
+  also only on `autosel`, not in 6.18.44.
+- **Current tree**: `drivers/acpi/pci_root.c` still lacks
+  `acpi_dev_clear_dependencies()`, and `acpi_honor_dep_ids[]` has no
+  `ACPI0016` entry.
+
+**Verdict unchanged: YES** — backport this commit together with patch
+2/2 for the CXL `_DEP` ordering fix on 6.18.y.
+
+ drivers/acpi/pci_root.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
+index 74ade41603145..332568e00f37c 100644
+--- a/drivers/acpi/pci_root.c
++++ b/drivers/acpi/pci_root.c
+@@ -760,6 +760,10 @@ static int acpi_pci_root_add(struct acpi_device *device,
+ 	pci_lock_rescan_remove();
+ 	pci_bus_add_devices(root->bus);
+ 	pci_unlock_rescan_remove();
 +
-+	skb = nft_obj_notify_alloc(ctx->net, ctx->table, obj, ctx->portid,
-+				   ctx->seq, event, ctx->flags, ctx->family,
-+				   ctx->report, GFP_KERNEL);
-+	if (skb)
-+		nft_notify_enqueue(skb, ctx->report, &nft_net->notify_list);
- }
++	/* Clear _DEP dependencies to allow consumers to enumerate */
++	acpi_dev_clear_dependencies(device);
++
+ 	return 1;
  
- /*
-
+ remove_dmar:
+-- 
+2.53.0
 
