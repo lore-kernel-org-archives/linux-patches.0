@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3470C47886A;
-	Mon, 31 Aug 2026 13:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7360478E51;
+	Mon, 31 Aug 2026 13:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184435; cv=none; b=s9jJ/+JNqiBju9+J54YzgDJTQTfUx2m5FVSsHlLsIIA6MgyECiVP6VkCE+gSym84pLCykIGf4529PODWaMnhCg1g7mkTeaWeTybj/hi3Ug2510hUeKU0RovC3//36vzBhAZMfnk4YiCWu7zLgDsxrrXq5Ia7kXrDERs26ZaHGWY=
+	t=1788184443; cv=none; b=eDtJ7GaOzKYaWkX4LgMNvAkJ1a5ysT4dvixSipsd+9xsnd7jeFNgxOI5esBYjbQGa3OkhnqNUqC+qRVc4f9HTcqcplQE1UAw9GG0DZW70ANq9+b+h6zgxds0v8fFGt/4iin2H+Vt+29oUbbPtvbxUpqbGw7I6fwWU00vDuLsFQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184435; c=relaxed/simple;
-	bh=krljfYgOyI569UrXheDjKxrmjqAGCF3MVUIWfnm4pf4=;
+	s=arc-20240116; t=1788184443; c=relaxed/simple;
+	bh=ljQIYO3FKXtTtPef/20b/WW8uhQTTV9Ys3bwE5cNduY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGxWu/07w6VGhzIQha7GnitN4jSMWHTNhEDnKdwwPfMx012ZhTc79nOn2xFKrmMPa6eonLIFD7jIdJHyH23NhkhgVlCuoPK/W2QxJspIX8cpFgvq1oshK2Q86vLWE6T5BuenarmXH33vlDNtuRBsKFUFsALfhSD5k68xVX9vGFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EbWx7Nj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yjzj3C5jM/gaMeu9pqJV3jyPsridcYyiOr1RzzHRYfmCnhywl9bVZCV88Rxa3tSQdjuIelOuDQNJtjKgqFp0k/AkjSy1Dc9cxzDkFCYe7JFfIBCmCRDbRH5HPcXMGzzLoqe5dmLpzsas+0vNYovXwsbw10RH8Fsv55jTj3+niZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pen+Ztsr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EbWx7Nj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB471F000E9;
-	Mon, 31 Aug 2026 13:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pen+Ztsr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B2D1F000E9;
+	Mon, 31 Aug 2026 13:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184434;
-	bh=eQuzueUT52qle8epbWIziF4DpE64iWCmSHnGw8Z4vwQ=;
+	s=korg; t=1788184442;
+	bh=11TEHtnzhjBmEZM2dfZPjWtTHUSScEYR/qLr21Hkbn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2EbWx7Nj6+SLbHNdjiHARZ0G8AtEgEZD8R4TlS8uNBhpm3CqcSYBOl9TrnasjkNtX
-	 0m6W1Wnk5cEQs7jGzVdXR/3sGOBMhu771MfG4ZfNlPgb9mhtttRy6bYXhPxWaLLgmP
-	 5euU9l+HsT8X2kmRtlZK/TOmrTeaGnXFcwW+5+1U=
+	b=pen+ZtsrdvkmvI2q7nD9vCh1+4m6cHAT7bDquisQpwTbdQ6eJRf4f9yLTrihQgMdr
+	 TuQ4FpYmn8o1+N+/nCezOQcTkiSvzjOq4tQ3uiIVhagem4FmX5hhWiF+mgc54eLiMK
+	 aOQphsAzxATTL3H1LT1ik2zNwYasukILANpkuy+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Semih Baskan <strst.gs@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.12 58/99] usb: xhci: Handle USB3 port events when there is one roothub
-Date: Mon, 31 Aug 2026 15:34:27 +0200
-Message-ID: <20260831133402.919840302@linuxfoundation.org>
+	syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 10/91] jfs: add check read-only before txBeginAnon() call
+Date: Mon, 31 Aug 2026 15:33:58 +0200
+Message-ID: <20260831133400.052147753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
+In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
+References: <20260831133359.468089036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Semih Baskan <strst.gs@gmail.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 3e91ec3e7d80a327fb558207613c80415d3bf756 upstream.
+[ Upstream commit 0176e69743ecc02961f2ae1ea42439cd2bf9ed58 ]
 
-handle_port_status() drops every USB3 port event when xhci->shared_hcd is
-NULL. The check dates from a time when xhci-plat always created a shared
-hcd, so a NULL one could only mean the hcd had been removed.
+Added a read-only check before calling `txBeginAnon` in `extAlloc`
+and `extRecord`. This prevents modification attempts on a read-only
+mounted filesystem, avoiding potential errors or crashes.
 
-Since commit 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if
-either root hub has no ports") that is no longer true. A controller whose
-USB2 root hub has no ports gets a single roothub, the USB3 rhub is served
-by the main hcd, and shared_hcd stays NULL for the lifetime of the device.
-Every SuperSpeed port event is then thrown away as bogus behind a debug
-message, so devices never enumerate even though the port sees the device
-and its change bits stay set:
+Call trace:
+ txBeginAnon+0xac/0x154
+ extAlloc+0xe8/0xdec fs/jfs/jfs_extent.c:78
+ jfs_get_block+0x340/0xb98 fs/jfs/inode.c:248
+ __block_write_begin_int+0x580/0x166c fs/buffer.c:2128
+ __block_write_begin fs/buffer.c:2177 [inline]
+ block_write_begin+0x98/0x11c fs/buffer.c:2236
+ jfs_write_begin+0x44/0x88 fs/jfs/inode.c:299
 
-  0x006a1203 Powered Connected Enabled Link:U0 PortSpeed:4
-  Change: CSC WRC PRC PLC
-
-Broadcom Northstar is such a controller. USB3 works there up to 5.15 and
-stops working from 5.19 onwards.
-
-Ask xhci_get_usb3_hcd() instead. It returns the shared hcd when there is
-one, the main hcd when the USB2 root hub has no ports, and NULL once the
-shared hcd is gone, which keeps the original meaning of the check.
-
-Tested on an Asus RT-N18U (BCM47081), which has a single roothub. Before
-the change nothing enumerates on the USB3 port; after it SuperSpeed
-devices enumerate normally over repeated connect and disconnect cycles,
-the change bits shown above clear, and USB2 is unaffected on both ports.
-
-Fixes: 4736ebd7fcaf ("usb: host: xhci-plat: omit shared hcd if either root hub has no ports")
-Cc: stable@vger.kernel.org
-Signed-off-by: Semih Baskan <strst.gs@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260806142113.2436238-17-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+4e89b5368baba8324e07@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=4e89b5368baba8324e07
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_extent.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1986,7 +1986,7 @@ static void handle_port_status(struct xh
- 		vdev = xhci->devs[port->slot_id];
+diff --git a/fs/jfs/jfs_extent.c b/fs/jfs/jfs_extent.c
+index 63d21822d309b..46529bcc8297e 100644
+--- a/fs/jfs/jfs_extent.c
++++ b/fs/jfs/jfs_extent.c
+@@ -74,6 +74,11 @@ extAlloc(struct inode *ip, s64 xlen, s64 pno, xad_t * xp, bool abnr)
+ 	int rc;
+ 	int xflag;
  
- 	/* We might get interrupts after shared_hcd is removed */
--	if (port->rhub == &xhci->usb3_rhub && xhci->shared_hcd == NULL) {
-+	if (port->rhub == &xhci->usb3_rhub && xhci_get_usb3_hcd(xhci) == NULL) {
- 		xhci_dbg(xhci, "ignore port event for removed USB3 hcd\n");
- 		bogus_port_status = true;
- 		goto cleanup;
++	if (isReadOnly(ip)) {
++		jfs_error(ip->i_sb, "read-only filesystem\n");
++		return -EIO;
++	}
++
+ 	/* This blocks if we are low on resources */
+ 	txBeginAnon(ip->i_sb);
+ 
+@@ -253,6 +258,11 @@ int extRecord(struct inode *ip, xad_t * xp)
+ {
+ 	int rc;
+ 
++	if (isReadOnly(ip)) {
++		jfs_error(ip->i_sb, "read-only filesystem\n");
++		return -EIO;
++	}
++
+ 	txBeginAnon(ip->i_sb);
+ 
+ 	mutex_lock(&JFS_IP(ip)->commit_mutex);
+-- 
+2.53.0
+
 
 
