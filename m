@@ -1,418 +1,496 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D7B583AB5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0663A582B9A;
 	Mon, 31 Aug 2026 13:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184205; cv=none; b=oenYEL29LBA6XrKyu/aLhOOSTHYvCbuuKST7ZvgcyDghCgZOVP7M1pjRYh7idD34AYbZjzv3n+ZeMKTfXjoq5XEcYu780Bq7fGzDXN3t4kCHq6M36YszIeQ+MenHgxIY89gibLtQxTpJufLoIVoKMOvzLLGcB4i4TunR1ZpP2Hs=
+	t=1788184205; cv=none; b=qCnnFqa+2Vl1iBoCjTOxUfdE1IwqFlgql8apFDfu9TrfbIEi0j8RiMQXg3RsdcLMs+J0Onlo6flLSiKbHLUSiG/hF8j1q0IvUWWIJNnkPCg5DDFejrgRMOm+aAjYeLaiYUJI558swiAEO7kwqwUYKrZIs2AaPHOqqm2CnKBSEOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184205; c=relaxed/simple;
-	bh=BGZDSPxHc1gRRkFlT/enxSIwikFaUZRT3Fwb2KOoMQM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C9eq2WscmeGZHx4uZQXvLiRRndcHeCqG6HknWClJWsPrQ4BRGv88yTvdesG+3rrfl8TGtmJHqbgtMZeh6Ejre9/o3uBFEvJ2OCYQj96TYxGCdfs8tXptbYSvRJb4oOAd7BbAQ0rk1am8BbvrV3qPS/QHShtktKCOtpGpLAugvxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pg/B5Lox; arc=none smtp.client-ip=100.103.45.18
+	bh=HKC4sZjaSuaf7OUx5APi4ZeR8wVuw/KZQNx3gISLiHY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bBSHMPI2Rr1DhWfEzrD6b5Io3tVoLXUJ//D1/FQ4ZR9j6FQnGlPPF3PrVI3L84WPnFhaMB4T4Dlzc1+1mWFZqo8UAnOFJIy9pWxNd3iHLt+FTcErkuZHbLMntQKSwe+9sz5Xkl9MwehssGgr8R6zL1pT0YRTpahMTpgKcmKM3II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1SGmYSY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pg/B5Lox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6711F000E9;
-	Mon, 31 Aug 2026 13:50:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184202;
-	bh=it4mtCYNz8u1hklavjiA7XOWE9P7mg7elTYlRIEuKIk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pg/B5Loxw4gL5YwySWVrtC1B0Xe1yAbiTLGiE6OFXrYzRLwRZvlg4990wvwnPYJBS
-	 3wef6ygVFz4cHfEKzJls45CWPDfGHFZW8pLhask1F8pp3RcFWqrN6NtGC+VZmEEjbZ
-	 lXxPI9vrETtMEXTtI84S9TcdVjsLi85rzqe0AAxVI/OFPPsZQpFhsq23VPYupwVzNQ
-	 uHQnQFB2ac8lD0+6ucZWxx6LL8wVzcyvs6ymhFG5tcZKOX7yAes4pQvrfq0OtfwX7k
-	 g1kgcY2T8KF5py6u7h2SZ41bdn5Vt2XmFA9rFNy3w8lLMihJcyXxLO0ge8cmAJx2OY
-	 oyGHoK1sFuN5w==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Alexander Egorov <begeebe@gmail.com>,
-	Derek J Clark <derekjohn.clark@gmail.com>,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	samsagax@gmail.com,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] platform/x86: oxpec: add support for OneXPlayer Super X
-Date: Mon, 31 Aug 2026 09:29:40 -0400
-Message-ID: <20260831133314.4125787-552-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1SGmYSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767831F00A3F;
+	Mon, 31 Aug 2026 13:50:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184202;
+	bh=/V/R84HYagfrQHP9x+qpQlp8wSVoSk4YQr8HNEbEa+g=;
+	h=From:To:Cc:Subject:Date;
+	b=g1SGmYSY5vnQwhjOGVdLA851WohN6LKnxexFpUaENml1f7wZZzaw5loB3Gl1ungCG
+	 92VqxpmAqQmcoEaUWn5I8ctCqWTD4DT/Wgd8dB2NakHzZ5acQXFRFBwQ5ewMLNmeLg
+	 KvOf/feMwqe4JV54yZr9QusECAIiouRnjBC8QCYM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 6.12 00/99] 6.12.108-rc1 review
+Date: Mon, 31 Aug 2026 15:33:29 +0200
+Message-ID: <20260831133359.740409777@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.69
 X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.108-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.12.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.12.108-rc1
+X-KernelTest-Deadline: 2026-09-02T13:34+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Egorov <begeebe@gmail.com>
-
-[ Upstream commit 0b6573e23acc7bca808e539e3edea49683f106de ]
-
-OneXPlayer Super X identifies itself via DMI as:
-
-  board vendor: ONE-NETBOOK
-  board name:   ONEXPLAYER SUPER X
-  product name: ONEXPLAYER SUPER X
-
-Current mainline oxpec does not contain a matching DMI entry for this
-system, so the in-tree driver is not auto-loaded.
-
-The tested Super X fan, PWM, turbo-toggle, and battery charge-control EC
-layout matches the existing ONEXPLAYER G1 A handling.
-
-Add a DMI match for OneXPlayer Super X and reuse the oxp_g1_a board data.
-
-Reviewed-by: Derek J Clark <derekjohn.clark@gmail.com>
-Reviewed-by: Antheas Kapenekakis <lkml@antheas.dev>
-Signed-off-by: Alexander Egorov <begeebe@gmail.com>
-Link: https://patch.msgid.link/20260519155124.3240359-1-begeebe@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-### Step 1.1: Subject Line
-**Record:** `[platform/x86: oxpec]` `[add]` — Add DMI match so the
-existing oxpec driver auto-loads on OneXPlayer Super X hardware.
-
-### Step 1.2: Tags
-**Record:**
-- **Reviewed-by:** Derek J. Clark, Antheas Kapenekakis, Ilpo Järvinen
-  (subsystem maintainer)
-- **Signed-off-by:** Alexander Egorov (author), Ilpo Järvinen
-  (maintainer commit)
-- **Link:**
-  https://patch.msgid.link/20260519155124.3240359-1-begeebe@gmail.com
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org, or
-  syzbot tags
-- Notable: Three Reviewed-by lines including the x86 platform maintainer
-  — strong review signal
-
-### Step 1.3: Body Analysis
-**Record:**
-- **Bug:** OneXPlayer Super X reports DMI `ONE-NETBOOK` / `ONEXPLAYER
-  SUPER X`, but no matching `dmi_table` entry exists, so
-  `oxp_platform_init()` returns `-ENODEV` and the driver never loads.
-- **Symptom:** No fan control (PWM/hwmon), no turbo-toggle sysfs, no
-  battery charge-control EC features on Super X.
-- **Root cause:** Missing DMI quirk entry; EC layout matches existing
-  `oxp_g1_a` profile.
-- **Version info:** None stated; hardware is a new OneXPlayer variant.
-
-### Step 1.4: Hidden Bug Fix?
-**Record:** Not disguised — this is explicit hardware enablement.
-Functionally it fixes “driver doesn’t bind on this machine,” which is a
-real usability defect for Super X owners, though not a crash or security
-issue.
-
----
-
-## Phase 2: Diff Analysis
-
-### Step 2.1: Inventory
-**Record:**
-- **Files:** `drivers/platform/x86/oxpec.c` only (+7 lines)
-- **Functions modified:** `dmi_table[]` static data only; no function
-  logic changed
-- **Scope:** Single-file, surgical DMI table addition
-
-### Step 2.2: Code Flow Change
-**Record:**
-- **Before:** `dmi_first_match(dmi_table)` fails for Super X →
-  `oxp_platform_init()` returns `-ENODEV` → no platform device, no
-  hwmon/battery EC sysfs.
-- **After:** Super X matches new entry → `board = oxp_g1_a` → driver
-  probes and exposes fan PWM, turbo toggle, charge control identical to
-  G1 A.
-- **Path affected:** Module init / DMI matching only (normal boot path
-  for matching hardware).
-
-### Step 2.3: Bug Mechanism
-**Record:** **Hardware workaround / DMI quirk** — same category as
-PCI/USB ID additions. Missing DMI match prevents driver binding on
-known-compatible hardware.
-
-### Step 2.4: Fix Quality
-**Record:** Obviously correct — reuses tested `oxp_g1_a` board data per
-author hardware validation. Minimal diff, no logic changes. Regression
-risk: very low (only affects machines with exact DMI string `ONEXPLAYER
-SUPER X`).
-
----
-
-## Phase 3: Git History Investigation
-
-### Step 3.1: Blame
-**Record:** Adjacent G1 A entry introduced in `b369395c895bf` (“Add
-support for the OneXPlayer G1”, Apr 2025); `driver_data = oxp_g1_a` set
-in `232b41d3c2ce8` (Jul 2025). G1 A support is an ancestor of HEAD and
-present in `v6.18`.
-
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
-
-### Step 3.3: Related File History
-**Record:** Recent oxpec DMI additions already backported to this 6.18.y
-tree:
-- `43c40bfb85038` — OneXPlayer APEX
-- `1faaa81aabab7` — OneXPlayer X1z
-- `ba6af12e600bf` — Aokzoe A2 Pro
-- `0a4e44eb4b0c1` — OneXPlayer X1 Air (committed by Greg K-H with
-  upstream marker)
+This is the start of the stable review cycle for the 6.12.108 release.
+There are 99 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Same pattern, same file, same driver. Standalone one-commit change.
+Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
+Anything received after that time might be too late.
 
-### Step 3.4: Author Context
-**Record:** Alexander Egorov authored this patch; Antheas Kapenekakis is
-the primary oxpec maintainer (authored most recent device additions).
-Ilpo Järvinen is x86 platform maintainer and committed the patch.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.108-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+and the diffstat can be found below.
 
-### Step 3.5: Dependencies
-**Record:** Requires `oxp_g1_a` enum and its EC handling — **present in
-this tree** since v6.18. No other commits needed. Patch inserts cleanly
-between G1 A and G1 i entries.
+thanks,
 
----
+greg k-h
 
-## Phase 4: Mailing List and External Research
+-------------
+Pseudo-Shortlog of commits:
 
-### Step 4.1: Original Discussion
-**Record:** `b4 dig -c <commit>` not possible — commit is not in local
-tree. Lore/patch.msgid.link fetch blocked (Anubis bot protection).
-**UNVERIFIED:** full mailing-list thread content and any explicit stable
-nominations in replies.
-
-### Step 4.2: Reviewers
-**Record:** From commit message — Derek J. Clark (oxpec co-maintainer),
-Antheas Kapenekakis (oxpec maintainer), Ilpo Järvinen (x86 platform
-maintainer). Appropriate reviewers CC’d per commit metadata.
-
-### Step 4.3: Bug Report
-**Record:** N/A — no Reported-by or external bug link beyond patch
-submission.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.12.108-rc1
 
-### Step 4.4: Related Patches
-**Record:** Standalone; not part of a multi-patch series. Same class as
-other oxpec DMI additions already in 6.18.y.
+Miguel Peñaranda <mig.penaranda07@gmail.com>
+    usb: usbfs: fix use-after-free of usb_device in usbdev_release()
 
-### Step 4.5: Stable List History
-**Record:** **UNVERIFIED** (lore blocked). However, four analogous oxpec
-DMI additions are already in `v6.18..v6.18.44`, establishing precedent
-in this tree.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-### Step 5.1: Key Functions
-**Record:** Only `dmi_table[]` modified. Relevant init path:
-`oxp_platform_init()` → `dmi_first_match()` →
-`platform_create_bundle()`.
-
-### Step 5.2: Callers
-**Record:** `oxp_platform_init()` is `module_init` — runs at module load
-/ built-in init. Affects every boot on matching DMI hardware when
-`CONFIG_OXP_EC` is enabled.
-
-### Step 5.3: Callees
-**Record:** `dmi_first_match()`, `platform_create_bundle()`,
-`oxp_platform_probe()` — standard platform driver init. `oxp_g1_a` path
-uses existing `read_from_ec`/`write_to_ec` for fan, turbo, battery.
-
-### Step 5.4: Reachability
-**Record:** Triggered automatically at boot on OneXPlayer Super X with
-`CONFIG_OXP_EC=y/m`. No userspace syscall needed; affects all Super X
-users on this kernel.
-
-### Step 5.5: Similar Patterns
-**Record:** Nine+ prior DMI entries in same table for other
-OneXPlayer/AOKZOE models; four similar additions already backported to
-6.18.y.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree
-
-### Step 6.1: Buggy Code Present?
-**Record:** **YES.** Local tree is **v6.18.44**.
-`drivers/platform/x86/oxpec.c` exists with `oxp_g1_a` and G1 A DMI
-entry, but **no** `ONEXPLAYER SUPER X` entry (verified by grep and
-reading lines 267–280). Super X owners on 6.18.44 get no oxpec support.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected** — 7-line insertion between existing
-G1 A and G1 i blocks; no structural divergence in that region.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** G1 A support (`b369395c895bf`) and G1 AMD turbo fix
-(`232b41d3c2ce8`) already in tree. Super X fix not present.
-
----
-
-## Phase 7: Subsystem Context
-
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/platform/x86/` — **PERIPHERAL** (handheld gaming
-device EC driver). Important to Super X users; not core kernel.
-
-### Step 7.2: Activity
-**Record:** Actively maintained — four oxpec DMI additions backported to
-6.18.y in the last few months.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** OneXPlayer Super X owners running Linux 6.18.y with
-`CONFIG_OXP_EC` enabled (typical on distro kernels for x86 handhelds).
-
-### Step 8.2: Trigger Conditions
-**Record:** Every boot on matching hardware. Common for device owners;
-not timing-dependent.
-
-### Step 8.3: Failure Mode Severity
-**Record:** Missing fan control, turbo management, and battery charge
-limiting — **MEDIUM** (no crash/corruption, but degraded hardware
-management and potential thermal/battery issues without manual
-workarounds).
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** Enables full EC platform support on a shipping device;
-  consistent with prior oxpec stable backports.
-- **Risk:** Very low — 7-line DMI entry, exact string match, reuses
-  validated board profile.
-- **Ratio:** Favorable; matches established 6.18.y policy for this
-  driver.
-
----
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence Summary
-
-**FOR backport:**
-- Trivial DMI quirk addition (stable exception category: device ID /
-  hardware quirk)
-- Fixes real user-visible problem (driver won’t load)
-- Hardware-tested; three Reviewed-by including maintainer
-- Prerequisites (`oxp_g1_a`) present since v6.18
-- Four analogous oxpec DMI patches already in 6.18.y
-- Clean, minimal diff
-
-**AGAINST backport:**
-- Not a crash, security, or data-corruption fix
-- Only affects one specific handheld model
-- Mailing-list stable nomination not verified
-
-**UNRESOLVED:**
-- Full lore thread content and any explicit Cc: stable discussion
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — reuses G1 A profile,
-   hardware-tested, maintainer-reviewed
-2. Fixes real bug affecting users? **PASS** — driver fails to bind; EC
-   features unavailable
-3. Important issue? **PASS** (moderate) — hardware management broken for
-   device owners; aligns with stable’s device-ID exception
-4. Small and contained? **PASS** — 7 lines, one file
-5. No new features/APIs? **PASS** — no new APIs; enables existing driver
-   on new DMI
-6. Can apply to local tree? **PASS** — prerequisites present, clean
-   insert
-
-### Step 9.3: Exception Category
-**Record:** Hardware quirk / DMI ID addition to existing driver (stable
-exception #1 and #2).
-
-### Step 9.4: Decision Rationale
-
-For **Linux 6.18.44** (this checkout): the oxpec driver and `oxp_g1_a`
-board profile already exist, but Super X is not matched, so owners lack
-fan control, turbo toggle, and battery charge management. The fix is a
-7-line DMI entry reusing validated board data — the same pattern already
-accepted four times in this 6.18.y series. Risk is negligible; benefit
-is concrete for Super X users.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed commit message, tags, and body from user-provided
-  diff
-- **[Phase 2]** Diff analysis: +7 lines in `dmi_table[]`, no function
-  logic changed
-- **[Phase 3]** `git describe HEAD` → v6.18.44; `make kernelversion`
-  equivalent → 6.18.44
-- **[Phase 3]** `git log --oneline -20 -- drivers/platform/x86/oxpec.c`
-  → recent oxpec history
-- **[Phase 3]** `git blame -L 267,273` → G1 A entry from
-  `b369395c895bf`, `oxp_g1_a` from `232b41d3c2ce8`
-- **[Phase 3]** `git merge-base --is-ancestor b369395c895bf HEAD` → G1
-  support is ancestor
-- **[Phase 3]** `git merge-base --is-ancestor b369395c895bf v6.18` → G1
-  support in v6.18 base
-- **[Phase 3]** `git log v6.18..v6.18.44 --oneline --
-  drivers/platform/x86/oxpec.c` → 4 prior DMI backports
-- **[Phase 3]** `git show 0a4e44eb4b0c1` → X1 Air backport by Greg K-H
-  with upstream marker
-- **[Phase 4]** `b4 dig` → requires commit in tree; not runnable for
-  candidate commit
-- **[Phase 4]** WebFetch lore/patch.msgid.link → blocked by Anubis;
-  thread content UNVERIFIED
-- **[Phase 5]** Read `oxp_platform_init()` at lines 1076–1099 →
-  `-ENODEV` when DMI unmatched
-- **[Phase 5]** Read `oxp_g1_a` usage in turbo/PWM/battery paths →
-  existing handling confirmed
-- **[Phase 6]** Grep for `ONEXPLAYER SUPER X` → not present in tree
-  (only unrelated eisa.ids match)
-- **[Phase 6]** Read `drivers/platform/x86/oxpec.c` lines 267–280 → G1 A
-  present, Super X absent
-- **[Phase 6]** `git show v6.18:drivers/platform/x86/oxpec.c | grep -c
-  "ONEXPLAYER G1 A"` → 1 (G1 A in v6.18)
-- **[Phase 7]** Kconfig `OXP_EC` at line 1025 → driver exists, depends
-  on ACPI_EC/ACPI_BATTERY/HWMON/X86
-
-**YES**
-
- drivers/platform/x86/oxpec.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/platform/x86/oxpec.c b/drivers/platform/x86/oxpec.c
-index a30845ba37969..56df03cd195fd 100644
---- a/drivers/platform/x86/oxpec.c
-+++ b/drivers/platform/x86/oxpec.c
-@@ -271,6 +271,13 @@ static const struct dmi_system_id dmi_table[] = {
- 		},
- 		.driver_data = (void *)oxp_g1_a,
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
-+			DMI_EXACT_MATCH(DMI_BOARD_NAME, "ONEXPLAYER SUPER X"),
-+		},
-+		.driver_data = (void *)oxp_g1_a,
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
--- 
-2.53.0
+Devin Wittmayer <lucid_duck@justthetip.ca>
+    wifi: mt76: mt7925: ensure tx headroom in usb_sdio_tx_prepare_skb
+
+Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+    USB: c67x00: fix use-after-free in c67x00_add_iso_urb()
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: spcp8x5: drop broken carrier detect support
+
+Jiale Yao <yaojiale02@163.com>
+    USB: serial: option: fix slab OOB read in interrupt URB callback
+
+Will Porter <mrwillporter@gmail.com>
+    ALSA: usb-audio: Complete cleanup after system-resume errors
+
+Marouane El Moufid <eun0us@espilon.net>
+    ALSA: usb-audio: fix OOB write in snd_usbmidi_novation_output()
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    usb: core: Strengthen error handling in hub_hub_status()
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    usb: core: Add lock to usb_wakeup_notification()
+
+Christian Borntraeger <borntraeger@linux.ibm.com>
+    KVM: s390: vsie: zero stale crypto bits
+
+Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+    crypto: qce - Remove unsafe/deprecated algorithms
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    crypto: mxs-dcp - fix source scatterlist length access
+
+Md Sadre Alam <md.alam@oss.qualcomm.com>
+    crypto: qce - fix CCM AAD buffer underallocation
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    crypto: atmel-tdes - use scatterlist length before DMA mapping
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: qcom-rng - Remove crypto_rng interface
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: qcom-rng - Allow zero as a random number
+
+Eric Biggers <ebiggers@kernel.org>
+    crypto: qcom-rng - Enable clock in hwrng case
+
+Eric Biggers <ebiggers@kernel.org>
+    mm/swap: reject swapon() on filesystem-level encrypted files
+
+Fourie Zhang <littleddfu@gmail.com>
+    netfilter: nf_tables: don't queue packet path object notifications
+
+Kyle Zeng <kylebot@openai.com>
+    vxlan: keep the last remote linked during FDB flush
+
+Kyle Zeng <kylebot@openai.com>
+    batman-adv: reject unrepresentable multicast TVLV offsets
+
+Kyle Zeng <kylebot@openai.com>
+    ipv6: seg6: clear IPv4 control block on IPIP decapsulation
+
+Norbert Szetei <norbert@doyensec.com>
+    net: bridge: mcast: fix use-after-free of a master VLAN's multicast context
+
+Zihan Xi <zihanx@nebusec.ai>
+    xfrm: bound nat keepalive state collection
+
+Zihan Xi <zihanx@nebusec.ai>
+    xfrm: fix xfrm_state_construct() auth-trunc leak
+
+Asim Viladi Oglu Manizada <manizada@pm.me>
+    xfrm: ah6: validate routing header segments_left
+
+Zihan Xi <xizh2024@lzu.edu.cn>
+    xfrm: avoid lock inversion in nat keepalive work
+
+Zhiling Zou <roxy520tt@gmail.com>
+    xfrm: drop ESP-in-TCP packets with no ingress device
+
+Sabrina Dubroca <sd@queasysnail.net>
+    xfrm: espintcp: fix UAF during close
+
+Hyunwoo Kim <imv4bel@gmail.com>
+    net/tcp-ao: fix use-after-free of current_key on reconnect to another peer
+
+Qing Ming <a0yami@mailbox.org>
+    tcp: fix AO info use-after-free in tcp_ao_connect_init()
+
+Rastislav Szabo <rastislav.szabo@isovalent.com>
+    net/tcp: fix TCP-AO key deletion in VRFs
+
+Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
+    x86/CPU/AMD: Carve out a Zen5 models range
+
+Qing Ming <a0yami@mailbox.org>
+    gtp: serialize PDP context updates
+
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    tls: device: fix out-of-bounds write in tls_append_frag()
+
+Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+    usb: gadget: f_tcm: keep port count until LUN teardown completes
+
+Aleksandr Nogikh <nogikh@google.com>
+    usb: usbtest: disable dynamic ID support
+
+Baokun Li <libaokun@linux.alibaba.com>
+    fuse: fix invalidate lock leak on open O_TRUNC DAX failure
+
+Baokun Li <libaokun@linux.alibaba.com>
+    fuse: fix invalidate lock leak on setattr writeback failure
+
+Lucas De Marchi <ldemarchi@nvidia.com>
+    xhci: dbgtty: Fix unregister on tty_alloc_driver() failure
+
+Lucas De Marchi <ldemarchi@nvidia.com>
+    xhci: dbgtty: Fix unregister on tty_register_driver() failure
+
+Semih Baskan <strst.gs@gmail.com>
+    usb: xhci: Handle USB3 port events when there is one roothub
+
+Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+    accessibility: speakup: unregister tty ldisc on later init failures
+
+Griffin Kroah-Hartman <griffin@kroah.com>
+    fpga: dfl: fme: add error handling
+
+Jose Villaseñor Montfort <pepemontfort@gmail.com>
+    HID: magicmouse: prevent unbounded recursion in magicmouse_raw_event()
+
+Chengfeng Ye <nicoyip.dev@gmail.com>
+    Bluetooth: hci_sync: Fix accept list UAF during suspend
+
+Zijun Hu <zijun.hu@oss.qualcomm.com>
+    Bluetooth: hci_sync: Use bt_dev_err() to log error message in hci_update_event_filter_sync()
+
+Ibrahim Hashimov <security@auditcode.ai>
+    HID: uclogic: fix use-after-free of inrange_timer on remove
+
+Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
+    HID: ft260: fix stack-use-after-return write in I2C read race
+
+Michael Zaidman <michael.zaidman@gmail.com>
+    HID: ft260: validate i2c input report length
+
+Jann Horn <jannh@google.com>
+    HID: asus: fix missing hid_is_usb() check
+
+Antheas Kapenekakis <lkml@antheas.dev>
+    HID: asus: simplify RGB init sequence
+
+Baul Lee <baul.lee@xbow.com>
+    HID: pidff: fix OOB write when hid->inputs is empty
+
+Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+    HID: pidff: clang-format pass
+
+Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+    HID: pidff: Use ARRAY_SIZE macro instead of sizeof
+
+Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+    HID: pidff: Rework pidff_set_time() to fix warnings
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    nfc: nci: add data_len bound checks to activation parameter extractors
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: reject invalid block index in GC ioctl
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: correct return value kernel-doc descriptions for ioctl functions
+
+DaeMyung Kang <charsyam@gmail.com>
+    ksmbd: harden file lifetime during session teardown
+
+Aboorva Devarajan <aboorvad@linux.ibm.com>
+    powerpc/hv-gpci: fix preempt count leak in sysfs show paths
+
+Jesper Dangaard Brouer <hawk@kernel.org>
+    veth: fix OOB txq access in veth_poll() with asymmetric queue counts
+
+Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
+    ring buffer: Propagate __rb_map_vma return value to caller
+
+Stephen Smalley <stephen.smalley.work@gmail.com>
+    selinux: switch two allocations to use kzalloc_objs()
+
+Kuniyuki Iwashima <kuniyu@google.com>
+    smc: Use __sk_dst_get() and dst_dev_rcu() in smc_vlan_by_tcpsk().
+
+Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+    ASoC: nau8821: Cancel pending work before suspend
+
+Sasha Levin <sashal@kernel.org>
+    Revert "PM: sleep: Use complete() in device_pm_sleep_init()"
+
+Michael Neuling <mikey@neuling.org>
+    riscv: Fix register corruption from uninitialized cregs on error
+
+Jiayuan Chen <jiayuan.chen@linux.dev>
+    bpf: Fix use-after-free in offloaded map/prog info fill
+
+Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+    ASoC: nau8821: Cancel delayed work on component remove
+
+Kuniyuki Iwashima <kuniyu@google.com>
+    smc: Use __sk_dst_get() and dst_dev_rcu() in smc_clc_prfx_match().
+
+Kuniyuki Iwashima <kuniyu@google.com>
+    smc: Use __sk_dst_get() and dst_dev_rcu() in in smc_clc_prfx_set().
+
+Oliver Upton <oliver.upton@linux.dev>
+    KVM: arm64: Prevent access to vCPU events before init
+
+Kuniyuki Iwashima <kuniyu@google.com>
+    smc: Fix use-after-free in __pnet_find_base_ndev().
+
+Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+    can: j1939: make j1939_sk_bind() fail if device is no longer registered
+
+Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+    can: j1939: add missing calls in NETDEV_UNREGISTER notification handler
+
+Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+    can: j1939: implement NETDEV_UNREGISTER notification handler
+
+Vladimir Riabchun <ferr.lambarginio@gmail.com>
+    mISDN: hfcpci: Fix warning when deleting uninitialized timer
+
+Wentao Liang <vulab@iscas.ac.cn>
+    media: platform: exynos4-is: Add hardware sync wait to fimc_is_hw_change_mode()
+
+Namjae Jeon <linkinjeon@kernel.org>
+    exfat: fix double free in delayed_free
+
+Dylan Wolff <wolffd@comp.nus.edu.sg>
+    jfs: Fix null-ptr-deref in jfs_ioc_trim
+
+Nick Child <nnac123@linux.ibm.com>
+    ibmvnic: Use kernel helpers for hex dumps
+
+Vasiliy Kovalev <kovalev@altlinux.org>
+    jfs: add check read-only before txBeginAnon() call
+
+Vasiliy Kovalev <kovalev@altlinux.org>
+    jfs: add check read-only before truncation in jfs_truncate_nolock()
+
+Kyle Zeng <kylebot@openai.com>
+    perf: Reject exited events as group leaders
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    selinux: require a class's permission values to cover its permission count
+
+Bryam Vargas <hexlabsecurity@proton.me>
+    selinux: reject a permission value exceeding the class permission count
+
+Christian Göttsche <cgzones@googlemail.com>
+    selinux: more strict policy parsing
+
+Christian Göttsche <cgzones@googlemail.com>
+    selinux: use u16 for security classes
+
+Christian Göttsche <cgzones@googlemail.com>
+    selinux: make more use of str_read() when loading the policy
+
+Christian Göttsche <cgzones@googlemail.com>
+    selinux: avoid unnecessary indirection in struct level_datum
+
+Christian Göttsche <cgzones@googlemail.com>
+    selinux: use known type instead of void pointer
+
+Carlos Llamas <cmllamas@google.com>
+    HID: uhid: convert to hid_safe_input_report()
+
+Dmitry Bogdanov <d.bogdanov@yadro.com>
+    nvme-tcp: fix usage of page_frag_cache
+
+Vishnu Razdan <vrazdan@openai.com>
+    io_uring/io-wq: fix worker accounting when canceling creation callbacks
+
+Eric Biggers <ebiggers@kernel.org>
+    ext4: don't enable DAX on new encrypted files
+
+Jinu Kim <kimjw04271234@gmail.com>
+    KVM: x86/mmu: Check write tracking in all address spaces
+
+Peiyang He <peiyang_he@smail.nju.edu.cn>
+    RDMA/rxe: Fix OOB in free_rd_atomic_resources()
+
+Ibrahim Hashimov <security@auditcode.ai>
+    RDMA/rxe: Fix responder UAF on IB_QP_MAX_DEST_RD_ATOMIC modify_qp
+
+
+-------------
+
+Diffstat:
+
+ Documentation/filesystems/fscrypt.rst              |   4 +
+ Makefile                                           |   4 +-
+ arch/arm64/kvm/arm.c                               |   6 +
+ arch/powerpc/perf/hv-gpci.c                        |  24 +-
+ arch/riscv/kernel/compat_signal.c                  |   2 +
+ arch/riscv/kernel/ptrace.c                         |   4 +-
+ arch/s390/kvm/vsie.c                               |   1 +
+ arch/x86/kernel/cpu/amd.c                          |   1 +
+ arch/x86/kvm/mmu/page_track.c                      |  32 +-
+ drivers/accessibility/speakup/main.c               |   1 +
+ drivers/base/power/main.c                          |   6 +-
+ drivers/crypto/Kconfig                             |   1 -
+ drivers/crypto/atmel-tdes.c                        |   5 +-
+ drivers/crypto/mxs-dcp.c                           |   2 +-
+ drivers/crypto/qce/aead.c                          |  58 +---
+ drivers/crypto/qce/common.c                        |  55 +--
+ drivers/crypto/qce/common.h                        |  16 +-
+ drivers/crypto/qce/regs-v5.h                       |   4 -
+ drivers/crypto/qce/sha.c                           |  30 +-
+ drivers/crypto/qce/sha.h                           |   1 -
+ drivers/crypto/qce/skcipher.c                      |  97 +-----
+ drivers/crypto/qcom-rng.c                          | 156 ++-------
+ drivers/fpga/dfl-fme-perf.c                        |   2 +
+ drivers/hid/hid-asus.c                             |  52 ++-
+ drivers/hid/hid-ft260.c                            |  41 ++-
+ drivers/hid/hid-magicmouse.c                       |  25 +-
+ drivers/hid/hid-uclogic-core.c                     |  12 +-
+ drivers/hid/uhid.c                                 |   8 +-
+ drivers/hid/usbhid/hid-pidff.c                     | 106 +++---
+ drivers/infiniband/sw/rxe/rxe_qp.c                 |  18 +-
+ drivers/isdn/hardware/mISDN/hfcpci.c               |  12 +-
+ .../platform/samsung/exynos4-is/fimc-is-regs.c     |   1 +
+ drivers/net/ethernet/ibm/ibmvnic.c                 |  30 +-
+ drivers/net/gtp.c                                  |  21 +-
+ drivers/net/veth.c                                 |   3 +-
+ drivers/net/vxlan/vxlan_core.c                     |  11 +-
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c    |   4 +
+ drivers/nvme/host/tcp.c                            |   8 +
+ drivers/target/target_core_fabric_configfs.c       |   8 +
+ drivers/usb/c67x00/c67x00-sched.c                  |   4 +-
+ drivers/usb/core/devio.c                           |   2 +-
+ drivers/usb/core/hub.c                             |   7 +-
+ drivers/usb/gadget/function/f_tcm.c                |   2 +-
+ drivers/usb/host/xhci-dbgtty.c                     |  15 +-
+ drivers/usb/host/xhci-ring.c                       |   2 +-
+ drivers/usb/misc/usbtest.c                         |   1 +
+ drivers/usb/serial/option.c                        |  20 +-
+ drivers/usb/serial/spcp8x5.c                       |  13 -
+ fs/exfat/nls.c                                     |   1 +
+ fs/ext4/crypto.c                                   |  40 +--
+ fs/ext4/ialloc.c                                   |   4 +
+ fs/fuse/dir.c                                      |   9 +-
+ fs/fuse/file.c                                     |   4 +-
+ fs/jfs/inode.c                                     |   2 +-
+ fs/jfs/jfs_discard.c                               |   3 +-
+ fs/jfs/jfs_extent.c                                |  10 +
+ fs/nilfs2/ioctl.c                                  | 251 +++++++-------
+ fs/smb/server/smb2pdu.c                            |   6 +-
+ fs/smb/server/vfs_cache.c                          | 179 ++++++++--
+ fs/smb/server/vfs_cache.h                          |   4 +-
+ include/linux/skbuff.h                             |  24 ++
+ include/target/target_core_fabric.h                |   2 +
+ io_uring/io-wq.c                                   |   9 +-
+ kernel/bpf/offload.c                               |  10 +-
+ kernel/events/core.c                               |  10 +
+ kernel/trace/ring_buffer.c                         |   2 +-
+ mm/swapfile.c                                      |   7 +
+ net/batman-adv/tvlv.c                              |   5 +-
+ net/bluetooth/hci_sync.c                           |  48 ++-
+ net/bridge/br_multicast.c                          |   4 +-
+ net/can/j1939/j1939-priv.h                         |   1 +
+ net/can/j1939/main.c                               |   5 +
+ net/can/j1939/socket.c                             |  55 +++
+ net/ipv4/tcp_ao.c                                  |  19 +-
+ net/ipv6/ah6.c                                     |  29 +-
+ net/ipv6/seg6_local.c                              |   7 +
+ net/netfilter/nf_tables_api.c                      |  36 +-
+ net/nfc/nci/ntf.c                                  |  26 +-
+ net/smc/smc_clc.c                                  |  67 ++--
+ net/smc/smc_core.c                                 |  27 +-
+ net/smc/smc_pnet.c                                 |  43 +--
+ net/tls/tls_device.c                               |   3 +-
+ net/xfrm/espintcp.c                                |   9 +-
+ net/xfrm/xfrm_nat_keepalive.c                      |  53 ++-
+ net/xfrm/xfrm_user.c                               |   2 +-
+ security/selinux/include/security.h                |   1 +
+ security/selinux/ss/avtab.c                        |  43 ++-
+ security/selinux/ss/avtab.h                        |  21 +-
+ security/selinux/ss/conditional.c                  |  47 +--
+ security/selinux/ss/conditional.h                  |   6 +-
+ security/selinux/ss/constraint.h                   |   1 +
+ security/selinux/ss/ebitmap.c                      |   4 +-
+ security/selinux/ss/ebitmap.h                      |   5 +-
+ security/selinux/ss/mls.c                          |   6 +-
+ security/selinux/ss/policydb.c                     | 375 +++++++++++++++------
+ security/selinux/ss/policydb.h                     |  51 ++-
+ security/selinux/ss/services.c                     |   8 +-
+ sound/soc/codecs/nau8821.c                         |  13 +
+ sound/usb/card.c                                   |  14 +-
+ sound/usb/midi.c                                   |   2 +
+ 100 files changed, 1484 insertions(+), 1067 deletions(-)
+
 
