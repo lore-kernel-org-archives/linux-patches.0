@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E6347D442;
-	Mon, 31 Aug 2026 13:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FD543C05E;
+	Mon, 31 Aug 2026 13:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184706; cv=none; b=pCl5Q+Ul+WrFw7XPfXRJS7npgwTknsII//ASCmRQ+4NrvPszh9xKxWKWjJyfSycs46R7hBdm1Hc3bxbOtLsyZlya9IZSaRtH0KTGTEFmHpEid5AuVIkRFoCVFcqB93vGMb9IDbDVyOVLrmWbgWwnGmLQtDWeQbgNumgUEFnM/9Q=
+	t=1788184715; cv=none; b=Hm233x+eAsUGWNZvg1Zs9hClULw41qUIRurPlJ1DkhC9qyKmYoP/3V5oexoynwiIWSSK10beYqLV7GkwTI9Ft72ol4d3vAE4pzIv+FArvtGLIFxjONlSfhyu+SLrzRPGhaIvd3SOFHONSdz/fa/EC7pEFSpI3nAoGy0/zTTNkDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184706; c=relaxed/simple;
-	bh=e/OQrEkR1D9RQwn8cvaNi/qZbjvGJ0o5eBU8cR32dKU=;
+	s=arc-20240116; t=1788184715; c=relaxed/simple;
+	bh=7YPIzdsO40f2I6VACpNoPfkKPq1UyJ/noux0PTPuGOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxnKlyyMuvmr1afYh1oq9+m77CdGE4gTbzem3SKJtfvm+cjPMlxOdynu6atlifRkXXsxRPKhe2+qNSCokiVrTXoU3XpqvmgwjY0ttnHYFcKbIFkmK/XBkyt5lIwbWiFYFzfCkWQsw97b80ZfN5wX3WGhEfJu/yDoCL4yTuZLQ2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQhH9f0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bE57tqNi0+F1n7gE4p9q+CrhUPVVmhxswA1k1rPBjse9FViRquNGYeF/ON0AucKDf7l2jkqzBcSPOmQmztt3kL14apnTSfeukV6E+/FyDlo6irW76IQRs7+h4UbxBChpGwugAmrOh+MA5PNComQFFa0g+N1Ioukz5KUlSJl4/PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhSPoVBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQhH9f0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FDA1F000E9;
-	Mon, 31 Aug 2026 13:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhSPoVBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4391F00A3D;
+	Mon, 31 Aug 2026 13:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184705;
-	bh=A3VIGYL9NWj9xR8ANx/laWdS+UJBxRwdA/wfF9R1tYw=;
+	s=korg; t=1788184714;
+	bh=RA7jyxQJ2stDMEqQcBENq4vCh5AsAOnGdPYr1u6/KSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tQhH9f0j9sMgJA+BZ9BiZiARyPSKlbZJnzu52NXlL0/x2mPhLX3tBCdF3EPf10sjg
-	 J1oDFvi0GYXBA+5j4AFPOew8mleRL4aeYZXesCDgf/S0BEUZnsjQGDi+C3FqQykqZC
-	 2HJKED/KnL9iSlhEyEOg88fZceVebVXgc5OSQhbI=
+	b=lhSPoVBCcDHdPfXi+CXtAqi88Uy3moZmfdfqJovpYZGYS9v4hPdla6vJaJAJUCQca
+	 JCnpgj1yNcY8gnHsQMxlnUYuLMv1eB8UsH6FY1RpsfuYF/eMOqOD6moHf04VQXOiFo
+	 GJ0AEaX29xsOpek5brEqOy1z2oRmMerBds03LPJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Dave Marquardt <davemarq@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/92] bpf: Remove tst_run from lwt_seg6local_prog_ops.
-Date: Mon, 31 Aug 2026 15:34:08 +0200
-Message-ID: <20260831133400.026645696@linuxfoundation.org>
+Subject: [PATCH 6.1 13/92] ibmvnic: Use kernel helpers for hex dumps
+Date: Mon, 31 Aug 2026 15:34:11 +0200
+Message-ID: <20260831133400.204661425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -54,47 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit c13fda93aca118b8e5cd202e339046728ee7dddb ]
+[ Upstream commit d93a6caab5d7d9b5ce034d75b1e1e993338e3852 ]
 
-The syzbot reported that the lwt_seg6 related BPF ops can be invoked
-via bpf_test_run() without without entering input_action_end_bpf()
-first.
+Previously, when the driver was printing hex dumps, the buffer was cast
+to an 8 byte long and printed using string formatters. If the buffer
+size was not a multiple of 8 then a read buffer overflow was possible.
 
-Martin KaFai Lau said that self test for BPF_PROG_TYPE_LWT_SEG6LOCAL
-probably didn't work since it was introduced in commit 04d4b274e2a
-("ipv6: sr: Add seg6local action End.BPF"). The reason is that the
-per-CPU variable seg6_bpf_srh_states::srh is never assigned in the self
-test case but each BPF function expects it.
+Therefore, create a new ibmvnic function that loops over a buffer and
+calls hex_dump_to_buffer instead.
 
-Remove test_run for BPF_PROG_TYPE_LWT_SEG6LOCAL.
+This patch address KASAN reports like the one below:
+  ibmvnic 30000003 env3: Login Buffer:
+  ibmvnic 30000003 env3: 01000000af000000
+  <...>
+  ibmvnic 30000003 env3: 2e6d62692e736261
+  ibmvnic 30000003 env3: 65050003006d6f63
+  ==================================================================
+  BUG: KASAN: slab-out-of-bounds in ibmvnic_login+0xacc/0xffc [ibmvnic]
+  Read of size 8 at addr c0000001331a9aa8 by task ip/17681
+  <...>
+  Allocated by task 17681:
+  <...>
+  ibmvnic_login+0x2f0/0xffc [ibmvnic]
+  ibmvnic_open+0x148/0x308 [ibmvnic]
+  __dev_open+0x1ac/0x304
+  <...>
+  The buggy address is located 168 bytes inside of
+                allocated 175-byte region [c0000001331a9a00, c0000001331a9aaf)
+  <...>
+  =================================================================
+  ibmvnic 30000003 env3: 000000000033766e
 
-Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
-Reported-by: syzbot+608a2acde8c5a101d07d@syzkaller.appspotmail.com
-Fixes: d1542d4ae4df ("seg6: Use nested-BH locking for seg6_bpf_srh_states.")
-Fixes: 004d4b274e2a ("ipv6: sr: Add seg6local action End.BPF")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20240710141631.FbmHcQaX@linutronix.de
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 032c5e82847a ("Driver for IBM System i/p VNIC protocol")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250320212951.11142-1-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 91d337252fc90..e2fd25d9e3580 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -11041,7 +11041,6 @@ const struct bpf_verifier_ops lwt_seg6local_verifier_ops = {
- };
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 071dca86fc883..67e34b2e09dab 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -4660,6 +4660,18 @@ static void vnic_add_client_data(struct ibmvnic_adapter *adapter,
+ 	strscpy(vlcd->name, adapter->netdev->name, len);
+ }
  
- const struct bpf_prog_ops lwt_seg6local_prog_ops = {
--	.test_run		= bpf_prog_test_run_skb,
- };
++static void ibmvnic_print_hex_dump(struct net_device *dev, void *buf,
++				   size_t len)
++{
++	unsigned char hex_str[16 * 3];
++
++	for (size_t i = 0; i < len; i += 16) {
++		hex_dump_to_buffer((unsigned char *)buf + i, len - i, 16, 8,
++				   hex_str, sizeof(hex_str), false);
++		netdev_dbg(dev, "%s\n", hex_str);
++	}
++}
++
+ static int send_login(struct ibmvnic_adapter *adapter)
+ {
+ 	struct ibmvnic_login_rsp_buffer *login_rsp_buffer;
+@@ -4770,10 +4782,8 @@ static int send_login(struct ibmvnic_adapter *adapter)
+ 	vnic_add_client_data(adapter, vlcd);
  
- const struct bpf_verifier_ops cg_sock_verifier_ops = {
+ 	netdev_dbg(adapter->netdev, "Login Buffer:\n");
+-	for (i = 0; i < (adapter->login_buf_sz - 1) / 8 + 1; i++) {
+-		netdev_dbg(adapter->netdev, "%016lx\n",
+-			   ((unsigned long *)(adapter->login_buf))[i]);
+-	}
++	ibmvnic_print_hex_dump(adapter->netdev, adapter->login_buf,
++			       adapter->login_buf_sz);
+ 
+ 	memset(&crq, 0, sizeof(crq));
+ 	crq.login.first = IBMVNIC_CRQ_CMD;
+@@ -5149,15 +5159,13 @@ static void handle_query_ip_offload_rsp(struct ibmvnic_adapter *adapter)
+ {
+ 	struct device *dev = &adapter->vdev->dev;
+ 	struct ibmvnic_query_ip_offload_buffer *buf = &adapter->ip_offload_buf;
+-	int i;
+ 
+ 	dma_unmap_single(dev, adapter->ip_offload_tok,
+ 			 sizeof(adapter->ip_offload_buf), DMA_FROM_DEVICE);
+ 
+ 	netdev_dbg(adapter->netdev, "Query IP Offload Buffer:\n");
+-	for (i = 0; i < (sizeof(adapter->ip_offload_buf) - 1) / 8 + 1; i++)
+-		netdev_dbg(adapter->netdev, "%016lx\n",
+-			   ((unsigned long *)(buf))[i]);
++	ibmvnic_print_hex_dump(adapter->netdev, buf,
++			       sizeof(adapter->ip_offload_buf));
+ 
+ 	netdev_dbg(adapter->netdev, "ipv4_chksum = %d\n", buf->ipv4_chksum);
+ 	netdev_dbg(adapter->netdev, "ipv6_chksum = %d\n", buf->ipv6_chksum);
+@@ -5388,10 +5396,8 @@ static int handle_login_rsp(union ibmvnic_crq *login_rsp_crq,
+ 	netdev->mtu = adapter->req_mtu - ETH_HLEN;
+ 
+ 	netdev_dbg(adapter->netdev, "Login Response Buffer:\n");
+-	for (i = 0; i < (adapter->login_rsp_buf_sz - 1) / 8 + 1; i++) {
+-		netdev_dbg(adapter->netdev, "%016lx\n",
+-			   ((unsigned long *)(adapter->login_rsp_buf))[i]);
+-	}
++	ibmvnic_print_hex_dump(netdev, adapter->login_rsp_buf,
++			       adapter->login_rsp_buf_sz);
+ 
+ 	/* Sanity checks */
+ 	if (login->num_txcomp_subcrqs != login_rsp->num_txsubm_subcrqs ||
 -- 
 2.53.0
 
