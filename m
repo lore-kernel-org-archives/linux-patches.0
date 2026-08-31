@@ -1,150 +1,331 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B9351FCB2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37F551FCBE;
 	Mon, 31 Aug 2026 13:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183837; cv=none; b=VqHzn6IZfoaRptJc3P/H/n1ASKpYwIcus6cbl3CL/pAwddVo2wtq1ZMc4VRgZ6tt6pIpnqlSXIBBEg8V8HS0H5zIMuldW4SmSUgM42JWtBTy+ieeRXSvBE0pQ/7bn/GLsA7h33y/reCLC1R01/rv+mi46alF87NwK24IKzDhRNo=
+	t=1788183838; cv=none; b=LLj7VMyd9POFAjBHCczcaezsuwwPoqJpMqrwOcCe5XoQ5gzimNVeCtznnTqNUKaMiPpFf//UdTJtX4akdmWfjH3cnAXrfv1tTKOl91OJ/jmWEH4S0B737XOGn65GSfxhQdj82X+ioP303aQA3EM5eIeQGkzISaJ5ZuC6GkvCoII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183837; c=relaxed/simple;
-	bh=biKOVasoj6tSY6FlcS1irsgZNm0vohE0TNSLOJb+qAs=;
+	s=arc-20240116; t=1788183838; c=relaxed/simple;
+	bh=FI6rnRQL1RPq+b/IB0heVFq0dV8yLFc5DhImLuGqhsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XTaX/mw+i06YRHMc+5tWH+bxxtPKHAcULIKJUNxcfkduaml7TzBPnY0Ej8uzKHcU15jkv2Sn2MmnWMvdc1TkGo8pYe9Ijw5b8GNLMPJ3Plcc3tX4kfT6Ktbs78DMuNNK+os1q+EJ9FkSnPqsfehqSuUYTmrJ+9VbIzC/EePqzpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XFaP480h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OdsFwpzSYZyDDkTDWQn/f6UvB8iE4Wz0sCP4yXQig8bYHiC7fGLdSFpQHjCoEv89GUSO/b/ZKX+xJANonEUg1Rs0IDV2yIK34G2wRDM2uxwCc7lndgc8QQAMgJlWc11Gw0GhJeT8qQ+FhZWX0r+ipHY+/nGFAU0ZEK3Ot2ICOlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYRr0pkI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XFaP480h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E721F00A3D;
-	Mon, 31 Aug 2026 13:43:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183835;
-	bh=BbLvC4XLuHvUox126ylkhDq5kOLzngT/8cbJZ+VZFns=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYRr0pkI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90E21F00A3E;
+	Mon, 31 Aug 2026 13:43:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183836;
+	bh=ke4fPPgc4vuBUVflpSPOKOMERn+UVXGL4IbkQRINdlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFaP480h0GabdeSVjArTJ5mCCWq6q49fYU6pdxLSgpfzhyl9bDSmPiCbH1RpcCDA8
-	 s8xm8Dgy2EN34poJnqbilDcHKz/8RpdHjk+7ShV8JMVfrtSB0n623tvkNppZ9/JaHX
-	 PfAlOplrwLwYurtx4XeiwdrVRGM54KMliDi4L+Ob7/CjTeiaBuDq+XvMKpUOESN0Bf
-	 OZjcaGHBbDFsNZqF1h5yAwXRc+l6PyRdF73G8AAxRnVGQFfdHle59S8fCwhiNqsn7b
-	 KEPonFh3vABqsfHS38gWeHJ1tGSGSsWJXw8ajeKEsIoqYd4rg3mS17tLVpHH1REZbb
-	 w4qDTJAKV8Lzw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jay Vadayath <jay@artiphishell.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	pc@manguebit.org,
-	linkinjeon@kernel.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] smb: client: bound dirent name against end of SMB response in cifs_filldir
-Date: Mon, 31 Aug 2026 09:26:01 -0400
-Message-ID: <20260831133314.4125787-333-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=FYRr0pkIGHRk8SaXZEs3ya23HIOO1kGiPhtGeOeTXFNTj75VxsStI8MU858vf/0ey
+	 DS5En34aC5ifKpajRvhAw7CPPWjPgqeCJu+4uCrpuAaxr3dDbPd6nVP7bo8+C1WATk
+	 5F36HWmik3VsD9fbzcQcrt7nyKWaHo3DPUgZclbE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Eric Biggers <ebiggers@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.1 58/76] crypto: qcom-rng - Remove crypto_rng interface
+Date: Mon, 31 Aug 2026 15:34:30 +0200
+Message-ID: <20260831133402.450619795@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jay Vadayath <jay@artiphishell.com>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit f8cf09a53a0dc1da298e9dd0ba5f21710cf119d6 ]
+------------------
 
-cifs_filldir() copies the entry name out of an SMB1 TRANS2_FIND_FIRST /
-FIND_NEXT response using a length (de.namelen) supplied by the server.
-The kmalloc'd SMB response buffer is bounded, but nothing checks that
-de.name + de.namelen still lies inside that buffer before the eventual
-filldir64() -> verify_dirent_name() -> memchr() reads namelen bytes.
+From: Eric Biggers <ebiggers@kernel.org>
 
-A hostile SMB1 server that returns an oversized FileNameLength in a
-directory entry therefore causes memchr() to read past the end of the
-response slab buffer. Reachable from any user who can list a directory
-on a CIFS mount served by an attacker-controlled server (getdents64()
-on the mounted directory):
+commit 2ecdf5c9910e20f73639bc322f0518a3439d17c0 upstream.
 
-  BUG: KASAN: slab-out-of-bounds in memchr+0x71/0x80
-  Read of size 1 at addr ffff88800e0640cc by task poc/115
-  Call Trace:
-   dump_stack_lvl+0x64/0x80
-   print_report+0xce/0x620
-   kasan_report+0xec/0x120
-   memchr+0x71/0x80
-   filldir64+0x4c/0x6a0
-   cifs_filldir.constprop.0+0x9bb/0x1e00
-   cifs_readdir+0x2101/0x3380
-   iterate_dir+0x19c/0x520
-   __x64_sys_getdents64+0x126/0x210
-   do_syscall_64+0x107/0x5a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+qcom-rng.c exposes the same hardware through two completely separate
+interfaces, crypto_rng and hwrng.  However, the implementation of this
+is buggy because it permits generation operations from these interfaces
+to run concurrently with each other, accessing the same registers.  That
+is, qcom_rng_generate() synchronizes with itself but not with
+qcom_hwrng_read().  This results in potential repetition of output from
+the RNG, output of non-random values, etc.
 
-Pass the end-of-response pointer down to cifs_filldir() and reject
-entries whose name would extend past that boundary.
+Fortunately, there's actually no point in hardware RNG drivers
+implementing the crypto_rng interface.  It's not actually used by
+anything besides the "rng" algorithm type of AF_ALG, which in turn is
+not actually used in practice.  Other crypto_rng hardware drivers are
+likewise being phased out, leaving just the hwrng support.
 
-This bug was discovered by Artiphishell's vTriage pipeline, which
-generated a userspace reproducer (an emulated hostile SMB1 server plus
-a getdents64() client) that reliably triggers the KASAN report on an
-unpatched kernel. The fix below was drafted with the Claude coding
-assistant; a userspace reproducer is available on request.
+Thus, remove it to simplify the code and avoid conflict (and confusion)
+with the hwrng interface which is the one that actually matters.
 
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Jay Vadayath <jay@artiphishell.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f29cd5bb64c2 ("crypto: qcom-rng - Add hw_random interface support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/crypto/Kconfig    |    1 
+ drivers/crypto/qcom-rng.c |  158 +++++-----------------------------------------
+ 2 files changed, 19 insertions(+), 140 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-That search finished with **no matches** for the fix string `"search
-entry name extends past end of SMB"` in the local tree’s history (~6.7
-minutes to scan). That confirms the patch isn’t in this 6.18.44
-checkout, which is consistent with the **YES** backport recommendation.
-
- fs/smb/client/readdir.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index f0ce26622a140..d61ce7c6be645 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -949,7 +949,7 @@ static bool cifs_dir_emit(struct dir_context *ctx,
- static int cifs_filldir(char *find_entry, struct file *file,
- 			struct dir_context *ctx,
- 			char *scratch_buf, unsigned int max_len,
--			struct cached_fid *cfid)
-+			char *end_of_smb, struct cached_fid *cfid)
- {
- 	struct cifsFileInfo *file_info = file->private_data;
- 	struct super_block *sb = file_inode(file)->i_sb;
-@@ -970,6 +970,11 @@ static int cifs_filldir(char *find_entry, struct file *file,
- 		return -EINVAL;
- 	}
+--- a/drivers/crypto/Kconfig
++++ b/drivers/crypto/Kconfig
+@@ -659,7 +659,6 @@ config CRYPTO_DEV_QCOM_RNG
+ 	tristate "Qualcomm Random Number Generator Driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+ 	depends on HW_RANDOM
+-	select CRYPTO_RNG
+ 	help
+ 	  This driver provides support for the Random Number
+ 	  Generator hardware found on Qualcomm SoCs.
+--- a/drivers/crypto/qcom-rng.c
++++ b/drivers/crypto/qcom-rng.c
+@@ -3,10 +3,8 @@
+ //
+ // Based on msm-rng.c and downstream driver
  
-+	if (de.name + de.namelen > end_of_smb) {
-+		cifs_dbg(VFS, "search entry name extends past end of SMB\n");
-+		return -EINVAL;
+-#include <crypto/internal/rng.h>
+ #include <linux/acpi.h>
+ #include <linux/clk.h>
+-#include <linux/crypto.h>
+ #include <linux/hw_random.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+@@ -32,24 +30,15 @@
+ #define QCOM_TRNG_QUALITY	1024
+ 
+ struct qcom_rng {
+-	struct mutex lock;
+ 	void __iomem *base;
+ 	struct clk *clk;
+ 	struct hwrng hwrng;
+-	struct qcom_rng_match_data *match_data;
+-};
+-
+-struct qcom_rng_ctx {
+-	struct qcom_rng *rng;
+ };
+ 
+ struct qcom_rng_match_data {
+-	bool skip_init;
+ 	bool hwrng_support;
+ };
+ 
+-static struct qcom_rng *qcom_rng_dev;
+-
+ static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
+ {
+ 	unsigned int currsize = 0;
+@@ -82,37 +71,6 @@ static int qcom_rng_read(struct qcom_rng
+ 	return currsize;
+ }
+ 
+-static int qcom_rng_generate(struct crypto_rng *tfm,
+-			     const u8 *src, unsigned int slen,
+-			     u8 *dstn, unsigned int dlen)
+-{
+-	struct qcom_rng_ctx *ctx = crypto_rng_ctx(tfm);
+-	struct qcom_rng *rng = ctx->rng;
+-	int ret;
+-
+-	ret = clk_prepare_enable(rng->clk);
+-	if (ret)
+-		return ret;
+-
+-	mutex_lock(&rng->lock);
+-
+-	ret = qcom_rng_read(rng, dstn, dlen);
+-
+-	mutex_unlock(&rng->lock);
+-	clk_disable_unprepare(rng->clk);
+-
+-	if (ret >= 0)
+-		ret = 0;
+-
+-	return ret;
+-}
+-
+-static int qcom_rng_seed(struct crypto_rng *tfm, const u8 *seed,
+-			 unsigned int slen)
+-{
+-	return 0;
+-}
+-
+ static int qcom_hwrng_init(struct hwrng *hwrng)
+ {
+ 	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
+@@ -134,74 +92,26 @@ static void qcom_hwrng_cleanup(struct hw
+ 	clk_disable_unprepare(qrng->clk);
+ }
+ 
+-static int qcom_rng_enable(struct qcom_rng *rng)
+-{
+-	u32 val;
+-	int ret;
+-
+-	ret = clk_prepare_enable(rng->clk);
+-	if (ret)
+-		return ret;
+-
+-	/* Enable PRNG only if it is not already enabled */
+-	val = readl_relaxed(rng->base + PRNG_CONFIG);
+-	if (val & PRNG_CONFIG_HW_ENABLE)
+-		goto already_enabled;
+-
+-	val = readl_relaxed(rng->base + PRNG_LFSR_CFG);
+-	val &= ~PRNG_LFSR_CFG_MASK;
+-	val |= PRNG_LFSR_CFG_CLOCKS;
+-	writel(val, rng->base + PRNG_LFSR_CFG);
+-
+-	val = readl_relaxed(rng->base + PRNG_CONFIG);
+-	val |= PRNG_CONFIG_HW_ENABLE;
+-	writel(val, rng->base + PRNG_CONFIG);
+-
+-already_enabled:
+-	clk_disable_unprepare(rng->clk);
+-
+-	return 0;
+-}
+-
+-static int qcom_rng_init(struct crypto_tfm *tfm)
+-{
+-	struct qcom_rng_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	ctx->rng = qcom_rng_dev;
+-
+-	if (!ctx->rng->match_data->skip_init)
+-		return qcom_rng_enable(ctx->rng);
+-
+-	return 0;
+-}
+-
+-static struct rng_alg qcom_rng_alg = {
+-	.generate	= qcom_rng_generate,
+-	.seed		= qcom_rng_seed,
+-	.seedsize	= 0,
+-	.base		= {
+-		.cra_name		= "stdrng",
+-		.cra_driver_name	= "qcom-rng",
+-		.cra_flags		= CRYPTO_ALG_TYPE_RNG,
+-		.cra_priority		= 300,
+-		.cra_ctxsize		= sizeof(struct qcom_rng_ctx),
+-		.cra_module		= THIS_MODULE,
+-		.cra_init		= qcom_rng_init,
+-	}
+-};
+-
+ static int qcom_rng_probe(struct platform_device *pdev)
+ {
++	const struct qcom_rng_match_data *match_data;
+ 	struct qcom_rng *rng;
+ 	int ret;
+ 
++	match_data = device_get_match_data(&pdev->dev);
++	if (match_data == NULL || !match_data->hwrng_support) {
++		dev_info(&pdev->dev, "TRNG support not detected\n");
++		/*
++		 * In this case the driver does nothing except the dev_info(),
++		 * but bind the device anyway to avoid effects on GCC state.
++		 */
++		return 0;
 +	}
 +
- 	/* skip . and .. since we added them first */
- 	if (cifs_entry_is_dot(&de, file_info->srch_inf.unicode))
- 		return 0;
-@@ -1190,7 +1195,7 @@ int cifs_readdir(struct file *file, struct dir_context *ctx)
- 		 */
- 		*tmp_buf = 0;
- 		rc = cifs_filldir(current_entry, file, ctx,
--				  tmp_buf, max_len, cfid);
-+				  tmp_buf, max_len, end_of_smb, cfid);
- 		if (rc) {
- 			if (rc > 0)
- 				rc = 0;
--- 
-2.53.0
+ 	rng = devm_kzalloc(&pdev->dev, sizeof(*rng), GFP_KERNEL);
+ 	if (!rng)
+ 		return -ENOMEM;
+ 
+-	platform_set_drvdata(pdev, rng);
+-	mutex_init(&rng->lock);
+-
+ 	rng->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(rng->base))
+ 		return PTR_ERR(rng->base);
+@@ -210,55 +120,26 @@ static int qcom_rng_probe(struct platfor
+ 	if (IS_ERR(rng->clk))
+ 		return PTR_ERR(rng->clk);
+ 
+-	rng->match_data = (struct qcom_rng_match_data *)device_get_match_data(&pdev->dev);
+-
+-	qcom_rng_dev = rng;
+-	ret = crypto_register_rng(&qcom_rng_alg);
+-	if (ret) {
+-		dev_err(&pdev->dev, "Register crypto rng failed: %d\n", ret);
+-		qcom_rng_dev = NULL;
+-		return ret;
+-	}
+-
+-	if (rng->match_data->hwrng_support) {
+-		rng->hwrng.name = "qcom_hwrng";
+-		rng->hwrng.init = qcom_hwrng_init;
+-		rng->hwrng.read = qcom_hwrng_read;
+-		rng->hwrng.cleanup = qcom_hwrng_cleanup;
+-		rng->hwrng.quality = QCOM_TRNG_QUALITY;
+-		ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
+-		if (ret) {
+-			dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
+-			qcom_rng_dev = NULL;
+-			goto fail;
+-		}
+-	}
+-
+-	return ret;
+-fail:
+-	crypto_unregister_rng(&qcom_rng_alg);
++	rng->hwrng.name = "qcom_hwrng";
++	rng->hwrng.init = qcom_hwrng_init;
++	rng->hwrng.read = qcom_hwrng_read;
++	rng->hwrng.cleanup = qcom_hwrng_cleanup;
++	rng->hwrng.quality = QCOM_TRNG_QUALITY;
++	ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
++	if (ret)
++		dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
+ 	return ret;
+ }
+ 
+-static void qcom_rng_remove(struct platform_device *pdev)
+-{
+-	crypto_unregister_rng(&qcom_rng_alg);
+-
+-	qcom_rng_dev = NULL;
+-}
+-
+ static struct qcom_rng_match_data qcom_prng_match_data = {
+-	.skip_init = false,
+ 	.hwrng_support = false,
+ };
+ 
+ static struct qcom_rng_match_data qcom_prng_ee_match_data = {
+-	.skip_init = true,
+ 	.hwrng_support = false,
+ };
+ 
+ static struct qcom_rng_match_data qcom_trng_match_data = {
+-	.skip_init = true,
+ 	.hwrng_support = true,
+ };
+ 
+@@ -278,7 +159,6 @@ MODULE_DEVICE_TABLE(of, qcom_rng_of_matc
+ 
+ static struct platform_driver qcom_rng_driver = {
+ 	.probe = qcom_rng_probe,
+-	.remove =  qcom_rng_remove,
+ 	.driver = {
+ 		.name = KBUILD_MODNAME,
+ 		.of_match_table = of_match_ptr(qcom_rng_of_match),
+
 
