@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0F547F789;
-	Mon, 31 Aug 2026 14:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CAE484239;
+	Mon, 31 Aug 2026 14:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184879; cv=none; b=iGNHy8VoUuo36CkMWB3MYVFjgmM8Z0vDAlVss4WsPmooPCQB9PkOy9/WOen63ZUMPe9VRv8lgvu7nFOWz2A4pvxHmRu2ukpX+vzbNwZ+yHHKnZcMg3e/fD7j7cMHESD0qcY0wjALTKPL3ckyHMhuWBsg8ZSuDbIgKBa/Ylcx9k4=
+	t=1788184876; cv=none; b=otGZgs7kpuFvG19j7f7R3pHc1zBpllfKeJcNkRxKUfBby2zcQWZPE/wbY71eQF5sMZrZGGmn/+a0O1i0PTYxquPFod6sOldSlANEgZFg6ZPnNG4uA+YEpus0KzbixsmI0FQWicklo7RrFX85ZrMB4+EiKB2YqrlfNZ9UE0+aUHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184879; c=relaxed/simple;
-	bh=fHSLn+xKoLkz2kUZJxekPSOydKdlsCWrG5jnTPcdNY8=;
+	s=arc-20240116; t=1788184876; c=relaxed/simple;
+	bh=FV580aQmYnBhqfXugdGp3NX5k69xSA8ZvvVjiYTU51I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iy9FC62JRoYGvvQcuwkYbcbQXjk4gfshPbIQ+wmk0XHWV1620lOIz8vHp5sXpyMWqxeEG1tzff5EG0qnmxxz9GM5DaqEVbjA7bSnP6Y81qplYXQ1ZXnu6xYjLFC42OWn7VIUZ85tOsurT3EDwvRsQHukyhTKZZVP99OUuhPep4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO/6Q152; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h9FPRhjZHx6j66q+xIccAyprrzUzf+MN16Q9M59U3uCxs/Ex7kOGRCiWlPpla3XUBne0wu6LntQi96g7GU4bjL1KfpSeJdriCZP5vcyhqU1OeK+xN/VnP8uHY55rhyOfdjnHyROUpuaVnYROutBzR6j+3DVhALrsfQ0ETZFsCnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raGojp7u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO/6Q152"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB141F000E9;
-	Mon, 31 Aug 2026 14:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raGojp7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC591F00A3D;
+	Mon, 31 Aug 2026 14:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184878;
-	bh=Q4JgAf+8zuA6/usJlbxeiYxWvR0bdK+K8K+8vMgGxnQ=;
+	s=korg; t=1788184875;
+	bh=tBYlHlnlH9pt/g1HwdWn97/uBQFPdD5CjOmhrDu8oWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lO/6Q15207LNMd5xKJpG75j0TKAfmHEwAxyYTMEYyQM+nJjvNvpLy/4Ayx4KTDnQU
-	 qv6zZDaKrK6GLFosdvGPn7vvIB4A8K3ph5bRE5mWAW2zC5QcnbxDjjZUEFycu1tkVK
-	 dqXp1m1ox+8KjEmx2sfGHK0ilQnfxUa5odlEnNog=
+	b=raGojp7ut5kYpzKatMagS203TLIaI2mGQbCIrDWv19xomNIKNuP9AEiq1MfbbWBbJ
+	 8yamK1s9bdpaaTBvTaKxj6vsJGsTe+XHFi0pzLz37caVYb6DkOKiiOl1ixXIarY728
+	 WShQabMWDBk3Pn4K/M79qJ/Anzltqrlx+JpbSWyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 6.1 70/92] usb: gadget: f_tcm: keep port count until LUN teardown completes
-Date: Mon, 31 Aug 2026 15:35:08 +0200
-Message-ID: <20260831133403.254368536@linuxfoundation.org>
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Denis Arefev <arefev@swemel.ru>
+Subject: [PATCH 6.1 61/92] ipv4: igmp: Fix potential UAF in igmp_gq_start_timer()
+Date: Mon, 31 Aug 2026 15:34:59 +0200
+Message-ID: <20260831133402.847507498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -49,80 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit c39d0916da47d94909391876c9e5bd429ea7b1b9 upstream.
+commit 7b19c0f81ed1fdaec6bc522569be367199a9edf3 upstream.
 
-tcm_usbg_drop_nexus() permits session removal once tpg_port_count
-reaches zero. However, usbg_port_unlink() currently decrements that
-count from the fabric_pre_unlink() callback, before core_dev_del_lun()
-waits for active se_lun references to drain.
+A race condition exists between device teardown (inetdev_destroy) and
+incoming IGMP query processing (igmp_rcv), leading to a Use-After-Free
+in the IGMP timer callback.
 
-If removal of the last LUN races a nexus removal, the latter can observe
-a zero port count and call target_remove_session(). This frees
-sess_cmd_map while an in-flight struct usbg_cmd, including its work item,
-can still be accessed.
+During device destruction, inetdev_destroy() drops the primary reference
+to in_device, which can drop its refcount to 0. The actual freeing of
+in_device memory is deferred via RCU (using call_rcu()).
 
-Overlapping the last-LUN unlink with nexus removal reproduces this
-lifetime violation as a DEBUG_OBJECTS "free active" warning for
-usbg_cmd_work, followed by a target-core BUG/Oops.
+Concurrently, igmp_rcv() runs under RCU read lock and obtains the
+in_device pointer. Because the memory is RCU-protected, CPU-0 can safely
+dereference in_device even if its refcount has hit 0.
 
-The generic target-core unlink path has no callback after
-core_dev_del_lun() completes. Add an optional fabric_post_unlink()
-callback and use it for the f_tcm port count. The count now remains
-nonzero until core_dev_del_lun() has finished draining active LUN
-references, preventing nexus removal from freeing the session during
-command completion.
+However, if CPU-0 calls igmp_gq_start_timer() and re-arms the timer, it
+attempts to acquire a reference using in_dev_hold(). This increments the
+refcount from 0 to 1, triggering a "refcount_t: addition on 0" warning.
+Since the in_device memory is still scheduled to be freed after the RCU
+grace period (as the free callback does not check the refcount again),
+the device is freed while the timer is still armed. When the timer
+expires, it accesses the freed memory, causing a kernel panic.
 
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260807060733.3186624-1-shuangpeng.kernel@gmail.com
+Fix this by using refcount_inc_not_zero() (via a new helper
+in_dev_hold_safe()) to prevent acquiring a reference if the device is
+already being destroyed. If the refcount is 0, we do not arm the timer.
+
+A similar issue in IPv6 MLD is fixed in a subsequent patch.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260705181756.963063-2-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[Denis Arefev: adapted for 6.1: keep prandom_u32_max(),
+get_random_u32_below() not used here]
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_fabric_configfs.c |    8 ++++++++
- drivers/usb/gadget/function/f_tcm.c          |    2 +-
- include/target/target_core_fabric.h          |    2 ++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ include/linux/inetdevice.h |    5 +++++
+ net/ipv4/igmp.c            |   14 +++++++++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/target/target_core_fabric_configfs.c
-+++ b/drivers/target/target_core_fabric_configfs.c
-@@ -689,6 +689,14 @@ static void target_fabric_port_unlink(
- 	}
+--- a/include/linux/inetdevice.h
++++ b/include/linux/inetdevice.h
+@@ -282,6 +282,11 @@ static inline void in_dev_put(struct in_
+ #define __in_dev_put(idev)  refcount_dec(&(idev)->refcnt)
+ #define in_dev_hold(idev)   refcount_inc(&(idev)->refcnt)
  
- 	core_dev_del_lun(se_tpg, lun);
++static inline bool in_dev_hold_safe(struct in_device *idev)
++{
++	return refcount_inc_not_zero(&idev->refcnt);
++}
 +
-+	if (tf->tf_ops->fabric_post_unlink) {
-+		/*
-+		 * Allow fabrics to release state that must remain valid until
-+		 * core_dev_del_lun() has drained all active LUN references.
-+		 */
-+		tf->tf_ops->fabric_post_unlink(se_tpg, lun);
+ #endif /* __KERNEL__ */
+ 
+ static __inline__ __be32 inet_make_mask(int logmask)
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -232,16 +232,20 @@ static void igmp_gq_start_timer(struct i
+ 		return;
+ 
+ 	in_dev->mr_gq_running = 1;
+-	if (!mod_timer(&in_dev->mr_gq_timer, exp))
+-		in_dev_hold(in_dev);
++	if (in_dev_hold_safe(in_dev)) {
++		if (mod_timer(&in_dev->mr_gq_timer, exp))
++			in_dev_put(in_dev);
 +	}
  }
  
- static void target_fabric_port_release(struct config_item *item)
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1709,7 +1709,7 @@ static const struct target_core_fabric_o
- 	.fabric_enable_tpg		= usbg_enable_tpg,
- 	.fabric_drop_tpg		= usbg_drop_tpg,
- 	.fabric_post_link		= usbg_port_link,
--	.fabric_pre_unlink		= usbg_port_unlink,
-+	.fabric_post_unlink		= usbg_port_unlink,
- 	.fabric_init_nodeacl		= usbg_init_nodeacl,
+ static void igmp_ifc_start_timer(struct in_device *in_dev, int delay)
+ {
+-	int tv = prandom_u32_max(delay);
++	if (in_dev_hold_safe(in_dev)) {
++		int tv = prandom_u32_max(delay);
  
- 	.tfc_wwn_attrs			= usbg_wwn_attrs,
---- a/include/target/target_core_fabric.h
-+++ b/include/target/target_core_fabric.h
-@@ -95,6 +95,8 @@ struct target_core_fabric_ops {
- 				struct se_lun *);
- 	void (*fabric_pre_unlink)(struct se_portal_group *,
- 				struct se_lun *);
-+	void (*fabric_post_unlink)(struct se_portal_group *se_tpg,
-+				   struct se_lun *lun);
- 	struct se_tpg_np *(*fabric_make_np)(struct se_portal_group *,
- 				struct config_group *, const char *);
- 	void (*fabric_drop_np)(struct se_tpg_np *);
+-	if (!mod_timer(&in_dev->mr_ifc_timer, jiffies+tv+2))
+-		in_dev_hold(in_dev);
++		if (mod_timer(&in_dev->mr_ifc_timer, jiffies + tv + 2))
++			in_dev_put(in_dev);
++	}
+ }
+ 
+ static void igmp_mod_timer(struct ip_mc_list *im, int max_delay)
 
 
