@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B172743E064;
-	Mon, 31 Aug 2026 13:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151C84302E6;
+	Mon, 31 Aug 2026 13:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183225; cv=none; b=txvFdOLM0jNGKxbExUPgEtkSC7MLy9jCp6ds4UDFjsV9XNntc+1gACq2UgYA0HxPTtp+RYxano34wc5DV3lOpafpmGUFg7RtEG1GJ0G7+3jLLBjF9khZxpKyJxnnIuF5CwBMe3wVr/uQAsU6Ot36etGs1NkJSpgajn5T3wPSaUU=
+	t=1788183226; cv=none; b=D+VmDt1bSqIQTt/W8wS31WVGxcsrIO0cTSMgLfcEQ5sTTayyXSsgt/sUKiE9iwuw7s6AvEnJwPAJFul3SlPJCyDycCKgbgQqjNcXkn9v/RBaOjswdL9o4yXyBRvmixvj3675v6V6iHqwtDqjuCxNzWCJPrqgwOwSZqAJPVNX20s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183225; c=relaxed/simple;
-	bh=l/56Mp+ctAZUbulXcqb+WeY2Ne2hHUShqhMTWzKM+TM=;
+	s=arc-20240116; t=1788183226; c=relaxed/simple;
+	bh=5lVvHXIAUsKrO0pyLf/HW3pkVaqBJ8tAE+mm6jRn8H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XOTsB88pIJY3DCbrWU80BmxmAPBg8/SW7IDb2Wwgjrpr+8wF3WBd3VvXNakBD5Zu/09Ig5lv354HLXhTEQe5oO5ZflCnPY8cq0Uj2js7L1+L93XqMdpqJi2j6TmqwjD37KPDWSdZjXlAl1fUh6nogHc5UVpLB2tEFhKFxwnd0pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DiuVFCof; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RM0w4tZztsd/+vSbX/P7MWFmpCrGdFULw3v1OIxOZ2fJAE/KfymWvplm5fp1vcGXvmLC912WUzC+JD2MLxRuq52wPt1h80If1cShHoOaYoE4KmPTr2j4JQu8LL5W7DgMuBNjEGNTwul7AdeeSV42lSYLo3JVmBua1Rj8JuY0f9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xr7lewpm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DiuVFCof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3521F000E9;
-	Mon, 31 Aug 2026 13:33:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xr7lewpm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F401F00A3D;
+	Mon, 31 Aug 2026 13:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183222;
-	bh=kCyqIH2jlVm1iotaIBZP5VkI5E3rVBdez4Hph9mnU7c=;
+	s=k20260515; t=1788183224;
+	bh=fCErg2Hrtok/522CbFYTLLln1nhr7kRsQGC5jRupeks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DiuVFCofGFKMhz5wyDNVfBXtI6IGs7MIin2qLdUGN+HXWnGtmBWm/CjhyM0knUwnR
-	 LlhwFLZVHMgtNc1HNCjPIWY8x+xbvy746UnWrTdQoy5kYYhCWQN6DjgSYXlp+vN3nN
-	 VOSt8kfiiYcyJNueFPFwuESIGKGJaNx3uJhJFq61luBujBUUJO+EYX3zwi2Nulvllb
-	 6n1+JALvD1Uac2/k9ArAZfj5MJSpmJKv0115osMwp9U3w1AerfqKxh4wHsPWgMI85s
-	 i2bpZWMC5U54ETJWWUlLOmqCJbgneBV4kEEVPE905m9ydv+gLIFgolygOr35gyWlS2
-	 a5iI5cC4UuFLw==
+	b=Xr7lewpmztG8pX+8qXqZhOdaBvc2GCj87P4z4uJ5bJwNV3zCF01DC8/kmuon+wOAR
+	 LaU/5DxR20mN6N2gzhcgQKC52156B37ndvunCUfpDDmaGhUH628dy0QVZuo3SbcwLX
+	 ckyOGRTd/Y4rqU7sqmM/SSjJDqBk8iVQJoP6ksNVm8kBguPor0yrXF+bGdlgFEumKP
+	 KUW3btnt1q6IZTdY6W8DTKwbPUTTSbn+zzEmn8oDLR5u8gLz/KLTEGlOJLTlzJNtth
+	 HO4IlqW1IjIXL71YJyYRg90zFFFyWXkgrSIFrFhe9U1qe7BLrWy4gMD5SwKe7lwO1B
+	 zDKdSCjSnLBXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+Cc: KangNing Liao <lkangn.kernel@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	acme@kernel.org,
-	namhyung@kernel.org,
-	tglx@kernel.org,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	linux-perf-users@vger.kernel.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] perf/x86/intel/uncore: Guard against invalid box control address
-Date: Mon, 31 Aug 2026 09:20:46 -0400
-Message-ID: <20260831133314.4125787-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] btrfs: protect sb_write_pointer() with invalidate lock
+Date: Mon, 31 Aug 2026 09:20:47 -0400
+Message-ID: <20260831133314.4125787-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -60,289 +54,276 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zide Chen <zide.chen@intel.com>
+From: KangNing Liao <lkangn.kernel@gmail.com>
 
-[ Upstream commit 3c19ea24f02658c4b8ad364458fae4d77fdb3fae ]
+[ Upstream commit 123b9a545f4d0348e81f558a032bf2a93ee5722f ]
 
-Theoretically, intel_uncore_find_discovery_unit() could return NULL,
-e.g., when a CPU die is offline during uncore enumeration and its PMU
-units are not added to the discovery RB-tree.
+sb_write_pointer() reads the super block from the block device page cache
+using read_cache_page_gfp(). This has the same race with BLKBSZSET as the
+one fixed by commit 3f29d661e568 ("btrfs: sync read disk super and set
+block size").
 
-Guard against a NULL return value and the resulting invalid box control
-address (0) before accessing hardware.
+Take the mapping invalidate lock around read_cache_page_gfp() to
+serialize the read against block size changes.
 
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260602144908.263680-3-zide.chen@intel.com
+Signed-off-by: KangNing Liao <lkangn.kernel@gmail.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `perf/x86/intel/uncore: Guard against
-invalid box control address`
+# Stable Backport Analysis: `btrfs: protect sb_write_pointer() with
+invalidate lock`
 
-**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`)
+**Tree under review:** `v6.18.44` (`stable/linux-6.18.y`, detached HEAD)
+
+**Commit analyzed:** `123b9a545f4d0` (not yet in this tree; applies
+cleanly)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the subject line
-**Record:** `[perf/x86/intel/uncore]` `[Guard]` — Add NULL/invalid-
-address guards before accessing uncore box control hardware.
+### Step 1.1: Subject line
+**Record:** `[btrfs]` `[protect]` — Add invalidate-lock protection
+around superblock page-cache reads in `sb_write_pointer()` for zoned
+btrfs.
 
-### Step 1.2: Parse all commit message tags
+### Step 1.2: Tags
 **Record:**
-| Tag | Value |
-|-----|-------|
-| Signed-off-by | Zide Chen \<zide.chen@intel.com\> |
-| Signed-off-by | Peter Zijlstra (Intel) \<peterz@infradead.org\> |
-| Reviewed-by | Dapeng Mi \<dapeng1.mi@linux.intel.com\> |
-| Link |
-https://patch.msgid.link/20260602144908.263680-3-zide.chen@intel.com |
+- **Signed-off-by:** KangNing Liao `<lkangn.kernel@gmail.com>` (author)
+- **Reviewed-by:** Qu Wenruo `<wqu@suse.com>` (btrfs maintainer)
+- **Signed-off-by:** David Sterba `<dsterba@suse.com>` (btrfs
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable`, or `Tested-by:`
+  tags
+- Notable: References upstream commit `3f29d661e568` as the prior fix
+  for the same race class
 
-**Notable patterns:** No `Fixes:`, `Reported-by:`, `Cc: stable`, or
-`Tested-by:`. Link is patch **3/3** of the same series as commit
-`58cbb1c2aadf` (patch 2/3, already in this tree).
-
-### Step 1.3: Analyze commit body
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `intel_uncore_find_discovery_unit()` can return NULL when a
-  die was offline during uncore enumeration and its PMU units were never
-  added to the discovery RB-tree.
-- **Symptom:** `intel_generic_uncore_box_ctl()` returns 0; callers then
-  invoke `wrmsrq(0, …)` or `pci_write_config_dword(pdev, 0, …)` —
-  invalid hardware access.
-- **Root cause:** Commit `58cbb1c2aadf` (already in 6.18.44) made per-
-  die lookup and removed `WARN_ON_ONCE`, explicitly documenting that
-  NULL is expected, but did not guard all hardware-access callers.
+- **Bug:** `sb_write_pointer()` calls `read_cache_page_gfp()` without
+  synchronizing against `BLKBSZSET` block-size changes on the block
+  device mapping.
+- **Symptom:** Same race as the syzbot-reported crash fixed in
+  `3f29d661e568` / stable `ccb3c75d57039`: folio order vs.
+  `mapping_min_folio_order()` mismatch → `VM_BUG_ON_FOLIO` or NULL
+  pointer dereference in `create_empty_buffers()`.
+- **Root cause:** Block-size change via `BLKBSZSET` alters
+  `mapping->flags` while a folio is being allocated/read.
+- **Fix:** Wrap `read_cache_page_gfp()` with `filemap_invalidate_lock()`
+  / `filemap_invalidate_unlock()`.
 
-### Step 1.4: Detect hidden bug fixes
-**Record:** Not disguised — this is an explicit defensive bug fix
-preventing invalid MSR/PCI config writes. Hidden-bug patterns: N/A
-(message is direct).
+### Step 1.4: Hidden bug fix?
+**Record:** Yes — despite “protect” wording rather than “fix”, this is a
+real concurrency/crash bug fix, not cleanup. It completes the same
+protection pattern already applied to `btrfs_read_disk_super()` in this
+tree.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory the changes
+### Step 2.1: Inventory
 **Record:**
-- **File:** `arch/x86/events/intel/uncore_discovery.c` only
-- **Scope:** ~+25 / -10 lines; single-file surgical fix
-- **Functions modified:**
-  - `intel_generic_uncore_msr_init_box`
-  - `intel_generic_uncore_msr_disable_box`
-  - `intel_generic_uncore_msr_enable_box`
-  - `intel_generic_uncore_pci_init_box`
-  - `intel_generic_uncore_pci_disable_box`
-  - `intel_generic_uncore_pci_enable_box`
+- **Files:** `fs/btrfs/zoned.c` only (+2 lines)
+- **Functions:** `sb_write_pointer()` only
+- **Scope:** Single-file, surgical fix (2 insertions)
 
-### Step 2.2: Code flow change (per hunk)
+### Step 2.2: Code flow per hunk
 **Record:**
-| Function | Before | After |
-|----------|--------|-------|
-| `*_msr_init_box` | `wrmsrq(intel_generic_uncore_box_ctl(box), …)`
-unconditionally | Cache `box_ctl`; return early if `!box_ctl` |
-| `*_msr_disable/enable_box` | Same unconditional `wrmsrq` | Skip
-`wrmsrq` when `!box_ctl` |
-| `*_pci_init_box` | `pci_write_config_dword(pdev, box_ctl, …)` even
-when `box_ctl==0` | Return early if `!box_ctl` |
-| `*_pci_disable/enable_box` | Same unconditional PCI write | Skip write
-when `!box_ctl` |
-
-`intel_generic_uncore_assign_hw_event()` already had `if (!box_ctl)
-return false` since `b1d9ea2e1ca4` — this patch extends the same pattern
-to init/enable/disable paths.
+- **Before:** In the `full[0] && full[1]` branch (both superblock log
+  zones full), loop calls `read_cache_page_gfp()` unlocked to compare
+  superblock generations.
+- **After:** Same path, but `read_cache_page_gfp()` is serialized
+  against block-size invalidation via `filemap_invalidate_lock/unlock`.
+- **Affected path:** Error and success paths unchanged; only the page-
+  cache read is synchronized.
 
 ### Step 2.3: Bug mechanism
-**Record:** **Category:** NULL/invalid-address hardware access
-(logic/correctness fix).
+**Record:**
+- **Category:** Race condition / memory safety (folio order mismatch)
+- **Mechanism:** Concurrent `BLKBSZSET` changes
+  `mapping_min_folio_order()` after folio allocation begins but before
+  `filemap_add_folio()` completes, producing kernel BUG or NULL deref —
+  identical to the already-backported `btrfs_read_disk_super()` bug.
 
-- `intel_generic_uncore_box_ctl()` returns 0 when
-  `intel_uncore_find_discovery_unit()` finds no unit (verified at lines
-  484–485).
-- `unit->addr` is never 0 for valid units — `uncore_insert_box_info()`
-  rejects `!unit->ctl` before insertion (lines 229–234).
-- `wrmsrq(0, val)` → write to MSR 0 (`native_write_msr` in `asm/msr.h`).
-- `pci_write_config_dword(pdev, 0, val)` → write PCI config dword at
-  offset 0 (vendor/device ID region); `UNCORE_DISCOVERY_PCI_BOX_CTRL(0)`
-  = 0 per `uncore_discovery.h:36`.
-
-### Step 2.4: Fix quality assessment
-**Record:** Fix is minimal, mirrors existing `assign_hw_event` guard,
-low regression risk. Early-return on missing discovery unit is
-consistent with 58cbb1c2’s stated intent (“PMU box is not functional for
-that die”). No lock-order or API changes.
+### Step 2.4: Fix quality
+**Record:**
+- **Quality:** Obviously correct — mirrors the exact pattern already in
+  `btrfs_read_disk_super()` at `fs/btrfs/volumes.c:1368-1370`.
+- **Regression risk:** Very low; `filemap_invalidate_lock` is the
+  established synchronization primitive for this race.
+- **No new APIs, no behavior change beyond preventing the race.**
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame the changed lines
+### Step 3.1: Blame
 **Record:**
-- `intel_generic_uncore_box_ctl()` introduced in `b1d9ea2e1ca4`
-  (2024-06-14, Kan Liang).
-- Per-die lookup change in `58cbb1c2aadf` (2026-06-02, Zide Chen) —
-  **present in 6.18.44**.
-- Unguarded `wrmsrq`/`pci_write_config_dword` callers date to 2021
-  (`d6c754130435ab`, `42839ef4a20a4b`).
-- Guard commit itself: **not found** in this tree’s history.
+- `read_cache_page_gfp()` in `sb_write_pointer()` introduced in
+  `12659251ca5df` (Nov 2020, “implement log-structured superblock for
+  ZONED mode”).
+- Loop structure updated in `02ca9e6fb5f66a` / `d2715d1db455e`
+  (2023–2024).
+- Buggy unlocked read has been present since zoned superblock logging
+  was added.
 
-### Step 3.2: Follow Fixes: tag
-**Record:** No `Fixes:` tag. Functionally follows `58cbb1c2aadf`, which
-is already in this tree.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag. Referenced commit `3f29d661e568`
+exists in repo; equivalent backport `ccb3c75d57039` **is** in this tree
+(committed by Greg K-H, Feb 2026).
 
 ### Step 3.3: Related file history
-**Record:** Recent related commits in this tree:
-- `58cbb1c2aadf` — Fix discovery unit lookup for multi-die systems
-  (prerequisite, in tree)
-- `f34feda8e0c95` — Skip discovery table for offline dies (in tree;
-  `Reported-by: Steve Wahl`, real multi-die boot issue)
+**Record:**
+- `ccb3c75d57039` backported the `btrfs_read_disk_super()` fix to
+  6.18.y.
+- `123b9a545f4d0` is on `master` but not yet on `stable/linux-6.18.y`.
+- Standalone single-patch series (v1 only per `b4 dig -a`).
 
 ### Step 3.4: Author context
-**Record:** Zide Chen authored both `f34feda8e0c95` and `58cbb1c2aadf`
-on this file. Peter Zijlstra (perf maintainer) signed off. Dapeng Mi
-(Intel) reviewed.
+**Record:** KangNing Liao has prior btrfs zoned contributions. Patch
+reviewed by Qu Wenruo (active btrfs maintainer).
 
 ### Step 3.5: Dependencies
-**Record:** Depends on `58cbb1c2aadf` (already in 6.18.44). No other
-prerequisites. Patch 3/3 of series; patches 1–2 appear already applied.
-Standalone and self-contained.
+**Record:**
+- References `3f29d661e568` conceptually; stable tree has
+  `ccb3c75d57039` (same fix, different hash).
+- No structural dependencies — patch applies cleanly (`git apply
+  --check` succeeded).
+- Standalone; does not require other commits from the series.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original patch discussion
-**Record:** `b4 dig -c` failed (commit not in local tree).
-Lore/patch.msgid.link fetch blocked by Anubis bot protection. Series
-context inferred from `58cbb1c2aadf` Link (`263680-2`) and this patch’s
-Link (`263680-3`).
+### Step 4.1: Original discussion
+**Record:**
+- **URL:** https://patch.msgid.link/20260521122945.524890-1-
+  lkangn.kernel@gmail.com
+- **Series:** v1 only (2026-05-21)
+- **Reviewer feedback:** Qu Wenruo replied with `Reviewed-by:` and
+  “Thanks” — no NAKs or concerns
+- **Stable nomination:** None found in thread
 
 ### Step 4.2: Reviewers
-**Record:** Reviewed-by Dapeng Mi; Signed-off-by Peter Zijlstra —
-appropriate perf/x86 maintainers.
+**Record:** `b4 dig -w` shows CC to `linux-btrfs@vger.kernel.org`, David
+Sterba, Edward Davis (author of the original BLKBSZSET fix), Filipe
+Manana’s address not listed but David Sterba committed.
 
 ### Step 4.3: Bug report
-**Record:** No user/syzbot report in this commit. Related
-`f34feda8e0c95` documents real multi-die/offline-die scenarios
-(`Reported-by: Steve Wahl`, WARNING at `uncore_pci_pmu_register`).
+**Record:** No direct syzbot report for this path. Indirect evidence
+from `ccb3c75d57039` syzbot report (`b4a2af3000eaa84d95d5`) documenting
+identical failure mode in `btrfs_read_disk_super()`.
 
-### Step 4.4: Series context
-**Record:** Part of 3-patch series from Zide Chen (June 2026). Patch 2
-(`58cbb1c2aadf`) explicitly states NULL discovery units are expected
-after per-die lookup; this patch completes that work.
+### Step 4.4: Related patches
+**Record:** Companion to `ccb3c75d57039` — same race, different code
+path in zoned superblock handling.
 
-### Step 4.5: Stable mailing list
-**Record:** Could not search lore (bot protection). No stable discussion
-found locally.
+### Step 4.5: Stable list
+**Record:** Lore fetch blocked by bot protection for full thread; mbox
+download via `b4 dig -m` succeeded. No stable-list discussion found in
+mbox content.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** Six box init/enable/disable functions listed in Phase 2.1.
+**Record:** `sb_write_pointer()` (modified)
 
 ### Step 5.2: Callers
 **Record:**
-- `init_box` via `uncore_box_init()` (`uncore.h:538–543`):
-  - `uncore_pci_pmu_register()` at `uncore.c:1158` (PCI probe)
-  - `uncore_box_ref()` at `uncore.c:1602` (CPU online on a die)
-- `enable_box` / `disable_box` via `uncore_pmu_enable()` /
-  `uncore_pmu_disable()` at `uncore.c:820–836` (perf PMU enable/disable)
+- `sb_log_location()` → `sb_write_pointer()`
+- `btrfs_sb_log_location_bdev()` → `sb_log_location()` — called from
+  `btrfs_read_disk_super()` (`fs/btrfs/volumes.c:1346`)
+- `btrfs_sb_log_location()` → `sb_log_location()` — called from `disk-
+  io.c` (super write/read), `scrub.c`, and zoned device validation
+  (`zoned.c:585`)
 
 ### Step 5.3: Callees
-**Record:** `wrmsrq()` → `native_write_msr()`;
-`pci_write_config_dword()` → PCI config space write.
+**Record:** `filemap_invalidate_lock()`, `read_cache_page_gfp()`,
+`filemap_invalidate_unlock()`, `btrfs_release_disk_super()`
 
-### Step 5.4: Call chain / reachability
+### Step 5.4: Reachability
 **Record:**
-1. Multi-die Intel server with generic discovery tables
-   (`CONFIG_PERF_EVENTS`, Intel uncore PMU).
-2. Die offline during enumeration → discovery units not in RB-tree
-   (`f34feda8` + MSR path only parses online dies at
-   `uncore_discovery.c:415–426`).
-3. Die later online or PCI box registered → `uncore_box_init` / PMU
-   enable runs.
-4. `intel_generic_uncore_box_ctl()` returns 0 → unguarded path writes
-   MSR 0 or PCI offset 0.
-
-Reachable from CPU hotplug and perf uncore use; requires root for perf
-but init runs at probe/hotplug without user perf events.
+- Triggered on zoned block devices (`bdev_is_zoned()`) when both
+  superblock log zones are full.
+- Reachable during **mount** (`btrfs_read_disk_super` →
+  `btrfs_sb_log_location_bdev`), **superblock writes**, **scrub**, and
+  **device validation**.
+- `BLKBSZSET` requires privileged access to the block device; syzbot
+  demonstrated the race is reachable from userspace with appropriate
+  privileges.
 
 ### Step 5.5: Similar patterns
-**Record:** `intel_generic_uncore_assign_hw_event()` already guards `if
-(!box_ctl) return false` at lines 545–547. This patch applies the same
-pattern to sibling functions — consistent, not novel logic.
+**Record:** Identical lock pattern already present in
+`btrfs_read_disk_super()` in this tree (`volumes.c:1368-1370`). This
+path was simply missed when that fix was backported.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.y)
 
-### Step 6.1: Does buggy code exist?
-**Record:** **YES.** Current tree at `uncore_discovery.c:490–503` and
-`567–589` calls `wrmsrq`/`pci_write_config_dword` without checking
-`box_ctl`. Per-die NULL return path exists since `58cbb1c2aadf` (lines
-482–485).
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** `fs/btrfs/zoned.c:133-134` calls
+`read_cache_page_gfp()` without invalidate lock. Bug present since zoned
+superblock logging (2020).
 
 ### Step 6.2: Backport complications
-**Record:** Clean apply expected — single file, no conflicting changes
-since `58cbb1c2aadf`. Minor style change (remove local `pdev` variable)
-is cosmetic.
+**Record:** **Clean apply** — `git apply --check` passed with zero
+conflicts.
 
 ### Step 6.3: Related fixes already present?
-**Record:** `58cbb1c2aadf` and `f34feda8e0c95` are in tree.
-`assign_hw_event` guard present. **This specific guard commit is
-absent.**
+**Record:** **Partial.** `ccb3c75d57039` fixed `btrfs_read_disk_super()`
+in this tree but left `sb_write_pointer()` unprotected. This commit
+closes that gap.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** `arch/x86/events/intel/` — perf uncore PMU on Intel x86.
-**IMPORTANT** (not universal core, but affects Intel server/workstation
-perf and hotplug paths).
+### Step 7.1: Subsystem
+**Record:** `fs/btrfs` — filesystem, zoned-mode superblock handling.
+**Criticality: IMPORTANT** (filesystem mount/write path; not universal
+like VFS core, but crash on mount/write for zoned btrfs users).
 
-### Step 7.2: Subsystem activity
-**Record:** Active development in 2026 (multi-die discovery fixes).
-Mature uncore framework with recent multi-die-related churn.
+### Step 7.2: Activity
+**Record:** Actively maintained; recent zoned fixes in 6.18.y
+(`deddd28fd83c2`, `4d4ef6627304a`, etc.).
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 8: IMPACT AND RISK
 
 ### Step 8.1: Who is affected
-**Record:** Intel x86 systems using generic uncore discovery (modern
-server platforms — Sapphire Rapids and later class). Config-specific
-(`CONFIG_PERF_EVENTS`, Intel uncore with discovery tables).
+**Record:** Users of **zoned btrfs** on host-managed zoned block devices
+(SMR/ZNS SSDs). Config: btrfs with zoned devices enabled at format/mount
+time.
 
 ### Step 8.2: Trigger conditions
-**Record:** Multi-die system where a die is offline during uncore
-enumeration; die later comes online or box is initialized. Uncommon but
-documented in the same author’s series. Not userspace-exploitable in a
-straightforward way; triggered by boot topology / hotplug.
-
-### Step 8.3: Failure mode severity
 **Record:**
-- `wrmsrq(0, …)` → likely #GP / kernel oops on invalid MSR write
-- `pci_write_config_dword(pdev, 0, …)` → write to PCI config offset 0
-  (vendor/device ID) — hardware corruption risk
+- Zoned btrfs with both superblock log zones full (normal steady-state
+  after superblock updates)
+- Concurrent `BLKBSZSET` on the same block device
+- Uncommon in production but proven reachable (syzbot for sibling path);
+  mount-time scenario explicitly described in `ccb3c75d57039`
 
-**Severity: HIGH** (potential oops / invalid hardware access), though
-trigger is relatively rare.
+### Step 8.3: Failure mode
+**Record:** Kernel `VM_BUG_ON_FOLIO` or KASAN NULL pointer dereference
+in buffer-head setup → **CRITICAL** (oops/panic during mount or
+superblock I/O).
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Prevents invalid MSR/PCI writes on a path made explicitly
-  reachable by `58cbb1c2aadf` already in this tree
-- **Risk:** Very low — early-return mirrors existing `assign_hw_event`
-  logic
-- **Ratio:** Strong benefit, minimal risk
+- **Benefit:** HIGH for zoned btrfs users — prevents kernel crash;
+  completes already-backported fix family
+- **Risk:** VERY LOW — 2 lines, identical to proven pattern already in
+  tree
+- **Ratio:** Strongly favors backport
 
 ---
 
@@ -351,178 +332,109 @@ trigger is relatively rare.
 ### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real bug: hardware access at address 0 when discovery unit missing
-- Prerequisite `58cbb1c2aadf` already in 6.18.44 and documents NULL as
-  expected
-- Small, single-file, obviously correct fix
-- Reviewed by Intel engineer; signed off by perf maintainer
-- Completes incomplete fix from patch 2/3 of same series
-- Invalid MSR/PCI writes can cause kernel oops
+- Real race bug with documented crash mechanism (syzbot for same pattern
+  in `btrfs_read_disk_super`)
+- Partial fix already in 6.18.y (`ccb3c75d57039`); this closes the
+  remaining hole
+- Kernel crash severity (CRITICAL)
+- Tiny, surgical, obviously correct
+- Reviewed by btrfs maintainer (Qu Wenruo)
+- Applies cleanly to 6.18.y
 
 **AGAINST backport:**
-- Commit says “theoretically” — no direct user crash report for this
-  specific patch
-- Affects niche multi-die + offline-die boot scenarios
-- Perf subsystem, not core kernel path
+- Affects only zoned btrfs (niche subset of btrfs users)
+- No direct syzbot report for this exact function (indirect evidence
+  only)
+- Requires privileged `BLKBSZSET` concurrent with superblock read
 
-**Unresolved:** Lore thread content; upstream commit SHA for this
-specific patch (not in local tree).
+**Unresolved:** None material to the decision.
 
 ### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — mirrors existing guard;
-reviewed by subsystem engineer |
-| 2. Fixes real bug affecting users? | **PASS** — invalid hardware
-access on documented code path |
-| 3. Important issue? | **PASS** — potential kernel oops / invalid PCI
-config write (HIGH) |
-| 4. Small and contained? | **PASS** — one file, ~25 lines |
-| 5. No new features/APIs? | **PASS** — defensive guards only |
-| 6. Can apply to local tree? | **PASS** — prerequisite in tree; clean
-apply expected |
+1. Obviously correct and tested? **PASS** — mirrors in-tree fix;
+   maintainer reviewed
+2. Fixes a real bug? **PASS** — race with `BLKBSZSET` on page-cache read
+3. Important issue? **PASS** — kernel crash (BUG/null deref)
+4. Small and contained? **PASS** — 2 lines, 1 file, 1 function
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — clean apply verified;
+   prerequisite fix already present
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-bug fix.
+### Step 9.3: Exception category
+**Record:** N/A (standard bug fix, not device-ID/quirk/DT/docs
+exception)
 
 ### Step 9.4: Decision rationale
-This tree (6.18.44) already contains `58cbb1c2aadf`, which intentionally
-allows `intel_uncore_find_discovery_unit()` to return NULL for offline-
-die enumeration gaps. Without this follow-up,
-`init_box`/`enable_box`/`disable_box` still perform `wrmsrq(0, …)` and
-`pci_write_config_dword(pdev, 0, …)`. The fix is the natural completion
-of an already-backported series, minimal, and prevents a plausible
-kernel oops on multi-die Intel systems.
+
+This tree (`6.18.44`) already backported the `BLKBSZSET` vs.
+`read_cache_page_gfp()` race fix for `btrfs_read_disk_super()`, but
+`sb_write_pointer()` — called from the same mount and superblock I/O
+paths on zoned devices — still performs the identical unlocked read when
+both superblock log zones are full. Leaving this unprotected means the
+backport is incomplete: zoned btrfs users can still hit the same crash
+class the stable tree already decided was worth fixing. The patch is
+minimal, follows the established pattern already in `volumes.c`, and
+applies without modification.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message
-- **[Phase 2]** Diff analysis: 6 functions guarded in
-  `uncore_discovery.c`
-- **[Phase 3]** `git describe HEAD` → v6.18.44 / 6.18.44
-- **[Phase 3]** `git blame -L 478,580` → `b1d9ea2e1ca4`, `58cbb1c2aadf`
-  on lookup path
-- **[Phase 3]** `git show 58cbb1c2aadf` → prerequisite in tree;
-  documents expected NULL
-- **[Phase 3]** `git show f34feda8e0c95` → offline-die skip in tree;
-  Steve Wahl report
-- **[Phase 3]** `git log --grep="Guard against invalid box control"` →
-  no match (commit not in tree)
-- **[Phase 4]** `b4 dig -c HEAD` → commit not in tree; cannot dig
-- **[Phase 4]** WebFetch lore/patch.msgid.link → blocked by Anubis
-- **[Phase 5]** Read `uncore.h:538–543`, `uncore.c:820–836,1158,1602` →
-  call paths verified
-- **[Phase 5]** Read `uncore_discovery.c:229–234,478–589` → buggy code
-  and missing guards verified
-- **[Phase 5]** Read `uncore_discovery.h:36` →
-  `UNCORE_DISCOVERY_PCI_BOX_CTRL(0)` = 0
-- **[Phase 5]** Read `asm/msr.h:197–200` → `wrmsrq` → `native_write_msr`
-- **[Phase 6]** Buggy unguarded code confirmed present in 6.18.44
-  checkout
-- **[Phase 6]** `58cbb1c2aadf` and `f34feda8e0c95` confirmed in tree via
-  `git log`
-- **[UNVERIFIED]** Lore thread review comments and explicit stable
-  nominations
+- **[Phase 1]** `git show 123b9a545f4d0 --format=fuller`: parsed
+  subject, body, tags
+- **[Phase 1]** No syzbot/Fixes tags on this commit; references
+  `3f29d661e568`
+- **[Phase 2]** Diff: +2 lines in `sb_write_pointer()`,
+  `filemap_invalidate_lock/unlock` around `read_cache_page_gfp()`
+- **[Phase 2]** Read `fs/btrfs/zoned.c:88-159`: confirmed buggy unlocked
+  read in `full[0] && full[1]` branch
+- **[Phase 2]** Read `fs/btrfs/volumes.c:1368-1370`: confirmed identical
+  fix pattern already in tree
+- **[Phase 3]** `git describe HEAD`: `v6.18.44`
+- **[Phase 3]** `git blame -L 128,140 fs/btrfs/zoned.c`:
+  `read_cache_page_gfp` since `12659251ca5df` (2020)
+- **[Phase 3]** `git merge-base --is-ancestor ccb3c75d57039 HEAD`:
+  prerequisite fix **in tree**
+- **[Phase 3]** `git merge-base --is-ancestor 123b9a545f4d0 HEAD`: fix
+  commit **not in tree**
+- **[Phase 3]** `git show ccb3c75d57039`: stable backport of BLKBSZSET
+  race fix with syzbot stack trace
+- **[Phase 3]** `git apply --check` on patch: **applies cleanly**
+- **[Phase 4]** `b4 dig -c 123b9a545f4d0`: lore URL found
+- **[Phase 4]** `b4 dig -a`: v1 only, no revisions
+- **[Phase 4]** `b4 dig -w`: CC to linux-btrfs, dsterba, eadavis
+- **[Phase 4]** `b4 dig -m /tmp/sb_write_pointer.mbox`: Qu Wenruo
+  `Reviewed-by`, no NAKs, no stable CC
+- **[Phase 5]** `grep btrfs_sb_log_location`: callers in `volumes.c`,
+  `disk-io.c`, `scrub.c`, `zoned.c`
+- **[Phase 5]** Traced mount path: `btrfs_read_disk_super` →
+  `btrfs_sb_log_location_bdev` → `sb_write_pointer`
+- **[Phase 6]** Confirmed `v6.18.44` tree has unlocked
+  `read_cache_page_gfp` at `zoned.c:133-134`
+- **[Phase 6]** Confirmed `ccb3c75d57039` already protects
+  `btrfs_read_disk_super()` read
+- **[Phase 8]** Failure mode from `ccb3c75d57039` message: KASAN null-
+  ptr-deref / VM_BUG_ON — CRITICAL
 
-**YES**The background search for this commit in the local tree finished
-with no matches — `git log --grep="Guard against invalid box control"`
-and `--grep="invalid box control"` both came up empty. So the guard
-patch isn’t in **6.18.44** yet, while its prerequisite `58cbb1c2aadf`
-(“Fix discovery unit lookup for multi-die systems”) is already there.
+**YES**
 
-That lines up with the earlier analysis: the tree has the per-die lookup
-change that can return NULL/0, but not the follow-up that stops
-`wrmsrq(0, …)` and `pci_write_config_dword(pdev, 0, …)` in the
-init/enable/disable paths. Backport recommendation remains **YES**.
+ fs/btrfs/zoned.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- arch/x86/events/intel/uncore_discovery.c | 33 +++++++++++++++++-------
- 1 file changed, 24 insertions(+), 9 deletions(-)
-
-diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
-index 7dd3910d8de3a..8595e14199ed4 100644
---- a/arch/x86/events/intel/uncore_discovery.c
-+++ b/arch/x86/events/intel/uncore_discovery.c
-@@ -489,17 +489,28 @@ static u64 intel_generic_uncore_box_ctl(struct intel_uncore_box *box)
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 0dfbb28b7445c..6ca5816a67381 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -130,8 +130,10 @@ static int sb_write_pointer(struct block_device *bdev, struct blk_zone *zones,
+ 			u64 bytenr = ALIGN_DOWN(zone_end, BTRFS_SUPER_INFO_SIZE) -
+ 						BTRFS_SUPER_INFO_SIZE;
  
- void intel_generic_uncore_msr_init_box(struct intel_uncore_box *box)
- {
--	wrmsrq(intel_generic_uncore_box_ctl(box), GENERIC_PMON_BOX_CTL_INT);
-+	u64 box_ctl = intel_generic_uncore_box_ctl(box);
-+
-+	if (!box_ctl)
-+		return;
-+
-+	wrmsrq(box_ctl, GENERIC_PMON_BOX_CTL_INT);
- }
- 
- void intel_generic_uncore_msr_disable_box(struct intel_uncore_box *box)
- {
--	wrmsrq(intel_generic_uncore_box_ctl(box), GENERIC_PMON_BOX_CTL_FRZ);
-+	u64 box_ctl = intel_generic_uncore_box_ctl(box);
-+
-+	if (box_ctl)
-+		wrmsrq(box_ctl, GENERIC_PMON_BOX_CTL_FRZ);
- }
- 
- void intel_generic_uncore_msr_enable_box(struct intel_uncore_box *box)
- {
--	wrmsrq(intel_generic_uncore_box_ctl(box), 0);
-+	u64 box_ctl = intel_generic_uncore_box_ctl(box);
-+
-+	if (box_ctl)
-+		wrmsrq(box_ctl, 0);
- }
- 
- static void intel_generic_uncore_msr_enable_event(struct intel_uncore_box *box,
-@@ -548,6 +559,7 @@ bool intel_generic_uncore_assign_hw_event(struct perf_event *event,
- 
- 	if (box->pci_dev) {
- 		box_ctl = UNCORE_DISCOVERY_PCI_BOX_CTRL(box_ctl);
-+
- 		hwc->config_base = box_ctl + uncore_pci_event_ctl(box, hwc->idx);
- 		hwc->event_base  = box_ctl + uncore_pci_perf_ctr(box, hwc->idx);
- 		return true;
-@@ -566,27 +578,30 @@ static inline int intel_pci_uncore_box_ctl(struct intel_uncore_box *box)
- 
- void intel_generic_uncore_pci_init_box(struct intel_uncore_box *box)
- {
--	struct pci_dev *pdev = box->pci_dev;
- 	int box_ctl = intel_pci_uncore_box_ctl(box);
- 
-+	if (!box_ctl)
-+		return;
-+
- 	__set_bit(UNCORE_BOX_FLAG_CTL_OFFS8, &box->flags);
--	pci_write_config_dword(pdev, box_ctl, GENERIC_PMON_BOX_CTL_INT);
-+	pci_write_config_dword(box->pci_dev, box_ctl, GENERIC_PMON_BOX_CTL_INT);
- }
- 
- void intel_generic_uncore_pci_disable_box(struct intel_uncore_box *box)
- {
--	struct pci_dev *pdev = box->pci_dev;
- 	int box_ctl = intel_pci_uncore_box_ctl(box);
- 
--	pci_write_config_dword(pdev, box_ctl, GENERIC_PMON_BOX_CTL_FRZ);
-+	if (box_ctl)
-+		pci_write_config_dword(box->pci_dev, box_ctl,
-+				       GENERIC_PMON_BOX_CTL_FRZ);
- }
- 
- void intel_generic_uncore_pci_enable_box(struct intel_uncore_box *box)
- {
--	struct pci_dev *pdev = box->pci_dev;
- 	int box_ctl = intel_pci_uncore_box_ctl(box);
- 
--	pci_write_config_dword(pdev, box_ctl, 0);
-+	if (box_ctl)
-+		pci_write_config_dword(box->pci_dev, box_ctl, 0);
- }
- 
- static void intel_generic_uncore_pci_enable_event(struct intel_uncore_box *box,
++			filemap_invalidate_lock(mapping);
+ 			page[i] = read_cache_page_gfp(mapping,
+ 					bytenr >> PAGE_SHIFT, GFP_NOFS);
++			filemap_invalidate_unlock(mapping);
+ 			if (IS_ERR(page[i])) {
+ 				if (i == 1)
+ 					btrfs_release_disk_super(super[0]);
 -- 
 2.53.0
 
