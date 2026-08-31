@@ -1,451 +1,534 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0B949CF34;
-	Mon, 31 Aug 2026 13:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C19049CF40;
+	Mon, 31 Aug 2026 13:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183602; cv=none; b=ZoJ6ktY1CUpQBKJnesq13t16gYT8I2EZJllB1QLhYXmocFJBxltz9SRVnbhxd6LWQNpRiI4O0W0TGQpLnD4Q0hkDjm/n4wxuh0uKKInXIMeto31FJT4oitky7ALxB9tPaQk7e9J1r5tZfEDOE1EuTisdGN9DQGG5VQFh3OT1qw0=
+	t=1788183602; cv=none; b=BB8zwgnQAY1/jNGBlaXcI5z63IlflV3l13VEJsVj9l0QHUJjBCgrbSGx2hWF1T2heodUNA+Ybke8N5kj9shyTdONBz7Ezr3RgGCC3FIrGtK38xiRkqhU5x1cooBK8voE5dHvlaFotGQ520CQmW3cCBUVhB6CpGMn7fcn+yR2UA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183602; c=relaxed/simple;
-	bh=dK33KCp9ImIgVqbJA1QhaoiVlEcLdSU8DuapOzrZ3KM=;
+	bh=e5R4ZKcLSa1XlZV36Aqdo9EYqZHG3H3wOoPKfR9WVlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oynnzoNaNEqe5BNJ+MmIkKSsarqPfolYlg0c9sivThWbLoml7L28H6dKuqeuH4dB9VKrvpeHVKqJkaqlTqnft/LvclhFCWeWqbPkYdOfyHIkvXiFn9ZN808WT1srynpruaLmvNN4mFazzsIzep8GbuevQOFghpWzZbJPhpOsxjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HayIjnqd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KNdukApoHLdXJxTI5wvnKSy45RpmKHMvhMvAR2nh4cTd5EbCr/wPdgy8SsbG0jmqNtEkvn/ZukAUZFmpiFmhBLuGF0FkgM1A74VM1v7WEHQQLBI95FcDonYGuJhW2VMXmiAgU5U+gVpOC4UdpUqlA9JHPvT/qdzaZIEFZL7Cad0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1KJ6tL6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HayIjnqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53241F00A3D;
-	Mon, 31 Aug 2026 13:39:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183599;
-	bh=BQEyAkLQQ9u0yZwKj9QEn6aiwa3AjXqE03qSoylSx2Q=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1KJ6tL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0E51F000E9;
+	Mon, 31 Aug 2026 13:39:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183600;
+	bh=NJWERij+iz7GlSs25sUpIvvFMeWjipfFNeKHw3CgjwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HayIjnqd7E5cC9QhjIiY9GPuP9pQLi9s6Z7vroVYCMEfQexMpUhgMm+yaFbmAQtTf
-	 2kL60HQi1DNM/o17yjjOOhw1UtOdauW7As4f2yoPrKGhECBehn7lDhz4gucktyWrd0
-	 zz8ZirCFDPWpFONeMOeHFG9Hng3Eus+ofn8sT20JB6cv9jDSph/8zxqUBXPJ1SmBvD
-	 /D6HEam4E26j0N6lfx51p2yO5XPfu+qMuWlG3O3CGowUEakdg+2UZ4SD9yG8SERSdl
-	 4mXUTyjTTB5Mh+zv8/rTbxXIOp7TcgmEw0fNtJNtND8iJ1T6lQEN37/jv8OcVh4AVZ
-	 +Q9hn/z9+aaOw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Alessandro Baldi <baldovic@virgilio.it>,
-	Sean Young <sean@mess.org>,
-	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] media: imon: Add iMON VFD HID OEM v1.2 key mappings
-Date: Mon, 31 Aug 2026 09:23:39 -0400
-Message-ID: <20260831133314.4125787-191-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=m1KJ6tL6Hmtp0FbN/mSC6pakZDvcJLKKyvgxChBeaeML/eLAQvK8xbIlh02EU6CR+
+	 BPKo1XGHDAnjQU2ZMNp2t9de9H1xEGjtfzHoVF796iWeJZaveZW/QLUeZWOmRBUYIy
+	 NajxoS3eyhXxLItehhoq/fQAkX4qHZRh1A5VY1i4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.2 53/71] crypto: sun8i-ce - Remove crypto_rng interface
+Date: Mon, 31 Aug 2026 15:34:18 +0200
+Message-ID: <20260831133401.983757270@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alessandro Baldi <baldovic@virgilio.it>
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit d97d13c24d7893abcfb80d38630ce74daaa1434c ]
+------------------
 
-Add Vol+/Vol-/Mute panel button mappings for iMON VFD HID OEM v1.2.
-This version differs in the codes that generate the
-KEY_VOLUMEUP, KEY_VOLUMEDOWN and KEY_MUTE events.
+From: Eric Biggers <ebiggers@kernel.org>
 
-Signed-off-by: Alessandro Baldi <baldovic@virgilio.it>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 011556f71d094da61379ae3672692cae2795304e upstream.
+
+Since the crypto_rng interface for hardware PRNGs is unused and is
+redundant with hwrng and the actual Linux RNG, it's being phased out.
+Most drivers for it were already removed.  Go ahead and remove the
+sun8i-ce support which is one of the only remaining ones.
+
+Note that the sun8i-ce support for hwrng remains in place.  That is the
+interface that actually matters.
+
+As usual for crypto_rng, this driver was also buggy: its ->generate()
+function had a use-after-free vulnerability due to using
+wait_for_completion_interruptible_timeout() without handling shutting
+down the DMA operation if a signal is sent.  There's no point in fixing
+this separately only to remove the code anyway, so this commit is marked
+with Fixes and Cc stable.
+
+Fixes: 5eb7e9468884 ("crypto: sun8i-ce - Add support for the PRNG")
+Cc: stable@vger.kernel.org
+Cc: Corentin Labbe <clabbe.montjoie@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/crypto/allwinner/Kconfig                  |    8 -
+ drivers/crypto/allwinner/sun8i-ce/Makefile        |    1 
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c |   63 --------
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-prng.c |  159 ----------------------
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h      |   29 ----
+ 5 files changed, 260 deletions(-)
+ delete mode 100644 drivers/crypto/allwinner/sun8i-ce/sun8i-ce-prng.c
+
+--- a/drivers/crypto/allwinner/Kconfig
++++ b/drivers/crypto/allwinner/Kconfig
+@@ -70,14 +70,6 @@ config CRYPTO_DEV_SUN8I_CE_HASH
+ 	help
+ 	  Say y to enable support for hash algorithms.
+ 
+-config CRYPTO_DEV_SUN8I_CE_PRNG
+-	bool "Support for Allwinner Crypto Engine PRNG"
+-	depends on CRYPTO_DEV_SUN8I_CE
+-	select CRYPTO_RNG
+-	help
+-	  Select this option if you want to provide kernel-side support for
+-	  the Pseudo-Random Number Generator found in the Crypto Engine.
+-
+ config CRYPTO_DEV_SUN8I_CE_TRNG
+ 	bool "Support for Allwinner Crypto Engine TRNG"
+ 	depends on CRYPTO_DEV_SUN8I_CE
+--- a/drivers/crypto/allwinner/sun8i-ce/Makefile
++++ b/drivers/crypto/allwinner/sun8i-ce/Makefile
+@@ -1,5 +1,4 @@
+ obj-$(CONFIG_CRYPTO_DEV_SUN8I_CE) += sun8i-ce.o
+ sun8i-ce-y += sun8i-ce-core.o sun8i-ce-cipher.o
+ sun8i-ce-$(CONFIG_CRYPTO_DEV_SUN8I_CE_HASH) += sun8i-ce-hash.o
+-sun8i-ce-$(CONFIG_CRYPTO_DEV_SUN8I_CE_PRNG) += sun8i-ce-prng.o
+ sun8i-ce-$(CONFIG_CRYPTO_DEV_SUN8I_CE_TRNG) += sun8i-ce-trng.o
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-core.c
+@@ -12,7 +12,6 @@
+ 
+ #include <crypto/engine.h>
+ #include <crypto/internal/hash.h>
+-#include <crypto/internal/rng.h>
+ #include <crypto/internal/skcipher.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+@@ -49,7 +48,6 @@ static const struct ce_variant ce_h3_var
+ 		{ "mod", 50000000, 0 },
+ 		},
+ 	.esr = ESR_H3,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -66,7 +64,6 @@ static const struct ce_variant ce_h5_var
+ 		{ "mod", 300000000, 0 },
+ 		},
+ 	.esr = ESR_H5,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -80,7 +77,6 @@ static const struct ce_variant ce_h6_var
+ 	},
+ 	.cipher_t_dlen_in_bytes = true,
+ 	.hash_t_dlen_in_bits = true,
+-	.prng_t_dlen_in_bytes = true,
+ 	.trng_t_dlen_in_bytes = true,
+ 	.ce_clks = {
+ 		{ "bus", 0, 200000000 },
+@@ -88,7 +84,6 @@ static const struct ce_variant ce_h6_var
+ 		{ "ram", 0, 400000000 },
+ 		},
+ 	.esr = ESR_H6,
+-	.prng = CE_ALG_PRNG_V2,
+ 	.trng = CE_ALG_TRNG_V2,
+ };
+ 
+@@ -102,7 +97,6 @@ static const struct ce_variant ce_h616_v
+ 	},
+ 	.cipher_t_dlen_in_bytes = true,
+ 	.hash_t_dlen_in_bits = true,
+-	.prng_t_dlen_in_bytes = true,
+ 	.trng_t_dlen_in_bytes = true,
+ 	.needs_word_addresses = true,
+ 	.ce_clks = {
+@@ -112,7 +106,6 @@ static const struct ce_variant ce_h616_v
+ 		{ "trng", 0, 0 },
+ 		},
+ 	.esr = ESR_H6,
+-	.prng = CE_ALG_PRNG_V2,
+ 	.trng = CE_ALG_TRNG_V2,
+ };
+ 
+@@ -129,7 +122,6 @@ static const struct ce_variant ce_a64_va
+ 		{ "mod", 300000000, 0 },
+ 		},
+ 	.esr = ESR_A64,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -148,7 +140,6 @@ static const struct ce_variant ce_d1_var
+ 		{ "trng", 0, 0 },
+ 		},
+ 	.esr = ESR_D1,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ALG_TRNG,
+ };
+ 
+@@ -165,7 +156,6 @@ static const struct ce_variant ce_r40_va
+ 		{ "mod", 300000000, 0 },
+ 		},
+ 	.esr = ESR_R40,
+-	.prng = CE_ALG_PRNG,
+ 	.trng = CE_ID_NOTSUPP,
+ };
+ 
+@@ -614,25 +604,6 @@ static struct sun8i_ce_alg_template ce_a
+ 	},
+ },
+ #endif
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_CE_PRNG
+-{
+-	.type = CRYPTO_ALG_TYPE_RNG,
+-	.alg.rng = {
+-		.base = {
+-			.cra_name		= "stdrng",
+-			.cra_driver_name	= "sun8i-ce-prng",
+-			.cra_priority		= 300,
+-			.cra_ctxsize		= sizeof(struct sun8i_ce_rng_tfm_ctx),
+-			.cra_module		= THIS_MODULE,
+-			.cra_init		= sun8i_ce_prng_init,
+-			.cra_exit		= sun8i_ce_prng_exit,
+-		},
+-		.generate               = sun8i_ce_prng_generate,
+-		.seed                   = sun8i_ce_prng_seed,
+-		.seedsize               = PRNG_SEED_SIZE,
+-	}
+-},
+-#endif
+ };
+ 
+ static int sun8i_ce_debugfs_show(struct seq_file *seq, void *v)
+@@ -694,14 +665,6 @@ static int sun8i_ce_debugfs_show(struct
+ 				   ce_algs[i].stat_fb_maxsg);
+ 			break;
+ #endif
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_CE_PRNG
+-		case CRYPTO_ALG_TYPE_RNG:
+-			seq_printf(seq, "%s %s reqs=%lu bytes=%lu\n",
+-				   ce_algs[i].alg.rng.base.cra_driver_name,
+-				   ce_algs[i].alg.rng.base.cra_name,
+-				   ce_algs[i].stat_req, ce_algs[i].stat_bytes);
+-			break;
+-#endif
+ 		}
+ 	}
+ #if defined(CONFIG_CRYPTO_DEV_SUN8I_CE_TRNG) && \
+@@ -931,25 +894,6 @@ static int sun8i_ce_register_algs(struct
+ 			}
+ 			break;
+ #endif
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_CE_PRNG
+-		case CRYPTO_ALG_TYPE_RNG:
+-			if (ce->variant->prng == CE_ID_NOTSUPP) {
+-				dev_info(ce->dev,
+-					 "DEBUG: Algo of %s not supported\n",
+-					 ce_algs[i].alg.rng.base.cra_name);
+-				ce_algs[i].ce = NULL;
+-				break;
+-			}
+-			dev_info(ce->dev, "Register %s\n",
+-				 ce_algs[i].alg.rng.base.cra_name);
+-			err = crypto_register_rng(&ce_algs[i].alg.rng);
+-			if (err) {
+-				dev_err(ce->dev, "Fail to register %s\n",
+-					ce_algs[i].alg.rng.base.cra_name);
+-				ce_algs[i].ce = NULL;
+-			}
+-			break;
+-#endif
+ 		default:
+ 			ce_algs[i].ce = NULL;
+ 			dev_err(ce->dev, "ERROR: tried to register an unknown algo\n");
+@@ -978,13 +922,6 @@ static void sun8i_ce_unregister_algs(str
+ 			crypto_engine_unregister_ahash(&ce_algs[i].alg.hash);
+ 			break;
+ #endif
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_CE_PRNG
+-		case CRYPTO_ALG_TYPE_RNG:
+-			dev_info(ce->dev, "Unregister %d %s\n", i,
+-				 ce_algs[i].alg.rng.base.cra_name);
+-			crypto_unregister_rng(&ce_algs[i].alg.rng);
+-			break;
+-#endif
+ 		}
+ 	}
+ }
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-prng.c
++++ /dev/null
+@@ -1,159 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/*
+- * sun8i-ce-prng.c - hardware cryptographic offloader for
+- * Allwinner H3/A64/H5/H2+/H6/R40 SoC
+- *
+- * Copyright (C) 2015-2020 Corentin Labbe <clabbe@baylibre.com>
+- *
+- * This file handle the PRNG
+- *
+- * You could find a link for the datasheet in Documentation/arch/arm/sunxi.rst
+- */
+-#include "sun8i-ce.h"
+-#include <linux/dma-mapping.h>
+-#include <linux/pm_runtime.h>
+-#include <crypto/internal/rng.h>
+-
+-int sun8i_ce_prng_init(struct crypto_tfm *tfm)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	memset(ctx, 0, sizeof(struct sun8i_ce_rng_tfm_ctx));
+-	return 0;
+-}
+-
+-void sun8i_ce_prng_exit(struct crypto_tfm *tfm)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	kfree_sensitive(ctx->seed);
+-	ctx->seed = NULL;
+-	ctx->slen = 0;
+-}
+-
+-int sun8i_ce_prng_seed(struct crypto_rng *tfm, const u8 *seed,
+-		       unsigned int slen)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_rng_ctx(tfm);
+-
+-	if (ctx->seed && ctx->slen != slen) {
+-		kfree_sensitive(ctx->seed);
+-		ctx->slen = 0;
+-		ctx->seed = NULL;
+-	}
+-	if (!ctx->seed)
+-		ctx->seed = kmalloc(slen, GFP_KERNEL | GFP_DMA);
+-	if (!ctx->seed)
+-		return -ENOMEM;
+-
+-	memcpy(ctx->seed, seed, slen);
+-	ctx->slen = slen;
+-
+-	return 0;
+-}
+-
+-int sun8i_ce_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen)
+-{
+-	struct sun8i_ce_rng_tfm_ctx *ctx = crypto_rng_ctx(tfm);
+-	struct rng_alg *alg = crypto_rng_alg(tfm);
+-	struct sun8i_ce_alg_template *algt;
+-	struct sun8i_ce_dev *ce;
+-	dma_addr_t dma_iv, dma_dst;
+-	int err = 0;
+-	int flow = 3;
+-	unsigned int todo;
+-	struct sun8i_ce_flow *chan;
+-	struct ce_task *cet;
+-	u32 common, sym;
+-	void *d;
+-
+-	algt = container_of(alg, struct sun8i_ce_alg_template, alg.rng);
+-	ce = algt->ce;
+-
+-	if (ctx->slen == 0) {
+-		dev_err(ce->dev, "not seeded\n");
+-		return -EINVAL;
+-	}
+-
+-	/* we want dlen + seedsize rounded up to a multiple of PRNG_DATA_SIZE */
+-	todo = dlen + ctx->slen + PRNG_DATA_SIZE * 2;
+-	todo -= todo % PRNG_DATA_SIZE;
+-
+-	d = kzalloc(todo, GFP_KERNEL | GFP_DMA);
+-	if (!d) {
+-		err = -ENOMEM;
+-		goto err_mem;
+-	}
+-
+-	dev_dbg(ce->dev, "%s PRNG slen=%u dlen=%u todo=%u multi=%u\n", __func__,
+-		slen, dlen, todo, todo / PRNG_DATA_SIZE);
+-
+-#ifdef CONFIG_CRYPTO_DEV_SUN8I_CE_DEBUG
+-	algt->stat_req++;
+-	algt->stat_bytes += todo;
+-#endif
+-
+-	dma_iv = dma_map_single(ce->dev, ctx->seed, ctx->slen, DMA_TO_DEVICE);
+-	if (dma_mapping_error(ce->dev, dma_iv)) {
+-		dev_err(ce->dev, "Cannot DMA MAP IV\n");
+-		err = -EFAULT;
+-		goto err_iv;
+-	}
+-
+-	dma_dst = dma_map_single(ce->dev, d, todo, DMA_FROM_DEVICE);
+-	if (dma_mapping_error(ce->dev, dma_dst)) {
+-		dev_err(ce->dev, "Cannot DMA MAP DST\n");
+-		err = -EFAULT;
+-		goto err_dst;
+-	}
+-
+-	err = pm_runtime_resume_and_get(ce->dev);
+-	if (err < 0)
+-		goto err_pm;
+-
+-	mutex_lock(&ce->rnglock);
+-	chan = &ce->chanlist[flow];
+-
+-	cet = &chan->tl[0];
+-	memset(cet, 0, sizeof(struct ce_task));
+-
+-	cet->t_id = cpu_to_le32(flow);
+-	common = ce->variant->prng | CE_COMM_INT;
+-	cet->t_common_ctl = cpu_to_le32(common);
+-
+-	/* recent CE (H6) need length in bytes, in word otherwise */
+-	if (ce->variant->prng_t_dlen_in_bytes)
+-		cet->t_dlen = cpu_to_le32(todo);
+-	else
+-		cet->t_dlen = cpu_to_le32(todo / 4);
+-
+-	sym = PRNG_LD;
+-	cet->t_sym_ctl = cpu_to_le32(sym);
+-	cet->t_asym_ctl = 0;
+-
+-	cet->t_key = desc_addr_val_le32(ce, dma_iv);
+-	cet->t_iv = desc_addr_val_le32(ce, dma_iv);
+-
+-	cet->t_dst[0].addr = desc_addr_val_le32(ce, dma_dst);
+-	cet->t_dst[0].len = cpu_to_le32(todo / 4);
+-
+-	err = sun8i_ce_run_task(ce, 3, "PRNG");
+-	mutex_unlock(&ce->rnglock);
+-
+-	pm_runtime_put(ce->dev);
+-
+-err_pm:
+-	dma_unmap_single(ce->dev, dma_dst, todo, DMA_FROM_DEVICE);
+-err_dst:
+-	dma_unmap_single(ce->dev, dma_iv, ctx->slen, DMA_TO_DEVICE);
+-
+-	if (!err) {
+-		memcpy(dst, d, dlen);
+-		memcpy(ctx->seed, d + dlen, ctx->slen);
+-	}
+-err_iv:
+-	kfree_sensitive(d);
+-err_mem:
+-	return err;
+-}
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce.h
+@@ -15,7 +15,6 @@
+ #include <linux/hw_random.h>
+ #include <crypto/internal/hash.h>
+ #include <crypto/md5.h>
+-#include <crypto/rng.h>
+ #include <crypto/sha1.h>
+ #include <crypto/sha2.h>
+ 
+@@ -58,9 +57,7 @@
+ #define CE_ALG_SHA384           20
+ #define CE_ALG_SHA512           21
+ #define CE_ALG_TRNG		48
+-#define CE_ALG_PRNG		49
+ #define CE_ALG_TRNG_V2		0x1c
+-#define CE_ALG_PRNG_V2		0x1d
+ 
+ /* Used in ce_variant */
+ #define CE_ID_NOTSUPP		0xFF
+@@ -96,10 +93,6 @@
+ #define ESR_H6	4
+ #define ESR_D1	5
+ 
+-#define PRNG_DATA_SIZE (160 / 8)
+-#define PRNG_SEED_SIZE DIV_ROUND_UP(175, 8)
+-#define PRNG_LD BIT(17)
+-
+ #define CE_DIE_ID_SHIFT	16
+ #define CE_DIE_ID_MASK	0x07
+ 
+@@ -136,13 +129,10 @@ struct ce_clock {
+  *				bytes or words
+  * @hash_t_dlen_in_bytes:	Does the request size for hash is in
+  *				bits or words
+- * @prng_t_dlen_in_bytes:	Does the request size for PRNG is in
+- *				bytes or words
+  * @trng_t_dlen_in_bytes:	Does the request size for TRNG is in
+  *				bytes or words
+  * @ce_clks:	list of clocks needed by this variant
+  * @esr:	The type of error register
+- * @prng:	The CE_ALG_XXX value for the PRNG
+  * @trng:	The CE_ALG_XXX value for the TRNG
+  */
+ struct ce_variant {
+@@ -151,12 +141,10 @@ struct ce_variant {
+ 	u32 op_mode[CE_ID_OP_MAX];
+ 	bool cipher_t_dlen_in_bytes;
+ 	bool hash_t_dlen_in_bits;
+-	bool prng_t_dlen_in_bytes;
+ 	bool trng_t_dlen_in_bytes;
+ 	bool needs_word_addresses;
+ 	struct ce_clock ce_clks[CE_MAX_CLOCKS];
+ 	int esr;
+-	unsigned char prng;
+ 	unsigned char trng;
+ };
+ 
+@@ -328,16 +316,6 @@ struct sun8i_ce_hash_reqctx {
+ };
+ 
+ /*
+- * struct sun8i_ce_prng_ctx - context for PRNG TFM
+- * @seed:	The seed to use
+- * @slen:	The size of the seed
+- */
+-struct sun8i_ce_rng_tfm_ctx {
+-	void *seed;
+-	unsigned int slen;
+-};
+-
+-/*
+  * struct sun8i_ce_alg_template - crypto_alg template
+  * @type:		the CRYPTO_ALG_TYPE for this template
+  * @ce_algo_id:		the CE_ID for this template
+@@ -357,7 +335,6 @@ struct sun8i_ce_alg_template {
+ 	union {
+ 		struct skcipher_engine_alg skcipher;
+ 		struct ahash_engine_alg hash;
+-		struct rng_alg rng;
+ 	} alg;
+ 	unsigned long stat_req;
+ 	unsigned long stat_fb;
+@@ -398,11 +375,5 @@ int sun8i_ce_hash_finup(struct ahash_req
+ int sun8i_ce_hash_digest(struct ahash_request *areq);
+ int sun8i_ce_hash_run(struct crypto_engine *engine, void *breq);
+ 
+-int sun8i_ce_prng_generate(struct crypto_rng *tfm, const u8 *src,
+-			   unsigned int slen, u8 *dst, unsigned int dlen);
+-int sun8i_ce_prng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen);
+-void sun8i_ce_prng_exit(struct crypto_tfm *tfm);
+-int sun8i_ce_prng_init(struct crypto_tfm *tfm);
+-
+ int sun8i_ce_hwrng_register(struct sun8i_ce_dev *ce);
+ void sun8i_ce_hwrng_unregister(struct sun8i_ce_dev *ce);
 
-LLM Generated explanations, may be completely bogus:
-
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-# Stable Backport Analysis: media: imon: Add iMON VFD HID OEM v1.2 key
-mappings
-
-**Local tree:** Linux 6.18.43 (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[media: imon]` `[Add]` — Add key mappings for iMON VFD HID
-OEM v1.2 panel buttons (Vol+/Vol-/Mute).
-
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-**Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** — none
-- **Cc: stable@vger.kernel.org:** — not present (expected)
-- **Signed-off-by:** Alessandro Baldi `<baldovic@virgilio.it>` (author)
-- **Signed-off-by:** Sean Young `<sean@mess.org>` (media subsystem
-  maintainer — strong quality signal)
-
-No syzbot, no bugzilla links, no multiple reporters.
-
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-**Record:**
-- **Bug:** iMON VFD HID OEM v1.2 firmware sends different hardware
-  scancodes for Vol+, Vol-, and Mute than other variants already mapped
-  in `imon_OEM_VFD`.
-- **Symptom:** Panel volume/mute buttons on v1.2 hardware produce no
-  useful input events (lookup returns `KEY_RESERVED`).
-- **Root cause:** Missing entries in the `imon_OEM_VFD.key_table` for
-  scancodes `0x0a`, `0x0b`, `0x0c` (with `0xffee` suffix applied at
-  lookup time).
-- **Version info:** Specific to "iMON VFD HID OEM v1.2" variant of USB
-  device `0x15c2:0x0036`.
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised as cleanup. This is an explicit hardware-
-variant key-mapping fix. Functionally equivalent to a hardware quirk:
-same USB ID, different firmware scanc## Phase 1: Commit Message
-Forensics
-
-### Step 1.1: Subject Line
-**Record:** `[media: imon]` `[Add]` — Add iMON VFD HID OEM v1.2 key
-mappings for Vol+/Vol-/Mute panel buttons.
-
-### Step 1.2: Commit Message Tags
-**Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** — none
-- **Cc: stable@vger.kernel.org** — none
-- **Signed-off-by:** Alessandro Baldi `<baldovic@virgilio.it>` (author)
-- **Signed-off-by:** Sean Young `<sean@mess.org>` (media maintainer;
-  pipeline Sasha Levin SOB ignored per instructions)
-
-Notable: maintainer sign-off from Sean Young, but no fuzzer report, user
-bug report, or explicit stable nomination.
-
-### Step 1.3: Commit Body Analysis
-**Record:**
-- **Bug:** iMON VFD HID OEM v1.2 panel buttons send different hardware
-  codes for `KEY_VOLUMEUP`, `KEY_VOLUMEDOWN`, and `KEY_MUTE` than other
-  variants already mapped in `imon_OEM_VFD`.
-- **Symptom:** Volume+/Volume-/Mute panel buttons produce no useful
-  input events on v1.2 hardware.
-- **Root cause:** Missing entries in the `imon_OEM_VFD.key_table` for
-  the v1.2 scancodes (`0x0a`, `0x0b`, `0x0c` with `0xffee` suffix
-  pattern).
-- **Version info:** Targets a specific hardware/firmware variant (v1.2),
-  not a kernel regression.
-
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Not a disguised crash/leak/race fix. This is explicit
-hardware-variant keymap completion — functionally a hardware
-quirk/workaround for a device revision that uses different scancodes.
-
----
-
-## Phase 2: Diff Analysis
-
-### Step 2.1: Change Inventory
-**Record:**
-- **File:** `drivers/media/rc/imon.c` (+4 lines including comment, +3
-  mapping entries)
-- **Function/structure:** `imon_OEM_VFD.key_table` static data only
-- **Scope:** Single-file, surgical data-table addition
-
-### Step 2.2: Code Flow Change
-**Record:**
-- **Before:** `imon_panel_key_lookup()` walks `imon_OEM_VFD.key_table`;
-  v1.2 Vol+/Vol-/Mute scancodes (`0x000000000a00ffee`,
-  `0x000000000b00ffee`, `0x000000000c00ffee`) match nothing → returns
-  `KEY_RESERVED`.
-- **After:** Those scancodes map to `KEY_VOLUMEUP`, `KEY_VOLUMEDOWN`,
-  `KEY_MUTE`.
-- **Path affected:** 8-byte panel button packets (`len == 8 && buf[7] ==
-  0xee`) on USB device `0x15c2:0x0036` using `imon_OEM_VFD`.
-
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** Hardware quirk / incomplete keymap for
-hardware variant. **Mechanism:** Same USB ID and driver, but v1.2
-firmware emits different panel scancodes than existing table entries;
-unmatched codes are dropped as `KEY_RESERVED`.
-
-### Step 2.4: Fix Quality
-**Record:** Obviously correct pattern — mirrors existing volume/mute
-entries already in the same table. Minimal diff, no logic changes.
-**Regression risk:** Very low; only adds new lookup entries without
-altering existing mappings.
-
----
-
-## Phase 3: Git History Investigation
-
-### Step 3.1: Blame / Introduction
-**Record:** In this shallow 6.18.43 checkout (~50 commits),
-`imon_OEM_VFD` and its volume mappings are present at base commit
-`a112b91dd6349`. Full upstream introduction history is not available in
-this checkout. The **missing v1.2 mappings are confirmed absent** in the
-current tree.
-
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no `Fixes:` tag.
-
-### Step 3.3: Related File History
-**Record:** `git log --oneline -20 -- drivers/media/rc/imon.c` shows
-only one commit in this shallow tree (`a112b91dd6349`), which is not
-informative for upstream history. No evidence this is part of a multi-
-patch series from local history.
-
-### Step 3.4: Author Context
-**Record:** No commits from Alessandro Baldi found in this checkout.
-Sean Young (Signed-off-by) is the media/RC maintainer — strong subsystem
-credibility signal.
-
-### Step 3.5: Dependencies
-**Record:** **Standalone.** No prerequisites; only adds rows to an
-existing table in existing driver code. No new structures or APIs
-required.
-
----
-
-## Phase 4: Mailing List and External Research
-
-### Step 4.1: Original Patch Discussion
-**Record:** `b4 dig` requires `-c COMMITISH`; no commit hash was
-provided and subject-only search is unsupported. **Could not retrieve
-lore thread.**
-
-### Step 4.2: Reviewers
-**Record:** `b4 dig -w` not possible without commit hash. Sean Young SOB
-in commit message indicates maintainer involvement.
-
-### Step 4.3: Bug Report
-**Record:** No `Reported-by:` or `Link:` tags. No external bug report
-verified.
-
-### Step 4.4: Related Patches / Series
-**Record:** Appears standalone; no series indicators in subject or diff.
-
-### Step 4.5: Stable List History
-**Record:** Not searched (lore blocked by bot protection on fetch).
-Precedent exists for imon stable backports (e.g., 3.17-stable picked up
-imon RC protocol fix for broken remote functionality on `15c2:0034`).
-
----
-
-## Phase 5: Code Semantic Analysis
-
-### Step 5.1: Key Functions
-**Record:** Modified data: `imon_OEM_VFD`. Affected runtime functions:
-`imon_panel_key_lookup()`, called from `imon_incoming_packet()`; table
-also used by `imon_init_idev()` to register supported keys.
-
-### Step 5.2: Callers
-**Record:** `imon_panel_key_lookup()` called from
-`imon_incoming_packet()` when processing 8-byte panel packets (`buf[7]
-== 0xee`). Triggered by physical panel button presses on supported iMON
-USB devices during normal driver operation.
-
-### Step 5.3: Callees
-**Record:** Simple linear table scan; returns `KEY_RESERVED` on miss. No
-allocation, locking, or I/O in lookup itself.
-
-### Step 5.4: Reachability
-**Record:** **Userspace-reachable** via panel button input on
-`USB_DEVICE(0x15c2, 0x0036)` bound to `imon_OEM_VFD`. Common HTPC/media-
-center use case for this hardware.
-
-### Step 5.5: Similar Patterns
-**Record:** Same table already contains multiple variant-specific
-volume/mute mappings (standard OEM, MCE VFD `0xffdc`, knob values). v1.2
-entries follow established pattern.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree (6.18.43)
-
-### Step 6.1: Buggy Code Present?
-**Record:** **YES.** Tree is `6.18.43` (`git describe`:
-`v6.18.43-1-gc7f0dac02d232`). `imon_OEM_VFD` exists at lines 267–310
-with volume mappings for other variants but **without** v1.2 entries
-(`0x0a/0x0b/0x0c`). USB ID `0x15c2:0x0036` → `imon_OEM_VFD` at line
-392–393.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** Insertion point is clearly between
-existing OEM volume entries and MCE VFD section — matches current file
-layout exactly.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** `grep` for `0x000000000a00ffee` and `OEM v1.2` — **not
-found**. Fix is not already in this tree.
-
----
-
-## Phase 7: Subsystem Context
-
-### Step 7.1: Subsystem / Criticality
-**Record:** `drivers/media/rc/imon.c` — media RC/input driver.
-**Criticality: PERIPHERAL** (niche HTPC front-panel hardware).
-
-### Step 7.2: Subsystem Activity
-**Record:** Mature, low-churn driver in this tree. imon support has been
-stable for many years; this is variant-specific table maintenance.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Users of SoundGraph iMON OEM VFD (`15c2:0036`) with HID OEM
-**v1.2** firmware — specifically panel Vol+/Vol-/Mute buttons. Config:
-`CONFIG_RC_CORE` / imon USB driver.
-
-### Step 8.2: Trigger Conditions
-**Record:** Pressing panel volume/mute buttons on v1.2 hardware.
-**Common** for affected users every time they use those buttons.
-Unprivileged physical access; not a security vector.
-
-### Step 8.3: Failure Mode Severity
-**Record:** Unmapped keys → `KEY_RESERVED` → buttons do nothing.
-**Severity: LOW** — functional impairment only; no oops, hang,
-corruption, or security impact.
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** Restores basic panel functionality for v1.2 owners;
-  aligns with stable rules' explicit acceptance of **hardware quirk**
-  fixes.
-- **Risk:** Minimal — 3 table entries, no behavior change for existing
-  mappings.
-- **Ratio:** Moderate benefit for a small user population, very low
-  risk.
-
----
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence Summary
-
-**FOR backport:**
-- Fixes a real, user-visible hardware issue (non-working volume/mute
-  buttons)
-- Tiny, obviously correct, maintainer-signed
-- Fits stable rules' **hardware quirk** category
-  (`Documentation/process/stable-kernel-rules.rst`)
-- Same pattern as existing variant-specific entries in the same table
-- Applies cleanly to 6.18.43; driver and device ID already present
-- Zero regression risk for users without v1.2 hardware
-
-**AGAINST backport:**
-- Not crash/security/corruption/deadlock
-- Niche hardware with small user base
-- No user/fuzzer bug report in commit message
-- Completes support for a variant rather than fixing a kernel regression
-- Mailing list review not verified (no commit hash for `b4 dig`)
-
-**Unresolved:** Original lore discussion and whether a user/distro filed
-a bug report.
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — standard keymap pattern;
-   maintainer SOB
-2. Fixes real bug affecting users? **PASS** — broken panel buttons on
-   v1.2 hardware
-3. Important issue? **PASS (borderline)** — hardware quirk per stable-
-   kernel-rules.rst; not crash-level but explicitly listed acceptable
-   category
-4. Small and contained? **PASS** — 3 entries, one file
-5. No new features/APIs? **PASS** — data-only quirk entries
-6. Can apply to local tree? **PASS** — code present, clean insertion
-   point
-
-### Step 9.3: Exception Category
-**Record:** **Hardware quirk/workaround** — v1.2 firmware revision uses
-different panel scancodes for the same USB device already supported by
-`imon_OEM_VFD`.
-
-### Step 9.4: Decision Rationale
-
-For **Linux 6.18.43**, the driver, device ID, and `imon_OEM_VFD` table
-all exist; v1.2 volume/mute scancodes are missing, so affected users'
-buttons are silently ignored. The fix is a minimal hardware-variant
-keymap addition — the same class of change stable trees routinely accept
-as hardware quirks. Severity is low (no stability/security impact), but
-benefit is clear for affected HTPC users and risk is negligible.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Confirmed no Reported-by/Fixes/Link/Cc: stable tags
-- **[Phase 2]** Diff: +3 keymap entries + comment in
-  `imon_OEM_VFD.key_table`
-- **[Phase 2]** Read `imon_panel_key_lookup()` at lines 1300–1316
-- **[Phase 2]** Read `imon_incoming_packet()` panel path at lines
-  1599–1602
-- **[Phase 3]** `git describe HEAD` → `v6.18.43-1-gc7f0dac02d232`;
-  Makefile → 6.18.43
-- **[Phase 3]** `git blame -L 267,310 drivers/media/rc/imon.c` — table
-  present (shallow history limits introduction date)
-- **[Phase 3]** `git log --grep` / `-S` searches — no candidate commit
-  in this tree
-- **[Phase 4]** `b4 dig` — failed (no commit hash provided; `-q` not
-  supported)
-- **[Phase 4]** lore.kernel.org fetch — blocked by bot protection
-- **[Phase 4]** Web search — found prior imon stable backport precedent
-  (3.17-stable RC protocol fix)
-- **[Phase 5]** `grep imon_OEM_VFD` — device `0x15c2:0x0036` uses this
-  table
-- **[Phase 5]** Traced call chain: panel button →
-  `imon_incoming_packet()` → `imon_panel_key_lookup()`
-- **[Phase 6]** Read `imon_OEM_VFD` at lines 267–310 — v1.2 mappings
-  absent
-- **[Phase 6]** `grep 0x000000000a00ffee` — not in tree
-- **[Phase 7]** Read `Documentation/process/stable-kernel-rules.rst` —
-  hardware quirk explicitly acceptable
-- **[Phase 8]** Confirmed failure mode is `KEY_RESERVED` (no crash) via
-  lookup code
-- **UNVERIFIED:** Original mailing list review thread; whether bug was
-  reported by users; exact kernel version that first introduced
-  `imon_OEM_VFD` (shallow clone)
-
-**YES**
-
- drivers/media/rc/imon.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 48534bb52e4d0..4f974b88628f0 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -290,6 +290,10 @@ static const struct imon_usb_dev_descr imon_OEM_VFD = {
- 		{ 0x000100000000ffeell, KEY_VOLUMEUP },
- 		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
- 		{ 0x000000000100ffeell, KEY_MUTE },
-+		/* iMON VFD HID OEM v1.2 */
-+		{ 0x000000000a00ffeell, KEY_VOLUMEUP },
-+		{ 0x000000000b00ffeell, KEY_VOLUMEDOWN },
-+		{ 0x000000000c00ffeell, KEY_MUTE },
- 		/* 0xffdc iMON MCE VFD */
- 		{ 0x00010000ffffffeell, KEY_VOLUMEUP },
- 		{ 0x01000000ffffffeell, KEY_VOLUMEDOWN },
--- 
-2.53.0
 
