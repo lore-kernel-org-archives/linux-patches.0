@@ -1,124 +1,158 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0E74A92EF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FFA463B7B;
 	Mon, 31 Aug 2026 13:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183964; cv=none; b=VdnwkA3FyJBP8unYCTzDq2aYeo/+a+r6/9pN48KTnAqgi4ZhuPw3doPni3LH+LOwtFEONGyEMEmbGlK6WLd33E1EVLaI/Gn5dEU8wUQi+kZwidH3FgmdzLIijjJF3eCZQduRtG8oaLYHIOcXBUjpiPIBJd9OYL8ZZEnhr7oyvNs=
+	t=1788183964; cv=none; b=Fy6nN74tcxgaxXl/rNe3suWQcILRVkhkoj2xoZjm+LDGIPKZ/hRVWMcvenxeRFTUxomqtSciZImIyr+ob2ra0OYQX6scwZlye9jKzllMC4AwFuRJx3BkXoNDAl+bDNzmKRn95crgU/JRMUSElF+1EMM2Z5voi1DRetoj5ZkO4II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183964; c=relaxed/simple;
-	bh=KZfxHIuw9GrsEIQ5kA/Vo4AKEeVh9WwTmh0eYjH/zM4=;
+	bh=ZzvtMEmfCsR+doVfpKDB47iEEIuijQgJU4FXUuCfRcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IlReZ2fkl5GPdXAo/uV6tn9r/08gSlD2XWMZPnN/XFd471KGR7IvXQMDRp/aWyhOcs4oWxlfvp3XLfBAjMUsOXCUBzbLQbTsgQUK2exYQyXHCs08ounEIv9Zq8B961AD0ONn4x37B7yxTPVqAH55+y+4eBPfJCjtsL4OrLIbRlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CLSisUNk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XSap48LGgOZ8OutnbA5ZQBuWHl37+k+PkPsz6N3ugtnTRl8wq+0tz8cxyhk/0MP6BdAJZWShW0NnAUzegvK/7Jj5fFMOuqoF3N28+5sweyqlBZ1ZqrmZCQuJvR9gDQAE0Yz0j1ITwHzMecGAh8gITD+4ka60J47GRUyk5Dlm7iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4bD2et+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CLSisUNk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A788B1F00ACF;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4bD2et+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034ED1F00A3F;
 	Mon, 31 Aug 2026 13:46:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183962;
-	bh=t+sVb8PgnzfqMU9b8wBaeZ12DQgszbLqCk0ZHL9yUBE=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183962;
+	bh=RWBp5TmzOZszg7oeEPcejSRMHcVv8duZbOn7+sOCf6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CLSisUNkGqy6Qh91V6lrg8ZcCdrKI4+KCHUU9SU8hAxeUzoyrpP6R3WLoHVUzUz83
-	 4xvOlJJxrCbMts8aVU5bqVGBDpXq0x54MLqAWKVO/Pa4EksGzximNuGLjtR4pQioM5
-	 +Lj4YIlrspgsZfgbp9gXlK9q5H2NyPrmqt3IA10FFfX1sPqmDItvZfuUtSrkqPbOw5
-	 e9/vZEd28f3ohADHTMfhNULiNI8RzzV11+u1HLB8YuKd7Vg0tBLAAfzckOHpKHUFMU
-	 EMytpx3StBPCaLfE90ghpuG7rXuLm2vSj46zgceOQEI8z4VqSiq9Y4JRW8N+KLR0Ql
-	 Ey01znHsugk3g==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: mac80211: explicitly disable FTM responder on AP stop
-Date: Mon, 31 Aug 2026 09:27:15 -0400
-Message-ID: <20260831133314.4125787-407-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=N4bD2et+nemxa9HOWktgt3HfHC0c5jiPbu8WpVrSlMm6of+Z5Z5FIT1fAjy3ZdYQb
+	 rrl8QIXbUxGBTs/JMZaeXOtUZF/4FXiLHT+XwQDQRDBUWMdCrgZVO7ZgguByIh1ebu
+	 Wo1JI9xRHRbbxHGgHAPOLiRS+HuSOCVMnQKSna/Q=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 25/83] HID: asus: simplify RGB init sequence
+Date: Mon, 31 Aug 2026 15:34:01 +0200
+Message-ID: <20260831133400.589218998@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 89e367a90c1a877ca9c5d75d3848582d80fd0e60 ]
+------------------
 
-When stopping the AP, explicitly disable FTM responder while
-disabling beaconing.
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-Link: https://patch.msgid.link/20260505151241.f213196d7d6a.I95d65c030e986c5f7d63ecbd79596da890b9fc84@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ Upstream commit 56d1b33e644cca1bedffbc73d28778ed4ae30f64 ]
+
+Currently, RGB initialization forks depending on whether a device is
+NKEY. However, in reality both initialization forks are the same, other
+than the NKEY initialization initializing the LED_REPORT_ID1,
+LED_REPORT_ID2 endpoints, and the non-NKEY initialization having a
+functionality check which is skipped for the NKEY path.
+
+Therefore, merge the if blocks, gate the ID1/ID2 initializations
+behind the NKEY quirk instead, and introduce the functionality check
+for NKEY devices (it is supported by them).
+
+There should be no functional change with this patch.
+
+Acked-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20260122075044.5070-2-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 02bf61dfb44f ("HID: asus: fix missing hid_is_usb() check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/hid/hid-asus.c |   52 ++++++++++++++++++++-----------------------------
+ 1 file changed, 22 insertions(+), 30 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-The background `git log -S'BSS_CHANGED_FTM_RESPONDER'` search finished
-after ~7 minutes. It didn’t pinpoint a clean “introducing” commit in
-this tree — the pickaxe scan surfaced a long list of unrelated merge
-commits, which is typical for a stable checkout with compressed history.
-
-That doesn’t change the earlier conclusion: `BSS_CHANGED_FTM_RESPONDER`
-and the FTM responder AP path are present in this 6.18.43 tree, and the
-missing `ftm_responder` teardown in `ieee80211_stop_ap()` is a real bug
-there — especially for ath10k/ath11k drivers that rely on that notify
-bit and don’t implement `.stop_ap`.
-
-**YES**
-
- net/mac80211/cfg.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index f6232948bc0f4..72c9d5aceae58 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1811,6 +1811,7 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev,
- 	struct ieee80211_link_data *link =
- 		sdata_dereference(sdata->link[link_id], sdata);
- 	struct ieee80211_bss_conf *link_conf = link->conf;
-+	u64 changes = BSS_CHANGED_BEACON_ENABLED;
- 	LIST_HEAD(keys);
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -638,13 +638,20 @@ static int asus_kbd_register_leds(struct
+ 	unsigned char kbd_func;
+ 	int ret;
  
- 	lockdep_assert_wiphy(local->hw.wiphy);
-@@ -1860,6 +1861,11 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev,
- 	if (old_s1g_short_beacon)
- 		kfree_rcu(old_s1g_short_beacon, rcu_head);
- 
-+	if (link_conf->ftm_responder) {
-+		link_conf->ftm_responder = false;
-+		changes |= BSS_CHANGED_FTM_RESPONDER;
-+	}
+-	if (drvdata->quirks & QUIRK_ROG_NKEY_KEYBOARD) {
+-		/* Initialize keyboard */
+-		ret = asus_kbd_init(hdev, FEATURE_KBD_REPORT_ID);
+-		if (ret < 0)
+-			return ret;
++	ret = asus_kbd_init(hdev, FEATURE_KBD_REPORT_ID);
++	if (ret < 0)
++		return ret;
 +
- 	kfree(link_conf->ftmr_params);
- 	link_conf->ftmr_params = NULL;
++	/* Get keyboard functions */
++	ret = asus_kbd_get_functions(hdev, &kbd_func, FEATURE_KBD_REPORT_ID);
++	if (ret < 0)
++		return ret;
++
++	/* Check for backlight support */
++	if (!(kbd_func & SUPPORT_KBD_BACKLIGHT))
++		return -ENODEV;
  
-@@ -1881,8 +1887,7 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev,
- 	sdata->vif.cfg.ssid_len = 0;
- 	sdata->vif.cfg.s1g = false;
- 	clear_bit(SDATA_STATE_OFFCHANNEL_BEACON_STOPPED, &sdata->state);
--	ieee80211_link_info_change_notify(sdata, link,
--					  BSS_CHANGED_BEACON_ENABLED);
-+	ieee80211_link_info_change_notify(sdata, link, changes);
+-		/* The LED endpoint is initialised in two HID */
++	if (drvdata->quirks & QUIRK_ROG_NKEY_KEYBOARD) {
+ 		ret = asus_kbd_init(hdev, FEATURE_KBD_LED_REPORT_ID1);
+ 		if (ret < 0)
+ 			return ret;
+@@ -652,34 +659,19 @@ static int asus_kbd_register_leds(struct
+ 		ret = asus_kbd_init(hdev, FEATURE_KBD_LED_REPORT_ID2);
+ 		if (ret < 0)
+ 			return ret;
++	}
  
- 	ieee80211_remove_link_keys(link, &keys);
- 	if (!list_empty(&keys)) {
--- 
-2.53.0
+-		if (dmi_match(DMI_PRODUCT_FAMILY, "ProArt P16")) {
+-			ret = asus_kbd_disable_oobe(hdev);
+-			if (ret < 0)
+-				return ret;
+-		}
+-
+-		if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
+-			intf = to_usb_interface(hdev->dev.parent);
+-			udev = interface_to_usbdev(intf);
+-			validate_mcu_fw_version(hdev,
+-				le16_to_cpu(udev->descriptor.idProduct));
+-		}
+-
+-	} else {
+-		/* Initialize keyboard */
+-		ret = asus_kbd_init(hdev, FEATURE_KBD_REPORT_ID);
+-		if (ret < 0)
+-			return ret;
+-
+-		/* Get keyboard functions */
+-		ret = asus_kbd_get_functions(hdev, &kbd_func, FEATURE_KBD_REPORT_ID);
++	if (dmi_match(DMI_PRODUCT_FAMILY, "ProArt P16")) {
++		ret = asus_kbd_disable_oobe(hdev);
+ 		if (ret < 0)
+ 			return ret;
++	}
+ 
+-		/* Check for backlight support */
+-		if (!(kbd_func & SUPPORT_KBD_BACKLIGHT))
+-			return -ENODEV;
++	if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
++		intf = to_usb_interface(hdev->dev.parent);
++		udev = interface_to_usbdev(intf);
++		validate_mcu_fw_version(hdev,
++			le16_to_cpu(udev->descriptor.idProduct));
+ 	}
+ 
+ 	drvdata->kbd_backlight = devm_kzalloc(&hdev->dev,
+
 
