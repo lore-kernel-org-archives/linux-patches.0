@@ -1,458 +1,442 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB37545DA0;
-	Mon, 31 Aug 2026 13:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBA0545286;
+	Mon, 31 Aug 2026 13:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183976; cv=none; b=BD0C7+/A81AW25yqVOfNAB/uIfce5UMAJ5cDTHzGR4kCCbH7QFvgOng0rSBhaiqBRXCO2sZ8pz1bG6GUAg/IfWg8FzkSoDRnDla40Dx9tktbu6m7JsAQLpfl3LWw44zRuqqJOecHu1LwsCBmdJAZETn50pyNyTxcFOwuuNXXNHo=
+	t=1788183976; cv=none; b=D4Xblkm3NEtnYrtLn/mEGiYvNjyhSvEdzRmjmIf0xJQTba5UuRRy5ntYjvW6oawtQvSfFKsJslqHPhaZw0bMLthwNr1jG8R7IVLCl/NLbu6U+L3ZzMDDPYh75KZmwGrjNZpEWpmB+y6r6WJdjA39Q39STe4u+LKyV5NThf1QKa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183976; c=relaxed/simple;
-	bh=lwxZB4bWP3J4uIT+rsFK8BcHXCnZAEvMa1dJD+vpI7w=;
+	bh=5zCllLt/fbTc0APAFkWpUsOQSeW9gXC3J5DUtuOvLlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hsBwcI3WFq/br4cyMjHCekohhKYNCuLQHG/ha82J++3nkw6KpqcTl/3Q5C+fLn5iLZwMm74aKptg2zxdMozB+c73TZAvaYoLAa+AkH9KssF/ECCqlNH45ssYkalWOpqgVOXlownQETNU1mCpoyA2yhJUIKjZukqqOc7dvL0sn8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ckOTl3Os; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QVmavj5ezz7Mzx+5U8BqGu31d75p2hL42XEuwhGCPmZen7EGv/D6CIwu/TWatdbXtgY1pG+pRjZx2V+K/8skQCTsgsTx1uDBTBvuUPEwCmexHZX8IPnHMoAm54GJyKf+1Dt1PfegKnyzBj6PK4edlMdJ3r1pN1XEstM/AXuBYFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/usC7U4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ckOTl3Os"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E161F00A3D;
-	Mon, 31 Aug 2026 13:46:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183972;
-	bh=ZS3lBWW7hHyb7tV1rLSgTQszmpq24OfCesfSwyDtlJQ=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/usC7U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D631F00ADB;
+	Mon, 31 Aug 2026 13:46:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183973;
+	bh=YRungeeUQBKOdYRH1s2O1z0ZoyhBWYjkkw3t+OmTEZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ckOTl3Osn8KpM6AfLQm5QdwUSoMjYuM4GNtlacMqLsMl+PQairlAC+Mw9kNAhg9QV
-	 3jV7eINM7yGokOMvzWp3IVO/QRQdXeh7ug2EtCLgbqeGR6LMgL1gkLarQ9yiy2cBF8
-	 uwF/q3/0z09EoBXzWvqDIAdgVVDTLdI/+svbd6SDEf5sg6qw0a6qne99PyByWT+anw
-	 y1u6RK0G9JN3QcaxA7QyT9Kp48d9q6bRq4m0z0lSrJqC9z5ypiQOI84lEhdjH+nkoh
-	 JchJMUv7rTOV/NlFYfIQdITBtd2eNmeq5k9OV6G8XJyHZXIG7gIJsZlFdOJCxU85o2
-	 a6gJtr3nNiCPA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Erez Shitrit <erezsh@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	saeedm@nvidia.com,
-	mbloch@nvidia.com,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] net/mlx5: HWS, Check if device is down while polling for completion
-Date: Mon, 31 Aug 2026 09:27:21 -0400
-Message-ID: <20260831133314.4125787-413-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=R/usC7U40WZTsW2RsQ7ZuDPnn1Cb2Kt2XW5hjgLlXTE7MAwXKvOAjj29YjEqgB63m
+	 WPwyOSJgWFW7157O/WexRx1zfupGZ9ALlnDKtvlouc478hZy6EkkJi0tvmj+7UZAG6
+	 YipvfKTGCOHwWm3mmQnNi0B3UlGeU8g5XpGO+65s=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 29/83] ksmbd: harden file lifetime during session teardown
+Date: Mon, 31 Aug 2026 15:34:05 +0200
+Message-ID: <20260831133400.859445339@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit e3ec1570895bcf81f443e8ac60059edc61dbfca3 ]
+------------------
 
-In case the device is down for any reason (e.g. FLR),
-the HW will no longer generate completions - no point
-polling and waiting for timeout.
+From: DaeMyung Kang <charsyam@gmail.com>
 
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Erez Shitrit <erezsh@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260507173443.320465-2-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit a42896bebfcc287ed1e61d820a888e33b1eb80ce upstream.
+
+__close_file_table_ids() is the per-session teardown that closes every
+fp belonging to a session (or to one tree connect on that session) by
+walking the session's volatile-id idr.  The current loop has three
+related problems on busy or racing workloads:
+
+  * Sleeping under ft->lock.  The session-teardown skip callback,
+    session_fd_check(), already sleeps in ksmbd_vfs_copy_durable_owner()
+    -> kstrdup(GFP_KERNEL) and down_write(&fp->f_ci->m_lock) (a
+    rw_semaphore).  Running the callback inside write_lock(&ft->lock)
+    trips CONFIG_DEBUG_ATOMIC_SLEEP / CONFIG_PROVE_LOCKING on a
+    durable-fd workload.
+
+  * Refcount accounting blind to f_state.  The unconditional
+    atomic_dec_and_test(&fp->refcount) does not distinguish
+    FP_INITED (idr-owned reference still intact) from FP_CLOSED (an
+    earlier ksmbd_close_fd() already consumed the idr-owned reference
+    while leaving fp in the idr because a holder kept refcount
+    non-zero).  When the latter races with teardown the same path
+    over-decrements into a holder reference and ksmbd_fd_put() later
+    UAFs that holder.
+
+  * FP_NEW window.  Between __open_id() publishing fp into the
+    session idr and ksmbd_update_fstate(..., FP_INITED) committing the
+    transition at the end of smb2_open(), an fp is in FP_NEW and an
+    intervening teardown that takes a transient reference and
+    unpublishes the volatile id leaves the original idr-owned
+    reference orphaned -- the opener is unaware that fp has been
+    unpublished, returns success to the client, and the fp leaks at
+    refcount = 1.
+
+Refactor __close_file_table_ids() to take a transient reference on fp
+and unpublish fp from the session idr *under ft->lock* before calling
+skip() outside the lock.  A transient ref protects lifetime but not
+concurrent field mutation, so the idr_remove() is what keeps
+__ksmbd_lookup_fd() through this session's idr from granting a new
+ksmbd_fp_get() reference to an fp whose fp->conn / fp->tcon /
+fp->volatile_id / op->conn / lock_list links are about to be rewritten
+by session_fd_check().  Durable reconnect is unaffected because it
+reaches fp through the global durable table (ksmbd_lookup_durable_fd
+-> global_ft).
+
+Decide n_to_drop together with any FP_INITED -> FP_CLOSED transition
+under ft->lock so teardown and ksmbd_close_fd() never both consume the
+idr-owned reference.  See ksmbd_mark_fp_closed() for the per-state
+accounting.  For the FP_NEW path to be safe, the opener has to learn
+that fp was unpublished: ksmbd_update_fstate() now returns -ENOENT
+when an FP_NEW -> FP_INITED transition finds f_state already advanced
+or the volatile id cleared (both committed by teardown under
+ft->lock); smb2_open() propagates that as STATUS_OBJECT_NAME_INVALID
+and drops the original reference via ksmbd_fd_put().
+
+The list removal cannot be left for a deferred final putter because
+fp->volatile_id has already been cleared and __ksmbd_remove_fd() will
+intentionally skip both idr_remove() and list_del_init().  Move the
+m_fp_list unlink in __ksmbd_remove_fd() above the volatile-id check so
+that an FP_NEW fp that happened to be added to m_fp_list (smb2_open()
+adds fp->node before ksmbd_update_fstate() runs) is still cleaned up
+on the deferred putter path; list_del_init() on an empty node is a
+no-op and remains safe for fps that were never added.
+
+Add a defensive guard in session_fd_check() that refuses non-FP_INITED
+fps so that even if a teardown reaches an FP_NEW fp it falls into the
+close branch (where the n_to_drop = 1 accounting keeps the opener's
+reference alive) instead of the durable-preserve branch (which mutates
+fp->conn / fp->tcon).
+
+Validation on a debug kernel additionally built with CONFIG_DEBUG_LIST
+and CONFIG_DEBUG_OBJECTS_WORK used a same-session two-tcon workload
+(open/write storm on one tcon, 50 tree disconnects on the other) and
+reported no list-corruption, work_struct ODEBUG, sleep-in-atomic,
+lockdep or kmemleak reports.  Reverting only the
+__close_file_table_ids() hunk while keeping a forced-is_reconnectable()
+harness produced the expected sleep-in-atomic at vfs_cache.c:1095,
+confirming the ft->lock-out-of-sleepable-skip discipline.
+
+KASAN-enabled direct SMB2 coverage with durable handles enabled
+exercised ksmbd_close_tree_conn_fds(), ksmbd_close_session_fds(),
+the FP_NEW failure path, tree_conn_fd_check(), and a non-zero
+session_fd_check() durable-preserve return.  This produced no KASAN,
+DEBUG_LIST, ODEBUG, or WARNING reports.
+
+Fixes: f44158485826 ("cifsd: add file operations")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-# Stable Backport Analysis: `net/mlx5: HWS, Check if device is down
-while polling for completion`
-
-**Local tree:** Linux **6.18.43** (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`, detached from `stable/linux-6.18.y`)
-
-**Commit under review:** `e3ec1570895bc` (on `net-next`; **not yet** in
-this 6.18.43 checkout)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[net/mlx5: HWS]` `[Check]` — Check if device is down while
-polling for BWC completion queue.
-
-### Step 1.2: Tags
-**Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** Erez Shitrit `<erezsh@nvidia.com>`, Shay Drori
-  `<shayd@nvidia.com>`
-- **Acked-by:** — none
-- **Link:**
-  https://patch.msgid.link/20260507173443.320465-2-tariqt@nvidia.com
-- **Cc: stable:** — none (not a negative signal)
-- **Signed-off-by:** Yevgeny Kliteynik, Tariq Toukan, Jakub Kicinski
-  (ignore pipeline SOBs)
-
-Notable: NVIDIA internal review + netdev maintainer merge; no
-syzbot/user bug report.
-
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** When mlx5 device enters error state (e.g. FLR), hardware
-  stops generating completions, but BWC polling still waits for the full
-  timeout.
-- **Symptom:** Unnecessary polling delay (up to
-  `MLX5HWS_BWC_POLLING_TIMEOUT` = 60 seconds per call); during
-  rehash/resize/shrink this can chain into multiple timeouts.
-- **Root cause:** `mlx5hws_bwc_queue_poll()` enters a polling loop
-  without checking `ctx->mdev->state`.
-- **Fix approach:** Early-exit with `-ETIMEDOUT` when
-  `MLX5_DEVICE_STATE_INTERNAL_ERROR`, reusing existing BWC timeout
-  handling to abort rehash/resize/shrink loops.
-
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — subject says "Check" rather than "fix", but this is a
-real hang/latency bug during device failure recovery, not cosmetic
-cleanup.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-**Record:**
-- **Files:**
-  `drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c` (+12
-  lines, 0 removed)
-- **Function modified:** `mlx5hws_bwc_queue_poll()`
-- **Scope:** Single-file, surgical fix
-
-### Step 2.2: Code flow change
-**Record:**
-- **Hunk (before):** After early-return when no completions expected,
-  function enters polling loop calling `mlx5hws_send_queue_poll()` until
-  completions arrive or 60s timeout.
-- **Hunk (after):** Before entering the loop, checks `ctx->mdev->state
-  == MLX5_DEVICE_STATE_INTERNAL_ERROR`; if set, logs
-  `mlx5_core_warn_once()` and returns `-ETIMEDOUT` immediately.
-- **Path affected:** All BWC synchronous completion polling (rule
-  create/destroy, rehash move loops).
-
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic/correctness — missing device-error fast-path in
-  polling loop.
-- **Mechanism:** On FLR/fatal error, `mlx5_enter_error_state()` sets
-  `MLX5_DEVICE_STATE_INTERNAL_ERROR`. `mlx5hws_send_queue_poll()`
-  returns 0 when no CQEs are available (`hws_send_engine_poll_cq()`
-  returns early at `!cqe` without surfacing device-down). BWC layer then
-  busy-waits until `time_after(jiffies, timeout)` — up to 60 seconds per
-  `mlx5hws_bwc_queue_poll()` call.
-
-### Step 2.4: Fix quality
-**Record:**
-- **Obviously correct:** Yes — mirrors existing mlx5 pattern (`send.c`
-  `mlx5hws_cq_poll_one()`, `dr_send.c` FLR skip).
-- **Minimal:** 12 lines, no unrelated changes.
-- **Regression risk:** Low — only triggers in `INTERNAL_ERROR` state;
-  `-ETIMEDOUT` is already handled by all callers (rehash abort at lines
-  116–120, 139–143 in `bwc.c`; rule insertion at 1072–1081).
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame
-**Record:** `mlx5hws_bwc_queue_poll()` introduced in `5d324e5159d9e`
-(Merge tag `usb-6.18-rc8`, 2025-11-28) — first appearance in this tree
-at **6.18**. Bug present since HWS BWC introduction.
-
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
-
-### Step 3.3: Related file history
-**Record:**
-- `bwc.c` history in this tree: `5d324e5159d9e` (introduction),
-  `1dce4f4bb3c1c` (matcher leak fix).
-- Part of 3-patch series (`[PATCH 0/3] net/mlx5: Steering misc
-  enhancements`); **this patch is standalone** — only touches `bwc.c`;
-  patches 2/3 are unrelated (`table.c`, `dr_types.h`).
-
-### Step 3.4: Author context
-**Record:** Yevgeny Kliteynik (NVIDIA mlx5 steering). Tariq Toukan
-signed off; Jakub Kicinski merged. No prior author commits in this
-tree's HWS path (new subsystem in 6.18).
-
-### Step 3.5: Dependencies
-**Record:** No prerequisites. `ctx->mdev` exists in `struct
-mlx5hws_context` (`context.h:38`). `MLX5_DEVICE_STATE_INTERNAL_ERROR`
-used throughout mlx5 core. Patch applies cleanly (`git apply --check`
-passed).
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original discussion
-**Record:**
-- `b4 dig -c e3ec1570895bc` →
-  https://patch.msgid.link/20260507173443.320465-2-tariqt@nvidia.com
-- Series: `[PATCH net-next 1/3]` — single revision found; committed
-  version matches submission.
-- Cover letter describes series as "steering enhancements / cleanups" —
-  patch 1 is clearly a bug fix.
-- No explicit stable nomination found in available thread metadata.
-
-### Step 4.2: Reviewers
-**Record:** `b4 dig -c e3ec1570895bc -w` — CC'd: Jakub Kicinski, Saeed
-Mahameed, Leon Romanovsky, netdev@, linux-rdma@, Simon Horman, and other
-mlx5 maintainers/reviewers. Appropriate subsystem coverage.
-
-### Step 4.3: Bug report
-**Record:** No external bug report or syzbot link. Bug identified by
-driver authors during development/review of error-path behavior.
-
-### Step 4.4: Series context
-**Record:** Patches 2/3 fix a miss-table list UAF and remove an unused
-DR field — **not required** for this fix.
-
-### Step 4.5: Stable list history
-**Record:** Lore stable search blocked by Anubis bot protection — could
-not verify stable-list discussion. Not relied upon for decision.
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key functions
-**Record:** `mlx5hws_bwc_queue_poll()` (modified); callers unchanged.
-
-### Step 5.2: Callers
-**Record:** `mlx5hws_bwc_queue_poll()` called from:
-- `bwc.c`: rehash move loops (lines 111, 134),
-  `hws_bwc_rule_destroy_hws_sync()` (541), `hws_bwc_rule_create_sync()`
-  (703), `hws_bwc_rule_update_sync()` (725)
-- `bwc_complex.c`: complex matcher rehash (1031)
-
-All paths are flow-steering operations under mutex protection.
-
-### Step 5.3: Callees
-**Record:** Calls `mlx5hws_send_engine_full()`,
-`mlx5hws_send_queue_poll()`, uses `mlx5_core_warn_once()`.
-
-### Step 5.4: Reachability
-**Record:**
-- HWS integrated into mlx5 flow steering via `fs_hws.c` (e.g.
-  `mlx5_cmd_hws_create_flow_group()` → `mlx5hws_bwc_matcher_create()`).
-- Reachable from kernel flow-offload paths (tc, OVS, etc.) on mlx5 NICs
-  with HWS support.
-- Device error (FLR, fatal sensors) can occur concurrently with in-
-  flight flow operations → this path is realistically triggerable.
-
-### Step 5.5: Similar patterns
-**Record:** Existing device-down checks:
-- `send.c:581-585` — `mlx5hws_cq_poll_one()` checks `INTERNAL_ERROR`
-  when no CQE
-- `dr_send.c:632-637` — SWS steering skips post-send on `INTERNAL_ERROR`
-- BWC layer lacked equivalent fast-path at its own timeout loop
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
-
-### Step 6.1: Buggy code exists?
-**Record:** **Yes.** `mlx5hws_bwc_queue_poll()` at `bwc.c:407-457` lacks
-device-down check. HWS BWC code present since 6.18 merge
-(`5d324e5159d9e`). Fix commit `e3ec1570895bc` is on `net-next` but
-**not** in 6.18.43.
-
-### Step 6.2: Backport complications
-**Record:** **Clean apply** — `git show e3ec1570895bc -- bwc.c | git
-apply --check` succeeded with no conflicts.
-
-### Step 6.3: Related fixes already present?
-**Record:** No — `git log --grep="device is down"` and `--grep="BWC
-poll"` in mlx5 steering returned no matches in this tree.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/net/ethernet/mellanox/mlx5` — **IMPORTANT** (mlx5
-NIC flow steering; not core-kernel-wide, but widely deployed in
-cloud/HPC/enterprise).
-
-### Step 7.2: Subsystem activity
-**Record:** HWS steering is **new and actively developed** in 6.18
-(introduced Nov 2025; multiple follow-up fixes already in 6.18.y: leak
-fix, unsupported action rejection).
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Who is affected
-**Record:** mlx5 users with HWS flow steering (BWC API) — cloud/SDN
-deployments using tc flow offload on ConnectX devices. Config-dependent
-on HWS-capable hardware and flow-steering usage.
-
-### Step 8.2: Trigger conditions
-**Record:** Device enters `MLX5_DEVICE_STATE_INTERNAL_ERROR` (FLR, fatal
-error, health failure) while BWC operations have pending HW completions.
-Timing-dependent but realistic during error recovery. Triggerable
-indirectly via admin actions (FLR, PCI reset) concurrent with flow
-operations.
-
-### Step 8.3: Failure severity
-**Record:** **HIGH** — up to 60-second hang per poll call in kernel
-context, potentially while holding BWC queue mutex; during rehash can
-chain multiple timeouts ("chain of timeouts" per commit comment). Not a
-crash/UAF, but a serious latency/hung-task issue during error recovery.
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH for affected mlx5 HWS users — immediate abort
-  instead of 60s+ waits during device failure.
-- **Risk:** VERY LOW — 12-line early return on error state only; reuses
-  established `-ETIMEDOUT` handling.
-- **Ratio:** Strong benefit, minimal risk.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence summary
-
-**FOR backport:**
-- Real bug in code present since 6.18
-- Causes up to 60s hangs per poll during device error (FLR)
-- Mutex-held paths make hang user-visible
-- Small, reviewed, obviously correct fix
-- Applies cleanly to 6.18.43
-- Standalone (no series dependencies)
-- Follows existing mlx5 device-down patterns
-- Callers already handle `-ETIMEDOUT` correctly
-
-**AGAINST backport:**
-- Driver-specific, not universal
-- No user/syzbot report (author-found)
-- HWS is new subsystem (limited exposure window, but code is in 6.18.y)
-
-**Unresolved:** Lore stable-list discussion (blocked by Anubis).
-
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — reviewed by NVIDIA
-   engineers, merged by netdev maintainer; logic is straightforward.
-2. Fixes a real bug? **PASS** — 60s timeout spin on dead device during
-   flow operations.
-3. Important issue? **PASS** — HIGH severity hang during error recovery.
-4. Small and contained? **PASS** — 12 lines, one function, one file.
-5. No new features/APIs? **PASS** — error-path behavior fix only.
-6. Can apply to local tree? **PASS** — clean apply verified.
-
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs fix —
-standard driver bug fix).
-
-### Step 9.4: Decision rationale
-
-For **this** tree (6.18.43), the HWS BWC polling code exists and has had
-the missing device-down check since its introduction. During FLR or
-fatal device error, users with mlx5 flow steering can hit multi-second
-to multi-minute hangs. The fix is minimal, follows existing mlx5
-conventions, applies cleanly, and reuses established error handling.
-This meets stable kernel criteria.
-
----
-
-## Verification
-
-- **[Phase 1]** Parsed commit message from user query and `git show
-  e3ec1570895bc`
-- **[Phase 1]** Tags: Reviewed-by (2), Link, Signed-off-by; no
-  Fixes/Reported-by/Cc:stable
-- **[Phase 2]** Diff: +12 lines in `mlx5hws_bwc_queue_poll()`, `bwc.c`
-  only
-- **[Phase 2]** `MLX5HWS_BWC_POLLING_TIMEOUT` = 60 in `bwc.h:19`
-- **[Phase 3]** `git blame -L 407,456 bwc.c`: function introduced in
-  `5d324e5159d9e` (6.18)
-- **[Phase 3]** `git log --oneline -- bwc.c`: 2 commits in tree (intro +
-  leak fix)
-- **[Phase 3]** `b4 am` cover letter: 3-patch series, patch 1 standalone
-- **[Phase 3]** `git apply --check` on commit diff: **clean apply**
-- **[Phase 4]** `b4 dig -c e3ec1570895bc`: lore URL found
-- **[Phase 4]** `b4 dig -c e3ec1570895bc -w`: maintainers CC'd
-  (Kicinski, Saeed, Leon, netdev@)
-- **[Phase 4]** `b4 am` mbox: patch content matches committed version
-- **[Phase 4]** Lore stable search: **blocked** (Anubis)
-- **[Phase 5]** `grep mlx5hws_bwc_queue_poll`: 6 call sites in `bwc.c`,
-  `bwc_complex.c`
-- **[Phase 5]** `fs_hws.c`: BWC used for flow group/rule operations
-- **[Phase 5]** `send.c:610-612`: `hws_send_engine_poll_cq` returns on
-  `!cqe` without device check
-- **[Phase 5]** `send.c:581-585`: device-down check exists in
-  `mlx5hws_cq_poll_one` (different path)
-- **[Phase 5]** `health.c:215`: `MLX5_DEVICE_STATE_INTERNAL_ERROR` set
-  on fatal error
-- **[Phase 6]** `git describe HEAD`: v6.18.43
-- **[Phase 6]** Buggy code confirmed at `bwc.c:407-457` without fix
-- **[Phase 6]** `git log net-next --grep=...`: commit `e3ec1570895bc` on
-  net-next, not in 6.18.43
-- **[Phase 6]** `context.h:38`: `struct mlx5hws_context { struct
-  mlx5_core_dev *mdev; ...}`
-- **[Phase 8]** ETIMEDOUT handling verified at `bwc.c:116-120`,
-  `139-143`, `1072-1081`
-- **[Phase 8]** Mutex context verified: `mutex_lock(queue_lock)` before
-  rule create paths
-
-**YES**
-
- .../ethernet/mellanox/mlx5/core/steering/hws/bwc.c   | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
-index 564ae98316bc9..756b87a3d68dd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
-@@ -423,6 +423,18 @@ int mlx5hws_bwc_queue_poll(struct mlx5hws_context *ctx,
- 	if (!got_comp && !drain)
- 		return 0;
+ fs/smb/server/smb2pdu.c   |    6 +
+ fs/smb/server/vfs_cache.c |  179 ++++++++++++++++++++++++++++++++++++++++------
+ fs/smb/server/vfs_cache.h |    4 -
+ 3 files changed, 164 insertions(+), 25 deletions(-)
+
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3765,8 +3765,10 @@ err_out1:
  
-+	if (unlikely(ctx->mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR)) {
-+		/* If the device is down for any reason (e.g. FLR), the HW will
-+		 * no longer generate completions.
-+		 * Note that ETIMEDOUT is returned here because the BWC layer
-+		 * already has a special handling for timeouts - it breaks the
-+		 * rehash / resize / shrink loops to avoid chain of timeouts.
-+		 */
-+		mlx5_core_warn_once(ctx->mdev,
-+				    "BWC poll: device is down, polling for completion aborted\n");
-+		return -ETIMEDOUT;
+ err_out2:
+ 	if (!rc) {
+-		ksmbd_update_fstate(&work->sess->file_table, fp, FP_INITED);
+-		rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
++		rc = ksmbd_update_fstate(&work->sess->file_table, fp,
++					 FP_INITED);
++		if (!rc)
++			rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
+ 	}
+ 	if (rc) {
+ 		if (rc == -EINVAL)
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -358,13 +358,13 @@ static void ksmbd_remove_durable_fd(stru
+ 
+ static void __ksmbd_remove_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+ {
+-	if (!has_file_id(fp->volatile_id))
+-		return;
+-
+ 	down_write(&fp->f_ci->m_lock);
+ 	list_del_init(&fp->node);
+ 	up_write(&fp->f_ci->m_lock);
+ 
++	if (!has_file_id(fp->volatile_id))
++		return;
++
+ 	write_lock(&ft->lock);
+ 	idr_remove(ft->idr, fp->volatile_id);
+ 	write_unlock(&ft->lock);
+@@ -748,15 +748,58 @@ err_out:
+ 	return ERR_PTR(ret);
+ }
+ 
+-void ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+-			 unsigned int state)
++/**
++ * ksmbd_update_fstate() - update an fp state under the file-table lock
++ * @ft: file table that publishes @fp's volatile id
++ * @fp: file pointer to update
++ * @state: new state
++ *
++ * Return: 0 on success.  The FP_NEW -> FP_INITED transition is special:
++ * -ENOENT if teardown already unpublished @fp by advancing the state or
++ * clearing the volatile id.  Other state updates preserve the historical
++ * fire-and-forget behavior.
++ */
++int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
++			unsigned int state)
+ {
++	int ret;
++
+ 	if (!fp)
+-		return;
++		return -ENOENT;
+ 
+ 	write_lock(&ft->lock);
+-	fp->f_state = state;
++	if (state == FP_INITED &&
++	    (fp->f_state != FP_NEW || !has_file_id(fp->volatile_id))) {
++		ret = -ENOENT;
++	} else {
++		fp->f_state = state;
++		ret = 0;
++	}
+ 	write_unlock(&ft->lock);
++
++	return ret;
++}
++
++/*
++ * ksmbd_mark_fp_closed() - mark fp closed under ft->lock and return how many
++ * refs the teardown path owns.
++ *
++ * FP_INITED has a normal idr-owned reference, so teardown owns both that
++ * reference and the transient lookup reference.  FP_NEW is still owned by the
++ * in-flight opener/reopener, which will drop the original reference after
++ * ksmbd_update_fstate(..., FP_INITED) observes the cleared volatile id.
++ * FP_CLOSED on entry means an earlier ksmbd_close_fd() already consumed the
++ * idr-owned ref.
++ */
++static int ksmbd_mark_fp_closed(struct ksmbd_file *fp)
++{
++	if (fp->f_state == FP_INITED) {
++		set_close_state_blocked_works(fp);
++		fp->f_state = FP_CLOSED;
++		return 2;
 +	}
 +
- 	queue_full = mlx5hws_send_engine_full(&ctx->send_queue[queue_id]);
- 	while (queue_full || ((got_comp || drain) && *pending_rules)) {
- 		ret = mlx5hws_send_queue_poll(ctx, queue_id, comp, burst_th);
--- 
-2.53.0
++	return 1;
+ }
+ 
+ static int
+@@ -764,7 +807,8 @@ __close_file_table_ids(struct ksmbd_sess
+ 		       struct ksmbd_tree_connect *tcon,
+ 		       bool (*skip)(struct ksmbd_tree_connect *tcon,
+ 				    struct ksmbd_file *fp,
+-				    struct ksmbd_user *user))
++				    struct ksmbd_user *user),
++		       bool skip_preserves_fp)
+ {
+ 	struct ksmbd_file_table *ft = &sess->file_table;
+ 	struct ksmbd_file *fp;
+@@ -772,32 +816,120 @@ __close_file_table_ids(struct ksmbd_sess
+ 	int num = 0;
+ 
+ 	while (1) {
++		int n_to_drop;
++
+ 		write_lock(&ft->lock);
+ 		fp = idr_get_next(ft->idr, &id);
+ 		if (!fp) {
+ 			write_unlock(&ft->lock);
+ 			break;
+ 		}
+-
+-		if (skip(tcon, fp, sess->user) ||
+-		    !atomic_dec_and_test(&fp->refcount)) {
++		if (!atomic_inc_not_zero(&fp->refcount)) {
+ 			id++;
+ 			write_unlock(&ft->lock);
+ 			continue;
+ 		}
+ 
+-		set_close_state_blocked_works(fp);
+-		idr_remove(ft->idr, fp->volatile_id);
+-		fp->volatile_id = KSMBD_NO_FID;
+-		write_unlock(&ft->lock);
++		if (skip_preserves_fp) {
++			/*
++			 * Session teardown: skip() is session_fd_check(),
++			 * which may sleep and mutates fp->conn / fp->tcon /
++			 * fp->volatile_id when it chooses to preserve fp
++			 * for durable reconnect.  Unpublish fp from the
++			 * session idr here, under ft->lock, so that
++			 * __ksmbd_lookup_fd() through this session cannot
++			 * grant a new ksmbd_fp_get() reference to an fp
++			 * whose fields are about to be rewritten outside
++			 * the lock.  Durable reconnect still reaches fp via
++			 * global_ft.
++			 */
++			idr_remove(ft->idr, id);
++			fp->volatile_id = KSMBD_NO_FID;
++			write_unlock(&ft->lock);
+ 
++			if (skip(tcon, fp, sess->user)) {
++				/*
++				 * session_fd_check() has converted fp to
++				 * durable-preserve state and cleared its
++				 * per-conn fields.  fp is already unpublished
++				 * above; the original idr-owned ref keeps it
++				 * alive for the durable scavenger.  Drop only
++				 * the transient ref.  atomic_dec() is safe --
++				 * atomic_inc_not_zero() succeeded on a
++				 * positive value and we added one more, so
++				 * refcount cannot be zero here.
++				 */
++				atomic_dec(&fp->refcount);
++				id++;
++				continue;
++			}
++
++			/*
++			 * Keep the close-state decision under the same lock
++			 * observed by ksmbd_update_fstate(), which is how an
++			 * in-flight FP_NEW opener learns that teardown has
++			 * cleared its volatile id.
++			 */
++			write_lock(&ft->lock);
++			n_to_drop = ksmbd_mark_fp_closed(fp);
++			write_unlock(&ft->lock);
++		} else {
++			/*
++			 * Tree teardown: skip() is tree_conn_fd_check(), a
++			 * cheap pointer compare that doesn't sleep and has
++			 * no side effects, so keep the skip decision plus
++			 * the unpublish-and-mark-closed sequence atomic
++			 * under ft->lock.  fps belonging to other tree
++			 * connects (skip() == true) stay fully published in
++			 * the session idr with no lock window.
++			 */
++			if (skip(tcon, fp, sess->user)) {
++				atomic_dec(&fp->refcount);
++				write_unlock(&ft->lock);
++				id++;
++				continue;
++			}
++			idr_remove(ft->idr, id);
++			fp->volatile_id = KSMBD_NO_FID;
++			n_to_drop = ksmbd_mark_fp_closed(fp);
++			write_unlock(&ft->lock);
++		}
++
++		/*
++		 * fp->volatile_id is already cleared to prevent stale idr
++		 * removal from a deferred final close.  Remove fp from
++		 * m_fp_list here because __ksmbd_remove_fd() will skip the
++		 * list unlink when volatile_id is KSMBD_NO_FID.
++		 */
+ 		down_write(&fp->f_ci->m_lock);
+ 		list_del_init(&fp->node);
+ 		up_write(&fp->f_ci->m_lock);
+ 
+-		__ksmbd_close_fd(ft, fp);
+-
+-		num++;
++		/*
++		 * Drop the references this iteration owns:
++		 *
++		 *   n_to_drop == 2: we observed FP_INITED and committed
++		 *     the FP_CLOSED transition ourselves, so we own the
++		 *     transient (+1) and the still-intact idr-owned ref.
++		 *
++		 *   n_to_drop == 1: either a prior ksmbd_close_fd()
++		 *     already consumed the idr-owned ref, or fp was still
++		 *     FP_NEW and the in-flight opener/reopener must keep
++		 *     the original reference until ksmbd_update_fstate()
++		 *     observes the cleared volatile id.
++		 *
++		 * If we end up as the final putter, finalize fp and
++		 * account the open_files_count decrement via the caller's
++		 * atomic_sub(num, ...).  Otherwise the remaining user's
++		 * ksmbd_fd_put() reaches __put_fd_final(), which does its
++		 * own atomic_dec(&open_files_count), so we must not count
++		 * this fp here -- doing so would double-decrement the
++		 * connection-wide counter.
++		 */
++		if (atomic_sub_and_test(n_to_drop, &fp->refcount)) {
++			__ksmbd_close_fd(NULL, fp);
++			num++;
++		}
+ 		id++;
+ 	}
+ 
+@@ -1071,6 +1203,9 @@ static bool session_fd_check(struct ksmb
+ 	if (!is_reconnectable(fp))
+ 		return false;
+ 
++	if (fp->f_state != FP_INITED)
++		return false;
++
+ 	if (WARN_ON_ONCE(!fp->conn))
+ 		return false;
+ 
+@@ -1122,7 +1257,8 @@ void ksmbd_close_tree_conn_fds(struct ks
+ {
+ 	int num = __close_file_table_ids(work->sess,
+ 					 work->tcon,
+-					 tree_conn_fd_check);
++					 tree_conn_fd_check,
++					 false);
+ 
+ 	atomic_sub(num, &work->conn->stats.open_files_count);
+ }
+@@ -1131,7 +1267,8 @@ void ksmbd_close_session_fds(struct ksmb
+ {
+ 	int num = __close_file_table_ids(work->sess,
+ 					 work->tcon,
+-					 session_fd_check);
++					 session_fd_check,
++					 true);
+ 
+ 	atomic_sub(num, &work->conn->stats.open_files_count);
+ }
+@@ -1271,7 +1408,7 @@ void ksmbd_destroy_file_table(struct ksm
+ 	if (!ft->idr)
+ 		return;
+ 
+-	__close_file_table_ids(sess, NULL, session_fd_check);
++	__close_file_table_ids(sess, NULL, session_fd_check, true);
+ 	idr_destroy(ft->idr);
+ 	kfree(ft->idr);
+ 	ft->idr = NULL;
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -175,8 +175,8 @@ int ksmbd_close_inode_fds(struct ksmbd_w
+ int ksmbd_init_global_file_table(void);
+ void ksmbd_free_global_file_table(void);
+ void ksmbd_set_fd_limit(unsigned long limit);
+-void ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+-			 unsigned int state);
++int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
++			unsigned int state);
+ bool ksmbd_vfs_compare_durable_owner(struct ksmbd_file *fp,
+ 		struct ksmbd_user *user);
+ 
+
 
