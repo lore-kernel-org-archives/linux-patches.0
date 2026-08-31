@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160334CC276;
-	Mon, 31 Aug 2026 14:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDDF4CCDD0;
+	Mon, 31 Aug 2026 14:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185107; cv=none; b=dyWlkIERpnGJIIcu7OCEmm12gj18wjbvvoGns7aOmdyyTtn68xi2m2KSLTuU95sJh8UHk/csNyxvjnUb39CxTSiMpPZPY6T20SHY8k4L5NYsJ7+JIyhYrpEazcS059Rcvitzo1lrjgqVu6K9KyuMQNPQ1mtqf6wLrk736JrxfrM=
+	t=1788185112; cv=none; b=d7WX2QE8pYPJvz4zFa1q/vMbyzK8PZwS8nCVBK/cVUgjNImCd/JDDRyqfD2vREuZkppr0ERb0EA/nVQNLoc6Ee5RVEqy8w5FgBHDkb82cPdls0/zi2UGiRjtWsBPumQxXT7rHDLskXldu0UcDJbrN74Y1YNeK4HG0PuKDSLemgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185107; c=relaxed/simple;
-	bh=JBrXIi3RFeB/QB9H+XDEZFsLLNrZEpwcWQEbno2xBR8=;
+	s=arc-20240116; t=1788185112; c=relaxed/simple;
+	bh=zzK7EKpV+NXDb1ifogX7cvCtZanS698uM2M7s2/ZYD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTYb4gcOH8QbFt7Xjn8KjzSSJTNA9ELe82HKlNBwMl3XKUTAGlEH12KMGk2ZdRPoXqopxSgYZPtsrXn4PlxVqPIj8w2ZnkYqfLfuseqnl7ZK/zIMtPIv/kF/yrWMTY5OqBo/8zhKdGIpGw5AjLjWsJeEdVhx/PpbWjyJo+cs0OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEl5Fuoi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UP/GK0p2851mdXSXAsHcekFqJgEy7fGebSvSfccsKeGHJB5h1JA1eBuuaLP18MmKmAOD9kBSYhxW5IMoY0kLSwkrG3lICBc6Vk2bynXbFkwyieKSlzLm7YoCqAZYiaE7ZdYzhbgBdt3jw6bIqSIFH7DjYSmrdGbcrXVjfInuEKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQRKRq7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEl5Fuoi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10ADB1F00A3D;
-	Mon, 31 Aug 2026 14:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQRKRq7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B913B1F00A3D;
+	Mon, 31 Aug 2026 14:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185104;
-	bh=EdYxjGZ2BXIKBVaWBrhkdE/mNcGQR681F1bLCMd+f60=;
+	s=korg; t=1788185110;
+	bh=8D/Xin8p8SVj0KYaFKwqAwIEAyflmxr8aifG7FKv29U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uEl5Fuoiu2bGeevUknPUA3LBeDGjWs/tvxidaeojLurYsCaGG5gRpkucxlR7AyEs6
-	 /eNYXfBYlGB4ejIvKtFRjjdlFvbOJaFbcH+NIzuiH9ZuIVVNzWq78KdQ3t3WiB9zXv
-	 ZA2dMTAAjcTjuJsmSx3bSWHOqBe+6CtBxw4TFlC8=
+	b=vQRKRq7X1toesWNvgC0aHN0aYyi4IJjiMZliP63E/XLI+JJXwB9pAkyY+7ZIPZR/b
+	 MnyoiO6SXGpSYwq5GZvN9lXvV/q74PrEeGVkWjNxAFas9B3miIQznDS5/stwR20Ano
+	 E6750PY2TekKUICdlnMCX77HDCiSs/2CwwHNbWk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 54/69] net: bridge: mcast: fix use-after-free of a master VLANs multicast context
-Date: Mon, 31 Aug 2026 15:35:27 +0200
-Message-ID: <20260831133401.414999313@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 56/69] mm/swap: reject swapon() on filesystem-level encrypted files
+Date: Mon, 31 Aug 2026 15:35:29 +0200
+Message-ID: <20260831133401.532907885@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -51,75 +58,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 50e5c6605cc9c2dd57bd2d1b3459674d19738983 upstream.
+commit c310a8932a3107c9bc8f01d473e9d085f8aa9c98 upstream.
 
-br_multicast_toggle_one_vlan() clears BR_VLFLAG_MCAST_ENABLED under
-br->multicast_lock before stopping a VLAN's multicast context.  That is
-the teardown handshake: lockless readers gate on the flag through
-br_multicast_ctx_should_use() -> br_multicast_ctx_vlan_disabled(), so
-once it is cleared under the lock no reader can arm the context again.
+ext4 and f2fs don't prevent filesystem-level encrypted files from being
+set up directly as swap files.  In this case, encryption is bypassed.
 
-For a master VLAN the handshake never runs.  __vlan_del() clears
-BRIDGE_VLAN_INFO_BRENTRY before calling br_vlan_put_master(), so
-br_multicast_toggle_one_vlan(masterv, false) returns early on
-!br_vlan_is_brentry(vlan): the flag stays set and br->multicast_lock is
-never taken.  br_vlan_put_master() then drains the context in
-br_multicast_ctx_deinit() and frees the VLAN through call_rcu(), while a
-reader still inside rcu_read_lock() sees the context as enabled and
-re-arms it.  The port and port-VLAN branch of the function has no
-br_vlan_is_brentry() test and flips the flag under br->multicast_lock,
-so it is not affected.
+No one should be doing this, vs.  the methods of encrypted swap that
+actually do work (such as swapping to a dm-crypt device, or swapping to a
+loopback device on top of a filesystem-level encrypted file).
 
-The reader is the bridge transmit path.  For a master VLAN
-br_multicast_rcv() selects brmctx = &vlan->br_mcast_ctx with
-pmctx = NULL, so IGMP sent to the bridge device re-arms the context's
-timers after br_multicast_ctx_deinit() has already stopped them.
+Nevertheless, to prevent user error, make swapon() explicitly reject this
+case.  Document this behavior in fscrypt.rst as well.
 
-  BUG: KASAN: slab-use-after-free in detach_if_pending+0x412/0x4a0
-  Write of size 8 at addr ffff88810ac39918 by task brmc/601
-   __mod_timer+0x51a/0xc50
-   br_multicast_host_join+0x25b/0x390
-   __br_multicast_add_group+0x468/0x530
-   br_ip4_multicast_add_group+0x1a0/0x260
-   br_multicast_rcv+0x2cda/0x61e0
-   br_dev_xmit+0x6c4/0x1540
-  Allocated by task 610:
-   br_vlan_add+0x111/0xb40
-   br_vlan_info+0x370/0x3e0
-  Freed by task 0:
-   kfree+0x1a7/0x4f0
-   rcu_core+0x7dc/0x10a0
-
-Only test br_vlan_is_brentry() when enabling, like the
-br_multicast_ctx_vlan_global_disabled() test next to it.  Disabling then
-always clears BR_VLFLAG_MCAST_ENABLED under br->multicast_lock before
-br_multicast_ctx_deinit() drains the context.
-
-Fixes: 7b54aaaf53cb ("net: bridge: multicast: add vlan state initialization and control")
-Cc: stable@vger.kernel.org
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/D400F6C7-543A-4B79-9E5B-D1D8974DE5C9@doyensec.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20260803180426.3123-1-ebiggers@kernel.org
+Fixes: 9bd8212f981e ("ext4 crypto: add encryption policy and password salt support")
+Fixes: f424f664f0e8 ("f2fs crypto: add encryption policy and password salt support")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Baoquan He <baoquan.he@linux.dev>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/filesystems/fscrypt.rst |    4 ++++
+ mm/swapfile.c                         |    7 +++++++
+ 2 files changed, 11 insertions(+)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -4113,8 +4113,8 @@ void br_multicast_toggle_one_vlan(struct
- 	if (br_vlan_is_master(vlan)) {
- 		br = vlan->br;
+--- a/Documentation/filesystems/fscrypt.rst
++++ b/Documentation/filesystems/fscrypt.rst
+@@ -1063,6 +1063,10 @@ astute users may notice some differences
  
--		if (!br_vlan_is_brentry(vlan) ||
--		    (on &&
-+		if (on &&
-+		    (!br_vlan_is_brentry(vlan) ||
- 		     br_multicast_ctx_vlan_global_disabled(&vlan->br_mcast_ctx)))
- 			return;
+ - DAX (Direct Access) is not supported on encrypted files.
  
++- Encrypted files cannot be used directly as swap files.  To swap to
++  an encrypted file, set up a loopback device on top of it.
++  Alternatively, encrypted swap can use a dm-crypt device.
++
+ - The maximum length of an encrypted symlink is 2 bytes shorter than
+   the maximum length of an unencrypted symlink.  For example, on an
+   EXT4 filesystem with a 4K block size, unencrypted symlinks can be up
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -3209,6 +3209,13 @@ SYSCALL_DEFINE2(swapon, const char __use
+ 		error = -EBUSY;
+ 		goto bad_swap_unlock_inode;
+ 	}
++	if (IS_ENCRYPTED(inode)) {
++		pr_warn_once(
++			"Filesystem-level encrypted swapfile '%s' is unsupported. Create a loop device over it, or use dm-crypt\n",
++			name->name);
++		error = -EINVAL;
++		goto bad_swap_unlock_inode;
++	}
+ 
+ 	/*
+ 	 * Read the swap header.
 
 
