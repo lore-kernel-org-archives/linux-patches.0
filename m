@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BD543FD18;
-	Mon, 31 Aug 2026 14:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E345A483BF2;
+	Mon, 31 Aug 2026 14:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184963; cv=none; b=pGOX66VF0//SV2W1NW7jjk78K6/HCLYLaICAGrUMATSjMZxR5kvUO5bdom4xKQEt75PxYb39dBnC+t3EWbym+5PpOz8N4UB5U5KL13Nkuw8/vDhggs6A3XtFNsocRbyp4fei6doXm3+358XNf/FC6d0Q52aJOT66BrFmJxL7Q6Q=
+	t=1788184966; cv=none; b=e7/o8EaRZmgv0ivp+w84gipR21R5eDOJJPgb5OHG4Qv1bSmrrUqKAZNGao1p7BgPfcT/kJ9smzMSFhypBlgy6YlR7+Gh39hvo2u3n+1Zy1bkzoqHLn0N+8GcX27fl0gFBVQJiSLp8wX9FWe34Rpe+ZbhBAUQ01iAkvg8i+XJInk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184963; c=relaxed/simple;
-	bh=l3cuw4uSam3lLzJMgth+OpsKPK8xcay77dbku/f1IyY=;
+	s=arc-20240116; t=1788184966; c=relaxed/simple;
+	bh=lDnyj6RC/rK5zAcI6c260mjsBsAbLEtZvpoleqZ8gr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VJiZOvDVZNoTxE28VhJqxmnUcB+yPm668Ije54dURCsqK+EpqcOPFVcJUV2RZyl2KvjsdNK3ATPY1vd2WlJyKmv/R4EXJsdClsNk6hRa9TM4t8X1o23U7pW8IGq60lG52DEYOlkFdMb6Dv3Fxw/hey9Z/RdHnTDCjAR0YF5OB/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrvX61kx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U+2d5jxq9lFsPczUHGi7cR8HdHRXQNVhXC4cfhMyobTkjqranph6bu05M51ImO9sjG9rgxlEYt/FPrKMIyGGR4tRIJw+oCRm0LMEjG94FJ12jpStdNbFIZESqG0eGAJa3HW6Aa2PhnMNM07Y8Zdndb/YwDyDDldSFCmbK/ohatI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elS3Lk3j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrvX61kx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670861F00A3D;
-	Mon, 31 Aug 2026 14:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elS3Lk3j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E451F000E9;
+	Mon, 31 Aug 2026 14:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184961;
-	bh=cut0vjFA6hDao/rflm2VCWK3A7MG5yq6WACXyO+aWQE=;
+	s=korg; t=1788184964;
+	bh=IYaOoQMIDc+zsiIe25P6PGBYPBvThLO1qgwjvSJUkus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lrvX61kxfYPxQ//6NoDzzes/TMfsnqW4wuSvN7oO6FovL+Gjl2/UtupI9eXKmOPl3
-	 8Xj3wedfJTyFQi5jLLo6FLwlcp862WZA/EkMknkshWgk895EhzDfzprBpHqbc7TCDm
-	 xnK9q337tGQbcR8e/MqGAeKdueItFBlTI/8Rv4rg=
+	b=elS3Lk3jViv9PI/8Er9+9VaQT1UUeKt4EsnGCTYIfC9B54m2kvu9V1AvYrJ5qWAFt
+	 V9N44QOUJm5PRYFyweuoAIgXUWP4mZ6wC38Fv2XUAeW+B94NwMTNHDAJ0CCip6Bl4D
+	 Kn3V9theSqJHFhOh5CztP6fjht5/wyzYHtGwim/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.1 68/92] fuse: fix invalidate lock leak on open O_TRUNC DAX failure
-Date: Mon, 31 Aug 2026 15:35:06 +0200
-Message-ID: <20260831133403.178210246@linuxfoundation.org>
+	syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	syzbot@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 69/92] usb: usbtest: disable dynamic ID support
+Date: Mon, 31 Aug 2026 15:35:07 +0200
+Message-ID: <20260831133403.216638458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -44,70 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-commit a927f1867e61b78f39f9da0bbba3c98c2ca151fe upstream.
+commit 00e2071f6d5621a5ddea311a5e6b143ae6e474af upstream.
 
-fuse_open() takes filemap_invalidate_lock() for a DAX truncate
-(dax_truncate = true) and releases it before the out_inode_unlock
-label.  But when fuse_dax_break_layouts() fails, the goto
-out_inode_unlock skips the unlock and leaks the rwsem, so any later
-fault or truncate on the file stalls on the stale lock.
+The usbtest driver relies on the driver_info field of struct usb_device_id
+to point to a valid struct usbtest_info descriptor. This structure contains
+essential test configurations, such as endpoint addresses and test modes,
+which are required during probe.
 
-fuse_dax_break_layouts() can fail with -ERESTARTSYS when a signal
-interrupts the wait for busy DAX pages to drain:
+When a user dynamically adds a new device ID via the sysfs new_id
+interface without specifying a reference device, the USB core initializes
+driver_info to 0 (NULL). When a matching device is subsequently probed,
+usbtest_probe() unconditionally casts driver_info to a struct usbtest_info
+pointer and dereferences it, leading to a NULL pointer dereference crash:
 
-  open("file", O_RDWR | O_TRUNC)
-  └─ fuse_open()
-     ├─ filemap_invalidate_lock()        # dax_truncate
-     └─ fuse_dax_break_layouts()
-        └─ dax_break_layout()
-           └─ wait_page_idle()           # TASK_INTERRUPTIBLE
-              └─ fuse_wait_dax_page()    # unlock, schedule, re-lock
-                 └─ signal → -ERESTARTSYS
-     goto out_inode_unlock               # <- lock leaked
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  RIP: 0010:usbtest_probe+0x3b9/0x1280 drivers/usb/misc/usbtest.c:2822
 
-Fix this by moving filemap_invalidate_unlock() below the label so
-that all error paths release the lock, and rename the label to
-out_unlock as it now covers more than just the inode lock.
+Because usbtest strictly requires pre-defined usbtest_info descriptors
+to function, dynamic ID binding via sysfs is fundamentally unsupported
+for this driver.
 
-Fixes: 2fdbb8dd0155 ("fuse: fix deadlock between atomic O_TRUNC and page invalidation")
-Cc: stable@vger.kernel.org # v6.0+
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fix this by setting .no_dynamic_id = 1 on usbtest_driver. This instructs
+the USB core to skip creating the new_id and remove_id sysfs interfaces
+for usbtest, preventing invalid dynamic ID entries from being created.
+
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7e1e5911f9eac50bedc7
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260806152651.2370795-1-nogikh@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/misc/usbtest.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -259,7 +259,7 @@ int fuse_open_common(struct inode *inode
- 		filemap_invalidate_lock(inode->i_mapping);
- 		err = fuse_dax_break_layouts(inode, 0, -1);
- 		if (err)
--			goto out_inode_unlock;
-+			goto out_unlock;
- 	}
+--- a/drivers/usb/misc/usbtest.c
++++ b/drivers/usb/misc/usbtest.c
+@@ -3053,6 +3053,7 @@ static struct usb_driver usbtest_driver
+ 	.disconnect =	usbtest_disconnect,
+ 	.suspend =	usbtest_suspend,
+ 	.resume =	usbtest_resume,
++	.no_dynamic_id = 1,
+ };
  
- 	if (is_wb_truncate || dax_truncate)
-@@ -279,9 +279,9 @@ int fuse_open_common(struct inode *inode
- 		else if (!(ff->open_flags & FOPEN_KEEP_CACHE))
- 			invalidate_inode_pages2(inode->i_mapping);
- 	}
-+out_unlock:
- 	if (dax_truncate)
- 		filemap_invalidate_unlock(inode->i_mapping);
--out_inode_unlock:
- 	if (is_wb_truncate || dax_truncate)
- 		inode_unlock(inode);
- 
+ /*-------------------------------------------------------------------------*/
 
 
