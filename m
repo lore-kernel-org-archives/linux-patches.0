@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F4341A551;
-	Mon, 31 Aug 2026 13:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20455445ACD;
+	Mon, 31 Aug 2026 13:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183239; cv=none; b=iv5JMqAZYQmCaROXtbSHnPJ98dTGH/YIzZio1DC9AA+BHvphEyVNtRRc0QR74f3JQ4IbIkH/KXCwVzMNtffQmg6Bh6qbvOChLNaakciusDEF1Fv910oD+uzGIEI4r74C8byWg5WMWi0JKFRdCkSzwOqHuzpD2UjmHejewRgkeXE=
+	t=1788183241; cv=none; b=KXFM+ZWMlYrvaPkEsUtd5t+boopb9H1eQwHr5ADOIFzGz5Ib3a47RHJyz9pYfIWhqDy9AU4wNf3DNDeAKVcJNOtNurCqz+QRbLEuBz79cAEItJ5XKhFaj+YJ5LYRoH2xKGwXmnFzdeyUoTrlixD2sWU3dt6LpOdQMJqKYvym/zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183239; c=relaxed/simple;
-	bh=jW+N1yboSweju19E3TsMZhNzXAFzMtAZ8tirvVgB8kw=;
+	s=arc-20240116; t=1788183241; c=relaxed/simple;
+	bh=siC7b/RXQMD9zWiCVLMtyOflobjo0LftJv+JgUlGYYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KeFIQT3XNcLmZNEE/rRI+EoP96zpTihKNc6XxnH1AsC4DfDJQrzf7rdSgaR2jsDQotd4YzMUYPcALqDdHsF1LjyYESgQUiOMmzO5AqHIIqcF1EuHea9OmcTfQk1hlP6iBbHeEe1gftiXG49Nv1hqPoQZshFD/5n+S7E/y6VqMGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dNg5++zb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fwZw1dwNPtnpT7oOQZwV73E/q9QFoBmyp438PJ/vqGKE09cRJ30lGcdW9yDt4Wc6ak/1VI/WbRRPj3Jw/nwJZAjEVeBZw0ZI5Qio0msommhyYZrrcyNo1axXF5zCqGQJbKdzw9B08tq1ac5H0/TqhFq4KuHMeODs4DG5fW3P4fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DwhXxJzF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dNg5++zb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A4F1F00A3E;
-	Mon, 31 Aug 2026 13:33:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DwhXxJzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2521F000E9;
+	Mon, 31 Aug 2026 13:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183237;
-	bh=AvV6yLbMcV1B8b94+oJs4b8s8FAEbmCg1eKUL+PjPVw=;
+	s=k20260515; t=1788183238;
+	bh=HFhRf0/FmP6ds4GoQQqyvgeK2pUF/4KOa974VNOLQhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNg5++zbB3BfVTWnJEtXW5tOkPcBTqtXZnIf07R9IvYG7j/kl9XYuqi1lraVvGbeY
-	 A+Og8SmdJqvlat/1S6/vCbojmdd0JjW3nZ6vl9X6ds70Qb6Z0KaTmEGhMihX418YYS
-	 wt8NHPgf2UwiBKbsn70mv+0GQyjqJcVXnX+vfe4lVTetL8QZvFEk4pRFhy0Or+UKd5
-	 6gN/LQmNTdlpxeMYe3ys9rXxT8S4pFeYQ6kd5i3HIDQGvJgqiUkTNv/rY4nq3S2/uz
-	 dCRbtibE2a6phXrnTHipPjERyP1c7fBR3SJ2WdSccS75ayiUM486/FRk0McqQ739Xn
-	 kwHbjsuXG5YPA==
+	b=DwhXxJzFMotJFoJSxvhlCg3VCACmdBJ7q3ybQXQb6dUPlVDOBUXJK+dBZvfm9fVbI
+	 0K4LD5NhD8qwCMc5/s42SkvGfZQ/oLOC9bhuOh7Jk8ZJQRosKjfONJgQwc7rtmQk5Z
+	 hFltrlMJ+5x+GT0lr9Etg0hSQCrWZc2kKB9sqMIuEG7/dQS6WeG3QAgYafB6zY/rwj
+	 paBxwCv1EjrKNUCF7mKQCqM5SKFECJQws+NnYg8sSDhs0Gk9r3AOd/x4brJhCR1q3L
+	 3seYI7wVzcz5cefST+XGdlNQLR1ToERetcGfG8BIrPOtdnDuFpHBCgHKvwZ1OVqQ0c
+	 Vf1+CcTisb0Rw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pu Hu <hupu@transsion.com>,
-	Hongyan Xia <hongyan.xia@transsion.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Will Deacon <will@kernel.org>,
+Cc: Lukas Wunner <lukas@wunner.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	catalin.marinas@arm.com,
-	linux-arm-kernel@lists.infradead.org,
+	davem@davemloft.net,
+	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] arm64: kprobes: Only handle faults originating from XOL slot
-Date: Mon, 31 Aug 2026 09:20:55 -0400
-Message-ID: <20260831133314.4125787-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] crypto: ecc - Unbreak the build on arm with CONFIG_KASAN_STACK=y
+Date: Mon, 31 Aug 2026 09:20:56 -0400
+Message-ID: <20260831133314.4125787-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,421 +55,438 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pu Hu <hupu@transsion.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 879a6754d3d11e30af24b7dc486f561510d62641 ]
+[ Upstream commit c64ba13e2033c3c6dc1a097bf35f9f1fe457c3f7 ]
 
-kprobe_fault_handler() currently treats any page fault taken while in
-KPROBE_HIT_SS or KPROBE_REENTER state as a kprobe single-step fault. This
-assumption does not hold: perf or tracing code may run from the debug
-exception path during the single-step window and take its own page fault.
+Andrew reports build breakage of arm allmodconfig, reproducible with gcc
+14.2.0 and 15.2.0:
 
-When the fault is handled as a kprobe fault, the PC is rewritten to the
-probe address, corrupting the exception recovery context for the real
-fault. A typical reproducer is running perf with preemptirq tracepoints
-and dwarf callchains while a kprobe is installed on a frequently
-executed function.
+  crypto/ecc.c: In function 'ecc_point_mult':
+  crypto/ecc.c:1380:1: error: the frame size of 1360 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
 
-Fix this in two layers:
+gcc aggressively inlines functions called by ecc_point_mult() (without
+there being any explicit inline declarations), which pushes stack usage
+close to the limit imposed by CONFIG_FRAME_WARN.  allmodconfig implies
+CONFIG_KASAN_STACK=y, which increases the stack above that limit.
 
-1. At function entry, bail out immediately for simulated kprobes
-   (ainsn.xol_insn == NULL), since they have no XOL slot and any fault
-   taken during their execution cannot be a single-step fault.
+In the bugzilla entry linked below, gcc maintainers explain that gcc
+estimates extra stack usage caused by inlining, but ASAN instrumentation
+is added in post-IPA passes and thus the inlining heuristics cannot
+account for it.
 
-2. For kprobes with an XOL slot, only handle the fault when the
-   faulting PC matches the XOL instruction address. Faults from any
-   other PC are left to the normal page fault handler.
+It could be argued that -Werror=frame-larger-than=1280 instructs the
+compiler to avoid inlining beyond that limit lest the build breaks,
+which would imply gcc behaves incorrectly.  But gcc maintainers reject
+this notion and believe that a warning switch should never affect code
+generation, even if it is promoted to an error.
 
-This follows the same principle as the x86 fix in commit 6381c24cd6d5
-("kprobes/x86: Fix page-fault handling logic").
+One way to unbreak the build is to limit inlining via -finline-limit=100
+or by explicitly declaring some functions noinline.  However while it
+does keep stack usage of individual functions below the limit, *total*
+stack usage increases.
 
-Signed-off-by: Pu Hu <hupu@transsion.com>
-Signed-off-by: Hongyan Xia <hongyan.xia@transsion.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+A longterm solution is to refactor ecc.c for reduced stack usage.  It
+currently performs ECC point multiplication with a Montgomery ladder
+which uses co-Z (conjugate) addition to trade off memory for speed.
+The algorithm is susceptible to timing attacks and needs to be replaced
+with a constant time Montgomery ladder, which should consume less memory
+and thus resolve the stack usage issue as a side effect.
+
+In the interim, raise the limit for ecc.c, as is already done for
+several other files in the source tree.
+
+Constrain to gcc because clang 19.1.7 does not exhibit the issue.  It
+makes do with a 724 bytes stack frame even though it inlines almost the
+same functions as gcc.
+
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
+Reported-by: Andrew Morton <akpm@linux-foundation.org> # off-list
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `arm64: kprobes: Only handle faults
-originating from XOL slot`
+# Stable Backport Analysis: `crypto: ecc - Unbreak the build on arm with
+CONFIG_KASAN_STACK=y`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-2-g1b9e1abadee04`)
+**Local tree:** Linux **6.18.43** (`git describe HEAD` →
+`v6.18.43-1-gc7f0dac02d232`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the subject line
-**Record:** `[arm64: kprobes]` `[Only handle]` — restricts kprobe page-
-fault handling to faults that actually originate from the XOL (execute-
-out-of-line) single-step slot.
+### Step 1.1: Subject line
+**Record:** `[crypto/ecc] [unbreak/fix build] [raise frame-size warning
+limit for ecc.o on arm+KASAN_STACK+gcc to fix allmodconfig build
+failure]`
 
-### Step 1.2: Parse all commit message tags
+### Step 1.2: Tags
 **Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** Masami Hiramatsu (Google) `<mhiramat@kernel.org>` —
-  kprobes subsystem maintainer
-- **Acked-by:** — none
-- **Link:** — none
-- **Cc: stable:** — none (expected)
-- **Signed-off-by:** Pu Hu, Hongyan Xia (authors); Will Deacon (arm64
-  maintainer)
-- **Notable:** Strong maintainer review signal; references x86 precedent
-  commit `6381c24cd6d5`
+| Tag | Value |
+|-----|-------|
+| Link | https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949 |
+| Reported-by | Andrew Morton \<akpm@linux-foundation.org\> (off-list) |
+| Signed-off-by | Lukas Wunner \<lukas@wunner.de\> |
+| Acked-by | Andy Shevchenko \<andriy.shevchenko@linux.intel.com\> |
+| Reviewed-by | Andy Shevchenko \<andriy.shevchenko@linux.intel.com\> |
+| Signed-off-by | Herbert Xu \<herbert@gondor.apana.org.au\> (crypto
+maintainer) |
+| Fixes: | absent (expected) |
+| Cc: stable | absent (expected) |
 
-### Step 1.3: Analyze commit body text
+**Notable:** Reported by Andrew Morton; crypto maintainer sign-off; gcc
+bugzilla link; no syzbot.
+
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `kprobe_fault_handler()` treats *any* page fault during
-  `KPROBE_HIT_SS` or `KPROBE_REENTER` as a kprobe single-step fault.
-- **Symptom:** PC is rewritten to the probe address, corrupting
-  exception recovery for the real fault → kernel crash/BUG.
-- **Reproducer:** perf with preemptirq tracepoints and DWARF callchains
-  while a kprobe is on a frequently executed function.
-- **Root cause:** perf/tracing code can run from the debug-exception
-  path during the single-step window and take its own page fault; that
-  fault is not from the XOL instruction.
-- **Version info:** Not specified; fix mirrors a 2014 x86 fix that arm64
-  never received.
+- **Bug:** `arm allmodconfig` fails to build with gcc 14.2.0/15.2.0 when
+  `CONFIG_KASAN_STACK=y`.
+- **Symptom:** `-Werror=frame-larger-than` error in `ecc_point_mult()` —
+  frame 1360 bytes > 1280-byte limit.
+- **Root cause:** GCC aggressively inlines into `ecc_point_mult()`;
+  KASAN stack instrumentation is added post-IPA and is not accounted for
+  in inlining heuristics.
+- **Fix approach:** Interim workaround — raise per-object `-Wframe-
+  larger-than` to 1536 for `ecc.o` under `CONFIG_ARM &&
+  CONFIG_KASAN_STACK && CONFIG_CC_IS_GCC`.
+- **Version info:** Triggered by newer gcc (14/15); clang 19.1.7 not
+  affected.
 
-### Step 1.4: Detect hidden bug fixes
-**Record:** Not disguised — this is an explicit correctness/crash fix,
-though the mechanism (verify faulting PC before rewriting it) is the
-same pattern used on x86 since 2014.
+### Step 1.4: Hidden bug fix?
+**Record:** Not a hidden runtime bug fix. This is an explicit **build
+fix** — a Makefile-only workaround for a compiler/KASAN interaction. No
+runtime behavior change.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory the changes
+### Step 2.1: Inventory
 **Record:**
-- **Files:** `arch/arm64/kernel/probes/kprobes.c` only (+22 lines, 0
-  removals)
-- **Function modified:** `kprobe_fault_handler()`
-- **Scope:** Single-file surgical fix
+- **Files:** `crypto/Makefile` only (+5 lines)
+- **Functions modified:** none (build flags only)
+- **Scope:** Single-file, surgical Makefile change
 
-### Step 2.2: Code flow change per hunk
+### Step 2.2: Code flow per hunk
 **Record:**
-- **Hunk 1 (early return):** Before → any fault during simulated kprobe
-  (`xol_insn == NULL`) could enter the switch and corrupt state. After →
-  immediate `return 0`, leaving the fault to the normal handler
-  (including `fixup_exception`).
-- **Hunk 2 (PC check):** Before → any fault in
-  `KPROBE_HIT_SS`/`KPROBE_REENTER` rewrote PC to `cur->addr`. After →
-  only rewrites PC when `instruction_pointer(regs) ==
-  cur->ainsn.xol_insn`; otherwise `break` and fall through to `return
-  0`.
+- **Before:** Global `CONFIG_FRAME_WARN` (1280 on 32-bit) applies to
+  `ecc.o`; gcc+KASAN_STACK can push `ecc_point_mult()` past that limit →
+  build error with `-Werror`.
+- **After:** When `CONFIG_ARM=y`, `CONFIG_KASAN_STACK=y`, and
+  `CONFIG_CC_IS_GCC=y`, add `CFLAGS_ecc.o += -Wframe-larger-than=1536`
+  for that object only.
+- **Path affected:** Compile-time only; no execution-path change.
 
 ### Step 2.3: Bug mechanism
-**Record:** **Logic/correctness fix** — incorrect fault attribution
-corrupts register context (PC) for unrelated page faults during kprobe
-single-stepping. Same class of bug fixed on x86 in `6381c24cd6d5`.
+**Record:** **Build fix / toolchain interaction** — not UAF, leak, race,
+etc. GCC stack-frame estimate plus KASAN instrumentation exceeds the
+kernel’s default 32-bit `FRAME_WARN` (1280), promoted to error under
+`WERROR`/allmodconfig.
 
-### Step 2.4: Fix quality assessment
-**Record:** Fix is obviously correct and minimal. It mirrors the proven
-x86 pattern (`regs->ip == cur->ainsn.insn`). Regression risk is very
-low: legitimate XOL single-step faults still match `xol_insn` and follow
-the existing path. The `kprobe_ss_brk_handler()` already uses a similar
-XOL-address check at line 361–362.
+### Step 2.4: Fix quality
+**Record:**
+- **Quality:** High — matches existing pattern in the same Makefile
+  (`CFLAGS_blake2b_generic.o := -Wframe-larger-than=4096`).
+- **Regression risk:** Very low — only relaxes a compile-time warning
+  threshold for one object under a narrow config triple; no code
+  generation change intended.
+- **Caveat:** Does not reduce actual stack use; silences the warning
+  until a future ECC refactor.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame the changed lines
-**Record:** Current `kprobe_fault_handler()` body is present in this
-tree at lines 280–308. Repository is shallow (`git rev-parse --is-
-shallow-repository` → `true`), limiting deep history. File header dates
-arm64 kprobes to 2013; the overly broad fault handling predates this
-6.18.y branch and was never corrected on arm64 (unlike x86).
+### Step 3.1: Blame
+**Record:**
+- `ecc_point_mult()` at `crypto/ecc.c:1338` — present at Linux 6.18.43
+  tag (`7b923c78b50d2`).
+- `CFLAGS_blake2b_generic.o` precedent at `crypto/Makefile:87` — same
+  gcc frame-size workaround pattern already in this tree.
+- Blame on this stable checkout points at bulk import commit
+  `a112b91dd6349`; per-file history is not granular here.
 
-### Step 3.2: Follow Fixes: tag
-**Record:** N/A — no `Fixes:` tag. Referenced x86 commit `6381c24cd6d5`
-("kprobes/x86: Fix page-fault handling logic", April 2014) is present in
-this tree and documents the same failure mode (perf/NMI page fault
-during single-step → PC corruption → kernel BUG).
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: File history for related changes
-**Record:** Shallow history shows only one commit touching
-`arch/arm64/kernel/probes/kprobes.c` in this checkout. No related fix
-already present. This commit is patch 1 of a 3-patch RFC series; patches
-2–3 address separate reentry/irqflag issues and are **not**
-prerequisites for this fix.
+### Step 3.3: Related file history
+**Record:**
+- `crypto/Makefile` at 6.18.43 has `obj-$(CONFIG_CRYPTO_ECC) += ecc.o`
+  with **no** `CFLAGS_ecc.o` workaround — fix is **not** present.
+- Commit under review **not found** in local `master` or current HEAD
+  via grep/log search — likely newer mainline crypto work being
+  evaluated for stable.
 
-### Step 3.4: Author's other commits
-**Record:** No commits from Pu Hu found in this shallow tree. Author
-appears to be a Transsion contributor; patch was reviewed by the kprobes
-maintainer.
+### Step 3.4: Author context
+**Record:** Lukas Wunner is a regular kernel contributor; Herbert Xu
+(crypto maintainer) merged. Andy Shevchenko acked/reviewed.
 
-### Step 3.5: Dependent/prerequisite commits
-**Record:** None. Self-contained. `xol_insn`, `instruction_pointer()`,
-and `kprobe_fault_handler()` all exist in this tree. `git apply --check`
-confirms clean apply.
+### Step 3.5: Dependencies
+**Record:** Standalone — no series, no prerequisite commits, no new
+APIs. Applies after `obj-$(CONFIG_CRYPTO_ECC) += ecc.o` line in
+Makefile.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original patch discussion
-**Record:** Patch submitted as RFC v2/v3 series in July 2026. Lore URL
-(via openwall mirror): https://lists.openwall.net/linux-
-kernel/2026/07/10/387. Final committed version matches v3 content. `b4
-dig -c` could not be used (commit not in local tree).
+### Step 4.1: Patch discussion
+**Record:** `b4 dig -c <hash>` could not run — commit hash not in this
+repository. Lore and gcc bugzilla returned HTTP 403 from this
+environment.
 
 ### Step 4.2: Reviewers
-**Record:** CC'd to `mhiramat@kernel.org`, `will@kernel.org`,
-`catalin.marinas@arm.com`, `linux-arm-kernel@`, `linux-trace-kernel@`.
-Masami Hiramatsu replied "This looks good to me" with `Reviewed-by`
-(https://lists.openwall.net/linux-kernel/2026/07/10/222).
+**Record:** UNVERIFIED via b4 -w. From commit message: Andy Shevchenko
+(Acked-by + Reviewed-by), Herbert Xu (merge SOB).
 
-### Step 4.3: Bug report details
-**Record:** No formal bugzilla/syzbot report. Reproducer described in
-commit message and series cover letter: perf + preemptirq tracepoints +
-DWARF callchains + active kprobe on hot function. Series cover letter
-states crashes occur in the kprobe debug exception path.
+### Step 4.3: Bug report
+**Record:** Andrew Morton off-list report (high credibility for
+allmodconfig breakage). gcc BZ #124949 explains gcc/KASAN stack-
+estimation mismatch — URL not fetchable here.
 
-### Step 4.4: Related patches/series
-**Record:** Part of "arm64: kprobes: Fix single-step fault and reentry
-handling" (3 patches). Only patch 1 (this commit) is required for the
-fault-handler bug. Patches 2–3 are independent improvements.
+### Step 4.4: Related patches
+**Record:** Commit references long-term ECC constant-time refactor; this
+patch is explicitly interim. No other patches required for this fix to
+work.
 
-### Step 4.5: Stable mailing list history
-**Record:** Could not search lore stable list (bot protection). No
-evidence found of prior stable rejection.
+### Step 4.5: Stable list
+**Record:** UNVERIFIED — lore 403 blocked search.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions modified
-**Record:** `kprobe_fault_handler()` only.
+### Step 5.1: Key functions
+**Record:** No functions modified. Affected compile unit: `ecc.o` →
+contains `ecc_point_mult()` and ECC helpers.
 
-### Step 5.2: Trace callers
-**Record:** Call chain:
-1. `do_page_fault()` in `arch/arm64/mm/fault.c:565` →
-   `kprobe_page_fault(regs, esr)`
-2. `kprobe_page_fault()` in `include/linux/kprobes.h:576-591` — checks
-   `CONFIG_KPROBES`, non-user mode, non-preemptible, `kprobe_running()`
-   → calls `kprobe_fault_handler()`
-3. x86 equivalent called from `arch/x86/mm/fault.c`
+### Step 5.2: Callers
+**Record:** `ecc_point_mult()` is called from `ecc_point_mult_shamir()`,
+key generation, and scalar-multiply paths in `crypto/ecc.c` (lines 1593,
+1661, 1708). Used when `CONFIG_CRYPTO_ECC` and dependent algorithms
+(ECDH, ECDSA, ECRDSA) are enabled.
 
-Called from the kernel page-fault path during any kernel-mode
-data/instruction abort while a kprobe is active.
+### Step 5.3: Callees
+**Record:** Montgomery-ladder ECC math (`xycz_add`, `vli_mod_mult_fast`,
+etc.) — large on-stack `u64` arrays (`ECC_MAX_DIGITS` = 9 → 72 bytes per
+array; multiple arrays in `ecc_point_mult`).
 
-### Step 5.3: Key callees
-**Record:** `kprobe_running()`, `get_kprobe_ctlblk()`,
-`instruction_pointer()` / `instruction_pointer_set()`,
-`restore_previous_kprobe()`, `kprobes_restore_local_irqflag()`,
-`reset_current_kprobe()`.
-
-### Step 5.4: Call chain / reachability
-**Record:** Reachable whenever `CONFIG_KPROBES` is enabled and
-perf/tracing + kprobes are used concurrently on arm64 — a realistic
-production/debug scenario on Graviton, Ampere, and other arm64 servers.
-Root-capable users can install kprobes; perf is widely used.
+### Step 5.4: Reachability
+**Record:** Runtime path is reachable via crypto/KPP when ECC is
+enabled. **The patch does not change this** — only whether the object
+compiles under arm+KASAN+gcc+WERROR.
 
 ### Step 5.5: Similar patterns
-**Record:** x86 `kprobe_fault_handler()` at
-`arch/x86/kernel/kprobes/core.c:1039` already gates on `regs->ip ==
-(unsigned long)cur->ainsn.insn`. `kprobe_ss_brk_handler()` on arm64
-already checks XOL address at lines 361–362. This fix brings fault
-handling in line with both.
+**Record:** Same Makefile already has:
+- `CFLAGS_blake2b_generic.o := -Wframe-larger-than=4096` (gcc BZ 105930)
+- `arch/arm/boot/compressed/Makefile` per-object frame limit override
+- `arch/powerpc/xmon/Makefile` clang frame override
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.43)
 
-### Step 6.1: Does the buggy code exist?
-**Record:** **YES.** `arch/arm64/kernel/probes/kprobes.c:280-308` has
-the buggy unconditional PC rewrite. The fix is **not** yet applied in
-this 6.18.44 tree.
+### Step 6.1: Buggy code present?
+**Record:** **YES.** `crypto/ecc.c` with `ecc_point_mult()` exists at
+6.18.43. Relevant Kconfig exists:
+- `CONFIG_FRAME_WARN` default **1280** for `!64BIT`
+  (`lib/Kconfig.debug:448`)
+- `CONFIG_KASAN_STACK` default **y** for GCC (`lib/Kconfig.kasan:167`)
+- Global `-Wframe-larger-than=$(CONFIG_FRAME_WARN)` in
+  `scripts/Makefile.extrawarn:25`
+- `CONFIG_CRYPTO_ECC` / `ecc.o` build in `crypto/Makefile:183`
+
+Fix is **not** yet in this tree.
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply** — verified with `git apply --check`. No
-conflicting recent churn in this file.
+**Record:** **Clean apply expected** — 5 lines inserted immediately
+after `obj-$(CONFIG_CRYPTO_ECC) += ecc.o`. No conflicting changes at
+that location in 6.18.43.
 
 ### Step 6.3: Related fixes already present?
-**Record:** None found. x86 has had the equivalent fix since 2014; arm64
-still lacks it.
+**Record:** **NO** — `grep CFLAGS_ecc` returns nothing. Blake2b
+precedent exists; ecc-specific workaround does not.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
 ### Step 7.1: Subsystem criticality
-**Record:** **IMPORTANT** — `arch/arm64/kernel/probes/` +
-`arch/arm64/mm/fault.c`. Affects arm64 kernel debugging/tracing
-infrastructure, not every user, but crashes are severe when triggered.
+**Record:** **crypto** — IMPORTANT subsystem. This patch affects
+buildability, not runtime crypto behavior.
 
-### Step 7.2: Subsystem activity
-**Record:** arm64 kprobes code is mature (2013 origin). This is a long-
-standing correctness gap, not a regression from a recent mainline
-commit.
+### Step 7.2: Activity
+**Record:** `crypto/ecc.c` is mature, relatively stable code. Issue is
+toolchain-driven (gcc 14/15 + KASAN), not a recent kernel regression in
+ECC logic.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 8: IMPACT AND RISK
 
 ### Step 8.1: Who is affected
-**Record:** **Config-specific** (`CONFIG_KPROBES`) on **arm64** systems
-running kprobes concurrently with perf/tracing (especially preemptirq
-tracepoints + DWARF callchains).
+**Record:** **Config-specific builders** — developers/CI running
+**32-bit ARM** (`CONFIG_ARM`) **allmodconfig** (or similar) with
+**GCC**, **KASAN** (`CONFIG_KASAN_STACK=y`), and **WERROR**. Not typical
+production distro arm32 kernels (KASAN usually off).
 
 ### Step 8.2: Trigger conditions
-**Record:** Kprobe on frequently executed function + perf tracing that
-page-faults during the kprobe single-step window. Not every boot, but
-reproducible with the described workload. Requires privileges to use
-kprobes/perf, but this is standard on developer and observability-
-focused production systems.
+**Record:**
+- `CONFIG_ARM=y` (32-bit, not arm64)
+- `CONFIG_CC_IS_GCC=y`
+- `CONFIG_KASAN_STACK=y` (default y for GCC)
+- gcc 14.2+ with aggressive inlining
+- `CONFIG_FRAME_WARN=1280` (32-bit default) + warnings-as-errors
+
+**Likelihood:** Low for end users; **high** for kernel compile-test/CI
+on arm allmodconfig. Andrew Morton’s report indicates it blocks a
+standard maintainer build configuration.
 
 ### Step 8.3: Failure mode severity
-**Record:** **CRITICAL** — PC corruption in the fault handler leads to
-mis-handled page faults and kernel BUG/panic (same severity class as the
-documented x86 case: NULL pointer dereference after IP corruption).
+**Record:** **Build failure** (compiler error). Severity for runtime
+users: **NONE**. Severity for kernel development/CI: **MEDIUM** (blocks
+full config testing).
 
-### Step 8.4: Risk-benefit ratio
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** HIGH for arm64 kprobes+perf users — prevents real crashes
-- **Risk:** VERY LOW — 22-line, maintainer-reviewed, mirrors 10+ year
-  proven x86 logic
-- **Ratio:** Strongly favors backport
+- **Benefit:** Unblocks arm allmodconfig builds with modern gcc;
+  restores parity with existing blake2b workaround pattern; zero runtime
+  change.
+- **Risk:** Very low — Makefile-only, narrow `ifeq` guard, per-object
+  flag.
+- **Ratio:** Favorable for stable as a **build-fix exception**,
+  especially with Andrew Morton report and maintainer acks.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence compile
+### Step 9.1: Evidence summary
 
-**FOR backporting:**
-- Fixes a real, reproducible kernel crash
-- Corrupts exception context (PC rewrite) — severe failure mode
-- Small (22 lines), single file, applies cleanly to 6.18.44
-- Reviewed by kprobes maintainer (Hiramatsu), signed off by arm64
-  maintainer (Deacon)
-- Follows proven x86 fix from 2014
-- Buggy code confirmed present in this tree
-- Standalone — no dependencies on other series patches
+**FOR backport:**
+- Explicit build fix; fits documented stable exception category
+- Andrew Morton reported arm allmodconfig breakage
+- Herbert Xu merged; Andy Shevchenko acked/reviewed
+- Tiny (5 lines), precedented in same `crypto/Makefile`
+- Buggy build conditions exist in 6.18.43; fix not yet applied
+- Clean apply expected; no dependencies
+- Enables kernel-wide compile testing on arm with modern gcc
 
-**AGAINST backporting:**
-- Only affects `CONFIG_KPROBES` on arm64 (narrower audience than core
-  MM/net)
-- No syzbot/CVE report (but clear reproducer and maintainer review)
+**AGAINST backport:**
+- No runtime bug — production kernels rarely use KASAN+allmodconfig on
+  arm32
+- Workaround, not a reduction of actual stack usage
+- Very narrow config intersection (arm32 + gcc + KASAN_STACK)
+- Commit not yet in local `master` (timing/unverified upstream merge
+  status)
+- External discussion (lore, gcc BZ) not accessible from this
+  environment
 
-**Unresolved:** Exact commit that introduced arm64
-`kprobe_fault_handler()` (shallow repo). Bug has likely existed since
-arm64 kprobes inception regardless.
+**Unresolved:**
+- Full lore review thread unavailable (403)
+- gcc BZ #124949 details not fetchable (403)
+- Exact upstream commit SHA not in this repo
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — mirrors x86; maintainer
-   reviewed; logical correctness verifiable from code
-2. Fixes a real bug affecting users? **PASS** — documented perf+kprobes
-   reproducer
-3. Important issue? **PASS** — kernel crash/BUG (CRITICAL)
-4. Small and contained? **PASS** — 22 lines, 1 file
-5. No new features or APIs? **PASS** — pure bug fix
-6. Can apply to local tree? **PASS** — verified clean apply; buggy code
-   present
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — Makefile pattern proven
+by blake2b entry; maintainer reviewed |
+| 2. Fixes real bug affecting users? | **PASS** — real build failure for
+arm allmodconfig; builder/CI impact |
+| 3. Important issue? | **PASS (build/CI)** — not crash/security; blocks
+standard compile-test config |
+| 4. Small and contained? | **PASS** — 5 lines, one file |
+| 5. No new features/APIs? | **PASS** — compiler flag only |
+| 6. Applies to local tree? | **PASS** — ecc.c and Kconfig preconditions
+present; fix absent |
 
-### Step 9.3: Exception categories
-**Record:** None apply (not device ID, quirk, DT, build, or docs).
-Standard bug-fix backport.
+### Step 9.3: Exception category
+**Record:** **BUILD FIX** — compilation failure under `CONFIG_ARM` +
+`CONFIG_KASAN_STACK` + GCC + `-Werror=frame-larger-than`.
 
 ### Step 9.4: Decision rationale
 
-For **Linux 6.18.44**, this commit should be backported. The arm64
-kprobe fault handler has a longstanding correctness bug that x86 fixed
-in 2014: it mishandles page faults from perf/tracing code that runs
-during the kprobe single-step window, corrupting the faulting PC and
-causing kernel crashes. The fix is minimal, maintainer-reviewed, matches
-an established cross-architecture pattern, and applies cleanly to this
-tree where the buggy code is still present.
+For **Linux 6.18.43**, this commit should be backported. The ECC code
+and all triggering Kconfig defaults exist in this tree, the fix is
+absent, and the patch is a minimal Makefile workaround following an
+established pattern already present in `crypto/Makefile`. While it does
+not fix a runtime crash or security issue, it unblocks a standard kernel
+build configuration (arm allmodconfig with modern gcc and KASAN)
+reported by Andrew Morton, with crypto maintainer approval — exactly the
+kind of contained build fix stable trees routinely carry.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body; confirmed Reviewed-by
-  Hiramatsu, SOB Deacon
-- **[Phase 1]** Confirmed no Fixes:/Reported-by:/Cc: stable tags
-- **[Phase 2]** Read diff: +22 lines in `kprobe_fault_handler()`, two
-  guard layers
-- **[Phase 2]** Read current tree code at
-  `arch/arm64/kernel/probes/kprobes.c:280-308` — buggy version present
-- **[Phase 2]** Compared to x86 fix at
-  `arch/x86/kernel/kprobes/core.c:1039` — same IP-check pattern
-- **[Phase 3]** `git blame -L 280,308` — function present in tree
-- **[Phase 3]** `git rev-parse --is-shallow-repository` → `true`
-  (limited history)
-- **[Phase 3]** `git show 6381c24cd6d5` — x86 precedent with crash
-  description confirmed
-- **[Phase 3]** `git apply --check` — patch applies cleanly
-- **[Phase 4]** Fetched lore/openwall: RFC v3 submission at
-  lists.openwall.net/linux-kernel/2026/07/10/387
-- **[Phase 4]** Fetched review reply: Hiramatsu "This looks good to me"
-  at lists.openwall.net/linux-kernel/2026/07/10/222
-- **[Phase 4]** Series cover letter (web search): 3-patch series; patch
-  1 is standalone for fault handling
-- **[Phase 4]** lore.kernel.org/stable search blocked by bot protection
-  — UNVERIFIED for stable-list discussion
-- **[Phase 5]** `grep kprobe_page_fault` — caller at
-  `arch/arm64/mm/fault.c:565`
-- **[Phase 5]** Read `kprobe_page_fault()` in
-  `include/linux/kprobes.h:576-591` — requires `kprobe_running()`
-- **[Phase 5]** Read `kprobe_ss_brk_handler()` XOL check at lines
-  361-362 — consistent pattern
-- **[Phase 6]** `git describe HEAD` → `v6.18.44-2-g1b9e1abadee04`; `make
-  kernelversion` → `6.18.44`
-- **[Phase 6]** Confirmed fix NOT in tree; buggy code at lines 280-308
-- **[Phase 6]** `git apply --check` on provided diff — PASS
-- **[Phase 7]** Read `arch/Kconfig:117-128` — KPROBES depends on
-  HAVE_KPROBES
-- **[Phase 8]** Failure mode: PC corruption → kernel BUG; severity
-  CRITICAL
+- **[Phase 1]** Parsed subject, tags, body from user-provided commit
+  message
+- **[Phase 2]** Analyzed provided diff: +5 lines in `crypto/Makefile`
+  only
+- **[Phase 3]** `git describe HEAD` → v6.18.43; `make kernelversion` →
+  6.18.43
+- **[Phase 3]** `git log --grep` for commit subject/hash — not found in
+  tree
+- **[Phase 3]** `git show 7b923c78b50d2:crypto/ecc.c` — `ecc_point_mult`
+  at line 1338 confirmed
+- **[Phase 3]** `git show 7b923c78b50d2:crypto/Makefile` — no
+  `CFLAGS_ecc.o` workaround
+- **[Phase 3]** `git blame crypto/Makefile:87` — blake2b frame-larger
+  precedent present
+- **[Phase 4]** `b4 dig` — failed (no commit hash in repo)
+- **[Phase 4]** lore.kernel.org curl — HTTP 403
+- **[Phase 4]** gcc.gnu.org bugzilla #124949 — HTTP 403
+- **[Phase 5]** Read `crypto/ecc.c:1338-1398` — large on-stack arrays in
+  `ecc_point_mult`
+- **[Phase 5]** `grep ecc_point_mult crypto/ecc.c` — callers at 1593,
+  1661, 1708
+- **[Phase 5]** `include/crypto/internal/ecc.h:37` — `ECC_MAX_DIGITS =
+  DIV_ROUND_UP(521, 64)` (= 9)
+- **[Phase 6]** `grep CFLAGS_ecc / KASAN_STACK / Wframe-larger-than`
+  across tree
+- **[Phase 6]** Read `lib/Kconfig.debug:441-453` — FRAME_WARN default
+  1280 for !64BIT
+- **[Phase 6]** Read `lib/Kconfig.kasan:163-179` — KASAN_STACK default y
+  for GCC
+- **[Phase 6]** Read `init/Kconfig:227-232` — WERROR defaults to
+  COMPILE_TEST
+- **[Phase 6]** Read `scripts/Makefile.extrawarn:24-26` — global frame-
+  larger-than flag
+- **[Phase 6]** Read `crypto/Makefile:183-184` — ECC object build rule,
+  no workaround yet
+- **UNVERIFIED:** Full mailing-list review thread and gcc BZ discussion
+  text (HTTP 403)
+- **UNVERIFIED:** Whether commit is already merged to mainline outside
+  this checkout
 
 **YES**
 
- arch/arm64/kernel/probes/kprobes.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ crypto/Makefile | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
-index 7133da1653964..4e0efad5caf24 100644
---- a/arch/arm64/kernel/probes/kprobes.c
-+++ b/arch/arm64/kernel/probes/kprobes.c
-@@ -303,9 +303,31 @@ int __kprobes kprobe_fault_handler(struct pt_regs *regs, unsigned int fsr)
- 	struct kprobe *cur = kprobe_running();
- 	struct kprobe_ctlblk *kcb = get_kprobe_ctlblk();
+diff --git a/crypto/Makefile b/crypto/Makefile
+index e430e6e99b6a2..ef963cc03a038 100644
+--- a/crypto/Makefile
++++ b/crypto/Makefile
+@@ -183,6 +183,11 @@ obj-$(CONFIG_CRYPTO_ZSTD) += zstd.o
+ obj-$(CONFIG_CRYPTO_ECC) += ecc.o
+ obj-$(CONFIG_CRYPTO_ESSIV) += essiv.o
  
-+	/*
-+	 * Simulated kprobes execute in the debug trap context and have no
-+	 * XOL slot. Any page fault taken while a simulated kprobe is in
-+	 * progress cannot have been caused by kprobe single-stepping and
-+	 * must be left alone for the normal page fault handler, including
-+	 * fixup_exception.
-+	 */
-+	if (cur && !cur->ainsn.xol_insn)
-+		return 0;
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
++ifeq ($(CONFIG_ARM)$(CONFIG_KASAN_STACK)$(CONFIG_CC_IS_GCC),yyy)
++CFLAGS_ecc.o += $(call cc-option,-Wframe-larger-than=1536)
++endif
 +
- 	switch (kcb->kprobe_status) {
- 	case KPROBE_HIT_SS:
- 	case KPROBE_REENTER:
-+		/*
-+		 * A page fault taken while in KPROBE_HIT_SS or
-+		 * KPROBE_REENTER state is only attributable to kprobe
-+		 * single-stepping if the faulting PC points to the
-+		 * current kprobe's XOL instruction. If the fault occurred
-+		 * elsewhere (e.g. in perf or tracing code invoked from the
-+		 * debug exception path), leave it for the normal page fault
-+		 * handler to process.
-+		 */
-+		if (instruction_pointer(regs) != (unsigned long)cur->ainsn.xol_insn)
-+			break;
-+
- 		/*
- 		 * We are here because the instruction being single
- 		 * stepped caused a page fault. We reset the current
+ ecdh_generic-y += ecdh.o
+ ecdh_generic-y += ecdh_helper.o
+ obj-$(CONFIG_CRYPTO_ECDH) += ecdh_generic.o
 -- 
 2.53.0
 
