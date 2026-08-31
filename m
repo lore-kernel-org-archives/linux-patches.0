@@ -1,135 +1,155 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FAC4A8FEB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB20C463B7B;
 	Mon, 31 Aug 2026 13:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183956; cv=none; b=AsBPc2xpYa02AcA9vfDPtxmt/g9gFTWC3V4uJZ3hs0Ch2E9xIso8jq1sgUpIolgYJ2FaI9Y/rSPvALMEzSalxZNIpvvX60WVd78pb1IUePMjhzHq2coQLuhfHfyhPbeZiO2MOjLxSb+lDozzAGsr4ypvoKEAxoCWC2xBk1zOMNc=
+	t=1788183956; cv=none; b=ZQzgd9lG8SEUf739dgOw8YPun9bkU/5+G2ih/UzFhKOlbeUI/2wMXFsYGCHVTGvlvcJ0TgBc+/4P6PE7DQoVfP7HH81iEIE9vH2KWwvG1hfZLMsEtnZkvTk2Tr+Zi02RECAV9KhLyzhZlaDYJdUxIZsw2lMpKi4qRXJdz/qHFEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183956; c=relaxed/simple;
-	bh=zkYofZZQEwCxF/i1lVYQytgE13GVlA7jDYqA/+ByxsQ=;
+	bh=+sgNPuX+cVBpnmZJO8TTtdvLGhD7iEDVMdnJaXblJcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpM3ktvaABWhkUqdcxratnCUJmS1BP6dxE3idP/MZ89fIRjfYoiva/P6LsIvYhYm/eVZ+g5Z2jYPfxh7f1WD71bQKYytG9RnsUZKhTLt+X/vleeEemAK9u6Y7P+xGJWyd30vocGM8ElX/F7/peqACaU0U69ZEeBIOKeFIN2klLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEj3CSAq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HNF4a5hAMp9cNZnyme2zS223yFUFF+k8MRepc1Hqw8YWB/ZGuaAFdnXso557UHxY1KcCN/2T2oE+C0YjBKvWErAu1WTAkPgKBzBo86+sleX8FvfVO3+lFIhxGbxP8hm8cw8GUYlEdgIGmBD3vGwrBWQIYk50Nk2Nzfv9g0wjk1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b8GTqxb+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEj3CSAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674081F00ACA;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b8GTqxb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767331F00ACF;
 	Mon, 31 Aug 2026 13:45:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183953;
-	bh=qY5EmaKrMSLMF7iAAluBbO2kKjmPNjfCNhHPGjk4TBo=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183954;
+	bh=79SnfAKr0WCbVfxiI6EYmarFRhbBXTB4QyqCZJq5fa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hEj3CSAqjwoYm3pK/VGSUSXT3tZFDkl6kjJbjLRdS0FD3f05U53jtMYl3DURLDROA
-	 Pmdhdg+UpXa9i2I9Qr4t7que5/sjppnf6zhOwEEli7vaGtE8f4OmhXXhzBjreCQP2B
-	 Y50aKhk1Vlcsedo6IQA+rq43PV61vNWq4JyWKh4I=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 22/83] io_uring/rsrc: improve regbuf iov validation
-Date: Mon, 31 Aug 2026 15:33:58 +0200
-Message-ID: <20260831133400.381169281@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
-References: <20260831133359.207714926@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=b8GTqxb+/FDvS2T1JvLmRW8aO57/fvT6/cWwQyc+p93ETjtElHGIHms6NKPCX2BC8
+	 NcL7SVqjtP+xu36g0ihf3wMouvE5bonYXWaOqsw+yhqQfHpxWvTtYKhxt8N2V9b12P
+	 oAopk0HamywzrO0gMo95NQf96jDR36IT1Zdt11n/AuUTpEBQHlk7tdxFydpxlJeLK+
+	 78OFmbgOaJtRIxkupp68rW5ilcsFImwyOIG3Q+yrHeYP97d/cneWKqm9DaftCcTgAd
+	 zWWSX0MTbTsiuz98khLrDOdzcoB4GbSOgyl43ctmCVwN3BPl+drXn9cnat9gCNG2FH
+	 2q2G+BNTYW/Gw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Frank.Li@nxp.com,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] mailbox: imx: Use devm_pm_runtime_enable()
+Date: Mon, 31 Aug 2026 09:27:10 -0400
+Message-ID: <20260831133314.4125787-402-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-------------------
+[ Upstream commit 1f602619e408b6e9655ee76656a2a5ab6e89c5e4 ]
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+sashiko complained about early usage of the device while probe isn't
+completed. This can be mitigated by delaying the pm_runtime_enable()
+into the removal path instead doing it early. This ensures that in an
+error case the device is removed (and imx_mu_shutdown()) before
+pm_runtime_disable() so we don't have to do this manually.
 
-[ Upstream commit 2e02f9efdbc6c73544e315b7eb85e55a59776b6f ]
+For the order to work, lets move devm_mbox_controller_register() until
+after the pm-runtime part. So the reverse order will be mbox-controller
+removal followed by disabling pm runtime.
 
-Deduplicate io_buffer_validate() calls by moving the checks into
-io_sqe_buffer_register(). Now we also don't need special handling in
-io_buffer_validate() passing through buffer removal requests. I also
-was using it as a cleanup before some other changes.
+Use devm_pm_runtime_enable(), remove manual pm_runtime_disable()
+invocations and move the pm_runtime handling in probe before
+devm_mbox_controller_register().
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: cd305ee3633a ("io_uring: defer eventfd signaling when queued from a wakeup handler")
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c |   31 ++++++++++---------------------
- 1 file changed, 10 insertions(+), 21 deletions(-)
 
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -94,20 +94,6 @@ int io_validate_user_buf_range(u64 uaddr
+LLM Generated explanations, may be completely bogus:
+
+The background history check finished successfully. It confirmed:
+
+- The imx mailbox PM/mbox ordering issue dates to **676f23eab75adb**
+  (Apr 2020, “Support runtime PM”).
+- The same class of fix is already in **6.18.44** via **a8bd68e4329f9**
+  (mtk-cmdq devm PM/mbox reorder), merged with mailbox-v6.11.
+
+That supports the earlier **YES** verdict: the imx patch fixes the same
+teardown ordering bug for i.MX MU devices in this tree.
+
+ drivers/mailbox/imx-mailbox.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+index a80cb2c9df6ee..a45c3e6d76575 100644
+--- a/drivers/mailbox/imx-mailbox.c
++++ b/drivers/mailbox/imx-mailbox.c
+@@ -936,38 +936,36 @@ static int imx_mu_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, priv);
+ 
+-	ret = devm_mbox_controller_register(dev, &priv->mbox);
+-	if (ret)
++	ret = devm_pm_runtime_enable(dev);
++	if (ret < 0)
+ 		goto disable_clk;
+ 
+-	of_platform_populate(dev->of_node, NULL, NULL, dev);
+-
+-	pm_runtime_enable(dev);
+-
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+-		goto disable_runtime_pm;
++		goto disable_clk;
+ 
+ 	ret = pm_runtime_put_sync(dev);
+ 	if (ret < 0)
+-		goto disable_runtime_pm;
++		goto disable_clk;
+ 
+ 	clk_disable_unprepare(priv->clk);
+ 
++	ret = devm_mbox_controller_register(dev, &priv->mbox);
++	if (ret)
++		goto err_out;
++
++	of_platform_populate(dev->of_node, NULL, NULL, dev);
++
  	return 0;
+ 
+-disable_runtime_pm:
+-	pm_runtime_disable(dev);
+ disable_clk:
+ 	clk_disable_unprepare(priv->clk);
++err_out:
+ 	return ret;
  }
  
--static int io_buffer_validate(struct iovec *iov)
--{
--	/*
--	 * Don't impose further limits on the size and buffer
--	 * constraints here, we'll -EINVAL later when IO is
--	 * submitted if they are wrong.
--	 */
--	if (!iov->iov_base)
--		return iov->iov_len ? -EFAULT : 0;
--
--	return io_validate_user_buf_range((unsigned long)iov->iov_base,
--					  iov->iov_len);
--}
--
- static void io_release_ubuf(void *priv)
+ static void imx_mu_remove(struct platform_device *pdev)
  {
- 	struct io_mapped_ubuf *imu = priv;
-@@ -317,9 +303,6 @@ static int __io_sqe_buffers_update(struc
- 			err = -EFAULT;
- 			break;
- 		}
--		err = io_buffer_validate(iov);
--		if (err)
--			break;
- 		node = io_sqe_buffer_register(ctx, iov, &last_hpage);
- 		if (IS_ERR(node)) {
- 			err = PTR_ERR(node);
-@@ -788,8 +771,17 @@ static struct io_rsrc_node *io_sqe_buffe
- 	struct io_imu_folio_data data;
- 	bool coalesced = false;
+-	struct imx_mu_priv *priv = platform_get_drvdata(pdev);
+-
+-	pm_runtime_disable(priv->dev);
+ }
  
--	if (!iov->iov_base)
-+	if (!iov->iov_base) {
-+		if (iov->iov_len)
-+			return ERR_PTR(-EFAULT);
-+		/* remove the buffer without installing a new one */
- 		return NULL;
-+	}
-+
-+	ret = io_validate_user_buf_range((unsigned long)iov->iov_base,
-+					 iov->iov_len);
-+	if (ret)
-+		return ERR_PTR(ret);
- 
- 	node = io_rsrc_node_alloc(ctx, IORING_RSRC_BUFFER);
- 	if (!node)
-@@ -895,9 +887,6 @@ int io_sqe_buffers_register(struct io_ri
- 				ret = PTR_ERR(iov);
- 				break;
- 			}
--			ret = io_buffer_validate(iov);
--			if (ret)
--				break;
- 			if (ctx->compat)
- 				arg += sizeof(struct compat_iovec);
- 			else
-
+ static const struct imx_mu_dcfg imx_mu_cfg_imx6sx = {
+-- 
+2.53.0
 
