@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452B049CF27;
-	Mon, 31 Aug 2026 13:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97354E56C3;
+	Mon, 31 Aug 2026 13:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183603; cv=none; b=G9jVQdxCwFjS02iP6zvE663xztQpqUZwSLAb2jTPZe2gtM23rKnpGgiYf09pYavEARPp+ZHwtAFhmiVU4YWC9liLiCOoMRnDzogwclK7tJAAqARu7y+hc9mYIGjJTmm8tGIiBkGlgzL6u7ll8U9Aq4PGYbzxfC4NK1xOC4rLKR8=
+	t=1788183605; cv=none; b=HB8GIHqYd2fqVUTy/IC2G+9dNyRTCdHKMiiaHuPgYkxup4GEn7P4E1nSZ88x5i6MDoCxd+tFOB9M12czIAWxuYRK0XJvgeseAhfXkDUpbVXb2FW3yMhymbS3okj02UMyyR6FelU307IAf6iyEG5nx8ETnsyqRLITMq5mH1oNKno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183603; c=relaxed/simple;
-	bh=HdTqYmRFCqXz2BrcvU61DWP7azzaV565riu46iVoBlI=;
+	s=arc-20240116; t=1788183605; c=relaxed/simple;
+	bh=hq3LvVJbLSoVc9fDLeWev5a3+jV6a15QR+CehIr11S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QuT/96BndceJCdEH+HP0e14Q0e2HdMbk2FwztEOU1njUlAcVrabTbd6UX7eF0pSd98b4Km1uISUVm+WPdwAQ0yFwvRVKKlH/oiG/oqEr6El59MEqCwR7kw+ElhFE+OQclZvp1PXWdbBUpcz5dw+h8Q4arkAo0axbBAFmukRjR7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gIWtnluB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pnzACSbFk0XdzYGvC+WX5ZP5c9phKf/3iUyR2C8nUx3P9usqkAvbd4ylEPH4MKiHRN0bpN24/3IgRHrln9vI2LwphqZEskBLvIr6VYmEQXmMXDTQjJqQTAOTpLojwceuWEy8qbXWTCB8khmjQFTIkDaYpcYkTJGuqEbHUOHy69E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lSCQDRm7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gIWtnluB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146F41F00A3E;
-	Mon, 31 Aug 2026 13:39:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lSCQDRm7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769E91F00ACA;
+	Mon, 31 Aug 2026 13:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183601;
-	bh=NtVfbbes/ko7nNCbIZFxZeNaoWBzUa4mLaruX3hFLmY=;
+	s=k20260515; t=1788183602;
+	bh=FRdDbvDICh6LQur0eYHl3aCIVvxP1IckkMD0ZJdShjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gIWtnluBVQiykWMQo2b6i16IImj3gG6crovtHbdCf6lySc2CI252J3Kj+9Wk6QS7B
-	 oVC+7dTL99mi9pmbSTTTP7d3KhXMukhIOnjOhkTi9ALfbjQZvidGcSBhmmQzDi6P9s
-	 03eCGIn4WjXNt5t/ERxnKup/KydVZEWAg++N3L7ZBnpvOD6xXEgtGZXNeQ2gVvf0A1
-	 m+XGVATsMXi8uEcZA8yJKTrhOWWJUUuDjt6/g4mfsfYnB4yY4uVXjiikg0hzptI1wa
-	 dfcF2jndqaC3TqYRmQelr/WV83DPwQlWOTE8FcHKqJjdBCn+VboaWWWLnq3gl/htwh
-	 5/l1oTVZxQByQ==
+	b=lSCQDRm7HtqaY68yuwyba87tbjcMjjvs0npUylx7FTDlV5tM4uenxk6bp854qyOUm
+	 HcOuAgXs5opXpeC9b5QLRcj7o0JbS/G+meT2IkoHuX9lak7nwdw3NYLTicBBnsAiMA
+	 LqUlBLNEeA3kAjTdqdvPG24Bc61c9NbPih4xETGYp42yL9Tw+QECmlZNMLSU449tGT
+	 8c3KSnc74PkxKT+VOsh2+NoUt2Oql3qkLg6owmZO4XpcxGCaCqzJy3Dzw6HNEZkM9f
+	 tmBmRKoMGSWxFnEdj5xIP6VQRgUI4Te2Cs80+EzPaeESf+b7tZsrZHaE/50KOC4ts9
+	 BVZU2pBrd39DA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tobias Deiminger <tobias.deiminger@linutronix.de>,
-	Lee Jones <lee@kernel.org>,
+Cc: Jijie Shao <shaojijie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	riku.voipio@iki.fi,
-	pavel@kernel.org,
-	linux-leds@vger.kernel.org,
+	shenjian15@huawei.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] leds: pca9532: Don't stop blinking for non-zero brightness
-Date: Mon, 31 Aug 2026 09:23:40 -0400
-Message-ID: <20260831133314.4125787-192-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] net: hns3: improve the unused_tuple parameter setting
+Date: Mon, 31 Aug 2026 09:23:41 -0400
+Message-ID: <20260831133314.4125787-193-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,398 +57,380 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Deiminger <tobias.deiminger@linutronix.de>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
+[ Upstream commit 1ad6f1ff3e96c7ee888475740c8acdaf822e0813 ]
 
-pca9532 unexpectedly stopped blinking when changing brightness to a
-non-zero value. To reproduce:
+Currently, when the tc tool is used to set flow table rules, the IP address
+and MAC address can be configured separately, for example, src_xx or dst_xx
+can be configured separately.
 
- echo timer > /sys/class/leds/led-1/trigger   # blinks
- echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
- cat /sys/class/leds/led-1/trigger            # still claims [timer]
+Therefore, the driver needs to check whether the mask is all zero in
+keys, such as FLOW_DISSECTOR_KEY_IPV4_ADDRS, FLOW_DISSECTOR_KEY_IPV6_ADDRS,
+and FLOW_DISSECTOR_KEY_ETH_ADDRS.
+If the mask is all zero, the tuple is not configured.
+In this case, the driver adds the tuple to unused_tuple.
 
-According to Documentation/leds/leds-class.rst, only brightness = 0
-shall be a stop condition:
-
-> You can change the brightness value of a LED independently of the
-> timer trigger. However, if you set the brightness value to LED_OFF it
-> will also disable the timer trigger.
-
-Therefore add a guard to continue blinking when brightness != LED_OFF,
-similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
-HW blink support").
-
-Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `leds: pca9532: Don't stop blinking for non-
-zero brightness`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (`6.18.44`, Makefile `VERSION=6`,
-`PATCHLEVEL=18`, `SUBLEVEL=44`)
+**Step 1.1 — Subject line**
+Record: `[net: hns3]` `[improve]` — improve `unused_tuple` handling when
+parsing tc flower match keys for MAC and IP addresses.
 
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[leds: pca9532]` `[fix/guard]` — When brightness is set to
-a non-zero value while hardware blinking is active, do not stop
-blinking.
-
-### Step 1.2: Tags
-**Record:**
-- **Signed-off-by:** Tobias Deiminger `<tobias.deiminger@linutronix.de>`
-  (author)
-- **Link:** https://patch.msgid.link/20260331202848.658676-1-
-  tobias.deiminger@linutronix.de
-- **Signed-off-by:** Lee Jones `<lee@kernel.org>` (subsystem maintainer,
-  applied)
+**Step 1.2 — Tags**
+Record:
+- **Signed-off-by:** Jijie Shao `<shaojijie@huawei.com>` (author)
+- **Link:**
+  https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
+- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (netdev
+  maintainer)
 - No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
   by:`, or `Cc: stable@vger.kernel.org`
-- Lore thread identifies mainline commit as
-  `770edd8e8e5bed961af2ca6ab397052046d1d774` (not present in this
-  checkout)
 
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** After enabling the `timer` trigger (hardware blink via PWM1),
-  writing a non-zero value to `brightness` stops blinking while sysfs
-  still reports `[timer]`.
-- **Symptom:** LED stays solid on; trigger sysfs entry is inconsistent
-  with actual behavior.
-- **Reproduction:** Documented sysfs sequence (`timer` trigger → `echo
-  255 > brightness` → `cat trigger`).
-- **Root cause (author):** `pca9532_set_brightness()` overwrites
-  `PCA9532_PWM1` state for any non-zero brightness.
-- **Reference:** LED class docs say only `LED_OFF` should stop a timer
-  trigger; `pca955x` already guards this way since `575f10dc64a2`.
+Notable: maintainer merge (`kuba@kernel.org`), but no fuzzer or user bug
+report tags.
 
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit functional bug fix, not disguised
-cleanup.
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** When `tc` installs flower rules with only `src_*` or only
+  `dst_*` for IP/MAC, the dissector key (`FLOW_DISSECTOR_KEY_ETH_ADDRS`,
+  `FLOW_DISSECTOR_KEY_IPV4_ADDRS`, `FLOW_DISSECTOR_KEY_IPV6_ADDRS`) can
+  be present while one side’s mask is all-zero.
+- **Symptom:** Driver fails to mark that tuple as unused; hardware flow-
+  director rules are programmed incorrectly instead of treating the
+  field as a wildcard.
+- **Root cause:** `hclge_get_cls_key_mac()` / `hclge_get_cls_key_ip()`
+  only set `unused_tuple` when the entire key is absent, not when an
+  individual mask is zero.
+
+**Step 1.4 — Hidden bug fix?**
+Record: **Yes.** Subject says “improve,” but this is a correctness fix
+for tc flower hardware offload, not a cosmetic cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **Files:** `drivers/leds/leds-pca9532.c` only (+4/-2 lines net)
-- **Function:** `pca9532_set_brightness()`
+**Step 2.1 — Inventory**
+Record:
+- **Files:** `drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c`
+  (+12 lines)
+- **Functions:** `hclge_get_cls_key_mac()`, `hclge_get_cls_key_ip()`
 - **Scope:** Single-file, surgical driver fix
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** Any non-zero brightness overwrites `led->state`
-  (`PCA9532_ON` or `PCA9532_PWM0`), including when already in
-  `PCA9532_PWM1` (HW blink).
-- **After:** If `value == LED_OFF` → turn off as before. Else if
-  `led->state == PCA9532_PWM1` → return 0 immediately (preserve HW
-  blink). Otherwise unchanged logic for `LED_FULL` / PWM dimming.
-- **Path affected:** Sysfs `brightness` writes while hardware blinking
-  is active.
+**Step 2.2 — Code flow change**
+Record:
+- **MAC hunk:** After copying eth addr keys/masks, if `match.mask->dst`
+  or `match.mask->src` is all-zero, set `INNER_DST_MAC` /
+  `INNER_SRC_MAC` in `unused_tuple`.
+- **IPv4 hunk:** If `match.mask->src` or `match.mask->dst` is zero, set
+  corresponding `INNER_SRC_IP` / `INNER_DST_IP`.
+- **IPv6 hunk:** If `ipv6_addr_any(&match.mask->src/dst)`, set
+  corresponding IP unused bits.
+- **Before:** Only the `else` branch (key fully absent) marked tuples
+  unused.
+- **After:** Per-field zero masks are also treated as unused, matching
+  ethtool-path behavior elsewhere in the same file.
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic / correctness fix (API contract violation)
-- **Mechanism:** HW blink sets `led->state = PCA9532_PWM1` in
-  `pca9532_update_hw_blink()`. Subsequent `brightness_set_blocking`
-  calls clobber that state via `pca9532_setled()`, stopping hardware
-  blink while the LED core still believes the timer trigger is active.
+**Step 2.3 — Bug mechanism**
+Record: **Logic / correctness fix.** Category: incorrect hardware tuple
+programming.
 
-### Step 2.4: Fix quality
-**Record:**
-- Fix is minimal and mirrors the established `pca955x` pattern
-  (`test_bit(active_blink)` → early `goto out` for non-zero brightness).
-- **Regression risk:** Low. `PCA9532_PWM1` for HW blink is only set via
-  `pca9532_update_hw_blink()`, which requires `hw_blink == true`. The
-  N2100 beeper path uses PWM1 but does not register a `led_classdev`
-  brightness callback, so the guard does not affect beeper input
-  handling.
-- `LED_OFF` still correctly stops the LED.
+When `unused_tuple` is **not** set, `hclge_fd_convert_tuple()` programs
+hardware using:
 
----
+```862:863:drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
+#define calc_x(x, k, v) ((x) = ~(k) & (v))
+#define calc_y(y, k, v) ((y) = (k) & (v))
+```
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+With mask `k = 0`, this yields `X = key`, `Y = 0` — not wildcard
+behavior. When `unused_tuple` **is** set, `hclge_fd_convert_tuple()`
+skips programming that tuple (wildcard). The ethtool path already does
+zero-mask checks (e.g. `hclge_fd_check_ether_tuple()`); the tc flower
+path did not.
 
-### Step 3.1: Blame
-**Record:** `pca9532_set_brightness()` core logic dates to 2008
-(`e14fa82439d33c`). The bug was latent until HW blink landed in
-`48ca7f302cfcf` (2024-06-17, "leds: pca9532: Use PWM1 for hardware
-blinking"), which added `pca9532_update_hw_blink()` setting
-`PCA9532_PWM1` without updating `pca9532_set_brightness()`.
-
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag. Logical introducer is
-`48ca7f302cfcf`, which is an ancestor of this tree.
-
-### Step 3.3: Related file history
-**Record:** Recent `leds-pca9532.c` commits in this tree include HW
-blink work (`48ca7f302cfcf`, `f51bc3cedfc45`), default frequency change,
-and error-message cleanup (`2aad93b6de0d8`, which carried `Cc: stable`).
-This fix is standalone (v2 of a single-patch series).
-
-### Step 3.4: Author context
-**Record:** Tobias Deiminger has no other commits in `drivers/leds/` in
-this tree. Lee Jones (LED maintainer) applied the patch.
-
-### Step 3.5: Dependencies
-**Record:**
-- Requires HW blink support (`48ca7f302cfcf`) — **present** in this
-  tree.
-- References `pca955x` pattern from `575f10dc64a2` — **present** in this
-  tree.
-- No series dependencies; applies standalone.
+**Step 2.4 — Fix quality**
+Record: Obviously correct, minimal, mirrors existing driver logic. Low
+regression risk. Does not fix the same gap in `hclge_get_cls_key_port()`
+(ports), but that is a separate pre-existing issue.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 3: Git History Investigation
 
-### Step 4.1: Original discussion
-**Record:**
-- **URL:** https://lore.kernel.org/linux-
-  leds/20260331202848.658676-1-tobias.deiminger@linutronix.de/
-- **Series:** v2 (v1 at https://lore.kernel.org/r/20260321102121.1563365
-  -1-tobias.deiminger@linutronix.de); v2 only changes comment style and
-  brace placement.
-- **Review:** Lee Jones replied "Applied, thanks!" — no NAKs or
-  objections found.
-- **Stable nomination:** None in thread.
+**Step 3.1 — Blame**
+Record: `hclge_get_cls_key_mac()` introduced in `0205ec041ec61` (“net:
+hns3: add support for hw tc offload of tc flower”, Dec 2020).
+`hclge_get_cls_key_ip()` mostly from same commit; signature extended in
+`e199a5b29f199` (2024).
 
-### Step 4.2: Reviewers
-**Record:** CC'd: `lee@kernel.org`, `pavel@kernel.org`,
-`eajames@linux.ibm.com`, `riku.voipio@iki.fi`, `linux-
-leds@vger.kernel.org`. Lee Jones (maintainer) applied.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no `Fixes:` tag.
 
-### Step 4.3: Bug report
-**Record:** Author-provided sysfs reproduction in patch and commit
-message. No external bugzilla/syzbot report.
+**Step 3.3 — Related file history**
+Record: Commit `1ad6f1ff3e96c` is patch 2/6 of “enhance tc flow offload
+support” on master. Other series commits add actions, dissectors,
+debugfs, and file split — not required for this 12-line fix. Standalone.
 
-### Step 4.4: Related patches
-**Record:** Standalone 1/1 patch. Related context: `575f10dc64a2`
-(pca955x HW blink guard) and `48ca7f302cfcf` (pca9532 HW blink
-introduction).
+**Step 3.4 — Author context**
+Record: Jijie Shao is an active hns3 contributor (FD/TC-related commits
+in this tree).
 
-### Step 4.5: Stable list
-**Record:** No stable-list discussion found for this specific fix.
+**Step 3.5 — Dependencies**
+Record: None. Functions and structures exist unchanged in 6.18.y.
+Cherry-pick to current HEAD applies cleanly (auto-merge, exit 0).
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 4: Mailing List and External Research
 
-### Step 5.1: Key functions
-**Record:** `pca9532_set_brightness()` (modified); context:
-`pca9532_update_hw_blink()`, `pca9532_set_blink()`, `pca9532_setled()`.
+**Step 4.1 — Original discussion**
+Record: `b4 dig -c 1ad6f1ff3e96c` →
+https://patch.msgid.link/20260610060618.834987-3-shaojijie@huawei.com
+Series: V4 net-next 2/6. Revisions v1–v4 found via `b4 dig -a`. Lore
+direct fetch blocked by bot protection; thread retrieved via `b4 dig
+-m`.
 
-### Step 5.2: Callers
-**Record:** `pca9532_set_brightness` is registered as
-`brightness_set_blocking` for `PCA9532_TYPE_LED` devices (probe path
-~line 426). Called from LED core via `__led_set_brightness_blocking()`
-on sysfs `brightness` writes — userspace-accessible.
+**Step 4.2 — Reviewers**
+Record: `b4 dig -w` CC’d `davem@davemloft.net`, `kuba@kernel.org`,
+`pabeni@redhat.com`, `netdev@vger.kernel.org`, Huawei maintainers. No
+explicit stable nomination found in mbox grep.
 
-### Step 5.3: Callees
-**Record:** On guarded path: none (early return). Normal path:
-`pca9532_calcpwm()`, `pca9532_setpwm()`, `pca9532_setled()` (I2C
-register writes under mutex).
+**Step 4.3 — Bug report**
+Record: No external bug report, syzbot, or user `Reported-by:`.
 
-### Step 5.4: Reachability
-**Record:**
-1. User writes `timer` to `trigger` → `led_blink_set()` →
-   `pca9532_set_blink()` → HW blink configures PWM1
-2. User writes non-zero `brightness` → `pca9532_set_brightness()` —
-   **buggy without fix**
-- Reachable from unprivileged userspace (sysfs, subject to permissions).
-  Common on embedded status-LED setups.
+**Step 4.4 — Series context**
+Record: Part of 6-patch enhancement series, but this patch only fixes
+existing cls-flower parsing; does not depend on new actions/dissectors
+from patches 3–6.
 
-### Step 5.5: Similar patterns
-**Record:** `pca955x_led_set()` in `leds-pca955x.c` lines 316–323
-explicitly preserves blinking for non-zero brightness when
-`active_blink` is set — same design intent.
+**Step 4.5 — Stable list**
+Record: Not searched on lore stable (no stable nomination found in
+retrieved mbox). UNVERIFIED whether stable@ discussed this separately.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 5: Code Semantic Analysis
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current `pca9532_set_brightness()` at lines 185–198
-lacks the `PCA9532_PWM1` guard. HW blink support from `48ca7f302cfcf` is
-in this tree. Bug introduced ~2024-06 with that commit.
+**Step 5.1 — Key functions**
+Record: `hclge_get_cls_key_mac()`, `hclge_get_cls_key_ip()`, called from
+`hclge_parse_cls_flower()`.
 
-### Step 6.2: Backport complications
-**Record:** Expected **clean apply** — the surrounding function matches
-the diff context exactly. No conflicting recent changes to this
-function.
+**Step 5.2 — Callers**
+Record: `hclge_parse_cls_flower()` ← `hclge_add_cls_flower()` ←
+`add_cls_flower` in `hnae3` ops ← `hns3_nic_setup_tc()`
+(`ndo_setup_tc`). Reachable from userspace via `tc` flower rules on HNS3
+NICs.
 
-### Step 6.3: Related fixes already present?
-**Record:** **No** — grep finds no "Non-zero brightness shall not stop"
-comment or equivalent guard. The fix commit (`770edd8e8e5b`) is not in
-this tree.
+**Step 5.3 — Callees**
+Record: `flow_rule_match_*`, `ether_addr_copy`, `ipv6_addr_be32_to_cpu`,
+`unused_tuple |= BIT(...)`.
 
----
+**Step 5.4 — Reachability**
+Record: Userspace-triggered via `tc filter add ... flower ...` on
+HiSilicon HNS3 hardware with flow-director/tc-flower offload enabled
+(`CONFIG_HNS3`).
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/leds/` — **PERIPHERAL** driver (PCA9532 I2C LED
-controller). Important for embedded/industrial boards (e.g. historical
-Thecus NAS platforms), not core kernel.
-
-### Step 7.2: Subsystem activity
-**Record:** LED subsystem actively maintained in 6.18.y; recent stable-
-relevant fixes include buffer overread, error-path leaks, and probe-
-order fixes.
+**Step 5.5 — Similar patterns**
+Record: Ethtool FD path in same file already checks zero masks
+(`hclge_fd_check_tcpip4_tuple()`, `hclge_fd_check_ether_tuple()`, etc.).
+tc flower path was inconsistent.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 6: Cross-Reference Against Local Tree (6.18.y)
 
-### Step 8.1: Who is affected
-**Record:** Users of `pca9532` with `hw_blink == true` (default for
-normal LED configs; disabled only for N2100 beeper variant). Driver-
-specific, config/board-specific.
+**Step 6.1 — Buggy code present?**
+Record: **Yes.** Local tree is **v6.18.44** (`git describe HEAD`).
+`hclge_get_cls_key_mac()` and `hclge_get_cls_key_ip()` lack zero-mask
+checks. Commit `1ad6f1ff3e96c` is **not** an ancestor of HEAD (`NOT IN
+TREE`). Bug present since tc flower support landed (2020).
 
-### Step 8.2: Trigger conditions
-**Record:** Enable `timer` trigger (HW blink succeeds), then write any
-non-zero brightness. **Common** for scripts/users adjusting LED
-intensity while blinking. Unprivileged users can trigger via sysfs (with
-normal permissions).
+**Step 6.2 — Backport complications**
+Record: Clean cherry-pick (auto-merge, no conflicts). Expected apply:
+**clean**.
 
-### Step 8.3: Failure mode severity
-**Record:** Incorrect LED behavior + inconsistent sysfs state (trigger
-shows active, hardware not blinking). **Severity: MEDIUM** — no crash,
-corruption, or deadlock; real functional regression against documented
-LED class behavior.
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Restores documented sysfs semantics; fixes regression
-  introduced by HW blink backport already in this tree.
-- **Risk:** Very low (4-line guard, proven sibling-driver pattern).
-- **Ratio:** Favorable — low-risk regression fix for functionality
-  already shipped in 6.18.y.
+**Step 6.3 — Related fixes already present?**
+Record: No equivalent fix found in 6.18.y history for this specific
+issue.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 7: Subsystem Context
 
-### Step 9.1: Evidence summary
+**Step 7.1 — Subsystem / criticality**
+Record: `drivers/net/ethernet/hisilicon/hns3` — **IMPORTANT**
+(server/cloud NIC driver, tc offload data path).
 
-**FOR backport:**
-- Real, reproducible bug with clear sysfs steps
-- Regression from `48ca7f302cfcf`, already in this tree
-- Violates `Documentation/leds/leds-class.rst` contract
-- Tiny, obviously correct fix matching `pca955x`
-- Maintainer (Lee Jones) applied without objection
-- Clean apply expected
+**Step 7.2 — Activity**
+Record: Actively maintained; recent TC/FD fixes in this file (e.g.
+`d7beeb64be5ca`, `6b36e5c4741f1`).
 
-**AGAINST backport:**
-- Not a crash, security, corruption, or deadlock issue
-- Affects only `pca9532` + HW blink configurations
-- No explicit `Cc: stable` or user bug reports beyond author
+---
 
-**Unresolved:** None material to the decision.
+## Phase 8: Impact and Risk Assessment
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic matches pca955x; sysfs
-   repro documented; maintainer applied.
-2. Fixes a real bug affecting users? **PASS** — sysfs/API behavior bug
-   on real hardware.
-3. Important issue? **PASS (moderate)** — regression in shipped HW-blink
-   feature; inconsistent sysfs state; not crash-level but user-visible
-   and documented-API violation.
-4. Small and contained? **PASS** — ~4 lines, one function, one file.
-5. No new features or APIs? **PASS** — behavior correction only.
-6. Can apply to local tree? **PASS** — prerequisite commits present;
-   clean apply expected.
+**Step 8.1 — Who is affected**
+Record: Users of HiSilicon HNS3 NICs with hardware tc flower offload,
+configuring rules with partial src/dst IP or MAC matching.
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs-only).
-Standard driver correctness fix.
+**Step 8.2 — Trigger conditions**
+Record: Common — `tc flower` rules matching only source or only
+destination IP/MAC. Unprivileged users can install tc rules (with
+appropriate capabilities/namespace policy).
 
-### Step 9.4: Problem and decision rationale
+**Step 8.3 — Failure mode / severity**
+Record: Incorrect hardware packet classification / queue steering; rules
+may not match intended traffic or may match too narrowly. **Severity:
+MEDIUM** — functional data-path bug, not kernel crash, deadlock, or
+memory corruption.
 
-This commit fixes a regression introduced when hardware blinking was
-added to `pca9532` in this tree (`48ca7f302cfcf`). Without the guard,
-any non-zero `brightness` write silently tears down `PCA9532_PWM1`
-hardware blink while the LED core still reports the `timer` trigger as
-active — breaking the documented rule that non-zero brightness changes
-should not disable the timer trigger.
+**Step 8.4 — Risk vs benefit**
+Record:
+- **Benefit:** MEDIUM — fixes real mis-steering for standard tc usage on
+  production NICs
+- **Risk:** LOW — 12 lines, mirrors proven ethtool logic
+- **Ratio:** Favorable for stable
 
-For 6.18.y users who received HW blink support, this completes that
-feature correctly. The fix is minimal, follows an in-tree precedent
-(`pca955x`), and carries negligible regression risk. While not a crash
-fix, it is a clear regression fix for behavior already present in this
-stable tree.
+---
+
+## Phase 9: Final Synthesis
+
+**Evidence FOR backport:**
+- Real, verifiable logic bug in tc flower offload path
+- Bug present in 6.18.y since 2020
+- Small, self-contained, applies cleanly
+- Aligns tc path with existing ethtool FD logic in same driver
+- Userspace-reachable via `tc` on widely deployed server NICs
+- Maintainer-reviewed and merged
+
+**Evidence AGAINST backport:**
+- No crash, security, or corruption angle
+- No user/fuzzer bug report
+- Part of larger net-next enhancement series (though patch itself is
+  independent)
+- Port matching has same class of bug but is not addressed here
+
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** — logic mirrors existing
+   driver patterns; no `Tested-by:` but change is straightforward
+2. Fixes a real bug affecting users? **PASS** — incorrect HW filtering
+   for partial tc flower matches
+3. Important issue? **PASS (borderline)** — incorrect packet steering on
+   production networking path; not crash-level but user-visible and
+   operationally significant
+4. Small and contained? **PASS** — 12 lines, 1 file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — verified clean cherry-pick
+
+**Exception category:** None (not quirk/ID/DT/docs/build).
+
+---
+
+## Problem Summary
+
+This commit fixes a long-standing inconsistency in the HNS3 driver’s tc
+flower offload path. When users install `tc flower` rules specifying
+only source or only destination IP/MAC addresses, the flow dissector
+includes the address key with a zero mask for the unspecified side. The
+driver must mark those tuples as unused so hardware treats them as
+wildcards. Without this fix, `unused_tuple` is not set, hardware is
+programmed with zero-mask tuple values, and flow-director rules behave
+incorrectly.
+
+For **Linux 6.18.y**, the buggy code is present, the fix is absent, the
+patch applies cleanly, and it is standalone. This is appropriate stable
+material: a small, low-risk driver correctness fix for a userspace-
+visible data-path bug.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message; fetched lore v2 mbox via curl
-- **[Phase 2]** Read current `pca9532_set_brightness()` at lines
-  179–199; analyzed provided diff
-- **[Phase 3]** `git describe HEAD` → v6.18.44; `git blame -L 179,199` →
-  core logic from 2008, bug latent until 2024; `git log --oneline -20 --
-  drivers/leds/leds-pca9532.c` → `48ca7f302cfcf` present; `git merge-
-  base --is-ancestor` → both `48ca7f302cfcf` and `575f10dc64a2` in tree;
-  `git show 48ca7f302cfcf` confirmed HW blink addition
-- **[Phase 4]** curl lore mbox: v2 patch, Lee Jones "Applied, thanks!",
-  commit id `770edd8e8e5b`; `b4 dig -c` failed (commit not in tree); no
-  stable-list hits
-- **[Phase 5]** Traced `brightness_set_blocking` registration (~line
-  426); read `pca955x_led_set()` guard at lines 316–323; read
-  `led_blink_setup()` in `led-core.c` (HW blink bypasses SW timer when
-  `blink_set` succeeds)
-- **[Phase 6]** Confirmed buggy code present (no PCA9532_PWM1 guard);
-  grep found no existing fix; `git show 770edd8e8e5b` → bad object (not
-  in tree)
-- **[Phase 7]** `git log --oneline -20 -- drivers/leds/` for subsystem
-  activity
-- **[Phase 8]** Read `Documentation/leds/leds-class.rst` lines 23–25;
-  confirmed `hw_blink` default true except N2100 beeper (~line 440)
-- **[Phase 9]** Synthesized against stable rules for 6.18.44 only
+- [Phase 1] Parsed commit message and tags from provided diff and `git
+  show 1ad6f1ff3e96c`
+- [Phase 2] Analyzed diff: +12 lines in `hclge_get_cls_key_mac()` and
+  `hclge_get_cls_key_ip()`
+- [Phase 2] Verified `calc_x`/`calc_y` macros and
+  `hclge_fd_convert_tuple()` skip logic
+- [Phase 2] Verified ethtool path already has zero-mask checks
+  (`hclge_fd_check_ether_tuple()` etc.)
+- [Phase 3] `git blame`: buggy code from `0205ec041ec61` (2020)
+- [Phase 3] `git merge-base --is-ancestor 1ad6f1ff3e96c HEAD` → NOT IN
+  TREE
+- [Phase 3] Cherry-pick test: `git cherry-pick --no-commit
+  1ad6f1ff3e96c` → exit 0, auto-merge
+- [Phase 4] `b4 dig -c 1ad6f1ff3e96c` → lore URL found
+- [Phase 4] `b4 dig -a` → v1–v4 series revisions
+- [Phase 4] `b4 dig -w` → netdev maintainers CC’d
+- [Phase 4] `b4 dig -m` → cover letter retrieved; patch 2/6 context
+  confirmed
+- [Phase 5] Traced call chain: `hns3_nic_setup_tc` →
+  `hclge_add_cls_flower` → `hclge_parse_cls_flower`
+- [Phase 6] `git describe HEAD` → v6.18.44; Makefile 6.18.44
+- [Phase 6] Read current `hclge_main.c` — buggy code confirmed present
+  (no zero-mask checks in MAC/IP cls helpers)
+- [Phase 8] Assessed severity as MEDIUM functional data-path bug
+- UNVERIFIED: No direct lore stable-list discussion
+- UNVERIFIED: No runtime test evidence beyond maintainer merge
 
-**YES**The background search finished: the fix (`leds: pca9532: Don't
-stop blinking for non-zero brightness`) is **not** in this `6.18.44`
-tree yet. The buggy code is still there — `pca9532_set_brightness()` can
-overwrite `PCA9532_PWM1` when sysfs brightness is set to a non-zero
-value while hardware blinking is active.
+**YES****Task result:** The branch search found commit `1ad6f1ff3e96c`
+on `master` — it matches the patch under review and is not in the local
+6.18.44 tree.
 
-**Verdict for this tree: YES** — small regression fix for HW blink
-support already in 6.18.y; low risk and matches the `pca955x` pattern.
+**Verdict (unchanged):** Backport **YES**. Small, standalone fix for
+incorrect tc flower hardware filtering when only src or dst IP/MAC is
+specified; applies cleanly to 6.18.y.
 
- drivers/leds/leds-pca9532.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c  | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 0344189bb991c..dae7c67605084 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -182,11 +182,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
- 	int err = 0;
- 	struct pca9532_led *led = ldev_to_led(led_cdev);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 7f174453928c1..08f7bda4ef4c4 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -7261,6 +7261,10 @@ static void hclge_get_cls_key_mac(const struct flow_rule *flow,
+ 		ether_addr_copy(rule->tuples_mask.dst_mac, match.mask->dst);
+ 		ether_addr_copy(rule->tuples.src_mac, match.key->src);
+ 		ether_addr_copy(rule->tuples_mask.src_mac, match.mask->src);
++		if (is_zero_ether_addr(match.mask->dst))
++			rule->unused_tuple |= BIT(INNER_DST_MAC);
++		if (is_zero_ether_addr(match.mask->src))
++			rule->unused_tuple |= BIT(INNER_SRC_MAC);
+ 	} else {
+ 		rule->unused_tuple |= BIT(INNER_DST_MAC);
+ 		rule->unused_tuple |= BIT(INNER_SRC_MAC);
+@@ -7309,6 +7313,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
+ 		rule->tuples.dst_ip[IPV4_INDEX] = be32_to_cpu(match.key->dst);
+ 		rule->tuples_mask.dst_ip[IPV4_INDEX] =
+ 						be32_to_cpu(match.mask->dst);
++		if (!match.mask->src)
++			rule->unused_tuple |= BIT(INNER_SRC_IP);
++		if (!match.mask->dst)
++			rule->unused_tuple |= BIT(INNER_DST_IP);
+ 	} else if (addr_type == FLOW_DISSECTOR_KEY_IPV6_ADDRS) {
+ 		struct flow_match_ipv6_addrs match;
  
--	if (value == LED_OFF)
-+	if (value == LED_OFF) {
- 		led->state = PCA9532_OFF;
--	else if (value == LED_FULL)
-+	} else if (led->state == PCA9532_PWM1) {
-+		return 0; /* Non-zero brightness shall not stop HW blinking */
-+	} else if (value == LED_FULL) {
- 		led->state = PCA9532_ON;
--	else {
-+	} else {
- 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
- 		err = pca9532_calcpwm(led->client, PCA9532_PWM_ID_0, 0, value);
- 		if (err)
+@@ -7321,6 +7329,10 @@ static int hclge_get_cls_key_ip(const struct flow_rule *flow,
+ 				      match.key->dst.s6_addr32);
+ 		ipv6_addr_be32_to_cpu(rule->tuples_mask.dst_ip,
+ 				      match.mask->dst.s6_addr32);
++		if (ipv6_addr_any(&match.mask->src))
++			rule->unused_tuple |= BIT(INNER_SRC_IP);
++		if (ipv6_addr_any(&match.mask->dst))
++			rule->unused_tuple |= BIT(INNER_DST_IP);
+ 	} else {
+ 		rule->unused_tuple |= BIT(INNER_SRC_IP);
+ 		rule->unused_tuple |= BIT(INNER_DST_IP);
 -- 
 2.53.0
 
