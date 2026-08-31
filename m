@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E5F5287E7;
-	Mon, 31 Aug 2026 13:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258A3525A6F;
+	Mon, 31 Aug 2026 13:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183873; cv=none; b=SFQouUqMRAFb2CVEcDsHa0ac/iLIRU37LMEuPlYUnKNGzvVbuwNQ+41OkEVFLxvznNXFVsQKAZ1a7YJLXHsb2TY1o26jkHxFWfBf5Cm+7Coo+uEzHOpNCgqfw3DaXrEriYO23OwMmGGlQzB/TpmHwLKcwbG9YuXa+8qNjv3qXLc=
+	t=1788183874; cv=none; b=osrvLkCT+MQPyv3jks5uA5bqOmzTg3AxIjCcExjtUyefowtqeX0zPzd/nqViKOqJnP6XOMN79ZTSqGxP+6qNUp1n8UgKOIzwWzdYRcoOEu+I0yWi4g0ytPVpfOMc4h8UsvwotSBZKnbTM7U+Xsp8+Fxrbs6wD00AU194Er2moIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183873; c=relaxed/simple;
-	bh=puNNEFgoDvAsBVoZoHPhxdKlDs1V7Bn/zAFeqzKKQLw=;
+	s=arc-20240116; t=1788183874; c=relaxed/simple;
+	bh=dVyXwQpOhSlcZaeS+Pb9nWCK/YswTgLI3aEufnhu3s0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LH9WI5mzwOqABZ7md1KEupICqhRJMU7Zq7VQ7GSSnbnkI2amyzhXgvLurTsChc9uCuNOC8OW3FUEMU2Gpj48p1Il7fru1w/jd901n30aC+AAdkZLzvSqh2xV7CBz8yfiRZ/wX2EDVYMFBIVHMMXsI8oTKetm+7XuYU0KQlyZdy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZtypRJ+4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IewIwnkwhcoMZyYlOfupeTDUIm64loriyXliV07h591jUe2HlNk/BGJFCN1TIoiiKVzoO0sjOP4JLxBj8hNOm3wjg8B1YbunSrNZRfoOHr4EqPCU9/HEvtV03gJgfNuFiloDiHUlLdzzCPNl/FF/aMF8U8q7YXtfmhjYz0Yeb6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RrNnvBr5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZtypRJ+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29A71F000E9;
-	Mon, 31 Aug 2026 13:44:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RrNnvBr5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDCA1F00A3E;
+	Mon, 31 Aug 2026 13:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183870;
-	bh=7cYGm8ncQi+rXRPclvImLskw4LvGRvg1dZVIcJ/v8vE=;
+	s=k20260515; t=1788183872;
+	bh=XrswinvKlteXXsU1UUGMT4NTv9PprhYDQw1IswwUcS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZtypRJ+4fCsfsywiPwbdFG5fWu7i8E2Eoit4a0JfxU3MhPEtJ0Bfa9VjDAMpxrgLb
-	 vmk6Cjj+kzhRVKiXYRAq9LV1IW4WL/PCvv8drDx2dVOG2Sg7js6kXtkKsztge8sLYo
-	 noqRNZJnCuq1PDSqbb9Zld2c4narjWZ/tGE6YnSkuVaibEJJH5wO7kHYOrs5rQyvsF
-	 cbX6y5iIS+AnzFGVweJ6Qye5p2fCZh+qZMag3ds9BXZJDtAR1tu/m523i7j70GC4Y3
-	 f+dT6wr4TYANttFgx6gd+Of8qw8twTQUz/vPOyaLa2PYLfrVfDIFJMpcEOscd6tZFr
-	 GEYiopkKOVKKA==
+	b=RrNnvBr5mEbzF9Q50Kvr3k9rdeRmQ30PtmQzo2LSicvP00T5TAgCnoCH1cCxV6afp
+	 LHWdsGnZgcDkjXHRHjW8acaqMF3t8OzMrdZMtsIhSUIeukJO4GTmsROw2YWM8BYUxV
+	 JJrEbn/hkpL841z26ZM8XJDFxT6rze2pNG96wFWUX/uylmDU7ZiFLdEhpyA5JSJgtQ
+	 w9joExCQvynGEiYXK0XOK60UnnSnJOuOpBeiTH85KERO1TvIBg5bqwGaVcuIcl7v9i
+	 3xOW+DaaTRqjVu20sBOu4Qyl+96wyXZzMpadOCb0gdGaO7e7BmyjG5KOKOLOrGk3l1
+	 aslU7tliKmYPw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+Cc: Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andreas.noever@gmail.com,
-	westeri@kernel.org,
-	YehezkelShB@gmail.com,
-	linux-usb@vger.kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] thunderbolt: Verify Router Ready bit is set after router enumeration
-Date: Mon, 31 Aug 2026 09:26:20 -0400
-Message-ID: <20260831133314.4125787-352-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/amdgpu/userq: pin mqd and fw object bo to avoid eviction
+Date: Mon, 31 Aug 2026 09:26:21 -0400
+Message-ID: <20260831133314.4125787-353-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -49,433 +50,412 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gil Fine <gil.fine@linux.intel.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit 062023c4364ffdc72978ed2de1d1435e5d4eee43 ]
+[ Upstream commit a3bbf32a336939a1d21b9561f8e53333b684b7ef ]
 
-The USB4 Connection Manager guide specifies that after enumerating a
-router, the Connection Manager shall verify that the Router Ready bit
-(ROUTER_CS_6.RR) has been set to ensure hardware configuration has completed.
-Currently, this step is missing from the enumeration sequence.
+mqd and fw objects are queue core objects which should remain
+valid and never be unmapped and evicted for user queues to work
+properly.
 
-Add this check to follow the Connection Manager guide more closely.
+During eviction if these buffers are evicted the hw continue to
+use the invalid addresses and caused page faults and system hung.
 
-Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `drm/amdgpu/userq: pin mqd and fw object bo
+to avoid eviction`
 
-### Step 1.1: Subject Line
-**Record:** `[thunderbolt]` `[verify]` — After USB4 router enumeration,
-verify that the Router Ready bit (`ROUTER_CS_6.RR`) is set before
-continuing.
+**Local tree:** Linux **6.18.43** (`git describe HEAD` →
+`v6.18.43-1-gc7f0dac02d232`, `make kernelversion` → `6.18.43`)
 
-### Step 1.2: Commit Message Tags
+**Upstream commit:** `a3bbf32a336939a1d21b9561f8e53333b684b7ef` (not
+present in this tree)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Parse the subject line
+**Record:** `[drm/amdgpu/userq]` — implicit **fix** (prevent eviction) —
+**pin MQD and firmware-object BOs so they are not evicted while user
+queues are active**.
+
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Fixes:** — not present (expected for manual review)
+- **Fixes:** — none (expected for manual review)
 - **Reported-by:** — none
 - **Tested-by:** — none
-- **Reviewed-by / Acked-by / Cc: stable:** — none in the committed
-  message
+- **Reviewed-by:** Christian König `<christian.koenig@amd.com>`
+- **Acked-by:** — none
 - **Link:** — none
-- **Signed-off-by:** Gil Fine, Mika Westerberg (ignore any pipeline-
-  added SOBs)
+- **Cc: stable@vger.kernel.org:** — none (not a negative signal)
+- **Signed-off-by:** Sunil Khatri (author), Alex Deucher (maintainer
+  merge)
+- **Notable:** Reviewed-by from AMDGPU subsystem maintainer; no
+  syzbot/reporter tags
 
-Notable pattern: no fuzzer report, no user report, no explicit stable
-nomination.
-
-### Step 1.3: Commit Body Analysis
+### Step 1.3: Analyze commit body
 **Record:**
-- **Bug described:** USB4 Connection Manager guide requires verifying
-  `ROUTER_CS_6.RR` after router enumeration to confirm hardware
-  configuration is complete; Linux omits this step.
-- **Symptom/failure mode:** Not spelled out as a crash or user report.
-  Implied failure mode is continuing enumeration before the router is
-  ready, which can cause flaky or failed device bring-up.
-- **Version info:** none
-- **Root cause:** Missing mandatory hardware-ready polling in the USB4
-  enumeration sequence.
+- **Bug:** MQD and firmware context objects are core user-queue state;
+  they must stay mapped and valid for the lifetime of an active queue.
+- **Symptom:** Under eviction (memory pressure), these BOs can be
+  evicted while hardware still references their GPU addresses → GPU page
+  faults → **system hang**.
+- **Root cause (author):** Objects were created as kernel BOs in GTT but
+  were not pinned, unlike other queue-critical objects.
+- **Version info:** None in the message.
 
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Yes, likely a hidden correctness bug. The message frames it
-as CM-guide compliance, but the mechanism is a missing hardware-ready
-wait in a hot enumeration path — the same class of fix as the existing
-Configuration Ready (`ROUTER_CS_6.CR`) wait already in this driver.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised as cleanup — this is an explicit stability
+fix. Pinning prevents TTM eviction of BOs the GPU firmware still uses.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Change Inventory
+### Step 2.1: Inventory the changes
 **Record:**
-- `drivers/thunderbolt/tb_regs.h`: +1 line (`ROUTER_CS_6_RR`)
-- `drivers/thunderbolt/usb4.c`: +6 / -1 lines in `usb4_switch_setup()`
-- **Functions modified:** `usb4_switch_setup()`
-- **Scope:** single-function, 2-file surgical fix
+- **File:** `drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c` (+10 / −3)
+- **Functions modified:** `amdgpu_userq_create_object()`,
+  `amdgpu_userq_destroy_object()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change (per hunk)
 **Record:**
-- **Hunk 1 (`tb_regs.h`):** Adds `ROUTER_CS_6_RR` (`BIT(24)`).
-- **Hunk 2 (`usb4.c`):**
-  - **Before:** `usb4_switch_setup()` wrote `ROUTER_CS_5` and returned
-    immediately.
-  - **After:** checks `tb_sw_write()` return value, then waits up to 500
-    ms for `ROUTER_CS_6_RR` via `tb_switch_wait_for_bit()`.
-- **Path affected:** USB4 router enumeration setup in
-  `tb_switch_configure()` → `usb4_switch_setup()`.
+- **Hunk 1 (`create_object`):** Before → reserve BO, alloc GART, kmap.
+  After → **pin BO first**, then GART/kmap; error paths goto `unpin_bo`
+  before `unresv`.
+- **Hunk 2 (`destroy_object`):** Before → kunmap + unref. After → kunmap
+  + **unpin** + unref.
+- **Paths affected:** Queue object creation/destruction for MQD and
+  firmware context objects.
 
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** synchronization / hardware-readiness race
-- **Mechanism:** Without waiting for RR, the CM can proceed to plug-
-  event enablement and later configuration/tunnel setup while the router
-  may still be finishing hardware configuration. The fix blocks until RR
-  is set or returns `-ETIMEDOUT`.
+### Step 2.3: Bug mechanism
+**Record:** **Memory safety / resource lifetime bug.** MQD
+(`queue->mqd`) and firmware context (`queue->fw_obj`) BOs created via
+`amdgpu_userq_create_object()` were evictable. Doorbell objects in the
+same file were already pinned (`amdgpu_bo_pin(...,
+AMDGPU_GEM_DOMAIN_DOORBELL)` at line 331). MQD/fw objects were an
+oversight.
 
-### Step 2.4: Fix Quality
+### Step 2.4: Fix quality
 **Record:**
-- **Quality:** High. Mirrors the existing CR wait in
-  `usb4_switch_configuration_valid()`.
-- **Regression risk:** Low. `tb_switch_wait_for_bit()` returns
-  immediately when the bit is already set; 500 ms is a max timeout, not
-  a fixed sleep.
-- **Red flags:** none significant.
+- **Obviously correct:** Mirrors existing doorbell pinning pattern in
+  the same file.
+- **Minimal:** 10 lines, proper error-path cleanup (`unpin_bo` label).
+- **Regression risk:** Low — pinning is standard for BOs hardware must
+  keep resident; unpin on destroy balances pin on create.
+- **Reviewer note:** Christian König suggested eviction-fence
+  association as a future improvement but gave **Reviewed-by** for
+  pinning as an immediate fix.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame / Introduction of Buggy Code
-**Record:**
-- `usb4_switch_setup()` introduced in `d49b4f043d63b` (2022-10-11),
-  refined in later commits.
-- The direct-return `tb_sw_write()` path dates to original USB4 support
-  (`b04079837b209`, 2019-12-18).
-- **Bug present since initial USB4 support** in this subsystem.
+### Step 3.1: Blame changed lines
+**Record:** `amdgpu_userq_create_object()` / `destroy_object()` present
+in `7b923c78b50d2` (v6.18.43 tag) **without** pinning. `amdgpu_userq.c`
+also exists in `v6.17` and `v6.18` tags. Bug predates the fix commit.
 
-### Step 3.2: Fixes: Tag
+### Step 3.2: Follow Fixes: tag
 **Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: Related File History
-**Record:**
-- Part of Gil Fine’s 5-patch series `[PATCH 0/5] CM fixes to follow CM
-  guide more closely` on lore.
-- Related upstream-only commits on `master` not in `linux-6.18.y`:
-  - `ba2cc38511012` — increase CR timeout to 500 ms
-  - `e24f3c0df4837` — increase notification timeout
-  - `69a7b98770b7e` — verify PCIe adapter detect state before tunnel
-    setup
-- **This patch is standalone**; it does not depend on the other series
-  members.
+### Step 3.3: File history for related changes
+**Record:** Patch is **v2 2/2** in series with `drm/amdgpu/userq: use
+drm_exec in amdgpu_userq_fence_read_wptr` (patch 1/2, different file:
+`amdgpu_userq_fence.c`). **This patch is standalone** — no dependency on
+patch 1/2.
 
-### Step 3.4: Author Context
-**Record:** Gil Fine is a regular Thunderbolt contributor; prior work
-includes moving/wait-bit infrastructure (`1639664fb74f3`). Mika
-Westerberg committed/applied it.
+### Step 3.4: Author's other commits
+**Record:** Sunil Khatri is an active AMDGPU userq contributor (multiple
+userq fixes in drm tree). Alex Deucher merged; Christian König reviewed.
 
 ### Step 3.5: Prerequisites
-**Record:**
-- `tb_switch_wait_for_bit()` exists in this tree (`switch.c`, declared
-  in `tb.h`).
-- `usb4_switch_setup()` exists and matches the patch context.
-- `git apply --check` on the upstream patch: **clean apply**.
-- **Standalone:** yes.
+**Record:** No prerequisites. `amdgpu_bo_pin()` / `amdgpu_bo_unpin()`
+exist in this tree (`amdgpu_object.c`). `git show a3bbf32... | git apply
+--check` succeeds on current checkout.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
+### Step 4.1: Original patch discussion
 **Record:**
-- `b4 dig -c 062023c4364ff` → https://patch.msgid.link/20260126220606.34
-  76657-4-gil.fine@linux.intel.com
-- Series: v1 only, `[PATCH 3/5]`
-- Cover letter: “improves Connection Manager implementation to better
-  align with the CM Guide”
-- **No stable nomination found** in the downloaded thread.
+- **b4 dig -c a3bbf32a336939a1d21b9561f8e53333b684b7ef:**
+  https://patch.msgid.link/20260508103910.2442183-2-sunil.khatri@amd.com
+- **b4 dig -a:** v1 single patch, v2 two-patch series; committed version
+  matches v2 2/2
+- **Reviewer feedback:** Christian König: "We should probably use the
+  eviction fence instead of pinning, but that can come in a later patch
+  set." → **Reviewed-by for now.** Author agreed pinning is acceptable
+  interim fix.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` CC’d `mika.westerberg@linux.intel.com`, `linux-
-usb@vger.kernel.org`, Andreas Noever, YehezkelShB, Lukas Wunner. No
-`Reviewed-by` / `Acked-by` captured in the committed result.
+**Record:** **b4 dig -w:** To/CC: Sunil Khatri, Alex Deucher, Christian
+König, amd-gfx@lists.freedesktop.org — appropriate maintainer coverage.
 
-### Step 4.3: Bug Report
-**Record:** No external bug report, syzbot link, or `Reported-by:`.
+### Step 4.3: Bug report
+**Record:** No external bug report or syzbot link. Hang described in
+commit message and patch submission; no stack trace provided.
 
-### Step 4.4: Series Context
-**Record:** 5-patch CM-guide alignment series. Other patches include log
-cleanup, PCIe LTSSM check, CR timeout increase, and notification timeout
-increase. Only patch 3 is under review here.
+### Step 4.4: Related patches
+**Record:** Patch 1/2 (drm_exec locking in fence read) is independent.
+Not required for this fix.
 
-### Step 4.5: Stable List History
-**Record:** No stable-list discussion found for this specific patch.
+### Step 4.5: Stable mailing list
+**Record:** Not searched on lore stable (Anubis blocked direct lore
+fetch). No explicit stable nomination found in accessible amd-gfx
+thread.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `usb4_switch_setup()`, `tb_switch_wait_for_bit()`,
-`tb_switch_configure()`
+### Step 5.1: Key functions
+**Record:** `amdgpu_userq_create_object()`,
+`amdgpu_userq_destroy_object()`
 
 ### Step 5.2: Callers
-**Record:**
-- `usb4_switch_setup()` called from `tb_switch_configure()` in
-  `switch.c` for USB4 routers.
-- `tb_switch_configure()` called from:
-  - hotplug path in `tb.c` (`~1344`) during downstream router discovery
-  - resume/reconfigure paths (`switch.c`, `tb.c`)
-
-**Context:** device hotplug/enumeration and resume — common, user-
-visible paths.
+**Record:** `mes_userqueue.c`:
+- `mes_userq_create_ctx_space()` → `amdgpu_userq_create_object(uq_mgr,
+  &queue->fw_obj, ...)` (fw context)
+- MQD setup → `amdgpu_userq_create_object(uq_mgr, &queue->mqd, ...)`
+  (line 266)
+- Destroy paths call `amdgpu_userq_destroy_object()` for both objects
 
 ### Step 5.3: Callees
-**Record:** `tb_sw_read()`, `tb_sw_write()`, `tb_switch_wait_for_bit()`
-— standard router config-space access and polling.
+**Record:** `amdgpu_bo_create`, `amdgpu_bo_reserve`,
+**`amdgpu_bo_pin`**, `amdgpu_ttm_alloc_gart`, `amdgpu_bo_kmap`,
+`amdgpu_bo_kunmap`, **`amdgpu_bo_unpin`**, `amdgpu_bo_unref`
 
-### Step 5.4: Reachability
+### Step 5.4: Call chain / reachability
 **Record:**
-- Triggered by USB4/Thunderbolt hotplug, resume, and domain
-  initialization.
-- Requires `CONFIG_USB4` / Thunderbolt stack; not universal, but
-  important on modern laptops and docks.
-- **Userspace-reachable indirectly** via physical hotplug/connect
-  events.
+`userspace DRM_IOCTL_AMDGPU_USERQ (CREATE)` → `amdgpu_userq_ioctl()` →
+`amdgpu_userq_create()` → MES userq setup →
+`amdgpu_userq_create_object()` for MQD/fw_obj.
 
-### Step 5.5: Similar Patterns
-**Record:** Existing CR wait in `usb4_switch_configuration_valid()`:
+**Reachable from userspace** by processes with DRM render access on
+supported AMDGPU hardware (GFX11+ with MES userq support). Trigger
+requires active user queues plus memory eviction pressure.
 
-```329:330:drivers/thunderbolt/usb4.c
-        return tb_switch_wait_for_bit(sw, ROUTER_CS_6, ROUTER_CS_6_CR,
-                                      ROUTER_CS_6_CR, 50);
-```
-
-The RR wait is the missing earlier-stage counterpart after enumeration
-setup.
+### Step 5.5: Similar patterns
+**Record:** Doorbell pinning already done in
+`amdgpu_userq_get_doorbell_index()` (line 331). Fix aligns MQD/fw_obj
+with that established pattern.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Does Buggy Code Exist Here?
-**Record:** **Yes.**
-- Local tree: `stable/linux-6.18.y`, `v6.18.44`
-- `ROUTER_CS_6_RR` is **not** present
-- `usb4_switch_setup()` still returns directly after `tb_sw_write()`:
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** At `7b923c78b50d2` and current HEAD,
+`amdgpu_userq_create_object()` has no `amdgpu_bo_pin()`; only doorbell
+path pins. Fix commit `a3bbf32` is **not** an ancestor of HEAD (`merge-
+base --is-ancestor` returned 1).
 
-```294:297:drivers/thunderbolt/usb4.c
-        /* TBT3 supported by the CM */
-        val &= ~ROUTER_CS_5_CNS;
+### Step 6.2: Backport complications
+**Record:** **Clean apply** — `git apply --check` passes with no
+conflicts. Line numbers differ slightly from upstream diff (487 vs 243)
+but context matches.
 
-        return tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
-```
-
-- Commit `062023c4364ff` is on `master` but **not** in this `6.18.y`
-  checkout.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** `git apply --check` succeeded with
-no conflicts.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent RR wait already in `6.18.y`. Related dock
-timing fix `bd646c768a934` is already present, but it addresses a
-different issue (sideband polling delay), not RR verification.
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent pinning for MQD/fw_obj found. Doorbell pinning
+present; this fix completes the pattern.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/thunderbolt` — **IMPORTANT**. Affects
-USB4/Thunderbolt device enumeration on laptops, docks, and peripherals.
+### Step 7.1: Subsystem criticality
+**Record:** **drivers/gpu/drm/amd/amdgpu** — IMPORTANT (AMD GPU users;
+not universal core kernel, but affects all userq users on supported
+hardware).
 
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained; recent stable-relevant fixes include
-dock connection and wake issues.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Users with USB4/Thunderbolt hardware and
-`CONFIG_USB4`/Thunderbolt enabled — common on Intel/Apple/modern AMD
-laptops and docks.
-
-### Step 8.2: Trigger Conditions
-**Record:**
-- USB4 router enumeration during hotplug, resume, or domain setup
-- Race manifests when software proceeds before router sets RR
-- **Likelihood:** intermittent/timing-dependent; bug has existed since
-  2019 without a cited report, but the race window is real on a
-  mandatory spec step
-
-### Step 8.3: Failure Mode Severity
-**Record:**
-- **Without fix:** possible flaky enumeration, failed router bring-up,
-  downstream tunnel/device failures
-- **With fix:** explicit success or `-ETIMEDOUT` instead of proceeding
-  on unready hardware
-- **Severity:** **MEDIUM-HIGH** for affected hardware paths; not a
-  kernel oops, but can make docks/devices fail to connect
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** improves correctness of USB4 enumeration; prevents use of
-  a router before hardware configuration completes
-- **Risk:** very low — tiny patch, existing helper, immediate return
-  when bit already set
-- **Ratio:** favorable
+### Step 7.2: Subsystem activity
+**Record:** Userq subsystem actively developed in 6.18.y (multiple
+userq-related stable fixes in drm-fixes stream). Feature is present and
+enabled via existing IOCTL path.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 9.1: Evidence Summary
+### Step 8.1: Who is affected
+**Record:** Users of **AMDGPU user mode queues** on hardware where
+`userq_funcs` is registered (GFX11/GFX12, SDMA v6/v7, etc.). Config:
+`CONFIG_DRM_AMDGPU` with userq-capable ASIC.
 
-**For backport:**
-- Real missing hardware-ready wait in USB4 enumeration
-- Small, surgical, cleanly applies to `6.18.y`
-- Uses existing `tb_switch_wait_for_bit()` infrastructure
-- Consistent with existing CR wait in same driver
-- Failure aborts enumeration cleanly instead of continuing in a bad
-  state
-- Maintainer-authored/applied Thunderbolt fix
+### Step 8.2: Trigger conditions
+**Record:** Create user queues via `DRM_AMDGPU_USERQ`, then
+**VRAM/memory pressure triggers TTM eviction** while queues are active.
+Not every boot — requires memory pressure plus active userq workloads.
+Triggerable by unprivileged render-capable processes.
 
-**Against backport:**
-- No user report, syzbot, or crash trace
-- Framed as CM-guide compliance rather than fixing a reported regression
-- Issue present since 2019 without demonstrated widespread impact
-- Part of a broader spec-alignment series
-- No explicit stable nomination or `Cc: stable`
+### Step 8.3: Failure mode severity
+**Record:** GPU page faults from stale MQD/fw addresses → **system
+hang**. Severity: **CRITICAL**.
 
-**Unresolved:**
-- No proof of a specific production failure this patch fixes
-- No `Tested-by` on hardware
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** HIGH for userq users — prevents GPU hangs under memory
+  pressure
+- **Risk:** LOW — 10-line change, established pin/unpin API, reviewed by
+  maintainer
+- **Ratio:** Strong benefit, minimal risk
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic is clear; no runtime
-   test evidence
-2. Fixes a real bug affecting users? **PASS** — missing mandatory
-   hardware-ready check in enumeration
-3. Important issue? **PASS** — can cause device/dock enumeration failure
-4. Small and contained? **PASS** — 7 lines, 2 files
-5. No new features/APIs? **PASS**
-6. Can apply to this tree? **PASS**
+---
 
-### Step 9.3: Exception Categories
-**Record:** Not a device-ID/quirk/DT/build/docs exception. This is a
-driver correctness/hardware-readiness fix.
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.4: Decision Rationale
+### Step 9.1: Evidence compile
 
-For **linux-6.18.y**, this is worth backporting. The missing RR
-verification is not just documentation polish: it allows the connection
-manager to continue router bring-up before the hardware signals
-configuration completion. That is a real race in a user-visible hotplug
-path. The fix is tiny, uses established driver infrastructure, applies
-cleanly, and matches an existing pattern already present in this tree
-for `ROUTER_CS_6_CR`. The lack of a specific bug report weakens the
-case, but stable policy favors small correctness fixes that prevent
-hardware-init races on commonly used laptop/dock paths when risk is
-minimal.
+**FOR backport:**
+- Fixes real system hang (page faults → hang) under eviction
+- Small, surgical, reviewed by Christian König, merged by Alex Deucher
+- Mirrors existing doorbell pinning in same file
+- Applies cleanly to 6.18.43
+- Buggy code confirmed present in this tree
+- Standalone — no series dependency
+
+**AGAINST backport:**
+- Userq is a relatively new feature (not all stable users enable it)
+- Pinning is acknowledged as interim; eviction-fence integration
+  preferred long-term
+- No syzbot/reporter — harder to quantify frequency
+- Affects driver-specific path, not core kernel
+
+**Unresolved:** Exact reproduction rate in production; no public CVE or
+bugzilla reference.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — pattern matches doorbell
+   pinning; reviewed by maintainer
+2. Fixes real bug affecting users? **PASS** — hang under eviction with
+   active user queues
+3. Important issue? **PASS** — CRITICAL (system hang)
+4. Small and contained? **PASS** — 1 file, +10/−3
+5. No new features/APIs? **PASS** — lifecycle fix only
+6. Can apply to local tree? **PASS** — clean apply verified
+
+### Step 9.3: Exception categories
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+bug fix.
+
+### Step 9.4: Decision rationale
+
+For **Linux 6.18.y**, the userq infrastructure is present and the bug is
+real: MQD and firmware context BOs can be evicted while hardware still
+references them, causing hangs. The fix is minimal, maintainer-reviewed,
+follows an existing pattern in the same file, and applies cleanly. While
+userq affects a subset of AMDGPU users, a system hang under memory
+pressure meets stable criteria for important fixes.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject/tags/body from provided commit and `git show
-  062023c4364ff`
-- [Phase 2] Diff analysis: 2 files, `usb4_switch_setup()` only; adds RR
-  define and wait
-- [Phase 3] `git describe HEAD` → `v6.18.44`; tree is `6.18.44`
-- [Phase 3] `git blame` on `usb4.c:295-297` → path present since USB4
-  bring-up
-- [Phase 3] `usb4_switch_setup` introduced via `b04079837b209` /
-  `d49b4f043d63bd`
-- [Phase 3] `tb_switch_wait_for_bit` present since `1639664fb74f3`
-- [Phase 3] Commit not in `stable/linux-6.18.y`; present on `master` as
-  `062023c4364ff`
-- [Phase 4] `b4 dig -c 062023c4364ff` found lore thread
-- [Phase 4] `b4 dig -a` found v1 series only
-- [Phase 4] `b4 dig -w` listed Thunderbolt/USB maintainers/reviewers
-- [Phase 4] Downloaded mbox; cover letter confirms CM-guide alignment
-  series; no stable CC found
-- [Phase 5] `grep usb4_switch_setup` → called from
-  `tb_switch_configure()`
-- [Phase 5] `grep tb_switch_configure` → hotplug path in `tb.c:1344`
-- [Phase 5] Verified existing CR wait in
-  `usb4_switch_configuration_valid()`
-- [Phase 6] Confirmed `ROUTER_CS_6_RR` absent in current `6.18.y`
-  checkout
-- [Phase 6] `git apply --check` on upstream patch → clean apply
-- [Phase 6] Verified prerequisites `tb_switch_wait_for_bit` and USB4
-  support are ancestors of HEAD
-- [Phase 8] Read failure handling in `tb.c:1344-1346` — configure
-  failure drops switch and aborts bring-up
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+  and `git show a3bbf32`
+- **[Phase 1]** Reviewed-by: Christian König; Signed-off-by: Sunil
+  Khatri, Alex Deucher
+- **[Phase 2]** Diff: +10/−3 in `amdgpu_userq.c`;
+  `create_object`/`destroy_object` modified
+- **[Phase 2]** Confirmed doorbell already pinned at line 331 in local
+  tree
+- **[Phase 3]** `git describe` / `make kernelversion`: 6.18.43
+- **[Phase 3]** `git merge-base --is-ancestor a3bbf32 7b923c78b50d2`:
+  NOT in tree (exit 1)
+- **[Phase 3]** `git show 7b923c78b50d2:...amdgpu_userq.c`:
+  create_object lacks pin
+- **[Phase 3]** `git apply --check` on upstream patch: clean apply
+- **[Phase 3]** `git show v6.18:...amdgpu_userq.c | grep amdgpu_bo_pin`:
+  only doorbell pin
+- **[Phase 3]** `git show v6.17:...amdgpu_userq.c`: file exists (982
+  lines)
+- **[Phase 4]** `b4 dig -c a3bbf32`: lore URL found
+- **[Phase 4]** `b4 dig -a`: v1/v2 series; v2 2/2 is committed version
+- **[Phase 4]** `b4 dig -w`: Alex Deucher, Christian König CC'd
+- **[Phase 4]** spinics.net msg143086: König Reviewed-by; eviction-fence
+  noted as future work
+- **[Phase 5]** Grep callers: `mes_userqueue.c` uses create_object for
+  `fw_obj` and `mqd`
+- **[Phase 5]** IOCTL path: `DRM_IOCTL_AMDGPU_USERQ` in `amdgpu_drv.c`
+- **[Phase 6]** Buggy code at HEAD lines 243–303: no pin in
+  create_object
+- **[Phase 6]** Eviction path: `amdgpu_eviction_fence.c` →
+  `amdgpu_userq_evict()` exists but does not pin MQD/fw BOs
+- **[Phase 8]** Failure mode: page faults + system hang per commit
+  message
 
-**YES****Verdict: YES** — backport to `linux-6.18.y`.
+**YES**
 
-The commit adds a missing Router Ready (`ROUTER_CS_6.RR`) wait in
-`usb4_switch_setup()` after USB4 router enumeration. Without it, the
-driver can continue before hardware configuration finishes, which can
-cause flaky dock/device bring-up. The fix is small (7 lines), applies
-cleanly to `6.18.y`, and follows the same pattern as the existing
-Configuration Ready wait in the Thunderbolt driver.
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-The main weakness is the lack of a reported bug or crash trace — it's
-framed as CM-guide compliance — but the correctness issue in a hot
-enumeration path and the low risk still make it a reasonable stable
-candidate.
-
- drivers/thunderbolt/tb_regs.h | 1 +
- drivers/thunderbolt/usb4.c    | 7 ++++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/thunderbolt/tb_regs.h b/drivers/thunderbolt/tb_regs.h
-index 97404d8d878bf..7f2dcb309e928 100644
---- a/drivers/thunderbolt/tb_regs.h
-+++ b/drivers/thunderbolt/tb_regs.h
-@@ -216,6 +216,7 @@ struct tb_regs_switch_header {
- #define ROUTER_CS_6_WOPS			BIT(2)
- #define ROUTER_CS_6_WOUS			BIT(3)
- #define ROUTER_CS_6_HCI				BIT(18)
-+#define ROUTER_CS_6_RR				BIT(24)
- #define ROUTER_CS_6_CR				BIT(25)
- #define ROUTER_CS_7				0x07
- #define ROUTER_CS_9				0x09
-diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
-index 9430bed07c468..6383fd43203d7 100644
---- a/drivers/thunderbolt/usb4.c
-+++ b/drivers/thunderbolt/usb4.c
-@@ -294,7 +294,12 @@ int usb4_switch_setup(struct tb_switch *sw)
- 	/* TBT3 supported by the CM */
- 	val &= ~ROUTER_CS_5_CNS;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index 7e3175f82a20d..0f4281c9aea2f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -270,16 +270,20 @@ int amdgpu_userq_create_object(struct amdgpu_userq_mgr *uq_mgr,
+ 		goto free_obj;
+ 	}
  
--	return tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
-+	ret = tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
-+	if (ret)
-+		return ret;
++	r = amdgpu_bo_pin(userq_obj->obj, AMDGPU_GEM_DOMAIN_GTT);
++	if (r)
++		goto unresv;
 +
-+	return tb_switch_wait_for_bit(sw, ROUTER_CS_6, ROUTER_CS_6_RR,
-+				      ROUTER_CS_6_RR, 500);
+ 	r = amdgpu_ttm_alloc_gart(&(userq_obj->obj)->tbo);
+ 	if (r) {
+ 		drm_file_err(uq_mgr->file, "Failed to alloc GART for userqueue object (%d)", r);
+-		goto unresv;
++		goto unpin_bo;
+ 	}
+ 
+ 	r = amdgpu_bo_kmap(userq_obj->obj, &userq_obj->cpu_ptr);
+ 	if (r) {
+ 		drm_file_err(uq_mgr->file, "Failed to map BO for userqueue (%d)", r);
+-		goto unresv;
++		goto unpin_bo;
+ 	}
+ 
+ 	userq_obj->gpu_addr = amdgpu_bo_gpu_offset(userq_obj->obj);
+@@ -287,11 +291,13 @@ int amdgpu_userq_create_object(struct amdgpu_userq_mgr *uq_mgr,
+ 	memset(userq_obj->cpu_ptr, 0, size);
+ 	return 0;
+ 
++unpin_bo:
++	amdgpu_bo_unpin(userq_obj->obj);
+ unresv:
+ 	amdgpu_bo_unreserve(userq_obj->obj);
+-
+ free_obj:
+ 	amdgpu_bo_unref(&userq_obj->obj);
++
+ 	return r;
  }
  
- /**
+@@ -299,6 +305,7 @@ void amdgpu_userq_destroy_object(struct amdgpu_userq_mgr *uq_mgr,
+ 				 struct amdgpu_userq_obj *userq_obj)
+ {
+ 	amdgpu_bo_kunmap(userq_obj->obj);
++	amdgpu_bo_unpin(userq_obj->obj);
+ 	amdgpu_bo_unref(&userq_obj->obj);
+ }
+ 
 -- 
 2.53.0
 
