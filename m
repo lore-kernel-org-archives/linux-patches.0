@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1713F441638;
-	Mon, 31 Aug 2026 13:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4307492531;
+	Mon, 31 Aug 2026 13:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183514; cv=none; b=E7ri5/t6xMVfiVsplWkZ2FXGv5NLaWoixLoRJrjuPayiZQ6ZreqfuHGJHmtiXo6UvgPnuqKnvF7cJbpao/rVVIAcafLHn3ILVnosmQmCC0//gO2O1fBM3z637kKf/6hHhDWVg4JCxOIj9MLRK8USFRAlsjtH4/ywfUW2WHlr/hE=
+	t=1788183514; cv=none; b=M4g4+3/19S5915myxDbE5WfsOTifAtwRoIy4J8zg1xf00oNu3Al30WPZvWtDS6lOlr8q5D0kbBUyO/3NaqxCDMEx2oXc5R7QFQZRuwsmKSRd9MyiI2570C698M3JxT+o5HRiVC9I2x17XURyD6FBRt8uprZx6qBRFvm8qUVA6VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183514; c=relaxed/simple;
-	bh=vkzjvcfVOuU9CfoH9pSbPF3ZMRBrTjtnmjiEgS+KVoQ=;
+	bh=fLJLMeraz/9+eiqxQRHsQvXXQQCTTjaCm+C0Blki5zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G/d8B1rgVveaxuuqjFUHyykEbQmbgEh5NHPHk3J7g9B/21r3qcs+LLKW8VPIN2zlykb9HBnQww0TwWTb4N4xP4Bb4BjbovheCaWzSBI38ao7tDg/2JGEFvXIPETO5QJa74dBdVXtj9uHh3KK+KOave0mfCAh9LQGlAkqtrdtXKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RENWGPik; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BM4ebZWcL3mq27As1x+2qZkJJGSQwE4KdHFh9Q0U+qYMZYHGu5EJ/XWahaoG7zkzLfXYsEwwCo0PBZpXkyYwnsRvkBNA/3gvrzQdjInuxncB/SxQW7lFWq96xYW821bHagdIK39nX2Eg5SKXdI3lFcMjpXzCnZV+8PX8YAMho2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EE5Slf9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RENWGPik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21EF1F00ACF;
-	Mon, 31 Aug 2026 13:38:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EE5Slf9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127F91F00A3D;
+	Mon, 31 Aug 2026 13:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183511;
-	bh=VG40jkJfT/mfWU5YClkiIfIvVi7DZ27PT6hNxwmHfaw=;
+	s=k20260515; t=1788183512;
+	bh=VW0zXeoVMDpVklc0AYJUhm2FnO1Cs46mUoMbZ5PioLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RENWGPikzrameTPXDJ3W08SduHEMqQrOTVvnjsxKuE3dSpI9c/z1pdJlyVzwzwruD
-	 /ulb9S45TQWJrJk8eQvO3wB1HWLTqv269kVANwzEbNv3nKtmXcCCdVj6GKSpwzRkxp
-	 X82TZzuuhnZ5OTXd5Jx01RnfjzgjKAAFS02h/k/hvpuTB6bK7GZNxOjIYyN77XK/7R
-	 Ws1yq+UiVTAPKU26i+RejT5jSo2OvCznJa2RROkpEFVoXzi8h7LDV/Hb2Y60C88kQu
-	 YnyVyfueBOp/W2zUsKHRuU/aDneNQ1XNyIOBkQhY1lZAT/o/Sn+mWm+ncuaoBYNH7e
-	 Yu4oNzdSoQthQ==
+	b=EE5Slf9nZVEqfvAOJQVeoM4X6tDJ9Vdt5sgySDmh5BJwF3WOkgP1KoZh+jsCjvxqF
+	 MudMXGnDL3BBehPDorM7/BxcplgZqM3GAHacR+G1/Bpy14IyR5dL/HBFT3ZhEj4FmU
+	 p62f1bYN3fmUrlW58MOzdEm0DPKD8toBdx+IyzNL38bk8dqfs6X2LIX1ONnQqqs1wV
+	 yaUCl5J5fAoKlrEq8DEJ3tHwmgrkcPDwXnm+R/6qgnHOEK1p5UF463mdvpx90bb/MW
+	 vVqfTZw41xra/ZKOkf3XuRUfkL1ztS6hSpR5tpunaw3BLEIWl9ToWDc39Mle4EzqLm
+	 Ow4XwC84ph96A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: iwlwifi: mvm: validate mac_link_id in session protect notif
-Date: Mon, 31 Aug 2026 09:22:48 -0400
-Message-ID: <20260831133314.4125787-140-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] tools/nolibc: avoid call to wcslen() in _start_c() inserted by clang
+Date: Mon, 31 Aug 2026 09:22:49 -0400
+Message-ID: <20260831133314.4125787-141-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -46,395 +45,336 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 71245daf7d58a3c407c7e1422facce13ff6a584b ]
+[ Upstream commit 4c6826ee7d04f489ad6fcf46ae6dd595fe9c6295 ]
 
-Check the mac_id before accessing the vif_id_to_mac array.
+Clang may convert the loop to find _auxv into a call to wcslen() which
+is missing on nolibc. -fsanitize needs to be disabled for this to
+happen.
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714141909.547ea470e686.I931445ae6f37bf0e1ef6f112c811712fc48af9c9@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Use the same pattern as in the nolibc strlen() implementation to avoid
+the function call generation.
+
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://patch.msgid.link/20260418-nolibc-wcslen-v1-1-671271b8ea63@weissschuh.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: iwlwifi: mvm: validate mac_link_id in
-session protect notif`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`,
-`VERSION=6 PATCHLEVEL=18 SUBLEVEL=44`)
+### Step 1.1: Subject Line
+**Record:** `[tools/nolibc]` `[avoid]` — Prevent clang from inserting a
+`wcslen()` call into the `_auxv` search loop in `_start_c()`.
+
+### Step 1.2: Commit Tags
+**Record:**
+- **Signed-off-by:** Thomas Weißschuh `<linux@weissschuh.net>` (author)
+- **Acked-by:** Willy Tarreau `<w@1wt.eu>` (nolibc co-maintainer)
+- **Link:** https://patch.msgid.link/20260418-nolibc-
+  wcslen-v1-1-671271b8ea63@weissschuh.net
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc:
+  stable@vger.kernel.org`
+- Notable: maintainer Ack; no syzbot/user crash reports
+
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** Clang may turn the `_auxv` scan loop into a call to
+  `wcslen()`, which nolibc does not provide → link failure (`undefined
+  symbol: wcslen`).
+- **Symptom:** Link-time failure building nolibc programs with clang.
+- **Trigger:** The commit states this happens when function sanitizer
+  instrumentation is disabled on `_start_c()` (via
+  `no_sanitize("function")` when UBSan is enabled globally). The nolibc
+  test build enables `-fsanitize=undefined` by default in
+  `Makefile.include`.
+- **Root cause:** LLVM loop-idiom optimization (same class as the
+  kernel-wide `wcslen` issue addressed by `-fno-builtin-wcslen` in the
+  top-level `Makefile`).
+- **Fix approach:** Add `__asm__("")` in the loop body, matching the
+  existing `strlen()` pattern in `string.h`.
+
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes — described as an optimization workaround, but it fixes
+a real link failure. Same category as the existing `strlen()`
+`__asm__("")` guard.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 2: Diff Analysis
 
-### Step 1.1: Subject line
-**Record:** `[wifi: iwlwifi: mvm]` `[validate]` — Add bounds validation
-for `mac_link_id` in the session protection firmware notification
-handler before indexing `vif_id_to_mac`.
-
-### Step 1.2: Tags
+### Step 2.1: Change Inventory
 **Record:**
-- **Assisted-by:** GitHubCopilot:gpt-5.3-codex
-- **Signed-off-by:** Emmanuel Grumbach \<emmanuel.grumbach@intel.com\>
-  (iwlwifi maintainer)
-- **Link:** https://patch.msgid.link/20260714141909.547ea470e686.I931445
-  ae6f37bf0e1ef6f112c811712fc48af9c9@changeid
-- **Signed-off-by:** Miri Korenblit
-  \<miriam.rachel.korenblit@intel.com\>
-- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or
-  Cc: stable tags
-- **Notable:** Maintainer-authored; no fuzzer or user bug report cited
+- **Files:** `tools/include/nolibc/crt.h` (+1/−1)
+- **Function:** `_start_c()`
+- **Scope:** Single-file, one-line surgical fix
 
-### Step 1.3: Body
+### Step 2.2: Code Flow Change
 **Record:**
-- **Bug:** `mac_link_id` from firmware is used to index `vif_id_to_mac`
-  without validating it first.
-- **Symptom:** Not explicitly stated (no crash trace); implied mis-
-  handling of invalid firmware notification.
-- **Root cause (from code):** `mac_link_id` is read as a 32-bit value
-  into an `int`, then passed to `iwl_mvm_rcu_dereference_vif_id()` which
-  takes `u8`. Values ≥ 256 truncate modulo 256 and can map to valid
-  indices 0–3, bypassing the helper’s `WARN_ON` bounds check.
+- **Hunk (auxv loop):** Before: empty loop body `;` — clang may optimize
+  to `wcslen()`. After: `__asm__("")` blocks that optimization while
+  preserving loop semantics.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Despite the terse message, this is a real logic/safety
-bug fix, not cosmetic cleanup. It mirrors an existing pattern in
-`rxmq.c` for the same array.
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** Build/compiler optimization bug.
+**Mechanism:** LLVM recognizes the null-terminated scan pattern and
+emits a `wcslen()` builtin call; nolibc has no `wcslen` implementation →
+undefined symbol at link time.
+
+### Step 2.4: Fix Quality
+**Record:** Obviously correct — identical to the established `strlen()`
+pattern at line 140 of `string.h`. Minimal scope, no API changes,
+negligible regression risk.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/net/wireless/intel/iwlwifi/mvm/time-event.c` (+5
-  lines)
-- **Function:** `iwl_mvm_rx_session_protect_notif()`
-- **Scope:** Single-file, surgical fix
-
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** `id = le32_to_cpu(notif->mac_link_id)` → immediate
-  `iwl_mvm_rcu_dereference_vif_id(mvm, id, true)` (implicit `int` → `u8`
-  truncation).
-- **After:** `IWL_FW_CHECK` on full `int id` against
-  `ARRAY_SIZE(mvm->vif_id_to_mac)` (4); early return if invalid; then
-  existing lookup proceeds.
-- **Path:** Firmware RX notification handler
-  (`SESSION_PROTECTION_NOTIF`), normal runtime path during
-  association/session protection.
-
-### Step 2.3: Bug mechanism
-**Record:** **Logic / bounds-check bypass via type truncation.**
-
-`NUM_MAC_INDEX_DRIVER` = 4, so valid indices are 0–3:
-
-```15:16:drivers/net/wireless/intel/iwlwifi/fw/api/mac.h
-#define NUM_MAC_INDEX_DRIVER    MAC_INDEX_AUX
-#define NUM_MAC_INDEX           (NUM_MAC_INDEX_DRIVER + 1)
-```
-
-`iwl_mvm_rcu_dereference_vif_id()` only checks the truncated `u8`:
-
-```1384:1391:drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-static inline struct ieee80211_vif *
-iwl_mvm_rcu_dereference_vif_id(struct iwl_mvm *mvm, u8 vif_id, bool rcu)
-{
-        if (WARN_ON(vif_id >= ARRAY_SIZE(mvm->vif_id_to_mac)))
-                return NULL;
-```
-
-Example: `mac_link_id = 256` → `u8` = 0 → passes check → wrong VIF at
-index 0. Values 4–255 are caught; values ≥ 256 congruent to 0–3 mod 256
-are not.
-
-Downstream effects in `iwl_mvm_rx_session_protect_notif()` include
-modifying the wrong interface’s `time_event_data`, calling
-`iwl_mvm_te_check_disconnect()` on the wrong VIF, and corrupting P2P ROC
-state.
-
-### Step 2.4: Fix quality
-**Record:** Obviously correct; matches existing driver pattern in
-`rxmq.c`:
-
-```2618:2623:drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-        /* >= means AUX MAC/link ID, no energy correction needed then */
-        if (IWL_FW_CHECK(mvm, id >= ARRAY_SIZE(mvm->vif_id_to_mac),
-                         "invalid link ID %d\n", id))
-                return;
-
-        vif = iwl_mvm_rcu_dereference_vif_id(mvm, id, false);
-```
-
-**Regression risk:** Very low — early return only on invalid firmware
-input; no API or locking changes.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** `iwl_mvm_rx_session_protect_notif()` exists at lines
-953–1025 in this tree. Blame attributes lines to merge commit
-`5d324e5159d9e` (shallow history for this file). Function and handler
-registration in `ops.c` are present in 6.18.44.
+**Record:** In this shallow checkout (`v6.18.43`), blame points to a
+single commit for `crt.h`; full introduction history is not reliably
+available here. The buggy loop is present at lines 73–74.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in commit message.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: Related file history
-**Record:** `git log --oneline -20 -- time-event.c` returns only the usb
-merge commit (limited per-file history in this checkout). The beacon-
-filter validation in `rxmq.c` at line 2619 establishes precedent for
-this exact check pattern.
+### Step 3.3: Related File History
+**Record:** `string.h` already uses `__asm__("")` in `strlen()` for the
+same compiler-optimization issue (lines 127–141). The top-level
+`Makefile` already has `KBUILD_CFLAGS += -fno-builtin-wcslen` (line
+1085), but nolibc standalone builds do not inherit `KBUILD_CFLAGS`.
 
-### Step 3.4: Author context
-**Record:** Emmanuel Grumbach is iwlwifi maintainer. Miri Korenblit is
-an active iwlwifi contributor. High credibility for driver correctness.
+### Step 3.4: Author Context
+**Record:** Thomas Weißschuh is a primary nolibc contributor/maintainer.
+Willy Tarreau Acked the patch.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone; no series or prerequisite commits. Uses existing
-`IWL_FW_CHECK` macro from `fw/dbg.h`. No new structures or APIs.
+**Record:** Standalone — no series dependency, no prerequisite commits
+required. Applies cleanly to this tree’s `crt.h`.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig` on HEAD did not match this patch. Link URL and
-lore.kernel.org blocked by Anubis bot protection — could not read
-thread. **UNVERIFIED:** reviewer feedback and stable nominations.
+### Step 4.1: Patch Discussion
+**Record:** Patch posted 2026-04-18 to linux-kernel; spinics mirror at
+https://www.spinics.net/lists/kernel/msg6159937.html. Follow-up from
+Willy Tarreau listed. `b4 dig -c` failed (commit not in this shallow
+tree). Lore direct fetch blocked (403).
 
 ### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** — `b4 dig -w` not run (no commit hash
-available in this evaluation context).
+**Record:** Acked-by Willy Tarreau (nolibc co-maintainer). CC’d linux-
+kernel.
 
-### Step 4.3: Bug report
-**Record:** No Reported-by or syzbot link. Bug inferred from code
-analysis and driver consistency with `rxmq.c`.
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link. Issue is a
+reproducible build/link failure class, related to LLVM commit
+9694844d7e36 (kernel addressed via `-fno-builtin-wcslen`, backported to
+stable for kbuild).
 
-### Step 4.4: Related patches
-**Record:** Same validation pattern exists for beacon filter
-notifications in `rxmq.c`. This commit closes a gap in `time-event.c`
-where `IWL_FW_CHECK` is currently absent.
+### Step 4.4: Related Patches
+**Record:** Same author posted related nolibc sanitizer/stack-protector
+patches in April 2026. This patch is independent.
 
-### Step 4.5: Stable list
-**Record:** **UNVERIFIED** — lore stable search blocked.
+### Step 4.5: Stable List History
+**Record:** Could not search lore stable list (blocked). The kernel-wide
+`-fno-builtin-wcslen` fix was queued for stable (spinics stable-commits
+reference).
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `iwl_mvm_rx_session_protect_notif()` (modified); uses
-`iwl_mvm_rcu_dereference_vif_id()`, `iwl_mvm_te_check_disconnect()`,
-`iwl_mvm_te_clear_data()`, `ieee80211_ready_on_channel()` /
-`ieee80211_remain_on_channel_expired()`.
+### Step 5.1: Key Functions
+**Record:** `_start_c()` — nolibc C runtime entry called from arch
+`_start` assembly.
 
 ### Step 5.2: Callers
-**Record:** Registered in `ops.c` as RX handler for
-`SESSION_PROTECTION_NOTIF` under `MAC_CONF_GROUP` — invoked on every
-session-protection firmware notification for Intel MVM devices.
+**Record:** Called from every nolibc arch entry stub (e.g. `arch-x86.h`,
+`arch-arm64.h`, etc.) at program startup. Every nolibc binary executes
+this path once at boot.
 
 ### Step 5.3: Callees
-**Record:** RCU lookup, spinlocks on `time_event_lock`, mac80211
-callbacks. Invalid ID can corrupt another interface’s session-protection
-/ ROC state.
+**Record:** After auxv scan: constructor arrays, `_nolibc_main()`
+(main), destructor arrays, `exit()`.
 
 ### Step 5.4: Reachability
-**Record:** Triggered by iwlwifi firmware notifications during WiFi
-association, session protection, and P2P ROC. Reachable during normal
-WiFi use on Intel hardware (`CONFIG_IWLMVM`).
+**Record:** Every nolibc program hits this path at startup. Failure is
+at link time (before execution), triggered when building with clang
+under conditions described above.
 
-### Step 5.5: Similar patterns
-**Record:** `rxmq.c` lines 272–273 and 2619–2621 already validate before
-`vif_id_to_mac` access. `time-event.c` is the outlier lacking this
-check.
-
----
-
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
-
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current `time-event.c` at lines 958–965 has no
-`IWL_FW_CHECK`; passes raw `int id` directly to
-`iwl_mvm_rcu_dereference_vif_id()`. Fix is **not** yet applied in
-6.18.44.
-
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — 5-line insertion before
-`rcu_read_lock()`. No conflicting changes observed. `IWL_FW_CHECK` and
-`vif_id_to_mac` already exist in this tree.
-
-### Step 6.3: Related fixes already present?
-**Record:** Beacon-filter path in `rxmq.c` already has this validation.
-No duplicate fix for session-protect in this tree (`grep` found no
-"Invalid mac_link_id" string).
+### Step 5.5: Similar Patterns
+**Record:** `strlen()` in `string.h` uses the same `__asm__("")`
+pattern. Kernel `Makefile` uses `-fno-builtin-wcslen` for the same LLVM
+optimization.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## Phase 6: Cross-Reference Against Local Tree (v6.18.43)
 
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/net/wireless/intel/iwlwifi/mvm` — **IMPORTANT**
-(Intel WiFi, widely deployed on laptops/desktops).
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** `tools/include/nolibc/crt.h` lines 73–74 have the
+empty loop body without `__asm__("")`. Tree is `v6.18.43` on
+`stable/linux-6.18.y`.
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — one-line change, no conflicts with
+surrounding code in this tree.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** `Makefile` has `-fno-builtin-wcslen` for kernel builds (line
+1085). `string.h` has the `strlen()` asm barrier. The `_start_c()` auxv
+loop fix is **not** present.
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem and Criticality
+**Record:** `tools/nolibc` — **PERIPHERAL** for runtime (not in kernel
+boot path), but **IMPORTANT** for kernel development/selftest
+infrastructure.
 
 ### Step 7.2: Activity
-**Record:** iwlwifi actively maintained; MLD path added alongside legacy
-MVM. This fix targets the MVM notification path still used by many
-devices in 6.18.y.
+**Record:** nolibc is actively maintained; used by multiple selftests
+(nolibc suite, vDSO, riscv vector, arm64 GCS/FP).
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## Phase 8: Impact and Risk Assessment
 
-### Step 8.1: Who is affected
-**Record:** Users of Intel WiFi with MVM driver (`CONFIG_IWLMVM=y/m`),
-during session protection / association / P2P ROC.
+### Step 8.1: Who Is Affected
+**Record:** Kernel developers and CI building nolibc programs with
+**clang** and **UBSan** (default in
+`tools/testing/selftests/nolibc/Makefile.include`). Not production
+kernel runtime.
 
-### Step 8.2: Trigger conditions
-**Record:** Firmware sends `SESSION_PROTECTION_NOTIF` with `mac_link_id`
-≥ 4, or ≥ 256 with value mod 256 in 0–3. Requires firmware misbehavior
-or edge-case firmware state — not everyday, but plausible and not user-
-privilege-dependent.
+### Step 8.2: Trigger Conditions
+**Record:** Build nolibc test binaries with clang +
+`-fsanitize=undefined`. Fairly specific, but nolibc’s own test Makefile
+enables sanitizers by default. Not userspace-exploitable.
 
-### Step 8.3: Failure mode severity
-**Record:** Wrong-interface session-protection state corruption;
-possible spurious disconnect (`iwl_mvm_te_check_disconnect`) or ROC
-misbehavior on an unrelated VIF. **Severity: MEDIUM–HIGH** (functional
-WiFi breakage, not kernel oops, but user-visible connectivity impact).
+### Step 8.3: Failure Severity
+**Record:** **Link failure** (build error) — severity **MEDIUM** for
+affected developers/CI; **LOW** for end users running kernels.
 
-### Step 8.4: Risk–benefit
-**Record:**
-- **Benefit:** Prevents cross-interface state corruption from invalid
-  firmware notifications; aligns with existing driver defensive pattern.
-- **Risk:** Very low — 5 lines, early return on invalid input only.
-- **Ratio:** Favorable for stable.
+### Step 8.4: Risk-Benefit
+**Record:** **Benefit:** MEDIUM — unblocks nolibc+clang+UBSan builds,
+complements existing `-fno-builtin-wcslen` kbuild fix. **Risk:** VERY
+LOW — one-line asm barrier, proven pattern. **Ratio:** Favorable.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real bug: `int`→`u8` truncation bypasses bounds checking for
-  `vif_id_to_mac`
-- Wrong VIF can be operated on (disconnect, time-event corruption)
-- Small, surgical, maintainer-authored fix
-- Matches established pattern in same driver (`rxmq.c`)
-- Buggy code confirmed present in Linux 6.18.44; fix not yet applied
-- No new APIs or features
+- Real build/link failure with clang on nolibc programs
+- Explicit build-fix category per stable rules
+- One-line, obviously correct, maintainer-Acked
+- Same LLVM `wcslen` optimization class already addressed in this tree’s
+  `Makefile`
+- Established precedent in `string.h` `strlen()` implementation
+- Buggy code confirmed present in v6.18.43
 
 **AGAINST backport:**
-- No explicit crash report, syzbot, or user Reported-by
-- Commit message is minimal
-- Trigger requires invalid firmware `mac_link_id` (not proven in the
-  wild from available sources)
+- Affects developer tooling/selftests, not kernel runtime
+- Narrow trigger (clang + UBSan on nolibc builds)
+- Workaround possible (use gcc, add `-fno-builtin-wcslen` to nolibc
+  CFLAGS)
+- Could not reproduce `wcslen` call locally on clang 21.1.8 (may need
+  newer clang or specific flags)
 
-**UNRESOLVED:**
-- Mailing list review discussion (lore blocked)
-- Whether a specific production firmware bug motivated this fix
+**Unresolved:**
+- Exact clang version/flags that trigger the optimization
+  (author/maintainer report accepted; local reproduction failed)
 
-### Step 9.2: Stable rules checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — matches existing
-`rxmq.c` pattern; maintainer SOB |
-| 2. Fixes a real bug? | **PASS** — truncation bypass is verifiable in
-code |
-| 3. Important issue? | **PASS** — wrong-interface WiFi state corruption
-/ disconnect |
-| 4. Small and contained? | **PASS** — 5 lines, one function |
-| 5. No new features/APIs? | **PASS** |
-| 6. Can apply to local tree? | **PASS** — code exists; clean apply
-expected |
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — proven pattern, maintainer
+   Ack
+2. Fixes real bug affecting users? **PASS** — link failure for
+   nolibc+clang builds (developer/CI users)
+3. Important issue? **PASS** — build error (stable-rules explicit
+   category), severity MEDIUM
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
 
-### Step 9.3: Exception categories
-**Record:** N/A (not device ID, quirk, DT, build, or docs — standard
-driver bug fix).
+### Step 9.3: Exception Category
+**Record:** **Build fix** — compilation/link error in kernel tree
+tooling.
 
-### Step 9.4: Decision rationale
-For **this** tree (6.18.44), the vulnerable code is present and the fix
-is a minimal, obviously-correct defensive validation that prevents
-wrong-interface state corruption when firmware sends an out-of-range
-`mac_link_id`. It follows an established iwlwifi pattern and carries
-negligible regression risk.
+### Step 9.4: Decision Rationale
+
+This is the nolibc counterpart to the kernel-wide `-fno-builtin-wcslen`
+fix already present in this 6.18.y tree. Nolibc standalone builds do not
+use `KBUILD_CFLAGS`, so the header-level asm barrier is the correct
+targeted fix. It is trivial, follows an in-tree precedent, is Acked by
+the nolibc maintainer, and fixes a real link failure in the kernel’s own
+nolibc test infrastructure when built with clang and UBSan (the default
+nolibc test configuration). Impact is limited to developers/CI, but
+stable rules explicitly include build errors, and the risk is
+essentially zero.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message
-- **[Phase 2]** Read `time-event.c` lines 953–1025: fix absent,
-  vulnerable code confirmed
-- **[Phase 2]** Read `mvm.h` lines 1384–1394: `u8` parameter + `WARN_ON`
-  only on truncated value
-- **[Phase 2]** Read `mac.h` line 15: `NUM_MAC_INDEX_DRIVER = 4`
-- **[Phase 2]** Read `rxmq.c` lines 2618–2623: identical validation
-  pattern exists
-- **[Phase 2]** Read `fw/dbg.h` lines 334–342: `IWL_FW_CHECK` logs and
-  returns condition
-- **[Phase 3]** `git describe HEAD`: v6.18.44-1-g2736c32da98b9
-- **[Phase 3]** `git blame -L 953,970 time-event.c`: function present in
-  tree
-- **[Phase 3]** `grep IWL_FW_CHECK time-event.c`: no matches (fix not
-  present)
-- **[Phase 4]** `b4 dig -c HEAD`: no match for this patch
-- **[Phase 4]** WebFetch patch.msgid.link and lore.kernel.org: blocked
-  by Anubis — **UNVERIFIED**
-- **[Phase 5]** `grep iwl_mvm_rx_session_protect_notif`: handler in
-  `ops.c` line 355
-- **[Phase 5]** `grep iwl_mvm_rcu_dereference_vif_id mvm/`: multiple
-  call sites; `time-event.c` lacks pre-check
-- **[Phase 6]** Confirmed buggy code at lines 958–965 without
-  `IWL_FW_CHECK`
-- **[Phase 6]** `grep "Invalid mac_link_id"`: no results (fix not
-  applied)
-- **[Phase 8]** Traced downstream effects:
-  `iwl_mvm_te_check_disconnect`, ROC callbacks on wrong VIF
+- **[Phase 1]** Parsed subject, tags (Acked-by Willy Tarreau, Link to
+  patch msgid)
+- **[Phase 1]** Read commit body: clang `wcslen` insertion,
+  `__asm__("")` fix
+- **[Phase 2]** Diff: 1 line in `_start_c()` auxv loop in `crt.h`
+- **[Phase 2]** Read `string.h` lines 127–141: `strlen()` uses same
+  `__asm__("")` pattern
+- **[Phase 3]** `git blame` on crt.h lines 72–75: buggy loop present
+- **[Phase 3]** `git log -- tools/include/nolibc/crt.h`: limited history
+  (shallow clone)
+- **[Phase 4]** spinics.net patch mirror fetched; Willy Tarreau follow-
+  up listed
+- **[Phase 4]** `b4 dig -c`: failed — commit not in shallow tree
+- **[Phase 4]** lore.kernel.org / patch.msgid.link: blocked (403/Anubis)
+- **[Phase 5]** `grep _start_c`: called from all nolibc arch entry stubs
+- **[Phase 5]** Read `Makefile.include`: `_CFLAGS_SANITIZER` defaults to
+  `-fsanitize=undefined`
+- **[Phase 6]** `git describe HEAD`: `v6.18.43` on `stable/linux-6.18.y`
+- **[Phase 6]** Read `crt.h` lines 72–75: empty loop body (bug present,
+  fix absent)
+- **[Phase 6]** `grep fno-builtin-wcslen Makefile`: present at line 1085
+- **[Phase 8]** Attempted clang reproduction of `wcslen` call:
+  **UNVERIFIED** — not reproduced on clang 21.1.8 with test programs;
+  maintainer report and LLVM context accepted
+- **[Phase 8]** `make -f Makefile.nolibc nolibc-test` with clang: failed
+  on unrelated `__stack_chk_init` unused-function error, not this bug
 
----
+**YES**
 
-**YES**Two background git history lookups (`git log -S` for when
-`iwl_mvm_rx_session_protect_notif` was introduced, and a repo-depth
-check) timed out and were killed — likely due to the large tree and the
-accidental `--all` on one of them.
+ tools/include/nolibc/crt.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-That didn’t change the backport verdict: the vulnerable code is present
-in this 6.18.44 tree, the fix is a 5-line bounds check matching an
-existing `rxmq.c` pattern, and the analysis already concluded **YES**.
-
- drivers/net/wireless/intel/iwlwifi/mvm/time-event.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
-index 1a3a8a3f0fb49..356f68f5e6ac3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
-@@ -960,6 +960,11 @@ void iwl_mvm_rx_session_protect_notif(struct iwl_mvm *mvm,
- 	struct ieee80211_vif *vif;
- 	struct iwl_mvm_vif *mvmvif;
+diff --git a/tools/include/nolibc/crt.h b/tools/include/nolibc/crt.h
+index 961cfe777c356..d4e726ed80765 100644
+--- a/tools/include/nolibc/crt.h
++++ b/tools/include/nolibc/crt.h
+@@ -71,7 +71,7 @@ void _start_c(long *sp)
  
-+	if (IWL_FW_CHECK(mvm, id >= ARRAY_SIZE(mvm->vif_id_to_mac),
-+			 "Invalid mac_link_id (%d) in session protect notif\n",
-+			 id))
-+		return;
-+
- 	rcu_read_lock();
+ 	/* find _auxv */
+ 	for (auxv = (void *)envp; *auxv++;)
+-		;
++		__asm__("");
+ 	_auxv = auxv;
  
- 	/* note we use link ID == MAC ID */
+ 	for (ctor_func = __preinit_array_start; ctor_func < __preinit_array_end; ctor_func++)
 -- 
 2.53.0
 
