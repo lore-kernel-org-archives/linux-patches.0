@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096094749FA;
-	Mon, 31 Aug 2026 13:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B594B5132;
+	Mon, 31 Aug 2026 13:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184340; cv=none; b=PWfi+Nav29EJs5q9GFV844LSsb3geu+9nc6g4khMfBM2726eFHn8ymO1N6nJEPbWE852LkrF87p/BLNWtIPB/ARfwJfzoD05rixEDcuRif+gfh/KIEzEDZUTLctMiOiSRn2AO1umhX7tfSQaXK/4qsoaHi524dAmJBYR/OKAeE4=
+	t=1788184341; cv=none; b=uUMcKYw36eE78Aoyc6BbegvGX3XBJ17aCkadwCxXdlGscyCeJFqrb9znimDEcLClL4kVTnBaNsp0vKsP/KvvYX6eWKcipNlx43WMlvZS6Eze5NtfULT8Ms/qPTljMPLQ6SN9gJFWaChiKiquyt9/6g4G0zPgmTITGmhcdNdT3Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184340; c=relaxed/simple;
-	bh=KJK3ycfqUwN1KDk7Ki5klCghE4HY+wFirozkycJ1jTQ=;
+	s=arc-20240116; t=1788184341; c=relaxed/simple;
+	bh=HzEe29KoGyGWZBCFWu0kK75awybvPLxgzeAdmm8N+nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FGEpGftJ2jOjLuZdqpBcLy3l7kWci1Zz6a32XRCDhfwHXb4yh+0QEXEShzF7+yBAidma6HV79YrbdodGkEzlq8lZlUX1CE8a9PpQV0v61JFqYJWjEEv0Zlnz1BXBH1J3RQ2Gh7y12Tl4iT41dUuYQi0JdsV9ojytzHkzlS43Mgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZE8Mi7A5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=j/LafJHNpahP99GbglYjki5+aiHomcIAJdH3JzqP8zkTfJZFXvMuLl4wOQeBObnwWq7Amei7eShNxxepwIbaM3SnbpMKSfmQ/B4JZXwSAev6xmi/qx1aFY96zmIGZYIS3BJFWuoLup9ahXBQ4rLn2jD2hbcca2hbMiMppxtDczw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j/AIbJ83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZE8Mi7A5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F651F000E9;
-	Mon, 31 Aug 2026 13:52:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j/AIbJ83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA921F00A3D;
+	Mon, 31 Aug 2026 13:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184337;
-	bh=l6e8MCFDdZ45iyK12XDZh0vNZV6G6YO/jnD4tg1Cyk0=;
+	s=k20260515; t=1788184339;
+	bh=QQjJUuwqF3dl/BsR9mTs4/kOQd2wo43GQXcvfc26Dc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZE8Mi7A5yg/6WplFYswVtgx7NgZkOyrUEk9jxNraymfyeTyZYxLA34mCYA2k6pTBZ
-	 bElGVpLAZUCM/75XaoVEUmGEJh2+6156p6Q9D+kWeuAzvRdpdvp3565VsdUDSJHNrB
-	 sBkp3aljiURPVEyFj+8Yf32EAalUL05vEvDECWiDhNISI6EqX0ldEy/t4WEWE9mS34
-	 xabs/xqwHUXRViLoaDUApRmUPihUsLNXNENBEnOjV95MWUw0WNkhh7ads92bextwoi
-	 0aodmWhgRfniPmq2AEK9wEBqE0IFr9CUE6Y6LO+SMW7fPMubdJ4o3TmLyzhQcDR/8o
-	 IYsFR9PdUQdEQ==
+	b=j/AIbJ83WoxEzQsG+uHKBnqX7EmB84bQrNan1Ni9YU+/3HbXlycJpafC/5dRJQXwo
+	 zIByS93zfUNf27JjTMHKWh2xcJy6sFQxNnC7AZLx7bfhgZawkeqlukwRQy1oPv4obS
+	 G/zNLMoX1RVLzfPM5ZaIEF558e4aKZaH4o38+iM7ROCeNBPBwXRdEyKQ3bZf2lqvmI
+	 kgHHs3G+1CzUNlJGkyLlfQYGNDifDeP3SxPdSChjmfSZ3aL6Z1ewx7meHg3dyoOsfG
+	 Rsl4Y58Yr8aB4eghvVropM7ykRpxDxCEroSMM1L3lTx7bJlb/WZVtnkvz/2GGC2pb3
+	 ZhdF7oskK5lpA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+Cc: David Francis <David.Francis@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	Felix.Kuehling@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] PCI: Stop setting cached power state to 'unknown' on unbind
-Date: Mon, 31 Aug 2026 09:31:02 -0400
-Message-ID: <20260831133314.4125787-634-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] drm/amdkfd: Check bounds on allocate_doorbell
+Date: Mon, 31 Aug 2026 09:31:03 -0400
+Message-ID: <20260831133314.4125787-635-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,384 +58,380 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: David Francis <David.Francis@amd.com>
 
-[ Upstream commit d462c8e89e84bfb6417e6b4c88e0cb7cc747ba41 ]
+[ Upstream commit 1f087bb8cf9e8797633da35c85435e557ef74d06 ]
 
-When a PCI device is unbound from its driver, pci_device_remove() sets the
-cached power state in pci_dev->current_state to PCI_UNKNOWN.  This was
-introduced by commit 2449e06a5696 ("PCI: reset pci device state to unknown
-state for resume") to invalidate the cached power state in case the system
-is subsequently put to sleep.
+allocated_doorbell has an option to set the doorbell id
+to a specific value (used by CRIU). This value was not
+bounds checked.
 
-For bound devices, the cached power state is set to PCI_UNKNOWN in
-pci_pm_suspend_noirq(), immediately before entering system sleep.
+Check to confirm it's less than KFD_MAX_NUM_OF_QUEUES_PER_PROCESS.
 
-Extend to unbound devices for consistency.
-
-This obviates the need to change the cached power state on unbind, so stop
-doing so.
-
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/af7d11d3ceb231acc90829f7a5c8400c2446744f.1776415510.git.lukas@wunner.de
+Signed-off-by: David Francis <David.Francis@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `drm/amdkfd: Check bounds on
+allocate_doorbell`
+
+**Local tree:** Linux 6.18.43 (`git describe HEAD` →
+`v6.18.43-1-gc7f0dac02d232`)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-**Record:** `[PCI]` `[Stop]` — Stop setting cached power state to
-`PCI_UNKNOWN` on driver unbind; move invalidation to the system-suspend
-path for driverless devices.
+**Record:** `[drm/amdkfd]` `[Check]` — Add bounds validation on doorbell
+ID during CRIU restore allocation in `allocate_doorbell()`.
 
-### Step 1.2: Tags
+### Step 1.2: Commit Tags
 **Record:**
-- **Signed-off-by:** Lukas Wunner `<lukas@wunner.de>` (author)
-- **Signed-off-by:** Bjorn Helgaas `<bhelgaas@google.com>` (PCI
-  maintainer)
-- **Reviewed-by:** Mario Limonciello (AMD) `<superm1@kernel.org>`
-- **Link:** https://patch.msgid.link/af7d11d3ceb231acc90829f7a5c8400c244
-  6744f.1776415510.git.lukas@wunner.de
-- **No** Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org,
-  or syzbot tags
-- Notable: PCI subsystem maintainer sign-off; AMD reviewer found no
-  corner cases
+| Tag | Value |
+|-----|-------|
+| Signed-off-by | David Francis \<David.Francis@amd.com\> |
+| Reviewed-by | Harish Kasiviswanathan
+\<Harish.Kasiviswanathan@amd.com\> |
+| Signed-off-by | Alex Deucher \<alexander.deucher@amd.com\>
+(committer/maintainer) |
+| Fixes: | None |
+| Reported-by: | None |
+| Cc: stable | None (expected for manual review) |
+| Link: | None |
 
-### Step 1.3: Body Analysis
+Notable: Reviewed by AMD colleague; committed by subsystem maintainer.
+No syzbot or user bug reports.
+
+### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug described:** On driver unbind, `pci_device_remove()` sets
-  `pci_dev->current_state = PCI_UNKNOWN` while hardware may still be in
-  D0. Bound devices only invalidate the cache in
-  `pci_pm_suspend_noirq()` right before sleep. Driverless/unbound
-  devices on the `!pm` suspend path skipped that invalidation.
-- **Symptom/failure mode:** Stale cached power state after
-  suspend/resume can cause `pci_set_power_state(dev, PCI_D0)` to return
-  early (believing the device is already in D0) when hardware is
-  actually in D3 — the same class of failure as bugzilla #6024 fixed by
-  commit 2449e06a5696.
-- **Version info:** References 2449e06a5696 (2006); commit d462c8e89e84
-  landed in mainline April 2026.
-- **Root cause:** PCI_UNKNOWN invalidation was done at unbind time (too
-  early) and was missing from the `!pm` branch of
-  `pci_pm_suspend_noirq()`.
+- **Bug:** `allocate_doorbell()` accepts a user-specified doorbell ID
+  via `restore_id` (CRIU restore path) without validating it is within
+  `KFD_MAX_NUM_OF_QUEUES_PER_PROCESS`.
+- **Symptom:** Out-of-bounds `__test_and_set_bit()` on
+  `qpd->doorbell_bitmap` → kernel memory corruption or crash.
+- **Root cause:** CRIU restore copies `doorbell_id` from userspace
+  (`kfd_criu_queue_priv_data`) and passes it directly to
+  `allocate_doorbell()` with no upper-bound check.
+- **Version info:** None in commit message.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Yes. Described as “consistency,” but it closes a real PM
-correctness gap: driverless PCI devices on S2RAM suspend never had their
-cached state invalidated, and prematurely setting UNKNOWN at unbind left
-cache ≠ hardware between unbind and suspend.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Not disguised — explicitly a missing bounds check. Same
+class of bug as the parallel event-restore fix in `kfd_events.c` (`if
+(*restore_id >= KFD_SIGNAL_EVENT_LIMIT)`).
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Change Inventory
 **Record:**
-- **File:** `drivers/pci/pci-driver.c` (+2 / −8 lines)
-- **Functions:** `pci_device_remove()`, `pci_pm_suspend_noirq()`
-- **Scope:** Single-file surgical fix
+| File | Changes |
+|------|---------|
+| `drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c` | +3 lines |
 
-### Step 2.2: Code Flow Changes
+- **Function modified:** `allocate_doorbell()`
+- **Scope:** Single-file, surgical fix (3 lines added)
+
+### Step 2.2: Code Flow Change
 **Record:**
-- **Hunk 1 (`pci_device_remove`):** Before — set `PCI_UNKNOWN` on unbind
-  if cached state was D0. After — remove that; cached state stays
-  accurate while hardware is still D0.
-- **Hunk 2 (`pci_pm_suspend_noirq`):** Before — `!pm` path
-  (`pci_save_state` then `goto Fixup`) skipped
-  `pci_pm_set_unknown_state()`. After — `goto set_unknown` ensures
-  driverless devices also invalidate cache immediately before sleep,
-  same as bound devices.
+- **Hunk (CP queues on SOC15, `restore_id` path):**
+  - **Before:** `__test_and_set_bit(*restore_id, qpd->doorbell_bitmap)`
+    called with no validation.
+  - **After:** Return `-EINVAL` if `*restore_id >=
+    KFD_MAX_NUM_OF_QUEUES_PER_PROCESS` (1024) before the bit operation.
+- **Affected path:** CRIU queue restore on SOC15+ compute (CP) queues
+  only.
 
 ### Step 2.3: Bug Mechanism
-**Record:** **Logic / correctness fix (PCI PM cache coherency).**
-`pci_set_power_state()` early-returns when `dev->current_state == state`
-(see `__pci_set_power_state()` at line 1545 in `pci.c`). Stale D0 after
-BIOS changes hardware to D3 during suspend prevents powering the device
-back up on driver bind — identical mechanism to bugzilla #6024.
+**Record:**
+- **Category:** Buffer out-of-bounds / memory safety.
+- **Mechanism:** `qpd->doorbell_bitmap` is allocated with
+  `bitmap_zalloc(KFD_MAX_NUM_OF_QUEUES_PER_PROCESS, GFP_KERNEL)` (1024
+  bits). An out-of-range `restore_id` causes `__test_and_set_bit()` to
+  write beyond the allocation.
 
 ### Step 2.4: Fix Quality
-**Record:** Minimal, obviously correct, mirrors existing bound-device
-behavior. Low regression risk: only moves UNKNOWN invalidation from
-unbind to suspend_noirq; hibernate path (`pci_pm_freeze_noirq`) already
-called `pci_pm_set_unknown_state()` for all devices.
+**Record:**
+- Obviously correct; mirrors existing pattern in
+  `allocate_event_notification_slot()`.
+- Minimal, no unrelated changes.
+- Low regression risk: only rejects invalid IDs that should never
+  succeed.
+- No API or behavioral changes for valid inputs.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Unbind-time `PCI_UNKNOWN` logic traces to 2449e06a5696
-(“PCI: reset pci device state to unknown state for resume”, 2006). That
-commit is present in this tree. `pci_pm_set_unknown_state()` exists at
-line 606 in current `pci-driver.c`.
+**Record:** Buggy `restore_id` path is present in this tree at lines
+474–479. Git blame in this stable checkout is unreliable (squashed
+history), but the vulnerable code is confirmed present.
 
 ### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag. Referenced commit 2449e06a5696 is in
-this tree and introduced the unbind-time behavior this patch refines.
+**Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: Related Changes
-**Record:** Related recent fix: 382895a288515 “PCI/PM: Reinstate
-clearing state_saved in legacy and !PM codepaths” (already in 6.18.43).
-No patch-series dependency; standalone 1/1 commit (d462c8e89e84).
+### Step 3.3: Related File History
+**Record:**
+- Commit on `master`: `a1d4b228e3dc5` (May 19, 2026), cherry-picked from
+  `1f087bb8cf9e`.
+- Part of a 2-patch series; patch 2/2 (`6dc2c49a70519` on master) fixes
+  the same class of bug for `allocate_sdma_queue()` — separate,
+  standalone fix.
+- Fix is **not** in the local 6.18.43 tree.
 
 ### Step 3.4: Author Context
-**Record:** Lukas Wunner is a regular PCI/PM contributor. Bjorn Helgaas
-(PCI maintainer) applied and signed off. No other related commits from
-this author in the immediate `pci-driver.c` history of this tree.
+**Record:** David Francis (AMD). Reviewed by Harish Kasiviswanathan;
+committed by Alex Deucher (amdgpu/amdkfd maintainer).
 
 ### Step 3.5: Dependencies
-**Record:** No prerequisites. Requires only existing
-`pci_pm_set_unknown_state()` and `pci_pm_suspend_noirq()` `!pm` path —
-all present in Linux 6.18.43. Patch applies cleanly (`git apply --check`
-passed).
+**Record:** Standalone. No prerequisite commits. Applies cleanly to the
+local tree.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Original Discussion
-**Record:** b4 dig found thread at https://patch.msgid.link/af7d11d3ceb2
-31acc90829f7a5c8400c2446744f.1776415510.git.lukas@wunner.de. Single v1
-patch; Bjorn applied to `pci/pm`; Mario Limonciello Reviewed-by with no
-corner cases found. No stable nomination or NAKs.
+**Record:**
+- **URL:** https://patch.msgid.link/20260512192824.3682569-1-
+  David.Francis@amd.com
+- **Series:** v1 only (no further revisions via `b4 dig -a`)
+- **Review feedback:** No stable nominations, NAKs, or substantive
+  objections found in the mbox thread.
 
 ### Step 4.2: Reviewers
-**Record:** b4 dig -w: To/Cc included Bjorn Helgaas, Rafael Wysocki,
-Mario Limonciello, Alex Williamson, linux-pci@vger.kernel.org.
+**Record:** CC'd to `amd-gfx@lists.freedesktop.org`. Reviewed-by on
+commit.
 
 ### Step 4.3: Bug Reports
-**Record:** No new bug report. Commit references historical bugzilla
-#6024 class via 2449e06a5696. No syzbot link.
+**Record:** N/A — no external bug report or syzbot link.
 
-### Step 4.4: Series Context
-**Record:** Standalone patch, not part of a multi-patch series.
+### Step 4.4: Related Patches
+**Record:** Patch 2/2 bounds-checks `restore_sdma_id` in
+`allocate_sdma_queue()`. Same bug class; also missing in this tree.
+Independent backport candidate.
 
 ### Step 4.5: Stable List History
-**Record:** lore.kernel.org blocked by bot protection; no stable-list
-discussion found via b4 mbox thread.
+**Record:** Not searched; no stable-list discussion found in mbox.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key Functions
-**Record:** `pci_device_remove()`, `pci_pm_suspend_noirq()`,
-`pci_pm_set_unknown_state()`, `pci_set_power_state()` /
-`__pci_set_power_state()`.
+**Record:** `allocate_doorbell()` — only function modified.
 
 ### Step 5.2: Callers
-**Record:** `pci_device_remove` — PCI bus `.remove` callback (sysfs
-unbind, module unload). `pci_pm_suspend_noirq` — PCI bus
-`.suspend_noirq` for every PCI device during system suspend.
+**Record:**
+- `create_queue_nocpsch()` → `allocate_doorbell(qpd, q, qd ?
+  &qd->doorbell_id : NULL)` (line 670)
+- `create_queue_cpsch()` → same pattern (line 1991)
+- Both reached from `pqm_create_queue()` → `kfd_criu_restore_queue()`
+  during CRIU restore
 
 ### Step 5.3: Callees
-**Record:** `pci_save_state()`, `pci_pm_set_unknown_state()`,
-`pci_fixup_device()`, `pci_prepare_to_sleep()` (bound path only).
+**Record:** `__test_and_set_bit()`, `find_first_zero_bit()`,
+`set_bit()`, `amdgpu_doorbell_index_on_bar()`.
 
-### Step 5.4: Reachability
-**Record:** Any PCI device without a bound driver (or driver without PM
-ops) going through system suspend hits the `!pm` path. Users can trigger
-via S3/S2RAM; driver bind after resume via `modprobe` or sysfs is
-common. Reachable without privileges for suspend; driver bind typically
-requires root.
+### Step 5.4: Call Chain / Reachability
+**Record:**
+```
+userspace AMDKFD_IOC_CRIU_OP (restore)
+  → criu_restore() → criu_restore_objects()
+  → kfd_criu_restore_queue() [copy_from_user q_data including
+doorbell_id]
+  → pqm_create_queue(..., q_data, ...)
+  → create_queue_*() → allocate_doorbell(..., &qd->doorbell_id)
+```
+Reachable from userspace via CRIU restore ioctl. Requires
+`CAP_CHECKPOINT_RESTORE` or `CAP_SYS_ADMIN` (see `kfd_chardev.c` lines
+3332–3337).
 
 ### Step 5.5: Similar Patterns
-**Record:** `pci_pm_freeze_noirq()` already calls
-`pci_pm_set_unknown_state()` unconditionally (line 1098). Suspend path
-was inconsistent for driverless devices.
+**Record:** `kfd_events.c:110` already bounds-checks `*restore_id >=
+KFD_SIGNAL_EVENT_LIMIT` for CRIU event restore. This commit closes the
+same gap for doorbells.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
 
 ### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Tree is **Linux 6.18.43** (`git describe HEAD` →
-v6.18.43). Buggy code confirmed at lines 497–498 (unbind UNKNOWN) and
-line 874 (`goto Fixup` skipping `pci_pm_set_unknown_state` for `!pm`).
+**Record:** **Yes.** Lines 474–479 in `kfd_device_queue_manager.c` lack
+the bounds check. CRIU support (`kfd_criu_restore_queue`,
+`AMDKFD_IOC_CRIU_OP`) is present. `KFD_MAX_NUM_OF_QUEUES_PER_PROCESS` is
+1024.
 
 ### Step 6.2: Backport Complications
-**Record:** Patch applies cleanly with no modifications. No significant
-refactoring conflicts in this area of 6.18.43.
+**Record:** Clean apply expected — 3-line addition with no conflicts.
+File structure matches mainline.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent fix in this tree. Commit d462c8e89e84 is not
-in 6.18.43.
+**Record:** No. `git show master:a1d4b228e3dc5` has the fix; local HEAD
+does not. SDMA bounds fix (patch 2/2) is also absent.
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem / Criticality
-**Record:** **drivers/pci** — CORE subsystem. PCI PM affects virtually
-all systems.
+### Step 7.1: Subsystem Criticality
+**Record:** `drivers/gpu/drm/amd/amdkfd` — AMDGPU KFD compute driver.
+**IMPORTANT** (GPU compute users; not core kernel, but widely deployed
+on AMD hardware).
 
-### Step 7.2: Activity
-**Record:** Actively maintained; recent PM fix 382895a288515 already
-backported to this tree.
+### Step 7.2: Subsystem Activity
+**Record:** Active — CRIU support and related hardening commits exist on
+master for this subsystem.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who Is Affected
-**Record:** Systems with PCI devices that are driverless at suspend time
-(never probed, intentionally unbound, or drivers without PM ops) that
-later get a driver bound after resume.
+**Record:** Users of AMDGPU KFD with CRIU checkpoint/restore on SOC15+
+hardware (CP compute queues). Narrow feature set, but real production
+use (containers, HPC migration).
 
 ### Step 8.2: Trigger Conditions
-**Record:** System suspend (S2RAM) → resume → driver bind. Uncommon but
-realistic for manual sysfs bind/unbind workflows and devices without in-
-tree drivers. Not security-relevant; requires suspend cycle.
+**Record:**
+- CRIU restore with `doorbell_id >= 1024` in checkpoint private data.
+- Requires privileged capability (`CAP_CHECKPOINT_RESTORE` or
+  `CAP_SYS_ADMIN`).
+- Corrupted or malicious checkpoint image during restore can trigger it.
+- Not triggerable by unprivileged users directly.
 
 ### Step 8.3: Failure Mode Severity
-**Record:** Device fails to power up / probe after resume (stale D0
-cache). **Severity: MEDIUM-HIGH** for affected users (hardware non-
-functional), but not a kernel crash, deadlock, or data corruption.
+**Record:** Out-of-bounds kernel heap write via `__test_and_set_bit()` →
+memory corruption, potential kernel oops/panic. **Severity: HIGH**
+(memory corruption); mitigated by privileged-only ioctl path.
 
 ### Step 8.4: Risk-Benefit
-**Record:** **Benefit:** MEDIUM — fixes latent PM bug for driverless
-devices; improves cache accuracy between unbind and suspend. **Risk:**
-VERY LOW — 10-line change, maintainer-reviewed, net deletion of code.
-**Ratio:** Favorable.
+**Record:**
+| | Assessment |
+|--|------------|
+| **Benefit** | Prevents kernel memory corruption on CRIU restore;
+defense-in-depth for untrusted checkpoint data |
+| **Risk** | Very low — 3-line bounds check, no behavior change for
+valid IDs |
+| **Ratio** | Favorable |
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Fixes real PCI PM cache bug for driverless devices on S2RAM suspend
-  (same failure class as bugzilla #6024)
-- Stops incorrect premature UNKNOWN at unbind while hardware is still D0
-- Tiny, surgical, PCI maintainer + AMD reviewed
-- Applies cleanly to 6.18.43
-- Aligns suspend path with existing hibernate path behavior
+- Real out-of-bounds bitmap access bug
+- Kernel memory corruption possible
+- Fix is minimal, obviously correct, maintainer-reviewed
+- Buggy code and CRIU infrastructure exist in 6.18.43
+- Matches existing bounds-check pattern in `kfd_events.c`
+- Standalone, clean apply
 
 **AGAINST backport:**
-- No explicit user bug report or syzbot hit
-- Failure is device malfunction, not kernel oops/panic
-- Described primarily as “consistency” in commit message
-- No stable nomination in review thread
+- CRIU is a niche feature
+- Requires privileged capability (not unprivileged attack surface)
+- No user reports or syzbot findings
+- Patch 2/2 (SDMA) addresses a related gap but is separate
 
-**Unresolved:** None material to the decision.
+**Unresolved:** None affecting the decision.
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — minimal diff, maintainer-
-   reviewed, corner-case review done
-2. Fixes a real bug affecting users? **PASS** — stale power-state cache
-   prevents device power-up after suspend+bind
-3. Important issue? **PASS (moderate)** — device non-functionality after
-   suspend, same class as historical PCI PM bug
-4. Small and contained? **PASS** — 1 file, 10 lines
-5. No new features or APIs? **PASS**
-6. Can apply to local tree? **PASS** — verified clean apply
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — trivial bounds check;
+Reviewed-by present |
+| 2. Fixes a real bug? | **PASS** — OOB `__test_and_set_bit()` on
+1024-bit bitmap |
+| 3. Important issue? | **PASS** — memory corruption (HIGH, privileged
+path) |
+| 4. Small and contained? | **PASS** — 3 lines, one function |
+| 5. No new features/APIs? | **PASS** |
+| 6. Can apply to local tree? | **PASS** — code present, fix absent |
 
 ### Step 9.3: Exception Categories
-**Record:** None (not a quirk, device ID, DT, or build fix).
+**Record:** None (not a device ID, quirk, DT, build, or docs fix).
+Qualifies as a standard memory-safety bug fix.
 
-### Step 9.4: Problem Summary for Stable Users
+### Step 9.4: Decision Rationale
 
-This commit fixes a gap in PCI core suspend handling: devices without a
-driver (or without PM callbacks) never had their cached power state
-invalidated before sleep, while bound devices did. After suspend/resume,
-if the BIOS changes the hardware power state, the kernel can believe the
-device is still in D0 and skip the transition back to D0 when a driver
-is later bound — leaving hardware dead. The patch also stops marking the
-cache as UNKNOWN at unbind time when hardware is still in D0, deferring
-invalidation to `pci_pm_suspend_noirq()` where bound devices already do
-it.
+For Linux **6.18.43**, the vulnerable CRIU restore path exists, the fix
+is absent, and the patch prevents out-of-bounds kernel memory writes
+from userspace-supplied `doorbell_id` values. Although CRIU restore
+requires elevated privileges, stable trees routinely take such defense-
+in-depth fixes — especially when they mirror an existing pattern
+(`kfd_events.c`) and are three lines with no regression risk for valid
+inputs.
 
-For Linux 6.18.43, the buggy code is present, prerequisites exist, and
-the patch applies cleanly with very low risk.
+**Note:** Patch 2/2 (`Check bounds for allocate_sdma_queue
+restore_sdma_id`) fixes the same bug class for SDMA queues and is also
+absent from this tree; it should be evaluated separately.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message and
-  kernel.org (d462c8e89e84)
-- [Phase 1] Confirmed no Reported-by/syzbot/Fixes:/Cc: stable tags
-- [Phase 2] Diff analysis: 2 insertions, 8 deletions in `pci-driver.c`;
-  two functions modified
-- [Phase 2] Read `__pci_set_power_state()` early-return at line 1545 in
-  `pci.c`
-- [Phase 3] `git describe HEAD` → v6.18.43; Makefile VERSION 6.18.43
-- [Phase 3] `git show 2449e06a5696` — original unbind UNKNOWN logic and
-  bugzilla #6024 context
-- [Phase 3] `git blame` lines 493–498 — unbind UNKNOWN code present
-- [Phase 3] Confirmed `pci_pm_set_unknown_state()` at line 606 in local
-  tree
-- [Phase 4] `b4 dig -c d462c8e89e84` — found lore thread URL
-- [Phase 4] `b4 dig -w` — reviewers/maintainers CC'd
-- [Phase 4] Downloaded mbox: Bjorn applied, Mario Reviewed-by, no stable
-  nomination
-- [Phase 4] lore.kernel.org direct fetch blocked (403/bot protection)
-- [Phase 5] Traced `pci_pm_suspend_noirq` `!pm` → `goto Fixup` at line
-  874 (buggy)
-- [Phase 5] Confirmed `pci_pm_freeze_noirq` already sets UNKNOWN at line
-  1098
-- [Phase 6] Buggy code at lines 497–498 and 874 confirmed in 6.18.43
-- [Phase 6] `git apply --check` on upstream patch — applies cleanly
-- [Phase 6] Commit d462c8e89e84 not in 6.18.43 tree
-- [Phase 8] Failure mode: stale D0 → device won't power up on driver
-  bind; severity MEDIUM-HIGH for affected cases
+- **[Phase 1]** Parsed commit message and tags from user query and `git
+  show a1d4b228e3dc5`
+- **[Phase 1]** No Fixes:/Reported-by:/Cc: stable tags
+- **[Phase 2]** Diff analysis: +3 lines in `allocate_doorbell()` before
+  `__test_and_set_bit()`
+- **[Phase 3]** `git describe HEAD`: v6.18.43; `make kernelversion`
+  equivalent from Makefile: 6.18.43
+- **[Phase 3]** `git show a1d4b228e3dc5`: commit exists on master, not
+  in HEAD
+- **[Phase 3]** `b4 dig -c a1d4b228e3dc5`: found lore thread at
+  patch.msgid.link/20260512192824.3682569-1
+- **[Phase 3]** `b4 dig -a`: v1 only, no further revisions
+- **[Phase 3]** `b4 dig -w`: CC'd amd-gfx@lists.freedesktop.org
+- **[Phase 4]** `b4 dig -m /tmp/doorbell_thread.mbox`: patch 2/2 content
+  retrieved; no stable Cc in thread
+- **[Phase 5]** Grep callers: `allocate_doorbell` called from
+  `create_queue_nocpsch` and `create_queue_cpsch` with
+  `&qd->doorbell_id`
+- **[Phase 5]** Traced CRIU path: `kfd_criu_restore_queue` →
+  `pqm_create_queue` → `allocate_doorbell`
+- **[Phase 5]** `kfd_events.c:110`: confirmed analogous bounds check
+  exists for event restore
+- **[Phase 6]** Read local `kfd_device_queue_manager.c:474-479`: bounds
+  check **missing**
+- **[Phase 6]** `kfd_doorbell.c:259`: `doorbell_bitmap` allocated with
+  `KFD_MAX_NUM_OF_QUEUES_PER_PROCESS` (1024)
+- **[Phase 6]** `kfd_priv.h:97`: `KFD_MAX_NUM_OF_QUEUES_PER_PROCESS` =
+  1024
+- **[Phase 6]** `kfd_chardev.c:3332-3337`: CRIU ioctl requires
+  `CAP_CHECKPOINT_RESTORE` or `CAP_SYS_ADMIN`
+- **[Phase 6]** CRIU infrastructure confirmed present
+  (`kfd_criu_restore_queue`, `AMDKFD_IOC_CRIU_OP`)
+- **[Phase 8]** Failure mode: OOB bit operation → memory corruption;
+  privileged ioctl mitigates unprivileged exploitability
 
-**YES**The background searches finished and line up with the earlier
-analysis:
+**YES**
 
-- **Local tree (6.18.43):** The fix is **not** present. The buggy paths
-  are still there — `PCI_UNKNOWN` is set on unbind, and the `!pm` branch
-  in `pci_pm_suspend_noirq()` still skips `pci_pm_set_unknown_state()`.
-- **Mainline (kernel.org):** The commit is **d462c8e89e84** (“PCI: Stop
-  setting cached power state to 'unknown' on unbind”), merged April 27,
-  2026 via the `pci/pm` branch.
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-That confirms the patch is a valid backport candidate for this tree and
-applies cleanly. **Verdict remains YES.**
-
- drivers/pci/pci-driver.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index f9ead94d5ebb6..1219f39b1c69b 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -490,13 +490,6 @@ static void pci_device_remove(struct device *dev)
- 	/* Undo the runtime PM settings in local_pci_probe() */
- 	pm_runtime_put_sync(dev);
- 
--	/*
--	 * If the device is still on, set the power state as "unknown",
--	 * since it might change by the next time we load the driver.
--	 */
--	if (pci_dev->current_state == PCI_D0)
--		pci_dev->current_state = PCI_UNKNOWN;
--
- 	/*
- 	 * We would love to complain here if pci_dev->is_enabled is set, that
- 	 * the driver should have called pci_disable_device(), but the
-@@ -871,7 +864,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
- 
- 	if (!pm) {
- 		pci_save_state(pci_dev);
--		goto Fixup;
-+		goto set_unknown;
- 	}
- 
- 	if (pm->suspend_noirq) {
-@@ -923,6 +916,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
- 		goto Fixup;
- 	}
- 
-+set_unknown:
- 	pci_pm_set_unknown_state(pci_dev);
- 
- 	/*
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 2f8df95382bc3..d9f09f25911a7 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -472,6 +472,9 @@ static int allocate_doorbell(struct qcm_process_device *qpd,
+ 	} else {
+ 		/* For CP queues on SOC15 */
+ 		if (restore_id) {
++			if (*restore_id >= KFD_MAX_NUM_OF_QUEUES_PER_PROCESS)
++				return -EINVAL;
++
+ 			/* make sure that ID is free  */
+ 			if (__test_and_set_bit(*restore_id, qpd->doorbell_bitmap))
+ 				return -EINVAL;
 -- 
 2.53.0
 
