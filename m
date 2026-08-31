@@ -1,109 +1,161 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B164AF141;
-	Mon, 31 Aug 2026 13:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E304AF17A;
+	Mon, 31 Aug 2026 13:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184156; cv=none; b=GEKgNtSvdXJIirQtFoFN090LtfKvB6uv5QMriA3sE4d6iVvAyAYm8Cv8NwrOsfccMiBw/0tmCepoSFBut/JMRfc5WgKuiwzoIxbJiQNz+1rtuug0ocWJkoGzbV3CjjqGxYraNVGPrixjXS4I4vyrmH+m/ehzlzT1svj/5iYYCTA=
+	t=1788184158; cv=none; b=qBqy0czbSjFHCIsfuZpWcb3ddG+TQ8Yd/ZdbrenoKF61DGFrpl7ruOEe7iKAsMMJ7suTyG1UwsZ2MtRK0SFNZ1m6YMQ4UmrGLvBXt9RRqNYD+4VQFyp7rOxumpYB+FXM3afMIAhAbQ1134cEoyPSqP/9DBZtR0GSUl1HxijKdvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184156; c=relaxed/simple;
-	bh=lDEQp1Jg2Lqzole5zhBgw4Nj1zCSsbuw8fwWkk8HbGU=;
+	s=arc-20240116; t=1788184158; c=relaxed/simple;
+	bh=VFiICGeFoEZM86vw7YipREWQcAPiIQuRqASHao4SHNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KepPgk0EJmmTOMv/pc1ucByWvQUCMju+N65X8mpq3qZBt4tRJdYiA3wxWr/5kahw+5wL+ScDVk933ZpAnlLcmx36SVYpjSf9Z843B/Rt8Mm8bfMgJkBaPzj+kXrLr6eoqDJYLlPhiAGR8PT4YO/br24gQI3Lwq2MXvFS/Pu3T+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R8nsUnYl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CV5dRgMKq0/wdgi9DX3/XQCohyYFc90H9FbQeMqXfHGgTKyQnG1zyYWEra+3E3Ykno1RrzZo9GHCicosB3BE/eYh39mPgE/egBivZ+u6VPGyc3PvZ8yrHJYvC5s1TfA82Y7U+xB9q04iD0A3xcvJtKTnMGFGai/ok4gh7I66uow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIePm5hc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R8nsUnYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63721F00A3E;
-	Mon, 31 Aug 2026 13:49:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184154;
-	bh=qkxEMTiYxEqz9LqiFfnHD0wIulNBWu8l047Bi/nKhGE=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIePm5hc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948C71F00A3D;
+	Mon, 31 Aug 2026 13:49:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184156;
+	bh=ZU4IN55dXPbez02gvT6c0U5NpO1GFYVvPgYTZn/ZKoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R8nsUnYlSl8Vyb6UHtPKiPZKbbX1ktt1GsrlTzt0cvcCxbqKwrY20/pNijAyyMRrX
-	 qDkQybYBGmOPnyuhdUq1fi5mWbHrB8b6y91N1lbr06+ensePqSG+IWuWwWr1PiejVb
-	 YS2RzE609M52khbgC9yB1Rn0GS8OLUznSQ+UCHOrorVQzeW3nwGSu4mbIqo0lOtaKD
-	 jCordmLOqOk6WpvMHX2t9LiRjZNVsVwhWAgHhbZ+n+Feuj2+Py+v7CvYLabGDpLJqK
-	 drNbyIKGbCrUnFv3e6KS0NHWx/NHzL8uWl9UFFf8lGl3O18fGqm+yWJS4YG8cArj3C
-	 LfG/2HJqqyBRw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	andreas.noever@gmail.com,
-	westeri@kernel.org,
-	YehezkelShB@gmail.com,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] thunderbolt: Don't disable lane adapter if XDomain lane bonding isn't possible
-Date: Mon, 31 Aug 2026 09:29:12 -0400
-Message-ID: <20260831133314.4125787-524-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=VIePm5hcd+sOJWsXlY0FUgiWyAt8rhRiHmRw/oCfZr4KHpVkMfu4WE5xoIbMMa2aL
+	 LoJpPbeRlW7VEVj5bp4YwMfgh8sOFBI3+Rxay5QDn/FZpDUy7PsuL60VVeqX/lV+sZ
+	 MXEhDAdbcuRXvyPmuOJpvDCFcrhmV/evBaczSPN8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 10/99] selinux: make more use of str_read() when loading the policy
+Date: Mon, 31 Aug 2026 15:33:39 +0200
+Message-ID: <20260831133400.332337930@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 7c7345bcde6c611fa8fa13e624207c6005798aa8 ]
+------------------
 
-This happens when firmware connection manager is being used. It will
-deal with disabling the lane 1 adapter after the tunnel has been
-established and re-enabling it afterwards. For this reason only do this
-when we know that lane bonding is possible (e.g running software
-connection manager).
+From: Christian Göttsche <cgzones@googlemail.com>
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+[ Upstream commit 01c2253a0fbdccb58cd79d4ff9ab39964bfb4474 ]
+
+Simplify the call sites, and enable future string validation in a single
+place.
+
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+[PM: subject tweak]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+(cherry picked from commit 01c2253a0fbdccb58cd79d4ff9ab39964bfb4474)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ security/selinux/ss/conditional.c | 10 ++--------
+ security/selinux/ss/policydb.c    | 22 ++++++++--------------
+ security/selinux/ss/policydb.h    |  2 ++
+ 3 files changed, 12 insertions(+), 22 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background `git log --all` search was killed — it was hanging on
-this repo, as expected.
-
-A follow-up `git log -S 'tb_xdomain_link_exit'` (without `--all`)
-finished after ~48s, but the hits (`19eef1d98eeda`, `ac3fd01e4c1ef`) are
-base-import commits, not a clean “introduced in commit X” answer. That’s
-normal on this 6.18.y tree where history is squashed.
-
-The backport analysis doesn’t depend on that: the buggy
-`tb_xdomain_link_exit()` path is present in 6.18.43, and the verdict
-remains **YES**.
-
- drivers/thunderbolt/xdomain.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 6b16fc7254b8e..b27ef872edeac 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -1951,7 +1951,13 @@ static void tb_xdomain_link_exit(struct tb_xdomain *xd)
- 	if (tb_port_get_link_generation(down) >= 4) {
- 		down->bonded = false;
- 		down->dual_link_port->bonded = false;
--	} else if (xd->link_width > TB_LINK_WIDTH_SINGLE) {
-+		return;
-+	}
+diff --git a/security/selinux/ss/conditional.c b/security/selinux/ss/conditional.c
+index 244dc82791133..f8a21d10ff929 100644
+--- a/security/selinux/ss/conditional.c
++++ b/security/selinux/ss/conditional.c
+@@ -230,17 +230,11 @@ int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ 		goto err;
+ 
+ 	len = le32_to_cpu(buf[2]);
+-	if (((len == 0) || (len == (u32)-1)))
+-		goto err;
+ 
+-	rc = -ENOMEM;
+-	key = kmalloc(len + 1, GFP_KERNEL);
+-	if (!key)
+-		goto err;
+-	rc = next_entry(key, fp, len);
++	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+ 		goto err;
+-	key[len] = '\0';
 +
-+	if (!xd->bonding_possible)
-+		return;
+ 	rc = symtab_insert(s, key, booldatum);
+ 	if (rc)
+ 		goto err;
+diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
+index 449458edec732..db200b7518fc7 100644
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1107,7 +1107,7 @@ static int context_read_and_validate(struct context *c, struct policydb *p,
+  * binary representation file.
+  */
+ 
+-static int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len)
++int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len)
+ {
+ 	int rc;
+ 	char *str;
+@@ -2499,24 +2499,18 @@ int policydb_read(struct policydb *p, struct policy_file *fp)
+ 		goto bad;
+ 	}
+ 
+-	rc = -ENOMEM;
+-	policydb_str = kmalloc(len + 1, GFP_KERNEL);
+-	if (!policydb_str) {
+-		pr_err("SELinux:  unable to allocate memory for policydb "
+-		       "string of length %d\n",
+-		       len);
+-		goto bad;
+-	}
+-
+-	rc = next_entry(policydb_str, fp, len);
++	rc = str_read(&policydb_str, GFP_KERNEL, fp, len);
+ 	if (rc) {
+-		pr_err("SELinux:  truncated policydb string identifier\n");
+-		kfree(policydb_str);
++		if (rc == -ENOMEM) {
++			pr_err("SELinux:  unable to allocate memory for policydb string of length %d\n",
++			       len);
++		} else {
++			pr_err("SELinux:  truncated policydb string identifier\n");
++		}
+ 		goto bad;
+ 	}
+ 
+ 	rc = -EINVAL;
+-	policydb_str[len] = '\0';
+ 	if (strcmp(policydb_str, POLICYDB_STRING)) {
+ 		pr_err("SELinux:  policydb string %s does not match "
+ 		       "my string %s\n",
+diff --git a/security/selinux/ss/policydb.h b/security/selinux/ss/policydb.h
+index e7a6f1a6c1461..d95a3941f327c 100644
+--- a/security/selinux/ss/policydb.h
++++ b/security/selinux/ss/policydb.h
+@@ -386,6 +386,8 @@ static inline char *sym_name(struct policydb *p, unsigned int sym_num,
+ 	return p->sym_val_to_name[sym_num][element_nr];
+ }
+ 
++extern int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len);
 +
-+	if (xd->link_width > TB_LINK_WIDTH_SINGLE) {
- 		/*
- 		 * Just return port structures back to way they were and
- 		 * update credits. No need to update userspace because
+ extern u16 string_to_security_class(struct policydb *p, const char *name);
+ extern u32 string_to_av_perm(struct policydb *p, u16 tclass, const char *name);
+ 
 -- 
 2.53.0
+
+
 
