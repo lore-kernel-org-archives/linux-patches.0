@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E345A483BF2;
-	Mon, 31 Aug 2026 14:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE07243FD3F;
+	Mon, 31 Aug 2026 14:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184966; cv=none; b=e7/o8EaRZmgv0ivp+w84gipR21R5eDOJJPgb5OHG4Qv1bSmrrUqKAZNGao1p7BgPfcT/kJ9smzMSFhypBlgy6YlR7+Gh39hvo2u3n+1Zy1bkzoqHLn0N+8GcX27fl0gFBVQJiSLp8wX9FWe34Rpe+ZbhBAUQ01iAkvg8i+XJInk=
+	t=1788184968; cv=none; b=UHLoC9Zq6H1nTqVvb2ICefNzHQfO9Chq+P02BhRVcA7i6olwMSUDuxfBvJE/YeRJbK4K0MqP4zrLz0fIWBf+hdHMcrxonmd2EKxgkdSspNY3o4Te52As9FIlY5P+ROy/hqqc1iLDQjozjm/UkH8XnygkyMk4OoIVhkb07wAON/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184966; c=relaxed/simple;
-	bh=lDnyj6RC/rK5zAcI6c260mjsBsAbLEtZvpoleqZ8gr0=;
+	s=arc-20240116; t=1788184968; c=relaxed/simple;
+	bh=Q3tat8MXZwty1o7YAM+xtPI52CtpSe0lEs+tw5p1ttA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+2d5jxq9lFsPczUHGi7cR8HdHRXQNVhXC4cfhMyobTkjqranph6bu05M51ImO9sjG9rgxlEYt/FPrKMIyGGR4tRIJw+oCRm0LMEjG94FJ12jpStdNbFIZESqG0eGAJa3HW6Aa2PhnMNM07Y8Zdndb/YwDyDDldSFCmbK/ohatI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elS3Lk3j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G40rh+qKAaVUvgEDOEkIfgkWd68zzH8wfSsdvlVnr+1zjWJxXIqZzlGA8Q3w7KMyCrmix/Qs1lPji2/N6KHsbBVcnVvoKmQXMVVEMPLmYqadBRHyY3qThkekGarMLki5RKdJdRhs/4XR950/SROXYnZpBNJ0q61PI3KcAlqKa74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2ciSHeJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elS3Lk3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E451F000E9;
-	Mon, 31 Aug 2026 14:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2ciSHeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E831F000E9;
+	Mon, 31 Aug 2026 14:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184964;
-	bh=IYaOoQMIDc+zsiIe25P6PGBYPBvThLO1qgwjvSJUkus=;
+	s=korg; t=1788184967;
+	bh=hJu/SExb0NDzHUrQaO2sbSQE6fEE2ils9N1RJKLuHrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=elS3Lk3jViv9PI/8Er9+9VaQT1UUeKt4EsnGCTYIfC9B54m2kvu9V1AvYrJ5qWAFt
-	 V9N44QOUJm5PRYFyweuoAIgXUWP4mZ6wC38Fv2XUAeW+B94NwMTNHDAJ0CCip6Bl4D
-	 Kn3V9theSqJHFhOh5CztP6fjht5/wyzYHtGwim/Y=
+	b=S2ciSHeJ9xt4hJQ/c7BPKJMOKuJr7r3DCKEgz5EHlxStGPei2OqNUjh3wjbzjJLVh
+	 OXUQX4TTgcK2X9lMLEpbuIBnDrdu8xCHdcLf3WJ8tDMAlbasIIsVRbBAF68YTnbXJK
+	 2PKYaNUur8gc40ljYVkKQ1o7jcn3NrlTAdTK1C2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	syzbot@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 69/92] usb: usbtest: disable dynamic ID support
-Date: Mon, 31 Aug 2026 15:35:07 +0200
-Message-ID: <20260831133403.216638458@linuxfoundation.org>
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 60/92] Bluetooth: hci_event: validate LE Set CIG Parameters response
+Date: Mon, 31 Aug 2026 15:34:58 +0200
+Message-ID: <20260831133402.796997302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -51,54 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-commit 00e2071f6d5621a5ddea311a5e6b143ae6e474af upstream.
+[ Upstream commit 0acd4eeb4b225b9bebbf9ef96cc10cdd79b94899 ]
 
-The usbtest driver relies on the driver_info field of struct usb_device_id
-to point to a valid struct usbtest_info descriptor. This structure contains
-essential test configurations, such as endpoint addresses and test modes,
-which are required during probe.
+The Command Complete dispatch validates only the fixed part of the LE Set
+CIG Parameters response. After that part is pulled from the skb,
+hci_cc_le_set_cig_params() trusts num_handles and reads each entry in the
+trailing handle array.
 
-When a user dynamically adds a new device ID via the sysfs new_id
-interface without specifying a reference device, the USB core initializes
-driver_info to 0 (NULL). When a matching device is subsequently probed,
-usbtest_probe() unconditionally casts driver_info to a struct usbtest_info
-pointer and dereferences it, leading to a NULL pointer dereference crash:
+Matching num_handles against the command's num_cis does not guarantee
+that the response contains the advertised handles. A truncated response
+from a malfunctioning controller can therefore make the handler read
+beyond the skb data.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:usbtest_probe+0x3b9/0x1280 drivers/usb/misc/usbtest.c:2822
+Validate that the remaining skb data contains all advertised handles.
+Include this in the existing response validation so malformed responses
+also follow the established CIG failure handling.
 
-Because usbtest strictly requires pre-defined usbtest_info descriptors
-to function, dynamic ID binding via sysfs is fundamentally unsupported
-for this driver.
-
-Fix this by setting .no_dynamic_id = 1 on usbtest_driver. This instructs
-the USB core to skip creating the new_id and remove_id sysfs interfaces
-for usbtest, preventing invalid dynamic ID entries from being created.
-
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7e1e5911f9eac50bedc7
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260806152651.2370795-1-nogikh@google.com
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/usbtest.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_event.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/misc/usbtest.c
-+++ b/drivers/usb/misc/usbtest.c
-@@ -3053,6 +3053,7 @@ static struct usb_driver usbtest_driver
- 	.disconnect =	usbtest_disconnect,
- 	.suspend =	usbtest_suspend,
- 	.resume =	usbtest_resume,
-+	.no_dynamic_id = 1,
- };
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3793,8 +3793,10 @@ static u8 hci_cc_le_set_cig_params(struc
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
  
- /*-------------------------------------------------------------------------*/
+ 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
+-	if (!rp->status && (!cp || rp->num_handles != cp->num_cis ||
+-			    rp->cig_id != cp->cig_id)) {
++	if (!rp->status &&
++	    (!cp || rp->num_handles != cp->num_cis ||
++	     rp->cig_id != cp->cig_id ||
++	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
+ 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
+ 		status = HCI_ERROR_UNSPECIFIED;
+ 	}
 
 
