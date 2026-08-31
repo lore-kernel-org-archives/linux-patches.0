@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE95A5164B2;
-	Mon, 31 Aug 2026 13:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC714A49A1;
+	Mon, 31 Aug 2026 13:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183814; cv=none; b=fAKA2YWk0mvn7YR3WrLpYeiGFlH7yS+UM2iK7QDpHlqHuYEg3+quUj+SbzoWTVwOstCoguqp276VbP5BagJNN9ITNpmywPrBqQ9fTgcDhn+NdqBDSFHinYk4nM+2Ut8XvrrYWqJvjIaJVZ0Y7gAyUdCun2WDiqi/v3NvevHkNoo=
+	t=1788183814; cv=none; b=hxpfpa3dMG0Pm7XdIQKX4r2w+hxtZ7Wx+8PzdmZl9bHThDebioujbHl+Iejo0cmSyNVnYwlg/5O9iBhpuKRc2l+PUdMgCyV3kEcx7prlIbPChF5q5hZBusAwWQgOOiitc55A+nxMPniiIivh0+iK8PAx+i5kWI4R9BOVNqoR/2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183814; c=relaxed/simple;
-	bh=QwLpm0nvi7EV2RlxfIxlUHPsJjbTtqj4RlzH/6ZYUGI=;
+	bh=sVyr8foC6HYCvrx8Cque7mZDWQkB3fi3pNelniF0yfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M4UmgfjeG4ScU5WbjGsZ4r/03BNId8PvN7Zq38hvfHABEVFGNivxoB1bXVBGxLbZL4JuXbOcNASz7ytR/lqxZHCHg6bYtQKN1KREWM9n4d4zjcer4b76DvJ844GkvEeTVSQ9qoiBwBEQvfCUkIV1iV9+ds5Rj9e4yTlnVWCuK0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R58WqMve; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GhNZpXgT1hx/gtqQ6Iv+YDuyaZSys0SkjlRg6QIg+7+gKPbRZmW7Ggx8fTRUF0xEJyzFAq2oLh9k42qlbgz52l8fcoOp2A2BDXU0XSvDPfpF2jVGQqqGNQruRZhh8R6nNyeuYjQpmr7pyuhepEP6wdEtQHcHyh/uTuoFy1eW3N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cHcWbP2R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R58WqMve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1F41F00A3D;
-	Mon, 31 Aug 2026 13:43:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cHcWbP2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D51F000E9;
+	Mon, 31 Aug 2026 13:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183811;
-	bh=NNeDVYB834eBUK2IVKo137f7ozwOhKTwFFvma5/NENo=;
+	s=k20260515; t=1788183810;
+	bh=rOKKgiKls+fMCU+mwXra6P3qUafxkT02LD6xOduHgow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R58WqMve6aSy3tvmBPPnEBnmRfBHDJ1cIOkUvsPRuf5Uq4vJGi0aEGfSGnbrpsW5c
-	 CR7/D+WblCHsHIGjKuiB4A4GTWiJ7QJB5foWqkhzrg6z9xUR0oda+EP8r3rDYzldgl
-	 eD7liJDRPOGNyw8ATcVVszGnywI+9iVW+1CxSmc3OMZN7tY6RNoIFovl6CQ2Wh3ztF
-	 BVyPA4SSP+8Wu2/0NWjo4Poc0yUalk76qArZtHWaP2sfmYGibVlIjskxroGoed2d4F
-	 tjrZQDzej6X3MLUGRS6SyjbZ0pkaogebxFZGiIhp6DeCBtsT2+IERhET7x+SMEEt4e
-	 vQvbwIJTW8Vsg==
+	b=cHcWbP2RKD4r7kOfLHXlktKuMg6JH09cvIXd7/Ln0Asnlne4gwRO0fFdFi5JMOkLB
+	 Z0WD1V99wN2aaJNNiTQAgP783YYqPrNSDL4A2U+Cnp9mUJstJJl+I/Q3fwwGWt3YZV
+	 4Sgk6+ei9o19ndq5JzLbAuhJe9cfN4RGna0uq7IGfeLPq8freCSufJ2OU1Py4DU6Ya
+	 KB+plFussJl0xcS2P8x8JZwXlVpDzgQUX7VxqW+FbAKvkq15NwPKZBlUbKCbpYCGMp
+	 tAr8u27/x/Eb5/TntWjuLroAIn5+ZlCl0XFIvm+qfhb4iE7dBYuCNAs8TsRrKRbRE6
+	 zN1lujZx4fPXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Jie Gan <jie.gan@oss.qualcomm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+Cc: Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	alexander.shishkin@linux.intel.com,
-	coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] coresight: perf: Retrieve path and source from event data
-Date: Mon, 31 Aug 2026 09:25:47 -0400
-Message-ID: <20260831133314.4125787-319-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: usb-audio: qcom: Free QMI handle
+Date: Mon, 31 Aug 2026 09:25:46 -0400
+Message-ID: <20260831133314.4125787-318-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,310 +54,409 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@arm.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit f37bc31447c0ddafedb25e3c4a4f4e2284034247 ]
+[ Upstream commit b8ff1f3578f83dedf5feb796d97a3f67c1bea58f ]
 
-ETM perf callbacks currently use the per-CPU csdev_src pointer, which
-can race with updates during device registration and unregistration.
+qc_usb_audio_probe() allocates svc->uaudio_svc_hdl separately from the
+uaudio_qmi_svc object.
 
-The AUX setup already builds and stores the path in the event data.
-Use this path to retrieve the source instead of csdev_src to avoid
-the race.
+qmi_handle_release() releases the resources owned by an initialized QMI
+handle, but does not free the memory containing the struct qmi_handle
+itself. The probe error path and the remove path currently release the
+handle and then free svc, losing the last pointer to the separately
+allocated handle.
 
-Export coresight_get_source() and add etm_event_get_ctxt_path() to
-retrieve the context's path and its source with READ_ONCE() /
-WRITE_ONCE() accessors. Give the comments to explain why this
-approach is safe when pause or resume callbacks preempt the disable
-callback (e.g. via NMI).
+This leaks one struct qmi_handle on each affected probe unwind and on
+each successful probe/remove cycle.
 
-Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Tested-by: James Clark <james.clark@linaro.org>
-Tested-by: Jie Gan <jie.gan@oss.qualcomm.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260515-arm_coresight_path_power_management_improvement-v14-7-f88c4a3ecfe9@arm.com
+Free the handle after qmi_handle_release() in both paths.
+
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/9108EC860F3F87DF+20260623071308.2549182-1-raoxu@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The background searches finished:
+# Stable Backport Analysis: ALSA: usb-audio: qcom: Free QMI handle
 
-1. **linux-next lookup** — Subject/`etm_event_get_ctxt_path` searches on
-   `linux-next` didn’t turn up this commit (the `-S` pickaxe run was
-   slow and returned unrelated results).
+**Local tree:** `v6.18.44` (Linux 6.18.y stable)
+**Upstream fix:** `b8ff1f3578f83` (on `master`, not yet in this tree)
 
-2. **Branch containment** — The full `git branch -a --contains
-   f37bc31447c0` scan returned nothing after ~2.5 minutes. A quicker
-   check confirms the commit object exists locally but is **not** an
-   ancestor of `linux-next` or `origin/master` in this checkout.
+---
 
-That matches the earlier finding: the fix is present as commit
-`f37bc31447c0` but isn’t merged into mainline or the current 6.18.43
-tree yet. The backport recommendation remains **YES** on technical merit
-once it lands upstream.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
- drivers/hwtracing/coresight/coresight-core.c  |   2 +-
- .../hwtracing/coresight/coresight-etm-perf.c  | 114 +++++++++++-------
- drivers/hwtracing/coresight/coresight-priv.h  |   1 +
- 3 files changed, 74 insertions(+), 43 deletions(-)
+### Step 1.1: Subject line
+**Record:** `[ALSA: usb-audio: qcom]` `[Free]` — free a separately
+allocated QMI handle that was leaked on probe error and remove paths.
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index 911a7b6d4867b..4cf4a3e92c272 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -79,7 +79,7 @@ struct coresight_device *coresight_get_percpu_sink(int cpu)
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Xu Rao `<raoxu@uniontech.com>` (author)
+- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer,
+  committer)
+- **Link:** https://patch.msgid.link/9108EC860F3F87DF+20260623071308.254
+  9182-1-raoxu@uniontech.com
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+- Notable: maintainer (Takashi Iwai) applied and committed the patch
+
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `svc->uaudio_svc_hdl` is `kzalloc()`'d separately from
+  `struct uaudio_qmi_svc`. `qmi_handle_release()` tears down handle
+  resources but does not free the `struct qmi_handle` memory. After
+  `kfree(svc)`, the handle allocation is orphaned.
+- **Symptom:** One `struct qmi_handle` leaked per probe unwind (error
+  path) and per successful probe/remove cycle.
+- **Root cause:** Mismatch between separate allocation and release API
+  semantics (`qmi_handle_release()` vs. `kfree()`).
+- **Version info:** None stated; bug present since driver introduction.
+
+### Step 1.4: Hidden bug fix?
+**Record:** No — this is an explicit, straightforward memory-leak fix,
+not disguised cleanup.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory
+**Record:**
+- **File:** `sound/usb/qcom/qc_audio_offload.c` (+2 / -0)
+- **Functions:** `qc_usb_audio_probe()`, `qc_usb_audio_remove()`
+- **Scope:** Single-file, surgical fix (2 lines)
+
+### Step 2.2: Code flow per hunk
+
+**Hunk 1 — `release_qmi` error path in `qc_usb_audio_probe()`:**
+- **Before:** `qmi_handle_release(svc->uaudio_svc_hdl);` → `kfree(svc);`
+  — handle struct leaked
+- **After:** `qmi_handle_release()` then `kfree(svc->uaudio_svc_hdl)`
+  then `kfree(svc)`
+
+**Hunk 2 — `qc_usb_audio_remove()`:**
+- **Before:** Same leak on every module remove
+- **After:** `kfree(svc->uaudio_svc_hdl)` added after
+  `qmi_handle_release()`
+
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Error-path / resource leak (missing `kfree` on
+separately allocated object).
+**Mechanism:** `uaudio_svc_hdl` is a pointer field in `struct
+uaudio_qmi_svc` pointing to a separately `kzalloc()`'d `struct
+qmi_handle`. `qmi_handle_release()` (documented and implemented in
+`drivers/soc/qcom/qmi_interface.c`) frees internal resources
+(`recv_buf`, service list entries, etc.) but explicitly does not free
+the handle struct itself — callers must do that, as
+`drivers/slimbus/qcom-ngd-ctrl.c` does with `devm_kfree()` after
+`qmi_handle_release()`.
+
+### Step 2.4: Fix quality
+**Record:** Obviously correct; mirrors established QMI caller pattern.
+Minimal, no API changes. No meaningful regression risk — `kfree()` is
+called after full `qmi_handle_release()` and before `kfree(svc)`.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+**Record:** Buggy allocation introduced in `326bbc348298a` ("ALSA: usb-
+audio: qcom: Introduce QC USB SND offloading support", 2025-04-11).
+Driver is an ancestor of `v6.18` — bug has been present since the driver
+landed in this release series.
+
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag present.
+
+### Step 3.3: Related file history
+**Record:** Recent related fixes in this file from the same
+author/subsystem:
+- `1467ca02ddac4` — "Free sideband sg_table objects" (same leak pattern,
+  already in this 6.18.y tree)
+- `e7144a2b3ac8d` — error-path cleanup in `qc_usb_audio_probe()`
+- `5c7ef5001292d` — xfer_buf leak fix
+
+Standalone fix; original submission was `[PATCH 1/3]` but v2 was applied
+as a single patch by Takashi Iwai with no series dependencies.
+
+### Step 3.4: Author context
+**Record:** Xu Rao (Uniontech) — active contributor to Qualcomm USB
+audio offload leak fixes. Takashi Iwai (ALSA maintainer) committed the
+fix.
+
+### Step 3.5: Dependencies
+**Record:** None. Applies standalone; no prerequisite commits or
+structural assumptions beyond code already in this tree.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Original discussion
+**Record:**
+- **URL:** https://lists.openwall.net/linux-kernel/2026/06/23/512
+- **Series:** Originally `[PATCH 1/3]`; v2 submitted as single patch
+- **Maintainer response:** Takashi Iwai: "Applied now. Thanks."
+  (https://lists.openwall.net/linux-kernel/2026/06/25/1001)
+- No NAKs, no stable nomination in thread
+- `b4 dig -c` could not be used (commit not in current HEAD); lore found
+  via openwall mirror
+
+### Step 4.2: Reviewers
+**Record:** CC'd: Jaroslav Kysela, Takashi Iwai, Greg Kroah-Hartman,
+Kees Cook, linux-sound, linux-kernel. Appropriate subsystem maintainers
+included.
+
+### Step 4.3: Bug report
+**Record:** No syzbot, kmemleak, or user bug report. Found via code
+review.
+
+### Step 4.4: Related patches
+**Record:** Patches 2/3 of the original series were not committed with
+this fix; the applied upstream commit is self-contained.
+
+### Step 4.5: Stable list
+**Record:** No stable-specific discussion found for this exact patch.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key functions
+**Record:** `qc_usb_audio_probe()`, `qc_usb_audio_remove()`
+
+### Step 5.2: Callers
+**Record:** Registered as `.probe`/`.remove` in
+`qc_usb_audio_offload_drv` auxiliary driver table. Invoked during
+auxiliary device probe/remove on Qualcomm platforms with
+`CONFIG_SND_USB_AUDIO_QMI`.
+
+### Step 5.3: Callees
+**Record:** `kzalloc()`, `qmi_handle_init()`, `qmi_add_server()`,
+`qmi_handle_release()`, `kfree()`, `qc_usb_audio_cleanup_qmi_dev()`,
+`snd_usb_register_platform_ops()`
+
+### Step 5.4: Reachability
+**Record:** Triggered at module/auxiliary-device load and unload on
+systems with Qualcomm USB audio offload enabled
+(`CONFIG_SND_USB_AUDIO_QMI=y/m`, requires `QCOM_QMI_HELPERS`,
+`USB_XHCI_SIDEBAND`). Not userspace-triggerable directly, but hits every
+probe error and every clean module remove.
+
+### Step 5.5: Similar patterns
+**Record:** `drivers/slimbus/qcom-ngd-ctrl.c` correctly calls
+`qfree`/`devm_kfree` after `qmi_handle_release()`. Same author's
+`1467ca02ddac4` fixed an analogous separate-allocation leak in this same
+driver.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+
+### Step 6.1: Buggy code present?
+**Record:** **YES.** Current tree at
+`sound/usb/qcom/qc_audio_offload.c`:
+- Line 1968: separate `kzalloc(sizeof(*svc->uaudio_svc_hdl))`
+- Lines 1996–1998: `release_qmi` path missing
+  `kfree(svc->uaudio_svc_hdl)`
+- Lines 2020–2021: `remove` path missing `kfree(svc->uaudio_svc_hdl)`
+- Upstream fix `b8ff1f3578f83` is **not** an ancestor of HEAD (`git
+  merge-base --is-ancestor` exit 1)
+
+### Step 6.2: Backport difficulty
+**Record:** Clean apply expected — the `release_qmi` and `remove` paths
+match upstream context exactly.
+
+### Step 6.3: Related fixes already present?
+**Record:** `1467ca02ddac4` (sg_table leak, same driver/author) is
+already in this tree — strong precedent that this class of leak fix is
+accepted for 6.18.y.
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **IMPORTANT** — ALSA USB audio driver, Qualcomm-specific
+offload path. Not core kernel, but affects real hardware (Snapdragon
+laptops/tablets with USB XHCI sideband audio offload).
+
+### Step 7.2: Activity
+**Record:** Actively maintained; multiple bug fixes in 2025–2026
+including several leak fixes backported to stable.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users with `CONFIG_SND_USB_AUDIO_QMI` on Qualcomm platforms
+using USB audio offload. Config-specific, platform-specific — not
+universal.
+
+### Step 8.2: Trigger conditions
+**Record:**
+- Every successful driver remove (module unload, device unbind)
+- Probe error after QMI init when `snd_usb_register_platform_ops()`
+  fails
+- Unprivileged users cannot directly trigger; requires platform hardware
+  and driver loaded
+- **Likelihood:** Once per boot cycle on affected systems (remove path);
+  probe error path is rarer
+
+### Step 8.3: Failure mode severity
+**Record:** **LOW** — small memory leak (~one `struct qmi_handle` per
+cycle, roughly a few hundred bytes including embedded lists already
+freed by `qmi_handle_release()`). No crash, corruption, deadlock, or
+security exposure. Would require repeated load/unload to accumulate
+meaningfully.
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** Eliminates a real, confirmed leak on an established code
+  path; aligns with prior stable backports in this exact driver
+- **Risk:** Very low — 2-line addition, established QMI pattern, no
+  behavior change beyond freeing leaked memory
+- **Ratio:** Moderate benefit for niche users, very low risk; precedent
+  in this tree tips toward inclusion
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Real, verified memory leak in code present since driver introduction
+- Obviously correct 2-line fix matching QMI subsystem conventions
+- Driver exists in v6.18; bug affects this tree
+- Same author fixed an analogous leak (`1467ca02ddac4`) already
+  backported to this 6.18.y tree by Greg Kroah-Hartman
+- ALSA maintainer reviewed and applied upstream
+- Clean apply, no dependencies
+
+**AGAINST backport:**
+- Low severity (small leak, not crash/corruption/security)
+- Niche hardware/config (`CONFIG_SND_USB_AUDIO_QMI`)
+- No fuzzer or user reports
+- Strict reading of "important issue" criterion is borderline for pure
+  leaks
+
+**Unresolved:** Whether patches 2/3 of the original `[PATCH 1/3]` series
+were ever needed — upstream committed only this standalone fix.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — correct by inspection;
+   maintainer-applied upstream
+2. Fixes a real bug? **PASS** — confirmed memory leak
+3. Important issue? **PASS (borderline)** — not crash/security, but real
+   leak on remove path; same class already accepted in this tree
+4. Small and contained? **PASS** — 2 lines, 1 file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
+   expected
+
+### Step 9.3: Exception categories
+**Record:** None directly (not device ID, quirk, DT, build, or docs).
+Standard resource-leak fix.
+
+### Step 9.4: Decision rationale
+
+This is a genuine memory leak on the driver remove path and probe error
+path in `sound/usb/qcom/qc_audio_offload.c`, present in Linux 6.18 since
+the Qualcomm USB audio offload driver was introduced. The fix is
+minimal, obviously correct, and follows the established QMI handle
+lifecycle pattern used elsewhere in the Qualcomm subsystem.
+
+While the leak severity is low (one small allocation per module cycle on
+niche hardware), this 6.18.y tree has already accepted a nearly
+identical class of fix from the same author in the same file
+(`1467ca02ddac4` — "Free sideband sg_table objects"). That establishes
+clear precedent that resource-leak fixes in this driver are appropriate
+for 6.18.y stable. The fix is not yet in the local tree (`b8ff1f3578f83`
+is on `master` only) and should be backported.
+
+---
+
+## Verification
+
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+- **[Phase 1]** Confirmed no syzbot/Reported-by; Takashi Iwai Signed-
+  off-by present
+- **[Phase 2]** Read current `qc_audio_offload.c` lines 1957–2023: leak
+  confirmed on both paths
+- **[Phase 2]** Read `qmi_handle_release()` at
+  `drivers/soc/qcom/qmi_interface.c:687-719`: does not free `struct
+  qmi_handle` itself
+- **[Phase 2]** Read `drivers/slimbus/qcom-ngd-ctrl.c:496-508`:
+  precedent for caller freeing handle after release
+- **[Phase 3]** `git describe HEAD`: `v6.18.44`
+- **[Phase 3]** `git blame` lines 1968–2021: introduced in
+  `326bbc348298a` (2025-04-11)
+- **[Phase 3]** `git merge-base --is-ancestor 326bbc348298ab v6.18`:
+  driver in v6.18 release
+- **[Phase 3]** `git merge-base --is-ancestor b8ff1f3578f83 HEAD`: exit
+  1 — fix NOT in current tree
+- **[Phase 3]** `git show 1467ca02ddac4`: analogous leak fix already in
+  this tree (committed by Greg K-H)
+- **[Phase 4]** Fetched https://lists.openwall.net/linux-
+  kernel/2026/06/23/512: original patch submission
+- **[Phase 4]** Fetched https://lists.openwall.net/linux-
+  kernel/2026/06/25/1001: Takashi Iwai "Applied now"
+- **[Phase 4]** `b4 dig -c HEAD`: not applicable (commit not in HEAD);
+  lore accessed via openwall
+- **[Phase 5]** `grep qc_usb_audio_probe`: only auxiliary driver probe
+  entry
+- **[Phase 5]** Read `include/linux/soc/qcom/qmi.h:216-238`: `struct
+  qmi_handle` definition
+- **[Phase 6]** Confirmed buggy code at lines 1996–1998 and 2020–2021 in
+  local tree
+- **[Phase 6]** `grep kfree.*uaudio_svc_hdl` in tree: no matches — fix
+  absent
+- **[Phase 6]** Read `sound/usb/Kconfig:191-197`:
+  `CONFIG_SND_USB_AUDIO_QMI` dependencies
+- **[Phase 8]** Assessed severity as LOW leak, not crash/security
+
+**YES**The background checks finished and match the earlier analysis:
+
+- **Fix location:** `b8ff1f3578f83` ("ALSA: usb-audio: qcom: Free QMI
+  handle") is on `master` but **not** in the current `v6.18.44` tree —
+  so the leak is still present locally.
+- **Author context:** Xu Rao has several similar QMI/resource-leak fixes
+  in this area, including `1467ca02ddac4` (sideband `sg_table` leak),
+  which is already in this 6.18.y tree.
+
+That supports the **YES** backport recommendation: real leak, trivial
+fix, and precedent for the same driver in this stable series.
+
+ sound/usb/qcom/qc_audio_offload.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
+index da2759f2ee866..62a57b8d171b8 100644
+--- a/sound/usb/qcom/qc_audio_offload.c
++++ b/sound/usb/qcom/qc_audio_offload.c
+@@ -1994,6 +1994,7 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
+ release_qmi:
+ 	qc_usb_audio_cleanup_qmi_dev();
+ 	qmi_handle_release(svc->uaudio_svc_hdl);
++	kfree(svc->uaudio_svc_hdl);
+ free_svc:
+ 	kfree(svc);
+ 
+@@ -2018,6 +2019,7 @@ static void qc_usb_audio_remove(struct auxiliary_device *auxdev)
+ 	qc_usb_audio_cleanup_qmi_dev();
+ 
+ 	qmi_handle_release(svc->uaudio_svc_hdl);
++	kfree(svc->uaudio_svc_hdl);
+ 	kfree(svc);
+ 	uaudio_svc = NULL;
  }
- EXPORT_SYMBOL_GPL(coresight_get_percpu_sink);
- 
--static struct coresight_device *coresight_get_source(struct coresight_path *path)
-+struct coresight_device *coresight_get_source(struct coresight_path *path)
- {
- 	struct coresight_device *csdev;
- 
-diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/drivers/hwtracing/coresight/coresight-etm-perf.c
-index accf101779de8..60f4fde3b398b 100644
---- a/drivers/hwtracing/coresight/coresight-etm-perf.c
-+++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
-@@ -312,6 +312,35 @@ static bool sinks_compatible(struct coresight_device *a,
- 	       (sink_ops(a) == sink_ops(b));
- }
- 
-+/*
-+ * This helper is used for fetching the path pointer via the ctxt.
-+ *
-+ * Perf event callbacks run on the same CPU in atomic context, but AUX pause
-+ * and resume may run in NMI context and preempt other callbacks. Since the
-+ * event stop callback clears ctxt->event_data before the data is released,
-+ * AUX pause/resume will either observe a NULL pointer and stop fetching the
-+ * path pointer, or safely access event_data and the path, as the data has
-+ * not yet been freed.
-+ */
-+static struct coresight_path *etm_event_get_ctxt_path(struct etm_ctxt *ctxt)
-+{
-+	struct etm_event_data *event_data;
-+	struct coresight_path *path;
-+
-+	if (!ctxt)
-+		return NULL;
-+
-+	event_data = READ_ONCE(ctxt->event_data);
-+	if (!event_data)
-+		return NULL;
-+
-+	path = etm_event_cpu_path(event_data, smp_processor_id());
-+	if (!path)
-+		return NULL;
-+
-+	return path;
-+}
-+
- static void *etm_setup_aux(struct perf_event *event, void **pages,
- 			   int nr_pages, bool overwrite)
- {
-@@ -463,13 +492,23 @@ static void *etm_setup_aux(struct perf_event *event, void **pages,
- 	goto out;
- }
- 
--static int etm_event_resume(struct coresight_device *csdev,
--			     struct etm_ctxt *ctxt)
-+static int etm_event_resume(struct coresight_path *path)
- {
--	if (!ctxt->event_data)
-+	struct coresight_device *source;
-+	int ret;
-+
-+	if (!path)
- 		return 0;
- 
--	return coresight_resume_source(csdev);
-+	source = coresight_get_source(path);
-+	if (!source)
-+		return 0;
-+
-+	ret = coresight_resume_source(source);
-+	if (ret < 0)
-+		dev_err(&source->dev, "Failed to resume ETM event.\n");
-+
-+	return ret;
- }
- 
- static void etm_event_start(struct perf_event *event, int flags)
-@@ -478,23 +517,19 @@ static void etm_event_start(struct perf_event *event, int flags)
- 	struct etm_event_data *event_data;
- 	struct etm_ctxt *ctxt = this_cpu_ptr(&etm_ctxt);
- 	struct perf_output_handle *handle = &ctxt->handle;
--	struct coresight_device *sink, *csdev = per_cpu(csdev_src, cpu);
-+	struct coresight_device *source, *sink;
- 	struct coresight_path *path;
- 	u64 hw_id;
- 
--	if (!csdev)
--		goto fail;
--
- 	if (flags & PERF_EF_RESUME) {
--		if (etm_event_resume(csdev, ctxt) < 0) {
--			dev_err(&csdev->dev, "Failed to resume ETM event.\n");
-+		path = etm_event_get_ctxt_path(ctxt);
-+		if (etm_event_resume(path) < 0)
- 			goto fail;
--		}
- 		return;
- 	}
- 
- 	/* Have we messed up our tracking ? */
--	if (WARN_ON(ctxt->event_data))
-+	if (WARN_ON(READ_ONCE(ctxt->event_data)))
- 		goto fail;
- 
- 	/*
-@@ -522,9 +557,10 @@ static void etm_event_start(struct perf_event *event, int flags)
- 
- 	path = etm_event_cpu_path(event_data, cpu);
- 	path->handle = handle;
--	/* We need a sink, no need to continue without one */
-+	/* We need source and sink, no need to continue if any is not set */
-+	source = coresight_get_source(path);
- 	sink = coresight_get_sink(path);
--	if (WARN_ON_ONCE(!sink))
-+	if (WARN_ON_ONCE(!source || !sink))
- 		goto fail_end_stop;
- 
- 	/* Nothing will happen without a path */
-@@ -532,7 +568,7 @@ static void etm_event_start(struct perf_event *event, int flags)
- 		goto fail_end_stop;
- 
- 	/* Finally enable the tracer */
--	if (source_ops(csdev)->enable(csdev, event, CS_MODE_PERF, path))
-+	if (source_ops(source)->enable(source, event, CS_MODE_PERF, path))
- 		goto fail_disable_path;
- 
- 	/*
-@@ -556,7 +592,7 @@ static void etm_event_start(struct perf_event *event, int flags)
- 	/* Tell the perf core the event is alive */
- 	event->hw.state = 0;
- 	/* Save the event_data for this ETM */
--	ctxt->event_data = event_data;
-+	WRITE_ONCE(ctxt->event_data, event_data);
- 	return;
- 
- fail_disable_path:
-@@ -576,27 +612,26 @@ static void etm_event_start(struct perf_event *event, int flags)
- 	return;
- }
- 
--static void etm_event_pause(struct perf_event *event,
--			    struct coresight_device *csdev,
-+static void etm_event_pause(struct coresight_path *path,
-+			    struct perf_event *event,
- 			    struct etm_ctxt *ctxt)
- {
--	int cpu = smp_processor_id();
--	struct coresight_device *sink;
- 	struct perf_output_handle *handle = &ctxt->handle;
--	struct coresight_path *path;
-+	struct coresight_device *source, *sink;
-+	struct etm_event_data *event_data;
- 	unsigned long size;
- 
--	if (!ctxt->event_data)
-+	if (!path)
- 		return;
- 
--	/* Stop tracer */
--	coresight_pause_source(csdev);
--
--	path = etm_event_cpu_path(ctxt->event_data, cpu);
-+	source = coresight_get_source(path);
- 	sink = coresight_get_sink(path);
--	if (WARN_ON_ONCE(!sink))
-+	if (WARN_ON_ONCE(!source || !sink))
- 		return;
- 
-+	/* Stop tracer */
-+	coresight_pause_source(source);
-+
- 	/*
- 	 * The per CPU sink has own interrupt handling, it might have
- 	 * race condition with updating buffer on AUX trace pause if
-@@ -612,8 +647,9 @@ static void etm_event_pause(struct perf_event *event,
- 	if (!sink_ops(sink)->update_buffer)
- 		return;
- 
-+	event_data = READ_ONCE(ctxt->event_data);
- 	size = sink_ops(sink)->update_buffer(sink, handle,
--					     ctxt->event_data->snk_config);
-+					     event_data->snk_config);
- 	if (READ_ONCE(handle->event)) {
- 		if (!size)
- 			return;
-@@ -629,14 +665,14 @@ static void etm_event_stop(struct perf_event *event, int mode)
- {
- 	int cpu = smp_processor_id();
- 	unsigned long size;
--	struct coresight_device *sink, *csdev = per_cpu(csdev_src, cpu);
-+	struct coresight_device *source, *sink;
- 	struct etm_ctxt *ctxt = this_cpu_ptr(&etm_ctxt);
- 	struct perf_output_handle *handle = &ctxt->handle;
-+	struct coresight_path *path = etm_event_get_ctxt_path(ctxt);
- 	struct etm_event_data *event_data;
--	struct coresight_path *path;
- 
- 	if (mode & PERF_EF_PAUSE)
--		return etm_event_pause(event, csdev, ctxt);
-+		return etm_event_pause(path, event, ctxt);
- 
- 	/*
- 	 * If we still have access to the event_data via handle,
-@@ -646,9 +682,9 @@ static void etm_event_stop(struct perf_event *event, int mode)
- 	    WARN_ON(perf_get_aux(handle) != ctxt->event_data))
- 		return;
- 
--	event_data = ctxt->event_data;
-+	event_data = READ_ONCE(ctxt->event_data);
- 	/* Clear the event_data as this ETM is stopping the trace. */
--	ctxt->event_data = NULL;
-+	WRITE_ONCE(ctxt->event_data, NULL);
- 
- 	if (event->hw.state == PERF_HES_STOPPED)
- 		return;
-@@ -670,19 +706,13 @@ static void etm_event_stop(struct perf_event *event, int mode)
- 		return;
- 	}
- 
--	if (!csdev)
--		return;
--
--	path = etm_event_cpu_path(event_data, cpu);
--	if (!path)
--		return;
--
-+	source = coresight_get_source(path);
- 	sink = coresight_get_sink(path);
--	if (!sink)
-+	if (!source || !sink)
- 		return;
- 
- 	/* stop tracer */
--	coresight_disable_source(csdev, event);
-+	coresight_disable_source(source, event);
- 
- 	/* tell the core */
- 	event->hw.state = PERF_HES_STOPPED;
-diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-index bcc5db0d9c3c2..7f27ef2ab1619 100644
---- a/drivers/hwtracing/coresight/coresight-priv.h
-+++ b/drivers/hwtracing/coresight/coresight-priv.h
-@@ -250,6 +250,7 @@ void coresight_add_helper(struct coresight_device *csdev,
- 
- void coresight_set_percpu_sink(int cpu, struct coresight_device *csdev);
- struct coresight_device *coresight_get_percpu_sink(int cpu);
-+struct coresight_device *coresight_get_source(struct coresight_path *path);
- void coresight_disable_source(struct coresight_device *csdev, void *data);
- void coresight_pause_source(struct coresight_device *csdev);
- int coresight_resume_source(struct coresight_device *csdev);
 -- 
 2.53.0
 
