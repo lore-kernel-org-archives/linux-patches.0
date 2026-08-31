@@ -1,713 +1,432 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821C5582B9A;
-	Mon, 31 Aug 2026 13:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EB3582B8D;
+	Mon, 31 Aug 2026 13:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184199; cv=none; b=CtBnKge+WjTk1NcradjODYa0pw21VDWFzV4ugr0PfRFK+aCx7Iod2WqxJaKMON7mT39HKt5DKx5ILigPwkYuoaxYXwMmM6BFA4RIm6wuD8hPXvx0+DcKHvLzxAAdtJMipF7O5snwyK6I6AtqdSDWX6XHRUN0igxTLuAKrMrL6JI=
+	t=1788184199; cv=none; b=osaDZRKiyA2x2fbUTlQ/4fC30uHIEqHQLwFQIbQhtQzE3JKYHJfJ2LeNu6c0xi/SLqBDpoUd8oXt0rk12h8eLwwKSUuScCKbQ+lYrL+7kkaertCw5uvUDVCeSCF1ueDuXEILU7Dtoz7isvllS2Q70FWivxNDpPeIBJHJiBDpqQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184199; c=relaxed/simple;
-	bh=h5cAa6ABLjS0Uv6w2PafCYkEjVNx8dx2kP56sCwIDWE=;
+	bh=8SYMDksE1DxQY8JuTiY2RejCiTm9Ev2iN/cZEe5mBc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lAPdNFma7uGBqP3W0Xb46kQsLTU0V/iGgSz7u6bEntBrPZBZ9e4/SEuiGbTAAUfNdzP2nwDOkdmN7VF9tC9VGHtvscs0QOj928CB1DvXdIqt6JTtTecvdtEkyXrRipGwgrIDfLO93/t5or/SmZEUZOMMNTLXbBEO8pmGLfU33y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtdAzd5G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pzZmVGSo+mTMxPQs5ULLUSSmxyJMimI+zF1xgKpN6rw6F3fvOISjfy0GYNZkufy0xVwh3zoflKa9yZ3kc91C0PAcBwtek+2Wx9oI1qrfMMIj59du9L5MvMqGQ+J/mJgZspvCv1hgVViXxZ8Wdwz6bfRFQ0uh/5s3DQ79YnpZSFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jN/woYYO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtdAzd5G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25551F00A3E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jN/woYYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E734F1F00ACA;
 	Mon, 31 Aug 2026 13:49:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184196;
-	bh=D6k8Y9o9LiMayUQChsEhx74o23ag/BfmdGmp5FkPxP0=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184197;
+	bh=YsiWhBDT+GunKvfhsAsf8vWwVOjjNgw+gRuWWzNkjSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vtdAzd5GkJrEf0EO3XiS0nku+pLQP3uBuvbU8AthzO0RWt8uZytX3U1LcubO+QAUx
-	 WJFFYKinZxGGUzJmqj+SEmzh0+oHpGFdVxRL5sj6fjdcuuGElFNG933CZw0LpX/afU
-	 hVDwaMAkR+UOIuH+ynwYJHNKEmpxZtwO+XWChycI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 08/99] selinux: use known type instead of void pointer
-Date: Mon, 31 Aug 2026 15:33:37 +0200
-Message-ID: <20260831133400.208771864@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=jN/woYYOEDj5+i2chnkFB854H8aGsyIcV3B08Z7Ds4kvYap8NWYPdZyL00dCaUDus
+	 pdWYqgvIkUZLk0Qxmq2zOslMiIRxBDYcV7GIZA6M4G0xqFWnl9Z/pfhW+VwQsJhAIB
+	 6GwV9Jcw+EQtUIsoIwNvDGCdGBG19b7eE2oNKeUHDY9sMZaTg+E7xUPKWmNDppGFKr
+	 cR0s8VLAp327TgzsRRtuCkuenZLMSANWdrC7w3FnV8O0rCl4VL3bWKuMzx2YB/Fzey
+	 VocAyb0+Lt5NXJfInW6YuRfGXssSp5BA41iTr3mNP3kq3mITY3C46av8HGOLughf1Q
+	 tIWCloXlKyMJg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	mengyuanlou@net-swift.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] net: txgbe: fix phylink leak on AML init failure
+Date: Mon, 31 Aug 2026 09:29:37 -0400
+Message-ID: <20260831133314.4125787-549-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-------------------
+[ Upstream commit 9c89f975e66922f346d92d60c9d51d07274a7f3b ]
 
-From: Christian Göttsche <cgzones@googlemail.com>
+Destroy the phylink instance when fixed-link setup fails.
 
-[ Upstream commit f07586160fd5492f8d48e7667e7a5d8797aa5090 ]
-
-Improve type safety and readability by using the known type.
-
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-(cherry picked from commit f07586160fd5492f8d48e7667e7a5d8797aa5090)
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20260528013258.129146-1-zhaochenguang@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/avtab.c       |  8 +--
- security/selinux/ss/avtab.h       |  9 +--
- security/selinux/ss/conditional.c | 12 ++--
- security/selinux/ss/conditional.h |  6 +-
- security/selinux/ss/ebitmap.c     |  4 +-
- security/selinux/ss/ebitmap.h     |  5 +-
- security/selinux/ss/policydb.c    | 91 ++++++++++++++++---------------
- security/selinux/ss/policydb.h    | 16 +++---
- 8 files changed, 77 insertions(+), 74 deletions(-)
 
-diff --git a/security/selinux/ss/avtab.c b/security/selinux/ss/avtab.c
-index 8e400dd736b7a..23210faaa0465 100644
---- a/security/selinux/ss/avtab.c
-+++ b/security/selinux/ss/avtab.c
-@@ -336,7 +336,7 @@ static const uint16_t spec_order[] = {
- };
- /* clang-format on */
+LLM Generated explanations, may be completely bogus:
+
+# Stable Backport Analysis: `net: txgbe: fix phylink leak on AML init
+failure`
+
+## Local Tree Context
+
+- **Tree:** `v6.18.44` / `6.18.44`
+- **Fix commit in repo:** `9c89f975e669` exists but is **not** in HEAD
+- **Buggy code:** Present in `txgbe_phylink_init_aml()` at lines 381–384
+- **Introducing commit:** `6f8b4c01a8cd9` ("Implement PHYLINK for AML
+  25G/10G devices") is an ancestor of HEAD
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject Line
+**Record:** `[net: txgbe]` `[fix]` — destroy phylink on AML init failure
+when fixed-link setup fails.
+
+### Step 1.2: Tags
+**Record:**
+- **Fixes:** `6f8b4c01a8cd` (in original patch submission; absent from
+  committed version in repo object)
+- **Reviewed-by:** Maxime Chevallier, Jiawen Wu
+- **Link:** https://patch.msgid.link/20260528013258.129146-1-
+  zhaochenguang@kylinos.cn
+- **Signed-off-by:** Chenguang Zhao, Jakub Kicinski
+- No Reported-by, Tested-by, Cc: stable, or syzbot tags
+
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** `phylink_create()` succeeds, but `phylink_set_fixed_link()`
+  failure returns without `phylink_destroy()`.
+- **Symptom:** Memory leak (~`sizeof(struct phylink)` + workqueue) on
+  probe failure.
+- **Root cause:** Missing cleanup on error path introduced with AML
+  phylink support.
+
+### Step 1.4: Hidden Bug Fix?
+**Record:** No — explicitly labeled as a leak fix.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory
+**Record:**
+- **File:** `drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c` (+1 line)
+- **Function:** `txgbe_phylink_init_aml()`
+- **Scope:** Single-file, surgical fix
+
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** On `phylink_set_fixed_link()` error → log and return;
+  local `phylink` leaked.
+- **After:** Same path calls `phylink_destroy(phylink)` before return.
+- **Path:** Probe-time initialization error path only.
+
+### Step 2.3: Bug Mechanism
+**Record:** **Resource leak on error path.** Category: memory/resource
+leak (probe failure).
+
+Probe flow when init fails:
+
+```892:894:drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
+        err = txgbe_init_phy(txgbe);
+        if (err)
+                goto err_release_hw;
+```
+
+`err_release_hw` does **not** call `txgbe_remove_phy()`. Since
+`wx->phylink` is only assigned after successful init:
+
+```381:387:drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+        err = phylink_set_fixed_link(phylink, &state);
+        if (err) {
+                wx_err(wx, "Failed to set fixed link\n");
+                return err;
+        }
+
+        wx->phylink = phylink;
+```
+
+…the leaked `phylink` has no other cleanup path.
+
+### Step 2.4: Fix Quality
+**Record:** Obviously correct. Mirrors the existing pattern in
+`txgbe_phylink_init()`:
+
+```300:303:drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
+                ret = phylink_connect_phy(phylink, wx->phydev);
+                if (ret) {
+                        phylink_destroy(phylink);
+                        return ret;
+```
+
+**Regression risk:** Very low — one line on a failure-only path.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+**Record:** Buggy error path introduced in `6f8b4c01a8cd9` (May 2025) by
+Jiawen Wu. Present in this 6.18.y tree.
+
+### Step 3.2: Fixes: Tag
+**Record:** Original patch had `Fixes: 6f8b4c01a8cd9`. Verified that
+commit is in this tree and introduced `txgbe_phylink_init_aml()` without
+error-path cleanup.
+
+### Step 3.3: Related Changes
+**Record:** Recent txgbe history includes AML phylink work (`6f8b4c01`,
+`7649ba2b`, `9157060f`). Standalone one-line fix; no series dependency.
+Similar leak fix already backported: `2d34421bfa261` ("fix FDIR filter
+leak on remove") by same author, committed by Greg K-H to this tree.
+
+### Step 3.4: Author Context
+**Record:** Chenguang Zhao is an active txgbe contributor. Reviewed by
+driver reviewers (Chevallier, Wu).
+
+### Step 3.5: Dependencies
+**Record:** None. Applies cleanly to this tree's simpler `txgbe_aml.c`
+(391 lines vs. mainline ~530 at fix time).
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Original Discussion
+**Record:** Fetched from lore.kernel.org. Patch v3 applied to net-next
+as `9c89f975e669` by Jakub Kicinski (Jun 1, 2026). Went through v1→v3
+review. No stable nomination found in thread.
+
+### Step 4.2: Reviewers
+**Record:** CC'd netdev maintainers (Kicinski, Abeni, Miller, etc.) plus
+Wangxun driver developers. Two Reviewed-by tags from subsystem
+reviewers.
+
+### Step 4.3: Bug Report
+**Record:** No external bug report or syzbot link. Bug identified by
+code inspection / review.
+
+### Step 4.4: Series Context
+**Record:** Standalone fix, not part of a multi-patch series.
+
+### Step 4.5: Stable List History
+**Record:** No stable-list discussion found for this specific fix.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key Functions
+**Record:** `txgbe_phylink_init_aml()`, `phylink_create()`,
+`phylink_set_fixed_link()`, `phylink_destroy()`
+
+### Step 5.2: Callers
+**Record:** `txgbe_phylink_init_aml()` ← `txgbe_init_phy()` (for
+`wx_mac_aml`) ← `txgbe_probe()` in `txgbe_main.c`
+
+### Step 5.3: Callees
+**Record:** `phylink_create()` allocates via `kzalloc()`;
+`phylink_destroy()` frees via `kfree()` after `cancel_work_sync()`.
+
+### Step 5.4: Reachability
+**Record:** Reachable during PCI probe of AML Wangxun NICs
+(`wx_mac_aml`). `phylink_set_fixed_link()` can return `-EINVAL` on
+validation failure (wrong mode, speed/duplex not in supported caps).
+With current hardcoded `SPEED_25000` + `MAC_25000FD`, failure is
+**unlikely in normal operation** but the error path is real and
+exercised if validation fails.
+
+### Step 5.5: Similar Patterns
+**Record:** `txgbe_phylink_init()` already destroys phylink on connect
+failure. AML path was missing the equivalent cleanup.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+
+### Step 6.1: Buggy Code Exists?
+**Record:** **YES.** Lines 381–384 lack `phylink_destroy()` on error.
+Bug present since `6f8b4c01a8cd9` landed in this tree.
+
+### Step 6.2: Backport Complications
+**Record:** **Clean apply expected.** Local file differs from mainline
+(no 40G/XLGMII branch in this tree), but the fix hunk applies
+identically to the error path.
+
+### Step 6.3: Fix Already Present?
+**Record:** **NO.** `9c89f975e669` is in the object database but not in
+HEAD (`6.18.44`).
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem
+**Record:** `drivers/net/ethernet/wangxun/txgbe` — network driver
+(IMPORTANT, driver-specific).
+
+### Step 7.2: Activity
+**Record:** Actively maintained; AML support added in 2025; multiple
+stable backports already in this tree.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who Is Affected
+**Record:** Users of Wangxun txgbe AML 25G/10G NICs (`CONFIG_TXGBE`,
+`wx_mac_aml`). Not universal, but real hardware.
+
+### Step 8.2: Trigger Conditions
+**Record:** `phylink_set_fixed_link()` returns error during probe.
+Uncommon with current hardcoded parameters, but possible on
+misconfiguration or future code changes. Each failed probe leaks one
+phylink allocation. Module reload / reprobe could accumulate leaks.
+
+### Step 8.3: Failure Mode Severity
+**Record:** Memory leak on probe error path. **Severity: MEDIUM** — no
+crash or corruption, but resource leak with no recovery on the probe
+failure path.
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Correct error-path resource management; aligns AML path
+  with non-AML phylink init; precedent exists (FDIR leak fix backported
+  to this same tree).
+- **Risk:** Very low (1 line, error path only).
+- **Ratio:** Favorable for backport.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence Summary
+
+**FOR backport:**
+- Real memory leak on probe error path
+- Obviously correct, 1-line fix matching existing driver pattern
+- Bug introduced by commit present in this tree
+- Reviewed by driver maintainers
+- Same driver already had a leak fix backported to 6.18.y
+  (`2d34421bfa261`)
+- Fix not yet in HEAD; applies cleanly
+
+**AGAINST backport:**
+- Affects niche hardware only
+- `phylink_set_fixed_link()` failure unlikely with current hardcoded
+  config
+- No user reports or fuzzer findings
+- Leak is per failed probe, not a hot-path leak
+
+**Unresolved:** No runtime crash reports; trigger frequency in
+production is unverified.
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — mirrors existing pattern;
+   two Reviewed-by
+2. Fixes a real bug? **PASS** — probe error-path memory leak
+3. Important issue? **PASS (MEDIUM)** — resource leak, not
+   crash/security
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — buggy code present, fix not
+   applied
+
+### Step 9.3: Exception Categories
+**Record:** None (not a quirk, device ID, DT, build, or docs fix).
+Standard error-path resource leak fix.
+
+### Step 9.4: Decision Rationale
+
+This is a textbook probe error-path resource leak: `phylink_create()`
+allocates memory, failure returns without cleanup, and the probe error
+path (`err_release_hw`) never calls `txgbe_remove_phy()` because
+`wx->phylink` was never assigned. The fix is minimal, matches existing
+code in the same driver, and the same author's leak fix was already
+accepted into this 6.18.y tree. While the trigger is uncommon and
+hardware-specific, stable trees routinely take such surgical leak fixes.
+
+---
+
+## Verification
+
+- **[Phase 1]** `git show 9c89f975e669`: parsed subject, tags, body
+- **[Phase 1]** Lore mbox fetch: confirmed v3 patch, Fixes tag,
+  reviewers
+- **[Phase 2]** Read `txgbe_aml.c:355-390`: confirmed missing
+  `phylink_destroy` on error
+- **[Phase 2]** Read `txgbe_phy.c:268-310`: confirmed sibling pattern
+  with `phylink_destroy`
+- **[Phase 2]** Read `txgbe_main.c:892-894,920-921`: probe goes to
+  `err_release_hw`, not `err_remove_phy`
+- **[Phase 2]** Read `phylink.c:1787-1800,1925-1941`:
+  `phylink_set_fixed_link` failure modes; `phylink_destroy` frees
+  allocation
+- **[Phase 3]** `git blame -L 381,385 txgbe_aml.c`: bug from
+  `6f8b4c01a8cd9`
+- **[Phase 3]** `git merge-base --is-ancestor 6f8b4c01a8cd9 HEAD`:
+  introducing commit in tree
+- **[Phase 3]** `git show 2d34421bfa261`: similar txgbe leak fix already
+  in 6.18.y
+- **[Phase 3]** `git log --oneline -20 -- txgbe_aml.c`: recent AML
+  driver history
+- **[Phase 4]** `curl lore.kernel.org/.../t.mbox.gz`: patch thread,
+  v1-v3, applied notification
+- **[Phase 4]** Lore stable search: no stable nomination found
+- **[Phase 5]** `grep txgbe_phylink_init_aml`: caller chain to
+  `txgbe_probe`
+- **[Phase 6]** `git describe HEAD` / `make kernelversion`: tree is
+  6.18.44
+- **[Phase 6]** `git cat-file -e 9c89f975e669` + merge-base check: fix
+  exists in repo, not in HEAD
+- **[Phase 6]** Read current `txgbe_aml.c`: buggy code confirmed at
+  lines 381-384
+
+**YES**The analysis is done for **v6.18.44**.
+
+**Commit:** `net: txgbe: fix phylink leak on AML init failure`
+
+**Finding:** On AML probe failure in `txgbe_phylink_init_aml()`, if
+`phylink_set_fixed_link()` fails, the phylink object is leaked because
+`wx->phylink` is never set and the probe path goes to `err_release_hw`
+without calling `txgbe_remove_phy()`. The fix adds a single
+`phylink_destroy(phylink)` on that error path, matching the pattern
+already used in `txgbe_phylink_init()`.
+
+**Local tree status:** The bug is present in this checkout; fix commit
+`9c89f975e669` exists in the repo but is not in HEAD. A similar txgbe
+leak fix (`2d34421bfa261`) was already backported to this tree.
+
+**Verdict:** **YES** — small, obviously correct probe error-path leak
+fix, low risk, applies cleanly.
+
+ drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+index 07ae491e3bc9b..a919962b71605 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+@@ -381,6 +381,7 @@ int txgbe_phylink_init_aml(struct txgbe *txgbe)
+ 	err = phylink_set_fixed_link(phylink, &state);
+ 	if (err) {
+ 		wx_err(wx, "Failed to set fixed link\n");
++		phylink_destroy(phylink);
+ 		return err;
+ 	}
  
--int avtab_read_item(struct avtab *a, void *fp, struct policydb *pol,
-+int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *pol,
- 		    int (*insertf)(struct avtab *a, const struct avtab_key *k,
- 				   const struct avtab_datum *d, void *p),
- 		    void *p)
-@@ -500,7 +500,7 @@ static int avtab_insertf(struct avtab *a, const struct avtab_key *k,
- 	return avtab_insert(a, k, d);
- }
- 
--int avtab_read(struct avtab *a, void *fp, struct policydb *pol)
-+int avtab_read(struct avtab *a, struct policy_file *fp, struct policydb *pol)
- {
- 	int rc;
- 	__le32 buf[1];
-@@ -543,7 +543,7 @@ int avtab_read(struct avtab *a, void *fp, struct policydb *pol)
- 	goto out;
- }
- 
--int avtab_write_item(struct policydb *p, const struct avtab_node *cur, void *fp)
-+int avtab_write_item(struct policydb *p, const struct avtab_node *cur, struct policy_file *fp)
- {
- 	__le16 buf16[4];
- 	__le32 buf32[ARRAY_SIZE(cur->datum.u.xperms->perms.p)];
-@@ -579,7 +579,7 @@ int avtab_write_item(struct policydb *p, const struct avtab_node *cur, void *fp)
- 	return 0;
- }
- 
--int avtab_write(struct policydb *p, struct avtab *a, void *fp)
-+int avtab_write(struct policydb *p, struct avtab *a, struct policy_file *fp)
- {
- 	u32 i;
- 	int rc = 0;
-diff --git a/security/selinux/ss/avtab.h b/security/selinux/ss/avtab.h
-index 8e8820484c55b..80c4a6064328e 100644
---- a/security/selinux/ss/avtab.h
-+++ b/security/selinux/ss/avtab.h
-@@ -104,15 +104,16 @@ static inline void avtab_hash_eval(struct avtab *h, const char *tag)
- #endif
- 
- struct policydb;
--int avtab_read_item(struct avtab *a, void *fp, struct policydb *pol,
-+struct policy_file;
-+int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *pol,
- 		    int (*insert)(struct avtab *a, const struct avtab_key *k,
- 				  const struct avtab_datum *d, void *p),
- 		    void *p);
- 
--int avtab_read(struct avtab *a, void *fp, struct policydb *pol);
-+int avtab_read(struct avtab *a, struct policy_file *fp, struct policydb *pol);
- int avtab_write_item(struct policydb *p, const struct avtab_node *cur,
--		     void *fp);
--int avtab_write(struct policydb *p, struct avtab *a, void *fp);
-+		     struct policy_file *fp);
-+int avtab_write(struct policydb *p, struct avtab *a, struct policy_file *fp);
- 
- struct avtab_node *avtab_insert_nonunique(struct avtab *h,
- 					  const struct avtab_key *key,
-diff --git a/security/selinux/ss/conditional.c b/security/selinux/ss/conditional.c
-index 64ba95e40a6fe..244dc82791133 100644
---- a/security/selinux/ss/conditional.c
-+++ b/security/selinux/ss/conditional.c
-@@ -206,7 +206,7 @@ static int bool_isvalid(struct cond_bool_datum *b)
- 	return 1;
- }
- 
--int cond_read_bool(struct policydb *p, struct symtab *s, void *fp)
-+int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct cond_bool_datum *booldatum;
-@@ -323,7 +323,7 @@ static int cond_insertf(struct avtab *a, const struct avtab_key *k,
- 	return 0;
- }
- 
--static int cond_read_av_list(struct policydb *p, void *fp,
-+static int cond_read_av_list(struct policydb *p, struct policy_file *fp,
- 			     struct cond_av_list *list,
- 			     struct cond_av_list *other)
- {
-@@ -375,7 +375,7 @@ static int expr_node_isvalid(struct policydb *p, struct cond_expr_node *expr)
- 	return 1;
- }
- 
--static int cond_read_node(struct policydb *p, struct cond_node *node, void *fp)
-+static int cond_read_node(struct policydb *p, struct cond_node *node, struct policy_file *fp)
- {
- 	__le32 buf[2];
- 	u32 i, len;
-@@ -415,7 +415,7 @@ static int cond_read_node(struct policydb *p, struct cond_node *node, void *fp)
- 	return cond_read_av_list(p, fp, &node->false_list, &node->true_list);
- }
- 
--int cond_read_list(struct policydb *p, void *fp)
-+int cond_read_list(struct policydb *p, struct policy_file *fp)
- {
- 	__le32 buf[1];
- 	u32 i, len;
-@@ -453,7 +453,7 @@ int cond_write_bool(void *vkey, void *datum, void *ptr)
- 	char *key = vkey;
- 	struct cond_bool_datum *booldatum = datum;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	__le32 buf[3];
- 	u32 len;
- 	int rc;
-@@ -536,7 +536,7 @@ static int cond_write_node(struct policydb *p, struct cond_node *node,
- 	return 0;
- }
- 
--int cond_write_list(struct policydb *p, void *fp)
-+int cond_write_list(struct policydb *p, struct policy_file *fp)
- {
- 	u32 i;
- 	__le32 buf[1];
-diff --git a/security/selinux/ss/conditional.h b/security/selinux/ss/conditional.h
-index 8827715bad751..468e98ad3ea14 100644
---- a/security/selinux/ss/conditional.h
-+++ b/security/selinux/ss/conditional.h
-@@ -68,10 +68,10 @@ int cond_destroy_bool(void *key, void *datum, void *p);
- 
- int cond_index_bool(void *key, void *datum, void *datap);
- 
--int cond_read_bool(struct policydb *p, struct symtab *s, void *fp);
--int cond_read_list(struct policydb *p, void *fp);
-+int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp);
-+int cond_read_list(struct policydb *p, struct policy_file *fp);
- int cond_write_bool(void *key, void *datum, void *ptr);
--int cond_write_list(struct policydb *p, void *fp);
-+int cond_write_list(struct policydb *p, struct policy_file *fp);
- 
- void cond_compute_av(struct avtab *ctab, struct avtab_key *key,
- 		     struct av_decision *avd, struct extended_perms *xperms);
-diff --git a/security/selinux/ss/ebitmap.c b/security/selinux/ss/ebitmap.c
-index 99c01be15115a..cd84357db2c47 100644
---- a/security/selinux/ss/ebitmap.c
-+++ b/security/selinux/ss/ebitmap.c
-@@ -360,7 +360,7 @@ void ebitmap_destroy(struct ebitmap *e)
- 	e->node = NULL;
- }
- 
--int ebitmap_read(struct ebitmap *e, void *fp)
-+int ebitmap_read(struct ebitmap *e, struct policy_file *fp)
- {
- 	struct ebitmap_node *n = NULL;
- 	u32 mapunit, count, startbit, index, i;
-@@ -478,7 +478,7 @@ int ebitmap_read(struct ebitmap *e, void *fp)
- 	goto out;
- }
- 
--int ebitmap_write(const struct ebitmap *e, void *fp)
-+int ebitmap_write(const struct ebitmap *e, struct policy_file *fp)
- {
- 	struct ebitmap_node *n;
- 	u32 bit, count, last_bit, last_startbit;
-diff --git a/security/selinux/ss/ebitmap.h b/security/selinux/ss/ebitmap.h
-index ba2ac3da11539..e0150695566cb 100644
---- a/security/selinux/ss/ebitmap.h
-+++ b/security/selinux/ss/ebitmap.h
-@@ -129,8 +129,9 @@ int ebitmap_contains(const struct ebitmap *e1, const struct ebitmap *e2,
- int ebitmap_get_bit(const struct ebitmap *e, u32 bit);
- int ebitmap_set_bit(struct ebitmap *e, u32 bit, int value);
- void ebitmap_destroy(struct ebitmap *e);
--int ebitmap_read(struct ebitmap *e, void *fp);
--int ebitmap_write(const struct ebitmap *e, void *fp);
-+struct policy_file;
-+int ebitmap_read(struct ebitmap *e, struct policy_file *fp);
-+int ebitmap_write(const struct ebitmap *e, struct policy_file *fp);
- u32 ebitmap_hash(const struct ebitmap *e, u32 hash);
- 
- #ifdef CONFIG_NETLABEL
-diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
-index 304746b503a0c..27407cb6f18a8 100644
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1011,7 +1011,7 @@ int policydb_context_isvalid(struct policydb *p, struct context *c)
-  * Read a MLS range structure from a policydb binary
-  * representation file.
-  */
--static int mls_read_range_helper(struct mls_range *r, void *fp)
-+static int mls_read_range_helper(struct mls_range *r, struct policy_file *fp)
- {
- 	__le32 buf[2];
- 	u32 items;
-@@ -1071,7 +1071,7 @@ static int mls_read_range_helper(struct mls_range *r, void *fp)
-  * from a policydb binary representation file.
-  */
- static int context_read_and_validate(struct context *c, struct policydb *p,
--				     void *fp)
-+				     struct policy_file *fp)
- {
- 	__le32 buf[3];
- 	int rc;
-@@ -1109,7 +1109,7 @@ static int context_read_and_validate(struct context *c, struct policydb *p,
-  * binary representation file.
-  */
- 
--static int str_read(char **strp, gfp_t flags, void *fp, u32 len)
-+static int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len)
- {
- 	int rc;
- 	char *str;
-@@ -1132,7 +1132,7 @@ static int str_read(char **strp, gfp_t flags, void *fp, u32 len)
- 	return 0;
- }
- 
--static int perm_read(struct policydb *p, struct symtab *s, void *fp)
-+static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct perm_datum *perdatum;
-@@ -1165,7 +1165,7 @@ static int perm_read(struct policydb *p, struct symtab *s, void *fp)
- 	return rc;
- }
- 
--static int common_read(struct policydb *p, struct symtab *s, void *fp)
-+static int common_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct common_datum *comdatum;
-@@ -1217,7 +1217,7 @@ static void type_set_init(struct type_set *t)
- 	ebitmap_init(&t->negset);
- }
- 
--static int type_set_read(struct type_set *t, void *fp)
-+static int type_set_read(struct type_set *t, struct policy_file *fp)
- {
- 	__le32 buf[1];
- 	int rc;
-@@ -1236,7 +1236,7 @@ static int type_set_read(struct type_set *t, void *fp)
- }
- 
- static int read_cons_helper(struct policydb *p, struct constraint_node **nodep,
--			    u32 ncons, int allowxtarget, void *fp)
-+			    u32 ncons, int allowxtarget, struct policy_file *fp)
- {
- 	struct constraint_node *c, *lc;
- 	struct constraint_expr *e, *le;
-@@ -1330,7 +1330,7 @@ static int read_cons_helper(struct policydb *p, struct constraint_node **nodep,
- 	return 0;
- }
- 
--static int class_read(struct policydb *p, struct symtab *s, void *fp)
-+static int class_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct class_datum *cladatum;
-@@ -1439,7 +1439,7 @@ static int class_read(struct policydb *p, struct symtab *s, void *fp)
- 	return rc;
- }
- 
--static int role_read(struct policydb *p, struct symtab *s, void *fp)
-+static int role_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct role_datum *role;
-@@ -1496,7 +1496,7 @@ static int role_read(struct policydb *p, struct symtab *s, void *fp)
- 	return rc;
- }
- 
--static int type_read(struct policydb *p, struct symtab *s, void *fp)
-+static int type_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct type_datum *typdatum;
-@@ -1548,7 +1548,7 @@ static int type_read(struct policydb *p, struct symtab *s, void *fp)
-  * Read a MLS level structure from a policydb binary
-  * representation file.
-  */
--static int mls_read_level(struct mls_level *lp, void *fp)
-+static int mls_read_level(struct mls_level *lp, struct policy_file *fp)
- {
- 	__le32 buf[1];
- 	int rc;
-@@ -1570,7 +1570,7 @@ static int mls_read_level(struct mls_level *lp, void *fp)
- 	return 0;
- }
- 
--static int user_read(struct policydb *p, struct symtab *s, void *fp)
-+static int user_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct user_datum *usrdatum;
-@@ -1621,7 +1621,7 @@ static int user_read(struct policydb *p, struct symtab *s, void *fp)
- 	return rc;
- }
- 
--static int sens_read(struct policydb *p, struct symtab *s, void *fp)
-+static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct level_datum *levdatum;
-@@ -1662,7 +1662,7 @@ static int sens_read(struct policydb *p, struct symtab *s, void *fp)
- 	return rc;
- }
- 
--static int cat_read(struct policydb *p, struct symtab *s, void *fp)
-+static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
- {
- 	char *key = NULL;
- 	struct cat_datum *catdatum;
-@@ -1697,7 +1697,7 @@ static int cat_read(struct policydb *p, struct symtab *s, void *fp)
- 
- /* clang-format off */
- static int (*const read_f[SYM_NUM])(struct policydb *p, struct symtab *s,
--				    void *fp) = {
-+				    struct policy_file *fp) = {
- 	common_read,
- 	class_read,
- 	role_read,
-@@ -1867,7 +1867,7 @@ u32 string_to_av_perm(struct policydb *p, u16 tclass, const char *name)
- 	return 1U << (perdatum->value - 1);
- }
- 
--static int range_read(struct policydb *p, void *fp)
-+static int range_read(struct policydb *p, struct policy_file *fp)
- {
- 	struct range_trans *rt = NULL;
- 	struct mls_range *r = NULL;
-@@ -1944,7 +1944,7 @@ static int range_read(struct policydb *p, void *fp)
- 	return rc;
- }
- 
--static int filename_trans_read_helper_compat(struct policydb *p, void *fp)
-+static int filename_trans_read_helper_compat(struct policydb *p, struct policy_file *fp)
- {
- 	struct filename_trans_key key, *ft = NULL;
- 	struct filename_trans_datum *last, *datum = NULL;
-@@ -2029,7 +2029,7 @@ static int filename_trans_read_helper_compat(struct policydb *p, void *fp)
- 	return rc;
- }
- 
--static int filename_trans_read_helper(struct policydb *p, void *fp)
-+static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp)
- {
- 	struct filename_trans_key *ft = NULL;
- 	struct filename_trans_datum **dst, *datum, *first = NULL;
-@@ -2118,7 +2118,7 @@ static int filename_trans_read_helper(struct policydb *p, void *fp)
- 	return rc;
- }
- 
--static int filename_trans_read(struct policydb *p, void *fp)
-+static int filename_trans_read(struct policydb *p, struct policy_file *fp)
- {
- 	u32 nel, i;
- 	__le32 buf[1];
-@@ -2159,7 +2159,7 @@ static int filename_trans_read(struct policydb *p, void *fp)
- 	return 0;
- }
- 
--static int genfs_read(struct policydb *p, void *fp)
-+static int genfs_read(struct policydb *p, struct policy_file *fp)
- {
- 	int rc;
- 	u32 i, j, nel, nel2, len, len2;
-@@ -2273,7 +2273,7 @@ static int genfs_read(struct policydb *p, void *fp)
- }
- 
- static int ocontext_read(struct policydb *p,
--			 const struct policydb_compat_info *info, void *fp)
-+			 const struct policydb_compat_info *info, struct policy_file *fp)
- {
- 	int rc;
- 	unsigned int i;
-@@ -2470,7 +2470,7 @@ static int ocontext_read(struct policydb *p,
-  * Read the configuration data from a policy database binary
-  * representation file into a policy database structure.
-  */
--int policydb_read(struct policydb *p, void *fp)
-+int policydb_read(struct policydb *p, struct policy_file *fp)
- {
- 	struct role_allow *ra, *lra;
- 	struct role_trans_key *rtk = NULL;
-@@ -2793,7 +2793,7 @@ int policydb_read(struct policydb *p, void *fp)
-  * Write a MLS level structure to a policydb binary
-  * representation file.
-  */
--static int mls_write_level(struct mls_level *l, void *fp)
-+static int mls_write_level(struct mls_level *l, struct policy_file *fp)
- {
- 	__le32 buf[1];
- 	int rc;
-@@ -2814,7 +2814,7 @@ static int mls_write_level(struct mls_level *l, void *fp)
-  * Write a MLS range structure to a policydb binary
-  * representation file.
-  */
--static int mls_write_range_helper(struct mls_range *r, void *fp)
-+static int mls_write_range_helper(struct mls_range *r, struct policy_file *fp)
- {
- 	__le32 buf[3];
- 	size_t items;
-@@ -2854,7 +2854,7 @@ static int sens_write(void *vkey, void *datum, void *ptr)
- 	char *key = vkey;
- 	struct level_datum *levdatum = datum;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	__le32 buf[2];
- 	size_t len;
- 	int rc;
-@@ -2882,7 +2882,7 @@ static int cat_write(void *vkey, void *datum, void *ptr)
- 	char *key = vkey;
- 	struct cat_datum *catdatum = datum;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	__le32 buf[3];
- 	size_t len;
- 	int rc;
-@@ -2907,7 +2907,7 @@ static int role_trans_write_one(void *key, void *datum, void *ptr)
- 	struct role_trans_key *rtk = key;
- 	struct role_trans_datum *rtd = datum;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	struct policydb *p = pd->p;
- 	__le32 buf[3];
- 	int rc;
-@@ -2927,7 +2927,7 @@ static int role_trans_write_one(void *key, void *datum, void *ptr)
- 	return 0;
- }
- 
--static int role_trans_write(struct policydb *p, void *fp)
-+static int role_trans_write(struct policydb *p, struct policy_file *fp)
- {
- 	struct policy_data pd = { .p = p, .fp = fp };
- 	__le32 buf[1];
-@@ -2941,7 +2941,7 @@ static int role_trans_write(struct policydb *p, void *fp)
- 	return hashtab_map(&p->role_tr, role_trans_write_one, &pd);
- }
- 
--static int role_allow_write(struct role_allow *r, void *fp)
-+static int role_allow_write(struct role_allow *r, struct policy_file *fp)
- {
- 	struct role_allow *ra;
- 	__le32 buf[2];
-@@ -2969,7 +2969,7 @@ static int role_allow_write(struct role_allow *r, void *fp)
-  * Write a security context structure
-  * to a policydb binary representation file.
-  */
--static int context_write(struct policydb *p, struct context *c, void *fp)
-+static int context_write(struct policydb *p, struct context *c, struct policy_file *fp)
- {
- 	int rc;
- 	__le32 buf[3];
-@@ -3022,7 +3022,7 @@ static int common_write(void *vkey, void *datum, void *ptr)
- 	char *key = vkey;
- 	struct common_datum *comdatum = datum;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	__le32 buf[4];
- 	size_t len;
- 	int rc;
-@@ -3047,7 +3047,7 @@ static int common_write(void *vkey, void *datum, void *ptr)
- 	return 0;
- }
- 
--static int type_set_write(struct type_set *t, void *fp)
-+static int type_set_write(struct type_set *t, struct policy_file *fp)
- {
- 	int rc;
- 	__le32 buf[1];
-@@ -3066,7 +3066,7 @@ static int type_set_write(struct type_set *t, void *fp)
- }
- 
- static int write_cons_helper(struct policydb *p, struct constraint_node *node,
--			     void *fp)
-+			     struct policy_file *fp)
- {
- 	struct constraint_node *c;
- 	struct constraint_expr *e;
-@@ -3117,7 +3117,7 @@ static int class_write(void *vkey, void *datum, void *ptr)
- 	char *key = vkey;
- 	struct class_datum *cladatum = datum;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	struct policydb *p = pd->p;
- 	struct constraint_node *c;
- 	__le32 buf[6];
-@@ -3202,7 +3202,7 @@ static int role_write(void *vkey, void *datum, void *ptr)
- 	char *key = vkey;
- 	struct role_datum *role = datum;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	struct policydb *p = pd->p;
- 	__le32 buf[3];
- 	size_t items, len;
-@@ -3242,7 +3242,7 @@ static int type_write(void *vkey, void *datum, void *ptr)
- 	struct type_datum *typdatum = datum;
- 	struct policy_data *pd = ptr;
- 	struct policydb *p = pd->p;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	__le32 buf[4];
- 	int rc;
- 	size_t items, len;
-@@ -3283,7 +3283,7 @@ static int user_write(void *vkey, void *datum, void *ptr)
- 	struct user_datum *usrdatum = datum;
- 	struct policy_data *pd = ptr;
- 	struct policydb *p = pd->p;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	__le32 buf[3];
- 	size_t items, len;
- 	int rc;
-@@ -3332,7 +3332,8 @@ static int (*const write_f[SYM_NUM])(void *key, void *datum, void *datap) = {
- /* clang-format on */
- 
- static int ocontext_write(struct policydb *p,
--			  const struct policydb_compat_info *info, void *fp)
-+			  const struct policydb_compat_info *info,
-+			  struct policy_file *fp)
- {
- 	unsigned int i, j;
- 	int rc;
-@@ -3468,7 +3469,7 @@ static int ocontext_write(struct policydb *p,
- 	return 0;
- }
- 
--static int genfs_write(struct policydb *p, void *fp)
-+static int genfs_write(struct policydb *p, struct policy_file *fp)
- {
- 	struct genfs *genfs;
- 	struct ocontext *c;
-@@ -3526,7 +3527,7 @@ static int range_write_helper(void *key, void *data, void *ptr)
- 	struct range_trans *rt = key;
- 	struct mls_range *r = data;
- 	struct policy_data *pd = ptr;
--	void *fp = pd->fp;
-+	struct policy_file *fp = pd->fp;
- 	struct policydb *p = pd->p;
- 	int rc;
- 
-@@ -3548,7 +3549,7 @@ static int range_write_helper(void *key, void *data, void *ptr)
- 	return 0;
- }
- 
--static int range_write(struct policydb *p, void *fp)
-+static int range_write(struct policydb *p, struct policy_file *fp)
- {
- 	__le32 buf[1];
- 	int rc;
-@@ -3575,7 +3576,7 @@ static int filename_write_helper_compat(void *key, void *data, void *ptr)
- 	struct filename_trans_key *ft = key;
- 	struct filename_trans_datum *datum = data;
- 	struct ebitmap_node *node;
--	void *fp = ptr;
-+	struct policy_file *fp = ptr;
- 	__le32 buf[4];
- 	int rc;
- 	u32 bit, len = strlen(ft->name);
-@@ -3612,7 +3613,7 @@ static int filename_write_helper(void *key, void *data, void *ptr)
- {
- 	struct filename_trans_key *ft = key;
- 	struct filename_trans_datum *datum;
--	void *fp = ptr;
-+	struct policy_file *fp = ptr;
- 	__le32 buf[3];
- 	int rc;
- 	u32 ndatum, len = strlen(ft->name);
-@@ -3657,7 +3658,7 @@ static int filename_write_helper(void *key, void *data, void *ptr)
- 	return 0;
- }
- 
--static int filename_trans_write(struct policydb *p, void *fp)
-+static int filename_trans_write(struct policydb *p, struct policy_file *fp)
- {
- 	__le32 buf[1];
- 	int rc;
-@@ -3689,7 +3690,7 @@ static int filename_trans_write(struct policydb *p, void *fp)
-  * structure to a policy database binary representation
-  * file.
-  */
--int policydb_write(struct policydb *p, void *fp)
-+int policydb_write(struct policydb *p, struct policy_file *fp)
- {
- 	unsigned int num_syms;
- 	int rc;
-diff --git a/security/selinux/ss/policydb.h b/security/selinux/ss/policydb.h
-index 4bba386264a3d..e01de17e569bf 100644
---- a/security/selinux/ss/policydb.h
-+++ b/security/selinux/ss/policydb.h
-@@ -312,14 +312,19 @@ struct policydb {
- 	u32 process_trans_perms;
- } __randomize_layout;
- 
-+struct policy_file {
-+	char *data;
-+	size_t len;
-+};
-+
- extern void policydb_destroy(struct policydb *p);
- extern int policydb_load_isids(struct policydb *p, struct sidtab *s);
- extern int policydb_context_isvalid(struct policydb *p, struct context *c);
- extern int policydb_class_isvalid(struct policydb *p, unsigned int class);
- extern int policydb_type_isvalid(struct policydb *p, unsigned int type);
- extern int policydb_role_isvalid(struct policydb *p, unsigned int role);
--extern int policydb_read(struct policydb *p, void *fp);
--extern int policydb_write(struct policydb *p, void *fp);
-+extern int policydb_read(struct policydb *p, struct policy_file *fp);
-+extern int policydb_write(struct policydb *p, struct policy_file *fp);
- 
- extern struct filename_trans_datum *
- policydb_filenametr_search(struct policydb *p, struct filename_trans_key *key);
-@@ -342,14 +347,9 @@ policydb_roletr_search(struct policydb *p, struct role_trans_key *key);
- #define POLICYDB_MAGIC	SELINUX_MAGIC
- #define POLICYDB_STRING "SE Linux"
- 
--struct policy_file {
--	char *data;
--	size_t len;
--};
--
- struct policy_data {
- 	struct policydb *p;
--	void *fp;
-+	struct policy_file *fp;
- };
- 
- static inline int next_entry(void *buf, struct policy_file *fp, size_t bytes)
 -- 
 2.53.0
-
-
 
