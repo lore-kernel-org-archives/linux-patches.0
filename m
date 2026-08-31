@@ -1,110 +1,142 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813374DF4BC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C3D4DF4CE;
 	Mon, 31 Aug 2026 13:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183574; cv=none; b=nm3gprpluFYYu5rYQ8+nGfT4YSamO6Hf6jwvPJeRKg+ErhlUjUROXl3nIGI+bZZzvGeV37KrZe2pbSPOxVrYD2eVInuZrmTREXYxKgBfCIWxKh8HJYchar/roepTAGCUGzOfpg5JUCXNUx8Bawq24sr2vUOhSFi5v8Tb3zFk2OE=
+	t=1788183574; cv=none; b=Fsr4mHgglhVAABujB051g2XYjLURSDv/JQuJlj0WCwKK+SKOBO0+OjHoKI39WES9vMyGKrk5ZfJCPu04c6ovctL483JJ4hqbXHFk2mMW4n2+59EzTX7Pvynrl0PTlU5VWppmB59ccQBRO//wBafne4KtT2RprgIdJ/m1s64JDgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183574; c=relaxed/simple;
-	bh=KNZ8JYa6REPkCMxVsDmesVZB0HG84Z/y/vYB2KKojDM=;
+	bh=st6+RC1VrXFZrWRkH8z7pelEL5ZrMh+i5GpcZyAP09M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=So9fD4kb2bc/cQ59ZSotAb7D+eGaANkosxTphBsQvgKZenDHIR/SnGEkDwGSrL79ZtIzQ4aeGvAfCwq9qTAH3D3cqwQUsjTW6ht57fl1/t2RUESWIuMSh6X9TM7AHaH4xFsrefUqAZVykCKlBxRImB6J3+UHr2L1fUs2gTLWrB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nNrNvZOA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RSrWWVNi6s2fIp0U3GI7G+VOMUEt3KexqrLri7IYPZiU3MW80+yBTUQ5xYhgI2FPaXhEhsRJvTr/RgDvUB+x3mi0b5BOfadHktiuACg+2sK5iLFijLb+YrKUZDNGGC9NRgddUjc2ZmHWORc2fqhHDiJSUSw9uBclqKU7IbYG2LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLkMVWIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nNrNvZOA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418851F000E9;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLkMVWIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB27A1F00A3D;
 	Mon, 31 Aug 2026 13:39:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183572;
-	bh=35rz6y9ZLLDwMrShi+YGpJKjh8xiv/yE7rM/kMksMNk=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183572;
+	bh=yUyQALtqz6RgmNEApioDnzgtXsgrKqI4DZ0crxZSy0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNrNvZOAWgN+F7daCPiywJXKrQK70rV7TYTGkp4cZqrVbIdPHTaRvQ9jnxNnWpoAO
-	 BIhGGPXJzGWLXLu7rPFxa+hnMfOQqWJYLAjyyeOGFy+27QYdL9FjKeC6R1ya1bBvmq
-	 YhhmHzfYxr6PgDiK/KhwZvr0OqZY9YHYSyQE2cN3N0PuQOco2s8wOdMYyUK52JW2N1
-	 OTNxyhxe+ztlbUNZ9wHbuvJb/exUL6eVLkhZKZ64e9OOdCfWV+8uqFhoo0r76/9CRt
-	 rKvW4hxDBfoxdIFGb/1G8RkXOQCaQOCrr6B6wSAfY93g0Xs4985ojYNdJMWV7GsQz5
-	 9dIgyF9OnupOA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Johny Lin <johnylin@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda: cs35l41: imply SERIAL_MULTI_INSTANTIATE
-Date: Mon, 31 Aug 2026 09:23:24 -0400
-Message-ID: <20260831133314.4125787-176-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=xLkMVWIWkgxRjudA3lbg8zRx1FGnuiY+4l44+E2VxCINumCnEqQUOfMRGIgpgRVq3
+	 fdJC0BmQofHNgNXURAG0WjObDMUYa38q9JvsbxxNCd45ETm+jQkv+p3XQnH5dHrHKy
+	 k1vtyXPNPSA4Y3DbbfQ5sJdmE1g+eWhfCcaTXW3E=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Breno Leitao <leitao@debian.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 7.2 09/71] usb: xhci: bail out of setup if the controller is inaccessible
+Date: Mon, 31 Aug 2026 15:33:34 +0200
+Message-ID: <20260831133359.466500426@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johny Lin <johnylin@google.com>
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 72d8bf668954678bfae8f7296b4b1c01990bcdc2 ]
+------------------
 
-Use a weak reverse selection to suggest the config
-SERIAL_MULTI_INSTANTIATE just like cs35l56 did.
+From: Breno Leitao <leitao@debian.org>
 
-Signed-off-by: Johny Lin <johnylin@google.com>
-Link: https://patch.msgid.link/20260527023350.3067547-1-johnylin@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 78203d5b54a40f0e36196ebf31c9c7a380fc8811 upstream.
+
+xhci_gen_setup() locates the operational registers using the capability
+length read from the very first register:
+
+	xhci->op_regs = hcd->regs +
+		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
+
+If the controller is dead or has dropped off the bus, that read returns
+~0, HC_LENGTH() truncates it to 0xff, and op_regs ends up 0xff bytes
+past the page-aligned MMIO base, i.e. unaligned. The first access
+through it, xhci_halt() -> xhci_handshake() reading op_regs->status, is
+then an unaligned readl() on device memory. arm64 faults on unaligned
+device accesses, so instead of xhci_handshake() catching the all-ones
+value and returning -ENODEV, setup oopses:
+
+  xhci-pci-renesas 0005:08:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  xhci-pci-renesas 0005:08:00.0: xHCI Host Controller
+  xhci-pci-renesas 0005:08:00.0: new USB bus registered, assigned bus number 1
+  Unable to handle kernel paging request at virtual address ffff80030a770103
+    ESR = 0x0000000096000021
+    FSC = 0x21: alignment fault
+  Internal error: Oops: 0000000096000021 [#1]  SMP
+  pc : xhci_halt [xhci_hcd]
+  Call trace:
+   xhci_halt
+   xhci_gen_setup
+   xhci_pci_setup
+   usb_add_hcd
+   usb_hcd_pci_probe
+   xhci_pci_common_probe
+   xhci_pci_renesas_probe
+
+This was hit with a Renesas uPD720201 that failed to power up ("Unable
+to change power state from D3cold to D0, device inaccessible") yet still
+reached the HCD probe path.
+
+Read the capability register once, and if it reads back the all-ones
+value (as xhci_handshake() and xhci_reset() already test for), abort
+setup with -ENODEV before op_regs is derived from it. Reading it once
+also avoids re-reading a register that may change under a concurrent
+hot-removal.
+
+Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260806142113.2436238-11-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/usb/host/xhci.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -5433,6 +5433,7 @@ int xhci_gen_setup(struct usb_hcd *hcd,
+ 	struct device		*dev = hcd->self.sysdev;
+ 	int			retval;
+ 	u32			hcs_params1;
++	u32			hc_capbase;
+ 
+ 	/* Accept arbitrarily long scatter-gather lists */
+ 	hcd->self.sg_tablesize = ~0;
+@@ -5453,15 +5454,19 @@ int xhci_gen_setup(struct usb_hcd *hcd,
+ 	mutex_init(&xhci->mutex);
+ 	xhci->main_hcd = hcd;
+ 	xhci->cap_regs = hcd->regs;
+-	xhci->op_regs = hcd->regs +
+-		HC_LENGTH(readl(&xhci->cap_regs->hc_capbase));
++	hc_capbase = readl(&xhci->cap_regs->hc_capbase);
++	if (hc_capbase == U32_MAX) {
++		xhci_warn(xhci, "Host controller not accessible, removed?\n");
++		return -ENODEV;
++	}
++	xhci->op_regs = hcd->regs + HC_LENGTH(hc_capbase);
+ 	xhci->run_regs = hcd->regs +
+ 		(readl(&xhci->cap_regs->run_regs_off) & RTSOFF_MASK);
+ 	/* Cache read-only capability registers */
+ 	hcs_params1 = readl(&xhci->cap_regs->hcs_params1);
+ 	xhci->hcs_params2 = readl(&xhci->cap_regs->hcs_params2);
+ 	xhci->hcs_params3 = readl(&xhci->cap_regs->hcs_params3);
+-	xhci->hci_version = HC_VERSION(readl(&xhci->cap_regs->hc_capbase));
++	xhci->hci_version = HC_VERSION(hc_capbase);
+ 	xhci->hcc_params = readl(&xhci->cap_regs->hcc_params);
+ 	if (xhci->hci_version > 0x100)
+ 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
 
-The background history searches finished and match the earlier analysis:
-
-- **No prior CS35L41 + SERIAL_MULTI commit** exists in this tree — the
-  `imply` addition would be new.
-- **`imply SERIAL_MULTI_INSTANTIATE` for CS35L56** came in
-  `17563b4a19d18` (Jun 2024) and was preserved through the HDA codec
-  move (`6014e9021b28e`); CS35L41 never got the same treatment.
-- **Johny Lin** has no other commits in this 6.18.44 checkout.
-
-That reinforces the conclusion: this is a small Kconfig dependency fix
-aligning CS35L41 with CS35L56 for laptops that need `serial-multi-
-instantiate`. Verdict remains **YES** for 6.18.y.
-
- sound/hda/codecs/side-codecs/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/sound/hda/codecs/side-codecs/Kconfig b/sound/hda/codecs/side-codecs/Kconfig
-index cbf1847896bc9..96c7e39b0715c 100644
---- a/sound/hda/codecs/side-codecs/Kconfig
-+++ b/sound/hda/codecs/side-codecs/Kconfig
-@@ -27,6 +27,7 @@ config SND_HDA_SCODEC_CS35L41_I2C
- 	depends on ACPI
- 	depends on EFI
- 	depends on SND_SOC
-+	imply SERIAL_MULTI_INSTANTIATE
- 	select SND_SOC_CS35L41_LIB
- 	select SND_HDA_SCODEC_CS35L41
- 	select SND_SOC_CS_AMP_LIB
-@@ -43,6 +44,7 @@ config SND_HDA_SCODEC_CS35L41_SPI
- 	depends on ACPI
- 	depends on EFI
- 	depends on SND_SOC
-+	imply SERIAL_MULTI_INSTANTIATE
- 	select SND_SOC_CS35L41_LIB
- 	select SND_HDA_SCODEC_CS35L41
- 	select SND_SOC_CS_AMP_LIB
--- 
-2.53.0
 
