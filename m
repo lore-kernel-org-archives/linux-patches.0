@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014F34949F0;
-	Mon, 31 Aug 2026 14:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EA343F4C5;
+	Mon, 31 Aug 2026 14:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185196; cv=none; b=Hg7Hkcz2pm5ERCwEZ9OA9MB+j1KcUTZRVChFGpikR34AVajzHyoj6/eq44ymEZGmHxOtWWOfpcPI9ycQxEPv2kmsMvPA5fSYSAL5+yJapqeLIL/Q7+Ylsb1yV6LjggAiw3QJSBO5OaV9a1PNijsJg3zPEMUAM4zUcgEJjnt1OLY=
+	t=1788185198; cv=none; b=AuCRoinwnzKVRQ69g+7Ax1PZXgW10S7hJJV1TPjV7BNWeeo9uaAN6QSBeRTlin9gHzguY2AtcWpylStPcj7nt1OmW11TEcdWt6j7fmvnUAF/GpsSXoATv96kLdSPqBnI53peSf9I3XHVBj+IuDGwB3bskOScspPvI6fBE3TrTvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185196; c=relaxed/simple;
-	bh=eVBcbBvCHux89xnD//vl7NZARqzc0MABYCqSZfyBXOU=;
+	s=arc-20240116; t=1788185198; c=relaxed/simple;
+	bh=k512HBE5aWXwAISLz6rfFRjDx78i3zL5V46b56hWWjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2h6uhim6aJ7DP53ndojJaTy5tzH7Tn3ofTSyUEQZnimfHizPBJTJLQDoroMhpdHIIS8FOxdU2CMsp5bE95NMWvx8TpQXl+Xm/j4aIHFGPLjPQTDtrK/h5S9Mb6+mKu9vbLYXUnjzsQ3xhAiqFelAzzvWMH7ULVJQ5/89p+3wdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgowc5fY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qeQ7fPWWU50X8RAykS7xxTKBzIToL5wzPTm0UMe96atFdFB9vQnoGzQ3Fxux1eIu/V0dfiMLgcQvwLu/5tniLdGiV/KpgpjMn3a62uOTLhqhAKlBadyITU1WeCmSMUtfI0rr5qOwUhMeEc7+dI8s73awLfX5mpujvZOUqP8q5VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ma+8WKFb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgowc5fY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1915B1F000E9;
-	Mon, 31 Aug 2026 14:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ma+8WKFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47F21F000E9;
+	Mon, 31 Aug 2026 14:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185194;
-	bh=4b6K8uWYBo75dT2gjpyVeQPJCqB+l7H4UrdrZKm+y08=;
+	s=korg; t=1788185197;
+	bh=A/cqrToSC1hBWgwHDqc83D08Xb5yOLk1f+Fw3WJcQvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mgowc5fY1xBl5k2c/1okSAhPOYidTiPDJvxRQotYm5lTUypO/uIeETHuQXI6j3oJ8
-	 2q69k6/xvA7md4bfI3PN+LvZjpL+tS5889taz+V80ea2mn3TuE74IDUMpAPsadkr9t
-	 BxLYbRAIS6EKl/+SL+XX+aXQq9d1kknBCX/3GwJs=
+	b=ma+8WKFbdgut0STGC5oyGzzXLknB+UIhqSOf3iQ6LZFS6Xjvb5aDTwLrXqxhCieNM
+	 +ngBADdRPp6hgCPLlbEimiZRc9s0TPegrW9n5bs1it3LBuxi6ZYo9IwDQk2YQYXA9w
+	 fCy3+Ni8rbKMI965KQF0ThlX0ezUGFi94b5XouIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com,
+	wuyankun <wuyankun@uniontech.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/43] ext4: propagate errors from fast commit range replay
-Date: Mon, 31 Aug 2026 15:35:25 +0200
-Message-ID: <20260831133359.278948288@linuxfoundation.org>
+Subject: [PATCH 5.10 18/43] nilfs2: reject invalid block index in GC ioctl
+Date: Mon, 31 Aug 2026 15:35:26 +0200
+Message-ID: <20260831133359.341141534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -52,78 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit d8b8dd3530bf41e14b118702cdaf9de64bb96885 ]
+[ Upstream commit a1735eae55448bc79c2da6593455791e886f6ed8 ]
 
-ext4_fc_replay() stops replaying fast commit tags only when a tag
-handler returns a negative error. However, ext4_fc_replay_add_range()
-and ext4_fc_replay_del_range() currently return 0 from their common
-exit paths even after internal failures.
+Syzbot reported list corruption caused by a double list_add_tail() call on
+bh->b_assoc_buffers within nilfs_lookup_dirty_data_buffers().
 
-This hides errors from ext4_fc_record_modified_inode(),
-ext4_map_blocks(), ext4_find_extent(), ext4_ext_insert_extent(),
-ext4_ext_replay_update_ex(), and ext4_ext_remove_space(). As a result,
-a failed ADD_RANGE or DEL_RANGE replay can be treated as successful and
-the replay code may continue with subsequent fast commit tags.
+Analysis revealed that the root cause was the insertion of a page/folio
+with a page index of ULONG_MAX into the page cache via the GC ioctl.
+filemap_get_folios_tag(), called by nilfs_lookup_dirty_data_buffers(),
+repeatedly detects a dirty folio with a page index of ULONG_MAX due to
+index wrap-around, leading to duplicate processing of dirty buffers.
 
-This is particularly problematic for DEL_RANGE because it may already
-have marked blocks as free before ext4_ext_remove_space() fails. If the
-error is swallowed, replay may continue from a partially applied range
-operation.
+As a preparatory step, the GC ioctl loads the page/folio of the block to
+be moved during GC and inserts it into the page cache based on information
+in the nilfs_vdesc structure passed as an argument.  Normally, this does
+not cause issues because the user-space GC library configures the
+nilfs_vdesc structure properly.  However, since there is no range check on
+the parameters determining the page index, a request with artificially
+crafted parameters -- such as those generated by Syzbot -- can result in a
+page/folio being inserted with a page index of ULONG_MAX, triggering the
+above problem.
 
-Return the saved error from the common exit paths and make the
-ERR_PTR() cases in ADD_RANGE store PTR_ERR() before jumping to out.
+This resolves the issue by checking the ranges of 'vd_offset' and
+'vd_vblocknr' in the nilfs_vdesc structure that determine the page index,
+thereby preventing the invalid page/folio insertions.
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Reported-by: syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c37bed40868932d790e9
+Fixes: 7942b919f732 ("nilfs2: ioctl operations")
+Cc: wuyankun <wuyankun@uniontech.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_E3622146846A84C75C31C7D32AC4D5AD0605@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/nilfs2/ioctl.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1678,8 +1678,10 @@ static int ext4_fc_replay_add_range(stru
- 		if (ret == 0) {
- 			/* Range is not mapped */
- 			path = ext4_find_extent(inode, cur, NULL, 0);
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
- 				goto out;
-+			}
- 			memset(&newex, 0, sizeof(newex));
- 			newex.ee_block = cpu_to_le32(cur);
- 			ext4_ext_store_pblock(
-@@ -1741,9 +1743,10 @@ next:
- 	}
- 	ext4_ext_replay_shrink_inode(inode, i_size_read(inode) >>
- 					sb->s_blocksize_bits);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -544,6 +544,8 @@ static int nilfs_ioctl_get_bdescs(struct
+  * Return Value: On success, 0 is returned. On error, one of the following
+  * negative error codes is returned.
+  *
++ * %-EINVAL - Invalid virtual block descriptor.
++ *
+  * %-EIO - I/O error.
+  *
+  * %-ENOMEM - Insufficient amount of memory available.
+@@ -557,15 +559,30 @@ static int nilfs_ioctl_move_inode_block(
+ 					struct list_head *buffers)
+ {
+ 	struct buffer_head *bh;
++	__u64 limit_blkidx = (__u64)inode->i_sb->s_maxbytes >> inode->i_blkbits;
+ 	int ret;
  
- /* Replay DEL_RANGE tag */
-@@ -1804,9 +1807,10 @@ ext4_fc_replay_del_range(struct super_bl
- 	ext4_ext_replay_shrink_inode(inode,
- 		i_size_read(inode) >> sb->s_blocksize_bits);
- 	ext4_mark_inode_dirty(NULL, inode);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
+-	if (vdesc->vd_flags == 0)
++	/*
++	 * vblocknr 0 is reserved as an invalid pointer.  Also, limit_blkidx
++	 * ensures that the page index converted from vd_vblocknr never
++	 * overflows the page cache limit and respects the architecture's bmap
++	 * key width.
++	 */
++	if (unlikely(vdesc->vd_vblocknr == 0 ||
++			vdesc->vd_vblocknr >= limit_blkidx))
++		return -EINVAL;
++
++	if (vdesc->vd_flags == 0) {
++		if (unlikely(vdesc->vd_offset >= limit_blkidx))
++			return -EINVAL;
++
+ 		ret = nilfs_gccache_submit_read_data(
+ 			inode, vdesc->vd_offset, vdesc->vd_blocknr,
+ 			vdesc->vd_vblocknr, &bh);
+-	else
++	} else {
+ 		ret = nilfs_gccache_submit_read_node(
+ 			inode, vdesc->vd_blocknr, vdesc->vd_vblocknr, &bh);
++	}
  
- static inline const char *tag2str(u16 tag)
+ 	if (unlikely(ret < 0)) {
+ 		if (ret == -ENOENT)
 
 
