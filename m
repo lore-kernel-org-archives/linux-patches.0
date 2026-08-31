@@ -1,52 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7AD43E064;
-	Mon, 31 Aug 2026 14:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9DC493621;
+	Mon, 31 Aug 2026 14:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185154; cv=none; b=hBqPUj+gq23Uty228ygltG99kcVX/+EYMQE2bvKIMTanl3B6YbW4cHKuynf+UZbTs7CI22G4eNBoWaxJQEC77tn3gQtz1SE+G4Xi6FfpOXkKSIhiXNEbNWh7vmi9xTaivoTVQvxjbnl/nbyyCfNdCWrvxhE5Z/2Nke7K8m3zD0Q=
+	t=1788185144; cv=none; b=UQcTSrSNIwyMbpfqNfXVNK0rGteVqZDGfqwYpKOog0HIy44QbxZrjod4GRL9YA5FAoJZCL8QGnugHCNsViAMRbh2JaTT3wOb18N0JdussA0aToFWFxufbAaHdEzLyqUzuImALTV0L6LCdzrtqHP0BJDlmrN4Rx4T18DSs7FSOGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185154; c=relaxed/simple;
-	bh=GW85gerdPtE6os28Spk74Bz3FOHE8BwREvCLDEnl6HU=;
+	s=arc-20240116; t=1788185144; c=relaxed/simple;
+	bh=+ahqRwc6Vn7XqoJOx9bee3jH73A4YuffxQcD6nAYaHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TY7/GcoLnHMB+3YKxMurBEAppeKS7Hp+wArQx8z0Q8pOvTDjG5rwcV2znR0j6joELTQs+RgNTKLpAMteqle7hUV8LJrgM4waZ1aqr+yxbeBzEuJCUawirzSzUC5BnDdxoTW7Tc8OgpATbbkomjbOyfJTEKNcpE3WoJpsrAOXBZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ea0B0a37; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mP2ioxe1hKVD1jkJi/XpxdqVmtnLeNJ/guXA/UC77sNgPAd+HwcsftC3AYyra2PVM2TYJCqw99yMCOOI9vKJhm3UHbVawzRtTQgLY8J27a6eQiUJ9Mg/u/WGNR1FNHDXmjB5zB09fdjahdtkS1/cy4qYQTCF5oQbq1WifpUWgRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSlH+gEg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ea0B0a37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB601F00A3D;
-	Mon, 31 Aug 2026 14:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSlH+gEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1E41F000E9;
+	Mon, 31 Aug 2026 14:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185153;
-	bh=m/DqbASBrNSbtkPPmGF2SGLcLidUUz19VZ2X+qS8yJs=;
+	s=korg; t=1788185141;
+	bh=1kkY3nwQJUB09HsFy/XhRVN0LSYgCAlhh/FeXTSTOHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ea0B0a37oC2Hupn5biAqMi4lxmGk4PpIbhVgSPjiiNAzGKS59oob22NjpA1x6DAaw
-	 D4ib0aHYVksxydlX2bJm0wD6Img533RfwFeDuHjVB4/+hFIu39RzlEC40JxQWcrmwa
-	 VFR0WJPvbGfS9ESHzqz8ILwoMjwGhNAmQ2qec6y0=
+	b=OSlH+gEgB9n/pEYyNpdExD7+X1ZWJnYPOQEgGgaRy3Bs/kmMsYB7+BdwZW9Cbo36B
+	 1+fJDr0UlyoHAfzTiV1JuDSaSga2rje2FUXPrm+NG+pUSOZHz2kIDLAOJKCOvBQdNv
+	 CMteRXn0NSTRg9AFh8UDtPm/yXnDucIvCMXCOWwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3f51ad7ac3ae57a6fdcc@syzkaller.appspotmail.com,
-	syzbot+47cf95ca1f9dcca872c8@syzkaller.appspotmail.com,
-	syzbot+8a173e13208949931dc7@syzkaller.appspotmail.com,
-	syzbot+90984d3713722683112e@syzkaller.appspotmail.com,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Alexander Potapenko <glider@google.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Clark Williams <williams@redhat.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Mark Brown <broonie@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Weiwen Hu <huweiwen@linux.alibaba.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/69] kcov: fix data corruption and race conditions on PREEMPT_RT
-Date: Mon, 31 Aug 2026 15:34:57 +0200
-Message-ID: <20260831133359.643794276@linuxfoundation.org>
+Subject: [PATCH 5.15 30/69] nvme: rename CDR/MORE/DNR to NVME_STATUS_*
+Date: Mon, 31 Aug 2026 15:35:03 +0200
+Message-ID: <20260831133359.981948530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -65,294 +54,953 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Weiwen Hu <huweiwen@linux.alibaba.com>
 
-[ Upstream commit 2eed77fdcb0cc48e8eccb2bcd4b7f2c6d650e84c ]
+[ Upstream commit dd0b0a4a2c5d7209457dc172997d1243ad269cfa ]
 
-syzbot is reporting KCOV state corruption on PREEMPT_RT kernels, for the
-temporary storage used for saving/restoring remote KCOV state is currently
-allocated as the per-CPU area.
+CDR/MORE/DNR fields are not belonging to SC in the NVMe spec, rename
+them to NVME_STATUS_* to avoid confusion.
 
-On PREEMPT_RT kernels, softirq handlers run as preemptible task threads
-(e.g., ksoftirqd). If a softirq context preempts a task running a remote
-KCOV session, it safely saves the task's state into the per-CPU area.
-However, if that softirq thread is subsequently preempted by a higher-
-priority softirq thread on the same CPU, the second softirq will overwrite
-the same per-CPU area, permanently destroying the original task's KCOV
-state.
-
-Fix this data corruption by moving the temporary storage from the per-CPU
-area to the per-thread area. Since each softirq thread now owns its own
-task context, nested softirq preemption no longer causes data overwrites.
-
-Note that while the temporary storage is now on a per-thread basis, the
-per-CPU kcov_percpu_data.lock must be retained, for we need to ensure that
-kcov_remote_start() and kcov_remote_stop() operate atomically without
-racing against asynchronous interrupts that manipulate the current task's
-KCOV state.
-
-It is likely that GFP_KERNEL allocation by vmalloc_node() in kcov_init()
-has already called panic() before returning NULL, for there will be no
-OOM-killable userspace processes when __init function of built-in module
-runs. But this patch also fixes crashing the kernel when vmalloc_node()
-in kcov_init() returned NULL, for kcov_init() left per-CPU irq_area == NULL
-but kcov_remote_start() depends on per-CPU irq_area != NULL, resulting in
-
-  (1) doing vmalloc() in kcov_remote_start() despite !in_task() context
-
-  (2) out-of-array-bounds access if (1) succeeded but
-      kcov->remote_size < CONFIG_KCOV_IRQ_AREA_SIZE
-
-  (3) always leak memory allocated by (1), eventually killing all
-      OOM-killable userspace processes
-
-problems.
-
-Link: https://lore.kernel.org/43552d09-2ce2-4b19-b0d3-a2d1ab952145@I-love.SAKURA.ne.jp
-Reported-by: syzbot+3f51ad7ac3ae57a6fdcc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3f51ad7ac3ae57a6fdcc
-Reported-by: syzbot+47cf95ca1f9dcca872c8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=47cf95ca1f9dcca872c8
-Reported-by: syzbot+8a173e13208949931dc7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8a173e13208949931dc7
-Reported-by: syzbot+90984d3713722683112e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=90984d3713722683112e
-Analyzed-by: AI Mode in Google Search (no mail address)
-Fixes: 5ff3b30ab57d ("kcov: collect coverage from interrupts")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Clark Williams <williams@redhat.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Marco Elver <elver@google.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Adjusted the `kcov_init()` deletion context to plain `vmalloc()` since 5.15 lacks the `vmalloc_node()`/`cpu_to_node()` conversion. ]
+Signed-off-by: Weiwen Hu <huweiwen@linux.alibaba.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 4a3f00262a04 ("nvmet-tcp: bound SGL data length before allocating command buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched.h |    8 ++++
- kernel/kcov.c         |   90 ++++++++++++++++++++++++++------------------------
- lib/Kconfig.debug     |    5 +-
- 3 files changed, 58 insertions(+), 45 deletions(-)
+ drivers/nvme/host/core.c          |   12 +++++-----
+ drivers/nvme/host/fabrics.c       |    8 +++----
+ drivers/nvme/host/fault_inject.c  |    2 -
+ drivers/nvme/host/fc.c            |    8 +++----
+ drivers/nvme/target/admin-cmd.c   |   20 +++++++++---------
+ drivers/nvme/target/core.c        |   42 +++++++++++++++++++-------------------
+ drivers/nvme/target/discovery.c   |   14 ++++++------
+ drivers/nvme/target/fabrics-cmd.c |   32 ++++++++++++++--------------
+ drivers/nvme/target/io-cmd-bdev.c |   12 +++++-----
+ drivers/nvme/target/nvmet.h       |    2 -
+ drivers/nvme/target/passthru.c    |   10 ++++-----
+ drivers/nvme/target/rdma.c        |   10 ++++-----
+ drivers/nvme/target/tcp.c         |    4 +--
+ drivers/nvme/target/zns.c         |   30 +++++++++++++--------------
+ include/linux/nvme.h              |    4 +--
+ 15 files changed, 105 insertions(+), 105 deletions(-)
 
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1398,6 +1398,14 @@ struct task_struct {
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -308,7 +308,7 @@ static void nvme_retry_req(struct reques
+ 	u16 crd;
  
- 	/* Collect coverage from softirq context: */
- 	unsigned int			kcov_softirq;
-+
-+	/* Temporary storage for preempting remote coverage collection: */
-+	unsigned int			kcov_saved_mode;
-+	unsigned int			kcov_saved_size;
-+	void				*kcov_saved_area;
-+	struct kcov			*kcov_saved_kcov;
-+	int				kcov_saved_sequence;
-+
- #endif
+ 	/* The mask and shift result must be <= 3 */
+-	crd = (nvme_req(req)->status & NVME_SC_CRD) >> 11;
++	crd = (nvme_req(req)->status & NVME_STATUS_CRD) >> 11;
+ 	if (crd)
+ 		delay = nvme_req(req)->ctrl->crdt[crd - 1] * 100;
  
- #ifdef CONFIG_MEMCG
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -84,17 +84,12 @@ struct kcov_remote {
+@@ -329,7 +329,7 @@ static inline enum nvme_disposition nvme
+ 		return COMPLETE;
  
- static DEFINE_SPINLOCK(kcov_remote_lock);
- static DEFINE_HASHTABLE(kcov_remote_map, 4);
--static struct list_head kcov_remote_areas = LIST_HEAD_INIT(kcov_remote_areas);
-+static struct list_head kcov_remote_areas[2] = {
-+	LIST_HEAD_INIT(kcov_remote_areas[0]), LIST_HEAD_INIT(kcov_remote_areas[1])
-+};
+ 	if (blk_noretry_request(req) ||
+-	    (nvme_req(req)->status & NVME_SC_DNR) ||
++	    (nvme_req(req)->status & NVME_STATUS_DNR) ||
+ 	    nvme_req(req)->retries >= nvme_max_retries)
+ 		return COMPLETE;
  
- struct kcov_percpu_data {
--	void			*irq_area;
- 	local_lock_t		lock;
--
--	unsigned int		saved_mode;
--	unsigned int		saved_size;
--	void			*saved_area;
--	struct kcov		*saved_kcov;
--	int			saved_sequence;
+@@ -1519,7 +1519,7 @@ static int nvme_identify_ns(struct nvme_
+ 		goto out_free_id;
+ 	}
+ 
+-	error = NVME_SC_INVALID_NS | NVME_SC_DNR;
++	error = NVME_SC_INVALID_NS | NVME_STATUS_DNR;
+ 	if ((*id)->ncap == 0) /* namespace not allocated or attached */
+ 		goto out_free_id;
+ 
+@@ -4015,7 +4015,7 @@ static void nvme_ns_remove_by_nsid(struc
+ static void nvme_validate_ns(struct nvme_ns *ns, struct nvme_ns_ids *ids)
+ {
+ 	struct nvme_id_ns *id;
+-	int ret = NVME_SC_INVALID_NS | NVME_SC_DNR;
++	int ret = NVME_SC_INVALID_NS | NVME_STATUS_DNR;
+ 
+ 	if (test_bit(NVME_NS_DEAD, &ns->flags))
+ 		goto out;
+@@ -4024,7 +4024,7 @@ static void nvme_validate_ns(struct nvme
+ 	if (ret)
+ 		goto out;
+ 
+-	ret = NVME_SC_INVALID_NS | NVME_SC_DNR;
++	ret = NVME_SC_INVALID_NS | NVME_STATUS_DNR;
+ 	if (!nvme_ns_ids_equal(&ns->head->ids, ids)) {
+ 		dev_err(ns->ctrl->device,
+ 			"identifiers changed for nsid %d\n", ns->head->ns_id);
+@@ -4042,7 +4042,7 @@ out:
+ 	 *
+ 	 * TODO: we should probably schedule a delayed retry here.
+ 	 */
+-	if (ret > 0 && (ret & NVME_SC_DNR))
++	if (ret > 0 && (ret & NVME_STATUS_DNR))
+ 		nvme_ns_remove(ns);
+ }
+ 
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -161,7 +161,7 @@ int nvmf_reg_read32(struct nvme_ctrl *ct
+ 	if (unlikely(ret != 0))
+ 		dev_err(ctrl->device,
+ 			"Property Get error: %d, offset %#x\n",
+-			ret > 0 ? ret & ~NVME_SC_DNR : ret, off);
++			ret > 0 ? ret & ~NVME_STATUS_DNR : ret, off);
+ 
+ 	return ret;
+ }
+@@ -207,7 +207,7 @@ int nvmf_reg_read64(struct nvme_ctrl *ct
+ 	if (unlikely(ret != 0))
+ 		dev_err(ctrl->device,
+ 			"Property Get error: %d, offset %#x\n",
+-			ret > 0 ? ret & ~NVME_SC_DNR : ret, off);
++			ret > 0 ? ret & ~NVME_STATUS_DNR : ret, off);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(nvmf_reg_read64);
+@@ -249,7 +249,7 @@ int nvmf_reg_write32(struct nvme_ctrl *c
+ 	if (unlikely(ret))
+ 		dev_err(ctrl->device,
+ 			"Property Set error: %d, offset %#x\n",
+-			ret > 0 ? ret & ~NVME_SC_DNR : ret, off);
++			ret > 0 ? ret & ~NVME_STATUS_DNR : ret, off);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(nvmf_reg_write32);
+@@ -284,7 +284,7 @@ static void nvmf_log_connect_error(struc
+ 		int errval, int offset, struct nvme_command *cmd,
+ 		struct nvmf_connect_data *data)
+ {
+-	int err_sctype = errval & ~NVME_SC_DNR;
++	int err_sctype = errval & ~NVME_STATUS_DNR;
+ 
+ 	switch (err_sctype) {
+ 	case (NVME_SC_CONNECT_INVALID_PARAM):
+--- a/drivers/nvme/host/fault_inject.c
++++ b/drivers/nvme/host/fault_inject.c
+@@ -75,7 +75,7 @@ void nvme_should_fail(struct request *re
+ 		/* inject status code and DNR bit */
+ 		status = fault_inject->status;
+ 		if (fault_inject->dont_retry)
+-			status |= NVME_SC_DNR;
++			status |= NVME_STATUS_DNR;
+ 		nvme_req(req)->status =	status;
+ 	}
+ }
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -3108,7 +3108,7 @@ nvme_fc_create_association(struct nvme_f
+ 	if (ctrl->ctrl.icdoff) {
+ 		dev_err(ctrl->ctrl.device, "icdoff %d is not supported!\n",
+ 				ctrl->ctrl.icdoff);
+-		ret = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		ret = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out_disconnect_admin_queue;
+ 	}
+ 
+@@ -3116,7 +3116,7 @@ nvme_fc_create_association(struct nvme_f
+ 	if (!nvme_ctrl_sgl_supported(&ctrl->ctrl)) {
+ 		dev_err(ctrl->ctrl.device,
+ 			"Mandatory sgls are not supported!\n");
+-		ret = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		ret = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out_disconnect_admin_queue;
+ 	}
+ 
+@@ -3287,7 +3287,7 @@ nvme_fc_reconnect_or_delete(struct nvme_
+ 		dev_info(ctrl->ctrl.device,
+ 			"NVME-FC{%d}: reset: Reconnect attempt failed (%d)\n",
+ 			ctrl->cnum, status);
+-		if (status > 0 && (status & NVME_SC_DNR))
++		if (status > 0 && (status & NVME_STATUS_DNR))
+ 			recon = false;
+ 	} else if (time_after_eq(jiffies, rport->dev_loss_end))
+ 		recon = false;
+@@ -3304,7 +3304,7 @@ nvme_fc_reconnect_or_delete(struct nvme_
+ 		queue_delayed_work(nvme_wq, &ctrl->connect_work, recon_delay);
+ 	} else {
+ 		if (portptr->port_state == FC_OBJSTATE_ONLINE) {
+-			if (status > 0 && (status & NVME_SC_DNR))
++			if (status > 0 && (status & NVME_STATUS_DNR))
+ 				dev_warn(ctrl->ctrl.device,
+ 					 "NVME-FC{%d}: reconnect failure\n",
+ 					 ctrl->cnum);
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -342,7 +342,7 @@ static void nvmet_execute_get_log_page(s
+ 	pr_debug("unhandled lid %d on qid %d\n",
+ 	       req->cmd->get_log_page.lid, req->sq->qid);
+ 	req->error_loc = offsetof(struct nvme_get_log_page_command, lid);
+-	nvmet_req_complete(req, NVME_SC_INVALID_FIELD | NVME_SC_DNR);
++	nvmet_req_complete(req, NVME_SC_INVALID_FIELD | NVME_STATUS_DNR);
+ }
+ 
+ static void nvmet_execute_identify_ctrl(struct nvmet_req *req)
+@@ -491,7 +491,7 @@ static void nvmet_execute_identify_ns(st
+ 
+ 	if (le32_to_cpu(req->cmd->identify.nsid) == NVME_NSID_ALL) {
+ 		req->error_loc = offsetof(struct nvme_identify, nsid);
+-		status = NVME_SC_INVALID_NS | NVME_SC_DNR;
++		status = NVME_SC_INVALID_NS | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -657,7 +657,7 @@ static void nvmet_execute_identify_descl
+ 
+ 	if (sg_zero_buffer(req->sg, req->sg_cnt, NVME_IDENTIFY_DATA_SIZE - off,
+ 			off) != NVME_IDENTIFY_DATA_SIZE - off)
+-		status = NVME_SC_INTERNAL | NVME_SC_DNR;
++		status = NVME_SC_INTERNAL | NVME_STATUS_DNR;
+ 
+ out:
+ 	nvmet_req_complete(req, status);
+@@ -814,7 +814,7 @@ u16 nvmet_set_feat_async_event(struct nv
+ 
+ 	if (val32 & ~mask) {
+ 		req->error_loc = offsetof(struct nvme_common_command, cdw11);
+-		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ 
+ 	WRITE_ONCE(req->sq->ctrl->aen_enabled, val32);
+@@ -840,7 +840,7 @@ void nvmet_execute_set_features(struct n
+ 		ncqr = (cdw11 >> 16) & 0xffff;
+ 		nsqr = cdw11 & 0xffff;
+ 		if (ncqr == 0xffff || nsqr == 0xffff) {
+-			status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++			status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 			break;
+ 		}
+ 		nvmet_set_result(req,
+@@ -853,14 +853,14 @@ void nvmet_execute_set_features(struct n
+ 		status = nvmet_set_feat_async_event(req, NVMET_AEN_CFG_ALL);
+ 		break;
+ 	case NVME_FEAT_HOST_ID:
+-		status = NVME_SC_CMD_SEQ_ERROR | NVME_SC_DNR;
++		status = NVME_SC_CMD_SEQ_ERROR | NVME_STATUS_DNR;
+ 		break;
+ 	case NVME_FEAT_WRITE_PROTECT:
+ 		status = nvmet_set_feat_write_protect(req);
+ 		break;
+ 	default:
+ 		req->error_loc = offsetof(struct nvme_common_command, cdw10);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		break;
+ 	}
+ 
+@@ -946,7 +946,7 @@ void nvmet_execute_get_features(struct n
+ 		if (!(req->cmd->common.cdw11 & cpu_to_le32(1 << 0))) {
+ 			req->error_loc =
+ 				offsetof(struct nvme_common_command, cdw11);
+-			status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++			status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 			break;
+ 		}
+ 
+@@ -959,7 +959,7 @@ void nvmet_execute_get_features(struct n
+ 	default:
+ 		req->error_loc =
+ 			offsetof(struct nvme_common_command, cdw10);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		break;
+ 	}
+ 
+@@ -976,7 +976,7 @@ void nvmet_execute_async_event(struct nv
+ 	mutex_lock(&ctrl->lock);
+ 	if (ctrl->nr_async_event_cmds >= NVMET_ASYNC_EVENTS) {
+ 		mutex_unlock(&ctrl->lock);
+-		nvmet_req_complete(req, NVME_SC_ASYNC_LIMIT | NVME_SC_DNR);
++		nvmet_req_complete(req, NVME_SC_ASYNC_LIMIT | NVME_STATUS_DNR);
+ 		return;
+ 	}
+ 	ctrl->async_event_cmds[ctrl->nr_async_event_cmds++] = req;
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -53,18 +53,18 @@ inline u16 errno_to_nvme_status(struct n
+ 		return NVME_SC_SUCCESS;
+ 	case -ENOSPC:
+ 		req->error_loc = offsetof(struct nvme_rw_command, length);
+-		return NVME_SC_CAP_EXCEEDED | NVME_SC_DNR;
++		return NVME_SC_CAP_EXCEEDED | NVME_STATUS_DNR;
+ 	case -EREMOTEIO:
+ 		req->error_loc = offsetof(struct nvme_rw_command, slba);
+-		return  NVME_SC_LBA_RANGE | NVME_SC_DNR;
++		return  NVME_SC_LBA_RANGE | NVME_STATUS_DNR;
+ 	case -EOPNOTSUPP:
+ 		req->error_loc = offsetof(struct nvme_common_command, opcode);
+ 		switch (req->cmd->common.opcode) {
+ 		case nvme_cmd_dsm:
+ 		case nvme_cmd_write_zeroes:
+-			return NVME_SC_ONCS_NOT_SUPPORTED | NVME_SC_DNR;
++			return NVME_SC_ONCS_NOT_SUPPORTED | NVME_STATUS_DNR;
+ 		default:
+-			return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++			return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 		}
+ 		break;
+ 	case -ENODATA:
+@@ -74,7 +74,7 @@ inline u16 errno_to_nvme_status(struct n
+ 		fallthrough;
+ 	default:
+ 		req->error_loc = offsetof(struct nvme_common_command, opcode);
+-		return NVME_SC_INTERNAL | NVME_SC_DNR;
++		return NVME_SC_INTERNAL | NVME_STATUS_DNR;
+ 	}
+ }
+ 
+@@ -84,7 +84,7 @@ u16 nvmet_report_invalid_opcode(struct n
+ 		 req->sq->qid);
+ 
+ 	req->error_loc = offsetof(struct nvme_common_command, opcode);
+-	return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++	return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ }
+ 
+ static struct nvmet_subsys *nvmet_find_get_subsys(struct nvmet_port *port,
+@@ -95,7 +95,7 @@ u16 nvmet_copy_to_sgl(struct nvmet_req *
+ {
+ 	if (sg_pcopy_from_buffer(req->sg, req->sg_cnt, buf, len, off) != len) {
+ 		req->error_loc = offsetof(struct nvme_common_command, dptr);
+-		return NVME_SC_SGL_INVALID_DATA | NVME_SC_DNR;
++		return NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
+ 	}
+ 	return 0;
+ }
+@@ -104,7 +104,7 @@ u16 nvmet_copy_from_sgl(struct nvmet_req
+ {
+ 	if (sg_pcopy_to_buffer(req->sg, req->sg_cnt, buf, len, off) != len) {
+ 		req->error_loc = offsetof(struct nvme_common_command, dptr);
+-		return NVME_SC_SGL_INVALID_DATA | NVME_SC_DNR;
++		return NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
+ 	}
+ 	return 0;
+ }
+@@ -113,7 +113,7 @@ u16 nvmet_zero_sgl(struct nvmet_req *req
+ {
+ 	if (sg_zero_buffer(req->sg, req->sg_cnt, len, off) != len) {
+ 		req->error_loc = offsetof(struct nvme_common_command, dptr);
+-		return NVME_SC_SGL_INVALID_DATA | NVME_SC_DNR;
++		return NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
+ 	}
+ 	return 0;
+ }
+@@ -143,7 +143,7 @@ static void nvmet_async_events_failall(s
+ 	while (ctrl->nr_async_event_cmds) {
+ 		req = ctrl->async_event_cmds[--ctrl->nr_async_event_cmds];
+ 		mutex_unlock(&ctrl->lock);
+-		nvmet_req_complete(req, NVME_SC_INTERNAL | NVME_SC_DNR);
++		nvmet_req_complete(req, NVME_SC_INTERNAL | NVME_STATUS_DNR);
+ 		mutex_lock(&ctrl->lock);
+ 	}
+ 	mutex_unlock(&ctrl->lock);
+@@ -427,7 +427,7 @@ u16 nvmet_req_find_ns(struct nvmet_req *
+ 	req->ns = xa_load(&nvmet_req_subsys(req)->namespaces, nsid);
+ 	if (unlikely(!req->ns)) {
+ 		req->error_loc = offsetof(struct nvme_common_command, nsid);
+-		return NVME_SC_INVALID_NS | NVME_SC_DNR;
++		return NVME_SC_INVALID_NS | NVME_STATUS_DNR;
+ 	}
+ 
+ 	percpu_ref_get(&req->ns->ref);
+@@ -942,7 +942,7 @@ bool nvmet_req_init(struct nvmet_req *re
+ 	/* no support for fused commands yet */
+ 	if (unlikely(flags & (NVME_CMD_FUSE_FIRST | NVME_CMD_FUSE_SECOND))) {
+ 		req->error_loc = offsetof(struct nvme_common_command, flags);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto fail;
+ 	}
+ 
+@@ -953,7 +953,7 @@ bool nvmet_req_init(struct nvmet_req *re
+ 	 */
+ 	if (unlikely((flags & NVME_CMD_SGL_ALL) != NVME_CMD_SGL_METABUF)) {
+ 		req->error_loc = offsetof(struct nvme_common_command, flags);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto fail;
+ 	}
+ 
+@@ -971,7 +971,7 @@ bool nvmet_req_init(struct nvmet_req *re
+ 	trace_nvmet_req_init(req, req->cmd);
+ 
+ 	if (unlikely(!percpu_ref_tryget_live(&sq->ref))) {
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto fail;
+ 	}
+ 
+@@ -998,7 +998,7 @@ bool nvmet_check_transfer_len(struct nvm
+ {
+ 	if (unlikely(len != req->transfer_len)) {
+ 		req->error_loc = offsetof(struct nvme_common_command, dptr);
+-		nvmet_req_complete(req, NVME_SC_SGL_INVALID_DATA | NVME_SC_DNR);
++		nvmet_req_complete(req, NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR);
+ 		return false;
+ 	}
+ 
+@@ -1010,7 +1010,7 @@ bool nvmet_check_data_len_lte(struct nvm
+ {
+ 	if (unlikely(data_len > req->transfer_len)) {
+ 		req->error_loc = offsetof(struct nvme_common_command, dptr);
+-		nvmet_req_complete(req, NVME_SC_SGL_INVALID_DATA | NVME_SC_DNR);
++		nvmet_req_complete(req, NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR);
+ 		return false;
+ 	}
+ 
+@@ -1275,13 +1275,13 @@ u16 nvmet_check_ctrl_status(struct nvmet
+ 	if (unlikely(!(req->sq->ctrl->cc & NVME_CC_ENABLE))) {
+ 		pr_err("got cmd %d while CC.EN == 0 on qid = %d\n",
+ 		       req->cmd->common.opcode, req->sq->qid);
+-		return NVME_SC_CMD_SEQ_ERROR | NVME_SC_DNR;
++		return NVME_SC_CMD_SEQ_ERROR | NVME_STATUS_DNR;
+ 	}
+ 
+ 	if (unlikely(!(req->sq->ctrl->csts & NVME_CSTS_RDY))) {
+ 		pr_err("got cmd %d while CSTS.RDY == 0 on qid = %d\n",
+ 		       req->cmd->common.opcode, req->sq->qid);
+-		return NVME_SC_CMD_SEQ_ERROR | NVME_SC_DNR;
++		return NVME_SC_CMD_SEQ_ERROR | NVME_STATUS_DNR;
+ 	}
+ 	return 0;
+ }
+@@ -1355,7 +1355,7 @@ u16 nvmet_alloc_ctrl(const char *subsysn
+ 	int ret;
+ 	u16 status;
+ 
+-	status = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
++	status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 	subsys = nvmet_find_get_subsys(req->port, subsysnqn);
+ 	if (!subsys) {
+ 		pr_warn("connect request for invalid subsystem %s!\n",
+@@ -1371,7 +1371,7 @@ u16 nvmet_alloc_ctrl(const char *subsysn
+ 			hostnqn, subsysnqn);
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_DATA(hostnqn);
+ 		up_read(&nvmet_config_sem);
+-		status = NVME_SC_CONNECT_INVALID_HOST | NVME_SC_DNR;
++		status = NVME_SC_CONNECT_INVALID_HOST | NVME_STATUS_DNR;
+ 		req->error_loc = offsetof(struct nvme_common_command, dptr);
+ 		goto out_put_subsystem;
+ 	}
+@@ -1417,7 +1417,7 @@ u16 nvmet_alloc_ctrl(const char *subsysn
+ 			     subsys->cntlid_min, subsys->cntlid_max,
+ 			     GFP_KERNEL);
+ 	if (ret < 0) {
+-		status = NVME_SC_CONNECT_CTRL_BUSY | NVME_SC_DNR;
++		status = NVME_SC_CONNECT_CTRL_BUSY | NVME_STATUS_DNR;
+ 		goto out_free_sqs;
+ 	}
+ 	ctrl->cntlid = ret;
+--- a/drivers/nvme/target/discovery.c
++++ b/drivers/nvme/target/discovery.c
+@@ -178,7 +178,7 @@ static void nvmet_execute_disc_get_log_p
+ 	if (req->cmd->get_log_page.lid != NVME_LOG_DISC) {
+ 		req->error_loc =
+ 			offsetof(struct nvme_get_log_page_command, lid);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -186,7 +186,7 @@ static void nvmet_execute_disc_get_log_p
+ 	if (offset & 0x3) {
+ 		req->error_loc =
+ 			offsetof(struct nvme_get_log_page_command, lpo);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -251,7 +251,7 @@ static void nvmet_execute_disc_identify(
+ 
+ 	if (req->cmd->identify.cns != NVME_ID_CNS_CTRL) {
+ 		req->error_loc = offsetof(struct nvme_identify, cns);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -313,7 +313,7 @@ static void nvmet_execute_disc_set_featu
+ 	default:
+ 		req->error_loc =
+ 			offsetof(struct nvme_common_command, cdw10);
+-		stat = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		stat = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		break;
+ 	}
+ 
+@@ -338,7 +338,7 @@ static void nvmet_execute_disc_get_featu
+ 	default:
+ 		req->error_loc =
+ 			offsetof(struct nvme_common_command, cdw10);
+-		stat = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		stat = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		break;
+ 	}
+ 
+@@ -354,7 +354,7 @@ u16 nvmet_parse_discovery_cmd(struct nvm
+ 		       cmd->common.opcode);
+ 		req->error_loc =
+ 			offsetof(struct nvme_common_command, opcode);
+-		return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 	}
+ 
+ 	switch (cmd->common.opcode) {
+@@ -379,7 +379,7 @@ u16 nvmet_parse_discovery_cmd(struct nvm
+ 	default:
+ 		pr_debug("unhandled cmd %d\n", cmd->common.opcode);
+ 		req->error_loc = offsetof(struct nvme_common_command, opcode);
+-		return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 	}
+ 
+ }
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -18,7 +18,7 @@ static void nvmet_execute_prop_set(struc
+ 	if (req->cmd->prop_set.attrib & 1) {
+ 		req->error_loc =
+ 			offsetof(struct nvmf_property_set_command, attrib);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -29,7 +29,7 @@ static void nvmet_execute_prop_set(struc
+ 	default:
+ 		req->error_loc =
+ 			offsetof(struct nvmf_property_set_command, offset);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ out:
+ 	nvmet_req_complete(req, status);
+@@ -50,7 +50,7 @@ static void nvmet_execute_prop_get(struc
+ 			val = ctrl->cap;
+ 			break;
+ 		default:
+-			status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++			status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 			break;
+ 		}
+ 	} else {
+@@ -65,7 +65,7 @@ static void nvmet_execute_prop_get(struc
+ 			val = ctrl->csts;
+ 			break;
+ 		default:
+-			status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++			status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 			break;
+ 		}
+ 	}
+@@ -97,7 +97,7 @@ u16 nvmet_parse_fabrics_cmd(struct nvmet
+ 		pr_debug("received unknown capsule type 0x%x\n",
+ 			cmd->fabrics.fctype);
+ 		req->error_loc = offsetof(struct nvmf_common_command, fctype);
+-		return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 	}
+ 
+ 	return 0;
+@@ -116,14 +116,14 @@ static u16 nvmet_install_queue(struct nv
+ 		pr_warn("queue size zero!\n");
+ 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+-		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
++		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		goto err;
+ 	}
+ 
+ 	if (ctrl->sqs[qid] != NULL) {
+ 		pr_warn("qid %u has already been created\n", qid);
+ 		req->error_loc = offsetof(struct nvmf_connect_command, qid);
+-		return NVME_SC_CMD_SEQ_ERROR | NVME_SC_DNR;
++		return NVME_SC_CMD_SEQ_ERROR | NVME_STATUS_DNR;
+ 	}
+ 
+ 	if (sqsize > mqes) {
+@@ -131,14 +131,14 @@ static u16 nvmet_install_queue(struct nv
+ 				sqsize, mqes, ctrl->cntlid);
+ 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+-		return NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
++		return NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 	}
+ 
+ 	old = cmpxchg(&req->sq->ctrl, NULL, ctrl);
+ 	if (old) {
+ 		pr_warn("queue already connected!\n");
+ 		req->error_loc = offsetof(struct nvmf_connect_command, opcode);
+-		return NVME_SC_CONNECT_CTRL_BUSY | NVME_SC_DNR;
++		return NVME_SC_CONNECT_CTRL_BUSY | NVME_STATUS_DNR;
+ 	}
+ 
+ 	/* note: convert queue size from 0's-based value to 1's-based value */
+@@ -191,14 +191,14 @@ static void nvmet_execute_admin_connect(
+ 		pr_warn("invalid connect version (%d).\n",
+ 			le16_to_cpu(c->recfmt));
+ 		req->error_loc = offsetof(struct nvmf_connect_command, recfmt);
+-		status = NVME_SC_CONNECT_FORMAT | NVME_SC_DNR;
++		status = NVME_SC_CONNECT_FORMAT | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+ 	if (unlikely(d->cntlid != cpu_to_le16(0xffff))) {
+ 		pr_warn("connect attempt for invalid controller ID %#x\n",
+ 			d->cntlid);
+-		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
++		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_DATA(cntlid);
+ 		goto out;
+ 	}
+@@ -255,7 +255,7 @@ static void nvmet_execute_io_connect(str
+ 	if (c->recfmt != 0) {
+ 		pr_warn("invalid connect version (%d).\n",
+ 			le16_to_cpu(c->recfmt));
+-		status = NVME_SC_CONNECT_FORMAT | NVME_SC_DNR;
++		status = NVME_SC_CONNECT_FORMAT | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -264,13 +264,13 @@ static void nvmet_execute_io_connect(str
+ 	ctrl = nvmet_ctrl_find_get(d->subsysnqn, d->hostnqn,
+ 				   le16_to_cpu(d->cntlid), req);
+ 	if (!ctrl) {
+-		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
++		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+ 	if (unlikely(qid > ctrl->subsys->max_qid)) {
+ 		pr_warn("invalid queue id (%d)\n", qid);
+-		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
++		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(qid);
+ 		goto out_ctrl_put;
+ 	}
+@@ -303,13 +303,13 @@ u16 nvmet_parse_connect_cmd(struct nvmet
+ 		pr_debug("invalid command 0x%x on unconnected queue.\n",
+ 			cmd->fabrics.opcode);
+ 		req->error_loc = offsetof(struct nvme_common_command, opcode);
+-		return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 	}
+ 	if (cmd->fabrics.fctype != nvme_fabrics_type_connect) {
+ 		pr_debug("invalid capsule type 0x%x on unconnected queue.\n",
+ 			cmd->fabrics.fctype);
+ 		req->error_loc = offsetof(struct nvmf_common_command, fctype);
+-		return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 	}
+ 
+ 	if (cmd->connect.qid == 0)
+--- a/drivers/nvme/target/io-cmd-bdev.c
++++ b/drivers/nvme/target/io-cmd-bdev.c
+@@ -124,11 +124,11 @@ u16 blk_to_nvme_status(struct nvmet_req
+ 	 */
+ 	switch (blk_sts) {
+ 	case BLK_STS_NOSPC:
+-		status = NVME_SC_CAP_EXCEEDED | NVME_SC_DNR;
++		status = NVME_SC_CAP_EXCEEDED | NVME_STATUS_DNR;
+ 		req->error_loc = offsetof(struct nvme_rw_command, length);
+ 		break;
+ 	case BLK_STS_TARGET:
+-		status = NVME_SC_LBA_RANGE | NVME_SC_DNR;
++		status = NVME_SC_LBA_RANGE | NVME_STATUS_DNR;
+ 		req->error_loc = offsetof(struct nvme_rw_command, slba);
+ 		break;
+ 	case BLK_STS_NOTSUPP:
+@@ -136,10 +136,10 @@ u16 blk_to_nvme_status(struct nvmet_req
+ 		switch (req->cmd->common.opcode) {
+ 		case nvme_cmd_dsm:
+ 		case nvme_cmd_write_zeroes:
+-			status = NVME_SC_ONCS_NOT_SUPPORTED | NVME_SC_DNR;
++			status = NVME_SC_ONCS_NOT_SUPPORTED | NVME_STATUS_DNR;
+ 			break;
+ 		default:
+-			status = NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++			status = NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 		}
+ 		break;
+ 	case BLK_STS_MEDIUM:
+@@ -148,7 +148,7 @@ u16 blk_to_nvme_status(struct nvmet_req
+ 		break;
+ 	case BLK_STS_IOERR:
+ 	default:
+-		status = NVME_SC_INTERNAL | NVME_SC_DNR;
++		status = NVME_SC_INTERNAL | NVME_STATUS_DNR;
+ 		req->error_loc = offsetof(struct nvme_common_command, opcode);
+ 	}
+ 
+@@ -339,7 +339,7 @@ static void nvmet_bdev_execute_flush(str
+ u16 nvmet_bdev_flush(struct nvmet_req *req)
+ {
+ 	if (blkdev_issue_flush(req->ns->bdev))
+-		return NVME_SC_INTERNAL | NVME_SC_DNR;
++		return NVME_SC_INTERNAL | NVME_STATUS_DNR;
+ 	return 0;
+ }
+ 
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -653,7 +653,7 @@ static inline void nvmet_req_cns_error_c
+ 	pr_debug("unhandled identify cns %d on qid %d\n",
+ 	       req->cmd->identify.cns, req->sq->qid);
+ 	req->error_loc = offsetof(struct nvme_identify, cns);
+-	nvmet_req_complete(req, NVME_SC_INVALID_FIELD | NVME_SC_DNR);
++	nvmet_req_complete(req, NVME_SC_INVALID_FIELD | NVME_STATUS_DNR);
+ }
+ 
+ static inline void nvmet_req_bio_put(struct nvmet_req *req, struct bio *bio)
+--- a/drivers/nvme/target/passthru.c
++++ b/drivers/nvme/target/passthru.c
+@@ -243,7 +243,7 @@ static void nvmet_passthru_execute_cmd(s
+ 		ns = nvme_find_get_ns(ctrl, nsid);
+ 		if (unlikely(!ns)) {
+ 			pr_err("failed to get passthru ns nsid:%u\n", nsid);
+-			status = NVME_SC_INVALID_NS | NVME_SC_DNR;
++			status = NVME_SC_INVALID_NS | NVME_STATUS_DNR;
+ 			goto out;
+ 		}
+ 
+@@ -362,7 +362,7 @@ u16 nvmet_parse_passthru_io_cmd(struct n
+ 		 * emulated in the future if regular targets grow support for
+ 		 * this feature.
+ 		 */
+-		return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 	}
+ 
+ 	return nvmet_setup_passthru_command(req);
+@@ -414,7 +414,7 @@ static u16 nvmet_passthru_get_set_featur
+ 	case NVME_FEAT_RESV_PERSIST:
+ 		/* No reservations, see nvmet_parse_passthru_io_cmd() */
+ 	default:
+-		return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++		return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 	}
+ }
+ 
+@@ -482,7 +482,7 @@ u16 nvmet_parse_passthru_admin_cmd(struc
+ 				req->p.use_workqueue = true;
+ 				return NVME_SC_SUCCESS;
+ 			}
+-			return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++			return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 		case NVME_ID_CNS_NS:
+ 			req->execute = nvmet_passthru_execute_cmd;
+ 			req->p.use_workqueue = true;
+@@ -494,7 +494,7 @@ u16 nvmet_parse_passthru_admin_cmd(struc
+ 				req->p.use_workqueue = true;
+ 				return NVME_SC_SUCCESS;
+ 			}
+-			return NVME_SC_INVALID_OPCODE | NVME_SC_DNR;
++			return NVME_SC_INVALID_OPCODE | NVME_STATUS_DNR;
+ 		default:
+ 			return nvmet_setup_passthru_command(req);
+ 		}
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -852,12 +852,12 @@ static u16 nvmet_rdma_map_sgl_inline(str
+ 	if (!nvme_is_write(rsp->req.cmd)) {
+ 		rsp->req.error_loc =
+ 			offsetof(struct nvme_common_command, opcode);
+-		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ 
+ 	if (off + len > rsp->queue->dev->inline_data_size) {
+ 		pr_err("invalid inline data offset!\n");
+-		return NVME_SC_SGL_INVALID_OFFSET | NVME_SC_DNR;
++		return NVME_SC_SGL_INVALID_OFFSET | NVME_STATUS_DNR;
+ 	}
+ 
+ 	/* no data command? */
+@@ -921,7 +921,7 @@ static u16 nvmet_rdma_map_sgl(struct nvm
+ 			pr_err("invalid SGL subtype: %#x\n", sgl->type);
+ 			rsp->req.error_loc =
+ 				offsetof(struct nvme_common_command, dptr);
+-			return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++			return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		}
+ 	case NVME_KEY_SGL_FMT_DATA_DESC:
+ 		switch (sgl->type & 0xf) {
+@@ -933,12 +933,12 @@ static u16 nvmet_rdma_map_sgl(struct nvm
+ 			pr_err("invalid SGL subtype: %#x\n", sgl->type);
+ 			rsp->req.error_loc =
+ 				offsetof(struct nvme_common_command, dptr);
+-			return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++			return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		}
+ 	default:
+ 		pr_err("invalid SGL type: %#x\n", sgl->type);
+ 		rsp->req.error_loc = offsetof(struct nvme_common_command, dptr);
+-		return NVME_SC_SGL_INVALID_TYPE | NVME_SC_DNR;
++		return NVME_SC_SGL_INVALID_TYPE | NVME_STATUS_DNR;
+ 	}
+ }
+ 
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -397,10 +397,10 @@ static int nvmet_tcp_map_data(struct nvm
+ 	if (sgl->type == ((NVME_SGL_FMT_DATA_DESC << 4) |
+ 			  NVME_SGL_FMT_OFFSET)) {
+ 		if (!nvme_is_write(cmd->req.cmd))
+-			return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++			return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 
+ 		if (len > cmd->req.port->inline_data_size)
+-			return NVME_SC_SGL_INVALID_OFFSET | NVME_SC_DNR;
++			return NVME_SC_SGL_INVALID_OFFSET | NVME_STATUS_DNR;
+ 		cmd->pdu_len = len;
+ 	}
+ 	cmd->req.transfer_len += len;
+--- a/drivers/nvme/target/zns.c
++++ b/drivers/nvme/target/zns.c
+@@ -104,7 +104,7 @@ void nvmet_execute_identify_cns_cs_ns(st
+ 
+ 	if (le32_to_cpu(req->cmd->identify.nsid) == NVME_NSID_ALL) {
+ 		req->error_loc = offsetof(struct nvme_identify, nsid);
+-		status = NVME_SC_INVALID_NS | NVME_SC_DNR;
++		status = NVME_SC_INVALID_NS | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -125,7 +125,7 @@ void nvmet_execute_identify_cns_cs_ns(st
+ 	}
+ 
+ 	if (!bdev_is_zoned(req->ns->bdev)) {
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc = offsetof(struct nvme_identify, nsid);
+ 		goto out;
+ 	}
+@@ -162,17 +162,17 @@ static u16 nvmet_bdev_validate_zone_mgmt
+ 
+ 	if (sect >= get_capacity(req->ns->bdev->bd_disk)) {
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_recv_cmd, slba);
+-		return NVME_SC_LBA_RANGE | NVME_SC_DNR;
++		return NVME_SC_LBA_RANGE | NVME_STATUS_DNR;
+ 	}
+ 
+ 	if (out_bufsize < sizeof(struct nvme_zone_report)) {
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_recv_cmd, numd);
+-		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ 
+ 	if (req->cmd->zmr.zra != NVME_ZRA_ZONE_REPORT) {
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_recv_cmd, zra);
+-		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ 
+ 	switch (req->cmd->zmr.pr) {
+@@ -181,7 +181,7 @@ static u16 nvmet_bdev_validate_zone_mgmt
+ 		break;
+ 	default:
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_recv_cmd, pr);
+-		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ 
+ 	switch (req->cmd->zmr.zrasf) {
+@@ -197,7 +197,7 @@ static u16 nvmet_bdev_validate_zone_mgmt
+ 	default:
+ 		req->error_loc =
+ 			offsetof(struct nvme_zone_mgmt_recv_cmd, zrasf);
+-		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ 
+ 	return NVME_SC_SUCCESS;
+@@ -346,7 +346,7 @@ static u16 blkdev_zone_mgmt_errno_to_nvm
+ 		return NVME_SC_SUCCESS;
+ 	case -EINVAL:
+ 	case -EIO:
+-		return NVME_SC_ZONE_INVALID_TRANSITION | NVME_SC_DNR;
++		return NVME_SC_ZONE_INVALID_TRANSITION | NVME_STATUS_DNR;
+ 	default:
+ 		return NVME_SC_INTERNAL;
+ 	}
+@@ -470,7 +470,7 @@ static u16 nvmet_bdev_execute_zmgmt_send
+ 	default:
+ 		/* this is needed to quiet compiler warning */
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_send_cmd, zsa);
+-		return NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
+ 
+ 	return NVME_SC_SUCCESS;
+@@ -488,7 +488,7 @@ static void nvmet_bdev_zmgmt_send_work(s
+ 
+ 	if (op == REQ_OP_LAST) {
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_send_cmd, zsa);
+-		status = NVME_SC_ZONE_INVALID_TRANSITION | NVME_SC_DNR;
++		status = NVME_SC_ZONE_INVALID_TRANSITION | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -500,13 +500,13 @@ static void nvmet_bdev_zmgmt_send_work(s
+ 
+ 	if (sect >= get_capacity(bdev->bd_disk)) {
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_send_cmd, slba);
+-		status = NVME_SC_LBA_RANGE | NVME_SC_DNR;
++		status = NVME_SC_LBA_RANGE | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+ 	if (sect & (zone_sectors - 1)) {
+ 		req->error_loc = offsetof(struct nvme_zone_mgmt_send_cmd, slba);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -557,13 +557,13 @@ void nvmet_bdev_execute_zone_append(stru
+ 
+ 	if (sect >= get_capacity(req->ns->bdev->bd_disk)) {
+ 		req->error_loc = offsetof(struct nvme_rw_command, slba);
+-		status = NVME_SC_LBA_RANGE | NVME_SC_DNR;
++		status = NVME_SC_LBA_RANGE | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+ 	if (sect & (bdev_zone_sectors(req->ns->bdev) - 1)) {
+ 		req->error_loc = offsetof(struct nvme_rw_command, slba);
+-		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		goto out;
+ 	}
+ 
+@@ -597,7 +597,7 @@ void nvmet_bdev_execute_zone_append(stru
+ 	}
+ 
+ 	if (total_len != nvmet_rw_data_len(req)) {
+-		status = NVME_SC_INTERNAL | NVME_SC_DNR;
++		status = NVME_SC_INTERNAL | NVME_STATUS_DNR;
+ 		goto out_put_bio;
+ 	}
+ 
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -1622,8 +1622,8 @@ enum {
+ 	NVME_SC_HOST_PATH_ERROR		= 0x370,
+ 	NVME_SC_HOST_ABORTED_CMD	= 0x371,
+ 
+-	NVME_SC_CRD			= 0x1800,
+-	NVME_SC_DNR			= 0x4000,
++	NVME_STATUS_CRD			= 0x1800,
++	NVME_STATUS_DNR			= 0x4000,
  };
  
- static DEFINE_PER_CPU(struct kcov_percpu_data, kcov_percpu_data) = {
-@@ -130,12 +125,13 @@ static struct kcov_remote *kcov_remote_a
- }
- 
- /* Must be called with kcov_remote_lock locked. */
--static struct kcov_remote_area *kcov_remote_area_get(unsigned int size)
-+static struct kcov_remote_area *kcov_remote_area_get(unsigned int size, bool irq)
- {
- 	struct kcov_remote_area *area;
- 	struct list_head *pos;
-+	struct list_head *list = &kcov_remote_areas[irq];
- 
--	list_for_each(pos, &kcov_remote_areas) {
-+	list_for_each(pos, list) {
- 		area = list_entry(pos, struct kcov_remote_area, list);
- 		if (area->size == size) {
- 			list_del(&area->list);
-@@ -147,11 +143,11 @@ static struct kcov_remote_area *kcov_rem
- 
- /* Must be called with kcov_remote_lock locked. */
- static void kcov_remote_area_put(struct kcov_remote_area *area,
--					unsigned int size)
-+				 unsigned int size, bool irq)
- {
- 	INIT_LIST_HEAD(&area->list);
- 	area->size = size;
--	list_add(&area->list, &kcov_remote_areas);
-+	list_add(&area->list, &kcov_remote_areas[irq]);
- }
- 
- /*
-@@ -369,6 +365,12 @@ void kcov_task_init(struct task_struct *
- {
- 	kcov_task_reset(t);
- 	t->kcov_handle = current->kcov_handle;
-+	t->kcov_softirq = 0;
-+	t->kcov_saved_mode = 0;
-+	t->kcov_saved_size = 0;
-+	t->kcov_saved_area = NULL;
-+	t->kcov_saved_kcov = NULL;
-+	t->kcov_saved_sequence = 0;
- }
- 
- static void kcov_reset(struct kcov *kcov)
-@@ -790,34 +792,31 @@ static inline bool kcov_mode_enabled(uns
- 
- static void kcov_remote_softirq_start(struct task_struct *t)
- {
--	struct kcov_percpu_data *data = this_cpu_ptr(&kcov_percpu_data);
- 	unsigned int mode;
- 
- 	mode = READ_ONCE(t->kcov_mode);
- 	barrier();
- 	if (kcov_mode_enabled(mode)) {
--		data->saved_mode = mode;
--		data->saved_size = t->kcov_size;
--		data->saved_area = t->kcov_area;
--		data->saved_sequence = t->kcov_sequence;
--		data->saved_kcov = t->kcov;
-+		t->kcov_saved_mode = mode;
-+		t->kcov_saved_size = t->kcov_size;
-+		t->kcov_saved_area = t->kcov_area;
-+		t->kcov_saved_sequence = t->kcov_sequence;
-+		t->kcov_saved_kcov = t->kcov;
- 		kcov_stop(t);
- 	}
- }
- 
- static void kcov_remote_softirq_stop(struct task_struct *t)
- {
--	struct kcov_percpu_data *data = this_cpu_ptr(&kcov_percpu_data);
--
--	if (data->saved_kcov) {
--		kcov_start(t, data->saved_kcov, data->saved_size,
--				data->saved_area, data->saved_mode,
--				data->saved_sequence);
--		data->saved_mode = 0;
--		data->saved_size = 0;
--		data->saved_area = NULL;
--		data->saved_sequence = 0;
--		data->saved_kcov = NULL;
-+	if (t->kcov_saved_kcov) {
-+		kcov_start(t, t->kcov_saved_kcov, t->kcov_saved_size,
-+			   t->kcov_saved_area, t->kcov_saved_mode,
-+			   t->kcov_saved_sequence);
-+		t->kcov_saved_mode = 0;
-+		t->kcov_saved_size = 0;
-+		t->kcov_saved_area = NULL;
-+		t->kcov_saved_sequence = 0;
-+		t->kcov_saved_kcov = NULL;
- 	}
- }
- 
-@@ -878,17 +877,17 @@ void kcov_remote_start(u64 handle)
- 	sequence = kcov->sequence;
- 	if (in_task()) {
- 		size = kcov->remote_size;
--		area = kcov_remote_area_get(size);
-+		area = kcov_remote_area_get(size, false);
- 	} else {
- 		size = CONFIG_KCOV_IRQ_AREA_SIZE;
--		area = this_cpu_ptr(&kcov_percpu_data)->irq_area;
-+		area = kcov_remote_area_get(size, true);
- 	}
- 	spin_unlock(&kcov_remote_lock);
- 
--	/* Can only happen when in_task(). */
-+	/* Allocate new buffer if we can sleep. */
- 	if (!area) {
- 		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
--		area = vmalloc(size * sizeof(unsigned long));
-+		area = in_task() ? vmalloc(size * sizeof(unsigned long)) : NULL;
- 		if (!area) {
- 			kcov_put(kcov);
- 			return;
-@@ -1021,11 +1020,9 @@ void kcov_remote_stop(void)
- 		kcov_move_area(kcov->mode, kcov->area, kcov->size, area);
- 	spin_unlock(&kcov->lock);
- 
--	if (in_task()) {
--		spin_lock(&kcov_remote_lock);
--		kcov_remote_area_put(area, size);
--		spin_unlock(&kcov_remote_lock);
--	}
-+	spin_lock(&kcov_remote_lock);
-+	kcov_remote_area_put(area, size, !in_task());
-+	spin_unlock(&kcov_remote_lock);
- 
- 	local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
- 
-@@ -1045,14 +1042,21 @@ EXPORT_SYMBOL(kcov_common_handle);
- 
- static int __init kcov_init(void)
- {
--	int cpu;
-+	int cpu = num_possible_cpus();
-+
-+#ifdef CONFIG_PREEMPT_RT
-+	/* Allocate some extra buffers in order to prepare for softirq preemption. */
-+	cpu = cpu >= 4 ? cpu * 2 : cpu + 4;
-+#endif
-+	while (cpu--) {
-+		void *area = vmalloc(CONFIG_KCOV_IRQ_AREA_SIZE * sizeof(unsigned long));
-+		unsigned long flags;
- 
--	for_each_possible_cpu(cpu) {
--		void *area = vmalloc(CONFIG_KCOV_IRQ_AREA_SIZE *
--				sizeof(unsigned long));
- 		if (!area)
- 			return -ENOMEM;
--		per_cpu_ptr(&kcov_percpu_data, cpu)->irq_area = area;
-+		spin_lock_irqsave(&kcov_remote_lock, flags);
-+		kcov_remote_area_put(area, CONFIG_KCOV_IRQ_AREA_SIZE, true);
-+		spin_unlock_irqrestore(&kcov_remote_lock, flags);
- 	}
- 
- 	/*
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -2032,10 +2032,11 @@ config KCOV_INSTRUMENT_ALL
- config KCOV_IRQ_AREA_SIZE
- 	hex "Size of interrupt coverage collection area in words"
- 	depends on KCOV
-+	range 0x80 0x1000000
- 	default 0x40000
- 	help
--	  KCOV uses preallocated per-cpu areas to collect coverage from
--	  soft interrupts. This specifies the size of those areas in the
-+	  KCOV uses preallocated areas to collect coverage from soft
-+	  interrupts. This specifies the size of those areas in the
- 	  number of unsigned long words.
- 
- menuconfig RUNTIME_TESTING_MENU
+ struct nvme_completion {
 
 
