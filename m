@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBAE48C8CE;
-	Mon, 31 Aug 2026 14:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD68848C8D9;
+	Mon, 31 Aug 2026 14:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185216; cv=none; b=tsGslFqJkjgaOCoMHiuaBoHmPleokb7WaWrtpc7eJFHJW7txMnWS0pmefHs3iiond8hiSaXSjd5d73PBFrEhNuofCEpRLcZSa9Pt4SatvtgLfnmdbL+4QKVsI1g1Iywf6J9pdQvhZbTFiOHDh2Wt/lVoBweqxePcG05qy8csayw=
+	t=1788185217; cv=none; b=eW/DVum3w+g3mOcLYUdAtSBwYyWZpIJp98eajLKfCMl0N5LPQnky1uNuXEzWKLUbrZb41fxB72iSo8cU2OOBxOZTNifCN4upAfeKyVgYjqImRkDamkW30oT6+DF31Yc+9aKonRZ7oHiihTCnetydQRgBqakS8djYJkh4w9iEtc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185216; c=relaxed/simple;
-	bh=8Vvi4gumPc/aACyVyoEjIMIQd9Iwch57//GklqQSybo=;
+	s=arc-20240116; t=1788185217; c=relaxed/simple;
+	bh=4upBi0eqLp+v5i0cynGzx68OH8R7E7rnjMIi8XGpyOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mj9EIsMsILjervQUVCI0ZN/97l06uO91TzJRn8lnwFYWhmHlEEbiS59K2cFv2a3wXoo+6vFkDjJZkVuBat5krbzUD27+VIX15ICeflQyjnE/12/MNcjP64Dix1Cl0yUZqHIJEs8XX7mNZPXNEbSkaFOOOVAjM0Dj8f/ILWx5WJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxbxHFfT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=c7gyRExhuhsxEHi7J8mm21Zy0+zVNz+HETV0QfSDu0sonGtJTHMsxeQyPiaLKMm78UL8uncKq4ImmLQzsMey4B/rtvVTRDQYOnvdRBqGx8fR1kDPTJTvIbdu6PQif3VhnhNADJeqG4aMra2aKdEZh5C2U6oF2m+0SKfPQ9dUyWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAZvr9Pi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxbxHFfT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323561F00A3D;
-	Mon, 31 Aug 2026 14:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAZvr9Pi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1386E1F000E9;
+	Mon, 31 Aug 2026 14:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185211;
-	bh=z4IM7B6jU4ppq4VGvSwln33A+VjWFlmqOvbdmrsXQqs=;
+	s=korg; t=1788185214;
+	bh=uo011geDhX5G4bKQrByKDrkBzyxor945n9n6Eazhwdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sxbxHFfT/+0V1CPp/j9I3y7uwDaLjGuiXk5ww8sw2sfpUQ3Tkq/LOR/8k8JSRQ3gU
-	 NxeiwP4bsgSIsTmiPsynKqugUicBHsY/RThw0xuF8huZObgTc9zqfuyLwLioKFjreX
-	 aohnEcrls/F7pEkpy4qFJisZBOqKECjCFWMJK1is=
+	b=fAZvr9Pi9qpF0qt0r1tqXfRrc8G694NfFEAR0mF9LJWMtFs0t13tPkXPmBZtjgu6l
+	 cccSdbZbYvsVnvdRRtebf/P0z8idVy6JPjMqQiyFGngTnlliGBNPuqiaimawbNy3IH
+	 GS1rDXgjPeOdCAw7/OwJkMFfH2QiYVxkuM92RE00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Keith Busch <kbusch@kernel.org>,
+	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
+	Alec Hall <signshop.alec@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 22/43] nvmet-tcp: bound SGL data length before allocating command buffers
-Date: Mon, 31 Aug 2026 15:35:30 +0200
-Message-ID: <20260831133359.532020492@linuxfoundation.org>
+Subject: [PATCH 5.10 23/43] HID: input: read battery capacity from its actual report offset
+Date: Mon, 31 Aug 2026 15:35:31 +0200
+Message-ID: <20260831133359.611158910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -46,87 +46,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
 
-[ Upstream commit 4a3f00262a044e8e15064b1a6860968bf0500bf4 ]
+[ Upstream commit d07644524b6511b622ee7b0e2e68c9ee43d522a4 ]
 
-nvmet_tcp_map_data() reads the host-controlled 32-bit sgl->length
-and, for the in-capsule offset descriptor (type 0x01), checks it
-against port->inline_data_size before use. Any other SGL descriptor
-type -- including the non-inline transport SGL data-block descriptor
-(type (NVME_TRANSPORT_SGL_DATA_DESC << 4) | NVME_SGL_FMT_TRANSPORT_A,
-the type a real host uses for out-of-capsule writes) skips that check
-entirely and falls straight through to:
+hidinput_query_battery_capacity() assumes the state-of-charge value is
+the first byte following the report ID (buf[1]) and ignores where the
+battery field actually sits within the report.
 
-	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
+An Apple Magic Trackpad 2 precedes the AbsoluteStateOfCharge byte with a
+byte of status flags in its battery reports, so this query returns the
+flags byte instead of the charge level.
 
-with len taken directly from the wire, unbounded up to 4 GiB.
+The device happens to make that easy to observe, because it exposes the
+same cell twice: its report descriptor declares AbsoluteStateOfCharge in
+two reports (0x90 and 0x9b), so hidinput_setup_battery() registers two
+power supplies. Only the first one is refreshed by hid-magicmouse -- it
+uses hid_get_battery(), which returns the first battery of the list --
+and that refresh goes through the report event path, which parses the
+field correctly. Nothing ever reports the second one, so every read of
+its capacity takes the query path above. On a USB-C Magic Trackpad over
+USB, on an unpatched 7.1.5:
 
-nvmet_req_init() only parses the command and never inspects
-sgl->length, and nvmet_check_transfer_len() -- the only other place
-transfer_len is validated -- runs later, from req->execute(), after
-the allocation has already happened. For a write command the target
-responds with an R2T and parks the command waiting for the host to
-send the data; if the host (or an unauthenticated peer that simply
-never follows up) never does, the sgl_alloc() buffer stays resident
-for the life of the command. NVMe/TCP has no mandatory authentication
-in the default configuration, so any peer able to reach the target
-portal and complete a Fabrics connect can drive this with a single
-crafted command, repeatable across queues and connections for
-amplification. This is unbounded kernel memory allocation
-triggered by a remote, effectively unauthenticated peer.
+  hid-<serial>-battery-144 = 100%  (Charging)      <- report event path
+  hid-<serial>-battery-155 =   3%  (Discharging)   <- query path
 
-Validate len against the same NVMET_TCP_MAXH2CDATA ceiling this file
-already uses to bound per-PDU H2C data, for every SGL descriptor type,
-before doing any allocation. This closes the gap for the non-inline
-descriptor while leaving the existing, tighter inline_data_size check
-in place for the in-capsule case.
+Both are the same physical battery. A raw HIDIOCGINPUT of the two
+reports at that same moment:
 
-Runtime-verified on a v6.19 KASAN stand: with this bound in place, a
-crafted write command carrying an oversized non-inline SGL length is
-rejected before sgl_alloc() runs, where the same request previously
-drove an unbounded ~256 MiB kernel allocation (up to 4 GiB) that
-stayed resident pending an R2T the host never satisfies.
+  report 0x90 -> [90 03 64]
+  report 0x9b -> [9b 03 64 64 00 00 10 00 00 00 00 00 00 00]
+                     ^flags ^SoC = 0x64 = 100%
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+The device answers correctly in both cases; only the offset the kernel
+reads the capacity from is wrong. 0x03 is the flags byte (present,
+charging), reported as "3%".
+
+Bluetooth takes the same query path for its capacity, where the trackpad
+reported a bogus near-constant ~4% -- 0b100, the FullyCharged flag --
+regardless of the real charge.
+
+Store the battery field's offset within the report at setup time and use
+it when querying, so the capacity is read from its real position. The
+report event path already parses the field correctly through the HID
+core; only the explicit GET_REPORT query was wrong.
+
+Devices whose capacity field is the first field in the report have a
+report_offset of 0 and are unaffected (buf[1 + 0] == buf[1]).
+
+Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+Reviewed-by: Alec Hall <signshop.alec@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/hid/hid-input.c |   17 +++++++++++++----
+ include/linux/hid.h     |    1 +
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -382,6 +382,19 @@ static int nvmet_tcp_map_data(struct nvm
- 	if (!len)
- 		return 0;
- 
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -358,19 +358,27 @@ static int hidinput_query_battery_capaci
+ {
+ 	u8 *buf;
+ 	int ret;
 +	/*
-+	 * inline_data_size only bounds the in-capsule (type 0x01) SGL
-+	 * descriptor below. A non-inline transport SGL data-block
-+	 * descriptor skips that check entirely and would otherwise reach
-+	 * sgl_alloc() with an attacker-controlled len of up to 4 GiB,
-+	 * pinning that much kernel memory for a command that may never
-+	 * complete. Bound every descriptor type here, before allocating
-+	 * anything, using the same ceiling this file already applies to
-+	 * per-PDU H2C data.
++	 * The capacity field may not be the first field in the report: some
++	 * devices (e.g. the Apple Magic Trackpad 2 over Bluetooth) precede it
++	 * with status flags. Read it from its actual byte offset in the report
++	 * (report_offset is in bits; the leading byte is the report id).
 +	 */
-+	if (len > NVMET_TCP_MAXH2CDATA)
-+		return NVME_SC_SGL_INVALID_DATA | NVME_SC_DNR;
-+
- 	if (sgl->type == ((NVME_SGL_FMT_DATA_DESC << 4) |
- 			  NVME_SGL_FMT_OFFSET)) {
- 		if (!nvme_is_write(cmd->req.cmd))
++	int offset = 1 + dev->battery_report_offset / 8;
++	int len = offset + 1;
+ 
+-	buf = kmalloc(4, GFP_KERNEL);
++	buf = kmalloc(max(len, 4), GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, 4,
++	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, max(len, 4),
+ 				 dev->battery_report_type, HID_REQ_GET_REPORT);
+-	if (ret < 2) {
++	if (ret < len) {
+ 		kfree(buf);
+ 		return -ENODATA;
+ 	}
+ 
+-	ret = hidinput_scale_battery_capacity(dev, buf[1]);
++	ret = hidinput_scale_battery_capacity(dev, buf[offset]);
+ 	kfree(buf);
+ 	return ret;
+ }
+@@ -487,6 +495,7 @@ static int hidinput_setup_battery(struct
+ 	dev->battery_max = max;
+ 	dev->battery_report_type = report_type;
+ 	dev->battery_report_id = field->report->id;
++	dev->battery_report_offset = field->report_offset;
+ 
+ 	/*
+ 	 * Stylus is normally not connected to the device and thus we
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -616,6 +616,7 @@ struct hid_device {							/* device repo
+ 	__s32 battery_max;
+ 	__s32 battery_report_type;
+ 	__s32 battery_report_id;
++	__s32 battery_report_offset;					/* bit offset of the capacity field within its report */
+ 	enum hid_battery_status battery_status;
+ 	bool battery_avoid_query;
+ #endif
 
 
