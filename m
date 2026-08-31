@@ -1,102 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F8C5947F2;
-	Mon, 31 Aug 2026 13:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A06C592D2A;
+	Mon, 31 Aug 2026 13:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184277; cv=none; b=aL2vqbrO+rGFDtU0ttkfDZ5fNGX3687lVSsk07CrC9z2U9K+D4GdR4dcDwf6VjL2aSb1eiSFBxIj1E38bLd2RKN6JFJIbbkfipSrCXmw2v9uBacMTaRSF0R/BB0ajZgWMJYnyPTu/EL4omjwM6i/Mv8biJt922KCU7PGl+ublZY=
+	t=1788184277; cv=none; b=mRKOpSrj0xlKcljDDGJOiQ52lJR7IqpKmC5vEylLbpYYdzLrjXvawnl+e7BFCb1VHH9oK8oxUT84xJdfY20grKQFcG1hna8UwjTEFMTk5pIKSSaHM3bDFEo0ik9IDhN2w3NnwmSP9/oznWSn2TIdqBCH+JTd/l7Qo14HJSnfZIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184277; c=relaxed/simple;
-	bh=0ow9FdJwruU3EfVsBZBqH23+DWD/8TlBS8GXALiAm8I=;
+	bh=mCIWpQObiMavMD7PTxT8f0Ca+xbs2NxNCMi/ikpj7Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZsBXVd04nCTIhS0Rpd3xdblzW8qfTsE0gByUmtdyWX7iuH/unR5Gz1rYz5MXWcLioq6AcVcTbSc4Kg9CMJxdh5xSXjPg5e1aie+h0YXej9roD/RDq8rRrMgnso0jBCCqVizVhLkFGbTwkG+D/dqn8urOp8Jt0U0Xfm5eoV3S5lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGU7vi8J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d2VPeAAFAbWyQvSZw7LZUvXFzjc06FxLMmiTaafpoUfTsDpDnNycehfX3lKy/Hent9euQyVaXH7ecma5urlPhLx/9KQWiOvTt0Vb397fFWfa5WJi80OFdOaxxTU40HBC7d/lgemD4Dxsnhul+8CU0mo04wJ455joU0STVvlgFpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pA/FQnAl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGU7vi8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903CF1F00A3D;
-	Mon, 31 Aug 2026 13:51:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184274;
-	bh=ZhNeJQZ/M9+Wo0pvgRV3unjcZkDV8kn5qrwr9dXtgFE=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pA/FQnAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B761F00A3F;
+	Mon, 31 Aug 2026 13:51:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184275;
+	bh=V4CREAPxBxHjyup9gVJeYokvCy3HfOcQ6akHeuaGfR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WGU7vi8JZCNMgWY27IZrkbouGuWsEFIa2dTwQ8pXkKXTORBM4nJWiaQ+I9Edu2+UI
-	 lDVVMIONdxfsXei2o+WGrsN+wyuKrj/5LdJfbBE/xTzKbxRS49G+sBkftMUPgFN3cc
-	 asIeRFAmq1GfgsqyfHWpGX6NMuApfonRLteGXoKlonhOGrheaWTW2cEXuwuU+Uel2Y
-	 KR5wA13ZmBREd5Z+EuqFJAbR05l0zCha54GNoT4oDSGKNMWY+q3Ppdk+IufLBdD3n9
-	 H20oxRRhsP3JQq80rGU7vKX7sfixWywk6gzou72AYcOKWePAZ2XDNVMNsToGGMbG4a
-	 gh2X8R5/8xzXw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Cyrill Gorcunov <gorcunov@gmail.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	tatyana.e.nikolova@intel.com,
-	linux-rdma@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] RDMA/irdma: Fix typo in SQ completions generation
-Date: Mon, 31 Aug 2026 09:30:23 -0400
-Message-ID: <20260831133314.4125787-595-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=pA/FQnAlsjhfxlnC3PegrBpZ9+Jtm76VbQdNnz+BBmzAE0tUuvd+TUNbwLweu7RJi
+	 qWlTC0AG0GZcobwmrWK/n1dZ58YfQam3heNFrJzVEs71zUxZkq1I8L+JNbFFAeyoXR
+	 cj/92ugCErzAdZIt6IYSSt/WE71rzv8rRSj92tY0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Jann Horn <jannh@google.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 49/99] HID: asus: fix missing hid_is_usb() check
+Date: Mon, 31 Aug 2026 15:34:18 +0200
+Message-ID: <20260831133402.495036758@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cyrill Gorcunov <gorcunov@gmail.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit b548a6c4eee5c428663f3944e173e6c92e2e8d6f ]
+------------------
 
-When we generate completion for SQ the opcode while being properly read
-from ring buffer is ignored when written back to completion. Seems
-to be a simple typo.
+From: Jann Horn <jannh@google.com>
 
-Link: https://patch.msgid.link/r/ahjB87k54bYdFbft@grain
-Signed-off-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[ Upstream commit 02bf61dfb44f17ec187d1da1a82495951bbd12df ]
+
+to_usb_interface() can only be used on a hid_device whose parent is really
+USB; uhid can create devices that identify as being on BUS_USB, but don't
+actually have a USB parent.
+Fix the use of to_usb_interface() without a hid_is_usb() check.
+
+I have verified that it is currently possible to trigger a kernel splat due
+to this bug in an ASAN build, and that this commit fixes the issue.
+
+Fixes: 00e005c952f7 ("hid-asus: check ROG Ally MCU version and warn")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-The background search finished: the fix commit is **not in this v6.18.44
-tree** (`git log --grep` for the subject returned nothing). The buggy
-line is still at `utils.c:2464`.
-
-**Verdict: YES** — one-line typo in the kernel-client SQ flush path. It
-always sets `op_type` to `0x3f`, which breaks NOP filtering and
-overwrites flush status with `IB_WC_GENERAL_ERR` instead of
-`IB_WC_WR_FLUSH_ERR`. Low risk, clearly correct, and appropriate for
-stable backport.
-
- drivers/infiniband/hw/irdma/utils.c | 2 +-
+ drivers/hid/hid-asus.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index e5e226b346211..8442e4fb3f984 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -2461,7 +2461,7 @@ void irdma_generate_flush_completions(struct irdma_qp *iwqp)
- 			cmpl->cpi.wr_id = qp->sq_wrtrk_array[wqe_idx].wrid;
- 			sw_wqe = qp->sq_base[wqe_idx].elem;
- 			get_64bit_val(sw_wqe, 24, &wqe_qword);
--			cmpl->cpi.op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, IRDMAQPSQ_OPCODE);
-+			cmpl->cpi.op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, wqe_qword);
- 			cmpl->cpi.q_type = IRDMA_CQE_QTYPE_SQ;
- 			/* remove the SQ WR by moving SQ tail*/
- 			IRDMA_RING_SET_TAIL(*sq_ring,
--- 
-2.53.0
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -664,7 +664,7 @@ static int asus_kbd_register_leds(struct
+ 			return ret;
+ 	}
+ 
+-	if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
++	if ((drvdata->quirks & QUIRK_ROG_ALLY_XPAD) && hid_is_usb(hdev)) {
+ 		intf = to_usb_interface(hdev->dev.parent);
+ 		udev = interface_to_usbdev(intf);
+ 		validate_mcu_fw_version(hdev,
+
 
