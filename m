@@ -1,132 +1,173 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A2655D863;
-	Mon, 31 Aug 2026 13:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A2E55D89B;
+	Mon, 31 Aug 2026 13:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184051; cv=none; b=ChfyI2vJDQSwEriObXQnsejnX41GpGkynYkJ5nlmhQ+xpd34ytUDZm0X++bL9mqIasV9RFNCIdwGY6oo7E5dkfVmNZ9VR54XSseQdnxOgSpEVhMVVTbTylL+nx9ikSMjBTBMcxSRtdH1fBzAv7pTpQiefIkvzZAzYcFVuMJbxJc=
+	t=1788184053; cv=none; b=BT2u9il7s6qbDOonZWq0i1WP1VB1LEqCSXioR0peaIK2RYT25HvLcZubA7mssicmY/OSZ0lk6TkGDZ7bDsiRMr8tZoQFjw3Ukdtjm9t2DTf0ejte3bI5l+krYLJmNeEkTaaMP67BpkD0sp7Y9OwNkG1fFTJDjQv4p8R69kn73ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184051; c=relaxed/simple;
-	bh=J+jQFYaucxEOWqW3yf0UhZjsWJzOiScJ1kL9CFAoUSA=;
+	s=arc-20240116; t=1788184053; c=relaxed/simple;
+	bh=20P4AMebor1Hccl11JHPY4BeRyBYtDrYX+xAZNEr5w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hKtfrc0Yc5FVz7UfPSw10yN14cUC9j7tocUEnfk1V2dau+8tVMvruBsWRlSJ2puTDiEluBS+SmJKDIi9GBYUZd2MkCmwCetY0INTFd+pD2KfJIb0PuIBtahddrI3FYljL5xya0eXxp3X9fyBXRQewocPRgfEMY74zG9DSAAL2MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UZ/ahsCV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JvajMfM/LB8sSVqXrjeO85d0w0UvCkc0UpMeaSnXlLTmUexHPSthy2qFE2Shy/B0YanHY0qDDSapUtretXf/zK65BHQKOKhmy6bxCt/SR3i9fXAmck9ijrGxaMnUq6f8MpAzF73bvtRqJZmY2rjZm5BmRfD/a3S4yld/H2ZPPxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnaVVjdl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UZ/ahsCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161D41F00A3F;
-	Mon, 31 Aug 2026 13:47:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184049;
-	bh=ds1ysNFYTR+NgjJ/YOnzzaH4ibJAxib2md01bLonLbM=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnaVVjdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630001F000E9;
+	Mon, 31 Aug 2026 13:47:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184050;
+	bh=/mE+Z2mfIs0HeORpP/HS2pjRx3W6b93x02sZqfqVd5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZ/ahsCVszyhkeoaVgZ9MQO5tWWN6m0cBIukOfxiOxPgztRebI8GclxqX8pO95fbT
-	 1y8SFPTSW8wrAIFLDzMmwKeEQkSp6X4WoNRo7BBAUhAf6if+r1IPYloICSpXDJ4QWK
-	 kKb7a9UDKTXA2OWwYNACcKtGE0c1PRxkwDfrwvonvZR8UWqC0lFo1cdnKxUcJ5OaTR
-	 Xv5GnivWcYbSHiTlq3mFUjGXQMwrrx1Jy3zCmtVaD2w2UV/MvL8yL2qi/T7d0/Yubi
-	 /ksmnOWhz+81+QMZB+iVrpjKg83UV15w/UaUJ+jEA1zqsWU5hWmoCB8APYYXmj6owS
-	 +NX7RIx6SP9MQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Markus Lindner <lindner.markus@outlook.at>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: usb-audio: Add dB map quirk for Razer Barracuda X 2.4
-Date: Mon, 31 Aug 2026 09:28:09 -0400
-Message-ID: <20260831133314.4125787-461-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=gnaVVjdlFpGXoZUlu+ITeG5kDMrEA7Hl0LpaweBcC4URrf2pIcU5Vz6shub8xCJmY
+	 jFzVtkuTd+5LUFNNzF1jeNLxriyLuCwO8JL/weMuNsj6KM1ahC7ol3Pe9VALrLy3jY
+	 GSjfFj80gl8SmLX6NiKObzQmapLu70zHf9Zb1wxM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Eyal Birger <eyal.birger@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.18 56/83] xfrm: bound nat keepalive state collection
+Date: Mon, 31 Aug 2026 15:34:32 +0200
+Message-ID: <20260831133402.391596645@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Lindner <lindner.markus@outlook.at>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit acd8aa3c4b91a38c8521000790890bc9d1083f1d ]
+------------------
 
-The Razer Barracuda X 2.4 GHz USB headset dongle (0x1532:0x0552)
-reports a minimum volume register value of cval->min = -16800.
+From: Zihan Xi <zihanx@nebusec.ai>
 
-In UAC 1/256 dB units, -16800 corresponds to -65.625 dB. However,
-stock ALSA misinterprets this raw integer as 1/100 dB units
-(-168.00 dB), causing user-space audio servers (PipeWire /
-PulseAudio) to map their volume curves against an incorrectly wide
-range.
+commit 4e9442ce551ebd84b52ad649df721e2dc28af95a upstream.
 
-Add an explicit usbmix_dB_map entry overriding Unit 2 to -6562
-(-65.62 dB) to accurately report the physical hardware
-attenuation bounds.
+The v1 nat keepalive fix allocates a GFP_ATOMIC object for every state
+while collecting references for phase two. This makes the worker's
+temporary memory use depend on the number of states and lets -ENOMEM abort
+the scan.
 
-Signed-off-by: Markus Lindner <lindner.markus@outlook.at>
-Link: https://patch.msgid.link/AS8P195MB2142F4EFF83980BD02BA6566E1C12@AS8P195MB2142.EURP195.PROD.OUTLOOK.COM
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Replace the allocated list with a fixed-size batch. When the batch is full,
+return a private walk status so xfrm_state_walk() leaves a cursor; drain
+the references after the walk releases xfrm_state_lock and resume from
+the cursor. This bounds temporary memory use and avoids the allocation
+failure path.
+
+The v1 fix also moved nat_keepalive_send() out of the walk callback. Keep
+the phase-two drain BH-disabled, as required by local_lock_nested_bh()
+used by the keepalive sockets.
+
+Fixes: 763fe700b7c5 ("xfrm: avoid lock inversion in nat keepalive work")
+Cc: stable@vger.kernel.org
+Cc: Eyal Birger <eyal.birger@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ net/xfrm/xfrm_nat_keepalive.c |   46 +++++++++++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The background searches finished:
-
-- **Mainline lookup** found the commit: `acd8aa3c4b91` — “ALSA: usb-
-  audio: Add dB map quirk for Razer Barracuda X 2.4” by Markus Lindner,
-  merged 2026-07-24 (+15 lines, one file). That matches the patch under
-  review and confirms it’s in mainline but not yet in this 6.18.44 tree.
-- **Bose SoundLink history search** in this checkout wasn’t useful: `git
-  log -S` only surfaced the usb-6.18-rc8 merge, so the original quirk
-  introduction isn’t visible here.
-
-The earlier **YES** backport recommendation stands.
-
- sound/usb/mixer_maps.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index faac7df1fbcf0..4d8dca04f87d0 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -344,6 +344,16 @@ static const struct usbmix_name_map bose_soundlink_map[] = {
- 	{ 0 }	/* terminator */
- };
+--- a/net/xfrm/xfrm_nat_keepalive.c
++++ b/net/xfrm/xfrm_nat_keepalive.c
+@@ -155,32 +155,30 @@ static void nat_keepalive_send(struct na
+ 	}
+ }
  
-+/*
-+ * Razer Barracuda X 2.4: Firmware reports cval->min = -16800 in 1/256 dB units
-+ * (-65.62 dB), which stock ALSA misinterprets as a -168 dB floor
-+ */
-+static const struct usbmix_dB_map razer_barracuda_x_2_4_dB = {-6562, 0};
-+static const struct usbmix_name_map razer_barracuda_x_2_4_map[] = {
-+	{ 2, NULL, .dB = &razer_barracuda_x_2_4_dB },
-+	{ 0 }   /* terminator */
++enum {
++	NAT_KEEPALIVE_BATCH_SIZE = 16,
++	NAT_KEEPALIVE_BATCH_FULL = 1,
 +};
 +
- /* Sennheiser Communications Headset [PC 8], the dB value is reported as -6 negative maximum  */
- static const struct usbmix_dB_map sennheiser_pc8_dB = {-9500, 0};
- static const struct usbmix_name_map sennheiser_pc8_map[] = {
-@@ -689,6 +699,11 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x17aa, 0x1046),
- 		.map = lenovo_p620_rear_map,
- 	},
-+	{
-+		/* Razer Barracuda X 2.4 */
-+		.id = USB_ID(0x1532, 0x0552),
-+		.map = razer_barracuda_x_2_4_map,
-+	},
- 	{
- 		/* Sennheiser Communications Headset [PC 8] */
- 		.id = USB_ID(0x1395, 0x0025),
--- 
-2.53.0
+ struct nat_keepalive_work_ctx {
+-	struct list_head states;
++	struct xfrm_state *batch[NAT_KEEPALIVE_BATCH_SIZE];
++	unsigned int nr;
+ 	time64_t next_run;
+ 	time64_t now;
+ };
+ 
+-struct nat_keepalive_state {
+-	struct list_head list;
+-	struct xfrm_state *x;
+-};
+-
+ static int nat_keepalive_work_collect(struct xfrm_state *x, int count, void *ptr)
+ {
+ 	struct nat_keepalive_work_ctx *ctx = ptr;
+-	struct nat_keepalive_state *state;
+ 
+ 	if (!READ_ONCE(x->nat_keepalive_interval))
+ 		return 0;
+ 
+-	state = kmalloc_obj(*state, GFP_ATOMIC);
+-	if (!state)
+-		return -ENOMEM;
++	if (ctx->nr == ARRAY_SIZE(ctx->batch))
++		return NAT_KEEPALIVE_BATCH_FULL;
+ 
+ 	xfrm_state_hold(x);
+-	state->x = x;
+-	list_add_tail(&state->list, &ctx->states);
++	ctx->batch[ctx->nr++] = x;
+ 	return 0;
+ }
+ 
+@@ -226,29 +224,27 @@ out:
+ 
+ static void nat_keepalive_work(struct work_struct *work)
+ {
+-	struct nat_keepalive_state *state, *tmp;
+ 	struct nat_keepalive_work_ctx ctx;
+ 	struct xfrm_state_walk walk;
+ 	struct net *net;
+-	int err;
++	int err, i;
+ 
+-	INIT_LIST_HEAD(&ctx.states);
+ 	ctx.next_run = 0;
+ 	ctx.now = ktime_get_real_seconds();
+ 
+ 	net = container_of(work, struct net, xfrm.nat_keepalive_work.work);
+ 	xfrm_state_walk_init(&walk, IPPROTO_ESP, NULL);
+-	err = xfrm_state_walk(net, &walk, nat_keepalive_work_collect, &ctx);
++	do {
++		ctx.nr = 0;
++		err = xfrm_state_walk(net, &walk, nat_keepalive_work_collect, &ctx);
++		local_bh_disable();
++		for (i = 0; i < ctx.nr; i++) {
++			nat_keepalive_work_single(ctx.batch[i], &ctx);
++			xfrm_state_put(ctx.batch[i]);
++		}
++		local_bh_enable();
++	} while (err == NAT_KEEPALIVE_BATCH_FULL);
+ 	xfrm_state_walk_done(&walk, net);
+-	list_for_each_entry_safe(state, tmp, &ctx.states, list) {
+-		nat_keepalive_work_single(state->x, &ctx);
+-		xfrm_state_put(state->x);
+-		kfree(state);
+-	}
+-	if (err == -ENOMEM) {
+-		schedule_delayed_work(&net->xfrm.nat_keepalive_work, 0);
+-		return;
+-	}
+ 	if (ctx.next_run)
+ 		schedule_delayed_work(&net->xfrm.nat_keepalive_work,
+ 				      (ctx.next_run - ctx.now) * HZ);
+
 
