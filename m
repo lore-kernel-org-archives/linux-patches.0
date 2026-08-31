@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2B058039D;
-	Mon, 31 Aug 2026 13:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B005803B5;
+	Mon, 31 Aug 2026 13:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184187; cv=none; b=AwxTmLJAuPwcu6hSuoCernPBtCINfCCMaMYa44+rIdq3ER5YnUd5vom3VhestXtZHNJF54YyExWwhDfSlvKh1T4eve5dUBKRnfrbWde2rr38B7oUs48aYYEPr3hoxnmJOPJ778ghVqXgJKqcAzJkMIS87txT97j/zoaAsm8JVEs=
+	t=1788184189; cv=none; b=jkl17QpZ34+ofbnYpUL9OVSVoCAMv6cBHXU8G518RPCj873ZoZq0qlXZxM7xrdpFS2ZIhDwz1odOEUvDBCf1wudnr/d9jd4C+akDhag3xuQWJ1Y9kiwV1jVOQLsQnLJxNB3ax2FyLogoP82PJYXYdJNtEXZvMegeTRX5iRrNRwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184187; c=relaxed/simple;
-	bh=pZu2pCoV6K7ySpvB/3gJkjn9t17/G7T56MdIbHe4DwU=;
+	s=arc-20240116; t=1788184189; c=relaxed/simple;
+	bh=LPueD1hUsDjQlY4SKgu6VHjnhiah98+PhF0cjozIjDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uYSg8jo2959O0djatKCrfjE1u0YMukqZTVmRCSaSL2vetlwWrauVaRJls94Tl2A9i9uPr0aMHioorWOYapgRvORDeoTMt7Y0S8STEZBobrvjpoBmlReCBIS8JKkDqB/hTcIkAM8dHP1WWAwfPXe7YBBNC1pHSOGuDW9siC5jOKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KgCCOg2t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ifTzv3kGi3xn2WK17+Ks9pvkZcAFkXUXpXPyUMf5RQKeFFwxORn8ofB2Jqty4RROH7+uccL1CwSiqy2GolE6E08d9FIFBMg/JRFahvhBKgpgytm/URYfA6/BiDxGQMY8lNRq3YMDSvXqksbYxPUV+JX4xvT2A4jXnde+CGzXYXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cbLXvWdT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KgCCOg2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3A71F00A3E;
-	Mon, 31 Aug 2026 13:49:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cbLXvWdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3B91F00A3D;
+	Mon, 31 Aug 2026 13:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184185;
-	bh=SlSZnePD1C0svI0M8whuH2lg/iVWP+r5DLZy13O4zWE=;
+	s=k20260515; t=1788184186;
+	bh=sEnbmS/e3mUQWPuHjNXWSDPAdU/HRaTajz+dBcPwjX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KgCCOg2tyDCvY7I9hBbOYStF31g6wqtimgCgYQ7JwV/BLH+9ZJqyqd2oogTIaxO2C
-	 beW6rV4DL1aFRvgCq3geXcvkhpCGoWIM2fqNlkswzvCopNZoWRBSxaBVIC3o331nAT
-	 uqio5RUBbE+b9ASeZR2epjLmulCkWzfK6HCZGGiKkAtnHFBM6TIv8hV0aY6cJRE4zR
-	 Ky+qmIXXoL7+zuSg2fxrAMm+bY4VtqWgmu/t5Hbkak0tUPrUeuud6IIsGYn2YVAbqS
-	 bBe+Zkan7sSZpSx5dNgw4vDwkKKJQoF+hXxX0m033b87lGgcCECUUIp9NSuVsS96tn
-	 fF3e34FIIxAeQ==
+	b=cbLXvWdT39QgBFWWQBTWB6aOXGRgsvBs/9IFM31ocpAPeazTpEtV/8NJcomr4E9Xq
+	 6GUwAgdD+MTJ1Yess+8jAVekVnyy/dvznlSwKYscDwi/+NCnbnhHimCmrqR7TbbJBw
+	 iNQsakS8gTd/NISmDC7qYoUxSukHYk1vZDAfE1Wq1mCAHbvFg258p4nt+9V9PWJsVU
+	 hO47biD36a1k2PN+985Qi0SWqV3X5I91kR5xGp8UE0kppdWwxbv5IyknQk4/ArW/J1
+	 ljoFItTHa1hVrWejwOyB0ytX1ZUtW256O8o+w73bG/8SSRFbjkoQ5OST+UTKWrYCnk
+	 gAkfF+xlLQpWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Luka Gejak <luka.gejak@linux.dev>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Luis de Carlos <reskoldo73@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	teackot@gmail.com,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] net: hsr: require valid EOT supervision TLV
-Date: Mon, 31 Aug 2026 09:29:30 -0400
-Message-ID: <20260831133314.4125787-542-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] platform/x86: msi-ec: Add support for MSI Pulse GL66 12th Gen
+Date: Mon, 31 Aug 2026 09:29:31 -0400
+Message-ID: <20260831133314.4125787-543-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -50,27 +48,24 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Luis de Carlos <reskoldo73@gmail.com>
 
-[ Upstream commit 46d111a3ef3b5972804dcdce0833767143a12192 ]
+[ Upstream commit ab7be7ed913086e076bfd8aba79f614f415cd6dc ]
 
-Supervision frames are only valid if terminated with a zero-length EOT
-TLV. The current check fails to reject non-EOT entries as the terminal
-TLV, potentially allowing malformed supervision traffic.
+Add the firmware string '1583EMS1.109' to the ALLOWED_FW_10 array.
+This enables Embedded Controller support, including battery charge
+thresholds, for the MSI Pulse GL66 12UEK (MS-1583) laptop.
 
-Fix this by strictly requiring the terminal TLV to be HSR_TLV_EOT with
-a length of zero.
-
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Luis de Carlos <reskoldo73@gmail.com>
+Link: https://patch.msgid.link/20260527134750.25263-1-reskoldo73@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,226 +74,233 @@ LLM Generated explanations, may be completely bogus:
 ## Phase 1: Commit Message Forensics
 
 ### Step 1.1: Subject Line
-**Record:** `[net: hsr]` `[require]` — HSR supervision-frame validation:
-strictly require a zero-length EOT TLV at the end of the TLV chain.
+**Record:** `[platform/x86: msi-ec]` `[Add]` — Add firmware whitelist
+entry to enable EC support for MSI Pulse GL66 12th Gen (MS-1583).
 
-### Step 1.2: Tags
+### Step 1.2: Commit Message Tags
 **Record:**
-- **Signed-off-by:** Luka Gejak `<luka.gejak@linux.dev>` (author)
-- **Reviewed-by:** Fernando Fernandez Mancera `<fmancera@suse.de>`
-  (subsystem reviewer)
+- **Signed-off-by:** Luis de Carlos `<reskoldo73@gmail.com>` (author)
 - **Link:**
-  https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev
-- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (net maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Acked-by:, or Cc: stable tags
-- Notable: Reviewed by SUSE HSR contributor; no syzbot or user bug
-  report
+  https://patch.msgid.link/20260527134750.25263-1-reskoldo73@gmail.com
+- **Reviewed-by:** Ilpo Järvinen `<ilpo.jarvinen@linux.intel.com>`
+  (subsystem maintainer)
+- **Signed-off-by:** Ilpo Järvinen (committer/maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org, or
+  syzbot tags
+- Notable: Reviewed and committed by platform/x86 maintainer Ilpo
+  Järvinen
 
-### Step 1.3: Body Analysis
+### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug:** Supervision frames must end with a zero-length EOT TLV per
-  IEC 62439-3. The existing check only rejects EOT TLVs with non-zero
-  length; it does not reject non-EOT TLVs as the terminal entry.
-- **Symptom:** Malformed supervision traffic can be accepted as valid.
-- **Root cause:** Inverted conditional logic — accepts any terminal TLV
-  that is not `(EOT && length != 0)`.
-- **Version info:** None in message.
+- **Bug description:** Not a crash/corruption bug. The `msi-ec` driver
+  refuses to load on firmware `1583EMS1.109` because it is absent from
+  `ALLOWED_FW_10`.
+- **Symptom:** Driver init returns `-EOPNOTSUPP` with "Firmware version
+  is not supported"; battery charge thresholds and other EC extras
+  unavailable on MSI Pulse GL66 12UEK (MS-1583).
+- **Root cause:** Missing firmware string in the whitelist for existing
+  `CONF10` configuration.
+- **Version info:** None stated; laptop is 12th Gen (Alder Lake era).
 
 ### Step 1.4: Hidden Bug Fix Detection
-**Record:** Explicit protocol-validation bug fix, not disguised cleanup.
-The inverted `&&` vs `||`/`!=` is a classic logic error.
+**Record:** Not a hidden bug fix. This is explicit hardware enablement —
+adding a firmware identification string so an existing, tested
+configuration (`CONF10`) is selected for a new laptop variant.
+Functionally equivalent to adding a device ID.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
+### Step 2.1: Change Inventory
 **Record:**
-- **Files:** `net/hsr/hsr_forward.c` (+1 / -1)
-- **Function:** `is_supervision_frame()`
-- **Scope:** Single-file, single-line surgical fix
+- **Files:** `drivers/platform/x86/msi-ec.c` (+1 line)
+- **Functions/areas:** `ALLOWED_FW_10[]` firmware whitelist array
+- **Scope:** Single-file, single-line surgical change
 
 ### Step 2.2: Code Flow Change
 **Record:**
-- **Before:** Reject only if `type == HSR_TLV_EOT && length != 0`. All
-  other terminal TLVs (including non-EOT with length 0 or non-zero) are
-  accepted.
-- **After:** Reject unless `type == HSR_TLV_EOT && length == 0`. Only a
-  proper EOT terminator is accepted.
-- **Path:** Receive path in `is_supervision_frame()`, called for every
-  HSR/PRP frame.
+- **Before:** `load_configuration()` iterates `CONFIGS[]`, calls
+  `match_string()` on each `allowed_fw` list. Firmware `1583EMS1.109`
+  matches nothing → warning + `-EOPNOTSUPP` → `msi_ec_init()` fails →
+  module does not load.
+- **After:** `1583EMS1.109` matches `ALLOWED_FW_10` → `CONF10` is copied
+  into `conf` → `battery_hook_register()` succeeds → charge threshold
+  sysfs attributes become available.
+- **Path affected:** Module initialization (`__init`), normal boot path
+  for matching MSI hardware.
 
 ### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Logic / protocol correctness
-- **Mechanism:** De Morgan inversion. Comment says “end of tlvs must
-  follow at the end,” but old code only filtered malformed EOT entries,
-  not non-EOT terminal TLVs.
+**Record:** Category: **Hardware enablement / device identification**
+(not memory safety, race, or crash). The driver deliberately whitelists
+firmware versions before exposing EC register addresses. Missing entry =
+safe refusal to load, not a kernel defect.
 
 ### Step 2.4: Fix Quality
-**Record:** Obviously correct, minimal, no API changes. Regression risk
-is very low — only makes validation stricter (rejects more malformed
-frames). No deadlock or locking changes.
+**Record:** Obviously correct — reuses existing `CONF10` already used
+for `1582EMS1.107` (GF66 11UC), a closely related MS-158x platform.
+Minimal change. Regression risk very low: only affects systems reporting
+exactly this firmware string; no API, locking, or memory management
+changes.
 
 ---
 
 ## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** Buggy EOT check introduced in `eafaa88b3eb7` (“net: hsr: Add
-support for redbox supervision frames”, Oct 2021). Present in this tree
-since that commit. `eafaa88b3eb7` is an ancestor of HEAD.
+**Record:** `ALLOWED_FW_10` and `CONF10` introduced in `8abba08944663`
+("platform/x86: msi-ec: Add more EC configs", 2023-10-06, v6.6 era).
+Present in this tree since driver merge.
 
 ### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag in commit message.
+**Record:** N/A — no Fixes: tag present.
 
 ### Step 3.3: Related File History
-**Record:** Related stable commits on `stable/linux-6.18.y`:
-- `fbd0662f9c9a6` — “net: hsr: fix potential OOB access in supervision
-  frame handling” (same author, same day, already in this tree)
-- `eafaa88b3eb7` — introduced the buggy EOT check
-- `51dd4ee037222`, `295de650d3aaf` — earlier supervision parsing fixes
+**Record:** Recent `msi-ec.c` history in this tree (v6.18.44):
+- `59fff63cc2b75` Merge platform-drivers-x86 v6.7-1
+- `6284e67aa6cb3` Fix the 3rd config
+- `8abba08944663` Add more EC configs
+- `392cacf2aa10d` Add new msi-ec driver (v6.4)
+
+On master but not in this stable tree:
+- `ab7be7ed91308` — this commit (Pulse GL66)
+- `4c8f323b9e151` — unrelated include fix for future acpi.h change
+
+**Standalone:** Yes. No series dependency.
 
 ### Step 3.4: Author Context
-**Record:** Luka Gejak has multiple stable backports in this tree
-(`fbd0662f9c9a6`, `1fe371a34e801`, rtw88 fixes). Active HSR contributor.
+**Record:** Luis de Carlos is a hardware reporter/user contributor. Ilpo
+Järvinen is the platform/x86 maintainer who reviewed and committed the
+patch.
 
-### Step 3.5: Dependencies
-**Record:** Standalone. Originally part of a larger series (v1–v3), but
-from v4 onward it is a standalone 1/2 or single patch. No structural
-prerequisites. Applies cleanly on top of current tree (`git apply
---check` passed).
+### Step 3.5: Prerequisites
+**Record:** No prerequisites. `CONF10`, `CONFIGS[]`,
+`load_configuration()`, and `ALLOWED_FW_10` all exist in v6.18.44. The
+`4c8f323b9e151` dmi.h include commit is independent and not needed for
+this one-line addition.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
 ### Step 4.1: Original Discussion
-**Record:** `b4 dig -c 46d111a3ef3b5` found thread at
-https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev.
-Series evolved v1–v7; committed version is v7 (latest). No NAKs found in
-saved mbox. No explicit stable nomination in thread.
+**Record:**
+- **b4 dig URL:**
+  https://patch.msgid.link/20260527134750.25263-1-reskoldo73@gmail.com
+- **Series revisions:** v1 → v2 (v2 is what was committed)
+- **Reviewer feedback:** Ilpo Järvinen applied to his review branch with
+  acknowledgment ("Thank you for your contribution, it has been
+  applied")
+- **No NAKs, no stable nomination** in thread
+- **No objections** raised
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: CC'd netdev maintainers (Miller, Dumazet,
-Kicinski, Abeni, Horman) and Felix Maurer (HSR maintainer). Reviewed-by
-from Fernando Fernandez Mancera (SUSE).
+**Record:** CC'd: `platform-driver-x86@vger.kernel.org`, `linux-
+kernel@vger.kernel.org`, teackot@gmail.com (driver author),
+hansg@kernel.org. Reviewed/committed by Ilpo Järvinen.
 
 ### Step 4.3: Bug Report
-**Record:** No external bug report, syzbot, or Bugzilla link. Author-
-identified logic bug.
+**Record:** No external bug report, syzbot, or bugzilla link. User-
+submitted hardware enablement from laptop owner.
 
-### Step 4.4: Series Context
-**Record:** v1–v3 bundled with “serialize seq_blocks merge”; v4+ split
-out as standalone EOT fix. No other series patches required.
+### Step 4.4: Related Patches
+**Record:** Standalone 1/1 patch. No multi-patch series dependencies.
 
-### Step 4.5: Stable List
-**Record:** No stable-list discussion found. Companion OOB fix
-(`fbd0662f9c9a6`) was already backported to this tree.
+### Step 4.5: Stable Mailing List
+**Record:** Not searched separately; no stable nomination found in the
+patch thread itself.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key Functions
-**Record:** `is_supervision_frame()` modified.
+**Record:** `ALLOWED_FW_10[]` (data), `load_configuration()`,
+`msi_ec_init()`.
 
 ### Step 5.2: Callers
-**Record:** Called from `fill_frame_info()` (line 691), which is called
-from `hsr_forward_skb()` (line 739). `hsr_forward_skb()` is invoked
-from:
-- `hsr_slave.c` — slave port receive
-- `hsr_device.c` — master/interlink receive
+**Record:** `msi_ec_init()` → `load_configuration()` at module init.
+`msi_ec` is a loadable module (`CONFIG_MSI_EC`, tristate) probed on MSI
+laptops matching DMI vendor table. Called once at boot/module load.
 
-Every HSR/PRP received frame goes through this path.
-
-### Step 5.3: Callees / Downstream Effects
-**Record:** When `is_supervision_frame()` returns true:
-- `hsr_get_node()` runs with `is_sup=true` (affects node DB, SAN info)
-- `hsr_handle_sup_frame()` called on master for non-proxy supervision
-  (node merging)
-- Supervision-specific forwarding: dropped on interlink, special path ID
-  (0xf) for HSRv0
-- `prp_check_lsdu_size()` uses `is_supervision` flag
+### Step 5.3: Callees
+**Record:** `ec_get_firmware_version()` reads EC register 0xa0;
+`match_string()` compares against whitelist; on match,
+`battery_hook_register()` exposes charge threshold sysfs via ACPI
+battery hook.
 
 ### Step 5.4: Reachability
-**Record:** Reachable from network receive on any HSR/PRP-configured
-interface. Attacker on the HSR/PRP segment can send crafted frames.
-HSR/PRP is config-specific (`CONFIG_HSR`), not universal.
+**Record:** Triggered when `CONFIG_MSI_EC=m/y` on MSI laptop with
+firmware `1583EMS1.109`. Requires root to load module (or built-in at
+boot). Not a syscall path; hardware-specific platform driver init.
 
 ### Step 5.5: Similar Patterns
-**Record:** No similar inverted EOT check elsewhere in `net/hsr/`.
-`is_proxy_supervision_frame()` does not perform EOT validation
-(different purpose).
+**Record:** The driver has 14 `ALLOWED_FW_*` arrays with the same
+pattern. Adding entries to existing arrays is the established mechanism
+for new hardware variants (e.g., `8abba08944663` added many configs at
+once).
 
 ---
 
 ## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Buggy Code Present?
-**Record:** YES. Local tree is **v6.18.44** (`git describe HEAD`). Buggy
-code at lines 113–115 of `net/hsr/hsr_forward.c`:
-
-```113:115:net/hsr/hsr_forward.c
-        if (hsr_sup_tlv->HSR_TLV_type == HSR_TLV_EOT &&
-            hsr_sup_tlv->HSR_TLV_length != 0)
-                return false;
-```
-
-Bug present since `eafaa88b3eb7` (2021). Fix commit `46d111a3ef3b5` is
-NOT in this tree.
+### Step 6.1: Buggy Code Exists?
+**Record:** **YES.** Local tree is **v6.18.44** (6.18.y stable).
+`ALLOWED_FW_10` exists with only `"1582EMS1.107"`. Firmware
+`1583EMS1.109` is not whitelisted. Commit `ab7be7ed91308` is on master
+but not in this tree.
 
 ### Step 6.2: Backport Complications
-**Record:** Clean apply expected. OOB fix (`fbd0662f9c9a6`) already
-changed `pskb_may_pull()` offsets but left the EOT check unchanged. `git
-format-patch -1 46d111a3ef3b5 --stdout | git apply --check` succeeded.
+**Record:** **Clean apply expected.** Single-line insertion into
+existing array at line 825. No conflicts with local modifications. Index
+in commit (`f19504dbf164c`) matches current tree structure around
+`CONF9`/`ALLOWED_FW_10`.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** OOB fix `fbd0662f9c9a6` is in tree (companion fix, same
-author/day). EOT logic fix is not.
+**Record:** No. `git grep 1583EMS1` returns no matches. No alternative
+fix for Pulse GL66 in this tree.
 
 ---
 
-## Phase 7: Subsystem Context
+## Phase 7: Subsystem and Maintainer Context
 
 ### Step 7.1: Subsystem Criticality
-**Record:** `net/hsr` — HSR/PRP redundancy protocol for
-industrial/utility networks. **IMPORTANT** for that niche;
-**PERIPHERAL** globally (requires `CONFIG_HSR`).
+**Record:** `drivers/platform/x86/` — **PERIPHERAL** platform driver for
+MSI laptop EC extras. Optional module; laptop functions without it (no
+crash), but battery charge threshold control is unavailable.
 
-### Step 7.2: Activity
-**Record:** Active development in 6.18.y (VLAN support, OOB fix, memory
-leak fix, RedBox support).
+### Step 7.2: Subsystem Activity
+**Record:** Driver added v6.4 (2023), configs expanded v6.6. Mature but
+still receiving firmware whitelist additions. Low churn in stable tree.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who Is Affected
-**Record:** Users running HSR/PRP (`CONFIG_HSR`) — industrial
-automation, power grid, substation networking.
+**Record:** **Hardware-specific** — owners of MSI Pulse GL66 12UEK
+(MS-1583) with firmware `1583EMS1.109` who build/load `CONFIG_MSI_EC`.
+Small population.
 
 ### Step 8.2: Trigger Conditions
-**Record:** Malformed supervision frame on the HSR/PRP network with a
-non-EOT terminal TLV (any type other than EOT=0 with length 0). Attacker
-or faulty device on the L2 segment. Config-specific, not every kernel
-user.
+**Record:** Boot or `modprobe msi-ec` on matching MSI laptop with this
+exact firmware. Not timing-dependent. Requires `CONFIG_MSI_EC` enabled.
+Unprivileged users cannot trigger module load.
 
 ### Step 8.3: Failure Mode Severity
-**Record:** Malformed frames accepted as valid supervision → incorrect
-node DB updates, node merging via `hsr_handle_sup_frame()`, altered
-forwarding/drop behavior. **Severity: MEDIUM-HIGH** for HSR deployments
-(protocol state corruption / redundancy disruption), but not a kernel
-crash, OOB, or UAF. No memory-safety issue.
+**Record:** Without patch: driver refuses to load (`-EOPNOTSUPP`),
+charge thresholds unavailable. **Severity: LOW** — missing
+functionality, not crash, corruption, hang, or security issue. Laptop
+otherwise works.
 
 ### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** Correct IEC 62439-3 validation; completes supervision
-  hardening alongside already-backported OOB fix; protects node DB
-  integrity.
-- **Risk:** Very low — one-line logic inversion, only rejects more bad
-  frames.
-- **Ratio:** Favorable for HSR users; low global risk.
+- **Benefit:** Enables battery charge threshold and EC extras for a real
+  laptop on stable kernel; matches official stable rule allowing device
+  ID additions
+- **Risk:** Very low — 1 line, whitelist-only, reuses proven `CONF10`
+  config
+- **Ratio:** Moderate benefit for affected users, negligible risk
 
 ---
 
@@ -306,117 +308,125 @@ crash, OOB, or UAF. No memory-safety issue.
 
 ### Step 9.1: Evidence Summary
 
-**FOR backport:**
-- Clear logic bug since 2021 (inverted conditional)
-- Real protocol validation failure with node DB / forwarding impact
-- 1-line, obviously correct, applies cleanly
-- Reviewed by HSR contributor and net maintainer
-- Companion OOB fix from same author already in v6.18.44
-- Standalone, no dependencies
+**FOR backporting:**
+- Explicitly allowed by `Documentation/process/stable-kernel-rules.rst`:
+  "just add a device ID"
+- Firmware string is this driver's device-identification mechanism
+- 1 line, obviously correct, maintainer-reviewed
+- Driver and `CONF10` already exist in v6.18.44
+- Clean apply, no dependencies
+- Enables real hardware functionality for stable-kernel users
 
-**AGAINST backport:**
-- No crash, syzbot report, or user bug report
-- Niche subsystem (`CONFIG_HSR`)
-- Impact is protocol/state correctness, not memory safety
-- No explicit stable nomination
+**AGAINST backporting:**
+- Not a crash/corruption/security/deadlock fix
+- Affects one laptop model with small user base
+- Optional module — system works without it
+- No user bug reports beyond patch author
 
-**Unresolved:** No field reports quantifying real-world exploitation.
+**Unresolved:** Whether `CONF10` register map is fully validated on
+MS-1583 (author and maintainer accepted it; no independent test reports
+in thread).
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic inversion is self-
-   evident; Reviewed-by present; no runtime test reported.
-2. Fixes a real bug? **PASS** — inverted conditional since
-   `eafaa88b3eb7`.
-3. Important issue? **PASS (moderate)** — HSR node DB / redundancy state
-   corruption for industrial users, not kernel panic.
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features/APIs? **PASS**.
-6. Can apply to local tree? **PASS** — verified with `git apply
-   --check`.
+1. Obviously correct and tested? **PASS** — maintainer
+   reviewed/committed; trivial whitelist addition
+2. Fixes real bug affecting users? **PASS** — per stable rules, "just
+   add a device ID" is sufficient; missing ID prevents driver from
+   loading on real hardware
+3. Important issue? **PASS (by exception)** — not crash-level, but
+   device ID additions are explicitly permitted
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features or APIs? **PASS** — no new APIs; enables existing
+   `CONF10` on new hardware variant
+6. Can apply to local tree? **PASS** — driver infrastructure present,
+   clean 1-line apply
 
-### Step 9.3: Exception Categories
-**Record:** None (not device ID, quirk, DT, build, or docs).
+### Step 9.3: Exception Category
+**Record:** **NEW DEVICE ID** — firmware version string added to
+existing driver's whitelist, enabling existing `CONF10` configuration.
+Directly matches stable-kernel-rules.rst line 15 and the user's "NEW
+DEVICE IDs" exception.
 
 ### Step 9.4: Decision Rationale
 
-This is a longstanding logic inversion in HSR supervision-frame
-validation. Since 2021, any terminal TLV that is not “EOT with non-zero
-length” has been accepted, violating IEC 62439-3 and allowing malformed
-supervision traffic to drive node DB updates and supervision-specific
-forwarding. The fix is a one-line De Morgan correction with negligible
-regression risk.
+This commit adds firmware `1583EMS1.109` to the `ALLOWED_FW_10`
+whitelist so the existing `msi-ec` driver loads on the MSI Pulse GL66
+12UEK. The local tree (v6.18.44) has the driver and `CONF10` but lacks
+this string, so affected laptops cannot use kernel-managed battery
+charge thresholds.
 
-The companion OOB fix from the same author on the same day is already in
-v6.18.44; leaving this EOT validation gap incomplete is inconsistent.
-For HSR/PRP deployments — used in safety-critical industrial
-infrastructure — protocol validation that protects node state integrity
-is appropriate stable material even without a crash report.
+Per the stable rules in this tree's own documentation, patches that
+"just add a device ID" are explicitly acceptable for stable. The
+firmware string serves as the device identifier for `msi-ec`. The change
+is one line, maintainer-reviewed, applies cleanly, and carries
+negligible regression risk.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from commit `46d111a3ef3b5`
-- [Phase 1] No syzbot/Reported-by; Reviewed-by: Fernando Fernandez
-  Mancera
-- [Phase 2] Diff: 1 line in `is_supervision_frame()`, logic inversion
-  confirmed
-- [Phase 2] Read current buggy code at lines 113–115 of
-  `net/hsr/hsr_forward.c`
-- [Phase 3] `git show eafaa88b3eb7`: buggy EOT check introduced Oct 2021
-- [Phase 3] `git merge-base --is-ancestor eafaa88b3eb7 HEAD`: bug-
-  introducing commit in tree
-- [Phase 3] `git merge-base --is-ancestor 46d111a3ef3b5 HEAD`: fix NOT
-  in tree
-- [Phase 3] `git log stable/linux-6.18.y -- net/hsr/hsr_forward.c`:
-  related OOB fix `fbd0662f9c9a6` present
-- [Phase 3] `git merge-base --is-ancestor fbd0662f9c9a6 HEAD`: OOB fix
-  in tree
-- [Phase 4] `b4 dig -c 46d111a3ef3b5`: lore thread found, v7 is latest
-- [Phase 4] `b4 dig -a`: series v1–v7; standalone from v4 onward
-- [Phase 4] `b4 dig -w`: netdev maintainers CC'd
-- [Phase 4] Mbox grep: Reviewed-by confirmed; no stable nomination or
-  NAK
-- [Phase 5] `grep is_supervision_frame`: caller chain `fill_frame_info`
-  → `hsr_forward_skb` → slave/master receive
-- [Phase 5] Read `hsr_handle_sup_frame()`, `hsr_get_node()`,
-  `hsr_forward_do()` for downstream impact
-- [Phase 6] `git describe HEAD`: v6.18.44
-- [Phase 6] Buggy code confirmed present in stable release commit
-  `1efe5d048a391`
-- [Phase 6] `git format-patch -1 46d111a3ef3b5 --stdout | git apply
-  --check`: applies cleanly
-- [Phase 8] Assessed severity as protocol state corruption for HSR
-  users, not kernel memory safety
+- [Phase 1] Parsed subject, tags, body; identified hardware enablement
+  intent
+- [Phase 1] No syzbot/Fixes:/Cc: stable tags found
+- [Phase 2] Diff: +1 line to `ALLOWED_FW_10[]` in
+  `drivers/platform/x86/msi-ec.c`
+- [Phase 2] Read `load_configuration()` at lines 1306–1337: confirms
+  `-EOPNOTSUPP` without whitelist match
+- [Phase 3] `git describe HEAD`: v6.18.44
+- [Phase 3] `git blame -L 824,827`: `ALLOWED_FW_10` from `8abba08944663`
+  (2023-10-06)
+- [Phase 3] `git show ab7be7ed91308`: confirmed commit hash and 1-line
+  diff
+- [Phase 3] `git log HEAD..master -- drivers/platform/x86/msi-ec.c`: 2
+  commits (this + unrelated include fix)
+- [Phase 3] `git show 4c8f323b9e151`: confirmed NOT a prerequisite
+- [Phase 4] `b4 dig -c ab7be7ed91308`: found v2 thread at
+  patch.msgid.link
+- [Phase 4] `b4 dig -a`: v1→v2 series, v2 committed
+- [Phase 4] `b4 dig -w`: Ilpo Järvinen, platform-driver-x86 list CC'd
+- [Phase 4] Read `/tmp/msi-ec-pulse.mbox`: maintainer applied patch, no
+  NAKs, no stable CC
+- [Phase 5] `grep match_string`: used in `load_configuration()` line
+  1319
+- [Phase 5] Read `Kconfig` MSI_EC help text: confirms charge threshold
+  purpose
+- [Phase 6] `grep 1583EMS1`: not present in local tree
+- [Phase 6] `grep 1582EMS1`: present at line 825, confirming target
+  array exists
+- [Phase 6] Read `Documentation/process/stable-kernel-rules.rst` line
+  15: "just add a device ID" explicitly allowed
+- [Phase 8] Confirmed failure mode is `-EOPNOTSUPP` (LOW severity), not
+  crash
 
-**YES**The background checks finished and match what the analysis
-already used:
+**YES**The MSI Pulse GL66 `msi-ec` commit is a good stable backport
+candidate for this tree (v6.18.44).
 
-- **Mainline search** found commit `46d111a3ef3b5` (“net: hsr: require
-  valid EOT supervision TLV”) on master/linux-next.
-- **Author history on stable/linux-6.18.y** shows the companion OOB fix
-  (`fbd0662f9c9a6`) is already in v6.18.44, while this EOT logic fix is
-  not.
+It adds one firmware string (`1583EMS1.109`) to the existing
+`ALLOWED_FW_10` whitelist so the already-present `CONF10` config can
+load on the MSI Pulse GL66 12UEK. Without it, `msi-ec` returns
+`-EOPNOTSUPP` and battery charge thresholds stay unavailable.
 
-Verdict for this tree (v6.18.44): **YES** — one-line protocol validation
-fix, applies cleanly, and completes the supervision-frame hardening
-started by the already-backported OOB patch.
+This fits the stable rule for device ID additions: one line, maintainer-
+reviewed, clean apply, and the driver infrastructure is already in
+6.18.y. It is hardware enablement, not a crash fix, but that is
+explicitly allowed for this kind of change.
 
- net/hsr/hsr_forward.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+**YES**
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 299de290ddaa5..901eb85c112d1 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -110,7 +110,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
- 	}
+ drivers/platform/x86/msi-ec.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/platform/x86/msi-ec.c b/drivers/platform/x86/msi-ec.c
+index f19504dbf164c..0157e233e4300 100644
+--- a/drivers/platform/x86/msi-ec.c
++++ b/drivers/platform/x86/msi-ec.c
+@@ -823,6 +823,7 @@ static struct msi_ec_conf CONF9 __initdata = {
  
- 	/* end of tlvs must follow at the end */
--	if (hsr_sup_tlv->HSR_TLV_type == HSR_TLV_EOT &&
-+	if (hsr_sup_tlv->HSR_TLV_type != HSR_TLV_EOT ||
- 	    hsr_sup_tlv->HSR_TLV_length != 0)
- 		return false;
+ static const char * const ALLOWED_FW_10[] __initconst = {
+ 	"1582EMS1.107", // GF66 11UC
++	"1583EMS1.109", // Pulse GL66 12UEK
+ 	NULL
+ };
  
 -- 
 2.53.0
