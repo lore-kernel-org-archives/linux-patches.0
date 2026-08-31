@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8873E58B6AA;
-	Mon, 31 Aug 2026 13:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3438858B6C7;
+	Mon, 31 Aug 2026 13:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184232; cv=none; b=twcoPLKnoMkb1gbvdHMLcRuJuWzXTVWzfg63AnsrMYUfvfcUvXsYY5Sf5ad72MtLjPwRO8WaHBYFPXrrJUg3nwugCZDa0n6EAE0yup8hV1K/YqqJs71Nnpm5s/5v7B5qsHc89Gl4KdiNHDw83k3Z3E38PJ4dM2HeVyiHHxulWRA=
+	t=1788184235; cv=none; b=NjVr19e+EqQRH3xNHaPZJ7ZE9ohM0xs3yT5cXbbOlOy+KTTLAT2XIHRJEnRKeYuDxzXTcVso48YH+RRzWwCmSIo9L4K75TJf5zN7w7oNDFI4uZLpScy50FeXKqZ6KAmrC/4mN6Wt21nswYx/SyR/il/BJsLLMQkSo/g+eT1DtQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184232; c=relaxed/simple;
-	bh=uFxGczykqFKTYpsqfQxkRqUUfKgnxYhwqb5E5dDVj0E=;
+	s=arc-20240116; t=1788184235; c=relaxed/simple;
+	bh=Wcghe1FVJIscBa5KOWBEgGmrrpcV3pXkLc3/u2Ln1JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GCGZRN+svVSjlh/aqg5ZC6OxAGylQLwJod+mgial4OANPGJYDxYI/C2gse16M+3wIbEYpwUHdIChfcqmGNX0o+3fmjLQa6fXhsAc62InkwpkbsfWuLIAPf3ykGeGwxp9fv8AzGHF/7XctCN/jmCdfP8wdQhxUXiI25Par/7Cxyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UVDyH7S4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TGs7gJriUzat+Q6a90SR0/JDgY0YPb2fXAUWXXEZw/YloHlgX6MuhHIxxQPxZjepnPjneQ1brYBe/i2TO3emTVJz8XauxVJSTBnfj8OefRFG/0EaqL2jIKhN14kBqaY0cwywG69S/Bzql6uHwqC2qkDkZRpcl9k45egxTfJ4Vms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnhtfPUh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UVDyH7S4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD341F000E9;
-	Mon, 31 Aug 2026 13:50:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnhtfPUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B781F00A3E;
+	Mon, 31 Aug 2026 13:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184230;
-	bh=sjVdUiYm/8x5tYlhDT8FvYcN+SUMyrkrpfK0H0O87Pg=;
+	s=k20260515; t=1788184232;
+	bh=GWWRbb5fx/50qNvFfhxhjVCsZ2dC5kuRKeGuqJBIxak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UVDyH7S4HimQgAMFQ647ux6SXxlYFlO8kw/avMXXasP1ZSG9jpohq27rFQ4y3UtVa
-	 d8vl+p7q+zRn852aevtEMGEYjjxoWOndCfPLmUJ5G69GLFG2FkaNcXizv51eTChJXs
-	 MOddhp+OG4D3/TjdjAhLZJRcnDLg+pXBNdmfY0ruYO9Q8oXcduitwyeCUp/pBuyTZf
-	 QNR9iwiKdM1YcqQGeOwkf741MfqCNBvjxV3X4LBKq4ButYtgSjpSPL/VlbVZaqH4oZ
-	 C1GVp7tbPDp3BknhQqGDow+iCMqmrJo1vyvrAvr/OjZswA1+zFx+sRLb1eOSLrGbJN
-	 7kxIeP/w3RXvw==
+	b=SnhtfPUhVX74L1ZiyCv6GpdPBCNNhURN5zDrCnYxj9ZKVh7BVKduUlVx1BXs1rms9
+	 lNrfZvFtQCtrgz+ZFA19cvg6WDXOYIYAPo23lCftcmlYqqvo+XyTfOFFYhlz7f6sVB
+	 Esj+JDdXaTquKP0qlALYL8xI5IQ+bJIqRshmtD1mZloQ8Yai5owpTyll6cfZ9Er+6C
+	 7MxUFCe66q9tw2la0wtz1bGIf+XEawLHnl8bS40sMvyed+XYI/8x70BZhZ3aYCLIJu
+	 woxU6SJ3g0e+XwpU6sUnYXFieRap8Joy/1G29h4KVQZFs9kQlRDZdrTW57YPd+twgX
+	 vNbBXNQdkJtHQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Candice Li <candice.li@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	jingoohan1@gmail.com,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] drm/amdgpu: Bound GPIO I2C table entry count from VBIOS
-Date: Mon, 31 Aug 2026 09:29:57 -0400
-Message-ID: <20260831133314.4125787-569-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] PCI: dwc: Protect root bus removal with rescan lock
+Date: Mon, 31 Aug 2026 09:29:58 -0400
+Message-ID: <20260831133314.4125787-570-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,480 +56,406 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Candice Li <candice.li@amd.com>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit a99cd231cd924b7160fecb9fb3a94b801522323b ]
+[ Upstream commit 26335696498ab502e907a556e97c7039bc80a87e ]
 
-Reject undersized tables and cap the derived entry count
-to AMDGPU_MAX_I2C_BUS so we do not overrun adev->i2c_bus[]
-or walk an absurd number of entries on corrupt size fields.
+Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
+to avoid racing with concurrent rescan or hotplug operations triggered via
+sysfs.  Such races may lead to use-after-free issues or system crashes.
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260521161822.132996-3-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject line**
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[PCI: dwc]` `[Protect]` — Add synchronization around root
+bus teardown in the DesignWare PCIe host controller to prevent races
+with concurrent PCI rescan/hotplug.
 
-Record: `[drm/amdgpu]` `[Bound]` — Bound/cap GPIO I2C table entry count
-parsed from VBIOS atom data tables.
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Record:**
+- **Link:**
+  `https://patch.msgid.link/20260521161822.132996-3-18255117159@163.com`
+- **Signed-off-by:** Hans Zhang `<18255117159@163.com>`
+- **Signed-off-by:** Manivannan Sadhasivam `<mani@kernel.org>`
+- **Signed-off-by:** Bjorn Helgaas `<bhelgaas@google.com>` (with
+  `[bhelgaas: commit log]`)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable@vger.kernel.org`
+- Notable: PCI maintainer (Bjorn Helgaas) committed; DWC maintainer
+  (Mani) signed off. No syzbot or user crash report in the message
+  itself.
 
-**Step 1.2 — Tags**
-
-Record:
-- `Signed-off-by: Candice Li <candice.li@amd.com>` (author)
-- `Reviewed-by: Tao Zhou <tao.zhou1@amd.com>`
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (amdgpu
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable@vger.kernel.org`, or
-  `Tested-by:` tags
-- Notable: maintainer sign-off and AMD review, but no fuzzer/user report
-
-**Step 1.3 — Body analysis**
-
-Record:
-- **Bug:** VBIOS-reported GPIO I2C table `size` is trusted without
-  validation; entry count is derived unchecked.
-- **Symptoms:** Can overrun `adev->i2c_bus[]` (fixed size 16) and walk
-  an excessive number of entries on corrupt/undersized size fields.
-- **Root cause:** `num_indices = (size - header) / entry_size` with no
-  lower/upper bound; `amdgpu_atom_parse_data_header()` only reads a
-  16-bit size from the BIOS image and does not validate it.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Record:**
+- **Bug:** `dw_pcie_host_deinit()` stops and removes the root bus
+  without holding `pci_rescan_remove_lock`.
+- **Symptom:** Race with concurrent sysfs-triggered PCI rescan or
+  hotplug; may cause use-after-free or system crashes.
+- **Root cause:** `pci_stop_root_bus()` / `pci_remove_root_bus()` are
+  not serialized against sysfs paths that already take
+  `pci_lock_rescan_remove()`.
 - **Version info:** None in the message.
 
-**Step 1.4 — Hidden bug fix?**
-
-Record: **Yes.** Despite no “fix” in the subject, this is a defensive
-bounds-check fix for out-of-bounds array indexing and unbounded
-iteration on corrupt VBIOS metadata.
-
----
-
-## Phase 2: Diff Analysis
-
-**Step 2.1 — Inventory**
-
-Record:
-- **File:** `drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c` (+18 / -6)
-- **Functions modified:** new helper
-  `amdgpu_atombios_gpio_i2c_num_entries()`; callers
-  `amdgpu_atombios_lookup_i2c_gpio()`, `amdgpu_atombios_i2c_init()`,
-  `amdgpu_atombios_oem_i2c_init()`
-- **Scope:** Single-file, surgical fix
-
-**Step 2.2 — Code flow per hunk**
-
-Record:
-- **New helper:** If `size < sizeof(ATOM_COMMON_TABLE_HEADER)` → return
-  0; else compute `bytes / sizeof(ATOM_GPIO_I2C_ASSIGMENT)` capped at
-  `AMDGPU_MAX_I2C_BUS` (16).
-- **Before:** Three sites computed `num_indices` directly from unchecked
-  `size`.
-- **After:** All three use the bounded helper.
-- **Paths affected:**
-  - `amdgpu_atombios_i2c_init()` — probe-time I2C bus creation; indexes
-    `adev->i2c_bus[i]`
-  - `amdgpu_atombios_oem_i2c_init()` — Polaris OEM I2C path; same
-    indexing
-  - `amdgpu_atombios_lookup_i2c_gpio()` — encoder/router DDC lookup;
-    walks GPIO entries by pointer
-
-**Step 2.3 — Bug mechanism**
-
-Record: **Buffer overflow / out-of-bounds access + unbounded loop**
-
-1. **Undersized `size` (< 4 bytes):** `(uint16_t)size - sizeof(header)`
-   underflows in unsigned arithmetic → enormous `num_indices` (e.g.
-   65534/entry_size ≈ thousands).
-2. **Oversized/corrupt `size`:** `num_indices` can exceed
-   `AMDGPU_MAX_I2C_BUS` (16). In `amdgpu_atombios_i2c_init()` /
-   `oem_i2c_init()`, loop index `i` is used as `adev->i2c_bus[i]` →
-   **write past end of 16-element pointer array**.
-3. **GPIO pointer walk:** Uncapped iteration reads past the actual VBIOS
-   table region.
-
-**Step 2.4 — Fix quality**
-
-Record:
-- Fix is minimal, obviously correct, and matches driver limits
-  (`AMDGPU_MAX_I2C_BUS == 16`, `ATOM_MAX_SUPPORTED_DEVICE == 16`).
-- Does not validate `size` against total BIOS image length (unlike the
-  related `drm/amd/display` fix), but still eliminates the array overrun
-  and caps iteration.
-- **Regression risk:** Very low. Legitimate tables with ≤16 entries
-  behave identically; undersized tables fail closed (0 entries) instead
-  of crashing.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not hidden — this is an explicit synchronization bug fix.
+The “protect” wording and UAF/crash description clearly indicate a real
+concurrency defect, not cleanup.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 2: DIFF ANALYSIS
 
-**Step 3.1 — Blame**
+### Step 2.1: INVENTORY THE CHANGES
+**Record:**
+- **Files:** `drivers/pci/controller/dwc/pcie-designware-host.c` (+2
+  lines)
+- **Function:** `dw_pcie_host_deinit()`
+- **Scope:** Single-file, surgical fix (2 insertions around existing
+  calls)
 
-Record: Buggy `num_indices` calculation introduced in `d38ceaf99ed01`
-(“drm/amdgpu: add core driver (v4)”, Alex Deucher, 2015-04-20). Present
-throughout the life of amdgpu in this tree.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Record:**
+- **Hunk (deinit path):**
+  - **Before:** `pci_stop_root_bus()` and `pci_remove_root_bus()` run
+    unlocked during driver teardown.
+  - **After:** Same operations run under `pci_lock_rescan_remove()` /
+    `pci_unlock_rescan_remove()`.
+  - **Path affected:** Platform driver remove / module unload / probe
+    error cleanup via `dw_pcie_host_deinit()`.
 
-**Step 3.2 — Fixes: tag**
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Record:**
+- **Category:** Race condition / synchronization bug (can manifest as
+  UAF or crash).
+- **Mechanism:** Sysfs rescan/remove (`rescan_store`, `remove_store`,
+  `bus_rescan_store` in `pci-sysfs.c`) holds `pci_rescan_remove_lock`.
+  DWC host teardown did not, so two threads could concurrently mutate
+  the same PCI bus/device tree.
 
-Record: N/A — no `Fixes:` tag in commit message.
-
-**Step 3.3 — Related file history**
-
-Record:
-- `20f48be63d1ad` added `amdgpu_atombios_oem_i2c_init()` with the same
-  unchecked pattern.
-- No prior bounds-check fix for GPIO I2C tables in this tree.
-- Fix commit `a99cd231cd92` is **not** present locally
-  (`amdgpu_atombios_gpio_i2c_num_entries` not found).
-
-**Step 3.4 — Author context**
-
-Record: Candice Li has other amdgpu commits in this tree (RAS, SMU,
-etc.). Patch reviewed by Tao Zhou and signed off by Alex Deucher.
-
-**Step 3.5 — Dependencies**
-
-Record: Mailing-list submission is **[PATCH 3/4]** in a hardening
-series, but this patch is **standalone**:
-- Patch 1/4: RAS CPER buffer bounds (different files)
-- Patch 2/4: ATOM command table nesting depth (different code)
-- Patch 4/4: PSP fw_pri_buf validation (different code)
-
-No prerequisite commits needed for this hunk to apply and function.
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 — Original discussion**
-
-Record:
-- `b4 dig -c a99cd231cd924b7160fecb9fb3a94b801522323b` → no lore match
-  (thread on freedesktop.org, not lore).
-- Verified at https://lists.freedesktop.org/archives/amd-
-  gfx/2026-May/144648.html
-- Series: [PATCH 3/4], May 18 2026
-- No stable nomination found in the thread
-- No NAKs observed in fetched content
-
-**Step 4.2 — Reviewers**
-
-Record: CC list includes Hawking Zhang, Tao Zhou, Stanley Yang, Thomas
-Chai. `Reviewed-by: Tao Zhou`. `Signed-off-by: Alex Deucher`.
-
-**Step 4.3 — Bug reports**
-
-Record: None. No syzbot, bugzilla, or user crash reports referenced.
-
-**Step 4.4 — Related patches**
-
-Record: Related hardening in same series (RAS, ATOM nesting, PSP).
-Separate mainline commit `86d2b20644b` (“drm/amd/display: Validate GPIO
-pin LUT table size before iterating”) addresses the same class of VBIOS
-table parsing bug in the display BIOS parser and was nominated with `Cc:
-stable@vger.kernel.org`.
-
-**Step 4.5 — Stable list**
-
-Record: No stable-list discussion found for this specific patch (lore
-blocked by bot protection; freedesktop thread has no stable CC).
+### Step 2.4: ASSESS THE FIX QUALITY
+**Record:**
+- **Quality:** Obviously correct; matches the established pattern in
+  `pci_host_common_remove()`, `pci-aardvark.c`, `pci-mvebu.c`, `pci-
+  hyperv.c`, etc.
+- **Regression risk:** Very low. The lock is a global PCI mutex already
+  used widely; holding it only around bus stop/remove is the intended
+  usage documented in `probe.c`.
+- **Red flags:** None.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 5.1 — Key functions**
+### Step 3.1: BLAME THE CHANGED LINES
+**Record:**
+- `pci_stop_root_bus()` / `pci_remove_root_bus()` in
+  `dw_pcie_host_deinit()` introduced in commit `5808d43e7c91b2` (Rob
+  Herring, Aug 2020).
+- `dw_pcie_host_deinit()` itself dates to 2019.
+- **Bug present since:** ~2020 in this function; DWC host code never had
+  the rescan lock (`git log -S 'pci_lock_rescan_remove' -- pcie-
+  designware-host.c` returned empty).
 
-Record: `amdgpu_atombios_gpio_i2c_num_entries()`,
-`amdgpu_atombios_lookup_i2c_gpio()`, `amdgpu_atombios_i2c_init()`,
-`amdgpu_atombios_oem_i2c_init()`.
+### Step 3.2: FOLLOW THE FIXES: TAG
+**Record:** No `Fixes:` tag. N/A.
 
-**Step 5.2 — Callers**
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:**
+- Related fix in-tree: `1d59d474e1cb7` — “PCI: Hold rescan lock while
+  adding devices during host probe” (Oct 2024), with a documented NULL
+  deref crash from concurrent probe vs. sysfs remove.
+- This commit is patch **2/9** in series “PCI: controller: Add missing
+  rescan lock around root bus removal”; cover letter states **each patch
+  is independent**.
+- Fix is **not yet merged** in this tree (current `pcie-designware-
+  host.c` still lacks the lock).
 
-Record:
-- `amdgpu_atombios_i2c_init()` ← `amdgpu_i2c_init()` in `amdgpu_i2c.c`
-- `amdgpu_atombios_oem_i2c_init()` ← `amdgpu_i2c_init()` (Polaris chips
-  with DC)
-- `amdgpu_i2c_init()` ← `amdgpu_device.c` during device init when
-  `adev->bios` present and `!adev->is_atom_fw`
-- `amdgpu_atombios_lookup_i2c_gpio()` ← `amdgpu_atombios.c`
-  encoder/router parsing (DDC/I2C routing during display setup)
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** Hans Zhang is an active PCI contributor (capability-search
+refactors, cadence/dwc work). This series is a targeted locking fix, not
+part of a larger refactor.
 
-**Step 5.3 — Callees**
-
-Record: `amdgpu_atom_parse_data_header()`,
-`amdgpu_atombios_get_bus_rec_for_i2c_gpio()`, `amdgpu_i2c_create()`,
-`min_t()`.
-
-**Step 5.4 — Reachability**
-
-Record:
-- **Probe path:** `amdgpu_i2c_init()` runs during GPU driver
-  initialization for legacy atombios (non-atom-fw) GPUs — common on pre-
-  GCN/older hardware and Polaris OEM path.
-- **Display path:** `amdgpu_atombios_lookup_i2c_gpio()` runs during
-  encoder/connector parsing — broader reach on atom-bios GPUs.
-- **Userspace trigger:** Not a direct syscall path; triggered by GPU
-  probe with VBIOS present. Corrupt/malicious VBIOS (flash corruption or
-  reflashing) can trigger it at module load / GPU init. Unprivileged
-  users cannot typically rewrite GPU VBIOS without root/hardware access.
-
-**Step 5.5 — Similar patterns**
-
-Record: Same unchecked `(size - header) / struct_size` pattern exists
-elsewhere in `amdgpu_atombios.c` (e.g. spread-spectrum tables at lines
-929+), but this commit does not touch those — scoped to GPIO I2C only. A
-related display-side GPIO LUT bounds fix exists upstream.
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:**
+- **Dependency:** `pci_lock_rescan_remove()` API from `9d16947b75831`
+  (Jan 2014) — **present in this tree**.
+- **Standalone:** Yes; no structural/API prerequisites beyond the
+  existing lock helpers.
+- Buggy code (`5808d43e7c91b2`) is also an ancestor of HEAD.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 6.1 — Buggy code present?**
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:**
+- `b4 dig -c` failed (commit not in local history yet).
+- Local mbox/cover files found: `20260522_18255117159_pci_controller_add
+  _missing_rescan_lock_around_root_bus_removal.{cover,mbx}`.
+- **Series:** 9 independent patches; this is patch 2/9 (DWC).
+- **Cover letter context:** Bot review on a separate cadence patch
+  flagged the same missing-lock pattern; author submitted this series to
+  fix all affected controllers.
+- **Lore URL fetch:** Blocked by Anubis anti-bot on lore.kernel.org.
 
-Record: **Yes.** Local tree is `v6.18.44` (Makefile: 6.18.44). All three
-unchecked `num_indices` calculations exist at lines 99–100, 130–131, and
-161–162 of `amdgpu_atombios.c`. `adev->i2c_bus[AMDGPU_MAX_I2C_BUS]` is
-defined in `amdgpu.h` with `AMDGPU_MAX_I2C_BUS = 16`. Bug dates to
-original amdgpu import (2015).
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** From commit message: Manivannan Sadhasivam (DWC maintainer)
+SOB; Bjorn Helgaas (PCI maintainer) committed. `b4 dig -w` not available
+for this unreleased commit.
 
-**Step 6.2 — Backport complications**
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** No `Reported-by:` or crash trace in this specific patch.
+Precedent crash documented in `1d59d474e1cb7` for the **probe/add** side
+of the same locking gap. This fix addresses the symmetric **remove**
+side.
 
-Record: **Clean apply expected.** File structure and includes match the
-patch context (`bif/bif_4_1_d.h` present, same three call sites). No
-conflicting fix already applied.
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** 8 sibling patches fix the same pattern in cadence, altera,
+brcmstb, iproc, mediatek, rockchip, vmd, plda. Each is independently
+backportable.
 
-**Step 6.3 — Related fixes already present?**
-
-Record: **None** for GPIO I2C table bounding.
-`amdgpu_atombios_gpio_i2c_num_entries` does not exist in tree.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem**
-
-Record: `drm/amdgpu` display/GPU driver — **IMPORTANT** subsystem
-(widely deployed AMD GPU driver).
-
-**Step 7.2 — Activity**
-
-Record: File actively maintained; recent commits include OEM I2C
-support, vbios interfaces, PM cleanups.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** Not searched (lore blocked). No stable-list discussion found
+in local mbox files.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 8.1 — Who is affected**
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** `dw_pcie_host_deinit()` — only function modified.
 
-Record: AMD GPU users on the legacy atombios path (`!adev->is_atom_fw`)
-during I2C init; additionally any GPU using atom-bios encoder routing
-that calls `amdgpu_atombios_lookup_i2c_gpio()`. Config-specific to
-`CONFIG_DRM_AMDGPU` with affected hardware.
+### Step 5.2: TRACE CALLERS
+**Record:** `dw_pcie_host_deinit()` is called from multiple DWC-based
+platform drivers:
+- `pcie-tegra194.c` (`tegra_pcie_deinit_controller()` → platform
+  `.remove` and probe error path)
+- `pcie-stm32.c`, `pcie-rcar-gen4.c`, `pci-meson.c`, `pci-dra7xx.c`,
+  `pcie-bt1.c`, `pci-exynos.c`, `pcie-kirin.c`, `pcie-intel-gw.c`
+- **Context:** Driver remove, module unload, and probe failure cleanup
+  on embedded/SoC platforms using Synopsys DWC PCIe.
 
-**Step 8.2 — Trigger conditions**
+### Step 5.3: TRACE CALLEES
+**Record:** Key callees in the critical section:
+- `pci_stop_root_bus()` — stops child devices, releases host bridge
+  driver
+- `pci_remove_root_bus()` — removes child devices, deletes host bridge
+  from device model
+- Both documented to require the rescan/remove lock when racing with
+  sysfs operations.
 
-Record:
-- Corrupt or malicious VBIOS with invalid GPIO I2C table `size` field
-- Undersized table (`size < 4`) or oversized entry count (`> 16`)
-- **Likelihood:** Low for legitimate factory VBIOS; non-zero for flash
-  corruption, bad flashing, or adversarial VBIOS
-- **Unprivileged direct trigger:** Unlikely without ability to modify
-  GPU VBIOS
+### Step 5.4: FOLLOW THE CALL CHAIN
+**Record:**
+- **Trigger A:** Platform device remove / module rmmod →
+  `dw_pcie_host_deinit()` → unlocked bus teardown.
+- **Trigger B (concurrent):** Root/admin writes to
+  `/sys/bus/pci/rescan`, `/sys/bus/pci/devices/.../remove`, or per-bus
+  rescan sysfs → `pci_lock_rescan_remove()` → bus mutation.
+- **Userspace reachability:** Sysfs PCI operations require privileges;
+  race is realistic during driver unbind/rebind, hotplug, or admin
+  tooling — not merely theoretical.
 
-**Step 8.3 — Failure mode severity**
-
-Record:
-- `amdgpu_atombios_i2c_init()` / `oem_i2c_init()`: **out-of-bounds
-  write** to `adev->i2c_bus[]` → heap corruption, kernel oops, possible
-  security impact — **CRITICAL/HIGH**
-- All three functions: **out-of-bounds read** past VBIOS mapping, very
-  long loops → probe hang/oops — **HIGH**
-- Undersized table: previously could loop thousands of times instead of
-  zero — **HIGH** (boot hang)
-
-**Step 8.4 — Risk vs benefit**
-
-Record:
-- **Benefit:** Prevents kernel crash/corruption during GPU probe on
-  corrupt VBIOS; aligns with AMD’s own hardening series and similar
-  stable-nominated display fix.
-- **Risk:** Minimal — 15-line helper, caps at existing hardware limit of
-  16 buses.
-- **Ratio:** High benefit, very low risk.
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** In this tree, several controllers already protect removal
+with the lock (`pci-host-common.c`, `pci-aardvark.c`, `pci-mvebu.c`,
+`pcie-mediatek-gen3.c`, `pci-hyperv.c`). DWC and others listed in the
+series do **not** — inconsistent, known-bad pattern.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-**Step 9.1 — Evidence compile**
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:**
+- **Tree:** `v6.18.44` (`stable/linux-6.18.y`, detached HEAD at
+  `2736c32da98b9`)
+- **Buggy code:** **YES** — `pcie-designware-host.c:709-710` calls
+  `pci_stop_root_bus()` / `pci_remove_root_bus()` without locking.
+- **Bug age:** Present since ~2020; not a post-6.18 regression.
 
-**FOR backport:**
-- Real OOB write to `adev->i2c_bus[i]` when `i >= 16`
-- Real OOB read / unbounded loop on corrupt `size`
-- Small, maintainer-reviewed, obviously correct
-- Bug present since 2015 in this tree
-- Same vulnerability class as a related fix already nominated for stable
-  (display GPIO LUT)
-- Applies cleanly to v6.18.44
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** **Clean apply expected** — 2-line addition with no context
+conflicts. File has recent churn but the `dw_pcie_host_deinit()`
+teardown block is stable and matches the patch hunk.
 
-**AGAINST backport:**
-- No user bug report or syzbot reproduction
-- Requires corrupt/malicious VBIOS — uncommon trigger
-- Fix does not validate `size` against total BIOS image length (partial
-  mitigation only)
-- Part of a 4-patch hardening series (though this patch is independent)
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** Probe-side rescan lock fix (`1d59d474e1cb7`) is in-tree.
+Remove-side DWC fix is **not** present. No duplicate fix found.
 
-**Unresolved:** No runtime crash report confirming field failure on
-production systems.
+---
 
-**Step 9.2 — Stable rules checklist**
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-1. Obviously correct and tested? **PASS** — logic is straightforward;
-   reviewed by AMD engineer and maintainer. No runtime test tag.
-2. Fixes a real bug? **PASS** — verified OOB array indexing and
-   unbounded iteration in source.
-3. Important issue? **PASS** — OOB write during driver probe
-   (crash/corruption potential).
-4. Small and contained? **PASS** — 18 lines added, one file, three call
-   sites.
-5. No new features/APIs? **PASS** — defensive bounds only.
-6. Can apply to local tree? **PASS** — buggy code confirmed present;
-   patch not yet applied; clean apply expected.
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** **PCI / DWC host controller drivers** — **IMPORTANT**.
+Affects many ARM/embedded SoC platforms (Tegra, STM32, Kirin, Meson,
+Exynos, R-Car, etc.), not universal but widely deployed.
 
-**Step 9.3 — Exception category**
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** PCI controller code is actively maintained; recent related
+stable-worthy fix (`1d59d474e1cb7`) shows the subsystem maintainers
+treat rescan-lock gaps as real crash bugs.
 
-Record: Not a device-ID/quirk/DT/build/docs exception — standard bug-
-fix/hardening.
+---
 
-**Step 9.4 — Decision rationale**
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-For **this** tree (v6.18.44), the unchecked VBIOS size parsing is a
-long-standing defect that can cause out-of-bounds writes to a kernel
-array during GPU initialization. The fix is minimal, self-contained,
-maintainer-approved, and matches established stable practice for amdgpu
-VBIOS table hardening. The lack of a user report is outweighed by the
-severity of the failure mode and the negligible regression risk.
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** Users of DWC-based PCIe host controllers on platforms using
+`dw_pcie_host_deinit()` — embedded ARM servers/devices, Tegra, various
+SoCs. Config-dependent on `CONFIG_PCIE_DW_HOST` and specific platform
+drivers.
+
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+**Record:**
+- **Trigger:** Concurrent root bus removal (driver unload/remove) with
+  sysfs PCI rescan/remove/hotplug.
+- **Likelihood:** Uncommon but realistic during driver rebinding,
+  development, or admin maintenance.
+- **Unprivileged trigger:** No direct unprivileged sysfs access; race
+  still matters for system stability under privileged operations.
+
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:**
+- **Failure mode:** Use-after-free, NULL pointer dereference, kernel
+  oops/crash during concurrent bus teardown.
+- **Severity:** **CRITICAL** (system crash; potential memory
+  corruption).
+
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Record:**
+- **Benefit:** **High** — prevents crashes on a common PCIe IP block
+  across many platforms; aligns DWC with already-fixed controllers.
+- **Risk:** **Very low** — 2-line, established locking pattern, no
+  API/behavior change beyond proper serialization.
+- **Ratio:** Strong benefit, minimal risk.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: COMPILE THE EVIDENCE
+
+**FOR backporting:**
+- Real race between bus removal and sysfs rescan/remove paths.
+- Documented failure modes (UAF/crash) in commit message; strong
+  precedent in `1d59d474e1cb7`.
+- Tiny, obviously correct fix matching multiple in-tree controllers.
+- Buggy code present in v6.18.44; prerequisites
+  (`pci_lock_rescan_remove`) present.
+- Standalone patch; maintainer-reviewed.
+- Affects widely used DWC PCIe host path on many embedded platforms.
+
+**AGAINST backporting:**
+- No explicit user crash report or syzbot entry for this specific patch.
+- Race requires concurrent privileged sysfs activity (somewhat
+  uncommon).
+- Part of a 9-patch series (though each patch is independent).
+
+**UNRESOLVED:**
+- Full lore.kernel.org review thread (blocked by anti-bot).
+- No independent `Tested-by:` on this specific DWC patch.
+
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — pattern is standard;
+   maintainer SOBs; no test report but fix is trivial and well-
+   precedented.
+2. Fixes a real bug? **PASS** — missing lock on a documented race path.
+3. Important issue? **PASS** — UAF/kernel crash potential
+   (**CRITICAL**).
+4. Small and contained? **PASS** — 2 lines, one function.
+5. No new features or APIs? **PASS** — uses existing lock API only.
+6. Can apply to the local tree? **PASS** — buggy code and API both
+   present; clean apply expected.
+
+### Step 9.3: EXCEPTION CATEGORIES
+**Record:** None (not a quirk/DT/build/docs fix). This is a core
+synchronization bug fix.
+
+### Step 9.4: DECISION RATIONALE
+
+For **linux-6.18.y** (`v6.18.44`), `dw_pcie_host_deinit()` removes the
+root PCI bus without the global rescan/remove lock that sysfs PCI
+operations already use. That is the same class of defect already fixed
+on the probe/add path (`1d59d474e1cb7`) and already handled correctly in
+several other PCI host controller drivers in this tree. The fix is
+minimal, self-contained, and prevents realistic kernel crashes during
+driver teardown on DWC-based platforms.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 2] Diff analysis: verified +18/-6 in `amdgpu_atombios.c`, three
-  call sites, new helper function
-- [Phase 2] Read current `amdgpu_atombios.c` lines 82–175: confirmed
-  unchecked `num_indices` pattern
-- [Phase 2] Read `amdgpu.h`: `i2c_bus[AMDGPU_MAX_I2C_BUS]` with
-  `AMDGPU_MAX_I2C_BUS = 16`
-- [Phase 2] Read `atom.c` `amdgpu_atom_parse_data_header()`: `size` from
-  `CU16(idx)`, no bounds validation
-- [Phase 3] `git blame`: buggy lines from `d38ceaf99ed01` (2015-04-20)
-- [Phase 3] `git show d38ceaf99ed01`: original amdgpu core driver import
-- [Phase 3] `grep amdgpu_atombios_gpio_i2c_num_entries`: not in tree
-  (fix absent)
-- [Phase 3] Verified patch 3/4 is standalone; patches 1–2 are unrelated
-  subsystems (freedesktop.org)
-- [Phase 4] `b4 dig -c a99cd23...`: no lore match
-- [Phase 4] WebFetch freedesktop.org amd-gfx May 2026: confirmed [PATCH
-  3/4] content
-- [Phase 4] Web search: mainline SHA
-  `a99cd231cd924b7160fecb9fb3a94b801522323b`; related display fix
-  `86d2b20` with `Cc: stable`
-- [Phase 5] `grep` callers: `amdgpu_i2c_init` → `amdgpu_device.c:4771`;
-  lookup used in encoder parsing
-- [Phase 5] Read `amdgpu_i2c.c:218–235`: init paths for legacy and
-  Polaris OEM
-- [Phase 5] Read `amdgpu_device.c:4753–4772`: called when `adev->bios &&
-  !adev->is_atom_fw`
-- [Phase 6] `git describe HEAD`: `v6.18.44`; Makefile confirms 6.18.44
-- [Phase 6] Buggy code confirmed at lines 99, 130, 161 in local tree
-- [Phase 6] `ATOM_MAX_SUPPORTED_DEVICE` = 16 (`atombios.h`), matches
-  `AMDGPU_MAX_I2C_BUS`
-- [Phase 7/8] Assessed subsystem criticality and failure modes from
-  verified call paths
-- UNVERIFIED: No end-user crash report for this specific GPIO I2C issue
-- UNVERIFIED: Whether undersized-table underflow has been observed in
-  the field
+- **[Phase 1]** Parsed subject, tags, body; no Fixes/Reported-by;
+  maintainer SOBs present.
+- **[Phase 2]** Confirmed diff: +2 lines wrapping
+  `pci_stop/remove_root_bus` in `dw_pcie_host_deinit()`.
+- **[Phase 3]** `git blame`: buggy calls from `5808d43e7c91b2` (2020);
+  `git log -S`: DWC never had rescan lock.
+- **[Phase 3]** `git merge-base --is-ancestor`: `9d16947b75831` YES,
+  `5808d43e7c91b2` YES.
+- **[Phase 3]** Related fix `1d59d474e1cb7` confirmed in tree with crash
+  stack trace.
+- **[Phase 3]** `git log --grep`: fix not merged in this tree.
+- **[Phase 4]** Read local mbox/cover for series context; patch 2/9,
+  independent patches stated.
+- **[Phase 4]** `b4 dig -c`: failed (commit not in tree); lore fetch
+  blocked.
+- **[Phase 5]** `grep dw_pcie_host_deinit(`: 9 platform driver call
+  sites verified.
+- **[Phase 5]** Read `pci-sysfs.c`: rescan/remove paths use
+  `pci_lock_rescan_remove()`.
+- **[Phase 5]** Read `pci-host-common.c`, `probe.c`: lock pattern and
+  API confirmed.
+- **[Phase 5]** `grep pci_lock_rescan_remove` in
+  `drivers/pci/controller/`: multiple drivers already protected; DWC
+  not.
+- **[Phase 6]** `git describe HEAD`: `v6.18.44-1-g2736c32da98b9`;
+  `Makefile`: 6.18.44.
+- **[Phase 6]** Read `pcie-designware-host.c:703-724`: buggy code
+  confirmed present.
+- **[Phase 8]** Traced `tegra_pcie_dw_remove` →
+  `tegra_pcie_deinit_controller` → `dw_pcie_host_deinit`.
 
-**YES**The background search finished: the **Bound GPIO I2C** fix is
-**not** in this tree (`v6.18.44`). Candice Li’s other amdgpu work is
-present, but `amdgpu_atombios_gpio_i2c_num_entries()` is missing and the
-unchecked `num_indices` logic is still at lines 99, 130, and 161 of
-`amdgpu_atombios.c`.
+**YES**The analysis is complete: **backport this commit to
+linux-6.18.y**.
 
-**Verdict from the analysis:** backport **YES** — small, standalone
-bounds-check fix that prevents OOB writes to `adev->i2c_bus[]` and
-unbounded VBIOS table walks on corrupt GPIO I2C table sizes during GPU
-init.
+`dw_pcie_host_deinit()` in `pcie-designware-host.c` removes the root PCI
+bus without `pci_lock_rescan_remove()`, which can race with sysfs
+rescan/remove and cause UAF or kernel crashes. The fix is two lines,
+matches patterns already used in other PCI host drivers in this tree,
+and applies cleanly to v6.18.44 where the bug is still present.
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 24 +++++++++++++++-----
- 1 file changed, 18 insertions(+), 6 deletions(-)
+**YES**
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-index 763f2b8dcf13a..b8f7e3a18d324 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-@@ -36,6 +36,21 @@
- #include "atombios_encoders.h"
- #include "bif/bif_4_1_d.h"
+ drivers/pci/controller/dwc/pcie-designware-host.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 48e4a887bb1bb..d5c24098c3dd3 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -706,8 +706,10 @@ void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
  
-+/* VBIOS-reported table size is unchecked against the image; cap iterations and
-+ * adev->i2c_bus[] indexing to AMDGPU_MAX_I2C_BUS.
-+ */
-+static int amdgpu_atombios_gpio_i2c_num_entries(uint16_t size)
-+{
-+	u32 bytes;
-+
-+	if (size < sizeof(ATOM_COMMON_TABLE_HEADER))
-+		return 0;
-+
-+	bytes = size - sizeof(ATOM_COMMON_TABLE_HEADER);
-+	return (int)min_t(u32, bytes / sizeof(ATOM_GPIO_I2C_ASSIGMENT),
-+			  AMDGPU_MAX_I2C_BUS);
-+}
-+
- static struct amdgpu_i2c_bus_rec amdgpu_atombios_get_bus_rec_for_i2c_gpio(ATOM_GPIO_I2C_ASSIGMENT *gpio)
- {
- 	struct amdgpu_i2c_bus_rec i2c;
-@@ -96,8 +111,7 @@ struct amdgpu_i2c_bus_rec amdgpu_atombios_lookup_i2c_gpio(struct amdgpu_device *
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 	dwc_pcie_debugfs_deinit(pci);
  
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
++	pci_lock_rescan_remove();
+ 	pci_stop_root_bus(pp->bridge->bus);
+ 	pci_remove_root_bus(pp->bridge->bus);
++	pci_unlock_rescan_remove();
  
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
-@@ -127,8 +141,7 @@ void amdgpu_atombios_i2c_init(struct amdgpu_device *adev)
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 	dw_pcie_stop_link(pci);
  
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
- 
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
-@@ -158,8 +171,7 @@ void amdgpu_atombios_oem_i2c_init(struct amdgpu_device *adev, u8 i2c_id)
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
- 
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
- 
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
 -- 
 2.53.0
 
