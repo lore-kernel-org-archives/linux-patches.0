@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A699459AE1;
-	Mon, 31 Aug 2026 13:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CDD45D1BA;
+	Mon, 31 Aug 2026 13:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183284; cv=none; b=ZqDIGO3xJozC4ve3VvTeFX1aK3m+gHRIF2ppiWPK6GJGuFVaIGtwOSVa3feznuKnmU009y+s5BQjwMjrHFSdGj44+PmvJSz484w7P/YGbKQiD18B/i4cyWP3BpDHNtQzlE07SIJHqUDMo1jZ+OySKs0Lka/nr7lul+w2PMEMsMQ=
+	t=1788183286; cv=none; b=mhYMVJHJv2Y4VN7doVKsyefmx7P/XLb70Zhm5D9jXmLds/ZtQ5XoIbqCZMEaHLWT6I355J9TSBw0jEqBYNRg99XBPXmeT5WhAmriV89qd9+0pAiJC24k6MXbT6wbcaI2NmQhhvlqy9hKdlKowegQDplmITgC7lIuhZsIPH+uvII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183284; c=relaxed/simple;
-	bh=PH2X3SFn9NSEbVrnM93NioM31uEVwUeY3PxrAvoIU5g=;
+	s=arc-20240116; t=1788183286; c=relaxed/simple;
+	bh=hyEMb6Pd+n28yzIyR/ILAMDzupK47uN1KNRKnpySPgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OiYyGLRTwAm94SohFS3j5+ujcAtI2HWYNw2yTZJdYIdmBogOZ9DZoBIN0J3m6ixi2vTofAFPYJNWMJ2b3Wyy+HJIYvFOTNcHajQjr0a7qKH6msWImSfFY/zBYDx0QqPS13JMXFL2M9LWH0EQoc22nL/4ze+aIzi7kgKBv3Z2UY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RvoIgE+O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jLl7CVwIC3mf1Fj2Fidaxkg9yXuSm8chdZ8XHTm8+lkWsZuR86uG2URXK2be+r2NEY2fB5pLMelmLfmudjD48cTkvAAKBJk21Azpjmnpa1jZwGftBcXdKzyn6HBPDd59Od3u4n6WVEzVpy4mELjDbkk4JLrSEXClbaOIF0ktxSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NvMRC+eR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RvoIgE+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE191F000E9;
-	Mon, 31 Aug 2026 13:34:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NvMRC+eR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E681F00A3D;
+	Mon, 31 Aug 2026 13:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183282;
-	bh=mZkxmumgWxt+25lmmE7hMDBxeMFAURVsSHQbXMIjoFo=;
+	s=k20260515; t=1788183283;
+	bh=ts42t936biBKN+Jn2RLMye+YeFon94fudtO7pT68Q98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RvoIgE+OrctmpA+8ZXMVBVnMNE7Zg47gm2VAMVsdfB+XajESy4oXH9yBKaPkJZYvV
-	 a9ci1TYvvchG0Ipxjevn1POoKruEju3mr/gz7Iwi2TuXJH5RCrCfbOKMw5sli+vl9x
-	 9wvEHLQJx8ow5YI+e3Nnz5/JXbPjeeWOBB9jA2cpq4phJ7+fA/cpwoMqli9BGbX2sT
-	 TnUH1XuHb2FzODRgcfhVW3Cha2Ve2Quh4sYfD0/h9ioOJDGQNdj4Mql55lbJ86zZBW
-	 It9tUG7u7+bfW4vV4B+VooweC/FKQINPb3PfRvKHyv83XIAGxg5gefKZwl1fFPAXj7
-	 BFWNGzBJ8mHxg==
+	b=NvMRC+eR0Z+myBTruNs6T+PWsmqTRkErWbmc+RUXdRxH0AeZKSs6hkreTgBh6aOG7
+	 uGNj3yTML6qRfl6dOrr+u8czAL+D0R4akz5AkC/tho6hyvjIHtT5dy9mz8Pm3VvaOK
+	 svnl6cmye9cSRs8IWaA7h/CMwV8g147jOpf7Ztx5noJrWQwPoA0Ahy9N5hiTe1csJx
+	 JgrpFW0V3INE7aDchh7nBWmfqychTlkL0Ikf0lGh3LTcq4nVLnFrVMlo02We/N1UVa
+	 YKr8DzfA5fhLxPeUsThlv4hJ0l8bz46msMjIzu4K+hjUdGkJxCCOv8nnJyBoOoUrkC
+	 X0cU+MEcZjo3Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andreas Larsson <andreas@gaisler.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	sparclinux@vger.kernel.org,
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] sparc: Disable compat support with LLD
-Date: Mon, 31 Aug 2026 09:21:22 -0400
-Message-ID: <20260831133314.4125787-54-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: use connection ClientGUID for lease lookup
+Date: Mon, 31 Aug 2026 09:21:23 -0400
+Message-ID: <20260831133314.4125787-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,378 +53,509 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 852fed2e8bfe195351fb0078ba7245d41154e7a5 ]
+[ Upstream commit fa111daae1a02dbff5693dfc12f368bccd9eb5f4 ]
 
-An LLVM=1 sparc64 allmodconfig enables COMPAT and then tries to
-build the 32-bit vDSO. That path cannot be linked with ld.lld:
+MS-SMB2 defines the lease table lookup key as Connection.ClientGuid.
+Use the connection ClientGUID consistently when checking for same-client
+leases and duplicate lease keys.
 
-  ld.lld: error: unknown emulation: elf32_sparc
+Also preserve directory and parent lease metadata when copying an existing
+lease state to a new open.
 
-ld.lld does not support the 32-bit SPARC ELF emulation used for
-the compat vDSO, so keep COMPAT disabled when LLD is the linker.
-This avoids selecting an unsupported build path while leaving the
-existing GNU ld configuration unchanged.
-
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20260508000834.834824-1-rosenp@gmail.com
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `sparc: Disable compat support with LLD`
+# Stable Backport Analysis: `ksmbd: use connection ClientGUID for lease
+lookup`
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
+**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, detached HEAD at
+`2736c32da98b9`)
+**Commit evaluated:** `41fd6f97cf085` (upstream
+`fa111daae1a02dbff5693dfc12f368bccd9eb5f4`) — **not yet present in this
+tree**
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[sparc] [disable] Disable compat support with LLD` —
-Kconfig change to prevent an unsupported LLVM/LLD build path on sparc64.
+### Step 1.1: Subject line
+**Record:** `[ksmbd]` `[use]` — Use the connection `ClientGUID`
+consistently for SMB2 lease table lookups and duplicate-lease-key
+checks, and preserve directory/parent lease metadata when copying lease
+state to a new open.
 
-### Step 1.2: Parse All Commit Message Tags
+### Step 1.2: Tags
 **Record:**
-- **Acked-by:** Nathan Chancellor `<nathan@kernel.org>` (LLVM/toolchain
-  maintainer)
-- **Reviewed-by:** Andreas Larsson `<andreas@gaisler.com>` (sparc
-  maintainer)
-- **Link:**
-  https://lore.kernel.org/r/20260508000834.834824-1-rosenp@gmail.com
-- **Signed-off-by:** Rosen Penev `<rosenp@gmail.com>` (author)
-- **Signed-off-by:** Andreas Larsson (committer/maintainer)
-- **Assisted-by:** Codex:GPT-5.5
-- No Fixes:, Reported-by:, Tested-by:, or Cc: stable tags
-- Notable: dual maintainer endorsement (toolchain + sparc)
+- **Fixes:** — none
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:** — none
+- **Cc: stable:** — none (expected for manual review)
+- **Signed-off-by:** Namjae Jeon `<linkinjeon@kernel.org>`, Steve French
+  `<stfrench@microsoft.com>` (ignore pipeline Sasha Levin SOB)
 
-### Step 1.3: Analyze Commit Body
+Notable: Steve French (ksmbd/SMB maintainer) signed off. No
+syzbot/fuzzer tags.
+
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `LLVM=1 sparc64 allmodconfig` enables `CONFIG_COMPAT`
-  (default y), which builds the 32-bit compat vDSO using `elf32_sparc`
-  linker emulation.
-- **Symptom:** Build failure: `ld.lld: error: unknown emulation:
-  elf32_sparc`
-- **Root cause:** LLD does not support 32-bit SPARC ELF emulation; GNU
-  ld path is unaffected.
-- **Fix approach:** Add `depends on !LD_IS_LLD` to `CONFIG_COMPAT` so
-  LLD builds skip the unsupported vDSO32 path.
-- No kernel version range specified in the message.
+- **Bug:** ksmbd used `sess->ClientGUID` for lease table lookup and
+  same-client lease checks, but MS-SMB2 defines the lease table key as
+  `Connection.ClientGuid`. Lease tables are populated with
+  `conn->ClientGUID`.
+- **Symptom:** Incorrect lease duplicate detection; failure to recognize
+  same-client leases; incomplete lease state when re-opening with an
+  existing lease (`copy_lease()` omitted `is_dir` and
+  `parent_lease_key`; `flags` assignment clobbered existing flags).
+- **Root cause:** Inconsistent identifier choice (session vs connection)
+  and incomplete field copy in `copy_lease()`.
 
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not disguised — this is an explicit **build fix**. No hidden
-runtime bug; the failure is at link time during kernel build when LLD is
-the linker.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes. Although the subject says “use” rather than “fix,” this
+is a protocol-correctness bug fix. The `copy_lease()` and `flags |=`
+changes fix functional directory-lease and break-in-progress handling
+bugs.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory the Changes
+### Step 2.1: Inventory
 **Record:**
-- **Files:** `arch/sparc/Kconfig` only (+1 line)
-- **Scope:** Single-file, surgical Kconfig fix
-- **Function modified:** N/A (Kconfig symbol `COMPAT`)
+| File | Changes |
+|------|---------|
+| `fs/smb/server/oplock.c` | +11 / -9 |
+| `fs/smb/server/oplock.h` | +1 / -1 |
+| `fs/smb/server/smb2pdu.c` | +1 / -1 |
 
-### Step 2.2: Code Flow Change
+**Functions modified:** `same_client_has_lease()`,
+`find_same_lease_key()`, `copy_lease()`, `smb_grant_oplock()`
+**Scope:** Single-subsystem, surgical fix (3 files, ~20 lines).
+
+### Step 2.2: Code flow changes
 **Record:**
-- **Before:** `CONFIG_COMPAT` depends only on `SPARC64`, defaults to
-  `y`. With `LLVM=1` + LLD, COMPAT stays enabled →
-  `arch/sparc/vdso/Makefile` builds `vdso-image-32.o` using `-m
-  elf32_sparc` → LLD fails.
-- **After:** `CONFIG_COMPAT` additionally requires `!LD_IS_LLD`. LLD
-  builds disable COMPAT and skip vdso32; GNU ld builds unchanged.
+- **`find_same_lease_key()`:** API changes from `struct ksmbd_session
+  *sess` to `struct ksmbd_conn *conn`; table lookup and
+  `compare_guid_key()` now use `conn->ClientGUID` instead of
+  `sess->ClientGUID`.
+- **`smb_grant_oplock()`:** `same_client_has_lease()` called with
+  `work->conn->ClientGUID`; removed unused `sess` local.
+- **`copy_lease()`:** Copies `is_dir` and `parent_lease_key`; `flags`
+  set with `|=` instead of `=` when break is in progress.
+- **`smb2_open()`:** Passes `conn` instead of `sess` to
+  `find_same_lease_key()`.
 
-### Step 2.3: Bug Mechanism
+### Step 2.3: Bug mechanism
 **Record:**
-- **Category:** Build fix / toolchain incompatibility (Kconfig guard)
-- **Mechanism:** Kconfig enables a build target (`vdso32.so` with
-  `elf32_sparc`) that the selected linker cannot handle. The fix gates
-  COMPAT on linker capability.
+- **Category:** Logic / protocol correctness + incomplete state copy.
+- **Mechanism:**
+  1. Lease tables are keyed by `opinfo->conn->ClientGUID`
+     (`alloc_lease_table()`, `add_lease_global_list()`,
+     `lookup_lease_in_table()`, `destroy_lease_table()`), but
+     `find_same_lease_key()` and `same_client_has_lease()` used
+     `sess->ClientGUID`. Per MS-SMB2 and the rest of ksmbd, the current
+     **connection’s** GUID is the correct lookup key.
+  2. `copy_lease()` did not copy `is_dir` or `parent_lease_key`,
+     breaking v2 directory lease parent-key logic (used in
+     `smb_send_parent_lease_break_noti()` and lease-break downgrade at
+     line 928).
+  3. `opinfo->o_lease->flags = SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE`
+     overwrote all flags; `|=` preserves other flags.
 
-Relevant existing code in this tree:
-
-```64:64:arch/sparc/vdso/Makefile
-VDSO_LDFLAGS_vdso32.lds = -m elf32_sparc -soname linux-gate.so.1
-```
-
-```470:476:arch/sparc/Kconfig
-config COMPAT
-        bool
-        depends on SPARC64
-        default y
-        select HAVE_UID16
-        select ARCH_WANT_OLD_COMPAT_IPC
-        select COMPAT_OLD_SIGACTION
-```
-
-### Step 2.4: Fix Quality Assessment
-**Record:** Obviously correct, minimal (1 line), matches established
-pattern on s390. **Regression risk:** Low — only affects LLVM+LLD
-sparc64 builds; those already fail to build. Trade-off: LLD builds lose
-32-bit compat support, which is unavoidable until LLD gains
-`elf32_sparc` support.
+### Step 2.4: Fix quality
+**Record:** Obviously correct — aligns all lease paths with MS-SMB2 and
+with existing helpers (`lookup_lease_in_table()`, `compare_guid_key()`).
+Minimal, no API surface visible to userspace. Low regression risk.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame Changed Lines
-**Record:** `CONFIG COMPAT` on sparc dates to Sam Ravnborg, 2008
-(`26b4c912185a8`). The missing `!LD_IS_LLD` guard has been absent since
-COMPAT was introduced. `CONFIG_LD_IS_LLD` was added in `b744b43f79cc7`
-(kbuild, May 2020) and is present in this tree.
+### Step 3.1: Blame
+**Record:** `sess->ClientGUID` in `find_same_lease_key()` introduced in
+`af7c39d971e43` (Jul 2022, “fix racy issue while destroying session on
+multichannel”). Lease tables have used `conn->ClientGUID` since 2021
+(`e2f34481b24db`). The inconsistency has been present since multichannel
+work. `is_dir`/`parent_lease_key` added in `d47d9886aeef7` (directory v2
+leases); `copy_lease()` never copied them.
 
-### Step 3.2: Follow Fixes: Tag
-**Record:** No `Fixes:` tag. N/A.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: File History for Related Changes
-**Record:** Recent sparc toolchain work in this tree includes
-`05457d96175d2` ("sparc/module: Add R_SPARC_UA64 relocation handling" —
-needed for LLVM's IAS, committed Sep 2025). This shows active LLVM sparc
-build enablement. The candidate fix is **standalone** (not part of a
-multi-patch series).
+### Step 3.3: Related file history
+**Record:** Recent `oplock.c` fixes in this tree are UAF/NULL-deref
+hardening (`35d3d6ff2bc1e`, `cd5c1b75d2f45`, etc.). This commit is
+separate protocol/correctness work. Later related commit `5198f8b2d0b1c`
+(“share SMB2 lease state across opens”) is a larger refactor **not** in
+this tree and **not** required for this patch.
 
-### Step 3.4: Author's Other Commits
-**Record:** Rosen Penev is an active contributor (ata, gpio, net
-drivers) but not the sparc maintainer. Andreas Larsson (sparc
-maintainer, also committed the LLVM relocation fix) reviewed and signed
-off.
+### Step 3.4: Author context
+**Record:** Namjae Jeon is ksmbd maintainer. Steve French signed off.
 
-### Step 3.5: Prerequisite Commits
-**Record:** Requires only `CONFIG_LD_IS_LLD` from `init/Kconfig`, which
-exists in 6.18.44. No other dependencies. Applies cleanly as a one-line
-addition.
+### Step 3.5: Dependencies
+**Record:** Standalone. Cherry-pick to current HEAD applies cleanly
+(auto-merge, no conflicts). Does not depend on the later “share SMB2
+lease state across opens” refactor.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Patch Discussion
-**Record:** `b4 dig` with message-id failed (wrong invocation syntax).
-Lore.kernel.org fetch blocked by anti-bot protection. Could not read
-thread discussion directly.
+### Step 4.1: Original discussion
+**Record:** `b4 dig -c 41fd6f97cf085` →
+`https://patch.msgid.link/20260618141739.9029-2-linkinjeon@kernel.org`
+(patch 2/N in a series). Lore fetch blocked by bot protection; full
+thread not readable. `b4 dig -a` returned no additional revisions.
 
 ### Step 4.2: Reviewers
-**Record:** Acked-by Nathan Chancellor (LLVM/kbuild) and Reviewed-by
-Andreas Larsson (sparc maintainer) — appropriate reviewers for this
-change.
+**Record:** `b4 dig -w` returned the same patch link only; maintainer CC
+list not retrieved.
 
-### Step 4.3: Bug Report
-**Record:** No external bug report or syzbot link. Failure is
-reproducible from the commit message's described build command (`LLVM=1
-sparc64 allmodconfig`).
+### Step 4.3: Bug reports
+**Record:** No `Reported-by:` or `Link:` tags. Web search found this
+commit listed in Namjae Jeon’s June 2026 ksmbd git-pull, which describes
+fixes for **smbtorture** protocol divergence in SMB2/3 lease handling.
+That pull context is secondary evidence only (not the commit message
+itself).
 
-### Step 4.4: Related Patches/Series
-**Record:** Standalone 1-patch fix. Direct precedent: s390 uses the same
-pattern:
+### Step 4.4: Series context
+**Record:** Part of a larger ksmbd lease rework series. This specific
+commit is self-contained and applies independently to the current 6.18.y
+code.
 
-```507:514:arch/s390/Kconfig
-config COMPAT
-        def_bool n
-        prompt "Kernel support for 31 bit emulation"
-        ...
-        depends on MULTIUSER
-        depends on !CC_IS_CLANG && !LD_IS_LLD
-```
-
-### Step 4.5: Stable Mailing List History
-**Record:** Could not search lore (blocked). No evidence of prior stable
-discussion found.
+### Step 4.5: Stable list
+**Record:** Not searched (lore blocked). No stable-list discussion
+found.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** Kconfig symbol `COMPAT` in `arch/sparc/Kconfig`; build
-impact via `arch/sparc/vdso/Makefile` line 14: `obj-$(CONFIG_COMPAT) +=
-vdso-image-32.o`
+### Step 5.1: Key functions
+**Record:** `find_same_lease_key()`, `same_client_has_lease()`,
+`copy_lease()`, `smb_grant_oplock()`, `smb2_open()`.
 
-### Step 5.2: Callers / Impact Surface
-**Record:** COMPAT enables 32-bit userspace syscall emulation on sparc64
-(sys_sparc32.c, signal32.c, vdso32, etc.). Only disabled when
-`LD_IS_LLD` is true — a build-time Kconfig decision, not a runtime code
-path.
+### Step 5.2: Callers
+**Record:**
+- `find_same_lease_key()` — called from `smb2_open()` during SMB2 CREATE
+  with lease context (userspace-triggered file open).
+- `same_client_has_lease()` — called from `smb_grant_oplock()` on lease
+  grant path.
+- Both are reachable from normal SMB client file-open operations.
 
 ### Step 5.3: Callees
-**Record:** When COMPAT=y, vdso build invokes `$(LD)` with `-m
-elf32_sparc`. With LLD, this fails at link time.
+**Record:** `compare_guid_key()` (compares against
+`opinfo->conn->ClientGUID`), lease table list traversal, `opinfo_put()`.
 
 ### Step 5.4: Reachability
-**Record:** Triggered by any developer/CI building `LLVM=1` sparc64
-kernel with LLD (default with LLVM=1). Not userspace-triggerable at
-runtime; build-time only.
+**Record:** Fully reachable from SMB2 CREATE with
+`SMB2_OPLOCK_LEVEL_LEASE` when `CONFIG_SMB_SERVER` is enabled. Common
+path for Windows/macOS clients using SMB2/3 leasing.
 
-### Step 5.5: Similar Patterns
-**Record:** `arch/arm/mm/Kconfig` (`CPU_BIG_ENDIAN depends on
-!LD_IS_LLD`), `arch/arm/Kconfig.platforms`, and `arch/s390/Kconfig`
-(`COMPAT depends on !CC_IS_CLANG && !LD_IS_LLD`) — established pattern
-for gating features LLD cannot support.
-
----
-
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
-
-### Step 6.1: Does the Buggy Code Exist?
-**Record:** **YES.** `arch/sparc/Kconfig` lacks `depends on !LD_IS_LLD`
-on COMPAT. vdso32 build with `elf32_sparc` is present.
-`CONFIG_LD_IS_LLD` exists in `init/Kconfig`. The fix commit itself is
-**not yet** in this tree.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply** — single line insertion after `depends on
-SPARC64`. No conflicting changes in recent `arch/sparc/Kconfig` history.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent fix found (`git log -S "depends on !LD_IS_LLD"
--- arch/sparc/Kconfig` returned nothing). s390's analogous guard exists
-but sparc does not.
+### Step 5.5: Similar patterns
+**Record:** `lookup_lease_in_table()`, `destroy_lease_table()`,
+`add_lease_global_list()`, and `smb_send_parent_lease_break_noti()`
+already use `conn->ClientGUID`. Only `find_same_lease_key()` and
+`same_client_has_lease()` call sites were wrong.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
 
-### Step 7.1: Subsystem Criticality
-**Record:** `arch/sparc` — **PERIPHERAL** architecture (niche hardware),
-but kbuild/toolchain interaction affects kernel builders.
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** Current tree at
+`fs/smb/server/oplock.c:1019,1035,1249` and `smb2pdu.c:3515` use
+`sess->ClientGUID`. `copy_lease()` at lines 1055–1068 omits `is_dir` and
+`parent_lease_key`.
 
-### Step 7.2: Subsystem Activity
-**Record:** Active LLVM/toolchain work on sparc in this tree
-(R_SPARC_UA64 relocation, Sep 2025), indicating LLVM sparc builds are a
-real and growing concern.
+### Step 6.2: Backport complications
+**Record:** Clean apply verified via test cherry-pick. No conflicts.
+
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent fix in this tree. Upstream commit `fa111daa`
+is not an ancestor of HEAD.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 8.1: Who Is Affected
-**Record:** **Config-specific** — sparc64 kernel builders using `LLVM=1`
-with LLD. Not general runtime users. Relevant to CI, distro builders,
-and developers adopting LLVM toolchains on SPARC.
+### Step 7.1: Subsystem
+**Record:** `fs/smb/server/` (ksmbd in-kernel SMB server).
+**Criticality:** IMPORTANT for deployments using `CONFIG_SMB_SERVER`;
+not core kernel path for all users.
 
-### Step 8.2: Trigger Conditions
-**Record:** `LLVM=1` + sparc64 + LLD linker + config that enables COMPAT
-(default y on sparc64). Reproducible on `allmodconfig`. Not timing-
-dependent.
+### Step 7.2: Activity
+**Record:** Actively maintained — multiple ksmbd stable fixes already in
+6.18.y (UAF, NULL-deref, durable-handle fixes).
 
-### Step 8.3: Failure Mode Severity
-**Record:** **Build failure** (hard error at link stage) — severity
-**MEDIUM** for affected builders (cannot complete kernel build), **LOW**
-for runtime/production users (no oops, corruption, or security issue).
+---
 
-### Step 8.4: Risk-Benefit Ratio
+## PHASE 8: IMPACT AND RISK
+
+### Step 8.1: Who is affected
+**Record:** Users of ksmbd (`CONFIG_SMB_SERVER`) with SMB2/3 leasing
+enabled — typically Samba-alternative NAS/file-server deployments
+serving Windows/macOS clients.
+
+### Step 8.2: Trigger conditions
 **Record:**
-- **Benefit:** Unblocks LLVM+LLD sparc64 kernel builds; aligns with
-  active LLVM enablement work in tree; follows s390 precedent.
-- **Risk:** Very low — 1-line Kconfig guard; only changes behavior for
-  builds that already fail.
-- **Ratio:** Favorable for backport as a build fix.
+- Any SMB2 CREATE with a lease context (common for modern Windows
+  clients).
+- Directory v2 leases with parent lease keys (second open of same file
+  from same client).
+- Scenarios where connection-level and session-level GUID usage must
+  match MS-SMB2 (multichannel, durable reconnect contexts).
+
+### Step 8.3: Failure mode severity
+**Record:**
+- Incorrect duplicate lease-key detection → spurious `-EINVAL` opens or
+  missed duplicate-key validation.
+- Missing `is_dir`/`parent_lease_key` on copy → wrong parent lease break
+  behavior for directory leases.
+- Flag clobber → incorrect lease break-in-progress reporting.
+- **Severity: MEDIUM-HIGH** — not a kernel oops, but SMB lease errors
+  affect client caching coherency; incorrect lease state can lead to
+  clients holding stale cached data (coherency/correctness issue for
+  file-server workloads).
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** HIGH for ksmbd + leasing users — protocol compliance,
+  smbtorture-aligned behavior, directory lease correctness.
+- **Risk:** VERY LOW — ~20 lines, no new APIs, matches existing code
+  patterns.
+- **Ratio:** Strong benefit, minimal risk.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Explicit build fix — listed in `Documentation/process/stable-kernel-
-  rules.rst` as valid stable material
-- Reproducible, documented failure (`elf32_sparc` unsupported by LLD)
-- 1-line, obviously correct, maintainer-reviewed
-- Direct precedent on s390 (`COMPAT depends on !LD_IS_LLD`)
-- Bug exists in 6.18.44; applies cleanly
-- LLVM sparc support actively being developed in this tree
+- Real protocol bug: MS-SMB2 lease table key is `Connection.ClientGuid`;
+  code was inconsistent.
+- Incomplete `copy_lease()` breaks directory v2 lease metadata on re-
+  open.
+- `flags |=` fixes flag clobbering during break-in-progress.
+- Small, surgical, applies cleanly to 6.18.44.
+- Maintainer-signed (Steve French).
+- Listed in ksmbd git-pull as part of smbtorture protocol divergence
+  fixes.
 
 **AGAINST backport:**
-- Very niche audience (sparc64 + LLVM + LLD)
-- No runtime user impact — only affects kernel builders
-- LLD builds lose 32-bit compat (acceptable workaround)
+- Only affects `CONFIG_SMB_SERVER` users (not universal).
+- No crash/oops/syzbot report in commit message.
+- Part of a larger lease rework series (but this patch is standalone).
 
-**Unresolved:**
-- Full lore.kernel.org review thread (blocked by anti-bot)
-- Whether any distro has filed a stable request
+**UNRESOLVED:**
+- Full lore review thread (bot-blocked).
+- Explicit smbtorture test name not in commit message (only in git-pull
+  summary).
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — Kconfig guard;
-   Acked/Reviewed by toolchain and sparc maintainers.
-2. Fixes a real bug affecting users? **PASS** — real build failure for
-   LLVM sparc64 builders.
-3. Important issue? **PASS (MEDIUM)** — build error, not
-   crash/corruption/security.
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features or APIs? **PASS** — Kconfig dependency only.
-6. Can apply to local tree? **PASS** — clean one-line apply to 6.18.44.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — aligns with MS-SMB2,
+   existing ksmbd patterns, maintainer SOB; smbtorture context from git-
+   pull.
+2. Fixes a real bug? **PASS** — protocol divergence and incomplete lease
+   state copy.
+3. Important issue? **PASS** — MEDIUM-HIGH: SMB lease/coherency
+   correctness for file-server users.
+4. Small and contained? **PASS** — 3 files, ~20 lines.
+5. No new features/APIs? **PASS** — internal parameter type change only.
+6. Can apply to local tree? **PASS** — verified clean cherry-pick.
 
-### Step 9.3: Exception Categories
-**Record:** **Build fix** — explicitly qualifies under stable kernel
-rules.
+### Step 9.3: Exception category
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+protocol-correctness bug fix.
 
-### Step 9.4: Decision Rationale
+### Step 9.4: Problem and decision rationale
 
-This commit fixes a reproducible build failure when compiling a sparc64
-kernel with `LLVM=1` and LLD. The failure occurs because `CONFIG_COMPAT`
-(default y) triggers building the 32-bit vDSO with `elf32_sparc`
-emulation, which LLD does not support. The fix is a one-line Kconfig
-guard matching an established pattern on s390 and arm.
+This commit fixes ksmbd SMB2/3 lease handling to use the connection
+`ClientGUID` (per MS-SMB2) instead of the session `ClientGUID` when
+looking up lease tables and checking duplicate lease keys. The lease
+infrastructure already keys tables by `conn->ClientGUID`; using
+`sess->ClientGUID` was internally inconsistent and could cause wrong
+lease lookups. The `copy_lease()` additions fix directory lease metadata
+loss on second opens, and the `flags |=` change prevents overwriting
+other lease flags during break-in-progress.
 
-While the affected audience is small (sparc64 LLVM builders), stable
-kernel rules explicitly include build errors as backport-worthy, and
-LLVM toolchain adoption on sparc is actively progressing in this 6.18.y
-tree. The fix is minimal, reviewed by both the sparc and LLVM
-maintainers, and carries negligible regression risk.
+For stable 6.18.y users running ksmbd with SMB2/3 leasing, this is a
+worthwhile fix: small, low-risk, and addresses real client-visible lease
+correctness issues.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body; identified as build-fix with
-  maintainer review
-- [Phase 2] Confirmed 1-line diff in `arch/sparc/Kconfig`; verified
-  `elf32_sparc` in `arch/sparc/vdso/Makefile:64` and COMPAT→vdso32
-  linkage at `Makefile:14`
-- [Phase 3] `git describe HEAD`: v6.18.44; `git blame` COMPAT lines to
-  2008; `CONFIG_LD_IS_LLD` present since b744b43f79cc7 (2020)
-- [Phase 3] Related commit `05457d96175d2` (LLVM R_SPARC_UA64) present
-  in tree, confirming active LLVM sparc work
-- [Phase 3] `git log -S "depends on !LD_IS_LLD" -- arch/sparc/Kconfig`:
-  no results — fix not present
-- [Phase 4] `b4 dig` with message-id: failed (syntax error);
-  lore.kernel.org: blocked by anti-bot
-- [Phase 4] Verified s390 precedent at `arch/s390/Kconfig:514` (`depends
-  on !CC_IS_CLANG && !LD_IS_LLD`)
-- [Phase 5] Traced COMPAT → vdso32 build path via Makefile and Kconfig
-- [Phase 6] Confirmed buggy Kconfig state in 6.18.44; fix not yet
-  applied; clean apply expected
-- [Phase 8] Assessed as build-time failure, MEDIUM severity for
-  builders, LOW runtime risk
-- UNVERIFIED: Full mailing list review thread content (lore blocked)
-- UNVERIFIED: Whether commit has landed in mainline (evaluated as
-  candidate for this 6.18.y tree)
+- **[Phase 1]** `git show 41fd6f97cf085 --format=fuller`: parsed
+  subject, body, tags (Namjae Jeon, Steve French SOBs only).
+- **[Phase 2]** `git show 41fd6f97cf085 -p`: confirmed 3-file diff,
+  function-level changes.
+- **[Phase 2]** Read `oplock.c` lines 91, 489, 984, 1019, 1035,
+  1055–1068, 1077, 1130, 1249, 1820; `smb2pdu.c` line 3515;
+  `user_session.c` line 216.
+- **[Phase 3]** `git describe HEAD`: v6.18.44. `git blame -L 1018,1036
+  fs/smb/server/oplock.c`: `sess->ClientGUID` from `af7c39d971e43`
+  (2022).
+- **[Phase 3]** `git show af7c39d971e43`: multichannel session fix that
+  introduced `sess->ClientGUID` usage.
+- **[Phase 3]** `git log -1 -S"parent_lease_key"`: `d47d9886aeef7` added
+  directory lease parent keys.
+- **[Phase 3]** `git merge-base --is-ancestor fa111daa HEAD`: exit 1 —
+  fix not in tree.
+- **[Phase 3]** `git merge-base --is-ancestor 5198f8b2 HEAD`: exit 1 —
+  dependent refactor not in tree.
+- **[Phase 3]** Cherry-pick test: `git cherry-pick --no-commit
+  41fd6f97cf085` — clean auto-merge on 3 files.
+- **[Phase 4]** `b4 dig -c 41fd6f97cf085`: lore URL
+  `20260618141739.9029-2-linkinjeon@kernel.org`.
+- **[Phase 4]** Web search: found commit in ksmbd git-pull listing
+  smbtorture protocol fixes.
+- **[Phase 4]** Lore/patch.msgid.link fetch: blocked by bot protection —
+  thread content UNVERIFIED.
+- **[Phase 5]** `grep find_same_lease_key`: single caller in
+  `smb2pdu.c`; `same_client_has_lease` called from `smb_grant_oplock()`.
+- **[Phase 5]** Verified `lookup_lease_in_table()`,
+  `compare_guid_key()`, `add_lease_global_list()` use
+  `conn->ClientGUID`.
+- **[Phase 6]** `grep sess->ClientGUID fs/smb/server/oplock.c`: buggy
+  lines present at 1019, 1035, 1249.
+- **[Phase 6]** `copy_lease()` in tree lacks `is_dir`/`parent_lease_key`
+  copy.
+- **[Phase 7]** `grep CONFIG_SMB_SERVER fs/smb/Kconfig`: ksmbd is
+  `CONFIG_SMB_SERVER`.
+- **[Phase 8]** Failure mode assessed from code paths: lease
+  lookup/coherency bugs, not kernel crash.
 
-**YES**
+**YES**These background lookups are done. Summary:
 
- arch/sparc/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+- **Commit identified:** `41fd6f97cf085` (upstream
+  `fa111daae1a02dbff5693dfc12f368bccd9eb5f4`) — `ksmbd: use connection
+  ClientGUID for lease lookup`
+- **Not in this tree:** Neither that commit nor the related refactor
+  `5198f8b2d0b1c` (“share SMB2 lease state across opens”) is in
+  `v6.18.44`
+- **`all-next`:** The ClientGUID commit wasn’t found there; recent
+  `oplock.c` work on that branch is separate UAF/NULL-deref hardening
+- **Standalone backport:** Cherry-pick to current HEAD applies cleanly;
+  it does not require the later “share SMB2 lease state” refactor
 
-diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
-index a630d373e6453..454782ac54b26 100644
---- a/arch/sparc/Kconfig
-+++ b/arch/sparc/Kconfig
-@@ -470,6 +470,7 @@ endmenu
- config COMPAT
- 	bool
- 	depends on SPARC64
-+	depends on !LD_IS_LLD
- 	default y
- 	select HAVE_UID16
- 	select ARCH_WANT_OLD_COMPAT_IPC
+**Verdict from the full analysis: YES** — protocol-correctness fix for
+ksmbd SMB2/3 lease handling, small and low-risk for 6.18.y.
+
+ fs/smb/server/oplock.c  | 16 +++++++++-------
+ fs/smb/server/oplock.h  |  2 +-
+ fs/smb/server/smb2pdu.c |  2 +-
+ 3 files changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index c12b2b2857667..b6705a07c6ebe 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -520,7 +520,7 @@ static inline int compare_guid_key(struct oplock_info *opinfo,
+  * Return:      oplock(lease) object on success, otherwise NULL
+  */
+ static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
+-						 char *client_guid,
++						 const char *client_guid,
+ 						 struct lease_ctx_info *lctx)
+ {
+ 	int ret;
+@@ -1014,7 +1014,7 @@ void destroy_lease_table(struct ksmbd_conn *conn)
+ 	write_unlock(&lease_list_lock);
+ }
+ 
+-int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
++int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
+ 			struct lease_ctx_info *lctx)
+ {
+ 	struct oplock_info *opinfo;
+@@ -1031,7 +1031,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
+ 	}
+ 
+ 	list_for_each_entry(lb, &lease_table_list, l_entry) {
+-		if (!memcmp(lb->client_guid, sess->ClientGUID,
++		if (!memcmp(lb->client_guid, conn->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE))
+ 			goto found;
+ 	}
+@@ -1047,7 +1047,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
+ 		rcu_read_unlock();
+ 		if (opinfo->o_fp->f_ci == ci)
+ 			goto op_next;
+-		err = compare_guid_key(opinfo, sess->ClientGUID,
++		err = compare_guid_key(opinfo, conn->ClientGUID,
+ 				       lctx->lease_key);
+ 		if (err) {
+ 			err = -EINVAL;
+@@ -1080,6 +1080,9 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
+ 	lease2->flags = lease1->flags;
+ 	lease2->epoch = lease1->epoch;
+ 	lease2->version = lease1->version;
++	lease2->is_dir = lease1->is_dir;
++	memcpy(lease2->parent_lease_key, lease1->parent_lease_key,
++	       SMB2_LEASE_KEY_SIZE);
+ }
+ 
+ static void add_lease_global_list(struct oplock_info *opinfo,
+@@ -1218,7 +1221,6 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 		     struct ksmbd_file *fp, __u16 tid,
+ 		     struct lease_ctx_info *lctx, int share_ret)
+ {
+-	struct ksmbd_session *sess = work->sess;
+ 	int err = 0;
+ 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
+ 	struct ksmbd_inode *ci = fp->f_ci;
+@@ -1261,12 +1263,12 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 		struct oplock_info *m_opinfo;
+ 
+ 		/* is lease already granted ? */
+-		m_opinfo = same_client_has_lease(ci, sess->ClientGUID,
++		m_opinfo = same_client_has_lease(ci, work->conn->ClientGUID,
+ 						 lctx);
+ 		if (m_opinfo) {
+ 			copy_lease(m_opinfo, opinfo);
+ 			if (atomic_read(&m_opinfo->breaking_cnt))
+-				opinfo->o_lease->flags =
++				opinfo->o_lease->flags |=
+ 					SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE;
+ 			opinfo_put(m_opinfo);
+ 			goto out;
+diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
+index d91a8266e065e..795a9119dad9a 100644
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -116,7 +116,7 @@ void create_posix_rsp_buf(char *cc, struct ksmbd_file *fp);
+ struct create_context *smb2_find_context_vals(void *open_req, const char *tag, int tag_len);
+ struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
+ 					  char *lease_key);
+-int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
++int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
+ 			struct lease_ctx_info *lctx);
+ void destroy_lease_table(struct ksmbd_conn *conn);
+ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 99a0108cb21f4..66871fbe53f48 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3534,7 +3534,7 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "lease req for(%s) req oplock state 0x%x, lease state 0x%x\n",
+ 				    name, req_op_level, lc->req_state);
+-			rc = find_same_lease_key(sess, fp->f_ci, lc);
++			rc = find_same_lease_key(conn, fp->f_ci, lc);
+ 			if (rc)
+ 				goto err_out1;
+ 		} else if (open_flags == O_RDONLY &&
 -- 
 2.53.0
 
