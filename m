@@ -1,91 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCD155F99C;
-	Mon, 31 Aug 2026 13:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B656755EAF5;
+	Mon, 31 Aug 2026 13:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184057; cv=none; b=X+6S/0vk6kXoK/GYXDuWCnqP7ac//JQGL0sKEhwO4GjJADrAXfEJROfR02k8rNwa2PF+EFGdB8+gwjmitnUZ/w6LifOm3oe5SXkJ4nGH2jdssEA/rn9uLfus3ai2AR+024kId4iYPGh5OfpGA8HUksQ2n8MRtx/WWila+z+7lAU=
+	t=1788184058; cv=none; b=uW7WL4cHpvs6y3SD8Wiudfj9DFU6cJxx213Z1Pj/fHOqbgjHJUuEM1Ki/PvissuzZ4kx0ewngdKJ/UsbqGAJBBZ9ocYw1oR56twloP2HbgzPXK1ZVUINJgDPHb08+qcJJEQP0BRcM//IXHhhFHHcTbxAcqoF9MbPCtDlBcZZPjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184057; c=relaxed/simple;
-	bh=Hkb+C4Ndvoj16DXa89l6lYGtxIxQ9kGtJ2YXjzmndNY=;
+	s=arc-20240116; t=1788184058; c=relaxed/simple;
+	bh=PavXlPYDUWW5ir4xzkALBu93pTsxUEBaCHIASgrXFEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=boULU6Fk6gKsOxeR0t1Ei4Pxcz4oE/PaIdoKZ4rYzr4t7bbZq7ZhE+TQ15J83GWi5KIEeYt8UgjD6dykGX7Qq2RRmBU825sIaZjWUVoigCnUUI6q2V2m4tWJQtbBXlBmnvqIgLVh8w5EpaFRvtiBELUwk5yjh87tGCYzz02pDxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ltgJWody; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oTx25Lay+Gp68do2mRGZI9h/cIJOzIFeV5nMqiKsB5IrRe9vUM624vVuiXIGb3Ssv3Im12uq0pX6Kn7C/ASh2HpRdBzK4PGh4rE6UwpVuEI+TA+w5f+jk1pafK5sRXo/yW4hUEQMMG3yCHarJXOxln1KR9/njsoAt1Telf9deYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qjw87szY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ltgJWody"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3521F00A3E;
-	Mon, 31 Aug 2026 13:47:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184055;
-	bh=URd3zVLAawmO8jIxw21jOr8qKugsfJ2nRl7yBUHUYaA=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qjw87szY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A7E1F00ACA;
+	Mon, 31 Aug 2026 13:47:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184056;
+	bh=+EDLZj0eCtTDieLw7R2owouJyJA9n1ILLxWZDXMJn9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ltgJWody5lUoV7evxSKZIVXB/3aaedn1RsKyL8GgorNS7+2D6nSC3DN4paJUiUiQp
-	 1+Fq16JrOkh89UI2quxGD2wcwydWkJmW1joMQ09EI8I49+jzSqFf0Ffr3Fkd5OvVIb
-	 P7J5B9AhXRb03nkYwqyt5dpIWZthzR3mRRGvsJXlP3WAxn2ESRP8uBTNIA/68a1f2W
-	 +wUuYsy2AnfSqvJXEe9nuDZATy2ZS1JuU1wSmZWDHlibr4cQHrLgjiAFHZrkUlgQ1I
-	 4Tc01WP+cVQC4wulXt1ch0EWItp+8Ja9RsqffIUwISOYWzNLFu8TYGPeyLi27dansK
-	 3w1+egW7YAtEg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-ide@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ata: libata-core: Disable LPM on WDC WD141KFGX-68FH9N0
-Date: Mon, 31 Aug 2026 09:28:13 -0400
-Message-ID: <20260831133314.4125787-465-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=Qjw87szYCMj6SQY1STNybA/PtcpZbOOkvDuN91kZZojbVTIxy3F0447+hEp4fe+rY
+	 HYJBlEeidwUcQnidzYOoAG8LyeN5/GhhYq+hLECHE0ugC8ZRBdivQdJONN/F5MbLAa
+	 PG0NmL8BVjVk3FO3s75PW2rXuvS/RpQBzvQAaocA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 58/83] ipv6: seg6: clear IPv4 control block on IPIP decapsulation
+Date: Mon, 31 Aug 2026 15:34:34 +0200
+Message-ID: <20260831133402.485715251@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Cassel <cassel@kernel.org>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 3971921a055330669b281962ff723d1abb76a58c ]
+------------------
 
-According to a user report, WDC WD141KFGX-68FH9N0 has problems with LPM.
+From: Kyle Zeng <kylebot@openai.com>
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220693
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 44930446dde45a7a90fe1446fa38eb0e2c561646 upstream.
+
+End.DX4 and End.DT4 decapsulate an IPv4 packet through
+decap_and_validate() and send it directly to IPv4 routing. The inner
+packet therefore bypasses ip_rcv_core(), which normally clears IPCB
+before IPv4 interprets skb->cb.
+
+The skb instead retains IP6CB data from the outer packet. IP6CB and
+IPCB use the same skb->cb storage, so IP6CB(skb)->lastopt overlaps
+IPCB(skb)->opt.optlen and srr, while IP6CB(skb)->nhoff overlaps rr and
+ts.
+
+The sender can make the stale optlen byte nonzero with a valid outer
+extension-header chain. The reproducers put an eight-byte Destination
+Options header immediately after the 40-byte IPv6 header and before the
+Segment Routing Header. ipv6_destopt_rcv() records the sender-controlled
+Destination Options offset in both lastopt and nhoff, setting them to
+40. On the reproduced little-endian x86-64 kernel, IPv4 therefore sees
+optlen = 40 and rr = 40.
+
+Both tcp_v4_save_options() and __ip_options_echo() skip option copying
+when optlen is zero. Here optlen is 40, so the TCP SYN path allocates
+room for 40 bytes of option data and calls __ip_options_echo(). The
+stale rr value makes that function read inner packet byte 41 as the
+Record Route option length. The reproducers set that sender-controlled
+byte to 255, so __ip_options_echo() copies 255 bytes into the 40-byte
+option-data area.
+
+Separate End.DX4 and End.DT4 reproducers on the unpatched v7.2-rc5
+kernel both produced:
+
+  BUG: KASAN: slab-out-of-bounds in __ip_options_echo()
+  Write of size 255
+
+The relevant End.DX4 call path is:
+
+  __ip_options_echo
+  tcp_v4_route_req
+  tcp_conn_request
+  tcp_v4_conn_request
+  tcp_rcv_state_process
+  tcp_v4_do_rcv
+  tcp_v4_rcv
+  ip_protocol_deliver_rcu
+  ip_local_deliver_finish
+  ip_local_deliver
+  input_action_end_dx4_finish
+  input_action_end_dx4
+
+The relevant End.DT4 call path is:
+
+  __ip_options_echo
+  tcp_v4_route_req
+  tcp_conn_request
+  tcp_v4_conn_request
+  tcp_rcv_state_process
+  tcp_v4_do_rcv
+  tcp_v4_rcv
+  ip_protocol_deliver_rcu
+  ip_local_deliver_finish
+  ip_local_deliver
+  input_action_end_dt4
+
+tcp_v4_save_options() is inlined into the tcp_v4_route_req() path, so
+it does not appear as a separate frame.
+
+When decap_and_validate() handles IPPROTO_IPIP, save the ingress
+interface from IP6CB, clear IPCB, and restore the saved value. Doing
+this in the common decapsulation path covers End.DX4, End.DT4, and
+End.DT46's IPv4 arm.
+
+Use IP6CB(skb)->iif rather than skb->skb_iif. These actions run after
+l3mdev processing, which can replace skb_iif with the L3 master;
+IP6CB iif still records the receiving interface set at IPv6 ingress.
+
+Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
+Cc: stable@vger.kernel.org
+Suggested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260817085839.946321-1-david.lee@trailofbits.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ net/ipv6/seg6_local.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-LLM Generated explanations, may be completely bogus:
-
-The `git log -S "WD141KFGX"` search finished with no results on
-`linux-6.18.y` — that model string has never appeared in this stable
-branch. It only shows up on mainline in commit `3971921a05533`, which
-supports the **YES** backport verdict.
-
- drivers/ata/libata-core.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index a7a89b675a912..ef7f93aca36d1 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4379,6 +4379,7 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	 */
- 	{ "WDC WD100EFGX-68CPLN0",	NULL,	ATA_QUIRK_NOLPM },
- 	{ "WDC WD102KFBX-68M95N0",	NULL,	ATA_QUIRK_NOLPM },
-+	{ "WDC WD141KFGX-68FH9N0",	NULL,	ATA_QUIRK_NOLPM },
- 	{ "WD Green 2.5 480GB",		NULL,	ATA_QUIRK_NOLPM },
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -256,6 +256,13 @@ static bool decap_and_validate(struct sk
+ 	if (iptunnel_pull_offloads(skb))
+ 		return false;
  
- 	/*
--- 
-2.53.0
++	if (proto == IPPROTO_IPIP) {
++		int iif = IP6CB(skb)->iif;
++
++		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++		IPCB(skb)->iif = iif;
++	}
++
+ 	return true;
+ }
+ 
+
 
