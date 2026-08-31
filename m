@@ -1,152 +1,230 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DC548164E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F18481652;
 	Mon, 31 Aug 2026 13:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183476; cv=none; b=qrwOCimtfFtAX0bMZmZ8EzjHrexDY08nAo+JjKnT4PYkNyrhWvvOYjM2Grdgc7yyhB6BqeGEXqGBwbonF9zItSHIIUP6TESCA60GELItyGPycuz4NMm2JysXLU5nWm7hHbhzhMkxEPYAoqMN5d8vWPE3+nrCMGESg07XtK3RANM=
+	t=1788183476; cv=none; b=FWdgKBfwo5rAyipr5KJpJdcThyNgIpo0NgmwBtHImtatHHUwHn+Zz4Jq6c+SGjO7YBgEPxGW6GKRiNtQOg2uEqz3+DxuC1PACYAatOdxCPyLaQiTJwGkRpuiCwMdwjFKdvDuzk07kn7jqMiclTITgzqh9rkFnrDS6KLV0Nd2cD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183476; c=relaxed/simple;
-	bh=F5BCNe0l9SOqLED3yKxTwxK4NNtEnCnI8+79xPiJRjw=;
+	bh=PXRh4kIt5FHKAyKEbfsJnv/uPZcSsPdmMdKL2m1m6Y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bddBsZkDrVN0nhdN+7z4oA2sVcyY5AytOvkL0Ga1G6ikI2d0lrzjACd3fMVOL69RUib5vXT0pSM1K+YHw9W6Bh3F+guGnOIW1tAPaqcheyG8iDnjLrV3Y5xdJ6XKblqurh4pRAEhfvaWBVoMT+6afGfZu/30d3any5fQwwvRuaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EaazbuF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tkTn49HXp+fP9M/mHDHmYgeDEfqJl9KKxZzoBuWjKOhpuapTO8oE6QC1pt/xWlV7QUYG3tW/clVIZ93nI4LIiRXJ+9PHTPTgaH6KAPCZjg+fp8pxrESaWtrrUn5FjlNGudud37c2L4S85lOwp9IV4XG5NiiTzzBYK0jSD3rwV7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=be7V1EQi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EaazbuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12FE1F00A3D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="be7V1EQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6642E1F00A3F;
 	Mon, 31 Aug 2026 13:37:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183474;
-	bh=qLYk5ToTfQECdew/D/SaEbtlwAYrayK/hPMwW9Zu0Fo=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183474;
+	bh=w8AgcJcC28d8usKmvG/1RQt+YxSUGWMZ4Yhm/hTZhb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0EaazbuF5NiPsF1OCcC+cQPrf0NjMHITFb6xsVeHSYSyLCKFC7n6M2MIWtkyy9pJG
-	 bidHJHlCzfiY0DcTMaNxJBmZaHp4aQ+oJC/MYQ1wDJ0G0NtW9IZzyRQXUcP526uhV0
-	 BYUanJVzsIPXNf83SRD8dyeuaOsoA4W/qIH62XLY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 7.2 12/71] fuse: fix race between interrupt and resend
-Date: Mon, 31 Aug 2026 15:33:37 +0200
-Message-ID: <20260831133359.605466985@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
-References: <20260831133359.055927882@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=be7V1EQiwSbslW4mGI2dArZZQcoX1cm+G1eYTs6hOn7KUIuzSwExLOsxvkwxyIDJr
+	 2Hm2xiI+bkLF/PTarCsIyhXFN41bdIN7/LMB8x2oJPXMFspkm9orfKcHW8jlPObdYO
+	 jJfk7h5KOU1gUEn7GaBv+tqgAwfRln3z39HaIiiINGH4ww2mzUucVlZt0vTneX9xdI
+	 8pCI3gfJmNkydJHdBb0GrgiBEWXZ+DX+k4tzNFBLHMPmrxBg3paKz9r09+laWBfaWs
+	 E/43bDQeq9H9Li5dQEzruSRKg5hHMOJBibRkOgMZpIqBlHfoIXr6jzF2u1HhAopAPi
+	 Sr3hpl2FhDBeg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Teng Liu <27rabbitlt@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	syzbot+3e20d8f3d41bac5dc9a2@syzkaller.appspotmail.com,
+	Sasha Levin <sashal@kernel.org>,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] btrfs: validate data reloc tree file extent item members
+Date: Mon, 31 Aug 2026 09:22:26 -0400
+Message-ID: <20260831133314.4125787-118-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+From: Teng Liu <27rabbitlt@gmail.com>
 
-------------------
+[ Upstream commit a6908f88c9da9778957a07ac568aa643124278a8 ]
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+get_new_location() uses BUG_ON() to crash the kernel if the file extent
+item it looks up has any of offset, compression, encryption, or
+other_encoding set non-zero. The data reloc inode is only written by
+relocation's own paths and the four fields are always 0 in what the
+kernel writes:
 
-commit ed9c881f3b498383f73c42712b359419da42a7b0 upstream.
+  - insert_prealloc_file_extent() memsets the stack item to zero and
+    only fills in type, disk_bytenr, disk_num_bytes and num_bytes, so
+    offset/compression/encryption/other_encoding stay 0.
+  - insert_ordered_extent_file_extent() copies oe->compress_type into
+    the file extent's compression field, but the data reloc inode is
+    created with BTRFS_INODE_NOCOMPRESS so compress_type is always 0;
+    encryption and other_encoding are reserved-and-zero in btrfs.
 
-After commit f8fce75fedf7 ("fuse: clear intr_entry in fuse_resend and
-fuse_remove_pending_req") the WARN_ON(!list_empty(&req->intr_entry)) in
-fuse_request_free() still triggers due to the following race:
+A non-zero value here means the leaf decoded from disk does not match
+what the kernel wrote, i.e. on-disk corruption. A malformed image
+reaches this code via balance and panics the kernel.
 
-In request_wait_answer()
-  if (test_bit(FR_SENT, &req->flags)) -> returns true
+A previous attempt to enforce all four constraints in tree-checker's
+check_extent_data_item() was merged as commit 7d0ee95979e9 ("btrfs:
+validate data reloc tree file extent item members in tree-checker")
+and then reverted by commit 1c034697fcaa after btrfs/061 produced
+false positives on arm64 with 64K pages. The reason: relocation
+writeback legitimately produces REG file_extent_items with offset != 0
+in the data reloc tree. When an ordered extent covers only the back
+portion of an underlying PREALLOC (num_bytes < ram_bytes on the input
+file_extent), insert_ordered_extent_file_extent() inserts a REG with
 
-In fuse_chan_resend()
-  clear_bit(FR_SENT, &req->flags)
+  offset    = oe->offset
+  num_bytes = oe->num_bytes
+  ram_bytes preserved from the original PREALLOC,
 
-In request_wait_answer()
-  queue_interrupt(req)
+and this item can reach disk if a transaction commit fires while it
+is present in the leaf.
 
-Fix by:
+The four fields belong in different layers:
 
- - move clearing FR_SENT inside fpq->lock
+  - compression, encryption and other_encoding are universal
+    invariants for every item in the data reloc tree, regardless of
+    cluster geometry. Enforce them in tree-checker's
+    check_extent_data_item() so a corrupt leaf is rejected at read
+    time.
 
- - move setting FR_PENDING inside fiq->lock
+  - offset is only an invariant at the cluster-boundary keys that
+    get_new_location() searches (the key is computed as
+    src_disk_bytenr - reloc_block_group_start). Partial-PREALLOC
+    writebacks legitimately place REG items at non-boundary keys with
+    offset != 0; tree-checker cannot reject these. The cluster-
+    boundary item is always written by either
+    insert_prealloc_file_extent() (offset=0 by memset) or by the
+    front portion of a partial writeback (offset=0 by construction),
+    so a non-zero offset there is corruption.
 
- - recheck FR_SENT after acquiring fiq->lock in fuse_dev_queue_interrupt()
+Enforce the universal invariants in check_extent_data_item() with a
+file_extent_err() rejection. Convert the BUG_ON() in
+get_new_location() to a -EUCLEAN return paired with btrfs_print_leaf()
+and btrfs_err() so the offending leaf is logged. The caller in
+replace_file_extents() already handles non-zero returns from
+get_new_location() by breaking out of the loop without aborting the
+transaction.
 
-Reported-by: zdi-disclosures@trendmicro.com
-Fixes: f8fce75fedf7 ("fuse: clear intr_entry in fuse_resend and fuse_remove_pending_req")
-Cc: stable@vger.kernel.org # 6.9
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Qu Wenruo <wqu@suse.com>
+Suggested-by: David Sterba <dsterba@suse.com>
+Reported-by: syzbot+3e20d8f3d41bac5dc9a2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3e20d8f3d41bac5dc9a2
+Signed-off-by: Teng Liu <27rabbitlt@gmail.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dev.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -240,7 +240,8 @@ void fuse_dev_queue_forget(struct fuse_i
- void fuse_dev_queue_interrupt(struct fuse_iqueue *fiq, struct fuse_req *req)
- {
- 	spin_lock(&fiq->lock);
--	if (list_empty(&req->intr_entry)) {
-+	/* Repeat FR_SENT test after obtaining the lock to prevent race with fuse_resend() */
-+	if (list_empty(&req->intr_entry) && test_bit(FR_SENT, &req->flags)) {
- 		list_add_tail(&req->intr_entry, &fiq->interrupts);
- 		/*
- 		 * Pairs with smp_mb() implied by test_and_set_bit()
-@@ -1760,7 +1761,7 @@ out:
- void fuse_chan_resend(struct fuse_chan *fch)
- {
- 	struct fuse_dev *fud;
--	struct fuse_req *req, *next;
-+	struct fuse_req *req;
- 	struct fuse_iqueue *fiq = &fch->iq;
- 	LIST_HEAD(to_queue);
- 	unsigned int i;
-@@ -1775,24 +1776,20 @@ void fuse_chan_resend(struct fuse_chan *
- 		struct fuse_pqueue *fpq = &fud->pq;
- 
- 		spin_lock(&fpq->lock);
--		for (i = 0; i < FUSE_PQ_HASH_SIZE; i++)
--			list_splice_tail_init(&fpq->processing[i], &to_queue);
-+		for (i = 0; i < FUSE_PQ_HASH_SIZE; i++) {
-+			struct list_head *this_queue = &fpq->processing[i];
-+
-+			list_for_each_entry(req, this_queue, list)
-+				clear_bit(FR_SENT, &req->flags);
-+			list_splice_tail_init(this_queue, &to_queue);
-+		}
- 		spin_unlock(&fpq->lock);
- 	}
- 	spin_unlock(&fch->lock);
- 
--	list_for_each_entry_safe(req, next, &to_queue, list) {
--		set_bit(FR_PENDING, &req->flags);
--		clear_bit(FR_SENT, &req->flags);
--		/* mark the request as resend request */
--		req->in.h.unique |= FUSE_UNIQUE_RESEND;
--	}
--
- 	spin_lock(&fiq->lock);
- 	if (!fiq->connected) {
- 		spin_unlock(&fiq->lock);
--		list_for_each_entry(req, &to_queue, list)
--			clear_bit(FR_PENDING, &req->flags);
- 		fuse_dev_end_requests(&to_queue);
- 		return;
- 	}
-@@ -1801,6 +1798,10 @@ void fuse_chan_resend(struct fuse_chan *
- 	 * intr_entry on fiq->interrupts after the request is re-queued.
- 	 */
- 	list_for_each_entry(req, &to_queue, list) {
-+		set_bit(FR_PENDING, &req->flags);
-+		/* mark the request as resend request */
-+		req->in.h.unique |= FUSE_UNIQUE_RESEND;
-+
- 		if (test_bit(FR_INTERRUPTED, &req->flags))
- 			list_del_init(&req->intr_entry);
- 	}
+LLM Generated explanations, may be completely bogus:
 
+The background git searches finished with no matches — expected, since
+this tree is **v6.18.44** and commit `a6908f88c9da` isn’t on it yet.
+Subject grep and related-commit searches also came up empty, which fits:
+the earlier mainline-only fix/revert pair (`7d0ee95979e9` /
+`1c034697fcaa`) never landed in 6.18.y.
+
+That doesn’t change the earlier conclusion: this is a syzbot-reported
+kernel panic fix (`BUG_ON()` → `-EUCLEAN`), it applies cleanly, and it
+should be backported to this tree.
+
+**YES**
+
+ fs/btrfs/relocation.c   | 22 ++++++++++++++++++----
+ fs/btrfs/tree-checker.c | 27 +++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 4 deletions(-)
+
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index 80e5de6736e82..f1104fa6efb3f 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -822,6 +822,7 @@ static int get_new_location(struct inode *reloc_inode, u64 *new_bytenr,
+ 			    u64 bytenr, u64 num_bytes)
+ {
+ 	struct btrfs_root *root = BTRFS_I(reloc_inode)->root;
++	struct btrfs_fs_info *fs_info = root->fs_info;
+ 	BTRFS_PATH_AUTO_FREE(path);
+ 	struct btrfs_file_extent_item *fi;
+ 	struct extent_buffer *leaf;
+@@ -843,10 +844,23 @@ static int get_new_location(struct inode *reloc_inode, u64 *new_bytenr,
+ 	fi = btrfs_item_ptr(leaf, path->slots[0],
+ 			    struct btrfs_file_extent_item);
+ 
+-	BUG_ON(btrfs_file_extent_offset(leaf, fi) ||
+-	       btrfs_file_extent_compression(leaf, fi) ||
+-	       btrfs_file_extent_encryption(leaf, fi) ||
+-	       btrfs_file_extent_other_encoding(leaf, fi));
++	/*
++	 * The cluster-boundary key searched above is always written by
++	 * relocation with offset 0: either by insert_prealloc_file_extent()
++	 * (memsets the stack item to 0) or by the front portion of a partial
++	 * writeback (offset=0 by construction). A non-zero value here means
++	 * the on-disk leaf does not match what relocation wrote, i.e.
++	 * corruption. The other encoding fields are caught earlier by
++	 * tree-checker's check_extent_data_item().
++	 */
++	if (unlikely(btrfs_file_extent_offset(leaf, fi))) {
++		btrfs_print_leaf(leaf);
++		btrfs_err(fs_info,
++"unexpected non-zero offset in file extent item for data reloc inode %llu key offset %llu offset %llu",
++			  btrfs_ino(BTRFS_I(reloc_inode)), bytenr,
++			  btrfs_file_extent_offset(leaf, fi));
++		return -EUCLEAN;
++	}
+ 
+ 	if (num_bytes != btrfs_file_extent_disk_num_bytes(leaf, fi))
+ 		return -EINVAL;
+diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
+index 97be0c1ed22f7..c7e0e5fb6402d 100644
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -296,6 +296,33 @@ static int check_extent_data_item(struct extent_buffer *leaf,
+ 		return 0;
+ 	}
+ 
++	/*
++	 * For the data reloc tree, file extent items are written by
++	 * relocation's own paths. The data reloc inode is created with
++	 * BTRFS_INODE_NOCOMPRESS, so insert_ordered_extent_file_extent()
++	 * always leaves the compression field at 0. Encryption and
++	 * other_encoding are reserved-and-zero in btrfs. A non-zero value
++	 * for any of these means the leaf decoded from disk does not match
++	 * what the kernel wrote, i.e. on-disk corruption.
++	 *
++	 * The file_extent_item's offset field is NOT a universal invariant
++	 * here: partial-PREALLOC writebacks legitimately produce REG items
++	 * with non-zero offset at non-boundary keys. The offset check is
++	 * performed at the call site in get_new_location(), which only
++	 * inspects cluster-boundary keys where offset is always 0.
++	 */
++	if (unlikely(btrfs_header_owner(leaf) == BTRFS_DATA_RELOC_TREE_OBJECTID &&
++		     (btrfs_file_extent_compression(leaf, fi) ||
++		      btrfs_file_extent_encryption(leaf, fi) ||
++		      btrfs_file_extent_other_encoding(leaf, fi)))) {
++		file_extent_err(leaf, slot,
++"invalid encoding fields for data reloc tree, compression=%u encryption=%u other_encoding=%u",
++				btrfs_file_extent_compression(leaf, fi),
++				btrfs_file_extent_encryption(leaf, fi),
++				btrfs_file_extent_other_encoding(leaf, fi));
++		return -EUCLEAN;
++	}
++
+ 	/* Regular or preallocated extent has fixed item size */
+ 	if (unlikely(item_size != sizeof(*fi))) {
+ 		file_extent_err(leaf, slot,
+-- 
+2.53.0
 
