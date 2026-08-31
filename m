@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBE1559C8C;
-	Mon, 31 Aug 2026 13:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8B0559CB6;
+	Mon, 31 Aug 2026 13:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184037; cv=none; b=I0WOh5Q2nA88vfr9mpPMLYOUSs4aMQYT+f6qItQxewjiaBHP4fbLSQd4UkyoLFgbAUMQCPji2F3wGsO8eNjs0FiBUSq5HpTWc9QadNbwzBxE7NGtqZMDhpqG31BEw8fDJIRZoO3pcoiDola3kGA77blLrhg803CvMpY6cbKYHD4=
+	t=1788184040; cv=none; b=M7sGVhXWNgN2hZFkrWm5hvPaLemIWFq/+iT62KjNio4BBYBmSxkkDECniC1uNBODiU2u9wu6O6FIH4EJAquBInyYCXe31FPmaRTExyiE1U+f9pFsINMxvTWYsJwGXy6nXYjBeQnrW4Jbl4IMB23YX0gFeK62xIQAhXsi1DTWfbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184037; c=relaxed/simple;
-	bh=OGBNe6Of555E3cMhokYzTCprUdg5piyVluzuP1eNiMQ=;
+	s=arc-20240116; t=1788184040; c=relaxed/simple;
+	bh=agQdFWgGdxOk9QtCWPcZkyFXsru8JE2Gu6KW/lltHts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bMFvt7/LoKyWwHJ1OCU/bmHxzaj5ZCmvfM1m91DOtupjCtzOFq6X136jPsPj7jM/Dnpv+xFiz4s63k1FZQO0CTCjbUd0wUGxKdD1tmcmRVa+uqJjut4VG/vmhaB6SIvSxmX0BGGGNnppizxpwfoxQjigSW+WhsU7wbAEhIZB7Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EEeFzdGZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G8KJaj5/ipjipTzmff5OHa5zpkfKm2cnxPdBLz7/yA/cHZXjB6h2ZOOvp7HNihty/LJlf/k213QJhyMU1pm0xqXQ1DnRQu80Zfm4BUHh6qAHBqsvXDfffrnYptciCIiNY7CvVCNcPHoyd/hqvywhnFLKxAbEtg1C/RBYMZNI6gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dumFuYa6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EEeFzdGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC05A1F00ACF;
-	Mon, 31 Aug 2026 13:47:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dumFuYa6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646DB1F00A3D;
+	Mon, 31 Aug 2026 13:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184035;
-	bh=Mt5YSHE4bKinXdaYDMwvfpUDb934LVODG8gkA2CRJLw=;
+	s=k20260515; t=1788184036;
+	bh=bDCAWpER37datQHefj9rAvTXlYrx134DmbFTqr6CzU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EEeFzdGZscG7bUIgFAY+id07Din3hIFNbtyaZsMmrrDVVv81WMwzGsKVdnu7l5u82
-	 LuR9fgyhPlPK6CfwMi/XkarjO05dm5p4UL+npuQIYQgZv44K4ISGKVuPyWZyZXP2IN
-	 LSONJMZPbo3mQJgE/Z8OGqxVFHj4/yPaD0YbkT/BGov5exG2NWTLR5DB5hchDAai3f
-	 JCtejl2D3XHRID+YxlxX3EC+iwd1SAuoavbOqRnyJoyej35Qg5NxaRAPnNclQx5hK8
-	 DJ4chb/DcXLoK9N7e4Smrl/gFrNUZOmhB8Dj1PmU9pMAUv7WyDEKF3Wfu/mbV/cPkU
-	 KLDl7UxvwqUBA==
+	b=dumFuYa6yDYRmeLQKdvjFHAo54QMmopuR1/vyJkBNZt7KTlb37MX3k38fylHTuB9e
+	 ZBQ0vOr48p2+Y6jFhaNBmLNUWcYksV8s7wqVTRYKbSEeQ1jiwYnXVHwa+mJF4loD7U
+	 YJRS8jlLhet6g7SUFC5k2JY0tiPwISrr+kbbnycAmBiF1UEPerKZrp5KOmGZOteeoE
+	 DFmNM7UoigY46YIxEZCxsQuc+fGfPseSxedpQvrYmSlw95YVvanuwBJhhD58S1v7KE
+	 yx9rP1mVH/HybE3i9Gyg55uUjqW/eLhyhabrJWsgOlsHiE8MIta8UAD7N2jGly4Xg/
+	 IBKVdn0uXvAhA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Baojun Xu <baojun.xu@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	netdev@vger.kernel.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net: ibm: emac: Reserve VLAN header in MJS limit
-Date: Mon, 31 Aug 2026 09:28:00 -0400
-Message-ID: <20260831133314.4125787-452-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ASoC: sdw_utils: Add missed component_name strings for TI amps
+Date: Mon, 31 Aug 2026 09:28:01 -0400
+Message-ID: <20260831133314.4125787-453-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,389 +55,377 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Baojun Xu <baojun.xu@ti.com>
 
-[ Upstream commit 0906c117f81c2ae6e6dbfa82719f79c75e1c9325 ]
+[ Upstream commit 79bec463819428912e1cfcb534e4379093b422ce ]
 
-The IBM EMAC programs its Maximum Jumbo Size (MJS) drop
-threshold from ndev->mtu directly. The hardware sizes the threshold
-against the L2 frame minus the ethernet header, but does not
-discount the 802.1Q tag, so a frame carrying a VLAN tag and a full
-1500-byte payload exceeds MJS by exactly 4 bytes and is dropped.
+Added component_name for UCM.
 
-This is normally hidden because JPSM (and therefore the MJS check)
-only engages when the MTU is raised above ETH_DATA_LEN.  With the
-qca8k DSA tagger the conduit MTU is bumped by QCA_HDR_LEN to 1502
-during dsa_conduit_setup(), which is enough to enable JPSM and
-expose the off-by-VLAN-tag in the limit.
-
-Pad MJS by VLAN_HLEN so a VLAN-tagged full-MTU frame passes.
-
-Reported on Meraki MX60 (qca8k switch): tagged VLAN
-traffic drops at 1500-byte payload, while 1496 bytes works
-and untagged 1500 bytes works.
-
-Assisted-by: Claude:Opus-4.7
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Baojun Xu <baojun.xu@ti.com>
+Link: https://patch.msgid.link/20260611125359.19839-1-baojun.xu@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: ASoC: sdw_utils: Add missed component_name
+strings for TI amps
 
-### Step 1.1: Subject Line
-**Record:** `[net: ibm: emac]` `[Reserve]` — Reserve VLAN header space
-in the Maximum Jumbo Size (MJS) hardware limit.
+**Local tree:** `v6.18.44` (`git describe HEAD` →
+`v6.18.44-1-g2736c32da98b9`, `make kernelversion` → `6.18.44`)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[ASoC: sdw_utils]` `[Add]` — add missing `component_name`
+string for TI TAS2783A speaker amp in the SoundWire utils codec table.
 
 ### Step 1.2: Tags
 **Record:**
+- **Signed-off-by:** Baojun Xu `<baojun.xu@ti.com>` (author)
+- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (ASoC maintainer
+  merge)
 - **Link:**
-  https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
-- **Assisted-by:** Claude:Opus-4.7
-- **Signed-off-by:** Rosen Penev \<rosenp@gmail.com\>
-- **Signed-off-by:** Paolo Abeni \<pabeni@redhat.com\> (net maintainer,
-  committer)
-- No Fixes:, Reported-by:, Cc: stable@vger.kernel.org, Tested-by:, or
-  Reviewed-by: in commit message
-- Notable: Real-world hardware report in body (Meraki MX60); maintainer
-  ack on commit
+  https://patch.msgid.link/20260611125359.19839-1-baojun.xu@ti.com
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable tags
+- Notable: very minimal message; no explicit bug report or syzbot
+  involvement
 
-### Step 1.3: Body Analysis
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** IBM EMAC APM821xx programs MJS from `ndev->mtu`. Hardware
-  compares frame size minus Ethernet header against MJS but does not
-  account for the 802.1Q VLAN tag (4 bytes).
-- **Symptom:** VLAN-tagged frames with a 1500-byte payload are dropped;
-  1496-byte payloads and untagged 1500-byte payloads work.
-- **Trigger:** JPSM/MJS only engages when MTU > `ETH_DATA_LEN` (1500).
-  With qca8k DSA, `dsa_conduit_setup()` sets conduit MTU to
-  `ETH_DATA_LEN + QCA_HDR_LEN` = 1502, enabling JPSM and exposing the
-  off-by-4 bug.
-- **Root cause:** MJS threshold is 4 bytes too small for VLAN-tagged
-  full-MTU frames.
-- **Version info:** None explicit; bug latent since jumbo/MJS support
-  was added (2012).
+- **Bug described:** Omission of `component_name` for the TAS2783A amp
+  entry; body says only “Added component_name for UCM.”
+- **Symptom/failure mode:** `card->components` will not include
+  `spk:tas2783`, so ALSA Use Case Manager (UCM) cannot match the correct
+  profile on TAS2783A platforms.
+- **Version info:** None in the message.
+- **Root cause (from code context):** TAS2783A was added to
+  `codec_info_list[]` in `b41949a2109e4` without `component_name`, while
+  the centralized `asoc_sdw_rtd_init()` path (since `0f60ecffbfe35`)
+  depends on that field to build the `spk:` component string.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — this is an explicit hardware-limit bug fix, not
-disguised cleanup.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes. Despite the “Add” wording, this is a functional bug fix
+— an incomplete integration of TAS2783A into the UCM component-string
+mechanism, identical in nature to `c61da55412a08` (“Add missed
+component_name strings for speaker amps”).
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `drivers/net/ethernet/ibm/emac/core.c` (+2, -1 functional;
-  +1 include)
-- **Functions modified:** `emac_iff2rmr()`
-- **Scope:** Single-file surgical fix
+- **Files:** `sound/soc/sdw_utils/soc_sdw_utils.c` (+1 line)
+- **Functions modified:** `codec_info_list[]` static data only (no
+  function body changes)
+- **Scope:** Single-file, single-line surgical fix
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change
 **Record:**
-- **Hunk 1 (include):** Adds `#include <linux/if_vlan.h>` for
-  `VLAN_HLEN`.
-- **Hunk 2 (`emac_iff2rmr`):**
-  - **Before:** `EMAC4_RMR_MJS(ndev->mtu)` — MJS equals netdev MTU.
-  - **After:** `EMAC4_RMR_MJS(ndev->mtu + VLAN_HLEN)` — MJS includes
-    4-byte VLAN headroom.
-  - **Path:** Runs when `EMAC_APM821XX_REQ_JUMBO_FRAME_SIZE` is set,
-    during `emac_configure()` and multicast updates.
+- **Before:** TAS2783A AMP DAI entry has `dai_name = "tas2783-codec"`
+  but `component_name` is NULL.
+- **After:** `component_name = "tas2783"` is set.
+- **Affected path:** During `asoc_sdw_rtd_init()` (called from Intel/AMD
+  SOF SoundWire machine drivers at card init), when processing an AMP
+  DAI with `component_name` set, the code appends to `spk_components`
+  and ultimately sets `card->components` to include `spk:tas2783` (or
+  `spk:tas2783+tas2783` for dual-amp configs).
 
-### Step 2.3: Bug Mechanism
+### Step 2.3: Bug mechanism
 **Record:**
-- **Category:** Logic/correctness — hardware workaround
-- **Mechanism:** Hardware MJS check ignores VLAN tag size; driver must
-  pad MJS by `VLAN_HLEN` (4) so tagged full-MTU frames pass.
+- **Category:** Logic / correctness fix (missing metadata for UCM)
+- **Mechanism:** `asoc_sdw_rtd_init()` at lines 843–868 only generates
+  the `spk:` string when `component_name` is non-NULL.
+  `asoc_sdw_ti_spk_rtd_init()` does not set `card->components` itself
+  (unlike cs42l43, which has a dedicated `rtd_init`). Without this
+  field, speaker component tagging is silently skipped for TAS2783A.
 
-### Step 2.4: Fix Quality
+### Step 2.4: Fix quality
 **Record:**
-- Fix is minimal and matches the described hardware behavior.
-- Low regression risk: only affects APM821xx EMAC with jumbo/MJS enabled
-  (MTU > 1500).
-- Slightly more permissive MJS is safe; the alternative is incorrect
-  drops.
+- Obviously correct: matches every other AMP entry (`rt1308`, `rt1316`,
+  `mx8373`, `cs35l56`, etc.).
+- Minimal: one line, no behavior change for other codecs.
+- Regression risk: very low; only adds a string that was always intended
+  to be present.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
 **Record:**
-- Buggy MJS line introduced in `ae5d33723e3253` (2012-03-05):
-  "powerpc/44x: Add more changes for APM821XX EMAC driver"
-- Present in this tree at `drivers/net/ethernet/ibm/emac/core.c:460`
+- TAS2783A entry introduced by `b41949a2109e4` (Niranjan H Y,
+  2025-09-12) — present in `v6.18` release.
+- `component_name` infrastructure added by `f792733e08d5f` (2025-06-25).
+- Prior omission fix `c61da55412a08` (2025-07-09) added `component_name`
+  for other amps and was Cc’d to stable.
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+### Step 3.2: Fixes: tag
+**Record:** N/A — no Fixes: tag in this commit. Related prior fix
+`c61da55412a08` has `Fixes: f792733e08d5f` and is already in this tree.
 
-### Step 3.3: Related File History
+### Step 3.3: Related file history
 **Record:**
-- Fix commit: `0906c117f81c2` on `all-next` (2026-06-01), not in current
-  HEAD (6.18.44)
-- Recent emac changes on 6.18.y include UAF and NULL-deref fixes; no
-  prior MJS/VLAN fix
-- Standalone single patch (v1 only, no series)
+- `0f60ecffbfe35`: centralized `spk:` string generation in
+  `asoc_sdw_rtd_init()`
+- `c61da55412a08`: fixed same omission for
+  rt1308/rt1316/rt1318/rt721/cs42l43
+- `b41949a2109e4`: added TAS2783A without `component_name` (the gap this
+  patch closes)
+- `45f5c9eec43a9`: removed cs42l43 `component_name` because cs42l43 sets
+  it conditionally in its own `rtd_init` — tas2783 does not have that
+  alternative path
+- Standalone patch (not part of a series)
 
-### Step 3.4: Author Context
-**Record:** Rosen Penev — active networking contributor (DSA/Meraki-
-related work). Committer Paolo Abeni is a net maintainer.
+### Step 3.4: Author context
+**Record:** Baojun Xu is a regular TI codec contributor (tas2781/tas2783
+work). Mark Brown merged. No subsystem-maintainer authorship, but TI
+hardware vendor fix.
 
 ### Step 3.5: Dependencies
-**Record:**
-- No patch-series dependencies
-- Exposure path requires `dsa_conduit_setup()` MTU bump — present in
-  this tree since `6ca80638b90ce` (2023-10-24)
-- Applies cleanly: `git apply --check` on `0906c117f81c2` succeeds
+**Record:** No dependencies. Requires only code already in this tree:
+- `component_name` field in `asoc_sdw_dai_info` ✓
+- TAS2783A in `codec_info_list[]` ✓
+- `asoc_sdw_rtd_init()` spk string logic ✓
+- Applies cleanly (one line after `.dai_name = "tas2783-codec",` at line
+  66)
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
+### Step 4.1: Original discussion
 **Record:**
 - **URL:**
-  https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
-- **Revisions:** v1 only (2026-05-26)
-- **Key feedback:** Jacob Keller noted dropped packets are user-visible.
-  Paolo Abeni replied it is not a regression ("never worked"), suitable
-  for net-next to enable DSA support. Jacob Keller gave Reviewed-by.
-- **Stable nomination:** None in thread
-- **NAKs:** None
+  https://patch.msgid.link/20260611125359.19839-1-baojun.xu@ti.com
+- **Series revisions:** v1 only (b4 am found 1 patch, 2 messages total —
+  patch + no substantive review thread)
+- **Reviewer feedback:** None found in thread
+- **Stable nominations:** None in thread
+- **NAKs/concerns:** None
 
 ### Step 4.2: Reviewers
-**Record:** netdev@vger.kernel.org, Andrew Lunn, David S. Miller, Eric
-Dumazet, Jakub Kicinski, Paolo Abeni CC'd. Reviewed-by: Jacob Keller.
+**Record:** b4 am shows only author SOB and DKIM attestation; Mark
+Brown’s merge SOB is in the commit message but no Reviewed-by in the
+mailing list thread.
 
-### Step 4.3: Bug Report
-**Record:** Meraki MX60 with qca8k switch — tagged VLAN traffic drops at
-1500-byte payload. Severity: functional networking breakage (silent
-packet loss).
+### Step 4.3: Bug report
+**Record:** No external bug report, syzbot link, or user Reported-by.
+Impact inferred from prior commit `c61da55412a08` and UCM design
+(`0f60ecffbfe35` commit message: UCM expects `spk:rt722+rt1320` style
+strings).
 
-### Step 4.4: Related Patches
-**Record:** Standalone; no multi-patch series.
+### Step 4.4: Related patches
+**Record:** Direct precedent: `c61da55412a08` — same bug class,
+explicitly Cc’d stable, already in this tree.
 
-### Step 4.5: Stable List History
-**Record:** Not searched separately; no stable discussion found in the
-patch thread.
+### Step 4.5: Stable list history
+**Record:** Not searched separately; prior identical fix was explicitly
+nominated for stable by Intel maintainer.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `emac_iff2rmr()` — builds Receive Mode Register including
-MJS field.
+### Step 5.1: Key functions
+**Record:** Data change in `codec_info_list[]`; runtime effect in
+`asoc_sdw_rtd_init()` (line 784).
 
 ### Step 5.2: Callers
-**Record:**
-- `emac_configure()` (line 668) — device init/reconfigure, link setup,
-  TX reset
-- `__emac_set_multicast_list()` (line 949) — multicast/promisc flag
-  changes
-- `emac_configure()` called from `emac_reinitialize()`,
-  `emac_full_tx_reset()`, and MTU resize path when jumbo mode toggles
+**Record:** `asoc_sdw_rtd_init()` called from:
+- `sound/soc/intel/boards/sof_sdw.c` (Intel SOF SoundWire — primary path
+  for MTL+TAS2783)
+- `sound/soc/amd/acp/acp-sdw-sof-mach.c`
+- `sound/soc/amd/acp/acp-sdw-legacy-mach.c`
 
 ### Step 5.3: Callees
-**Record:** `emac_has_feature()`, `EMAC4_RMR_MJS()` macro, netdev
-flag/multicast helpers.
+**Record:** `asoc_sdw_rtd_init()` calls per-codec `rtd_init` callbacks,
+then checks `component_name` for AMP DAIs and builds `card->components`
+via `devm_kasprintf()`.
 
 ### Step 5.4: Reachability
+**Record:** Triggered at sound card initialization on any platform using
+TAS2783A via SOF SoundWire machine driver. ACPI match exists in `soc-
+acpi-intel-mtl-match.c` (`sof-mtl-tas2783.tplg`). Reachable on every
+boot for affected hardware; not userspace-triggerable but affects all
+users of that hardware.
+
+### Step 5.5: Similar patterns
+**Record:** TAS2783A is the only production AMP entry in
+`codec_info_list[]` currently missing `component_name`. All other
+speaker amps (rt1308, rt1316, rt1318, rt1320, rt721, rt722, mx8373,
+mx8363, cs35l56) have it set.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+
+### Step 6.1: Buggy code exists?
+**Record:** Yes. Lines 61–78 of `soc_sdw_utils.c` show TAS2783A entry
+without `component_name`. Present since `v6.18` release (`git merge-base
+--is-ancestor b41949a2109e4 v6.18` confirmed).
+
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — single line insertion. Local tree
+structure matches the patch (uses `part_id = 0x0000`, not the
+`vendor_id` layout shown in some newer mainline revisions).
+
+### Step 6.3: Related fixes already present?
+**Record:** `c61da55412a08` (same fix for other amps) is in tree. This
+specific tas2783 line is not yet applied.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** ASoC / SoundWire utils — **IMPORTANT** (affects audio on
+Intel MTL laptops with TAS2783A amps, not core kernel).
+
+### Step 7.2: Subsystem activity
+**Record:** Actively developed; recent commits include RT712/RT721
+quirks, reference leak fix, tas2783 driver updates.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of Intel Meteor Lake (and compatible) platforms with
+TAS2783A SoundWire speaker amps — config-specific, platform-specific.
+ACPI entry `tas2783_link0` / `sof-mtl-tas2783.tplg` confirmed in tree.
+
+### Step 8.2: Trigger conditions
+**Record:** Every boot/init of affected hardware using SOF SoundWire
+machine driver. Common for those machines, not timing-dependent.
+Unprivileged users cannot trigger directly but inherit broken audio
+routing.
+
+### Step 8.3: Failure mode severity
+**Record:** Missing `spk:tas2783` in `card->components` → UCM profile
+mismatch → speakers may not route correctly or UCM may select wrong
+configuration. **Severity: MEDIUM** (functional audio breakage, not
+crash/corruption/security).
+
+### Step 8.4: Risk-benefit
 **Record:**
-- **Call chain:** DSA setup → `dsa_conduit_setup()` →
-  `dev_set_mtu(1502)` → EMAC jumbo/MJS enabled → tagged VLAN frames at
-  1500 payload hit hardware MJS drop
-- **Userspace reachable:** Yes — normal bridged/VLAN traffic on affected
-  hardware
-- **Config:** `ibm,emac-apm821xx` + qca8k DSA conduit (e.g. Meraki MX60)
-
-### Step 5.5: Similar Patterns
-**Record:** No similar MJS/VLAN padding elsewhere in emac driver; this
-is the only MJS programming site.
+- **Benefit:** MEDIUM — fixes real speaker/UCM integration for hardware
+  supported in this tree
+- **Risk:** VERY LOW — one-line data addition, established pattern
+- **Ratio:** Favorable; matches precedent of `c61da55412a08` which
+  stable maintainers were asked to take
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 6.1: Buggy Code in Tree?
-**Record:** **Yes.** Local tree is **Linux 6.18.44**
-(`stable/linux-6.18.y`). Buggy line at `core.c:460`:
-`EMAC4_RMR_MJS(ndev->mtu)`. Bug present since 2012 APM821xx jumbo
-support. Fix commit `0906c117f81c2` is **not** in HEAD.
-
-### Step 6.2: Backport Complications
-**Record:** Clean apply expected — `git apply --check` passed with no
-conflicts.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** None for this MJS/VLAN issue.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-### Step 7.1: Subsystem Criticality
-**Record:** `drivers/net/ethernet/ibm/emac` — **PERIPHERAL** driver
-(PowerPC APM821xx), but networking correctness on real production
-hardware (Meraki MX60).
-
-### Step 7.2: Subsystem Activity
-**Record:** Moderately active — recent UAF/NULL-deref fixes in 6.18.y;
-DSA conduit infrastructure actively maintained.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Users of **ibm,emac-apm821xx** (APM821xx SoC) with **qca8k
-DSA** conduit and **VLAN-tagged** traffic at standard MTU. Meraki MX60
-is a confirmed case. Driver already contains Meraki MX60-specific MDIO
-workaround (line 2451).
-
-### Step 8.2: Trigger Conditions
-**Record:**
-- MTU > 1500 (automatically 1502 with qca8k DSA via
-  `dsa_conduit_setup()`)
-- VLAN-tagged frames with payload at MTU−4 boundary (1500 bytes with MTU
-  1502 conduit overhead accounting)
-- **Likelihood:** High on affected configs for standard enterprise VLAN
-  usage
-- **Unprivileged trigger:** Yes — normal network traffic
-
-### Step 8.3: Failure Mode Severity
-**Record:** Silent **packet drops** for VLAN traffic at full MTU. Not a
-crash or data corruption, but breaks standard VLAN networking.
-**Severity: MEDIUM-HIGH** (functional breakage, silent loss).
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** Restores correct VLAN forwarding on affected hardware;
-  trivial 3-line fix
-- **Risk:** Very low — scoped to APM821xx jumbo path only
-- **Ratio:** Strong benefit for affected users, minimal risk
-
----
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence compile
 
 **FOR backport:**
-- Real user-reported bug (Meraki MX60)
-- Silent packet drops on standard VLAN/MTU traffic
-- Minimal, obviously correct hardware workaround
-- Buggy code and exposure path (DSA conduit MTU bump) both exist in
-  6.18.44
-- Applies cleanly
-- Reviewed on mailing list; maintainer committed
-- Falls under hardware quirk/workaround exception
+- Real functional bug on supported hardware in this tree
+- Identical bug class to `c61da55412a08`, which was explicitly Cc’d
+  stable
+- TAS2783A is the only AMP missing `component_name`; no alternative path
+  sets the string
+- One-line, obviously correct fix with near-zero regression risk
+- All prerequisites present in v6.18.44
 
 **AGAINST backport:**
-- Narrow hardware scope (APM821xx + qca8k DSA)
-- Not a regression — latent since 2012
-- Paolo routed to net-next as non-regression fix
-- Packet drops, not crash/security/corruption
+- Not a crash, security issue, data corruption, or deadlock
+- Sparse commit message with no user bug report
+- Affects niche/new hardware (MTL + TAS2783A)
+- No reviewer stable nomination for this specific patch
 
-**Unresolved:** No independent Tested-by on target hardware in commit
-message.
+**Unresolved:** No user bug report confirming broken speakers in the
+field; impact inferred from code path and prior maintainer statements.
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic matches hardware
-   behavior; reviewed on list
-2. Fixes real bug affecting users? **PASS** — Meraki MX60 report,
-   reproducible symptoms
-3. Important issue? **PASS** — silent packet loss on standard VLAN
-   traffic (MEDIUM-HIGH)
-4. Small and contained? **PASS** — 3 lines, one file
-5. No new features/APIs? **PASS** — hardware limit correction only
-6. Can apply to local tree? **PASS** — clean apply verified
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — mirrors all other AMP
+   entries; maintainer merged; no logic change
+2. Fixes a real bug affecting users? **PASS** — omission breaks UCM
+   `spk:` tagging for TAS2783A
+3. Important issue? **PASS (borderline)** — functional audio breakage on
+   supported platforms; not crash-level but same class as prior stable-
+   nominated fix
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features or APIs? **PASS** — completes existing metadata, no
+   new API
+6. Can apply to local tree? **PASS** — prerequisites present, clean
+   apply
 
-### Step 9.3: Exception Category
-**Record:** Hardware quirk/workaround — EMAC hardware does not account
-for VLAN tag in MJS calculation.
+### Step 9.3: Exception categories
+**Record:** Hardware quirk/workaround adjacent — completes hardware
+enablement metadata for an existing driver, similar to device-ID-class
+fixes. Not a pure device-ID addition, but same stability rationale.
 
-### Step 9.4: Decision Rationale
+### Step 9.4: Decision rationale
 
-For **Linux 6.18.44**, this fix should be backported. The buggy MJS
-programming and the DSA conduit MTU bump that exposes it are both
-present. On Meraki MX60-class hardware, standard VLAN traffic at
-1500-byte payload is silently dropped — a real, user-visible networking
-failure. The fix is a 3-line hardware workaround with verified clean
-apply and negligible regression risk. Paolo's net-next routing reflects
-that this is not a regression, not that the fix lacks stable merit.
+This commit fixes an integration omission introduced when TAS2783A
+support landed in `b41949a2109e4`. Without `component_name`, the
+centralized `asoc_sdw_rtd_init()` path never emits `spk:tas2783` in
+`card->components`, breaking UCM profile matching for Intel MTL
+platforms using `sof-mtl-tas2783.tplg`. The fix is trivial, follows
+established precedent (`c61da55412a08`), and all required infrastructure
+exists in v6.18.44. While not a crash fix, it corrects broken speaker
+routing on real hardware that this stable tree already supports.
 
 ---
 
 ## Verification
 
-- [Phase 1] `git show 0906c117f81c2`: parsed subject, tags, body
-- [Phase 2] Read diff and `core.c:438-464`: confirmed
-  `EMAC4_RMR_MJS(ndev->mtu)` → `+ VLAN_HLEN`
-- [Phase 3] `git blame -L 458,461`: buggy code from `ae5d33723e3253`
-  (2012)
-- [Phase 3] `git merge-base --is-ancestor 0906c117f81c2 HEAD`:
-  NOT_IN_HEAD
-- [Phase 3] `git apply --check` on `0906c117f81c2`: passes
-- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.18.44
-- [Phase 4] `b4 dig -c 0906c117f81c2`: found lore thread
-- [Phase 4] `b4 dig -a`: v1 only
-- [Phase 4] `b4 dig -w`: netdev maintainers CC'd
-- [Phase 4] `/tmp/emac_vlan_thread.mbox`: Keller review, Abeni net-next
-  rationale
-- [Phase 5] `grep emac_iff2rmr`: callers at lines 668, 949
-- [Phase 5] Read `net/dsa/conduit.c:419-445`: MTU = `ETH_DATA_LEN +
-  dsa_tag_protocol_overhead()`
-- [Phase 5] Read `net/dsa/tag_qca.c:118`: `needed_headroom =
-  QCA_HDR_LEN` (2)
-- [Phase 5] Read `include/linux/if_vlan.h:16`: `VLAN_HLEN = 4`
-- [Phase 6] `grep EMAC4_RMR_MJS`: buggy code at `core.c:460`
-- [Phase 6] `git merge-base --is-ancestor 6ca80638b90ce HEAD`:
-  conduit_in_tree (2023-10-24)
-- [Phase 6] `git show 6ca80638b90ce:net/dsa/conduit.c`: MTU bump present
-  from introduction
-- [Phase 7] `core.c:2869-2872`: APM821xx feature flag assignment
-  confirmed
-- [Phase 7] `core.c:2451`: existing Meraki MX60 reference in driver
+- [Phase 1] Parsed subject, tags, body from provided commit message and
+  mbox
+- [Phase 1] `b4 am 20260611125359.19839-1-baojun.xu@ti.com`: found v1
+  patch, 1 insertion, Link confirmed
+- [Phase 2] Read `soc_sdw_utils.c` lines 60–78, 843–868: confirmed
+  missing `component_name` and generation logic
+- [Phase 2] Read `soc_sdw_ti_amp.c`: confirmed
+  `asoc_sdw_ti_spk_rtd_init()` does NOT set `card->components`
+- [Phase 3] `git describe HEAD`: v6.18.44; `make kernelversion`: 6.18.44
+- [Phase 3] `git blame -L 60,78`: tas2783 entry from `b41949a2109e4`
+- [Phase 3] `git show c61da55412a08`: prior identical fix, Cc stable
+- [Phase 3] `git show f792733e08d5f`, `0f60ecffbfe35`: component_name
+  infrastructure and UCM rationale
+- [Phase 3] `git show b41949a2109e4`: tas2783 added without
+  component_name
+- [Phase 3] `git show 45f5c9eec43a9`: cs42l43 exception (has own
+  rtd_init path) — does not apply to tas2783
+- [Phase 3] `git merge-base --is-ancestor` checks: tas2783 driver,
+  machine entry, component_name infra all in HEAD and v6.18
+- [Phase 4] Mbox thread: no reviews, no stable nomination, no NAKs
+- [Phase 4] WebFetch patch.msgid.link: blocked by bot protection; used
+  b4 am mbox instead
+- [Phase 5] `grep asoc_sdw_rtd_init`: callers in sof_sdw.c, acp-sdw
+  machines
+- [Phase 5] `grep SOC_SDW_DAI_TYPE_AMP`: tas2783 is only production AMP
+  missing component_name
+- [Phase 6] Confirmed buggy code at lines 66–67 in local tree
+- [Phase 6] `grep tas2783` in `soc-acpi-intel-mtl-match.c`: MTL platform
+  support confirmed
+- [Phase 8] Failure mode: UCM mismatch, severity MEDIUM (not CRITICAL)
 
-**YES****Verdict: YES** for backport to Linux 6.18.44.
+**YES**
 
-The commit (`0906c117f81c2` on `all-next`) pads the IBM EMAC APM821xx
-MJS limit by `VLAN_HLEN` so VLAN-tagged full-MTU frames aren’t dropped.
-It isn’t in the current 6.18.y tree yet, but the buggy code and the
-qca8k DSA conduit MTU bump that exposes it are both present, and the
-patch applies cleanly.
+ sound/soc/sdw_utils/soc_sdw_utils.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Worth backporting: small hardware workaround for a real Meraki MX60 bug
-(silent VLAN packet loss at 1500-byte payload).
-
- drivers/net/ethernet/ibm/emac/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
-index e1047915e101e..f48568140480e 100644
---- a/drivers/net/ethernet/ibm/emac/core.c
-+++ b/drivers/net/ethernet/ibm/emac/core.c
-@@ -30,6 +30,7 @@
- #include <linux/skbuff.h>
- #include <linux/crc32.h>
- #include <linux/ethtool.h>
-+#include <linux/if_vlan.h>
- #include <linux/mii.h>
- #include <linux/bitops.h>
- #include <linux/of.h>
-@@ -457,7 +458,7 @@ static inline u32 emac_iff2rmr(struct net_device *ndev)
- 
- 	if (emac_has_feature(dev, EMAC_APM821XX_REQ_JUMBO_FRAME_SIZE)) {
- 		r &= ~EMAC4_RMR_MJS_MASK;
--		r |= EMAC4_RMR_MJS(ndev->mtu);
-+		r |= EMAC4_RMR_MJS(ndev->mtu + VLAN_HLEN);
- 	}
- 
- 	return r;
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index 3facb78748acf..86b0b25bed56a 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -64,6 +64,7 @@ struct asoc_sdw_codec_info codec_info_list[] = {
+ 			{
+ 				.direction = {true, true},
+ 				.dai_name = "tas2783-codec",
++				.component_name = "tas2783",
+ 				.dai_type = SOC_SDW_DAI_TYPE_AMP,
+ 				.dailink = {SOC_SDW_AMP_OUT_DAI_ID, SOC_SDW_AMP_IN_DAI_ID},
+ 				.init = asoc_sdw_ti_amp_init,
 -- 
 2.53.0
 
