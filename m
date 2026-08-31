@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0FF47D447;
-	Mon, 31 Aug 2026 13:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE96747DD4F;
+	Mon, 31 Aug 2026 13:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184772; cv=none; b=OZoN6DVsd8tVm6pI3eO0zW7OGxds6QCnZqQD/AP652pf2a8dngncekVFIxGuJa6FxBJWnkC90moyGu5rwDzsFyOZqz6J0N/TviMH1m1hxbz42IthJFcVek1dfSuZVAvYXHmGIRYMgen3Jlbkr2LKm/CIVlJzJoLb+TBJsflWgtI=
+	t=1788184774; cv=none; b=BXCik+bPT7GRV3IC45PVJRFvB5fb3qXy1v41vZWSJPMtLGS40472StJzy3viG6f2OkQjUYeZsFclW0LS7zT3MDwzkpx0pCJ8xnmS7ug4E2wWYSAgiCjou/pbsIzAUgTQlMIRutwqwdaiLEvC0hEeXm4M+JwvKS7StebtpJjO63A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184772; c=relaxed/simple;
-	bh=dYb6Dv9HJUKSm/X8wTYQrwde+Klqk3q8VsY5c1Wt06g=;
+	s=arc-20240116; t=1788184774; c=relaxed/simple;
+	bh=TKR9RoCUYNyoxbzUbxuB/A4AT+vbC5L/3uQ/IYoDGlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IwyQgUCXXHF+NgMqQu3gPnvHZyqc+cc8I6EPPYtVDDv/lxhxf8Xn1I5Qj0LDsnNTkafVOY82x+WCilh6952kyAjH95RUXF/KEDutkLH0k8hQp9ytMKJuJ6J6GoKky6AHCXskEbzORA7W1qD3wbhXCTJz6gLA6CaKBOU91yHZWGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2+ESsdY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NaqVGpUE55QoddU/6uOtgccIcwLLOt/NAsc6iPuSX0C3laABMm/0EbM7ouNQSQR9ddGW/wQD0EUH0jQp7INFGgUTMTLaCHwxHQPNJbCerElfOM8L7JyiRbYUKHheQb7JG6qnKfVHGjLvWCNtc3pRT7MqFpHFJYidfle3g2N6P8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8wobYii; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2+ESsdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515881F000E9;
-	Mon, 31 Aug 2026 13:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8wobYii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2571F000E9;
+	Mon, 31 Aug 2026 13:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184770;
-	bh=2Np2ozRhIV9fqAcI7n2JSShNVgg4DVldA7Pxdts1MAA=;
+	s=korg; t=1788184773;
+	bh=C30mQbacuv4oW+evibx0iJ8mPE9zVcYgZk5Tc64C75E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2+ESsdYTrqyWPCEsAuRz0v8bxFNQMd9j0eZ8kVUgFy9c2XEp425WqJtooW0JrW1M
-	 i4WwQcDwj9nU06aVUDVcuurY5sdlKawAwIwhW/nvOxRgRc+gG/UA3wtOpkdXIwlvao
-	 ywKkv/3d5BopogSUSH5+StMk8/udulHm6uugL1+Y=
+	b=f8wobYiimYkzcZwDcfp3qMmguUABCW67hhxjoFmKHak+wTCNjE/SvdhCTagvEWNMu
+	 ZoE1KSSkwRjze/jHrwPTOE3rtdxcqj/ZTB6u67LBICFbki92AE5XI7kiCgriW7BZAG
+	 6TEi03pW9I4Bs1SbuZ6C5ewtpaqpPaYzNjt2SbjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 33/92] Revert "smb: client: use kvzalloc() for megabyte buffer in simple fallocate"
-Date: Mon, 31 Aug 2026 15:34:31 +0200
-Message-ID: <20260831133401.406419869@linuxfoundation.org>
+Subject: [PATCH 6.1 34/92] ASoC: tegra: Fix Master Volume Control
+Date: Mon, 31 Aug 2026 15:34:32 +0200
+Message-ID: <20260831133401.474375091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -49,35 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 1233c883cceb2e859b14abef4087f400e92490c7.
+From: Jon Hunter <jonathanh@nvidia.com>
 
+[ Upstream commit f9fd804aa0a36f15a35ca070ec4c52650876cc29 ]
+
+Commit 3ed2b549b39f ("ALSA: pcm: fix wait_time calculations") corrected
+the PCM wait_time calculations and in doing so reduced the calculated
+wait_time. This exposed an issue with the Tegra Master Volume Control
+(MVC) device where the reduced wait_time caused the MVC to fail. For now
+fix this by setting the default wait_time for Tegra to be 500ms.
+
+Fixes: 3ed2b549b39f ("ALSA: pcm: fix wait_time calculations")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20230613093453.13927-1-jonathanh@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/tegra/tegra_pcm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 05b7b02a6b035..2b38e8e7efd4e 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3670,7 +3670,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	if (rc)
- 		goto out;
+diff --git a/sound/soc/tegra/tegra_pcm.c b/sound/soc/tegra/tegra_pcm.c
+index 468c8e77de217..0b69cebc9a33c 100644
+--- a/sound/soc/tegra/tegra_pcm.c
++++ b/sound/soc/tegra/tegra_pcm.c
+@@ -117,6 +117,9 @@ int tegra_pcm_open(struct snd_soc_component *component,
+ 		return ret;
+ 	}
  
--	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
-+	buf = kzalloc(1024 * 1024, GFP_KERNEL);
- 	if (buf == NULL) {
- 		rc = -ENOMEM;
- 		goto out;
-@@ -3737,7 +3737,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 
-  out:
- 	kfree(out_data);
--	kvfree(buf);
-+	kfree(buf);
- 	return rc;
++	/* Set wait time to 500ms by default */
++	substream->wait_time = 500;
++
+ 	return 0;
  }
- 
+ EXPORT_SYMBOL_GPL(tegra_pcm_open);
 -- 
 2.53.0
 
