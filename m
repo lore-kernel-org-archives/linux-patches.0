@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB683521210;
-	Mon, 31 Aug 2026 13:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A5A522EC5;
+	Mon, 31 Aug 2026 13:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183855; cv=none; b=BnigulsA3j5w+GoJ0Mjd6wb5EgnLJxrdk3NABh1WOh8n0Bym6vfwG5wIRZsDT6XodTEUCVYNc+4hNe2JeHa5HHYL2P+rXxTHloWo1nDeVDwx64EPBhNf8dVP75xl3UiAcRb9EDPhSBhpVwR2Edghg3okI9gp+WiErIXgvviXJc8=
+	t=1788183856; cv=none; b=twX2vAK8w9PtnzvGNfiFXEv5B+uu4SXwgEvgNDVCwph7YR0PnHGjqm8QPVAzMZ7gqwu9veAShQdgoWF2nmvC0pB5m1+2EIfVbKlfwx7Faqe1sT5Oshg8J3JMRCYKqvg5H5CCWgLo2/uIXkZqEf37RILvlWXEbJEsfH1hthRTJ4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183855; c=relaxed/simple;
-	bh=9UVlpdY2+yBE/50frAkHYJdIgkUz+ShHyHuMH0CWi2c=;
+	s=arc-20240116; t=1788183856; c=relaxed/simple;
+	bh=YzomyiaSSYlSEVqtsSwnQ1VSK21Q6sA+HUUrTBdFNvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AwcoBdIlBgs45z4tI6v9isFOcpUEC+x+2UFpvoztvVaWCiOV0gALF/majqvDZOXGhAgnuMxjHT55XJIeJJgnjhm7gUmLstWTa+HdFRwLLoI9bcU2TvgE4Q9RqLO/8Kz57mcptqDueps3YvovpDv4Zf3qPsfZvue3zxOm1GVn5lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLk/2A6B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FmgKCBBgrKGE8S8abDY00x+OZY1zvuGfPi1JMCT9K+JdaWRwsp5razy7UugVJqfXfg2/ggjSwn3AUAJPhMCPvY7pWZ05+g//BqPriDPLd1PHo5sOW9iqDMz8zhaU1XylKtkodcrey64HsDjIGpicO5pJnmd9/0dnZ20pfOFqm6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GGrsBYIC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLk/2A6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077E01F00A3E;
-	Mon, 31 Aug 2026 13:44:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GGrsBYIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC601F000E9;
+	Mon, 31 Aug 2026 13:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183851;
-	bh=QXRzar77aJt/WkXV87uNtCkSjKWYNfrHbwi6KZO9GUw=;
+	s=k20260515; t=1788183853;
+	bh=gey/pA+MqLSign78ltl1Z+G5U1XGzfWV9TBfTmZofj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLk/2A6Bp/XVkKA1mZ5RzaHay0XmceXligCyTi//WFaY5hxDudLnAjanAMKgg7osU
-	 PTSiR80y/52SHOKoBhAAtHGiQ5TPHBsVgd/+Llz8UkdYGo+efIxE2A4WhuKkDGKaO1
-	 K1BhliPYpkFaffXZ3Ohh5Gp3/A4tZ41Xx4rbENXJK5QvX/IAtbXUu9giJtNWUD2NsH
-	 q3LdDyQodkTy9PFmU5zO99wFacjpWSKJ04vAG8FVfMOLGnX5Lpkd9vkXz248Y46Zdf
-	 66nujuGFTyxQcGyLIj/DLY32UbG7l9XpU5Epx811n77OcL7kk9ru3K5NZWEb1/yMQQ
-	 EM6Gw1aIT+pkg==
+	b=GGrsBYICdmnzHpkk8pJtbeu44an+jR8Ikh6BsEZxLJGuT/MDHDiBD+woyHCTrb7hA
+	 slW6LSry5tFgl84XeZG9vbfMT1IUacGNyCUs7TxpLl6AqSdNWJdCeZK+b4QvJvt2wo
+	 BUVTzANrACxhP4IvMx10MzeZ3918WMd9p900CeXPngHE56tpAg6oU+MBBiZLvI6/Oj
+	 GM2JhSFL4SYLBIB0JbLu6LCrvmbi+t0ebfixcItvQpmDA8vsBzTQIFJwWUNSbXT3lx
+	 zApQkqjM3rdL9BYlZbaROjYG0i5upuZIAOtivjAKH5zI31lpR2IKNzQHEAuF9LNm3x
+	 IYwAGM0D+H3NQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jetha Chan <jethachan@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Vijendar.Mukunda@amd.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	mathias.nyman@intel.com,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ASoC: amd: yc: Add Alienware m15 R7 AMD to DMIC quirk table
-Date: Mon, 31 Aug 2026 09:26:10 -0400
-Message-ID: <20260831133314.4125787-342-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] usb: xhci: Improve Soft Retries after short transfers
+Date: Mon, 31 Aug 2026 09:26:11 -0400
+Message-ID: <20260831133314.4125787-343-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,409 +54,398 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jetha Chan <jethachan@gmail.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit e782d687d2f5bf8b8113dc48ba22cca4b472c252 ]
+[ Upstream commit e765ab012f73717238c95ab9c34bfc3c767fa48c ]
 
-The Alienware m15 R7 AMD exposes an ACP6x DMIC path, but its DMI
-product name is not present in the Yellow Carp ACP quirk table. As a
-result, the ACP machine driver does not enable the DMIC card on this
-system.
+A short transfer is a successful one, so reset the error count.
+Otherwise, endpoints which always complete short are limited to
+three retries per endpoint life rather than per URB.
 
-Add the DMI product name for this machine. With this quirk applied, the
-kernel reports:
-
-  acp_yc_mach acp_yc_mach.0: Enabling ACP DMIC support via DMI
-
-and ALSA exposes the ACP DMIC capture device:
-
-  card 3: acp6x
-  device 0: DMIC capture dmic-hifi-0
-
-Tested on an Alienware m15 R7 AMD with product SKU 0B59.
-
-Link: https://jethachan.net/dev/2026/03/21/fixing-internal-microphone-alienware-linux.html
-Assisted-by: OpenAI-Codex:gpt-5.5
-Signed-off-by: Jetha Chan <jethachan@gmail.com>
-Link: https://patch.msgid.link/20260630003328.15675-1-jethachan@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260603091132.1110849-7-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ASoC: amd: yc: Add Alienware m15 R7 AMD to
-DMIC quirk table
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44-1-g2736c32da98b9` (Makefile: 6.18.44), checked
-out from `stable/linux-6.18.y`.
+**Step 1.1 – Subject line**
 
----
+Record: `[usb: xhci]` `[Improve]` – Improve soft-retry error counting
+after short bulk/interrupt transfers.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.2 – Tags**
 
-### Step 1.1: Subject line
-**Record:** `[ASoC: amd: yc] [add] Add Alienware m15 R7 AMD to DMIC
-quirk table`
+Record:
+- `Signed-off-by: Michal Pecio <michal.pecio@gmail.com>` (author)
+- `Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>` (xHCI
+  maintainer)
+- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
+  maintainer)
+- `Link: https://patch.msgid.link/20260603091132.1110849-7-
+  mathias.nyman@linux.intel.com` (patch 7/7 in a series)
+- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Tested-by:`, or `Reviewed-
+  by:` tags
 
-### Step 1.2: Tags
-**Record:**
-- **Link:** https://jethachan.net/dev/2026/03/21/fixing-internal-
-  microphone-alienware-linux.html (author blog with reproduction
-  details)
-- **Link:**
-  https://patch.msgid.link/20260630003328.15675-1-jethachan@gmail.com
-  (mailing list submission)
-- **Assisted-by:** OpenAI-Codex:gpt-5.5
-- **Signed-off-by:** Jetha Chan \<jethachan@gmail.com\>
-- **Signed-off-by:** Mark Brown \<broonie@kernel.org\> (ASoC maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable tags
-- Notable: maintainer Signed-off-by; hardware-tested per commit body
+**Step 1.3 – Body analysis**
 
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** Alienware m15 R7 AMD has ACP6x DMIC hardware, but DMI product
-  name is missing from `yc_acp_quirk_table`, so the ACP machine driver
-  does not enable DMIC.
-- **Symptom:** `acp_yc_mach.0` stays unbound; no ACP DMIC ALSA capture
-  device; internal microphone unusable.
-- **Root cause:** BIOS does not expose working `AcpDmicConnected` ACPI
-  property (same pattern as m17 R5 AMD quirk from 2022).
-- **Fix approach:** Add DMI vendor/product match entry pointing at
-  `acp6x_card`.
-- **Version info:** Tested on SKU 0B59; author used kernel 6.19.8 on
-  Arch-based distro.
+Record:
+- **Bug:** `ep->err_count` is not cleared on `COMP_SHORT_PACKET`, even
+  though a short transfer is a successful completion.
+- **Symptom:** Endpoints that routinely complete short are limited to
+  three soft retries over the endpoint’s lifetime, not per URB/transfer.
+- **Root cause:** `err_count` is reset on `COMP_SUCCESS` but not on
+  `COMP_SHORT_PACKET`, so successful short transfers do not reset the
+  counter.
+- **Version info:** None in the message.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Not disguised — this is an explicit hardware-enablement
-quirk fix. Without the entry, probe returns `-ENODEV` and DMIC never
-registers.
+**Step 1.4 – Hidden bug fix?**
+
+Record: **Yes.** Although the subject says “Improve,” this is a
+correctness bug in xHCI soft-retry error accounting, not a cosmetic
+cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **Files:** `sound/soc/amd/yc/acp6x-mach.c` (+7 lines, 0 removed)
-- **Functions modified:** none directly; `yc_acp_quirk_table[]` data
-  extended
-- **Scope:** Single-file, surgical DMI table addition
+**Step 2.1 – Inventory**
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** `dmi_first_match(yc_acp_quirk_table)` on Alienware m15 R7
-  AMD returns NULL → `platform_get_drvdata()` NULL → probe fails with
-  `-ENODEV`.
-- **After:** DMI match succeeds → `platform_set_drvdata(pdev,
-  &acp6x_card)` → DMIC card registers, log shows `"Enabling ACP DMIC
-  support via DMI"`.
-- **Path affected:** Platform driver probe during boot on matching
-  hardware only.
+Record:
+- **Files:** `drivers/usb/host/xhci-ring.c` (+1 line)
+- **Function:** `process_bulk_intr_td()`
+- **Scope:** Single-file, one-line surgical fix
 
-### Step 2.3: Bug mechanism
-**Record:** **[Hardware workaround / DMI quirk]** — Missing DMI override
-for a platform whose ACPI tables omit `AcpDmicConnected`. Same mechanism
-as existing Alienware m17 R5 AMD entry (`d40b6529c6269`).
+**Step 2.2 – Code flow change**
 
-### Step 2.4: Fix quality
-**Record:**
-- Obviously correct: identical structure to 70+ existing entries in the
-  same table.
-- Minimal, no logic changes.
-- **Regression risk:** Very low — only matches exact DMI vendor
-  `"Alienware"` + product `"Alienware m15 R7 AMD"`.
-- **Backport note:** Mainline diff context includes MSI Vector/Raider
-  entries not present in 6.18.44; insertion should go immediately before
-  the existing m17 entry at lines 503–509. Trivial adjustment, same
-  7-line hunk content.
+Record:
+- **Before:** `COMP_SHORT_PACKET` sets `td->status = 0` only;
+  `ep->err_count` is unchanged.
+- **After:** `COMP_SHORT_PACKET` also sets `ep->err_count = 0`, matching
+  `COMP_SUCCESS`.
+- **Path:** Bulk/interrupt transfer completion in
+  `process_bulk_intr_td()`, called from `handle_tx_event()` for non-
+  control, non-isoc endpoints.
 
----
+**Step 2.3 – Bug mechanism**
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Record: **Logic / error-recovery bug.** `MAX_SOFT_RETRY` is 3. On
+`COMP_USB_TRANSACTION_ERROR`, `ep->err_count` is incremented; if it
+exceeds 3, soft retry is skipped and the error path proceeds without
+`xhci_handle_halted_endpoint(..., EP_SOFT_RESET)`. Successful
+completions should reset the counter, but short completions did not.
 
-### Step 3.1: Blame
-**Record:**
-- Alienware m17 R5 AMD quirk introduced by `d40b6529c6269` (Brent
-  Mendelsohn, 2022-10-24).
-- YC machine driver introduced by `fa991481b8b22` (2021-10-18).
-- Both are ancestors of HEAD in this tree.
-- **m15 R7 AMD entry:** NOT present (`git log -S "Alienware m15 R7 AMD"
-  -- sound/soc/amd/yc/acp6x-mach.c` returns empty).
+**Step 2.4 – Fix quality**
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag. Bug is omission from quirk table, not a
-regression from a specific commit.
-
-### Step 3.3: Related file history
-**Record:** 73 quirk-related commits in `sound/soc/amd/yc/`. Recent
-stable examples: HP OMEN (`65aabf8896687`), MSI Bravo 17 D7VF
-(`ba06528ad5a31`), ASUS ExpertBook entries. **20** DMI quirk commits
-already in `stable/linux-6.18.y` for this subsystem. Standalone one-
-patch fix.
-
-### Step 3.4: Author context
-**Record:** Jetha Chan is not a regular ASoC contributor (only unrelated
-Alienware platform/x86 commit `246f9bb62016c` in tree). Patch merged by
-Mark Brown. Precedent: community hardware reports routinely land as DMI
-quirks in this file.
-
-### Step 3.5: Dependencies
-**Record:** No dependencies. Requires only `SND_SOC_AMD_YC_MACH` driver
-and `yc_acp_quirk_table` — both present since kernel ~5.15+. Applies
-standalone.
+Record:
+- **Obviously correct:** Short packet is a successful transfer
+  (`td->status = 0`); resetting `err_count` matches `COMP_SUCCESS` and
+  the design intent.
+- **Minimal:** One line.
+- **Regression risk:** Very low; only resets a counter on a success
+  path.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 3: Git History Investigation
 
-### Step 4.1: Original discussion
-**Record:**
-- `b4 dig` with message-id failed (commit not in local repo; lore
-  blocked by Anubis bot protection).
-- Author blog post fetched successfully — detailed reproduction
-  confirming DMI mismatch and successful module-level test.
+**Step 3.1 – Blame**
 
-### Step 4.2: Reviewers
-**Record:** Mark Brown Signed-off-by confirms maintainer acceptance.
-Could not verify CC list via b4 dig -w (tool failure / commit not
-indexed locally).
+Record:
+- Soft retry introduced in `f8f80be501aa2` (2018): `ep_ring->err_count =
+  0` on `COMP_SUCCESS`.
+- `err_count` moved to endpoint in `a1575120972ec` (Nov 2022, backported
+  with `Cc: stable`).
+- `COMP_SHORT_PACKET` handling dates to 2017; never reset `err_count`.
+- Bug present since soft-retry accounting was added (~2018).
 
-### Step 4.3: Bug report
-**Record:** Blog documents: `acp_yc_mach.0` unbound, only HDA cards
-visible, DMI product `"Alienware m15 R7 AMD"` vs table having only m17.
-Severity from user perspective: **complete internal mic failure**. m17
-R5 had bugzilla.kernel.org #216590 for same class of issue.
+**Step 3.2 – Fixes: tag**
 
-### Step 4.4: Related patches
-**Record:** Standalone. Related sibling: `d40b6529c6269` (m17 R5 AMD,
-same table, same symptom class).
+Record: N/A – no `Fixes:` tag.
 
-### Step 4.5: Stable list history
-**Record:** Could not search lore stable archive (bot protection).
-However, 20 prior DMI quirk commits for this exact driver are already in
-`stable/linux-6.18.y`, establishing clear precedent.
+**Step 3.3 – Related file history**
 
----
+Record:
+- Related short-packet work by Michal Pecio: `9e3a28793d2fd` (“Fix Short
+  Packet handling rework ignoring errors”), affecting UAC, UVC, serial,
+  UAS.
+- This fix is standalone; no dependency on other series patches for
+  correctness.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 3.4 – Author context**
 
-### Step 5.1: Key functions
-**Record:** `acp6x_probe()` uses `yc_acp_quirk_table[]`; table data
-extended only.
+Record: Michal Pecio is an active xHCI contributor; Mathias Nyman is the
+xHCI maintainer. Both signed off.
 
-### Step 5.2: Callers
-**Record:** `acp6x_probe` registered as `.probe` in `acp6x_mach_driver`,
-invoked via `module_platform_driver()` at boot when
-`CONFIG_SND_SOC_AMD_YC_MACH` is enabled and ACPI platform device exists.
+**Step 3.5 – Dependencies**
 
-### Step 5.3: Callees
-**Record:** `dmi_first_match()`, `platform_set_drvdata()`,
-`devm_snd_soc_register_card()`.
-
-### Step 5.4: Reachability
-**Record:** Triggered on every boot for Alienware m15 R7 AMD with YC ACP
-hardware and module built-in or loaded. Not userspace-triggerable, but
-affects all owners of this laptop model at boot.
-
-### Step 5.5: Similar patterns
-**Record:** Entire `yc_acp_quirk_table[]` is a catalog of identical per-
-laptop DMI overrides for broken/missing ACPI DMIC detection. Alienware
-m17 R5 AMD entry at lines 503–509 is the direct sibling.
+Record: **Standalone.** One-line addition; no new symbols or structures.
+Patch 7/7 in submission, but this hunk is self-contained.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 4: Mailing List and External Research
 
-### Step 6.1: Buggy code exists?
-**Record:** **YES.** File `sound/soc/amd/yc/acp6x-mach.c` exists. Quirk
-table and probe logic present. m17 R5 AMD quirk present; **m15 R7 AMD
-missing** — bug is live in 6.18.44.
+**Step 4.1 – Original discussion**
 
-### Step 6.2: Backport complications
-**Record:** **Minor context adjustment.** Mainline patch context
-references MSI Vector/Raider entries absent from 6.18.44; insert before
-existing Alienware m17 block. No structural conflicts.
+Record: Link points to patch 7/7 in a Mathias Nyman series (2026-06-03).
+`b4 dig` did not find the committed hash (commit not in this tree).
+`patch.msgid.link` and `lore.kernel.org` were blocked (403/Anubis).
+Discussion content could not be fetched.
 
-### Step 6.3: Related fixes already present?
-**Record:** m17 R5 AMD quirk (`d40b6529c6269`) present. No m15 fix. No
-duplicate.
+**Step 4.2 – Reviewers**
 
----
+Record: UNVERIFIED from lore. Commit has SOBs from author, xHCI
+maintainer, and USB maintainer.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 4.3 – Bug report**
 
-### Step 7.1: Subsystem criticality
-**Record:** **sound/ASoC AMD YC driver** — IMPORTANT for affected laptop
-users; PERIPHERAL in global kernel terms (config-dependent, specific
-hardware).
+Record: No external bug report or syzbot link. Bug inferred from code
+analysis and commit message.
 
-### Step 7.2: Subsystem activity
-**Record:** Highly active — continuous DMI quirk additions through
-2025–2026, many backported to 6.18.y stable.
+**Step 4.4 – Series context**
 
----
+Record: Patch 7/7; this change does not appear to require earlier series
+patches.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 4.5 – Stable list**
 
-### Step 8.1: Who is affected
-**Record:** Owners of Alienware m15 R7 AMD laptops running kernels with
-`SND_SOC_AMD_YC_MACH` enabled (common on AMD Rembrandt/Yellow Carp
-laptops).
-
-### Step 8.2: Trigger conditions
-**Record:** Every boot on matching DMI identity. Deterministic, not a
-race. Unprivileged users cannot trigger the fix path, but all users on
-this hardware are affected by the bug.
-
-### Step 8.3: Failure mode severity
-**Record:** Internal DMIC completely non-functional (driver probe
-fails). **Severity: MEDIUM** — not crash/corruption/security, but core
-laptop functionality broken. Falls under stable **hardware quirk
-exception**.
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH for affected users (working internal microphone).
-- **Risk:** VERY LOW (7-line DMI string, exact hardware match only).
-- **Ratio:** Strongly favorable; matches established stable practice for
-  this file.
+Record: UNVERIFIED – could not search lore stable archives due to access
+restrictions.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 5: Code Semantic Analysis
 
-### Step 9.1: Evidence summary
+**Step 5.1 – Key functions**
 
-**FOR backport:**
-- Fixes real, reproducible hardware bug (dead internal mic)
-- Hardware quirk / DMI workaround — explicit stable exception category
-- 7-line, single-file, obviously correct
-- Tested on real hardware; ASoC maintainer Signed-off-by
-- Identical pattern to m17 R5 quirk already in tree since 2022
-- 20 similar quirk commits already in 6.18.y stable for this driver
-- Driver and quirk infrastructure fully present in this tree
-- No new APIs, no behavior change for non-matching systems
+Record: `process_bulk_intr_td()`, caller `handle_tx_event()`.
 
-**AGAINST backport:**
-- Not a crash, security, or data-corruption issue (strict "important
-  issue" reading)
-- Lore review thread not accessible for verification
-- Minor patch context adjustment needed vs mainline
+**Step 5.2 – Callers**
 
-**Unresolved:**
-- Full mailing list review thread (Anubis blocked lore.kernel.org)
-- b4 dig could not resolve commit hash (not in local tree)
+Record: `handle_tx_event()` is the main xHCI transfer-event handler,
+invoked from the xhci interrupt path for every bulk/interrupt transfer
+completion. High-traffic, common path.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — same pattern as dozens of
-   accepted quirks; author tested on hardware
-2. Fixes real bug affecting users? **PASS** — internal microphone
-   completely broken
-3. Important issue? **PASS** (hardware quirk exception) — functional
-   hardware failure on a commercial laptop
-4. Small and contained? **PASS** — 7 lines, 1 file
-5. No new features or APIs? **PASS** — DMI table entry only
-6. Can apply to local tree? **PASS** — trivial insertion before existing
-   Alienware m17 entry
+**Step 5.3 – Callees**
 
-### Step 9.3: Exception category
-**Record:** **Hardware quirk/workaround** — DMI-based enablement for
-laptop with broken ACPI DMIC detection.
+Record: On transaction error with `err_count <= MAX_SOFT_RETRY`, calls
+`xhci_handle_halted_endpoint(..., EP_SOFT_RESET)`. When limit exceeded,
+soft retry is skipped and `finish_td()` runs with `-EPROTO`.
 
-### Step 9.4: Problem and decision rationale
+**Step 5.4 – Reachability**
 
-This commit solves a concrete hardware support gap: the Alienware m15 R7
-AMD has an ACP6x DMIC path, but without a DMI quirk the `acp_yc_mach`
-platform driver refuses to bind because ACPI does not report
-`AcpDmicConnected`. The result is no internal microphone on Linux — a
-user-visible regression-class hardware issue, not a cosmetic fix.
+Record: **Highly reachable.** Any bulk/interrupt endpoint can hit this.
+Critically, in `handle_tx_event()`:
 
-For the 6.18.y stable tree specifically, all infrastructure exists (YC
-driver since 2021, m17 sibling quirk since 2022, continuous stable
-backport of identical quirk patches). The fix is minimal, maintainer-
-reviewed, and carries negligible regression risk while restoring
-essential laptop functionality for a defined hardware population.
+```2707:2712:drivers/usb/host/xhci-ring.c
+        case COMP_SUCCESS:
+                if (EVENT_TRB_LEN(le32_to_cpu(event->transfer_len)) !=
+0) {
+                        trb_comp_code = COMP_SHORT_PACKET;
+                        xhci_dbg(xhci, "Successful completion on short
+TX for slot %u ep %u with last td comp code %d\n",
+                                 slot_id, ep_index,
+ep_ring->old_trb_comp_code);
+                }
+```
+
+Short transfers reported as `COMP_SUCCESS` are converted to
+`COMP_SHORT_PACKET` before `process_bulk_intr_td()` runs. So the
+`COMP_SUCCESS` `err_count` reset does **not** apply to short transfers
+on typical hosts; they go through `COMP_SHORT_PACKET` without resetting
+the counter.
+
+**Step 5.5 – Similar patterns**
+
+Record: `ep->err_count = 0` exists only on `COMP_SUCCESS` in
+`process_bulk_intr_td()`. `handle_transferless_tx_event()` increments
+`err_count` on stream transaction errors but never resets it on success.
+This fix addresses the bulk/intr path only.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree
+
+**Step 6.1 – Buggy code in this tree?**
+
+Record: **Yes.** Local tree is **v6.18.44** (`git describe HEAD`, `make
+kernelversion`). At lines 2572–2574, `COMP_SHORT_PACKET` does not reset
+`ep->err_count`. The candidate commit is not yet applied.
+
+**Step 6.2 – Backport complications**
+
+Record: **Clean apply expected** – single line in a stable function with
+no recent churn at that hunk.
+
+**Step 6.3 – Related fixes already present?**
+
+Record: `git log --grep='Soft Retries'` returned nothing. No equivalent
+fix in this tree.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+**Step 7.1 – Subsystem**
+
+Record: `drivers/usb/host/` – USB xHCI host controller driver.
+**Criticality: IMPORTANT** (core USB path for most modern systems).
+
+**Step 7.2 – Activity**
+
+Record: Active subsystem; recent xhci fixes include HCE interrupt storm,
+memory leaks, and short-packet handling.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 – Who is affected**
+
+Record: Users of xHCI with bulk/interrupt endpoints that complete short
+(serial, UVC, UAC, storage status pipes, interrupt IN with fixed
+buffers). Essentially all xHCI users with typical USB devices.
+
+**Step 8.2 – Trigger conditions**
+
+Record:
+- Endpoint sees successful short transfers (very common).
+- Plus occasional `COMP_USB_TRANSACTION_ERROR` (transient bus errors).
+- After 3 such errors, `err_count` stays elevated because short
+  successes never reset it.
+- **Likelihood:** Moderate for long-lived endpoints with occasional bus
+  noise.
+
+**Step 8.3 – Failure mode severity**
+
+Record:
+- Soft retry stops after 3 transaction errors over endpoint lifetime.
+- Subsequent errors skip `EP_SOFT_RESET` and proceed to error completion
+  / harder recovery.
+- **Severity: MEDIUM-HIGH** – device malfunction, transfer failures,
+  possible disconnect; not a kernel oops, but real user-visible USB
+  breakage.
+
+**Step 8.4 – Risk vs benefit**
+
+Record:
+- **Benefit:** HIGH for affected endpoints – restores intended per-
+  transfer error accounting.
+- **Risk:** VERY LOW – one line, mirrors existing `COMP_SUCCESS`
+  behavior.
+- **Ratio:** Strong benefit, minimal risk.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Step 9.1 – Evidence**
+
+**FOR:**
+- Real, long-standing logic bug in soft-retry accounting
+- Affects a very common path (short bulk/interrupt transfers)
+- `handle_tx_event()` converts success-with-remaining to
+  `COMP_SHORT_PACKET`, so most short transfers hit the buggy path
+- After 3 transaction errors, error recovery degrades permanently for
+  that endpoint
+- One-line, obviously correct fix
+- Signed off by xHCI and USB maintainers
+- Bug present in v6.18.44; fix applies cleanly
+
+**AGAINST:**
+- No syzbot report or user bug report in commit message
+- Failure mode is degraded recovery, not kernel crash
+- Lore discussion could not be verified
+
+**UNRESOLVED:**
+- Full mailing-list review thread inaccessible
+- No explicit stable nomination found
+
+**Step 9.2 – Stable rules checklist**
+
+1. Obviously correct and tested? **PASS** – logic is clear; maintainer
+   SOBs present; no runtime test cited.
+2. Fixes a real bug affecting users? **PASS** – short transfers are
+   routine; error accounting is wrong.
+3. Important issue? **PASS (MEDIUM-HIGH)** – USB communication failures
+   on common device classes.
+4. Small and contained? **PASS** – 1 line, 1 file.
+5. No new features or APIs? **PASS**.
+6. Can apply to local tree? **PASS** – buggy code confirmed in v6.18.44.
+
+**Step 9.3 – Exception categories**
+
+Record: None (not device ID, quirk, DT, build, or docs). Standard bug
+fix.
+
+**Step 9.4 – Decision rationale**
+
+This is a clear correctness bug in xHCI error recovery. Because
+`handle_tx_event()` rewrites success-with-short-data to
+`COMP_SHORT_PACKET`, the existing `err_count` reset on `COMP_SUCCESS`
+does not cover the common short-transfer case. Endpoints that routinely
+short-packet can exhaust their three soft retries permanently after only
+three transient transaction errors, causing degraded USB error recovery.
+The fix is minimal, obviously correct, and low risk.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Fetched author blog: confirmed DMI mismatch, unbound
-  `acp_yc_mach`, successful DMIC after quirk
-- **[Phase 2]** Diff: +7 lines to `yc_acp_quirk_table[]` in
-  `acp6x-mach.c`
-- **[Phase 2]** Read `acp6x_probe()` lines 758–816: confirmed DMI match
-  enables `acp6x_card`, no match → `-ENODEV`
-- **[Phase 3]** `git describe HEAD`: v6.18.44-1-g2736c32da98b9
-- **[Phase 3]** `git log -S "Alienware m15 R7 AMD"`: empty — commit not
-  in tree
-- **[Phase 3]** `git blame` lines 503–509: m17 quirk from
-  `d40b6529c6269` (2022-10-24)
-- **[Phase 3]** `git merge-base --is-ancestor d40b6529c6269 HEAD`: m17
-  quirk is ancestor
-- **[Phase 3]** `git merge-base --is-ancestor fa991481b8b22 HEAD`: YC
-  driver is ancestor
-- **[Phase 3]** `git log --oneline -20 --
-  sound/soc/amd/yc/acp6x-mach.c`: many recent quirk commits
-- **[Phase 3]** `git show d40b6529c6269`: m17 quirk, same bug class,
-  bugzilla #216590
-- **[Phase 4]** `b4 dig` for new patch message-id: failed (exit 2)
-- **[Phase 4]** lore.kernel.org fetch: blocked by Anubis bot protection
-- **[Phase 4]** Blog fetch: success — full reproduction details
-- **[Phase 5]** `grep acp6x_probe/dmi_first_match`: probe at line 758,
-  DMI check at 798
-- **[Phase 6]** `grep "Alienware" acp6x-mach.c`: only m17 R5 present,
-  m15 R7 absent
-- **[Phase 6]** Confirmed Vector A16/Raider A18 from mainline diff
-  context not in 6.18.44 tree
-- **[Phase 6]** `git log stable/linux-6.18.y --grep="DMI quirk" --
-  sound/soc/amd/yc/ | wc -l`: 20 quirk commits in stable
-- **[Phase 7]** Read `sound/soc/amd/Kconfig` lines 107–116:
-  `SND_SOC_AMD_YC_MACH` config exists
-- **[Phase 8]** Failure mode verified via probe code: no DMI match →
-  `-ENODEV` → no DMIC card
+- **[Phase 1]** Parsed subject, tags, and body from provided commit
+  message.
+- **[Phase 2]** Confirmed diff: +1 line `ep->err_count = 0` in
+  `COMP_SHORT_PACKET` case.
+- **[Phase 3]** `git blame -L 2560,2595 drivers/usb/host/xhci-ring.c`:
+  soft retry from 2018, `err_count` on endpoint from 2022.
+- **[Phase 3]** `git show f8f80be501aa2`: original soft retry added
+  `err_count` reset on `COMP_SUCCESS` only.
+- **[Phase 3]** `git show a1575120972ec`: moved `err_count` to endpoint;
+  had `Cc: stable`.
+- **[Phase 3]** `git log --oneline -20 -- drivers/usb/host/xhci-ring.c`:
+  recent xhci activity confirmed.
+- **[Phase 4]** `b4 dig`: no match (commit not in tree).
+  Lore/patch.msgid.link: blocked (403/Anubis). **UNVERIFIED:** review
+  thread content.
+- **[Phase 5]** `grep process_bulk_intr_td`: called from
+  `handle_tx_event()` line 2982.
+- **[Phase 5]** Read `handle_tx_event()` lines 2707–2712: `COMP_SUCCESS`
+  with remaining length converted to `COMP_SHORT_PACKET`.
+- **[Phase 5]** `grep err_count drivers/usb/host/`: only reset on
+  `COMP_SUCCESS` in xhci-ring.c.
+- **[Phase 6]** `git describe HEAD` → v6.18.44; `make kernelversion` →
+  6.18.44.
+- **[Phase 6]** Read lines 2572–2574: bug present (no reset on
+  `COMP_SHORT_PACKET`).
+- **[Phase 6]** `git log --grep='Soft Retries'`: no existing fix in
+  tree.
+- **[Phase 8]** `MAX_SOFT_RETRY` = 3 in `drivers/usb/host/xhci.h` line
+  1272.
+- **[Phase 8]** Read `COMP_USB_TRANSACTION_ERROR` path: when `err_count
+  > 3`, soft retry skipped.
 
-**YES**The background searches finished and match what the analysis
-already used:
+**YES**
 
-- **Author/subject search:** No ASoC quirk commit for "Alienware m15 R7
-  AMD" in this tree. The only m15 R7 hits are unrelated `platform/x86`
-  Alienware WMI work.
-- **Stable quirk count:** **20** DMI quirk commits for
-  `sound/soc/amd/yc/` are already in `stable/linux-6.18.y`, including
-  the sibling `d40b6529c6269` (Alienware m17 R5 AMD) entry.
+ drivers/usb/host/xhci-ring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-That supports the **YES** backport verdict for 6.18.y: same quirk
-pattern, driver and table already present, only the m15 R7 DMI entry is
-missing.The target-commit search finished: **"Alienware m15 R7 AMD" is
-not in `sound/soc/amd/yc/acp6x-mach.c` in this tree.** The only m15 R7
-matches are unrelated `platform/x86` Alienware WMI commits, which
-confirms the ASoC DMIC quirk patch still needs to be backported.
-
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index d9f145b634f35..d657287ccf43e 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -500,6 +500,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VF"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Alienware"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m15 R7 AMD"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 2bb7569c95054..3f1a6089a01ce 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2570,6 +2570,7 @@ static void process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
+ 		td->status = 0;
+ 		break;
+ 	case COMP_SHORT_PACKET:
++		ep->err_count = 0;
+ 		td->status = 0;
+ 		break;
+ 	case COMP_STOPPED_SHORT_PACKET:
 -- 
 2.53.0
 
