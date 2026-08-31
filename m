@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5808C55EAF7;
-	Mon, 31 Aug 2026 13:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CAA55F972;
+	Mon, 31 Aug 2026 13:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184055; cv=none; b=gmN47l0jlajLrCbNm38ctk3/Ry7WcXP/bBiX2t9LWuiRUFzW/crUpNBNVD76ChXrDMB6ta2th6+fo5JQxekaxKO6agkufxhGlq1dYOQTKBmdbJ1Lq5qRREiXWxhvYcV4AImpFmRv4EB2WY+PVbeApzXVOsRj1S4JM0dFHvGjwzI=
+	t=1788184057; cv=none; b=DXfbNLPZmSjsYB8qtKD3NJ+4y5lpNQWQO7iAryS8JfkbQRePug/S0AW/olOIVwYWmQcBWIArqyAemrv/gc6ehO/oFJNurbU+A794uOfT7KJjNKLziRlCoh93XyvbkI5wHLmN9Clw+gThwCUrKmlHi7+RRVTwWPRxsGVgWne5X8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184055; c=relaxed/simple;
-	bh=7yjxVhNAX9o3HTxeQpJ0/t/F3IDXyVkBk3Rljnq0Pk0=;
+	s=arc-20240116; t=1788184057; c=relaxed/simple;
+	bh=44aSCLil5K1oQx2EdutGR9G20dQM6nP9QzGg9B9B7xE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rpc0DEGUsms7uF4+fl1xdHF3apmyyVM/sTpHUxma6988oMBcXbrZT5fJpygdvoDik2Jx4LDVc5gpGJm9MBTfUH91lO86GBAB6WFTzU2VKcaKTjzVC6SRHAlCbxr6YAAUJRejhUZZR5Y1C0Pnshd7O4gJdEU6IAS9B8HkWeL5i68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ILcvsDTN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r2T1cISRee1kfsyz3P0V/OMETtzmr/fKRZtylN3587Icc+IoldUohvQoc3WNMbhYAJGFfcuvI+HCTTf5Q6gEJWq/UgxqbAH2UlyEdeRxtfd06n72RTp8W9JxZtxTnSu8EeP92W7s0gV5ZlKLN+Yf8rI6Lpd0C/jfDL0aOMwZFGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPb8JApy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ILcvsDTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7C01F00ACF;
-	Mon, 31 Aug 2026 13:47:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPb8JApy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6184F1F00A3F;
+	Mon, 31 Aug 2026 13:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184053;
-	bh=Jgg4sdSKbomE329Nl7tVODUKAEXno6ZeeSXNFVTs4r8=;
+	s=k20260515; t=1788184054;
+	bh=4k5LOiCtW72h2pqHH8HSiv4C8+Pr6/EAJf7KCOrU7ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ILcvsDTNC3/+2JCCTIQDPLXOdlMAd4m1Mk634fbNR0XRKWvKfXvduykTTdx/vVdEr
-	 +u1BOELQ8lWlY0Huc910AC3U13rdXPMNZYPd10EzchhXD2X8bYcMOk/ZEreEdHX1+2
-	 2Gaqnc30x+tdHuKqkrgye18UiTmsFxQwalorHzhE/pABQaUl8AeCkekxli+wO7kpQW
-	 l8WkfT8i4Q5P1w6REmppC6VOIexnsiCOMzEy+21KIjUNixBYss4hsYioRbowDd/web
-	 EzQ4WDaijA4Ymz0xgnCBpwZwoijyoRaLAj2vHjRoKJB6nUjNX2VUrgntO5GAbakY1k
-	 s+9B+0nuCOX+w==
+	b=cPb8JApynlapLpsnidtkoUWCLuQ1z98V9fOu5oLH5YacI2TKzHJaclLvSPXlqzHFC
+	 CwZGYqRrbHt6piofwa4S9wH+/kTy3v0S9d2VwAUbIjWYgs1fOZYzgUMnKyi7EOGQbr
+	 jpmF7oV71n0uNm9U/9/u8BY6N/4FWZMUUEwo8ROkHsCUzRHqfRfVKE4q8gUsOJJbDC
+	 0W15n/cCQNlaR9PNroDhf4gbN3ZzAaEOilcTsWgLzAPcmxHsWLQ7MHKcVflbcAulIa
+	 /fA6seOwWh6gXthjclPDWyDjWmvwjDJ0bMMfR2EPDFEBciEcHptl3x4CTstl77lir0
+	 t/9/APmbO+IqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Michael Diesen <michael.diesen@posteo.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	han.xu@nxp.com,
-	linux-spi@vger.kernel.org,
-	imx@lists.linux.dev,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] spi: spi-nxp-fspi: enter stop mode before reconfiguring MCR0 and DLL
-Date: Mon, 31 Aug 2026 09:28:11 -0400
-Message-ID: <20260831133314.4125787-463-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Add quirk for HP Dragonfly Folio G3 2-in-1 (103c:8a05)
+Date: Mon, 31 Aug 2026 09:28:12 -0400
+Message-ID: <20260831133314.4125787-464-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,429 +54,397 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Michael Diesen <michael.diesen@posteo.de>
 
-[ Upstream commit b4bde5cfff8e43e948219f0a598e4bf057ecfba4 ]
+[ Upstream commit bed0c8084044364f5ac3f3e89e1bbad423f6b0d4 ]
 
-In nxp_fspi_select_mem() the RX sample clock source (MCR0[RXCLKSRC])
-and the DLL control registers (DLLxCR) are reconfigured while the
-FlexSPI module is still enabled. According to the FlexSPI reference
-manual initialization sequence, MCR0 and the DLL control registers
-should be programmed while the module is in stop mode, i.e. with
-MCR0[MDIS] set to 1, and the module re-enabled (MCR0[MDIS] = 0)
-afterwards.
+The HP Dragonfly Folio G3 2-in-1 also ships with PCI SSID 103c:8a05.
+On this unit the ALC245 codec reports subsystem id 103c:8a06 - the SSID
+that is already covered by commit 0a10faad5ca5 ("ALSA: hda/realtek: add
+quirk for HP Dragonfly Folio G3 2-in-1") - while the PCI SSID that
+SND_PCI_QUIRK matches against is 103c:8a05:
 
-Wrap the RX sample clock source selection and the DLL calibration/
-override reconfiguration in a stop-mode window to align with the RM
-and avoid reconfiguring timing-critical registers while the module is
-active.
+  snd_hda_codec_alc269 ehdaudio0D0: ALC245: picked fixup for PCI SSID 103c:8a05
+  cs35l41-hda spi1-CSC3551:00-cs35l41-hda.0: CS35L41 Bound - SSID: 103C8A06
 
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260728-fspi-clock-v2-2-dbe786a4a6eb@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The existing entry therefore never applies here, the four CS35L41
+amplifiers on SPI are not registered and the internal speakers stay
+silent.
+
+Add the same fixup that the 8a06 entry uses: the four amplifiers bind
+and the speaker mute LED (codec GPIO 0x04) works.
+
+Signed-off-by: Michael Diesen <michael.diesen@posteo.de>
+Link: https://patch.msgid.link/20260727091920.4634-1-michael.diesen@posteo.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `spi: spi-nxp-fspi: enter stop mode before
-reconfiguring MCR0 and DLL`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux 6.18.44 (`v6.18.44-2-g1b9e1abadee04`, Makefile
-`VERSION=6 PATCHLEVEL=18 SUBLEVEL=44`)
+### Step 1.1: Subject Line
+**Record:** `[ALSA: hda/realtek]` `[Add]` — Add PCI quirk for HP
+Dragonfly Folio G3 2-in-1 with SSID `103c:8a05`.
 
----
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Michael Diesen `<michael.diesen@posteo.de>`
+  (author)
+- **Link:** `https://patch.msgid.link/20260727091920.4634-1-
+  michael.diesen@posteo.de`
+- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA/HDA
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+- Notable: maintainer sign-off from Takashi Iwai; no syzbot/fuzzer
+  involvement
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** Some HP Dragonfly Folio G3 2-in-1 units expose PCI SSID
+  `103c:8a05`, while the codec subsystem ID is `103c:8a06`. The existing
+  quirk added by upstream `0a10faad5ca5` only matches `103c:8a06`.
+- **Symptom:** Wrong/no fixup selected; four CS35L41 SPI amplifiers
+  never bind; internal speakers stay silent; speaker mute LED (GPIO
+  0x04) does not work.
+- **Evidence in message:** dmesg shows `picked fixup for PCI SSID
+  103c:8a05` but CS35L41 binds with SSID `103C8A06` — mismatch between
+  PCI and codec SSIDs.
+- **Root cause (author):** `SND_PCI_QUIRK` matching uses PCI SSID, so
+  the `8a06` entry never applies on `8a05` hardware variants.
+- **Fix approach:** Add `103c:8a05` entry using the same fixup as
+  `8a06`: `ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED`.
 
-**Step 1.1 – Subject line**
-
-Record: `[spi: spi-nxp-fspi]` `[enter/align]` — Enter FlexSPI stop mode
-(MCR0[MDIS]=1) before reprogramming MCR0 RX clock source and DLL control
-registers during runtime memory selection.
-
-**Step 1.2 – Tags**
-
-| Tag | Value |
-|-----|-------|
-| Signed-off-by | Haibo Chen \<haibo.chen@nxp.com\> |
-| Reviewed-by | Frank Li \<Frank.Li@nxp.com\> (NXP) |
-| Link | https://patch.msgid.link/20260728-fspi-
-clock-v2-2-dbe786a4a6eb@nxp.com |
-| Signed-off-by | Mark Brown \<broonie@kernel.org\> (SPI maintainer) |
-
-Notable: No Reported-by, Fixes:, Cc: stable, or syzbot tags. Reviewed by
-NXP engineer. Link indicates patch **2/2** of `fspi-clock-v2` series
-(patch 1 is already in this tree as `51c52e493346f`).
-
-Record: Reviewed-by from NXP; part of v2 series; no user/fuzzer bug
-report in message.
-
-**Step 1.3 – Body analysis**
-
-Record:
-- **Bug:** `nxp_fspi_select_mem()` reprograms MCR0[RXCLKSRC] and DLLxCR
-  while FlexSPI is still enabled (MCR0[MDIS]=0), violating the FlexSPI
-  reference manual initialization sequence.
-- **Symptom:** Timing-critical registers changed while the module is
-  active; can cause unreliable flash reads when switching chip-select,
-  DTR/STR mode, or clock rate.
-- **Root cause:** Runtime reconfiguration path omits the stop-mode
-  window that probe initialization already uses correctly.
-- **Version info:** None in message.
-
-**Step 1.4 – Hidden bug fix?**
-
-Record: **Yes.** Although framed as RM compliance, this is a hardware
-correctness bug fix. The driver’s own probe path already disables the
-module (MDIS) before DLL programming; `select_mem()` was inconsistent,
-creating a real stability risk on flash access paths.
+### Step 1.4: Hidden Bug Fix?
+**Record:** Not disguised — this is an explicit hardware quirk fix for
+broken audio on a specific laptop model. Classic audio driver quirk
+pattern.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-**Step 2.1 – Inventory**
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `sound/hda/codecs/realtek/alc269.c` only (+1 line)
+- **Functions modified:** None directly; `alc269_fixup_tbl[]` quirk
+  table only
+- **Scope:** Single-file, one-line surgical addition
 
-Record:
-- **File:** `drivers/spi/spi-nxp-fspi.c` (+14 lines net in
-  `nxp_fspi_select_mem()`)
-- **Function modified:** `nxp_fspi_select_mem()`
-- **Scope:** Single-file, surgical fix
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** `snd_hda_pick_fixup()` walks `alc269_fixup_tbl[]`; for PCI
+  SSID `103c:8a05`, no matching `SND_PCI_QUIRK` entry → wrong or no
+  CS35L41 SPI fixup → amplifiers not probed.
+- **After:** PCI SSID `103c:8a05` matches new entry →
+  `ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED` selected →
+  `cs35l41_fixup_spi_four()` runs → four SPI CS35L41 amps bind; GPIO LED
+  fixup chains.
+- **Path affected:** Normal HDA codec probe/initialization on affected
+  hardware.
 
-**Step 2.2 – Code flow change**
+### Step 2.3: Bug Mechanism
+**Record:**
+- **Category:** Hardware quirk / logic correctness (wrong fixup
+  selection due to PCI vs codec SSID mismatch)
+- **Mechanism:** `snd_hda_pick_fixup()` matches PCI subsystem
+  vendor/device for standard `SND_PCI_QUIRK` entries (see
+  ```1066:1078:sound/hda/common/auto_parser.c```). Existing `8a06` entry
+  cannot match `8a05` PCI SSID.
 
-Record:
-- **Hunk 1 (before RX/DLL reconfig):** Reads MCR0, sets MDIS (stop
-  mode), then proceeds with `nxp_fspi_select_rx_sample_clk_source()`,
-  clock rate change, and DLL calibration/override.
-- **Hunk 2 (after DLL reconfig):** Clears MDIS to re-enable the module.
-- **Before:** MCR0 and DLL registers written while module active.
-- **After:** Same operations wrapped in stop-mode window, matching probe
-  init at lines 1244–1252.
-
-**Step 2.3 – Bug mechanism**
-
-Record: **Category (g) logic/correctness + hardware workaround.**
-Reprogramming timing-critical MCR0/DLL registers on a live FlexSPI
-controller violates documented hardware sequencing. The probe path
-already does this correctly; runtime `select_mem()` did not.
-
-**Step 2.4 – Fix quality**
-
-Record:
-- **Obviously correct:** Yes — mirrors existing probe/cleanup MDIS usage
-  in the same file.
-- **Minimal:** Yes — ~14 lines, no refactoring.
-- **Regression risk:** Low overall. **Minor concern:** pre-existing
-  early `return` on `clk_set_rate()` / `clk_prep_enable()` failure would
-  now leave MDIS=1 (module disabled). These paths existed before; stop
-  mode makes failure state slightly worse, but `clk_set_rate()` failure
-  is rare and the function already had unsafe early returns.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1 – Blame**
-
-Record: Lines 899–929 in current tree blame to `10eaa4c4a2579` (tree
-import artifact; entire `spi-nxp-fspi.c` arrived with stable tree). The
-runtime reconfiguration path without stop mode has been present since
-the driver exists in this tree.
-
-**Step 3.2 – Fixes: tag**
-
-Record: N/A — no Fixes: tag in commit message.
-
-**Step 3.3 – Related file history**
-
-Record:
-- `51c52e493346f` — v2-1 per-SoC rate limits (already in tree; does
-  **not** include stop mode)
-- `40ad64ac25bb7` — ACPI fwnode propagation
-- No stop-mode fix already present
-
-**Step 3.4 – Author context**
-
-Record: Haibo Chen (NXP) authored both `51c52e493346f` (v2-1) and this
-v2-2 patch. Frank Li (NXP) reviewed. Mark Brown (SPI maintainer)
-committed.
-
-**Step 3.5 – Dependencies**
-
-Record: Part of `fspi-clock-v2` 2-patch series. **v2-1 is already in
-this tree.** This patch is standalone — it only wraps existing
-reconfiguration in stop mode and does not depend on v2-1’s data
-structures. Can apply cleanly to current `nxp_fspi_select_mem()`.
+### Step 2.4: Fix Quality
+**Record:**
+- **Obviously correct:** Yes — duplicates the proven fixup already used
+  for the same laptop model (`8a06` entry, present in this tree at line
+  6842).
+- **Minimal:** One line, no unrelated changes.
+- **Regression risk:** Very low — only affects machines with PCI SSID
+  `103c:8a05`; uses existing, tested fixup type.
+- **Red flags:** None.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 3: Git History Investigation
 
-**Step 4.1 – Original discussion**
+### Step 3.1: Blame
+**Record:**
+- `0x8a06` Dragonfly Folio G3 quirk introduced by `302eb87651326`
+  (upstream `0a10faad5ca5`), committed to this tree 2026-08-09.
+- `0x8a05` entry does **not** exist in this tree (`git log -S "0x8a05"`
+  on `alc269.c` returns empty).
+- The incomplete coverage (only `8a06`) has existed since the
+  prerequisite landed ~1 week before HEAD.
 
-Record: **UNVERIFIED** — `b4 dig -c` could not run (commit not in tree);
-lore.kernel.org and patch.msgid.link returned 403/bot protection. Link
-confirms patch `fspi-clock-v2-2` from NXP.
+### Step 3.2: Fixes: Tag
+**Record:** No `Fixes:` tag. Prerequisite commit referenced in message
+body: `0a10faad5ca5` — present in this tree as `302eb87651326`. That
+commit added the incomplete `8a06`-only quirk; this commit completes
+coverage for the `8a05` PCI variant.
 
-**Step 4.2 – Reviewers**
+### Step 3.3: Related File History
+**Record:** Recent related commits in this tree:
+- `302eb87651326` — add quirk for HP Dragonfly Folio G3 (`8a06`)
+- `6b2c0cd5f9689` — Fix speakers on Legion Pro 7 with mismatched
+  codec/PCI SSID (same class of bug, already backported here)
+- `7484669d1fbab`, `12e43f99242b0` — other quirk additions
 
-Record: **UNVERIFIED** via b4 dig -w. Commit message shows Reviewed-by:
-Frank Li (NXP), Signed-off-by: Mark Brown (SPI maintainer).
+Standalone fix; not part of a multi-patch series.
 
-**Step 4.3 – Bug report**
+### Step 3.4: Author Context
+**Record:** Michael Diesen has no prior commits in
+`sound/hda/codecs/realtek/` in this tree. Patch carries maintainer sign-
+off from Takashi Iwai.
 
-Record: No Reported-by or syzbot link. Bug inferred from RM requirement
-and inconsistency with probe init.
-
-**Step 4.4 – Series context**
-
-Record: `fspi-clock-v2` series:
-- v2-1 (`51c52e493346f`) — per-SoC SDR/DTR limits — **in tree**
-- v2-2 (this commit) — stop mode before MCR0/DLL reconfig — **not in
-  tree**
-
-**Step 4.5 – Stable list**
-
-Record: **UNVERIFIED** — could not search lore stable archive (403).
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1 – Key functions**
-
-Record: `nxp_fspi_select_mem()` modified; calls
-`nxp_fspi_select_rx_sample_clk_source()`, `nxp_fspi_dll_calibration()`,
-`nxp_fspi_dll_override()`.
-
-**Step 5.2 – Callers**
-
-Record: `nxp_fspi_select_mem()` called from `nxp_fspi_exec_op()` (line
-1121), which is the `spi_mem` exec_op handler — invoked on every SPI
-flash memory operation when CS, DTR/STR mode, or frequency changes.
-
-**Step 5.3 – Callees**
-
-Record: `fspi_readl`/`fspi_writel` on MCR0,
-`nxp_fspi_select_rx_sample_clk_source()` (writes MCR0 RXCLKSRC),
-`clk_set_rate`, `nxp_fspi_dll_calibration()`/`nxp_fspi_dll_override()`
-(write DLLACR/DLLBCR).
-
-**Step 5.4 – Reachability**
-
-Record: **Userspace-reachable** via MTD/SPI-NOR flash access on NXP
-platforms. Triggered when:
-- Switching between chip-selects (multi-flash boards)
-- Switching DTR ↔ STR mode (e.g., after `spi_nor_suspend` per driver
-  comment at line 754)
-- Changing operation frequency
-
-**Step 5.5 – Similar patterns**
-
-Record: Probe init (lines 1244–1252) and cleanup (line 1352) already use
-`FSPI_MCR0_MDIS`. `select_mem()` was the inconsistent outlier. Driver
-comment at lines 749–751 notes DTR mode without proper RXCLKSRC “read
-operation may meet issue.”
+### Step 3.5: Dependencies
+**Record:**
+- **Requires:** `ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED` fixup type and
+  `302eb87651326` (`8a06` quirk) — both present in this tree.
+- **Can apply standalone:** Yes — single-line table entry insertion
+  immediately before existing `8a06` line.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
+## Phase 4: Mailing List and External Research
 
-**Step 6.1 – Buggy code present?**
+### Step 4.1: Original Discussion
+**Record:** UNVERIFIED — `b4 dig -c <commit>` could not be run (commit
+not present in this checkout). `WebFetch` and `curl` to
+lore.kernel.org/patch.msgid.link blocked by Anubis bot protection.
 
-Record: **Yes.** Current `nxp_fspi_select_mem()` at lines 899–929
-reprograms MCR0/DLL without entering stop mode. Commit is **not** yet
-applied.
+### Step 4.2: Reviewers
+**Record:** UNVERIFIED via b4 dig -w. Commit message shows Takashi Iwai
+(subsystem maintainer) as committer sign-off.
 
-**Step 6.2 – Backport complications**
+### Step 4.3: Bug Report
+**Record:** No external bug tracker link. Author-provided dmesg excerpts
+in commit message serve as reproduction evidence.
 
-Record: **Clean apply expected.** Only adds `u32 reg` and MDIS set/clear
-around existing code. No structural conflicts with recent changes.
+### Step 4.4: Related Patches
+**Record:** Follow-up to `0a10faad5ca5` / `302eb87651326`. Same pattern
+as `6b2c0cd5f9689` (Legion Pro dual-SSID speaker fix, already in
+6.18.y).
 
-**Step 6.3 – Related fixes already present?**
-
-Record: **No.** `git log --grep='stop mode'` returns nothing. v2-1 rate
-limits are present but stop-mode fix is absent.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-**Step 7.1 – Subsystem and criticality**
-
-Record: **drivers/spi** — NXP FlexSPI controller
-(`CONFIG_SPI_NXP_FLEXSPI`, depends on `ARCH_LAYERSCAPE || ARCH_MXC`).
-**IMPORTANT** for NXP embedded (i.MX8, i.MX95, LX2160A) — boot/storage
-flash lives on this controller.
-
-**Step 7.2 – Activity**
-
-Record: Active — recent commits `51c52e493346f`, `40ad64ac25bb7` in this
-tree.
+### Step 4.5: Stable List History
+**Record:** UNVERIFIED — could not search lore.kernel.org/stable due to
+bot protection.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## Phase 5: Code Semantic Analysis
 
-**Step 8.1 – Who is affected**
+### Step 5.1: Key Functions
+**Record:**
+- `alc269_fixup_tbl[]` — quirk table (modified)
+- `snd_hda_pick_fixup()` — fixup selection (caller, unchanged)
+- `cs35l41_fixup_spi_four()` — fixup handler for selected entry
+  (unchanged)
+- `alc269_probe()` — calls `snd_hda_pick_fixup()` during codec probe
 
-Record: **Platform-specific** — NXP i.MX and Layerscape boards using
-FlexSPI for SPI-NOR flash (common boot media).
+### Step 5.2: Callers
+**Record:** `alc269_probe()` → `snd_hda_pick_fixup(codec,
+alc269_fixup_models, alc269_fixup_tbl, alc269_fixups)` at line 8471.
+Called during HDA codec driver probe on every Realtek ALC269-family
+codec initialization.
 
-**Step 8.2 – Trigger conditions**
+### Step 5.3: Callees
+**Record:** Selected fixup `ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED`
+calls `cs35l41_fixup_spi_four()` which calls `comp_generic_fixup()` to
+bind four SPI CS35L41-HDA amplifiers, then chains
+`ALC285_FIXUP_HP_GPIO_LED` for mute LED.
 
-Record: Chip-select switch, DTR/STR mode change, or frequency change
-during flash I/O. Moderately common on multi-CS or DTR-capable setups.
-Unprivileged users can trigger via normal flash/MTD access.
+### Step 5.4: Reachability
+**Record:** Triggered at boot/module load when `snd-hda-intel` probes
+the HDA codec on HP Dragonfly Folio G3 hardware with PCI SSID
+`103c:8a05`. Common laptop audio path; affects all users of that
+hardware variant.
 
-**Step 8.3 – Failure mode severity**
-
-Record: **Flash read corruption or failures** when timing registers are
-reprogrammed on an active controller. Severity: **HIGH** for affected
-platforms (silent data corruption risk on NOR flash reads).
-
-**Step 8.4 – Risk/benefit**
-
-Record:
-- **Benefit:** HIGH for NXP embedded users — prevents unreliable flash
-  reads during runtime reconfiguration.
-- **Risk:** LOW — small change, matches existing probe pattern, NXP-
-  reviewed.
-- **Ratio:** Strong benefit, low risk.
+### Step 5.5: Similar Patterns
+**Record:** Multiple HP laptops in the same table use
+`ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED` (e.g., `0x89c3`, `0x8a06`,
+`0x8b63`). Same dual-SSID pattern fixed for Lenovo Legion Pro in
+`6b2c0cd5f9689`.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
 
-**Evidence FOR backport:**
-- Fixes real hardware programming sequence violation
-- Probe init already uses stop mode; runtime path was wrong by
-  comparison
-- Can cause flash read instability/corruption on CS/mode/freq switches
-- Small (~14 lines), surgical, NXP-reviewed
-- Buggy code confirmed present in Linux 6.18.44 tree
-- v2-1 prerequisite already in tree; patch applies standalone
-- Hardware workaround / correctness fix category
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** Tree is `v6.18.44` / `6.18.44` on
+`stable/linux-6.18.y`. File `sound/hda/codecs/realtek/alc269.c` exists
+with `0x8a06` Dragonfly quirk at line 6842 but **no** `0x8a05` entry.
+The bug (incomplete SSID coverage) is live in this tree since
+`302eb87651326` landed.
 
-**Evidence AGAINST:**
-- No explicit user bug report or syzbot finding
-- Platform-specific driver (not universal)
-- Early-return error paths could leave MDIS=1 (pre-existing pattern,
-  rare trigger)
-- Mailing list discussion unverified
+### Step 6.2: Backport Complications
+**Record:** **Clean apply expected** — one-line insertion before
+existing `8a06` entry. Table is already sorted (`8a05` < `8a06`). No
+structural divergence from mainline diff context.
 
-**Stable rules checklist:**
+### Step 6.3: Related Fixes Already Present?
+**Record:** Prerequisite `302eb87651326` (`8a06` quirk) is an ancestor
+of HEAD. No `8a05` fix found. No duplicate fix for this SSID.
 
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — matches probe pattern;
-NXP-reviewed |
-| 2. Fixes real bug affecting users? | **PASS** — RM violation on live
-controller during flash ops |
-| 3. Important issue? | **PASS** — flash read corruption risk, HIGH for
-NXP platforms |
-| 4. Small and contained? | **PASS** — single function, ~14 lines |
-| 5. No new features/APIs? | **PASS** — sequencing fix only |
-| 6. Can apply to local tree? | **PASS** — buggy code present, clean
-apply expected |
+---
 
-**Exception category:** Hardware workaround / correctness fix for
-timing-critical register programming.
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem
+**Record:** `sound/hda` — Realtek HDA codec driver. **Criticality:
+IMPORTANT** (peripheral driver, but affects core laptop functionality
+for affected users).
+
+### Step 7.2: Activity
+**Record:** Actively maintained — multiple quirk commits in recent
+6.18.y history (TongFang, Legion, HP, Samsung, Lenovo entries in last
+~20 commits).
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users of HP Dragonfly Folio G3 2-in-1 laptops reporting PCI
+SSID `103c:8a05` with ALC245 codec. Driver-specific, platform-specific.
+
+### Step 8.2: Trigger Conditions
+**Record:** Every boot on affected hardware when HDA codec probes. Not
+timing-dependent. Not userspace-triggerable for exploitation; hardware
+identity match only. **Likelihood:** Certain on affected units.
+
+### Step 8.3: Failure Mode Severity
+**Record:** Internal speakers completely non-functional; CS35L41
+amplifiers not registered; mute LED broken. **Severity: MEDIUM** —
+functional hardware breakage, not kernel crash/corruption, but makes the
+machine's primary audio output unusable without workarounds.
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Restores speaker audio and mute LED on affected premium
+  laptops; completes fix started by `302eb87651326`.
+- **Risk:** Very low — one-line quirk using existing fixup, narrow
+  hardware match.
+- **Ratio:** Strongly favorable.
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Summary
+
+**FOR backport:**
+- Real hardware bug with documented dmesg evidence
+- Silent internal speakers on affected laptop model
+- One-line hardware quirk — textbook stable exception category
+- Uses existing, proven fixup already in tree
+- Prerequisite commit already backported to 6.18.y
+- ALSA maintainer (Takashi Iwai) sign-off
+- Same dual-SSID pattern already accepted in this tree (`6b2c0cd5f9689`)
+- Trivial, obviously correct change
+
+**AGAINST backport:**
+- No kernel crash, security issue, or data corruption
+- Affects only one hardware variant
+- Mailing list review details unverified
+
+**UNRESOLVED:**
+- Full lore.kernel.org review thread inaccessible
+- No explicit `Tested-by:` in commit message
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — mirrors existing `8a06`
+   entry; author tested on hardware per message
+2. Fixes a real bug affecting users? **PASS** — silent speakers on real
+   laptop
+3. Important issue? **PASS** — complete loss of internal speaker audio
+   (MEDIUM severity hardware functionality)
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features or APIs? **PASS** — hardware quirk only
+6. Can apply to local tree? **PASS** — prerequisite present, clean one-
+   line apply
+
+### Step 9.3: Exception Category
+**Record:** Hardware quirk/workaround for broken/misidentified PCI SSID
+on existing supported hardware. Automatic stable qualification per
+documented exception rules.
+
+### Step 9.4: Decision Rationale
+This commit completes speaker support for HP Dragonfly Folio G3 2-in-1
+on the 6.18.y stable tree. The prerequisite `8a06` quirk was already
+backported but only covers one PCI SSID variant; units with `103c:8a05`
+still have silent speakers. The fix is a single `SND_PCI_QUIRK` line
+reusing an existing fixup — minimal risk, clear user benefit, and
+directly analogous to other speaker quirk fixes already accepted in this
+stable series.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags (Reviewed-by Frank Li, Link to v2-2),
-  body — no Reported-by/syzbot
-- [Phase 2] Diff analysis: adds MDIS stop-mode window in
-  `nxp_fspi_select_mem()`, +14 lines
-- [Phase 3] `git blame -L 899,929`: buggy path in current tree; `git log
-  --oneline -- drivers/spi/spi-nxp-fspi.c`: v2-1 present, stop-mode fix
-  absent
-- [Phase 3] `51c52e493346f` confirmed as v2-1 already in tree; stop mode
-  not included
-- [Phase 3] `git merge-base --is-ancestor f43579ef3500 HEAD`: f43579 NOT
-  ancestor (stable import), but runtime reconfig code exists
-- [Phase 4] b4 dig: commit not in tree, could not run `-c`
-- [Phase 4] lore.kernel.org / patch.msgid.link: 403 Forbidden —
-  **UNVERIFIED** discussion content
-- [Phase 5] `nxp_fspi_select_mem()` called from `nxp_fspi_exec_op()`
-  line 1121 — flash hot path
-- [Phase 5] Probe lines 1244–1252 use MDIS before DLL config; cleanup
-  line 1352 uses MDIS
-- [Phase 6] `git describe HEAD`: v6.18.44; buggy code at lines 899–929
-  confirmed by read
-- [Phase 6] `git log --grep='stop mode'`: no matches — fix not yet
-  applied
-- [Phase 7] `CONFIG_SPI_NXP_FLEXSPI` in drivers/spi/Kconfig,
-  ARCH_MXC/ARCH_LAYERSCAPE
-- [Phase 8] Supported SoCs: imx8mm/mp/qxp/dxl/ulp/95, lx2160a (device
-  table lines 1522–1529)
+- [Phase 1] Parsed subject, tags, body from provided commit message
+- [Phase 1] Identified maintainer sign-off (Takashi Iwai), Link: tag
+  present
+- [Phase 2] Diff analysis: +1 line in `alc269_fixup_tbl[]`,
+  `SND_PCI_QUIRK(0x103c, 0x8a05, ...)`
+- [Phase 3] `git describe HEAD`: `v6.18.44`; `make kernelversion`:
+  `6.18.44`
+- [Phase 3] `git blame` line 6842: `8a06` quirk from `302eb87651326`
+- [Phase 3] `git log -S "0x8a05" -- sound/hda/codecs/realtek/alc269.c`:
+  empty (fix not in tree)
+- [Phase 3] `git show 302eb87651326`: prerequisite adds `8a06` quirk,
+  upstream `0a10faad5ca5`
+- [Phase 3] `git merge-base --is-ancestor 302eb87651326 HEAD`:
+  prerequisite confirmed in tree
+- [Phase 3] `git show 6b2c0cd5f9689`: similar dual-SSID speaker fix
+  already in 6.18.y
+- [Phase 4] `b4 dig -c`: not run — commit not in checkout
+- [Phase 4] UNVERIFIED: lore.kernel.org and patch.msgid.link blocked by
+  Anubis
+- [Phase 5] Read `snd_hda_pick_fixup()` at
+  `sound/hda/common/auto_parser.c:1066-1078`: PCI SSID matching
+  confirmed
+- [Phase 5] Read `ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED` at
+  `alc269.c:6158-6162`: uses `cs35l41_fixup_spi_four`
+- [Phase 5] Read `cs35l41_fixup_spi_four()` at `alc269.c:3218-3221`:
+  binds 4 SPI amplifiers
+- [Phase 5] `alc269_probe()` calls `snd_hda_pick_fixup()` at line 8471
+- [Phase 6] Grep `0x8a05` in `alc269.c`: not found; `0x8a06` at line
+  6842 present
+- [Phase 6] Fixup type `ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED` exists
+  with multiple other HP entries
+- [Phase 6] `cs35l41_hda` driver files present under
+  `sound/hda/codecs/side-codecs/`
+- [Phase 7] `git log --oneline -20 -- sound/hda/codecs/realtek/`: active
+  quirk maintenance
+- [Phase 8] Failure mode: silent speakers, not kernel crash — MEDIUM
+  severity
 
-This is a small, hardware-correctness fix that prevents reprogramming
-timing-critical FlexSPI registers while the controller is active — a
-documented violation that can cause flash read failures on NXP embedded
-platforms. The fix mirrors the probe init sequence already in the
-driver, applies cleanly to 6.18.44, and its series prerequisite is
-already present.
+**YES**The background searches finished and match the earlier analysis:
 
-**YES**The background `git log -S 'select_rx_sample_clk_source'` search
-timed out and was killed; it wasn’t needed for the verdict — the
-relevant history was already covered via blame, file log, and reading
-the current `nxp_fspi_select_mem()` code.
+- **`8a05` quirk search:** No commit adding `103c:8a05` to `alc269.c`
+  exists in this 6.18.44 tree.
+- **Michael Diesen commit search:** No matching commit from that author;
+  unrelated `8a05` hits elsewhere in history are not this ALSA fix.
 
-**Conclusion for Linux 6.18.44:** backport **YES**. The driver
-reprograms MCR0/DLL timing registers at runtime without entering stop
-mode, while probe init already does — a small hardware-correctness fix
-that can affect flash read reliability on NXP i.MX/Layerscape platforms
-when switching chip-select, DTR/STR mode, or frequency.
+So the prerequisite `8a06` quirk is present, but the `8a05` entry is
+still missing — backporting this one-line quirk to 6.18.y is warranted.
 
- drivers/spi/spi-nxp-fspi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
-index 69ab72fff19d2..5cdd14d72c34c 100644
---- a/drivers/spi/spi-nxp-fspi.c
-+++ b/drivers/spi/spi-nxp-fspi.c
-@@ -867,6 +867,7 @@ static int nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
- 	unsigned long rate = op->max_freq;
- 	int ret;
- 	uint64_t size_kb;
-+	u32 reg;
- 
- 	/*
- 	 * Return when following condition all meet,
-@@ -896,6 +897,15 @@ static int nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
- 
- 	dev_dbg(f->dev, "Target device [CS:%x] selected\n", spi_get_chipselect(spi, 0));
- 
-+	/*
-+	 * Per the FlexSPI reference manual (initialization sequence), MCR0 and
-+	 * the DLL control registers should be configured while the module is in
-+	 * stop mode (MCR0[MDIS] = 1). Enter stop mode before reconfiguring the
-+	 * RX sample clock source and the DLL, then exit stop mode afterwards.
-+	 */
-+	reg = fspi_readl(f, f->iobase + FSPI_MCR0);
-+	fspi_writel(f, reg | FSPI_MCR0_MDIS, f->iobase + FSPI_MCR0);
-+
- 	nxp_fspi_select_rx_sample_clk_source(f, op_is_dtr);
- 	rate = min(f->max_rate, op->max_freq);
- 
-@@ -935,6 +945,10 @@ static int nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
- 	else
- 		nxp_fspi_dll_override(f);
- 
-+	/* Exit stop mode now that MCR0 and the DLL have been reconfigured. */
-+	reg = fspi_readl(f, f->iobase + FSPI_MCR0);
-+	fspi_writel(f, reg & ~FSPI_MCR0_MDIS, f->iobase + FSPI_MCR0);
-+
- 	f->pre_op_rate = op->max_freq;
- 
- 	f->selected = spi_get_chipselect(spi, 0);
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 2a0a1891ac423..5a0672fc82284 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6891,6 +6891,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x89da, "HP Spectre x360 14t-ea100", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x89e7, "HP Elite x2 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8a05, "HP Dragonfly Folio G3 2-in-1", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a06, "HP Dragonfly Folio G3 2-in-1", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a0f, "HP Pavilion 14-ec1xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a1b, "HP 255 15.6 inch G9 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
 -- 
 2.53.0
 
