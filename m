@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8374655820B;
-	Mon, 31 Aug 2026 13:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBE1559C8C;
+	Mon, 31 Aug 2026 13:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184036; cv=none; b=Z64RtRXsjoh6ro5RjefUbtqbHeoY4VPQYHxP8ykI+LnEjT4lAZ6JzJc+xlKWz7DkPe5w7RC5jOh8MrMvQ2ESNE0mUxAbgk05A8ZQvnJpKHWsY3GnXO/4MzDRCKjy9yrCxxf9tRy80Uf+ZBMcCGa6MbCax27gEM3NNXiaBW+mUNw=
+	t=1788184037; cv=none; b=I0WOh5Q2nA88vfr9mpPMLYOUSs4aMQYT+f6qItQxewjiaBHP4fbLSQd4UkyoLFgbAUMQCPji2F3wGsO8eNjs0FiBUSq5HpTWc9QadNbwzBxE7NGtqZMDhpqG31BEw8fDJIRZoO3pcoiDola3kGA77blLrhg803CvMpY6cbKYHD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184036; c=relaxed/simple;
-	bh=NcK4P1CGk+aDIjSRTj+dtZpbuS52Zgf27SntGYnC+9M=;
+	s=arc-20240116; t=1788184037; c=relaxed/simple;
+	bh=OGBNe6Of555E3cMhokYzTCprUdg5piyVluzuP1eNiMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZQr1L2OdYNRMAAu797rIHNiLDpB5cFta9AZcUmdT/RV9CgA9fDWXhfrBASX85o3niWeqePNEeZFIrcie19jQnob3SxQebDvz+OM8+FQ1THbHSf3k6W3Bb/YF0PzGOXceKUUgGWI8tjxKCJSTuNVpG9DxPqav6RxlohX+d44dh2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/p7rej7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bMFvt7/LoKyWwHJ1OCU/bmHxzaj5ZCmvfM1m91DOtupjCtzOFq6X136jPsPj7jM/Dnpv+xFiz4s63k1FZQO0CTCjbUd0wUGxKdD1tmcmRVa+uqJjut4VG/vmhaB6SIvSxmX0BGGGNnppizxpwfoxQjigSW+WhsU7wbAEhIZB7Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EEeFzdGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/p7rej7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3B61F00A3F;
-	Mon, 31 Aug 2026 13:47:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EEeFzdGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC05A1F00ACF;
+	Mon, 31 Aug 2026 13:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184033;
-	bh=WbiPvEsz4cjRvtCEuN3SotjWZZ8/mhoflAbKzVEP7kg=;
+	s=k20260515; t=1788184035;
+	bh=Mt5YSHE4bKinXdaYDMwvfpUDb934LVODG8gkA2CRJLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/p7rej7y/TXWVtz0VyET6fOVjxjP65ApHQCcZdVqPpI8bQeUiDyq5H6RQ7HIZ6Dn
-	 6iQ+I6M90GBT4xRk+rJmsbzPeFPK7ZtKkRUj0F4QolnFg5jGgxqwPawpBIZmypfgZn
-	 Co2QGj7MXw1WAWXhVZb08RQ7x5FQ3uNUMhNWTBmSMvgM2ze9zx/7DSirO2JdxkjWbE
-	 n9NRMAz71J381LHkfWm1IXIjdJhJLcEv04o/LcwvB4/pjel2LYbOnUfqSR++iscBDX
-	 SFbu6YjLrj5b5kEOG3Ciig1wLamPQaq9BQzZl+xbAeB0P6A+TyqoBsIIMWOWE6EZd6
-	 DHsZCjwDzvA5g==
+	b=EEeFzdGZscG7bUIgFAY+id07Din3hIFNbtyaZsMmrrDVVv81WMwzGsKVdnu7l5u82
+	 LuR9fgyhPlPK6CfwMi/XkarjO05dm5p4UL+npuQIYQgZv44K4ISGKVuPyWZyZXP2IN
+	 LSONJMZPbo3mQJgE/Z8OGqxVFHj4/yPaD0YbkT/BGov5exG2NWTLR5DB5hchDAai3f
+	 JCtejl2D3XHRID+YxlxX3EC+iwd1SAuoavbOqRnyJoyej35Qg5NxaRAPnNclQx5hK8
+	 DJ4chb/DcXLoK9N7e4Smrl/gFrNUZOmhB8Dj1PmU9pMAUv7WyDEKF3Wfu/mbV/cPkU
+	 KLDl7UxvwqUBA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kory Maincent <kory.maincent@bootlin.com>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Rosen Penev <rosenp@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-hwmon@vger.kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] hwmon: (adt7462) Add of_match_table to support devicetree
-Date: Mon, 31 Aug 2026 09:27:59 -0400
-Message-ID: <20260831133314.4125787-451-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] net: ibm: emac: Reserve VLAN header in MJS limit
+Date: Mon, 31 Aug 2026 09:28:00 -0400
+Message-ID: <20260831133314.4125787-452-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,400 +56,389 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit cd1b42617aafe01810ab7d3b9948d2f5fa9fb8af ]
+[ Upstream commit 0906c117f81c2ae6e6dbfa82719f79c75e1c9325 ]
 
-Add of_match_table to add support of devicetree probing.
+The IBM EMAC programs its Maximum Jumbo Size (MJS) drop
+threshold from ndev->mtu directly. The hardware sizes the threshold
+against the L2 frame minus the ethernet header, but does not
+discount the 802.1Q tag, so a frame carrying a VLAN tag and a full
+1500-byte payload exceeds MJS by exactly 4 bytes and is dropped.
 
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-[rgantois: Removed of_match_ptr().]
-Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
-Link: https://lore.kernel.org/r/20260608-adt7462-bindings-v2-1-272982c40325@bootlin.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This is normally hidden because JPSM (and therefore the MJS check)
+only engages when the MTU is raised above ETH_DATA_LEN.  With the
+qca8k DSA tagger the conduit MTU is bumped by QCA_HDR_LEN to 1502
+during dsa_conduit_setup(), which is enough to enable JPSM and
+expose the off-by-VLAN-tag in the limit.
+
+Pad MJS by VLAN_HLEN so a VLAN-tagged full-MTU frame passes.
+
+Reported on Meraki MX60 (qca8k switch): tagged VLAN
+traffic drops at 1500-byte payload, while 1496 bytes works
+and untagged 1500 bytes works.
+
+Assisted-by: Claude:Opus-4.7
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `hwmon: (adt7462) Add of_match_table to
-support devicetree`
-
-**Local tree:** `v6.18.44` (Makefile: VERSION=6, PATCHLEVEL=18,
-SUBLEVEL=44)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
 ### Step 1.1: Subject Line
-**Record:** `[hwmon/adt7462]` `[Add]` — Add `of_match_table` to enable
-Device Tree probing for the existing ADT7462 hwmon driver.
+**Record:** `[net: ibm: emac]` `[Reserve]` — Reserve VLAN header space
+in the Maximum Jumbo Size (MJS) hardware limit.
 
 ### Step 1.2: Tags
 **Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none (Guenter Roeck committed it as hwmon
-  maintainer)
-- **Acked-by:** — none
-- **Link:** https://lore.kernel.org/r/20260608-adt7462-bindings-v2-1-
-  272982c40325@bootlin.com
-- **Cc: stable:** — none
-- **Signed-off-by:** Kory Maincent, Romain Gantois (noted removal of
-  `of_match_ptr()`), Guenter Roeck
-
-No syzbot, no user bug reports, no explicit stable nomination in commit
-message.
+- **Link:**
+  https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
+- **Assisted-by:** Claude:Opus-4.7
+- **Signed-off-by:** Rosen Penev \<rosenp@gmail.com\>
+- **Signed-off-by:** Paolo Abeni \<pabeni@redhat.com\> (net maintainer,
+  committer)
+- No Fixes:, Reported-by:, Cc: stable@vger.kernel.org, Tested-by:, or
+  Reviewed-by: in commit message
+- Notable: Real-world hardware report in body (Meraki MX60); maintainer
+  ack on commit
 
 ### Step 1.3: Body Analysis
 **Record:**
-- **Bug described:** The ADT7462 I2C hwmon driver lacks an
-  `of_match_table`, so it cannot be probed via Device Tree even when a
-  DT node declares `compatible = "onnn,adt7462"`.
-- **Symptom:** Fan controller / temperature monitor chip is not bound on
-  DT-based platforms; hwmon sensors never appear.
-- **Root cause:** Driver was written for legacy I2C detect probing only;
-  DT binding was added separately without the corresponding driver OF
-  table.
+- **Bug:** IBM EMAC APM821xx programs MJS from `ndev->mtu`. Hardware
+  compares frame size minus Ethernet header against MJS but does not
+  account for the 802.1Q VLAN tag (4 bytes).
+- **Symptom:** VLAN-tagged frames with a 1500-byte payload are dropped;
+  1496-byte payloads and untagged 1500-byte payloads work.
+- **Trigger:** JPSM/MJS only engages when MTU > `ETH_DATA_LEN` (1500).
+  With qca8k DSA, `dsa_conduit_setup()` sets conduit MTU to
+  `ETH_DATA_LEN + QCA_HDR_LEN` = 1502, enabling JPSM and exposing the
+  off-by-4 bug.
+- **Root cause:** MJS threshold is 4 bytes too small for VLAN-tagged
+  full-MTU frames.
+- **Version info:** None explicit; bug latent since jumbo/MJS support
+  was added (2012).
 
 ### Step 1.4: Hidden Bug Fix?
-**Record:** Not a crash/leak/race fix. This is **hardware enablement** —
-completing DT integration that was partially merged. The driver probe
-path itself is unchanged; only the matching mechanism is added.
-Classified as a functional gap, not a hidden memory-safety fix.
+**Record:** No — this is an explicit hardware-limit bug fix, not
+disguised cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/hwmon/adt7462.c` — +8 lines, 0 removed
-- **Functions modified:** None functionally; changes are at
-  module/driver registration level
-- **Scope:** Single-file, surgical addition
+- **File:** `drivers/net/ethernet/ibm/emac/core.c` (+2, -1 functional;
+  +1 include)
+- **Functions modified:** `emac_iff2rmr()`
+- **Scope:** Single-file surgical fix
 
 ### Step 2.2: Code Flow Change
 **Record:**
-- **Hunk 1 (include):** Adds `#include <linux/mod_devicetable.h>` for
-  `MODULE_DEVICE_TABLE(of, ...)`.
-- **Hunk 2 (of_match table):** Adds `adt7462_of_match[]` with `{
-  .compatible = "onnn,adt7462" }` and `MODULE_DEVICE_TABLE(of, ...)`.
-- **Hunk 3 (driver struct):** Sets `.of_match_table = adt7462_of_match`
-  in `adt7462_driver`.
-- **Before:** I2C core could only match via `id_table` or legacy
-  `.detect` on non-DT buses.
-- **After:** I2C core can match DT nodes with `compatible =
-  "onnn,adt7462"` to this driver.
+- **Hunk 1 (include):** Adds `#include <linux/if_vlan.h>` for
+  `VLAN_HLEN`.
+- **Hunk 2 (`emac_iff2rmr`):**
+  - **Before:** `EMAC4_RMR_MJS(ndev->mtu)` — MJS equals netdev MTU.
+  - **After:** `EMAC4_RMR_MJS(ndev->mtu + VLAN_HLEN)` — MJS includes
+    4-byte VLAN headroom.
+  - **Path:** Runs when `EMAC_APM821XX_REQ_JUMBO_FRAME_SIZE` is set,
+    during `emac_configure()` and multicast updates.
 
 ### Step 2.3: Bug Mechanism
-**Record:** **Category (h): Hardware/DT enablement.** On DT platforms,
-I2C devices are instantiated from the device tree at boot. Without
-`of_match_table`, the I2C subsystem has no way to associate the DT node
-with `adt7462_driver`. The `.detect` callback is not used for OF-
-instantiated devices.
+**Record:**
+- **Category:** Logic/correctness — hardware workaround
+- **Mechanism:** Hardware MJS check ignores VLAN tag size; driver must
+  pad MJS by `VLAN_HLEN` (4) so tagged full-MTU frames pass.
 
 ### Step 2.4: Fix Quality
-**Record:** Obviously correct — standard pattern used by dozens of hwmon
-drivers in this tree (e.g., `tmp108.c`, `ltc4282.c`, `sht4x.c`). Minimal
-diff. No regression risk for non-DT users (OF table is only consulted
-for DT nodes). Romain Gantois removed unnecessary `of_match_ptr()`
-wrapper per maintainer feedback.
+**Record:**
+- Fix is minimal and matches the described hardware behavior.
+- Low regression risk: only affects APM821xx EMAC with jumbo/MJS enabled
+  (MTU > 1500).
+- Slightly more permissive MJS is safe; the alternative is incorrect
+  drops.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** `adt7462_driver` structure dates to 2014 (commit
-`a2cc242823399`). Driver has never had `of_match_table`. `.probe`
-updated in 2023 (`1975d167869ef`). The "bug" is longstanding absence of
-DT support, exposed when DT binding and board DTS were added in
-6.13/6.14.
+**Record:**
+- Buggy MJS line introduced in `ae5d33723e3253` (2012-03-05):
+  "powerpc/44x: Add more changes for APM821XX EMAC driver"
+- Present in this tree at `drivers/net/ethernet/ibm/emac/core.c:460`
 
 ### Step 3.2: Fixes: Tag
-**Record:** Not applicable — no `Fixes:` tag present.
+**Record:** N/A — no Fixes: tag.
 
 ### Step 3.3: Related File History
 **Record:**
-- `3d973b98d2744` (v6.13): `dt-bindings: trivial-devices: add
-  onnn,adt7462` — binding added
-- `de153911ffcb6` (v6.14): `ARM: dts: aspeed: Add device tree for
-  Ampere's Mt. Jefferson BMC` — board DTS with `compatible =
-  "onnn,adt7462"` at i2c8:0x5c
-- `cd1b42617aafe` (v7.2, NOT in this tree): driver OF table added
-- Both binding and Jefferson DTS are ancestors of HEAD (v6.18.44);
-  driver fix is NOT
+- Fix commit: `0906c117f81c2` on `all-next` (2026-06-01), not in current
+  HEAD (6.18.44)
+- Recent emac changes on 6.18.y include UAF and NULL-deref fixes; no
+  prior MJS/VLAN fix
+- Standalone single patch (v1 only, no series)
 
 ### Step 3.4: Author Context
-**Record:** Kory Maincent and Romain Gantois (Bootlin). Guenter Roeck
-(hwmon maintainer) committed. No prior hwmon commits from these authors
-in this tree. Maintainer-reviewed and accepted.
+**Record:** Rosen Penev — active networking contributor (DSA/Meraki-
+related work). Committer Paolo Abeni is a net maintainer.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone — no prerequisite commits. Requires only that
-`onnn,adt7462` binding exist (present since v6.13) and that `adt7462.c`
-driver exist (present since v4.x). Patch applies cleanly (`git apply
---check` succeeded).
+**Record:**
+- No patch-series dependencies
+- Exposure path requires `dsa_conduit_setup()` MTU bump — present in
+  this tree since `6ca80638b90ce` (2023-10-24)
+- Applies cleanly: `git apply --check` on `0906c117f81c2` succeeds
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
 ### Step 4.1: Original Discussion
-**Record:** `b4 dig -c cd1b42617aafe` found thread at https://patch.msgi
-d.link/20260608-adt7462-bindings-v2-1-272982c40325@bootlin.com. Part of
-a 2-patch series (v1 added binding, v2 added driver OF table). Lore page
-blocked by bot protection — could not read review thread content.
+**Record:**
+- **URL:**
+  https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
+- **Revisions:** v1 only (2026-05-26)
+- **Key feedback:** Jacob Keller noted dropped packets are user-visible.
+  Paolo Abeni replied it is not a regression ("never worked"), suitable
+  for net-next to enable DSA support. Jacob Keller gave Reviewed-by.
+- **Stable nomination:** None in thread
+- **NAKs:** None
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` shows CC to Guenter Roeck, Rob Herring,
-Krzysztof Kozlowski, Conor Dooley, Thomas Petazzoni, linux-hwmon@,
-devicetree@, linux-kernel@. Appropriate maintainers included.
+**Record:** netdev@vger.kernel.org, Andrew Lunn, David S. Miller, Eric
+Dumazet, Jakub Kicinski, Paolo Abeni CC'd. Reviewed-by: Jacob Keller.
 
-### Step 4.3: Bug Reports
-**Record:** No bug reports, syzbot links, or bugzilla references.
+### Step 4.3: Bug Report
+**Record:** Meraki MX60 with qca8k switch — tagged VLAN traffic drops at
+1500-byte payload. Severity: functional networking breakage (silent
+packet loss).
 
-### Step 4.4: Series Context
-**Record:** v1 (2026-06-03) added DT binding; v2 (2026-06-08) added
-driver OF table. Binding portion was already merged separately in v6.13
-(`3d973b98d2744`); only the driver portion remains missing from this
-tree.
+### Step 4.4: Related Patches
+**Record:** Standalone; no multi-patch series.
 
 ### Step 4.5: Stable List History
-**Record:** Not searched (lore blocked). No stable nomination found in
-commit message.
+**Record:** Not searched separately; no stable discussion found in the
+patch thread.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key Functions
-**Record:** No functions modified. Changes affect `adt7462_of_match[]`
-(new), `adt7462_driver` (registration), and module tables.
+**Record:** `emac_iff2rmr()` — builds Receive Mode Register including
+MJS field.
 
 ### Step 5.2: Callers
-**Record:** `adt7462_probe()` is called by I2C core during device
-binding. Currently unreachable from DT on Ampere Jefferson; after fix,
-reachable when DT node `fan-controller@5c` with `compatible =
-"onnn,adt7462"` is present.
+**Record:**
+- `emac_configure()` (line 668) — device init/reconfigure, link setup,
+  TX reset
+- `__emac_set_multicast_list()` (line 949) — multicast/promisc flag
+  changes
+- `emac_configure()` called from `emac_reinitialize()`,
+  `emac_full_tx_reset()`, and MTU resize path when jumbo mode toggles
 
 ### Step 5.3: Callees
-**Record:** `adt7462_probe()` uses `devm_kzalloc`,
-`devm_hwmon_device_register_with_groups` — unchanged.
+**Record:** `emac_has_feature()`, `EMAC4_RMR_MJS()` macro, netdev
+flag/multicast helpers.
 
 ### Step 5.4: Reachability
-**Record:** On Ampere Mt. Jefferson BMC (`aspeed-bmc-ampere-
-mtjefferson.dts`), the ADT7462 fan controller at I2C bus 8, address 0x5c
-is declared in DT. Without this fix, no driver binds. With fix, probe
-runs at boot on that platform. Not reachable from userspace syscalls;
-platform-specific embedded path.
+**Record:**
+- **Call chain:** DSA setup → `dsa_conduit_setup()` →
+  `dev_set_mtu(1502)` → EMAC jumbo/MJS enabled → tagged VLAN frames at
+  1500 payload hit hardware MJS drop
+- **Userspace reachable:** Yes — normal bridged/VLAN traffic on affected
+  hardware
+- **Config:** `ibm,emac-apm821xx` + qca8k DSA conduit (e.g. Meraki MX60)
 
 ### Step 5.5: Similar Patterns
-**Record:** Standard hwmon DT enablement pattern. Similar commit:
-`393de14673d60 hwmon: (sht21) Add devicetree support` (+13 lines, same
-pattern).
+**Record:** No similar MJS/VLAN padding elsewhere in emac driver; this
+is the only MJS programming site.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Buggy Code Exists?
-**Record:** **YES.** `drivers/hwmon/adt7462.c` in v6.18.44 lacks
-`of_match_table` (verified: no matches for `adt7462_of_match`). DT
-binding (`onnn,adt7462` in `trivial-devices.yaml`, since v6.13) and
-board DTS (`aspeed-bmc-ampere-mtjefferson.dts`, since v6.14) are both
-present. The integration is incomplete in this tree.
+### Step 6.1: Buggy Code in Tree?
+**Record:** **Yes.** Local tree is **Linux 6.18.44**
+(`stable/linux-6.18.y`). Buggy line at `core.c:460`:
+`EMAC4_RMR_MJS(ndev->mtu)`. Bug present since 2012 APM821xx jumbo
+support. Fix commit `0906c117f81c2` is **not** in HEAD.
 
 ### Step 6.2: Backport Complications
-**Record:** **Clean apply.** `git apply --check` on commit diff
-succeeded with no conflicts.
+**Record:** Clean apply expected — `git apply --check` passed with no
+conflicts.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** None. `git log --grep="adt7462.*of_match"` found no matching
-commit in HEAD. Binding commit `3d973b98d2744` is present; driver OF
-table commit `cd1b42617aafe` is NOT.
+**Record:** None for this MJS/VLAN issue.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 7.1: Subsystem
-**Record:** `drivers/hwmon/` — **PERIPHERAL** (specific I2C sensor/fan
-controller driver). Critical for BMC thermal management on affected
-platform but not a core kernel path.
+### Step 7.1: Subsystem Criticality
+**Record:** `drivers/net/ethernet/ibm/emac` — **PERIPHERAL** driver
+(PowerPC APM821xx), but networking correctness on real production
+hardware (Meraki MX60).
 
-### Step 7.2: Activity
-**Record:** hwmon subsystem actively maintained. adt7462 driver last
-touched for struct initialization cleanup (`d8a66f3621c28`). Low churn
-on this specific file.
+### Step 7.2: Subsystem Activity
+**Record:** Moderately active — recent UAF/NULL-deref fixes in 6.18.y;
+DSA conduit infrastructure actively maintained.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who Is Affected
-**Record:** **Platform-specific** — users of Ampere Mt. Jefferson BMC
-(ASPEED AST2600) with `CONFIG_SENSORS_ADT7462=y/m`. Currently the only
-in-tree DTS using `onnn,adt7462`. Enterprise server BMC deployments.
+**Record:** Users of **ibm,emac-apm821xx** (APM821xx SoC) with **qca8k
+DSA** conduit and **VLAN-tagged** traffic at standard MTU. Meraki MX60
+is a confirmed case. Driver already contains Meraki MX60-specific MDIO
+workaround (line 2451).
 
 ### Step 8.2: Trigger Conditions
-**Record:** Boot on DT platform with `compatible = "onnn,adt7462"` node.
-Deterministic — happens every boot on Jefferson BMC. Not triggerable by
-unprivileged users; embedded platform init path.
+**Record:**
+- MTU > 1500 (automatically 1502 with qca8k DSA via
+  `dsa_conduit_setup()`)
+- VLAN-tagged frames with payload at MTU−4 boundary (1500 bytes with MTU
+  1502 conduit overhead accounting)
+- **Likelihood:** High on affected configs for standard enterprise VLAN
+  usage
+- **Unprivileged trigger:** Yes — normal network traffic
 
 ### Step 8.3: Failure Mode Severity
-**Record:** ADT7462 fan controller and temperature sensors never
-initialize. No kernel crash, oops, or data corruption. **Severity:
-MEDIUM** for affected platform (loss of fan monitoring/thermal
-management on server BMC); **LOW** globally (single known board).
+**Record:** Silent **packet drops** for VLAN traffic at full MTU. Not a
+crash or data corruption, but breaks standard VLAN networking.
+**Severity: MEDIUM-HIGH** (functional breakage, silent loss).
 
 ### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** Enables fan/thermal monitoring on Ampere Jefferson BMC;
-  completes DT integration already shipped in this tree. Real hardware
-  fix for a real platform.
-- **Risk:** Very low — 8 lines, standard pattern, no logic changes, no
-  impact on non-DT systems.
-- **Ratio:** Moderate benefit for embedded/BMC users, very low risk.
+- **Benefit:** Restores correct VLAN forwarding on affected hardware;
+  trivial 3-line fix
+- **Risk:** Very low — scoped to APM821xx jumbo path only
+- **Ratio:** Strong benefit for affected users, minimal risk
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- DT binding and Ampere Jefferson board DTS already shipped in v6.18.44
-  without driver OF support — incomplete integration
-- Fan controller is completely non-functional on Jefferson BMC without
-  this fix
-- Tiny (8 lines), obviously correct, applies cleanly
-- Falls under stable **DT exception**: "Enabling already-supported
-  hardware on new boards"
-- Driver already exists; only adds matching glue for already-declared
-  hardware
-- Zero regression risk for existing non-DT users
+- Real user-reported bug (Meraki MX60)
+- Silent packet drops on standard VLAN/MTU traffic
+- Minimal, obviously correct hardware workaround
+- Buggy code and exposure path (DSA conduit MTU bump) both exist in
+  6.18.44
+- Applies cleanly
+- Reviewed on mailing list; maintainer committed
+- Falls under hardware quirk/workaround exception
 
 **AGAINST backport:**
-- Not a crash, security, corruption, or deadlock fix
-- Technically adds DT probing capability (feature addition)
-- Only one in-tree board currently affected
-- No user bug reports or syzbot findings
-- Binding was merged 3 major versions before driver fix — gap has
-  existed since v6.14
+- Narrow hardware scope (APM821xx + qca8k DSA)
+- Not a regression — latent since 2012
+- Paolo routed to net-next as non-regression fix
+- Packet drops, not crash/security/corruption
 
-**Unresolved:**
-- Could not read lore review thread (bot protection) — stable nomination
-  in review unverified
+**Unresolved:** No independent Tested-by on target hardware in commit
+message.
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — standard OF table pattern;
-   maintainer-committed; no functional logic changes
-2. Fixes real bug affecting users? **PASS** — DT-declared hardware is
-   non-functional on Jefferson BMC in this tree
-3. Important issue? **PASS (borderline)** — not crash/security, but loss
-   of fan/thermal monitoring on server BMC is operationally significant
-   for that platform
-4. Small and contained? **PASS** — 8 lines, one file
-5. No new features or APIs? **PASS with exception** — adds DT probing
-   path, but qualifies under DT exception for enabling hardware on
-   boards already in tree
+1. Obviously correct and tested? **PASS** — logic matches hardware
+   behavior; reviewed on list
+2. Fixes real bug affecting users? **PASS** — Meraki MX60 report,
+   reproducible symptoms
+3. Important issue? **PASS** — silent packet loss on standard VLAN
+   traffic (MEDIUM-HIGH)
+4. Small and contained? **PASS** — 3 lines, one file
+5. No new features/APIs? **PASS** — hardware limit correction only
 6. Can apply to local tree? **PASS** — clean apply verified
 
 ### Step 9.3: Exception Category
-**Record:** **Device Tree update** — enabling already-supported hardware
-(ADT7462 via existing driver) on a board (Ampere Mt. Jefferson) whose
-DTS and binding are already present in v6.18.44.
+**Record:** Hardware quirk/workaround — EMAC hardware does not account
+for VLAN tag in MJS calculation.
 
 ### Step 9.4: Decision Rationale
 
-This tree (v6.18.44) already contains the `onnn,adt7462` DT binding
-(since v6.13) and the Ampere Mt. Jefferson BMC device tree (since v6.14)
-declaring a `fan-controller@5c` node. Without the driver's
-`of_match_table`, that hardware cannot be driven — the I2C core has no
-mechanism to bind the existing driver to the DT node. The commit
-completes an integration that was partially merged into this stable
-series.
-
-While this is not a crash or security fix, it is a real functional
-defect for the Jefferson BMC platform and fits the stable exception for
-DT updates that enable hardware on boards already supported in-tree. The
-patch is minimal, standard, and applies cleanly with no regression risk.
+For **Linux 6.18.44**, this fix should be backported. The buggy MJS
+programming and the DSA conduit MTU bump that exposes it are both
+present. On Meraki MX60-class hardware, standard VLAN traffic at
+1500-byte payload is silently dropped — a real, user-visible networking
+failure. The fix is a 3-line hardware workaround with verified clean
+apply and negligible regression risk. Paolo's net-next routing reflects
+that this is not a regression, not that the fix lacks stable merit.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit `cd1b42617aafe`: subject, SOBs, Link tag; no
-  Fixes/Reported-by/syzbot
-- [Phase 2] Diff analysis: +8 lines in `adt7462.c`; adds include,
-  `of_match_table`, `MODULE_DEVICE_TABLE(of)`
-- [Phase 3] `git describe HEAD`: v6.18.44
-- [Phase 3] `git blame` on driver struct: dates to 2014, never had OF
-  table
-- [Phase 3] `3d973b98d2744`: DT binding in tree since v6.13; confirmed
-  ancestor of HEAD
-- [Phase 3] `de153911ffcb6`: Jefferson DTS in tree since v6.14;
-  confirmed ancestor of HEAD
-- [Phase 3] `cd1b42617aafe`: NOT ancestor of HEAD; only on v7.2+
-  branches
-- [Phase 3] `git apply --check`: patch applies cleanly
-- [Phase 4] `b4 dig -c cd1b42617aafe`: found lore thread; v1/v2 series
-  identified
-- [Phase 4] `b4 dig -w`: Guenter Roeck, Rob Herring, Krzysztof Kozlowski
-  CC'd
-- [Phase 4] Lore fetch: blocked by Anubis bot protection — review
-  content UNVERIFIED
-- [Phase 5] Grep `onnn,adt7462`: only in `aspeed-bmc-ampere-
-  mtjefferson.dts` and binding YAML
-- [Phase 5] Read DTS lines 466-472: `fan-controller@5c` with `compatible
-  = "onnn,adt7462"`, `reg = <0x5c>`
-- [Phase 5] Grep `adt7462_of_match` in tree: no matches (fix absent)
-- [Phase 6] Read current `adt7462.c` lines 1811-1826: no
-  `of_match_table` present
-- [Phase 6] Compared with other hwmon drivers: standard `of_match_table`
-  pattern confirmed
-- [Phase 8] Failure mode: no driver binding on DT platform; fan/thermal
-  sensors absent; severity MEDIUM for platform
+- [Phase 1] `git show 0906c117f81c2`: parsed subject, tags, body
+- [Phase 2] Read diff and `core.c:438-464`: confirmed
+  `EMAC4_RMR_MJS(ndev->mtu)` → `+ VLAN_HLEN`
+- [Phase 3] `git blame -L 458,461`: buggy code from `ae5d33723e3253`
+  (2012)
+- [Phase 3] `git merge-base --is-ancestor 0906c117f81c2 HEAD`:
+  NOT_IN_HEAD
+- [Phase 3] `git apply --check` on `0906c117f81c2`: passes
+- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.18.44
+- [Phase 4] `b4 dig -c 0906c117f81c2`: found lore thread
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] `b4 dig -w`: netdev maintainers CC'd
+- [Phase 4] `/tmp/emac_vlan_thread.mbox`: Keller review, Abeni net-next
+  rationale
+- [Phase 5] `grep emac_iff2rmr`: callers at lines 668, 949
+- [Phase 5] Read `net/dsa/conduit.c:419-445`: MTU = `ETH_DATA_LEN +
+  dsa_tag_protocol_overhead()`
+- [Phase 5] Read `net/dsa/tag_qca.c:118`: `needed_headroom =
+  QCA_HDR_LEN` (2)
+- [Phase 5] Read `include/linux/if_vlan.h:16`: `VLAN_HLEN = 4`
+- [Phase 6] `grep EMAC4_RMR_MJS`: buggy code at `core.c:460`
+- [Phase 6] `git merge-base --is-ancestor 6ca80638b90ce HEAD`:
+  conduit_in_tree (2023-10-24)
+- [Phase 6] `git show 6ca80638b90ce:net/dsa/conduit.c`: MTU bump present
+  from introduction
+- [Phase 7] `core.c:2869-2872`: APM821xx feature flag assignment
+  confirmed
+- [Phase 7] `core.c:2451`: existing Meraki MX60 reference in driver
 
-**YES**
+**YES****Verdict: YES** for backport to Linux 6.18.44.
 
- drivers/hwmon/adt7462.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+The commit (`0906c117f81c2` on `all-next`) pads the IBM EMAC APM821xx
+MJS limit by `VLAN_HLEN` so VLAN-tagged full-MTU frames aren’t dropped.
+It isn’t in the current 6.18.y tree yet, but the buggy code and the
+qca8k DSA conduit MTU bump that exposes it are both present, and the
+patch applies cleanly.
 
-diff --git a/drivers/hwmon/adt7462.c b/drivers/hwmon/adt7462.c
-index 174dfee47f7a7..f935c3477b364 100644
---- a/drivers/hwmon/adt7462.c
-+++ b/drivers/hwmon/adt7462.c
-@@ -12,6 +12,7 @@
- #include <linux/hwmon.h>
- #include <linux/hwmon-sysfs.h>
- #include <linux/err.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/mutex.h>
- #include <linux/log2.h>
- #include <linux/slab.h>
-@@ -1814,10 +1815,17 @@ static const struct i2c_device_id adt7462_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, adt7462_id);
+Worth backporting: small hardware workaround for a real Meraki MX60 bug
+(silent VLAN packet loss at 1500-byte payload).
+
+ drivers/net/ethernet/ibm/emac/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
+index e1047915e101e..f48568140480e 100644
+--- a/drivers/net/ethernet/ibm/emac/core.c
++++ b/drivers/net/ethernet/ibm/emac/core.c
+@@ -30,6 +30,7 @@
+ #include <linux/skbuff.h>
+ #include <linux/crc32.h>
+ #include <linux/ethtool.h>
++#include <linux/if_vlan.h>
+ #include <linux/mii.h>
+ #include <linux/bitops.h>
+ #include <linux/of.h>
+@@ -457,7 +458,7 @@ static inline u32 emac_iff2rmr(struct net_device *ndev)
  
-+static const struct of_device_id adt7462_of_match[] = {
-+	{ .compatible = "onnn,adt7462" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, adt7462_of_match);
-+
- static struct i2c_driver adt7462_driver = {
- 	.class		= I2C_CLASS_HWMON,
- 	.driver = {
- 		.name	= "adt7462",
-+		.of_match_table = adt7462_of_match,
- 	},
- 	.probe		= adt7462_probe,
- 	.id_table	= adt7462_id,
+ 	if (emac_has_feature(dev, EMAC_APM821XX_REQ_JUMBO_FRAME_SIZE)) {
+ 		r &= ~EMAC4_RMR_MJS_MASK;
+-		r |= EMAC4_RMR_MJS(ndev->mtu);
++		r |= EMAC4_RMR_MJS(ndev->mtu + VLAN_HLEN);
+ 	}
+ 
+ 	return r;
 -- 
 2.53.0
 
