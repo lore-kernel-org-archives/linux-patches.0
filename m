@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617874CCDE4;
-	Mon, 31 Aug 2026 14:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F094BD0E7;
+	Mon, 31 Aug 2026 14:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185117; cv=none; b=MaE94vUIDH4aNU+oJ24pe42o8mYZeg1cxiNJeX/+roxTLB1/hYurXMc0tRivTtfSyMV6qpYcvYIK1YFfIrjLzqzKYwU+e6l/q7QoUjNaMBES6QQFSA3MVpSoZToenvsksK+nCo60Vo+02YcGUv+Bc3YsWJmEsgalG+RZ5l5I7us=
+	t=1788185086; cv=none; b=MTDsOusjigdrXM1jA6X2v97BIbiV9+ryyqu1Ry+cvKl4MTHp5CWsdnLRmRklOUuDWr7KZiNaeAubRcuhgrGBNeDPltt1sGHiS39GY4meoHKcSfnZnhy9hFQ+KE/qk8OuOy66ijYT7diAQQBJjzK+9ii2bXbCULzi+iSmXRSmAKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185117; c=relaxed/simple;
-	bh=0+bErX1I+bXge9DPk8tfZ7stUtwq7nU1FSKufMAgSm4=;
+	s=arc-20240116; t=1788185086; c=relaxed/simple;
+	bh=L5uzHJjZKPStT7FCFArwJsnvpE9gKQU3dJNuz0Wvh0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mxjf9ctyxVdmuQW4zOheU9/JLIVjFH+xZ1iJ5YWo+MFvUk6LoVAfMD/esi8GPnD69A1ngSZt4nboxk3+iNiBQ1r2Ky/tr6yFCd/POo8TihK32C47DGvd2LSjt2AvOi6ESftjxZxbuDBYf951utVZg9gMZrAjgquCW7ZZgvyMXt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPAGGbB5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KX/u0xy4RcskEfbG3Kh8tD8m7Uj4lkNj7pRStSginJp7l0obNtM6dWNocPWHhklfmKOjG/2fHuHLbNpvCNy9BbKuDQld805K6brZmk5wHxM+pOvm50AkjfaggNFNBzLSf6L3PEDH6XwUSJ/cGH+RwCAPi1H0lz485Ec61w5Hlpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEKLnS5X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPAGGbB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5ED1F00A3D;
-	Mon, 31 Aug 2026 14:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEKLnS5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169D21F000E9;
+	Mon, 31 Aug 2026 14:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185116;
-	bh=psVHp3xLWyZDtVJF3uaL6p2QXXHzsEoWgiGVksF6hT8=;
+	s=korg; t=1788185084;
+	bh=FJzbWwSU310fCWaqksIJsary6cEgETOFnubHjciq02E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPAGGbB5J+q8eYDwqnJvFX5Wwel2SDD2dEC+84TxuLuxj1qai8Mma5HczIjLZl3UG
-	 m/diyMnc+lRc6cctS1M18/7OZeIKFtIklbtNeBoHmOGXhgs7TVjSIGchobXT0fVfv+
-	 4WaF+2owiuv5/kFNHvWQ8wGGKx2yfjpKXl6aWqlA=
+	b=tEKLnS5XY4IXKJIDb7vf91H1KFN1zAp4DEMZuJGiQ6AhtiPdqMkoVMiML49ObV+I5
+	 J2BA1oLoGw76tx3mdkxUhOCFrFnB0s8W+ol1R0haTAk0AhQjxwnAU04LWXTNg+QyNH
+	 o0OBQb0ckLozvBQhDxC1hGY4AwMlGjdQf+1CIwwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Sadre Alam <md.alam@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 58/69] crypto: qce - fix CCM AAD buffer underallocation
-Date: Mon, 31 Aug 2026 15:35:31 +0200
-Message-ID: <20260831133401.642080291@linuxfoundation.org>
+	syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	syzbot@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 48/69] usb: usbtest: disable dynamic ID support
+Date: Mon, 31 Aug 2026 15:35:21 +0200
+Message-ID: <20260831133401.051160157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -51,66 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Sadre Alam <md.alam@oss.qualcomm.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-commit 7f2345f47dd189625f657cd72437179ab4170ee1 upstream.
+commit 00e2071f6d5621a5ddea311a5e6b143ae6e474af upstream.
 
-The AAD buffer allocated in qce_aead_ccm_prepare_buf_assoclen()
-can be smaller than the length later programmed into the DMA
-scatterlist.
+The usbtest driver relies on the driver_info field of struct usb_device_id
+to point to a valid struct usbtest_info descriptor. This structure contains
+essential test configurations, such as endpoint addresses and test modes,
+which are required during probe.
 
-The allocation size is currently calculated as:
+When a user dynamically adds a new device ID via the sysfs new_id
+interface without specifying a reference device, the USB core initializes
+driver_info to 0 (NULL). When a matching device is subsequently probed,
+usbtest_probe() unconditionally casts driver_info to a struct usbtest_info
+pointer and dereferences it, leading to a NULL pointer dereference crash:
 
-  ALIGN(assoclen, 16) + MAX_CCM_ADATA_HEADER_LEN
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  RIP: 0010:usbtest_probe+0x3b9/0x1280 drivers/usb/misc/usbtest.c:2822
 
-while the DMA length is set to:
+Because usbtest strictly requires pre-defined usbtest_info descriptors
+to function, dynamic ID binding via sysfs is fundamentally unsupported
+for this driver.
 
-  ALIGN(assoclen + adata_header_len, 16)
-
-Since ALIGN() does not distribute over addition, the allocation
-can be smaller than the DMA length. For example, when
-assoclen = 32 and adata_header_len = 2:
-
-  allocation = ALIGN(32, 16) + 6 = 38
-  DMA length = ALIGN(32 + 2, 16) = 48
-
-As a result, the QCE hardware can read beyond the allocated
-buffer while computing the CBC-MAC over the associated data.
-The extra bytes are folded into the authentication tag,
-resulting in an incorrect tag and causing CCM self-test
-failures such as:
-
-  alg: aead: ccm-aes-qce encryption test failed (wrong result)
-  on test vector 8
-
-Fix the allocation by adding the maximum possible AAD header
-length before alignment:
-
-  ALIGN(assoclen + MAX_CCM_ADATA_HEADER_LEN, 16)
-
-This guarantees that the allocated buffer is large enough
-for the fully padded AAD data for all supported header sizes.
+Fix this by setting .no_dynamic_id = 1 on usbtest_driver. This instructs
+the USB core to skip creating the new_id and remove_id sysfs interfaces
+for usbtest, preventing invalid dynamic ID entries from being created.
 
 Cc: stable@vger.kernel.org
-Fixes: 9363efb4181c ("crypto: qce - Add support for AEAD algorithms")
-Signed-off-by: Md Sadre Alam <md.alam@oss.qualcomm.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: syzbot+7e1e5911f9eac50bedc7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7e1e5911f9eac50bedc7
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260806152651.2370795-1-nogikh@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/qce/aead.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/misc/usbtest.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/qce/aead.c
-+++ b/drivers/crypto/qce/aead.c
-@@ -203,7 +203,7 @@ qce_aead_ccm_prepare_buf_assoclen(struct
- 	/* Get the msg */
- 	msg_sg = scatterwalk_ffwd(__sg, req->src, req->assoclen);
+--- a/drivers/usb/misc/usbtest.c
++++ b/drivers/usb/misc/usbtest.c
+@@ -3053,6 +3053,7 @@ static struct usb_driver usbtest_driver
+ 	.disconnect =	usbtest_disconnect,
+ 	.suspend =	usbtest_suspend,
+ 	.resume =	usbtest_resume,
++	.no_dynamic_id = 1,
+ };
  
--	rctx->adata = kzalloc((ALIGN(assoclen, 16) + MAX_CCM_ADATA_HEADER_LEN) *
-+	rctx->adata = kzalloc(ALIGN(assoclen + MAX_CCM_ADATA_HEADER_LEN, 16) *
- 			       sizeof(unsigned char), GFP_ATOMIC);
- 	if (!rctx->adata)
- 		return -ENOMEM;
+ /*-------------------------------------------------------------------------*/
 
 
