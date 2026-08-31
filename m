@@ -1,455 +1,301 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530F64A99CF;
-	Mon, 31 Aug 2026 13:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7F35476D5;
+	Mon, 31 Aug 2026 13:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183978; cv=none; b=glKpulZLDNSPifUvABDjk9Kmb6AYuDvOrO98BBjkw5YsZ6NBygAQfzQGyWi6JCUWdbrMlUcdk/qYJaxVOA3k0tDVHbZwVOZAsknhkdbbAlofzphvOaPIuzj3qhE3LXRq8VuGBuTmAOC/6Ekqf+Ke1dJeEy2CUprsG+1HcOlhwRk=
+	t=1788183979; cv=none; b=SMrjPNkMdwhDDI0IQYqldS5RZVF82JBqPg/hGfFTOHrbtyir6JwXIgcAfWKXFTwxB6AohmeYe530LmWj8fE1YhM0xQTbROqfpDR/GtIcakD9qb8uc0kT7g1PD5wrO5eR6xPkXsDvLQskWvY9I03NNPee2CDkrtKW5BEQMzzBB8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183978; c=relaxed/simple;
-	bh=EIxTSjY1a9DpIBHGBQ7WoZ038xzqtVxhhud28bdE+kc=;
+	s=arc-20240116; t=1788183979; c=relaxed/simple;
+	bh=nwVoEls4/fzw0QpPFImmbtmw4hiSY6c0W1IcOGiAgEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tCNnCqPuuSylaG3ILQibNttVFa7k8J/ERuVDojED2Vf4jCpKtSkvRXFUVvBKk9Xq5jNt8c6LQSnCzdMuBJCd3JG5arSviV5xPo81xT8S8r/bcbPcwNeBKgmZJYFAS+LjlPbnfvdTQNyscrAaRsBX62RjG4CO4g69HUW3WqVTDa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iuQOydXp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fVIrtHoYohIVyyj9DWQS/tmepp7u2rOhFaAXs2XYo8SmTXX8/H/AcZIw2sMbxVil5mg23LUNbMPBpZfSonLAnTCHO6dZY7XCv5ERsZvUAxD+A6PNk4n4CpCy+sRz9ptSVdCgMQDDVMqvtpOzw4nO7/OcB7VSA+yAsJxOu08reXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFeyI+Nq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iuQOydXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE281F00A3E;
-	Mon, 31 Aug 2026 13:46:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183975;
-	bh=VuuTfQsSlsnIRKrUr/mDOL2bAkwlXnRRMmPO/GFFYPA=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFeyI+Nq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EA41F000E9;
+	Mon, 31 Aug 2026 13:46:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183976;
+	bh=Sz2UMQSlEHhIZEOM4oB7B/YkTKXdNKKkx57d2oGKwmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iuQOydXpKQt7a1jrYnXvxz7aQoIBCAIFNAv8EO+fBl9su81MHY8w4LofBu/My120O
-	 HfxrnjWbBjI9EIMnOnAbhove+XB7itONKmPObfJ8BBqywYenmcucJkIlYPVTh/0z0A
-	 ps1dPvhLbgt3Owl/Pc24DurbtbBTtexTy9LRjri94Iw+AGgVCCxauPZA0qOLCCTw5p
-	 20KwhhSloo5K6hqhVASUKB35Mb4EJl9l/olv96/HlXBA4Qr8cFmkozXPAezRsJqnw4
-	 w5rg67QthsQRBYGHGuYJL5oF3jZtmzLZPd/iHKocBv6uL5OJjV7cCUos1poqzORyKs
-	 10sUmsRrufMyw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	sstabellini@kernel.org,
-	xen-devel@lists.xenproject.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] xen/gntalloc: validate grant count before allocation
-Date: Mon, 31 Aug 2026 09:27:23 -0400
-Message-ID: <20260831133314.4125787-415-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=vFeyI+Nq2HHfF652Dz/9Gp7A/Uv5k7QeFeMPrwURI3YHTRhm7dqc0AKD4ODbmM3Ff
+	 GCDKyJfR+MxfzWV7DoN+fh9XmT3yqhyYZTZMh2FhtNNz3R/E4cTOI3gAIKm246JRAH
+	 6hoIcJfMSQRmY3ci1G7ZtzsVGCjrlr9c6XLHRYOE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Jia Yao <jia.yao@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 03/83] drm/xe/guc_ads: allocate UM queues in a separate BO
+Date: Mon, 31 Aug 2026 15:33:39 +0200
+Message-ID: <20260831133359.368556334@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+References: <20260831133359.207714926@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 2299822f3f466b5dcad2377bf63986199f881a6b ]
+------------------
 
-gntalloc_ioctl_alloc() allocates the grant-id array before checking
-whether the requested count fits within the global grant limit. Counts
-above that limit cannot succeed, so reject them before the
-user-controlled allocation reaches kcalloc().
+From: Jia Yao <jia.yao@intel.com>
 
-Use a subtraction-based check while holding gref_mutex so adding the
-requested count cannot wrap. Also cast the count before advancing the
-per-file index so the page-size multiplication is performed in 64-bit
-arithmetic.
+commit 99b01815957bd7d848420cb697f79ed11f7f215c upstream.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260626223805.43781-3-alhouseenyousef@gmail.com>
+Move the UM queues into a dedicated BO (ads->um_queue_bo) and avoid
+CPU memset operations on it, which eliminates the CPU as a potential
+cacheline-polluting agent and helps maintain consistency between GAM
+writes and GuC reads.
+
+We also need to ensure the base_dpa for the queue is contiguous on hw
+where this is used instead of a GGTT address. Another good reason to
+split this out to a separate BO.
+
+Fixes: 9c57bc08652a ("drm/xe/lnl: Drop force_probe requirement")
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: <stable@vger.kernel.org> # v6.12+
+Signed-off-by: Jia Yao <jia.yao@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260804165057.129529-2-jia.yao@intel.com
+(cherry picked from commit 99b01815957bd7d848420cb697f79ed11f7f215c)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-**Step 1.1 — Subject line**
-Record: `[xen/gntalloc] [validate] validate grant count before
-allocation` — ioctl input validation and overflow-safety fix in the Xen
-grant allocator.
-
-**Step 1.2 — Tags**
-Record:
-- `Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>` (author)
-- `Reviewed-by: Juergen Gross <jgross@suse.com>` (Xen maintainer —
-  strong quality signal)
-- `Signed-off-by: Juergen Gross <jgross@suse.com>`
-- `Message-ID: <20260626223805.43781-3-alhouseenyousef@gmail.com>`
-  (patch 2/2 of v2 series)
-- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable@vger.kernel.org`, or
-  `Tested-by:` tags
-
-**Step 1.3 — Body analysis**
-Record:
-- **Bug:** `gntalloc_ioctl_alloc()` calls `kcalloc(op.count, ...)`
-  before verifying `op.count` against the global grant limit.
-- **Symptom:** User-controlled counts above the limit still reach kernel
-  allocation; limit enforcement uses addition with mixed signed/unsigned
-  types that can wrap; `priv->index` advance uses 32-bit multiply.
-- **Failure modes:** Unnecessary kernel allocations (memory
-  pressure/DoS), potential limit-check bypass via wrap, corrupted per-
-  file mmap index.
-- **Root cause:** Validation ordering and unsafe arithmetic on user-
-  supplied `op.count` (`__u32`).
-
-**Step 1.4 — Hidden bug fix?**
-Record: **Yes.** Although the subject says "validate," this is a real
-bug fix: premature allocation, integer-overflow-prone limit check, and
-32-bit multiply before 64-bit assignment.
-
----
-
-## Phase 2: Diff Analysis
-
-**Step 2.1 — Inventory**
-Record:
-- 1 file: `drivers/xen/gntalloc.c` (+11 / -2 net)
-- Function modified: `gntalloc_ioctl_alloc()`
-- Scope: single-file, surgical ioctl-path fix
-
-**Step 2.2 — Code flow per hunk**
-
-| Hunk | Before | After |
-|------|--------|-------|
-| Early check | `kcalloc()` immediately after `copy_from_user()` |
-Snapshot `limit` with `READ_ONCE()`, reject `op.count > limit` with
-`-ENOSPC` before any allocation |
-| Locked limit check | `gref_size + op.count > limit` | Subtraction:
-`gref_size > limit_snapshot \|\| op.count > limit_snapshot - gref_size`
-under `gref_mutex` |
-| Index advance | `priv->index += op.count * PAGE_SIZE` (32-bit
-multiply) | `priv->index += (uint64_t)op.count * PAGE_SIZE` |
-
-Record: Normal ioctl path and error paths affected; early rejection
-avoids `kcalloc`/`kfree` on doomed requests.
-
-**Step 2.3 — Bug mechanism**
-Record:
-- **Category:** Input validation + integer overflow / type-safety
-- **Mechanism 1:** User `count` drives `kcalloc()` before limit
-  enforcement → kmem pressure DoS on `/dev/xen/gntalloc`
-- **Mechanism 2:** `gref_size + op.count > limit` mixes `int` counters
-  with `uint32_t` count; addition can wrap, potentially bypassing limit
-  and reaching `add_grefs()`'s `for (i = 0; i < op->count; i++)` loop
-- **Mechanism 3:** `op.count * PAGE_SIZE` computed in 32-bit arithmetic
-  before widening to `uint64_t priv->index`
-
-**Step 2.4 — Fix quality**
-Record: Minimal, obviously correct, no API changes. Early check is
-cheap. Subtraction check is standard overflow-safe idiom.
-`READ_ONCE(limit)` snapshots admin-tunable limit. Regression risk:
-**low** — only tightens validation; legitimate allocations within limit
-unchanged.
-
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-Record: Buggy lines in `gntalloc_ioctl_alloc()` trace to `5d324e5159d9e`
-in this shallow checkout (file unchanged since tree root). The ioctl
-allocation pattern is long-standing driver code, not a recent
-regression.
-
-**Step 3.2 — Fixes: tag**
-Record: Not applicable — no `Fixes:` tag present.
-
-**Step 3.3 — Related file history**
-Record: Shallow tree shows only merge commit touching
-`drivers/xen/gntalloc.c`. IOCTL path with `kcalloc`-before-limit pattern
-is present at HEAD.
-
-**Step 3.4 — Author context**
-Record: Yousef Alhouseen submitted the v2 series. Juergen Gross (active
-Xen maintainer; recent xen commits in tree include `xen/privcmd`
-security fixes) reviewed and signed off.
-
-**Step 3.5 — Dependencies**
-Record: **Series dependency identified.** Cover letter ([openwall v2
-0/2](https://lists.openwall.net/linux-kernel/2026/06/26/2112)) states
-patch 1/2 (`xen/gntalloc: make grant counters unsigned`) is a
-prerequisite for overflow-safe unsigned arithmetic. **This commit (2/2)
-applies cleanly standalone** to the current tree (`git apply --check`
-succeeded). Patch 1/2 is a 3-line companion change (`int` → `unsigned
-int` for `limit`/`gref_size`, `module_param(limit, uint, ...)`). Not a
-hard blocker for backporting this patch, but both should ideally ship
-together for a complete fix.
-
----
-
-## Phase 4: Mailing List and External Research
-
-**Step 4.1 — Original discussion**
-Record: `b4 dig -c <sha>` unavailable (commit not in local tree). Found
-via openwall:
-- Cover: https://lists.openwall.net/linux-kernel/2026/06/26/2112
-- Patch 1/2: https://lists.openwall.net/linux-kernel/2026/06/26/2113
-- Patch 2/2 (this commit): https://lists.openwall.net/linux-
-  kernel/2026/06/26/2114
-- v2 split unsigned-type changes into prerequisite per maintainer
-  feedback
-
-**Step 4.2 — Reviewers**
-Record: To: Juergen Gross, Stefano Stabellini, Oleksandr Tyshchenko; Cc:
-xen-devel, linux-kernel. Juergen Gross reviewed.
-
-**Step 4.3 — Bug report**
-Record: No external bug report or syzbot link. Issue identified by code
-review / proactive hardening.
-
-**Step 4.4 — Series context**
-Record: 2-patch v2 series, same file. Patch 1 prepares unsigned
-counters; patch 2 adds validation. Both are small and complementary.
-
-**Step 4.5 — Stable list**
-Record: No stable-list discussion found. lore.kernel.org returned 403
-(bot protection); openwall used instead.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-Record: `gntalloc_ioctl_alloc()` (modified); related: `add_grefs()`,
-`do_cleanup()`.
-
-**Step 5.2 — Callers**
-Record: `gntalloc_ioctl()` → `case IOCTL_GNTALLOC_ALLOC_GREF` →
-`gntalloc_ioctl_alloc()`. Reachable from userspace via `ioctl()` on
-`/dev/xen/gntalloc` (`miscdevice`, name `"xen/gntalloc"`).
-
-**Step 5.3 — Callees**
-Record: `copy_from_user`, `kcalloc`, `mutex_lock/unlock`, `do_cleanup`,
-`add_grefs` (allocates pages, grants foreign access in a loop over
-`op->count`), `copy_to_user`, `kfree`.
-
-**Step 5.4 — Reachability**
-Record: Userspace ioctl on Xen systems with
-`CONFIG_XEN_GRANT_DEV_ALLOC`. Kconfig: "Allows userspace processes to
-create pages with access granted to other domains." Impact surface: Xen
-dom0 / Xen PV frontends using grant allocation — not universal, but
-ioctl is explicitly user-facing.
-
-**Step 5.5 — Similar patterns**
-Record: No other instances of this exact bug pattern in `gntalloc.c`.
-The `add_grefs()` loop makes a bypassed limit check especially dangerous
-(unbounded iteration + per-page allocations).
-
----
-
-## Phase 6: Cross-Reference Against Local Tree (6.18.44)
-
-**Step 6.1 — Buggy code present?**
-Record: **Yes.** Local tree is `v6.18.44-1-g2736c32da98b9` / `6.18.44`.
-At HEAD, `gntalloc_ioctl_alloc()` still does `kcalloc()` before limit
-check, uses `gref_size + op.count > limit`, and `priv->index += op.count
-* PAGE_SIZE`. `limit`/`gref_size` are `static int`.
-
-**Step 6.2 — Backport complications**
-Record: **Clean apply** — `git apply --check` on the provided diff
-succeeded with no conflicts.
-
-**Step 6.3 — Related fixes already present?**
-Record: No — `git log --grep="gntalloc"` and `--grep="validate grant
-count"` returned nothing. Fix not yet in this tree.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem**
-Record: `drivers/xen/` — Xen grant-table userspace interface.
-Criticality: **IMPORTANT** for Xen deployments (dom0, paravirt
-frontends); **PERIPHERAL** relative to all Linux users.
-
-**Step 7.2 — Activity**
-Record: Xen subsystem actively maintained; recent security fixes in
-related xen drivers (`privcmd`, `sys-hypervisor`) in this tree.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 — Who is affected**
-Record: Xen systems with `CONFIG_XEN_GRANT_DEV_ALLOC` (default `m`),
-users/processes that can open `/dev/xen/gntalloc` and issue
-`IOCTL_GNTALLOC_ALLOC_GREF`.
-
-**Step 8.2 — Trigger conditions**
-Record:
-- **Common:** `op.count > limit` (default 1024) → unnecessary `kcalloc`
-  before `-ENOSPC`; repeatable for memory pressure
-- **Less common:** Large `limit` module parameter + crafted counts →
-  addition wrap bypassing limit → massive `add_grefs()` loop
-- **Less common:** Large `op.count` with raised limit → 32-bit `op.count
-  * PAGE_SIZE` wrap corrupting `priv->index`
-- Unprivileged users need device access; still a valid hardening for any
-  caller with ioctl access
-
-**Step 8.3 — Failure severity**
-Record:
-- Memory pressure / DoS from premature allocations: **MEDIUM-HIGH**
-- Limit bypass → huge grant allocation loop: **CRITICAL** (hang/OOM) if
-  triggerable
-- Index corruption: **HIGH** (broken mmap offsets / grant bookkeeping)
-- Overall: **HIGH** for affected Xen configurations
-
-**Step 8.4 — Risk vs benefit**
-Record:
-- **Benefit:** HIGH for Xen users — closes validation gap on user-facing
-  ioctl
-- **Risk:** LOW — 11 lines, no behavior change for valid requests within
-  limit
-- **Ratio:** Strong benefit, low risk
-
----
-
-## Phase 9: Final Synthesis
-
-**Step 9.1 — Evidence summary**
-
-**FOR backport:**
-- Fixes real bugs (premature user-sized allocation, overflow-prone limit
-  check, 32-bit multiply)
-- Small, surgical, maintainer-reviewed
-- Applies cleanly to 6.18.44
-- Buggy code confirmed present in this tree
-- User-facing ioctl path on Xen systems
-- Companion patch 1/2 is tiny and should accompany for complete
-  unsigned-counter hardening
-
-**AGAINST backport:**
-- Xen-specific; not all stable users run Xen
-- No syzbot/user crash report (proactive fix)
-- Ideally paired with patch 1/2 for full unsigned arithmetic story
-  (minor concern, not a blocker)
-
-**Unresolved:** Whether reviewers explicitly nominated for stable (no
-thread replies fetched beyond cover/patch text).
-
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct and tested? **PASS** — logic is straightforward;
-   reviewed by Juergen Gross; no `Tested-by`
-2. Fixes real bug affecting users? **PASS** — ioctl validation /
-   overflow issues on Xen grant allocator
-3. Important issue? **PASS** — DoS, potential limit bypass, index
-   corruption (HIGH severity on Xen)
-4. Small and contained? **PASS** — 1 file, ~13 lines changed
-5. No new features/APIs? **PASS** — validation only
-6. Can apply to local tree? **PASS** — verified clean apply
-
-**Step 9.3 — Exception category**
-Record: None (standard bug fix, not device ID/quirk/docs/build).
-
-**Step 9.4 — Decision rationale**
-This commit should be backported to the local **6.18.44** stable tree.
-The buggy ioctl ordering and arithmetic are present, the fix is minimal
-and maintainer-reviewed, and the failure modes (kmem pressure, limit
-bypass, index corruption) are meaningful on Xen systems. Backport patch
-1/2 (`make grant counters unsigned`) alongside this commit for the
-complete v2 series.
-
----
-
-## Verification
-
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 1] Identified patch as 2/2 via Message-ID `43781-3`
-- [Phase 2] Read current `gntalloc_ioctl_alloc()` at HEAD — confirmed
-  buggy ordering
-- [Phase 2] Verified `limit`/`gref_size` are `static int`, `op.count` is
-  `__u32`, `priv->index` is `uint64_t`
-- [Phase 2] Verified `kcalloc` uses `check_mul_overflow` in
-  `include/linux/slab.h`
-- [Phase 3] `git blame -L 283,302 drivers/xen/gntalloc.c` — lines from
-  `5d324e5159d9e`
-- [Phase 3] `git log --oneline -20 -- drivers/xen/gntalloc.c` — shallow
-  history
-- [Phase 3] `git log --grep` for gntalloc/validate — no existing fix in
-  tree
-- [Phase 4] `b4 dig -c 3218686be45b8` — no result (commit not in tree)
-- [Phase 4] Fetched openwall cover + patches 1/2 and 2/2 — confirmed v2
-  series and prerequisite note
-- [Phase 4] lore.kernel.org — 403 Forbidden (unverified for reviewer
-  stable nominations)
-- [Phase 5] Traced call chain: `gntalloc_ioctl` → `gntalloc_ioctl_alloc`
-- [Phase 5] Confirmed miscdevice `"xen/gntalloc"` registration
-- [Phase 5] Read `add_grefs()` — loops `op->count` times with page alloc
-  + grant setup
-- [Phase 6] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; `make
-  kernelversion` → `6.18.44`
-- [Phase 6] `git apply --check` on provided diff — **clean apply**
-- [Phase 6] Confirmed pre-fix code via `git show
-  HEAD:drivers/xen/gntalloc.c`
-- [Phase 7] Read `drivers/xen/Kconfig` `XEN_GRANT_DEV_ALLOC` —
-  userspace-facing, default `m`
-- [Phase 8] Assessed severity from code paths (not from unverified crash
-  reports)
-
-**YES**
-
- drivers/xen/gntalloc.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/xen/gntalloc.c b/drivers/xen/gntalloc.c
-index f93f73ecefeee..462f67dc32751 100644
---- a/drivers/xen/gntalloc.c
-+++ b/drivers/xen/gntalloc.c
-@@ -272,6 +272,7 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	int rc = 0;
- 	struct ioctl_gntalloc_alloc_gref op;
- 	uint32_t *gref_ids;
-+	unsigned int limit_snapshot;
+ drivers/gpu/drm/xe/xe_bo.h            | 14 +++++
+ drivers/gpu/drm/xe/xe_guc.c           |  6 ++
+ drivers/gpu/drm/xe/xe_guc_ads.c       | 89 +++++++++++++++++----------
+ drivers/gpu/drm/xe/xe_guc_ads_types.h |  5 ++
+ 4 files changed, 82 insertions(+), 32 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_bo.h b/drivers/gpu/drm/xe/xe_bo.h
+index fef60c8a4e5b1..71169b57fbda4 100644
+--- a/drivers/gpu/drm/xe/xe_bo.h
++++ b/drivers/gpu/drm/xe/xe_bo.h
+@@ -6,6 +6,7 @@
+ #ifndef _XE_BO_H_
+ #define _XE_BO_H_
  
- 	pr_debug("%s: priv %p\n", __func__, priv);
++#include <drm/drm_prime.h>
+ #include <drm/ttm/ttm_tt.h>
  
-@@ -280,6 +281,12 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 		goto out;
- 	}
+ #include "xe_bo_types.h"
+@@ -455,6 +456,19 @@ void xe_bo_dev_fini(struct xe_bo_dev *bo_device);
  
-+	limit_snapshot = READ_ONCE(limit);
-+	if (op.count > limit_snapshot) {
-+		rc = -ENOSPC;
-+		goto out;
+ struct sg_table *xe_bo_sg(struct xe_bo *bo);
+ 
++/**
++ * xe_bo_sg_is_contiguous() - Check if a BO's DMA address space is contiguous.
++ * @bo: the BO to check (must have a valid sg table, i.e. !xe_bo_is_vram())
++ * @len: required contiguous length in bytes
++ *
++ * Returns true if the first @len bytes of the BO are mapped to a contiguous
++ * DMA address range.
++ */
++static inline bool xe_bo_sg_is_contiguous(struct xe_bo *bo, size_t len)
++{
++	return drm_prime_get_contiguous_size(xe_bo_sg(bo)) >= len;
++}
++
+ /*
+  * xe_sg_segment_size() - Provides upper limit for sg segment size.
+  * @dev: device pointer
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index ae0c88da422b2..cc5741f751b93 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -700,6 +700,12 @@ static int xe_guc_realloc_post_hwconfig(struct xe_guc *guc)
+ 	if (ret)
+ 		return ret;
+ 
++	if (guc->ads.um_queue_bo) {
++		ret = xe_managed_bo_reinit_in_vram(xe, tile, &guc->ads.um_queue_bo);
++		if (ret)
++			return ret;
 +	}
 +
- 	gref_ids = kcalloc(op.count, sizeof(gref_ids[0]), GFP_KERNEL);
- 	if (!gref_ids) {
- 		rc = -ENOMEM;
-@@ -292,14 +299,16 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	 * are about to enforce, removing them here is a good idea.
- 	 */
- 	do_cleanup();
--	if (gref_size + op.count > limit) {
-+	limit_snapshot = READ_ONCE(limit);
-+	if (gref_size > limit_snapshot ||
-+	    op.count > limit_snapshot - gref_size) {
- 		mutex_unlock(&gref_mutex);
- 		rc = -ENOSPC;
- 		goto out_free;
- 	}
- 	gref_size += op.count;
- 	op.index = priv->index;
--	priv->index += op.count * PAGE_SIZE;
-+	priv->index += (uint64_t)op.count * PAGE_SIZE;
- 	mutex_unlock(&gref_mutex);
+ 	return 0;
+ }
  
- 	rc = add_grefs(&op, gref_ids, priv);
+diff --git a/drivers/gpu/drm/xe/xe_guc_ads.c b/drivers/gpu/drm/xe/xe_guc_ads.c
+index db71823b25380..86e6651c00363 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ads.c
++++ b/drivers/gpu/drm/xe/xe_guc_ads.c
+@@ -65,10 +65,14 @@ ads_to_map(struct xe_guc_ads *ads)
+ 
+ /*
+  * The Additional Data Struct (ADS) has pointers for different buffers used by
+- * the GuC. One single gem object contains the ADS struct itself (guc_ads) and
+- * all the extra buffers indirectly linked via the ADS struct's entries.
++ * the GuC. One gem object (ads->bo) contains the ADS struct itself (guc_ads)
++ * and most of the extra buffers linked via the ADS struct's entries.  The UM
++ * fault queues (PAGE_FAULT, PAGE_FAULT_RESPONSE, ACCESS_COUNTER rings) are
++ * kept in a separate BO (ads->um_queue_bo) so that the full memset of ads->bo
++ * performed on every GT reset does not discard fault descriptors already
++ * written into the rings by the GPU.
+  *
+- * Layout of the ADS blob allocated for the GuC:
++ * Layout of the ADS blob (ads->bo):
+  *
+  *      +---------------------------------------+ <== base
+  *      | guc_ads                               |
+@@ -100,10 +104,6 @@ ads_to_map(struct xe_guc_ads *ads)
+  *      +---------------------------------------+
+  *      | padding                               |
+  *      +---------------------------------------+ <== 4K aligned
+- *      | UM queues                             |
+- *      +---------------------------------------+
+- *      | padding                               |
+- *      +---------------------------------------+ <== 4K aligned
+  *      | private data                          |
+  *      +---------------------------------------+
+  *      | padding                               |
+@@ -157,16 +157,6 @@ static size_t guc_ads_capture_size(struct xe_guc_ads *ads)
+ 	return PAGE_ALIGN(ads->capture_size);
+ }
+ 
+-static size_t guc_ads_um_queues_size(struct xe_guc_ads *ads)
+-{
+-	struct xe_device *xe = ads_to_xe(ads);
+-
+-	if (!xe->info.has_usm)
+-		return 0;
+-
+-	return GUC_UM_QUEUE_SIZE * GUC_UM_HW_QUEUE_MAX;
+-}
+-
+ static size_t guc_ads_private_data_size(struct xe_guc_ads *ads)
+ {
+ 	return PAGE_ALIGN(ads_to_guc(ads)->fw.private_data_size);
+@@ -207,22 +197,12 @@ static size_t guc_ads_capture_offset(struct xe_guc_ads *ads)
+ 	return PAGE_ALIGN(offset);
+ }
+ 
+-static size_t guc_ads_um_queues_offset(struct xe_guc_ads *ads)
+-{
+-	u32 offset;
+-
+-	offset = guc_ads_capture_offset(ads) +
+-		 guc_ads_capture_size(ads);
+-
+-	return PAGE_ALIGN(offset);
+-}
+-
+ static size_t guc_ads_private_data_offset(struct xe_guc_ads *ads)
+ {
+ 	size_t offset;
+ 
+-	offset = guc_ads_um_queues_offset(ads) +
+-		guc_ads_um_queues_size(ads);
++	offset = guc_ads_capture_offset(ads) +
++		guc_ads_capture_size(ads);
+ 
+ 	return PAGE_ALIGN(offset);
+ }
+@@ -408,6 +388,45 @@ int xe_guc_ads_init(struct xe_guc_ads *ads)
+ 
+ 	ads->bo = bo;
+ 
++	if (xe->info.has_usm) {
++		/*
++		 * Allocate a separate BO for the HW fault ring (UM queues).
++		 *
++		 * Round the size up to the next power of two so that
++		 * (system memory, no IOMMU) the TTM pool issues a single
++		 * alloc_pages(order=N) call, maximising the chance of getting
++		 * a physically contiguous block.  GuC requires contiguous DPA.
++		 */
++		size_t um_size = roundup_pow_of_two(GUC_UM_QUEUE_SIZE *
++						    GUC_UM_HW_QUEUE_MAX);
++
++		u32 um_flags = XE_BO_FLAG_SYSTEM |
++			       XE_BO_FLAG_GGTT |
++			       XE_BO_FLAG_GGTT_INVALIDATE |
++			       XE_BO_FLAG_PINNED_NORESTORE;
++
++		bo = xe_managed_bo_create_pin_map(xe, tile, um_size, um_flags);
++		if (IS_ERR(bo))
++			return PTR_ERR(bo);
++
++		/*
++		 * On pre-Xe3p platforms, GAM (not GuC) accesses the UM queue
++		 * ring via base_dpa, which must be a contiguous DMA address
++		 * range.  Verify that the allocated pages are contiguous in
++		 * DMA address space.
++		 */
++		if (!xe_bo_is_vram(bo) &&
++		    unlikely(!xe_bo_sg_is_contiguous(bo,
++						     GUC_UM_QUEUE_SIZE *
++						     GUC_UM_HW_QUEUE_MAX))) {
++			drm_err(&xe->drm,
++				"UM fault queue memory is not contiguous in DMA address space; GAM requires contiguous DPA\n");
++			return -ENOMEM;
++		}
++
++		ads->um_queue_bo = bo;
++	}
++
+ 	return 0;
+ }
+ ALLOW_ERROR_INJECTION(xe_guc_ads_init, ERRNO); /* See xe_pci_probe() */
+@@ -824,13 +843,19 @@ static void guc_mmio_reg_state_init(struct xe_guc_ads *ads)
+ 
+ static void guc_um_init_params(struct xe_guc_ads *ads)
+ {
+-	u32 um_queue_offset = guc_ads_um_queues_offset(ads);
++	struct xe_bo *um_bo = ads->um_queue_bo;
+ 	u64 base_dpa;
+ 	u32 base_ggtt;
+ 	int i;
+ 
+-	base_ggtt = xe_bo_ggtt_addr(ads->bo) + um_queue_offset;
+-	base_dpa = xe_bo_main_addr(ads->bo, PAGE_SIZE) + um_queue_offset;
++	if (um_bo) {
++		/* All USM platforms: UM queues in dedicated um_queue_bo */
++		base_ggtt = xe_bo_ggtt_addr(um_bo);
++		base_dpa = xe_bo_main_addr(um_bo, PAGE_SIZE);
++	} else {
++		/* Platform does not support USM: no UM queues, nothing to do */
++		return;
++	}
+ 
+ 	for (i = 0; i < GUC_UM_HW_QUEUE_MAX; ++i) {
+ 		ads_blob_write(ads, um_init_params.queue_params[i].base_dpa,
+diff --git a/drivers/gpu/drm/xe/xe_guc_ads_types.h b/drivers/gpu/drm/xe/xe_guc_ads_types.h
+index 70c132458ac38..acb5366f76efe 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ads_types.h
++++ b/drivers/gpu/drm/xe/xe_guc_ads_types.h
+@@ -16,6 +16,11 @@ struct xe_bo;
+ struct xe_guc_ads {
+ 	/** @bo: XE BO for GuC ads blob */
+ 	struct xe_bo *bo;
++	/**
++	 * @um_queue_bo: Dedicated BO for the HW fault ring (UM queues).
++	 * NULL if the platform does not support USM.
++	 */
++	struct xe_bo *um_queue_bo;
+ 	/** @golden_lrc_size: golden LRC size */
+ 	size_t golden_lrc_size;
+ 	/** @regset_size: size of register set passed to GuC for save/restore */
 -- 
 2.53.0
+
+
 
