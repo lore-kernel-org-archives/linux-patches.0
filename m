@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88E344685D;
-	Mon, 31 Aug 2026 13:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AA04483AB;
+	Mon, 31 Aug 2026 13:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183245; cv=none; b=ooRigfVtxqwuNtVxpdS+NZPG//oM6mjy6rrCLsn81PupEbcSEdstQIL8NUQOst24bOcbRx9Ak3i4D31dx8MjpVgwG1tQTuLKlbO1/UcA6jDEBDMOjNAC0XlAnHmzO6s2+K9HZkNHQot+jGeH5kjDNQ66QV4zPyPbaHcnV9gs84k=
+	t=1788183247; cv=none; b=GipukJ/dMCjiUaMJytmP3+jYaJhAXvSj0VyJbyAlvVnlbV7xA3uXlVpd+OGBej7oGAuLUava1t6vTkzMUbc07cJecWKtg1BshB/Bjkh0j1sT6LKFOor/BqibVA396K9s30L9m3pfrg3WseOyYsyZCEQ8wEnqjvIz7v7LDGA4x/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183245; c=relaxed/simple;
-	bh=OWFKpA3ZuDzs7hMv+8YGSP5x9c87ZGjBeQTHZCoiBws=;
+	s=arc-20240116; t=1788183247; c=relaxed/simple;
+	bh=6t5XOUyIMbWGOOvlv5e/onn57DhshHv9bNX/QZz896I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qEOfkALTbGKm5BLv9lorg1p4mqer5lK0/GyF3OscfzAnh5t16ABZzWe/RIPY6YYetTxBfNafQKwBzESh11szF42k/1yvxdsULRsJdVHsIzOedlrMjcbVPOwb2o1ZP6xVyVRXwx/XEB4Cwqh0L5xYAn1mERIINohLIUzgPGmPJNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dToK+IrD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tHePmVVWgLgDL78vTZSVF5WbUfQ6ux9cu1Ho9ZbOR+NCmu1/G6vvkJDA6wNuj3AmsFIHO9v86ic+E45d8XkwSOutb3KtRV88YYJZZPvTXPYEbvC1PM/0XMdtI/Cc8YdKbEpTcg7nOcZVnNWHVcVcOed7aaEblmlEeghGVDGehw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g2jpei/j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dToK+IrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7071D1F000E9;
-	Mon, 31 Aug 2026 13:34:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g2jpei/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05821F00A3D;
+	Mon, 31 Aug 2026 13:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183243;
-	bh=K09q/buokMvn65Vf9LNh4KXDSVO1+zr1vaU2AYgr2xQ=;
+	s=k20260515; t=1788183245;
+	bh=bGLi8cWVQ5WvUPoi1yj2jO7mi90RrKqBFc6uQi+9uCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dToK+IrD/BimSq1uvK+0xrz7UhVutVxwkXeLrrUl+CcCGQNUOgRI+/2/vuu3l3jTp
-	 uiKz5Sa/WPXLnbBfKrYpHOcQetqNoAhBNylxJJMx//AdrcVi2bKaW20HnJr8pJs9xJ
-	 CpR4n1qh43FHxk/fBlWzou3OgvMs+3r4QqbiRnLzP5RTp0q+NugBMJkDC0yaIc1w7/
-	 frLW/CdYobU1ENyo1ekluo7uWWyjj/Zt4Cs6xdsC3qF1igH6H9p2gm5uUV1APUXkHb
-	 9uHKg8LOs1VfOEV4vsDs4Drg0EJHsPzHMJcgemsUfqVOAE6jtsZBBVo9xQ9PUjf6CV
-	 QnXJsWMMWdh7w==
+	b=g2jpei/jVoUq4Gab9WfQng9DQ2p7jmIUUYYfSrhVDT7ePW4pIhaSfkYqxYnGmY3Rk
+	 vorcEh/u8cwYhrX1Rxn8t7u7T9KS6fzwaLMHQnj9t8XMUrEclWbyjJHK0y7gtqihnt
+	 Mpaw8drDHm6EjZrxUFLk/8Cs7RGi12sRQTazPHmYKfJ1wwKaJTmGg6tvLcsQlJk1n2
+	 xLrxYZQ7sl1QJc1vvzVotMGuuuF7GBKbse3FN3NCn61hH1NoDmTduWhza+wfdbAfXV
+	 01fICx/C+ScMdogIoh+x7qDRE3BAxzZ7DcTl0iblqq0s8OsGhZRF0bHqUpu6m+PFl+
+	 dnyj5RCXHom8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Ruoyu Wang <ruoyuw560@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	catalin.marinas@arm.com,
-	linux-arm-kernel@lists.infradead.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] arm64: panic from init_IRQ if IRQ handler stacks cannot be allocated
-Date: Mon, 31 Aug 2026 09:20:59 -0400
-Message-ID: <20260831133314.4125787-31-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: es18xx: check control allocation before private data setup
+Date: Mon, 31 Aug 2026 09:21:00 -0400
+Message-ID: <20260831133314.4125787-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,451 +54,409 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 7dc6922f7fdd3496de4e7d8fb99284fc08f98003 ]
+[ Upstream commit 422e42b7c2b882ba1d16d4afc8891bcea7c4de93 ]
 
-init_irq_stacks() and init_irq_scs() may fail when arch_alloc_vmap_stack
-or scs_alloc return NULL. Return -ENOMEM from both and call panic() once
-from init_IRQ(), covering per-CPU IRQ stacks and shadow IRQ stacks
-consistently.
+snd_es18xx_mixer() creates controls with snd_ctl_new1() and then stores
+bookkeeping pointers or sets private_free before calling snd_ctl_add().
+snd_ctl_new1() can return NULL on allocation failure, so those writes
+can dereference a NULL control pointer.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Check the returned control pointers before using them and return -ENOMEM
+on allocation failure.
+
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://patch.msgid.link/20260607074219.3-1-ruoyuw560@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: ALSA: es18xx: check control allocation
+before private data setup
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[arm64]` `[panic]` — Add explicit panic in `init_IRQ()`
-when per-CPU IRQ handler stacks or shadow call stacks cannot be
-allocated.
-
-### Step 1.2: Parse All Commit Message Tags
-**Record:**
-- `Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>` —
-  author
-- `Signed-off-by: Will Deacon <will@kernel.org>` — arm64 maintainer
-  sign-off
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable@vger.kernel.org`
-- Notable: maintainer sign-off (Will Deacon) but no fuzzer/user bug
-  report
-
-### Step 1.3: Analyze Commit Body
-**Record:**
-- **Bug described:** `init_irq_stacks()` and `init_irq_scs()` ignore
-  failures from `arch_alloc_vmap_stack()` and `scs_alloc()`, which can
-  return NULL.
-- **Symptom/failure mode:** Boot continues with NULL per-CPU IRQ stack
-  pointers; first IRQ uses an invalid stack → crash/corruption instead
-  of a clear early panic.
-- **Version info:** None in message.
-- **Root cause:** Missing error checking on allocation return values in
-  early-boot IRQ stack setup.
-
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Yes — described as adding panic, but it fixes a real NULL-
-pointer/invalid-stack bug on the IRQ path. Not cosmetic cleanup.
+**Local tree:** `v6.18.44` (Makefile: 6.18.44)
 
 ---
 
-## Phase 2: Diff Analysis — Line by Line
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 2.1: Inventory the Changes
-**Record:**
-- **Files:** `arch/arm64/kernel/irq.c` only (~30 lines changed)
-- **Functions modified:** `init_irq_scs()`, `init_irq_stacks()`,
-  `init_IRQ()`
-- **Scope:** Single-file, surgical early-boot fix
+### Step 1.1: Parse the subject line
+**Record:** `[ALSA: es18xx]` `[check]` — Add NULL checks after
+`snd_ctl_new1()` before using returned control pointers in
+`snd_es18xx_mixer()`.
 
-### Step 2.2: Code Flow Change
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **`init_irq_scs()` hunk:** Before — `void`, ignored `scs_alloc()`
-  NULL. After — returns `int`, propagates `-ENOMEM` on failure.
-- **`init_irq_stacks()` hunk:** Before — `void`, ignored
-  `arch_alloc_vmap_stack()` NULL. After — returns `int`, propagates
-  `-ENOMEM` on failure.
-- **`init_IRQ()` hunk:** Before — always continued to `irqchip_init()`.
-  After — `panic("Failed to allocate IRQ stack resources\n")` if either
-  init fails.
-- **Affected path:** Early boot initialization only (`init_IRQ()` during
-  `start_kernel()`).
+- **Signed-off-by:** Ruoyu Wang `<ruoyuw560@gmail.com>` (author)
+- **Link:**
+  https://patch.msgid.link/20260607074219.3-1-ruoyuw560@gmail.com
+- **Signed-off-by:** Takashi Iwai `<tiwai@suse.de>` (ALSA maintainer
+  merge)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
+  by:`, or `Reviewed-by:` tags
+- Notable: absence of `Cc: stable` is expected for manual review; not a
+  negative signal
 
-### Step 2.3: Bug Mechanism
+### Step 1.3: Analyze commit body text
 **Record:**
-- **Category:** Error-path / memory-safety (NULL stack pointer)
-- **Mechanism:** On allocation failure, `per_cpu(irq_stack_ptr, cpu)`
-  stays NULL. `call_on_irq_stack()` loads it and does `add sp, x16,
-  #IRQ_STACK_SIZE` with x16=0, placing SP at `THREAD_SIZE` (16 KiB on
-  4K-page kernels) — not a valid stack. Subsequent `stp`/`blr` corrupt
-  low kernel memory and crash unpredictably.
+- **Bug:** `snd_es18xx_mixer()` calls `snd_ctl_new1()`, then stores
+  bookkeeping pointers (`chip->master_volume`, etc.) and sets
+  `kctl->private_free` before calling `snd_ctl_add()`. If allocation
+  fails, `snd_ctl_new1()` returns NULL and those writes dereference
+  NULL.
+- **Symptom:** NULL pointer dereference (kernel oops) during driver
+  probe/mixer setup.
+- **Root cause:** Missing NULL check on `snd_ctl_new1()` return value in
+  two loops that use `kctl` before `snd_ctl_add()`.
+- **Fix:** Check `kctl` after allocation; return `-ENOMEM` on failure.
 
-### Step 2.4: Fix Quality Assessment
-**Record:**
-- Obviously correct; mirrors existing `sdei.c` pattern
-  (`_init_sdei_stack()` / `_init_sdei_scs()` check NULL and return
-  `-ENOMEM`).
-- Minimal, no unrelated changes.
-- Regression risk very low — only affects the already-fatal OOM-at-boot
-  path, changing delayed corruption into immediate panic.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised — this is an explicit NULL-dereference bug
+fix, not cleanup or optimization.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 2: DIFF ANALYSIS
 
-### Step 3.1: Blame Changed Lines
+### Step 2.1: Inventory the changes
 **Record:**
-- `init_irq_stacks()` core loop: `e3067861ba6650` (Mark Rutland, Jul
-  2017) — arm64 VMAP_STACK IRQ stacks since ~v4.12.
-- `init_irq_scs()`: `ac20ffbb0279aa` (Sami Tolvanen, Nov 2020) — dynamic
-  SCS for IRQ stacks since ~v5.10.
-- Node selection updates: `75b5e0bf90bff`, `7b1a09e44dc64` (2023).
-- Bug present since original introduction; not a recent regression.
+- **Files:** `sound/isa/es18xx.c` only (+4 lines, 0 removed)
+- **Functions modified:** `snd_es18xx_mixer()`
+- **Scope:** Single-file, surgical fix (2 identical NULL-check
+  additions)
 
-### Step 3.2: Follow Fixes Tag
-**Record:** N/A — no `Fixes:` tag in commit message.
+### Step 2.2: Understand the code flow change
 
-### Step 3.3: File History for Related Changes
+**Hunk 1 (base_controls loop, ~line 1764):**
+- **Before:** `kctl = snd_ctl_new1(...)` → if `ES18XX_HWV`, assign
+  `chip->master_volume`/`master_switch` and set `kctl->private_free` →
+  `snd_ctl_add(card, kctl)`
+- **After:** Same, but return `-ENOMEM` immediately if `kctl` is NULL
+- **Path affected:** Mixer initialization for HWV-capable chips during
+  probe
+
+**Hunk 2 (hw_volume_controls loop, ~line 1825):**
+- **Before:** `kctl = snd_ctl_new1(...)` → assign
+  `chip->hw_volume`/`hw_switch`, set `kctl->private_free` →
+  `snd_ctl_add()`
+- **After:** Same, with NULL check added
+- **Path affected:** Hardware volume control setup during probe
+
+**Record:** Both hunks fix error-path NULL dereference before
+`snd_ctl_add()` is reached.
+
+### Step 2.3: Identify the bug mechanism
 **Record:**
-- Recent `irq.c` changes: `c4a5699d5cefd` (Jul 2025) removed
-  `CONFIG_VMAP_STACK` conditionals; did not add error checking.
-- `sdei.c` (same commit `ac20ffbb0279aa`) already checks allocation
-  failures for SDEI stacks/SCS.
-- Fix is standalone; not part of a multi-patch series in this tree.
-- Fix commit **not present** in local tree (grep/author search found no
-  match).
+- **Category:** NULL pointer dereference (memory safety)
+- **Mechanism:** `snd_ctl_new1()` documented to return NULL on
+  allocation failure (`sound/core/control.c` line 258). In two loops,
+  `kctl` is dereferenced (`kctl->private_free`, pointer assignments)
+  before `snd_ctl_add()`, which does handle NULL but is never reached.
+  Other `snd_ctl_new1()` calls in the same function pass the result
+  directly to `snd_ctl_add()` and are already safe.
 
-### Step 3.4: Author's Other Commits
-**Record:** Osama Abdelkader has other kernel commits in this tree (drm,
-riscv kvm), but not this irq fix. Will Deacon is arm64 maintainer and
-committed the related `ac20ffbb0279aa` SCS work.
-
-### Step 3.5: Prerequisites
-**Record:** No dependencies. Uses only existing APIs
-(`arch_alloc_vmap_stack`, `scs_alloc`, `panic`, `-ENOMEM`). Applies
-cleanly to current `irq.c`.
-
----
-
-## Phase 4: Mailing List and External Research
-
-### Step 4.1: Original Patch Discussion
-**Record:** `b4 dig -c HEAD` did not match this commit (fix not in
-tree). Subject-based `b4 dig` failed (wrong usage). lore.kernel.org
-returned 403 to automated fetch. **UNVERIFIED:** full review thread and
-any stable nominations.
-
-### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** via `b4 dig -w`. Will Deacon sign-off in
-commit message confirms maintainer acceptance.
-
-### Step 4.3: Bug Report
-**Record:** No `Reported-by:` or `Link:` tags. No syzbot report. Bug
-identified by code inspection / consistency with `sdei.c`.
-
-### Step 4.4: Related Patches/Series
-**Record:** Standalone fix. Complements existing error handling in
-`arch/arm64/kernel/sdei.c`.
-
-### Step 4.5: Stable Mailing List
-**Record:** **UNVERIFIED** — could not search lore stable archive (403).
-
----
-
-## Phase 5: Code Semantic Analysis
-
-### Step 5.1: Key Functions
-**Record:** `init_irq_scs()`, `init_irq_stacks()`, `init_IRQ()`, and
-downstream `call_on_irq_stack()`.
-
-### Step 5.2: Callers
+### Step 2.4: Assess fix quality
 **Record:**
-- `init_IRQ()` called from `start_kernel()` in `init/main.c:970` during
-  early boot.
-- `call_on_irq_stack()` called from `entry-common.c:160` on IRQ entry
-  when `on_thread_stack()` is true, and from `do_softirq_own_stack()` in
-  `irq.c:73`.
-- Every hardware interrupt on arm64 can reach this path once IRQs are
-  enabled.
+- Fix is obviously correct and minimal
+- Matches the established pattern in `sound/pci/es1938.c` (lines
+  1657–1659), which already has identical NULL checks
+- No regression risk: only adds early return on allocation failure
+- No API changes, no locking changes
 
-### Step 5.3: Callees
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame the changed lines
 **Record:**
-- `arch_alloc_vmap_stack()` → `__vmalloc_node()` (can return NULL)
-- `scs_alloc()` → `__scs_alloc()` → `__vmalloc_node_range()` (explicitly
-  returns NULL on failure, `kernel/scs.c:58-60`)
-- `panic()` on failure
+- Buggy pattern present since `1da177e4c3f41` (Linux 2.6.12-rc2) —
+  original import of es18xx driver
+- HWV bookkeeping (`master_volume = kctl`, `private_free`) dates to the
+  same original commit
+- Bug has existed across all kernel versions including this tree
 
-### Step 5.4: Call Chain / Reachability
-**Record:** `start_kernel()` → `init_IRQ()` → [allocation] → later
-`irqchip_init()` → timers/IRQs enabled → `handle_arch_irq` →
-`call_on_irq_stack()`. If stacks are NULL, first IRQ after enable hits
-invalid stack. Reachable on all arm64 systems using VMAP stacks (always
-selected in `arch/arm64/Kconfig:285`).
+### Step 3.2: Follow Fixes: tag
+**Record:** No `Fixes:` tag present. Not applicable.
 
-### Step 5.5: Similar Patterns
-**Record:** `arch/arm64/kernel/sdei.c:74-84` and `:129-135` already
-check `arch_alloc_vmap_stack()` / `scs_alloc()` for NULL and return
-`-ENOMEM`. `arch/arm64/kernel/efi.c:218-222` also handles
-`arch_alloc_vmap_stack()` failure. `irq.c` is the inconsistent outlier.
-
----
-
-## Phase 6: Cross-Referencing Against the Local Tree
-
-### Step 6.1: Does Buggy Code Exist?
-**Record:** **Yes.** Local tree is **v6.18.43** (`git describe HEAD` →
-`v6.18.43-1-gc7f0dac02d232`). Current `arch/arm64/kernel/irq.c:54-63`
-and `:42-52` lack NULL checks. Fix not applied.
-
-### Step 6.2: Backport Complications
-**Record:** Clean apply expected. One minor context difference: user's
-diff shows `#ifdef CONFIG_SOFTIRQ_ON_OWN_STACK` but this tree uses
-`#ifndef CONFIG_PREEMPT_RT` at that location — unrelated to the fix
-hunks.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** SDEI stack allocation error handling present since
-`ac20ffbb0279aa`. No equivalent fix in `irq.c`. `git log -S "Failed to
-allocate IRQ stack"` found nothing (fix absent).
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-### Step 7.1: Subsystem Criticality
-**Record:** `arch/arm64` — **CORE/IMPORTANT**. Affects every arm64
-system (servers, mobile, embedded).
-
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained; recent `irq.c` changes in 2025
-(`c4a5699d5cefd`). Long-standing code with a long-lived oversight.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** All arm64 users with `CONFIG_VMAP_STACK` (always selected).
-`CONFIG_SHADOW_CALL_STACK` users additionally affected by `scs_alloc()`
-path.
-
-### Step 8.2: Trigger Conditions
-**Record:** `arch_alloc_vmap_stack()` or `scs_alloc()` returns NULL
-during `init_IRQ()` — early-boot OOM / vmalloc failure. Rare but
-concrete (not theoretical). Once IRQs fire, every CPU is affected.
-Unprivileged users can trigger IRQs after boot proceeds.
-
-### Step 8.3: Failure Mode Severity
-**Record:** Without fix: invalid stack at address `THREAD_SIZE` (16
-KiB), stack operations corrupt kernel memory, then oops/hang with poor
-diagnostics. **Severity: HIGH** when triggered (crash + potential
-corruption). With fix: immediate panic with clear message. **Severity of
-fix: prevents corruption.**
-
-### Step 8.4: Risk-Benefit
+### Step 3.3: Check file history for related changes
 **Record:**
-- **Benefit:** Prevents undefined behavior and memory corruption on IRQ;
-  fail-fast with clear message; aligns with `sdei.c` precedent.
-- **Risk:** Very low — ~30 lines, early-boot-only, maintainer-reviewed.
-- **Ratio:** Favorable for backport.
+- Recent es18xx commits are cleanups (guard(), strscpy, spelling) —
+  unrelated
+- **Direct precedent:** `9e53e99b6fa3c` — "ALSA: es1938: check
+  snd_ctl_new1() return value" — identical fix for sibling ESS driver,
+  already in this tree as a stable backport (`Cc:
+  stable@vger.kernel.org`, `Signed-off-by: Greg Kroah-Hartman`)
+- Standalone fix; v2 resend notes other v1 patches were already in for-
+  next
+
+### Step 3.4: Check author's other commits
+**Record:** Ruoyu Wang is an active contributor with multiple similar
+NULL-check / allocation-safety fixes across subsystems (mtk, mt76, nfp,
+RDMA, etc.). Not the es18xx maintainer, but fixes follow established
+ALSA patterns.
+
+### Step 3.5: Check for dependent/prerequisite commits
+**Record:** No dependencies. Self-contained 4-line fix. Applies cleanly
+to v6.18.44 (`git apply --check` succeeded).
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 9.1: Evidence Compile
+### Step 4.1: Find original patch discussion
+**Record:**
+- **v1:** https://lkml.iu.edu/2606.0/12742.html (Jun 6, 2026)
+- **v2:** https://lkml.iu.edu/2606.0/12836.html (Jun 7, 2026) — rebased
+  on sound.git for-next
+- **Maintainer reply:** https://lkml.iu.edu/2606.0/12904.html — Takashi
+  Iwai: "Applied to for-next branch now. Thanks."
+- No NAKs or objections found
+- No explicit stable nomination in thread, but identical es1938 fix was
+  stable-nominated
 
-**FOR backport:**
-- Real bug: NULL IRQ stack pointers used by `call_on_irq_stack()`
-- Can cause memory corruption and oops, not just clean failure
-- Small, surgical, obviously correct
-- Matches existing `sdei.c` error-handling pattern in this tree
-- arm64 maintainer (Will Deacon) signed off
-- Buggy code present since 2017/2020 in this tree
-- VMAP_STACK always enabled on arm64
+### Step 4.2: Check who reviewed the patch
+**Record:** (from v2 headers via openwall mirror)
+- **To:** Takashi Iwai, Jaroslav Kysela
+- **Cc:** linux-sound@, linux-kernel@, alsa-devel@
+- Takashi Iwai (ALSA maintainer) applied the patch
 
-**AGAINST backport:**
-- Trigger (OOM at early boot) is very rare
-- No user reports, syzbot, or `Fixes:` tag
-- System likely unusable anyway under severe boot-time OOM
-- Mailing list review thread unverified
+### Step 4.3: Search for bug report
+**Record:** No user bug report, syzbot report, or sanitizer report. Bug
+identified by code review (static analysis of allocation pattern).
+Trigger requires ENOMEM during probe — rare but real.
 
-**UNRESOLVED:**
-- Full lore review discussion and any explicit stable nominations
+### Step 4.4: Check for related patches and series
+**Record:** v2 notes other v1 patches (for other drivers) were already
+in for-next. This es18xx patch is standalone.
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — mirrors proven `sdei.c`
-   pattern; maintainer sign-off; no user test reports.
-2. Fixes a real bug affecting users? **PASS** — NULL stack →
-   corruption/crash on IRQ.
-3. Important issue? **PASS** — oops and potential memory corruption
-   (HIGH when triggered).
-4. Small and contained? **PASS** — one file, ~30 lines.
-5. No new features or APIs? **PASS** — error handling only.
-6. Can apply to local tree? **PASS** — buggy code present; clean apply
-   expected.
+### Step 4.5: Check stable mailing list history
+**Record:** No stable-list discussion found for this specific commit.
+The es1938 sibling fix (`9e53e99b6fa3c`) was explicitly nominated for
+stable and merged by Greg K-H.
 
-### Step 9.3: Exception Categories
-**Record:** Not a device ID, quirk, DT, build fix, or docs fix. Standard
-bug fix.
+---
 
-### Step 9.4: Decision Rationale
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-This commit fixes a long-standing oversight where IRQ stack allocation
-failures are silently ignored. When `arch_alloc_vmap_stack()` or
-`scs_alloc()` fails during early boot, the kernel proceeds with NULL
-per-CPU stack pointers. The first IRQ then runs `call_on_irq_stack()`
-with an invalid stack base (`THREAD_SIZE`), causing stack operations to
-corrupt low kernel memory before crashing — worse than a clean panic.
+### Step 5.1: Identify key functions
+**Record:** `snd_es18xx_mixer()` — only function modified
 
-The fix is minimal, follows an established pattern already used in
-`sdei.c` in this same tree, and is signed off by the arm64 maintainer.
-While the trigger is rare (boot-time OOM), the consequence is a serious
-crash with potential corruption, which fits stable kernel criteria for
-"oops" and "oh, that's not good" issues. For v6.18.43, the buggy code is
-present and the fix is not.
+### Step 5.2: Trace callers
+**Record:**
+- `snd_es18xx_mixer()` called from `snd_audiodrive_probe()` (line 2071)
+- `snd_audiodrive_probe()` called from PnP probe paths
+  (`snd_audiodrive_pnp_detect`, `snd_audiodrive_pnpc_detect`) and module
+  init
+- **Context:** Driver probe during module load / PnP enumeration —
+  standard device initialization path
+
+### Step 5.3: Trace callees
+**Record:** `snd_ctl_new1()` (can return NULL), `snd_ctl_add()` (handles
+NULL safely at line 515–516 of `sound/core/control.c`, but never reached
+in buggy paths)
+
+### Step 5.4: Follow call chain (bug reachability)
+**Record:**
+```
+module load / PnP probe → snd_audiodrive_probe() → snd_es18xx_mixer() →
+snd_ctl_new1() [ENOMEM] → NULL deref
+```
+- Reachable during driver probe on systems with ESS ES18xx hardware
+- Bug only in HWV code paths (`chip->caps & ES18XX_HWV`), set for chip
+  versions 0x1869 and 0x1879
+- Trigger requires memory allocation failure — uncommon but possible
+  under memory pressure
+
+### Step 5.5: Search for similar patterns
+**Record:** Identical pattern already fixed in `sound/pci/es1938.c`.
+Multiple other ALSA drivers check `if (!kctl)` after `snd_ctl_new1()`.
+es18xx was simply missed.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+
+### Step 6.1: Does the buggy code exist in this tree?
+**Record:** **YES.** At lines 1764–1773 and 1825–1830 in
+`sound/isa/es18xx.c`, the code uses `kctl` without NULL check before
+`snd_ctl_add()`. Fix is not yet present in v6.18.44.
+
+### Step 6.2: Check for backport complications
+**Record:** **Clean apply** — `git apply --check` succeeded with zero
+conflicts. No refactoring needed.
+
+### Step 6.3: Check if related fixes are already here
+**Record:** The es1938 sibling fix (`9e53e99b6fa3c`) is already in this
+tree. No equivalent es18xx fix present.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Identify subsystem and criticality
+**Record:** **ALSA / ISA sound driver** (`CONFIG_SND_ES18XX`) —
+**PERIPHERAL** subsystem. Legacy ESS AudioDrive hardware (ISA/PnP).
+Small user base but real hardware still exists.
+
+### Step 7.2: Assess subsystem activity
+**Record:** es18xx driver receives periodic maintenance (guard(),
+strscpy, constification) but is mature/legacy code. Bug predates all
+recent changes.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users with `CONFIG_SND_ES18XX` enabled and ESS ES18xx
+hardware with HWV capability (chip versions 0x1869, 0x1879). Narrow but
+real population.
+
+### Step 8.2: Trigger conditions
+**Record:**
+- **When:** Driver probe, during mixer control creation
+- **Condition:** `snd_ctl_new1()` allocation failure (ENOMEM) in HWV
+  code paths
+- **Likelihood:** Low (requires memory pressure during probe), but probe
+  is a standard path
+- **Unprivileged trigger:** No — requires hardware present and driver
+  loading; not a syscall-level attack vector
+
+### Step 8.3: Failure mode severity
+**Record:**
+- **Failure:** NULL pointer dereference → kernel oops during module
+  probe
+- **Severity:** **HIGH** when triggered (kernel crash during driver
+  load); **LOW** likelihood of trigger
+
+### Step 8.4: Risk-benefit ratio
+**Record:**
+- **Benefit:** Prevents kernel oops on allocation failure; aligns es18xx
+  with es1938 and ALSA conventions
+- **Risk:** Very low — 4 lines, no behavior change on success path
+- **Ratio:** Clear benefit outweighs risk
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Compile the evidence
+
+**FOR backporting:**
+- Real NULL pointer dereference bug in driver probe path
+- Small (4 lines), obviously correct fix
+- Identical fix for es1938 sibling driver already backported to stable
+  in this tree
+- Bug present since 2.6.12; code exists in v6.18.44
+- Applies cleanly
+- ALSA maintainer (Takashi Iwai) applied to for-next
+- Follows established ALSA pattern (`if (!kctl) return -ENOMEM`)
+
+**AGAINST backporting:**
+- Legacy ISA driver with small user base
+- Trigger requires ENOMEM during probe (rare)
+- No user reports or fuzzer findings
+- Only affects HWV-capable chip variants
+
+**Unresolved:** None material to the decision.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — pattern proven in es1938;
+   maintainer merged
+2. Fixes a real bug? **PASS** — documented NULL deref on allocation
+   failure
+3. Important issue? **PASS** — kernel oops (HIGH severity, low
+   likelihood)
+4. Small and contained? **PASS** — 4 lines, 1 file
+5. No new features or APIs? **PASS**
+6. Can apply to local tree? **PASS** — clean apply verified
+
+### Step 9.3: Exception categories
+**Record:** Not applicable (standard bug fix, not device ID/quirk/build
+fix).
+
+### Step 9.4: Decision rationale
+
+This commit fixes a genuine NULL pointer dereference in
+`snd_es18xx_mixer()` where `snd_ctl_new1()` return values are used
+before being validated. The identical pattern was already fixed and
+backported for the closely related `es1938` driver in this same tree.
+The fix is minimal, follows ALSA conventions, applies cleanly to
+v6.18.44, and prevents a kernel oops during driver probe under memory
+pressure. While the affected hardware is legacy and the trigger is
+uncommon, stable trees routinely accept such probe-path NULL-deref fixes
+— especially when a direct sibling precedent exists.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from user-provided commit
-  message
-- **[Phase 2]** Diff analysis: 1 file, 3 functions, NULL-check + panic
-  pattern
-- **[Phase 3]** `git describe HEAD`: v6.18.43-1-gc7f0dac02d232
-- **[Phase 3]** `git blame -L 42,63 arch/arm64/kernel/irq.c`: bug since
-  e3067861 (2017), ac20ffbb (2020)
-- **[Phase 3]** `git show e3067861ba6650`: introduced
-  `init_irq_stacks()` without error check
-- **[Phase 3]** `git show ac20ffbb0279aa`: introduced `init_irq_scs()`
-  without error check; sdei.c got checks
-- **[Phase 3]** `git log --oneline -20 -- arch/arm64/kernel/irq.c`:
-  recent history reviewed
-- **[Phase 3]** `git log --grep="panic from init_IRQ"`: no match (fix
-  not in tree)
-- **[Phase 3]** `git log -S "Failed to allocate IRQ stack"`: no match
-  (timed out once, then killed; no results)
-- **[Phase 4]** `b4 dig -c HEAD`: no match for this commit
-- **[Phase 4]** lore.kernel.org fetch: 403 Forbidden — **UNVERIFIED**
-  review thread
-- **[Phase 5]** Read `arch/arm64/kernel/irq.c`: confirmed buggy code at
-  lines 42-63, 110-113
-- **[Phase 5]** Read `arch/arm64/kernel/entry.S:874-891`:
-  `call_on_irq_stack` uses `irq_stack_ptr` without NULL check
-- **[Phase 5]** Read `kernel/scs.c:54-60`: `scs_alloc()` returns NULL on
-  failure
-- **[Phase 5]** Read `arch/arm64/include/asm/vmap_stack.h:18-26`:
-  `arch_alloc_vmap_stack()` returns `kasan_reset_tag(p)` which can be
-  NULL
-- **[Phase 5]** Read `arch/arm64/kernel/sdei.c:74-84,129-135,177-181`:
-  precedent for NULL checks
-- **[Phase 5]** Read `init/main.c:970`: `init_IRQ()` called during
-  `start_kernel()`
-- **[Phase 5]** Read `arch/arm64/kernel/entry-common.c:159-160`: IRQ
-  path calls `call_on_irq_stack`
-- **[Phase 6]** `arch/arm64/Kconfig:285`: `select VMAP_STACK` — always
-  enabled on arm64
-- **[Phase 6]** Confirmed fix not present in current `irq.c`
-- **[Phase 8]** `IRQ_STACK_SIZE` = `THREAD_SIZE` = 16 KiB (4K pages) per
-  `arch/arm64/include/asm/memory.h:131,140`
+- [Phase 1] `git describe HEAD` → v6.18.44; parsed subject, tags, body
+  from provided commit message
+- [Phase 1] Web search → found v1/v2 on lkml.iu.edu and maintainer
+  acceptance reply
+- [Phase 2] Read `sound/isa/es18xx.c` lines 1754–1845 → confirmed buggy
+  code without NULL checks
+- [Phase 2] Read `sound/core/control.c` lines 250–259, 515–516 →
+  confirmed `snd_ctl_new1()` returns NULL on failure; `snd_ctl_add()`
+  handles NULL but is bypassed in buggy paths
+- [Phase 2] Read `sound/pci/es1938.c` lines 1655–1678 → confirmed
+  identical fix pattern already present
+- [Phase 3] `git blame -L 1755,1845 sound/isa/es18xx.c` → buggy code
+  from 1da177e4c3f41 (2.6.12)
+- [Phase 3] `git log -S 'master_volume = kctl' -- sound/isa/es18xx.c` →
+  introduced in 1da177e4c3f41
+- [Phase 3] `git show 9e53e99b6fa3c` → es1938 stable backport with Cc:
+  stable, Fixes: 2.6.12
+- [Phase 3] `git log --oneline -20 -- sound/isa/es18xx.c` → no
+  conflicting recent changes
+- [Phase 4] WebFetch lkml.iu.edu/2606.0/12904.html → Takashi Iwai
+  applied to for-next
+- [Phase 4] b4 dig unavailable (commit not in tree); used web search
+  instead
+- [Phase 5] `grep snd_es18xx_mixer(` → called from
+  `snd_audiodrive_probe()` line 2071
+- [Phase 5] Read es18xx.c lines 1597–1604 → ES18XX_HWV set for versions
+  0x1869, 0x1879
+- [Phase 6] `git apply --check` with provided diff → exit 0 (clean
+  apply)
+- [Phase 6] Confirmed fix not present in current tree (no `if (!kctl)`
+  in es18xx.c)
+- [Phase 7] Read `sound/isa/Kconfig` line 186 → CONFIG_SND_ES18XX
+  tristate option
+- [Phase 8] Assessed severity: oops on ENOMEM during probe, HWV chips
+  only
 
-**YES**Those background searches are done. They back up the earlier
-analysis:
+**YES**
 
-- **`git log --grep="panic from init_IRQ"`** — no matches; the fix is
-  not in this v6.18.43 tree.
-- **Similar-fix search** — no equivalent error handling in `irq.c`; only
-  unrelated history (e.g. SDEI stack checks in `sdei.c`).
-- **Author/subject search** — no local commit for this IRQ stack panic
-  fix.
-- **`git log -S` for the panic string** — timed out and was stopped;
-  other checks already showed the fix is absent.
+ sound/isa/es18xx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Verdict unchanged: **YES** for backport to this tree.
-
- arch/arm64/kernel/irq.c | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
-
-diff --git a/arch/arm64/kernel/irq.c b/arch/arm64/kernel/irq.c
-index c0065a1d77cf3..00ebbf18b1c18 100644
---- a/arch/arm64/kernel/irq.c
-+++ b/arch/arm64/kernel/irq.c
-@@ -10,6 +10,7 @@
-  * Copyright (C) 2012 ARM Ltd.
-  */
- 
-+#include <linux/errno.h>
- #include <linux/hardirq.h>
- #include <linux/init.h>
- #include <linux/irq.h>
-@@ -32,34 +33,43 @@ DEFINE_PER_CPU(struct nmi_ctx, nmi_contexts);
- 
- DEFINE_PER_CPU(unsigned long *, irq_stack_ptr);
- 
--
- DECLARE_PER_CPU(unsigned long *, irq_shadow_call_stack_ptr);
- 
- #ifdef CONFIG_SHADOW_CALL_STACK
- DEFINE_PER_CPU(unsigned long *, irq_shadow_call_stack_ptr);
- #endif
- 
--static void init_irq_scs(void)
-+static int __init init_irq_scs(void)
- {
- 	int cpu;
-+	void *s;
- 
- 	if (!scs_is_enabled())
--		return;
-+		return 0;
-+
-+	for_each_possible_cpu(cpu) {
-+		s = scs_alloc(early_cpu_to_node(cpu));
-+		if (!s)
+diff --git a/sound/isa/es18xx.c b/sound/isa/es18xx.c
+index 1da7b400a17b6..2f454f7797ce2 100644
+--- a/sound/isa/es18xx.c
++++ b/sound/isa/es18xx.c
+@@ -1762,6 +1762,8 @@ static int snd_es18xx_mixer(struct snd_card *card)
+ 	for (idx = 0; idx < ARRAY_SIZE(snd_es18xx_base_controls); idx++) {
+ 		struct snd_kcontrol *kctl;
+ 		kctl = snd_ctl_new1(&snd_es18xx_base_controls[idx], chip);
++		if (!kctl)
 +			return -ENOMEM;
-+		per_cpu(irq_shadow_call_stack_ptr, cpu) = s;
-+	}
- 
--	for_each_possible_cpu(cpu)
--		per_cpu(irq_shadow_call_stack_ptr, cpu) =
--			scs_alloc(early_cpu_to_node(cpu));
-+	return 0;
- }
- 
--static void __init init_irq_stacks(void)
-+static int __init init_irq_stacks(void)
- {
- 	int cpu;
- 	unsigned long *p;
- 
- 	for_each_possible_cpu(cpu) {
- 		p = arch_alloc_vmap_stack(IRQ_STACK_SIZE, early_cpu_to_node(cpu));
-+		if (!p)
-+			return -ENOMEM;
- 		per_cpu(irq_stack_ptr, cpu) = p;
- 	}
-+
-+	return 0;
- }
- 
- #ifndef CONFIG_PREEMPT_RT
-@@ -109,8 +119,9 @@ int __init set_handle_fiq(void (*handle_fiq)(struct pt_regs *))
- 
- void __init init_IRQ(void)
- {
--	init_irq_stacks();
--	init_irq_scs();
-+	if (init_irq_stacks() || init_irq_scs())
-+		panic("Failed to allocate IRQ stack resources\n");
-+
- 	irqchip_init();
- 
- 	if (system_uses_irq_prio_masking()) {
+ 		if (chip->caps & ES18XX_HWV) {
+ 			switch (idx) {
+ 			case 0:
+@@ -1823,6 +1825,8 @@ static int snd_es18xx_mixer(struct snd_card *card)
+ 		for (idx = 0; idx < ARRAY_SIZE(snd_es18xx_hw_volume_controls); idx++) {
+ 			struct snd_kcontrol *kctl;
+ 			kctl = snd_ctl_new1(&snd_es18xx_hw_volume_controls[idx], chip);
++			if (!kctl)
++				return -ENOMEM;
+ 			if (idx == 0)
+ 				chip->hw_volume = kctl;
+ 			else
 -- 
 2.53.0
 
