@@ -1,109 +1,151 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CDA51043D;
-	Mon, 31 Aug 2026 13:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05A2514751;
+	Mon, 31 Aug 2026 13:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183794; cv=none; b=VR9hUd8tAtlK1ZI8ZJbXIHv/ox9hp6ioT1+7EucrfO3XR+ntn3oV+mwN4SOBZkKea25iu4vN6thLMLoLkQLHjDjpRY06xvB2vWiPOq7fTwnn9puY4u9V98k7lqxnk1l2IUFN7xEOapsod4KO38fD7B7+24LTsSRN7OzbNVvTW4o=
+	t=1788183796; cv=none; b=bTuAlhMpM1nktVnC3Whwi9DC4j2aISKJjeCe/eIX/B/9xjS6ILO/RMOgCvMkj9o9py9iSSNikvGUbdCzoFYIOPPXXyTXEcvagjBoGCVL1VzmhSj731DJpUgzJsCTECkyM5XqVThv2M2cnSj/2Lu2mdYeTxC8F60XCM2aG2vRBlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183794; c=relaxed/simple;
-	bh=ybXQpZUfgZ32ccm9FuhYE2lLDrtz7oXawzEZP8k0oS8=;
+	s=arc-20240116; t=1788183796; c=relaxed/simple;
+	bh=P36z0LgOTirIqs8Gap3vzg3bhxskuhT+8NF6h62j7CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RmlApoFuEdBAB/9rfNoS0tANT0nCyWHj6G8w4sMkmbEMrPtYlbtRcGQVGRKQqJ29N4/tvNHjG4vTrHZJeu2gDDR5vpd0nBRvJcB+HrjQ12Id0XN6rbjIsujKC7r+WMgwfy0OaNL9FNinyerS7fZWzjMuIEXrqhzpZlsBzyWGG0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K5A8qDRE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vBeb1sJh9uptjcczgnJStkzejH1GXKimOVApAKvxol6Q5B7DZvbtaAsat/Ahmw/+rUtrpfOhXMpP8NqqIAxgyq90CUuknRaMIJWkVCHaZIGJMpH3mQrOpKR8satQw8sLjtQAoIfpNTc+WqxFGrQxkqJpMv+/RqMpQBR7FFGvojk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkyNfNjS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K5A8qDRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0E11F000E9;
-	Mon, 31 Aug 2026 13:43:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183792;
-	bh=w5lh3aCVAo9rPW0i7OECtnfBmySyoPR//G0XDXo8WSs=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkyNfNjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331E01F00ACA;
+	Mon, 31 Aug 2026 13:43:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183793;
+	bh=Iz5F5G02Q9dKsIJdii1EJmUlA7d5+LZUOFwfLqkNySo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K5A8qDREHDGa6ygPD2ejc3GlKhbpYdHAWjPgWheHzrulCmThyWAvW16IKSadMuocg
-	 3HtWKNl+4IisArd8blKAumn77ehFixYUH3h1ciufkgC5IFycoNUCNk9xXNiNiwuj8Q
-	 sYpPdhIuEIMr59IW+GlWNl/9ijMTfwW5+6rijeB/eSa1Qj4vsH9Fx8/3zzbxAG+bfI
-	 ZTgCo3TOPPOPNiJGOpeONFKNLgoe8sXhwM9shLgaidOybf9FbmzPDhEvxJ4gWKa7AR
-	 855cY8/8QSrVkWKcuHC6JQRigSXXRk4+HecDoqDMqB+Uj3Ei0fUXJ2xB3IsrErxMv8
-	 sj5ROdm7bKP6w==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: rsi: avoid reading TKIP MIC keys for non-TKIP ciphers
-Date: Mon, 31 Aug 2026 09:25:35 -0400
-Message-ID: <20260831133314.4125787-307-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=zkyNfNjSpd3jiIbL0/6HkSnKnCQu99HZ4JgTi2LfHxorqj9MijNtXG+PN9Vejp2bM
+	 9Cx3D5EEL3KhidLWm2wTnAuOQR1vi4a94v4RZh7GQIXgUDTzYgmT8/N4peCZ9IuPaX
+	 caE1asAXqJAvIqZPAKnMHxtC2TE3EnKqmk8Uczd8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 7.1 44/76] xfrm: ah6: validate routing header segments_left
+Date: Mon, 31 Aug 2026 15:34:16 +0200
+Message-ID: <20260831133401.688306702@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+References: <20260831133359.185608553@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 843fe9bc583b7686ca68312ac9319c9240a73c03 ]
+------------------
 
-rsi_hal_load_key() copies tx_mic_key and rx_mic_key from data[16] and
-data[24] whenever key data is present. Those offsets are only part of
-the 32-byte TKIP key layout. Shorter keys used by other ciphers, such as
-CCMP, do not provide those bytes, so the unconditional copies can read
-past the supplied key buffer.
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-Only copy the MIC keys for TKIP, and reject malformed TKIP keys that are
-shorter than the expected 32-byte layout.
+commit 7bad4bda74dc4713f398d3b7624ff05478e3a568 upstream.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260701053414.34015-1-pengpeng@iscas.ac.cn
-[drop useless length check]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+AH6 rearranges routing-header addresses before computing or verifying the
+ICV. ipv6_rearrange_rthdr() assumes that segments_left is not larger than
+the number of addresses described by the routing header's hdrlen field.
+
+That assumption does not hold for raw IPv6 HDRINCL packets. A packet with
+hdrlen equal to 2 describes one address, but can carry an arbitrary
+segments_left value. With segments_left equal to 255, the function moves
+its address pointer 4,064 bytes backwards and passes a 4,064-byte length to
+memmove(), resulting in an out-of-bounds access.
+
+Validate the invariant locally before modifying the routing header or
+performing any address-pointer arithmetic, and propagate malformed-header
+errors to the existing AH6 input and output error paths.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ net/ipv6/ah6.c |   29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
+--- a/net/ipv6/ah6.c
++++ b/net/ipv6/ah6.c
+@@ -232,26 +232,28 @@ static void ipv6_rearrange_destopt(struc
+  *	Rearrange the destination address in @iph and the addresses in @rthdr
+  *	so that they appear in the order they will at the final destination.
+  *	See Appendix A2 of RFC 2402 for details.
++ *
++ * Return: 0 on success, -EINVAL if segments_left exceeds the number of
++ * addresses described by hdrlen.
+  */
+-static void ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
++static int ipv6_rearrange_rthdr(struct ipv6hdr *iph, struct ipv6_rt_hdr *rthdr)
+ {
+-	int segments, segments_left;
++	unsigned int segments, segments_left;
+ 	struct in6_addr *addrs;
+ 	struct in6_addr final_addr;
+ 
+ 	segments_left = rthdr->segments_left;
+ 	if (segments_left == 0)
+-		return;
+-	rthdr->segments_left = 0;
++		return 0;
+ 
+-	/* The value of rthdr->hdrlen has been verified either by the system
+-	 * call if it is locally generated, or by ipv6_rthdr_rcv() for incoming
+-	 * packets.  So we can assume that it is even and that segments is
+-	 * greater than or equal to segments_left.
+-	 *
+-	 * For the same reason we can assume that this option is of type 0.
++	/* Raw locally generated packets can reach AH6 without the invariant
++	 * required by the rt0-style address rearrangement below.
+ 	 */
+ 	segments = rthdr->hdrlen >> 1;
++	if (segments_left > segments)
++		return -EINVAL;
++
++	rthdr->segments_left = 0;
+ 
+ 	addrs = ((struct rt0_hdr *)rthdr)->addr;
+ 	final_addr = addrs[segments - 1];
+@@ -261,6 +263,8 @@ static void ipv6_rearrange_rthdr(struct
+ 
+ 	addrs[0] = iph->daddr;
+ 	iph->daddr = final_addr;
++
++	return 0;
+ }
+ 
+ static int ipv6_clear_mutable_options(struct ipv6hdr *iph, int len, int dir)
+@@ -273,6 +277,7 @@ static int ipv6_clear_mutable_options(st
+ 	} exthdr = { .iph = iph };
+ 	char *end = exthdr.raw + len;
+ 	int nexthdr = iph->nexthdr;
++	int err;
+ 
+ 	exthdr.iph++;
+ 
+@@ -292,7 +297,9 @@ static int ipv6_clear_mutable_options(st
+ 			break;
+ 
+ 		case NEXTHDR_ROUTING:
+-			ipv6_rearrange_rthdr(iph, exthdr.rth);
++			err = ipv6_rearrange_rthdr(iph, exthdr.rth);
++			if (err)
++				return err;
+ 			break;
+ 
+ 		default:
 
-The background `git log -S "tx_mic_key"` search finished, but it wasn’t
-very useful: with `--all` it mostly hit unrelated commits, and without
-it the shallow clone only reaches the graft root (`5d324e5159d9e`).
-
-Tag checks are more reliable here — the unconditional MIC key copies are
-present at least as far back as `v5.10.1`, `v6.12.1`, and `v6.18.44`.
-
-**Verdict for this 6.18.44 tree: YES** — real OOB read on CCMP key
-install, small maintainer-reviewed fix, applies cleanly.
-
- drivers/net/wireless/rsi/rsi_91x_mgmt.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/wireless/rsi/rsi_91x_mgmt.c b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-index 7f2c1608f2ce3..2ddf4d158bfe3 100644
---- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-@@ -848,8 +848,10 @@ int rsi_hal_load_key(struct rsi_common *common,
- 		} else {
- 			memcpy(&set_key->key[0][0], data, key_len);
- 		}
--		memcpy(set_key->tx_mic_key, &data[16], 8);
--		memcpy(set_key->rx_mic_key, &data[24], 8);
-+		if (cipher == WLAN_CIPHER_SUITE_TKIP) {
-+			memcpy(set_key->tx_mic_key, &data[16], 8);
-+			memcpy(set_key->rx_mic_key, &data[24], 8);
-+		}
- 	} else {
- 		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
- 	}
--- 
-2.53.0
 
