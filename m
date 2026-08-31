@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A96503BDF;
-	Mon, 31 Aug 2026 13:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5CA44CAC1;
+	Mon, 31 Aug 2026 13:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183727; cv=none; b=YaRGQ0+xM82J1YyanRqZg99EkpVZG5TUG9h15Vbn9rbYr0r5Fmofz0z6Ddt4CzIJvF3w06vTsyiGWHPR8i2HSojSEx0Ds/9BhHYrzuhG7wyz4X0SQTxwV435LT7Lj2djeXhj7+7Q1KnFvRpdWDq59aA8aRwMXx5OaEg7nFpLMig=
+	t=1788183728; cv=none; b=kyPLLSBmbBRYNDMjkVWR4JpVnoZvsIZXL4D9H5YSBdjtx2yjz2lM3RA4LEXmNnx7ZVo3GnNRTooSZUiq67RurTHw0wOSYOdO4TYRulK5tPSh5URiDmRIpsGqDEx10ibmqsVTMUrj4AKGOoR5cXLATVtikykN0ERczmgN38poNzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183727; c=relaxed/simple;
-	bh=ErK8VEajhzGycChOxhSNwg67bkKQ1CqjODyFYK6rvao=;
+	s=arc-20240116; t=1788183728; c=relaxed/simple;
+	bh=5at3IeaA6cfwORKOfKAMKjh1/u2q4qG0jAbKukIT8+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=POWqxRJfBUmFZYQljm+OnFP08u7hJj6SEK0bypZw4xkUV7nvjC9el9dptqMfLUamSDg24W9jhxn2hzIvaHPe55TiL+OS8N92GQM4JvovlQnBTipcdpPzB/whRVIcOOI8UprzHDozYc2Vo7FJ1pzj6SDVMgN87vE2rFsXvwsOMc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CEevhqv9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qjZof4pEA9JmtBWm6Pg52cPy3hRA82VkQ/AdY4cJb9wq7Zy4Z+9JEIXc9pgS40QHCOozeHkcRd0eCGJ7TtAY2yNsqWm65pcYQTOCtHr9vEvKd7L2Tm5I8skReXFLqVo3c3lKva/OXMkHUipoEH1e2MmcJgGNZzg6PJV2eSiBdJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MNkSYdRf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CEevhqv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE3C1F00A3E;
-	Mon, 31 Aug 2026 13:42:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MNkSYdRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2561F00A3F;
+	Mon, 31 Aug 2026 13:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183723;
-	bh=6bkSnFuT4z0ZDgVR+dCP91I857eDaDQj4JMTa1PfVzE=;
+	s=k20260515; t=1788183725;
+	bh=IToJlCIicRLqVSVtwjTCz3NLfo/8wcoja9GnonmpK/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CEevhqv9fM89GIp85XFA22TkS9TQRtCOhiH3Ip+pLMiilItAOGk1NmnUbIM4yV30z
-	 weBHBWRKm3Gqv82cNCtBJHVHBN3+GIZseqCO3Y/EYK/dWRkCe4EqwpP3+pJDJijMng
-	 P1qBKjE4f5ywTsdQFGgMfdW3hYShwuXFGnmR2UNMQVZRMhPIasRdhazr/WCPEUS8DW
-	 yy37k8tXz67MA+JnraYurEVspbHSiP/q42kpuU1CQib55smIaOISoZQikAgf7RLMdc
-	 +/UIQWeKax/iKVEpRsNvTFrUpF8jjMmjFpItdEh8g7kH9We+SLL2peLYhYshxNIwsw
-	 kBZ4CBMMHdSVg==
+	b=MNkSYdRfBny5glVuqGKyA0yJ6h8iQERkS2um+MSyxqdK463hg40ZC1P0mMwWJctrj
+	 urF/ldR4O7sry7LmXUUl8eCbL18yWxkgdXiBH3QrkG+suQyGCqNm7iizCcUYT7j3Hx
+	 ipYPIGZW3fvA3J8IIYvzUabLmdn8+dfdm0Xryk4Cd2yid9v91+n7YXcLtq/M/bk+wm
+	 1sMi7mOqd5Ye+BDauoa9ia660uB0icSpvko+64rUpfpt2ub/lNd6aUh9dp7ME/A8VM
+	 Cihth77BhyBR/EhGCmAcODwZ4PTh/I9va8HD/jXM4Squu4cWMnkmBfWbaeBlJGgjxK
+	 RZZdPFR/aq6Xg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ZhengYuan Huang <gality369@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Zhang Cen <rollkingzzc@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] fs/ntfs3: validate index entry key bounds
-Date: Mon, 31 Aug 2026 09:24:54 -0400
-Message-ID: <20260831133314.4125787-266-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] btrfs: tree-checker: validate names in ROOT_REF and ROOT_BACKREF
+Date: Mon, 31 Aug 2026 09:24:55 -0400
+Message-ID: <20260831133314.4125787-267-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,583 +54,491 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 98d6e5d9dc1d34dcffc61549617581a5fe1ef807 ]
+[ Upstream commit 0af37c217edf15fa21dac1c40822086df356c6bb ]
 
-[BUG]
-A malformed NTFS directory index entry can advertise a key_size larger
-than the bytes actually present in its NTFS_DE payload. Directory lookup
-then passes that malformed key to cmp_fnames(), which can read past the
-end of the kmalloc'ed index buffer.
+ROOT_REF and ROOT_BACKREF items contain a struct btrfs_root_ref followed
+by the subvolume name. Several readers assume that this layout is already
+valid and then use the on-disk name length directly. A corrupted item can
+therefore make those readers address bytes outside the item, and
+BTRFS_IOC_GET_SUBVOL_INFO can copy too many bytes into its fixed-size UAPI
+name buffer.
 
-BUG: KASAN: slab-out-of-bounds in fname_full_size fs/ntfs3/ntfs.h:590 [inline]
-BUG: KASAN: slab-out-of-bounds in cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
-Read of size 1 at addr ffff88801c313018 by task syz.6.3365/9279
+Validate ROOT_REF and ROOT_BACKREF items in tree-checker before any reader
+uses them. Reject records that do not contain a non-empty name, whose
+name_len does not exactly describe the remaining item payload, or whose
+name exceeds BTRFS_NAME_LEN.
 
-Call Trace:
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xd1/0x650 mm/kasan/report.c:482
- kasan_report+0xfb/0x140 mm/kasan/report.c:595
- __asan_report_load1_noabort+0x14/0x30 mm/kasan/report_generic.c:378
- fname_full_size fs/ntfs3/ntfs.h:590 [inline]
- cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
- hdr_find_e.isra.0+0x3ed/0x670 fs/ntfs3/index.c:762
- indx_find+0x4b5/0x900 fs/ntfs3/index.c:1186
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
+For BTRFS_IOC_GET_SUBVOL_INFO, copy only the validated on-disk name_len
+instead of deriving the copy length from the item size. The ioctl result is
+zeroed when allocated. That leaves the existing trailing zero byte
+untouched.
 
-Allocated by task 9279:
- kasan_save_stack+0x39/0x70 mm/kasan/common.c:56
- kasan_save_track+0x14/0x40 mm/kasan/common.c:77
- kasan_save_alloc_info+0x37/0x60 mm/kasan/generic.c:573
- poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
- __kasan_kmalloc+0xc3/0xd0 mm/kasan/common.c:417
- kasan_kmalloc include/linux/kasan.h:262 [inline]
- __do_kmalloc_node mm/slub.c:5650 [inline]
- __kmalloc_noprof+0x2bd/0x900 mm/slub.c:5662
- kmalloc_noprof include/linux/slab.h:961 [inline]
- indx_read+0x41d/0xad0 fs/ntfs3/index.c:1059
- indx_find+0x447/0x900 fs/ntfs3/index.c:1179
- dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
- ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
- __lookup_slow+0x241/0x450 fs/namei.c:1816
- lookup_slow fs/namei.c:1833 [inline]
- walk_component+0x31c/0x570 fs/namei.c:2151
- link_path_walk+0x592/0xd60 fs/namei.c:2519
- path_lookupat+0x138/0x660 fs/namei.c:2675
- filename_lookup+0x1f3/0x560 fs/namei.c:2705
- filename_setxattr+0xad/0x1c0 fs/xattr.c:660
- path_setxattrat+0x1d8/0x280 fs/xattr.c:713
- __do_sys_lsetxattr fs/xattr.c:754 [inline]
- __se_sys_lsetxattr fs/xattr.c:750 [inline]
- __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
- ...
-
-[CAUSE]
-The index-header validators only validated INDEX_HDR-level geometry.
-They did not walk each NTFS_DE to verify entry alignment, subnode
-layout, or that key_size fit inside the entry payload. They also
-allowed a last sentinel entry to carry a non-zero key_size.
-
-[FIX]
-Walk every NTFS_DE in ntfs3's index-header validators and reject
-entries with invalid layout, mismatched subnode state, oversized
-key_size, or non-zero sentinel keys before lookup or log replay can
-consume them.
-
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `fs/ntfs3: validate index entry key bounds`
+# Stable Backport Analysis: btrfs: tree-checker: validate names in
+ROOT_REF and ROOT_BACKREF
 
-**Local tree:** `v6.18.44-1-gef4bf62bccf3c` (Linux **6.18.44**)
+**Local tree:** `v6.18.44` (Linux 6.18.44)
+**Commit under review:** `0af37c217edf1` (on `master`, **not** in this
+tree)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the Subject Line
-**Record:** `[fs/ntfs3]` `[validate]` — Add validation of per-entry
-`key_size` bounds in NTFS directory index headers before lookup/log
-replay consumes them.
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[btrfs: tree-checker]` `[validate]` — Add validation of
+subvolume names embedded in ROOT_REF and ROOT_BACKREF tree items.
 
-### Step 1.2: Parse All Commit Message Tags
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
 **Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — not in message body (but KASAN stack trace
-  identifies syzbot task `syz.6.3365/9279`)
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** — none
-- **Cc: stable:** — none (expected)
-- **Signed-off-by:** ZhengYuan Huang, Konstantin Komarov (ignore
-  pipeline SOB)
+- **Fixes:** — absent (expected for manual review)
+- **Reported-by:** — absent
+- **Tested-by:** — absent
+- **Reviewed-by:** Qu Wenruo `<wqu@suse.com>`, David Sterba
+  `<dsterba@suse.com>`
+- **Acked-by:** — absent
+- **Link:** — absent
+- **Cc: stable:** — absent (expected)
+- **Signed-off-by:** Zhang Cen `<rollkingzzc@gmail.com>`, David Sterba
+  `<dsterba@suse.com>` (ignore pipeline-added SOBs)
 
-**Notable pattern:** Full KASAN slab-out-of-bounds report with syscall
-reachability (`__x64_sys_lsetxattr`).
+Notable: reviewed by two btrfs maintainers; no syzbot report, but the
+commit message describes a concrete memory-safety failure mode.
 
-### Step 1.3: Analyze Commit Body
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
 **Record:**
-- **Bug:** Malformed `NTFS_DE` index entry can advertise `key_size`
-  larger than bytes available in the entry payload.
-- **Symptom:** `cmp_fnames()` → `fname_full_size()` reads past the end
-  of the kmalloc'd index buffer; KASAN slab-out-of-bounds.
-- **Root cause:** `index_hdr_check()` and `check_index_header()` only
-  validated INDEX_HDR-level geometry, not per-entry `key_size` fit; last
-  sentinel entry could have non-zero `key_size`.
-- **Version info:** Not specified; bug is in long-standing validation
-  code.
+- **Bug:** ROOT_REF/ROOT_BACKREF items store `struct btrfs_root_ref`
+  followed by a variable-length name. Readers trust on-disk `name_len`
+  and item layout without validation.
+- **Symptom:** Corrupted items cause readers to access bytes outside the
+  item; `BTRFS_IOC_GET_SUBVOL_INFO` can copy more than 256 bytes into
+  its fixed-size UAPI name buffer.
+- **Root cause:** Tree-checker validates INODE_REF and ROOT_ITEM but not
+  ROOT_REF/ROOT_BACKREF; ioctl derives copy length from total item size
+  instead of validated `name_len`.
+- **Version info:** None in commit message.
 
-### Step 1.4: Detect Hidden Bug Fixes
-**Record:** Not disguised — explicitly labeled `[BUG]` with KASAN trace.
-This is a memory-safety validation fix, not cleanup.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not disguised — this is an explicit memory-safety /
+corruption-handling fix, not cleanup. The ioctl change is defense-in-
+depth on top of tree-checker validation.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory the Changes
+### Step 2.1: INVENTORY THE CHANGES
 **Record:**
-| File | Change | Functions |
-|------|--------|-----------|
-| `fs/ntfs3/fslog.c` | ~+35 / -10 lines | `check_index_header()` |
-| `fs/ntfs3/index.c` | ~+35 / -3 lines | `index_hdr_check()` |
+- `fs/btrfs/tree-checker.c`: +35 lines — new `check_root_ref()`, two new
+  switch cases
+- `fs/btrfs/ioctl.c`: +6/−6 lines — `btrfs_ioctl_get_subvol_info()`
+- **Functions modified:** `check_root_ref()` (new), `check_leaf_item()`,
+  `btrfs_ioctl_get_subvol_info()`
+- **Scope:** Single-subsystem, surgical, 2 files, ~40 lines net
 
-**Scope:** Two-file, surgical validation enhancement (~70 lines total).
-No new functions or APIs.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 
-### Step 2.2: Code Flow Change (per hunk)
+**Hunk 1 — `tree-checker.c`:**
+- **Before:** ROOT_REF/ROOT_BACKREF items fell through
+  `check_leaf_item()` with no item-specific validation.
+- **After:** `check_root_ref()` rejects items where:
+  - `item_size <= sizeof(*rref)` (no non-empty name)
+  - `name_len > BTRFS_NAME_LEN` (255)
+  - `item_size != sizeof(*rref) + name_len` (layout mismatch)
+- **Path affected:** Every leaf block read from disk via
+  `btrfs_check_leaf()`.
 
-**`check_index_header()` (fslog.c):**
-- **Before:** Walked entries checking `esize >= min_de`, end offset, and
-  subnode flag mask; did not validate `key_size`.
-- **After:** Also checks 8-byte alignment, cumulative offset bounds via
-  `size_add()`, rejects non-last entries with `key_size > data_size`,
-  rejects last sentinel with non-zero `key_size`.
+**Hunk 2 — `ioctl.c`:**
+- **Before:** `item_len = btrfs_item_size(...) - sizeof(struct
+  btrfs_root_ref)`; copy `item_len` bytes into `subvol_info->name[256]`.
+- **After:** Copy `btrfs_root_ref_name_len(leaf, rref)` bytes instead.
+- **Path affected:** `BTRFS_IOC_GET_SUBVOL_INFO` ioctl on non-top-level
+  subvolumes.
 
-**`index_hdr_check()` (index.c):**
-- **Before:** Only checked header fields (`off`, `tot`, `end`, minimum
-  first-entry size); returned true without walking entries.
-- **After:** Full entry walk with same per-entry validations as above,
-  using `de_has_vcn(e) != has_subnode`.
-
-### Step 2.3: Bug Mechanism
+### Step 2.3: IDENTIFY THE BUG MECHANISM
 **Record:**
 - **Category:** Buffer overflow / out-of-bounds read (memory safety)
-- **Mechanism:** `hdr_find_e()` at line 760–762 reads `e_key_len =
-  le16_to_cpu(e->key_size)` and passes it to `cmp_fnames(key, key_len, e
-  + 1, e_key_len, ctx)`. With inflated `key_size`, `cmp_fnames()` calls
-  `fname_full_size(f2)` which reads `fname->name_len` beyond the kmalloc
-  buffer boundary.
+- **Mechanism:** On-disk `name_len` is `__le16` (up to 65535).
+  `check_inode_ref()` validates inode refs but ROOT_REF/ROOT_BACKREF had
+  no equivalent. In ioctl, `item_len` derived from item size can exceed
+  `BTRFS_VOL_NAME_MAX + 1` (256). `read_extent_buffer()` bounds-checks
+  the *source* extent-buffer range, not the *destination* buffer size —
+  so a 300-byte copy into a 256-byte `name[]` overflows kernel memory.
+  Other readers (`send.c`, `export.c`, `super.c`) use
+  `btrfs_root_ref_name_len()` directly and can similarly misbehave on
+  corrupt metadata.
 
-```760:762:fs/ntfs3/index.c
-        e_key_len = le16_to_cpu(e->key_size);
-
-        diff2 = (*cmp)(key, key_len, e + 1, e_key_len, ctx);
-```
-
-```46:48:fs/ntfs3/index.c
-        fsize2 = fname_full_size(f2);
-        if (l2 < fsize2)
-                return -1;
-```
-
-### Step 2.4: Fix Quality Assessment
-**Record:** Fix is obviously correct — standard on-disk structure
-validation. Minimal regression risk: only rejects already-malformed data
-that would cause OOB reads. Uses existing helpers (`size_add`,
-`IS_ALIGNED`, `de_is_last`, `de_has_vcn`). No locking changes.
+### Step 2.4: ASSESS THE FIX QUALITY
+**Record:**
+- Fix mirrors the existing `check_inode_ref()` pattern — obviously
+  correct.
+- Minimal, no API changes, no refactoring.
+- Tree-checker fix protects all consumers at block-read time; ioctl fix
+  adds per-call-site safety.
+- **Regression risk:** Very low. Valid filesystems always have
+  consistent ROOT_REF layout; only corrupt/malicious metadata is
+  rejected (returns `-EUCLEAN`/`-EIO` at read time).
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame Changed Lines
+### Step 3.1: BLAME THE CHANGED LINES
 **Record:**
-- `index_hdr_check()` introduced in `0e8235d28f3a0e` (Konstantin
-  Komarov, 2022-10-10) — always lacked per-entry `key_size` validation.
-- `check_index_header()` core loop from `b46acd6a6a627d` (2021-08-13) —
-  walked entries but never checked `key_size`.
-- Bug present since ntfs3 driver introduction; affects all 6.18.y users
-  with CONFIG_NTFS3.
+- Vulnerable ioctl code introduced in `b64ec075bded2` (2018-05-21):
+  "btrfs: Add unprivileged ioctl which returns subvolume information"
+- `item_len` derivation changed in `3212fa14e77291` (2021-10-21)
+- Bug present since 2018 in this tree; ROOT_REF validation gap existed
+  since tree-checker was introduced (`check_inode_ref` added 2019 in
+  `71bf92a9b8777`, but never extended to ROOT_REF)
 
-### Step 3.2: Follow Fixes: Tag
+### Step 3.2: FOLLOW THE FIXES: TAG
 **Record:** No `Fixes:` tag present — N/A.
 
-### Step 3.3: File History for Related Changes
-**Record:** Recent ntfs3 hardening series in this tree from same author
-(ZhengYuan Huang):
-- `50b5e83384e7f` — bound `attr_off` in UpdateResidentValue
-- `09fddd52c1b0c` — bound DeleteIndexEntryAllocation memmove
-- `be306b8d9143a` — bound NTFS_DE view.data_off
-- `908c9243ba309` — depth limit in indx_find_buffer
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+**Record:**
+- Related on master (not in this tree): `3dc22abc21f58` — "btrfs: tree-
+  checker: validate INODE_REF's namelen" (adds `namelen >
+  BTRFS_NAME_LEN` to `check_inode_ref`)
+- This commit is **standalone** — does not depend on `3dc22abc21f58`
+- Part of a review series (v1–v4 on linux-btrfs); committed version is
+  the final v4 form
 
-This commit is standalone; same validation-hardening theme but no series
-dependency.
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+**Record:** Zhang Cen is a btrfs contributor; David Sterba (committer)
+is btrfs maintainer. Patch went through maintainer review cycle.
 
-### Step 3.4: Author's Other Commits
-**Record:** ZhengYuan Huang is an active ntfs3 hardening contributor.
-Konstantin Komarov is original ntfs3 author/maintainer. Both are
-credible subsystem contributors.
-
-### Step 3.5: Prerequisites
-**Record:** No prerequisites. Uses `size_add`, `IS_ALIGNED`,
-`de_has_vcn`, `hdr_has_subnode` — all present in this tree. Patch
-applies cleanly against current code (verified: pre-patch functions
-match diff context exactly).
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**Record:** No dependencies. `git apply --check` on `0af37c217edf1`
+succeeds cleanly against this tree's `ioctl.c` and `tree-checker.c`.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Patch Discussion
-**Record:** Commit not in local tree; `b4 dig -c` not possible. Subject
-search via `b4 dig` returned no match. **UNVERIFIED:** Could not
-retrieve lore.kernel.org thread (Anubis bot protection blocked fetch).
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+**Record:**
+- `b4 dig -c 0af37c217edf1` returned empty (likely too recent for b4
+  cache)
+- Found via spinics: [PATCH v4] at https://www.spinics.net/lists/linux-
+  btrfs/msg165221.html
+- Series revisions: v1–v4 exist; committed version matches v4
+- Reviewed-by tags from Qu Wenruo and David Sterba in final patch
 
-### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** — could not access mailing list recipients.
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+**Record:** CC'd to `linux-btrfs@xxxxxxxxxxxxxxx`; reviewed by Qu Wenruo
+and David Sterba (subsystem maintainers). `b4 dig -w` returned empty.
 
-### Step 4.3: Bug Report
-**Record:** KASAN report embedded in commit message. Trigger path:
-`lsetxattr` → `path_lookupat` → `ntfs_lookup` → `dir_search_u` →
-`indx_find` → `hdr_find_e` → `cmp_fnames` → OOB. Syzbot task name in
-trace (`syz.6.3365`). Severity: reproducible slab OOB from syscall path
-on mounted NTFS.
+### Step 4.3: SEARCH FOR THE BUG REPORT
+**Record:** No external bug report or syzbot link. Bug identified
+through code analysis of metadata validation gaps (consistent with other
+btrfs tree-checker hardening patches).
 
-### Step 4.4: Related Patches/Series
-**Record:** Part of ongoing ntfs3 on-disk validation hardening;
-standalone fix, not "patch X/Y".
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+**Record:** Related but separate: INODE_REF namelen cap
+(`3dc22abc21f58`) addresses the same class of bug for a different item
+type. Not a prerequisite for this patch.
 
-### Step 4.5: Stable Mailing List
-**Record:** **UNVERIFIED** — lore stable list search blocked.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+**Record:** No stable-list discussion found. Not a negative signal per
+review instructions.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `index_hdr_check()`, `check_index_header()` (validators);
-`hdr_find_e()`, `cmp_fnames()` (vulnerable consumers).
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+**Record:** `check_root_ref()`, `check_leaf_item()`,
+`btrfs_ioctl_get_subvol_info()`
 
-### Step 5.2: Callers
+### Step 5.2: TRACE CALLERS
 **Record:**
-- `index_hdr_check()` ← `index_buf_check()` ← `indx_read()` (every index
-  block read) and `indx_init()` (root at mount)
-- `check_index_header()` ← `check_index_buffer()`, `check_index_root()`
-  (log replay), `hdr_delete_de()` (index delete path)
-- `hdr_find_e()` ← `indx_find()` ← `dir_search_u()` ← `ntfs_lookup()`
-  and other directory operations
+- `check_leaf_item()` → `__btrfs_check_leaf()` → `btrfs_check_leaf()` →
+  called from `read_extent_buffer_pages()` in `disk-io.c:457` on every
+  metadata leaf read
+- `btrfs_ioctl_get_subvol_info()` → `btrfs_ioctl()` case
+  `BTRFS_IOC_GET_SUBVOL_INFO` (`ioctl.c:5361`)
 
-### Step 5.3: Callees
-**Record:** Validators use `le16_to_cpu`, `le32_to_cpu`, `size_add`,
-`de_is_last`, `de_has_vcn`, `hdr_has_subnode`. No allocation in
-validator loops.
+### Step 5.3: TRACE CALLEES
+**Record:** `btrfs_root_ref_name_len()`, `btrfs_item_size()`,
+`read_extent_buffer()`, `generic_err()`, `copy_to_user()`
 
-### Step 5.4: Call Chain / Reachability
+### Step 5.4: FOLLOW THE CALL CHAIN
 **Record:**
-```
-userspace syscall (lsetxattr/lookup/open/...)
-  → VFS path walk
-    → ntfs_lookup()
-      → dir_search_u()
-        → indx_find()
-          → hdr_find_e()  [uses unvalidated key_size]
-            → cmp_fnames() → fname_full_size() [OOB read]
-```
-**Userspace-reachable:** YES — any path lookup on a mounted NTFS with
-malformed index data triggers this.
+1. Mount/access btrfs filesystem with corrupt ROOT_BACKREF metadata
+2. Block read triggers `btrfs_check_leaf()` — currently passes corrupt
+   ROOT_REF items
+3. User opens inode on subvolume, calls `BTRFS_IOC_GET_SUBVOL_INFO`
+4. Kernel copies `item_len` bytes into 256-byte `name[]` → **kernel
+   buffer overflow**
+5. **Userspace reachable:** yes, via ioctl on accessible inode (ioctl
+   introduced as "unprivileged")
 
-**Gap in current validation:** `indx_read()` calls `index_buf_check()` →
-weak `index_hdr_check()` at line 1096, which currently passes malformed
-entries through to subsequent `hdr_find_e()` calls.
-
-### Step 5.5: Similar Patterns
-**Record:** Multiple prior slab-OOB fixes in ntfs3 backported to stable
-in this tree (`731ab1f982880` ntfs_listxattr OOB, `ab84eee4c7ab9`
-hdr_delete_de OOB, `b8c44949044e5` indx_insert_into_buffer OOB). Same
-bug class, same subsystem, same treatment.
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+**Record:** Same vulnerability class as `check_inode_ref()` (validates
+item size vs embedded name length). `send.c:2493`, `export.c:282`,
+`super.c:847` all read `btrfs_root_ref_name_len()` without local bounds
+checks — tree-checker fix protects all of them centrally.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 
-### Step 6.1: Does Buggy Code Exist?
-**Record:** **YES.** Current `index_hdr_check()` (lines 614–627) returns
-true after only header-level checks — no entry walk. Current
-`check_index_header()` (lines 2609–2649) walks entries but does not
-validate `key_size`. Fix is **not** present (`key_size > data_size` grep
-returns no matches).
+### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
+**Record:** **YES.** Vulnerable ioctl code at `ioctl.c:2129–2134`:
 
-### Step 6.2: Backport Complications
-**Record:** Expected **clean apply**. Pre-patch code matches diff
-context exactly. No structural refactoring since introduction. Two
-functions, same pattern in both files.
+```2129:2134:fs/btrfs/ioctl.c
+                        item_off = btrfs_item_ptr_offset(leaf, slot)
+                                        + sizeof(struct btrfs_root_ref);
+                        item_len = btrfs_item_size(leaf, slot)
+     - sizeof(struct btrfs_root_ref);
+                        read_extent_buffer(leaf, subvol_info->name,
+                                           item_off, item_len);
+```
 
-### Step 6.3: Related Fixes Already Present?
-**Record:** No duplicate fix for this specific `key_size` validation
-gap. Related but distinct hardening commits are present (depth limits,
-memmove bounds, etc.).
+`check_root_ref` does not exist; `check_leaf_item()` has no cases for
+`BTRFS_ROOT_REF_KEY` / `BTRFS_ROOT_BACKREF_KEY`. Commit `0af37c217edf1`
+is **not** an ancestor of HEAD.
+
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**Record:** `git apply --check` passes cleanly. ioctl.c uses
+`kzalloc`/`kfree` here (not mainline's `AUTO_KFREE`/`kzalloc_obj`), but
+the patch hunks align with this tree's code.
+
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
+**Record:** `3dc22abc21f58` (INODE_REF namelen cap) is **not** in this
+tree. No duplicate ROOT_REF validation fix present.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**Record:** `fs/ntfs3` — filesystem driver. **IMPORTANT** for NTFS3
-users; not universal core, but security-relevant when CONFIG_NTFS3_FS is
-enabled.
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+**Record:** **btrfs filesystem** — **IMPORTANT** (widely deployed;
+metadata corruption handling and ioctl safety affect data integrity and
+kernel memory safety).
 
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained with frequent validation fixes (10+
-syzbot-related ntfs3 commits in this tree's history).
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+**Record:** Actively maintained; tree-checker receives regular hardening
+patches in this tree (e.g., root drop_level validation, error-message
+fixes in recent history).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** Users who mount NTFS volumes with CONFIG_NTFS3_FS (built-in
-or module). Includes anyone mounting untrusted/corrupt NTFS images.
+### Step 8.1: DETERMINE WHO IS AFFECTED
+**Record:** Users of btrfs with `CONFIG_BTRFS_FS=y/m`. Any system
+mounting a btrfs volume (including corrupted or attacker-crafted images)
+where ROOT_REF/ROOT_BACKREF items are read.
 
-### Step 8.2: Trigger Conditions
-**Record:** Malformed NTFS directory index with `key_size` exceeding
-entry payload, followed by any directory lookup (open, stat, xattr,
-etc.). Triggerable by mounting a crafted image. **Unprivileged users**
-can trigger via syscalls on mounted filesystem.
-
-### Step 8.3: Failure Mode Severity
-**Record:** Slab out-of-bounds read — **HIGH** severity (memory safety,
-potential info leak or further exploitation depending on adjacent slab
-content; KASAN-detected).
-
-### Step 8.4: Risk-Benefit
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
 **Record:**
-- **Benefit:** HIGH — closes userspace-reachable OOB on common
-  filesystem operation path
-- **Risk:** VERY LOW — ~70 lines of defensive validation, rejects only
-  corrupt data
+- Corrupt/malicious ROOT_REF or ROOT_BACKREF metadata (item size ≠
+  header + name_len, or name_len > 255)
+- Filesystem mounted and metadata block read into cache
+- ioctl or other reader consumes the item
+- **Likelihood:** Low for organic bitrot with checksums, but realistic
+  for crafted images; ioctl path is directly triggerable
+- **Unprivileged trigger:** Partially — mounting requires
+  `CAP_SYS_ADMIN`, but `BTRFS_IOC_GET_SUBVOL_INFO` is available to users
+  with access to inodes on the mount
+
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+**Record:**
+- Kernel buffer overflow in `btrfs_ioctl_get_subvol_info()` (256-byte
+  destination, unbounded source length)
+- Out-of-bounds reads in other ROOT_REF consumers on corrupt metadata
+- **Severity: HIGH** (kernel memory corruption; potential crash or worse
+  depending on layout)
+
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+**Record:**
+- **Benefit:** HIGH — prevents kernel memory corruption on corrupt
+  metadata; hardens a gap left open since tree-checker was introduced
+- **Risk:** VERY LOW — ~40 lines, follows established `check_inode_ref`
+  pattern, reviewed by maintainers, applies cleanly
 - **Ratio:** Strongly favors backport
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+### Step 9.1: COMPILE THE EVIDENCE
 
 **FOR backport:**
-- Real KASAN slab-out-of-bounds bug with full stack trace
-- Userspace-reachable via path lookup syscalls on mounted NTFS
-- Syzbot-reproducible (task name in trace)
-- Long-standing bug since ntfs3 validation was introduced (2021–2022)
-- Small, surgical, obviously correct fix
-- No new APIs or features
-- Buggy code confirmed present in 6.18.44 tree; fix not yet applied
-- Consistent with numerous prior ntfs3 OOB fixes already in stable
-- Applies cleanly
+- Real memory-safety bug with kernel buffer overflow in ioctl path
+- Affects long-standing code (since 2018)
+- Small, surgical, maintainer-reviewed
+- Applies cleanly to v6.18.44
+- Tree-checker fix protects all ROOT_REF readers, not just ioctl
+- Consistent with stable btrfs tree-checker hardening pattern
 
 **AGAINST backport:**
-- Only affects CONFIG_NTFS3_FS users (not all kernel users)
-- No independent runtime testing evidence beyond KASAN report in commit
-  message
+- No syzbot/user crash report (theoretical on well-checksummed
+  filesystems)
+- Related INODE_REF namelen cap (`3dc22abc21f58`) is a separate follow-
+  up, not included here
 
 **UNRESOLVED:**
-- Mailing list review discussion (lore blocked)
-- Whether reviewers explicitly nominated for stable
+- No explicit stable nomination found in mailing list (not required)
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic is straightforward;
-   KASAN provides concrete repro
-2. Fixes real bug affecting users? **PASS** — OOB on directory lookup
-3. Important issue? **PASS** — memory safety, userspace-triggerable
-4. Small and contained? **PASS** — ~70 lines, 2 files
-5. No new features/APIs? **PASS** — validation only
-6. Can apply to local tree? **PASS** — code exists, clean apply expected
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **PASS** — mirrors `check_inode_ref`;
+   reviewed by Qu Wenruo and David Sterba
+2. Fixes a real bug? **PASS** — kernel buffer overflow on corrupt
+   ROOT_REF metadata
+3. Important issue? **PASS** — memory corruption / potential crash (HIGH
+   severity)
+4. Small and contained? **PASS** — 2 files, ~40 lines
+5. No new features or APIs? **PASS** — validation only, no UAPI changes
+6. Can apply to local tree? **PASS** — `git apply --check` succeeds
 
-### Step 9.3: Exception Categories
-**Record:** Not a device-ID/quirk/DT/doc fix. Standard
-security/stability bug fix.
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+**Record:** Not a device-ID/quirk/DT/build/doc exception — standard bug-
+fix category.
 
-### Step 9.4: Decision Rationale
-
-For Linux **6.18.44**, the vulnerable validation code is present and the
-fix is absent. A malformed NTFS index entry with an oversized `key_size`
-can cause `hdr_find_e()` to pass an invalid length to `cmp_fnames()`,
-resulting in a slab out-of-bounds read on any directory lookup —
-reachable from unprivileged syscalls on a mounted NTFS volume. This is
-the same class of bug that has been repeatedly backported for ntfs3. The
-fix is minimal, self-contained, and closes the validation gap in both
-the runtime path (`index_hdr_check`) and log-replay path
-(`check_index_header`).
+### Step 9.4: DECISION RATIONALE
+This tree (6.18.44) contains the vulnerable ioctl code and lacks
+ROOT_REF/ROOT_BACKREF validation in tree-checker. The fix is small,
+maintainer-reviewed, prevents kernel memory corruption on corrupt btrfs
+metadata, and applies cleanly. It meets all stable kernel criteria.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message: KASAN slab-OOB,
-  `[BUG]`/`[CAUSE]`/`[FIX]` sections, authors Huang/Komarov
-- **[Phase 2]** Read diff and current source: 2 files, `index_hdr_check`
-  + `check_index_header`, ~70 lines
-- **[Phase 2]** Confirmed OOB path: `hdr_find_e:760-762` →
-  `cmp_fnames:46-48` → `fname_full_size`
-- **[Phase 3]** `git describe HEAD`: v6.18.44-1-gef4bf62bccf3c
-- **[Phase 3]** `git blame`: `index_hdr_check` from 0e8235d28f3a0e
-  (2022); `check_index_header` loop from b46acd6a6a627d (2021)
-- **[Phase 3]** `git log --oneline -20 -- fs/ntfs3/index.c`: related
-  Huang hardening commits present; this fix absent
-- **[Phase 3]** `git log --grep='validate index entry key bounds'`: no
-  match — commit not in tree
-- **[Phase 4]** `b4 dig` subject search: no match
-- **[Phase 4]** WebFetch lore.kernel.org: blocked by Anubis —
-  **UNVERIFIED**
-- **[Phase 5]** Traced callers:
-  `indx_read→index_buf_check→index_hdr_check`,
-  `indx_init→index_hdr_check`, `indx_find→hdr_find_e`
-- **[Phase 5]** Traced userspace path:
-  `ntfs_lookup→dir_search_u→indx_find` (namei.c:85, dir.c:254)
-- **[Phase 6]** Grep `key_size > data_size` in fs/ntfs3: no matches —
-  fix not applied
-- **[Phase 6]** Read current `index_hdr_check` (614-627) and
-  `check_index_header` (2609-2649): buggy code confirmed
-- **[Phase 6]** Pre-patch code matches provided diff context — clean
-  apply expected
-- **[Phase 7]** CONFIG_NTFS3_FS present in fs/ntfs3/Kconfig
-- **[Phase 8]** `git log --grep='syzbot' -- fs/ntfs3/`: extensive prior
-  syzbot OOB fixes backported to this tree
+- **[Phase 1]** Parsed subject, tags, body; no syzbot/Fixes tags;
+  Reviewed-by from Qu Wenruo and David Sterba
+- **[Phase 2]** Analyzed diff: 2 files, ~40 lines; buffer overflow
+  mechanism confirmed in ioctl path
+- **[Phase 3]** `git describe HEAD`: v6.18.44; `git blame
+  ioctl.c:2129-2134`: introduced 2018; `git merge-base --is-ancestor
+  0af37c217edf1 HEAD`: fix NOT present; `git apply --check`: PASS
+- **[Phase 4]** `b4 dig -c 0af37c217edf1`: empty; WebFetch spinics
+  msg165221: found v4 patch thread; no stable nomination found
+- **[Phase 5]** Traced callers: `btrfs_check_leaf` at `disk-io.c:457`;
+  ioctl at `ioctl.c:5361`; `read_extent_buffer` only bounds-checks
+  source (`extent_io.c:3938-3947`)
+- **[Phase 6]** Buggy code confirmed at `ioctl.c:2129-2134`; no
+  `check_root_ref` in tree; patch applies cleanly
+- **[Phase 7]** Subsystem: btrfs, IMPORTANT criticality
+- **[Phase 8]** Failure mode: kernel buffer overflow, HIGH severity;
+  benefit HIGH, risk VERY LOW
+- **[Phase 9]** All 6 stable rules PASS
 
-**YES**The background searches finished and match the earlier analysis:
+**YES****Verdict: YES** — backport to this tree (v6.18.44).
 
-- **Commit search:** `validate index entry key bounds` is **not** in
-  this 6.18.44 tree. Recent `fs/ntfs3/index.c` history shows related
-  hardening (depth limits, memmove bounds, etc.), but not this fix.
-- **Author search:** ZhengYuan Huang’s commits here are mostly other
-  subsystems (ocfs2, btrfs, raid5). The targeted ntfs3 search did find
-  his validation work in this tree (`bound attr_off`, `bound
-  DeleteIndexEntryAllocation`, etc.).
+The commit fixes a real memory-safety bug: corrupt
+`ROOT_REF`/`ROOT_BACKREF` metadata isn’t validated by tree-checker, and
+`BTRFS_IOC_GET_SUBVOL_INFO` can copy more than 256 bytes into its fixed
+`name[]` buffer (kernel overflow). The fix adds `check_root_ref()`
+(mirroring existing `check_inode_ref()` logic) and tightens the ioctl
+copy length. It’s small (~40 lines), maintainer-reviewed, applies
+cleanly here, and the vulnerable code is present in this tree.
 
-**Verdict unchanged:** backport **YES** — the vulnerable
-`index_hdr_check()` / `check_index_header()` code is present, the fix is
-absent, and it closes a userspace-reachable slab OOB on NTFS directory
-lookup.
+ fs/btrfs/ioctl.c        | 11 +++++------
+ fs/btrfs/tree-checker.c | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+), 6 deletions(-)
 
- fs/ntfs3/fslog.c | 26 ++++++++++++++++++++------
- fs/ntfs3/index.c | 37 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 56 insertions(+), 7 deletions(-)
-
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index a0503a3344237..a23683f2b95fb 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2608,11 +2608,12 @@ static int read_next_log_rec(struct ntfs_log *log, struct lcb *lcb, u64 *lsn)
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 2f1c5f5e2e725..3197f61d612b4 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -2046,7 +2046,6 @@ static int btrfs_ioctl_get_subvol_info(struct inode *inode, void __user *argp)
+ 	struct btrfs_root_ref *rref;
+ 	struct extent_buffer *leaf;
+ 	unsigned long item_off;
+-	unsigned long item_len;
+ 	int slot;
+ 	int ret = 0;
  
- bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
- 	__le16 mask;
- 	u32 min_de, de_off, used, total;
- 	const struct NTFS_DE *e;
+@@ -2121,17 +2120,17 @@ static int btrfs_ioctl_get_subvol_info(struct inode *inode, void __user *argp)
+ 		btrfs_item_key_to_cpu(leaf, &key, slot);
+ 		if (key.objectid == subvol_info->treeid &&
+ 		    key.type == BTRFS_ROOT_BACKREF_KEY) {
++			u16 name_len;
++
+ 			subvol_info->parent_id = key.offset;
  
--	if (hdr_has_subnode(hdr)) {
-+	if (has_subnode) {
- 		min_de = sizeof(struct NTFS_DE) + sizeof(u64);
- 		mask = NTFS_IE_HAS_SUBNODES;
- 	} else {
-@@ -2629,20 +2630,33 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
- 		return false;
- 	}
+ 			rref = btrfs_item_ptr(leaf, slot, struct btrfs_root_ref);
++			name_len = btrfs_root_ref_name_len(leaf, rref);
+ 			subvol_info->dirid = btrfs_root_ref_dirid(leaf, rref);
  
--	e = Add2Ptr(hdr, de_off);
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	for (;;) {
- 		u16 esize = le16_to_cpu(e->size);
--		struct NTFS_DE *next = Add2Ptr(e, esize);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
- 
--		if (esize < min_de || PtrOffset(hdr, next) > used ||
-+		if (!IS_ALIGNED(esize, 8) || esize < min_de ||
- 		    (e->flags & NTFS_IE_HAS_SUBNODES) != mask) {
- 			return false;
- 		}
- 
--		if (de_is_last(e))
-+		if (size_add(de_off, esize) > used)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
- 			break;
-+		}
-+
-+		data_size = esize - min_de;
-+		if (key_size > data_size)
-+			return false;
- 
--		e = next;
-+		de_off += esize;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
- 	}
- 
- 	return true;
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index a9c5dcc23a5ce..dd54c966babca 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -613,16 +613,51 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
-  */
- static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
- {
-+	const bool has_subnode = hdr_has_subnode(hdr);
-+	const u16 min_size = sizeof(struct NTFS_DE) +
-+			     (has_subnode ? sizeof(u64) : 0);
- 	u32 end = le32_to_cpu(hdr->used);
- 	u32 tot = le32_to_cpu(hdr->total);
- 	u32 off = le32_to_cpu(hdr->de_off);
-+	const struct NTFS_DE *e;
- 
- 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
--	    size_add(off, sizeof(struct NTFS_DE)) > end) {
-+	    size_add(off, min_size) > end) {
- 		/* incorrect index buffer. */
- 		return false;
- 	}
- 
-+	/* Ensure every key stays inside its entry before lookup walks it. */
-+	e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	for (;;) {
-+		u16 e_size = le16_to_cpu(e->size);
-+		u16 key_size = le16_to_cpu(e->key_size);
-+		u16 data_size;
-+
-+		if (!IS_ALIGNED(e_size, 8) || e_size < min_size ||
-+		    de_has_vcn(e) != has_subnode) {
-+			/* incorrect index entry. */
-+			return false;
-+		}
-+
-+		if (size_add(off, e_size) > end)
-+			return false;
-+
-+		if (de_is_last(e)) {
-+			if (key_size)
-+				return false;
-+
-+			break;
-+		}
-+
-+		data_size = e_size - min_size;
-+		if (key_size > data_size)
-+			return false;
-+
-+		off += e_size;
-+		e = (const struct NTFS_DE *)((const u8 *)hdr + off);
-+	}
-+
- 	return true;
+-			item_off = btrfs_item_ptr_offset(leaf, slot)
+-					+ sizeof(struct btrfs_root_ref);
+-			item_len = btrfs_item_size(leaf, slot)
+-					- sizeof(struct btrfs_root_ref);
++			item_off = btrfs_item_ptr_offset(leaf, slot) + sizeof(*rref);
+ 			read_extent_buffer(leaf, subvol_info->name,
+-					   item_off, item_len);
++					   item_off, name_len);
+ 		} else {
+ 			ret = -ENOENT;
+ 			goto out;
+diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
+index db7402836340a..97be0c1ed22f7 100644
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1288,6 +1288,37 @@ static int check_root_item(struct extent_buffer *leaf, struct btrfs_key *key,
+ 	return 0;
  }
  
++static int check_root_ref(struct extent_buffer *leaf, struct btrfs_key *key, int slot)
++{
++	struct btrfs_root_ref *rref;
++	u32 item_size = btrfs_item_size(leaf, slot);
++	u32 name_len;
++
++	if (unlikely(item_size <= sizeof(*rref))) {
++		generic_err(leaf, slot,
++			    "invalid root ref item size for key type %u, have %u expect > %zu",
++			    key->type, item_size, sizeof(*rref));
++		return -EUCLEAN;
++	}
++
++	rref = btrfs_item_ptr(leaf, slot, struct btrfs_root_ref);
++	name_len = btrfs_root_ref_name_len(leaf, rref);
++	if (unlikely(name_len > BTRFS_NAME_LEN)) {
++		generic_err(leaf, slot,
++			    "root ref name too long for key type %u, have %u max %u",
++			    key->type, name_len, BTRFS_NAME_LEN);
++		return -EUCLEAN;
++	}
++	if (unlikely(item_size != sizeof(*rref) + name_len)) {
++		generic_err(leaf, slot,
++			    "invalid root ref item size for key type %u, have %u expect %zu",
++			    key->type, item_size, sizeof(*rref) + name_len);
++		return -EUCLEAN;
++	}
++
++	return 0;
++}
++
+ __printf(3,4)
+ __cold
+ static void extent_err(const struct extent_buffer *eb, int slot,
+@@ -1965,6 +1996,10 @@ static enum btrfs_tree_block_status check_leaf_item(struct extent_buffer *leaf,
+ 	case BTRFS_ROOT_ITEM_KEY:
+ 		ret = check_root_item(leaf, key, slot);
+ 		break;
++	case BTRFS_ROOT_REF_KEY:
++	case BTRFS_ROOT_BACKREF_KEY:
++		ret = check_root_ref(leaf, key, slot);
++		break;
+ 	case BTRFS_EXTENT_ITEM_KEY:
+ 	case BTRFS_METADATA_ITEM_KEY:
+ 		ret = check_extent_item(leaf, key, slot, prev_key);
 -- 
 2.53.0
 
