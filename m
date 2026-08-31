@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D7A5947FB;
-	Mon, 31 Aug 2026 13:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E21C59C967;
+	Mon, 31 Aug 2026 13:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184307; cv=none; b=fBaOw67KbzyLLCKa/91j6sqGicuoc+oB0QjbJPUpCiT/4pTK1o3dPa7EOs1Bj//zfCeKNojd1Vxs14OjOw97gLPhMi6BvPEXLqZLS6nOtRBO3quhehPZTTe9j3KMU/OV8ekNYnJtup3j3dZOrIMihjguuX4zqoGNnzxEHy4OiMU=
+	t=1788184308; cv=none; b=uMmMx/7rHgUnqPeN6/+COIHzins/dz3B7XylZe55Sgz6Vu35cFTZk8ofy8JAHT6TGFPi4p8otFFiBtjfbA7qx+Bz9cH1Gs2OnTsSLhoz/CBscvER8sws82scO/dF3g53sPksDSib1rgK48h1wSNIU/ivIRBp0lj2Q75ENQor8w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184307; c=relaxed/simple;
-	bh=qB11NREuBJJqLHe3A7lwrm8ZvR+CPjaQv1Sgz6lMRmU=;
+	s=arc-20240116; t=1788184308; c=relaxed/simple;
+	bh=V5xONX1gn0lAIYOBTx9OCT+AWtO7PgejkgS1uWRUGKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOMY+/IVmYHs0pkUPTWL4kk1yoqePzn9PAT6QKwqJ4p1GvFAvK6cGqh2bSpB4w83vUZWb+EEVgYjgaTh6w2ZH7JKD/7h7s4iJ8PDeWWEh9CtZSONCIaoNBTCZ+C7J5Hh6Yq7Zw3eIKaCfSNBF6afA41IqPuWrzaB+puAM0fczBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZcoHaNV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SXJxcK918XyARayW3WIWJP+8IIxcCXCz56DBU1uDUfYrimwwGi4DG7LTMB5omwjd/haBbSIRY1TUlG4tFKvgFpDDWihOw9XQ55fqX+hjaGfyLa9BFYzUqkeBVyXExy6twR7TN+/EeXlbxsdQO7lnjLvY08kd4Lkcn+HSBXtEaD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0etcrr8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZcoHaNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4221F0155C;
-	Mon, 31 Aug 2026 13:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0etcrr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C061F000E9;
+	Mon, 31 Aug 2026 13:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184303;
-	bh=ygsITXipBYPw2ibWDbjSoPSK4VRK0ICeoZr5fuT3PkQ=;
+	s=korg; t=1788184306;
+	bh=B0vopn4ttnoIhYvmuxy3mLOXrL4Cmgh0T19xftoRh8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YZcoHaNVZ2JixS0gr5/jniD4dxz9GPd2ixuCjuiGp+UlTUWNCQUsNypHhRp8AdF+H
-	 2vS/FdpX+6mWfYCK9J3+oxAhudvf/gI0hKdvR5cF5RTCwsx1UwkaGK6QHSd+FyuzXc
-	 0PuoVOm1h0DqGYhQGgJIX1IQD7W32NB8YoLw5yWc=
+	b=x0etcrr87/7/nIaTKNSLBgE1HLX05g69TFbo04jwDvcMooA1YlevHc6YuIz8Wrxb7
+	 gU88l/z/DA9jAKOfgbgxaPDDBvkkWLypOOPGw7UcO9ceGkoUEB5GslWeKORtYUMEv2
+	 Y2h3n4qA5a8Cb4FngcmHOMM8E3QhHONXO7P1cd+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
 	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 23/99] can: j1939: implement NETDEV_UNREGISTER notification handler
-Date: Mon, 31 Aug 2026 15:33:52 +0200
-Message-ID: <20260831133401.087859657@linuxfoundation.org>
+Subject: [PATCH 6.12 24/99] can: j1939: add missing calls in NETDEV_UNREGISTER notification handler
+Date: Mon, 31 Aug 2026 15:33:53 +0200
+Message-ID: <20260831133401.137532805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
 References: <20260831133359.740409777@linuxfoundation.org>
@@ -55,130 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 7fcbe5b2c6a4b5407bf2241fdb71e0a390f6ab9a ]
+[ Upstream commit 93a27b5891b8194a8c083c9a80d2141d4bf47ba8 ]
 
-syzbot is reporting
+Currently NETDEV_UNREGISTER event handler is not calling
+j1939_cancel_active_session() and j1939_sk_queue_drop_all().
+This will result in these calls being skipped when j1939_sk_release() is
+called. And I guess that the reason syzbot is still reporting
 
   unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
 
-problem, for j1939 protocol did not have NETDEV_UNREGISTER notification
-handler for undoing changes made by j1939_sk_bind().
+is caused by lack of these calls.
 
-Commit 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct
-callback") expects that a call to j1939_priv_put() can be unconditionally
-delayed until j1939_sk_sock_destruct() is called. But we need to call
-j1939_priv_put() against an extra ref held by j1939_sk_bind() call
-(as a part of undoing changes made by j1939_sk_bind()) as soon as
-NETDEV_UNREGISTER notification fires (i.e. before j1939_sk_sock_destruct()
-is called via j1939_sk_release()). Otherwise, the extra ref on "struct
-j1939_priv" held by j1939_sk_bind() call prevents "struct net_device" from
-dropping the usage count to 1; making it impossible for
-unregister_netdevice() to continue.
+Calling j1939_cancel_active_session(priv, sk) from j1939_sk_release() can
+be covered by calling j1939_cancel_active_session(priv, NULL) from
+j1939_netdev_notify().
 
-Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Tested-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Fixes: 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct callback")
+Calling j1939_sk_queue_drop_all() from j1939_sk_release() can be covered
+by calling j1939_sk_netdev_event_netdown() from j1939_netdev_notify().
+
+Therefore, we can reuse j1939_cancel_active_session(priv, NULL) and
+j1939_sk_netdev_event_netdown(priv) for NETDEV_UNREGISTER event handler.
+
+Fixes: 7fcbe5b2c6a4 ("can: j1939: implement NETDEV_UNREGISTER notification handler")
 Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/ac9db9a4-6c30-416e-8b94-96e6559d55b2@I-love.SAKURA.ne.jp
-[mkl: remove space in front of label]
+Link: https://patch.msgid.link/3ad3c7f8-5a74-4b07-a193-cb0725823558@I-love.SAKURA.ne.jp
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/j1939/j1939-priv.h |  1 +
- net/can/j1939/main.c       |  3 +++
- net/can/j1939/socket.c     | 49 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+)
+ net/can/j1939/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/can/j1939/j1939-priv.h b/net/can/j1939/j1939-priv.h
-index 1d3d5d0551e0f..cf26352d1d8ce 100644
---- a/net/can/j1939/j1939-priv.h
-+++ b/net/can/j1939/j1939-priv.h
-@@ -214,6 +214,7 @@ void j1939_priv_get(struct j1939_priv *priv);
- 
- /* notify/alert all j1939 sockets bound to ifindex */
- void j1939_sk_netdev_event_netdown(struct j1939_priv *priv);
-+void j1939_sk_netdev_event_unregister(struct j1939_priv *priv);
- int j1939_cancel_active_session(struct j1939_priv *priv, struct sock *sk);
- void j1939_tp_init(struct j1939_priv *priv);
- 
 diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
-index b45f834ff2cf6..6bbe75d2211d5 100644
+index 6bbe75d2211d5..21186932f8f61 100644
 --- a/net/can/j1939/main.c
 +++ b/net/can/j1939/main.c
-@@ -377,6 +377,9 @@ static int j1939_netdev_notify(struct notifier_block *nb,
- 		j1939_sk_netdev_event_netdown(priv);
+@@ -378,6 +378,8 @@ static int j1939_netdev_notify(struct notifier_block *nb,
  		j1939_ecu_unmap_all(priv);
  		break;
-+	case NETDEV_UNREGISTER:
-+		j1939_sk_netdev_event_unregister(priv);
-+		break;
+ 	case NETDEV_UNREGISTER:
++		j1939_cancel_active_session(priv, NULL);
++		j1939_sk_netdev_event_netdown(priv);
+ 		j1939_sk_netdev_event_unregister(priv);
+ 		break;
  	}
- 
- 	j1939_priv_put(priv);
-diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
-index e843891a9323b..48b60f6cfa8fe 100644
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -1300,6 +1300,55 @@ void j1939_sk_netdev_event_netdown(struct j1939_priv *priv)
- 	read_unlock_bh(&priv->j1939_socks_lock);
- }
- 
-+void j1939_sk_netdev_event_unregister(struct j1939_priv *priv)
-+{
-+	struct sock *sk;
-+	struct j1939_sock *jsk;
-+	bool wait_rcu = false;
-+
-+rescan: /* The caller is holding a ref on this "priv" via j1939_priv_get_by_ndev(). */
-+	read_lock_bh(&priv->j1939_socks_lock);
-+	list_for_each_entry(jsk, &priv->j1939_socks, list) {
-+		/* Skip if j1939_jsk_add() is not called on this socket. */
-+		if (!(jsk->state & J1939_SOCK_BOUND))
-+			continue;
-+		sk = &jsk->sk;
-+		sock_hold(sk);
-+		read_unlock_bh(&priv->j1939_socks_lock);
-+		/* Check if j1939_jsk_del() is not yet called on this socket after holding
-+		 * socket's lock, for both j1939_sk_bind() and j1939_sk_release() call
-+		 * j1939_jsk_del() with socket's lock held.
-+		 */
-+		lock_sock(sk);
-+		if (jsk->state & J1939_SOCK_BOUND) {
-+			/* Neither j1939_sk_bind() nor j1939_sk_release() called j1939_jsk_del().
-+			 * Make this socket no longer bound, by pretending as if j1939_sk_bind()
-+			 * dropped old references but did not get new references.
-+			 */
-+			j1939_jsk_del(priv, jsk);
-+			j1939_local_ecu_put(priv, jsk->addr.src_name, jsk->addr.sa);
-+			j1939_netdev_stop(priv);
-+			/* Call j1939_priv_put() now and prevent j1939_sk_sock_destruct() from
-+			 * calling the corresponding j1939_priv_put().
-+			 *
-+			 * j1939_sk_sock_destruct() is supposed to call j1939_priv_put() after
-+			 * an RCU grace period. But since the caller is holding a ref on this
-+			 * "priv", we can defer synchronize_rcu() until immediately before
-+			 * the caller calls j1939_priv_put().
-+			 */
-+			j1939_priv_put(priv);
-+			jsk->priv = NULL;
-+			wait_rcu = true;
-+		}
-+		release_sock(sk);
-+		sock_put(sk);
-+		goto rescan;
-+	}
-+	read_unlock_bh(&priv->j1939_socks_lock);
-+	if (wait_rcu)
-+		synchronize_rcu();
-+}
-+
- static int j1939_sk_no_ioctlcmd(struct socket *sock, unsigned int cmd,
- 				unsigned long arg)
- {
 -- 
 2.53.0
 
