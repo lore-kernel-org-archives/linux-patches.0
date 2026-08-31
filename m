@@ -1,241 +1,462 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15B75237BF;
-	Mon, 31 Aug 2026 13:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2525F53ECEC;
+	Mon, 31 Aug 2026 13:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183949; cv=none; b=aBqeauYqebQOKEjgSzIkisWMGRO8pSyquFeTBOaHF5Fd2U4lrQsw7WNDVSW8v2zsj+JG38ZCJn5AMrURi09S/fpPzZV+2uelmZPDa94sGjaGlQ14UFWsivtJHWFvTqM4hTmJsWP0F74y/4gtJgM7saeEq6E3OOpMYie6ZWsU0j0=
+	t=1788183950; cv=none; b=Bb0DXh/CK10oWKOWPBuCIQKTBuH9DyH2JzzhOoEAeToxWD6UPwwwJ0UK1z59LA58v+U09BcRbpzlqYAB0diOee7Nfwz7fo7tMIku+/tliJG5SgQBt2Ast8WAg3Th0YUnPNz0M1hXh69WB4gqRWz2qb67up8CnWzyKf2V1hsLSfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183949; c=relaxed/simple;
-	bh=D6LQ7jI0fhv6EW1+kzhoypHBccatNGrENzJcopiD8Dc=;
+	s=arc-20240116; t=1788183950; c=relaxed/simple;
+	bh=XlNxqSA133ZMrZnSfjO640y26Jdh3/XjLckUv6n/kqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ep59OEADoPJ6RBTwbfxWtqk5S9gBU2GtFQ0zmra4s1JwSyFWagojqpi3oLkKY6lz1bQmKmh6tr0AIt6ye1BquvlDeBuCtGt4d8NT3+fpknMQEYe8/Ru3hwEhdmZuMEkECF0Bhm3L24CQPi1EC6KddJjPkVJw/4GH715AMnaFmFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImdTDAaI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ceXnXsjehjMQ00Jv2eTw59NFNUwyrXgdNuf1QXGZFDskgIUpUWfvrMq72BFEYyvaDYKMf7qSH/yQaar7Nj2xemah4hHn/blAGMlHpxgTJB3sWd004NpopF6oRn/iIhiib85qNaHmG3W/7PVkTmCg8s+0tiwlGbkKPuLdaZl4mgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KFjqMsAn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImdTDAaI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC651F000E9;
-	Mon, 31 Aug 2026 13:45:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183945;
-	bh=x7rbhgMgh6cD/4YAb6oQSdQazndrEjshWO5lB+q4uNE=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KFjqMsAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB3D1F00ACA;
+	Mon, 31 Aug 2026 13:45:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183947;
+	bh=5VuKC7elaBXrqqotHw05DBEnzKzZ+p6CwQxhm96PQH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ImdTDAaIMkQUQTK1It+MwtJN+jHEYw+hlVdNxccGMptitlFyiRgmv46/JnX6X41m/
-	 1Fw5T5fVS+Cao3GiFZ5qHmqAIn//34hzW5lyiuJAYGjJKhXfBzU8a/TmegIlm7681z
-	 WwyFxdEM8KmmCV4mW76k6uLPVCCtTIj181RBs2PI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 02/83] RDMA/rxe: Fix OOB in free_rd_atomic_resources()
-Date: Mon, 31 Aug 2026 15:33:38 +0200
-Message-ID: <20260831133359.323924470@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
-References: <20260831133359.207714926@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=KFjqMsAn7aBlXCQUwqQBCDcqDgbwkL8GOFvIWE+HbkAJEmBtCape8SSEFjFsbjHxU
+	 gL1FFlIyInYgBtiD31jQXrxbR2KvjXATGwtun0Q3DHvzv0SvoRmqIwH2ncbinniBOL
+	 U1rftaep1yzsQo3cw9U4FB/2X49PYvihA/0K3rxPhxEAZ8Swt9tQ5omWGhSEIIlfFe
+	 hFe+SMhqBeMdVRlGq9he0si+/ex6I1SpiFC8BPoWD4rxcEIpOOSzx568Jr9clphVkt
+	 fM2Xc2vcffke6+zdEPTeO/IYOKOBvrFHoWGJN6RWWAoAC1HeR7zB1cM5DYWNZHfwoP
+	 91Ik1gepoWe6Q==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Leo Yan <leo.yan@arm.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	eddyz87@gmail.com,
+	memxor@gmail.com,
+	bpf@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] bpftool: Pass host flags to bootstrap libbpf
+Date: Mon, 31 Aug 2026 09:27:05 -0400
+Message-ID: <20260831133314.4125787-397-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+From: Leo Yan <leo.yan@arm.com>
 
-------------------
+[ Upstream commit 9080b97689dbf8d2c338a9af97cd2b4a714f25bf ]
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+bpftool builds a bootstrap libbpf with HOSTCC, but the libbpf submake can
+still inherit target build flags through CFLAGS. This can break cross
+builds when host objects are compiled with target-only options.
 
-[ Upstream commit de329533792a373186d79dca1ca120f8fa0afd05 ]
+Since HOST_CFLAGS contains warning options that are not suitable for
+building libbpf, use LIBBPF_BOOTSTRAP_CFLAGS with the warning options
+removed to build the bootstrap libbpf. Clear EXTRA_CFLAGS so target
+extra flags are not mixed into the host bootstrap libbpf build.
 
-free_rd_atomic_resources() iterates using qp->attr.max_dest_rd_atomic.
-Updating max_dest_rd_atomic before freeing the old array can make the
-free path walk past the old allocation and trigger a slab out-of-bounds
-write catched by KASAN:
-==================================================================
-BUG: KASAN: slab-out-of-bounds in free_rd_atomic_resource drivers/infiniband/sw/rxe/rxe_qp.c:180 [inline]
-BUG: KASAN: slab-out-of-bounds in free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:171 [inline]
-BUG: KASAN: slab-out-of-bounds in free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:163 [inline]
-BUG: KASAN: slab-out-of-bounds in rxe_qp_from_attr+0x1e88/0x2150 drivers/infiniband/sw/rxe/rxe_qp.c:712
-Write of size 4 at addr ffff88802b8dddb8 by task syz.3.451/11063
-
-CPU: 0 UID: 0 PID: 11063 Comm: syz.3.451 Not tainted 7.1.0 #2 PREEMPT(full)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x10e/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xf7/0x600 mm/kasan/report.c:482
- kasan_report+0xe4/0x120 mm/kasan/report.c:595
- free_rd_atomic_resource drivers/infiniband/sw/rxe/rxe_qp.c:180 [inline]
- free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:171 [inline]
- free_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:163 [inline]
- rxe_qp_from_attr+0x1e88/0x2150 drivers/infiniband/sw/rxe/rxe_qp.c:712
- rxe_modify_qp+0x1e2/0x530 drivers/infiniband/sw/rxe/rxe_verbs.c:623
- ib_security_modify_qp+0x223/0xfa0 drivers/infiniband/core/security.c:625
- _ib_modify_qp+0x333/0xec0 drivers/infiniband/core/verbs.c:1915
- modify_qp+0x13ca/0x1940 drivers/infiniband/core/uverbs_cmd.c:1932
- ib_uverbs_modify_qp+0xcb/0x120 drivers/infiniband/core/uverbs_cmd.c:1958
- ib_uverbs_write+0xb86/0x1030 drivers/infiniband/core/uverbs_main.c:680
- vfs_write+0x2aa/0x1070 fs/read_write.c:686
- ksys_write+0x1f8/0x250 fs/read_write.c:740
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fefc75a70cd
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fefc8495018 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00007fefc7835fa0 RCX: 00007fefc75a70cd
-RDX: 0000000000000078 RSI: 0000200000000240 RDI: 0000000000000007
-RBP: 00007fefc764f10f R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fefc7836038 R14: 00007fefc7835fa0 R15: 00007ffcf0586aa0
- </TASK>
-
-Allocated by task 11063:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:57
- kasan_save_track+0x14/0x30 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5296 [inline]
- __kmalloc_noprof+0x32a/0x850 mm/slub.c:5308
- kmalloc_noprof include/linux/slab.h:954 [inline]
- kzalloc_noprof include/linux/slab.h:1188 [inline]
- alloc_rd_atomic_resources drivers/infiniband/sw/rxe/rxe_qp.c:155 [inline]
- rxe_qp_from_attr+0x3f8/0x2150 drivers/infiniband/sw/rxe/rxe_qp.c:714
- rxe_modify_qp+0x1e2/0x530 drivers/infiniband/sw/rxe/rxe_verbs.c:623
- ib_security_modify_qp+0x223/0xfa0 drivers/infiniband/core/security.c:625
- _ib_modify_qp+0x333/0xec0 drivers/infiniband/core/verbs.c:1915
- modify_qp+0x13ca/0x1940 drivers/infiniband/core/uverbs_cmd.c:1932
- ib_uverbs_modify_qp+0xcb/0x120 drivers/infiniband/core/uverbs_cmd.c:1958
- ib_uverbs_write+0xb86/0x1030 drivers/infiniband/core/uverbs_main.c:680
- vfs_write+0x2aa/0x1070 fs/read_write.c:686
- ksys_write+0x1f8/0x250 fs/read_write.c:740
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-The buggy address belongs to the object at ffff88802b8ddd80
- which belongs to the cache kmalloc-64 of size 64
-The buggy address is located 0 bytes to the right of
- allocated 56-byte region [ffff88802b8ddd80, ffff88802b8dddb8)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x2b8dd
-flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
-page_type: f5(slab)
-raw: 00fff00000000000 ffff888015c418c0 dead000000000100 dead000000000122
-raw: 0000000000000000 0000000800200020 00000000f5000000 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0xd2c40(GFP_NOFS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 4651, tgid 4651 ((udev-worker)), ts 123427165316, free_ts 123425874255
- set_page_owner include/linux/page_owner.h:32 [inline]
- post_alloc_hook+0xfc/0x120 mm/page_alloc.c:1853
- prep_new_page mm/page_alloc.c:1861 [inline]
- get_page_from_freelist+0x75b/0x3220 mm/page_alloc.c:3941
- __alloc_frozen_pages_noprof+0x27e/0x2b00 mm/page_alloc.c:5221
- alloc_slab_page mm/slub.c:3278 [inline]
- allocate_slab mm/slub.c:3467 [inline]
- new_slab+0xa6/0x670 mm/slub.c:3525
- refill_objects+0x278/0x420 mm/slub.c:7272
- refill_sheaf mm/slub.c:2816 [inline]
- __pcs_replace_empty_main+0x2ed/0x640 mm/slub.c:4652
- alloc_from_pcs mm/slub.c:4750 [inline]
- slab_alloc_node mm/slub.c:4884 [inline]
- __do_kmalloc_node mm/slub.c:5295 [inline]
- __kmalloc_noprof+0x68d/0x850 mm/slub.c:5308
- kmalloc_noprof include/linux/slab.h:954 [inline]
- kzalloc_noprof include/linux/slab.h:1188 [inline]
- tomoyo_encode2+0x100/0x3e0 security/tomoyo/realpath.c:45
- tomoyo_encode+0x29/0x50 security/tomoyo/realpath.c:80
- tomoyo_realpath_from_path+0x18c/0x690 security/tomoyo/realpath.c:283
- tomoyo_get_realpath security/tomoyo/file.c:151 [inline]
- tomoyo_check_open_permission+0x2ab/0x3c0 security/tomoyo/file.c:776
- tomoyo_file_open+0x6b/0x90 security/tomoyo/tomoyo.c:334
- security_file_open+0x7a/0x1b0 security/security.c:2739
- do_dentry_open+0x57e/0x1690 fs/open.c:924
- vfs_open+0x82/0x3f0 fs/open.c:1079
- do_open fs/namei.c:4699 [inline]
- path_openat+0x218a/0x3190 fs/namei.c:4858
-page last free pid 1 tgid 1 stack trace:
- reset_page_owner include/linux/page_owner.h:25 [inline]
- __free_pages_prepare mm/page_alloc.c:1397 [inline]
- __free_frozen_pages+0x763/0xfc0 mm/page_alloc.c:2938
- selinux_genfs_get_sid security/selinux/hooks.c:1364 [inline]
- inode_doinit_with_dentry+0x903/0x1320 security/selinux/hooks.c:1563
- selinux_d_instantiate+0x26/0x30 security/selinux/hooks.c:6658
- security_d_instantiate+0x123/0x190 security/security.c:3704
- d_splice_alias_ops+0x92/0x850 fs/dcache.c:3141
- kernfs_iop_lookup+0x23f/0x2d0 fs/kernfs/dir.c:1289
- lookup_open.isra.0+0x659/0x1080 fs/namei.c:4484
- open_last_lookups fs/namei.c:4611 [inline]
- path_openat+0x17dd/0x3190 fs/namei.c:4855
- do_file_open+0x20c/0x430 fs/namei.c:4887
- do_sys_openat2+0x101/0x1d0 fs/open.c:1364
- do_sys_open fs/open.c:1370 [inline]
- __do_sys_openat fs/open.c:1386 [inline]
- __se_sys_openat fs/open.c:1381 [inline]
- __x64_sys_openat+0x141/0x200 fs/open.c:1381
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Memory state around the buggy address:
- ffff88802b8ddc80: 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc
- ffff88802b8ddd00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
->ffff88802b8ddd80: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
-                                        ^
- ffff88802b8dde00: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
- ffff88802b8dde80: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
-
-Fix the OOB by moving the assignment after free_rd_atomic_resources()
-so the old array is freed using the old bound. This matches the original
-ordering in commit 8700e3e7c485 ("Soft RoCE driver").
-
-Closes: https://lore.kernel.org/all/365C68B4923F8214+30195a67-0b90-4b92-ab96-2ce41517793c@smail.nju.edu.cn/
-Fixes: b6bbee0d2438 ("IB/rxe: Properly honor max IRD value for rd/atomic.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/r/20260602-tools_build_fix_zero_init_bpf_only-v2-1-c76e5250ea1c@arm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index 0af697c6469db..c31c0c9a53828 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -659,8 +659,6 @@ int rxe_qp_from_attr(struct rxe_qp *qp, struct ib_qp_attr *attr, int mask,
- 		int max_dest_rd_atomic = attr->max_dest_rd_atomic ?
- 			roundup_pow_of_two(attr->max_dest_rd_atomic) : 0;
+LLM Generated explanations, may be completely bogus:
+
+## Phase 1: Commit Message Forensics
+
+**Step 1.1 — Subject line**
+
+Record: `[bpftool] [Pass] Pass host flags to bootstrap libbpf — fix
+bootstrap libbpf submake inheriting target build flags during cross-
+compilation.`
+
+**Step 1.2 — Tags**
+
+| Tag | Value |
+|-----|-------|
+| Signed-off-by | Leo Yan \<leo.yan@arm.com\> |
+| Acked-by | Quentin Monnet \<qmo@kernel.org\> (bpftool maintainer) |
+| Link | https://lore.kernel.org/r/20260602-
+tools_build_fix_zero_init_bpf_only-v2-1-c76e5250ea1c@arm.com |
+| Signed-off-by | Alexei Starovoitov \<ast@kernel.org\> |
+
+No Fixes:, Reported-by:, Tested-by:, or Cc: stable tags (expected for
+manual review).
+
+Record: Acked-by from bpf/bpftool maintainer. Part of `[PATCH bpf-next
+v2 1/8]` series. No syzbot or user crash reports.
+
+**Step 1.3 — Body analysis**
+
+Record:
+- **Bug:** bpftool builds bootstrap libbpf with `HOSTCC`, but the libbpf
+  submake can still inherit target `CFLAGS`/`EXTRA_CFLAGS` from the
+  parent make.
+- **Symptom:** Cross-build failures when host objects are compiled with
+  target-only compiler options.
+- **Root cause:** Submake does not override inherited flags;
+  `HOST_CFLAGS` warning options are also unsuitable for libbpf’s own
+  warning setup.
+- **Fix approach:** Pass `CFLAGS="$(LIBBPF_BOOTSTRAP_CFLAGS)"` (host
+  flags with warnings stripped) and `EXTRA_CFLAGS=` to the bootstrap
+  libbpf submake.
+
+**Step 1.4 — Hidden bug fix?**
+
+Record: No — this is an explicit build-system bug fix, not disguised
+cleanup.
+
+---
+
+## Phase 2: Diff Analysis
+
+**Step 2.1 — Inventory**
+
+| File | Changes |
+|------|---------|
+| `tools/bpf/bpftool/Makefile` | +5 / -1 |
+
+Functions/rules modified: `$(LIBBPF_BOOTSTRAP)` recipe, new
+`LIBBPF_BOOTSTRAP_CFLAGS` variable.
+
+Record: Single-file, surgical Makefile change. Scope: build-system only.
+
+**Step 2.2 — Code flow change**
+
+Hunk 1 — `$(LIBBPF_BOOTSTRAP)` recipe:
+- **Before:** Submake invoked with `HOSTCC`/`HOSTLD`/`HOSTAR` and
+  `ARCH=`/`CROSS_COMPILE=` cleared, but no explicit `CFLAGS` or
+  `EXTRA_CFLAGS`.
+- **After:** Submake gets explicit `CFLAGS="$(LIBBPF_BOOTSTRAP_CFLAGS)"`
+  and `EXTRA_CFLAGS=`.
+
+Hunk 2 — new variable:
+- **Before:** No dedicated bootstrap libbpf CFLAGS.
+- **After:** `LIBBPF_BOOTSTRAP_CFLAGS` = `HOST_CFLAGS` with `-W`,
+  `-Wall`, `-Wextra`, `-Wformat`, `-Wformat-signedness` removed.
+
+Record: Normal bootstrap libbpf build path during cross-compilation is
+affected.
+
+**Step 2.3 — Bug mechanism**
+
+Record: **Build-system flag leakage.** Parent make exports/inherits
+`CFLAGS` and `EXTRA_CFLAGS` into the libbpf submake.
+`tools/lib/bpf/Makefile` uses `ifdef EXTRA_CFLAGS` to replace `CFLAGS`
+entirely, and appends `$(CLANG_CROSS_FLAGS)`. Without explicit
+overrides, target cross-compile flags reach host bootstrap objects.
+
+**Step 2.4 — Fix quality**
+
+Record: Fix is obviously correct, minimal, and follows the existing
+pattern in `tools/bpf/resolve_btfids/Makefile` (`CROSS_COMPILE=""
+CLANG_CROSS_FLAGS="" EXTRA_CFLAGS="$(HOSTCFLAGS)"`). Low regression risk
+— Makefile-only, bootstrap path only.
+
+---
+
+## Phase 3: Git History Investigation
+
+**Step 3.1 — Blame**
+
+Record: `$(LIBBPF_BOOTSTRAP)` recipe dates to 2020–2023
+(`ced846c65e8ff`, `8859b0da5aac2`, `c62dd8a58d19f`, `af0e26beaa693c`).
+Cross-build partial fixes: `bdadbb44c90ae` (2021, clang cross),
+`0b817059a8830` (2022, `HOSTAR`), `cc9b22dfa7358` (2024, `HOST_CFLAGS`
+cleanup). Buggy gap (no explicit CFLAGS/`EXTRA_CFLAGS=` for libbpf
+submake) has existed since bootstrap libbpf was introduced.
+
+**Step 3.2 — Fixes: tag**
+
+Record: N/A — no Fixes: tag.
+
+**Step 3.3 — Related file history**
+
+Record: Related commits in this tree:
+- `bdadbb44c90ae` — Enable cross-building with clang
+- `0b817059a8830` — Fix bootstrapping during cross compilation (HOSTAR)
+- `cc9b22dfa7358` — Clean up HOST_CFLAGS/HOST_LDFLAGS
+- `8d86767be9c9b` — Add `-Wformat-signedness` (relevant to warning
+  stripping)
+
+On master, this commit is patch 1/8 of series
+`tools_build_fix_zero_init_bpf_only`; patches 2–3 (`956841cbc3d77`,
+`3f2fec5b02b6e`) further refine HOST_CFLAGS handling. Patches 4–8 touch
+libbpf/selftests and are not prerequisites for this Makefile hunk.
+
+**Step 3.4 — Author context**
+
+Record: Leo Yan is an active Arm/tools contributor. Quentin Monnet
+(bpftool maintainer) Acked-by.
+
+**Step 3.5 — Dependencies**
+
+Record: Commit applies cleanly to 6.18.44 (`git apply --check` passes).
+Does not require `HOST_EXTRACFLAGS` (not present in this tree).
+Standalone for the submake flag-leakage mechanism. Patch 2 from the same
+series would improve completeness when `EXTRA_CFLAGS` contains target
+flags (because in this tree `HOST_CFLAGS` is computed after
+`EXTRA_CFLAGS` is appended to `CFLAGS`).
+
+---
+
+## Phase 4: Mailing List and External Research
+
+**Step 4.1 — Original discussion**
+
+Record: `b4 dig -c 9080b97689db` → https://patch.msgid.link/20260602-
+tools_build_fix_zero_init_bpf_only-v2-1-c76e5250ea1c@arm.com. Lore page
+blocked by bot protection; content verified via openwall mirror and
+GitHub commit page.
+
+**Step 4.2 — Reviewers**
+
+Record: CC list includes bpf maintainers (Starovoitov, Borkmann,
+Nakryiko, Monnet, etc.). Acked-by: Quentin Monnet.
+
+**Step 4.3 — Bug report**
+
+Record: No external bug report or syzbot link. Failure mode described in
+commit message and series cover letter (cross-build breakage).
+
+**Step 4.4 — Series context**
+
+Record: Series `[PATCH bpf-next v2 0/8] tools build: bpf: Append
+EXTRA_CFLAGS and HOST_EXTRACFLAGS`. Patch 1 was added in v2 specifically
+to fix bootstrap libbpf cross-build flag leakage. Other patches address
+GCC 15 zero-init and broader EXTRA_CFLAGS infrastructure.
+
+**Step 4.5 — Stable list**
+
+Record: UNVERIFIED — could not search lore stable list (bot protection).
+No evidence this was previously rejected for stable.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+**Step 5.1 — Key functions/rules**
+
+Record: `$(LIBBPF_BOOTSTRAP)` make rule; `LIBBPF_BOOTSTRAP_CFLAGS`
+variable definition.
+
+**Step 5.2 — Callers**
+
+Record: `$(LIBBPF_BOOTSTRAP)` is a dependency of bootstrap bpftool
+objects (`$(BOOTSTRAP_OBJS)`, `$(BPFTOOL_BOOTSTRAP)`). Triggered during
+bpftool feature detection requiring bootstrap (e.g. `clang-bpf-co-re`)
+and during cross-compiled bpf tools builds (`tools/bpf/Makefile`,
+selftests).
+
+**Step 5.3 — Callees**
+
+Record: Submake into `tools/lib/bpf/` with `HOSTCC`. libbpf Makefile
+reads `EXTRA_CFLAGS`, `CFLAGS`, `CLANG_CROSS_FLAGS`.
+
+**Step 5.4 — Reachability**
+
+Record: Reachable when building bpf tools in-tree during cross-
+compilation (`make tools/bpf` or full tools install with cross
+`CC`/`CROSS_COMPILE`). Not a syscall/runtime path; build-time only.
+
+**Step 5.5 — Similar patterns**
+
+Record: `tools/bpf/resolve_btfids/Makefile` already uses
+`HOST_OVERRIDES` with `CROSS_COMPILE="" CLANG_CROSS_FLAGS=""
+EXTRA_CFLAGS="$(HOSTCFLAGS)"` — same class of fix, already in this tree.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree
+
+**Step 6.1 — Buggy code present?**
+
+Record: **YES.** Local tree is **Linux 6.18.44** (`git describe HEAD` →
+`v6.18.44-1-g2736c32da98b9`). Current `tools/bpf/bpftool/Makefile` lines
+47–50 invoke libbpf bootstrap submake without explicit `CFLAGS` or
+`EXTRA_CFLAGS=`. Commit `9080b97689db` is on `master`/`bpf-next` but
+**not** in this 6.18.y checkout.
+
+**Step 6.2 — Backport complications**
+
+Record: **Clean apply** — `git apply --check` succeeds with no
+conflicts.
+
+**Step 6.3 — Related fixes already present?**
+
+Record: Prior cross-build fixes are present (`bdadbb44c90ae`,
+`0b817059a8830`, `cc9b22dfa7358`), but none address libbpf submake
+CFLAGS leakage. `LIBBPF_BOOTSTRAP_CFLAGS` not found in tree.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+**Step 7.1 — Subsystem**
+
+Record: **tools/bpf/bpftool** — IMPORTANT for bpf tooling, PERIPHERAL
+for kernel runtime.
+
+**Step 7.2 — Activity**
+
+Record: Actively maintained; recent Makefile changes in 6.18.y include
+signing support, `-Wformat-signedness`, zstd linking.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 — Who is affected**
+
+Record: Users cross-compiling bpf tools (distro builders, embedded/ARM
+developers). Does not affect already-built kernels or runtime behavior.
+
+**Step 8.2 — Trigger conditions**
+
+Record: Cross-compilation of bpftool with bootstrap libbpf build
+(feature detection or explicit bootstrap target). Requires
+`EXTRA_CFLAGS`/`CFLAGS` with target-specific options to leak. Common in
+distro/SDK cross-build environments.
+
+**Step 8.3 — Failure mode severity**
+
+Record: **Compilation failure** during tools build — severity **MEDIUM**
+(build breakage, not crash/corruption/security).
+
+**Step 8.4 — Risk vs benefit**
+
+| | Assessment |
+|--|------------|
+| Benefit | Prevents cross-build failures for bpftool; fills known gap
+left by earlier cross-build fixes |
+| Risk | Very low — 5-line Makefile change, bootstrap-only path |
+| Ratio | Favorable for stable under build-fix exception |
+
+---
+
+## Phase 9: Final Synthesis
+
+**Evidence FOR backport:**
+- Real, reproducible cross-build bug in existing code
+- Build-fix exception category (stable-kernel-rules.rst)
+- Small, surgical, maintainer-acked fix
+- Applies cleanly to 6.18.44
+- Precedent: `0b817059a8830` (similar bpftool cross-bootstrap fix) is in
+  6.18.y history
+- Matches established pattern in `resolve_btfids/Makefile`
+
+**Evidence AGAINST:**
+- Tools-only; no kernel runtime impact
+- Part of 8-patch series; patch 2 would further improve
+  `HOST_CFLAGS`/`EXTRA_CFLAGS` separation
+- Only affects cross-compilation build paths
+- No user crash reports or security implications
+
+**Unresolved:** Full lore review thread unavailable (bot protection).
+Whether patch 2 should accompany this for maximum `EXTRA_CFLAGS`
+correctness in 6.18.y.
+
+### Stable Rules Checklist
+
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — Acked-by maintainer;
+follows existing resolve_btfids pattern |
+| 2. Fixes real bug affecting users? | **PASS** — cross-build
+compilation failure |
+| 3. Important issue? | **PASS** (build-fix exception) — compilation
+error, not crash/security |
+| 4. Small and contained? | **PASS** — 5 lines, one file |
+| 5. No new features/APIs? | **PASS** — Makefile build flags only |
+| 6. Can apply to local tree? | **PASS** — clean apply verified |
+
+**Exception category:** Build fix.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed subject, tags, body from provided commit message and
+  `git show 9080b97689db`
+- [Phase 2] Diff analysis: 5 lines added, 1 removed in
+  `tools/bpf/bpftool/Makefile`
+- [Phase 3] `git blame` on lines 47–50: bootstrap recipe from 2020–2023
+  commits
+- [Phase 3] `git log --oneline master -- tools/bpf/bpftool/Makefile`:
+  found series commits 9080b97, 956841c, 3f2fec5
+- [Phase 3] `git show bdadbb44c90ae`, `0b817059a8830`, `cc9b22dfa7358`:
+  prior cross-build fixes confirmed
+- [Phase 3] `git apply --check` on 9080b97689db: **passes cleanly**
+- [Phase 4] `b4 dig -c 9080b97689db`: lore URL found; full thread
+  UNVERIFIED (bot block)
+- [Phase 4] openwall mirror: confirmed patch content and series context
+  (v2 1/8)
+- [Phase 5] Read `tools/lib/bpf/Makefile` lines 73–87, 101:
+  `EXTRA_CFLAGS`/`CLANG_CROSS_FLAGS` inheritance confirmed
+- [Phase 5] Read `tools/bpf/resolve_btfids/Makefile` line 19–20:
+  analogous HOST_OVERRIDES pattern confirmed
+- [Phase 5] Read `tools/scripts/Makefile.include` lines 100–117:
+  `CLANG_CROSS_FLAGS` added to `CFLAGS` when `CROSS_COMPILE` set
+- [Phase 6] `git describe HEAD`: v6.18.44; `make kernelversion`: 6.18.44
+- [Phase 6] `grep LIBBPF_BOOTSTRAP_CFLAGS`: not in tree (fix absent)
+- [Phase 6] Read current `tools/bpf/bpftool/Makefile` lines 47–50,
+  84–92: buggy code confirmed
+- [Phase 6] `git cat-file -t 9080b97689db`: commit exists on master/bpf-
+  next, not in current HEAD
+- [Phase 7] `grep HOST_EXTRACFLAGS tools/`: not present (patch 3
+  infrastructure absent)
+- [Phase 8] `git log stable/linux-6.18.y --grep="cross" --
+  tools/bpf/bpftool/Makefile`: `0b817059a8830` in stable history
+
+This is a valid, low-risk build fix for a real cross-compilation failure
+in bpftool that exists in Linux 6.18.44 and applies cleanly.
+
+**YES**
+
+ tools/bpf/bpftool/Makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/tools/bpf/bpftool/Makefile b/tools/bpf/bpftool/Makefile
+index fd43e5ea63f38..4b6670bad86e7 100644
+--- a/tools/bpf/bpftool/Makefile
++++ b/tools/bpf/bpftool/Makefile
+@@ -47,7 +47,8 @@ $(LIBBPF_INTERNAL_HDRS): $(LIBBPF_HDRS_DIR)/%.h: $(BPF_DIR)/%.h | $(LIBBPF_HDRS_
+ $(LIBBPF_BOOTSTRAP): $(wildcard $(BPF_DIR)/*.[ch] $(BPF_DIR)/Makefile) | $(LIBBPF_BOOTSTRAP_OUTPUT)
+ 	$(Q)$(MAKE) -C $(BPF_DIR) OUTPUT=$(LIBBPF_BOOTSTRAP_OUTPUT) \
+ 		DESTDIR=$(LIBBPF_BOOTSTRAP_DESTDIR:/=) prefix= \
+-		ARCH= CROSS_COMPILE= CC="$(HOSTCC)" LD="$(HOSTLD)" AR="$(HOSTAR)" $@ install_headers
++		ARCH= CROSS_COMPILE= CC="$(HOSTCC)" LD="$(HOSTLD)" AR="$(HOSTAR)" \
++		CFLAGS="$(LIBBPF_BOOTSTRAP_CFLAGS)" EXTRA_CFLAGS= $@ install_headers
  
--		qp->attr.max_dest_rd_atomic = max_dest_rd_atomic;
--
- 		/*
- 		 * Not gated by IB_QP_STATE, so the responder task is live.
- 		 * Quiesce recv_task like rxe_qp_reset() before swapping the
-@@ -669,6 +667,7 @@ int rxe_qp_from_attr(struct rxe_qp *qp, struct ib_qp_attr *attr, int mask,
- 		 */
- 		rxe_disable_task(&qp->recv_task);
- 		free_rd_atomic_resources(qp);
-+		qp->attr.max_dest_rd_atomic = max_dest_rd_atomic;
- 		err = alloc_rd_atomic_resources(qp, max_dest_rd_atomic);
- 		/*
- 		 * On ENOMEM leave recv_task quiesced: qp->resp.resources is
+ $(LIBBPF_BOOTSTRAP_INTERNAL_HDRS): $(LIBBPF_BOOTSTRAP_HDRS_DIR)/%.h: $(BPF_DIR)/%.h | $(LIBBPF_BOOTSTRAP_HDRS_DIR)
+ 	$(call QUIET_INSTALL, $@)
+@@ -92,6 +93,9 @@ HOST_CFLAGS := $(subst -I$(LIBBPF_INCLUDE),-I$(LIBBPF_BOOTSTRAP_INCLUDE),\
+ 		$(subst $(CLANG_CROSS_FLAGS),,$(CFLAGS)))
+ HOST_LDFLAGS := $(LDFLAGS)
+ 
++# Remove warnings for libbpf bootstrap build
++LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat -Wformat-signedness,$(HOST_CFLAGS))
++
+ INSTALL ?= install
+ RM ?= rm -f
+ 
 -- 
 2.53.0
-
-
 
