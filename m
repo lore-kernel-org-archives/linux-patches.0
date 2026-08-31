@@ -1,49 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ACE474258;
-	Mon, 31 Aug 2026 13:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DFC477280;
+	Mon, 31 Aug 2026 13:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183340; cv=none; b=kHI5TagiUuil8wxjcYME31MIIuUmPX6bChMpfMx2sU/fElCyMG61vaG13M3X9TOjCEFZv2+IHRjkSwEt+LV0ico9cHg1yqUJXB+Ylw02sSp1IKQWJGWNt5YEvAatBnXLfFTsjL/w5iHLFP5FWY5LayBk/vrCZUar8uiC36/G6lM=
+	t=1788183341; cv=none; b=ke/PQuJLWPSJq41JHWH7n6tsCOa0eth4PY4Wc5i5Q55L0G3xtufSJCrpYh2DUXNBdrI1Yu0hokQ+0Y/zf0ojTMQTTc55PVJisZRxMc3+VWaMW/qJUIwlqFBcA44Jn/S6wPP49411wVqNM6+71YNVQMrt+mjTj8/VvpLWPvXpoZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183340; c=relaxed/simple;
-	bh=axz5vylE4FxBOgoV1DlQWb8KgAqUuL00a1VstUYsNKQ=;
+	s=arc-20240116; t=1788183341; c=relaxed/simple;
+	bh=zCwVNMWm9AJarhUGZuV8079zSkn5F2Ic6om4TiPHmW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YYfZsEUMXYlKPThSo1FRxvO6IWiD4BgJz2s2bXukG4UrKfWl/N3lIeeZ4n9aBDHhS7KPiQC/mwtp82dQRUpzJ12V9TY+pBRm47rKear00wgQX4ujV5qbDSIGJQxDlzw5N9aLtdrAbi/YLtM995tOeo2FMGLdlICzQQcuzUIvE00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOHGpe3n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fUjv8kgBj8xivrv5bC2akJp5RZ6/qBeEE6RgcW4SD/fnPc6QZmnYs5K288M26u8zyurWH5K1JhSXGPy3Wck83wGZcDHjjJlSUAlplHWKkUD9Her+G20dnNuYr9gclv9VMBypoPjc1vqZUM05MbuuJcEOFES6m2yaX61vY+rVxnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JpWI9G5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOHGpe3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BA81F00A3D;
-	Mon, 31 Aug 2026 13:35:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JpWI9G5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1499D1F00A3F;
+	Mon, 31 Aug 2026 13:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183337;
-	bh=QpstxJnSY0vcdZyNSDutxF0fesjA6gCk/K78ALCzL4I=;
+	s=k20260515; t=1788183339;
+	bh=kKb26iVImiPGyTnZ71DQ0DY1f9MALfzVnRrVOZzO4mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jOHGpe3nR2OxwcY4oja0MXj0lYsegH1QjBiYFc+z7mp2G3xrQrq33cslcM2mZh99E
-	 nYXDXw31cXqJoj0+8b64QkEkRBSmnthr/7981/XamXKAMiSmQz6c4k26xCr+LdyNzX
-	 qVF2xWxj6e/TvYRP4BgJeBTQ8kUVgB/DaFpEoilDDOq8awB4iRLYKXj946CrTPWlTl
-	 sLEJOfUZj1zeA0txtg0IREkIRjxyXz08Fi1uSVtkdZvUSAWtzB+rhYsVLjSna/cJNp
-	 NSCWm4NanUmlMKKQpXxK9WmTcKeOAo5TcTnI7zRmBAXbk7e3E8BSyWDGfmvPWjw6ch
-	 OwwMd5Ed0gciA==
+	b=JpWI9G5quEyUvQ6URcmYRXV3Hkax89IhAXL2g70duB7A5J6c7Njkrnjm/dfzl4nDb
+	 jDoWcj8tOoVOPjweHX1I0exa2yxfEI9GdMh3I+y2WNVc4//EZr4G6KHQ1wjFXwSF3e
+	 BYwAR/Xsnhbv7ppj+kPKpxBCqOP50SDqCO+2JWlqSkl0nmtuPfLEapnTbnEnIRXalP
+	 u+xWGaRvNc6YqCnnR+3VvIsvdeuLvX8wyRNwsrJ6T2gU+h+AJnNsjeMeJG2sDKrv8t
+	 u6hPE5c10sg9inlGkRFdszMoPI33IUHL0M5+ULDaN/GF1XUO5a32fkTrwMnq1k3aiX
+	 XAy1E8UVtdrFw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Berger <stefanb@linux.ibm.com>,
-	Kamlesh Kumar <kam@juniper.net>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+Cc: Jia Jia <physicalmtea@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	roberto.sassu@huawei.com,
-	dmitry.kasatkin@gmail.com,
-	paul@paul-moore.com,
-	jmorris@namei.org,
-	serge@hallyn.com,
-	linux-integrity@vger.kernel.org,
-	linux-security-module@vger.kernel.org,
+	jasowangio@gmail.com,
+	michael.christie@oracle.com,
+	virtualization@lists.linux.dev,
+	kvm@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] integrity: Check for NULL returned by asymmetric_key_public_key
-Date: Mon, 31 Aug 2026 09:21:56 -0400
-Message-ID: <20260831133314.4125787-88-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] vhost-scsi: flush backend after device ioctls
+Date: Mon, 31 Aug 2026 09:21:57 -0400
+Message-ID: <20260831133314.4125787-89-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -59,16 +56,26 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit c93a5f038ccc11ed8558ce642f62d5ede701a348 ]
+[ Upstream commit 22598f55a4c2b510b3df5e69e563387a963222ae ]
 
-Check for a NULL pointer returned by asymmetric_key_public_key and return
--ENOKEY in this case.
+vhost-scsi translates guest response descriptors into userspace iovecs
+when commands are submitted.  Target-core completes those commands
+asynchronously, so VHOST_SET_MEM_TABLE can replace the memory table while
+an in-flight command still retains response iovecs translated through the
+old table.
 
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Tested-by: Kamlesh Kumar <kam@juniper.net>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+If the old mapping is reused after VHOST_SET_MEM_TABLE returns, command
+completion can write the response to an unrelated userspace object.
+
+Flush the vhost-scsi backend after vhost_dev_ioctl() handles a device
+ioctl.  This waits for in-flight commands that can still use the old
+response iovecs before the ioctl returns.
+
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260724060919.1569170-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,335 +83,443 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-### Step 1.1: Subject line
-**Record:** `[integrity]` `[Check]` — Add a NULL check on the return
-value of `asymmetric_key_public_key()` in asymmetric signature
-verification.
+**Step 1.1 – Subject line**
 
-### Step 1.2: Tags
-**Record:**
-- **Signed-off-by:** Stefan Berger `<stefanb@linux.ibm.com>` (author)
-- **Tested-by:** Kamlesh Kumar `<kam@juniper.net>`
-- **Signed-off-by:** Mimi Zohar `<zohar@linux.ibm.com>` (integrity
-  subsystem maintainer)
-- **No** Fixes:, Reported-by:, Link:, Cc: stable@vger.kernel.org,
-  Reviewed-by:, Acked-by:
+Record: `[vhost-scsi] [flush] Flush backend after device ioctls to
+prevent stale response-iovec writes after memory table changes.`
 
-Notable: maintainer sign-off plus Tested-by; no syzbot or user bug
-report.
+**Step 1.2 – Tags**
 
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** `asymmetric_key_public_key()` can return NULL; the code
-  dereferences `pk` without checking.
-- **Symptom:** NULL pointer dereference → kernel oops in
-  `asymmetric_verify()`.
-- **Fix:** Return `-ENOKEY` and jump to the existing `out:` cleanup
-  path.
-- **Series context:** Patch 1/4 of “Add support for ML-DSA signature for
-  EVM and IMA”; v3 added patches 1/4 and 2/4 per Mimi Zohar’s review
-  comments on v2.
+Record:
+- **Fixes:** none
+- **Reported-by:** none
+- **Tested-by:** none
+- **Reviewed-by:** none in commit message
+- **Acked-by:** none in commit message
+- **Link:** none
+- **Cc: stable:** none (expected for pipeline candidates)
+- **Signed-off-by:** Jia Jia `<physicalmtea@gmail.com>`, Michael S.
+  Tsirkin `<mst@redhat.com>` (ignore pipeline-added SOBs)
+- **Message-ID:** `<20260724060919.1569170-1-physicalmtea@gmail.com>`
+  (v2 submission)
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes — explicit NULL-dereference fix, not cosmetic cleanup.
+Notable: Signed-off-by from vhost maintainer (mst) is a strong quality
+signal. No syzbot/fuzzer report; this is a logic/lifetime bug.
+
+**Step 1.3 – Body analysis**
+
+Record:
+- **Bug:** `vhost_scsi_setup_resp_iovs()` copies guest response
+  descriptor addresses (translated userspace HVAs) into per-command
+  `tvc_resp_iovs` at submit time. Target-core completes SCSI commands
+  asynchronously. `VHOST_SET_MEM_TABLE` can replace the memory table
+  while commands still hold iovecs from the old table.
+- **Symptom:** After the ioctl returns and old mappings are reused,
+  async completion via `copy_to_iter()` can write the virtio-scsi
+  response into unrelated userspace memory → **host memory corruption**.
+- **Versions:** Not specified; mechanism has existed since the 2012 TODO
+  was added.
+- **Root cause:** Missing synchronization barrier between device-wide
+  ioctls (especially `VHOST_SET_MEM_TABLE`) and in-flight async
+  completions using stale response iovecs.
+
+**Step 1.4 – Hidden bug fix?**
+
+Record: **Yes.** Although the subject says "flush" rather than "fix",
+this closes a long-standing correctness hole marked by a `/* TODO: flush
+backend after dev ioctl. */` comment since 2012. It is not cosmetic
+cleanup.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `security/integrity/digsig_asymmetric.c` (+4 / −0)
-- **Function:** `asymmetric_verify()`
-- **Scope:** Single-file, surgical (4 lines)
+**Step 2.1 – Inventory**
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** After `request_asymmetric_key()` succeeds, `pk =
-  asymmetric_key_public_key(key)` is used immediately as
-  `pk->pkey_algo`.
-- **After:** If `pk` is NULL, set `ret = -ENOKEY`, `goto out` (which
-  calls `key_put(key)`).
-- **Path:** Error handling in IMA/EVM asymmetric signature verification
-  (sig v2).
+Record:
+- **File:** `drivers/vhost/scsi.c` (+2 / -1 lines net)
+- **Function:** `vhost_scsi_ioctl()` default branch
+- **Scope:** Single-file, surgical fix
 
-### Step 2.3: Bug mechanism
-**Record:** **Category:** NULL pointer dereference.
-**Mechanism:** `asymmetric_key_public_key()` is an inline accessor
-returning `key->payload.data[asym_crypto]`, which can be NULL. The code
-assumed it was always valid after a successful key lookup.
+**Step 2.2 – Code flow change**
 
-### Step 2.4: Fix quality
-**Record:** Obviously correct; mirrors existing `!pkey` handling in
-`restrict_link_by_digsig()` / `restrict_link_by_ca()`. Uses existing
-`out:` label. Very low regression risk.
+Record:
+- **Before:** After `vhost_dev_ioctl()`, unknown ioctls fall through to
+  `vhost_vring_ioctl()` on `-ENOIOCTLCMD`; no flush for handled device
+  ioctls (`VHOST_SET_MEM_TABLE`, etc.).
+- **After:** On any non-`-ENOIOCTLCMD` result from `vhost_dev_ioctl()`,
+  call `vhost_scsi_flush(vs)` before returning. Vring ioctls still
+  bypass this flush (they return `-ENOIOCTLCMD` and go to
+  `vhost_vring_ioctl()`).
+- **Path affected:** Control-plane ioctl path only; data path unchanged.
+
+**Step 2.3 – Bug mechanism**
+
+Record: **Memory safety / lifetime bug (stale pointer use).**
+- `vhost_get_vq_desc()` → `translate_desc()` builds `vq->iov[]` using
+  current `dev->umem` mappings.
+- `vhost_scsi_setup_resp_iovs()` copies those pointers into
+  `cmd->tvc_resp_iovs`.
+- Completion in `vhost_scsi_complete_cmd_work()` writes via those stored
+  iovecs:
+
+```721:723:drivers/vhost/scsi.c
+                iov_iter_init(&iov_iter, ITER_DEST, cmd->tvc_resp_iovs,
+                              cmd->tvc_resp_iovs_cnt, sizeof(v_rsp));
+                ret = copy_to_iter(&v_rsp, sizeof(v_rsp), &iov_iter);
+```
+
+- `vhost_set_memory()` replaces `d->umem` and frees the old IOTLB
+  without waiting for in-flight completions using old HVAs.
+
+**Step 2.4 – Fix quality**
+
+Record:
+- **Obviously correct:** Matches the established pattern in `vhost-net`
+  and `vhost-vsock`:
+
+```1827:1835:drivers/vhost/net.c
+        default:
+                mutex_lock(&n->dev.mutex);
+                r = vhost_dev_ioctl(&n->dev, ioctl, argp);
+                if (r == -ENOIOCTLCMD)
+                        r = vhost_vring_ioctl(&n->dev, ioctl, argp);
+                else
+                        vhost_net_flush(n);
+                mutex_unlock(&n->dev.mutex);
+                return r;
+```
+
+- **Minimal:** 3-line change; removes TODO, adds `else
+  vhost_scsi_flush(vs)`.
+- **Regression risk:** Low. Flush only on rare device-wide control
+  ioctls; vring hot-path ioctls explicitly excluded.
+  `vhost_scsi_flush()` already used in set/clear endpoint paths and
+  requires `dev.mutex` (held here).
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:** Lines 110–111 in the local tree were introduced in commit
-`6bda50f4333fa` (2025-11-29) when `digsig_asymmetric.c` was added. The
-missing NULL check has been present since that introduction in this
-tree.
+**Step 3.1 – Blame**
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag.
+Record: TODO introduced in `935cdee7ee1595` (Dec 2012, Michael S.
+Tsirkin, "vhost: avoid backend flush on vring ops"). Default ioctl
+branch dates to `057cbf49a1f082` (Jul 2012). Buggy gap present ~14
+years.
 
-### Step 3.3: Related file history
-**Record:** On `stable/linux-6.18.y`, `digsig_asymmetric.c` appears from
-`6bda50f4333fa`. The buggy pattern is present at merge-base
-`7b923c78b50d`. Part of ML-DSA v3 series (4 patches); this commit is
-standalone and does not require patches 2–4.
+**Step 3.2 – Fixes: tag**
 
-### Step 3.4: Author context
-**Record:** Stefan Berger is a regular integrity contributor. Mimi Zohar
-(maintainer) signed off. Series included in `integrity-v7.2` pull (June
-2026).
+Record: N/A — no Fixes: tag.
 
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Applies independently of ML-DSA support
-(patches 3/4 and 4/4).
+**Step 3.3 – Related file history**
+
+Record:
+- `vhost_scsi_flush()` introduced/evolved through inflight refcount
+  mechanism (commits like `25b98b64e2842`, `31fbea3ab94ea`).
+- `vhost_scsi_setup_resp_iovs()` added in `9d8960672d63d` (2024) — makes
+  explicit per-command storage of response iovecs, but the race predates
+  this.
+- Fix is **standalone**; not part of a multi-patch dependency series for
+  this specific change.
+
+**Step 3.4 – Author context**
+
+Record: Jia Jia submitted v2 (Jul 2026); Michael S. Tsirkin Signed-off-
+by. Author also submitted related vhost-scsi hardening patches in the
+same timeframe.
+
+**Step 3.5 – Prerequisites**
+
+Record: **None required.** `vhost_scsi_flush()` exists in this tree.
+Patch applies to current `vhost_scsi_ioctl()` structure. No new APIs or
+structures.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** Found via spinics/openwall at [PATCH v3
-1/4](https://www.spinics.net/lists/kernel/msg6157574.html). Cover
-letter: [PATCH v3
-0/4](https://www.spinics.net/lists/kernel/msg6157584.html). v3 added
-patches 1/4 and 2/4 addressing Mimi’s v2 comments. `b4 dig -c` could not
-be run (commit not in local tree); `b4 shazam` did not find message-id.
-lore.kernel.org blocked by bot protection.
+**Step 4.1 – Original discussion**
 
-### Step 4.2: Reviewers
-**Record:** CC’d: linux-integrity, linux-security-module, Mimi Zohar,
-Roberto Sassu, Eric Biggers.
+Record:
+- Thread found via web search (lore.kernel.org blocked by bot
+  protection):
+  - https://www.spinics.net/lists/netdev/msg1207854.html
+  - https://lists.openwall.net/netdev/2026/07/21/81
+  - v2: Message-ID `<20260724060919.1569170-1-physicalmtea@gmail.com>`
+- Author explains flush is control-plane only; vring ioctls
+  intentionally excluded per 2012 design.
+- Mike Christie reviewed (Jul 22); author responded Jul 23 with detailed
+  lifetime analysis.
+- **b4 dig:** Could not run — commit hash not present in this checkout;
+  `b4 dig -c` requires a commitish.
 
-### Step 4.3: Bug report
-**Record:** No external bug report, syzbot, or sanitizer report. Found
-during ML-DSA series review (Mimi’s v2 feedback).
+**Step 4.2 – Reviewers**
 
-### Step 4.4: Series context
-**Record:** 4-patch ML-DSA series. This patch is independently valuable;
-later patches refactor and add ML-DSA sigv3 support.
+Record: CC'd netdev, kvm, virtualization; Paolo Bonzini, Stefan
+Hajnoczi, Eugenio Pérez, Mike Christie, Jason Wang area. mst Signed-off-
+by on committed version.
 
-### Step 4.5: Stable list
-**Record:** No stable-list discussion found. Included in maintainer’s
-`integrity-v7.2` pull for mainline.
+**Step 4.3 – Bug report**
+
+Record: No external bugzilla/syzbot report. Bug identified through code
+analysis of the 2012 TODO and async completion path.
+
+**Step 4.4 – Related patches**
+
+Record: Author has related vhost-scsi patches (feature-change rejection,
+T10-PI lifecycle) but this flush fix is independent.
+
+**Step 4.5 – Stable list history**
+
+Record: No stable-list discussion found (lore blocked). Not used as
+negative signal.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `asymmetric_verify()` modified.
+**Step 5.1 – Key functions**
 
-### Step 5.2: Callers
-**Record:**
-- `integrity_digsig_verify()` in `security/integrity/digsig.c` (sig
-  types 2 and 3)
-- Callers of `integrity_digsig_verify()`:
-  - `security/integrity/ima/ima_appraise.c` — IMA signature appraisal
-  - `security/integrity/evm/evm_main.c` — EVM signature verification
+Record: `vhost_scsi_ioctl()`, `vhost_scsi_flush()`, `vhost_dev_ioctl()`,
+`vhost_scsi_setup_resp_iovs()`, `vhost_scsi_complete_cmd_work()`,
+`vhost_set_memory()`.
 
-### Step 5.3: Callees
-**Record:** `request_asymmetric_key()`, `asymmetric_key_public_key()`,
-`verify_signature()`, `key_put()`.
+**Step 5.2 – Callers**
 
-### Step 5.4: Reachability
-**Record:** Reachable from file access when
-`CONFIG_INTEGRITY_ASYMMETRIC_KEYS` and IMA/EVM appraisal are enabled. On
-this tree, IMA rejects sig version ≥ 3 before verification; sig v2
-asymmetric verification is the affected path.
+Record:
+- `vhost_scsi_ioctl()` — userspace via `/dev/vhost-scsi` ioctl
+  (QEMU/vhost owner process).
+- `vhost_scsi_flush()` — already called from
+  `vhost_scsi_set_endpoint()`, `vhost_scsi_clear_endpoint()`.
+- Trigger ioctl `VHOST_SET_MEM_TABLE` — userspace during guest memory
+  layout changes (hotplug, migration prep).
 
-### Step 5.5: Similar patterns
-**Record:** `crypto/asymmetric_keys/restrict.c` checks `if (!pkey)
-return -ENOPKG`. `verify_signature()` checks `!key->payload.data[0]`
-(same slot as `asym_crypto`) — but only after `asymmetric_verify()`
-would have already crashed on NULL `pk`.
+**Step 5.3 – Callees**
+
+Record: `vhost_scsi_flush()` → `vhost_scsi_init_inflight()`,
+`kref_put()` on old generation, `vhost_dev_flush()`,
+`wait_for_completion()` on old inflight completions.
+
+**Step 5.4 – Reachability**
+
+Record: **Reachable from userspace** with `CONFIG_VHOST_SCSI`. Requires
+active vhost-scsi endpoint with in-flight SCSI I/O concurrent with
+`VHOST_SET_MEM_TABLE`. Realistic in virtualization workloads.
+
+**Step 5.5 – Similar patterns**
+
+Record: `vhost_net_flush()` and `vhost_vsock_flush()` already follow
+identical ioctl pattern. vhost-scsi is the outlier with an unfilled
+TODO.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Local tree is **v6.18.43** (`stable/linux-6.18.y`,
-`HEAD` detached). `security/integrity/digsig_asymmetric.c` lines 110–111
-lack the NULL check:
+**Step 6.1 – Buggy code present?**
 
-```110:111:security/integrity/digsig_asymmetric.c
-        pk = asymmetric_key_public_key(key);
-        pks.pkey_algo = pk->pkey_algo;
+Record: **YES.** Local tree is `v6.18.44` / `6.18.44`. Current code
+still has the TODO and no flush:
+
+```2431:2438:drivers/vhost/scsi.c
+        default:
+                mutex_lock(&vs->dev.mutex);
+                r = vhost_dev_ioctl(&vs->dev, ioctl, argp);
+                /* TODO: flush backend after dev ioctl. */
+                if (r == -ENOIOCTLCMD)
+                        r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
+                mutex_unlock(&vs->dev.mutex);
+                return r;
 ```
 
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — 4 lines at a stable location. Minor
-field-name difference (`pks.digest` vs `pks.m` in the submitted diff)
-does not affect patch placement.
+Fix not yet applied (`git log --grep='vhost-scsi: flush backend'`
+returned empty).
 
-### Step 6.3: Related fixes already present?
-**Record:** No — grep shows no existing NULL check at this site.
+**Step 6.2 – Backport complications**
+
+Record: **Clean apply expected.** Identical structure to vhost-net fix;
+no refactoring conflicts in recent `drivers/vhost/scsi.c` history.
+
+**Step 6.3 – Related fixes already present?**
+
+Record: **No.** No alternative fix for this race found in this tree.
 
 ---
 
-## Phase 7: Subsystem Context
+## Phase 7: Subsystem and Maintainer Context
 
-### Step 7.1: Subsystem criticality
-**Record:** **security/integrity** (IMA/EVM) — **IMPORTANT** (security-
-sensitive, affects systems with integrity appraisal enabled).
+**Step 7.1 – Subsystem**
 
-### Step 7.2: Activity
-**Record:** Actively maintained; recent IMA/EVM commits on this branch.
+Record: **drivers/vhost** (virtio host backends). Criticality:
+**IMPORTANT** for virtualization (KVM/QEMU with kernel virtio-scsi
+target). Not universal like mm/net core, but data corruption in host
+userspace is serious.
+
+**Step 7.2 – Activity**
+
+Record: vhost-scsi actively maintained in 6.18 (logging, resource
+handling, bug fixes in recent commits).
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-### Step 8.1: Who is affected
-**Record:** Systems with `CONFIG_INTEGRITY_ASYMMETRIC_KEYS` and IMA/EVM
-digital-signature appraisal. Not universal, but important for
-secured/enterprise deployments.
+**Step 8.1 – Who is affected**
 
-### Step 8.2: Trigger conditions
-**Record:** A signature references a key ID that resolves to an
-asymmetric key whose `asym_crypto` payload is NULL. With standard
-X.509-loaded RSA/ECDSA keys this is unlikely; the subsystem already
-treats `!pkey` as a valid error state elsewhere. More relevant once non-
-standard key types (e.g. ML-DSA) are introduced. Trigger does not
-require ML-DSA patch 4/4 on this tree, but practical likelihood on
-6.18.y without ML-DSA is low.
+Record: Users of `CONFIG_VHOST_SCSI` — QEMU/KVM setups using kernel
+vhost-scsi with target-core backend.
 
-### Step 8.3: Failure mode severity
-**Record:** **Kernel oops** (NULL dereference at `pk->pkey_algo`) —
-**CRITICAL** if triggered.
+**Step 8.2 – Trigger conditions**
 
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Prevents crash in security verification path; returns
-  proper error instead.
-- **Risk:** Very low — 4 lines, uses existing cleanup, no API change.
-- **Ratio:** Favorable for stable despite rare trigger on current 6.18.y
-  key types.
+Record: `VHOST_SET_MEM_TABLE` (or other `vhost_dev_ioctl()` handlers)
+while SCSI commands are in flight. Moderately rare (control-plane) but
+normal during memory hotplug/migration. Unprivileged users cannot
+directly ioctl vhost-scsi without device access, but VM operators can
+trigger it.
+
+**Step 8.3 – Failure mode severity**
+
+Record: **Stale HVA write on async completion → host userspace memory
+corruption.** Severity: **CRITICAL** (data corruption, potential
+security impact in multi-tenant/host scenarios).
+
+**Step 8.4 – Risk-benefit**
+
+Record:
+- **Benefit:** HIGH — prevents real corruption bug present since 2012.
+- **Risk:** LOW — 3-line change, mirrors proven net/vsock pattern, flush
+  infrastructure already exists and is tested in endpoint paths.
+- **Ratio:** Strongly favors backport.
 
 ---
 
 ## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence summary
+**Step 9.1 – Evidence summary**
 
 **FOR backport:**
-- Real NULL-deref bug in security code
-- Small, surgical, maintainer-signed fix with Tested-by
-- Buggy code exists in v6.18.43
-- Applies cleanly and standalone
-- IMA/EVM verification path is security-critical
-- Consistent with existing `!pkey` handling in asymmetric key code
+- Real memory-corruption bug with clear mechanism
+- Long-standing known gap (TODO since 2012)
+- Surgical 3-line fix, obviously correct
+- Matches existing vhost-net/vhost-vsock behavior
+- vhost maintainer Signed-off-by
+- Reviewed on netdev list with technical discussion
+- All prerequisites (`vhost_scsi_flush`) present in 6.18.44
+- Buggy code confirmed present in this tree
 
 **AGAINST backport:**
-- No user report or fuzzer finding
-- Added during ML-DSA series review; practical trigger on 6.18.y without
-  ML-DSA may be very rare
-- Standard X.509 keys normally always populate `asym_crypto`
-- IMA already rejects sig v3 on this tree, limiting some future trigger
-  scenarios
+- Affects only `CONFIG_VHOST_SCSI` users (narrower than core subsystems)
+- No fuzzer/user bug report (theoretical until triggered — but mechanism
+  is concrete, not speculative)
+- Flush adds latency on rare control ioctls (acceptable; same as vhost-
+  net)
 
-**Unresolved:** No confirmed production crash on 6.18.y with current key
-types only.
+**Unresolved:** Could not access lore.kernel.org directly; relied on
+spinics/openwall mirrors. Commit hash not in local tree for `b4 dig -c`.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** (simple NULL check; Tested-by;
-   maintainer SOB)
-2. Fixes a real bug? **PASS** (NULL deref is a real defect, even if
-   trigger is edge-case)
-3. Important issue? **PASS** (kernel oops in integrity verification —
-   HIGH/CRITICAL)
-4. Small and contained? **PASS** (4 lines, one function)
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS**
+**Step 9.2 – Stable rules checklist**
 
-### Step 9.3: Exception categories
-**Record:** None (not a quirk, device ID, or build fix).
+| Criterion | Result |
+|-----------|--------|
+| 1. Obviously correct and tested? | **PASS** — mirrors net/vsock; mst
+SOB; list review |
+| 2. Fixes real bug affecting users? | **PASS** — stale-iovec corruption
+on mem table update |
+| 3. Important issue? | **PASS** — data corruption, severity CRITICAL |
+| 4. Small and contained? | **PASS** — 3 lines, one function |
+| 5. No new features/APIs? | **PASS** — uses existing
+`vhost_scsi_flush()` |
+| 6. Can apply to local tree? | **PASS** — clean apply to current
+`scsi.c` |
 
-### Step 9.4: Decision rationale
+**Step 9.3 – Exception categories**
 
-For **linux-6.18.y** specifically: the vulnerable code is present, the
-fix is minimal and obviously correct, and a NULL dereference in the
-IMA/EVM signature path is exactly the kind of security-subsystem defect
-stable trees should fix. While the trigger may be uncommon with today’s
-RSA/ECDSA-only keyrings, the kernel already acknowledges that asymmetric
-keys can lack a public-key payload (`restrict.c`), and this path lacked
-the corresponding guard. The patch is independent of the ML-DSA feature
-commits and safe to backport alone.
+Record: Not a device-ID/quirk/DT/build/docs exception. Qualifies as a
+**real bug fix** under stable rules.
+
+**Step 9.4 – Decision rationale**
+
+This commit closes a genuine control-plane synchronization hole in
+vhost-scsi that can cause host memory corruption when
+`VHOST_SET_MEM_TABLE` races with asynchronously completing SCSI
+commands. The bug exists in Linux 6.18.44, the fix is minimal and
+follows an established pattern in sibling vhost drivers, and all
+infrastructure is already present in this tree.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user query and
-  spinics/openwall
-- **[Phase 2]** Read `security/integrity/digsig_asymmetric.c`; confirmed
-  4-line NULL check at `asymmetric_key_public_key()` call site
-- **[Phase 2]** Read `include/keys/asymmetric-type.h`; confirmed
-  `asymmetric_key_public_key()` returns `key->payload.data[asym_crypto]`
-  with no NULL guarantee
-- **[Phase 3]** `git describe HEAD` → `v6.18.43`; Makefile VERSION
-  6.18.43
-- **[Phase 3]** `git blame -L 108,115
-  security/integrity/digsig_asymmetric.c` → `6bda50f4333fa`
-- **[Phase 3]** `git show 7b923c78b50d:...` → buggy code at merge-base
-- **[Phase 3]** `git branch` → detached from `stable/linux-6.18.y`
-- **[Phase 4]** spinics/openwall: found v3 1/4 and 0/4; v3 added patches
-  per Mimi’s comments
-- **[Phase 4]** `b4 shazam` — message-id not found; `b4 dig -c` not run
-  (commit absent locally)
-- **[Phase 4]** lore.kernel.org — blocked (bot protection)
-- **[Phase 4]** Web search — commit `c93a5f0`, integrity-v7.2 pull
-  confirmed
-- **[Phase 5]** `grep asymmetric_verify` — callers in `digsig.c`,
-  `ima_appraise.c`, `evm_main.c`
-- **[Phase 5]** Read `crypto/asymmetric_keys/restrict.c` — `!pkey`
-  checks at lines 141 and 183
-- **[Phase 5]** Read `crypto/asymmetric_keys/signature.c` —
-  `verify_signature()` checks `!key->payload.data[0]` but only after
-  `asymmetric_verify()` would crash
-- **[Phase 6]** Confirmed NULL check absent in current tree at lines
-  110–111
-- **[Phase 6]** Read `ima_appraise.c` lines 335–338 — sig v3 rejected
-  before `integrity_digsig_verify()`
-- **[Phase 8]** `grep mldsa` in `crypto/asymmetric_keys` — no ML-DSA
-  support in this tree
-- **UNVERIFIED:** Exact Mimi Zohar review text (follow-up to v2 on
-  spinics not fetched); no production crash report
+- [Phase 1] Parsed subject, tags, body; identified corruption bug and
+  mst SOB
+- [Phase 1] Confirmed no Fixes:/Reported-by:/syzbot tags
+- [Phase 2] Read diff: removes TODO, adds `else vhost_scsi_flush(vs)` in
+  `vhost_scsi_ioctl()` default branch
+- [Phase 2] Traced completion path: `vhost_scsi_setup_resp_iovs()` →
+  `copy_to_iter()` at lines 721-723
+- [Phase 2] Traced mem table update: `vhost_set_memory()` replaces
+  `d->umem`, frees old IOTLB at lines 2021-2032
+- [Phase 2] Confirmed `translate_desc()` builds userspace HVAs from
+  memory table at lines 2646-2688
+- [Phase 3] `git blame -L 2431,2438`: TODO from `935cdee7ee1595` (Dec
+  2012)
+- [Phase 3] `git show 935cdee7ee1595`: original commit added TODO when
+  splitting vring vs dev ioctl flush
+- [Phase 3] `git log --grep='vhost-scsi: flush backend'`: empty — fix
+  not in tree
+- [Phase 3] `git log -S 'vhost_scsi_flush'`: flush infrastructure
+  present since inflight mechanism
+- [Phase 4] Web search found netdev thread (spinics/openwall); author v2
+  Jul 24 2026; Mike Christie review Jul 22
+- [Phase 4] lore.kernel.org fetch: **FAILED** (403/bot protection)
+- [Phase 4] `b4 dig -c`: **NOT RUN** — commit hash unavailable in
+  checkout
+- [Phase 5] Confirmed `vhost_scsi_flush()` at lines 1855-1876 uses
+  inflight generation + `vhost_dev_flush()` + wait
+- [Phase 5] Confirmed inflight refcount on cmd alloc/release (lines 768,
+  454)
+- [Phase 5] Compared with `vhost_net_flush` pattern at net.c:1827-1835
+  and vsock.c:883-891
+- [Phase 6] `git describe HEAD`: v6.18.44
+- [Phase 6] `make -s kernelversion`: 6.18.44
+- [Phase 6] Confirmed buggy TODO still present at scsi.c:2434
+- [Phase 6] Expected clean backport — no conflicting changes in ioctl
+  path
+- [Phase 8] Failure mode: host userspace memory corruption; severity
+  CRITICAL
+- [Phase 8] Affected population: CONFIG_VHOST_SCSI virtualization users
 
-**YES**The background history search finished. In this
-`stable/linux-6.18.y` checkout, `digsig_asymmetric.c` and the
-`asymmetric_verify()` path without the NULL check both trace back to
-commit `6bda50f4333fa` (Nov 29, 2025), when that file was added. The
-vulnerable code is present in the current v6.18.43 tree, so the backport
-analysis stands: **YES**.
+**YES**The background checks finished: `git log --grep='vhost-scsi:
+flush backend'` returned nothing, so this fix is **not** in the local
+**6.18.44** tree yet. The `/* TODO: flush backend after dev ioctl. */`
+comment is still in `drivers/vhost/scsi.c`.
 
- security/integrity/digsig_asymmetric.c | 4 ++++
- 1 file changed, 4 insertions(+)
+That matches the earlier analysis — this is a real memory-corruption bug
+on the `VHOST_SET_MEM_TABLE` path, and the 3-line fix mirrors what
+`vhost-net` and `vhost-vsock` already do.
 
-diff --git a/security/integrity/digsig_asymmetric.c b/security/integrity/digsig_asymmetric.c
-index 457c0a396caf3..17219424a34dd 100644
---- a/security/integrity/digsig_asymmetric.c
-+++ b/security/integrity/digsig_asymmetric.c
-@@ -108,6 +108,10 @@ int asymmetric_verify(struct key *keyring, const char *sig,
- 	pks.hash_algo = hash_algo_name[hdr->hash_algo];
- 
- 	pk = asymmetric_key_public_key(key);
-+	if (!pk) {
-+		ret = -ENOKEY;
-+		goto out;
-+	}
- 	pks.pkey_algo = pk->pkey_algo;
- 	if (!strcmp(pk->pkey_algo, "rsa")) {
- 		pks.encoding = "pkcs1";
+**YES** — it should be backported to this tree.
+
+ drivers/vhost/scsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 98e4f68f4e3cb..e369f57ce1679 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -2431,9 +2431,10 @@ vhost_scsi_ioctl(struct file *f,
+ 	default:
+ 		mutex_lock(&vs->dev.mutex);
+ 		r = vhost_dev_ioctl(&vs->dev, ioctl, argp);
+-		/* TODO: flush backend after dev ioctl. */
+ 		if (r == -ENOIOCTLCMD)
+ 			r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
++		else
++			vhost_scsi_flush(vs);
+ 		mutex_unlock(&vs->dev.mutex);
+ 		return r;
+ 	}
 -- 
 2.53.0
 
