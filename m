@@ -1,47 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30644242D9B;
-	Mon, 31 Aug 2026 01:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6B434D4DE;
+	Mon, 31 Aug 2026 01:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788140366; cv=none; b=JLgeg1pVUMxde3teNZ1wjBHcO6tiDRWsGJ8xWYPtkyXb4JHbMd35QpWurs32/Lq59E4Z7o1CuD+qFA3A5jChzthW/XR8Rz4cVOAB0U2TUgXSFGrvVVTSmt7SM1/JWXKaoBsqzongFBJAzSrQ/SRLlS77IgJoBodDnBbdY/S7T+0=
+	t=1788140367; cv=none; b=Yc0l/m5KnD14s0zKJdHo1GZxneMPQF2/B23LndXLQxuuILk39DDT27vyWX4tGZ9OQvdIizDjATn48I9wKtt6obEzuLOEiglyvRkIJpqNGw2fwFL9Zsz2qXIJ31lH1k8mf84NAw0EBu91KwuCgx+KxjyrDc968Tljy03flNQDr0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788140366; c=relaxed/simple;
-	bh=EyfyDMfz5iXIvIGYNGacBa2DbdPXe/Usl+9PLaxb2pU=;
+	s=arc-20240116; t=1788140367; c=relaxed/simple;
+	bh=o0s6nuGRf7iEuMmxTv+A9zdSxmJAbCmH/UvGy4znr0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iswsV7+aVUDuNdMbFyprKq5SmE/PebdPCNS6B2PrBtxbXRUXjRYDkbrcQ06v37quX4jqKPnQHto/LOUYi8v/s3rYkavAyLvKK8+bE6xn2yFfPZToG8fC2CPCD/dQ4su4iNtxkZOdgS4psojwBcaLNH/5uGeAgMlYz9Xbk22Pujc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ehzkbp4P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AA7sazou2K4jse/za1Q+kCRrLUj7HxYc+nRfh9KDPgXt8NcNvIpTuMThDM58k2u/K3ZSkovWwdXclEOAhUG7w/5CK6d4JaQgmnAiEAmcMYbeSfEoaOuCidxccL8ed3zCt4extw5cIcdz+3vxEVucfMWHodgFH+kMdp0SzJ/Yxvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQqTO6sG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ehzkbp4P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67371F00A3E;
-	Mon, 31 Aug 2026 01:39:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQqTO6sG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E02B1F000E9;
+	Mon, 31 Aug 2026 01:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788140364;
-	bh=2w/QyiVRlKJlvamF6UhNH3OakGYy3ud/rLQtAxasD/U=;
+	s=k20260515; t=1788140366;
+	bh=3Vo60SsofioewEk/hakNWs8htBGiu8cleHsJFO70b9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ehzkbp4PmbR84P+pt/LVA77wYaP24tS6XFn0WrX1ksu7ub6pttF1AUSccuHylOc2J
-	 p8o1CUV6E3X482u9bSkUHo75EXFp5vnrAZOya+DUFThurPRDr0QNHyrb8K7I1jAbKl
-	 scdsDdiaJMALNDUlChJgDkRHBmCdWgjH0QAmydrFk0e6qjSqLcSMZvayy4xr3HKNoA
-	 gs312k2i6oUMwOiQ6zqnPu3OFgbr52YBW3WEengDDpRysR/we5SKemxQD/lF1Q43iz
-	 +eim3CWlx1WD+MtM+VlrpqgZA+Lmu36XzJCNuOmVPIjqujK/2kmPNUnLFd5y++7tR8
-	 QpZRy1atG6MeA==
+	b=kQqTO6sGCXp4phAaQvyQH4iaPj/4dh/fGyL+sJEmVMU4H6EroVzErW6MQgR7nmaQJ
+	 MBJ9D9CthNJRGKszokB0T7bwWhWV1oZzmcNNtdw9nrYqmEj18HSluT2C5vYcHbDbtn
+	 eD0L4BNU27tA8+AOcPtx7yPqMHhTQcIAdiTfw0T4IFY/tNBB1hX6MtM3ErLuJrJQzX
+	 41ap+iEmyCv6/6r+fR9rCDTOrbFSzU9bhYPXMq+yDi76ryiTrtil8aMuQBZv9d2+gv
+	 7Op3UTphyh/vwRqsorz5QxNCbrbDJ18SOrya+nEpZKNGc7NJOUQoEE7NcAU8OZPfYV
+	 GwZ6qr13Ur7sw==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Vegard Nossum <vegard.nossum@oracle.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 016/220] selinux: require every boolean value to be defined
-Date: Sun, 30 Aug 2026 21:39:08 -0400
-Message-ID: <20260830194600.0002-1-sashal@kernel.org>
+Subject: Re: [PATCH 6.12 184/220] ring-buffer: Make ring_buffer_{un}map() simpler with guard(mutex)
+Date: Sun, 30 Aug 2026 21:39:09 -0400
+Message-ID: <20260830194800.0004-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <d3b0885f-30f2-4022-8790-321092db16fe@oracle.com>
-References: <d3b0885f-30f2-4022-8790-321092db16fe@oracle.com>
+In-Reply-To: <69d0d491-b9ef-4e85-93ba-d500de1ae6e9@oracle.com>
+References: <69d0d491-b9ef-4e85-93ba-d500de1ae6e9@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,17 +51,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Upstream already had cf6a513f1937 ("selinux: switch two allocations to
-> use kzalloc_objs()") and therefore has:
+> I ran an AI-assisted backport review and then checked c7f40b670e5c
+> against the 6.12.y code. The refactor changes the first-map exit in
+> ring_buffer_map() from:
 >
->         p->bool_val_to_struct = kzalloc_objs(...);
+>         return err;
 >
-> 6.12.y instead has:
+> to:
 >
->         p->bool_val_to_struct = kmall
+>         return 0;
 
-Queued for 7.1, 6.18, 6.12, 6.6, 6.1, 5.15 and 5.10, thanks. Used
-kcalloc() on 6.6 and older, where kzalloc_objs() doesn't exist yet.
+Queued for 6.12, thanks.
 
 -- 
 Thanks,
