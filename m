@@ -1,112 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F644E56EB;
-	Mon, 31 Aug 2026 13:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465C24E66A5;
+	Mon, 31 Aug 2026 13:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183606; cv=none; b=NobJmgS47rvw0iSm8QiA2eFhonCjHpNKGxhD0GTGfm9tXGAiwhj5xRa2rpTwMIfxlujJSeSOnwzGQQm+wwFCDVi+UpiJfWpT64Zc+WhIbx0EnSLff8kfh5soLyKO++Ni8ukEyUYlnsmBC1yy6XnelUXX539LBvnpJjwLFVETk6o=
+	t=1788183608; cv=none; b=UupxjZW1J9cCr5B33ura6x5TQh2ObPTFYyiS/0dflDr9txfj+/neJ1uliE55jIApI9fOAsLBhaROsWpHril9nL6eSxUH24PLPjHz3qfr7wQZUHBpza3dV+qmnL7QrEXJj5/xxNRSie1g2TnSaubrmXn6iBOPOSoe351pRxZnCzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183606; c=relaxed/simple;
-	bh=9W3rUd+OYpLcqalcIqTbM98pREBLJhZC2xB7hI7PiwE=;
+	s=arc-20240116; t=1788183608; c=relaxed/simple;
+	bh=FqDWrUQyaQEOsOypeiOXUac63Hy3SJWmlgwPCQBPOlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=soScetJD34yReGrgE4Os8WAxnCGj06Ty1TQ6YUKVEdGGwXQaNgODJowk6GUsDtUrkULUaFpz4EQvA/SYVdEVSmK60mnp4mL4Stf56HcJvgQcGJsrHLybT6VFHKxmhRt/35drnJlK7bw/cYA7mWYr7kEtsE2HirJKr2SBrSD4mP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V5DC9wMM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cax2gI8+3NyoVgySxjwobyXx2RkjTSyI+wJMsa+HQqA3sWMxfnWGQ5bPxUOYf9yLd013WdAFu/K3g7rhHkHCS/TBFQH2hPPQYIffrb3LrNIfHzd3fU65OROvU/jxTe6l3dW9+Tkkq24mweI3EhE7uw0zrWjWIOVXbZjuuN5Z3oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFvgvFfL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V5DC9wMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FBA1F00A3D;
-	Mon, 31 Aug 2026 13:40:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183604;
-	bh=7+4+Mj5xMw3iTFchj0PIGWYEqdIBf0ZuxxB5KKCLY+c=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFvgvFfL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD6C1F00A3F;
+	Mon, 31 Aug 2026 13:40:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788183606;
+	bh=ex4NCBD3QmiAXPmSaoAOR8Iz6X6omIKmtm+G379kSPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5DC9wMM8NLvVvVHeNTHVPi7HwuLd/UBuRBXZzwywSwcDfg27gpJatH/0ZjedaSzI
-	 pUAn1fOTl3SrsTkWR85BmdqwaRt4Jdm+FkyT1uda0zv3sJoft//7M/6V/zbZgeVaiH
-	 Q1N5ASxjwzNKJ2p0NNp/QBuo7vQTbaPiP3J4tSEoBAhEUplSMU9ZTAw2YJSCT7X8Kc
-	 w78/xgTvqJOtwXHYDshia/sVxKZGRkeVQHbXmn2o6QkkvmMTG3mmi/W9NWKdrLAEUF
-	 8hBs+qDI0rEuhByJndK9n954eZaDivAw3BaPwebnDD3YLqGhZnmoSNiZAzJQvnR7Tl
-	 1Vapugt2VA+/g==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Frank.Li@nxp.com,
-	linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] mailbox: imx: use devm_of_platform_populate()
-Date: Mon, 31 Aug 2026 09:23:42 -0400
-Message-ID: <20260831133314.4125787-194-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=IFvgvFfLFbbQ/5hVr+g/QkMRp0/A+AcZME8WNv5sTsvwMcgSDusR3FEhAgUvglZCd
+	 TzjW5+7P+K11Du3/AnO6tOVJARdsVE4diYMY0MeOjMwYCVeZ0+05saEQbDGeG582r5
+	 tg/at6V/WkJXomwByf/fRXAjIgWgYTLioxqcFIRE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.2 55/71] crypto: atmel-tdes - use scatterlist length before DMA mapping
+Date: Mon, 31 Aug 2026 15:34:20 +0200
+Message-ID: <20260831133402.090054031@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit dd1b321e8024fb01404fe163076c9010c5df8608 ]
+------------------
 
-The driver uses of_platform_populate() but does not remove the added
-devices on removal. This can lead to "double devices" on module removal
-followed by adding the module again.
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-Use devm_of_platform_populate() to remove the populated devices once the
-parent device is removed.
+commit ba199bdaa80b09a7dd92f28751de7f3dbb06c510 upstream.
 
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Using sg_dma_len() is only valid after mapping the scatterlist with
+dma_map_sg(). However, atmel_tdes_crypt_start() uses it before mapping
+to compare input/output lengths and to compute the transfer count.
+
+Use the original scatterlist lengths before DMA mapping to avoid reading
+stale or uninitialized DMA lengths when CONFIG_NEED_SG_DMA_LENGTH=y.
+
+Drop the output scatterlist length in the fast path since it is equal to
+->in_sg->length and does not change the transfer count.
+
+Fixes: 13802005d8f2 ("crypto: atmel - add Atmel DES/TDES driver")
+Fixes: 1f858040c2f7 ("crypto: atmel-tdes - add support for latest release of the IP (0x700)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/crypto/atmel-tdes.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-The analysis is complete for **Linux 6.18.44**.
-
-**Verdict: YES** — backport `mailbox: imx: use
-devm_of_platform_populate()` (`dd1b321e8024f`).
-
-The bug is present in this tree: `of_platform_populate()` was added in
-v6.9 (`2a0ac450128bc`) for i.MX95 SCMI SRAM sub-nodes, but
-`imx_mu_remove()` never depopulates them. On module reload or sysfs
-unbind/rebind, child platform devices can be duplicated and break SCMI
-setup.
-
-The fix is a one-line change to `devm_of_platform_populate(dev)` at line
-943 of `drivers/mailbox/imx-mailbox.c`. The mainline patch needs a minor
-context adjustment to apply here, but no functional rework.
-
- drivers/mailbox/imx-mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index 3e52f70434c97..445cd50c1b667 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -986,7 +986,7 @@ static int imx_mu_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_out;
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -462,14 +462,13 @@ static int atmel_tdes_crypt_start(struct
+ 			IS_ALIGNED(dd->out_sg->length, dd->ctx->block_size);
+ 		fast = in && out;
  
--	of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	devm_of_platform_populate(dev);
+-		if (sg_dma_len(dd->in_sg) != sg_dma_len(dd->out_sg))
++		if (dd->in_sg->length != dd->out_sg->length)
+ 			fast = 0;
+ 	}
  
- 	return 0;
  
--- 
-2.53.0
+ 	if (fast)  {
+-		count = min_t(size_t, dd->total, sg_dma_len(dd->in_sg));
+-		count = min_t(size_t, count, sg_dma_len(dd->out_sg));
++		count = min_t(size_t, dd->total, dd->in_sg->length);
+ 
+ 		err = dma_map_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
+ 		if (!err) {
+
 
