@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E7D4A2A7E;
-	Mon, 31 Aug 2026 13:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FF75073B3;
+	Mon, 31 Aug 2026 13:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183742; cv=none; b=nQSR3dtcVUUOwtR8mK5CBj9Y3IxTHbl5yOLwTgfzEALfhpVaaH+IIYqrDDrHpRC3ySPGNKabC5XNd9JSBkkj4rKDdhNF5w0NPhSjDmvwrroL/d6kyCNSsLyZ2CYwEqoywe2vKbOfliNjEM8PM/jkjum+2xMjQbSwkRiqxrqNFyk=
+	t=1788183743; cv=none; b=mONiXLFwcZfCLGnqXe+g8YG934yCxx1E7ra1KPB+pKq2JsKQTsOlnysoS3NSkIXQQIqjRVaeT6s5Z6ia2VwDtl4S3eUN8Spi9N34VEDrvBIIJk7xhbDWKZ0Yr1INCJ3HnnpBnr7/Soql1gsu0Ysk1hQJCgIVYZ1BSCTarrtBjdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183742; c=relaxed/simple;
-	bh=QSlgWUHKFieonTqmTqX+8UloC5qEueWyfKw3H/cpFgE=;
+	s=arc-20240116; t=1788183743; c=relaxed/simple;
+	bh=l05waIfOGb2md7L51xI/aVnBYpnEjDNXuDkjWtHUh1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZN3mBv+UN8l0YZrQmLweusprX9aebyJolR/8Rv0ApMCZzqVGjWukaocz3M3CMPSWLlyoJl8ZfDZUBNlRsWZmG+/1Nloo9Kr1czzHekq9y5WGhk570b1Ocm4mXQBW2dOntQ7fvJX6l8BcOg3K2VsZWQ4uIr6j/gVN6ndrR/Z0+EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmYA8hfq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OvST1tRM8glW74t3UBpKeN1YmuZEpoq19/hrbh1/zPkfTWpPaDceuOqmb9fVQ1TEqd+WyJ3jmxTVnhfcpLkqbg5DP1glUxRDVcHzy6ZULl6+4pp+dE5WW7njfEVDQg1Pnvxx/87f+SkAeEDSgJaN9d+DKGuYIA0XH2PFH4mvfD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mWqqvwJe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmYA8hfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905C51F000E9;
-	Mon, 31 Aug 2026 13:42:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mWqqvwJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEB01F00ACA;
+	Mon, 31 Aug 2026 13:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183739;
-	bh=zGjJjwPm4jSrA8LTBjKCFqr80P0Fkin04Tc6rM8MmrM=;
+	s=k20260515; t=1788183741;
+	bh=fM0UZjPtgg3mX+QaciP2m/Ie2Zng2aoX6+wtAILlx2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmYA8hfqGrDPsw4NOPRupIo+C/HCrslYZB+oy2hEVKqod0Hp5mP9eRGkI5eIqU6tj
-	 IoxzH3DIinxLWjC5AZ5SFZuUjUgz8X5U1lvX8Uk0bEqvUrob3SSFP8Kh8FSOEn5GOI
-	 P6aRAB6zFgujJAUG0ciScNlS08PQ5NpxdZ194I3lVjt3dw5DCBFxt/daaaP3M69QeV
-	 gHOKaR8bSTnkOxBR2U/S5w+hLCb6BzieoB1F4FGcisOtBkCT7wFl7DmmhdcmIOz4Ld
-	 AUp25VJNthKDy1xKG1U6vrTEA3l0urG+GLgogNk1Ly+Jz95yfZ8xtjq8DbO0+N6ioC
-	 9ZF18MXde7OLg==
+	b=mWqqvwJey9Ayo4yaeEMrCw00L6+Z6B761ObW0y/SuqB/UkMjSlMNbGghFEaEyuNTb
+	 naCH6h6u7hzlLxSUKvmbLEA+FP09teRZqd1YJlg6JiI4nxES8164XyjpisuyZKZ50L
+	 5mShQoT/y6dqHKtnxpOCd3gnswkGbAKr8tPsbXOrAtBNiu8Qox6w/+F8iqHBdzerrA
+	 q5OsPxYECrtv1i4KbXN25OQYhsshFx/Z+g5goqqfMputEKrR1PuRz8UyJDrRk8Stgx
+	 oChdJ2xkjZsRhetnTvEZvjYF7Ah4bWrJY8mVRhxAsJQAJwwkhLpElTJBvdh3O/a44C
+	 C8WAUAfbpDa0g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+Cc: Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	saeedm@nvidia.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] btrfs: fix reloc root cleanup in merge_reloc_roots()
-Date: Mon, 31 Aug 2026 09:25:03 -0400
-Message-ID: <20260831133314.4125787-275-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] net/mlx5e: Verify unique vhca_id count instead of range
+Date: Mon, 31 Aug 2026 09:25:04 -0400
+Message-ID: <20260831133314.4125787-276-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,417 +60,454 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit b78fe9563e2d5ae47805f1e5dc722c91fd30e1f8 ]
+[ Upstream commit 0b1c4495aa007932e9cbd7b45a8037e7b4fe34b0 ]
 
-If the root we got has zero root refs in its root item, we are resetting
-the root's ->reloc_root without using barriers like we do everywhere else.
-Sashiko complained about this while reviewing another patch, and it's
-correct (see the Link tag below).
+Change verify_num_vhca_ids() to count the number of unique vhca_ids
+and verify this count doesn't exceed max_num_vhca_id, rather than
+validating individual vhca_id values are within a specific range.
 
-Also, we should not clear BTRFS_ROOT_DEAD_RELOC_TREE from the root unless
-the root points to the reloc root we have.
+The previous implementation checked if each vhca_id was in the range
+[0, max_num_vhca_id - 1], which is overly restrictive. The hardware
+capability max_rqt_vhca_id represents the maximum number of unique
+vhca_ids that can be used, not a range constraint on individual IDs.
 
-Fix this by using clear_reloc_root(), which issues the memory barrier
-after setting the root's ->reloc_root to NULL and before clearing the bit
-BTRFS_ROOT_DEAD_RELOC_TREE from the root.
-
-Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260531113954.395443-14-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `btrfs: fix reloc root cleanup in
-merge_reloc_roots()`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
+**Step 1.1 — Subject line**
 
-**Commit analyzed:** `b78fe9563e2d5ae47805f1e5dc722c91fd30e1f8` (not yet
-merged into this checkout)
+Record: `[net/mlx5e] [verify/change] Verify unique vhca_id count instead
+of range` — mlx5e RQT validation correction.
 
----
+**Step 1.2 — Tags**
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+Record:
+- `Signed-off-by: Shay Drory <shayd@nvidia.com>` (author)
+- `Reviewed-by: Mark Bloch <mbloch@nvidia.com>`
+- `Signed-off-by: Tariq Toukan <tariqt@nvidia.com>`
+- `Link:
+  https://patch.msgid.link/20260531113954.395443-14-tariqt@nvidia.com`
+  (patch 14 of a series)
+- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` (netdev maintainer
+  merge)
+- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or syzbot
+  tags
+- Notable: NVIDIA internal review + netdev maintainer merge; no
+  user/fuzzer reports
 
-### Step 1.1: Subject Line
-**Record:** `[btrfs]` `[fix]` — correct reloc-root cleanup in
-`merge_reloc_roots()` when a reloc root has zero root refs.
+**Step 1.3 — Body analysis**
 
-### Step 1.2: Tags
-**Record:**
-- **Link:** Sashiko automated review (https://sashiko.dev/...)
-- **Reviewed-by:** Boris Burkov `<boris@bur.io>`
-- **Signed-off-by:** Filipe Manana, David Sterba
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org
-- Notable: found during code review (Sashiko), not a syzbot/user crash
-  report for this specific path
+Record:
+- **Bug:** `verify_num_vhca_ids()` treats `max_rqt_vhca_id` as an upper
+  bound on each individual `vhca_id` value (`[0, max-1]`), but hardware
+  defines it as the maximum number of *distinct* `vhca_id` values
+  allowed in an RQT.
+- **Symptom:** Valid cross-vHCA RQT configurations are rejected when
+  actual hardware `vhca_id` values exceed that numeric limit, even when
+  the number of unique IDs is within capability.
+- **Root cause:** Semantic mismatch between driver validation and
+  hardware capability definition.
+- **Versions:** Not stated in the commit message.
 
-### Step 1.3: Body Analysis
-**Record:**
-- **Bug:** In the zero-ref reloc-root branch of `merge_reloc_roots()`,
-  `root->reloc_root` is cleared without the memory barrier used
-  elsewhere; `BTRFS_ROOT_DEAD_RELOC_TREE` is cleared unconditionally
-  even when `root->reloc_root != reloc_root`.
-- **Symptom:** Incorrect synchronization with `have_reloc_root()` /
-  `reloc_root_is_dead()`; can observe stale `reloc_root` pointers or
-  wrong dead-tree state during relocation/balance.
-- **Root cause:** Inconsistent barrier usage and misplaced `clear_bit()`
-  outside the matching-reloc-root guard.
-- **Fix approach:** Use `clear_reloc_root()` helper (sets NULL →
-  `smp_wmb()` → `clear_bit()`), only when `root->reloc_root ==
-  reloc_root`.
+**Step 1.4 — Hidden bug fix?**
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — explicitly described as a bug fix (barrier + logic
-error).
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-**Record:**
-- **Files:** `fs/btrfs/relocation.c` (+2 / -3)
-- **Function:** `merge_reloc_roots()`
-- **Scope:** Single-file, surgical fix in one error/cleanup branch
-
-### Step 2.2: Code Flow Change
-**Record:**
-
-| Hunk | Before | After |
-|------|--------|-------|
-| Zero-ref cleanup branch | `root->reloc_root = NULL;
-btrfs_put_root(reloc_root);` then unconditional
-`clear_bit(DEAD_RELOC_TREE)` | `clear_reloc_root(root);
-btrfs_put_root(reloc_root);` only inside `if (root->reloc_root ==
-reloc_root)` |
-
-**Affected path:** Relocation merge when
-`btrfs_root_refs(&reloc_root->root_item) == 0` (dead/orphan reloc tree
-cleanup during balance).
-
-### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Synchronization / logic correctness
-- **Mechanism 1 (missing `smp_wmb()`):** Writers in
-  `clean_dirty_subvols()` (lines 1474–1480) and
-  `btrfs_update_reloc_root()` (lines 796–801) use `smp_wmb()` between
-  NULL-ing `reloc_root` and clearing `BTRFS_ROOT_DEAD_RELOC_TREE`.
-  `merge_reloc_roots()` did not, breaking pairing with
-  `reloc_root_is_dead()`'s `smp_rmb()`.
-- **Mechanism 2 (wrong `clear_bit` scope):** `clear_bit()` ran even when
-  `root->reloc_root != reloc_root`, corrupting state for a root still
-  associated with a different reloc root.
-
-### Step 2.4: Fix Quality
-**Record:** Fix is minimal and matches the established pattern in the
-same file. Low regression risk. **Caveat:** depends on
-`clear_reloc_root()` helper, which is **not present** in this tree (see
-Phase 6).
+Record: Yes. Despite no "fix" in the subject, this corrects broken
+validation logic introduced with cross-vHCA RSS. It is a functional bug
+fix, not a refactor or optimization.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 2: Diff Analysis
 
-### Step 3.1: Blame
-**Record:** Buggy lines (1873–1879) blamed to `5d324e5159d9e` (6.18-rc8
-era merge, Nov 2025). Barrier infrastructure (`reloc_root_is_dead`,
-`BTRFS_ROOT_DEAD_RELOC_TREE`) introduced in same timeframe — relatively
-new in 6.18.
+**Step 2.1 — Inventory**
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
+Record:
+- **File:** `drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c` (+15 / -5
+  net)
+- **Function modified:** `verify_num_vhca_ids()` only
+- **Scope:** Single-file, single-function surgical change
 
-### Step 3.3: Related Changes
-**Record:**
-- `60a23d4ea169e` — related fix in same function (root leak on
-  unexpected reloc_root); already in this tree.
-- Part of 2-patch series `[PATCH 0/2] btrfs: fix incorrect barrier usage
-  in relocation`:
-  - **1/2:** this commit
-  - **2/2:** `btrfs: fix memory barrier order in reloc_root_is_dead()`
-- `clear_reloc_root()` introduced in separate UAF-fix series (`[PATCH
-  v2] btrfs: fix use-after-free on reloc root after error in
-  insert_dirty_subvol()`); **not in this tree**.
+**Step 2.2 — Code flow change**
 
-### Step 3.4: Author Context
-**Record:** Filipe Manana — active btrfs maintainer; multiple recent
-`merge_reloc_roots()` fixes in this tree.
+Record:
+- **Hunk 1 (before):** Loop all entries; reject if any `vhca_ids[i] >=
+  max_num_vhca_id`.
+- **Hunk 1 (after):** Count unique `vhca_ids` via nested loop; accept if
+  `unique_count <= max_num_vhca_id`.
+- **Affected paths:** All callers of `rqt_verify_vhca_ids()`:
+  - `mlx5e_rqt_init()` — returns `-EOPNOTSUPP` on failure
+  - `mlx5e_rqt_redirect()` — returns `-EINVAL` on failure
+  - `mlx5e_rqt_redirect_indir()` — pre-check before RSS indirection
+    redirect
 
-### Step 3.5: Dependencies
-**Record:** Commit calls `clear_reloc_root()`, which does not exist in
-6.18.44. **Not standalone as-is**, but trivially adaptable using the
-inline pattern already in `clean_dirty_subvols()`:
+**Step 2.3 — Bug mechanism**
 
-```c
-root->reloc_root = NULL;
-smp_wmb();
-clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
-```
+Record:
+- **Category:** Logic / correctness fix (incorrect parameter semantics)
+- **Mechanism:** `max_rqt_vhca_id` is a *count* cap, not a per-ID range.
+  Actual `vhca_id` values come from `MLX5_CAP_GEN(mdev, vhca_id)`
+  (firmware-assigned), while `sd.c` already compares `host_buses >
+  max_rqt_vhca_id` as a count. The RQT validator used the wrong
+  interpretation, rejecting configurations that `sd.c` already approved.
 
----
+**Step 2.4 — Fix quality**
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original Discussion
-**Record:**
-- **b4 dig:** https://patch.msgid.link/50682caa6bbf69740c629a26ff6f19a72
-  ce55e03.1781263239.git.fdmanana@suse.com
-- **Series:** v1 only (2026-06-12)
-- **Reviewer feedback:** Boris Burkov Reviewed-by on cover letter; David
-  Sterba replied on patch 2/2; kernel test robot build-tested patch 2/2
-- **Stable nomination:** None found in thread
-
-### Step 4.2: Reviewers
-**Record:** `linux-btrfs@vger.kernel.org`; Boris Burkov reviewed; David
-Sterba (btrfs maintainer) engaged on patch 2/2.
-
-### Step 4.3: Bug Report
-**Record:** No syzbot/user crash report for this specific bug.
-Identified by Sashiko during review of a related patch. Related UAF in
-relocation (syzbot-reported) motivated the `clear_reloc_root()` helper
-in a separate series.
-
-### Step 4.4: Related Patches
-**Record:** Patch 2/2 fixes read-side barrier ordering in
-`reloc_root_is_dead()`. Ideally backported together for complete barrier
-correctness, but patch 1/2 independently fixes a real write-side bug.
-
-### Step 4.5: Stable List History
-**Record:** No stable-list discussion found.
+Record:
+- Fix is obviously correct and consistent with `mlx5_sd_is_supported()`
+  in `sd.c`.
+- Minimal scope; no API changes.
+- **Regression risk:** Low. Worst case is allowing configurations
+  hardware already supports. Uniqueness counting is O(n²), but `n` is
+  bounded by channel count (SD max group size is 2).
+- No new locking or memory management changes.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 3: Git History Investigation
 
-### Step 5.1: Key Functions
-**Record:** `merge_reloc_roots()`, `reloc_root_is_dead()`,
-`have_reloc_root()`, `clear_reloc_root()` (upstream only)
+**Step 3.1 — Blame**
 
-### Step 5.2: Callers
-**Record:** `merge_reloc_roots()` called from:
-- `relocate_block_group()` (line 3653) — balance/relocation path
-- Another relocation path (line 4198)
+Record:
+- Buggy validation introduced in `40e6ad9182b48` ("net/mlx5e: Support
+  cross-vhca RSS", Tariq Toukan, 2024-02-14, merged 2024-03-07).
+- Present in local tree `v6.18.44` (confirmed ancestor of HEAD).
+- Bug has existed since the cross-vHCA RSS feature landed.
 
-Both are btrfs balance/relocation operations, reachable via
-`BTRFS_IOC_BALANCE` ioctl (privileged).
+**Step 3.2 — Fixes: tag**
 
-### Step 5.3: Callees
-**Record:** `btrfs_get_fs_root()`, `btrfs_put_root()`, `clear_bit()`,
-barrier primitives; interacts with refcounted `btrfs_root` objects.
+Record: N/A — no `Fixes:` tag in commit message.
 
-### Step 5.4: Reachability
-**Record:** Triggered during btrfs balance/relocation (admin/root
-operation). Not every boot, but real production use (rebalancing, device
-replacement). Unprivileged users cannot directly trigger, but corruption
-from a privileged balance affects the whole filesystem.
+**Step 3.3 — Related file history**
 
-### Step 5.5: Similar Patterns
-**Record:** Correct barrier pattern exists in `clean_dirty_subvols()` at
-lines 1474–1480; `merge_reloc_roots()` is the inconsistent outlier.
+Record:
+- `rqt.c` history: cross-vHCA RSS (`40e6ad9182b48`), XOR hash channel
+  limit (`49e6c93870517`), earlier RQT object conversion.
+- SD support added separately in `sd.c` (2023–2024 commits); uses
+  correct count semantics for `max_rqt_vhca_id`.
+- Standalone fix; not part of a multi-patch dependency chain for this
+  specific change.
 
----
+**Step 3.4 — Author context**
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+Record: Tariq Toukan authored the original cross-vHCA RSS code and is a
+regular mlx5/mlx5e contributor. Shay Drory (fix author) is also an
+NVIDIA mlx5 contributor.
 
-### Step 6.1: Buggy Code Present?
-**Record:** **YES** — confirmed at lines 1873–1879:
+**Step 3.5 — Dependencies**
 
-```1873:1880:fs/btrfs/relocation.c
-                        if (!IS_ERR(root)) {
-                                if (root->reloc_root == reloc_root) {
-                                        root->reloc_root = NULL;
-                                        btrfs_put_root(reloc_root);
-                                }
-                                clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE,
-                                          &root->state);
-                                btrfs_put_root(root);
-```
-
-Barrier infrastructure (`BTRFS_ROOT_DEAD_RELOC_TREE`,
-`reloc_root_is_dead`) also present since 6.18.
-
-### Step 6.2: Backport Complications
-**Record:** **Minor adaptation needed.** `clear_reloc_root()` does not
-exist in this tree. Equivalent inline fix (matching
-`clean_dirty_subvols()`) is straightforward. No conflicting refactors in
-this area.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** `60a23d4ea169e` (root leak fix) is present. This
-barrier/logic fix is **not** present. No duplicate fix found.
+Record: No prerequisite commits required. The diff only modifies an
+existing static function in code already present in this tree. Applies
+cleanly to current `rqt.c`.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## Phase 4: Mailing List and External Research
 
-### Step 7.1: Subsystem
-**Record:** **fs/btrfs** — IMPORTANT (filesystem, data integrity)
+**Step 4.1 — Original discussion**
 
-### Step 7.2: Activity
-**Record:** Active — multiple recent `merge_reloc_roots()` fixes in
-6.18.y.
+Record: `b4 dig -c <commit>` could not be run — the fix commit is not in
+this checkout. `Link:` URL and lore.kernel.org fetch blocked by Anubis
+bot protection. **UNVERIFIED:** full mailing list thread content and any
+explicit stable nominations.
 
----
+**Step 4.2 — Reviewers**
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+Record: **UNVERIFIED** via `b4 dig -w`. From commit message: Mark Bloch
+(NVIDIA reviewer), Tariq Toukan, Jakub Kicinski (netdev maintainer).
 
-### Step 8.1: Who Is Affected
-**Record:** Users running btrfs balance/relocation on 6.18.y kernels
-with the `BTRFS_ROOT_DEAD_RELOC_TREE` barrier mechanism.
+**Step 4.3 — Bug reports**
 
-### Step 8.2: Trigger Conditions
-**Record:** Balance/relocation reaching `merge_reloc_roots()` with a
-reloc root whose root item has zero refs. Uncommon relative to normal
-I/O, but standard admin workflow. Privileged trigger only.
+Record: No `Reported-by:` or bugzilla/syzbot links. No external crash
+report — this is a driver logic bug found/reviewed internally.
 
-### Step 8.3: Failure Mode Severity
-**Record:**
-- Stale `reloc_root` pointer observed after bit cleared → potential
-  **UAF** or double-free (same class as syzbot-reported relocation UAF)
-- Wrong `clear_bit` when `reloc_root` doesn't match → incorrect
-  `have_reloc_root()` behavior
-- **Severity: HIGH** (filesystem corruption / crash potential)
+**Step 4.4 — Series context**
 
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH — prevents barrier/logic bug in relocation cleanup
-- **Risk:** LOW — 3-line effective change, matches existing in-file
-  pattern
-- **Ratio:** Favorable
+Record: Link indicates patch 14/N of a larger tariqt series
+(`20260531113954.395443-14`). This specific patch is self-contained (one
+function in one file); no evidence other series patches are required.
+
+**Step 4.5 — Stable list history**
+
+Record: **UNVERIFIED** — could not search lore stable archive due to bot
+protection.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 5: Code Semantic Analysis
 
-### Step 9.1: Evidence Summary
+**Step 5.1 — Key functions**
+
+Record: `verify_num_vhca_ids()` (modified); callers via
+`rqt_verify_vhca_ids()`.
+
+**Step 5.2 — Callers**
+
+Record:
+- `mlx5e_rqt_init()` — RQT creation during RSS setup
+- `mlx5e_rqt_redirect()` — RQT modification during channel activation
+- `mlx5e_rqt_redirect_indir()` — RSS indirection table updates
+
+In SD multi-vHCA mode (`MLX5E_RX_RES_FEATURE_MULTI_VHCA`, enabled when
+`mlx5_get_sd()` is set in `en_main.c`):
+- `mlx5e_channels_get_regular_rqn()` / `mlx5e_channels_get_xsk_rqn()`
+  populate `vhca_id` from `MLX5_CAP_GEN(c->mdev, vhca_id)`
+- SD channels map to different `mlx5_core_dev` instances via
+  `mlx5_sd_ch_ix_get_dev()` in `en_main.c`
+- `mlx5e_rx_res_channels_activate()` drives RSS enable and per-channel
+  direct RQT redirect
+
+**Step 5.3 — Callees**
+
+Record: Uses `MLX5_CAP_GEN_2(mdev, max_rqt_vhca_id)` only; no
+allocations or locks.
+
+**Step 5.4 — Reachability**
+
+Record:
+- Triggered during netdev open/channel activation on mlx5e devices with
+  Socket Direct + `cross_vhca_rqt` hardware.
+- Not a direct syscall path, but reached during normal driver operation
+  on supported enterprise NIC configurations.
+- SD is niche but is a supported, production feature path.
+
+**Step 5.5 — Similar patterns**
+
+Record: `mlx5_sd_is_supported()` in `sd.c:116` correctly uses
+`host_buses > MLX5_CAP_GEN_2(dev, max_rqt_vhca_id)` as a count
+comparison. The RQT validator was the outlier using range semantics.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
+
+**Step 6.1 — Buggy code present?**
+
+Record: **Yes.** Current `rqt.c` lines 7–17 contain the range-based
+check. Fix commit is **not** yet applied. Bug introduced in
+`40e6ad9182b48`, which is an ancestor of HEAD.
+
+**Step 6.2 — Backport complications**
+
+Record: Expected **clean apply** — single hunk in an unchanged function
+with no surrounding churn in recent `rqt.c` history.
+
+**Step 6.3 — Related fixes already present?**
+
+Record: No alternate fix for this issue found in tree. `git log
+--grep="unique vhca_id"` returned nothing.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+**Step 7.1 — Subsystem**
+
+Record: `drivers/net/ethernet/mellanox/mlx5` — mlx5e NIC driver.
+**Criticality: IMPORTANT** (enterprise NIC driver, not core kernel, but
+networking data path).
+
+**Step 7.2 — Activity**
+
+Record: mlx5/mlx5e actively maintained; SD and cross-vHCA RSS are
+relatively recent additions (2023–2024).
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 — Who is affected**
+
+Record: Users of Mellanox/NVIDIA ConnectX **Socket Direct** multi-PF
+setups with `cross_vhca_rqt` hardware capability. Config-specific,
+platform-specific — not universal.
+
+**Step 8.2 — Trigger conditions**
+
+Record:
+- SD group configured (`mlx5_get_sd()` non-NULL)
+- `MLX5E_RX_RES_FEATURE_MULTI_VHCA` enabled
+- Actual firmware-assigned `vhca_id` values ≥ `max_rqt_vhca_id` (common
+  when IDs are not 0-based indices)
+- Triggered on channel activation / RSS RQT redirect — not a race;
+  deterministic validation failure
+
+**Step 8.3 — Failure mode severity**
+
+Record:
+- `mlx5e_rqt_init()` → `-EOPNOTSUPP`
+- `mlx5e_rqt_redirect()` / `mlx5e_rqt_redirect_indir()` → `-EINVAL`
+- `mlx5e_rx_res_channel_activate_direct()` logs warning on redirect
+  failure
+- **Result:** Cross-vHCA RSS and RX steering from primary to secondaries
+  broken — **functional networking failure** for SD users
+- **Severity: HIGH** for affected deployments (broken networking), but
+  **not CRITICAL** (no kernel crash, no memory corruption, no security
+  issue)
+
+**Step 8.4 — Risk vs benefit**
+
+Record:
+- **Benefit:** Restores a supported hardware feature that has been
+  broken since introduction whenever `vhca_id` values exceed the
+  capability number; aligns driver with hardware semantics and with
+  `sd.c`.
+- **Risk:** Very low — ~20 lines, vendor-reviewed, no structural
+  changes.
+- **Ratio:** Good benefit for SD users at minimal risk, but narrow
+  audience.
+
+---
+
+## Phase 9: Final Synthesis
+
+**Step 9.1 — Evidence summary**
 
 **FOR backport:**
-- Real, verifiable bug in this tree (missing barrier + unconditional
-  `clear_bit`)
-- Same file already documents correct pattern (`clean_dirty_subvols`)
-- Small, surgical fix reviewed by btrfs reviewers
-- Same bug class as syzbot-reported relocation UAF (barrier
-  inconsistency in reloc-root lifecycle)
-- Barrier infrastructure is present in 6.18.44 — bug is live
+- Real, verified logic bug since cross-vHCA RSS landed (`40e6ad9182b48`)
+- Buggy code confirmed present in local v6.18.44 tree
+- Breaks Socket Direct cross-vHCA RX steering (production networking
+  failure for affected hardware)
+- Small, surgical, vendor-reviewed fix
+- Consistent with existing `sd.c` interpretation of `max_rqt_vhca_id`
+- No dependencies; clean apply expected
+- No new APIs or features
 
 **AGAINST backport:**
-- No direct crash report for this exact path (review-found)
-- Depends on `clear_reloc_root()` not in tree (needs minor backport
-  adaptation)
-- Patch 2/2 ideally accompanies for complete read-side fix
-- Only affects balance/relocation (not hot path)
+- Very niche hardware (Socket Direct, max 2 PFs per
+  `MLX5_SD_MAX_GROUP_SZ`)
+- No crash, corruption, deadlock, or security impact
+- No syzbot/user bug reports
+- Some SD configs may coincidentally pass the old check if `vhca_id`
+  values happen to be small
+- Mailing list/stable discussion not verified
 
-**Unresolved:** No runtime reproduction confirmed for this exact path;
-impact inferred from code analysis and related UAF class.
+**Unresolved:**
+- Whether the bug manifests on all real SD deployments (depends on
+  firmware `vhca_id` assignment)
+- Full lore review thread content
 
-### Step 9.2: Stable Rules Checklist
-| Criterion | Result |
-|-----------|--------|
-| 1. Obviously correct and tested? | **PASS** — matches established in-
-file pattern; reviewed by Boris Burkov; build-tested in series |
-| 2. Fixes real bug affecting users? | **PASS** — barrier + logic error
-in relocation cleanup |
-| 3. Important issue? | **PASS** — potential UAF/corruption during
-balance |
-| 4. Small and contained? | **PASS** — 5 lines net in one function |
-| 5. No new features/APIs? | **PASS** — correctness fix only |
-| 6. Can apply to local tree? | **PASS** (with adaptation) — inline
-`smp_wmb()` pattern substitutes for missing `clear_reloc_root()` |
+**Step 9.2 — Stable rules checklist**
 
-### Step 9.3: Exception Category
-**Record:** N/A — standard bug fix.
+1. Obviously correct and tested? **PASS** — semantics match `sd.c` and
+   commit explanation; NVIDIA-reviewed.
+2. Fixes a real bug affecting users? **PASS** — incorrect validation
+   rejects valid HW configs on SD+cross-vHCA path.
+3. Important issue? **PASS (borderline)** — functional networking
+   breakage for SD users, not crash/corruption.
+4. Small and contained? **PASS** — one function, ~20 lines.
+5. No new features or APIs? **PASS**.
+6. Can apply to local tree? **PASS** — code exists, fix not yet present,
+   clean apply expected.
 
-### Step 9.4: Decision Rationale
-The buggy code exists in Linux 6.18.44. The fix corrects a memory-
-ordering inconsistency and a logic error (`clear_bit` outside the
-matching-reloc-root guard) in btrfs relocation cleanup — the same
-synchronization design used elsewhere in `relocation.c`. While the patch
-calls `clear_reloc_root()` which is not yet in this tree, the equivalent
-inline fix is trivial and already demonstrated in
-`clean_dirty_subvols()`. The fix is small, low-risk, and addresses a
-HIGH-severity failure mode in filesystem code.
+**Step 9.3 — Exception categories**
+
+Record: Hardware workaround / driver correctness fix for an existing
+feature — analogous to quirk/correctness fixes for supported enterprise
+hardware. Not a device-ID addition, build fix, or docs fix.
+
+**Step 9.4 — Decision rationale**
+
+This is a genuine driver bug that has been present since cross-vHCA RSS
+was added to this tree. It causes Socket Direct multi-PF RX steering to
+fail when firmware-assigned `vhca_id` values do not fall in `[0,
+max_rqt_vhca_id)`, which is the expected interpretation of a *count*
+capability. The fix is minimal, low-risk, vendor-authored, and restores
+functionality for a supported enterprise NIC configuration. While the
+audience is narrow and the failure mode is functional rather than a
+kernel panic, broken networking on production SD deployments meets the
+stable bar for driver correctness fixes to existing hardware support.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-- **[Phase 1]** Confirmed no syzbot Reported-by; Sashiko Link tag
-  present
-- **[Phase 2]** Read diff: +2/-3 in `merge_reloc_roots()` zero-ref
-  branch
-- **[Phase 2]** Read current buggy code at lines 1873–1879 in
-  `fs/btrfs/relocation.c`
-- **[Phase 2]** Read correct barrier pattern at lines 1474–1480 and
-  796–801
-- **[Phase 3]** `git describe HEAD`: v6.18.44
-- **[Phase 3]** `git blame -L 1873,1880`: lines from 5d324e5159d9e (Nov
-  2025)
-- **[Phase 3]** `git log --grep="clear_reloc_root"`: no results in tree
-- **[Phase 3]** `grep clear_reloc_root fs/btrfs/`: no matches — helper
-  absent
-- **[Phase 3]** `60a23d4ea169e` confirmed related prior fix already in
-  tree
-- **[Phase 3]** `git merge-base --is-ancestor b78fe95 HEAD`: exit 1 —
-  commit not merged
-- **[Phase 4]** `b4 dig -c b78fe95`: found lore URL, patch 1/2 of
-  2-patch series
-- **[Phase 4]** `b4 dig -a`: v1 only
-- **[Phase 4]** `b4 dig -w`: linux-btrfs@vger.kernel.org CC'd
-- **[Phase 4]** Read `/tmp/b78fe95.mbox`: cover letter, patch 2/2
-  content, Boris Reviewed-by
-- **[Phase 4]** spinics.net msg166109: confirmed `clear_reloc_root()`
-  introduced in separate UAF series
-- **[Phase 5]** `grep merge_reloc_roots(`: 2 call sites (lines 3653,
-  4198)
-- **[Phase 5]** Read `reloc_root_is_dead()` / `have_reloc_root()` at
-  lines 246–274
-- **[Phase 6]** Confirmed buggy code present in 6.18.44 checkout
-- **[Phase 6]** Confirmed `clear_reloc_root()` absent; inline adaptation
-  viable
-- **[Phase 8]** Assessed severity from barrier pairing analysis and
-  related UAF class (not directly reproduced)
+- [Phase 1] Parsed commit message tags from user-provided commit text
+- [Phase 2] Read current `rqt.c` and traced `rqt_verify_vhca_ids()` call
+  chain
+- [Phase 3] `git blame -L 7,18 rqt.c`: buggy code from `40e6ad9182b48`
+  (2024-02-14)
+- [Phase 3] `git show 40e6ad9182b48`: confirmed original range-based
+  validation at introduction
+- [Phase 3] `git merge-base --is-ancestor 40e6ad9182b48 HEAD`: buggy
+  commit IS in v6.18.44 tree
+- [Phase 3] `git log --oneline -20 -- rqt.c`: no conflicting later
+  changes
+- [Phase 4] `b4 dig`: could not run — fix commit not in checkout
+- [Phase 4] WebFetch lore/patch.msgid.link: blocked by Anubis —
+  **UNVERIFIED** mailing list discussion
+- [Phase 5] `grep vhca_ids` in `en/`: traced population via `channels.c`
+  → `MLX5_CAP_GEN(c->mdev, vhca_id)`
+- [Phase 5] Read `en_main.c:2769` — SD channels use
+  `mlx5_sd_ch_ix_get_dev()` for per-PF `mdev`
+- [Phase 5] Read `sd.c:116` — `max_rqt_vhca_id` used as count limit for
+  `host_buses`
+- [Phase 5] Read `rx_res.c:578-598` — channel activation populates
+  vhca_ids and enables RSS
+- [Phase 6] `git describe HEAD` / `make kernelversion`: **v6.18.44 /
+  6.18.44**
+- [Phase 6] Current `rqt.c` lines 13-16: range check still present (fix
+  NOT applied)
+- [Phase 6] `git log --grep="unique vhca_id"`: no existing fix in tree
+- [Phase 8] `MLX5_SD_MAX_GROUP_SZ` = 2 in `sd.h` — bounded input size
+  for uniqueness loop
+- [Phase 8] Failure paths verified: `-EOPNOTSUPP` in `mlx5e_rqt_init`,
+  `-EINVAL` in redirect paths
 
-**YES**The background search finished: **`clear_reloc_root` does not
-appear anywhere in this 6.18.44 tree** — no commits introduce it under
-`fs/btrfs/` or elsewhere.
+**YES**
 
-That matches the earlier analysis: commit `b78fe95` calls a helper that
-isn’t here yet (it lands in a separate UAF-fix series). A backport would
-need a small adaptation — use the same inline pattern already in
-`clean_dirty_subvols()` (`reloc_root = NULL` → `smp_wmb()` →
-`clear_bit`) instead of calling `clear_reloc_root()`.
+ .../net/ethernet/mellanox/mlx5/core/en/rqt.c  | 27 ++++++++++++++-----
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-The verdict for this tree remains **YES**, with that minor backport
-tweak.
-
- fs/btrfs/relocation.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 851cef16d4017..6b0bf7eff9d3e 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -1910,11 +1910,10 @@ void merge_reloc_roots(struct reloc_control *rc)
- 		} else {
- 			if (!IS_ERR(root)) {
- 				if (root->reloc_root == reloc_root) {
--					root->reloc_root = NULL;
-+					clear_reloc_root(root);
-+					/* Drop the ref for root->reloc_root. */
- 					btrfs_put_root(reloc_root);
- 				}
--				clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE,
--					  &root->state);
- 				btrfs_put_root(root);
- 			}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c
+index 8d9a3b5ec973b..c845ed8f9ebfa 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rqt.c
+@@ -8,13 +8,28 @@ static bool verify_num_vhca_ids(struct mlx5_core_dev *mdev, u32 *vhca_ids,
+ 				unsigned int size)
+ {
+ 	unsigned int max_num_vhca_id = MLX5_CAP_GEN_2(mdev, max_rqt_vhca_id);
+-	int i;
++	unsigned int unique_count = 0;
++	int i, j;
++
++	/* Count unique vhca_ids */
++	for (i = 0; i < size; i++) {
++		bool is_unique = true;
++
++		/* Check if vhca_ids[i] was already seen */
++		for (j = 0; j < i; j++) {
++			if (vhca_ids[j] == vhca_ids[i]) {
++				is_unique = false;
++				break;
++			}
++		}
++		if (is_unique)
++			unique_count++;
++	}
  
+-	/* Verify that all vhca_ids are in range [0, max_num_vhca_ids - 1] */
+-	for (i = 0; i < size; i++)
+-		if (vhca_ids[i] >= max_num_vhca_id)
+-			return false;
+-	return true;
++	/* Verify that number of unique vhca_ids doesn't exceed
++	 * max_num_vhca_id
++	 */
++	return unique_count <= max_num_vhca_id;
+ }
+ 
+ static bool rqt_verify_vhca_ids(struct mlx5_core_dev *mdev, u32 *vhca_ids,
 -- 
 2.53.0
 
