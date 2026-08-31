@@ -1,52 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21583576EC6;
-	Mon, 31 Aug 2026 13:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324A5576ECB;
+	Mon, 31 Aug 2026 13:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184149; cv=none; b=N5dK1DmFEYDiOpwrJWfSVmzH4Vw0UD8YTngTHhLrDlcPkkNfIyL3U2ax8m0Scw8QmrBan50Bq4NXfamRsxOdd4QsaGns00AFyIW2k/woCmUnJXzxintjnH+yoDgZCLQeqdrYmuNmAmmT6lvrUepkCxF1v8J3VYAbStH2b9KNkz8=
+	t=1788184151; cv=none; b=dt9aGbxwMTlYxO2oXlbOsJqxV68HPWzSB3dpvpD0vsJyN2TKrhkTgwajPdrVdL23x4g/n7OiZwV/Y+P7QPGpkKKq0ZtKusM/A76mDOCjJdJuhcBG8RdxDL6c58VXlnZxmDJR9NZay696EVgZ1ZNBnDrBkLw5ObW9++NMF0aeK0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184149; c=relaxed/simple;
-	bh=73b6ujas0L0O7L8zE5h4eFQrJNPoI1vdv5F9kC9ZZDg=;
+	s=arc-20240116; t=1788184151; c=relaxed/simple;
+	bh=nxm8TCLe1NAIexoZGCss09KSBgvZckLa5mkKFBP8Ld8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uyXz5X7fPt1LEKYCeJhcC8kVfyi+5wADi/LT6YcyzpogLh8o5AFt9ibD5WwtgsGAwqLO1HgD2IfTUt15Tsj9hGITl8K7Csib/wYqyngWgQNuwWZKNkEGkn430qbVfi5WNAYH78hbm6mVoOAzqvKqbEMStxaBVaBc9vZQGMv2nWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q68yedK2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gm3nZqOK/mO3GXR4smUVmatFu2iLn/Cbgbr0E8QGXP6mF80HIRnGwLKAYHnvwTUtOVvYglbBcQLbw/HYFFpKJGSIRqwtAufw6FA4XDxiUoKLKke1WRf6eN95c6asJ5wv5tkfprW/z9XcwfnyMQQQYW7eZ0r68bdA8S6O4vtHC/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ChqJJsUL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q68yedK2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28C51F000E9;
-	Mon, 31 Aug 2026 13:49:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ChqJJsUL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E76D1F00ADF;
+	Mon, 31 Aug 2026 13:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184146;
-	bh=KlSvKAY/kIXka37cbjpcQ5QVOoWOuQkNVF54QeykQFg=;
+	s=k20260515; t=1788184148;
+	bh=+2piEAl8TQwbISF+YrXVO7sQM3VsKs+x6fEO3ZYdErE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q68yedK20Mqs2QJoHCbSyfQAqvLtW/UNzCLvN7LtcdmL4TPOw4ngMTxzDe8PiumNM
-	 Wzk1coqmH1XBFzJzN19jKUPDPMeNVntYEAOdJSvuAnzpSkreSO7tHOC4POSHkdSXws
-	 ID9jkH7qFUYQM+btudL0y0bPP0LTm9bgjDKYyUIBDEYuuasYkxykcGvcoomTLSt4ea
-	 jy3aA8XFT6MTC3qNqHVy8edtdTR5245fX/H51Uci6Ua/wfn3dDkFanAYJ5kxxxFuzz
-	 nUoZgQdRxdDVgW8F1tvJBgGvWC/WbUCXroHtAfJ7ScYm08jJjaXIftPE9UvETmu6Yk
-	 sp0UnyhkUrpKw==
+	b=ChqJJsUL2nSBGLK0dITiqSnrQLoGn2pqNXrF6Q4RkZj/hG4NAg+tnK3YrvEOm1E/O
+	 PTw/ji6NXP3NDi/julvstqk35fcRMckzGgZLcQmn9vgjqQpxSRWSv1SkZJKQsHUfIz
+	 ddKFQ7TqZU65YS6pGxMlJhL5cIZKAIPJOLNdHxD//GRxXPbgWD8gkRAvUTj1mxm9op
+	 czP+1cleHbMkmT3V9ZiviIBHkhH2GwfvmpEoP0C+toKXhssaApxHK+yutZu/w7LB/r
+	 sA+Fn4CRnjioHcBdnLyJ+kGAE4UpiwBKj1aQxI99/GVVgrFB0d+ZF+QBT7dZq/+wDw
+	 M5sqBr86qsA8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Randy Jennings <randyj@purestorage.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Daniel Wagner <dwagner@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	James Smart <jsmart833426@gmail.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Liang Hao <haohlliang@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	justin.tee@broadcom.com,
-	nareshgottumukkala83@gmail.com,
-	paul.ely@broadcom.com,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	hoan@os.amperecomputing.com,
+	linusw@kernel.org,
+	brgl@kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] nvme-fc: Do not cancel requests in io target before it is initialized
-Date: Mon, 31 Aug 2026 09:29:07 -0400
-Message-ID: <20260831133314.4125787-519-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] gpio: dwapb: Mask interrupts at hardware initialization
+Date: Mon, 31 Aug 2026 09:29:08 -0400
+Message-ID: <20260831133314.4125787-520-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -62,419 +55,432 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Liang Hao <haohlliang@gmail.com>
 
-[ Upstream commit ee38469f88492df99e1d97f03aa40ecfd218934f ]
+[ Upstream commit aaf7766ba3b99a3834319e7cf939838afc705574 ]
 
-A new nvme-fc controller in CONNECTING state sees admin request timeout
-schedules ctrl->ioerr_work to abort inflight requests. This ends up
-calling __nvme_fc_abort_outstanding_ios() which aborts requests in both
-admin and io tagsets. In case fc_ctrl->tag_set was not initialized we
-see the warning below. This is because ctrl.queue_count is initialized
-early in nvme_fc_alloc_ctrl().
+GPIO interrupts may retain stale state across warm reboots when
+peripherals remain powered. If a GPIO line is not explicitly
+configured for interrupts, this can result in interrupt storms
+due to missing handlers.
 
-nvme nvme0: NVME-FC{0}: starting error recovery Connectivity Loss
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-lpfc 0000:ab:00.0: queue 0 connect admin queue failed (-6).
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-Workqueue: nvme-reset-wq nvme_fc_ctrl_ioerr_work [nvme_fc]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x57/0x80
- register_lock_class+0x567/0x580
- __lock_acquire+0x330/0xb90
- lock_acquire.part.0+0xad/0x210
- blk_mq_tagset_busy_iter+0xf9/0xc00
- __nvme_fc_abort_outstanding_ios+0x23f/0x320 [nvme_fc]
- nvme_fc_ctrl_ioerr_work+0x172/0x210 [nvme_fc]
- process_one_work+0x82c/0x1450
- worker_thread+0x5ee/0xfd0
- kthread+0x3a0/0x750
- ret_from_fork+0x439/0x670
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+Fix this by ensuring all interrupts are masked and disabled at
+hardware initialization time via the init_hw() callback. Pending
+interrupts are also cleared to start from a known-safe state.
 
-Update the check in __nvme_fc_abort_outstanding_ios() confirm that io
-tagset was created before iterating over busy requests. Also make sure
-to cancel ctrl->ioerr_work before removing io tagset.
+Interrupts will be unmasked only when explicitly configured by
+userspace or kernel drivers.
 
-Reviewed-by: Randy Jennings <randyj@purestorage.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Signed-off-by: James Smart <jsmart833426@gmail.com>
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Liang Hao <haohlliang@gmail.com>
+Link: https://patch.msgid.link/20260705074759.47863-1-haohlliang@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `nvme-fc: Do not cancel requests in io
-target before it is initialized`
+# Stable Backport Analysis: `gpio: dwapb: Mask interrupts at hardware
+initialization`
 
-**Local tree:** `v6.18.44` (Linux 6.18.y stable)
-**Upstream commit:** `ee38469f88492` (2026-06-10)
-**Candidate stable commit:** `7e1a5ff60479b` (exists in repo, **not**
-merged into HEAD)
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 – Subject line**
-Record: `[nvme-fc] [prevent/ensure] Do not cancel requests in io tagset
-before it is initialized`
+### Step 1.1: Parse the subject line
+**Record:** `[gpio: dwapb]` `[Mask]` — Ensure GPIO interrupt hardware is
+in a known-safe masked state during driver initialization.
 
-**Step 1.2 – Tags**
-Record:
-- **Reviewed-by:** Randy Jennings, Hannes Reinecke, Daniel Wagner,
-  Christoph Hellwig (four NVMe/FC reviewers)
-- **Signed-off-by:** Mohamed Khalfella, James Smart, Maurizio Lombardi,
-  Keith Busch
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Link:`, or
-  `Tested-by:` tags
-- Absence of stable tags is expected for manual review candidates
+### Step 1.2: Parse all commit message tags
+**Record:**
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:**
+  `https://patch.msgid.link/20260705074759.47863-1-haohlliang@gmail.com`
+- **Cc: stable:** — not present (not a negative signal)
+- **Signed-off-by:** Liang Hao `<haohlliang@gmail.com>` (author)
+- **Signed-off-by:** Bartosz Golaszewski
+  `<bartosz.golaszewski@oss.qualcomm.com>` (GPIO maintainer)
 
-**Step 1.3 – Body analysis**
-Record:
-- **Bug:** During `NVME_CTRL_CONNECTING`, an admin request timeout
-  schedules `ctrl->ioerr_work`, which calls
-  `__nvme_fc_abort_outstanding_ios()`. That function aborts both admin
-  and IO tagsets when `queue_count > 1`, but `fc_ctrl->tag_set` may not
-  yet be initialized.
-- **Symptom:** lockdep warning `"you didn't initialize this object
-  before use?"` in `blk_mq_tagset_busy_iter()`; lockdep validator
-  disabled; observed with lpfc during admin queue connect failure
-  (`-6`).
-- **Root cause:** `ctrl->queue_count` is set early in
-  `nvme_fc_alloc_ctrl()`, while IO tagset creation is deferred to the
-  connect path.
-- **Version info:** Not specified; bug is structural in existing init
-  ordering.
+Notable: maintainer sign-off; no syzbot/fuzzer report; no explicit user
+bug report in the message.
 
-**Step 1.4 – Hidden bug fix?**
-Record: **Yes.** Subject uses "Do not cancel" rather than "fix", but the
-body and stack trace describe a real uninitialized-lock / premature
-tagset iteration bug, plus a teardown race fixed by
-`cancel_work_sync()`.
+### Step 1.3: Analyze commit body
+**Record:**
+- **Bug:** GPIO interrupt registers can retain stale enabled/unmasked
+  state across warm reboots when the GPIO block stays powered.
+- **Symptom:** Interrupt storms on lines not explicitly configured for
+  interrupts, because hardware is firing but software has no proper
+  handler setup for those lines.
+- **Root cause:** Driver did not reset interrupt enable/mask/EOI
+  registers at probe time.
+- **Fix approach:** Add `init_hw` callback that disables all interrupts
+  (`GPIO_INTEN=0`), masks all lines (`GPIO_INTMASK=0xffffffff`), and
+  clears pending interrupts (`GPIO_PORTA_EOI=0xffffffff`) before the
+  irqchip/domain is fully operational.
+- **Version info:** none stated in the message.
+
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised as cleanup — this is an explicit hardware-init
+bug fix. The failure mode (interrupt storm → potential soft lockup /
+system unresponsiveness) is a real stability bug, not cosmetic cleanup.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 – Inventory**
-Record:
-- **File:** `drivers/nvme/host/fc.c` (+6, −1)
-- **Functions:** `__nvme_fc_abort_outstanding_ios()`,
-  `nvme_fc_create_io_queues()` error path (`out_cleanup_tagset`)
-- **Scope:** Single-file, surgical fix
+### Step 2.1: Inventory the changes
+**Record:**
+- **Files:** `drivers/gpio/gpio-dwapb.c` only (+16 lines net)
+- **Functions added/modified:**
+  - New: `dwapb_irq_init_hw()`
+  - Modified: `dwapb_configure_irqs()` (assigns `girq->init_hw`)
+- **Scope:** Single-file, surgical driver fix.
 
-**Step 2.2 – Code flow changes**
-Record:
-- **Hunk 1 (line 2462):** Before: abort IO tagset whenever `queue_count
-  > 1`. After: also require `ctrl->ctrl.tagset` (set by
-  `nvme_alloc_io_tag_set()`).
-- **Hunk 2 (`out_cleanup_tagset`):** Before: directly remove IO tagset
-  on create failure. After: `cancel_work_sync(&ctrl->ioerr_work)` first,
-  preventing `ioerr_work` from iterating a tagset being torn down.
+### Step 2.2: Code flow change per hunk
 
-**Step 2.3 – Bug mechanism**
-Record:
-- **Category:** Uninitialized data / memory safety (uninitialized
-  spinlock in `blk_mq_tag_set`)
-- **Mechanism:** `queue_count > 1` is true from allocation, but
-  `tag_set` is zero-initialized until `nvme_fc_create_io_queues()`
-  succeeds in `nvme_alloc_io_tag_set()`. Error recovery during
-  CONNECTING calls `blk_mq_tagset_busy_iter()` on an uninitialized
-  tagset.
+**Hunk 1 — new `dwapb_irq_init_hw()`:**
+- **Before:** No hardware interrupt reset at GPIO irqchip registration.
+- **After:** On `gpiochip_add_data()`, gpiolib calls `init_hw` which
+  writes:
+  - `GPIO_INTEN = 0` (disable all interrupt enables)
+  - `GPIO_INTMASK = 0xffffffff` (mask all lines)
+  - `GPIO_PORTA_EOI = 0xffffffff` (clear all pending interrupts)
 
-**Step 2.4 – Fix quality**
-Record:
-- Fix is minimal and follows existing patterns (`ctrl->ctrl.tagset` is
-  already checked at lines 3236 and 3267 in the same file).
-- Low regression risk: only skips IO abort when no tagset exists; admin
-  queue abort still proceeds.
-- `cancel_work_sync()` in the error path mirrors the pattern from
-  `0a2c5495b6d1e` (already in this tree for `nvme_fc_delete_ctrl()`).
+**Hunk 2 — `dwapb_configure_irqs()`:**
+- **Before:** `girq->handler = handle_bad_irq`, `girq->default_type =
+  IRQ_TYPE_NONE` only.
+- **After:** Also sets `girq->init_hw = dwapb_irq_init_hw`.
+
+**Execution path:** Driver probe → `dwapb_gpio_add_port()` →
+`dwapb_configure_irqs()` → `devm_gpiochip_add_data()` →
+`gpiochip_irqchip_init_hw()` → `dwapb_irq_init_hw()`.
+
+### Step 2.3: Bug mechanism
+**Record:** **Category (h): Hardware initialization / stale-state
+workaround**
+
+The DesignWare APB GPIO block does not reset interrupt state on warm
+reboot if power is maintained. Without explicit masking at probe, lines
+left enabled from a prior boot can assert interrupts continuously. The
+driver sets `handle_bad_irq` as default handler, but unmasked hardware
+interrupts on unconfigured lines can still flood the CPU with IRQ
+activity.
+
+The fix mirrors established patterns in other GPIO drivers (e.g. `gpio-
+max77620.c` explicitly documents bootloader-left interrupts).
+
+### Step 2.4: Fix quality assessment
+**Record:**
+- **Quality:** High — minimal, register writes match existing driver
+  register definitions and irq enable/disable logic.
+- **Regression risk:** Very low — interrupts are only unmasked later via
+  `dwapb_irq_unmask()` / `dwapb_irq_enable()` when explicitly
+  configured.
+- **Minor nuance:** On ACPI platforms, `devm_request_irq()` in
+  `dwapb_configure_irqs()` runs *before* `devm_gpiochip_add_data()`
+  triggers `init_hw`. This is a pre-existing ordering characteristic;
+  the fix still addresses the steady-state stale-hardware problem and is
+  strictly better than no masking. Verified in current tree code at
+  lines 484–566 of `gpio-dwapb.c`.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 – Blame**
-Record:
-- Buggy `if (ctrl->ctrl.queue_count > 1)` at line 2462 introduced by
-  `95ced8a2c72d` (James Smart, 2020-10-27): "nvme-fc: eliminate
-  terminate_io use by nvme_fc_error_recovery"
-- Early `queue_count` init dates to 2016–2017 (`e399441de9115`,
-  `d858e5f04e58a4`)
-- Tagset deferral comment at lines 3504–3508 confirms intentional late
-  IO tagset init
+### Step 3.1: Blame changed lines
+**Record:** `dwapb_configure_irqs()` and surrounding interrupt code
+trace to `5d324e5159d9e` (v6.18 merge base in this tree). The driver and
+interrupt path have been present since this tree's import; no `init_hw`
+hook was ever set for dwapb in this tree.
 
-**Step 3.2 – Fixes: tag**
-Record: Not applicable (no `Fixes:` tag in commit message).
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag in commit message.
 
-**Step 3.3 – Related file history**
-Record:
-- `ee59e3820ca92` (2025-01): "do not ignore connectivity loss during
-  connecting" — increases CONNECTING-state error handling
-- `f13409bb3f914` (2025-02): connectivity loss state machine changes —
-  present in this tree
-- `0a2c5495b6d1e`: related `ioerr_work` cancellation fix in delete path
-  — already in HEAD
-- `e810b290922c5`: admin tagset release on init failure — recent related
-  work
-- Standalone 1/1 patch, not part of a multi-patch dependency series
+### Step 3.3: File history for related changes
+**Record:** Recent `gpio-dwapb.c` history in this tree:
+- `5e15cf51982f8` gpio: dwapb: Defer clock gating until noirq
+- `6c736c5ccf4a3` gpio: dwapb: reduce allocation to single kzalloc
+- `d7b5497e0e45b` gpio: dwapb: Use modern PM macros
 
-**Step 3.4 – Author context**
-Record: Mohamed Khalfella (Pure Storage); patch submitted by Maurizio
-Lombardi; reviewed by NVMe maintainers (Hellwig, Busch chain). Author is
-an active NVMe-FC contributor.
+No related interrupt-init fix already present. Standalone patch, not
+part of a series.
 
-**Step 3.5 – Prerequisites**
-Record: No prerequisite commits required. Patch applies cleanly (`git
-apply --check` passed). Uses only existing symbols (`ctrl->ctrl.tagset`,
-`cancel_work_sync`).
+### Step 3.4: Author's other commits
+**Record:** No commits by Liang Hao found in this tree's history (`git
+log --author` returned empty). Author appears to be an external
+contributor; patch carries GPIO maintainer SOB.
+
+### Step 3.5: Prerequisites / dependencies
+**Record:**
+- **`init_hw` infrastructure:** Present in this tree —
+  `include/linux/gpio/driver.h` defines `gpio_irq_chip::init_hw`;
+  `gpiochip_irqchip_init_hw()` in `gpiolib.c` calls it during
+  `gpiochip_add_data()` at line 1196.
+- **No other commits required.** Patch is self-contained.
+- **Can apply standalone:** Yes.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1 – Original discussion**
-Record:
-- `b4 dig -c 7e1a5ff60479b`:
-  https://patch.msgid.link/20260528092734.258899-2-mlombard@redhat.com
-- Standalone v1 patch (2026-05-28), not part of the larger Rapid Path
-  Failure Recovery series
-- Lore page blocked by bot protection; could not read inline review text
+### Step 4.1: Original patch discussion
+**Record:** Attempted `b4 dig -c <commit>` — commit not in local tree
+(not yet applied). Attempted lore fetch via WebFetch and curl — blocked
+by Anubis bot protection. **Could not retrieve mailing list thread
+content.**
 
-**Step 4.2 – Reviewers**
-Record: `b4 dig -w` shows CC to `kbusch@kernel.org`, `hch@lst.de`,
-`linux-nvme@lists.infradead.org`, `dwagner@suse.de`,
-`randyj@purestorage.com`, `mkhalfella@purestorage.com`
+### Step 4.2: Reviewers from b4 dig -w
+**Record:** Not performed — commit hash unavailable locally; b4 requires
+`-c COMMITISH`.
 
-**Step 4.3 – Bug report**
-Record: Stack trace embedded in commit message; lpfc admin queue connect
-failure (`-6`); no external bugzilla/syzbot link.
+### Step 4.3: Bug report search
+**Record:** No Reported-by or syzbot link in commit message. No external
+bug report retrieved.
 
-**Step 4.4 – Series context**
-Record: `b4 dig -a` shows unrelated RFR series revisions; this fix was
-submitted separately as `[PATCH 1/1]`.
+### Step 4.4: Related patches / series
+**Record:** Appears to be a standalone 1-patch fix. No series indicators
+in subject.
 
-**Step 4.5 – Stable list**
-Record: UNVERIFIED — could not search lore stable archive due to fetch
-restrictions; no stable nomination found in commit metadata.
+### Step 4.5: Stable mailing list history
+**Record:** Not searchable due to lore access failure. No stable-list
+discussion verified.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 – Key functions**
-Record: `__nvme_fc_abort_outstanding_ios()`, `nvme_fc_error_recovery()`,
-`nvme_fc_ctrl_ioerr_work()`, `nvme_fc_create_io_queues()`
+### Step 5.1: Key functions
+**Record:** `dwapb_irq_init_hw()` (new), `dwapb_configure_irqs()`
+(modified), called via `gpiochip_irqchip_init_hw()` in gpiolib.
 
-**Step 5.2 – Callers**
-Record:
-- `nvme_fc_ctrl_ioerr_work()` → `nvme_fc_error_recovery()` →
-  `__nvme_fc_abort_outstanding_ios()` (CONNECTING path)
-- `nvme_fc_delete_association()` →
-  `__nvme_fc_abort_outstanding_ios(ctrl, false)`
-- `ioerr_work` queued from `nvme_fc_fcpio_done()` (`check_error` at line
-  2052) on transport errors
-- Triggered during controller connect/reconnect — common enterprise FC
-  storage path
+### Step 5.2: Callers
+**Record:**
+- `dwapb_configure_irqs()` ← `dwapb_gpio_add_port()` ←
+  `dwapb_gpio_probe()` (platform driver probe)
+- `gpiochip_irqchip_init_hw()` ← `gpiochip_add_data()` ←
+  `devm_gpiochip_add_data()`
+- Probe runs at boot for all DesignWare APB GPIO instances (DT:
+  `snps,dw-apb-gpio`; ACPI on Intel platforms per driver comment).
 
-**Step 5.3 – Callees**
-Record: `blk_mq_tagset_busy_iter()`, `nvme_quiesce_io_queues()`,
-`nvme_sync_io_queues()`, `nvme_remove_io_tag_set()`,
-`cancel_work_sync()`
+### Step 5.3: Callees
+**Record:** `dwapb_write()` / `dwapb_read()` — MMIO register accessors
+with v2 register offset remapping.
 
-**Step 5.4 – Reachability**
-Record:
-- Userspace triggers NVMe-FC device discovery/connect via sysfs/fc
-  transport
-- Connectivity loss or admin timeout during CONNECTING is a realistic
-  failure mode (documented in commit message with lpfc)
-- **Reachable from normal device operation**, not obscure debug-only
-  path
+### Step 5.4: Call chain / reachability
+**Record:** Triggered on every dwapb controller probe at boot (or module
+load). Warm reboot with powered GPIO block is the specific failure
+scenario. Affects embedded SoCs (RISC-V T-Head, Sophgo, many others in
+DT) and Intel ACPI platforms using shared GPIO IRQ lanes.
 
-**Step 5.5 – Similar patterns**
-Record: File already guards `ctrl->ctrl.tagset` before IO queue teardown
-at lines 3236 and 3267; this fix aligns abort path with existing
-teardown guards.
+### Step 5.5: Similar patterns
+**Record:** Identical pattern already used in this tree by:
+- `gpio-max77620.c` — "GPIO interrupts may be left ON after bootloader"
+- `gpio-idt3243x.c` — masks all interrupts in `init_hw`
+- `gpio-tangier.c` — clears edge-detect registers in `init_hw`
+
+This is an established, maintainer-accepted GPIO subsystem pattern.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
 
-**Step 6.1 – Buggy code present?**
-Record: **Yes.** HEAD at `drivers/nvme/host/fc.c:2462` still has `if
-(ctrl->ctrl.queue_count > 1)` without tagset check. `out_cleanup_tagset`
-at line 2900 lacks `cancel_work_sync()`. Upstream fix `ee38469f88492` is
-**not** an ancestor of HEAD.
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** Current `gpio-dwapb.c` has no `dwapb_irq_init_hw`
+and no `girq->init_hw` assignment. `dwapb_configure_irqs()` at lines
+472–474 sets only `handler` and `default_type`. The driver has been
+present in this tree without hardware interrupt masking at init.
 
-**Step 6.2 – Backport complications**
-Record: **Clean apply** — `git show 7e1a5ff60479b | git apply --check`
-succeeded with no conflicts.
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected.** File structure matches the patch
+context exactly. `init_hw` callback and gpiolib support are present. No
+conflicting changes identified.
 
-**Step 6.3 – Related fixes already present?**
-Record: `0a2c5495b6d1e` fixes `ioerr_work` cancellation ordering in
-`nvme_fc_delete_ctrl()` but does not cover the
-`nvme_fc_create_io_queues()` failure path or the uninitialized tagset
-abort. No duplicate fix found.
+### Step 6.3: Related fixes already present?
+**Record:** **None.** `grep` for `dwapb_irq_init_hw` and `init_hw` in
+`gpio-dwapb.c` returns no matches.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1 – Subsystem**
-Record: `drivers/nvme/host/fc.c` — NVMe over Fibre Channel host driver.
-**Criticality: IMPORTANT** (enterprise storage; not core kernel, but
-stability-critical for FC deployments).
+### Step 7.1: Subsystem criticality
+**Record:** **drivers/gpio** — IMPORTANT. GPIO/IRQ infrastructure
+affects many embedded and ACPI platforms. Interrupt storms are a system-
+wide stability issue.
 
-**Step 7.2 – Activity**
-Record: 14 commits to `fc.c` since `ee59e3820ca92`; actively maintained
-with recent connectivity/error-recovery work.
+### Step 7.2: Subsystem activity
+**Record:** Active — recent dwapb commits in 6.18.y (PM, allocation,
+clock gating). Driver is maintained and in active use.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1 – Who is affected**
-Record: Users with `CONFIG_NVME_FC` and FC HBAs (lpfc, etc.) during
-controller connect, reconnect, or connectivity-loss scenarios.
+### Step 8.1: Who is affected
+**Record:** Users of DesignWare APB GPIO (`CONFIG_GPIO_DWAPB`) on
+platforms where the GPIO block retains power across warm reboot —
+embedded SoCs, Intel ACPI systems with shared GPIO IRQ lanes. Config-
+specific but affects a broad class of hardware.
 
-**Step 8.2 – Trigger conditions**
-Record:
-- Controller in `NVME_CTRL_CONNECTING`
-- `queue_count > 1` (normal when IO queues configured)
-- IO tagset not yet created (admin connect in progress or IO queue setup
-  failed)
-- Admin timeout or connectivity loss schedules `ioerr_work`
-- **Likelihood:** Moderate during link/target issues — exactly when
-  error recovery runs
+### Step 8.2: Trigger conditions
+**Record:**
+- Warm reboot (not full power cycle)
+- GPIO block stays powered
+- Prior boot left interrupt enables/masks in non-default state
+- Lines not re-configured for interrupts in new boot
+- **Likelihood:** Platform-dependent but realistic on embedded/ACPI
+  systems that use warm reboot
+- **Unprivileged trigger:** No direct userspace trigger; boot-time /
+  reboot-time hardware state issue
 
-**Step 8.3 – Failure severity**
-Record:
-- lockdep: `"you didn't initialize this object before use?"` — disables
-  lock validator
-- Without lockdep: use of uninitialized spinlock in
-  `blk_mq_tagset_busy_iter()` — unpredictable behavior, potential
-  oops/panic
-- **Severity: HIGH** (kernel instability during error recovery)
+### Step 8.3: Failure mode severity
+**Record:** **Interrupt storm** → sustained IRQ handling → CPU
+saturation → soft lockup / hung system / severely degraded
+responsiveness. **Severity: HIGH to CRITICAL** (system stability).
 
-**Step 8.4 – Risk vs benefit**
-Record:
-- **Benefit: HIGH** — prevents crash/warning during connect-failure
-  error recovery on production FC storage
-- **Risk: LOW** — 7-line change, matches existing tagset guards, four
-  maintainer reviews
-- **Ratio:** Strong benefit, minimal risk
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** HIGH — prevents boot-time or post-warm-reboot interrupt
+  storms on widely deployed IP block
+- **Risk:** VERY LOW — ~16 lines, standard register init, no API
+  changes, interrupts restored only when explicitly enabled
+- **Ratio:** Strongly favors backport
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1 – Evidence summary**
+### Step 9.1: Evidence compile
 
-| FOR backport | AGAINST backport |
-|---|---|
-| Real bug with reproduced stack trace | Only affects NVMe-FC users (not
-all kernels) |
-| Uninitialized lock use — HIGH severity | No syzbot/CVE, but real lpfc
-scenario |
-| Small, surgical, 4 Reviewed-by | Lore review text UNVERIFIED |
-| Applies cleanly to 6.18.44 | — |
-| Buggy code confirmed in HEAD | — |
-| Complements existing `ioerr_work` fix | — |
+**FOR backport:**
+- Fixes real hardware stale-state bug causing interrupt storms
+- Can cause system hang / severe instability (HIGH severity)
+- Small, surgical, obviously correct fix
+- Uses existing `init_hw` infrastructure already in 6.18.44
+- Precedent in multiple GPIO drivers in this same tree
+- GPIO maintainer (Bartosz Golaszewski) signed off
+- Buggy code confirmed present; fix not yet applied
+- No dependencies on other commits
 
-**Step 9.2 – Stable rules checklist**
+**AGAINST backport:**
+- No syzbot report or explicit user bug report in commit message (weaker
+  evidence of real-world hit rate)
+- ACPI probe ordering means parent IRQ is requested before `init_hw`
+  runs (minor window; pre-existing, not introduced by patch)
+- Lore discussion could not be retrieved to confirm review feedback
 
-1. Obviously correct and tested? **PASS** — logic matches existing
-   `ctrl->ctrl.tagset` guards; four subsystem reviewers
-2. Fixes a real bug affecting users? **PASS** — lpfc connect failure
-   scenario with stack trace
-3. Important issue? **PASS** — kernel instability during error recovery
-   (HIGH)
-4. Small and contained? **PASS** — 1 file, 7 lines
-5. No new features/APIs? **PASS** — error-path guard only
-6. Can apply to local tree? **PASS** — clean apply verified
+**Unresolved:**
+- Mailing list review thread content (lore blocked)
+- Exact platforms where author observed the bug
 
-**Step 9.3 – Exception categories**
-Record: Not a device-ID/quirk/DT/docs/build fix; qualifies as a straight
-bug fix.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — register init matches driver
+   conventions; maintainer SOB; pattern used elsewhere
+2. Fixes a real bug? **PASS** — stale interrupt state on warm reboot
+3. Important issue? **PASS** — interrupt storm / system stability
+4. Small and contained? **PASS** — one file, ~16 lines
+5. No new features/APIs? **PASS** — uses existing `init_hw` callback
+6. Can apply to local tree? **PASS** — infrastructure present, clean
+   apply expected
 
-**Step 9.4 – Decision rationale**
-This is a longstanding init-order bug: `queue_count` is set at
-allocation time but the IO tagset is created later. Error recovery
-during CONNECTING can call `blk_mq_tagset_busy_iter()` on an
-uninitialized tagset. The fix is minimal, reviewed by NVMe maintainers,
-applies cleanly to 6.18.44, and prevents kernel instability during
-exactly the failure scenarios stable users encounter (connectivity loss,
-admin queue connect failure). The complementary `cancel_work_sync()`
-prevents a race when IO queue creation fails partway through.
+### Step 9.3: Exception categories
+**Record:** Hardware workaround / driver initialization quirk —
+qualifies under stable exception for hardware-specific workarounds that
+fix real hardware behavior.
+
+### Step 9.4: Decision rationale
+This commit fixes a genuine stability bug in a widely used GPIO
+controller driver. The failure mode (interrupt storm after warm reboot)
+is serious, the fix is minimal and follows an established pattern
+already present in this tree's GPIO subsystem, and all prerequisites
+exist in Linux 6.18.44. The fix is not yet in this tree and should be
+backported.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body; identified hidden bug fix
-- [Phase 2] Read diff: tagset guard + `cancel_work_sync()` in error path
-- [Phase 3] `git blame -L 2462`: buggy check from `95ced8a2c72d` (2020);
-  early `queue_count` from 2016–2017
-- [Phase 3] `git log --oneline -20 -- drivers/nvme/host/fc.c`: related
-  commits identified; no duplicate fix
-- [Phase 3] `git merge-base --is-ancestor ee38469f88492 HEAD`: upstream
-  fix **NOT** in HEAD
-- [Phase 3] `git show 7e1a5ff60479b | git apply --check`: applies
-  cleanly
-- [Phase 4] `b4 dig -c 7e1a5ff60479b`: lore URL found
-- [Phase 4] `b4 dig -a`: standalone 1/1 patch confirmed
-- [Phase 4] `b4 dig -w`: maintainers CC'd
-- [Phase 4] UNVERIFIED: lore thread content (bot protection)
-- [Phase 5] Traced call chain: `ioerr_work` → `nvme_fc_error_recovery` →
-  `__nvme_fc_abort_outstanding_ios`
-- [Phase 5] Verified `nvme_alloc_io_tag_set()` sets `ctrl->tagset` at
-  `core.c:4961`
-- [Phase 6] `git describe HEAD`: v6.18.44
-- [Phase 6] Read HEAD `fc.c:2462,2900`: buggy code present
-- [Phase 6] `0a2c5495b6d1e` in tree: related but incomplete coverage
-- [Phase 8] Failure mode: uninitialized lock in
-  `blk_mq_tagset_busy_iter`, severity HIGH
+- [Phase 1] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; Makefile
+  → 6.18.44
+- [Phase 1] Parsed commit message tags from user-provided content
+- [Phase 2] Read `drivers/gpio/gpio-dwapb.c` lines 182–509, 750–875;
+  confirmed diff targets match current code structure
+- [Phase 2] Verified register constants `GPIO_INTEN`, `GPIO_INTMASK`,
+  `GPIO_PORTA_EOI` at lines 35–41
+- [Phase 2] Verified irq enable/disable logic at lines 283–313 uses same
+  registers the fix initializes
+- [Phase 3] `git blame -L 454,490 drivers/gpio/gpio-dwapb.c` → code from
+  v6.18 merge base
+- [Phase 3] `git log --oneline -20 -- drivers/gpio/gpio-dwapb.c` →
+  recent PM/allocation commits, no interrupt-init fix
+- [Phase 3] `grep init_hw drivers/gpio/gpio-dwapb.c` → no matches (fix
+  not present)
+- [Phase 3] `git log -S 'init_hw' -- drivers/gpio/gpiolib.c` →
+  infrastructure present since tree base
+- [Phase 4] `b4 dig -c` — failed (commit not in tree)
+- [Phase 4] WebFetch + curl lore URL — blocked by Anubis; thread content
+  UNVERIFIED
+- [Phase 5] Read `gpiolib.c` lines 1185–1202 —
+  `gpiochip_irqchip_init_hw()` called before `gpiochip_add_irqchip()`
+- [Phase 5] `grep init_hw drivers/gpio/` → found precedent in max77620,
+  idt3243x, tangier, realtek-otto
+- [Phase 5] Read `gpio-max77620.c` lines 263–274 — identical rationale
+  ("left ON after bootloader")
+- [Phase 6] Confirmed `dwapb_configure_irqs()` lacks `girq->init_hw` at
+  line 472–474
+- [Phase 6] Confirmed `include/linux/gpio/driver.h` has `init_hw` at
+  line 264
+- [Phase 6] `grep snps,dw-apb-gpio` → multiple DT platforms (T-Head
+  th1520, Sophgo sg2042, etc.)
+- [Phase 7] `drivers/gpio/Kconfig` line 273 — `CONFIG_GPIO_DWAPB`
+  tristate driver exists
+- [Phase 8] Analyzed ACPI vs non-ACPI probe order in
+  `dwapb_configure_irqs()` + `dwapb_gpio_add_port()`
 
 **YES**
 
- drivers/nvme/host/fc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-dwapb.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index bf78faf1a4ffa..2e8cba91a853e 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -2459,7 +2459,7 @@ __nvme_fc_abort_outstanding_ios(struct nvme_fc_ctrl *ctrl, bool start_queues)
- 	 * io requests back to the block layer as part of normal completions
- 	 * (but with error status).
- 	 */
--	if (ctrl->ctrl.queue_count > 1) {
-+	if (ctrl->ctrl.queue_count > 1 && ctrl->ctrl.tagset) {
- 		nvme_quiesce_io_queues(&ctrl->ctrl);
- 		nvme_sync_io_queues(&ctrl->ctrl);
- 		blk_mq_tagset_busy_iter(&ctrl->tag_set,
-@@ -2898,6 +2898,11 @@ nvme_fc_create_io_queues(struct nvme_fc_ctrl *ctrl)
- out_delete_hw_queues:
- 	nvme_fc_delete_hw_io_queues(ctrl);
- out_cleanup_tagset:
+diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
+index 0259c65973323..6ece05f3afe2d 100644
+--- a/drivers/gpio/gpio-dwapb.c
++++ b/drivers/gpio/gpio-dwapb.c
+@@ -201,6 +201,22 @@ static void dwapb_toggle_trigger(struct dwapb_gpio *gpio, unsigned int offs)
+ 	dwapb_write(gpio, GPIO_INT_POLARITY, pol);
+ }
+ 
++static int dwapb_irq_init_hw(struct gpio_chip *gc)
++{
++	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
++
 +	/*
-+	 * In CONNECTING state ctrl->ioerr_work will abort both admin
-+	 * and io tagsets. Cancel it first before removing io tagset.
++	 * GPIO interrupts may retain stale state across warm reboots when
++	 * peripherals stay powered. Force a known-safe state before the GPIO
++	 * irqchip and irq domain are set up.
 +	 */
-+	cancel_work_sync(&ctrl->ioerr_work);
- 	nvme_remove_io_tag_set(&ctrl->ctrl);
- 	nvme_fc_free_io_queues(ctrl);
++	dwapb_write(gpio, GPIO_INTEN, 0);
++	dwapb_write(gpio, GPIO_INTMASK, 0xffffffff);
++	dwapb_write(gpio, GPIO_PORTA_EOI, 0xffffffff);
++
++	return 0;
++}
++
+ static u32 dwapb_do_irq(struct dwapb_gpio *gpio)
+ {
+ 	struct gpio_generic_chip *gen_gc = &gpio->ports[0].chip;
+@@ -472,6 +488,7 @@ static void dwapb_configure_irqs(struct dwapb_gpio *gpio,
+ 	girq = &gc->irq;
+ 	girq->handler = handle_bad_irq;
+ 	girq->default_type = IRQ_TYPE_NONE;
++	girq->init_hw = dwapb_irq_init_hw;
+ 
+ 	port->pirq = pirq;
  
 -- 
 2.53.0
