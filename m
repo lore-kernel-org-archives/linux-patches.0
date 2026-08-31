@@ -1,37 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBE44921AC;
-	Mon, 31 Aug 2026 14:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7AD43E064;
+	Mon, 31 Aug 2026 14:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185137; cv=none; b=SaJwppTc/ZRDV9lHvPY2Dy3eLNcXiL3Kgq7JkYwWVmgxJgncvj0A/EtX56tLhCAtud+ScOOQzypWo8Q9icYg/pZV1Ik3O+dBCX7+brWEfFtb3JSJ1brcnczt+U0hOFSg3Ys8b0UEF631c9naWEB/RpxnIK9QMIsM2E4+ZXai70U=
+	t=1788185154; cv=none; b=hBqPUj+gq23Uty228ygltG99kcVX/+EYMQE2bvKIMTanl3B6YbW4cHKuynf+UZbTs7CI22G4eNBoWaxJQEC77tn3gQtz1SE+G4Xi6FfpOXkKSIhiXNEbNWh7vmi9xTaivoTVQvxjbnl/nbyyCfNdCWrvxhE5Z/2Nke7K8m3zD0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185137; c=relaxed/simple;
-	bh=GebjLC5fZ6r2iSHwjgzBW6g6ZsW5nDW5/8x+Hu35gCw=;
+	s=arc-20240116; t=1788185154; c=relaxed/simple;
+	bh=GW85gerdPtE6os28Spk74Bz3FOHE8BwREvCLDEnl6HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qw34q9gSdQI+jRyUp54E77F03ir5LSQiaH9hlbGImeBRrvYv9ebNsagTAhwRgxaaT/hrhU1uRZs/hCNDB6mN0raEDPrLz85XnavUVRi7ETwLnHgXwB0Lio+hZWWTVEaqhOLT7M9w+JbEjy8KjyUjGO3u2O5fHvKS4+f9VS4OY0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgoZOfFg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TY7/GcoLnHMB+3YKxMurBEAppeKS7Hp+wArQx8z0Q8pOvTDjG5rwcV2znR0j6joELTQs+RgNTKLpAMteqle7hUV8LJrgM4waZ1aqr+yxbeBzEuJCUawirzSzUC5BnDdxoTW7Tc8OgpATbbkomjbOyfJTEKNcpE3WoJpsrAOXBZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ea0B0a37; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgoZOfFg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B041F000E9;
-	Mon, 31 Aug 2026 14:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ea0B0a37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB601F00A3D;
+	Mon, 31 Aug 2026 14:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185135;
-	bh=lDwpyA5Rhfh8BO2gEoJ8JJW9VrZXCW/ZaSBpvYfx86Y=;
+	s=korg; t=1788185153;
+	bh=m/DqbASBrNSbtkPPmGF2SGLcLidUUz19VZ2X+qS8yJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rgoZOfFgv17KtG0edhNUpggKKO47tn9mS4waa7cnvxRaHcVzwHeR7v+ZTq7Fk3hvd
-	 YjgT+YTPOrMz7Ch8w6wxqwyuY9JOlmX1+0nFpwgt7BCi1X0IVY/N9t5s/+6jOu7oBe
-	 CBOpIA/4AMhbA+RjOKGhArgSmCnCJKPfMPuc/Sss=
+	b=ea0B0a37oC2Hupn5biAqMi4lxmGk4PpIbhVgSPjiiNAzGKS59oob22NjpA1x6DAaw
+	 D4ib0aHYVksxydlX2bJm0wD6Img533RfwFeDuHjVB4/+hFIu39RzlEC40JxQWcrmwa
+	 VFR0WJPvbGfS9ESHzqz8ILwoMjwGhNAmQ2qec6y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marouane El Moufid <eun0us@espilon.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 64/69] ALSA: usb-audio: fix OOB write in snd_usbmidi_novation_output()
-Date: Mon, 31 Aug 2026 15:35:37 +0200
-Message-ID: <20260831133401.936807793@linuxfoundation.org>
+	syzbot+3f51ad7ac3ae57a6fdcc@syzkaller.appspotmail.com,
+	syzbot+47cf95ca1f9dcca872c8@syzkaller.appspotmail.com,
+	syzbot+8a173e13208949931dc7@syzkaller.appspotmail.com,
+	syzbot+90984d3713722683112e@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Alexander Potapenko <glider@google.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Clark Williams <williams@redhat.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Mark Brown <broonie@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 24/69] kcov: fix data corruption and race conditions on PREEMPT_RT
+Date: Mon, 31 Aug 2026 15:34:57 +0200
+Message-ID: <20260831133359.643794276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -50,57 +65,294 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marouane El Moufid <eun0us@espilon.net>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 1035a8f63bae28e498b0e7b5ac91d749844a7158 upstream.
+[ Upstream commit 2eed77fdcb0cc48e8eccb2bcd4b7f2c6d650e84c ]
 
-snd_usbmidi_novation_output() lays out a two-byte header at
-transfer_buffer[0..1] and passes &transfer_buffer[2] together with a
-length of ep->max_transfer - 2 to snd_rawmidi_transmit():
+syzbot is reporting KCOV state corruption on PREEMPT_RT kernels, for the
+temporary storage used for saving/restoring remote KCOV state is currently
+allocated as the per-CPU area.
 
-	count = snd_rawmidi_transmit(ep->ports[0].substream,
-				     &transfer_buffer[2],
-				     ep->max_transfer - 2);
+On PREEMPT_RT kernels, softirq handlers run as preemptible task threads
+(e.g., ksoftirqd). If a softirq context preempts a task running a remote
+KCOV session, it safely saves the task's state into the per-CPU area.
+However, if that softirq thread is subsequently preempted by a higher-
+priority softirq thread on the same CPU, the second softirq will overwrite
+the same per-CPU area, permanently destroying the original task's KCOV
+state.
 
-ep->max_transfer comes from the output endpoint's wMaxPacketSize via
-usb_maxpacket(). A malformed or malicious device can advertise a bulk
-OUT endpoint with a wMaxPacketSize of 1 - the USB core only clamps this
-value downwards - so ep->max_transfer becomes 1 and the count argument
-becomes -1.
+Fix this data corruption by moving the temporary storage from the per-CPU
+area to the per-thread area. Since each softirq thread now owns its own
+task context, nested softirq preemption no longer causes data overwrites.
 
-snd_rawmidi_transmit() passes the negative count on to
-__snd_rawmidi_transmit_peek(), where "if (count1 > count) count1 = count"
-leaves count1 negative; get_aligned_size() keeps it negative for a
-byte-stream substream, so the following memcpy(buffer, ..., count1) runs
-with a (size_t)-1 length and writes far past the transfer buffer, which
-was allocated with usb_alloc_coherent(ep->max_transfer).
+Note that while the temporary storage is now on a per-thread basis, the
+per-CPU kcov_percpu_data.lock must be retained, for we need to ensure that
+kcov_remote_start() and kcov_remote_stop() operate atomically without
+racing against asynchronous interrupts that manipulate the current task's
+KCOV state.
 
-This is the same class of bug that was fixed for snd_usbmidi_akai_output()
-in commit 0970274613fb ("ALSA: usb-audio: fix OOB write in
-snd_usbmidi_akai_output()"); the novation output routine was left
-unguarded. Bail out when the endpoint cannot hold the two-byte header
-plus at least one payload byte.
+It is likely that GFP_KERNEL allocation by vmalloc_node() in kcov_init()
+has already called panic() before returning NULL, for there will be no
+OOM-killable userspace processes when __init function of built-in module
+runs. But this patch also fixes crashing the kernel when vmalloc_node()
+in kcov_init() returned NULL, for kcov_init() left per-CPU irq_area == NULL
+but kcov_remote_start() depends on per-CPU irq_area != NULL, resulting in
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Marouane El Moufid <eun0us@espilon.net>
-Link: https://patch.msgid.link/178749334830.543645.13722252148340572274@espilon.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  (1) doing vmalloc() in kcov_remote_start() despite !in_task() context
+
+  (2) out-of-array-bounds access if (1) succeeded but
+      kcov->remote_size < CONFIG_KCOV_IRQ_AREA_SIZE
+
+  (3) always leak memory allocated by (1), eventually killing all
+      OOM-killable userspace processes
+
+problems.
+
+Link: https://lore.kernel.org/43552d09-2ce2-4b19-b0d3-a2d1ab952145@I-love.SAKURA.ne.jp
+Reported-by: syzbot+3f51ad7ac3ae57a6fdcc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3f51ad7ac3ae57a6fdcc
+Reported-by: syzbot+47cf95ca1f9dcca872c8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=47cf95ca1f9dcca872c8
+Reported-by: syzbot+8a173e13208949931dc7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8a173e13208949931dc7
+Reported-by: syzbot+90984d3713722683112e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=90984d3713722683112e
+Analyzed-by: AI Mode in Google Search (no mail address)
+Fixes: 5ff3b30ab57d ("kcov: collect coverage from interrupts")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Clark Williams <williams@redhat.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adjusted the `kcov_init()` deletion context to plain `vmalloc()` since 5.15 lacks the `vmalloc_node()`/`cpu_to_node()` conversion. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/sched.h |    8 ++++
+ kernel/kcov.c         |   90 ++++++++++++++++++++++++++------------------------
+ lib/Kconfig.debug     |    5 +-
+ 3 files changed, 58 insertions(+), 45 deletions(-)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -878,6 +878,8 @@ static void snd_usbmidi_novation_output(
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1398,6 +1398,14 @@ struct task_struct {
  
- 	if (!ep->ports[0].active)
- 		return;
-+	if (ep->max_transfer < 3)
-+		return;
- 	transfer_buffer = urb->transfer_buffer;
- 	count = snd_rawmidi_transmit(ep->ports[0].substream,
- 				     &transfer_buffer[2],
+ 	/* Collect coverage from softirq context: */
+ 	unsigned int			kcov_softirq;
++
++	/* Temporary storage for preempting remote coverage collection: */
++	unsigned int			kcov_saved_mode;
++	unsigned int			kcov_saved_size;
++	void				*kcov_saved_area;
++	struct kcov			*kcov_saved_kcov;
++	int				kcov_saved_sequence;
++
+ #endif
+ 
+ #ifdef CONFIG_MEMCG
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -84,17 +84,12 @@ struct kcov_remote {
+ 
+ static DEFINE_SPINLOCK(kcov_remote_lock);
+ static DEFINE_HASHTABLE(kcov_remote_map, 4);
+-static struct list_head kcov_remote_areas = LIST_HEAD_INIT(kcov_remote_areas);
++static struct list_head kcov_remote_areas[2] = {
++	LIST_HEAD_INIT(kcov_remote_areas[0]), LIST_HEAD_INIT(kcov_remote_areas[1])
++};
+ 
+ struct kcov_percpu_data {
+-	void			*irq_area;
+ 	local_lock_t		lock;
+-
+-	unsigned int		saved_mode;
+-	unsigned int		saved_size;
+-	void			*saved_area;
+-	struct kcov		*saved_kcov;
+-	int			saved_sequence;
+ };
+ 
+ static DEFINE_PER_CPU(struct kcov_percpu_data, kcov_percpu_data) = {
+@@ -130,12 +125,13 @@ static struct kcov_remote *kcov_remote_a
+ }
+ 
+ /* Must be called with kcov_remote_lock locked. */
+-static struct kcov_remote_area *kcov_remote_area_get(unsigned int size)
++static struct kcov_remote_area *kcov_remote_area_get(unsigned int size, bool irq)
+ {
+ 	struct kcov_remote_area *area;
+ 	struct list_head *pos;
++	struct list_head *list = &kcov_remote_areas[irq];
+ 
+-	list_for_each(pos, &kcov_remote_areas) {
++	list_for_each(pos, list) {
+ 		area = list_entry(pos, struct kcov_remote_area, list);
+ 		if (area->size == size) {
+ 			list_del(&area->list);
+@@ -147,11 +143,11 @@ static struct kcov_remote_area *kcov_rem
+ 
+ /* Must be called with kcov_remote_lock locked. */
+ static void kcov_remote_area_put(struct kcov_remote_area *area,
+-					unsigned int size)
++				 unsigned int size, bool irq)
+ {
+ 	INIT_LIST_HEAD(&area->list);
+ 	area->size = size;
+-	list_add(&area->list, &kcov_remote_areas);
++	list_add(&area->list, &kcov_remote_areas[irq]);
+ }
+ 
+ /*
+@@ -369,6 +365,12 @@ void kcov_task_init(struct task_struct *
+ {
+ 	kcov_task_reset(t);
+ 	t->kcov_handle = current->kcov_handle;
++	t->kcov_softirq = 0;
++	t->kcov_saved_mode = 0;
++	t->kcov_saved_size = 0;
++	t->kcov_saved_area = NULL;
++	t->kcov_saved_kcov = NULL;
++	t->kcov_saved_sequence = 0;
+ }
+ 
+ static void kcov_reset(struct kcov *kcov)
+@@ -790,34 +792,31 @@ static inline bool kcov_mode_enabled(uns
+ 
+ static void kcov_remote_softirq_start(struct task_struct *t)
+ {
+-	struct kcov_percpu_data *data = this_cpu_ptr(&kcov_percpu_data);
+ 	unsigned int mode;
+ 
+ 	mode = READ_ONCE(t->kcov_mode);
+ 	barrier();
+ 	if (kcov_mode_enabled(mode)) {
+-		data->saved_mode = mode;
+-		data->saved_size = t->kcov_size;
+-		data->saved_area = t->kcov_area;
+-		data->saved_sequence = t->kcov_sequence;
+-		data->saved_kcov = t->kcov;
++		t->kcov_saved_mode = mode;
++		t->kcov_saved_size = t->kcov_size;
++		t->kcov_saved_area = t->kcov_area;
++		t->kcov_saved_sequence = t->kcov_sequence;
++		t->kcov_saved_kcov = t->kcov;
+ 		kcov_stop(t);
+ 	}
+ }
+ 
+ static void kcov_remote_softirq_stop(struct task_struct *t)
+ {
+-	struct kcov_percpu_data *data = this_cpu_ptr(&kcov_percpu_data);
+-
+-	if (data->saved_kcov) {
+-		kcov_start(t, data->saved_kcov, data->saved_size,
+-				data->saved_area, data->saved_mode,
+-				data->saved_sequence);
+-		data->saved_mode = 0;
+-		data->saved_size = 0;
+-		data->saved_area = NULL;
+-		data->saved_sequence = 0;
+-		data->saved_kcov = NULL;
++	if (t->kcov_saved_kcov) {
++		kcov_start(t, t->kcov_saved_kcov, t->kcov_saved_size,
++			   t->kcov_saved_area, t->kcov_saved_mode,
++			   t->kcov_saved_sequence);
++		t->kcov_saved_mode = 0;
++		t->kcov_saved_size = 0;
++		t->kcov_saved_area = NULL;
++		t->kcov_saved_sequence = 0;
++		t->kcov_saved_kcov = NULL;
+ 	}
+ }
+ 
+@@ -878,17 +877,17 @@ void kcov_remote_start(u64 handle)
+ 	sequence = kcov->sequence;
+ 	if (in_task()) {
+ 		size = kcov->remote_size;
+-		area = kcov_remote_area_get(size);
++		area = kcov_remote_area_get(size, false);
+ 	} else {
+ 		size = CONFIG_KCOV_IRQ_AREA_SIZE;
+-		area = this_cpu_ptr(&kcov_percpu_data)->irq_area;
++		area = kcov_remote_area_get(size, true);
+ 	}
+ 	spin_unlock(&kcov_remote_lock);
+ 
+-	/* Can only happen when in_task(). */
++	/* Allocate new buffer if we can sleep. */
+ 	if (!area) {
+ 		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+-		area = vmalloc(size * sizeof(unsigned long));
++		area = in_task() ? vmalloc(size * sizeof(unsigned long)) : NULL;
+ 		if (!area) {
+ 			kcov_put(kcov);
+ 			return;
+@@ -1021,11 +1020,9 @@ void kcov_remote_stop(void)
+ 		kcov_move_area(kcov->mode, kcov->area, kcov->size, area);
+ 	spin_unlock(&kcov->lock);
+ 
+-	if (in_task()) {
+-		spin_lock(&kcov_remote_lock);
+-		kcov_remote_area_put(area, size);
+-		spin_unlock(&kcov_remote_lock);
+-	}
++	spin_lock(&kcov_remote_lock);
++	kcov_remote_area_put(area, size, !in_task());
++	spin_unlock(&kcov_remote_lock);
+ 
+ 	local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 
+@@ -1045,14 +1042,21 @@ EXPORT_SYMBOL(kcov_common_handle);
+ 
+ static int __init kcov_init(void)
+ {
+-	int cpu;
++	int cpu = num_possible_cpus();
++
++#ifdef CONFIG_PREEMPT_RT
++	/* Allocate some extra buffers in order to prepare for softirq preemption. */
++	cpu = cpu >= 4 ? cpu * 2 : cpu + 4;
++#endif
++	while (cpu--) {
++		void *area = vmalloc(CONFIG_KCOV_IRQ_AREA_SIZE * sizeof(unsigned long));
++		unsigned long flags;
+ 
+-	for_each_possible_cpu(cpu) {
+-		void *area = vmalloc(CONFIG_KCOV_IRQ_AREA_SIZE *
+-				sizeof(unsigned long));
+ 		if (!area)
+ 			return -ENOMEM;
+-		per_cpu_ptr(&kcov_percpu_data, cpu)->irq_area = area;
++		spin_lock_irqsave(&kcov_remote_lock, flags);
++		kcov_remote_area_put(area, CONFIG_KCOV_IRQ_AREA_SIZE, true);
++		spin_unlock_irqrestore(&kcov_remote_lock, flags);
+ 	}
+ 
+ 	/*
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2032,10 +2032,11 @@ config KCOV_INSTRUMENT_ALL
+ config KCOV_IRQ_AREA_SIZE
+ 	hex "Size of interrupt coverage collection area in words"
+ 	depends on KCOV
++	range 0x80 0x1000000
+ 	default 0x40000
+ 	help
+-	  KCOV uses preallocated per-cpu areas to collect coverage from
+-	  soft interrupts. This specifies the size of those areas in the
++	  KCOV uses preallocated areas to collect coverage from soft
++	  interrupts. This specifies the size of those areas in the
+ 	  number of unsigned long words.
+ 
+ menuconfig RUNTIME_TESTING_MENU
 
 
