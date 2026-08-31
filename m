@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6EB53FD49;
-	Mon, 31 Aug 2026 13:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E23542817;
+	Mon, 31 Aug 2026 13:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183960; cv=none; b=nn2N1EuoHtHX6ma/Uu+2tXx5TQhWEjiL0kNjAzJUl8bqkJA63LnvhPISToifiRv1XlvFKaoWIXtxM1XMgU8aVj6sT9VuAR62s7xZq+YQr9+hQCzloEu9Obg10wqyVrYG1hMhBAla5hzA9EuIPJm1ecFiouLMKLn1T/xYzpqtVDI=
+	t=1788183962; cv=none; b=kwwj99XTeyEKyTExOovKilzR7epjsqYh42usBROLACGmT59ctqdXVoSA1LZwXRo0HfA+X5nWQb3pJX9Cqmq4miM/ArQL3+bFm0RuB3kajKgMXJddjlODDx8a0WVwFHPsdiKgSEreWyZR9JdwGrKZIh5WcK40PVZas6rEg7BPgR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183960; c=relaxed/simple;
-	bh=laKgF3T+72TkSASFUL3U0Cf2oE3nNpCWepCuO5U0FpY=;
+	s=arc-20240116; t=1788183962; c=relaxed/simple;
+	bh=l19/Eitnt/WwBn03Y3+MmsIipieO3xBj/2OeQm1eSFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N7wEE6n0emD56CJH7775oGDZa8NWoCvCKVrfOobBM4raVOqQraknPUrsoM+cnwGk6Ts3lrzh+jaWF4EJe1FTODswe//kKZs6S83gawEDpbxdGGVP77qvp/0WKEShimE210QdQC4bgjjxssKun9v8LwvZPACEVhq5k/LqW70QqDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VzQAX7+8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k9wy5wTZz/E0Xd9+RlVtUU1c12KzNsOrDwLgDJGeiCG3sgZ5V4af9E+JorcihBipo2AeypKW3g9AeO0UUSO4Rq/Qp/j4zdTQ5k3pSE+qERLhkgpq1BSuauPqBoDA6Z1Kl3pfXoJx9CItn+Z6x4ov55nxGFAYXsnrov7rRQbdX74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d6/NvNas; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VzQAX7+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198E81F00ACF;
-	Mon, 31 Aug 2026 13:45:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d6/NvNas"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869421F00A3E;
+	Mon, 31 Aug 2026 13:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183958;
-	bh=003shy3L+UXbpB2hQD5Ja9a+UsUsVuBDrZ9w6FGc2aw=;
+	s=k20260515; t=1788183959;
+	bh=LGW/tvl6hcNoPK/NHpTAzf50PHQK625S5s/gyCPlYWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VzQAX7+8/g2UzpvGAftUth5m2V1YEPoUGgWmYiUBJApbCc3GyO9oNGBFnmSTuZXc9
-	 2+umK+WRXKEatGblNssGAUqaeFrUIQctRSIY5/sB3mBG3CLJLEPdFioCRbcocKacVS
-	 O68G5/ynSs6Jf6uschZfR60wt6ETzwS1v6VAW1OfGF+9mZPkRR8V/SA2gYVuDbzSVg
-	 283v7BMffx6cFil87jXxTU1KAF1KkvPtOgCvquXOm6QwkBz+KgOYfITzdKVIJTDd53
-	 zsMP/9NFFYW2/0N9eKe+9BzHfw4RA6KDwLD7RFRzWN2GJ1jbDR6I3KLSgat41SrO5s
-	 wWqInNzgnDRvg==
+	b=d6/NvNasORC31p0Fa/fLws6lMfdrmlXM3+y99q5ZNlzook9zIx0SsBPNZ8wteonde
+	 aiqn0tx07ADPRLMEJr1tD/IJXbcOh1HGkf1SsipQ3FrmauU5um6gEPNwEdqJd6XVw0
+	 2or/H4NgX6+mJP8fV8c/KBhkyVHjkebRw3+58NYeVCmgCv9IlbXhPWQmRTFBl0Nxx0
+	 kjzrQlT8exMuCGSaV23XxHIeopABuyDf/BeLJQFtLyVMNKF8kNkbgPhjnTzr2/vz0q
+	 MZy2Z1az0m+JN3lBY2fxZl9YiTdnh9pCXTR1rLWujlVJeRFJ9OMK7yRFWXDrfa1Jk3
+	 RTEMWl/LviZDQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dian-Syuan Yang <dian_syuan0116@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: rtw89: disable HTC field in AP mode
-Date: Mon, 31 Aug 2026 09:27:12 -0400
-Message-ID: <20260831133314.4125787-404-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: validate SID namespace before mapping IDs
+Date: Mon, 31 Aug 2026 09:27:13 -0400
+Message-ID: <20260831133314.4125787-405-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,368 +53,413 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1e53b826d5f8a3ca6d88fa6ed263acf54503214b ]
+[ Upstream commit fbe0bb2b75eb3c61e8464486506253d1b471240b ]
 
-Disable HE QoS HTC field when operating in AP mode to resolve
-interoperability issues with some stations.
+sid_to_id() currently treats the last subauthority of any owner or group
+SID as a Unix uid or gid. For example, this maps Everyone (S-1-1-0) to
+uid 0 and BUILTIN\Users (S-1-5-32-545) to gid 545.
 
-Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260424072552.59220-3-pkshih@realtek.com
+When an SMB2 CREATE security descriptor contains those SIDs, ksmbd
+attempts to change the newly created file to the bogus Unix ownership.
+notify_change() then returns -EPERM, which makes smb2.create.aclfile fail
+with NT_STATUS_SHARING_VIOLATION.
+
+Validate the SID prefix before extracting its RID. Only server-domain
+owner SIDs and S-1-22-2 Unix group SIDs have local ID representations.
+Treat other valid Windows SIDs as unmapped so their original values can
+still be preserved in the NT ACL xattr.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-# Stable Backport Analysis: `wifi: rtw89: disable HTC field in AP mode`
+# Stable Backport Analysis: `ksmbd: validate SID namespace before
+mapping IDs`
 
-**Local tree:** `v6.18.43` (Linux 6.18.y stable)
+**Local tree:** Linux 6.18.44 (`v6.18.44-1-g2736c32da98b9`)
+**Candidate commit:** `fbe0bb2b75eb3` (mainline 7.2-rc2; **not** in
+current HEAD history)
+**Bug status in this tree:** Present — `sid_to_id()` lacks SID prefix
+validation
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-**Record:** `[wifi: rtw89]` `[disable]` — Disable HE QoS HTC field when
-the driver operates in AP mode.
+**Step 1.1 — Subject line**
+Record: `[ksmbd] [validate] validate SID namespace before mapping IDs` —
+ACL/SID correctness fix in the SMB server.
 
-### Step 1.2: Tags
-**Record:**
-- **Signed-off-by:** Dian-Syuan Yang `<dian_syuan0116@realtek.com>`
-  (author)
-- **Signed-off-by:** Ping-Ke Shih `<pkshih@realtek.com>` (Realtek
+**Step 1.2 — Tags**
+Record:
+- `Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>` (ksmbd
   maintainer)
-- **Link:**
-  `https://patch.msgid.link/20260424072552.59220-3-pkshih@realtek.com`
-  (patch 3/N of a series, from Message-ID)
-- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or
-  Cc: stable tags
+- `Signed-off-by: Steve French <stfrench@microsoft.com>` (CIFS/SMB
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Cc: stable`, `Link:`, `Tested-by:`, or
+  `Reviewed-by:` tags
 
-Notable: vendor-authored fix with maintainer sign-off; no external bug
-report or syzbot reference.
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** `sid_to_id()` treats the last subauthority of *any*
+  owner/group SID as a Unix uid/gid.
+- **Examples:** Everyone (`S-1-1-0`) → uid 0; `BUILTIN\Users`
+  (`S-1-5-32-545`) → gid 545.
+- **Symptom:** SMB2 CREATE with such security descriptors causes bogus
+  ownership change; `notify_change()` returns `-EPERM`; CREATE fails
+  with `NT_STATUS_SHARING_VIOLATION`.
+- **Root cause:** No validation that the SID belongs to the server
+  domain (owner) or `S-1-22-2` Unix group namespace (group) before RID
+  extraction.
+- **Fix approach:** Validate SID prefix; only map domain owner SIDs and
+  `S-1-22-2-*` group SIDs; treat other valid Windows SIDs as unmapped so
+  NT ACL xattrs are preserved.
 
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** HE QoS HTC (High Throughput Control) field is inserted into
-  transmitted QoS data frames; in AP mode this breaks interoperability
-  with some client stations.
-- **Symptom:** Connectivity failures or degraded behavior for certain
-  clients associated to an rtw89 soft-AP/hotspot (not kernel
-  crash/oops).
-- **Root cause (author):** AP-mode frames should not carry the HE QoS
-  HTC field; some stations mishandle it.
-- **Version info:** None stated in the message.
-
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Although the subject says “disable,” this is an
-interoperability/connectivity bug fix, not a feature addition. The
-existing code already has a related AP IOT workaround comment for
-EAPoL/ARP/DHCP; this extends that logic to all AP-mode data traffic.
+**Step 1.4 — Hidden bug fix?**
+Record: **Yes.** Although titled “validate,” this is a functional
+correctness bug — incorrect ID mapping breaks SMB2 CREATE with security
+descriptors and can attempt root ownership for `Everyone`.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/net/wireless/realtek/rtw89/core.c` (+4 lines)
-- **Function:** `__rtw89_core_tx_check_he_qos_htc()`
-- **Scope:** Single-file, surgical fix
+**Step 2.1 — Inventory**
+Record:
+- **File:** `fs/smb/server/smbacl.c` (+17 / -4 lines)
+- **Functions:** `sid_to_id()`, `parse_sec_desc()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** For HE-capable associated stations, QoS data frames could
-  get an HE HTC field inserted on transmit (except EAPoL/ARP/DHCP/ICMP
-  special packets via `pkt_type < PACKET_MAX`).
-- **After:** Same logic, but returns `false` (skip HTC insertion) when
-  `tx_req->vif->type == NL80211_IFTYPE_AP`.
-- **Path affected:** Normal data TX path in AP mode
-  (`RTW89_CORE_TX_TYPE_DATA`).
+**Step 2.2 — Code flow changes**
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic / interoperability (hardware quirk–style
-  workaround)
-- **Mechanism:** Driver inserts non-standard or unwanted HE HTC on AP
-  TX; some client firmware rejects or mishandles those frames, breaking
-  association or data connectivity. Fix gates HTC insertion off in AP
-  mode entirely.
+| Hunk | Before | After |
+|------|--------|-------|
+| `sid_to_id()` owner path | Extract last subauthority as uid
+unconditionally | Require `psid` to match `server_conf.domain_sid`
+prefix + exactly one RID |
+| `sid_to_id()` group path | Extract last subauthority as gid
+unconditionally | Require `psid` to match `sid_unix_groups` (`S-1-22-2`)
+prefix + one RID |
+| `parse_sec_desc()` error handling | `pr_err()` on mapping failure |
+`ksmbd_debug()` + `rc = 0` for unmapped (non-fatal) SIDs |
 
-### Step 2.4: Fix quality
-**Record:**
-- Fix is minimal and consistent with the existing partial workaround at
-  line 855 (“AP IOT issue with EAPoL, ARP and DHCP”).
-- **Regression risk:** Low. Disabling HTC in AP mode may reduce HE
-  signaling optimizations (e.g. A-CTRL/BSR-related paths) but restores
-  client compatibility; STA mode unchanged.
-- **Concern:** `tx_req->vif` is dereferenced without a NULL check; safe
-  on the DATA TX path where `vif` is always set in
-  `rtw89_core_tx_write_link()`.
+**Step 2.3 — Bug mechanism**
+Record: **Logic/correctness fix.** `sid_to_id()` is the inverse of
+`id_to_sid()` but lacked the corresponding namespace checks. Well-known
+Windows SIDs were misinterpreted as Unix IDs.
+
+**Step 2.4 — Fix quality**
+Record:
+- **Obviously correct:** Mirrors `id_to_sid()` which uses
+  `server_conf.domain_sid` for `SIDOWNER` and `sid_unix_groups` for
+  groups.
+- **Minimal:** Uses existing `compare_sids()`.
+- **Low regression risk:** Only rejects SIDs that were never valid Unix
+  ID mappings.
+- **Note:** `parse_sec_desc()` already ends with `return 0`; the `rc =
+  0` reset is defensive/cosmetic but the `sid_to_id()` validation is the
+  substantive fix.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** `__rtw89_core_tx_check_he_qos_htc()` and related HE QoS HTC
-code are present in this tree (blame attributes to `19eef1d98eeda`, a
-stable-tree history artifact — the function body including the “AP IOT
-issue” comment is present in v6.18.43).
+**Step 3.1 — Blame**
+Record: Buggy `sid_to_id()` logic present at HEAD in lines 278–300,
+introduced with ksmbd in this tree (blame points to merge
+`5d324e5159d9e`).
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in the commit message.
+**Step 3.2 — Fixes: tag**
+Record: N/A — no `Fixes:` tag.
 
-### Step 3.3: Related file history
-**Record:** Recent rtw89 stable backports in this tree include
-connectivity and hardware workarounds (`98a774e2c58df` MLO probe
-responses, `4b4784394099d` disable EHT by chip cap, `ffbcca93034f1`
-device ID). No prior fix for AP-mode HTC found.
+**Step 3.3 — Related file history**
+Record: Recent 6.18.y ksmbd ACL hardening commits in same file:
+- `337022d9dfac4` — validate ACE size against SID sub-authorities
+- `18d8db24b0a5b` — validate SID in parent security descriptor during
+  ACL inheritance
+- Multiple DACL/OOB validation fixes
 
-### Step 3.4: Author context
-**Record:** Ping-Ke Shih is an active rtw89 contributor; several of his
-patches are already in this 6.18.y tree.
+This fix fits the same ACL correctness pattern already being backported.
 
-### Step 3.5: Dependencies
-**Record:** Message-ID suffix `-3` indicates patch 3 of a series.
-**UNVERIFIED:** patches 1 and 2 could not be retrieved (lore blocked).
-The diff itself is self-contained — only adds an AP-mode guard in one
-function, with no new symbols or structures. Standalone application
-appears feasible.
+**Step 3.4 — Author context**
+Record: Namjae Jeon is the ksmbd maintainer; Steve French committed.
+Both are authoritative for this subsystem.
+
+**Step 3.5 — Dependencies**
+Record: **Standalone.** Requires only symbols present in 6.18.44:
+- `compare_sids()` — exists
+- `server_conf.domain_sid` — exists
+- `sid_unix_groups` — exists (`S-1-22-2` constant at line 43)
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:** **UNVERIFIED** — `b4 dig` requires a commit hash (not
-available in this candidate-only review), and
-lore.kernel.org/patch.msgid.link are blocked by bot protection. Could
-not read reviewer feedback or stable nominations.
+**Step 4.1 — Original discussion**
+Record: `b4 dig -c fbe0bb2b75eb3` found **no matching lore thread**
+(patch-id `dfb14c6056968734ff03c9e2be7c62bc06662d79`). Manual lore
+search blocked by bot protection.
 
-### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** — `b4 dig -w` not run (no commit hash).
+**Step 4.2 — Reviewers**
+Record: `b4 dig -w` returned nothing (no thread found).
 
-### Step 4.3: Bug reports
-**Record:** None in commit message. No syzbot, bugzilla, or user
-Reported-by.
+**Step 4.3 — Bug reports**
+Record: N/A — no `Reported-by:` or `Link:` tags. Bug described only in
+commit message.
 
-### Step 4.4: Series context
-**Record:** **UNVERIFIED** — patch 3/N; content of earlier patches
-unknown. This hunk has no apparent dependency on other series members.
+**Step 4.4 — Related patches**
+Record: Standalone; not part of a numbered series.
 
-### Step 4.5: Stable list history
-**Record:** **UNVERIFIED** — lore stable search blocked.
+**Step 4.5 — Stable list**
+Record: No stable-list discussion found (b4/lore unavailable for this
+commit).
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key functions
-**Record:** `__rtw89_core_tx_check_he_qos_htc()`, called from
-`rtw89_core_tx_update_he_qos_htc()`, called from
-`rtw89_core_tx_update_desc_info()` on `RTW89_CORE_TX_TYPE_DATA`.
+**Step 5.1 — Key functions**
+Record: `sid_to_id()`, `parse_sec_desc()`, `set_info_sec()`,
+`smb2_create_sd_buffer()`
 
-### Step 5.2: Callers
-**Record:**
-- `rtw89_core_tx_update_desc_info()` ← `rtw89_core_tx_write_link()`
-  (data frames, `vif` set at line 1237)
-- `rtw89_core_tx_update_desc_info()` ← `rtw89_h2c_tx()` (FWCMD only;
-  does not hit DATA case / HTC path)
+**Step 5.2 — Callers**
 
-### Step 5.3: Callees
-**Record:** RCU read of `link_sta->he_cap`, frame-type checks,
-`skb_headroom` check, RA fallback check; on success,
-`__rtw89_core_tx_adjust_he_qos_htc()` inserts HTC and sets
-`desc_info->a_ctrl_bsr`.
+| Function | Callers | Context |
+|----------|---------|---------|
+| `sid_to_id()` | `parse_sec_desc()` (owner/group), DACL ACE parsing
+(~line 509) | Security descriptor processing |
+| `parse_sec_desc()` | `set_info_sec()` | SMB2 SET_INFO / CREATE SD
+buffer |
+| `set_info_sec()` | `smb2_create_sd_buffer()`, `smb2_set_info_sec()` |
+SMB2 CREATE/SET_INFO from network clients |
+| `smb2_create_sd_buffer()` | `smb2_open()` CREATE path (~line 3389) |
+File creation with `SMB2_CREATE_SD_BUFFER` |
 
-### Step 5.4: Reachability
-**Record:** Triggered on every QoS data frame TX to an HE-capable
-station. In AP mode (soft-AP, hostapd), this is a common, user-visible
-path. Not a theoretical/obscure code path.
+**Step 5.3 — Callees**
+Record: `compare_sids()`, `from_vfsuid()`/`from_vfsgid()`,
+`notify_change()` (downstream in `set_info_sec()`)
 
-### Step 5.5: Similar patterns
-**Record:** Existing `pkt_type < PACKET_MAX` guard (lines 855–857)
-already disables HTC for EAPoL/ARP/DHCP in AP IOT scenarios. The new
-check generalizes that pattern to all AP-mode frames. Elsewhere in
-rtw89, `NL80211_IFTYPE_AP` is used extensively for AP-specific behavior.
+**Step 5.4 — Reachability**
+Record: **Reachable from SMB clients** via SMB2 CREATE with security-
+descriptor create context. Triggered when Windows clients send SDs
+containing well-known SIDs (`Everyone`, `BUILTIN\Users`, etc.) — common
+in Windows ACLs.
+
+**Step 5.5 — Similar patterns**
+Record: `id_to_sid()` already restricts mapping to
+`server_conf.domain_sid` / `sid_unix_groups`; `sid_to_id()` was the
+missing inverse validation.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (v6.18.43)
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (6.18.44)
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** `__rtw89_core_tx_check_he_qos_htc()` exists at
-lines 845–881 without the AP-mode guard. HE QoS HTC insertion is active
-for AP-mode data frames today.
+**Step 6.1 — Buggy code present?**
+Record: **YES.** Current `sid_to_id()` at lines 257–303 extracts RID
+without prefix check. Fix commit `fbe0bb2b75eb3` is **not** an ancestor
+of HEAD.
 
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — `struct rtw89_core_tx_request`
-already has `struct ieee80211_vif *vif` (core.h:1198), and the target
-function matches the upstream diff context.
+**Step 6.2 — Backport difficulty**
+Record: **Clean apply** — `git apply --check` on `fbe0bb2b75eb3` patch
+succeeded with no conflicts.
 
-### Step 6.3: Related fixes already present?
-**Record:** Partial workaround for EAPoL/ARP/DHCP exists; full AP-mode
-disable is **not** present.
+**Step 6.3 — Duplicate fix?**
+Record: **No** — grep shows no SID prefix validation in current
+`sid_to_id()`.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem / criticality
-**Record:** `drivers/net/wireless/realtek/rtw89` — **IMPORTANT** (WiFi
-driver; affects users of Realtek 8852/8922-series hardware).
+**Step 7.1 — Subsystem**
+Record: `fs/smb/server/` (ksmbd SMB server). **Criticality: IMPORTANT**
+— network file server, config-dependent (`CONFIG_SMB_SERVER`).
 
-### Step 7.2: Activity
-**Record:** Actively maintained in 6.18.y — multiple rtw89 fixes already
-backported to this tree.
+**Step 7.2 — Activity**
+Record: Actively maintained in 6.18.y with recent security and ACL fixes
+(UAF, OOB, ACL validation).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK
 
-### Step 8.1: Who is affected
-**Record:** Users running rtw89 in **AP mode** (soft-AP, WiFi hotspot,
-tethering) with **HE-capable client stations** that mishandle HTC.
-Config: `CONFIG_RTW89` (+ PCI/USB variant). Driver-specific, not
-universal.
+**Step 8.1 — Who is affected**
+Record: Users running ksmbd (`CONFIG_SMB_SERVER`) with ACL/security-
+descriptor features, especially Windows SMB clients creating files with
+SD buffers.
 
-### Step 8.2: Trigger conditions
-**Record:** AP mode + HE client + QoS data frame TX (not EAPoL/ARP/DHCP,
-which are already exempt). Common during normal hotspot use. Not a
-security-relevant userspace trigger.
+**Step 8.2 — Trigger conditions**
+Record: SMB2 CREATE (or SET_INFO) carrying a security descriptor whose
+owner/group SID is a well-known Windows SID (e.g. `S-1-1-0`,
+`S-1-5-32-545`). **Common** in Windows environments. Triggerable by
+remote SMB clients (authenticated).
 
-### Step 8.3: Failure mode severity
-**Record:** Client connectivity/interoperability failure — clients may
-fail to pass traffic, associate unreliably, or disconnect. **Severity:
-MEDIUM** (functional, user-visible; not crash, corruption, or deadlock).
+**Step 8.3 — Failure mode**
+Record:
+- **Primary:** CREATE fails with `NT_STATUS_SHARING_VIOLATION` after
+  `-EPERM` from `notify_change()` — **functional breakage**
+- **Secondary:** Incorrect mapping of `Everyone` → uid 0; if chown were
+  permitted, file would get root ownership — **correctness/security
+  concern**
+- **Severity: MEDIUM-HIGH** for ksmbd deployments (not kernel panic, but
+  breaks interoperability)
 
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** Restores AP-mode usability with affected client devices;
-  complements existing partial IOT workaround.
-- **Risk:** Very low — 4 lines, AP-mode only, disables a signaling
-  optimization.
-- **Ratio:** Favorable for stable; fits the hardware-
-  quirk/interoperability exception category.
+**Step 8.4 — Risk/benefit**
+Record:
+- **Benefit:** Restores SMB2 CREATE with Windows security descriptors;
+  prevents bogus uid/gid assignment
+- **Risk:** Very low — 21-line change, uses existing helpers, only
+  rejects invalid mappings
+- **Ratio:** Favorable for ksmbd users
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+**Evidence FOR backport:**
+- Real, reproducible functional bug on common Windows SID patterns
+- Small, surgical, applies cleanly to 6.18.44
+- Obviously correct — mirrors `id_to_sid()` inverse logic
+- Signed by ksmbd and SMB maintainers
+- Same subsystem already receives similar ACL fixes in 6.18.y
+- Remote SMB clients can trigger the bug path
 
-**FOR backport:**
-- Real interoperability bug with user-visible connectivity impact in AP
-  mode
-- Tiny, obviously correct, vendor-authored fix
-- Buggy code and all prerequisites exist in v6.18.43
-- Extends an existing in-tree AP IOT workaround
-- Low regression risk; similar rtw89 connectivity/hardware fixes already
-  in this stable tree
-- Fits stable exception: hardware/driver interoperability workaround
+**Evidence AGAINST:**
+- No syzbot report or user `Reported-by:` tags
+- Not a kernel crash/UAF/OOB — operational failure
+- Only affects `CONFIG_SMB_SERVER` users
+- No mailing-list review traceable via b4
 
-**AGAINST backport:**
-- Not crash/security/corruption/deadline
-- No external bug reports or Tested-by in commit message
-- Mailing-list review unverified
-- Patch 3/N series — earlier patches unverified (but this hunk appears
-  standalone)
-- Does not cover `NL80211_IFTYPE_P2P_GO` (only `NL80211_IFTYPE_AP`)
+**Stable rules checklist:**
+1. Obviously correct and tested? **PASS** (logic mirrors existing
+   `id_to_sid()`; maintainer SOBs)
+2. Fixes real bug? **PASS**
+3. Important issue? **PASS** (SMB interoperability breakage; potential
+   incorrect root ownership)
+4. Small and contained? **PASS** (21 lines, 1 file)
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** (verified clean apply)
 
-**UNRESOLVED:**
-- Mailing-list review and stable nomination discussion
-- Whether patches 1–2 of the series are required
-- Specific client models affected
+**Exception category:** N/A (not device ID, quirk, DT, build, or docs)
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** (logic is clear; no Tested-by
-   verified)
-2. Fixes a real bug affecting users? **PASS** (AP-mode client
-   interoperability)
-3. Important issue? **PASS** (MEDIUM — serious functional/connectivity
-   impact for AP users, though not crash-level)
-4. Small and contained? **PASS** (+4 lines, one function)
-5. No new features or APIs? **PASS** (disables existing behavior in AP
-   mode)
-6. Can apply to local tree? **PASS** (code present, clean apply
-   expected)
-
-### Step 9.3: Exception category
-**Record:** Hardware/driver interoperability workaround (quirk-style),
-analogous to existing in-driver AP IOT handling.
-
-### Step 9.4: Decision rationale
-For v6.18.43, the HE QoS HTC insertion code is present and active in AP
-mode. The fix is minimal, vendor-validated, directly addresses a real
-connectivity problem for soft-AP users, and aligns with existing partial
-workarounds already in this tree. Risk is very low. This is appropriate
-stable material under the interoperability/quirk exception, consistent
-with other rtw89 fixes already backported here.
+**Problem summary for stable users:** Windows SMB clients sending
+security descriptors with well-known SIDs (e.g. `Everyone`,
+`BUILTIN\Users`) cause ksmbd to mis-map them to Unix uid/gid, attempt
+invalid ownership changes, and fail file creation. The fix restricts ID
+mapping to the same SID namespaces `id_to_sid()` already uses.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 2] Read current `core.c` lines 844–934, 1120–1130, 1223–1245;
-  confirmed diff context matches
-- [Phase 2] Confirmed `pkt_type < PACKET_MAX` maps to
-  EAPoL/ARP/DHCP/ICMP via `rtw89_core_tx_btc_spec_pkt_notify()`
-- [Phase 3] `git describe HEAD` → `v6.18.43`
-- [Phase 3] `git blame -L 845,885` → HE QoS HTC function present in tree
-- [Phase 3] `git log --oneline -30 --grep="wifi: rtw89"` → prior rtw89
-  stable backports confirmed
-- [Phase 3] No Fixes: tag to follow
-- [Phase 4] `b4 dig` — requires commit hash; not run
-- [Phase 4] lore.kernel.org / patch.msgid.link — blocked (bot
-  protection); **UNVERIFIED**
-- [Phase 4] patchwork.kernel.org search — no patch entries returned;
-  **UNVERIFIED**
-- [Phase 5] `grep rtw89_core_tx_update_he_qos_htc` → single DATA-path
-  call site
-- [Phase 5] `grep tx_req.vif` → set in `rtw89_core_tx_write_link()` line
-  1237
-- [Phase 5] Verified FWCMD path does not reach HTC code (switch on
-  `tx_type`)
-- [Phase 6] `grep NL80211_IFTYPE_AP` in
-  `__rtw89_core_tx_check_he_qos_htc` → not present (fix not yet applied)
-- [Phase 6] `struct rtw89_core_tx_request` has `vif` field in
-  `core.h:1198`
-- [Phase 7] `CONFIG_RTW89` present in Kconfig
-- [Phase 8] Failure mode assessed as MEDIUM connectivity issue, not
-  CRITICAL crash
+- [Phase 1] `git show fbe0bb2b75eb3 --format=fuller`: parsed subject,
+  body, SOB tags
+- [Phase 2] `git show fbe0bb2b75eb3`: full diff reviewed; 17 insertions,
+  4 deletions
+- [Phase 2] Read `fs/smb/server/smbacl.c` lines 257–303, 871–958,
+  1601–1654: confirmed buggy code and call chain
+- [Phase 3] `git describe HEAD`: v6.18.44-1-g2736c32da98b9; Makefile
+  VERSION=6 PATCHLEVEL=18 SUBLEVEL=44
+- [Phase 3] `git merge-base --is-ancestor fbe0bb2b75eb3 HEAD`: commit
+  NOT in HEAD history
+- [Phase 3] `git blame -L 278,300 fs/smb/server/smbacl.c`: buggy lines
+  present at HEAD
+- [Phase 3] `git log --oneline -15 -- fs/smb/server/`: related ACL fixes
+  in tree
+- [Phase 4] `b4 dig -c fbe0bb2b75eb3 -C`: no lore match found
+- [Phase 4] WebFetch lore.kernel.org: blocked by bot protection
+- [Phase 5] `grep` for `parse_sec_desc`, `set_info_sec`,
+  `smb2_create_sd_buffer`: traced SMB2 CREATE path
+- [Phase 5] Read `compare_sids()` lines 71–114: prefix comparison
+  behavior verified
+- [Phase 5] Read `id_to_sid()` lines 221–231: inverse mapping namespaces
+  confirmed
+- [Phase 6] Read current `sid_to_id()`: no prefix validation present
+- [Phase 6] `git apply --check` on patch: applies cleanly
+- [Phase 6] `grep domain_sid`, `sid_unix_groups`: all dependencies exist
+- [Phase 8] Read `smb2pdu.c` lines 2647–2672, 3388–3389: CREATE SD
+  buffer path confirmed
 
-**YES**
+**YES**The background check finished: commit `fbe0bb2b75eb3` (“ksmbd:
+validate SID namespace before mapping IDs”) is on the **7.2-rc2** line,
+not in your current **6.18.44** tree — which matches the earlier finding
+that the buggy `sid_to_id()` logic is still present locally and the
+patch applies cleanly.
 
- drivers/net/wireless/realtek/rtw89/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+**Backport recommendation remains YES** for 6.18.y: it’s a small, self-
+contained fix for a real ksmbd interoperability bug where common Windows
+SIDs (e.g. `Everyone`, `BUILTIN\Users`) get mis-mapped to Unix IDs and
+SMB2 CREATE with security descriptors fails.
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index d10483210ccca..989c6b09b2706 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -847,6 +847,7 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
- 				 enum btc_pkt_type pkt_type)
+ fs/smb/server/smbacl.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index d3d0a22620f96..0b55c77e64562 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -258,6 +258,7 @@ static int sid_to_id(struct mnt_idmap *idmap,
+ 		     struct smb_sid *psid, uint sidtype,
+ 		     struct smb_fattr *fattr)
  {
- 	struct rtw89_sta_link *rtwsta_link = tx_req->rtwsta_link;
-+	struct ieee80211_vif *vif = tx_req->vif;
- 	struct sk_buff *skb = tx_req->skb;
- 	struct ieee80211_hdr *hdr = (void *)skb->data;
- 	struct ieee80211_link_sta *link_sta;
-@@ -878,6 +879,9 @@ __rtw89_core_tx_check_he_qos_htc(struct rtw89_dev *rtwdev,
- 	if (rtwsta_link && rtwsta_link->ra_report.might_fallback_legacy)
- 		return false;
++	const struct smb_sid *sid_prefix;
+ 	int rc = -EINVAL;
  
-+	if (vif->type == NL80211_IFTYPE_AP)
-+		return false;
+ 	/*
+@@ -279,6 +280,12 @@ static int sid_to_id(struct mnt_idmap *idmap,
+ 		kuid_t uid;
+ 		uid_t id;
+ 
++		/* Only the server domain RID has a local uid representation. */
++		sid_prefix = &server_conf.domain_sid;
++		if (psid->num_subauth != sid_prefix->num_subauth + 1 ||
++		    compare_sids(psid, sid_prefix))
++			return -EINVAL;
 +
- 	return true;
- }
+ 		id = le32_to_cpu(psid->sub_auth[psid->num_subauth - 1]);
+ 		uid = KUIDT_INIT(id);
+ 		uid = from_vfsuid(idmap, &init_user_ns, VFSUIDT_INIT(uid));
+@@ -290,6 +297,12 @@ static int sid_to_id(struct mnt_idmap *idmap,
+ 		kgid_t gid;
+ 		gid_t id;
+ 
++		/* Local gids are represented by S-1-22-2-<gid>. */
++		sid_prefix = &sid_unix_groups;
++		if (psid->num_subauth != sid_prefix->num_subauth + 1 ||
++		    compare_sids(psid, sid_prefix))
++			return -EINVAL;
++
+ 		id = le32_to_cpu(psid->sub_auth[psid->num_subauth - 1]);
+ 		gid = KGIDT_INIT(id);
+ 		gid = from_vfsgid(idmap, &init_user_ns, VFSGIDT_INIT(gid));
+@@ -916,9 +929,9 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
+ 
+ 		rc = sid_to_id(idmap, owner_sid_ptr, SIDOWNER, fattr);
+ 		if (rc) {
+-			pr_err("%s: Error %d mapping Owner SID to uid\n",
+-			       __func__, rc);
++			ksmbd_debug(SMB, "Owner SID has no Unix uid mapping\n");
+ 			owner_sid_ptr = NULL;
++			rc = 0;
+ 		}
+ 	}
+ 
+@@ -934,9 +947,9 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
+ 		}
+ 		rc = sid_to_id(idmap, group_sid_ptr, SIDUNIX_GROUP, fattr);
+ 		if (rc) {
+-			pr_err("%s: Error %d mapping Group SID to gid\n",
+-			       __func__, rc);
++			ksmbd_debug(SMB, "Group SID has no Unix gid mapping\n");
+ 			group_sid_ptr = NULL;
++			rc = 0;
+ 		}
+ 	}
  
 -- 
 2.53.0
