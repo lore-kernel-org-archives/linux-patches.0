@@ -1,130 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A177502B7A;
-	Mon, 31 Aug 2026 13:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92779502B8D;
+	Mon, 31 Aug 2026 13:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183720; cv=none; b=fjNJgin6IKE4tsdCZ7RcJ7Bb+3QFKSLglSLPU1AMUX8Up49aNaC9I8EpVB5zOSS9MG8nDPnsjKcKPLtQLqTmyYOI9kzeb1QbS04tIo/mo4pZ2EmTbKrxedvfuRa8doBUo+P5PNepUqPSRodQAalI7mrUaHR9ONXc76eCbtWl5EA=
+	t=1788183722; cv=none; b=j4FidDurQKqehQ+Pg5rUGLXEEK+C7tbnvQjFhlKCeLRcytpaOni9FtR0bKwVUpc1tFM1Lhj4SutqPcAsfHXpc1CF4/9PFCiaidsx4EBxdTF33GR6UHOhqsAbIjcCj/9ue5von7OiQMENpOWMiZ4ibyXm5aIabclsNIFNfz9RBpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183720; c=relaxed/simple;
-	bh=WWD2Ql2Z4g+9fo4/urRGhmffawy8vMh55yVayotG9Tw=;
+	s=arc-20240116; t=1788183722; c=relaxed/simple;
+	bh=jqA9iTdJHhSUYxxVaQ1Jj4rd/kKO4eB76mg9to9Cnzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXXSeuWIdA7ZNURcKOeRDBXtlgAc2wJnFGmfjOsPEZ80yZqVKKQ5hzHvKm3ceQwzT8tYTdf1MDGIyA2ZN9Jp+b1/HNyEfHpUAxlfdEPtkjkjnuf4HmrQ8cyu+C5ZVDMIcG5Hjh5IkRbVPaBiAkxKNyW3zrzDfT4cOC7RfzAHVhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Qhs7wFn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rXUdxxwUEAE87c0LpWN/SMVlneuqzofG0jPpwlUvDovYAtr7WMDkfcNfZQaFG0MT1RDc75AP1TsZvt61+/iNSa+Ia6qmxFE1+KeK/tDoF26h6qqSue9iESwwh6jXU9B4kJSFQJ9bq/yyfH5PH1OqZhlRUIcnx0YZsCuEaCahJR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4V7VWjo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Qhs7wFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD9A1F00A3F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4V7VWjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941801F00ACF;
 	Mon, 31 Aug 2026 13:41:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183719;
-	bh=lwSzhMhCxYFFAVTwR9VVx7heB3uEWTOXm5OiGz1dMyY=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183720;
+	bh=DqpZCsgyUaeY20xlaeBW1YrZsbWreZj43KRBA/qOcAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Qhs7wFnhSx+07H7VHcxHY30I1pYowGb7bjOfVNUVnDd46tZFDIhgD4e90sGtrxLo
-	 kLcMZ42/7QkckvEroQ2/Fekx1abGxEkSbvh+qnZ5EV8kisF8xbivF4qGPKbiTiUpEl
-	 IhaCJQB30xo87vFnjinnQ8RIEv+yU8NGmfHI+OqQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 02/76] RDMA/rxe: Fix responder UAF on IB_QP_MAX_DEST_RD_ATOMIC modify_qp
-Date: Mon, 31 Aug 2026 15:33:34 +0200
-Message-ID: <20260831133359.306889063@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
-References: <20260831133359.185608553@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=L4V7VWjo8FDe18pno9q+ouJX1P9xloZdn9uMYcE+zVxBBtAoxd5l9fHqAk9Z0OkNl
+	 MWwreyGF4OIg+1G21F9ivk4fiVVKvhPeiBqkvcoOq/NRg+4DXoVmPTl5JPH2PiEkbD
+	 88B5TAPaVFL7QDiqgo9nX+oO+GdwSCSq+KzulG+VWX1dGa5RdGH5cel+YZLRbG0afk
+	 /uPLzQPJYLHLZ8/TeKXHJgu/ViY07wMniSQr9ec6p6M8VxYQ7DvJs4gXdQ4fbxL3C3
+	 c0JxIPlI6Dq6UrqfEKItC6/POmwOS+YYwXIzAzsw89MzpcWNTVgYOzK7vhflS8CJ93
+	 /sFIKNDoilLKw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	"Sun peng (Leo) Li" <sunpeng.li@amd.com>,
+	George Zhang <george.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	harry.wentland@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] drm/amd/display: Fix 8K Mode Not Parsed by EDID
+Date: Mon, 31 Aug 2026 09:24:52 -0400
+Message-ID: <20260831133314.4125787-264-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-------------------
+[ Upstream commit 9b3aa1dec7c364b0d7b171dcc00ab1092e362aef ]
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+[why]
+The 8K120/8K240 timings live in DisplayID extension blocks 2 and 3
+of this EDID. The EDID is a 4-block (512-byte) HDMI 2.1 EDID
+that uses HF-EEODB.
+drm core reads and parses this correctly, but amdgpu rebuilds its own copy.
+Only 2 of 4 blocks were copied into sink->dc_edid, that leads to
+drm_edid_connector_add_modes() never sees blocks 2 and 3.
 
-[ Upstream commit 6f7014237405e7f032b5c53a82d9eccf6161c291 ]
+[how]
+Directly populate edid_blob_ptr with a blob whose length is the full,
+and HF-EEODB-aware size.
 
-rxe_qp_from_attr() handles IB_QP_MAX_DEST_RD_ATOMIC outside the
-IB_QP_STATE path, so it holds no state_lock and runs while the responder
-task rxe_receiver() (recv_task on rxe_wq) is live. A modify_qp() setting
-only that attribute calls free_rd_atomic_resources() then
-alloc_rd_atomic_resources(), swapping qp->resp.resources[] while
-rxe_prepare_res()/find_resource() walk it; free_rd_atomic_resources()
-also leaves the cached pointer qp->resp.res dangling. A local
-unprivileged user can race the free/realloc into a use-after-free in
-rxe_receiver() (local DoS).
-
-Drain recv_task around the swap with rxe_disable_task()/rxe_enable_task(),
-as rxe_qp_reset() already does when tearing this array down, re-enabling
-only after alloc_rd_atomic_resources() succeeds so the responder never
-resumes against a NULL qp->resp.resources on the ENOMEM path. Also clear
-qp->resp.res in free_rd_atomic_resources(), like the rxe_resp.c
-completion paths.
-
-Reproduced under KASAN; the slab-use-after-free in rxe_receiver() is gone.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Link: https://patch.msgid.link/20260712121720.78001-1-security@auditcode.ai
-Assisted-by: AuditCode-AI:2026.07
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 11a90eaf5c808ba800249dda0d481c35d0888589)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index f3dff1aea96af..61cbf05fbf583 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -172,6 +172,7 @@ static void free_rd_atomic_resources(struct rxe_qp *qp)
- 		}
- 		kfree(qp->resp.resources);
- 		qp->resp.resources = NULL;
-+		qp->resp.res = NULL;
- 	}
- }
+LLM Generated explanations, may be completely bogus:
+
+The branch check finished: commit `11a90eaf5c808` (“Fix 8K Mode Not
+Parsed by EDID”) is on `linux-next/master` only, not in the local
+`v6.18.44` tree. That matches the earlier finding — the fix is in
+mainline development and still needs to be backported to 6.18.y if
+selected.
+
+The backport recommendation remains **YES** for this tree.
+
+ .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 20 ++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index d0f770dd0a956..c2de763d621d3 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -1031,11 +1031,25 @@ enum dc_edid_status dm_helpers_read_local_edid(
+ 			continue;
  
-@@ -709,11 +710,23 @@ int rxe_qp_from_attr(struct rxe_qp *qp, struct ib_qp_attr *attr, int mask,
- 
- 		qp->attr.max_dest_rd_atomic = max_dest_rd_atomic;
- 
+ 		edid = drm_edid_raw(drm_edid); // FIXME: Get rid of drm_edid_raw()
+-		if (!edid ||
+-		    edid->extensions >= sizeof(sink->dc_edid.raw_edid) / EDID_LENGTH)
 +		/*
-+		 * Not gated by IB_QP_STATE, so the responder task is live.
-+		 * Quiesce recv_task like rxe_qp_reset() before swapping the
-+		 * rd_atomic array, so rxe_receiver() cannot race the free/
-+		 * realloc.
++		 * Use the length of the EDID property blob populated by
++		 * drm_edid_connector_update() above. It reflects the true number
++		 * of EDID blocks, including any HDMI Forum EDID Extension Override
++		 * Data Block (HF-EEODB) count, which the raw byte 0x7e extension
++		 * count can hide (e.g. HDMI 8K sinks).
 +		 */
-+		rxe_disable_task(&qp->recv_task);
- 		free_rd_atomic_resources(qp);
--
- 		err = alloc_rd_atomic_resources(qp, max_dest_rd_atomic);
-+		/*
-+		 * On ENOMEM leave recv_task quiesced: qp->resp.resources is
-+		 * NULL and rxe_prepare_res()/find_resource() would deref it.
-+		 * Re-enable only after a fresh array is installed.
-+		 */
- 		if (err)
- 			return err;
-+		rxe_enable_task(&qp->recv_task);
- 	}
++		if (!edid || !connector->edid_blob_ptr ||
++		    connector->edid_blob_ptr->length > sizeof(sink->dc_edid.raw_edid))
+ 			return EDID_BAD_INPUT;
  
- 	if (mask & IB_QP_EN_SQD_ASYNC_NOTIFY)
+-		sink->dc_edid.length = EDID_LENGTH * (edid->extensions + 1);
++		/*
++		 * FIXME: amdgpu_dm today does not consider the HF-EEODB, which
++		 * may contain additional mode info for sinks. This is a
++		 * workaround until dc_edid is refactored out from DC into
++		 * amdgpu_dm's ownership, allowing amdgpu_dm to use drm_edid
++		 * directly
++		 */
++		sink->dc_edid.length = connector->edid_blob_ptr->length;
+ 		memmove(sink->dc_edid.raw_edid, (uint8_t *)edid, sink->dc_edid.length);
+ 
+ 		/* We don't need the original edid anymore */
 -- 
 2.53.0
-
-
 
