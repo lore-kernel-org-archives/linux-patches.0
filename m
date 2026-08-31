@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543194570EC;
-	Mon, 31 Aug 2026 13:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A699459AE1;
+	Mon, 31 Aug 2026 13:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183283; cv=none; b=QBo4yy638b/gWhd4PP/FSTxpSNtnR2iaT/vjcjLK2/XIP6I2AOsYYO+u83WtBnWQcXJKRVVUlLn/Vk0QswHQdtsvrqQeoryGejVSDYH2cJZAYYAb1tLAhWTEdzAnDacqGakwxw7vpBAefua8Sz72XSGAI8nLdr5R2EGBaNb46DE=
+	t=1788183284; cv=none; b=ZqDIGO3xJozC4ve3VvTeFX1aK3m+gHRIF2ppiWPK6GJGuFVaIGtwOSVa3feznuKnmU009y+s5BQjwMjrHFSdGj44+PmvJSz484w7P/YGbKQiD18B/i4cyWP3BpDHNtQzlE07SIJHqUDMo1jZ+OySKs0Lka/nr7lul+w2PMEMsMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183283; c=relaxed/simple;
-	bh=nc905L7O2isCtGXYoIvxxMHbhZ8IjiW+2nWM37+TWEg=;
+	s=arc-20240116; t=1788183284; c=relaxed/simple;
+	bh=PH2X3SFn9NSEbVrnM93NioM31uEVwUeY3PxrAvoIU5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jHaZMwKx6ShbWkPy5KZPFwmWo7gXoSKbEu/SQ2TzOJ3s1jlT5/vKa04casglfiTXNSdEf0rEZVygdNs73DxNAjXJj06MhqNW3YcrI3Sq9qzGQQAA3W+qt10Qvc0L+dfLsM1tUvWAaxV9EarrAGtWW/6ZfHan4rIkg7zadp8Mgc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LkX6jknh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OiYyGLRTwAm94SohFS3j5+ujcAtI2HWYNw2yTZJdYIdmBogOZ9DZoBIN0J3m6ixi2vTofAFPYJNWMJ2b3Wyy+HJIYvFOTNcHajQjr0a7qKH6msWImSfFY/zBYDx0QqPS13JMXFL2M9LWH0EQoc22nL/4ze+aIzi7kgKBv3Z2UY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RvoIgE+O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LkX6jknh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477771F00ADF;
-	Mon, 31 Aug 2026 13:34:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RvoIgE+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE191F000E9;
+	Mon, 31 Aug 2026 13:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183280;
-	bh=suBB6sMnaRiFD/+vEeFBmjXPBsbA6V2QiMRWp064h8M=;
+	s=k20260515; t=1788183282;
+	bh=mZkxmumgWxt+25lmmE7hMDBxeMFAURVsSHQbXMIjoFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LkX6jknhSgKIfTdQ1vm9tpy+L9A+0qjlmV+Z8AanhpK55nFFvQQxyP45Al6LMAQR3
-	 cuBuDK3kC3LtjhX0wFk9fEV8kRrkWohELRnTfhPrMoq7o0wlhNAP+iarmUeXyNqm1T
-	 GF2JM4A32W/5+hQ3VoVHMyhU2xT6VcdDVy6RqCjTCCh0DsQyYJ50dcYNhOvHfXhf0U
-	 w6puUhkmxBJLneahWJdAMPXjVoF6d62xDk88hiQ+anW+K/aYYcdnidUnGy8Bq6kKlN
-	 XAgE4kpCKzVSo9CY+tDYpeQBoR+JPLjckNeKFh+KI3IPHCj/P5WifFelru04GrzLKV
-	 SZBccebv5s9Rw==
+	b=RvoIgE+OrctmpA+8ZXMVBVnMNE7Zg47gm2VAMVsdfB+XajESy4oXH9yBKaPkJZYvV
+	 a9ci1TYvvchG0Ipxjevn1POoKruEju3mr/gz7Iwi2TuXJH5RCrCfbOKMw5sli+vl9x
+	 9wvEHLQJx8ow5YI+e3Nnz5/JXbPjeeWOBB9jA2cpq4phJ7+fA/cpwoMqli9BGbX2sT
+	 TnUH1XuHb2FzODRgcfhVW3Cha2Ve2Quh4sYfD0/h9ioOJDGQNdj4Mql55lbJ86zZBW
+	 It9tUG7u7+bfW4vV4B+VooweC/FKQINPb3PfRvKHyv83XIAGxg5gefKZwl1fFPAXj7
+	 BFWNGzBJ8mHxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Rosen Penev <rosenp@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org,
+	davem@davemloft.net,
+	sparclinux@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: ath12k: Prevent incorrect vif chanctx switch when handling multi-radio contexts
-Date: Mon, 31 Aug 2026 09:21:21 -0400
-Message-ID: <20260831133314.4125787-53-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] sparc: Disable compat support with LLD
+Date: Mon, 31 Aug 2026 09:21:22 -0400
+Message-ID: <20260831133314.4125787-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -57,522 +54,378 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 675aa75bfc29fb18c6e4d58904a91c1d37228217 ]
+[ Upstream commit 852fed2e8bfe195351fb0078ba7245d41154e7a5 ]
 
-When multiple links switch channel contexts around the same time, mac80211
-may complete CSA for several links together and invoke
-ath12k_mac_op_switch_vif_chanctx() with an array of vifs spanning more than
-one underlying radio in a single-wiphy configuration.
+An LLVM=1 sparc64 allmodconfig enables COMPAT and then tries to
+build the 32-bit vDSO. That path cannot be linked with ld.lld:
 
-The driver currently assumes that all entries in the vifs array belong to the
-same radio and derives the radio context from the first element. On multi-radio
-hardware, this can lead to incorrect vdev selection/updates and may corrupt
-driver state when the number of vifs exceeds what a single radio supports.
+  ld.lld: error: unknown emulation: elf32_sparc
 
-Fix this by validating each vif's switch request and then processing vifs
-grouped by their associated radio. For each vif, ensure the band does not
-change across the switch and that both old/new channel contexts resolve to a
-valid ath12k device. Reject attempts to move a vif between radios (not
-supported for now) and return -EOPNOTSUPP to upper layers.
+ld.lld does not support the 32-bit SPARC ELF emulation used for
+the compat vDSO, so keep COMPAT disabled when LLD is the linker.
+This avoids selecting an unsupported build path while leaving the
+existing GNU ld configuration unchanged.
 
-Then, iterate through the input vifs, collect all unprocessed entries that map
-to the same radio, and invoke ath12k_mac_update_vif_chan() separately for each
-radio group. This removes any reliance on mac80211 providing the array grouped
-by radio or sharing old_ctx pointers across vifs.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Co-developed-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
-Signed-off-by: Maharaja Kennadyrajan <maharaja.kennadyrajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260522091828.3199584-1-maharaja.kennadyrajan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20260508000834.834824-1-rosenp@gmail.com
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `sparc: Disable compat support with LLD`
 
-### Step 1.1: Subject Line
-**Record:** `[wifi: ath12k]` `[Prevent]` — Prevent incorrect vif chanctx
-switch when handling multi-radio contexts.
-
-### Step 1.2: Tags
-**Record:**
-- **Tested-on:** QCN9274 hw2.0 PCI
-  WLAN.WBE.1.5-01651-QCAHKSWPL_SILICONZ-1
-- **Signed-off-by:** Aditya Kumar Singh, Maharaja Kennadyrajan, Jeff
-  Johnson
-- **Co-developed-by:** Maharaja Kennadyrajan
-- **Reviewed-by:** Baochen Qiang, Rameshkumar Sundaram (Qualcomm ath12k
-  developers)
-- **Link:** https://patch.msgid.link/20260522091828.3199584-1-
-  maharaja.kennadyrajan@oss.qualcomm.com
-- No Fixes:, Reported-by:, Cc: stable, or syzbot tags
-- Notable: Hardware-tested on real QCN9274; dual Reviewed-by from
-  subsystem developers
-
-### Step 1.3: Body Analysis
-**Record:**
-- **Bug:** `ath12k_mac_op_switch_vif_chanctx()` assumes all entries in
-  the `vifs` array belong to the same radio, deriving the radio (`ar`)
-  from `vifs[0]` only. When mac80211 completes CSA for multiple links
-  simultaneously across radios in a single-wiphy multi-radio
-  configuration, vifs from different radios are passed in one array.
-- **Symptom:** Incorrect vdev selection/updates; driver state corruption
-  when vif count exceeds single-radio capacity.
-- **Root cause:** Reliance on mac80211 grouping vifs by radio or sharing
-  old_ctx pointers across vifs — neither is guaranteed.
-- **Fix approach:** Validate each vif individually, group by radio,
-  process each group with the correct `ar`. Reject unsupported band
-  changes and cross-radio moves with `-EOPNOTSUPP`.
-
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Yes — explicitly a bug fix despite "Prevent" wording. Also
-adds `WARN_ON(!arvif)` in `ath12k_mac_update_vif_chan()` which prevents
-a NULL dereference before `arvif->vdev_id` is accessed (current code
-dereferences `arvif` at line 10893 before the `is_started` check at
-10899, with no NULL guard).
+**Local tree:** Linux **6.18.44** (`v6.18.44-1-g2736c32da98b9`)
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/net/wireless/ath/ath12k/mac.c` only
-- **Scope:** ~3 lines added in `ath12k_mac_update_vif_chan()`, ~70 lines
-  changed in `ath12k_mac_op_switch_vif_chanctx()`
-- **Functions modified:** `ath12k_mac_update_vif_chan()`,
-  `ath12k_mac_op_switch_vif_chanctx()`
-- **Classification:** Single-file, focused driver fix
+### Step 1.1: Parse the Subject Line
+**Record:** `[sparc] [disable] Disable compat support with LLD` —
+Kconfig change to prevent an unsupported LLVM/LLD build path on sparc64.
 
-### Step 2.2: Code Flow Changes
+### Step 1.2: Parse All Commit Message Tags
 **Record:**
-- **Hunk 1 (`ath12k_mac_update_vif_chan`):** Before → dereferences
-  `arvif->vdev_id` in debug print without NULL check. After →
-  `WARN_ON(!arvif); continue;` added before dereference.
-- **Hunk 2 (`ath12k_mac_op_switch_vif_chanctx`):** Before → gets `ar`
-  from `vifs[0].old_ctx`, validates only first vif's old/new ctx match
-  same radio, calls `ath12k_mac_update_vif_chan(ar, vifs, n_vifs)` for
-  entire array. After → validates each vif's band/old/new ctx/radio,
-  builds `ar_map[]`, groups vifs by radio, calls
-  `ath12k_mac_update_vif_chan(group_ar, group_vifs, count)` per radio
-  group.
+- **Acked-by:** Nathan Chancellor `<nathan@kernel.org>` (LLVM/toolchain
+  maintainer)
+- **Reviewed-by:** Andreas Larsson `<andreas@gaisler.com>` (sparc
+  maintainer)
+- **Link:**
+  https://lore.kernel.org/r/20260508000834.834824-1-rosenp@gmail.com
+- **Signed-off-by:** Rosen Penev `<rosenp@gmail.com>` (author)
+- **Signed-off-by:** Andreas Larsson (committer/maintainer)
+- **Assisted-by:** Codex:GPT-5.5
+- No Fixes:, Reported-by:, Tested-by:, or Cc: stable tags
+- Notable: dual maintainer endorsement (toolchain + sparc)
+
+### Step 1.3: Analyze Commit Body
+**Record:**
+- **Bug:** `LLVM=1 sparc64 allmodconfig` enables `CONFIG_COMPAT`
+  (default y), which builds the 32-bit compat vDSO using `elf32_sparc`
+  linker emulation.
+- **Symptom:** Build failure: `ld.lld: error: unknown emulation:
+  elf32_sparc`
+- **Root cause:** LLD does not support 32-bit SPARC ELF emulation; GNU
+  ld path is unaffected.
+- **Fix approach:** Add `depends on !LD_IS_LLD` to `CONFIG_COMPAT` so
+  LLD builds skip the unsupported vDSO32 path.
+- No kernel version range specified in the message.
+
+### Step 1.4: Detect Hidden Bug Fixes
+**Record:** Not disguised — this is an explicit **build fix**. No hidden
+runtime bug; the failure is at link time during kernel build when LLD is
+the linker.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory the Changes
+**Record:**
+- **Files:** `arch/sparc/Kconfig` only (+1 line)
+- **Scope:** Single-file, surgical Kconfig fix
+- **Function modified:** N/A (Kconfig symbol `COMPAT`)
+
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** `CONFIG_COMPAT` depends only on `SPARC64`, defaults to
+  `y`. With `LLVM=1` + LLD, COMPAT stays enabled →
+  `arch/sparc/vdso/Makefile` builds `vdso-image-32.o` using `-m
+  elf32_sparc` → LLD fails.
+- **After:** `CONFIG_COMPAT` additionally requires `!LD_IS_LLD`. LLD
+  builds disable COMPAT and skip vdso32; GNU ld builds unchanged.
 
 ### Step 2.3: Bug Mechanism
-**Record:** **Category:** Logic/correctness bug + potential NULL pointer
-dereference. **Mechanism:** WMI vdev restart/stop/start commands are
-sent via the `ar` (radio) context. Using radio A's `ar` to process vifs
-belonging to radio B sends vdev operations to the wrong pdev/firmware,
-corrupting driver state. The `WARN_ON(!arvif)` addition fixes a
-secondary NULL deref when `arvif` lookup fails for a vif on the wrong
-radio.
+**Record:**
+- **Category:** Build fix / toolchain incompatibility (Kconfig guard)
+- **Mechanism:** Kconfig enables a build target (`vdso32.so` with
+  `elf32_sparc`) that the selected linker cannot handle. The fix gates
+  COMPAT on linker capability.
 
-### Step 2.4: Fix Quality
-**Record:** Fix is obviously correct — mirrors the per-vif iteration
-pattern used by rtw89's `rtw89_ops_switch_vif_chanctx()`. Minimal
-regression risk: only affects the multi-vif chanctx switch path, adds
-proper validation, uses existing allocation patterns (`kzalloc_objs`,
-`__free(kfree)`) already present in ath12k. Early returns on error
-prevent partial corruption.
+Relevant existing code in this tree:
 
----
+```64:64:arch/sparc/vdso/Makefile
+VDSO_LDFLAGS_vdso32.lds = -m elf32_sparc -soname linux-gate.so.1
+```
 
-## Phase 3: Git History Investigation
+```470:476:arch/sparc/Kconfig
+config COMPAT
+        bool
+        depends on SPARC64
+        default y
+        select HAVE_UID16
+        select ARCH_WANT_OLD_COMPAT_IPC
+        select COMPAT_OLD_SIGACTION
+```
 
-### Step 3.1: Blame
-**Record:** `ath12k_mac_op_switch_vif_chanctx()` introduced in
-`d889913205cf7` (Kalle Valo, 2022-11-28, "wifi: ath12k: driver for
-Qualcomm Wi-Fi 7 devices"). Radio lookup from `vifs->old_ctx` added in
-`314876885bdcc3` (Sriram R, 2024-04-09, "wifi: ath12k: vdev statemachine
-changes for single wiphy") — this is when the bug was introduced. Both
-commits are ancestors of HEAD.
-
-### Step 3.2: Fixes Tag
-**Record:** N/A — no Fixes: tag in commit message.
-
-### Step 3.3: Related File History
-**Record:** Recent ath12k/mac.c commits include other stable-worthy
-fixes (NULL deref, deadlock, scan state). No related chanctx fix already
-present. `git log -S "ar_map"` returns empty — fix not yet applied to
-this tree.
-
-### Step 3.4: Author Context
-**Record:** Authors are active Qualcomm ath12k contributors (Aditya
-Kumar Singh, Maharaja Kennadyrajan). Multiple prior ath12k fixes in tree
-from same team. Reviewed by Baochen Qiang and Rameshkumar Sundaram.
-
-### Step 3.5: Dependencies
-**Record:** Uses `kzalloc_objs()` and `__free(kfree)` — both present in
-this tree (`3bf5e19c804d0` for kzalloc_objs; `__free(kfree)` already
-used extensively in ath12k/mac.c). Uses `ath12k_generic_dbg()` — present
-in debug.h. No series dependencies; standalone fix. Can apply
-standalone.
+### Step 2.4: Fix Quality Assessment
+**Record:** Obviously correct, minimal (1 line), matches established
+pattern on s390. **Regression risk:** Low — only affects LLVM+LLD
+sparc64 builds; those already fail to build. Trade-off: LLD builds lose
+32-bit compat support, which is unavoidable until LLD gains
+`elf32_sparc` support.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 4.1: Original Discussion
-**Record:** `b4 dig -c <hash>` not possible — commit not merged into
-this tree. `b4 dig` with message-id failed (wrong invocation).
-lore.kernel.org and patch.msgid.link blocked by Anubis bot protection
-(curl and WebFetch both returned challenge page). **UNVERIFIED:** Full
-mailing list review thread content.
+### Step 3.1: Blame Changed Lines
+**Record:** `CONFIG COMPAT` on sparc dates to Sam Ravnborg, 2008
+(`26b4c912185a8`). The missing `!LD_IS_LLD` guard has been absent since
+COMPAT was introduced. `CONFIG_LD_IS_LLD` was added in `b744b43f79cc7`
+(kbuild, May 2020) and is present in this tree.
+
+### Step 3.2: Follow Fixes: Tag
+**Record:** No `Fixes:` tag. N/A.
+
+### Step 3.3: File History for Related Changes
+**Record:** Recent sparc toolchain work in this tree includes
+`05457d96175d2` ("sparc/module: Add R_SPARC_UA64 relocation handling" —
+needed for LLVM's IAS, committed Sep 2025). This shows active LLVM sparc
+build enablement. The candidate fix is **standalone** (not part of a
+multi-patch series).
+
+### Step 3.4: Author's Other Commits
+**Record:** Rosen Penev is an active contributor (ata, gpio, net
+drivers) but not the sparc maintainer. Andreas Larsson (sparc
+maintainer, also committed the LLVM relocation fix) reviewed and signed
+off.
+
+### Step 3.5: Prerequisite Commits
+**Record:** Requires only `CONFIG_LD_IS_LLD` from `init/Kconfig`, which
+exists in 6.18.44. No other dependencies. Applies cleanly as a one-line
+addition.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Original Patch Discussion
+**Record:** `b4 dig` with message-id failed (wrong invocation syntax).
+Lore.kernel.org fetch blocked by anti-bot protection. Could not read
+thread discussion directly.
 
 ### Step 4.2: Reviewers
-**Record:** **UNVERIFIED** via b4 dig -w. Commit message shows Reviewed-
-by from two Qualcomm ath12k developers and Signed-off-by from Jeff
-Johnson (ath maintainer).
+**Record:** Acked-by Nathan Chancellor (LLVM/kbuild) and Reviewed-by
+Andreas Larsson (sparc maintainer) — appropriate reviewers for this
+change.
 
 ### Step 4.3: Bug Report
-**Record:** No external bug report or syzbot link. Bug identified
-through code analysis and hardware testing (Tested-on: QCN9274).
+**Record:** No external bug report or syzbot link. Failure is
+reproducible from the commit message's described build command (`LLVM=1
+sparc64 allmodconfig`).
 
-### Step 4.4: Related Patches
-**Record:** Standalone patch, not part of a series (no "patch X/Y" in
-subject). No dependencies on other patches.
+### Step 4.4: Related Patches/Series
+**Record:** Standalone 1-patch fix. Direct precedent: s390 uses the same
+pattern:
 
-### Step 4.5: Stable List History
-**Record:** **UNVERIFIED** — could not access lore.kernel.org/stable due
-to bot protection.
+```507:514:arch/s390/Kconfig
+config COMPAT
+        def_bool n
+        prompt "Kernel support for 31 bit emulation"
+        ...
+        depends on MULTIUSER
+        depends on !CC_IS_CLANG && !LD_IS_LLD
+```
+
+### Step 4.5: Stable Mailing List History
+**Record:** Could not search lore (blocked). No evidence of prior stable
+discussion found.
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key Functions
-**Record:** `ath12k_mac_op_switch_vif_chanctx()` (mac80211 driver op),
-`ath12k_mac_update_vif_chan()` (internal helper),
-`ath12k_get_ar_by_ctx()` (radio lookup by channel context).
+**Record:** Kconfig symbol `COMPAT` in `arch/sparc/Kconfig`; build
+impact via `arch/sparc/vdso/Makefile` line 14: `obj-$(CONFIG_COMPAT) +=
+vdso-image-32.o`
 
-### Step 5.2: Callers
-**Record:** `ath12k_mac_op_switch_vif_chanctx` registered at mac.c:13056
-as `.switch_vif_chanctx` in `ieee80211_ops`. Called from mac80211 via
-`drv_switch_vif_chanctx()` in `net/mac80211/driver-ops.c:414`. mac80211
-invokes this during channel context switches in `net/mac80211/chan.c` —
-both single-vif (`ieee80211_chsw_switch_vif`, line 1389) and multi-vif
-(`ieee80211_chsw_switch_vifs`, line 1537) paths. Multi-vif path collects
-ALL links with in-place reservations across all replacing chanctxs.
+### Step 5.2: Callers / Impact Surface
+**Record:** COMPAT enables 32-bit userspace syscall emulation on sparc64
+(sys_sparc32.c, signal32.c, vdso32, etc.). Only disabled when
+`LD_IS_LLD` is true — a build-time Kconfig decision, not a runtime code
+path.
 
 ### Step 5.3: Callees
-**Record:** `ath12k_get_ar_by_ctx()` → `ath12k_mac_get_ar_by_chan()`
-(maps channel frequency to radio in multi-radio mode).
-`ath12k_mac_update_vif_chan()` → `ath12k_mac_vdev_restart()`,
-`ath12k_mac_vdev_stop()`, `ath12k_mac_vdev_start()` — all send WMI
-commands to firmware via the `ar` pdev.
+**Record:** When COMPAT=y, vdso build invokes `$(LD)` with `-m
+elf32_sparc`. With LLD, this fails at link time.
 
 ### Step 5.4: Reachability
-**Record:** Triggered during CSA (Channel Switch Announcement) when
-mac80211 swaps channel contexts. Reachable from AP channel switches, DFS
-events, and MLO multi-link simultaneous CSA. Requires `CONFIG_ATH12K`
-with multi-radio hardware (`ah->num_radio > 1`). Userspace triggers via
-normal WiFi operations (hostapd channel changes, etc.).
+**Record:** Triggered by any developer/CI building `LLVM=1` sparc64
+kernel with LLD (default with LLVM=1). Not userspace-triggerable at
+runtime; build-time only.
 
 ### Step 5.5: Similar Patterns
-**Record:** rtw89's `rtw89_ops_switch_vif_chanctx()` (mac80211.c:1369)
-iterates each vif individually with per-vif link lookup — the correct
-pattern. ath12k's pre-fix code was an outlier assuming single-radio
-batch processing.
+**Record:** `arch/arm/mm/Kconfig` (`CPU_BIG_ENDIAN depends on
+!LD_IS_LLD`), `arch/arm/Kconfig.platforms`, and `arch/s390/Kconfig`
+(`COMPAT depends on !CC_IS_CLANG && !LD_IS_LLD`) — established pattern
+for gating features LLD cannot support.
 
 ---
 
-## Phase 6: Cross-Referencing Against Local Tree
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
 
-### Step 6.1: Buggy Code Exists?
-**Record:** **YES.** Local tree is **v6.18.44** (`git describe HEAD`).
-Buggy code confirmed at mac.c:11635-11646 — uses `vifs->old_ctx` for
-single `ar`, processes all `n_vifs` with that `ar`. Bug introduced by
-`314876885bdcc3` (April 2024, present since ~v6.9). Multi-radio single-
-wiphy support fully present (`ah->num_radio`, `wiphy->n_radio`, MLO
-capable hardware registration at mac.c:14395+).
+### Step 6.1: Does the Buggy Code Exist?
+**Record:** **YES.** `arch/sparc/Kconfig` lacks `depends on !LD_IS_LLD`
+on COMPAT. vdso32 build with `elf32_sparc` is present.
+`CONFIG_LD_IS_LLD` exists in `init/Kconfig`. The fix commit itself is
+**not yet** in this tree.
 
 ### Step 6.2: Backport Complications
-**Record:** Clean apply expected. File structure matches diff context.
-`kzalloc_objs`, `__free(kfree)`, `ath12k_generic_dbg` all available. No
-conflicting changes in recent history. Expected difficulty: **clean
-apply**.
+**Record:** **Clean apply** — single line insertion after `depends on
+SPARC64`. No conflicting changes in recent `arch/sparc/Kconfig` history.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** No — `git log -S "ar_map"` and `git grep "Prevent incorrect
-vif chanctx"` return nothing. Fix not yet in tree.
+**Record:** No equivalent fix found (`git log -S "depends on !LD_IS_LLD"
+-- arch/sparc/Kconfig` returned nothing). s390's analogous guard exists
+but sparc does not.
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem Criticality
-**Record:** **drivers/net/wireless/ath/ath12k** — IMPORTANT. WiFi 7
-driver for Qualcomm hardware (QCN9274, WCN7850, etc.). Not core kernel,
-but affects all users of supported WiFi 7 hardware.
+**Record:** `arch/sparc` — **PERIPHERAL** architecture (niche hardware),
+but kbuild/toolchain interaction affects kernel builders.
 
 ### Step 7.2: Subsystem Activity
-**Record:** Actively developed — 20+ commits to ath12k/mac.c in recent
-history. ath12k is a relatively young but production driver in v6.18.
+**Record:** Active LLVM/toolchain work on sparc in this tree
+(R_SPARC_UA64 relocation, Sep 2025), indicating LLVM sparc builds are a
+real and growing concern.
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who Is Affected
-**Record:** Users of multi-radio ath12k hardware in single-wiphy MLO
-configuration (`CONFIG_ATH12K=y/m`). Specifically QCN9274 and similar
-WiFi 7 chipsets with 2+ radios. Not universal, but growing hardware
-segment.
+**Record:** **Config-specific** — sparc64 kernel builders using `LLVM=1`
+with LLD. Not general runtime users. Relevant to CI, distro builders,
+and developers adopting LLVM toolchains on SPARC.
 
 ### Step 8.2: Trigger Conditions
-**Record:** Simultaneous CSA across multiple links spanning more than
-one radio. Occurs when mac80211 calls `ieee80211_chsw_switch_vifs()`
-with `n_vifs > 1` and vifs map to different radios. Realistic on MLO
-AP/STA setups during channel switches. Not timing-dependent race —
-deterministic logic bug. Unprivileged users can trigger indirectly via
-WiFi management (e.g., AP channel change affecting multiple MLO links).
+**Record:** `LLVM=1` + sparc64 + LLD linker + config that enables COMPAT
+(default y on sparc64). Reproducible on `allmodconfig`. Not timing-
+dependent.
 
 ### Step 8.3: Failure Mode Severity
-**Record:** **HIGH** — Driver state corruption. Wrong vdev IDs sent to
-wrong radio's firmware via WMI. Can cause WiFi disconnects, firmware
-communication errors, potential kernel warnings/crashes. The added
-`WARN_ON(!arvif)` path prevents NULL dereference when vif doesn't
-resolve on the wrong radio. Not silent data corruption, but functional
-breakage of wireless connectivity.
+**Record:** **Build failure** (hard error at link stage) — severity
+**MEDIUM** for affected builders (cannot complete kernel build), **LOW**
+for runtime/production users (no oops, corruption, or security issue).
 
-### Step 8.4: Risk-Benefit
+### Step 8.4: Risk-Benefit Ratio
 **Record:**
-- **Benefit:** HIGH for affected hardware — prevents state corruption
-  during CSA on multi-radio WiFi 7 devices
-- **Risk:** LOW — contained to one function's error handling path, uses
-  established patterns, adds validation before processing
-- **Ratio:** Strong benefit outweighs minimal risk
+- **Benefit:** Unblocks LLVM+LLD sparc64 kernel builds; aligns with
+  active LLVM enablement work in tree; follows s390 precedent.
+- **Risk:** Very low — 1-line Kconfig guard; only changes behavior for
+  builds that already fail.
+- **Ratio:** Favorable for backport as a build fix.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence Summary
 
-**FOR backporting:**
-- Fixes real, reproducible logic bug in multi-radio chanctx switching
-- Can corrupt driver state / break WiFi on QCN9274-class hardware
-- Hardware-tested (Tested-on: QCN9274)
-- Reviewed by two Qualcomm ath12k developers
-- Small, single-file, self-contained fix
-- Bug present since April 2024 single-wiphy support (`314876885bdcc3`)
-- Buggy code confirmed in v6.18.44
-- Adds NULL safety guard preventing potential oops
-- Follows pattern used by other WiFi drivers (rtw89)
+**FOR backport:**
+- Explicit build fix — listed in `Documentation/process/stable-kernel-
+  rules.rst` as valid stable material
+- Reproducible, documented failure (`elf32_sparc` unsupported by LLD)
+- 1-line, obviously correct, maintainer-reviewed
+- Direct precedent on s390 (`COMPAT depends on !LD_IS_LLD`)
+- Bug exists in 6.18.44; applies cleanly
+- LLVM sparc support actively being developed in this tree
 
-**AGAINST backporting:**
-- Only affects multi-radio ath12k hardware (not all users)
-- No syzbot report or user bug report (identified proactively)
-- CSA across multiple radios may be less common than single-radio
-  operations
+**AGAINST backport:**
+- Very niche audience (sparc64 + LLVM + LLD)
+- No runtime user impact — only affects kernel builders
+- LLD builds lose 32-bit compat (acceptable workaround)
 
-**UNRESOLVED:**
-- Full lore.kernel.org review thread (bot protection blocked access)
-- Whether reviewers explicitly nominated for stable
+**Unresolved:**
+- Full lore.kernel.org review thread (blocked by anti-bot)
+- Whether any distro has filed a stable request
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — logic is sound, QCN9274
-   tested, dual Reviewed-by
-2. Fixes a real bug? **PASS** — incorrect radio selection with state
-   corruption
-3. Important issue? **PASS** — driver state corruption / connectivity
-   loss (HIGH severity)
-4. Small and contained? **PASS** — one file, ~75 lines, focused change
-5. No new features or APIs? **PASS** — bug fix only, returns existing
-   error codes
-6. Can apply to local tree? **PASS** — all dependencies present, clean
-   apply expected
+1. Obviously correct and tested? **PASS** — Kconfig guard;
+   Acked/Reviewed by toolchain and sparc maintainers.
+2. Fixes a real bug affecting users? **PASS** — real build failure for
+   LLVM sparc64 builders.
+3. Important issue? **PASS (MEDIUM)** — build error, not
+   crash/corruption/security.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features or APIs? **PASS** — Kconfig dependency only.
+6. Can apply to local tree? **PASS** — clean one-line apply to 6.18.44.
 
 ### Step 9.3: Exception Categories
-**Record:** N/A — standard driver bug fix, not a quirk/DT/build/doc
-exception.
+**Record:** **Build fix** — explicitly qualifies under stable kernel
+rules.
 
 ### Step 9.4: Decision Rationale
 
-This commit fixes a deterministic bug in ath12k's channel context switch
-handler for multi-radio single-wiphy configurations. The local tree
-(v6.18.44) contains the buggy code introduced in April 2024 and lacks
-this fix. When mac80211 passes vifs spanning multiple radios during
-simultaneous CSA, the driver sends vdev WMI commands to the wrong radio,
-corrupting driver state. The fix correctly groups vifs by radio and
-validates each entry — a minimal, obviously correct change tested on
-real hardware. While the affected hardware population is narrower than a
-core kernel bug, WiFi 7 multi-radio devices are production hardware in
-v6.18, and driver state corruption during channel switches is a serious
-functional defect appropriate for stable.
+This commit fixes a reproducible build failure when compiling a sparc64
+kernel with `LLVM=1` and LLD. The failure occurs because `CONFIG_COMPAT`
+(default y) triggers building the 32-bit vDSO with `elf32_sparc`
+emulation, which LLD does not support. The fix is a one-line Kconfig
+guard matching an established pattern on s390 and arm.
+
+While the affected audience is small (sparc64 LLVM builders), stable
+kernel rules explicitly include build errors as backport-worthy, and
+LLVM toolchain adoption on sparc is actively progressing in this 6.18.y
+tree. The fix is minimal, reviewed by both the sparc and LLVM
+maintainers, and carries negligible regression risk.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message: subject, tags (Tested-on,
-  Reviewed-by x2, Link), body analysis
-- **[Phase 2]** Diff analysis: 2 functions in mac.c, logic bug + NULL
-  guard, ~75 lines
-- **[Phase 3]** `git blame -L 11625,11649`: function from d889913
-  (2022), radio lookup from 314876885bdcc3 (2024-04-09)
-- **[Phase 3]** `git show 314876885bdcc3`: confirmed single-wiphy commit
-  introduced the assumption
-- **[Phase 3]** `git merge-base --is-ancestor`: both d889913 and
-  314876885bdcc3 are in tree
-- **[Phase 3]** `git log -S "ar_map"`: empty — fix not applied
-- **[Phase 3]** `git log --oneline -20 --
-  drivers/net/wireless/ath/ath12k/mac.c`: recent active development
-- **[Phase 4]** `b4 dig -c HEAD`: failed (commit not in tree)
-- **[Phase 4]** lore.kernel.org/patch.msgid.link: blocked by Anubis
-  (UNVERIFIED: review thread)
-- **[Phase 5]** `grep switch_vif_chanctx`: mac80211 chan.c:1537 calls
-  with n_vifs spanning all reserved links
-- **[Phase 5]** Read rtw89 mac80211.c:1369-1414: per-vif iteration
-  pattern (comparison)
-- **[Phase 5]** Read ath12k mac.c:10878-10907: confirmed NULL deref risk
-  before fix
-- **[Phase 6]** `git describe HEAD`: v6.18.44
-- **[Phase 6]** Read mac.c:11625-11649: buggy code present (uses vifs[0]
-  only)
-- **[Phase 6]** `git merge-base --is-ancestor 3bf5e19c804d0 HEAD`:
-  kzalloc_objs available
-- **[Phase 6]** `grep __free(kfree)`: pattern already used in
-  ath12k/mac.c
-- **[Phase 6]** `grep ath12k_generic_dbg`: present in debug.h
-- **[Phase 8]** Failure mode: driver state corruption on multi-radio
-  CSA, severity HIGH
+- [Phase 1] Parsed subject, tags, body; identified as build-fix with
+  maintainer review
+- [Phase 2] Confirmed 1-line diff in `arch/sparc/Kconfig`; verified
+  `elf32_sparc` in `arch/sparc/vdso/Makefile:64` and COMPAT→vdso32
+  linkage at `Makefile:14`
+- [Phase 3] `git describe HEAD`: v6.18.44; `git blame` COMPAT lines to
+  2008; `CONFIG_LD_IS_LLD` present since b744b43f79cc7 (2020)
+- [Phase 3] Related commit `05457d96175d2` (LLVM R_SPARC_UA64) present
+  in tree, confirming active LLVM sparc work
+- [Phase 3] `git log -S "depends on !LD_IS_LLD" -- arch/sparc/Kconfig`:
+  no results — fix not present
+- [Phase 4] `b4 dig` with message-id: failed (syntax error);
+  lore.kernel.org: blocked by anti-bot
+- [Phase 4] Verified s390 precedent at `arch/s390/Kconfig:514` (`depends
+  on !CC_IS_CLANG && !LD_IS_LLD`)
+- [Phase 5] Traced COMPAT → vdso32 build path via Makefile and Kconfig
+- [Phase 6] Confirmed buggy Kconfig state in 6.18.44; fix not yet
+  applied; clean apply expected
+- [Phase 8] Assessed as build-time failure, MEDIUM severity for
+  builders, LOW runtime risk
+- UNVERIFIED: Full mailing list review thread content (lore blocked)
+- UNVERIFIED: Whether commit has landed in mainline (evaluated as
+  candidate for this 6.18.y tree)
 
-**YES**The background search finished: the commit isn’t in this tree yet
-(no matches for “Prevent incorrect vif chanctx” or “multi-radio
-contexts”), which matches evaluating it as a new backport candidate.
+**YES**
 
-**Summary for v6.18.44:** **YES** — backport this fix.
+ arch/sparc/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-The bug is real and present: on multi-radio ath12k hardware,
-`ath12k_mac_op_switch_vif_chanctx()` picks the radio from `vifs[0]` but
-processes the whole batch, so simultaneous CSA across radios can send
-vdev WMI commands to the wrong radio and corrupt driver state. The patch
-groups vifs by radio, validates each one, and adds a NULL guard in
-`ath12k_mac_update_vif_chan()`. It’s a small, single-file change, tested
-on QCN9274, and should apply cleanly here.
-
- drivers/net/wireless/ath/ath12k/mac.c | 87 +++++++++++++++++++++++----
- 1 file changed, 76 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 4bb4482e27343..2f47054efa44e 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -10888,6 +10888,9 @@ ath12k_mac_update_vif_chan(struct ath12k *ar,
- 			continue;
- 		}
- 
-+		if (WARN_ON(!arvif))
-+			continue;
-+
- 		ath12k_dbg(ab, ATH12K_DBG_MAC,
- 			   "mac chanctx switch vdev_id %i freq %u->%u width %d->%d\n",
- 			   arvif->vdev_id,
-@@ -11628,23 +11631,85 @@ ath12k_mac_op_switch_vif_chanctx(struct ieee80211_hw *hw,
- 				 int n_vifs,
- 				 enum ieee80211_chanctx_switch_mode mode)
- {
--	struct ath12k *ar;
-+	struct ath12k *curr_ar, *new_ar, *group_ar;
-+	struct ieee80211_vif_chanctx_switch *v;
-+	int i, j, count = 0;
- 
- 	lockdep_assert_wiphy(hw->wiphy);
- 
--	ar = ath12k_get_ar_by_ctx(hw, vifs->old_ctx);
--	if (!ar)
--		return -EINVAL;
-+	if (n_vifs == 0)
-+		return 0;
- 
--	/* Switching channels across radio is not allowed */
--	if (ar != ath12k_get_ar_by_ctx(hw, vifs->new_ctx))
--		return -EINVAL;
-+	struct ath12k **ar_map __free(kfree) = kzalloc_objs(*ar_map, n_vifs);
- 
--	ath12k_dbg(ar->ab, ATH12K_DBG_MAC,
--		   "mac chanctx switch n_vifs %d mode %d\n",
--		   n_vifs, mode);
--	ath12k_mac_update_vif_chan(ar, vifs, n_vifs);
-+	if (!ar_map)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < n_vifs; i++) {
-+		v = &vifs[i];
-+
-+		if (v->old_ctx->def.chan->band != v->new_ctx->def.chan->band) {
-+			ath12k_generic_dbg(ATH12K_DBG_MAC,
-+					   "mac chanctx switch band change not supported\n");
-+			return -EOPNOTSUPP;
-+		}
-+
-+		curr_ar = ath12k_get_ar_by_ctx(hw, v->old_ctx);
-+		new_ar = ath12k_get_ar_by_ctx(hw, v->new_ctx);
-+
-+		if (!curr_ar || !new_ar) {
-+			ath12k_generic_dbg(ATH12K_DBG_MAC,
-+					   "unable to determine device for the passed channel ctx\n");
-+			ath12k_generic_dbg(ATH12K_DBG_MAC,
-+					   "Old freq %d MHz (device %s) to new freq %d MHz (device %s)\n",
-+					   v->old_ctx->def.chan->center_freq,
-+					   curr_ar ? "valid" : "invalid",
-+					   v->new_ctx->def.chan->center_freq,
-+					   new_ar ? "valid" : "invalid");
-+			return -EINVAL;
-+		}
- 
-+		/* Switching a vif between two radios is not allowed */
-+		if (curr_ar != new_ar) {
-+			ath12k_dbg(curr_ar->ab, ATH12K_DBG_MAC,
-+				   "mac chanctx switch to another radio not supported\n");
-+			return -EOPNOTSUPP;
-+		}
-+
-+		ar_map[i] = curr_ar;
-+	}
-+
-+	/* Group vifs by radio (ar) and process each group independently. */
-+	bool *processed __free(kfree) = kzalloc_objs(*processed, n_vifs);
-+
-+	if (!processed)
-+		return -ENOMEM;
-+
-+	struct ieee80211_vif_chanctx_switch *group_vifs __free(kfree) =
-+						kzalloc_objs(*group_vifs, n_vifs);
-+
-+	if (!group_vifs)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < n_vifs; i++) {
-+		if (processed[i])
-+			continue;
-+
-+		group_ar = ar_map[i];
-+
-+		count = 0;
-+		for (j = 0; j < n_vifs; j++) {
-+			if (!processed[j] && ar_map[j] == group_ar) {
-+				group_vifs[count++] = vifs[j];
-+				processed[j] = true;
-+			}
-+		}
-+
-+		ath12k_dbg(group_ar->ab, ATH12K_DBG_MAC,
-+			   "mac chanctx switch n_vifs %d mode %d\n",
-+			   count, mode);
-+		ath12k_mac_update_vif_chan(group_ar, group_vifs, count);
-+	}
- 	return 0;
- }
- 
+diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
+index a630d373e6453..454782ac54b26 100644
+--- a/arch/sparc/Kconfig
++++ b/arch/sparc/Kconfig
+@@ -470,6 +470,7 @@ endmenu
+ config COMPAT
+ 	bool
+ 	depends on SPARC64
++	depends on !LD_IS_LLD
+ 	default y
+ 	select HAVE_UID16
+ 	select ARCH_WANT_OLD_COMPAT_IPC
 -- 
 2.53.0
 
