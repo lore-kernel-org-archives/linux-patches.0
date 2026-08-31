@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6034F9C7C;
-	Mon, 31 Aug 2026 13:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E946E4A015A;
+	Mon, 31 Aug 2026 13:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183685; cv=none; b=gWNmEGHt1G8NzV3sRTlPty8V4x9V322+eIfyxKJ4abTqh551ND5a39OvVDVdY4D4zPpzpCk8D0QseSymb8GnrJRpWdvPi0BkaWlpLN6hcilbWUNA0ByEmfsYjI8013cvXxfzfS6NBUNy/SzqacsQ/8BRv355g3diVWyt7Ae2Gfw=
+	t=1788183687; cv=none; b=vC+pYYqH27606HVGj/bp0MjlaIq9DwwrzPGwmnFWDTHur8V6FayuNhyOCHbcHo33geisn4qRVEoYxk9VDUL6fMg6o361xUbx62723WKKdMvX4mAGtDqk2h7OY0iTTkCVG+j4VsmMPgLjX4tdWrHccfhmmiDo5mXc99peeoqz/rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183685; c=relaxed/simple;
-	bh=DB0Tukm1teGstjgzYUkOET9cw3v8J72MQ1+1ieAPynE=;
+	s=arc-20240116; t=1788183687; c=relaxed/simple;
+	bh=ExYEIBHflgKX7wH0/UegyqsqQrnI96Pdxdc1zx3k55c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dGkQ8ezyHVG+s7V2gWsRrATQOCql+K3ZLLGGM1m12Q2cAiURjOvxSULUEvvoxL4TY37ft9Q4CWiwR50TKGK1+VcOfwOp62B18COWzaBEPzAonJ6tqjJmOXcIARMEAjNyEd5Fkz9gvr+fYqkrgs8nchUAnPDh3wLplG0EolkzDFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e0wRlrKE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=F3GVAEL2zoqghhJ1C1+Wo+8R8kvdgk5lUj1ciRZ1Pjnpf3pEDv5ygHfQkoEt91PnkHK1lFIBAcF3+uTpWq/qsd6P4DB4ddZihLXX/UgyXzmoL+Ly5h+0oZMhLt+K/IRVMqzTyUQVjSsLCtN0CYgka4r3FD2NLyDSKg8dzOeOLcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XehznNZO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e0wRlrKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497B51F00A3F;
-	Mon, 31 Aug 2026 13:41:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XehznNZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003E01F000E9;
+	Mon, 31 Aug 2026 13:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183683;
-	bh=t9NjzSVvUiK3gayp1XaXxHEpLml92T0c2xxi6CPFnHk=;
+	s=k20260515; t=1788183684;
+	bh=Z+/9zkiq29qZCLnLy+ynK/JkEFK4uDrWz9KvtCHAk9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e0wRlrKErUVDJTAUuxmDF+qkwIgNWTtkYZSb/XVEpOJEiKoamOkdq/FZi5K5vUY/a
-	 fU3+G1q8E2Hiq02mHCLEi6HTn24OVCAs8FJY1M5m20l93YY9Md+iXq6ecr10MTzptF
-	 LV0BhieFqvztq5TEX2pmpX9u3Ae2LQ1ymMWfoV031HWXCLSjFDYfnDwp51wYKAMeR/
-	 C5nc7GZN6x5Je7xDJAXGTjvfQ4xCE0x366xDDIMZgURRuuh+fiz/qexjbAbavznSFR
-	 LRG8juTiYLQyRB4IFVxAW6X5c1k2FFegP/UghbXiuLVdEsQdf2+CvX6sQm6uCGhLdF
-	 k6Gym0z8QKOsw==
+	b=XehznNZOkTmLfdKlABoXtpKMe8rNUTCCkFLbQS3eM2W/iKSYd74OvwXHuBCPzdkeP
+	 f9YLeNuUWM3izKPXs3mGctndAhP7R2cypAAQr3QigQ83/YsdixWHeOkem+GRE5iAF7
+	 eITqUNGxp4/eWJFVPMVA+ub1yuYSSdoWpXA6lMaBNRSp8WKMSgWWrJr5yJ1Lf+zgSA
+	 8/hfkHh/sRP0yZMGnpmEVUZG0SsmtITRLjwYVW+/D0rx35Zmu7C2Zy2To3kV+ggkeT
+	 soaTUnTGAygcP4LE10CaMzuS2g2fbCaDIsDFZJXxYQZc1m56qlFB9WYazfRdskX54p
+	 C9uZXknMeWbSw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: shayderrr <darknessshayder@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+Cc: Tao Cui <cuitao@kylinos.cn>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	thierry.reding@kernel.org,
-	mperttunen@nvidia.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
-	linux-tegra@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] host1x: bus: Fix missing ops null check in error teardown
-Date: Mon, 31 Aug 2026 09:24:30 -0400
-Message-ID: <20260831133314.4125787-242-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] RDMA/counter: Fix num_counters leak on bind_qp failure in alloc_and_bind()
+Date: Mon, 31 Aug 2026 09:24:31 -0400
+Message-ID: <20260831133314.4125787-243-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -51,363 +46,416 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: shayderrr <darknessshayder@gmail.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 71d25f668bc5c0f36ea843462e12307dea45aaa3 ]
+[ Upstream commit 4fbc8230009f5b1bcd13cc74c5a6a43ddba141fd ]
 
-In host1x_device_init(), the error teardown paths do not check
-client->ops before dereferencing it, unlike the forward init paths
-which correctly guard with 'client->ops &&'. This can result in a
-NULL pointer dereference if client->ops is NULL.
+When __rdma_counter_bind_qp() fails in alloc_and_bind(), the error path
+jumps to err_mode which frees the counter without decrementing
+port_counter->num_counters. The only place that decrements is
+rdma_counter_free(), which is unreachable since the counter was never
+successfully bound.
 
-Fix by adding the missing client->ops check in both the teardown
-and teardown_late labels.
+This leak accumulates across repeated failures, permanently preventing
+the port from switching to AUTO mode (-EBUSY in __counter_set_mode())
+and blocking the MANUAL→NONE auto-revert in rdma_counter_free(). When
+the mode was NONE before the call, the MANUAL mode set by
+__counter_set_mode() also leaks since the revert logic is never
+reached.
 
-Signed-off-by: shayderrr <darknessshayder@gmail.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260517170456.84927-1-darknessshayder@gmail.com
+Add an err_bind label between the num_counters increment and the
+existing err_mode label. It decrements num_counters and mirrors the
+MANUAL→NONE revert from rdma_counter_free(), ensuring the port state
+is fully restored on bind failure.
+
+Link: https://patch.msgid.link/r/20260520104546.1776253-2-cuitao@kylinos.cn
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: RDMA/counter num_counters leak fix
 
-### Step 1.1: Subject Line
-**Record:** `[host1x: bus]` `[Fix]` — Add missing `client->ops` NULL
-checks in `host1x_device_init()` error teardown paths.
+**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`,
+`make kernelversion` → `6.18.44`)
 
-### Step 1.2: Tags
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Parse the subject line
+**Record:** `[RDMA/counter]` `[Fix]` — Fix `num_counters` leak on
+`bind_qp` failure in `alloc_and_bind()`.
+
+### Step 1.2: Parse all commit message tags
 **Record:**
-- **Signed-off-by:** shayderrr \<darknessshayder@gmail.com\> (author)
-- **Signed-off-by:** Thierry Reding \<treding@nvidia.com\> (host1x/Tegra
+- **Link:** `https://patch.msgid.link/r/20260520104546.1776253-2-
+  cuitao@kylinos.cn`
+- **Signed-off-by:** Tao Cui `<cuitao@kylinos.cn>`
+- **Signed-off-by:** Jason Gunthorpe `<jgg@nvidia.com>` (RDMA
   maintainer)
-- **Link:** https://patch.msgid.link/20260517170456.84927-1-
-  darknessshayder@gmail.com
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable tags
-- Notable: maintainer sign-off is a strong quality signal; no
-  syzbot/user bug report
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+- Notable: part of a 2-patch series; sibling patch (`1776253-3`) is
+  already backported to this tree as `9420871183eab`.
 
-### Step 1.3: Body Analysis
+### Step 1.3: Analyze commit body
 **Record:**
-- **Bug:** `host1x_device_init()` teardown (`teardown`, `teardown_late`)
-  dereferences `client->ops` without a NULL guard; forward init paths
-  already use `client->ops &&`.
-- **Symptom:** NULL pointer dereference during error recovery when
-  initialization fails.
-- **Root cause:** Oversight when teardown was added (2017) and when
-  `teardown_late` was added (2021); `host1x_device_exit()` and other
-  paths in the same file already guard correctly.
+- **Bug:** On `__rdma_counter_bind_qp()` failure in `alloc_and_bind()`,
+  error path jumps to `err_mode` and frees the counter without
+  decrementing `port_counter->num_counters`.
+- **Symptom:** Leak accumulates across repeated failures; port cannot
+  switch to AUTO mode (`-EBUSY` from `__counter_set_mode()`);
+  MANUAL→NONE auto-revert never runs; if mode was NONE before call,
+  MANUAL mode also leaks.
+- **Root cause:** `num_counters` is incremented before bind; decrement
+  only happens in `rdma_counter_free()`, which is unreachable when bind
+  never succeeded.
+- **Fix approach:** Add `err_bind` label that decrements `num_counters`
+  and mirrors MANUAL→NONE revert from `rdma_counter_free()`.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** No — this is an explicit NULL-deref fix on an error path,
-not disguised cleanup.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised — explicitly a resource/state leak fix on an
+error path.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
+### Step 2.1: Inventory the changes
 **Record:**
-- **File:** `drivers/gpu/host1x/bus.c` (+2 / -2 lines)
-- **Function:** `host1x_device_init()`
-- **Scope:** Single-file, surgical (2-line change)
+- **File:** `drivers/infiniband/core/counters.c` (+9 / -1 lines)
+- **Function:** `alloc_and_bind()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code Flow Change
+### Step 2.2: Code flow change
 **Record:**
-- **Hunk 1 (`teardown`):** `if (client->ops->exit)` → `if (client->ops
-  && client->ops->exit)`
-- **Hunk 2 (`teardown_late`):** `if (client->ops->late_exit)` → `if
-  (client->ops && client->ops->late_exit)`
-- **Before:** Error teardown could dereference NULL `client->ops`.
-- **After:** Clients without `ops` are skipped, matching forward init
-  and `host1x_device_exit()`.
+- **Hunk 1 (bind failure):** `goto err_mode` → `goto err_bind`
+- **Hunk 2 (new `err_bind`):** Lock `port_counter`, decrement
+  `num_counters`, if zero and MANUAL mode call
+  `__counter_set_mode(NONE)`, unlock, then fall through to `err_mode`
+- **Before:** Bind failure leaked counter refcount state and left port
+  mode stuck
+- **After:** Bind failure fully restores port counter state before
+  freeing counter object
 
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** NULL pointer dereference (memory safety).
-**Mechanism:** On `early_init`/`init` failure, reverse iteration calls
-`client->ops->exit` / `client->ops->late_exit` even when `client->ops`
-is NULL — a client skipped in the forward path can still be visited in
-teardown.
+### Step 2.3: Bug mechanism
+**Record:** **Category:** Error-path resource/state leak (reference-
+count-like counter + mode state machine).
+- `num_counters++` at line 191 happens before `__rdma_counter_bind_qp()`
+  at line 199
+- Current tree still has `goto err_mode` on failure (lines 200–201),
+  skipping decrement/revert
+- Fix mirrors existing cleanup in `rdma_counter_free()` (lines 220–225)
 
-### Step 2.4: Fix Quality
-**Record:** Obviously correct; mirrors existing patterns at lines
-196–207, 257–271, and 815–836 in the same file. Minimal regression risk.
+### Step 2.4: Fix quality
+**Record:** Obviously correct — duplicates proven cleanup logic from
+`rdma_counter_free()`. Minimal, no API changes. Low regression risk;
+uses existing lock and `__counter_set_mode()` patterns.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
+### Step 3.1: Blame changed lines
+**Record:** Buggy lines blame to `e664048784506` (tree import merge).
+Shallow stable-tree history; counters subsystem predates 6.18 (file
+copyright 2019 Mellanox; sibling fix references `Fixes: 56594ae1d250`).
+
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no `Fixes:` tag on this commit. Sibling patch fixes
+`56594ae1d250` (mutex annotation commit in RDMA core).
+
+### Step 3.3: Related file history
 **Record:**
-- `teardown` without NULL check: introduced in `8f7da1578e90b` (Thierry
-  Reding, 2017-11-08) — "gpu: host1x: Cleanup on initialization failure"
-- `teardown_late` without NULL check: introduced in `933deb8c7b8e3f`
-  (Thierry Reding, 2021-03-26) — "gpu: host1x: Add early init and late
-  exit callbacks"
-- Forward paths have had `client->ops &&` since original
-  `host1x_device_init()` (2013)
+- `9420871183eab` — "RDMA/counter: Fix incorrect port index in
+  rdma_counter_init() error cleanup" — **already in this 6.18.44 tree**
+  (same author, same series, committed by Greg K-H)
+- This `num_counters` leak fix is **not** yet in the tree
 
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no Fixes: tag.
-
-### Step 3.3: Related File History
-**Record:** Recent host1x stable-style fixes in this tree include UAF
-(`5f4de3c717d34`), reference leak (`c4d6442ac3ed0`), and syncpt race
-(`79197c6007f2a`). Standalone fix; not part of a series.
-
-### Step 3.4: Author Context
-**Record:** shayderrr is a contributor; Thierry Reding (maintainer)
-signed off. Author is not the subsystem maintainer but patch was
-accepted by one.
+### Step 3.4: Author context
+**Record:** Tao Cui authored both patches; Jason Gunthorpe (maintainer)
+Signed-off-by and replied "Applied to for-next" on the series.
 
 ### Step 3.5: Dependencies
-**Record:** No prerequisites. Applies to code present since 2017/2021.
-Self-contained.
+**Record:** Standalone 2-patch series; patches are independent. This
+patch applies cleanly to current `counters.c` (pre-patch index
+`c3aa6d7fc66b6` matches current file). No prerequisite commits required
+beyond existing counters code.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1–4.5
+### Step 4.1: Original patch discussion
 **Record:**
-- `b4 dig` by commit hash and subject: no match (commit not in this
-  checkout)
-- Lore/patch.msgid.link: blocked by Anubis bot protection — could not
-  read thread
-- **UNVERIFIED:** Reviewer feedback, stable nominations, series
-  revisions
+- **URL:** https://lkml.iu.edu/2605.2/07986.html (patch 1/2)
+- **Cover:** https://lkml.iu.edu/2605.2/07985.html
+- **Series:** 2 patches, both error-path fixes in `counters.c`
+- **Maintainer response:** Jason Gunthorpe: "Applied to for-next"
+  (https://lists.openwall.net/linux-kernel/2026/05/25/1182)
+- No NAKs found; no explicit stable nomination in thread
+- `b4 dig -c <hash>` failed (commit not in local tree); lore.kernel.org
+  blocked by bot protection
+
+### Step 4.2: Reviewers
+**Record:** CC'd: `leon@kernel.org`, `linux-rdma@vger.kernel.org`,
+`linux-kernel@vger.kernel.org`. Jason Gunthorpe reviewed and applied.
+
+### Step 4.3: Bug report
+**Record:** No external bug report or syzbot — found via code review in
+a small 2-patch series.
+
+### Step 4.4: Related patches
+**Record:** Patch 2/2 (`rdma_counter_init()` port index) already
+backported here as `9420871183eab` (upstream `b86fd95805a7`).
+
+### Step 4.5: Stable mailing list
+**Record:** Not searched (no stable-specific discussion found in
+available sources).
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `host1x_device_init()` — only function modified.
+### Step 5.1: Key functions
+**Record:** `alloc_and_bind()`, `__rdma_counter_bind_qp()`,
+`__counter_set_mode()`, `rdma_counter_free()`
 
-### Step 5.2: Callers
-**Record:** `host1x_device_init()` is called from:
-- `drivers/gpu/drm/tegra/drm.c` (Tegra DRM probe)
-- `drivers/crypto/tegra/tegra-se-main.c` (Tegra SE)
-- `drivers/staging/media/tegra-video/video.c` (staging Tegra video)
-
-All are device-probe initialization paths on Tegra (or COMPILE_TEST).
+### Step 5.2: Callers of `alloc_and_bind()`
+**Record:**
+- `rdma_counter_bind_qp_auto()` — called from `verbs.c` during QP
+  RST→INIT with port specified (common QP creation path)
+- `rdma_counter_bind_qpn_alloc()` — called from `nldev.c` via RDMA
+  netlink/devlink counter configuration
 
 ### Step 5.3: Callees
-**Record:** `client->ops->exit`, `client->ops->late_exit`,
-`mutex_lock/unlock`, list iteration macros.
+**Record:** `__rdma_counter_bind_qp()` → driver `counter_bind_qp` op
+(e.g. mlx5 `mlx5_ib_counter_bind_qp()` which can fail on hardware
+counter allocation or flow binding)
 
 ### Step 5.4: Reachability
+**Record:** Reachable from userspace via RDMA devlink netlink
+(`nldev.c`) and from QP modification during IB/RDMA workload setup.
+Unprivileged users with RDMA device access can trigger counter bind
+operations.
+
+### Step 5.5: Similar patterns
+**Record:** Correct cleanup already exists in `rdma_counter_free()`;
+this fix adds the missing mirror on the alloc/bind error path.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+
+### Step 6.1: Does buggy code exist?
+**Record:** **YES.** Current tree at lines 191–201 increments
+`num_counters` then `goto err_mode` on bind failure without decrement:
+
+```191:201:drivers/infiniband/core/counters.c
+        port_counter->num_counters++;
+        mutex_unlock(&port_counter->lock);
+        // ...
+        ret = __rdma_counter_bind_qp(counter, qp, port);
+        if (ret)
+                goto err_mode;
+```
+
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — file matches pre-patch blob index
+from the patch (`c3aa6d7fc66b6`). Sibling fix from same series already
+applied without conflict.
+
+### Step 6.3: Related fixes already present?
+**Record:** `9420871183eab` (rdma_counter_init port-index fix) is
+present. This `num_counters` leak fix is **not** present.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** **RDMA/InfiniBand core** — IMPORTANT for HPC, cloud, and
+RoCE deployments using hardware counters (mlx5, ionic, etc.)
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained; recent stable backport activity in this
+tree for same file/author.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of RDMA hardware counters on devices with
+`counter_bind_qp` support (notably mlx5). Config-dependent on
+`CONFIG_INFINIBAND` and counter-capable hardware.
+
+### Step 8.2: Trigger conditions
+**Record:** Any `__rdma_counter_bind_qp()` failure after
+`alloc_and_bind()` increments `num_counters` — e.g. mlx5 hardware
+counter allocation failure (`mlx5_cmd_exec_inout`) or op-counter flow
+binding failure (`mlx5r_fs_bind_op_fc`). Repeated failures accumulate
+the leak.
+
+### Step 8.3: Failure mode severity
+**Record:** No kernel crash/oops, but **permanent functional breakage**
+until reboot:
+- `-EBUSY` when trying to enable AUTO mode
+- Port stuck in MANUAL when it should revert to NONE
+- Counter management via devlink becomes unusable
+**Severity: MEDIUM-HIGH** (persistent admin/operational failure, not
+data corruption or security)
+
+### Step 8.4: Risk-benefit
 **Record:**
-1. Tegra clients register via `host1x_client_register()` /
-   `__host1x_client_register()`.
-2. `host1x_device_init()` runs when the composite host1x device driver
-   probes.
-3. If any client's `init`/`early_init` fails, teardown runs.
-4. Forward path skips clients with `client->ops == NULL`; teardown does
-   not — inconsistent and unsafe.
-5. In-tree drivers set `ops` before register, but the API explicitly
-   allows NULL `ops` (forward guards prove intent). A client with NULL
-   `ops` on `device->clients` plus a later init failure triggers the
-   bug.
-
-**Userspace trigger:** Indirect — probe failure during boot/driver load
-on Tegra systems with `CONFIG_TEGRA_HOST1X` and dependent drivers.
-
-### Step 5.5: Similar Patterns
-**Record:** Same `client->ops &&` pattern used in
-`host1x_device_exit()`, `host1x_client_suspend()`, and
-`host1x_client_resume()` in the same file. Teardown paths are the
-outlier.
+- **Benefit:** Restores correct counter state on bind failure; completes
+  the already-started backport of this 2-patch series
+- **Risk:** Very low — 9 lines mirroring existing `rdma_counter_free()`
+  logic
+- **Ratio:** Favorable for backport
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Local tree is **v6.18.44** (Makefile: 6.18.44).
-Buggy code at lines 224 and 232 in `drivers/gpu/host1x/bus.c` — fix not
-yet applied.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply expected** — two identical one-line changes.
-No conflicting recent churn in this function.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No existing fix for this issue in this tree.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-### Step 7.1: Subsystem
-**Record:** `drivers/gpu/host1x/` — Tegra display/multimedia bus
-infrastructure. **Criticality:** IMPORTANT for Tegra/embedded;
-PERIPHERAL globally (requires `CONFIG_TEGRA_HOST1X`, `ARCH_TEGRA` or
-`COMPILE_TEST`).
-
-### Step 7.2: Activity
-**Record:** Actively maintained; multiple bugfix commits in recent
-history on this subsystem.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Tegra platform users with host1x clients (DRM, crypto,
-staging video). Not universal x86/ARM server impact.
-
-### Step 8.2: Trigger Conditions
-**Record:**
-- `host1x_device_init()` called during probe
-- A client `init`/`early_init` fails
-- Teardown visits a client with `client->ops == NULL` (skipped during
-  forward init)
-- **Likelihood:** Low-to-medium on error paths; requires init failure
-  plus NULL-ops client on the list
-
-### Step 8.3: Failure Mode Severity
-**Record:** Kernel oops (NULL dereference) during error recovery instead
-of clean `-errno` return. **Severity: HIGH** for affected path (turns
-recoverable probe failure into crash).
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** Prevents crash on init-failure teardown; makes error
-  recovery robust
-- **Risk:** Very low — 2-line change matching established pattern
-- **Ratio:** Favorable for Tegra stable users
-
----
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
 **FOR backport:**
-- Real NULL-deref bug on error path
-- Trivial, obviously correct 2-line fix
-- Matches existing code in same function/file
-- Maintainer (Thierry Reding) signed off
-- Bug present since 2017/2021; affects this v6.18.44 tree
-- Error-path crash is worse than the original init failure
+- Real, verified state leak on error path in production RDMA counter
+  code
+- User-visible permanent `-EBUSY` / stuck MANUAL mode until reboot
+- Small, obviously correct fix reviewed by RDMA maintainer
+- Buggy code confirmed present in Linux 6.18.44
+- Companion patch from same series already backported to this tree
+- Reachable from userspace devlink and QP creation paths
+- `mlx5_ib_counter_bind_qp()` has multiple real failure paths
 
 **AGAINST backport:**
-- Platform-specific (Tegra only)
-- Requires init failure (uncommon)
-- No user/syzbot report documented
-- In-tree drivers appear to always set `ops` before register (trigger
-  may be rare in practice)
+- Not a crash, security issue, or data corruption
+- Only affects RDMA counter users (subset of kernel users)
+- Requires bind failure (not every-day path)
+- No syzbot/user bug report
 
-**UNRESOLVED:**
-- Mailing list review thread (Anubis blocked)
-- No confirmed in-tree reproduction with current drivers
+**Unresolved:** Exact upstream commit SHA not in local tree; precise
+introduction commit of `alloc_and_bind()` error path not determinable
+from shallow stable history (but code clearly present and long-
+standing).
 
-The unresolved items do not outweigh the clear correctness fix: forward
-paths already treat NULL `ops` as valid; teardown must match.
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — mirrors existing guards;
-   maintainer SOB; no logic change beyond NULL safety
-2. Fixes a real bug? **PASS** — NULL deref on error teardown
-3. Important issue? **PASS** — kernel oops on probe error recovery (HIGH
-   for affected users)
-4. Small and contained? **PASS** — 2 lines, 1 file
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — mirrors
+   `rdma_counter_free()`; maintainer applied to for-next
+2. Fixes real bug affecting users? **PASS** — state leak with permanent
+   counter-mode breakage
+3. Important issue? **PASS (moderate)** — persistent functional failure
+   of RDMA counter subsystem, not crash-level but operationally
+   significant
+4. Small and contained? **PASS** — 9 lines, 1 file
 5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — buggy code confirmed in v6.18.44
+6. Can apply to local tree? **PASS** — code present, clean apply
+   expected
 
-### Step 9.3: Exception Categories
-**Record:** None (standard bug fix).
+### Step 9.3: Exception categories
+**Record:** N/A — standard error-path bug fix, not device
+ID/quirk/build/doc exception.
 
-### Step 9.4: Decision Rationale
-This is a conservative, surgical fix for an inconsistent NULL check that
-can kernel-oops during `host1x_device_init()` error recovery on Tegra
-systems. The fix aligns teardown with forward init and
-`host1x_device_exit()`, carries negligible regression risk, and the
-buggy code is present in this v6.18.44 tree.
+### Step 9.4: Decision rationale
+
+This commit fixes a genuine error-path state leak in `alloc_and_bind()`
+that leaves `num_counters` inflated and can permanently block AUTO mode
+(`-EBUSY`) or leave ports stuck in MANUAL mode. The bug is present in
+this 6.18.44 tree, the fix is minimal and mirrors existing cleanup
+logic, and the sibling patch from the same 2-patch series is already
+backported here. While the failure mode is operational rather than a
+kernel panic, the impact is persistent until reboot and affects real
+RDMA counter management paths used in production InfiniBand/RoCE
+environments.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message and tags from user query
-- **[Phase 2]** Confirmed diff: 2 lines in `host1x_device_init()`
-  teardown paths
-- **[Phase 3]** `git describe HEAD`: v6.18.44; Makefile confirms 6.18.44
-- **[Phase 3]** `git blame -L 222,236`: teardown from 2017
-  (`8f7da1578e90b`), teardown_late from 2021 (`933deb8c7b8e3f`)
-- **[Phase 3]** `git show 8f7da1578e90bf`: original teardown added
-  without NULL check while forward path had one
-- **[Phase 3]** `git log -p -S 'if (client->ops->exit)'`: confirmed 2017
-  introduction of unguarded teardown
-- **[Phase 3]** `git log --oneline -15 -- drivers/gpu/host1x/bus.c`:
-  recent related fixes; no duplicate fix
-- **[Phase 4]** `b4 dig`: no results (commit not in tree)
-- **[Phase 4]** WebFetch lore/patch.msgid.link: blocked by Anubis —
-  **UNVERIFIED** review discussion
-- **[Phase 5]** `grep host1x_device_init`: callers in tegra drm, tegra-
-  se, tegra-video
-- **[Phase 5]** Read `host1x_device_init()`, `host1x_device_exit()`,
-  suspend/resume: confirmed `client->ops &&` pattern elsewhere
-- **[Phase 5]** Read tegra driver probes (dc.c, gr3d.c, sor.c, tegra-
-  se): ops set before register
-- **[Phase 6]** Read current `bus.c` lines 224, 232: buggy code present
-  (no NULL check)
-- **[Phase 6]** Kconfig: `CONFIG_TEGRA_HOST1X` depends on `ARCH_TEGRA ||
-  COMPILE_TEST`
-- **[Phase 8]** Failure mode: NULL deref → oops on init-failure teardown
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+- **[Phase 1]** Confirmed part of 2-patch series via lkml cover letter
+  (https://lkml.iu.edu/2605.2/07985.html)
+- **[Phase 2]** Read diff: +9/-1 in `alloc_and_bind()`, new `err_bind`
+  label
+- **[Phase 2]** Read current `counters.c` lines 145–232: confirmed bug
+  at 200–201 (`goto err_mode` without decrement)
+- **[Phase 2]** Read `rdma_counter_free()` lines 215–225: confirmed fix
+  mirrors existing cleanup
+- **[Phase 2]** Read `__counter_set_mode()` lines 13–28: confirmed
+  `-EBUSY` when `num_counters != 0` in AUTO mode
+- **[Phase 3]** `git describe HEAD` → v6.18.44; `make kernelversion` →
+  6.18.44
+- **[Phase 3]** `git blame -L 191,201`: lines present in tree
+- **[Phase 3]** `git log --grep="num_counters leak"` → empty (fix not
+  applied)
+- **[Phase 3]** `git show 9420871183eab`: sibling patch already
+  backported to this tree
+- **[Phase 4]** lkml.iu.edu/2605.2/07986.html: patch content matches
+- **[Phase 4]** lists.openwall.net reply: Jason Gunthorpe "Applied to
+  for-next"
+- **[Phase 4]** `b4 dig -c <hash>`: failed (commit not in tree) —
+  UNVERIFIED via b4
+- **[Phase 4]** lore.kernel.org: blocked by bot protection — UNVERIFIED
+  via lore
+- **[Phase 5]** `grep alloc_and_bind`: callers in
+  `rdma_counter_bind_qp_auto()` and `rdma_counter_bind_qpn_alloc()`
+- **[Phase 5]** `verbs.c:1854`: `rdma_counter_bind_qp_auto()` on QP
+  RST→INIT
+- **[Phase 5]** `nldev.c:2050-2064`: netlink paths to counter bind/auto-
+  mode
+- **[Phase 5]** `mlx5/counters.c:624-669`: `mlx5_ib_counter_bind_qp()`
+  has failure paths returning errors
+- **[Phase 6]** Confirmed buggy code exists at lines 191–201 in local
+  tree
+- **[Phase 6]** Confirmed fix NOT applied (`grep err_bind` in counters.c
+  → no match)
+- **[Phase 6]** Confirmed sibling fix IS applied (rdma_counter_init uses
+  `port_data[i]` at line 664)
+- **[Phase 8]** Assessed failure mode: permanent `-EBUSY`/stuck MANUAL,
+  severity MEDIUM-HIGH
 
-**YES**The backport analysis is done.
+**YES**
 
-**Commit:** `host1x: bus: Fix missing ops null check in error teardown`
-**Tree:** v6.18.44 — the bug is still present (unguarded `client->ops`
-derefs at lines 224 and 232 in `drivers/gpu/host1x/bus.c`).
+ drivers/infiniband/core/counters.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-**Summary:** On Tegra, if `host1x_device_init()` fails partway through,
-the teardown paths can NULL-deref `client->ops` while forward init and
-`host1x_device_exit()` already guard against that. The fix is two lines,
-matches existing patterns, and is signed off by host1x maintainer
-Thierry Reding.
-
-**Verdict: YES** — backport to this tree.
-
-A background `git log --grep` search timed out; it wasn’t needed for the
-decision since the buggy code and history were already confirmed
-directly.
-
- drivers/gpu/host1x/bus.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
-index 3313ead8bfcc2..06aa7fcd367e1 100644
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -221,7 +221,7 @@ int host1x_device_init(struct host1x_device *device)
+diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
+index 5dad5d77ce274..a9e189194c130 100644
+--- a/drivers/infiniband/core/counters.c
++++ b/drivers/infiniband/core/counters.c
+@@ -198,12 +198,20 @@ static struct rdma_counter *alloc_and_bind(struct ib_device *dev, u32 port,
  
- teardown:
- 	list_for_each_entry_continue_reverse(client, &device->clients, list)
--		if (client->ops->exit)
-+		if (client->ops && client->ops->exit)
- 			client->ops->exit(client);
+ 	ret = __rdma_counter_bind_qp(counter, qp, port);
+ 	if (ret)
+-		goto err_mode;
++		goto err_bind;
  
- 	/* reset client to end of list for late teardown */
-@@ -229,7 +229,7 @@ int host1x_device_init(struct host1x_device *device)
+ 	rdma_restrack_parent_name(&counter->res, &qp->res);
+ 	rdma_restrack_add(&counter->res);
+ 	return counter;
  
- teardown_late:
- 	list_for_each_entry_continue_reverse(client, &device->clients, list)
--		if (client->ops->late_exit)
-+		if (client->ops && client->ops->late_exit)
- 			client->ops->late_exit(client);
- 
- 	mutex_unlock(&device->clients_lock);
++err_bind:
++	mutex_lock(&port_counter->lock);
++	port_counter->num_counters--;
++	if (!port_counter->num_counters &&
++	    port_counter->mode.mode == RDMA_COUNTER_MODE_MANUAL)
++		__counter_set_mode(port_counter, RDMA_COUNTER_MODE_NONE, 0,
++				   false);
++	mutex_unlock(&port_counter->lock);
+ err_mode:
+ 	rdma_free_hw_stats_struct(counter->stats);
+ err_stats:
 -- 
 2.53.0
 
