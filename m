@@ -1,465 +1,713 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3BE582B82;
-	Mon, 31 Aug 2026 13:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821C5582B9A;
+	Mon, 31 Aug 2026 13:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184197; cv=none; b=XMbqOjTkWI45CKQk701QWjBW+bB9QUdpNF8E45F9Inrt+5XLQ5R0Yb0ifQYezk5v/EujS3C6DsQYfae/cDbEk5hd1+JtIlydHH7LjCVlY03vTHzXkiIwvm1yNvMp4WBEh8RJ3AzD+ww62OId1DNfviThLCRSY3wpWetM7KXiu0I=
+	t=1788184199; cv=none; b=CtBnKge+WjTk1NcradjODYa0pw21VDWFzV4ugr0PfRFK+aCx7Iod2WqxJaKMON7mT39HKt5DKx5ILigPwkYuoaxYXwMmM6BFA4RIm6wuD8hPXvx0+DcKHvLzxAAdtJMipF7O5snwyK6I6AtqdSDWX6XHRUN0igxTLuAKrMrL6JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184197; c=relaxed/simple;
-	bh=cEIZjVXRfd+mKXvLlidGrD8yGxVGNRhDU8f0aHmnmgA=;
+	s=arc-20240116; t=1788184199; c=relaxed/simple;
+	bh=h5cAa6ABLjS0Uv6w2PafCYkEjVNx8dx2kP56sCwIDWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iPYMZGgx9Cizry+dGtIGY0IL8LVzPqenonh+SaJSYV5UVE1nQ+2Tltg7rSAUPOcedE9JlEvO2Sx4R0W0+kaVAF0/9Qma6YsKbG8cVKAJ1YNm6mLG8z+kFoNwysC8qSBQ7R1t147zOxFTWCKgD57oRsj9OPgKev0jB6Qdsxwtevg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KqLBVTR5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lAPdNFma7uGBqP3W0Xb46kQsLTU0V/iGgSz7u6bEntBrPZBZ9e4/SEuiGbTAAUfNdzP2nwDOkdmN7VF9tC9VGHtvscs0QOj928CB1DvXdIqt6JTtTecvdtEkyXrRipGwgrIDfLO93/t5or/SmZEUZOMMNTLXbBEO8pmGLfU33y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtdAzd5G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KqLBVTR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A521F00A3F;
-	Mon, 31 Aug 2026 13:49:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184195;
-	bh=hKH0tZRDdHMNPnmyCNcAIcyxU04yp78Tf160s2ctNsA=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtdAzd5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25551F00A3E;
+	Mon, 31 Aug 2026 13:49:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184196;
+	bh=D6k8Y9o9LiMayUQChsEhx74o23ag/BfmdGmp5FkPxP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KqLBVTR5OUNSzYIrnJHG7Fbzu963cwmEkWsW3MSHmZsospjoMdFNZVzJwPs9Spj0t
-	 L79KnaX+SeahVXS2c/vhRylweR59zbElJYtTthth9u9ISYxrE0NJbq2DVF5o+ZpavB
-	 HxcnXeqE8Y58jFjGAM5629TdIlE/yheyDeA/feAeU7gwCcCAKYMQ0NI55R/FIA5Z5D
-	 dN4VgoUxmmUi6Iu6I1Xbmwa6o0Axu+mla828QXla7pnyXkHXVtlm/T6ykoemURuwyv
-	 Vmr6Cob7HI6xtuIhZYLrCJaXcupRg6mshRqG3r4zDBiyR4ZfnRVPHUGHDTHeYvRxCr
-	 I0erGB4SuiE2g==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	pabeni@redhat.com,
-	bridge@lists.linux.dev,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net: bridge: remove stale rcu_barrier() in br_multicast_dev_del()
-Date: Mon, 31 Aug 2026 09:29:36 -0400
-Message-ID: <20260831133314.4125787-548-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=vtdAzd5GkJrEf0EO3XiS0nku+pLQP3uBuvbU8AthzO0RWt8uZytX3U1LcubO+QAUx
+	 WJFFYKinZxGGUzJmqj+SEmzh0+oHpGFdVxRL5sj6fjdcuuGElFNG933CZw0LpX/afU
+	 hVDwaMAkR+UOIuH+ynwYJHNKEmpxZtwO+XWChycI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 08/99] selinux: use known type instead of void pointer
+Date: Mon, 31 Aug 2026 15:33:37 +0200
+Message-ID: <20260831133400.208771864@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 25ae123db10ba9ab890b56bcdb0a4363aee8529a ]
+------------------
 
-This rcu_barrier() came from a time call_rcu() calls were used in
-net/bridge/br_multicast.c.
+From: Christian Göttsche <cgzones@googlemail.com>
 
-Now kfree_rcu() is there, we can remove this problematic rcu_barrier()
-which causes extreme RTNL pressure in many syzbot reports.
+[ Upstream commit f07586160fd5492f8d48e7667e7a5d8797aa5090 ]
 
-INFO: task syz-executor:77945 is blocked on a mutex likely owned by task kworker/u1024:5:36537.
-task:kworker/u1024:5 state:D stack:24616 pid:36537 tgid:36537 ppid:2      task_flags:0x4208060 flags:0x00080000 last_sleep:612797637337
-Workqueue: netns cleanup_net
-Call Trace:
- <TASK>
-  [<ffffffff81914eaa>] context_switch+0xf2a/0x1730 kernel/sched/core.c:6483
-  [<ffffffff81201143>] __schedule+0x1133/0x43a0 kernel/sched/core.c:8411
-  [<ffffffff8120446b>] __schedule_loop kernel/sched/core.c:8514 [inline]
-  [<ffffffff8120446b>] schedule+0xab/0x260 kernel/sched/core.c:8529
-  [<ffffffff8121a093>] schedule_timeout+0xc3/0x2b0 kernel/time/sleep_timeout.c:75
-  [<ffffffff81205347>] do_wait_for_common kernel/sched/completion.c:100 [inline]
-  [<ffffffff81205347>] __wait_for_common kernel/sched/completion.c:121 [inline]
-  [<ffffffff81205347>] wait_for_common kernel/sched/completion.c:132 [inline]
-  [<ffffffff81205347>] wait_for_completion+0x2c7/0x5d0 kernel/sched/completion.c:153
-  [<ffffffff81b8f27f>] rcu_barrier+0x49f/0x620 kernel/rcu/tree.c:3888
-  [<ffffffff860091b3>] br_multicast_dev_del+0x303/0x350 net/bridge/br_multicast.c:4459
-  [<ffffffff85fb5dbc>] br_dev_uninit+0x1c/0x40 net/bridge/br_device.c:157
-  [<ffffffff8568058c>] unregister_netdevice_many_notify+0x1c1c/0x2300 net/core/dev.c:12599
-  [<ffffffff8562be43>] ops_exit_rtnl_list net/core/net_namespace.c:187 [inline]
-  [<ffffffff8562be43>] ops_undo_list+0x3d3/0x940 net/core/net_namespace.c:248
+Improve type safety and readability by using the known type.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260519095540.2643318-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+(cherry picked from commit f07586160fd5492f8d48e7667e7a5d8797aa5090)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-## Phase 1: Commit Message Forensics
-
-### Step 1.1: Subject Line
-**Record:** `[net: bridge]` `[remove]` — remove a stale `rcu_barrier()`
-call from `br_multicast_dev_del()`.
-
-### Step 1.2: Commit Message Tags
-**Record:**
-- **Fixes:** — not present (expected for manual review)
-- **Reported-by:** — not present; syzbot impact described in body
-- **Tested-by:** — not present
-- **Reviewed-by:** Jakub Sitnicki `<jakub@cloudflare.com>`, Ido Schimmel
-  `<idosch@nvidia.com>`
-- **Acked-by:** Nikolay Aleksandrov `<razor@blackwall.org>` (bridge
-  multicast maintainer)
-- **Link:**
-  https://patch.msgid.link/20260519095540.2643318-1-edumazet@google.com
-- **Cc: stable:** — not present (not a negative signal)
-- **Signed-off-by:** Eric Dumazet, Jakub Kicinski (ignore pipeline-added
-  SOBs)
-
-Notable: maintainer ack + two subsystem reviewers; syzbot deadlock stack
-trace in body.
-
-### Step 1.3: Commit Body Analysis
-**Record:**
-- **Bug:** `rcu_barrier()` in `br_multicast_dev_del()` is leftover from
-  the `call_rcu()` era; multicast teardown now uses `kfree_rcu()`.
-- **Symptom:** Extreme RTNL pressure; syzbot reports tasks blocked on
-  mutex during `cleanup_net` workqueue processing.
-- **Failure mode:** `cleanup_net` → `ops_exit_rtnl_list` (RTNL held) →
-  `unregister_netdevice_many` → `br_dev_uninit` → `br_multicast_dev_del`
-  → `rcu_barrier()` → hung task waiting on completion while kworker
-  holds RTNL.
-- **Root cause (author):** Global `rcu_barrier()` drains unrelated RCU
-  callbacks while RTNL is held, creating lock-order / pressure problems.
-
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Yes — described as cleanup, but it fixes a real
-hang/deadlock during network namespace teardown. Not cosmetic.
-
----
-
-## Phase 2: Diff Analysis
-
-### Step 2.1: Change Inventory
-**Record:**
-- **Files:** `net/bridge/br_multicast.c` only (−2 lines)
-- **Function:** `br_multicast_dev_del()`
-- **Scope:** Single-file, surgical deletion
-
-### Step 2.2: Code Flow Change
-**Record:**
-- **Before:** After synchronous GC (`br_multicast_gc`) and
-  `cancel_work_sync(&br->mcast_gc_work)`, call global `rcu_barrier()`.
-- **After:** Return immediately after GC work is synchronized.
-- **Path affected:** Bridge netdev teardown during namespace/device
-  unregistration (error/cleanup path, not hot path).
-
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** Deadlock / hung task from unnecessary global
-synchronization.
-- `rcu_barrier()` waits for all RCU callbacks system-wide.
-- Called under RTNL during `cleanup_net`.
-- Other workers may need RTNL to complete their RCU callbacks → circular
-  wait.
-- With `kfree_rcu()` only (no `call_rcu()` in this file), the barrier
-  has no bridge-multicast callbacks of its own to wait for; it only
-  stalls unrelated subsystems.
-
-### Step 2.4: Fix Quality
-**Record:** Obviously correct and minimal. Bridge maintainer confirmed
-the barrier is stale. Regression risk is very low: synchronous GC +
-`cancel_work_sync` already ensure teardown ordering; `kfree_rcu` handles
-deferred freeing without a global barrier. Precedent: `writeback: drop
-now-unnecessary rcu_barrier()` was backported to stable (commit
-`29de8448174cf` in this tree).
-
----
-
-## Phase 3: Git History Investigation
-
-### Step 3.1: Blame
-**Record:**
-- `rcu_barrier()` at line 4460 introduced by Nikolay Aleksandrov, commit
-  `4329596cb10d23` (2018-12-05), when switching from `call_rcu_bh` to
-  `kfree_rcu`.
-- `cancel_work_sync` added in `e12cec65b5546` (2020-09-07) with the GC
-  refactor.
-- Bug present since 2018; deadlock surfaced under syzbot stress.
-
-### Step 3.2: Fixes: Tag
-**Record:** N/A — no `Fixes:` tag. Original introduction:
-`4329596cb10d23` ("net: bridge: multicast: use non-bh rcu flavor"),
-which is an ancestor of this tree.
-
-### Step 3.3: Related File History
-**Record:**
-- `4329596cb10d23`: `call_rcu_bh` → `kfree_rcu`, kept `rcu_barrier()`
-  (changed from `rcu_barrier_bh()`).
-- `e12cec65b5546`: GC refactor; `br_multicast_dev_del` now uses
-  synchronous `br_multicast_gc()`.
-- No `call_rcu` remains in `br_multicast.c` (verified).
-- Standalone one-patch series (v1 only per `b4 dig -a`).
-
-### Step 3.4: Author Context
-**Record:** Eric Dumazet is a senior networking developer. Nikolay
-Aleksandrov (bridge maintainer) acked. No conflicting follow-up fixes
-found.
-
-### Step 3.5: Dependencies
-**Record:** No dependencies. Prerequisites (`kfree_rcu` migration, GC
-refactor) are both ancestors of HEAD. Patch applies cleanly (`git apply
---check` → **APPLIES CLEANLY**). Fix commit `25ae123db10ba` is **NOT**
-in this tree.
-
----
-
-## Phase 4: Mailing List and External Research
-
-### Step 4.1: Original Discussion
-**Record:**
-- `b4 dig -c 25ae123db10ba` →
-  https://patch.msgid.link/20260519095540.2643318-1-edumazet@google.com
-- Single revision (v1, 2026-05-19).
-- Nikolay Aleksandrov: **Acked-by** — confirms barrier is no longer
-  needed.
-- No NAKs found in thread.
-- No explicit `Cc: stable` in thread, but that is not required.
-
-### Step 4.2: Reviewers
-**Record:** CC'd: David Miller, Jakub Kicinski, Paolo Abeni, Simon
-Horman, netdev@, Nikolay Aleksandrov, Ido Schimmel. Appropriate
-maintainers/reviewers involved.
-
-### Step 4.3: Bug Report
-**Record:** syzbot-style hung-task trace in commit message and patch.
-Task blocked on mutex during `cleanup_net` / `rcu_barrier`. Reproducible
-under fuzzing; affects netns teardown with bridges.
-
-### Step 4.4: Related Patches
-**Record:** Standalone patch, not part of a series. Similar pattern in
-writeback (`29de8448174cf`, already backported here).
-
-### Step 4.5: Stable List History
-**Record:** Not searched on lore stable@ (WebFetch blocked by bot
-protection for direct lore). No evidence this was rejected for stable.
-Fix is not yet in `stable/linux-6.18.y`.
-
----
-
-## Phase 5: Code Semantic Analysis
-
-### Step 5.1: Key Functions
-**Record:** `br_multicast_dev_del()` modified.
-
-### Step 5.2: Callers
-**Record:**
-- `br_dev_uninit()` in `net/bridge/br_device.c:157` — called during
-  netdev unregistration.
-- Reachable from `unregister_netdevice_many()` → `ops_exit_rtnl_list()`
-  → `cleanup_net` workqueue.
-- Affects all bridge teardown when `CONFIG_BRIDGE_IGMP_SNOOPING` is
-  enabled.
-
-### Step 5.3: Callees
-**Record:** `br_multicast_del_mdb_entry`, `br_multicast_ctx_deinit`,
-`br_multicast_gc`, `cancel_work_sync`, (removed) `rcu_barrier`.
-- `br_multicast_gc` synchronously calls destroy callbacks that use
-  `kfree_rcu()` for mdb entries, port groups, and group sources.
-
-### Step 5.4: Call Chain / Reachability
-**Record:**
-`unshare(CLONE_NEWNET)` / container stop / `ip netns delete` → netns
-refcount drop → `cleanup_net` → bridge device unregister →
-`br_multicast_dev_del`. Userspace-triggerable via namespace lifecycle;
-common in containers.
-
-### Step 5.5: Similar Patterns
-**Record:**
-- `br.c:506` still has `rcu_barrier()` at **module unload** — different
-  context (fdb kmem_cache teardown), intentionally kept.
-- `writeback` had identical stale-`rcu_barrier` removal backported to
-  stable.
-
----
-
-## Phase 6: Cross-Reference Against Local Tree
-
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Local tree is **Linux 6.18.44**
-(`stable/linux-6.18.y`). `rcu_barrier()` present at
-`net/bridge/br_multicast.c:4460`. Fix commit `25ae123db10ba` is **not**
-merged.
-
-### Step 6.2: Backport Complications
-**Record:** Clean apply confirmed. No conflicting refactors in this
-function between mainline fix and 6.18.y.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** No equivalent fix in tree. `git grep "remove stale
-rcu_barrier"` returns nothing. Prerequisites (`kfree_rcu`, GC refactor)
-are present.
-
----
-
-## Phase 7: Subsystem and Maintainer Context
-
-### Step 7.1: Subsystem Criticality
-**Record:** **net/bridge** — IMPORTANT. Bridge is widely used in
-virtualization, containers, and enterprise networking.
-
-### Step 7.2: Subsystem Activity
-**Record:** Actively maintained; recent multicast fixes from Nikolay
-Aleksandrov in 6.18.y.
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-### Step 8.1: Who Is Affected
-**Record:** Users with `CONFIG_BRIDGE` + `CONFIG_BRIDGE_IGMP_SNOOPING`
-who tear down bridges during network namespace cleanup (containers, LXC,
-Kubernetes CNI, test harnesses).
-
-### Step 8.2: Trigger Conditions
-**Record:** Network namespace deletion with bridge devices present.
-syzbot reproduces under stress. Not every boot, but realistic in
-container orchestration. Unprivileged users can trigger via user
-namespaces + bridge setup.
-
-### Step 8.3: Failure Severity
-**Record:** Hung task / RTNL deadlock during cleanup — **CRITICAL**
-(namespace teardown stalls, can leave system in degraded state).
-
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH — prevents real hangs in namespace teardown.
-- **Risk:** VERY LOW — 2-line deletion, maintainer-acked, synchronous GC
-  already in place.
-- **Ratio:** Strongly favors backport.
-
----
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence Summary
-
-**FOR:**
-- Real, reproducible hung-task / RTNL pressure (syzbot).
-- Critical failure mode during netns cleanup.
-- Minimal, maintainer-acked fix.
-- Buggy code present in 6.18.44.
-- Applies cleanly.
-- `kfree_rcu` has been used since 2018; `rcu_barrier` is genuinely
-  stale.
-- Precedent: similar `rcu_barrier` removal backported in writeback.
-
-**AGAINST:**
-- Only affects configs with bridge IGMP snooping (not universal, but
-  very common in distros).
-- No explicit `Cc: stable` (irrelevant per review rules).
-
-**UNRESOLVED:**
-- Exact syzkaller bug URL not fetched (lore bot-blocked); stack trace in
-  commit is sufficient.
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — maintainer ack, two reviews,
-   syzbot validation.
-2. Fixes a real bug? **PASS** — hung task during netns cleanup.
-3. Important issue? **PASS** — deadlock/hang, CRITICAL severity.
-4. Small and contained? **PASS** — 2 lines, 1 file.
-5. No new features/APIs? **PASS** — deletion only.
-6. Can apply to local tree? **PASS** — clean apply verified.
-
-### Step 9.3: Exception Categories
-**Record:** Not a device-ID/quirk/DT/build/doc exception. Qualifies as a
-straight bug fix.
-
-### Step 9.4: Decision Rationale
-The stale `rcu_barrier()` in `br_multicast_dev_del()` causes real hangs
-when bridges are torn down during network namespace cleanup. The barrier
-was needed for `call_rcu()` callbacks that no longer exist — all
-multicast objects now use `kfree_rcu()` with synchronous GC beforehand.
-Removing it is safe, tiny, and maintainer-approved. The bug exists in
-Linux 6.18.44 and the fix applies cleanly.
-
----
-
-## Verification
-
-- [Phase 1] `git show 25ae123db10ba`: parsed subject, tags, body, stack
-  trace
-- [Phase 2] Read `br_multicast_dev_del()` at lines 4444–4461; confirmed
-  −2 line diff
-- [Phase 2] `grep call_rcu net/bridge/br_multicast.c`: no matches (only
-  `kfree_rcu`)
-- [Phase 3] `git blame -L 4458,4461`: `rcu_barrier` from
-  `4329596cb10d23` (2018)
-- [Phase 3] `git show 4329596cb10d23`: `call_rcu_bh` → `kfree_rcu`, kept
-  `rcu_barrier`
-- [Phase 3] `git show e12cec65b5546`: GC refactor with synchronous
-  destroy
-- [Phase 3] `git merge-base --is-ancestor`: both prerequisite commits in
-  tree
-- [Phase 3] `git merge-base --is-ancestor 25ae123db10ba HEAD`: **NOT IN
-  TREE**
-- [Phase 3] `git apply --check`: **APPLIES CLEANLY**
-- [Phase 4] `b4 dig -c 25ae123db10ba`: lore URL found
-- [Phase 4] `b4 dig -w`: netdev maintainers CC'd
-- [Phase 4] `b4 dig -a`: v1 only, no later revisions
-- [Phase 4] mbox: Acked-by Nikolay Aleksandrov; Reviewed-by Sitnicki,
-  Schimmel
-- [Phase 5] `grep br_multicast_dev_del`: caller `br_dev_uninit` at
-  `br_device.c:157`
-- [Phase 5] Read `ops_exit_rtnl_list` at `net_namespace.c:165–189`: RTNL
-  held during unregister
-- [Phase 5] Read `br_multicast_gc` at lines 893–902: synchronous destroy
-  with `kfree_rcu`
-- [Phase 6] `git describe HEAD`: v6.18.44; `make kernelversion`: 6.18.44
-- [Phase 6] Confirmed `rcu_barrier()` at line 4460 still present
-- [Phase 6] `git log stable/linux-6.18.y --grep="stale rcu_barrier"`: no
-  match
-- [Phase 8] `git show 29de8448174cf`: precedent for stale `rcu_barrier`
-  removal in stable
-- [Phase 8] `grep rcu_barrier net/bridge/`: only `br_multicast.c:4460`
-  and `br.c:506` (module exit)
-
-**YES**The background checks finished and match the earlier analysis.
-
-**Task 65367** (`git log -S "rcu_barrier"` on `br_multicast.c`): the
-only relevant hit was `10cc2b50eb4b0` (RCU race fix in
-`br_multicast_stop`). The `rcu_barrier()` in `br_multicast_dev_del()`
-came from the 2018 `kfree_rcu` migration (`4329596cb10d23`).
-
-**Task 65368** (stable branch search): the fix commit `25ae123db10ba` is
-**not** in `stable/linux-6.18.y`. The stale `rcu_barrier()` is still
-present at line 4460 in this tree.
-
-**Verdict unchanged: YES** — backport to Linux 6.18.y. It’s a 2-line
-removal that fixes syzbot-reported hangs during netns/bridge teardown,
-applies cleanly, and is acked by the bridge maintainer.
-
- net/bridge/br_multicast.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index ce34881a9d96e..1014f6221472e 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -4456,8 +4456,6 @@ void br_multicast_dev_del(struct net_bridge *br)
- 	br_multicast_ctx_deinit(&br->multicast_ctx);
- 	br_multicast_gc(&deleted_head);
- 	cancel_work_sync(&br->mcast_gc_work);
--
--	rcu_barrier();
+ security/selinux/ss/avtab.c       |  8 +--
+ security/selinux/ss/avtab.h       |  9 +--
+ security/selinux/ss/conditional.c | 12 ++--
+ security/selinux/ss/conditional.h |  6 +-
+ security/selinux/ss/ebitmap.c     |  4 +-
+ security/selinux/ss/ebitmap.h     |  5 +-
+ security/selinux/ss/policydb.c    | 91 ++++++++++++++++---------------
+ security/selinux/ss/policydb.h    | 16 +++---
+ 8 files changed, 77 insertions(+), 74 deletions(-)
+
+diff --git a/security/selinux/ss/avtab.c b/security/selinux/ss/avtab.c
+index 8e400dd736b7a..23210faaa0465 100644
+--- a/security/selinux/ss/avtab.c
++++ b/security/selinux/ss/avtab.c
+@@ -336,7 +336,7 @@ static const uint16_t spec_order[] = {
+ };
+ /* clang-format on */
+ 
+-int avtab_read_item(struct avtab *a, void *fp, struct policydb *pol,
++int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *pol,
+ 		    int (*insertf)(struct avtab *a, const struct avtab_key *k,
+ 				   const struct avtab_datum *d, void *p),
+ 		    void *p)
+@@ -500,7 +500,7 @@ static int avtab_insertf(struct avtab *a, const struct avtab_key *k,
+ 	return avtab_insert(a, k, d);
  }
  
- int br_multicast_set_router(struct net_bridge_mcast *brmctx, unsigned long val)
+-int avtab_read(struct avtab *a, void *fp, struct policydb *pol)
++int avtab_read(struct avtab *a, struct policy_file *fp, struct policydb *pol)
+ {
+ 	int rc;
+ 	__le32 buf[1];
+@@ -543,7 +543,7 @@ int avtab_read(struct avtab *a, void *fp, struct policydb *pol)
+ 	goto out;
+ }
+ 
+-int avtab_write_item(struct policydb *p, const struct avtab_node *cur, void *fp)
++int avtab_write_item(struct policydb *p, const struct avtab_node *cur, struct policy_file *fp)
+ {
+ 	__le16 buf16[4];
+ 	__le32 buf32[ARRAY_SIZE(cur->datum.u.xperms->perms.p)];
+@@ -579,7 +579,7 @@ int avtab_write_item(struct policydb *p, const struct avtab_node *cur, void *fp)
+ 	return 0;
+ }
+ 
+-int avtab_write(struct policydb *p, struct avtab *a, void *fp)
++int avtab_write(struct policydb *p, struct avtab *a, struct policy_file *fp)
+ {
+ 	u32 i;
+ 	int rc = 0;
+diff --git a/security/selinux/ss/avtab.h b/security/selinux/ss/avtab.h
+index 8e8820484c55b..80c4a6064328e 100644
+--- a/security/selinux/ss/avtab.h
++++ b/security/selinux/ss/avtab.h
+@@ -104,15 +104,16 @@ static inline void avtab_hash_eval(struct avtab *h, const char *tag)
+ #endif
+ 
+ struct policydb;
+-int avtab_read_item(struct avtab *a, void *fp, struct policydb *pol,
++struct policy_file;
++int avtab_read_item(struct avtab *a, struct policy_file *fp, struct policydb *pol,
+ 		    int (*insert)(struct avtab *a, const struct avtab_key *k,
+ 				  const struct avtab_datum *d, void *p),
+ 		    void *p);
+ 
+-int avtab_read(struct avtab *a, void *fp, struct policydb *pol);
++int avtab_read(struct avtab *a, struct policy_file *fp, struct policydb *pol);
+ int avtab_write_item(struct policydb *p, const struct avtab_node *cur,
+-		     void *fp);
+-int avtab_write(struct policydb *p, struct avtab *a, void *fp);
++		     struct policy_file *fp);
++int avtab_write(struct policydb *p, struct avtab *a, struct policy_file *fp);
+ 
+ struct avtab_node *avtab_insert_nonunique(struct avtab *h,
+ 					  const struct avtab_key *key,
+diff --git a/security/selinux/ss/conditional.c b/security/selinux/ss/conditional.c
+index 64ba95e40a6fe..244dc82791133 100644
+--- a/security/selinux/ss/conditional.c
++++ b/security/selinux/ss/conditional.c
+@@ -206,7 +206,7 @@ static int bool_isvalid(struct cond_bool_datum *b)
+ 	return 1;
+ }
+ 
+-int cond_read_bool(struct policydb *p, struct symtab *s, void *fp)
++int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct cond_bool_datum *booldatum;
+@@ -323,7 +323,7 @@ static int cond_insertf(struct avtab *a, const struct avtab_key *k,
+ 	return 0;
+ }
+ 
+-static int cond_read_av_list(struct policydb *p, void *fp,
++static int cond_read_av_list(struct policydb *p, struct policy_file *fp,
+ 			     struct cond_av_list *list,
+ 			     struct cond_av_list *other)
+ {
+@@ -375,7 +375,7 @@ static int expr_node_isvalid(struct policydb *p, struct cond_expr_node *expr)
+ 	return 1;
+ }
+ 
+-static int cond_read_node(struct policydb *p, struct cond_node *node, void *fp)
++static int cond_read_node(struct policydb *p, struct cond_node *node, struct policy_file *fp)
+ {
+ 	__le32 buf[2];
+ 	u32 i, len;
+@@ -415,7 +415,7 @@ static int cond_read_node(struct policydb *p, struct cond_node *node, void *fp)
+ 	return cond_read_av_list(p, fp, &node->false_list, &node->true_list);
+ }
+ 
+-int cond_read_list(struct policydb *p, void *fp)
++int cond_read_list(struct policydb *p, struct policy_file *fp)
+ {
+ 	__le32 buf[1];
+ 	u32 i, len;
+@@ -453,7 +453,7 @@ int cond_write_bool(void *vkey, void *datum, void *ptr)
+ 	char *key = vkey;
+ 	struct cond_bool_datum *booldatum = datum;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	__le32 buf[3];
+ 	u32 len;
+ 	int rc;
+@@ -536,7 +536,7 @@ static int cond_write_node(struct policydb *p, struct cond_node *node,
+ 	return 0;
+ }
+ 
+-int cond_write_list(struct policydb *p, void *fp)
++int cond_write_list(struct policydb *p, struct policy_file *fp)
+ {
+ 	u32 i;
+ 	__le32 buf[1];
+diff --git a/security/selinux/ss/conditional.h b/security/selinux/ss/conditional.h
+index 8827715bad751..468e98ad3ea14 100644
+--- a/security/selinux/ss/conditional.h
++++ b/security/selinux/ss/conditional.h
+@@ -68,10 +68,10 @@ int cond_destroy_bool(void *key, void *datum, void *p);
+ 
+ int cond_index_bool(void *key, void *datum, void *datap);
+ 
+-int cond_read_bool(struct policydb *p, struct symtab *s, void *fp);
+-int cond_read_list(struct policydb *p, void *fp);
++int cond_read_bool(struct policydb *p, struct symtab *s, struct policy_file *fp);
++int cond_read_list(struct policydb *p, struct policy_file *fp);
+ int cond_write_bool(void *key, void *datum, void *ptr);
+-int cond_write_list(struct policydb *p, void *fp);
++int cond_write_list(struct policydb *p, struct policy_file *fp);
+ 
+ void cond_compute_av(struct avtab *ctab, struct avtab_key *key,
+ 		     struct av_decision *avd, struct extended_perms *xperms);
+diff --git a/security/selinux/ss/ebitmap.c b/security/selinux/ss/ebitmap.c
+index 99c01be15115a..cd84357db2c47 100644
+--- a/security/selinux/ss/ebitmap.c
++++ b/security/selinux/ss/ebitmap.c
+@@ -360,7 +360,7 @@ void ebitmap_destroy(struct ebitmap *e)
+ 	e->node = NULL;
+ }
+ 
+-int ebitmap_read(struct ebitmap *e, void *fp)
++int ebitmap_read(struct ebitmap *e, struct policy_file *fp)
+ {
+ 	struct ebitmap_node *n = NULL;
+ 	u32 mapunit, count, startbit, index, i;
+@@ -478,7 +478,7 @@ int ebitmap_read(struct ebitmap *e, void *fp)
+ 	goto out;
+ }
+ 
+-int ebitmap_write(const struct ebitmap *e, void *fp)
++int ebitmap_write(const struct ebitmap *e, struct policy_file *fp)
+ {
+ 	struct ebitmap_node *n;
+ 	u32 bit, count, last_bit, last_startbit;
+diff --git a/security/selinux/ss/ebitmap.h b/security/selinux/ss/ebitmap.h
+index ba2ac3da11539..e0150695566cb 100644
+--- a/security/selinux/ss/ebitmap.h
++++ b/security/selinux/ss/ebitmap.h
+@@ -129,8 +129,9 @@ int ebitmap_contains(const struct ebitmap *e1, const struct ebitmap *e2,
+ int ebitmap_get_bit(const struct ebitmap *e, u32 bit);
+ int ebitmap_set_bit(struct ebitmap *e, u32 bit, int value);
+ void ebitmap_destroy(struct ebitmap *e);
+-int ebitmap_read(struct ebitmap *e, void *fp);
+-int ebitmap_write(const struct ebitmap *e, void *fp);
++struct policy_file;
++int ebitmap_read(struct ebitmap *e, struct policy_file *fp);
++int ebitmap_write(const struct ebitmap *e, struct policy_file *fp);
+ u32 ebitmap_hash(const struct ebitmap *e, u32 hash);
+ 
+ #ifdef CONFIG_NETLABEL
+diff --git a/security/selinux/ss/policydb.c b/security/selinux/ss/policydb.c
+index 304746b503a0c..27407cb6f18a8 100644
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1011,7 +1011,7 @@ int policydb_context_isvalid(struct policydb *p, struct context *c)
+  * Read a MLS range structure from a policydb binary
+  * representation file.
+  */
+-static int mls_read_range_helper(struct mls_range *r, void *fp)
++static int mls_read_range_helper(struct mls_range *r, struct policy_file *fp)
+ {
+ 	__le32 buf[2];
+ 	u32 items;
+@@ -1071,7 +1071,7 @@ static int mls_read_range_helper(struct mls_range *r, void *fp)
+  * from a policydb binary representation file.
+  */
+ static int context_read_and_validate(struct context *c, struct policydb *p,
+-				     void *fp)
++				     struct policy_file *fp)
+ {
+ 	__le32 buf[3];
+ 	int rc;
+@@ -1109,7 +1109,7 @@ static int context_read_and_validate(struct context *c, struct policydb *p,
+  * binary representation file.
+  */
+ 
+-static int str_read(char **strp, gfp_t flags, void *fp, u32 len)
++static int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len)
+ {
+ 	int rc;
+ 	char *str;
+@@ -1132,7 +1132,7 @@ static int str_read(char **strp, gfp_t flags, void *fp, u32 len)
+ 	return 0;
+ }
+ 
+-static int perm_read(struct policydb *p, struct symtab *s, void *fp)
++static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct perm_datum *perdatum;
+@@ -1165,7 +1165,7 @@ static int perm_read(struct policydb *p, struct symtab *s, void *fp)
+ 	return rc;
+ }
+ 
+-static int common_read(struct policydb *p, struct symtab *s, void *fp)
++static int common_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct common_datum *comdatum;
+@@ -1217,7 +1217,7 @@ static void type_set_init(struct type_set *t)
+ 	ebitmap_init(&t->negset);
+ }
+ 
+-static int type_set_read(struct type_set *t, void *fp)
++static int type_set_read(struct type_set *t, struct policy_file *fp)
+ {
+ 	__le32 buf[1];
+ 	int rc;
+@@ -1236,7 +1236,7 @@ static int type_set_read(struct type_set *t, void *fp)
+ }
+ 
+ static int read_cons_helper(struct policydb *p, struct constraint_node **nodep,
+-			    u32 ncons, int allowxtarget, void *fp)
++			    u32 ncons, int allowxtarget, struct policy_file *fp)
+ {
+ 	struct constraint_node *c, *lc;
+ 	struct constraint_expr *e, *le;
+@@ -1330,7 +1330,7 @@ static int read_cons_helper(struct policydb *p, struct constraint_node **nodep,
+ 	return 0;
+ }
+ 
+-static int class_read(struct policydb *p, struct symtab *s, void *fp)
++static int class_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct class_datum *cladatum;
+@@ -1439,7 +1439,7 @@ static int class_read(struct policydb *p, struct symtab *s, void *fp)
+ 	return rc;
+ }
+ 
+-static int role_read(struct policydb *p, struct symtab *s, void *fp)
++static int role_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct role_datum *role;
+@@ -1496,7 +1496,7 @@ static int role_read(struct policydb *p, struct symtab *s, void *fp)
+ 	return rc;
+ }
+ 
+-static int type_read(struct policydb *p, struct symtab *s, void *fp)
++static int type_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct type_datum *typdatum;
+@@ -1548,7 +1548,7 @@ static int type_read(struct policydb *p, struct symtab *s, void *fp)
+  * Read a MLS level structure from a policydb binary
+  * representation file.
+  */
+-static int mls_read_level(struct mls_level *lp, void *fp)
++static int mls_read_level(struct mls_level *lp, struct policy_file *fp)
+ {
+ 	__le32 buf[1];
+ 	int rc;
+@@ -1570,7 +1570,7 @@ static int mls_read_level(struct mls_level *lp, void *fp)
+ 	return 0;
+ }
+ 
+-static int user_read(struct policydb *p, struct symtab *s, void *fp)
++static int user_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct user_datum *usrdatum;
+@@ -1621,7 +1621,7 @@ static int user_read(struct policydb *p, struct symtab *s, void *fp)
+ 	return rc;
+ }
+ 
+-static int sens_read(struct policydb *p, struct symtab *s, void *fp)
++static int sens_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct level_datum *levdatum;
+@@ -1662,7 +1662,7 @@ static int sens_read(struct policydb *p, struct symtab *s, void *fp)
+ 	return rc;
+ }
+ 
+-static int cat_read(struct policydb *p, struct symtab *s, void *fp)
++static int cat_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
+ {
+ 	char *key = NULL;
+ 	struct cat_datum *catdatum;
+@@ -1697,7 +1697,7 @@ static int cat_read(struct policydb *p, struct symtab *s, void *fp)
+ 
+ /* clang-format off */
+ static int (*const read_f[SYM_NUM])(struct policydb *p, struct symtab *s,
+-				    void *fp) = {
++				    struct policy_file *fp) = {
+ 	common_read,
+ 	class_read,
+ 	role_read,
+@@ -1867,7 +1867,7 @@ u32 string_to_av_perm(struct policydb *p, u16 tclass, const char *name)
+ 	return 1U << (perdatum->value - 1);
+ }
+ 
+-static int range_read(struct policydb *p, void *fp)
++static int range_read(struct policydb *p, struct policy_file *fp)
+ {
+ 	struct range_trans *rt = NULL;
+ 	struct mls_range *r = NULL;
+@@ -1944,7 +1944,7 @@ static int range_read(struct policydb *p, void *fp)
+ 	return rc;
+ }
+ 
+-static int filename_trans_read_helper_compat(struct policydb *p, void *fp)
++static int filename_trans_read_helper_compat(struct policydb *p, struct policy_file *fp)
+ {
+ 	struct filename_trans_key key, *ft = NULL;
+ 	struct filename_trans_datum *last, *datum = NULL;
+@@ -2029,7 +2029,7 @@ static int filename_trans_read_helper_compat(struct policydb *p, void *fp)
+ 	return rc;
+ }
+ 
+-static int filename_trans_read_helper(struct policydb *p, void *fp)
++static int filename_trans_read_helper(struct policydb *p, struct policy_file *fp)
+ {
+ 	struct filename_trans_key *ft = NULL;
+ 	struct filename_trans_datum **dst, *datum, *first = NULL;
+@@ -2118,7 +2118,7 @@ static int filename_trans_read_helper(struct policydb *p, void *fp)
+ 	return rc;
+ }
+ 
+-static int filename_trans_read(struct policydb *p, void *fp)
++static int filename_trans_read(struct policydb *p, struct policy_file *fp)
+ {
+ 	u32 nel, i;
+ 	__le32 buf[1];
+@@ -2159,7 +2159,7 @@ static int filename_trans_read(struct policydb *p, void *fp)
+ 	return 0;
+ }
+ 
+-static int genfs_read(struct policydb *p, void *fp)
++static int genfs_read(struct policydb *p, struct policy_file *fp)
+ {
+ 	int rc;
+ 	u32 i, j, nel, nel2, len, len2;
+@@ -2273,7 +2273,7 @@ static int genfs_read(struct policydb *p, void *fp)
+ }
+ 
+ static int ocontext_read(struct policydb *p,
+-			 const struct policydb_compat_info *info, void *fp)
++			 const struct policydb_compat_info *info, struct policy_file *fp)
+ {
+ 	int rc;
+ 	unsigned int i;
+@@ -2470,7 +2470,7 @@ static int ocontext_read(struct policydb *p,
+  * Read the configuration data from a policy database binary
+  * representation file into a policy database structure.
+  */
+-int policydb_read(struct policydb *p, void *fp)
++int policydb_read(struct policydb *p, struct policy_file *fp)
+ {
+ 	struct role_allow *ra, *lra;
+ 	struct role_trans_key *rtk = NULL;
+@@ -2793,7 +2793,7 @@ int policydb_read(struct policydb *p, void *fp)
+  * Write a MLS level structure to a policydb binary
+  * representation file.
+  */
+-static int mls_write_level(struct mls_level *l, void *fp)
++static int mls_write_level(struct mls_level *l, struct policy_file *fp)
+ {
+ 	__le32 buf[1];
+ 	int rc;
+@@ -2814,7 +2814,7 @@ static int mls_write_level(struct mls_level *l, void *fp)
+  * Write a MLS range structure to a policydb binary
+  * representation file.
+  */
+-static int mls_write_range_helper(struct mls_range *r, void *fp)
++static int mls_write_range_helper(struct mls_range *r, struct policy_file *fp)
+ {
+ 	__le32 buf[3];
+ 	size_t items;
+@@ -2854,7 +2854,7 @@ static int sens_write(void *vkey, void *datum, void *ptr)
+ 	char *key = vkey;
+ 	struct level_datum *levdatum = datum;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	__le32 buf[2];
+ 	size_t len;
+ 	int rc;
+@@ -2882,7 +2882,7 @@ static int cat_write(void *vkey, void *datum, void *ptr)
+ 	char *key = vkey;
+ 	struct cat_datum *catdatum = datum;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	__le32 buf[3];
+ 	size_t len;
+ 	int rc;
+@@ -2907,7 +2907,7 @@ static int role_trans_write_one(void *key, void *datum, void *ptr)
+ 	struct role_trans_key *rtk = key;
+ 	struct role_trans_datum *rtd = datum;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	struct policydb *p = pd->p;
+ 	__le32 buf[3];
+ 	int rc;
+@@ -2927,7 +2927,7 @@ static int role_trans_write_one(void *key, void *datum, void *ptr)
+ 	return 0;
+ }
+ 
+-static int role_trans_write(struct policydb *p, void *fp)
++static int role_trans_write(struct policydb *p, struct policy_file *fp)
+ {
+ 	struct policy_data pd = { .p = p, .fp = fp };
+ 	__le32 buf[1];
+@@ -2941,7 +2941,7 @@ static int role_trans_write(struct policydb *p, void *fp)
+ 	return hashtab_map(&p->role_tr, role_trans_write_one, &pd);
+ }
+ 
+-static int role_allow_write(struct role_allow *r, void *fp)
++static int role_allow_write(struct role_allow *r, struct policy_file *fp)
+ {
+ 	struct role_allow *ra;
+ 	__le32 buf[2];
+@@ -2969,7 +2969,7 @@ static int role_allow_write(struct role_allow *r, void *fp)
+  * Write a security context structure
+  * to a policydb binary representation file.
+  */
+-static int context_write(struct policydb *p, struct context *c, void *fp)
++static int context_write(struct policydb *p, struct context *c, struct policy_file *fp)
+ {
+ 	int rc;
+ 	__le32 buf[3];
+@@ -3022,7 +3022,7 @@ static int common_write(void *vkey, void *datum, void *ptr)
+ 	char *key = vkey;
+ 	struct common_datum *comdatum = datum;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	__le32 buf[4];
+ 	size_t len;
+ 	int rc;
+@@ -3047,7 +3047,7 @@ static int common_write(void *vkey, void *datum, void *ptr)
+ 	return 0;
+ }
+ 
+-static int type_set_write(struct type_set *t, void *fp)
++static int type_set_write(struct type_set *t, struct policy_file *fp)
+ {
+ 	int rc;
+ 	__le32 buf[1];
+@@ -3066,7 +3066,7 @@ static int type_set_write(struct type_set *t, void *fp)
+ }
+ 
+ static int write_cons_helper(struct policydb *p, struct constraint_node *node,
+-			     void *fp)
++			     struct policy_file *fp)
+ {
+ 	struct constraint_node *c;
+ 	struct constraint_expr *e;
+@@ -3117,7 +3117,7 @@ static int class_write(void *vkey, void *datum, void *ptr)
+ 	char *key = vkey;
+ 	struct class_datum *cladatum = datum;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	struct policydb *p = pd->p;
+ 	struct constraint_node *c;
+ 	__le32 buf[6];
+@@ -3202,7 +3202,7 @@ static int role_write(void *vkey, void *datum, void *ptr)
+ 	char *key = vkey;
+ 	struct role_datum *role = datum;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	struct policydb *p = pd->p;
+ 	__le32 buf[3];
+ 	size_t items, len;
+@@ -3242,7 +3242,7 @@ static int type_write(void *vkey, void *datum, void *ptr)
+ 	struct type_datum *typdatum = datum;
+ 	struct policy_data *pd = ptr;
+ 	struct policydb *p = pd->p;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	__le32 buf[4];
+ 	int rc;
+ 	size_t items, len;
+@@ -3283,7 +3283,7 @@ static int user_write(void *vkey, void *datum, void *ptr)
+ 	struct user_datum *usrdatum = datum;
+ 	struct policy_data *pd = ptr;
+ 	struct policydb *p = pd->p;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	__le32 buf[3];
+ 	size_t items, len;
+ 	int rc;
+@@ -3332,7 +3332,8 @@ static int (*const write_f[SYM_NUM])(void *key, void *datum, void *datap) = {
+ /* clang-format on */
+ 
+ static int ocontext_write(struct policydb *p,
+-			  const struct policydb_compat_info *info, void *fp)
++			  const struct policydb_compat_info *info,
++			  struct policy_file *fp)
+ {
+ 	unsigned int i, j;
+ 	int rc;
+@@ -3468,7 +3469,7 @@ static int ocontext_write(struct policydb *p,
+ 	return 0;
+ }
+ 
+-static int genfs_write(struct policydb *p, void *fp)
++static int genfs_write(struct policydb *p, struct policy_file *fp)
+ {
+ 	struct genfs *genfs;
+ 	struct ocontext *c;
+@@ -3526,7 +3527,7 @@ static int range_write_helper(void *key, void *data, void *ptr)
+ 	struct range_trans *rt = key;
+ 	struct mls_range *r = data;
+ 	struct policy_data *pd = ptr;
+-	void *fp = pd->fp;
++	struct policy_file *fp = pd->fp;
+ 	struct policydb *p = pd->p;
+ 	int rc;
+ 
+@@ -3548,7 +3549,7 @@ static int range_write_helper(void *key, void *data, void *ptr)
+ 	return 0;
+ }
+ 
+-static int range_write(struct policydb *p, void *fp)
++static int range_write(struct policydb *p, struct policy_file *fp)
+ {
+ 	__le32 buf[1];
+ 	int rc;
+@@ -3575,7 +3576,7 @@ static int filename_write_helper_compat(void *key, void *data, void *ptr)
+ 	struct filename_trans_key *ft = key;
+ 	struct filename_trans_datum *datum = data;
+ 	struct ebitmap_node *node;
+-	void *fp = ptr;
++	struct policy_file *fp = ptr;
+ 	__le32 buf[4];
+ 	int rc;
+ 	u32 bit, len = strlen(ft->name);
+@@ -3612,7 +3613,7 @@ static int filename_write_helper(void *key, void *data, void *ptr)
+ {
+ 	struct filename_trans_key *ft = key;
+ 	struct filename_trans_datum *datum;
+-	void *fp = ptr;
++	struct policy_file *fp = ptr;
+ 	__le32 buf[3];
+ 	int rc;
+ 	u32 ndatum, len = strlen(ft->name);
+@@ -3657,7 +3658,7 @@ static int filename_write_helper(void *key, void *data, void *ptr)
+ 	return 0;
+ }
+ 
+-static int filename_trans_write(struct policydb *p, void *fp)
++static int filename_trans_write(struct policydb *p, struct policy_file *fp)
+ {
+ 	__le32 buf[1];
+ 	int rc;
+@@ -3689,7 +3690,7 @@ static int filename_trans_write(struct policydb *p, void *fp)
+  * structure to a policy database binary representation
+  * file.
+  */
+-int policydb_write(struct policydb *p, void *fp)
++int policydb_write(struct policydb *p, struct policy_file *fp)
+ {
+ 	unsigned int num_syms;
+ 	int rc;
+diff --git a/security/selinux/ss/policydb.h b/security/selinux/ss/policydb.h
+index 4bba386264a3d..e01de17e569bf 100644
+--- a/security/selinux/ss/policydb.h
++++ b/security/selinux/ss/policydb.h
+@@ -312,14 +312,19 @@ struct policydb {
+ 	u32 process_trans_perms;
+ } __randomize_layout;
+ 
++struct policy_file {
++	char *data;
++	size_t len;
++};
++
+ extern void policydb_destroy(struct policydb *p);
+ extern int policydb_load_isids(struct policydb *p, struct sidtab *s);
+ extern int policydb_context_isvalid(struct policydb *p, struct context *c);
+ extern int policydb_class_isvalid(struct policydb *p, unsigned int class);
+ extern int policydb_type_isvalid(struct policydb *p, unsigned int type);
+ extern int policydb_role_isvalid(struct policydb *p, unsigned int role);
+-extern int policydb_read(struct policydb *p, void *fp);
+-extern int policydb_write(struct policydb *p, void *fp);
++extern int policydb_read(struct policydb *p, struct policy_file *fp);
++extern int policydb_write(struct policydb *p, struct policy_file *fp);
+ 
+ extern struct filename_trans_datum *
+ policydb_filenametr_search(struct policydb *p, struct filename_trans_key *key);
+@@ -342,14 +347,9 @@ policydb_roletr_search(struct policydb *p, struct role_trans_key *key);
+ #define POLICYDB_MAGIC	SELINUX_MAGIC
+ #define POLICYDB_STRING "SE Linux"
+ 
+-struct policy_file {
+-	char *data;
+-	size_t len;
+-};
+-
+ struct policy_data {
+ 	struct policydb *p;
+-	void *fp;
++	struct policy_file *fp;
+ };
+ 
+ static inline int next_entry(void *buf, struct policy_file *fp, size_t bytes)
 -- 
 2.53.0
+
+
 
