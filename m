@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DD64BD0F0;
-	Mon, 31 Aug 2026 14:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5964BA9F1;
+	Mon, 31 Aug 2026 14:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184910; cv=none; b=aLjfroFx+HbX5gCpIdJ1L9hdAnigrHI0UfxRkb4yFmWhnvCScJ7YYzA3L1cs5eNNkm7GvOYPh608M+yaR3m3U5YAPa/vMCUt0WebjFYILXRQQqOz7JV1b0siubIoImil6JTVxIqk7V1TVfEUh9uyxBXbvruhxUjjhUsbeQDekvc=
+	t=1788184924; cv=none; b=gM7wESOqWCVauNhSF0yEw2kWX/BuKGxjy/7FiFvNF2/rTJanREb6RWT+PnbrQ44eVOaCtoAeRRVTEnv03dPCuqA/UruYoakOV51ocQX/pWKIBxxXAIVD4OL/+SlFnfOs9mL0Kud8htU5KZfnuzx/XssuItFYR55GDlHXAMPqiWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184910; c=relaxed/simple;
-	bh=7uDWBhhezHtZGRAzZOGklU2TDU0kFnjOsdN3QKuYtmo=;
+	s=arc-20240116; t=1788184924; c=relaxed/simple;
+	bh=NBICjH1523uz50rfI/GUWN8WwtuRaTqSmMx2ZWmbboY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQPZupUJdOZMI/pO5AIOz1fc0vhpqAImJrMy5hGz7eq0N9nVHTkCrbAX4nBAl1PxKmK2Elm2Ig6xsPF8s5KDbnOMbZIy7S7iydUaC6+ilqO0Oe+iyVIASAA6t/Zs+HHdxUbNdV68KsxpBnzHoEKzOit4fmmgXTO0qvkuSLmNggQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnac7QTH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yv0dffgXN6hzUpQAwyyfPva+ihfszRE+oompI0a2tUfEEsEGz/TFtevoc5ziFHbiD7zDST8+6HinkXHOVR553Osz1J9kKl6TD2CRsNLfncPqRRutkvsG9mCoIQ8Vq5udN7HXZzE2EHFwz87smoke/GSOJJwELDne0m0j8A15XtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uasbM2hz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnac7QTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905AD1F00A3D;
-	Mon, 31 Aug 2026 14:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uasbM2hz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E2C1F00A3D;
+	Mon, 31 Aug 2026 14:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184908;
-	bh=+9DJ/fqHBr0awkjLwZ0GvEhXqonbNWpccBkG23H9LTk=;
+	s=korg; t=1788184922;
+	bh=KM4ToLMkOICjCSZ4eN+pK9DEkHx/gXa9H4hcX64KWS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wnac7QTHl7m7cxWaAG+2Z7kjY8KCpmjNgc4SO2E+HdB9tWLmzIKOzzniAPqmKt2Ha
-	 HIhpXitNGnPSW3rWGnX0/JlEd58XM19qD5qvfGeyfdVp0FHWGXWuNav5xl2IWuu0aY
-	 AErhoXzDxo+M9CEdGqpANkv9CG8b0+DaxdHKsPr8=
+	b=uasbM2hzRg5nbKgk4OiQg3d450x2s8l0dGYC68IGVJOupAMk2JOjcjyesb207m2h8
+	 yvlFQ5UqnAdaQNM3Q+igDj2oqWyhHWJIbC7Aa01hfAcI5D9g9I6GFlYDwkQfqy6NVX
+	 LyGA0q3OSart4QObnyzgFRp+09PFbM0DKnoCAAVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Xu Yilun <yilun.xu@intel.com>,
-	Tom Rix <trix@redhat.com>,
-	Moritz Fischer <mdf@kernel.org>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 6.1 62/92] fpga: dfl: fme: add error handling
-Date: Mon, 31 Aug 2026 15:35:00 +0200
-Message-ID: <20260831133402.890050898@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 84/92] Bluetooth: hci_core: Fix hci_conn_hash_lookup_cis
+Date: Mon, 31 Aug 2026 15:35:22 +0200
+Message-ID: <20260831133403.861272128@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -54,39 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit b5ba63e247075087ab8a6a087622c762dc4172e9 upstream.
+commit 50efc63d1a7a7b9a6ed21adae1b9a7123ec8abc0 upstream.
 
-Add error handling to devm_kasprint in fme_perf_pmu_register().
+hci_conn_hash_lookup_cis shall always match the requested CIG and CIS
+ids even when they are unset as otherwise it result in not being able
+to bind/connect different sockets to the same address as that would
+result in having multiple sockets mapping to the same hci_conn which
+doesn't really work and prevents BAP audio configuration such as
+AC 6(i) when CIG and CIS are left unset.
 
-Assisted-by: gkh_clanker_2000
-Fixes: 724142f8c42a ("fpga: dfl: fme: add performance reporting support")
-Cc: stable@kernel.org
-Cc: Xu Yilun <yilun.xu@intel.com>
-Cc: Tom Rix <trix@redhat.com>
-Cc: Moritz Fischer <mdf@kernel.org>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Yilun: Fix stable tag, add Fixes tag ]
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/2026070620-unwired-clay-f6cc@gregkh
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Fixes: c14516faede3 ("Bluetooth: hci_conn: Fix not matching by CIS ID")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/dfl-fme-perf.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/net/bluetooth/hci_core.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/fpga/dfl-fme-perf.c
-+++ b/drivers/fpga/dfl-fme-perf.c
-@@ -925,6 +925,8 @@ static int fme_perf_pmu_register(struct
- 				PERF_PMU_CAP_NO_EXCLUDE;
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1192,11 +1192,11 @@ static inline struct hci_conn *hci_conn_
+ 			continue;
  
- 	name = devm_kasprintf(priv->dev, GFP_KERNEL, "dfl_fme%d", pdev->id);
-+	if (!name)
-+		return -ENOMEM;
+ 		/* Match CIG ID if set */
+-		if (cig != BT_ISO_QOS_CIG_UNSET && cig != c->iso_qos.cig)
++		if (cig != c->iso_qos.cig)
+ 			continue;
  
- 	ret = perf_pmu_register(pmu, name, -1);
- 	if (ret)
+ 		/* Match CIS ID if set */
+-		if (id != BT_ISO_QOS_CIS_UNSET && id != c->iso_qos.cis)
++		if (id != c->iso_qos.cis)
+ 			continue;
+ 
+ 		/* Match destination address if set */
 
 
