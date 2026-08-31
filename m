@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4274646DFF2;
-	Mon, 31 Aug 2026 13:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C125678ED;
+	Mon, 31 Aug 2026 13:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184087; cv=none; b=iVF5OP+kFafIjwpGXTnv8OyYQAJJHsOdpJyepz4Fitia3Ak1afmQv6zM34NnnRX04VIOv7TseOeAb+6xMPE+sBabMM9BHLZusFtt0Un+eutqEnUaYwSqTik/Q770989zlNWpwDOYcM/P0yDjCUkQHfg9C39RMc8DGd1ktnqCKaw=
+	t=1788184089; cv=none; b=gOTy/4mNc9UrnMmIvbkknCbtj7DuUcWGYJd/k3GSPQyE6/CCkrbUjU4hWiGeu0DMt2D3dVQAy3BPnaiF951SNQjYao91AiReUovABxWER7GRo3I18N1yKmTmKUulaGwuvrSzAt6Yhe7GVwMZpkQEK6iy6XxQsOCJVDsC0MEGtFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184087; c=relaxed/simple;
-	bh=FjGo1xqX53H0I+x4xSs3IDlZ8KjyuZjw739fZG5uh3E=;
+	s=arc-20240116; t=1788184089; c=relaxed/simple;
+	bh=HPh1+K8z50chjoh1AS4lqFYWOSmTGRbB3wRmetVIK2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZykdVyu99YPXu/ocqJPO0fBDBhhLIBHg+zufRCMD6zYidbwJ5gbTRLwx8uHFjZxchvhkwR++yBCPHc+x2Ol9SJz045Ng5oNxE80AF1/3mtCVOGlVMMujO+/EQfpkLnlCs7Bts5YgRAZq9SSBp2ckpGSF7k2iwR3kGjI9GtyE490=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QLCoFjtt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XnKpUNi5N2jNhs2kqm0gVzNCRJNIqEgMYTjFWeV2d7H7LYSDCCNG6i6RjY0J40BYZR8Hf/kruvY08+HFySCcFA2OqoaTAvlEkEjtESoDbJWoUBC1CJEf0jbYY1JkKE5Y4J059POFmVBo9CY2GYlJdrcThzUY7wBKoyQmVG2blac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=djE6Z8hs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QLCoFjtt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA8A1F00ACA;
-	Mon, 31 Aug 2026 13:48:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="djE6Z8hs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDF81F00A3E;
+	Mon, 31 Aug 2026 13:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184083;
-	bh=hAe8LvtGvmvY/5iCmNSXi89MCqlZH3fjnCqPJozDObY=;
+	s=k20260515; t=1788184085;
+	bh=0d9n3jwUIqfDYpN8X4JkH/rBGvoUBMz3sO4aQ/1nhGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QLCoFjttkIYi3M/502COb1cPlw9pX+PUE3xx5IucjpOD7SBf3zorNJVBky0lCwLcz
-	 clczrgr0xNeIbbp13NFeUeLEeQjEUEEhLeWXc6vB75x0G/6noymnMgNj2awOyJXOes
-	 ieSd6X9y5u2bwtYD645T/evlU/OOisBPc6l3dzXkuUP9sxincG/VnkdxHytRfwo+3i
-	 N2i7OgHvGgR/DChNfkVLAs9qmxRe5FmrOkKitSqf1WvhpPwPzcfbiq+VRR6R4yDH6I
-	 7dOKvuX4ZrTGFATSLFuYJrIyN+DRUlcwuz9iVZm0F5UAWF+OVK8Cj1q3j3MAoar4/Z
-	 N26ck+n3R7neA==
+	b=djE6Z8hscfvq+XKrDOKhCtHrEBjGonbShOeWEhY7Ydt+eBqrHWNPt7SvQfm6pyVxD
+	 91vO9krGyGWpeuB/iD+OQgLaRHajJMpOK7pYiIypjm92U+zuROJ8C8MILsxnBb9KaK
+	 zVLP0uNQRJJvwii4T7LGxY99GJxsdvmTU7CYWxLjcb3bP/FRltYg0wYWwZCmn/Yd39
+	 4y1qWCGHXnYh+kkN+UhgyUqFuU4XbckZWYdsoZ2sinrwLKDU77Gc4EwGbge+2O/Ad6
+	 Wy9MnaoEtGjTbH4JS09ZYytSMEwcaLbANyaovt7Ktj+U2V3iPv/+OqnS50QuAjlD6c
+	 x2ycBzvJLR56A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Kuai <yukuai@fygo.io>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	tj@kernel.org,
-	josef@toxicpanda.com,
-	cgroups@vger.kernel.org,
-	linux-block@vger.kernel.org,
+	kenneth.feng@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] blk-cgroup: protect iterating blkgs with blkcg->lock in blkcg_print_stat()
-Date: Mon, 31 Aug 2026 09:28:29 -0400
-Message-ID: <20260831133314.4125787-481-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.6] drm/amd/pm: Check SMUv13.0.6/12 metrics integrity
+Date: Mon, 31 Aug 2026 09:28:30 -0400
+Message-ID: <20260831133314.4125787-482-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,401 +58,377 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 25656304dabd26198ec69460c594a19d086ef099 ]
+[ Upstream commit 6fc63d80c01a480e3d2c98620f07d46e5bcfc85a ]
 
-blkcg_print_one_stat() will be called for each blkg:
-- access blkg->iostat, which is freed from rcu callback
-  blkg_free_workfn();
-- access policy data from pd_stat_fn(), which is freed from
-  pd_free_fn(), while pd_free_fn() can be called by removing blkcg or
-  deactivating policy;
+Check if data fetch is proper by matching the first few bytes against
+0xFFs. If 0xFFs, that means data couldn't be read properly.
 
-Take blkcg->lock while iterating so the blkgs stay online and both
-blkg->iostat and policy data for activated policies stay valid.  Use
-irq-safe locking because blkcg->lock can be nested under q->queue_lock,
-which is used from IRQ completion paths.
-
-Prepare to convert protecting blkgs from request_queue with mutex.
-
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/05799877e720dcd300e2ddd4625e8e162959d7cc.1780621988.git.yukuai@fygo.io
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `drm/amd/pm: Check SMUv13.0.6/12 metrics
+integrity`
 
-### Step 1.1: Subject Line
-**Record:** `[blk-cgroup]` `[protect]` — Protect iteration over blkgs in
-`blkcg_print_stat()` using `blkcg->lock`.
+**Local tree:** `v6.18.43` (Linux 6.18.43)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[drm/amd/pm]` `[Check]` — Add integrity validation for SMU
+v13.0.6/12 metrics table reads.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Yu Kuai `<yukuai@fygo.io>` (author)
-- **Link:** https://patch.msgid.link/05799877e720dcd300e2ddd4625e8e16295
-  9d7cc.1780621988.git.yukuai@fygo.io
-- **Signed-off-by:** Jens Axboe `<axboe@kernel.dk>` (block maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
-  stable@vger.kernel.org`
+- `Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>` (author)
+- `Reviewed-by: Asad Kamal <asad.kamal@amd.com>`
+- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (AMD DRM
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable@vger.kernel.org`, or
+  `Tested-by:`
 
-Notable: maintainer sign-off from Jens Axboe; no syzbot/fuzzer report.
+Notable: AMD maintainer review and sign-off, but no public bug report or
+fuzzer report.
 
-### Step 1.3: Body Analysis
+### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `blkcg_print_one_stat()` reads `blkg->iostat` (freed in
-  `blkg_free_workfn()`) and policy data via `pd_stat_fn()` (freed in
-  `pd_free_fn()` during cgroup removal or policy deactivation).
-- **Symptom:** Use-after-free when reading cgroup I/O stats concurrently
-  with teardown/deactivation.
-- **Root cause:** Iteration is RCU-protected and per-blkg `queue_lock`
-  is held, but neither prevents `pd_free_fn()` or async `blkg` teardown
-  from invalidating data being read.
-- **Fix:** Hold `blkcg->lock` (IRQ-safe) for the full iteration so blkgs
-  stay online and policy/iostat data remain valid.
-- **Note:** "Prepare to convert protecting blkgs from request_queue with
-  mutex" — future work, not a dependency.
+- **Bug:** SMU metrics table fetch can succeed at the SMC-message level
+  while the copied data is invalid (all `0xFF`, meaning unread).
+- **Symptom:** Driver treats poisoned/unread data as valid metrics.
+- **Root cause:** No post-copy validation after `GetMetricsTable` +
+  VRAM/CPU copy.
+- **Fix:** Check first 16 bytes with `memchr_inv()`; if all `0xFF`,
+  return `-EHWPOISON`.
+- No kernel version or hardware list in the message; subject names
+  SMUv13.0.6/12.
 
-### Step 1.4: Hidden Bug Fix?
-**Record:** Yes — explicit UAF/race fix disguised as locking correction.
-Not cosmetic cleanup.
+### Step 1.4: Hidden bug fix?
+**Record:** Yes. Despite “Check” wording, this is a real correctness bug
+fix: it stops silently consuming invalid SMU metrics that would
+otherwise drive power limits, clock tables, sysfs metrics, and XGMI
+configuration.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
 **Record:**
-- **File:** `block/blk-cgroup.c` (+3 / -6 net)
-- **Function:** `blkcg_print_stat()` only
-- **Scope:** Single-file, surgical (~10 lines touched)
+- **File:** `drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c` (+4
+  lines)
+- **Function:** `smu_v13_0_6_get_metrics_table()`
+- **Scope:** Single-file, surgical fix
 
-### Step 2.2: Code Flow Change
+Note: upstream diff context uses `amdgpu_hdp_invalidate()` +
+`smu_cmn_vram_cpy()`. This tree uses `amdgpu_asic_invalidate_hdp()` +
+`memcpy()` — same logical point, different API names.
+
+### Step 2.2: Code flow change
 **Record:**
-- **Before:** `rcu_read_lock()` → `hlist_for_each_entry_rcu()` → per-
-  iteration `spin_lock_irq(&blkg->q->queue_lock)` →
-  `blkcg_print_one_stat()` → unlock → `rcu_read_unlock()`
-- **After:** `guard(spinlock_irq)(&blkcg->lock)` →
-  `hlist_for_each_entry()` → `blkcg_print_one_stat()` → auto-unlock
-- **Path:** `cgroup` `io.stat` seq_file read (normal monitoring path)
+- **Before:** After SMC message + copy, metrics are cached and returned
+  unconditionally.
+- **After:** After copy, if first `min(16, table_size)` bytes are all
+  `0xFF`, return `-EHWPOISON` and do not update `metrics_time`.
+- **Path:** Metrics refresh path (cache bypass or >1 ms stale).
 
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** Race condition / use-after-free (reference-
-counting and lifetime)
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Memory/hardware data integrity / logic correctness
+- **Mechanism:** Uninitialized or failed VRAM read leaves `0xFF`
+  pattern; driver previously treated it as valid. With all-`0xFF` data,
+  `AccumulationCounter` appears non-zero, so
+  `smu_v13_0_6_setup_driver_pptable()` can exit its retry loop
+  immediately and write garbage into `pptable` (power limits, clock
+  tables, serial numbers). The fix detects poisoned data before
+  caching/propagation.
 
-**Mechanism (verified in tree):**
-1. `blkcg_deactivate_policy()` holds `queue_lock`, then `blkcg->lock`,
-   then calls `pd_free_fn()`:
-
-```1738:1744:block/blk-cgroup.c
-                spin_lock(&blkcg->lock);
-                if (blkg->pd[pol->plid]) {
-                        if (blkg->pd[pol->plid]->online &&
-pol->pd_offline_fn)
-                                pol->pd_offline_fn(blkg->pd[pol->plid]);
-                        pol->pd_free_fn(blkg->pd[pol->plid]);
-                        blkg->pd[pol->plid] = NULL;
-```
-
-2. `blkg_destroy()` requires `blkcg->lock`, unhashes the blkg, and
-   eventually frees via `blkg_free_workfn()`:
-
-```529:554:block/blk-cgroup.c
-        lockdep_assert_held(&blkg->q->queue_lock);
-        lockdep_assert_held(&blkcg->lock);
-        // ...
-        hlist_del_init_rcu(&blkg->blkcg_node);
-```
-
-3. `blkcg_print_stat()` currently does **not** hold `blkcg->lock`, so
-   `pd_stat_fn()` and `blkg->iostat` access can race with steps 1–2.
-
-4. The kernel already documents that RCU alone is insufficient:
-
-```177:184:block/blk-cgroup.c
- - A group is RCU protected, but having an rcu lock does not mean that
-   one
- - can access all the fields of blkg and assume these are valid.
-```
-
-### Step 2.4: Fix Quality
-**Record:** Obviously correct. Aligns `blkcg_print_stat()` with
-`blkcg_reset_stats()`, which already iterates `blkg_list` under
-`spin_lock_irq(&blkcg->lock)`:
-
-```662:669:block/blk-cgroup.c
-        spin_lock_irq(&blkcg->lock);
-        // ...
-        hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node) {
-```
-
-**Regression risk:** Low. `blkcg_print_stat()` takes only `blkcg->lock`
-(no `queue_lock`), avoiding AB-BA with `blkcg_destroy_blkgs()` (blkcg
-lock → queue lock) and `blkcg_deactivate_policy()` (queue lock → blkcg
-lock).
+### Step 2.4: Fix quality
+**Record:**
+- Obviously correct: `0xFF` fill is a standard “unread” sentinel;
+  `memchr_inv()` is used elsewhere in the kernel for this pattern (e.g.
+  `amd_pmf` policy buffer validation).
+- Minimal (4 lines), no API changes.
+- Low regression risk: only triggers on fully-`0xFF` prefix; legitimate
+  metrics are unaffected.
+- `-EHWPOISON` is already used in amdgpu for hardware data integrity
+  failures.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Current RCU+`queue_lock` pattern in `blkcg_print_stat()`
-from commit `49cb5168a7c6ab` (Aug 2021, "blk-cgroup: refactor
-blkcg_print_stat"). Bug window is long; code is present in this tree.
+**Record:** `smu_v13_0_6_get_metrics_table()` at lines 750–778 is
+present in this tree; blame points to merge commit `5d324e5159d9e`
+(history is flattened through merges). The vulnerable function exists in
+v6.18.43.
 
-### Step 3.2: Fixes: Tag
+### Step 3.2: Fixes tag
 **Record:** N/A — no `Fixes:` tag.
 
-### Step 3.3: Related File History
-**Record:**
-- `5e5b7f2ef8549` — separate UAF fix in `__blkcg_rstat_flush()` (already
-  in 6.18.y); same subsystem, different race.
-- `5d726c4dbeedd` — Yu Kuai deadlock fix in policy configuration (same
-  author/subsystem).
-- `810ecfa765f8b` (2013) — historical move from `blkcg->lock` to
-  `queue_lock` for `blkcg_print_blkgs()`; this patch partially reverses
-  that for `blkcg_print_stat()` where `queue_lock` is insufficient.
+### Step 3.3: Related file history
+**Record:** Recent PM commits in this tree include `75849e13e428e` (xgmi
+max speed reporting) and `33c3a4db31719` (invalid energy_accumulator on
+smu v13.0.x). No duplicate integrity-check fix found. This commit is not
+in this tree yet (`git log --grep` returned nothing).
 
-### Step 3.4: Author Context
-**Record:** Yu Kuai is an active block/cgroup contributor
-(`5d726c4dbeedd`, `dc96cefef0d30`, etc.).
+### Step 3.4: Author context
+**Record:** Lijo Lazar is an active AMD PM contributor (`75849e13e428e`
+xgmi fix in this tree). Patch reviewed by fellow AMD engineer Asad Kamal
+and maintainer Alex Deucher.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone. `guard(spinlock_irq)` is defined in
-`include/linux/spinlock.h` (available in 6.18). No series dependency.
+**Record:** Standalone. `memchr_inv()` and `-EHWPOISON` are available.
+Backport inserts after the local copy call (`memcpy`), not upstream’s
+`smu_cmn_vram_cpy`.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1–4.5
-**Record:**
-- `b4 dig -c <commit>`: **N/A** — commit not found in local `FETCH_HEAD`
-  master; patch appears not yet merged upstream.
-- Lore/patch.msgid.link: **Blocked** (403/Anubis bot protection).
-- **UNVERIFIED:** Full review-thread content, stable nominations from
-  reviewers, series revisions.
+### Step 4.1: Original discussion
+**Record:** Patch submitted to amd-gfx on 2026-04-18 by Lijo Lazar.
+Thread: https://lists.freedesktop.org/archives/amd-
+gfx/2026-April/143042.html (also mirrored at yhbt.net). Included in Alex
+Deucher’s drm-next-7.2 pull. `b4 dig -c` could not be run (commit not in
+this checkout). lore.kernel.org direct fetch blocked (bot protection).
 
-From available metadata: Jens Axboe merged sign-off indicates maintainer
-acceptance.
+### Step 4.2: Reviewers
+**Record:** CC’d Hawking.Zhang, Alexander.Deucher, Asad.Kamal. Asad
+Kamal replied 2026-04-20 (Reviewed-by in final commit). No NAKs found.
+
+### Step 4.3: Bug report
+**Record:** No public bug report, syzbot, or Bugzilla link. Likely
+internal AMD testing discovery.
+
+### Step 4.4: Series context
+**Record:** Standalone 1-patch fix, not part of a multi-patch series.
+
+### Step 4.5: Stable list discussion
+**Record:** No stable@ discussion found (UNVERIFIED beyond search; no
+stable nomination seen in available sources).
 
 ---
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `blkcg_print_stat()`, `blkcg_print_one_stat()` (caller
-context unchanged).
+### Step 5.1: Key functions
+**Record:** `smu_v13_0_6_get_metrics_table()` (modified).
 
 ### Step 5.2: Callers
-**Record:** `blkcg_print_stat` is `.seq_show` for cgroup `stat` file:
-
-```1254:1258:block/blk-cgroup.c
-static struct cftype blkcg_files[] = {
-        {
-                .name = "stat",
-                .seq_show = blkcg_print_stat,
-```
-
-Triggered via cgroupfs reads (`/sys/fs/cgroup/.../io.stat`).
+**Record:** Direct callers in this tree:
+- `smu_v13_0_6_get_pm_metrics()` — sysfs PM metrics (checks `ret`)
+- `smu_v13_0_6_setup_driver_pptable()` — DPM init, power/clock limits
+  (checks `ret` in retry loop; caller at line 1088 ignores return — pre-
+  existing)
+- `smu_v13_0_6_get_smu_metrics_data()` — clock/power/thermal sysfs
+  (checks `ret`)
+- Partition metrics paths at lines 2657, 2758 (check `ret`)
+- `smu_v13_0_12_ppt.c:258` — XGMI max speed/width fallback (checks
+  `ret`)
 
 ### Step 5.3: Callees
-**Record:** `blkcg_print_one_stat()` reads `blkg->iostat`, calls
-`pol->pd_stat_fn()`, uses `blkg_dev_name()`.
+**Record:** `smu_cmn_send_smc_msg()`, HDP invalidate, `memcpy()` from
+driver table CPU address.
 
 ### Step 5.4: Reachability
-**Record:** Reachable from userspace via cgroup stat reads. Concurrent
-with cgroup deletion (`blkcg_destroy_blkgs`) and policy deactivation
-(`blkcg_deactivate_policy`) in container/VM environments.
+**Record:** Reachable from GPU init (DPM table setup) and runtime
+sysfs/metrics queries on SMU IP 13.0.6 and 13.0.12 hardware (MI300-class
+datacenter GPUs). Not a syscall path, but reachable from normal driver
+operation on affected hardware.
 
-### Step 5.5: Similar Patterns
-**Record:** `blkcg_print_blkgs()` still uses RCU+`queue_lock` (lines
-718–724) — same class of issue may exist there, but is out of scope for
-this commit. `blkcg_reset_stats()` already uses the correct
-`blkcg->lock` pattern.
+### Step 5.5: Similar patterns
+**Record:** `amd_pmf` uses `memchr_inv(dev->policy_buf, 0xff, ...)` for
+the same invalid-read detection pattern. No existing `memchr_inv` +
+`0xff` check in amdgpu PM code in this tree.
 
 ---
 
-## Phase 6: Cross-Reference Against Local Tree
+## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (v6.18.43)
 
-### Step 6.1: Buggy Code Present?
-**Record:** **Yes.** Tree is **v6.18.44** (`linux-6.18.y` stable). Buggy
-code at lines 1244–1250:
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** `smu_v13_0_6_get_metrics_table()` at lines 750–778
+lacks integrity check. SMU 13.0.6/12 support is wired in `amdgpu_smu.c`
+(cases `IP_VERSION(13, 0, 6)` and `IP_VERSION(13, 0, 12)`).
 
-```1244:1250:block/blk-cgroup.c
-        rcu_read_lock();
-        hlist_for_each_entry_rcu(blkg, &blkcg->blkg_list, blkcg_node) {
-                spin_lock_irq(&blkg->q->queue_lock);
-                blkcg_print_one_stat(blkg, sf);
-                spin_unlock_irq(&blkg->q->queue_lock);
-        }
-        rcu_read_unlock();
+### Step 6.2: Backport difficulty
+**Record:** **Clean apply with trivial context adjustment.** Insert
+after:
+
+```768:769:drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+                amdgpu_asic_invalidate_hdp(smu->adev, NULL);
+                memcpy(smu_table->metrics_table, table->cpu_addr,
+table_size);
 ```
 
-### Step 6.2: Backport Complications
-**Record:** Clean apply expected — hunk matches current file.
-`blkcg->lock` exists in `struct blkcg` (`blk-cgroup.h:96`).
-`guard(spinlock_irq)` available via `spinlock.h` include chain.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** `5e5b7f2ef8549` (rstat flush UAF) is present; it does
-**not** fix this `blkcg_print_stat()` race.
+### Step 6.3: Related fixes already present?
+**Record:** **No.** `grep` found no `memchr_inv` + `0xff` in amdgpu PM.
+Commit not in tree history.
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem / Criticality
-**Record:** **block / blk-cgroup** — **IMPORTANT** (cgroup I/O
-accounting; widely used with containers/systemd/cgroup v2).
+### Step 7.1: Subsystem and criticality
+**Record:** `drivers/gpu/drm/amd/pm` — **IMPORTANT** (AMDGPU power
+management for datacenter GPUs; affects power/thermal/clock behavior,
+not core kernel).
 
 ### Step 7.2: Activity
-**Record:** Actively maintained; recent stable fixes in same file
-(`5e5b7f2ef8549`, `6a01413a4e8fc`).
+**Record:** Actively maintained; recent stable-relevant PM fixes in this
+tree (xgmi reporting, energy_accumulator invalidation).
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK
 
-### Step 8.1: Who Is Affected
-**Record:** Users with `CONFIG_BLK_CGROUP` reading I/O cgroup stats
-while cgroups are deleted or policies deactivated — common in
-Kubernetes/container teardown with concurrent monitoring.
+### Step 8.1: Who is affected
+**Record:** Users of AMD GPUs with SMU firmware IP 13.0.6 or 13.0.12
+(MI300/MI325X-class hardware). Config: `CONFIG_DRM_AMDGPU`.
 
-### Step 8.2: Trigger Conditions
-**Record:** Concurrent `io.stat` read + cgroup rmdir or block policy
-deactivation/disk removal. Realistic in production; not purely
-theoretical given `pd_free_fn()` runs under `blkcg->lock` that
-`blkcg_print_stat()` does not take.
+### Step 8.2: Trigger conditions
+**Record:** SMU metrics table VRAM read fails or returns uninitialized
+`0xFF` data while SMC message succeeds. Can occur during init or runtime
+metrics refresh. Not user-triggerable from syscalls; hardware/firmware
+timing dependent. Plausible during error recovery or SMU communication
+issues.
 
-### Step 8.3: Failure Mode
-**Record:** UAF on policy data and/or iostat → kernel oops, memory
-corruption. **Severity: HIGH (potential CRITICAL security impact).**
+### Step 8.3: Failure mode severity
+**Record:** Without fix: corrupt power limits, clock frequency tables,
+thermal/activity metrics, and XGMI parameters derived from `0xFF` data —
+risk of incorrect DPM behavior, bogus sysfs readings, and potential
+hardware stress. **Severity: HIGH** (incorrect power/clock configuration
+from poisoned data). Not a kernel oops, but can cause real hardware
+misbehavior.
 
-### Step 8.4: Risk-Benefit
+### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** High — prevents UAF on a userspace-reachable path.
-- **Risk:** Very low — ~7-line locking change matching existing
-  `blkcg_reset_stats()` pattern.
-- **Ratio:** Strongly favors backport.
+- **Benefit:** HIGH for affected datacenter deployments — prevents
+  silent use of completely invalid SMU metrics.
+- **Risk:** LOW — 4-line defensive check, AMD-reviewed, established
+  errno pattern.
+- **Ratio:** Strong benefit, minimal risk.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence summary
 
-**FOR:**
-- Real UAF race with verified mechanism in local tree
-- Userspace-reachable via cgroup `stat` file
-- Small, surgical, matches established locking in `blkcg_reset_stats()`
-  / `blkcg_destroy_blkgs()`
-- Block maintainer (Jens Axboe) sign-off
-- Long-standing buggy pattern (since 2021 refactor)
-- Related UAF fix already backported to this tree — demonstrates
-  subsystem stability priority
+**FOR backport:**
+- Fixes real bug (silent consumption of unread `0xFF` metrics data)
+- Can corrupt power/clock initialization in `setup_driver_pptable()`
+- Small, surgical, AMD-maintainer-reviewed
+- Code and affected hardware exist in v6.18.43
+- Matches existing kernel/amdgpu integrity-check patterns
+- Clean backport to this tree
 
-**AGAINST:**
-- Commit not yet verified as merged to mainline (stable rules require
-  upstream merge before submission)
-- `blkcg_print_blkgs()` may have a similar latent issue (not fixed here;
-  not a reason to reject this fix)
-- Mailing list review details unverified due to lore access blocks
+**AGAINST backport:**
+- No public bug report or crash trace
+- Hardware-specific (MI300-class, niche vs consumer GPUs)
+- `setup_driver_pptable()` return still ignored at one call site (pre-
+  existing; fix still prevents writing garbage into `pptable`)
+- Severity is misconfiguration rather than kernel panic
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — locking matches sibling
-   functions; maintainer SOB; mechanism clear from code.
-2. Fixes a real bug affecting users? **PASS** — UAF on cgroup stat read
-   path.
-3. Important issue? **PASS** — UAF / potential crash or corruption (HIGH
-   severity).
-4. Small and contained? **PASS** — single function, <20 lines.
-5. No new features or APIs? **PASS** — synchronization only.
-6. Can apply to local tree? **PASS** — buggy code present; dependencies
-   (`blkcg->lock`, `guard(spinlock_irq)`) exist in 6.18.44.
+**Unresolved:** Exact production trigger frequency; no syzbot/user
+reports.
 
-### Step 9.3: Exception Category
-**Record:** N/A — standard bug fix, not device-ID/quirk/build/doc
-exception.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — simple sentinel check;
+   Reviewed-by from AMD engineer; maintainer SOB.
+2. Fixes real bug affecting users? **PASS** — invalid metrics used for
+   PM decisions on real hardware.
+3. Important issue? **PASS** — incorrect power/clock limits from
+   poisoned SMU data on datacenter GPUs (HIGH severity
+   misconfiguration).
+4. Small and contained? **PASS** — 4 lines, one function, one file.
+5. No new features/APIs? **PASS** — error-path validation only.
+6. Can apply to local tree? **PASS** — code present; minor context
+   adjustment for `memcpy` vs `smu_cmn_vram_cpy`.
 
-### Step 9.4: Decision Rationale
-This commit fixes a genuine use-after-free race in `blkcg_print_stat()`
-when users read block cgroup statistics concurrently with cgroup
-teardown or policy deactivation. The buggy code is present in the local
-6.18.44 tree, the fix is minimal and mirrors the already-correct
-`blkcg_reset_stats()` locking, and the failure mode is a kernel crash or
-memory corruption. This is appropriate stable material once merged
-upstream.
+### Step 9.3: Exception categories
+**Record:** N/A (not device ID, DT, build fix, or docs). Standard bug
+fix.
+
+### Step 9.4: Decision rationale
+This patch prevents the driver from silently building power-management
+state from completely invalid SMU metrics. On MI300-class hardware in
+the 6.18.y tree, a failed metrics read currently produces `0xFF` data
+that can populate `pptable` power and clock limits. The fix is minimal,
+low-risk, AMD-reviewed, and directly applicable to this checkout.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from user-provided commit message
-- [Phase 1] Identified as explicit UAF/race fix, not cosmetic cleanup
-- [Phase 2] Diff: 1 file, `blkcg_print_stat()` only, ~10 lines
-- [Phase 2] Verified `pd_free_fn()` called under `blkcg->lock` in
-  `blkcg_deactivate_policy()` (lines 1738–1744)
-- [Phase 2] Verified `blkg_destroy()` requires `blkcg->lock` (lines
-  529–530, 554)
-- [Phase 2] Verified `blkg_free_workfn()` frees policy data and iostat
-  (lines 114–142)
-- [Phase 2] Verified RCU insufficiency comment (lines 177–184)
-- [Phase 2] Verified `blkcg_reset_stats()` uses
-  `spin_lock_irq(&blkcg->lock)` for same list iteration (lines 662–669)
-- [Phase 3] `git blame`: RCU+queue_lock pattern from `49cb5168a7c6ab`
-  (2021)
-- [Phase 3] `git log -20 -- block/blk-cgroup.c`: related fixes
-  `5e5b7f2ef8549`, `5d726c4dbeedd`
-- [Phase 3] `git show 5e5b7f2ef8549`: separate rstat UAF fix, already in
-  tree
-- [Phase 3] No `Fixes:` tag to follow
-- [Phase 3] `guard(spinlock_irq)` defined in `include/linux/spinlock.h`
-  lines 571–573
-- [Phase 4] `b4 dig`: N/A — commit not in `FETCH_HEAD` master
-- [Phase 4] Lore/patch.msgid.link fetch: blocked (403/Anubis)
-- [Phase 4] **UNVERIFIED:** Review-thread stable nominations, Tested-by
-  reports
-- [Phase 5] `blkcg_print_stat` registered as `.seq_show` for `"stat"`
-  (lines 1254–1258)
-- [Phase 5] `blkcg_print_one_stat` accesses `blkg->iostat` and
-  `pd_stat_fn()` (lines 1182–1228)
-- [Phase 6] `git describe HEAD`: v6.18.44 on `stable/linux-6.18.y`
-- [Phase 6] Buggy code confirmed at lines 1244–1250
-- [Phase 6] `struct blkcg` has `spinlock_t lock` in `blk-cgroup.h:96`
-- [Phase 6] No equivalent fix already present for `blkcg_print_stat()`
-- [Phase 7] Subsystem: block/blk-cgroup, CONFIG_BLK_CGROUP
-- [Phase 8] Failure mode: UAF → oops/corruption, HIGH severity
-- [Phase 8] Trigger: cgroup stat read during teardown/deactivation
+- **[Phase 1]** Parsed commit message and tags from user-provided diff
+- **[Phase 2]** Read `smu_v13_0_6_get_metrics_table()` at lines 750–778;
+  confirmed missing integrity check
+- **[Phase 2]** Traced `setup_driver_pptable()` lines 873–942; confirmed
+  garbage `0xFF` metrics can populate power/clock limits
+- **[Phase 3]** `git describe HEAD` → `v6.18.43`
+- **[Phase 3]** `git blame -L 750,778` → function present, no integrity
+  check
+- **[Phase 3]** `git log --grep="metrics integrity"` → no match (commit
+  not in tree)
+- **[Phase 3]** `grep memchr_inv.*0xff drivers/gpu/drm/amd/pm` → no
+  matches
+- **[Phase 4]** Web search found amd-gfx submission (2026-04-18) and
+  drm-next-7.2 pull inclusion
+- **[Phase 4]** lore.kernel.org fetch failed (bot protection); Asad
+  Kamal reply noted via search snippet
+- **[Phase 4]** `b4 dig` without commit hash unavailable; commit not in
+  local tree
+- **[Phase 5]** `grep smu_v13_0_6_get_metrics_table` → 6 call sites in
+  `smu_v13_0_6_ppt.c`, 1 in `smu_v13_0_12_ppt.c`
+- **[Phase 5]** Verified callers check `ret` (except
+  `smu_v13_0_6_setup_driver_pptable()` at line 1088)
+- **[Phase 5]** `grep EHWPOISON drivers/gpu/drm/amd` → used in amdgpu
+  core (ras, cs, job, kms, xgmi)
+- **[Phase 5]** Found `memchr_inv(..., 0xff, ...)` pattern in
+  `drivers/platform/x86/amd/pmf/tee-if.c`
+- **[Phase 6]** Confirmed `IP_VERSION(13, 0, 6)` and `IP_VERSION(13, 0,
+  12)` in `amdgpu_smu.c`
+- **[Phase 6]** Confirmed upstream diff context differs
+  (`smu_cmn_vram_cpy` vs local `memcpy`); fix placement is equivalent
+- **[Phase 7]** `git log --oneline -20 -- drivers/gpu/drm/amd/pm/` →
+  active PM maintenance
+- **UNVERIFIED:** Exact hardware SKU list beyond IP version 13.0.6/12;
+  production incident frequency; full Asad Kamal review thread content
 
-**YES**
+**YES****Verdict: YES** — backport to this tree (`v6.18.43`).
 
- block/blk-cgroup.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+The commit adds a 4-line check in `smu_v13_0_6_get_metrics_table()` so
+unread SMU metrics (all `0xFF`) return `-EHWPOISON` instead of being
+used for power limits, clock tables, and sysfs metrics on SMU 13.0.6/12
+hardware (MI300-class). The buggy code is present in this tree; the
+patch applies cleanly after the existing `memcpy()` call.
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index a2347b5795874..812f60905a708 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1241,13 +1241,10 @@ static int blkcg_print_stat(struct seq_file *sf, void *v)
- 	else
- 		css_rstat_flush(&blkcg->css);
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+index 43965b1135fe7..0d065e4073655 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+@@ -768,6 +768,10 @@ int smu_v13_0_6_get_metrics_table(struct smu_context *smu, void *metrics_table,
+ 		amdgpu_asic_invalidate_hdp(smu->adev, NULL);
+ 		memcpy(smu_table->metrics_table, table->cpu_addr, table_size);
  
--	rcu_read_lock();
--	hlist_for_each_entry_rcu(blkg, &blkcg->blkg_list, blkcg_node) {
--		spin_lock_irq(&blkg->q->queue_lock);
-+	guard(spinlock_irq)(&blkcg->lock);
-+	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node)
- 		blkcg_print_one_stat(blkg, sf);
--		spin_unlock_irq(&blkg->q->queue_lock);
--	}
--	rcu_read_unlock();
++		if (!memchr_inv(smu_table->metrics_table, 0xff,
++				min(16, table_size)))
++			return -EHWPOISON;
 +
- 	return 0;
- }
+ 		smu_table->metrics_time = jiffies;
+ 	}
  
 -- 
 2.53.0
