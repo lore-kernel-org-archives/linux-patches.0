@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F565463B85;
-	Mon, 31 Aug 2026 13:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46A65632A6;
+	Mon, 31 Aug 2026 13:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184068; cv=none; b=RJCZStvrxnc2jMl772I4YNP1dTnZ7zCJcsG8rpg5qY2RWigsKYOkS3CooJk7TxCXxfLMidc/065UZQ52L5Z7RCnjLONKbJ7aGpaGC2DvhJgxyc8tXYj9SQqanQfZ1nY+YWNwIyaO+ACVJaJe2zRInc9M0o/lpmE3ujX5alIRM3M=
+	t=1788184069; cv=none; b=fCjWECd76yQqMd8xBi+sZAhDCCCdWBBvpC2hs7lvPBjOIn75348rsloIG66wqSjiPNql794YQS0DJONiXs0bWD5cJBtKzSojedu8EwxYupt1suo8joHhneiQvCrrzmldNmD3YcnE50sH3mV/0BJMD8i22dWuQkVGh1/oDflg4RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184068; c=relaxed/simple;
-	bh=T+KJEYiXhwV86mH4htXeP5xfNjt5uRzB8leGiTJm0ZM=;
+	s=arc-20240116; t=1788184069; c=relaxed/simple;
+	bh=F3PXKsGiZS6fYAcXoh+mSIliT4gOFNfvnyloSUYCwac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JUnPbtIDZ37nXudJPvptChz7EDEkUwHG34B8dzWDg/q9OZ3sIFKhvaV9WlLEfHssFxVURMqIABmJ+w+IvqBMbTLVqI8rsjbxrrlxQOlfWFEmnG6oDKTzM0KKBcmNYjTgcXFY0M1yugptiEyqxvHRG1chc+ApZ/X7N1tCQpeuPqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GZPKFqs5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=n9lw2rvOSG/ksbFKFyxYDLAsFh4f/r/JczArLsj1Z4W03F8Ss3j6rAD7P4J2cDb05Ph/Y5n5sg/4onRUhSoBcTb1XLrzlCF6rCZvfVK4yDfDVq8LI9lcEwz9m6dZ+bGGBGNT13qjy4ZBxugN5j5qRz7pwDbKcDU3BeP8QO+qETk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mzAEGYnV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GZPKFqs5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063011F00A3F;
-	Mon, 31 Aug 2026 13:47:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mzAEGYnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925F11F00A3D;
+	Mon, 31 Aug 2026 13:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184065;
-	bh=2BaV6aSCBfWzbisaA6ISQZlpEcse2nanP+Vnl+b0oeY=;
+	s=k20260515; t=1788184066;
+	bh=MxBcVVAjkwnqigI9ZfUaaBNLBx8KvOmAXi0pHeLz1eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZPKFqs5Sw1P5ijK/Z+czEzKQLsaTJK+KWD8T5EtL24Y1vTjG5Eicfnpj6XQvCJFi
-	 8p6qNklI2sbf6fdAsv57k6NmakUZ2WdNi3vGnG1+lW2SkTuX53QLZ5TAqNzIjxNE2A
-	 NEf55csJbBFFzaPcpizSpKNGxZnYi9iodF07g42JQ/cH6yO4UHfsHxK8lNmdZnJYj9
-	 tkmiG4XXEM4Qawz1t9vBYFnzUFCWBisjEqECY7RJ7YHfrk+YcF3pimGw2pDy6RYkWq
-	 nUQWkL6qYQkFBrKbJEjszR+EywuxehiHQFDlAqqqABi/NYw40oPgyZH4P2n3ScmbYd
-	 Jdf7ZpPbF8NIA==
+	b=mzAEGYnVLvXHdJL6Kjh895cClOJCx71v0xA6vUR6CvEmfzuI8Eos6s8SaIah7Nylm
+	 R+xKJ2znesf8iQHXn97Jm6Cb9GZoz+zVWedRzf4wjFzXysu+zg65TLLsjltAOwWv2U
+	 JVWpJtx/1Q/UpNVG45x3AQMk0JsO5ob6I0l1egV/lAXly1eLR40vhfg9SSGQ7Ma/kV
+	 saOvz2vxhgq6XsR5x2QN7Lcc8ztFCHnvyrJMwLcPblfND/zx9irMw+cnNemjaoy9aF
+	 vPOkjXB+vFAe0kDxV+dJ2yquRf0yEWGiOo2fKEo7F7qQ6s/30Xgcacv+109z2AAXDZ
+	 MZT6OB6cksdVQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
+Cc: "Rob Herring (Arm)" <robh@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	linusw@kernel.org,
+	brgl@kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: mac80211: clarify beacon parsing with MBSSID/EMA
-Date: Mon, 31 Aug 2026 09:28:18 -0400
-Message-ID: <20260831133314.4125787-470-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] gpio: pisosr: Read "ngpios" as u32
+Date: Mon, 31 Aug 2026 09:28:19 -0400
+Message-ID: <20260831133314.4125787-471-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -52,554 +54,369 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
 
-[ Upstream commit 32e223198539bd8be5a84764df869f88bc56f25b ]
+[ Upstream commit 4910aa198d25e5d1067236560ba34ab12bccc677 ]
 
-When connected to a non-transmitting BSS of multiple BSSID
-set with EMA, the correct profile for the connection isn't
-always present in the beacon. Indicate this in the parser
-and use the information to not check everything in beacon
-processing, since the information might not be correct if
-taken only from the transmitted BSS.
+The generic "ngpios" property is encoded as a normal uint32 cell. The
+pisosr driver stores it in the gpio_chip field, but reading it with a
+u16 helper does not match the DT property encoding.
 
-Link: https://patch.msgid.link/20260529102644.97527a7dfd7b.Iecd0ef578b85a5a0057538cfff5fdff41d19b7ea@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Read "ngpios" as u32 and keep the existing assignment to the chip
+field.
+
+Assisted-by: Codex:gpt-5-5
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260612215216.1887485-1-robh@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: mac80211: clarify beacon parsing with
-MBSSID/EMA`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (6.18.44)
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[wifi: mac80211]` `[clarify]` — When connected to a non-
-transmitting BSS in an MBSSID set with EMA, beacon parsing may not find
-the correct profile; the parser should record that and skip processing
-that depends on profile-specific data.
+### Step 1.1: Subject Line
+**Record:** `[gpio: pisosr]` `[Read]` — Read the device-tree `ngpios`
+property with the correct cell width (`u32` instead of `u16`).
 
 ### Step 1.2: Tags
 **Record:**
-- **Fixes:** — none
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** https://patch.msgid.link/20260529102644.97527a7dfd7b.Iecd0ef
-  578b85a5a0057538cfff5fdff41d19b7ea@changeid
-- **Cc: stable:** — none (expected for manual review)
-- **Signed-off-by:** Johannes Berg \<johannes.berg@intel.com\> (mac80211
-  maintainer)
+- **Assisted-by:** Codex:gpt-5-5
+- **Signed-off-by:** Rob Herring (Arm) \<robh@kernel.org\>
+- **Link:**
+  https://patch.msgid.link/20260612215216.1887485-1-robh@kernel.org
+- **Signed-off-by:** Bartosz Golaszewski
+  \<bartosz.golaszewski@oss.qualcomm.com\> (GPIO maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Cc:
+  stable@vger.kernel.org
+- Notable: authored/assisted by the device-tree maintainer; merged by
+  GPIO subsystem maintainer
 
-No syzbot, no user bug reports in the message.
-
-### Step 1.3: Body analysis
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** With EMA (Enhanced Multi-BSSID Advertisement), a non-
-  transmitting BSS profile may be absent from a given beacon. The parser
-  cannot return complete element data for the connected BSS.
-- **Symptom:** Beacon processing still uses incomplete/incorrect data
-  (from the transmitted BSS) for profile-specific updates.
-- **Root cause:** No signal that the non-transmitted profile was
-  missing; downstream code treats parsed elements as authoritative.
-- **Version info:** None stated.
+- **Bug:** Generic `ngpios` is a standard `u32` DT cell; `gpio-pisosr`
+  read it via `of_property_read_u16()`.
+- **Symptom:** Wrong `ngpio` when `ngpios` is present in DT; chip field
+  type is `u16`, but the property encoding is `u32`.
+- **Root cause:** Size/endian mismatch between DT encoding and OF read
+  helper.
+- **Fix:** Read into temporary `u32`, assign to `gpio->chip.ngpio` only
+  on success.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. "Clarify" understates it. This is a correctness fix
-that prevents applying WMM, bandwidth, TWT, power constraint, and ML
-reconfiguration from the wrong BSS's beacon data — behavior that can
-cause spurious disconnects.
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes. Despite neutral wording, this is a correctness /
+memory-safety bug fix, not style cleanup.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
 ### Step 2.1: Inventory
 **Record:**
-| File | Change |
-|------|--------|
-| `net/mac80211/ieee80211_i.h` | +9 lines: new
-`mbssid_nontx_profile_missing` bool in `struct ieee802_11_elems` |
-| `net/mac80211/parse.c` | +4 lines: set flag when `transmitted_bss` set
-and `nontx_len == 0` |
-| `net/mac80211/mlme.c` | ~90 lines: reorder + gate beacon processing
-behind flag |
+- **File:** `drivers/gpio/gpio-pisosr.c` (+3 / -1 net)
+- **Function:** `pisosr_gpio_probe()`
+- **Scope:** Single-file surgical fix
 
-**Functions modified:** `ieee802_11_parse_elems_full()`,
-`ieee80211_rx_mgmt_beacon()`
-**Scope:** Single-subsystem, 3 files, focused logic change with some
-reordering.
-
-### Step 2.2: Code flow changes
+### Step 2.2: Code Flow Change
 **Record:**
+- **Before:** `of_property_read_u16(dev->of_node, "ngpios",
+  &gpio->chip.ngpio);` (return ignored). `buffer_size` computed
+  immediately after from `gpio->chip.ngpio`.
+- **After:** `u32 ngpios`; `if (!of_property_read_u32(..., &ngpios))
+  gpio->chip.ngpio = ngpios;`. On missing property, default
+  `DEFAULT_NGPIO` (8) is preserved.
 
-**parse.c hunk:** Before → after
-- Before: `ieee802_11_find_bssid_profile()` returns 0 silently when
-  profile absent; caller has no way to know parsing is incomplete.
-- After: Sets `elems->mbssid_nontx_profile_missing = true` when
-  connected to non-transmitted BSS and profile not found.
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** DT property parsing / memory safety (buffer
+underrun → OOB)
 
-**mlme.c hunk:** Before → after
-- Before: All beacon-derived updates run unconditionally (WMM, cross-
-  link CSA, BW config, TWT, power constraint, ML reconfig).
-- After: Essential processing still runs (beacon monitor, SSID check,
-  TIM/PS, P2P NoA, timing, CRC, CSA from transmitted BSS, DTIM, ERP).
-  Profile-dependent updates are skipped when flag is set; `goto apply`
-  jumps to `ieee80211_link_info_change_notify()`.
+Verified mechanism:
+1. DT stores `ngpios = <N>` as a 4-byte big-endian `u32`.
+2. `of_property_read_u16()` requires `prop->length >= 2` with `max=0`
+   (no upper bound), so it **succeeds** on a 4-byte property.
+3. It reads the **first** 16 bits (`be16_to_cpup` at offset 0). For any
+   normal `N < 65536`, those high 16 bits are zero.
 
-### Step 2.3: Bug mechanism
-**Record:** **Category:** Logic/correctness fix (incorrect data
-application)
-**Mechanism:** When `nontx_len == 0`, `sub.len == 0` so inner profile
-parsing is skipped and `elems` contains outer/transmitted-BSS data.
-Without the flag, `ieee80211_config_bw()` can see apparent
-mode/bandwidth changes and return `-EINVAL`, triggering disconnect.
-`ieee80211_sta_wmm_params()`, `ieee80211_recalc_twt_req()`,
-`ieee80211_handle_pwr_constr()`, and `ieee80211_ml_reconfiguration()`
-can apply wrong parameters.
+Python simulation confirmed:
+- `ngpios=8` → u32 bytes `00000008` → u16 read = **0**
+- Same for 16, 24, 32
 
-### Step 2.4: Fix quality
-**Record:** Fix is logically sound and minimal for the problem. The
-maintainer explicitly documents what must still run vs. what must be
-skipped. Reordering (CSA before gated block, RNR outside profile) is
-intentional. Low regression risk: only affects the
-`mbssid_nontx_profile_missing` path, which is currently unhandled.
+4. With `ngpios` present in DT, `gpio->chip.ngpio` becomes **0**.
+5. `buffer_size = DIV_ROUND_UP(0, 8) = 0`; `devm_kzalloc(dev, 0, ...)`
+   yields `ZERO_SIZE_PTR`.
+6. Later `devm_gpiochip_add_data()` → `gpiochip_get_ngpios()` sees
+   `gc->ngpio == 0`, re-reads `ngpios` as `u32`, and restores the
+   correct line count for registration — but **`buffer_size` and
+   `buffer` are never recomputed**.
+7. GPIO access (`pisosr_gpio_get()` → `gpio->buffer[offset / 8]`) can
+   then read/write through a zero-sized buffer → **out-of-bounds
+   access**.
+
+When `ngpios` is **absent**, `of_property_read_u16()` fails, `ngpio`
+stays at template default 8, and the driver works.
+
+### Step 2.4: Fix Quality
+**Record:** Obviously correct; matches every other GPIO driver in-tree
+(`gpio-uniphier.c`, `gpio-aspeed.c`, `gpio-em.c`, etc.). Minimal diff.
+Regression risk very low.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** `ieee802_11_find_bssid_profile()` introduced in
-`9d0480a7c05b6` (Jan 2024, "move element parsing to a new file"). MBSSID
-non-transmitted profile search fixed in `e1e6ebf490e55` (Jun 2025).
-Buggy "process all beacon data even when profile missing" behavior
-present since MBSSID STA parsing was added; EMA makes the missing-
-profile case expected and recurring.
+**Record:** Buggy `of_property_read_u16()` introduced in `df6df93c8a73f`
+(2016-01-25, "gpio: Add driver for SPI serializers"). Present throughout
+6.18.y.
 
-### Step 3.2: Fixes: tag
+### Step 3.2: Fixes: Tag
 **Record:** N/A — no Fixes: tag.
 
-### Step 3.3: Related file history
-**Record:** Related MBSSID commits in this tree: `e1e6ebf490e55`
-(profile search fix), `182a2786d248e` (don't use old MBSSID elements),
-`1afa18e9e7239` (EMA beacon switch count), `68b9bea267bfc` (RNR for EMA
-AP). Standalone fix; not part of a numbered series. Commit not present
-in this tree (candidate only).
+### Step 3.3: Related File History
+**Record:** Recent `gpio-pisosr.c` commits are cleanups
+(`devm_mutex_init`, remove `direction_output`,
+`devm_gpiochip_add_data`). No related ngpios fix already present.
+Standalone one-patch fix.
 
-### Step 3.4: Author context
-**Record:** Johannes Berg is mac80211/cfg80211 maintainer. Recent
-related work in tree includes MLE defragmentation fix, non-transmitted
-BSSID profile search fix.
+### Step 3.4: Author Context
+**Record:** Rob Herring is DT maintainer. Bartosz Golaszewski is GPIO
+maintainer. Patch is subsystem-appropriate.
 
 ### Step 3.5: Dependencies
-**Record:** Patch context references `empty_non_inheritance` and
-`sub.type`, which are **not** in v6.18.44 (`sub.action` is used instead;
-no `empty_non_inheritance`). Those are context from a newer mainline
-base, not part of this commit's actual diff. Core changes (flag +
-gating) are self-contained and apply to this tree with minor context
-adaptation. No other commits required for the fix to function.
+**Record:** None. No series markers. Applies standalone to existing
+`pisosr_gpio_probe()`.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c` failed (commit not in local tree). `b4 dig` by
-subject failed (wrong usage). Lore/patch.msgid.link blocked by bot
-protection. Could not retrieve thread discussion.
-
-### Step 4.2: Reviewers
-**Record:** UNVERIFIED — could not access lore thread.
-
-### Step 4.3: Bug report
-**Record:** No external bug report. No syzbot. Issue is protocol-
-correctness driven, identified by maintainer.
-
-### Step 4.4: Related patches
-**Record:** Part of ongoing MBSSID/EMA beacon-parsing work. Complements
-`e1e6ebf490e55` (profile search) already in tree. Standalone value.
-
-### Step 4.5: Stable list history
-**Record:** UNVERIFIED — lore blocked.
+### Step 4.1–4.5
+**Record:**
+- `b4 dig -c 2732ea8c16b7b`: commit hash not in local repo (blob only
+  from diff index); no lore match.
+- Link URL and lore.kernel.org blocked by Anubis bot protection —
+  **UNVERIFIED** for review-thread content, stable nominations, or NAKs.
+- No syzbot/bugzilla references in commit message.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `ieee802_11_parse_elems_full()`,
-`ieee802_11_find_bssid_profile()`, `ieee80211_rx_mgmt_beacon()`,
-`ieee80211_config_bw()`, `ieee80211_sta_wmm_params()`
+### Step 5.1: Key Functions
+**Record:** `pisosr_gpio_probe()`, indirectly `pisosr_gpio_get()`,
+`pisosr_gpio_refresh()`.
 
 ### Step 5.2: Callers
-**Record:** `ieee80211_rx_mgmt_beacon()` called from management RX path
-(`ieee80211_rx_mgmt`, lines ~8156/8186) — normal connected-STA beacon
-receive path. High-frequency, every beacon interval.
+**Record:** `pisosr_gpio_probe()` via SPI driver registration at
+boot/module load. GPIO ops invoked from gpiolib when consumers read
+lines.
 
 ### Step 5.3: Callees
-**Record:** Parser calls `ieee802_11_find_bssid_profile()`,
-`cfg80211_find_ext_elem()`, `_ieee802_11_parse_elems_full()`. Beacon
-handler calls disconnect path via `ieee80211_config_bw()` →
-`ieee80211_set_disassoc()`.
+**Record:** `of_property_read_u16/u32`, `devm_kzalloc`,
+`devm_gpiochip_add_data` → `gpiochip_get_ngpios`.
 
 ### Step 5.4: Reachability
-**Record:** Triggered when STA is associated to a non-transmitted BSS
-(`bss->transmitted_bss` set) on an EMA-capable AP. EMA detection exists
-in tree (`bss_conf->ema_ap`, `WLAN_EXT_CAPA11_EMA_SUPPORT`). Reachable
-from normal WiFi association — no special privileges needed beyond
-connecting to such an AP.
+**Record:** Triggered when a board DT node has `compatible = "pisosr-
+gpio"` **and** an explicit `ngpios` property. GPIO reads from userspace
+or kernel consumers reach the buggy buffer path.
 
-### Step 5.5: Similar patterns
-**Record:** EMA beacon generation/parsing fixes already in tree
-(`1afa18e9e7239`, `68b9bea267bfc`). This follows the same MBSSID/EMA
-correctness theme.
+### Step 5.5: Similar Patterns
+**Record:** `gpio-pisosr.c` is the **only** GPIO driver using
+`of_property_read_u16()` for `ngpios`. All others use
+`of_property_read_u32()`.
 
 ---
 
-## PHASE 6: CROSS-REFERENCE WITH LOCAL TREE (v6.18.44)
+## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
 
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current `ieee80211_rx_mgmt_beacon()` at lines
-7616–7703 processes WMM, BW, TWT, power constraint, and ML reconfig
-without checking whether the non-transmitted profile was found.
-`ieee802_11_find_bssid_profile()` can return 0 (line 825).
-`mbssid_nontx_profile_missing` does not exist. MBSSID/EMA infrastructure
-is present.
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** Local tree at `v6.18.44-1-g2736c32da98b9` still
+has:
 
-### Step 6.2: Backport complications
-**Record:** Expected **minor conflicts** — patch base uses `sub.type`
-vs. local `sub.action`; `empty_non_inheritance` is context-only and not
-needed for this commit's actual changes. Core 3-file change should apply
-cleanly with trivial adaptation.
+```123:123:drivers/gpio/gpio-pisosr.c
+        of_property_read_u16(dev->of_node, "ngpios", &gpio->chip.ngpio);
+```
 
-### Step 6.3: Related fixes already present?
-**Record:** `e1e6ebf490e55` (profile search return fix) is in tree. This
-complementary fix is **not** present. No duplicate fix found.
+Bug present since driver addition in 2016.
 
----
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — 3-line hunk in one function, no
+structural conflicts.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 6.3: Related Fixes Already Present?
+**Record:** None found for this issue.
 
-### Step 7.1: Subsystem criticality
-**Record:** `net/mac80211` — **IMPORTANT** (WiFi stack used broadly; STA
-beacon path is core connectivity).
-
-### Step 7.2: Activity
-**Record:** Actively developed; recent MBSSID/MLE/EMA fixes indicate
-this area is still maturing and bug-prone.
+### In-tree DTS usage
+**Record:** Five `pisosr-gpio` nodes exist (BeagleBone AI, AM57xx IDK,
+AM437x IDK, AM335x ICEv2, VF610 BK4). **None specify `ngpios`** — all
+rely on the driver default of 8. So mainline shipped boards are not
+currently broken, but the binding allows `ngpios` (default 8, max 32 per
+`pisosr-gpio.yaml`).
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## Phase 7: Subsystem Context
 
-### Step 8.1: Who is affected
-**Record:** WiFi clients connected to **non-transmitted BSSs** in **EMA-
-enabled MBSSID** deployments (enterprise/campus WiFi 6/7 APs). Config-
-specific, but user population is growing.
+### Step 7.1
+**Record:** `drivers/gpio/gpio-pisosr.c` — GPIO driver for SPI parallel-
+in/serial-out shift registers. **Criticality: PERIPHERAL** (niche
+industrial/embedded hardware).
 
-### Step 8.2: Trigger conditions
-**Record:** Every beacon where EMA rotation omits the connected non-
-transmitted profile — **periodic and expected** with EMA, not rare.
-Unprivileged users trigger by normal WiFi association.
+### Step 7.2
+**Record:** Driver is mature (since 2016); recent activity is
+maintenance only.
 
-### Step 8.3: Failure mode severity
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users of `pisosr-gpio` hardware who include an explicit
+`ngpios` property in device tree. Config-specific / board-specific.
+
+### Step 8.2: Trigger Conditions
+**Record:** `ngpios = <N>` in DT for a `pisosr-gpio` node. Uncommon
+today (no in-tree examples), but valid per binding. Not userspace-
+triggerable directly; kernel GPIO access after probe triggers OOB.
+
+### Step 8.3: Failure Mode Severity
+**Record:** Wrong zero-sized internal buffer while gpiochip may register
+the correct line count → **OOB on GPIO read** → potential
+oops/corruption. **Severity: HIGH** when triggered; **latent** on
+current in-tree DTS.
+
+### Step 8.4: Risk-Benefit
 **Record:**
-- **Spurious disconnect** via `ieee80211_config_bw()` returning
-  `-EINVAL` (lines 7678–7687) — **CRITICAL**
-- Wrong WMM/QoS parameters — **MEDIUM**
-- Wrong TWT/power/ML reconfig — **MEDIUM**
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH for affected deployments — prevents recurring
-  disconnects and incorrect connection parameters during normal EMA
-  operation
-- **Risk:** LOW — small flag + early-exit; only affects the previously-
-  unhandled missing-profile path
-- **Ratio:** Strong benefit, low risk
+- **Benefit:** Fixes real DT-binding compliance bug with memory-safety
+  consequences; enables correct custom board DT.
+- **Risk:** Very low — 3-line change, matches established driver
+  pattern.
+- **Ratio:** Favorable for backport despite niche hardware.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence Summary
 
-**FOR backport:**
-- Real bug: incomplete beacon parse treated as complete
-- Can cause spurious disconnects (`ieee80211_config_bw()`)
-- EMA makes missing profiles expected, not exceptional
-- Small, maintainer-authored, logically correct fix
-- Buggy code confirmed in v6.18.44
-- MBSSID/EMA support already in tree
+**FOR:**
+- Verified bug: `u16` read of `u32` `ngpios` yields 0 for all normal
+  values
+- Leads to zero-sized buffer + possible OOB despite correct gpiochip
+  registration
+- Bug since 2016; fix not yet in 6.18.y
+- Trivial, obviously correct; DT + GPIO maintainers involved
+- DT binding documents `ngpios` as valid optional property
 
-**AGAINST backport:**
-- No explicit user/syzbot report
-- Niche scenario (non-transmitted BSS + EMA)
-- Slight mainline divergence in patch context (`sub.type`,
-  `empty_non_inheritance`)
-- "Clarify" wording understates severity
+**AGAINST:**
+- No in-tree DTS currently uses `ngpios` on pisosr nodes
+- No fuzzer/user crash reports
+- Peripheral driver; default path (no `ngpios`) works
+- `gpiochip_get_ngpios()` partially masks the gpio-count symptom
 
-**Unresolved:** Mailing list review feedback (lore inaccessible).
+**UNVERIFIED:**
+- Mailing list review discussion and any explicit stable nomination
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic verified in code;
-   maintainer-authored; no Tested-by
-2. Fixes a real bug? **PASS** — incorrect beacon data application when
-   EMA profile absent
-3. Important issue? **PASS** — spurious disconnects (CRITICAL), wrong
-   connection params (MEDIUM)
-4. Small and contained? **PASS** — 3 files, ~100 lines, no API changes
-5. No new features/APIs? **PASS** — internal flag only
-6. Can apply to local tree? **PASS** — buggy code present; minor context
-   adaptation expected
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — mechanism verified in OF
+   code; pattern used elsewhere; maintainer-authored.
+2. Fixes a real bug? **PASS** — incorrect DT parsing when `ngpios` is
+   present.
+3. Important issue? **PASS** — OOB/memory safety when triggered;
+   functional breakage for valid DT.
+4. Small and contained? **PASS** — 4 lines in one file.
+5. No new features/APIs? **PASS** — behavior correction only.
+6. Can apply to local tree? **PASS** — buggy code confirmed present in
+   v6.18.44.
 
-### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-bug fix.
+### Step 9.3: Exception Category
+**Record:** Device tree fix for existing driver/hardware — qualifies
+under DT-update exception.
 
-### Step 9.4: Decision rationale
-When a STA is connected to a non-transmitted BSS on an EMA AP, beacon
-profiles rotate and the connected profile is intentionally absent from
-many beacons. The current v6.18.44 code parses outer/transmitted-BSS
-elements and applies them as if they belong to the connected BSS —
-including bandwidth tracking that can trigger disconnect. This commit
-adds a clear signal (`mbssid_nontx_profile_missing`) and skips profile-
-dependent updates while preserving essential beacon handling
-(monitoring, CSA, DTIM, ERP). This is exactly the kind of connectivity-
-stability fix stable trees should carry.
+### Step 9.4: Decision Rationale
+This is a long-standing DT property encoding bug that silently breaks
+any board specifying `ngpios` for `pisosr-gpio`: the driver allocates a
+zero-byte buffer while registering the correct GPIO count via gpiolib
+fallback, creating an OOB path on GPIO access. The fix is minimal,
+matches every other GPIO driver, and carries negligible regression risk.
+Current mainline DTS avoids the bug by omitting `ngpios`, but the
+binding permits it and custom boards can hit this today.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, body, tags: only Link + SOB from Johannes
-  Berg
-- [Phase 2] Diff analysis: 3 files, flag in `ieee802_11_elems`, set in
-  `parse.c`, gating in `mlme.c`
-- [Phase 2] Verified `ieee80211_config_bw()` disconnect path at lines
-  1288–1294, 1346–1350, 7678–7687
-- [Phase 3] `git describe HEAD`: v6.18.44
-- [Phase 3] `git blame` on `ieee802_11_find_bssid_profile()`: introduced
-  9d0480a7c05b6 (2024)
-- [Phase 3] `e1e6ebf490e55` confirmed in tree (related profile search
-  fix)
-- [Phase 3] `git log --grep="clarify beacon parsing"`: no match — commit
-  not in tree
-- [Phase 4] `b4 dig -c`: failed (commit not in tree)
-- [Phase 4] Lore/patch.msgid.link: blocked by bot protection —
-  UNVERIFIED
-- [Phase 5] `grep ieee80211_rx_mgmt_beacon`: called from mgmt RX at
-  lines 8156, 8186
-- [Phase 5] Traced `nontx_len == 0` path in `parse.c` lines 1023–1058:
-  inner profile parsing skipped
-- [Phase 6] `grep mbssid_nontx_profile_missing`: not in tree (fix
-  absent, buggy code present)
-- [Phase 6] `grep empty_non_inheritance`: not in tree (context-only
-  divergence)
-- [Phase 6] Verified `WLAN_EXT_CAPA11_EMA_SUPPORT` and
-  `bss_conf->ema_ap` in mlme.c
-- [Phase 6] Read current `ieee80211_rx_mgmt_beacon()` lines 7384–7708:
-  matches pre-fix behavior
-- [Phase 8] Disconnect path confirmed: `ieee80211_config_bw()` failure →
-  `ieee80211_set_disassoc()`
-- [UNVERIFIED] Mailing list reviewer feedback and stable nominations
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+- **[Phase 2]** Diff analysis: 3-line probe() change; verified
+  `of_property_read_u16` implementation in `drivers/of/property.c`
+  (min=2, max=0, reads first be16)
+- **[Phase 2]** Python simulation: u32 `ngpios` values 8/16/24/32 all
+  read as 0 via u16
+- **[Phase 2]** Confirmed `struct gpio_chip.ngpio` is `u16` in
+  `include/linux/gpio/driver.h`
+- **[Phase 3]** `git blame`: buggy line from `df6df93c8a73f` (2016)
+- **[Phase 3]** `git log --oneline -20 -- drivers/gpio/gpio-pisosr.c`:
+  no prior ngpios fix
+- **[Phase 3]** `git grep`: only `gpio-pisosr.c` uses
+  `of_property_read_u16` for `ngpios`
+- **[Phase 4]** `b4 dig -c 2732ea8c16b7b`: no result (commit not in
+  repo) — **UNVERIFIED** lore thread
+- **[Phase 4]** WebFetch patch.msgid.link and lore.kernel.org: blocked
+  by Anubis — **UNVERIFIED**
+- **[Phase 5]** Read `gpiochip_get_ngpios()` in
+  `drivers/gpio/gpiolib.c`: re-reads u32 when `gc->ngpio==0`, does not
+  fix driver buffer
+- **[Phase 5]** Traced probe order: buffer allocated before
+  `devm_gpiochip_add_data()`
+- **[Phase 6]** `git describe HEAD`: `v6.18.44-1-g2736c32da98b9`;
+  Makefile confirms 6.18.44
+- **[Phase 6]** Read current `drivers/gpio/gpio-pisosr.c`: still has
+  buggy `of_property_read_u16`
+- **[Phase 6]** `grep pisosr-gpio` in `arch/arm/boot/dts/`: 5 nodes,
+  none with `ngpios` property
+- **[Phase 6]** Read `Documentation/devicetree/bindings/gpio/pisosr-
+  gpio.yaml`: `ngpios` optional, default 8, max 32
+- **[Phase 8]** Assessed failure mode: zero buffer + OOB on GPIO access
+  when `ngpios` in DT
 
-**YES**The background search finished: none of the three greps (`clarify
-beacon parsing`, `mbssid_nontx`, `empty_non_inheritance`) matched
-anything in this tree, so the commit is not in v6.18.44 yet — it's only
-a backport candidate.
+**YES**The backport analysis is done for **gpio: pisosr: Read "ngpios"
+as u32** on **v6.18.44**.
 
-That matches the earlier analysis: the buggy beacon-handling path is
-present, and the fix should still apply with minor context tweaks
-(`sub.action` vs `sub.type`).
+**Verdict: YES**
 
-**YES** — backport recommended for this tree.
+The driver reads the standard `u32` `ngpios` DT property with
+`of_property_read_u16()`, which turns any normal value into **0**. That
+leaves a zero-sized buffer while gpiolib may still register the correct
+GPIO count, so boards that set `ngpios` in DT can hit out-of-bounds
+access on GPIO reads. The fix is small, obviously correct, and matches
+other GPIO drivers. No in-tree DTS nodes currently set `ngpios` for
+`pisosr-gpio`, but the binding allows it.
 
- net/mac80211/ieee80211_i.h |  9 +++++
- net/mac80211/mlme.c        | 83 ++++++++++++++++++++++++++++----------
- net/mac80211/parse.c       |  4 ++
- 3 files changed, 75 insertions(+), 21 deletions(-)
+ drivers/gpio/gpio-pisosr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 5c0c833fcf7a9..b0e64cf346e2b 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1864,6 +1864,15 @@ struct ieee802_11_elems {
- 	struct ieee80211_mle_per_sta_profile *prof;
- 	size_t sta_prof_len;
+diff --git a/drivers/gpio/gpio-pisosr.c b/drivers/gpio/gpio-pisosr.c
+index 7ec6a46ed6007..2732ea8c16b7b 100644
+--- a/drivers/gpio/gpio-pisosr.c
++++ b/drivers/gpio/gpio-pisosr.c
+@@ -112,6 +112,7 @@ static int pisosr_gpio_probe(struct spi_device *spi)
+ {
+ 	struct device *dev = &spi->dev;
+ 	struct pisosr_gpio *gpio;
++	u32 ngpios;
+ 	int ret;
  
-+	/*
-+	 * When parsing the beacon with MBSSID (from a transmitted BSS), this
-+	 * indicates that the profile the parser was instructed to look for
-+	 * (via the bss value in &struct ieee80211_elems_parse_params) couldn't
-+	 * be found (due to EMA, or perhaps broken AP) and the result cannot be
-+	 * considered complete.
-+	 */
-+	bool mbssid_nontx_profile_missing;
-+
- 	/* whether/which parse error occurred while retrieving these elements */
- 	u8 parse_error;
- };
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 9ec4125c06d19..3c33e56c12a80 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -7400,8 +7400,6 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
- 	struct link_sta_info *link_sta;
- 	struct sta_info *sta;
- 	u64 changed = 0;
--	bool erp_valid;
--	u8 erp_value = 0;
- 	u32 ncrc = 0;
- 	u8 *bssid, *variable = mgmt->u.beacon.variable;
- 	u8 deauth_buf[IEEE80211_DEAUTH_FRAME_LEN];
-@@ -7521,6 +7519,13 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
- 	if (!elems)
- 		return;
+ 	gpio = devm_kzalloc(dev, sizeof(*gpio), GFP_KERNEL);
+@@ -120,7 +121,8 @@ static int pisosr_gpio_probe(struct spi_device *spi)
  
-+	/*
-+	 * Note: with MBSSID and an EMA (or broken) AP, we could fail to find
-+	 * the correct multi-BSSID profile for the non-transmitting AP we're
-+	 * connected to. The result's elems->mbssid_nontx_profile_missing is
-+	 * indicating that, but some things must happen regardless.
-+	 */
-+
- 	if (rx_status->flag & RX_FLAG_DECRYPTED &&
- 	    ieee80211_mgd_ssid_mismatch(sdata, elems)) {
- 		sdata_info(sdata, "SSID mismatch for AP %pM, disconnect\n",
-@@ -7556,6 +7561,11 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
- 		}
- 	}
+ 	gpio->chip = template_chip;
+ 	gpio->chip.parent = dev;
+-	of_property_read_u16(dev->of_node, "ngpios", &gpio->chip.ngpio);
++	if (!of_property_read_u32(dev->of_node, "ngpios", &ngpios))
++		gpio->chip.ngpio = ngpios;
  
-+	/*
-+	 * P2P will almost certainly not have MBSSID, but this just
-+	 * assumes that it would at least always inherit NoA anyway
-+	 * since it's absent from the channel.
-+	 */
- 	if (sdata->vif.p2p ||
- 	    sdata->vif.driver_flags & IEEE80211_VIF_GET_NOA_UPDATE) {
- 		struct ieee80211_p2p_noa_attr noa = {};
-@@ -7613,23 +7623,17 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
- 
- 	ieee80211_rx_bss_info(link, mgmt, len, rx_status);
- 
-+	/*
-+	 * This assumes that all members of a multiple BSS set must be
-+	 * switching together, so we can parse channel switch elements
-+	 * from the transmitted BSS even if our non-transmitted one is
-+	 * not present in this beacon (due to EMA.)
-+	 */
- 	ieee80211_sta_process_chanswitch(link, rx_status->mactime,
- 					 rx_status->device_timestamp,
- 					 elems, elems,
- 					 IEEE80211_CSA_SOURCE_BEACON);
- 
--	/* note that after this elems->ml_basic can no longer be used fully */
--	ieee80211_mgd_check_cross_link_csa(sdata, rx_status->link_id, elems);
--
--	ieee80211_mgd_update_bss_param_ch_cnt(sdata, bss_conf, elems);
--
--	if (!sdata->u.mgd.epcs.enabled &&
--	    !link->u.mgd.disable_wmm_tracking &&
--	    ieee80211_sta_wmm_params(local, link, elems->wmm_param,
--				     elems->wmm_param_len,
--				     elems->mu_edca_param_set))
--		changed |= BSS_CHANGED_QOS;
--
- 	/*
- 	 * If we haven't had a beacon before, tell the driver about the
- 	 * DTIM period (and beacon timing if desired) now.
-@@ -7646,17 +7650,53 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
- 		ieee80211_recalc_ps_vif(sdata);
- 	}
- 
--	if (elems->erp_info) {
--		erp_valid = true;
--		erp_value = elems->erp_info[0];
--	} else {
--		erp_valid = false;
--	}
-+	/* RNR isn't inside an MBSSID profile */
-+	ieee80211_mgd_update_bss_param_ch_cnt(sdata, bss_conf, elems);
-+
-+	/* assume ERP would be inherited anyway */
-+	if (!ieee80211_is_s1g_beacon(hdr->frame_control)) {
-+		u8 erp_value = 0;
-+		bool erp_valid;
-+
-+		if (elems->erp_info) {
-+			erp_valid = true;
-+			erp_value = elems->erp_info[0];
-+		} else {
-+			erp_valid = false;
-+		}
- 
--	if (!ieee80211_is_s1g_beacon(hdr->frame_control))
- 		changed |= ieee80211_handle_bss_capability(link,
- 				le16_to_cpu(mgmt->u.beacon.capab_info),
- 				erp_valid, erp_value);
-+	}
-+
-+	/*
-+	 * There are some other things that we can only do when the
-+	 * real non-transmitted profile was actually parsed, so exit
-+	 * here before doing those.
-+	 */
-+	if (elems->mbssid_nontx_profile_missing)
-+		goto apply;
-+
-+	/*
-+	 * This requires multi-link element, which is from the MBSSID profile.
-+	 * Note that after this elems->ml_basic can no longer be used fully.
-+	 *
-+	 * Note also that currently the parsing is incorrect, so this will
-+	 * never actually do anything.
-+	 */
-+	ieee80211_mgd_check_cross_link_csa(sdata, rx_status->link_id, elems);
-+
-+	/*
-+	 * EDCA parameters should be the same, but perhaps ACM can differ
-+	 * between BSSes in an MBSSID set.
-+	 */
-+	if (!sdata->u.mgd.epcs.enabled &&
-+	    !link->u.mgd.disable_wmm_tracking &&
-+	    ieee80211_sta_wmm_params(local, link, elems->wmm_param,
-+				     elems->wmm_param_len,
-+				     elems->mu_edca_param_set))
-+		changed |= BSS_CHANGED_QOS;
- 
- 	sta = sta_info_get(sdata, sdata->vif.cfg.ap_addr);
- 	if (WARN_ON(!sta)) {
-@@ -7702,6 +7742,7 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
- 	ieee80211_process_adv_ttlm(sdata, elems,
- 				      le64_to_cpu(mgmt->u.beacon.timestamp));
- 
-+apply:
- 	ieee80211_link_info_change_notify(sdata, link, changed);
- free:
- 	kfree(elems);
-diff --git a/net/mac80211/parse.c b/net/mac80211/parse.c
-index b9ec99f51851a..b117572f8cb17 100644
---- a/net/mac80211/parse.c
-+++ b/net/mac80211/parse.c
-@@ -1032,6 +1032,10 @@ ieee802_11_parse_elems_full(struct ieee80211_elems_parse_params *params)
- 		sub.action = params->action;
- 		sub.link_id = params->link_id;
- 
-+		/* indicate to consumer whether or not profile was found */
-+		if (params->bss->transmitted_bss && !nontx_len)
-+			elems->mbssid_nontx_profile_missing = true;
-+
- 		/* consume the space used for non-transmitted profile */
- 		elems_parse->scratch_pos += nontx_len;
+ 	gpio->spi = spi;
  
 -- 
 2.53.0
