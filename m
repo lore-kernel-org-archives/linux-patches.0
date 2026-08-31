@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AE85A5120;
-	Mon, 31 Aug 2026 13:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE245A5142;
+	Mon, 31 Aug 2026 13:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184337; cv=none; b=rdzpOFyL17xn/0C/48dQQXqIb9N35YQ4fFvIj/qjv7P0/6KBo1SCOLHzqIDV7JGMlQLJYacus+1iFMpzwscyRDnpBdS4ikvy2jvhdlo84Ky5FF1DZuogplmisaEI6BR2Sk5j6TUpccYnkkZ+OpVk/6tuFzulYgKw9YtEKTZW9oE=
+	t=1788184338; cv=none; b=kCNA/lb2dQZLJLyEJNg/Pc6O9MJyqjxcR+5Tlq6P6KjrLNuvv50CkO0kUAifMIsZKnU3yeY51y9b13RF3qA5GfT1TM2OAjwbHYPYjbEZODoLML3PFrdfBlNMRjsSanoDdavQHA2d3GxgG1aJtkRnlcutxFYhAO8MHyDqCpK/BiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184337; c=relaxed/simple;
-	bh=FxQ6nVZ4YoyxEkQbWtAhM8UOOYbiFoZNH1wXzlUa/XI=;
+	s=arc-20240116; t=1788184338; c=relaxed/simple;
+	bh=YZIvxUQeoIWU+qk7vGIrjZ88RH6Sh3WqwfQAZmAWMmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UPN+XhTR/9hIJHGT2tok3U2hstYmwAo5GPpB2M3wYI1iyXfKIOtuEn8Fhy5MUr+kxoKcHo+l/E/9MerAB2MUgbXGyrEjD/7iqY3TAocS65gA6JvbsdTYPEOQ2/rJqWwLZ/bmxdy5DwNpvgEXcs0SF/Z6pqNnrMtZW90PLqI+dgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gpuGlnII; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YNOsAvZu0Uyd9fBhnFEtqqkc4vLjNoqcavmVHLoX6OPoI7+oAlOvgyw7IQQ99ycsouRrW0dmNSHstzQeSWXSoA50mqpkb70sHz6yP2X9ZpvM2FaibT1lq3IG3JhBF7jLngXNZRY/ZYL4ir7FUkaBQX2JCk4F4u7vKL7gDZaNJ/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jk+9XX0N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gpuGlnII"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CDD1F00A3D;
-	Mon, 31 Aug 2026 13:52:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jk+9XX0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294CD1F00A3F;
+	Mon, 31 Aug 2026 13:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184334;
-	bh=LiC5preUXJ6GSBz7xSKt4+QPU8ODGRCx8zv11LGbr7w=;
+	s=k20260515; t=1788184336;
+	bh=Nhwg4k6YpAqkSMc8ZUEpSURpmfGFhXWr3FMAzIJLWXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gpuGlnIIoVDmWOYw4ygF2Cgp63GViMcyh+nUvt32dSCoj2LbxY4T4h/BiRn1DSbJh
-	 Lx8BVt1ebRBq1eMl23BUmV0LncDPPt3IEuIf40CbwmFMFaoknnVJwmY6/pFcsrEwoF
-	 dXLaXyMpU8zfZCke9bCZ1ogPRnaUJtrNuO0CEVp8F9Xm1vMSK+RIAekiAzTgXbLKqg
-	 7ye4rElbBwZoAzlwdq+CJJSL6ACzueqIJwySaix67UZwvKyAxMBpa8FoDi4TwlIhEm
-	 Mx4OTc0zpjwl2WstKtjbY0jSe1pgUoZDbPPNAd0efFjeKvZmqvg3wyfI91ul2ZBtzf
-	 jsbAk3IY3KTmg==
+	b=Jk+9XX0N8WRFSva/EXbaIVa4ynScFuljqQcEZ86iAmryU1fqtRrvKX0a8YAiIItAp
+	 RuIEBK97OweaYczv/dOcxd3Z2DUq7MQAWTa7DcHkgUyD/U79F3lC3A0bcZZugux+Jm
+	 jGlBtmXK1jib3h00z/DeFRoJsS+yXw7Y0dqZIb1pD/bf/9DZjNRrhR+irYI8egl3SM
+	 SeubfYZBh7Z4BOcUiVIoTxejJRDsY2k1Gf9thOJf5JVG3MM/liCg+Om06SEzyxhOM0
+	 BMVsOdApZhXCbEUA5iXYOSMOCElX9OprY7fdBzFKLmtuhmAMuGdr0WNI/0zBidFZDb
+	 7glgMjefORSWg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Jiri Kosina <jkosina@suse.com>,
+	zdi-disclosures@trendmicro.com,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] net: ibm: emac: mal: fix potential system hang in mal_remove()
-Date: Mon, 31 Aug 2026 09:31:00 -0400
-Message-ID: <20260831133314.4125787-632-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.1] HID: hidpp: fix potential UAF in hidpp_connect_event()
+Date: Mon, 31 Aug 2026 09:31:01 -0400
+Message-ID: <20260831133314.4125787-633-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,26 +54,17 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jiri Kosina <jkosina@suse.com>
 
-[ Upstream commit 7c5d41f87f079990bf241359e3c1332d8d10fe87 ]
+[ Upstream commit 6df6b1f2c49678211f65647c300bc51dda02893b ]
 
-napi_disable() is not idempotent and calling it on an already-disabled
-or unenabled NAPI context will cause the kernel to spin indefinitely
-waiting for the NAPI_STATE_SCHED bit to clear.
+If input_register_device() fails, we call input_free_device(), but keep
+stale pointer to the old device in hidpp->input, which could potentially
+lead to UAF. Fix that by resetting it to NULL before returning from
+hidpp_connect_event().
 
-In mal_remove(), napi_disable() is called unconditionally. If no MACs were
-registered, NAPI was never enabled. Also, if they were registered but
-subsequently unregistered, NAPI was already disabled in
-mal_unregister_commac(). In either case, calling napi_disable() causes
-the kernel to hang upon module removal.
-
-Fix this by only calling napi_disable() in mal_remove() if the commac list
-is not empty (which implies NAPI is enabled).
-
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260603230821.5619-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: zdi-disclosures@trendmicro.com
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -83,363 +72,376 @@ LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
 
-### Step 1.1: Subject line
-**Record:** `[net: ibm: emac: mal]` `[fix]` — fix potential system hang
-in `mal_remove()`.
+**Step 1.1 — Subject line**
 
-### Step 1.2: Tags
-**Record:**
-- **Signed-off-by:** Rosen Penev `<rosenp@gmail.com>` (author)
-- **Link:**
-  https://patch.msgid.link/20260603230821.5619-1-rosenp@gmail.com
-- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (net maintainer
-  merge)
-- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
-  stable tags
-- Notable: maintainer merge SOB; no syzbot or user reports in the
-  message
+Record: **[HID/hidpp] [fix] [potential UAF in hidpp_connect_event() when
+input_register_device() fails]**
 
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** `napi_disable()` is called unconditionally in `mal_remove()`,
-  but NAPI is only enabled when the first commac registers
-  (`mal_register_commac()`), and is disabled when the last commac
-  unregisters (`mal_unregister_commac()`).
-- **Symptom:** Kernel spins indefinitely in `napi_disable()` waiting for
-  `NAPI_STATE_SCHED` to clear → system hang on MAL device removal.
-- **Trigger paths:** (1) No MAC ever registered → NAPI never enabled;
-  (2) MACs registered then unregistered → NAPI already disabled.
-- **Root cause:** `napi_disable()` is not idempotent on an unenabled or
-  already-disabled NAPI context.
-- **Fix approach:** Only call `napi_disable()` in `mal_remove()` when
-  `mal->list` is non-empty (abnormal leftover commacs).
+**Step 1.2 — Tags**
 
-### Step 1.4: Hidden bug fix?
-**Record:** No — this is an explicit bug fix for a hang, not disguised
-cleanup.
+Record:
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** zdi-disclosures@trendmicro.com (Trend Micro Zero Day
+  Initiative — security disclosure channel)
+- **Tested-by:** — not present
+- **Reviewed-by:** — not present
+- **Acked-by:** — not present
+- **Link:** — not present
+- **Cc: stable:** — not present (expected)
+- **Signed-off-by:** Jiri Kosina (author); ignore pipeline-added SOBs
+  per instructions
+
+Notable: ZDI disclosure is a strong security-relevant signal.
+
+**Step 1.3 — Body analysis**
+
+Record:
+- **Bug:** On `input_register_device()` failure in
+  `hidpp_connect_event()`, the driver calls `input_free_device()` but
+  leaves a stale pointer in `hidpp->input`.
+- **Symptom:** Potential use-after-free when later code dereferences
+  `hidpp->input`.
+- **Root cause:** `hidpp_populate_input()` sets `hidpp->input = input`
+  before registration; the error path frees the device without clearing
+  the pointer.
+- **Version info:** Not specified in the message.
+
+**Step 1.4 — Hidden bug fix?**
+
+Record: **No — this is an explicit UAF fix**, not disguised cleanup.
 
 ---
 
 ## Phase 2: Diff Analysis
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/net/ethernet/ibm/emac/mal.c` (+2 net lines,
-  structural brace change)
-- **Function:** `mal_remove()`
-- **Scope:** Single-file, surgical (3-line logical change)
+**Step 2.1 — Inventory**
 
-### Step 2.2: Code flow change
-**Record:**
-- **Before:** `mal_remove()` always called `napi_disable(&mal->napi)`,
-  then checked if commac list was non-empty and WARNed.
-- **After:** `napi_disable()` and the WARN are both inside `if
-  (!list_empty(&mal->list))`.
-- **Paths affected:** Platform device removal / module unload
-  (`mal_exit()` → `platform_driver_unregister()`).
+Record:
+- **Files:** `drivers/hid/hid-logitech-hidpp.c` (+1 line)
+- **Function:** `hidpp_connect_event()`
+- **Scope:** Single-file, single-line surgical fix on an error path
 
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Logic/correctness — incorrect lifecycle pairing of
-  `napi_enable()` / `napi_disable()`.
-- **Mechanism:**
-  - `netif_napi_add_weight()` sets `NAPI_STATE_SCHED | NAPI_STATE_NPSVC`
-    at init.
-  - `napi_enable()` clears those bits (NAPI active).
-  - `napi_disable()` waits for those bits to clear, then sets them
-    again.
-  - If NAPI was never enabled, SCHED/NPSVC stay set → infinite spin in
-    the wait loop.
-  - If NAPI was already disabled by `mal_unregister_commac()`,
-    SCHED/NPSVC are set again → second `napi_disable()` spins forever.
+**Step 2.2 — Code flow change**
 
-### Step 2.4: Fix quality
-**Record:**
-- Fix mirrors the existing register/unregister contract: list non-empty
-  ⟺ NAPI enabled.
-- Minimal, obviously correct, no API changes.
-- **Regression risk:** Very low. Normal teardown (empty list) skips the
-  redundant disable; abnormal teardown (non-empty list) still disables
-  and warns.
+Record:
+- **Before:** On `input_register_device()` failure →
+  `input_free_device(input)` → return, with `hidpp->input` still
+  pointing at freed memory.
+- **After:** On failure → `hidpp->input = NULL` →
+  `input_free_device(input)` → return.
+- **Path affected:** Delayed-init connect work item error path only
+  (devices with `HIDPP_QUIRK_DELAYED_INIT`).
+
+**Step 2.3 — Bug mechanism**
+
+Record: **Category: use-after-free / memory safety**
+- `hidpp_populate_input()` assigns `hidpp->input = input` (line 3810).
+- Failure path frees `input` but does not NULL the stored pointer.
+- Existing `if (!hidpp->input)` guards do not help — the pointer is non-
+  NULL but dangling.
+
+**Step 2.4 — Fix quality**
+
+Record:
+- **Obviously correct:** Yes — standard pattern: clear pointer before
+  freeing referenced object.
+- **Minimal:** One line, no unrelated changes.
+- **Regression risk:** Very low — only affects the failure path;
+  successful registration is unchanged.
 
 ---
 
 ## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:**
-- Unconditional `napi_disable()` in `mal_remove()` introduced in
-  `59e90b2d22500f` (2007-10-09, Roland Dreier NAPI conversion).
-- Conditional `napi_enable()`/`napi_disable()` in register/unregister
-  added in `b3e441c6ed865` (2007-10-16, Benjamin Herrenschmidt).
-- Mismatch between the two has existed since October 2007.
-- Buggy code is present in this tree at lines 706–712 of `mal.c`.
+**Step 3.1 — Blame**
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no Fixes: tag in commit message.
+Record:
+- Delayed-init block in `hidpp_connect_event()`: `c39e3d5fc9dd` (2014,
+  Benjamin Tissoires).
+- `hidpp_populate_input()` before register: `e54abaf675ca76` (2019, Hans
+  de Goede).
+- `hidpp->input = input` in `hidpp_populate_input()`: `0610430e3dea`
+  (2019).
+- Error-path `return` without NULLing: `98d67f250472cd` (2022) fixed
+  `delayed_input` assignment but missed `hidpp->input`.
+- **Bug present since ~2019** when populate-before-register was
+  introduced.
 
-### Step 3.3: Related file history
-**Record:**
-- Recent mal.c work by Rosen Penev: devm conversions, `dcr_unmap` in
-  remove, IRQ map moves (2024).
-- Related fix `c09c2e236eef6` — UAF during emac device removal (same
-  driver, different bug).
-- Standalone one-patch fix, not part of a series.
+**Step 3.2 — Fixes: tag**
 
-### Step 3.4: Author context
-**Record:** Rosen Penev is an active contributor to ibm/emac driver
-maintenance (multiple 2024 commits). Jakub Kicinski merged.
+Record: **N/A** — no Fixes: tag in commit message.
 
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Fix applies to existing `mal_remove()` /
-commac list logic with no new symbols or structures.
+**Step 3.3 — Related file history**
+
+Record:
+- Recent related fix in this tree: `b846fb0a73e99` — separate G920
+  force-feedback UAF fix (already backported).
+- `680ee411a98e8` — connect event race fix (2023).
+- **Standalone fix** — not part of a multi-patch series.
+
+**Step 3.4 — Author context**
+
+Record: Jiri Kosina is the HID subsystem maintainer. Upstream commit:
+`6df6b1f2c4967`; stable-format commit: `67eae1a739c6d`.
+
+**Step 3.5 — Dependencies**
+
+Record: **None.** Self-contained one-liner; no prerequisite commits
+required.
 
 ---
 
 ## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** UNVERIFIED — `b4 dig -c` requires the commit in the local
-tree (fix not merged here). WebFetch of patch.msgid.link blocked by bot
-protection; lore.kernel.org raw fetch returned 403.
+**Step 4.1 — Original discussion**
 
-### Step 4.2: Reviewers
-**Record:** UNVERIFIED — could not retrieve thread via b4 or lore.
+Record:
+- `b4 dig -c 6df6b1f2c4967`: https://patch.msgid.link/r7qq6043-p432-
+  51o0-3s93-r9382q44n027@xreary.bet
+- Single v1 submission (2026-06-12); no follow-up revisions found.
+- Lore fetch blocked by Anubis bot protection — **could not read thread
+  replies**.
 
-### Step 4.3: Bug report
-**Record:** No external bug report linked. Hang mechanism verified
-directly from kernel NAPI code and driver lifecycle.
+**Step 4.2 — Reviewers (b4 dig -w)**
 
-### Step 4.4: Related patches
-**Record:** No series dependencies identified.
+Record: CC'd to Jiri Kosina, Benjamin Tissoires (HID maintainer), linux-
+kernel, linux-input.
 
-### Step 4.5: Stable list history
-**Record:** UNVERIFIED — could not search stable@ lore.
+**Step 4.3 — Bug report**
+
+Record: **Reported-by: zdi-disclosures@trendmicro.com** — ZDI security
+disclosure. No public syzbot/bugzilla link. ZDI typically reports
+exploitable or high-severity kernel issues. Full ZDI advisory not
+verified (no Link: tag).
+
+**Step 4.4 — Related patches**
+
+Record: **Standalone** — v1 only, no series dependencies.
+
+**Step 4.5 — Stable list discussion**
+
+Record: **Not searched** (no stable-specific thread found via b4). Not a
+negative signal.
 
 ---
 
 ## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `mal_remove()`, `mal_register_commac()`,
-`mal_unregister_commac()`, `napi_disable()`, `napi_enable()`.
+**Step 5.1 — Key functions**
 
-### Step 5.2: Callers
-**Record:**
-- `mal_remove` — platform driver `.remove` via `mal_of_driver`
-  registered in `mal_init()`.
-- `mal_register_commac` / `mal_unregister_commac` — called from
-  `emac_probe()` / `emac_remove()` and error paths in `core.c`.
-- `mal_exit()` called from `emac_exit()` after
-  `platform_driver_unregister(&emac_driver)`.
+Record: `hidpp_connect_event()`, `hidpp_populate_input()`,
+`hidpp_allocate_input()`, `hidpp_raw_event()`, `m560_raw_event()`,
+`wtp_raw_event()`
 
-### Step 5.3: Callees
-**Record:** `napi_disable()`, `mal_reset()`, `free_netdev()`,
-`dcr_unmap()`, `dma_free_coherent()`.
+**Step 5.2 — Callers**
 
-### Step 5.4: Call chain / reachability
-**Record:**
-```
-module_exit(emac_exit)
-  → platform_driver_unregister(emac_driver)  [each emac_remove →
-mal_unregister_commac → napi_disable]
-  → mal_exit()
-    → platform_driver_unregister(mal_of_driver)  [mal_remove →
-napi_disable → HANG]
-```
-Reachable on every `rmmod ibm_emac` (or built-in shutdown) on PowerPC
-systems using this driver. Not a syscall path, but a standard driver
-teardown path.
+Record:
+- `hidpp_connect_event()` — scheduled from `hidpp_raw_hidpp_event()` on
+  connect events; also from `hidpp_probe()` via `schedule_work()` +
+  `flush_work()`.
+- `hidpp->input` used from raw event handlers (`m560_raw_event`,
+  `wtp_raw_event`, wheel/button handlers, scroll counter).
 
-### Step 5.5: Similar patterns
-**Record:** `mal_poll_disable()` uses `__napi_synchronize()` instead of
-`napi_disable()` — shows prior awareness that blind `napi_disable()` is
-unsafe in some contexts.
+**Step 5.3 — Callees**
+
+Record: `hidpp_allocate_input()` → `devm_input_allocate_device()`;
+`hidpp_populate_input()` → sets `hidpp->input`;
+`input_register_device()` / `input_free_device()` on failure.
+
+**Step 5.4 — Reachability**
+
+Record:
+- Affects devices with `HIDPP_QUIRK_DELAYED_INIT`: wireless touchpads
+  (0x4011, 0x4101, T651) and M560 mouse (0x402d).
+- Trigger: `input_register_device()` fails during delayed connect (e.g.
+  memory pressure).
+- After failure, device stays bound and continues receiving HID reports
+  → `hidpp_raw_event()` → class-specific handlers use dangling
+  `hidpp->input`.
+- **Userspace-reachable** via device plug/connect; no special privileges
+  needed to connect a HID device.
+
+**Step 5.5 — Similar patterns**
+
+Record: `b846fb0a73e99` fixed a different UAF in the same driver (G920
+FF init). Same driver, same class of bug.
 
 ---
 
 ## Phase 6: Cross-Reference Against Local Tree
 
-### Step 6.1: Buggy code in tree?
-**Record:** **YES.** Local tree is **v6.18.44** (`git describe HEAD`,
-Makefile 6.18.44). `mal_remove()` at lines 706–712 still has
-unconditional `napi_disable()`. Fix commit message not found in tree
-(`git grep` returned no matches).
+**Step 6.1 — Buggy code in tree?**
 
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — 3-line change in one function, no
-surrounding churn in that hunk.
+Record: **YES.** Local tree is **6.18.44** (`git describe`:
+`v6.18.44-1-g2736c32da98b9`). At lines 4279–4284:
 
-### Step 6.3: Related fixes already present?
-**Record:** No equivalent fix found. UAF fix `c09c2e236eef6` is
-separate.
+```4279:4287:drivers/hid/hid-logitech-hidpp.c
+        hidpp_populate_input(hidpp, input);
+
+        ret = input_register_device(input);
+        if (ret) {
+                input_free_device(input);
+                return;
+        }
+
+        hidpp->delayed_input = input;
+```
+
+Missing `hidpp->input = NULL`. Upstream fix `6df6b1f2c4967` is **not**
+an ancestor of HEAD.
+
+**Step 6.2 — Backport complications**
+
+Record: **`git apply --check` passes cleanly** — no conflicts expected.
+
+**Step 6.3 — Related fixes already present?**
+
+Record: G920 FF UAF fix (`b846fb0a73e99`) is present. **This specific
+`hidpp_connect_event()` UAF fix is not.**
 
 ---
 
-## Phase 7: Subsystem and Maintainer Context
+## Phase 7: Subsystem Context
 
-### Step 7.1: Subsystem criticality
-**Record:** `drivers/net/ethernet/ibm/emac/` — PowerPC embedded Ethernet
-(IBM EMAC on 4xx, Cell Axon). **PERIPHERAL** subsystem (platform-
-specific), but teardown is on the critical shutdown path.
+**Step 7.1 — Subsystem**
 
-### Step 7.2: Subsystem activity
-**Record:** Moderate recent activity (devm conversions, UAF fix, IRQ
-handling). Mature driver with long-stable core logic.
+Record: **drivers/hid** (Logitech HID++ driver). Criticality:
+**IMPORTANT** — common consumer peripherals (mice, touchpads).
+
+**Step 7.2 — Activity**
+
+Record: Actively maintained; multiple recent fixes in `hid-logitech-
+hidpp.c`.
 
 ---
 
 ## Phase 8: Impact and Risk Assessment
 
-### Step 8.1: Who is affected
-**Record:** Users with `CONFIG_IBM_EMAC` on PowerPC (4xx embedded, some
-Cell platforms). Not universal, but real production embedded hardware.
+**Step 8.1 — Who is affected**
 
-### Step 8.2: Trigger conditions
-**Record:**
-1. **Normal case:** Any system that had EMAC interfaces probed; on
-   module unload/reboot, `emac_remove()` disables NAPI, then
-   `mal_remove()` double-calls `napi_disable()` → hang. **Very common**
-   on affected hardware.
-2. **Edge case:** MAL probed but no EMAC registered → `napi_disable()`
-   on never-enabled NAPI → hang. **Less common** but possible.
+Record: Users of Logitech HID++ devices with delayed input registration
+— wireless touchpads (T650/T651/4011) and M560 mouse on Unifying
+receivers.
 
-### Step 8.3: Failure mode severity
-**Record:** **CRITICAL** — indefinite kernel hang (soft lockup) during
-driver removal or shutdown. System becomes unresponsive; may require
-hard reset.
+**Step 8.2 — Trigger conditions**
 
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH for affected platforms — prevents hang on every
-  driver unload/shutdown.
-- **Risk:** VERY LOW — 3-line conditional, matches existing
-  enable/disable contract.
+Record:
+- Device connects with `HIDPP_QUIRK_DELAYED_INIT`.
+- `input_register_device()` fails (uncommon but possible under resource
+  pressure).
+- Device continues operating at the HID layer; subsequent input events
+  hit stale `hidpp->input`.
+- **Unprivileged users** can trigger by connecting affected hardware.
+
+**Step 8.3 — Failure mode**
+
+Record: **Use-after-free** on `struct input_dev` via `input_report_*()`
+/ `input_event()` / `input_sync()`. Severity: **HIGH** (kernel memory
+corruption; potential security impact given ZDI disclosure).
+
+**Step 8.4 — Risk vs benefit**
+
+Record:
+- **Benefit:** HIGH — prevents UAF on a reachable path for common
+  hardware.
+- **Risk:** VERY LOW — one-line NULL assignment on error path only.
 - **Ratio:** Strongly favors backport.
 
 ---
 
 ## Phase 9: Final Synthesis
 
-### Step 9.1: Evidence summary
+**Step 9.1 — Evidence summary**
 
-**FOR backport:**
-- Real, reproducible hang on standard teardown path (double
-  `napi_disable()`).
-- Hang also on never-enabled NAPI path.
-- Mechanism verified in `net/core/dev.c` `napi_disable_locked()` and
-  driver lifecycle.
-- Small, surgical, obviously correct fix.
-- Bug present since 2007; latent in all stable trees carrying ibm/emac.
-- Maintainer-merged fix.
+**FOR:**
+- Real UAF with clear mechanism (stale pointer after free).
+- ZDI security disclosure.
+- Small, obviously correct fix.
+- Buggy code confirmed in 6.18.44 tree.
+- Patch applies cleanly.
+- Affects common Logitech peripherals.
+- HID maintainer-authored fix.
 
-**AGAINST backport:**
-- Platform-specific driver (limited user base).
-- No syzbot/user report in commit message.
-- Mailing list discussion not retrieved.
+**AGAINST:**
+- `input_register_device()` failure is uncommon.
+- No public crash reproducer verified in this analysis.
+- Lore thread content unverified (bot protection).
 
-**Unresolved:** Original lore thread content and any reviewer stable
-nominations.
+**UNRESOLVED:**
+- Full ZDI advisory details and exploitability assessment not retrieved.
+- No reviewer Ack/Tested-by in commit message.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — logic matches
-   register/unregister contract; compile-tested per submission norms
-   (Tested-by not present).
-2. Fixes a real bug affecting users? **PASS** — hang on driver removal.
-3. Important issue? **PASS** — CRITICAL (system hang).
-4. Small and contained? **PASS** — 3 lines, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to local tree? **PASS** — buggy code confirmed present;
-   clean apply expected.
+**Step 9.2 — Stable rules checklist**
 
-### Step 9.3: Exception categories
-**Record:** N/A — standard bug fix, not a quirk/DT/build/doc exception.
+1. Obviously correct and tested? **PASS** (logic is trivial; no Tested-
+   by)
+2. Fixes a real bug? **PASS**
+3. Important issue? **PASS** — UAF / potential security (ZDI)
+4. Small and contained? **PASS** — 1 line, 1 file
+5. No new features/APIs? **PASS**
+6. Can apply to local tree? **PASS** — verified with `git apply --check`
 
-### Step 9.4: Decision rationale
+**Step 9.3 — Exception category**
 
-This commit fixes a genuine system hang in the IBM EMAC/MAL driver that
-triggers on every normal module unload when EMAC interfaces were ever
-registered: `emac_exit()` unregisters EMAC devices (which calls
-`napi_disable()` via `mal_unregister_commac()`), then `mal_exit()` calls
-`mal_remove()` which unconditionally calls `napi_disable()` again.
-Because `napi_disable()` waits for `NAPI_STATE_SCHED` to clear and then
-sets it, a second call spins forever. The fix correctly gates
-`napi_disable()` on a non-empty commac list, matching the enable/disable
-logic in `mal_register_commac()` / `mal_unregister_commac()`. The local
-v6.18.44 tree still contains the buggy code and the fix is not yet
-applied.
+Record: **N/A** — standard bug fix, not a quirk/ID/DT exception.
+
+**Step 9.4 — Decision rationale**
+
+For the **6.18.44** tree checked out here, the buggy code exists and the
+fix is absent. The commit closes a real UAF on an error path where
+`hidpp->input` becomes a dangling pointer. Existing NULL checks do not
+protect against this. The fix is minimal, maintainer-authored, security-
+disclosed, and applies cleanly. This meets all stable kernel criteria.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, and body from provided commit
-  message.
-- **[Phase 2]** Read diff and current `mal.c` `mal_remove()` /
-  register/unregister functions.
-- **[Phase 2]** Read `napi_disable_locked()` and `napi_enable_locked()`
-  in `net/core/dev.c` — confirmed non-idempotent behavior and SCHED-bit
-  wait loop.
-- **[Phase 2]** Read `netif_napi_add_weight_locked()` — confirmed
-  SCHED/NPSVC set at init (lines 7496–7497).
-- **[Phase 3]** `git describe HEAD` → v6.18.44; Makefile → 6.18.44.
-- **[Phase 3]** `git blame -L 699,725 mal.c` → unconditional
-  `napi_disable` from 2007.
-- **[Phase 3]** `git show b3e441c6ed865` → conditional enable/disable
-  added 2007-10-16.
-- **[Phase 3]** `git log --oneline -20 -- mal.c` → recent history, no
-  duplicate fix.
-- **[Phase 4]** `b4 dig` — commit not in tree, could not run `-c`.
-  UNVERIFIED.
-- **[Phase 4]** WebFetch patch.msgid.link and lore raw — blocked
-  (403/bot protection). UNVERIFIED.
-- **[Phase 5]** Traced `emac_exit()` → `mal_exit()` → `mal_remove()` in
-  `core.c` and `mal.c`.
-- **[Phase 5]** Grep `mal_register_commac` / `mal_unregister_commac`
-  call sites in `core.c`.
-- **[Phase 6]** Confirmed buggy unconditional `napi_disable` at
-  `mal.c:706` in local tree.
-- **[Phase 6]** `git grep "potential system hang in mal_remove"` — no
-  match; fix not applied.
-- **[Phase 7]** Read `drivers/net/ethernet/ibm/emac/Kconfig` — depends
-  on PPC_DCR, PowerPC embedded.
-- **[Phase 8]** Verified module unload order: emac driver unregistered
-  before mal driver in `emac_exit()`.
-
-**YES**The background search finished: the fix commit is **not** in this
-tree (`v6.18.44`). A grep for the commit subject returned nothing, and
-`mal_remove()` still calls `napi_disable()` unconditionally.
-
-That matches the earlier analysis — this is a real hang on driver
-teardown for IBM EMAC on PowerPC, and the patch should be backported
-here.
+- [Phase 1] Parsed commit `6df6b1f2c4967`: subject, body, Reported-by
+  ZDI
+- [Phase 2] Read diff: +1 line `hidpp->input = NULL` in error path
+- [Phase 2] Read `hidpp_populate_input()`: sets `hidpp->input = input`
+  at line 3810
+- [Phase 3] `git blame` on lines 4269–4287: bug path dates to 2014–2019
+  code
+- [Phase 3] `git log -1 -S "hidpp->input = input"`: introduced in
+  `0610430e3dea` (2019)
+- [Phase 3] `git show 98d67f250472cd`: fixed `delayed_input` on failure,
+  missed `hidpp->input`
+- [Phase 3] `git merge-base --is-ancestor 6df6b1f2c4967 HEAD`: exit 1 —
+  fix NOT in tree
+- [Phase 4] `b4 dig -c 6df6b1f2c4967`: lore URL found
+- [Phase 4] `b4 dig -w`: CC to HID maintainers
+- [Phase 4] `b4 dig -a`: v1 only
+- [Phase 4] UNVERIFIED: Lore thread replies (Anubis blocked fetch)
+- [Phase 5] Grep `hidpp->input`: multiple uses in raw event paths; NULL
+  checks insufficient for dangling pointer
+- [Phase 5] Read `hidpp_raw_event()`: dispatches to `wtp_raw_event` /
+  `m560_raw_event` for affected quirks
+- [Phase 5] Grep `HIDPP_QUIRK_DELAYED_INIT`: touchpads + M560 mouse
+- [Phase 6] `git describe HEAD`: v6.18.44-1-g2736c32da98b9 / kernel
+  6.18.44
+- [Phase 6] Read lines 4279–4287: buggy code present
+- [Phase 6] `git apply --check` on upstream patch: applies cleanly
+- [Phase 8] ZDI Reported-by: security-relevant disclosure channel
 
 **YES**
 
- drivers/net/ethernet/ibm/emac/mal.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hid/hid-logitech-hidpp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index 7d70056e90081..35b93e6bcdf9f 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -703,13 +703,13 @@ static void mal_remove(struct platform_device *ofdev)
- 	MAL_DBG(mal, "remove" NL);
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 4ba652ae54765..83d625f361f49 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4280,6 +4280,7 @@ static void hidpp_connect_event(struct work_struct *work)
  
- 	/* Synchronize with scheduled polling */
--	napi_disable(&mal->napi);
--
--	if (!list_empty(&mal->list))
-+	if (!list_empty(&mal->list)) {
-+		napi_disable(&mal->napi);
- 		/* This is *very* bad */
- 		WARN(1, KERN_EMERG
- 		       "mal%d: commac list is not empty on remove!\n",
- 		       mal->index);
-+	}
- 
- 	mal_reset(mal);
- 
+ 	ret = input_register_device(input);
+ 	if (ret) {
++		hidpp->input = NULL;
+ 		input_free_device(input);
+ 		return;
+ 	}
 -- 
 2.53.0
 
