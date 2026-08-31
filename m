@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2161654528E;
-	Mon, 31 Aug 2026 13:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530F64A99CF;
+	Mon, 31 Aug 2026 13:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183977; cv=none; b=LTZLqaQxlEZrVgKNeJOx7aii4WVYPuygkq4QCbdIi8pgdeSbIqLMHupcJbaKz6CM1CCvFtIid4TTGJmalU++HzluPj3tZiqezy0SSGvh+8of6PYqkhl5nUWQYl9uJIQk7/owNS4mkQ0hRjdXRSDlvbYiS37OU+vSuEyobAGSU68=
+	t=1788183978; cv=none; b=glKpulZLDNSPifUvABDjk9Kmb6AYuDvOrO98BBjkw5YsZ6NBygAQfzQGyWi6JCUWdbrMlUcdk/qYJaxVOA3k0tDVHbZwVOZAsknhkdbbAlofzphvOaPIuzj3qhE3LXRq8VuGBuTmAOC/6Ekqf+Ke1dJeEy2CUprsG+1HcOlhwRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183977; c=relaxed/simple;
-	bh=dzSTdZ849HBReuhrO41FWQwocuEhov5JM/MClRFC4NU=;
+	s=arc-20240116; t=1788183978; c=relaxed/simple;
+	bh=EIxTSjY1a9DpIBHGBQ7WoZ038xzqtVxhhud28bdE+kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CX6HnmpUwjJxx5Ey5btUVa2sgy/Y+7YhfzQ/YMZ8baSuC+yjvj+0TEmsWe0kEET51wt04qPIMH7JBYdSM7ArbdnrFXBN1jU6/PsoT38cZxv6LDJThSKSG4uIPc9TRa7mjxU7nkuNxwiapnNKpyZJo1toZdN/Y8ex4oanmpNlnAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5F7DQhs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tCNnCqPuuSylaG3ILQibNttVFa7k8J/ERuVDojED2Vf4jCpKtSkvRXFUVvBKk9Xq5jNt8c6LQSnCzdMuBJCd3JG5arSviV5xPo81xT8S8r/bcbPcwNeBKgmZJYFAS+LjlPbnfvdTQNyscrAaRsBX62RjG4CO4g69HUW3WqVTDa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iuQOydXp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5F7DQhs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0CB1F00A3F;
-	Mon, 31 Aug 2026 13:46:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iuQOydXp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE281F00A3E;
+	Mon, 31 Aug 2026 13:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183973;
-	bh=T8CoT45ycZ6x0kFHPpneDiyOZEEg+LlC41dDKdWTFYo=;
+	s=k20260515; t=1788183975;
+	bh=VuuTfQsSlsnIRKrUr/mDOL2bAkwlXnRRMmPO/GFFYPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a5F7DQhs6IyKi3Ggt+9gb65BJU/RUiDB7HxGp9XcZWBxnnwu7e8rhoBg91z/iPujm
-	 9xwr75yCmmyJmr47Nhvn9B4BxlXAIdm4UNKsAbskO/0EUqjPjltglcaHsuoG+rtMBg
-	 laC/Tk4F3zLOreHoxUtWSibHTO/yBSWxppqClOL3XGxIeLkp48VvG+Ld0KebenLpGy
-	 wrw16k4MzpU0x4S+ZE3c1OFicFMh7n9vbUFLKUcevJrm5dLyAgY0fecptfDgSFBeDH
-	 m8txyFVpJlQyXh2GWBkV+G8BgjxRPTJ7XJPoXhZDbn4V9g5o25YLTQHjCGLPVkDmKn
-	 +ENpTwg7kk3IQ==
+	b=iuQOydXpKQt7a1jrYnXvxz7aQoIBCAIFNAv8EO+fBl9su81MHY8w4LofBu/My120O
+	 HfxrnjWbBjI9EIMnOnAbhove+XB7itONKmPObfJ8BBqywYenmcucJkIlYPVTh/0z0A
+	 ps1dPvhLbgt3Owl/Pc24DurbtbBTtexTy9LRjri94Iw+AGgVCCxauPZA0qOLCCTw5p
+	 20KwhhSloo5K6hqhVASUKB35Mb4EJl9l/olv96/HlXBA4Qr8cFmkozXPAezRsJqnw4
+	 w5rg67QthsQRBYGHGuYJL5oF3jZtmzLZPd/iHKocBv6uL5OJjV7cCUos1poqzORyKs
+	 10sUmsRrufMyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen-Yu Tsai <wenst@chromium.org>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sean.wang@kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-gpio@vger.kernel.org,
+	sstabellini@kernel.org,
+	xen-devel@lists.xenproject.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] pinctrl: mediatek: paris: bypass pinctrl GPIO layer in set GPIO direction
-Date: Mon, 31 Aug 2026 09:27:22 -0400
-Message-ID: <20260831133314.4125787-414-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] xen/gntalloc: validate grant count before allocation
+Date: Mon, 31 Aug 2026 09:27:23 -0400
+Message-ID: <20260831133314.4125787-415-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,398 +53,403 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit c87c9046c4e00d599454e033a477176c4d73ac2a ]
+[ Upstream commit 2299822f3f466b5dcad2377bf63986199f881a6b ]
 
-pinctrl_gpio_direction_input() / pinctrl_gpio_direction_output() take
-the pinctrl mutex. This causes a gpiochip operations to need to sleep.
-Worse yet, the .can_sleep field in the gpiochip is not set. This causes
-the shared GPIO proxy to trip over, as it uses gpiod_cansleep() to check
-whether it can use a spinlock or needs a mutex. In this case, it ends
-up taking a spinlock, then calls pinctrl_gpio_direction_output(), which
-takes a mutex. This causes a huge warning.
+gntalloc_ioctl_alloc() allocates the grant-id array before checking
+whether the requested count fits within the global grant limit. Counts
+above that limit cannot succeed, so reject them before the
+user-controlled allocation reaches kcalloc().
 
-While this class of Mediatek hardware does not have separate clear/set
-registers, the pinctrl context has a spinlock that is taken whenever
-a register read-modify-write is done. Also, once the GPIO function is
-selected / muxed in, further GPIO operations do not involve pinctrl
-operations or state. The GPIO direction and level values do not require
-toggling the pinmux or any other pin config options.
+Use a subtraction-based check while holding gref_mutex so adding the
+requested count cannot wrap. Also cast the count before advancing the
+per-file index so the page-size multiplication is performed in 64-bit
+arithmetic.
 
-Switch to directly calling mtk_pinmux_gpio_set_direction() in the GPIO
-set direction callbacks to avoid taking the pinctrl mutex. Drop the
-.gpio_set_direction field in mtk_pmxops to signal we are no longer using
-the pinctrl GPIO layer for setting the direction.
-
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260626223805.43781-3-alhouseenyousef@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
-### Step 1.1: Subject line
-**Record:** `[pinctrl: mediatek: paris]` `[bypass]` — bypass the pinctrl
-GPIO layer when setting GPIO direction on MediaTek Paris pin
-controllers.
+**Step 1.1 — Subject line**
+Record: `[xen/gntalloc] [validate] validate grant count before
+allocation` — ioctl input validation and overflow-safety fix in the Xen
+grant allocator.
 
-### Step 1.2: Tags
-**Record:**
-- **Signed-off-by:** Chen-Yu Tsai `<wenst@chromium.org>` (author)
-- **Signed-off-by:** Linus Walleij `<linusw@kernel.org>` (pinctrl
-  maintainer)
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc:
-  stable@vger.kernel.org`, or `Link:` tags
-- Notable: maintainer sign-off; no syzbot/fuzzer report
+**Step 1.2 — Tags**
+Record:
+- `Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>` (author)
+- `Reviewed-by: Juergen Gross <jgross@suse.com>` (Xen maintainer —
+  strong quality signal)
+- `Signed-off-by: Juergen Gross <jgross@suse.com>`
+- `Message-ID: <20260626223805.43781-3-alhouseenyousef@gmail.com>`
+  (patch 2/2 of v2 series)
+- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable@vger.kernel.org`, or
+  `Tested-by:` tags
 
-### Step 1.3: Body analysis
-**Record:**
-- **Bug:** `pinctrl_gpio_direction_input/output()` take
-  `pctldev->mutex`, so direction callbacks can sleep, but the Paris
-  gpiochip does not set `.can_sleep`. The shared GPIO proxy uses
-  `gpiod_cansleep()` to choose spinlock vs mutex; with `can_sleep ==
-  false` it takes a spinlock, then direction setup reaches the pinctrl
-  mutex → lockdep “sleeping in atomic context” warning.
-- **Symptom:** Large kernel warning (lockdep sleep-in-atomic).
-- **Root cause:** Redundant pinctrl-layer direction call adds a sleeping
-  mutex on a chip that should be fast/MMIO; after muxing to GPIO,
-  direction changes only need register RMW under the driver’s spinlock.
-- **Version info:** None in the message.
+**Step 1.3 — Body analysis**
+Record:
+- **Bug:** `gntalloc_ioctl_alloc()` calls `kcalloc(op.count, ...)`
+  before verifying `op.count` against the global grant limit.
+- **Symptom:** User-controlled counts above the limit still reach kernel
+  allocation; limit enforcement uses addition with mixed signed/unsigned
+  types that can wrap; `priv->index` advance uses 32-bit multiply.
+- **Failure modes:** Unnecessary kernel allocations (memory
+  pressure/DoS), potential limit-check bypass via wrap, corrupted per-
+  file mmap index.
+- **Root cause:** Validation ordering and unsafe arithmetic on user-
+  supplied `op.count` (`__u32`).
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Although framed as bypassing a layer, this is a real
-concurrency bug fix: sleeping mutex taken from a path that must be non-
-sleeping.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/pinctrl/mediatek/pinctrl-paris.c` only
-- **Scope:** ~8 lines changed (1 removed, 5 added, 2 modified)
-- **Functions:** `mtk_pmxops`, `mtk_gpio_direction_input()`,
-  `mtk_gpio_direction_output()`
-- **Classification:** Single-file surgical fix
-
-### Step 2.2: Code flow per hunk
-**Record:**
-1. **`mtk_pmxops`:** Removes `.gpio_set_direction =
-   mtk_pinmux_gpio_set_direction` so the pinctrl core no longer exposes
-   this hook.
-2. **`mtk_gpio_direction_input()`:** Before:
-   `pinctrl_gpio_direction_input()` → mutex + `pinmux_gpio_direction()`
-   → `mtk_pinmux_gpio_set_direction()`. After: direct
-   `mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, true)` — no
-   pinctrl mutex.
-3. **`mtk_gpio_direction_output()`:** Same pattern after
-   `mtk_gpio_set()`; direct call with `false` for output.
-
-### Step 2.3: Bug mechanism
-**Record:**
-- **Category:** Synchronization / sleep-in-atomic (lockdep)
-- **Mechanism:** `pinctrl_gpio_direction()` in `core.c` does
-  `mutex_lock(&pctldev->mutex)` before calling the pinmux op. Paris
-  gpiochip has `can_sleep` unset (false) and uses `mtk_hw_set_value()` →
-  `mtk_rmw()` under `spinlock_irqsave(&pctl->lock)`. The pinctrl mutex
-  path is inappropriate for a non-sleeping gpiochip and conflicts with
-  callers that serialize with a spinlock.
-
-### Step 2.4: Fix quality
-**Record:** Obviously correct and minimal. Same underlying function
-(`mtk_pinmux_gpio_set_direction`) is invoked; only the mutex wrapper is
-removed. Low regression risk; matches the tegra stable backport already
-in this tree.
+**Step 1.4 — Hidden bug fix?**
+Record: **Yes.** Although the subject says "validate," this is a real
+bug fix: premature allocation, integer-overflow-prone limit check, and
+32-bit multiply before 64-bit assignment.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 2: Diff Analysis
 
-### Step 3.1: Blame
-**Record:** Current direction callbacks and `.gpio_set_direction` in
-`mtk_pmxops` trace to `5d324e5159d9e` in this stable tree (squashed
-history). Paris driver and the `pinctrl_gpio_direction_*` pattern are
-present throughout v6.18.x.
+**Step 2.1 — Inventory**
+Record:
+- 1 file: `drivers/xen/gntalloc.c` (+11 / -2 net)
+- Function modified: `gntalloc_ioctl_alloc()`
+- Scope: single-file, surgical ioctl-path fix
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+**Step 2.2 — Code flow per hunk**
 
-### Step 3.3: Related file history
-**Record:** Only one history entry visible for `pinctrl-paris.c` in this
-tree. Related sibling issue exists in `pinctrl-mtk-common.c` (common-v1)
-with a separate patch series; this Paris commit is standalone.
+| Hunk | Before | After |
+|------|--------|-------|
+| Early check | `kcalloc()` immediately after `copy_from_user()` |
+Snapshot `limit` with `READ_ONCE()`, reject `op.count > limit` with
+`-ENOSPC` before any allocation |
+| Locked limit check | `gref_size + op.count > limit` | Subtraction:
+`gref_size > limit_snapshot \|\| op.count > limit_snapshot - gref_size`
+under `gref_mutex` |
+| Index advance | `priv->index += op.count * PAGE_SIZE` (32-bit
+multiply) | `priv->index += (uint64_t)op.count * PAGE_SIZE` |
 
-### Step 3.4: Author context
-**Record:** Chen-Yu Tsai (Chromium) has other MediaTek pinctrl work in-
-tree. Linus Walleij is the pinctrl maintainer and signed off upstream.
+Record: Normal ioctl path and error paths affected; early rejection
+avoids `kcalloc`/`kfree` on doomed requests.
 
-### Step 3.5: Dependencies
-**Record:** No prerequisites. `mtk_pinmux_gpio_set_direction()`,
-`hw->pctrl`, and `gpiochip_get_data()` all exist in this tree. Applies
-standalone.
+**Step 2.3 — Bug mechanism**
+Record:
+- **Category:** Input validation + integer overflow / type-safety
+- **Mechanism 1:** User `count` drives `kcalloc()` before limit
+  enforcement → kmem pressure DoS on `/dev/xen/gntalloc`
+- **Mechanism 2:** `gref_size + op.count > limit` mixes `int` counters
+  with `uint32_t` count; addition can wrap, potentially bypassing limit
+  and reaching `add_grefs()`'s `for (i = 0; i < op->count; i++)` loop
+- **Mechanism 3:** `op.count * PAGE_SIZE` computed in 32-bit arithmetic
+  before widening to `uint64_t priv->index`
 
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1: Original discussion
-**Record:** v2 posted 2026-05-05 by Chen-Yu Tsai; thread at
-[spinics](https://www.spinics.net/lists/kernel/msg6186918.html). CC’d to
-MediaTek, GPIO, arm-kernel maintainers. v1 linked in cover letter. Linus
-Walleij replied in-thread (per index). `b4 dig -c` could not be used
-(commit not in this checkout).
-
-### Step 4.2: Reviewers
-**Record:** To: Sean Wang, Matthias Brugger, AngeloGioacchino Del Regno,
-Linus Walleij. Maintainer sign-off from Linus Walleij.
-
-### Step 4.3: Bug report
-**Record:** No external bugzilla/syzbot link. Author describes
-reproduced lockdep warning on Chromebook-class MediaTek hardware.
-
-### Step 4.4: Related patches
-**Record:** Companion patch for `pinctrl-mtk-common.c` (common-v1)
-exists; not required for this Paris-only fix.
-
-### Step 4.5: Stable list
-**Record:** No explicit stable nomination in the Paris v2 post (unlike
-tegra fix `ac761e66708d5` which had `Cc: stable@vger.kernel.org`).
+**Step 2.4 — Fix quality**
+Record: Minimal, obviously correct, no API changes. Early check is
+cheap. Subtraction check is standard overflow-safe idiom.
+`READ_ONCE(limit)` snapshots admin-tunable limit. Regression risk:
+**low** — only tightens validation; legitimate allocations within limit
+unchanged.
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 3: Git History Investigation
 
-### Step 5.1: Key functions
-**Record:** `mtk_gpio_direction_input`, `mtk_gpio_direction_output`,
-`mtk_pinmux_gpio_set_direction`, `pinctrl_gpio_direction`,
-`mtk_hw_set_value`, `mtk_rmw`.
+**Step 3.1 — Blame**
+Record: Buggy lines in `gntalloc_ioctl_alloc()` trace to `5d324e5159d9e`
+in this shallow checkout (file unchanged since tree root). The ioctl
+allocation pattern is long-standing driver code, not a recent
+regression.
 
-### Step 5.2: Callers
-**Record:** Direction callbacks are reached from gpiolib
-(`gpiod_direction_input_nonotify`, `gpiod_direction_output_raw_commit` →
-`gpiochip_direction_*`). On Chromebook/MediaTek platforms these GPIOs
-are used by regulators, PMICs, USB, display, etc. Shared-GPIO consumers
-(when present) call direction while holding their lock.
+**Step 3.2 — Fixes: tag**
+Record: Not applicable — no `Fixes:` tag present.
 
-### Step 5.3: Callees
-**Record:** Fixed path calls `mtk_pinmux_gpio_set_direction()` →
-`mtk_hw_set_value()` → `mtk_rmw()` with
-`spin_lock_irqsave(&pctl->lock)`.
+**Step 3.3 — Related file history**
+Record: Shallow tree shows only merge commit touching
+`drivers/xen/gntalloc.c`. IOCTL path with `kcalloc`-before-limit pattern
+is present at HEAD.
 
-### Step 5.4: Reachability
-**Record:** Reachable from userspace-driven device operations and from
-kernel drivers requesting GPIO direction changes. The problematic path
-is direction change on a non-`can_sleep` chip while a spinlock-holding
-caller (e.g. gpio-shared-proxy on newer kernels) invokes
-`gpiod_direction_*`.
+**Step 3.4 — Author context**
+Record: Yousef Alhouseen submitted the v2 series. Juergen Gross (active
+Xen maintainer; recent xen commits in tree include `xen/privcmd`
+security fixes) reviewed and signed off.
 
-### Step 5.5: Similar patterns
-**Record:** `ac761e66708d5` (“gpio: tegra: do not call pinctrl for GPIO
-direction”) is already in this v6.18.43 tree — same bug class,
-explicitly backported to stable with `Cc: stable@vger.kernel.org`.
-`pinctrl-mtk-common.c` and `pinctrl-moore.c` still use
-`pinctrl_gpio_direction_*` but are out of scope for this commit.
-
----
-
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (v6.18.43)
-
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** `git describe HEAD` → `v6.18.43`; `Makefile` →
-6.18.43. Current code at lines 889 and 901 still calls
-`pinctrl_gpio_direction_input/output()`. `.gpio_set_direction` is set in
-`mtk_pmxops` at line 774. `can_sleep` is not set in
-`mtk_build_gpiochip()`.
-
-### Step 6.2: Backport complications
-**Record:** Clean apply expected — small, localized change; no
-structural conflicts observed.
-
-### Step 6.3: Related fixes already present?
-**Record:** Tegra equivalent fix `ac761e66708d5` is in HEAD. This Paris
-fix is **not** yet applied. No duplicate fix found.
-
-**Important nuance:** `gpio-shared-proxy` was merged in **6.19**, not
-6.18. It is **not** present in this v6.18.43 tree (`grep` found no
-`GPIO_SHARED`, `gpio-shared-proxy`, or `gpio_shared_proxy`). The
-commit’s primary trigger is therefore not available in 6.18.43 today,
-but the underlying mutex-in-non-sleeping-callback bug still exists and
-matches the tegra stable backport rationale.
+**Step 3.5 — Dependencies**
+Record: **Series dependency identified.** Cover letter ([openwall v2
+0/2](https://lists.openwall.net/linux-kernel/2026/06/26/2112)) states
+patch 1/2 (`xen/gntalloc: make grant counters unsigned`) is a
+prerequisite for overflow-safe unsigned arithmetic. **This commit (2/2)
+applies cleanly standalone** to the current tree (`git apply --check`
+succeeded). Patch 1/2 is a 3-line companion change (`int` → `unsigned
+int` for `limit`/`gref_size`, `module_param(limit, uint, ...)`). Not a
+hard blocker for backporting this patch, but both should ideally ship
+together for a complete fix.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## Phase 4: Mailing List and External Research
 
-### Step 7.1: Subsystem and criticality
-**Record:** `drivers/pinctrl/mediatek/` — **IMPORTANT** (ARM64 SoC pin
-control; affects Chromebooks, tablets, embedded MediaTek Paris
-platforms: MT8186, MT8188, MT8192, MT8195, MT8196, etc.).
+**Step 4.1 — Original discussion**
+Record: `b4 dig -c <sha>` unavailable (commit not in local tree). Found
+via openwall:
+- Cover: https://lists.openwall.net/linux-kernel/2026/06/26/2112
+- Patch 1/2: https://lists.openwall.net/linux-kernel/2026/06/26/2113
+- Patch 2/2 (this commit): https://lists.openwall.net/linux-
+  kernel/2026/06/26/2114
+- v2 split unsigned-type changes into prerequisite per maintainer
+  feedback
 
-### Step 7.2: Activity
-**Record:** Active subsystem with many Paris-based SoC drivers in
-`Kconfig`.
+**Step 4.2 — Reviewers**
+Record: To: Juergen Gross, Stefano Stabellini, Oleksandr Tyshchenko; Cc:
+xen-devel, linux-kernel. Juergen Gross reviewed.
 
----
+**Step 4.3 — Bug report**
+Record: No external bug report or syzbot link. Issue identified by code
+review / proactive hardening.
 
-## PHASE 8: IMPACT AND RISK
+**Step 4.4 — Series context**
+Record: 2-patch v2 series, same file. Patch 1 prepares unsigned
+counters; patch 2 adds validation. Both are small and complementary.
 
-### Step 8.1: Who is affected
-**Record:** Users of MediaTek Paris pinctrl/GPIO on affected SoCs
-(CONFIG_PINCTRL_MTK_PARIS and selected SoC drivers). Not universal, but
-significant for ChromeOS/Chromebook and embedded MTK platforms.
-
-### Step 8.2: Trigger conditions
-**Record:** GPIO direction change on a Paris pin after it is muxed to
-GPIO, when called from a context expecting non-sleeping behavior
-(notably shared-GPIO proxy on 6.19+; tegra stable commit documents the
-same class on 6.18). Normal process-context `gpiod_direction_*` works
-but still incorrectly takes a sleeping mutex on a chip advertised as
-non-sleeping.
-
-### Step 8.3: Failure mode severity
-**Record:** Lockdep “sleeping in atomic context” / potential real
-deadlock or oops under contention. **Severity: HIGH** (not data
-corruption, but serious stability warning and potential hang).
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH for affected platforms; aligns with accepted tegra
-  stable fix in the same tree.
-- **Risk:** VERY LOW — 8-line change, same hardware operation, removes
-  redundant mutex.
-- **Ratio:** Strong benefit, minimal risk.
+**Step 4.5 — Stable list**
+Record: No stable-list discussion found. lore.kernel.org returned 403
+(bot protection); openwall used instead.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 5: Code Semantic Analysis
 
-### Step 9.1: Evidence summary
+**Step 5.1 — Key functions**
+Record: `gntalloc_ioctl_alloc()` (modified); related: `add_grefs()`,
+`do_cleanup()`.
+
+**Step 5.2 — Callers**
+Record: `gntalloc_ioctl()` → `case IOCTL_GNTALLOC_ALLOC_GREF` →
+`gntalloc_ioctl_alloc()`. Reachable from userspace via `ioctl()` on
+`/dev/xen/gntalloc` (`miscdevice`, name `"xen/gntalloc"`).
+
+**Step 5.3 — Callees**
+Record: `copy_from_user`, `kcalloc`, `mutex_lock/unlock`, `do_cleanup`,
+`add_grefs` (allocates pages, grants foreign access in a loop over
+`op->count`), `copy_to_user`, `kfree`.
+
+**Step 5.4 — Reachability**
+Record: Userspace ioctl on Xen systems with
+`CONFIG_XEN_GRANT_DEV_ALLOC`. Kconfig: "Allows userspace processes to
+create pages with access granted to other domains." Impact surface: Xen
+dom0 / Xen PV frontends using grant allocation — not universal, but
+ioctl is explicitly user-facing.
+
+**Step 5.5 — Similar patterns**
+Record: No other instances of this exact bug pattern in `gntalloc.c`.
+The `add_grefs()` loop makes a bypassed limit check especially dangerous
+(unbounded iteration + per-page allocations).
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree (6.18.44)
+
+**Step 6.1 — Buggy code present?**
+Record: **Yes.** Local tree is `v6.18.44-1-g2736c32da98b9` / `6.18.44`.
+At HEAD, `gntalloc_ioctl_alloc()` still does `kcalloc()` before limit
+check, uses `gref_size + op.count > limit`, and `priv->index += op.count
+* PAGE_SIZE`. `limit`/`gref_size` are `static int`.
+
+**Step 6.2 — Backport complications**
+Record: **Clean apply** — `git apply --check` on the provided diff
+succeeded with no conflicts.
+
+**Step 6.3 — Related fixes already present?**
+Record: No — `git log --grep="gntalloc"` and `--grep="validate grant
+count"` returned nothing. Fix not yet in this tree.
+
+---
+
+## Phase 7: Subsystem and Maintainer Context
+
+**Step 7.1 — Subsystem**
+Record: `drivers/xen/` — Xen grant-table userspace interface.
+Criticality: **IMPORTANT** for Xen deployments (dom0, paravirt
+frontends); **PERIPHERAL** relative to all Linux users.
+
+**Step 7.2 — Activity**
+Record: Xen subsystem actively maintained; recent security fixes in
+related xen drivers (`privcmd`, `sys-hypervisor`) in this tree.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1 — Who is affected**
+Record: Xen systems with `CONFIG_XEN_GRANT_DEV_ALLOC` (default `m`),
+users/processes that can open `/dev/xen/gntalloc` and issue
+`IOCTL_GNTALLOC_ALLOC_GREF`.
+
+**Step 8.2 — Trigger conditions**
+Record:
+- **Common:** `op.count > limit` (default 1024) → unnecessary `kcalloc`
+  before `-ENOSPC`; repeatable for memory pressure
+- **Less common:** Large `limit` module parameter + crafted counts →
+  addition wrap bypassing limit → massive `add_grefs()` loop
+- **Less common:** Large `op.count` with raised limit → 32-bit `op.count
+  * PAGE_SIZE` wrap corrupting `priv->index`
+- Unprivileged users need device access; still a valid hardening for any
+  caller with ioctl access
+
+**Step 8.3 — Failure severity**
+Record:
+- Memory pressure / DoS from premature allocations: **MEDIUM-HIGH**
+- Limit bypass → huge grant allocation loop: **CRITICAL** (hang/OOM) if
+  triggerable
+- Index corruption: **HIGH** (broken mmap offsets / grant bookkeeping)
+- Overall: **HIGH** for affected Xen configurations
+
+**Step 8.4 — Risk vs benefit**
+Record:
+- **Benefit:** HIGH for Xen users — closes validation gap on user-facing
+  ioctl
+- **Risk:** LOW — 11 lines, no behavior change for valid requests within
+  limit
+- **Ratio:** Strong benefit, low risk
+
+---
+
+## Phase 9: Final Synthesis
+
+**Step 9.1 — Evidence summary**
 
 **FOR backport:**
-- Real concurrency bug (sleeping mutex in non-sleeping gpiochip
-  callback)
-- Small, surgical, maintainer-reviewed fix
-- Buggy code confirmed present in v6.18.43
-- Same pattern as tegra fix already backported to this tree
-  (`ac761e66708d5`)
-- Affects widely deployed MediaTek Paris SoCs
-- Direct call preserves semantics while removing incorrect mutex
+- Fixes real bugs (premature user-sized allocation, overflow-prone limit
+  check, 32-bit multiply)
+- Small, surgical, maintainer-reviewed
+- Applies cleanly to 6.18.44
+- Buggy code confirmed present in this tree
+- User-facing ioctl path on Xen systems
+- Companion patch 1/2 is tiny and should accompany for complete
+  unsigned-counter hardening
 
 **AGAINST backport:**
-- `gpio-shared-proxy` (the described trigger) is not in v6.18.43 (landed
-  in 6.19)
-- No `Cc: stable` tag on the Paris patch
-- Common-v1 (`pinctrl-mtk-common.c`) has the same pattern but is a
-  separate commit
+- Xen-specific; not all stable users run Xen
+- No syzbot/user crash report (proactive fix)
+- Ideally paired with patch 1/2 for full unsigned arithmetic story
+  (minor concern, not a blocker)
 
-**Unresolved:**
-- Exact upstream commit SHA not in this checkout (candidate evaluation
-  only)
-- Could not fetch full Linus Walleij review reply (wrong spinics message
-  ID)
+**Unresolved:** Whether reviewers explicitly nominated for stable (no
+thread replies fetched beyond cover/patch text).
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — same function, mutex
-   removed; maintainer SOB; author reproduced warning.
-2. Fixes a real bug? **PASS** — lockdep sleep-in-atomic on direction
-   change.
-3. Important issue? **PASS** — stability / lockdep, HIGH severity.
-4. Small and contained? **PASS** — 1 file, ~8 lines.
-5. No new features/APIs? **PASS** — behavior correction only.
-6. Can apply to local tree? **PASS** — code exists, no dependencies.
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct and tested? **PASS** — logic is straightforward;
+   reviewed by Juergen Gross; no `Tested-by`
+2. Fixes real bug affecting users? **PASS** — ioctl validation /
+   overflow issues on Xen grant allocator
+3. Important issue? **PASS** — DoS, potential limit bypass, index
+   corruption (HIGH severity on Xen)
+4. Small and contained? **PASS** — 1 file, ~13 lines changed
+5. No new features/APIs? **PASS** — validation only
+6. Can apply to local tree? **PASS** — verified clean apply
 
-### Step 9.3: Exception category
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-driver bug fix.
+**Step 9.3 — Exception category**
+Record: None (standard bug fix, not device ID/quirk/docs/build).
 
-### Step 9.4: Decision rationale
-
-This tree (v6.18.43) still has Paris GPIO direction callbacks routing
-through `pinctrl_gpio_direction_*`, which takes the pinctrl mutex on a
-gpiochip that does not set `can_sleep` and whose register access uses a
-spinlock. That is incorrect and matches the tegra direction fix already
-accepted into this same stable series. Even though `gpio-shared-proxy`
-is not in 6.18, the underlying bug is present and the fix is minimal,
-obviously correct, and low-risk. Chromebook/MediaTek users benefit, and
-the change is consistent with stable maintainer practice for this bug
-class.
+**Step 9.4 — Decision rationale**
+This commit should be backported to the local **6.18.44** stable tree.
+The buggy ioctl ordering and arithmetic are present, the fix is minimal
+and maintainer-reviewed, and the failure modes (kmem pressure, limit
+bypass, index corruption) are meaningful on Xen systems. Backport patch
+1/2 (`make grant counters unsigned`) alongside this commit for the
+complete v2 series.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body; no Fixes/Reported-by/Cc:stable
-- [Phase 2] Diff: 1 file, `mtk_gpio_direction_*` + `mtk_pmxops`; mutex-
-  bypass fix verified in `core.c` and `pinctrl-paris.c`
-- [Phase 3] `git blame` lines 887–902, 769–776 → present in v6.18.43; no
-  Fixes tag; standalone (no deps)
-- [Phase 4] WebFetch spinics v2 thread; b4 dig requires commit in tree
-  (N/A); gpio-shared-proxy confirmed 6.19+ via web search
-- [Phase 5] Traced `pinctrl_gpio_direction()` → `mutex_lock`;
-  `mtk_hw_set_value()` → `spin_lock_irqsave`
-- [Phase 6] `git describe HEAD` → v6.18.43; buggy code at lines 774,
-  889, 901; `hw->pctrl` in `pinctrl-mtk-common-v2.h:292`; tegra fix
-  `ac761e66708d5` in HEAD
-- [Phase 6] `grep` — no `gpio-shared-proxy` / `GPIO_SHARED` in tree
-- [Phase 7] Paris used by multiple MTK SoCs in `Kconfig`
-- [Phase 8] Failure mode: lockdep sleep-in-atomic, HIGH severity
-- [UNVERIFIED] Full text of Linus Walleij review reply not retrieved
-
-**YES**Those three background `git log -S "gpio_shared_proxy"` searches
-didn’t finish (they timed out or were killed on this large tree), so
-they didn’t add anything new.
-
-That doesn’t change the conclusion: `gpio_shared_proxy` / `gpio-shared-
-proxy` isn’t in this v6.18.43 checkout — that was already confirmed with
-targeted `grep` and the 6.19 merge history. The Paris pinctrl fix should
-still be backported to this tree.
+- [Phase 1] Parsed subject, tags, body from provided commit message
+- [Phase 1] Identified patch as 2/2 via Message-ID `43781-3`
+- [Phase 2] Read current `gntalloc_ioctl_alloc()` at HEAD — confirmed
+  buggy ordering
+- [Phase 2] Verified `limit`/`gref_size` are `static int`, `op.count` is
+  `__u32`, `priv->index` is `uint64_t`
+- [Phase 2] Verified `kcalloc` uses `check_mul_overflow` in
+  `include/linux/slab.h`
+- [Phase 3] `git blame -L 283,302 drivers/xen/gntalloc.c` — lines from
+  `5d324e5159d9e`
+- [Phase 3] `git log --oneline -20 -- drivers/xen/gntalloc.c` — shallow
+  history
+- [Phase 3] `git log --grep` for gntalloc/validate — no existing fix in
+  tree
+- [Phase 4] `b4 dig -c 3218686be45b8` — no result (commit not in tree)
+- [Phase 4] Fetched openwall cover + patches 1/2 and 2/2 — confirmed v2
+  series and prerequisite note
+- [Phase 4] lore.kernel.org — 403 Forbidden (unverified for reviewer
+  stable nominations)
+- [Phase 5] Traced call chain: `gntalloc_ioctl` → `gntalloc_ioctl_alloc`
+- [Phase 5] Confirmed miscdevice `"xen/gntalloc"` registration
+- [Phase 5] Read `add_grefs()` — loops `op->count` times with page alloc
+  + grant setup
+- [Phase 6] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; `make
+  kernelversion` → `6.18.44`
+- [Phase 6] `git apply --check` on provided diff — **clean apply**
+- [Phase 6] Confirmed pre-fix code via `git show
+  HEAD:drivers/xen/gntalloc.c`
+- [Phase 7] Read `drivers/xen/Kconfig` `XEN_GRANT_DEV_ALLOC` —
+  userspace-facing, default `m`
+- [Phase 8] Assessed severity from code paths (not from unverified crash
+  reports)
 
 **YES**
 
- drivers/pinctrl/mediatek/pinctrl-paris.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/xen/gntalloc.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
-index 6bf37d8085fae..23f04b24fd65e 100644
---- a/drivers/pinctrl/mediatek/pinctrl-paris.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
-@@ -771,7 +771,6 @@ static const struct pinmux_ops mtk_pmxops = {
- 	.get_function_name	= mtk_pmx_get_func_name,
- 	.get_function_groups	= mtk_pmx_get_func_groups,
- 	.set_mux		= mtk_pmx_set_mux,
--	.gpio_set_direction	= mtk_pinmux_gpio_set_direction,
- 	.gpio_request_enable	= mtk_pinmux_gpio_request_enable,
- };
+diff --git a/drivers/xen/gntalloc.c b/drivers/xen/gntalloc.c
+index f93f73ecefeee..462f67dc32751 100644
+--- a/drivers/xen/gntalloc.c
++++ b/drivers/xen/gntalloc.c
+@@ -272,6 +272,7 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
+ 	int rc = 0;
+ 	struct ioctl_gntalloc_alloc_gref op;
+ 	uint32_t *gref_ids;
++	unsigned int limit_snapshot;
  
-@@ -886,19 +885,22 @@ static int mtk_gpio_set(struct gpio_chip *chip, unsigned int gpio, int value)
+ 	pr_debug("%s: priv %p\n", __func__, priv);
  
- static int mtk_gpio_direction_input(struct gpio_chip *chip, unsigned int gpio)
- {
--	return pinctrl_gpio_direction_input(chip, gpio);
-+	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
+@@ -280,6 +281,12 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
+ 		goto out;
+ 	}
+ 
++	limit_snapshot = READ_ONCE(limit);
++	if (op.count > limit_snapshot) {
++		rc = -ENOSPC;
++		goto out;
++	}
 +
-+	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, true);
- }
+ 	gref_ids = kcalloc(op.count, sizeof(gref_ids[0]), GFP_KERNEL);
+ 	if (!gref_ids) {
+ 		rc = -ENOMEM;
+@@ -292,14 +299,16 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
+ 	 * are about to enforce, removing them here is a good idea.
+ 	 */
+ 	do_cleanup();
+-	if (gref_size + op.count > limit) {
++	limit_snapshot = READ_ONCE(limit);
++	if (gref_size > limit_snapshot ||
++	    op.count > limit_snapshot - gref_size) {
+ 		mutex_unlock(&gref_mutex);
+ 		rc = -ENOSPC;
+ 		goto out_free;
+ 	}
+ 	gref_size += op.count;
+ 	op.index = priv->index;
+-	priv->index += op.count * PAGE_SIZE;
++	priv->index += (uint64_t)op.count * PAGE_SIZE;
+ 	mutex_unlock(&gref_mutex);
  
- static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
- 				     int value)
- {
-+	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
- 	int ret;
- 
- 	ret = mtk_gpio_set(chip, gpio, value);
- 	if (ret)
- 		return ret;
- 
--	return pinctrl_gpio_direction_output(chip, gpio);
-+	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, false);
- }
- 
- static int mtk_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
+ 	rc = add_grefs(&op, gref_ids, priv);
 -- 
 2.53.0
 
