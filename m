@@ -1,137 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0C75867D5;
-	Mon, 31 Aug 2026 13:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B6D4B0C82;
+	Mon, 31 Aug 2026 13:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184220; cv=none; b=TktPgR8KGu0O8tcPA1xhCCXUMKL1J4j/6PFBbFndsLEY4nAZ5T7QLWUFGQte/C5VVlIwe2vCueBvDoMVnwbw+tGO9XwfMrIV9ySw122mUr8yjUasbscHGginkhSCDXjM1rFEhj6YC/6QniaSDdf3qOlU4YCLaLdJWm4plMRwSDQ=
+	t=1788184221; cv=none; b=SXME7dClAL3WqfbtmcPs8K6FdrNJtSSd9nIDG8u9RkO4vWSdSemtS10NrW5OR+sjvtJ3IE6EpYT+hSDK1yVHWe6Kf//AXu32GXRU4hVY+unJw5anTyBN6+m/67hBFOqYLChwBjfRp8PZ4rd2uu6EaKFNgLTU8HUpW1FR4/D6V6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184220; c=relaxed/simple;
-	bh=dlqJS75pc9r36XeZzV0aXAaWO5RTF9CkX6hS/orui5M=;
+	s=arc-20240116; t=1788184221; c=relaxed/simple;
+	bh=6McxkPjq+JhMJa9F+pAjZXrxcyCZiB7vqWeH/sER1d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShVXt3awVvqqDfEy9yJTOdRPJ4UPVLMhZJluP41U8HsjOYLCFYuG9mXOvIQ/BEMRulmboxeUTXnNjEFKG71RBNadBQbTaLVep9o5tBBoNjO69Lq1e7NO46LNUXoqBncEn3dtBL5oNkstpAPQJNApCtgd/wvP6B/mz1Wtv31n9Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o3FLl2/p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HtmfZOeX4n+CD5Voc3GRYcfXT52WcNBkre3u+HJ2OEl6++w8iWutVmI6zsUPTj0awpGGUs+df3k5dmUzCiWOFgoAv+2dexLgGwcYA958/VHVbBAaDyB76GPnw0Rdjn7JanK7NuDnVJY8wEJqTidlKGehd8AEP+XOXMUE/9WlyTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clNz52MO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o3FLl2/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062531F00A3D;
-	Mon, 31 Aug 2026 13:50:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184218;
-	bh=BTyedSN3YbOUiJKzZA2msjsF7CSOouyfNx25cmftEjs=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clNz52MO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ED11F00A3F;
+	Mon, 31 Aug 2026 13:50:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184219;
+	bh=6A+MbXV4uXsdwfY4ZbFYtR7DsQlzBCN2s1/efSVvgA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o3FLl2/pB4NrE/yXtf21vsYZPeB0ZpZj66oENL6q1WHtfZjOVnyUiWOIbfGSkZo4D
-	 XMZ2EOxzJcjAC8Av7tePSWGnG5Rrvlqyb7pqNcB7qP+jT59fHykm624UFJy4VMs189
-	 xNEJbERcgo76jkUaBJLor4octlfideC0/4txB8B4aelDaz/iiDGjgVuy7xDI/aSCWn
-	 bIr/0sDez2FUm8ouroaAYFO5Z1RmIpUGyPefGChRZ1OhbiSDAyGXdvflSPjYpnCzWb
-	 6+tevY2W2G5fOMHStQpAKT0mxfZdGkWJ9nVbYfhwyQUcLMGTKXpSkbBVFID15gUWqe
-	 56QZjCickNzEA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	saeedm@nvidia.com,
-	mbloch@nvidia.com,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] net/mlx5: Switch vport HCA cap helpers to kvzalloc
-Date: Mon, 31 Aug 2026 09:29:50 -0400
-Message-ID: <20260831133314.4125787-562-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=clNz52MO+VfHjE7eFNX+mA4vPYoseLqOU00aXgZ3jNN1TZe/HxSYUIGsfOZvCk/97
+	 Mm8cXWO7nRdJAyhDNZuIzh5ZIMDcCU1juWqZICOzac/TYLepBU3fl0MnDFswlunEpT
+	 Ge8RguBw8f67X+Qgj8Up+BS1tfaGfRlemK3DTckI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Michael Neuling <mikey@neuling.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 32/99] riscv: Fix register corruption from uninitialized cregs on error
+Date: Mon, 31 Aug 2026 15:34:01 +0200
+Message-ID: <20260831133401.615392120@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 62af408fd772ba0194c007170f9e930ea71e01ea ]
+------------------
 
-mlx5_vport_set_other_func_cap() and mlx5_vport_get_vhca_id() allocate
-command buffers that embed the HCA capability union, exceeding 4KiB.
-Use kvzalloc/kvfree so the allocation can fall back to vmalloc when
-contiguous memory is scarce.
+From: Michael Neuling <mikey@neuling.org>
 
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260518071356.345723-5-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Upstream commit 6ebcbb53fc9bc30843054ed99fd60b8e542628f4 ]
+
+compat_riscv_gpr_set() calls cregs_to_regs() unconditionally, even when
+user_regset_copyin() fails. Since cregs is an uninitialized stack
+variable, a copyin failure causes uninitialized stack data to be written
+into the target task's pt_regs, corrupting its register state and
+potentially leaking kernel stack contents.
+
+compat_restore_sigcontext() has the same issue: it calls cregs_to_regs()
+even when __copy_from_user() fails, leading to the same corruption of
+the signal-returning task's register state on error.
+
+Only call cregs_to_regs() when the user copy succeeds.
+
+Fixes: 4608c159594f ("riscv: compat: ptrace: Add compat_arch_ptrace implement")
+Fixes: 7383ee05314b ("riscv: compat: signal: Add rt_frame implementation")
+Signed-off-by: Michael Neuling <mikey@neuling.org>
+Assisted-by: Cursor:claude-4.6-opus-high-thinking
+Link: https://patch.msgid.link/20260501062320.2339562-1-mikey@neuling.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
+ arch/riscv/kernel/compat_signal.c | 2 ++
+ arch/riscv/kernel/ptrace.c        | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-The background author-history search finished. It found one relevant
-prior commit from Tariq Toukan: `ca11b798998a6` (`net/mlx5e: Convert
-large order kzalloc allocations to kvzalloc`). No Moshe Shemesh commits
-touching `vport.c` showed up in that query.
-
-That fits the earlier analysis: mlx5 maintainers have already moved
-large command-buffer allocations to `kvzalloc` in this tree, and this
-patch closes a remaining gap in the vport helpers. The backport
-recommendation remains **YES** for linux-6.18.y.
-
- drivers/net/ethernet/mellanox/mlx5/core/vport.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-index a44214c660b03..fd10018b25807 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -1279,7 +1279,7 @@ int mlx5_vport_get_vhca_id(struct mlx5_core_dev *dev, u16 vport, u16 *vhca_id)
- 	if (mlx5_esw_vport_vhca_id(dev->priv.eswitch, vport, vhca_id))
- 		return 0;
+diff --git a/arch/riscv/kernel/compat_signal.c b/arch/riscv/kernel/compat_signal.c
+index 6ec4e34255a9a..cf3eb33a11e46 100644
+--- a/arch/riscv/kernel/compat_signal.c
++++ b/arch/riscv/kernel/compat_signal.c
+@@ -107,6 +107,8 @@ static long compat_restore_sigcontext(struct pt_regs *regs,
  
--	query_ctx = kzalloc(query_out_sz, GFP_KERNEL);
-+	query_ctx = kvzalloc(query_out_sz, GFP_KERNEL);
- 	if (!query_ctx)
- 		return -ENOMEM;
+ 	/* sc_regs is structured the same as the start of pt_regs */
+ 	err = __copy_from_user(&cregs, &sc->sc_regs, sizeof(sc->sc_regs));
++	if (unlikely(err))
++		return err;
  
-@@ -1291,7 +1291,7 @@ int mlx5_vport_get_vhca_id(struct mlx5_core_dev *dev, u16 vport, u16 *vhca_id)
- 	*vhca_id = MLX5_GET(cmd_hca_cap, hca_caps, vhca_id);
+ 	cregs_to_regs(&cregs, regs);
  
- out_free:
--	kfree(query_ctx);
-+	kvfree(query_ctx);
- 	return err;
- }
- EXPORT_SYMBOL_GPL(mlx5_vport_get_vhca_id);
-@@ -1306,7 +1306,7 @@ int mlx5_vport_set_other_func_cap(struct mlx5_core_dev *dev, const void *hca_cap
- 	void *set_ctx;
- 	int ret;
+diff --git a/arch/riscv/kernel/ptrace.c b/arch/riscv/kernel/ptrace.c
+index 92731ff8c79ad..69e669ef48107 100644
+--- a/arch/riscv/kernel/ptrace.c
++++ b/arch/riscv/kernel/ptrace.c
+@@ -330,8 +330,8 @@ static int compat_riscv_gpr_set(struct task_struct *target,
+ 	struct compat_user_regs_struct cregs;
  
--	set_ctx = kzalloc(set_sz, GFP_KERNEL);
-+	set_ctx = kvzalloc(set_sz, GFP_KERNEL);
- 	if (!set_ctx)
- 		return -ENOMEM;
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &cregs, 0, -1);
+-
+-	cregs_to_regs(&cregs, task_pt_regs(target));
++	if (!ret)
++		cregs_to_regs(&cregs, task_pt_regs(target));
  
-@@ -1335,6 +1335,6 @@ int mlx5_vport_set_other_func_cap(struct mlx5_core_dev *dev, const void *hca_cap
- 	MLX5_SET(set_hca_cap_in, set_ctx, function_id, function_id);
- 	ret = mlx5_cmd_exec_in(dev, set_hca_cap, set_ctx);
- 
--	kfree(set_ctx);
-+	kvfree(set_ctx);
  	return ret;
  }
 -- 
 2.53.0
+
+
 
