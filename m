@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23026439913;
-	Mon, 31 Aug 2026 13:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD614B7160;
+	Mon, 31 Aug 2026 13:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184596; cv=none; b=rfPHXvgX5GdchnXBz0lEb0kIRL+zJgZv2BNqk/3Zxt77sdGBNNSAH0nNzHrsA9Mb5k0lMiXyjV5ano0R3WilzVImFNvvi3fiFj5fu8RV3bXhoWDuKQkHvxcGCO5ieT9HOXuYqmD60DiTXhpA1mT9ZO1Ew9Lf3AzkedV1LJpMN/I=
+	t=1788184599; cv=none; b=XAFpHTSnQntwpm1gnH5vGR2llFDJnF2pvMoBaZ56fBq9GcufJoiKZD7Z+8WNPhjSRNGsJpTnBDYKO8STNUpsezc5E/PCvHIkBJ9XRNo0Jzug6YmxIXKkkHbgYRatK6waNWIH9rccmjQA+GDkVuRT2Uv4pEUDYI9hyqQkXvncbC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184596; c=relaxed/simple;
-	bh=LzOQbn4KcqJ7MIrPHfRQrjYrGwMLxpc02udyfwLVai4=;
+	s=arc-20240116; t=1788184599; c=relaxed/simple;
+	bh=Bi152230k8QMV1HQsPyRLdFd8QYC5lauzHR0anAP0T0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aC4Wh9okCCHy9QhM1zNLxoB2RlrymcTe8yGuDTW7FWhry+68pDvs4VCU580sqwwYLfvGTwm//FgPj0E0Ob0eYhV/nm7OwjGip0Hkw0FsRjbhBAdjNXf9UB11N4tcchWcmLKVqkaWgEGYtf2T5zleSXHuzaVFJz2AVrD0cZYjrJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p45vZ9jV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lAdbMCr8mvcf284jrG9UVZQ5KbN7ApFUjOAhbBQAAi2gM/bEejAQWsZ6gPOFdCh2MNOubMKtCi774JlOyL7RlA3hfnqCTs54YhQ9FbLY1EiwJi65/4Qu79vakL/0N3lyEEiDE1xZvFAvTl0V6ap5oJ8jJiXJUb2oFTTgKrsWpAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qekofV8V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p45vZ9jV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FEC1F000E9;
-	Mon, 31 Aug 2026 13:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qekofV8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4E91F000E9;
+	Mon, 31 Aug 2026 13:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184595;
-	bh=YEQ/Ydo1QYuF2L8a4NtJKPlKHW/CAM8Sc6FeuPe/Yl4=;
+	s=korg; t=1788184597;
+	bh=wJzM9bGm7oGYZkwhRag9hExX2K+V0Pyiv84FM147js8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p45vZ9jVLfGc9/T/aipJOMj+fuZ1OY0+RZkOODxJkt76E4X7veo89wMfyAtVRoXbh
-	 9PsXrHAkN7A/ZWe8XzA1aqg3JejOlI9iW1A7HDmvWx+d/LwA4HWzfU7FNTXrnWs1mG
-	 3sfaHtlnENLD/MoOhy8egF4tunftQRmq4IIVt1Nk=
+	b=qekofV8VnyBcj8lSkoOTaLtRfmpiy7KGRZAe2RxzzBJ165/nyiknR1MH/poO2MOB3
+	 e/R3NioDvQCU9uWotzaYj2TR8Iyb2flXTCIOMyjSlf8nPkUmrhUX/cKSFvmJAfNhP7
+	 Acf27RuClBuM/1vUiER+/KXMsuicr2EFa9rR3tkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Lucas De Marchi <ldemarchi@nvidia.com>
-Subject: [PATCH 6.6 61/91] xhci: dbgtty: Fix unregister on tty_alloc_driver() failure
-Date: Mon, 31 Aug 2026 15:34:49 +0200
-Message-ID: <20260831133402.888233139@linuxfoundation.org>
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.6 62/91] fuse: fix invalidate lock leak on setattr writeback failure
+Date: Mon, 31 Aug 2026 15:34:50 +0200
+Message-ID: <20260831133402.930097402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -44,66 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas De Marchi <ldemarchi@nvidia.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-commit 25b8dfc13495a6c1cf4abacc8ef20196c7f20e5c upstream.
+commit 9afeca0d569c9fc89d758fe7a9339d1e8afb1546 upstream.
 
-Make sure to set dbc_tty_driver to NULL to match the check in
-dbc_tty_exit(). For that, make detached error handling path common to the
-other branch in the same function.
+fuse_do_setattr() takes filemap_invalidate_lock() for a DAX truncate
+(fault_blocked = true) and releases it at the out:/error: labels.  But
+when a writeback flush is also needed, a write_inode_now() failure
+returns directly and leaks the lock, so any later fault or truncate on
+the file stalls on the stale rwsem.
 
-Fixes: 4521f1613940 ("xhci: dbctty: split dbc tty driver registration and unregistration functions.")
-Cc: stable@vger.kernel.org # v5.10
-Cc: Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Lucas De Marchi <ldemarchi@nvidia.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260806142113.2436238-9-mathias.nyman@linux.intel.com
+For example, truncate(2) on a setuid file reaches fuse_do_setattr()
+with both ATTR_SIZE and ATTR_MODE set:
+
+  truncate(2)
+  └─ do_truncate()
+     ├─ dentry_needs_remove_privs()         # S_ISUID
+     └─ notify_change()                     # KILL_SUID -> ATTR_MODE
+        └─ fuse_setattr()                   # no killpriv:
+           │                                #   ia_valid |= ATTR_MODE
+           └─ fuse_do_setattr()
+              ├─ filemap_invalidate_lock()  # IS_DAX && is_truncate
+              └─ write_inode_now()          # is_wb && ATTR_MODE
+                 └─ if (err)                # e.g. daemon -> -EIO
+                    return err              # <- lock leaked
+
+Fix this by adding an unlock label that releases the lock before
+returning the error, and use it for the fuse_dax_break_layouts()
+failure path as well.
+
+Fixes: 6ae330cad6ef ("virtiofs: serialize truncate/punch_hole and dax fault path")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgtty.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/fuse/dir.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -596,8 +596,8 @@ int dbc_tty_init(void)
- 	dbc_tty_driver = tty_alloc_driver(64, TTY_DRIVER_REAL_RAW |
- 					  TTY_DRIVER_DYNAMIC_DEV);
- 	if (IS_ERR(dbc_tty_driver)) {
--		idr_destroy(&dbc_tty_minors);
--		return PTR_ERR(dbc_tty_driver);
-+		ret = PTR_ERR(dbc_tty_driver);
-+		goto fail;
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1879,10 +1879,8 @@ int fuse_do_setattr(struct dentry *dentr
+ 		filemap_invalidate_lock(mapping);
+ 		fault_blocked = true;
+ 		err = fuse_dax_break_layouts(inode, 0, -1);
+-		if (err) {
+-			filemap_invalidate_unlock(mapping);
+-			return err;
+-		}
++		if (err)
++			goto unlock;
  	}
  
- 	dbc_tty_driver->driver_name = "dbc_serial";
-@@ -617,12 +617,18 @@ int dbc_tty_init(void)
- 	ret = tty_register_driver(dbc_tty_driver);
- 	if (ret) {
- 		pr_err("Can't register dbc tty driver\n");
--		tty_driver_kref_put(dbc_tty_driver);
--		idr_destroy(&dbc_tty_minors);
--		dbc_tty_driver = NULL;
-+		goto fail_put;
- 	}
+ 	if (attr->ia_valid & ATTR_OPEN) {
+@@ -1909,7 +1907,7 @@ int fuse_do_setattr(struct dentry *dentr
+ 			 ATTR_TIMES_SET)) {
+ 		err = write_inode_now(inode, true);
+ 		if (err)
+-			return err;
++			goto unlock;
  
- 	return ret;
-+
-+fail_put:
-+	tty_driver_kref_put(dbc_tty_driver);
-+fail:
-+	idr_destroy(&dbc_tty_minors);
-+	dbc_tty_driver = NULL;
-+
-+	return ret;
- }
+ 		fuse_set_nowrite(inode);
+ 		fuse_release_nowrite(inode);
+@@ -2017,6 +2015,7 @@ error:
  
- void dbc_tty_exit(void)
+ 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
+ 
++unlock:
+ 	if (fault_blocked)
+ 		filemap_invalidate_unlock(mapping);
+ 	return err;
 
 
