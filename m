@@ -1,43 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949595540B6;
-	Mon, 31 Aug 2026 13:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6F74AC2D0;
+	Mon, 31 Aug 2026 13:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184022; cv=none; b=PT2JIF28SjKzuq8AfZqvd/3kt1c/6qLDADqSf5QtqvJ6RDiwxnoTtxhZk7Wh+/dWH+qmjATL1BmA9Rf1nzWUeqdLNAWx77gPtpgjnw9Y9rzRgv5DhdzqNhY6lF0Id96k4UK/+tbz54qlLRnal0r70FWpSHnXIMVEGUrl2GBfxz8=
+	t=1788184024; cv=none; b=SG9PAgmRvTAHojUuMejdDXY7R7fT8tWQwBJT65w3Do/eJ896ptxPK+D5uga97CNInZVTzovIWV2g4cy/EYu05JMfz6vzyXS/nr+kM1Z9YF8bGFfXhA8MgPjcvaTqXMCbmZxNgaXCD9y7aw6DUB2eN5UItywAChikU9X77RzQgAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184022; c=relaxed/simple;
-	bh=zwvwbOhGw1C7ophV7SpK5Uw2kEtfLSP+tp9L42IJE+c=;
+	s=arc-20240116; t=1788184024; c=relaxed/simple;
+	bh=4Ugd7NZthPGB7/aS8BHE5sDi+bHMactzDm59QVZV/M0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CYSvqtU32NBQufbZ3VPwRi2UbfO7WmOGhsWhb61cANHgN3uRaQTcSWFQ9LZCwg3Qus6vrNBWsakOSRNjVLLZIm67s+sFoiOPrOfMVQxDjdGPzm7S62jSCwi0IN9nFS3rUE3/UrQwcAUwuyKG1bbS/sPZ8cxl2wioCWxbmfgia1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T+rAC9OW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YmPk+I8tE7uuNcemvQH7Xe95lViRynB+KFTsU/cfJZzvJZwcnIedCLhWpAU/u4wlXuEMSWJ9AuwfgSZ2AY9iyu/8I5DgO4DKjmQ9sQz7gbudJ0mIDNvfJn2UaxC8wQ5YJ/Hbs1GXZ47U/Y5vEkdyrRhkqRj64IxxNApxmLTROVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GEHEExPq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T+rAC9OW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DB41F00A3F;
-	Mon, 31 Aug 2026 13:46:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GEHEExPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AD51F00ADB;
+	Mon, 31 Aug 2026 13:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184018;
-	bh=KpQJogOnWNm1wLnORWhkcR5bmVd9p4So25qtBfHPoz8=;
+	s=k20260515; t=1788184020;
+	bh=5pyJ96Qnm8dDNN9ZwyaQBPz/6YRx72SlNJlQ0MsCvAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T+rAC9OWbM6h2dAyHcWLHGOWclrIF53qC0bYGvwrTalHIr3z5x/7OX7Da8cYFaYsG
-	 X6kBzfYuYlLBZyMAH1oOgguAIUpArX/S7wGGuDTbYjf451cbp4Gw1ornxTx6UVhBXs
-	 yghC6a/4hCYf83OLhDft7f0i58FcdufxXWjVSSxlFdhuV/9Wab+TGAWZTAkyblXXOe
-	 hlQirdKAqWDhQzdi7oWbUn/cCwpAwosL9MU9LrlIeAuAc9j/l7u8dGWirVcLetfPRz
-	 4/7j3E7dFXQkoXOv0GfcfbLX88r8tDyRodufPTdHM0mLdJrrI5fqlGpONXb4056N+l
-	 NXapE6yFhNcsA==
+	b=GEHEExPq8hXWHWAheueGRRGnMwsvTX1IlvuEuQeuzQnjfEKq/sC6tF/W+C4B6UNPp
+	 tE/T7z/Eo7ATvNkEDB1Jaw70f8v5654hK8qiL/NcyVVfV4IBKigH5eNezPEuKd3Ckr
+	 9NrRIqCuqEkB1WV5L+cKWQAKdC7iMMhPF/MC0DzoKDOuZ9SouYxKCtzUqk3/wfwIkH
+	 /09jnGuLHrVkWwua4GYcUOFn4vKdvstDCaE4GYi+iniVsN20KkkEJOQjcpZvsCTocp
+	 SSywt+YJyOaTym2FkTX+59kdOxBoI/lifpipeYF1R27xZEnCShY8EplcOqQwd4C79k
+	 GFai0ehVLpNHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	kys@microsoft.com,
+	haiyangz@microsoft.com,
+	wei.liu@kernel.org,
+	decui@microsoft.com,
+	longli@microsoft.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	linux-hyperv@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] wifi: iwlwifi: fix the access to CNVR TOP registers
-Date: Mon, 31 Aug 2026 09:27:49 -0400
-Message-ID: <20260831133314.4125787-441-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] net: mana: hardening: Reject zero max_num_queues from MANA_QUERY_VPORT_CONFIG
+Date: Mon, 31 Aug 2026 09:27:50 -0400
+Message-ID: <20260831133314.4125787-442-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,501 +62,400 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-[ Upstream commit c73869c1df2a27dc3c928e94b42660124318f727 ]
+[ Upstream commit 93ca1575dd1f43e24ad85663305e13114f9acdf1 ]
 
-For Dr and Sc, we need to wait until the TOP is ready to gets its
-registers read by the host.
+As a part of MANA hardening for CVM, validate that max_num_sq and
+max_num_rq returned by MANA_QUERY_VPORT_CONFIG are not zero. These
+values flow into apc->num_queues, which is used as an allocation count
+and loop bound. A zero value would result in zero-size allocations and
+incorrect driver behavior.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Daniel Gabay <daniel.gabay@intel.com>
-Link: https://patch.msgid.link/20260511203428.09778340db51.I28d678ad404bbf8068f139666d38e29be5aa063b@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Return -EPROTO if either value is zero.
+
+Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+Link: https://patch.msgid.link/20260430085638.1875400-1-ernis@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `wifi: iwlwifi: fix the access to CNVR TOP
-registers`
+# Stable Backport Analysis: `net: mana: hardening: Reject zero
+max_num_queues from MANA_QUERY_VPORT_CONFIG`
 
-**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`)
+**Local tree:** Linux **6.18.43** (`v6.18.43-1-gc7f0dac02d232`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-**Record:** `[wifi: iwlwifi]` `[fix]` — Correct premature access to CNVR
-TOP peripheral registers on DR and SC device families during early
-hardware identification.
+### Step 1.1: Subject Line
+**Record:** `[net: mana]` `[hardening/validate]` — Reject zero
+`max_num_sq` / `max_num_rq` from `MANA_QUERY_VPORT_CONFIG` firmware
+response.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Emmanuel Grumbach `<emmanuel.grumbach@intel.com>`
-  (author)
-- **Reviewed-by:** Daniel Gabay `<daniel.gabay@intel.com>` (Intel
-  reviewer)
-- **Link:** `https://patch.msgid.link/20260511203428...` (patch
-  submission reference)
-- **Signed-off-by:** Miri Korenblit
-  `<miriam.rachel.korenblit@intel.com>` (maintainer committer)
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or syzbot
-  tags
-- Notable: Intel-internal review; part of `[PATCH 3/15]` iwlwifi update
-  series (May 11, 2026)
+- **Signed-off-by:** Erni Sri Satya Vennela
+  `<ernis@linux.microsoft.com>` (author)
+- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (committer)
+- **Link:** https://patch.msgid.link/20260430085638.1875400-1-
+  ernis@linux.microsoft.com
+- **No** Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, Cc:
+  stable@vger.kernel.org
+- Notable: Same author (Erni) as the already-backported MANA CVM TOCTOU
+  fix (`09ec063d87c2d`) in this tree.
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** On DR and SC families, the host reads CNVR TOP peripheral
-  registers before the TOP block is ready.
-- **Symptom:** Incorrect or unavailable peripheral register reads during
-  `get_crf_id()` in the PCIe probe path; can lead to wrong/missing RF ID
-  and probe failure.
-- **Root cause:** Missing hardware-readiness wait before `WFPM_CTRL_REG`
-  / peripheral register access.
-- **Version info:** None explicit; hardware-specific to
-  `IWL_DEVICE_FAMILY_DR` and `IWL_DEVICE_FAMILY_SC`.
+- **Bug:** Firmware may return `max_num_sq == 0` or `max_num_rq == 0`
+  from `MANA_QUERY_VPORT_CONFIG`.
+- **Symptom:** Values flow into `apc->num_queues` (via
+  `mana_init_port()`), used as allocation count and loop bound → zero-
+  size allocations and incorrect driver behavior.
+- **Fix:** Return `-EPROTO` if either value is zero.
+- **Context:** CVM (Confidential VM) hardening — firmware/hypervisor
+  responses treated as untrusted.
+- **Root cause:** Missing input validation on firmware-reported queue
+  limits.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-**Record:** Not disguised — this is an explicit hardware-init timing bug
-fix, not cleanup or optimization.
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes. Labeled "hardening" but is a real input-validation bug
+fix. Without it, zero queue counts propagate into driver state and cause
+broken device behavior.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
+### Step 2.1: Inventory
 **Record:**
-| File | Change |
-|------|--------|
-| `iwl-io.c` | +18 lines (new poll helper) |
-| `iwl-io.h` | +2 lines (declaration) |
-| `iwl-prph.h` | +5 lines (register/bit defines) |
-| `pcie/gen1_2/trans.c` | +24 lines (wait logic in `get_crf_id()`) |
+- **File:** `drivers/net/ethernet/microsoft/mana/mana_en.c` (+6 lines)
+- **Function:** `mana_query_vport_cfg()`
+- **Scope:** Single-file, surgical validation in one function.
 
-- **Functions modified:** `get_crf_id()`; new
-  `iwl_poll_umac_prph_bits_no_grab()`
-- **Scope:** Single-subsystem, 4-file surgical fix (~51 lines total
-  including copyright year bumps)
-
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+### Step 2.2: Code Flow Change
 **Record:**
-- **Hunk 1 (`iwl-io.c` / `iwl-io.h`):** Adds
-  `iwl_poll_umac_prph_bits_no_grab()` — mirrors `iwl_poll_prph_bit()`
-  but uses `iwl_read_umac_prph_no_grab()` for contexts where NIC access
-  is already held.
-- **Hunk 2 (`iwl-prph.h`):** Defines `WFPM_RSRCS_4PHS_REQ_STTS`,
-  `WFPM_RSRCS_4PHS_ACK_STTS`, and CNVR TOP request/ack bits.
-- **Hunk 3 (`trans.c` / `get_crf_id()`):**
-  - **Before:** Immediately reads/writes UMAC peripheral registers.
-  - **After (DR/SC only):** Checks REQ bit 6; polls ACK bit 6 (50 ms
-    timeout); then proceeds with peripheral access.
-  - **Path:** Early probe, inside `iwl_pci_gen1_2_probe()` →
-    `get_crf_id()` with NIC access held.
+- **Hunk (lines ~1263–1268):**
+  - **Before:** Accept any `max_num_sq`/`max_num_rq` from firmware after
+    status check.
+  - **After:** Reject zero values with `netdev_err()` + `-EPROTO`.
+- **Path affected:** Port initialization during `mana_init_port()` →
+  `mana_probe_port()` probe path.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-**Record:**
-- **Category:** Logic / hardware-init correctness fix
-  (timing/sequencing).
-- **Mechanism:** `get_crf_id()` reads `WFPM_CTRL_REG`,
-  `sd_reg_ver_addr`, and `CNVI_AUX_MISC_CHIP` before CNVR TOP signals
-  readiness via `WFPM_RSRCS_4PHS_ACK_STTS` bit 6. On DR/SC this yields
-  garbage or zero `hw_crf_id`, causing `map_crf_id()` to fail and probe
-  to return `-EINVAL`.
+### Step 2.3: Bug Mechanism
+**Record:** **Input validation / logic correctness bug.**
+- `mana_init_port()` computes `max_queues = min(max_txq, max_rxq)` and
+  clamps `apc->num_queues` down to that value.
+- With zero firmware values, `apc->num_queues` becomes 0.
+- `kcalloc(0, ...)` returns `ZERO_SIZE_PTR` (non-NULL), passing `!ptr`
+  checks.
+- `netif_set_real_num_tx_queues(ndev, 0)` and
+  `netif_set_real_num_rx_queues(ndev, 0)` both require `txq/rxq >= 1`
+  and return `-EINVAL`.
+- Probe can still register a netdev with carrier on before queue setup
+  fails on attach.
 
-### Step 2.4: ASSESS THE FIX QUALITY
-**Record:**
-- Follows existing `iwl_poll_prph_bit()` / `iwl_poll_umac_prph_bit()`
-  patterns.
-- Minimal, device-family-gated (`DR` and `SC` only).
-- **Minor concern:** On ACK poll timeout, code logs `IWL_ERR` but still
-  proceeds (best-effort, same as many iwlwifi init paths). REQ-bit-clear
-  path returns early from `get_crf_id()` without reading registers.
-- **Regression risk:** Low — change is gated to two families and adds a
-  wait before existing reads.
+### Step 2.4: Fix Quality
+**Record:** Obviously correct, minimal, mirrors existing `-EPROTO` usage
+for bad firmware status. No API changes. Very low regression risk — only
+rejects values that are fundamentally invalid (a NIC cannot have zero
+TX/RX queues).
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-**Record:** `get_crf_id()` at lines 3990–4040 in `trans.c` is present in
-this tree. Git blame in this checkout is shallow (single squashed commit
-per file), so the exact introduction commit could not be determined from
-local history.
+### Step 3.1: Blame
+**Record:** Lines `*max_sq = resp.max_num_sq` / `*max_rq =
+resp.max_num_rq` blame to `19eef1d98eeda` (tree import). MANA driver and
+`mana_query_vport_cfg()` exist in this 6.18.43 tree. Fix not yet
+present.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-**Record:** No `Fixes:` tag present — not applicable.
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag in commit message.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-**Record:** Local git history for `drivers/net/wireless/intel/iwlwifi/`
-is extremely shallow (no meaningful per-file history). Patch is **3/15**
-in the May 2026 iwlwifi series; this commit is standalone and does not
-depend on patches 1/15 or 2/15.
+### Step 3.3: Related File History
+**Record:** Recent MANA fixes in this tree include CVM/security-oriented
+patches:
+- `09ec063d87c2d` — TOCTOU fix in `hw_channel.c` (CVM, same author Erni)
+- `6d13eaa13341a` — RX packet length validation (untrusted NIC data,
+  backported with Cc: stable)
+- `da87896f34e0a` — NULL guards to prevent panic on attach failure
+Standalone fix; no "patch X/Y" series indicator.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-**Record:** Emmanuel Grumbach is a long-standing iwlwifi maintainer.
-Series cover letter lists him as author of this fix among other iwlwifi
-changes. Cannot verify author history in this shallow tree.
+### Step 3.4: Author Context
+**Record:** Erni Sri Satya Vennela is an active MANA contributor with
+multiple probe/teardown/CVM fixes already in this tree.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-**Record:** No prerequisites identified. Required symbols
-(`iwl_read_umac_prph_no_grab`, `IWL_DEVICE_FAMILY_DR`,
-`IWL_DEVICE_FAMILY_SC`, `get_crf_id`) all exist in this tree. Patch
-should apply cleanly.
+### Step 3.5: Dependencies
+**Record:** None. Uses existing `mana_query_vport_cfg_resp` struct
+(`include/net/mana/mana.h`), `netdev_err()`, and `-EPROTO`. Applies
+standalone.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-**Record:** Patch found in local mbox
-`20260511_miriam_rachel_korenblit_wifi_iwlwifi_updates_2026_05_11.mbx`
-as `[PATCH 3/15]`. Cover letter classifies it under "Features, cleanups
-and **fixes**". `b4 dig -c HEAD` did not match (HEAD is the stable
-release tag, not this commit). `b4 dig` by subject failed (wrong
-invocation). Link fetch blocked by bot protection — could not read full
-lore thread.
+### Step 4.1: Patch Discussion
+**Record:** `b4 dig -c <sha>` not possible (commit not in local tree).
+`b4 dig` with message-id failed (wrong syntax). WebFetch of
+patch.msgid.link blocked by bot protection. **UNVERIFIED:** Full lore
+review thread content.
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-**Record:** `Reviewed-by: Daniel Gabay <daniel.gabay@intel.com>`. Series
-addressed to iwlwifi maintainers. Full `-w` recipient list not
-retrieved.
+### Step 4.2: Reviewers
+**Record:** **UNVERIFIED** — could not fetch mailing list thread.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-**Record:** No external bug report, syzbot link, or user `Reported-by:`
-— internal Intel discovery/fix.
+### Step 4.3: Bug Report
+**Record:** No Reported-by or bugzilla/syzbot links. Bug identified
+through CVM hardening code review, not a user crash report.
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-**Record:** Part of 15-patch series; patches 1/15 (debugfs PE naming)
-and 2/15 (firmware core bump) are independent. This fix is self-
-contained.
+### Step 4.4: Related Series
+**Record:** Part of broader MANA CVM hardening effort (same author as
+TOCTOU fix). No evidence this is one patch of a multi-patch dependency
+chain.
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-**Record:** Not searched on lore stable list (no stable nomination found
-in available sources). Absence of `Cc: stable` is expected per review
-instructions.
+### Step 4.5: Stable List Discussion
+**Record:** **UNVERIFIED** — could not search lore stable list. No Cc:
+stable in commit message (expected for manual review candidates).
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-**Record:** `iwl_poll_umac_prph_bits_no_grab()` (new), `get_crf_id()`
-(modified), callers of `get_crf_id()`.
+### Step 5.1: Key Functions
+**Record:** `mana_query_vport_cfg()` (modified), callers:
+`mana_init_port()`.
 
-### Step 5.2: TRACE CALLERS
-**Record:** `get_crf_id()` is called from `iwl_pci_gen1_2_probe()` at
-line 4195, during early PCIe probe after `iwl_trans_activate_nic()` and
-`iwl_trans_grab_nic_access()`. This runs for every iwlwifi PCIe gen1/2
-device, including all SC PCI IDs (`0xE440`, `0xE340`, `0xD340`,
-`0x6E70`, `0xD240` in `pcie/drv.c`).
+### Step 5.2: Callers
+**Record:**
+- `mana_init_port()` → called from `mana_probe_port()` (probe) and
+  `mana_attach()` (attach/resume)
+- Triggered during MANA vPort probe/attach on Azure VMs with
+  CONFIG_MICROSOFT_MANA.
 
-### Step 5.3: TRACE CALLEES
-**Record:** Uses `iwl_read_umac_prph_no_grab()`,
-`iwl_write_umac_prph_no_grab()`, `iwl_read_prph_no_grab()`,
-`udelay(IWL_POLL_INTERVAL)` — standard iwlwifi register I/O.
+### Step 5.3: Callees
+**Record:** `mana_send_request()`, `mana_verify_resp_hdr()`,
+`netdev_err()`.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-**Record:** PCI probe → `iwl_pci_gen1_2_probe()` → `get_crf_id()` →
-`map_crf_id()` (if `hw_rf_id` is zero). Reachable on every boot/module
-load for affected hardware. Not userspace-triggerable directly, but
-affects all users of SC (and future DR) WiFi hardware.
+### Step 5.4: Reachability
+**Record:** Reachable during PCI probe / netdev attach of MANA devices.
+Not userspace-triggerable directly, but firmware/hypervisor can return
+bad `MANA_QUERY_VPORT_CONFIG` data (especially relevant in CVM where DMA
+memory is shared/unencrypted per `hw_channel.c` comments).
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-**Record:** `iwl_poll_umac_prph_bit()` exists in `iwl-io.h` (uses
-`iwl_poll_prph_bit` with grab). `rx.c` uses `iwl_poll_umac_prph_bit()`
-for RFH status. New `no_grab` variant is needed because `get_crf_id()`
-runs with NIC access already held — verified: no existing
-`poll_*_no_grab` helper before this patch.
+### Step 5.5: Similar Patterns
+**Record:** Driver already validates indirection table size (warn +
+default). `gdma_main.c` clamps `gc->max_num_queues` against firmware
+limits but does not explicitly reject zero at vport level.
+`mana_rss_table_alloc()` already rejects `indir_table_sz == 0`. This
+adds the analogous check for queue counts.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-**Record:** **YES.** `get_crf_id()` in `trans.c` (lines 3990–4040)
-accesses peripheral registers without CNVR TOP readiness wait.
-`IWL_DEVICE_FAMILY_SC` and `IWL_DEVICE_FAMILY_DR` are defined; SC PCI
-IDs are present in `pcie/drv.c`. DR config (`cfg/dr.c`) exists but has
-no PCI ID table entry yet in this tree. The buggy code path is live for
-SC devices today.
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** `drivers/net/ethernet/microsoft/mana/mana_en.c`
+lines 1263–1264 assign firmware values without zero check.
+`mana_query_vport_cfg_resp` struct exists in `include/net/mana/mana.h`.
+MANA driver fully present in 6.18.43.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-**Record:** Expected **clean apply**. Target functions and register-
-access helpers exist unchanged. No conflicting recent changes found
-(shallow history). Only copyright year lines differ cosmetically.
+### Step 6.2: Backport Complications
+**Record:** **Clean apply.** Verified patch context matches local file
+exactly (`python3` context check: `old found: True`). No conflicting
+changes in the hunk area.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-**Record:** **No.** `iwl_poll_umac_prph_bits_no_grab`,
-`WFPM_RSRCS_4PHS_*`, and `RSRC_*_CNVR_TOP` are absent from this tree
-(grep confirmed).
+### Step 6.3: Related Fixes Already Present?
+**Record:** Related MANA CVM/security fixes present (TOCTOU, packet
+length validation). This specific zero-queue validation is **not**
+present (`git log --grep="Invalid max queues"` — no match).
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-**Record:** `drivers/net/wireless/intel/iwlwifi` — **IMPORTANT** (widely
-deployed Intel WiFi driver; probe/init path).
+### Step 7.1: Subsystem
+**Record:** `drivers/net/ethernet/microsoft/mana/` — network driver
+(Microsoft Azure Network Adapter). **Criticality: IMPORTANT**
+(production Azure VM networking, including CVM deployments).
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-**Record:** Actively developed; DR family added recently (cfg copyright
-2024–2025). SC family has been present longer (2015+). Cannot assess
-commit frequency from shallow local history.
+### Step 7.2: Activity
+**Record:** Actively maintained — 10+ MANA commits in recent history of
+`mana_en.c` alone, including multiple stable-worthy bug fixes.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-**Record:** Users with Intel WiFi **SC-family** hardware (PCI IDs in
-`drv.c`). **DR-family** users when PCI IDs are added. Config-dependent
-(`CONFIG_IWLWIFI`).
+### Step 8.1: Who Is Affected
+**Record:** Azure VM users with MANA NICs (`CONFIG_MICROSOFT_MANA`).
+Most acute for CVM (SEV-SNP/TDX) where firmware responses are explicitly
+untrusted.
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-**Record:** Every probe/resume path where blank OTP requires reading CRF
-ID from peripheral registers. Timing-dependent on DR/SC silicon — CNVR
-TOP not ready at the moment `get_crf_id()` runs. Common on boot; not
-privilege-dependent.
+### Step 8.2: Trigger Conditions
+**Record:** Firmware/hypervisor returns `max_num_sq == 0` or `max_num_rq
+== 0` in `MANA_QUERY_VPORT_CONFIG`. Not a normal operational case;
+requires buggy or malicious firmware. In CVM, malicious host is in
+threat model.
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+### Step 8.3: Failure Mode Severity
+**Record:** Without fix:
+1. `apc->num_queues` set to 0
+2. `kcalloc(0, ...)` returns `ZERO_SIZE_PTR` (passes NULL checks)
+3. `mana_probe_port()` can succeed through `register_netdev()` +
+   `netif_carrier_on()`
+4. Queue allocation fails later with `-EINVAL` from
+   `netif_set_real_num_*_queues()`
+5. Results in broken/unusable netdev rather than clean probe failure
+
+**Severity: MEDIUM-HIGH** — not a demonstrated kernel panic, but real
+incorrect driver state and CVM input-validation gap. Consistent with
+other MANA hardening already accepted into this stable tree.
+
+### Step 8.4: Risk-Benefit
 **Record:**
-- Wrong/zero `hw_crf_id` → `map_crf_id()` returns `-EIO` → probe fails
-  with `-EINVAL` at line 4211–4214
-- **Severity: HIGH** — WiFi completely non-functional on affected
-  hardware (not a kernel panic, but total device failure)
-- No data corruption or security exposure identified
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-**Record:**
-- **Benefit:** HIGH for SC (and future DR) users — restores reliable
-  probe/hardware identification
-- **Risk:** LOW — ~30 lines of functional code, family-gated, follows
-  established polling pattern
-- **Ratio:** Strongly favorable
+- **Benefit:** Fail fast at config query; prevent broken netdev
+  registration; CVM input validation aligned with existing MANA stable
+  backports.
+- **Risk:** Very low — 6 lines, only rejects impossible values.
+- **Ratio:** Favorable for backport.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real hardware-init bug on DR/SC silicon
-- Probe failure (`-EINVAL`) when RF ID cannot be read correctly
-- Small, surgical, Intel-reviewed fix
-- Buggy code confirmed present in 6.18.44
-- SC PCI IDs actively supported in this tree
-- Follows existing iwlwifi polling conventions
-- Standalone within a larger series
+- Real validation bug with verified code path in this tree
+- Causes broken driver state (registered netdev with 0 queues)
+- CVM security hardening — same category as TOCTOU fix already in
+  6.18.43
+- Small, surgical, obviously correct
+- Clean apply to local tree
+- Same subsystem already receiving similar stable backports (`6d13eaa`,
+  `09ec063d87c2d`)
 
 **AGAINST backport:**
-- No external user/syzbot report (internal Intel fix)
-- DR PCI IDs not yet in `drv.c` (fix most immediately benefits SC)
-- On ACK timeout, driver still proceeds (mitigation is wait, not hard
-  abort)
-- Shallow git history limits introduction-date analysis
+- No crash report, syzbot, or CVE cited
+- Requires abnormal firmware response
+- Without fix, failure is degraded functionality rather than kernel oops
+- No explicit Cc: stable or maintainer stable nomination visible
+- Mailing list review unverified
 
-**Unresolved:**
-- Exact lore thread review discussion (link blocked)
-- Whether SC devices in the field routinely hit this without the fix
-  (Intel says they need the wait)
+**UNRESOLVED:**
+- Full lore review thread content
+- Whether reviewers explicitly nominated for stable
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — standard poll-before-read
-   pattern; Intel reviewed
-2. Fixes a real bug affecting users? **PASS** — probe failure on SC
-   hardware
-3. Important issue? **PASS** — HIGH severity (device completely non-
-   functional)
-4. Small and contained? **PASS** — 4 files, ~30 lines functional code
-5. No new features or APIs? **PASS** — internal driver helper only
-6. Can apply to local tree? **PASS** — all prerequisites present
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logic is trivial; no Tested-
+   by but pattern is standard.
+2. Fixes real bug affecting users? **PASS** — broken netdev state on
+   invalid firmware response.
+3. Important issue? **PASS** — CVM input validation / broken device
+   state (MEDIUM-HIGH; precedented in this tree's MANA backports).
+4. Small and contained? **PASS** — 6 lines, one function.
+5. No new features/APIs? **PASS** — validation only.
+6. Can apply to local tree? **PASS** — context verified, code present.
 
-### Step 9.3: EXCEPTION CATEGORIES
-**Record:** Hardware workaround / hardware-init quirk for specific Intel
-WiFi silicon (DR/SC CNVR TOP sequencing).
+### Step 9.3: Exception Categories
+**Record:** None directly (not device ID, DT, build fix, or docs).
+Qualifies as driver hardening/input-validation bug fix.
 
-### Step 9.4: DECISION RATIONALE
-
-For **Linux 6.18.44**, this commit should be backported. The tree
-contains SC-family PCI device support and the buggy `get_crf_id()` path
-that reads CNVR TOP peripheral registers without waiting for hardware
-readiness. Without the fix, affected Intel WiFi hardware can fail probe
-entirely when blank OTP requires CRF-ID-based RF identification. The fix
-is minimal, gated to the affected families, reviewed by Intel, and
-introduces no userspace-visible changes.
+### Step 9.4: Decision Rationale
+This tree (6.18.43) already carries MANA CVM hardening fixes from the
+same team. The buggy code is present, the patch applies cleanly, and the
+failure mode (zero queues propagating into driver state, potentially
+registering a broken netdev) is a real correctness bug. While not as
+severe as buffer overflow or UAF, it meets stable criteria for this tree
+given established precedent and the CVM threat model where firmware
+responses must not be trusted.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed subject, tags, body from provided commit message
-  and local mbox
-- **[Phase 2]** Analyzed full diff: 4 files, new poll helper +
-  `get_crf_id()` wait logic
-- **[Phase 3]** `git blame` on `get_crf_id()`: present in tree; shallow
-  history limits introduction commit
-- **[Phase 3]** No `Fixes:` tag to follow
-- **[Phase 3]** Mbox confirms patch 3/15, standalone
-- **[Phase 4]** Local mbox `20260511_miriam_rachel_korenblit_wifi_iwlwif
-  i_updates_2026_05_11.mbx`: found patch 3/15 and cover letter
-- **[Phase 4]** `b4 dig -c HEAD`: no match (HEAD is v6.18.44 tag, not
-  this commit)
-- **[Phase 4]** Link fetch to patch.msgid.link: blocked by bot
-  protection
-- **[Phase 4]** `Reviewed-by: Daniel Gabay` confirmed from commit
-  message
-- **[Phase 5]** `get_crf_id()` caller: `iwl_pci_gen1_2_probe()` line
-  4195 in `trans.c`
-- **[Phase 5]** Downstream: `map_crf_id()` at lines 4211–4214 can return
-  `-EINVAL` on probe failure
-- **[Phase 5]** Existing `iwl_poll_umac_prph_bit()` uses grab; new
-  `no_grab` variant needed in held-access context
-- **[Phase 6]** `git describe HEAD`: v6.18.44
-- **[Phase 6]** Grep: `iwl_poll_umac_prph_bits_no_grab` /
-  `WFPM_RSRCS_4PHS_*` absent — fix not yet applied
-- **[Phase 6]** Grep: `IWL_DEVICE_FAMILY_DR` / `SC` present; SC PCI IDs
-  in `pcie/drv.c` (5 devices); DR config exists but no PCI ID entry
-- **[Phase 6]** Read `get_crf_id()` lines 3990–4040: buggy code (no CNVR
-  TOP wait) confirmed
-- **[Phase 8]** Failure mode traced: bad `hw_crf_id` → `map_crf_id()`
-  `-EIO` → probe `-EINVAL`
+- **[Phase 1]** Parsed commit message: subject, tags (SOB x2, Link),
+  body text analyzed
+- **[Phase 1]** Confirmed no Fixes:/Reported-by:/Cc: stable tags
+- **[Phase 2]** Read diff: +6 lines in `mana_query_vport_cfg()`, adds
+  zero-check returning `-EPROTO`
+- **[Phase 2]** Read `mana_init_port()` (lines 3122–3162): `max_queues =
+  min(max_txq, max_rxq)` clamps `apc->num_queues`
+- **[Phase 2]** Read `mana_init_port_context()` (line 1010):
+  `kcalloc(apc->num_queues, ...)`
+- **[Phase 2]** Read `mana_create_txq()` (line 2373):
+  `kcalloc(apc->num_queues, ...)`
+- **[Phase 2]** Read `netif_set_real_num_tx_queues()` (line 3190): `txq
+  < 1` returns `-EINVAL`
+- **[Phase 2]** Read `netif_set_real_num_rx_queues()` (line 3240): `rxq
+  < 1` returns `-EINVAL`
+- **[Phase 2]** Read `mana_probe_port()` (lines 3415–3446): probe can
+  succeed to `register_netdev()` + `netif_carrier_on()` before queue
+  setup
+- **[Phase 3]** `git describe HEAD`: v6.18.43-1-gc7f0dac02d232
+- **[Phase 3]** `git blame -L 1263,1264`: lines exist since tree import
+  `19eef1d98eeda`
+- **[Phase 3]** `git log --grep="Invalid max queues"`: no match — fix
+  not in tree
+- **[Phase 3]** `git show 09ec063d87c2d`: CVM TOCTOU fix from same
+  author, already in tree
+- **[Phase 3]** `git show 6d13eaa13341a`: packet length validation
+  backported with Cc: stable
+- **[Phase 3]** `git log --author="ernis" --
+  drivers/net/ethernet/microsoft/mana/`: multiple MANA fixes
+- **[Phase 4]** `b4 dig` with message-id: failed (syntax/args)
+- **[Phase 4]** WebFetch patch.msgid.link: blocked by bot protection —
+  **UNVERIFIED** lore content
+- **[Phase 5]** Grep callers: `mana_query_vport_cfg` called only from
+  `mana_init_port()`
+- **[Phase 5]** Read `hw_channel.c` line 278: CVM DMA sharing comment
+  confirms threat model
+- **[Phase 5]** Read `include/net/mana/mana.h` lines 704–713:
+  `mana_query_vport_cfg_resp` struct confirmed
+- **[Phase 6]** `git describe HEAD`: 6.18.43 tree confirmed
+- **[Phase 6]** Read current `mana_en.c` lines 1263–1264: buggy code
+  present (no zero check)
+- **[Phase 6]** Python context check: patch hunks match local file (`old
+  found: True`)
+- **[Phase 6]** `git log --oneline -10 --
+  drivers/net/ethernet/microsoft/mana/mana_en.c`: active MANA
+  maintenance
+- **[Phase 8]** Traced failure path: zero queues → broken probe state →
+  `-EINVAL` on queue setup
 
-**YES**
+**YES**The background history search finished successfully: `git log -S`
+found **no commits** in this tree containing `"Invalid max queues from
+vPort config"` or `"max_sq == 0"` in `mana_en.c`, which confirms the
+zero-queue validation fix is **not** already present locally.
 
- drivers/net/wireless/intel/iwlwifi/iwl-io.c   | 18 ++++++++++++-
- drivers/net/wireless/intel/iwlwifi/iwl-io.h   |  4 ++-
- drivers/net/wireless/intel/iwlwifi/iwl-prph.h |  7 ++++-
- .../intel/iwlwifi/pcie/gen1_2/trans.c         | 26 ++++++++++++++++++-
- 4 files changed, 51 insertions(+), 4 deletions(-)
+That matches the earlier analysis — the buggy code is still in the
+6.18.43 tree, the patch applies cleanly, and the backport recommendation
+remains **YES**.
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-io.c b/drivers/net/wireless/intel/iwlwifi/iwl-io.c
-index b1944584c6931..c4ccfffdf6af9 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-io.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-io.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2003-2014, 2018-2022, 2024-2025 Intel Corporation
-+ * Copyright (C) 2003-2014, 2018-2022, 2024-2026 Intel Corporation
-  * Copyright (C) 2015-2016 Intel Deutschland GmbH
-  */
- #include <linux/device.h>
-@@ -168,6 +168,22 @@ int iwl_poll_prph_bit(struct iwl_trans *trans, u32 addr,
- 	return -ETIMEDOUT;
- }
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index adf25acb0d46f..b61da240ac1bb 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1262,6 +1262,12 @@ static int mana_query_vport_cfg(struct mana_port_context *apc, u32 vport_index,
  
-+int iwl_poll_umac_prph_bits_no_grab(struct iwl_trans *trans, u32 addr,
-+				    u32 bits, u32 mask, int timeout)
-+{
-+	int t = 0;
+ 	*max_sq = resp.max_num_sq;
+ 	*max_rq = resp.max_num_rq;
 +
-+	do {
-+		if ((iwl_read_umac_prph_no_grab(trans, addr) & mask) ==
-+		    (bits & mask))
-+			return 0;
-+		udelay(IWL_POLL_INTERVAL);
-+		t += IWL_POLL_INTERVAL;
-+	} while (t < timeout);
-+
-+	return -ETIMEDOUT;
-+}
-+
- void iwl_set_bits_prph(struct iwl_trans *trans, u32 ofs, u32 mask)
- {
- 	if (iwl_trans_grab_nic_access(trans)) {
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-io.h b/drivers/net/wireless/intel/iwlwifi/iwl-io.h
-index 5bcec239ffc4a..d920a32fc173c 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-io.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-io.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2018-2021, 2025 Intel Corporation
-+ * Copyright (C) 2018-2021, 2025-2026 Intel Corporation
-  */
- #ifndef __iwl_io_h__
- #define __iwl_io_h__
-@@ -51,6 +51,8 @@ static inline void iwl_write_prph(struct iwl_trans *trans, u32 ofs, u32 val)
- 
- int iwl_poll_prph_bit(struct iwl_trans *trans, u32 addr,
- 		      u32 bits, u32 mask, int timeout);
-+int iwl_poll_umac_prph_bits_no_grab(struct iwl_trans *trans, u32 addr,
-+				    u32 bits, u32 mask, int timeout);
- void iwl_set_bits_prph(struct iwl_trans *trans, u32 ofs, u32 mask);
- void iwl_set_bits_mask_prph(struct iwl_trans *trans, u32 ofs,
- 			    u32 bits, u32 mask);
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
-index a7214ddcfaf56..6ca1f51b69a1c 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2005-2014, 2018-2025 Intel Corporation
-+ * Copyright (C) 2005-2014, 2018-2026 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016 Intel Deutschland GmbH
-  */
-@@ -411,6 +411,11 @@ enum {
- #define HPM_SECONDARY_DEVICE_STATE      0xa03404
- #define WFPM_MAC_OTP_CFG7_ADDR		0xa03338
- #define WFPM_MAC_OTP_CFG7_DATA		0xa0333c
-+#define WFPM_RSRCS_4PHS_REQ_STTS	0xa033f8
-+#define WFPM_RSRCS_4PHS_ACK_STTS	0xa033fc
-+
-+#define RSRC_REQ_CNVR_TOP BIT(6)
-+#define RSRC_ACK_CNVR_TOP BIT(6)
- 
- 
- /* For UMAG_GEN_HW_STATUS reg check */
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
-index 59307b5df4417..b003abf1fe2ce 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2007-2015, 2018-2024 Intel Corporation
-+ * Copyright (C) 2007-2015, 2018-2024, 2026 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -4000,6 +4000,30 @@ static void get_crf_id(struct iwl_trans *iwl_trans,
- 	else
- 		sd_reg_ver_addr = SD_REG_VER;
- 
-+	/* wait until the device is ready to access the prph registers */
-+	if (iwl_trans->mac_cfg->device_family == IWL_DEVICE_FAMILY_DR ||
-+	    iwl_trans->mac_cfg->device_family == IWL_DEVICE_FAMILY_SC) {
-+		u32 req = iwl_read_umac_prph_no_grab(iwl_trans,
-+						     WFPM_RSRCS_4PHS_REQ_STTS);
-+		int ret;
-+
-+		if (!(req & RSRC_REQ_CNVR_TOP)) {
-+			IWL_ERR(iwl_trans,
-+				"WFPM_RSRCS_4PHS_REQ_STTS bit 6 is clear 0x%x\n",
-+				req);
-+			return;
-+		}
-+
-+		ret = iwl_poll_umac_prph_bits_no_grab(iwl_trans,
-+						      WFPM_RSRCS_4PHS_ACK_STTS,
-+						      RSRC_ACK_CNVR_TOP,
-+						      RSRC_ACK_CNVR_TOP,
-+						      50 * 1000);
-+		if (ret < 0)
-+			IWL_ERR(iwl_trans,
-+				"WFPM_RSRCS_4PHS_ACK_STTS bit 6 is clear\n");
++	if (*max_sq == 0 || *max_rq == 0) {
++		netdev_err(apc->ndev, "Invalid max queues from vPort config\n");
++		return -EPROTO;
 +	}
 +
- 	/* Enable access to peripheral registers */
- 	val = iwl_read_umac_prph_no_grab(iwl_trans, WFPM_CTRL_REG);
- 	val |= WFPM_AUX_CTL_AUX_IF_MAC_OWNER_MSK;
+ 	if (resp.num_indirection_ent > 0 &&
+ 	    resp.num_indirection_ent <= MANA_INDIRECT_TABLE_MAX_SIZE &&
+ 	    is_power_of_2(resp.num_indirection_ent)) {
 -- 
 2.53.0
 
