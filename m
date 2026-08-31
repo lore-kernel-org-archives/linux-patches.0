@@ -1,442 +1,451 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBA0545286;
-	Mon, 31 Aug 2026 13:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2161654528E;
+	Mon, 31 Aug 2026 13:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183976; cv=none; b=D4Xblkm3NEtnYrtLn/mEGiYvNjyhSvEdzRmjmIf0xJQTba5UuRRy5ntYjvW6oawtQvSfFKsJslqHPhaZw0bMLthwNr1jG8R7IVLCl/NLbu6U+L3ZzMDDPYh75KZmwGrjNZpEWpmB+y6r6WJdjA39Q39STe4u+LKyV5NThf1QKa0=
+	t=1788183977; cv=none; b=LTZLqaQxlEZrVgKNeJOx7aii4WVYPuygkq4QCbdIi8pgdeSbIqLMHupcJbaKz6CM1CCvFtIid4TTGJmalU++HzluPj3tZiqezy0SSGvh+8of6PYqkhl5nUWQYl9uJIQk7/owNS4mkQ0hRjdXRSDlvbYiS37OU+vSuEyobAGSU68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183976; c=relaxed/simple;
-	bh=5zCllLt/fbTc0APAFkWpUsOQSeW9gXC3J5DUtuOvLlI=;
+	s=arc-20240116; t=1788183977; c=relaxed/simple;
+	bh=dzSTdZ849HBReuhrO41FWQwocuEhov5JM/MClRFC4NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVmavj5ezz7Mzx+5U8BqGu31d75p2hL42XEuwhGCPmZen7EGv/D6CIwu/TWatdbXtgY1pG+pRjZx2V+K/8skQCTsgsTx1uDBTBvuUPEwCmexHZX8IPnHMoAm54GJyKf+1Dt1PfegKnyzBj6PK4edlMdJ3r1pN1XEstM/AXuBYFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/usC7U4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CX6HnmpUwjJxx5Ey5btUVa2sgy/Y+7YhfzQ/YMZ8baSuC+yjvj+0TEmsWe0kEET51wt04qPIMH7JBYdSM7ArbdnrFXBN1jU6/PsoT38cZxv6LDJThSKSG4uIPc9TRa7mjxU7nkuNxwiapnNKpyZJo1toZdN/Y8ex4oanmpNlnAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5F7DQhs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/usC7U4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D631F00ADB;
-	Mon, 31 Aug 2026 13:46:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183973;
-	bh=YRungeeUQBKOdYRH1s2O1z0ZoyhBWYjkkw3t+OmTEZE=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5F7DQhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0CB1F00A3F;
+	Mon, 31 Aug 2026 13:46:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183973;
+	bh=T8CoT45ycZ6x0kFHPpneDiyOZEEg+LlC41dDKdWTFYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/usC7U40WZTsW2RsQ7ZuDPnn1Cb2Kt2XW5hjgLlXTE7MAwXKvOAjj29YjEqgB63m
-	 WPwyOSJgWFW7157O/WexRx1zfupGZ9ALlnDKtvlouc478hZy6EkkJi0tvmj+7UZAG6
-	 YipvfKTGCOHwWm3mmQnNi0B3UlGeU8g5XpGO+65s=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 29/83] ksmbd: harden file lifetime during session teardown
-Date: Mon, 31 Aug 2026 15:34:05 +0200
-Message-ID: <20260831133400.859445339@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
-References: <20260831133359.207714926@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=a5F7DQhs6IyKi3Ggt+9gb65BJU/RUiDB7HxGp9XcZWBxnnwu7e8rhoBg91z/iPujm
+	 9xwr75yCmmyJmr47Nhvn9B4BxlXAIdm4UNKsAbskO/0EUqjPjltglcaHsuoG+rtMBg
+	 laC/Tk4F3zLOreHoxUtWSibHTO/yBSWxppqClOL3XGxIeLkp48VvG+Ld0KebenLpGy
+	 wrw16k4MzpU0x4S+ZE3c1OFicFMh7n9vbUFLKUcevJrm5dLyAgY0fecptfDgSFBeDH
+	 m8txyFVpJlQyXh2GWBkV+G8BgjxRPTJ7XJPoXhZDbn4V9g5o25YLTQHjCGLPVkDmKn
+	 +ENpTwg7kk3IQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Chen-Yu Tsai <wenst@chromium.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	sean.wang@kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] pinctrl: mediatek: paris: bypass pinctrl GPIO layer in set GPIO direction
+Date: Mon, 31 Aug 2026 09:27:22 -0400
+Message-ID: <20260831133314.4125787-414-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-------------------
+[ Upstream commit c87c9046c4e00d599454e033a477176c4d73ac2a ]
 
-From: DaeMyung Kang <charsyam@gmail.com>
+pinctrl_gpio_direction_input() / pinctrl_gpio_direction_output() take
+the pinctrl mutex. This causes a gpiochip operations to need to sleep.
+Worse yet, the .can_sleep field in the gpiochip is not set. This causes
+the shared GPIO proxy to trip over, as it uses gpiod_cansleep() to check
+whether it can use a spinlock or needs a mutex. In this case, it ends
+up taking a spinlock, then calls pinctrl_gpio_direction_output(), which
+takes a mutex. This causes a huge warning.
 
-commit a42896bebfcc287ed1e61d820a888e33b1eb80ce upstream.
+While this class of Mediatek hardware does not have separate clear/set
+registers, the pinctrl context has a spinlock that is taken whenever
+a register read-modify-write is done. Also, once the GPIO function is
+selected / muxed in, further GPIO operations do not involve pinctrl
+operations or state. The GPIO direction and level values do not require
+toggling the pinmux or any other pin config options.
 
-__close_file_table_ids() is the per-session teardown that closes every
-fp belonging to a session (or to one tree connect on that session) by
-walking the session's volatile-id idr.  The current loop has three
-related problems on busy or racing workloads:
+Switch to directly calling mtk_pinmux_gpio_set_direction() in the GPIO
+set direction callbacks to avoid taking the pinctrl mutex. Drop the
+.gpio_set_direction field in mtk_pmxops to signal we are no longer using
+the pinctrl GPIO layer for setting the direction.
 
-  * Sleeping under ft->lock.  The session-teardown skip callback,
-    session_fd_check(), already sleeps in ksmbd_vfs_copy_durable_owner()
-    -> kstrdup(GFP_KERNEL) and down_write(&fp->f_ci->m_lock) (a
-    rw_semaphore).  Running the callback inside write_lock(&ft->lock)
-    trips CONFIG_DEBUG_ATOMIC_SLEEP / CONFIG_PROVE_LOCKING on a
-    durable-fd workload.
-
-  * Refcount accounting blind to f_state.  The unconditional
-    atomic_dec_and_test(&fp->refcount) does not distinguish
-    FP_INITED (idr-owned reference still intact) from FP_CLOSED (an
-    earlier ksmbd_close_fd() already consumed the idr-owned reference
-    while leaving fp in the idr because a holder kept refcount
-    non-zero).  When the latter races with teardown the same path
-    over-decrements into a holder reference and ksmbd_fd_put() later
-    UAFs that holder.
-
-  * FP_NEW window.  Between __open_id() publishing fp into the
-    session idr and ksmbd_update_fstate(..., FP_INITED) committing the
-    transition at the end of smb2_open(), an fp is in FP_NEW and an
-    intervening teardown that takes a transient reference and
-    unpublishes the volatile id leaves the original idr-owned
-    reference orphaned -- the opener is unaware that fp has been
-    unpublished, returns success to the client, and the fp leaks at
-    refcount = 1.
-
-Refactor __close_file_table_ids() to take a transient reference on fp
-and unpublish fp from the session idr *under ft->lock* before calling
-skip() outside the lock.  A transient ref protects lifetime but not
-concurrent field mutation, so the idr_remove() is what keeps
-__ksmbd_lookup_fd() through this session's idr from granting a new
-ksmbd_fp_get() reference to an fp whose fp->conn / fp->tcon /
-fp->volatile_id / op->conn / lock_list links are about to be rewritten
-by session_fd_check().  Durable reconnect is unaffected because it
-reaches fp through the global durable table (ksmbd_lookup_durable_fd
--> global_ft).
-
-Decide n_to_drop together with any FP_INITED -> FP_CLOSED transition
-under ft->lock so teardown and ksmbd_close_fd() never both consume the
-idr-owned reference.  See ksmbd_mark_fp_closed() for the per-state
-accounting.  For the FP_NEW path to be safe, the opener has to learn
-that fp was unpublished: ksmbd_update_fstate() now returns -ENOENT
-when an FP_NEW -> FP_INITED transition finds f_state already advanced
-or the volatile id cleared (both committed by teardown under
-ft->lock); smb2_open() propagates that as STATUS_OBJECT_NAME_INVALID
-and drops the original reference via ksmbd_fd_put().
-
-The list removal cannot be left for a deferred final putter because
-fp->volatile_id has already been cleared and __ksmbd_remove_fd() will
-intentionally skip both idr_remove() and list_del_init().  Move the
-m_fp_list unlink in __ksmbd_remove_fd() above the volatile-id check so
-that an FP_NEW fp that happened to be added to m_fp_list (smb2_open()
-adds fp->node before ksmbd_update_fstate() runs) is still cleaned up
-on the deferred putter path; list_del_init() on an empty node is a
-no-op and remains safe for fps that were never added.
-
-Add a defensive guard in session_fd_check() that refuses non-FP_INITED
-fps so that even if a teardown reaches an FP_NEW fp it falls into the
-close branch (where the n_to_drop = 1 accounting keeps the opener's
-reference alive) instead of the durable-preserve branch (which mutates
-fp->conn / fp->tcon).
-
-Validation on a debug kernel additionally built with CONFIG_DEBUG_LIST
-and CONFIG_DEBUG_OBJECTS_WORK used a same-session two-tcon workload
-(open/write storm on one tcon, 50 tree disconnects on the other) and
-reported no list-corruption, work_struct ODEBUG, sleep-in-atomic,
-lockdep or kmemleak reports.  Reverting only the
-__close_file_table_ids() hunk while keeping a forced-is_reconnectable()
-harness produced the expected sleep-in-atomic at vfs_cache.c:1095,
-confirming the ft->lock-out-of-sleepable-skip discipline.
-
-KASAN-enabled direct SMB2 coverage with durable handles enabled
-exercised ksmbd_close_tree_conn_fds(), ksmbd_close_session_fds(),
-the FP_NEW failure path, tree_conn_fd_check(), and a non-zero
-session_fd_check() durable-preserve return.  This produced no KASAN,
-DEBUG_LIST, ODEBUG, or WARNING reports.
-
-Fixes: f44158485826 ("cifsd: add file operations")
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c   |    6 +
- fs/smb/server/vfs_cache.c |  179 ++++++++++++++++++++++++++++++++++++++++------
- fs/smb/server/vfs_cache.h |    4 -
- 3 files changed, 164 insertions(+), 25 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3765,8 +3765,10 @@ err_out1:
- 
- err_out2:
- 	if (!rc) {
--		ksmbd_update_fstate(&work->sess->file_table, fp, FP_INITED);
--		rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
-+		rc = ksmbd_update_fstate(&work->sess->file_table, fp,
-+					 FP_INITED);
-+		if (!rc)
-+			rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
- 	}
- 	if (rc) {
- 		if (rc == -EINVAL)
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -358,13 +358,13 @@ static void ksmbd_remove_durable_fd(stru
- 
- static void __ksmbd_remove_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
- {
--	if (!has_file_id(fp->volatile_id))
--		return;
--
- 	down_write(&fp->f_ci->m_lock);
- 	list_del_init(&fp->node);
- 	up_write(&fp->f_ci->m_lock);
- 
-+	if (!has_file_id(fp->volatile_id))
-+		return;
-+
- 	write_lock(&ft->lock);
- 	idr_remove(ft->idr, fp->volatile_id);
- 	write_unlock(&ft->lock);
-@@ -748,15 +748,58 @@ err_out:
- 	return ERR_PTR(ret);
- }
- 
--void ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
--			 unsigned int state)
-+/**
-+ * ksmbd_update_fstate() - update an fp state under the file-table lock
-+ * @ft: file table that publishes @fp's volatile id
-+ * @fp: file pointer to update
-+ * @state: new state
-+ *
-+ * Return: 0 on success.  The FP_NEW -> FP_INITED transition is special:
-+ * -ENOENT if teardown already unpublished @fp by advancing the state or
-+ * clearing the volatile id.  Other state updates preserve the historical
-+ * fire-and-forget behavior.
-+ */
-+int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
-+			unsigned int state)
- {
-+	int ret;
-+
- 	if (!fp)
--		return;
-+		return -ENOENT;
- 
- 	write_lock(&ft->lock);
--	fp->f_state = state;
-+	if (state == FP_INITED &&
-+	    (fp->f_state != FP_NEW || !has_file_id(fp->volatile_id))) {
-+		ret = -ENOENT;
-+	} else {
-+		fp->f_state = state;
-+		ret = 0;
-+	}
- 	write_unlock(&ft->lock);
-+
-+	return ret;
-+}
-+
-+/*
-+ * ksmbd_mark_fp_closed() - mark fp closed under ft->lock and return how many
-+ * refs the teardown path owns.
-+ *
-+ * FP_INITED has a normal idr-owned reference, so teardown owns both that
-+ * reference and the transient lookup reference.  FP_NEW is still owned by the
-+ * in-flight opener/reopener, which will drop the original reference after
-+ * ksmbd_update_fstate(..., FP_INITED) observes the cleared volatile id.
-+ * FP_CLOSED on entry means an earlier ksmbd_close_fd() already consumed the
-+ * idr-owned ref.
-+ */
-+static int ksmbd_mark_fp_closed(struct ksmbd_file *fp)
-+{
-+	if (fp->f_state == FP_INITED) {
-+		set_close_state_blocked_works(fp);
-+		fp->f_state = FP_CLOSED;
-+		return 2;
-+	}
-+
-+	return 1;
- }
- 
- static int
-@@ -764,7 +807,8 @@ __close_file_table_ids(struct ksmbd_sess
- 		       struct ksmbd_tree_connect *tcon,
- 		       bool (*skip)(struct ksmbd_tree_connect *tcon,
- 				    struct ksmbd_file *fp,
--				    struct ksmbd_user *user))
-+				    struct ksmbd_user *user),
-+		       bool skip_preserves_fp)
- {
- 	struct ksmbd_file_table *ft = &sess->file_table;
- 	struct ksmbd_file *fp;
-@@ -772,32 +816,120 @@ __close_file_table_ids(struct ksmbd_sess
- 	int num = 0;
- 
- 	while (1) {
-+		int n_to_drop;
-+
- 		write_lock(&ft->lock);
- 		fp = idr_get_next(ft->idr, &id);
- 		if (!fp) {
- 			write_unlock(&ft->lock);
- 			break;
- 		}
--
--		if (skip(tcon, fp, sess->user) ||
--		    !atomic_dec_and_test(&fp->refcount)) {
-+		if (!atomic_inc_not_zero(&fp->refcount)) {
- 			id++;
- 			write_unlock(&ft->lock);
- 			continue;
- 		}
- 
--		set_close_state_blocked_works(fp);
--		idr_remove(ft->idr, fp->volatile_id);
--		fp->volatile_id = KSMBD_NO_FID;
--		write_unlock(&ft->lock);
-+		if (skip_preserves_fp) {
-+			/*
-+			 * Session teardown: skip() is session_fd_check(),
-+			 * which may sleep and mutates fp->conn / fp->tcon /
-+			 * fp->volatile_id when it chooses to preserve fp
-+			 * for durable reconnect.  Unpublish fp from the
-+			 * session idr here, under ft->lock, so that
-+			 * __ksmbd_lookup_fd() through this session cannot
-+			 * grant a new ksmbd_fp_get() reference to an fp
-+			 * whose fields are about to be rewritten outside
-+			 * the lock.  Durable reconnect still reaches fp via
-+			 * global_ft.
-+			 */
-+			idr_remove(ft->idr, id);
-+			fp->volatile_id = KSMBD_NO_FID;
-+			write_unlock(&ft->lock);
- 
-+			if (skip(tcon, fp, sess->user)) {
-+				/*
-+				 * session_fd_check() has converted fp to
-+				 * durable-preserve state and cleared its
-+				 * per-conn fields.  fp is already unpublished
-+				 * above; the original idr-owned ref keeps it
-+				 * alive for the durable scavenger.  Drop only
-+				 * the transient ref.  atomic_dec() is safe --
-+				 * atomic_inc_not_zero() succeeded on a
-+				 * positive value and we added one more, so
-+				 * refcount cannot be zero here.
-+				 */
-+				atomic_dec(&fp->refcount);
-+				id++;
-+				continue;
-+			}
-+
-+			/*
-+			 * Keep the close-state decision under the same lock
-+			 * observed by ksmbd_update_fstate(), which is how an
-+			 * in-flight FP_NEW opener learns that teardown has
-+			 * cleared its volatile id.
-+			 */
-+			write_lock(&ft->lock);
-+			n_to_drop = ksmbd_mark_fp_closed(fp);
-+			write_unlock(&ft->lock);
-+		} else {
-+			/*
-+			 * Tree teardown: skip() is tree_conn_fd_check(), a
-+			 * cheap pointer compare that doesn't sleep and has
-+			 * no side effects, so keep the skip decision plus
-+			 * the unpublish-and-mark-closed sequence atomic
-+			 * under ft->lock.  fps belonging to other tree
-+			 * connects (skip() == true) stay fully published in
-+			 * the session idr with no lock window.
-+			 */
-+			if (skip(tcon, fp, sess->user)) {
-+				atomic_dec(&fp->refcount);
-+				write_unlock(&ft->lock);
-+				id++;
-+				continue;
-+			}
-+			idr_remove(ft->idr, id);
-+			fp->volatile_id = KSMBD_NO_FID;
-+			n_to_drop = ksmbd_mark_fp_closed(fp);
-+			write_unlock(&ft->lock);
-+		}
-+
-+		/*
-+		 * fp->volatile_id is already cleared to prevent stale idr
-+		 * removal from a deferred final close.  Remove fp from
-+		 * m_fp_list here because __ksmbd_remove_fd() will skip the
-+		 * list unlink when volatile_id is KSMBD_NO_FID.
-+		 */
- 		down_write(&fp->f_ci->m_lock);
- 		list_del_init(&fp->node);
- 		up_write(&fp->f_ci->m_lock);
- 
--		__ksmbd_close_fd(ft, fp);
--
--		num++;
-+		/*
-+		 * Drop the references this iteration owns:
-+		 *
-+		 *   n_to_drop == 2: we observed FP_INITED and committed
-+		 *     the FP_CLOSED transition ourselves, so we own the
-+		 *     transient (+1) and the still-intact idr-owned ref.
-+		 *
-+		 *   n_to_drop == 1: either a prior ksmbd_close_fd()
-+		 *     already consumed the idr-owned ref, or fp was still
-+		 *     FP_NEW and the in-flight opener/reopener must keep
-+		 *     the original reference until ksmbd_update_fstate()
-+		 *     observes the cleared volatile id.
-+		 *
-+		 * If we end up as the final putter, finalize fp and
-+		 * account the open_files_count decrement via the caller's
-+		 * atomic_sub(num, ...).  Otherwise the remaining user's
-+		 * ksmbd_fd_put() reaches __put_fd_final(), which does its
-+		 * own atomic_dec(&open_files_count), so we must not count
-+		 * this fp here -- doing so would double-decrement the
-+		 * connection-wide counter.
-+		 */
-+		if (atomic_sub_and_test(n_to_drop, &fp->refcount)) {
-+			__ksmbd_close_fd(NULL, fp);
-+			num++;
-+		}
- 		id++;
- 	}
- 
-@@ -1071,6 +1203,9 @@ static bool session_fd_check(struct ksmb
- 	if (!is_reconnectable(fp))
- 		return false;
- 
-+	if (fp->f_state != FP_INITED)
-+		return false;
-+
- 	if (WARN_ON_ONCE(!fp->conn))
- 		return false;
- 
-@@ -1122,7 +1257,8 @@ void ksmbd_close_tree_conn_fds(struct ks
- {
- 	int num = __close_file_table_ids(work->sess,
- 					 work->tcon,
--					 tree_conn_fd_check);
-+					 tree_conn_fd_check,
-+					 false);
- 
- 	atomic_sub(num, &work->conn->stats.open_files_count);
- }
-@@ -1131,7 +1267,8 @@ void ksmbd_close_session_fds(struct ksmb
- {
- 	int num = __close_file_table_ids(work->sess,
- 					 work->tcon,
--					 session_fd_check);
-+					 session_fd_check,
-+					 true);
- 
- 	atomic_sub(num, &work->conn->stats.open_files_count);
- }
-@@ -1271,7 +1408,7 @@ void ksmbd_destroy_file_table(struct ksm
- 	if (!ft->idr)
- 		return;
- 
--	__close_file_table_ids(sess, NULL, session_fd_check);
-+	__close_file_table_ids(sess, NULL, session_fd_check, true);
- 	idr_destroy(ft->idr);
- 	kfree(ft->idr);
- 	ft->idr = NULL;
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -175,8 +175,8 @@ int ksmbd_close_inode_fds(struct ksmbd_w
- int ksmbd_init_global_file_table(void);
- void ksmbd_free_global_file_table(void);
- void ksmbd_set_fd_limit(unsigned long limit);
--void ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
--			 unsigned int state);
-+int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
-+			unsigned int state);
- bool ksmbd_vfs_compare_durable_owner(struct ksmbd_file *fp,
- 		struct ksmbd_user *user);
- 
+LLM Generated explanations, may be completely bogus:
 
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject line
+**Record:** `[pinctrl: mediatek: paris]` `[bypass]` — bypass the pinctrl
+GPIO layer when setting GPIO direction on MediaTek Paris pin
+controllers.
+
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Chen-Yu Tsai `<wenst@chromium.org>` (author)
+- **Signed-off-by:** Linus Walleij `<linusw@kernel.org>` (pinctrl
+  maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc:
+  stable@vger.kernel.org`, or `Link:` tags
+- Notable: maintainer sign-off; no syzbot/fuzzer report
+
+### Step 1.3: Body analysis
+**Record:**
+- **Bug:** `pinctrl_gpio_direction_input/output()` take
+  `pctldev->mutex`, so direction callbacks can sleep, but the Paris
+  gpiochip does not set `.can_sleep`. The shared GPIO proxy uses
+  `gpiod_cansleep()` to choose spinlock vs mutex; with `can_sleep ==
+  false` it takes a spinlock, then direction setup reaches the pinctrl
+  mutex → lockdep “sleeping in atomic context” warning.
+- **Symptom:** Large kernel warning (lockdep sleep-in-atomic).
+- **Root cause:** Redundant pinctrl-layer direction call adds a sleeping
+  mutex on a chip that should be fast/MMIO; after muxing to GPIO,
+  direction changes only need register RMW under the driver’s spinlock.
+- **Version info:** None in the message.
+
+### Step 1.4: Hidden bug fix?
+**Record:** Yes. Although framed as bypassing a layer, this is a real
+concurrency bug fix: sleeping mutex taken from a path that must be non-
+sleeping.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory
+**Record:**
+- **File:** `drivers/pinctrl/mediatek/pinctrl-paris.c` only
+- **Scope:** ~8 lines changed (1 removed, 5 added, 2 modified)
+- **Functions:** `mtk_pmxops`, `mtk_gpio_direction_input()`,
+  `mtk_gpio_direction_output()`
+- **Classification:** Single-file surgical fix
+
+### Step 2.2: Code flow per hunk
+**Record:**
+1. **`mtk_pmxops`:** Removes `.gpio_set_direction =
+   mtk_pinmux_gpio_set_direction` so the pinctrl core no longer exposes
+   this hook.
+2. **`mtk_gpio_direction_input()`:** Before:
+   `pinctrl_gpio_direction_input()` → mutex + `pinmux_gpio_direction()`
+   → `mtk_pinmux_gpio_set_direction()`. After: direct
+   `mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, true)` — no
+   pinctrl mutex.
+3. **`mtk_gpio_direction_output()`:** Same pattern after
+   `mtk_gpio_set()`; direct call with `false` for output.
+
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Synchronization / sleep-in-atomic (lockdep)
+- **Mechanism:** `pinctrl_gpio_direction()` in `core.c` does
+  `mutex_lock(&pctldev->mutex)` before calling the pinmux op. Paris
+  gpiochip has `can_sleep` unset (false) and uses `mtk_hw_set_value()` →
+  `mtk_rmw()` under `spinlock_irqsave(&pctl->lock)`. The pinctrl mutex
+  path is inappropriate for a non-sleeping gpiochip and conflicts with
+  callers that serialize with a spinlock.
+
+### Step 2.4: Fix quality
+**Record:** Obviously correct and minimal. Same underlying function
+(`mtk_pinmux_gpio_set_direction`) is invoked; only the mutex wrapper is
+removed. Low regression risk; matches the tegra stable backport already
+in this tree.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+**Record:** Current direction callbacks and `.gpio_set_direction` in
+`mtk_pmxops` trace to `5d324e5159d9e` in this stable tree (squashed
+history). Paris driver and the `pinctrl_gpio_direction_*` pattern are
+present throughout v6.18.x.
+
+### Step 3.2: Fixes: tag
+**Record:** N/A — no `Fixes:` tag.
+
+### Step 3.3: Related file history
+**Record:** Only one history entry visible for `pinctrl-paris.c` in this
+tree. Related sibling issue exists in `pinctrl-mtk-common.c` (common-v1)
+with a separate patch series; this Paris commit is standalone.
+
+### Step 3.4: Author context
+**Record:** Chen-Yu Tsai (Chromium) has other MediaTek pinctrl work in-
+tree. Linus Walleij is the pinctrl maintainer and signed off upstream.
+
+### Step 3.5: Dependencies
+**Record:** No prerequisites. `mtk_pinmux_gpio_set_direction()`,
+`hw->pctrl`, and `gpiochip_get_data()` all exist in this tree. Applies
+standalone.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Original discussion
+**Record:** v2 posted 2026-05-05 by Chen-Yu Tsai; thread at
+[spinics](https://www.spinics.net/lists/kernel/msg6186918.html). CC’d to
+MediaTek, GPIO, arm-kernel maintainers. v1 linked in cover letter. Linus
+Walleij replied in-thread (per index). `b4 dig -c` could not be used
+(commit not in this checkout).
+
+### Step 4.2: Reviewers
+**Record:** To: Sean Wang, Matthias Brugger, AngeloGioacchino Del Regno,
+Linus Walleij. Maintainer sign-off from Linus Walleij.
+
+### Step 4.3: Bug report
+**Record:** No external bugzilla/syzbot link. Author describes
+reproduced lockdep warning on Chromebook-class MediaTek hardware.
+
+### Step 4.4: Related patches
+**Record:** Companion patch for `pinctrl-mtk-common.c` (common-v1)
+exists; not required for this Paris-only fix.
+
+### Step 4.5: Stable list
+**Record:** No explicit stable nomination in the Paris v2 post (unlike
+tegra fix `ac761e66708d5` which had `Cc: stable@vger.kernel.org`).
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key functions
+**Record:** `mtk_gpio_direction_input`, `mtk_gpio_direction_output`,
+`mtk_pinmux_gpio_set_direction`, `pinctrl_gpio_direction`,
+`mtk_hw_set_value`, `mtk_rmw`.
+
+### Step 5.2: Callers
+**Record:** Direction callbacks are reached from gpiolib
+(`gpiod_direction_input_nonotify`, `gpiod_direction_output_raw_commit` →
+`gpiochip_direction_*`). On Chromebook/MediaTek platforms these GPIOs
+are used by regulators, PMICs, USB, display, etc. Shared-GPIO consumers
+(when present) call direction while holding their lock.
+
+### Step 5.3: Callees
+**Record:** Fixed path calls `mtk_pinmux_gpio_set_direction()` →
+`mtk_hw_set_value()` → `mtk_rmw()` with
+`spin_lock_irqsave(&pctl->lock)`.
+
+### Step 5.4: Reachability
+**Record:** Reachable from userspace-driven device operations and from
+kernel drivers requesting GPIO direction changes. The problematic path
+is direction change on a non-`can_sleep` chip while a spinlock-holding
+caller (e.g. gpio-shared-proxy on newer kernels) invokes
+`gpiod_direction_*`.
+
+### Step 5.5: Similar patterns
+**Record:** `ac761e66708d5` (“gpio: tegra: do not call pinctrl for GPIO
+direction”) is already in this v6.18.43 tree — same bug class,
+explicitly backported to stable with `Cc: stable@vger.kernel.org`.
+`pinctrl-mtk-common.c` and `pinctrl-moore.c` still use
+`pinctrl_gpio_direction_*` but are out of scope for this commit.
+
+---
+
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE (v6.18.43)
+
+### Step 6.1: Buggy code present?
+**Record:** **Yes.** `git describe HEAD` → `v6.18.43`; `Makefile` →
+6.18.43. Current code at lines 889 and 901 still calls
+`pinctrl_gpio_direction_input/output()`. `.gpio_set_direction` is set in
+`mtk_pmxops` at line 774. `can_sleep` is not set in
+`mtk_build_gpiochip()`.
+
+### Step 6.2: Backport complications
+**Record:** Clean apply expected — small, localized change; no
+structural conflicts observed.
+
+### Step 6.3: Related fixes already present?
+**Record:** Tegra equivalent fix `ac761e66708d5` is in HEAD. This Paris
+fix is **not** yet applied. No duplicate fix found.
+
+**Important nuance:** `gpio-shared-proxy` was merged in **6.19**, not
+6.18. It is **not** present in this v6.18.43 tree (`grep` found no
+`GPIO_SHARED`, `gpio-shared-proxy`, or `gpio_shared_proxy`). The
+commit’s primary trigger is therefore not available in 6.18.43 today,
+but the underlying mutex-in-non-sleeping-callback bug still exists and
+matches the tegra stable backport rationale.
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem and criticality
+**Record:** `drivers/pinctrl/mediatek/` — **IMPORTANT** (ARM64 SoC pin
+control; affects Chromebooks, tablets, embedded MediaTek Paris
+platforms: MT8186, MT8188, MT8192, MT8195, MT8196, etc.).
+
+### Step 7.2: Activity
+**Record:** Active subsystem with many Paris-based SoC drivers in
+`Kconfig`.
+
+---
+
+## PHASE 8: IMPACT AND RISK
+
+### Step 8.1: Who is affected
+**Record:** Users of MediaTek Paris pinctrl/GPIO on affected SoCs
+(CONFIG_PINCTRL_MTK_PARIS and selected SoC drivers). Not universal, but
+significant for ChromeOS/Chromebook and embedded MTK platforms.
+
+### Step 8.2: Trigger conditions
+**Record:** GPIO direction change on a Paris pin after it is muxed to
+GPIO, when called from a context expecting non-sleeping behavior
+(notably shared-GPIO proxy on 6.19+; tegra stable commit documents the
+same class on 6.18). Normal process-context `gpiod_direction_*` works
+but still incorrectly takes a sleeping mutex on a chip advertised as
+non-sleeping.
+
+### Step 8.3: Failure mode severity
+**Record:** Lockdep “sleeping in atomic context” / potential real
+deadlock or oops under contention. **Severity: HIGH** (not data
+corruption, but serious stability warning and potential hang).
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** HIGH for affected platforms; aligns with accepted tegra
+  stable fix in the same tree.
+- **Risk:** VERY LOW — 8-line change, same hardware operation, removes
+  redundant mutex.
+- **Ratio:** Strong benefit, minimal risk.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Real concurrency bug (sleeping mutex in non-sleeping gpiochip
+  callback)
+- Small, surgical, maintainer-reviewed fix
+- Buggy code confirmed present in v6.18.43
+- Same pattern as tegra fix already backported to this tree
+  (`ac761e66708d5`)
+- Affects widely deployed MediaTek Paris SoCs
+- Direct call preserves semantics while removing incorrect mutex
+
+**AGAINST backport:**
+- `gpio-shared-proxy` (the described trigger) is not in v6.18.43 (landed
+  in 6.19)
+- No `Cc: stable` tag on the Paris patch
+- Common-v1 (`pinctrl-mtk-common.c`) has the same pattern but is a
+  separate commit
+
+**Unresolved:**
+- Exact upstream commit SHA not in this checkout (candidate evaluation
+  only)
+- Could not fetch full Linus Walleij review reply (wrong spinics message
+  ID)
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — same function, mutex
+   removed; maintainer SOB; author reproduced warning.
+2. Fixes a real bug? **PASS** — lockdep sleep-in-atomic on direction
+   change.
+3. Important issue? **PASS** — stability / lockdep, HIGH severity.
+4. Small and contained? **PASS** — 1 file, ~8 lines.
+5. No new features/APIs? **PASS** — behavior correction only.
+6. Can apply to local tree? **PASS** — code exists, no dependencies.
+
+### Step 9.3: Exception category
+**Record:** None (not device ID, quirk, DT, build, or docs). Standard
+driver bug fix.
+
+### Step 9.4: Decision rationale
+
+This tree (v6.18.43) still has Paris GPIO direction callbacks routing
+through `pinctrl_gpio_direction_*`, which takes the pinctrl mutex on a
+gpiochip that does not set `can_sleep` and whose register access uses a
+spinlock. That is incorrect and matches the tegra direction fix already
+accepted into this same stable series. Even though `gpio-shared-proxy`
+is not in 6.18, the underlying bug is present and the fix is minimal,
+obviously correct, and low-risk. Chromebook/MediaTek users benefit, and
+the change is consistent with stable maintainer practice for this bug
+class.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed subject, tags, body; no Fixes/Reported-by/Cc:stable
+- [Phase 2] Diff: 1 file, `mtk_gpio_direction_*` + `mtk_pmxops`; mutex-
+  bypass fix verified in `core.c` and `pinctrl-paris.c`
+- [Phase 3] `git blame` lines 887–902, 769–776 → present in v6.18.43; no
+  Fixes tag; standalone (no deps)
+- [Phase 4] WebFetch spinics v2 thread; b4 dig requires commit in tree
+  (N/A); gpio-shared-proxy confirmed 6.19+ via web search
+- [Phase 5] Traced `pinctrl_gpio_direction()` → `mutex_lock`;
+  `mtk_hw_set_value()` → `spin_lock_irqsave`
+- [Phase 6] `git describe HEAD` → v6.18.43; buggy code at lines 774,
+  889, 901; `hw->pctrl` in `pinctrl-mtk-common-v2.h:292`; tegra fix
+  `ac761e66708d5` in HEAD
+- [Phase 6] `grep` — no `gpio-shared-proxy` / `GPIO_SHARED` in tree
+- [Phase 7] Paris used by multiple MTK SoCs in `Kconfig`
+- [Phase 8] Failure mode: lockdep sleep-in-atomic, HIGH severity
+- [UNVERIFIED] Full text of Linus Walleij review reply not retrieved
+
+**YES**Those three background `git log -S "gpio_shared_proxy"` searches
+didn’t finish (they timed out or were killed on this large tree), so
+they didn’t add anything new.
+
+That doesn’t change the conclusion: `gpio_shared_proxy` / `gpio-shared-
+proxy` isn’t in this v6.18.43 checkout — that was already confirmed with
+targeted `grep` and the 6.19 merge history. The Paris pinctrl fix should
+still be backported to this tree.
+
+**YES**
+
+ drivers/pinctrl/mediatek/pinctrl-paris.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
+index 6bf37d8085fae..23f04b24fd65e 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -771,7 +771,6 @@ static const struct pinmux_ops mtk_pmxops = {
+ 	.get_function_name	= mtk_pmx_get_func_name,
+ 	.get_function_groups	= mtk_pmx_get_func_groups,
+ 	.set_mux		= mtk_pmx_set_mux,
+-	.gpio_set_direction	= mtk_pinmux_gpio_set_direction,
+ 	.gpio_request_enable	= mtk_pinmux_gpio_request_enable,
+ };
+ 
+@@ -886,19 +885,22 @@ static int mtk_gpio_set(struct gpio_chip *chip, unsigned int gpio, int value)
+ 
+ static int mtk_gpio_direction_input(struct gpio_chip *chip, unsigned int gpio)
+ {
+-	return pinctrl_gpio_direction_input(chip, gpio);
++	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
++
++	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, true);
+ }
+ 
+ static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
+ 				     int value)
+ {
++	struct mtk_pinctrl *hw = gpiochip_get_data(chip);
+ 	int ret;
+ 
+ 	ret = mtk_gpio_set(chip, gpio, value);
+ 	if (ret)
+ 		return ret;
+ 
+-	return pinctrl_gpio_direction_output(chip, gpio);
++	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, false);
+ }
+ 
+ static int mtk_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
+-- 
+2.53.0
 
