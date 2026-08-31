@@ -1,331 +1,456 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2911D5678D1;
-	Mon, 31 Aug 2026 13:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4274646DFF2;
+	Mon, 31 Aug 2026 13:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184087; cv=none; b=EuL374eJ0XLg+eE6BPrCPP3VG4FE/ppGuKC93btWFoMBE/ntDT9bBHfCQcHLeZshxLrziWONF4tNhkTXZAiMuP4YyVcVUonMiq/icvWEsBNu2VnP+CUqDTbcXrNKqxEsIKGdgtLLDpXcR+8uxr0uzGKL0Ev+srjNCMoNfkp7Yl0=
+	t=1788184087; cv=none; b=iVF5OP+kFafIjwpGXTnv8OyYQAJJHsOdpJyepz4Fitia3Ak1afmQv6zM34NnnRX04VIOv7TseOeAb+6xMPE+sBabMM9BHLZusFtt0Un+eutqEnUaYwSqTik/Q770989zlNWpwDOYcM/P0yDjCUkQHfg9C39RMc8DGd1ktnqCKaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788184087; c=relaxed/simple;
-	bh=Gc3eXoj2X1sHpjfWprv1VgVVvFR72eJDGp51pPh0kwU=;
+	bh=FjGo1xqX53H0I+x4xSs3IDlZ8KjyuZjw739fZG5uh3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKYtKKHcsOa/Xvt1T+TTom5d1/PRhHU9BQmjbpxMsobPF0sgU1MQJO65w9yelC2ghJoZaKOFAMmmB+6pV0pnC2Itn7k+n1fvSeTdKNDFVvW/HIFtEOXaMGSPR2rfURpTdHrew1Jjv0NUUnGLwGJXt8+l7v5xdZwBx9LNN/iMdos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKVizccz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZykdVyu99YPXu/ocqJPO0fBDBhhLIBHg+zufRCMD6zYidbwJ5gbTRLwx8uHFjZxchvhkwR++yBCPHc+x2Ol9SJz045Ng5oNxE80AF1/3mtCVOGlVMMujO+/EQfpkLnlCs7Bts5YgRAZq9SSBp2ckpGSF7k2iwR3kGjI9GtyE490=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QLCoFjtt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKVizccz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8472F1F00A3F;
-	Mon, 31 Aug 2026 13:48:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184085;
-	bh=YsRJDT/rG1XA7dwa400Lswtpvpzt3WWOXe4JkiSOBa8=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QLCoFjtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA8A1F00ACA;
+	Mon, 31 Aug 2026 13:48:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184083;
+	bh=hAe8LvtGvmvY/5iCmNSXi89MCqlZH3fjnCqPJozDObY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kKVizcczydpMe6wYIr3nbD3iulrApTvFGgzab4bVHIA5Gerb4YDRQL3sD049a5/FK
-	 bbi14cKnvUlZRBUD3A75t3kRWCDjtRGAS6H/asEK5SMKaufyZGIHG386NzFXDglWJy
-	 tdNCkGHU9WfFeahx026DtUe78iLQh5zMg26NY6sg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 67/83] crypto: qcom-rng - Remove crypto_rng interface
-Date: Mon, 31 Aug 2026 15:34:43 +0200
-Message-ID: <20260831133402.913492986@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
-References: <20260831133359.207714926@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=QLCoFjttkIYi3M/502COb1cPlw9pX+PUE3xx5IucjpOD7SBf3zorNJVBky0lCwLcz
+	 clczrgr0xNeIbbp13NFeUeLEeQjEUEEhLeWXc6vB75x0G/6noymnMgNj2awOyJXOes
+	 ieSd6X9y5u2bwtYD645T/evlU/OOisBPc6l3dzXkuUP9sxincG/VnkdxHytRfwo+3i
+	 N2i7OgHvGgR/DChNfkVLAs9qmxRe5FmrOkKitSqf1WvhpPwPzcfbiq+VRR6R4yDH6I
+	 7dOKvuX4ZrTGFATSLFuYJrIyN+DRUlcwuz9iVZm0F5UAWF+OVK8Cj1q3j3MAoar4/Z
+	 N26ck+n3R7neA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Yu Kuai <yukuai@fygo.io>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>,
+	tj@kernel.org,
+	josef@toxicpanda.com,
+	cgroups@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] blk-cgroup: protect iterating blkgs with blkcg->lock in blkcg_print_stat()
+Date: Mon, 31 Aug 2026 09:28:29 -0400
+Message-ID: <20260831133314.4125787-481-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+From: Yu Kuai <yukuai@fygo.io>
 
-------------------
+[ Upstream commit 25656304dabd26198ec69460c594a19d086ef099 ]
 
-From: Eric Biggers <ebiggers@kernel.org>
+blkcg_print_one_stat() will be called for each blkg:
+- access blkg->iostat, which is freed from rcu callback
+  blkg_free_workfn();
+- access policy data from pd_stat_fn(), which is freed from
+  pd_free_fn(), while pd_free_fn() can be called by removing blkcg or
+  deactivating policy;
 
-commit 2ecdf5c9910e20f73639bc322f0518a3439d17c0 upstream.
+Take blkcg->lock while iterating so the blkgs stay online and both
+blkg->iostat and policy data for activated policies stay valid.  Use
+irq-safe locking because blkcg->lock can be nested under q->queue_lock,
+which is used from IRQ completion paths.
 
-qcom-rng.c exposes the same hardware through two completely separate
-interfaces, crypto_rng and hwrng.  However, the implementation of this
-is buggy because it permits generation operations from these interfaces
-to run concurrently with each other, accessing the same registers.  That
-is, qcom_rng_generate() synchronizes with itself but not with
-qcom_hwrng_read().  This results in potential repetition of output from
-the RNG, output of non-random values, etc.
+Prepare to convert protecting blkgs from request_queue with mutex.
 
-Fortunately, there's actually no point in hardware RNG drivers
-implementing the crypto_rng interface.  It's not actually used by
-anything besides the "rng" algorithm type of AF_ALG, which in turn is
-not actually used in practice.  Other crypto_rng hardware drivers are
-likewise being phased out, leaving just the hwrng support.
-
-Thus, remove it to simplify the code and avoid conflict (and confusion)
-with the hwrng interface which is the one that actually matters.
-
-Fixes: f29cd5bb64c2 ("crypto: qcom-rng - Add hw_random interface support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/05799877e720dcd300e2ddd4625e8e162959d7cc.1780621988.git.yukuai@fygo.io
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/Kconfig    |    1 
- drivers/crypto/qcom-rng.c |  158 +++++-----------------------------------------
- 2 files changed, 19 insertions(+), 140 deletions(-)
 
---- a/drivers/crypto/Kconfig
-+++ b/drivers/crypto/Kconfig
-@@ -659,7 +659,6 @@ config CRYPTO_DEV_QCOM_RNG
- 	tristate "Qualcomm Random Number Generator Driver"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on HW_RANDOM
--	select CRYPTO_RNG
- 	help
- 	  This driver provides support for the Random Number
- 	  Generator hardware found on Qualcomm SoCs.
---- a/drivers/crypto/qcom-rng.c
-+++ b/drivers/crypto/qcom-rng.c
-@@ -3,10 +3,8 @@
- //
- // Based on msm-rng.c and downstream driver
+LLM Generated explanations, may be completely bogus:
+
+## Phase 1: Commit Message Forensics
+
+### Step 1.1: Subject Line
+**Record:** `[blk-cgroup]` `[protect]` — Protect iteration over blkgs in
+`blkcg_print_stat()` using `blkcg->lock`.
+
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Yu Kuai `<yukuai@fygo.io>` (author)
+- **Link:** https://patch.msgid.link/05799877e720dcd300e2ddd4625e8e16295
+  9d7cc.1780621988.git.yukuai@fygo.io
+- **Signed-off-by:** Jens Axboe `<axboe@kernel.dk>` (block maintainer)
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc:
+  stable@vger.kernel.org`
+
+Notable: maintainer sign-off from Jens Axboe; no syzbot/fuzzer report.
+
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** `blkcg_print_one_stat()` reads `blkg->iostat` (freed in
+  `blkg_free_workfn()`) and policy data via `pd_stat_fn()` (freed in
+  `pd_free_fn()` during cgroup removal or policy deactivation).
+- **Symptom:** Use-after-free when reading cgroup I/O stats concurrently
+  with teardown/deactivation.
+- **Root cause:** Iteration is RCU-protected and per-blkg `queue_lock`
+  is held, but neither prevents `pd_free_fn()` or async `blkg` teardown
+  from invalidating data being read.
+- **Fix:** Hold `blkcg->lock` (IRQ-safe) for the full iteration so blkgs
+  stay online and policy/iostat data remain valid.
+- **Note:** "Prepare to convert protecting blkgs from request_queue with
+  mutex" — future work, not a dependency.
+
+### Step 1.4: Hidden Bug Fix?
+**Record:** Yes — explicit UAF/race fix disguised as locking correction.
+Not cosmetic cleanup.
+
+---
+
+## Phase 2: Diff Analysis
+
+### Step 2.1: Inventory
+**Record:**
+- **File:** `block/blk-cgroup.c` (+3 / -6 net)
+- **Function:** `blkcg_print_stat()` only
+- **Scope:** Single-file, surgical (~10 lines touched)
+
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** `rcu_read_lock()` → `hlist_for_each_entry_rcu()` → per-
+  iteration `spin_lock_irq(&blkg->q->queue_lock)` →
+  `blkcg_print_one_stat()` → unlock → `rcu_read_unlock()`
+- **After:** `guard(spinlock_irq)(&blkcg->lock)` →
+  `hlist_for_each_entry()` → `blkcg_print_one_stat()` → auto-unlock
+- **Path:** `cgroup` `io.stat` seq_file read (normal monitoring path)
+
+### Step 2.3: Bug Mechanism
+**Record:** **Category:** Race condition / use-after-free (reference-
+counting and lifetime)
+
+**Mechanism (verified in tree):**
+1. `blkcg_deactivate_policy()` holds `queue_lock`, then `blkcg->lock`,
+   then calls `pd_free_fn()`:
+
+```1738:1744:block/blk-cgroup.c
+                spin_lock(&blkcg->lock);
+                if (blkg->pd[pol->plid]) {
+                        if (blkg->pd[pol->plid]->online &&
+pol->pd_offline_fn)
+                                pol->pd_offline_fn(blkg->pd[pol->plid]);
+                        pol->pd_free_fn(blkg->pd[pol->plid]);
+                        blkg->pd[pol->plid] = NULL;
+```
+
+2. `blkg_destroy()` requires `blkcg->lock`, unhashes the blkg, and
+   eventually frees via `blkg_free_workfn()`:
+
+```529:554:block/blk-cgroup.c
+        lockdep_assert_held(&blkg->q->queue_lock);
+        lockdep_assert_held(&blkcg->lock);
+        // ...
+        hlist_del_init_rcu(&blkg->blkcg_node);
+```
+
+3. `blkcg_print_stat()` currently does **not** hold `blkcg->lock`, so
+   `pd_stat_fn()` and `blkg->iostat` access can race with steps 1–2.
+
+4. The kernel already documents that RCU alone is insufficient:
+
+```177:184:block/blk-cgroup.c
+ - A group is RCU protected, but having an rcu lock does not mean that
+   one
+ - can access all the fields of blkg and assume these are valid.
+```
+
+### Step 2.4: Fix Quality
+**Record:** Obviously correct. Aligns `blkcg_print_stat()` with
+`blkcg_reset_stats()`, which already iterates `blkg_list` under
+`spin_lock_irq(&blkcg->lock)`:
+
+```662:669:block/blk-cgroup.c
+        spin_lock_irq(&blkcg->lock);
+        // ...
+        hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node) {
+```
+
+**Regression risk:** Low. `blkcg_print_stat()` takes only `blkcg->lock`
+(no `queue_lock`), avoiding AB-BA with `blkcg_destroy_blkgs()` (blkcg
+lock → queue lock) and `blkcg_deactivate_policy()` (queue lock → blkcg
+lock).
+
+---
+
+## Phase 3: Git History Investigation
+
+### Step 3.1: Blame
+**Record:** Current RCU+`queue_lock` pattern in `blkcg_print_stat()`
+from commit `49cb5168a7c6ab` (Aug 2021, "blk-cgroup: refactor
+blkcg_print_stat"). Bug window is long; code is present in this tree.
+
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no `Fixes:` tag.
+
+### Step 3.3: Related File History
+**Record:**
+- `5e5b7f2ef8549` — separate UAF fix in `__blkcg_rstat_flush()` (already
+  in 6.18.y); same subsystem, different race.
+- `5d726c4dbeedd` — Yu Kuai deadlock fix in policy configuration (same
+  author/subsystem).
+- `810ecfa765f8b` (2013) — historical move from `blkcg->lock` to
+  `queue_lock` for `blkcg_print_blkgs()`; this patch partially reverses
+  that for `blkcg_print_stat()` where `queue_lock` is insufficient.
+
+### Step 3.4: Author Context
+**Record:** Yu Kuai is an active block/cgroup contributor
+(`5d726c4dbeedd`, `dc96cefef0d30`, etc.).
+
+### Step 3.5: Dependencies
+**Record:** Standalone. `guard(spinlock_irq)` is defined in
+`include/linux/spinlock.h` (available in 6.18). No series dependency.
+
+---
+
+## Phase 4: Mailing List and External Research
+
+### Step 4.1–4.5
+**Record:**
+- `b4 dig -c <commit>`: **N/A** — commit not found in local `FETCH_HEAD`
+  master; patch appears not yet merged upstream.
+- Lore/patch.msgid.link: **Blocked** (403/Anubis bot protection).
+- **UNVERIFIED:** Full review-thread content, stable nominations from
+  reviewers, series revisions.
+
+From available metadata: Jens Axboe merged sign-off indicates maintainer
+acceptance.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+**Record:** `blkcg_print_stat()`, `blkcg_print_one_stat()` (caller
+context unchanged).
+
+### Step 5.2: Callers
+**Record:** `blkcg_print_stat` is `.seq_show` for cgroup `stat` file:
+
+```1254:1258:block/blk-cgroup.c
+static struct cftype blkcg_files[] = {
+        {
+                .name = "stat",
+                .seq_show = blkcg_print_stat,
+```
+
+Triggered via cgroupfs reads (`/sys/fs/cgroup/.../io.stat`).
+
+### Step 5.3: Callees
+**Record:** `blkcg_print_one_stat()` reads `blkg->iostat`, calls
+`pol->pd_stat_fn()`, uses `blkg_dev_name()`.
+
+### Step 5.4: Reachability
+**Record:** Reachable from userspace via cgroup stat reads. Concurrent
+with cgroup deletion (`blkcg_destroy_blkgs`) and policy deactivation
+(`blkcg_deactivate_policy`) in container/VM environments.
+
+### Step 5.5: Similar Patterns
+**Record:** `blkcg_print_blkgs()` still uses RCU+`queue_lock` (lines
+718–724) — same class of issue may exist there, but is out of scope for
+this commit. `blkcg_reset_stats()` already uses the correct
+`blkcg->lock` pattern.
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree
+
+### Step 6.1: Buggy Code Present?
+**Record:** **Yes.** Tree is **v6.18.44** (`linux-6.18.y` stable). Buggy
+code at lines 1244–1250:
+
+```1244:1250:block/blk-cgroup.c
+        rcu_read_lock();
+        hlist_for_each_entry_rcu(blkg, &blkcg->blkg_list, blkcg_node) {
+                spin_lock_irq(&blkg->q->queue_lock);
+                blkcg_print_one_stat(blkg, sf);
+                spin_unlock_irq(&blkg->q->queue_lock);
+        }
+        rcu_read_unlock();
+```
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — hunk matches current file.
+`blkcg->lock` exists in `struct blkcg` (`blk-cgroup.h:96`).
+`guard(spinlock_irq)` available via `spinlock.h` include chain.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** `5e5b7f2ef8549` (rstat flush UAF) is present; it does
+**not** fix this `blkcg_print_stat()` race.
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem / Criticality
+**Record:** **block / blk-cgroup** — **IMPORTANT** (cgroup I/O
+accounting; widely used with containers/systemd/cgroup v2).
+
+### Step 7.2: Activity
+**Record:** Actively maintained; recent stable fixes in same file
+(`5e5b7f2ef8549`, `6a01413a4e8fc`).
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users with `CONFIG_BLK_CGROUP` reading I/O cgroup stats
+while cgroups are deleted or policies deactivated — common in
+Kubernetes/container teardown with concurrent monitoring.
+
+### Step 8.2: Trigger Conditions
+**Record:** Concurrent `io.stat` read + cgroup rmdir or block policy
+deactivation/disk removal. Realistic in production; not purely
+theoretical given `pd_free_fn()` runs under `blkcg->lock` that
+`blkcg_print_stat()` does not take.
+
+### Step 8.3: Failure Mode
+**Record:** UAF on policy data and/or iostat → kernel oops, memory
+corruption. **Severity: HIGH (potential CRITICAL security impact).**
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** High — prevents UAF on a userspace-reachable path.
+- **Risk:** Very low — ~7-line locking change matching existing
+  `blkcg_reset_stats()` pattern.
+- **Ratio:** Strongly favors backport.
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Summary
+
+**FOR:**
+- Real UAF race with verified mechanism in local tree
+- Userspace-reachable via cgroup `stat` file
+- Small, surgical, matches established locking in `blkcg_reset_stats()`
+  / `blkcg_destroy_blkgs()`
+- Block maintainer (Jens Axboe) sign-off
+- Long-standing buggy pattern (since 2021 refactor)
+- Related UAF fix already backported to this tree — demonstrates
+  subsystem stability priority
+
+**AGAINST:**
+- Commit not yet verified as merged to mainline (stable rules require
+  upstream merge before submission)
+- `blkcg_print_blkgs()` may have a similar latent issue (not fixed here;
+  not a reason to reject this fix)
+- Mailing list review details unverified due to lore access blocks
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — locking matches sibling
+   functions; maintainer SOB; mechanism clear from code.
+2. Fixes a real bug affecting users? **PASS** — UAF on cgroup stat read
+   path.
+3. Important issue? **PASS** — UAF / potential crash or corruption (HIGH
+   severity).
+4. Small and contained? **PASS** — single function, <20 lines.
+5. No new features or APIs? **PASS** — synchronization only.
+6. Can apply to local tree? **PASS** — buggy code present; dependencies
+   (`blkcg->lock`, `guard(spinlock_irq)`) exist in 6.18.44.
+
+### Step 9.3: Exception Category
+**Record:** N/A — standard bug fix, not device-ID/quirk/build/doc
+exception.
+
+### Step 9.4: Decision Rationale
+This commit fixes a genuine use-after-free race in `blkcg_print_stat()`
+when users read block cgroup statistics concurrently with cgroup
+teardown or policy deactivation. The buggy code is present in the local
+6.18.44 tree, the fix is minimal and mirrors the already-correct
+`blkcg_reset_stats()` locking, and the failure mode is a kernel crash or
+memory corruption. This is appropriate stable material once merged
+upstream.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed subject, tags, body from user-provided commit message
+- [Phase 1] Identified as explicit UAF/race fix, not cosmetic cleanup
+- [Phase 2] Diff: 1 file, `blkcg_print_stat()` only, ~10 lines
+- [Phase 2] Verified `pd_free_fn()` called under `blkcg->lock` in
+  `blkcg_deactivate_policy()` (lines 1738–1744)
+- [Phase 2] Verified `blkg_destroy()` requires `blkcg->lock` (lines
+  529–530, 554)
+- [Phase 2] Verified `blkg_free_workfn()` frees policy data and iostat
+  (lines 114–142)
+- [Phase 2] Verified RCU insufficiency comment (lines 177–184)
+- [Phase 2] Verified `blkcg_reset_stats()` uses
+  `spin_lock_irq(&blkcg->lock)` for same list iteration (lines 662–669)
+- [Phase 3] `git blame`: RCU+queue_lock pattern from `49cb5168a7c6ab`
+  (2021)
+- [Phase 3] `git log -20 -- block/blk-cgroup.c`: related fixes
+  `5e5b7f2ef8549`, `5d726c4dbeedd`
+- [Phase 3] `git show 5e5b7f2ef8549`: separate rstat UAF fix, already in
+  tree
+- [Phase 3] No `Fixes:` tag to follow
+- [Phase 3] `guard(spinlock_irq)` defined in `include/linux/spinlock.h`
+  lines 571–573
+- [Phase 4] `b4 dig`: N/A — commit not in `FETCH_HEAD` master
+- [Phase 4] Lore/patch.msgid.link fetch: blocked (403/Anubis)
+- [Phase 4] **UNVERIFIED:** Review-thread stable nominations, Tested-by
+  reports
+- [Phase 5] `blkcg_print_stat` registered as `.seq_show` for `"stat"`
+  (lines 1254–1258)
+- [Phase 5] `blkcg_print_one_stat` accesses `blkg->iostat` and
+  `pd_stat_fn()` (lines 1182–1228)
+- [Phase 6] `git describe HEAD`: v6.18.44 on `stable/linux-6.18.y`
+- [Phase 6] Buggy code confirmed at lines 1244–1250
+- [Phase 6] `struct blkcg` has `spinlock_t lock` in `blk-cgroup.h:96`
+- [Phase 6] No equivalent fix already present for `blkcg_print_stat()`
+- [Phase 7] Subsystem: block/blk-cgroup, CONFIG_BLK_CGROUP
+- [Phase 8] Failure mode: UAF → oops/corruption, HIGH severity
+- [Phase 8] Trigger: cgroup stat read during teardown/deactivation
+
+**YES**
+
+ block/blk-cgroup.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index a2347b5795874..812f60905a708 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1241,13 +1241,10 @@ static int blkcg_print_stat(struct seq_file *sf, void *v)
+ 	else
+ 		css_rstat_flush(&blkcg->css);
  
--#include <crypto/internal/rng.h>
- #include <linux/acpi.h>
- #include <linux/clk.h>
--#include <linux/crypto.h>
- #include <linux/hw_random.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
-@@ -32,24 +30,15 @@
- #define QCOM_TRNG_QUALITY	1024
- 
- struct qcom_rng {
--	struct mutex lock;
- 	void __iomem *base;
- 	struct clk *clk;
- 	struct hwrng hwrng;
--	struct qcom_rng_match_data *match_data;
--};
--
--struct qcom_rng_ctx {
--	struct qcom_rng *rng;
- };
- 
- struct qcom_rng_match_data {
--	bool skip_init;
- 	bool hwrng_support;
- };
- 
--static struct qcom_rng *qcom_rng_dev;
--
- static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
- {
- 	unsigned int currsize = 0;
-@@ -82,37 +71,6 @@ static int qcom_rng_read(struct qcom_rng
- 	return currsize;
- }
- 
--static int qcom_rng_generate(struct crypto_rng *tfm,
--			     const u8 *src, unsigned int slen,
--			     u8 *dstn, unsigned int dlen)
--{
--	struct qcom_rng_ctx *ctx = crypto_rng_ctx(tfm);
--	struct qcom_rng *rng = ctx->rng;
--	int ret;
--
--	ret = clk_prepare_enable(rng->clk);
--	if (ret)
--		return ret;
--
--	mutex_lock(&rng->lock);
--
--	ret = qcom_rng_read(rng, dstn, dlen);
--
--	mutex_unlock(&rng->lock);
--	clk_disable_unprepare(rng->clk);
--
--	if (ret >= 0)
--		ret = 0;
--
--	return ret;
--}
--
--static int qcom_rng_seed(struct crypto_rng *tfm, const u8 *seed,
--			 unsigned int slen)
--{
--	return 0;
--}
--
- static int qcom_hwrng_init(struct hwrng *hwrng)
- {
- 	struct qcom_rng *qrng = container_of(hwrng, struct qcom_rng, hwrng);
-@@ -134,74 +92,26 @@ static void qcom_hwrng_cleanup(struct hw
- 	clk_disable_unprepare(qrng->clk);
- }
- 
--static int qcom_rng_enable(struct qcom_rng *rng)
--{
--	u32 val;
--	int ret;
--
--	ret = clk_prepare_enable(rng->clk);
--	if (ret)
--		return ret;
--
--	/* Enable PRNG only if it is not already enabled */
--	val = readl_relaxed(rng->base + PRNG_CONFIG);
--	if (val & PRNG_CONFIG_HW_ENABLE)
--		goto already_enabled;
--
--	val = readl_relaxed(rng->base + PRNG_LFSR_CFG);
--	val &= ~PRNG_LFSR_CFG_MASK;
--	val |= PRNG_LFSR_CFG_CLOCKS;
--	writel(val, rng->base + PRNG_LFSR_CFG);
--
--	val = readl_relaxed(rng->base + PRNG_CONFIG);
--	val |= PRNG_CONFIG_HW_ENABLE;
--	writel(val, rng->base + PRNG_CONFIG);
--
--already_enabled:
--	clk_disable_unprepare(rng->clk);
--
--	return 0;
--}
--
--static int qcom_rng_init(struct crypto_tfm *tfm)
--{
--	struct qcom_rng_ctx *ctx = crypto_tfm_ctx(tfm);
--
--	ctx->rng = qcom_rng_dev;
--
--	if (!ctx->rng->match_data->skip_init)
--		return qcom_rng_enable(ctx->rng);
--
--	return 0;
--}
--
--static struct rng_alg qcom_rng_alg = {
--	.generate	= qcom_rng_generate,
--	.seed		= qcom_rng_seed,
--	.seedsize	= 0,
--	.base		= {
--		.cra_name		= "stdrng",
--		.cra_driver_name	= "qcom-rng",
--		.cra_flags		= CRYPTO_ALG_TYPE_RNG,
--		.cra_priority		= 300,
--		.cra_ctxsize		= sizeof(struct qcom_rng_ctx),
--		.cra_module		= THIS_MODULE,
--		.cra_init		= qcom_rng_init,
+-	rcu_read_lock();
+-	hlist_for_each_entry_rcu(blkg, &blkcg->blkg_list, blkcg_node) {
+-		spin_lock_irq(&blkg->q->queue_lock);
++	guard(spinlock_irq)(&blkcg->lock);
++	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node)
+ 		blkcg_print_one_stat(blkg, sf);
+-		spin_unlock_irq(&blkg->q->queue_lock);
 -	}
--};
--
- static int qcom_rng_probe(struct platform_device *pdev)
- {
-+	const struct qcom_rng_match_data *match_data;
- 	struct qcom_rng *rng;
- 	int ret;
- 
-+	match_data = device_get_match_data(&pdev->dev);
-+	if (match_data == NULL || !match_data->hwrng_support) {
-+		dev_info(&pdev->dev, "TRNG support not detected\n");
-+		/*
-+		 * In this case the driver does nothing except the dev_info(),
-+		 * but bind the device anyway to avoid effects on GCC state.
-+		 */
-+		return 0;
-+	}
+-	rcu_read_unlock();
 +
- 	rng = devm_kzalloc(&pdev->dev, sizeof(*rng), GFP_KERNEL);
- 	if (!rng)
- 		return -ENOMEM;
- 
--	platform_set_drvdata(pdev, rng);
--	mutex_init(&rng->lock);
--
- 	rng->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(rng->base))
- 		return PTR_ERR(rng->base);
-@@ -210,55 +120,26 @@ static int qcom_rng_probe(struct platfor
- 	if (IS_ERR(rng->clk))
- 		return PTR_ERR(rng->clk);
- 
--	rng->match_data = (struct qcom_rng_match_data *)device_get_match_data(&pdev->dev);
--
--	qcom_rng_dev = rng;
--	ret = crypto_register_rng(&qcom_rng_alg);
--	if (ret) {
--		dev_err(&pdev->dev, "Register crypto rng failed: %d\n", ret);
--		qcom_rng_dev = NULL;
--		return ret;
--	}
--
--	if (rng->match_data->hwrng_support) {
--		rng->hwrng.name = "qcom_hwrng";
--		rng->hwrng.init = qcom_hwrng_init;
--		rng->hwrng.read = qcom_hwrng_read;
--		rng->hwrng.cleanup = qcom_hwrng_cleanup;
--		rng->hwrng.quality = QCOM_TRNG_QUALITY;
--		ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
--		if (ret) {
--			dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
--			qcom_rng_dev = NULL;
--			goto fail;
--		}
--	}
--
--	return ret;
--fail:
--	crypto_unregister_rng(&qcom_rng_alg);
-+	rng->hwrng.name = "qcom_hwrng";
-+	rng->hwrng.init = qcom_hwrng_init;
-+	rng->hwrng.read = qcom_hwrng_read;
-+	rng->hwrng.cleanup = qcom_hwrng_cleanup;
-+	rng->hwrng.quality = QCOM_TRNG_QUALITY;
-+	ret = devm_hwrng_register(&pdev->dev, &rng->hwrng);
-+	if (ret)
-+		dev_err(&pdev->dev, "Register hwrng failed: %d\n", ret);
- 	return ret;
+ 	return 0;
  }
  
--static void qcom_rng_remove(struct platform_device *pdev)
--{
--	crypto_unregister_rng(&qcom_rng_alg);
--
--	qcom_rng_dev = NULL;
--}
--
- static struct qcom_rng_match_data qcom_prng_match_data = {
--	.skip_init = false,
- 	.hwrng_support = false,
- };
- 
- static struct qcom_rng_match_data qcom_prng_ee_match_data = {
--	.skip_init = true,
- 	.hwrng_support = false,
- };
- 
- static struct qcom_rng_match_data qcom_trng_match_data = {
--	.skip_init = true,
- 	.hwrng_support = true,
- };
- 
-@@ -278,7 +159,6 @@ MODULE_DEVICE_TABLE(of, qcom_rng_of_matc
- 
- static struct platform_driver qcom_rng_driver = {
- 	.probe = qcom_rng_probe,
--	.remove =  qcom_rng_remove,
- 	.driver = {
- 		.name = KBUILD_MODNAME,
- 		.of_match_table = of_match_ptr(qcom_rng_of_match),
-
+-- 
+2.53.0
 
