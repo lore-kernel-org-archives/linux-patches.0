@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CDD45D1BA;
-	Mon, 31 Aug 2026 13:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3B64611CF;
+	Mon, 31 Aug 2026 13:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183286; cv=none; b=mhYMVJHJv2Y4VN7doVKsyefmx7P/XLb70Zhm5D9jXmLds/ZtQ5XoIbqCZMEaHLWT6I355J9TSBw0jEqBYNRg99XBPXmeT5WhAmriV89qd9+0pAiJC24k6MXbT6wbcaI2NmQhhvlqy9hKdlKowegQDplmITgC7lIuhZsIPH+uvII=
+	t=1788183287; cv=none; b=N53WFixdC2fuPEI/viNQAyRQvV9BksoOTob1+YASe9/SkldIYgNyiPtaH9h5QIYTGD3E5FmxCSoEuoKEIsWiWJLB30B9bkzGThuXoTKFaw1doE56kIgJy4Gmz1XvzaYyzLo4Ct/70nZe4fdDYXxn/OmaSyplAjyZy4gwiQQCJMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183286; c=relaxed/simple;
-	bh=hyEMb6Pd+n28yzIyR/ILAMDzupK47uN1KNRKnpySPgA=;
+	s=arc-20240116; t=1788183287; c=relaxed/simple;
+	bh=eFvisUckkNSmvFFq1pdTJLcfIoD8pK81JeS80VTcSBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jLl7CVwIC3mf1Fj2Fidaxkg9yXuSm8chdZ8XHTm8+lkWsZuR86uG2URXK2be+r2NEY2fB5pLMelmLfmudjD48cTkvAAKBJk21Azpjmnpa1jZwGftBcXdKzyn6HBPDd59Od3u4n6WVEzVpy4mELjDbkk4JLrSEXClbaOIF0ktxSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NvMRC+eR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ELyLcyd4tCyYl+b3deXTPSeeajrpkTd2JN6LZdYWhHpe2K1yq3tXlIx+xOH+FbMvzlpIy94hPaiIAoO+Eo7YMA9AQQ09p/Ev2jZTeMtaPMotymkXFGY/r2pZF9N8D+7TOcPqisBOzJjaFSGnnMsp9kUPZ2h1rr6ccJaJEU1yUPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pd00OX5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NvMRC+eR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E681F00A3D;
-	Mon, 31 Aug 2026 13:34:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pd00OX5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA291F00ACA;
+	Mon, 31 Aug 2026 13:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183283;
-	bh=ts42t936biBKN+Jn2RLMye+YeFon94fudtO7pT68Q98=;
+	s=k20260515; t=1788183284;
+	bh=Xh5u8FuzUDj4ag9ogwHjp3d6RgJocWRprHO9U/lme/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvMRC+eR0Z+myBTruNs6T+PWsmqTRkErWbmc+RUXdRxH0AeZKSs6hkreTgBh6aOG7
-	 uGNj3yTML6qRfl6dOrr+u8czAL+D0R4akz5AkC/tho6hyvjIHtT5dy9mz8Pm3VvaOK
-	 svnl6cmye9cSRs8IWaA7h/CMwV8g147jOpf7Ztx5noJrWQwPoA0Ahy9N5hiTe1csJx
-	 JgrpFW0V3INE7aDchh7nBWmfqychTlkL0Ikf0lGh3LTcq4nVLnFrVMlo02We/N1UVa
-	 YKr8DzfA5fhLxPeUsThlv4hJ0l8bz46msMjIzu4K+hjUdGkJxCCOv8nnJyBoOoUrkC
-	 X0cU+MEcZjo3Q==
+	b=Pd00OX5qbs+K3jN/XZ8KfGqqDTSR9yile4RZN65oK0RCmvVhen2cJEETgfG4qOrXK
+	 LuZNuAYBF0pQiMWz69FNy0ihA+KKX1CSs52kepPApo3JeBpts3WV6nOFpNAq8dbZJ7
+	 cRCXcvluPUsMtu0NM1cyEccAWi5wFucvIP/st9ni/pyOcKsA9meaMnYzQeNGaqrmTJ
+	 RpJKiEKNvVM/WzFHkZjgcm0mV5gt0q7A+qPYjBPuoTQyDBEwucilSK4D/azfcI9vYv
+	 5kPgbJcgqwetGMLP+QltAMzqmbo+qxPpgvSPIZ58TrGsHYWNrEEasau97PBfQehHhU
+	 +eJe97WDBSdHA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] ksmbd: use connection ClientGUID for lease lookup
-Date: Mon, 31 Aug 2026 09:21:23 -0400
-Message-ID: <20260831133314.4125787-55-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] minix: handle set_blocksize failures
+Date: Mon, 31 Aug 2026 09:21:24 -0400
+Message-ID: <20260831133314.4125787-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -53,509 +51,391 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit fa111daae1a02dbff5693dfc12f368bccd9eb5f4 ]
+[ Upstream commit 38a03dc2bc71e7e0746cdb9ef5e9947f72470c67 ]
 
-MS-SMB2 defines the lease table lookup key as Connection.ClientGuid.
-Use the connection ClientGUID consistently when checking for same-client
-leases and duplicate lease keys.
+minix uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting we will hit the
 
-Also preserve directory and parent lease metadata when copying an existing
-lease state to a new open.
+        BUG_ON(offset >= folio_size(folio));
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+in folio_set_bh on the first __bread_gfp call.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-9-hch@lst.de
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `ksmbd: use connection ClientGUID for lease
-lookup`
+## Phase 1: Commit Message Forensics
 
-**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, detached HEAD at
-`2736c32da98b9`)
-**Commit evaluated:** `41fd6f97cf085` (upstream
-`fa111daae1a02dbff5693dfc12f368bccd9eb5f4`) — **not yet present in this
-tree**
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject line
-**Record:** `[ksmbd]` `[use]` — Use the connection `ClientGUID`
-consistently for SMB2 lease table lookups and duplicate-lease-key
-checks, and preserve directory/parent lease metadata when copying lease
-state to a new open.
+### Step 1.1: Subject Line
+**Record:** `[minix] [handle] [check and propagate sb_set_blocksize()
+failure for MINIX V3 mount path]`
 
 ### Step 1.2: Tags
 **Record:**
-- **Fixes:** — none
-- **Reported-by:** — none
-- **Tested-by:** — none
-- **Reviewed-by:** — none
-- **Acked-by:** — none
-- **Link:** — none
-- **Cc: stable:** — none (expected for manual review)
-- **Signed-off-by:** Namjae Jeon `<linkinjeon@kernel.org>`, Steve French
-  `<stfrench@microsoft.com>` (ignore pipeline Sasha Levin SOB)
+- **Signed-off-by:** Christoph Hellwig `<hch@lst.de>` (author)
+- **Signed-off-by:** Christian Brauner (Amutable) `<brauner@kernel.org>`
+  (maintainer merge)
+- **Link:**
+  `https://patch.msgid.link/20260511071701.2456211-9-hch@lst.de` (patch
+  9 of an 11-patch series)
+- No Fixes:, Reported-by:, Tested-by:, Reviewed-by:, Acked-by:, or Cc:
+  stable tags
+- Notable: Part of series titled "fix crashes when mounting legacy file
+  system with sector size > PAGE_SIZE"
 
-Notable: Steve French (ksmbd/SMB maintainer) signed off. No
-syzbot/fuzzer tags.
-
-### Step 1.3: Body analysis
+### Step 1.3: Body Analysis
 **Record:**
-- **Bug:** ksmbd used `sess->ClientGUID` for lease table lookup and
-  same-client lease checks, but MS-SMB2 defines the lease table key as
-  `Connection.ClientGuid`. Lease tables are populated with
-  `conn->ClientGUID`.
-- **Symptom:** Incorrect lease duplicate detection; failure to recognize
-  same-client leases; incomplete lease state when re-opening with an
-  existing lease (`copy_lease()` omitted `is_dir` and
-  `parent_lease_key`; `flags` assignment clobbered existing flags).
-- **Root cause:** Inconsistent identifier choice (session vs connection)
-  and incomplete field copy in `copy_lease()`.
+- **Bug:** MINIX V3 calls `sb_set_blocksize(s, m3s->s_blocksize)`
+  without checking the return value. When block size exceeds
+  `PAGE_SIZE`, `sb_set_blocksize()` fails (returns 0) but mount
+  continues.
+- **Symptom:** Kernel hits `BUG_ON(offset >= folio_size(folio))` in
+  `folio_set_bh()` on the first `__bread_gfp` call during mount.
+- **Root cause:** buffer_heads do not handle block size > `PAGE_SIZE`;
+  ignoring `sb_set_blocksize()` failure leaves the superblock in an
+  inconsistent state and mount proceeds into code that cannot work.
+- **Version info:** None explicit; MINIX V3 `s_blocksize` field has
+  existed since 2007.
 
-### Step 1.4: Hidden bug fix?
-**Record:** Yes. Although the subject says “use” rather than “fix,” this
-is a protocol-correctness bug fix. The `copy_lease()` and `flags |=`
-changes fix functional directory-lease and break-in-progress handling
-bugs.
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Not disguised — this is an explicit bug fix for a mount-time
+kernel crash, though the verb "handle" rather than "fix" is used.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
 ### Step 2.1: Inventory
 **Record:**
-| File | Changes |
-|------|---------|
-| `fs/smb/server/oplock.c` | +11 / -9 |
-| `fs/smb/server/oplock.h` | +1 / -1 |
-| `fs/smb/server/smb2pdu.c` | +1 / -1 |
+- **Files:** `fs/minix/inode.c` (+2 lines, -1 line)
+- **Function:** `minix_fill_super()`
+- **Scope:** Single-file, surgical fix (3-line hunk)
 
-**Functions modified:** `same_client_has_lease()`,
-`find_same_lease_key()`, `copy_lease()`, `smb_grant_oplock()`
-**Scope:** Single-subsystem, surgical fix (3 files, ~20 lines).
-
-### Step 2.2: Code flow changes
+### Step 2.2: Code Flow Change
 **Record:**
-- **`find_same_lease_key()`:** API changes from `struct ksmbd_session
-  *sess` to `struct ksmbd_conn *conn`; table lookup and
-  `compare_guid_key()` now use `conn->ClientGUID` instead of
-  `sess->ClientGUID`.
-- **`smb_grant_oplock()`:** `same_client_has_lease()` called with
-  `work->conn->ClientGUID`; removed unused `sess` local.
-- **`copy_lease()`:** Copies `is_dir` and `parent_lease_key`; `flags`
-  set with `|=` instead of `=` when break is in progress.
-- **`smb2_open()`:** Passes `conn` instead of `sess` to
-  `find_same_lease_key()`.
+- **Before:** `sb_set_blocksize(s, m3s->s_blocksize);` — return value
+  ignored; mount continues to `minix_check_superblock()` and
+  `sb_bread()` calls.
+- **After:** `if (!sb_set_blocksize(s, m3s->s_blocksize)) goto out;` —
+  mount aborts with `-EINVAL` on failure.
+- **Path affected:** MINIX V3 superblock detection branch only
+  (error/validation path during mount).
 
-### Step 2.3: Bug mechanism
+### Step 2.3: Bug Mechanism
 **Record:**
-- **Category:** Logic / protocol correctness + incomplete state copy.
-- **Mechanism:**
-  1. Lease tables are keyed by `opinfo->conn->ClientGUID`
-     (`alloc_lease_table()`, `add_lease_global_list()`,
-     `lookup_lease_in_table()`, `destroy_lease_table()`), but
-     `find_same_lease_key()` and `same_client_has_lease()` used
-     `sess->ClientGUID`. Per MS-SMB2 and the rest of ksmbd, the current
-     **connection’s** GUID is the correct lookup key.
-  2. `copy_lease()` did not copy `is_dir` or `parent_lease_key`,
-     breaking v2 directory lease parent-key logic (used in
-     `smb_send_parent_lease_break_noti()` and lease-break downgrade at
-     line 928).
-  3. `opinfo->o_lease->flags = SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE`
-     overwrote all flags; `|=` preserves other flags.
+- **Category:** Logic/correctness fix preventing kernel panic (missing
+  error-path handling).
+- **Mechanism:** `sb_set_blocksize()` in `block/bdev.c` returns 0 when
+  `size > PAGE_SIZE` for non-`FS_LBS` filesystems (minix has
+  `FS_REQUIRES_DEV` only). Mount continued with stale `s_blocksize`
+  (1024 from line 221), then `sb_bread()` → `bdev_getblk()` →
+  `folio_alloc_buffers()` → `folio_set_bh()` triggered `BUG_ON` when
+  buffer size exceeded folio size.
 
-### Step 2.4: Fix quality
-**Record:** Obviously correct — aligns all lease paths with MS-SMB2 and
-with existing helpers (`lookup_lease_in_table()`, `compare_guid_key()`).
-Minimal, no API surface visible to userspace. Low regression risk.
+### Step 2.4: Fix Quality
+**Record:**
+- **Quality:** Obviously correct — mirrors the existing pattern at line
+  221 (`if (!sb_set_blocksize(s, BLOCK_SIZE)) goto out_bad_hblock;`).
+- **Regression risk:** Very low. Only affects failed-mount path for
+  invalid/unsupported block sizes.
+- **Minor note:** `goto out` skips `brelse(bh)` (one buffer_head leak on
+  failed mount); pre-existing style in this function for early errors
+  after `bh` is read. Not a stability concern.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
 ### Step 3.1: Blame
-**Record:** `sess->ClientGUID` in `find_same_lease_key()` introduced in
-`af7c39d971e43` (Jul 2022, “fix racy issue while destroying session on
-multichannel”). Lease tables have used `conn->ClientGUID` since 2021
-(`e2f34481b24db`). The inconsistency has been present since multichannel
-work. `is_dir`/`parent_lease_key` added in `d47d9886aeef7` (directory v2
-leases); `copy_lease()` never copied them.
+**Record:**
+- Unchecked `sb_set_blocksize(s, m3s->s_blocksize)` introduced in commit
+  `939b00df0306` (Andries Brouwer, 2007-02-12) — MINIX V3 support.
+- `PAGE_SIZE` validation in `sb_set_blocksize()` re-added in
+  `a64e5a596067b` (Luis Chamberlain, 2025-03-06), present in this tree.
 
-### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag.
+### Step 3.2: Fixes: Tag
+**Record:** No Fixes: tag present. N/A.
 
-### Step 3.3: Related file history
-**Record:** Recent `oplock.c` fixes in this tree are UAF/NULL-deref
-hardening (`35d3d6ff2bc1e`, `cd5c1b75d2f45`, etc.). This commit is
-separate protocol/correctness work. Later related commit `5198f8b2d0b1c`
-(“share SMB2 lease state across opens”) is a larger refactor **not** in
-this tree and **not** required for this patch.
+### Step 3.3: File History
+**Record:**
+- Recent minix changes: superblock sanity checking (`31fefc18096cd`),
+  inode mode verification (`73861970938ad`).
+- This fix is standalone within the 11-patch series; each filesystem
+  patch is independent.
+- Fix is **not** yet merged in this tree (grep confirms unchecked call
+  still at line 275).
 
-### Step 3.4: Author context
-**Record:** Namjae Jeon is ksmbd maintainer. Steve French signed off.
+### Step 3.4: Author Context
+**Record:** Christoph Hellwig is a prolific VFS/block-layer contributor.
+Recent minix work from others (Biggers, Viro). Hellwig authored the
+broader series fixing the same pattern across legacy filesystems.
 
 ### Step 3.5: Dependencies
-**Record:** Standalone. Cherry-pick to current HEAD applies cleanly
-(auto-merge, no conflicts). Does not depend on the later “share SMB2
-lease state across opens” refactor.
+**Record:** No dependencies. Self-contained 2-line change. Does not
+require other patches in the series.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c 41fd6f97cf085` →
-`https://patch.msgid.link/20260618141739.9029-2-linkinjeon@kernel.org`
-(patch 2/N in a series). Lore fetch blocked by bot protection; full
-thread not readable. `b4 dig -a` returned no additional revisions.
+### Step 4.1: Original Discussion
+**Record:**
+- Fetched cover letter from `https://lore.kernel.org/linux-
+  fsdevel/20260511071701.2456211-1-hch@lst.de/t.mbox.gz`
+- **Series:** "fix crashes when mounting legacy file system with sector
+  size > PAGE_SIZE" (11 patches)
+- **Author's scenario:** Test case on 64k block-size loop device
+  triggered filesystem probing of built-in filesystems, causing actual
+  crashes in roughly half the affected filesystems.
+- **b4 dig -c:** Failed — commit not yet in local tree (not merged).
+- No explicit stable nomination found in cover letter.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w` returned the same patch link only; maintainer CC
-list not retrieved.
+**Record:** CC'd to Alexander Viro, Christian Brauner, Jan Kara, David
+Sterba, and multiple filesystem maintainers on linux-fsdevel. Brauner
+merged (Signed-off-by in commit message).
 
-### Step 4.3: Bug reports
-**Record:** No `Reported-by:` or `Link:` tags. Web search found this
-commit listed in Namjae Jeon’s June 2026 ksmbd git-pull, which describes
-fixes for **smbtorture** protocol divergence in SMB2/3 lease handling.
-That pull context is secondary evidence only (not the commit message
-itself).
+### Step 4.3: Bug Report
+**Record:** No external bug report. Author discovered via own testing
+(64k block device + filesystem probe). Reproducible, concrete trigger.
 
-### Step 4.4: Series context
-**Record:** Part of a larger ksmbd lease rework series. This specific
-commit is self-contained and applies independently to the current 6.18.y
-code.
+### Step 4.4: Related Patches
+**Record:** Same pattern fixed in affs, befs, bfs, hpfs, isofs, jfs,
+ntfs3, omfs, qnx4 (series diffstat). Each is independently backportable.
 
-### Step 4.5: Stable list
-**Record:** Not searched (lore blocked). No stable-list discussion
-found.
+### Step 4.5: Stable List History
+**Record:** No stable-list discussion found (series is May 2026,
+recent).
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-### Step 5.1: Key functions
-**Record:** `find_same_lease_key()`, `same_client_has_lease()`,
-`copy_lease()`, `smb_grant_oplock()`, `smb2_open()`.
+### Step 5.1: Key Functions
+**Record:** `minix_fill_super()`, `sb_set_blocksize()`, `sb_bread()`,
+`folio_alloc_buffers()`, `folio_set_bh()`
 
 ### Step 5.2: Callers
 **Record:**
-- `find_same_lease_key()` — called from `smb2_open()` during SMB2 CREATE
-  with lease context (userspace-triggered file open).
-- `same_client_has_lease()` — called from `smb_grant_oplock()` on lease
-  grant path.
-- Both are reachable from normal SMB client file-open operations.
+- `minix_fill_super()` ← `minix_get_tree()` ← `get_tree_bdev()` ← mount
+  syscall path
+- Triggered during `mount -t minix` or automatic filesystem probing on
+  block devices
 
 ### Step 5.3: Callees
-**Record:** `compare_guid_key()` (compares against
-`opinfo->conn->ClientGUID`), lease table list traversal, `opinfo_put()`.
+**Record:** On V3 path after superblock read: `sb_set_blocksize()` → (on
+failure, should abort) → `minix_check_superblock()` → `sb_bread()` for
+bitmap blocks
 
 ### Step 5.4: Reachability
-**Record:** Fully reachable from SMB2 CREATE with
-`SMB2_OPLOCK_LEVEL_LEASE` when `CONFIG_SMB_SERVER` is enabled. Common
-path for Windows/macOS clients using SMB2/3 leasing.
-
-### Step 5.5: Similar patterns
-**Record:** `lookup_lease_in_table()`, `destroy_lease_table()`,
-`add_lease_global_list()`, and `smb_send_parent_lease_break_noti()`
-already use `conn->ClientGUID`. Only `find_same_lease_key()` and
-`same_client_has_lease()` call sites were wrong.
-
----
-
-## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
-
-### Step 6.1: Buggy code present?
-**Record:** **Yes.** Current tree at
-`fs/smb/server/oplock.c:1019,1035,1249` and `smb2pdu.c:3515` use
-`sess->ClientGUID`. `copy_lease()` at lines 1055–1068 omits `is_dir` and
-`parent_lease_key`.
-
-### Step 6.2: Backport complications
-**Record:** Clean apply verified via test cherry-pick. No conflicts.
-
-### Step 6.3: Related fixes already present?
-**Record:** No equivalent fix in this tree. Upstream commit `fa111daa`
-is not an ancestor of HEAD.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem
-**Record:** `fs/smb/server/` (ksmbd in-kernel SMB server).
-**Criticality:** IMPORTANT for deployments using `CONFIG_SMB_SERVER`;
-not core kernel path for all users.
-
-### Step 7.2: Activity
-**Record:** Actively maintained — multiple ksmbd stable fixes already in
-6.18.y (UAF, NULL-deref, durable-handle fixes).
-
----
-
-## PHASE 8: IMPACT AND RISK
-
-### Step 8.1: Who is affected
-**Record:** Users of ksmbd (`CONFIG_SMB_SERVER`) with SMB2/3 leasing
-enabled — typically Samba-alternative NAS/file-server deployments
-serving Windows/macOS clients.
-
-### Step 8.2: Trigger conditions
 **Record:**
-- Any SMB2 CREATE with a lease context (common for modern Windows
-  clients).
-- Directory v2 leases with parent lease keys (second open of same file
-  from same client).
-- Scenarios where connection-level and session-level GUID usage must
-  match MS-SMB2 (multichannel, durable reconnect contexts).
+- Reachable from mount syscall (requires `CAP_SYS_ADMIN` typically)
+- Also reachable via built-in filesystem probing when kernel tries to
+  identify filesystem on a block device (author's actual trigger)
+- MINIX V3 with `s_blocksize > PAGE_SIZE` (e.g., 8K/16K/32K/64K on
+  4K-page systems) triggers the bug
 
-### Step 8.3: Failure mode severity
-**Record:**
-- Incorrect duplicate lease-key detection → spurious `-EINVAL` opens or
-  missed duplicate-key validation.
-- Missing `is_dir`/`parent_lease_key` on copy → wrong parent lease break
-  behavior for directory leases.
-- Flag clobber → incorrect lease break-in-progress reporting.
-- **Severity: MEDIUM-HIGH** — not a kernel oops, but SMB lease errors
-  affect client caching coherency; incorrect lease state can lead to
-  clients holding stale cached data (coherency/correctness issue for
-  file-server workloads).
-
-### Step 8.4: Risk-benefit
-**Record:**
-- **Benefit:** HIGH for ksmbd + leasing users — protocol compliance,
-  smbtorture-aligned behavior, directory lease correctness.
-- **Risk:** VERY LOW — ~20 lines, no new APIs, matches existing code
-  patterns.
-- **Ratio:** Strong benefit, minimal risk.
+### Step 5.5: Similar Patterns
+**Record:** Same unchecked-call pattern exists in other legacy FS (hpfs,
+isofs, jfs, qnx4, omfs) — fixed in the same series. Within minix, line
+221 already checks `sb_set_blocksize()` for initial `BLOCK_SIZE`; only
+the V3 re-set at line 275 is missing the check.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 6: Cross-Reference Against Local Tree (v6.18.44)
 
-### Step 9.1: Evidence summary
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** Local tree is `v6.18.44` (Makefile: 6.18.44).
+Unchecked call at line 275:
+
+```275:275:fs/minix/inode.c
+                sb_set_blocksize(s, m3s->s_blocksize);
+```
+
+MINIX V3 support and `struct minix3_super_block.s_blocksize` are
+present. `sb_set_blocksize()` PAGE_SIZE check (`a64e5a596067b`) is an
+ancestor of HEAD.
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected — 2-line change in a stable code region
+unchanged since 2007. No conflicts anticipated.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** No. `git log --grep='handle set_blocksize'` and
+`--grep='sector size > PAGE_SIZE'` return empty. Fix not yet in tree.
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem Criticality
+**Record:** `fs/minix` — filesystem driver. **IMPORTANT** (not core VFS,
+but mount path can panic kernel). Legacy/niche but built-in on many
+configs.
+
+### Step 7.2: Activity Level
+**Record:** Moderately active — recent superblock validation and
+timestamp accessor updates, but core mount path is mature.
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users mounting or auto-probing MINIX V3 filesystems with
+`s_blocksize > PAGE_SIZE`, or with any block size rejected by
+`sb_set_blocksize()`. Config-dependent (`CONFIG_MINIX_FS`).
+
+### Step 8.2: Trigger Conditions
+**Record:**
+- MINIX V3 image with blocksize > `PAGE_SIZE` (author used 64k on
+  4k-page system)
+- Filesystem probe on unsuitable block device (author's actual scenario)
+- Malicious/corrupt superblock with oversized blocksize
+- **Likelihood:** Low for typical users, but concrete and reproducible
+- **Unprivileged trigger:** Unlikely directly; probing requires block
+  device access
+
+### Step 8.3: Failure Mode Severity
+**Record:** `BUG_ON()` in `folio_set_bh()` → **kernel panic**.
+**Severity: CRITICAL** (system crash during mount/probe).
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Prevents kernel panic on mount/probe failure path;
+  converts crash to clean `-EINVAL` mount failure
+- **Risk:** Very low — 2 lines, matches existing in-file pattern, only
+  affects error path
+- **Ratio:** High benefit, minimal risk
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real protocol bug: MS-SMB2 lease table key is `Connection.ClientGuid`;
-  code was inconsistent.
-- Incomplete `copy_lease()` breaks directory v2 lease metadata on re-
-  open.
-- `flags |=` fixes flag clobbering during break-in-progress.
-- Small, surgical, applies cleanly to 6.18.44.
-- Maintainer-signed (Steve French).
-- Listed in ksmbd git-pull as part of smbtorture protocol divergence
-  fixes.
+- Real, reproducible kernel panic (`BUG_ON`) on mount
+- Small, obviously correct fix matching existing code pattern
+- Author verified crashes across multiple legacy filesystems
+- Filesystem probing can trigger without explicit minix mount
+- `sb_set_blocksize()` PAGE_SIZE validation is already in 6.18.y, making
+  the silent-failure path live today
 
 **AGAINST backport:**
-- Only affects `CONFIG_SMB_SERVER` users (not universal).
-- No crash/oops/syzbot report in commit message.
-- Part of a larger lease rework series (but this patch is standalone).
+- MINIX is niche/rarely used
+- Requires specific blocksize condition
+- Minor buffer_head leak on new error path (`goto out` vs `goto
+  out_release`) — negligible
 
-**UNRESOLVED:**
-- Full lore review thread (bot-blocked).
-- Explicit smbtorture test name not in commit message (only in git-pull
-  summary).
+**Unresolved:** None material to the decision.
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — aligns with MS-SMB2,
-   existing ksmbd patterns, maintainer SOB; smbtorture context from git-
-   pull.
-2. Fixes a real bug? **PASS** — protocol divergence and incomplete lease
-   state copy.
-3. Important issue? **PASS** — MEDIUM-HIGH: SMB lease/coherency
-   correctness for file-server users.
-4. Small and contained? **PASS** — 3 files, ~20 lines.
-5. No new features/APIs? **PASS** — internal parameter type change only.
-6. Can apply to local tree? **PASS** — verified clean cherry-pick.
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — mirrors line 221; author
+   tested via 64k block device scenario
+2. Fixes a real bug affecting users? **PASS** — mount-time kernel panic
+3. Important issue? **PASS** — CRITICAL (BUG_ON/panic)
+4. Small and contained? **PASS** — 2 lines, one file
+5. No new features or APIs? **PASS** — error handling only
+6. Can apply to local tree? **PASS** — buggy code present, clean apply
+   expected
 
-### Step 9.3: Exception category
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-protocol-correctness bug fix.
+### Step 9.3: Exception Categories
+**Record:** N/A — standard bug fix, not a device-ID/quirk/build/doc
+exception.
 
-### Step 9.4: Problem and decision rationale
+### Step 9.4: Problem Summary
 
-This commit fixes ksmbd SMB2/3 lease handling to use the connection
-`ClientGUID` (per MS-SMB2) instead of the session `ClientGUID` when
-looking up lease tables and checking duplicate lease keys. The lease
-infrastructure already keys tables by `conn->ClientGUID`; using
-`sess->ClientGUID` was internally inconsistent and could cause wrong
-lease lookups. The `copy_lease()` additions fix directory lease metadata
-loss on second opens, and the `flags |=` change prevents overwriting
-other lease flags during break-in-progress.
+This commit fixes a mount-time kernel panic in the MINIX V3 code path.
+When a V3 superblock specifies a block size that `sb_set_blocksize()`
+rejects (notably > `PAGE_SIZE` on systems where minix lacks `FS_LBS`),
+the failure was silently ignored. Mount continued and the first
+`sb_bread()` call hit `BUG_ON(offset >= folio_size(folio))` in
+`folio_set_bh()`. The fix adds the same return-value check already used
+for the initial `BLOCK_SIZE` setup at the top of `minix_fill_super()`,
+causing mount to fail cleanly instead of panicking.
 
-For stable 6.18.y users running ksmbd with SMB2/3 leasing, this is a
-worthwhile fix: small, low-risk, and addresses real client-visible lease
-correctness issues.
+For v6.18.44, the buggy code is present, the prerequisite
+`sb_set_blocksize()` PAGE_SIZE validation exists, and the fix applies
+cleanly as a standalone 2-line change.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** `git show 41fd6f97cf085 --format=fuller`: parsed
-  subject, body, tags (Namjae Jeon, Steve French SOBs only).
-- **[Phase 2]** `git show 41fd6f97cf085 -p`: confirmed 3-file diff,
-  function-level changes.
-- **[Phase 2]** Read `oplock.c` lines 91, 489, 984, 1019, 1035,
-  1055–1068, 1077, 1130, 1249, 1820; `smb2pdu.c` line 3515;
-  `user_session.c` line 216.
-- **[Phase 3]** `git describe HEAD`: v6.18.44. `git blame -L 1018,1036
-  fs/smb/server/oplock.c`: `sess->ClientGUID` from `af7c39d971e43`
-  (2022).
-- **[Phase 3]** `git show af7c39d971e43`: multichannel session fix that
-  introduced `sess->ClientGUID` usage.
-- **[Phase 3]** `git log -1 -S"parent_lease_key"`: `d47d9886aeef7` added
-  directory lease parent keys.
-- **[Phase 3]** `git merge-base --is-ancestor fa111daa HEAD`: exit 1 —
-  fix not in tree.
-- **[Phase 3]** `git merge-base --is-ancestor 5198f8b2 HEAD`: exit 1 —
-  dependent refactor not in tree.
-- **[Phase 3]** Cherry-pick test: `git cherry-pick --no-commit
-  41fd6f97cf085` — clean auto-merge on 3 files.
-- **[Phase 4]** `b4 dig -c 41fd6f97cf085`: lore URL
-  `20260618141739.9029-2-linkinjeon@kernel.org`.
-- **[Phase 4]** Web search: found commit in ksmbd git-pull listing
-  smbtorture protocol fixes.
-- **[Phase 4]** Lore/patch.msgid.link fetch: blocked by bot protection —
-  thread content UNVERIFIED.
-- **[Phase 5]** `grep find_same_lease_key`: single caller in
-  `smb2pdu.c`; `same_client_has_lease` called from `smb_grant_oplock()`.
-- **[Phase 5]** Verified `lookup_lease_in_table()`,
-  `compare_guid_key()`, `add_lease_global_list()` use
-  `conn->ClientGUID`.
-- **[Phase 6]** `grep sess->ClientGUID fs/smb/server/oplock.c`: buggy
-  lines present at 1019, 1035, 1249.
-- **[Phase 6]** `copy_lease()` in tree lacks `is_dir`/`parent_lease_key`
-  copy.
-- **[Phase 7]** `grep CONFIG_SMB_SERVER fs/smb/Kconfig`: ksmbd is
-  `CONFIG_SMB_SERVER`.
-- **[Phase 8]** Failure mode assessed from code paths: lease
-  lookup/coherency bugs, not kernel crash.
+- [Phase 1] Parsed subject, tags, body from provided commit message
+- [Phase 1] Identified patch 9/11 from Link message-ID
+- [Phase 2] Diff: 2 lines added in `minix_fill_super()` V3 branch
+- [Phase 2] Read `sb_set_blocksize()` at `block/bdev.c:220-230` —
+  returns 0 when `size > PAGE_SIZE` for non-FS_LBS
+- [Phase 2] Read `folio_set_bh()` at `fs/buffer.c:1578-1582` — confirmed
+  `BUG_ON(offset >= folio_size(folio))`
+- [Phase 2] Traced `sb_bread` → `bdev_getblk` → `folio_alloc_buffers` →
+  `folio_set_bh` at `fs/buffer.c:1075,946`
+- [Phase 3] `git describe HEAD`: v6.18.44
+- [Phase 3] `git blame -L 270,280 fs/minix/inode.c`: unchecked call from
+  2007 (939b00df0306)
+- [Phase 3] `git merge-base --is-ancestor a64e5a596067b HEAD`: PAGE_SIZE
+  check is in tree
+- [Phase 3] `git log --grep='handle set_blocksize'`: empty — fix not
+  merged
+- [Phase 3] `git log --oneline -20 -- fs/minix/inode.c`: recent
+  activity, no duplicate fix
+- [Phase 4] Fetched cover letter mbox from lore.kernel.org — confirmed
+  crash scenario and 11-patch series
+- [Phase 4] b4 dig -c: N/A — commit not in tree
+- [Phase 4] No stable nomination found in cover letter
+- [Phase 5] `minix_fill_super` called from `minix_get_tree` →
+  `get_tree_bdev` (mount path)
+- [Phase 5] minix `fs_flags = FS_REQUIRES_DEV` — no FS_LBS
+- [Phase 6] `grep sb_set_blocksize fs/minix/inode.c`: line 275
+  unchecked, line 221 checked
+- [Phase 6] `struct minix3_super_block.s_blocksize` in
+  `include/uapi/linux/minix_fs.h:94`
+- [Phase 6] Read `minix_check_superblock()` — does not validate
+  blocksize against PAGE_SIZE
+- [Phase 8] Failure mode: BUG_ON → kernel panic, severity CRITICAL
 
-**YES**These background lookups are done. Summary:
+**YES**The background checks finished and match what the analysis
+already used:
 
-- **Commit identified:** `41fd6f97cf085` (upstream
-  `fa111daae1a02dbff5693dfc12f368bccd9eb5f4`) — `ksmbd: use connection
-  ClientGUID for lease lookup`
-- **Not in this tree:** Neither that commit nor the related refactor
-  `5198f8b2d0b1c` (“share SMB2 lease state across opens”) is in
-  `v6.18.44`
-- **`all-next`:** The ClientGUID commit wasn’t found there; recent
-  `oplock.c` work on that branch is separate UAF/NULL-deref hardening
-- **Standalone backport:** Cherry-pick to current HEAD applies cleanly;
-  it does not require the later “share SMB2 lease state” refactor
+- **Hellwig/minix history:** Recent related work in this tree is mostly
+  older minix cleanups (error handling in `minix_set_link` /
+  `minix_delete_entry`, DIRSYNC behavior), not this `sb_set_blocksize`
+  fix.
+- **Merge check:** `git log --grep='handle set_blocksize'` and
+  `--grep='sector size > PAGE_SIZE'` both came back empty, so the fix is
+  still not in v6.18.44.
 
-**Verdict from the full analysis: YES** — protocol-correctness fix for
-ksmbd SMB2/3 lease handling, small and low-risk for 6.18.y.
+That leaves the earlier conclusion unchanged: this is a small mount-time
+panic fix worth backporting to this tree.
 
- fs/smb/server/oplock.c  | 16 +++++++++-------
- fs/smb/server/oplock.h  |  2 +-
- fs/smb/server/smb2pdu.c |  2 +-
- 3 files changed, 11 insertions(+), 9 deletions(-)
+**YES**
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index c12b2b2857667..b6705a07c6ebe 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -520,7 +520,7 @@ static inline int compare_guid_key(struct oplock_info *opinfo,
-  * Return:      oplock(lease) object on success, otherwise NULL
-  */
- static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
--						 char *client_guid,
-+						 const char *client_guid,
- 						 struct lease_ctx_info *lctx)
- {
- 	int ret;
-@@ -1014,7 +1014,7 @@ void destroy_lease_table(struct ksmbd_conn *conn)
- 	write_unlock(&lease_list_lock);
- }
- 
--int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
-+int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
- 			struct lease_ctx_info *lctx)
- {
- 	struct oplock_info *opinfo;
-@@ -1031,7 +1031,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
- 	}
- 
- 	list_for_each_entry(lb, &lease_table_list, l_entry) {
--		if (!memcmp(lb->client_guid, sess->ClientGUID,
-+		if (!memcmp(lb->client_guid, conn->ClientGUID,
- 			    SMB2_CLIENT_GUID_SIZE))
- 			goto found;
- 	}
-@@ -1047,7 +1047,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
- 		rcu_read_unlock();
- 		if (opinfo->o_fp->f_ci == ci)
- 			goto op_next;
--		err = compare_guid_key(opinfo, sess->ClientGUID,
-+		err = compare_guid_key(opinfo, conn->ClientGUID,
- 				       lctx->lease_key);
- 		if (err) {
- 			err = -EINVAL;
-@@ -1080,6 +1080,9 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
- 	lease2->flags = lease1->flags;
- 	lease2->epoch = lease1->epoch;
- 	lease2->version = lease1->version;
-+	lease2->is_dir = lease1->is_dir;
-+	memcpy(lease2->parent_lease_key, lease1->parent_lease_key,
-+	       SMB2_LEASE_KEY_SIZE);
- }
- 
- static void add_lease_global_list(struct oplock_info *opinfo,
-@@ -1218,7 +1221,6 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 		     struct ksmbd_file *fp, __u16 tid,
- 		     struct lease_ctx_info *lctx, int share_ret)
- {
--	struct ksmbd_session *sess = work->sess;
- 	int err = 0;
- 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
- 	struct ksmbd_inode *ci = fp->f_ci;
-@@ -1261,12 +1263,12 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 		struct oplock_info *m_opinfo;
- 
- 		/* is lease already granted ? */
--		m_opinfo = same_client_has_lease(ci, sess->ClientGUID,
-+		m_opinfo = same_client_has_lease(ci, work->conn->ClientGUID,
- 						 lctx);
- 		if (m_opinfo) {
- 			copy_lease(m_opinfo, opinfo);
- 			if (atomic_read(&m_opinfo->breaking_cnt))
--				opinfo->o_lease->flags =
-+				opinfo->o_lease->flags |=
- 					SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE;
- 			opinfo_put(m_opinfo);
- 			goto out;
-diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
-index d91a8266e065e..795a9119dad9a 100644
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -116,7 +116,7 @@ void create_posix_rsp_buf(char *cc, struct ksmbd_file *fp);
- struct create_context *smb2_find_context_vals(void *open_req, const char *tag, int tag_len);
- struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
- 					  char *lease_key);
--int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
-+int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
- 			struct lease_ctx_info *lctx);
- void destroy_lease_table(struct ksmbd_conn *conn);
- void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 99a0108cb21f4..66871fbe53f48 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3534,7 +3534,7 @@ int smb2_open(struct ksmbd_work *work)
- 			ksmbd_debug(SMB,
- 				    "lease req for(%s) req oplock state 0x%x, lease state 0x%x\n",
- 				    name, req_op_level, lc->req_state);
--			rc = find_same_lease_key(sess, fp->f_ci, lc);
-+			rc = find_same_lease_key(conn, fp->f_ci, lc);
- 			if (rc)
- 				goto err_out1;
- 		} else if (open_flags == O_RDONLY &&
+ fs/minix/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index 7bdd240ea1584..5bfe42599a585 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -272,7 +272,8 @@ static int minix_fill_super(struct super_block *s, struct fs_context *fc)
+ 		sbi->s_namelen = 60;
+ 		sbi->s_version = MINIX_V3;
+ 		sbi->s_mount_state = MINIX_VALID_FS;
+-		sb_set_blocksize(s, m3s->s_blocksize);
++		if (!sb_set_blocksize(s, m3s->s_blocksize))
++			goto out;
+ 		s->s_max_links = MINIX2_LINK_MAX;
+ 	} else
+ 		goto out_no_fs;
 -- 
 2.53.0
 
