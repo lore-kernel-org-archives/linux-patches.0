@@ -1,108 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FB04766B8;
-	Mon, 31 Aug 2026 13:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6E75AC1F2;
+	Mon, 31 Aug 2026 13:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184365; cv=none; b=FKOWMIB+g5+t5duzyYikFpKN+raFyJf6OKa0l6ZW9ITgElhrQlP9efWoQciwdNu/YFSOvK2L6dhQ79Ls//bGcweqpHHm5rh9D1FE8ifrJ9iYu7rQLfTfO8IGroTX0xRkyYb0JUHHFAC72ICqd4aTc6s1dj6IS3bip5CaJQG8Cz4=
+	t=1788184367; cv=none; b=i11nDjlOKdv8n5LNPhrfYAhx0iRjG4Zu+hE0sxEiOdpwh9giINrczRru9gIkjx+oVGXznlsJ6ZR0cTSrUGID+/wes/w/qrMDILuuyV/6uOSILgcrBbAxC0p1ww3xL0GmcYIbQaQD0HIgOcUnn9Dy47Zqtmh9oy5nJpk+odR/gLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184365; c=relaxed/simple;
-	bh=cIip9Z66Yiy0Xwq6y1y7qtFx/jql0j9kuQpAH7Ihcdc=;
+	s=arc-20240116; t=1788184367; c=relaxed/simple;
+	bh=gYV4dMstE0v6pJ4mq2LrijhxEdfiWaKyPp2PA0HfRKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pvdoVg4G6FKq3c9U+8k9X3CwmUSCyrMGcLpHtoeP8Lz/5SPfKavYbYOB3nG4sBqSV/zOzSq4AYm2PXcIR9rxlS7ggXA48KshMBSZjSWhhm5tgd2/VQKyIaZSjGXF+XPbDZIbgA4aJwaBr2JQJ5J7McKAl6yjPp0V95hgWThr0XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g0W64eLU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qLDHiO8ftEV6TK9LVHmc2+u3Ffj2GiaBAKH2Cx9/uPCXifJRiCgAv8O0+vS+NX61dIMm7xPomyXxgpwM6LEvbj2SPhxuYxN28HW6XmiCoFza5gHwkIlGquvP6/binMRe8mUDs5Vj69yimYLAFYXJNhY21WUWh+Hj4kUSiyy+Iw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upev1P/B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g0W64eLU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986971F00ACF;
-	Mon, 31 Aug 2026 13:52:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184364;
-	bh=M3ArXLpvvpK2406PiFlTgTKded0BNHL3d2lE6hA0x2s=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upev1P/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597371F00A3E;
+	Mon, 31 Aug 2026 13:52:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1788184365;
+	bh=nEvg7Z1PIaYmiTKEcIP9b7V7TCuCveCnXpB84ggNGIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0W64eLU9QJpWLKQJDU4JVXkmuTtQ8PmDt0ycrbZjrsvVIJ9+aDve3XcXbTK5RSlq
-	 ezRXzJFLuW9hjXaXqIH+pDDnzFsXY4mT1vCgdaaLqf256V3ArLfVmOExLJubgCh+vX
-	 6CHyR+cZ8n6wyoCIL2wZNlLWc5Ow3Xzt6g/I80jSXsW9a7vqJJAqW/zeGicDZzJ8Ky
-	 NiTMEeRonY+8574BHslDDQvwJ3krSDJPqPkQg2e1lilR5viZLp2/gOGBKQTTZLMLVB
-	 pPWmELZoWPKRC33zX5FBoEijYJZPvQ+7ODu221ZdnLWXOu9R/Js08n5sKfBf/LdxwS
-	 thVqQODErH+xA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jie Wang <jie.wang@intel.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	gfs2@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] gfs2: move quota_init qc iterator increment
-Date: Mon, 31 Aug 2026 09:31:18 -0400
-Message-ID: <20260831133314.4125787-650-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
-References: <20260831133314.4125787-1-sashal@kernel.org>
+	b=upev1P/BFbneQr9bQvJGjVBlZMOr9vFwM4FtuqjljxPExjDgfHs9D0RV63qCDG5Gd
+	 e9aEgk43bZhtfKGR0uVSeiJ+NVcNjgsGUj5bqwwxivQYRw0O+Klvz+Ge+/kTEd2k83
+	 M2NEjhGiIOBZoqna7nPHRzyg6fEw+f641cSQiyh0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Eric Biggers <ebiggers@kernel.org>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 82/99] mm/swap: reject swapon() on filesystem-level encrypted files
+Date: Mon, 31 Aug 2026 15:34:51 +0200
+Message-ID: <20260831133403.960471198@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
+References: <20260831133359.740409777@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.48
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <jie.wang@intel.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 942202677f8f2ee448a6a2feb06aeeaf520342e3 ]
+------------------
 
-Move qc++ from the loop body into the for-loop increment
-expression in gfs2_quota_init().
+From: Eric Biggers <ebiggers@kernel.org>
 
-This keeps iterator progression explicit and avoids mixing pointer
-advance with duplicate-slot handling in the loop body.
+commit c310a8932a3107c9bc8f01d473e9d085f8aa9c98 upstream.
 
-Signed-off-by: Jie Wang <jie.wang@intel.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ext4 and f2fs don't prevent filesystem-level encrypted files from being
+set up directly as swap files.  In this case, encryption is bypassed.
+
+No one should be doing this, vs.  the methods of encrypted swap that
+actually do work (such as swapping to a dm-crypt device, or swapping to a
+loopback device on top of a filesystem-level encrypted file).
+
+Nevertheless, to prevent user error, make swapon() explicitly reject this
+case.  Document this behavior in fscrypt.rst as well.
+
+Link: https://lore.kernel.org/20260803180426.3123-1-ebiggers@kernel.org
+Fixes: 9bd8212f981e ("ext4 crypto: add encryption policy and password salt support")
+Fixes: f424f664f0e8 ("f2fs crypto: add encryption policy and password salt support")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Baoquan He <baoquan.he@linux.dev>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ Documentation/filesystems/fscrypt.rst |    4 ++++
+ mm/swapfile.c                         |    7 +++++++
+ 2 files changed, 11 insertions(+)
 
-LLM Generated explanations, may be completely bogus:
-
-The background `git log -S` search between v6.10 and v6.11 finished
-(~75s) but only surfaced merge/release commits, not the actual GFS2
-change — typical for this shallow stable checkout.
-
-What we could pin down: duplicate-slot zeroing first appears in
-**v6.11** (absent in v6.10, present in v6.11), so the `qc++` /
-`memset(qc)` ordering bug has been in 6.18.y since then. That’s enough
-context for the **YES** backport call; the exact introducing SHA isn’t
-available from this tree’s history.
-
- fs/gfs2/quota.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index 7a36a3fe5e6e6..4620f586411a6 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -1447,7 +1447,7 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
+--- a/Documentation/filesystems/fscrypt.rst
++++ b/Documentation/filesystems/fscrypt.rst
+@@ -1216,6 +1216,10 @@ astute users may notice some differences
  
- 		qc = (struct gfs2_quota_change *)(bh->b_data + sizeof(struct gfs2_meta_header));
- 		for (y = 0; y < sdp->sd_qc_per_block && slot < sdp->sd_quota_slots;
--		     y++, slot++) {
-+		     y++, slot++, qc++) {
- 			struct gfs2_quota_data *old_qd, *qd;
- 			s64 qc_change = be64_to_cpu(qc->qc_change);
- 			u32 qc_flags = be32_to_cpu(qc->qc_flags);
-@@ -1455,7 +1455,6 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
- 						USRQUOTA : GRPQUOTA;
- 			struct kqid qc_id = make_kqid(&init_user_ns, qtype,
- 						      be32_to_cpu(qc->qc_id));
--			qc++;
- 			if (!qc_change)
- 				continue;
+ - DAX (Direct Access) is not supported on encrypted files.
  
--- 
-2.53.0
++- Encrypted files cannot be used directly as swap files.  To swap to
++  an encrypted file, set up a loopback device on top of it.
++  Alternatively, encrypted swap can use a dm-crypt device.
++
+ - The maximum length of an encrypted symlink is 2 bytes shorter than
+   the maximum length of an unencrypted symlink.  For example, on an
+   EXT4 filesystem with a 4K block size, unencrypted symlinks can be up
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -3430,6 +3430,13 @@ SYSCALL_DEFINE2(swapon, const char __use
+ 		error = -EBUSY;
+ 		goto bad_swap_unlock_inode;
+ 	}
++	if (IS_ENCRYPTED(inode)) {
++		pr_warn_once(
++			"Filesystem-level encrypted swapfile '%s' is unsupported. Create a loop device over it, or use dm-crypt\n",
++			name->name);
++		error = -EINVAL;
++		goto bad_swap_unlock_inode;
++	}
+ 
+ 	/*
+ 	 * Read the swap header.
+
 
