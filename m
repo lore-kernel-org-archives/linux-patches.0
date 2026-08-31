@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091904A13B0;
-	Mon, 31 Aug 2026 14:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A66248A2BC;
+	Mon, 31 Aug 2026 14:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185288; cv=none; b=OwwoULXxjZopjZWRjm5wYSFTvZKsUC9xJ1jyWLYOCm3+W2NSMepjUC27ikw8QVfH3ZJy4Kg0sqEK8ypJnXv8A6CPo9TQ4CSPTpt/mrh/ZtS6rkwpdWUz6O40Hj5od7SLqA9XEKXe20LLiSX2mJrNUOfCqhJAGHHh8YRbGCyfTqM=
+	t=1788185293; cv=none; b=fF0KijJOUHwkK2AFMtCt+v+D1kugyEjpLd7ePcYva6nQ3K4Bie/ayey4B+ZFWRLBP/TKAkoqP0S81fLbi/kc/ldGFkG5P5ezw3YrAO8qer9Zt0h1cBsACFlo9i77EDdpcC6js3Yvs7Bt1Q/5k9xzk0GuCLCp+pjM/wIvJK1wNbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185288; c=relaxed/simple;
-	bh=16pAtrQz088M+DXE2D8zZvDDgErC2kRb8L2Fqlxhnq4=;
+	s=arc-20240116; t=1788185293; c=relaxed/simple;
+	bh=Im+8XIVZg5vdQ2BKnnXL5P+iNgF0txt7FULMY9+9ssg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eBqmvzXWpkTMNlobmA6Q4E0iLv8W9jGhm8tFfKtTiBFVl/bnI8XWgFKSuJLdK6UxnOHqsTUgx34fLeeZLBJjlCe9XYYgX5s4vYcCByMFACs+6FcQNkWa7a7oFyw5RWWKOMcz61FwQaKll0u25cm7bws0cP+NDa1akCbULb5Hblk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbKptzbH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XOZkEk6H0wpyYLcqnBpVZ4CsRyf2B1SMp0QXgpIAhFnZLGEtu2nULXBvPRi+1+fhvTiWr5M9QFyLEFet0tn339/D958b1AsXp8JAw/4vqsgMpFqrrUtJVw0Cz0yIDgEnxvJ40lLOpF0Ct3LbvxT5tcWC+V+zAi2EKFMiyq8c4wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYe93F3M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbKptzbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B1D1F000E9;
-	Mon, 31 Aug 2026 14:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYe93F3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D301F000E9;
+	Mon, 31 Aug 2026 14:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185285;
-	bh=dXqIEiKJKlN3+HBXKg+98dzJTndU6vfxlG8g5UucReU=;
+	s=korg; t=1788185291;
+	bh=gZs87srd6YCiVhvNm6VlhA+1p+VpWKEYej9bWWODCsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jbKptzbHCFt6yGbSAK/H/Gc+lfzQHXekLVMP30eywGHZB5knfBwFiBGCii/MKVxIo
-	 8m0X3lkQlcdrgjg1Qkbdknv6dLM3/fqMc5/jNaHR196O5KZBREU0XpsevHC5v2KQzZ
-	 Nz9KhvI5NmYX9hCql7CJZnGyY6l3qbcxWs+VrxjQ=
+	b=cYe93F3MNUC34KeYmo/qFpPqDmjnKfvpR9SlIzbZT4Lp3R/75RoqB8AVDQLVTbWzb
+	 YmGrIQaRhvQvMwdidhLXpomw5yKQugmvA05MIpfOR4myJTcPcrvFZflW7kJXFA4ie1
+	 xlomqxLMgh/1ziB/TMVYsAe2c2GSch6SFMVuXwkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3b514b87202742f22c44@syzkaller.appspotmail.com,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 41/43] USB: serial: spcp8x5: drop broken carrier detect support
-Date: Mon, 31 Aug 2026 15:35:49 +0200
-Message-ID: <20260831133400.676125932@linuxfoundation.org>
+	=?UTF-8?q?Miguel=20Pe=C3=B1aranda?= <mig.penaranda07@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 43/43] usb: usbfs: fix use-after-free of usb_device in usbdev_release()
+Date: Mon, 31 Aug 2026 15:35:51 +0200
+Message-ID: <20260831133400.804733282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -44,64 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miguel Peñaranda <mig.penaranda07@gmail.com>
 
-commit d37186bd95a07e334447f47274a38a311dad2172 upstream.
+commit 0dd68b5d01d022fc9c5e71c82a82b0a94d3d0671 upstream.
 
-The driver does not support modem status notifications and instead used
-to fetch the modem status once at open() and subsequently operate on and
-report stale state.
+usbdev_release() drops its reference to the struct usb_device before
+draining the list of completed async URBs, but that drain path reads back
+through the same object: free_async() calls dec_usb_memory_use_count()
+for any URB whose buffer came from the usbfs mmap() region, and its first
+statement is bus_to_hcd(ps->dev->bus).
 
-As part of fixing this, a call to fetch the status was added to
-carrier_raised(), which does not work as that callback must not sleep
-(e.g. unlike tiocmget()).
+After a disconnect the usbfs reference can be the last one, in which case
+usb_put_dev() frees the device and the subsequent loop reads offset 80 of
+freed memory and uses the result as a struct usb_hcd *, which
+hcd_buffer_free_pages() then dereferences.
 
-Drop the broken carrier detect support.
+This is reachable by an unprivileged process that has read/write access to
+a /dev/bus/usb node: mmap() the fd, submit one URB with a buffer inside the
+mapping, wait for the device to be unplugged, then munmap() and close().
+It reproduces on every attempt rather than being a race, because a live
+MAP_SHARED vma holds a reference on the struct file, so usbdev_release()
+cannot run until the last vma is gone and the freeing branch of
+dec_usb_memory_use_count() is always taken.
 
-Fixes: e1ed212d8593 ("USB: spcp8x5: add proper modem-status support")
-Cc: stable@vger.kernel.org	# 3.10
-Reported-by: syzbot+3b514b87202742f22c44@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/6a73cea2.01d0871a.3a0d52.000d.GAE@google.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
+  BUG: KASAN: slab-use-after-free in dec_usb_memory_use_count+0x3ae/0x410
+  Read of size 8 at addr ffff8880122ee050 by task poc/769
+  CPU: 1 UID: 1000 PID: 769 Comm: poc Tainted: G    B    6.12.94 #3
+
+  Call Trace:
+   dec_usb_memory_use_count+0x3ae/0x410
+   free_async+0x2aa/0x4f0
+   usbdev_release+0x375/0x460
+   __fput+0x3ea/0xb50
+   __x64_sys_close+0x86/0x100
+
+  Allocated by task 11:
+   usb_alloc_dev+0x55/0xd90
+   hub_event+0x2524/0x43d0
+
+  Freed by task 769:
+   kfree+0x121/0x360
+   device_release+0xd2/0x280
+   usb_put_dev+0x23/0x30
+   usbdev_release+0x2d8/0x460
+
+Release the device reference after the drain loop instead. Nothing between
+the two points requires it to have been dropped.
+
+Fixes: f7d34b445abc ("USB: Add support for usbfs zerocopy.")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Miguel Peñaranda <mig.penaranda07@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260810121209.795089-1-mig.penaranda07@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/spcp8x5.c |   13 -------------
- 1 file changed, 13 deletions(-)
+ drivers/usb/core/devio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/spcp8x5.c
-+++ b/drivers/usb/serial/spcp8x5.c
-@@ -249,18 +249,6 @@ static void spcp8x5_set_work_mode(struct
- 		dev_err(&port->dev, "failed to set work mode: %d\n", ret);
- }
+--- a/drivers/usb/core/devio.c
++++ b/drivers/usb/core/devio.c
+@@ -1098,7 +1098,6 @@ static int usbdev_release(struct inode *
+ 	if (!ps->suspend_allowed)
+ 		usb_autosuspend_device(dev);
+ 	usb_unlock_device(dev);
+-	usb_put_dev(dev);
+ 	put_pid(ps->disc_pid);
+ 	put_cred(ps->cred);
  
--static int spcp8x5_carrier_raised(struct usb_serial_port *port)
--{
--	u8 msr;
--	int ret;
--
--	ret = spcp8x5_get_msr(port, &msr);
--	if (ret || msr & MSR_STATUS_LINE_DCD)
--		return 1;
--
--	return 0;
--}
--
- static void spcp8x5_dtr_rts(struct usb_serial_port *port, int on)
- {
- 	struct spcp8x5_private *priv = usb_get_serial_port_data(port);
-@@ -472,7 +460,6 @@ static struct usb_serial_driver spcp8x5_
- 	.num_bulk_out		= 1,
- 	.open			= spcp8x5_open,
- 	.dtr_rts		= spcp8x5_dtr_rts,
--	.carrier_raised		= spcp8x5_carrier_raised,
- 	.set_termios		= spcp8x5_set_termios,
- 	.init_termios		= spcp8x5_init_termios,
- 	.tiocmget		= spcp8x5_tiocmget,
+@@ -1107,6 +1106,7 @@ static int usbdev_release(struct inode *
+ 		free_async(as);
+ 		as = async_getcompleted(ps);
+ 	}
++	usb_put_dev(dev);
+ 
+ 	kfree(ps);
+ 	return 0;
 
 
