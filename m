@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FEA47CC97;
-	Mon, 31 Aug 2026 13:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0E847D465;
+	Mon, 31 Aug 2026 13:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184735; cv=none; b=a0r7GjajX/UDhudcWVpFAG8i9jnzlvD2RqtJp/0k19xOknctrwPaclFfkVfCRsItRu9p9/VkiLPPSswZA44gJROgUkB+0DGRJR61pcxCQGy9AWFN36yQooUHfEtCR17PBKlo+5FlXljGMWGcTNWuLXSxFqt6KFspQvYRIUvh4+k=
+	t=1788184730; cv=none; b=Dk1M5doL2lGVq7Lui2daR/uuTucThVograrkDJDqTYn/9CJTrrpWRYjoENgevwP8zTVaEiGeghdIrM2kdAksgglfYSKwx07B3BmNqnELe+8OCyocbGzoKTi0AOFmBkWUUh+lWoTT9RZOOnW3RFHsvGjSxSEUBP2i8VjYhx7M5Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184735; c=relaxed/simple;
-	bh=EEMaq+hlw38/f6uZi1OOTr2CBz4KJjiVVaCqebd/C3A=;
+	s=arc-20240116; t=1788184730; c=relaxed/simple;
+	bh=O7JHclBS6cMnvJ6PaCNIlGAkJfVCrpglFtAJ1BNOpO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFFXIFL8JpGhcanQJfk20KQSPjF01qqG9eSOgQ9Uxve676WkrMpetTCwgvL+G3ShIlM9m94TlU3xI1cEC+DvFPXttJGszWnB6g1UaTm/C6/nCcTmVSh6A/Ar5k0/J5d00/v4GPDt3NZCI/S3U/h2FA1vYIMSbEhXK+IhidAmXUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poxFhVLX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mzFMAgU9uyLAf1/f4ZdXu15bS0zKCWTU9STBQejOPXMekLrivJYX50ePwfd2LiFKp2OkCkm1I+iwDDYlNo4HnkYj0ny5igktojbwaEU3//VVeDLdlfGrv+LN9R3ec9AwKvbFtg9NlkRkjFF7MnVo+VHNGDq8YX+xIX5aIuP1DpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEDXDBpD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poxFhVLX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624D91F00A3D;
-	Mon, 31 Aug 2026 13:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEDXDBpD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6401F000E9;
+	Mon, 31 Aug 2026 13:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184733;
-	bh=gi95rRgcV9UIDUTdoLQw7kAuCO/H0epEwle+4LgidCE=;
+	s=korg; t=1788184728;
+	bh=floG1vFzAoSAT33JTW8bNwBs+fXCZ57QoMvhbSVGjH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=poxFhVLXLETvAf30xqzKLSxoK17eVO4Dm0tfpu87j7pbpjDFWq1km/NZuRw04WQ02
-	 JQHbT1M+YUCy2+KjZTRJwvLxeRCHGjs5MLhKtjMJ2poCQANO9BMQ1Ekjp4PQEIBD+J
-	 90FIy+rzTLMjhxeYiKi8eOdMyNCKqbXqzST3vZ4E=
+	b=OEDXDBpDFuMONxHC1C6g6mQ+6H08Dy7HU8Dy2oKp17CTPdr14u7oS+1y4BcOeP2Wt
+	 JJA8ygVkfPb9Sy4ouy2Wde22q2eLSvsxwXVwj1phPVYmTESsYfhZdGMLVCSOpj21/K
+	 5BmqBYB7y+j0VmR05uTK/03Sfj2ghQRcm4i5iJyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinu Kim <kimjw04271234@gmail.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/92] KVM: x86/mmu: Check write tracking in all address spaces
-Date: Mon, 31 Aug 2026 15:34:01 +0200
-Message-ID: <20260831133359.644516155@linuxfoundation.org>
+Subject: [PATCH 6.1 18/92] can: j1939: implement NETDEV_UNREGISTER notification handler
+Date: Mon, 31 Aug 2026 15:34:16 +0200
+Message-ID: <20260831133400.522897504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.482388899@linuxfoundation.org>
 References: <20260831133359.482388899@linuxfoundation.org>
@@ -52,86 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinu Kim <kimjw04271234@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 0f38453cdb2e17566ccb7c0f3dabd5bd21caca26 upstream.
+[ Upstream commit 7fcbe5b2c6a4b5407bf2241fdb71e0a390f6ab9a ]
 
-kvm_gfn_is_write_tracked() checks only the supplied memslot, but page
-tracking is per-address-space and shadow pages are shared across all
-address spaces.  With SMM, a GFN can therefore be write-tracked in one
-address space and appear untracked through the other.
+syzbot is reporting
 
-Check the supplied slot first, then the slot for the other address space.
-This ensures all callers honor write tracking regardless of the active
-address space.  In particular, it prevents mmu_try_to_unsync_pages() from
-marking an upper-level shadow page unsync and eventually triggering the
-BUG in pte_list_remove().
+  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
 
-Fixes: 699023e23965 ("KVM: x86: add SMM to the MMU role, support SMRAM address space")
-Assisted-by: Codex:GPT-5
-Signed-off-by: Jinu Kim <kimjw04271234@gmail.com>
-Message-ID: <20260721103512.2136240-2-kimjw04271234@gmail.com>
-[invert direction of the conditional. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ artem: adapt to 6.1's kvm_slot_page_track_is_active() and mode-indexed
-  gfn_track[]; KVM_ADDRESS_SPACE_NUM is unconditionally 2 on x86 in 6.1,
-  so the peer-slot lookup needs no guard ]
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+problem, for j1939 protocol did not have NETDEV_UNREGISTER notification
+handler for undoing changes made by j1939_sk_bind().
+
+Commit 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct
+callback") expects that a call to j1939_priv_put() can be unconditionally
+delayed until j1939_sk_sock_destruct() is called. But we need to call
+j1939_priv_put() against an extra ref held by j1939_sk_bind() call
+(as a part of undoing changes made by j1939_sk_bind()) as soon as
+NETDEV_UNREGISTER notification fires (i.e. before j1939_sk_sock_destruct()
+is called via j1939_sk_release()). Otherwise, the extra ref on "struct
+j1939_priv" held by j1939_sk_bind() call prevents "struct net_device" from
+dropping the usage count to 1; making it impossible for
+unregister_netdevice() to continue.
+
+Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Tested-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Fixes: 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct callback")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/ac9db9a4-6c30-416e-8b94-96e6559d55b2@I-love.SAKURA.ne.jp
+[mkl: remove space in front of label]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/page_track.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ net/can/j1939/j1939-priv.h |  1 +
+ net/can/j1939/main.c       |  3 +++
+ net/can/j1939/socket.c     | 49 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+)
 
-diff --git a/arch/x86/kvm/mmu/page_track.c b/arch/x86/kvm/mmu/page_track.c
-index 2e09d1b6249f3..51d5a912c5539 100644
---- a/arch/x86/kvm/mmu/page_track.c
-+++ b/arch/x86/kvm/mmu/page_track.c
-@@ -171,14 +171,25 @@ void kvm_slot_page_track_remove_page(struct kvm *kvm,
- }
- EXPORT_SYMBOL_GPL(kvm_slot_page_track_remove_page);
+diff --git a/net/can/j1939/j1939-priv.h b/net/can/j1939/j1939-priv.h
+index 1d3d5d0551e0f..cf26352d1d8ce 100644
+--- a/net/can/j1939/j1939-priv.h
++++ b/net/can/j1939/j1939-priv.h
+@@ -214,6 +214,7 @@ void j1939_priv_get(struct j1939_priv *priv);
  
--/*
-- * check if the corresponding access on the specified guest page is tracked.
-- */
-+static bool __kvm_slot_page_track_is_active(const struct kvm_memory_slot *slot,
-+					    gfn_t gfn,
-+					    enum kvm_page_track_mode mode)
+ /* notify/alert all j1939 sockets bound to ifindex */
+ void j1939_sk_netdev_event_netdown(struct j1939_priv *priv);
++void j1939_sk_netdev_event_unregister(struct j1939_priv *priv);
+ int j1939_cancel_active_session(struct j1939_priv *priv, struct sock *sk);
+ void j1939_tp_init(struct j1939_priv *priv);
+ 
+diff --git a/net/can/j1939/main.c b/net/can/j1939/main.c
+index b45f834ff2cf6..6bbe75d2211d5 100644
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -377,6 +377,9 @@ static int j1939_netdev_notify(struct notifier_block *nb,
+ 		j1939_sk_netdev_event_netdown(priv);
+ 		j1939_ecu_unmap_all(priv);
+ 		break;
++	case NETDEV_UNREGISTER:
++		j1939_sk_netdev_event_unregister(priv);
++		break;
+ 	}
+ 
+ 	j1939_priv_put(priv);
+diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
+index c8173cd34433c..2c15614ea7dde 100644
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -1300,6 +1300,55 @@ void j1939_sk_netdev_event_netdown(struct j1939_priv *priv)
+ 	read_unlock_bh(&priv->j1939_socks_lock);
+ }
+ 
++void j1939_sk_netdev_event_unregister(struct j1939_priv *priv)
 +{
-+	int index;
++	struct sock *sk;
++	struct j1939_sock *jsk;
++	bool wait_rcu = false;
 +
-+	if (!slot)
-+		return false;
-+
-+	index = gfn_to_index(gfn, slot->base_gfn, PG_LEVEL_4K);
-+	return !!READ_ONCE(slot->arch.gfn_track[mode][index]);
++rescan: /* The caller is holding a ref on this "priv" via j1939_priv_get_by_ndev(). */
++	read_lock_bh(&priv->j1939_socks_lock);
++	list_for_each_entry(jsk, &priv->j1939_socks, list) {
++		/* Skip if j1939_jsk_add() is not called on this socket. */
++		if (!(jsk->state & J1939_SOCK_BOUND))
++			continue;
++		sk = &jsk->sk;
++		sock_hold(sk);
++		read_unlock_bh(&priv->j1939_socks_lock);
++		/* Check if j1939_jsk_del() is not yet called on this socket after holding
++		 * socket's lock, for both j1939_sk_bind() and j1939_sk_release() call
++		 * j1939_jsk_del() with socket's lock held.
++		 */
++		lock_sock(sk);
++		if (jsk->state & J1939_SOCK_BOUND) {
++			/* Neither j1939_sk_bind() nor j1939_sk_release() called j1939_jsk_del().
++			 * Make this socket no longer bound, by pretending as if j1939_sk_bind()
++			 * dropped old references but did not get new references.
++			 */
++			j1939_jsk_del(priv, jsk);
++			j1939_local_ecu_put(priv, jsk->addr.src_name, jsk->addr.sa);
++			j1939_netdev_stop(priv);
++			/* Call j1939_priv_put() now and prevent j1939_sk_sock_destruct() from
++			 * calling the corresponding j1939_priv_put().
++			 *
++			 * j1939_sk_sock_destruct() is supposed to call j1939_priv_put() after
++			 * an RCU grace period. But since the caller is holding a ref on this
++			 * "priv", we can defer synchronize_rcu() until immediately before
++			 * the caller calls j1939_priv_put().
++			 */
++			j1939_priv_put(priv);
++			jsk->priv = NULL;
++			wait_rcu = true;
++		}
++		release_sock(sk);
++		sock_put(sk);
++		goto rescan;
++	}
++	read_unlock_bh(&priv->j1939_socks_lock);
++	if (wait_rcu)
++		synchronize_rcu();
 +}
 +
-+/* check if write access is tracked on the specified guest page. */
- bool kvm_slot_page_track_is_active(struct kvm *kvm,
- 				   const struct kvm_memory_slot *slot,
- 				   gfn_t gfn, enum kvm_page_track_mode mode)
+ static int j1939_sk_no_ioctlcmd(struct socket *sock, unsigned int cmd,
+ 				unsigned long arg)
  {
--	int index;
-+	const struct kvm_memory_slot *other_slot;
- 
- 	if (WARN_ON(!page_track_mode_is_valid(mode)))
- 		return false;
-@@ -190,8 +201,13 @@ bool kvm_slot_page_track_is_active(struct kvm *kvm,
- 	    !kvm_page_track_write_tracking_enabled(kvm))
- 		return false;
- 
--	index = gfn_to_index(gfn, slot->base_gfn, PG_LEVEL_4K);
--	return !!READ_ONCE(slot->arch.gfn_track[mode][index]);
-+	BUILD_BUG_ON(KVM_ADDRESS_SPACE_NUM > 2);
-+
-+	if (__kvm_slot_page_track_is_active(slot, gfn, mode))
-+		return true;
-+
-+	other_slot = __gfn_to_memslot(__kvm_memslots(kvm, slot->as_id ^ 1), gfn);
-+	return __kvm_slot_page_track_is_active(other_slot, gfn, mode);
- }
- 
- void kvm_page_track_cleanup(struct kvm *kvm)
 -- 
 2.53.0
 
