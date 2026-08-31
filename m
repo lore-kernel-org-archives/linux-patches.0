@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCC647ACF6;
-	Mon, 31 Aug 2026 13:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8268478E56;
+	Mon, 31 Aug 2026 13:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184608; cv=none; b=aV9Cbq1rc8lU9RZitqaL75xPqef+tQcJ/HUtB2SYVs7ps5Omc4mtxYRl3aIjVyKTE5igBW8P3eD6v1tU8BqnC17EoxoHektKABW4qAprCIy2zNWixpGquJjRqgSrWpck3pBlVvu5u90WLDLQJknu2spw+/WPlsy+K+GVrHhs+xI=
+	t=1788184605; cv=none; b=oHG5b4gK32kGThvAbd2gOVebMgcFEZqMO8QWrBQe6D+BB7/X2hPkm+Et4EZfL2iqsdnZHaPnnBJztvu5/7BCbdSrjojtpaEEaLyl3bpOEx/k9QctUahTI7WSgo55cSzOPBbtoIoaFMVBWkvhZSX4yxxgWHAnuZ1cGzWpziFcvyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184608; c=relaxed/simple;
-	bh=oV09JT564KqIDZ3ud9Y0J/KDtJ6XfY0ogBtd81INzGk=;
+	s=arc-20240116; t=1788184605; c=relaxed/simple;
+	bh=5hQqgGyakgcZOzcCSFLB/1LmFFXNfytP0kH6+KywT7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNvrWvaYd7qr/Wkq0NTQkAd7Gnhw2CeaevFcdKBbzAA+nT9T+OKBqk5byFUu+zn5+7bs2cGP41vyAwbgFl8aml+XPqe6fx84Bibru7T2Ir3grVhiddPda3enzwGt/n3mr3YkLU95O43D07CgbOjHncOa1W2q4YUS55Cngtc/itA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sd6ituEX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X5FNvs1yqKojdUIWALZpzqfdg7IcbieMuK3w5eUHiI29kW0qaifKvpSZGcsKHtH4Q41f2NYkpAZBqTvW2Nj1pTbzSY6OI+iqtkMgwtYROaM/llszGYhCFfBwnkV4S2JSDpQkKLeW22BbE5H0X58ippIC3akkJegYaiguJJ6tmfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4Eo8rht; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sd6ituEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D129A1F000E9;
-	Mon, 31 Aug 2026 13:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4Eo8rht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0180D1F000E9;
+	Mon, 31 Aug 2026 13:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184606;
-	bh=GPubb674/2NBMvLJMvVPIIPSSkCkOu5KS5Fnoq8+eF0=;
+	s=korg; t=1788184603;
+	bh=GaVh/l8o8W4IOufh0xNXPSPohrClXtGbrh4agphmtJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sd6ituEXhijdaH9t1YnEuD3BJR3EVGwcSUa9LpjZ21Hvk7Dyrgx8LEwh27sdAxnAR
-	 FcrSASDkmzpFfmnotGD5M6+JwArghOyBANULsFfebOZporOMb94kgUoNphIVSbhak9
-	 N4FeqkRJt3s3n96xvG3jCjTo+PrUkzTErYlrCelE=
+	b=H4Eo8rht84WjAqF6kAskuzmd5dr045feYdrrZOj7KS6sVwjp3L+JbubwAVupS5UuU
+	 Ex8a0WwviPSgJaPXZRopeULSDnPVYolBpJgbNNXbDnxsSexHCI5y62yVQlIper+RH4
+	 xm5aLTGQC+84PID7xf/yfnyEsFWJ/hlQk9FnXDMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 29/91] selinux: switch two allocations to use kzalloc_objs()
-Date: Mon, 31 Aug 2026 15:34:17 +0200
-Message-ID: <20260831133401.203695201@linuxfoundation.org>
+Subject: [PATCH 6.6 28/91] smc: Use __sk_dst_get() and dst_dev_rcu() in smc_vlan_by_tcpsk().
+Date: Mon, 31 Aug 2026 15:34:16 +0200
+Message-ID: <20260831133401.150200129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -51,51 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit cf6a513f1937581eb012a217b29817e025a1a0ef ]
+[ Upstream commit 0b0e4d51c6554e5ecc3f8cc73c2eaf12da21249a ]
 
-These were the only two allocations in the policy loading logic
-that were not already using kzalloc_objs() for the policy
-data structures. Fix these to be consistent with the rest and
-to protect against ill-formed policy.
+smc_vlan_by_tcpsk() fetches sk_dst_get(sk)->dev before RTNL and
+passes it to netdev_walk_all_lower_dev(), which is illegal.
 
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Also, smc_vlan_by_tcpsk_walk() does not require RTNL at all.
+
+Let's use __sk_dst_get(), dst_dev_rcu(), and
+netdev_walk_all_lower_dev_rcu().
+
+Note that the returned value of smc_vlan_by_tcpsk() is not used
+in the caller.
+
+Fixes: 0cfdd8f92cac ("smc: connection and link group creation")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250916214758.650211-5-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/conditional.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/smc/smc_core.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/security/selinux/ss/conditional.c b/security/selinux/ss/conditional.c
-index 81ff676f209a8..4cd908913b379 100644
---- a/security/selinux/ss/conditional.c
-+++ b/security/selinux/ss/conditional.c
-@@ -166,9 +166,9 @@ void cond_policydb_destroy(struct policydb *p)
- int cond_init_bool_indexes(struct policydb *p)
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 1e27617a5f88c..d325dbd012254 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1827,35 +1827,32 @@ static int smc_vlan_by_tcpsk_walk(struct net_device *lower_dev,
+ /* Determine vlan of internal TCP socket. */
+ int smc_vlan_by_tcpsk(struct socket *clcsock, struct smc_init_info *ini)
  {
- 	kfree(p->bool_val_to_struct);
--	p->bool_val_to_struct = kmalloc_array(p->p_bools.nprim,
--					      sizeof(*p->bool_val_to_struct),
--					      GFP_KERNEL);
-+	p->bool_val_to_struct = kcalloc(p->p_bools.nprim,
-+					sizeof(*p->bool_val_to_struct),
-+					GFP_KERNEL);
- 	if (!p->bool_val_to_struct)
- 		return -ENOMEM;
- 	return 0;
-@@ -714,9 +714,9 @@ static int duplicate_policydb_bools(struct policydb *newdb,
- 	struct cond_bool_datum **cond_bool_array;
- 	int rc;
+-	struct dst_entry *dst = sk_dst_get(clcsock->sk);
+ 	struct netdev_nested_priv priv;
+ 	struct net_device *ndev;
++	struct dst_entry *dst;
+ 	int rc = 0;
  
--	cond_bool_array = kmalloc_array(orig->p_bools.nprim,
--					sizeof(*orig->bool_val_to_struct),
--					GFP_KERNEL);
-+	cond_bool_array = kcalloc(orig->p_bools.nprim,
-+				  sizeof(*orig->bool_val_to_struct),
-+				  GFP_KERNEL);
- 	if (!cond_bool_array)
- 		return -ENOMEM;
+ 	ini->vlan_id = 0;
+-	if (!dst) {
+-		rc = -ENOTCONN;
+-		goto out;
+-	}
+-	if (!dst->dev) {
++
++	rcu_read_lock();
++
++	dst = __sk_dst_get(clcsock->sk);
++	ndev = dst ? dst_dev_rcu(dst) : NULL;
++	if (!ndev) {
+ 		rc = -ENODEV;
+-		goto out_rel;
++		goto out;
+ 	}
+ 
+-	ndev = dst->dev;
+ 	if (is_vlan_dev(ndev)) {
+ 		ini->vlan_id = vlan_dev_vlan_id(ndev);
+-		goto out_rel;
++		goto out;
+ 	}
+ 
+ 	priv.data = (void *)&ini->vlan_id;
+-	rtnl_lock();
+-	netdev_walk_all_lower_dev(ndev, smc_vlan_by_tcpsk_walk, &priv);
+-	rtnl_unlock();
+-
+-out_rel:
+-	dst_release(dst);
++	netdev_walk_all_lower_dev_rcu(ndev, smc_vlan_by_tcpsk_walk, &priv);
+ out:
++	rcu_read_unlock();
++
+ 	return rc;
+ }
  
 -- 
 2.53.0
