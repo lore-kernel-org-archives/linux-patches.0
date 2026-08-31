@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1525B4B1B5F;
-	Mon, 31 Aug 2026 13:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13BA5921F3;
+	Mon, 31 Aug 2026 13:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184258; cv=none; b=mrL15rroRDcrr35ybrKmxcf2Dt/pePct2A20Ce2nxZRfMr4sTw1BUh1pvq5fcfa0V0n3vWX7qnAONs7cw76WE3QZMSiWjiSGompSPqtZT7SS7F//hFHngolBRtGgicn3xRaHto+DQ8QSDgDubudTQLk8X7sqDm6yC26NdDySccU=
+	t=1788184260; cv=none; b=guYohzwErlVTSvCxHkLJBR+fPXv/QYr7OYSIf7l6aJmhQL/y/8mqdq0uHO8A8N8vxo8G0SFKaiWJFglL+vjMNRi3cg8KM5eznrbCh0NBbB4KijL/DKZgUL9BX4A30EYmB8b9Ogwn1ysAAUTe5NDaFmK1wjbiaWpQTU/FJUgGoOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184258; c=relaxed/simple;
-	bh=3ZV2+Pw7D9VzpYokzAPv0U41nDw8ubdgNTkOD043wYQ=;
+	s=arc-20240116; t=1788184260; c=relaxed/simple;
+	bh=7HRChmrFfGxoj+hIjT8UeB3BjHu9D5NWXk4DlMLXzXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SPfj/DckBwUm0uze+R78AbQUU2eCr1t38h5QR8P0haxjgaa5T2YJ4/VhUBQmLd5XgFL4nwwN1JiX7Gb5UL1dhGnGAtbJx6VUdePsar74050AgLtAyvkpOBmzOGuVWHLhTsXI0GvvulWqq+I5dShxdywvNswHvbUa8sJQVJk9An0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dL5CF+cR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UvOUiigDF6jr85pqZPGGO1u+J5KJ0RY3jG2QK/slIljrI5erVU8bUCgSP0BMA7+D7u2x+4PB10savRceYp/A8YYP78NL/PW3FTNkH6QLizk8O0DWoTXgB7kO1pkQbolc0KOm4ZnpvjeKzlIEPVY2D3nFkIy4j+2fpEaAlg5Hmvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEN75hpm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dL5CF+cR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA26A1F00ACF;
-	Mon, 31 Aug 2026 13:50:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEN75hpm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECD01F00A3E;
+	Mon, 31 Aug 2026 13:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184256;
-	bh=BasNP7Rq1MiEoMB6w7glWy4aVMfvxmmw0zVRrfeVddw=;
+	s=k20260515; t=1788184258;
+	bh=1ddNYRlzvjA+IbHZuoSgXjNf2dnTqeGfZr/H4aIQxfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dL5CF+cRmbgmXPV6CPXbx0tvuWV/6SWIbfQ+JKumumcYqRrCNnhzuaqjayXvxq2Di
-	 1+fjc18+hYp/am8Cfb8GQq9gQfxu15aRhulAVMaNix449k4bWXXqYaO3SEtPuTNHQo
-	 Ztuu9C/qs1VS3AFWlppKFoR0JNuKiIcRBNezMXN6OcDN1ScTlpV3JlmIPrpsC8gBXI
-	 94bkuYgO7OtdGorryfUYZfwL6s8ucc0ukoZQ0qLmNGac0YAOFPNvxWNBPYpCncrfjg
-	 SqlV3p4qjmEdGSC5lKxDYJzLZvzV5+FI2RfcijD/bggPXGSXpo9ROaluFEuURv55sf
-	 sqzUvOS881Wsg==
+	b=UEN75hpmcR7pzwb8hhUbCWR2yuaOBCanKQk5ea1zbhxojJ2YJrZAl51wAx4Gj4AbI
+	 RhZRto428ZpdTi0Uxs95y23wEDthfAOFMdFiY2br6TLO6A0S2qkChGi2fyH7eyDC27
+	 8vcE/fexAF17ilHe5pAmKUwBjjsE/o42Iqb5k1ykkWVtTibfLsOj7kLC5HJpLrUMVG
+	 zN8XPc1HcgJFa26Ev3QCnhH21183tvWOYAQTqu9FILo3L/KwEl/hJye+Evj0bLGTfo
+	 DWNFVK5Kd0y0Cwf5ABOto1lGxUzLvrpSHWIWp0VNDpU4NSoNdxTxDmgCqAjDVKer5I
+	 Wv779qxeMupRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Zhang <zhangchen01@kylinos.cn>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Ilya Dryomov <idryomov@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
+	davem@davemloft.net,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	linux-crypto@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: Add Realtek RTL8922AE VID/PID 0bda/d923
-Date: Mon, 31 Aug 2026 09:30:13 -0400
-Message-ID: <20260831133314.4125787-585-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] crypto: testmgr - allow authenc(hmac(sha{256,384}),cts(cbc(aes))) in FIPS mode
+Date: Mon, 31 Aug 2026 09:30:14 -0400
+Message-ID: <20260831133314.4125787-586-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,91 +58,67 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhang <zhangchen01@kylinos.cn>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit 5612ee230a33c450976c3bcaea174f1d816a2697 ]
+[ Upstream commit 6b7e97752854b1f7bccc41864428ea3b55c53cde ]
 
-Add the vendor/product ID (0x0bda, 0xd923) to usb_device_id table for
-Realtek RTL8922AE.
+hmac(sha256), hmac(sha384) and cts(cbc(aes)) algorithms have been
+marked as FIPS allowed for years.  Mark the respective authenc()
+constructions per RFC 8009 ("AES Encryption with HMAC-SHA2 for
+Kerberos 5") as such as well.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+SP 800-57 Part 3 Rev. 1 from Jan 2015 [1] links the draft of what
+became RFC 8009 in Oct 2016 as approved in section 6.3 Procurement
+Guidance (item/recommendation 3).
 
-T:  Bus=10 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=d923 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00E04C885A01
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+[1] https://csrc.nist.gov/pubs/sp/800/57/pt3/r1/final
 
-Signed-off-by: Chen Zhang <zhangchen01@kylinos.cn>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 1)...
-Retry attempt 1...
-Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
-(attempt 2)...
-Retry attempt 2...
-**Verdict: YES** — backport to 6.18.y.
+The background git searches finished and match what we already had:
 
-This is a 2-line USB device ID addition (`0x0bda:0xd923`) to the
-existing `btusb` driver for Realtek RTL8922AE hardware. It fits the
-standard stable exception for new device IDs: small, obviously correct,
-and the prerequisites are already in your tree (RTL8922A support in
-`btrtl.c`, the 8922AE quirks section in `btusb.c`).
+- **Subject search** — No commit with “allow authenc” in this tree.
+  Related hits are krb5/CTS/RFC 8009 work (`d1775a177f7f3`, SUNRPC RFC
+  8009 KUnit tests, etc.).
+- **Krb5 test vectors** — Added in `1b80b6f446ed2` (“crypto/krb5: Test
+  manager data”), committed **2025-03-02**. That’s when the two
+  `authenc(...,cts(cbc(aes)))` entries landed without `fips_allowed`.
+- **Commit hash search** — Ilya Dryomov’s testmgr patch isn’t in 6.18.44
+  yet; only his unrelated Ceph/RBD commits show up.
 
-Confirmed: neither `0xd922` nor `0xd923` is present in 6.18.44 yet. The
-patch should apply cleanly by inserting the new entry after the existing
-`0x8922` line rather than after `0xd922` (which mainline has but this
-tree doesn't).
+That supports the earlier **YES** verdict: the gap is in this tree, the
+fix is a small metadata correction, and it unblocks RFC 8009 Kerberos
+crypto in FIPS mode.
 
- drivers/bluetooth/btusb.c | 2 ++
+ crypto/testmgr.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 38a066cc3404a..502b2984d994a 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -604,6 +604,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0xd922), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0bda, 0xd923), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3617), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3616), .driver_info = BTUSB_REALTEK |
+diff --git a/crypto/testmgr.c b/crypto/testmgr.c
+index 6a490aaa71b9a..9a4d75782a486 100644
+--- a/crypto/testmgr.c
++++ b/crypto/testmgr.c
+@@ -4264,6 +4264,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.alg = "authenc(hmac(sha256),cts(cbc(aes)))",
+ 		.generic_driver = "authenc(hmac-sha256-lib,cts(cbc(aes-generic)))",
+ 		.test = alg_test_aead,
++		.fips_allowed = 1,
+ 		.suite = {
+ 			.aead = __VECS(krb5_test_aes128_cts_hmac_sha256_128)
+ 		}
+@@ -4293,6 +4294,7 @@ static const struct alg_test_desc alg_test_descs[] = {
+ 		.alg = "authenc(hmac(sha384),cts(cbc(aes)))",
+ 		.generic_driver = "authenc(hmac-sha384-lib,cts(cbc(aes-generic)))",
+ 		.test = alg_test_aead,
++		.fips_allowed = 1,
+ 		.suite = {
+ 			.aead = __VECS(krb5_test_aes256_cts_hmac_sha384_192)
+ 		}
 -- 
 2.53.0
 
