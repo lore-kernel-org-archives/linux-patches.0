@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDD9446074;
-	Mon, 31 Aug 2026 13:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0B949CF34;
+	Mon, 31 Aug 2026 13:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183601; cv=none; b=tihJ9+X0qQz3/sHToRUkcrceIR7LWYG9ULC9GBKHLZKSGDgawLojKaehb+IgORMIMpmuoFdxXMTUzM5lM2b67tEW8J/pCGY4t6LcIinLCZ4xH7c9YE4QuS5dIu9et512JYx5thGt7GylHvpkHopAD6pD5us3O1pSmp+oKByU2Go=
+	t=1788183602; cv=none; b=ZoJ6ktY1CUpQBKJnesq13t16gYT8I2EZJllB1QLhYXmocFJBxltz9SRVnbhxd6LWQNpRiI4O0W0TGQpLnD4Q0hkDjm/n4wxuh0uKKInXIMeto31FJT4oitky7ALxB9tPaQk7e9J1r5tZfEDOE1EuTisdGN9DQGG5VQFh3OT1qw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183601; c=relaxed/simple;
-	bh=r8dkcLNr5q9v4O/kFqzMa0nfADSurC5aXyTF/Z5tkH8=;
+	s=arc-20240116; t=1788183602; c=relaxed/simple;
+	bh=dK33KCp9ImIgVqbJA1QhaoiVlEcLdSU8DuapOzrZ3KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qf2jrbEk19Kje0xI2JIJhXwNnVZax6hS/boW5wyEErPbWb/AkdCxKj9gzx1c7TrdZ2MYM5C1QkDpG1qALyN3uYx3ZsewDwItbC/9A0wVod1WeLWFdQh/PsFF96PpZJxaVWjQ6GGpfRBObZrVG9/pl7hyeruJsS9IGm9TEs8Vfpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgKJ8abu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oynnzoNaNEqe5BNJ+MmIkKSsarqPfolYlg0c9sivThWbLoml7L28H6dKuqeuH4dB9VKrvpeHVKqJkaqlTqnft/LvclhFCWeWqbPkYdOfyHIkvXiFn9ZN808WT1srynpruaLmvNN4mFazzsIzep8GbuevQOFghpWzZbJPhpOsxjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HayIjnqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgKJ8abu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4A41F00ACA;
-	Mon, 31 Aug 2026 13:39:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HayIjnqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53241F00A3D;
+	Mon, 31 Aug 2026 13:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183598;
-	bh=rwB2YCCBSkSa7ALLQYruPF6qOCUg1uuofODiN2yR2qg=;
+	s=k20260515; t=1788183599;
+	bh=BQEyAkLQQ9u0yZwKj9QEn6aiwa3AjXqE03qSoylSx2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HgKJ8abuCIeo26N0C0ygBqJWsSkxT6nQK9+oHLHVVO64se7epwcB+vF5FkE3DtOdH
-	 52m1+MdDCs5tlgtrzPBkSs9bH7YqML+wGZAkueq5E6UwIGMVjPz3Mp0AanTsOKP4jY
-	 mOVNmqW+8BtMSgXnQGn2sXcrxjb9oKeYsmTJlRQYVLjw2MapZY/2Qpdz801r5RnqXR
-	 baenAoVr+vN71jXvZVVZFYZ3e/eUI3K3M2jBf3T7yjF1L661rhXkX5zsKZF9uYT7SM
-	 JxNLaC7rbqStDjsXuG5VLO/5pwqxtt8cG5vm989jq3yVLwqiCqhVmi+WhdO3xjrQ4f
-	 +Vh3wwlQ7TRxA==
+	b=HayIjnqd7E5cC9QhjIiY9GPuP9pQLi9s6Z7vroVYCMEfQexMpUhgMm+yaFbmAQtTf
+	 2kL60HQi1DNM/o17yjjOOhw1UtOdauW7As4f2yoPrKGhECBehn7lDhz4gucktyWrd0
+	 zz8ZirCFDPWpFONeMOeHFG9Hng3Eus+ofn8sT20JB6cv9jDSph/8zxqUBXPJ1SmBvD
+	 /D6HEam4E26j0N6lfx51p2yO5XPfu+qMuWlG3O3CGowUEakdg+2UZ4SD9yG8SERSdl
+	 4mXUTyjTTB5Mh+zv8/rTbxXIOp7TcgmEw0fNtJNtND8iJ1T6lQEN37/jv8OcVh4AVZ
+	 +Q9hn/z9+aaOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Alessandro Baldi <baldovic@virgilio.it>,
+	Sean Young <sean@mess.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	maciej.wieczor-retman@intel.com,
-	pawel.chmielewski@intel.com,
-	linux-acpi@vger.kernel.org,
-	acpica-devel@lists.linux.dev,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: Fix condition check in acpi_ps_parse_loop()
-Date: Mon, 31 Aug 2026 09:23:38 -0400
-Message-ID: <20260831133314.4125787-190-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] media: imon: Add iMON VFD HID OEM v1.2 key mappings
+Date: Mon, 31 Aug 2026 09:23:39 -0400
+Message-ID: <20260831133314.4125787-191-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -56,374 +53,399 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ikaros <void0red@gmail.com>
+From: Alessandro Baldi <baldovic@virgilio.it>
 
-[ Upstream commit 8de27e2d83c0d07ae9443c6304575b0609394bfd ]
+[ Upstream commit d97d13c24d7893abcfb80d38630ce74daaa1434c ]
 
-Fix condition check for AML_ELSE_OP in acpi_ps_parse_loop() to prevent
-out-of-bounds access.
+Add Vol+/Vol-/Mute panel button mappings for iMON VFD HID OEM v1.2.
+This version differs in the codes that generate the
+KEY_VOLUMEUP, KEY_VOLUMEDOWN and KEY_MUTE events.
 
-Link: https://github.com/acpica/acpica/commit/3b537b92336e
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/1959692.tdWV9SEqCh@rafael.j.wysocki
+Signed-off-by: Alessandro Baldi <baldovic@virgilio.it>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: ACPICA Fix condition check in
-acpi_ps_parse_loop()
+Connection lost, reconnecting to https://agentn.us.api5.cursor.sh
+(attempt 1)...
+Retry attempt 1...
+# Stable Backport Analysis: media: imon: Add iMON VFD HID OEM v1.2 key
+mappings
 
-**Local tree:** `stable/linux-6.18.y` at `v6.18.44` (Makefile: 6.18.44)
+**Local tree:** Linux 6.18.43 (`git describe HEAD` →
+`v6.18.43-1-gc7f0dac02d232`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
+### Step 1.1: PARSE THE SUBJECT LINE
+**Record:** `[media: imon]` `[Add]` — Add key mappings for iMON VFD HID
+OEM v1.2 panel buttons (Vol+/Vol-/Mute).
+
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+**Record:**
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:** — none
+- **Cc: stable@vger.kernel.org:** — not present (expected)
+- **Signed-off-by:** Alessandro Baldi `<baldovic@virgilio.it>` (author)
+- **Signed-off-by:** Sean Young `<sean@mess.org>` (media subsystem
+  maintainer — strong quality signal)
+
+No syzbot, no bugzilla links, no multiple reporters.
+
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+**Record:**
+- **Bug:** iMON VFD HID OEM v1.2 firmware sends different hardware
+  scancodes for Vol+, Vol-, and Mute than other variants already mapped
+  in `imon_OEM_VFD`.
+- **Symptom:** Panel volume/mute buttons on v1.2 hardware produce no
+  useful input events (lookup returns `KEY_RESERVED`).
+- **Root cause:** Missing entries in the `imon_OEM_VFD.key_table` for
+  scancodes `0x0a`, `0x0b`, `0x0c` (with `0xffee` suffix applied at
+  lookup time).
+- **Version info:** Specific to "iMON VFD HID OEM v1.2" variant of USB
+  device `0x15c2:0x0036`.
+
+### Step 1.4: DETECT HIDDEN BUG FIXES
+**Record:** Not disguised as cleanup. This is an explicit hardware-
+variant key-mapping fix. Functionally equivalent to a hardware quirk:
+same USB ID, different firmware scanc## Phase 1: Commit Message
+Forensics
+
 ### Step 1.1: Subject Line
-**Record:** `[ACPICA]` `[Fix]` — correct the `AML_ELSE_OP` condition
-check in `acpi_ps_parse_loop()` to prevent out-of-bounds access.
+**Record:** `[media: imon]` `[Add]` — Add iMON VFD HID OEM v1.2 key
+mappings for Vol+/Vol-/Mute panel buttons.
 
 ### Step 1.2: Commit Message Tags
 **Record:**
-- **Link:** https://github.com/acpica/acpica/commit/3b537b92336e
-  (upstream ACPICA commit)
-- **Signed-off-by:** ikaros <void0red@gmail.com> (author)
-- **Signed-off-by:** Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-  (ACPI maintainer)
-- **Link:** https://patch.msgid.link/1959692.tdWV9SEqCh@rafael.j.wysocki
-  (kernel submission; could not fetch — Anubis bot protection)
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or `Reviewed-by:` tags
-- Notable: Rafael Wysocki sign-off indicates ACPI maintainer acceptance
-  for kernel integration
+- **Fixes:** — not present (expected for manual review)
+- **Reported-by:** — none
+- **Tested-by:** — none
+- **Reviewed-by:** — none
+- **Acked-by:** — none
+- **Link:** — none
+- **Cc: stable@vger.kernel.org** — none
+- **Signed-off-by:** Alessandro Baldi `<baldovic@virgilio.it>` (author)
+- **Signed-off-by:** Sean Young `<sean@mess.org>` (media maintainer;
+  pipeline Sasha Levin SOB ignored per instructions)
+
+Notable: maintainer sign-off from Sean Young, but no fuzzer report, user
+bug report, or explicit stable nomination.
 
 ### Step 1.3: Commit Body Analysis
 **Record:**
-- **Bug:** After skipping a failed If/While block, the code checks
-  `*walk_state->aml == AML_ELSE_OP` without verifying `walk_state->aml`
-  is within the AML buffer.
-- **Symptom:** Out-of-bounds read (1 byte past buffer end).
-- **Root cause:** `acpi_ps_get_next_package_end()` can advance the AML
-  pointer to or past `parser_state->aml_end` on malformed/truncated AML;
-  the subsequent dereference is unchecked.
-- **Version info:** None in commit message; upstream ACPICA issue #1078
-  documents ASan reproduction.
+- **Bug:** iMON VFD HID OEM v1.2 panel buttons send different hardware
+  codes for `KEY_VOLUMEUP`, `KEY_VOLUMEDOWN`, and `KEY_MUTE` than other
+  variants already mapped in `imon_OEM_VFD`.
+- **Symptom:** Volume+/Volume-/Mute panel buttons produce no useful
+  input events on v1.2 hardware.
+- **Root cause:** Missing entries in the `imon_OEM_VFD.key_table` for
+  the v1.2 scancodes (`0x0a`, `0x0b`, `0x0c` with `0xffee` suffix
+  pattern).
+- **Version info:** Targets a specific hardware/firmware variant (v1.2),
+  not a kernel regression.
 
 ### Step 1.4: Hidden Bug Fix Detection
-**Record:** Not disguised — explicitly labeled a fix for an out-of-
-bounds access. Genuine memory-safety bug fix.
+**Record:** Not a disguised crash/leak/race fix. This is explicit
+hardware-variant keymap completion — functionally a hardware
+quirk/workaround for a device revision that uses different scancodes.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
 ### Step 2.1: Change Inventory
 **Record:**
-- **File:** `drivers/acpi/acpica/psloop.c` (+3 / -1 lines)
-- **Function:** `acpi_ps_parse_loop()`
-- **Scope:** Single-file, surgical fix in an error-recovery path
+- **File:** `drivers/media/rc/imon.c` (+4 lines including comment, +3
+  mapping entries)
+- **Function/structure:** `imon_OEM_VFD.key_table` static data only
+- **Scope:** Single-file, surgical data-table addition
 
 ### Step 2.2: Code Flow Change
 **Record:**
-- **Before:** After skipping a failed If/While body, unconditionally
-  dereferenced `*walk_state->aml` to test for `AML_ELSE_OP`.
-- **After:** Only dereferences if `walk_state->aml <
-  parser_state->aml_end` AND the byte equals `AML_ELSE_OP`.
-- **Path affected:** Error recovery when `acpi_ps_get_arguments()` fails
-  inside an If/While control structure during module-level ACPI table
-  parsing.
+- **Before:** `imon_panel_key_lookup()` walks `imon_OEM_VFD.key_table`;
+  v1.2 Vol+/Vol-/Mute scancodes (`0x000000000a00ffee`,
+  `0x000000000b00ffee`, `0x000000000c00ffee`) match nothing → returns
+  `KEY_RESERVED`.
+- **After:** Those scancodes map to `KEY_VOLUMEUP`, `KEY_VOLUMEDOWN`,
+  `KEY_MUTE`.
+- **Path affected:** 8-byte panel button packets (`len == 8 && buf[7] ==
+  0xee`) on USB device `0x15c2:0x0036` using `imon_OEM_VFD`.
 
 ### Step 2.3: Bug Mechanism
-**Record:**
-- **Category:** Buffer overflow / out-of-bounds read (memory safety)
-- **Mechanism:** `acpi_ps_get_next_package_end()` returns a pointer past
-  the package end. On malformed AML at the buffer boundary,
-  `walk_state->aml` can equal or exceed `parser_state->aml_end`. The old
-  code read one byte past the allocated AML buffer. The fix adds the
-  same bounds guard used by the main parse loop at line 300.
+**Record:** **Category:** Hardware quirk / incomplete keymap for
+hardware variant. **Mechanism:** Same USB ID and driver, but v1.2
+firmware emits different panel scancodes than existing table entries;
+unmatched codes are dropped as `KEY_RESERVED`.
 
 ### Step 2.4: Fix Quality
-**Record:**
-- **Quality:** Obviously correct; mirrors the existing
-  `parser_state->aml < parser_state->aml_end` pattern at line 300.
-- **Regression risk:** Very low — only skips the Else-block skip when
-  already past the buffer end (correct behavior).
-- **Red flags:** None.
+**Record:** Obviously correct pattern — mirrors existing volume/mute
+entries already in the same table. Minimal diff, no logic changes.
+**Regression risk:** Very low; only adds new lookup entries without
+altering existing mappings.
 
 ---
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-### Step 3.1: Blame
-**Record:** Buggy line introduced in `5088814a6e931` ("ACPICA: AML
-parser: attempt to continue loading table after error") by Erik Kaneda,
-2018-06-01. Confirmed ancestor of HEAD. Present in `v6.18.44`.
+### Step 3.1: Blame / Introduction
+**Record:** In this shallow 6.18.43 checkout (~50 commits),
+`imon_OEM_VFD` and its volume mappings are present at base commit
+`a112b91dd6349`. Full upstream introduction history is not available in
+this checkout. The **missing v1.2 mappings are confirmed absent** in the
+current tree.
 
 ### Step 3.2: Fixes: Tag
-**Record:** N/A — no `Fixes:` tag. Upstream ACPICA issue #1078
-references the bug; the introducing commit is `5088814a6e931` (2018).
+**Record:** N/A — no `Fixes:` tag.
 
 ### Step 3.3: Related File History
-**Record:** Recent `psloop.c` history is copyright updates and unrelated
-parser cleanups. No prior fix for this issue in this tree. The Else-skip
-logic has been unchanged since 2018.
+**Record:** `git log --oneline -20 -- drivers/media/rc/imon.c` shows
+only one commit in this shallow tree (`a112b91dd6349`), which is not
+informative for upstream history. No evidence this is part of a multi-
+patch series from local history.
 
 ### Step 3.4: Author Context
-**Record:** Author ikaros (void0red) reported the bug via ACPICA
-fuzzing. Rafael Wysocki (ACPI maintainer) signed off. ACPICA maintainer
-SaketADumbre merged upstream PR #1087 with positive review ("minimal but
-the right changes").
+**Record:** No commits from Alessandro Baldi found in this checkout.
+Sean Young (Signed-off-by) is the media/RC maintainer — strong subsystem
+credibility signal.
 
 ### Step 3.5: Dependencies
-**Record:** No dependencies. Standalone 3-line fix. No patch series.
-Applies cleanly to current `psloop.c` in this tree.
+**Record:** **Standalone.** No prerequisites; only adds rows to an
+existing table in existing driver code. No new structures or APIs
+required.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## Phase 4: Mailing List and External Research
 
-### Step 4.1: Original Discussion
-**Record:** `b4 dig -c 3b537b92336e` failed — commit not in Linux git
-history (ACPICA-only commit). Upstream discussion found at:
-- ACPICA issue #1078: ASan heap-buffer-overflow at `psloop.c:569`
-  (fuzzed AML via `acpiexec`)
-- ACPICA PR #1087: merged 2026-02-21
-- Kernel lore/patch.msgid.link blocked by Anubis — could not read thread
+### Step 4.1: Original Patch Discussion
+**Record:** `b4 dig` requires `-c COMMITISH`; no commit hash was
+provided and subject-only search is unsupported. **Could not retrieve
+lore thread.**
 
 ### Step 4.2: Reviewers
-**Record:** Rafael Wysocki signed off (kernel ACPI maintainer).
-SaketADumbre (ACPICA maintainer) reviewed and merged upstream. No NAKs
-found.
+**Record:** `b4 dig -w` not possible without commit hash. Sean Young SOB
+in commit message indicates maintainer involvement.
 
 ### Step 4.3: Bug Report
-**Record:** ACPICA issue #1078 — ASan READ of size 1 at address 0 bytes
-past a 1293-byte heap region. Reproducible with fuzzed AML
-(`fuzz_178.aml`). Severity: confirmed memory safety bug via sanitizer.
+**Record:** No `Reported-by:` or `Link:` tags. No external bug report
+verified.
 
-### Step 4.4: Related Patches
-**Record:** Standalone fix. Not part of a multi-patch series.
+### Step 4.4: Related Patches / Series
+**Record:** Appears standalone; no series indicators in subject or diff.
 
-### Step 4.5: Stable Mailing List
-**Record:** Could not search lore (Anubis protection). No stable-
-specific discussion found via other sources.
+### Step 4.5: Stable List History
+**Record:** Not searched (lore blocked by bot protection on fetch).
+Precedent exists for imon stable backports (e.g., 3.17-stable picked up
+imon RC protocol fix for broken remote functionality on `15c2:0034`).
 
 ---
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
 ### Step 5.1: Key Functions
-**Record:** `acpi_ps_parse_loop()` — modified.
-`acpi_ps_get_next_package_end()` — called just before the buggy check.
+**Record:** Modified data: `imon_OEM_VFD`. Affected runtime functions:
+`imon_panel_key_lookup()`, called from `imon_incoming_packet()`; table
+also used by `imon_init_idev()` to register supported keys.
 
 ### Step 5.2: Callers
-**Record:** `acpi_ps_parse_loop()` called from `acpi_ps_parse_aml()` in
-`psparse.c:475`. Reachable during ACPI table loading and method
-execution.
+**Record:** `imon_panel_key_lookup()` called from
+`imon_incoming_packet()` when processing 8-byte panel packets (`buf[7]
+== 0xee`). Triggered by physical panel button presses on supported iMON
+USB devices during normal driver operation.
 
 ### Step 5.3: Callees
-**Record:** `acpi_ps_get_arguments()`, `acpi_ps_complete_op()`,
-`acpi_ps_get_next_package_end()`, `acpi_ut_pop_generic_state()`.
+**Record:** Simple linear table scan; returns `KEY_RESERVED` on miss. No
+allocation, locking, or I/O in lookup itself.
 
-### Step 5.4: Call Chain (Reachability)
-**Record:**
-```
-Boot: acpi_ns_load_table() → acpi_ns_parse_table() →
-acpi_ns_execute_table()
-  → acpi_ps_execute_table() [sets ACPI_METHOD_MODULE_LEVEL]
-  → acpi_ps_parse_aml() → acpi_ps_parse_loop()
-```
-Module-level ACPI table parsing (DSDT/SSDT) uses this error-recovery
-path. Malformed firmware AML that fails If/While argument parsing can
-reach the buggy dereference. **Reachable during boot on all ACPI-enabled
-systems.**
+### Step 5.4: Reachability
+**Record:** **Userspace-reachable** via panel button input on
+`USB_DEVICE(0x15c2, 0x0036)` bound to `imon_OEM_VFD`. Common HTPC/media-
+center use case for this hardware.
 
 ### Step 5.5: Similar Patterns
-**Record:** Main parse loop at line 300 uses `parser_state->aml <
-parser_state->aml_end`. The Else check at line 428 was the only
-unguarded dereference in this error path. No similar fix already present
-in this tree (`git log -S 'walk_state->aml <'` returned nothing).
+**Record:** Same table already contains multiple variant-specific
+volume/mute mappings (standard OEM, MCE VFD `0xffdc`, knob values). v1.2
+entries follow established pattern.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+## Phase 6: Cross-Reference Against Local Tree (6.18.43)
 
-### Step 6.1: Buggy Code Exists?
-**Record:** **YES.** Line 428 in `drivers/acpi/acpica/psloop.c` has the
-unguarded `if (*walk_state->aml == AML_ELSE_OP)`. Confirmed in
-`v6.18.44` tag. Bug present since 2018 (commit `5088814a6e931`).
+### Step 6.1: Buggy Code Present?
+**Record:** **YES.** Tree is `6.18.43` (`git describe`:
+`v6.18.43-1-gc7f0dac02d232`). `imon_OEM_VFD` exists at lines 267–310
+with volume mappings for other variants but **without** v1.2 entries
+(`0x0a/0x0b/0x0c`). USB ID `0x15c2:0x0036` → `imon_OEM_VFD` at line
+392–393.
 
 ### Step 6.2: Backport Complications
-**Record:** **Clean apply expected.** File structure unchanged around
-the hunk. No conflicting recent changes in this area.
+**Record:** **Clean apply expected.** Insertion point is clearly between
+existing OEM volume entries and MCE VFD section — matches current file
+layout exactly.
 
 ### Step 6.3: Related Fixes Already Present?
-**Record:** **No.** Fix not in this tree. `grep` for the bounds-check
-pattern returns no matches.
+**Record:** `grep` for `0x000000000a00ffee` and `OEM v1.2` — **not
+found**. Fix is not already in this tree.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## Phase 7: Subsystem Context
 
-### Step 7.1: Subsystem Criticality
-**Record:** **ACPI / ACPICA** — **CORE**. ACPI table parsing runs at
-boot on essentially all x86 and many ARM systems. Affects firmware table
-loading.
+### Step 7.1: Subsystem / Criticality
+**Record:** `drivers/media/rc/imon.c` — media RC/input driver.
+**Criticality: PERIPHERAL** (niche HTPC front-panel hardware).
 
 ### Step 7.2: Subsystem Activity
-**Record:** Active — regular ACPICA syncs and copyright updates, but
-this code path has been stable since 2018.
+**Record:** Mature, low-churn driver in this tree. imon support has been
+stable for many years; this is variant-specific table maintenance.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 8: Impact and Risk Assessment
 
 ### Step 8.1: Who Is Affected
-**Record:** All systems with ACPI enabled that load AML tables
-containing If/While constructs. Trigger requires malformed ACPI AML
-(common in buggy firmware) combined with a parse failure in the If/While
-predicate.
+**Record:** Users of SoundGraph iMON OEM VFD (`15c2:0036`) with HID OEM
+**v1.2** firmware — specifically panel Vol+/Vol-/Mute buttons. Config:
+`CONFIG_RC_CORE` / imon USB driver.
 
 ### Step 8.2: Trigger Conditions
-**Record:**
-- If/While argument parsing fails during module-level table load
-- `acpi_ps_get_next_package_end()` advances AML pointer to or past
-  buffer end
-- Unprivileged users cannot directly inject ACPI tables, but **malicious
-  or buggy firmware ACPI tables** can trigger this at boot
-- Likelihood: Low in practice, but the error-recovery path exists
-  specifically for malformed AML
+**Record:** Pressing panel volume/mute buttons on v1.2 hardware.
+**Common** for affected users every time they use those buttons.
+Unprivileged physical access; not a security vector.
 
 ### Step 8.3: Failure Mode Severity
-**Record:** Out-of-bounds read of 1 byte past AML buffer. **Severity:
-HIGH** — potential kernel oops/crash or information leak. ASan-confirmed
-heap-buffer-overflow.
+**Record:** Unmapped keys → `KEY_RESERVED` → buttons do nothing.
+**Severity: LOW** — functional impairment only; no oops, hang,
+corruption, or security impact.
 
 ### Step 8.4: Risk-Benefit
 **Record:**
-- **Benefit:** HIGH — prevents OOB read in core ACPI parser on malformed
-  firmware tables
-- **Risk:** VERY LOW — 3-line bounds check matching existing code
-  pattern
-- **Ratio:** Strongly favors backport
+- **Benefit:** Restores basic panel functionality for v1.2 owners;
+  aligns with stable rules' explicit acceptance of **hardware quirk**
+  fixes.
+- **Risk:** Minimal — 3 table entries, no behavior change for existing
+  mappings.
+- **Ratio:** Moderate benefit for a small user population, very low
+  risk.
 
 ---
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
 ### Step 9.1: Evidence Summary
 
 **FOR backport:**
-- Real, ASan-confirmed out-of-bounds read
-- Small (3 lines), obviously correct fix
-- Bug present in this tree since 2018
-- Affects core ACPI table loading at boot
-- ACPI maintainer (Rafael Wysocki) signed off
-- No dependencies; clean apply
-- Error-recovery path designed for malformed AML — exactly when this bug
-  triggers
+- Fixes a real, user-visible hardware issue (non-working volume/mute
+  buttons)
+- Tiny, obviously correct, maintainer-signed
+- Fits stable rules' **hardware quirk** category
+  (`Documentation/process/stable-kernel-rules.rst`)
+- Same pattern as existing variant-specific entries in the same table
+- Applies cleanly to 6.18.43; driver and device ID already present
+- Zero regression risk for users without v1.2 hardware
 
 **AGAINST backport:**
-- Found via acpiexec fuzzing, not a reported production kernel crash
-- Requires malformed ACPI + specific parse failure (narrow trigger)
-- ACPI tables come from firmware, not direct userspace input (reduced
-  attack surface, but buggy firmware is common)
+- Not crash/security/corruption/deadlock
+- Niche hardware with small user base
+- No user/fuzzer bug report in commit message
+- Completes support for a variant rather than fixing a kernel regression
+- Mailing list review not verified (no commit hash for `b4 dig`)
 
-**UNRESOLVED:**
-- Kernel lore thread content (Anubis blocked)
-- Whether any production kernel crash has been attributed to this
-  specific bug
+**Unresolved:** Original lore discussion and whether a user/distro filed
+a bug report.
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — matches existing bounds-
-   check pattern; ASan-verified fix upstream
-2. Fixes a real bug? **PASS** — confirmed OOB read
-3. Important issue? **PASS** — memory safety in core boot path (HIGH)
-4. Small and contained? **PASS** — 3 lines, one function
-5. No new features/APIs? **PASS**
-6. Can apply to local tree? **PASS** — buggy code confirmed present,
-   clean apply expected
+1. Obviously correct and tested? **PASS** — standard keymap pattern;
+   maintainer SOB
+2. Fixes real bug affecting users? **PASS** — broken panel buttons on
+   v1.2 hardware
+3. Important issue? **PASS (borderline)** — hardware quirk per stable-
+   kernel-rules.rst; not crash-level but explicitly listed acceptable
+   category
+4. Small and contained? **PASS** — 3 entries, one file
+5. No new features/APIs? **PASS** — data-only quirk entries
+6. Can apply to local tree? **PASS** — code present, clean insertion
+   point
 
-### Step 9.3: Exception Categories
-**Record:** N/A — standard bug fix, not a device ID/quirk/DT/build/doc
-exception.
+### Step 9.3: Exception Category
+**Record:** **Hardware quirk/workaround** — v1.2 firmware revision uses
+different panel scancodes for the same USB device already supported by
+`imon_OEM_VFD`.
 
 ### Step 9.4: Decision Rationale
 
-This commit fixes a genuine out-of-bounds read in the ACPI AML parser's
-error-recovery path. The bug has existed since 2018 and is present in
-the local `6.18.44` tree. While the trigger requires malformed ACPI AML
-with a failed If/While parse, that is precisely the scenario the 2018
-error-recovery code was written to handle — and buggy ACPI firmware is a
-known real-world problem. The fix is minimal, mirrors an existing bounds
-check in the same function, and carries negligible regression risk.
-Memory-safety fixes in core boot-path code are appropriate for stable
-trees.
+For **Linux 6.18.43**, the driver, device ID, and `imon_OEM_VFD` table
+all exist; v1.2 volume/mute scancodes are missing, so affected users'
+buttons are silently ignored. The fix is a minimal hardware-variant
+keymap addition — the same class of change stable trees routinely accept
+as hardware quirks. Severity is low (no stability/security impact), but
+benefit is clear for affected HTPC users and risk is negligible.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit message: subsystem ACPICA, action "Fix",
-  OOB access described; Rafael Wysocki SOB confirmed
-- **[Phase 1]** No Reported-by/syzbot; upstream ACPICA issue #1078
-  provides bug report
-- **[Phase 2]** Diff: +3/-1 in `psloop.c`, adds `walk_state->aml <
-  parser_state->aml_end` guard before `AML_ELSE_OP` check
-- **[Phase 3]** `git blame -L 428,428`: buggy line from `5088814a6e931`
-  (2018-06-01)
-- **[Phase 3]** `git show 5088814a6e931`: introduced Else-skip logic
-  without bounds check
-- **[Phase 3]** `git merge-base --is-ancestor 5088814a6e931 HEAD`:
-  confirmed buggy commit in tree
-- **[Phase 3]** `git log --oneline -20 -- drivers/acpi/acpica/psloop.c`:
-  no prior fix for this issue
-- **[Phase 3]** `git log -S 'walk_state->aml <' --
-  drivers/acpi/acpica/`: no similar fix already applied
-- **[Phase 4]** `b4 dig -c 3b537b92336e`: FAILED — commit not in Linux
-  git
-- **[Phase 4]** ACPICA issue #1078: ASan heap-buffer-overflow confirmed
-  at psloop.c
-- **[Phase 4]** ACPICA PR #1087: merged, maintainer approved minimal fix
-- **[Phase 4]** lore.kernel.org / patch.msgid.link: BLOCKED by Anubis —
-  UNVERIFIED for kernel list discussion
-- **[Phase 5]** `acpi_ps_parse_loop` callers: `psparse.c:475` via
-  `acpi_ps_parse_aml`
-- **[Phase 5]** Call chain: `acpi_ns_parse_table` →
-  `acpi_ns_execute_table` → `acpi_ps_execute_table` (sets
-  `ACPI_METHOD_MODULE_LEVEL`) → `acpi_ps_parse_loop`
-- **[Phase 5]** `nsparse.c:98`: `ACPI_METHOD_MODULE_LEVEL` set during
-  table execution
-- **[Phase 6]** `git describe HEAD`: v6.18.44 on `stable/linux-6.18.y`
-- **[Phase 6]** `git show v6.18.44:drivers/acpi/acpica/psloop.c` lines
-  426-432: buggy unguarded check confirmed
-- **[Phase 6]** `grep` for fix pattern in tree: no matches — fix not
-  present
-- **[Phase 8]** Failure mode: OOB read, severity HIGH; trigger on
-  malformed ACPI during boot table load
+- **[Phase 1]** Parsed subject, tags, body from provided commit message
+- **[Phase 1]** Confirmed no Reported-by/Fixes/Link/Cc: stable tags
+- **[Phase 2]** Diff: +3 keymap entries + comment in
+  `imon_OEM_VFD.key_table`
+- **[Phase 2]** Read `imon_panel_key_lookup()` at lines 1300–1316
+- **[Phase 2]** Read `imon_incoming_packet()` panel path at lines
+  1599–1602
+- **[Phase 3]** `git describe HEAD` → `v6.18.43-1-gc7f0dac02d232`;
+  Makefile → 6.18.43
+- **[Phase 3]** `git blame -L 267,310 drivers/media/rc/imon.c` — table
+  present (shallow history limits introduction date)
+- **[Phase 3]** `git log --grep` / `-S` searches — no candidate commit
+  in this tree
+- **[Phase 4]** `b4 dig` — failed (no commit hash provided; `-q` not
+  supported)
+- **[Phase 4]** lore.kernel.org fetch — blocked by bot protection
+- **[Phase 4]** Web search — found prior imon stable backport precedent
+  (3.17-stable RC protocol fix)
+- **[Phase 5]** `grep imon_OEM_VFD` — device `0x15c2:0x0036` uses this
+  table
+- **[Phase 5]** Traced call chain: panel button →
+  `imon_incoming_packet()` → `imon_panel_key_lookup()`
+- **[Phase 6]** Read `imon_OEM_VFD` at lines 267–310 — v1.2 mappings
+  absent
+- **[Phase 6]** `grep 0x000000000a00ffee` — not in tree
+- **[Phase 7]** Read `Documentation/process/stable-kernel-rules.rst` —
+  hardware quirk explicitly acceptable
+- **[Phase 8]** Confirmed failure mode is `KEY_RESERVED` (no crash) via
+  lookup code
+- **UNVERIFIED:** Original mailing list review thread; whether bug was
+  reported by users; exact kernel version that first introduced
+  `imon_OEM_VFD` (shallow clone)
 
 **YES**
 
- drivers/acpi/acpica/psloop.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/rc/imon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/acpi/acpica/psloop.c b/drivers/acpi/acpica/psloop.c
-index c989cadf271ce..35111ff2526b1 100644
---- a/drivers/acpi/acpica/psloop.c
-+++ b/drivers/acpi/acpica/psloop.c
-@@ -425,7 +425,10 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
- 
- 					ACPI_ERROR((AE_INFO,
- 						    "Skipping While/If block"));
--					if (*walk_state->aml == AML_ELSE_OP) {
-+					if ((walk_state->aml <
-+					     parser_state->aml_end)
-+					    && (*walk_state->aml ==
-+						AML_ELSE_OP)) {
- 						ACPI_ERROR((AE_INFO,
- 							    "Skipping Else block"));
- 						walk_state->parser_state.aml =
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 48534bb52e4d0..4f974b88628f0 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -290,6 +290,10 @@ static const struct imon_usb_dev_descr imon_OEM_VFD = {
+ 		{ 0x000100000000ffeell, KEY_VOLUMEUP },
+ 		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
+ 		{ 0x000000000100ffeell, KEY_MUTE },
++		/* iMON VFD HID OEM v1.2 */
++		{ 0x000000000a00ffeell, KEY_VOLUMEUP },
++		{ 0x000000000b00ffeell, KEY_VOLUMEDOWN },
++		{ 0x000000000c00ffeell, KEY_MUTE },
+ 		/* 0xffdc iMON MCE VFD */
+ 		{ 0x00010000ffffffeell, KEY_VOLUMEUP },
+ 		{ 0x01000000ffffffeell, KEY_VOLUMEDOWN },
 -- 
 2.53.0
 
