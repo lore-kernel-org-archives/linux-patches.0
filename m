@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EA343F4C5;
-	Mon, 31 Aug 2026 14:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A597D488747;
+	Mon, 31 Aug 2026 14:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185198; cv=none; b=AuCRoinwnzKVRQ69g+7Ax1PZXgW10S7hJJV1TPjV7BNWeeo9uaAN6QSBeRTlin9gHzguY2AtcWpylStPcj7nt1OmW11TEcdWt6j7fmvnUAF/GpsSXoATv96kLdSPqBnI53peSf9I3XHVBj+IuDGwB3bskOScspPvI6fBE3TrTvI=
+	t=1788185202; cv=none; b=Z2rTRaNbPfRI1SlSgh/Qo7iSiN3nHhUfM1QJpenpr+hrQ1C4D/4LtR733JFI43IhKiwvuF4nrzEaoQz5SvRGq+9GJAaKi1pvLa6JhxpUO5565Jaqag8vobly4MwFoKMRMrXBreVY3AVJRRr26LL0z4L3DN67mLo6TuuxrQ2t+t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185198; c=relaxed/simple;
-	bh=k512HBE5aWXwAISLz6rfFRjDx78i3zL5V46b56hWWjQ=;
+	s=arc-20240116; t=1788185202; c=relaxed/simple;
+	bh=ebZAMPh4kfi/SLxtfBrOLCQhwtT/cDQLvRV0aKoCXTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qeQ7fPWWU50X8RAykS7xxTKBzIToL5wzPTm0UMe96atFdFB9vQnoGzQ3Fxux1eIu/V0dfiMLgcQvwLu/5tniLdGiV/KpgpjMn3a62uOTLhqhAKlBadyITU1WeCmSMUtfI0rr5qOwUhMeEc7+dI8s73awLfX5mpujvZOUqP8q5VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ma+8WKFb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pKXtT8xYpbKfC8fkQZg0RarYpfU8FkuIYpbz/bOquCAh+g8C175/QbhaDszqd7wthkdLOyousNnk2lzOqDs8b9eNOIWwYS36SXDUcm7jCc2rYGUX4ya9MpZfC5zhSWWdIsxN74fK+ygD4imIBFO5Lx+Z4sXIZ68qOgB1RHhI+AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qpt5mrt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ma+8WKFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47F21F000E9;
-	Mon, 31 Aug 2026 14:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qpt5mrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10901F000E9;
+	Mon, 31 Aug 2026 14:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185197;
-	bh=A/cqrToSC1hBWgwHDqc83D08Xb5yOLk1f+Fw3WJcQvk=;
+	s=korg; t=1788185200;
+	bh=IeLN8I7jdEbK9us4nx7KzXnmHCjzPMOD1SQplmy7AaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ma+8WKFbdgut0STGC5oyGzzXLknB+UIhqSOf3iQ6LZFS6Xjvb5aDTwLrXqxhCieNM
-	 +ngBADdRPp6hgCPLlbEimiZRc9s0TPegrW9n5bs1it3LBuxi6ZYo9IwDQk2YQYXA9w
-	 fCy3+Ni8rbKMI965KQF0ThlX0ezUGFi94b5XouIo=
+	b=1qpt5mrt6uMwW54bfzD+QkRdQytorZENI4Koki7NqmuWFopxokRvOvmglLMc29usk
+	 tzAnS6SkbE/VW72hECRbWde7QNHb0DhM+6u0pWXiAaHz3yRB9wymYQCwVm/ccT4SWY
+	 VJiDSO89cqLUei/EK7ycK1j4vJimemYmtHxiBdJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com,
-	wuyankun <wuyankun@uniontech.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Samuel Page <sam@bynar.io>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 18/43] nilfs2: reject invalid block index in GC ioctl
-Date: Mon, 31 Aug 2026 15:35:26 +0200
-Message-ID: <20260831133359.341141534@linuxfoundation.org>
+Subject: [PATCH 5.10 19/43] nfc: nci: fix uninit-value in the RF discover/activated NTF handlers
+Date: Mon, 31 Aug 2026 15:35:27 +0200
+Message-ID: <20260831133359.385753214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.571886287@linuxfoundation.org>
 References: <20260831133358.571886287@linuxfoundation.org>
@@ -53,89 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Samuel Page <sam@bynar.io>
 
-[ Upstream commit a1735eae55448bc79c2da6593455791e886f6ed8 ]
+[ Upstream commit 8cbe06c1e699c0a165dae5093a2550e65f914818 ]
 
-Syzbot reported list corruption caused by a double list_add_tail() call on
-bh->b_assoc_buffers within nilfs_lookup_dirty_data_buffers().
+nci_rf_discover_ntf_packet() and nci_rf_intf_activated_ntf_packet() each
+parse a notification into an on-stack struct (nci_rf_discover_ntf /
+nci_rf_intf_activated_ntf) that is not initialised. The RF
+technology-specific parameters are only extracted when
+rf_tech_specific_params_len is non-zero, so a notification that reports a
+zero length leaves the rf_tech_specific_params union uninitialised - and
+both handlers then pass it to nci_add_new_protocol(), which reads it:
 
-Analysis revealed that the root cause was the insertion of a page/folio
-with a page index of ULONG_MAX into the page cache via the GC ioctl.
-filemap_get_folios_tag(), called by nilfs_lookup_dirty_data_buffers(),
-repeatedly detects a dirty folio with a page index of ULONG_MAX due to
-index wrap-around, leading to duplicate processing of dirty buffers.
+ - discover:  nci_add_new_target() -> nci_add_new_protocol();
+ - activated: nci_target_auto_activated() -> nci_add_new_protocol().
 
-As a preparatory step, the GC ioctl loads the page/folio of the block to
-be moved during GC and inserts it into the page cache based on information
-in the nilfs_vdesc structure passed as an argument.  Normally, this does
-not cause issues because the user-space GC library configures the
-nilfs_vdesc structure properly.  However, since there is no range check on
-the parameters determining the page index, a request with artificially
-crafted parameters -- such as those generated by Syzbot -- can result in a
-page/folio being inserted with a page index of ULONG_MAX, triggering the
-above problem.
+nci_add_new_protocol() uses nfca_poll->nfcid1_len as both a branch
+condition and a memcpy() length and copies nfcid1/sens_res/sel_res into
+ndev->targets, which is later exposed to user space via NFC_CMD_GET_TARGET.
 
-This resolves the issue by checking the ranges of 'vd_offset' and
-'vd_vblocknr' in the nilfs_vdesc structure that determine the page index,
-thereby preventing the invalid page/folio insertions.
+  BUG: KMSAN: uninit-value in nci_add_new_protocol+0x624/0x6c0
+   nci_add_new_protocol+0x624/0x6c0
+   nci_ntf_packet+0x25b2/0x3c30
+   nci_rx_work+0x318/0x5d0
+   process_scheduled_works+0x84b/0x17a0
+   worker_thread+0xc10/0x11b0
+   kthread+0x376/0x500
+  Local variable ntf.i created at:
+   nci_ntf_packet+0xbc2/0x3c30
 
-Reported-by: syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c37bed40868932d790e9
-Fixes: 7942b919f732 ("nilfs2: ioctl operations")
-Cc: wuyankun <wuyankun@uniontech.com>
+Zero-initialise both on-stack notifications so the union reads back as
+zero when no technology-specific parameters are present.
+
+Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
+Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
+Link: https://lore.kernel.org/netdev/20260623172109.1105965-2-horms@kernel.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Link: https://patch.msgid.link/20260626090301.2139500-1-sam@bynar.io
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/ioctl.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ net/nfc/nci/ntf.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -544,6 +544,8 @@ static int nilfs_ioctl_get_bdescs(struct
-  * Return Value: On success, 0 is returned. On error, one of the following
-  * negative error codes is returned.
-  *
-+ * %-EINVAL - Invalid virtual block descriptor.
-+ *
-  * %-EIO - I/O error.
-  *
-  * %-ENOMEM - Insufficient amount of memory available.
-@@ -557,15 +559,30 @@ static int nilfs_ioctl_move_inode_block(
- 					struct list_head *buffers)
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -310,7 +310,7 @@ void nci_clear_target_list(struct nci_de
+ static void nci_rf_discover_ntf_packet(struct nci_dev *ndev,
+ 				       struct sk_buff *skb)
  {
- 	struct buffer_head *bh;
-+	__u64 limit_blkidx = (__u64)inode->i_sb->s_maxbytes >> inode->i_blkbits;
- 	int ret;
+-	struct nci_rf_discover_ntf ntf;
++	struct nci_rf_discover_ntf ntf = {};
+ 	__u8 *data = skb->data;
+ 	bool add_target = true;
  
--	if (vdesc->vd_flags == 0)
-+	/*
-+	 * vblocknr 0 is reserved as an invalid pointer.  Also, limit_blkidx
-+	 * ensures that the page index converted from vd_vblocknr never
-+	 * overflows the page cache limit and respects the architecture's bmap
-+	 * key width.
-+	 */
-+	if (unlikely(vdesc->vd_vblocknr == 0 ||
-+			vdesc->vd_vblocknr >= limit_blkidx))
-+		return -EINVAL;
-+
-+	if (vdesc->vd_flags == 0) {
-+		if (unlikely(vdesc->vd_offset >= limit_blkidx))
-+			return -EINVAL;
-+
- 		ret = nilfs_gccache_submit_read_data(
- 			inode, vdesc->vd_offset, vdesc->vd_blocknr,
- 			vdesc->vd_vblocknr, &bh);
--	else
-+	} else {
- 		ret = nilfs_gccache_submit_read_node(
- 			inode, vdesc->vd_blocknr, vdesc->vd_vblocknr, &bh);
-+	}
+@@ -517,7 +517,7 @@ static void nci_rf_intf_activated_ntf_pa
+ 					     struct sk_buff *skb)
+ {
+ 	struct nci_conn_info    *conn_info;
+-	struct nci_rf_intf_activated_ntf ntf;
++	struct nci_rf_intf_activated_ntf ntf = {};
+ 	__u8 *data = skb->data;
+ 	int err = NCI_STATUS_OK;
  
- 	if (unlikely(ret < 0)) {
- 		if (ret == -ENOENT)
 
 
