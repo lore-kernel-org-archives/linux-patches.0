@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E664347ACC3;
-	Mon, 31 Aug 2026 13:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76DD47ACE0;
+	Mon, 31 Aug 2026 13:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184498; cv=none; b=qr/TUEjCjs6E7LQGS4qJAG/HQV3bU5+kbDuRrenPMmATK9fNsDyXx0PWaZ9smznNcdiqYeDoX9KNDcjd1fWVHQHGHybIQOISxQpZknIWl6ujISYu2isS+KPiIKFdm10V99Jg/DcNIHt5ClLaS3MWu2vBOrR/OWHHYKek4fodavw=
+	t=1788184487; cv=none; b=DrAi/HpcjHD1VQeTrpu9GdAGoJINmufxPlDRu99aHPO2xKEh/IAAbfaY959gcES2jQieZC6OD1xmxqyJC974pRxikyr1tL+geNva8FiFvAKe2jFf5Q3KDFexIBWOx3nOlmpunyYYRCg+e6S9nxPK7RCNOppvRpywzaqZTEIHGYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184498; c=relaxed/simple;
-	bh=jiN9qM2y0zoXefmmjPq95J2LCG4r/UGiECxMtBJ47wc=;
+	s=arc-20240116; t=1788184487; c=relaxed/simple;
+	bh=dxuBWW8+xcHj72V0aYXuCzQyzxRUl7e7djv/1ZjFQ00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxnEQUxHYlPePUmd8SFFr2Nr3V66aoSJ5K03CkM5YYelJXgrjBl0WbkqEDufbgQWPKxGtL90IzqTzgY+K0R6Dok13QrlPWfS6JoRr9MmtcXcKmM/Z8ACp2phVKE+les0G3sUzUhO56LD328u3cHybaMbaHc+7jYii+WNF5VJ1Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZEvRlL4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O56BcJtkei4iiNBoDmAqIEH9nDNH+a/ZaW462KDVDZzn7ooiOaSsZlb/DMPOIJWowscc1eK59ZKvxsq5ZtWFBM/pft12RdN3+IQA/Daqi7l1H6MCsanp0QS84v6/TjcNLEFjEnnNgLWm0OPq9UudGzjvvkKNiVuKjPlswogqZb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjzKs0cR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZEvRlL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D13E1F00A3D;
-	Mon, 31 Aug 2026 13:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjzKs0cR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1701F00A3D;
+	Mon, 31 Aug 2026 13:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184496;
-	bh=BHN22svFb8r5jQpulQMbWEEA/mkvRwoczlqRtI0B4fs=;
+	s=korg; t=1788184485;
+	bh=skjjqFDL+stFMcnILe4Ccb+w1axk5+uCTOV+qkmkJWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZEvRlL4Jw+7HXXP7OwyNCXFJiBf1UVTMYLrKTQFGI04V78+pfQzCwHKk0oOL4ISS
-	 kDXCkMUm7/UoFMWGs1xENwOiYIAFRtz7vbc1mOKZeEFEnYLQnvG9Wjao6ZIKrY4rui
-	 5KqplCTzbyBzPXfagsBOtHpK+7KtbyxJjIKk5pEk=
+	b=zjzKs0cR9+rkJ8l5ESt4r4esFwn2I6ePZUpTmjWcggBx1WR9Q3ItlEml2FOXl7EOs
+	 ODzBHXZR40kv/IVcQWMmTuqlszzhZEaJrt9m6zB4nm/yc50pFvSTrrHkOJ+ssD03yu
+	 xJ1+v02phLqTHr6Tkq8G65G1KyjNj4L8Os3hXOjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 07/91] perf: Reject exited events as group leaders
-Date: Mon, 31 Aug 2026 15:33:55 +0200
-Message-ID: <20260831133359.892598129@linuxfoundation.org>
+Subject: [PATCH 6.6 03/91] ext4: dont enable DAX on new encrypted files
+Date: Mon, 31 Aug 2026 15:33:51 +0200
+Message-ID: <20260831133359.637917132@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
 References: <20260831133359.468089036@linuxfoundation.org>
@@ -51,64 +54,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit fa091f46c3833fb22384f10eade2b4e1e1d0b278 ]
+commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
 
-perf_event_remove_on_exec() sets remove-on-exec events to the EXIT state
-and detaches their group relationships.  The event's file descriptor can
-remain open, however, and perf_event_open() currently accepts that event
-as a group leader because its early validation rejects only REVOKED and
-DEAD events.
+Currently, when a new encrypted regular file is created, the call to
+ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
+before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
+filesystem is mounted with "-o dax=always".
 
-A new sibling can consequently be linked to the detached leader.  When
-the leader is closed, perf_group_detach() observes that its
-PERF_ATTACH_GROUP bit is already clear and skips the new sibling.  The
-sibling then retains a group_leader pointer to the freed event.
+EXT4_INODE_ENCRYPT then actually gets set a bit later in
+__ext4_new_inode(), when it calls fscrypt_set_context() which calls
+ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
+calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
 
-Reject group leaders in the EXIT state.  Perform the check while holding
-the shared context mutex so that an exec in the target task cannot detach
-the leader between validation and group attachment.
+This was intended to clear S_DAX as well.  However, this was broken by
+commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
+causes data written to the file to bypass encryption, also causing
+xfstests failures such as generic/548 (when "-o dax=always" is used).
 
-[peterz: make the earlier test fully consistent]
-Fixes: 037a3c43edfb ("perf/core: Detach event groups during remove_on_exec")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260806205655.75722-1-kylebot@openai.com
+Fix this by simplifying the flow by making __ext4_new_inode() set
+EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
+ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
+
+Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
+place on new encrypted inodes.  Then it doesn't need to be cleared.
+
+As a result of these simplifications, ext4_set_context() no longer needs
+to change inode flags or state when 'handle != NULL'.  Remove that too.
+
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
+Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ext4/crypto.c | 40 ++++++++++++++++++++--------------------
+ fs/ext4/ialloc.c |  4 ++++
+ 2 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 3f86104eb4c5a..95743e6c5b0cb 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -12692,6 +12692,10 @@ SYSCALL_DEFINE5(perf_event_open,
- 		if (err)
- 			goto err_fd;
- 		group_leader = group.file->private_data;
-+		if (group_leader->state <= PERF_EVENT_STATE_EXIT) {
-+			err = -ENODEV;
-+			goto err_group_fd;
-+		}
- 		if (flags & PERF_FLAG_FD_OUTPUT)
- 			output_event = group_leader;
- 		if (flags & PERF_FLAG_FD_NO_GROUP)
-@@ -12819,6 +12823,12 @@ SYSCALL_DEFINE5(perf_event_open,
- 		if (group_leader->ctx != ctx)
- 			goto err_locked;
+diff --git a/fs/ext4/crypto.c b/fs/ext4/crypto.c
+index 8292494a9b6c8..8497f6125a8eb 100644
+--- a/fs/ext4/crypto.c
++++ b/fs/ext4/crypto.c
+@@ -150,7 +150,13 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 	if (inode->i_ino == EXT4_ROOT_INO)
+ 		return -EPERM;
  
-+		/* Recheck under ctx::mutex to serialize against remove-on-exec. */
-+		if (group_leader->state <= PERF_EVENT_STATE_EXIT) {
-+			err = -ENODEV;
-+			goto err_locked;
-+		}
-+
+-	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
++	/*
++	 * For new encrypted inodes, S_DAX is never set in the first place.
++	 *
++	 * For existing inodes, this is called only on empty directories.  ext4
++	 * never sets S_DAX on directories.
++	 */
++	if (WARN_ON_ONCE(IS_DAX(inode)))
+ 		return -EINVAL;
+ 
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
+@@ -169,6 +175,14 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 	 */
+ 
+ 	if (handle) {
++		/*
++		 * __ext4_new_inode() should have already set the encrypt flag
++		 * on the inode and avoided enabling inline data.
++		 */
++		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
++			return -EINVAL;
++		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
++			return -EINVAL;
  		/*
- 		 * Only a group leader can be exclusive or pinned
+ 		 * Since the inode is new it is ok to pass the
+ 		 * XATTR_CREATE flag. This is necessary to match the
+@@ -176,21 +190,10 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 		 * function with the credits allocated for the new
+ 		 * inode.
  		 */
+-		res = ext4_xattr_set_handle(handle, inode,
+-					    EXT4_XATTR_INDEX_ENCRYPTION,
+-					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
+-					    ctx, len, XATTR_CREATE);
+-		if (!res) {
+-			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-			ext4_clear_inode_state(inode,
+-					EXT4_STATE_MAY_INLINE_DATA);
+-			/*
+-			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-			 * S_DAX may be disabled
+-			 */
+-			ext4_set_inode_flags(inode, false);
+-		}
+-		return res;
++		return ext4_xattr_set_handle(handle, inode,
++					     EXT4_XATTR_INDEX_ENCRYPTION,
++					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
++					     ctx, len, XATTR_CREATE);
+ 	}
+ 
+ 	res = dquot_initialize(inode);
+@@ -211,10 +214,7 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 				    ctx, len, 0);
+ 	if (!res) {
+ 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-		/*
+-		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-		 * S_DAX may be disabled
+-		 */
++		/* Update inode->i_flags to set S_ENCRYPTED. */
+ 		ext4_set_inode_flags(inode, false);
+ 		res = ext4_mark_inode_dirty(handle, inode);
+ 		if (res)
+diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
+index 8daebea58027a..aa5afd7a17b99 100644
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -996,6 +996,8 @@ struct inode *__ext4_new_inode(struct mnt_idmap *idmap,
+ 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
+ 		if (err)
+ 			goto out;
++		if (encrypt)
++			i_flags |= EXT4_ENCRYPT_FL;
+ 	}
+ 
+ 	err = dquot_initialize(inode);
+@@ -1310,6 +1312,8 @@ struct inode *__ext4_new_inode(struct mnt_idmap *idmap,
+ 	ei->i_extra_isize = sbi->s_want_extra_isize;
+ 	ei->i_inline_off = 0;
+ 	if (ext4_has_feature_inline_data(sb) &&
++	    /* Encrypted inodes cannot have inline data */
++	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
+ 	    (!(ei->i_flags & EXT4_DAX_FL) || S_ISDIR(mode)))
+ 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+ 	ret = inode;
 -- 
 2.53.0
 
