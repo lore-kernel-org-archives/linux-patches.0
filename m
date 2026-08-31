@@ -1,201 +1,423 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A8580394;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2B058039D;
 	Mon, 31 Aug 2026 13:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184186; cv=none; b=qA5XGkirAZ6Z8VAAhHxLgZnEkNwU+sLMGeFud/NlIUbW7YdRrDE9MTFL6KBePHmLbcXYrUxYGB8LAB0VLbsHv75s2hIXUj/5Ugeutx4HS9OaW6GJW2VS3W2uf9/n/DdxHYq8UnpHLzyeAPUpdR/DpT7RTmYljNRsv5LnDjl8b9Q=
+	t=1788184187; cv=none; b=AwxTmLJAuPwcu6hSuoCernPBtCINfCCMaMYa44+rIdq3ER5YnUd5vom3VhestXtZHNJF54YyExWwhDfSlvKh1T4eve5dUBKRnfrbWde2rr38B7oUs48aYYEPr3hoxnmJOPJ778ghVqXgJKqcAzJkMIS87txT97j/zoaAsm8JVEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184186; c=relaxed/simple;
-	bh=AFkTEoKMJEB3bj61Yta4irxcJNbhz5hpHxBP9O5A2og=;
+	s=arc-20240116; t=1788184187; c=relaxed/simple;
+	bh=pZu2pCoV6K7ySpvB/3gJkjn9t17/G7T56MdIbHe4DwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuJPXHg2oV0XVi5HGgGsRIE0PbNj7YrTG4J3uDoyzekXXkUnFQnYmGMCm0Pnkq4//Dpdtc70ELoQJwpnX+yjD6wxI4k3eoe1xnrCjjfHMqKtt9rAt1tkiJtRIjVOnxsQ4Mvf0E7rsfYhuBkzq3vO15a+A1IQMdloDcOxNEKpXVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yn5cyAIc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uYSg8jo2959O0djatKCrfjE1u0YMukqZTVmRCSaSL2vetlwWrauVaRJls94Tl2A9i9uPr0aMHioorWOYapgRvORDeoTMt7Y0S8STEZBobrvjpoBmlReCBIS8JKkDqB/hTcIkAM8dHP1WWAwfPXe7YBBNC1pHSOGuDW9siC5jOKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KgCCOg2t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yn5cyAIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699C11F000E9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KgCCOg2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3A71F00A3E;
 	Mon, 31 Aug 2026 13:49:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788184184;
-	bh=kpdwQe/N8oJ27xWDlyjFpOdlKZESvOdD8UScbAWdMCg=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788184185;
+	bh=SlSZnePD1C0svI0M8whuH2lg/iVWP+r5DLZy13O4zWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yn5cyAIc+BC+6VWl6n4bB5RT979JG/deCtiUOj43LdPh2lCYa89VlTa42tiywRHOn
-	 js1qmmvTsj0a+woivLOHMRojo2se/j/b3mBGVbpv+t2TsUPhfXDsgcxiY8MO85ORt4
-	 MWJIUNw7WpW7e4hYRb7hVh+Lf1hwxDoaUHTjNRPI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 04/99] ext4: dont enable DAX on new encrypted files
-Date: Mon, 31 Aug 2026 15:33:33 +0200
-Message-ID: <20260831133359.994861625@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.740409777@linuxfoundation.org>
-References: <20260831133359.740409777@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=KgCCOg2tyDCvY7I9hBbOYStF31g6wqtimgCgYQ7JwV/BLH+9ZJqyqd2oogTIaxO2C
+	 beW6rV4DL1aFRvgCq3geXcvkhpCGoWIM2fqNlkswzvCopNZoWRBSxaBVIC3o331nAT
+	 uqio5RUBbE+b9ASeZR2epjLmulCkWzfK6HCZGGiKkAtnHFBM6TIv8hV0aY6cJRE4zR
+	 Ky+qmIXXoL7+zuSg2fxrAMm+bY4VtqWgmu/t5Hbkak0tUPrUeuud6IIsGYn2YVAbqS
+	 bBe+Zkan7sSZpSx5dNgw4vDwkKKJQoF+hXxX0m033b87lGgcCECUUIp9NSuVsS96tn
+	 fF3e34FIIxAeQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Luka Gejak <luka.gejak@linux.dev>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] net: hsr: require valid EOT supervision TLV
+Date: Mon, 31 Aug 2026 09:29:30 -0400
+Message-ID: <20260831133314.4125787-542-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Luka Gejak <luka.gejak@linux.dev>
 
-------------------
+[ Upstream commit 46d111a3ef3b5972804dcdce0833767143a12192 ]
 
-From: Eric Biggers <ebiggers@kernel.org>
+Supervision frames are only valid if terminated with a zero-length EOT
+TLV. The current check fails to reject non-EOT entries as the terminal
+TLV, potentially allowing malformed supervision traffic.
 
-commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
+Fix this by strictly requiring the terminal TLV to be HSR_TLV_EOT with
+a length of zero.
 
-Currently, when a new encrypted regular file is created, the call to
-ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
-before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
-filesystem is mounted with "-o dax=always".
-
-EXT4_INODE_ENCRYPT then actually gets set a bit later in
-__ext4_new_inode(), when it calls fscrypt_set_context() which calls
-ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
-calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
-
-This was intended to clear S_DAX as well.  However, this was broken by
-commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
-causes data written to the file to bypass encryption, also causing
-xfstests failures such as generic/548 (when "-o dax=always" is used).
-
-Fix this by simplifying the flow by making __ext4_new_inode() set
-EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
-ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
-
-Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
-place on new encrypted inodes.  Then it doesn't need to be cleared.
-
-As a result of these simplifications, ext4_set_context() no longer needs
-to change inode flags or state when 'handle != NULL'.  Remove that too.
-
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
-Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/crypto.c | 40 ++++++++++++++++++++--------------------
- fs/ext4/ialloc.c |  4 ++++
- 2 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/fs/ext4/crypto.c b/fs/ext4/crypto.c
-index 78cede130cbd4..2d1f868cc3dfa 100644
---- a/fs/ext4/crypto.c
-+++ b/fs/ext4/crypto.c
-@@ -144,7 +144,13 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 	if (inode->i_ino == EXT4_ROOT_INO)
- 		return -EPERM;
- 
--	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
-+	/*
-+	 * For new encrypted inodes, S_DAX is never set in the first place.
-+	 *
-+	 * For existing inodes, this is called only on empty directories.  ext4
-+	 * never sets S_DAX on directories.
-+	 */
-+	if (WARN_ON_ONCE(IS_DAX(inode)))
- 		return -EINVAL;
- 
- 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
-@@ -163,6 +169,14 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 	 */
- 
- 	if (handle) {
-+		/*
-+		 * __ext4_new_inode() should have already set the encrypt flag
-+		 * on the inode and avoided enabling inline data.
-+		 */
-+		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
-+			return -EINVAL;
-+		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
-+			return -EINVAL;
- 		/*
- 		 * Since the inode is new it is ok to pass the
- 		 * XATTR_CREATE flag. This is necessary to match the
-@@ -170,21 +184,10 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 		 * function with the credits allocated for the new
- 		 * inode.
- 		 */
--		res = ext4_xattr_set_handle(handle, inode,
--					    EXT4_XATTR_INDEX_ENCRYPTION,
--					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
--					    ctx, len, XATTR_CREATE);
--		if (!res) {
--			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--			ext4_clear_inode_state(inode,
--					EXT4_STATE_MAY_INLINE_DATA);
--			/*
--			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--			 * S_DAX may be disabled
--			 */
--			ext4_set_inode_flags(inode, false);
--		}
--		return res;
-+		return ext4_xattr_set_handle(handle, inode,
-+					     EXT4_XATTR_INDEX_ENCRYPTION,
-+					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
-+					     ctx, len, XATTR_CREATE);
+LLM Generated explanations, may be completely bogus:
+
+## Phase 1: Commit Message Forensics
+
+### Step 1.1: Subject Line
+**Record:** `[net: hsr]` `[require]` — HSR supervision-frame validation:
+strictly require a zero-length EOT TLV at the end of the TLV chain.
+
+### Step 1.2: Tags
+**Record:**
+- **Signed-off-by:** Luka Gejak `<luka.gejak@linux.dev>` (author)
+- **Reviewed-by:** Fernando Fernandez Mancera `<fmancera@suse.de>`
+  (subsystem reviewer)
+- **Link:**
+  https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev
+- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` (net maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Acked-by:, or Cc: stable tags
+- Notable: Reviewed by SUSE HSR contributor; no syzbot or user bug
+  report
+
+### Step 1.3: Body Analysis
+**Record:**
+- **Bug:** Supervision frames must end with a zero-length EOT TLV per
+  IEC 62439-3. The existing check only rejects EOT TLVs with non-zero
+  length; it does not reject non-EOT TLVs as the terminal entry.
+- **Symptom:** Malformed supervision traffic can be accepted as valid.
+- **Root cause:** Inverted conditional logic — accepts any terminal TLV
+  that is not `(EOT && length != 0)`.
+- **Version info:** None in message.
+
+### Step 1.4: Hidden Bug Fix Detection
+**Record:** Explicit protocol-validation bug fix, not disguised cleanup.
+The inverted `&&` vs `||`/`!=` is a classic logic error.
+
+---
+
+## Phase 2: Diff Analysis
+
+### Step 2.1: Inventory
+**Record:**
+- **Files:** `net/hsr/hsr_forward.c` (+1 / -1)
+- **Function:** `is_supervision_frame()`
+- **Scope:** Single-file, single-line surgical fix
+
+### Step 2.2: Code Flow Change
+**Record:**
+- **Before:** Reject only if `type == HSR_TLV_EOT && length != 0`. All
+  other terminal TLVs (including non-EOT with length 0 or non-zero) are
+  accepted.
+- **After:** Reject unless `type == HSR_TLV_EOT && length == 0`. Only a
+  proper EOT terminator is accepted.
+- **Path:** Receive path in `is_supervision_frame()`, called for every
+  HSR/PRP frame.
+
+### Step 2.3: Bug Mechanism
+**Record:**
+- **Category:** Logic / protocol correctness
+- **Mechanism:** De Morgan inversion. Comment says “end of tlvs must
+  follow at the end,” but old code only filtered malformed EOT entries,
+  not non-EOT terminal TLVs.
+
+### Step 2.4: Fix Quality
+**Record:** Obviously correct, minimal, no API changes. Regression risk
+is very low — only makes validation stricter (rejects more malformed
+frames). No deadlock or locking changes.
+
+---
+
+## Phase 3: Git History Investigation
+
+### Step 3.1: Blame
+**Record:** Buggy EOT check introduced in `eafaa88b3eb7` (“net: hsr: Add
+support for redbox supervision frames”, Oct 2021). Present in this tree
+since that commit. `eafaa88b3eb7` is an ancestor of HEAD.
+
+### Step 3.2: Fixes: Tag
+**Record:** N/A — no Fixes: tag in commit message.
+
+### Step 3.3: Related File History
+**Record:** Related stable commits on `stable/linux-6.18.y`:
+- `fbd0662f9c9a6` — “net: hsr: fix potential OOB access in supervision
+  frame handling” (same author, same day, already in this tree)
+- `eafaa88b3eb7` — introduced the buggy EOT check
+- `51dd4ee037222`, `295de650d3aaf` — earlier supervision parsing fixes
+
+### Step 3.4: Author Context
+**Record:** Luka Gejak has multiple stable backports in this tree
+(`fbd0662f9c9a6`, `1fe371a34e801`, rtw88 fixes). Active HSR contributor.
+
+### Step 3.5: Dependencies
+**Record:** Standalone. Originally part of a larger series (v1–v3), but
+from v4 onward it is a standalone 1/2 or single patch. No structural
+prerequisites. Applies cleanly on top of current tree (`git apply
+--check` passed).
+
+---
+
+## Phase 4: Mailing List and External Research
+
+### Step 4.1: Original Discussion
+**Record:** `b4 dig -c 46d111a3ef3b5` found thread at
+https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev.
+Series evolved v1–v7; committed version is v7 (latest). No NAKs found in
+saved mbox. No explicit stable nomination in thread.
+
+### Step 4.2: Reviewers
+**Record:** `b4 dig -w`: CC'd netdev maintainers (Miller, Dumazet,
+Kicinski, Abeni, Horman) and Felix Maurer (HSR maintainer). Reviewed-by
+from Fernando Fernandez Mancera (SUSE).
+
+### Step 4.3: Bug Report
+**Record:** No external bug report, syzbot, or Bugzilla link. Author-
+identified logic bug.
+
+### Step 4.4: Series Context
+**Record:** v1–v3 bundled with “serialize seq_blocks merge”; v4+ split
+out as standalone EOT fix. No other series patches required.
+
+### Step 4.5: Stable List
+**Record:** No stable-list discussion found. Companion OOB fix
+(`fbd0662f9c9a6`) was already backported to this tree.
+
+---
+
+## Phase 5: Code Semantic Analysis
+
+### Step 5.1: Key Functions
+**Record:** `is_supervision_frame()` modified.
+
+### Step 5.2: Callers
+**Record:** Called from `fill_frame_info()` (line 691), which is called
+from `hsr_forward_skb()` (line 739). `hsr_forward_skb()` is invoked
+from:
+- `hsr_slave.c` — slave port receive
+- `hsr_device.c` — master/interlink receive
+
+Every HSR/PRP received frame goes through this path.
+
+### Step 5.3: Callees / Downstream Effects
+**Record:** When `is_supervision_frame()` returns true:
+- `hsr_get_node()` runs with `is_sup=true` (affects node DB, SAN info)
+- `hsr_handle_sup_frame()` called on master for non-proxy supervision
+  (node merging)
+- Supervision-specific forwarding: dropped on interlink, special path ID
+  (0xf) for HSRv0
+- `prp_check_lsdu_size()` uses `is_supervision` flag
+
+### Step 5.4: Reachability
+**Record:** Reachable from network receive on any HSR/PRP-configured
+interface. Attacker on the HSR/PRP segment can send crafted frames.
+HSR/PRP is config-specific (`CONFIG_HSR`), not universal.
+
+### Step 5.5: Similar Patterns
+**Record:** No similar inverted EOT check elsewhere in `net/hsr/`.
+`is_proxy_supervision_frame()` does not perform EOT validation
+(different purpose).
+
+---
+
+## Phase 6: Cross-Reference Against Local Tree
+
+### Step 6.1: Buggy Code Present?
+**Record:** YES. Local tree is **v6.18.44** (`git describe HEAD`). Buggy
+code at lines 113–115 of `net/hsr/hsr_forward.c`:
+
+```113:115:net/hsr/hsr_forward.c
+        if (hsr_sup_tlv->HSR_TLV_type == HSR_TLV_EOT &&
+            hsr_sup_tlv->HSR_TLV_length != 0)
+                return false;
+```
+
+Bug present since `eafaa88b3eb7` (2021). Fix commit `46d111a3ef3b5` is
+NOT in this tree.
+
+### Step 6.2: Backport Complications
+**Record:** Clean apply expected. OOB fix (`fbd0662f9c9a6`) already
+changed `pskb_may_pull()` offsets but left the EOT check unchanged. `git
+format-patch -1 46d111a3ef3b5 --stdout | git apply --check` succeeded.
+
+### Step 6.3: Related Fixes Already Present?
+**Record:** OOB fix `fbd0662f9c9a6` is in tree (companion fix, same
+author/day). EOT logic fix is not.
+
+---
+
+## Phase 7: Subsystem Context
+
+### Step 7.1: Subsystem Criticality
+**Record:** `net/hsr` — HSR/PRP redundancy protocol for
+industrial/utility networks. **IMPORTANT** for that niche;
+**PERIPHERAL** globally (requires `CONFIG_HSR`).
+
+### Step 7.2: Activity
+**Record:** Active development in 6.18.y (VLAN support, OOB fix, memory
+leak fix, RedBox support).
+
+---
+
+## Phase 8: Impact and Risk Assessment
+
+### Step 8.1: Who Is Affected
+**Record:** Users running HSR/PRP (`CONFIG_HSR`) — industrial
+automation, power grid, substation networking.
+
+### Step 8.2: Trigger Conditions
+**Record:** Malformed supervision frame on the HSR/PRP network with a
+non-EOT terminal TLV (any type other than EOT=0 with length 0). Attacker
+or faulty device on the L2 segment. Config-specific, not every kernel
+user.
+
+### Step 8.3: Failure Mode Severity
+**Record:** Malformed frames accepted as valid supervision → incorrect
+node DB updates, node merging via `hsr_handle_sup_frame()`, altered
+forwarding/drop behavior. **Severity: MEDIUM-HIGH** for HSR deployments
+(protocol state corruption / redundancy disruption), but not a kernel
+crash, OOB, or UAF. No memory-safety issue.
+
+### Step 8.4: Risk-Benefit
+**Record:**
+- **Benefit:** Correct IEC 62439-3 validation; completes supervision
+  hardening alongside already-backported OOB fix; protects node DB
+  integrity.
+- **Risk:** Very low — one-line logic inversion, only rejects more bad
+  frames.
+- **Ratio:** Favorable for HSR users; low global risk.
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence Summary
+
+**FOR backport:**
+- Clear logic bug since 2021 (inverted conditional)
+- Real protocol validation failure with node DB / forwarding impact
+- 1-line, obviously correct, applies cleanly
+- Reviewed by HSR contributor and net maintainer
+- Companion OOB fix from same author already in v6.18.44
+- Standalone, no dependencies
+
+**AGAINST backport:**
+- No crash, syzbot report, or user bug report
+- Niche subsystem (`CONFIG_HSR`)
+- Impact is protocol/state correctness, not memory safety
+- No explicit stable nomination
+
+**Unresolved:** No field reports quantifying real-world exploitation.
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **PASS** — logic inversion is self-
+   evident; Reviewed-by present; no runtime test reported.
+2. Fixes a real bug? **PASS** — inverted conditional since
+   `eafaa88b3eb7`.
+3. Important issue? **PASS (moderate)** — HSR node DB / redundancy state
+   corruption for industrial users, not kernel panic.
+4. Small and contained? **PASS** — 1 line, 1 file.
+5. No new features/APIs? **PASS**.
+6. Can apply to local tree? **PASS** — verified with `git apply
+   --check`.
+
+### Step 9.3: Exception Categories
+**Record:** None (not device ID, quirk, DT, build, or docs).
+
+### Step 9.4: Decision Rationale
+
+This is a longstanding logic inversion in HSR supervision-frame
+validation. Since 2021, any terminal TLV that is not “EOT with non-zero
+length” has been accepted, violating IEC 62439-3 and allowing malformed
+supervision traffic to drive node DB updates and supervision-specific
+forwarding. The fix is a one-line De Morgan correction with negligible
+regression risk.
+
+The companion OOB fix from the same author on the same day is already in
+v6.18.44; leaving this EOT validation gap incomplete is inconsistent.
+For HSR/PRP deployments — used in safety-critical industrial
+infrastructure — protocol validation that protects node state integrity
+is appropriate stable material even without a crash report.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed subject, tags, body from commit `46d111a3ef3b5`
+- [Phase 1] No syzbot/Reported-by; Reviewed-by: Fernando Fernandez
+  Mancera
+- [Phase 2] Diff: 1 line in `is_supervision_frame()`, logic inversion
+  confirmed
+- [Phase 2] Read current buggy code at lines 113–115 of
+  `net/hsr/hsr_forward.c`
+- [Phase 3] `git show eafaa88b3eb7`: buggy EOT check introduced Oct 2021
+- [Phase 3] `git merge-base --is-ancestor eafaa88b3eb7 HEAD`: bug-
+  introducing commit in tree
+- [Phase 3] `git merge-base --is-ancestor 46d111a3ef3b5 HEAD`: fix NOT
+  in tree
+- [Phase 3] `git log stable/linux-6.18.y -- net/hsr/hsr_forward.c`:
+  related OOB fix `fbd0662f9c9a6` present
+- [Phase 3] `git merge-base --is-ancestor fbd0662f9c9a6 HEAD`: OOB fix
+  in tree
+- [Phase 4] `b4 dig -c 46d111a3ef3b5`: lore thread found, v7 is latest
+- [Phase 4] `b4 dig -a`: series v1–v7; standalone from v4 onward
+- [Phase 4] `b4 dig -w`: netdev maintainers CC'd
+- [Phase 4] Mbox grep: Reviewed-by confirmed; no stable nomination or
+  NAK
+- [Phase 5] `grep is_supervision_frame`: caller chain `fill_frame_info`
+  → `hsr_forward_skb` → slave/master receive
+- [Phase 5] Read `hsr_handle_sup_frame()`, `hsr_get_node()`,
+  `hsr_forward_do()` for downstream impact
+- [Phase 6] `git describe HEAD`: v6.18.44
+- [Phase 6] Buggy code confirmed present in stable release commit
+  `1efe5d048a391`
+- [Phase 6] `git format-patch -1 46d111a3ef3b5 --stdout | git apply
+  --check`: applies cleanly
+- [Phase 8] Assessed severity as protocol state corruption for HSR
+  users, not kernel memory safety
+
+**YES**The background checks finished and match what the analysis
+already used:
+
+- **Mainline search** found commit `46d111a3ef3b5` (“net: hsr: require
+  valid EOT supervision TLV”) on master/linux-next.
+- **Author history on stable/linux-6.18.y** shows the companion OOB fix
+  (`fbd0662f9c9a6`) is already in v6.18.44, while this EOT logic fix is
+  not.
+
+Verdict for this tree (v6.18.44): **YES** — one-line protocol validation
+fix, applies cleanly, and completes the supervision-frame hardening
+started by the already-backported OOB patch.
+
+ net/hsr/hsr_forward.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 299de290ddaa5..901eb85c112d1 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -110,7 +110,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
  	}
  
- 	res = dquot_initialize(inode);
-@@ -205,10 +208,7 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 				    ctx, len, 0);
- 	if (!res) {
- 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
--		/*
--		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
--		 * S_DAX may be disabled
--		 */
-+		/* Update inode->i_flags to set S_ENCRYPTED. */
- 		ext4_set_inode_flags(inode, false);
- 		res = ext4_mark_inode_dirty(handle, inode);
- 		if (res)
-diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index 950cda9dc7cca..5aa49839dc7ef 100644
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -993,6 +993,8 @@ struct inode *__ext4_new_inode(struct mnt_idmap *idmap,
- 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
- 		if (err)
- 			goto out;
-+		if (encrypt)
-+			i_flags |= EXT4_ENCRYPT_FL;
- 	}
+ 	/* end of tlvs must follow at the end */
+-	if (hsr_sup_tlv->HSR_TLV_type == HSR_TLV_EOT &&
++	if (hsr_sup_tlv->HSR_TLV_type != HSR_TLV_EOT ||
+ 	    hsr_sup_tlv->HSR_TLV_length != 0)
+ 		return false;
  
- 	err = dquot_initialize(inode);
-@@ -1303,6 +1305,8 @@ struct inode *__ext4_new_inode(struct mnt_idmap *idmap,
- 	ei->i_extra_isize = sbi->s_want_extra_isize;
- 	ei->i_inline_off = 0;
- 	if (ext4_has_feature_inline_data(sb) &&
-+	    /* Encrypted inodes cannot have inline data */
-+	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
- 	    (!(ei->i_flags & EXT4_DAX_FL) || S_ISDIR(mode)))
- 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
- 	ret = inode;
 -- 
 2.53.0
-
-
 
