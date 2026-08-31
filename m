@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D055D48AE0F;
-	Mon, 31 Aug 2026 14:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617874CCDE4;
+	Mon, 31 Aug 2026 14:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788185110; cv=none; b=SZnIZHNgPaDSTk9IrPB2A3tjW1OIWrUcof3p5vMbnddkSOhEHzmUEdfKd+TGzaTA2/Ct24jP9vnc05xORoQns8tCaYMN9qM/5jAlTAyX2WKriubEgEc/HrYmMMKT4V7qdLoYQpfMKpcNU5cWgaxZjX+bGzGgBuDtIk9hUbASnSQ=
+	t=1788185117; cv=none; b=MaE94vUIDH4aNU+oJ24pe42o8mYZeg1cxiNJeX/+roxTLB1/hYurXMc0tRivTtfSyMV6qpYcvYIK1YFfIrjLzqzKYwU+e6l/q7QoUjNaMBES6QQFSA3MVpSoZToenvsksK+nCo60Vo+02YcGUv+Bc3YsWJmEsgalG+RZ5l5I7us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788185110; c=relaxed/simple;
-	bh=bwPppRYMOMCjgc8LRT+cZGdH5pNHWZTwUl5F7fRqEf8=;
+	s=arc-20240116; t=1788185117; c=relaxed/simple;
+	bh=0+bErX1I+bXge9DPk8tfZ7stUtwq7nU1FSKufMAgSm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWamsXvT4rF3QE0jPxwkupS3gH3ovWuGkxwsmrZBpGzmS5YEO/tkOMFjKPhIIKwzYA4rLGkc2DIhagW7JmXzOhtFRAivBbSQT+j3gc7urtSTRLmRv+poCkofGOt+jaZTXV+NAmOOMpi1+R5ubVNFonK+ib0AQAyZaBdpYmSWYZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVBDh+mv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mxjf9ctyxVdmuQW4zOheU9/JLIVjFH+xZ1iJ5YWo+MFvUk6LoVAfMD/esi8GPnD69A1ngSZt4nboxk3+iNiBQ1r2Ky/tr6yFCd/POo8TihK32C47DGvd2LSjt2AvOi6ESftjxZxbuDBYf951utVZg9gMZrAjgquCW7ZZgvyMXt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPAGGbB5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVBDh+mv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF901F000E9;
-	Mon, 31 Aug 2026 14:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPAGGbB5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5ED1F00A3D;
+	Mon, 31 Aug 2026 14:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788185107;
-	bh=tb/aybKG4QqsCoRMc7Iy62bpbXSmUUS6UoAErIjjjvw=;
+	s=korg; t=1788185116;
+	bh=psVHp3xLWyZDtVJF3uaL6p2QXXHzsEoWgiGVksF6hT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NVBDh+mvrlZxGTNyvW7alHXFoP/r+IlZtPpZaICQktjATFWnTPm43WwtyQPeRbdP/
-	 ZtgN9wQol2sLBLr/gH4FwmPGuJz1nl0f8XVDsp1wiq4fTJwPvQ4FqSK9y084Jr5DPN
-	 7XXY+IALUM/mEqjy4lwsdZmNgGTSxNgdI2KrFKrg=
+	b=TPAGGbB5J+q8eYDwqnJvFX5Wwel2SDD2dEC+84TxuLuxj1qai8Mma5HczIjLZl3UG
+	 m/diyMnc+lRc6cctS1M18/7OZeIKFtIklbtNeBoHmOGXhgs7TVjSIGchobXT0fVfv+
+	 4WaF+2owiuv5/kFNHvWQ8wGGKx2yfjpKXl6aWqlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 55/69] ipv6: seg6: clear IPv4 control block on IPIP decapsulation
-Date: Mon, 31 Aug 2026 15:35:28 +0200
-Message-ID: <20260831133401.474509256@linuxfoundation.org>
+	Md Sadre Alam <md.alam@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 58/69] crypto: qce - fix CCM AAD buffer underallocation
+Date: Mon, 31 Aug 2026 15:35:31 +0200
+Message-ID: <20260831133401.642080291@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831133358.601894154@linuxfoundation.org>
 References: <20260831133358.601894154@linuxfoundation.org>
@@ -52,112 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Md Sadre Alam <md.alam@oss.qualcomm.com>
 
-commit 44930446dde45a7a90fe1446fa38eb0e2c561646 upstream.
+commit 7f2345f47dd189625f657cd72437179ab4170ee1 upstream.
 
-End.DX4 and End.DT4 decapsulate an IPv4 packet through
-decap_and_validate() and send it directly to IPv4 routing. The inner
-packet therefore bypasses ip_rcv_core(), which normally clears IPCB
-before IPv4 interprets skb->cb.
+The AAD buffer allocated in qce_aead_ccm_prepare_buf_assoclen()
+can be smaller than the length later programmed into the DMA
+scatterlist.
 
-The skb instead retains IP6CB data from the outer packet. IP6CB and
-IPCB use the same skb->cb storage, so IP6CB(skb)->lastopt overlaps
-IPCB(skb)->opt.optlen and srr, while IP6CB(skb)->nhoff overlaps rr and
-ts.
+The allocation size is currently calculated as:
 
-The sender can make the stale optlen byte nonzero with a valid outer
-extension-header chain. The reproducers put an eight-byte Destination
-Options header immediately after the 40-byte IPv6 header and before the
-Segment Routing Header. ipv6_destopt_rcv() records the sender-controlled
-Destination Options offset in both lastopt and nhoff, setting them to
-40. On the reproduced little-endian x86-64 kernel, IPv4 therefore sees
-optlen = 40 and rr = 40.
+  ALIGN(assoclen, 16) + MAX_CCM_ADATA_HEADER_LEN
 
-Both tcp_v4_save_options() and __ip_options_echo() skip option copying
-when optlen is zero. Here optlen is 40, so the TCP SYN path allocates
-room for 40 bytes of option data and calls __ip_options_echo(). The
-stale rr value makes that function read inner packet byte 41 as the
-Record Route option length. The reproducers set that sender-controlled
-byte to 255, so __ip_options_echo() copies 255 bytes into the 40-byte
-option-data area.
+while the DMA length is set to:
 
-Separate End.DX4 and End.DT4 reproducers on the unpatched v7.2-rc5
-kernel both produced:
+  ALIGN(assoclen + adata_header_len, 16)
 
-  BUG: KASAN: slab-out-of-bounds in __ip_options_echo()
-  Write of size 255
+Since ALIGN() does not distribute over addition, the allocation
+can be smaller than the DMA length. For example, when
+assoclen = 32 and adata_header_len = 2:
 
-The relevant End.DX4 call path is:
+  allocation = ALIGN(32, 16) + 6 = 38
+  DMA length = ALIGN(32 + 2, 16) = 48
 
-  __ip_options_echo
-  tcp_v4_route_req
-  tcp_conn_request
-  tcp_v4_conn_request
-  tcp_rcv_state_process
-  tcp_v4_do_rcv
-  tcp_v4_rcv
-  ip_protocol_deliver_rcu
-  ip_local_deliver_finish
-  ip_local_deliver
-  input_action_end_dx4_finish
-  input_action_end_dx4
+As a result, the QCE hardware can read beyond the allocated
+buffer while computing the CBC-MAC over the associated data.
+The extra bytes are folded into the authentication tag,
+resulting in an incorrect tag and causing CCM self-test
+failures such as:
 
-The relevant End.DT4 call path is:
+  alg: aead: ccm-aes-qce encryption test failed (wrong result)
+  on test vector 8
 
-  __ip_options_echo
-  tcp_v4_route_req
-  tcp_conn_request
-  tcp_v4_conn_request
-  tcp_rcv_state_process
-  tcp_v4_do_rcv
-  tcp_v4_rcv
-  ip_protocol_deliver_rcu
-  ip_local_deliver_finish
-  ip_local_deliver
-  input_action_end_dt4
+Fix the allocation by adding the maximum possible AAD header
+length before alignment:
 
-tcp_v4_save_options() is inlined into the tcp_v4_route_req() path, so
-it does not appear as a separate frame.
+  ALIGN(assoclen + MAX_CCM_ADATA_HEADER_LEN, 16)
 
-When decap_and_validate() handles IPPROTO_IPIP, save the ingress
-interface from IP6CB, clear IPCB, and restore the saved value. Doing
-this in the common decapsulation path covers End.DX4, End.DT4, and
-End.DT46's IPv4 arm.
+This guarantees that the allocated buffer is large enough
+for the fully padded AAD data for all supported header sizes.
 
-Use IP6CB(skb)->iif rather than skb->skb_iif. These actions run after
-l3mdev processing, which can replace skb_iif with the L3 master;
-IP6CB iif still records the receiving interface set at IPv6 ingress.
-
-Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
 Cc: stable@vger.kernel.org
-Suggested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260817085839.946321-1-david.lee@trailofbits.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9363efb4181c ("crypto: qce - Add support for AEAD algorithms")
+Signed-off-by: Md Sadre Alam <md.alam@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_local.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/crypto/qce/aead.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -193,6 +193,13 @@ static bool decap_and_validate(struct sk
- 	if (iptunnel_pull_offloads(skb))
- 		return false;
+--- a/drivers/crypto/qce/aead.c
++++ b/drivers/crypto/qce/aead.c
+@@ -203,7 +203,7 @@ qce_aead_ccm_prepare_buf_assoclen(struct
+ 	/* Get the msg */
+ 	msg_sg = scatterwalk_ffwd(__sg, req->src, req->assoclen);
  
-+	if (proto == IPPROTO_IPIP) {
-+		int iif = IP6CB(skb)->iif;
-+
-+		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
-+		IPCB(skb)->iif = iif;
-+	}
-+
- 	return true;
- }
- 
+-	rctx->adata = kzalloc((ALIGN(assoclen, 16) + MAX_CCM_ADATA_HEADER_LEN) *
++	rctx->adata = kzalloc(ALIGN(assoclen + MAX_CCM_ADATA_HEADER_LEN, 16) *
+ 			       sizeof(unsigned char), GFP_ATOMIC);
+ 	if (!rctx->adata)
+ 		return -ENOMEM;
 
 
