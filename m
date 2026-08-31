@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE0A49EC7C;
-	Mon, 31 Aug 2026 13:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE8C4F30E8;
+	Mon, 31 Aug 2026 13:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183660; cv=none; b=KnBNDZzdDu1la3Kqe64HW8YfG+KMHHdO6W1n44X1rHXjRxvHbYjUOUo+Rr+rccNtuAAOUnXE2JrIL66eaaPyoTZjoIz9VZTgzthttlex2PezdmdOCCPVuFoVJZ4J5XfoHp0hL/Z5ZNHxuKfKhdmEjECPTBWRFJMc6egcLuigCJ0=
+	t=1788183661; cv=none; b=Ie5i4uvVJs5snCgVcdW2IxIy1X1aBCbLldqIlCuQzjJlncuNTSGYJu/zD9/+YQYajMtDjYlPB9nmMTyzGjKSAxqutZRrok1KmeKkWtwf2Y/RfTNkljLXUjNQWuKmId9ndxj9u8USG70i0gUqDw2Yl9KH4EkZiQRMUyefNwJV/oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183660; c=relaxed/simple;
-	bh=pEN59Hvh2xSnx4Oset4MKQbPIxWil82jRcAsfuC5FwQ=;
+	s=arc-20240116; t=1788183661; c=relaxed/simple;
+	bh=35ftScKN79r4y9/XpMotZcW20dUe1DAof2CnKV9ela0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WQAF6HzyPBUAC7z8YpICeUbNSSIEDwDPYIaVAZQ/Km8vig9+Rd+WY7a14IVaJIaDXlsIiMT02xOwYwqNukGzSUCsaok+PxhSIaJd2iNUX9j/9fRKqxX2utZWgt7euQsNVEtWFde2RCfa9uh9XX/4NEXHl5tqUvTUSkr0qCczAc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cM7eqY8q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=V5JapgM9QGrBDYYUWCrazoRG54s5ojl08f80ZpTb1dX1zWMISm+dE7SaAOkdvq1pM8mRpR6L3+L+B5W0ItiGlzkzufFkfPRMhoI1xexUZFrt1ecpXBKxSQe8HHD784aEXfN9A+JI0JsCA3zz09oSsydqV0i+tpYRcafIzm0Y6hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jhNVhna1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cM7eqY8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241F71F000E9;
-	Mon, 31 Aug 2026 13:40:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jhNVhna1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22A21F00A3D;
+	Mon, 31 Aug 2026 13:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183657;
-	bh=z9mJTpMcm1/aaJKkgjCHY5iHQT365GwTrWPUks41BV0=;
+	s=k20260515; t=1788183658;
+	bh=ihLb3RsDQds81mGMVctTKmmoDpuj7IoLPdoU1xnopSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cM7eqY8qeEosnPuAchJ+qaOkybCExHHdxr+kgSQtlVD1RgFoZigPYDhn8Wd9pdyQK
-	 cz9zlPlLGpRk6l8ZOuGoo8YHT3AM0Ro801ldKVFuL20GrorAVErTPZudmx5WZnP/7x
-	 MN9+5YvUJ84ciRkW7eIbjFaKiQ5Dh2FGpSljqgqitXNbyEnaqVkZnVjJcx49uObveF
-	 q03EVIUZuOnMadYmMViMf2lOHelZV5biVaR9WjEJE5E5AXkroYLSdzVIVqSUznRwmZ
-	 VEeCaFxPNfz3yUVeALDWqy+jK2ZcwHchnKRmtKYfLRDWH4ek7W52qLGlrLoc1CjzKa
-	 RAfXsom+EKpyw==
+	b=jhNVhna16hkcynvvA9glKOYI0PCIOvHdhAiNcWUPY8MItC6N7byd00nnt6vcVoLl0
+	 9crv/c++t9qfrnF24L0QZ7ZuwqAT99kGrIa1efp+uTmHp9cZTDTIR4NcxGI90UWtAu
+	 eRSVaBjgd1+8N/xCQsVV6lrYH5yv6rqrsuAcH4abMPouyei2Ynfa85SXOZnfpiHJAT
+	 U7/d21p8tVTRlp6uyuDUKFMYOkMPQHxdiUshIKCxnGPMc8/DBuUvtofesj07dw2tZ1
+	 PeEFfZq1tPB4ITph77WKnreeal0mJNTy8Q46KLVaX2sVzuoviVV4JDz+wden/L9No6
+	 aRt+DG6ZGD9Tw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Carlos Bilbao <carlos.bilbao@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Joy Zou <joy.zou@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kwilczynski@kernel.org,
-	gregkh@linuxfoundation.org,
-	linux-pci@vger.kernel.org,
+	lgirdwood@gmail.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] misc: pci_endpoint_test: Validate BAR index in doorbell test
-Date: Mon, 31 Aug 2026 09:24:13 -0400
-Message-ID: <20260831133314.4125787-225-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] regulator: pca9450: Correct default t_off_deb for PCA9451A/PCA9452
+Date: Mon, 31 Aug 2026 09:24:14 -0400
+Message-ID: <20260831133314.4125787-226-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,70 +53,72 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Bilbao <carlos.bilbao@kernel.org>
+From: Joy Zou <joy.zou@nxp.com>
 
-[ Upstream commit 854bd081c7680029d7886689f6bef8f740625fde ]
+[ Upstream commit fbef4191b4961c125585c715407e693f7d0024a9 ]
 
-pci_endpoint_test_doorbell() reads the BAR number directly from an endpoint
-test register and uses it as an index into test->bar[].  Add a defensive
-bounds check before the dereference: positive values >= PCI_STD_NUM_BARS
-are out of range, and NO_BAR (-1) as a negative signed value would slip
-past an upper-bound-only check.
+The PMIC PCA9451A and PCA9452 have a default power-off debounce time of
+2ms according to their datasheet, while PCA9450A and PCA9450BC use 120us.
 
-Signed-off-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-[mani: changed errno to -ERANGE]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260410230300.135631-2-carlos.bilbao@kernel.org
+Add default_t_off_deb field to struct pca9450 to support per-variant
+default configuration when the device tree property is not specified.
+
+Datasheet reference links:
+- PCA9451A Rev.2.1: https://www.nxp.com/docs/en/data-sheet/PCA9451A.pdf
+- PCA9452 Rev.1.0: https://www.nxp.com/docs/en/data-sheet/PCA9452.pdf
+
+Signed-off-by: Joy Zou <joy.zou@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260618-b4-regulator-opt-v1-1-c43b1f62aaf6@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: `misc: pci_endpoint_test: Validate BAR index
-in doorbell test`
+# Stable Backport Analysis: `regulator: pca9450: Correct default
+t_off_deb for PCA9451A/PCA9452`
 
-**Local tree:** `v6.18.44-1-g2736c32da98b9` (kernel version **6.18.44**,
-6.18.y stable series)
-
-**Commit under review:** `854bd081c7680` (not yet in this tree; present
-on `master`)
+**Local tree:** `v6.18.44` (Makefile: 6.18.44)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject line
-**Record:** `[misc: pci_endpoint_test]` `[Validate]` — defensive bounds
-check on BAR index used in the doorbell test path.
+**Record:** `[regulator: pca9450]` `[Correct]` — Fix wrong default
+power-off debounce (`t_off_deb`) for PCA9451A/PCA9452 PMIC variants.
 
 ### Step 1.2: Tags
 **Record:**
-- **Signed-off-by:** Carlos Bilbao (Lambda), Manivannan Sadhasivam,
-  Bjorn Helgaas
-- **Link:** https://patch.msgid.link/20260410230300.135631-2-
-  carlos.bilbao@kernel.org
-- No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, `Tested-
-  by:`, or `Reviewed-by:` in the committed message
-- Notable: PCI subsystem maintainers (Mani, Bjorn) signed off; no syzbot
-  or user bug report
+- **Reviewed-by:** Frank Li `<Frank.Li@nxp.com>` (NXP reviewer)
+- **Link:** https://patch.msgid.link/20260618-b4-regulator-
+  opt-v1-1-c43b1f62aaf6@oss.nxp.com
+- **Signed-off-by:** Joy Zou `<joy.zou@nxp.com>` (author)
+- **Signed-off-by:** Mark Brown `<broonie@kernel.org>` (regulator
+  maintainer)
+- No Fixes:, Reported-by:, Tested-by:, Cc: stable, syzbot links
+
+Notable: NXP author + NXP reviewer + subsystem maintainer ack; no user
+bug report or fuzzer report.
 
 ### Step 1.3: Body analysis
 **Record:**
-- **Bug:** `pci_endpoint_test_doorbell()` reads a BAR number from
-  endpoint MMIO (`PCI_ENDPOINT_TEST_DB_BAR`) and uses it unvalidated as
-  `test->bar[bar]`.
-- **Symptom:** Out-of-range positive values (`>= PCI_STD_NUM_BARS`) or
-  `NO_BAR (-1)` cause out-of-bounds indexing before `writel()`.
-- **Root cause:** Missing lower/upper bounds check; an upper-bound-only
-  check would miss negative values because `bar` is `enum pci_barno`
-  (signed, with `NO_BAR = -1`).
-- **Version info:** None in the message.
+- **Bug:** PCA9451A and PCA9452 datasheet default power-off debounce is
+  **2 ms**; PCA9450A/PCA9450BC default is **120 µs**. Driver used 120 µs
+  for all variants when DT property `nxp,pmic-on-req-off-debounce-us` is
+  absent.
+- **Symptom:** Wrong PMIC `PWRCTRL` off-debounce programmed at probe on
+  PCA9451A/9452 boards without that DT property.
+- **Root cause:** `pca9450_of_init()` hardcoded `T_OFF_DEB_120US` as the
+  fallback for all chip types.
+- **Fix:** Add per-variant `default_t_off_deb` in `struct pca9450`, set
+  in probe switch.
 
 ### Step 1.4: Hidden bug fix?
-**Record:** Yes — explicitly a memory-safety bounds-check fix, not
-cosmetic cleanup. Same bug class as the earlier ioctl underflow fix
-(`1ad82f9db13d8`).
+**Record:** Yes. Despite “Correct default,” this is a real hardware-
+configuration bug: the driver overwrites PMIC timing with a value
+inappropriate for PCA9451A/9452.
 
 ---
 
@@ -126,307 +126,312 @@ cosmetic cleanup. Same bug class as the earlier ioctl underflow fix
 
 ### Step 2.1: Inventory
 **Record:**
-- **Files:** `drivers/misc/pci_endpoint_test.c` (+5 lines)
-- **Function:** `pci_endpoint_test_doorbell()`
+- **File:** `drivers/regulator/pca9450-regulator.c` only (+9 / -1 net
+  functional lines)
+- **Functions:** `pca9450_of_init()`, `pca9450_i2c_probe()`
 - **Scope:** Single-file, surgical fix
 
 ### Step 2.2: Code flow change
 **Record:**
-- **Before:** After re-reading `PCI_ENDPOINT_TEST_DB_BAR`, code
-  immediately does `writel(data, test->bar[bar] + addr)`.
-- **After:** Validates `bar < BAR_0 || bar >= PCI_STD_NUM_BARS`; logs
-  error and returns `-ERANGE` on failure; only then dereferences
-  `test->bar[bar]`.
-- **Path affected:** Error/safety path inside doorbell test, reached via
-  `ioctl(PCITEST_DOORBELL)`.
+- **Hunk 1 (`struct pca9450`):** Add `int default_t_off_deb`.
+- **Hunk 2 (`pca9450_of_init`):** When `nxp,pmic-on-req-off-debounce-us`
+  is missing (`-EINVAL`), use `pca9450->default_t_off_deb` instead of
+  hardcoded `T_OFF_DEB_120US`.
+- **Hunk 3 (`pca9450_i2c_probe`):** Set `default_t_off_deb` per chip
+  type:
+  - PCA9450A/BC → `T_OFF_DEB_120US`
+  - PCA9451A/9452 → `T_OFF_DEB_2MS`
+
+**Before → After:** Missing DT property → always 120 µs → variant-
+correct default (120 µs or 2 ms).
 
 ### Step 2.3: Bug mechanism
-**Record:** **Category:** Out-of-bounds array access / buffer overflow.
-- `test->bar` is `void __iomem *bar[PCI_STD_NUM_BARS]` (6 elements,
-  indices 0–5).
-- `pci_endpoint_test_readl()` returns `u32`; assigned to signed `enum
-  pci_barno`.
-- `bar == -1` (NO_BAR) → array underflow; `bar >= 6` → array overflow.
-- Either can yield a garbage pointer passed to `writel()` → kernel oops
-  or memory corruption.
+**Record:** **Category (g): Logic/correctness fix** — wrong default
+constant for newer PMIC variants. `pca9450_of_init()` always writes
+`PCA9450_REG_PWRCTRL` via `regmap_update_bits()` during probe; with
+missing DT property it programmed 120 µs on chips whose default is 2 ms.
 
 ### Step 2.4: Fix quality
-**Record:** Obviously correct; mirrors the existing ioctl guard (`bar <=
-NO_BAR || bar > BAR_5`). Minimal, no API changes. Low regression risk.
-Does not add a NULL-bar check (consistent with other paths that validate
-index separately).
+**Record:** Obviously correct, minimal, matches datasheet. Low
+regression risk: PCA9450A/BC behavior unchanged; only PCA9451A/9452
+default path changes. No new public API.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-**Record:** Lines 895–897 introduced by `eefb83790a0dd` ("Add doorbell
-test case", Frank Li, 2025-07-10). First appeared in **v6.17**. Bug
-present since doorbell support landed.
+**Record:** Buggy line `t_off_deb = T_OFF_DEB_120US` introduced in
+**55ca06f54f57f** (“regulator: pca9450: Add support for setting debounce
+settings”, 2025-11-17 / backported to 6.18.y 2026-03-19). Before that
+commit, driver did not program `PWRCTRL` debounce at all (hardware
+defaults remained).
 
 ### Step 3.2: Fixes: tag
-**Record:** N/A — no `Fixes:` tag. Related introducing commit:
-`eefb83790a0dd`, which is an ancestor of this 6.18.44 tree.
+**Record:** N/A — no Fixes: tag. Bug introduced by 55ca06f54f57f,
+confirmed present in this tree.
 
 ### Step 3.3: Related file history
 **Record:**
-- `eefb83790a0dd` — added doorbell test (v6.17+)
-- `1ad82f9db13d8` — fixed ioctl array underflow for user-supplied BAR
-  (same `NO_BAR` issue)
-- `cc8e391067164`, `384b1b29481e3` — other doorbell-related cleanups
-- Fix is standalone (patch 1/2 of a series); patch 2/2 only removes a
-  dead register read (cleanup, not required for the bounds fix)
+- `5edeb7d312628` — add pca9451a support
+- `017b76fb8e5b6` — add pca9452 support
+- `55ca06f54f57f` — add debounce DT configuration (introduced bug)
+- `f7e52a24e5b76` — PCA9452 probed name fix
+Standalone fix; no series dependency.
 
 ### Step 3.4: Author context
-**Record:** Carlos Bilbao is a PCI endpoint contributor. Manivannan
-Sadhasivam (PCI endpoint maintainer) applied the series. Dan Carpenter
-previously fixed the parallel ioctl-path bug.
+**Record:** Joy Zou authored PCA9451A/9452 support commits; NXP
+contributor for this driver.
 
-### Step 3.5: Dependencies
-**Record:** No prerequisites. Doorbell code exists in this tree. `git
-apply --check` on the patch succeeds cleanly against 6.18.44.
+### Step 3.5: Prerequisites
+**Record:** Requires `pca9450_of_init()` from 55ca06f54f57f and
+PCA9451A/9452 types — all present in this tree. Applies cleanly.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original discussion
-**Record:** `b4 dig -c 854bd081c7680` → https://patch.msgid.link/2026041
-0230300.135631-2-carlos.bilbao@kernel.org. Part of **v2 1/2** series.
-Manivannan Sadhasivam replied "Applied, thanks!" No explicit stable
-nomination found.
+### Step 4.1: Patch discussion
+**Record:** Link fetch blocked (Anubis bot protection). `b4 dig` for
+this commit hash returned no match (fix not yet merged). `b4 dig -c
+55ca06f54f57f` found the original debounce patch thread. Could not read
+fix-patch review thread.
 
 ### Step 4.2: Reviewers
-**Record:** `b4 dig -w`: CC'd to `mani@kernel.org`,
-`kwilczynski@kernel.org`, `kishon@kernel.org`, `den@valinux.co.jp`,
-`linux-pci@vger.kernel.org`. **Reviewed-by: Koichiro Den** on the
-series.
+**Record:** Mark Brown (regulator maintainer) committed; Frank Li (NXP)
+reviewed. Appropriate subsystem coverage.
 
-### Step 4.3: Bug reports
-**Record:** No external bug report, syzbot report, or crash log.
-Proactive defensive fix identified during code review.
+### Step 4.3: Bug report
+**Record:** No Reported-by or bugzilla/syzbot link. Issue identified
+from datasheet mismatch (author-driven fix).
 
-### Step 4.4: Series context
-**Record:** 2-patch series. Only patch 1/2 (this commit) fixes the OOB
-bug. Patch 2/2 removes an unused earlier BAR read.
+### Step 4.4: Related patches
+**Record:** Standalone 1/1 fix in “regulator-opt” series per Link
+subject. No other patches required.
 
-### Step 4.5: Stable list history
-**Record:** Not searched separately; no stable-list discussion found in
-the patch thread.
+### Step 4.5: Stable list
+**Record:** Not searched (no stable discussion found via available
+tools).
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 ### Step 5.1: Key functions
-**Record:** `pci_endpoint_test_doorbell()` (modified), called from
-`pci_endpoint_test_ioctl()`.
+**Record:** `pca9450_of_init()`, `pca9450_i2c_probe()`
 
 ### Step 5.2: Callers
-**Record:**
-- `pci_endpoint_test_ioctl()` → `case PCITEST_DOORBELL:` →
-  `pci_endpoint_test_doorbell(test)`
-- Exposed via `misc_device` (`/dev/pci-endpoint-test.*`) through
-  `unlocked_ioctl`
-- Selftest: `tools/testing/selftests/pci_endpoint/pci_endpoint_test.c`
-  calls `PCITEST_DOORBELL`
+**Record:** `pca9450_of_init()` called once from `pca9450_i2c_probe()`
+at line 1371 during I2C device probe (boot-time, board enumeration).
 
 ### Step 5.3: Callees
-**Record:** `pci_endpoint_test_readl/writel`,
-`wait_for_completion_timeout`, `writel()` to BAR-mapped MMIO.
+**Record:** `of_property_read_u32()`, `regmap_update_bits()` on
+`PCA9450_REG_PWRCTRL` — programs PMIC power-control timing.
 
 ### Step 5.4: Reachability
-**Record:** Reachable from userspace via `ioctl()` on the misc device.
-Requires access to the PCI endpoint test device node (typically root or
-delegated permissions). Not triggerable by unprivileged users without
-device access. With device access + buggy/malicious endpoint firmware
-returning an invalid BAR register value, the OOB path is reachable.
+**Record:** Triggered on every boot for PCA9451A/PCA9452 devices when DT
+omits `nxp,pmic-on-req-off-debounce-us`. Not userspace-triggerable;
+embedded platform init path. DT bindings in this tree do not document
+debounce properties, so omission is likely.
 
 ### Step 5.5: Similar patterns
-**Record:** Ioctl path already has equivalent validation at line 940:
-```940:941:drivers/misc/pci_endpoint_test.c
-                if (bar <= NO_BAR || bar > BAR_5)
-                        goto ret;
-```
-Doorbell path lacks this guard — an inconsistency the patch corrects.
+**Record:** Other debounce defaults in `pca9450_of_init()` are also
+hardcoded (e.g. `t_on_deb`, `t_on_step`); only `t_off_deb` differs by
+PMIC variant per commit message/datasheet.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE (6.18.44)
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
 ### Step 6.1: Buggy code present?
-**Record:** **Yes.** `pci_endpoint_test_doorbell()` at lines 895–897
-performs unchecked `test->bar[bar]` dereference. Doorbell support
-(`eefb83790a0dd`) is an ancestor of HEAD (landed in v6.17, present in
-6.18.44).
+**Record:** **Yes.** `drivers/regulator/pca9450-regulator.c:1182` still
+has `t_off_deb = T_OFF_DEB_120US`. PCA9451A/9452 support and debounce
+init code are present. Bug introduced by 55ca06f54f57f (ancestor of
+HEAD). Fix commit not yet in tree.
 
 ### Step 6.2: Backport complications
-**Record:** **Clean apply.** `git apply --check` passes. No structural
-conflicts; line numbers differ but context matches.
+**Record:** Clean apply expected — small localized change, no conflicts
+anticipated.
 
 ### Step 6.3: Related fixes already present?
-**Record:** Ioctl underflow fix (`1ad82f9db13d8`) is in this tree. The
-doorbell-path BAR validation fix (`854bd081c7680`) is **not** in this
-tree (only on `master`).
+**Record:** No existing fix for this issue found via `git log --grep`.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem criticality
-**Record:** **drivers/misc** — PCI Endpoint Test driver
-(`CONFIG_PCI_ENDPOINT_TEST`). **PERIPHERAL** — host-side test driver for
-PCI endpoint development (TI K3, Rockchip, etc.). Not a core subsystem,
-but kernel code reachable from userspace ioctl.
+### Step 7.1: Subsystem
+**Record:** `drivers/regulator/` — PMIC driver. **Criticality:
+PERIPHERAL** (platform-specific embedded hardware).
 
 ### Step 7.2: Activity
-**Record:** Actively maintained; multiple recent fixes in the same file
-(IRQ range checks, ioctl underflow, integer overflow prevention).
+**Record:** Active in 6.18.y; recent pca9450 commits include debounce
+support and PCA9452 name fix.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Who is affected
-**Record:** Users with `CONFIG_PCI_ENDPOINT_TEST` enabled who run the
-doorbell selftest against PCI endpoint hardware. Primarily embedded/SoC
-developers, not typical server/desktop workloads.
+**Record:** Boards with **PCA9451A** or **PCA9452** PMIC and no
+`nxp,pmic-on-req-off-debounce-us` DT property. PCA9450A/BC unaffected.
 
 ### Step 8.2: Trigger conditions
-**Record:** `ioctl(PCITEST_DOORBELL)` after doorbell enable, when
-endpoint MMIO reports `PCI_ENDPOINT_TEST_DB_BAR` outside [0, 5] or as
--1. Unlikely in correct firmware, but possible with bugs or during
-bring-up. Requires device-node access.
+**Record:** Every boot/probe on affected hardware without explicit DT
+property. Common case since bindings don't document the property. Not
+unprivileged-userspace reachable.
 
 ### Step 8.3: Failure mode severity
-**Record:** Out-of-bounds pointer dereference in `writel()` → **kernel
-oops / potential memory corruption**. **Severity: HIGH** if triggered;
-**likelihood: LOW** (niche driver, privileged access, depends on
-endpoint behavior).
+**Record:** PMIC ON_REQ off-debounce set to 120 µs instead of required 2
+ms. Can cause power-sequencing misbehavior (spurious power-off
+recognition, shutdown/boot instability). **Severity: MEDIUM** — real
+hardware impact, not a kernel oops/panic/data corruption.
 
 ### Step 8.4: Risk-benefit
 **Record:**
-- **Benefit:** Prevents kernel crash from a real OOB bug; aligns
-  doorbell path with already-fixed ioctl path.
-- **Risk:** Very low — 5-line bounds check, maintainer-reviewed, clean
-  apply.
-- **Ratio:** Favorable for backport despite narrow exposure.
+- **Benefit:** Fixes regression from 55ca06f54f57f; restores datasheet-
+  correct PMIC timing for PCA9451A/9452.
+- **Risk:** Very low — ~10 lines, PCA9450 variants unchanged.
+- **Ratio:** Moderate benefit, very low risk. Regression fix for code
+  already in this stable tree.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence summary
+### Step 9.1: Evidence compile
 
 **FOR backport:**
-- Real out-of-bounds array index bug (underflow and overflow)
-- Can cause kernel oops
-- Small (5 lines), obviously correct, applies cleanly
-- Buggy code confirmed in 6.18.44 since v6.17 doorbell addition
-- PCI maintainers signed off; parallel ioctl fix already in this tree
-- Self-contained; no dependencies
+- Regression introduced by 55ca06f54f57f (already in 6.18.y)
+- Driver actively programs wrong PMIC register value at probe
+- Datasheet-backed, maintainer-reviewed, minimal fix
+- PCA9451A/9452 support and buggy code both exist in this tree
+- DT bindings omit debounce properties → missing property is the common
+  case
 
 **AGAINST backport:**
-- Niche test driver (`CONFIG_PCI_ENDPOINT_TEST`)
-- Requires privileged device access
-- No syzbot/user crash reports
-- Invalid BAR comes from endpoint MMIO, not direct userspace input
-- Limited production impact
+- No crash, security issue, or data corruption
+- Platform-specific embedded hardware only
+- No user/fuzzer bug report
+- Workaround: add `nxp,pmic-on-req-off-debounce-us = <2000>` to DT
 
-**Unresolved:** None material to the decision.
+**Unresolved:** Could not read mailing-list review thread for fix patch.
 
 ### Step 9.2: Stable rules checklist
-1. Obviously correct and tested? **PASS** — simple bounds check;
-   selftests exercise doorbell path; maintainer applied.
-2. Fixes a real bug? **PASS** — OOB array indexing.
-3. Important issue? **PASS** — kernel crash on invalid index (HIGH
-   severity, lower exposure).
-4. Small and contained? **PASS** — 5 lines, one function.
-5. No new features/APIs? **PASS**.
-6. Can apply to local tree? **PASS** — clean apply verified.
+1. Obviously correct and tested? **PASS** — datasheet defaults, NXP
+   review; no runtime test evidence
+2. Fixes real bug? **PASS** — wrong PMIC timing programmed for two
+   variants
+3. Important issue? **PASS (borderline)** — PMIC power-sequencing
+   misconfiguration on affected boards; regression from stable commit
+4. Small and contained? **PASS** — single file, ~10 lines
+5. No new features/APIs? **PASS** — internal field only
+6. Can apply to local tree? **PASS** — prerequisites present, clean
+   apply expected
 
 ### Step 9.3: Exception categories
-**Record:** None (not device ID, quirk, DT, build, or docs). Standard
-bug fix.
+**Record:** Hardware quirk/workaround category — per-variant PMIC timing
+correction to match datasheet defaults.
 
 ### Step 9.4: Decision rationale
-For **6.18.44**, the doorbell test exists and has had an unchecked BAR
-index since v6.17. This is the same class of memory-safety bug already
-fixed on the ioctl path in this tree. The fix is minimal, maintainer-
-approved, and prevents a kernel oops. Narrow driver scope lowers urgency
-but does not negate that it is a real, reachable crash fix in code that
-is present and active in this stable tree.
+
+This commit fixes a **regression** in 6.18.y: commit 55ca06f54f57f added
+`pca9450_of_init()` which programs `PCA9450_REG_PWRCTRL` on every probe,
+but used PCA9450A/BC's 120 µs off-debounce default for all variants.
+PCA9451A and PCA9452 require 2 ms per their datasheets. Because DT
+bindings in this tree don't document the debounce property, boards are
+likely to omit it, making the wrong 120 µs value the common case.
+
+The fix is small, obviously correct, maintainer-reviewed, and restores
+correct hardware behavior without changing PCA9450A/BC paths. While not
+a kernel crash, incorrect PMIC power-off debounce can cause real
+boot/shutdown/power-management failures on affected embedded platforms —
+and this is directly fixing broken behavior introduced by a commit
+already in this stable tree.
 
 ---
 
 ## Verification
 
-- **[Phase 1]** Parsed commit `854bd081c7680` message and tags via `git
-  show`
-- **[Phase 1]** No syzbot/Reported-by; Link tag present; Bjorn Helgaas
-  and Mani SOBs confirmed
-- **[Phase 2]** Read `pci_endpoint_test_doorbell()` at lines 857–922;
-  confirmed unchecked `test->bar[bar]` at line 897
-- **[Phase 2]** Confirmed `test->bar[PCI_STD_NUM_BARS]` and `NO_BAR =
-  -1` at lines 108–121
-- **[Phase 3]** `git blame -L 895,897`: introduced by `eefb83790a0dd`
-  (2025-07-10)
-- **[Phase 3]** `git log -20 -- drivers/misc/pci_endpoint_test.c`:
-  related ioctl fix `1ad82f9db13d8` present
-- **[Phase 3]** `git tag --contains eefb83790a0dd`: first in **v6.17**
-- **[Phase 3]** `git merge-base --is-ancestor`: doorbell IN tree; fix
-  `854bd081c7680` NOT in HEAD; ioctl fix IN HEAD
-- **[Phase 4]** `b4 dig -c 854bd081c7680`: lore URL found
-- **[Phase 4]** `b4 dig -m /tmp/doorbell_bar.mbox`: v2 1/2 series;
-  Reviewed-by Den; Mani "Applied, thanks!"
-- **[Phase 4]** No stable nomination in thread
-- **[Phase 5]** Traced call chain: `pci_endpoint_test_ioctl` →
-  `PCITEST_DOORBELL` → `pci_endpoint_test_doorbell`
-- **[Phase 5]** Grep `PCITEST_DOORBELL`: ioctl case at line 974,
-  selftest at
-  `tools/testing/selftests/pci_endpoint/pci_endpoint_test.c:261`
-- **[Phase 5]** Confirmed ioctl bounds check at line 940 (`bar <= NO_BAR
-  || bar > BAR_5`)
-- **[Phase 6]** `git describe HEAD`: v6.18.44; `make kernelversion`:
-  6.18.44
-- **[Phase 6]** `git apply --check` on patch: **clean apply**
-- **[Phase 6]** Read probe: `test` allocated with `devm_kzalloc` (line
-  1019); `test->bar[]` sized `PCI_STD_NUM_BARS`
-- **[Phase 8]** `CONFIG_PCI_ENDPOINT_TEST` in `drivers/misc/Kconfig:482`
-  — tristate host-side PCI endpoint test driver
+- [Phase 1] Parsed subject, tags, body from user-provided commit message
+- [Phase 2] Read current `pca9450-regulator.c` at lines 1120–1297, 1371;
+  confirmed diff hunks match tree
+- [Phase 3] `git describe HEAD` → `v6.18.44-1-g2736c32da98b9`; Makefile
+  → 6.18.44
+- [Phase 3] `git blame -L 1180,1190` → 55ca06f54f57f introduced buggy
+  default
+- [Phase 3] `git show 55ca06f54f57f^` → no `pca9450_of_init` / PWRCTRL
+  programming before debounce commit
+- [Phase 3] `git merge-base --is-ancestor` → 55ca06f54f57f and
+  5edeb7d312628 both ancestors of HEAD
+- [Phase 3] `git log --oneline -20 --
+  drivers/regulator/pca9450-regulator.c` → history reviewed
+- [Phase 4] WebFetch of patch Link → blocked by Anubis
+- [Phase 4] `b4 dig -c 55ca06f54f57f` → found debounce patch thread
+- [Phase 4] `b4 dig` for fix commit → no match (not merged)
+- [Phase 5] `grep pca9450_of_init` → called from probe line 1371
+- [Phase 5] Read `include/linux/regulator/pca9450.h` → `T_OFF_DEB_120US`
+  / `T_OFF_DEB_2MS` definitions
+- [Phase 6] `grep default_t_off_deb` → not present (fix not applied)
+- [Phase 6] `grep pmic-on-req-off-debounce` in tree → driver only, no DT
+  binding docs
+- [Phase 7] `git log --oneline -20 -- drivers/regulator/` → subsystem
+  activity confirmed
+- [Phase 8] Assessed impact from PWRCTRL register programming path in
+  `pca9450_of_init()`
 
-**YES**The background lookups finished and match the earlier analysis:
+**YES**
 
-- **Commit hash:** `854bd081c7680` — `misc: pci_endpoint_test: Validate
-  BAR index in doorbell test`
-- **Location:** on `master` (via merge `ae385ca812325`), **not** in the
-  checked-out **6.18.44** tree
-- **Local state:** the doorbell path still does an unchecked
-  `test->bar[bar]` dereference; the patch applies cleanly here
+ drivers/regulator/pca9450-regulator.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-**Verdict remains YES** for backport to this 6.18.y tree — small bounds-
-check fix for a real OOB bug in code that’s already present since v6.17.
-
- drivers/misc/pci_endpoint_test.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
-index 1c0fd185114fc..43e2282f8a76e 100644
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -893,6 +893,11 @@ static int pci_endpoint_test_doorbell(struct pci_endpoint_test *test)
- 	pci_endpoint_test_writel(test, PCI_ENDPOINT_TEST_STATUS, 0);
+diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
+index f991dc9365f18..2e79d0e096518 100644
+--- a/drivers/regulator/pca9450-regulator.c
++++ b/drivers/regulator/pca9450-regulator.c
+@@ -44,6 +44,7 @@ struct pca9450 {
+ 	unsigned int rcnt;
+ 	int irq;
+ 	bool sd_vsel_fixed_low;
++	int default_t_off_deb;
+ };
  
- 	bar = pci_endpoint_test_readl(test, PCI_ENDPOINT_TEST_DB_BAR);
-+	if (bar < BAR_0 || bar >= PCI_STD_NUM_BARS) {
-+		dev_err(dev, "BAR %d reported by endpoint out of range [0, %u]\n",
-+			bar, PCI_STD_NUM_BARS - 1);
-+		return -ERANGE;
-+	}
+ static const struct regmap_range pca9450_status_range = {
+@@ -1179,7 +1180,7 @@ static int pca9450_of_init(struct pca9450 *pca9450)
  
- 	writel(data, test->bar[bar] + addr);
- 
+ 	ret = of_property_read_u32(i2c->dev.of_node, "nxp,pmic-on-req-off-debounce-us", &val);
+ 	if (ret == -EINVAL)
+-		t_off_deb = T_OFF_DEB_120US;
++		t_off_deb = pca9450->default_t_off_deb;
+ 	else if (ret)
+ 		return ret;
+ 	else {
+@@ -1274,21 +1275,25 @@ static int pca9450_i2c_probe(struct i2c_client *i2c)
+ 	case PCA9450_TYPE_PCA9450A:
+ 		regulator_desc = pca9450a_regulators;
+ 		pca9450->rcnt = ARRAY_SIZE(pca9450a_regulators);
++		pca9450->default_t_off_deb = T_OFF_DEB_120US;
+ 		type_name = "pca9450a";
+ 		break;
+ 	case PCA9450_TYPE_PCA9450BC:
+ 		regulator_desc = pca9450bc_regulators;
+ 		pca9450->rcnt = ARRAY_SIZE(pca9450bc_regulators);
++		pca9450->default_t_off_deb = T_OFF_DEB_120US;
+ 		type_name = "pca9450bc";
+ 		break;
+ 	case PCA9450_TYPE_PCA9451A:
+ 		regulator_desc = pca9451a_regulators;
+ 		pca9450->rcnt = ARRAY_SIZE(pca9451a_regulators);
++		pca9450->default_t_off_deb = T_OFF_DEB_2MS;
+ 		type_name = "pca9451a";
+ 		break;
+ 	case PCA9450_TYPE_PCA9452:
+ 		regulator_desc = pca9451a_regulators;
+ 		pca9450->rcnt = ARRAY_SIZE(pca9451a_regulators);
++		pca9450->default_t_off_deb = T_OFF_DEB_2MS;
+ 		type_name = "pca9452";
+ 		break;
+ 	default:
 -- 
 2.53.0
 
