@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBF35AA69B;
-	Mon, 31 Aug 2026 13:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FCD5AB238;
+	Mon, 31 Aug 2026 13:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788184362; cv=none; b=JM25OHd9pHVO+DQ37Cfma8+FvNkh4wyCCArinW8XLQAgjjn0fMKix8n0nVbdXx/rZkf3cJJcfY/ZfrOdFkpk50lzTkv3HEFCAxW9wcRiJ3ILp0wHo3/vajqmeY7lsz/t4+3Xnz1jlZEO24xkd6FIMz3LbjwHgGXG0b+PocLO+20=
+	t=1788184364; cv=none; b=RE4bHD62OeXSlk1XmlIO0Ec8FtrgsausyEZWsFcXLyIBtuFbGkYaelwGatadMZsHnlVkhToKpome0MfC9+iwvlaO/0mOyGbsRpS3yc/cQD2StWW20g6ESTMdPjplzolqvhXs5OupoHdP4BYbZ5mdFqx01IPdwm+ZEHBP0DKn418=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788184362; c=relaxed/simple;
-	bh=P7GWI4QqTyfKeMIcOp/wfgw+pvLSHaZ81/lMOGaRcoM=;
+	s=arc-20240116; t=1788184364; c=relaxed/simple;
+	bh=aUMBBnwF6XMzoE9QYbZBPO7MZL3jdNKcSCyd740XR2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=huuquR7aE0e7+/8yv1GeKmjoTR1n9SapF5VET/KdljP1k8JY3RMlM2LR+cAKdNBs0YpcBzEd8w6qcpWZZN+VJSLsLXyW1Wy53CfdXY16jbBeuYY7Z5ohU8eK6cIyWpVaWrsl66LExf6UzoO1edW0FvBwi3BxRXeyg8Y4j7fY56U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZdCuWFCX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=REcyp/EvKW+bamQF359KYhQPzn4S0ODlhdXRdNn/9fpyLJ3H+BULFMv0p8H3HL0OBEX8D6KA11e7OUY8mr0YE6n3eiPoYn+oc+b5yXo0BJ68d/IRrjhegQXUnfszBAWXr+6Ppg1CTofHaYBB/IoOhXMPrOlqKduow7QnsXZXYBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nxWrOaUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZdCuWFCX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30FB1F00ADF;
-	Mon, 31 Aug 2026 13:52:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nxWrOaUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F521F000E9;
+	Mon, 31 Aug 2026 13:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788184360;
-	bh=gn/x46AcCcCqDneJy+pgdlKQ+Wml9FPVINTnDu7omW4=;
+	s=k20260515; t=1788184361;
+	bh=QPeZ0wi9nlfmmqDf/06OscKfZ8nxNAF1gvkAK7UQUQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZdCuWFCXLnum0OR0fxNVjjU2gh6h/TxZPIDTrrpmNdNblnDOWIbVP7xilAGhLejAS
-	 6GPNrYs6O9oEoqc1i7BT5UANw6vFeiPlM2Eawt7uvA69xNfhTIuChevbbhAPrdDHVy
-	 V044cOkuWct+HL1cSHLVTu4RNBootywF/FPdP8RMItZPbkacH8Y4QTUDuT0t0nlY5f
-	 zj7i34ZpwWQzYzsqW4wruSnUlBJCvqZFJiOqMgxD2r9IXv9s8ZNm/hT51+zkCs9EBI
-	 jbOHhYV7WbobXL3S6swoUvygQWAVRTYmML3TC3UYJlvrSCRpU4Fc8J57AkAukeH7J2
-	 AwbW+5gHfbuIQ==
+	b=nxWrOaUAvznMDpVzLbzucTVf7RWOMP0TjFYC3o3FxCq/AUa8xahQZiEKWM1qcTitK
+	 Y59N4lrPkfUnlWk1X4q1PLN4ClHhZhQQfZLsMzM+/4ZMu4L80hAiVjD492gddPgDU7
+	 fNxsL2SuY4zKZjT3k/vlzCqlRwl6ErLAG0O+/nld3uRmVbvxIId3TJWxAhbvYPheEa
+	 od1S+Y7dmMFl6M/MEtfyXFclyfOaldl4jCPWLOtl+M/STxpJWlS81L5YWG2qjRs2IA
+	 f/xnGPZWUjL9VBUz5YA4TGRMv1turs5qWREkWLZOkoWXlZoHvApQ2T2HODJ3KHAR18
+	 iJ9KNZutFRA7g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Boris Burkov <boris@bur.io>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	miquel.raynal@bootlin.com,
-	linux-i3c@lists.infradead.org,
-	imx@lists.linux.dev,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] i3c: master: svc: Prevent IRQ storm from false SLVSTART on NPCM845
-Date: Mon, 31 Aug 2026 09:31:15 -0400
-Message-ID: <20260831133314.4125787-647-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] btrfs: zoned: always set data_relocation_bg
+Date: Mon, 31 Aug 2026 09:31:16 -0400
+Message-ID: <20260831133314.4125787-648-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -55,413 +55,416 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 1effa3adfe53cb2bb28bf5640a676b791d5ab405 ]
+[ Upstream commit 82fd26090ebdbe6fa4b6039d059a7ea0a974cc36 ]
 
-On NPCM845, when a target on the I3C bus gets stuck holding SDA low,
-the controller reports a false Master Request (MR) in-band interrupt
-event. The driver handles this by emitting a STOP condition to restore
-the bus.
+When searching for a data relocation block-group on mount,
+btrfs_zoned_reserve_data_reloc_bg() is looking for the first empty DATA
+block-group. But it first checks if the block-group is empty and if yes
+continues the search, and then checks if it is the first DATA block-group.
 
-However, the hardware quirk SVC_I3C_QUIRK_FALSE_SLVSTART indicates that
-emitting a STOP condition may spuriously set the SLVSTART interrupt
-status bit. In the Master Request case, this creates a feedback loop:
-the STOP triggers a new SLVSTART event, the IRQ handler fires again,
-the controller still reports an MR type, another STOP is emitted, and
-the cycle repeats indefinitely, resulting in an IRQ storm that can lock
-up the CPU.
+There is actually no point in looking for the second empty DATA block
+group as new DATA allocations will just allocate a new chunk for it. Pick
+the first DATA block-group without any allocations done and set it as
+relocation block-group.
 
-Clear the SLVSTART status bit explicitly after emitting the STOP in the
-Master Request IBI handler when the SVC_I3C_QUIRK_FALSE_SLVSTART quirk
-is set. This breaks the feedback loop without affecting normal SLVSTART
-processing, which is already guarded in the top-level IRQ handler by
-checking that MSTATUS is in SLVREQ state.
+At first, the commit 694ce5e143d6 ("btrfs: zoned: reserve data_reloc
+block group on mount") introduced the functionality. At that time, we
+took second unused (used == 0) block group, as the first one might be a
+block group used for normal data.  Later, commit daa0fde32235 ("btrfs:
+zoned: fix data relocation block group reservation") switched to look
+for an empty block group (alloc_offset == 0). At this point, there is no
+reason taking the second one anymore. So, this commit is fixing an issue
+in commit daa0fde32235.
 
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260413005040.1211107-3-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Stable Backport Analysis: i3c: master: svc: Prevent IRQ storm from
-false SLVSTART on NPCM845
+# Stable Backport Analysis: `btrfs: zoned: always set
+data_relocation_bg`
 
-**Local tree:** Linux 6.18.43 (`v6.18.43-1-gc7f0dac02d232`)
+**Local tree:** Linux **6.18.44** (`git describe HEAD` → `v6.18.44`,
+`make kernelversion` → `6.18.44`)
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** `[i3c: master: svc]` `[Prevent]` — Prevent IRQ storm from
-false SLVSTART on NPCM845 (Nuvoton BMC I3C master driver hardware quirk
-workaround).
+**Step 1.1 – Subject line**
+Record: `[btrfs: zoned]` `[always set]` — ensures `data_relocation_bg`
+is set on mount by picking the first empty DATA block group instead of
+skipping it.
 
-### Step 1.2: Tags
-**Record:**
-- **Signed-off-by:** Stanley Chu `<yschu@nuvoton.com>` (author)
-- **Reviewed-by:** Frank Li `<Frank.Li@nxp.com>` (NXP I3C reviewer)
-- **Link:**
-  https://patch.msgid.link/20260413005040.1211107-3-yschu@nuvoton.com
-- **Signed-off-by:** Alexandre Belloni `<alexandre.belloni@bootlin.com>`
-  (I3C maintainer)
-- No Fixes:, Reported-by:, Tested-by:, Cc: stable@vger.kernel.org
-- Notable: Reviewed by subsystem reviewer; maintainer applied the
-  series. No syzbot report (hardware-specific quirk).
+**Step 1.2 – Tags**
+Record:
+- `Reviewed-by: Boris Burkov <boris@bur.io>`
+- `Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>`
+- `Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>`
+- `Signed-off-by: David Sterba <dsterba@suse.com>`
+- No `Fixes:`, `Reported-by:`, `Link:`, `Cc: stable`, or `Tested-by:`
+  tags
+- Notable: two btrfs zoned subsystem reviewers signed off
 
-### Step 1.3: Body Analysis
-**Record:**
-- **Bug:** On NPCM845, when an I3C target holds SDA low (bus stuck), the
-  controller reports a false Master Request (MR) IBI. The driver emits
-  STOP to recover the bus, but STOP spuriously sets the SLVSTART status
-  bit (known `SVC_I3C_QUIRK_FALSE_SLVSTART` behavior).
-- **Symptom:** Feedback loop — STOP → spurious SLVSTART → IRQ handler →
-  MR again → STOP → … → **IRQ storm that can lock up the CPU**.
-- **Root cause:** MR handler emits STOP without clearing the spurious
-  SLVSTART bit afterward; top-level quirk guard (SLVREQ state check)
-  does not break this specific MR+stuck-SDA loop.
-- **Fix:** After STOP in the `MASTER_REQUEST` IBI path, explicitly clear
-  SLVSTART when the quirk is set.
-- **Version info:** NPCM845-specific; no kernel version range stated.
+**Step 1.3 – Body analysis**
+Record:
+- **Bug:** After `daa0fde32235` switched selection to `alloc_offset ==
+  0`, the code still skipped the first empty DATA block group (leftover
+  from when `used == 0` was the criterion).
+- **Symptom:** When only one empty DATA block group exists and the
+  device cannot allocate a new chunk (zone-limited), `data_reloc_bg` is
+  never set on mount.
+- **Root cause:** Obsolete “take the second empty block group” logic
+  from `694ce5e143d6` was not removed when the selection criterion
+  changed in `daa0fde32235`.
+- **Version context:** Fix targets a regression in `daa0fde32235`;
+  original feature in `694ce5e143d6`.
 
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** Not disguised — explicitly a bug fix for IRQ storm / CPU
-lockup. Falls under hardware quirk/workaround exception category.
+**Step 1.4 – Hidden bug fix?**
+Record: **Yes.** Despite the neutral subject, this is a logic-correction
+bug fix. Mailing-list discussion (Boris Burkov) documents a real remount
+scenario where no relocation block group gets reserved.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-**Record:**
-- **File:** `drivers/i3c/master/svc-i3c-master.c` (+9 lines, 0 removed)
-- **Function modified:** `svc_i3c_master_ibi_isr()`
-- **Scope:** Single-file, surgical fix in one `switch` case
-  (`SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST`)
+**Step 2.1 – Inventory**
+Record:
+- **Files:** `fs/btrfs/zoned.c` only (+1 / −10 lines)
+- **Function:** `btrfs_zoned_reserve_data_reloc_bg()`
+- **Scope:** Single-file surgical fix
 
-### Step 2.2: Code Flow Change
-**Record:**
-- **Hunk (MASTER_REQUEST case):**
-  - **Before:** `svc_i3c_master_emit_stop(master); break;`
-  - **After:** Same STOP, then if `SVC_I3C_QUIRK_FALSE_SLVSTART` quirk
-    is set, `writel(SVC_I3C_MINT_SLVSTART, master->regs +
-    SVC_I3C_MSTATUS)` to clear spurious SLVSTART.
-- **Path affected:** IRQ-driven IBI handler, non-critical task section,
-  MR event only, only when quirk bit is set (NPCM845).
+**Step 2.2 – Code flow change**
+Record per hunk:
+- **Before:** Loop skips every block group with `alloc_offset != 0`,
+  then skips the first empty one (`first` flag), uses the second empty
+  block group for relocation.
+- **After:** Loop skips only non-empty block groups (`alloc_offset !=
+  0`), immediately uses the first empty block group.
+- **Also removed:** `bool first`, comment about “second one”,
+  `ASSERT(!list_empty(...))` (invalid when only one empty BG exists),
+  and `first = false` after chunk allocation.
 
-### Step 2.3: Bug Mechanism
-**Record:** **Category:** Hardware quirk workaround / IRQ storm
-prevention (synchronization with hardware interrupt status).
-- STOP on NPCM845 spuriously sets SLVSTART interrupt status.
-- In MR+stuck-SDA scenario, top-level handler's SLVREQ guard does not
-  prevent re-entry into MR handling.
-- Explicit status clear after STOP breaks the feedback loop.
+**Step 2.3 – Bug mechanism**
+Record: **Logic / correctness fix** in mount-time block-group
+reservation. Stale algorithm from an earlier criterion (`used == 0` →
+skip first) persisted after criterion changed to `alloc_offset == 0`,
+causing failure to reserve relocation space on zone-constrained
+filesystems with a single empty DATA block group.
 
-### Step 2.4: Fix Quality
-**Record:**
-- **Obviously correct:** Uses the same `writel(SVC_I3C_MINT_SLVSTART,
-  ...)` pattern already used in `svc_i3c_master_irq_handler()` at line
-  626.
-- **Minimal:** Quirk-gated, only in MR path.
-- **Regression risk:** Very low — only affects NPCM845
-  (`npcm845_drvdata` sets `SVC_I3C_QUIRK_FALSE_SLVSTART`). Normal
-  SLVSTART processing remains guarded by SLVREQ check in the top-level
-  IRQ handler.
+**Step 2.4 – Fix quality**
+Record: Fix is minimal and obviously correct — removes dead logic and an
+assertion that assumed a second empty block group always exists. Low
+regression risk; only changes which empty block group is chosen on
+mount.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-**Record:** Lines 609–611 (`MASTER_REQUEST` STOP without clear) blamed
-to `19eef1d98eeda` (kernel import). The MR+STOP path predates this
-series; the missing clear is a gap in the original
-`SVC_I3C_QUIRK_FALSE_SLVSTART` handling from March 2025.
+**Step 3.1 – Blame**
+Record: Buggy “skip first empty” logic introduced in `daa0fde32235`
+(Naohiro Aota, 2025-07-16). Loop structure from `694ce5e143d6` (Johannes
+Thumshirn, 2025-06-03). Both are in v6.18 and in this tree.
 
-### Step 3.2: Fixes: Tag
-**Record:** No Fixes: tag. N/A.
+**Step 3.2 – Fixes: tag**
+Record: N/A — no `Fixes:` tag. Author explicitly states this corrects
+`daa0fde32235`, which is present in this tree.
 
-### Step 3.3: Related File History
-**Record:** Related commits in this tree on `svc-i3c-master.c`:
-- `466c7f87de52d` — Fix missed IBI after false SLVSTART (series patch
-  1/2, **present**)
-- `98ddff8a90f82` — Initialize `dev` to NULL in
-  `svc_i3c_master_ibi_isr()`
-- `8ddff9989f06a` — Prevent incomplete IBI transaction
-- Quirk introduced via code present since kernel import;
-  `SVC_I3C_QUIRK_FALSE_SLVSTART` and `npcm845_drvdata` confirmed in
-  tree.
+**Step 3.3 – Related file history**
+Record: Recent `fs/btrfs/zoned.c` changes in this tree include deadlock
+fixes and zone pointer fixes; no duplicate fix for this issue found.
 
-### Step 3.4: Author Context
-**Record:** Stanley Chu (Nuvoton) authored NPCM845 I3C fixes. Frank Li
-(NXP) reviewed. Alexandre Belloni (I3C maintainer) committed. Author has
-multiple related svc-i3c-master fixes in this tree.
+**Step 3.4 – Author context**
+Record: Johannes Thumshirn is a btrfs zoned contributor; authored
+`694ce5e143d6` (original mount-time reservation feature, with `Cc:
+stable@vger.kernel.org # 6.6+`).
 
-### Step 3.5: Dependencies
-**Record:**
-- **Prerequisite:** Patch 1/2 (`466c7f87de52d` — re-read MSTATUS in IRQ
-  handler) is **already in this tree**.
-- **Required infrastructure:** `SVC_I3C_QUIRK_FALSE_SLVSTART`,
-  `svc_has_quirk()`, `npcm845_drvdata` — all **present**.
-- **Standalone:** This patch (2/2) is self-contained; applies cleanly on
-  top of current tree (`git apply --check` passed).
-- Upstream commit: `1effa3adfe53c`; **not yet in this 6.18.43 tree**.
+**Step 3.5 – Dependencies**
+Record: **Standalone.** Patch is 3/5 in a series (“fix deadlock and
+space reporting issues for zoned filesystems”), but only touches
+`btrfs_zoned_reserve_data_reloc_bg()` and does not depend on patches
+1/2/4/5. `git apply --check` confirms clean apply to 6.18.44.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: Original Discussion
-**Record:**
-- **b4 dig -c 1effa3adfe53c:**
-  https://patch.msgid.link/20260413005040.1211107-3-yschu@nuvoton.com
-- **Series:** v1, 2 patches: (1) Fix missed IBI, (2) Prevent IRQ storm
-- **Maintainer response:** Alexandre Belloni: "Applied, thanks!" — both
-  patches applied to i3c tree.
-- **Stable nomination:** None found in thread.
-- **NAKs/concerns:** None found.
+**Step 4.1 – Original discussion**
+Record:
+- `b4 dig -c 82fd26090ebd` → https://patch.msgid.link/20260522090247.274
+  45-4-johannes.thumshirn@wdc.com (v3 submission)
+- Series revisions: v1 (2026-05-13), v2 (2026-05-19), v3 (2026-05-22);
+  committed version matches v3 (removes `first` entirely, not v2’s
+  reorder-only approach)
+- Boris Burkov review identified the concrete failure: after GC-heavy
+  workload and remount, all non-empty BGs skipped, first empty BG also
+  skipped, drive out of free zones → no relocation BG set
 
-### Step 4.2: Reviewers
-**Record:** CC'd: frank.li@nxp.com, miquel.raynal@bootlin.com,
-alexandre.belloni@bootlin.com, linux-i3c@lists.infradead.org, Nuvoton
-engineers. Reviewed-by: Frank Li.
+**Step 4.2 – Reviewers**
+Record: `b4 dig -w` shows CC to `linux-btrfs@vger.kernel.org`, David
+Sterba, Filipe Manana, Naohiro Aota, Boris Burkov, Christoph Hellwig,
+Damien Le Moal.
 
-### Step 4.3: Bug Report
-**Record:** No external bug report or syzbot link. Hardware quirk
-described by Nuvoton driver author; credible for embedded BMC platform.
+**Step 4.3 – Bug report**
+Record: No formal bugzilla/syzbot report. Failure scenario documented in
+list discussion (remount after heavy GC on zone-limited device).
 
-### Step 4.4: Series Context
-**Record:** 2-patch series addressing false SLVSTART quirk. Patch 1
-fixes missed IBI (race); patch 2 fixes IRQ storm (feedback loop). Both
-are complementary; patch 1 already in this tree; patch 2 is still
-missing.
+**Step 4.4 – Series context**
+Record: Other patches in series cover tracepoints (1/2), statfs
+accounting (4/5), deadlock (5/5) — separate issues; this patch is
+independently backportable.
 
-### Step 4.5: Stable List History
-**Record:** Not searched on lore stable list; no stable nomination found
-in patch thread. Absence is not a negative signal per instructions.
+**Step 4.5 – Stable list**
+Record: lore.kernel.org/stable search blocked (bot protection). Original
+feature commit `694ce5e143d6` had explicit stable nomination (`Cc:
+stable # 6.6+`).
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-**Record:** `svc_i3c_master_ibi_isr()` (modified),
-`svc_i3c_master_irq_handler()` (caller, unmodified).
+**Step 5.1 – Key functions**
+Record: `btrfs_zoned_reserve_data_reloc_bg()` modified.
 
-### Step 5.2: Callers
-**Record:**
-- `svc_i3c_master_irq_handler()` → `svc_i3c_master_ibi_isr()` (line 646)
-- IRQ registered via `devm_request_irq()` at line 1944
-- **Context:** Hard IRQ context on I3C SLVSTART interrupt — hot path for
-  all IBI events on NPCM845.
+**Step 5.2 – Callers**
+Record: Called once from `btrfs_open_devices()` path in `fs/btrfs/disk-
+io.c:3556` during filesystem mount, after `btrfs_read_block_groups()`.
 
-### Step 5.3: Callees
-**Record:** `svc_i3c_master_emit_stop()`, `svc_has_quirk()`, `writel()`
-to hardware MSTATUS register.
+**Step 5.3 – Callees**
+Record: Block-group list iteration, space_info migration
+(`list_del_init`, `btrfs_add_bg_to_space_info`), `btrfs_chunk_alloc()`
+fallback, `btrfs_zone_activate()`.
 
-### Step 5.4: Reachability
-**Record:**
-- Triggered when I3C bus target holds SDA low (hardware fault or
-  misbehaving device).
-- IRQ-driven, runs on every spurious SLVSTART in the MR feedback loop.
-- Not directly userspace-triggerable, but bus faults on BMC/server
-  platforms are realistic production scenarios.
-- **Impact when triggered:** Continuous IRQ processing → CPU lockup.
+**Step 5.4 – Reachability**
+Record: Triggered on every read-write mount of a zoned btrfs filesystem
+(`btrfs_is_zoned()`). Common operational path for zoned-storage users.
 
-### Step 5.5: Similar Patterns
-**Record:** Top-level IRQ handler already clears SLVSTART and has quirk
-guard. IBI and HOT_JOIN cases also emit STOP but do not need this extra
-clear (commit explains MR-specific loop). Same
-`writel(SVC_I3C_MINT_SLVSTART, ...)` idiom used elsewhere in file.
+**Step 5.5 – Similar patterns**
+Record: Treelog block-group reservation uses related but separate logic
+in `extent-tree.c`. No other “skip first empty” pattern found for data
+relocation.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
 
-### Step 6.1: Buggy Code Exists?
-**Record:** **YES.** Current tree at lines 609–611:
+**Step 6.1 – Buggy code present?**
+Record: **Yes.** Current `fs/btrfs/zoned.c:2760–2787` still has `bool
+first = true`, comment “Take the second one”, and skip-first-empty
+logic. Fix commit `82fd26090ebd` is **not** an ancestor of HEAD
+(6.18.44).
 
-```609:611:drivers/i3c/master/svc-i3c-master.c
-        case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
-                svc_i3c_master_emit_stop(master);
-                break;
-```
+**Step 6.2 – Backport complications**
+Record: **Clean apply.** `git format-patch -1 82fd260 | git apply
+--check` succeeds on current tree.
 
-No SLVSTART clear after STOP. `SVC_I3C_QUIRK_FALSE_SLVSTART` and
-`npcm845_drvdata` are present (lines 154, 2056–2059). Prerequisite patch
-`466c7f87de52d` is present. Upstream fix `1effa3adfe53c` is **not** in
-this tree.
-
-### Step 6.2: Backport Complications
-**Record:** **Clean apply** — `git apply --check` against upstream diff
-succeeded with no conflicts. No rework needed.
-
-### Step 6.3: Related Fixes Already Present?
-**Record:** Patch 1/2 (`466c7f87de52d`) present. IRQ storm fix
-(`1effa3adfe53c`) absent. No alternate fix for this issue found.
+**Step 6.3 – Related fixes already present?**
+Record: Prerequisites `694ce5e143d6` and `daa0fde32235` are in v6.18 and
+this tree. No alternate fix for this issue found.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**Record:** **Subsystem:** `drivers/i3c/master/` — I3C bus master driver
-(Silvaco/Vayavya Labs SVC IP, Nuvoton NPCM845). **Criticality:**
-IMPORTANT/PERIPHERAL — affects NPCM845 BMC platforms specifically, but
-IRQ storm is a system-wide CPU lockup.
+**Step 7.1 – Subsystem**
+Record: **btrfs / zoned mode** — IMPORTANT for zoned-btrfs deployments
+(SMR/ZNS storage); not universal but operationally critical for that
+subset.
 
-### Step 7.2: Subsystem Activity
-**Record:** I3C subsystem actively maintained in 6.18.y with recent svc
-and mipi-i3c-hci fixes. NPCM845 support and quirk infrastructure are
-established in this tree.
+**Step 7.2 – Activity**
+Record: `fs/btrfs/zoned.c` actively maintained in 6.18.y with multiple
+recent zoned fixes.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-**Record:** Users of Nuvoton NPCM845 I3C controller
-(`"nuvoton,npcm845-i3c"` DT compatible). Primarily embedded BMC/server
-platforms. Config-specific (driver + hardware present).
+**Step 8.1 – Who is affected**
+Record: Users of **zoned btrfs** (`CONFIG_BTRFS_FS` + zoned devices).
+Not all kernel users, but all zoned-btrfs users on affected versions.
 
-### Step 8.2: Trigger Conditions
-**Record:** I3C target stuck holding SDA low → false MR IBI → STOP
-recovery loop. Requires bus fault or misbehaving device — uncommon but
-realistic. Not unprivileged-userspace-direct, but can freeze the system
-when it occurs.
+**Step 8.2 – Trigger conditions**
+Record: Mount after workload leaving one empty DATA block group and no
+spare zones for new chunk allocation (e.g., remount after heavy GC).
+Realistic on zone-limited SMR/ZNS hardware.
 
-### Step 8.3: Failure Mode Severity
-**Record:** **IRQ storm → CPU lockup.** Severity: **CRITICAL** (system
-becomes unresponsive).
+**Step 8.3 – Failure severity**
+Record: `data_reloc_bg` remains 0 → garbage collection / data relocation
+cannot reserve dedicated space → **ENOSPC under overwrite workloads**
+(the exact problem `694ce5e143d6` was designed to prevent). Severity:
+**HIGH** for affected configurations; mount succeeds silently so the
+failure is deferred.
 
-### Step 8.4: Risk-Benefit
-**Record:**
-- **Benefit:** HIGH for NPCM845 users — prevents system lockup on bus
-  fault.
-- **Risk:** VERY LOW — 9 lines, quirk-gated, same register write pattern
-  as existing code, zero impact on non-NPCM845 platforms.
-- **Ratio:** Strongly favors backport.
+**Step 8.4 – Risk-benefit**
+Record:
+- **Benefit:** HIGH for zoned btrfs — restores guaranteed relocation
+  block-group reservation
+- **Risk:** LOW — 10-line deletion, reviewed by two btrfs developers,
+  applies cleanly
+- **Ratio:** Strongly favors backport
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Step 9.1 – Evidence summary**
 
-**FOR backporting:**
-- Fixes real IRQ storm causing CPU lockup (CRITICAL severity)
-- Small, surgical, quirk-gated hardware workaround
-- Reviewed by NXP reviewer; applied by I3C maintainer
-- Prerequisites present in 6.18.43 tree; applies cleanly
-- Complements already-backported patch 1/2 in the series
-- Matches stable exception category: hardware quirk/workaround
+| FOR backport | AGAINST backport |
+|---|---|
+| Real bug with documented remount scenario | Narrow audience (zoned
+btrfs only) |
+| Can leave `data_reloc_bg` unset → ENOSPC/GC failure | Part of 5-patch
+series (but this patch is standalone) |
+| Small, surgical, reviewed fix | No syzbot/fuzzer report |
+| Applies cleanly to 6.18.44 | Bug only exists since `daa0fde32235` (not
+in older trees) |
+| Fixes regression in already-stable code | |
+| Original feature had stable CC | |
 
-**AGAINST backporting:**
-- NPCM845-specific (limited audience) — but stable routinely takes
-  hardware quirk fixes
-- Requires bus fault to trigger — but consequence is system lockup
-- No syzbot/user bug report — but hardware quirk from silicon vendor is
-  credible
+**Step 9.2 – Stable rules checklist**
+1. Obviously correct and tested? **PASS** — logic fix reviewed by Boris
+   Burkov and Naohiro Aota; applies cleanly
+2. Fixes a real user-affecting bug? **PASS** — documented remount/zone-
+   exhaustion scenario
+3. Important issue? **PASS** — ENOSPC / broken GC on zoned btrfs (HIGH
+   for affected users)
+4. Small and contained? **PASS** — 1 file, net −9 lines
+5. No new features/APIs? **PASS** — removes obsolete logic only
+6. Can apply to local tree? **PASS** — verified with `git apply --check`
 
-**Unresolved:** None affecting the decision.
+**Step 9.3 – Exception categories**
+Record: None (not a quirk/DT/build/doc fix), but a straightforward logic
+bug fix.
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **PASS** — minimal register clear,
-   reviewed, maintainer-applied
-2. Fixes a real bug? **PASS** — IRQ storm on NPCM845
-3. Important issue? **PASS** — CPU lockup (CRITICAL)
-4. Small and contained? **PASS** — 9 lines, one case branch
-5. No new features/APIs? **PASS** — quirk workaround only
-6. Can apply to local tree? **PASS** — clean apply, prerequisites
-   present
+**Step 9.4 – Problem and why it matters**
 
-### Step 9.3: Exception Category
-**Record:** Hardware quirk/workaround for NPCM845 I3C controller.
+On mount, zoned btrfs reserves a dedicated data-relocation block group
+so garbage collection always has space under heavy overwrite. Commit
+`daa0fde32235` changed the selection criterion to `alloc_offset == 0`
+but kept the old “skip the first empty block group” rule. When a
+filesystem has only one empty DATA block group and the device cannot
+allocate a new chunk (common after GC-heavy use on zone-limited drives),
+the mount path silently fails to set `data_reloc_bg`. The filesystem
+then hits ENOSPC when GC is needed — defeating the purpose of the mount-
+time reservation added in `694ce5e143d6`.
 
-### Step 9.4: Decision Rationale
-This commit closes a gap in the existing `SVC_I3C_QUIRK_FALSE_SLVSTART`
-handling. The 6.18.43 tree already has NPCM845 support, the quirk flag,
-and series patch 1/2, but lacks this IRQ storm fix. When an I3C bus
-fault causes a target to hold SDA low, the driver can enter an infinite
-IRQ loop that locks the CPU. The fix is minimal, quirk-gated, reviewed,
-and applies cleanly. This is appropriate stable material.
+This fix simply picks the first empty DATA block group, which is correct
+under the new criterion. It is minimal, self-contained, and directly
+relevant to Linux 6.18.44 where both the feature and the regression are
+present.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed subject, tags, body from provided commit message
-- [Phase 1] Identified as explicit hardware quirk IRQ storm fix, not
-  hidden cleanup
-- [Phase 2] Diff: +9 lines in `svc_i3c_master_ibi_isr()`, MASTER_REQUEST
-  case only
-- [Phase 2] Verified `writel(SVC_I3C_MINT_SLVSTART, ...)` pattern
-  matches line 626 in same file
-- [Phase 3] `git describe HEAD` / `make kernelversion`: 6.18.43
-- [Phase 3] `git blame -L 609,611`: MR STOP path present without
-  SLVSTART clear
-- [Phase 3] `git merge-base --is-ancestor 466c7f87de52d HEAD`: patch 1/2
+- [Phase 1] Parsed subject, tags, body; no Fixes/Reported-by/Cc:stable
+  on this commit
+- [Phase 1] Identified hidden bug fix from message and list discussion
+- [Phase 2] Diff: 1 file, `btrfs_zoned_reserve_data_reloc_bg()`, −10/+1
+  lines
+- [Phase 2] Mechanism: stale skip-first-empty logic after criterion
+  change
+- [Phase 3] `git blame -L 2777,2800 fs/btrfs/zoned.c`: skip logic from
+  `daa0fde32235`
+- [Phase 3] `git merge-base --is-ancestor`: `694ce5e143d6` and
+  `daa0fde32235` both in HEAD and v6.18
+- [Phase 3] `git show 694ce5e143d6`: original feature with `Cc: stable #
+  6.6+`
+- [Phase 3] `git show daa0fde32235`: introduced skip-first-empty with
+  `alloc_offset == 0`
+- [Phase 3] `git merge-base --is-ancestor 82fd260 HEAD`: fix **NOT** in
+  6.18.44
+- [Phase 4] `b4 dig -c 82fd260`: lore URL found
+- [Phase 4] `b4 dig -a`: v1/v2/v3 series revisions confirmed; v3 is
+  final form
+- [Phase 4] `b4 dig -w`: btrfs maintainers/reviewers CC'd
+- [Phase 4] WebFetch spinics msg165574: Boris documented remount + zone
+  exhaustion scenario
+- [Phase 5] `grep btrfs_zoned_reserve_data_reloc_bg`: caller at `disk-
+  io.c:3556` on mount
+- [Phase 5] Read `extent-tree.c:3870–3966`: `data_reloc_bg == 0` breaks
+  relocation allocation paths
+- [Phase 6] `git describe HEAD` / `make kernelversion`: tree is 6.18.44
+- [Phase 6] Read `fs/btrfs/zoned.c:2752–2845`: buggy code confirmed
   present
-- [Phase 3] `git merge-base --is-ancestor 1effa3adfe53c HEAD`: IRQ storm
-  fix NOT present
-- [Phase 3] `git log --oneline 4dd12e944f07^..HEAD --
-  drivers/i3c/master/svc-i3c-master.c`: related history confirmed
-- [Phase 3] `git apply --check` on upstream diff: applies cleanly
-- [Phase 4] `b4 dig -c 1effa3adfe53c -a`: v1 2/2 series found
-- [Phase 4] `b4 dig -c 1effa3adfe53c -w`: maintainers CC'd, Frank Li
-  reviewed
-- [Phase 4] `b4 dig -c 1effa3adfe53c -m /tmp/i3c_irq_storm.mbox`:
-  Belloni applied both patches; no stable tag, no NAKs
-- [Phase 5] `grep svc_i3c_master_irq_handler`: caller at line 646; IRQ
-  registered at line 1944
-- [Phase 5] `grep SVC_I3C_QUIRK_FALSE_SLVSTART`: quirk defined line 154,
-  used lines 628 and 2058
-- [Phase 6] `grep npcm845`: `npcm845_drvdata` with quirk at lines
-  2056–2065
-- [Phase 6] Read current file lines 609–611, 617–648: buggy code
-  confirmed, prerequisite quirk guard present
-- [Phase 7] `git log --oneline -20 -- drivers/i3c/`: active subsystem
-- [Phase 8] Failure mode IRQ storm → CPU lockup assessed as CRITICAL
+- [Phase 6] `git format-patch -1 82fd260 | git apply --check`: clean
+  apply
+- [Phase 8] Failure mode: no relocation BG → ENOSPC on zoned btrfs,
+  severity HIGH for affected configs
 
-**YES**The background check finished: the IRQ storm fix (`1effa3adfe53c`
-/ `5e33b8c19e5b2`) is **not** in your current **6.18.43** tree.
+**YES**The background searches finished and matched what the analysis
+already used:
 
-That matches the earlier analysis: NPCM845 support and the related
-false-SLVSTART quirk are present, patch 1/2 (`466c7f87de52d`) is already
-applied, but the MR-handler SLVSTART clear is still missing — and the
-upstream patch applies cleanly.
+- The fix commit (`always set data_relocation_bg`) is **not** in
+  6.18.44; the tree still has the skip-first-empty logic in
+  `fs/btrfs/zoned.c`.
+- The prerequisite commits are present: `694ce5e143d6` (reserve
+  data_reloc BG on mount) and `daa0fde32235` (the regression this fix
+  corrects).
+- `b4 dig` on HEAD didn’t match (expected — the fix isn’t applied yet);
+  digging by commit hash `82fd260` found the v3 lore thread.
 
-**Backport recommendation: YES** — it’s a small, quirk-gated fix for an
-IRQ storm that can lock up the CPU on NPCM845 when the I3C bus gets
-stuck.
+**Verdict remains YES** for backporting to this 6.18.44 tree.
 
- drivers/i3c/master/svc-i3c-master.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/btrfs/zoned.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index d33f4c7654974..70365a550ad29 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -608,6 +608,15 @@ static void svc_i3c_master_ibi_isr(struct svc_i3c_master *master)
- 		break;
- 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
- 		svc_i3c_master_emit_stop(master);
-+
-+		/*
-+		 * If a target gets stuck holding SDA low, the controller reports a MR.
-+		 * On NPCM845, emitting STOP may spuriously set SLVSTART, retriggering
-+		 * the interrupt and re-entering MR handling, leading to an IRQ storm.
-+		 * Clear SLVSTART after STOP to break the loop.
-+		 */
-+		if (svc_has_quirk(master, SVC_I3C_QUIRK_FALSE_SLVSTART))
-+			writel(SVC_I3C_MINT_SLVSTART, master->regs + SVC_I3C_MSTATUS);
- 		break;
- 	default:
- 		break;
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 6ca5816a67381..660f516cb9357 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2759,7 +2759,6 @@ void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info)
+ 	struct btrfs_block_group *bg;
+ 	struct list_head *bg_list;
+ 	u64 alloc_flags;
+-	bool first = true;
+ 	bool did_chunk_alloc = false;
+ 	int index;
+ 	int ret;
+@@ -2776,17 +2775,12 @@ void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info)
+ 	alloc_flags = btrfs_get_alloc_profile(fs_info, space_info->flags);
+ 	index = btrfs_bg_flags_to_raid_index(alloc_flags);
+ 
+-	/* Scan the data space_info to find empty block groups. Take the second one. */
+ again:
+ 	bg_list = &space_info->block_groups[index];
+ 	list_for_each_entry(bg, bg_list, list) {
+-		if (bg->alloc_offset != 0)
+-			continue;
+ 
+-		if (first) {
+-			first = false;
++		if (bg->alloc_offset != 0)
+ 			continue;
+-		}
+ 
+ 		if (space_info == data_sinfo) {
+ 			/* Migrate the block group to the data relocation space_info. */
+@@ -2798,8 +2792,6 @@ void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info)
+ 
+ 			down_write(&space_info->groups_sem);
+ 			list_del_init(&bg->list);
+-			/* We can assume this as we choose the second empty one. */
+-			ASSERT(!list_empty(&space_info->block_groups[index]));
+ 			up_write(&space_info->groups_sem);
+ 
+ 			spin_lock(&space_info->lock);
+@@ -2843,7 +2835,6 @@ void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info)
+ 		 * We allocated a new block group in the data relocation space_info. We
+ 		 * can take that one.
+ 		 */
+-		first = false;
+ 		did_chunk_alloc = true;
+ 		goto again;
+ 	}
 -- 
 2.53.0
 
