@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB89243DA3C
-	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D6744162A
+	for <patches@lists.linux.dev>; Mon, 31 Aug 2026 17:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788198276; cv=none; b=GsG12JvwNPL7WwS8WXDQRt0xy83u1gHMIj9HBzjcq5GqmbG7vq2dHf2A5jNtSnX56sexsxxFITFx+VAZx7yGjaNRoLW6Ey+fkbAfBc45iwz1YuntyVxL9woZbKp3guqQY96JmIWegerDbBuTYHuJrjF7A7524+DL1y2rXOe7xnA=
+	t=1788198278; cv=none; b=rVH4nntg1ryGDArbry4hvb6KxoGtNkQqzlsfyQ09u08LIskTSgVaLc9PmpunNYqDY2dUKEGnaTfNAl5seE/hYaRUWR3eCF+ouCy2QAORt+/DWLh8+2ZCdSLetg3iWrjUQp5rhRp+H5kAhXfgY9MBt7I3Jb2GBd2FPm2Ig1nJN+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788198276; c=relaxed/simple;
-	bh=MVoenKJyXcSb5Jiia+eBvMNI5XF3ytHBCSf+x/xE4CA=;
+	s=arc-20240116; t=1788198278; c=relaxed/simple;
+	bh=cngsMzp3mV2hKVsIOckHgZkkimcTstRNquOZij5E5fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agbCfg2QpHsUNSVLGD4fTHnhfKqGxIWPBZKPAl4jdxe7DP+Q0md4Xnn3zOzjmKMqJbMBVwU8OOfD7hC3Wt9SwcqO5Lf3Va+GeZY4BlIHUKvwkV2WG3atiIhns+9TSCmPS6r5aF2I90tFmCooZjFz+q/4zJ6wzCEM7eLhbGHLVko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=E2ZyVGX+; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=JBFK7lBuGC1Pk19gQF+021BehH1SeCbmqT3rw60MLZ12/GdZNQyoz/He787dx0xsW9Nl79IKKvDb6NFmPkvhWA3fQHtMM3iRLtRzMSodsXkR3qxAWS8GtLr6w/n0ajWPqBsrgrFS563phJsPbyCOHbXhaawA6XknQmh4Jxy9B6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Hx7zIS1y; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="E2ZyVGX+"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Hx7zIS1y"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788198275; x=1819734275;
+  t=1788198276; x=1819734276;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=MVoenKJyXcSb5Jiia+eBvMNI5XF3ytHBCSf+x/xE4CA=;
-  b=E2ZyVGX+KYmqEfP8xUGzKO2cSfmFHyCewND7LKd+DmP1pF+s8nqYH4WW
-   Tb839+YRwS2DKRnSrD7xqp/c2Hihckb/jQFDLav8IRKHV8RjbnsLZn3mK
-   hyus89GtDU1FZRkIS78KAHLLflTP6PoTgIxKrWhAlxN3FY7pq43S1zVsN
-   zgikkCUHbn8QZBTYGkyDB2H0bKvzH7kApfCIbiMLnu0EYdZmkyn6WtLxe
-   AVpyVFrC00XOp/6VSvcE9TpYVeyHK4KG0T1968zM9fvSptxm+tHIhH/cN
-   xaCIa6xZCGx5UTcClEFR1Q+t7he1RtwKss0Ia0ePjLta4Lu/edgHZpi22
-   w==;
-X-CSE-ConnectionGUID: wsM6wmnxQXmdO4T7/vrfNg==
-X-CSE-MsgGUID: V8QMrQHcSA270L8my9J0Pg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="92479929"
+  bh=cngsMzp3mV2hKVsIOckHgZkkimcTstRNquOZij5E5fQ=;
+  b=Hx7zIS1yrEvfbi5MWcGvS5v83/af0EOJa2Aj+Q+NfPWLwOFxaCVDGY1h
+   YdImBpa2BZSsvLCW1JpeptYZ/6BSnhic5w/5dZnJ/3R7qt/e7R6iD4Wtm
+   22IF+UqZ7yPICQl0w4rqJcuTFM2d2dO8Ay9KHvIKHbQ0aLrL3t25Vvrsv
+   Cc1xoVp3ysrqd5P4F4hDJ24m0MZJqE5U2VVUtzruw5r56qSF01rnTKpnN
+   JO3R6qLYCZr2RpNamj+uYzkQI8zLopqEbU83Qty9M7W0m6917yQc1bkdb
+   5YsOhjUHxbxqsx/1w94quAJ7RxYOnQCAnXTknGeoZUNtUe9PgKz2Yjfvk
+   Q==;
+X-CSE-ConnectionGUID: XsAR+ismSky5lMkZuMU9Wg==
+X-CSE-MsgGUID: 6rLlnRXmRuaEdKdsL2xO6Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="92479940"
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="92479929"
+   d="scan'208";a="92479940"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:33 -0700
-X-CSE-ConnectionGUID: Mz1Nnv/gSF2vVK6Ex5GBZg==
-X-CSE-MsgGUID: NKBuUQEFTsyQfij9q8uCxw==
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:34 -0700
+X-CSE-ConnectionGUID: 3gK0QcBKTn6H9ZklYr/TUw==
+X-CSE-MsgGUID: 678Y8gIGT0OWCilmR1PxrQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,254,1779174000"; 
-   d="scan'208";a="268906952"
+   d="scan'208";a="268906956"
 Received: from aherrold-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.17])
   by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 10:44:32 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -58,10 +58,11 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v11 04/23] x86/resctrl: Apply Intel MBM quirk from rdt_get_l3_mon_config()
-Date: Mon, 31 Aug 2026 10:44:02 -0700
-Message-ID: <20260831174421.13921-5-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH v11 05/23] x86/resctrl: Delete resctrl_cpu_detect()
+Date: Mon, 31 Aug 2026 10:44:03 -0700
+Message-ID: <20260831174421.13921-6-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831174421.13921-1-tony.luck@intel.com>
 References: <20260831174421.13921-1-tony.luck@intel.com>
@@ -73,130 +74,184 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Intel quirk to adjust Memory Bandwidth Monitoring (MBM) values on
-certain CPUs is applied early, before discovering if MBM is supported.
+cpuinfo_x86::x86_cache_{max_rmid,occ_scale,mbm_width_offset} are no
+longer used.
 
-Move the call to rdt_get_l3_mon_config(), but keep the decision on
-whether it is needed in __check_quirks_intel() with all the other
-model specific tests.
+Delete resctrl_cpu_detect() and the fields from struct cpuinfo_x86.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
 ---
 v11:
 	New patch
 
- arch/x86/kernel/cpu/resctrl/internal.h |  4 +--
- arch/x86/kernel/cpu/resctrl/core.c     |  2 +-
- arch/x86/kernel/cpu/resctrl/monitor.c  | 35 +++++++++++++++-----------
- 3 files changed, 23 insertions(+), 18 deletions(-)
+ arch/x86/include/asm/processor.h   |  4 ---
+ arch/x86/include/asm/resctrl.h     |  3 ---
+ arch/x86/kernel/cpu/amd.c          |  3 ---
+ arch/x86/kernel/cpu/hygon.c        |  3 ---
+ arch/x86/kernel/cpu/intel.c        |  7 -----
+ arch/x86/kernel/cpu/resctrl/core.c | 42 ------------------------------
+ 6 files changed, 62 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index e3cfa0c10e92..e46eb9a4c725 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -151,6 +151,8 @@ static inline struct rdt_hw_resource *resctrl_to_arch_res(struct rdt_resource *r
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index ec9db0dfa0df..4deb88c61c94 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -185,10 +185,6 @@ struct cpuinfo_x86 {
+ 	/* in KB - valid for CPUS which support this call: */
+ 	unsigned int		x86_cache_size;
+ 	int			x86_cache_alignment;	/* In bytes */
+-	/* Cache QoS architectural values, valid only on the BSP: */
+-	int			x86_cache_max_rmid;	/* max index */
+-	int			x86_cache_occ_scale;	/* scale to bytes */
+-	int			x86_cache_mbm_width_offset;
+ 	int			x86_power;
+ 	unsigned long		loops_per_jiffy;
+ 	/* protected processor identification number */
+diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
+index 9bfa9b14002b..ab7f6ccd149e 100644
+--- a/arch/x86/include/asm/resctrl.h
++++ b/arch/x86/include/asm/resctrl.h
+@@ -193,12 +193,9 @@ static inline void resctrl_arch_mon_ctx_free(struct rdt_resource *r,
+ 					     enum resctrl_event_id evtid,
+ 					     void *ctx) { }
  
- extern struct rdt_hw_resource rdt_resources_all[];
- 
-+extern bool __initdata intel_rdt_mbm_need_quirk;
-+
- void arch_mon_domain_online(struct rdt_resource *r, struct rdt_l3_mon_domain *d);
- 
- /* CPUID.(EAX=10H, ECX=ResID=1).EAX */
-@@ -228,8 +230,6 @@ int rdt_get_l3_mon_config(struct rdt_resource *r);
- 
- bool rdt_cpu_has(int flag);
- 
--void __init intel_rdt_mbm_apply_quirk(void);
+-void resctrl_cpu_detect(struct cpuinfo_x86 *c);
 -
- void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
- void resctrl_arch_mbm_cntr_assign_set_one(struct rdt_resource *r);
+ #else
  
+ static inline void resctrl_arch_sched_in(struct task_struct *tsk) {}
+-static inline void resctrl_cpu_detect(struct cpuinfo_x86 *c) {}
+ 
+ #endif /* CONFIG_X86_CPU_RESCTRL */
+ 
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index 54e14ed276b5..dd82a11084f4 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -23,7 +23,6 @@
+ #include <asm/pci-direct.h>
+ #include <asm/delay.h>
+ #include <asm/debugreg.h>
+-#include <asm/resctrl.h>
+ #include <asm/msr.h>
+ #include <asm/sev.h>
+ 
+@@ -475,8 +474,6 @@ static void bsp_init_amd(struct cpuinfo_x86 *c)
+ 		}
+ 	}
+ 
+-	resctrl_cpu_detect(c);
+-
+ 	/* Figure out Zen generations: */
+ 	switch (c->x86) {
+ 	case 0x17:
+diff --git a/arch/x86/kernel/cpu/hygon.c b/arch/x86/kernel/cpu/hygon.c
+index ec51c2b9a257..0f226335dd9a 100644
+--- a/arch/x86/kernel/cpu/hygon.c
++++ b/arch/x86/kernel/cpu/hygon.c
+@@ -17,7 +17,6 @@
+ #include <asm/spec-ctrl.h>
+ #include <asm/delay.h>
+ #include <asm/msr.h>
+-#include <asm/resctrl.h>
+ 
+ #include "cpu.h"
+ 
+@@ -119,8 +118,6 @@ static void bsp_init_hygon(struct cpuinfo_x86 *c)
+ 			x86_amd_ls_cfg_ssbd_mask = 1ULL << 10;
+ 		}
+ 	}
+-
+-	resctrl_cpu_detect(c);
+ }
+ 
+ static void early_init_hygon(struct cpuinfo_x86 *c)
+diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
+index 4297ceb2cb24..2f09710e863c 100644
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -22,7 +22,6 @@
+ #include <asm/microcode.h>
+ #include <asm/msr.h>
+ #include <asm/numa.h>
+-#include <asm/resctrl.h>
+ #include <asm/thermal.h>
+ #include <asm/uaccess.h>
+ 
+@@ -371,11 +370,6 @@ static void early_init_intel(struct cpuinfo_x86 *c)
+ 		detect_tme_early(c);
+ }
+ 
+-static void bsp_init_intel(struct cpuinfo_x86 *c)
+-{
+-	resctrl_cpu_detect(c);
+-}
+-
+ #ifdef CONFIG_X86_32
+ /*
+  *	Early probe support logic for ppro memory erratum #50
+@@ -804,7 +798,6 @@ static const struct cpu_dev intel_cpu_dev = {
+ #endif
+ 	.c_detect_tlb	= intel_detect_tlb,
+ 	.c_early_init   = early_init_intel,
+-	.c_bsp_init	= bsp_init_intel,
+ 	.c_init		= init_intel,
+ 	.c_x86_vendor	= X86_VENDOR_INTEL,
+ };
 diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index fcbecf677914..0799dbfc7a72 100644
+index 0799dbfc7a72..b657eab4eb0c 100644
 --- a/arch/x86/kernel/cpu/resctrl/core.c
 +++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -1010,7 +1010,7 @@ static __init void __check_quirks_intel(void)
- 			set_rdt_options("!l3cat");
- 		fallthrough;
- 	case INTEL_BROADWELL_X:
--		intel_rdt_mbm_apply_quirk();
-+		intel_rdt_mbm_need_quirk = true;
- 		break;
- 	}
- }
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 0c2aa20148a1..0bce199a5f7b 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -37,6 +37,8 @@ bool rdt_mon_capable;
-  */
- unsigned int __ro_after_init rdt_l3_mon_scale;
+@@ -1082,48 +1082,6 @@ static __init void rdt_init_res_defs(void)
  
-+bool __initdata intel_rdt_mbm_need_quirk;
-+
- #define CF(cf)	((unsigned long)(1048576 * (cf) + 0.5))
+ static enum cpuhp_state rdt_online;
  
- static int snc_nodes_per_l3_cache = 1;
-@@ -51,7 +53,7 @@ static int snc_nodes_per_l3_cache = 1;
-  * 1. The threshold 0 is changed to rmid count - 1 so don't do correction
-  *    for the case.
-  * 2. MBM total and local correction table indexed by core counter which is
-- *    equal to (x86_cache_max_rmid + 1) / 8 - 1 and is from 0 up to 27.
-+ *    equal to r->mon.num_rmid / 8 - 1 and is from 0 up to 27.
-  * 3. The correction factor is normalized to 2^20 (1048576) so it's faster
-  *    to calculate corrected value by shifting:
-  *    corrected_value = (original_value * correction_factor) >> 20
-@@ -421,6 +423,20 @@ static __init int snc_get_config(void)
- 	return ret;
- }
- 
-+static void __init intel_rdt_mbm_apply_quirk(u32 num_rmid)
-+{
-+	int cf_index;
-+
-+	cf_index = num_rmid / 8 - 1;
-+	if (cf_index >= ARRAY_SIZE(mbm_cf_table)) {
-+		pr_info("No MBM correction factor available\n");
-+		return;
-+	}
-+
-+	mbm_cf_rmidthreshold = mbm_cf_table[cf_index].rmidthreshold;
-+	mbm_cf = mbm_cf_table[cf_index].cf;
-+}
-+
- int __init rdt_get_l3_mon_config(struct rdt_resource *r)
- {
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
-@@ -500,25 +516,14 @@ int __init rdt_get_l3_mon_config(struct rdt_resource *r)
- 		hw_res->mbm_cntr_assign_enabled = true;
- 	}
- 
-+	if (intel_rdt_mbm_need_quirk)
-+		intel_rdt_mbm_apply_quirk(r->mon.num_rmid);
-+
- 	r->mon_capable = true;
- 
- 	return 0;
- }
- 
--void __init intel_rdt_mbm_apply_quirk(void)
+-/* Runs once on the BSP during boot. */
+-void resctrl_cpu_detect(struct cpuinfo_x86 *c)
 -{
--	int cf_index;
--
--	cf_index = (boot_cpu_data.x86_cache_max_rmid + 1) / 8 - 1;
--	if (cf_index >= ARRAY_SIZE(mbm_cf_table)) {
--		pr_info("No MBM correction factor available\n");
+-	if (!cpu_has(c, X86_FEATURE_L3_MON) && !cpu_has(c, X86_FEATURE_ABMC)) {
+-		c->x86_cache_max_rmid  = -1;
+-		c->x86_cache_occ_scale = -1;
+-		c->x86_cache_mbm_width_offset = -1;
 -		return;
 -	}
 -
--	mbm_cf_rmidthreshold = mbm_cf_table[cf_index].rmidthreshold;
--	mbm_cf = mbm_cf_table[cf_index].cf;
+-	/* will be overridden if occupancy monitoring exists */
+-	c->x86_cache_max_rmid = cpuid_ebx(0xf);
+-
+-	if (cpu_has(c, X86_FEATURE_CQM_OCCUP_LLC) ||
+-	    cpu_has(c, X86_FEATURE_CQM_MBM_TOTAL) ||
+-	    cpu_has(c, X86_FEATURE_CQM_MBM_LOCAL) ||
+-	    cpu_has(c, X86_FEATURE_ABMC)) {
+-		u32 eax, ebx, ecx, edx;
+-
+-		/* QoS sub-leaf, EAX=0Fh, ECX=1 */
+-		cpuid_count(0xf, 1, &eax, &ebx, &ecx, &edx);
+-
+-		c->x86_cache_max_rmid  = ecx;
+-		c->x86_cache_occ_scale = ebx;
+-		c->x86_cache_mbm_width_offset = eax & 0xff;
+-
+-		if (!c->x86_cache_mbm_width_offset) {
+-			switch (c->x86_vendor) {
+-			case X86_VENDOR_AMD:
+-				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
+-				break;
+-			case X86_VENDOR_HYGON:
+-				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_HYGON;
+-				break;
+-			default:
+-				/* Leave c->x86_cache_mbm_width_offset as 0 */
+-				break;
+-			}
+-		}
+-	}
 -}
 -
- static void resctrl_abmc_set_one_amd(void *arg)
+ static int __init resctrl_arch_late_init(void)
  {
- 	bool *enable = arg;
+ 	struct rdt_resource *r;
 -- 
 2.55.0
 
