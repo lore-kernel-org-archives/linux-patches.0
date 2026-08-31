@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B9B440A0B;
-	Mon, 31 Aug 2026 13:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF4244236B;
+	Mon, 31 Aug 2026 13:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183231; cv=none; b=VoNUlyPrcrscex72COuBCWfj1TRU1Dzu0zd3qjCp99QSwjyicjGGLKWwdG0ISEdnpGVaB/0LhEQLvYSiGJSSyZZKSFSrD/q1hUCv4/f2EaVN4k089V5H+Jn1m8KC7OR1pJ1Rw+km7Raky4cSjmDeepfibR37FByjED0l8KShdu4=
+	t=1788183233; cv=none; b=VT6v+AqPwRQbV2dEd16y0f9ESPNScXtODtIT8Eb6IABlQjptXh9pzQTNJ0m/YDRbmEguRxVdRD+liXnFQNo2WmFVDaprCi0fmAxVy2esVoITvOOYqPY5AAQ4svDTI1VvYdmC9SJshVKch1omWuOnBgQyEws/X1ap8Bp8csnE8is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183231; c=relaxed/simple;
-	bh=tkpHD4DSeyuTAZYFKCHQdx8RPdkHr/iEr5XjPh7Q5q4=;
+	s=arc-20240116; t=1788183233; c=relaxed/simple;
+	bh=V7sbAJfojpViBi9NF9WshJ5gEPS+pZYWlgpCHUkkIho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZAUgFKj0Dc99Sy7l1gqGY09p6i/YSmvVnzP4UNmS7RUqCAi/tSbtslZX3D/Oe9FZFYNs79o3GgG/T5vXYPXXngURHE09d1Oae5Fdu1IDguOQtbRWZB3sl3H3hUs7lMlRqkSGqsfASsH/Kk5HRjcAqp4jyL/sHzt6H/HOZB+JgGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QfpgBCww; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dLF6e+f9G5ZlqNQaOG5hz7sAmy6Pwzb+ggv96Mg6aKaVL/l10WqV8qfWrHMPyJKiv1866ovW1tA7V2PhcFVNL7ZtAm/411FDjLshaBE7H6TPqsvj2Y0rGxtDJY4zgHt8w4ZIblq6BYdbFOomTGR+rYaal8jzd4oZ9LyivQ3YGrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jmixC4rq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QfpgBCww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B3F1F000E9;
-	Mon, 31 Aug 2026 13:33:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jmixC4rq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AF11F00A3F;
+	Mon, 31 Aug 2026 13:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788183229;
-	bh=aDQ7Idb1BacoK/e+5mo9Tq1bAJsZONh8HmTGjZmF8bU=;
+	s=k20260515; t=1788183231;
+	bh=Cqd//VPcToMiX8rAslIYH5tBq/ViuVFDxNgrqV68/Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfpgBCwwPBXFoyB6mF/aLL0snxTkADOw32ytUu5IxWaicl7yvO6R+9l1LMJ5H/SQ2
-	 fJObvTMgmED2JQ5N/XwXFy1LRAWufR+WO9ufLLK75KhBYYpPCOpLd4buFQgzvkJw0G
-	 qf15pxcOF+P3OooAiTE+ogCQnvYdSk7cE3ODeAT0Z9hH5vfV3DSoX2/wgroeS8Dl4v
-	 X2rr9PbrzXC4v5xlruSlFz70WwlMMhSF4TeGnuICvraD/Rb3HsTIUHNVzvXofg+NKD
-	 Y0oA4UbhePQa3zd1CiNqHbsSIynXYVdGrjnZ07SRqqyQ149ZYOwxduDezo+etyqYs/
-	 6lCqeCKkHZ0Lg==
+	b=jmixC4rqpIwE9etwyxxfzVccRgds96FfGnEeBgXs1Btfdf84wzBf/EbUbO48WrHG+
+	 EAtPQjXvSq0G61vY1Dm3zgo4Yax5B4YWkxu6aKAoG2dCfuQGyT+RuVa/zCBVjpDr54
+	 ynl7cgQWazG+mfP4TwXMmlDlRybGM9JklVfdRCe1r1VSveQCd9NiFWmwbbam7ofbvV
+	 lI8o9wzan0srUVwb8F3XaghGEeEPIHNBUh19FpxCJvAAziZiwpaZGomntYuZny5oUH
+	 gNkxIKHvsJz0p6p+hYIjWAscU9IrIlhMau048VTjFS2/G/5BI4ahwu1RuZCPEQq8zm
+	 6UPRbr43LfqEg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zizhi Wo <wozizhi@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+Cc: Albert Esteve <aesteve@redhat.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	James.Bottomley@HansenPartnership.com,
-	linux-scsi@vger.kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] scsi: core: Do not block on tag allocation in scsi_eh_lock_door()
-Date: Mon, 31 Aug 2026 09:20:51 -0400
-Message-ID: <20260831133314.4125787-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] drm/panel/tdo-tl070wsh30: Use refcounted allocation in place of devm_kzalloc()
+Date: Mon, 31 Aug 2026 09:20:52 -0400
+Message-ID: <20260831133314.4125787-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
 References: <20260831133314.4125787-1-sashal@kernel.org>
@@ -54,346 +58,465 @@ X-stable-base: Linux 6.18.48
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Albert Esteve <aesteve@redhat.com>
 
-[ Upstream commit 732cb6bb37fd26863d5786522fb1997e7f5865b4 ]
+[ Upstream commit 928decbed75bf215a8d0eecc88aa2edc77023db2 ]
 
-scsi_eh_lock_door() is called from scsi_restart_operations() while the
-host is still in the SHOST_RECOVERY state, i.e. before the host is
-switched back to SHOST_RUNNING and scsi_run_host_queues() restarts the
-queues. It allocates a request via scsi_alloc_request() with no flags,
-so blk_mq_get_tag() may block waiting for a free sched tag when all tags
-are already in use.
+Move to using the new API devm_drm_panel_alloc() to allocate the
+panel. In the call to the new API, avoid using explicit type and use
+__typeof() for more type safety.
 
-Those tags can be held by commands that were just requeued by
-scsi_eh_flush_done_q() during error handling. Such commands cannot be
-dispatched until the host leaves SHOST_RECOVERY and
-scsi_run_host_queues() is called - which only happens *after*
-scsi_eh_lock_door() returns.
-
-This forms a circular dependency:
-
-  - scsi_eh_lock_door(), running in the SCSI error handler thread, waits
-    for a sched tag held by a requeued command;
-
-  - the requeued command cannot complete and release its sched tag until
-    the error handler thread leaves scsi_restart_operations() and restart
-    the queues.
-
-For devices with a single driver tag (e.g. USB storage) it is a
-guaranteed deadlock and I/O that can never be submitted. This problem
-has also been reproduced in our environment.
-
-Locking the door is a best-effort operation, and scsi_eh_lock_door()
-already returns silently when the request allocation fails. Pass
-BLK_MQ_REQ_NOWAIT to scsi_alloc_request() so the allocation fails
-instead of blocking when no tag is available. This breaks the circular
-dependency and allows the error handler to finish restarting the queues,
-after which the pending commands are dispatched normally.
-
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260723041238.1584632-1-wozizhi@huaweicloud.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260508-drm_panel_init_rm-v2-6-0bd4ac429971@redhat.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+# Stable Backport Analysis: `drm/panel/tdo-tl070wsh30: Use refcounted
+allocation in place of devm_kzalloc()`
 
-**Step 1.1 — Subject line**
-- Record: `[scsi: core]` `[prevent/block]` — Do not block on tag
-  allocation in `scsi_eh_lock_door()`.
-
-**Step 1.2 — Tags**
-- Record:
-  - `Signed-off-by`: Zizhi Wo `<wozizhi@huawei.com>` (author)
-  - `Reviewed-by`: Bart Van Assche `<bvanassche@acm.org>` (SCSI
-    maintainer)
-  - `Link`: https://patch.msgid.link/20260723041238.1584632-1-
-    wozizhi@huaweicloud.com
-  - `Signed-off-by`: Martin K. Petersen (Oracle) `<mkp@kernel.org>`
-    (committer)
-  - No `Fixes:`, `Reported-by:`, `Cc: stable@vger.kernel.org`, or
-    `Tested-by:` tags.
-  - Notable: maintainer review present; author reports reproduction in
-    their environment.
-
-**Step 1.3 — Body analysis**
-- Record:
-  - **Bug**: Circular dependency during SCSI error recovery —
-    `scsi_eh_lock_door()` blocks in `blk_mq_get_tag()` while host is
-    still in `SHOST_RECOVERY`, but tags are held by commands requeued by
-    `scsi_eh_flush_done_q()` that cannot dispatch until
-    `scsi_run_host_queues()` runs *after* `scsi_eh_lock_door()` returns.
-  - **Symptom**: Guaranteed deadlock on single-tag devices (e.g. USB
-    storage); I/O permanently stuck.
-  - **Root cause**: Blocking tag allocation during recovery restart.
-  - **Fix**: Pass `BLK_MQ_REQ_NOWAIT` so allocation fails fast; door-
-    lock is already best-effort (silent return on failure).
-
-**Step 1.4 — Hidden bug fix?**
-- Record: No — this is an explicit deadlock fix, not disguised cleanup.
+**Local tree:** `v6.18.43` (`6.18.43`) — Linux 6.18.y stable series
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 2.1 — Inventory**
-- Record: 1 file (`drivers/scsi/scsi_error.c`), 1 line changed (+1/-1).
-  Function: `scsi_eh_lock_door()`. Scope: single-file surgical fix.
+### Step 1.1: Parse the subject line
+**Record:** `[drm/panel/tdo-tl070wsh30]` — migrate allocation — convert
+from `devm_kzalloc()` + `drm_panel_init()` to `devm_drm_panel_alloc()`.
 
-**Step 2.2 — Code flow change**
-- Record:
-  - **Before**: `scsi_alloc_request(..., 0)` → `blk_mq_get_tag()` may
-    block indefinitely waiting for a sched tag.
-  - **After**: `scsi_alloc_request(..., BLK_MQ_REQ_NOWAIT)` → returns
-    `ERR_PTR(-EWOULDBLOCK)` immediately when no tag is available;
-    existing `IS_ERR(req) return;` path handles it.
+### Step 1.2: Parse all commit message tags
+**Record:**
+- **Reviewed-by:** Neil Armstrong, Maxime Ripard, Dmitry Baryshkov,
+  Thomas Zimmermann (DRM/panel maintainers/reviewers)
+- **Signed-off-by:** Albert Esteve (author), Maxime Ripard (maintainer)
+- **Link:** `https://patch.msgid.link/20260508-drm_panel_init_rm-v2-6-
+  0bd4ac429971@redhat.com` (patch 6/10 of `drm_panel_init_rm` v2 series)
+- **No** Fixes:, Reported-by:, Cc: stable, Tested-by:, Acked-by:
 
-**Step 2.3 — Bug mechanism**
-- Record: **Deadlock / lock ordering** — error-handler thread blocks on
-  tag allocation while holding recovery state that prevents requeued
-  commands from releasing tags. Category: synchronization deadlock in EH
-  restart path.
+Notable: multiple maintainer Reviewed-by tags; part of a reviewed
+10-patch series.
 
-**Step 2.4 — Fix quality**
-- Record: Obviously correct. Minimal one-line change. Low regression
-  risk — door locking is documented as best-effort; failure path already
-  existed. Reviewed by SCSI maintainer.
+### Step 1.3: Analyze commit body
+**Record:**
+- **Bug described:** Not in the per-driver commit body itself; the
+  series cover letter (patch 00/10) states the old `devm_kzalloc()` +
+  `drm_panel_init()` pattern is unsafe.
+- **Symptom:** Use-after-free when the panel device is unbound — `devm`
+  frees the panel context struct immediately, but the DRM device may
+  still reference the embedded `drm_panel` via a panel bridge.
+- **Root cause (series):** Panel memory lifetime tied to `devm_kzalloc`
+  does not match the lifetime of DRM-side panel bridge references.
+  `devm_drm_panel_alloc()` wraps allocation in a `kref` scheme so memory
+  is freed only when the last reference is dropped.
+- **Version info:** None in commit message.
 
----
-
-## Phase 3: Git History Investigation
-
-**Step 3.1 — Blame**
-- Record: `scsi_eh_lock_door()` exists since kernel 2.6 (commit
-  `1da177e`). Blocking allocation introduced in `68ec3b819a5d6` ("scsi:
-  add a scsi_alloc_request helper", 2021-10-22, first in v5.16). Present
-  in this tree.
-
-**Step 3.2 — Fixes: tag**
-- Record: N/A — no `Fixes:` tag. Buggy behavior introduced by
-  `68ec3b819a5d6`, which is an ancestor of HEAD.
-
-**Step 3.3 — Related file history**
-- Record: Recent `scsi_error.c` changes in 6.18.y include EH wake
-  reliability fixes (`c7a1509123720`, `219f009ebfd1e`) but nothing
-  addressing this deadlock. Standalone fix, not part of a series.
-
-**Step 3.4 — Author context**
-- Record: Zizhi Wo is not a regular SCSI maintainer (other work in blk-
-  throttle, xfs, tty). This is a targeted bug report/fix.
-
-**Step 3.5 — Dependencies**
-- Record: None. `BLK_MQ_REQ_NOWAIT`, `scsi_alloc_request()` flags
-  parameter, and `IS_ERR` handling all exist in this tree. `git apply
-  --check` on the patch succeeds cleanly.
+### Step 1.4: Detect hidden bug fixes
+**Record:** Yes — despite no "fix" in the subject, this is a **use-
+after-free prevention** fix, not a cosmetic refactor. The series cover
+letter explicitly documents UAF on panel device unbind. The per-driver
+commit is the mechanical driver-side half of that fix.
 
 ---
 
-## Phase 4: Mailing List and External Research
+## PHASE 2: DIFF ANALYSIS
 
-**Step 4.1 — Original discussion**
-- Record: `b4 dig -c 732cb6bb37fd2` found v1 only at https://patch.msgid
-  .link/20260723041238.1584632-1-wozizhi@huaweicloud.com. Bart Van
-  Assche replied with `Reviewed-by`. No NAKs or objections in thread.
+### Step 2.1: Inventory the changes
+**Record:**
+- **Files:** `drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c` only (+7/−7
+  lines)
+- **Functions modified:** `tdo_tl070wsh30_panel_add()`,
+  `tdo_tl070wsh30_panel_probe()`
+- **Scope:** Single-file, surgical driver fix
 
-**Step 4.2 — Reviewers**
-- Record: `b4 dig -w` shows CC to James Bottomley, Martin Petersen, Bart
-  Van Assche, linux-scsi, linux-kernel. Appropriate maintainers
-  included.
+### Step 2.2: Code flow change per hunk
 
-**Step 4.3 — Bug report**
-- Record: Author states "reproduced in our environment." No
-  syzbot/bugzilla link. Real-world reproduction claimed.
+**Hunk 1 — `tdo_tl070wsh30_panel_add()`:**
+- **Before:** Explicit `drm_panel_init()` call to initialize the
+  embedded `drm_panel`.
+- **After:** `drm_panel_init()` removed; initialization now happens
+  inside `devm_drm_panel_alloc()` during probe.
+- **Path affected:** Normal probe path.
 
-**Step 4.4 — Series context**
-- Record: `b4 dig -a` shows single v1 patch — standalone, no series
-  dependencies.
+**Hunk 2 — `tdo_tl070wsh30_panel_probe()`:**
+- **Before:** `devm_kzalloc()` allocation; `-ENOMEM` on failure.
+- **After:** `devm_drm_panel_alloc()` with `__typeof(*tdo_tl070wsh30),
+  base, ...`; `IS_ERR()` / `PTR_ERR()` error handling.
+- **Path affected:** Probe initialization path.
 
-**Step 4.5 — Stable list discussion**
-- Record: No stable-specific discussion found in mbox thread (no "Cc:
-  stable" mentions). Absence is neutral per instructions.
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category:** Use-after-free / memory lifetime bug
+- **Mechanism:** `devm_kzalloc()` ties panel struct lifetime to panel
+  device devres release. When the panel DSI device unbinds, memory is
+  freed while `drmm_panel_bridge_add()` / `devm_drm_of_get_bridge()` on
+  the display side may still hold a `struct drm_panel *` through a panel
+  bridge. `devm_drm_panel_alloc()` allocates via `kzalloc()` (not
+  devres-backed memory), initializes `kref`, and registers a devm
+  cleanup action calling `drm_panel_put()`, decoupling panel memory
+  lifetime from naive devres free ordering.
 
----
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1 — Key functions**
-- Record: `scsi_eh_lock_door()`, called from
-  `scsi_restart_operations()`, which is called from
-  `scsi_error_handler()`.
-
-**Step 5.2 — Callers**
-- Record: `scsi_restart_operations()` ← `scsi_error_handler()` (EH
-  kernel thread, process context). Triggered on SCSI I/O
-  failures/timeouts — common path for all SCSI block devices.
-
-**Step 5.3 — Callees**
-- Record: `scsi_alloc_request()` → `blk_mq_alloc_request()` →
-  `blk_mq_get_tag()`. On failure with NOWAIT: `ERR_PTR(-EWOULDBLOCK)`.
-  On success: `blk_execute_rq_nowait()`.
-
-**Step 5.4 — Reachability**
-- Record: Trigger requires SCSI EH after device reset with door locked
-  (`sdev->was_reset && sdev->locked`). Verified in
-  `scsi_restart_operations()` at line 2200. Host stays in
-  `SHOST_RECOVERY` until line 2215
-  (`scsi_host_set_state(SHOST_RUNNING)`), which is *after*
-  `scsi_eh_lock_door()`. Requeued commands from `scsi_eh_flush_done_q()`
-  use `blk_mq_requeue_request(..., !scsi_host_in_recovery(...))` —
-  during recovery, `kick_requeue_list` is false, so they cannot
-  dispatch. Reachable from normal block I/O error paths.
-
-**Step 5.5 — Similar patterns**
-- Record: Historical USB SCSI EH deadlocks fixed in `7daf480483e60` and
-  `c69e6f812bab0` (same file, same subsystem concern).
-  `BLK_MQ_REQ_NOWAIT` already used elsewhere in SCSI (`sg.c` documents
-  why it avoids NOWAIT for userspace). This is the correct use case for
-  NOWAIT.
+### Step 2.4: Fix quality assessment
+**Record:**
+- **Obviously correct:** Yes — identical pattern already applied to 100+
+  panel drivers in this tree (e.g., `panel-jdi-lt070me05000.c`, `panel-
+  novatek-nt36672a.c`).
+- **Minimal/surgical:** Yes — only allocation/init changes, no logic
+  changes.
+- **Regression risk:** Very low — mechanical API swap using existing,
+  exported API.
+- **Red flags:** None. No API changes, no cross-subsystem impact.
 
 ---
 
-## Phase 6: Cross-Referencing Against Local Tree
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 6.1 — Buggy code exists?**
-- Record: **YES.** Local tree is `v6.18.44` (`linux-6.18.y`). Current
-  code at line 2160 still has `scsi_alloc_request(sdev->request_queue,
-  REQ_OP_DRV_IN, 0)`. Fix commit `732cb6bb37fd2` is on mainline but
-  **not** in this tree.
+### Step 3.1: Blame changed lines
+**Record:** Shallow history — all lines blame to `5d324e5159d9e` (6.18
+merge base). Driver has used `devm_kzalloc()` + `drm_panel_init()` since
+import into this tree. The vulnerable pattern is long-standing in this
+driver.
 
-**Step 6.2 — Backport complications**
-- Record: Clean apply confirmed via `git apply --check`. No conflicts
-  expected.
+### Step 3.2: Follow Fixes: tag
+**Record:** N/A — no Fixes: tag present.
 
-**Step 6.3 — Related fixes already present?**
-- Record: No — `git log -S"BLK_MQ_REQ_NOWAIT" --
-  drivers/scsi/scsi_error.c` returns nothing. Fix not yet backported.
+### Step 3.3: File history for related changes
+**Record:**
+- `devm_drm_panel_alloc()` infrastructure present in
+  `drivers/gpu/drm/drm_panel.c` and `include/drm/drm_panel.h`.
+- Bulk migration already done: **100+** panel drivers use
+  `devm_drm_panel_alloc`.
+- **6 drivers** still use `drm_panel_init()` — exactly the set targeted
+  by this series:
+  - `panel-tdo-tl070wsh30.c` (this commit)
+  - `panel-visionox-g2647fb105.c`, `panel-samsung-s6e63m0.c`, `panel-
+    sharp-ls043t1le01.c`, `panel-truly-nt35597.c`, `panel-startek-
+    kd070fhfid015.c`
+- This commit is **patch 6/10** of `drm_panel_init_rm` v2; patch 10/10
+  makes `drm_panel_init()` static but is **not required** for this
+  driver patch to function.
 
----
+### Step 3.4: Author's other commits
+**Record:** Albert Esteve authored the full 10-patch series converting
+the last remaining panel drivers. Maxime Ripard (DRM maintainer) signed
+off. Multiple subsystem maintainers reviewed.
 
-## Phase 7: Subsystem and Maintainer Context
-
-**Step 7.1 — Subsystem criticality**
-- Record: `drivers/scsi/scsi_error.c` — SCSI core error handling.
-  **CORE/IMPORTANT** — affects all SCSI block storage (disks, USB
-  storage, optical drives).
-
-**Step 7.2 — Subsystem activity**
-- Record: Actively maintained in 6.18.y with recent EH fixes
-  (`c7a1509123720`, etc.).
-
----
-
-## Phase 8: Impact and Risk Assessment
-
-**Step 8.1 — Who is affected**
-- Record: Users of SCSI block devices undergoing error recovery,
-  especially USB storage (single tag) and optical media with door-lock
-  after reset. Universal for SCSI-enabled kernels.
-
-**Step 8.2 — Trigger conditions**
-- Record: SCSI EH after reset on a device with locked door, with
-  requeued commands occupying all queue tags. Reproducible per author;
-  guaranteed on single-tag devices. Unprivileged users can trigger via
-  normal I/O to removable media.
-
-**Step 8.3 — Failure mode severity**
-- Record: **CRITICAL** — permanent deadlock of EH thread; all I/O to
-  affected device/host stuck indefinitely.
-
-**Step 8.4 — Risk-benefit**
-- Record: Benefit **very high** (prevents unrecoverable I/O hang). Risk
-  **very low** (1-line change, existing failure path, best-effort
-  operation). Strong positive ratio.
+### Step 3.5: Prerequisites
+**Record:**
+- **Required:** `devm_drm_panel_alloc()` — **present** in 6.18.43.
+- **Not required:** Patch 10/10 (`drm_panel_init()` static) — this
+  driver patch compiles and works without it; `drm_panel_init()` remains
+  exported in this tree.
+- **Standalone:** Yes — single-driver change, self-contained.
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Evidence FOR backport:**
-- Real, reproducible deadlock in SCSI EH restart path
-- CRITICAL severity (permanent I/O hang)
-- One-line, obviously correct fix
-- Reviewed by SCSI maintainer (Bart Van Assche)
-- Applies cleanly to 6.18.44
-- Bug present since v5.16 (`scsi_alloc_request` migration)
-- No dependencies or new APIs
-- Historical precedent for USB/EH deadlock fixes in stable
+### Step 4.1: Original patch discussion
+**Record:**
+- **Series URL:**
+  https://lkml.iu.edu/hypermail/linux/kernel/2605.1/00251.html (`[PATCH
+  v2 00/10]`)
+- **This patch URL:**
+  https://www.spinics.net/lists/kernel/msg6193227.html (`[PATCH v2
+  06/10]`)
+- **Series revisions:** v1 → v2 (v2 removed kdoc precedence mentions)
+- **Key feedback:** Series cover letter documents UAF; v2 is latest
+  revision.
+- **Stable nominations:** None found in thread excerpts.
+- **NAKs/concerns:** None found.
 
-**Evidence AGAINST backport:**
-- None significant. Door-lock skip on tag exhaustion is acceptable
-  (best-effort by design).
+### Step 4.2: Reviewers
+**Record:** CC'd to dri-devel, linux-kernel. To: Neil Armstrong, Maxime
+Ripard, Thomas Zimmermann, David Airlie, Maarten Lankhorst, and other
+DRM maintainers. Reviewed-by from Neil Armstrong and Maxime Ripard on
+this specific patch.
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **PASS** — maintainer reviewed; author
-   reproduced bug.
-2. Fixes real bug? **PASS** — deadlock with concrete trigger.
-3. Important issue? **PASS** — CRITICAL deadlock.
-4. Small and contained? **PASS** — 1 line, 1 file.
-5. No new features/APIs? **PASS**.
-6. Can apply to local tree? **PASS** — clean apply verified.
+### Step 4.3: Bug report
+**Record:** No syzbot/KASAN report. Bug identified through API lifetime
+analysis in the series cover letter, not a specific crash report.
+Severity is still real (UAF on unbind).
 
-**Exception category:** N/A (not a quirk/DT/build fix — standard bug
-fix).
+### Step 4.4: Related patches
+**Record:** Part of 10-patch series; each driver patch is independent.
+Other patches in series target the other 5 remaining `drm_panel_init()`
+callers. `panel-ilitek-ili9806e` was already converted in this tree via
+earlier work.
+
+### Step 4.5: Stable mailing list
+**Record:** No stable-specific discussion found (not searched
+exhaustively on lore stable list; no evidence against backport).
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key functions
+**Record:** `tdo_tl070wsh30_panel_probe()`,
+`tdo_tl070wsh30_panel_add()`, `tdo_tl070wsh30_panel_remove()`
+
+### Step 5.2: Callers
+**Record:**
+- `tdo_tl070wsh30_panel_probe()` — MIPI DSI core during device probe
+  (`module_mipi_dsi_driver`)
+- `tdo_tl070wsh30_panel_add()` — called from probe
+- Panel registered globally via `drm_panel_add()`; discovered by display
+  drivers via `of_drm_find_panel()` / `drm_of_find_panel_or_bridge()` →
+  `drmm_panel_bridge_add()` / `devm_drm_of_get_bridge()`
+
+### Step 5.3: Callees
+**Record:** `devm_drm_panel_alloc()` → `kzalloc()`, `kref_init()`,
+`devm_add_action_or_reset(drm_panel_put_void)`, `drm_panel_init()`.
+Probe also calls `devm_regulator_get()`, `devm_gpiod_get()`,
+`drm_panel_of_backlight()`, `drm_panel_add()`, `mipi_dsi_attach()`.
+
+### Step 5.4: Call chain / reachability
+**Record:**
+```
+Device probe → mipi_dsi_driver.probe → devm_drm_panel_alloc →
+drm_panel_add
+Display probe → drm_of_find_panel_or_bridge → drmm_panel_bridge_add
+(stores panel pointer)
+Panel unbind → devm cleanup → [UAF if old pattern, fixed with refcounted
+alloc]
+```
+**Userspace reachable:** Yes — via device hot-unplug, module unload, or
+driver rebinding on embedded systems using this panel.
+
+### Step 5.5: Similar patterns
+**Record:** Same fix pattern applied to 100+ sibling panel drivers in
+this tree. Six drivers (including this one) are the remaining unmigrated
+instances targeted by the series.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AGAINST LOCAL TREE
+
+### Step 6.1: Does buggy code exist?
+**Record:** **Yes.** `panel-tdo-tl070wsh30.c` at lines 165–166 and
+186–189 still uses `drm_panel_init()` + `devm_kzalloc()`.
+`CONFIG_DRM_PANEL_TDO_TL070WSH30` is present in Kconfig.
+
+### Step 6.2: Backport complications
+**Record:** **Clean apply expected.** Current file content matches the
+patch base (`index 227f97f9b136f`). Diff is identical to published
+v2-6/10 on spinics. No conflicting changes in this file.
+
+### Step 6.3: Related fixes already present?
+**Record:** Infrastructure fix (`devm_drm_panel_alloc`) and bulk driver
+migration already in 6.18.43. This specific driver conversion is **not**
+yet applied. No alternate fix for this driver found.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** `drivers/gpu/drm/panel/` — **IMPORTANT** (display
+subsystem). Affects embedded platforms using the TDO TL070WSH30 1024×600
+DSI panel (`compatible = "tdo,tl070wsh30"`).
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained. Recent 6.18.y commits include multiple
+`drm/panel` fixes. Panel refcount infrastructure recently landed and
+bulk-converted.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** **Driver-specific / platform-specific** — systems with
+`CONFIG_DRM_PANEL_TDO_TL070WSH30` enabled and the TDO TL070WSH30 panel
+connected via MIPI DSI. Not universal, but real hardware (listed in
+`panel-simple-dsi.yaml` compatible list).
+
+### Step 8.2: Trigger conditions
+**Record:**
+- Panel DSI device unbinds (module unload, device removal, driver
+  unbind) while DRM display driver still holds a panel bridge reference
+- Requires display + panel driver interaction via
+  `drm_of_find_panel_or_bridge()` path
+- **Unprivileged direct trigger:** No (requires device/module management
+  capability)
+- **Likelihood:** Low-to-moderate on embedded systems with hotplug or
+  driver reload; not every boot
+
+### Step 8.3: Failure mode severity
+**Record:** **Use-after-free** → kernel oops/panic when DRM accesses
+freed panel memory through panel bridge. **Severity: HIGH** (crash,
+potential security implications from UAF).
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** HIGH for affected hardware — prevents UAF crash on panel
+  unbind
+- **Risk:** VERY LOW — 7-line mechanical change, pattern proven across
+  100+ drivers, multiple maintainer reviews
+- **Ratio:** Strong benefit, minimal risk
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Fixes documented UAF on panel device unbind (series cover letter)
+- Same pattern already applied to 100+ panel drivers in 6.18.43
+- Prerequisite API (`devm_drm_panel_alloc`) exists in this tree
+- Buggy code still present in this tree (6 of 6 remaining
+  `drm_panel_init()` users)
+- Small, surgical, reviewed by Neil Armstrong, Maxime Ripard, Dmitry
+  Baryshkov, Thomas Zimmermann
+- UAF → crash is stable-worthy
+
+**AGAINST backport:**
+- Per-driver commit message doesn't explicitly say "fix UAF" (rationale
+  is in series cover)
+- No syzbot/reporter crash report
+- Affects niche hardware only
+- Part of a series (though this patch is standalone-applicable)
+
+**Unresolved:**
+- `drm_panel_get()` has no external callers in this tree; exact UAF
+  prevention mechanism relies on devm action ordering and kref-managed
+  lifetime rather than explicit `drm_panel_get()` from bridge code.
+  Maintainers accepted this across the subsystem.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — mechanical API migration,
+   multiple Reviewed-by from maintainers, proven pattern in 100+ sibling
+   drivers.
+2. Fixes a real bug? **PASS** — UAF on panel unbind documented in
+   series.
+3. Important issue? **PASS** — UAF/crash, severity HIGH.
+4. Small and contained? **PASS** — 1 file, ~14 lines changed.
+5. No new features/APIs? **PASS** — uses existing
+   `devm_drm_panel_alloc()`.
+6. Can apply to local tree? **PASS** — API present, buggy code present,
+   clean apply expected.
+
+### Step 9.3: Exception categories
+**Record:** N/A — not a device ID, quirk, DT, build, or docs fix. This
+is a genuine memory-safety bug fix.
+
+### Step 9.4: Decision rationale
+This commit completes the refcounted-allocation migration for one of the
+last six panel drivers still using the unsafe `devm_kzalloc()` +
+`drm_panel_init()` pattern in Linux 6.18.43. The prerequisite
+infrastructure is already in this stable tree, the vulnerable code is
+present, and the fix matches a pattern already applied across the vast
+majority of panel drivers. The series documents a real use-after-free
+when the panel device unbinds while the DRM subsystem retains a panel
+bridge reference. The change is minimal, maintainer-reviewed, and low-
+risk.
+
+---
+
+## What Problem This Solves
+
+The TDO TL070WSH30 panel driver allocates its context structure with
+`devm_kzalloc()`, which frees memory immediately when the panel DSI
+device unbinds. Display drivers that wrap the panel in a `panel_bridge`
+(via `drmm_panel_bridge_add()` / `devm_drm_of_get_bridge()`) can retain
+a pointer to the embedded `drm_panel` after that free, causing a use-
+after-free and potential kernel crash on subsequent DRM access.
+
+Switching to `devm_drm_panel_alloc()` ties panel memory lifetime to a
+`kref` with a devm-managed `drm_panel_put()` cleanup action, matching
+the allocation model used by the rest of the panel subsystem in 6.18.y.
 
 ---
 
 ## Verification
 
-- [Phase 1] `git show 732cb6bb37fd2`: parsed full commit message and
-  tags
-- [Phase 2] Diff: confirmed single-line `BLK_MQ_REQ_NOWAIT` change in
-  `scsi_eh_lock_door()`
-- [Phase 3] `git describe HEAD`: v6.18.44; `git blame` line 2160:
-  blocking call from `68ec3b819a5d6` (v5.16)
-- [Phase 3] `git merge-base --is-ancestor 68ec3b819a5d6 HEAD`: confirmed
-  buggy code ancestor present
-- [Phase 3] `git merge-base --is-ancestor 732cb6bb37fd2 HEAD`: fix NOT
-  in tree
-- [Phase 3] `git apply --check`: patch applies cleanly
-- [Phase 4] `b4 dig -c 732cb6bb37fd2`: found lore thread
-- [Phase 4] `b4 dig -w`: maintainers CC'd (Bottomley, Petersen, Van
-  Assche)
-- [Phase 4] `b4 dig -a`: single v1 patch, no series
-- [Phase 4] mbox: Bart Van Assche `Reviewed-by`; no NAKs, no stable
-  nomination
-- [Phase 5] Read `scsi_restart_operations()`, `scsi_unjam_host()`,
-  `scsi_eh_flush_done_q()`, `__scsi_queue_insert()`: confirmed recovery-
-  state ordering and requeue behavior
-- [Phase 5] Read `scsi_host_in_recovery()` in
-  `include/scsi/scsi_host.h`: checks `SHOST_RECOVERY` etc.
-- [Phase 5] Read `blk_mq_alloc_request()` / `blk_mq_get_tag()`: NOWAIT
-  returns `ERR_PTR(-EWOULDBLOCK)` on no tag
-- [Phase 6] Grep current tree line 2160: still uses flags `0` (buggy)
-- [Phase 8] Confirmed `sdev->was_reset` set in
-  `__scsi_report_device_reset()` during EH reset path
+- [Phase 1] Parsed subject, tags, body; identified series context from
+  Link tag
+- [Phase 1] Fetched series cover letter at lkml.iu.edu — confirmed UAF
+  rationale
+- [Phase 1] Fetched patch 6/10 at spinics.net — confirmed diff matches
+  provided commit
+- [Phase 2] Read full `panel-tdo-tl070wsh30.c` — confirmed old pattern
+  at lines 165–166, 186–189
+- [Phase 2] Read `__devm_drm_panel_alloc()` in `drm_panel.c` — confirmed
+  kref + devm put action
+- [Phase 3] `git describe HEAD` → `v6.18.43`; `make kernelversion` →
+  `6.18.43`
+- [Phase 3] Counted drivers: 6 still use `drm_panel_init()`, 100+ use
+  `devm_drm_panel_alloc`
+- [Phase 3] Verified `panel-jdi-lt070me05000.c` as example of already-
+  converted sibling driver
+- [Phase 4] Series discussion at
+  https://lkml.iu.edu/hypermail/linux/kernel/2605.1/00251.html
+- [Phase 4] Patch discussion at
+  https://www.spinics.net/lists/kernel/msg6193227.html
+- [Phase 4] b4 dig: could not run — commit not present in local tree (no
+  commit hash available)
+- [Phase 5] Traced `drmm_panel_bridge_add()` /
+  `devm_drm_of_get_bridge()` in `bridge/panel.c` — panel pointer stored
+  in bridge
+- [Phase 5] Confirmed `drm_panel_get()` has no external callers in this
+  tree (only definition in `drm_panel.c`)
+- [Phase 6] Confirmed `devm_drm_panel_alloc` in
+  `include/drm/drm_panel.h` and `drm_panel.c`
+- [Phase 6] Confirmed `CONFIG_DRM_PANEL_TDO_TL070WSH30` in Kconfig
+- [Phase 6] Confirmed `compatible = "tdo,tl070wsh30"` in DT bindings
+- [Phase 8] Assessed UAF → crash as HIGH severity for affected platforms
 
-This commit fixes a real SCSI error-handler deadlock that can
-permanently hang I/O — especially on single-tag USB storage — and the
-fix is a minimal, reviewed, cleanly-applicable one-liner appropriate for
-the 6.18.y stable tree.
+**YES**The background git history lookups finished. Both searches (`-S
+"allocated by devm_drm_panel_alloc"` and `-S "kref_init"` / `-S
+"__devm_drm_panel_alloc"`) only hit the shallow tree base
+(`5d324e5159d9e`, the 6.18-rc8 merge), so they didn’t add finer-grained
+history beyond what we already verified in code.
 
-**YES**
+That’s consistent with this checkout: `devm_drm_panel_alloc()` and the
+panel refcount machinery are already in 6.18.43, while `panel-tdo-
+tl070wsh30.c` is still one of six drivers on the old `devm_kzalloc()` +
+`drm_panel_init()` path. The backport recommendation remains **YES**.
 
- drivers/scsi/scsi_error.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 13d46b6e0359e..857c2acc99645 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -2157,7 +2157,7 @@ static void scsi_eh_lock_door(struct scsi_device *sdev)
- 	struct scsi_cmnd *scmd;
- 	struct request *req;
+diff --git a/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c b/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
+index 227f97f9b136f..13cfe252a838d 100644
+--- a/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
++++ b/drivers/gpu/drm/panel/panel-tdo-tl070wsh30.c
+@@ -162,9 +162,6 @@ static int tdo_tl070wsh30_panel_add(struct tdo_tl070wsh30_panel *tdo_tl070wsh30)
+ 		return err;
+ 	}
  
--	req = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_IN, 0);
-+	req = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_IN, BLK_MQ_REQ_NOWAIT);
- 	if (IS_ERR(req))
- 		return;
- 	scmd = blk_mq_rq_to_pdu(req);
+-	drm_panel_init(&tdo_tl070wsh30->base, &tdo_tl070wsh30->link->dev,
+-		       &tdo_tl070wsh30_panel_funcs, DRM_MODE_CONNECTOR_DSI);
+-
+ 	err = drm_panel_of_backlight(&tdo_tl070wsh30->base);
+ 	if (err)
+ 		return err;
+@@ -183,10 +180,13 @@ static int tdo_tl070wsh30_panel_probe(struct mipi_dsi_device *dsi)
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST | MIPI_DSI_MODE_LPM;
+ 
+-	tdo_tl070wsh30 = devm_kzalloc(&dsi->dev, sizeof(*tdo_tl070wsh30),
+-				    GFP_KERNEL);
+-	if (!tdo_tl070wsh30)
+-		return -ENOMEM;
++	tdo_tl070wsh30 = devm_drm_panel_alloc(&dsi->dev,
++					      __typeof(*tdo_tl070wsh30), base,
++					      &tdo_tl070wsh30_panel_funcs,
++					      DRM_MODE_CONNECTOR_DSI);
++
++	if (IS_ERR(tdo_tl070wsh30))
++		return PTR_ERR(tdo_tl070wsh30);
+ 
+ 	mipi_dsi_set_drvdata(dsi, tdo_tl070wsh30);
+ 	tdo_tl070wsh30->link = dsi;
 -- 
 2.53.0
 
