@@ -1,111 +1,152 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9D94A2046;
-	Mon, 31 Aug 2026 13:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D104A2055;
+	Mon, 31 Aug 2026 13:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183713; cv=none; b=GG7NVBHkFjvp5Lm/HSvOtle79sBP0yPi68kHmFyWvnG9TFOjTttoD81FAqpdYgJiiDS6qT/u8t9M9U6oiUVLJgpbUB0xolrR5/zY29QKtgwnA2YeY9ZcW6sg3VTXxwmTTVWNTovA5MYejIyeSbZn9TfVF28M/ygW880nkW9ljFU=
+	t=1788183713; cv=none; b=ReHWUBVRle1A2rpxSgwxQ08VDkqSgNvtIEcRC0URe4O+C9wyyFKKciOmmMMTkLc8o0aCxkgGXnBAzmjHQMQeS9oHg2K5v/+0QSCSSEda8OxBTbR7G/MtUIsIwfRLfrjcBpvPSpj7m5J4ADScEC9+XhLleFtdbboknlo6SDu6X44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788183713; c=relaxed/simple;
-	bh=uH04i0zneTWVGjU0PWpWrCwE0y1syMQX85hqLhm5z18=;
+	bh=lG0ixKQ1mLCxQGPnXgn1lo1cOCb9q3hH11X63UuZKSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iEfQoDFElgKdXk3HVCoYfKqirr+nKjuVgIZNZi2OTvzWHmkMYKl8zzsXyfyyCN9H1sCwwrT4rHFr8DqwXuZ9wd8zllSzi5PJWHSRwIcmjCGyGPqknE2Z3ie/Qz68I+us7garuZB8Gq1ego8h+Hn1lk0K017bXSH6oE418p4ca+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eC8hXcgB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Wt5+sMq72TxDU+dQ9AgQw138RH7zup/Jb9alfVeNlpXVCTxqjUTBJxVWVqeYmI8J1TuufnebngYFE7X1k+crEVMR78G0V5OJYOgXpmWhZkk1Mc6fyg8zqTjTD9WIU46HdpCpXT5O3vSbtbYPxSK4YHB1MZu2oeWoyLlCyatlvvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aqZdnV5E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eC8hXcgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AEA1F000E9;
-	Mon, 31 Aug 2026 13:41:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788183710;
-	bh=NUJYg0hwl8rW+blc/vM8VCb+SfckIty8sRIhU5h9aPU=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aqZdnV5E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239701F00A3F;
+	Mon, 31 Aug 2026 13:41:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183711;
+	bh=3NlhHbvyFPMU6mH5r1dGOqevBmHLJaKBG2LBztKcTZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eC8hXcgButWoo8g1xC2JKax+G0SZPPsMFG2f2MAP9qk7YG6TKIN9/e3XjGJgERxIF
-	 zp3WducDbrH610sgNNieOIBFFnvnuCGb5GpR4W/O0eB2Gr7wL90NBt8dbA7IxeYJdq
-	 hNO9M5TID7kFfa4V/VUTksVgVKwpvmZY5G7wI/u8=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 17/76] ext4: zero out whole block for clean edges in WRITE_ZEROES
-Date: Mon, 31 Aug 2026 15:33:49 +0200
-Message-ID: <20260831133400.092339108@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
-References: <20260831133359.185608553@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=aqZdnV5EJBQy4hjrSgodr+nVMGulnJLU9RS4vbC8F3+hmKjVzJjj/7Y8GZuQHQdAU
+	 8BWpTjK2JgrCCGvFVabdGVHU6MqWoKH2jf/uSxd1G7ytd3soNgzaRZn3AXYwgdtRiR
+	 hLpRJ3QH4elVhEHrgs2FtnD0Aljcaz51WerU+3SjtmMszNF7JurxhtUdluf0yN4Qn6
+	 lQ+M2xGTCBlho1jziiVK6Oteva90k+VBRpIPOz418zYQyT5i14G0bx7Nq/L0YhpFkA
+	 ETIwR3PA1GnIiovsazJUj5Pqg0qyvlwn5JdtRq9y64PPi7F20nK20/ZBF2RR1s/MbC
+	 mGoYQI8fEcDBw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] wifi: iwlwifi: mvm: validate TX_CMD response layout
+Date: Mon, 31 Aug 2026 09:24:47 -0400
+Message-ID: <20260831133314.4125787-259-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-------------------
+[ Upstream commit 8d70881707b47353359df57df12f6de67fdacdd2 ]
 
-From: Zhang Yi <yi.zhang@huawei.com>
+TX_CMD parsing uses frame_count to walk status entries and then
+read the trailing SCD SSN. Make the minimum-length check follow
+that exact runtime layout calculation before parsing the payload.
 
-[ Upstream commit a5179156ac1d9a6646da42254e4c461e1fc20096 ]
+For new TX API, reject TX_CMD responses with frame_count != 1 and
+warn/return in the aggregation handler to document that aggregated
+accounting is expected via BA notifications.
 
-FALLOC_FL_WRITE_ZEROES requires that all blocks in the requested range
-end up as written extents with zeroed content. For unaligned edges that
-were already allocated, ext4_zero_partial_blocks() zeros them directly.
-However, for unaligned edges whose underlying extent is a clean
-unwritten extent or a hole, the extent type remains unwritten after
-partial zeroing, which does not align with the semantics of
-WRITE_ZEROES.
-
-Therefore, when ext4_zero_partial_blocks() skips partial zeroing, it
-indicates that the corresponding edges are clean unwritten extents or
-holes. In this case, we need to expand the aligned allocation range
-outward to cover such edges, so that ext4_alloc_file_blocks() can
-correctly allocate blocks for the unaligned range. Edges that were
-partial-zeroed (i.e., written or dirty) are left untouched.
-
-Fixes: f4265b8d32c4 ("ext4: add FALLOC_FL_WRITE_ZEROES support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260714080044.4038124-8-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Assisted-by: GitHubCopilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715215523.0474ee89bab9.I84f151aabecb8921b587da092f29f78c47128f0f@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4822,6 +4822,21 @@ static long ext4_zero_range(struct file
- 	/* Zero range excluding the unaligned edges */
- 	align_start = round_up(offset, blocksize);
- 	align_end = round_down(end, blocksize);
-+
-+	/*
-+	 * In WRITE_ZEROES mode, edges that were not partial-zeroed (clean
-+	 * unwritten or hole) must be allocated and zeroed as whole blocks.
-+	 * Expand the aligned range outward to cover them.
-+	 */
-+	if (mode & FALLOC_FL_WRITE_ZEROES) {
-+		if (!IS_ALIGNED(offset, blocksize) &&
-+		    !(partial_zeroed & EXT4_PARTIAL_ZERO_START))
-+			align_start = round_down(offset, blocksize);
-+		if (!IS_ALIGNED(end, blocksize) &&
-+		    !(partial_zeroed & EXT4_PARTIAL_ZERO_END))
-+			align_end = round_up(end, blocksize);
-+	}
-+
- 	if (align_end > align_start) {
- 		if (mode & FALLOC_FL_WRITE_ZEROES)
- 			flags = EXT4_GET_BLOCKS_CREATE_ZERO | EXT4_EX_NOCACHE;
+LLM Generated explanations, may be completely bogus:
 
+The background lookup finished: commit `5a6d47d1037f5` is on the
+`autosel` branch but not in the checked-out **v6.18.44** tree.
+
+**Verdict: YES** — backport this to 6.18.y.
+
+The MVM TX_CMD handler parses variable-length firmware responses using
+`frame_count` without checking that the packet is large enough for all
+status entries plus the trailing SCD SSN. That can cause an out-of-
+bounds read on a common TX completion path. The fix is small (34 lines,
+one file), applies cleanly, and matches validation already used in the
+MLD path and other iwlwifi handlers already backported to this tree.
+
+ drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 34 +++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+index bb97837baedaf..30aee52bf9cb4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+@@ -1581,6 +1581,17 @@ static inline u32 iwl_mvm_get_scd_ssn(struct iwl_mvm *mvm,
+ 	return val & 0xFFF;
+ }
+ 
++static inline size_t iwl_mvm_tx_resp_min_len(struct iwl_mvm *mvm,
++					     struct iwl_tx_resp *tx_resp)
++{
++	struct agg_tx_status *agg_status =
++		iwl_mvm_get_agg_status(mvm, tx_resp);
++
++	/* The aggregate response ends with a trailing SCD SSN __le32 word. */
++	return (u8 *)(agg_status + tx_resp->frame_count) - (u8 *)tx_resp +
++		sizeof(__le32);
++}
++
+ static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
+ 				     struct iwl_rx_packet *pkt)
+ {
+@@ -1884,6 +1895,9 @@ static void iwl_mvm_rx_tx_cmd_agg(struct iwl_mvm *mvm,
+ 	int queue = SEQ_TO_QUEUE(sequence);
+ 	struct ieee80211_sta *sta;
+ 
++	if (WARN_ON_ONCE(iwl_mvm_has_new_tx_api(mvm)))
++		return;
++
+ 	if (WARN_ON_ONCE(queue < IWL_MVM_DQA_MIN_DATA_QUEUE &&
+ 			 (queue != IWL_MVM_DQA_BSS_CLIENT_QUEUE)))
+ 		return;
+@@ -1918,6 +1932,26 @@ void iwl_mvm_rx_tx_cmd(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb)
+ {
+ 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
+ 	struct iwl_tx_resp *tx_resp = (void *)pkt->data;
++	size_t min_len;
++
++	if (IWL_FW_CHECK(mvm, !tx_resp->frame_count,
++			 "invalid TX_CMD frame_count %u\n",
++			 tx_resp->frame_count))
++		return;
++
++	if (IWL_FW_CHECK(mvm,
++			 iwl_mvm_has_new_tx_api(mvm) &&
++			 tx_resp->frame_count != 1,
++			 "invalid TX_CMD frame_count %u for new TX API\n",
++			 tx_resp->frame_count))
++		return;
++
++	min_len = iwl_mvm_tx_resp_min_len(mvm, tx_resp);
++	if (IWL_FW_CHECK(mvm, iwl_rx_packet_payload_len(pkt) < min_len,
++			 "invalid TX_CMD len %u (frame_count %u, min %zu)\n",
++			 iwl_rx_packet_payload_len(pkt), tx_resp->frame_count,
++			 min_len))
++		return;
+ 
+ 	if (tx_resp->frame_count == 1)
+ 		iwl_mvm_rx_tx_cmd_single(mvm, pkt);
+-- 
+2.53.0
 
