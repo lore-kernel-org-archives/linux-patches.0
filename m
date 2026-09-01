@@ -1,115 +1,121 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86F438F642
-	for <patches@lists.linux.dev>; Tue,  1 Sep 2026 05:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B239B975
+	for <patches@lists.linux.dev>; Tue,  1 Sep 2026 07:44:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788240509; cv=none; b=j3Go6xUI/Rq4jeZEVNW9vwTbBLcFDWYyhpx7LUOkD+OyDyQcYjO2u4CDxrPJ86YH70AdxDBxZlq7SWZo0e10odoRKRiEAgWCBXZzEIGE8P+y/ESRh1VScZQVNmOzf2mjjDN0Cwa5LO6Dm1JSYtwoE9gpEaFCSzO6x6wpj1BsWkk=
+	t=1788248696; cv=none; b=nDqgEX1zbKvvRSWSGVFeZcrYElwH0J1POyU1RR1FFGrUHfYssFaM9S5osFry2HQr3S61No99qL03fOa+mVmJEGfL3wI/Gx3KCQ7gnahE/9a0Ta9RLZ5Hh+YgZnQBvCPXRV/inoMp4qReC13BkQ6b8oy4Wv2uyQ4jIJm46KKab/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788240509; c=relaxed/simple;
-	bh=W7Q8xg8BSAYA2tpHUW+AynBJ9lC5DWh80C8PRS4kSR0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0QFBz7o07X6TH+yBC0xSOf/DgBmZOVBdEWfgqBS+v3Faw7rUxbD/T+9d3ZxSguH1htaGtOdHKRdj0xf6wSUM6DttgtyVEdxqfUgtf+B91ZpsF9DXx+d9magcpZ80iR8nJ5HZRqebzkFOI8F5/Tr9i/1E2wg61HvWZCAmMS04Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BC/WjRAO; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788248696; c=relaxed/simple;
+	bh=yoMTvp4YiPcF7B1CdZBdXB9u2vytV5Ngn5aJ0MgQzww=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=obZF4aBP+zBZI75wMmP6MprcnzoATPxNCo6AHXlZbzN6qerTl92JsEYQy3MVXlTELKYwkEqFmqGpelMt7u8JF7yTP5Bet0JAolLRFEUpirFg08M3AxRw3af25ifOdTrWbArMmXRy9f0yiwxazd7iiOepY0ZiNx8ObhMmAInEg10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GyU9v09j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RwjV8WCl; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BC/WjRAO"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4995b0343c1so43045985e9.3
-        for <patches@lists.linux.dev>; Mon, 31 Aug 2026 22:28:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788240506; x=1788845306; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=W7Q8xg8BSAYA2tpHUW+AynBJ9lC5DWh80C8PRS4kSR0=;
-        b=BC/WjRAOlrvFpmVt/1VMCTYElveqmZkvwt40Aty7KwPK+MM76hvb2mioPdAB/jJzSY
-         fQzRB/M2CbS4dRupl/OAtqcYYvLHwBspiscrSH3QYzZiRGS8nAUrQ0mPYB6XIYMowf33
-         ImnYEMAlaSWMR4wb9C1JQ3n+rwSvcBJgiY6cFjk1ng8p3JDKBAfEP8Z9mVn6kUIyoYtG
-         2ddJ3GVphCjEsvOMVl+NhHd7qGNk+mM/nhQm3rup27JSy3BW2vg1HkrPDBov6oF9X/MY
-         GlEjQeLnKa3uN9UDHp2kN8UvIEYaLVuYi5e0paYd7/ghuZw5CChKx49+duChfZ8/vGgq
-         3F5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788240506; x=1788845306;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=W7Q8xg8BSAYA2tpHUW+AynBJ9lC5DWh80C8PRS4kSR0=;
-        b=oiJnU4xy/34rBpZHAwpspY4rcelpNw33QFC2vliopSuVe0VsfJXgwI9dbk4kXfJtkD
-         UcZ60FTauDjPmp0jMnESBJoJdMji+vUvjHwLqCdbHyJeRXKI8NpWbzB/vOtVIeA63W0c
-         pFGUvZf8mzE7Tc8D7e/0FkDV4PPQPZnO8YuS3FOGeWfwtOBvkqJ1laQLWI7kGUuauVgz
-         ekGJ7xhWGd+WPCXiEIa3ayZlDx7kjsAVoMJ5NejZsRTtSwjB7zwGe2n/LFBZQ5hlzTRp
-         rfPIphCfU2PniFAku2YhKFYw/BJz8NA48Pd5INjs1TBQIc4mJojKlG4/vkWKf5HEQ2cW
-         BbyQ==
-X-Gm-Message-State: AFuF++nVtIoze0nHrePPOCdcdN9S3wI0LSUoSC19zz+8W81TxA1Kkrt/
-	zQpcxfjLr/w7l4zesyUcy3HKTlFICxlrqwnq7G/SYrTkw08Ubg9sHcjD
-X-Gm-Gg: AR+sD13Bwh3tYHnaeuaScOtNrjW3x7b0ggSYN+AKs7om8FxsaP2vBMmkij4LbzxI64k
-	9hgDPereB2fxF1afnaejRD53nbEsQyM4NJr+SNMJoKN1l6kQic143vKhAraIGEe3r3J4UrbSpUz
-	70MFtHJbWRE1U/CGrlCtkI6sT6mkt583rcXnN4/QGky24I7pO8iZpKOw5D6dTaiV6GvWXrVvLZn
-	xOvT9QRtej8hwMOA1drjglGtFQGStLsYsBR2StktpPVoOMILWS1cKQScnBUCyecyJUk6+y5Q8w7
-	0eK3oh2iMk/CfHrcphVG2iTnxI2uzMPIN8SgjQ9S5rJIYCWiRE057xLGkBZdV6ARan/lGLRkFce
-	pwyOB/0UpmsuyCy1lsIeEozzN5MvwH0bEg11aqyt3sjTxaopVWPlH183mNLsaZUu5cd0btNQeFQ
-	wWYudSDuwBH0nt0nQ1vm390/YZmhIzxKMeypG+AJCbce9QUf2MLLlq7fqOUM5oCC7+GmMZlltfi
-	uwKpJWeZEVuUZRRipmglA3fmfQz7iWyedAucNCZ/dMjoZoIBhnm+b23CZ1X+Ntz
-X-Received: by 2002:a05:600c:3e18:b0:49a:77c1:d246 with SMTP id 5b1f17b1804b1-49b91c4e073mr525091595e9.15.1788240505850;
-        Mon, 31 Aug 2026 22:28:25 -0700 (PDT)
-Received: from localhost.localdomain (ip-89-176-136-191.bb.vodafone.cz. [89.176.136.191])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49cd8b9a2efsm140752035e9.3.2026.08.31.22.28.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 22:28:24 -0700 (PDT)
-From: Petr Wozniak <petr.wozniak@gmail.com>
-To: sashal@kernel.org
-Cc: patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	maxime.chevallier@bootlin.com,
-	kuba@kernel.org,
-	andrew@lunn.ch,
-	hkallweit1@gmail.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	linux@armlinux.org.uk,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Petr Wozniak <petr.wozniak@gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.18-6.1] net: phy: sfp: probe for RollBall I2C-to-MDIO bridge in mdio-i2c
-Date: Tue,  1 Sep 2026 07:28:16 +0200
-Message-ID: <20260901052816.3815-1-petr.wozniak@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260831133314.4125787-466-sashal@kernel.org>
-References: <20260831133314.4125787-466-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GyU9v09j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RwjV8WCl"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 35DAE1D000C6;
+	Tue,  1 Sep 2026 03:44:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 01 Sep 2026 03:44:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1788248693;
+	 x=1788335093; bh=vAHRdu25Gd4aL0UCJnMOYgyFCMzj8uwlZmxfVfrx82o=; b=
+	GyU9v09jebZ9vm9YyuliYanip4wbKWhazOj2kLHzIvXnW8VH1J8h/LamrDmydqeP
+	H7yQTd5VcRorkpDKQgZgFURSgNC2L72BN36sOmQMADCsTvTm+KNmdcOF7ad6Och/
+	QQ6xOvPIZBpYkjRczgAXz9bwAYSenwjeaCxPd2U3LRB2i7DWYfsZh70498vhG8SE
+	einRRPlW/VV0HClwMCNjL72Oz7incaYFNGZ1+xVUUDwJQ9isYM5r2u33o/6bccQ/
+	nzXskrxRDcX36Xz/lxqCBbPut6du5azKVmpNhcaE19up4Eq/rHQKiKSjN2pgBqcF
+	L+c0NKXC2vvfCeq0ecwd2w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788248693; x=
+	1788335093; bh=vAHRdu25Gd4aL0UCJnMOYgyFCMzj8uwlZmxfVfrx82o=; b=R
+	wjV8WClSIy+JkzJTAmyrHU1dKAczuy1j/KcDmr/bJIYBW6Uo3VzBkfqW6QXbz4Hx
+	1akYPtU5AGfRO6a7sSc1H9Jz6bl43vXzXEUveB4WoVGaYG9Zk4TM3OaglpdUPfyX
+	GwxAWC1EyWKIQPYTOSwWphJbaTach5/IKDnPepSs3WTSpoxOtkUh1ApFWMdSQNF8
+	zZUvlPdrSKRFRNsYyw1scUyeu1yol5jXVoAWatgKVIb1i5nkW3dF60jOTnrrVJNX
+	YLsEb3C75M1ZhtyDdwGUQB875c2DRlMRD972v3zfYBG+aMPpkw2WIAQNJvryaZF+
+	CoDhzcBW4p6PRMZJui1GQ==
+X-ME-Sender: <xms:dIKWarAWlaYPWbX8PJZcSYPaLBftF6A7bdpWc_-DRXZDaC2TIJ3bjg>
+    <xme:dIKWatYXIEYOxTsBu1Xi9PBVF3ELPbO9jTB2sTuizh7BBS5vFClU_9Tt1qTOUwmyU
+    lC-8rxsX3sGISPGXLlswknpGn-AdBnZ8M1HSF98l7T95ZJ-jHmSSczL>
+X-ME-Received: <xmr:dIKWaiFRcEeI6Ez36WL6WHtrBj2bI5kuidyGZxgnN0oSOStRzeAKFTPX1qcWwzyTlhyn9sRI5F-m9jNo8Kqkjw2ro_FgOB-P>
+X-ME-Proxy-Cause: dmFkZTFjbx0J/iGofjF5oeSN/hGWMP2hYVoR0A7CGppWe8ytwELxlfhj94LCTLfefR5EFW
+    Ca1160+d9JZ0igfSyzXa+LMFDI9u/T1g5MX/YJf0o7e/HuEeiut61eMa54GClb8GU0nhOb
+    Z0bptqNf0jhIZanZHApWkU2mwfYpgTRnaLO9je0XFsQLBNdWzIHcSHXm6EbEPTT/gHHJ7j
+    JI8TyHuA4TMXDsvKN9O3vjKrrU8vvOoJTUXqvRpYlHJ1PNiD3LtMO2nxD7ceVG3hHaaeET
+    roXCiT5G1Mrz4mziEt+tYxaDLRl1UVc9YcKBUc+FIsWWSyFLXPwiGBKOeikqP9d4ihw2oj
+    2jAe+pUQyhBfY99KY9avYO28fEVGk4Fu3k2WTmEumgwTWs9MrsNHnnhKKp5o3v6dvB6PR0
+    Hq6tfh0IQVfLoFG+v0zW/7WEhhP/ZHdOA8hemZB6naGKPiUbZJH2Zg6/OBKdVTDhOIZ2BE
+    nLQlfWDasBfnwZBbFaRITA0ehw1W8x6VCqX4O7DxTB2CjKFxYMu7yLeFn1kHxY8X76HTKe
+    Khp9p+NF1kqNLdlFs9GncVPi2FKUtrfrlm8aeetRhyaydWj/g80BFyhoskDMUTSy8Zqytw
+    qP7+vlOvs6m9/vyzscwpigwmC+cnpuWFzMCZZVzmFk2hpjjL4fDuFBvvj7sQ
+X-ME-Proxy: <xmx:dIKWahsblQ9Bnjf50ZTu0c0Pte1-aw42n3C6sVOBpMLpxu0F9ril0g>
+    <xmx:dIKWaoKFJns0Q8PeKy2yQ5BNgvjebvyWNL46VKsCaQmXSRlJ4c-dpQ>
+    <xmx:dIKWavM6jZtpUiy_zVHC_xx1AZOo5W15PIuGVoCOv9AcDBpXu5Wo8w>
+    <xmx:dIKWagaN5jliQn2kv3uaPGiSrA3d47J-9_rzCvpvfqt9Ka51Ko3xVQ>
+    <xmx:dYKWavIaSBlQHCALCoKEtO4nQyJZ4PZOQ7I8p3a6lZR17CbQMUswqGrl>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 03:44:49 -0400 (EDT)
+Message-ID: <1442dad3-9791-40d8-a602-8f857bd6fd46@pobox.com>
+Date: Tue, 1 Sep 2026 00:44:48 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.1 00/76] 7.1.13-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260831133359.185608553@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260831133359.185608553@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Please drop this one from AUTOSEL.
+On 8/31/26 6:33 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.1.13 release.
+> There are 76 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.13-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-8fe125892f40 was reverted upstream on 2026-06-29 in b521003c27eb
-("Revert "net: phy: sfp: probe for RollBall I2C-to-MDIO bridge in
-mdio-i2c""), so it is no longer in mainline.
+Tested on two amd64 systems, my DIY home NAS and my Lenovo ThinkPad T14
+Gen 1. Working well, no regressions observed.
 
-The probe it added runs in SFP_S_INIT, before genuine RollBall modules
-have finished initialising their bridge, so the bridge does not answer
-CMD_READ/CMD_DONE within the 200 ms window. mdio_protocol is then set
-to MDIO_I2C_NONE and PHY detection is skipped for modules that worked
-before the commit. Maxime Chevallier and Aleksander Bajkowski both
-confirmed that on hardware.
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-The timing is per-module rather than per-PHY: the FLYPRO
-SFP-10GT-CS-30M they tested carries the same AQR113C as a module here
-that answers within 200 ms, but needs seconds to load its PHY firmware
-from SPI. A fixed probe window cannot cover both, which is why the
-commit was reverted rather than adjusted. A proper fix needs per-module
-init timing, and per SFF-8472 the host must wait at least 300 ms after
-insertion in any case.
-
-Backporting this to stable would reintroduce that regression on
-hardware that works there today.
-
-Thanks,
-Petr
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
