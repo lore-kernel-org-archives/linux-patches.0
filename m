@@ -1,113 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58204289E13;
-	Tue,  1 Sep 2026 15:09:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC323C5832
+	for <patches@lists.linux.dev>; Tue,  1 Sep 2026 16:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788275346; cv=none; b=VsYrR9TV2k+qkJdTeifcV5oFt9LaM1bri9dESd3ZGKXp7tkApAoiK16UTmDBybR37XqlG6zuYzR4xeUu8lifYKHMdv5d9GUtNs7spABU3kxgOInMQzJXT2janptQnJkrJGHxtVH3FyeuBARRl2lLSt98QGKed7oBKD8Xji4eSq4=
+	t=1788281047; cv=none; b=LJRs1ys2zObykC8qkw9TcZOEAlKeeTQGftfae+NSP9BFToCyYckz3gXOH9EXWCY3wCOeGkaZ3H10X3JYKTuQzgqlz7UG/eYKV7srf13GpK7NYpA2aXvlEczEfY2YwpXNJpw4BI8sxfdayxhmq9FwXJFmDZy3k1GE30C7ul90B7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788275346; c=relaxed/simple;
-	bh=JEbOp4Gv+dXWEfhB4S9KDJBdaC3V5EcD1S0bRwLf89Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j4OygSxNhzwDyfPSE++9nviTGDcthhB0s7vhOYJdwOhjCHXR//28ZFcF3/1hcxAgfLsjoxQsa90x3uEQGaFQLacE1wTHDGyKpA3Nyqdf/AUh+LfffTaP/6kVVGS0mdVi9wNAz3nKp5ct0ePrdq1zbWd+vYViuwJ4QO2DUF29cIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgmkHC4K; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788281047; c=relaxed/simple;
+	bh=lBssdOL4h0dDqyFCQ04Yu5KOZOoreuzJ9iq3r1VKZ/Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Gkkg7pRINVyRXHU9TBudZbmVWpGSUwn9H4SQEerFDZX5pCDoFjuL3wIalr2OegCLIRVnr+XN/Yzl2UeQYgkgL9GzSth3+4x2Nqw007ZRIUN4y1xxhhZlULUi2I2crGn+6g4BcJgtdX19ZGEMGUqzKWE0dpLD9j5366TeW/VUuh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDx+VnAZ; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgmkHC4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8B21F00A3A;
-	Tue,  1 Sep 2026 15:09:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788275344;
-	bh=D7SXBMUeLLj2WoeOZ8MFjbeMY7N6yqBaPhWFITAaUL0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HgmkHC4KsdEdALuOD02HLsUtjnaTD9XJa5pX0GZVNjE6sBJnuG+c5zXcFtuoI4guM
-	 dSpWd88LdVWOvpmLfvjJYAudCfkNhv69fBqzCydZHGz7vxNcU2g/jIwGFQATaLKtGg
-	 V/6j8RMg05ez8g+2PhFSHvCgss+/uvgWJMIPmtRac1BLvpmVb3fOcw0NB15moRMdzN
-	 KqBl828NTzMFFEf/5aEeXY3/80AyYlskXai/cvYgycHA+LWB8YmkKbaSJFd7IVHx01
-	 IJeSbP3ziBHamM6qbcIPmfVCQZMImGC0pSwV24WcdNzj6xCjGWaXGHi8gnuFrTl8zi
-	 DYDCm0fjgLqvQ==
-Date: Tue, 1 Sep 2026 11:09:02 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Sabrina Dubroca <sd@queasysnail.net>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jakub Sitnicki <jakub@cloudflare.com>, john.fastabend@gmail.com,
-	davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.18-6.1] tls: reject the combination of TLS and
- sockmap
-Message-ID: <apbqjuv6l20bTjQI@laps>
-References: <20260831133314.4125787-1-sashal@kernel.org>
- <20260831133314.4125787-596-sashal@kernel.org>
- <apacn0u4092axmXy@krikkit>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDx+VnAZ"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-4a4cb36ae00so63479b6e.0
+        for <patches@lists.linux.dev>; Tue, 01 Sep 2026 09:44:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1788281044; x=1788885844; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OKR0Q5O9wNc6TWb0BqTKUYLMLU6iV3p1EeGlnxaUPrc=;
+        b=ZDx+VnAZ7+suVaJsy7FNNXNOwN1xF/rn5CRG5DMjFYK40RBmp3Wq55PUZZdX1Pqzly
+         XvxM+KGzfAIA45DQlOHgznrUzUqbRv1mgr07IN6TEZOXeLuMVsvV/FqBumIhLr1bYZfK
+         pdPwy63vl4Zz7wlZ/HOso8qkwG4S0PULJ8kgo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788281044; x=1788885844;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=OKR0Q5O9wNc6TWb0BqTKUYLMLU6iV3p1EeGlnxaUPrc=;
+        b=p6ExQVRj77ORpfYiSSuguTo5HXHCqdkc6qhUnwa9AEZkHpimflAAkcY4YOYrOt9AP7
+         9Ufo4vqokfAqU0pc1hfDOk2UgnNPvg5q+76pIGN/u9YvZfuTJ7kZ5eBKucjKUoIBDdjT
+         02/jOzc2Gxyo2f403rnfLwYGiiVmHZjlCbWVrx2qL8NqztW/AR0VeqUZ0jo/brNMkPmM
+         zsijAdGhb8FJjPZk0TLAjYp9UrFYihDVRd3/hO+7HEhbVR8ktLeYgLnNVchF6el3FvCe
+         Kfk8WQRlR/rp+1r0lXLP0En14uJoJmcpR59oUaAd5SvfQWFJ5t4f7yoDTjJ37rs6Vo+p
+         PySw==
+X-Gm-Message-State: AFuF++ly8czv9vuqAzE+8P2IhQ9BKf5cvWf6lBZpP/H2mrcYuXbHaa3u
+	LUKRty/qe/bk6O74l+i/Xl9apuoWCBu1PxhgCWaGDPhsFcFAUyy+jOaLWoqoac7A6Xw=
+X-Gm-Gg: AR+sD13/F02t046lP7Aj+uFyNPLUssRuUCKDSJ7K9gRFq2bUmK7XZguGQsrub+HhUZB
+	gRhjtDDpwhey9rDi0xTsPDsVNuMnl8Y/kRPNo+w/uP4CwYxiGoebEu6YH+ZV63uqpA/KzCK6Dus
+	DG66qpslvx+ofQm89RwX56Q4I7dGhcE6Hs7x1AymJX2rNw23v5zz6gbfLxcByJz5klhCfxCIe+1
+	ZqtkwrODBDAKfPi1HIBwyS+QY8AsUI/BfDTu9WmiJ9VCk2OfLEShuOewYMTGYkeODHmJ4J4mKey
+	kkuDmdXaEv6iVCpispn88VeCEirljO1D+jZ4wA09SxSb1nheZ5zM0pD5dZgb6R+C7ZiclxWeims
+	UeXVFRXsK2rWdGw7cQdGY1pjeGkLcQQF3KN/qAiBE6JkfuP6naaTzgsgdYyLSRz2rk1FrJGk+JI
+	OqSv0IWSjvdoCq4bIXWS1FejIP+ivZ/2jZ/bMZyxw7hvlmSDZPq7urUkEi9dHecbgVU1jrZg==
+X-Received: by 2002:a05:6808:bc9:b0:4b3:7b31:8df7 with SMTP id 5614622812f47-4b39824817bmr35286429b6e.14.1788281044022;
+        Tue, 01 Sep 2026 09:44:04 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.57.99])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4b3a1995f2fsm11396298b6e.11.2026.09.01.09.43.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Sep 2026 09:44:03 -0700 (PDT)
+Message-ID: <58e592ce-3354-4165-bf7e-93fee744339c@linuxfoundation.org>
+Date: Tue, 1 Sep 2026 10:43:56 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <apacn0u4092axmXy@krikkit>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.2 00/71] 7.2.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20260831133359.055927882@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 01, 2026 at 11:36:31AM +0200, Sabrina Dubroca wrote:
->2026-08-31, 09:30:24 -0400, Sasha Levin wrote:
->> From: Jakub Kicinski <kuba@kernel.org>
->>
->> [ Upstream commit 460e6486617c17dd19abe8f3fc67d9a6fa25f8ca ]
->>
->> TLS and sockmap (BPF psock) integration hides a lot of latent bugs.
->> Bugs which may be more or less relevant for real users but they
->> are definitely exploitable.
->>
->> We could not find anyone actively using this integration so let's
->> reject this config. Adding a TLS socket to a sockmap was already
->> rejected by sk_psock_init() through the inet_csk_has_ulp() check.
->> We need to reject the attempts to configure the TLS keys (rather
->> than adding the ULP itself) because checking prior to the ULP
->> installation is tricky without risking a race with sockmap getting
->> added in parallel (sockmap does not hold the socket lock).
->>
->> This patch is a minimal rejection of the feature. Subsequent patch
->> in the series will do a light dead code removal. Full cleanup would
->> require a major rewrite of the Tx path, we don't need skmsg any more.
->>
->> Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
->> Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
->> Link: https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
->> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>
->> LLM Generated explanations, may be completely bogus:
->
->330L... wow.
->
->> ## Phase 1: Commit Message Forensics
->>
->> ### Step 1.1: Subject line
->> **Record:** `[tls]` / `reject` — reject the unsupported TLS + sockmap
->> (BPF psock) configuration.
->>
->> ### Step 1.2: Tags
->> **Record:**
->> - **Reviewed-by:** Jakub Sitnicki `<jakub@cloudflare.com>`
->> - **Reviewed-by:** Sabrina Dubroca `<sd@queasysnail.net>`
->> - **Link:**
->>   https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
->> - **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>`
->> - No Fixes:, Reported-by:, Cc: stable@vger.kernel.org, or syzbot tags
->
->Yes, this was intentionally sent to net-next without a Fixes tag,
->because it's a "feature-level" change, so it kind of feels wrong to
->send that to stable (even if it's removing a feature that nobody seems
->to be using). OTOH the code is broken and not really fixable...
+On 8/31/26 07:33, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.2.3 release.
+> There are 71 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.3-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-We have plenty of "fixes" that just drop a bunch of broken code :)
+Compiled and booted on my test system. No dmesg regressions.
 
-Happy to do either, just let me know.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
--- 
-Thanks,
-Sasha
+thanks,
+-- Shuah
