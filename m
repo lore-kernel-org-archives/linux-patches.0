@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643D9414DDB;
-	Tue,  1 Sep 2026 15:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0EB417D9C;
+	Tue,  1 Sep 2026 15:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788275268; cv=none; b=cpkmGRGu19I5eYrGoV8VNa6WlVwkJ4pS1P3u9wS23ULU69IYzTSw08mLGak+xX7GSet2GSm0y+WeIFLGLh2H9EfBkmyZ5Ycqo9d2n6pV5Kh4FJIg2vP0NJMbi3s5JYxkQn8wlSqWo/cWwfNa8UrtjmmI5ds5BKPZn3UvemQynGs=
+	t=1788275288; cv=none; b=TUAdvOZWzU58/5UuQsLrG+ly9QpIuGskUIdpwbQLDvRS/KFLbuWq0W99KuIqee3cZwW4v0P0TCNDGqrZYj0izfmAkAz7sNNX8BnNSyyos+uTnVJ5mpTnckmnoCyJ2YtS8df8Lr5fXWjkhvcCFTh8CBFGCuuD9sqsh3947gPRMco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788275268; c=relaxed/simple;
-	bh=QK+LBpaZKtKRLPRrE8ETXxHcpoTF4GZ3WUJyT59MwM0=;
+	s=arc-20240116; t=1788275288; c=relaxed/simple;
+	bh=3xticCwYjuCzv+1BeKxY/4DQLmjKBRNF26asJHo8SyQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M26BcxKXIFb8ov88aatUCuYNgrLaHEaewAC1O8QzC8iZbAIWhZr3pIGMUyJ73NfxtVzXNtGW+E3TH4jYHp1jy2jQ+DWSt2maCVy/ZEYA0Ci4HNMqa42JVNyYnb77hziZW6zyMSJkY087yth+zXSSEtIZjwwUdaRTmePpbM1Tw18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJ9fgcd/; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=VjssZTLYI62o6u+g2O1gawbahRFB6hOyIrnXqo28JjJNE+X0Pas8IpENr0vIQyEFA5qO1RlyqiEfRGtsTDV28OEcnefYPlVxN+/Cp8N+MK8h5jEtIzneLZVjM+eBEFsTJOpHaINYiMGCd5oRj9NNfrAOubrfy7dKXbl2taCEJMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KjxjW5Sd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJ9fgcd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FFB1F000E9;
-	Tue,  1 Sep 2026 15:07:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KjxjW5Sd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39201F000E9;
+	Tue,  1 Sep 2026 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788275267;
-	bh=urG2brwJoQHtMVrzl8UUHq0yWLnkCZwfeyADZl5CciM=;
+	s=k20260515; t=1788275287;
+	bh=1SQmsAssNiroGIhHUW6JN17P8wVVV96aaDWH9CxD17s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=iJ9fgcd/UxyfrKXMhTRviEic3Wjvup/2bE7OV3krdDqI15KU3ZPfcW7nkkP32/AT5
-	 Cky04oH3SqNx9CSdxyskURm6V9HRnUfdVIBr0PU3GG2p2qSnI7UjI8xERx/sWXHk6k
-	 rUOM/Ayd6lhz7htlFGTQJkk68IAvsLoW6F6g84qYleo9zVwMgA9z+NddqFeoOcvsjQ
-	 geLsu9soOlhljSQf35yhIJ4lrL7hiWxNMdCKNdYge0jJ5QTPNZDyzLk4/WhSTkvhYZ
-	 y/kMWlXuJVBTLoAjYY0aHLgClJp4LSk826tUghuMJDKzkhLUsK1g7x0ntfgXscM5j9
-	 zg5MEfJo96pUA==
-Date: Tue, 1 Sep 2026 11:07:45 -0400
+	b=KjxjW5SdJ2WXtYwSt9FBNWPFEgmx9MtpZYWwGV+74ZdK52+VuwlTEsNd+y0igg1/j
+	 fY+SJh+Yw/deFcaoMwuHbis5YZjU0PHpFWIk76M1h69O3DcHafDpGcq2aAZwYRrVB5
+	 Y9W+vTK7XUKM7zoeVKDelRcmOnAWVE/rnkSo3lOreZBwKO5nm6Lqws3O3GY1uYrzm2
+	 KcbRRsz+eKtOcG+UGOjA/xpwApX8oipKxkVoHd21W1ttWBDtNBY7ygro9XmWJdSBMW
+	 Zzx2Dr8u8nkFlX3hwpfeIF15aebbmhIRut/DRRudv8VMDBEMdoXAtRUrVwwMnPEHd1
+	 EfyEtJMvxtWjg==
+Date: Tue, 1 Sep 2026 11:08:05 -0400
 From: Sasha Levin <sashal@kernel.org>
-To: Petr Wozniak <petr.wozniak@gmail.com>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	maxime.chevallier@bootlin.com, kuba@kernel.org, andrew@lunn.ch,
-	hkallweit1@gmail.com, davem@davemloft.net, edumazet@google.com,
-	pabeni@redhat.com, linux@armlinux.org.uk, netdev@vger.kernel.org,
+To: Antony Antony <antony.antony@secunet.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>,
+	patches@lists.linux.dev, stable@vger.kernel.org,
+	Yan Yan <evitayan@google.com>, Sabrina Dubroca <sd@queasysnail.net>,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.18-6.1] net: phy: sfp: probe for RollBall
- I2C-to-MDIO bridge in mdio-i2c
-Message-ID: <apbqQRSj6oAFw0Wl@laps>
-References: <20260831133314.4125787-466-sashal@kernel.org>
- <20260901052816.3815-1-petr.wozniak@gmail.com>
+Subject: Re: [PATCH AUTOSEL 6.18-5.10] xfrm: allow migration from UDP
+ encapsulated to non-encapsulated ESP
+Message-ID: <apbqVbriIt6ne4JF@laps>
+References: <20260831133314.4125787-1-sashal@kernel.org>
+ <20260831133314.4125787-428-sashal@kernel.org>
+ <apaDxC5gBw7G2zMc@moon.secunet.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,10 +49,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260901052816.3815-1-petr.wozniak@gmail.com>
+In-Reply-To: <apaDxC5gBw7G2zMc@moon.secunet.de>
 
-On Tue, Sep 01, 2026 at 07:28:16AM +0200, Petr Wozniak wrote:
->Please drop this one from AUTOSEL.
+On Tue, Sep 01, 2026 at 09:50:28AM +0200, Antony Antony wrote:
+>Hi,
+>
+>I am thinking of not to back port this patch.
+>As it may become a surprise behavior change on older kernels.
+>
+>I vote not to backport!  Anyone vote to be back port it?
 
 Ack, dropped.
 
