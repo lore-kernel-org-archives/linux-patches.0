@@ -1,30 +1,75 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3D21B808
-	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 03:17:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8D12EFDA4
+	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 03:40:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788319065; cv=none; b=XtXCmpK4gf1KjYzr1nvfDRGr23LYPTVDvEuY88QrUQfH9+DRNNDVKmTp6U2hyxXYW/kQCVDE83PvJ6NUb1cUl94oq9lz7NZefvt0t66w3W0lrzX7aNINwkquvyu6n91MmaJVJX02YXhrm4LAfTW6r6foRUtjFwlV14q74e0I75Q=
+	t=1788320404; cv=none; b=kg88BenLfAlRyzWd1tDVr+o8D+rXoDkikgrj9ONjtMQB3LIQ3O1mWynj9YwsWXH4Vo1AF4FieZ127vvOAA/SfXQDK7c2bQut4Ste/N5HEhRKleyJ5IHDsvEBxgDcXMoudytzbBwGogO6sFTywf32ZRRybmQShptTpcjr15Ik0s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788319065; c=relaxed/simple;
-	bh=uRgdatM8lpgXibRALPB1Q/7MF1332nK+00r7Kuztk5w=;
+	s=arc-20240116; t=1788320404; c=relaxed/simple;
+	bh=uDYnLfI9Aa5+jJvAV5ND9dJ4A0mwMALtMGM1iG4fnm8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e5Ji145DeF10J0kTZsez2Ecf73ST1wquubwCuU7OhgcsUlro4tgv4sCR/PjERcAIrmnfYeKqBt7vy0MgCfcJ51radCG9sSAdsdhkiiWXsR0gQ1kO8+v3/YFgMij8peo+3D1WwEwXDZKtScWh9X04Pud0r/L0JJukKyV9uaYoORE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hZSZ55cRSzYQtny
-	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 11:16:45 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.112])
-	by mail.maildlp.com (Postfix) with ESMTP id 43C60407B7
-	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 11:17:26 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP1 (Coremail) with UTF8SMTPA id cCh0CgCnjwpFlZdqDqq+AQ--.57637S2;
-	Wed, 02 Sep 2026 11:17:26 +0800 (CST)
-Message-ID: <7a6417ca-fb4c-40da-8ad1-b9d76a2fa142@huaweicloud.com>
-Date: Wed, 2 Sep 2026 11:17:24 +0800
+	 In-Reply-To:Content-Type; b=ZzMI3sIV/OIjUYBXzDrAkpWweuwdpsqLZacdmixd6pNPbR3Lom971GNVQTBu9OpVno4/pZWM5f902PQpagXAOmo0mh3aPRtidHLm1/vPGM5CXwjZUpme4NaExYOQGcbpGo+VQ7kqNPMwOAqdvYoL7RMAxweo19zoccCnCg5syC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YOfzS+lY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LxHf1K6a; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YOfzS+lY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LxHf1K6a"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 35C227A0095;
+	Tue,  1 Sep 2026 23:40:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Tue, 01 Sep 2026 23:40:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1788320400;
+	 x=1788406800; bh=In5DW79fO3VDiYySeXS/i8pWpXqOI/SquxDxzES1DEE=; b=
+	YOfzS+lYTlMi2RFVVaGl34gx5usshOZlqNMtsYuW2hWyjsBLAj71tDyZrUu52XmX
+	133ASH2VScdrsssOoRLCmv51ugPBpIbfJAuIawXs99xFtuudAWzl6KwOr5fjQV1c
+	iR5gkxDHcBxxRgftuf0mHcmhGjc/FGPFZNJpPYE9KXBOfWLKTIENIk/h37rUqkcA
+	jSLkFL6pbTrZ/p0RWrhCn/jBzjCmc2XzpwVwJmR6r7Rw6nv9gePYSZGTd0XyUF3j
+	c43sTiAuKrqK3AmWhZIJRWnHBAEa17/soLo3qxbI4vbXQwgsj94auFFXphRXuWa9
+	IutFFaUlmJd6Rtogj3WGyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1788320400; x=
+	1788406800; bh=In5DW79fO3VDiYySeXS/i8pWpXqOI/SquxDxzES1DEE=; b=L
+	xHf1K6aLkPQ842RbfXHzbWH+hnm3FDLzA1wl6lt/kS0GApLfSMCP1fAZtSFmFLrk
+	pNMZebti6gn2SGzhQgDhDP9sNHGyEZgIc6Mm6ahagRy4IlkzL0njEHH8yX5vKj4W
+	zBHhkEGvU7qpdGymPw8aBiJN6qOixT74rTaz7Fik2j6DMpdmD+Zj2SF8jFRsQRS1
+	gLyPfp5hqVAY8jAGRLs/6vqBGrmkywcoU7+VBFM5AVgoP4mKneF1M4EDEJAI1UVV
+	smyXL4fs5ULcCyq+CjEOkay8+IrKx1BtALYj9z4yQtfluSNLLNKCzMCRucGTrCTP
+	U/vULyoLvy+52GWJRTXoQ==
+X-ME-Sender: <xms:j5qXaj1s4RDioh2T-i0_Bm_7zlXG_J2jDpPHOH5jjQUJQmM6rn6Sww>
+    <xme:j5qXat8yeUE0K7DW_tOKEEuVUWtvuHSEuTTgTUuZC6hMAZ6jE3R6IAbhMSTGRAA9h
+    D0ohSmD7WCd7kYyi00W9vyN82gbzEgX5pW2B9XJIYVK4XHY4zdNrkQ>
+X-ME-Received: <xmr:j5qXavbp9hSIY5jxOqmZVQSTwIeTDR7VxeuMmEakII256xJA2aJBbYOG-zhESIuW2X5Zo5Mp-N5tGQmKtMn4-Vgk-EAopkyY>
+X-ME-Proxy-Cause: dmFkZTF1wNsmtCvWlSNdN+3WxjnlaCDK9VuqrR63ZTkwHJQiWRCqdwXSaYHjyQdVHK7e8Y
+    SYlYLxr5gSTy4JUNJxqE5Ho1jfMLp6ujyl/9tmP+CH8kvVG7vHNfnNu+zuw10fFkOaqIfm
+    bVBClD1g4BAmI/2SEywlYKGk9nAob42tpVnElREDOsneKG/g/XVa0rT8NobPp6Z5G3Mwa5
+    X7hgwWWMYahiFgdLerKXlDqPbbekOS0lD8GYlpqyRi3cc59PDHumJ8KLUroMtoINxuwdtY
+    U6VRY/HU77muts+Qwqjwgp3BApmQ+CjPO6QIBULagHkywwGn/d7yzor9XsVEASD5h0vmT0
+    8WyVgsyR5tIX2s7Cho73jdAKBqHgkGp6SwgavSt3S0PTpclipbWjO35GlHGBVQR1PQWZXZ
+    2HZfAbKk1GH5e8VKT/r5AtMbsErvwsJjcbJnT/1iOSa2drJigYxrRdWuZK6x4hwmWvF1QJ
+    +WP7Pi58EJSKAnBRePVutY7t3s0pULH4PDxNSyz2GcSmkp6P+rxTPqL2lekB5IJyQ6Bx4B
+    MFETIeX28PRkX2p4cwf0RZHSZU1NMdWvoO/RS7KhaMAd/+qJTIaIIoFSqpempsDc8mbpLE
+    TmLt6rFmsUK6Mvus+zHvVmjuIqAVqvaNV1BJ3ScYEm76/KgIRcDVMW6YNmug
+X-ME-Proxy: <xmx:j5qXasyLjxkyStJhpROyWirONZj8I8ydZTN2iWr8ZgVB5dw-rQ-pnA>
+    <xmx:j5qXat-GMx0c_vL11bWjSfd_iZNI9uNnOur42Z24-zUMZg4AfOb7Fw>
+    <xmx:j5qXaoxdDDIgMEXSFefa3ZsSjqmWcYQ4OLeqMhWvLmqaAZkB5PAtCQ>
+    <xmx:j5qXaiu-KRqfmu0lidHe5Pmk4lyADvsir45uG7b55840hr42he2O5g>
+    <xmx:kJqXatpemHSbVppykoKDlOGseZn9Q0AYvdF5aXoAKGGBP1jeNlljWy92>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Sep 2026 23:39:56 -0400 (EDT)
+Message-ID: <fcf6128b-8f6c-46b7-9217-03aa1288298c@pobox.com>
+Date: Tue, 1 Sep 2026 20:39:55 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -32,119 +77,45 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 095/261] tracing/probes: Reject $arg0 in meta argument
- expansion
+Subject: Re: [PATCH 6.6 00/91] 6.6.156-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Raushan Patel <raushan.jhon@gmail.com>,
- "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-References: <20260807143415.358597922@linuxfoundation.org>
- <20260807143417.434454264@linuxfoundation.org>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260831133359.468089036@linuxfoundation.org>
 Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <20260807143417.434454264@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260831133359.468089036@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:cCh0CgCnjwpFlZdqDqq+AQ--.57637S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxAw4rury5CrWfXFW8Jr17GFg_yoW5AFyDpF
-	93tr9xtr1rJr48CFWj9F18CFyFy3ykJry3Wa95Jw13XF15Gr4rZr4Sga9Fq345Z3ykK3yf
-	tFn0qr4UKay7ZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUylb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxkF7I0En4kS14v26r126r1DMxAIw28IcxkI7VAK
-	I48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7
-	xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xII
-	jxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw2
-	0EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x02
-	67AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7IJmUUUUU
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-Hi Greg,
+On 8/31/26 6:33 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.156 release.
+> There are 91 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.156-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-On 2026/8/7 22:37, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Raushan Patel <raushan.jhon@gmail.com>
-> 
-> commit 00a8ce2a2a9fa17674e1feec4d9105c1a5d6a419 upstream.
-> 
-> traceprobe_expand_meta_args() parses $argN with simple_strtoul() and
-> calls sprint_nth_btf_arg(n - 1, ...). For $arg0, n is 0 so the index is
-> -1. Because ctx->nr_params is signed, the "idx >= nr_params" guard in
-> sprint_nth_btf_arg() does not catch the negative index, and
-> ctx->params[-1].name_off is read out of bounds.
-> 
-> The normal per-argument path (parse_probe_vars()) already rejects
-> $arg0 via its argument-number check, but meta-argument expansion runs
-> before per-argument parsing and substitutes the value first, bypassing
-> that check.
-> 
-> Reject $arg0 explicitly during expansion.
-> 
-> Link: https://lore.kernel.org/all/20260724054435.146279-1-raushan.jhon@gmail.com/
-> 
-> Fixes: 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all function args")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Raushan Patel <raushan.jhon@gmail.com>
-> Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  kernel/trace/trace_probe.c |    6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> --- a/kernel/trace/trace_probe.c
-> +++ b/kernel/trace/trace_probe.c
-> @@ -1721,7 +1721,11 @@ const char **traceprobe_expand_meta_args
->  				ret = -ENOENT;
->  				goto error;
->  			}
-> -			/* Note: $argN starts from $arg1 */
-> +			/* Note: $argN starts from $arg1, so $arg0 is invalid. */
-> +			if (n == 0) {
-> +				trace_probe_log_err(0, BAD_ARG_NUM);
-> +				return ERR_PTR(-EINVAL);
+Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well,
+no regressions observed.
 
-The control flow here is not quite right.
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-Returning directly within this branch fails to free the new_argv memory,
-resulting in a memory leak.
-
-The mainline does not have this issue because the preceding patch
-4af0532a0f47 ("tracing: Use __free() in trace_probe for cleanup") introduced
-__free to manage the release of new_argv memory. However, due to the extensive
-changes involved, directly cherry-picking that patch does not seem to be that
-straightforward.
-
-Therefore, it might be more appropriate to simply change it to goto here:
-
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index 2fa7b596f03e..1f55268fbf63 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1724,7 +1724,8 @@ const char **traceprobe_expand_meta_args(int argc, const char *argv[],
- 			/* Note: $argN starts from $arg1, so $arg0 is invalid. */
- 			if (n == 0) {
- 				trace_probe_log_err(0, BAD_ARG_NUM);
--				return ERR_PTR(-EINVAL);
-+				ret = -EINVAL;
-+				goto error;
- 			}
- 			ret = sprint_nth_btf_arg(n - 1, type, buf + used,
- 						 bufsize - used, ctx);
-
-Thanks,
-Tengda
-
-> +			}
->  			ret = sprint_nth_btf_arg(n - 1, type, buf + used,
->  						 bufsize - used, ctx);
->  			if (ret < 0)
-> 
-> 
-
-
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
