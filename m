@@ -1,75 +1,30 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41CD34CFAB
-	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 07:54:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1113C1F
+	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 08:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788335645; cv=none; b=MogA/5/uqTdG6Ra3rA6jKk2T567lnXfrp+AAEX+JnQojISSZcqH658b1KNGHO4AciIY/LtnQDgrWcKAn+bWUGkgU9L/UPWlNF/YtPXUfXT400fZX58z92Fm/x3NIjcFXpZ3W4f5/e2VwsAYJ6kkel86AKLFKrlHVFvBzvVfR++Q=
+	t=1788337230; cv=none; b=puaNTW2D2mnJV7+CnybJM/RUTTdtqJT9BD4PYC6HV8rdBtM57p0ZEtHk8xt+ZcSHq9kVwCAr01sJc/eNWDFq3Zv1zT4NSwZ9DggStWFzszYmAy1VBLc+NcZY3a/s/cbNZGlLcGxnPJ+AcH/yIGRSYAhfujLi+hmyZdDe1KhlBEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788335645; c=relaxed/simple;
-	bh=h0ZFDLNyQKmMqCI24MP+vrayXKLwsUZ3jLZ7DSrj6w4=;
+	s=arc-20240116; t=1788337230; c=relaxed/simple;
+	bh=2wO/V6+U7w2bGtRa1e8YA94XbpqLc7o53riuolU8UBc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nILmPAQbvzenC0XwhakAdO15FSJUuc3RMoF4AYvSnhm1y4ZSGdYeswpOFfPQFud+djz59JA2JhBHR8BhJV3+4lIpyhrxl2htZqeB9APYKUU6sYh9lThHfhX6dWVF4kzyx3PCsB9eO6Ji1r0cWocAbeCZw4cVYI+2+R2QdD8v6E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HcYMt0/D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PiBt0dZu; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HcYMt0/D";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PiBt0dZu"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2F9FFEC0074;
-	Wed,  2 Sep 2026 03:54:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 02 Sep 2026 03:54:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1788335643;
-	 x=1788422043; bh=eu4wew0RHn2kFkFjJ7vxD+kWTFHmY+H0jX6dOS1OFlk=; b=
-	HcYMt0/Dv5u/WfkGHM8x3pD9YWVbAF14v36LC6gJeNQSCfbzxM5IQSqgsUlpXh/z
-	AjKtIQ+MM2h3GrlX26fmZtzkHltTKCGP36MrxiW7tS9jfxAWNXWx6oolBlZqO7A0
-	6hnew0EBqSmN6xwBsIJ3R7jNcazIKFYxYMdm38QgM23WEfVFuTKi+c7gKdberF8e
-	CfOJMYjISUbcwlafJqjU9+SGyPthZNIZjxyQgxk1MdJasdCb5IXih5Y0DgyaVwCa
-	rY1cHDKj+2Osi3YJDCk7S4nvwZwLO7wCx6M/tUMqUQzfXbET/NGt5D/cqqacJ0Ed
-	3vlNloIL863TCjZ4iRopkg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788335643; x=
-	1788422043; bh=eu4wew0RHn2kFkFjJ7vxD+kWTFHmY+H0jX6dOS1OFlk=; b=P
-	iBt0dZu/aNOrFvyxtVSqmvHTvwqKom6+wrKi6tZAQJygaiVGk+E3Ev5KIKThVPSw
-	+worGUgqhHwb47bDZ+t3DICXaHm1f++JjG66G3u2BgElQQQQF6Dl7MysDmsTA9gp
-	nne1DH8VjDr4wG2f1vqYhchC6fXvH8vYH69EJN0y5ZXP+xgQ3CmOcmAQhCPD6qXv
-	VKZpBG/vfYLuI+NHMQQrnWRpl2HGlIgqaMgv2+dV/h3DjB/+h9g+Tf+wL1ga0Oda
-	FoRScAiQDhWpwQtmVjoinHDwjxZKOCumaXNnxO36SJU1PLO0rs7vA9dqnmy1km4D
-	2q6dkQh7iwmUi7Vz1DHFg==
-X-ME-Sender: <xms:GtaXah4zjntaUYbQJKT8kHzQ37kVnROfGxQ1xdW7u8SjbhtUIWlceQ>
-    <xme:GtaXaqwGJF2a8Loovf_tsKk91RTvVMLRXTfgbj3Y0FJQeZ7OcU5vrO3eQRkRVMg6E
-    P1q4zuK-0eEHKojM2lTcoijsD2uYz78qW-0_t9ga28TiDkc_RdimM1K>
-X-ME-Received: <xmr:GtaXaj9G-V2EWkAj8tPrjkBnLtFHyWpcP6xWY5oUHk2qYqKPB0pR6Xye585WxRBgosMRA0z3NUZExwwsPxQWwc-T89ks7qu8>
-X-ME-Proxy-Cause: dmFkZTFt64D2s3ZYUHlOw6VXBIqy+HoU8imDm2gWVxcVAGyAyIxblZ9Bqnw3y+88b62TBY
-    PzaQEexsIcVDJRSHrT4DXTV/xSCWMEz+8nbgCkqy5tIlEQoJM/T9YZPmm2lBi6gAMo1JdL
-    qFZkPDwGuJ82ipNgDyOz3F7PzESlLHzIew84UW3oEv8zBXoLxlKgDid35YyJXeHQJ5ZsX8
-    zUL+yHdD5u5HHqvt+AgHwFEPNq9UZnnJTB2lZlOWi49AgVjAM19gEVX9/M4hbguseWYIAj
-    +MLXYOJHrYFd78m6NxqR0ZH/Eq6xlmUeeYB2y9A0YH482PlRowHdBYl4uI+r9Vs/B0UiH6
-    tczqDqFOhlNo6jIow6ZPVs3ake1+DD+G06ORo5byngtKl76gGvsTfD8PL+7ms8gzuh94h8
-    xWpJmxqWquICha3Du/DybyLQby5n0SLgksU+X9mWS38D5ttMTQIpRjNL0dklJw0meosJ/W
-    642OZ1q1QUzqWHK+m2wca3vvxTCMsyALGYvw+L8oNbESajoL1cd/AMOksGtYiCDIvadSuc
-    jfifWBXQGApQbbMCzMPEmhxxELLtYAbwvCiPZwdl0L0wJRhDFTNy3kWljgR6HK5KwyTfrf
-    n2w/HQxrECC2orE4MYAYR3zA9LKvHAgjTWaqd6e/d/RZtddhjy2bQzSsV22A
-X-ME-Proxy: <xmx:GtaXauFsxq_SQAE8RKswaT9yvMxahvlQ7f6wXggm07cZ3dGlwnR8Bw>
-    <xmx:GtaXatA6JhYqJ8rZezFyxJmWYfi2atgnqgQb2-Fnyu04vJH7had2xg>
-    <xmx:GtaXaimBOR9SahpsSdmkBlIcgvvRA1Y7PqXLtfNCcFKojljjXDEE0A>
-    <xmx:GtaXagT2HJ-m-TPcuYTNotHpuwoe_hcYX8swJwOt6FGs4SyAl1ZwXQ>
-    <xmx:G9aXaqvNCfoRJS0b3LwPXfPk1BbURDKopZaLQBweytDvCkpZYBQPrAPs>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Sep 2026 03:54:00 -0400 (EDT)
-Message-ID: <c868e28b-42b5-4b6d-ad6b-1af65848c4eb@pobox.com>
-Date: Wed, 2 Sep 2026 00:53:58 -0700
+	 In-Reply-To:Content-Type; b=SuFNhoasrRHt9KhVbs9Oo5fltmz3Bj5vswDHE78JOV4EGq00ZR0lLiGhqRhZB7RnLUWPbCXRS4alLl3oGjZtcu+M586lgYNQNriFtEU2flmT3GxqjmUaPDobFJI99WqksG1KMcWV4C2ogw8dbxDNr3RkxpNXlOFMQmkdvCjc/ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hZbHd00l1zYQtxJ
+	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 16:19:40 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id CEF1F407AE
+	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 16:20:21 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgBn0ExE3Jdq1r_dAQ--.7188S2;
+	Wed, 02 Sep 2026 16:20:21 +0800 (CST)
+Message-ID: <068d6b49-1e79-4d14-a51f-a445c7ecdbd0@huaweicloud.com>
+Date: Wed, 2 Sep 2026 16:20:20 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -77,46 +32,109 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.2 00/71] 7.2.3-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260831133359.055927882@linuxfoundation.org>
+Subject: Re: [PATCH 6.6 095/261] tracing/probes: Reject $arg0 in meta argument
+ expansion
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Raushan Patel <raushan.jhon@gmail.com>,
+ "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+References: <20260807143415.358597922@linuxfoundation.org>
+ <20260807143417.434454264@linuxfoundation.org>
+ <7a6417ca-fb4c-40da-8ad1-b9d76a2fa142@huaweicloud.com>
+ <2026090227-clash-peroxide-8872@gregkh>
 Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260831133359.055927882@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <2026090227-clash-peroxide-8872@gregkh>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgBn0ExE3Jdq1r_dAQ--.7188S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxCrW8Aw4UuFWkZFykKFWxJFb_yoW5XrWxpF
+	WfGFnxtr48Jr4fCrW293W8CFyFy3ykXry3XryDJw1fWFn0kF1rJr4xW3yj9a4Du3y8K3yS
+	vF4YqFsrKa98ZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUymb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
+	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l42xK82IYc2Ij64vI
+	r41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
+	xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0
+	cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
+	AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E
+	14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jjVbkUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On 8/31/26 6:33 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.2.3 release.
-> There are 71 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+
+
+On 2026/9/2 14:29, Greg Kroah-Hartman wrote:
+> On Wed, Sep 02, 2026 at 11:17:24AM +0800, Tengda Wu wrote:
+>> Hi Greg,
+>>
+>> On 2026/8/7 22:37, Greg Kroah-Hartman wrote:
+>>> 6.6-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>> ------------------
+>>>
+>>> From: Raushan Patel <raushan.jhon@gmail.com>
+>>>
+>>> commit 00a8ce2a2a9fa17674e1feec4d9105c1a5d6a419 upstream.
+>>>
+>>> traceprobe_expand_meta_args() parses $argN with simple_strtoul() and
+>>> calls sprint_nth_btf_arg(n - 1, ...). For $arg0, n is 0 so the index is
+>>> -1. Because ctx->nr_params is signed, the "idx >= nr_params" guard in
+>>> sprint_nth_btf_arg() does not catch the negative index, and
+>>> ctx->params[-1].name_off is read out of bounds.
+>>>
+>>> The normal per-argument path (parse_probe_vars()) already rejects
+>>> $arg0 via its argument-number check, but meta-argument expansion runs
+>>> before per-argument parsing and substitutes the value first, bypassing
+>>> that check.
+>>>
+>>> Reject $arg0 explicitly during expansion.
+>>>
+>>> Link: https://lore.kernel.org/all/20260724054435.146279-1-raushan.jhon@gmail.com/
+>>>
+>>> Fixes: 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all function args")
+>>> Cc: stable@vger.kernel.org
+>>> Signed-off-by: Raushan Patel <raushan.jhon@gmail.com>
+>>> Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+>>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>> ---
+>>>  kernel/trace/trace_probe.c |    6 +++++-
+>>>  1 file changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> --- a/kernel/trace/trace_probe.c
+>>> +++ b/kernel/trace/trace_probe.c
+>>> @@ -1721,7 +1721,11 @@ const char **traceprobe_expand_meta_args
+>>>  				ret = -ENOENT;
+>>>  				goto error;
+>>>  			}
+>>> -			/* Note: $argN starts from $arg1 */
+>>> +			/* Note: $argN starts from $arg1, so $arg0 is invalid. */
+>>> +			if (n == 0) {
+>>> +				trace_probe_log_err(0, BAD_ARG_NUM);
+>>> +				return ERR_PTR(-EINVAL);
+>>
+>> The control flow here is not quite right.
+>>
+>> Returning directly within this branch fails to free the new_argv memory,
+>> resulting in a memory leak.
+>>
+>> The mainline does not have this issue because the preceding patch
+>> 4af0532a0f47 ("tracing: Use __free() in trace_probe for cleanup") introduced
+>> __free to manage the release of new_argv memory. However, due to the extensive
+>> changes involved, directly cherry-picking that patch does not seem to be that
+>> straightforward.
+>>
+>> Therefore, it might be more appropriate to simply change it to goto here:
 > 
-> Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.3-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
+> Thanks for the review, can you send a fix-up patch for this as it is
+> already in a release?
 > 
 > greg k-h
 
-Tested on 3 amd64 systems (my DIY home NAS, my Lenovo ThinkPad T14 Gen
-1, and an Apple MacBook Air 13" 2017). Working well, no regressions
-observed.
+Sure.
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+Tengda
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
