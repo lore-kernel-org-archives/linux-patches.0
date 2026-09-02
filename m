@@ -1,112 +1,121 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EB438CFE7;
-	Wed,  2 Sep 2026 06:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387A420E334
+	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 07:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788330594; cv=none; b=DjT7uNkCBnRnxLhpAuj34uBIviUAVlJ8PeFg8gNqwWINIBDiuQIxbUXBq+dhiR821dFE5IT/fnKHOA+9zjKSR7iDNl9OsqdDI+48wsyMtHld5hsmD8lF8Jk1g9ek4OuM0bQ7ffO7LsZgHePGvxsk9ThDvutVM1Tp3RaK1ilafMk=
+	t=1788335052; cv=none; b=MZXG2ocD/EuR3EvwMb6oboAtLEnBReXC+LmB4qAQxXHLSnZkJNblPyCp0bR82HAE9Jy7HbywJLorjrkr3ijAhjj149Y6dFIYWof7qsFgm1D+aRS8mlcbzJkQoU9yGBQOkpZU2POg3aU+/PJ1B9eMGvpbDaLq8OOGUaeLvnEfhDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788330594; c=relaxed/simple;
-	bh=p7pVIHcF+v5InapvcwA0+b1hKrVe6y1L9rtG/3lihNQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dThbchLbx0Cc86pgvyMHS/Hp3SL6sbuMukJcpe27m/nLVi08Lh7iGcF2+vLplM1sBT8rFg+m9bPacGTa+2uP0YypYd/Ep0/Ch9X6+5KSRsyd8BZI6LK9MLkk1MjdYX+euzqhr+EeQoTXGZNKtyZ9JgO2kowfWdAkI57j4nF9fQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7vuOrhe; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788335052; c=relaxed/simple;
+	bh=xIiI0lg4PK2+9DUaFY0rE32lADtmm7ytlXzoNmcE9MI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LzFv59JHDB2USKFm/dopClP6j3t6y8QFp9SjZYwjXPYcyonavJu62gzFCRiMWa+rZ3SF5Iqu2CcvgLQBT1eo/0za25GJBguBVDKJoazWm8WQVCA/pLzmV8Y/Kp9oKtjyDtdpkevyFBpmHMy3PerLw1PdJnZO/inpDuQekXSb7a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f2HEx2WR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KDThgixP; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7vuOrhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA35B1F00A3D;
-	Wed,  2 Sep 2026 06:29:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788330592;
-	bh=5QKb53dfppE3ODd0ICOTgThrzRgUoUErwUPy0Ymaocg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Z7vuOrheqSj4RAmGWewuILXngQ9Oc3k4ZggQCCQBklzY9jZ/inWu8COMIWAsjyBeO
-	 jbFfjUdMReJXoPghuXvMqnPYr5tl2B0q5S8b+HIfnNo638GtKjIMgYSFov3uYU+hqH
-	 plu5T2eLzcm25QEstV0lOhwfiKSXdWS/93HELGcA=
-Date: Wed, 2 Sep 2026 08:29:48 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Tengda Wu <wutengda@huaweicloud.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Raushan Patel <raushan.jhon@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: Re: [PATCH 6.6 095/261] tracing/probes: Reject $arg0 in meta
- argument expansion
-Message-ID: <2026090227-clash-peroxide-8872@gregkh>
-References: <20260807143415.358597922@linuxfoundation.org>
- <20260807143417.434454264@linuxfoundation.org>
- <7a6417ca-fb4c-40da-8ad1-b9d76a2fa142@huaweicloud.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f2HEx2WR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KDThgixP"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5483B1400192;
+	Wed,  2 Sep 2026 03:44:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 02 Sep 2026 03:44:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1788335048;
+	 x=1788421448; bh=jgulC8yX5SXLl4FbbnEuZE+yJ3vYsVJVhHCUd3qdXbE=; b=
+	f2HEx2WRIv46FNpOfCOqZo8CylRjD8ORZIDWzsep9nY3MieNcPTUPiXKO1b78eLf
+	2ZMD4K08V10iFYniXVP3RUhn3vseT5+6ktQNTkQJ3e1ac/Iq4sT+Jgoha4gMjq0p
+	AKbIeUPtDfexNGEOVCRMzasUmLWlYu3Pnby57nwejt7tM1qA/NlJDG80oUf1WmrV
+	voX80wPGy/WaSxY5tzc1kVPcZjK9Nq2oNhk+G/kywBaVTykqvy6q9IQGkcJvuYyI
+	syHVtKkoWPSJwKMciXU3E2uxNZIpKF+7ne56S+BhXkegsMA4aJ3S8KwPi9GULeT/
+	Aak3P11JsCCU9RYZFP3v6w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788335048; x=
+	1788421448; bh=jgulC8yX5SXLl4FbbnEuZE+yJ3vYsVJVhHCUd3qdXbE=; b=K
+	DThgixPhcGSs5MiG/CkiT1e8CBUyDxLze1YfhkjuYrIOfBA4qeZAvzsUrqMtmxKB
+	eqTXVGdlpPYKTb15JsUdm6YFgSAVDIOIUlDmtXHvc9cbmK/NRvuu3A0u0lYiQxM1
+	wR5abFX0Vl8dTIU+OsW3l19KImS4sPiKa2IAxw7NP7S7DhWzgwUz2iMsz1HZKYyJ
+	BWUms0wr7Xd6XrTZ3P541DUv9viA2o8U993m+AGmaDEG1QEHpFk3o7AKiCP/fAuZ
+	BB72W+MmMGODlzqnnaOe8dglmu65NvsS/bd0LVp82zfmzeBfdDXXwuR11pxxMy9T
+	rt64S4G4wnLWex+UgnT5w==
+X-ME-Sender: <xms:x9OXaj0L_vU84lfWwpDLOA874gxwRpQWhndIzLCORdoH6bgMV01ryw>
+    <xme:x9OXat_lghlrXMS8u_uK4I7A1oaXNN2aZr6A_YI92CFi1PeQDUYVHH6e6licNFXnN
+    VEaR22klRSaPvYDEUoPiZ9ev2NWZFMBi4EisjAUStDTbp9qNxbaJw>
+X-ME-Received: <xmr:x9OXavYg6svwG2j0tMMPQ_mSsLbQ-xDQ2LjztEHRWpu0Kr4_A2OrR51z0V3SW-CqLarGompdNO6d_BIIP2CrbEpE3Xe2WcsE>
+X-ME-Proxy-Cause: dmFkZTEz4T5115jsAsfLajQ+UDt/Sbgr1vKjQ+JNUKUIHxFxq7shcA/u+SivYrKuDjwdeZ
+    N+IO8v3nyYrBybDZk8tKcNx6hKijc+gw9uX1HqYWdxZc3HRwgRRzWIVwwxaaZaYMEv0FJj
+    2xXqKLioZwlMxH13QpKDbsLyVLrMG3iD6yPd7lVe0x9nplnpZJ6L8/EuE/SEoEoTONCaxa
+    TzgYw8HjyL+a3APW/yorNy414tw9F9WCBniokhgPrmU7HwdIrSeuST0hHXhpE0m34StiwJ
+    L8OBfJX/gDgRFsf6nQ8yBLf9tkmSZNM5Zk0pXz9OR0Xfq1bA30WhthwZQ9fhtytdwPYHQB
+    A68Wrunyz+fPp+ZJfYRKCgfKEZ6KPU9EcBOEryG+/BBeO61nNLOd/pgMIUa2GIQcTeOost
+    H5RCwZfD4K/dw5Q5oTn4ch/r+uYTV9aUnJXlhhwsnMbxq3j6OB8/RCk66OTAfqknx5f8Jv
+    hLNwl+DCh7lRxmav6mw83d2cgC/DXfWww94kTQaM99LUnN3H2pyTJI7Zrl9GGrRUCw4T9X
+    7kxkImTYo4+NmW4+8i05s5JAFwdj0ReGPr5bE2i78G5i+1vLM/6kTF96KC03e0ONKZs9EZ
+    lifKrCWYhfqeLNx2BhcglBdlP/Int66ezrrPSGWxjFO0Ek0g+FgEV8hm65Lw
+X-ME-Proxy: <xmx:x9OXasz2hzbNd0edtbQwaa77TpALcCU6chWnfjC-PTwbryUoXRGKPA>
+    <xmx:x9OXat8VG0fUfsALU3P5k5dsMyzMxf-vMhJhzn2bpAAqdk7WuJkz2A>
+    <xmx:x9OXaoxAHujSLAX4gNk-d1Fb6c2cyG4qcOfqdDsCcHec71wjT7H5EQ>
+    <xmx:x9OXaitlufWLcg_GQKYCEVO4Wi349XYzb2XjRs8G27ur9a8RbypTyA>
+    <xmx:yNOXamuOsv73ydph88dp7RbgTB6KsmvaXkfTwc3e6OT58ofDyNb1CRkf>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Sep 2026 03:44:04 -0400 (EDT)
+Message-ID: <5b0890d3-b297-43f2-a44a-40f8a683f820@pobox.com>
+Date: Wed, 2 Sep 2026 00:44:02 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7a6417ca-fb4c-40da-8ad1-b9d76a2fa142@huaweicloud.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 00/83] 6.18.49-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260831133359.207714926@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260831133359.207714926@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 02, 2026 at 11:17:24AM +0800, Tengda Wu wrote:
-> Hi Greg,
+On 8/31/26 6:33 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.49 release.
+> There are 83 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On 2026/8/7 22:37, Greg Kroah-Hartman wrote:
-> > 6.6-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Raushan Patel <raushan.jhon@gmail.com>
-> > 
-> > commit 00a8ce2a2a9fa17674e1feec4d9105c1a5d6a419 upstream.
-> > 
-> > traceprobe_expand_meta_args() parses $argN with simple_strtoul() and
-> > calls sprint_nth_btf_arg(n - 1, ...). For $arg0, n is 0 so the index is
-> > -1. Because ctx->nr_params is signed, the "idx >= nr_params" guard in
-> > sprint_nth_btf_arg() does not catch the negative index, and
-> > ctx->params[-1].name_off is read out of bounds.
-> > 
-> > The normal per-argument path (parse_probe_vars()) already rejects
-> > $arg0 via its argument-number check, but meta-argument expansion runs
-> > before per-argument parsing and substitutes the value first, bypassing
-> > that check.
-> > 
-> > Reject $arg0 explicitly during expansion.
-> > 
-> > Link: https://lore.kernel.org/all/20260724054435.146279-1-raushan.jhon@gmail.com/
-> > 
-> > Fixes: 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all function args")
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Raushan Patel <raushan.jhon@gmail.com>
-> > Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >  kernel/trace/trace_probe.c |    6 +++++-
-> >  1 file changed, 5 insertions(+), 1 deletion(-)
-> > 
-> > --- a/kernel/trace/trace_probe.c
-> > +++ b/kernel/trace/trace_probe.c
-> > @@ -1721,7 +1721,11 @@ const char **traceprobe_expand_meta_args
-> >  				ret = -ENOENT;
-> >  				goto error;
-> >  			}
-> > -			/* Note: $argN starts from $arg1 */
-> > +			/* Note: $argN starts from $arg1, so $arg0 is invalid. */
-> > +			if (n == 0) {
-> > +				trace_probe_log_err(0, BAD_ARG_NUM);
-> > +				return ERR_PTR(-EINVAL);
+> Responses should be made by Wed, 02 Sep 2026 13:32:19 +0000.
+> Anything received after that time might be too late.
 > 
-> The control flow here is not quite right.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.49-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
 > 
-> Returning directly within this branch fails to free the new_argv memory,
-> resulting in a memory leak.
+> thanks,
 > 
-> The mainline does not have this issue because the preceding patch
-> 4af0532a0f47 ("tracing: Use __free() in trace_probe for cleanup") introduced
-> __free to manage the release of new_argv memory. However, due to the extensive
-> changes involved, directly cherry-picking that patch does not seem to be that
-> straightforward.
-> 
-> Therefore, it might be more appropriate to simply change it to goto here:
+> greg k-h
 
-Thanks for the review, can you send a fix-up patch for this as it is
-already in a release?
+Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well,
+no regressions observed.
 
-greg k-h
+Tested-by: Barry K. Nathan <barryn@pobox.com>
+
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
