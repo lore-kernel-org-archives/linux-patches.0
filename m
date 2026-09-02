@@ -1,140 +1,158 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1113C1F
-	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 08:20:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEBD4A8FF2
+	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 15:35:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788337230; cv=none; b=puaNTW2D2mnJV7+CnybJM/RUTTdtqJT9BD4PYC6HV8rdBtM57p0ZEtHk8xt+ZcSHq9kVwCAr01sJc/eNWDFq3Zv1zT4NSwZ9DggStWFzszYmAy1VBLc+NcZY3a/s/cbNZGlLcGxnPJ+AcH/yIGRSYAhfujLi+hmyZdDe1KhlBEA=
+	t=1788363334; cv=none; b=hFWkZSpPH3EdiD9UTg0ADTu/S7xEdBPA3XUQBjT8qCGUPvzULkozJfHEU1q3sFHLAZBomE5rUb8drvJC5LANs1D0R1r5ihMdSQXSN/bNSyeEnZnOPlgRja1Ey5S4tcBxfEYR3ITMcyOuojHw6VWEWRhwdJizU3Blo3rgrK5iXho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788337230; c=relaxed/simple;
-	bh=2wO/V6+U7w2bGtRa1e8YA94XbpqLc7o53riuolU8UBc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SuFNhoasrRHt9KhVbs9Oo5fltmz3Bj5vswDHE78JOV4EGq00ZR0lLiGhqRhZB7RnLUWPbCXRS4alLl3oGjZtcu+M586lgYNQNriFtEU2flmT3GxqjmUaPDobFJI99WqksG1KMcWV4C2ogw8dbxDNr3RkxpNXlOFMQmkdvCjc/ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hZbHd00l1zYQtxJ
-	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 16:19:40 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id CEF1F407AE
-	for <patches@lists.linux.dev>; Wed,  2 Sep 2026 16:20:21 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgBn0ExE3Jdq1r_dAQ--.7188S2;
-	Wed, 02 Sep 2026 16:20:21 +0800 (CST)
-Message-ID: <068d6b49-1e79-4d14-a51f-a445c7ecdbd0@huaweicloud.com>
-Date: Wed, 2 Sep 2026 16:20:20 +0800
+	s=arc-20240116; t=1788363334; c=relaxed/simple;
+	bh=4/zkLDvK82JU6Q6Tw2RpZsP6R/Iy2acCK0Y+c7mxREM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s1I4TlupLEKj89VtriDVD6upyJ2Blo5KEUAmKDBk07jdagV2Cr3Y77gMbhcoC0EaHsRX4nYgjRzBYnF2+CWU3K0qJWBLCScdw9Nx7VgYjrwQRW+bzs/sv1FrYQe/tisukOxwMFlulAPA8zI9O5Zrm0Bqlq8Az4HZfFMjisEu234=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=queasysnail.net; spf=pass smtp.mailfrom=queasysnail.net; dkim=pass (2048-bit key) header.d=queasysnail.net header.i=@queasysnail.net header.b=J9JFdUcU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tSL+WAXj; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=queasysnail.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=queasysnail.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=queasysnail.net header.i=@queasysnail.net header.b="J9JFdUcU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tSL+WAXj"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 16ED47A0149;
+	Wed,  2 Sep 2026 11:35:27 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 02 Sep 2026 11:35:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=queasysnail.net;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1788363326; x=1788449726; bh=WClryFH/uykhLTwGrswB2IbjE2NVUlJb
+	Xpw7qCV2yQQ=; b=J9JFdUcUvGR2jn0Cz0R5bDpmoY2/7CwXnryN0ONPCwFkYBzD
+	zdDGYTls0frTCFJ7s4S6Kwceafhk4J124bnlBZZkvhvty0lKIbm9NfXX06rYZLeN
+	j6kKJ9p8Sz73+76ku3eOxepWN/f6XcFjItWo8skfPV5HhsskC1/VeKnN8Tv3j6Fq
+	mwdgZ8CBBLovXc6qQectX5eqBP+5rGeWTbP6WS/Fx4fsRYLMPfyaIoS7URbNWxy9
+	CHrpl+20LpEFuoL1zZZ8/n2Ypc7TrnNKzulDkak+nuNMVVm+tTf+AIpH0Mr19kka
+	jIq+QBA5xRUGh9mBuFfgVn40+x/KV5GgzEMQfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1788363326; x=
+	1788449726; bh=WClryFH/uykhLTwGrswB2IbjE2NVUlJbXpw7qCV2yQQ=; b=t
+	SL+WAXjD6Oz+jMKIWEuB5ns+eqdiolbTbx/M5w97qjtyFtOOeVKG1Tcob13EPRyG
+	GGfla5WkIkDkQmJHFEtKnym7RFfdlkTDA5VklpOKxH5fUfsPFJMOKi7epcW7RM/q
+	sgBoZxsS9rTk3l85GJEoQzOFZbR2OiUJV+sjYJdRqZKcxPZWO4jrCZKeVA1+Xf+F
+	rjlxCLe3nqwnODDmHbB0Y9U6Ii79anL0ZIFBrqJw2MQJiziL653HZAGX+S1IhbaW
+	QnDeqSPG9u8GzPdStjPB+pV/BBFw0bLTrwz454k3SjLJxZsKsn1dL5U7mJdLxwyb
+	cz6aLp5OwJrcNdK0igsOQ==
+X-ME-Sender: <xms:PkKYajecV2bl94Ydq8S4vdX6ZwZKkYSei_UgHNWiZeqwSp2pNPH5CQ>
+    <xme:PkKYalBYjLupgqBvMJZeHqay-uqNJFKW1kUqWS79Ymga2EUXJ54oG6dtHTFXVbPZP
+    toV5s3n0XKCbunuZTrWXoOl0qYrVJmUWvwjNdLxWRLPRiSWbBuDJpY>
+X-ME-Received: <xmr:PkKYan6zKoSDm8Kfp7sgWEBDGsjGuI66RbRzovJ679zm9ZwenvCZfzciFow>
+X-ME-Proxy-Cause: dmFkZTEf4k+3+JnIrFCzoGXzs89B6GwbkUyP8MFu2olz4AHzC29gDOrIDb4S1aFZs4Vr0Q
+    Gi5yw83Uj/+D38UBBcGcMaAYGhWF9Q4iy5kA+ScqAPy2xndWfFU91RifL3hapLRrs3F/ya
+    f1cJax7diydBCIWG4mjJgya75KzCaJyd0dMAmn08K/kfoDSQIDo+MN+ZzpVT5mjYSB2EDT
+    kINyn3/SCpMC62mdfcr8RiYIsapHEDqyjwtZXqavViZ0iJJtxwcTY7I7Wurh+4asGxWNxs
+    8VuhMWKXDj+A3qbDYZFmezTh40dEGT2hcbPXn3e+icvkpcinglKglJAQqkSkH6L96yg4eN
+    u8F7yRp1dC24c9fz41j8Ygf/2AxG5hL3UcC10in/nYNDqjuGODXwOvbsICTLD0WSJRdwKA
+    mgnaK/Gjpr6T9Z1d7ie3CQjJgNlVaVt4HV341LBIbVINlvABh+JPk89QIaH7/2F2f715XK
+    uxNaLNAaXjV82q9S+o6iPlHHK+LN7vAwx8q9l5fnjs9MTifrmrpCi2SH6fZAi4P0AxLMm2
+    XzAN6wLLqgaXVoDFMZ9ScdgueDpldN4ZqvhSoXF2CYsQWYWJdaDZzjES0rWmX7fU5309Pw
+    do391yGPtyO5nK36l4eKjtDAdCwTKGPyme54xBD5KRiGgz7vmrqAsGAB4UyQ
+X-ME-Proxy: <xmx:PkKYaufdR5IRxqdVL91Ff9_7km6lkS-QmLrLoYnoFAPJyv2L1TcuRA>
+    <xmx:PkKYatubdQOFRK1kwUEQSu-iBEyleeoX207N0qO8jpyvd9CvCJVEgw>
+    <xmx:PkKYaunv_OV_bfb_GWuWNKy5rDqnbwsjD2ssrx7EwedOoSLsDAjMeA>
+    <xmx:PkKYagSKoi5AiAMLjkj6PCwn72Ck_OehEbNhk7IBsR_nw-DS0cIa1Q>
+    <xmx:PkKYaiAtuEkwyY3s0ACABoyfDXFtUoAjO2N_AXJL3JNBNHQkeaMkDTFq>
+Feedback-ID: i934648bf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Sep 2026 11:35:25 -0400 (EDT)
+Date: Wed, 2 Sep 2026 17:35:23 +0200
+From: Sabrina Dubroca <sd@queasysnail.net>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>, john.fastabend@gmail.com,
+	davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.18-6.1] tls: reject the combination of TLS and
+ sockmap
+Message-ID: <aphCOxhmFLqpjqvs@krikkit>
+References: <20260831133314.4125787-1-sashal@kernel.org>
+ <20260831133314.4125787-596-sashal@kernel.org>
+ <apacn0u4092axmXy@krikkit>
+ <apbqjuv6l20bTjQI@laps>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 095/261] tracing/probes: Reject $arg0 in meta argument
- expansion
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Raushan Patel <raushan.jhon@gmail.com>,
- "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-References: <20260807143415.358597922@linuxfoundation.org>
- <20260807143417.434454264@linuxfoundation.org>
- <7a6417ca-fb4c-40da-8ad1-b9d76a2fa142@huaweicloud.com>
- <2026090227-clash-peroxide-8872@gregkh>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <2026090227-clash-peroxide-8872@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgBn0ExE3Jdq1r_dAQ--.7188S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxCrW8Aw4UuFWkZFykKFWxJFb_yoW5XrWxpF
-	WfGFnxtr48Jr4fCrW293W8CFyFy3ykXry3XryDJw1fWFn0kF1rJr4xW3yj9a4Du3y8K3yS
-	vF4YqFsrKa98ZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUymb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l42xK82IYc2Ij64vI
-	r41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
-	xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0
-	cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
-	AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E
-	14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jjVbkUUUUU=
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <apbqjuv6l20bTjQI@laps>
 
-
-
-On 2026/9/2 14:29, Greg Kroah-Hartman wrote:
-> On Wed, Sep 02, 2026 at 11:17:24AM +0800, Tengda Wu wrote:
->> Hi Greg,
->>
->> On 2026/8/7 22:37, Greg Kroah-Hartman wrote:
->>> 6.6-stable review patch.  If anyone has any objections, please let me know.
->>>
->>> ------------------
->>>
->>> From: Raushan Patel <raushan.jhon@gmail.com>
->>>
->>> commit 00a8ce2a2a9fa17674e1feec4d9105c1a5d6a419 upstream.
->>>
->>> traceprobe_expand_meta_args() parses $argN with simple_strtoul() and
->>> calls sprint_nth_btf_arg(n - 1, ...). For $arg0, n is 0 so the index is
->>> -1. Because ctx->nr_params is signed, the "idx >= nr_params" guard in
->>> sprint_nth_btf_arg() does not catch the negative index, and
->>> ctx->params[-1].name_off is read out of bounds.
->>>
->>> The normal per-argument path (parse_probe_vars()) already rejects
->>> $arg0 via its argument-number check, but meta-argument expansion runs
->>> before per-argument parsing and substitutes the value first, bypassing
->>> that check.
->>>
->>> Reject $arg0 explicitly during expansion.
->>>
->>> Link: https://lore.kernel.org/all/20260724054435.146279-1-raushan.jhon@gmail.com/
->>>
->>> Fixes: 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all function args")
->>> Cc: stable@vger.kernel.org
->>> Signed-off-by: Raushan Patel <raushan.jhon@gmail.com>
->>> Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
->>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>> ---
->>>  kernel/trace/trace_probe.c |    6 +++++-
->>>  1 file changed, 5 insertions(+), 1 deletion(-)
->>>
->>> --- a/kernel/trace/trace_probe.c
->>> +++ b/kernel/trace/trace_probe.c
->>> @@ -1721,7 +1721,11 @@ const char **traceprobe_expand_meta_args
->>>  				ret = -ENOENT;
->>>  				goto error;
->>>  			}
->>> -			/* Note: $argN starts from $arg1 */
->>> +			/* Note: $argN starts from $arg1, so $arg0 is invalid. */
->>> +			if (n == 0) {
->>> +				trace_probe_log_err(0, BAD_ARG_NUM);
->>> +				return ERR_PTR(-EINVAL);
->>
->> The control flow here is not quite right.
->>
->> Returning directly within this branch fails to free the new_argv memory,
->> resulting in a memory leak.
->>
->> The mainline does not have this issue because the preceding patch
->> 4af0532a0f47 ("tracing: Use __free() in trace_probe for cleanup") introduced
->> __free to manage the release of new_argv memory. However, due to the extensive
->> changes involved, directly cherry-picking that patch does not seem to be that
->> straightforward.
->>
->> Therefore, it might be more appropriate to simply change it to goto here:
+2026-09-01, 11:09:02 -0400, Sasha Levin wrote:
+> On Tue, Sep 01, 2026 at 11:36:31AM +0200, Sabrina Dubroca wrote:
+> > 2026-08-31, 09:30:24 -0400, Sasha Levin wrote:
+> > > From: Jakub Kicinski <kuba@kernel.org>
+> > > 
+> > > [ Upstream commit 460e6486617c17dd19abe8f3fc67d9a6fa25f8ca ]
+> > > 
+> > > TLS and sockmap (BPF psock) integration hides a lot of latent bugs.
+> > > Bugs which may be more or less relevant for real users but they
+> > > are definitely exploitable.
+> > > 
+> > > We could not find anyone actively using this integration so let's
+> > > reject this config. Adding a TLS socket to a sockmap was already
+> > > rejected by sk_psock_init() through the inet_csk_has_ulp() check.
+> > > We need to reject the attempts to configure the TLS keys (rather
+> > > than adding the ULP itself) because checking prior to the ULP
+> > > installation is tricky without risking a race with sockmap getting
+> > > added in parallel (sockmap does not hold the socket lock).
+> > > 
+> > > This patch is a minimal rejection of the feature. Subsequent patch
+> > > in the series will do a light dead code removal. Full cleanup would
+> > > require a major rewrite of the Tx path, we don't need skmsg any more.
+> > > 
+> > > Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+> > > Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+> > > Link: https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
+> > > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > ---
+> > > 
+> > > LLM Generated explanations, may be completely bogus:
+> > 
+> > 330L... wow.
+> > 
+> > > ## Phase 1: Commit Message Forensics
+> > > 
+> > > ### Step 1.1: Subject line
+> > > **Record:** `[tls]` / `reject` — reject the unsupported TLS + sockmap
+> > > (BPF psock) configuration.
+> > > 
+> > > ### Step 1.2: Tags
+> > > **Record:**
+> > > - **Reviewed-by:** Jakub Sitnicki `<jakub@cloudflare.com>`
+> > > - **Reviewed-by:** Sabrina Dubroca `<sd@queasysnail.net>`
+> > > - **Link:**
+> > >   https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
+> > > - **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>`
+> > > - No Fixes:, Reported-by:, Cc: stable@vger.kernel.org, or syzbot tags
+> > 
+> > Yes, this was intentionally sent to net-next without a Fixes tag,
+> > because it's a "feature-level" change, so it kind of feels wrong to
+> > send that to stable (even if it's removing a feature that nobody seems
+> > to be using). OTOH the code is broken and not really fixable...
 > 
-> Thanks for the review, can you send a fix-up patch for this as it is
-> already in a release?
+> We have plenty of "fixes" that just drop a bunch of broken code :)
 > 
-> greg k-h
+> Happy to do either, just let me know.
 
-Sure.
+Alright, if that's ok for you, no objection.
 
-Tengda
-
+-- 
+Sabrina
