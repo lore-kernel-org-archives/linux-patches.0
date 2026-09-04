@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCA03876B3;
-	Fri,  4 Sep 2026 05:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBE3515D2;
+	Fri,  4 Sep 2026 05:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498336; cv=none; b=p8zvIGFTBdTawiUqflDgLa4h+3elGzP54d8buOodWNqCr53V4JBliY4R8VkifoEskfP4v0Y7goZ9o31vFfAQroj5qTbZjwCV3Skldy+SVK73opHWcFEyZRZclRBPAQRLnf8AZ/3yahyIr3V3Eo6rTE2KYCt7WSe8XGjrr/GzFhY=
+	t=1788498339; cv=none; b=hhioQErtQEdHw8fZNWnYUlt3nbRISWO1qZG9rC6+CSj8TAR22WfaAQXwcPcgVmd93d324LZEhiQd3LkWPG1G+RQ/FUh1sI7Mkb7tMeYuFTETKQeXZyzQBKCSi3+KgA1rsX22T5TAM9RzT8WTFQbtCB9G87Lyu4OqmU784PZqEac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498336; c=relaxed/simple;
-	bh=ErXf+JapEHZFx5DMYOd+lW7uRzbTycTdgrGya1Ljk3M=;
+	s=arc-20240116; t=1788498339; c=relaxed/simple;
+	bh=nzCGzvzX6XHuObztr7ub4BHi4lSQK95+SNRBqwhd/s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eH6xkB78OW61exhuojLn7h88FThRzqOhl+siQvP2bJV7kWqhK+2LtjmufUvIYM+r/iH4q8/OUalt9YAvypqWXz1gCGL4o8be/veCTt5aZjBD6fDnKdobcr5YYThjN0wbG1UVyIs+dYZvcm8P4sli5CudG3Qn/UoyUU5BtU4BMl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTFtPHPQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AhIBMkuavSFLG8QFO+JLFj8mlozdOhI/DW2tPkm0KHqecain1Kgijy6GvhS5L9rXm2+RKsMWKfEvZZpgcR3pOH6uzcJaZ0usRjKNn/LquC8eaDVsc3fADrgos7oMuohqDwTJpVUKUyzHd2O1CBM1Qz8JU+hd3zOh5A5C1uS+w5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCt7uMfM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTFtPHPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69801F00A3D;
-	Fri,  4 Sep 2026 05:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCt7uMfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A411F00A3E;
+	Fri,  4 Sep 2026 05:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498335;
-	bh=mnDBCOrS7UxlhTtb/voaCP/ejwBKPytuzCB/uw5RvtM=;
+	s=korg; t=1788498338;
+	bh=tXudOnGMMF2BMfX43DSetSmP9kPI9jNbt8buj49h+Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GTFtPHPQ5AoRXJLwBdN0+vhc4U8fvWzAriytyXoT15QbTuz3Gnp5qZMP6QvDj1Olt
-	 oIE7W1TDREGYwS29glFYIohsQpdeqkGEvwyDVSSFWk4xu1lggpQXGwWTtfNdsXXprp
-	 P7w6PPRJc7A1SKMwvTpDe/g5k9+65nj76acCgDig=
+	b=sCt7uMfMnkNZ2e0Sq0jGcI82NdHVTma1qOnh7oXmb52/ALtkxGBTuEV64pWxgagHK
+	 rGJIz/a18P1BqbrJwi0wBGIvXmkbdhvYnnwt6RUeDBLoamFu/HDeU2w21eChoLqyPW
+	 LzVATuOT7g4D6bX8dvAydE2h9CSS4sFsYOSI43m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoni Boucher <bouanto@zoho.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.2 026/713] rust: kbuild: disambiguate `zerocopy` for `rusttest`
-Date: Fri,  4 Sep 2026 06:49:54 +0200
-Message-ID: <20260904045804.416381891@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>
+Subject: [PATCH 7.2 027/713] rust: bug: skip arch-specific asm in `testlib` builds
+Date: Fri,  4 Sep 2026 06:49:55 +0200
+Message-ID: <20260904045804.438654783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,59 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoni Boucher <bouanto@zoho.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-commit fe39a233ea52601d416a1d02e7f70049aae47016 upstream.
+commit 5d9668f3930609ead91f39b059ef4fe53db04942 upstream.
 
-Starting with Rust 1.76.0, `zerocopy` was added as an (indirect)
-compiler dependency [1]. In turn, this meant that the `rustc-dev`
-component started including a precompiled `zerocopy` crate in the sysroot.
+Running `make rusttest` with `ARCH=` set to an architecture other than
+the host's fails, e.g. `ARCH=arm64` on an x86_64 host:
 
-This makes `rusttest` fail because the compiler finds several candidates:
+error: invalid instruction mnemonic 'brk'
+  --> rust/kernel/bug.rs:63:17
+   |
+63 | /                 concat!(
+64 | |                     "/* {size} */",
+65 | |                     include!(concat!(env!("OBJTREE"), "/rust/kernel/generated_arch_warn_asm.rs")),
+66 | |                     include!(concat!(env!("OBJTREE"), "/rust/kernel/generated_arch_reachable_asm.rs")));
+   | |_______________________________________________________________________________________________________^
+   |
+note: instantiated into assembly here
+  --> <inline asm>:1:115
+   |
+ 1 |     /* 8 */.pushsection __bug_table,"aw"; .align 2; 14470: .long 14471f - .;.short 2305;.align 2; .popsection; 14471:brk 0x800
+   |                                                                                                                      ^^^
 
-    error[E0464]: multiple candidates for `rmeta` dependency `zerocopy` found
-      --> rust/kernel/prelude.rs:64:9
-       |
-    64 | pub use zerocopy::{
-       |         ^^^^^^^^
-       |
-       = note: candidate #1: .../lib/rustlib/x86_64-unknown-linux-gnu/lib/libzerocopy-dfef4cb07ca752aa.rmeta
-       = note: candidate #2: ./rust/test/libzerocopy.rlib
+The reason is that `rusttest` builds the `kernel` crate as a host
+library: it passes the `CONFIG_*` cfgs of the configured architecture,
+but not `--target`, so code generation happens for the
+host. `warn_flags!` then selects the arch-specific inline asm arm
+based on `CONFIG_*`, and the host assembler rejects it.
 
-We cannot use `--sysroot=/dev/null` for these, thus point to the dependency
-explicitly.
+This does not happen with the current `master` because `warn_on!` has
+no user inside the `kernel` crate itself yet, but it will as soon as
+one is added.
 
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Antoni Boucher <bouanto@zoho.com>
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Closes: https://lore.kernel.org/all/CANiq72n4=fz=JNKY0Jdm8BnLa=RmHB2B7s0bO47YTJ7hygqBZg@mail.gmail.com/
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 567621523ab7 ("rust: zerocopy: enable support in kbuild")
-Link: https://github.com/rust-lang/rust/pull/118546 [1]
-Link: https://patch.msgid.link/20260729173803.13459-1-ojeda@kernel.org
-[ Investigated when it started happening, reworded to add that and to
-  follow our usual style and sent on behalf of Antoni, who found this
-  during his work to support Rust for Linux with the GCC backend, i.e.
-  with `rustc_codegen_gcc`. - Miguel ]
+Fixes: dff64b072708 ("rust: Add warn_on macro")
+Link: https://patch.msgid.link/20260808022608.1125174-1-tomo@flapping.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/bug.rs |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 627ed79dc6f5..fbe0accc51a3 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -350,7 +350,7 @@ rusttestlib-pin_init: $(src)/pin-init/src/lib.rs rusttestlib-macros \
- rusttestlib-kernel: private rustc_target_flags = --extern ffi \
-     --extern build_error --extern macros --extern pin_init \
-     --extern bindings --extern uapi \
--    --extern zerocopy --extern zerocopy_derive
-+    --extern zerocopy=$(objtree)/$(obj)/test/libzerocopy.rlib --extern zerocopy_derive
- rusttestlib-kernel: $(src)/kernel/lib.rs rusttestlib-bindings rusttestlib-uapi \
-     rusttestlib-build_error rusttestlib-pin_init $(obj)/$(libmacros_name) \
-     $(obj)/bindings.o rusttestlib-zerocopy rusttestlib-zerocopy_derive FORCE
--- 
-2.55.0
-
+--- a/rust/kernel/bug.rs
++++ b/rust/kernel/bug.rs
+@@ -8,6 +8,7 @@
+ 
+ #[macro_export]
+ #[doc(hidden)]
++#[cfg(not(testlib))]
+ #[cfg(all(CONFIG_BUG, not(CONFIG_UML), not(CONFIG_LOONGARCH), not(CONFIG_ARM)))]
+ #[cfg(CONFIG_DEBUG_BUGVERBOSE)]
+ macro_rules! warn_flags {
+@@ -47,6 +48,7 @@ macro_rules! warn_flags {
+ 
+ #[macro_export]
+ #[doc(hidden)]
++#[cfg(not(testlib))]
+ #[cfg(all(CONFIG_BUG, not(CONFIG_UML), not(CONFIG_LOONGARCH), not(CONFIG_ARM)))]
+ #[cfg(not(CONFIG_DEBUG_BUGVERBOSE))]
+ macro_rules! warn_flags {
+@@ -73,6 +75,7 @@ macro_rules! warn_flags {
+ 
+ #[macro_export]
+ #[doc(hidden)]
++#[cfg(not(testlib))]
+ #[cfg(all(CONFIG_BUG, CONFIG_UML))]
+ macro_rules! warn_flags {
+     ($file:expr, $flags:expr) => {
+@@ -91,6 +94,7 @@ macro_rules! warn_flags {
+ 
+ #[macro_export]
+ #[doc(hidden)]
++#[cfg(not(testlib))]
+ #[cfg(all(CONFIG_BUG, any(CONFIG_LOONGARCH, CONFIG_ARM)))]
+ macro_rules! warn_flags {
+     ($file:expr, $flags:expr) => {
+@@ -101,7 +105,7 @@ macro_rules! warn_flags {
+ 
+ #[macro_export]
+ #[doc(hidden)]
+-#[cfg(not(CONFIG_BUG))]
++#[cfg(any(testlib, not(CONFIG_BUG)))]
+ macro_rules! warn_flags {
+     ($file:expr, $flags:expr) => {};
+ }
 
 
