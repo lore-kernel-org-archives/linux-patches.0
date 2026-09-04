@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D94B415F12;
-	Fri,  4 Sep 2026 05:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0924195A0;
+	Fri,  4 Sep 2026 05:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498754; cv=none; b=P+fIGKKvdPMrjhTPqBR3SwJihl4yT2Re3Iuru1khpOompQFmi+ugjR3qChLIl3iqB7ThnQurvgfwuGC5IPo33PAMst+iA5HDP1HNGy6FiLW61UHqmLUQVHHzznHBWvn60FRZKnZkIrORpCbdcs14Qc/PcmwTnMZVhlDEsjlww8M=
+	t=1788498757; cv=none; b=Wbf0U+DrfWs1kwV/1HzOsrpFcGI+lVX66wB9a76rIpbtz60CG4ohCEdQK2C+X/7UOPE+6GhsmR5wxUgDacUikA0Jd/Z+Q7N57H/SoB3aphXleIqMRlEU21bxcBOdLQZbFVSxNgCeKFwlKX9REVmAl57yWM6SCsW/HrnkVxigEeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498754; c=relaxed/simple;
-	bh=20MkiBGPX7k6QAvuaEJ5spuy7msi25Wno9rw7oeKltQ=;
+	s=arc-20240116; t=1788498757; c=relaxed/simple;
+	bh=zxE2DugzW5DotkqlOPowu49SwXQm+vCElLm1BrNmwBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTuIxMAz2dLt8TxSrqylu1Eji5xtllE/yWOeqPdM5s1r7QorKBdpEpyEMIQKiLn4QpJX4HQNz1h1kGl1Dz3TvBY5SfLYuCT1/T7mRgfhi3O8JidfSpWV/GoGtY0yyPlKi9n+uZHKPQWeDQR+s4UK2uT5yF0ZlpS8UWqEukfVux8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPoN5tPX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FgJL5QOAvAVrqWVB434tfQqtYZZuVN+LR7pPdSIOckuzL+RnsNG9AJ8lxZjlUX6BrtSvstZ5eu9KYl8JbnOhzOs/6akkVgp7DlhXGOtKg6PtJgfQyu7NcGRqk1ounnsSAyKDCvrZhSU2qyv6GgS0Os/aEG1PQ3cpqosDV/BJ9CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PphtnWjQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPoN5tPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E899D1F00A3D;
-	Fri,  4 Sep 2026 05:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PphtnWjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA941F00A3D;
+	Fri,  4 Sep 2026 05:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498753;
-	bh=8Giol/f3JKy7fkHGzuL7kLcN3y+nZUIz5Uq2zgcLaHI=;
+	s=korg; t=1788498756;
+	bh=SQXW2Fx1vUVJWIqIjKn3/OCtjACSM2LcUIq0+/IvcEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kPoN5tPXHP+FIuK6NdIXC1OUXQw19j2oQD/kqb9kxxUeJZ2bOUB45Zi0TKzjG18+B
-	 FX9Gf5HNJK18N0ffIYMUgzhAB5RVshv+jIPVng6OZN3ylAIJV7VeYKT+cJe6S8vG8t
-	 6OF4PeGJCxAxD7VnfWzRxZcb9rtL00fC6VALg/e8=
+	b=PphtnWjQW/AIYhmlf9Npu8hTNYq2k/OHdXv0yVxrOFWhrsbNnK2kUrJMOGaIIAduM
+	 HGPlAkMDBuaHjAfAXr7Zf3J6LQp4CP6fqZhhQErfJCl6bnAFzXj1NiTtBSxozuE8MQ
+	 LwP+tGoozoGLIUqyO8gXcVPS1upL3EaeWCjZOzdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 132/713] zram: fix out-of-bounds access in writeback_store()
-Date: Fri,  4 Sep 2026 06:51:40 +0200
-Message-ID: <20260904045806.791982417@linuxfoundation.org>
+Subject: [PATCH 7.2 123/713] lib/ucs2_string.c: fix out-of-bounds read in ucs2_strnlen()
+Date: Fri,  4 Sep 2026 06:51:31 +0200
+Message-ID: <20260904045806.591931872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,72 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-commit 894913e2d35c46ff19a77530907771ae57862b96 upstream.
+commit cec0d03fe785380540dc1b4d07c80f67ae2ffc78 upstream.
 
-Patch series "zram: fix stale scan bounds after reinitialization".
+Patch series "lib/ucs2_string.c: fix out-of-bounds read in
+ucs2_strnlen()", v2.
 
-Both writeback_store() and read_block_state() derive their table scan
-bounds from zram->disksize before acquiring dev_lock.  If the device is
-reset and reinitialized with a smaller disksize between that read and lock
-acquisition, the bound can describe the old table while the scan operates
-on the new one.  This can lead to out-of-bounds slot accesses.
+This series fixes an off-by-one out-of-bounds read in ucs2_strnlen().
 
-Move both bound calculations under dev_lock so each bound remains
-consistent with the table throughout its scan.  Keep the fixes separate
-because the affected interfaces originate from different commits and can
-be backported independently.
+The first patch is the real fix, the second patch comes as a bonus and
+fixes the code indentation.
 
 
 This patch (of 2):
 
-writeback_store() calculates the table scan bounds before taking dev_lock.
-A reset followed by reconfiguration with a smaller disksize can therefore
-replace zram->table while writeback_store() is waiting for the lock.  Once
-it acquires the lock, it sees an initialized device but scans the new
-table using the old upper bound, resulting in an out-of-bounds access.
+ucs2_strnlen() checks the current character before checking whether the
+caller-provided maximum length has been reached.  If the input is not
+NUL-terminated within that bound, the loop can read one ucs2_char_t past
+the limit.
 
-Calculate the number of pages while holding dev_lock so the scan bound
-matches the table protected by the lock.
+Test the length before dereferencing to prevent an off-by-one
+out-of-bounds read.
 
-Link: https://lore.kernel.org/20260804065919.3970386-1-xialonglong2025@163.com
-Link: https://lore.kernel.org/20260804065919.3970386-2-xialonglong2025@163.com
-Fixes: a939888ec38b ("zram: support idle/huge page writeback")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
+Link: https://lore.kernel.org/20260723-fix-ucs2_strnlen-v2-0-9ea94e32a358@kernel.org
+Link: https://lore.kernel.org/20260723-fix-ucs2_strnlen-v2-1-9ea94e32a358@kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ lib/ucs2_string.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1244,8 +1244,8 @@ static ssize_t writeback_store(struct de
- 			       const char *buf, size_t len)
+--- a/lib/ucs2_string.c
++++ b/lib/ucs2_string.c
+@@ -8,7 +8,7 @@ ucs2_strnlen(const ucs2_char_t *s, size_
  {
- 	struct zram *zram = dev_to_zram(dev);
--	u64 nr_pages = zram->disksize >> PAGE_SHIFT;
--	unsigned long lo = 0, hi = nr_pages;
-+	u64 nr_pages;
-+	unsigned long lo = 0, hi;
- 	struct zram_pp_ctl *pp_ctl = NULL;
- 	struct zram_wb_ctl *wb_ctl = NULL;
- 	char *args, *param, *val;
-@@ -1259,6 +1259,9 @@ static ssize_t writeback_store(struct de
- 	if (!zram->backing_dev)
- 		return -ENODEV;
+         unsigned long length = 0;
  
-+	nr_pages = zram->disksize >> PAGE_SHIFT;
-+	hi = nr_pages;
-+
- 	pp_ctl = init_pp_ctl();
- 	if (!pp_ctl)
- 		return -ENOMEM;
+-        while (*s++ != 0 && length < maxlength)
++	while (length < maxlength && *s++ != 0)
+                 length++;
+         return length;
+ }
 
 
