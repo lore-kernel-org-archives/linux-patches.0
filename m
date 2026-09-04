@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC993AE198;
-	Fri,  4 Sep 2026 05:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3EA4156F0;
+	Fri,  4 Sep 2026 05:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499291; cv=none; b=BeXgANuGVhko6RZnjU42rvR4vNzYyYNTVvefsE0Q9MSNBVrj5gVPPLD1/oo/lJr/nDjyBwTF2vM0qwqMm/prgUoRMcNY1qgZukBz/kIOoE+yI0mwOEjLWHGpxzNJ30pGwMxlvgb5f3bk4hpTiWrgsVZX1LpFsUcTdbLVy9Tx+uE=
+	t=1788499294; cv=none; b=JGguobHnOAWwhAwMBq7788cThDTIuPFQ37dHGBS3So6GErlVMva6tUcuyk7PLeK7PqK2FY9szO6Llj4tF+IiD9Tw0olOdCiVbs7NZ0QAOxCOV7QWO6VdAZR2oAnVfeTQccfMqm9vsXdHqLI3NxnsjCbxXU3dM7DTN1FRIrkWaPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499291; c=relaxed/simple;
-	bh=ca9GtaXsYRzQr+CY0HEm22z1tz0EfYjEhPrdiCFhJJ8=;
+	s=arc-20240116; t=1788499294; c=relaxed/simple;
+	bh=zWqxqi0JhcVO9rSBUASp+Y7X55HK0j3+wa2SNqpVfD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wvm6FXPAsIXlcUcrWvsuYtAIdsM1UXR4qdtBkIKSF/w6a2t62RRQ6O79KZPFlqIVX6mX7vgt2LHS0aCdNiKZvYftyNUO77Y6F3MbFXioka2cIQEUhO8cYoEHr9FLCm/N+N0BfeccjOP6qVo2lBOv7Hbxj+yPJN3t4A5HQ3RfXZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGtoZB8B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gn0BOiY9M0Y8DuB4XPzOcCFV3Dj6eWxtJLr+z9OOLRbH0usxcjGWESdD9q3Qml8gRMzWuCdcdBsOS+HNq+wOe5n3kOGeA5PMyzyfqZo+Vi36NRLO0aWaus6lZkXQuf6WjWtwhdKgku+2FTjKsxcPzphOI+PSl0T6yQo7TpNDjSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B76lZMf4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGtoZB8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83501F00A3D;
-	Fri,  4 Sep 2026 05:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B76lZMf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866601F00A3D;
+	Fri,  4 Sep 2026 05:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499290;
-	bh=pVeCismFCci7FSb+MvneyyiFmHQmOthaYZJLTRyDRy0=;
+	s=korg; t=1788499293;
+	bh=yrePAyOzfKS+S4avbK3GAs+ihMnBEYjNiOsGYmMF5mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EGtoZB8BC8pwOfnK0Nk1NWltGITtXBovVXQEme6U6fFawDR/kgrPhoyCuNhMXud4h
-	 G8/UxrPKpMBfAwQ4cupey3A1mVwy3kH7JNfzSC8beFWB9RmC/ZxJSYlc3QzWC2+Tqa
-	 4Zshy9ilCQB1x5gsfVKGYUe2gaVZl4u6hGQLoq8M=
+	b=B76lZMf4zuvQYvyNLlNSx+BkmZtqlNAgpDoFlNs8Em9Wt/aqgrXLost6TE8qUqv+9
+	 Z+QzAClsyTVWQrWsvvHd6xb62l+uhD4/7ftrjD6KV0361cSejJqKpJxH+gy70B0Zk0
+	 zgnx5wC6daYa7i+d4787QNKjb/OAQhTiET5WTlik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Petr Pavlu <petr.pavlu@suse.com>
-Subject: [PATCH 7.2 366/713] module/kallsyms: fix nextval for data symbol lookup
-Date: Fri,  4 Sep 2026 06:55:34 +0200
-Message-ID: <20260904045812.033543725@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.2 367/713] nouveau/gem: reserve the bo in the info ioctl around the vma lookup
+Date: Fri,  4 Sep 2026 06:55:35 +0200
+Message-ID: <20260904045812.056520443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,63 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Dave Airlie <airlied@redhat.com>
 
-commit 0e9f090a4e9bfae5a190ccf89eab3bf14f6b0f96 upstream.
+commit 5e17160d41d92823f3379c1982e1369680c5ce4d upstream.
 
-The symbol lookup code assumes the queried address resides in either
-MOD_TEXT or MOD_INIT_TEXT. This breaks for addresses in other module
-memory regions (e.g. rodata or data), resulting in incorrect upper
-bounds and wrong symbol size.
+In the non-uvmm path, there could be a race between the info lookup
+finding the vma, and the gem close path closing the vma leading
+to a use-after-free.
 
-Select the module memory region the address belongs to instead of
-hardcoding text sections. Also initialize the lower bound to the start
-of that region, as searching from address 0 is unnecessary.
+Spotted with the help of Opus 4.6.
 
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Fixes: e758a3111914 ("drm/nouveau: fixup gem_info ioctl to return client-specific bo virtual")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Link: https://patch.msgid.link/20260612020658.3176270-1-airlied@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/module/kallsyms.c |   24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_gem.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/kernel/module/kallsyms.c
-+++ b/kernel/module/kallsyms.c
-@@ -258,17 +258,25 @@ static const char *find_kallsyms_symbol(
- 	unsigned int i, best = 0;
- 	unsigned long nextval, bestval;
- 	struct mod_kallsyms *kallsyms = rcu_dereference(mod->kallsyms);
--	struct module_memory *mod_mem;
-+	struct module_memory *mod_mem = NULL;
- 
--	/* At worse, next value is at end of module */
--	if (within_module_init(addr, mod))
--		mod_mem = &mod->mem[MOD_INIT_TEXT];
--	else
--		mod_mem = &mod->mem[MOD_TEXT];
-+	for_each_mod_mem_type(type) {
-+#ifndef CONFIG_KALLSYMS_ALL
-+		if (!mod_mem_type_is_text(type))
-+			continue;
-+#endif
-+		if (within_module_mem_type(addr, mod, type)) {
-+			mod_mem = &mod->mem[type];
-+			break;
+--- a/drivers/gpu/drm/nouveau/nouveau_gem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
+@@ -313,11 +313,20 @@ nouveau_gem_info(struct drm_file *file_p
+ 	rep->offset = nvbo->offset;
+ 	if (vmm->vmm.object.oclass >= NVIF_CLASS_VMM_NV50 &&
+ 	    !nouveau_cli_uvmm(cli)) {
++		int ret;
++
++		ret = ttm_bo_reserve(&nvbo->bo, false, false, NULL);
++		if (ret)
++			return ret;
++
+ 		vma = nouveau_vma_find(nvbo, vmm);
+-		if (!vma)
++		if (!vma) {
++			ttm_bo_unreserve(&nvbo->bo);
+ 			return -EINVAL;
 +		}
-+	}
  
--	nextval = (unsigned long)mod_mem->base + mod_mem->size;
-+	if (!mod_mem)
-+		return NULL;
+ 		rep->offset = vma->addr;
++		ttm_bo_unreserve(&nvbo->bo);
+ 	} else
+ 		rep->offset = 0;
  
--	bestval = kallsyms_symbol_value(&kallsyms->symtab[best]);
-+	/* Initialize bounds within memory region the address belongs to. */
-+	nextval = (unsigned long)mod_mem->base + mod_mem->size;
-+	bestval = (unsigned long)mod_mem->base - 1;
- 
- 	/*
- 	 * Scan for closest preceding symbol, and next symbol. (ELF
 
 
