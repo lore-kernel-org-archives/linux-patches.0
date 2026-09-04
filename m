@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDFC36B07C;
-	Fri,  4 Sep 2026 06:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365B641D11C;
+	Fri,  4 Sep 2026 06:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502072; cv=none; b=mIrzI+t+OUAijIImo9m3pXxj3BbLbkyDN606rm3OZDrSIis7zg/Sxk0o1aJb9tHeaYwdZ3dl5MQfAmN4SHVZIBEKYZFoTPzDMPfKLqqr3bwEKyRhgCyJbJ36K5o7hKRAlmfJiODzYAf4IfQdSjGQShidEb3qSMwowzks/m1Hqzo=
+	t=1788502075; cv=none; b=CZnGIbDnBu6h0NFT+OERw/SkmOpxycWP+dRps7CHm82YhPtd8O7H5wcBH23rBN3MwfDDneZEEWxmMwjZ2RJu3zGFkO3rdykXkFpO8bMoBe85fSGKzsDSV937QgIH1255yb5C1SW9fAQcLiz4gjl04JPjuY1gx0vL4rxUIm9HbFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502072; c=relaxed/simple;
-	bh=0I3YmrLe/baajDO9egWBaxpU5uMhd/jn2+xdkvyGsxQ=;
+	s=arc-20240116; t=1788502075; c=relaxed/simple;
+	bh=rxaUHLGU9k6tPzoj4hOXz72TDIsa3Zb4x9vgr5/hMYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5P066EYvwKrYTAc9PkzMDpT/w1t9ay4zpfIe5zSsaVATN0Y48bikvY9bCpTgAmyCO6pSRawtqWF7ZkuFsxDe1UBzlZWtlF9CmEKvzsgupFcoptN3lbOunhiotu4VHr2w2UPG1kwQEiDhjep2uTgD+IXX/optuBm/7HcTm36uRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTkQ6/p6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bzmFRfqQHYIHrRR5elMgk7HRUyYXtUorRYdQ5uAq/aXWgRVP8CY0QSbEli/lf8qvCjXzos8Z6lFNRAEgK2JeGIs68kt4XuTvfbDQEqlFGb25jqwa4udQ618YJbLZPYoH8Yva7EMzw/8L26Z8jkow9W0FuOFdSxQ3EW4w0hN2kAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjXn5ApS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTkQ6/p6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950901F00A3D;
-	Fri,  4 Sep 2026 06:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjXn5ApS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852351F00A3E;
+	Fri,  4 Sep 2026 06:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502071;
-	bh=Mn5OHXwckZ0FHaCe3D5x5A8PG5NB94ZIWmO8klfLr/0=;
+	s=korg; t=1788502073;
+	bh=MgTnFyfhwjLTAvVYlsXi38gxSyU5qNipRCwfimNyOa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TTkQ6/p6hjKGi8nw3mw6h4hetThPe5+5q78waZTNERHkNkNGx55VJJ0BGqMp3edmL
-	 Ra0fysGGuRpIPJoOUmPQbay0KHNAH2yBgACR1pOMAjpCLk1tLEjd+J0aX/Apktw28D
-	 I43Vjf1LOGvA7pArwDuGOqmQ5hu/5oDm3yDJkZbc=
+	b=XjXn5ApS3VQn/NPK47A8eHPAB78mB8wZA6+sONgWLTHN1wbmNSvqWQJXkpkGvVsZN
+	 L6Rw/Qn3rc2hnkrZQyq8sUus4Js657vgkZofv+5CHNFmT8mXgdZXn9kLTpF3ISnCPk
+	 +o70HZMVn69g70NS52PxXcJhNW0g8gd54b0jeMBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 078/403] nfsd: return NFS4ERR_NOTSUPP for unsupported netloc4 types
-Date: Fri,  4 Sep 2026 06:58:01 +0200
-Message-ID: <20260904045736.605944599@linuxfoundation.org>
+	James Kim <james010kim@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 043/403] rapidio: mport_cdev: fix use-after-free in dma_req_free()
+Date: Fri,  4 Sep 2026 06:57:26 +0200
+Message-ID: <20260904045735.794636555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,56 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: James Kim <james010kim@gmail.com>
 
-commit 45b06a75086f331f52cbb81223a59421d43f8809 upstream.
+commit 5cbef379a94b161726c5f504598bf4791d45cedc upstream.
 
-nfsd4_decode_nl4_server() handled only NL4_NETADDR and returned
-nfserr_bad_xdr for NL4_NAME and NL4_URL. Those forms are well-formed XDR,
-so BADXDR is misleading -- the request is unsupported, not malformed.
+dma_req_free() acquires buf_mutex through req->map, drops the mapping
+reference with kref_put(), and then dereferences req->map again to unlock
+the mutex.
 
-Decode and discard the utf8str_cis for NL4_NAME and NL4_URL to keep the
-stream consistent, and return nfserr_notsupp. nfsd4_proc_compound() honors
-a decode-time op->status, so the op fails without executing.
+If kref_put() drops the last reference, mport_release_mapping() frees the
+mapping, and the subsequent mutex_unlock() dereferences a freed object.
+This is a use-after-free.
 
-Fixes: 84e1b21d5ec4 ("NFSD add ca_source_server<> to COPY")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-7-a0ff7db6aa3e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fix this by caching map and md before kref_put(), clearing req->map while
+holding buf_mutex, and using the cached md for mutex unlocking.
+
+The bug is reachable from userspace via the RapidIO mport character device
+interface.
+
+Link: https://lore.kernel.org/20260723235220.588424-1-james010kim@gmail.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Signed-off-by: James Kim <james010kim@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/rapidio/devices/rio_mport_cdev.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -1946,6 +1946,7 @@ static __be32 nfsd4_decode_nl4_server(st
- {
- 	struct nfs42_netaddr *naddr;
- 	__be32 *p;
-+	u32 str_len;
- 
- 	if (xdr_stream_decode_u32(argp->xdr, &ns->nl4_type) < 0)
- 		return nfserr_bad_xdr;
-@@ -1975,6 +1976,18 @@ static __be32 nfsd4_decode_nl4_server(st
- 			return nfserr_bad_xdr;
- 		memcpy(naddr->addr, p, naddr->addr_len);
- 		break;
-+	case NL4_NAME:
-+	case NL4_URL:
-+		/*
-+		 * Well-formed XDR, but only NL4_NETADDR is supported. Consume
-+		 * the utf8str_cis to keep the stream aligned, then return
-+		 * NFS4ERR_NOTSUPP rather than the misleading NFS4ERR_BADXDR.
-+		 */
-+		if (xdr_stream_decode_u32(argp->xdr, &str_len) < 0)
-+			return nfserr_bad_xdr;
-+		if (!xdr_inline_decode(argp->xdr, str_len))
-+			return nfserr_bad_xdr;
-+		return nfserr_notsupp;
- 	default:
- 		return nfserr_bad_xdr;
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -584,9 +584,13 @@ static void dma_req_free(struct kref *re
  	}
+ 
+ 	if (req->map) {
+-		mutex_lock(&req->map->md->buf_mutex);
+-		kref_put(&req->map->ref, mport_release_mapping);
+-		mutex_unlock(&req->map->md->buf_mutex);
++		struct rio_mport_mapping *map = req->map;
++		struct mport_dev *md = map->md;
++
++		mutex_lock(&md->buf_mutex);
++		req->map = NULL;
++		kref_put(&map->ref, mport_release_mapping);
++		mutex_unlock(&md->buf_mutex);
+ 	}
+ 
+ 	kref_put(&priv->dma_ref, mport_release_dma);
 
 
