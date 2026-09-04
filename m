@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB36412294;
-	Fri,  4 Sep 2026 05:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F22A30C160;
+	Fri,  4 Sep 2026 05:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500302; cv=none; b=SJHS8PA0Mgw27aq/Y6t1cGVT6sS/lZbB8tQwQxHzlbWvl58tVbSlXoJ07pzS4fPHGaq14voxVqCdzJ+FERmQrxEwch2c4OQWRY7Z7uv49Xz/yBDUfyyEc1Q+3ijxbfwwB1tmy+Z+K0oJ/3DHEbjkYaLYnPge7xQOS77+3O0X8lM=
+	t=1788500306; cv=none; b=gKGCFxdfJq1l+HoMv9Edu/cPz559MjLz5bn7tr/b0tQD1VHQAkRSlqZeYLw/nI+7x2aTZBY76d7G3Y/VR0V1sI3YNEe0FNTtH8LV7+3ThU0RBzJJ7s5WGfYxNVIn2kDIzqCmVDLE/XK7Om7ZqE4skwCRxJ0JaweJDxyNY5bVDoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500302; c=relaxed/simple;
-	bh=Kk21t4K8v0wVuQUSblmH/VKGfPot8TsF3Z4HAFJ1SC0=;
+	s=arc-20240116; t=1788500306; c=relaxed/simple;
+	bh=V7iAnjydT+RZLfOqFkvZdqZVspOvnaEkqa3yDXyxCbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjNYL7zLAfASDdEa9LipmXot7nVKEh4i7AysFPFWweEd+8T1dWlT1MXRABhopHf/QyG1Hct4j5wRnFVjBu1NHRU6xiAKKpfKR5mLu1F7AGBxpsuSBjl0K5gDmIxB9LOryoAI+s05LiFCgnMz1f9jhhT5BINXET82Kf6IiPX3kJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGnp4bZG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHMG+rYZ2ar6ZIt3PWh0vPciU3Vp0HC9TT94Rz+cH9Cv4/AaqkxqxhOQymHdVkh8SZNBDFeYJSe/4+Ib+HQV7w36KH1TAI8bQ/KkQTZjFRN+nyNrwIvQAmkTheg36rN3dK/IjsA6RCq3/vyo5a6EmTEEvSSiwdKDD/uJ6tHMdgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2/zithV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGnp4bZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EC81F00A3D;
-	Fri,  4 Sep 2026 05:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2/zithV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E501F00A3D;
+	Fri,  4 Sep 2026 05:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500301;
-	bh=J7lS5KQ5EowycYq4VnYB0t2sFuRiFWeYSVYgpUwvYVw=;
+	s=korg; t=1788500303;
+	bh=8Ac7s5Y7ESMuYnc2kU2sO2uWep0CDQglL4JejGtl8hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gGnp4bZGd+34bdG+rEJZsE9in5bn5ejJrpTWxzmkH/U5f778Nil3nyoHksZZBmx7j
-	 tayuSdarxKKIGOD4CvOwZQGgTofyFDEydsUHKDWt+5UNX9YePLiGpUo5Cr3G7uomeo
-	 6epmtqYa0Hecv1GPkWGjNccsbOR6o7wsuGuJOIb4=
+	b=B2/zithVo2YXqwh/wCEp4WYdt9JmzrR1m+AWa6GPIRM/SOjd7ct9GyAkz7btUr8vi
+	 xLq4OwtRbGFWJvZnSPU3gRyKI51lb7szFugxBxyjnq57IH1Zz8dFp2pXH2GVPgds/i
+	 UtKhl8JjB0DBTnmkd+bAps06UDwn4oaHv6X2b93U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Steve Wahl <steve.wahl@hpe.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/552] perf/x86/intel/uncore: Fix die ID init and look up bugs
-Date: Fri,  4 Sep 2026 06:52:38 +0200
-Message-ID: <20260904045747.854369727@linuxfoundation.org>
+Subject: [PATCH 6.18 010/552] netfs: Fix missing locking around retry adding new subreqs
+Date: Fri,  4 Sep 2026 06:52:47 +0200
+Message-ID: <20260904045748.059394246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,101 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit a16d1ec4dd0cdcf689f324adde6067083bce9099 ]
+[ Upstream commit cce18c263e9623872327ba3c956012f73c1179cc ]
 
-In snbep_pci2phy_map_init(), in the nr_node_ids > 8 path,
-uncore_device_to_die() may return -1 when all CPUs associated
-with the UBOX device are offline.
+Fix netfs_retry_read_subrequests() and netfs_retry_write_stream() to take
+the appropriate lock when adding extra subrequests into
+stream->subrequests.
 
-Remove the WARN_ON_ONCE(die_id == -1) check for two reasons:
-
-- The current code breaks out of the loop. This is incorrect because
-  pci_get_device() does not guarantee iteration in domain or bus order,
-  so additional UBOX devices may be skipped during the scan.
-
-- Returning -EINVAL is incorrect, since marking offline buses with
-  die_id == -1 is expected and should not be treated as an error.
-
-Separately, when NUMA is disabled on a NUMA-capable platform,
-pcibus_to_node() returns NUMA_NO_NODE, causing uncore_device_to_die()
-to return -1 for all PCI devices.  As a result,
-spr_update_device_location(), used on Intel SPR and EMR, ignores the
-corresponding PMON units and does not add them to the RB tree.
-
-Fix this by using uncore_pcibus_to_dieid(), which retrieves topology
-from the UBOX GIDNIDMAP register and works regardless of whether NUMA
-is enabled in Linux.  This requires snbep_pci2phy_map_init() to be
-added in spr_uncore_pci_init().
-
-Keep uncore_device_to_die() only for the nr_node_ids > 8 case, where
-NUMA is expected to be enabled.
-
-Fixes: 9a7832ce3d92 ("perf/x86/intel/uncore: With > 8 nodes, get pci bus die id from NUMA info")
-Fixes: 65248a9a9ee1 ("perf/x86/uncore: Add a quirk for UPI on SPR")
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: Steve Wahl <steve.wahl@hpe.com>
-Link: https://patch.msgid.link/20260313174050.171704-4-zide.chen@intel.com
+Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
+Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
+Closes: https://sashiko.dev/#/patchset/20260425125426.3855807-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-3-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore.c       |  1 +
- arch/x86/events/intel/uncore_snbep.c | 13 ++++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ fs/netfs/read_retry.c  | 6 +++++-
+ fs/netfs/write_retry.c | 6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index e228e564b15ea..8301a589d9a61 100644
---- a/arch/x86/events/intel/uncore.c
-+++ b/arch/x86/events/intel/uncore.c
-@@ -67,6 +67,7 @@ int uncore_die_to_segment(int die)
- 	return bus ? pci_domain_nr(bus) : -EINVAL;
- }
+diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
+index 999177426141a..f59a70f3a086b 100644
+--- a/fs/netfs/read_retry.c
++++ b/fs/netfs/read_retry.c
+@@ -175,7 +175,9 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
+ 			list_for_each_entry_safe_from(subreq, tmp,
+ 						      &stream->subrequests, rreq_link) {
+ 				trace_netfs_sreq(subreq, netfs_sreq_trace_superfluous);
++				spin_lock(&rreq->lock);
+ 				list_del(&subreq->rreq_link);
++				spin_unlock(&rreq->lock);
+ 				netfs_put_subrequest(subreq, netfs_sreq_trace_put_done);
+ 				if (subreq == to)
+ 					break;
+@@ -203,8 +205,10 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
+ 					     refcount_read(&subreq->ref),
+ 					     netfs_sreq_trace_new);
  
-+/* Note: This API can only be used when NUMA information is available. */
- int uncore_device_to_die(struct pci_dev *dev)
- {
- 	int node = pcibus_to_node(dev->bus);
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index a338ee01bb242..0182785cad1fe 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -1475,13 +1475,7 @@ static int snbep_pci2phy_map_init(int devid, int nodeid_loc, int idmap_loc, bool
- 			}
++			spin_lock(&rreq->lock);
+ 			list_add(&subreq->rreq_link, &to->rreq_link);
+-			to = list_next_entry(to, rreq_link);
++			spin_unlock(&rreq->lock);
++			to = subreq;
+ 			trace_netfs_sreq(subreq, netfs_sreq_trace_retry);
  
- 			map->pbus_to_dieid[bus] = die_id = uncore_device_to_die(ubox_dev);
--
- 			raw_spin_unlock(&pci2phy_map_lock);
--
--			if (WARN_ON_ONCE(die_id == -1)) {
--				err = -EINVAL;
--				break;
--			}
- 		}
- 	}
+ 			stream->sreq_max_len	= umin(len, rreq->rsize);
+diff --git a/fs/netfs/write_retry.c b/fs/netfs/write_retry.c
+index 29489a23a2209..32735abfa03f0 100644
+--- a/fs/netfs/write_retry.c
++++ b/fs/netfs/write_retry.c
+@@ -130,7 +130,9 @@ static void netfs_retry_write_stream(struct netfs_io_request *wreq,
+ 			list_for_each_entry_safe_from(subreq, tmp,
+ 						      &stream->subrequests, rreq_link) {
+ 				trace_netfs_sreq(subreq, netfs_sreq_trace_discard);
++				spin_lock(&wreq->lock);
+ 				list_del(&subreq->rreq_link);
++				spin_unlock(&wreq->lock);
+ 				netfs_put_subrequest(subreq, netfs_sreq_trace_put_done);
+ 				if (subreq == to)
+ 					break;
+@@ -153,8 +155,10 @@ static void netfs_retry_write_stream(struct netfs_io_request *wreq,
+ 					     netfs_sreq_trace_new);
+ 			trace_netfs_sreq(subreq, netfs_sreq_trace_split);
  
-@@ -6533,7 +6527,7 @@ static void spr_update_device_location(int type_id)
++			spin_lock(&wreq->lock);
+ 			list_add(&subreq->rreq_link, &to->rreq_link);
+-			to = list_next_entry(to, rreq_link);
++			spin_unlock(&wreq->lock);
++			to = subreq;
+ 			trace_netfs_sreq(subreq, netfs_sreq_trace_retry);
  
- 	while ((dev = pci_get_device(PCI_VENDOR_ID_INTEL, device, dev)) != NULL) {
- 
--		die = uncore_device_to_die(dev);
-+		die = uncore_pcibus_to_dieid(dev->bus);
- 		if (die < 0)
- 			continue;
- 
-@@ -6557,6 +6551,11 @@ static void spr_update_device_location(int type_id)
- 
- int spr_uncore_pci_init(void)
- {
-+	int ret = snbep_pci2phy_map_init(0x3250, SKX_CPUNODEID, SKX_GIDNIDMAP, true);
-+
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * The discovery table of UPI on some SPR variant is broken,
- 	 * which impacts the detection of both UPI and M3UPI uncore PMON.
+ 			stream->sreq_max_len	= len;
 -- 
 2.53.0
 
