@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310D73D6664;
-	Fri,  4 Sep 2026 05:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19ECD3D6664;
+	Fri,  4 Sep 2026 05:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499246; cv=none; b=GRnmvyamS3lGhNlzBu/B1+AJGm5WrtLK+nAs/Fye0LLoZn74T6wDsEoX2JbjVIgT20fx42F05OObgwHlzPAEbANoydzK25/nCRArn7wqs2RpsKXhD5u0bZfX2iIBn3n8v/MDONRz4TftOIi+WkXkdBGwH1X31feBkIE2Dq8mFpw=
+	t=1788499249; cv=none; b=Maus1OSYjLJOlIUXX/M+zAWfH8CsfVM52fkYvtYamZPXSnnFnc964xAkMniWeM4sHsxF4N9QxBwMvBw9zNRk7tFp5ed8cbUNwMbkplOw+KzdNGz5FRD1nw68a6hhpBtL8A3j9sj4zkMIlIi73nCv3txb6H5WG1Rm1yUE8PR2UEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499246; c=relaxed/simple;
-	bh=bk9g6pyr13cD1tb3qGbiboaqA1cbW4uu2NFODNhJjNo=;
+	s=arc-20240116; t=1788499249; c=relaxed/simple;
+	bh=yHuYGPYg5pYYJjb7Rr3JlSiI0eZZXK6EItlClkhSqWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q7ZW8ICwUiEIfEDn36vdyT9GW3g3ZhVfa3TRSj8xzsyblYpb9sOHyW7bTpVyJGEZjjr5NDOa4cSq5wG8S/O+J6QP/aR9gdRYFMHKdxAqBcy5FhoCb+nYv6yZJneEnPndbQaWZ4Thkoa9vztOsUNQt5w+H90ZX3YHGM2E+1m5k7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMv8aEuV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZslC2GSs5HtjYTUaNTUzYzP84YB5wOpNy+XcXbbNVPCEVcEMqtFbxz+4AkhuQ8qrBbprZ79AojR4oPrwkX6DBxZ0CqIT4eOFa0GsNFdK7deFsL4MKRo4dRM5UcAa/9jfULsFDLmC57o9cYiGLWy/YdQTeb7RA/V8aCqUggFDXI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbtRJ45g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMv8aEuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EF41F00A3D;
-	Fri,  4 Sep 2026 05:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbtRJ45g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE7D1F00A3D;
+	Fri,  4 Sep 2026 05:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499244;
-	bh=uYWubyc2VZJF43caTuKZ9RYM0kNhIqTdGfm2BwN7ssI=;
+	s=korg; t=1788499247;
+	bh=zAp0LXMkrBiHtu4u/D2kawdjiN2vNG0nxrZIbmioiP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NMv8aEuVMgH66JXoeeYKfCGe5oWMmxndA6ct4NRQMXeASzpMCL8Xwr9DRfjlqHyaR
-	 R69x7iPx5P+vP27j90tUs5xGYa8AIOh8PdnCmk1UGc7BZBlErtUmv8ELlFuL8fr0bG
-	 bAfXh5poly28RUMRwjZr3ziseqmUmlaIDnfXSDpw=
+	b=jbtRJ45gHRZN+gXXD0dbcUMDSpJJbzGmXNCA+pfyx0Zd59zjYWQKolSiL48MSHPDx
+	 QGWqRQANa2x8HwpORkptu3QMiZzScCf4gtnnz1i1l+dZxFzcfGYa+faGgt/fTwy3Um
+	 Dc5utZ+I1UiCEySTnMUlRVcRHND/5Q3Sj/9e4wrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 312/713] block: validate user space vectors during extraction
-Date: Fri,  4 Sep 2026 06:54:40 +0200
-Message-ID: <20260904045810.828172181@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	"Zhang, Qiang1" <qiang1.zhang@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2 348/713] kasan: fix cache shrink race with CPU hotplug
+Date: Fri,  4 Sep 2026 06:55:16 +0200
+Message-ID: <20260904045811.629573449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,228 +56,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Hui Su <sh_def@163.com>
 
-commit 14b007e178811db72fbb1ebb3535160db6ec1e6a upstream.
+commit 8790303cbaac52a11dfed4aab261f8ea60682525 upstream.
 
-The bio-based drivers don't necessarily check the alignment split, and
-stacking block drivers don't always handle a misalignment detected after
-submitting the bio. Validate user vectors against the device's
-dma_alignment as the bio is built from the iov_iter, rejecting
-misaligned early with -EINVAL.
+kasan_quarantine_remove_cache() first invokes per_cpu_remove_cache() on
+all online CPUs.  Each callback moves objects belonging to the cache from
+cpu_quarantine to the CPU's shrink_qlist, where they can later be freed
+from task context.
 
-Cc: stable@vger.kernel.org
-Fixes: 5ff3f74e145a ("block: simplify direct io validity check")
-Fixes: 7eac33186957 ("iomap: simplify direct io validity check")
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Link: https://patch.msgid.link/20260720201057.1862857-6-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+kmem_cache_destroy() invokes the quarantine removal path while holding
+cpus_read_lock(), but kmem_cache_shrink() does not.  The latter can
+therefore race with CPU offlining as follows:
+
+  kmem_cache_shrink()             CPU hotplug
+  -------------------             -----------
+  on_each_cpu()
+    CPU1 moves objects to
+    CPU1's shrink_qlist
+  on_each_cpu() returns
+                                  CPU1 goes offline
+                                  kasan_cpu_offline()
+                                    drains cpu_quarantine
+                                    leaves shrink_qlist untouched
+  for_each_online_cpu()
+    skips CPU1
+
+The objects left on CPU1's shrink_qlist are not returned to the slab
+allocator.  This may prevent kmem_cache_shrink() from releasing slabs that
+would otherwise become empty.  If CPU1 remains offline, a later
+kmem_cache_destroy() also skips the list and can report that the cache
+still contains objects.
+
+An intermittent occurrence was observed with a virtio-9p filesystem.  The
+mount and umount commands both returned 0, but the kernel logged the
+following during the userspace-triggered teardown:
+
+  [  2994.380134][  T111] BUG 9p-fcall-cache-1 (Tainted: G    B              ): Objects remaining on __kmem_cache_shutdown()
+  [  2994.381140][  T111] Object 0xff11000004361118 @offset=4376
+  [  2994.381607][  T111] Allocated in p9_fcall_init+0x201/0x400 age=19564 cpu=1 pid=104
+  [  2994.382591][  T111]  p9_fcall_init+0x201/0x400
+  [  2994.382810][  T111]  p9_tag_alloc+0x12f/0x700
+  [  2994.382982][  T111]  p9_client_prepare_req+0x102/0x3e0
+  [  2994.383165][  T111]  p9_client_rpc+0x1ab/0xa50
+  [  2994.383334][  T111]  p9_client_getattr_dotl+0xb0/0x1a0
+  [  2994.383515][  T111]  v9fs_vfs_getattr_dotl+0x115/0x360
+  [  2994.383719][  T111]  vfs_getattr_nosec+0x22c/0x3a0
+  [  2994.383910][  T111]  vfs_statx+0xd7/0x170
+  [  2994.384062][  T111]  vfs_fstatat+0x45/0x80
+  [  2994.384215][  T111]  __do_sys_newfstatat+0x84/0xe0
+  [  2994.384386][  T111]  do_syscall_64+0x115/0x6a0
+  [  2994.384566][  T111]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  [  2994.399720][  T111] WARNING: mm/slub.c:1244 at __kmem_cache_shutdown+0x363/0x500, CPU#0: busybox/111
+  [  2994.405655][  T111] Call Trace:
+  [  2994.406325][  T111]  kmem_cache_destroy+0x73/0x1b0
+  [  2994.406630][  T111]  p9_client_destroy+0x271/0x3c0
+  [  2994.407210][  T111]  v9fs_session_close+0x3c/0x260
+  [  2994.407409][  T111]  v9fs_kill_super+0x48/0x90
+  [  2994.407584][  T111]  deactivate_locked_super+0xa3/0x160
+  [  2994.407778][  T111]  cleanup_mnt+0x1dd/0x3e0
+
+Thus, a successful umount left objects in the 9p fcall cache and prevented
+the cache from being destroyed cleanly.
+
+Per-CPU shrink_qlist storage exists for every possible CPU, and each list
+is protected by its own raw spinlock.  Iterate over possible CPUs so that
+a list populated before its CPU went offline is drained as well.
+
+for_each_possible_cpu() can do more work than for_each_online_cpu(), but
+this change only affects CONFIG_KASAN_GENERIC kernels.  The extra work is
+limited to cache shrink and cache destruction paths and does not affect
+the normal allocation/free fast path.  It adds one raw-spinlock-protected
+scan of each possible CPU's shrink list.  These lists are normally empty;
+a non-empty list is traversed to remove objects belonging to the cache
+being shrunk or destroyed.
+
+Link: https://lore.kernel.org/20260808031459.3032812-1-sh_def@163.com
+Fixes: 07d067e4f2ce ("kasan: fix sleeping function called from invalid context on RT kernel")
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: "Zhang, Qiang1" <qiang1.zhang@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio.c          |   56 ++++++++++++++++++++++++++++++++++++++++++++++++---
- block/blk-map.c      |    2 -
- block/fops.c         |    2 -
- fs/iomap/direct-io.c |    1 
- include/linux/bio.h  |    2 -
- include/linux/uio.h  |   10 ++++++++-
- lib/iov_iter.c       |    9 +++++++-
- 7 files changed, 74 insertions(+), 8 deletions(-)
+ mm/kasan/quarantine.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1221,10 +1221,45 @@ static int bio_iov_iter_align_down(struc
- 	return 0;
- }
- 
-+#ifdef CONFIG_DEBUG_KERNEL
-+static inline bool bio_iov_bvec_aligned(const struct bio *bio,
-+					unsigned mem_align_mask)
-+{
-+	struct bvec_iter iter;
-+	struct bio_vec bv;
-+
-+	/*
-+	 * Correct callers never break the alignment requirements, so this
-+	 * exhaustive check is only paid for in debug builds.
-+	 */
-+	for_each_mp_bvec(bv, bio->bi_io_vec, iter, bio->bi_iter)
-+		if ((bv.bv_offset | bv.bv_len) & mem_align_mask)
-+			return false;
-+	return true;
-+}
-+#else
-+static inline bool bio_iov_bvec_aligned(const struct bio *bio,
-+					unsigned mem_align_mask)
-+{
-+	/*
-+	 * We forward the bio_vec as-is, so ITER_BVEC callers must provide
-+	 * segments already aligned to the device's DMA alignment. The only
-+	 * unchecked user-controllable offset that reaches here is an io_uring
-+	 * registered buffer where just the first segment can be unaligned
-+	 * (the rest is virtually contiguous), so checking only that one is
-+	 * sufficient to know if the entire vector is valid.
-+	 */
-+	return !(mp_bvec_iter_offset(bio->bi_io_vec, bio->bi_iter) &
-+							mem_align_mask);
-+}
-+#endif
-+
- /**
-  * bio_iov_iter_get_pages - add user or kernel pages to a bio
-  * @bio: bio to add pages to
-  * @iter: iov iterator describing the region to be added
-+ * @mem_align_mask: the mask the source address and length must be aligned to,
-+ *	0 for no requirement
-  * @len_align_mask: the mask to align the total size to, 0 for any length
-  *
-  * This takes either an iterator pointing to user memory, or one pointing to
-@@ -1243,7 +1278,7 @@ static int bio_iov_iter_align_down(struc
-  * is returned only if 0 pages could be pinned.
-  */
- int bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter,
--			   unsigned len_align_mask)
-+			   unsigned mem_align_mask, unsigned len_align_mask)
- {
- 	iov_iter_extraction_t flags = 0;
- 
-@@ -1252,6 +1287,10 @@ int bio_iov_iter_get_pages(struct bio *b
- 
- 	if (iov_iter_is_bvec(iter)) {
- 		bio_iov_bvec_set(bio, iter);
-+
-+		if (!bio_iov_bvec_aligned(bio, mem_align_mask))
-+			return -EINVAL;
-+
- 		iov_iter_advance(iter, bio->bi_iter.bi_size);
- 		return 0;
- 	}
-@@ -1266,8 +1305,19 @@ int bio_iov_iter_get_pages(struct bio *b
- 
- 		ret = iov_iter_extract_bvecs(iter, bio->bi_io_vec,
- 				BIO_MAX_SIZE - bio->bi_iter.bi_size,
--				&bio->bi_vcnt, bio->bi_max_vecs, flags);
-+				&bio->bi_vcnt, bio->bi_max_vecs,
-+				mem_align_mask, flags);
- 		if (ret <= 0) {
-+			/*
-+			 * A misaligned vector fails the whole I/O.  Release any
-+			 * pages pinned by earlier iterations before returning
-+			 * since this bio won't be submitted to release them.
-+			 */
-+			if (ret == -EINVAL) {
-+				bio_release_pages(bio, false);
-+				bio_clear_flag(bio, BIO_PAGE_PINNED);
-+				bio->bi_vcnt = 0;
-+			}
- 			if (!bio->bi_vcnt)
- 				return ret;
- 			break;
-@@ -1380,7 +1430,7 @@ static int bio_iov_iter_bounce_read(stru
- 
- 	do {
- 		ret = iov_iter_extract_bvecs(iter, bio->bi_io_vec + 1, len,
--				&bio->bi_vcnt, bio->bi_max_vecs - 1, 0);
-+				&bio->bi_vcnt, bio->bi_max_vecs - 1, 0, 0);
- 		if (ret <= 0) {
- 			if (!bio->bi_vcnt)
- 				goto out_folio_put;
---- a/block/blk-map.c
-+++ b/block/blk-map.c
-@@ -274,7 +274,7 @@ static int bio_map_user_iov(struct reque
- 	 * No alignment requirements on our part to support arbitrary
- 	 * passthrough commands.
+--- a/mm/kasan/quarantine.c
++++ b/mm/kasan/quarantine.c
+@@ -355,7 +355,12 @@ void kasan_quarantine_remove_cache(struc
  	 */
--	ret = bio_iov_iter_get_pages(bio, iter, 0);
-+	ret = bio_iov_iter_get_pages(bio, iter, 0, 0);
- 	if (ret)
- 		goto out_put;
- 	ret = blk_rq_append_bio(rq, bio);
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -46,7 +46,7 @@ static bool blkdev_dio_invalid(struct bl
- static inline int blkdev_iov_iter_get_pages(struct bio *bio,
- 		struct iov_iter *iter, struct block_device *bdev)
- {
--	return bio_iov_iter_get_pages(bio, iter,
-+	return bio_iov_iter_get_pages(bio, iter, bdev_dma_alignment(bdev),
- 			bdev_logical_block_size(bdev) - 1);
- }
+ 	on_each_cpu(per_cpu_remove_cache, cache, 1);
  
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -358,6 +358,7 @@ static ssize_t iomap_dio_bio_iter_one(st
- 				iomap_max_bio_size(&iter->iomap), alignment);
- 	else
- 		ret = bio_iov_iter_get_pages(bio, dio->submit.iter,
-+					     bdev_dma_alignment(bio->bi_bdev),
- 					     alignment - 1);
- 	if (unlikely(ret))
- 		goto out_put_bio;
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -477,7 +477,7 @@ int bdev_rw_virt(struct block_device *bd
- 		size_t len, enum req_op op);
- 
- int bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter,
--		unsigned len_align_mask);
-+		unsigned mem_align_mask, unsigned len_align_mask);
- 
- void bio_iov_bvec_set(struct bio *bio, const struct iov_iter *iter);
- void __bio_release_pages(struct bio *bio, bool mark_dirty);
---- a/include/linux/uio.h
-+++ b/include/linux/uio.h
-@@ -389,9 +389,17 @@ ssize_t iov_iter_extract_pages(struct io
- 			       size_t maxsize, unsigned int maxpages,
- 			       iov_iter_extraction_t extraction_flags,
- 			       size_t *offset0);
-+/*
-+ * Block-layer consumers (e.g. bio_iov_iter_get_pages()) require that the
-+ * segments of an ITER_BVEC iterator are already aligned to the target device's
-+ * DMA alignment, and forward them as-is.  In-kernel users that build their own
-+ * bvecs must not create sub-aligned segments; iov_iter_extract_bvecs() enforces
-+ * the same for the segments it extracts via @mem_align_mask.
-+ */
- ssize_t iov_iter_extract_bvecs(struct iov_iter *iter, struct bio_vec *bv,
- 		size_t max_size, unsigned short *nr_vecs,
--		unsigned short max_vecs, iov_iter_extraction_t extraction_flags);
-+		unsigned short max_vecs, unsigned mem_align_mask,
-+		iov_iter_extraction_t extraction_flags);
- 
- /**
-  * iov_iter_extract_will_pin - Indicate how pages from the iterator will be retained
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -1904,6 +1904,8 @@ static unsigned int get_contig_folio_len
-  * @max_size:	maximum size to extract from @iter
-  * @nr_vecs:	number of vectors in @bv (on in and output)
-  * @max_vecs:	maximum vectors in @bv, including those filled before calling
-+ * @mem_align_mask:	reject with -EINVAL if the source address or
-+ *		length is not aligned to this mask
-  * @extraction_flags: flags to qualify request
-  *
-  * Like iov_iter_extract_pages(), but returns physically contiguous ranges
-@@ -1915,14 +1917,19 @@ static unsigned int get_contig_folio_len
-  */
- ssize_t iov_iter_extract_bvecs(struct iov_iter *iter, struct bio_vec *bv,
- 		size_t max_size, unsigned short *nr_vecs,
--		unsigned short max_vecs, iov_iter_extraction_t extraction_flags)
-+		unsigned short max_vecs, unsigned mem_align_mask,
-+		iov_iter_extraction_t extraction_flags)
- {
-+	unsigned long start = (unsigned long)iter_iov_addr(iter);
- 	unsigned short entries_left = max_vecs - *nr_vecs;
- 	unsigned short nr_pages, i = 0;
- 	size_t left, offset, len;
- 	struct page **pages;
- 	ssize_t size;
- 
-+	if ((start | iter_iov_len(iter)) & mem_align_mask)
-+		return -EINVAL;
-+
- 	/*
- 	 * Move page array up in the allocated memory for the bio vecs as far as
- 	 * possible so that we can start filling biovecs from the beginning
+-	for_each_online_cpu(cpu) {
++	/*
++	 * A CPU can go offline after on_each_cpu() returns, leaving cache
++	 * objects on that CPU's shrink list. Scan all possible CPUs to
++	 * drain those lists.
++	 */
++	for_each_possible_cpu(cpu) {
+ 		sq = per_cpu_ptr(&shrink_qlist, cpu);
+ 		raw_spin_lock_irqsave(&sq->lock, flags);
+ 		qlist_move_cache(&sq->qlist, &to_free, cache);
 
 
