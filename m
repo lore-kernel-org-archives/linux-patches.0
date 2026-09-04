@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A157241A4F8;
-	Fri,  4 Sep 2026 05:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F12534EF15;
+	Fri,  4 Sep 2026 05:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499404; cv=none; b=CUHBLjFoVc6uUctyIE+gpwwyp5NmN7EqKPBtSbMymxxMMSv5CmrGPjDoJw9iloHo6MTx1iZ8x8I75742M/pameRwSzY9T6qAvOIN8h3ISIDnSy9uJDATpxQpap/I8h5jlbsgDL9EcbSIF+FiOrWNlJwnCbSgHC43OyYc0ARzZqs=
+	t=1788499407; cv=none; b=Y3SZ7PjmIZDCb22f1b1cTwGkh+sTORxxt7aVlhnn1iUbRY2AKufV4VALwqgPQ+Ek+cSDdq9HMjdD4sA9+8OzuNPYy2T7KNSyuBiYljYJbk5Fqq9yFfUGwsUvOle5PiD1r8QMmbwiCSP6NzVajVTV4ZHA4zMSy0SPs3mokDUedaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499404; c=relaxed/simple;
-	bh=Kk1PXmPzk05x+lkL9PxoNRSCyCziIn7+hi9KRKGBHlM=;
+	s=arc-20240116; t=1788499407; c=relaxed/simple;
+	bh=2qNmeWEq5NgM6yzD725dWwazf2cVF5s5EiHQ14Q1CW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atc+0+lBlNIgcZvwMdL77WNNJ6UuIKebgTz5wZMKyEUV9uW3rmcPW8ByGdI85kycwovSIF7ciinaXDnDv49rFwK1/KoQlQU0YBj5/YycMoMRJs4od5tZ8dis+bqr4tw1x5wVFFip5SPURHsDLGII27MMNefkb8MiC4Noz9YPqGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBfdoHFc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NcooRpZF/IuyG61Xoj6+82WP6W5IY2xLO9LoD2APtJZCFONNYKxENMr6HFcJUVe+pBH05xouNm4kacFsUzf54r9ahXBVhF2aK2mASzjieEdDG90Wp/NGUvbeztXvSRJFMySKdteUsIYRNI/uTAe/Rt/cVdm2hltjw6bq5JIMOwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viIYI2OI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBfdoHFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B5E1F00A3E;
-	Fri,  4 Sep 2026 05:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viIYI2OI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D591B1F00A3D;
+	Fri,  4 Sep 2026 05:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499403;
-	bh=ulikVhCC4h5oh+WzRTyM/cEXoPedU4Q68aB1iOb6r68=;
+	s=korg; t=1788499406;
+	bh=B1gTXZt3FebuWrXW9ld/WFbqnz6qRkKgc2oUf9aPjPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cBfdoHFcUTipbTYcIRd2D9N31Jbe5sRPLxG9jGWLIMXNAl2pZNY5Bp3IdkMMvSUFX
-	 mGTg93GlNyM2cZADDDuaVl5/wz7nTB5/Dsq+K4+4VQVRWYDAEqWCTr0xx7McnfR6vZ
-	 DWkSj+CX6pLK4D3duWwbSDN/R8dcXLmb3JfMODCM=
+	b=viIYI2OIlwPh4fTZjvH2QrymD7no0RTBQIhmX58lI4C++cAGF9+xuAF1HDjXJwA2R
+	 KhN4YYSSMQGP0fqWCHeScoyr2pIzgB2JUVVrP6VkCd9/N7i3PTPN/dCRDcUVmy7B1A
+	 YF7hYIjzzQvzKuzm0B2BtxFFD57G4A2pDMBXVrxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramesh Adhikari <adhikari.resume@gmail.com>,
-	Coly Li <colyli@fygo.io>,
-	Yu Kuai <yukuai@fygo.io>
-Subject: [PATCH 7.2 362/713] md: do overflow check for sb->bblog_shift in super_1_load()
-Date: Fri,  4 Sep 2026 06:55:30 +0200
-Message-ID: <20260904045811.944360792@linuxfoundation.org>
+	=?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Petr Pavlu <petr.pavlu@suse.com>
+Subject: [PATCH 7.2 363/713] module: validate string table section types
+Date: Fri,  4 Sep 2026 06:55:31 +0200
+Message-ID: <20260904045811.965908585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,77 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Coly Li <colyli@fygo.io>
+From: Thiébaud Weksteen <tweek@google.com>
 
-commit 35d522bd32462afcf1981dab6da8a9256c26c1e0 upstream.
+commit 9a5ff45689329835f874cefe5174e577d141d423 upstream.
 
-In super_1_load(), sb->bblog_shift is an __u8 type value loaded from on-
-disk superblock. It is used for badblocks API badblocks_set() by the
-following sequence,
+In elf_validity_cache_sechdrs, section sizes and offsets are validated,
+unless the section type is SHT_NULL or SHT_NOBITS.
 
- 1930   rdev->badblocks.shift = sb->bblog_shift;
- 1931   for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
- 1932           u64 bb = le64_to_cpu(*bbp);
- 1933           int count = bb & (0x3ff);
- 1934           u64 sector = bb >> 10;
- 1935           sector <<= sb->bblog_shift;
- 1936           count <<= sb->bblog_shift;
- 1937           if (bb + 1 == 0)
- 1938                   break;
- 1939           if (!badblocks_set(&rdev->badblocks, sector, count, 1))
- 1940                   return -EINVAL;
- 1941   }
+Later, elf_validity_cache_secstrings and elf_validity_cache_index_str
+access the section name table (.shstrtab) and symbol string table
+(.strtab) headers without first ensuring that their types are
+SHT_STRTAB. If a section type is SHT_NULL or SHT_NOBITS, sh_offset has
+not been validated and may reference out-of-bounds memory when
+dereferenced in elf_validity_cache_secstrings or
+elf_validity_cache_strtab.
 
-bb->bblog_shit is in range of 0-255, variable sector is 64bit width, for
-an invalid bb->bblog_shit, it is possible to make sector be overflowed
-by the following calculation,
- 1935           sector <<= sb->bblog_shift;
-Then in turn when call badblocks_set() at line 1939 with the invalid
-rdev->badblocks.shift set at line 1930, may result an overflow inside
-_badblocks_clear() in block/badblocks.c.
+Validate that both string section headers are of type SHT_STRTAB before
+caching them.
 
-Although there are many places to call badblocks APIs, the non-zero
-shift value is only used in super_1_load(), other places always use 0 as
-the shift value. Therefore it is unnecessary to do a general shift value
-overflow check inside badblock API, and just check here as the caller.
-
-This may avoid unnecessary check, make the badblocks API code more simple
-and elegant.
-
-Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
-Fixes: 1726c7746783 ("badblocks: improve badblocks_set() for multiple ranges handling")
 Cc: stable@vger.kernel.org
-Cc: Ramesh Adhikari <adhikari.resume@gmail.com>
-Signed-off-by: Coly Li <colyli@fygo.io>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260720111400.2120834-1-colyli@fygo.io
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Thiébaud Weksteen <tweek@google.com>
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/module/main.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -1920,6 +1920,13 @@ static int super_1_load(struct md_rdev *
- 				  rdev->bb_page, REQ_OP_READ, true))
- 			return -EIO;
- 		bbp = (__le64 *)page_address(rdev->bb_page);
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -2011,6 +2011,7 @@ static int elf_validity_cache_sechdrs(st
+  * Specifically checks:
+  *
+  * * Section name table index is inbounds of section headers
++ * * Section name table type is SHT_STRTAB
+  * * Section name table is not empty
+  * * Section name table is NUL terminated
+  * * All section name offsets are inbounds of the section
+@@ -2038,6 +2039,11 @@ static int elf_validity_cache_secstrings
+ 
+ 	strhdr = &info->sechdrs[info->hdr->e_shstrndx];
+ 
++	if (strhdr->sh_type != SHT_STRTAB) {
++		pr_err("Invalid ELF section name table type: %u\n", strhdr->sh_type);
++		return -ENOEXEC;
++	}
 +
-+		/* check for badblocks api. */
-+		if (sb->bblog_shift >= BITS_PER_TYPE(sector_t)) {
-+			pr_err("md: %pg: bogus bblog_shift %u for badblocks.\n",
-+			       rdev->bdev, sb->bblog_shift);
-+			return -EINVAL;
-+		}
- 		rdev->badblocks.shift = sb->bblog_shift;
- 		for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
- 			u64 bb = le64_to_cpu(*bbp);
+ 	/*
+ 	 * The section name table must be NUL-terminated, as required
+ 	 * by the spec. This makes strcmp and pr_* calls that access
+@@ -2204,7 +2210,7 @@ static int elf_validity_cache_index_sym(
+  *        Must have &load_info->index.sym populated.
+  *
+  * Looks at the symbol table's associated string table, makes sure it is
+- * in-bounds, and caches it.
++ * in-bounds and of type SHT_STRTAB, and caches it.
+  *
+  * Return: %0 if valid, %-ENOEXEC on failure.
+  */
+@@ -2218,6 +2224,12 @@ static int elf_validity_cache_index_str(
+ 		return -ENOEXEC;
+ 	}
+ 
++	if (info->sechdrs[str_idx].sh_type != SHT_STRTAB) {
++		pr_err("Invalid ELF symbol string table type: %u\n",
++		       info->sechdrs[str_idx].sh_type);
++		return -ENOEXEC;
++	}
++
+ 	info->index.str = str_idx;
+ 	return 0;
+ }
 
 
