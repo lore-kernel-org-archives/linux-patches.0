@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F36411FBF;
-	Fri,  4 Sep 2026 06:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963363A9D9B;
+	Fri,  4 Sep 2026 06:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501602; cv=none; b=sVD05xJ+2z8kdXgHsjTEi0UmQaSFer60AvBBk2HoKVRcXSg2bM3Dnwp7KAI/5P3gh6fS+dldvF2Ijco31/LoQn1aAKTvQnLshOsPF8mKdCowrfDrJG1l8crmbit7W4L2OiFndsPJQX2eNZTh7HFLCkORj4zfyvIsrnAM6P5Q0ck=
+	t=1788501605; cv=none; b=pVJJR7dhK5OwfaJwknDI9dJPDBaANOSI1pikQlEMaGQmiGQRySF3EST5JkFmYuEWbJBNg/mO9R+T6Sd/3BMmdEBWRet00iS2CfY1rLo2YFDgEBztuDq1+4+UHanSw1TGfdGfMqBqb2jKJ27T2jR1kXWo9MhipUO34yYkiyj9bm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501602; c=relaxed/simple;
-	bh=GN4Pv4zzn5cvJZ7nQES0BOSyaCljJxLgWGvODheahHs=;
+	s=arc-20240116; t=1788501605; c=relaxed/simple;
+	bh=m6wLCXYP3zm6M4cwJy8RlauKH1a+nfzDN775VEUY19s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkykmnvKSnmTG9hDZp031Svm6gipjYfvukbKdWf/8yovmTDIOG9Cz6RrUTvBtNoMD9Lgqa438BdDs13QFZedEvI5oSOj0nmg/HzPsLQT8BNvQyG2yuxVcxpqCquWawVojr15MNTxu/4EfMTqMGOCd7RubKza+JQrY+xbOvSszsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/UBq4ju; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b2QRMWnDkyndr82LkiQJYW7CV0iDxKMrBFBOYwsBUVE33weFFGZnRIc8tFerrOFJYBu72+XhaVNl1lW54a+/KNMsDrNlq9hKconDUROLzO86jsnPYoNcKGYIZrqhOHrsic0ge2pfdtIsryz/MoG0OOjzdj5oQqOatj8ek7+6va4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPd9P6au; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/UBq4ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194331F00A3D;
-	Fri,  4 Sep 2026 06:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPd9P6au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F102B1F00A3D;
+	Fri,  4 Sep 2026 06:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501601;
-	bh=uQ9A9nCMoyghr483VfU97VYj8m3Sh4ANNamr2FawBVE=;
+	s=korg; t=1788501604;
+	bh=VoQbNDSkRBzMf6yXphRCp6Pemceed9wpQ0DiMk5Taqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/UBq4juNeNFedm9uNGjmvoRJO5yET4pJWy2jGP5QQ165AW2vEmVdgUi0DXepaQ0r
-	 ezeWCtJIsVxgBCFZS470SKWZfwOzaoVmdIS6kRvj+yxDGQ3MNb542VPmw8KOmq7rbB
-	 ESg0Sxv+lPyDvXZRN9odTWNAs9lSi0fXqo4xnxmo=
+	b=KPd9P6audqRvOhdpVSlftRwfR8mBepW35wIZ8h4153FDE5GxKO3b4BeZ+UJcqDh7U
+	 Juq/BXl5P3GP2lwU79Vtxfz0a5IUXYFPsJjw70cFwk44WqI+cCJnWYJb9IxMRcLMSK
+	 bXwk/FaNqTQk2uVQr3VKqiKEs9PyzeyH40VsGTLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Koichiro Den <den@valinux.co.jp>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 467/552] NTB: ntb_transport: Fail TX enqueue when the QP link is down
-Date: Fri,  4 Sep 2026 07:00:24 +0200
-Message-ID: <20260904045801.282917116@linuxfoundation.org>
+Subject: [PATCH 6.18 468/552] NTB: ntb_transport: Reject oversized TX buffers
+Date: Fri,  4 Sep 2026 07:00:25 +0200
+Message-ID: <20260904045801.304481885@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,44 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-commit 873ce713fef5dde0939220f04f3484ec86a16fba upstream.
+commit a4f2387db6f1cc2f03abba7f3a6807ad61e26ff7 upstream.
 
-Commit f195a1a6fe41 ("ntb: Drop packets when qp link is down") meant to
-make ntb_transport_tx_enqueue() drop packets submitted while the QP link
-is down, but it only returns 0 without consuming the packet. Zero means
-success by this function's contract, so ntb_netdev reports NETDEV_TX_OK
-and forgets the skb: nothing queued it, nothing frees it, and it leaks,
-one skb for every transmit racing a link-down.
+ntb_process_tx() handles an oversized buffer by calling tx_handler()
+with a NULL data pointer and returning success. ntb_netdev therefore
+neither frees the skb in its completion callback nor takes its enqueue
+error path, leaking it.
 
-Return -ENOLINK instead, restoring the contract that a non-zero return
-leaves the buffer owned by the caller. With the preceding patch,
-ntb_netdev frees the skb on non-retryable enqueue failures and returns
-NETDEV_TX_OK, so a packet racing with link-down is dropped without leaking
-or entering a busy retry loop.
+Reject oversized buffers in ntb_transport_tx_enqueue() before acquiring
+a queue entry and return -EMSGSIZE. The caller retains ownership of the
+buffer, and the preceding netdev patch frees the skb when enqueue
+returns this permanent error.
 
-Fixes: f195a1a6fe41 ("ntb: Drop packets when qp link is down")
+Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260817053519.4135287-4-den@valinux.co.jp
+Link: https://patch.msgid.link/20260817053519.4135287-5-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/ntb_transport.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ntb/ntb_transport.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
 --- a/drivers/ntb/ntb_transport.c
 +++ b/drivers/ntb/ntb_transport.c
-@@ -2315,9 +2315,8 @@ int ntb_transport_tx_enqueue(struct ntb_
- 	if (!qp || !len)
- 		return -EINVAL;
+@@ -1935,15 +1935,6 @@ static int ntb_process_tx(struct ntb_tra
+ 		return -EAGAIN;
+ 	}
  
--	/* If the qp link is down already, just ignore. */
- 	if (!qp->link_is_up)
+-	if (entry->len > qp->tx_max_frame - sizeof(struct ntb_payload_header)) {
+-		if (qp->tx_handler)
+-			qp->tx_handler(qp, qp->cb_data, NULL, -EIO);
+-
+-		ntb_list_add(&qp->ntb_tx_free_q_lock, &entry->entry,
+-			     &qp->tx_free_q);
 -		return 0;
-+		return -ENOLINK;
+-	}
+-
+ 	ntb_async_tx(qp, entry);
  
+ 	qp->tx_index++;
+@@ -2318,6 +2309,9 @@ int ntb_transport_tx_enqueue(struct ntb_
+ 	if (!qp->link_is_up)
+ 		return -ENOLINK;
+ 
++	if (len > qp->tx_max_frame - sizeof(struct ntb_payload_header))
++		return -EMSGSIZE;
++
  	entry = ntb_list_rm(&qp->ntb_tx_free_q_lock, &qp->tx_free_q);
  	if (!entry) {
+ 		qp->tx_err_no_buf++;
 
 
