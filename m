@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153E635AC03;
-	Fri,  4 Sep 2026 06:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0842D738A;
+	Fri,  4 Sep 2026 06:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502158; cv=none; b=njj3FuUUQ+Fn4Vcr4sYM6riQAc7NlekzH7pSIXyD3H5pRaq2UNfIGPZhRJ/y5kkwi7aJQ54UjfZZvBLaEJ7xtLd7uiENImEjnIKJMKWYo758WCzbyjztDidxRv+N56EzdMap+7XHY8d7mtQOQQIwVLUNBcxH61Fz6kgHggmu4E8=
+	t=1788502161; cv=none; b=mVTOtTSA6iOYOWK5BKnFRzCuFeCExLAzW9yfxrVTHRhBMnzY23Vubslkr2zytRDE2RMWoNXV6d8TdEm+whPp3viQ103N49ZV7QlbgDQgG6bvPV/9NMmFA5X6xMr7VbTr6Bzr7wneFx/cd17ZXqucdJ8EMyRUpb67VcSOb6ToIYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502158; c=relaxed/simple;
-	bh=1DbzmNnassFpDL/vGENy3wxR+O1gg+X+f4zxLPPnZX4=;
+	s=arc-20240116; t=1788502161; c=relaxed/simple;
+	bh=V12cs5XX1Byg3PG7ZIM4gX1J0GkmjWacndZ32wheS0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFH97QxIRZO9tT2fvjLbBEC6CT2GUyPi5vcvPtOXD1GNsIr3NZ/Z91P8DhSwRGceGqELr4ycHD5mDpzEILkKtwAHjseNWeZxXyru3ugHX6ghTUdorLoPHWeEKETMW7eLGv5YemVjalUhHtTno9QEk5z+gauxsgbOwbYLFzw0LBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnDXULI8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hoH9KbeaBqFBrMR3p2CHpJsoSbZEdCG4+vks6jdBsUOLQWQRXEFAnbHGuTspePaZbBeaw6bB9GdsLBIAZk2m+Z2QViJjkWFSGAmtHgkbwvUhI4cMIsbLRy4fw7eFpPrewzG7+MWl2kSpdGVGIKT/lGGF15wXDfrvW5HMn1OHDaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPsUYyMb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnDXULI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C89C1F00A3D;
-	Fri,  4 Sep 2026 06:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPsUYyMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5244A1F00A3D;
+	Fri,  4 Sep 2026 06:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502157;
-	bh=mFS8oi+qZfDogDHfia36mmlcxYOaQmC8ghwYo3hkynU=;
+	s=korg; t=1788502159;
+	bh=R/NLLghFtScelWpZgsuM/l3MD/yW0ffZeQLQ4UFI0gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnDXULI8WNlkqRR0VQSWuLPWjcbXJZHdOtuZDEaPUuNaUZo+9OtQs3ZeNKsHzwt2v
-	 xeu2kTY1dhRI+X7nhZOXi0tR8FxF8b9NFprSHVcPGq8hmBFyNEd1ITy+XXkPOJ9FzI
-	 tL2v05uSBgGtiCUsyqGx2KPyshvtGpBRGYY6JVuA=
+	b=DPsUYyMb9awmtr3qkfbuxUs574c2vc9IyDX3aI8+StIqHSY8DjtKf+7jU2paJVOT4
+	 7YcYzczT3Uja+gQPP7g5gAtd4qdflwGFhHD7aBahEakJew8f3R1wRNu9xMRR+ZVmde
+	 uEKYpzhX+tOI3LC2NUTtUdOh8QHABbvELHAfaL1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 109/403] libceph: validate OSD extent maps before cursor advance
-Date: Fri,  4 Sep 2026 06:58:32 +0200
-Message-ID: <20260904045737.307661087@linuxfoundation.org>
+Subject: [PATCH 6.12 110/403] libceph: reject buckets with mismatched CRUSH ids
+Date: Fri,  4 Sep 2026 06:58:33 +0200
+Message-ID: <20260904045737.330023162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -45,99 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 9ec08b7499a62c6d4afa93d36ab47a43fcad57d1 upstream.
+commit 3cde4a8302301679937474a5f7a851394cc1bd11 upstream.
 
-net/ceph/osd_client.c:osd_sparse_read() validates that the sparse-read
-data length matches the summed extent lengths, but it does not validate
-that each OSD-supplied extent is monotonic and lies inside the original
-request range. A malformed authenticated OSD reply can advertise a
-far-forward nonzero extent offset with a matching data length and make
-the client advance the message-data cursor beyond the request buffer.
-This reaches the BUG_ON(!*length) assertion in ceph_msg_data_next() from
-the client receive path.
+crush_decode() stores bucket data by array slot, and the mapper later
+derives the per-bucket workspace index from the decoded bucket id. A
+malformed map can therefore make one bucket reuse another bucket's
+workspace by encoding an id different from -1 - slot.
 
-Impact: A malicious or compromised authenticated Ceph OSD peer can crash
-a kernel Ceph client via a malformed sparse-read reply.
+For uniform buckets, the second replica selection expands the source
+bucket's permutation into that aliased workspace buffer. If the source
+bucket is larger than the aliased bucket, the write runs past the smaller
+permutation array and can escape the kvmalloc'd CRUSH workspace. KASAN
+reports a slab OOB write of 4 bytes in bucket_perm_choose().
 
-Reject sparse extent maps that overflow, move backwards, overlap, or
-extend outside the original sparse-read request before advancing the
-cursor.
-
-[ idryomov: perform sparse_extent_map_valid() check a bit earlier,
-  in CEPH_SPARSE_READ_DATA_LEN instead of CEPH_SPARSE_READ_DATA_PRE
-  state ]
+Reject buckets whose encoded id does not match their array slot. Valid
+CRUSH maps already use the canonical negative id corresponding to the
+bucket slot, so this restores the invariant expected by
+work->work[-1 - in->id] without changing valid map behavior.
 
 Cc: stable@vger.kernel.org
-Fixes: f628d7999727 ("libceph: add sparse read support to OSD client")
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 66a0e2d579db ("crush: remove mutable part of CRUSH map")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ net/ceph/osdmap.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -6,6 +6,7 @@
- #include <linux/err.h>
- #include <linux/highmem.h>
- #include <linux/mm.h>
-+#include <linux/overflow.h>
- #include <linux/pagemap.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -5862,6 +5863,31 @@ static inline void convert_extent_map(st
- }
- #endif
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -519,6 +519,8 @@ static struct crush_map *crush_decode(vo
  
-+static bool sparse_extent_map_valid(struct ceph_sparse_read *sr)
-+{
-+	u64 req_end, pos;
-+	int i;
-+
-+	if (check_add_overflow(sr->sr_req_off, sr->sr_req_len, &req_end))
-+		return false;
-+
-+	pos = sr->sr_req_off;
-+	for (i = 0; i < sr->sr_count; i++) {
-+		struct ceph_sparse_extent *ext = &sr->sr_extent[i];
-+		u64 end;
-+
-+		if (ext->off < pos)
-+			return false;
-+		if (check_add_overflow(ext->off, ext->len, &end))
-+			return false;
-+		if (end > req_end)
-+			return false;
-+		pos = end;
-+	}
-+
-+	return true;
-+}
-+
- static int osd_sparse_read(struct ceph_connection *con,
- 			   struct ceph_msg_data_cursor *cursor,
- 			   char **pbuf)
-@@ -5913,6 +5939,10 @@ next_op:
- 		fallthrough;
- 	case CEPH_SPARSE_READ_DATA_LEN:
- 		convert_extent_map(sr);
-+		if (!sparse_extent_map_valid(sr)) {
-+			pr_warn_ratelimited("invalid sparse extent map\n");
-+			return -EREMOTEIO;
-+		}
- 		ret = sizeof(sr->sr_datalen);
- 		*pbuf = (char *)&sr->sr_datalen;
- 		sr->sr_state = CEPH_SPARSE_READ_DATA_PRE;
+ 		ceph_decode_need(p, end, 4*sizeof(u32), bad);
+ 		b->id = ceph_decode_32(p);
++		if (b->id != -1 - i)
++			goto bad;
+ 		b->type = ceph_decode_16(p);
+ 		if (b->type == 0)
+ 			goto bad;
 
 
