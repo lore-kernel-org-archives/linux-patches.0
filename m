@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DF442E416;
-	Fri,  4 Sep 2026 06:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB7142C500;
+	Fri,  4 Sep 2026 06:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502994; cv=none; b=qJuHVRGt4sgv0RbLKaz0RWNLTUFFEFPiqcoGCu5Lpb62Ao7gtfVQgykvx81YPZUydmPUS4yH84Fj4w4o52UN7besG0VykLdR+XheiEauH2xvV+u4eGu+7qmgsWh0K+gEYTO26PQJu3J9K+Mi4KcN24u1RojlJOzrTnWrUsu1Ew8=
+	t=1788502997; cv=none; b=jpOM871bl7v+Mjas184DC+zBE8eJOMclXowpdbPfpxKLKkE0CH5u3KLAon4ZsAVT9uHQYZFFUvmXXGT1e61o7SwivgkL1q2Haa/lzi1MQwx97+psBMAB67JwNqLqVU5roxDiBlf49DEH0y0vrF6t7xbIZHqb7ekv0s6QQbz7Jtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502994; c=relaxed/simple;
-	bh=ZkSf4rnCc52112y714jiT2TAlOeElZz0Kpa8RRDiJAs=;
+	s=arc-20240116; t=1788502997; c=relaxed/simple;
+	bh=yUkBR9gG1DRDs6MSelhGaR0iCzfl3A1lEMKvjkg5vZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hiYEZpG01x1FdgvtOZKFyPXowhAKnX2ryEG9hxiVgK96gVs+DvpPkmWpYeh8nYkYCOMFgku/HYgln5VkxLjhexTvN4FRhAPDeOtDFI804xvCP6Zai/qE00ZObKhoAcoQzQMrhQz52ek+dZQsQ4aOaNNhH5ZcD7LiMDFD94D5AC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8svjkZk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZastIOQ/F9tPAwxdXHIeNhhJJsPhPYAFurKVE2nIkNKOw2JNfsnEmDd0WERXSDCOERigF1pLiKv+H7BLSnAE3vPnqts/vkAn4IHpKCdqfdh40SauY73IdZRa4KI/YRgDI45bvv3UVw4kpdqNaRORcf81G4knGX1ZS4ZaYB3n54c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNqw/ROX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8svjkZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7C71F00A3E;
-	Fri,  4 Sep 2026 06:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNqw/ROX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B021F00AC4;
+	Fri,  4 Sep 2026 06:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502993;
-	bh=vwU1G5iwyXid5pvAmGLowPfTfFacK5QAahrUqfviEvY=;
+	s=korg; t=1788502995;
+	bh=EZc9daKnNnt7fjEk4YZxwWD4gWJUCg3pJfUiZjyrRNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8svjkZk9tEcIomVDvxgUtSX0K6g6qfCYCduUky1Ejoqd9fWl5ysuPqy3J2svt6NN
-	 gw5Uc3DXXn+M83sKLuA+jxm+wbE6xrYJytpwj21tvy5sNnf7UP1evCcwAIUDAihMw9
-	 a6Fqnt6ZZyLPywce30L2bYIPYZCSoGM6nbEafhTY=
+	b=sNqw/ROXGhKQB3spk+VBIBknSYIKK9Ba3wPI5NamWxfxcJOi4Ba2RBvbcPmljTpoM
+	 0Y+EYARmxKarMZNBxHb25zdYLsMqcSdk/GKwodSRHt4Nu37G7t2RKtmSq0C72N5eeF
+	 1727Gp6ULtGOAkmunmu0lZK8pHAYZIVBOtZgigYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 401/403] timer: Keep debugobjects state consistent in migrate_timer_list()
-Date: Fri,  4 Sep 2026 07:03:24 +0200
-Message-ID: <20260904045743.897744563@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 366/403] ALSA: pcxhr: initialize mutexes before requesting threaded IRQ
+Date: Fri,  4 Sep 2026 07:02:49 +0200
+Message-ID: <20260904045743.128867919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -49,38 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@kernel.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit c793bbfc4a0a9f5a66978fc91559e9681748dbeb upstream.
+commit 6c97817e20598e5473094e0e38d1f51f1cf4dfff upstream.
 
-When timers are migrated away from an offline CPU the debugobjects state
-gets corrupted. The timer is accounted as inactive on deletion, but the
-enqueue on the alive CPU lacks the activation call.
+pcxhr_probe() requests pcxhr_threaded_irq() before initializing
+mgr->lock, even though the threaded handler takes that mutex.
 
-That used to work, but got broken when the trace point and the debug
-objects call got separated. That change missed to fixup
-migrate_timer_list().
+Initialize the manager locks before request_threaded_irq() so an
+early interrupt cannot run against uninitialized mutex state during
+probe.
 
-Add the missing debug_timer_activate() invocation to fix it.
-
-Fixes: dc1e7dc5ac62 ("timer: Move trace point to get proper index")
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 9bef72bdb26e ("ALSA: pcxhr: Use nonatomic PCM ops")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/87bjb0l7ha.ffs@fw13
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260818144717.2269918-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timer.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/pcxhr/pcxhr.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -2673,6 +2673,7 @@ static void migrate_timer_list(struct ti
- 		timer = hlist_entry(head->first, struct timer_list, entry);
- 		detach_timer(timer, false);
- 		timer->flags = (timer->flags & ~TIMER_BASEMASK) | cpu;
-+		debug_timer_activate(timer);
- 		internal_add_timer(new_base, timer);
- 	}
- }
+--- a/sound/pci/pcxhr/pcxhr.c
++++ b/sound/pci/pcxhr/pcxhr.c
+@@ -1551,6 +1551,13 @@ static int pcxhr_probe(struct pci_dev *p
+ 	mgr->pci = pci;
+ 	mgr->irq = -1;
+ 
++	/* ISR lock  */
++	mutex_init(&mgr->lock);
++	mutex_init(&mgr->msg_lock);
++
++	/* init setup mutex*/
++	mutex_init(&mgr->setup_mutex);
++
+ 	if (request_threaded_irq(pci->irq, pcxhr_interrupt,
+ 				 pcxhr_threaded_irq, IRQF_SHARED,
+ 				 KBUILD_MODNAME, mgr)) {
+@@ -1564,13 +1571,6 @@ static int pcxhr_probe(struct pci_dev *p
+ 		 "Digigram at 0x%lx & 0x%lx, 0x%lx irq %i",
+ 		 mgr->port[0], mgr->port[1], mgr->port[2], mgr->irq);
+ 
+-	/* ISR lock  */
+-	mutex_init(&mgr->lock);
+-	mutex_init(&mgr->msg_lock);
+-
+-	/* init setup mutex*/
+-	mutex_init(&mgr->setup_mutex);
+-
+ 	mgr->prmh = kmalloc(sizeof(*mgr->prmh) +
+ 			    sizeof(u32) * (PCXHR_SIZE_MAX_LONG_STATUS -
+ 					   PCXHR_SIZE_MAX_STATUS),
 
 
