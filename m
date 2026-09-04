@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE20F408035;
-	Fri,  4 Sep 2026 05:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8210E37DAD0;
+	Fri,  4 Sep 2026 05:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499931; cv=none; b=dgDVzx7zlILUF4y+DOLPxBbBBGG4udayjl441v1RtfbJhokT1eiebZ49heAHncQ8V66cGyfkMeb5jylush2A33xq739f3aaBK+kY91375EC50cqa+g3U9a46MUL3jbRA1eoZnlPV/obAG2on2RW0zrj0g0yj4Kyi/MqLBi7Neq4=
+	t=1788499934; cv=none; b=XuRM14Y4DCMakeWh0nOsmPIsbkwPuuzc1CPSPkDicLRgCy2J6uoN1ltGk4F8rr5Z9PGx/ZMHoIOw94mmeMltkflB2lipi9maBmdpdbIXQM+PYjLBzMSwaen9CXs3JBPyB3Ejsxzj4l/oNUbZ7b/i6hECxlTOZovh0F6F6Iaw29I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499931; c=relaxed/simple;
-	bh=FtQSNWYZcUZxMpWKnQIvvlaCRpV7hZyypNCWFGb37DE=;
+	s=arc-20240116; t=1788499934; c=relaxed/simple;
+	bh=rwDl7gZK6FVj5VtPaTxahSc/Zth4LHo56R2PtmzJmuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srwfqocYDA/CjUEj5jdfN3MwEbUZa1TS5j4FkySWshgRm/3Pn8chEcdCjxd3x6BwzPrWOVhPtS/mwPyv0Py4QsZJXNGp8eBvPyrk0X13jHIcYdFVB93Ms6rbULvVaCbiFz+bbTYGanr/t9wTafGJ1CbiA/5xRPOEO0ZKQiCY32E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yD7Fp2G5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OZXj7EcU5aGQNvtK88RKEy62C1P2fHhSZQF3WzqEoIvvhhtASYuSW5U3nuQfGdSZxPpm/Q8/mx9gYQ4Kqg7XbFvGDWsf1zAsjujtr6lycjhvRaNvwpGT6Nnx9nscZ1W2ZFTKM3r86V9zcBurXxwsxk8+kdNwmsqSuu/nv3APf00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dl7r402F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yD7Fp2G5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0563E1F00A3D;
-	Fri,  4 Sep 2026 05:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dl7r402F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA4F1F00A3D;
+	Fri,  4 Sep 2026 05:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499930;
-	bh=PsrfMl8c+rJ4oi/HLJ/JFvTXmApCLvJVLXtnFOmDbds=;
+	s=korg; t=1788499933;
+	bh=/Ah5tzEbU62vtFqfqFhXPoZdJikQZHdL/HZ/6cEdh7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yD7Fp2G5BhfX9am5uahVKq2AZJlj/+m0ePmtHz+V6o4Hyrz7zSM610CduGqAY/Y6C
-	 YFaW1TlpiSOpfCci14tsjNoawd55jZRXKqiOvMTHvnJf8PFuL53pde7Lh43OANyN6X
-	 XAVQP+HjR92RP5zXoEfCpYlHERVitDoOi1aXhJV0=
+	b=dl7r402FhV+mYKzMKgVe6Y+uPwIIAaVoCTWmiQh8nSxuOiB7NIAUeqODV3tGstF4P
+	 hfhUIXdvFlirR/WEKo2LNXL6F6yjRhsYJT7O6KCKb7tK9z/D35XzAb8dYQQNuDPVVS
+	 uEZiwG3JCGEUEFaqjBtWYeR+1+AvNkVBWUcRholQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kevin Tian <kevin.tian@intel.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 7.2 547/713] iommufd: Avoid locking internal accesses during unmap
-Date: Fri,  4 Sep 2026 06:58:35 +0200
-Message-ID: <20260904045816.078676929@linuxfoundation.org>
+Subject: [PATCH 7.2 548/713] iommufd: Release current IOAS on xa_store() failure
+Date: Fri,  4 Sep 2026 06:58:36 +0200
+Message-ID: <20260904045816.102584414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -54,20 +54,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit 0dbcdf4473a614adbd732d567c9b39ac0e040e0c upstream.
+commit 4ac2ce123824d5f885c868fa1f9f4d463141a2ba upstream.
 
-iommufd_access_notify_unmap() skips internal accesses because they do
-not have an external unmap callback to invoke.
+iommufd_take_all_iova_rwsem() takes an object reference and the
+iova_rwsem write lock before storing the IOAS in the temporary ioas_list
+xarray.
 
-However, the current test calls iommufd_lock_obj() before checking
-whether the access is internal. If iommufd_lock_obj() succeeds, the loop
-then sees the internal access and continues, bypassing the matching
-iommufd_put_object() used by the normal unmap path. This leaks the
-object reference taken by iommufd_lock_obj().
+If xa_store() fails, the current IOAS has not been inserted into
+ioas_list yet. iommufd_release_all_iova_rwsem() only unwinds IOAS
+objects already present in that xarray, so it cannot release the current
+IOAS.
 
-Check for internal accesses first so skipped entries are never locked.
+Release the current IOAS rwsem and object reference before unwinding the
+previously stored entries.
 
-Fixes: 27b77ea5feaa ("iommufd/access: Bypass access->ops->unmap for internal use")
+Fixes: 051ae5aa73d7 ("iommufd: Lock all IOAS objects")
 Cc: stable@vger.kernel.org
 Assisted-by: Qoder:Qwen-3.8-MAX-Preview
 Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
@@ -76,21 +77,19 @@ Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/device.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/ioas.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -1307,8 +1307,8 @@ void iommufd_access_notify_unmap(struct
+--- a/drivers/iommu/iommufd/ioas.c
++++ b/drivers/iommu/iommufd/ioas.c
+@@ -427,6 +427,8 @@ static int iommufd_take_all_iova_rwsem(s
  
- 	xa_lock(&ioas->iopt.access_list);
- 	xa_for_each(&ioas->iopt.access_list, index, access) {
--		if (!iommufd_lock_obj(&access->obj) ||
--		    iommufd_access_is_internal(access))
-+		if (iommufd_access_is_internal(access) ||
-+		    !iommufd_lock_obj(&access->obj))
- 			continue;
- 		xa_unlock(&ioas->iopt.access_list);
- 
+ 		rc = xa_err(xa_store(ioas_list, index, ioas, GFP_KERNEL));
+ 		if (rc) {
++			up_write(&ioas->iopt.iova_rwsem);
++			refcount_dec(&ioas->obj.users);
+ 			iommufd_release_all_iova_rwsem(ictx, ioas_list);
+ 			return rc;
+ 		}
 
 
