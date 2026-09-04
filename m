@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6208D3A7F4C;
-	Fri,  4 Sep 2026 05:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304BA23BD1B;
+	Fri,  4 Sep 2026 05:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499022; cv=none; b=sSy76GTAgHvqcfaKAlojtVBXfCabDDs70fL6S3/t9T20+HlEkoko7iNOfX9fm0KsvihEsTa8rdTfGmoHGEpvnSBxbcDxEottBng5AQqdSv+xTxV5CeYxzd5g1SQxycggo6N+29HVn545SKseST23dtL/cFEhDe5mZ9wkUwjUVpI=
+	t=1788499025; cv=none; b=izJnG598e1DVxLsYfz3ESpDPEtWcrWSi+E0c8E3VE1xJje8DBfbFP6SinYk1ndFdFYwCgOTs2uo4s/iVBBJdOh03AdN4bJxiE38OXPu6+Q8vvuyU0KP+27mxHtrvsejs3ZCp9xkiE6qK6LT2o8eyaccu7LYSgPlCyag0eAFm53o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499022; c=relaxed/simple;
-	bh=tqNd+5oK6VUYsOGvP680ZbXMcvImZ3D1tESRVWSKEJ0=;
+	s=arc-20240116; t=1788499025; c=relaxed/simple;
+	bh=3+wodY+a217Be561T1xaP5FeUJxz/xc26RHq5AhmbNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fT6LCpsEMjVzrI7GT4UcGZMspBxacJ+N+9L/CnRbXWQ/53RosAugiNpjQBIuTPoaBSmNdrtct1Ro69Om0DWyU9EHU55P/rIc+P5fVE1N5BuQTNLnbnX0gTmxUByyPxTFulOneHpjyIOHWqXbKlOo5w6xeW9WPaF5BM6RV2b1nsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+B0UpKc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eIjm4DWBbErBsEU8DkrTWRjODsaUefbTCAta0CDMoXQFukP5b6T028ZH0sFtd27visSy/8zdy29wNlBc2CP5xwVE495W9NsBDbR8JNjSBvo0cFO2MlKNhAMbKjyMtgDAADVcuHs+CyJzX9N1lxLCIkkzEfnojlLsPJVkhWOicdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwE3U5wh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+B0UpKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5611F00A3E;
-	Fri,  4 Sep 2026 05:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwE3U5wh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAF91F00A3D;
+	Fri,  4 Sep 2026 05:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499021;
-	bh=InrhBO4ZhQ+KX1nst+N4DFO1YyWZgcvoio5emXacIzY=;
+	s=korg; t=1788499024;
+	bh=ijsWrcbEzgtzLQYEo1plTyHr7PQhEoboq135XyqqsKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c+B0UpKcyWgE6xq82uJzsKD09OIXkH2jGOdpZatrKF5B3Qy5h4uwN7YydZvt5EgHu
-	 S1cDiO05oh+rF7VqAvDROakkGLJoest4o8sD17nynvZgPIqJ30PYlFPmO50yU6eq/I
-	 hnRGSrfcbpLpXEuxEGXuMqfNR+AVm6hGmuZZfMeY=
+	b=zwE3U5whURY1AoJQTyBUc6zWWr4sKT0+5ADEPRlwCKrDQkn14Y5LREqSZPAl1K5gs
+	 NIEN+dwGL4orM24H6OGjIJ7tKayCN64PdnsS156f2u6SXaghq8vuwb9pAN3IJU9K8N
+	 Nu7OieIlWjjowaHFohfwyibkf3raxwiABXlKbnZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 7.2 263/713] fs/ntfs3: bound page_lcns[] index by the log record
-Date: Fri,  4 Sep 2026 06:53:51 +0200
-Message-ID: <20260904045809.732709550@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Tyler Hicks <code@tyhicks.com>
+Subject: [PATCH 7.2 272/713] ecryptfs: pass packet set buffer size to parser
+Date: Fri,  4 Sep 2026 06:54:00 +0200
+Message-ID: <20260904045809.934754708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,65 +50,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 6f7b9dbdc1b7520206abce0049bdd143eb536e75 upstream.
+commit 2602b79c5b3e2f6fce12e38a670f8e3fda4e46a2 upstream.
 
-The copy_lcns loop and the redo shorten loop index page_lcns[] at j + i,
-where i runs up to the log record's lcns_follow. That count is checked only
-against the record's own length, not the target entry, so check_dp_table()
-(which validates the entry's lcns_follow) does not cover it: the copy_lcns
-entry may even be freshly allocated after that check, and find_dp() bounds j
-but not i. A crafted record thus overflows page_lcns[] of an otherwise valid
-entry.
+ecryptfs_parse_packet_set() receives a pointer into the file header, but
+it calculates the remaining packet buffer size from PAGE_SIZE - 8.  For
+version 1 headers the packet set starts later in the header, so this can
+overstate the available buffer.
 
-Add dp_range_ok() and reject, before each loop, any record whose run does
-not fit the entry. These are the only two page_lcns[] accesses indexed by
-the record rather than the entry, so together with the entry validation
-every access is now bounded.
+Pass the actual packet set buffer length from the caller and calculate
+per-packet limits from the remaining bytes in that buffer.  Recompute the
+remaining length after consuming a tag 3 packet before parsing the
+following tag 11 packet.
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-[almaz.alexandrovich@paragon-software.com: original patch contained changes to the problem already handled, applied partly]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 237fead61998 ("[PATCH] ecryptfs: fs/Makefile and fs/Kconfig")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/ecryptfs/crypto.c          |    2 +-
+ fs/ecryptfs/ecryptfs_kernel.h |    3 ++-
+ fs/ecryptfs/keystore.c        |   23 ++++++++++++++++++++---
+ 3 files changed, 23 insertions(+), 5 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -648,6 +648,14 @@ static inline void *enum_rstbl(struct RE
+--- a/fs/ecryptfs/crypto.c
++++ b/fs/ecryptfs/crypto.c
+@@ -1197,7 +1197,7 @@ static int ecryptfs_read_headers_virt(ch
+ 	} else
+ 		set_default_header_data(crypt_stat);
+ 	rc = ecryptfs_parse_packet_set(crypt_stat, (page_virt + offset),
+-				       ecryptfs_dentry);
++				       PAGE_SIZE - offset, ecryptfs_dentry);
+ out:
+ 	return rc;
  }
- 
- /*
-+ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.
-+ */
-+static inline bool dp_range_ok(size_t j, u32 count, u32 cap)
-+{
-+	return j < cap && count <= cap - j;
-+}
-+
-+/*
-  * find_dp - Search for a @vcn in Dirty Page Table.
+--- a/fs/ecryptfs/ecryptfs_kernel.h
++++ b/fs/ecryptfs/ecryptfs_kernel.h
+@@ -580,7 +580,8 @@ int ecryptfs_generate_key_packet_set(cha
+ 				     size_t *len, size_t max);
+ int
+ ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
+-			  unsigned char *src, struct dentry *ecryptfs_dentry);
++			  unsigned char *src, size_t src_size,
++			  struct dentry *ecryptfs_dentry);
+ int ecryptfs_truncate(struct dentry *dentry, loff_t new_length);
+ ssize_t
+ ecryptfs_getxattr_lower(struct dentry *lower_dentry, struct inode *lower_inode,
+--- a/fs/ecryptfs/keystore.c
++++ b/fs/ecryptfs/keystore.c
+@@ -1704,6 +1704,7 @@ out:
+  * ecryptfs_parse_packet_set
+  * @crypt_stat: The cryptographic context
+  * @src: Virtual address of region of memory containing the packets
++ * @src_size: Size of the packet set buffer
+  * @ecryptfs_dentry: The eCryptfs dentry associated with the packet set
+  *
+  * Get crypt_stat to have the file's session key if the requisite key
+@@ -1714,7 +1715,7 @@ out:
+  * conditions.
   */
- static inline struct DIR_PAGE_ENTRY *find_dp(struct RESTART_TABLE *dptbl,
-@@ -5106,6 +5114,13 @@ find_dirty_page:
- 	/* Shorten length by any Lcns which were deleted. */
- 	saved_len = dlen;
- 
-+	if (!dp_range_ok(le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn),
-+			 le16_to_cpu(lrh->lcns_follow),
-+			 le32_to_cpu(dp->lcns_follow))) {
-+		err = -EINVAL;
-+		goto out;
-+	}
+ int ecryptfs_parse_packet_set(struct ecryptfs_crypt_stat *crypt_stat,
+-			      unsigned char *src,
++			      unsigned char *src, size_t src_size,
+ 			      struct dentry *ecryptfs_dentry)
+ {
+ 	size_t i = 0;
+@@ -1736,7 +1737,11 @@ int ecryptfs_parse_packet_set(struct ecr
+ 	 * added the our &auth_tok_list */
+ 	next_packet_is_auth_tok_packet = 1;
+ 	while (next_packet_is_auth_tok_packet) {
+-		size_t max_packet_size = ((PAGE_SIZE - 8) - i);
++		size_t max_packet_size;
 +
- 	for (i = le16_to_cpu(lrh->lcns_follow); i; i--) {
- 		size_t j;
- 		u32 alen, voff;
++		if (i >= src_size)
++			break;
++		max_packet_size = src_size - i;
+ 
+ 		switch (src[i]) {
+ 		case ECRYPTFS_TAG_3_PACKET_TYPE:
+@@ -1751,12 +1756,16 @@ int ecryptfs_parse_packet_set(struct ecr
+ 				goto out_wipe_list;
+ 			}
+ 			i += packet_size;
++			if (i > src_size) {
++				rc = -EIO;
++				goto out_wipe_list;
++			}
+ 			rc = parse_tag_11_packet((unsigned char *)&src[i],
+ 						 sig_tmp_space,
+ 						 ECRYPTFS_SIG_SIZE,
+ 						 &tag_11_contents_size,
+ 						 &tag_11_packet_size,
+-						 max_packet_size);
++						 src_size - i);
+ 			if (rc) {
+ 				ecryptfs_printk(KERN_ERR, "No valid "
+ 						"(ecryptfs-specific) literal "
+@@ -1768,6 +1777,10 @@ int ecryptfs_parse_packet_set(struct ecr
+ 				goto out_wipe_list;
+ 			}
+ 			i += tag_11_packet_size;
++			if (i > src_size) {
++				rc = -EIO;
++				goto out_wipe_list;
++			}
+ 			if (ECRYPTFS_SIG_SIZE != tag_11_contents_size) {
+ 				ecryptfs_printk(KERN_ERR, "Expected "
+ 						"signature of size [%d]; "
+@@ -1793,6 +1806,10 @@ int ecryptfs_parse_packet_set(struct ecr
+ 				goto out_wipe_list;
+ 			}
+ 			i += packet_size;
++			if (i > src_size) {
++				rc = -EIO;
++				goto out_wipe_list;
++			}
+ 			crypt_stat->flags |= ECRYPTFS_ENCRYPTED;
+ 			break;
+ 		case ECRYPTFS_TAG_11_PACKET_TYPE:
 
 
