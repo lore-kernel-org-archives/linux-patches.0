@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DAD346FB3;
-	Fri,  4 Sep 2026 06:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F08423780;
+	Fri,  4 Sep 2026 06:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502734; cv=none; b=ddHirLwQwAq+qgc49iYRTLZbMr2qw212SMC5I/uY9ux4edgiaXZU4Rjt7VFFA0CG4HBmK95rEqz8o75Zuf8Y18/z932Rr7BxaOmf3a/J1Izem2vkej5scUGxGo/GDxZtxn+P7oKOFnDcbiTSyPcsTGQJLr6NgTBreldGQkgJaVw=
+	t=1788502738; cv=none; b=jsqdsE9AK0pkRFjMA9YGFJz3MukRRMlv3L811aSdnY9T6+GLowaz+pd2hEvUUFf7xJyHx+iyuziPH+U4LF+pNXxB3MI2FzTaBt/KqC5YMc1wqUP7NwtuSZJiUvXB/yWkE7oz0kGgHfXQAFXFKA3wWz3vspprOoynUk3m6AUdybk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502734; c=relaxed/simple;
-	bh=CXmobGMvnhwfpybvmxP190/imadmrzHZYgxhYBi1Z1g=;
+	s=arc-20240116; t=1788502738; c=relaxed/simple;
+	bh=QAFFEdatcXfaIgCTPH45uq8PQUqVdqs4yp3KZejHe5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOpUVA/CSv3ouLhvoYNEXthHgHSKmNEvlXdX4bkipCFvFhWH1Br5+bMwz7tSRm3tX5Ru1z/kUflubUPPziEnNl7MYRi2LVADykQd9npa6If803wI5Akwq7RLeurk/QBypkjgHG+OQS51udzNT441uaB5iI/1IyFFpOedP6zoVxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HttrtRfs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UyAKaEN4WzaBFbkkrdwFP3AbnBmJVr9Tj3O2o4NG3nheUA358dBDYX5TaAUnaWQIGOHt6Z9VYY/NMxDBbOnureTBoBDLHTI2s+vHVFMLFoaS9JxxUu0zp83JiTK/llLyPquTcH/eBNfLKt/B7xRwKSNt8Y6tIvHiSO3aeSM79rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2xGm3uN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HttrtRfs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FD21F00A3D;
-	Fri,  4 Sep 2026 06:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2xGm3uN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8361F00A3D;
+	Fri,  4 Sep 2026 06:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502733;
-	bh=8CXNwSVLQaccxbAe4k6Nu/ZhhO/3Kx+LjzjI9pqd+/Y=;
+	s=korg; t=1788502736;
+	bh=ENxnBA0FOVfe2iiqa5l9E14eQyHioUKeEkTDt9GqbWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HttrtRfs6iTE2pZocH7pregRCAJtrfKon/qWgir9JAn0HN7Dt+XlJVbCxnLeDAbOm
-	 UdyZDYGdl/LtbMXGOPFlKws8vkKgODEWeg9gQJ/LW+9aHWYFqigZLlZs8Vy9vLL31+
-	 M6ek34QKeb7aJNaomKampokKLOqoH9u3UGLF39fk=
+	b=r2xGm3uNN8ApIyTeUM2uLlBlaza94zBcj4sbuJHOUqWBuR6vUh+G8eUwIhEt7FMFe
+	 C1jRCG4/4o+wCa4wV119f7PQjnKtwCOlbo4Bi715NKn+h4R0DUcsRTfjZRxJbdzEIf
+	 UrzmSbDO4MdM0/fzH4r+T/VbYxRsic+KVHVEdjtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 274/403] power: supply: cros_usbpd-charger: bound the EC-reported port count
-Date: Fri,  4 Sep 2026 07:01:17 +0200
-Message-ID: <20260904045741.089943832@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.12 310/403] mmc: via-sdmmc: stop card-detect handling on probe failure
+Date: Fri,  4 Sep 2026 07:01:53 +0200
+Message-ID: <20260904045741.891840344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,66 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 48355ce49359740f52e94d3623f6fc557ce341f0 upstream.
+commit 088eaa92fcebaa6b957ccf9635afdf39643a577d upstream.
 
-cros_usbpd_charger_probe() reads two port counts from the EC and uses
-one of them, num_charger_ports, as the loop bound when populating a
-fixed-size array:
+request_irq() registers the SD card-detect interrupt and the probe enables
+it before mmc_add_host() runs. If mmc_add_host() fails, the error path only
+unmaps the registers and returns: the interrupt stays registered, so the
+handler keeps running against the host once it is freed. via_sdc_isr()
+dereferences sdhost and its MMIO base and schedules carddet_work, which
+via_sdc_card_detect() also runs against freed memory through its
+container_of() dereference.
 
-	struct port_data *ports[EC_USB_PD_MAX_PORTS];	/* 8 entries */
-	...
-	for (i = 0; i < charger->num_charger_ports; i++)
-		charger->ports[charger->num_registered_psy++] = port;
+Add a probe-error path that disables and frees the interrupt and cancels
+carddet_work before unmapping. carddet_work can re-enable the device
+interrupt via via_reset_pcictrl(), which restores PCIINTCTRL, so mask it
+again after cancelling the work.
 
-Both num_usbpd_ports (from EC_CMD_USB_PD_PORTS) and num_charger_ports
-(from EC_CMD_CHARGE_PORT_COUNT) are u8 values reported by the EC. The
-only validation is a sanity check that compares the two EC-reported
-values against each other:
+This issue was found by an in-house static analysis tool and confirmed by
+manual code review.
 
-	if (num_charger_ports < num_usbpd_ports ||
-	    num_charger_ports > num_usbpd_ports + 1)
-		return -EPROTO;
-
-It never checks either count against EC_USB_PD_MAX_PORTS, the size of
-the ports[] array. A malfunctioning, malicious or compromised EC that
-reports num_usbpd_ports == num_charger_ports == N for any N > 8 (for
-example both 255) passes this check, and the loop then writes N pointers
-into the 8-entry ports[] array embedded in the devm_kzalloc()'d
-charger_data, overflowing it by up to 255 - 8 = 247 entries (~1976
-bytes): a slab out-of-bounds write.
-
-Reject a port count larger than the ports[] array can hold.
-
-Fixes: f68b883e8fad ("power: supply: add cros-ec USBPD charger driver.")
+Fixes: e4e46fb61e3b ("mmc: via-sdmmc: fix return value check of mmc_add_host()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260616-b4-disp-5e197080-v2-1-8aa5bffce945@proton.me
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/mmc/host/via-sdmmc.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -589,10 +589,13 @@ static int cros_usbpd_charger_probe(stru
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1154,10 +1154,16 @@ static int via_sd_probe(struct pci_dev *
  
- 	/*
- 	 * Sanity checks on the number of ports:
--	 *  there should be at most 1 dedicated port
-+	 *  there should be at most 1 dedicated port, and the count must
-+	 *  not exceed the maximum number of supported ports
-+	 *  (EC_USB_PD_MAX_PORTS).
- 	 */
- 	if (charger->num_charger_ports < charger->num_usbpd_ports ||
--	    charger->num_charger_ports > (charger->num_usbpd_ports + 1)) {
-+	    charger->num_charger_ports > (charger->num_usbpd_ports + 1) ||
-+	    charger->num_charger_ports > EC_USB_PD_MAX_PORTS) {
- 		dev_err(dev, "Unexpected number of charge port count\n");
- 		ret = -EPROTO;
- 		goto fail_nowarn;
+ 	ret = mmc_add_host(mmc);
+ 	if (ret)
+-		goto unmap;
++		goto free_irq;
+ 
+ 	return 0;
+ 
++free_irq:
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
++	free_irq(pcidev->irq, sdhost);
++	cancel_work_sync(&sdhost->carddet_work);
++	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
+ unmap:
+ 	iounmap(sdhost->mmiobase);
+ free_mmc_host:
 
 
