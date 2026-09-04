@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7267415F22;
-	Fri,  4 Sep 2026 05:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30CC410D36;
+	Fri,  4 Sep 2026 05:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499419; cv=none; b=T8+8g9ReHkoYvbl5gw4dWUOaVKCDrp/qygcKdlNZLbEpjj5eH73GxqhscZiACqVtnoqxcOuJ4Wmjr6/h1jBRvK1xpKlo9hLRYtzu3HMkgQT6jgpzpC835yInwUfmqHancROSWaZUQEK0lTIki11rTv/mHHGVO2YL3LvFJGk8eDM=
+	t=1788499421; cv=none; b=k40PI0lHy3mwQo7sMJkhdsrR7Ce39NtpJC7ERRkKDjRPhg+HPNBAM+yUJibcJZb4TS/mpXgW8S0OtngdjerLB6COHDPCXS21sX3tVD5cz9U/Pp/PBIwdGos3mMndVUp2Uox9lTsZVdfkQcXSFdmsLzyVAYA7lDbV4N9OCT05yqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499419; c=relaxed/simple;
-	bh=q57Z0ms0AqQstgHfkWWvHtU48H+INNVsbxxfE4eFbZc=;
+	s=arc-20240116; t=1788499421; c=relaxed/simple;
+	bh=PfgZogafNm7GtgbrNnnctAHMcdY//IWKk1N8kCnlscU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LLneem0xlMN3auL/DKopIGXUh7dxb9IwS3pvwhXKcOqN50MWdZnNdQIm5QqwH7xWk7idkGGBv+I5e7qdJF/WUhCUBXDrru7q+DFCcSmMviq0mozhjyX6TySOkCynR940quNe326xLFbzD9HhnxipN37Ssa7p9k2se8Gl/G77nMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJY7ZzFw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XhAyHbeM631TN9ko4WXC//vjsFWyrsfdH/EeOa+vnJwkGcQ9kPJUreajllEkW79egkdnAFDFPmxq7aQSaHubpPv24kG8EaAT95DFFEkhEXygXq9jUUkuj5KiuNCmuONpAa5Is1DB9jJDHoTCp6RcfuZfSz41RfjA6hePkTj1NjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfTAdiJk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJY7ZzFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1EC1F00ACA;
-	Fri,  4 Sep 2026 05:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfTAdiJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DB41F00A3D;
+	Fri,  4 Sep 2026 05:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499417;
-	bh=EZkEvAJyiglzFtkjbo7IV85vXHMjNPbGRRmutUxj4rI=;
+	s=korg; t=1788499420;
+	bh=R24nBXu7aW+WlMkTuLkRw+otDSIj2sTeBcnPnBv2GMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kJY7ZzFw7Mp+mb57y7XcIeZC3APHgL+B8mLQ/6srhzQzQw+1zB1HzBfk0BGfVghU0
-	 vDcxjLXfLIePzuHVkJbay1c8WygExwdmr5eh5WYm9T/8tRuz7uooU6f0961RUyaTdt
-	 KF9/NRkrqFz0q0V5rotTdOq/nxVNcIcrCi8HlK9g=
+	b=zfTAdiJkIwxMmWvMqHcXwWitJajjaoU0PtLD3O++eearUhoGkizc3mTODWViDVFQA
+	 ZQWgrwj8/5f7jXGc25jYq9zpxXRrfL9spVcwvMQb+JspI63pA/+Xdvq4OdsHWYY/gJ
+	 t0lUX6yhz754ay+i/xEZDKXmFfcVvgAqxAHubxEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ElXreno <elxreno@gmail.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 411/713] sched_ext: Fix rq->core_pick corruption under core scheduling
-Date: Fri,  4 Sep 2026 06:56:19 +0200
-Message-ID: <20260904045813.038358795@linuxfoundation.org>
+Subject: [PATCH 7.2 412/713] sched_ext: Count rq lock releases in rq->scx.lock_drop_seq
+Date: Fri,  4 Sep 2026 06:56:20 +0200
+Message-ID: <20260904045813.062485869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,183 +51,205 @@ Content-Transfer-Encoding: 8bit
 
 From: Tejun Heo <tj@kernel.org>
 
-commit d954004205c1a1d3f59ce8482b559266c15600fa upstream.
+commit f2da9587118d5da41a3f81a59642d5bb4782ddcc upstream.
 
-Core scheduling's pick_next_task() picks what to run on every SMT sibling of
-the core in a single pass under the shared core-wide rq lock. The selection
-state is consistent only while the lock is held continuously, so
-->pick_task() originally could not release it. However, since 4c95380701f5
-("sched/ext: Fold balance_scx() into pick_task_scx()"), sched_ext runs
-dispatch from inside the pick and dispatching can drop the rq lock. To
-support this, pick_next_task() has been updated to restart the whole
-selection when a pick returns RETRY_TASK after releasing the lock.
-
-When selections on the same core interleave through the dropped lock, they
-corrupt each other's state: one clears the other's rq->core_pick leading to
-a NULL deref, or invalidates its keep-the-previous-task decision leaving a
-dequeued task running, which deadlocks the next wakeup and matches the
-reported hard hangs. A cookied ping-pong load on an SMT machine makes the
-interleavings frequent and kills the kernel within seconds.
-
-Fix it by making the pick return RETRY_TASK whenever dispatch released the
-rq lock, so that a selection only ever commits picks made under a
-continuously held lock. The previous patch's rq->scx.lock_drop_seq counts
-the releases. A dispatch that touched nothing never releases the lock and
-its verdict, including "nothing to run", stands: retries are bounded, each
-following a dispatch that actually did something, and an idle CPU does not
-loop.
-
-If another dispatch is already in flight on the rq, skip dispatching and
-pick from what is already queued locally - the in-flight dispatch has
-released the lock, so its own selection will retry and re-pick this rq,
-while returning RETRY_TASK here would only spin on the lock that dispatch
-needs to finish.
-
-Balance callbacks must run in the context that queued them, so they can only
-be queued on the CPU's own rq. When dispatching for another rq, run the
-deferred work directly instead - that rq may consume all its picks through
-the core-sched fast path and never queue the callback itself.
-
-The put_prev_task_scx() warning about a runnable task being left behind
-assumed that dispatch ran as part of the very pick that is switching away.
-That now only holds on the non-core path, so gate it and drop the
-cookie-match test, which is always true without core scheduling, from its
-condition.
+Under core scheduling, pick_next_task() selects for all SMT siblings under
+one continuous hold of the shared core-wide rq lock, and sched_ext's
+dispatch can release that lock from inside the pick. In preparation for
+making the core-sched pick detect the releases and retry, add
+rq->scx.lock_drop_seq and bump it at every site that can release an rq lock
+while a dispatch may be in flight. The counter is only maintained while core
+scheduling is enabled. No functional changes.
 
 Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
 Cc: stable@vger.kernel.org # v6.19+
-Reported-by: ElXreno <elxreno@gmail.com>
-Link: https://github.com/sched-ext/scx/issues/3715
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |   86 ++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 78 insertions(+), 8 deletions(-)
+ kernel/sched/ext/ext.c |   38 ++++++++++++++++++++++++++++++++++++--
+ kernel/sched/sched.h   |    3 +++
+ 2 files changed, 39 insertions(+), 2 deletions(-)
 
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -2779,6 +2779,7 @@ enum scx_dsp_verdict {
- 	SCX_DSP_NONE,		/* nothing to run */
- 	SCX_DSP_LOCAL,		/* local DSQ has tasks */
- 	SCX_DSP_PREV,		/* keep running @prev */
-+	SCX_DSP_RETRY,		/* pick helpers only: restart the pick */
- };
+@@ -479,12 +479,27 @@ static bool rq_is_open(struct rq *rq, u6
+  */
+ DEFINE_PER_CPU(struct rq *, scx_locked_rq_state);
  
- /*
-@@ -3124,12 +3125,12 @@ static void put_prev_task_scx(struct rq
- 		 * ops.enqueue() that @p is the only one available for this cpu,
- 		 * which should trigger an explicit follow-up scheduling event.
- 		 *
--		 * Core scheduling can force this CPU idle while @p stays
--		 * runnable. @p's cookie then won't match the core's, so skip
--		 * the warning in that case.
-+		 * Under core scheduling, a pick dispatches only when nothing is
-+		 * locally runnable and can legitimately go idle with @p still
-+		 * runnable (see do_pick_task_scx()).
- 		 */
- 		if (next && sched_class_above(&ext_sched_class, next->sched_class)) {
--			WARN_ON_ONCE(sched_cpu_cookie_match(rq, p) &&
-+			WARN_ON_ONCE(!sched_core_enabled(rq) &&
- 				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
- 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
- 		} else {
-@@ -3222,6 +3223,70 @@ static enum scx_dsp_verdict dispatch_pic
- 	return verdict;
++/*
++ * Under core scheduling, a pick that releases the rq lock invalidates the
++ * core-wide selection it is part of. Count the releases so that the core-sched
++ * pick can tell whether one happened across dispatch.
++ */
++static void scx_rq_lock_drop(struct rq *rq)
++{
++	lockdep_assert_rq_held(rq);
++#ifdef CONFIG_SCHED_CORE
++	if (sched_core_enabled(rq))
++		rq->scx.lock_drop_seq++;
++#endif
++}
++
+ static void switch_rq_lock(struct rq *from, struct rq *to)
+ {
+ 	bool tracked = scx_locked_rq() == from;
+ 
+ 	if (tracked)
+ 		update_locked_rq(NULL);
++	scx_rq_lock_drop(from);
+ 	raw_spin_rq_unlock(from);
+ 	raw_spin_rq_lock(to);
+ 	if (tracked)
+@@ -1133,6 +1148,7 @@ static void deferred_irq_workfn(struct i
+ 
+ 	raw_spin_rq_lock(rq);
+ 	run_deferred(rq);
++	scx_rq_lock_drop(rq);
+ 	raw_spin_rq_unlock(rq);
  }
  
-+#ifdef CONFIG_SCHED_CORE
-+/*
-+ * Dispatch for a pick when core scheduling is enabled. The selection picks for
-+ * all SMT siblings and the rq_i->core_pick state it builds must stay atomic
-+ * throughout. If the dispatch released the rq lock, anything can have happened
-+ * in between - return %SCX_DSP_RETRY to restart the selection against current
-+ * state.
-+ */
-+static enum scx_dsp_verdict dispatch_core_pick(struct rq *rq, struct rq_flags *rf,
-+					       struct task_struct *prev)
-+{
-+	enum scx_dsp_verdict verdict;
-+	u32 seq = rq->scx.lock_drop_seq;
-+
-+	/* another dispatch is in flight on @rq, let that handle it */
-+	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
-+		return SCX_DSP_NONE;
-+
-+	rq_unpin_lock(rq, rf);
-+
-+	verdict = balance_one(rq, prev);
-+
-+	if (cpu_of(rq) == smp_processor_id()) {
-+		maybe_queue_balance_callback(rq);
-+
-+		/* see dispatch_pick() */
-+		if (unlikely(rq->scx.kick_sync_pending)) {
-+			rq->scx.kick_sync_pending = false;
-+			queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
-+					       kick_sync_wait_bal_cb);
-+		}
-+	} else if (unlikely(rq->scx.flags & SCX_RQ_BAL_CB_PENDING)) {
-+		/*
-+		 * Balance callbacks must run in the context that queued them,
-+		 * so they can't be queued on another CPU's rq. Run the deferred
-+		 * work directly instead.
-+		 */
-+		rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
-+		run_deferred(rq);
-+	}
-+
-+	rq_repin_lock(rq, rf);
-+
-+	/* if balance_one() released the rq lock, restart the selection */
-+	if (rq->scx.lock_drop_seq != seq)
-+		return SCX_DSP_RETRY;
-+
-+	/* see dispatch_pick() */
-+	if (unlikely(verdict == SCX_DSP_PREV &&
-+		     prev->sched_class != &ext_sched_class)) {
-+		WARN_ON_ONCE(scx_enable_state() == SCX_ENABLED);
-+		verdict = SCX_DSP_LOCAL;
-+	}
-+
-+	return verdict;
-+}
-+#else	/* CONFIG_SCHED_CORE */
-+static enum scx_dsp_verdict dispatch_core_pick(struct rq *rq, struct rq_flags *rf,
-+					       struct task_struct *prev)
-+{
-+	return SCX_DSP_NONE;
-+}
-+#endif	/* CONFIG_SCHED_CORE */
-+
- static struct task_struct *
- do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+@@ -2430,12 +2446,14 @@ static bool consume_remote_task(struct r
+ 				struct task_struct *p, u64 enq_flags,
+ 				struct scx_dispatch_q *dsq, struct rq *src_rq)
  {
-@@ -3234,7 +3299,13 @@ do_pick_task_scx(struct rq *rq, struct r
++	scx_rq_lock_drop(this_rq);
+ 	raw_spin_rq_unlock(this_rq);
  
- 	rq_modified_begin(rq, &ext_sched_class);
+ 	if (unlink_dsq_and_lock_src_rq(p, dsq, src_rq)) {
+ 		move_remote_task_to_local_dsq(p, enq_flags, src_rq, this_rq);
+ 		return true;
+ 	} else {
++		scx_rq_lock_drop(src_rq);
+ 		raw_spin_rq_unlock(src_rq);
+ 		raw_spin_rq_lock(this_rq);
+ 		return false;
+@@ -3172,6 +3190,7 @@ retry:
+ 			continue;
+ 		}
  
--	verdict = dispatch_pick(rq, rf, prev);
-+	if (sched_core_enabled(rq))
-+		verdict = dispatch_core_pick(rq, rf, prev);
-+	else
-+		verdict = dispatch_pick(rq, rf, prev);
-+
-+	if (verdict == SCX_DSP_RETRY)
-+		return RETRY_TASK;
++		scx_rq_lock_drop(rq);
+ 		raw_spin_rq_unlock_irq(rq);
+ 		while (READ_ONCE(cpu_rq(cpu)->scx.kick_sync) == ksyncs[cpu]) {
+ 			smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
+@@ -4350,8 +4369,10 @@ static void reenq_user(struct rq *rq, st
+ 		task_rq = task_rq(p);
  
- 	/*
- 	 * If any higher-priority sched class enqueued a runnable task on this
-@@ -3248,9 +3319,8 @@ do_pick_task_scx(struct rq *rq, struct r
- 		return RETRY_TASK;
+ 		if (locked_rq != task_rq) {
+-			if (locked_rq)
++			if (locked_rq) {
++				scx_rq_lock_drop(locked_rq);
+ 				raw_spin_rq_unlock(locked_rq);
++			}
+ 			if (unlikely(!raw_spin_rq_trylock(task_rq))) {
+ 				raw_spin_unlock(&dsq->lock);
+ 				raw_spin_rq_lock(task_rq);
+@@ -4377,6 +4398,7 @@ static void reenq_user(struct rq *rq, st
+ 		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
  
- 	/*
--	 * If balance_one() is telling us to keep running @prev, replenish slice
--	 * if necessary and keep running @prev. Otherwise, pop the first one
--	 * from the local DSQ.
-+	 * If we're keeping @prev, replenish slice if necessary and keep running
-+	 * @prev. Otherwise, pop the first one from the local DSQ.
- 	 */
- 	if (verdict == SCX_DSP_PREV) {
- 		p = prev;
+ 		if (!(++nr_enqueued % SCX_TASK_ITER_BATCH)) {
++			scx_rq_lock_drop(locked_rq);
+ 			raw_spin_rq_unlock(locked_rq);
+ 			locked_rq = NULL;
+ 			cpu_relax();
+@@ -4389,8 +4411,10 @@ static void reenq_user(struct rq *rq, st
+ 	raw_spin_unlock(&dsq->lock);
+ 
+ 	if (locked_rq != rq) {
+-		if (locked_rq)
++		if (locked_rq) {
++			scx_rq_lock_drop(locked_rq);
+ 			raw_spin_rq_unlock(locked_rq);
++		}
+ 		raw_spin_rq_lock(rq);
+ 	}
+ }
+@@ -5442,6 +5466,7 @@ resume:
+ 		if (!(nr_balanced % SCX_BYPASS_LB_BATCH) && n) {
+ 			list_move_tail(&cursor.node, &n->scx.dsq_list.node);
+ 			raw_spin_unlock(&donor_dsq->lock);
++			scx_rq_lock_drop(donor_rq);
+ 			raw_spin_rq_unlock_irq(donor_rq);
+ 			cpu_relax();
+ 			raw_spin_rq_lock_irq(donor_rq);
+@@ -5452,6 +5477,7 @@ resume:
+ 
+ 	list_del_init(&cursor.node);
+ 	raw_spin_unlock(&donor_dsq->lock);
++	scx_rq_lock_drop(donor_rq);
+ 	raw_spin_rq_unlock_irq(donor_rq);
+ 
+ 	return nr_balanced;
+@@ -5742,6 +5768,7 @@ static void scx_bypass(struct scx_sched
+ 		 * sees scx_bypassing() before moving tasks to SCX.
+ 		 */
+ 		if (!scx_enabled()) {
++			scx_rq_lock_drop(rq);
+ 			raw_spin_rq_unlock(rq);
+ 			continue;
+ 		}
+@@ -5768,6 +5795,7 @@ static void scx_bypass(struct scx_sched
+ 		if (cpu_online(cpu) || cpu == smp_processor_id())
+ 			resched_curr(rq);
+ 
++		scx_rq_lock_drop(rq);
+ 		raw_spin_rq_unlock(rq);
+ 	}
+ 
+@@ -8495,6 +8523,7 @@ static bool kick_one_cpu(s32 cpu, struct
+ 		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
+ 	}
+ 
++	scx_rq_lock_drop(rq);
+ 	raw_spin_rq_unlock_irqrestore(rq, flags);
+ 
+ 	return should_wait;
+@@ -8511,6 +8540,7 @@ static void kick_one_cpu_if_idle(s32 cpu
+ 	    (cpu_online(cpu) || cpu == cpu_of(this_rq)))
+ 		resched_curr(rq);
+ 
++	scx_rq_lock_drop(rq);
+ 	raw_spin_rq_unlock_irqrestore(rq, flags);
+ }
+ 
+@@ -8548,6 +8578,7 @@ static void kick_cpus_irq_workfn(struct
+ 		raw_spin_rq_lock(this_rq);
+ 		this_scx->kick_sync_pending = true;
+ 		resched_curr(this_rq);
++		scx_rq_lock_drop(this_rq);
+ 		raw_spin_rq_unlock(this_rq);
+ 	}
+ }
+@@ -9039,6 +9070,7 @@ out:
+ 		if (locked_rq != p_rq)
+ 			switch_rq_lock(p_rq, locked_rq);
+ 	} else {
++		scx_rq_lock_drop(p_rq);
+ 		raw_spin_rq_unlock_irqrestore(p_rq, flags);
+ 	}
+ 
+@@ -9518,9 +9550,11 @@ static void scx_kick_cpu(struct scx_sche
+ 
+ 		if (raw_spin_rq_trylock(target_rq)) {
+ 			if (can_skip_idle_kick(target_rq)) {
++				scx_rq_lock_drop(target_rq);
+ 				raw_spin_rq_unlock(target_rq);
+ 				goto out;
+ 			}
++			scx_rq_lock_drop(target_rq);
+ 			raw_spin_rq_unlock(target_rq);
+ 		}
+ 		cpumask_set_cpu(cpu, this_rq->scx.cpus_to_kick_if_idle);
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -803,6 +803,9 @@ struct scx_rq {
+ 	bool			cpu_released;
+ 	u32			flags;
+ 	u32			nr_immed;		/* ENQ_IMMED tasks on local_dsq */
++#ifdef CONFIG_SCHED_CORE
++	u32			lock_drop_seq;	/* nr dispatch lock releases */
++#endif
+ 	u64			clock;			/* current per-rq clock -- see scx_bpf_now() */
+ 	cpumask_var_t		cpus_to_kick;
+ 	cpumask_var_t		cpus_to_kick_if_idle;
 
 
