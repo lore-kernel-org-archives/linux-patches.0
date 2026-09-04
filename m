@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7293242BD;
-	Fri,  4 Sep 2026 05:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60529248F64;
+	Fri,  4 Sep 2026 05:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501216; cv=none; b=NUbfe/FB2J196JkN3NX8F++6az4KIkz3c3E0av0mP55MCnZliNDBCoguB2PxuiKxFjK97YddZVHMQDJjCPIkZPUd5a0XljobBIo649ABDUUEpTytp4QAGIR/DTM+w/AP1gxEknsvDwPFA3ApuPtBTdm4pRtEX1HOfwQH2IqSeZ4=
+	t=1788501219; cv=none; b=qqdjyXjz5X3khKDF5C3qZKc+eGXKuBEtxMnLDsxhjhulkjMn205dxHsd+s+0Xj5/oBAi88YfW4jl4GqJefQCZQMPImpAf0vq6Zf39g2HFhW4Coqm+mcElO50A/wfXJnJlTTu7qlI8Ui9Sc+ObF5SYILJYWZnwpHIvG3gGvbyH9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501216; c=relaxed/simple;
-	bh=nyXn8D0Qtj6Sk6HAVppNVatPj6CAIJel7ijqnGofeNk=;
+	s=arc-20240116; t=1788501219; c=relaxed/simple;
+	bh=z//cgCEPpqf+kbcC9IDFC4dnV5zEcRQxzdeDuauNtns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czONpIgaf9jtHSG5MGRpwsz58Bm+uphNK9m42N9Z/GViBIXDS4Bb6ZeaN3NP70V00QBmQUuLpeDX2bXDHUYide2Bx///lC5g8VGu6ySN/6d1EPsZ5HrhSyC0KmRD6ZFiKbIDkikH5gL46oZEZwT3R5hOtR2LPtYBCqL/oZdbhfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwHKsRii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rPLZqWloZBXkPj0wa1CSCkFgwUW929ggp3HMgGZ7j9IO8Yvq3DNW/eNxK6TKakMoXcV4LhoxER3o1nqVp3ohClRp1IxOmK+8I37FMzjsE9omXZSAGiRGyYanUN/YOKQO+wr7C/YcsVmd/NQzTQTbjv4EALoGQl6tM0FLxuAjNrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRdnlCKg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwHKsRii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2371F00A3D;
-	Fri,  4 Sep 2026 05:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRdnlCKg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752961F00A3D;
+	Fri,  4 Sep 2026 05:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501215;
-	bh=+UsfeNLTZT1x4mgZgvqj3H4cRcMK5accyJsgC720vYU=;
+	s=korg; t=1788501218;
+	bh=4HgFrcK+b3dL1W+9hgDPlpRgKEizrksR8q/yg2vAcFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uwHKsRiinVZLj7XpLeU54x2BI0Lw+TOf9VZhy/ofVXgeqs4YA2NmGe+KeUHiyznqw
-	 x+4jlJo4ggtBxn6l/EznnIY5r9+oV0uzT7n4mtTOGwNVOqVZWFmjlB392qKscbmLqd
-	 w3BSLtZs42804UBQioD1OcwNb9WyWfK4go3vDRhY=
+	b=SRdnlCKggBC2z4TYd0ns1m84a6NW6weljxS0Gw0HgNVFQvb9+Umk1fNL1dVt/u7DQ
+	 6ItflL5elvXJU11SE+V9LiLhq44W3h+WpRwwOkVhzAY+fVfL/J5hDQE2lEIB6dx56B
+	 YZfbWjQUWqE6Q3zpTUyAEXu8EIiYJGnKwSFUE+18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
 	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 330/552] ring-buffer: Free cpu_buffer::free_page with subbuf_order
-Date: Fri,  4 Sep 2026 06:58:07 +0200
-Message-ID: <20260904045757.748194156@linuxfoundation.org>
+Subject: [PATCH 6.18 331/552] ring-buffer: Hold cpu_buffer::lock when resizing a subbuf
+Date: Fri,  4 Sep 2026 06:58:08 +0200
+Message-ID: <20260904045757.768998243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -54,35 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Donnefort <vdonnefort@google.com>
 
-commit 234b1a72e9706fe20c08c96f4374ec8e83b934cb upstream.
+commit 24974bd0da1b47fd56c975533ead50abf754e74d upstream.
 
-When sub-buffers use an order greater than 0, cpu_buffer->free_page is
-allocated with subbuf_order. Use the correct order for
-cpu_buffer->free_page.
+Because, ring_buffer_subbuf_order_set() can clear cpu_buffer->free_page,
+hold cpu_buffer->lock to prevent races with
+ring_buffer_alloc_read_page() and ring_buffer_free_read_page().
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813131152.3589632-2-vdonnefort@google.com
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
+Link: https://patch.msgid.link/20260813131152.3589632-3-vdonnefort@google.com
+Fixes: 8e7b58c27b3c ("ring-buffer: Just update the subbuffers when changing their allocation order")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260806211306.3704194-1-vdonnefort%40google.com # patch 3
+Closes: https://sashiko.dev/#/patchset/20260810125633.3344684-1-vdonnefort%40google.com # patch 3
 Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -2473,7 +2473,7 @@ static void rb_free_cpu_buffer(struct ri
- 		free_buffer_page(bpage);
- 	}
+@@ -6973,8 +6973,10 @@ int ring_buffer_subbuf_order_set(struct
+ 		cpu_buffer->nr_pages = cpu_buffer->nr_pages_to_update;
+ 		cpu_buffer->nr_pages_to_update = 0;
  
--	free_page((unsigned long)cpu_buffer->free_page);
-+	free_pages((unsigned long)cpu_buffer->free_page, cpu_buffer->buffer->subbuf_order);
++		arch_spin_lock(&cpu_buffer->lock);
+ 		old_free_data_page = cpu_buffer->free_page;
+ 		cpu_buffer->free_page = NULL;
++		arch_spin_unlock(&cpu_buffer->lock);
  
- 	kfree(cpu_buffer);
- }
+ 		rb_head_page_activate(cpu_buffer);
+ 
 
 
