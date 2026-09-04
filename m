@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC8241A4F8;
-	Fri,  4 Sep 2026 05:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B3641A4F8;
+	Fri,  4 Sep 2026 05:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500308; cv=none; b=q13gC8qCg3CqK4qf8N5tXsFPkXp2yORDKfJMLxh29VjlBzD2R3dyAdIIaKO5yajhoQfR7XV7tvXWTHB/ttYnsTbPCRkpKXoIPCZWMBLKF0CGEEUr7RKm3IZ9QffSZIUUATT/FOUztJ7Kv7pUQWEDBQmYyhT8WT4anNnzAsxJ1K0=
+	t=1788500311; cv=none; b=JFcFs7hx7sy7PGlGQ3QdjfNUm5xVSmQ52joVbva6DtErYQO+eUwpaG5m7ELaknLGqEzLFtgAmnkcHYWyXQtF5VsmL+EeZZw04RTH8rvkUh+q+5DbCuANJQPVTiNKAV1/lgzxFFxnKLX47HhXfF5GtaCuezStzYyvyJrEj0kAA4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500308; c=relaxed/simple;
-	bh=SVEYuAG6veSAwhZIauJWilS1yLlm13SHIDrsGZkVNfU=;
+	s=arc-20240116; t=1788500311; c=relaxed/simple;
+	bh=BiJwtHnEYuF6JtU2x9mhW4kF1qHhmRxXJVWS1BA+A4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IalBrQkh5lyrX22JfOuE7gC8z2jvR0BosWmpKZMkrVZtvI5n6neU87r4JmskWBeGSGTuL3c2RlYWrMt8J0TmQ4ruHB+JDsI6P2UEkmjzMa3RVNwi/fdVQtd3yVH7BC19UMIdHNjjBQLlLKhAjmkW8KcQh91k/sdhFRSUCz/mtKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2W0Rwv6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ss9RIv7L4kvb/ssiVYCeOwCyNaEzTYWm1e23FurzBKYSFSYG1IbKac8K7Cq4QtMRSbohW91L6HlkMKsiWr5odHhs07/TDsXdP7dkKUQ3gCDL/RvYVVmF9dmEGobUlm6xCSGZ/g/pNWSyHjRKrlsb2NRsG95+xvFvo4fvnwZRLgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=he8JAMwQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2W0Rwv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9A81F00AC4;
-	Fri,  4 Sep 2026 05:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="he8JAMwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9FA1F00A3E;
+	Fri,  4 Sep 2026 05:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500306;
-	bh=xHuUr2V/auxmLRhc+Cc7jCb8mWxesZvc+CyG3w0bgKo=;
+	s=korg; t=1788500309;
+	bh=XtHR67B5QM1n7gHYTq/qDIe14yUIhBxagdJX09yduzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2W0Rwv6QeW/TvnOddMnArt8vcVYmsa0hlHxB6GN9sDHlL6S3Hh6DF8KbxLTfOOg/
-	 51viEFMCvDFqhu8EdEZEY5LwhUfbnp89s7WOCDdiV2xGKuk1YCnuEaFnfhcLbAMU5O
-	 UahNTCQ0Rf0nPeBSkjRPz7RX48M82NLsAP43bxA8=
+	b=he8JAMwQtyJCdS7AsVrQRk8RI00kN0JQjP55b6wybjVoE1rQpINJDRtQYRpZViO+q
+	 prrl+cRt3r3fbM3G5b/nxjy4+S3qft3KanPi4rjBg9CiqY4lJUc1hH605Rzp84EVsG
+	 AbMjGj3Lg4ua81PFlIbZPpz7OA+KJn44KhQUa2OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 011/552] drm/amd/display: Skip PHY SSC reduction on some 8K panels
-Date: Fri,  4 Sep 2026 06:52:48 +0200
-Message-ID: <20260904045748.082035520@linuxfoundation.org>
+Subject: [PATCH 6.18 012/552] drm/amd/display: Refactor amdgpu_dm_connector_detect (v2)
+Date: Fri,  4 Sep 2026 06:52:49 +0200
+Message-ID: <20260904045748.104513309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -49,86 +47,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roman Li <Roman.Li@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 144169e7be0831e09958a906d08d1856751aa6c6 ]
+[ Upstream commit 8223a605744bb471f31018eac9075a539415b16f ]
 
-[Why]
-Some 8K displays cannot tolerate the reduced phy ssc value
-at high link utilization and show corruption or black screen.
+Prepare for polling analog connectors.
+Document the function better.
 
-[How]
-Add an EDID panel-id quirk to utilize existing skip_phy_ssc_reduction flag.
-
-To pass the link into the quirk handler, change the signature of
-apply_edid_quirks() to take link as an argument. The dev local in
-dm_helpers_parse_edid_caps() becomes unused and is removed.
-
-Fixes: 5fa62c87cffd ("drm/amd/display: Add option to disable PHY SSC reduction on transmitter enable")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Roman Li <Roman.Li@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Adjust for lack of HDMI 2.1 FRL in 6.18.y
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c   | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 35 ++++++++++---------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-index d0f770dd0a956..21f391e01ca7c 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -56,8 +56,11 @@ static u32 edid_extract_panel_id(struct edid *edid)
- 	       (u32)EDID_PRODUCT_ID(edid);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index fd5a6c6532a1e..d70b94c688c3a 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7327,29 +7327,32 @@ create_stream_for_sink(struct drm_connector *connector,
+ 	return stream;
  }
  
--static void apply_edid_quirks(struct drm_device *dev, struct edid *edid, struct dc_edid_caps *edid_caps)
-+static void apply_edid_quirks(struct dc_link *link, struct edid *edid,
-+			      struct dc_edid_caps *edid_caps)
++/**
++ * amdgpu_dm_connector_detect() - Detect whether a DRM connector is connected to a display
++ *
++ * A connector is considered connected when it has a sink that is not NULL.
++ * For connectors that support HPD (hotplug detection), the connection is
++ * handled in the HPD interrupt.
++ *
++ * Notes:
++ * 1. This interface is NOT called in context of HPD irq.
++ * 2. This interface *is called* in context of user-mode ioctl. Which
++ *    makes it a bad place for *any* MST-related activity.
++ */
+ static enum drm_connector_status
+ amdgpu_dm_connector_detect(struct drm_connector *connector, bool force)
  {
-+	struct amdgpu_dm_connector *aconnector = link->priv;
-+	struct drm_device *dev = aconnector->base.dev;
- 	uint32_t panel_id = edid_extract_panel_id(edid);
+-	bool connected;
+ 	struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
  
- 	switch (panel_id) {
-@@ -87,6 +90,11 @@ static void apply_edid_quirks(struct drm_device *dev, struct edid *edid, struct
- 		drm_dbg_driver(dev, "Disabling VSC on monitor with panel id %X\n", panel_id);
- 		edid_caps->panel_patch.disable_colorimetry = true;
- 		break;
-+	/* Workaround for monitors that get corrupted by the PHY SSC reduction */
-+	case drm_edid_encode_panel_id('D', 'E', 'L', 0x4147):
-+		drm_dbg_driver(dev, "Skip PHY SSC reduction on panel id %X\n", panel_id);
-+		link->wa_flags.skip_phy_ssc_reduction = true;
-+		break;
- 	default:
- 		return;
- 	}
-@@ -108,7 +116,6 @@ enum dc_edid_status dm_helpers_parse_edid_caps(
- {
- 	struct amdgpu_dm_connector *aconnector = link->priv;
- 	struct drm_connector *connector = &aconnector->base;
--	struct drm_device *dev = connector->dev;
- 	struct edid *edid_buf = edid ? (struct edid *) edid->raw_edid : NULL;
- 	struct cea_sad *sads;
- 	int sad_count = -1;
-@@ -138,7 +145,7 @@ enum dc_edid_status dm_helpers_parse_edid_caps(
+-	/*
+-	 * Notes:
+-	 * 1. This interface is NOT called in context of HPD irq.
+-	 * 2. This interface *is called* in context of user-mode ioctl. Which
+-	 * makes it a bad place for *any* MST-related activity.
+-	 */
+-
+-	if (aconnector->base.force == DRM_FORCE_UNSPECIFIED &&
+-	    !aconnector->fake_enable)
+-		connected = (aconnector->dc_sink != NULL);
+-	else
+-		connected = (aconnector->base.force == DRM_FORCE_ON ||
+-				aconnector->base.force == DRM_FORCE_ON_DIGITAL);
+-
+ 	update_subconnector_property(aconnector);
  
- 	edid_caps->edid_hdmi = connector->display_info.is_hdmi;
+-	return (connected ? connector_status_connected :
++	if (aconnector->base.force == DRM_FORCE_ON ||
++		aconnector->base.force == DRM_FORCE_ON_DIGITAL)
++		return connector_status_connected;
++	else if (aconnector->base.force == DRM_FORCE_OFF)
++		return connector_status_disconnected;
++
++	return (aconnector->dc_sink ? connector_status_connected :
+ 			connector_status_disconnected);
+ }
  
--	apply_edid_quirks(dev, edid_buf, edid_caps);
-+	apply_edid_quirks(link, edid_buf, edid_caps);
- 
- 	sad_count = drm_edid_to_sad((struct edid *) edid->raw_edid, &sads);
- 	if (sad_count <= 0)
 -- 
 2.53.0
 
