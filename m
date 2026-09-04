@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813E13B95FA;
-	Fri,  4 Sep 2026 05:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07807408035;
+	Fri,  4 Sep 2026 05:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499843; cv=none; b=bYN2j5XSTimhQAzpcEg41Z6MsVxbDiHoe509tvKsgMxga4TH4jiTcy95wNC+sDABs10onVGwnTmRSPuAGspbjXOwl6oFlBy2nVRSUFi9bMPwgxrDJDPHlgSGeB0RcTrBdoVatFptxK0cbbF1VrV4NOZExa1dw4tGEpKA1FsPE5c=
+	t=1788499846; cv=none; b=RvKHSYkpLtLTG6EVUTu/gCKKfh3fjpoJheaZOAQaTlFlxSworcJCkwZ3VJVP4TJCfWShKXa3VIm221q2YWd1qdpdD8vE1XH9bXEqwzbz8hBX0p1vnKafNsIa9Pt21QCeLb7CvK9r8inalZ6dX4Z/TIEm228xl5xnBkYCfI6Q+bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499843; c=relaxed/simple;
-	bh=W2MvVRiaJbuajpx0OHW2hYltUtr8BPfbpZdGJ8BtSsI=;
+	s=arc-20240116; t=1788499846; c=relaxed/simple;
+	bh=JawT5TWAhoI5/GsVZmYl0BSVszIHVGYYfsCtVI8iLwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QSmnVMxRuklN8CVCjnQzhFwulauiPipllf0H3YrnQUNWKrzURE5URAr4MLBGdVB4O5sN13bs6re3Whmk3w3RGdfL2vVXjms/GpqQ5NzaH09BfXKKGZsEADsKzlJAYTUrD8SLETFCvUUB2M/seH7B5ucsypuuFDz40hN2INudcY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfZDOD3X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YaoC0VQUG7xuvPZ18yHbikLPAvhNIVaR62UwdByGnUcEr7gks+LLBPmJdzKoG+b5sWF5eVKAKyfSppo6sJoz4X7kBkFtyYSez+O/l/PbglKXZ6334JSQao3opii4SwLormJnxL0wr3MQEonCK8En8dBVNZzoq2XX/5EmBmVKfs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8t2Hmhm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfZDOD3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937251F00A3D;
-	Fri,  4 Sep 2026 05:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8t2Hmhm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BF51F00A3D;
+	Fri,  4 Sep 2026 05:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499842;
-	bh=wmriFqSrQu+VOQKfd9dc4NqmrioSjnsCIWutLCIOTk4=;
+	s=korg; t=1788499844;
+	bh=w9UMb7TVxh325hIfuZY5H0fINtJKh3k6RBBtDGX10/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nfZDOD3Xgzwi3e4zeilo23fGMtc/f/E5Ac/0v/8pM37ctB2jzQTGWKDekPXu0Hwb/
-	 hLYKj8hhJWFPWyE6miJOBQzikC3+eULo2kZyQP8j+JbLKDCCsMe2Fo6jUKEQ/QC+o4
-	 t/fHSP7uVaFEftVNYRmnu0sjUrIouLBOLPqDscFA=
+	b=D8t2Hmhm6LF1AHqa1zGbhn+P9AqwV2BYyOei6uo5wThmIgZHjvufzI2eblfNjeCx1
+	 6t7VKj7J3Ljd73XaGu6M2xaNKc43BpWqlMmOdf39VnxDM4T+0zCKTnZ4jTDKWBygLP
+	 aX4TIh+yBpHA8E6fQ83FGUpLX2s+fKZ0jcoGbkLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 560/713] platform/x86: ISST: Validate parameter for core power state
-Date: Fri,  4 Sep 2026 06:58:48 +0200
-Message-ID: <20260904045816.372678312@linuxfoundation.org>
+Subject: [PATCH 7.2 561/713] platform/x86: ISST: Validate parameter for frequency and priority
+Date: Fri,  4 Sep 2026 06:58:49 +0200
+Message-ID: <20260904045816.394787798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,43 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit 1700b4f804555467b7eff58dff7acc11d508b3a1 upstream.
+commit 574b59bb4b6bfcfd1f639d02f1041b314d43a2e6 upstream.
 
-Allow only 0 or 1 for core_power enable and priority_type parameters.
+Validate range for frequency and proportional priority while setting
+CLOS parameters.
 
 Fixes: 12a7d2cb811d ("platform/x86: ISST: Add SST-CP support via TPMI")
 Cc: stable@vger.kernel.org
 Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260811221514.3905817-4-srinivas.pandruvada@linux.intel.com
+Link: https://patch.msgid.link/20260811221514.3905817-5-srinivas.pandruvada@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 --- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
 +++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -602,6 +602,9 @@ static bool disable_dynamic_sst_features
- #define SST_CP_PRIORITY_TYPE_START	1
- #define SST_CP_PRIORITY_TYPE_WIDTH	1
+@@ -661,6 +661,9 @@ static long isst_if_core_power_state(voi
  
-+#define SST_CP_MAX_ENABLE		1
-+#define SST_CP_MAX_PRIORITY_TYPE	1
+ #define SST_MAX_CLOS			3
+ 
++#define SST_MAX_FREQ			0xff
++#define SST_CLOS_MAX_PRIORITY		0x0f
 +
- static long isst_if_core_power_state(void __user *argp)
+ static long isst_if_clos_param(void __user *argp)
  {
  	struct tpmi_per_power_domain_info *power_domain_info;
-@@ -621,6 +624,10 @@ static long isst_if_core_power_state(voi
+@@ -680,6 +683,15 @@ static long isst_if_clos_param(void __us
  		if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
  			return -EPERM;
  
-+		if (core_power.enable > SST_CP_MAX_ENABLE ||
-+		    core_power.priority_type > SST_CP_MAX_PRIORITY_TYPE)
++		if (!in_range(clos_param.min_freq_mhz / SST_MUL_FACTOR_FREQ, 0, SST_MAX_FREQ + 1))
 +			return -EINVAL;
 +
- 		_write_cp_info("cp_enable", core_power.enable, SST_CP_CONTROL_OFFSET,
- 			       SST_CP_ENABLE_START, SST_CP_ENABLE_WIDTH, SST_MUL_FACTOR_NONE)
- 		_write_cp_info("cp_prio_type", core_power.priority_type, SST_CP_CONTROL_OFFSET,
++		if (!in_range(clos_param.max_freq_mhz / SST_MUL_FACTOR_FREQ, 0, SST_MAX_FREQ + 1))
++			return -EINVAL;
++
++		if (!in_range(clos_param.prop_prio, 0, SST_CLOS_MAX_PRIORITY + 1))
++			return -EINVAL;
++
+ 		_write_cp_info("clos.min_freq", clos_param.min_freq_mhz,
+ 			       (SST_CLOS_CONFIG_0_OFFSET + clos_param.clos * SST_REG_SIZE),
+ 			       SST_CLOS_CONFIG_MIN_START, SST_CLOS_CONFIG_MIN_WIDTH,
 
 
