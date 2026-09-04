@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A47F3876B3;
-	Fri,  4 Sep 2026 05:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA0B3876CC;
+	Fri,  4 Sep 2026 05:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498373; cv=none; b=Qc2tzOVPuRYe15mM03G/MeRdbZ0sk7se3rD2SQaLU/vlAb9e1LWvCsD3cEfrFkcLVrGD+cgFeOBiN5ND7cDjq/wJnG1GKUDtdCdg+JF2Uf0GZBV6w9RssY41OyBGD3xw2eucsTm/8aGwuzCq9jdaQv9SXgiAfUvUNOoj0Ih1P8E=
+	t=1788498380; cv=none; b=V2lnM/3a0QTWH0vY3unLgDiE08sZLtKsxKlC3+NbC09+JWsZIHF1XeRt3okLKO7I+Ft1W40Stg8xyVIvuZXVg5Kc2PmPduEOasFoFyurA0gRWufQGGuofnP94zSNYWEA8hb9WGtPW68S8Iz4awLtd9USdlhHnIdNcZFfa8ZSTQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498373; c=relaxed/simple;
-	bh=tDHFmxrULlvasXi5pfXry+AVJKha+7d3f0bPWjX1UGg=;
+	s=arc-20240116; t=1788498380; c=relaxed/simple;
+	bh=XNSCd7eQcaW/BRGvkPPusWDUBcfK0lxSPmnetmKEBW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHzyJDg0YAq1mVFti/RpolbqU3dISMQJvv2+gAwRR3cnRJQLOuPYTvQKGtQYwnVEDy/2HnwRsJtpmVuiNZiwXlWIIT0FLC6IgN/eBBrJHV+DdYWSYKLzAFs0MgNpQn2VAiaH5awGbgtQqp9im/fNJCIz5zUmAe1VWXdzFRbzx/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB9hfxJ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S4xjutzBwyxii+pwyY7XCpl0GfdKJ5MNHzocGI+GPWuXTgV6VilUzJKk9Ns2KHPXj7UBrm09PU0TFlyzRXbgebrDuQ+66b+SDSsFguaTzFfsuBN9KrkttZYwiF0ltFtv3BDSWNzcE5XANYHzUZVopAgUPth/IJ1tX1Iq4bFMsD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tA8wUG8W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB9hfxJ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DC11F00A3D;
-	Fri,  4 Sep 2026 05:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tA8wUG8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD651F00A3E;
+	Fri,  4 Sep 2026 05:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498372;
-	bh=iskjAkWvlAKEc8nb/9PkK52VEC8PRSnXFBKGcZhA9+E=;
+	s=korg; t=1788498378;
+	bh=soQ58yF8vJfXErXpPfChmO12V644dcyIvDWRa4wXXy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JB9hfxJ9AxvYChtOjE0tZwm443ZUOQWAxF1EjDKhLf2SBYk14IVZYhhaf8h/d8kHE
-	 80EMne5yjamv3QI+TsUbF4LZ82BpHf1Hl2+6YGTy/3Q50eroQjCoFt92h0YEVk2UU9
-	 MCERjCBjR0X5r810V0noM7DQCrBpPa+WG9snB9M8=
+	b=tA8wUG8WXt8ER+jR3Gdp15K9uM6zxrFbGTRDhWZyCyNWyoyqn6iGXlxjBXdGq+IOp
+	 1GaThV/xD2wlgxKDn6mi7OfkCcOCo60FZ5o21Tzi2IUpw5fIrGUFszXTpNg0476v3f
+	 sGdoPthqhfR4+ix0uSlXVk1Niiz2cTgJnq/xOnyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 009/713] btrfs: write-protect folios during data writeback
-Date: Fri,  4 Sep 2026 06:49:37 +0200
-Message-ID: <20260904045804.026244432@linuxfoundation.org>
+	Antoni Boucher <bouanto@zoho.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.2 034/713] rust: kbuild: disambiguate `zerocopy_derive` for `rusttest`
+Date: Fri,  4 Sep 2026 06:50:02 +0200
+Message-ID: <20260904045804.595079755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,251 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 5376c9db45368eb210b4d71104ac00a59dc8b6e0 upstream.
+commit 1b0bab4a873f1034c27573cfc613394cff7e0a5b upstream.
 
-commit 095be159f3eb ("btrfs: unify folio dirty flag clearing") replaced
-the folio_clear_dirty_for_io() call in extent_write_cache_pages() with a
-plain folio_test_dirty() check. Besides clearing the dirty flag,
-folio_clear_dirty_for_io() also calls folio_mkclean(), which write-protects
-the shared mmap PTEs mapping the folio. Note that we still do call
-folio_clear_dirty_for_io() later in submit_one_sector() when we clear
-dirty on the last sector of the folio (the only sector for non-subpage
-cases). But we lost this early call in extent_write_cache_pages().
+The `rustc-dev` components for Rust 1.82.0 through 1.87.0 include a
+precompiled `zerocopy_derive` procedural macro in the sysroot. This
+range includes Rust 1.85.0, our minimum supported version.
 
-Without the extra write-protection, a process with the file mmap-ed can
-modify a sector while it is being used by writeback in a way that
-expects a stable folio (checksumming, compressing, copying, etc...)
-without faulting, which manifests as a handful of concrete bugs.
+This makes `rusttest` fail because the compiler finds both the sysroot
+copy and the copy built in `rust/test`:
 
-1. For large folios or subpage sectorsize, it is possible to submit a bio
-which does not cover the whole folio. When this happens, we will have a
-bio in flight for a folio that we have *not* called
-folio_clear_dirty_for_io() on. If a task with an existing mmap-ed PTE
-writes (without faulting..) in this window, it can result in
-corruptions. If the write arrives while the checksumming or writing itself
-is underway, this can result in an invalid checksum and later corruption
-reports on read. If the write arrives after checksumming/writing is done
-but before the last sector dirty is cleared, then the write is present
-in page cache but doesn't affect the dirty tracking and will be lost
-when the folio is fully finished being submitted and the dirty bit
-is cleared. This results in losing the write even if fsync() is called.
+    error[E0464]: multiple candidates for `dylib` dependency `zerocopy_derive` found
+      --> rust/kernel/prelude.rs:70:9
+       |
+    70 | pub use zerocopy_derive::{
+       |         ^^^^^^^^^^^^^^^
+       |
+       = note: candidate #1: .../lib/rustlib/x86_64-unknown-linux-gnu/lib/libzerocopy_derive-54d2b38896fa6bc5.so
+       = note: candidate #2: .../rust/test/libzerocopy_derive.so
 
-2. For zoned submissions which are done in batch separate from the main
-extent_writepage() loop, we also risk csum violations for those
-submissions. Zoned writes are clamped to max_zone_append_size and are
-not aligned with folios, so a submission can span two folios. The first
-folio being processed in extent_write_cache_pages() will call
-extent_write_locked_range() which will submit the partial range of the
-next folio, while the rest of that folio could still be dirty. So
-clearing dirty on the submitted sectors doesn't call
-folio_clear_dirty_for_io() and we have the same issue. Since
-extent_write_cache_pages() skips these batch submitted folios (they are
-already marked for writeback from submission by the preceding folio), we
-must add the extra write protection in lock_delalloc_folios().
+Commit fe39a233ea52 ("rust: kbuild: disambiguate `zerocopy` for
+`rusttest`") fixed the equivalent ambiguity for `zerocopy`.
 
-3. For inline extents this will subtly risk losing writes that happen
-after/while we copy the inline extent but before we clear dirty on
-the folio.
+Thus point to the dependency explicitly in this case too.
 
-4. For folios spanning EOF, mmap could tamper with the zeroed bytes past
-EOF and cause them to be persisted where future faults would improperly
-see them instead of zeros.
-
-5. Finally, for compressed extents, we risk modifying the folios while we
-work on compressing them which will result in corrupted compressed data.
-Specifically, in run_delalloc_compressed() we queue up work to do
-compress_file_range() in BTRFS_COMPRESSION_CHUNK_SIZE (512K) chunks which
-will call btrfs_folio_clamp_clear_dirty() on the range. For non-subpage,
-this will always clear the whole folio, safely. For subpage, we risk a
-partial clear here as well. In particular, imagine a 2M folio broken up
-into 512K chunks of work which might start compression work on one chunk
-before all the chunks compress_file_range() workers have gotten far
-enough to finish clearing all the dirty bitmaps of the folio and getting
-to folio_clear_dirty_for_io(). Large folios on the edges of submission
-ranges are similarly at risk to be only partly cleared.
-This particular gap was introduced by a second patch in the same series:
-commit a4ef54dbb576 ("btrfs: make extent_range_clear_dirty_for_io() to handle sector size < page size cases")
-
-We cannot simply restore the call to folio_clear_dirty_for_io() because
-that also drops the dirty flag off the folio which violates invariants
-introduced for large folios by
-commit 334509ce9d07 ("btrfs: use dirty flag to check if an ordered extent needs to be truncated")
-and results in failing to invalidate clean folios past i_size, resulting
-in deadlocks.
-
-Therefore, to fix it, leave the existing semantics w.r.t. the folio's
-dirty flag (to preserve the correct invalidate behavior) but ensure that
-the other aspect of folio_clear_dirty_for_io(), folio_mkclean(), is run
-on the folio when we lock it for writeback.
-
-Finally, to help prevent similar regressions in the future, add a debug
-warning that triggers at the known corruption sites if we have failed to
-write protect the folio.
-
-Assisted-by: LLM (debug, reproduce, research fix, review patch)
-Fixes: 095be159f3eb ("btrfs: unify folio dirty flag clearing")
-Fixes: a4ef54dbb576 ("btrfs: make extent_range_clear_dirty_for_io() to handle sector size < page size cases")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Antoni Boucher <bouanto@zoho.com>
+Cc: stable@vger.kernel.org
+Fixes: 506054980429 ("rust: zerocopy-derive: enable support in kbuild")
+Link: https://patch.msgid.link/20260823193529.156066-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c | 31 +++++++++++++++++++++++++++++++
- fs/btrfs/extent_io.h |  5 +++++
- fs/btrfs/inode.c     | 23 +++++++++++++++++------
- 3 files changed, 53 insertions(+), 6 deletions(-)
+ rust/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index f032f0858f40f..45c4d4a3b29b1 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -6,6 +6,7 @@
- #include <linux/mm.h>
- #include <linux/pagemap.h>
- #include <linux/page-flags.h>
-+#include <linux/rmap.h>
- #include <linux/sched/mm.h>
- #include <linux/spinlock.h>
- #include <linux/blkdev.h>
-@@ -299,6 +300,25 @@ static noinline void unlock_delalloc_folio(const struct inode *inode,
- 				PAGE_UNLOCK);
- }
- 
-+#ifdef CONFIG_BTRFS_DEBUG
-+/*
-+ * Writeback must write-protect a folio when locking it for IO, before
-+ * anything consumes its data (zeroing, inline copy, compression,
-+ * checksumming). If this fails, then an mmap writer would be able to
-+ * modify the data concurrently while we need it to be stable.
-+ */
-+void btrfs_check_folio_write_protected(struct folio *folio)
-+{
-+	if (folio_mkclean(folio)) {
-+		const struct btrfs_inode *inode = BTRFS_I(folio->mapping->host);
-+
-+		DEBUG_WARN("writable mmap PTEs, root %llu ino %llu pos %llu order %u",
-+			   btrfs_root_id(inode->root), btrfs_ino(inode), folio_pos(folio),
-+			   folio_order(folio));
-+	}
-+}
-+#endif
-+
- static noinline int lock_delalloc_folios(struct inode *inode,
- 					 struct folio *locked_folio,
- 					 u64 start, u64 end)
-@@ -332,6 +352,8 @@ static noinline int lock_delalloc_folios(struct inode *inode,
- 				folio_unlock(folio);
- 				goto out;
- 			}
-+			/* Locked for writeback; revoke writable mmap PTEs before using the data. */
-+			folio_mkclean(folio);
- 			range_start = max_t(u64, folio_pos(folio), start);
- 			range_len = min_t(u64, folio_next_pos(folio), end + 1) - range_start;
- 			btrfs_folio_set_lock(fs_info, folio, range_start, range_len);
-@@ -1893,6 +1915,13 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
- 	ASSERT(end <= folio_end, "start=%llu len=%u folio_start=%llu folio_size=%zu",
- 	       start, len, folio_start, folio_size(folio));
- 
-+	/*
-+	 * We are about to checksum and write out the data, so it must not be
-+	 * mmap writeable, or we could corrupt the data and end up with invalid
-+	 * checksums.
-+	 */
-+	btrfs_check_folio_write_protected(folio);
-+
- 	/* Truncate the submit bitmap to the current range. */
- 	if (start > folio_start)
- 		bitmap_clear(bio_ctrl->submit_bitmap, 0,
-@@ -2703,6 +2732,8 @@ static int extent_write_cache_pages(struct address_space *mapping,
- 				continue;
- 			}
- 
-+			/* Locked for writeback; revoke writable mmap PTEs before using the data. */
-+			folio_mkclean(folio);
- 			ret = extent_writepage(folio, bio_ctrl);
- 			if (ret < 0) {
- 				done = true;
-diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
-index 9896e15ddc406..8699253376993 100644
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -255,6 +255,11 @@ bool try_release_extent_mapping(struct folio *folio, gfp_t mask);
- int try_release_extent_buffer(struct folio *folio);
- 
- int btrfs_read_folio(struct file *file, struct folio *folio);
-+#ifdef CONFIG_BTRFS_DEBUG
-+void btrfs_check_folio_write_protected(struct folio *folio);
-+#else
-+static inline void btrfs_check_folio_write_protected(struct folio *folio) { }
-+#endif
- void extent_write_locked_range(struct inode *inode, const struct folio *locked_folio,
- 			       u64 start, u64 end, struct writeback_control *wbc,
- 			       bool pages_dirty);
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 2534cd9284d54..39a01f9cf6b51 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -775,19 +775,28 @@ static inline void inode_should_defrag(struct btrfs_inode *inode,
- 
- static int extent_range_clear_dirty_for_io(struct btrfs_inode *inode, u64 start, u64 end)
- {
-+	pgoff_t index = start >> PAGE_SHIFT;
- 	const pgoff_t end_index = end >> PAGE_SHIFT;
- 	struct folio *folio;
- 	int ret = 0;
- 
--	for (pgoff_t index = start >> PAGE_SHIFT; index <= end_index; index++) {
-+	while (index <= end_index) {
- 		folio = filemap_get_folio(inode->vfs_inode.i_mapping, index);
- 		if (IS_ERR(folio)) {
- 			if (!ret)
- 				ret = PTR_ERR(folio);
-+			index++;
- 			continue;
- 		}
-+		/*
-+		 * We are about to compress the folio, so it must not be mmap
-+		 * writeable or we could corrupt the data as we attempt to
-+		 * compress it.
-+		 */
-+		btrfs_check_folio_write_protected(folio);
- 		btrfs_folio_clamp_clear_dirty(inode->root->fs_info, folio, start,
- 					      end + 1 - start);
-+		index = folio_next_index(folio);
- 		folio_put(folio);
- 	}
- 	return ret;
-@@ -877,11 +886,6 @@ static void compress_file_range(struct btrfs_work *work)
- 
- 	inode_should_defrag(inode, start, end, end - start + 1, SZ_16K);
- 
--	/*
--	 * We need to call clear_page_dirty_for_io on each page in the range.
--	 * Otherwise applications with the file mmap'd can wander in and change
--	 * the page contents while we are compressing them.
--	 */
- 	ret = extent_range_clear_dirty_for_io(inode, start, end);
- 
- 	/*
-@@ -2317,6 +2321,13 @@ static int run_delalloc_inline(struct btrfs_inode *inode, struct folio *locked_f
- 	int ret;
- 
- 	ASSERT(folio_pos(locked_folio) == 0);
-+	/*
-+	 * If an mmap writer could modify the folio while we copy it into an
-+	 * inline extent we might see only part of their modification then
-+	 * wrongly mark it clean again after copying, losing that write. So the
-+	 * folio must be write protected here.
-+	 */
-+	btrfs_check_folio_write_protected(locked_folio);
- 
- 	if (btrfs_inode_can_compress(inode) &&
- 	    inode_need_compress(inode, 0, blocksize, true)) {
+diff --git a/rust/Makefile b/rust/Makefile
+index 3afaad4a4a3a..9211d82ac96d 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -350,7 +350,8 @@ rusttestlib-pin_init: $(src)/pin-init/src/lib.rs rusttestlib-macros \
+ rusttestlib-kernel: private rustc_target_flags = --extern ffi \
+     --extern build_error --extern macros --extern pin_init \
+     --extern bindings --extern uapi \
+-    --extern zerocopy=$(objtree)/$(obj)/test/libzerocopy.rlib --extern zerocopy_derive
++    --extern zerocopy=$(objtree)/$(obj)/test/libzerocopy.rlib \
++    --extern zerocopy_derive=$(objtree)/$(obj)/test/$(libzerocopy_derive_name)
+ rusttestlib-kernel: $(src)/kernel/lib.rs rusttestlib-bindings rusttestlib-uapi \
+     rusttestlib-build_error rusttestlib-pin_init $(obj)/$(libmacros_name) \
+     $(obj)/bindings.o rusttestlib-zerocopy rusttestlib-zerocopy_derive FORCE
 -- 
-2.53.0
+2.55.0
 
 
 
