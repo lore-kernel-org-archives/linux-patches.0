@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B6A3F4DD2;
-	Fri,  4 Sep 2026 06:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A93E4156F9;
+	Fri,  4 Sep 2026 06:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502346; cv=none; b=KxvpWnf6H9zriAKHE857Q4DFTL8jtxxTchf7siK4rIyx6hts74U8MT/6PGtqbs2t+ipghQH8GMJ2MOAgZHHFDNFAfq5n7ydmgQTozempnxv//sje6WEr01WXrmY+vBSTgxKKHTKmGNP1m8Bd65Y3iwxZ/orpRHoIIXecub65evY=
+	t=1788502349; cv=none; b=X84Bu5woanK1q4GtfzqvaQFW7U1QtOcQ59j0RkkhyKztiFcL6vqzH1KEKbnF7uVDpYpiNkqAlqimKcJoccESPS41vshdCgQ8TCT0BQH9s67gURTZaaJVZWvdQm3caiG216ivQkpp1gdN0dlxRKX2RuVuVTLJk6v7WzpuhQbAvNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502346; c=relaxed/simple;
-	bh=wP61WS5tfu+ccUVsCHbUU2WQ3sPnhTBU7cK3nT1B9l4=;
+	s=arc-20240116; t=1788502349; c=relaxed/simple;
+	bh=Nm3ZVhEfEN14n85ZENs800pnYtI9+eiUW1z3VRNsWBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7ghvEG28hAmf8dCLzgJ74VeNQ3WdCSm1fexGGD9jpcaN+kUQgLGMbNjNNzWAJwH/aXc63AjDnUL/aJTwzlH9hINXV2ODUsEv6HFU82/ZUmsfl+yl4zIkHbbTu1JWnm2IbXc5AOQBDMq6GJ6lvMxgJl9jgXyiLyXOSgvZJjUwc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQOMMXOO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SuR1nt1EZ7upc9plj3JPPpMDQ9XulKeIXwdw+qKDtBRBsJpz/fxHU2qlaVfpilAsy7eUAUcVzFLPKZKL5STne3433FhctCxq5pdDJ1DdFB7FsGI6o2Vcc4okfO+pyIqoTlb2qzErJ80NRtAd2gyrcHe2a6FTuF/U1lpzLn6dW+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qalDgGXY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQOMMXOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD371F00A3D;
-	Fri,  4 Sep 2026 06:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qalDgGXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675D11F00A3D;
+	Fri,  4 Sep 2026 06:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502345;
-	bh=dKfEAGcPRKAM0A9cjJsOH0lN5WFobAvSyV51MjSBABY=;
+	s=korg; t=1788502347;
+	bh=TvwNrKEzFOTmH4epa+Kj2w+aBK0LWBKFr7Im22egl3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OQOMMXOOHJF5E+Z+kyjjo96Q8uT+d30H4m+kb4KbyjTOH+5dXCHPMOfGNXKxQibCq
-	 X9puQLA+VhXVlM+4O9LyBkpv/8a0IrmsRIvMHIBCyCsGGHLeKHxcYKtBJQl6FQvoQ2
-	 zBDyJokfINxVPEmW1vjIGWXD7AD5uXTQX167qru4=
+	b=qalDgGXYv5bNnF2pi2ssmTpqrTDFq4uexpzoTC+O9E7qctdwREZMfZY+EB7AzuKAR
+	 u0F/ftL00cNhvCXHmVIfSOC7DYo5aZfq5VIJOQtQfSeIryRxTfD0yH3bpRreTEdUAV
+	 hWzBdgttkQ5KjSUQchka8i+Z+ObuPEcpcw6L5KLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 173/403] cpufreq: schedutil: Fix rate limit overflow
-Date: Fri,  4 Sep 2026 06:59:36 +0200
-Message-ID: <20260904045738.794120396@linuxfoundation.org>
+	Dan Williams <djbw@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.12 174/403] cxl/pmem: Format the nvdimm serial number as unsigned decimal
+Date: Fri,  4 Sep 2026 06:59:37 +0200
+Message-ID: <20260904045738.817342231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,72 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-commit 3bff8f8e95fdc6ad19c8a1a8f87029094747e4bf upstream.
+commit 8a80d3d65cd06ee35b913d8517fb2f2319f8e70c upstream.
 
-rate_limit_us is an unsigned int, while NSEC_PER_USEC is defined as
-1000L. On 32-bit systems, the multiplication is therefore performed
-using 32-bit unsigned arithmetic before the result is assigned to
-freq_update_delay_ns.
+The CXL NVDIMM security passphrase key description and the nvdimm 'id'
+sysfs attribute are both derived from the CXL device serial number,
+but the serial number is not formatted consistently.
 
-For example, writing 4294968 to rate_limit_us wraps the delay from
-4294968000 ns to 704 ns. This makes schedutil update far more often
-than configured.
+The key description is formatted in hexadecimal while the 'id'
+attribute is formatted in decimal. As a result, ndctl stores the key
+using a decimal description while the kernel later looks it up using
+a hexadecimal description. For serial numbers of 10 and above, the
+descriptions no longer match, preventing automatic unlock after
+reboot.
 
-Add sugov_update_rate_limit_us() to widen rate_limit_us to s64 before
-converting it to nanoseconds. Use the helper when updating the tunable
-through sysfs and when starting the governor, so both paths perform the
-conversion without overflow.
+The decimal formatting has a second problem: both the key description
+and the 'id' attribute use the signed %lld format for a u64 PCIe
+Device Serial Number. Devices whose vendor OUI sets bit 63, such as
+Montage CXL devices, appear with negative decimal serial numbers.
 
-Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
-Signed-off-by: Hui Su <sh_def@163.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260806142304.1761454-1-sh_def@163.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Format the security key description and 'id' attribute as unsigned
+decimal, %llu, and document that the 'id' attribute is an unsigned
+decimal value.
+
+The key lookup mismatch was exposed by CXL unit test cxl-security.sh
+when cxl_test mock serial numbers were extended to 10 and above.
+
+A work around is described for ndctl load-key users here:
+https://github.com/pmem/ndctl/issues/299
+
+Cc: stable@vger.kernel.org
+Fixes: b5807c80b5bc ("cxl: add dimm_id support for __nvdimm_create()")
+Acked-by: Dan Williams <djbw@kernel.org>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/2c673a5ba0a8fa93ad160578e193bd556091fa95.1784924949.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ Documentation/ABI/testing/sysfs-bus-nvdimm |    3 ++-
+ drivers/cxl/core/pmem.c                    |   10 ++++++----
+ drivers/cxl/cxl.h                          |    3 ++-
+ drivers/cxl/pmem.c                         |    2 +-
+ 4 files changed, 11 insertions(+), 7 deletions(-)
 
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -59,6 +59,17 @@ static DEFINE_PER_CPU(struct sugov_cpu,
+--- a/Documentation/ABI/testing/sysfs-bus-nvdimm
++++ b/Documentation/ABI/testing/sysfs-bus-nvdimm
+@@ -48,7 +48,8 @@ What:		/sys/bus/nd/devices/nmemX/cxl/id
+ Date:		November 2022
+ KernelVersion:	6.2
+ Contact:	Dave Jiang <dave.jiang@intel.com>
+-Description:	(RO) Show the id (serial) of the device. This is CXL specific.
++Description:	(RO) Show the id (serial) of the device, formatted as an
++		unsigned 64-bit decimal value. This is CXL specific.
  
- /************************ Governor internals ***********************/
+ What:		/sys/bus/nd/devices/nmemX/cxl/provider
+ Date:		November 2022
+--- a/drivers/cxl/core/pmem.c
++++ b/drivers/cxl/core/pmem.c
+@@ -221,12 +221,14 @@ static struct cxl_nvdimm *cxl_nvdimm_all
+ 	dev->bus = &cxl_bus_type;
+ 	dev->type = &cxl_nvdimm_type;
+ 	/*
+-	 * A "%llx" string is 17-bytes vs dimm_id that is max
+-	 * NVDIMM_KEY_DESC_LEN
++	 * dev_id is the nvdimm dimm_id used for security key lookup.
++	 * It must match id_show(), which emits the CXL serial as an
++	 * unsigned decimal. A u64 decimal string is at most 20 digits
++	 * plus NUL.
+ 	 */
+-	BUILD_BUG_ON(sizeof(cxl_nvd->dev_id) < 17 ||
++	BUILD_BUG_ON(sizeof(cxl_nvd->dev_id) < 21 ||
+ 		     sizeof(cxl_nvd->dev_id) > NVDIMM_KEY_DESC_LEN);
+-	sprintf(cxl_nvd->dev_id, "%llx", cxlmd->cxlds->serial);
++	sprintf(cxl_nvd->dev_id, "%llu", cxlmd->cxlds->serial);
  
-+static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
-+{
-+	/*
-+	 * Cast rate_limit_us before multiplication to force 64-bit arithmetic.
-+	 * Otherwise, on 32-bit platforms, both operands are converted to
-+	 * 32-bit unsigned long and the multiplication may overflow.
-+	 */
-+	sg_policy->freq_update_delay_ns =
-+		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
-+}
-+
- static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
- {
- 	s64 delta_ns;
-@@ -599,7 +610,7 @@ rate_limit_us_store(struct gov_attr_set
- 	tunables->rate_limit_us = rate_limit_us;
- 
- 	list_for_each_entry(sg_policy, &attr_set->policy_list, tunables_hook)
--		sg_policy->freq_update_delay_ns = rate_limit_us * NSEC_PER_USEC;
-+		sugov_update_rate_limit_us(sg_policy);
- 
- 	return count;
+ 	return cxl_nvd;
  }
-@@ -858,7 +869,7 @@ static int sugov_start(struct cpufreq_po
- 	void (*uu)(struct update_util_data *data, u64 time, unsigned int flags);
- 	unsigned int cpu;
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -547,7 +547,8 @@ struct cxl_nvdimm_bridge {
+ 	struct nvdimm_bus_descriptor nd_desc;
+ };
  
--	sg_policy->freq_update_delay_ns	= sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
-+	sugov_update_rate_limit_us(sg_policy);
- 	sg_policy->last_freq_update_time	= 0;
- 	sg_policy->next_freq			= 0;
- 	sg_policy->work_in_progress		= false;
+-#define CXL_DEV_ID_LEN 19
++/* Holds a u64 serial as a decimal string: up to 20 digits + NUL */
++#define CXL_DEV_ID_LEN 21
+ 
+ struct cxl_nvdimm {
+ 	struct device dev;
+--- a/drivers/cxl/pmem.c
++++ b/drivers/cxl/pmem.c
+@@ -38,7 +38,7 @@ static ssize_t id_show(struct device *de
+ 	struct cxl_nvdimm *cxl_nvd = nvdimm_provider_data(nvdimm);
+ 	struct cxl_dev_state *cxlds = cxl_nvd->cxlmd->cxlds;
+ 
+-	return sysfs_emit(buf, "%lld\n", cxlds->serial);
++	return sysfs_emit(buf, "%llu\n", cxlds->serial);
+ }
+ static DEVICE_ATTR_RO(id);
+ 
 
 
