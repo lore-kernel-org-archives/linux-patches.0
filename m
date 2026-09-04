@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF59C4CCDC7;
-	Fri,  4 Sep 2026 05:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A273EC6AE;
+	Fri,  4 Sep 2026 05:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500276; cv=none; b=NKpNu0//2EyXEs862ompEb83rqHlzUlbBYgB1+RUxHZrP1mSnzg7wInoZlI45aDhAyCBBSlY2aZYwhxNNeaohfpIMVqkNEUF+KJ87/Uq287aHIIl6MN9aQUByBIJ+65yEh+nbZtA7pnaXpYdfMUawBY5fITquN0yhtqbCxr63Ps=
+	t=1788500279; cv=none; b=YcpYCge+jdYL6r7MMptVdnsQsWNx7suQgNZx9pPj3gtNlFRYHnlChABtH7zx3S7M5ds2mdCiG/OgNwfdfw4TKwd6cpoQwnnhrcCcM7R/Gp6DRVAzdBret+W/CzGE8PsQqJ+euUlH0whYn53jJVU5YyatrJOC8dZbPB5fukKs5U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500276; c=relaxed/simple;
-	bh=gw93FClnIwqvuqNHoB5+ujqg3L2P7EbjlNhpwvzkXg4=;
+	s=arc-20240116; t=1788500279; c=relaxed/simple;
+	bh=GFozOW3YYLcDHpcd+FDbJUr4/mRFuzqeahWQfIV5pMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tu9ToktPB1N5ukf1jCGZAr4TomWLVjG6OVQkw58f5JEGhFgW3TQqaXh/IlNa0YEzVNdwNqj2ztZmHdqzHN2n1UG5PcvfGrPylBSSda4oq0m3qY8whn9s9ywkjcOfmr2zb5o9w24QtgGhBQzkJf3sfTWAp6q8wFF/bCe2qzt3VNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERhE2WWj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GEw9chBZ8Otgu/xB8Zxp26ErLJ3L48Stlavp3W7Sa4nV0IxPjUG68LQiCgpOBZYPE9PytDGXAmb7o1InkYo+qAOC1cNXJ7T2sOvftTOabEqij3wwm+kMlr8w2ChL/hJpVuwblf48mfnNYyzr7oMBYO62Y5iq6p5QyFQHAZGgeQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngYTxARL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERhE2WWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9121F00A3D;
-	Fri,  4 Sep 2026 05:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngYTxARL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087E81F00A3D;
+	Fri,  4 Sep 2026 05:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500275;
-	bh=RGOdj8vQnssgai++vfBjvBcWMtlZwenMmE5eVfNktmY=;
+	s=korg; t=1788500278;
+	bh=y8Hw0X+4NPMBOoDsbnOeBUQm50P593OJ39GGTw+mGfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ERhE2WWjcAKE6BC6z0lszcB5GUl3HqtlxirK6nJgyuFg/4GE2IVHv1qNPbtlOZR6a
-	 ROiZ3lTzQLEM1xM+z/DvZxS2SxSgpM2t4fPFgqng96UahXZbzycSkotb1ioGPwhyr2
-	 ufttLg7qajioHlVcl7q9sOT+wwiyfbKnAGkDN7LU=
+	b=ngYTxARLEDvG+mwLPcwJHVIGgMX0XjXpDh1m61BUJdeEpNw1qlt51/epv5KeThvyH
+	 NjR71xCcVjbwgI5DDYSsPW4X3mgPpCVyy2saQJLdnvpaJUrV/HNucFMqjvV8AHU9tC
+	 3Lp23m2rdiQiHbsIahppmFQeROMjRJj1lgIRQPlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.2 712/713] ACPI: scan: Do not combine resources that overlap completely
-Date: Fri,  4 Sep 2026 07:01:20 +0200
-Message-ID: <20260904045819.807495029@linuxfoundation.org>
+	Tomasz Figa <tfiga@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 7.2 713/713] platform/chrome: sensorhub: Fix dropped timestamp events and log spam
+Date: Fri,  4 Sep 2026 07:01:21 +0200
+Message-ID: <20260904045819.831025016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,52 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 7617cc05df28dcae967cca109de74084321eaa62 upstream.
+commit 9a3f43b30373c61477d0d3ab52946c05f9492bf9 upstream.
 
-Commit f234fdaae1ca ("ACPI: scan: Avoid registering platform devices
-with resource overlaps") attempted to avoid platform device registration
-errors due to overlaps of resources of the same type returned by the
-same _CRS object in the ACPI tables.  It did that by combining two or
-more overlapping resources into one, but it went too far and also
-caused resources that overlap completely to be combined which broke
-the arm-cmn driver that expects two MMIO resources to be present for
-each device it binds to and it expects those two resources to overlap
-completely.
+Commit 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported
+sensor number") evaluated the `sensor_num` against the bounds limit even
+for timestamp events.  A timestamp event typically has a `sensor_num` of
+0xff [1], causing the driver to flag it as invalid and skip to the next
+event.
 
-Address this issue by adding checks for completely overlapping
-resources to acpi_platform_adjust_resources() and add a comment
-explaining what is done there.
+As a result, we'd see a flooding of "Invalid sensor number 255 from EC"
+warning logs and these timestamp events were being dropped.
 
-Fixes: f234fdaae1ca ("ACPI: scan: Avoid registering platform devices with resource overlaps")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/linux-acpi/20260819003752.GA3063251@ax162/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://patch.msgid.link/12955564.O9o76ZdvQC@rafael.j.wysocki
+Move the bounds-check into cros_ec_sensor_ring_process_event() and
+evaluate it only after standalone timestamp events have already been
+processed and returned early.
+
+[1] https://crrev.com/219ca6ef82ba266da788b673ee4ad50bd3ea1285/common/motion_sense_fifo.c#427
+
+Fixes: 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported sensor number")
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Link: https://lore.kernel.org/r/20260715024454.4127571-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_platform.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_sensorhub_ring.c |   27 ++++++++++++-----------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/drivers/acpi/acpi_platform.c
-+++ b/drivers/acpi/acpi_platform.c
-@@ -85,7 +85,13 @@ static unsigned int acpi_platform_adjust
- 	for (i = 0; i < count; ) {
- 		struct resource *res = &resources[i];
- 
--		if (resource_type(new_res) != resource_type(res) ||
+--- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+@@ -475,6 +475,21 @@ cros_ec_sensor_ring_process_event(struct
+ 						  fifo_timestamp,
+ 						  *current_timestamp,
+ 						  now);
++
 +		/*
-+		 * Look for overlaps of resources of the same type that would
-+		 * cause resource insertion to fail down the road.
++		 * A standalone timestamp event typically has a sensor_num of
++		 * 0xff.  Return early here to prevent it from hitting the
++		 * bounds check below and spamming the logs.
 +		 */
-+		if (__resource_contains_unbound(res, new_res) ||
-+		    __resource_contains_unbound(new_res, res) ||
-+		    resource_type(new_res) != resource_type(res) ||
- 		    !resource_union(new_res, res, new_res)) {
- 			i++;
- 			continue;
++		return false;
++	}
++
++	/* Skip event if sensor_num from EC is out of bounds. */
++	if (in->sensor_num >= sensorhub->sensor_num) {
++		dev_warn_ratelimited(sensorhub->dev,
++				     "Invalid sensor number %u from EC\n",
++				     in->sensor_num);
++		return false;
+ 	}
+ 
+ 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
+@@ -502,10 +517,6 @@ cros_ec_sensor_ring_process_event(struct
+ 		return true;
+ 	}
+ 
+-	if (in->flags & MOTIONSENSE_SENSOR_FLAG_TIMESTAMP)
+-		/* If we just have a timestamp, skip this entry. */
+-		return false;
+-
+ 	/* Regular sample */
+ 	out->sensor_id = in->sensor_num;
+ 	trace_cros_ec_sensorhub_data(in->sensor_num,
+@@ -890,14 +901,6 @@ static void cros_ec_sensorhub_ring_handl
+ 
+ 		for (in = sensorhub->resp->fifo_read.data, j = 0;
+ 		     j < number_data; j++, in++) {
+-			/* Skip event if sensor_num from EC is out of bounds. */
+-			if (in->sensor_num >= sensorhub->sensor_num) {
+-				dev_warn_ratelimited(sensorhub->dev,
+-						     "Invalid sensor number %u from EC\n",
+-						     in->sensor_num);
+-				continue;
+-			}
+-
+ 			if (cros_ec_sensor_ring_process_event(
+ 						sensorhub, fifo_info,
+ 						fifo_timestamp,
 
 
