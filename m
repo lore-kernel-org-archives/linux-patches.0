@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01013876CC;
-	Fri,  4 Sep 2026 06:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D400041D22E;
+	Fri,  4 Sep 2026 06:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502931; cv=none; b=AZdHi/7W+1BLdzyD7fpmvrhlR7Cwgz8VP3gwadvlW2LCsXzR8hwjUIcVjCZIcdKednc8IFKVAtl0H/SSbWTkXip92AdfUwbhUHSJj7F9kknJ329SLdcUdbKQkes9UPTED9a//RLCpVZ4jq85KNRoBBrD10//eZWNCzmmydrxPfU=
+	t=1788502934; cv=none; b=douZ94Se5drFxZ1drGkfohJ+Y+Rr9woEMban6CqsYTx9vroPKSqKxv8vGn4OVv7xulM3gZklSkcrGE2EnDQlu3+r/ujCGdsND2cHpplIRxPHONf0/FgRS+ZK2qDuFf3+0d7WJXooq8RlbARQoITXYBoxpQoApAcRRxvSuLVPuD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502931; c=relaxed/simple;
-	bh=9CHuoC9d0UsVKE7wSRiDXcve+Sy/AvDyI1V/DuV1VTo=;
+	s=arc-20240116; t=1788502934; c=relaxed/simple;
+	bh=E6tCuyRc0dAYhxPB/rwJGQX9RCLmD0EwnPRIPl+0oOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vwf0JWvhylFdWzXnZL2FHMZu0RjchzUspoChpnXs3OmFVuNuqP1jbkhZVyNGU5wqCt0cb7mXXBtePGk1bPHm0ftw2Z1lwyDU8b/RBTSsFBT2cM3gEMceAgakRxpA4Yg9qwIlrSNG3nFZaova8YYyMmaT4u+tHamSCYItDBYO0Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPXG5Y4c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WgKi2oGuF7oea6a2+zBzNMnTtkU1v0z57hCRewIZ8RIkrskTNN+OmlVdwebPjMiSjE58TarAtmtMkcIcDawC4HSfyQkY3SSE7Zh6wXXNhTkCu3EqvYpGKvLLQ9o8iyqBad5jN0sB5C6Eu/SvD0soqSoag+GBvB6mIxrbm+lnm+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzTDL0hx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPXG5Y4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6A71F00A3D;
-	Fri,  4 Sep 2026 06:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzTDL0hx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B7B1F00A3D;
+	Fri,  4 Sep 2026 06:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502930;
-	bh=IpwboTUACIdNPD8hfMl8VqPwjVkf7ivaa1uD2cO01is=;
+	s=korg; t=1788502933;
+	bh=QTaqhRkacVDv8U2lJgazVVf6eOMvTgsPU4Jx3JfGu5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sPXG5Y4c1rLYonuUb9Sj7XOJ6obvGMBbhiaRxfzSV6ZriQyBaX36tI+eAK/mTPSM+
-	 r46FARYHq3j/1bBpDYjvSC3diUO3pMfmXLTChe6iHa2mDQO6e0FFJDPLOd1AC1tZiV
-	 LitQlYB+SEYrQW4bjSgRltM9NEGi546SlnpmpGNA=
+	b=nzTDL0hxeKQu5f6qKgnkCSZx+3qRh7Bw0Jm9Kc8Vfyt9SQA8QXdSfBY52ieqI1Kgd
+	 0Tmx5a3RMLN2VYsGsmglP9HX9QGvUW9wzdFRpjyjmQ/vqEVW46k61DHgRHQP6WON0P
+	 X75R4lugYQYfgiEvrjlmtFZkekg7OTLdyCk5FePE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.12 381/403] i3c: master: Fix potential UAF in i3c_device_uevent()
-Date: Fri,  4 Sep 2026 07:03:04 +0200
-Message-ID: <20260904045743.458413377@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 364/403] ALSA: mpu401: Check card index validity at probe
+Date: Fri,  4 Sep 2026 07:02:47 +0200
+Message-ID: <20260904045743.085808146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,51 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit e5e8dd2e959f470524c16ca444d001c90d6bb3ad upstream.
+commit f7dcecb92ed192ff5fcf842918fb1aaea84b5bdd upstream.
 
-i3c_device_uevent() dereferences i3cdev->desc without holding the bus
-normal-use lock.  Since the descriptor pointer can be replaced
-concurrently, including when a uevent is generated from sysfs, this can
-result in dereferencing a stale descriptor and lead to a use-after-free.
+mpu401 driver blindly trusts that the given devptr->id value is within
+the proper card index range at probe.  It's OK for the devices the
+driver itself creates at the module probe time, but if the device is
+bound manually via sysfs interface, this could be -1 as "none", and
+this leads to OOB access for index[] and other parameters.
 
-Use i3c_device_get_info() instead, which protects access to the
-descriptor with the normal-use lock.
+Add a sanity check for the card index and warn/correct it if it's a
+value out of the range.
 
-Commit 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling
-i3c_device_get_info() to avoid deadlock") replaced the accessor with a
-direct descriptor dereference because i3c_device_get_info() would
-recursively acquire bus->lock during device registration.
-
-This change depends on "i3c: master: Fix recursive locking during device
-registration", which moves device registration out from under bus->lock
-and removes the possibility of that deadlock.  Without that change,
-restoring the i3c_device_get_info() call would reintroduce the deadlock.
-
-Fixes: 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling i3c_device_get_info() to avoid deadlock")
-Cc: stable@vger.kernel.org # requires "i3c: master: Fix recursive locking during device registration"
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260807145638.168865-7-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260806153227.1460166-3-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/drivers/mpu401/mpu401.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -282,8 +282,7 @@ static int i3c_device_uevent(const struc
- 	struct i3c_device_info devinfo;
- 	u16 manuf, part, ext;
+--- a/sound/drivers/mpu401/mpu401.c
++++ b/sound/drivers/mpu401/mpu401.c
+@@ -89,6 +89,12 @@ static int snd_mpu401_probe(struct platf
+ 	int err;
+ 	struct snd_card *card;
  
--	if (i3cdev->desc)
--		devinfo = i3cdev->desc->info;
-+	i3c_device_get_info(i3cdev, &devinfo);
- 	manuf = I3C_PID_MANUF_ID(devinfo.pid);
- 	part = I3C_PID_PART_ID(devinfo.pid);
- 	ext = I3C_PID_EXTRA_INFO(devinfo.pid);
++	if (dev < 0 || dev >= SNDRV_CARDS) {
++		dev_warn(&devptr->dev,
++			 "Invalid card index %d, using default 0\n", dev);
++		dev = 0;
++	}
++
+ 	if (port[dev] == SNDRV_AUTO_PORT) {
+ 		dev_err(&devptr->dev, "specify port\n");
+ 		return -EINVAL;
 
 
