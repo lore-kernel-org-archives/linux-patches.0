@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E15D3D903B;
-	Fri,  4 Sep 2026 06:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA0735B632;
+	Fri,  4 Sep 2026 06:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502455; cv=none; b=s49cF3GXgfrQp8kJL7XgRvnXYYUVGYMBz8baXCI+8O5CeoFoMIcD3LiqRR89aPp8yVSrbYZ8Nz9310VzgkADyiYnumEL6zeoitGnyY0/L19aVP7cDD2R2uNcaGVypsSRALgeT2Bc/BF8dIDEYynt7YsiBCa0j7bqkSTqE/hQdWU=
+	t=1788502458; cv=none; b=EzwbRWNBH9UABnDM4r19b3wLucphUlOjkb9aX4uF2zqSSfoFLWjKqbSJauzxRuysFOcIh7VgN2jyvUZHEep5hjpyNToJgJ7fGjXGtCUBvsPVcddItZKzPGbVL9Y/PWnMxZ4ArdscHXE9dRzYDef1KLRydAFApMeJ85cNyXMYJAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502455; c=relaxed/simple;
-	bh=5t+mjZA+UasNm0G/Ou3hxeVGrcQHg4zmas69tzFNtOw=;
+	s=arc-20240116; t=1788502458; c=relaxed/simple;
+	bh=EkGuvyZ6f0cV7v4657Onm0FiI/b5RJ85DF4MmJT/V4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ini5fKIpwBzLUef00+Df8WAdNC9ZvNJnBGdMtIBlwZQpVjIimQAzq6CA6+QCn6zLFUGWufRbh97tYTdPq9Dm33rjBPgjhWVn6VDoYbGTG7VHPflaPD9OHHlyDdAN7WKYuRRzJdmh+IjpGmW9NS3J94cGvJ6nOnnn9pX+xXoSYbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqQkjj2Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EeHK0I2LPK3mcTUtczSplRSPDdtzRvZh2pv3ElH8g2HC4MYvxF0TUofpSXQP6fPrZCwE83da8lIXhyUYnk/7ib7IxgVo30T3aE+3RPJaJ+/KDtiAFbKdOL1SgSrWPNC4SktiS278wmPbfjB/1ZEelHWd7ND9QDZdXYN1OsBgXjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tjdblsgh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqQkjj2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BDF1F00A3D;
-	Fri,  4 Sep 2026 06:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tjdblsgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1F01F00A3D;
+	Fri,  4 Sep 2026 06:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502453;
-	bh=7BWsX6Rb4u6BPb7MOOnWgAfdGW4ODs0IBTFBoeG2dMA=;
+	s=korg; t=1788502456;
+	bh=6jptB/6wLELppq2hAFL+7ZXHdnquw1N6+cS031jECZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TqQkjj2QoE2rDjOXAWQ22mkmuCS5pn+BaoSL9WSmf0lz5dAxywRZYup1d+99wwxwW
-	 uhwkxelCVY0Tf9MnjYVhxJdSBv3hHRn+LC0f5i8Ilu/LFkAVW4mpYPtryAEqY3EwTZ
-	 oGXF9XV2D75nEUIKarbrqfMTmVJARskm339zuuLk=
+	b=Tjdblsghm2Xi1dz7dCI8U9kCL8Ra1i+GX0vqv/jKWnnLN6vu5m2mczexFBG2RDvP7
+	 Y1G9Opl+bFN2EaKV7FUIhXzAMiphRHCTxvZofO2sTCxoMdSpV8hny/+c8cISm9hMnn
+	 4TkuV8abjRvZTUdkEZFigJmtsrCwP6optZkKBZ4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 212/403] SUNRPC: Reject krb5 v2 wrap tokens with oversized ec field
-Date: Fri,  4 Sep 2026 07:00:15 +0200
-Message-ID: <20260904045739.677205805@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Chuck Lever <cel@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.12 213/403] SUNRPC: wait for in-flight client TLS handshake callback
+Date: Fri,  4 Sep 2026 07:00:16 +0200
+Message-ID: <20260904045739.700681912@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,66 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit ad484748eec0a66eac0f13ab53b3fbedb7333c91 upstream.
+commit a89dd597458848b463d284b15e42a8078beeb046 upstream.
 
-gss_krb5_unwrap_v2() sets buf->len to a logical
-length, which can be much smaller than head[0].iov_len
-(the allocated receive-page capacity).  It then calls
-xdr_buf_trim() with a trim length derived from the 16-bit
-"extra count" (ec) field in the Kerberos v2 token header.
+xs_tls_handshake_sync() gives xs_tls_handshake_done() a reference to the
+lower transport before submitting the handshake request. On timeout or
+signal, the synchronous waiter drops that reference after calling
+tls_handshake_cancel().
 
-The ec field is authenticated by the post-decrypt memcmp()
-against the encrypted header copy, so a randomly-mutated
-value is rejected.  However, any peer holding a valid GSS
-context can legitimately encrypt a token whose ec exceeds
-the plaintext length.  Per RFC 4121, such a token is
-structurally malformed.
+handshake_req_cancel() returns false when handshake_complete() has
+already marked the request complete. In that case the completion callback
+can still be running, so dropping the callback-owned reference in the
+waiter can free the lower transport before xs_tls_handshake_done() stores
+xprt_err or drops its own reference.
 
-Although xdr_buf_trim() now clamps the buf->len subtraction
-to avoid unsigned underflow, the buffer is still left in a
-semantically invalid state (zero length, inconsistent iov
-lengths) when ec is oversized.
+If cancellation loses to completion, wait until xs_tls_handshake_done()
+signals handshake_done and let the callback release its reference. This
+mirrors the server-side handshake lifetime handling and keeps the timeout
+or signal return value unchanged.
 
-Reject these tokens before calling xdr_buf_trim(), giving
-callers a well-defined GSS_S_DEFECTIVE_TOKEN error and
-keeping the xdr_buf internally consistent.  The wrapped blob
-begins at a nonzero offset -- both callers pass len as
-offset + opaque_len -- so buf->len still counts the offset
-bytes that precede the blob.  Compare the trim length
-against the remaining wrapped segment, buf->len - offset,
-rather than the whole buffer; comparing against buf->len
-alone leaves an offset-wide window in which an oversized ec
-passes the test and xdr_buf_trim() cuts into the bytes ahead
-of the blob.
-
-Fixes: cf4c024b9083 ("sunrpc: trim off EC bytes in GSSAPI v2 unwrap")
+Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-1-d026a1415e0b@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_krb5_wrap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/xprtsock.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
-@@ -236,6 +236,8 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
- 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
- 
- 	/* Trim off the trailing "extra count" and checksum blob */
-+	if (ec + GSS_KRB5_TOK_HDR_LEN + tailskip > buf->len - offset)
-+		return GSS_S_DEFECTIVE_TOKEN;
- 	xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
- 
- 	*align = XDR_QUADLEN(GSS_KRB5_TOK_HDR_LEN + headskip);
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2646,7 +2646,17 @@ static int xs_tls_handshake_sync(struct
+ 	rc = wait_for_completion_interruptible_timeout(&lower_transport->handshake_done,
+ 						       XS_TLS_HANDSHAKE_TO);
+ 	if (rc <= 0) {
+-		tls_handshake_cancel(sk);
++		if (!tls_handshake_cancel(sk)) {
++			/*
++			 * Cancellation lost to handshake_complete(): the
++			 * callback still owns its xprt reference and is in
++			 * flight. Wait for it to finish before returning.
++			 */
++			wait_for_completion(&lower_transport->handshake_done);
++			if (rc == 0)
++				rc = -ETIMEDOUT;
++			goto out;
++		}
+ 		if (rc == 0)
+ 			rc = -ETIMEDOUT;
+ 		goto out_put_xprt;
 
 
