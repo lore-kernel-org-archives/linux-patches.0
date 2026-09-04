@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E551D4CCDC7;
-	Fri,  4 Sep 2026 05:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C3A3B05AF;
+	Fri,  4 Sep 2026 05:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500207; cv=none; b=LkcKx3FZw4IHFCz3kpxbxrlShwUWMDi/BAT4SKifaRXi4BHUaJyhsiEu2XgnhZleJGfdC9BcInz8cKuAv7UunqX7MOy8XxHT9MB0z8yM9ro+nrRz7C0FcsKArjbdHA2RVdndgk0lwlIaqfa3RDLJmMi7K824bV/0IPG3uT6YuKE=
+	t=1788500209; cv=none; b=GiphMsEbDNFH97zhHvOmd2Igv/7x9eFkbvpXRyFM2L7FL5xXi98fAesXvKtJ/WqR1lHz1xMeBsjVGQr8BD76ulUKIx4war+pHdKvL9h6OFG/fv8fqNz8j/WoTRIPj9/udfqFmDG/KO3ApRDJySw/t6Q3M0Ay6cVGJUqSs9pndSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500207; c=relaxed/simple;
-	bh=TFH+rn130qAEmHesqL8Ldtlc5Q2v8jmGJ0psRirHy4E=;
+	s=arc-20240116; t=1788500209; c=relaxed/simple;
+	bh=eqnTs+OaiXAyXKwR+TeiH78VJur/VQ2NzHuctpuehFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utNXqySYqjC3KMqo06c6wkyIIjwhTwneMKiQ6Btv02Gi6G+SAKNcdbFzVkKYT0sa+cNeR1XGV8t4hLymCNG4v60niNoH9AZGBbr62nAD2U9VQ7SJ+E68qfGyvm2TEaCXKLyZqiCMTfA6xGZPI895Ao8uSslTBMHNvKMbGC5/N1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9UbNEb/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RnNUqYS27lw6ryaFsSFh1Z0PwuHi527SpIJYizHXH6umdiRp1ByxnZVcJB1aMJHWmvpsy8AkeNWDjDlRWMlFtsJSKzFZbzJomLDc/ZgpvEhZw6mAS3oX5FzK1bHiQVuCxMLGHifNPpUw4d/ZuhDCIg0nTq3rZwQ/pejRsJbwm1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STydmSjR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9UbNEb/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443071F00A3D;
-	Fri,  4 Sep 2026 05:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STydmSjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194D11F00A3D;
+	Fri,  4 Sep 2026 05:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500205;
-	bh=u5svkUEWh3ySIc7fEKUg1j/WUgnT3/5E3eW0uq8cVio=;
+	s=korg; t=1788500208;
+	bh=/9adr44UqN0NMiKlr1a+C8oIM0BnRPtBkN8FLDCZeKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k9UbNEb/san2Wsk1AsFeNATD4ppkZa9rsq3aroYwWGL6ehscv0L4vUupxl0suPuOT
-	 xyL39yU52mDDnq/dFaaFcvx1ygPke66BG4LZzfov9N6++/gqoophUWHNYmVTPj53Xp
-	 jBDWZaWloGaHmBXyOP8NPMjCWZI0FND9ZPttRoi8=
+	b=STydmSjR2pPpExRVwgSpBb/K7Fgb+yg4OhqtjqbdmiP8OJiWN8qeQwX4eWOwD73oD
+	 nlMIB8wjiaIf4yIidw6Y3SHqqFnH8YDXdZ0abZk9L5isnAmSdZR0zdKplpZ+EftuXi
+	 t6i+Q9pfqFb9u1OxoDoYfpMJxLqh8ZWKfE94TVHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
 	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 7.2 689/713] wifi: rtw88: Fix potential memory leak in rtw_txq_push_skb()
-Date: Fri,  4 Sep 2026 07:00:57 +0200
-Message-ID: <20260904045819.285941354@linuxfoundation.org>
+Subject: [PATCH 7.2 690/713] wifi: rtw88: pci: fix resource leak on failed NAPI setup
+Date: Fri,  4 Sep 2026 07:00:58 +0200
+Message-ID: <20260904045819.309008267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,35 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 9f2948010764d708bda27369d09ce6f194abe8e3 upstream.
+commit e779df4806cd29cbcca5c9dc0a1073662c76b889 upstream.
 
-The skb passed to the rtw_hci_tx_write() is expected to be freed when
-the function fails, but the error path in rtw_txq_push_skb() does not
-free the skb before returning. This can lead to a memory leak in
-rtw_txq_push() where a dequeued skb is passed to rtw_txq_push_skb().
+rtw_pci_probe() allocates PCI resources through
+rtw_pci_setup_resource() before it sets up NAPI. If
+rtw_pci_napi_init() fails, the error path jumps straight to
+err_pci_declaim and skips rtw_pci_destroy(), leaving the PCI
+resources allocated by rtw_pci_setup_resource() behind.
 
-Fixes: aaab5d0e6737 ("rtw88: kick off TX packets once for higher efficiency")
+Add a dedicated cleanup label for the NAPI setup failure path so probe
+destroys the PCI resources.
+
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing current
+mainline kernels. The tool is still under development and is not yet
+publicly available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+suitable rtw88 PCI board to test with, no runtime testing was able to be
+performed.
+
+Fixes: d0bcb10e7b94 ("wifi: rtw88: Un-embed dummy device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260727064223.61836-1-nihaal@cse.iitm.ac.in
+Link: https://patch.msgid.link/20260617013502.114057-1-dawei.feng@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/tx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw88/pci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/tx.c
-+++ b/drivers/net/wireless/realtek/rtw88/tx.c
-@@ -619,6 +619,7 @@ static int rtw_txq_push_skb(struct rtw_d
- 	ret = rtw_hci_tx_write(rtwdev, &pkt_info, skb);
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1834,7 +1834,7 @@ int rtw_pci_probe(struct pci_dev *pdev,
+ 	ret = rtw_pci_napi_init(rtwdev);
  	if (ret) {
- 		rtw_err(rtwdev, "failed to write TX skb to HCI\n");
-+		ieee80211_free_txskb(rtwdev->hw, skb);
- 		return ret;
+ 		rtw_err(rtwdev, "failed to setup NAPI\n");
+-		goto err_pci_declaim;
++		goto err_destroy_rsrc;
  	}
- 	return 0;
+ 
+ 	ret = rtw_chip_info_setup(rtwdev);
+@@ -1866,6 +1866,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
+ 
+ err_destroy_pci:
+ 	rtw_pci_napi_deinit(rtwdev);
++
++err_destroy_rsrc:
+ 	rtw_pci_destroy(rtwdev, pdev);
+ 
+ err_pci_declaim:
 
 
