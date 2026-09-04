@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFBB419FC5;
-	Fri,  4 Sep 2026 06:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAF935AC03;
+	Fri,  4 Sep 2026 06:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501951; cv=none; b=gdV+JDLDvaQglpOWJCLopc9KTpG8nLBOjf1hpHbS/7xGfpq/UPpYeOJKNTchoAPP5RLldrbV1nRxJpkDM1DLXmGvo7J36KLf/VsCrs4QrQ0UnP0IJV4xmCIuC7h6f2r8vnmXI+SVqsvhZaFqawHNZUSWEBlsX8+CCQ3XelOQ84k=
+	t=1788501954; cv=none; b=iSZxqb+0pzObgpl/yLznfKH2nRtvOk00fWjHksMssTbq94LRGZx5Xx4Zt1fM7O/oa37pkLrZJH2Qw4++n44otNKp3m9HqLyRTcc6uqS1ECEiGN99YRHIBIkLzrvSc4g/4KhFg3+rXee6hcYerZvluGulUTyOeqHRsnSNTk/mbLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501951; c=relaxed/simple;
-	bh=Es1y7tZE+Qz0EcIo3FPp0JYiKJxgPpT46WFvqOqAp9M=;
+	s=arc-20240116; t=1788501954; c=relaxed/simple;
+	bh=t7xoMR1gF3CH1ugH18AceQiNIeGUg4NL/NTtc3FIgT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhXgEj2WokiFKiaXbY2F6oLlMMEBIL7rmLKq4dOnrNtryB32/fZs499/cNPgM/bkBQbFs2pMQvW0eGMHg4+q/w4UweRGeAzTPpmaXUyEfUtJerlcFnUQRAFzG0ezQnhi1qJ370IVzuSna9ds9u6zhrWr2pzDp/IfT/YsbLvS0rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVhIP7xo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dcq9r0d9WWeBMUjemRfDeZfds2rP0iyVSUFC3hnk+iiPMscTT7FsQ85/LohldR+qcuAVDjcXdVwXsvQFYVxJC/M3am+Et1MBgiCout6i5eSlvoRG+gX2raLj/bUyO515u/+RKEtpSXfKTGcYFej855oRn7rU50TAKpWDEXfdjic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjuQqVBY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVhIP7xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087771F00A3D;
-	Fri,  4 Sep 2026 06:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjuQqVBY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E431F00A3D;
+	Fri,  4 Sep 2026 06:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501950;
-	bh=tF9ob1xTSToh5bfbBWOf6KrBPMmBnZT75CESlKOJ8mA=;
+	s=korg; t=1788501953;
+	bh=m7xmll0hCLSQeZRz3hvmVeIlCUSKrDqyJySTru+Beww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zVhIP7xofkgGAjq3EJZ3PJbyULNSLpBEbmnJ2DE1MGmpNaxZu5TabqIBcIc+HkHRW
-	 6WW2r+KprzaKUxxbUJTWcmeZSq4vH0dtrlv4rYIiUBh2RWqlsJUF2EMtaHluE+HfHf
-	 o26Eu/InjGpiqcvz4q0Qw1NttLSQaM5IdTPQusQ4=
+	b=zjuQqVBYcR0Xyz0zcILW1oi3TxoRkdKu6HadbWqaMorZEgJeicOSOe/dgWAo3IQ4x
+	 KixwIjiGRbSt8Q9BIYNRxPVhproEZwWtKBzhbE26kv8IMV3MCrd+VjQrlcLmUh0tnM
+	 sb/G1lWdd9Y72R1I0BD5/oLDVli09OVElL3tzd18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Vincent Donnefort <vdonnefort@google.com>,
+	syzbot+685955db58555575fdd2@syzkaller.appspotmail.com,
+	Bradley Morgan <include@grrlz.net>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 036/403] tracing: Fix logged instance name on creation failure
-Date: Fri,  4 Sep 2026 06:57:19 +0200
-Message-ID: <20260904045735.634431520@linuxfoundation.org>
+Subject: [PATCH 6.12 037/403] tracing: Fix use-after-free in trace_pipe read on sub-buffer order change
+Date: Fri,  4 Sep 2026 06:57:20 +0200
+Message-ID: <20260904045735.658979055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,39 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit a9a01be2834a529cbd490ccbab02643f0c1735f2 upstream.
+commit 372f8534244d632ad5118e8a87a11291b01712d3 upstream.
 
-When boot instance creation fails, the kernel incorrectly logs "(null)"
-as the instance name because strsep() consumes curr_str entirely during
-parsing.
+Writing to buffer_subbuf_size_kb calls ring_buffer_subbuf_order_set(),
+which frees every sub-buffer of the ring buffer, including the reader
+page, and replaces them with newly allocated ones.
 
-Print the properly parsed name variable instead. And while at it log
-the error code.
+Readers of trace_pipe hold pointers into those pages. ring_buffer_peek()
+looks up an event under cpu_buffer->reader_lock but returns the event
+pointer after dropping the lock, and peek_next_entry() then calls
+ring_buffer_event_length() and ring_buffer_event_data() on it. If the
+sub-buffer order is changed in that window, the reader dereferences
+freed memory:
+
+  BUG: KASAN: use-after-free in ring_buffer_peek+0x3e0/0x430
+  Read of size 1 at addr ffff88802a4cf010 by task syz-executor989/6002
+
+  Freed by:
+   free_buffer_page kernel/trace/ring_buffer.c:398 [inline]
+   ring_buffer_subbuf_order_set+0x1325/0x18e0 kernel/trace/ring_buffer.c:7444
+   buffer_subbuf_size_write+0x182/0x280 kernel/trace/trace.c:8221
+
+Take trace_access_lock(RING_BUFFER_ALL_CPUS) around the order change.
+This is the lock trace_pipe readers already hold across their entire
+peek-and-print loop, so the swap can no longer race with a reader that
+is dereferencing a peeked event.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260807085423.4175161-1-vdonnefort@google.com
-Fixes: cb1f98c5e574 ("tracing: Add creation of instances at boot command line")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Link: https://patch.msgid.link/20260817140655.5694-1-kartikey406@gmail.com
+Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
+Reported-by: syzbot+685955db58555575fdd2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=685955db58555575fdd2
+Tested-by: syzbot+685955db58555575fdd2@syzkaller.appspotmail.com
+Reviewed-by: Bradley Morgan <include@grrlz.net>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -10431,7 +10431,8 @@ __init static void enable_instances(void
+@@ -9148,6 +9148,8 @@ buffer_subbuf_size_write(struct file *fi
+ 	/* Do not allow tracing while changing the order of the ring buffer */
+ 	tracing_stop_tr(tr);
  
- 		tr = trace_array_create_systems(name, NULL, addr, size);
- 		if (IS_ERR(tr)) {
--			pr_warn("Tracing: Failed to create instance buffer %s\n", curr_str);
-+			pr_warn("Tracing: Failed to create instance buffer '%s' (%ld)\n", name,
-+				PTR_ERR(tr));
- 			continue;
- 		}
- 
++	trace_access_lock(RING_BUFFER_ALL_CPUS);
++
+ 	old_order = ring_buffer_subbuf_order_get(tr->array_buffer.buffer);
+ 	if (old_order == order)
+ 		goto out;
+@@ -9187,6 +9189,7 @@ buffer_subbuf_size_write(struct file *fi
+ #endif
+ 	(*ppos)++;
+  out:
++	trace_access_unlock(RING_BUFFER_ALL_CPUS);
+ 	if (ret)
+ 		cnt = ret;
+ 	tracing_start_tr(tr);
 
 
