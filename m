@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6C141D222;
-	Fri,  4 Sep 2026 06:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F34241D4F3;
+	Fri,  4 Sep 2026 06:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502817; cv=none; b=pzd/N5WEnobvvZsiC2EMCGe8Dn3r6cSQOjDuxOYmNrNDxp1KyYD/GICWQtu6s8XHky7l+3fuR/B8NhsPVvKsw5uWRLUUJq5hnPVa7Xm8KezyI18CJ6Q03zauN6XI1axbdGlKZOpBbuL3L19JSttALCRJJI1u/IMXlLhxZKnK6aM=
+	t=1788502820; cv=none; b=lNMoSY2EOCKS2Oq9lDXWAv5j3DLKbBk5rDIAgFPOsMAFn7sU1as2WQB4LOuOP5uI/dIGrzTGWqnC2BbysBJEOJydOGWSr0gVRu95TuxZ8T2NJb4uC///dgqVjHPOB7yjSG+78tyyHeBxdV4FRxGHGlRPo0fLqy+pBMfOPAu0gCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502817; c=relaxed/simple;
-	bh=g8EEwVGaBW0Vt8rtMCrm/voqcYqjwHQG8Qw3F70KqHc=;
+	s=arc-20240116; t=1788502820; c=relaxed/simple;
+	bh=+RywVo8Z4LPKkoW289Xi3p4+MfVZ0GG/AYVcMnTNrTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHc7I5LFBH19LwOwQH4ISvZ5UiumCaEDoRocsmLJIn0+GhDOGN22P98fNLONRa2QucYhCVy57j1dNK0O/j2jdIBguHExA2IQWjbqxHBlK1vVsoPxfLx3bvrglgLvLvXmELHHzQS+uQR12Hl2icrI1rXEwSB06ImYbnjIxy96xWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlO+nz7d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LMI+/rJONxWkgJI9PdmhiBqoiGwB06ZAM+1ySAq1f1/GwKVmVlVusgkQTqRWwTqYfzWKPUY2T1V3gHBx4hcnKiZaWDXt1TkY//RI73YlKkdehKekq5Z3YCAjB+K0scpa0Kg+h+kXNeW3BNm6VvJfqPOE88mLJEhsws4OZ0iDxYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ze1foa6S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlO+nz7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9284F1F00A3D;
-	Fri,  4 Sep 2026 06:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze1foa6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770DC1F00A3D;
+	Fri,  4 Sep 2026 06:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502816;
-	bh=03Z6O74yK+jVngQY4KT/GQs8GltO/BpBd6+BSER5VGU=;
+	s=korg; t=1788502819;
+	bh=PR/9qmDfVt9542qtdOSgvEpMXFl2OYydCZPCNQoeSvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MlO+nz7dOUGoXnjyIEZlemvJJqir1KZSg47dHsXSRvSRnHe2yGvSyonp3M7u1gemy
-	 Q36CPh3FvUwmpP0adyH18ASJQo3/cK2H/Lcy1aEiZQiINEEgMEZqWuZ6btyb0p55wK
-	 cbR2jZTJJ60f9Nnqz/8A1mGZM+AeSYON6byv9P8M=
+	b=ze1foa6So2I+pLjw23Wo+tRDetv2DCwA5j+gUo4VjoO4ywaO3Oi8s1tdA15RLgCY1
+	 bKbsM/zCri6XneXnLRhgTd7epdqcNt95mdm7krcK4RST6fhDuoZYQ+6re3lGtIm2tj
+	 yVQDbUKAppB+YKuKoiqvRtZec900P+FoLF0fxoOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Simon Horman <horms@kernel.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 340/403] net: l2tp: do not propagate multicast notification errors
-Date: Fri,  4 Sep 2026 07:02:23 +0200
-Message-ID: <20260904045742.550696817@linuxfoundation.org>
+Subject: [PATCH 6.12 341/403] net: openvswitch: fix flow mask use-after-free on flow deletion
+Date: Fri,  4 Sep 2026 07:02:24 +0200
+Message-ID: <20260904045742.573016800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,80 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit af20e269f7459d2ce69887fdf2fad7caf986c865 upstream.
+commit 4e30317ff67a2eb12b4d890d39f72fd7e7117d48 upstream.
 
-The tunnel create, tunnel modify, session create, and session modify
-netlink handlers send multicast notifications through helpers that can fail
-while allocating or encoding a message, or while multicasting it.
+The commit in the Fixes tag below made so flow->mask free is scheduled
+via RCU right after it is removed from the flow table.  The pointer
+stays in the flow structure and it can be accessible while in the same
+RCU critical section.  This is done to avoid requiring ovs_mutex for
+the ovs_flow_free().
 
-For tunnel and session create/modify, a notification is sent after the live
-operation has completed. Returning a best-effort notification error as the
-command result can therefore report failure for an operation that already
-committed and can cause callers to retry and accumulate live objects.
+However, while removing the flow during processing of CMD_DEL, we do
+not take RCU read lock before the removal, and ovs_flow_cmd_fill_info()
+uses the flow->mask pointer afterwards.  The RCU read lock is taken,
+but it's already late at that point.  The comment on that line
+acknowledges that the lock is cosmetic and doesn't serve a real purpose.
 
-Keep sending notifications for listener visibility, but do not propagate
-their best-effort status as the command result. This also keeps the tunnel
-modify command consistent with the other notification-only paths.
+This leads to use-after-free if the RCU grace period passes between
+removal and the filling.  It is a short race window, but it is there
+and can lead to a real crash in case memory allocation for the info
+takes a bit longer:
 
-Fixes: 33f72e6f0c67 ("l2tp : multicast notification to the registered listeners")
+ BUG: KASAN: slab-use-after-free in __ovs_nla_put_key
+             net/openvswitch/flow_netlink.c:1996
+ BUG: KASAN: slab-use-after-free in ovs_nla_put_key+0x2463/0x2e30
+             net/openvswitch/flow_netlink.c:2250
+ Read of size 4 at addr ffff88801ee89970 by task ovs_flow_del_ec/9487
+
+ Call Trace:
+  <TASK>
+  __ovs_nla_put_key net/openvswitch/flow_netlink.c:1996
+  ovs_nla_put_key+0x2463/0x2e30 net/openvswitch/flow_netlink.c:2250
+  ovs_flow_cmd_fill_info+0x420/0x9c0 net/openvswitch/datapath.c:930
+  ovs_flow_cmd_del+0x53a/0x970 net/openvswitch/datapath.c:1467
+  ...
+  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
+  </TASK>
+
+ Allocated by task 9487:
+  mask_alloc net/openvswitch/flow_table.c:967
+  flow_mask_insert net/openvswitch/flow_table.c:1012
+  ovs_flow_tbl_insert+0xea2/0x1a90 net/openvswitch/flow_table.c:1084
+  ovs_flow_cmd_new+0x7e3/0xd90 net/openvswitch/datapath.c:1086
+  ...
+  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
+
+ Freed by task 9485:
+  rcu_free_sheaf+0x1e/0x100 mm/slub.c:5978
+  rcu_do_batch kernel/rcu/tree.c:2645
+  rcu_core+0x59c/0x10c0 kernel/rcu/tree.c:2897
+  handle_softirqs+0x1e4/0x9a0 kernel/softirq.c:622
+  ...
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1062
+
+ovs_flow_tbl_remove() must be called after the ovs_flow_cmd_fill_info()
+to avoid this race.  This also helps with cleaning up the forced cast
+and the cosmetic RCU read lock.  Before the commit in the Fixes tag the
+order did not matter as long as the flow object itself was not freed.
+
+A wider RCU critical section could be another option, but we have a
+GFP_KERNEL allocation in the way.
+
+Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-32042.
+
+Fixes: 56c19868e115 ("openvswitch: Make flow mask removal symmetric.")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/54f48e812ca0424c47ffdb9a8182180921f7e6b2.1787247008.git.zihanx@nebusec.ai
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260815005915.1097270-1-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/l2tp/l2tp_netlink.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/openvswitch/datapath.c |   45 +++++++++++++++++++++++----------------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
---- a/net/l2tp/l2tp_netlink.c
-+++ b/net/l2tp/l2tp_netlink.c
-@@ -248,8 +248,8 @@ static int l2tp_nl_cmd_tunnel_create(str
- 		kfree(tunnel);
- 		goto out;
- 	}
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
--				 L2TP_CMD_TUNNEL_CREATE);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
-+			   L2TP_CMD_TUNNEL_CREATE);
- 	l2tp_tunnel_put(tunnel);
- 
- out:
-@@ -305,8 +305,8 @@ static int l2tp_nl_cmd_tunnel_modify(str
- 		goto out;
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1442,33 +1442,34 @@ static int ovs_flow_cmd_del(struct sk_bu
+ 		goto unlock;
  	}
  
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info,
--				 tunnel, L2TP_CMD_TUNNEL_MODIFY);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info,
-+			   tunnel, L2TP_CMD_TUNNEL_MODIFY);
+-	ovs_flow_tbl_remove(&dp->table, flow);
+-	ovs_unlock();
+-
+-	reply = ovs_flow_cmd_alloc_info((const struct sw_flow_actions __force *) flow->sf_acts,
++	reply = ovs_flow_cmd_alloc_info(ovsl_dereference(flow->sf_acts),
+ 					&flow->id, info, false, ufid_flags);
+-	if (likely(reply)) {
+-		if (!IS_ERR(reply)) {
+-			rcu_read_lock();	/*To keep RCU checker happy. */
+-			err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
+-						     reply, info->snd_portid,
+-						     info->snd_seq, 0,
+-						     OVS_FLOW_CMD_DEL,
+-						     ufid_flags);
+-			rcu_read_unlock();
+-			if (WARN_ON_ONCE(err < 0)) {
+-				kfree_skb(reply);
+-				goto out_free;
+-			}
++	if (IS_ERR(reply)) {
++		netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
++				PTR_ERR(reply));
++		reply = NULL;
++	}
  
- 	l2tp_tunnel_put(tunnel);
- 
-@@ -645,8 +645,8 @@ static int l2tp_nl_cmd_session_create(st
- 		session = l2tp_session_get(net, tunnel->sock, tunnel->version,
- 					   tunnel_id, session_id);
- 		if (session) {
--			ret = l2tp_session_notify(&l2tp_nl_family, info, session,
--						  L2TP_CMD_SESSION_CREATE);
-+			l2tp_session_notify(&l2tp_nl_family, info, session,
-+					    L2TP_CMD_SESSION_CREATE);
- 			l2tp_session_put(session);
+-			ovs_notify(&dp_flow_genl_family, reply, info);
+-		} else {
+-			netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
+-					PTR_ERR(reply));
++	if (likely(reply)) {
++		err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
++					     reply, info->snd_portid,
++					     info->snd_seq, 0,
++					     OVS_FLOW_CMD_DEL, ufid_flags);
++		if (WARN_ON_ONCE(err < 0)) {
++			kfree_skb(reply);
++			reply = NULL;
  		}
  	}
-@@ -710,8 +710,8 @@ static int l2tp_nl_cmd_session_modify(st
- 	if (info->attrs[L2TP_ATTR_RECV_TIMEOUT])
- 		session->reorder_timeout = nla_get_msecs(info->attrs[L2TP_ATTR_RECV_TIMEOUT]);
++	/* Removal has to happen after ovs_flow_cmd_fill_info(), as it uses
++	 * the flow->mask that can be scheduled to be freed by the
++	 * ovs_flow_tbl_remove() and we're not holding the RCU read lock.
++	 */
++	ovs_flow_tbl_remove(&dp->table, flow);
++	ovs_unlock();
++
++	if (likely(reply))
++		ovs_notify(&dp_flow_genl_family, reply, info);
  
--	ret = l2tp_session_notify(&l2tp_nl_family, info,
--				  session, L2TP_CMD_SESSION_MODIFY);
-+	l2tp_session_notify(&l2tp_nl_family, info,
-+			    session, L2TP_CMD_SESSION_MODIFY);
- 
- 	l2tp_session_put(session);
- 
+-out_free:
+ 	ovs_flow_free(flow, true);
+ 	return 0;
+ unlock:
 
 
