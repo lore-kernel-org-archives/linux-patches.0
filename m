@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55477422523;
-	Fri,  4 Sep 2026 06:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A70426693;
+	Fri,  4 Sep 2026 06:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502977; cv=none; b=NOblT5PEEmxtkQtEktFhefXsB2TJfSbIaVAPWZ40/khQA1Zxxo8GwIwI9anvaEU5Eq68AWraVZ03i60U1XH7Y2F8PfP7tZLVHnR9X+MUw2yHZ5GxfLIVVt8od6mVNrHyhNyUQBlTWQj67pnoX04pm5BfpiEXdmnQbTErEctaYi0=
+	t=1788502980; cv=none; b=AgB2Jr52zs40Kc0g7qxLDrJgHz+UfVFFiB1/LwpXP8g3zJIkZqSy2JjO9iMhIywU0F0jEdXwt5upjvWkUrlL+aiOTIfYSvw7h7iFGy/xm4ad69nhtC4Dbn1eXe+keTQxHadQH0IojtvA+KqEpaePoCYaTrMfxDCzdbksRZNY6oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502977; c=relaxed/simple;
-	bh=IMKqMDhWxEhiOcK+AkWl9QFr9PT9Gidaks3rxLvLmvY=;
+	s=arc-20240116; t=1788502980; c=relaxed/simple;
+	bh=qojq4fp3LjCdEosig5KNTuG6mN7Jzw5AJe1FzPEn7fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMLBlmbCK3qBS5z2srR5sWqqs+HZE1mWlthAQJt2JdmE69U4avR1fTLKFEbAGnhrHESbqo1BsrTONAxVx+Q9bAQdzgU+LyhtJ3IBRX85EsUUQfTZMAIcZp5OkMz98wgSnTvN5cEU+8ZMWu16QcePNQq33KZs8pf69klcXxwvIxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbg5VdVz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DpyovBubq7ilpsqqG4KcD41dbIFbdGJXHaO7FsJrp7l7CscNkzo+VpIEu5tjn5Mr1WsjaRFhPGC2jqV62KfA2llJRW3kfp81iuSWF0jcwC9CqRDQUHbBzG0Z3ZPdn82+kDPN3GZLTXJh/bzJCzP4qHTamRuGFZoJnAkiUAAuc2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BY6ujkgx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbg5VdVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36D11F00A3E;
-	Fri,  4 Sep 2026 06:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BY6ujkgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7E01F00A3D;
+	Fri,  4 Sep 2026 06:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502976;
-	bh=iSRpn1DsNQ9bO+QZE9R3KYQVhHW7GZddKfwVtnQKHQ8=;
+	s=korg; t=1788502979;
+	bh=q9Ebf80JnikwwkWZBHWH6gX9972E9+wu6qwg/KWGOgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cbg5VdVzLdaPEPn6jPLtmStA+6EbRVKJN84m/Mmygc3ckagPYc+VOtDGvEunsFFvV
-	 09JpFfnEF9Jo6V5vmL9xo4bRuK2v2S+PlqegToJdhNPa8ZX78UcVz2kV8Iw3DOT6+t
-	 EoGhTtfoBxlG1wGz2jJ2T1BMbBJyEZzyVCS6M7Uw=
+	b=BY6ujkgxOsHv+4gnpRnFPFXjpx8MBf9pygcvXv9aT3Lhjpg8OHFfWwESbe0rLrGID
+	 QF8CoO8urcSvLIKJLjzTzFLG+k/bWXLE3+q0wPFsGMQh/4ZvdQQlyi1R0HRm+8m/Xg
+	 BCxfzFwfb2F9xUl6g4skWhnyuAuO9dm1a/c4hBJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 395/403] xarray: honor XA_FLAGS_ACCOUNT in xas_split_alloc()
-Date: Fri,  4 Sep 2026 07:03:18 +0200
-Message-ID: <20260904045743.765765092@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.12 396/403] tpm: tpm_i2c_nuvoton: disable IRQ on wait timeout
+Date: Fri,  4 Sep 2026 07:03:19 +0200
+Message-ID: <20260904045743.787173456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -61,51 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 789763523fb43cdc328de5cb5dcd19240ccf90d8 upstream.
+commit 705c4ed0643366963547b2616d53165f2519c81f upstream.
 
-XArray operations that allocate xa_nodes, such as xas_nomem() and
-xas_alloc(), add __GFP_ACCOUNT when the array has XA_FLAGS_ACCOUNT set.
-This charges the allocated memory and avoids the workingset convergence
-issue described by commit 7b785645e8f13 ("mm: fix page cache convergence
-regression").
+i2c_nuvoton_wait_for_stat() enables the IRQ before waiting for the
+interrupt handler to report a status change. If the wait times out, or is
+interrupted before the handler runs, the function returns without
+balancing the enable_irq() call.
 
-xas_split_alloc() does not add _GFP_ACCOUNT when XA_FLAGS_ACCOUNT is
-present.  Fix it.
+Disable the IRQ before leaving the failed wait path. Also preserve an
+interrupted wait's original error code instead of converting it to
+-ETIMEDOUT inside the helper.
 
-Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-2-38cb3ff325c5@nvidia.com
-Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: William Kucharski <william.kucharski@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: 4c336e4b1556 ("tpm: Add support for the Nuvoton NPCT501 I2C TPM")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260626091653.54929-1-mhun512@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/xarray.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/char/tpm/tpm_i2c_nuvoton.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/lib/xarray.c
-+++ b/lib/xarray.c
-@@ -1027,6 +1027,9 @@ void xas_split_alloc(struct xa_state *xa
- 	if (xas->xa_shift + XA_CHUNK_SHIFT > order)
- 		return;
- 
-+	if (xas->xa->xa_flags & XA_FLAGS_ACCOUNT)
-+		gfp |= __GFP_ACCOUNT;
+--- a/drivers/char/tpm/tpm_i2c_nuvoton.c
++++ b/drivers/char/tpm/tpm_i2c_nuvoton.c
+@@ -182,8 +182,10 @@ static int i2c_nuvoton_wait_for_stat(str
+ 						      timeout);
+ 		if (rc > 0)
+ 			return 0;
+-		/* At this point we know that the SINT pin is asserted, so we
+-		 * do not need to do i2c_nuvoton_check_status */
 +
- 	do {
- 		unsigned int i;
- 		void *sibling = NULL;
++		disable_irq(priv->irq);
++		if (rc < 0)
++			return rc;
+ 	} else {
+ 		unsigned long ten_msec, stop;
+ 		bool status_valid;
 
 
