@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF634A77D;
-	Fri,  4 Sep 2026 05:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E233A961E;
+	Fri,  4 Sep 2026 05:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499090; cv=none; b=kvu9xy5o0rv38qcTi+Vh7YGvBK5evQi8jcpR9pBnlR2IMvm7M4dXBHzPuAZwWofv+CJrW+/+jrSe/DaP3J/LASuSwc1uHDm9aTl5uxW+2VVLsCXrC63Lp79il2j6+QdssdPZ76SAYBcrEeZpMdVEYpyYHLdpYXgfa5uKq3KRs7A=
+	t=1788499093; cv=none; b=uPtK0+LaI9Cdnem+IXo2pVxFSOVs5VKYP4bqITmHAu6nRb3Md8qtMXKgo6z2hfqW/TUebSXNsiUI3mSDy16LxHteZ7EcL3VG2JNfvK8gSeV8l08ExyfG3QrvFW8fCtdVpn1LlpHO9+w76k/Wphvb2uO9/MXJCTENgFWEgUyLGjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499090; c=relaxed/simple;
-	bh=EAEUGU+AtTPi6Lgnjfl2Z1eFJ81amTqOOah6EtLsbtY=;
+	s=arc-20240116; t=1788499093; c=relaxed/simple;
+	bh=jbSOHd7zyLGJe2T2EewhIMF7HHN3RUgL279pj4dl8iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=febqicE1t0aaq9ebRhwtpdUCGyhPdZbxfws0ecoqNDnxZg4rc/Kf+u+vHX7R7rQ6L5QYJnwhGROmOfM1/+g2MUycinSkpK828LV80G//7VJNLexpuZE2xJlt8vez+yBg0LlisDIgQAu8BJODQvyzZDSHVB6cpfcbbK51S2BJ2KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxlZxV6O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vd6RlEp96QA9Yu/fMxGa35YAoyHD0KRm7n/GzEUumJE84EMS3ig/824V8/oSkNYCwekeoVAlBCiHP8Hxf/HspyM6JzWVrzgFq/buLmiq0OEDESjLlh+hGqLZNwup/+f6gwAWfS5mCJHquOmkxZ5U9XkjBVdaS4JHZNcZOFlb9VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjrj/2tJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxlZxV6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAD21F00A3D;
-	Fri,  4 Sep 2026 05:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjrj/2tJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0651F00A3D;
+	Fri,  4 Sep 2026 05:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499089;
-	bh=+CryiEzCVv0wHDospS/4EVAFdDrWbZrVu5JCl4vvNoc=;
+	s=korg; t=1788499092;
+	bh=y7bATqHQFVirKV5qXsSF2TQk8f5Obs3tqj3Y2b+7paU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vxlZxV6OhwcFRig57SQARiyJ+HHwo0j/CSZ+21Ja12GxD3wocEkjsfqgUr0LjSJXD
-	 /CFMOpgXXXmYGkCGUhAyEC69cuBWqQyH1/+tUUw02cTjiaIe/GRIRBlUeebekwGtzj
-	 BiWoVkca/nqdlio/R2VyHExmDlzKnYEuPPeyplI8=
+	b=jjrj/2tJETHbMzVS6AMX70c/ofoPATowP3OoVOMoxGVRaP7EANAzvSqGcHhJA9/2y
+	 kvfowu4BypFXJ+XBC62U9016P9DVF/MCqJqrRbLvAfUSctUsUx1pqyue9q5IajruEl
+	 WgLK9WXwd9GcoOa6ASMcop1OW1V/JTulZjEC4aMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
 	Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Subject: [PATCH 7.2 293/713] accel/rocket: fix NULL dereference and integer overflow in rocket_job_push()
-Date: Fri,  4 Sep 2026 06:54:21 +0200
-Message-ID: <20260904045810.409308207@linuxfoundation.org>
+Subject: [PATCH 7.2 294/713] accel/rocket: initialize job domain before cleanup paths
+Date: Fri,  4 Sep 2026 06:54:22 +0200
+Message-ID: <20260904045810.430932935@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,87 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-commit a85402bff218f2b8f0d806e46c16c2f3d49cdda7 upstream.
+commit 70e6a33d68a9b03335c5426332666e52d07f45d6 upstream.
 
-rocket_job_push() allocates a temporary array to hold all input and
-output GEM object pointers:
+rocket_ioctl_submit_job() releases rjob through rocket_job_put() on
+allocation error paths. rocket_job_cleanup() unconditionally calls
+rocket_iommu_domain_put(job->domain), but job->domain is assigned only
+after task copying and BO lookups. A failure before that assignment can
+therefore clean up a job with a NULL domain pointer.
 
-    bos = kvmalloc_array(job->in_bo_count + job->out_bo_count,
-                         sizeof(void *), GFP_KERNEL);
-    memcpy(bos, job->in_bos, job->in_bo_count * sizeof(void *));
-    memcpy(&bos[job->in_bo_count], job->out_bos, ...);
-
-Two bugs exist:
-
-1. Missing NULL check: if kvmalloc_array() fails, bos is NULL and
-   the subsequent memcpy() dereferences it, causing a kernel NULL
-   pointer dereference.
-
-2. Integer overflow: in_bo_count and out_bo_count are both u32, set
-   directly from userspace-supplied in_bo_handle_count and
-   out_bo_handle_count with no prior validation. Their sum is computed
-   in u32 arithmetic and can wrap to a smaller value, causing the
-   allocation count passed to kvmalloc_array() to be smaller than
-   intended. Subsequent uses still operate on the original counts when
-   copying and locking objects, which may lead to out-of-bounds accesses
-   on the temporary array.
-
-Fix by using check_add_overflow() to detect count overflow before the
-allocation, and adding a NULL check on the allocation result.
+Take the per-file domain reference before the first error path can release
+rjob. Also clear rjob->tasks after freeing it in rocket_copy_tasks(), so
+the common cleanup path cannot free the task array again after a task-copy
+error.
 
 Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/r/20260524155716.90955-1-meatuni001@gmail.com
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Link: https://lore.kernel.org/r/6a454b48.6a8fa39a.27019b.984b@mx.google.com
 Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/rocket/rocket_job.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/accel/rocket/rocket_job.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/accel/rocket/rocket_job.c
 +++ b/drivers/accel/rocket/rocket_job.c
-@@ -8,6 +8,7 @@
- #include <drm/drm_gem.h>
- #include <drm/rocket_accel.h>
- #include <linux/interrupt.h>
-+#include <linux/overflow.h>
- #include <linux/iommu.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
-@@ -188,14 +189,19 @@ static int rocket_job_push(struct rocket
- 	struct rocket_device *rdev = job->rdev;
- 	struct drm_gem_object **bos;
- 	struct ww_acquire_ctx acquire_ctx;
-+	u32 bo_count;
- 	int ret = 0;
+@@ -103,6 +103,7 @@ rocket_copy_tasks(struct drm_device *dev
  
--	bos = kvmalloc_array(job->in_bo_count + job->out_bo_count, sizeof(void *),
--			     GFP_KERNEL);
-+	if (check_add_overflow(job->in_bo_count, job->out_bo_count, &bo_count))
-+		return -EINVAL;
-+
-+	bos = kvmalloc_array(bo_count, sizeof(*bos), GFP_KERNEL);
-+	if (!bos)
-+		return -ENOMEM;
- 	memcpy(bos, job->in_bos, job->in_bo_count * sizeof(void *));
- 	memcpy(&bos[job->in_bo_count], job->out_bos, job->out_bo_count * sizeof(void *));
+ fail:
+ 	kvfree(rjob->tasks);
++	rjob->tasks = NULL;
+ 	return ret;
+ }
  
--	ret = drm_gem_lock_reservations(bos, job->in_bo_count + job->out_bo_count, &acquire_ctx);
-+	ret = drm_gem_lock_reservations(bos, bo_count, &acquire_ctx);
+@@ -555,6 +556,7 @@ static int rocket_ioctl_submit_job(struc
+ 	kref_init(&rjob->refcount);
+ 
+ 	rjob->rdev = rdev;
++	rjob->domain = rocket_iommu_domain_get(file_priv);
+ 
+ 	ret = drm_sched_job_init(&rjob->base,
+ 				 &file_priv->sched_entity,
+@@ -580,8 +582,6 @@ static int rocket_ioctl_submit_job(struc
+ 
+ 	rjob->out_bo_count = job->out_bo_handle_count;
+ 
+-	rjob->domain = rocket_iommu_domain_get(file_priv);
+-
+ 	ret = rocket_job_push(rjob);
  	if (ret)
- 		goto err;
- 
-@@ -220,7 +226,7 @@ static int rocket_job_push(struct rocket
- 	rocket_attach_object_fences(job->out_bos, job->out_bo_count, job->inference_done_fence);
- 
- err_unlock:
--	drm_gem_unlock_reservations(bos, job->in_bo_count + job->out_bo_count, &acquire_ctx);
-+	drm_gem_unlock_reservations(bos, bo_count, &acquire_ctx);
- err:
- 	kvfree(bos);
- 
+ 		goto out_cleanup_job;
 
 
