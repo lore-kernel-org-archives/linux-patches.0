@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304064195A3;
-	Fri,  4 Sep 2026 05:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA594078C0;
+	Fri,  4 Sep 2026 05:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499430; cv=none; b=g4QFQoG0iUSuk9hju7neJZxmCzFnNga0pcGFHAlL/bqFzxL0Cv/grzlFwSRsUWT883RofmGN7uSHcdKcHC1zKy+xpWoI3GZ7hsw2pXAyoFsnUue8GuEftqU4UgF9LN5uy4vv3U9w8fLMTkIdlAbGOT8lmg/Wl4FSqN0RwbBCZtE=
+	t=1788499433; cv=none; b=JaPsZa/eJSz1Op6ZZCW4PTJdR6k1ROX3lPsGjUrrq2KIvDajr/eSmCM8soMU0LoDVOo5gskypFY5eHKtpEDeWkWxg6Rs5uJCfg4YO8MxsdHWj/U07KK5jXpE6nyhAZ9gUqXXNapu34mNJXhU/OIUZBzCLFMZtutADn/1yJMupVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499430; c=relaxed/simple;
-	bh=jpmZ8/By24jzAP8Wnvy6hGFcRHnEqKdVAdw+GO6xY8Q=;
+	s=arc-20240116; t=1788499433; c=relaxed/simple;
+	bh=Vl/FHaYr+enAnJRYHmGgIvFoSboC7tKoYyIxjzGzcpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzD4zhDKKaoJZfDpkJXGdy694Z1u47zqn55ccch25cM43uys3OCR4KxdE7tQT7xE+m8G+va/2Oqk5oKqHyP+e2YJ0Sx1vqKL8aJp4pOMG9ZiMj85nV1ed4w5B+H6Oszxe6BsYHpAnu6sq1DeJynTZM7y2hoxAQIwGAtSInlwQ7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xruMKRuV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CMdFfxaZ6WNT5+k3B8oS7CUiN1PLJFDqyvemQJDr380teeMnyF0uTsgN0NVrgjzzG0QnM6x+bM/8ZIhO3HiC19GCEYmGpqQsXmgMhvN5o/2pqa/siuSGKASY209MtFVu9qzBed5n4SsqNqdgD7CR3VXTo5hpbEiMIim1Ty1Idp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ksulceve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xruMKRuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A9C1F00A3E;
-	Fri,  4 Sep 2026 05:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ksulceve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673E01F00A3D;
+	Fri,  4 Sep 2026 05:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499429;
-	bh=JWNGDU5dRVAsbF3wsH1HZVgPNg+k3V909R4J79mJPy8=;
+	s=korg; t=1788499431;
+	bh=BOCnLZ3YWR0gl9Az6PYD/rhVw7vD3KO/7Cowwo8LvBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xruMKRuV8dIJ8C6oJnP2Tq+0pvOdnurd2V4xZWNBkJ5OYmScmMpakcGGT+TcYXxPg
-	 4gsonK2oLDWJjmH4C1y4Z3XKvvOUpOgdVS1jJqNQ+9LbVWjAqdFHTqjhGKy0BAehcs
-	 lfhaPZ2a1qIQO8NQ1WYiMSmI9HPsZR3A6F0oGDig=
+	b=KsulceveU2crHROJpK1RkfFmGyVR4nqfKZ53Bw+OKIpkQWHMs6du6UJZDFy6qwnKw
+	 tnFlWKMDE0AiK9XifuwnObX5lbExt0KWQ3ZYqPPVEmCOWrZ4ahiTRdyvGtJ1jEi6xl
+	 VL7rXS8PKN1E3bbWnS3xZqkwmIjr2wjUe35lhECU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tao Cui <cuitao@kylinos.cn>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 415/713] sched_ext: Fix inverted ops.core_sched_before() invocation
-Date: Fri,  4 Sep 2026 06:56:23 +0200
-Message-ID: <20260904045813.132871005@linuxfoundation.org>
+Subject: [PATCH 7.2 416/713] sched_ext: Dont BUG_ON a destroyed DSQ in process_deferred_reenq_users
+Date: Fri,  4 Sep 2026 06:56:24 +0200
+Message-ID: <20260904045813.155423787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -49,76 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit f7b6d128dd49a6eec09066ecfd29095f12588786 upstream.
+commit 8d8dd8ae89eaa78b37fc85528e926029f5facbdf upstream.
 
-scx_prio_less() implements prio_less() semantics - %true means that @a is
-the lower priority and should run after @b. ops.core_sched_before() is
-documented to return %true when @a should run before @b. scx_prio_less()
-returns the op's value as-is, inverting the documented semantics at runtime.
+scx_bpf_dsq_reenq() queues a deferred reenq (dru) that runs from
+run_deferred(), not ops.dispatch(). If the DSQ is destroyed before the dru
+runs, process_deferred_reenq_users() sees dsq->id == SCX_DSQ_INVALID and
+hits the BUG_ON. destroy_dsq() doesn't flush pending drus, so just skip.
 
-Call the op with the arguments swapped.
+tj: Read dsq->id once with READ_ONCE(). Reading it separately in the INVALID
+    check and the BUG_ON would leave a window where destroy_dsq() can
+    invalidate the id between the two reads and still trigger the BUG_ON.
 
-scx_qmap followed the wiring instead of the documentation and returned %true
-for the younger task, so the two inversions canceled out and it behaved as
-intended. Flip its comparison to match. scx_qmap is likely the only current
-user in or out of the kernel tree. Any scheduler written the same way needs
-the same flip, while schedulers following the documentation are fixed by
-this change.
-
-Fixes: 7b0888b7cc19 ("sched_ext: Implement core-sched support")
-Cc: stable@vger.kernel.org # v6.12+
+Fixes: 84b1a0ea0b7c ("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c         |   10 ++++++++--
- tools/sched_ext/scx_qmap.bpf.c |    2 +-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ kernel/sched/ext/ext.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -3416,6 +3416,8 @@ void ext_server_init(struct rq *rq)
-  *
-  * When ops.core_sched_before() is enabled, @p->scx.core_sched_at is used to
-  * implement FIFO ordering within each local DSQ. See pick_task_scx().
-+ *
-+ * Return: %true if @a should run after @b.
-  */
- bool scx_prio_less(const struct task_struct *a, const struct task_struct *b,
- 		   bool in_fi)
-@@ -3424,6 +3426,10 @@ bool scx_prio_less(const struct task_str
- 	struct scx_sched *sch_b = scx_task_sched(b);
+@@ -4431,7 +4431,7 @@ static void process_deferred_reenq_users
  
- 	/*
-+	 * scx_prio_less() returns whether @a should run after @b while
-+	 * ops.core_sched_before() returns whether its first argument should run
-+	 * before the second. Swap the arguments.
-+	 *
- 	 * The const qualifiers are dropped from task_struct pointers when
- 	 * calling ops.core_sched_before(). Accesses are controlled by the
- 	 * verifier.
-@@ -3432,8 +3438,8 @@ bool scx_prio_less(const struct task_str
- 	    !scx_bypassing(sch_a, task_cpu(a)))
- 		return SCX_CALL_OP_2TASKS_RET(sch_a, core_sched_before,
- 					      task_rq(a),
--					      (struct task_struct *)a,
--					      (struct task_struct *)b);
-+					      (struct task_struct *)b,
-+					      (struct task_struct *)a);
- 	else
- 		return time_after64(a->scx.core_sched_at, b->scx.core_sched_at);
- }
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -749,7 +749,7 @@ static s64 task_qdist(struct task_struct
- bool BPF_STRUCT_OPS(qmap_core_sched_before,
- 		    struct task_struct *a, struct task_struct *b)
- {
--	return task_qdist(a) > task_qdist(b);
-+	return task_qdist(a) < task_qdist(b);
- }
+ 	while (true) {
+ 		struct scx_dispatch_q *dsq;
+-		u64 reenq_flags;
++		u64 dsq_id, reenq_flags;
  
- /*
+ 		scoped_guard (raw_spinlock, &rq->scx.deferred_reenq_lock) {
+ 			struct scx_deferred_reenq_user *dru =
+@@ -4454,7 +4454,12 @@ static void process_deferred_reenq_users
+ 		/* see schedule_dsq_reenq() */
+ 		smp_mb();
+ 
+-		BUG_ON(dsq->id & SCX_DSQ_FLAG_BUILTIN);
++		/* destroy_dsq() may have raced and invalidated @dsq, nothing to reenq */
++		dsq_id = READ_ONCE(dsq->id);
++		if (unlikely(dsq_id == SCX_DSQ_INVALID))
++			continue;
++
++		BUG_ON(dsq_id & SCX_DSQ_FLAG_BUILTIN);
+ 		reenq_user(rq, dsq, reenq_flags);
+ 	}
+ }
 
 
