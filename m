@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A211C3242BD;
-	Fri,  4 Sep 2026 05:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8496135AC03;
+	Fri,  4 Sep 2026 05:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500961; cv=none; b=Q3P8bSiT8j2kQDa3G3vVHtq8W5x5oWCkZRC+YaOW087Gfv5eUOMDE6ylwUdU3xpeiFLHOWDXj6DQQGlfRJDsDy1OIY+stqcBJv699H11pjgGlI5j+BFIe/kqc0Aq7MC1n+M7Q4CnmeXbzKnWZqyqPik2V/i2mwE100PE2A8SKZk=
+	t=1788500964; cv=none; b=JpooRIsDxkCDmHXLy4mHe0CIaRVt87FgwqKE/ATn1Xypfq6KWiGvMi+9tsEGC6oJi8TOAyrkjtcjPx7Ch+kuIyu+wCCu0RDKQuzRTPEGHEFbSsaXDCeUGKCd1Bc0z3fSxxUd1gpdjUHU/HuTo0XAyvlWcVIHowMMwzBHdhzJbsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500961; c=relaxed/simple;
-	bh=uGP1fTL0OcTAUP9XNP/cjcYNh17xvHf4tCygnEvN+Ic=;
+	s=arc-20240116; t=1788500964; c=relaxed/simple;
+	bh=QYAHGCmDPADPm/AmSiKze7tV1Pg7BAVhDhu+mfADSk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5Ua4fEYC/vOXqxo4X5wLZycjVrpQi+Oy75UJtYaO61e3LFwzL1OZFaUSTjTdybZihE0btaQvpsBehjHMRSWvWk8CjbnCc1LiPCG8J63+KpF60oxYTo/CWF5k+3wxA8+lp41SJb/H0mGQVMxmVj5lQbGwG8ivsCrHH1BwUCV8N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZFKBBum; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uMaDKR+o2uCiP2J3uOMJYodHjeFyQARWhI33hU1o7k/Xy4BFgSLp9IUO/kByjSl1a0WIwobJcaXdAdgCGRzT105Mec29PrsSMHAidvCbDGxTHBD+TmlOSZyJNwud99B1uWmC6bBz4rZtVRephNrvtxbY35iTLP2EwGUc1XTKQow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDwvU0Bj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZFKBBum"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3F21F00A3D;
-	Fri,  4 Sep 2026 05:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDwvU0Bj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5CD1F00A3D;
+	Fri,  4 Sep 2026 05:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500960;
-	bh=K9Epro9qc+st9UnAMsPH76se/7RA/Nzq+xR1UtWoGfk=;
+	s=korg; t=1788500963;
+	bh=zPX11iPTgYPbdrUcCQEswVlQ8w1oDtmtLlxBovGlJik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RZFKBBumgRkYmZ3IT9hLeqeBOPipfi+WqODaXpRcMfK+LJCWus48R3kWHabjXcli4
-	 n9tH05AvsPhJT+r94+6ssb9chP9hNIMEQM2SVWx/BMgIhMgQSOP7+i3fRmX4G/iMZb
-	 nPwO8Mqyxh4hW88I2T0iWAGdAdDQNDE3PS4CRLuM=
+	b=EDwvU0BjZdAnSaNFjgzbAane/OeJWG01UnYFjhxWIMupI9zB7ASF1+/9HfsYu3XTC
+	 LllkUR9TO/U0+XZt/5JqEspcDn91Q0aw2Twwyj3L69+M6UfjT/Y5goHpiiVR6nOa5S
+	 Hktzmq9s8CzUj2ZcX4Z4AB+6NFAYtOhAS0itcuoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.18 240/552] coresight: etm3x: Fix cntr_val_show() to match cntr_val_store() behavior
-Date: Fri,  4 Sep 2026 06:56:37 +0200
-Message-ID: <20260904045754.918877128@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 241/552] cpufreq: schedutil: Fix rate limit overflow
+Date: Fri,  4 Sep 2026 06:56:38 +0200
+Message-ID: <20260904045754.941366454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,67 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-commit 41fb4e925528aefa4b7a5f76c7f81db99c0d0f38 upstream.
+commit 3bff8f8e95fdc6ad19c8a1a8f87029094747e4bf upstream.
 
-The cntr_val_show() function was intended to print the values of all
-counters using a loop. However, due to a buffer overwrite issue with
-sprintf(), it effectively only displayed the value of the last counter.
+rate_limit_us is an unsigned int, while NSEC_PER_USEC is defined as
+1000L. On 32-bit systems, the multiplication is therefore performed
+using 32-bit unsigned arithmetic before the result is assigned to
+freq_update_delay_ns.
 
-The companion function, cntr_val_store(), allows users to modify a
-specific counter selected by 'cntr_idx'. To maintain consistency
-between read and write operations and to align with the ETM4x driver
-behavior, modify cntr_val_show() to report only the value of the
-currently selected counter.
+For example, writing 4294968 to rate_limit_us wraps the delay from
+4294968000 ns to 704 ns. This makes schedutil update far more often
+than configured.
 
-This change removes the loop and the "counter %d:" prefix, printing
-only the hexadecimal value. It also adopts sysfs_emit() for standard
-sysfs output formatting.
+Add sugov_update_rate_limit_us() to widen rate_limit_us to s64 before
+converting it to nanoseconds. Use the helper when updating the tunable
+through sysfs and when starting the governor, so both paths perform the
+conversion without overflow.
 
-Fixes: a939fc5a71ad ("coresight-etm: add CoreSight ETM/PTM driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20251202082613.3265761-1-visitorckw@gmail.com
+Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
+Signed-off-by: Hui Su <sh_def@163.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260806142304.1761454-1-sh_def@163.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/coresight-etm3x-sysfs.c |   15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ kernel/sched/cpufreq_schedutil.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-sysfs.c
-@@ -717,26 +717,19 @@ static DEVICE_ATTR_RW(cntr_rld_event);
- static ssize_t cntr_val_show(struct device *dev,
- 			     struct device_attribute *attr, char *buf)
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -61,6 +61,17 @@ static DEFINE_PER_CPU(struct sugov_cpu,
+ 
+ /************************ Governor internals ***********************/
+ 
++static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
++{
++	/*
++	 * Cast rate_limit_us before multiplication to force 64-bit arithmetic.
++	 * Otherwise, on 32-bit platforms, both operands are converted to
++	 * 32-bit unsigned long and the multiplication may overflow.
++	 */
++	sg_policy->freq_update_delay_ns =
++		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
++}
++
+ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
  {
--	int i, ret = 0;
- 	u32 val;
- 	struct etm_drvdata *drvdata = dev_get_drvdata(dev->parent);
- 	struct etm_config *config = &drvdata->config;
+ 	s64 delta_ns;
+@@ -606,7 +617,7 @@ rate_limit_us_store(struct gov_attr_set
+ 	tunables->rate_limit_us = rate_limit_us;
  
- 	if (!coresight_get_mode(drvdata->csdev)) {
- 		spin_lock(&drvdata->spinlock);
--		for (i = 0; i < drvdata->nr_cntr; i++)
--			ret += sprintf(buf, "counter %d: %x\n",
--				       i, config->cntr_val[i]);
-+		val = config->cntr_val[config->cntr_idx];
- 		spin_unlock(&drvdata->spinlock);
--		return ret;
-+	} else {
-+		val = etm_readl(drvdata, ETMCNTVRn(config->cntr_idx));
- 	}
+ 	list_for_each_entry(sg_policy, &attr_set->policy_list, tunables_hook)
+-		sg_policy->freq_update_delay_ns = rate_limit_us * NSEC_PER_USEC;
++		sugov_update_rate_limit_us(sg_policy);
  
--	for (i = 0; i < drvdata->nr_cntr; i++) {
--		val = etm_readl(drvdata, ETMCNTVRn(i));
--		ret += sprintf(buf, "counter %d: %x\n", i, val);
--	}
--
--	return ret;
-+	return sysfs_emit(buf, "%#x\n", val);
+ 	return count;
  }
+@@ -848,7 +859,7 @@ static int sugov_start(struct cpufreq_po
+ 	void (*uu)(struct update_util_data *data, u64 time, unsigned int flags);
+ 	unsigned int cpu;
  
- static ssize_t cntr_val_store(struct device *dev,
+-	sg_policy->freq_update_delay_ns	= sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
++	sugov_update_rate_limit_us(sg_policy);
+ 	sg_policy->last_freq_update_time	= 0;
+ 	sg_policy->next_freq			= 0;
+ 	sg_policy->work_in_progress		= false;
 
 
