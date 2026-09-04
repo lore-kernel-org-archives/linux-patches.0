@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA332F9DA1;
-	Fri,  4 Sep 2026 05:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3973F7873;
+	Fri,  4 Sep 2026 05:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501148; cv=none; b=Btt1+Tx6tVHDdhflpUi4mHqmtO8+Oh02ENxJ4oL9242F9CElLsdAlbxj5/NRTAaWbQ4wOhCCqbEEz4O85i2SHP2ewa0WNmSfnEOO04DysXHVskLdOWWuvnc+p/bWMUmJDmEiuao01qOCnAwk2evT/1r+QKkSMIcIkdAMLlNP62A=
+	t=1788501151; cv=none; b=c/2gJvZzt5bSSlUhcJSnbm9nzcH5Gfn2oFbOU7nlL9O3c8O5ZN21+uFMn9HpHyrd6uKTmEb0PZHJNtPWMa+jdPhh/iFga2ry2+ZH4z3jCdExeKeerVutJwNJo1n3oL13wHsT48bfITP3E53X+WUHVxMvbCtmlG7Kw1ITS46u1qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501148; c=relaxed/simple;
-	bh=gyjt65jz3HGKNpbYghbIAarFlzyWnR9ZwKubsLA2GMI=;
+	s=arc-20240116; t=1788501151; c=relaxed/simple;
+	bh=surVgFxeyC1QQKpp7gEfuIjV0tQbCBjWm0ELla0IzFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MejS+5fO/k1ZKt/DRQd1LvDAK7H4VCOGnOdxo1ti2sCVF2zZlNXvwHYuwWruIK8QNYfBkGNuyd+UvSblTTj58MvDRokdgCuy+N2XFEyK3PDmgGz483bS5sjyRaa7txT3mFwUOZEwtJLI5Foo9VEW/APhCVBPHi6Rau2yS0PoRN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZUkH+dP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hJAxS2KeGdp1oUJBKm+d9DdUaDEB2p+tFTFE8Ko2mU3PJXkt94digzYQCi1lbEpNJAADOy3YjlTHNus4b9W3EikG7GgJRI585fcttsPY8JYdKrFtPIEaB7iUlPCHqLEc2lIsVEcVdNJH3s0atcWGPxO1EG9N42nNlHZzLnapnds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDQvd5S/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZUkH+dP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C657D1F00A3D;
-	Fri,  4 Sep 2026 05:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDQvd5S/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F4F1F00A3D;
+	Fri,  4 Sep 2026 05:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501147;
-	bh=mnQp10pf2HSl6qUfbiqXGqAZvN9pClxxNSBl1id6MA8=;
+	s=korg; t=1788501150;
+	bh=CxK8LlPiCdOSlVshY5VlcX/kAkZe0jZ/LMpbpUapmBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uZUkH+dPtwRTBTLFfU8/y+hBJD8nbXpCJfCKyrMCcYYTxfn8mnoBqyzvBYFpI8OLI
-	 uG99EI38uYjjE/S1ZLBrvdyGeQDvXuIIvkPZ5HqNFlokgTQ6PwJEcSpDdcncPdsCMx
-	 dzJEM6YmD7QmxLw8gk9RbfQu7ki8BFa+lSg37638=
+	b=KDQvd5S/H/Q6FiEsyOLK6XJxSZ4km1K6b8+bkcGxYkJEZzAB+EFXLN+lYGXPiy4xd
+	 z9GFtLXJvgWVIK3grgEE3BPIDZfg6UYDe3W8Bj8GhhGCXVHtDk3R5ZsJFbX2Lw9hGk
+	 Zdd+wHpcCR1kxlJhxTLN3TVrpr7BYy3ExhpUnFHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 254/552] Bluetooth: hci_sync: Clear HCI_CMD_PENDING when dropping the last request
-Date: Fri,  4 Sep 2026 06:56:51 +0200
-Message-ID: <20260904045755.458484043@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.18 301/552] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
+Date: Fri,  4 Sep 2026 06:57:38 +0200
+Message-ID: <20260904045756.986126228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,65 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit cb19774faa57c51efa189d8b8606aeabccebc53b upstream.
+commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
 
-A synchronous HCI command that never receives a response leaves
-HCI_CMD_PENDING set: hci_req_cmd_complete() is the only place that clears
-it, and it only runs when a response matching the last command sent
-arrives.
+ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
+assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
+bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
+bounds the declared lengths from above (their sum must fit the received
+event), but an assoc request/response shorter than its fixed offset still
+underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
+cfg80211_roamed() then treat that wrapped value as the IE length and copy
+that many bytes out of the small assoc_info buffer to user space via
+nl80211, disclosing adjacent slab memory.
 
-hci_send_cmd_sync() populates hdev->req_skb only when the flag transitions
-from clear to set, while hci_dev_open_sync() and hci_dev_close_sync() drop
-req_skb without clearing the flag. After a timeout followed by either, the
-two disagree: the flag claims a request is outstanding while req_skb is
-NULL. Subsequent synchronous commands are then sent with no req_skb, so
-hci_event_packet() has nothing to match an arriving event against, and the
-caller times out even though the controller answered.
+Clamp both lengths to their offsets before subtracting.
 
-Commands answered by Command Complete recover on their own, since
-hci_req_cmd_complete() clears the flag as a side effect. Drivers using
-__hci_cmd_sync_ev() with a custom event do not, because a vendor event
-never reaches that path. On a WCN3988 (hci_qca over UART) this makes a
-controller firmware hang unrecoverable: the driver injects a hardware
-error and re-runs qca_setup(), qca_read_soc_version() waits for
-HCI_EV_VENDOR, the reply arrives within 4 ms and is discarded, and every
-retry fails the same way. The adapter is left down until the driver is
-unbound and rebound, or power is removed.
+Found by 0sec (https://0sec.ai) using automated source analysis; the
+missing lower bound is evident from source. Compile-tested.
 
-Clear the flag wherever the last request is dropped, restoring the
-invariant that req_skb is non-NULL exactly when HCI_CMD_PENDING is set.
-Verified on hardware by forcing a command timeout: without this change
-setup fails on every attempt, with it setup succeeds on the first.
-
-Fixes: 2615fd9a7c25 ("Bluetooth: hci_sync: Fix overwriting request callback")
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Abdelkader <iabdelka@qti.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5300,6 +5300,7 @@ int hci_dev_open_sync(struct hci_dev *hd
- 		if (hdev->req_skb) {
- 			kfree_skb(hdev->req_skb);
- 			hdev->req_skb = NULL;
-+			hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
- 		}
+--- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
++++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
+@@ -753,6 +753,11 @@ void ath6kl_cfg80211_connect_event(struc
+ 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
+ 	    assoc_resp_ie_offset;
  
- 		clear_bit(HCI_RUNNING, &hdev->flags);
-@@ -5484,6 +5485,7 @@ int hci_dev_close_sync(struct hci_dev *h
- 	if (hdev->req_skb) {
- 		kfree_skb(hdev->req_skb);
- 		hdev->req_skb = NULL;
-+		hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
- 	}
++	if (assoc_req_len < assoc_req_ie_offset)
++		assoc_req_len = assoc_req_ie_offset;
++	if (assoc_resp_len < assoc_resp_ie_offset)
++		assoc_resp_len = assoc_resp_ie_offset;
++
+ 	assoc_req_len -= assoc_req_ie_offset;
+ 	assoc_resp_len -= assoc_resp_ie_offset;
  
- 	clear_bit(HCI_RUNNING, &hdev->flags);
 
 
