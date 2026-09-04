@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79103DB310;
-	Fri,  4 Sep 2026 05:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959E834A3A5;
+	Fri,  4 Sep 2026 05:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500812; cv=none; b=RJ2nfdw+GUOmNFau6hT7l8wakZ7EwWV4myvp6p25OpVqhVZAeAjil/QgYb4fj7/qneZxNcBtLXJksFi4sqe/L3cJFv+599BMPNvTicaunOYkZLTmBJgaY1N1n4aQ00HnvJPp0Jd64mvytff2W6r+ZJCx5GXNTnrUkVq5AfxCgdQ=
+	t=1788500814; cv=none; b=OZhGJ7Fk0PFKG0hng+9Ho+AgBenTZEzJXActrgJC7qrYX6CcQ/nxqN/Sp3BJIsBqqFkuc3QuGcewy3PW6DHN+rc3Hbdpnx/aUndhNLaOeb2tfxdnxKgi7p7KcWZmV5/lsMIxnRGUyL/Z5JO92KyoU4r4Nmw1rjIsZFg+cfaB2Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500812; c=relaxed/simple;
-	bh=P9YaETB9xzbx9Ta7iIRfGPrFj81gjAD7y4cPWbDtFak=;
+	s=arc-20240116; t=1788500814; c=relaxed/simple;
+	bh=xPZ2DrxFBNpus4Gk8daYurdUPqEBEQ8lrpfv4gjYxLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlvsG6daDBsJJMJclJWoiZJcg970FYJhfE5JSBGT9ZoVE/c70RP5F0Z6KZqLZxzTSgp+/5R0ESsMMvXkqtot4Hd4SrAZZmxjSTnSMzDzWjWIuCmN07cogSwwaDU76mkOC9McR71ojBN4OJdezb4NZ4iBCd2gLHoLbgdSOHt3dbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVZJd7qC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GsxaUBESuosrPLPjRcSklFb9DPu9MoBaZqeR1hWGTl65VGHh4cgCmFvylOEudM65ZBwYIyaRak1AmK0qeZjstg64VT/TvDTNFatsb5M7q/43ogxsfegKmffHZdIxOla0y5SqIVX4H/xTvqgPYyBUlp3iKGQRE7d7uZsuSsGEMIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xE5JJ2G0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVZJd7qC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211B11F00A3D;
-	Fri,  4 Sep 2026 05:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xE5JJ2G0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FF11F00A3D;
+	Fri,  4 Sep 2026 05:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500810;
-	bh=KoFxMqYhtcgXWEt9NB+yTEcV2DBgrXlqGjPZDWoL2hQ=;
+	s=korg; t=1788500813;
+	bh=UtQOQUC3wqXQn+jKaq9dVeMJj4Aw1hY1c49/Uwn2XuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hVZJd7qCTdRNym2So2cMuMIiapx1SBuwjI0pNUYML4GDltq3mf7VMm0l1uL+6mGM6
-	 mNuA9pXrojYl2EnK2cxBcROL1heNsAa7aNy8BjyKpl6No2Rg9pUkczM8VOTeOS0HS2
-	 2wMUjaJMJY9Cu5KdMS1/IliQ+JeegJOrpsnKkEZs=
+	b=xE5JJ2G0gFbBJ0FmQYhSHhhPIRw/+CAUmEj/YSgXbMBPpJxWbSQRYGANSjlaSPZ4K
+	 i3htYLc1z9CBVSDimO6K0Ju0lBJD7qfIo8ltYi+AqMcUNClMpxsY6sg9kfuw55L9yw
+	 xkTr6YBWW13ZPkEAsDlIE+F/b1EDQsuVZ1UKBNek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Samuel Page <sam@bynar.io>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.18 188/552] fs/ntfs3: validate dirty page table on log replay
-Date: Fri,  4 Sep 2026 06:55:45 +0200
-Message-ID: <20260904045753.277720138@linuxfoundation.org>
+Subject: [PATCH 6.18 189/552] fs/ntfs3: fix info-leak on partial LZNT decompress in ni_read_frame()
+Date: Fri,  4 Sep 2026 06:55:46 +0200
+Message-ID: <20260904045753.300060431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,69 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Samuel Page <sam@bynar.io>
 
-commit 006cb7713dec10368e699abc4367e5faa334c9a5 upstream.
+commit 35d1ea92c7d946e2ebdbe36cdb2c969c8704bebd upstream.
 
-Each DIR_PAGE_ENTRY ends in a page_lcns[] array whose length is the on-disk
-lcns_follow field. check_rstbl() validates the table bookkeeping but never
-checks that this array fits in the entry, so a crafted lcns_follow lets the
-v0->v1 conversion memmove and later replay passes run off the entry.
+ni_read_frame() decompresses an LZNT $DATA frame into the vmapped target
+pages and then trusts decompress_lznt()'s return value:
 
-Add check_dp_table() to reject, right after check_rstbl(), any entry larger
-than its size claims via struct_size() (the same expression used to allocate
-these entries, so the check is overflow-safe by construction). All consumers
-can then trust lcns_follow as the real capacity. This covers every
-page_lcns[] access whose index is bounded by the entry itself (the
-conversion memmove, the HotFix store via find_dp(), and the self-bounded
-scan loops). Accesses whose index comes from the log record need a separate
-bound and are handled in a follow-up patch.
+  unc_size = decompress_lznt(frame_ondisk, ondisk_size, frame_mem,
+                             frame_size);
+  if ((ssize_t)unc_size < 0)        err = unc_size;
+  else if (!unc_size || unc_size > frame_size)  err = -EINVAL;
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+decompress_lznt() stops as soon as the compressed stream is exhausted
+(e.g. a zero chunk header) and returns the number of bytes it actually
+wrote, which may be far less than frame_size. The bytes between unc_size
+and frame_size are never written. The only memset() that follows zeroes
+the region beyond i_valid; when the frame lies entirely within the file's
+valid size that memset() does not run, so the gap retains whatever was in
+the just-vmapped pages. All pages are then marked uptodate and returned
+to userspace, disclosing uninitialized (recently-freed) kernel page
+memory. A crafted compressed file whose stream decompresses to only a few
+bytes leaks the remainder of every frame on a plain read(2), which is
+enough to recover kernel pointers and defeat KASLR.
+
+Zero the [unc_size, frame_size) tail immediately after a successful LZNT
+decompress so the remainder reads back as zero.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/ntfs3/frecord.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -789,6 +789,20 @@ static bool check_rstbl(const struct RES
- 	return true;
- }
- 
-+static bool check_dp_table(const struct RESTART_TABLE *dptbl)
-+{
-+	u32 rsize = le16_to_cpu(dptbl->size);
-+	struct DIR_PAGE_ENTRY *dp = NULL;
-+
-+	while ((dp = enum_rstbl((struct RESTART_TABLE *)dptbl, dp))) {
-+		if (struct_size(dp, page_lcns, le32_to_cpu(dp->lcns_follow)) >
-+		    rsize)
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- /*
-  * free_rsttbl_idx - Free a previously allocated index a Restart Table.
-  */
-@@ -4279,6 +4293,11 @@ check_dirty_page_table:
- 		err = -EINVAL;
- 		goto out;
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2652,6 +2652,15 @@ int ni_read_frame(struct ntfs_inode *ni,
+ 			err = unc_size;
+ 		else if (!unc_size || unc_size > frame_size)
+ 			err = -EINVAL;
++		else if (unc_size < frame_size) {
++			/*
++			 * Partial decompress: zero the [unc_size, frame_size)
++			 * tail.  decompress_lznt() leaves it untouched, so
++			 * without this the freshly vmapped pages would expose
++			 * uninitialized kernel memory to userspace.
++			 */
++			memset(frame_mem + unc_size, 0, frame_size - unc_size);
++		}
  	}
-+
-+	if (!check_dp_table(rt)) {
-+		err = -EINVAL;
-+		goto out;
-+	}
- 
- 	dptbl = kmemdup(rt, t32, GFP_NOFS);
- 	if (!dptbl) {
+ 	if (!err && valid_size < frame_vbo + frame_size) {
+ 		size_t ok = valid_size - frame_vbo;
 
 
