@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40035419FBB;
-	Fri,  4 Sep 2026 05:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B67C41A4F8;
+	Fri,  4 Sep 2026 05:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499399; cv=none; b=oXAEK0QywvHw6E7zdi56VWLoa28gutGkone7uxYnL38AWj5yKD+bXlbHrr89fvwUiHU7FtAoWIF2x46Dtf38CyvRtjfjSE3rdKcMb2R//2Nq2jrypkwiV20tlYF0clQlCkG+h0xPub6D/KOj5P5L4F+joOIsCxKfFEWrInklOuw=
+	t=1788499402; cv=none; b=JaRmhn/QXh2MHFBFAdwIBMEieBVPMx6N0B1le2R/6tlxm3b3YlCuhMzQuwMcXCE5uOMHBLnopjhf/5XrQ10K1Jn+54NHvZOWK9j4jtOOEMySVQy3RnMLByI+ODklNQyeZjESMWxcE2/TZILxbNCo+zvM0eD1xemBQNP147jcEkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499399; c=relaxed/simple;
-	bh=USXP5QUaVCtLqxi6iB7XDRXkmMHSIlk3M8CemJOSSuQ=;
+	s=arc-20240116; t=1788499402; c=relaxed/simple;
+	bh=zbC8S7v+ykk8KPrgFOQANsTiAVMdg8bDN6ooJ86mKvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBs4FHzBCT0ezb4WwAFjRFXxUSd7jF49OIRkxTvaCdDPuEyHlXJslWz1m/k9lcgZl0eQFewSkAxmB2HNalzcA5YETHBTVu0riKuuIJKQH5lQdeuWNXnNkV8IezXHoUulKvzxhAySCoeYqnpsx+/b0yChUvEy3sO99hncnhV/2+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+K6eHDQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dQb38fByWVlPdwDOT0T6JcWHp5ylTgRcvkyG8UuXH0QSuh2L542FYrc4KYQyC8UpBln7vTBZ6qVxKsTYcTFUjD9rYK9kAta8VmR+C8wcf5c052CS35953Fz1yULwu7hTBzbQFNaJTi3IFCScF6kU7x+1hYvCUncpjrcLBo88ZMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c97KpS7N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+K6eHDQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520061F00A3D;
-	Fri,  4 Sep 2026 05:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c97KpS7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B28C1F00A3D;
+	Fri,  4 Sep 2026 05:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499397;
-	bh=Wi7IMN7M8WixL58rJiO91EC139ZJU/q71Rk5bjATr1Y=;
+	s=korg; t=1788499400;
+	bh=tRn6t4xTN/6VotiJ/BeWAqoM1SYCc5GCY0ntFXLdQJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+K6eHDQtYlyxDRjaL0qpypUbYJh85/J3ynFA0OvVeNsvn9w5+/ahYMyXsY48bZvE
-	 UDzjr705ZcTqH6KQFZipgYw21xkgvZVfiSwRttLl2LQLgEKfJz+8wuu99TDw6usYhR
-	 Ii/mK/s1nSdbp96JOCVos1ek4zQdRoINRoAYS2T0=
+	b=c97KpS7NtnwU5ncbvGdD6MizL1lkTC1N0VNL/sS1laHJ8+uicX0VAO1r57hUNn74N
+	 kpWS90IfoTG/s02cgsC9HdyXWR6Tf8EBzhH1K0dEamLJfUxhJULw3QEbU3gfz+lbNT
+	 NCWzhQVzlaXOkw4MUd0w64vKJ18S9+bXGVRKP6/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>
-Subject: [PATCH 7.2 360/713] mailbox: qcom-ipcc: fix duplicate channel allocation across holes
-Date: Fri,  4 Sep 2026 06:55:28 +0200
-Message-ID: <20260904045811.899853036@linuxfoundation.org>
+	Yunye Zhao <yunye.zhao@linux.alibaba.com>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Yu Kuai <yukuai@fygo.io>
+Subject: [PATCH 7.2 361/713] md/raid10: fix still_degraded being inverted in raid10_sync_request()
+Date: Fri,  4 Sep 2026 06:55:29 +0200
+Message-ID: <20260904045811.921791997@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,65 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
 
-commit 66c7bcad72430a02c860521031350b84b31ad9a8 upstream.
+commit 47f1441b281decde6954a2fa82b4131637d685ac upstream.
 
-The IPCC of_xlate() both scans for a free mailbox channel and checks
-for duplicate references to the same underlying IPCC channel. When a
-channel has been shutdown it might have left a hole in the channel
-list, which would terminate the search without considering duplicates
-later in the list.
+Commit fe6a19d40ceb ("md/md-bitmap: merge md_bitmap_start_sync() into
+bitmap_operations") converted still_degraded from int to bool, but
+inverted the assignment in the loop that checks whether the array will
+still be degraded after the current device is recovered:
+"still_degraded = 1" became "still_degraded = false".
 
-Continue the traversal of the channel list to detect and reject
-duplicates, while keeping track of the first free channel.
+As a result, recovering a device while another mirror is still missing
+calls md_bitmap_start_sync() with degraded == false, which clears bitmap
+bits that the still-missing device needs.  When that device is re-added,
+its bitmap-based recovery finds the bits already cleared and skips every
+region written while the array was degraded, so it is marked In_sync
+while holding stale data: silent corruption.
 
-Fixes: d6fbfdbc1274 ("mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion")
+Reproducer (raid10 near=2, 4 disks, internal bitmap):
+ - fail and remove one disk of each mirror pair
+ - write to the degraded array
+ - re-add both disks and let recovery finish
+ - "check" reports mismatch_cnt=262272 after 256 MiB of degraded
+   writes and file contents differ; the second disk's "recovery"
+   completes in milliseconds because everything is skipped
+
+The same conversion in raid1 got it right (still_degraded = true).
+Restore the correct value.
+
+Fixes: fe6a19d40ceb ("md/md-bitmap: merge md_bitmap_start_sync() into bitmap_operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+Reviewed-by: Mykola Marzhan <mykola@meshstor.io>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260723135535.101995-2-yunye.zhao@linux.alibaba.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/qcom-ipcc.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/md/raid10.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -167,7 +167,7 @@ static struct mbox_chan *qcom_ipcc_mbox_
- {
- 	struct qcom_ipcc *ipcc = to_qcom_ipcc(mbox);
- 	struct qcom_ipcc_chan_info *mchan;
--	struct mbox_chan *chan;
-+	struct mbox_chan *chan, *free_chan = NULL;
- 	struct device *dev;
- 	int chan_id;
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3365,7 +3365,7 @@ static sector_t raid10_sync_request(stru
+ 				struct md_rdev *rdev = conf->mirrors[j].rdev;
  
-@@ -180,16 +180,21 @@ static struct mbox_chan *qcom_ipcc_mbox_
- 		chan = &ipcc->chans[chan_id];
- 		mchan = chan->con_priv;
- 
--		if (!mchan)
--			break;
--		else if (mchan->client_id == ph->args[0] &&
--				mchan->signal_id == ph->args[1])
-+		if (!mchan) {
-+			/* Keep scanning past holes to reject duplicate channel requests. */
-+			if (!free_chan)
-+				free_chan = chan;
-+		} else if (mchan->client_id == ph->args[0] &&
-+				mchan->signal_id == ph->args[1]) {
- 			return ERR_PTR(-EBUSY);
-+		}
- 	}
- 
--	if (chan_id >= mbox->num_chans)
-+	if (!free_chan)
- 		return ERR_PTR(-EBUSY);
- 
-+	chan = free_chan;
-+
- 	mchan = devm_kzalloc(dev, sizeof(*mchan), GFP_KERNEL);
- 	if (!mchan)
- 		return ERR_PTR(-ENOMEM);
+ 				if (rdev == NULL || test_bit(Faulty, &rdev->flags)) {
+-					still_degraded = false;
++					still_degraded = true;
+ 					break;
+ 				}
+ 			}
 
 
