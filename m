@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEF13B95FA;
-	Fri,  4 Sep 2026 05:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B177F3815E1;
+	Fri,  4 Sep 2026 05:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500139; cv=none; b=EKZXT1GwAmKsQScH9amh7+/ZeggijCpT4R/m4k3+pZBlP5vnbYF/raUavkk8W1ZwK9aaRLxpHtmRB/2bp71ejicTxcBbPACEivSeMNLbRMqn38YFS3HSmcauHzaboHd0FyJIHHsWfLoSUCP2eOceMb3vLf0Veg8bw3yXph8TSgI=
+	t=1788500141; cv=none; b=cUKHfl5LZa9NhPjOJHRC9BYTaXisVIwVJmw04POac2IstW0p48tZLFL0L4TB3bwXsiBbJpkBj6cRb/xhDE47ddIOyyCIpUbjttEdVgjNIK5GcutkANHnmpe5kUTxi2sYG13UnotCQZOTFsumS1BrHVQd2jZ90cIBT5Oa6+h6sIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500139; c=relaxed/simple;
-	bh=l5KYLBVHXFgh2Zlf5WplMuXbjhN0xsVuhItjVNU7rds=;
+	s=arc-20240116; t=1788500141; c=relaxed/simple;
+	bh=6C3Yv5XDFHwg3ps15az4Vd5dujsXtCzZCsOmU3BVWmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lgi0c5uLjVf13QwgcNl1QOy3tHuS4onP8G1zekB1De2fBp4PlGEv600PlWahBvqjDD+2PJlBFn19SLF4O6e/ptH5j6hsnp04kW31njhS3bvhifGNoQEQ0H1nM1p/QxK7UOxrOz+pH1Oo3BJyNIUmW0Tzq6Vmn6GXHtyMFNGXlpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jo61JM79; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sSDp6L+4SwMaw/w6e7jRdJQA8r0W4L6/i2plj4raZrVhVbs1vaqMmUPvJhIxOI2O4CR71hDMts/BB+GXHYBxRSj/TIKmHtlzZ8USFMyiBt7H2NEYXqeaEabD+/DYHJZLOqcxZttb01tJdKZlsY5OJjrbjz0Oe+Zua9u0x5yuFik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHqaYWdc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jo61JM79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350B61F00A3D;
-	Fri,  4 Sep 2026 05:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHqaYWdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154BF1F00A3D;
+	Fri,  4 Sep 2026 05:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500137;
-	bh=Shd7seSV2tlIBYKJs0zrdM8ARrO7l7ivekm37TntUFo=;
+	s=korg; t=1788500140;
+	bh=OSWaHcuXyG4xRgg0108eP/IOSvFGdExD+qZazQUDDvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jo61JM796ndep+Once+wmnVi1y7uzdh0EmjgJ05IxHr4mnXP1NRrubiefZiXk4W0H
-	 XNATrbw5aSMKe6y+hJm8fJ4NmPmYlk9sssqEtyHiMrSB23F6cRiytT0IxI0rRiBn/E
-	 +zaPaoSGcllLB8qLQnkaPQsYZpALi0GNxfM+Hd4A=
+	b=HHqaYWdchsq8qCA6qLtz5mY9ThwSYptp9vDsqHYj+hSbtko6ZuiYl9sS2nr2glZOq
+	 tSJvKztguCdBSfS/ZUkHA/VSdQvK0tzpUVXJyQd8dfBfApS4CxHBrJgeIezaOL6X0r
+	 ZypSGKDogd/ajxY6jxm7wT5M2d/Ftf2Xy+/X6SJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 7.2 663/713] i3c: Fix unlocked dereference of dev->desc in i3c_device_get_supported_xfer_mode()
-Date: Fri,  4 Sep 2026 07:00:31 +0200
-Message-ID: <20260904045818.697615985@linuxfoundation.org>
+Subject: [PATCH 7.2 664/713] i3c: master: adi: initialize the lock before enabling interrupts
+Date: Fri,  4 Sep 2026 07:00:32 +0200
+Message-ID: <20260904045818.719834024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,68 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 8bed7f4fa710914b7f05fd59998316bfb4d43385 upstream.
+commit 8a53f9102a0d3eeb8784999f925028acf339c276 upstream.
 
-i3c_device_get_supported_xfer_mode() uses dev->desc to obtain the
-master controller.  However, dev->desc must not be dereferenced unless
-bus->lock is held, and this function does not take that lock.
+adi_i3c_master_probe() requests the IRQ and unmasks REG_IRQ_PENDING_CMDR
+before the controller's IBI state, transfer queue list and transfer
+queue lock are initialized.  A pending CMDR interrupt can therefore run
+adi_i3c_master_irq() and take master->xferqueue.lock before the dynamic
+lock has been initialized.
 
-The function only needs access to the master controller associated with
-the device's bus.  Use dev->bus instead, which is always valid for the
-lifetime of the device and does not require dereferencing dev->desc.
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-Fixes: 256a21743d91 ("i3c: Add HDR API support")
+The grounded PoC kept the probe ordering and the IRQ path
+adi_i3c_master_probe() -> adi_i3c_master_irq() -> xferqueue.lock, with a
+pending CMDR interrupt arriving after REG_IRQ_PENDING_CMDR is unmasked.
+Lockdep reported:
+
+  INFO: trying to register non-static key.
+  you didn't initialize this object before use?
+  lock_acquire+0xbb/0x290
+  _raw_spin_lock_irqsave+0x36/0x60
+  adi_i3c_master_irq+0x32/0x56 [vuln_msv]
+  adi_i3c_master_probe+0x5a/0xf47 [vuln_msv]
+
+Initialize the transfer queue and IBI state before requesting and
+unmasking the IRQ.
+
+Fixes: a79ac2cdc91d ("i3c: master: Add driver for Analog Devices I3C Controller IP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260807145638.168865-3-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260617150138.628578-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/device.c    |    2 +-
- drivers/i3c/internals.h |    5 +++++
- drivers/i3c/master.c    |    6 ------
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ drivers/i3c/master/adi-i3c-master.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/i3c/device.c
-+++ b/drivers/i3c/device.c
-@@ -309,7 +309,7 @@ EXPORT_SYMBOL_GPL(i3c_device_match_id);
-  */
- u32 i3c_device_get_supported_xfer_mode(struct i3c_device *dev)
- {
--	return i3c_dev_get_master(dev->desc)->this->info.hdr_cap | BIT(I3C_SDR);
-+	return i3c_bus_to_i3c_master(dev->bus)->this->info.hdr_cap | BIT(I3C_SDR);
- }
- EXPORT_SYMBOL_GPL(i3c_device_get_supported_xfer_mode);
+--- a/drivers/i3c/master/adi-i3c-master.c
++++ b/drivers/i3c/master/adi-i3c-master.c
+@@ -964,17 +964,9 @@ static int adi_i3c_master_probe(struct p
+ 	writel(0x00, master->regs + REG_ENABLE);
+ 	writel(0x00, master->regs + REG_IRQ_MASK);
  
---- a/drivers/i3c/internals.h
-+++ b/drivers/i3c/internals.h
-@@ -72,4 +72,9 @@ static inline void i3c_readl_fifo(const
- 	}
- }
- 
-+static inline struct i3c_master_controller *i3c_bus_to_i3c_master(struct i3c_bus *i3cbus)
-+{
-+	return container_of(i3cbus, struct i3c_master_controller, bus);
-+}
-+
- #endif /* I3C_INTERNAL_H */
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -97,12 +97,6 @@ void i3c_bus_normaluse_unlock(struct i3c
- 	up_read(&bus->lock);
- }
- 
--static struct i3c_master_controller *
--i3c_bus_to_i3c_master(struct i3c_bus *i3cbus)
--{
--	return container_of(i3cbus, struct i3c_master_controller, bus);
--}
+-	ret = devm_request_irq(&pdev->dev, irq, adi_i3c_master_irq, 0,
+-			       dev_name(&pdev->dev), master);
+-	if (ret)
+-		return ret;
 -
- static struct i3c_master_controller *dev_to_i3cmaster(struct device *dev)
- {
- 	return container_of(dev, struct i3c_master_controller, dev);
+ 	platform_set_drvdata(pdev, master);
+ 
+ 	master->free_rr_slots = GENMASK(ADI_MAX_DEVS, 1);
+-
+-	writel(REG_IRQ_PENDING_CMDR, master->regs + REG_IRQ_MASK);
+-
+ 	spin_lock_init(&master->ibi.lock);
+ 	master->ibi.num_slots = 15;
+ 	master->ibi.slots = devm_kcalloc(&pdev->dev, master->ibi.num_slots,
+@@ -986,6 +978,13 @@ static int adi_i3c_master_probe(struct p
+ 	spin_lock_init(&master->xferqueue.lock);
+ 	INIT_LIST_HEAD(&master->xferqueue.list);
+ 
++	ret = devm_request_irq(&pdev->dev, irq, adi_i3c_master_irq, 0,
++			       dev_name(&pdev->dev), master);
++	if (ret)
++		return ret;
++
++	writel(REG_IRQ_PENDING_CMDR, master->regs + REG_IRQ_MASK);
++
+ 	return i3c_master_register(&master->base, &pdev->dev,
+ 				   &adi_i3c_master_ops, false);
+ }
 
 
