@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B31372B2F;
-	Fri,  4 Sep 2026 05:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A92533FE09;
+	Fri,  4 Sep 2026 05:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498707; cv=none; b=uMqLfQh3I8fXXq4UrPTaAndAx4+h5O623FRNj/5UAE4mCMikdqci3uhbv+oJaVQTvHdA71d+ZfPwMS9PnDiat6iwbEYMoy2q65lkt/7upw/xJb1gD92zQHs9t+l4fW9KUEgF7z9qJv3aCyFYWUHb6ulc55NILjjiBxPeC4sokUg=
+	t=1788498711; cv=none; b=Dhwx+GWwpvNkNxy2k4WVXb2toq7ctXH03b7knP1QMuZdumFziXTx8dW1Uc0Er19eRzv+lHKPgrkB57Nv09yx20PE3PWtUTWqGgYGBDu9YzUPVbsRsTlz098XaaPGSKa+cm7ZEPk06YOx0tG0TpqN2tQjuy1YO1iy2RUCBViUhOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498707; c=relaxed/simple;
-	bh=b8F04mkR8tI84PdWg0qXBWGcTZyY0C8WXbEK1zlGcZ4=;
+	s=arc-20240116; t=1788498711; c=relaxed/simple;
+	bh=Pi+RmRptqvmHUTTbQD5oXFrvE6GL+rexKEwQMp3p4lE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5RJ1Fo8TA8r62h2hnBX4LHkk5bmySAGn6AohwMIBHUDBax4gLIbQA79DQYbxMYc8tNuSkv6cuod17F3NImQTDgx8g7n783PMWXmxEIlFfmmyGBFVHRCgA6LFhizwxqhtLQ5OkSBeukGhlRAIyyui9rkxyOqi/Qi1T/txcfyKYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWrQB9p1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MYJxL3MkdGTVRWzTxElEAFuum1dFHrzzZ7FIv2gPZedFS7lPv9TxJd6tE9XL/68Hfao/JBGJ1a3IG2ielFBcJUclGzjH5kdoARzB7ksX3yHgQva9Jh5lK0Ak3wrgVO+/h/7Sk3E8/HpI6i8sRxeEruxW5JE0S7a2tHNywl3Xrg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsRayw1t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWrQB9p1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7E31F00A3D;
-	Fri,  4 Sep 2026 05:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsRayw1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024391F00A3D;
+	Fri,  4 Sep 2026 05:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498705;
-	bh=k52i3xfRLSf6A88UejGMYlnntcYQA3AXFralar1SCTQ=;
+	s=korg; t=1788498708;
+	bh=il7cvjeecm6kTtwzrC1uBkByOZpvUbaMBaJ6oe1Ndng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rWrQB9p1FCi+gqeGu4N/027/1sEKnOyW/PX48/Ym11XYyCDZ88qlnjGNzCFsLrLrj
-	 EzUIEgO3KKcfpnAGdzE8YnJvA+IlLDwhcEzFz7VvnvodXrQSw0B99HND5izobaPLQU
-	 96s00zPvokFWGsdM2cydkSfcI5IzdeazzwWKzm4Y=
+	b=hsRayw1tXHQOnST28pqyDgUthXjZofDWppc4uzB1pS5BCUNHfGKnUxri+q27n+yqv
+	 Buq4Wu/tjT/j1IPEyxmUa1Or8UKnsuCX9TSet2FhEO/B6Mblk11zgCjnDDZ5Aug6Dj
+	 6v8Ks79cVkm/IIH2I2aWqt6sEjRSU7Bcqzt21gfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.2 157/713] nfsd: validate sockaddr length per family in listener_set
-Date: Fri,  4 Sep 2026 06:52:05 +0200
-Message-ID: <20260904045807.345816610@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.2 158/713] nfsd: validate symlink target length in NFSv4 CREATE
+Date: Fri,  4 Sep 2026 06:52:06 +0200
+Message-ID: <20260904045807.367594458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,159 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit bdcc85c2b05a9378d8bd2d65f9fc41440a3cf464 upstream.
+commit 041f57056e5fb9c80adc088269322d2c61074406 upstream.
 
-nfsd_sock_nl_policy declares NFSD_A_SOCK_ADDR as a bare NLA_BINARY
-attribute with no minimum length. A CAP_NET_ADMIN caller can send a
-16-byte NFSD_A_SOCK_ADDR with sa_family=AF_INET6, causing a 12-byte
-OOB read across three consumers (rpc_cmp_addr_port, svc_find_listener,
-kernel_bind).
+nfsd4_decode_create() accepts an unbounded cr_datalen from the wire for
+NF4LNK symlink targets, allowing a client to force a kmalloc of up to
+the maximum RPC payload size (several MiB) per COMPOUND op that persists
+until compound teardown.  The VFS rejects oversized targets with
+ENAMETOOLONG, but the allocation has already occurred.
 
-nfsd_nl_listener_set_doit() also parsed and validated each listener
-entry inline in two separate loops, interleaved with mutating the
-running listener configuration. The validation was duplicated, used an
-open-coded "nla_len < sizeof(struct sockaddr)" check that was too short
-for AF_INET6, and handled a malformed entry inconsistently depending on
-which loop noticed it.
+Reject cr_datalen == 0 early with nfserr_inval and cr_datalen greater
+than NFS4_MAXPATHLEN (PATH_MAX) with nfserr_nametoolong to bound the
+allocation.
 
-Add an nfsd_nl_validate_listeners() helper that walks the entire list
-once and confirms each entry parses, carries both an address and a
-transport name, and is long enough for its address family
-(sizeof(struct sockaddr_in) for AF_INET, sizeof(struct sockaddr_in6)
-for AF_INET6, -EAFNOSUPPORT otherwise). Call it before taking
-nfsd_mutex or creating the serv, so a malformed request fails cleanly
-with no side effects.
-
-Since every entry is known valid by the time the two existing loops
-run, drop the redundant presence and per-family length checks from
-both, leaving only the nla_parse_nested() call needed to extract the
-data.
-
-Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
+Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260615-nfsd-testing-v5-1-188d75aedda0@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-9-f27e8eb4d974@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   77 ++++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 65 insertions(+), 12 deletions(-)
+ fs/nfsd/nfs4xdr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1948,6 +1948,60 @@ err_free_msg:
- }
- 
- /**
-+ * nfsd_nl_validate_listeners - sanity-check the listener list from userland
-+ * @info: netlink metadata and command arguments
-+ *
-+ * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that each entry
-+ * is well-formed: it parses against the policy, carries both an address and
-+ * a transport name, and the address is long enough for its family. Doing
-+ * this up front lets the callers below assume every entry is valid and
-+ * guarantees we make no changes when the request is malformed.
-+ *
-+ * Return: 0 if every entry is valid, or a negative errno otherwise.
-+ */
-+static int nfsd_nl_validate_listeners(struct genl_info *info)
-+{
-+	const struct nlattr *attr;
-+	int rem;
-+
-+	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
-+				 GENL_HDRLEN, rem) {
-+		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
-+		struct sockaddr *sa;
-+		int err;
-+
-+		err = nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
-+				       nfsd_sock_nl_policy, info->extack);
-+		if (err < 0)
-+			return err;
-+
-+		if (!tb[NFSD_A_SOCK_ADDR] || !tb[NFSD_A_SOCK_TRANSPORT_NAME])
-+			return -EINVAL;
-+
-+		sa = nla_data(tb[NFSD_A_SOCK_ADDR]);
-+		if (nla_len(tb[NFSD_A_SOCK_ADDR]) < sizeof(sa->sa_family))
-+			return -EINVAL;
-+
-+		switch (sa->sa_family) {
-+		case AF_INET:
-+			if (nla_len(tb[NFSD_A_SOCK_ADDR]) <
-+			    sizeof(struct sockaddr_in))
-+				return -EINVAL;
-+			break;
-+		case AF_INET6:
-+			if (nla_len(tb[NFSD_A_SOCK_ADDR]) <
-+			    sizeof(struct sockaddr_in6))
-+				return -EINVAL;
-+			break;
-+		default:
-+			return -EAFNOSUPPORT;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+/**
-  * nfsd_nl_listener_set_doit - set the nfs running sockets
-  * @skb: reply buffer
-  * @info: netlink metadata and command arguments
-@@ -1965,6 +2019,15 @@ int nfsd_nl_listener_set_doit(struct sk_
- 	bool delete = false;
- 	int err, rem;
- 
-+	/*
-+	 * Validate the entire listener list before making any changes, so a
-+	 * malformed request fails cleanly without creating a serv or touching
-+	 * the existing listeners.
-+	 */
-+	err = nfsd_nl_validate_listeners(info);
-+	if (err)
-+		return err;
-+
- 	mutex_lock(&nfsd_mutex);
- 
- 	err = nfsd_create_serv(net);
-@@ -1991,16 +2054,11 @@ int nfsd_nl_listener_set_doit(struct sk_
- 		const char *xcl_name;
- 		struct sockaddr *sa;
- 
-+		/* validated up front in nfsd_nl_validate_listeners() */
- 		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
- 				     nfsd_sock_nl_policy, info->extack) < 0)
- 			continue;
- 
--		if (!tb[NFSD_A_SOCK_ADDR] || !tb[NFSD_A_SOCK_TRANSPORT_NAME])
--			continue;
--
--		if (nla_len(tb[NFSD_A_SOCK_ADDR]) < sizeof(*sa))
--			continue;
--
- 		xcl_name = nla_data(tb[NFSD_A_SOCK_TRANSPORT_NAME]);
- 		sa = nla_data(tb[NFSD_A_SOCK_ADDR]);
- 
-@@ -2052,16 +2110,11 @@ int nfsd_nl_listener_set_doit(struct sk_
- 		struct sockaddr *sa;
- 		int ret;
- 
-+		/* validated up front in nfsd_nl_validate_listeners() */
- 		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
- 				     nfsd_sock_nl_policy, info->extack) < 0)
- 			continue;
- 
--		if (!tb[NFSD_A_SOCK_ADDR] || !tb[NFSD_A_SOCK_TRANSPORT_NAME])
--			continue;
--
--		if (nla_len(tb[NFSD_A_SOCK_ADDR]) < sizeof(*sa))
--			continue;
--
- 		xcl_name = nla_data(tb[NFSD_A_SOCK_TRANSPORT_NAME]);
- 		sa = nla_data(tb[NFSD_A_SOCK_ADDR]);
- 
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -959,6 +959,10 @@ nfsd4_decode_create(struct nfsd4_compoun
+ 	case NF4LNK:
+ 		if (xdr_stream_decode_u32(argp->xdr, &create->cr_datalen) < 0)
+ 			return nfserr_bad_xdr;
++		if (create->cr_datalen == 0)
++			return nfserr_inval;
++		if (create->cr_datalen > NFS4_MAXPATHLEN)
++			return nfserr_nametoolong;
+ 		p = xdr_inline_decode(argp->xdr, create->cr_datalen);
+ 		if (!p)
+ 			return nfserr_bad_xdr;
 
 
