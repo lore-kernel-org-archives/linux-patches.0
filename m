@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B386E41685A;
-	Fri,  4 Sep 2026 06:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCC529B781;
+	Fri,  4 Sep 2026 06:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502243; cv=none; b=HOkVN93lIaT+OQJUK5nbS6IrHFO4CsgIaMo44RYhcXyoePMMirtFM24B+TI/xo7U0cA2HTGT9d/NMr7u87ri8QEXwKW6xGL21MisEDUcdQb7rccjCQUo0GlUV+skdBaSPuhVItgQnb0HQmldACGpQ/jN3+gypAiI78pCh6obZaA=
+	t=1788502247; cv=none; b=hHWunNMxhFHX/B+PuH6od/IQ9Fln0xMc4k7Zs20TKlZVAvBldQquxsKibp6Qfo0pB9tWypzF354fywZn5Xue0wywU1uhKt/neUFicsrY7VykqDiLIyQy2M2V57RtJCNYxHryafBN+HeZ8oviluR8cEgZMfq1IFMAoCyBu8OZY08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502243; c=relaxed/simple;
-	bh=AYNrDUrWniTdBP3W+sPIknfCqijXF6nDqXyGXoHkx6w=;
+	s=arc-20240116; t=1788502247; c=relaxed/simple;
+	bh=4TPwtOmG3hqsdEBbXGN5OJlG70YvdrLJ+0cqjM64YFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=urzXWmtW5axBwn18LyFzctQzrscWxOYecC0f8eSdub5mBxc8D/entQ2VFBEQH0Yiq3CB/J4SkDPurwlg2R6xR4KvHz+OeD8kTsayd41y8jPkQNCMlX5aCYMchAjKxDY1BYE6T4OE3ZMWiucaWPp7Cc2G2R6hN2z+FSCYi4RuibU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3MyLyxq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tf5KodX8h97gAvGIkLI+JVH3uX9+j5NcMArXiGYHAq6MWaI+Xn25PC2OQR+urdJDSxalYcTmCuAe/y14PMc0pxP9IZmXKiw0U++rekJv/lpN9oMCoY1mOzS5mxZs6T7fdGC+/myz2tR1Cz9tb7q4vnbQDBaxT9AQE5VkfrlDhPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdzgFujf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3MyLyxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BDD1F00A3D;
-	Fri,  4 Sep 2026 06:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdzgFujf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A0F1F00A3D;
+	Fri,  4 Sep 2026 06:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502242;
-	bh=Zaa8wKBLdTod4JJsRsKxNRvzdrSMg36s5WqCKTMgDDI=;
+	s=korg; t=1788502245;
+	bh=+yoJ8CtZbSWO2Qa+E2Swpue3VBkffSSalVR+VOB7eSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n3MyLyxqFYmveNa+5A2AZp1g1oC2cYOmsqWdYLzi0rGI4KVRoBcnXGu75FXxk0/L9
-	 fk6mCeNhZM3KErpyIQgngst+BYV2EVGd4MS3IeQ2UgLzHupl/PDSa+1gyorbf/Wn+n
-	 riEMCeI9j+ksSJ996fHVFaEMfT4TQ9D8vQlH67Wc=
+	b=EdzgFujfznBitjh9HY4Q+AE4RhI1UuX8zZtA0S0dU/v8V08CQgdaV/ehpjDU8s15w
+	 WC159xJAdjlFXXK/7AtoF/TMvaMfbqewhyKTzxlNvHz+9pkFHlqE7rM2lScwwvbLDe
+	 33HyZrd2cgZK2SnhnwEMseSaMJPDRCdOUxYN4qX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 086/403] nfsd: block non-SAVEFH ops after FOREIGN PUTFH to prevent NULL deref
-Date: Fri,  4 Sep 2026 06:58:09 +0200
-Message-ID: <20260904045736.789964109@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.12 133/403] fs/ntfs3: bound page_lcns[] index by the log record
+Date: Fri,  4 Sep 2026 06:58:56 +0200
+Message-ID: <20260904045737.863046938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,71 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit c59738a00aa51b16adc1b5ceb7c80877168efb4d upstream.
+commit 6f7b9dbdc1b7520206abce0049bdd143eb536e75 upstream.
 
-When CONFIG_NFSD_V4_2_INTER_SSC is enabled, nfsd4_putfh() can return
-success with fh_dentry and fh_export both NULL if fh_verify() returns
-nfserr_stale and putfh->no_verify is true. The NFSD4_FH_FOREIGN flag
-is set, but the compound dispatch loop only uses this flag to bypass
-the nfserr_nofilehandle check -- it does not prevent subsequent ops
-from running with a NULL fh_dentry.
+The copy_lcns loop and the redo shorten loop index page_lcns[] at j + i,
+where i runs up to the log record's lcns_follow. That count is checked only
+against the record's own length, not the target entry, so check_dp_table()
+(which validates the entry's lcns_follow) does not cover it: the copy_lcns
+entry may even be freshly allocated after that check, and find_dp() bounds j
+but not i. A crafted record thus overflows page_lcns[] of an otherwise valid
+entry.
 
-A remote client can exploit this by crafting a COMPOUND that includes
-an inter-SSC COPY (which causes check_if_stalefh_allowed() to set
-no_verify=true on the saved PUTFH) with an additional op inserted
-between the source PUTFH and SAVEFH. For example, SETATTR calls
-fh_want_write() which dereferences fh_export->ex_path.mnt without
-calling fh_verify() first, causing a NULL pointer dereference in the
-nfsd kthread.
+Add dp_range_ok() and reject, before each loop, any record whose run does
+not fit the entry. These are the only two page_lcns[] accesses indexed by
+the record rather than the entry, so together with the entry validation
+every access is now bounded.
 
-Fix this by gating the dispatch loop: when NFSD4_FH_FOREIGN is set
-and fh_dentry is NULL, only OP_SAVEFH (needed for the inter-SSC flow)
-and ops with ALLOWED_WITHOUT_FH (which don't need a resolved
-filehandle) may proceed. All other ops receive nfserr_stale, per
-RFC 7862 Section 15.2.3 which specifies that foreign filehandle
-validation is deferred to the consuming operation and NFS4ERR_STALE
-returned at that point.
-
-Fixes: b9e8638e3d9e ("NFSD: allow inter server COPY to have a STALE source server fh")
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-putfh_foreign_fh_null_deref_consumers-v1-1-1b8a5aa28c59@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+[almaz.alexandrovich@paragon-software.com: original patch contained changes to the problem already handled, applied partly]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/ntfs3/fslog.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2743,9 +2743,22 @@ nfsd4_proc_compound(struct svc_rqst *rqs
- 				op->status = nfsd4_open_omfg(rqstp, cstate, op);
- 			goto encode_op;
- 		}
--		if (!current_fh->fh_dentry &&
--				!HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
--			if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
-+		if (!current_fh->fh_dentry) {
-+			if (HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
-+				/*
-+				 * FOREIGN fh from inter-SSC PUTFH: only
-+				 * SAVEFH may proceed with a NULL fh_dentry.
-+				 * Per RFC 7862 S15.2.3, validation of a
-+				 * foreign fh is deferred to the operation
-+				 * that consumes it, and NFS4ERR_STALE is
-+				 * returned at that point.
-+				 */
-+				if (op->opnum != OP_SAVEFH &&
-+				    !(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
-+					op->status = nfserr_stale;
-+					goto encode_op;
-+				}
-+			} else if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
- 				op->status = nfserr_nofilehandle;
- 				goto encode_op;
- 			}
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -648,6 +648,14 @@ static inline void *enum_rstbl(struct RE
+ }
+ 
+ /*
++ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.
++ */
++static inline bool dp_range_ok(size_t j, u32 count, u32 cap)
++{
++	return j < cap && count <= cap - j;
++}
++
++/*
+  * find_dp - Search for a @vcn in Dirty Page Table.
+  */
+ static inline struct DIR_PAGE_ENTRY *find_dp(struct RESTART_TABLE *dptbl,
+@@ -5093,6 +5101,13 @@ find_dirty_page:
+ 	/* Shorten length by any Lcns which were deleted. */
+ 	saved_len = dlen;
+ 
++	if (!dp_range_ok(le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn),
++			 le16_to_cpu(lrh->lcns_follow),
++			 le32_to_cpu(dp->lcns_follow))) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	for (i = le16_to_cpu(lrh->lcns_follow); i; i--) {
+ 		size_t j;
+ 		u32 alen, voff;
 
 
