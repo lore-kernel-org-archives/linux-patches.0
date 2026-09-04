@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A205D405C3F;
-	Fri,  4 Sep 2026 06:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83506405C3F;
+	Fri,  4 Sep 2026 06:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501898; cv=none; b=JibkHsxAVyvgIF+kIzwaKdq8WV+BQLQFxIp5IfZV052Oxtjlt8DEzbXrT2dILeEnbmSPjQ8bqJnTIllLC1xinsUGwSlSLf9lhu3Lic8zHi6Ak4J+HRzJnbIiTJBGoPAw5K17h6dTyTREVWhS4XjxZXFb/VhFlwMe7NHNZCjZVjk=
+	t=1788501901; cv=none; b=TN/Hw6nqNlCKCHxVpUQKvm5T6DLiEBnLvj+qg1QIhYxMbDdxMnhffZkQLvJvIvfENCbVzKt27HcdUHIzwDYTwMkkYpPmgLm9KiOvQcELpymNAWgUy+cBHYQxEGF7l4B6PUpdZo/FA6SvmIGqAbBwWfmuHflF8bh5Ld+4xeuGAHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501898; c=relaxed/simple;
-	bh=A2EAoorRShiq/hCs2W61a3hYPYWqzc57yu/NVzeA7DU=;
+	s=arc-20240116; t=1788501901; c=relaxed/simple;
+	bh=tSqQ1eJBu1U4xQ4auJLd8/PKYzEcsfirjMedk5rTbDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwTLS+63LcQTD8g9JqRtUHKnJOHZA1WSxlaktJ1MOcOYoMAhAAfPhYTr5ES2nGh2jYrtQ132tgL3PCAzJ2s3MF/dE+PRBi4PMYlH9oGnL6h/aRwNKdvIQvf4RyxUXLciA6q6dxzI/CXR/l9Rd5G06io4s2M8CIN5NTUaG1/BYN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9oP5p0l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FNdjb71HDZlf9QD560NDppWQfuBNjkCt0GET15oAwqSEaXSXj9FnEFLiUz1/2VTBWR5uUtLcb4IkgXMI5Vi3q/5lbr7Nt7OyVW2uMEKfHUdFwwaLvk2GJkCniqLRtMYLK1j8VZtt+O1y8xKP+lYdWqF9PeMD0odGSbce6/I/3DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kndeJ/o8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9oP5p0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9CE1F00A3D;
-	Fri,  4 Sep 2026 06:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kndeJ/o8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99071F00A3D;
+	Fri,  4 Sep 2026 06:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501897;
-	bh=0Mrlcoqum+T/aXo1nag9+kFvuKIwjq1rD2VvncpNa5M=;
+	s=korg; t=1788501900;
+	bh=mpgLxLf4/AbXFyGnwM0d77oQHAfJ1RjWju/aPR76gGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9oP5p0lrcrT8zE/rCpPc+0cdDRa6UWAn37Asp0YoMs9Hw9oR7KE9qC9qLWnxv5Ev
-	 t2W4iWUT7IbzD0uQ9Lhb78XlS4hTi85/GiZna13ld1kbXyRpa9hc8qH1NJxemJlhls
-	 rDTmEckrY24Xa6uyAphA88+3Nz2OD2PUSAzQcLAw=
+	b=kndeJ/o8nFtZXMcgRztdqTYUgjnRNcGwdAEC5UjG/42HRbbvcjQw3sdqDc8PWBh6q
+	 csb2NfjqJ4YInxQdAmY2f2IM1fGD0EMHj1yahCM9oBuPUXvYf4VBQUA6PYKUSMuFRl
+	 Cqj0LrBfTrEdSvYDOai67A+y6lOLC8RDzF5a9v8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan R Abrahams-Whitehead <ajordanr@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Giuliano Procida <gprocida@google.com>,
-	Yabin Cui <yabinc@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 019/403] include/linux/list.h: mark list_add and __list_add as __always_inline
-Date: Fri,  4 Sep 2026 06:57:02 +0200
-Message-ID: <20260904045735.249443879@linuxfoundation.org>
+	Yang Erkun <yangerkun@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 002/403] md: make rdev_addable usable for rcu mode
+Date: Fri,  4 Sep 2026 06:56:45 +0200
+Message-ID: <20260904045734.863346883@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -57,92 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan R Abrahams-Whitehead <ajordanr@google.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-commit 2780860eddecba9ffe210bb9436eee3cf22bfcdd upstream.
+[ Upstream commit 13017b427118f4311471ee47df74872372ca8482 ]
 
-This commit resolves an issue where modpost section verification fails due
-to section mismatches between list_add and its callers.
+Our testcase trigger panic:
 
-At present, list_add (and its internal __list_add) are called from both
-.text and .init code sections.  Since inlining can vary per call site,
-list_add can be 4 different states:
+BUG: kernel NULL pointer dereference, address: 00000000000000e0
+...
+Oops: Oops: 0000 [#1] SMP NOPTI
+CPU: 2 UID: 0 PID: 85 Comm: kworker/2:1 Not tainted 6.16.0+ #94
+PREEMPT(none)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+Workqueue: md_misc md_start_sync
+RIP: 0010:rdev_addable+0x4d/0xf0
+...
+Call Trace:
+ <TASK>
+ md_start_sync+0x329/0x480
+ process_one_work+0x226/0x6d0
+ worker_thread+0x19e/0x340
+ kthread+0x10f/0x250
+ ret_from_fork+0x14d/0x180
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+Modules linked in: raid10
+CR2: 00000000000000e0
+---[ end trace 0000000000000000 ]---
+RIP: 0010:rdev_addable+0x4d/0xf0
 
-  list_add in text with arguments to non-.init.data values
-  list_add in init with arguments to static .init.data values
-  list_add in init with arguments to non-.init.data values
-  list_add in text with arguments to static .init.data values
+md_spares_need_change in md_start_sync will call rdev_addable which
+protected by rcu_read_lock/rcu_read_unlock. This rcu context will help
+protect rdev won't be released, but rdev->mddev will be set to NULL
+before we call synchronize_rcu in md_kick_rdev_from_array. Fix this by
+using READ_ONCE and check does rdev->mddev still alive.
 
-It is last instance that ends up causing the section mismatch caused by
-constant propagation of the address of static libs inside the `dir_add` as
-seen below (with the dir_list being defined statically in initramfs.c,
-resting in .init.data).
-
-  WARNING: modpost: vmlinux.o: section mismatch in reference: __list_add
-  (section: .text.unlikely.) -> dir_list (section: .init.data)
-
-Because of these section matching requirements, semantically, __list_add
-and list_add MUST be inlined.  This will then ensure callers inside .init
-will receive a list_add that exists and refers to only .init data, and
-list_add code in .text sections will only refer to non-init data.
-
-This issue manifests predominently in AutoFDO with clang, which is very
-hesitant to inline cold functions such as list_add even when marked
-`inline`.  Marking them as `__always_inline` therefore matches the
-existing semantic constraints imposed by modpost's section mismatch
-checks.
-
-Link: https://lore.kernel.org/20260731-always-inline-list-add-v1-1-d29f54ce5477@google.com
-Link: https://lore.kernel.org/all/CANn89iJVQe=wedLheJmjZjOTJsWHijT0jZs=iRxKssJZbjAxHw@mail.gmail.com/
-Signed-off-by: Jordan R Abrahams-Whitehead <ajordanr@google.com>
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Reported-by: Giuliano Procida <gprocida@google.com>
-Reported-by: Yabin Cui <yabinc@google.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2173
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
+Fixes: 570b9147deb6 ("md: use RCU lock to protect traversal in md_spares_need_change()")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Link: https://lore.kernel.org/linux-raid/20250731114530.776670-1-yangerkun@huawei.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/list.h |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/md/md.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/include/linux/list.h
-+++ b/include/linux/list.h
-@@ -142,10 +142,13 @@ static inline bool __list_del_entry_vali
-  *
-  * This is only for internal list manipulation where we know
-  * the prev/next entries already!
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void __list_add(struct list_head *new,
--			      struct list_head *prev,
--			      struct list_head *next)
-+static __always_inline void __list_add(struct list_head *new,
-+				       struct list_head *prev,
-+				       struct list_head *next)
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 1aff3e541ceb5..60a07d7264d83 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9373,6 +9373,12 @@ static bool rdev_is_spare(struct md_rdev *rdev)
+ 
+ static bool rdev_addable(struct md_rdev *rdev)
  {
- 	if (!__list_add_valid(new, prev, next))
- 		return;
-@@ -163,8 +166,12 @@ static inline void __list_add(struct lis
-  *
-  * Insert a new entry after the specified head.
-  * This is good for implementing stacks.
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void list_add(struct list_head *new, struct list_head *head)
-+static __always_inline void list_add(struct list_head *new,
-+				     struct list_head *head)
- {
- 	__list_add(new, head, head->next);
- }
++	struct mddev *mddev;
++
++	mddev = READ_ONCE(rdev->mddev);
++	if (!mddev)
++		return false;
++
+ 	/* rdev is already used, don't add it again. */
+ 	if (test_bit(Candidate, &rdev->flags) || rdev->raid_disk >= 0 ||
+ 	    test_bit(Faulty, &rdev->flags))
+@@ -9383,7 +9389,7 @@ static bool rdev_addable(struct md_rdev *rdev)
+ 		return true;
+ 
+ 	/* Allow to add if array is read-write. */
+-	if (md_is_rdwr(rdev->mddev))
++	if (md_is_rdwr(mddev))
+ 		return true;
+ 
+ 	/*
+-- 
+2.53.0
+
 
 
