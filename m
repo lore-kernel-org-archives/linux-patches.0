@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA193DAAB7;
-	Fri,  4 Sep 2026 05:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBBE351C04;
+	Fri,  4 Sep 2026 05:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499648; cv=none; b=Y7X7wro2bkF9ddIEXVdSNhB6aUyKvd5ApsnqQBIuaUO8xcQU+vEPvcMRq+epB9YzuXnDxEsJr4umBbvsGEb5lB2KUhAEyXckWkG2jbQ2vVcDMRshUF82JwPSss2UIPmtPfdio/N2vkgNezuZXM5aKW/cDRFlSE3zY3k+bqjnNdA=
+	t=1788499651; cv=none; b=bmtpzMRrTbid1IPPCyUUuZ+B7pdttBLiixOHAJJ/thl35U0jHvIdo7ZKeeXrBJ9TRpUiSSByRLX5LeSvtiLYuOfnyrSZBi+cQPe/NwE5YukCP6XN7pRfOj+yS6qh1aCYHu7QNbc3QiU2LzWKIS1MryX0dVA89mIFXsyelgmFxJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499648; c=relaxed/simple;
-	bh=DTWOPIHYjfw+KfNWKt1FRsOYj9K0pWpC665C2JJgAHI=;
+	s=arc-20240116; t=1788499651; c=relaxed/simple;
+	bh=iaRgHbqSnTXjY6CrUtSl+95nwJc/Zb7tIdCMk6g8KTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5o+c6gWHAya4HTVFATAGuLJ86ralr4FBT4hdKrKddbGR6WY34vcZDM/IoNFqvMGHRvWI0SDnIn02Lh5isf/xJ3/eWOiXTZnag91u9LC7B/wbX5XWe7g6Cgk6l28YBpFykl+PCX9yULd2QFWO6VVujjOPe6DDSu6kUYAPHa5+zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXlk9i+C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rRzhmH646EzG+iHuDXLySghkO+4L3JCsFIZ0HgUmIyfEuNxpvMrmjC57pMAiGzkutvrbV3jLMYD++brITnDxyD84uvhDChzaEC3CwZjFBjsWqmJDRg8Qi22HxpTWsrhhNc8vHyNvJ4wU1trX9q7yzd/PxS1RIA3mQ6jNhrueAc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJaMI/uC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXlk9i+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AA61F00A3D;
-	Fri,  4 Sep 2026 05:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJaMI/uC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B721F00A3E;
+	Fri,  4 Sep 2026 05:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499646;
-	bh=ubefjrk31iPP/Dklzzio+//MURmQz8KTWNVXtkY1G7o=;
+	s=korg; t=1788499649;
+	bh=G+uB8sx+/k+1vAEgudTTPmBf8uzy1Byn3Hvq5oPsPgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FXlk9i+CVHhgR5cRN8E8756Pzz21gbslfiCvBO5OxTGaTVCN1AVgskrYJ1uFoK1fT
-	 FOrVXkW2vHKWfeHl9n/WmUn3vAP7C1Nmgif5FSKXKkXYQSopzAIfYFB81uhqXh7Y+O
-	 zBvER6ECErF7g4kaCNbsolJNLWqPTA2+QiMIocRs=
+	b=bJaMI/uCCxhUtE08JR4zknrd6cfdAGf3Bh6OexMKxhY9eDB0dFhLuXnQhAZRvmuM7
+	 96qr60+Kn2wfQEcwCnoLqHJKT2DTiFIIhu9c5w+ajkMKWPwo+SCGTImVS13p6HpNDN
+	 P0KAmHaNss1BprfV2OOic/AALcSGgUOLA1+855Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 489/713] nvme-pci: disable controller on admin queue IRQ setup failure
-Date: Fri,  4 Sep 2026 06:57:37 +0200
-Message-ID: <20260904045814.788123826@linuxfoundation.org>
+Subject: [PATCH 7.2 490/713] nvme-tcp: do not accept C2HData based on blk_rq_payload_bytes() alone
+Date: Fri,  4 Sep 2026 06:57:38 +0200
+Message-ID: <20260904045814.809714544@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,44 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 08660a5c8d497f43191635d97efd31cd35051f15 upstream.
+commit 3a4aa9e6ad3e35f8e24d5eaf38ee4d437075fb36 upstream.
 
-nvme_pci_configure_admin_queue() enables the controller and then requests
-the admin queue interrupt. If queue_request_irq() fails it returns without
-disabling the controller, and no caller compensates: nvme_pci_enable() only
-frees the IRQ vectors and calls pci_disable_device(), after which
-nvme_dev_disable() treats the controller as dead and skips nvme_disable_ctrl().
-The controller is left enabled (CC.EN set) on this error path.
+Commit 25e5cb780e62 ("nvme-tcp: fix possible crash in write_zeroes
+processing") established that blk_rq_payload_bytes() must not be read
+without first checking blk_rq_nr_phys_segments(), and recorded the
+result in nvme_tcp_setup_cmd_pdu() as req->data_len. The receive side
+was left as it was.
 
-Disable it in the failure path, while the PCI device is still enabled so the
-CC.EN clear handshake completes.
+The two differ for REQ_OP_WRITE_ZEROES, which has no physical segments
+but a non-zero blk_rq_bytes(), so setup leaves req->iter untouched
+while the receive gate lets a C2HData through and nvme_tcp_recv_data()
+copies into whatever the previous command on that tag left there. The
+driver-private area is zeroed only when the tag set is allocated.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Reproduced with a test target that leaves a residual iterator on a tag
+and then sends a C2HData for a WRITE_ZEROES command on the same tag:
 
-Fixes: b60503ba432b ("NVMe: New driver")
+BUG: KASAN: wild-memory-access in _copy_to_iter+0x642/0x1330
+Write of size 512 at addr ffe728c2175dfa81 by task kworker/0:1H/103
+
+CPU: 0 UID: 0 PID: 103 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMETCP-gf5098b6bae76 #1 PREEMPT(lazy)
+Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: nvme_tcp_wq nvme_tcp_io_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x53/0x70
+ kasan_report+0xce/0x100
+ ? _copy_to_iter+0x642/0x1330
+ kasan_check_range+0x105/0x1b0
+ __asan_memcpy+0x3c/0x60
+ _copy_to_iter+0x642/0x1330
+ ? __pfx_sock_has_perm+0x10/0x10
+ ? worker_thread+0x45b/0xd10
+ ? __pfx__copy_to_iter+0x10/0x10
+ ? _raw_spin_lock_bh+0x83/0xe0
+ ? __pfx__raw_spin_lock_bh+0x10/0x10
+ __skb_datagram_iter+0xf3/0x820
+ ? __pfx_simple_copy_to_iter+0x10/0x10
+ ? __asan_memcpy+0x3c/0x60
+ ? skb_copy_bits+0x58d/0x830
+ skb_copy_datagram_iter+0x37/0x120
+ nvme_tcp_recv_skb+0xa07/0x4320
+ ? __pfx_nvme_tcp_recv_skb+0x10/0x10
+ __tcp_read_sock+0x1ab/0x810
+ ? __pfx_nvme_tcp_recv_skb+0x10/0x10
+ ? __pfx_lock_sock_nested+0x10/0x10
+ ? __pfx___tcp_read_sock+0x10/0x10
+ nvme_tcp_try_recv+0x152/0x1e0
+ ? __pfx_nvme_tcp_try_recv+0x10/0x10
+ ? __pfx_mutex_unlock+0x10/0x10
+ nvme_tcp_io_work+0x1e4/0x6c0
+ ? __schedule+0x181a/0x49f0
+ ? __pfx_nvme_tcp_io_work+0x10/0x10
+ process_one_work+0x633/0x1030
+
+Keep the blk_rq_payload_bytes() test and add req->data_len to it. The
+old test is what rejects a C2HData naming a tag that is no longer in
+flight, because blk_update_request() zeroes rq->__data_len on
+completion; req->data_len and req->curr_bio are driver-private and
+survive completion, so they cannot stand in for it. Setup initialises
+the iterator only when both req->curr_bio and req->data_len are set, so
+the gate now tests the same two.
+
+Fixes: 25e5cb780e62 ("nvme-tcp: fix possible crash in write_zeroes processing")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/tcp.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2400,6 +2400,7 @@ static int nvme_pci_configure_admin_queu
- 	result = queue_request_irq(nvmeq);
- 	if (result) {
- 		dev->online_queues--;
-+		nvme_disable_ctrl(&dev->ctrl, false);
- 		return result;
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -644,6 +644,7 @@ static int nvme_tcp_process_nvme_cqe(str
+ static int nvme_tcp_handle_c2h_data(struct nvme_tcp_queue *queue,
+ 		struct nvme_tcp_data_pdu *pdu)
+ {
++	struct nvme_tcp_request *req;
+ 	struct request *rq;
+ 
+ 	rq = nvme_find_rq(nvme_tcp_tagset(queue), pdu->command_id);
+@@ -654,7 +655,8 @@ static int nvme_tcp_handle_c2h_data(stru
+ 		return -ENOENT;
  	}
  
+-	if (!blk_rq_payload_bytes(rq)) {
++	req = blk_mq_rq_to_pdu(rq);
++	if (!blk_rq_payload_bytes(rq) || !req->curr_bio || !req->data_len) {
+ 		dev_err(queue->ctrl->ctrl.device,
+ 			"queue %d tag %#x unexpected data\n",
+ 			nvme_tcp_queue_id(queue), rq->tag);
 
 
