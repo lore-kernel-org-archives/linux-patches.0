@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B927B3F7AA9;
-	Fri,  4 Sep 2026 05:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AA53F7AA9;
+	Fri,  4 Sep 2026 05:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499016; cv=none; b=BRRJ8EakrpFxNydDVzU0pc3XJIHnxfTABydPjGaQz+Z8HVU5EKxne17CVaVApBRYe0TGE9YMSIyQn7smbAsOHHGJpShQZD+6TWzkgCAADCyoTgHSAP+NnDJUF4GOA7k3XzZ2oFfbJu5AZ3CT7DH7m2X3NjKfvdeZTnZPuco5Cnw=
+	t=1788499019; cv=none; b=BbgE9g0EiJ4G233MPA9mzo4Abqta6t4/M0PpvA5GK+Jfzh8Q143pwXoKM2Gw5Yzz4+Ewy/JeJfw7yh8hvOxtu6CAkJxT6kOEDKhqvGHZf+axSb2C7dKL1XZ8nsUD/c6SdYPxzrjiMxWxapddh4JARgvFCxfx4TJ3Yuk2T6vhLUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499016; c=relaxed/simple;
-	bh=0Qa2Zj6e/WdqDDk35MTCwnmCQns4B9lmEy5ZjKw00iM=;
+	s=arc-20240116; t=1788499019; c=relaxed/simple;
+	bh=9o5PKwtvaZTkOROPQi5rVy8zIyMs8/umCPN08Btd6b4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZ9UFk/97EbuRUzb+bh1QsEijlYCndf9ZXRDHRFbhl8o2QvF1SO/2yQJL1S1DNCcdO8DoksBh92Gs/aFNCuOShxqbpayQBc+m1Y50RTJebzP0ahVu3HGWjGIegoXDyFSoYx5hwn/eg4HHYS3JZeWkDTdI+1wyqr+uZbaDAhmJZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyDAJ+nH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ha6Q/LAJRjSKjJAdxObxGSh8hfetlhBHzbnChy5CB2LSCZ92EIlPMU2LiLwqcNbJ7m3/ltN8scAWJ3r/lNmH4Dck21QxIlHd8GRUNIDc44I7/AuJmBozVdDqp0Miai5jo8guemA9dSmci4AvarZNs6P3AHEr7MRnNBLA5QRLpeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEd6X4O9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyDAJ+nH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139D01F00A3D;
-	Fri,  4 Sep 2026 05:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEd6X4O9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBEE1F00A3D;
+	Fri,  4 Sep 2026 05:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499015;
-	bh=H7ESWBRcj1om9Ak06vLiMQWZTjWVpbJRSgXP/EX7Z8c=;
+	s=korg; t=1788499018;
+	bh=g8nZbeNo8HZSUi1JKSEJTsRTgQkAqDFdkpwc5couVXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyDAJ+nHJa4aKL2VfU5F/LVA/Qc8n2DK047T0sFVVKx2SbowlKFxUAE+K0fIf+GbV
-	 /zzpY/b3D8NkK+PzHL04XdgF6ZqkoXJbDSesKieQ3XdBT6OHGJUqhitrOvk3tT2tFC
-	 k8zkCtleKYNm6+7PQ95sJFMhEcHvgklEt+4kkw1c=
+	b=SEd6X4O9+dEHiEiOy00J8htYsw8cJ3BvFdC5cMLtehq77LErWmJHBviIpNFO01w1J
+	 XJpsp5GnI35Rgp0jscX4Jiv76W4aLwl64i3TsPD7+Tm8ddlmPz+aU/GjS4F48QsC83
+	 qCS0z+E14fCuPgiJiQbALxlsYledVnqh5RzGyuNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brown <matthew@bargrove.com>,
 	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.2 225/713] ceph: fix leaked inode reference on writeback abort at umount
-Date: Fri,  4 Sep 2026 06:53:13 +0200
-Message-ID: <20260904045808.863122646@linuxfoundation.org>
+Subject: [PATCH 7.2 216/713] ceph: fix UAF in check_new_map() on session freed during unlock
+Date: Fri,  4 Sep 2026 06:53:04 +0200
+Message-ID: <20260904045808.659854002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,83 +45,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brown <matthew@bargrove.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-commit c25aee9c630fb86f98d79eccb75765067079b972 upstream.
+commit ee611a7509554c4ca1f54f6aefe592fb1df7ea70 upstream.
 
-ceph_dirty_folio() takes a wrbuffer claim on each newly dirtied folio: it
-bumps i_wrbuffer_ref (taking an ihold() on the 0->1 transition) and
-attaches the snap_context to folio->private.  That claim is released only
-by ceph_put_wrbuffer_cap_refs(), which for a submitted write runs from
-writepages_finish().
+check_new_map() iterates mdsc->sessions[] and for each active session
+drops mdsc->mutex to perform per-session operations.  The forced-close
+path (rank removed from map) correctly takes a reference on s via
+ceph_get_mds_session() before releasing mdsc->mutex, but three other
+paths do not:
 
-In ceph_submit_write(), if ceph_inc_osd_stopping_blocker() fails -- which
-happens during umount -- the request is aborted before submission: the
-already-collected folios are only redirtied and unlocked, so
-writepages_finish() never runs and the claim is leaked.
-redirty_page_for_writepage() -> folio_redirty_for_writepage() ->
-filemap_dirty_folio() sets PG_dirty directly and does not go through
-->dirty_folio, so ceph_dirty_folio() is not re-entered to rebalance it.
-Because every subsequent writeback also fails the osd_stopping_blocker,
-i_wrbuffer_ref never returns to 0, the ihold() is never dropped, and the
-inode cannot be evicted:
+  Path A (address changed):  mutex_unlock → mutex_lock(&s->s_mutex)
+  Path B (reconnect):        mutex_unlock → send_mds_reconnect(mdsc, s)
+  Path C (active transition): mutex_unlock → mutex_lock(&s->s_mutex)
 
-  VFS: Busy inodes after unmount of ceph
-  kernel BUG at fs/super.c:650!
+Without the extra reference, another thread can acquire mdsc->mutex
+during the unlock window, call __unregister_session() which drops the
+last reference on s, and free it.  The original thread then accesses
+freed memory via s->s_mutex.
 
-Release the orphaned claim in the abort path before redirtying, via
-ceph_undo_wrbuffer_claim(): detach the snap_context, drop the wrbuffer
-reference (letting i_wrbuffer_ref reach 0 and iput() the inode), and drop
-the snap_context reference -- i.e. do what writepages_finish() would have
-done for these never-submitted folios.
+Fix by adding ceph_get_mds_session(s) before each mutex_unlock and
+ceph_put_mds_session(s) after the corresponding mutex_lock, matching
+the pattern already used in the forced-close path.
 
-Only the locked_pages entries are undone; folios still in the fbatch were
-never dirty-cleared by this call (folio_clear_dirty_for_io() is the
-ownership-transfer point, and a successful move NULLs the fbatch slot), so
-they hold no claim this call owns.
+Race timeline (Path A):
+
+  Thread A (check_new_map)             Thread B (another map update
+    holds mdsc->mutex                      or session teardown)
+  --------------------------           --------------------------
+  s = mdsc->sessions[i]
+  (refcount == 1, held only by
+   sessions[] array)
+
+  mutex_unlock(&mdsc->mutex)
+                               --->    acquires mdsc->mutex
+                                       __unregister_session(mdsc, s)
+                                         sessions[i] = NULL
+                                         ceph_put_mds_session(s)
+                                           refcount: 1 -> 0
+                                           kfree(s)  <--- freed!
+
+  mutex_lock(&s->s_mutex)
+  UAF on freed s->s_mutex
 
 Cc: stable@vger.kernel.org
-Fixes: fd7449d937e7 ("ceph: fix generic/421 test failure")
-Signed-off-by: Matthew Brown <matthew@bargrove.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/addr.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ceph/mds_client.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1426,6 +1426,16 @@ void ceph_shift_unused_folios_left(struc
- 	fbatch->nr = n;
- }
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -5834,9 +5834,11 @@ static void check_new_map(struct ceph_md
+ 			   ceph_mdsmap_get_addr(newmap, i),
+ 			   sizeof(struct ceph_entity_addr))) {
+ 			/* just close it */
++			ceph_get_mds_session(s);
+ 			mutex_unlock(&mdsc->mutex);
+ 			mutex_lock(&s->s_mutex);
+ 			mutex_lock(&mdsc->mutex);
++			ceph_put_mds_session(s);
+ 			ceph_con_close(&s->s_con);
+ 			mutex_unlock(&s->s_mutex);
+ 			s->s_state = CEPH_MDS_SESSION_RESTARTING;
+@@ -5851,6 +5853,7 @@ static void check_new_map(struct ceph_md
+ 		    newstate >= CEPH_MDS_STATE_RECONNECT) {
+ 			int rc;
  
-+static void ceph_undo_wrbuffer_claim(struct inode *inode, struct folio *folio)
-+{
-+	struct ceph_snap_context *snapc = folio_detach_private(folio);
-+
-+	if (!snapc)
-+		return;
-+	ceph_put_wrbuffer_cap_refs(ceph_inode(inode), 1, snapc);
-+	ceph_put_snap_context(snapc);
-+}
-+
- static
- int ceph_submit_write(struct address_space *mapping,
- 			struct writeback_control *wbc,
-@@ -1489,6 +1499,7 @@ new_request:
- 			if (!page)
- 				continue;
- 
-+			ceph_undo_wrbuffer_claim(inode, page_folio(page));
- 			redirty_page_for_writepage(wbc, page);
- 			unlock_page(page);
++			ceph_get_mds_session(s);
+ 			mutex_unlock(&mdsc->mutex);
+ 			clear_bit(i, targets);
+ 			rc = send_mds_reconnect(mdsc, s);
+@@ -5859,6 +5862,7 @@ static void check_new_map(struct ceph_md
+ 					       "mds%d reconnect failed: %d\n",
+ 					       i, rc);
+ 			mutex_lock(&mdsc->mutex);
++			ceph_put_mds_session(s);
  		}
+ 
+ 		/*
+@@ -5871,9 +5875,11 @@ static void check_new_map(struct ceph_md
+ 				pr_info_client(cl, "mds%d recovery completed\n",
+ 					       s->s_mds);
+ 			kick_requests(mdsc, i);
++			ceph_get_mds_session(s);
+ 			mutex_unlock(&mdsc->mutex);
+ 			mutex_lock(&s->s_mutex);
+ 			mutex_lock(&mdsc->mutex);
++			ceph_put_mds_session(s);
+ 			ceph_kick_flushing_caps(mdsc, s);
+ 			mutex_unlock(&s->s_mutex);
+ 			wake_up_session_caps(s, RECONNECT);
 
 
