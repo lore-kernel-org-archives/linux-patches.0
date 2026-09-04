@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC7C369204;
-	Fri,  4 Sep 2026 06:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A474C37F306;
+	Fri,  4 Sep 2026 06:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502321; cv=none; b=OqA+X1Rzd4rLQ81J4L/+eHttOoTuSPXdhJtJ4KvYD/KAtVIHwK1bUvNBHQrUfPfx0TVxfoOoRPSeacAQrFQkf5TwrpYyD3jpetgIgEyUyZ4eN8M1HgpCfBGI5x4hyYQsSAzjug7SyK3d6TlMRf038P+TVPCkW1PtHDcdYYzWdXg=
+	t=1788502323; cv=none; b=oCnboaffkoF3+vBHJgjGiu4qsLrAViLZu+V+DDuPxoXzA8wdWgteZSqsbbLE96tmogmEifDHVd0f0iGydrVYBKKcx3eUX6Qdm8qEdD0nUXnWg+L3DY46hy3y7GK72DuBB1jl7yJSsxxHZ7ngBnkoTixKd3gyKCjBqn8hkUt1JDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502321; c=relaxed/simple;
-	bh=ieJLYBMwc+yAFsq+sPOtj4IWxK9Pm349fAHRdw4B1lw=;
+	s=arc-20240116; t=1788502323; c=relaxed/simple;
+	bh=BvMR1EG8JrcEahFKfyuTOSzGHypIEGur/fbidf0evd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvAtfX8ypJMtSb1tNcxG2CiTNfTS2+MAMTkHVqUp7zLhbGoAvnz8hQn3UG8sXin8ES6jlDElCy+WqqLCcWbk9eQTmC9+zhHcUpFNJ0ewyNy2jPw7SgdJQ3EkLunlNQCnXCUvQzDVqIAzUynDgZpurtOj8CgGjk6VqilrvD2ZvGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOhO83/y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCmAV9LDlyO4VoTAUoVYCi5Y5szdMW4lDhA1JDfMU6RxgBPBAU7ly9VGZYP9z7CtRJLczPXWQphmXEDUUxTXobgfOzduCdt2+x2PmGOGs/C65kOkjQuynpv6u3XKUzf57Wi/aEkNoeHL4uO7JD0VpYiHJz7J+S04CssuhCuq8K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyqDocSI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOhO83/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173D51F00A3D;
-	Fri,  4 Sep 2026 06:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyqDocSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F197C1F00A3D;
+	Fri,  4 Sep 2026 06:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502319;
-	bh=l6OkRnE/dZeTF0ZFFms+/3FPvBHDEk3SRPU17hjINAI=;
+	s=korg; t=1788502322;
+	bh=CwC0Zwc+hro72sNm3i+2CPgC0fsSakDDk39YxY/mCDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOhO83/yCrPP2ZgepqASG/J8n3iiB1uStasnyHpIBZr6a4LGESjlEdSW/s+Tu29yM
-	 p6623IEAZ7jZhMdowSzDc+/pdaRUlrTaGSHjGyyaWzCip87zqMl88EejBL5uPV4O62
-	 at1X6IZRIo7wSmPfmQxpkX6dUf6+TT2UTGMBym7o=
+	b=iyqDocSInZDQ1w5eLKDQ7956iiDtJgRHzXFrX1d4I/upfzp5E9DT4y4gnHxvvsEPA
+	 /B/z30cAkImyLZ5Zvo4R7lW6CVVwqxBztNtWR2ZGsQSpwnxKRVygzNYVDt2PHbSdrZ
+	 uZMdzDEyRM+Yyp8okdCv9vKScKeigtFEoq4BFb1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineet Gupta <vineet.gupta@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>
-Subject: [PATCH 6.12 165/403] bpf, x86: Fix per-CPU address resolution into an extended register
-Date: Fri,  4 Sep 2026 06:59:28 +0200
-Message-ID: <20260904045738.606365581@linuxfoundation.org>
+	Tao Chen <chen.dylane@linux.dev>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <borkmann@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>
+Subject: [PATCH 6.12 166/403] bpf: Disable preemption in __bpf_get_stack
+Date: Fri,  4 Sep 2026 06:59:29 +0200
+Message-ID: <20260904045738.632709061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,75 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineet Gupta <vineet.gupta@linux.dev>
+From: Daniel Borkmann <borkmann@iogearbox.net>
 
-commit 5bbbce02e500d47d8e259a45be5a7be9741d0533 upstream.
+commit b1a47b2708d4e95dbd23aee2ec83752190897b3f upstream.
 
-The destination of the per-CPU address MOV is encoded in ModRM.reg,
-which is extended by REX.R, but the REX prefix is built with
-add_1mod(), which sets REX.B. REX.B extends ModRM.rm and SIB.base, and
-this instruction addresses memory as disp32 with no base, so the bit
-has no effect at all and the high register bit is simply lost.
+get_perf_callchain() returns a per-CPU perf_callchain_entry buffer and
+releases its recursion slot via put_callchain_entry() before returning,
+so nothing keeps the entry reserved while __bpf_get_stack() consumes
+it below.
 
-Every is_ereg() destination therefore resolves to the wrong register,
-picking whichever one shares the low three bits:
+A preemptible BPF program (e.g. a non-sleepable raw tracepoint program
+on a PREEMPT kernel, which runs under migrate_disable() but not
+preempt_disable()) can be scheduled out between obtaining the entry
+and the copy. Another task scheduled on the same CPU then reuses the
+same per-CPU buffer and overwrites trace->nr with a larger value.
+copy_len is then computed from the inflated trace->nr and can exceed
+the caller's buffer, causing an out-of-bounds write in the memcpy()
+and in the build_id path.
 
-  R5 -> RAX    R7 -> RBP    R8 -> RSI    R9 -> RDI
+The rcu_read_lock() taken here alone does not prevent this. It is
+only taken on the may_fault path, and under CONFIG_PREEMPT_RCU it does
+not disable preemption; it merely keeps perf's callchain buffer array
+alive (freed via call_rcu()) and does nothing to stop another task
+from reusing the entry.
 
-With BPF_REG_5, whose reg2hex is 0, the emitted
+Disable preemption around obtaining the callchain entry and copying
+it into the caller's buffer, so the entry cannot be reused underneath
+us and trace->nr stays bounded by max_depth. Build ID resolution may
+fault and is therefore deferred until after preemption is re-enabled;
+by then the instruction pointers have already been copied into buf,
+so it operates only on that private copy. Note, preempt_disable() also
+subsumes the buffer-lifetime guarantee the rcu_read_lock() provided,
+since a preempt-disabled section is an RCU read-side critical section
+for the callchain buffers' call_rcu() reclaim.
 
-  65 49 03 04 25 <off>	add %gs:<off>,%rax
-
-adds the per-CPU offset to RAX rather than R8. The destination keeps
-the unadjusted address and RAX is clobbered, so the program goes on to
-dereference a pointer that was never made per-CPU:
-
-  BUG: unable to handle page fault for address: 0000607e386a8894
-  RIP: bpf_prog_707837aafd2aa9ae_update_percpu_data+0x93/0xc9
-  Call Trace:
-   __bpf_prog_test_run_raw_tp+0x2dc/0x7d0
-   __flush_smp_call_function_queue+0x1e9/0xc80
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-R5 is the mildest of the four, aliasing a scratch register and faulting
-at the store. R7 aliases RBP and would corrupt the frame pointer, R8
-and R9 alias the argument registers.
-
-Use add_2mod() so the register goes through REX.R, matching how
-add_2reg() places it in ModRM.reg and how emit_priv_frame_ptr()
-hardcodes 0x4c for the same instruction with R9. Encodings for the
-non-extended registers are unchanged.
-
-Problem showed up when trying to resurrect BPF_GCC CI (selftests built
-with BPF_GCC).
-
-This has gone unnoticed because clang reloads the address into R1
-before each per-CPU access, so the destination is never an extended
-register. GCC keeps several per-CPU addresses live at once, and
-test_progs-bpf_gcc panics the kernel in global_percpu_data/init, where
-the address of a .percpu variable ends up in R5.
-
-Fixes: 7bdbf7446305 ("bpf: add special internal-only MOV instruction to resolve per-CPU addrs")
-Signed-off-by: Vineet Gupta <vineet.gupta@linux.dev>
-Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: c195651e565a ("bpf: add bpf_get_stack helper")
+Reported-by: Tao Chen <chen.dylane@linux.dev>
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <borkmann@iogearbox.net>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260814220254.3797467-2-vineet.gupta@linux.dev
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-11-jolsa@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/net/bpf_jit_comp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1578,7 +1578,7 @@ static int do_jit(struct bpf_prog *bpf_p
- 				EMIT_mov(dst_reg, src_reg);
- #ifdef CONFIG_SMP
- 				/* add <dst>, gs:[<off>] */
--				EMIT2(0x65, add_1mod(0x48, dst_reg));
-+				EMIT2(0x65, add_2mod(0x48, 0, dst_reg));
- 				EMIT3(0x03, add_2reg(0x04, 0, dst_reg), 0x25);
- 				EMIT((u32)(unsigned long)&this_cpu_off, 4);
- #endif
+Closes: https://lore.kernel.org/bpf/20260206090653.1336687-1-chen.dylane@linux.dev/
+[ changed Fixes: commit ]
+---
+ kernel/bpf/stackmap.c |    3 +++
+ 1 file changed, 3 insertions(+)
+
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -460,6 +460,7 @@ static long __bpf_get_stack(struct pt_re
+ 
+ 	max_depth = stack_map_calculate_max_depth(size, elem_size, flags);
+ 
++	preempt_disable();
+ 	if (may_fault)
+ 		rcu_read_lock(); /* need RCU for perf's callchain below */
+ 
+@@ -476,6 +477,7 @@ static long __bpf_get_stack(struct pt_re
+ 	if (unlikely(!trace) || trace->nr < skip) {
+ 		if (may_fault)
+ 			rcu_read_unlock();
++		preempt_enable();
+ 		goto err_fault;
+ 	}
+ 
+@@ -496,6 +498,7 @@ static long __bpf_get_stack(struct pt_re
+ 	/* trace/ips should not be dereferenced after this point */
+ 	if (may_fault)
+ 		rcu_read_unlock();
++	preempt_enable();
+ 
+ 	if (user_build_id)
+ 		stack_map_get_build_id_offset(buf, trace_nr, user, may_fault);
 
 
