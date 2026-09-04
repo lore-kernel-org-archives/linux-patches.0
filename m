@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4221408035;
-	Fri,  4 Sep 2026 05:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1CB3B19BC;
+	Fri,  4 Sep 2026 05:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500068; cv=none; b=nXQYEG6lkPY1xV89SvTPRzthwzsTRIlHbD13w6zFdQ9UmGt6z95IDvAoRIEK4qmS+75utk1kcdFdT+bjeb4lkwaq6THkcmIRMwBdUA9CKvk9zp1GM0rAgtQpXUAVtIkdZnrF8zQUzlVZygK5q+OXd9Hl/Xu1ZXkHkqgIeTwQI3Q=
+	t=1788500071; cv=none; b=qdhEnD8NBjIZI1cPKWLPubIaXGyJKpvIYVJbi5gUWc8pVB+ZAaIAwuEec5zV4+DdntXtWV3MGwg8O9jEbPembNZa80XRuWfw4reX/rc17I5qKSxBx0ObCTjrxgJpRUhoqLzQxYAm7ZCyOaKoygBlm0PIChb5cU0NfDXD4GqXmoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500068; c=relaxed/simple;
-	bh=XArY7gqeoUTmjxtENGcDGyGG4VOFVUgYNCaO/JQ7tJE=;
+	s=arc-20240116; t=1788500071; c=relaxed/simple;
+	bh=v71zrKhXzW7mVdA7ciRbf8KkrC4eynRZASpOdbQ62nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+5ngao6AIszuZ4IfCeJ6LkxONKRDSXaX8vUzsnYQg2nYkP0kgBZsoY2Tfcy1TqmSfXq8/77xv24SFFb/FrueKQfinuMT/PFZzmGkR/IzZrIXgUsyhuZV0nPusJQZJWma1PBmwV2dJfYhhYwLspMWlTwoNqPn7IVsywAHTxhPn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDXyoFmX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LTiP1fVI5k4vlwCHq+QOGZXkv9XgK6kSLBNXlmMFu3UqEI5isIQBCwrlF9RVm4mYnN8z3EJ8Ir0T9/SdIiYu8RUwQM+TGt3TVJGFR3jIB2HLtNGDS1WdD9Bjy4iuWrGJtcqNJbjYQxrR5Tf4LOW9XXQ0WGx5CPRinHWaDUS2OL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+NUOH6F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDXyoFmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572D51F00A3D;
-	Fri,  4 Sep 2026 05:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+NUOH6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A291F00A3D;
+	Fri,  4 Sep 2026 05:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500066;
-	bh=7Embin01mGy/DooOfhpW65BR+cQr20ZWNtPhrgbdUfQ=;
+	s=korg; t=1788500069;
+	bh=aH9+WwycUo/52sZdpuwqezEfNBOgOFFDDR8/SC8Ig7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDXyoFmX5K2+MkBXt4ItoI/ZdVteKhYU+C5KqQoey3+Jm1tyAnkfHD7FZpVSPGOOi
-	 BxAw+n9yubnkPgZngIKR2bnxQLU3hzv8HjMVuxAKPcEsbZ/Z6B11DDGoQ++hUKpHfq
-	 Dw6mMKkEqtmGvZJ8U8NmHSQF+/KVN4h7RZVB3ps4=
+	b=O+NUOH6Fi9x2BlqW0JBL8VLL5EVRH1MP3b0+NMVtSefMazi4VR7B31fkJgEnKkDCK
+	 stOFBPROb9kEMWz4Pc+lIYpquIbkSzc+iS2r56fg6kG4CYCuaPb3rLA+472IHbXO1U
+	 6lq6aj0djgp0EnjBFafMRGqe+F6rflvKWvSI7sjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 586/713] io_uring/waitid: honor task_work cancellation
-Date: Fri,  4 Sep 2026 06:59:14 +0200
-Message-ID: <20260904045816.954542014@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 7.2 633/713] mfd: qnap-mcu: keep the reply buffer alive past a command timeout
+Date: Fri,  4 Sep 2026 07:00:01 +0200
+Message-ID: <20260904045818.019005259@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,90 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 14572de82e5022899e5856008bc9cac97004a88c upstream.
+commit 47504742cea7878ebd1bf1491bbed923df6b90b1 upstream.
 
-io_waitid_cb() may run through the fallback task_work path when
-task_work_add() can no longer queue work to the originating task. The
-fallback runs from a kworker and io_uring marks such task work as
-canceled through tw.cancel.
+qnap_mcu_exec() publishes an on-stack buffer to the receive path:
 
-io_waitid_cb() currently ignores tw.cancel and calls __do_wait().
-waitid is task-context dependent: __do_wait() performs child lookup
-relative to current, and the retry path also uses
-current->signal->wait_chldexit. If the callback runs from the fallback
-kworker, current is therefore not the task that submitted the request.
+	unsigned char rx[QNAP_MCU_RX_BUFFER_SIZE];
+	...
+	reply->data = rx;
+	reply->length = length;
 
-Honor tw.cancel before entering __do_wait(). Complete the request with
--ECANCELED and skip the siginfo copy, since canceled task work may run
-without the submitting task's userspace execution context.
+and qnap_mcu_receive_buf() writes into it from the serdev receive path,
+which runs out of flush_to_ldisc() and is not serialized against
+qnap_mcu_exec() at all. bus_lock cannot cover it, because qnap_mcu_exec()
+holds that mutex across wait_for_completion_timeout().
 
-Keep the existing siginfo handling for normal waitid completion and
-explicit cancellation.
+On a timeout qnap_mcu_exec() returns with reply->data still pointing at
+its own frame. A reply that arrives late, or an unsolicited message from
+the MCU, is then written into a stack frame that has been left, corrupting
+whatever runs next on that stack. The same applies when qnap_mcu_write()
+fails, since that path returns without touching the reply state either.
 
-Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
+Move the receive buffer into struct qnap_mcu. It is 37 bytes and the
+structure is devm_kzalloc()ed, so it lives as long as the driver, and a
+late write lands in memory that is still valid and is reinitialized by the
+next command. bus_lock keeps commands from sharing it.
+
+This deliberately does not clear reply->data or reply->length on the
+timeout path. Doing so races with qnap_mcu_receive_buf(), which reads both
+after its
+
+	if (!reply->length)
+		return size;
+
+check: clearing reply->data gives a NULL dereference, and clearing
+reply->length alone removes the reply->received == reply->length exit
+condition, so the copy loop runs until the uart chunk is consumed and
+overruns the buffer. Leaving both set keeps the write bounded by
+reply->length, which qnap_mcu_exec() has already checked against
+sizeof(mcu->rx).
+
+Fixes: 998f70d1806b ("mfd: Add base driver for qnap-mcu devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Su <sh_def@163.com>
-Link: https://patch.msgid.link/20260818103336.1922818-2-sh_def@163.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://lore.kernel.org/all/20260802132012.537B81F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/20260802135307.31380-1-ali@iusegentoo.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/waitid.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/mfd/qnap-mcu.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -125,7 +125,7 @@ static void io_waitid_remove_wq(struct i
- 	}
- }
+--- a/drivers/mfd/qnap-mcu.c
++++ b/drivers/mfd/qnap-mcu.c
+@@ -56,6 +56,7 @@ struct qnap_mcu_reply {
+  * @reply:	Reply data structure
+  * @variant:	Device variant specific information
+  * @version:	MCU firmware version
++ * @rx:		Receive buffer the reply is assembled in
+  */
+ struct qnap_mcu {
+ 	struct serdev_device *serdev;
+@@ -63,6 +64,7 @@ struct qnap_mcu {
+ 	struct qnap_mcu_reply reply;
+ 	const struct qnap_mcu_variant *variant;
+ 	u8 version[QNAP_MCU_VERSION_LEN];
++	u8 rx[QNAP_MCU_RX_BUFFER_SIZE];
+ };
  
--static void io_waitid_complete(struct io_kiocb *req, int ret)
-+static void io_waitid_complete(struct io_kiocb *req, int ret, bool copy_si)
+ /*
+@@ -214,19 +216,18 @@ int qnap_mcu_exec(struct qnap_mcu *mcu,
+ 		  const u8 *cmd_data, size_t cmd_data_size,
+ 		  u8 *reply_data, size_t reply_data_size)
  {
- 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+-	unsigned char rx[QNAP_MCU_RX_BUFFER_SIZE];
+ 	size_t length = reply_data_size + QNAP_MCU_CHECKSUM_SIZE;
+ 	struct qnap_mcu_reply *reply = &mcu->reply;
+ 	int ret = 0;
  
-@@ -137,7 +137,10 @@ static void io_waitid_complete(struct io
- 	hlist_del_init(&req->hash_node);
- 	io_waitid_remove_wq(req);
- 
--	ret = io_waitid_finish(req, ret);
-+	if (copy_si)
-+		ret = io_waitid_finish(req, ret);
-+	else
-+		io_waitid_free(req);
- 	if (ret < 0)
- 		req_set_fail(req);
- 	io_req_set_res(req, ret, 0);
-@@ -159,7 +162,7 @@ static bool __io_waitid_cancel(struct io
- 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
- 		return false;
- 
--	io_waitid_complete(req, -ECANCELED);
-+	io_waitid_complete(req, -ECANCELED, true);
- 	io_req_queue_tw_complete(req, -ECANCELED);
- 	return true;
- }
-@@ -202,6 +205,11 @@ static void io_waitid_cb(struct io_tw_re
- 	int ret;
- 
- 	io_tw_lock(ctx, tw);
-+	if (unlikely(tw.cancel)) {
-+		io_waitid_complete(req, -ECANCELED, false);
-+		io_req_task_complete(tw_req, tw);
-+		return;
-+	}
- 
- 	ret = __do_wait(&iwa->wo);
- 
-@@ -229,7 +237,7 @@ static void io_waitid_cb(struct io_tw_re
- 		}
+-	if (length > sizeof(rx)) {
++	if (length > sizeof(mcu->rx)) {
+ 		dev_err(&mcu->serdev->dev, "expected data too big for receive buffer");
+ 		return -EINVAL;
  	}
  
--	io_waitid_complete(req, ret);
-+	io_waitid_complete(req, ret, true);
- 	io_req_task_complete(tw_req, tw);
- }
+ 	guard(mutex)(&mcu->bus_lock);
  
+-	reply->data = rx;
++	reply->data = mcu->rx;
+ 	reply->length = length;
+ 	reply->received = 0;
+ 	reinit_completion(&reply->done);
+@@ -242,15 +243,15 @@ int qnap_mcu_exec(struct qnap_mcu *mcu,
+ 		return -ETIMEDOUT;
+ 	}
+ 
+-	if (!qnap_mcu_verify_checksum(rx, reply->received)) {
++	if (!qnap_mcu_verify_checksum(mcu->rx, reply->received)) {
+ 		dev_err(&mcu->serdev->dev, "Invalid Checksum received from controller\n");
+ 		return -EPROTO;
+ 	}
+ 
+-	if (qnap_mcu_reply_is_any_error(mcu, rx, reply->received))
++	if (qnap_mcu_reply_is_any_error(mcu, mcu->rx, reply->received))
+ 		return -EPROTO;
+ 
+-	memcpy(reply_data, rx, reply_data_size);
++	memcpy(reply_data, mcu->rx, reply_data_size);
+ 
+ 	return 0;
+ }
 
 
