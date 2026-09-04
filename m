@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4EF424641;
-	Fri,  4 Sep 2026 06:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A529A424664;
+	Fri,  4 Sep 2026 06:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502441; cv=none; b=I0HdKknf4Q6K7b32zdqSwrG/hvB5jXfMO4pOrDjIS8mjMEDucbIxU+VRcoK3xTk65lIRjw8RBg0wRqEswJb9RAevAbvh/gKN60TqmmQm+mE5Orw+yvdDZpWs/OnEaaK2JMmTQv8+072u6B4fhmJMqxMd+MXlw5B3sZ/t7tYoiug=
+	t=1788502443; cv=none; b=AUez/jYR6R7VZlWLgY07wVfaB51+ZOqOGjs59IP8P+7DRSY7RG85/vKccNBOow0QaXmb2/XD2OMV6erkl51ql8CQt2NA3SZWylGWug593ZN9gL2slkeJ5qq+KXHHy/14898qErLfcitK83vwkWHcBIU9VYm0T4cuWgg3emyg1T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502441; c=relaxed/simple;
-	bh=uucXBYCFuSZ+2MRTIcZmp2d2FyZHGfanRxdX3YsTkO4=;
+	s=arc-20240116; t=1788502443; c=relaxed/simple;
+	bh=qiIoUFEkVukm9ts5ZGFP7BawAdyWMXNUQ6eox6tCVjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4bdgQKsXRuzQ8ixBkcNv3dN4EUV6MA0cSOWXvyN8D5IyC8IMfH+o/JZh2MS3r8s8PnbJJQW4yE84kA/fqKQ86fDTn7Y5N3140wNk8CSnReClLlM0mvM8Dd1zngUW0vd+yxE18xhkgMEE/0SRif9WIo23G+p796uCQ/i5toq8j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNtfLDo+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TTO741Gy2n2xMwQKnxFVRyD39pXjW3/7XMITC1vVQVJ/JIJEqjvkSS+LuU/Eqdw9zMDrq167n1tnSY78/CBtKQ3j2zBJnS0l8rIgy92Gxf8Hu2qpij4M4B+/o14pKXtwsGI1eJYUQgIfeku7VCPm5+EDTP74k+qHzkyi+CBnrqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDNGffAj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNtfLDo+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C18A1F00A3D;
-	Fri,  4 Sep 2026 06:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDNGffAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CC51F00A3D;
+	Fri,  4 Sep 2026 06:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502439;
-	bh=p2mtALIWc8HtBpyR6YobU4bK98QgWUQdzKYGf2y7YIU=;
+	s=korg; t=1788502442;
+	bh=94daQXh1mvHzeurPrQHTevZqne4+/eo3XiSfMr6zWPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bNtfLDo++39jsYDPuoF7kktgfnpiFmNXZGKIUZ/4bogQwzIEPrv02S/tHsbb3TR4S
-	 IMe2BdXagLAUoCbdonadi3xTdMgXkYBxz4SSwYIBJ4iOojFTrajK/1yeOo+Lhebr01
-	 yn9xC4OMnjqWauIkCsRZ4pPFdnW+NtiVo7x1qKEA=
+	b=BDNGffAjwEr9nYV+WGG7g5vz6gI9neD4EDhQh8P67x3yMJi04DWQmGmX/9rCcUwnC
+	 otTLpHUmyaoJgV+KYSgnLRfWl7gIzrU4gmDooZwTwCuz9s1wnBlhMfullXIShiyyH4
+	 uyDa7f+AN9iLgTjsSSB12zdBsKZ957bWYPmfsISc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Chen <xin.chen2@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 181/403] Bluetooth: hci_core: use skb_get() instead of skb_clone() for req_skb
-Date: Fri,  4 Sep 2026 06:59:44 +0200
-Message-ID: <20260904045738.974042637@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 208/403] SUNRPC: harden gss_krb5_unwrap_v2 against short tokens
+Date: Fri,  4 Sep 2026 07:00:11 +0200
+Message-ID: <20260904045739.584928929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,68 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Chen <xin.chen2@oss.qualcomm.com>
+From: Chris Mason <clm@meta.com>
 
-commit f5afdff569a09d1cb8cf19826199d024725576cb upstream.
+commit 6959297aaa9572783d620a226d73c3fb94494888 upstream.
 
-BT enable fails intermittently with -ETIMEDOUT (-110).  The kernel log
-shows the HCI Read Local Version command was sent and the firmware
-replied with status 0x00 (logged by hci_req_cmd_complete() BT_DBG),
-but the waiter in __hci_cmd_sync_sk() never woke up and timed out
-after 10 s:
+gss_krb5_unwrap_v2() reads the EC and RRC header fields at ptr+4 and
+ptr+6 before validating that the token is at least GSS_KRB5_TOK_HDR_LEN
+(16) bytes long, and its rotate_left() helper passes buf->len - base
+to xdr_buf_subsegment() without verifying that base <= buf->len. When
+a caller hands in a sub-16-byte token, or a token whose declared len
+leaves base past the end of the buffer, three distinct failures follow:
 
-  bluetooth hci0: Opcode 0xfc00              // __hci_cmd_sync_sk
-  bluetooth hci0: opcode 0xfc00 plen 1       // hci_cmd_sync_add
-  bluetooth hci0: skb len 4                  // hci_cmd_sync_alloc
-  bluetooth hci0: length 1                   // hci_req_sync_run
-  Bluetooth: hci0 cmd_cnt 1 cmd queued 1     // hci_cmd_work
-  Bluetooth: hci0 type 1 len 4               // hci_send_frame
-  Bluetooth: opcode 0xfc00 status 0x00       // hci_req_cmd_complete
-  <-- req_skb NULL: req_complete_skb not set,
-      hci_cmd_sync_complete() never called,
-      req_status stays HCI_REQ_PEND            -->
-  <-- 10 s later: wait_event_interruptible_timeout expires -->
-  bluetooth hci0: end: err -110              // __hci_cmd_sync_sk
+    gss_krb5_unwrap_v2(offset, len, buf)
+      ptr = buf->head[0].iov_base + offset
+      ec  = *(ptr + 4)              /* OOB read on short head */
+      rrc = *(ptr + 6)              /* OOB read on short head */
+      rotate_left(offset + 16, buf, rrc)
+        xdr_buf_subsegment(buf, &subbuf,
+                           base, buf->len - base)   /* u32 wrap when base > len */
+        _rotate_left(&subbuf, shift)
+          shift %= buf->len         /* divide-by-zero when base == len */
 
-The root cause is that hci_send_cmd_sync() clones the sent command
-into hdev->req_skb so that hci_req_cmd_complete() can locate the
-registered completion callback.  Under memory pressure this
-skb_clone() fails, leaving hdev->req_skb NULL.  The firmware reply
-is received and processed, but hci_req_cmd_complete() finds NULL
-req_skb, so hci_cmd_sync_complete() is never called, req_status
-stays HCI_REQ_PEND, and the waiter times out with -ETIMEDOUT.
+After decryption, the cleanup arithmetic has the same shape:
 
-req_skb is only used to read bt_cb(skb)->hci callbacks and opcode --
-it is never modified.  Replace skb_clone() with skb_get(), which
-simply increments the reference count of hdev->sent_cmd without
-allocating new memory and therefore cannot fail.
+    movelen = min_t(unsigned int, buf->head[0].iov_len, len);
+    movelen -= offset + GSS_KRB5_TOK_HDR_LEN + headskip;
+    BUG_ON(offset + GSS_KRB5_TOK_HDR_LEN + headskip + movelen >
+                                            buf->head[0].iov_len);
 
-This issue was first observed as a use-after-free in ttyport_close()
-when ttyport_open() failed, which was investigated in an earlier
-patch series [1].  That investigation led to the discovery of the
-true root cause described above.
+The BUG_ON re-adds the value just subtracted, so it reduces to
+min(A, B) > A and is permanently false; it cannot catch the unsigned
+underflow of movelen, which then drives a ~UINT_MAX-byte memmove().
 
-[1] https://lore.kernel.org/all/20250430111617.1151390-1-quic_cxin@quicinc.com/
+Add four defense-in-depth guards inside the unwrap core so it is safe
+regardless of what its callers validate:
 
-Fixes: 2615fd9a7c25 ("Bluetooth: hci_sync: Fix overwriting request callback")
+  - reject tokens with len - offset < GSS_KRB5_TOK_HDR_LEN before
+    touching ptr+4/ptr+6;
+  - bail from rotate_left() when buf->len <= base, covering both the
+    underflow and zero-length cases;
+  - return early from _rotate_left() when buf->len is zero, so the
+    shift %= buf->len modulo cannot fault;
+  - replace the dead BUG_ON with a live check that returns
+    GSS_S_DEFECTIVE_TOKEN before the movelen subtraction.
+
+Fixes: de9c17eb4a91 ("gss_krb5: add support for new token formats in rfc4121")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xin Chen <xin.chen2@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260524010213.557424-5-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/auth_gss/gss_krb5_wrap.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4124,7 +4124,7 @@ static int hci_send_cmd_sync(struct hci_
- 	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND &&
- 	    !hci_dev_test_and_set_flag(hdev, HCI_CMD_PENDING)) {
- 		kfree_skb(hdev->req_skb);
--		hdev->req_skb = skb_clone(hdev->sent_cmd, GFP_KERNEL);
-+		hdev->req_skb = skb_get(hdev->sent_cmd);
- 	}
+--- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
++++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
+@@ -74,6 +74,8 @@ static void _rotate_left(struct xdr_buf
+ 	int shifted = 0;
+ 	int this_shift;
  
- 	return err;
++	if (!buf->len)
++		return;
+ 	shift %= buf->len;
+ 	while (shifted < shift) {
+ 		this_shift = min(shift - shifted, LOCAL_BUF_LEN);
+@@ -86,6 +88,8 @@ static void rotate_left(u32 base, struct
+ {
+ 	struct xdr_buf subbuf;
+ 
++	if (buf->len <= base)
++		return;
+ 	xdr_buf_subsegment(buf, &subbuf, base, buf->len - base);
+ 	_rotate_left(&subbuf, shift);
+ }
+@@ -155,6 +159,9 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
+ 
+ 	dprintk("RPC:       %s\n", __func__);
+ 
++	if (len - offset <= GSS_KRB5_TOK_HDR_LEN)
++		return GSS_S_DEFECTIVE_TOKEN;
++
+ 	ptr = buf->head[0].iov_base + offset;
+ 
+ 	if (be16_to_cpu(*((__be16 *)ptr)) != KG2_TOK_WRAP)
+@@ -221,9 +228,9 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
+ 	 * head buffer space rather than that actually occupied.
+ 	 */
+ 	movelen = min_t(unsigned int, buf->head[0].iov_len, len);
++	if (movelen < offset + GSS_KRB5_TOK_HDR_LEN + headskip)
++		return GSS_S_DEFECTIVE_TOKEN;
+ 	movelen -= offset + GSS_KRB5_TOK_HDR_LEN + headskip;
+-	BUG_ON(offset + GSS_KRB5_TOK_HDR_LEN + headskip + movelen >
+-							buf->head[0].iov_len);
+ 	memmove(ptr, ptr + GSS_KRB5_TOK_HDR_LEN + headskip, movelen);
+ 	buf->head[0].iov_len -= GSS_KRB5_TOK_HDR_LEN + headskip;
+ 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
 
 
