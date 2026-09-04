@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598793CB2DB;
-	Fri,  4 Sep 2026 06:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA9841D127;
+	Fri,  4 Sep 2026 06:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502677; cv=none; b=CFDZ53SfHHvpIuKwqpj1qgN0M8/PgF1PwfAMU3ixjlRRu+eUEJr5QOBWl6pEwOpIFmRcbKi4mKWD6sUCDbhofbWyqQSQp0y4XhV3wMaMDLCM6KG2EMx1rhDXLqAkQ5JtL2rQBnzx/j5bPwLOI4bSjly6JN9cUuut9za54dQHSlU=
+	t=1788502680; cv=none; b=VDr5cX7Nl1uymyLLnPgbzlxXlrp96vBJR/NkZT7qHUAhrTuWdYaJtkEX0evvKViaYRdqrGKJtLGS0Wkn8/dxzlUiMxgOwuFXWn4ApMvJtlsdmtGoBdO8RxVt7N0vLRAKbZU3Y51bLcj2iYALw6f4KWFZDM/EXXW1Dpci4DZ+1nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502677; c=relaxed/simple;
-	bh=jSh7c2xPmM46QkHQaV0R2xt8xLgL3jKt1nNVPOvx1bk=;
+	s=arc-20240116; t=1788502680; c=relaxed/simple;
+	bh=To7uDSxqLAeFQMGBIC9w1PSDTD/NzZtgAIyQZIK2PPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNVaEndhAnyCo8r4G3UsUXDkqrtnDPgA1LTzd2zi64AgQ1bbUsv8eMpApFrodgke314z00BQTVypNBlTNX5hgnW1Ii/ve8AMfB6+n62vBVpgoKEeBm34Fu4hVJSytv/HC/jPl0rkddW6T3l52juJzz9oEmeWf8I0OKEe3vws6wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyxHH4e0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Duy41mv2or/rKNtlHgOqynURgfUwYx/MOY+Jy6+bnt/JA/O8iX6kqUmov/5742YRXOOa0Ddo8nCSE8Jawu/jM4Pf+YzbYQocIHKQKfqprDUdElIfiTTfcnUT42IYcnNdEuVk+/GE1J5amfllyFuK87+jdy54mUDvBHVQd/HqwtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuJZ4oyM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyxHH4e0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D8E1F00A3D;
-	Fri,  4 Sep 2026 06:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuJZ4oyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945F21F00A3D;
+	Fri,  4 Sep 2026 06:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502676;
-	bh=JEMibYRnoNix5y0O87ALPCDKp5XZJFTU0BfKZRRw+KM=;
+	s=korg; t=1788502679;
+	bh=th4tWqaMUtEXVeLKMxmcKtJUZZXkSQqgGxDuVSn6iLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyxHH4e0Ni3eD+01rmtkzXbJ/O+EfKUvDICAjzDs7moq6xp7j8ATTktIXW6Z8yTsi
-	 XSBJR1kvpNBJbP7YX46FgqJi1GKuqtu6qKmZClFw7I/IFLCUKA5DuNOF10A9Siw7jk
-	 LopxHUg6CTzx6PpobaI3riT1D2K1nRNdBoiJqs3s=
+	b=wuJZ4oyMJQteIUWUGAUzhZ72swu82ch3zglTeOqS+aOKmj5upWOTlJps6pKqB0DxZ
+	 WnnzpCt/x09cN0X8lyVmslQUFX0fwRE2pkJOH33iWSL0AHW9QeY4nsoKmWkDPj8HWK
+	 UkdRuq49ftDom/KKXAsWEFjFjjkN7a/mKNAIvye4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ali Tariq <alitariq45892@gmail.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH 6.12 291/403] PCI: plda: Fix use-after-free of event IRQs during teardown
-Date: Fri,  4 Sep 2026 07:01:34 +0200
-Message-ID: <20260904045741.468221194@linuxfoundation.org>
+Subject: [PATCH 6.12 292/403] PCI: plda: Fix IRQ domain leaks in the error paths of plda_init_interrupts()
+Date: Fri,  4 Sep 2026 07:01:35 +0200
+Message-ID: <20260904045741.489294936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,79 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Ali Tariq <alitariq45892@gmail.com>
 
-commit 26b73bae01d6eb81a4a38f36101812f20b2639de upstream.
+commit 19a30bbb6477bfd7e3109b7a2943e6597ee9de37 upstream.
 
-plda_pcie_irq_domain_deinit() removes pcie->event_domain via
-irq_domain_remove(), but the per-event IRQs mapped from that domain
-are requested with devm_request_irq() in plda_init_interrupts(). The
-actual free_irq() for a devm-managed IRQ is deferred by devres until
-after the calling probe()/remove() function returns.
+plda_init_interrupts() initializes IRQ domains and creates IRQ mapping but
+does not unwind them when later step fails.
 
-This means irq_domain_remove() can free the domain's internal data
-before the deferred free_irq() for IRQs still mapped into it has run.
-When devres later processes that deferred cleanup, it can end up
-dereferencing the already-freed domain.
+If platform_get_irq() or either irq_create_mapping() fails
+in plda_init_interrupts(), the domains are never deinitialized. If
+irq_create_mapping() fails, port->intx_irq stays initialized.
 
-Free each event IRQ explicitly with devm_free_irq() before removing
-the domain. This triggers the free immediately and removes the IRQ
-from the devres tracking list, so devres will not attempt to free it
-a second time later.
+Hence, remove the IRQ domains in the error path by calling
+plda_pcie_irq_domain_deinit().
 
-Also dispose of the event, INTx, and MSI IRQ mappings with
-irq_dispose_mapping() before their owning domains are removed.
+Since plda_pcie_irq_domain_deinit() now disposes of the intx_irq and
+msi_irq mappings itself before removing their domains, the msi_irq
+mapping failure path can go directly to err_irq_domain_deinit instead of
+disposing of port->intx_irq separately first.
 
-Finally, guard the calls to irq_set_chained_handler_and_data() for
-pcie->irq, pcie->msi_irq, and pcie->intx_irq so they only run when
-those fields hold a valid (>0) IRQ number.
+This issue was found by automated review of sashiko-bot
 
-This is a pre-existing issue, flagged by automated review during work
-on an earlier, unrelated patch to this driver.
-
-Build-tested and boot-tested on StarFive VisionFive v1.2A board
-
+Fixes: 4602c370bdf6 ("PCI: microchip: Move IRQ functions to pcie-plda-host.c")
 Fixes: 76c911396807 ("PCI: plda: Add host init/deinit and map bus functions")
-Closes: https://lore.kernel.org/linux-pci/20260714115343.4D49E1F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/linux-pci/20260718120701.DF4111F000E9@smtp.kernel.org/
 Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+[mani: commit log]
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260723140434.675512-2-alitariq45892@gmail.com
+Link: https://patch.msgid.link/20260723142824.726655-1-alitariq45892@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/plda/pcie-plda-host.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/pci/controller/plda/pcie-plda-host.c |   28 ++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
 --- a/drivers/pci/controller/plda/pcie-plda-host.c
 +++ b/drivers/pci/controller/plda/pcie-plda-host.c
-@@ -561,9 +561,27 @@ EXPORT_SYMBOL_GPL(plda_pcie_setup_iomems
+@@ -421,6 +421,8 @@ static int plda_pcie_init_irq_domains(st
+ 	return plda_allocate_msi_domains(port);
+ }
  
- static void plda_pcie_irq_domain_deinit(struct plda_pcie_rp *pcie)
- {
--	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
--	irq_set_chained_handler_and_data(pcie->msi_irq, NULL, NULL);
--	irq_set_chained_handler_and_data(pcie->intx_irq, NULL, NULL);
-+	u32 i, event_irq;
++static void plda_pcie_irq_domain_deinit(struct plda_pcie_rp *pcie);
 +
-+	if (pcie->irq > 0)
-+		irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
-+	if (pcie->msi_irq > 0)
-+		irq_set_chained_handler_and_data(pcie->msi_irq, NULL, NULL);
-+	if (pcie->intx_irq > 0)
-+		irq_set_chained_handler_and_data(pcie->intx_irq, NULL, NULL);
-+
-+	for_each_set_bit(i, &pcie->events_bitmap, pcie->num_events) {
-+		event_irq = irq_find_mapping(pcie->event_domain, i);
-+		if (event_irq) {
-+			devm_free_irq(pcie->dev, event_irq, pcie);
-+			irq_dispose_mapping(event_irq);
-+		}
+ int plda_init_interrupts(struct platform_device *pdev,
+ 			 struct plda_pcie_rp *port,
+ 			 const struct plda_event *event)
+@@ -442,14 +444,17 @@ int plda_init_interrupts(struct platform
+ 	}
+ 
+ 	port->irq = platform_get_irq(pdev, 0);
+-	if (port->irq < 0)
+-		return -ENODEV;
++	if (port->irq < 0) {
++		ret = -ENODEV;
++		goto err_irq_domain_deinit;
 +	}
-+
-+	if (pcie->intx_irq)
-+		irq_dispose_mapping(pcie->intx_irq);
-+	if (pcie->msi_irq)
-+		irq_dispose_mapping(pcie->msi_irq);
  
- 	irq_domain_remove(pcie->msi.msi_domain);
- 	irq_domain_remove(pcie->msi.dev_domain);
+ 	for_each_set_bit(i, &port->events_bitmap, port->num_events) {
+ 		event_irq = irq_create_mapping(port->event_domain, i);
+ 		if (!event_irq) {
+ 			dev_err(dev, "failed to map hwirq %d\n", i);
+-			return -ENXIO;
++			ret = -ENXIO;
++			goto err_irq_domain_deinit;
+ 		}
+ 
+ 		if (event->request_event_irq)
+@@ -461,7 +466,7 @@ int plda_init_interrupts(struct platform
+ 
+ 		if (ret) {
+ 			dev_err(dev, "failed to request IRQ %d\n", event_irq);
+-			return ret;
++			goto err_irq_domain_deinit;
+ 		}
+ 	}
+ 
+@@ -469,7 +474,8 @@ int plda_init_interrupts(struct platform
+ 					    event->intx_event);
+ 	if (!port->intx_irq) {
+ 		dev_err(dev, "failed to map INTx interrupt\n");
+-		return -ENXIO;
++		ret = -ENXIO;
++		goto err_irq_domain_deinit;
+ 	}
+ 
+ 	/* Plug the INTx chained handler */
+@@ -477,8 +483,11 @@ int plda_init_interrupts(struct platform
+ 
+ 	port->msi_irq = irq_create_mapping(port->event_domain,
+ 					   event->msi_event);
+-	if (!port->msi_irq)
+-		return -ENXIO;
++	if (!port->msi_irq) {
++		dev_err(dev, "failed to map MSI interrupt\n");
++		ret = -ENXIO;
++		goto err_irq_domain_deinit;
++	}
+ 
+ 	/* Plug the MSI chained handler */
+ 	irq_set_chained_handler_and_data(port->msi_irq, plda_handle_msi, port);
+@@ -487,6 +496,11 @@ int plda_init_interrupts(struct platform
+ 	irq_set_chained_handler_and_data(port->irq, plda_handle_event, port);
+ 
+ 	return 0;
++
++err_irq_domain_deinit:
++	plda_pcie_irq_domain_deinit(port);
++
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(plda_init_interrupts);
+ 
 
 
