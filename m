@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDE7415F01;
-	Fri,  4 Sep 2026 05:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535E40F742;
+	Fri,  4 Sep 2026 05:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498516; cv=none; b=FEqEqHGisPnySK6F697qv9Rz8ubSWDl01vWR2MUIAJkmYMqPfXU7JtGFU+mRCMD8zKUVGaEDGLsCtAi3QDfIHQYk8z+HWH8+0szE3lAGckJ8mS6WRVxHrni36m5cXmQVxwHmn9FLK2P4swEiW8Qcq+0TW0sJCTuy6sgBHkDjROg=
+	t=1788498518; cv=none; b=hzpdwvicwRdMd82v0LuNhjkvn/IfrW9yd79j2LsTCP38inZuDm09D/2+HaxUPePAjaL7xhqANU2ZoTjSqoaoMGVeGTFaHgiZPlG4GfW1Hydsj7fk9J3jgscgkwYgtuUa0yBkHECtDbjurkyxx8A1XB/sqL3b6HLMkhPwXTUyGX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498516; c=relaxed/simple;
-	bh=EjZ/DFxLOz2K+7xkacWJVHoFlNkzgBclv12Sp7f0YNs=;
+	s=arc-20240116; t=1788498518; c=relaxed/simple;
+	bh=v16HYZHhE2Yl3Vx9g8g16bfNIXfxAgNq/gi7Z8sdVek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TITGYH/TU9hOqbRB8KP23o9KQ61i5uh7rokzIsaPO2JzxHZLCXtJXj1E2Wt1cWz4RYzJwcLdGRQy60zPSrPImwWuDQGRibnn9OvHzIqxk15AH9/XAkWxey/l4Wh0MCotSo2ww4vZVYuZRdzUuSQsvza6naiCTed6DWXBtby8Ppo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arnZykI/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K1ID18J7oYtbdLzqeS53RpkBuVSjEbfIDofhqIajeZR/mSZpKF9VXF3eju6Z4A1YVOpNKehjadWYJtqk7LlKkwl//Jf937j90bNaQl+b6lWw71RrShF2QhTL+7B+2Use8q+JiEgTEU0axqLAffMvECY8CbHk5ljhuD2RWSquzTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlvsSIyb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arnZykI/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBFD1F00A3D;
-	Fri,  4 Sep 2026 05:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlvsSIyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1BA1F00A3E;
+	Fri,  4 Sep 2026 05:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498511;
-	bh=BznajIsUmAWkIiGzQ9UHCBNkjQrIZOf/nL2VTadPs8I=;
+	s=korg; t=1788498514;
+	bh=j2CsdK18T4RUuB9FcSMWsw2AFSQFbDHZWGILUaqoSq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=arnZykI/G92xHeQ4G5mw2cFAcBJLe5yIfTa1Eh4nu2Cc47KRk2Xj14qFkYHxLeLBf
-	 E+OeXazmkZAhPDnE0cJ7dJ75WGMtQknlhgYQoROltUOZeA9qXebkna0WpIXE8hPf7G
-	 9L8BP1SXj50Ev6k5qjf4C3Rv3np6tDZqv49w3uFc=
+	b=HlvsSIybN46ZPi68JHG8/AQrqVG0wRmtK+u3wJTja6T+DECnk+UAwj0vXj+lW1nEA
+	 C8KaGBz/ZzSOly5tquUO84M/GlX+/Axhr0X7EUftylCZcXwu1iWIdjrPK9XbZuREcq
+	 pUs2oqonotojDrMblueBjNS7Vhv8kiFPf9Zj/k/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Vincent Donnefort <vdonnefort@google.com>,
+	Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 090/713] tracing: Fix logged instance name on creation failure
-Date: Fri,  4 Sep 2026 06:50:58 +0200
-Message-ID: <20260904045805.855262506@linuxfoundation.org>
+Subject: [PATCH 7.2 091/713] tracing: Fix retry exhaustion in simple ring buffer reader swap
+Date: Fri,  4 Sep 2026 06:50:59 +0200
+Message-ID: <20260904045805.879183611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,39 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>
 
-commit a9a01be2834a529cbd490ccbab02643f0c1735f2 upstream.
+commit e0d3aed7b12cf37b74c7cc5265073d0263b49cde upstream.
 
-When boot instance creation fails, the kernel incorrectly logs "(null)"
-as the instance name because strsep() consumes curr_str entirely during
-parsing.
+simple_ring_buffer_swap_reader_page() starts with retry set to 8 and
+post-decrements it only after a failed link replacement. On the final
+attempt, a successful replacement leaves retry at zero, while a failed
+replacement leaves it at -1.
 
-Print the properly parsed name variable instead. And while at it log
-the error code.
+The current !retry test reverses both outcomes. It returns an error after
+a successful final replacement, leaving the link update complete but the
+reader bookkeeping unfinished. After a failed final replacement, it
+falls through and updates the head and reader pointers as though the
+replacement succeeded, which can corrupt the ring.
+
+Treat only a negative counter as exhaustion and return the documented
+-EBUSY error.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260807085423.4175161-1-vdonnefort@google.com
-Fixes: cb1f98c5e574 ("tracing: Add creation of instances at boot command line")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Fixes: 34e5b958bdad ("tracing: Introduce simple_ring_buffer")
+Link: https://patch.msgid.link/20260825-kernel-patch-1-v2-1-bb3461807a32@gmail.com
+Assisted-by: LLM sparse
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/simple_ring_buffer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9726,7 +9726,8 @@ __init static void enable_instances(void
+--- a/kernel/trace/simple_ring_buffer.c
++++ b/kernel/trace/simple_ring_buffer.c
+@@ -160,8 +160,8 @@ int simple_ring_buffer_swap_reader_page(
+ 		overrun = cpu_buffer->meta->overrun;
+ 	} while (!simple_bpage_unset_head_link(last, reader, SIMPLE_RB_LINK_NORMAL) && retry--);
  
- 		tr = trace_array_create_systems(name, NULL, addr, size);
- 		if (IS_ERR(tr)) {
--			pr_warn("Tracing: Failed to create instance buffer %s\n", curr_str);
-+			pr_warn("Tracing: Failed to create instance buffer '%s' (%ld)\n", name,
-+				PTR_ERR(tr));
- 			continue;
- 		}
+-	if (!retry)
+-		return -EINVAL;
++	if (retry < 0)
++		return -EBUSY;
  
+ 	cpu_buffer->head_page = simple_bpage_from_link(reader->link.next);
+ 	cpu_buffer->head_page->link.prev = &reader->link;
 
 
