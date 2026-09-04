@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5E140F754;
-	Fri,  4 Sep 2026 05:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8948414A0E;
+	Fri,  4 Sep 2026 05:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498659; cv=none; b=GJgS9CXASeeK/elUN/6U5kLTH1xmxC3Jm4W3DOmvmMDi5Y2BB3MEmCpJ/3qQHXnagOPPKuE3HkTNvvgvSVod6QrgZVRSkgtnjg5VB3M/6bW1mA7dSZyYfkPPKd4Y++2Ekby9lC+VB+GiQDELHv5tqe8q19sUjISuT12MVRld1YE=
+	t=1788498662; cv=none; b=He4uucXZOio6mir1npGdErE7S77Wtvkns3U55CES/zayFiU/r3l4Cj6rRpzjJmDijyKJgolcJVW8lWNp4zXz4QmH7RI8zlqzUumDpqkA/pj/dEYJzrgqX6q+byjFLV6Szu36OWTdeqkR5mL6RLgSxycxggbf9vYOaD6Cw2ANH8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498659; c=relaxed/simple;
-	bh=hd0yzia1ipAx8JZRhWAm3fVWPqvb+dikZlqfPApZPhU=;
+	s=arc-20240116; t=1788498662; c=relaxed/simple;
+	bh=HGhUMPB26LbJIs0cxCbIjivP4PzZomoj95DRndhRx3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ya3FGVsVeDwPfk6YskJHPfGmYbEP9/mkAtp6CxTi5HqHVJpd8iawWzKnEA+qMlELFpihdrYogpC0mhTqc49R77Psa6hiWe400UNcByIPDBnBpFPo171iuCJSwrVRoyLHIJoziBAM2q9JTPVa/zKGexcDJSLppAWaFm9RUlq2Hl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHlGPuLb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UuWsM+xMrgb7EMzibR8GHPOtIhucGb5W/XJglJkPEnyJZ1JYQkY+k+OvIH4r5vZBdUkOZ+aRv/LppnneRhNS10sCWInDfMySnWAqu0lyuAlAiB0R+R43HtBDZcNLGXn/yWHWTHfb2PRMAWEPhnJTwBTvJ/8l9EZacDFeNIfrQ/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlVyjABX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHlGPuLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6695A1F00A3D;
-	Fri,  4 Sep 2026 05:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlVyjABX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F83C1F00A3D;
+	Fri,  4 Sep 2026 05:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498657;
-	bh=sL/pmBoh4yqD2WcylV1yyZN7haxT0JobmYOOgZbivy0=;
+	s=korg; t=1788498660;
+	bh=CnpxiSW+tCV8zWfy9FmDhwc04MGsiSBXwujE4xQsgVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JHlGPuLbm3HOezY/eduuOEOdUGOTRPw/3SDkZNrN3KIRr+l+ey8AILwCclTu+ZOng
-	 euNchm/Mfl8oUcYzK7gmv3JJQRYYzZkR+Sc6s+oXb4Iz0b4DEcvGarQtuaoHeEWskv
-	 vb2/rgMc10mEC0GETitN+ziO4CDFEVRXVXTKNF4M=
+	b=AlVyjABXFSEggy1Z6FkLY9+691f1weFl7qCzHZKOZf9sxEGgBhgiRsa0YJpSGX6ex
+	 4uAs0yAOYftz+/4xWawUdXWEUx2bDHOLE2s50mJTQ9RZ1LGt7b7+ZvlUe0ASXhkN03
+	 gQ3zImPR1R6BBKqSUAisKO2t9Xdhr/n1k8gB7Ros=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 142/713] NFSD: restart ssc_expire_umount walk after dropping nfsd_ssc_lock
-Date: Fri,  4 Sep 2026 06:51:50 +0200
-Message-ID: <20260904045807.013298441@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.2 125/713] media: vicodec: fix out-of-bounds write in FWHT encoder
+Date: Fri,  4 Sep 2026 06:51:33 +0200
+Message-ID: <20260904045806.636092166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,99 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 036c1b182f4da65363e79ec0ac276edc6b7296e5 upstream.
+commit cf4500ebf6fb57bf4ab83c3dd349a40257dbe2a9 upstream.
 
-nfsd4_ssc_expire_umount() walks nn->nfsd_ssc_mount_list with
-list_for_each_entry_safe(ni, tmp, ...).  For each expired entry it
-sets nsui_busy = true, drops nfsd_ssc_lock to run mntput() on the
-source vfsmount, then reacquires the lock to list_del + kfree the
-entry and continue iterating via the macro's saved tmp pointer.
+vidioc_s_fmt_vid_out() sizes the encoder CAPTURE buffer from the
+compressed descriptor pixfmt_fwht, whose sizeimage_mult is 3:
+coded_w * coded_h * 3 + sizeof(struct fwht_cframe_hdr). fwht_encode_frame()
+encodes one plane per component, and an incompressible plane takes the
+FWHT_FRAME_UNENCODED path in encode_plane(), copying the plane verbatim.
 
-The nsui_busy flag protects the current ni from concurrent
-nfsd4_ssc_setup_dul() finders during the lock-drop window, but it
-does not pin tmp.  Another nfsd RPC thread that fails its source-
-server mount and reaches nfsd4_ssc_cancel_dul() will, during that
-same window, take nfsd_ssc_lock, list_del + kfree its own ssc_umount
-item, and release the lock.  If that item is the saved tmp of the
-expire walk, the next iteration dereferences a freed
-nfsd4_ssc_umount_item.
+For a 4-component pixel format all four planes are full resolution
+(width_div == height_div == 1), so a frame that forces every plane
+through the unencoded fallback writes
+sizeof(struct fwht_cframe_hdr) + 4 * coded_w * coded_h bytes, overrunning
+the plane by coded_w * coded_h, which can result in corruption
+of adjacent kernel heap memory.
 
-Restart the walk from the head after the mntput() unlock window so
-no saved next pointer survives the lock-drop.  The list is bounded
-by the number of active inter-server source mounts (typically small)
-and the expire delayed-work runs periodically rather than per-IO,
-so the restart is cheap.
+Bump pixfmt_fwht.sizeimage_mult from 3 to 4, matching the largest
+components_num among the supported raw formats, so the capture buffer is
+always large enough for the unencoded fallback.
 
-Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
+Fixes: 16ecf6dff97c ("media: vicodec: Add support for 4 planes formats")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260524130654.1924556-1-michael.bommarito@gmail.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   44 +++++++++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ drivers/media/test-drivers/vicodec/vicodec-core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6859,30 +6859,36 @@ static void nfsd4_ssc_shutdown_umount(st
- static void nfsd4_ssc_expire_umount(struct nfsd_net *nn)
- {
- 	bool do_wakeup = false;
--	struct nfsd4_ssc_umount_item *ni = NULL;
--	struct nfsd4_ssc_umount_item *tmp;
-+	struct nfsd4_ssc_umount_item *ni;
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -63,11 +63,11 @@ struct pixfmt_info {
+ };
  
-+restart:
- 	spin_lock(&nn->nfsd_ssc_lock);
--	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
--		if (time_after(jiffies, ni->nsui_expire)) {
--			if (refcount_read(&ni->nsui_refcnt) > 1)
--				continue;
-+	list_for_each_entry(ni, &nn->nfsd_ssc_mount_list, nsui_list) {
-+		if (!time_after(jiffies, ni->nsui_expire))
-+			break;
-+		if (refcount_read(&ni->nsui_refcnt) > 1)
-+			continue;
+ static const struct v4l2_fwht_pixfmt_info pixfmt_fwht = {
+-	V4L2_PIX_FMT_FWHT, 0, 3, 1, 1, 1, 1, 1, 0, 1
++	V4L2_PIX_FMT_FWHT, 0, 4, 1, 1, 1, 1, 1, 0, 1
+ };
  
--			/* mark being unmount */
--			ni->nsui_busy = true;
--			spin_unlock(&nn->nfsd_ssc_lock);
--			mntput(ni->nsui_vfsmount);
--			spin_lock(&nn->nfsd_ssc_lock);
-+		/* Prevent concurrent setup during unmount */
-+		ni->nsui_busy = true;
-+		spin_unlock(&nn->nfsd_ssc_lock);
-+		mntput(ni->nsui_vfsmount);
-+		spin_lock(&nn->nfsd_ssc_lock);
+ static const struct v4l2_fwht_pixfmt_info pixfmt_stateless_fwht = {
+-	V4L2_PIX_FMT_FWHT_STATELESS, 0, 3, 1, 1, 1, 1, 1, 0, 1
++	V4L2_PIX_FMT_FWHT_STATELESS, 0, 4, 1, 1, 1, 1, 1, 0, 1
+ };
  
--			/* waiters need to start from begin of list */
--			list_del(&ni->nsui_list);
--			kfree(ni);
-+		/* Force concurrent scanners to restart */
-+		list_del(&ni->nsui_list);
-+		kfree(ni);
- 
--			/* wakeup ssc_connect waiters */
--			do_wakeup = true;
--			continue;
--		}
--		break;
-+		/* wakeup ssc_connect waiters */
-+		do_wakeup = true;
-+		/*
-+		 * Concurrent nfsd4_ssc_cancel_dul() can free any item
-+		 * on the list under nfsd_ssc_lock while mntput() runs
-+		 * above.  Restart from the head; the list is short and
-+		 * the expire worker is periodic, so this is cheap.
-+		 */
-+		spin_unlock(&nn->nfsd_ssc_lock);
-+		goto restart;
- 	}
- 	if (do_wakeup)
- 		wake_up_all(&nn->nfsd_ssc_waitq);
+ static void vicodec_dev_release(struct device *dev)
 
 
