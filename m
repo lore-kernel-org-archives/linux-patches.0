@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7153B7B7B;
-	Fri,  4 Sep 2026 05:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3316418A34;
+	Fri,  4 Sep 2026 05:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499362; cv=none; b=GYEydBXD/cMvYJ69SBg4Wz1/zH/l2xvcxAAiUQG8ppjlKlRTYos1joxA+/nwBDO7zXnOI4nttlGXpjpixBg3R2ita8c8zH+2O8onHEdoxUwXdVhsBXbBZ/0i1quQTQ1o3ISW3O1ZV8iREyRiaz4KgSG+LxKznSHr2cudFaQGYic=
+	t=1788499365; cv=none; b=XojqSuvYtvhJ6UmM7JRLxM5qOd0Kq7fdWuyPv25vJCOc9E8kneou9LNc/8EjYDcgxw+ox0xhYCbdTr/6x45u0row5X/g2JxVbwCDtmMua9skWacBo7ZZkIxVVxOBtfYhVD4ZyGI0hXPW8P79KVaKHLdHDdgDCDCh2TMEz5bKHcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499362; c=relaxed/simple;
-	bh=DTyY9TNLMSvYDMJQjNkadkyDvu5mimQ+eFqIalv+yy4=;
+	s=arc-20240116; t=1788499365; c=relaxed/simple;
+	bh=h5F79EE3sUgGZYJM0yVLnZIe6rSNPOYH6Be4BUVJM0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEcGMNS95UtrJbbeo+QswF1dEe1/j8W3FtsDaW7GSIaPWWuQCqxvw02hznFjZSb5+U9xRDbHJm6PKnv8oovHMQS0CEP6ZN144cU7eG62ZvoC+8+kmzPYTOFKzvP13VYuy99Cg929mPIc8d6LkBl0HEtKqSQ5gHIXzWSZ2lZg1ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZKZ5MKR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aY3yRU/2Dok5UQNTIMoR14/+b2vadf7CrBWAMbhkeeeUfSCcVk+yERHbQJ4kreT9Q19Iqg1q0AlWm+ZxYqR6bDA/1iVXpb4zmN9X1hBpHinmJsoDLhb9YaqnAxhQy84Qxwx/Hgvjjh9sH6Ca/00qAkHaZLyBk4cklzsPrTwvEk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxGnaBfF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZKZ5MKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686281F00A3D;
-	Fri,  4 Sep 2026 05:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxGnaBfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E35C1F00A3D;
+	Fri,  4 Sep 2026 05:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499360;
-	bh=9MWSD+w4/Y24GXGc1roknN8z0DeBDGJa9jLkXYcvQO8=;
+	s=korg; t=1788499363;
+	bh=cU1Rd3cuP7MOOouCDSmn4BwU+x/q+Wp4JIIWuV1ij70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZKZ5MKRb6HkmmZNkMhnMqia6i8GnaSWo6BeOEHUIpsBsHDBYESMx+W1bbMz+ApR0
-	 lfF3pOBsayk9LTOU8liJpoh8eQS8aQVJCRNb9l8O6Oa2stD/x1FKtY2ULt8dOtTvt/
-	 siDt3Qu4ADh3XaLjT8q+pPA6yBcL08f3PGToedy8=
+	b=jxGnaBfFnvgy5QrnP7+XgxvGqNV38FXc4N/4cSbQd4MKIeXKCOGsnKpFABAyd4Q+f
+	 oomw0jnXHUpxRjgqL0Gog4w5fyG5i1ECsvdbOog9dW3sk+izjfcqVKNADIU7RjaP5t
+	 eV2rReTVwY7ClyRvVGL/1fo1nSFLBvzZCAv+39BM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 389/713] svcrdma: Reorder rpcrdma_rn_unregister before rdma_destroy_id
-Date: Fri,  4 Sep 2026 06:55:57 +0200
-Message-ID: <20260904045812.542662421@linuxfoundation.org>
+Subject: [PATCH 7.2 390/713] svcrdma: Clear sc_cm_id when ADDR_CHANGE replacement fails
+Date: Fri,  4 Sep 2026 06:55:58 +0200
+Message-ID: <20260904045812.565634391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,68 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 4488e912973773d64368828acf3b8e39d93650ae upstream.
+commit 01500306e1d50de7ca7a2cdcdfa28ac0523eb747 upstream.
 
-svc_rdma_free() caches rdma->sc_cm_id->device before teardown,
-then calls rdma_destroy_id(sc_cm_id) which frees the cm_id.
-rpcrdma_rn_unregister() follows, but between those two calls
-the transport's sc_rn entry is still installed in the device's
-rd_xa. A concurrent ib_unregister_device walk can dispatch
-svc_rdma_xprt_done() against the now-freed sc_cm_id.
+When svc_rdma_listen_handler() handles RDMA_CM_EVENT_ADDR_CHANGE,
+it creates a replacement listener cm_id and returns 1, telling
+the CM core to destroy the old one. If the replacement allocation
+fails, sc_cm_id still points at the old cm_id that the CM core is
+about to destroy. Any subsequent dereference of sc_cm_id --
+such as svc_rdma_detach()'s rdma_disconnect() call -- is a
+use-after-free.
 
-Move rpcrdma_rn_unregister() before rdma_destroy_id() so the
-transport's notification entry is removed from the xarray before
-the cm_id it references is destroyed.
+NULL sc_cm_id on the failure path and guard svc_rdma_detach()'s
+rdma_disconnect() call against NULL so that the listener can
+be torn down safely when the server shuts down.
 
-Also guard the sc_cm_id dereference with a NULL check: the
-following patches introduce paths that reach svc_rdma_free()
-with sc_cm_id == NULL (listener create failure, ADDR_CHANGE
-replacement failure).
-
-Fixes: c4de97f7c454 ("svcrdma: Handle device removal outside of the CM event handler")
+Fixes: d1b586e75ec6 ("svcrdma: Handle ADDR_CHANGE CM event properly")
 Cc: stable@vger.kernel.org
 Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-2-1b09bd87b6cd@oracle.com
+Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-5-1b09bd87b6cd@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -634,10 +634,15 @@ static void svc_rdma_free(struct svc_xpr
- {
+@@ -325,6 +325,7 @@ static int svc_rdma_listen_handler(struc
+ 		if (IS_ERR(listen_id)) {
+ 			pr_err("Listener dead, address change failed for device %s\n",
+ 				cma_id->device->name);
++			cma_xprt->sc_cm_id = NULL;
+ 		} else
+ 			cma_xprt->sc_cm_id = listen_id;
+ 		return 1;
+@@ -614,7 +615,8 @@ static void svc_rdma_detach(struct svc_x
  	struct svcxprt_rdma *rdma =
  		container_of(xprt, struct svcxprt_rdma, sc_xprt);
--	struct ib_device *device = rdma->sc_cm_id->device;
-+	struct ib_device *device;
  
- 	might_sleep();
+-	rdma_disconnect(rdma->sc_cm_id);
++	if (rdma->sc_cm_id)
++		rdma_disconnect(rdma->sc_cm_id);
  
-+	if (!rdma->sc_cm_id)
-+		goto out_free;
-+
-+	device = rdma->sc_cm_id->device;
-+
- 	/* This blocks until the Completion Queues are empty */
- 	if (rdma->sc_qp && !IS_ERR(rdma->sc_qp))
- 		ib_drain_qp(rdma->sc_qp);
-@@ -662,11 +667,13 @@ static void svc_rdma_free(struct svc_xpr
- 	if (rdma->sc_pd && !IS_ERR(rdma->sc_pd))
- 		ib_dealloc_pd(rdma->sc_pd);
- 
-+	if (!test_bit(XPT_LISTENER, &rdma->sc_xprt.xpt_flags))
-+		rpcrdma_rn_unregister(device, &rdma->sc_rn);
-+
- 	/* Destroy the CM ID */
- 	rdma_destroy_id(rdma->sc_cm_id);
- 
--	if (!test_bit(XPT_LISTENER, &rdma->sc_xprt.xpt_flags))
--		rpcrdma_rn_unregister(device, &rdma->sc_rn);
-+out_free:
- 	kfree(rdma);
- }
- 
+ 	/*
+ 	 * Most close paths go through svc_rdma_xprt_deferred_close(),
 
 
