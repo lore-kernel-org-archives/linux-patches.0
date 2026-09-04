@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5C43D6664;
-	Fri,  4 Sep 2026 05:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47D03A16AC;
+	Fri,  4 Sep 2026 05:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499260; cv=none; b=I3q7CPI4edovtmT93GkQ99NRsaIEvJWYqVPzN88MfAsR952XYMDTdcQvRGnEVpsfcfqiHSQa9mV85dExOsUniGCLvNhNnKWTav35uexeP+eEV7uDQhEcd1nMS0DHIdugpzVxzj7NwLgGxCw77xQcDkHs4Ydhnez5mpsC42MkN28=
+	t=1788499263; cv=none; b=K2OS+wV5EutumQRjW17DpH3uoiRAsjwiNXxCj9ObkQgp3NC73XMeG4AeAliOB9Z9XBVe5Pbsmk7HzdSej6Mb/nqYx38bLoFOTR0BjVPQ4/2GMrcv29d6TxMANFVcj/UR/QX6ptkVLUu6VF2dSQUZEXyJB2M4tAi9rxPrEd9uxuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499260; c=relaxed/simple;
-	bh=41qZs1TdxSWpCmgq+eu+c9ywdJJWcuw3nhMIKk3R0yA=;
+	s=arc-20240116; t=1788499263; c=relaxed/simple;
+	bh=klS8g1qmxyaYg62tL3DCSVHVdwQeONbTkmFbFEMk2a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1SI1CeSwc3N5ieH//+3MFPAtP274U8U37v8X+q/P9Bkh28UlOcH4CK2zgO7E5DaB0dk1XnIjvsNwVqkmyV4e+DDG0WwT5DhuXsviOgqN6OBM98XsDZ98mia0Op/37RLf4XtAn6fCa+9NgLiewiVppbAgbym9LxGenpIED5XDZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2aDjSMu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MCncVDZS/pdW0P5Q6Wqlka2CBbMtSp/JpmXtsVdG1lPqhhXPqybqduI/Ud20O6uBYh5KkIM2B2mPF4YxLnftQpHeTpLE52CaJZeeogCki/Qd6Ccirt6kDgnJZAE/12ppJngpEgIJ4awmJQbpJ5Hzu9xryp3dXqqS+Kao/6gc40c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ekv78/BB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2aDjSMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADA71F00A3D;
-	Fri,  4 Sep 2026 05:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ekv78/BB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B591F00A3D;
+	Fri,  4 Sep 2026 05:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499259;
-	bh=+8bEAcxYXrJLoFWEY4N9cetwcRzLnREqtKfotOrCPa4=;
+	s=korg; t=1788499261;
+	bh=xeOPoHtxVURP7TsXZTlDnTuSS0sSNA75bZAHj8vx78Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t2aDjSMu2egcXOapwDTfDiBRjh2HX2nmFlR8NaRbWTuv44Cw9kz80PCJABftHAfSQ
-	 1HdWkrGNX4rGJBlv6sNMhabicmO0r5qkDdmduq8O2b0fw4jm18HeGc8xNHVe0pMAeh
-	 3qoZczEYJJNshis7/+bByS83IOwIIPvO+9S6RBj0=
+	b=Ekv78/BBrV+DN3mK+csg7iGMPH0w7InRJmi+ZnMPUB214eOUvQ6+tZ1i3N8PdIOzV
+	 oB5KsdvTRBH4N71SO1FwNSThkMK3nNC0Jub1q7Tqyk7N9Qbo+0fwiES3CyHJmAUXzJ
+	 kBSSYu3CSUAc2lUn7bACa5iB08NSQ/i3X2IAwuVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Danilov <littlesmilingcloud@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 352/713] ipip: fix skb leak in collect_md mode when metadata_dst allocation fails
-Date: Fri,  4 Sep 2026 06:55:20 +0200
-Message-ID: <20260904045811.721471467@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 353/713] ip: orphan prefetched skbs before multicast forwarding
+Date: Fri,  4 Sep 2026 06:55:21 +0200
+Message-ID: <20260904045811.742526230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,49 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Danilov <littlesmilingcloud@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 6776efe4a52f289a3fc18f8adf19b035a7d8e1bb upstream.
+commit e36ce6e78fe3fc3c071a26750783b7ba081ce10d upstream.
 
-In collect_md mode ipip_tunnel_rcv() returns 0 without freeing the skb
-when ip_tun_rx_dst() fails to allocate the metadata_dst. ipip_rcv() and
-mplsip_rcv() are registered as xfrm_tunnel handlers, so tunnel4_rcv()
-and tunnelmpls4_rcv() read the zero return as "the packet has been
-consumed" and do not free it either. The skb is leaked.
+IPv4 and IPv6 input preserve an skb->sk association installed by
+bpf_sk_assign() so that local delivery can use the selected socket under
+RCU. Both address families can also prefetch a socket in UDP early demux.
+In both paths (BPF and UDP early demux) a reference is not guaranteed to
+be held on the socket.
 
-The other tunnel drivers all dispose of the packet at this point:
-ip6_tunnel.c jumps to its drop label, ip_gre.c and ip6_gre.c return
-PACKET_REJECT, which makes gre_rcv() free the skb. Only ipip returns 0.
+When a multicast packet is not locally deliverable, IPv6 hands the
+original skb to ip6_mr_input(). IPv4's ip_mr_input() similarly keeps the
+original skb when local delivery is not needed. Either path can put the
+skb on an unresolved multicast route queue or forward it after the
+receive-side RCU section ends.
 
-Jump to the existing drop label instead. It frees the skb and still
-returns 0, so the packet keeps being reported as consumed, which is what
-we want here: the outer header has already been pulled, and neither the
-remaining handlers nor an ICMP unreachable have any use for it.
+After the prefetched socket is destroyed, a later skb free invokes
+sock_pfree() and dereferences the stale skb->sk. Orphan the skb before
+each non-local multicast forwarding path. Local delivery retains the
+original skb; the existing skb_clone() calls provide multicast forwarding
+with a socket-free clone.
 
-Triggering this needs an ipip or mplsip tunnel in collect_md mode and an
-atomic allocation failure, which is why it has gone unnoticed.
-
-Fixes: cfc7381b3002 ("ip_tunnel: add collect_md mode to IPIP tunnel")
+Fixes: cf7fbe660f2d ("bpf: Add socket assign support")
+Fixes: 08842c43d016 ("udp: no longer touch sk->sk_refcnt in early demux")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260819104338.432631-2-littlesmilingcloud@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/0c52eb3d7532aaf8bccf37e0f7c922143c639735.1786552223.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ipip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ipmr.c      |    3 +++
+ net/ipv6/ip6_input.c |    1 +
+ 2 files changed, 4 insertions(+)
 
---- a/net/ipv4/ipip.c
-+++ b/net/ipv4/ipip.c
-@@ -248,7 +248,7 @@ static int ipip_tunnel_rcv(struct sk_buf
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -2213,6 +2213,9 @@ int ip_mr_input(struct sk_buff *skb)
+ 	if (IPCB(skb)->flags & IPSKB_FORWARDED)
+ 		goto dont_forward;
  
- 			tun_dst = ip_tun_rx_dst(skb, flags, 0, 0);
- 			if (!tun_dst)
--				return 0;
-+				goto drop;
- 			ip_tunnel_md_udp_encap(skb, &tun_dst->u.tun_info);
++	if (!local)
++		skb_orphan(skb);
++
+ 	mrt = ipmr_rt_fib_lookup(net, skb);
+ 	if (IS_ERR(mrt)) {
+ 		kfree_skb(skb);
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -622,6 +622,7 @@ int ip6_mc_input(struct sk_buff *skb)
+ 		if (deliver) {
+ 			skb2 = skb_clone(skb, GFP_ATOMIC);
+ 		} else {
++			skb_orphan(skb);
+ 			skb2 = skb;
+ 			skb = NULL;
  		}
- 		skb_reset_mac_header(skb);
 
 
