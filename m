@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCC529B781;
-	Fri,  4 Sep 2026 06:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708AC29B781;
+	Fri,  4 Sep 2026 06:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502247; cv=none; b=hHWunNMxhFHX/B+PuH6od/IQ9Fln0xMc4k7Zs20TKlZVAvBldQquxsKibp6Qfo0pB9tWypzF354fywZn5Xue0wywU1uhKt/neUFicsrY7VykqDiLIyQy2M2V57RtJCNYxHryafBN+HeZ8oviluR8cEgZMfq1IFMAoCyBu8OZY08=
+	t=1788502249; cv=none; b=P8J5WmMhtkkPe+OrE3TgprLIjF6k0uGnaPfE/sxTppbIXbq9+e9r/wjo8u2gM1pGipry2gG32GoxahuDt1H1xz8GLlyWEjGorEv7etenlVWTBvNX6rKKeDYJraMcxPzJ2izhdxYPoN1qv93CUcdFqUhptg2LkK8Np0QmqD0UzB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502247; c=relaxed/simple;
-	bh=4TPwtOmG3hqsdEBbXGN5OJlG70YvdrLJ+0cqjM64YFg=;
+	s=arc-20240116; t=1788502249; c=relaxed/simple;
+	bh=AKTYo5qKXUDVwTwTkn1R1+zRuzBdnPj/mHOxxDFQdsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tf5KodX8h97gAvGIkLI+JVH3uX9+j5NcMArXiGYHAq6MWaI+Xn25PC2OQR+urdJDSxalYcTmCuAe/y14PMc0pxP9IZmXKiw0U++rekJv/lpN9oMCoY1mOzS5mxZs6T7fdGC+/myz2tR1Cz9tb7q4vnbQDBaxT9AQE5VkfrlDhPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdzgFujf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F1PuFoQ8RTSbwoqXBsrSugIf7la4CIxvOwJ9MuWnhyJVDCYmTYeXjssDkmG3V/mmQXqgE4Us8PW9ENZbhZDlh5nAwVa4bdbL7k+QFIo+DQblFBdsHwwbZcvSMrBq9BJfSYyiz85Rnn4SG0UPA1VjdkAf4Qcthz9JhSn9A9xWeSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5TToNo8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdzgFujf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A0F1F00A3D;
-	Fri,  4 Sep 2026 06:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5TToNo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84C81F00A3E;
+	Fri,  4 Sep 2026 06:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502245;
-	bh=+yoJ8CtZbSWO2Qa+E2Swpue3VBkffSSalVR+VOB7eSw=;
+	s=korg; t=1788502248;
+	bh=Sd+J9eNhsBaWDB5bwJbxu+1YeypJzfV1B2XNGOpsAjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdzgFujfznBitjh9HY4Q+AE4RhI1UuX8zZtA0S0dU/v8V08CQgdaV/ehpjDU8s15w
-	 WC159xJAdjlFXXK/7AtoF/TMvaMfbqewhyKTzxlNvHz+9pkFHlqE7rM2lScwwvbLDe
-	 33HyZrd2cgZK2SnhnwEMseSaMJPDRCdOUxYN4qX8=
+	b=V5TToNo83KH4wv45H4Wb+DBNTw9WtKMF3+0YdAsGi7m42sgQd08lVCzozywn6RZFJ
+	 M1mdtHpEVLxp1aqCm73Derwu9XIO7ih04Gw/ndnV2W967ehPzHADxsOAfJwh+LoeXP
+	 IRybsYQu2vcHfABna7SAjeribf9qymChu9ohlu2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.12 133/403] fs/ntfs3: bound page_lcns[] index by the log record
-Date: Fri,  4 Sep 2026 06:58:56 +0200
-Message-ID: <20260904045737.863046938@linuxfoundation.org>
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Anisse Astier <anisse@astier.eu>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.12 142/403] efivarfs: Rate limit statfs() handler
+Date: Fri,  4 Sep 2026 06:59:05 +0200
+Message-ID: <20260904045738.073825501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,65 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 6f7b9dbdc1b7520206abce0049bdd143eb536e75 upstream.
+commit b2326338dc683e8c1067c0cbf7a47986c4190902 upstream.
 
-The copy_lcns loop and the redo shorten loop index page_lcns[] at j + i,
-where i runs up to the log record's lcns_follow. That count is checked only
-against the record's own length, not the target entry, so check_dp_table()
-(which validates the entry's lcns_follow) does not cover it: the copy_lcns
-entry may even be freshly allocated after that check, and find_dp() bounds j
-but not i. A crafted record thus overflows page_lcns[] of an otherwise valid
-entry.
+Ravi reports that statfs() may be called by unprivileged users on the
+efivarfs mount point, which may result in a flood of calls to the
+QueryVariableInfo() runtime service. These calls are disproportionately
+costly on x86 systems where the variable store is backed by SMM, as each
+SMM entry requires a rendez-vous of all the CPUs.
 
-Add dp_range_ok() and reject, before each loop, any record whose run does
-not fit the entry. These are the only two page_lcns[] accesses indexed by
-the record rather than the entry, so together with the entry validation
-every access is now bounded.
+So rate limit the calls to QueryVariableInfo() at twice per second, and
+return the most recently obtained value for calls that are elided.
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-[almaz.alexandrovich@paragon-software.com: original patch contained changes to the problem already handled, applied partly]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: <stable@vger.kernel.org>
+Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Fixes: d86ff3333cb1 ("efivarfs: expose used and total size")
+Reviewed-by: Anisse Astier <anisse@astier.eu>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/efivarfs/super.c |   30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -648,6 +648,14 @@ static inline void *enum_rstbl(struct RE
- }
- 
- /*
-+ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.
-+ */
-+static inline bool dp_range_ok(size_t j, u32 count, u32 cap)
-+{
-+	return j < cap && count <= cap - j;
-+}
+--- a/fs/efivarfs/super.c
++++ b/fs/efivarfs/super.c
+@@ -71,12 +71,30 @@ static int efivarfs_statfs(struct dentry
+ 	/* Some UEFI firmware does not implement QueryVariableInfo() */
+ 	storage_space = remaining_space = 0;
+ 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_QUERY_VARIABLE_INFO)) {
+-		status = efivar_query_variable_info(attr, &storage_space,
+-						    &remaining_space,
+-						    &max_variable_size);
+-		if (status != EFI_SUCCESS && status != EFI_UNSUPPORTED)
+-			pr_warn_ratelimited("query_variable_info() failed: 0x%lx\n",
+-					    status);
++		static DEFINE_RATELIMIT_STATE(_rs, 2 * HZ, 5);
++		static u64 storage, remaining;
++		static DEFINE_SPINLOCK(lock);
 +
-+/*
-  * find_dp - Search for a @vcn in Dirty Page Table.
-  */
- static inline struct DIR_PAGE_ENTRY *find_dp(struct RESTART_TABLE *dptbl,
-@@ -5093,6 +5101,13 @@ find_dirty_page:
- 	/* Shorten length by any Lcns which were deleted. */
- 	saved_len = dlen;
- 
-+	if (!dp_range_ok(le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn),
-+			 le16_to_cpu(lrh->lcns_follow),
-+			 le32_to_cpu(dp->lcns_follow))) {
-+		err = -EINVAL;
-+		goto out;
-+	}
++		if (!__ratelimit(&_rs)) {
++			ratelimit_set_flags(&_rs, RATELIMIT_MSG_ON_RELEASE);
 +
- 	for (i = le16_to_cpu(lrh->lcns_follow); i; i--) {
- 		size_t j;
- 		u32 alen, voff;
++			spin_lock(&lock);
++			storage_space = storage;
++			remaining_space = remaining;
++			spin_unlock(&lock);
++		} else {
++			status = efivar_query_variable_info(attr, &storage_space,
++							    &remaining_space,
++							    &max_variable_size);
++			if (status != EFI_SUCCESS && status != EFI_UNSUPPORTED)
++				pr_warn("query_variable_info() failed: 0x%lx\n",
++					status);
++
++			spin_lock(&lock);
++			storage = storage_space;
++			remaining = remaining_space;
++			spin_unlock(&lock);
++		}
+ 	}
+ 
+ 	/*
 
 
