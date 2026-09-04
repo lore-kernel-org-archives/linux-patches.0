@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DF5414A34;
-	Fri,  4 Sep 2026 05:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59909356773;
+	Fri,  4 Sep 2026 05:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500692; cv=none; b=VkWUK//ryBFBCS0Rp1uTGQLEmQT/AlksZwrZGbgAM1lRMjnoEEBEEk/HYZDTJbEUaLEn/DPRsns1Nd9nnQYLAguLxgnalw5DvPy7FqWWzNghw2ENslB6dfwJJo49BClL8T9qWpGaNPs3UJtlxbx/dld0vx+IYZCNj2yo0OX9iNQ=
+	t=1788500695; cv=none; b=h1Elgc/yuhlg9AevtcSjQprG/kyTf09MjDVQDzQbnxFJJa4sLXbTwOfvgSjzyfx4dBSSJNhNVl/ivIGLcy9JhblmV9Rg4zJhyuqjpIxznaOJpuVrawgZdXIfpDKZehtr7akNZFY2XbAgo6H4/FRxykSUZbt/TyrlVwzPbynLtS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500692; c=relaxed/simple;
-	bh=eXTsyd8/yDVVkrwwpRH5GuxP6Oq+8EyxZ0XxYD3cewE=;
+	s=arc-20240116; t=1788500695; c=relaxed/simple;
+	bh=KWZNlWU8uvS6KHeRZBlg4N5FS+QfKSnfqrF7ngU2F7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dV/HVqmHDvh3A3tFYwEsD/XOC6DBiaZs8KKEbI4eTFx2ebfxyn5qX3AGetm1L0iE4jF8IOpp8hXnWX5oq5A+wRmMMa8k0eFzgQniCK6MIY1abtUVc4dTZ++kR2cAoFsSxUhj6RL9srec9+21+0zwlNtpZnTCoDErLBOj4kxaHz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDXkvtsn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oBPodMaxCSj6uSMQFClaslApHS63s7LjARjfLfybadh97dPDblnjkdW/5l7i95OsZkabnIiLm3mKUFs8rjn51JxOU83SHILAJ3k4OVyOf8CLJY38zMvYFMMCzVKAgbxPmLgEbQKOVf6/1azoHxPvesZrhuqqeQilcHLhA3Gbi/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdb0bN5P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDXkvtsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D201F00A3D;
-	Fri,  4 Sep 2026 05:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdb0bN5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20D81F00A3D;
+	Fri,  4 Sep 2026 05:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500691;
-	bh=5lupxxQaDu6KftUpz9SO0J76o+K8brzRxbRNm0Iz1kA=;
+	s=korg; t=1788500694;
+	bh=m0xTPttaUZgnjHQ+kTfBDaUQapiPhHcxY2dB3fzitDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LDXkvtsnZA28vNy92vyz3fDnNPMM7pr9lzqn31thTdU0rYsTs/SfOu1Pc+Iu6G5T7
-	 njNMxzi5b6dKU+sTMj5tRA6//l44xatqRsFpVAN/5lfj0WDYkMPaE/oHMkNakjDicC
-	 mvEXH4beINSs1nlojzIvjqMhcFVIknt+Mxt9MMXU=
+	b=hdb0bN5Pe9Wb5l8cGY4M8sQ+X4R3MbC4FLb0i5ntTaza5AWj+GtpJqyNfVWtUmMgS
+	 JX95uwF1QhlZ6wyX7hLfjxQEWWlk4AVLHBGggizQwZzhk2AvCGyqyEJ+tCZ9aTF993
+	 KuZPomiVMqK6vTzF2nWIfiBrJJjKGfpy5mbC++Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 119/552] nfsd: add missing read barrier to rpc_status_get dumpit seqcount retry
-Date: Fri,  4 Sep 2026 06:54:36 +0200
-Message-ID: <20260904045750.730454482@linuxfoundation.org>
+Subject: [PATCH 6.18 146/552] nfsd: move nfsd_debugfs_init() after nfsd4_init_slabs() in init_nfsd()
+Date: Fri,  4 Sep 2026 06:55:03 +0200
+Message-ID: <20260904045751.912998222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,58 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit a71f161a857117e8e0264deb7d14fff5c98adcf5 upstream.
+commit 2c390c8a1764d67095fe444401861fac4c049362 upstream.
 
-The hand-rolled seqcount-like protocol in nfsd_nl_rpc_status_get_dumpit()
-is missing a read memory barrier (smp_rmb) before its second counter
-check.  The standard kernel read_seqcount_retry() includes smp_rmb()
-to ensure that all data reads complete before the counter is re-checked.
+nfsd_debugfs_init() runs before nfsd4_init_slabs() in init_nfsd().
+If the slab allocation fails, the bare "return retval" bypasses
+nfsd_debugfs_exit(), leaving orphan debugfs files with stale fops
+pointers into the freed module text.
 
-Without this barrier, on weakly-ordered architectures (ARM, POWER),
-the CPU may reorder field reads past the second counter check, making
-the retry logic ineffective: it could observe a consistent counter pair
-while reading fields that have been concurrently modified by the writer.
+Move nfsd_debugfs_init() to after the slab init succeeds, so the
+early return has no debugfs state to clean up.
 
-Add smp_rmb() before the second counter check to order the field reads
-ahead of it, matching the barrier semantics of the standard seqcount
-read-side.  The begin-side smp_load_acquire() already pairs with the
-smp_store_release() in nfsd_dispatch(); with the smp_rmb() now ordering
-the field reads, the retry check no longer needs acquire semantics and
-reads the counter with a plain READ_ONCE(), as read_seqcount_retry()
-does.
+Since debugfs is now the more recently initialized of the two, also
+update the unwind paths to match reverse-initialization (LIFO) order:
+run nfsd_debugfs_exit() before nfsd4_free_slabs() in both the
+init_nfsd() error path and exit_nfsd(). The nfsd debugfs files only
+reference module-global state and have no dependency on the slab
+caches, so that reordering is a cleanup with no functional change.
 
-Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
+Fixes: 9fe5ea760e64 ("NFSD: Add /sys/kernel/debug/nfsd")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: Use READ_ONCE instead of smp_load_acquire() ]
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-2-5b90e276f2d9@kernel.org
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-17-5b90e276f2d9@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/nfsd/nfsctl.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 --- a/fs/nfsd/nfsctl.c
 +++ b/fs/nfsd/nfsctl.c
-@@ -1555,11 +1555,14 @@ int nfsd_nl_rpc_status_get_dumpit(struct
- #endif /* CONFIG_NFSD_V4 */
+@@ -2326,11 +2326,12 @@ static int __init init_nfsd(void)
+ {
+ 	int retval;
  
- 			/*
--			 * Acquire rq_status_counter before reporting the rqst
--			 * fields to the user.
-+			 * Read-side load-load fence: order the field reads
-+			 * above before the counter re-read below, mirroring
-+			 * the smp_rmb() in the standard seqcount retry. The
-+			 * begin-side smp_load_acquire() above pairs with the
-+			 * smp_store_release() in nfsd_dispatch().
- 			 */
--			if (smp_load_acquire(&rqstp->rq_status_counter) !=
--			    status_counter)
-+			smp_rmb();
-+			if (READ_ONCE(rqstp->rq_status_counter) != status_counter)
- 				continue;
+-	nfsd_debugfs_init();
+-
+ 	retval = nfsd4_init_slabs();
+ 	if (retval)
+ 		return retval;
++
++	nfsd_debugfs_init();
++
+ 	retval = nfsd4_init_pnfs();
+ 	if (retval)
+ 		goto out_free_slabs;
+@@ -2375,8 +2376,8 @@ out_free_lockd:
+ out_free_pnfs:
+ 	nfsd4_exit_pnfs();
+ out_free_slabs:
+-	nfsd4_free_slabs();
+ 	nfsd_debugfs_exit();
++	nfsd4_free_slabs();
+ 	return retval;
+ }
  
- 			ret = nfsd_genl_rpc_status_compose_msg(skb, cb,
+@@ -2391,9 +2392,9 @@ static void __exit exit_nfsd(void)
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+ 	nfsd_drc_slab_free();
+ 	nfsd_lockd_shutdown();
+-	nfsd4_free_slabs();
+ 	nfsd4_exit_pnfs();
+ 	nfsd_debugfs_exit();
++	nfsd4_free_slabs();
+ }
+ 
+ MODULE_AUTHOR("Olaf Kirch <okir@monad.swb.de>");
 
 
