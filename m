@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C345348C47;
-	Fri,  4 Sep 2026 05:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBCD35B632;
+	Fri,  4 Sep 2026 05:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500868; cv=none; b=OFGSoLdXFMUulO3fKtd29oD0esDjWvymdaLaBkZwX4V0Y+wNw9cSTEvsk8iA1/G/XQegMSC+VW/y3RSsWYM2y2vT6ZvewwsijZk3n09B091aA5wFmd9BKQZ+LSiNRDrwxL/tA3QgbCmy0tDRiQ/wslnPJsUBlf8dLJmgzrwh65A=
+	t=1788500871; cv=none; b=eh1vlljUdck/eznAI0EsJmGuf7Fd2X/rHAxbJ71kgwvPgUaagexsZBgRwSCQxh9qqR/BkT7rszOR6/DbSBoNX5s4MiR7oqmRHap3fjw0UsgFl6CeZmhpLh2DN6sU0pWV5CCGtPTcXf+eU9pkRhwRXdB8v6p+nnPGN5hYwmpY6O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500868; c=relaxed/simple;
-	bh=tcMW5MUdFI6umXE+0W6YW5tdzwRu0bTPDc7MoC5vwFs=;
+	s=arc-20240116; t=1788500871; c=relaxed/simple;
+	bh=ozcY+dKkq3Iy3y3mBSOlETmYZSvJDlOAB7Qr3U6+Qhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBDi5SiM4nHjXleEn5emlpct3hCAESG7RFoPHtqZWThChXwfLRUJG6SA81Lv5F4CIFJrQCxEVra5dB4bFCeLtiBE/VE7BZWP8bzMa7E0MgDmMcCDtDC1zn5443A9tnRCmnijx5SLo4/12ZnvO/t14Kv9E9Zv2AxAz+lTiRhkhy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9I9Tq0t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s8XwF9/7paK0Z7vpBPPLH5a8qgXV7e2o/0M2SnfDIqq5ep5ReWuhSrflF1sH8BUA/otVdsT3MkzY4YzG/ijAgcQnNcSXJqAak1pTsWqBR3pgMq06vUGIKxLzrDLbMY6YkzfMePbO57Epppll9PvUg3y28v2jy8fLd079QlpYGEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKcyF4T5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9I9Tq0t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8521F00A3D;
-	Fri,  4 Sep 2026 05:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKcyF4T5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B771F00A3D;
+	Fri,  4 Sep 2026 05:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500867;
-	bh=rB1wgImJf14bo/R/dm4fw2Iyb2rkxCEpYLzRJtn6+r8=;
+	s=korg; t=1788500870;
+	bh=YdgB9D1rAU5betbIH2smCdY35BH1kT39TOYET2ob8Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G9I9Tq0tXOUWSS40vhvZHItaRibPitK3g1onmxHownIiW6UUZUHHRxseJxvPOBaY2
-	 6ayEsCJGnUr4HQ1UOcdmI81g8vfileSf8uCx5rYWoGIHbUZ/iKFEYA2WnZNSy93GWm
-	 gmv2ZiDBZmHOGYt3TuXecH7bhXFCa7CVUFv9WAsA=
+	b=AKcyF4T59OnjrCcDmMFpoyfxXjEBYtIelMZwr1kITC8nzkOlncb8K3pzXdIOGK7kD
+	 I/JsdO+k5DDUMeoIbzeSpfPHS0DhnRV9GPkOtihYkvwMf0Xu6Z+GnrSwep3qter2W4
+	 WRzCFaFNBjhUxLJWrf0qyDu1z4J9gPoCX9BqNWc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Czernohous <marek@czernohous.de>,
-	Simon Horman <horms@kernel.org>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 206/552] forcedeth: fix off-by-one when saving/restoring non-PCI config space
-Date: Fri,  4 Sep 2026 06:56:03 +0200
-Message-ID: <20260904045753.946464589@linuxfoundation.org>
+	Tien Sung Ang <tien.sung.ang@altera.com>,
+	Tze Yee Ng <tze.yee.ng@altera.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.18 207/552] fpga: stratix10-soc: Fix SVC mailbox handling during reconfiguration
+Date: Fri,  4 Sep 2026 06:56:04 +0200
+Message-ID: <20260904045753.988588388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,102 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: Tien Sung Ang <tien.sung.ang@altera.com>
 
-commit 9393f1d656a79693e0c123ff7bc7c5c0f708046d upstream.
+commit c14a8b15c87b49efc3ef898cec8ac7c30336a080 upstream.
 
-nv_suspend() and nv_resume() walk the non-PCI configuration space with
+Fix incorrect stratix10_svc_done() usage during FPGA reconfiguration.
 
-	for (i = 0; i <= np->register_size/sizeof(u32); i++)
+Do not call stratix10_svc_done() at the end of write_init() on success, so
+the SVC session remains active through write() and write_complete(). Call
+stratix10_svc_done() on failure in write_init() and write() so the shared
+SVC mailbox is released when reconfiguration aborts, allowing coexistence
+with other SVC clients such as soc64-hwmon.
 
-which runs one iteration too many. saved_config_space is declared as
-
-	u32 saved_config_space[NV_PCI_REGSZ_MAX/4];
-
-and NV_PCI_REGSZ_VER3 is equal to NV_PCI_REGSZ_MAX (0x604), so on a VER3
-device register_size/sizeof(u32) is exactly the array length and the last
-iteration addresses one element past the end.
-
-The element it lands on is np->name_rx[0..3]: saved_config_space[] is
-followed immediately by char name_rx[IFNAMSIZ + 3], and char needs no
-padding. Nothing observable is corrupted by that, because nv_request_irq()
-rewrites name_rx with sprintf() before it is ever passed to request_irq().
-The bug is the out-of-bounds access itself, which UBSAN reports and which
-CONFIG_UBSAN_TRAP=y turns into a trap that aborts the running kernel code,
-plus an MMIO read and, on resume, an MMIO writel() to base + 0x604, one
-dword past the range the driver mapped:
-
-	np->base = ioremap(addr, np->register_size);
-
-VER1 and VER2 devices stay inside the array, but they too get the stray
-read and the stray write one dword past their own window.
-
-Caught by UBSAN on an Apple Macmini3,1 (MCP79) during a deep S3 cycle.
-The splat below is trimmed: the build path in the file name, the CPU
-and taint lines, the Workqueue line, the "?" hint frames, and the
-frames below device_suspend are all cut. The kernel was tainted, with
-an out-of-tree nouveau and CPU_OUT_OF_SPEC; forcedeth itself was the
-stock module.
-
-  UBSAN: array-index-out-of-bounds in drivers/net/ethernet/nvidia/forcedeth.c:6225:25
-  index 385 is out of range for type 'u32 [385]'
-  Call Trace:
-   dump_stack_lvl+0x5d/0x80
-   ubsan_epilogue+0x5/0x2b
-   __ubsan_handle_out_of_bounds.cold+0x54/0x59
-   __this_module+0xe398c/0xe9010 [forcedeth]
-   pci_pm_suspend+0x80/0x170
-   dpm_run_callback+0x51/0x160
-   device_suspend+0x1a2/0x4a0
-   ...
-
-Both loops are hit. UBSAN reports each source location only once per module
-load (__ubsan_handle_out_of_bounds() calls suppress_report(), which does
-test_and_set_bit(REPORTED_BIT, ...) on the struct source_location), so the
-two splats land in the first S3 cycle after the module is loaded and later
-cycles are silent even though the access still runs off the end every time.
-In that first cycle line 6225 is reported from pci_pm_suspend and line 6240
-from pci_pm_resume.
-
-The same off-by-one was fixed in nv_get_regs() by commit ba9aa134287f
-("forcedeth: fix buffer overflow") in 2012; these two loops were missed.
-The suspend and resume side was reported on LKML in September 2013 by Marc
-Weber, with the same analysis and the same one-character fix, but the patch
-was attached rather than sent inline and the thread ended there.
-
-Use < instead of <=, which saves and restores exactly register_size bytes.
-
-Fixes: 1a1ca86158ee ("[netdrvr] forcedeth: save/restore device configuration space")
-Cc: stable@vger.kernel.org
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/178682367885.3748309.10595890901761762683@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e7eef1d7633a ("fpga: add intel stratix10 soc fpga manager driver")
+Cc: stable@vger.kernel.org # 5.1+
+Signed-off-by: Tien Sung Ang <tien.sung.ang@altera.com>
+Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/8768ce3260489c9febdfce08e27d03f5f5ed9c33.1782801986.git.tze.yee.ng@altera.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/fpga/stratix10-soc.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6221,7 +6221,7 @@ static int nv_suspend(struct device *dev
- 	netif_device_detach(dev);
+--- a/drivers/fpga/stratix10-soc.c
++++ b/drivers/fpga/stratix10-soc.c
+@@ -195,20 +195,18 @@ static int s10_ops_write_init(struct fpg
+ 	ret = s10_svc_send_msg(priv, COMMAND_RECONFIG,
+ 			       &ctype, sizeof(ctype));
+ 	if (ret < 0)
+-		goto init_done;
++		goto init_error;
  
- 	/* save non-pci configuration space */
--	for (i = 0; i <= np->register_size/sizeof(u32); i++)
-+	for (i = 0; i < np->register_size/sizeof(u32); i++)
- 		np->saved_config_space[i] = readl(base + i*sizeof(u32));
+-	ret = wait_for_completion_timeout(
+-		&priv->status_return_completion, S10_RECONFIG_TIMEOUT);
+-	if (!ret) {
++	if (!wait_for_completion_timeout(&priv->status_return_completion,
++					 S10_RECONFIG_TIMEOUT)) {
+ 		dev_err(dev, "timeout waiting for RECONFIG_REQUEST\n");
+ 		ret = -ETIMEDOUT;
+-		goto init_done;
++		goto init_error;
+ 	}
  
- 	return 0;
-@@ -6236,7 +6236,7 @@ static int nv_resume(struct device *devi
- 	int i, rc = 0;
+-	ret = 0;
+ 	if (!test_and_clear_bit(SVC_STATUS_OK, &priv->status)) {
+ 		ret = -ETIMEDOUT;
+-		goto init_done;
++		goto init_error;
+ 	}
  
- 	/* restore non-pci configuration space */
--	for (i = 0; i <= np->register_size/sizeof(u32); i++)
-+	for (i = 0; i < np->register_size/sizeof(u32); i++)
- 		writel(np->saved_config_space[i], base+i*sizeof(u32));
+ 	/* Allocate buffers from the service layer's pool. */
+@@ -217,14 +215,16 @@ static int s10_ops_write_init(struct fpg
+ 		if (IS_ERR(kbuf)) {
+ 			s10_free_buffers(mgr);
+ 			ret = PTR_ERR(kbuf);
+-			goto init_done;
++			goto init_error;
+ 		}
  
- 	if (np->driver_data & DEV_NEED_MSI_FIX)
+ 		priv->svc_bufs[i].buf = kbuf;
+ 		priv->svc_bufs[i].lock = 0;
+ 	}
+ 
+-init_done:
++	return 0;
++
++init_error:
+ 	stratix10_svc_done(priv->chan);
+ 	return ret;
+ }
+@@ -342,6 +342,9 @@ static int s10_ops_write(struct fpga_man
+ 	if (!s10_free_buffers(mgr))
+ 		dev_err(dev, "%s not all buffers were freed\n", __func__);
+ 
++	if (ret < 0)
++		stratix10_svc_done(priv->chan);
++
+ 	return ret;
+ }
+ 
 
 
