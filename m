@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528F435AC03;
-	Fri,  4 Sep 2026 05:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F672D738A;
+	Fri,  4 Sep 2026 05:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501391; cv=none; b=TWxnL+dqNiaKPBmCer9MC6Tny8qHfbq0sLki6rXjcXQCfMAr2WSz/J1WB5Xan7lMk+4lS6W2dSvDuAWxE0r7VQTgghEwfxZIuPCr9v5Nl/iPmop2LjWKREvlkS+ZCcozdUVxIksAtcsWAA+bA05PWHvRjPrw0CcxHGFe8V3n5yY=
+	t=1788501394; cv=none; b=RgxDbUGsDeKxLFraJQGpX3RAs7q9L37EtfhHEaPG+XJVwRDOlvQuy3d94EjgYF35akJ2fC5HSQc7UYYANgtL9TL7D6VJ4QrxoUhEodSYyqHcqGnYwlnEd9hKIOIABEyBi48FGyNcpueMNS2cm1gX1OOALI4xRz3xoJPPTKMWms4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501391; c=relaxed/simple;
-	bh=QjArBVN9KpXVm8FS9R/GphiPM2YeSWu+g6WviRjCNow=;
+	s=arc-20240116; t=1788501394; c=relaxed/simple;
+	bh=b6TiOw4xlI5oQbtv/O/U63bcfQEYjOWPoGgosWGHKtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fitlUlAaW+f635vjzWRPzelmIJrAAWuYCcK1nzR8AKYJG/xKJuqnafJ2YCCgQm5NsyqJ3h+l9ORiiI551/m1/46UvGYt36boTSg/e58XAuN1IR7YnmOuRYv5jrjEFhOIHxdxrVkeWiwjyXTI8/9AmqTVWIFImZsomhIffnca7WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ko1I+hla; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N0YoV0gaWTQvJuJckqcoiQjOHZAMBSqK30+sArfor/WqQDOPmer4lBD08H460FaSsmUmQ8xS/6G0Ym5sCeptgLKXEYOMX6wWZ0gQo75MaFDxakTIZD915R+zXjmiFGVGfWtDRPgviPkSQWx4WNcRyl8v/edAH3/qRgBwDxpcIbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5+JJclG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ko1I+hla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9311F00A3D;
-	Fri,  4 Sep 2026 05:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5+JJclG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BFD1F00A3D;
+	Fri,  4 Sep 2026 05:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501390;
-	bh=AoWazLNd7WJClD9/Ri8Qduj8GgAZST7p8jkxhzvEnRI=;
+	s=korg; t=1788501393;
+	bh=r1AUNsusNuxcc2Yd0I63TY7p1tAE7/ZdNKUIa3xqzZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ko1I+hlaZunltYSTnA9ugAuLdiHMEz4wCc+2ArPMW14DGPXZMRfs5mWpIRJv1QZJ9
-	 gu4/9jteiQrtId478H9ct+DZpdUKjqHXeYTgI097N6QWdqfCl4fjo4lrZ1Qn2cJDvP
-	 hM4pCnMgIrVlZAyvp390lJD8Qb7iRM6F9Zhvz/Bg=
+	b=L5+JJclGOTn3ScOx3YojpI+lakm8G/0JQWJ6pPsSyANR0e8YEYQaQ/CLnFZGDmxGg
+	 KLDQorCjFGSeHW9+m4eTfouQktGSvZ9L9GuMuRamRVFu2YWfyW57HZk1F4LQanM/vl
+	 K2sYE3lxlWNGnQ+fBGe3HKI9ARCyXTkji/zIz2LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.18 391/552] PCI: Add ACS quirk for Pericom PI7C9X2G608 switches [12d8:2608]
-Date: Fri,  4 Sep 2026 06:59:08 +0200
-Message-ID: <20260904045759.071772765@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.18 351/552] i2c: mxs: fix DMA channel leak on probe error
+Date: Fri,  4 Sep 2026 06:58:28 +0200
+Message-ID: <20260904045758.203294704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,40 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit 062fb7f816439da6bf3860386889343482a66bd4 upstream.
+commit 777979e627115734052b323d2721cdb500e81dcf upstream.
 
-The Pericom PI7C9X2G608 6-port Gen2 PCIe switch is also affected by the
-PI7C9X2G errata per the errata document:
+mxs_i2c_probe() requests an exclusive DMA channel before resetting the
+controller and registering the I2C adapter. If either later operation
+fails, probe returns without releasing the channel because the remove
+callback is not invoked after a failed probe.
 
-  E2: ACS P2P Request Redirect Is Not Functional
+Use devm_dma_request_chan() so the device core releases the channel on
+probe failure and driver detach. Remove the manual release from the
+remove callback because the channel is now device-managed.
 
-Apply the same quirk to this PCI ID as well to apply the workaround
-required if using ACS.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Fixes: acd61ffb2f16 ("PCI: Add ACS quirk for Pericom PI7C9X2G switches")
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720215718.2139510-1-tharvey@gateworks.com
+Fixes: 62885f59a261 ("MXS: Implement DMA support into mxs-i2c")
+Assisted-by: unnamed:claude-opus-4.8 typestate
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Cc: <stable@vger.kernel.org> # v3.7+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260815151720.3757460-1-ruoyuw560@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/busses/i2c-mxs.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -6210,6 +6210,10 @@ DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_P
- 			 pci_fixup_pericom_acs_store_forward);
- DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0xb404,
- 			 pci_fixup_pericom_acs_store_forward);
-+DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_PERICOM, 0x2608,
-+			 pci_fixup_pericom_acs_store_forward);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_PERICOM, 0x2608,
-+			 pci_fixup_pericom_acs_store_forward);
+--- a/drivers/i2c/busses/i2c-mxs.c
++++ b/drivers/i2c/busses/i2c-mxs.c
+@@ -831,7 +831,7 @@ static int mxs_i2c_probe(struct platform
+ 	}
  
- static void nvidia_ion_ahci_fixup(struct pci_dev *pdev)
- {
+ 	/* Setup the DMA */
+-	i2c->dmach = dma_request_chan(dev, "rx-tx");
++	i2c->dmach = devm_dma_request_chan(dev, "rx-tx");
+ 	if (IS_ERR(i2c->dmach)) {
+ 		return dev_err_probe(dev, PTR_ERR(i2c->dmach),
+ 				     "Failed to request dma\n");
+@@ -869,9 +869,6 @@ static void mxs_i2c_remove(struct platfo
+ 
+ 	i2c_del_adapter(&i2c->adapter);
+ 
+-	if (i2c->dmach)
+-		dma_release_channel(i2c->dmach);
+-
+ 	writel(MXS_I2C_CTRL0_SFTRST, i2c->regs + MXS_I2C_CTRL0_SET);
+ }
+ 
 
 
