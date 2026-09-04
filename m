@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9207D38B7D4;
-	Fri,  4 Sep 2026 06:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65097414A2A;
+	Fri,  4 Sep 2026 06:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501691; cv=none; b=ffhUdLocy1qBHACCBptZIsHGapU29SD1XsA2JP4WUdHbEucx7zZ9PDNoEQ9/gjcbckCRXJcVJXt1TXNc3ZtutHEOL45XsLt6K0PxOm2XfmaG6gJjQ7lQIByGTb6VuICy3qS5ae3LvnHZgR1uUzjL9DKkfjfUK0k4RZh8OV+ZX4I=
+	t=1788501693; cv=none; b=HQG048hEAsRqK5wAmj2/7yMSrsAZDqKIXMx6qGBjjwLe8c1wdPGeUc8Fbjo43e9ndwCYpTdlvmvDCdHIamZsizpwPi75AbC1RsD/mCZM4cXTgJDQiXW5sRUt9JpYFLOO1Z+hloUluzKNxfJay9faDxE+VoN4IuKJoOKS/+fspQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501691; c=relaxed/simple;
-	bh=cnS4p/i4QeHQcQC20Xok09oQCSzLD6k1cnsqIekxo8c=;
+	s=arc-20240116; t=1788501693; c=relaxed/simple;
+	bh=cJlo8CYSiDDaFI51lFQBUlAG9nSsodVnRXwFXWtFfeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IhxY3taIpwr6gkeanVQVt30MZFMj/SWd06w6Ki7W6mwq0CLk3styaalJiGZKUwKqxS77XeTHBwzIVfamrK47574doSTves2Z1ns3onUfEjYifXmi+Refo3z6uQ706YO3VlDrpumy09jLqyahPaUOMQUGzK2/C/n70fozm4Ndxjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XA7CKrJt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DgucIN2WY0V8ZfsbSQZ+c90lMj9LhmXecB85kUl36DNvFp5ypvB64+EC97/hzJJemIJLZsxqEA26Pau5+prPVVO+gVJ3mVcvJNqzF07bEmqsKiR4Fb1IyIqez0QveqESul6wXYoB9XBc8hBS6D4SPUqF9g8zr+vp4JSm8mTjtEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1N6QNdH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XA7CKrJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDA51F00A3E;
-	Fri,  4 Sep 2026 06:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1N6QNdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8611F00A3D;
+	Fri,  4 Sep 2026 06:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501689;
-	bh=eiNTpi1NrPFxzsMQjvNeN8SxzBcx0afnA0SkNzjkaFc=;
+	s=korg; t=1788501692;
+	bh=Fxgw0Z5AJsI1GkqnoFLHM+afR0ioFczt8uCO4+Stz/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XA7CKrJtRqep13PonUf2gd9ByoEwUHRcoMu1J3mb4hqRcfrR9WKXhwkGMykT9d0MD
-	 Qnf2YiEvZcTJVOEsS5MbJHIXmD6QBsqXyOGG4kdW3JMi745WfxLCZJf1dvbI+QFkyy
-	 GZG1fmkq3yylVk9TWnoABIW1yygW3/66zrMub02Y=
+	b=U1N6QNdH2DWYHNDqCB4PF5ZHBVuOZo7ryNwnGhxzSTCtP1rh6k1Tg24/Dx2KBpk38
+	 gICEhgpk1pkwQRT2gUKpcuGIbu3OZEbhVsj8YTYU3ijXtQC2DG2ZpDx+8T554spw7e
+	 DCTgos7zX3DZUFwt+E6d74y33G3I0K/0+xeMbGQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
+	Alexander Martyniuk <alexevgmart@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 499/552] ring-buffer: Fix subbuf resize race with ring buffer readers
-Date: Fri,  4 Sep 2026 07:00:56 +0200
-Message-ID: <20260904045801.968537501@linuxfoundation.org>
+Subject: [PATCH 6.18 500/552] ovpn: run deferred work on a module-owned workqueue
+Date: Fri,  4 Sep 2026 07:00:57 +0200
+Message-ID: <20260904045801.989501778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,473 +52,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 8a5f63637890f03177146efddaba5ec7a1b4d61f ]
+commit e9714db8041763f59dde152c812b96b3de05c6d9 upstream.
 
-trace_buffer subbuf_size is read lockless in ring_buffer_read_page() and
-ring_buffer_read_start(), while it can simultaneously be resized with
-ring_buffer_subbuf_order_set().
+ovpn queues several work items whose callbacks execute module text.
+These works currently run on the global system workqueues, so module
+exit has no driver-owned drain point that guarantees the callbacks have
+fully returned before the module text can be freed.
 
-Instead of trace_buffer::subbuf_size, use bpage::order in
-ring_buffer_read_start() and ring_buffer_read_page().
+Object references protect the objects used by the callbacks, but they do
+not prove that a workqueue function has returned. In particular, a
+worker can drop the final reference that unblocks device teardown while
+it is still executing ovpn code.
 
-In ring_buffer_read_start(), even with resize_disabled, there is still a
-possibility of a race with a buffer modification. Hold the trace_buffer
-mutex to synchronise with any pending ring buffer order modification.
+Add a module-owned workqueue and queue all ovpn work items on it. During
+module exit, unregister rtnl and netlink first, flush the workqueue so
+ordinary ovpn workers finish, run the final RCU barrier, and destroy the
+workqueue last. This keeps the workqueue available for cleanup work
+queued from RCU callbacks, while ensuring no ovpn work item can outlive
+the module text.
 
-trace_buffer::subbuf_size is now actually useless, remove it. Also,
-create accessors rb_subbuf_capacity() and rb_page_capacity() which
-return the actual size available for storing events, while
-rb_subbuf_size() returns the actual subbuf page-size.
+The per-device delayed keepalive work remains explicitly disabled during
+netdev teardown (disable_delayed_work_sync in ndo_uninit), since
+flush_workqueue does not flush delayed work that is still only pending
+on its timer.
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813131152.3589632-5-vdonnefort@google.com
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260805153225.2096152-1-vdonnefort%40google.com # patch 1
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 3ecfd9349f40 ("ovpn: implement keepalive mechanism")
+Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 167 +++++++++++++++++++++++--------------
- 1 file changed, 106 insertions(+), 61 deletions(-)
+ drivers/net/ovpn/main.c     | 19 ++++++++++++++++++-
+ drivers/net/ovpn/ovpnpriv.h |  4 ++++
+ drivers/net/ovpn/peer.c     |  8 ++++----
+ drivers/net/ovpn/tcp.c      |  9 ++++-----
+ 4 files changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index c0ca860c9b5b9..5936389188bd7 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -396,6 +396,17 @@ static __always_inline unsigned int rb_page_commit(struct buffer_page *bpage)
- 	return local_read(&bpage->page->commit);
- }
+diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
+index 0262926449f2e..c18ed8690baff 100644
+--- a/drivers/net/ovpn/main.c
++++ b/drivers/net/ovpn/main.c
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/netdevice.h>
+ #include <linux/inetdevice.h>
++#include <linux/workqueue.h>
+ #include <net/gro_cells.h>
+ #include <net/ip.h>
+ #include <net/rtnetlink.h>
+@@ -26,6 +27,9 @@
+ #include "tcp.h"
+ #include "udp.h"
  
-+/**
-+ * rb_page_capacity - Get the capacity of a buffer page
-+ * @bpage:	The buffer page
-+ *
-+ * Return: The maximum size available for events in the given buffer page.
-+ */
-+static __always_inline unsigned int rb_page_capacity(struct buffer_page *bpage)
-+{
-+	return (PAGE_SIZE << bpage->order) - BUF_PAGE_HDR_SIZE;
-+}
++/* module-owned workqueue on which all ovpn-specific work is queued */
++struct workqueue_struct *ovpn_wq;
 +
- static void free_buffer_page(struct buffer_page *bpage)
+ static void ovpn_priv_free(struct net_device *net)
  {
- 	/* Range pages are not to be freed */
-@@ -595,11 +606,42 @@ struct trace_buffer {
+ 	struct ovpn_priv *ovpn = netdev_priv(net);
+@@ -264,10 +268,16 @@ static int __init ovpn_init(void)
  
- 	struct ring_buffer_meta		*meta;
+ 	ovpn_tcp_init();
  
--	unsigned int			subbuf_size;
- 	unsigned int			subbuf_order;
- 	unsigned int			max_data_size;
- };
- 
-+static __always_inline unsigned int rb_subbuf_size(struct trace_buffer *buffer)
-+{
-+	return PAGE_SIZE << buffer->subbuf_order;
-+}
-+
-+/**
-+ * rb_subbuf_capacity - Get the capacity of a subbuffer
-+ * @buffer:	A trace buffer
-+ *
-+ * Unsafe to use without holding trace_buffer::mutex or with resizing enabled.
-+ * Consider rb_page_capacity() instead.
-+ *
-+ * Return: The maximum size available for events in a trace buffer subbuffer.
-+ */
-+static __always_inline unsigned int rb_subbuf_capacity(struct trace_buffer *buffer)
-+{
-+	return rb_subbuf_size(buffer) - BUF_PAGE_HDR_SIZE;
-+}
-+
-+/**
-+ * rb_subbuf_start - Get the start address of a subbuffer
-+ * @buffer:	A trace buffer
-+ * @addr:	An address of an event on a subbuffer
-+ *
-+ * Return: The start of the subbuffer for where @addr sits
-+ */
-+static __always_inline
-+unsigned long rb_subbuf_start(struct trace_buffer *buffer, unsigned long addr)
-+{
-+	return addr & ~((unsigned long)(rb_subbuf_size(buffer) - 1));
-+}
-+
- struct ring_buffer_iter {
- 	struct ring_buffer_per_cpu	*cpu_buffer;
- 	unsigned long			head;
-@@ -639,7 +681,7 @@ int ring_buffer_print_page_header(struct trace_buffer *buffer, struct trace_seq
- 	trace_seq_printf(s, "\tfield: char data;\t"
- 			 "offset:%u;\tsize:%u;\tsigned:%u;\n",
- 			 (unsigned int)offsetof(typeof(field), data),
--			 (unsigned int)buffer->subbuf_size,
-+			 (unsigned int)rb_subbuf_capacity(buffer),
- 			 (unsigned int)is_signed_type(char));
- 
- 	return !trace_seq_has_overflowed(s);
-@@ -1628,7 +1670,7 @@ rb_range_align_subbuf(unsigned long addr, int subbuf_size, int nr_subbufs)
-  */
- static void *rb_range_meta(struct trace_buffer *buffer, int nr_pages, int cpu)
- {
--	int subbuf_size = buffer->subbuf_size + BUF_PAGE_HDR_SIZE;
-+	int subbuf_size = rb_subbuf_size(buffer);
- 	struct ring_buffer_cpu_meta *meta;
- 	struct ring_buffer_meta *bmeta;
- 	unsigned long ptr;
-@@ -2302,8 +2344,8 @@ static int __rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
- 			bpage->range = 1;
- 			bpage->id = i + 1;
- 		} else {
--			int order = cpu_buffer->buffer->subbuf_order;
--			bpage->page = alloc_cpu_data(cpu_buffer->cpu, order);
-+			bpage->page = alloc_cpu_data(cpu_buffer->cpu,
-+						     cpu_buffer->buffer->subbuf_order);
- 			if (!bpage->page)
- 				goto free_pages;
- 		}
-@@ -2402,8 +2444,7 @@ rb_allocate_cpu_buffer(struct trace_buffer *buffer, long nr_pages, int cpu)
- 
- 		atomic_inc(&cpu_buffer->resize_disabled);
- 	} else {
--		int order = cpu_buffer->buffer->subbuf_order;
--		bpage->page = alloc_cpu_data(cpu, order);
-+		bpage->page = alloc_cpu_data(cpu, bpage->order);
- 		if (!bpage->page)
- 			goto fail_free_reader;
- 	}
-@@ -2512,10 +2553,9 @@ static struct trace_buffer *alloc_buffer(unsigned long size, unsigned flags,
- 
- 	buffer->subbuf_order = order;
- 	subbuf_size = (PAGE_SIZE << order);
--	buffer->subbuf_size = subbuf_size - BUF_PAGE_HDR_SIZE;
- 
- 	/* Max payload is buffer page size - header (8bytes) */
--	buffer->max_data_size = buffer->subbuf_size - (sizeof(u32) * 2);
-+	buffer->max_data_size = rb_subbuf_capacity(buffer) - (sizeof(u32) * 2);
- 
- 	buffer->flags = flags;
- 	buffer->clock = trace_clock_local;
-@@ -2588,9 +2628,8 @@ static struct trace_buffer *alloc_buffer(unsigned long size, unsigned flags,
- 
- 		rb_range_meta_init(buffer, nr_pages, scratch_size);
- 	} else {
--
- 		/* need at least two pages */
--		nr_pages = DIV_ROUND_UP(size, buffer->subbuf_size);
-+		nr_pages = DIV_ROUND_UP(size, rb_subbuf_capacity(buffer));
- 		if (nr_pages < 2)
- 			nr_pages = 2;
- 	}
-@@ -2963,7 +3002,7 @@ static void update_pages_handler(struct work_struct *work)
-  * @size: the new size.
-  * @cpu_id: the cpu buffer to resize
-  *
-- * Minimum size is 2 * buffer->subbuf_size.
-+ * Minimum size is 2 * rb_subbuf_capacity(buffer).
-  *
-  * Returns 0 on success and < 0 on failure.
-  */
-@@ -2985,12 +3024,6 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
- 	    !cpumask_test_cpu(cpu_id, buffer->cpumask))
- 		return 0;
- 
--	nr_pages = DIV_ROUND_UP(size, buffer->subbuf_size);
--
--	/* we need a minimum of two pages */
--	if (nr_pages < 2)
--		nr_pages = 2;
--
- 	/*
- 	 * Keep CPUs from coming online while resizing to synchronize
- 	 * with new per CPU buffers being created.
-@@ -3001,6 +3034,12 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
- 	mutex_lock(&buffer->mutex);
- 	atomic_inc(&buffer->resizing);
- 
-+	nr_pages = DIV_ROUND_UP(size, rb_subbuf_capacity(buffer));
-+
-+	/* we need a minimum of two pages */
-+	if (nr_pages < 2)
-+		nr_pages = 2;
-+
- 	if (cpu_id == RING_BUFFER_ALL_CPUS) {
- 		/*
- 		 * Don't succeed if resizing is disabled, as a reader might be
-@@ -3279,7 +3318,7 @@ rb_event_index(struct ring_buffer_per_cpu *cpu_buffer, struct ring_buffer_event
- {
- 	unsigned long addr = (unsigned long)event;
- 
--	addr &= (PAGE_SIZE << cpu_buffer->buffer->subbuf_order) - 1;
-+	addr &= (unsigned long)rb_subbuf_size(cpu_buffer->buffer) - 1;
- 
- 	return addr - BUF_PAGE_HDR_SIZE;
- }
-@@ -3518,8 +3557,8 @@ static inline void
- rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
- 	      unsigned long tail, struct rb_event_info *info)
- {
--	unsigned long bsize = READ_ONCE(cpu_buffer->buffer->subbuf_size);
- 	struct buffer_page *tail_page = info->tail_page;
-+	unsigned long bsize = rb_page_capacity(tail_page);
- 	struct ring_buffer_event *event;
- 	unsigned long length = info->length;
- 
-@@ -3871,8 +3910,7 @@ rb_try_to_discard(struct ring_buffer_per_cpu *cpu_buffer,
- 
- 	new_index = rb_event_index(cpu_buffer, event);
- 	old_index = new_index + rb_event_ts_length(event);
--	addr = (unsigned long)event;
--	addr &= ~((PAGE_SIZE << cpu_buffer->buffer->subbuf_order) - 1);
-+	addr = rb_subbuf_start(cpu_buffer->buffer, (unsigned long)event);
- 
- 	bpage = READ_ONCE(cpu_buffer->tail_page);
- 
-@@ -4519,7 +4557,7 @@ __rb_reserve_next(struct ring_buffer_per_cpu *cpu_buffer,
- 	tail = write - info->length;
- 
- 	/* See if we shot pass the end of this buffer page */
--	if (unlikely(write > cpu_buffer->buffer->subbuf_size)) {
-+	if (unlikely(write > rb_page_capacity(tail_page))) {
- 		check_buffer(cpu_buffer, info, CHECK_FULL_PAGE);
- 		return rb_move_tail(cpu_buffer, tail, info);
- 	}
-@@ -4764,7 +4802,7 @@ rb_decrement_entry(struct ring_buffer_per_cpu *cpu_buffer,
- 	struct buffer_page *bpage = cpu_buffer->commit_page;
- 	struct buffer_page *start;
- 
--	addr &= ~((PAGE_SIZE << cpu_buffer->buffer->subbuf_order) - 1);
-+	addr = rb_subbuf_start(cpu_buffer->buffer, addr);
- 
- 	/* Do the likely case first */
- 	if (likely(bpage->page == (void *)addr)) {
-@@ -5441,7 +5479,6 @@ static struct buffer_page *
- rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
- {
- 	struct buffer_page *reader = NULL;
--	unsigned long bsize = READ_ONCE(cpu_buffer->buffer->subbuf_size);
- 	unsigned long overwrite;
- 	unsigned long flags;
- 	int nr_loops = 0;
-@@ -5580,7 +5617,7 @@ rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
- #define USECS_WAIT	1000000
-         for (nr_loops = 0; nr_loops < USECS_WAIT; nr_loops++) {
- 		/* If the write is past the end of page, a writer is still updating it */
--		if (likely(!reader || rb_page_write(reader) <= bsize))
-+		if (likely(!reader || rb_page_write(reader) <= rb_page_capacity(reader)))
- 			break;
- 
- 		udelay(1);
-@@ -6002,36 +6039,44 @@ EXPORT_SYMBOL_GPL(ring_buffer_consume);
- struct ring_buffer_iter *
- ring_buffer_read_start(struct trace_buffer *buffer, int cpu, gfp_t flags)
- {
-+	struct ring_buffer_iter *iter __free(kfree) = kzalloc_obj(*iter, flags);
- 	struct ring_buffer_per_cpu *cpu_buffer;
--	struct ring_buffer_iter *iter;
--
--	if (!cpumask_test_cpu(cpu, buffer->cpumask))
--		return NULL;
- 
--	iter = kzalloc(sizeof(*iter), flags);
- 	if (!iter)
- 		return NULL;
- 
--	/* Holds the entire event: data and meta data */
--	iter->event_size = buffer->subbuf_size;
--	iter->event = kmalloc(iter->event_size, flags);
--	if (!iter->event) {
--		kfree(iter);
-+	if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 		return NULL;
--	}
- 
- 	cpu_buffer = buffer->buffers[cpu];
- 
--	iter->cpu_buffer = cpu_buffer;
-+	/*
-+	 * Only KDB is using GFP_ATOMIC, for the others, lock the buffer to
-+	 * prevent concurrent resizing.
-+	 */
-+	if (gfpflags_allow_blocking(flags))
-+		mutex_lock(&buffer->mutex);
- 
- 	atomic_inc(&cpu_buffer->resize_disabled);
- 
-+	if (gfpflags_allow_blocking(flags))
-+		mutex_unlock(&buffer->mutex);
-+
-+	/* Holds the entire event: data and meta data. */
-+	iter->event_size = rb_page_capacity(READ_ONCE(cpu_buffer->reader_page));
-+	iter->event = kmalloc(iter->event_size, flags);
-+	if (!iter->event) {
-+		atomic_dec(&cpu_buffer->resize_disabled);
-+		return NULL;
++	ovpn_wq = alloc_workqueue("ovpn", WQ_PERCPU, 0);
++	if (!ovpn_wq) {
++		pr_err("ovpn: cannot allocate workqueue\n");
++		return -ENOMEM;
 +	}
-+	iter->cpu_buffer = cpu_buffer;
 +
- 	guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock);
- 	arch_spin_lock(&cpu_buffer->lock);
- 	rb_iter_reset(iter);
- 	arch_spin_unlock(&cpu_buffer->lock);
+ 	err = rtnl_link_register(&ovpn_link_ops);
+ 	if (err) {
+ 		pr_err("ovpn: can't register rtnl link ops: %d\n", err);
+-		return err;
++		goto destroy_wq;
+ 	}
  
--	return iter;
-+	return_ptr(iter);
+ 	err = ovpn_nl_register();
+@@ -280,6 +290,9 @@ static int __init ovpn_init(void)
+ 
+ unreg_rtnl:
+ 	rtnl_link_unregister(&ovpn_link_ops);
++destroy_wq:
++	destroy_workqueue(ovpn_wq);
++	ovpn_wq = NULL;
+ 	return err;
  }
- EXPORT_SYMBOL_GPL(ring_buffer_read_start);
  
-@@ -6085,7 +6130,7 @@ unsigned long ring_buffer_size(struct trace_buffer *buffer, int cpu)
- 	if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 		return 0;
+@@ -288,7 +301,11 @@ static __exit void ovpn_cleanup(void)
+ 	ovpn_nl_unregister();
+ 	rtnl_link_unregister(&ovpn_link_ops);
  
--	return buffer->subbuf_size * buffer->buffers[cpu]->nr_pages;
-+	return rb_subbuf_capacity(buffer) * buffer->buffers[cpu]->nr_pages;
- }
- EXPORT_SYMBOL_GPL(ring_buffer_size);
- 
-@@ -6655,15 +6700,15 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
- 	if (!data_page || !data_page->data)
- 		return -1;
- 
--	if (data_page->order != buffer->subbuf_order)
--		return -1;
--
- 	bpage = data_page->data;
- 	if (!bpage)
- 		return -1;
- 
- 	guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock);
- 
-+	if (data_page->order != cpu_buffer->reader_page->order)
-+		return -1;
++	flush_workqueue(ovpn_wq);
+ 	rcu_barrier();
 +
- 	reader = rb_get_reader_page(cpu_buffer);
- 	if (!reader)
- 		return -1;
-@@ -6778,7 +6823,7 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
- 		/* If there is room at the end of the page to save the
- 		 * missed events, then record it there.
- 		 */
--		if (buffer->subbuf_size - commit >= sizeof(missed_events)) {
-+		if (rb_page_capacity(reader) - commit >= sizeof(missed_events)) {
- 			memcpy(&bpage->data[commit], &missed_events,
- 			       sizeof(missed_events));
- 			local_add(RB_MISSED_STORED, &bpage->commit);
-@@ -6790,8 +6835,8 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
- 	/*
- 	 * This page may be off to user land. Zero it out here.
++	destroy_workqueue(ovpn_wq);
++	ovpn_wq = NULL;
+ }
+ 
+ module_init(ovpn_init);
+diff --git a/drivers/net/ovpn/ovpnpriv.h b/drivers/net/ovpn/ovpnpriv.h
+index 5898f6adada7f..84499140e4bd9 100644
+--- a/drivers/net/ovpn/ovpnpriv.h
++++ b/drivers/net/ovpn/ovpnpriv.h
+@@ -15,6 +15,10 @@
+ #include <uapi/linux/if_link.h>
+ #include <uapi/linux/ovpn.h>
+ 
++struct workqueue_struct;
++
++extern struct workqueue_struct *ovpn_wq;
++
+ /**
+  * struct ovpn_peer_collection - container of peers for MultiPeer mode
+  * @by_id: table of peers index by ID
+diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
+index 412ef09abd5e7..6b9f5f12fc5a8 100644
+--- a/drivers/net/ovpn/peer.c
++++ b/drivers/net/ovpn/peer.c
+@@ -62,7 +62,7 @@ void ovpn_peer_keepalive_set(struct ovpn_peer *peer, u32 interval, u32 timeout)
+ 	/* now that interval and timeout have been changed, kick
+ 	 * off the worker so that the next delay can be recomputed
  	 */
--	if (commit < buffer->subbuf_size)
--		memset(&bpage->data[commit], 0, buffer->subbuf_size - commit);
-+	if (commit < rb_page_capacity(reader))
-+		memset(&bpage->data[commit], 0, rb_page_capacity(reader) - commit);
- 
- 	return read;
+-	mod_delayed_work(system_wq, &peer->ovpn->keepalive_work, 0);
++	mod_delayed_work(ovpn_wq, &peer->ovpn->keepalive_work, 0);
  }
-@@ -6817,7 +6862,7 @@ EXPORT_SYMBOL_GPL(ring_buffer_read_page_data);
-  */
- int ring_buffer_subbuf_size_get(struct trace_buffer *buffer)
- {
--	return buffer->subbuf_size + BUF_PAGE_HDR_SIZE;
-+	return rb_subbuf_size(buffer);
+ 
+ /**
+@@ -1366,7 +1366,7 @@ static time64_t ovpn_peer_keepalive_work_single(struct ovpn_peer *peer,
+ 			   peer->id);
+ 		if (WARN_ON(!ovpn_peer_hold(peer)))
+ 			return 0;
+-		if (!schedule_work(&peer->keepalive_work))
++		if (!queue_work(ovpn_wq, &peer->keepalive_work))
+ 			ovpn_peer_put(peer);
+ 	}
+ 
+@@ -1458,8 +1458,8 @@ void ovpn_peer_keepalive_work(struct work_struct *work)
+ 		netdev_dbg(ovpn->dev,
+ 			   "scheduling keepalive work: now=%llu next_run=%llu delta=%llu\n",
+ 			   next_run, now, next_run - now);
+-		schedule_delayed_work(&ovpn->keepalive_work,
+-				      (next_run - now) * HZ);
++		queue_delayed_work(ovpn_wq, &ovpn->keepalive_work,
++				   (next_run - now) * HZ);
+ 	}
+ 	unlock_ovpn(ovpn, &release_list);
  }
- EXPORT_SYMBOL_GPL(ring_buffer_subbuf_size_get);
- 
-@@ -6862,7 +6907,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- {
- 	struct ring_buffer_per_cpu *cpu_buffer;
- 	struct buffer_page *bpage, *tmp;
--	int old_order, old_size;
-+	unsigned int old_capacity;
-+	int old_order;
- 	int nr_pages;
- 	int psize;
- 	int err;
-@@ -6871,9 +6917,6 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 	if (!buffer || order < 0)
- 		return -EINVAL;
- 
--	if (buffer->subbuf_order == order)
--		return 0;
--
- 	psize = (1 << order) * PAGE_SIZE;
- 	if (psize <= BUF_PAGE_HDR_SIZE)
- 		return -EINVAL;
-@@ -6882,18 +6925,21 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 	if (psize > RB_WRITE_MASK + 1)
- 		return -EINVAL;
- 
--	old_order = buffer->subbuf_order;
--	old_size = buffer->subbuf_size;
--
- 	/* prevent another thread from changing buffer sizes */
- 	guard(mutex)(&buffer->mutex);
-+
-+	old_order = buffer->subbuf_order;
-+	if (old_order == order)
-+		return 0;
-+
-+	old_capacity = rb_subbuf_capacity(buffer);
-+
- 	atomic_inc(&buffer->record_disabled);
- 
- 	/* Make sure all commits have finished */
- 	synchronize_rcu();
- 
- 	buffer->subbuf_order = order;
--	buffer->subbuf_size = psize - BUF_PAGE_HDR_SIZE;
- 
- 	/* Make sure all new buffers are allocated, before deleting the old ones */
- 	for_each_buffer_cpu(buffer, cpu) {
-@@ -6909,8 +6955,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 		}
- 
- 		/* Update the number of pages to match the new size */
--		nr_pages = old_size * buffer->buffers[cpu]->nr_pages;
--		nr_pages = DIV_ROUND_UP(nr_pages, buffer->subbuf_size);
-+		nr_pages = old_capacity * buffer->buffers[cpu]->nr_pages;
-+		nr_pages = DIV_ROUND_UP(nr_pages, rb_subbuf_capacity(buffer));
- 
- 		/* we need a minimum of two pages */
- 		if (nr_pages < 2)
-@@ -6998,7 +7044,6 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 
- error:
- 	buffer->subbuf_order = old_order;
--	buffer->subbuf_size = old_size;
- 
- 	atomic_dec(&buffer->record_disabled);
- 
-@@ -7076,7 +7121,7 @@ static void rb_setup_ids_meta_page(struct ring_buffer_per_cpu *cpu_buffer,
- 
- 	meta->meta_struct_len = sizeof(*meta);
- 	meta->nr_subbufs = nr_subbufs;
--	meta->subbuf_size = cpu_buffer->buffer->subbuf_size + BUF_PAGE_HDR_SIZE;
-+	meta->subbuf_size = rb_subbuf_size(cpu_buffer->buffer);
- 	meta->meta_page_size = meta->subbuf_size;
- 
- 	rb_update_meta_page(cpu_buffer);
-@@ -7438,7 +7483,7 @@ int ring_buffer_map_get_reader(struct trace_buffer *buffer, int cpu)
- 			 * missed events, then record it there.
+diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
+index 0af14055c39aa..8fe8a8e750a40 100644
+--- a/drivers/net/ovpn/tcp.c
++++ b/drivers/net/ovpn/tcp.c
+@@ -151,7 +151,7 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
+ 	/* take reference for deferred peer deletion. should never fail */
+ 	if (WARN_ON(!ovpn_peer_hold(peer)))
+ 		goto err_nopeer;
+-	if (!schedule_work(&peer->tcp.defer_del_work))
++	if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
+ 		ovpn_peer_put(peer);
+ 	ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
+ err_nopeer:
+@@ -284,13 +284,12 @@ static void ovpn_tcp_send_sock(struct ovpn_peer *peer, struct sock *sk)
+ 			 * stream therefore we abort the connection
  			 */
- 			commit = rb_page_size(reader);
--			if (buffer->subbuf_size - commit >= sizeof(missed_events)) {
-+			if (rb_subbuf_capacity(buffer) - commit >= sizeof(missed_events)) {
- 				memcpy(&bpage->data[commit], &missed_events,
- 				       sizeof(missed_events));
- 				local_add(RB_MISSED_STORED, &bpage->commit);
-@@ -7470,7 +7515,7 @@ int ring_buffer_map_get_reader(struct trace_buffer *buffer, int cpu)
- out:
- 	/* Some archs do not have data cache coherency between kernel and user-space */
- 	flush_kernel_vmap_range(cpu_buffer->reader_page->page,
--				buffer->subbuf_size + BUF_PAGE_HDR_SIZE);
-+				rb_subbuf_size(buffer));
+ 			ovpn_peer_hold(peer);
+-			if (!schedule_work(&peer->tcp.defer_del_work))
++			if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
+ 				ovpn_peer_put(peer);
  
- 	rb_update_meta_page(cpu_buffer);
- 
+ 			/* we bail out immediately and keep tx_in_progress set
+ 			 * to true. This way we prevent more TX attempts
+-			 * which would lead to more invocations of
+-			 * schedule_work()
++			 * which would lead to more invocations of queue_work()
+ 			 */
+ 			return;
+ 		}
+@@ -487,7 +486,7 @@ static void ovpn_tcp_write_space(struct sock *sk)
+ 	rcu_read_lock();
+ 	sock = rcu_dereference_sk_user_data(sk);
+ 	if (likely(sock && sock->peer)) {
+-		schedule_work(&sock->tcp_tx_work);
++		queue_work(ovpn_wq, &sock->tcp_tx_work);
+ 		sock->peer->tcp.sk_cb.sk_write_space(sk);
+ 	}
+ 	rcu_read_unlock();
 -- 
 2.53.0
 
