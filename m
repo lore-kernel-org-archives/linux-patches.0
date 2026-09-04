@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF4D4248B1;
-	Fri,  4 Sep 2026 06:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2B1424D6B;
+	Fri,  4 Sep 2026 06:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502777; cv=none; b=pyJxX4wzpIJPrP/uXIuGiIb8rCy3OUyTZIpuDdfgSbe6ud9Xr31lkBcUJ73WFe2BulBAmy3VsNtSWkpzbxTMy2DPfY/Du+W/qihPdKYm0uNLZBOLUSvdAkvEi/+AcDpgUFFYWRpClBKOCXcGfv1LVRFOLTvnZnGbV0TySQyAup4=
+	t=1788502780; cv=none; b=oqfXNbeLMATZhwZDrrHq8JkU3ccOq9PG9IJoNoPQzIY1rFnuZqo5iC13q8w6tS5NeURvEUet9ym1LHYh+uG0n57C3IFnR/+D3JIddpQK0b5XqBFynhB1UWLyr9vM5mpcc9l60tdrPnigENV0ejRicb5J07ZNwp6rHMy/2QC/VH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502777; c=relaxed/simple;
-	bh=FiH147QWA983tsBs8OtxNvbNWuGJfga0FonNgUz9mjQ=;
+	s=arc-20240116; t=1788502780; c=relaxed/simple;
+	bh=X7xtSXosxI5Zhs7Y3BbuE6BKKVgaWhgj7sQA0q30KRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E077+yM3dTO6YSCyEIjgdeO4y6FERoN2m42uBRlaIiJAxa1ojhRKJ1wkiGxSXeT3KWyzXhZTLnzkoj36d3lKYPw6S0CYGCu+lLrjVKghFgGpYIN5sbAibkfkB4h3ScgiBvA6YBpigpg+HiNkP+asAE2nEwp3MUXVIen5XhyY0KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxCQlc9F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kJ2ae9mvzdO03GZZE1Se7xcHjm6Pf37IHGNTbIWdz4RfGVOnzkup7Odip6zvKZvpwmgwNpQA8QFGOonxvBpLX+V5HJyX7BoSc+1kbxB/Gy5pYbzy3Rf4VOcpVXSNTukNpQi68oZCfnfVjR2s0PlsZ9zQKOaNr8m4I4nwAVe6MP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16zix2Zb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxCQlc9F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C274D1F00A3D;
-	Fri,  4 Sep 2026 06:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16zix2Zb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E6B1F00A3D;
+	Fri,  4 Sep 2026 06:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502776;
-	bh=Tf78txEcxdtNTdhXLun6AF69Qfp7PKFNhO38kvowEOk=;
+	s=korg; t=1788502779;
+	bh=cpqXNbhaMhAoi3bVa7/YwsFpH6zNs0l31epGBCoTLG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MxCQlc9FZ1UbVfUahbu/RThD+lNvmFSvm9nNO9Scvtd86//bnKeKh+DosRCMfXvHI
-	 VsSdykd3EB0l8xvSoWSyiqpTFzoy+93Uzh9IDj3byuv5i4qIozUFl7athfqtzv4rVm
-	 5CWPUdJLL2FDJR+w4Ei7xOcZ2OPLp77q3CYBR/Ks=
+	b=16zix2ZbTlot00nTlKroT39JrOEOG8ChgZncvIB5kc8tpqvHoi+BWqWOe9ECU+8i6
+	 hh0dyi89YOUs/B6McA1BF4R5riSrVMf3VVc2qQT4zKTdKSCmyQQv/vwHvd3/xbtirt
+	 ryZ7Sk+5PsIsqdnvpYFA70NbkJ8L8foEPFplXEXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 327/403] platform/x86: hp-bioscfg: fix ORD_LIST_ELEMENTS never being parsed
-Date: Fri,  4 Sep 2026 07:02:10 +0200
-Message-ID: <20260904045742.264694488@linuxfoundation.org>
+Subject: [PATCH 6.12 328/403] platform/x86: hp-bioscfg: pass validated element count to package parsers
+Date: Fri,  4 Sep 2026 07:02:11 +0200
+Message-ID: <20260904045742.286602572@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,57 +53,251 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit cb6b1b0fb236a9581cae213c2a9182e68cc3ffe5 upstream.
+commit e0ddfd77c0c320b7d12b6c9169303b140b798775 upstream.
 
-The ACPI_TYPE_STRING case explicitly skips the string conversion for
-elem == ORD_LIST_ELEMENTS:
+The per-type package parsers are handed the wrong element count.
 
-	if (elem != PREREQUISITES && elem != ORD_LIST_ELEMENTS) {
-		ret = hp_convert_hexstr_to_str(..., &str_value, &value_len);
-		if (ret)
-			continue;
-	}
+hp_init_bios_package_attribute() validates obj->package.count and then
+calls one of the five hp_populate_*_package_data() wrappers (string,
+integer, enumeration, ordered list, password). Each wrapper forwards a
+count to its hp_populate_*_elements_from_package() parser, but instead
+of forwarding the validated obj->package.count it derives the count
+from elements[0]. elements[0] is the NAME field and is always an
+ACPI_TYPE_STRING, so reading ->package.count from it in fact reads
+->string.length through the union acpi_object. The parsers thus bound
+themselves against the length of the name string rather than against
+the real number of elements in the package.
 
-so by the time the ORD_LIST_ELEMENTS case in the eloc switch runs,
-str_value is NULL (it was freed and reset to NULL at the end of the
-previous iteration). That case then does:
+This is safe today because hp_init_bios_package_attribute() refuses any
+package that has fewer than the type's element count, so a parser only
+ever runs on a full package and never reads past it regardless of the
+bogus bound.
 
-	ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
+An upcoming change relaxes that check to accept shorter packages. Once
+a parser can receive fewer elements than its per-type count, a bound
+taken from the name length no longer reflects the array size, and the
+"elem < count" loop conditions and "elem + n >= count" sub-loop guards
+read past the end of elements[] - an out-of-bounds heap read.
 
-hp_convert_hexstr_to_str() rejects a NULL input with -EINVAL, which
-sends this function to exit_list, and exit_list unconditionally
-returns 0. The net effect is that any ordered-list attribute with
-elements present silently ends up with an empty elements list, with no
-error surfaced anywhere.
+Forward the validated obj->package.count to every *_package_data()
+wrapper so the parsers bound themselves against the real package size.
+This does not change behaviour for the packages that enumerate
+correctly today and is a prerequisite for accepting shorter packages
+safely.
 
-Fix by converting the current element directly, order_obj[elem], the
-same way the PREREQUISITES case already handles its own array
-elements, instead of reusing the unrelated str_value/value_len left
-over from earlier processing.
-
-Fixes: 4b2672ec71a3 ("platform/x86: hp-bioscfg: order-list-attributes")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260812111829.172273-9-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260709165900.30615-2-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c               |    5 +++++
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.h               |    5 +++++
+ drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c       |    4 +++-
+ drivers/platform/x86/hp/hp-bioscfg/int-attributes.c        |    4 +++-
+ drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    6 ++++--
+ drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c  |    6 ++++--
+ drivers/platform/x86/hp/hp-bioscfg/string-attributes.c     |    4 +++-
+ 7 files changed, 27 insertions(+), 7 deletions(-)
 
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -739,26 +739,31 @@ static int hp_init_bios_package_attribut
+ 	switch (attr_type) {
+ 	case HPWMI_STRING_TYPE:
+ 		ret = hp_populate_string_package_data(elements,
++						      obj->package.count,
+ 						      instance_id,
+ 						      attr_name_kobj);
+ 		break;
+ 	case HPWMI_INTEGER_TYPE:
+ 		ret = hp_populate_integer_package_data(elements,
++						       obj->package.count,
+ 						       instance_id,
+ 						       attr_name_kobj);
+ 		break;
+ 	case HPWMI_ENUMERATION_TYPE:
+ 		ret = hp_populate_enumeration_package_data(elements,
++							   obj->package.count,
+ 							   instance_id,
+ 							   attr_name_kobj);
+ 		break;
+ 	case HPWMI_ORDERED_LIST_TYPE:
+ 		ret = hp_populate_ordered_list_package_data(elements,
++							    obj->package.count,
+ 							    instance_id,
+ 							    attr_name_kobj);
+ 		break;
+ 	case HPWMI_PASSWORD_TYPE:
+ 		ret = hp_populate_password_package_data(elements,
++							obj->package.count,
+ 							instance_id,
+ 							attr_name_kobj);
+ 		break;
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
+@@ -404,6 +404,7 @@ int hp_populate_string_buffer_data(u8 *b
+ int hp_alloc_string_data(void);
+ void hp_exit_string_attributes(void);
+ int hp_populate_string_package_data(union acpi_object *str_obj,
++				    int str_obj_count,
+ 				    int instance_id,
+ 				    struct kobject *attr_name_kobj);
+ 
+@@ -414,6 +415,7 @@ int hp_populate_integer_buffer_data(u8 *
+ int hp_alloc_integer_data(void);
+ void hp_exit_integer_attributes(void);
+ int hp_populate_integer_package_data(union acpi_object *integer_obj,
++				     int integer_obj_count,
+ 				     int instance_id,
+ 				     struct kobject *attr_name_kobj);
+ 
+@@ -424,6 +426,7 @@ int hp_populate_enumeration_buffer_data(
+ int hp_alloc_enumeration_data(void);
+ void hp_exit_enumeration_attributes(void);
+ int hp_populate_enumeration_package_data(union acpi_object *enum_obj,
++					 int enum_obj_count,
+ 					 int instance_id,
+ 					 struct kobject *attr_name_kobj);
+ 
+@@ -435,6 +438,7 @@ int hp_populate_ordered_list_buffer_data
+ int hp_alloc_ordered_list_data(void);
+ void hp_exit_ordered_list_attributes(void);
+ int hp_populate_ordered_list_package_data(union acpi_object *order_obj,
++					  int order_obj_count,
+ 					  int instance_id,
+ 					  struct kobject *attr_name_kobj);
+ 
+@@ -443,6 +447,7 @@ int hp_populate_password_buffer_data(u8
+ 				     int instance_id,
+ 				     struct kobject *attr_name_kobj);
+ int hp_populate_password_package_data(union acpi_object *password_obj,
++				      int password_obj_count,
+ 				      int instance_id,
+ 				      struct kobject *attr_name_kobj);
+ int hp_alloc_password_data(void);
+--- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
+@@ -304,10 +304,12 @@ exit_enumeration_package:
+  * Populate all properties of an instance under enumeration attribute
+  *
+  * @enum_obj: ACPI object with enumeration data
++ * @enum_obj_count: Number of elements in @enum_obj
+  * @instance_id: The instance to enumerate
+  * @attr_name_kobj: The parent kernel object
+  */
+ int hp_populate_enumeration_package_data(union acpi_object *enum_obj,
++					 int enum_obj_count,
+ 					 int instance_id,
+ 					 struct kobject *attr_name_kobj)
+ {
+@@ -316,7 +318,7 @@ int hp_populate_enumeration_package_data
+ 	enum_data->attr_name_kobj = attr_name_kobj;
+ 
+ 	hp_populate_enumeration_elements_from_package(enum_obj,
+-						      enum_obj->package.count,
++						      enum_obj_count,
+ 						      instance_id);
+ 	hp_update_attribute_permissions(enum_data->common.is_readonly,
+ 					&enumeration_current_val);
+--- a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
+@@ -277,10 +277,12 @@ exit_integer_package:
+  * Populate all properties of an instance under integer attribute
+  *
+  * @integer_obj: ACPI object with integer data
++ * @integer_obj_count: Number of elements in @integer_obj
+  * @instance_id: The instance to enumerate
+  * @attr_name_kobj: The parent kernel object
+  */
+ int hp_populate_integer_package_data(union acpi_object *integer_obj,
++				     int integer_obj_count,
+ 				     int instance_id,
+ 				     struct kobject *attr_name_kobj)
+ {
+@@ -288,7 +290,7 @@ int hp_populate_integer_package_data(uni
+ 
+ 	integer_data->attr_name_kobj = attr_name_kobj;
+ 	hp_populate_integer_elements_from_package(integer_obj,
+-						  integer_obj->package.count,
++						  integer_obj_count,
+ 						  instance_id);
+ 	hp_update_attribute_permissions(integer_data->common.is_readonly,
+ 					&integer_current_val);
 --- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
 +++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
-@@ -264,7 +264,9 @@ static int hp_populate_ordered_list_elem
- 			 * Ordered list data is stored in hex and comma separated format
- 			 * Convert the data and split it to show each element
- 			 */
--			ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
-+			ret = hp_convert_hexstr_to_str(order_obj[elem].string.pointer,
-+						       order_obj[elem].string.length,
-+						       &tmpstr, &tmp_len);
- 			if (ret)
- 				goto exit_list;
+@@ -303,10 +303,12 @@ exit_list:
+  * Populate all properties of an instance under ordered_list attribute
+  *
+  * @order_obj: ACPI object with ordered_list data
++ * @order_obj_count: Number of elements in @order_obj
+  * @instance_id: The instance to enumerate
+  * @attr_name_kobj: The parent kernel object
+  */
+-int hp_populate_ordered_list_package_data(union acpi_object *order_obj, int instance_id,
++int hp_populate_ordered_list_package_data(union acpi_object *order_obj, int order_obj_count,
++					  int instance_id,
+ 					  struct kobject *attr_name_kobj)
+ {
+ 	struct ordered_list_data *ordered_list_data = &bioscfg_drv.ordered_list_data[instance_id];
+@@ -314,7 +316,7 @@ int hp_populate_ordered_list_package_dat
+ 	ordered_list_data->attr_name_kobj = attr_name_kobj;
  
+ 	hp_populate_ordered_list_elements_from_package(order_obj,
+-						       order_obj->package.count,
++						       order_obj_count,
+ 						       instance_id);
+ 	hp_update_attribute_permissions(ordered_list_data->common.is_readonly,
+ 					&ordered_list_current_val);
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -389,10 +389,12 @@ exit_package:
+  *	Populate all properties for an instance under password attribute
+  *
+  * @password_obj: ACPI object with password data
++ * @password_obj_count: Number of elements in @password_obj
+  * @instance_id: The instance to enumerate
+  * @attr_name_kobj: The parent kernel object
+  */
+-int hp_populate_password_package_data(union acpi_object *password_obj, int instance_id,
++int hp_populate_password_package_data(union acpi_object *password_obj, int password_obj_count,
++				      int instance_id,
+ 				      struct kobject *attr_name_kobj)
+ {
+ 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
+@@ -400,7 +402,7 @@ int hp_populate_password_package_data(un
+ 	password_data->attr_name_kobj = attr_name_kobj;
+ 
+ 	hp_populate_password_elements_from_package(password_obj,
+-						   password_obj->package.count,
++						   password_obj_count,
+ 						   instance_id);
+ 
+ 	hp_friendly_user_name_update(password_data->common.path,
+--- a/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/string-attributes.c
+@@ -265,10 +265,12 @@ exit_string_package:
+  * Populate all properties of an instance under string attribute
+  *
+  * @string_obj: ACPI object with string data
++ * @string_obj_count: Number of elements in @string_obj
+  * @instance_id: The instance to enumerate
+  * @attr_name_kobj: The parent kernel object
+  */
+ int hp_populate_string_package_data(union acpi_object *string_obj,
++				    int string_obj_count,
+ 				    int instance_id,
+ 				    struct kobject *attr_name_kobj)
+ {
+@@ -277,7 +279,7 @@ int hp_populate_string_package_data(unio
+ 	string_data->attr_name_kobj = attr_name_kobj;
+ 
+ 	hp_populate_string_elements_from_package(string_obj,
+-						 string_obj->package.count,
++						 string_obj_count,
+ 						 instance_id);
+ 
+ 	hp_update_attribute_permissions(string_data->common.is_readonly,
 
 
