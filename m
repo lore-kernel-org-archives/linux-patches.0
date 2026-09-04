@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1600037C106;
-	Fri,  4 Sep 2026 05:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75223242BD;
+	Fri,  4 Sep 2026 05:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501298; cv=none; b=i1h+mvHWXAv2XEMPrhmSKGZIJKfsc4kcDE6ivJpbwcmHvAK2ppwi3IMse4nTWLUdYWKfS/fF8gCnSwL/aedlsfcsEWtixGvoXlrUoD3VzvMUcLZEjvr2oNdfg76kMv/Y6EZUyxy+NUBEZKkmdVajBUYNsSswzko8MFtI8FAyjtI=
+	t=1788501301; cv=none; b=NYTg5WRyk413ajJLaXSLYTGjFAQ4QbHPguBYrtmDPmiL+m8ii77Pnyo2wbD+8PzE90e0yUIS97dJRuYFNvcY8PRMT6u5qxYWjRgZHbUTp74JdJRr40H6Iso01x4X0xZcvjKi8ai4KorW3RBLhmZX2ZBmSlo138PSqQbNFgVXzDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501298; c=relaxed/simple;
-	bh=OwQ6Y01eJNUEMSbN/YmLeYGKnydW6q9C+wMNHDQVIMo=;
+	s=arc-20240116; t=1788501301; c=relaxed/simple;
+	bh=GJ6E/21LO+c0RBfuks10pr3BuIVq08ETuCLKa4XuXtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPRCC87Ug+GLQL/iCY3E4IHqM4OEemMByYJw+QE1fLX02RUhnVc4RRze1EHkrq6h5DT+yT1VdL+H3zCRaoYAhS0v59sW1JCUwQsE3tTM7JR8oZ1j0i87O9lLhsZv3AtRZFKKqrVNs84lDgFsG4RSJGOBbBXEUGXOpmtPR+7mBtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ibvw6NcG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PS3Iv4Tp/dDrl+aKqZKD+9buSmLm5bYfYpvpgnxsuU/cvroyIqlHe1cCMiOFc/Ufh7bbOL0nYRoy+hgq8hk2iWVR71/j0WUSGvN3SbPgW9nDVvdBqo92FYzXHK5NcpvEVSYZTtEVNIMkgp5Vl7F+ZEGLLXZgiKxKzrQzdYBGEGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3wi1z0q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ibvw6NcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3821F00A3D;
-	Fri,  4 Sep 2026 05:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3wi1z0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC701F00A3D;
+	Fri,  4 Sep 2026 05:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501296;
-	bh=UB+46jsWPoevtQp6MoHPiekeeeCiczb5AnkLmqw3xGc=;
+	s=korg; t=1788501299;
+	bh=pH7FP6ik50rSrnALhxAcg02R2/ITSZPo0NF+u9nfCcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ibvw6NcGYKtphL+vjy5EoA3ABfo69ks/emLALGJE3Stu38vP1HbGemBN4wxumdT3N
-	 B5z5o/dKYEtfWBa+sbZl516xpka/L1V8sPiFxbxdvhgBsHfAYzIonrI5jqr0/EtUMv
-	 ZI9sEkrNq1YtgjqFSIrZNoCU11uPiV9gr/7YO7LQ=
+	b=d3wi1z0q/PftwrjfMBGpSF5gOODdD6zh6LSVii4EGJR4YWyak6VDysH2GcPGFe3w+
+	 SHPJhPxLZifA2LpjclVKZett+yj8Hu8DKDQvIlJZWglnYCM2nSwv016qOtDD5sZGgU
+	 jxmglBElbGFlRE63Qt/3pVydhqCPyjxxYlrmEUSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunwoo Kim <imv4bel@gmail.com>,
 	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 361/552] sctp: stop processing a packet once its association is deleted
-Date: Fri,  4 Sep 2026 06:58:38 +0200
-Message-ID: <20260904045758.419275333@linuxfoundation.org>
+Subject: [PATCH 6.18 362/552] sctp: drop a chunk if its transport was removed
+Date: Fri,  4 Sep 2026 06:58:39 +0200
+Message-ID: <20260904045758.441567383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,58 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 47e15a8d12e366d0d261bcbc394394f44418938d upstream.
+commit 03a9d10ecf71f54b2af8020935f2033d4a132be5 upstream.
 
-sctp_endpoint_bh_rcv() looks the association up only when chunk->asoc is
-NULL, and caches the result in chunk->asoc and chunk->transport without
-taking a reference.
+sctp_rcv() resolves the transport once per packet and leaves it in
+chunk->transport. The lookup reference, or the one sctp_add_backlog() takes
+if the socket is owned by userspace, keeps it around until the chunk has
+been processed.
 
-A packet that matches no association is handed to the endpoint, so a peer
-can bundle COOKIE ECHO, SHUTDOWN and SHUTDOWN ACK in one packet. The
-COOKIE ECHO creates the association, the SHUTDOWN chunk caches it, and
-with the outqueue empty the SHUTDOWN ACK reaches sctp_sf_do_9_2_final(),
-so the association and its transports are freed.
+An authenticated ASCONF DEL-IP can remove it in the meantime.
+sctp_assoc_rm_peer() takes the transport out of the association and calls
+sctp_transport_free(), which tags it dead and drops the reference the
+association held. There is a window on both paths: the packet can sit on
+the socket backlog, and on the direct path the lookup completes before
+bh_lock_sock().
 
-The endpoint loop has no counterpart to the asoc->base.dead check in
-sctp_assoc_bh_rcv(). The next chunk writes to last_time_heard in the freed
-transport and is then passed to sctp_do_sm() with the freed association.
-The transport is freed through RCU, so this needs the packet to come off
-the socket backlog, where the loop runs in task context.
+The DATA chunk in that packet puts the removed transport back into
+asoc->peer.last_data_from. Once the packet is done that reference goes
+away and the transport is freed by RCU, so the next delayed SACK carries
+the pointer into the SACK chunk and sctp_outq_select_transport() reads the
+freed transport's state.
 
-The endpoint loop cannot do the same check: it holds no reference on the
-association, so reading asoc->base.dead would itself be a use-after-free.
-Mark the packet for discard in the command interpreter, just before it
-deletes the association. That is also before sctp_inq_free() releases the
-chunk on the association receive path.
-
-sctp_sf_do_5_2_4_dupcook() issues SCTP_CMD_DELETE_TCB for the temporary
-association, while the one the packet belongs to stays alive. A restarting
-peer can bundle DATA behind its COOKIE ECHO, so compare against
-chunk->asoc and leave that case alone.
+Drop the chunk in sctp_inq_push(), next to the existing rcvr->dead check.
+Both paths reach it with the association's socket lock held. The peer
+retransmits it.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/an-YYtoqw1QpTXUL@v4bel
+Link: https://patch.msgid.link/aoUJHQmxL0LFIMCw@v4bel
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_sideeffect.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/sctp/inqueue.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/sctp/sm_sideeffect.c
-+++ b/net/sctp/sm_sideeffect.c
-@@ -1332,6 +1332,10 @@ static int sctp_cmd_interpreter(enum sct
- 				sctp_outq_uncork(&asoc->outqueue, gfp);
- 				local_cork = 0;
- 			}
-+			/* No chunk left in this packet may use this asoc. */
-+			if (event_type == SCTP_EVENT_T_CHUNK &&
-+			    chunk->asoc == asoc)
-+				chunk->pdiscard = 1;
- 			/* Delete the current association.  */
- 			sctp_cmd_delete_tcb(commands, asoc);
- 			asoc = NULL;
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -71,8 +71,11 @@ void sctp_inq_free(struct sctp_inq *queu
+  */
+ void sctp_inq_push(struct sctp_inq *q, struct sctp_chunk *chunk)
+ {
+-	/* Directly call the packet handling routine. */
+-	if (chunk->rcvr->dead) {
++	/* Directly call the packet handling routine.  Drop the chunk if the
++	 * receiver or the transport it was looked up on is gone.
++	 */
++	if (chunk->rcvr->dead ||
++	    (chunk->transport && chunk->transport->dead)) {
+ 		sctp_chunk_free(chunk);
+ 		return;
+ 	}
 
 
