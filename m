@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A18419FBB;
-	Fri,  4 Sep 2026 05:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00E2415F22;
+	Fri,  4 Sep 2026 05:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499314; cv=none; b=bebziR8t1Pz29c8+C9alE3/PmxUUAGgTcssp68N1Mc2aOWkNJxJyd0OuuZXzzfJRBmw/g1xRvgnm/InDTiTLCkRynswLqle578U+/XzofAAxA0HcoM3C9YVvqBeq+GntoT8DbvbA4KuQAQlsx73QHplbh3S796xHfunQhgAyHi4=
+	t=1788499317; cv=none; b=HnljAYlnaq60pO+63cLaDxvcCGA5ymGF5V3MhnCyNszyTATq4MObqmvEajR7xIOLE7tnSoIfgiog0bjuuhWjO2Us0VClc1yZR2tLehgOG+e3uftLbvqW1Mt0+HTTCMFs/+i2t35Mr04mVrzsEutFGFlP1VVl8BxSDvfQ65Q0fgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499314; c=relaxed/simple;
-	bh=wkWK++SNWgwCH4FYCoNJV6tEt/0Iz/2Gb6sVl/ov28E=;
+	s=arc-20240116; t=1788499317; c=relaxed/simple;
+	bh=ETGnUuR76O3MNDuo8toGuf0r0c7YN3R9vNd4el+rCic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccaneGhsk4wyEFp2j4f1oMoB2AlJLW4UErZUvSlkabAiCQuD4ZNCCspMbY7apyzy/NSi3d4omu5QcuXHyUhtr32RhC0LjFN5BClUBCxfJYxm4putWRTWsMTP/1VnroiFhh/ZhxoUxxvWOyTLxZLkk+QPC2rq4Bw7wbMKOZ7XT60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CULf3Bci; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nxaifJmxsRsBB+ljw/47GHtNc6YVWcKEHbfCpyV6Q7nREgvzh4I3nXjRJ0JNXFInfqH5kjlZMSPauceXw8EN2haUjB26SP7qQUUjLnl+Lr+qpo3BxYTWrBalOMLZeWMtxEekvxMUoDFj5it8MRxU0IQqiz9NggHkuILqrjNHLks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOeec6H9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CULf3Bci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0121F00A3D;
-	Fri,  4 Sep 2026 05:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOeec6H9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EF81F00A3D;
+	Fri,  4 Sep 2026 05:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499312;
-	bh=WyDAhr+j18Lz1dbkbYY2uaLSgMoRhLkTUBOfdMkrluU=;
+	s=korg; t=1788499315;
+	bh=qwEDroxx+w02gC1LAAEWLiEmsIigyIRA3pQMMU5cjRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CULf3Bciw8N12GNQD5hVeiUaj3VQarYxO9gt/K8blrnPa2m/8MFHi51JAYfgNtX8t
-	 BUFSOjhSsXbeD9yTNTL7dHvT7degsNq7WVhVZLT2HilVsQcMyZh4NQEJvadZzYIcvp
-	 R3lD6vXnxecooMRpelhTZRORb7zLbbx7sznlMDWw=
+	b=DOeec6H9727/oQMKsFVKy5ll85fXC2zEDTK0Ca6U2W5T6WiXbEqZhVXpLVbZCT+iJ
+	 BYzHvvP8J7fmdzzx2Mp3cbCQR5CMU80A5GzXJVgE2ZQai6fzoP2y19BJ+7W7DmC0ds
+	 QyQ4EcMR+oDpsIQSuQsbiZd6p571HsbSVY8vKtME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Xiang Mei <xmei5@asu.edu>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 356/713] ipv6: rpl: fix NULL dereference of idev in ipv6_rpl_srh_rcv()
-Date: Fri,  4 Sep 2026 06:55:24 +0200
-Message-ID: <20260904045811.810985977@linuxfoundation.org>
+	Ameer Hamza <ameer.hamza@truenas.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 374/713] SUNRPC: Restore NUMA_NO_NODE for svc thread allocations in global mode
+Date: Fri,  4 Sep 2026 06:55:42 +0200
+Message-ID: <20260904045812.211408319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,138 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Ameer Hamza <ameer.hamza@truenas.com>
 
-commit f826df95332c07380206dbd54178b6eefb311aba upstream.
+commit 0574da29ae12be7714df217c4ce7ff6ba9b0c23b upstream.
 
-ipv6_rpl_srh_rcv() dereferences idev from __in6_dev_get() without a NULL
-check when reading idev->cnf.rpl_seg_enabled.
+Commit d57e43b72bf2 ("SUNRPC: Update svcxdr_init_decode() to call
+xdr_set_scratch_folio()") changed svc_pool_map_get_node() to return
+numa_mem_id() instead of NUMA_NO_NODE, because __folio_alloc_node()
+cannot accept NUMA_NO_NODE. That return value is not equivalent: it
+is evaluated in the context of the task creating the nfsd threads,
+once per thread created, and it is passed to kthread_create_on_node()
+and to the per-thread allocations in svc_prepare_thread().
 
-When the device's MTU drops below IPV6_MIN_MTU, addrconf_ifdown() clears
-dev->ip6_ptr through RCU_INIT_POINTER(). A packet that passed the idev
-check in ip6_rcv_core() can then reach ipv6_rpl_srh_rcv() with
-dev->ip6_ptr already NULL.
+Since commit d1a89197589c ("kthread: Default affine kthread to its
+preferred NUMA node"), the node argument of kthread_create_on_node()
+no longer only places the task structure and stack: a kthread created
+with a real node id normally affines itself to that node's CPUs when
+it is first woken to run its thread function. All nfsd threads are
+typically started together, by one task writing to
+/proc/fs/nfsd/threads, so under the default pool_mode=global each
+nfsd thread is now affined to the local-memory node of the CPU its
+creating iteration happened to run on - typically the same node for
+every thread. The CPUs of the other nodes are then unable to run
+nfsd at all, and the threads' allocations - svc_rqst structures,
+page pointer arrays, newly allocated task stacks, and the per-RPC
+pages allocated at run time - all prefer that one node.
 
-Reproduced by flooding the receiving interface with ping6 traffic while
-flapping its MTU between 1500 and 1200:
+Restore the NUMA_NO_NODE behaviour that global mode has had since
+commit 11fd165c68b7 ("sunrpc: use better NUMA affinities"), and
+handle NUMA_NO_NODE at the one call site that cannot take it by
+resolving it to numa_mem_id() there, exactly as alloc_pages_node()
+did for the scratch page before the conversion. The mapped percpu
+and pernode branches are unchanged. Unpooled services such as lockd
+and the NFS client callback service also take this fallback when no
+percpu or pernode map is active, restoring their thread placement in
+that case.
 
- BUG: KASAN: null-ptr-deref in ipv6_rpl_srh_rcv+0xb3/0x1070
- Read of size 4 at addr 00000000000006b4 by task ping6/394
+A bisect of a 2x NFS READ throughput regression between v6.17 and
+v6.18 converged on d57e43b72bf2. On the affected 4-node server every
+nfsd thread comes up with its CPU affinity restricted to the CPUs of
+a single node; with this change the threads are runnable on all CPUs
+again and the observed regression is resolved.
 
- CPU: 2 UID: 0 PID: 394 Comm: ping6 Not tainted 7.2.0-rc7-micro-vm-dev-00095-g24ef02f934ee #240 PREEMPT(full)
- Call Trace:
-  <IRQ>
-  kasan_report+0xc6/0x100
-  ipv6_rpl_srh_rcv+0xb3/0x1070
-  ip6_protocol_deliver_rcu+0x759/0x9a0
-  ip6_input_finish+0xa8/0x1b0
-  ip6_input+0xe1/0x490
-  ipv6_rcv+0x33d/0x460
-  __netif_receive_skb_one_core+0xd6/0x130
-  process_backlog+0x2cc/0xa00
-  __napi_poll.constprop.0+0x56/0x270
-  net_rx_action+0x327/0x730
-  handle_softirqs+0x11e/0x630
-  do_softirq+0xb3/0xf0
-  </IRQ>
-
-Both ipv6_rpl_srh_rcv() and ipv6_srh_rcv() are called only from
-ipv6_rthdr_rcv(), which already has an idev lookup.
-
-Fix the NULL dereference on the RPL path by checking idev in
-ipv6_rthdr_rcv(), before it calls either function. The callees take idev as
-an argument and no longer call __in6_dev_get(), so the packet is now
-dropped in one place, with SKB_DROP_REASON_IPV6DISABLED on both paths.
-
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
+Fixes: d57e43b72bf2 ("SUNRPC: Update svcxdr_init_decode() to call xdr_set_scratch_folio()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260817132644.2223-1-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260722182012.2063936-1-ameer.hamza@truenas.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs.c |   26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ net/sunrpc/svc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -368,23 +368,16 @@ static void seg6_update_csum(struct sk_b
- 			   (__be32 *)addr);
- }
- 
--static int ipv6_srh_rcv(struct sk_buff *skb)
-+static int ipv6_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
- {
- 	struct inet6_skb_parm *opt = IP6CB(skb);
- 	struct net *net = dev_net(skb->dev);
- 	struct ipv6_sr_hdr *hdr;
--	struct inet6_dev *idev;
- 	struct in6_addr *addr;
- 	int accept_seg6;
- 
- 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
- 
--	idev = __in6_dev_get(skb->dev);
--	if (!idev) {
--		kfree_skb(skb);
--		return -1;
--	}
--
- 	accept_seg6 = min(READ_ONCE(net->ipv6.devconf_all->seg6_enabled),
- 			  READ_ONCE(idev->cnf.seg6_enabled));
- 
-@@ -485,12 +478,11 @@ looped_back:
- 	return -1;
- }
- 
--static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
-+static int ipv6_rpl_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
- {
- 	struct ipv6_rpl_sr_hdr *hdr, *ohdr, *chdr;
- 	struct inet6_skb_parm *opt = IP6CB(skb);
- 	struct net *net = dev_net(skb->dev);
--	struct inet6_dev *idev;
- 	struct ipv6hdr *oldhdr;
- 	unsigned int chdr_len;
- 	unsigned char *buf;
-@@ -499,8 +491,6 @@ static int ipv6_rpl_srh_rcv(struct sk_bu
- 	u64 n = 0;
- 	u32 r;
- 
--	idev = __in6_dev_get(skb->dev);
--
- 	accept_rpl_seg = min(READ_ONCE(net->ipv6.devconf_all->rpl_seg_enabled),
- 			     READ_ONCE(idev->cnf.rpl_seg_enabled));
- 	if (!accept_rpl_seg) {
-@@ -689,10 +679,14 @@ static int ipv6_rthdr_rcv(struct sk_buff
- 	switch (hdr->type) {
- 	case IPV6_SRCRT_TYPE_4:
- 		/* segment routing */
--		return ipv6_srh_rcv(skb);
-+		if (!idev)
-+			goto disabled;
-+		return ipv6_srh_rcv(skb, idev);
- 	case IPV6_SRCRT_TYPE_3:
- 		/* rpl segment routing */
--		return ipv6_rpl_srh_rcv(skb);
-+		if (!idev)
-+			goto disabled;
-+		return ipv6_rpl_srh_rcv(skb, idev);
- 	default:
- 		break;
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -352,7 +352,7 @@ static int svc_pool_map_get_node(unsigne
+ 		if (m->mode == SVC_POOL_PERNODE)
+ 			return m->pool_to[pidx];
  	}
-@@ -837,6 +831,10 @@ unknown_rh:
- 	icmpv6_param_prob(skb, ICMPV6_HDR_FIELD,
- 			  (&hdr->type) - skb_network_header(skb));
- 	return -1;
-+
-+disabled:
-+	kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
-+	return -1;
+-	return numa_mem_id();
++	return NUMA_NO_NODE;
  }
+ /*
+  * Set the given thread's cpus_allowed mask so that it
+@@ -738,7 +738,9 @@ svc_prepare_thread(struct svc_serv *serv
+ 	rqstp->rq_server = serv;
+ 	rqstp->rq_pool = pool;
  
- static const struct inet6_protocol rthdr_protocol = {
+-	rqstp->rq_scratch_folio = __folio_alloc_node(GFP_KERNEL, 0, node);
++	rqstp->rq_scratch_folio = __folio_alloc_node(GFP_KERNEL, 0,
++						     node == NUMA_NO_NODE ?
++						     numa_mem_id() : node);
+ 	if (!rqstp->rq_scratch_folio)
+ 		goto out_enomem;
+ 
 
 
