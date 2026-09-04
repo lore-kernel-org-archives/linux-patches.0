@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D2D24A05D;
-	Fri,  4 Sep 2026 05:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9504D26AC3;
+	Fri,  4 Sep 2026 05:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498297; cv=none; b=J9mDs/D2qCtYmk7LgYT/+9+SzXUTe5J3IPKZnQ3uCzCTG4oW7G22mdv39l+Td3ee0fUg5zRQt7JAUXpfdoo04lyz6p3A7LsrSub069g/JNwGKvAaEf9gJ4cyiKqEBbeAMh+Yh9bnVLb31pv7uWUrXIeEpPN9TGuI1/K7QXOc20k=
+	t=1788498299; cv=none; b=EhwklGCFvQflV6VwuDr+8x6J6W1R2SE6L1xd+U1/HCYABcyKW8UIn/Roo55OS06nzPZ1NM/Y7LFoJVHnZhaDDk46/emSBqMO8punsvoV2gOHD2AFEKd8nnEQFdPSa+Vk4+p1muLVWrCNeuMb4pwAAMnHMcdjDpb192MhaZQ1wkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498297; c=relaxed/simple;
-	bh=y0H07Zd/jwthCmvrVUK10qffqe5dlQ49fRAB8LLOoWo=;
+	s=arc-20240116; t=1788498299; c=relaxed/simple;
+	bh=wkAWGywlH328iBUCZnlerF7R3TFvcRDFSVJMUls46NI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKFQkTRPnwYLzy5lWdmTo84w5NlVG9vXsfnT51LVYSVFGGIY4OzKLdsD24fBFy451pZZi9p1vX2BWrnGYQ9YoT0r+bHkepZ5hIgP6jW9w6HY8iXE2FiAqN6uMFNQwD+R30IrWd1xqyYN9xw+NvxqtwqNdUDnWGjXox3idaoqH9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWR6bMsF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ekPGMSimOIwfGGpgp7SU+Sfx8lk76bDpte+gClXK8jDoR0hIdIpby9fVAHfuVpMPid2Y78jbyS2WII6jmHkdBloqcmJKbAhC+oN1JssQ+KMicstKsjvRZDBInCmgNo1YWdS+BK6I/XYBzFrN0F0nI1fVuo2kJPo+YqTXvfo76no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/7B6fwY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWR6bMsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286A91F00A3D;
-	Fri,  4 Sep 2026 05:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/7B6fwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF151F00A3D;
+	Fri,  4 Sep 2026 05:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498295;
-	bh=jXJZwOcUwIUX7UVlKBY6wjODhouyvbAio85BqKwUAm0=;
+	s=korg; t=1788498298;
+	bh=JXaJUq5/VgE/ZeeF18+z3odpa6db5D8/KJwYVf6fDI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IWR6bMsFugikUlk/QnBry3yVlAG7gKtiFSSq77ZJd116W5tYItyOd89miimeq39kb
-	 gIWXp3eAEoPsc2ZUdlyII9vq0TfIWFvKkDDpb0Fezi+Um6JVdHi6x5XzSWfcpnlwHx
-	 DZMcHyjD0qXIgVJRc5/BLiZWDF1XDEFx0DN4wb6Y=
+	b=o/7B6fwYKNqiQqgVvjnq7YlhivDCpa4RBG/t4NPUUdNcq0RkL3bLmDq5O5SPKNH3S
+	 SYmhYBPZBE3NwDUcAmJJKXxaiiEKRfesVZ4eA4OI5OcLtm8uWEsoZjLNGc7HFhqEBW
+	 Ro/8oZ1XNKny3l6trjR/aQNmHPDYuh2RyC5ljYVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 7.2 013/713] alpha: fix ieee_swcr_to_fpcr setting FPCR_DNOD unconditionally
-Date: Fri,  4 Sep 2026 06:49:41 +0200
-Message-ID: <20260904045804.120216031@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Anuj Gupta <anuj20.g@samsung.com>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.2 014/713] iomap: dont free integrity payload that doesnt exist
+Date: Fri,  4 Sep 2026 06:49:42 +0200
+Message-ID: <20260904045804.143093570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,83 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 49672d026cc4773608e1222b69b29fd70f41336b upstream.
+commit 8a8685b32c0718cc7b2cb4d6202e5a5b8e0a8e2d upstream.
 
-ieee_swcr_to_fpcr() converts the software IEEE trap-enable and status
-bits kept in thread_info.ieee_state into the hardware FPCR format.  It
-contained:
+fs_bio_integrity_alloc might not allocate a bio integrity payload if PI
+verification is disabled on the block device.  Check for that case before
+calling fs_bio_integrity_free in iomap_bio_read_folio_range_sync to
+avoid a NULL pointer dereferences.
 
-	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
+Make the branch cover the PI verification as well - while
+fs_bio_integrity_verify works without an integrity payload, it requires
+one to actually do useful work.
 
-FPCR_DNOD (bit 47) disables denormal operand traps: with it set the
-hardware handles a denormal operand itself, treating it as zero, instead
-of trapping for software completion.  The intent was to set DNOD when the
-user has not asked for SIGFPE on denormal operands, but
-IEEE_TRAP_ENABLE_DNO is clear by default, so ieee_swcr_to_fpcr(0) always
-set DNOD.
-
-Instructions built with the software completion suffix therefore never
-trapped on a denormal operand.  The hardware silently substituted zero
-and produced wrong results, affecting every program compiled with -mieee
-and default FPU settings, glibc included.
-
-Set FPCR_DNOD only when IEEE_MAP_DMZ is requested, which is exactly the
-case where flushing denormal inputs to zero is what the user asked for.
-DNOD then encodes MAP_DMZ, which ieee_fpcr_to_swcr() already recovers
-from FPCR_DNZ, so drop its attempt to recover IEEE_TRAP_ENABLE_DNO from
-DNOD; the DNO trap enable lives solely in ieee_state.
-
-Both functions are in a uapi header, so the encoding change is visible to
-userspace, but nothing outside the kernel is known to depend on DNOD
-carrying the DNO trap enable, and the kernel is the only writer of the
-FPCR.
-
-This must not be backported on its own.  Re-enabling denormal operand
-traps exposes a second bug, fixed in the following patch: those traps
-usually find an exact result, and for an exact result the emulator did
-not write the FPCR back, leaving hardware-fabricated exception bits
-visible to user space.  Taken alone this change would make spurious
-exception flags more common.
-
-The bug predates the git history, so there is no commit to reference in a
-Fixes tag.
-
-Cc: stable@vger.kernel.org # 5.15+
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-1-c99d75608e60@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Fixes: 0b10a370529c ("iomap: support T10 protection information")
+Cc: stable@vger.kernel.org # v7.1
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/20260804124404.737145-2-hch@lst.de
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/fpu.h |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/iomap/bio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/alpha/include/uapi/asm/fpu.h
-+++ b/arch/alpha/include/uapi/asm/fpu.h
-@@ -101,7 +101,12 @@ ieee_swcr_to_fpcr(unsigned long sw)
- 		      | IEEE_TRAP_ENABLE_OVF)) << 48;
- 	fp |= (~sw & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE)) << 57;
- 	fp |= (sw & IEEE_MAP_UMZ ? FPCR_UNDZ | FPCR_UNFD : 0);
--	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
-+	/*
-+	 * Disable denormal operand traps only when denormal inputs are to be
-+	 * flushed to zero.  Otherwise they must keep trapping, so that /S
-+	 * instructions reach the kernel emulation handler.
-+	 */
-+	fp |= (sw & IEEE_MAP_DMZ ? FPCR_DNOD : 0);
- 	return fp;
- }
- 
-@@ -116,7 +121,6 @@ ieee_fpcr_to_swcr(unsigned long fp)
- 			     | IEEE_TRAP_ENABLE_OVF);
- 	sw |= (~fp >> 57) & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE);
- 	sw |= (fp >> 47) & IEEE_MAP_UMZ;
--	sw |= (~fp >> 41) & IEEE_TRAP_ENABLE_DNO;
- 	return sw;
- }
- 
+--- a/fs/iomap/bio.c
++++ b/fs/iomap/bio.c
+@@ -179,7 +179,7 @@ int iomap_bio_read_folio_range_sync(cons
+ 	if (srcmap->flags & IOMAP_F_INTEGRITY)
+ 		fs_bio_integrity_alloc(&bio);
+ 	error = submit_bio_wait(&bio);
+-	if (srcmap->flags & IOMAP_F_INTEGRITY) {
++	if (bio_integrity(&bio)) {
+ 		if (!error)
+ 			error = fs_bio_integrity_verify(&bio, sector, len);
+ 		fs_bio_integrity_free(&bio);
 
 
