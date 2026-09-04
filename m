@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352FE2F9DA1;
-	Fri,  4 Sep 2026 06:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A973815E1;
+	Fri,  4 Sep 2026 06:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501943; cv=none; b=pJ2xrHi3fMNMHDiJlBWzp3i4ReHA+65Q45HEbEBQC1DzQRqACZxBOuSBpmu+gA3HO8mkLJR/bRjWJ9E7oc9SAV2MI5r308pV9hmjdCqaTE1jjEHhLHssMZmWZUVGmRy3u/cG/g7MJvl2OzC5I0mI2XUXjir4pR+0uWrIIkQnNyU=
+	t=1788501946; cv=none; b=RZ0CKoJeZPXx0vxYGBlYNpazXh9hLE7bkybJL/HaXB3mOKq9f9WR26B9DO/tGGJswEUK6ANujYFlxVYYWCUgSXhFZ+Jxe83In4WpCsHOQQ+rgIIK96d4/0NtePL1p6fmTIuyXd1tO6OLw0CZwYNWiP6HduVnhqrkKZDrPK9lREg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501943; c=relaxed/simple;
-	bh=6qevuBD/fZXX61KwM1BqIKfgE5EoIpEKCeQNo/F9ShA=;
+	s=arc-20240116; t=1788501946; c=relaxed/simple;
+	bh=Nq8q9g+3ON9Z/lSdW+93H+Lcx7YVVwGYGSAO+OpevpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j81L5xZ064To63N0/ps40MKU/kXVRIVLqAUydn1YSoxG+ZtGpjDhpqZVmaePg9mVZCzHmDCZuEWhuoZK4Cfut4qIAGdhZt9VrX3jIPoROQ2enYopck6LBj2yXFQ8CWDGa/CZ6G8WI9qu/Ec/CpfDfsMgaShQKX78NNtj9qn2I/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzU4lg6x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cDdcmNMtMWO7E2BmyCcBIT+BMVvMmziK6Sgb1Bnwnq/+TDGkKMSj7CWpuoymJjaA4eG5ukfvZ7iRzP2pv2g4eh7I7muxztQf1IFEvHJo30pz4pJkFWeqz98BfGEXT5v5HDzmT2gjA/CUmqiEzIq7cvW/0syNbpMZPpKcwyTRCOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShhFJxtA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzU4lg6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9151F00A3D;
-	Fri,  4 Sep 2026 06:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShhFJxtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689361F00A3D;
+	Fri,  4 Sep 2026 06:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501942;
-	bh=NDsrTjVaKUhlm5j52pqlo3Oe+ZHXBaUpnGy1fQV3nZc=;
+	s=korg; t=1788501944;
+	bh=UOAkHFN6IEjGyKWspEdlWE+1Yo/2aUhRZr0k45MYMVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KzU4lg6xxn5fdHdiBIfKdI3VrW5fyhvIY3LSE3Pnqp5stYS+mrwnsG08Yuh9JtqQs
-	 1oCc9qkMYQay5GXD5wDLuOu3rkJvU7GQ9bBh9G0R/WBxVUnKM4cKmJ6yzGrIhHP0AL
-	 Er2Eu+B1DiC8aazO0g/QPuNtcMWov1xBpqBg7LmA=
+	b=ShhFJxtAoNNhAhALAu2Nxg5zZ/R36zVHhea+XQ2tAHeDI0NGAjfovIywiHf26pI7e
+	 iiXVMPeX2IbRtkIUx4MIzfmRiWWbrnHNpUwXmRkyDcwKjiq4QoFOAwleBRZAKF/50f
+	 KZ8yjR4+cJMDylb7spGN2WUnYzidQjeM15mQfpfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Sizhe Liu <liusizhe5@huawei.com>,
-	Yicong Yang <yangyccccc@gmail.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH 6.12 033/403] hwtracing: hisi_ptt: Propagate DMA reset timeout in trace_start()
-Date: Fri,  4 Sep 2026 06:57:16 +0200
-Message-ID: <20260904045735.567227528@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Bradley Morgan <brads@mainlining.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 034/403] tracing/user_events: Clear copied tracing state before fork duplication
+Date: Fri,  4 Sep 2026 06:57:17 +0200
+Message-ID: <20260904045735.589498156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -46,90 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 75d42d990335322852ed5f7ce324b701c0949d79 upstream.
+commit 390f6bd8583d177029d9df4bea6667509e55a765 upstream.
 
-hisi_ptt_wait_dma_reset_done() discards the return value of
-readl_poll_timeout_atomic(). If the DMA engine does not complete its
-reset within the timeout, hisi_ptt_trace_start() proceeds to start
-tracing regardless.
+dup_task_struct() copies user_event_mm from the parent into the child,
+without grabbing a reference to it. user_event_mm_dup() should
+replace it, but it leaves that copied pointer unmodified if
+user_event_mm_alloc() fails.
 
-Return a bool from hisi_ptt_wait_dma_reset_done(), consistent with the
-other wait helpers in this driver. On timeout, log an error, de-assert
-the reset bit, and return -ETIMEDOUT. Move ctrl->started to the
-successful path so a failed start does not leave the trace marked as
-active.
+When the child exits, user_event_mm_remove() decrements a reference
+the child never owned, which ultimately frees user_event_mm, while
+the parent still as a stale pointer to it. This creates a UAF, which
+KASAN reports as:
 
-Fixes: ff0de066b463 ("hwtracing: hisi_ptt: Add trace function support for HiSilicon PCIe Tune and Trace device")
+    BUG: KASAN: slab-use-after-free in
+    current_user_event_mm+0x51/0x1d0 Write of size 4 at addr
+    ffff888005010d30 by task init/44
+
+    Call Trace:
+     <TASK>
+     kasan_report+0xce/0x100
+     kasan_check_range+0x10f/0x1e0
+     current_user_event_mm+0x51/0x1d0
+     user_events_ioctl+0x82e/0x15c0
+     __x64_sys_ioctl+0x139/0x1c0
+     do_syscall_64+0xce/0x450
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Allocated by task 44:
+     __kasan_kmalloc+0x8f/0xa0
+     __kmalloc_cache_noprof+0x180/0x3a0
+     user_event_mm_alloc+0x3c/0x1f0
+     current_user_event_mm+0x88/0x1d0
+
+    Freed by task 42:
+     __kasan_slab_free+0x43/0x70
+     kfree+0x13a/0x390
+     process_one_work+0x696/0xf90
+     worker_thread+0x420/0xba0
+
+The fix simply clears the copied pointer before any possible failure.
+In case of failure, the child then has nothing to free.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Reviewed-by: Sizhe Liu <liusizhe5@huawei.com>
-Reviewed-by: Yicong Yang <yangyccccc@gmail.com>
-Tested-by: Sizhe Liu <liusizhe5@huawei.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260414172451.14331-2-sanman.pradhan@hpe.com
+Fixes: 7235759084a4 ("tracing/user_events: Use remote writes for event enablement")
+Link: https://patch.msgid.link/20260827184321.2964601-2-Jeremy.Jean@oss.cyber.gouv.fr
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/ptt/hisi_ptt.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ kernel/trace/trace_events_user.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hwtracing/ptt/hisi_ptt.c
-+++ b/drivers/hwtracing/ptt/hisi_ptt.c
-@@ -171,13 +171,13 @@ static bool hisi_ptt_wait_trace_hw_idle(
- 					  HISI_PTT_WAIT_TRACE_TIMEOUT_US);
- }
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -868,6 +868,9 @@ void user_event_mm_dup(struct task_struc
+ 	struct user_event_mm *mm = user_event_mm_alloc(t);
+ 	struct user_event_enabler *enabler;
  
--static void hisi_ptt_wait_dma_reset_done(struct hisi_ptt *hisi_ptt)
-+static bool hisi_ptt_wait_dma_reset_done(struct hisi_ptt *hisi_ptt)
- {
- 	u32 val;
- 
--	readl_poll_timeout_atomic(hisi_ptt->iobase + HISI_PTT_TRACE_WR_STS,
--				  val, !val, HISI_PTT_RESET_POLL_INTERVAL_US,
--				  HISI_PTT_RESET_TIMEOUT_US);
-+	return !readl_poll_timeout_atomic(hisi_ptt->iobase + HISI_PTT_TRACE_WR_STS,
-+					  val, !val, HISI_PTT_RESET_POLL_INTERVAL_US,
-+					  HISI_PTT_RESET_TIMEOUT_US);
- }
- 
- static void hisi_ptt_trace_end(struct hisi_ptt *hisi_ptt)
-@@ -202,14 +202,18 @@ static int hisi_ptt_trace_start(struct h
- 		return -EBUSY;
- 	}
- 
--	ctrl->started = true;
--
- 	/* Reset the DMA before start tracing */
- 	val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
- 	val |= HISI_PTT_TRACE_CTRL_RST;
- 	writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
- 
--	hisi_ptt_wait_dma_reset_done(hisi_ptt);
-+	if (!hisi_ptt_wait_dma_reset_done(hisi_ptt)) {
-+		pci_err(hisi_ptt->pdev, "timed out waiting for DMA reset\n");
-+		val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
-+		val &= ~HISI_PTT_TRACE_CTRL_RST;
-+		writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
-+		return -ETIMEDOUT;
-+	}
- 
- 	val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
- 	val &= ~HISI_PTT_TRACE_CTRL_RST;
-@@ -234,6 +238,8 @@ static int hisi_ptt_trace_start(struct h
- 	if (!hisi_ptt->trace_ctrl.is_port)
- 		val |= HISI_PTT_TRACE_CTRL_FILTER_MODE;
- 
-+	ctrl->started = true;
++	/* On failure, do not free parent's copy */
++	t->user_event_mm = NULL;
 +
- 	/* Start the Trace */
- 	val |= HISI_PTT_TRACE_CTRL_EN;
- 	writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
+ 	if (!mm)
+ 		return;
+ 
 
 
