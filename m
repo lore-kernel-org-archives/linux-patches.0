@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ABA2264A3;
-	Fri,  4 Sep 2026 05:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC72D2264A3;
+	Fri,  4 Sep 2026 05:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500463; cv=none; b=pJMhfU+JPGMEXJUbi/al7rp4YUTuEftDem2dP9btdAuomWPqdtFOYJtTxFuBPuVYqYnwGard4jmMAI64Fl7CjsRfFFHaCovtPEU5L05VuJ6OPfw/VuLpgoFh3FZjJPCnaCuZwfX3dxe2WaHVshEeRMyFEO7xVqB9hXUKs8P5Ta4=
+	t=1788500466; cv=none; b=o0pEX61BAk3Wyi5Abj8Zx0cAFsKMpkR1fcxLyosE4LQPmamBelrmUXezqQUQkJKxV8eh9CAJnSAtUquy9c0PljvNtM6ZiRcs/Nzz4AY1IFV7IIfjSD8AK3QiV2y1PjkqhVWKn1+yZPu598w5v7ao/YYpkAF2UuUTSNTpqET4pDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500463; c=relaxed/simple;
-	bh=0Uc8nL0wVu0tfY4LnfsRvw4GnPigXLJyRa38YLx9d7g=;
+	s=arc-20240116; t=1788500466; c=relaxed/simple;
+	bh=asPfHcDi392ckTA5zAjTLmtt/jy0MUpO4kXShCO8ryg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmolImAbEMFW9UUU+uzmJGZUT6wZI3jWwP9tlao+Hs1Hn2f66E/ABdiyXA2uKjPds4aF9LSBZLoo4NaQwoFKjZ+e2oKlV1fB/24xfnqzlpQNGmSymxBfEF2JVx+WwelBdZ8G7OwKgNibwLjo5HqpLR0wVEMnCCERVS5HMQHe+PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcU3KoIw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=n56OHmF/Vf9MZS+GSVZ11wxvanSRlXnHHRQWDsXXvfft3IxyUguTgPFdi2b1l3dKM1RSj274TBXf0rVYshzI2QW6k3WKV5JkFOJ5vZevgMRaIDV05WYPVqiJx9vo4ZWZaAPoxjL15cibPRRlkSG7lajkqzXhny1uGVFnWjZjhPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCf2C7wl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcU3KoIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A611F00A3D;
-	Fri,  4 Sep 2026 05:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCf2C7wl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318CB1F00A3D;
+	Fri,  4 Sep 2026 05:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500461;
-	bh=LQ6Y0elwMwyMDWcS9EjK5dZQtAOl8/HAN4sVd5W1PZQ=;
+	s=korg; t=1788500464;
+	bh=aS/Nmkq+ZUj5TLJYcO3AL7Hlvwt6nZQD4CXSOmh2wWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lcU3KoIwZdyiiZRzaQxRu1Qy58GTHaw9/2MbftkIp8t9SgqsKHsYalg1pkrxEp7ge
-	 b5NvYb3N6jkNhh6KzfuGE1iVrIa+uC1eu1XF6oOaQMuDXHcVsv5Dk0rki8CaEA6a3J
-	 sjHmSqr4aYa0UrwXwnsbXPPEuOrf4PbC+BPgK5f4=
+	b=FCf2C7wlrEMKf7eXbPUsdX73On2H6u9R7GdPbxhlIZqon6J+MtA6XxjKJa2Gqn2HN
+	 B7JV5vSFip/eq1vWhGQrUnF2blTJA8zrlR1irqeM4ueub7TddGkqCkQm0riU8ANKY7
+	 DFGJXKGqKaNc8MvKt2TYKjYS/Zy8UX2Z/UkwezWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.18 028/552] apparmor: fix cred UAF caused by begin_current_label_crit_section()
-Date: Fri,  4 Sep 2026 06:53:05 +0200
-Message-ID: <20260904045748.465326696@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.18 064/552] device property: fix infinite loop in fwnode_for_each_child_node()
+Date: Fri,  4 Sep 2026 06:53:41 +0200
+Message-ID: <20260904045749.298175152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -44,194 +44,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 3f4ae5fab613dca01d6a2a8210dd832e009fcf47 upstream.
+commit 1900692555826753adab8799a1a8d50bb1ee200c upstream.
 
-AppArmor's begin_current_label_crit_section() is a scary function called
-from lots of LSM hooks (in particular VFS/socket-related ones) that checks
-if the label referenced by the current creds is marked FLAG_STALE, and if
-so, attempts to use aa_replace_current_label() to replace the creds with an
-updated version that uses a new label.
+When iterate over children of a fwnode that has a secondary fwnode,
+fwnode_get_next_child_node() can enter an infinite loop if the secondary
+fwnode has more than one child.
 
-The first problem with this is that it would directly lead to UAF of
-`struct cred` if anything in the kernel takes a pointer to the current
-creds and accesses these past a security hook invocation that replaces
-creds, like so:
-```
-const struct cred *cred = current_cred();
-alloc_file_pseudo(...);
-uid_t uid = cred->euid;
-```
-I don't know if anything in the kernel actually does this, but I think it
-is very surprising that this pattern could lead to UAF.
+                       Parent        Child
+      (Primary fwnode)   FWa:   {FWa1, FWa2, FWa3}
+    (Secondary fwnode)   FWb:   {FWb1, FWb2}
 
-The second problem is that things go wrong when aa_replace_current_label()
-runs with overridden credentials. aa_replace_current_label() bails out if
-`current_cred() != current_real_cred()` (mirroring the check in
-proc_pid_attr_write()), but this check can't actually reliably detect
-overridden credentials because the overridden creds can be the same as the
-objective creds.
+In this case:
 
-So in approximately the following scenario, things go wrong:
+ ┌─> fwnode_get_next_child_node(FWa, FWa1)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa1) returns FWa2
+ │
+ │   ...
+ │
+ │   fwnode_get_next_child_node(FWa, FWa3)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa3) returns NULL
+ │    - fwnode_call_ptr_op(FWb, get_next_child_node, FWa3) returns FWb1
+ │
+ │   fwnode_get_next_child_node(FWa, FWb1)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWb1) returns FWa1
+ └────┘
 
-1. task begins with <creds A> (as both objective and subjective creds),
-   with refcount=2
-2. task grabs an extra reference on <creds A> for overriding
-3. task calls override_creds(<creds A>), which returns a pointer to the old
-   subjective creds (<creds A>)
-4. task enters AppArmor LSM hook
-5. AppArmor checks that objective/subjective creds are equal
-6. AppArmor replaces both cred pointers with <creds B> and drops 2 refs on
-   <creds A>
-7. task leaves AppArmor LSM hook
-8. task calls revert_creds(<creds A>)
-9. now task->cred is <creds A> while task->real_cred is <creds B>, but the
-   task_struct logically holds two references to <creds B>
-10. another task drops the extra reference on <creds A> that was used for
-    overriding, refcount drops to 0
-11. now task->real_cred points to freed creds
+This cause fwnode_for_each_child_node() to loop indefinitely, reapeatedly
+output {FWa1, FWa2, FWa3, FWb1, FWa1, ...}.
 
-At this point, any access to current_cred() will be UAF.
+The root cause is that when the current child (FWb1) belongs to the
+secondary fwnode, calling get_next_child_node() on the parimary fwnode
+incorrectly returns the first child (FWa1) again instead of NULL.
 
-I have a test case where I run aa-disable on a profile while a process
-using that profile is blocked on splice() from a FUSE passthrough file into
-a full pipe; after the profile update, the pipe becomes empty, splice()
-resumes, the credentials go out of sync, and a subsequent getuid() syscall
-results in a KASAN UAF splat.
+Fix this by dynamically checking the parent fwnode of the current child
+before calling get_next_child_node(). This approach follows the pattern
+established in commit b5b41ab6b0c1 ("device property: Check
+fwnode->secondary in fwnode_graph_get_next_endpoint()").
 
-To fix this, instead of directly replacing creds, do it via task_work that
-will run at the end of the current syscall. (The point in time at which the
-cred replacement happens should have no correctness impact; it is just a
-performance optimization to avoid unnecessarily touching the refcount of
-the new label.)
-
-Note that AppArmor still performs direct cred replacements in the
-sb_pivotroot LSM hook after this change, and that direct cred replacements
-can still happen in VFS ->write() callbacks via proc_pid_attr_write().
-
-There are two options for what to do with aa_dup_task_ctx(): Either
-explicitly reset new->label_replacement_pending after the entire
-aa_task_ctx has been copied, or switch to manually copying members over.
-I am switching to manually copying members over because that should make
-bugs more obvious.
-
+Fixes: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
 Cc: stable@vger.kernel.org
-Fixes: c75afcd153f6 ("AppArmor: contexts used in attaching policy to system objects")
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260611203537.1786399-2-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/include/cred.h |    6 +-----
- security/apparmor/include/task.h |   15 +++++++++++----
- security/apparmor/task.c         |   27 +++++++++++++++++++++++++++
- 3 files changed, 39 insertions(+), 9 deletions(-)
+ drivers/base/property.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/security/apparmor/include/cred.h
-+++ b/security/apparmor/include/cred.h
-@@ -184,13 +184,9 @@ static inline struct aa_label *begin_cur
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -797,18 +797,31 @@ struct fwnode_handle *
+ fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
+ 			   struct fwnode_handle *child)
  {
- 	struct aa_label *label = aa_current_raw_label();
++	const struct fwnode_handle *parent;
++	struct fwnode_handle *child_parent __free(fwnode_handle) = NULL;
+ 	struct fwnode_handle *next;
  
--	might_sleep();
--
- 	if (label_is_stale(label)) {
- 		label = aa_get_newest_label(label);
--		if (aa_replace_current_label(label) == 0)
--			/* task cred will keep the reference */
--			aa_put_label(label);
-+		aa_schedule_stale_label_replacement();
- 	}
+-	if (IS_ERR_OR_NULL(fwnode))
++	/*
++	 * If this function is in a loop and the previous iteration returned
++	 * an child from fwnode->secondary, then we need to use the secondary
++	 * as parent rather than @fwnode.
++	 */
++	if (child) {
++		child_parent = fwnode_get_parent(child);
++		parent = child_parent;
++	} else {
++		parent = fwnode;
++	}
++	if (IS_ERR_OR_NULL(parent))
+ 		return NULL;
  
- 	return label;
---- a/security/apparmor/include/task.h
-+++ b/security/apparmor/include/task.h
-@@ -21,15 +21,22 @@ static inline struct aa_task_ctx *task_c
-  * @onexec: profile to transition to on next exec  (MAY BE NULL)
-  * @previous: profile the task may return to     (MAY BE NULL)
-  * @token: magic value the task must know for returning to @previous_profile
-+ * @label_replacement_tw: for aa_schedule_stale_label_replacement()
-+ * @label_replacement_pending: is @label_replacement_tw pending?
-+ *
-+ * When changing this, check if aa_dup_task_ctx() needs to be updated.
-  */
- struct aa_task_ctx {
- 	struct aa_label *nnp;
- 	struct aa_label *onexec;
- 	struct aa_label *previous;
- 	u64 token;
-+	struct callback_head label_replacement_tw;
-+	bool label_replacement_pending;
- };
+ 	/* Try to find a child in primary fwnode */
+-	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
++	next = fwnode_call_ptr_op(parent, get_next_child_node, child);
+ 	if (next)
+ 		return next;
  
- int aa_replace_current_label(struct aa_label *label);
-+void aa_schedule_stale_label_replacement(void);
- void aa_set_current_onexec(struct aa_label *label, bool stack);
- int aa_set_current_hat(struct aa_label *label, u64 token);
- int aa_restore_previous_label(u64 cookie);
-@@ -56,10 +63,10 @@ static inline void aa_free_task_ctx(stru
- static inline void aa_dup_task_ctx(struct aa_task_ctx *new,
- 				   const struct aa_task_ctx *old)
- {
--	*new = *old;
--	aa_get_label(new->nnp);
--	aa_get_label(new->previous);
--	aa_get_label(new->onexec);
-+	new->nnp = aa_get_label(old->nnp);
-+	new->onexec = aa_get_label(old->onexec);
-+	new->previous = aa_get_label(old->previous);
-+	new->token = old->token;
+ 	/* When no more children in primary, continue with secondary */
+-	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
++	return fwnode_get_next_child_node(parent->secondary, NULL);
  }
+ EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
  
- /**
---- a/security/apparmor/task.c
-+++ b/security/apparmor/task.c
-@@ -14,6 +14,7 @@
- 
- #include <linux/gfp.h>
- #include <linux/ptrace.h>
-+#include <linux/task_work.h>
- 
- #include "include/audit.h"
- #include "include/cred.h"
-@@ -88,6 +89,32 @@ int aa_replace_current_label(struct aa_l
- 	return 0;
- }
- 
-+static void aa_replace_stale_label_tw_func(struct callback_head *tw)
-+{
-+	struct aa_task_ctx *ctx = task_ctx(current);
-+	struct aa_label *label;
-+
-+	ctx->label_replacement_pending = false;
-+	label = aa_current_raw_label();
-+	if (!label_is_stale(label))
-+		return;
-+	label = aa_get_newest_label(label);
-+	aa_replace_current_label(label);
-+	aa_put_label(label);
-+}
-+
-+/* replace the current task's stale label on syscall return */
-+void aa_schedule_stale_label_replacement(void)
-+{
-+	struct aa_task_ctx *ctx = task_ctx(current);
-+
-+	if (ctx->label_replacement_pending)
-+		return;
-+	init_task_work(&ctx->label_replacement_tw, aa_replace_stale_label_tw_func);
-+	if (task_work_add(current, &ctx->label_replacement_tw, TWA_RESUME) == 0)
-+		ctx->label_replacement_pending = true;
-+}
-+
- 
- /**
-  * aa_set_current_onexec - set the tasks change_profile to happen onexec
 
 
