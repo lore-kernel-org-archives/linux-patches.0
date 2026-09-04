@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C85358378;
-	Fri,  4 Sep 2026 06:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63B33E49C0;
+	Fri,  4 Sep 2026 06:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502221; cv=none; b=K1rVI1cTw+U8W4MG1X7PrN7zlxl7BouhiK9xbhLyrZpxPTSjzkoKkC47WOk7deaJFNAucs4MzKxGkXk70cXepelJTn+3/UqL2SZbbP41oZJ5HJF0idgX4+sXY5psedWTmis8n/m7+5pw3gGiM5Y0L0ltJY11ytFHCSEbAHHH/LQ=
+	t=1788502224; cv=none; b=F7Yggj+bZsERHgIYJwoyc0hg04BXKHSK/j4g4p+GSboS7NO5O1YYJglXhhJ/esSY0vfNXmDC5dfTOQGvxk7YhCDuiZaxPcAMgLA0/s5nq0rSn/RgL3nOS/AbaLiSaW2sUZNUWAnRgP0MZ6bfCVvb0h59xLTuGuRFF6bml2vU33A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502221; c=relaxed/simple;
-	bh=a4AKjsWjy9E2Y7KhxJw/xzU6gCddnJ+3FZq+foyfNWM=;
+	s=arc-20240116; t=1788502224; c=relaxed/simple;
+	bh=6uZUG88j5xM8N2kafxOWEWtmEwtnQ+5dHBaSzCojq9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqW0OLTJyQW8vJfimQtDmNvol13OCIAySg2mhgNglNXFGZFQOsoH8CElEWB4YQidaP5Ax4F4VUuFn0tx4OUO5v/I7cP+ryYyQyfY5WKSt2+SzWxktKyq0zB+CzGh9omnpFb8MxoDnxNoORGcsWLCV4DopTZM0/kOMbGZ1hr2W9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzAwSoEt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EpPPiw5v/fP20NMrNv0SWf46GAf/pJ8+eiD8tl37OxmRQtq8e/iR7sNKoLzsbld55XxT5LVF31Qa5g2aBc/ZFiySK4zBJSitlTubDCyic7019RhSbSqqactRmCOwWxxh/o+cKX1kV1V94prrvhgj6UzCM26kxhgoJ7Qk87MSZEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXPdtZcV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzAwSoEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1DF1F00A3D;
-	Fri,  4 Sep 2026 06:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXPdtZcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AF01F00A3D;
+	Fri,  4 Sep 2026 06:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502219;
-	bh=rYYdafv5/7oVhPcWCmm0gIZH99EOiQ4BhwSbESoynFM=;
+	s=korg; t=1788502222;
+	bh=yq+SjCGU3qif/1rN/naFBC8S49GYKz+5ZjhDCst/YZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzAwSoEtvS/lCh+wLcH8A6H28WuRP5NccTnZdrOD96kn/7JfC24eeqX2U/eWcKK96
-	 TuD1Ek5quMPzXz/vmYj8nX7/QSum92L/1i8AKNOoh8o6mNc6KetZ1DaDYbDiLpz6eL
-	 VvoKKYf1rcjGrrjWcHctJ95xEfi5c2NGWmWcJGGg=
+	b=QXPdtZcVv5SznYT/jcUk0Kk3LcddyFu57O0v3E1sJHJI06eoWCvLImudKev8IDbOp
+	 G44fghjBjEyNtbipeEu+ElxZCTVcwkE1vm7KZm4UKTPzFczH0RJhQgYM0AMAdNKve4
+	 r1/KVb/m4Pt5rA/TMuoCEdF1GOQBjIMLrnQsAorc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 129/403] HID: mcp2221: validate report size in mcp2221_raw_event()
-Date: Fri,  4 Sep 2026 06:58:52 +0200
-Message-ID: <20260904045737.771444725@linuxfoundation.org>
+	syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 130/403] eventfs: Initialize ei->children and ei->list in init_ei()
+Date: Fri,  4 Sep 2026 06:58:53 +0200
+Message-ID: <20260904045737.793974662@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,53 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 2c9a6998c19503626c57a2267bf279e204113079 upstream.
+commit 1704aaaf5d22bc765c168402350d191e24e245bc upstream.
 
-mcp2221_raw_event() never validates the size of incoming HID reports.
-In the MCP2221_I2C_GET_DATA path it trusts the device-supplied data[3]
-as the copy length without checking that 4 + data[3] bytes actually
-exist in the received report. A malicious or misbehaving USB device can
-send a short report with a large data[3], causing the memcpy to read
-past the valid report data in the HID transfer buffer and leak
-uninitialized kernel memory back to userspace through the I2C/SMBus
-read path.
+eventfs_create_dir() allocates the eventfs_inode and initializes it with
+init_ei(). But this does not initialize the eventfs_inode list_heads. If
+the eventfs_create_dir() fails due to memory pressure, it will call
+free_ei() before it initialized the lists, and that checks to make sure
+the eventfs_inode has no children. But because the list wasn't
+initialized, it will give a false warning.
 
-Add a minimum size check at entry and validate that the source range
-fits within the received report before the copy.
+Fix it by moving the list initialization into init_ei().
 
-Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 5790b1fb3d67 ("eventfs: Remove eventfs_file and just use eventfs_inode")
+Reported-by: syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3ef80b4ed02226d04a06
+Link: https://patch.msgid.link/20260824144653.54044-1-kartikey406@gmail.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+[ Rewrote change log ]
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/tracefs/event_inode.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -759,6 +759,9 @@ static int mcp2221_raw_event(struct hid_
- 	u8 *buf;
- 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -436,6 +436,8 @@ static inline struct eventfs_inode *init
+ 	if (!ei->name)
+ 		return NULL;
+ 	kref_init(&ei->kref);
++	INIT_LIST_HEAD(&ei->children);
++	INIT_LIST_HEAD(&ei->list);
+ 	return ei;
+ }
  
-+	if (size < 4)
-+		return 0;
-+
- 	switch (data[0]) {
+@@ -727,8 +729,6 @@ struct eventfs_inode *eventfs_create_dir
+ 	ei->entries = entries;
+ 	ei->nr_entries = size;
+ 	ei->data = data;
+-	INIT_LIST_HEAD(&ei->children);
+-	INIT_LIST_HEAD(&ei->list);
  
- 	case MCP2221_I2C_WR_DATA:
-@@ -820,6 +823,10 @@ static int mcp2221_raw_event(struct hid_
- 					mcp->status = -EINVAL;
- 					break;
- 				}
-+				if (4 + data[3] > size) {
-+					mcp->status = -EINVAL;
-+					break;
-+				}
- 				buf = mcp->rxbuf;
- 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
- 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
+ 	mutex_lock(&eventfs_mutex);
+ 	if (!parent->is_freed)
+@@ -801,9 +801,6 @@ struct eventfs_inode *eventfs_create_eve
+ 	ei->attr.uid = uid;
+ 	ei->attr.gid = gid;
+ 
+-	INIT_LIST_HEAD(&ei->children);
+-	INIT_LIST_HEAD(&ei->list);
+-
+ 	ti = get_tracefs(inode);
+ 	ti->flags |= TRACEFS_EVENT_INODE;
+ 	ti->private = ei;
 
 
