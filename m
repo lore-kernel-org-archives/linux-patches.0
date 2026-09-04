@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A943B19BC;
-	Fri,  4 Sep 2026 05:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0C24156F0;
+	Fri,  4 Sep 2026 05:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499971; cv=none; b=qnBilK1lqTZMGBK/3KGYs59BKTVV45s0iKlirERniOm9wwI7duQkP8yq8oq0kemT+N+LFWiedqfNbayKOJYwCXt3wPf5GU190/B1xAnzX79H+QKBLoZfe8M9NWbKhGVmQsxO/7dFqop8/xo5NiDEPy7NrH9k5Ia85/oZK0sYlDA=
+	t=1788499974; cv=none; b=QXHOWjuHxMe+LbYdR5quqBe5/ckXNDR7ZEb3O2R4At80V3lcY3//9PbxF4AYdLTXzf+r6LtBLisGh1aUNy+noo68Tr0Ap9qPWPujVBJWnB9Kn164//a49rp460GiiKzH7ws5yDndPk/F1pPhBA01IQ4HkIy2JgFQ9gjQgICzD/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499971; c=relaxed/simple;
-	bh=k8/Pq+XJ/AHUOUQ/MupnnRE55z4PtbCdXABwGCoifSU=;
+	s=arc-20240116; t=1788499974; c=relaxed/simple;
+	bh=WVNph4k/Btc3WkA06bYxw3wuoRXTP4z3PJWxVJsDXHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F91V51TA0JiIUv8Mj9ul2LrexxgGGPkyZNRLk86MS4Jl1G3bB2Vz1WGhNDGbo49Enu60hMAYQ+kT21CNBuH34J2duQkHwDthovJTF+NyR+f33pwlP0X+aFIUuh9Dtx5kaM0rS6E8q+7eCKQwcMw07RdOyNTgBraJ1Z3veYSqnpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aT3Jvm2w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bHPEzk15sU3qrVp5AQN5IYOYd/GgGnZ685/UJY92kgPZxloMOABUWd7HCpJiy8L3sozeBNb3JwVQ63M8pWtwk08mMFgQYtABxfm3Z5FqXyYia1kDAmsHxPOkS8AD85qI/mCwFNvHo1Kpb//rfRZcBaLubYISqSJJbm1XAmsyUuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCgo0ZXE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aT3Jvm2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF9A1F00A3D;
-	Fri,  4 Sep 2026 05:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCgo0ZXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B8F1F00A3D;
+	Fri,  4 Sep 2026 05:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499970;
-	bh=2RUUjgfCUfCff9wnUJSw7CHFJt7gkZQqetnX+VZkj90=;
+	s=korg; t=1788499973;
+	bh=kLZVNXqzIVG/n0S7Z7Grft4OG+R1IWzyt0kMfJP6wRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aT3Jvm2wi2k7d5CyvqsYfq/EyMiMFK5lzlVsWrUGIUBHkcF289LRdw4IlHrojBkEg
-	 +lxwRfSiAYVX1ikmKKtt8QbasDLgsbXHmj/1SxZ5b4uE4OQZ7mOdZQ6NM+jzJLMkCC
-	 I3J3wvGtnjUykx+9zQ+O5zDga6FYw0cwQpBaP7N8=
+	b=zCgo0ZXExwaI3j+e//fr9jHmSG0aDNMHlvieNeKln2xUXdlxw5n3vPX7RrO4tx+yR
+	 0lfGwP0BTzmilQ4KkkTAvjIxmSpJHijlUh9AR78YXS5mtRTD1rklm4/vUSierJK1+A
+	 HSUTbN5gXifTV5D9Pt8ToqoL7BueULrT0Uz1ESX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 588/713] io_uring/query: cap user size passed to copy_struct_to_user
-Date: Fri,  4 Sep 2026 06:59:16 +0200
-Message-ID: <20260904045816.998714757@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 606/713] net: openvswitch: fix nf_connlabels leak in ovs_ct_init
+Date: Fri,  4 Sep 2026 06:59:34 +0200
+Message-ID: <20260904045817.410970646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,44 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit ba77efee1b95b4ad7559b1cdbe7cd7fa36dca95b upstream.
+commit f9de5db270a4c2641de87ee558c16a9bc6eb4cd8 upstream.
 
-io_handle_query_entry() clamps hdr.size for the inbound copy_from_user()
-but keeps the original user value as usize. copy_struct_to_user() uses
-that usize and, when it is larger than the kernel result, clear_user()s
-the trailing bytes.
+ovs_ct_init() acquires a connlabels reference before initializing the
+conntrack limit state. If ovs_ct_limit_init() fails, its error is returned
+directly. The pernet core does not invoke the exit callback for the
+operation whose initialization failed, so ovs_ct_exit() cannot drop the
+reference.
 
-As hdr.size is a __u32, a query can request nearly 4 GiB of zeroing,
-including on the error path where res_size stays 0. The interface is
-reachable without a ring via IORING_REGISTER_QUERY.
+This leaves labels_used elevated when Open vSwitch pernet registration
+fails for an existing network namespace. Subsequent conntrack entries in
+that namespace may allocate label extensions even though Open vSwitch
+failed to register.
 
-Reject sizes larger than PAGE_SIZE, as recommended for copy_struct_*
-interfaces.
+Drop the connlabels reference before returning a conntrack limit
+initialization error. ovs_ct_limit_init() already releases its partial
+state, and the original error remains unchanged.
 
-Fixes: c265ae75f900 ("io_uring: introduce io_uring querying")
-Cc: stable@vger.kernel.org # 6.18+
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260821103317.91437-1-acharyalaxman8848@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260815151729.3757984-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/query.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/openvswitch/conntrack.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/io_uring/query.c
-+++ b/io_uring/query.c
-@@ -76,6 +76,9 @@ static int io_handle_query_entry(union i
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -2022,6 +2022,7 @@ int ovs_ct_init(struct net *net)
+ {
+ 	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
+ 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
++	int err = 0;
  
- 	if (copy_from_user(&hdr, uhdr, sizeof(hdr)))
- 		return -EFAULT;
-+	/* copy_struct_to_user() zeros up to usize bytes */
-+	if (hdr.size > PAGE_SIZE)
-+		return -E2BIG;
- 	usize = hdr.size;
- 	hdr.size = min(hdr.size, IO_MAX_QUERY_SIZE);
- 	udata = u64_to_user_ptr(hdr.query_data);
+ 	if (nf_connlabels_get(net, n_bits - 1)) {
+ 		ovs_net->xt_label = false;
+@@ -2031,10 +2032,11 @@ int ovs_ct_init(struct net *net)
+ 	}
+ 
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+-	return ovs_ct_limit_init(net, ovs_net);
+-#else
+-	return 0;
++	err = ovs_ct_limit_init(net, ovs_net);
++	if (err && ovs_net->xt_label)
++		nf_connlabels_put(net);
+ #endif
++	return err;
+ }
+ 
+ /* Must be called with ovs_mutex held.  Detaches the RCU-protected
 
 
