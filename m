@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666BE35AC03;
-	Fri,  4 Sep 2026 05:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208252F9DA1;
+	Fri,  4 Sep 2026 05:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501134; cv=none; b=KT3LujbgACVvWbXMONfc0tu8nULgz6zv0DhHwMaEQO6A7PXdHE+tp6JxJq7uiOCeD0Xwo46XPf2Wx/Kk7ImeWdh76x8Ch4yDjEXoO53bO8ELnWXSHc5jPaeWJuIwE/WbNAIsThGjvbNe9X0UlsWM72bZpgpW5n+B/Uv6Gk3jW8k=
+	t=1788501137; cv=none; b=eWdukZX6dRGFm5TGm7T8ruVt5LUYEJQkjlZOuNQi51Fj3y5Fl9xUMLZ4qXoerQA3EymN1bLePze+z9XXY5N9r7glib3VJ2X7q92nxeMGuxCnW+ymoGfqSCO69Sy+FqwhM2bKzocpxQWdG4Vr8XfRMs97qUrfFKUlY/oub+mYBKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501134; c=relaxed/simple;
-	bh=YsEFgVG//MpG5cbB6mbjJjGU54JfRKCaFITQ7IeEHzM=;
+	s=arc-20240116; t=1788501137; c=relaxed/simple;
+	bh=6CSwVClCI4+EAt1wS+Mbb3GxDjDgRSWnXo4wcw/u2PQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNCuNB9FYq+iIG1o4uu3eTHcDW2EECDU190qwrecGIDHeFnXWHkGmOHOvwIxoUh2StLzZ2Cikqkcg2mWn2SjdRJYAFUMwbRaPDZUBeQQTE6sdcNNIynPRj32kH4xhYTJ9cZPTMrESJ2oZkvOSovRXrcUd2b9MXMVj/S05WXG1VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfCZP2pK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IN08bdp8/7WReevVN1doMu6JaatmmNbl8BG+NmPuES7g5A/lN7NHVVaGPxgbPzBIOifBZjLDCEF0QwtNrn1iv7PjjpkbGnmAx5j7EaaF5tZlQblehMGxS7RO8f5ARkuLJoEOYTpSRAvOSz/pGvqv2TaP09IEo80Bi/iR0WKv2Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jv3TQJL6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfCZP2pK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA41D1F00A3D;
-	Fri,  4 Sep 2026 05:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jv3TQJL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797F91F00A3D;
+	Fri,  4 Sep 2026 05:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501133;
-	bh=KuMzYnFefLw9UkjgU874RVJT7K21UU+7VvQhULU7WAY=;
+	s=korg; t=1788501136;
+	bh=BiMlgd8QB7Q4bb6M+5x2VpdqXr6KOno3y8OrEe3+Bwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfCZP2pK0Z5dMQGpz5Zxu1yg9CylK9afx5MVmAekC5kQNO+PLtQcvb3kc4VH7qRcy
-	 L1xwgsl327JXeCuRZxMkfNtn7qKTDJIB5eu4iLiWKyFW3CAy4m9CPvntNSVBzPPz8j
-	 Z4doFhwN3tUhUxeftBHv02lDZMkCcddJ2d2Aku6g=
+	b=Jv3TQJL6vbjpooOw091kBQ+5oNPK234q8GiKTduAKWKrOSw4Xcpb1RWFC691/g8aL
+	 kzofSzgLfWB+BpRNef2yW3BsKrW8zZ52w/DS59Y1qYPGK0TXFMi/S1dq0RCJ01maui
+	 5AA6CF+7X3+2ECtqX84wHFcuwNNuEvgGfOVedSLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 259/552] ip: orphan prefetched skbs before multicast forwarding
-Date: Fri,  4 Sep 2026 06:56:56 +0200
-Message-ID: <20260904045755.677719015@linuxfoundation.org>
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 260/552] ip6_tunnel: use skb_cow_head() in ip6_tnl_xmit()
+Date: Fri,  4 Sep 2026 06:56:57 +0200
+Message-ID: <20260904045755.720816785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -54,63 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit e36ce6e78fe3fc3c071a26750783b7ba081ce10d upstream.
+commit 87f21b59ddc618eff9670c174842964ad65fdade upstream.
 
-IPv4 and IPv6 input preserve an skb->sk association installed by
-bpf_sk_assign() so that local delivery can use the selected socket under
-RCU. Both address families can also prefetch a socket in UDP early demux.
-In both paths (BPF and UDP early demux) a reference is not guaranteed to
-be held on the socket.
+ip6_tnl_xmit() may need to expand headroom before it can push the
+outer IPv6 and optional encap headers. It currently does that with
+skb_realloc_headroom(), copies skb->sk ownership, consumes the original
+skb, and then continues processing with the replacement skb kept only in
+its local variable.
 
-When a multicast packet is not locally deliverable, IPv6 hands the
-original skb to ip6_mr_input(). IPv4's ip_mr_input() similarly keeps the
-original skb when local delivery is not needed. Either path can put the
-skb on an unresolved multicast route queue or forward it after the
-receive-side RCU section ends.
+That is safe only if the helper cannot fail afterwards. But this helper
+still has post-reallocation error exits. collect_md tunnels reject
+non-NONE encap after the replacement, and ip6_tnl_encap() can also fail
+later. In those cases the helper returns an error to its callers while
+the caller still only has the original skb pointer.
 
-After the prefetched socket is destroyed, a later skb free invokes
-sock_pfree() and dereferences the stale skb->sk. Orphan the skb before
-each non-local multicast forwarding path. Local delivery retains the
-original skb; the existing skb_clone() calls provide multicast forwarding
-with a socket-free clone.
+Both ip6_tnl_start_xmit() and the IPv6 GRE paths free the caller skb on
+error, so they can end up freeing an skb that ip6_tnl_xmit() already
+consumed.
 
-Fixes: cf7fbe660f2d ("bpf: Add socket assign support")
-Fixes: 08842c43d016 ("udp: no longer touch sk->sk_refcnt in early demux")
+Use skb_cow_head() instead. It provides the required headroom and
+writability without privately replacing the caller-owned skb, so later
+error returns cannot leave callers with a stale pointer.
+
+The Ethernet users, ip6gretap and ip6erspan, clear IFF_TX_SKB_SHARING
+and already call skb_cow_head() before entering ip6_tnl_xmit(). They do
+not rely on the removed skb_shared() reallocation. This also makes the
+IPv6 tunnel path consistent with ip_tunnel_xmit().
+
+Fixes: 058214a4d1df ("ip6_tun: Add infrastructure for doing encapsulation")
 Cc: stable@vger.kernel.org
 Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/0c52eb3d7532aaf8bccf37e0f7c922143c639735.1786552223.git.zhilinz@nebusec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/30807a062ccc5c9c8a5ec2c5eb805ef279c50bdd.1786452593.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ipmr.c      |    3 +++
- net/ipv6/ip6_input.c |    1 +
- 2 files changed, 4 insertions(+)
+ net/ipv6/ip6_tunnel.c |   15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -2168,6 +2168,9 @@ int ip_mr_input(struct sk_buff *skb)
- 	if (IPCB(skb)->flags & IPSKB_FORWARDED)
- 		goto dont_forward;
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1228,19 +1228,8 @@ route_lookup:
+ 	 */
+ 	max_headroom += LL_RESERVED_SPACE(tdev);
  
-+	if (!local)
-+		skb_orphan(skb);
-+
- 	mrt = ipmr_rt_fib_lookup(net, skb);
- 	if (IS_ERR(mrt)) {
- 		kfree_skb(skb);
---- a/net/ipv6/ip6_input.c
-+++ b/net/ipv6/ip6_input.c
-@@ -577,6 +577,7 @@ int ip6_mc_input(struct sk_buff *skb)
- 		if (deliver) {
- 			skb2 = skb_clone(skb, GFP_ATOMIC);
- 		} else {
-+			skb_orphan(skb);
- 			skb2 = skb;
- 			skb = NULL;
- 		}
+-	if (skb_headroom(skb) < max_headroom || skb_shared(skb) ||
+-	    (skb_cloned(skb) && !skb_clone_writable(skb, 0))) {
+-		struct sk_buff *new_skb;
+-
+-		new_skb = skb_realloc_headroom(skb, max_headroom);
+-		if (!new_skb)
+-			goto tx_err_dst_release;
+-
+-		if (skb->sk)
+-			skb_set_owner_w(new_skb, skb->sk);
+-		consume_skb(skb);
+-		skb = new_skb;
+-	}
++	if (skb_cow_head(skb, max_headroom))
++		goto tx_err_dst_release;
+ 
+ 	if (t->parms.collect_md) {
+ 		if (t->encap.type != TUNNEL_ENCAP_NONE)
 
 
