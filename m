@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797B33D9029;
-	Fri,  4 Sep 2026 05:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523873515D2;
+	Fri,  4 Sep 2026 05:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498451; cv=none; b=sYIi1ZcmseYaflBG3Wk9npJQn0KGg6SDLuakCiTCsIFW9S2nerF/BWldl7Ct2ODkFJv62kiqZghepv19t9MvkQijv60Kl4rzQDmzYil4vRzn9QNmRD7o9+guPsx5mPja86o+7ADDjWRb+ud+X4Q5b/soVF3hzAF6KhQlbKlyKQU=
+	t=1788498454; cv=none; b=XQCQavzhl2sJmDeB90o5gRWwElxRNdYuT8jwdTvKu77INm+xtO0kRXdffv7BPYipP0DQd7tbqVEv/5T/1gxWylJvHO3NiBu/Ww9cj91awLjn3sY99DIdZ88RlHBnbMxlqJA5eP+TMrNVFBpVaF++lhN5xYFwm+JFKhcJqb6Un5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498451; c=relaxed/simple;
-	bh=X70u5aoKsdEnSQneIV4tZ+XUkGkLQq+nmVRHtCsSe+c=;
+	s=arc-20240116; t=1788498454; c=relaxed/simple;
+	bh=EhRTyIZGQyBOwzaB6ENafVq3nIAQqRGuojacgjnphQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BsgVVtUhHo+XBgGmR8nHegAAaTneXRqX1zMaylqfW8lfKO/oeUqJuUUdoG2ufgr84FhiHdhn5RGbnzJs9AL0p3RlsRMv8iP7N7bYPujCJb8PXwLvkQyd33NGAcBnTkg7kIlWXe3H2CZRqn/AAsDrkdZeW1XOpNfygOHvM8xrJdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ut9QGF6/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u8E8xQ0F/aWE8TylSrkGlhWQgcuApUWg7h39LAg++VsjcrIYeVLOxkNkK/YU9lbXBj0s8O3oWX8xhoHRoPRrwcsaV1SdH7IT++bOPqLv534wkAp5gC8bHjz53WDzu4kZurKQQLXZPi4DnOROpvdvqds/YWDIVbJv/GQF6O3sfZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1FEx9N6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ut9QGF6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A081F00A3D;
-	Fri,  4 Sep 2026 05:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1FEx9N6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6711F00A3D;
+	Fri,  4 Sep 2026 05:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498450;
-	bh=JQ6nFTG15Jz7ZTbCLkxhT/MGKJ+fsNEKoKp6/HKtveI=;
+	s=korg; t=1788498453;
+	bh=ISMQSZXVhAUPmAc9GBrzxmyNqYRYjt/908HmhpTJU4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ut9QGF6/9NCVxBlhpDwfOReLDszIbTQMoq444j8BOAFa7eBAJ2VcUjiUkL7znPeNy
-	 j674EbvgnBHnsF6R0L8kMDrqunkTBwaRpVcMVTPMm+MdDObQZk2tcwyv/FhG5p6UPj
-	 hSXqvNgpb8FP18gw6nXYGO2Eo6BKUNyG85MMmQDo=
+	b=i1FEx9N6Pm+HjUXV1lfQBsqZxvPVRT3Q/rnA3mzK7MUBAEzEpmYRO8gXl+IVBCUbp
+	 AQG2oEHXoONqV/OCJM7Wg+rtMlDewAsS6JnU6Nx6CK4Hf3ha4A3xxipabufCbxr1OY
+	 K3hJx3m2k+fo/pw/9OK0UwMz5/mh6J1Zu/K9h+0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>
-Subject: [PATCH 7.2 066/713] mm/slub: fix missing debugfs entries for caches created before sysfs init
-Date: Fri,  4 Sep 2026 06:50:34 +0200
-Message-ID: <20260904045805.321189155@linuxfoundation.org>
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Hao Li <hao.li@linux.dev>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 7.2 067/713] mm/slub: prevent pfmemalloc objects from entering the barn
+Date: Fri,  4 Sep 2026 06:50:35 +0200
+Message-ID: <20260904045805.343814706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,191 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-commit 7e98f856395618011c517f767fb80ac3fe90de2b upstream.
+commit 9338b189be6895e45cf6fcf819c55cd3c47e4a18 upstream.
 
-slab_debugfs_init() creates the slab debugfs root at device initcall
-time, while slab_sysfs_init() moves slab_state to FULL at late initcall
-time. SLAB_STORE_USER caches created in this window miss their debugfs
-entries because do_kmem_cache_create() skips debugfs_slab_add() when
-slab_state <= UP. This was observed with MPTCP's request_sock_subflow_v6
-cache, whose slab debugfs directory was missing.
+kmem_cache_return_sheaf() may refill a partially consumed sheaf before
+placing it in the barn. Without an explicit restriction, this refill may
+draw objects from pfmemalloc slabs and consume emergency reserves.
 
-The affected window is:
+Add __GFP_NOMEMALLOC so that returned sheaves are refilled only from
+non-pfmemalloc slabs. Also add __GFP_NOWARN, as suggested by Hao Li,
+because this refill is a best-effort attempt and failure is acceptable.
+If the refill fails, flush and free the sheaf instead.
 
-  slab_debugfs_init()
-    slab_debugfs_root = debugfs_create_dir(...)
-    list_for_each_entry(s, &slab_caches, list)
-      debugfs_slab_add(s)
-
-  kmem_cache_create(..., SLAB_STORE_USER, ...)
-    do_kmem_cache_create()
-      if (slab_state <= UP)
-        return without debugfs entries
-
-  slab_sysfs_init()
-    slab_state = FULL
-
-Initialize the debugfs root and add debugfs entries while holding
-slab_mutex, walking slab_caches exactly once and handling both sysfs
-and debugfs entries in the same pass. This gives the sysfs and debugfs
-initialization an explicit order and prevents caches from being
-created between the debugfs scan and slab_state reaching FULL.
-
-Gate the new slab_late_init() on either sysfs or debugfs being enabled,
-with the slab_kset creation and alias_list processing factored into
-helpers that have empty no-sysfs variants, as suggested by Vlastimil
-Babka. On slab_kset_init() failure, slab_state stays below FULL so
-kmem_cache_create() keeps taking the early-boot path, matching prior
-behavior.
-
-Guard debugfs_slab_release() against an uninitialized debugfs root,
-since the root is now created later and a cache may be released before
-it exists.
-
-Fixes: 1a5ad30b89b4 ("mm: slub: make slab_sysfs_init() a late_initcall")
+Fixes: 1ce20c28eafd ("slab: handle pfmemalloc slabs properly with sheaves")
 Cc: stable@vger.kernel.org
-Suggested-by: Vlastimil Babka <vbabka@kernel.org>
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Link: https://patch.msgid.link/20260729101849.3734287-1-lixiasong1@huawei.com
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
 Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Link: https://patch.msgid.link/20260721084522552ZPa16p1SRj3PYat3sqxuN@zte.com.cn
 Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |   76 +++++++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 28 deletions(-)
+ mm/slub.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -333,14 +333,20 @@ enum track_item { TRACK_ALLOC, TRACK_FRE
- 
- #ifdef SLAB_SUPPORTS_SYSFS
- static int sysfs_slab_add(struct kmem_cache *);
-+static int __init slab_kset_init(void);
-+static void __init slab_sysfs_process_aliases(void);
- #else
- static inline int sysfs_slab_add(struct kmem_cache *s) { return 0; }
-+static inline int slab_kset_init(void) { return 0; }
-+static inline void slab_sysfs_process_aliases(void) { }
- #endif
- 
- #if defined(CONFIG_DEBUG_FS) && defined(CONFIG_SLUB_DEBUG)
- static void debugfs_slab_add(struct kmem_cache *);
-+static void __init slab_debugfs_root_init(void);
- #else
- static inline void debugfs_slab_add(struct kmem_cache *s) { }
-+static inline void slab_debugfs_root_init(void) { }
- #endif
- 
- enum add_mode {
-@@ -9734,28 +9740,20 @@ int sysfs_slab_alias(struct kmem_cache *
- 	return 0;
- }
- 
--static int __init slab_sysfs_init(void)
-+static int __init slab_kset_init(void)
- {
--	struct kmem_cache *s;
--	int err;
--
--	mutex_lock(&slab_mutex);
--
- 	slab_kset = kset_create_and_add("slab", NULL, kernel_kobj);
- 	if (!slab_kset) {
--		mutex_unlock(&slab_mutex);
- 		pr_err("Cannot register slab subsystem.\n");
- 		return -ENOMEM;
- 	}
- 
--	slab_state = FULL;
-+	return 0;
-+}
- 
--	list_for_each_entry(s, &slab_caches, list) {
--		err = sysfs_slab_add(s);
--		if (err)
--			pr_err("SLUB: Unable to add boot slab %s to sysfs\n",
--			       s->name);
--	}
-+static void __init slab_sysfs_process_aliases(void)
-+{
-+	int err;
- 
- 	while (alias_list) {
- 		struct saved_alias *al = alias_list;
-@@ -9767,12 +9765,41 @@ static int __init slab_sysfs_init(void)
- 			       al->name);
- 		kfree(al);
- 	}
-+}
-+#endif /* SLAB_SUPPORTS_SYSFS */
-+
-+#if defined(SLAB_SUPPORTS_SYSFS) || \
-+	(defined(CONFIG_SLUB_DEBUG) && defined(CONFIG_DEBUG_FS))
-+static int __init slab_late_init(void)
-+{
-+	struct kmem_cache *s;
-+	int err;
- 
-+	mutex_lock(&slab_mutex);
-+
-+	err = slab_kset_init();
-+	if (err)
-+		goto out;
-+
-+	slab_debugfs_root_init();
-+	slab_state = FULL;
-+
-+	list_for_each_entry(s, &slab_caches, list) {
-+		if (sysfs_slab_add(s))
-+			pr_err("SLUB: Unable to add boot slab %s to sysfs\n",
-+			       s->name);
-+
-+		if (s->flags & SLAB_STORE_USER)
-+			debugfs_slab_add(s);
-+	}
-+
-+	slab_sysfs_process_aliases();
-+out:
- 	mutex_unlock(&slab_mutex);
--	return 0;
-+	return err;
- }
--late_initcall(slab_sysfs_init);
--#endif /* SLAB_SUPPORTS_SYSFS */
-+late_initcall(slab_late_init);
-+#endif
- 
- #if defined(CONFIG_SLUB_DEBUG) && defined(CONFIG_DEBUG_FS)
- static int slab_debugfs_show(struct seq_file *seq, void *v)
-@@ -9964,23 +9991,16 @@ static void debugfs_slab_add(struct kmem
- 
- void debugfs_slab_release(struct kmem_cache *s)
- {
-+	if (unlikely(!slab_debugfs_root))
-+		return;
-+
- 	debugfs_lookup_and_remove(s->name, slab_debugfs_root);
- }
- 
--static int __init slab_debugfs_init(void)
-+static void __init slab_debugfs_root_init(void)
- {
--	struct kmem_cache *s;
--
- 	slab_debugfs_root = debugfs_create_dir("slab", NULL);
--
--	list_for_each_entry(s, &slab_caches, list)
--		if (s->flags & SLAB_STORE_USER)
--			debugfs_slab_add(s);
--
--	return 0;
--
- }
--__initcall(slab_debugfs_init);
- #endif
- /*
-  * The /proc/slabinfo ABI
+@@ -5153,7 +5153,7 @@ void kmem_cache_return_sheaf(struct kmem
+ 	 * simply flush and free it.
+ 	 */
+ 	if (!barn || data_race(barn->nr_full) >= MAX_FULL_SHEAVES ||
+-	    refill_sheaf(s, sheaf, gfp)) {
++	    refill_sheaf(s, sheaf, gfp | __GFP_NOMEMALLOC | __GFP_NOWARN)) {
+ 		sheaf_flush_unused(s, sheaf);
+ 		free_empty_sheaf(s, sheaf);
+ 		return;
 
 
