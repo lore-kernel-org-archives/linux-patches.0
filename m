@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C683515D2;
-	Fri,  4 Sep 2026 05:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ABB3B42F7;
+	Fri,  4 Sep 2026 05:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498359; cv=none; b=cJr7+a9RuZm8D2IMu33Y4/E5ye4DpvW8bSCgf1XwCsVZTlHS5fmJe4V90+E1eFcU3T7ozG69BLMm/QqCRnep7XL3rj+5sYs7AfA8b9Ddn5MVIUZWSDIqsXC4TGu1HvDRT0C04ej7nQOcZSXSeuwRAjEfJQIZlW+6yNIjnAafbYE=
+	t=1788498361; cv=none; b=eFY6E5BbzyzCE/KAgWznaOG5ltYXv1grXpUJ36od9UVzAbCIQOw2V9RbSuCZsBys1iFlYJE2TRCF3Gos/n+EJT7vgruA0o2tqeQ3yRAv/8UeDob0yTHgIwwLIfEUxdf/At2/blhYFgDz+Wh6HzuWTQw2Whcu2MwsDGyTbiutK4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498359; c=relaxed/simple;
-	bh=wV4wCUTvGOO4LzO7vXyypqviS/jKkg/+8Lp+s6f8ISc=;
+	s=arc-20240116; t=1788498361; c=relaxed/simple;
+	bh=CIbUaCV902hsRwVeuq6UefnvXKn9WJFkllsc7XT/Mz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMAL3nzfPAHgm9jPWJj33FqUTE5VzcMgkqnEfTbzaaM/ITC70DiqHs9Aarl4MsDnU0NwjSEDL/lg4t8ZD3nzO8nOSSSQVupr9Yh+VDlCq2rEA0ivwAyYfTkXty1L6gDJJzsNfQ6BFY+C0bVR7JaEvtzpocO367p10XRys5C2FR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+28Lp3s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W6gXr+fs9oX1shrvTl91jB6X0zxXrlABGIx6PG4yA+/oDp1yDDAAS2+JpSI3qhb1cGxl4cQkeCvQsVPioCodrWVX1AWgzwzM5F8QaiU0AqYHkQJb1g+BMReRYfyKMwwSyhpWVQr2QYPUZ0Tb7NmkIpbb/vo3NC3jKCgLfKoC0gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpXfA/ic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+28Lp3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5301B1F00A3D;
-	Fri,  4 Sep 2026 05:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpXfA/ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3241F00A3D;
+	Fri,  4 Sep 2026 05:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498357;
-	bh=8+B4RsSdOOTzSAlwshMX6LjQVmZ51jRJVnM1cie49X8=;
+	s=korg; t=1788498360;
+	bh=q8uNKI4yzXtg0d4PCnK7B54ycHxEUH2UQpuQSFIdgzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F+28Lp3s+zebYVvnp8PvDcis/VYy0yrXcjv7wpkun3n6MU0t7hmhIn9m5+VO+yI0A
-	 Obc7beQxXIruK4hzduasi3lonxxZy5cYknbqCur56RwE3tWIjavYog3xZwMWFUnaBe
-	 8ux2GdQz/80k9a5krcPzGRu4CEKMMqyoPeinsoRc=
+	b=qpXfA/icNSTCXHru1LxJSo4Uw81HSIgPKLlpiuYFIBbnViG4xIABn7hoY6R6MJZBJ
+	 NRBFSiTPONrWX6t+t7GJRUYdzKEoaiw4R7owlz2QxiPhXSKUiWYQAnTiyttBEWtPEM
+	 Yp1OmEEBbfufPrz6dIfLYJRcVecY+HgVRPA+6FQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 004/713] ASoC: tegra210_mixer: sort the register default table
-Date: Fri,  4 Sep 2026 06:49:32 +0200
-Message-ID: <20260904045803.916602099@linuxfoundation.org>
+Subject: [PATCH 7.2 005/713] ASoC: tegra: Fix the I2S enable default value
+Date: Fri,  4 Sep 2026 06:49:33 +0200
+Message-ID: <20260904045803.938850173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,48 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit f70bc276fc7f712ff5c8e995d5050558a3198df2 ]
+[ Upstream commit 53dd1c1de851280c71385f49a24715e5615c926c ]
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+Commit 4b05ccb17f92 ("regcache: Sort the local copy of an unsorted
+reg_defaults array") exposed an issue in the Tegra I2S driver where the
+register default for the TEGRA210_I2S_ENABLE is specified as 1, but the
+hardware default is actually 0. After this commit was added the I2S
+driver is no longer working and so fix this by correcting the default
+value for this register and explicitly configuring the I2S_ENABLE
+register when runtime resuming the I2S device.
 
-TEGRA210_MIXER_ENABLE (0x400) is the last entry of the table, after
-TEGRA210_MIXER_PEAKM_RAM_CTRL (0x434), which makes it unreachable.
-regcache_reg_needs_sync() then cannot compare it against its default and
-reports that a sync is needed, so it is written to the device on every
-regcache_sync() even when it was never touched.
+The I2S_ENABLE register offset is different on Tegra264 devices than
+other Tegra devices and so add a 'enable_reg' variable to the SoC data
+structure to specify the offset for different SoC devices.
 
-Sort the table by register address.
-
-Fixes: 05bb3d5ec64a ("ASoC: tegra: Add Tegra210 based Mixer driver")
+Fixes: c0bfa98349d1 ("ASoC: tegra: Add Tegra210 based I2S driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260805122748.13090-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260821153734.158426-2-jonathanh@nvidia.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/tegra/tegra210_mixer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/tegra/tegra210_i2s.c | 20 +++++++++++++++++---
+ sound/soc/tegra/tegra210_i2s.h |  1 +
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/tegra/tegra210_mixer.c b/sound/soc/tegra/tegra210_mixer.c
-index a69774578d69f..8eb4e54b954b1 100644
---- a/sound/soc/tegra/tegra210_mixer.c
-+++ b/sound/soc/tegra/tegra210_mixer.c
-@@ -57,10 +57,10 @@ static const struct reg_default tegra210_mixer_reg_defaults[] = {
- 	MIXER_TX_REG_DEFAULTS(3),
- 	MIXER_TX_REG_DEFAULTS(4),
- 
-+	{ TEGRA210_MIXER_ENABLE, 0x1 },
- 	{ TEGRA210_MIXER_CG, 0x00000001},
- 	{ TEGRA210_MIXER_GAIN_CFG_RAM_CTRL, 0x00004000},
- 	{ TEGRA210_MIXER_PEAKM_RAM_CTRL, 0x00004000},
--	{ TEGRA210_MIXER_ENABLE, 0x1 },
+diff --git a/sound/soc/tegra/tegra210_i2s.c b/sound/soc/tegra/tegra210_i2s.c
+index e4d11518ff019..fdcc5d62b720c 100644
+--- a/sound/soc/tegra/tegra210_i2s.c
++++ b/sound/soc/tegra/tegra210_i2s.c
+@@ -23,7 +23,7 @@ static const struct reg_default tegra210_i2s_reg_defaults[] = {
+ 	{ TEGRA210_I2S_RX_CIF_CTRL, 0x00007700 },
+ 	{ TEGRA210_I2S_TX_INT_MASK, 0x00000003 },
+ 	{ TEGRA210_I2S_TX_CIF_CTRL, 0x00007700 },
+-	{ TEGRA210_I2S_ENABLE, 0x1 },
++	{ TEGRA210_I2S_ENABLE, 0x0 },
+ 	{ TEGRA210_I2S_CG, 0x1 },
+ 	{ TEGRA210_I2S_TIMING, 0x0000001f },
+ 	/*
+@@ -42,7 +42,7 @@ static const struct reg_default tegra264_i2s_reg_defaults[] = {
+ 	{ TEGRA264_I2S_TX_INT_MASK, 0x00000003 },
+ 	{ TEGRA264_I2S_TX_CIF_CTRL, 0x00003f00 },
+ 	{ TEGRA264_I2S_TX_FIFO_RD_ACCESS_MODE, 0x1 },
+-	{ TEGRA264_I2S_ENABLE, 0x1 },
++	{ TEGRA264_I2S_ENABLE, 0x0 },
+ 	{ TEGRA264_I2S_CG, 0x1 },
+ 	{ TEGRA264_I2S_TIMING, 0x0000001f },
  };
+@@ -201,9 +201,21 @@ static int tegra210_i2s_runtime_resume(struct device *dev)
+ 	}
  
- /* Default gain parameters */
+ 	regcache_cache_only(i2s->regmap, false);
+-	regcache_sync(i2s->regmap);
++	err = regcache_sync(i2s->regmap);
++	if (err)
++		goto err;
++
++	err = regmap_write(i2s->regmap, i2s->soc_data->enable_reg, I2S_EN);
++	if (err)
++		goto err;
+ 
+ 	return 0;
++
++err:
++	regcache_cache_only(i2s->regmap, true);
++	clk_disable_unprepare(i2s->clk_i2s);
++
++	return err;
+ }
+ 
+ static void tegra210_i2s_set_data_offset(struct tegra210_i2s *i2s,
+@@ -1133,6 +1145,7 @@ static const struct tegra_i2s_soc_data soc_data_tegra210 = {
+ 	.regmap_conf		= &tegra210_regmap_conf,
+ 	.i2s_cmpnt		= &tegra210_i2s_cmpnt,
+ 	.max_ch			= TEGRA210_I2S_MAX_CHANNEL,
++	.enable_reg		= TEGRA210_I2S_ENABLE,
+ 	.tx_offset		= TEGRA210_I2S_TX_OFFSET,
+ 	.i2s_ctrl_offset	= TEGRA210_I2S_CTRL_OFFSET,
+ 	.fsync_width_mask	= I2S_CTRL_FSYNC_WIDTH_MASK,
+@@ -1144,6 +1157,7 @@ static const struct tegra_i2s_soc_data soc_data_tegra264 = {
+ 	.regmap_conf		= &tegra264_regmap_conf,
+ 	.i2s_cmpnt		= &tegra264_i2s_cmpnt,
+ 	.max_ch			= TEGRA264_I2S_MAX_CHANNEL,
++	.enable_reg		= TEGRA264_I2S_ENABLE,
+ 	.tx_offset		= TEGRA264_I2S_TX_OFFSET,
+ 	.i2s_ctrl_offset	= TEGRA264_I2S_CTRL_OFFSET,
+ 	.fsync_width_mask	= TEGRA264_I2S_CTRL_FSYNC_WIDTH_MASK,
+diff --git a/sound/soc/tegra/tegra210_i2s.h b/sound/soc/tegra/tegra210_i2s.h
+index 42be2137342c4..82292f96ab367 100644
+--- a/sound/soc/tegra/tegra210_i2s.h
++++ b/sound/soc/tegra/tegra210_i2s.h
+@@ -150,6 +150,7 @@ struct tegra_i2s_soc_data {
+ 	const struct regmap_config *regmap_conf;
+ 	const struct snd_soc_component_driver *i2s_cmpnt;
+ 	unsigned int max_ch;
++	unsigned int enable_reg;
+ 	unsigned int tx_offset;
+ 	unsigned int i2s_ctrl_offset;
+ 	unsigned int fsync_width_mask;
 -- 
 2.53.0
 
