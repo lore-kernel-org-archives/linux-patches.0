@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DB54195A3;
-	Fri,  4 Sep 2026 05:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F1941684A;
+	Fri,  4 Sep 2026 05:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501450; cv=none; b=oqXOoa3MmTN/ByRp6zfTqKXadinXgHx6n4i3Lp3gYAifTU5QmzL1yGVARB8FGgWqSrYW7rOrar84BOKDvYqqysGNhLC+OhH8xEybcWMzOEA7Eecpsumj53tOYjwiVXYHr4lRio86WFFY8QNnhCqSyd4unZxKfHrfNpPeBOwhcd4=
+	t=1788501453; cv=none; b=Y1Yv6qf0gyZAfNsIlnpOycRroSTlNUg5NsUd7Ys3UL8sVFoyQZwyPLINEo6DBm4t4ggGCesGBcxTgwACxGxpyLLkFEX2Thyj1BvFRpgsCpIrwARXNZRk5ZysyW8AYaeDPh062PT475KCkLxpvRqzfFhYiGOP+7k10cv4f2YsIbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501450; c=relaxed/simple;
-	bh=lsGTl0AFUiAOfyRiDZKqLHHU45ckRfWaRdsf2JFJByA=;
+	s=arc-20240116; t=1788501453; c=relaxed/simple;
+	bh=2PR8LVT52oPJxMRtEtZ8nJLLnVmaWxYnKRewDMVL+KI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BSnD0/4i6RX61TdskWH68zWCY4ak/qNxXQKsAmTo0vuU7mOtkoLyNdRKfRN7WUWaRwewnWH6SM/TnByktgBYewktFvkZ/RTbgb0l4qwO1sQ2/YEEjKH/+iSK+iVLqDX0EAL09GP5UViwut1fql+du2vdH7YeUfEvlgyeUwtHjsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qk1sorUa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ueuX/UIoJxwP8DbgplGOmhD/2hSiZR1Tdi5NC33KKdbNgmWH5iyg5kV1axAbAWlVBPjlfzQuclMrr1L3xY4Lyd19ejF+64hxEcGmETB7i/O2XfwryFRLD5/OYNO7zp36+ywLqAZlfESUQZ+rhZ7SkciP094Xxxw++1JVBp3snZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvFCwCkA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qk1sorUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F591F00A3D;
-	Fri,  4 Sep 2026 05:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvFCwCkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27721F00A3D;
+	Fri,  4 Sep 2026 05:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501449;
-	bh=OMnTpegCMNrQxDXs0kdXH40Kmd4zQdShtmTnMKZlgv4=;
+	s=korg; t=1788501452;
+	bh=8IxrUM1GxzVT2xUXC5Zllw0NSWKyxH83r+k1PBT/yvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qk1sorUaKjGuprphhpOInVkMLXHPNHxvDGNnnmmdzTJi3oXEJJY+0Qfo21fE5k0PW
-	 3dN2/5jPIVi6hbxHl4bAEm2RrcghZvcpLlOX+VAXt0IMZ92aVc7iMWOWAH57bTsFk+
-	 XLlopBVSkks6F5c9w86GJMI1AwvAGzbF9z4kNeLw=
+	b=ZvFCwCkADSyjVMa8ofZti66TxjNqJyjqq8P9v0J/c5NKg7Woe8ZySvJB3EXGeSYNs
+	 A2Wm1eTe17m7tF3oUwhUoWKCXP4/2FxXzDMICVonJSELFlozdi3sWZWC0DSzIi8c6B
+	 nzqcGHpH4PNKS1c6IFLVkLP47nl2aX9bzGcP/oU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	HyeongJun An <sammiee5311@gmail.com>,
 	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 414/552] platform/x86: ISST: Validate level in perf mask ioctls
-Date: Fri,  4 Sep 2026 06:59:31 +0200
-Message-ID: <20260904045800.003533734@linuxfoundation.org>
+Subject: [PATCH 6.18 415/552] platform/x86: ISST: Validate socket ID in clos_assoc ioctl
+Date: Fri,  4 Sep 2026 06:59:32 +0200
+Message-ID: <20260904045800.025389119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -54,59 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 80e0d353c86a9a168ad6d213f494796294381538 upstream.
+commit a89f07db0cb95c54dac4a8406c79a04e44a73c3c upstream.
 
-isst_if_get_perf_level_mask() and isst_if_get_base_freq_mask() use the
-user-provided level as an index into perf_levels[] via
-_read_pp_level_info() and _read_bf_level_info(), but neither helper
-validates it first.
+isst_if_clos_assoc() validates the user-supplied socket_id with
+'socket_id > topology_max_packages()', but isst_common.sst_inst[] is
+allocated with topology_max_packages() entries, so the valid index range
+is [0, topology_max_packages()).  The '>' comparison lets
+socket_id == topology_max_packages() pass and index one entry past the
+array.
 
-The adjacent level-info helpers reject levels above max_level before
-reading the same per-level register block. Add the same bounds checks to
-the mask helpers, and reject disabled SST-PP levels in
-isst_if_get_perf_level_mask() to match isst_if_get_perf_level_info().
+In addition, isst_common.sst_inst[socket_id] is NULL for an in-range
+package that has no bound TPMI SST instance, and the pointer is used
+without a NULL check.  Both the out-of-bounds entry and the NULL pointer
+are then dereferenced by map_partition_power_domain_id() and the
+following power_domain_info access.
 
-This prevents out-of-bounds reads from the per-level offset table on
-invalid ioctl input.
+Reject socket_id >= topology_max_packages() and a NULL sst_inst, matching
+the checks already performed by get_instance().
 
-Fixes: ea009e4769fa3 ("platform/x86: ISST: Add SST-PP support via TPMI")
-Fixes: 06a61df83209 ("platform/x86: ISST: Add SST-BF support via TPMI")
+Fixes: 12a7d2cb811d ("platform/x86: ISST: Add SST-CP support via TPMI")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260807144003.3498972-3-sammiee5311@gmail.com
+Link: https://patch.msgid.link/20260807144003.3498972-2-sammiee5311@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
 +++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -1260,6 +1260,12 @@ static int isst_if_get_perf_level_mask(v
- 	if (!power_domain_info)
- 		return -EINVAL;
+@@ -729,7 +729,7 @@ static long isst_if_clos_assoc(void __us
+ 		if (copy_from_user(&clos_assoc, ptr, sizeof(clos_assoc)))
+ 			return -EFAULT;
  
-+	if (cpumask.level > power_domain_info->max_level)
-+		return -EINVAL;
-+
-+	if (!(power_domain_info->pp_header.level_en_mask & BIT(cpumask.level)))
-+		return -EINVAL;
-+
- 	_read_pp_level_info("mask", mask, cpumask.level, SST_PP_INFO_2_OFFSET,
- 			    SST_PP_RSLVD_CORE_MASK_START, SST_PP_RSLVD_CORE_MASK_WIDTH,
- 			    SST_MUL_FACTOR_NONE)
-@@ -1341,6 +1347,9 @@ static int isst_if_get_base_freq_mask(vo
- 	if (!power_domain_info)
- 		return -EINVAL;
+-		if (clos_assoc.socket_id > topology_max_packages())
++		if (clos_assoc.socket_id >= topology_max_packages())
+ 			return -EINVAL;
  
-+	if (cpumask.level > power_domain_info->max_level)
-+		return -EINVAL;
-+
- 	_read_bf_level_info("BF-cpumask", mask, cpumask.level, SST_BF_INFO_1_OFFSET,
- 			    P1_HI_CORE_MASK_START, P1_HI_CORE_MASK_WIDTH,
- 			    SST_MUL_FACTOR_NONE)
+ 		cpu = clos_assoc.logical_cpu;
+@@ -747,6 +747,8 @@ static long isst_if_clos_assoc(void __us
+ 		pkg_id = clos_assoc.socket_id;
+ 
+ 		sst_inst = isst_common.sst_inst[pkg_id];
++		if (!sst_inst)
++			return -EINVAL;
+ 
+ 		punit_id = map_partition_power_domain_id(sst_inst, punit_id, &part);
+ 		if (punit_id < 0)
 
 
