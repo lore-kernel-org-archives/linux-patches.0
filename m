@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D68E318ED6;
-	Fri,  4 Sep 2026 05:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D2E318ED6;
+	Fri,  4 Sep 2026 05:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500820; cv=none; b=OE9YwfQB1AqFoRSPPxf/tU0cTKF683t2tWVmt7h2uwr4+xNbQVdri7djNjjVYF/yUEWongS4FjVZWzsP8A7SRIvAdpabSnGpJaNSJtkejpoU6TBoiarZxDuc+lcQONYhLVOjsyMDgpUzabk3LLsLNv2dtT5YGrlw2wuDuJGTwas=
+	t=1788500823; cv=none; b=j6VPMIynfLuSVIlulZzakF11VVOc2D36VGNduY8g34TnlMG89hAEMpilT6jm6uGldwa/7q5+SVZ2h+asECBw9D6ZLOrnelptdo1htauW6rO9975oHtBsJkY+FRWiJL7/zDb07LG1kWQctiOBEXOpYxq0zCDkGdPWQex4FNvJMzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500820; c=relaxed/simple;
-	bh=XxGaDBjZ4JQwn1955AYsqnbpASy42qOLzkuegRewwKE=;
+	s=arc-20240116; t=1788500823; c=relaxed/simple;
+	bh=kFYC/jgw9FQGzQKgmfE9cyjY1hF6iqZ3aUxZq5qDG8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwNrWN+hoYMDU2jDrXayqaWlUplSAQLJ2OwmBRNyumU4ZSWoZBlZR4sEFUhesje68yA++twj0PAPivEGrQq79dwF8ESC0mNILqjkryNgjsY2Iu9taR2GfwMQqguX5wISPKyu7aw0tje5O3epRXnLqZHmv9zvS7MS34bRo3/FPWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4L7+PUR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t2EB2665sclcLekePR59R13Br/ytG/ZLXhI/w/4/Bz7HMyt6pFxDesmfA1r+tBoalkNPdiWtOP9dIDT+Zq86L6oWAdCaxvMIv/nudAs40Xbae4IKQUzgcU2dJHvyH/J+nOW5h3IW/3U6rr9SEp03vpuzwck5taKQy1c/CXN05ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsjxNWgy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4L7+PUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965A81F00A3D;
-	Fri,  4 Sep 2026 05:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsjxNWgy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751051F00A3D;
+	Fri,  4 Sep 2026 05:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500819;
-	bh=yK6YaEGsBwC/zVCXsfowBv+7efbNgYk/l149TPT2e9U=;
+	s=korg; t=1788500822;
+	bh=QGjfhP+aWPNkIJqaICQjsDM22yn+XCwagZFiGGc4Fsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n4L7+PURYukrtaUimHdE13EkCo+MSMPqLYUiBq9SePoOd0BSgCeoun3t3ms+p8P3q
-	 JNlJ0nozg9Y3+ty/G2+uSdpZqLEY8Qo3+1Re49U+wICA80IV3X1atqOK+mh9fqMFIl
-	 24OUu2O6zSXdaUXNCrx2AmjjPvgIrsG0sS6kah9w=
+	b=TsjxNWgyURycdKRkSYsmJr0XJdfz4FJL5SvvAAIVsZGE9mks8XQ4CzMlkemdOv33O
+	 0zDoKi3Wt4MoiHuzqXVPJ0Zva6azrnymtqO7rmEtBzaGHl49/xtD/wx4AAio746chm
+	 Pq+fEGll3iPiwrrPU7xnYTs5V2PV6QmFbA6GPIeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 6.18 191/552] eCryptfs: bound the packet-length peek to the user buffer
-Date: Fri,  4 Sep 2026 06:55:48 +0200
-Message-ID: <20260904045753.344231652@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.18 165/552] btrfs: do not overwrite NODATASUM flag when removing NODATACOW flag
+Date: Fri,  4 Sep 2026 06:55:22 +0200
+Message-ID: <20260904045752.767893641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,48 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 95540462e630edbc8504e9537d16453d6942d143 upstream.
+commit 15f7c86215e8d5f14b24127fa88af6c79363d50e upstream.
 
-ecryptfs_miscdev_write() accepts the minimum one-byte packet-length
-encoding, but always copies the maximum two-byte encoding from userspace
-before parsing it. A six-byte message therefore reads one byte beyond the
-submitted user buffer.
+[TEST FAILURE]
+The test case generic/628 will fail if MOUNT_OPTIONS is set to
+"-o nodatasum":
 
-Zero-initialize the peek buffer and copy only the packet-length bytes
-present. The existing exact packet-size check still rejects truncated
-two-byte encodings after the parser determines their encoded length.
+  FSTYP         -- btrfs
+  PLATFORM      -- Linux/x86_64 btrfs-vm 7.1.0-rc4-custom+ #383 SMP PREEMPT_DYNAMIC Sat May 30 07:35:42 ACST 2026
+  MKFS_OPTIONS  -- -O bgt -K /dev/mapper/test-scratch1
+  MOUNT_OPTIONS -- -o nodatasum /dev/mapper/test-scratch1 /mnt/scratch
 
-Fixes: 8bf2debd5f7b ("eCryptfs: introduce device handle for userspace daemon communications")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Tyler Hicks <code@tyhicks.com>
+#  generic/628  1s ... - output mismatch (see /home/adam/xfstests/results//generic/628.out.bad)
+#     --- tests/generic/628.out	2022-05-11 11:25:30.816666664 +0930
+#     +++ /home/adam/xfstests/results//generic/628.out.bad	2026-06-08 18:56:49.878542927 +0930
+#     @@ -8,8 +8,9 @@
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/d
+#      test reflink flag not set iflag
+#     +XFS_IOC_CLONE: Invalid argument
+#      310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/a
+#     -310f146ce52077fcd3308dcbe7632bb2  SCRATCH_MNT/b
+#     +d41d8cd98f00b204e9800998ecf8427e  SCRATCH_MNT/b
+#     ...
+
+[CAUSE]
+The direct cause is that after "chattr +S", the btrfs inode will lose its
+NODATASUM flag inherited from the mount option. E.g.:
+
+  # mkfs.btrfs -f $dev
+  # mount $dev $mnt -o nodatasum
+  # touch $mnt/foobar
+  # sync
+  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
+         item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
+         	generation 9 transid 9 size 0 nbytes 0
+         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+         	sequence 1 flags 0x1(NODATASUM)
+         	                     ^^^^^^^^^ Proper NODATASUM flag
+
+  # chattr +S $mnt/foobar
+  # sync
+  # btrfs ins dump-tree -t 5 $dev | grep "(257 INODE_ITEM 0) itemoff" -A 3
+  	item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
+         	generation 9 transid 10 size 0 nbytes 0
+         	block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+         	sequence 2 flags 0x20(SYNC)
+         	                      ^^^^ Only the new SYNC flag
+
+This makes the inode drop the old NODATASUM flag, while the new reflink
+destination will still inherit the NODATASUM flag.  The mismatching
+NODATASUM flags will cause the reflink to fail.
+
+The root cause is that, inside btrfs_fileattr_set() if no FS_NOCOW_FL is
+set, we remove both NODATASUM and NODATACOW flag.
+
+However we should not touch NODATASUM flag, as data COW doesn't require
+checksum.  Only NODATACOW implies NODATASUM, but DATACOW doesn't imply
+DATASUM.
+
+The deeper problems are:
+
+- Fileattr API is too binary
+  It either clears or sets a flag, there is no "do not change" option.
+  So that why "chattr +S" implies "chattr -C", and is forcing us to
+  change NODATACOW along with NODATASUM flag.
+
+- No way to change NODATASUM through fileattr API
+  In fact NODATASUM can only be modified through mount option.
+
+The deeper problems are much harder to attack.
+
+[FIX]
+Remove NODATACOW flag when FS_NOCOW_FL is not set, but only remove
+NODATASUM if "nodatasum" mount option is not set.
+
+This allows the existing "chattr +C" then "chattr -C" to remove
+both NODATACOW and NODATASUM flags on a default mount.
+
+But for a mount with "nodatasum" option, the NODATASUM inode flag will
+persist through either "chattr +C" and "chattr -C".
+
+Fixes: 7e97b8daf634 ("btrfs: allow setting NOCOW for a zero sized file via ioctl")
+Cc: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/miscdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/ioctl.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/fs/ecryptfs/miscdev.c
-+++ b/fs/ecryptfs/miscdev.c
-@@ -357,7 +357,7 @@ ecryptfs_miscdev_write(struct file *file
- 	u32 seq;
- 	size_t packet_size, packet_size_length;
- 	char *data;
--	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE];
-+	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE] = { };
- 	ssize_t rc;
- 
- 	if (count == 0) {
-@@ -373,7 +373,8 @@ ecryptfs_miscdev_write(struct file *file
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -330,14 +330,21 @@ int btrfs_fileattr_set(struct mnt_idmap
+ 			inode_flags |= BTRFS_INODE_NODATACOW;
+ 		}
+ 	} else {
+-		/*
+-		 * Revert back under same assumptions as above
+-		 */
+-		if (S_ISREG(inode->vfs_inode.i_mode)) {
+-			if (inode->vfs_inode.i_size == 0)
+-				inode_flags &= ~(BTRFS_INODE_NODATACOW |
+-						 BTRFS_INODE_NODATASUM);
+-		} else {
++		/* We can only change NODATACOW for zero-sized regular file. */
++		if (S_ISREG(inode->vfs_inode.i_mode) && (inode->vfs_inode.i_size == 0)) {
++			inode_flags &= ~BTRFS_INODE_NODATACOW;
++			/*
++			 * There is currently no way to change NODATASUM flag
++			 * through fileattr API.  If we unconditionally keep the
++			 * current NODATASUM flag, chattr +C then chattr -C will
++			 * keep the NODATASUM flag, and no way to remove that
++			 * flag.
++			 *
++			 * So respect the current mount option for NODATASUM flag.
++			 */
++			if (!btrfs_test_opt(fs_info, NODATASUM))
++				inode_flags &= ~BTRFS_INODE_NODATASUM;
++		} else if (!S_ISREG(inode->vfs_inode.i_mode)) {
+ 			inode_flags &= ~BTRFS_INODE_NODATACOW;
+ 		}
  	}
- 
- 	if (copy_from_user(packet_size_peek, &buf[PKT_LEN_OFFSET],
--			   sizeof(packet_size_peek))) {
-+			   min_t(size_t, count - PKT_LEN_OFFSET,
-+				 sizeof(packet_size_peek)))) {
- 		printk(KERN_WARNING "%s: Error while inspecting packet size\n",
- 		       __func__);
- 		return -EFAULT;
 
 
