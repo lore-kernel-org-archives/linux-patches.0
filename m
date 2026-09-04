@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDABD41DEDF;
-	Fri,  4 Sep 2026 05:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A335241A4F8;
+	Fri,  4 Sep 2026 05:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499387; cv=none; b=KhLKsesfAE8dhoUuHDMANrRHLGBsZsr4D+Mk2D1XD57XUvSb4NeYIHBO2xfaoueGv5QnAQ2f0sjz6N4FDbe+IlitJ9GWHe4YZVRUoA6NWsBYm8L2vmurHnv2UhasG8cAkflRGvhNOQWk65SFURvF9Ch0e4ltbJwlzd4YC+/BwTo=
+	t=1788499390; cv=none; b=HQxt53bb3eMBztT/31l2dT9rbvmhqzS1c9uoPs8BAW7SVXQcCCgZW0GHcIahjeSIAi2Y6KiswNW3x/EAfyMLURvPp+NGc18N17UyUrCBFSGDJ9Dwv1h5aTovoOQE61MaOPhaaquVxj2y13QwcF5a39pJb1GdwdOERzBhV5bqQlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499387; c=relaxed/simple;
-	bh=YR8ru2XXB568DyHM73OlAtX276DlhGnxFuK9hXfGH0I=;
+	s=arc-20240116; t=1788499390; c=relaxed/simple;
+	bh=Sl1VzMDTN4LVPNftD+pXErnkvNsrBNIbbEx1n4MK4E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjAt+Uy8o7/3lQf/5It0zVKAVIhmrcImmpc6Qrua0OR0z04paGAhx6SZLoIjOuAZWUCBxYjcL9et4r4XUlK6PLtSiJfpLJo54xrsIH1YiJHryQON6VuOQqgqqOyGXcKQQFr+eDT2SdBwQofxSwA+yqm2al7Nrsrs3ZUwcI0X2FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efmP/hPs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oQ+hNlyGl1XLtNjAUjsfS+RF1G5vzFefLeeqmTmrZpi28fPaX65bn5Sh+JPPPAn7lAHMibekq2e5Tc7QxDLLK09rBPaHirl5fwjJXDJE1rws3XH/zm8yIK3Lb+i7DunojXXlReqJIUBNuhF/v4oUoCYZxAV9afgAymCki7ZpLr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLI+fO23; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efmP/hPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09251F00A3D;
-	Fri,  4 Sep 2026 05:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLI+fO23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B7C1F00ACA;
+	Fri,  4 Sep 2026 05:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499386;
-	bh=vS4WM2iVjizHEIURoqRhuxbGowMpko7C4mCCaG7GDsg=;
+	s=korg; t=1788499389;
+	bh=2/y0Gy07sFES3WUu5vGGevoQNnueL6vHs6NN4mujsKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=efmP/hPs5wVXll4drUmhpS3RMoMTw9PpvFXQkl1t1PkiTJLg13HaBIhiyjh+P3ko2
-	 8VMURVbKbWL8F+PlLv8RhqUx+ngvw4KmAsIBAKwTyqGc7uOt37hPCT+EOQHCH4JD3E
-	 8qxqZSseEd+QMAR896KnBXPoxtRf7ZclYepaTq64=
+	b=pLI+fO23pYK4MQ7pjea1XwyNtQzAPcYGmQODqMnEh0zVH1/n7DXuaVZhxU46Ngn/j
+	 /AmOdnoNCVjfrVysYmtTQx1RoM/D+cmJfVJSz0O1JC6oVe4xOBzWqr8cXYTpxpqDM6
+	 Cj13sNCYLcxvqFxc1r2tqps//sUunMbFe+X3DaoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 397/713] svcrdma: Reject Read lists that exceed the page budget
-Date: Fri,  4 Sep 2026 06:56:05 +0200
-Message-ID: <20260904045812.723708188@linuxfoundation.org>
+Subject: [PATCH 7.2 398/713] svcrdma: Reject Write/Reply chunks with segcount 0
+Date: Fri,  4 Sep 2026 06:56:06 +0200
+Message-ID: <20260904045812.745777183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -49,60 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Chris Mason <clm@meta.com>
 
-commit 0ca487abb3bdf581851664b5db21f364caf57682 upstream.
+commit 9808eb7656666acc7291bae9ab6b987bd16e47e0 upstream.
 
-Individual Read segment lengths are validated at decode time, but
-nothing prevents a requester from sending multiple segments whose
-cumulative length exceeds the rq_pages array budget. When one
-segment fills the page array exactly, the runtime guard in
-svc_rdma_build_read_segment() is bypassed because len reaches zero.
-A subsequent segment then accesses the NULL sentinel slot at
-rq_pages[rq_maxpages], resulting in a NULL pointer dereference during
-DMA mapping.
+A peer can send a Write or Reply chunk whose segcount field is zero.
+xdr_check_write_chunk() only rejects segcount > rc_maxpages, so zero
+passes the range check, and xdr_inline_decode(stream, 0) returns the
+current (non-NULL) cursor without advancing. The function returns
+true and pcl_alloc_write() then links a struct svc_rdma_chunk with
+ch_segcount == 0 onto rc_write_pcl or rc_reply_pcl.
 
-Accumulate pages across all Read segments and reject the message at
-decode time when the total would overflow the page budget.
+An earlier patch in this series made pcl_for_each_segment() safe for
+ch_segcount == 0, so this no longer drives the memory walk it used
+to. Rejecting the malformed frame at the decode boundary is still
+worthwhile as defense in depth: it keeps degenerate zero-segment
+chunks off the parsed chunk lists entirely, so any future consumer
+that walks ch_segments directly cannot observe one, and it makes the
+zero-floor easy to backport to trees where the macro change is more
+intrusive. RFC 8166 has no meaning for a Write/Reply chunk that
+describes no remote buffer, so no legitimate client is affected.
 
-Fixes: 026d958b38c6 ("svcrdma: Add recvfrom helpers to svc_rdma_rw.c")
+xdr_check_reply_chunk() funnels Reply chunks through
+xdr_check_write_chunk() and inherits the same rejection.
+
+pcl_alloc_write() also links each chunk onto the parsed chunk list
+before filling its segment array. If a future change weakens the
+segcount-0 rejection, an incomplete chunk is visible to consumers
+during the fill loop. Reorder so that list_add_tail() follows the
+segment fill loop, ensuring only fully-populated chunks appear on
+the list.
+
+Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
 Cc: stable@vger.kernel.org
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-5-e251306ccca9@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_pcl.c      |    2 +-
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c |    9 ++++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
+--- a/net/sunrpc/xprtrdma/svc_rdma_pcl.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_pcl.c
+@@ -213,7 +213,6 @@ bool pcl_alloc_write(struct svc_rdma_rec
+ 		chunk = pcl_alloc_chunk(segcount, 0);
+ 		if (!chunk)
+ 			return false;
+-		list_add_tail(&chunk->ch_list, &pcl->cl_chunks);
+ 
+ 		for (j = 0; j < segcount; j++) {
+ 			segment = &chunk->ch_segments[j];
+@@ -225,6 +224,7 @@ bool pcl_alloc_write(struct svc_rdma_rec
+ 			chunk->ch_length += segment->rs_length;
+ 			chunk->ch_segcount++;
+ 		}
++		list_add_tail(&chunk->ch_list, &pcl->cl_chunks);
+ 	}
+ 	return true;
+ }
 --- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
 +++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -440,11 +440,14 @@ static void svc_rdma_build_arg_xdr(struc
-  *	    to the first byte past the Read list. rc_read_pcl and
-  *	    rc_call_pcl cl_count fields are set to the number of
-  *	    Read segments in the list.
-- *  %false: Read list is corrupt. @rctxt's xdr_stream is left in an
-- *	    unknown state.
-+ *  %false: Read list is corrupt or exceeds the page budget. @rctxt's
-+ *	    xdr_stream is left in an unknown state.
-  */
- static bool xdr_count_read_segments(struct svc_rdma_recv_ctxt *rctxt, __be32 *p)
- {
-+	unsigned int maxlen = rctxt->rc_maxpages << PAGE_SHIFT;
-+	unsigned int total_len = 0;
-+
- 	rctxt->rc_call_pcl.cl_count = 0;
- 	rctxt->rc_read_pcl.cl_count = 0;
- 	while (xdr_item_is_present(p)) {
-@@ -458,7 +461,10 @@ static bool xdr_count_read_segments(stru
+@@ -516,10 +516,13 @@ static bool xdr_check_write_chunk(struct
+ 		return false;
  
- 		xdr_decode_read_segment(p, &position, &handle,
- 					    &length, &offset);
--		if (length > rctxt->rc_maxpages << PAGE_SHIFT)
-+		if (length > maxlen)
-+			return false;
-+		total_len += length;
-+		if (PAGE_ALIGN(total_len) > maxlen)
- 			return false;
- 		if (position) {
- 			if (position & 3)
+ 	/* Before trusting the segcount value enough to use it in
+-	 * a computation, perform a simple range check. This is an
+-	 * arbitrary but sensible limit (ie, not architectural).
++	 * a computation, perform a simple range check. A zero
++	 * segcount describes no remote buffer and is rejected so
++	 * downstream consumers never see a degenerate ch_segcount==0
++	 * chunk. The upper bound is an arbitrary but sensible limit
++	 * (ie, not architectural).
+ 	 */
+-	if (unlikely(segcount > rctxt->rc_maxpages))
++	if (segcount == 0 || unlikely(segcount > rctxt->rc_maxpages))
+ 		return false;
+ 
+ 	p = xdr_inline_decode(&rctxt->rc_stream,
 
 
