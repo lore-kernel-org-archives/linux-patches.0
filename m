@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BC2414A2A;
-	Fri,  4 Sep 2026 05:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE48E3ECBCF;
+	Fri,  4 Sep 2026 05:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499597; cv=none; b=KE2h6rMCC7gyi+DVMrrnpl6oohwyU/HmDKCiCwjNVtXI928eRC5CXmvDN31fVmaekuVLAx6nuXTCp9GwOkUQsXfm6wLVbpXvy73Sf+KGsqncT27Crc0KP8QS+45yifMuXIeXl9dMldcHZ+MSI01H8FZ6phL9nJH/MTyzW2cdY3Y=
+	t=1788499599; cv=none; b=YmtbxFxR1O6VXPmZVuIDhXG/kyjGp+1Kqc4jnceRCqfsDQwf6/4msV3QFtYolbSlR6af25CiM0JxYxRtM7NQhgldIWuJKntwfFRMxH1C9bJ9iH7hESVe0xQXflv3Q9JSZ+FXKq3yqYyp8dzW8DsWq4MLh/jnAS9f3pHHLSsVGgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499597; c=relaxed/simple;
-	bh=oWYiAfzo3PuX+my8ewfAUJJmn7l0DeX/RF9M89zz934=;
+	s=arc-20240116; t=1788499599; c=relaxed/simple;
+	bh=oDqpo3Gt7yZOuMD5DZKaHNSBh94jQPQomMHK4gf3x5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8PBbMi5OczTxAOiSDLXq0LtgUALER05lTTisZNRY/5wKPlfDaACPolohtwcRTc/Xip7qg5+SXz5ppjmgxOs2BULizN+eSNDYuGsqbJAccbpLA4dGNHbAXUEIbWgNxZTfVsquTya6wwmVWWsHLhc0qwqFRVxtYjmN0PxTIpkmXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMcjeCAy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U+EEvrsQTtVVpXo4FhE1qjPxIxF/lQdVu5+CVenGsRO57WcG8AQ59yGhFpFodM5UOzTPUdk9PtFpMQ9vLCl/alW0rNPFiSX+t4lXPzIVRNdYz3M5gHyz40GAWO/4Dd3JhnVhyBESTyPH8y2omraI/ecCVc80LrBxMJ2xgxHgK8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=su8geUHk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMcjeCAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381B71F00A3D;
-	Fri,  4 Sep 2026 05:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="su8geUHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F201F00A3D;
+	Fri,  4 Sep 2026 05:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499595;
-	bh=HYkrqgE5HKbSsC3f4p+k/k9LbOxIaTT7bebJ2j0czTE=;
+	s=korg; t=1788499598;
+	bh=YYAL9HEl0NLvZFqc39PyDlfF7AmuOk8HG19yj1ReIOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eMcjeCAyBFifFizvdAq2sTKCFAEllZEBJLFgWUmS5q9v6j47mbHpZZ/haC/QMTYTs
-	 6avv8+Ua1w7MEAuEWnPi/Mry8iFAnsXVeLuG8vFi5IWuv8EWcgAfwVah6kmCWEhtay
-	 VF+3lr+fEn2qcDQCW4uLYJ3hSP1WrS/d/ZyATL2A=
+	b=su8geUHkTgbqcH0vtzLA2sFkQy+q6OBeJ1omuEj9yxPEHF8JhpDX1tXAYoTCOK4ZR
+	 DLw98vi1dFPHV9TrVXm3kAJ9XJvJppzHcexZdotYIUKAWKDBNC46EDFIBruotoL8Mi
+	 +S1c4OPjm2fNqL7nfHLwLeXcdtciTfjiMMeHMLeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 473/713] ALSA: ump: Fix corrupted data bytes at MIDI 1.0 SysEx to UMP conversion
-Date: Fri,  4 Sep 2026 06:57:21 +0200
-Message-ID: <20260904045814.423519551@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.2 474/713] arm64: compat: Fix decrementing LDM/STM alignment emulation
+Date: Fri,  4 Sep 2026 06:57:22 +0200
+Message-ID: <20260904045814.448275028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,47 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 8a906c0b4f1ba123a95c166f644d2383bf30a420 upstream.
+commit f5b8b9037df387394a73aab47c5437bbac975077 upstream.
 
-The cvt_legacy_sysex_to_ump() initialises only the first word of the
-output packet and ORs the data bytes into it.  The second word is left
-alone, and the conversion context is kept across calls, so it still
-carries the previous packet's bytes.  Those stale bits corrupt the new
-data.  Any SysEx longer than six data bytes is affected.
+The compat alignment emulator inherited unsigned long data addresses from
+the 32-bit ARM implementation.
 
-A SysEx with the twelve data bytes 01..0c comes out as:
+In do_alignment_ldmstm(), nr_regs is an unsigned int holding the transfer
+size. The function uses the same address addition for both transfer
+directions, negating nr_regs first for a decrementing LDM or STM. The
+32-bit negation wraps before the addition, so the handler adds nearly
+4 GiB instead of subtracting the transfer size.
+The resulting address lies outside the compat task's address space, so
+decrementing LDM/STM emulation fails, while incrementing forms work.
 
-  30160102 03040506
-  30260708 0b0e0f0e
+For example, a backwards-moving copy routine using decrementing LDM/STM can
+take an alignment fault when called with unaligned pointers. The compat
+handler should emulate the transfer, but this bug instead causes SIGBUS.
 
-The second packet declares six data bytes and four of them are wrong,
-inside the declared length.
+The offset negated in do_alignment_finish_ldst() is offset_union.un, which
+is already unsigned long and does not have this width mismatch.
 
-The sibling cvt_legacy_cmd_to_ump() already clears the second word.  Do
-the same here.
+Make nr_regs unsigned long so its negation and the address arithmetic
+use the same width.
 
-Fixes: 0b5288f5fe63 ("ALSA: ump: Add legacy raw MIDI support")
+Fixes: 3fc24ef32d3b ("arm64: compat: Implement misalignment fixups for multiword loads")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260808014554.3550153-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/ump_convert.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/compat_alignment.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/core/ump_convert.c
-+++ b/sound/core/ump_convert.c
-@@ -258,6 +258,7 @@ static int cvt_legacy_sysex_to_ump(struc
- 	else
- 		status = UMP_SYSEX_STATUS_CONTINUE;
- 	*data = ump_compose(UMP_MSG_TYPE_DATA, group, status, cvt->len);
-+	data[1] = 0;
- 	offset = 8;
- 	for (i = 0; i < cvt->len; i++) {
- 		*data |= cvt->buf[i] << offset;
+--- a/arch/arm64/kernel/compat_alignment.c
++++ b/arch/arm64/kernel/compat_alignment.c
+@@ -114,8 +114,8 @@ do_alignment_ldrdstrd(unsigned long addr
+ static int
+ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+-	unsigned int rd, rn, nr_regs, regbits;
+-	unsigned long eaddr, newaddr;
++	unsigned int rd, rn, regbits;
++	unsigned long eaddr, newaddr, nr_regs;
+ 	unsigned int val;
+ 
+ 	/* count the number of registers in the mask to be transferred */
 
 
