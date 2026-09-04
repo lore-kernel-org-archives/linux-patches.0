@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F483A7F4C;
-	Fri,  4 Sep 2026 05:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00B83F23DB;
+	Fri,  4 Sep 2026 05:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499033; cv=none; b=hZgxfziMoqwUILdDmkx2SHQHywlai7Fhs4jVVQHqRTUK4FSXWOdqLh1Vr3Zf0GQ11P7rdHrHatKZ4MabmRJhSDFjr5CWBqfBOq7Xw0ifMxwA43dqtvlhi/SVO69aP1AS3pPlYikLcEdFveE7U54EPbGwGHFdhO+30bHMRcDSG2U=
+	t=1788499036; cv=none; b=KJLztqHxHOLWRTlEIhutQaE/TkP8k0HyfoJcJ31NF5+6cJuRngqDn8gMr8422+50N1J5kwX47FKDchJhDJ+KJNgS9bISCdwqlDnHKPvg5xLOZssxgKvBjDCuWI9nDpdi9yMcsSlS+3HyVC1f4ukeLxiX+CWcY1pl5HmMZg26TSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499033; c=relaxed/simple;
-	bh=7ISmhpQyEBaosRmoEJBqSMhOUu/YmTZcxe6LgWo96oQ=;
+	s=arc-20240116; t=1788499036; c=relaxed/simple;
+	bh=YLFBzmFnwUipCzlvwyxbpjZWgLJvqye091QiO6zmPzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLffxWDhc9z8c55zXJJY9opEfJiuODSSAeG1g6zIHWpkLreG02jdS8YihzAwKBd6gNaFZ/V7VvrBFoCS9SFS1YwkN4rZDyWQtZ71QG8kyX7h/m75g/epkNeUvKK1dBjpXgZ0Q4WXGL6nD7AuKlYF3J3MN/blgIMxpLqDaj2WUfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESkpRHoB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kz5eFAsuHbpd3ezPi+PYKInlUTPd0nqjSicQ1bJ4nEOUcREgUThQdUblw070H7mdXVkAhbfRRH44kOGHdCsXmHQvaZezUhdk9GGEgreG1ext8+4iVBJevOm6MejdLgm7HVgbOzCxzKhBC/XtRfAqvfL9dnjklIo12yzDvHCaZfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjL55PDN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESkpRHoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0766F1F00A3D;
-	Fri,  4 Sep 2026 05:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjL55PDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B951F00A3D;
+	Fri,  4 Sep 2026 05:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499032;
-	bh=eQUc84FmdIuxMjoTys1xQY/UKTK4Sv/FT+3CmOv2aRk=;
+	s=korg; t=1788499035;
+	bh=D1JZP+FGc9/VDAvq2zANzwDjj4Kfwl2kSbEUpLKooZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ESkpRHoBLmpk6Qr7V+HzKROjfODVZdSBIGdTKjDYMKkQ9x8gAq2UmgTY54sgAMaC3
-	 EXcqlhTiZ3a/pU4DYHpTt1pv12U0/Srcj99XnOlLULFKmFzj9SO6cF3yhQUeHCBX2q
-	 ZLKDUYeKZ115O0Ldeba3b8j2SrMhd0iiu3vjRu6E=
+	b=ZjL55PDNB4giu5tanFUJIWSBwsdacps2jUiQhSJ6V9QQdl/L7bwDo3OjGXwpeZ7HH
+	 mf+CGAzTFwHjgyszpOffCsYeDZWdbYw4qfeAoQAG6iJlwbU/clmtezjKOHJydiX/0+
+	 gJLWPVyySoMzRdi2VtfLQWhYhag5GttEZaZ82QJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yichong Chen <chenyichong@uniontech.com>,
 	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 7.2 275/713] ecryptfs: release message context on send failure
-Date: Fri,  4 Sep 2026 06:54:03 +0200
-Message-ID: <20260904045810.005794646@linuxfoundation.org>
+Subject: [PATCH 7.2 276/713] ecryptfs: show filename encryption options
+Date: Fri,  4 Sep 2026 06:54:04 +0200
+Message-ID: <20260904045810.027419836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 219644a3ad5518217b2d62cad6d2c36a2308c949 upstream.
+commit 496ec2d0852a02d2e631771b5c439130b9c7dce7 upstream.
 
-ecryptfs_send_message_locked() moves a message context from the free
-list to the allocated list before sending the request to the userspace
-daemon.
+ecryptfs_show_options() prints most user-visible mount options but
+omits the filename encryption cipher and key size.
 
-If ecryptfs_send_miscdev() fails, the context is left on the
-allocated list and cannot be reused. Move it back to the free list on
-failure and clear the caller's pointer.
+Print ecryptfs_fn_cipher and ecryptfs_fn_key_bytes when filename
+encryption is enabled so that the displayed mount options reflect the
+active filename encryption settings.
 
-Fixes: f66e883eb618 ("eCryptfs: integrate eCryptfs device handle into the module.")
+Fixes: 87c94c4df014 ("eCryptfs: Filename Encryption: mount option")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
 Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/messaging.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/ecryptfs/super.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/ecryptfs/messaging.c
-+++ b/fs/ecryptfs/messaging.c
-@@ -286,9 +286,16 @@ ecryptfs_send_message_locked(char *data,
- 	mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
- 	rc = ecryptfs_send_miscdev(data, data_len, *msg_ctx, msg_type, 0,
- 				   daemon);
--	if (rc)
-+	if (rc) {
- 		printk(KERN_ERR "%s: Error attempting to send message to "
- 		       "userspace daemon; rc = [%d]\n", __func__, rc);
-+		mutex_lock(&ecryptfs_msg_ctx_lists_mux);
-+		mutex_lock(&(*msg_ctx)->mux);
-+		ecryptfs_msg_ctx_alloc_to_free(*msg_ctx);
-+		mutex_unlock(&(*msg_ctx)->mux);
-+		mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
-+		*msg_ctx = NULL;
+--- a/fs/ecryptfs/super.c
++++ b/fs/ecryptfs/super.c
+@@ -150,6 +150,13 @@ static int ecryptfs_show_options(struct
+ 	if (mount_crypt_stat->global_default_cipher_key_size)
+ 		seq_printf(m, ",ecryptfs_key_bytes=%zd",
+ 			   mount_crypt_stat->global_default_cipher_key_size);
++	if (mount_crypt_stat->flags & ECRYPTFS_GLOBAL_ENCRYPT_FILENAMES) {
++		seq_printf(m, ",ecryptfs_fn_cipher=%s",
++			   mount_crypt_stat->global_default_fn_cipher_name);
++		if (mount_crypt_stat->global_default_fn_cipher_key_bytes)
++			seq_printf(m, ",ecryptfs_fn_key_bytes=%zd",
++				   mount_crypt_stat->global_default_fn_cipher_key_bytes);
 +	}
- out:
- 	return rc;
- }
+ 	if (mount_crypt_stat->flags & ECRYPTFS_PLAINTEXT_PASSTHROUGH_ENABLED)
+ 		seq_printf(m, ",ecryptfs_passthrough");
+ 	if (mount_crypt_stat->flags & ECRYPTFS_XATTR_METADATA_ENABLED)
 
 
