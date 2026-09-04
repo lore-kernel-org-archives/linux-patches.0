@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0C0424654;
-	Fri,  4 Sep 2026 06:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8E3424D46;
+	Fri,  4 Sep 2026 06:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502537; cv=none; b=HV84VEkoSG+aOc7ECM/lbpOBaVR6YwhW3SqTC/g8YmMCvjqiJs/npNRKUyCJHvSUKegL8g4tPGOpPu9fPtym8xF0S0GxT4oktx2m84gzI1H4nkXDE0pQm5R5gsvbte2+7akhJJmRDVDAEOYEl+jo9vS/7Xcj9OIufkpln9i7Ad8=
+	t=1788502540; cv=none; b=gVMgq4m/AOBW2Kwi6pJkRceYY/6UeyCCJ+Yi1aZsvMKTZX4Zo7Hj/VMAv71qc4OD7PzAC8ic+8EUSIkuWx+2JUNxkcXLyYkY7oER/Z9zDi0WdZ+3ky6KHIhQu0UCh7Tz6nSqC2LNQwiKVEQmG1H1saUo0pfordceMGrMNaTxH9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502537; c=relaxed/simple;
-	bh=0EALMO7Zf92L7yxNYCS2fWyS7wl4WbOQ1sW8WXDzdF4=;
+	s=arc-20240116; t=1788502540; c=relaxed/simple;
+	bh=GGR4rXoqdxwT9tlQnjSg3LLWSpPn3lpUN8MpFLOEyNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGXof1u4riLvgcckntk8GMA0QewEiEfWrnOPdAXgEeJZv+/o2jntDbgoTUc6BDJ6lTlxr/zSwWaMtmA8T4bJc88qydKnNP9j4x6Q7bQIrQiSV1l2R9QQufr4IRwxGNVw3/m68ysQMj13ETyDeSCk54pKJDHi0mQ8p07MeJLK4i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vs0xtzhf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J/3cwq7hVAdT6p0q9AWb1Z9zYbbbj2nPscJcEqitItVQiQzZzqmGVrHwlDCZM88zxmTvhGAczzomNzdZz9xcRxxsmjIujHm9fjt4Rkk17YWYk8ogyxhhIDpaJGBGgpjmAXV+ZfmWayDFluAsOkZXz0lIU8hz6ErckGekLS2JCDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeSo9xbe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vs0xtzhf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCF41F00A3D;
-	Fri,  4 Sep 2026 06:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeSo9xbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C121F00A3D;
+	Fri,  4 Sep 2026 06:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502536;
-	bh=SQ/z2NOmKBd1WUA33yHHm4kBq9G85QvirNThN5kp7ME=;
+	s=korg; t=1788502539;
+	bh=bmoluMAzCFRBpcpqhwe82j1kaGJbWfYlep80aldpX2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vs0xtzhf1u+hoZ6hhEKfHt+ivrOBn3fthuILlKsw0+ubWmGkIxuQrR10RwtKZOxcc
-	 ntg3RnEPvrtS9xCb3CmzXnlacKOCSAv963yjMnF567OVfrWPyAAYXVd5rmSgzOS77E
-	 KM4rfHPR/Bf1ejbVBXUa5L7QqCubQkLl6BDzwWYQ=
+	b=CeSo9xbe8sSa5Yo5GWYENlzzphq2lMmkBTJVhcLtn0DqHtdMUF31g7P193t68DulI
+	 ro0/cfYQxjdtceVzGkUxWp6+eChdpY12XGOPi30OkhuGBx7fcTZNIeev0RrTpUNiNa
+	 o9uX9TDXONnGYGGySQiKZ9nH4pPUn63A000qCFm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 243/403] ocfs2: bound namelen in dlm_migrate_request_handler
-Date: Fri,  4 Sep 2026 07:00:46 +0200
-Message-ID: <20260904045740.397248521@linuxfoundation.org>
+	Chunkai Deng <chunkai.deng@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.12 226/403] rpmsg: glink: smem: order FIFO read after availability check
+Date: Fri,  4 Sep 2026 07:00:29 +0200
+Message-ID: <20260904045740.001378721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -57,98 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
 
-commit ea5b5609305a8437bc955a0834a530c12246d78f upstream.
+commit 786439ad58763e04b91bc2ec5f590e463939f197 upstream.
 
-Patch series "ocfs2/dlm: bound peer-controlled lengths in the o2dlm".
+glink_smem_rx_peek() reads the RX FIFO payload after the caller has
+determined data is available via glink_smem_rx_avail(), which reads the
+remote-updated head index. A control dependency between the head read
+and the subsequent payload read does not order the two loads, so the
+CPU may speculatively read the FIFO before observing the head update
+and consume stale data the remote has not yet published.
 
-The o2dlm receive handlers trust u8 length and count fields from the wire
-without bounding them, so a node in a DLM domain can corrupt or panic any
-other node with a malformed message.  Three defects:
+Add rmb() in glink_smem_rx_peek() before the memcpy_fromio() so the
+availability (head) read is ordered ahead of the FIFO payload read,
+matching the consumer pattern in
+Documentation/core-api/circular-buffers.rst.
 
-  - dlm_migrate_request_handler() passes migrate->namelen unchecked to
-    dlm_init_mle(), which memcpy()s it into the 32-byte mname[] of an
-    o2dlm_mle slab object: a heap out-of-bounds write of up to ~215
-    attacker-controlled bytes.
-
-  - dlm_mig_lockres_handler() passes mres->lockname_len unchecked to
-    dlm_init_lockres(), which memcpy()s it into the 32-byte o2dlm_lockname
-    slab object: a heap out-of-bounds write of up to ~223 bytes.
-
-  - the same handler trusts mres->num_locks without checking that the
-    message is large enough to hold that many entries, so
-    dlm_process_recovery_data() walks mres->ml[] past the kmalloc(data_len)
-    copy and trips a BUG_ON (an out-of-bounds read ending in a panic).
-
-The other o2dlm receive handlers already reject an oversized name; the
-migration and recovery handlers have omitted it since the DLM was added
-(see the Fixes tags).  Patch 1 bounds namelen; patch 2 validates
-lockname_len, num_locks, and the payload size.  Conforming recovery and
-migration traffic is unaffected.
-
-o2net authenticates peers only by the DLM domain key, so any node that has
-joined the domain -- including a compromised or malicious member -- can
-send these messages.  There is no local trigger; the attacker must already
-be a member of the cluster.
-
-Each sink was confirmed under KASAN with an out-of-tree module mirroring
-it exactly -- a kmem_cache/kmalloc of the real destination size, then the
-same unclamped memcpy/loop: slab-out-of-bounds Write for the two writes,
-Read for the recovery walk, and a panic.  A userspace AddressSanitizer
-build faults identically under -m32 and -m64.  Scrubbed logs are available
-on request.
-
-I reported this privately to security@kernel.org and the ocfs2 maintainers
-on 2026-06-20; with no response after the standard embargo period I am
-posting the fix publicly.  I have no embargo requirement.
-
-
-This patch (of 2):
-
-A node receiving a DLM_MIGRATE_REQUEST message trusts the peer-supplied
-name length (migrate->namelen) without bounding it.  dlm_init_mle() then
-copies that many bytes into the fixed DLM_LOCKID_NAME_MAX-byte mname[]
-array of an o2dlm_mle slab object, so a malformed message from a cluster
-peer overflows the slab object by up to ~215 bytes: a heap out-of-bounds
-write of attacker-controlled data, reachable by any node in the domain.
-
-Reject an oversized name, the way dlm_master_request_handler() and the
-other o2dlm receive handlers already do; the migration handler omits the
-check entirely.  Conforming messages are unaffected.
-
-Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-0-6953bcc0421f@proton.me
-Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-1-6953bcc0421f@proton.me
-Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: caf989c350e8 ("rpmsg: glink: Introduce glink smem based transport")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260618-rpmsg-glink-smem-mb-v1-1-68a026453a69@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dlm/dlmmaster.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/rpmsg/qcom_glink_smem.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/ocfs2/dlm/dlmmaster.c
-+++ b/fs/ocfs2/dlm/dlmmaster.c
-@@ -3112,6 +3112,12 @@ int dlm_migrate_request_handler(struct o
+--- a/drivers/rpmsg/qcom_glink_smem.c
++++ b/drivers/rpmsg/qcom_glink_smem.c
+@@ -103,6 +103,13 @@ static void glink_smem_rx_peek(struct qc
+ 	if (tail >= pipe->native.length)
+ 		tail -= pipe->native.length;
  
- 	name = migrate->name;
- 	namelen = migrate->namelen;
-+	if (namelen > DLM_LOCKID_NAME_MAX) {
-+		mlog(ML_ERROR, "%s: invalid name length %u in migrate request\n",
-+		     dlm->name, namelen);
-+		ret = -EINVAL;
-+		goto leave;
-+	}
- 	hash = dlm_lockid_hash(name, namelen);
- 
- 	/* preallocate.. if this fails, abort */
++	/*
++	 * Order the availability (head) read in glink_smem_rx_avail()
++	 * against the FIFO payload read below, so APPS never consumes
++	 * stale data the remote has not yet published.
++	 */
++	rmb();
++
+ 	len = min_t(size_t, count, pipe->native.length - tail);
+ 	if (len)
+ 		memcpy_fromio(data, pipe->fifo + tail, len);
 
 
