@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86D03D6664;
-	Fri,  4 Sep 2026 05:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A423938E8DD;
+	Fri,  4 Sep 2026 05:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499668; cv=none; b=Wnk+l10u7mal3WlNlR4oZiVYttj3QEbjpFyCJiU5z65scE1QaVmC4hs7re1RV60F6TlsBFQ586OT3/MiZuOwVVjk3f3ssetCB/ldE+dBd/hKpaXYS3gbsr2/Zj/oqfgDRW0gc34gxwgylNvlfs8HQhcPh6wVfRLnyzJicZlYSHA=
+	t=1788499670; cv=none; b=mYjpg6b8akbLP25jgSY+m4GWzuUxyG9M4H/awC+Kk9MZxIk0gBJ81ZR7E2uUoAQ8GjWnmupxcdWLYuPTQpCstBVuL0WpWf6GBBgNDPXquf2nr9xENEpimTyv7/I2DZtUhNZHDTaw4aTYQT6AcXo30YsWX49NIbAymVdrtBBMT4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499668; c=relaxed/simple;
-	bh=WJQSil78HDymPycKusURiL5RhFsApLEt9gaAgqCgTCU=;
+	s=arc-20240116; t=1788499670; c=relaxed/simple;
+	bh=nlCjoq+vFIRfnjhv8jVJoLxRfjtctkwQQXc5VonuOs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRiPfYnbLIRewRueJfnAysYFHgah+RL/PAcxNE8zViRk0obkLle7+oAzD5bvGd2sLfGKezWIqoinSTaD/32tp+HGDEwSsE2+v1cbVePFec3nwP64hKTZQBjYolspJr9+mqkFpON/t+PWmk5FFRDV6XZ/1tf+pNbOL+0AVmAQzA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlH5HNJE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MmWXBMwfRqyBQoH/pWV63vRwTYm3i0FdllQ+oQO6xJ/OEe4Fn2DHH0Iilcp65ntdXsx3O2R5qqffG2Jeyxr/viNfta4dOFL9Vta2NFuRJ4XsPEe6QzIjbKPhLKV+zLKPTa6fGbyp3j3brWdr41o+7sksL6Hs1GJRU52WJ9TaWWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=px4YOjFz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlH5HNJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDE21F00A3D;
-	Fri,  4 Sep 2026 05:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="px4YOjFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD851F00A3D;
+	Fri,  4 Sep 2026 05:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499666;
-	bh=WZ2qLaQr3PdvMZrA9HKcQsjbPMAWbIUNyXdlyhA3qDU=;
+	s=korg; t=1788499669;
+	bh=cWff1+XTKqSKnHpvDQ0qa39aSOsoE7wDdqpgBBJfx3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MlH5HNJEZRaDp6OP1YodHDfUBJit+dbY9r+eO863hiZmRqzfxi3580c3iOoxYGLH3
-	 0gSDt9jb9AmF2H2Mck8IfHVrUoKuSmAy5++hEYKqsIepgjLj6IRnj05iAggIOwuFuZ
-	 dif0a2iQg0Kw8TZk7AaHNo+eaLqzhokHYfvw0ULU=
+	b=px4YOjFzCo4VVe3o/MFiKv+1EmGEbGDX0ci0FR73Yd3tgOoEN/1NxGALESy3ACBmM
+	 fm58RJdRpKU44HzfrLdep0qHhs8rqRcP2WB7JI55VyO3oxM+56fR1P4vJN4x888pU2
+	 lzJ0wapxwLS6GNCxmsnDY2VaAZhcLOzqgZRNqXRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
+	Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 455/713] ring-buffer: Make cpu_buffer::free_page a buffer_data_read_page
-Date: Fri,  4 Sep 2026 06:57:03 +0200
-Message-ID: <20260904045814.026027847@linuxfoundation.org>
+Subject: [PATCH 7.2 456/713] ring-buffer: Stop remote reader update when page swap fails
+Date: Fri,  4 Sep 2026 06:57:04 +0200
+Message-ID: <20260904045814.047778235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,101 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>
 
-commit 7a1fb95de5404134f8758c1295ce88986bdf117c upstream.
+commit 5eab74874d11160725c42ab676ba97a797a362eb upstream.
 
-Discarding a cached reader page after a concurrent ring buffer resize
-uses the new global subbuf_order for the free_pages() call. This
-mismatched order may crashes the kernel or leaks memory because the cached
-page was allocated under the old size.
+The remote swap_reader_page callback can return -EBUSY when the writer
+moves the head before the remote catches it, particularly during an event
+storm on a small buffer. __rb_get_reader_page_from_remote() currently
+warns about that failure but continues with the unchanged reader ID and
+rearranges the local page list as though the swap succeeded.
 
-Save the actual free_page order alongside the page address to ensure we
-always refer to the correct value and do not rely on the potentially
-stalled cpu_buffer->subbuf_order value. The simplest is to make
-free_page a buffer_data_read_page which already covers exactly what we
-need: a page address and a page order.
+Handle the callback failure as a recoverable error. Report it with
+pr_warn_ratelimited() and return NULL. Callers already handle a NULL reader
+page as a failed attempt. This avoids splicing the same page as both the
+previous and new reader without flooding the log under contention.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813131152.3589632-4-vdonnefort@google.com
-Fixes: 8e7b58c27b3c ("ring-buffer: Just update the subbuffers when changing their allocation order")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Fixes: 2e67fabd8b77 ("ring-buffer: Introduce ring-buffer remotes")
+Link: https://patch.msgid.link/20260825-kernel-patch-1-v2-2-bb3461807a32@gmail.com
+Assisted-by: LLM sparse
+Signed-off-by: Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ kernel/trace/ring_buffer.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -518,7 +518,7 @@ struct ring_buffer_per_cpu {
- 	raw_spinlock_t			reader_lock;	/* serialize readers */
- 	arch_spinlock_t			lock;
- 	struct lock_class_key		lock_key;
--	struct buffer_data_page		*free_page;
-+	struct buffer_data_read_page	free_page;
- 	unsigned long			nr_pages;
- 	unsigned int			current_context;
- 	struct list_head		*pages;
-@@ -2672,7 +2672,7 @@ static void rb_free_cpu_buffer(struct ri
- 		free_buffer_page(bpage);
- 	}
+@@ -5791,8 +5791,11 @@ __rb_get_reader_page_from_remote(struct
  
--	free_pages((unsigned long)cpu_buffer->free_page, cpu_buffer->buffer->subbuf_order);
-+	free_pages((unsigned long)cpu_buffer->free_page.data, cpu_buffer->free_page.order);
+ 	prev_reader = cpu_buffer->subbuf_ids[cpu_buffer->meta_page->reader.id];
  
- 	kfree(cpu_buffer);
- }
-@@ -7007,9 +7007,9 @@ ring_buffer_alloc_read_page(struct trace
- 	local_irq_save(flags);
- 	arch_spin_lock(&cpu_buffer->lock);
- 
--	if (cpu_buffer->free_page) {
--		bpage->data = cpu_buffer->free_page;
--		cpu_buffer->free_page = NULL;
-+	if (cpu_buffer->free_page.data) {
-+		*bpage = cpu_buffer->free_page;
-+		cpu_buffer->free_page.data = NULL;
- 	}
- 
- 	arch_spin_unlock(&cpu_buffer->lock);
-@@ -7061,8 +7061,8 @@ void ring_buffer_free_read_page(struct t
- 	local_irq_save(flags);
- 	arch_spin_lock(&cpu_buffer->lock);
- 
--	if (!cpu_buffer->free_page) {
--		cpu_buffer->free_page = dpage;
-+	if (!cpu_buffer->free_page.data) {
-+		cpu_buffer->free_page = *data_page;
- 		dpage = NULL;
- 	}
- 
-@@ -7436,7 +7436,7 @@ int ring_buffer_subbuf_order_set(struct
- 	}
- 
- 	for_each_buffer_cpu(buffer, cpu) {
--		struct buffer_data_page *old_free_data_page;
-+		struct buffer_data_read_page old_free_data_page;
- 		struct list_head old_pages;
- 		unsigned long flags;
- 
-@@ -7479,7 +7479,7 @@ int ring_buffer_subbuf_order_set(struct
- 
- 		arch_spin_lock(&cpu_buffer->lock);
- 		old_free_data_page = cpu_buffer->free_page;
--		cpu_buffer->free_page = NULL;
-+		cpu_buffer->free_page.data = NULL;
- 		arch_spin_unlock(&cpu_buffer->lock);
- 
- 		rb_head_page_activate(cpu_buffer);
-@@ -7491,7 +7491,7 @@ int ring_buffer_subbuf_order_set(struct
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
- 		}
--		free_pages((unsigned long)old_free_data_page, old_order);
-+		free_pages((unsigned long)old_free_data_page.data, old_free_data_page.order);
- 
- 		rb_check_pages(cpu_buffer);
- 	}
+-	WARN_ON_ONCE(cpu_buffer->remote->swap_reader_page(cpu_buffer->cpu,
+-							  cpu_buffer->remote->priv));
++	if (cpu_buffer->remote->swap_reader_page(cpu_buffer->cpu,
++						 cpu_buffer->remote->priv)) {
++		pr_warn_ratelimited("Remote reader page swap failed\n");
++		return NULL;
++	}
+ 	/* nr_pages doesn't include the reader page */
+ 	if (WARN_ON_ONCE(cpu_buffer->meta_page->reader.id > cpu_buffer->nr_pages))
+ 		return NULL;
 
 
