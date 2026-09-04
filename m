@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2194034EF15;
-	Fri,  4 Sep 2026 05:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A48418A2D;
+	Fri,  4 Sep 2026 05:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499413; cv=none; b=a/5fmxhtYzuL0412Yttty/sNWu2ag/8bsCPZEPjvAki+kG2U+abRNpgIoQtcJKVIRZjW4Xhd8jazxYmxvqRwE0gsrB4zkuzHLLBErrARCxcrG1A5MyJ22lhzilC06XmswKt2h0/kJ6UcAowKGB85hTciAHkDEjfQ3Nrv25MSlj8=
+	t=1788499416; cv=none; b=btUa0tQTz+s01SddQXd6px56qcq9eZqgNiVwTL6bKFtM66FRNAPb0yo+kzpjwrAn8tXOKF+j5oQfTZRLHadq42sS3Wi3DvP7LsQZiZ704KnyMqoufUd/GxqX0hBtEbDGeQ+0BIx3s4+k37Lw0PbRibLls3+VDmCe76DDDV+XOoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499413; c=relaxed/simple;
-	bh=Y4dXVFYW7dKJy5ybEUS3EtP6TrtfB1s0LDVpy/bsHpk=;
+	s=arc-20240116; t=1788499416; c=relaxed/simple;
+	bh=asEDLzGb1JeVVD9DQbZ9z019tKQIgd+bQU5bfHZPDqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YtonHlelamw2BmmXfD3KNEYHsSci4mNWsT5M40uBETGamLZlONlCaNe1gQZU2R9+4GjJBkcxBpnj3eQszha9QL4mWm+vF1rYHMGIItwn6/7yCkuG/8mMrhBZ+SlK8E1BMAzVubiyEtY8K/kBzyJ46fa+4xjxzWb2DaKFwroVBTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9Yje1Sb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V3AiMRdvPEMnjVX6z9BL8ThndiFIl7e4CLVu6QBdzNvbMAQXqWTS+n2/MDHQbfx0kdGbijjsbpFpZ4jUgXsGR83RNfP4BljRtvRfyMWwwhuzTxBbNxbHaSwui+Plslj7Oe3F65YqgQCidcG8H3Lc0dDkYME3W8EHK5Gw/Rri52g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcH6iVfi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9Yje1Sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A89C1F00A3D;
-	Fri,  4 Sep 2026 05:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcH6iVfi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2781F00A3D;
+	Fri,  4 Sep 2026 05:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499412;
-	bh=VfXfkUJdSHxN8rPewixOk5ErEQ5Xk3y22KBPZeyVwHw=;
+	s=korg; t=1788499414;
+	bh=1FWphMmzyMpotzZ7T47Eln4/FiDnt6MUYlYAsRG9kl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k9Yje1SbzppOgaaE2V1bzTEZmuzFpLpbQvShTn0FVopWMXw2+Iaf7dbwPMjKs721g
-	 dZ0YNz4vFWKajx+NP0QGasiiKQy5zikS1yWGI7IDsF/4vWeOLIEHxLq8LWykcL5yfJ
-	 mmluEI/TVtTYXepgQ9xVU8taQSQBjTCwuj8aEdBc=
+	b=LcH6iVfiyi8S8v8XpBagn9AHhsPKEY0ZfAGleot3WJU8wZJZKzy0JkTInOQkUk8pt
+	 QHcpS+WX+Zcq8DS9oNM9WNxCkGGvk57z1p4VjVtvGf4jRFPPEe83gJxPqzleJjGTBS
+	 JWlPRk6LjtOPHUD5wyCfiCSvsvHrICYHC4UY0nVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 7.2 401/713] udf: reject VAT indexes equal to the entry count
-Date: Fri,  4 Sep 2026 06:56:09 +0200
-Message-ID: <20260904045812.813887656@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 7.2 410/713] sched_ext: Fix this_rq() assumptions in dispatch kfuncs
+Date: Fri,  4 Sep 2026 06:56:18 +0200
+Message-ID: <20260904045813.014653464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,49 +49,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit cac0cb07f29ccfb373fd4a36c81e908ef3ce608c upstream.
+commit 3dd52416e44a70bc993adb96d2e0d71b9ea21359 upstream.
 
-UDF 1.50 virtual partition mapping uses the VAT as an array of physical
-block mappings. s_num_entries stores the number of entries in that array,
-not the highest valid index. The valid VAT indexes are therefore below
-s_num_entries.
+Under core scheduling, dispatch runs from within the core-wide pick and can
+target a sibling rq, so ops.dispatch() may execute on a CPU different from
+the dispatched rq's. Several kfunc paths assumed the two always coincide:
 
-udf_get_pblock_virt15() currently rejects only indexes greater than
-s_num_entries. A crafted image can request index s_num_entries, pass the
-bounds check, and make the kernel read one entry past the allocated VAT table.
+- scx_dsq_move() decided whether an rq lock is held by testing this_rq()'s
+  rq flags and lock-danced accordingly. A dispatch for a sibling took the
+  unlocked-context branch and acquired the source rq lock on top of the
+  already held dispatched rq lock which could deadlock.
 
-Change the check to reject block >= s_num_entries, so the count is handled as
-an exclusive upper bound.
+- scx_bpf_sub_dispatch() dispatched this_rq() with its stashed
+  sub_dispatch_prev, which is NULL when dispatching for a sibling.
 
-A crafted UDF image reproduced this on origin/master commit
-0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53 with a KASAN slab-out-of-bounds
-report in udf_get_pblock_virt15().
+- finish_dispatch(), scx_bpf_dsq_reenq() and scx_bpf_dsq_nr_queued()
+  resolved SCX_DSQ_LOCAL to this CPU's local DSQ rather than the dispatched
+  rq's. The latter two are callable from other rq-locked operations too,
+  where SCX_DSQ_LOCAL now likewise resolves to the op's rq. This changes
+  behavior also without core scheduling, e.g. for ops.enqueue() running a
+  remote wakeup on the waking CPU, and is intended: which CPU happens to
+  execute an operation is incidental, the op's rq is what it is operating
+  on, and the resolution now matches the insert side where SCX_DSQ_LOCAL
+  dispatches land on the task's rq.
 
-Trail of Bits has a reproducer that triggers kernel panic demonstrating the bug, and can share it if needed.
+Use the rq tracked by scx_locked_rq(), which is set to the dispatched rq
+around ops invocations and NULL in unlocked contexts.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
-Link: https://patch.msgid.link/20260708101712.1706564-1-david.lee@trailofbits.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/partition.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext/ext.c | 58 +++++++++++++++++++++++++-----------------
+ 1 file changed, 35 insertions(+), 23 deletions(-)
 
---- a/fs/udf/partition.c
-+++ b/fs/udf/partition.c
-@@ -55,7 +55,7 @@ uint32_t udf_get_pblock_virt15(struct su
- 	map = &sbi->s_partmaps[partition];
- 	vdata = &map->s_type_specific.s_virtual;
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index ffbe4f7edc99..84ec71d28b61 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2737,7 +2737,7 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
  
--	if (block > vdata->s_num_entries) {
-+	if (block >= vdata->s_num_entries) {
- 		udf_debug("Trying to access block beyond end of VAT (%u max %u)\n",
- 			  block, vdata->s_num_entries);
- 		return 0xFFFFFFFF;
+ 	BUG_ON(!(p->scx.flags & SCX_TASK_QUEUED));
+ 
+-	dsq = find_dsq_for_dispatch(sch, this_rq(), dsq_id, task_cpu(p));
++	dsq = find_dsq_for_dispatch(sch, rq, dsq_id, task_cpu(p));
+ 
+ 	if (dsq->id == SCX_DSQ_LOCAL)
+ 		dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
+@@ -8887,9 +8887,8 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
+ {
+ 	struct scx_dispatch_q *src_dsq = kit->dsq, *dst_dsq;
+ 	struct scx_sched *sch;
+-	struct rq *this_rq, *src_rq, *locked_rq;
++	struct rq *p_rq, *src_rq, *locked_rq;
+ 	bool dispatched = false;
+-	bool in_balance;
+ 	unsigned long flags;
+ 
+ 	/*
+@@ -8919,24 +8918,28 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
+ 	}
+ 
+ 	/*
+-	 * Can be called from either ops.dispatch() locking this_rq() or any
+-	 * context where no rq lock is held. If latter, lock @p's task_rq which
+-	 * we'll likely need anyway.
++	 * Can be called from either ops.dispatch() holding the dispatched rq's
++	 * lock or any context where no rq lock is held. If latter, lock @p's
++	 * task_rq which we'll likely need anyway.
+ 	 */
+ 	src_rq = task_rq(p);
+ 
+ 	local_irq_save(flags);
+-	this_rq = this_rq();
+-	in_balance = this_rq->scx.flags & SCX_RQ_IN_BALANCE;
+ 
+-	if (in_balance) {
+-		if (this_rq != src_rq)
+-			switch_rq_lock(this_rq, src_rq);
++	/*
++	 * Under core scheduling, dispatch can run for a sibling rq, so the
++	 * locked rq is not necessarily this CPU's.
++	 */
++	locked_rq = scx_locked_rq();
++
++	if (locked_rq) {
++		if (locked_rq != src_rq)
++			switch_rq_lock(locked_rq, src_rq);
+ 	} else {
+ 		raw_spin_rq_lock(src_rq);
+ 	}
+ 
+-	locked_rq = src_rq;
++	p_rq = src_rq;
+ 	raw_spin_lock(&src_dsq->lock);
+ 
+ 	/* did someone else get to it while we dropped the locks? */
+@@ -8946,7 +8949,7 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
+ 	}
+ 
+ 	/* @p is still on $src_dsq and stable, determine the destination */
+-	dst_dsq = find_dsq_for_dispatch(sch, this_rq, dsq_id, task_cpu(p));
++	dst_dsq = find_dsq_for_dispatch(sch, locked_rq ?: this_rq(), dsq_id, task_cpu(p));
+ 
+ 	/*
+ 	 * Apply vtime and slice updates before moving so that the new time is
+@@ -8959,14 +8962,14 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
+ 		p->scx.slice = kit->slice;
+ 
+ 	/* execute move */
+-	locked_rq = move_task_between_dsqs(sch, p, enq_flags, src_dsq, dst_dsq);
++	p_rq = move_task_between_dsqs(sch, p, enq_flags, src_dsq, dst_dsq);
+ 	dispatched = true;
+ out:
+-	if (in_balance) {
+-		if (this_rq != locked_rq)
+-			switch_rq_lock(locked_rq, this_rq);
++	if (locked_rq) {
++		if (locked_rq != p_rq)
++			switch_rq_lock(p_rq, locked_rq);
+ 	} else {
+-		raw_spin_rq_unlock_irqrestore(locked_rq, flags);
++		raw_spin_rq_unlock_irqrestore(p_rq, flags);
+ 	}
+ 
+ 	kit->cursor.flags &= ~(__SCX_DSQ_ITER_HAS_SLICE |
+@@ -9204,7 +9207,7 @@ __bpf_kfunc bool scx_bpf_dsq_move_vtime(struct bpf_iter_scx_dsq *it__iter,
+  */
+ __bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux)
+ {
+-	struct rq *this_rq = this_rq();
++	struct rq *rq = scx_locked_rq();
+ 	struct scx_sched *parent, *child;
+ 
+ 	guard(rcu)();
+@@ -9223,7 +9226,7 @@ __bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *
+ 		return false;
+ 	}
+ 
+-	return scx_dispatch_sched(child, this_rq, this_rq->scx.sub_dispatch_prev, true) !=
++	return scx_dispatch_sched(child, rq, rq->scx.sub_dispatch_prev, true) !=
+ 		SCX_DSP_NONE;
+ }
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+@@ -9518,6 +9521,10 @@ __bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *
+  *
+  * Return the number of tasks in the DSQ matching @dsq_id. If not found,
+  * -%ENOENT is returned.
++ *
++ * %SCX_DSQ_LOCAL resolves to the local DSQ of the rq the current scheduler
++ * operation is locked to - e.g. the rq being dispatched for in ops.dispatch() -
++ * or the calling CPU's when no rq is locked.
+  */
+ __bpf_kfunc s32 scx_bpf_dsq_nr_queued(u64 dsq_id, const struct bpf_prog_aux *aux)
+ {
+@@ -9534,7 +9541,7 @@ __bpf_kfunc s32 scx_bpf_dsq_nr_queued(u64 dsq_id, const struct bpf_prog_aux *aux
+ 	}
+ 
+ 	if (dsq_id == SCX_DSQ_LOCAL) {
+-		ret = READ_ONCE(this_rq()->scx.local_dsq.nr);
++		ret = READ_ONCE((scx_locked_rq() ?: this_rq())->scx.local_dsq.nr);
+ 		goto out;
+ 	} else if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
+ 		s32 cpu = scx_cpu_ret(sch, dsq_id & SCX_DSQ_LOCAL_CPU_MASK);
+@@ -9713,10 +9720,15 @@ __bpf_kfunc struct task_struct *scx_bpf_dsq_peek(u64 dsq_id,
+  * - User DSQs
+  *
+  * Re-enqueues are performed asynchronously. Can be called from anywhere.
++ *
++ * %SCX_DSQ_LOCAL resolves to the local DSQ of the rq the current scheduler
++ * operation is locked to - e.g. the rq being dispatched for in ops.dispatch() -
++ * or the calling CPU's when no rq is locked.
+  */
+ __bpf_kfunc void scx_bpf_dsq_reenq(u64 dsq_id, u64 reenq_flags,
+ 				   const struct bpf_prog_aux *aux)
+ {
++	struct rq *locked_rq = scx_locked_rq();
+ 	struct scx_sched *sch;
+ 	struct scx_dispatch_q *dsq;
+ 
+@@ -9735,8 +9747,8 @@ __bpf_kfunc void scx_bpf_dsq_reenq(u64 dsq_id, u64 reenq_flags,
+ 	if (!(reenq_flags & __SCX_REENQ_FILTER_MASK))
+ 		reenq_flags |= SCX_REENQ_ANY;
+ 
+-	dsq = find_dsq_for_dispatch(sch, this_rq(), dsq_id, smp_processor_id());
+-	schedule_dsq_reenq(sch, dsq, reenq_flags, scx_locked_rq());
++	dsq = find_dsq_for_dispatch(sch, locked_rq ?: this_rq(), dsq_id, smp_processor_id());
++	schedule_dsq_reenq(sch, dsq, reenq_flags, locked_rq);
+ }
+ 
+ /**
+-- 
+2.55.0
+
 
 
