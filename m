@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612644CCDC7;
-	Fri,  4 Sep 2026 05:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABC12264A3;
+	Fri,  4 Sep 2026 05:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500658; cv=none; b=HKeFM6KSWkNzQ4QO25Je1FgtancPEVh23MAn2XmpBzDGLZhHOBtQgKX1y3po6cA7nHkf+EK5u2fjTA9Y+VIlDIMbN/AIdTn1F3oWbivIQaScIvipaMlDzjDWMFB/vhgJKWsaDdMfTtDHdDhbFyDUyCiSrliEm6+jAYgT3cRydCU=
+	t=1788500663; cv=none; b=ACdbx9CHW/aV6TC7Rw5872A2SHKu8CaOlkc9DZwerT30MbpZezgeSsyD+UBamDm0b4M9NC9ilafu7PB/6v5UODLXW/c8NDUmtwcG1OWrgpGG7XdlW/cpthcS0/oshCTKOu4zaagDcXAXW3at23o1d/4wwWjXx52k7dXDs912JgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500658; c=relaxed/simple;
-	bh=tEmW41YqAMYNzXvkitDDfiK0vSAFCmUnQ4Uo2o7Zrok=;
+	s=arc-20240116; t=1788500663; c=relaxed/simple;
+	bh=HqkyaIH5O8JkmPZ0GZIv7XpxN0IP1zEkmHmcfuDAvow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDC1hpCf94cKHWh+/gUD2lFy36bmXDfo2G1Amy0rgC0w8feWUz7eWyCi75aN/35LwIAdCLZ3SdK3UaNqfKxvAG5Jw2lEW4D+rAkm2skU0GyvpnYmx8fNax7cEIO+W0MF7VNeiP7LyOyv5ddiEGLve7IRoMgNou6xI7HUvnrRC+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1m17FCCO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gdh4FR/N3hxDGz5c7mTCl8Ukvkn3oyrOF2EZAcb7oLizn6wAu7J4aFMglVCw/7JvEYKJOBxQ2XGLscZSI3QkwtyDlJoWchyQITijDgj3PF15lRRw+4JES9NBi3lRLaINEoO6hppCFsy0VbiCTyhuDMqcbuXqQA57Jd7tUGErX38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRDpbIyt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1m17FCCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01E21F00A3D;
-	Fri,  4 Sep 2026 05:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRDpbIyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B551F00A3D;
+	Fri,  4 Sep 2026 05:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500657;
-	bh=Wx3udhcjKM5HI4aKe4rFDFkvWhT1YxmEWPNuRwHD21M=;
+	s=korg; t=1788500660;
+	bh=69wVAy5IlzU4pOzmY6tWRepxp+9Emq8fW/8pB2JTiU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1m17FCCOuSImDTEHGKRXwY2Ypxvkny2xksH1ln/fGM1R+9e0AkzWYJ3+rbbCv0jXR
-	 TGQNCaLz5aKql+2m1PxuOt9xNPoSvRVmy81WSpPbt9DiAnt/o+5xvY5RKbPukZTMWA
-	 Yr7L4ahltZti3xv4+gkpBTakRN/OT33YVpiFxjCU=
+	b=LRDpbIythAkrwb0HCcu2OwVDCd5EubmlGEjVeGh2+q7wadmQuEcmzo7u67UqKobY8
+	 GXp1kk9pKommXccZ7h3dwkfJcTjtNpUo5KG1Obc6RCUXAyC1QcrgtKacjhl55ZkqIR
+	 su1AJCZ34Rg1Xdhn0x5R9ooJrslvfNeboyRDpkUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 135/552] nfsd: fix refcount leak in nfsd_file_lru_add on insertion failure
-Date: Fri,  4 Sep 2026 06:54:52 +0200
-Message-ID: <20260904045751.465558689@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 118/552] nfsd: add filehandle match check to nfsd4_delegreturn()
+Date: Fri,  4 Sep 2026 06:54:35 +0200
+Message-ID: <20260904045750.679857969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,61 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 30c2df3005c99819e117402dc492db4a2a696c2f upstream.
+commit 04cce9d79f2b1a114f7128e08bf60a473e10f1ec upstream.
 
-nfsd_file_lru_add() unconditionally increments nf_ref before attempting
-to insert the nfsd_file into the LRU via list_lru_add_obj(). If the
-insertion fails (the item is already linked), the incremented reference
-is never released, permanently inflating the refcount.
+nfsd4_delegreturn() is the only stateful NFSv4 operation that does
+not call nfs4_check_fh() to verify the delegation's file matches
+cstate->current_fh. A client can DELEGRETURN with a mismatched
+filehandle, destroying the correct delegation but waking the wrong
+inode's waiters.
 
-The LRU shrinker callback (nfsd_file_lru_cb) uses refcount_dec_if_one()
-to reclaim entries, which requires nf_ref == 1. An inflated refcount
-therefore blocks eviction of the affected file cache entry for the
-lifetime of the nfsd instance.
+Add the missing nfs4_check_fh() call after the generation check.
 
-While this failure path is currently unreachable -- the sole caller in
-nfsd_file_do_acquire() operates on freshly-allocated objects that cannot
-already be on the LRU -- it represents a latent bug that would become
-exploitable if a future change adds another call site or alters the
-PENDING protocol.
-
-Fix this by:
- - Adding a compensating refcount_dec() on the failure path. Bare
-   refcount_dec (rather than nfsd_file_put) is correct here because
-   the caller in nfsd_file_do_acquire still holds its own construction
-   reference, so the count goes from 2 back to 1 without risk of
-   reaching zero.
- - Changing WARN_ON(1) to WARN_ON_ONCE(1) to prevent log flooding if
-   this path is ever hit repeatedly.
- - Returning early on failure to skip the unnecessary call to
-   nfsd_file_schedule_laundrette(), since no entry was added to the LRU.
-
-Fixes: 56221b42d717 ("nfsd: filecache: don't repeatedly add/remove files on the lru list")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260602-nfsd-testing-v2-6-e4ea62e3cd5c@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-6-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -327,8 +327,11 @@ static void nfsd_file_lru_add(struct nfs
- 	refcount_inc(&nf->nf_ref);
- 	if (list_lru_add_obj(&nfsd_file_lru, &nf->nf_lru))
- 		trace_nfsd_file_lru_add(nf);
--	else
--		WARN_ON(1);
-+	else {
-+		refcount_dec(&nf->nf_ref);
-+		WARN_ON_ONCE(1);
-+		return;
-+	}
- 	nfsd_file_schedule_laundrette();
- }
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7921,6 +7921,10 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
+ 	if (status)
+ 		goto put_stateid;
  
++	status = nfs4_check_fh(&cstate->current_fh, &dp->dl_stid);
++	if (status)
++		goto put_stateid;
++
+ 	trace_nfsd_deleg_return(stateid);
+ 	destroy_delegation(dp);
+ 	smp_mb__after_atomic();
 
 
