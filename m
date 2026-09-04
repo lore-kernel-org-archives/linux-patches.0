@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFA842C500;
-	Fri,  4 Sep 2026 06:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBE6418348;
+	Fri,  4 Sep 2026 06:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788503017; cv=none; b=M2WkOMjmX7ecLvw58LH0Me067RRpAhXQSRjRJ7KbFyk5vbVQXTw+AT555q+JjvF0EWyPp4/YAqziwhen2y2WMm862SVSDIKsukyRCNItnx+/hIeFLSeqxK0b0Hlv86ozMAdVdX8xkcxhWszZJB0AQJlKoZCxn/LmWTUQPBmtDIk=
+	t=1788503020; cv=none; b=tYSA/eyb6YofvCozEwLGZdjMJBMhYYxjm/apCHBAjrZrQGYiZE6P9sRKji6jJIHE+f7FfnZ0pdf2yVqMi0mxfvd6dBTkNACpIOrB9sFU3VdQ8XQ++Rd5cdutyc4cXjsqfzgz5/rOE/D+uRT6YSiVeIG1ClgyVDT6fxjzldth8I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788503017; c=relaxed/simple;
-	bh=7Oh7UxNWxW2grkiYQiBNx/umh/gh9iD/v1hha7VxY6A=;
+	s=arc-20240116; t=1788503020; c=relaxed/simple;
+	bh=ggYho2v6Vi7S9IqpO9L1zxzjMZRclyVc+ZgH7Tlyg/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRgsIGM66ZkGDG8EPTNTrPxG5ixNXoYAVSHJQDI01hmIZhexu5va+6kBZgShGHTTY1dU7g3BWWiT2gST9Gc37TuvgmQQlxVg/D8QeqCF5rMNUuKgkIYajku67mZZ97F+DdA74D+l8R03yMbiCLioIoGRqMP8gA/KMrkMD3Glv/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTZ9B6zh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZfYGlta5jPzMrrCe7TFJN2WBBVHZap15oDiE/tWzbnA3+OS6bU9BpHqiOCYz/IMwtLpDJCA1hCBFzA3Nu/XjLwarGUuMeTKTqxwbe04OA3T7fd0oTz6+lSBkL++5INwJRIFq8gYk3BR0hEQhnY0io/2Ydd0lHUtKLOy9nqFalbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3tA5/I5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTZ9B6zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763FC1F00A3E;
-	Fri,  4 Sep 2026 06:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3tA5/I5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545041F00A3E;
+	Fri,  4 Sep 2026 06:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788503016;
-	bh=ldIe0IJaNNwkzteBoCWbghYkABCWzzTFxKU9YyFGBQ8=;
+	s=korg; t=1788503018;
+	bh=Vwhe2JYT/N4RlkyGot/kZhgGOvf5y6VsagoGcvUhBvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vTZ9B6zhxZ3EdT9u/hV7e9ZWF486qvXHTVFZA22kk89KcfEJXdUZoHRXsJhE4kibG
-	 NNa1voPS0LKKMTDe5HtdML07qRYhh7S8PafUPeMgtbvhqeC+Mp/XguABMbiFSaoN56
-	 yRbxrDUwGx4ZHek9WBsgsecPZAS78jvtea9EFJF8=
+	b=j3tA5/I5M//BRPGniS7OwhMMrV0I8mLPVCrodBO9HgLonkcdxEo5+yJFQ9prZVqGJ
+	 +0zWYC2bRAQZ3G//sdQIAJXEAXBJf4kXuIPXCuuHUMT78ujjrYAODl5k153wX89jZ0
+	 25OtvMXL0eF9l0OkCw+Nbts8ipf365FQx05MHyNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Shiyuan <gaoshiyuan@baidu.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 371/403] iommu/amd: remove return value of amd_iommu_detect
-Date: Fri,  4 Sep 2026 07:02:54 +0200
-Message-ID: <20260904045743.235910491@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 362/403] ALSA: aloop: Check card index validity at probe
+Date: Fri,  4 Sep 2026 07:02:45 +0200
+Message-ID: <20260904045743.042304377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,78 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Shiyuan <gaoshiyuan@baidu.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5bb494d5cbb9a3403ba8b1c8bc145b42fc119078 ]
+commit 819b106a9fd2ef3fd8abf898b9a8e4524eca8f48 upstream.
 
-The return value of amd_iommu_detect is not used, so remove it and
-is consistent with other iommu detect functions.
+aloop driver blindly trusts that the given devptr->id value is within
+the proper card index range at probe.  It's OK for the devices the
+driver itself creates at the module probe time, but if the device is
+bound manually via sysfs interface, this could be -1 as "none", and
+this leads to OOB access for index[] and other parameters.
 
-Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20250103165808.80939-1-gaoshiyuan@baidu.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a sanity check for the card index and warn/correct it if it's a
+value out of the range.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260806153227.1460166-2-tiwai@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/init.c  | 10 ++++------
- include/linux/amd-iommu.h |  4 ++--
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ sound/drivers/aloop.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 36a814b6c4de5..0e270533bf12b 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3484,25 +3484,23 @@ static bool amd_iommu_sme_check(void)
-  * IOMMUs
-  *
-  ****************************************************************************/
--int __init amd_iommu_detect(void)
-+void __init amd_iommu_detect(void)
- {
- 	int ret;
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -1822,6 +1822,12 @@ static int loopback_probe(struct platfor
+ 	int dev = devptr->id;
+ 	int err;
  
- 	if (no_iommu || (iommu_detected && !gart_iommu_aperture))
--		return -ENODEV;
-+		return;
- 
- 	if (!amd_iommu_sme_check())
--		return -ENODEV;
-+		return;
- 
- 	ret = iommu_go_to_state(IOMMU_IVRS_DETECTED);
- 	if (ret)
--		return ret;
-+		return;
- 
- 	amd_iommu_detected = true;
- 	iommu_detected = 1;
- 	x86_init.iommu.iommu_init = amd_iommu_init;
--
--	return 1;
- }
- 
- /****************************************************************************
-diff --git a/include/linux/amd-iommu.h b/include/linux/amd-iommu.h
-index 2b90c48a6a871..062fbd4c9b772 100644
---- a/include/linux/amd-iommu.h
-+++ b/include/linux/amd-iommu.h
-@@ -31,11 +31,11 @@ struct amd_iommu_pi_data {
- struct task_struct;
- struct pci_dev;
- 
--extern int amd_iommu_detect(void);
-+extern void amd_iommu_detect(void);
- 
- #else /* CONFIG_AMD_IOMMU */
- 
--static inline int amd_iommu_detect(void) { return -ENODEV; }
-+static inline void amd_iommu_detect(void) { }
- 
- #endif /* CONFIG_AMD_IOMMU */
- 
--- 
-2.53.0
-
++	if (dev < 0 || dev >= SNDRV_CARDS) {
++		dev_warn(&devptr->dev,
++			 "Invalid card index %d, using default 0\n", dev);
++		dev = 0;
++	}
++
+ 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
+ 				sizeof(struct loopback), &card);
+ 	if (err < 0)
 
 
