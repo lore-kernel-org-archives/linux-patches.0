@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0988E3515D2;
-	Fri,  4 Sep 2026 05:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D2A24A05D;
+	Fri,  4 Sep 2026 05:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498555; cv=none; b=WTCrBqIrMJv4Z4lk+wJicckH3nl8IY2YmGuEQT+83eVbyHeM0cPe3ynutc+Jd3lcFFvWPN+2zKozUu/Zl8lZ3l+YFNEpqgpejxr/FrL50XWAWoL5omb9fFt+yoKIrRUcuSD3J1FzKktCPzQm3fBt65zis2R1xybJ6fzA7vAhF+g=
+	t=1788498558; cv=none; b=EowtgGg3rVAEWPmZW/CRWw3sDed31ZrxGpNiu3neUDdEe2fj9QA7/AvZ7FoByPPUs4po5MeE/XKD24VlQKiqrup3RaEyucGFVzad8/NlrE41tKSyWgy9pWES5m3ATbFRZQD0STShBH7Jxdf3pxA7aUhiMbwAK2bnxzfja36Y+aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498555; c=relaxed/simple;
-	bh=fWxuUcH7u+y2lT5SIQ6kq/jwu+Q4A/ZS7dx3lyuNfws=;
+	s=arc-20240116; t=1788498558; c=relaxed/simple;
+	bh=MHNrey4krs6BQxoF3BlYJZufrjJtfpsIKlSNIzSZKa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akSm/bqZb9xpEZ4FVlcSLxfqHYxIJsQXD+UhoV/Bu5FqVtNFwPTcBg5N6EmN7679yjGtrIZYdpiMog1EH/O02QvNL2GH2x0Q0EmiHsPpuTq6HXrdDhzrrmWfG31cvOZPhLIkWPhANxU97NnSGnhLIXIQOi8Pq6EhcWra7x5mGwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLkpPDIE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IAmzREviRsbNQ+OhU9GjrmYOmFn5i+2uz0Tfl+xrGlRQqgbpwVobVPJatpQyCIZ/8XWECdGdI51ITQlVcpEXdMB8wikhhWHZijR/MX4NXwcvP/mfz+nX3JjOobQjADbFYxZ2bxQXkz4zJO0V26c75OBxa49c3sYOazpxTiSlSTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2NsPJgj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLkpPDIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F1D1F00A3D;
-	Fri,  4 Sep 2026 05:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2NsPJgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EF51F00A3D;
+	Fri,  4 Sep 2026 05:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498553;
-	bh=HPB0QYackso/4VxxYguCNESzxMxiCFowTziuKIJHSqM=;
+	s=korg; t=1788498556;
+	bh=6wOH4Th1I15DHeZkgABGMvGiZ3cTte3aZ95FhhykBvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLkpPDIEdfDwriQQp/ipDKd3pPmBDpiAauLpxGfa2IxS5GmFCeWHSw9cm5uV/NiYQ
-	 0EqK5Goy2n2MSFP3bwnz/0jq+JyRn+slUONeoRzrEvEx5cs+sMuiII1d+8zTpygm5V
-	 TyFGQ2g4+S5iWW1IHsfFd5ddmZ+yX2i5BrT29mrY=
+	b=b2NsPJgjvhyFI+l6L8/6x3GNw6NQw1akZvB3uxXd5YukHtjRqYZyw8Ka8dxS6WH1c
+	 HTQ7NMjaTVmWjb5UmZpJ0xNNDFqzQQOECfiOiv9V8zXdIG/S0rbB2mJQrewZQ04ezD
+	 rg7hTv/+zxJZp8EogrYpj+QixbCPVLpYCKM7CuYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Subject: [PATCH 7.2 104/713] usb: dwc3: gadget: Fix use-after-free in dwc3_gadget_free_endpoints due to race condition
-Date: Fri,  4 Sep 2026 06:51:12 +0200
-Message-ID: <20260904045806.165863817@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 7.2 105/713] usb: gadget: at91_udc: drain polled-VBUS timer/work before udc is freed
+Date: Fri,  4 Sep 2026 06:51:13 +0200
+Message-ID: <20260904045806.187400184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,61 +49,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 9c855832790cd488d87de1885974f4c37cfe7358 upstream.
+commit c27d13ce4bab80fbdf6523928071b6c24b37606c upstream.
 
-In dwc3_gadget_init_endpoint, &dep->nostream_work is bound with
-dwc3_nostream_work, and dwc3_gadget_endpoint_stream_event can queue
-this delayed work on system_percpu_wq when a DEPEVT_STREAM_NOSTREAM
-event is received.
+In polled-VBUS mode (board.vbus_pin && board.vbus_polled), probe arms a
+self-restarting cycle: at91_vbus_timer() schedules vbus_timer_work, and
+at91_vbus_timer_work() calls at91_vbus_update() and re-arms the timer via
+mod_timer(). Both recover the same udc through container_of and dereference
+it on every iteration.
 
-If we remove the gadget, dwc3_gadget_free_endpoints makes cleanup and
-the memory allocated for dep with kzalloc() is released by kfree(dep),
-while the delayed work mentioned above may still be pending or
-running. The sequence of operations that may lead to a UAF bug is as
-follows:
+Neither teardown path cancels this cycle. udc is devm-allocated, so it is
+freed after at91udc_remove() returns, and is likewise freed when probe
+fails and devres runs. A timer callback or work item that is pending or
+running at either point dereferences the freed udc.
 
-CPU0                                      CPU1
+Add at91_udc_shutdown_vbus_timer() and call it from at91udc_remove() and
+from the usb_add_gadget_udc() failure path in probe; the remaining probe
+error paths fail before the timer is armed. timer_shutdown_sync() waits
+for a running callback and clears timer->function, which makes the work
+handler's mod_timer() a permanent no-op; cancel_work_sync() then drains
+any pending or running work whose re-arm attempt now does nothing. The
+timer must be shut down first, since cancelling the work alone would let
+the timer re-queue it. The guard mirrors probe: in IRQ mode the timer and
+work_struct are never initialized.
 
-                                          | dwc3_thread_interrupt
-                                          | dwc3_endpoint_interrupt
-                                          | dwc3_gadget_endpoint_stream_event
-                                          | queue_delayed_work(system_percpu_wq,
-                                          |                    &dep->nostream_work)
-dwc3_gadget_free_endpoints                |
-dwc3_free_trb_pool(dep)                   |
-list_del(&dep->endpoint.ep_list)          |
-dwc3_debugfs_remove_endpoint_dir(dep)     |
-kfree(dep)                                |
-// dep is freed                           |
-                                          | dwc3_nostream_work
-                                          | // use dep (use-after-free)
+This does not require a fault; a normal driver unbind can interleave with
+an already queued work item.
 
-Fix it by canceling the delayed work before kfree(dep) in
-dwc3_gadget_free_endpoints.
+This issue was found by an in-house static analysis tool.
 
-Fixes: dcfe437492e2 ("usb: dwc3: gadget: Reinitiate stream for all host NoStream behavior")
-Assisted-by: Codex:deepseek-v4-flash
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Fixes: 4037242c4f5f ("ARM: 6209/3: at91_udc: Add vbus polarity and polling mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/331d1d5133496d2b4184e05f8848adb06930a138.1785893865.git.xiaopei01@kylinos.cn
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719042839.3167094-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/udc/at91_udc.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3497,6 +3497,7 @@ static void dwc3_gadget_free_endpoints(s
- 		}
- 
- 		dwc3_debugfs_remove_endpoint_dir(dep);
-+		cancel_delayed_work_sync(&dep->nostream_work);
- 		kfree(dep);
- 	}
+--- a/drivers/usb/gadget/udc/at91_udc.c
++++ b/drivers/usb/gadget/udc/at91_udc.c
+@@ -1794,6 +1794,19 @@ static void at91udc_of_init(struct at91_
+ 		udc->caps = match->data;
  }
+ 
++/*
++ * The work handler re-arms this timer, so shut the timer down before
++ * draining the work; otherwise it restarts the polling cycle.
++ */
++static void at91_udc_shutdown_vbus_timer(struct at91_udc *udc)
++{
++	if (!(udc->board.vbus_pin && udc->board.vbus_polled))
++		return;
++
++	timer_shutdown_sync(&udc->vbus_timer);
++	cancel_work_sync(&udc->vbus_timer_work);
++}
++
+ static int at91udc_probe(struct platform_device *pdev)
+ {
+ 	struct device	*dev = &pdev->dev;
+@@ -1907,7 +1920,7 @@ static int at91udc_probe(struct platform
+ 	}
+ 	retval = usb_add_gadget_udc(dev, &udc->gadget);
+ 	if (retval)
+-		goto err_unprepare_iclk;
++		goto err_shutdown_vbus;
+ 	dev_set_drvdata(dev, udc);
+ 	device_init_wakeup(dev, 1);
+ 	create_debug_file(udc);
+@@ -1915,6 +1928,8 @@ static int at91udc_probe(struct platform
+ 	INFO("%s version %s\n", driver_name, DRIVER_VERSION);
+ 	return 0;
+ 
++err_shutdown_vbus:
++	at91_udc_shutdown_vbus_timer(udc);
+ err_unprepare_iclk:
+ 	clk_unprepare(udc->iclk);
+ err_unprepare_fclk:
+@@ -1933,6 +1948,9 @@ static void at91udc_remove(struct platfo
+ 	DBG("remove\n");
+ 
+ 	usb_del_gadget_udc(&udc->gadget);
++
++	at91_udc_shutdown_vbus_timer(udc);
++
+ 	if (udc->driver) {
+ 		dev_err(&pdev->dev,
+ 			"Driver still in use but removing anyhow\n");
 
 
