@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50683F4101;
-	Fri,  4 Sep 2026 06:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49E37080D;
+	Fri,  4 Sep 2026 06:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501966; cv=none; b=MUb92HO8uM+/ipPhxORErJtTqcNyLBG0VHI/crLMHWagr8TERC3THi7LCrUWDDUYrj+DFAoa7nXfixZJ6Az0QLEraRE7ChjIqBbigOQ5cTLptGuEdj3xgc2J+u4e1bGz+dinSKoFnNo3ExIsD7WEBGW+rvdWRVl0yTO61JdaizQ=
+	t=1788501969; cv=none; b=SnU6RxkrcSJ5Sgz7wEk2NLQTedYwJDbisOzCjYtaOneqXZcwSwKkfPcifa1vDkSNmeLQCiZW7Xh2XrGpcx0AY1hyQ71Q3x6HyAkHY2c0jp3BxotkPjLKlCgAXbRpzGJbvcb/OiknKlx8a/VNn+5uzJO+qP9rMoqyMejIIbB2Bs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501966; c=relaxed/simple;
-	bh=qx3iZCFy2ch7RwDXcv2RndtikbzZhXBlLLZ29fMujU4=;
+	s=arc-20240116; t=1788501969; c=relaxed/simple;
+	bh=6svRBWFB9JMMWQtpv9EDGz1Q8/johDRNl2SWos5+t0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdcjWFsqcCGy64tgxZzZoO+ORKupv1hfhErvSOlgtVg4rKHpfeTLkDB2AnR0rBahRPVtgcoDlELwlDmhJ0NU/lK4zVPY0P0BN14AQkAmWQeRxmhQdc8JO6injEtnQSJd53+e+FJ9v48IaK06pdh2Zh1ltVyJh3peXbs5A4fSCQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXIcNgpE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ya04t7FbX2n3bzdKaHMrAIXAbH044aaDLdwzL4o8q84Hgerii3LN22tp7UgvnCDV9L5lNjbxuO+EAH+vT9c75yyqd//q+D4KOoPAM98xUpek7znpv/1BQZFqCYJveKBBeebzyax1gG2P/CZGEDQvOROawoKrO5/A3G3T4QEX7Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wI5VY+mA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXIcNgpE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A231F00A3D;
-	Fri,  4 Sep 2026 06:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wI5VY+mA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2911F00A3D;
+	Fri,  4 Sep 2026 06:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501964;
-	bh=6lygDirfAEOc6YPYR1vhhzbdcSJZHOf+VUsFWTRCvRw=;
+	s=korg; t=1788501967;
+	bh=eBivam/ZiB/JBUp0JkmGaC5xofjsDBImT/UXJr3leVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXIcNgpEvxSwQ225n63VvLfY0tjjNI79cG5vMJ5vcur3knWtFzUD6T6ume21Y5rBD
-	 MgR0bopi1rr3VgMUYSOgFjIbo2pqUeagwX3XUbWTXwKSUaFPJPsgEoEva4AnI81Kbu
-	 v+XHrBEpQg6nHCtbe2BwD9saHUVw7iRNwmPmbmn0=
+	b=wI5VY+mA5ImfXSZj23Nc92q6e2Z6OMIATINrfWIaxFNhZcJ6yPd6qtmTBGOWWHPco
+	 w2pbnZa5IOGu2Mn3EuWG5Ji+8i55vyZsVgOphcCoch9SJXUi4gmsdmpKB1Lr1Swvo0
+	 WrP4bpQ04gukpVlIZWa93GtyomZ0msu+E05KmGW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Steve Wahl <steve.wahl@hpe.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/403] perf/x86/intel/uncore: Fix die ID init and look up bugs
-Date: Fri,  4 Sep 2026 06:56:49 +0200
-Message-ID: <20260904045734.956152632@linuxfoundation.org>
+Subject: [PATCH 6.12 007/403] wifi: mt76: Fix memory leak after mt76_connac_mcu_alloc_sta_req()
+Date: Fri,  4 Sep 2026 06:56:50 +0200
+Message-ID: <20260904045734.977628328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,101 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit a16d1ec4dd0cdcf689f324adde6067083bce9099 ]
+[ Upstream commit c41075ce8cf05ed8c0e7b7efef000dce548ffc42 ]
 
-In snbep_pci2phy_map_init(), in the nr_node_ids > 8 path,
-uncore_device_to_die() may return -1 when all CPUs associated
-with the UBOX device are offline.
+mt76_connac_mcu_alloc_sta_req() allocates an skb which is expected to
+be freed eventually by mt76_mcu_skb_send_msg(). However, currently if
+an intermediate function fails before sending, the allocated skb is
+leaked.
 
-Remove the WARN_ON_ONCE(die_id == -1) check for two reasons:
+Specifically, mt76_connac_mcu_sta_wed_update() and
+mt76_connac_mcu_sta_key_tlv() may fail, leading to an immediate memory
+leak in the error path.
 
-- The current code breaks out of the loop. This is incorrect because
-  pci_get_device() does not guarantee iteration in domain or bus order,
-  so additional UBOX devices may be skipped during the scan.
+Fix this by explicitly freeing the skb in these error paths.
+Commit 7c0f63fe37a5 ("wifi: mt76: mt7996: fix memory leak on
+mt7996_mcu_sta_key_tlv error") made a similar change.
 
-- Returning -EINVAL is incorrect, since marking offline buses with
-  die_id == -1 is expected and should not be treated as an error.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-Separately, when NUMA is disabled on a NUMA-capable platform,
-pcibus_to_node() returns NUMA_NO_NODE, causing uncore_device_to_die()
-to return -1 for all PCI devices.  As a result,
-spr_update_device_location(), used on Intel SPR and EMR, ignores the
-corresponding PMON units and does not add them to the RB tree.
-
-Fix this by using uncore_pcibus_to_dieid(), which retrieves topology
-from the UBOX GIDNIDMAP register and works regardless of whether NUMA
-is enabled in Linux.  This requires snbep_pci2phy_map_init() to be
-added in spr_uncore_pci_init().
-
-Keep uncore_device_to_die() only for the nr_node_ids > 8 case, where
-NUMA is expected to be enabled.
-
-Fixes: 9a7832ce3d92 ("perf/x86/intel/uncore: With > 8 nodes, get pci bus die id from NUMA info")
-Fixes: 65248a9a9ee1 ("perf/x86/uncore: Add a quirk for UPI on SPR")
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: Steve Wahl <steve.wahl@hpe.com>
-Link: https://patch.msgid.link/20260313174050.171704-4-zide.chen@intel.com
+Fixes: d1369e515efe ("wifi: mt76: connac: introduce mt76_connac_mcu_sta_wed_update utility routine")
+Fixes: 6683d988089c ("mt76: connac: move mt76_connac_mcu_add_key in connac module")
+Fixes: 4f831d18d12d ("wifi: mt76: mt7915: enable WED RX support")
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20260116144919.1482558-1-zilin@seu.edu.cn
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore.c       |  1 +
- arch/x86/events/intel/uncore_snbep.c | 13 ++++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.c | 16 ++++++++++++----
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c  |  4 +++-
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c  |  4 +++-
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index e7aba7349231d..96607174a0a93 100644
---- a/arch/x86/events/intel/uncore.c
-+++ b/arch/x86/events/intel/uncore.c
-@@ -66,6 +66,7 @@ int uncore_die_to_segment(int die)
- 	return bus ? pci_domain_nr(bus) : -EINVAL;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index b1a7fbedffac5..f60fe27ab3f9d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -1289,8 +1289,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
+ 				    wtbl_hdr);
+ 
+ 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	ret = mt76_mcu_skb_send_msg(dev, skb, cmd, true);
+ 	if (ret)
+@@ -1303,8 +1305,10 @@ int mt76_connac_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
+ 	mt76_connac_mcu_sta_ba_tlv(skb, params, enable, tx);
+ 
+ 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	return mt76_mcu_skb_send_msg(dev, skb, cmd, true);
  }
+@@ -2697,12 +2701,16 @@ int mt76_connac_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
+ 		return PTR_ERR(skb);
  
-+/* Note: This API can only be used when NUMA information is available. */
- int uncore_device_to_die(struct pci_dev *dev)
- {
- 	int node = pcibus_to_node(dev->bus);
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index c453ee7a52074..ca0193cbbe924 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -1474,13 +1474,7 @@ static int snbep_pci2phy_map_init(int devid, int nodeid_loc, int idmap_loc, bool
- 			}
+ 	ret = mt76_connac_mcu_sta_key_tlv(sta_key_conf, skb, key, cmd);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
  
- 			map->pbus_to_dieid[bus] = die_id = uncore_device_to_die(ubox_dev);
--
- 			raw_spin_unlock(&pci2phy_map_lock);
--
--			if (WARN_ON_ONCE(die_id == -1)) {
--				err = -EINVAL;
--				break;
--			}
- 		}
+ 	ret = mt76_connac_mcu_sta_wed_update(dev, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
+ 
+ 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index d622d7c7bee41..32e9c0960657a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -1729,8 +1729,10 @@ int mt7915_mcu_add_sta(struct mt7915_dev *dev, struct ieee80211_vif *vif,
  	}
+ out:
+ 	ret = mt76_connac_mcu_sta_wed_update(&dev->mt76, skb);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
  
-@@ -6530,7 +6524,7 @@ static void spr_update_device_location(int type_id)
+ 	return mt76_mcu_skb_send_msg(&dev->mt76, skb,
+ 				     MCU_EXT_CMD(STA_REC_UPDATE), true);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 1fc1116d9becc..910775a2c39fe 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -1239,8 +1239,10 @@ int mt7925_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
+ 		return PTR_ERR(skb);
  
- 	while ((dev = pci_get_device(PCI_VENDOR_ID_INTEL, device, dev)) != NULL) {
+ 	ret = mt7925_mcu_sta_key_tlv(wcid, sta_key_conf, skb, key, cmd, msta);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
+ 		return ret;
++	}
  
--		die = uncore_device_to_die(dev);
-+		die = uncore_pcibus_to_dieid(dev->bus);
- 		if (die < 0)
- 			continue;
- 
-@@ -6554,6 +6548,11 @@ static void spr_update_device_location(int type_id)
- 
- int spr_uncore_pci_init(void)
- {
-+	int ret = snbep_pci2phy_map_init(0x3250, SKX_CPUNODEID, SKX_GIDNIDMAP, true);
-+
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * The discovery table of UPI on some SPR variant is broken,
- 	 * which impacts the detection of both UPI and M3UPI uncore PMON.
+ 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
+ }
 -- 
 2.53.0
 
