@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761F93EC6AE;
-	Fri,  4 Sep 2026 05:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447294CCDC7;
+	Fri,  4 Sep 2026 05:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500282; cv=none; b=QU1S5BVhs4dZtCcZ9+xD/IPV2sCsY/kVGpM9Crqk0xr4+xJVHr7lyCRPavIx+MpPceMlxhsusvykEy/fszAOK3GQz3OwqRCY1uezptYhI2X+d3lpsbp69ex0HZ09WeHgC33GNbtwaX5YbTXtJ5kNuizspbK0XKPIo/XVzG3IbY0=
+	t=1788500286; cv=none; b=XAtbnM7fAJfYe1KQWXggh78cYRHYCa9Tukal+RAAdq+yMb+Dqw+rRZXzoCz2C7Oi6prnuNNX7trvzFo1Qwf+5tTbeiEz8XGtXJGhfrtcknLZCgswW7cHrBqBzg8ba6n0YpREC2/hUa8mVhB6RquBvfiCBXm7l6I3Ds6HIaKQ4to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500282; c=relaxed/simple;
-	bh=IBUA2ufv7Jyne98SoxrQitNra5VdktQ/7LHezgdg3ys=;
+	s=arc-20240116; t=1788500286; c=relaxed/simple;
+	bh=ARXIecUWJisEVPabMYagT7Ld0qW4YRYH+LbDNPQsNnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5rSitu+2iTgT6b4brAI2jlR0eK8LM/otoGUXBH/9iiBBZPPrlUZMVvnzvFoz7xgNHe02Hyx3//Rrv8eXuN0N1Ts2kr1dJ5Y71v1P3HYID+CRp0PWTomLE4IK1TileK8PFjh+A3DDL761e0O06oN+BIgIb5VFgxTnASSKvaOP5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8K5b7Gk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cec0SMjNKTv/5cZyCpNBPFgnDuhBNN3OjgskeedqHPk0ODmSnsYUtVzjxBus/w5cjdHAq9LTB2ux89Jm9hwq3G22wu6mAdkCL7g6z7JitYMVTsZ2GOjYFxJzzRuEy+Gdt0+uFAqd4CSnGT+RHPR+qNpEkR/6ORjk1rP4rmgS9fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXIL5zX1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8K5b7Gk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20B61F00A3D;
-	Fri,  4 Sep 2026 05:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXIL5zX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F3F1F00A3D;
+	Fri,  4 Sep 2026 05:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500281;
-	bh=VAPCmvmEWh2D2nOij0G2u5ZGJgSj2Jcuf7VDoOsWGoE=;
+	s=korg; t=1788500284;
+	bh=5s3TYO5qVHmrQIKuDiw1Gbca13mHlenMKklToxVCJpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c8K5b7GklEqdtNXZswsmMLH1twduOHnpGg/ORsK3E6/lG0kJY5sT3JBREe2B0FHrt
-	 NRHA9v0M+tnFvLdBOcN6x/+Ccm8smgsbRERSKrJ1ECHeH6Y+FUvf7lPVsP43ovlZNn
-	 AdE3/FNcJ6mLljcWLroDKlKgg7rFazChmxF0sTmk=
+	b=HXIL5zX1WyiDl2BzO7PNTZFUaQHzGDvhdu3LlstkH4fNlnIf6O45g0q+9Uwg9UL3/
+	 p6J45IJXmwAv5Jv5hdVThMFApUrlBqRoBSJJwExNdit+6uMjVlJM4EDl9y+ieqDZoX
+	 GvG6kuMsrm3630obzjTxr6jPjX7HXOERDHxHofPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Breno Leitao <leitao@debian.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Lance Yang <lance.yang@linux.dev>,
+	Qian Cai <cai@lca.pw>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 682/713] crypto: atmel-ecc - avoid stale fallback key after set_secret failure
-Date: Fri,  4 Sep 2026 07:00:50 +0200
-Message-ID: <20260904045819.126964712@linuxfoundation.org>
+Subject: [PATCH 7.2 683/713] mm/kmemleak: stop the task stack scan early when interrupted
+Date: Fri,  4 Sep 2026 07:00:51 +0200
+Message-ID: <20260904045819.150125416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,54 +57,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f07a0d251db7606e4792d2610788fbcc7b2c0d12 ]
+[ Upstream commit eb11f56eeca56069613d00bf623607e305b271d9 ]
 
-Clear ->do_fallback before decoding a new ECDH secret and enable it only
-after the software fallback accepts a caller-provided private key. This
-avoids using a stale fallback key should crypto_kpp_set_secret() fail.
+scan_block() already checks scan_should_stop() for every pointer and bails
+out of the current block, but the task stack walk cannot tell and keeps
+issuing a separate scan_should_stop() between every task.
 
-Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Return that status from scan_block() and use it as the task stack loop
+condition, so the walk stops as soon as a scan is interrupted.
+
+Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-2-acecd7d7fd92@debian.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Qian Cai <cai@lca.pw>
+Cc: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 3541a2b06ecd ("mm/kmemleak: report RCU-tasks quiescent states during the scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-ecc.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/kmemleak.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/crypto/atmel-ecc.c
-+++ b/drivers/crypto/atmel-ecc.c
-@@ -84,6 +84,7 @@ static int atmel_ecdh_set_secret(struct
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1525,22 +1525,25 @@ static int scan_should_stop(void)
  
- 	kfree(ctx->public_key);
- 	ctx->public_key = NULL;
-+	ctx->do_fallback = false;
+ /*
+  * Scan a memory block (exclusive range) for valid pointers and add those
+- * found to the gray list.
++ * found to the gray list. Return non-zero if the scan was interrupted.
+  */
+-static void scan_block(void *_start, void *_end,
+-		       struct kmemleak_object *scanned)
++static int scan_block(void *_start, void *_end,
++		      struct kmemleak_object *scanned)
+ {
+ 	unsigned long *ptr;
+ 	unsigned long *start = PTR_ALIGN(_start, BYTES_PER_POINTER);
+ 	unsigned long *end = _end - (BYTES_PER_POINTER - 1);
+ 	unsigned long flags;
++	int stop = 0;
  
- 	if (crypto_ecdh_decode_key(buf, len, &params) < 0) {
- 		dev_err(&ctx->client->dev, "crypto_ecdh_decode_key failed\n");
-@@ -91,8 +92,9 @@ static int atmel_ecdh_set_secret(struct
+ 	raw_spin_lock_irqsave(&kmemleak_lock, flags);
+ 	for (ptr = start; ptr < end; ptr++) {
+ 		unsigned long pointer;
+ 
+-		if (scan_should_stop())
++		if (scan_should_stop()) {
++			stop = 1;
+ 			break;
++		}
+ 
+ 		kasan_disable_current();
+ 		pointer = *(unsigned long *)kasan_reset_tag((void *)ptr);
+@@ -1550,6 +1553,8 @@ static void scan_block(void *_start, voi
+ 		pointer_update_refs(scanned, pointer, OBJECT_PERCPU);
  	}
+ 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
++
++	return stop;
+ }
  
- 	if (params.key_size) {
--		ctx->do_fallback = true;
--		return crypto_kpp_set_secret(ctx->fallback, buf, len);
-+		ret = crypto_kpp_set_secret(ctx->fallback, buf, len);
-+		ctx->do_fallback = !ret;
-+		return ret;
- 	}
+ /*
+@@ -1705,6 +1710,7 @@ static void kmemleak_scan_task_stacks(vo
+ {
+ 	struct pid *pid;
+ 	int nr = 1;
++	int stop = 0;
  
- 	cmd = kmalloc_obj(*cmd);
-@@ -103,8 +105,6 @@ static int atmel_ecdh_set_secret(struct
- 	if (!public_key)
- 		goto free_cmd;
+ 	do {
+ 		struct task_struct *p = NULL;
+@@ -1723,13 +1729,13 @@ static void kmemleak_scan_task_stacks(vo
+ 			void *stack = try_get_task_stack(p);
  
--	ctx->do_fallback = false;
--
- 	atmel_i2c_init_genkey_cmd(cmd, DATA_SLOT_2);
+ 			if (stack) {
+-				scan_block(stack, stack + THREAD_SIZE, NULL);
++				stop = scan_block(stack, stack + THREAD_SIZE, NULL);
+ 				put_task_stack(p);
+ 			}
+ 			put_task_struct(p);
+ 		}
+ 		cond_resched();
+-	} while (pid && !scan_should_stop());
++	} while (pid && !stop);
+ }
  
- 	ret = atmel_i2c_send_receive(ctx->client, cmd);
+ /*
 
 
