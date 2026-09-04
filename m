@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BE118D636;
-	Fri,  4 Sep 2026 05:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3235F3242BD;
+	Fri,  4 Sep 2026 05:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501165; cv=none; b=DXDDpq8HLF2/S0UrkO6DV6cGpN7n+rLGb4BSXnoxG8wE4UgW2YkhnnR5Hz7lreE7Js4lJ17KxoVWLziorb0Dsqklvh3zFnG3/GEIPgSanr76alU2stzXvdF4ue5Yt8FSfwX5h2U77vbApRzlIDKmq4pmAN6MroR+60QH3irC7FY=
+	t=1788501168; cv=none; b=Rev5XrgmQmYR8XWpLi39qVul4DE/NiozHgQwKVgVc0H+7Nj0cHdVGT8jCPxKsZuWF/+tgYlRSHLpzKLkTbSiMZAeXZIAknhtktlZJ/JOfoisvtr219zOFWBFdmT45G0w7avwvCfN/CJcCY+0ThmaR4Y5CVTTKStBnI/tKxe4HAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501165; c=relaxed/simple;
-	bh=kYneBlqHZ5jyoNZjfoi6IEl1Bf7gIF04hBqB0pd3ph0=;
+	s=arc-20240116; t=1788501168; c=relaxed/simple;
+	bh=hw4ZTGO++ntg1uIyIaOK7HC8zLGAVqupyGm+TPzvxb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKP4Nj0520CKd28QWWyK3YTfPDQFP9CGmaL/Fryrka6uysvzNz+L2xk35QGPVgyQgLalHFNRZJslKOvBHVSeVVkdocWBdXUNThAO6wFebBkuk2TJtEZup0nCpr0mAEpZbusj+CPvz6vlf+25Cpe+t574ZNcr/KRF1juOjQCFUaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=solOcgTl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WP/HhXF0tdrxv1wP9qkVM1LWyC2Cf8j1A+mvrzThU1kPakGPSO8qZMpyIUHvegkUife+IX35KNB9clNPLODAgjj2sS8c40UuwLDNtN+ltpydDDXxxHTpDZgt2SATBaNsf2dolhoP8aXbPfFRuq+rxr7qL1E7zGGq6dZmogR57HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEqq+e8w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="solOcgTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF73C1F00A3D;
-	Fri,  4 Sep 2026 05:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEqq+e8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8021F00A3D;
+	Fri,  4 Sep 2026 05:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501164;
-	bh=rlbVViJobKtWqkiDmXfk2T1zJfm6tL/TgMg+ea90voQ=;
+	s=korg; t=1788501167;
+	bh=4T8lBrhl7rNBfGLF2TMoEcs7H4EH+AKGm0oZ2Sui+KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=solOcgTl/Wvn4CFkNyAAgteQc+cVGaiBpWS8L7NuXtl0Rddf/e+k3UQdPFSQgD12C
-	 EUdIhgfZAEIwEXg3zj+0OtWM0DfI8xEYZ9KmBcahlh+VHbKe2e+OrOrhWFriRTk6QA
-	 QC8D4U4dHe0XmFmzX+qainhOVXIkTqzryw/pK3BQ=
+	b=BEqq+e8wgB6tk1vUUbcz+6HNxSy0BIzvzySmSWF+W61HT843rKPyDT6NfFcJILlGm
+	 V90eMZ181nD0fgGyjxtz05ZfxbwUmyL5tCEdrtPTwPTlsi2nidsSWjvkSr9CK0kfM6
+	 dr/KwT+XaIOOdShiKUn5l3YLZ74S8n6sK+yRb+8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fabio Estevam <festevam@nabladev.com>,
 	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.18 314/552] arm64: dts: rockchip: Fix rk3399-roc-pc-plus analog audio
-Date: Fri,  4 Sep 2026 06:57:51 +0200
-Message-ID: <20260904045757.398313644@linuxfoundation.org>
+Subject: [PATCH 6.18 315/552] arm64: dts: rockchip: Fix rk3588s-roc-pc audio description
+Date: Fri,  4 Sep 2026 06:57:52 +0200
+Message-ID: <20260904045757.419504732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,57 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Fabio Estevam <festevam@nabladev.com>
 
-commit 4f7259ebe1eba4778768a4f5a0bbbe439d10f3f3 upstream.
+commit b4db45b3ec97a9d0d23446084f45e095b2ba2020 upstream.
 
-The ES8388 sound card on the rk3399-roc-pc-plus fails to probe because
-i2s1 cannot claim its MCLK pin:
+The rk3588s-roc-pc ES8388 codec is connected to the i2s0_8ch audio
+interface.  Use the matching I2S0 MCLK output for the codec clock
+instead of I2S1.
 
-pinctrl: pin gpio4-0 already requested by ff880000.i2s; cannot claim for ff890000.i2s
-pinctrl: error -EINVAL: pin-128 (ff890000.i2s)
-pinctrl: error -EINVAL: could not request pin 128 (gpio4-0) from group i2s-8ch-mclk-pin
-on device rockchip-pinctrl
+Using the I2S1 MCLK can leave the ALSA PCM running while the codec has
+no usable master clock for the active audio path, resulting in silent
+headphone output.
 
-GPIO4_A0 is routed as SCLK_I2S_8CH_OUT and is used by i2s1 as the
-external MCLK for the ES8388 codec. The board dts already removes
-GPIO4_A0 from the i2s0_8ch_bus pin group, but i2s0 still claims the
-same pin through its bclk_off state.
+Also make the CPU DAI provide bitclock and frame clock.  This matches
+the active Rockchip I2S controller side and avoids relying on the codec
+to drive the bus clocks.
 
-Since the i2s driver requests both states, this blocks i2s1 pinctrl
-setup and leaves the simple-audio-card deferred with a parse error.
+Route the headphone output to LOUT2 and ROUT2, matching the old 5.10
+BSP device tree.  LOUT1 and ROUT1 are used for the speaker route there,
+so using them for the headphone widget can leave the headphone jack
+silent even while the ALSA path is active.
 
-Override i2s0_8ch_bus_bclk_off as well, matching the existing
-i2s0_8ch_bus override, so GPIO4_A0 is left for i2s1/ES8388 audio.
+The old BSP also used hp-con-gpio on GPIO1_A4.  Model that GPIO as a
+simple audio amplifier so DAPM enables the headphone connection when the
+headphone path is active.
 
 Cc: stable@vger.kernel.org
-Fixes: 6d9a7bd6a13c ("arm64: dts: rockchip: add support for Firefly ROC-RK3399-PC-PLUS")
+Fixes: 7f9509791507 ("arm64: dts: rockchip: add DTs for Firefly ROC-RK3588S-PC")
 Signed-off-by: Fabio Estevam <festevam@nabladev.com>
-Link: https://patch.msgid.link/20260717010736.578419-1-festevam@gmail.com
+Link: https://patch.msgid.link/20260703025648.180135-1-festevam@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3588s-roc-pc.dts |   23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
-@@ -132,6 +132,18 @@
- 		<3 RK_PD7 1 &pcfg_pull_none>;
- };
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-roc-pc.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-roc-pc.dts
+@@ -23,16 +23,19 @@
+ 		compatible = "simple-audio-card";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&hp_detect>;
++		simple-audio-card,aux-devs = <&headphones_amp>;
+ 		simple-audio-card,name = "rockchip,es8388";
+-		simple-audio-card,bitclock-master = <&masterdai>;
++		simple-audio-card,bitclock-master = <&cpudai>;
+ 		simple-audio-card,format = "i2s";
+-		simple-audio-card,frame-master = <&masterdai>;
++		simple-audio-card,frame-master = <&cpudai>;
+ 		simple-audio-card,hp-det-gpios = <&gpio1 RK_PA6 GPIO_ACTIVE_LOW>;
+ 		simple-audio-card,mclk-fs = <256>;
+ 		simple-audio-card,pin-switches = "Headphones";
+ 		simple-audio-card,routing =
+-			"Headphones", "LOUT1",
+-			"Headphones", "ROUT1",
++			"Headphones", "Headphone Amp OUTL",
++			"Headphones", "Headphone Amp OUTR",
++			"Headphone Amp INL", "LOUT2",
++			"Headphone Amp INR", "ROUT2",
+ 			"LINPUT1", "Microphone Jack",
+ 			"RINPUT1", "Microphone Jack",
+ 			"LINPUT2", "Onboard Microphone",
+@@ -47,11 +50,17 @@
+ 			system-clock-frequency = <12288000>;
+ 		};
  
-+&i2s0_8ch_bus_bclk_off {
-+	rockchip,pins =
-+		<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>,
-+		<3 RK_PD1 1 &pcfg_pull_none>,
-+		<3 RK_PD2 1 &pcfg_pull_none>,
-+		<3 RK_PD3 1 &pcfg_pull_none>,
-+		<3 RK_PD4 1 &pcfg_pull_none>,
-+		<3 RK_PD5 1 &pcfg_pull_none>,
-+		<3 RK_PD6 1 &pcfg_pull_none>,
-+		<3 RK_PD7 1 &pcfg_pull_none>;
-+};
+-		simple-audio-card,cpu {
++		cpudai: simple-audio-card,cpu {
+ 			sound-dai = <&i2s0_8ch>;
+ 		};
+ 	};
+ 
++	headphones_amp: audio-amplifier-headphones {
++		compatible = "simple-audio-amplifier";
++		enable-gpios = <&gpio1 RK_PA4 GPIO_ACTIVE_HIGH>;
++		sound-name-prefix = "Headphone Amp";
++	};
 +
- &i2s1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
+ 	chosen {
+ 		stdout-path = "serial2:1500000n8";
+ 	};
+@@ -323,12 +332,12 @@
+ 	es8388: audio-codec@11 {
+ 		compatible = "everest,es8388", "everest,es8328";
+ 		reg = <0x11>;
+-		clocks = <&cru I2S1_8CH_MCLKOUT>;
++		clocks = <&cru I2S0_8CH_MCLKOUT>;
+ 		AVDD-supply = <&vcc_3v3_s0>;
+ 		DVDD-supply = <&vcc_1v8_s0>;
+ 		HPVDD-supply = <&vcc_3v3_s0>;
+ 		PVDD-supply = <&vcc_3v3_s0>;
+-		assigned-clocks = <&cru I2S1_8CH_MCLKOUT>;
++		assigned-clocks = <&cru I2S0_8CH_MCLKOUT>;
+ 		assigned-clock-rates = <12288000>;
+ 		#sound-dai-cells = <0>;
+ 	};
 
 
