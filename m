@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4BE4137B2;
-	Fri,  4 Sep 2026 05:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF59C4CCDC7;
+	Fri,  4 Sep 2026 05:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500274; cv=none; b=DIQeHmJzgMqJIlPiZGpaySY3q6Kt+NeeEcS/h1yZeg4/qvgEHujP3ep99DrAdbXuYKFlUB479ReG94BVj+DGJN0ZGqDAsCT1Sf8/GdpBU4gBzRX1tJcAS2/2KiOUcR+CKD570OWWx6uy1rT3CJm3gl5fndXLrXRGpkRkhEgChWs=
+	t=1788500276; cv=none; b=NKpNu0//2EyXEs862ompEb83rqHlzUlbBYgB1+RUxHZrP1mSnzg7wInoZlI45aDhAyCBBSlY2aZYwhxNNeaohfpIMVqkNEUF+KJ87/Uq287aHIIl6MN9aQUByBIJ+65yEh+nbZtA7pnaXpYdfMUawBY5fITquN0yhtqbCxr63Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500274; c=relaxed/simple;
-	bh=277QS+bnOzOM/mJP4J0jP/By0eH+2vQ7JLngtoC9zzE=;
+	s=arc-20240116; t=1788500276; c=relaxed/simple;
+	bh=gw93FClnIwqvuqNHoB5+ujqg3L2P7EbjlNhpwvzkXg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdxEdXS2gvaKkL7HqQzoRUG/DW2Egb/o3ws9tYGm7wvDyKLThxOv64p5AAH2beUW07UU0RuhKuMhfbvrgCdy8K8N55R86bhF7eDMSAkav14a5EADep+tJcdgPe+tl22B3e50u1QsKGDHSG44iXg1tZCrnQZr2Rpq/3S/spZkMhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgXqyeBo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tu9ToktPB1N5ukf1jCGZAr4TomWLVjG6OVQkw58f5JEGhFgW3TQqaXh/IlNa0YEzVNdwNqj2ztZmHdqzHN2n1UG5PcvfGrPylBSSda4oq0m3qY8whn9s9ywkjcOfmr2zb5o9w24QtgGhBQzkJf3sfTWAp6q8wFF/bCe2qzt3VNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERhE2WWj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgXqyeBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6381F00A3D;
-	Fri,  4 Sep 2026 05:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERhE2WWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9121F00A3D;
+	Fri,  4 Sep 2026 05:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500273;
-	bh=3fIdmkQIopeLAD9ROUyL0xQ90Mwr4PFzAWBUMbinSzg=;
+	s=korg; t=1788500275;
+	bh=RGOdj8vQnssgai++vfBjvBcWMtlZwenMmE5eVfNktmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jgXqyeBobG1onwy/g5ZxfF5mdAHDvoVxYrEsKoyR4Wvc/Ci0R1LKU6V2j7/ZWGdZz
-	 /RNQK2SKKiLFmO33oBcjf/MG41npFZkHYqSvxl65qJaFw/HnjjuCKGikcxDsxnbP9j
-	 s1dHpBqnVFKs2mXSnVEK/yGyKceQ1wGCsUPWv6ug=
+	b=ERhE2WWjcAKE6BC6z0lszcB5GUl3HqtlxirK6nJgyuFg/4GE2IVHv1qNPbtlOZR6a
+	 ROiZ3lTzQLEM1xM+z/DvZxS2SxSgpM2t4fPFgqng96UahXZbzycSkotb1ioGPwhyr2
+	 ufttLg7qajioHlVcl7q9sOT+wwiyfbKnAGkDN7LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Injae Ryou <injaeryou@gmail.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 711/713] selftests/mm: fix on-fault-limit false failure under sudo-rs
-Date: Fri,  4 Sep 2026 07:01:19 +0200
-Message-ID: <20260904045819.785389929@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 7.2 712/713] ACPI: scan: Do not combine resources that overlap completely
+Date: Fri,  4 Sep 2026 07:01:20 +0200
+Message-ID: <20260904045819.807495029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -54,64 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Injae Ryou <injaeryou@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 98df164036bed307a16e7c124ad023c2c13c4b76 upstream.
+commit 7617cc05df28dcae967cca109de74084321eaa62 upstream.
 
-run_vmtests.sh runs on-fault-limit as the nobody user via "sudo -u nobody
-./on-fault-limit", guarded by a check that nobody can access the binary
-("sudo -u nobody ls ./on-fault-limit").
+Commit f234fdaae1ca ("ACPI: scan: Avoid registering platform devices
+with resource overlaps") attempted to avoid platform device registration
+errors due to overlaps of resources of the same type returned by the
+same _CRS object in the ACPI tables.  It did that by combining two or
+more overlapping resources into one, but it went too far and also
+caused resources that overlap completely to be combined which broke
+the arm-cmn driver that expects two MMIO resources to be present for
+each device it binds to and it expects those two resources to overlap
+completely.
 
-The guard resolves the relative path from the inherited working directory,
-which only requires search permission on the test directory itself.
-Classic sudo passes the relative path through to execve() the same way, so
-the two agree.  However, sudo-rs (the default sudo implementation since
-Ubuntu 25.10) canonicalizes the command to an absolute path before
-executing it, which requires search permission on every ancestor
-directory.  When the kernel tree lives under a private home directory
-(mode 0750, the Ubuntu default for new users since 21.04), the guard
-passes but the execution fails with "command not found", and the test is
-reported as a false FAIL:
+Address this issue by adding checks for completely overlapping
+resources to acpi_platform_adjust_resources() and add a comment
+explaining what is done there.
 
-  # running sudo -u nobody ./on-fault-limit
-  sudo: './on-fault-limit': command not found
-  # [FAIL]
-
-Wrap the command in "sh -c" so that sudo only resolves the shell binary,
-and the relative path is resolved by nobody's shell from the inherited
-working directory, matching what the guard checks.  This is the only "sudo
--u nobody" invocation in the script; uid, cwd, rlimits (including
-RLIMIT_MEMLOCK, which this test exercises) and the exit status are
-unchanged through sh.
-
-Verified on Ubuntu 26.04 (sudo-rs 0.2.13): the test now runs and passes
-instead of failing.  Verified on Ubuntu 24.04 (sudo 1.9.15p5): behavior is
-unchanged.
-
-Link: https://lore.kernel.org/20260713092700.464376-1-injaeryou@gmail.com
-Fixes: 5d2146a3354f ("selftests/mm: skip mlock tests if nobody user can't read it")
-Signed-off-by: Injae Ryou <injaeryou@gmail.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f234fdaae1ca ("ACPI: scan: Avoid registering platform devices with resource overlaps")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/linux-acpi/20260819003752.GA3063251@ax162/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://patch.msgid.link/12955564.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/run_vmtests.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_platform.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/mm/run_vmtests.sh
-+++ b/tools/testing/selftests/mm/run_vmtests.sh
-@@ -303,7 +303,7 @@ CATEGORY="compaction" run_test ./compact
+--- a/drivers/acpi/acpi_platform.c
++++ b/drivers/acpi/acpi_platform.c
+@@ -85,7 +85,13 @@ static unsigned int acpi_platform_adjust
+ 	for (i = 0; i < count; ) {
+ 		struct resource *res = &resources[i];
  
- if command -v sudo &> /dev/null && sudo -u nobody ls ./on-fault-limit >/dev/null;
- then
--	CATEGORY="mlock" run_test sudo -u nobody ./on-fault-limit
-+	CATEGORY="mlock" run_test sudo -u nobody sh -c ./on-fault-limit
- else
- 	echo "# SKIP ./on-fault-limit"
- fi
+-		if (resource_type(new_res) != resource_type(res) ||
++		/*
++		 * Look for overlaps of resources of the same type that would
++		 * cause resource insertion to fail down the road.
++		 */
++		if (__resource_contains_unbound(res, new_res) ||
++		    __resource_contains_unbound(new_res, res) ||
++		    resource_type(new_res) != resource_type(res) ||
+ 		    !resource_union(new_res, res, new_res)) {
+ 			i++;
+ 			continue;
 
 
