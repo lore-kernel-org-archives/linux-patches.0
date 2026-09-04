@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E8C35AC03;
-	Fri,  4 Sep 2026 06:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283B2358378;
+	Fri,  4 Sep 2026 06:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502029; cv=none; b=ZP8tsY2zdK+Zy7nh235Z4/elYw+40b+6RS+uNAG9JAsI6QsO/izms5tWxMK1KQzYU5PajHCOYj54R7NGSCPfzQZV2B62kSSsM/0I804wVKpaeTBFQDMO7BwNSTkULf5p7Fay2cwz4ZX0kuL45MJkRY46XIUrkGuxbB+COJfnnBo=
+	t=1788502032; cv=none; b=QKr7/XMIuqBqAaAJSZRLfAHmBGcGb02uxg0N03tDhK3dKFnQbKB5XaKV/0aG4c0P/hDLxetysnrCYO18uM4vR/tGQwWzAM93XvBRRqV23fVZ0F96dv6Lz/zXnyToVRZZAG6k32aqabpVI8LmJH8xXUA7RK2Xnp65b14EtN5PF9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502029; c=relaxed/simple;
-	bh=NpruBYwS2Gr2HpcM3OJkz5zQYPKfWRRgBgT5PgMY9wE=;
+	s=arc-20240116; t=1788502032; c=relaxed/simple;
+	bh=fQMSinvSGrxJhd68jUOMop/3AExRu1w7wG7cTMzExrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dP7TJsYi1zVbcqtm3vkbl4fAQIpj5GGZJeUST2NATsr7ueQrgMK6UjdH3k68HAJbJeCEXPP271PRybZ+1Ebf1R6B9fIzb8g3WeIQqJ/QpmMohGrTn6IXHVyw7istK1th7PhhunZ9KGlUEnBpbCaz5dc4SErKsKL4705GaROzxXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0GcIZtE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=E0qLYhAw5B//0+cn2h8u8A70X7xi7PZBXUWmFwYZbQ70ooJ40wDTf9dvLgx+PjQiidpcQpTybrpXuFfLXDHwuABD1Vw8WFJIoJ5Dv41e2d1H3R2pt8xyMtbRo/6WJK2JXOYElbOYBFCG5by8gCgemDxAK9gQ0Tky7VHeIBoDVDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hL6Lz6JR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0GcIZtE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4B01F00A3D;
-	Fri,  4 Sep 2026 06:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hL6Lz6JR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830AB1F00A3D;
+	Fri,  4 Sep 2026 06:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502028;
-	bh=2UKbnekbC2y9dvCFrWMbwXuTQQDgUxH+zY6vuzrb3t8=;
+	s=korg; t=1788502031;
+	bh=8SZJqhEIv/79TZeGoYdyl4p9EcPd6uuN58q0N0OYK2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q0GcIZtEbO/PK4OBUO1INA3W2Rgg2b/EyGeMRvLpYJGSDnE0hEnDNdHXGqfa2X8oI
-	 rMuqSW+ef2NCtHXelfcYk1Pi21hDsPZxVETmRDk7uxaRc+lamePsDO9fxx5YZXMTJW
-	 mfVfQgsvLg7vkOWX/dM654j0bliy3frfd06fGgtc=
+	b=hL6Lz6JR7fAn+EofLZ5F1QnHFXX3VHfDtjfZrosZLz81aQjAWCbM20baBPCug/vxB
+	 pqYQuXAP2UrMlPTbnbWUFXO0WsIChaBLP8yEw6ryIc2rGYoS/ncpHmnDij1nr0JlWk
+	 TeFNIT1eD/h6lbpFEtaFry9kjN2nm2ubCwN35+YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 064/403] of: fix out-of-bounds read in of_alias_scan() stem parser
-Date: Fri,  4 Sep 2026 06:57:47 +0200
-Message-ID: <20260904045736.287131907@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.12 065/403] PCI/sysfs: Fix out-of-bounds read in pci_write_legacy_io()
+Date: Fri,  4 Sep 2026 06:57:48 +0200
+Message-ID: <20260904045736.312116667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -45,42 +43,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit 5bb01c657ff9fc807c2c592ca18af34c4fc3bc6f upstream.
+commit dc76258d0132df1d831a5a29758bd448ca9c566e upstream.
 
-The stem parser tests isdigit(*(end - 1)) before checking end > start
-and so reads one byte before the property name when the name is empty
-or all digits. Check the bound first.
+pci_write_legacy_io() loads 4 bytes from the kernfs write buffer
+regardless of how many bytes userspace wrote:
 
-Fixes: 611cad720148 ("dt: add of_alias_scan and of_alias_get_id")
+  if (count != 1 && count != 2 && count != 4)
+          return -EINVAL;
+
+  return pci_legacy_write(bus, off, *(u32 *)buf, count);
+
+kernfs_fop_write_iter() allocates the buffer with kmalloc(len + 1),
+so a 1-byte write to the legacy_io sysfs file allocates 2 bytes and
+the unconditional u32 load reads up to 2 bytes past the end of the
+allocation, which KASAN reports as a slab-out-of-bounds read.
+Similarly, a 2-byte write overreads by 1 byte.
+
+Thus, read only the number of bytes requested using get_unaligned_le16()
+and get_unaligned_le32() for the 2 and 4 byte cases, interpreting the
+buffer as little-endian to match the byte ordering of PCI I/O port
+space.
+
+The PowerPC implementation previously compensated for the generic
+code's native-endian 32-bit load by shifting the value into place
+for the 1 and 2 byte cases.  The shifts were only correct on
+big-endian kernels.
+
+On little-endian PowerPC (POWER8 and later), they extracted the wrong
+bytes, so a 1-byte write wrote an out-of-bounds byte instead of the
+requested value.  On big-endian, the native load also caused out_le16()
+and out_le32() to reverse the user's bytes on the wire for 2 and 4 byte
+writes.  The little-endian helpers resolve both issues, so the shifts
+are removed.
+
+No changes are needed for the Alpha platform.
+
+The legacy_io file is root-only and exists only on Alpha and PowerPC,
+the two architectures that define HAVE_PCI_LEGACY.
+
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5 [Claude Code]
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260805-nh-of-alias-overlay-v6-1-74f21d440819@nexthop.ai
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260616163131.2763281-1-kwilczynski@kernel.org
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/base.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/pci-common.c |    9 ++-------
+ drivers/pci/pci-sysfs.c          |   18 +++++++++++++++---
+ 2 files changed, 17 insertions(+), 10 deletions(-)
 
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -1818,7 +1818,7 @@ void of_alias_scan(void * (*dt_alloc)(u6
+--- a/arch/powerpc/kernel/pci-common.c
++++ b/arch/powerpc/kernel/pci-common.c
+@@ -626,19 +626,14 @@ int pci_legacy_write(struct pci_bus *bus
+ 		return -ENXIO;
+ 	addr = hose->io_base_virt + port;
  
- 		/* walk the alias backwards to extract the id and work out
- 		 * the 'stem' string */
--		while (isdigit(*(end-1)) && end > start)
-+		while (end > start && isdigit(*(end - 1)))
- 			end--;
- 		len = end - start;
+-	/* WARNING: The generic code is idiotic. It gets passed a pointer
+-	 * to what can be a 1, 2 or 4 byte quantity and always reads that
+-	 * as a u32, which means that we have to correct the location of
+-	 * the data read within those 32 bits for size 1 and 2
+-	 */
+ 	switch(size) {
+ 	case 1:
+-		out_8(addr, val >> 24);
++		out_8(addr, val);
+ 		return 1;
+ 	case 2:
+ 		if (port & 1)
+ 			return -EINVAL;
+-		out_le16(addr, val >> 16);
++		out_le16(addr, val);
+ 		return 2;
+ 	case 4:
+ 		if (port & 3)
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -907,12 +907,24 @@ static ssize_t pci_write_legacy_io(struc
+ 				   loff_t off, size_t count)
+ {
+ 	struct pci_bus *bus = to_pci_bus(kobj_to_dev(kobj));
++	u32 val;
  
+-	/* Only support 1, 2 or 4 byte accesses */
+-	if (count != 1 && count != 2 && count != 4)
++	/* Only support 1, 2 or 4 byte accesses. */
++	switch (count) {
++	case 1:
++		val = *(u8 *)buf;
++		break;
++	case 2:
++		val = get_unaligned_le16(buf);
++		break;
++	case 4:
++		val = get_unaligned_le32(buf);
++		break;
++	default:
+ 		return -EINVAL;
++	}
+ 
+-	return pci_legacy_write(bus, off, *(u32 *)buf, count);
++	return pci_legacy_write(bus, off, val, count);
+ }
+ 
+ /**
 
 
