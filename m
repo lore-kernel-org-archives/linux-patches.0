@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D8E41D106;
-	Fri,  4 Sep 2026 05:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554E441F37D;
+	Fri,  4 Sep 2026 05:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499305; cv=none; b=Zu3evootck0VIVqA9vpFlRQn0qsmwT9sWKE1ZI6DfAaGHjvZcNgUohfax29fyQkejLewzGufsl919Ld/w9xfHeEefiq9argqkHyJIvkSthlZsywbe0wHl45xiJLmimKftGvuXOhAauUqpwQtPLMWYAupBXiE+O2o8J3EuWTSGBI=
+	t=1788499308; cv=none; b=U4lEw66QZLtLLzNj4HrKWpr3+6FOsIPTcfNkiSLu05vMCL+MLl6tRmDwFKQEk83RTRVEaCu0NXOAbCjEv9roJHP1+l21Qox7ej78W4KnA5QR8eonoA8FyOL3wO0ix4uVGu41NPpboEeH9WwIKTMFTwNqY/OOszGKkqvZy9oDGxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499305; c=relaxed/simple;
-	bh=8QpCv7X6jvtfeMhtQF3MjIoJtY6viGFHaUmlIsRUZig=;
+	s=arc-20240116; t=1788499308; c=relaxed/simple;
+	bh=KLczzdbMZj9iC/FbJK8Tpo5xEJDjmrPqRhEoKDQWKTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZndRk0kZYQQjV31/4bvubTIzZSNwBSC6CkxP11kLCeqKdoJpW0uhRT2WEBZTf4Kx1/7gVfl+pLb7LOSrxz3DQR6NHgvI0PEFWcNtBarF1nnBX7iiM7e6bJAX3nfHfm7e5/WpgSFvJoAgOqQ3b90gt/39YsrG8H8HO3s6xeLJeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQn0Y6gk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hm0ATKlXV+S5PuN3WyIVONXTegvPFAZTAVd/JygpmYwX8cR+lnvILydQmAeEbX9LX7laFb7n1RMMoMoDvLSo1BM3/k+g+hdcDeNNiUyKk+IkukKC8C0Yf/jSNg7klgyA83Md+yvxAR/PU9HQjtOfbTa58KUO2BcDepj0b2rQcsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIKuD43i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQn0Y6gk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D006A1F00A3D;
-	Fri,  4 Sep 2026 05:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIKuD43i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BDC1F00A3D;
+	Fri,  4 Sep 2026 05:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499304;
-	bh=ZxfL2aDdE0zzL01mWe96Tvacxamh9Xrd8rIpNvqiwxM=;
+	s=korg; t=1788499307;
+	bh=durPC5kN4LViOxBXChjCykftsjQtzjR0whY+QBPSZlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQn0Y6gkutnJzvL/PNKfjK/k5aIxVj894dSd0sE78gETNMmdjCvfrwTxYfc+1tR1X
-	 UXHbea5AXKXOPMl2q7VjrzZfy+08S7389NLq0uumrHXOu4ZyWGvdlcaxhbZzqE3Jdp
-	 RL/tTu9ZFy/mhIN+fUdY0R0uwR9TW3kEE/WTxZ8o=
+	b=MIKuD43iPDi29OHqXbx+a6j2+38J6AQKQe/Q5Ucs9kdoqFH68GM4p9DJpLi1B/Unf
+	 3bLbaudsC5wp2dtsk9ZAgzUhQyTsjuKrXIrETnrueMbG/Ury11rfODNuvbntCs3Ikb
+	 Ctvl98EbzatsXeiazYnHPMWVjsgL6+v/XmfxMqBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 371/713] SUNRPC: Zero rpc_gss_wire_cred at svcauth_gss_decode_credbody() entry
-Date: Fri,  4 Sep 2026 06:55:39 +0200
-Message-ID: <20260904045812.143382283@linuxfoundation.org>
+Subject: [PATCH 7.2 372/713] SUNRPC: svcauth_gss: enforce krb5 token minimum length
+Date: Fri,  4 Sep 2026 06:55:40 +0200
+Message-ID: <20260904045812.165880803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -53,51 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <clm@meta.com>
 
-commit 11539e8fcce0b0af062ae5fecf7b3676c2f7aeed upstream.
+commit a919c5c88769cf8fb3ec071e6078d830bf512489 upstream.
 
-svcauth_gss_decode_credbody() writes the caller's
-rpc_gss_wire_cred field by field and assigns gc_ctx.len only on
-the success tail.  The caller storage is svcdata->clcred, which
-lives in the per-svc_rqst gss_svc_data and is reused across
-requests.  Early decode failures leave partially decoded state
-mixed with residue from the prior request.
+svcauth_gss_unwrap_priv() validates only an upper bound on the
+wire-supplied opaque length before handing the buffer to
+gss_unwrap():
 
-The trailing body_len tightness check is the sharpest case:
-xdr_stream_decode_opaque_inline() has already written gc_ctx.data
-with a borrowed inline pointer into the current request's XDR
-pages, but gc_ctx.len retains its prior value.  Once the request
-pages are released the pooled clcred carries a dangling pointer
-paired with a stale length.
+    if (len > xdr_stream_remaining(xdr))
+            goto unwrap_failed;
+    offset = xdr_stream_pos(xdr);
+    ...
+    maj_stat = gss_unwrap(ctx, offset, offset + len, buf);
 
-Zero the caller's rpc_gss_wire_cred at function entry so that
-every early-return path leaves a deterministic all-zero cred.
-On the trailing tightness-check path, gc_ctx.len is now zero
-instead of stale, which neuters length-driven consumers such as
-gss_svc_searchbyctx() that would otherwise walk the dangling
-data pointer.
+The wire value `len` flows unchanged as the upper bound into the
+krb5 unwrap path, so a len in [0, 16] passes this check and is
+handed to gss_unwrap(). For a krb5 v2 context that lands in
+gss_krb5_unwrap_v2(), which reads the 16-byte RFC 4121 token
+header fields at ptr+4 and ptr+6 and then calls rotate_left()
+before any integrity check. With a sub-header length the header
+reads run past the token, and _rotate_left()'s `shift %= buf->len`
+path can divide by zero when buf->len has been driven to zero by
+the truncated token. A header-only token (len == 16) is equally
+invalid: with a non-zero RRC field and the opaque blob ending at
+the XDR buffer boundary, rotate_left() builds a zero-length
+subbuffer, reaching the same division.
 
-Fixes: b0bc53470d1a ("SUNRPC: Convert the svcauth_gss_accept() pre-amble to use xdr_stream")
+Reject the token at the server entry point before it reaches the
+krb5 unwrap core. A valid sealed RFC 4121 token must contain
+the 16-byte header plus at least some encrypted payload.
+
+Fix by adding a minimum-length check immediately after the
+existing upper-bound check:
+
+    if (len <= GSS_KRB5_TOK_HDR_LEN)
+            goto unwrap_failed;
+
+Fixes: 7c9fdcfb1b64 ("[PATCH] knfsd: svcrpc: gss: server-side implementation of rpcsec_gss privacy")
 Cc: stable@vger.kernel.org
+Assisted-by: kres (claude-opus-4-7)
 Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-5-d026a1415e0b@oracle.com
+Link: https://patch.msgid.link/20260524010213.557424-2-cel@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sunrpc/auth_gss/svcauth_gss.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/net/sunrpc/auth_gss/svcauth_gss.c
 +++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1573,6 +1573,9 @@ svcauth_gss_decode_credbody(struct xdr_s
- 	u32 body_len;
- 	__be32 *p;
+@@ -949,6 +949,8 @@ svcauth_gss_unwrap_priv(struct svc_rqst
+ 	}
+ 	if (len > xdr_stream_remaining(xdr))
+ 		goto unwrap_failed;
++	if (len <= GSS_KRB5_TOK_HDR_LEN)
++		goto unwrap_failed;
+ 	offset = xdr_stream_pos(xdr);
  
-+	/* Early-return paths leave deterministic state, not stale residue. */
-+	memset(gc, 0, sizeof(*gc));
-+
- 	p = xdr_inline_decode(xdr, XDR_UNIT);
- 	if (!p)
- 		return false;
+ 	saved_len = buf->len;
 
 
