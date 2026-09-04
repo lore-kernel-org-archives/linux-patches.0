@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C177080D;
-	Fri,  4 Sep 2026 05:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDA030C160;
+	Fri,  4 Sep 2026 05:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498943; cv=none; b=p5zHX+4SMk/pZyfMV2JgElCr3fR7BxP6GPSWWbJ0FaUIRpBsSQj7Z7Wg0wSZgfNUUmd4a+yluVar0OnxVPleVnsUqYYNx9VhVTD4lj1QHh+FlV7F6J+TDd9UJQFkq4JEW/BR0vs6cVpOAYIRODRFaIXIwck+y0BHu/iHPYUKCNs=
+	t=1788498946; cv=none; b=FbWYZLKJeKfr/UjdEDpcI2c4jKuPuBEDWaa/MPo+qXBTNc1T8vCucHpww+Tjut/c0uuHnPh1np1p8tge8y1mRj6zxizCFl2UoVbLseaENF2iwE4vdSzugrOa3J8a51qvqxyWEw+e1JufKDBgv4R+0om1GJDbIu6dE1oYqPVX3sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498943; c=relaxed/simple;
-	bh=BrSdfnTtF2lCxC5rItgQGar2jdPFT7TI2DbF9h+z6ns=;
+	s=arc-20240116; t=1788498946; c=relaxed/simple;
+	bh=IMm+az2OjegicbaACJ5orTMSzXsfikEEhLwlRwIPjYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hso+QekOsm2ZtjVsdb0qelv3PC4J47ot/sz/JVBnyi4FShkZ8MEHWGaFNUAoALimYS3lHDTbjbTRI+cn7zICTm5rsu1R70eQFJWDnm2VNidTZPzlVVVFYjoINDuGXDJJM9SjKgvDiHhcRuGTD2frLKSKNxhr5hMkVStXk8BJnt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YT5Dt7g1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cnmSGzjrwPGriPNMZ3FuRiFGWj04KV4IecOC2o6Ii8aiDvBgdKUCylAhRH1VL6HZv1yGw7NmxlUXqcBYp4erk/Fn8f44nFFwaKIKQXLqRDEXee3yMJuC3iD6rdKz6wdCkh6gM7LydtOEyGRln9Vai2dH6L/TuufwT33O+fWZqy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YC0MCJwv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YT5Dt7g1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DD81F00A3D;
-	Fri,  4 Sep 2026 05:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YC0MCJwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E411F00A3D;
+	Fri,  4 Sep 2026 05:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498942;
-	bh=AUV/91NvAs/8TCErRbvdaZjI/sSHbLlzV7u43SXlrQk=;
+	s=korg; t=1788498945;
+	bh=T51pjUOpnoWTQ5cTsUBfE4atTeZP31PAeAzus2q6SyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YT5Dt7g1SWI7s1phB21Y/391a6NZ0m3hOB6Ygu2M6kJ4Srn1cibwGm1V2BEu0Hg79
-	 la3T8S2/7fXVPYQtWxT32Ju4V4lOBWiqqHcQEdZsa9oIqR/B1eTnCcH+yn12s2SojE
-	 83eRttBRTibNgKuEJd5lxWZk7IeQVvEVMXcZ0+DE=
+	b=YC0MCJwvGgDyBNaHsZFYpovWKkAx9qiicOcDU6TlovM90ZzcfCDbSjWQyeXQxrumy
+	 MUZ7IAudNu2j7sKR6MLSWN4Rqt+IVnlloKYgIqdHWmLvM+mDM7BqVac7N64vo5PB1C
+	 X5+GebKlSzQqA1Iy9HpAh/p2qnGaEe9tP1X6w5lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 242/713] smb: client: fix use-before-check of ReparseDataLength in reparse_buf_ptr()
-Date: Fri,  4 Sep 2026 06:53:30 +0200
-Message-ID: <20260904045809.255809951@linuxfoundation.org>
+Subject: [PATCH 7.2 243/713] smb: client: harden DFS cache against invalid target hints
+Date: Fri,  4 Sep 2026 06:53:31 +0200
+Message-ID: <20260904045809.279764856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,53 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 05f78e6cf34ea3a285053bd5999e08e8ac298bd5 upstream.
+commit bf86c08123c6ab8c61cc0be1dad7540db93738ff upstream.
 
-reparse_buf_ptr() reads buf->ReparseDataLength before checking that
-count covers the full fixed header:
+Currently, get_tgt_name() returns ERR_PTR(-ENOENT) when ce->tgthint is
+NULL, and dfs_cache_noreq_update_tgthint() assumes ce->tgthint is always
+valid.
 
-    buf = (struct reparse_data_buffer *)((u8 *)io + off);
-    len = sizeof(*buf);                          /* 8 bytes */
-    rdlen = le16_to_cpu(buf->ReparseDataLength); /* offset 4, 2 bytes */
+In preparation for clearing ce->tgthint in free_tgts(), harden callers
+of get_tgt_name() against ERR_PTR results and harden
+dfs_cache_noreq_update_tgthint() against NULL pointer dereferences.
 
-    if (count < len || count < rdlen + len)      /* check comes after */
-
-struct reparse_data_buffer has ReparseDataLength at offset 4.  If a
-server returns OutputCount < 6, the read at offset 4-5 reaches past
-the end of the received data.  The off+count bounds against iov_len
-were already validated, but that does not protect against count being
-smaller than sizeof(*buf).
-
-Split the check: verify count >= sizeof(*buf) before reading
-ReparseDataLength, then verify count covers the data region.
-
-Fixes: a158bb66b137 ("smb: client: optimise reparse point querying")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/client/dfs_cache.c |   31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -40,9 +40,11 @@ static struct reparse_data_buffer *repar
+--- a/fs/smb/client/dfs_cache.c
++++ b/fs/smb/client/dfs_cache.c
+@@ -871,13 +871,22 @@ int dfs_cache_find(const unsigned int xi
+ 		goto out_free_path;
+ 	}
  
- 	buf = (struct reparse_data_buffer *)((u8 *)io + off);
- 	len = sizeof(*buf);
--	rdlen = le16_to_cpu(buf->ReparseDataLength);
-+	if (count < len)
-+		return ERR_PTR(smb_EIO2(smb_eio_trace_reparse_rdlen, count, 0));
+-	if (ref)
+-		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
+-	else
++	if (ref) {
++		char *target = get_tgt_name(ce);
++
++		if (IS_ERR(target)) {
++			rc = PTR_ERR(target);
++			goto out_unlock;
++		}
++		rc = setup_referral(path, ce, ref, target);
++	} else {
+ 		rc = 0;
++	}
++
+ 	if (!rc && tgt_list)
+ 		rc = get_targets(ce, tgt_list);
  
--	if (count < len || count < rdlen + len)
-+	rdlen = le16_to_cpu(buf->ReparseDataLength);
-+	if (count < rdlen + len)
- 		return ERR_PTR(smb_EIO2(smb_eio_trace_reparse_rdlen, count, rdlen));
- 	return buf;
- }
++out_unlock:
+ 	up_read(&htable_rw_lock);
+ 
+ out_free_path:
+@@ -917,10 +926,17 @@ int dfs_cache_noreq_find(const char *pat
+ 		goto out_unlock;
+ 	}
+ 
+-	if (ref)
+-		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
+-	else
++	if (ref) {
++		char *target = get_tgt_name(ce);
++
++		if (IS_ERR(target)) {
++			rc = PTR_ERR(target);
++			goto out_unlock;
++		}
++		rc = setup_referral(path, ce, ref, target);
++	} else {
+ 		rc = 0;
++	}
+ 	if (!rc && tgt_list)
+ 		rc = get_targets(ce, tgt_list);
+ 
+@@ -961,7 +977,8 @@ void dfs_cache_noreq_update_tgthint(cons
+ 
+ 	t = READ_ONCE(ce->tgthint);
+ 
+-	if (unlikely(!strcasecmp(it->it_name, t->name)))
++	/* Check 't' in case ce->tgthint was cleared by free_tgts() */
++	if (t && unlikely(!strcasecmp(it->it_name, t->name)))
+ 		goto out_unlock;
+ 
+ 	list_for_each_entry(t, &ce->tlist, list) {
 
 
