@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF173242BD;
-	Fri,  4 Sep 2026 05:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1AC3B2FE4;
+	Fri,  4 Sep 2026 05:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498535; cv=none; b=ZezoQ+7hsD86viIWNwr49PrlJjSx+7AAeLHo36gjPRgOTJP0LqquDjmii9HxjwL6tW5Yo1F9UU97GfC1MuYQq1T1nQiRbCHTOG3shTVYtts6rpMPs+/ExzIdqroe2hYXiH7ZLm5W9YCTYo+KqqXNrbpLz372ZwJeibxcwf7Rz08=
+	t=1788498538; cv=none; b=bDyqhH+y7FipiaJTIdV06d35sZPTH0AhGHtNtv0OrU7GlXJ6A1rUKFAi8cWkgn/aOc3sPOK7jcnIloQ00oxX0lyPaSCk9UHbUrhu96t8ik6U949C9aw2GY8Gm2U4T0BunOfuVJbn5qMtlABwCPrwIfQcyrym/FbKigFym4SUXwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498535; c=relaxed/simple;
-	bh=X60MgYtPZkBQlU0VtAcD2TFDNbMwraHRL7KWVld+xLs=;
+	s=arc-20240116; t=1788498538; c=relaxed/simple;
+	bh=f1hRNbF9n6BgbwU+wVCDSRDDneYZ37t7uskOTryeyi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HomQUvvV9dEn0OykfLmy6QVv02QZ0hTmNBfzRB4U9MSBHed26D0ibhCoFT4tG/eHbuPhAaCHyC5K/Oea9gAbKZSSeJ0axL2ZlIg2c5qPnCf9U4G9X8ouB7oQrOb07PwxiR2ik9kdeIET3T9UE5auPIOh6b8L272eBamsRYsDLvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrTb9EWT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ed428l6DmKCNWWaE5abWdeINDKUEITV4B5LqHO6AG+zeqHmhpqGTsWIE2XkaW0QzHFIy28ITDN39crtejTRH30icWgRhZEKIVqpVLUVX4hB8vxaNcWcARh9Yz6p3qLwbCFFHugAgEB6Vhi/OC9dwWwciKykyRc+0CwHfsgPe3mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFaP7YC8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrTb9EWT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521B41F00A3D;
-	Fri,  4 Sep 2026 05:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFaP7YC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3AC1F00A3D;
+	Fri,  4 Sep 2026 05:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498533;
-	bh=JMvmQiU7mg6Y2SqyozSdlEiJ8Ichz0QQd5ci4DRWKL4=;
+	s=korg; t=1788498536;
+	bh=zld3+AKtq3Lx4GDK5mSCknTJkp0mWsEqZgdwEqrThJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xrTb9EWTctWqMkEDeWKBO6I7IPc3DSOJF0OgD1M8pfolUV9KWJLK8uUHuqXVFAQBf
-	 62u7ZpeXwgaIZ/nTySh90rF6wpbY3LDFGkEnzC4y05preSHuzxQfTkbyTRmxR4m0b8
-	 dQuxpUN75HTkLd/vKpjDw6Bn4j6cmiKKYTyJ+OFA=
+	b=AFaP7YC8fucxqPiPbxfSb3AtwoelAC0ADxTlmzb/mC3AGAuhQvQHnq93uHACTdXhc
+	 VSlVYE14GwPBeyLnVl8QzYc+bh8fscU0PmR4lXTVEqhRLOeUq8gnUJ0YhDT/4nayZp
+	 fax/zos8sV03qIV16+OiNzV1yhmf8XceU6tuOHsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alexander Graf <graf@amazon.com>
-Subject: [PATCH 7.2 097/713] misc: nsm: bound the device-reported response length
-Date: Fri,  4 Sep 2026 06:51:05 +0200
-Message-ID: <20260904045806.012473438@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 7.2 098/713] powerpc/powermac: fix OF node refcount
+Date: Fri,  4 Sep 2026 06:51:06 +0200
+Message-ID: <20260904045806.033779369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,42 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 808e530654a5354e6df78863a5d61e4d44e67235 upstream.
+commit bd0abfe6b013aeb2a1aebc5fbc7ceeb50355bda3 upstream.
 
-nsm_sendrecv_msg_locked() stores the virtqueue used-ring length reported
-by the NSM device into msg->resp.len without bounding it to the response
-buffer. A malicious or buggy backend can report a length larger than the
-response buffer; parse_resp_raw() then copies that many bytes out of the
-fixed buffer to user space, disclosing adjacent kernel heap (an
-out-of-bounds read). The request path already floors its length in
-fill_req_raw(); the response path lacks the symmetric check.
+Platform devices created with platform_device_alloc() call
+platform_device_release() when the last reference to the device's
+kobject is dropped. This function calls of_node_put() unconditionally.
+This works fine for devices created with platform_device_register_full()
+but users of the split approach (platform_device_alloc() +
+platform_device_add()) must bump the reference of the of_node they
+assign manually. Add the missing call to of_node_get().
 
-Clamp the stored length to the size of the response buffer. Well-behaved
-devices report no more than the posted buffer size, so conforming traffic
-is unaffected.
-
-Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Link: https://patch.msgid.link/20260620-b4-disp-a54b7dd6-v1-1-79d1f236a854@proton.me
+Fixes: 81e5d8646ff6 ("i2c/powermac: Register i2c devices from device-tree")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260706-pdev-fwnode-ref-v3-1-1ff028e33779@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/nsm.c |    2 +-
+ arch/powerpc/platforms/powermac/low_i2c.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/nsm.c
-+++ b/drivers/misc/nsm.c
-@@ -243,7 +243,7 @@ static int nsm_sendrecv_msg_locked(struc
- 		goto cleanup;
+--- a/arch/powerpc/platforms/powermac/low_i2c.c
++++ b/arch/powerpc/platforms/powermac/low_i2c.c
+@@ -1471,7 +1471,7 @@ static int __init pmac_i2c_create_platfo
+ 		if (bus->platform_dev == NULL)
+ 			return -ENOMEM;
+ 		bus->platform_dev->dev.platform_data = bus;
+-		bus->platform_dev->dev.of_node = bus->busnode;
++		bus->platform_dev->dev.of_node = of_node_get(bus->busnode);
+ 		platform_device_add(bus->platform_dev);
  	}
- 
--	msg->resp.len = len;
-+	msg->resp.len = min_t(unsigned int, len, sizeof(msg->resp.data));
- 
- 	rc = 0;
  
 
 
