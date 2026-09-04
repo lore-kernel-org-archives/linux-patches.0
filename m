@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDA030C160;
-	Fri,  4 Sep 2026 05:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213ED30C160;
+	Fri,  4 Sep 2026 05:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498946; cv=none; b=FbWYZLKJeKfr/UjdEDpcI2c4jKuPuBEDWaa/MPo+qXBTNc1T8vCucHpww+Tjut/c0uuHnPh1np1p8tge8y1mRj6zxizCFl2UoVbLseaENF2iwE4vdSzugrOa3J8a51qvqxyWEw+e1JufKDBgv4R+0om1GJDbIu6dE1oYqPVX3sI=
+	t=1788498949; cv=none; b=U+FPERaa+UBMBTcD0nSAfZOfu6er8/Y8/On0tg+K/2lTDIRph27IooL53Lz/ohGSqb1yoRPhBpKqald4ZsUvqxP/7ZwiFYkUAaofLoj+VBpEgEWlQyunr56Q8vaOdPGEigPCcl4aEV+SyiVTkcTeTF5fPzbQlxw9xU6/SZUi5eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498946; c=relaxed/simple;
-	bh=IMm+az2OjegicbaACJ5orTMSzXsfikEEhLwlRwIPjYc=;
+	s=arc-20240116; t=1788498949; c=relaxed/simple;
+	bh=VXLBIqu/8ESoLK1BbRS5rao4fnDKhH5B8kYeX190DxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnmSGzjrwPGriPNMZ3FuRiFGWj04KV4IecOC2o6Ii8aiDvBgdKUCylAhRH1VL6HZv1yGw7NmxlUXqcBYp4erk/Fn8f44nFFwaKIKQXLqRDEXee3yMJuC3iD6rdKz6wdCkh6gM7LydtOEyGRln9Vai2dH6L/TuufwT33O+fWZqy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YC0MCJwv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ua1E09wrp5sTbYPsuE8WLZH3+qup96hPFmJ3HdPrlqUyi+OA9xUAu0s1WmNsa218jo+UUPngJXtwVoAAGPLSqCEpOEXNz+foxp1XFmy48F2rgZtnhCc88l3H8TucXHu5mUEn14jZ00Jm3bbNdKr+IWrMb2M8+o7+wMvmcb8/MUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSUyXbvz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YC0MCJwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E411F00A3D;
-	Fri,  4 Sep 2026 05:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSUyXbvz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1381F00A3D;
+	Fri,  4 Sep 2026 05:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498945;
-	bh=T51pjUOpnoWTQ5cTsUBfE4atTeZP31PAeAzus2q6SyY=;
+	s=korg; t=1788498948;
+	bh=tgn88gia7wzl22yk2a5QmACO4d9hQ885nTDFSI6TF3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YC0MCJwvGgDyBNaHsZFYpovWKkAx9qiicOcDU6TlovM90ZzcfCDbSjWQyeXQxrumy
-	 MUZ7IAudNu2j7sKR6MLSWN4Rqt+IVnlloKYgIqdHWmLvM+mDM7BqVac7N64vo5PB1C
-	 X5+GebKlSzQqA1Iy9HpAh/p2qnGaEe9tP1X6w5lE=
+	b=hSUyXbvz6cMjsObWi6IzFheDIwc6RO/kBZy0wxNG+vYdRqNofs7ycoksLGXyKWfaU
+	 Ot/Xr4407t8pAs0ZATdacW/7Zl8+H1paFo+WHrR8zXCMbeTWVYzm4OMZQjdok4QSVd
+	 r4h/T4dTYZFnBjfPTWrPoH7XRGSC9YmYYUzHM+WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 243/713] smb: client: harden DFS cache against invalid target hints
-Date: Fri,  4 Sep 2026 06:53:31 +0200
-Message-ID: <20260904045809.279764856@linuxfoundation.org>
+Subject: [PATCH 7.2 244/713] smb: client: reject a tree connect response whose byte count is too small
+Date: Fri,  4 Sep 2026 06:53:32 +0200
+Message-ID: <20260904045809.303462535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,86 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit bf86c08123c6ab8c61cc0be1dad7540db93738ff upstream.
+commit 65deb18359341141d37dc86fc7853511be3c87a7 upstream.
 
-Currently, get_tgt_name() returns ERR_PTR(-ENOENT) when ce->tgthint is
-NULL, and dfs_cache_noreq_update_tgthint() assumes ce->tgthint is always
-valid.
+CIFSTCon() bounds its strnlen() over the byte area with the server's
+ByteCount minus two, which for ByteCount 0 or 1 goes negative as an int
+and converts to a huge size_t.  The later subtraction wraps the __u16
+bytes_left, and that is what bounds cifs_strndup_from_utf16(): a bound of
+up to 65535 against a ~16 KB cifs_req_poolp object runs off the end of the
+slab object, and the bytes reach userspace through tcon->nativeFileSystem
+in /proc/fs/cifs/DebugData.
 
-In preparation for clearing ce->tgthint in free_tgts(), harden callers
-of get_tgt_name() against ERR_PTR results and harden
-dfs_cache_noreq_update_tgthint() against NULL pointer dereferences.
+Reject a byte area too small for what the parser consumes.  Two bytes is
+the least it can consume, and no conformant response carries fewer.  The
+new trace point is the 129th smb_eio_trace entry, which __mode(byte)
+cannot represent, so the attribute goes with it.
 
+Fixes: cc20c031bb06 ("cifs: convert CIFSTCon to use new unicode helper functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dfs_cache.c |   31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ fs/smb/client/cifssmb.c |    6 ++++++
+ fs/smb/client/trace.h   |    3 ++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/dfs_cache.c
-+++ b/fs/smb/client/dfs_cache.c
-@@ -871,13 +871,22 @@ int dfs_cache_find(const unsigned int xi
- 		goto out_free_path;
- 	}
- 
--	if (ref)
--		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
--	else
-+	if (ref) {
-+		char *target = get_tgt_name(ce);
-+
-+		if (IS_ERR(target)) {
-+			rc = PTR_ERR(target);
-+			goto out_unlock;
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -615,6 +615,11 @@ CIFSTCon(const unsigned int xid, struct
+ 		tcon->tid = smb_buffer_response->Tid;
+ 		bcc_ptr = pByteArea(smb_buffer_response);
+ 		bytes_left = get_bcc(smb_buffer_response);
++		if (bytes_left < 2) {
++			rc = smb_EIO2(smb_eio_trace_tcon_bcc_too_small,
++				      bytes_left, 2);
++			goto out;
 +		}
-+		rc = setup_referral(path, ce, ref, target);
-+	} else {
- 		rc = 0;
-+	}
-+
- 	if (!rc && tgt_list)
- 		rc = get_targets(ce, tgt_list);
- 
-+out_unlock:
- 	up_read(&htable_rw_lock);
- 
- out_free_path:
-@@ -917,10 +926,17 @@ int dfs_cache_noreq_find(const char *pat
- 		goto out_unlock;
+ 		length = strnlen(bcc_ptr, bytes_left - 2);
+ 		if (smb_buffer->Flags2 & SMBFLG2_UNICODE)
+ 			is_unicode = true;
+@@ -670,6 +675,7 @@ CIFSTCon(const unsigned int xid, struct
+ 			reset_cifs_unix_caps(xid, tcon, NULL, NULL);
+ 		}
  	}
++out:
+ 	cifs_buf_release(smb_buffer);
+ 	return rc;
+ }
+--- a/fs/smb/client/trace.h
++++ b/fs/smb/client/trace.h
+@@ -133,6 +133,7 @@
+ 	EM(smb_eio_trace_sym_slash,			"sym_slash") \
+ 	EM(smb_eio_trace_sym_target_len,		"sym_target_len") \
+ 	EM(smb_eio_trace_symlink_file_size,		"symlink_file_size") \
++	EM(smb_eio_trace_tcon_bcc_too_small,		"tcon_bcc_too_small") \
+ 	EM(smb_eio_trace_tdis_in_reconnect,		"tdis_in_reconnect") \
+ 	EM(smb_eio_trace_tx_chained_async,		"tx_chained_async") \
+ 	EM(smb_eio_trace_tx_compress_failed,		"tx_compress_failed") \
+@@ -213,7 +214,7 @@
+ #define EM(a, b) a,
+ #define E_(a, b) a
  
--	if (ref)
--		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
--	else
-+	if (ref) {
-+		char *target = get_tgt_name(ce);
-+
-+		if (IS_ERR(target)) {
-+			rc = PTR_ERR(target);
-+			goto out_unlock;
-+		}
-+		rc = setup_referral(path, ce, ref, target);
-+	} else {
- 		rc = 0;
-+	}
- 	if (!rc && tgt_list)
- 		rc = get_targets(ce, tgt_list);
+-enum smb_eio_trace		{ smb_eio_traces } __mode(byte);
++enum smb_eio_trace		{ smb_eio_traces };
+ enum smb3_rw_credits_trace	{ smb3_rw_credits_traces } __mode(byte);
+ enum smb3_tcon_ref_trace	{ smb3_tcon_ref_traces } __mode(byte);
  
-@@ -961,7 +977,8 @@ void dfs_cache_noreq_update_tgthint(cons
- 
- 	t = READ_ONCE(ce->tgthint);
- 
--	if (unlikely(!strcasecmp(it->it_name, t->name)))
-+	/* Check 't' in case ce->tgthint was cleared by free_tgts() */
-+	if (t && unlikely(!strcasecmp(it->it_name, t->name)))
- 		goto out_unlock;
- 
- 	list_for_each_entry(t, &ce->tlist, list) {
 
 
