@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F3C418A34;
-	Fri,  4 Sep 2026 06:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71AF418A34;
+	Fri,  4 Sep 2026 06:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502461; cv=none; b=mZVoY4YBu1OS/DcDx5DFuSBV9OpJ22JwyenNM88BetmvXmZOG0HZK/AL1VXXv2MQpmsrvduo0j4tNoSv7e6SNiruwlOe6rAx7d1cTJt0HvxMf0GKsZdLpDerSPP7Ee4JuFJaJU284S9ssoIU3mv4etNvXoRv337UCaVtxsCv9PA=
+	t=1788502464; cv=none; b=HVMOVuYMLlVU0ghtXDOmbA5R9GfigfhzVUQ4XIX5IEH8sRPtey6He8mpHLw5J2Ae4usFukdcyFDi1KIzsaAhLdg4U9nnxyVwrMg4MZH/9bMe62Oe2yiHl19dWhk6QwaiJYTBam6rcUCFuw9JGBPxsdbgOJRgoV0mjqg/Nw90KKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502461; c=relaxed/simple;
-	bh=5bSVIOOBAGPKdxGhBOUjwNIfOfaGedUyuQUuQ9YHPRE=;
+	s=arc-20240116; t=1788502464; c=relaxed/simple;
+	bh=27y04Px1wQK1NehPYBCJfGN+mpn0UHPzV6GKvmQyWYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=couV/5UrZFy0qhRaHMRRvJ5piLKI+6wrVGy6r8dM+gSLDryCKyWIsv0b/nJxwjpCSkyum+DE8apsNkeV5uOwcigV8nJ99uLJwch5UpE1hucWTdvxWkf4ZkHT+02c2vmQSO/7G1xqaFOU9N/9D75GCbBh5dl34ktu3kOlzpEjYMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwVPlunD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SEQElegejobBZ/RaM2y8V1WKiP4jd2olzauK3Nfjl71ZaoRqUHfS6MQ4IMSyRRFr65fhgg78IFiilH2lQS1B4B8QyNQPHJxUePEaBS5y+B9+3TT2zhVVyPVLRryEmMe3thif/oMdsp1YGTDwQlwPwycjlN6dAQugw5Hx9a5brnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3UUIKCf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwVPlunD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259DF1F00A3D;
-	Fri,  4 Sep 2026 06:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3UUIKCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEF31F00A3D;
+	Fri,  4 Sep 2026 06:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502459;
-	bh=IduZlbgLjiWjQlmunTPDmh2L4s+b+me3dmHjoqVgcO4=;
+	s=korg; t=1788502462;
+	bh=fZGmHnQENC710uxe7dOU5Fl7GfdvCgV7BNb9jUvnOYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwVPlunD2A+0387g8qg50LKMZBj3KamThps9f4JZ8Bztt2l0fkVG5YDuTie5KRlht
-	 tP3CpnQov2DXBe6Rpu+rXCYYtmGXvpknGNbBQHj+VQZDbg0a44QvKEpJziphjuhLzk
-	 7wX/uKMwq739sgwzfVmjWg/BNBj4NZEMLFhvY+bU=
+	b=Y3UUIKCfu6FAPD7camatnj+QAnqu47kxFChCZcLXkfpm7rId+m+SlnnpG51Nk8C05
+	 IMujSJvhq1Wk6b2EapRdbEBG+cfLHKpjUh7FSCj8G/u1fsXJQmd8GiOhaIvHVNo/Zi
+	 t9p/mANmVFgo7mbKLNo1IsaPtgADZFCTT4PAz4jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 214/403] svcrdma: Fix offset arithmetic in read_chunk_range
-Date: Fri,  4 Sep 2026 07:00:17 +0200
-Message-ID: <20260904045739.726683589@linuxfoundation.org>
+Subject: [PATCH 6.12 215/403] svcrdma: Fix pcl_for_each_segment for empty chunks
+Date: Fri,  4 Sep 2026 07:00:18 +0200
+Message-ID: <20260904045739.751739546@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,101 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <clm@meta.com>
 
-commit 4a44c140cc2f3643a39e258bb0c0ab9d0f494f5e upstream.
+commit b7713a784c59515d0aba558c8f5df6a0164dd3a9 upstream.
 
-svc_rdma_read_chunk_range() walks a Read chunk's segment list to
-build a sub-range starting at byte offset and spanning length bytes
-for a Position-Zero or Call chunk. Two arithmetic defects in the
-per-segment loop produce wrong DMA lengths and a u32 underflow:
+When a parsed chunk list contains a chunk whose ch_segcount is zero,
+pcl_for_each_segment computes its inclusive upper bound as
+&chunk->ch_segments[ch_segcount - 1]. ch_segcount is u32, so the
+subtraction wraps to 0xFFFFFFFF and the bound lands far past the
+ch_segments flex array. The loop body then walks unrelated memory at
+sizeof(struct svc_rdma_segment) stride until it faults.
 
-    pcl_for_each_segment(segment, chunk) {
-            if (offset > segment->rs_length) {
-                    offset -= segment->rs_length;
-                    continue;
-            }
+A zero-segcount chunk is reachable from the wire:
+xdr_check_write_chunk() only rejects segcount values greater than
+rc_maxpages, and pcl_alloc_write() links a freshly allocated chunk
+onto rc_write_pcl/rc_reply_pcl before its segment-fill loop runs,
+so a Write or Reply chunk advertising zero segments leaves
+ch_segcount == 0 on the list. When the transport has negotiated
+Send-With-Invalidate, svc_rdma_get_inv_rkey() iterates all four
+PCLs with pcl_for_each_segment and dereferences segment->rs_handle
+on each iteration, turning the underflow into an out-of-bounds read
+and a general protection fault.
 
-            dummy.rs_handle = segment->rs_handle;
-            dummy.rs_length = min_t(u32, length,
-                                    segment->rs_length) - offset;
-            dummy.rs_offset = segment->rs_offset + offset;
+    xdr_check_write_list / xdr_check_reply_chunk
+      pcl_alloc_write()
+        chunk = pcl_alloc_chunk(...)  /* ch_segcount = 0 */
+        list_add_tail(&chunk->ch_list, &pcl->cl_chunks)
+        /* fill loop iterates zero times for wire segcount 0 */
 
-First, the skip predicate uses '>' instead of '>='. When offset
-equals the segment's full rs_length, the segment is fully consumed
-and should be skipped, but the loop falls through into the body.
-The resulting dummy.rs_length is min_t(u32, length, rs_length) -
-rs_length, which underflows to a near-UINT_MAX u32 when length is
-smaller than rs_length, or is zero otherwise.
+    svc_rdma_get_inv_rkey()
+      pcl_for_each_chunk(rc_write_pcl)
+        pcl_for_each_segment(segment, chunk)
+          pos <= &ch_segments[0u - 1u]  /* 0xFFFFFFFF */
+          segment->rs_handle            /* OOB read -> GPF */
 
-Second, the length formula subtracts offset from the min_t() result
-rather than from segment->rs_length before the cap. For offset > 0
-the segment's residual is rs_length - offset, not rs_length, so the
-cap must be applied to the residual. With the current bracketing,
-whenever length is smaller than rs_length - offset the per-segment
-length becomes length - offset instead of length, silently dropping
-offset bytes from the rebuilt chunk. Combined with the boundary
-case above it also enables the u32 underflow path, which propagates
-a huge nr_bvec into svc_rdma_build_read_segment() and a multi-MiB
-kmalloc_array_node() in svc_rdma_get_rw_ctxt().
+Fix by switching the macro to a half-open upper bound that uses
+ch_segcount directly. For ch_segcount == 0 the loop start equals the
+loop end and the body is skipped; for ch_segcount > 0 the iteration
+range is unchanged. All six existing call sites in
+net/sunrpc/xprtrdma/svc_rdma_recvfrom.c and
+net/sunrpc/xprtrdma/svc_rdma_rw.c remain correct under the new bound,
+so no caller changes are needed.
 
-Additionally, svc_rdma_read_call_chunk() can invoke this function
-with length == 0 when the last Read chunk ends exactly at the end
-of the Call chunk. With the corrected >= predicate, every segment
-is skipped and the function returns the initial -EINVAL, rejecting
-a valid request. Return success immediately when length is zero.
-Also break out of the loop once length is fully consumed to avoid
-passing zero-length segments to svc_rdma_build_read_segment().
-
-Fix by using '>=' so a fully-consumed segment is skipped, by
-moving '- offset' inside min_t() so the cap is applied to the
-segment's residual length, by returning success for zero-length
-requests, and by stopping iteration when the requested range has
-been consumed.
-
-Fixes: d7cc73972661 ("svcrdma: support multiple Read chunks per RPC")
+Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
 Cc: stable@vger.kernel.org
 Assisted-by: kres (claude-opus-4-7)
 Signed-off-by: Chris Mason <clm@meta.com>
 Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-2-e251306ccca9@oracle.com
+Link: https://patch.msgid.link/20260526-rpc-kernel-bugs-v1-4-e251306ccca9@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/linux/sunrpc/svc_rdma_pcl.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -966,17 +966,20 @@ static int svc_rdma_read_chunk_range(str
- 	const struct svc_rdma_segment *segment;
- 	int ret;
+--- a/include/linux/sunrpc/svc_rdma_pcl.h
++++ b/include/linux/sunrpc/svc_rdma_pcl.h
+@@ -97,7 +97,7 @@ pcl_next_chunk(const struct svc_rdma_pcl
+  */
+ #define pcl_for_each_segment(pos, chunk) \
+ 	for (pos = &(chunk)->ch_segments[0]; \
+-	     pos <= &(chunk)->ch_segments[(chunk)->ch_segcount - 1]; \
++	     pos < &(chunk)->ch_segments[(chunk)->ch_segcount]; \
+ 	     pos++)
  
-+	if (!length)
-+		return 0;
-+
- 	ret = -EINVAL;
- 	pcl_for_each_segment(segment, chunk) {
- 		struct svc_rdma_segment dummy;
- 
--		if (offset > segment->rs_length) {
-+		if (offset >= segment->rs_length) {
- 			offset -= segment->rs_length;
- 			continue;
- 		}
- 
- 		dummy.rs_handle = segment->rs_handle;
--		dummy.rs_length = min_t(u32, length, segment->rs_length) - offset;
-+		dummy.rs_length = min_t(u32, length, segment->rs_length - offset);
- 		dummy.rs_offset = segment->rs_offset + offset;
- 
- 		ret = svc_rdma_build_read_segment(rqstp, head, &dummy);
-@@ -985,6 +988,8 @@ static int svc_rdma_read_chunk_range(str
- 
- 		head->rc_readbytes += dummy.rs_length;
- 		length -= dummy.rs_length;
-+		if (!length)
-+			break;
- 		offset = 0;
- 	}
- 	return ret;
+ /**
 
 
