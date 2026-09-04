@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EBA351C04;
-	Fri,  4 Sep 2026 05:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5852F351C04;
+	Fri,  4 Sep 2026 05:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499622; cv=none; b=iCB+KKirFLM/JAEWl49kha6cYA5HKX1sfrgtlnKIqhoSbEEVjgNa0V1rnaeN4Ug52NQaQhYe82pJ0DHRkVIgY7w90R/Wd96B4bE1WDN/8uW5Qo2yQPSbAKlzQjmPgg89s9lkMamMPIVE1Utq9DDqNMqGWDLxe7NMZhRyqpzkiXs=
+	t=1788499625; cv=none; b=NJeLzPpv9iRpgxCUgJQJij+aM9FyC1Otbl9CwlThT9QiaUjpQKjL9Z9PepOWLuh4gXjguf6vgkp3s+tOfYSIjml3Z289GX1nxL8p3uQ2BkywrkNz/6qo5CpD7rXgC5XZp1qu6aoCfAA71TGDYCT2w5hwf1kwAjDuPiQL40BZK5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499622; c=relaxed/simple;
-	bh=BIWXpttg/p+x1QuX1N8aWtgzOxzTDRNqtSWYadUN06M=;
+	s=arc-20240116; t=1788499625; c=relaxed/simple;
+	bh=V6YxoMhocD+EnSRlBtacfY1b/v3TpxnxLHvtYyXd2BA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbA5ourpvdzOBw8HWGBE3Gimi8yvujKm85cLW6QYPD6s/hH5vNBCqs5uHNU1mt4X1eLUN9mbSljv/LIW8jGbcER4rNs+r7f7mVkbEKRWLvQhkqUe8ELvAwUht7TnjQdsxmXaMbckr9wbs21suRg2RBT3qK5TuIPZJBLqu03Vuvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJAFjoWN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F+lC9nfr6bkOBQOzp1s9jGCZes7SjDaSWt1eCToYzJsrVzlEHmOKnredgAHaSw+DFrZckhQa6gC/hk/FukKvKz8FzZMePBbtCNd+xgS62/D9j99iYzZyEwIBDcj2174nFejyGdDJY5dNAYGUOKnMW4CO26cXfqzojADXvGmmjsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg/nh69r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJAFjoWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB00F1F00A3D;
-	Fri,  4 Sep 2026 05:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg/nh69r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B347F1F00A3D;
+	Fri,  4 Sep 2026 05:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499621;
-	bh=a5dVHoQNX09uztsIZ9S8KjGZ1B/EmttaUMAUw7pTxPQ=;
+	s=korg; t=1788499624;
+	bh=d2maMeCPg9SQ8eZoy2Na123uVbZyqljKxT7kOuGAKTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vJAFjoWN+Tj5p91rO5cFVAjU/mmYRXz9qkgDnKt5gGcrgNzzrTI0DfDOgtOdBKOnW
-	 dkLvoG7/uWMBZwkkbx/vLkSnpzLMsKR93Si5c9r68G1D86ZkEAxrOJckFIJR/G0RaU
-	 O6gUGU4goyqj1v2aYq2TqHdNxCD6RLe0pES9zzBw=
+	b=dg/nh69rRC+G+y+E+HnBEYvMEmkZDTd1shPhU1pBag3euFDIP9YAW4vZxLcURp9VI
+	 QIHPr57FoNpBkdXNXkMVX29XIiGwNCXzszVAECqZJ4Q6Pjv5dOxYYlvX/Br5TEMJOw
+	 8nFYNq2oUywg8r7z6GyQD8IP1OIKq08ojRAYfXRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.2 481/713] i2c: mxs: fix DMA channel leak on probe error
-Date: Fri,  4 Sep 2026 06:57:29 +0200
-Message-ID: <20260904045814.605908003@linuxfoundation.org>
+	Yifei Gao <gyf161023@gmail.com>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 7.2 482/713] ipmi: Fix use-after-free of cmd_rcvr in _ipmi_destroy_user()
+Date: Fri,  4 Sep 2026 06:57:30 +0200
+Message-ID: <20260904045814.629660645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,54 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Yifei Gao <gyf161023@gmail.com>
 
-commit 777979e627115734052b323d2721cdb500e81dcf upstream.
+commit 05ec76cfbce653e07cec19b9b8b20e33449d5d87 upstream.
 
-mxs_i2c_probe() requests an exclusive DMA channel before resetting the
-controller and registering the I2C adapter. If either later operation
-fails, probe returns without releasing the channel because the remove
-callback is not invoked after a failed probe.
+Commit 9e91f8a6c868 ("ipmi:msghandler: Remove srcu for the
+ipmi_interfaces list") dropped the synchronize_rcu() between unlinking
+the command receivers from intf->cmd_rcvrs and freeing them, updating
+only the comment that explains why the barrier is needed.
 
-Use devm_dma_request_chan() so the device core releases the channel on
-probe failure and driver detach. Remove the manual release from the
-remove callback because the channel is now device-managed.
+The cmd_rcvrs list is still traversed under plain RCU: find_cmd_rcvr()
+walks it inside rcu_read_lock(), and handle_ipmb_get_msg_cmd() borrows
+rcvr->user from that lookup within the same read-side section. Without
+the grace period, _ipmi_destroy_user() can kfree() a cmd_rcvr while a
+reader still holds a pointer to it, causing a use-after-free.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+The rework only made srcu unnecessary for the interfaces list; the
+cmd_rcvrs list still relies on plain RCU. Restore the synchronize_rcu()
+before freeing the receivers.
 
-Fixes: 62885f59a261 ("MXS: Implement DMA support into mxs-i2c")
-Assisted-by: unnamed:claude-opus-4.8 typestate
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.7+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260815151720.3757460-1-ruoyuw560@gmail.com
+Fixes: 9e91f8a6c868 ("ipmi:msghandler: Remove srcu for the ipmi_interfaces list")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yifei Gao <gyf161023@gmail.com>
+Message-ID: <20260825234630.1196170-1-gyf161023@gmail.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mxs.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-mxs.c
-+++ b/drivers/i2c/busses/i2c-mxs.c
-@@ -839,7 +839,7 @@ static int mxs_i2c_probe(struct platform
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -1391,6 +1391,7 @@ static void _ipmi_destroy_user(struct ip
+ 		}
  	}
- 
- 	/* Setup the DMA */
--	i2c->dmach = dma_request_chan(dev, "rx-tx");
-+	i2c->dmach = devm_dma_request_chan(dev, "rx-tx");
- 	if (IS_ERR(i2c->dmach)) {
- 		return dev_err_probe(dev, PTR_ERR(i2c->dmach),
- 				     "Failed to request dma\n");
-@@ -877,9 +877,6 @@ static void mxs_i2c_remove(struct platfo
- 
- 	i2c_del_adapter(&i2c->adapter);
- 
--	if (i2c->dmach)
--		dma_release_channel(i2c->dmach);
--
- 	writel(MXS_I2C_CTRL0_SFTRST, i2c->regs + MXS_I2C_CTRL0_SET);
- }
- 
+ 	mutex_unlock(&intf->cmd_rcvrs_mutex);
++	synchronize_rcu();
+ 	while (rcvrs) {
+ 		rcvr = rcvrs;
+ 		rcvrs = rcvr->next;
 
 
