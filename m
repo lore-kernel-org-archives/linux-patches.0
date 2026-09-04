@@ -1,109 +1,65 @@
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA063546C8
-	for <patches@lists.linux.dev>; Fri,  4 Sep 2026 13:15:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D0F2E8DEC;
+	Fri,  4 Sep 2026 14:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788527734; cv=none; b=b5VZ+sRcBzlns9x6nnXxYQfJmx7hqcZvetfEDQiAp5c2EjiqyP9/DU8SrAuKVW4m2+pRg3TQ/AqVW3ttxGTJiBJ/MjLUrOsL9eMaeBSbkGt5P++/JuyV9Kz7Huiz4Mtwf8NLMZDYwAsX3HjRBf2BO1GnTv8cUCqeOY62zIT+yV0=
+	t=1788531160; cv=none; b=BrlbcPNck2htAK7n/mkRJ853CD1M7GTm4Y+zVCYKmUW6PnHgUH/XSObSKoduG8r8+/7zFvwFGeWm7LJwnXgXALfkJ12Ra2kSUwX0Nh+VZD+XRMlLe55rNgKOl+OJb5iER7i8WrcU8eorV5FNj/e0Xueoyeytka6j97UPqnw2GeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788527734; c=relaxed/simple;
-	bh=lGUPfaBAG2EBU4HVzU9QnJsK63JNbn9aX+dRzsAPbZU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HVHNnS1JcoQITbnEeH1qfurf8e/TWJWB9BSrPIJk1r9bFhdaAG5Sg+A35h8f1CtA8drzwQGt2KG4dWELm/n+8ItELdjh+iu81KYwgLHQsVgNTnIBZaZ5GC6Rv3GTCvgo5+gzgpkE5zdyQr3Lxh2w4RRJTZiOqq3g9a7kgvCnQn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=IWAMWgYC; arc=none smtp.client-ip=178.251.229.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	s=arc-20240116; t=1788531160; c=relaxed/simple;
+	bh=UEWlKWPr9JXPi0SPi/EYHDoJZTTbt+OtxwtkVKc/W+g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DIm4WWLMb7qnY7kN4Wje3pkIMyLhJ6CK7toEdQfB6Hzrw110GaxpYQlfKsaz3i6Y1qiFe0hmdpYXing3eFajiJfZBdwG1i5LciJ6yf18Y2+d1gVbed7hjtFEZcEXvzyyhI+hpTfPmo6uM4o5JN/NA0Adxq2DWqEC2SYOZQ3RbD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KO+u9VQn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="IWAMWgYC"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A1DE811D7E6;
-	Fri, 04 Sep 2026 15:15:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1788527724;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=0IDCFLJeOdZ0mmr5nHKMfC9XF8CnFtq4oEoo4lkiY6g=;
-	b=IWAMWgYCKfkV+JOeutic3Fa53fGyqrav3m6fBvsxhnYBN1rHgwvQSSdW11bX0Dg/s5/ZX+
-	sWpazrwdPcTKDjcznKEDOAtPukLOyl3+GpfFT4x9Rb6HUwe96D4U7qRR6ZuMtEvsGIU+oS
-	xHmr+kRZZO9VK0YxXscT5wWmMRP7GzOjqb+qT5O1No1JAKGQv2aj1TkqIgTJ0YYDIXoaY1
-	Z95D9k4D5qc8GUoCDt9CxZHbmUdXiDuC8nrvJMhg8YeBIrIq7LhhsEiVoV28x2i7YUFHb7
-	RAxmuFXzjseH88ht55v1qjAotaCjWBtu/+l53klkF1PpXC6F+fMW0UtGxeKj+w==
-Date: Fri, 4 Sep 2026 15:15:20 +0200
-From: Pavel Machek <pavel@nabladev.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KO+u9VQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC0C1F00A3D;
+	Fri,  4 Sep 2026 14:12:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788531158;
+	bh=NQQXN7XObmy/sQCXJZB13q5gSBD0fJWt3C/4V22QsxA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=KO+u9VQniIXowtbYT5Ps3Z3LI0BDv1d1mZvRthzWWYtlaMTWB4TGFEk0LYJzfYHNW
+	 TfPA4Nx7eZPAN2HWcw2S7RbmBNr4KyzxzxP3JPI7E43dO34bxXw/Ds/KZx3R50Z8Zm
+	 4PX1R/IkacBD3eBlGjAod8VbSTvE4YA3d+a6h5EwWuSMHKnNIjojY9ZXSQWrNwsmMH
+	 Bo0HA4RECWGfEut8EQyOwJEgBsmYVPgj1Ay7jZifzB66IvwmVQuevE1aVQWepxQ3v7
+	 xRJrZ8B9y7ItTFVN+VggjJjbrw/BM9UnGM2sQFYnm4qiQ0bfs1JKMIxkpzW/DtqYgv
+	 vpoeUUL+rVS7w==
+From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/552] 6.18.50-rc1 review
-Message-ID: <aprEaHx6T4mfJrbn@duo.ucw.cz>
-References: <20260904045747.813364717@linuxfoundation.org>
+Cc: Sasha Levin <sashal@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Darshit Shah <darnshah@amazon.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: Re: [PATCH 7.2 532/713] PCI/DPC: Allow DPC on all Downstream Ports when OS controls AER
+Date: Fri,  4 Sep 2026 10:12:32 -0400
+Message-ID: <20260904133500.rc-reply-0001-pci-dpc-aer@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <apqJFWNrcajdFyad@wunner.de>
+References: <20260904045803.810145556@linuxfoundation.org> <20260904045815.744991650@linuxfoundation.org> <apqJFWNrcajdFyad@wunner.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WfFMcxO8gHhRC0Ne"
-Content-Disposition: inline
-In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
 
+On Fri, Sep 04, 2026 at 11:02:13AM +0200, Lukas Wunner wrote:
+> Guixin Liu has found a problem with this upstream commit:
+>
+> https://lore.kernel.org/all/20260901064554.2178688-1-kanie@linux.alibaba.com/
+>
+> There's no fix in Linus' tree yet, so it might be best to hold off
+> for now on backporting the offending commit to stable kernels.
 
---WfFMcxO8gHhRC0Ne
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Dropped from the 7.2, 6.18, 6.12 and 6.6 queues, thanks.
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.18.50 release.
-> There are 552 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-We see similar problems to 6.12:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/2819268635
-
-for example
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/16299963277
-
-07:10:16
-mm/page_vma_mapped.c: In function 'check_pte':
-1479
-07:10:16
-mm/page_vma_mapped.c:110:25: error: implicit declaration of function 'huge_ptep_get' [-Werror=implicit-function-declaration]
-1480
-07:10:16
-  110 |                 ptent = huge_ptep_get(pvmw->vma->vm_mm, pvmw->address,
-1481
-07:10:16
-      |                         ^~~~~~~~~~~~~
-1482
-07:10:16
-  AR      drivers/pinctrl/nomadik/built-in.a
-1483
-07:10:16
-cc1: some warnings being treated as errors
-
-I assume bisection from 6.12 applies here, too.
-
-Best regards,
-								Pavel
-
---WfFMcxO8gHhRC0Ne
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaprEaAAKCRAw5/Bqldv6
-8vOFAJ9ssgpxtGedh9WY7bU0LeCn3SldpwCfX6yyUAAFnpTOe5bbqayChLXM5yo=
-=D9bt
------END PGP SIGNATURE-----
-
---WfFMcxO8gHhRC0Ne--
+-- 
+Thanks,
+Sasha
