@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7338635CB7C;
-	Fri,  4 Sep 2026 06:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE8330C366;
+	Fri,  4 Sep 2026 06:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502129; cv=none; b=MmZI5aQcpLSolNm6qdoJBOPFC+4/Te1MmJ+XpVF+QS1dGqvE6tsSm1F60OiXYXtV+BNrDZ7Jtt3NHGOP2Zgmi9Fi3im/ETtOJT7e+Wns0jk48O3dLnUVkkT2ZTu72d8G9HkaWXXhRLdEpM03l/P3YwcxUDXoYnLEJwGdUSA0slA=
+	t=1788502132; cv=none; b=NF2K/K0WSR0EDGYc22pQneyFMtI5/W3qxOhcsJNe0SMl23osKPBq++jpt/4TjN2u7JRQEThH6pkSQ3QoQqABGpD2X/LTfSLEsrH9f/MAFCm1vZCV0mMafesXiWCfv+glsuPShnRd3qKiULKXiVvfEF/V+aWIsdKvv9bfAR7ai7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502129; c=relaxed/simple;
-	bh=LX7yp+oLVclbIEK/T5oTNh1DqfJGcTTT3seRyheUasY=;
+	s=arc-20240116; t=1788502132; c=relaxed/simple;
+	bh=Ua3uB5abVxw4hVcvQcyzGfiZKCs5OVffPqR9p8isnY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOzHumTaGVY0uM3WWCh+ChA5f72KUyctLvzHRdmDAqQ2E8OQksNk0qff7IqYBwOBSTAUg+VjtGf8sGQ4Za1DMoRu01SMh/T3wzBQaDjSA3P9LGgJFH9lQnom19jVkki8pwkDxlIM5P9wm4a/P4NM7vjJTNTJ2IyK5hHqip8vclg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Z0kda0K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h1OOe3RY9IbUeISKr1VoMbWAV7lBUe0niVtyB8xAGiFA/Ji0LN9VmUJLQZbqt7dnpDfIooG1Hn+/nrlSTzJRBGz6nbQ5H7HHzzA5DEAosSJii56AqZ3Vm3FiInUy6zrhCJ34TUCRVddclxC0HyBMUEFpYiW9oaUYJK0CVRg7t24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKTQv1Tp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Z0kda0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14591F00A3D;
-	Fri,  4 Sep 2026 06:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKTQv1Tp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B56E1F00A3D;
+	Fri,  4 Sep 2026 06:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502128;
-	bh=PRaB7AE/b1J71bh13fWxt7Ews9UrzUrjkjSfZW0CA98=;
+	s=korg; t=1788502131;
+	bh=Gm7AhxF1sxPYdn+FQrD5sYi7Mg4TsehSbh1q+8UcKd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Z0kda0K0EoK6627UMtmestyvF8SzY0ByxVw2xTd0/5uMOQ6fe7vdNjT6OWEaGMOr
-	 autMN7MjW4Tbi3KcBI4sQ+V25n6I8LliMI73dN0d1HQfeTu3FmqDXViCNRI5vZq/Dp
-	 Kizv0y1PC4sTz61TNiUB06r23o9ALRevNoiD4PAI=
+	b=UKTQv1TpWYMovm5wIYDsUknihlFpu9YdYHQqzph1EEBAOtmISpzNcQmAfLDeZ8yMX
+	 +rBwehqIRwWOdYJVN4xaap1EGb3lmNSozrFwNYG46OfoiXuaWoUFqtO5aBaApFO1g7
+	 uDJ++18/nIQiXPKLAL2ulcHFiDJCW+AKsYxAP+Lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 100/403] nfsd: gate nfs3 setacl by argp->mask
-Date: Fri,  4 Sep 2026 06:58:23 +0200
-Message-ID: <20260904045737.107685114@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 101/403] nfsd: initialize copy-notify stateid before publishing it
+Date: Fri,  4 Sep 2026 06:58:24 +0200
+Message-ID: <20260904045737.128665375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,77 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 453d7198a0ab07a12d46e0575861ac7b932da17e upstream.
+commit 129643893b79f8a3c6b72045f933fbab5ee424ca upstream.
 
-nfsd3_proc_setacl() calls set_posix_acl() unconditionally for both
-ACL_TYPE_ACCESS and ACL_TYPE_DEFAULT, passing argp->acl_access and
-argp->acl_default verbatim. The NFSv3 ACL decoder only populates
-those pointers when the corresponding mask bit is set:
+nfsd4_copy_notify() finished initializing the cpntf state after
+nfs4_alloc_init_cpntf_state() had already linked it into the
+s2s_cp_stateids IDR and the parent's sc_cp_list, with cs_count == 1 (the
+membership reference) and none held for the caller. A racing
+OFFLOAD_CANCEL (crafted cl_id == nn->s2s_cp_cl_id plus the guessable
+so_id) could reach manage_cpntf_state() and free the entry, turning the
+caller's subsequent cpn_cnr_stateid read and cp_p_stateid/cp_p_clid
+writes into use-after-free. The owning clientid was also only recorded
+after publication, so it could not gate an ownership check in that window.
 
-    nfs3svc_decode_setaclargs()
-      if (args->mask & NFS_ACL)    decode into acl_access
-      if (args->mask & NFS_DFACL)  decode into acl_default
-      /* otherwise the pointer stays NULL (pc_argzero) */
+Record cp_p_stateid and cp_p_clid inside nfs4_alloc_init_cpntf_state()
+before nfs4_init_cp_state() publishes the entry, and return it with an
+extra reference. The caller reads the stateid under that reference and
+drops it with nfs4_put_cpntf_state(); on a late error the laundromat
+reaps the entry.
 
-    nfsd3_proc_setacl()
-      set_posix_acl(.., ACL_TYPE_ACCESS,  argp->acl_access)
-      set_posix_acl(.., ACL_TYPE_DEFAULT, argp->acl_default)
-
-set_posix_acl(idmap, dentry, type, NULL) is the VFS "remove this
-ACL type" operation. A NULL pointer that means "the client did not
-send this arm" is therefore indistinguishable from "the client
-asked to remove this ACL". A SETACL with mask=NFS_ACL silently
-drops the directory's default ACL; mask=0 drops both.
-
-The sibling nfsd3_proc_getacl() already consults argp->mask before
-touching each arm; mirror that in setacl.
-
-Fix by wrapping each set_posix_acl() call in the matching mask bit
-check and initializing error to 0 before inode_lock so that a
-request with neither bit set leaves the on-disk ACLs untouched and
-returns nfs_ok. The out_drop_lock path and the unconditional
-posix_acl_release() at out: are preserved; both NULL-tolerate the
-skipped arms.
-
-Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
+Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Chris Mason <clm@meta.com>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-5-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260710-nfsd-testing-v3-4-a0ff7db6aa3e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs3acl.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4proc.c  |   16 +++++++++-------
+ fs/nfsd/nfs4state.c |   10 +++++++++-
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
---- a/fs/nfsd/nfs3acl.c
-+++ b/fs/nfsd/nfs3acl.c
-@@ -105,12 +105,17 @@ static __be32 nfsd3_proc_setacl(struct s
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1949,7 +1949,6 @@ nfsd4_copy_notify(struct svc_rqst *rqstp
+ 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	struct nfs4_stid *stid = NULL;
+ 	struct nfs4_cpntf_state *cps;
+-	struct nfs4_client *clp = cstate->clp;
  
- 	inode_lock(inode);
+ 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
+ 					&cn->cpn_src_stateid, RD_STATE, NULL,
+@@ -1963,12 +1962,14 @@ nfsd4_copy_notify(struct svc_rqst *rqstp
+ 	cn->cpn_lease_time.tv_nsec = 0;
  
--	error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry, ACL_TYPE_ACCESS,
--			      argp->acl_access);
--	if (error)
--		goto out_drop_lock;
--	error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry, ACL_TYPE_DEFAULT,
--			      argp->acl_default);
-+	error = 0;
-+	if (argp->mask & NFS_ACL) {
-+		error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry,
-+				      ACL_TYPE_ACCESS, argp->acl_access);
-+		if (error)
-+			goto out_drop_lock;
-+	}
-+	if (argp->mask & NFS_DFACL) {
-+		error = set_posix_acl(&nop_mnt_idmap, fh->fh_dentry,
-+				      ACL_TYPE_DEFAULT, argp->acl_default);
-+	}
+ 	status = nfserrno(-ENOMEM);
++	/*
++	 * The returned cps is published and fully initialized, and carries an
++	 * extra reference for us; drop it once we are done with it.
++	 */
+ 	cps = nfs4_alloc_init_cpntf_state(nn, stid);
+ 	if (!cps)
+ 		goto out;
+ 	memcpy(&cn->cpn_cnr_stateid, &cps->cp_stateid.cs_stid, sizeof(stateid_t));
+-	memcpy(&cps->cp_p_stateid, &stid->sc_stateid, sizeof(stateid_t));
+-	memcpy(&cps->cp_p_clid, &clp->cl_clientid, sizeof(clientid_t));
  
- out_drop_lock:
- 	inode_unlock(inode);
+ 	/* For now, only return one server address in cpn_src, the
+ 	 * address used by the client to connect to this server.
+@@ -1977,10 +1978,11 @@ nfsd4_copy_notify(struct svc_rqst *rqstp
+ 	status = nfsd4_set_netaddr((struct sockaddr *)&rqstp->rq_daddr,
+ 				 &cn->cpn_src->u.nl4_addr);
+ 	WARN_ON_ONCE(status);
+-	if (status) {
+-		nfs4_put_cpntf_state(nn, cps);
+-		goto out;
+-	}
++	/*
++	 * Drop our extra reference. The membership reference keeps the entry
++	 * alive for a later inter-server READ, or until the laundromat reaps it.
++	 */
++	nfs4_put_cpntf_state(nn, cps);
+ out:
+ 	nfs4_put_stid(stid);
+ 	return status;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1023,7 +1023,15 @@ struct nfs4_cpntf_state *nfs4_alloc_init
+ 	/* So a stale list_del_init() before linking is a no-op. */
+ 	INIT_LIST_HEAD(&cps->cp_list);
+ 	cps->cpntf_time = ktime_get_boottime_seconds();
+-	refcount_set(&cps->cp_stateid.cs_count, 1);
++	/*
++	 * Fully initialize the entry before nfs4_init_cp_state() publishes it,
++	 * since a concurrent OFFLOAD_CANCEL could then free it. Take an extra
++	 * reference for the caller (dropped with nfs4_put_cpntf_state()).
++	 */
++	memcpy(&cps->cp_p_stateid, &p_stid->sc_stateid, sizeof(stateid_t));
++	memcpy(&cps->cp_p_clid, &p_stid->sc_client->cl_clientid,
++	       sizeof(clientid_t));
++	refcount_set(&cps->cp_stateid.cs_count, 2);
+ 	if (!nfs4_init_cp_state(nn, &cps->cp_stateid, NFS4_COPYNOTIFY_STID,
+ 				p_stid))
+ 		goto out_free;
 
 
