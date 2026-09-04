@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A6A412294;
-	Fri,  4 Sep 2026 05:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947103EC6AE;
+	Fri,  4 Sep 2026 05:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500448; cv=none; b=pHF0xhZXWYwPn+K/xD/jD77Dsc+u9bfvpOVyMVXMUsOxM1sK+wQfahwqcPzBWXbPN7ujbXav1nfiVSZ0IFPYb+8f7MeMRBUd0ZrqXmReT55yCj/T82Kh5twiBAc12O3fvND5oj5IqgWr88c8dWSn0MMxY4XHQHTDQIlirwPbVz4=
+	t=1788500451; cv=none; b=eaqq5Cmz1o/bmF2qYoHZzuU+fIgF2eGAuhGAdeHQjpSCTEkFHxJFCmyebAfgKMh1Pgpd6EDqjr1L9r7oqNOHA1AZXbre0b4grpeXMhmZrtEayfqmyIggti77DQ4d3kqGdhn/ni47Jz8u5thudn88Z63ulcxG+oEV+IrLv3CAJ7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500448; c=relaxed/simple;
-	bh=4hL/jb6zbUusC51YROmTqdoqq5bP3UM1OfBnK4ZhmJM=;
+	s=arc-20240116; t=1788500451; c=relaxed/simple;
+	bh=nT+vpiXFzDNv0PJqotVtJmOJYRr61by/Xgg3kd/B4lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kk9yVwWb24qGJuLtJdqu5wz0I15ja5ubdnOQWkB7xVeaoC7CYEhNvyOgHEqJtXRc06e9HlnluUSv7ne7fyosMXawT95y6G+dpWXD6Gwq/6ssrO6NVWGkoWD09y/ZHcufRS5wMC/x52l2L5DHB29zFLwqxGlwrp4wGM82Sjm4MsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbCBt+lF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F8BplG64dPfl/2CpiUn+2yygn1wQwThInfx2rs+k+cvv3YlUGY4TMVkZC0NuMt9XAjF+56/mxhLWxzwZfZmq25gGQs9kPob4gY1bOxFtNdOnFWSynT5cD8Z/fsZSzNeq1MXeqqQXM3sWTOVM02EKutDPJFOY5XSeLfQJQ8Achuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnBX63pX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbCBt+lF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE841F00A3D;
-	Fri,  4 Sep 2026 05:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnBX63pX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8C61F00A3D;
+	Fri,  4 Sep 2026 05:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500447;
-	bh=XFeO9cvoWIwXKnMBnWfSrHSly/CIxLjWULMJgxM7pL8=;
+	s=korg; t=1788500450;
+	bh=BWTAmNVfIptjy9diYV0IHrS/ZCIDEm572y/51rerAvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WbCBt+lF/kIGsMroUh5qig+LM0YVkVjQg0dJ8JaaQh7iw3M/0EYHoE9oHwd7ESt8S
-	 2zD4VzsQ/wz9W2Jzk9Hnu1MvU3mOr6g1gZyEMagwmZU+OZznlfsygbhuuCmuZBTCLj
-	 kb0bq1xZa+hSLc++6QZ8r0h0VAdgEuip/1vdueW4=
+	b=AnBX63pX0+i7Snm34P7zYvEdLNOIgCJOiCaSEV3S3thzhybpCn0uFoaF2NXOo2yeS
+	 CdwcNBHfJXEV3yTc2Y1uysGzUa/MJZFNZbh9lJfdTIBoeesk0+yM+C9Bivs2d2jle9
+	 cm64E3MUni4rm7aFOPSP2G2bIzatoEi9cYamVTCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 059/552] tracing: Fix crash passing ERR_PTR to kthread_stop()
-Date: Fri,  4 Sep 2026 06:53:36 +0200
-Message-ID: <20260904045749.184877354@linuxfoundation.org>
+Subject: [PATCH 6.18 060/552] tracing: Fix logged instance name on creation failure
+Date: Fri,  4 Sep 2026 06:53:37 +0200
+Message-ID: <20260904045749.207724887@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,41 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-commit 649bc7df3e5d7be6f7996a95084037dbf3cad1e5 upstream.
+commit a9a01be2834a529cbd490ccbab02643f0c1735f2 upstream.
 
-event_test_stuff() calls kthread_run() and unconditionally passes the
-returned task_struct pointer to kthread_stop(). kthread_run() returns an
-error pointer such as ERR_PTR(-ENOMEM) when kthread creation fails, for
-example under memory pressure during the boot-time event self-test.
-kthread_stop() then dereferences the invalid pointer, crashing the kernel.
+When boot instance creation fails, the kernel incorrectly logs "(null)"
+as the instance name because strsep() consumes curr_str entirely during
+parsing.
 
-Check the result of kthread_run() before passing it to kthread_stop(). Use
-WARN_ON() so that a failure to create the self-test thread does not go
-unnoticed, matching the ring-buffer self-test fix in commit
-91542863abad ("ring-buffer: Fix crash passing ERR_PTR to kthread_stop()").
+Print the properly parsed name variable instead. And while at it log
+the error code.
 
 Cc: stable@vger.kernel.org
-Fixes: e6187007d6c3 ("tracing/events: add startup tests for events")
-Link: https://patch.msgid.link/20260817120642.668375-3-sh_def@163.com
-Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://patch.msgid.link/20260807085423.4175161-1-vdonnefort@google.com
+Fixes: cb1f98c5e574 ("tracing: Add creation of instances at boot command line")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -4729,6 +4729,8 @@ static __init void event_test_stuff(void
- 	struct task_struct *test_thread;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -11172,7 +11172,8 @@ __init static void enable_instances(void
  
- 	test_thread = kthread_run(event_test_thread, NULL, "test-events");
-+	if (WARN_ON(IS_ERR(test_thread)))
-+		return;
- 	msleep(1);
- 	kthread_stop(test_thread);
- }
+ 		tr = trace_array_create_systems(name, NULL, addr, size);
+ 		if (IS_ERR(tr)) {
+-			pr_warn("Tracing: Failed to create instance buffer %s\n", curr_str);
++			pr_warn("Tracing: Failed to create instance buffer '%s' (%ld)\n", name,
++				PTR_ERR(tr));
+ 			continue;
+ 		}
+ 
 
 
