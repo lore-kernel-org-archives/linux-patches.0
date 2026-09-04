@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622653B7B7B;
-	Fri,  4 Sep 2026 05:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F863B7B7B;
+	Fri,  4 Sep 2026 05:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499376; cv=none; b=oGkVQqPIIk1SqcUzo87nPAbunZb1wjH7ko6ZKsZ9NdJ5ufq8XIafcZVcyl+WfPu2cpCTrZt8NZIYZlwQEMZxxkid4BD1DnJTJfSCDY37F/nldTpHvzMlWeAZtMiAJk1rtENekZ/NOtsHagc7PzcI3wmZYgGedvweQiCqu1RbjqA=
+	t=1788499379; cv=none; b=E+dQD0wnvAxTYExcEsSrt2+lurhqGE0yhUBi+n+Hl264pSnyMgalVIs+xcs5rEO+NZ5db70icqxmjDvXJd2yFbJpHly+UXF9jbwH7qA5JRwzNIJM4FbhjYr8dTH4LLDJz+LN1SKO69xLwgSq3Q+IjU52hsoe5v5Bgex02sGEKrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499376; c=relaxed/simple;
-	bh=ewAx8RmQiHFqKhIfBb/0FVxfFX9WFaICJPjb00/2gEI=;
+	s=arc-20240116; t=1788499379; c=relaxed/simple;
+	bh=krv5jz0FmRNIKsAfrlTPtxbohqxsk2V4sIG9/SfSHME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BzWXbxcRqU3vGAKCVmtgrn++l0CMEodL1RFwSAch6lmCaRS7C6N8Q3gGbCJY3hcEHozzX4gzAkjdsoBwrZumbjydnf5gZVyr9dqS/6oDNnWK0m21DpOJ7hL54yBAY7YJo1kpvTTXu5ZjfXvJAqkx6EpFEJS5LHlOTQlzUcUxGno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J02WZiL6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WR5EbV98en+mlquLzYL4jD2Ah/VLREuk9txfPlJXscJ7cQvgTOOgSrjucNFG+ibRILRXsI58iQjdEDMVNQ4S+cSN68Ahl3bwEa2TFN++To28Pe4TgCt+3f/JKaxY6fj7Iu/s/1ELNbcRZcKWOsnpeZBOWwZ6t+bOP/I87SJ2h30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTOLLLrZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J02WZiL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8119E1F00A3D;
-	Fri,  4 Sep 2026 05:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTOLLLrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9251F00A3D;
+	Fri,  4 Sep 2026 05:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499375;
-	bh=5uLQJZvAceCmSKKwfY5pDF01ruczJcG9Fx8aLPrazrU=;
+	s=korg; t=1788499377;
+	bh=VzFKjk42YxDuoldvNGNB7VZ7wPLbIbKemRej4LyZamY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J02WZiL6InVfon4ZxvCIgJFSfckBNXCewhjn3sWoUa9q5AFw2zye+oyfLgNhqxrex
-	 M6GHwZ/0Iu73VXK/5k+cvdtJBNFzKm24vUcYhXENlEAzaGwyveuLjFGAHAMWSc3q/V
-	 7kjlJEqXQfzpaJcTh6QaMaWzTc7nov3frgKcFR4c=
+	b=yTOLLLrZ7Cp/850zmyNgalQ2Di8xJPJ5N/Dj3m9Sg24KqMtqN7hk89h65z8NQXsws
+	 Pw54AuUEw9B/8/FhSQ/gKT7pfEks2BqA5/4Yzc6KxWsisOOY9xF9qYoJdefC9fERPR
+	 j9lb4shV1e7cDoWwZlgkqvxPaGchV8wkZsgxHtmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>
-Subject: [PATCH 7.2 358/713] landlock: Require LANDLOCK_ACCESS_FS_MAKE_REG for whiteout creation
-Date: Fri,  4 Sep 2026 06:55:26 +0200
-Message-ID: <20260904045811.854612571@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.2 394/713] svcrdma: Reject connection when transport allocation fails
+Date: Fri,  4 Sep 2026 06:56:02 +0200
+Message-ID: <20260904045812.656633009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,231 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 672fa082d48b21e1fb62cdb184fee41513e53421 upstream.
+commit 0944462247dcb7de7622cdaaadf5f05c52707dab upstream.
 
-Whiteout objects are used in the upper layer of an OverlayFS to
-indicate that the file with this name does not exist in the unified
-view, even if it is present in one of the lower layer file systems.
+handle_connect_req() returns without action when
+svc_rdma_create_xprt() fails to allocate the new transport.
+The CM core returns 0 for CONNECT_REQUEST events, so it does
+not destroy the new rdma_cm_id. Each allocation failure under
+memory pressure leaks one rdma_cm_id, and a remote peer driving
+connection attempts can amplify this.
 
-For the userspace implementations of OverlayFS (fuse-overlayfs),
-whiteout objects can be created from userspace as well:
+Reject the connection by returning a non-zero status from the
+CM event handler, which tells the CM core to destroy the
+orphaned cm_id.
 
-* mknod(2) with S_IFCHR and makedev(0, 0)
-* renameat2(2) with RENAME_WHITEOUT,
-  creating the whiteout in the old place of the moved file.
-
-This commit guards whiteout creation in both of these cases with
-LANDLOCK_ACCESS_FS_MAKE_REG.  Whiteout objects are *not* considered
-character devices and are not bound to a driver.
-
-LANDLOCK_ACCESS_FS_MAKE_REG describes the same permission class as a
-whiteout object: creating one is the only S_IFCHR creation that the VFS
-exempts from CAP_MKNOD, so it is as unprivileged as creating a regular
-file, while LANDLOCK_ACCESS_FS_MAKE_CHAR and
-LANDLOCK_ACCESS_FS_MAKE_BLOCK keep meaning the creation of devices that
-expose a kernel interface [1].
-
-For the mknod(2) case, introduce a Landlock erratum.  The creation of
-whiteout objects through mknod(2) was previously guarded using
-LANDLOCK_ACCESS_FS_MAKE_CHAR, and it is now guarded using
-LANDLOCK_ACCESS_FS_MAKE_REG.
-
-For the renameat2(2) case, fix a bug: Before this commit, renameat2(2)
-with RENAME_WHITEOUT would create a directory entry even when all
-LANDLOCK_ACCESS_FS_MAKE_* rights were denied.
-
-This does not affect normal renames within layered OverlayFS mounts:
-When doing a regular rename() on a mounted fuse-overlayfs, it is the
-fuse-overlayfs daemon that exercises renameat2() with RENAME_WHITEOUT,
-and only the Landlock domain of that daemon is checked there.
-
-Suggested-by: Christian Brauner <brauner@kernel.org>
-Suggested-by: Mickaël Salaün <mic@digikod.net>
+Fixes: 377f9b2f4529 ("rdma: SVCRDMA Core Transport Services")
 Cc: stable@vger.kernel.org
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Depends-on: 49c9e09d9610 ("landlock: Fix handling of disconnected directories")
-Depends-on: fe72ce6710cb ("landlock: Add errata documentation section")
-Signed-off-by: Günther Noack <gnoack@google.com>
-Link: https://patch.msgid.link/20260720.chow9ohYie5b@digikod.net [1]
-Link: https://patch.msgid.link/20260813093157.1436894-3-gnoack@google.com
-[mic: Record why LANDLOCK_ACCESS_FS_MAKE_REG is the matching right, and
-add link(2) to the user doc]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-4-1b09bd87b6cd@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/landlock.h    |    1 
- security/landlock/errata/abi-1.h |   23 +++++++++++++++++++++
- security/landlock/fs.c           |   41 ++++++++++++++++++++++++++++++---------
- 3 files changed, 56 insertions(+), 9 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/include/uapi/linux/landlock.h
-+++ b/include/uapi/linux/landlock.h
-@@ -351,6 +351,7 @@ struct landlock_net_port_attr {
-  *   device.
-  * - %LANDLOCK_ACCESS_FS_MAKE_DIR: Create (or rename) a directory.
-  * - %LANDLOCK_ACCESS_FS_MAKE_REG: Create (or rename or link) a regular file.
-+ *   This also guards the creation of whiteout objects as used in OverlayFS.
-  * - %LANDLOCK_ACCESS_FS_MAKE_SOCK: Create (or rename or link) a UNIX domain
-  *   socket.
-  * - %LANDLOCK_ACCESS_FS_MAKE_FIFO: Create (or rename or link) a named pipe.
---- a/security/landlock/errata/abi-1.h
-+++ b/security/landlock/errata/abi-1.h
-@@ -22,3 +22,26 @@
-  * from their original mount points.
-  */
- LANDLOCK_ERRATUM(3)
-+
-+/**
-+ * DOC: erratum_4
-+ *
-+ * Erratum 4: Creation of whiteout objects
-+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ *
-+ * This fix changes the access rights required for the creation of whiteout
-+ * objects through :manpage:`mknod(2)`, :manpage:`renameat2(2)`, or
-+ * :manpage:`link(2)`.  Creating whiteout objects is now guarded by
-+ * ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
-+ *
-+ * Whiteout objects are used in OverlayFS to mark the absence of a file in an
-+ * upper file system.  Despite being created with ``S_IFCHR``, whiteout objects
-+ * do not count as character devices.
-+ *
-+ * Impact:
-+ *
-+ * Sandboxed programs that create OverlayFS whiteouts (such as fuse-overlayfs)
-+ * now require ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of
-+ * ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
-+ */
-+LANDLOCK_ERRATUM(4)
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -20,6 +20,7 @@
- #include <linux/falloc.h>
- #include <linux/fs.h>
- #include <linux/init.h>
-+#include <linux/kdev_t.h>
- #include <linux/kernel.h>
- #include <linux/limits.h>
- #include <linux/list.h>
-@@ -983,7 +984,8 @@ static int current_check_access_path(con
- 	return -EACCES;
- }
- 
--static __attribute_const__ access_mask_t get_mode_access(const umode_t mode)
-+static __attribute_const__ access_mask_t get_mode_access(const umode_t mode,
-+							 const dev_t dev)
- {
- 	switch (mode & S_IFMT) {
- 	case S_IFLNK:
-@@ -991,6 +993,9 @@ static __attribute_const__ access_mask_t
- 	case S_IFDIR:
- 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
- 	case S_IFCHR:
-+		/* Whiteout objects are guarded with MAKE_REG. */
-+		if (dev == WHITEOUT_DEV)
-+			return LANDLOCK_ACCESS_FS_MAKE_REG;
- 		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
- 	case S_IFBLK:
- 		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
-@@ -1007,6 +1012,13 @@ static __attribute_const__ access_mask_t
- 	}
- }
- 
-+static access_mask_t get_dentry_access(const struct dentry *const dentry)
-+{
-+	const struct inode *const inode = d_backing_inode(dentry);
-+
-+	return get_mode_access(inode->i_mode, inode->i_rdev);
-+}
-+
- static access_mask_t maybe_remove(const struct dentry *const dentry)
- {
- 	if (d_is_negative(dentry))
-@@ -1093,6 +1105,7 @@ static bool collect_domain_accesses(cons
-  * @new_dentry: Destination file or directory.
-  * @removable: Sets to true if it is a rename operation.
-  * @exchange: Sets to true if it is a rename operation with RENAME_EXCHANGE.
-+ * @whiteout: Sets to true if it is a rename operation with RENAME_WHITEOUT.
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -246,12 +246,16 @@ svc_rdma_parse_connect_private(struct sv
+  * structure for the listening endpoint.
   *
-  * Because of its unprivileged constraints, Landlock relies on file hierarchies
-  * (and not only inodes) to tie access rights to files.  Being able to link or
-@@ -1140,7 +1153,8 @@ static bool collect_domain_accesses(cons
- static int current_check_refer_path(struct dentry *const old_dentry,
- 				    const struct path *const new_dir,
- 				    struct dentry *const new_dentry,
--				    const bool removable, const bool exchange)
-+				    const bool removable, const bool exchange,
-+				    const bool whiteout)
+  * This function creates a new xprt for the new connection and enqueues it on
+- * the accept queue for the listent xprt. When the listen thread is kicked, it
++ * the accept queue for the listen xprt. When the listen thread is kicked, it
+  * will call the recvfrom method on the listen xprt which will accept the new
+  * connection.
++ *
++ * Return values:
++ *     %0: Do not destroy @new_cma_id
++ *     %1: Destroy @new_cma_id (allocation failure)
+  */
+-static void handle_connect_req(struct rdma_cm_id *new_cma_id,
+-			       struct rdma_conn_param *param)
++static int handle_connect_req(struct rdma_cm_id *new_cma_id,
++			      struct rdma_conn_param *param)
  {
- 	const struct landlock_cred_security *const subject =
- 		landlock_get_applicable_subject(current_cred(), any_fs, NULL);
-@@ -1159,18 +1173,25 @@ static int current_check_refer_path(stru
- 	if (exchange) {
- 		if (unlikely(d_is_negative(new_dentry)))
- 			return -ENOENT;
--		access_request_parent1 =
--			get_mode_access(d_backing_inode(new_dentry)->i_mode);
-+		access_request_parent1 = get_dentry_access(new_dentry);
- 	} else {
- 		access_request_parent1 = 0;
- 	}
--	access_request_parent2 =
--		get_mode_access(d_backing_inode(old_dentry)->i_mode);
-+	access_request_parent2 = get_dentry_access(old_dentry);
- 	if (removable) {
- 		access_request_parent1 |= maybe_remove(old_dentry);
- 		access_request_parent2 |= maybe_remove(new_dentry);
- 	}
+ 	struct svcxprt_rdma *listen_xprt = new_cma_id->context;
+ 	struct svcxprt_rdma *newxprt;
+@@ -261,7 +265,7 @@ static void handle_connect_req(struct rd
+ 				       listen_xprt->sc_xprt.xpt_net,
+ 				       ibdev_to_node(new_cma_id->device));
+ 	if (!newxprt)
+-		return;
++		return 1;
+ 	newxprt->sc_cm_id = new_cma_id;
+ 	new_cma_id->context = newxprt;
+ 	svc_rdma_parse_connect_private(newxprt, param);
+@@ -295,6 +299,7 @@ static void handle_connect_req(struct rd
  
-+	/*
-+	 * In case of renameat2(2) with RENAME_WHITEOUT, a whiteout object is
-+	 * created in the source location, so we require an additional access
-+	 * right there.
-+	 */
-+	if (whiteout)
-+		access_request_parent1 |=
-+			get_mode_access(S_IFCHR | WHITEOUT_MODE, WHITEOUT_DEV);
-+
- 	/* The mount points are the same for old and new paths, cf. EXDEV. */
- 	if (old_dentry->d_parent == new_dir->dentry) {
- 		/*
-@@ -1520,7 +1541,7 @@ static int hook_path_link(struct dentry
- 			  struct dentry *const new_dentry)
- {
- 	return current_check_refer_path(old_dentry, new_dir, new_dentry, false,
--					false);
-+					false, false);
+ 	set_bit(XPT_CONN, &listen_xprt->sc_xprt.xpt_flags);
+ 	svc_xprt_enqueue(&listen_xprt->sc_xprt);
++	return 0;
  }
  
- static int hook_path_rename(const struct path *const old_dir,
-@@ -1531,7 +1552,8 @@ static int hook_path_rename(const struct
- {
- 	/* old_dir refers to old_dentry->d_parent and new_dir->mnt */
- 	return current_check_refer_path(old_dentry, new_dir, new_dentry, true,
--					!!(flags & RENAME_EXCHANGE));
-+					!!(flags & RENAME_EXCHANGE),
-+					!!(flags & RENAME_WHITEOUT));
- }
+ /**
+@@ -318,8 +323,7 @@ static int svc_rdma_listen_handler(struc
  
- static int hook_path_mkdir(const struct path *const dir,
-@@ -1544,7 +1566,8 @@ static int hook_path_mknod(const struct
- 			   struct dentry *const dentry, const umode_t mode,
- 			   const unsigned int dev)
- {
--	return current_check_access_path(dir, get_mode_access(mode));
-+	return current_check_access_path(
-+		dir, get_mode_access(mode, new_decode_dev(dev)));
- }
- 
- static int hook_path_symlink(const struct path *const dir,
+ 	switch (event->event) {
+ 	case RDMA_CM_EVENT_CONNECT_REQUEST:
+-		handle_connect_req(cma_id, &event->param.conn);
+-		break;
++		return handle_connect_req(cma_id, &event->param.conn);
+ 	case RDMA_CM_EVENT_ADDR_CHANGE:
+ 		listen_id = svc_rdma_create_listen_id(cma_rdma->xpt_net,
+ 						      sap, cma_xprt);
 
 
