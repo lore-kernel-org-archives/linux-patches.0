@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7699B30C160;
-	Fri,  4 Sep 2026 05:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197E1402B8C;
+	Fri,  4 Sep 2026 05:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498476; cv=none; b=F2J0mueSWsQwKoVPEc3oenmG6f63uRY8nZex+sUhNpevySsmDlOXqNSOenw/JH7jRqxFw/rmdm58fgp9dt2/Bb25u5pbGn0wRBjWBB34jadJdtsPaqNsY9DWftSoGMx5GGhRgilbd8P1ymQNcuZZI1/RKLrDM/fKPERunM7Oz7c=
+	t=1788498479; cv=none; b=Dzbd3I42uW84XM7YaSeVSOLKT8ie0cZqRayWpNLx65mRfw6QcMb4xgqn3RpEEreqK6HuVjPxadiuRfS4y0MmH7pZDgBBZH8h181VRNUeqvKZe4DP1hBsHNsNhYVZI4A7NLJYubrmiroAPutzxbTmatwfmrrjpAYB1hks/x6yxYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498476; c=relaxed/simple;
-	bh=fwb1aS8lQg2Ql70c2Kw0XUC8VXJXEy7xxMJ9gtREv1I=;
+	s=arc-20240116; t=1788498479; c=relaxed/simple;
+	bh=1yW1iWFLm0LBp2+sVjk0Ckn87V3wuTXFY4x9b7s63v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYXE6kcv6an+GNgqFEss+N5IHav1beRvnJ29kuyva9IGbAHsOJJgm31Wyq95Gw4o98OTLQNEaihZhIE2jga4r5ehq5QcvfliafrOASGstO1xni5NOR4ubm+bmTecyHEh4JTOvfE7qfUxrWgyP1vthuKP3Or05uRmX/gyCL17msQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+MY4e1P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aKeidpAfx1Qf4A+bVtG8O01lCzW0tYtNNg3gsc1oCmXfH6CmvsjVAeGWQ05ED2WBo9muxvObARG4kG/mJfPwwGZY9R8oJ1EyTZYtmFYNWY8C8inu3VjzAinbNq3t2BPrBV4abGS0aqvlM2xubHyRKGSr3hZiXEfVUkxrf+bRtMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBy7WD4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+MY4e1P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C5C1F00A3D;
-	Fri,  4 Sep 2026 05:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBy7WD4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758B81F00A3D;
+	Fri,  4 Sep 2026 05:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498475;
-	bh=qx337kgzhsiLf+wzak4TJEx3cvxRAtPaikARL6B2ZWo=;
+	s=korg; t=1788498478;
+	bh=wz5OWCRJVIk0tgh8cmphscTN8GUupiD6ZQ3HzwO0Kmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F+MY4e1PDcWVmDqDWl0QocGOUNropxF1/XixrP8PjPaezZbUZLD0VotNKGqC0DQmr
-	 da8ljyYyyIV5RDS0zyo9CpqohlUTGYDbUifi5MH+fEMTxxLO/81UzX5NaRgcFpxGPd
-	 10IHAlezGGC4Tw9qIzEx05ZOW4XiyGp7dqnxxqR4=
+	b=RBy7WD4j/PU99fOi0hvKJ4wqTzLnuUXEh8BWzNef/47sGD46TAg3+utXfdZajWKRe
+	 p0Xo12aQ3YhpkUj689SYj008bx52+O3Y6gV0HEV4VfepbCui+s/wMJuRP52yTXCtXV
+	 1ig6MTysrqE3xMptDWJm5VhVVgAIF3stK1HPQwPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,14 +30,16 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guopeng Zhang <zhangguopeng@kylinos.cn>,
 	Tao Cui <cuitao@kylinos.cn>,
 	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Alexandre Ghiti <alex@ghiti.fr>,
 	Michal Hocko <mhocko@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 074/713] mm: memcg: stop reclaim when a limit update is superseded
-Date: Fri,  4 Sep 2026 06:50:42 +0200
-Message-ID: <20260904045805.500409553@linuxfoundation.org>
+Subject: [PATCH 7.2 075/713] mm: memcontrol: update state_local when flushing NMI stats
+Date: Fri,  4 Sep 2026 06:50:43 +0200
+Message-ID: <20260904045805.522366811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -58,74 +60,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-commit 9477820c63cbf4d97114238f3d1ff10dfd6bee3f upstream.
+commit 72f522bbf473f03a77e83547b677dc1505c5d41a upstream.
 
-kernfs serializes file operations only per open file, so separate open
-files can update the same memory.high or memory.max file concurrently.
-Both handlers store the new limit before synchronous reclaim, but continue
-to use the writer's local target in the reclaim loop.  If another writer
-raises or removes the limit, the first writer can continue reclaiming
-toward a stale target.
+flush_nmi_stats() updates state[] for kmem and slab counters but leaves
+the corresponding state_local[] counters unchanged.  Local kmem and slab
+statistics therefore miss updates collected through the NMI-safe atomic
+path.
 
-For memory.max, this can leave the writer looping indefinitely once
-reclaim retries are exhausted.  The OOM path sees sufficient margin under
-the current limit and returns true without killing, while the writer still
-compares usage against its stale target and records another OOM event.
+Update state_local[] together with state[].
 
-Check the current limit at the start of each reclaim iteration and stop if
-it no longer matches the writer's target.
-
-Reproducer:
-
-Populate a cgroup with anonymous memory and disable swapping.  Lower
-memory.max from one open file, then restore it to "max" through another
-open file after the new limit becomes visible.
-
-Without the patch, the first writer remains blocked and repeatedly
-increments the OOM event counter.  With the patch, it returns normally.
-
-This was not motivated by a reported production workload.  We found it
-through automated randomized testing for our cgroup observability work
-and reduced it to the reproducer above.
-
-Link: https://lore.kernel.org/20260724021805.1234583-1-guopeng.zhang@linux.dev
-Fixes: 8c8c383c04f6 ("mm: memcontrol: try harder to set a new memory.high")
-Fixes: b6e6edcfa405 ("mm: memcontrol: reclaim and OOM kill when shrinking memory.max below usage")
+Link: https://lore.kernel.org/20260713085053.2916813-1-guopeng.zhang@linux.dev
+Fixes: 940b01fc8dc1 ("memcg: nmi safe memcg stats for specific archs")
 Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
 Acked-by: Tao Cui <cuitao@kylinos.cn>
 Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
 Cc: Michal Hocko <mhocko@kernel.org>
 Cc: Muchun Song <muchun.song@linux.dev>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/memcontrol.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
-@@ -4790,6 +4790,9 @@ static ssize_t memory_high_write(struct
- 		unsigned long nr_pages = page_counter_read(&memcg->memory);
- 		unsigned long reclaimed;
+@@ -4440,6 +4440,7 @@ static void flush_nmi_stats(struct mem_c
+ 		int index = memcg_stats_index(MEMCG_KMEM);
  
-+		if (high != READ_ONCE(memcg->memory.high))
-+			break;
-+
- 		if (nr_pages <= high)
- 			break;
+ 		memcg->vmstats->state[index] += kmem;
++		memcg->vmstats->state_local[index] += kmem;
+ 		if (parent)
+ 			parent->vmstats->state_pending[index] += kmem;
+ 	}
+@@ -4457,9 +4458,11 @@ static void flush_nmi_stats(struct mem_c
+ 			int index = memcg_stats_index(NR_SLAB_RECLAIMABLE_B);
  
-@@ -4841,6 +4844,9 @@ static ssize_t memory_max_write(struct k
- 	for (;;) {
- 		unsigned long nr_pages = page_counter_read(&memcg->memory);
+ 			lstats->state[index] += slab;
++			lstats->state_local[index] += slab;
+ 			if (plstats)
+ 				plstats->state_pending[index] += slab;
+ 			memcg->vmstats->state[index] += slab;
++			memcg->vmstats->state_local[index] += slab;
+ 			if (parent)
+ 				parent->vmstats->state_pending[index] += slab;
+ 		}
+@@ -4468,9 +4471,11 @@ static void flush_nmi_stats(struct mem_c
+ 			int index = memcg_stats_index(NR_SLAB_UNRECLAIMABLE_B);
  
-+		if (max != READ_ONCE(memcg->memory.max))
-+			break;
-+
- 		if (nr_pages <= max)
- 			break;
- 
+ 			lstats->state[index] += slab;
++			lstats->state_local[index] += slab;
+ 			if (plstats)
+ 				plstats->state_pending[index] += slab;
+ 			memcg->vmstats->state[index] += slab;
++			memcg->vmstats->state_local[index] += slab;
+ 			if (parent)
+ 				parent->vmstats->state_pending[index] += slab;
+ 		}
 
 
