@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF9B29B781;
-	Fri,  4 Sep 2026 06:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56E6400DE8;
+	Fri,  4 Sep 2026 06:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502278; cv=none; b=a1OhX5tCSG7S2myls6TcE2bhCtQldDU0PbUVWLVaHzgtrQOFIwCeZJDJd5Yi/rmgKFfubRKWqKlFioO36tVIJ0j1SkkTw1p7hp+rXWvNLMItUz4djdiW4eC5k6DS3JflmorkCrqdWoaEZz8t9Bx+lY2+lIrLHH0l8K3xcrWbCIM=
+	t=1788502280; cv=none; b=A9MCizbd6oYnW9tnb2Gzmiie2V62hLP624/iVzr+/ux+GwgnvSLV43Q81X2KrSBnm/Hut0emDVOFWqf4aPmBuGJwNj40bapDyyORENv9Gos9WAC2eHfY9eculqDeLqsbif6B0vu7faVlkdpFm3H7Fgjgv7RHSspvDtba6TpxkhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502278; c=relaxed/simple;
-	bh=zgjt2ElqqtzyxQm/bXl6yPdFr7MJ/D1RwjNqwUI40c4=;
+	s=arc-20240116; t=1788502280; c=relaxed/simple;
+	bh=PdlFsze9yntsEfDIAF9UTpVIWg3p48JmQ6vFNN+laGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQBcpa2DUF80PUfusfJNJapLiqVnvnu/LHm+ynMD0G6NeK8akSlnBuqnmM3miZLu0n8IOZ30Fpunv42VJ7SSWRfyKx8vcYVhXagFGhU9N16GjpYnMS9AGTe5WAHXxRE4HfFzI27JlRmkKffnK4YG0eCirMxIHtI5cTa8vyMcvM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dA2YkrpQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CthGwxDBVzSGqc7RFVKbOhq+ovRM3dSJgKUQAdan4mvjK3/fImcN8g42R60jbSr3r8CtJwTKF6dwn9wXDa9XSmoyMJtf76IhtanjD2RYAewVeRrh+sl8tbTefAg9uRvWUCUZD4S8hzjSf6V2+LrzAtAALqvlhI9pPFOr1PTKVYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyHboP7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dA2YkrpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B071F00A3D;
-	Fri,  4 Sep 2026 06:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyHboP7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7361F00A3D;
+	Fri,  4 Sep 2026 06:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502276;
-	bh=orBxWghYgTdjrpJ3RJsYKqdp3pnWSt30hseO4HggoQ4=;
+	s=korg; t=1788502279;
+	bh=y1l4SL0txYQo7ZmfhwEhVuirbdEh6FlhNnmGjeZYr44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dA2YkrpQy4I+yEegQlSqT6IxHpaUVrUilLphpZNChtzgkHPDCE27VOI1ybi2fzRbV
-	 J1b4/SzDHF8rjtS2VUgTqZZcF05T0aNeqeLPlpMeEMCpiA7VHvCQ8EBsOcV7UZ23Se
-	 GDaL6EonqYc2+ebByOEo6MSi+/1KbcueR01BcI0I=
+	b=gyHboP7XMSiEtSbsp07kqTUaqHSlKfz2MV7jxjcvMZmmdZpqfcXI3LUpELZ+JRv8a
+	 152MfiSKjIZhn/dx++x0rdDdS6L1hcv1jAN/EBqdaStZn29BEmPdIErzhrSqAV6jO8
+	 RKDmTSlA7yU2i6YQMQrbs0VpR4ImUyA6UAp2RkAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 6.12 134/403] eCryptfs: bound the packet-length peek to the user buffer
-Date: Fri,  4 Sep 2026 06:58:57 +0200
-Message-ID: <20260904045737.884203985@linuxfoundation.org>
+	TanZheng <tanzheng@kylinos.cn>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 152/403] ACPI: APEI: GHES: fix ARM section length accounting after header
+Date: Fri,  4 Sep 2026 06:59:15 +0200
+Message-ID: <20260904045738.305930174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,48 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: TanZheng <tanzheng@kylinos.cn>
 
-commit 95540462e630edbc8504e9537d16453d6942d143 upstream.
+commit 903308ea40adf0577d82eab69882faf8836326ce upstream.
 
-ecryptfs_miscdev_write() accepts the minimum one-byte packet-length
-encoding, but always copies the maximum two-byte encoding from userspace
-before parsing it. A six-byte message therefore reads one byte beyond the
-submitted user buffer.
+In ghes_handle_arm_hw_error(), after skipping the cper_sec_proc_arm
+header with (err + 1), the remaining length was reduced by sizeof(err)
+(pointer size) instead of sizeof(*err) (structure size).
 
-Zero-initialize the peek buffer and copy only the packet-length bytes
-present. The existing exact packet-size check still rejects truncated
-two-byte encodings after the parser determines their encoded length.
+That overestimates the bytes left for cper_arm_err_info records and can
+let the parser read past the CPER section when err_info_num is large
+enough relative to error_data_length.
 
-Fixes: 8bf2debd5f7b ("eCryptfs: introduce device handle for userspace daemon communications")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Tyler Hicks <code@tyhicks.com>
+Use sizeof(*err) so the length accounting matches the pointer advance
+and the earlier sizeof(*err) size check.
+
+Fixes: 87880af2d24e ("APEI/GHES: ARM processor Error: don't go past allocated memory")
+Cc: stable@vger.kernel.org
+Signed-off-by: TanZheng <tanzheng@kylinos.cn>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Link: https://patch.msgid.link/20260806010944.32384-1-kensanya@163.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/miscdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/acpi/apei/ghes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ecryptfs/miscdev.c
-+++ b/fs/ecryptfs/miscdev.c
-@@ -357,7 +357,7 @@ ecryptfs_miscdev_write(struct file *file
- 	u32 seq;
- 	size_t packet_size, packet_size_length;
- 	char *data;
--	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE];
-+	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE] = { };
- 	ssize_t rc;
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -556,7 +556,7 @@ static bool ghes_handle_arm_hw_error(str
+ 		return false;
  
- 	if (count == 0) {
-@@ -373,7 +373,8 @@ ecryptfs_miscdev_write(struct file *file
- 	}
+ 	p = (char *)(err + 1);
+-	length -= sizeof(err);
++	length -= sizeof(*err);
  
- 	if (copy_from_user(packet_size_peek, &buf[PKT_LEN_OFFSET],
--			   sizeof(packet_size_peek))) {
-+			   min_t(size_t, count - PKT_LEN_OFFSET,
-+				 sizeof(packet_size_peek)))) {
- 		printk(KERN_WARNING "%s: Error while inspecting packet size\n",
- 		       __func__);
- 		return -EFAULT;
+ 	for (i = 0; i < err->err_info_num; i++) {
+ 		struct cper_arm_err_info *err_info;
 
 
