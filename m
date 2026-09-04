@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959303AFB1C;
-	Fri,  4 Sep 2026 05:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D19730C160;
+	Fri,  4 Sep 2026 05:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498957; cv=none; b=Pv19lg+SB6kldjFhgrgbmbA/hImJXFt7tQtnPBtxWn99VU2UoN6JvIlm/XMM1NJQZDqnVomCuTy1NsvVYAoajq0/qrV++NyNrnexn/B/536BWAKKfSPTDEI9kjsAACoE9t8pGVZKY+/UWxgX6PeoD4aaMYwltWeCKOkbgNURZ8s=
+	t=1788498963; cv=none; b=VMa+LEJQzVD/cP2FVfxZpiLOe2BX60MeUVgtdAnEbekYbAdiCrOIAZ9x3OwGK9PwiGn9fROYS6uvqJGYOgLo8NjiJZatHdnKeun5QEQraB3rfj4ylspB+TWPH9qucb5tAMtCk0mTuQhTXp3WNjbMqKnIhWJp/wEOXWkwzi6r84I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498957; c=relaxed/simple;
-	bh=bMlv/mjXwDIObN0buDna1IlkfwFIXwTsKQ6xvZMThGE=;
+	s=arc-20240116; t=1788498963; c=relaxed/simple;
+	bh=9ifWBE2N4GdM6ma8NDigrS/cx+nJS5gDtm58bAY/I54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFEe36rtnqQ3+U6qc3ns9xXyaUov1tJF3nElwfrpNNQruA/ELyWKSUnLq17Wv6XMnynPsnAE9IfVjYrNFAfwo+TlW7ZPbwN+4jzA/HRMG3IkqIGDqJTwPAVK8sqmCrOBTqakpfNGiRIU5QEd1k8Qt1SugmphcCzjwmtV9HsttlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsx+tZrG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aXfX6VwhalroTDtqewKwb7FSZGJjI+0nFRzXt618PtrdeOU655lH/cnCiNkNJ5mPHk86IZilTjsWvCXjtJKCatD6WxKhAqB1w2pQ7ldLbf0cjK9/PWwxIIhCLSHSstAoXidQuQgGQAwVc8VsmFbEGb6Y2jv93A1Ar3eTddt7N5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2sDnPiT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsx+tZrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70D51F00A3D;
-	Fri,  4 Sep 2026 05:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2sDnPiT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859D51F00A3E;
+	Fri,  4 Sep 2026 05:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498956;
-	bh=KEPvk/E5PN4+1ZG39uy86RHCJe+pchqkUBmlV5BbhKk=;
+	s=korg; t=1788498962;
+	bh=d9thOP713h0NDI2BfTb5se43v2/pbFqH1bJwMJJdvfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsx+tZrGYYAQu4m1QBuhYZFsbjMX9Plp9ikY5nEsub1SaNWugSUktPHfLZevoSmjn
-	 JiHvIjxCjah2FdtxlE+2Z7tw5hU5N8IPXDO6jMOCnxS/HOKKdiRLXavUwaQah8+DKW
-	 vUNj5PmpTboawEB5CQvQMj140rPy8hwwbQgsrjj0=
+	b=r2sDnPiT9lwQhMcSlNALoOoqG0WL9KwU2hMAHAxRGFkinuYxBCS/sWZ7kQJ+mlT3r
+	 3Pbk9NH4f+lczoWQaaENzNHsCDuuIpKlBQc8WumXo66BxtVVnFbf/EmloE86FOEU5w
+	 vFfVYHodDjAZ4N5RiZ3ZZw5TtDT2X2O9mZX1atnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Eikmeyer <dev@deq.rocks>,
+	Ibrahim Hashimov <security@auditcode.ai>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 246/713] HID: apple: preserve keyboard backlight across T2 resume
-Date: Fri,  4 Sep 2026 06:53:34 +0200
-Message-ID: <20260904045809.347579144@linuxfoundation.org>
+Subject: [PATCH 7.2 248/713] HID: picolcd: clamp eeprom debugfs read to bytes actually received
+Date: Fri,  4 Sep 2026 06:53:36 +0200
+Message-ID: <20260904045809.393657818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,82 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Eikmeyer <dev@deq.rocks>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit 2b5d1495bd101f3d9c13caf3923754f48ee7371a upstream.
+commit e9c667395ac1f8024f623250b32bae4c7af9caa0 upstream.
 
-The T2 virtual USB host controller re-enumerates the internal keyboard
-after system resume. The butterfly keyboard backlight currently uses
-LED_CORE_SUSPENDRESUME, so the LED core sends a blocking request to the
-old HID device while it is disappearing. That request fails with -ENODEV
-and the newly probed device starts with its backlight off.
+picolcd_debug_eeprom_read() trusts resp->raw_data[2] -- a length byte
+supplied by the device in its REPORT_EE_DATA reply -- clamped only to
+the caller's read() count:
 
-To fix this, we cache the requested brightness when the old HID device is
-removed and restore it when the replacement is probed. We let
-re-enumeration handle restoration instead of issuing a request through the
-stale device.
+	ret = resp->raw_data[2];
+	if (ret > s)
+		ret = s;
+	if (copy_to_user(u, resp->raw_data+3, ret))
 
-Fixes: 1f95a6cd5ad7 ("HID: apple: ensure the keyboard backlight is off if suspending")
+It never checks resp->raw_size, the number of bytes picolcd_raw_event()
+actually copied into the 64-byte raw_data[] of the kmalloc'd struct
+picolcd_pending. A device (or a spoofed picoLCD) returning a length byte
+of 0xff, read with a count >= 255, makes copy_to_user() read past
+raw_data[] into adjacent slab memory and return it to userspace through
+the debugfs "eeprom" file:
+
+	BUG: KASAN: slab-out-of-bounds in _copy_to_user
+	Read of size 255 ... picolcd_debug_eeprom_read+0x214/0x2f0 [hid_picolcd]
+
+The debug-dump path in the same file already validates the device length
+byte against the received size before trusting it; this read does not.
+The file is created S_IRUSR (root-only) and a crafted device is needed,
+so it is neither unprivileged- nor remotely-triggerable.
+
+Clamp the copy length to resp->raw_size - 3 (the payload actually
+received, minus the 3-byte header), floored at 0 for short replies.
+
+Fixes: 9bbf2b98ba11 ("HID: add experimental access to PicoLCD device's EEPROM and FLASH")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-apple.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/hid/hid-picolcd_debugfs.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -91,6 +91,9 @@ struct apple_sc_backlight {
- 	struct hid_device *hdev;
- };
- 
-+/* T2 VHCI re-enumerates the internal keyboard across system resume. */
-+static int apple_backlight_resume_brightness = -1;
-+
- struct apple_backlight_config_report {
- 	u8 report_id;
- 	u8 version;
-@@ -825,6 +828,7 @@ static int apple_backlight_led_set(struc
- static int apple_backlight_init(struct hid_device *hdev)
- {
- 	int ret;
-+	int brightness;
- 	struct apple_sc *asc = hid_get_drvdata(hdev);
- 	struct apple_backlight_config_report *rep;
- 
-@@ -860,13 +864,20 @@ static int apple_backlight_init(struct h
- 	asc->backlight->cdev.name = "apple::kbd_backlight";
- 	asc->backlight->cdev.max_brightness = rep->backlight_on_max;
- 	asc->backlight->cdev.brightness_set_blocking = apple_backlight_led_set;
--	asc->backlight->cdev.flags = LED_CORE_SUSPENDRESUME;
-+	/* VHCI re-enumeration restores the cached brightness in the next probe. */
-+
-+	brightness = READ_ONCE(apple_backlight_resume_brightness);
-+	if (brightness < 0)
-+		brightness = LED_OFF;
-+	else
-+		brightness = min_t(int, brightness, rep->backlight_on_max);
- 
--	ret = apple_backlight_set(hdev, 0, 0);
-+	ret = apple_backlight_set(hdev, brightness, 0);
- 	if (ret < 0) {
- 		hid_err(hdev, "backlight set request failed: %d\n", ret);
- 		goto cleanup_and_exit;
- 	}
-+	asc->backlight->cdev.brightness = brightness;
- 
- 	ret = devm_led_classdev_register(&hdev->dev, &asc->backlight->cdev);
- 
-@@ -999,6 +1010,9 @@ static void apple_remove(struct hid_devi
- 
- 	if (asc->quirks & APPLE_RDESC_BATTERY)
- 		timer_delete_sync(&asc->battery_timer);
-+	if (asc->backlight)
-+		WRITE_ONCE(apple_backlight_resume_brightness,
-+			   asc->backlight->cdev.brightness);
- 
- 	hid_hw_stop(hdev);
- }
+--- a/drivers/hid/hid-picolcd_debugfs.c
++++ b/drivers/hid/hid-picolcd_debugfs.c
+@@ -99,6 +99,15 @@ static ssize_t picolcd_debug_eeprom_read
+ 		ret = resp->raw_data[2];
+ 		if (ret > s)
+ 			ret = s;
++		/*
++		 * raw_data[2] is a device-supplied length; also clamp it to
++		 * what picolcd_raw_event() actually stored (raw_size), or a
++		 * hostile device overruns the raw_data[] buffer.
++		 */
++		if (ret > resp->raw_size - 3)
++			ret = resp->raw_size - 3;
++		if (ret < 0)
++			ret = 0;
+ 		if (copy_to_user(u, resp->raw_data+3, ret))
+ 			ret = -EFAULT;
+ 		else
 
 
