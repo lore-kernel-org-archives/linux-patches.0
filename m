@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E0A3A7F4C;
-	Fri,  4 Sep 2026 05:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7B03B14B4;
+	Fri,  4 Sep 2026 05:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499042; cv=none; b=kOcPn/Q8K48uouLmm0FdzR4I5F08HgTpPaXaJ1MGyTd5ezGpRx/7utfKLcMOZUvXJ0vK2ehUDit9ecDoTKjkdNK7JrYqfu4VavTzsELs7kuWFFjhjqa1PatNjyKOGhcwTBNjl7nfk9RhlVCye2dLikhT11zuud8+h+uVu0y2Evo=
+	t=1788499045; cv=none; b=A6Xs18+G+3mOrvVU/TxpeXvl5rBxvIFu9L0LECToTexk6VFXgPinDhXr4oLn9uyln6TXyLLdYrhoVMg+wqb/+Cd8asLeY/gQuSEtapZNJlb3l9NwCvv0qXbM9DPemO0gqQbTAVTShLhugs+gRD9EJb0xyTdImpa674Hu3i1YQ+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499042; c=relaxed/simple;
-	bh=rrRZmaIHuUJhZbM+3ugJ4YTgZ5tSp0GGxq1VZC5d8MU=;
+	s=arc-20240116; t=1788499045; c=relaxed/simple;
+	bh=EQMKbaSBHisdfq9CQlxD1WJZ9pUibN8YVTEhw0yTSR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kx4aNxJD/iTpiVYb/WvRYdU4Rlk9v7JpWty4Ilh/nX57BKgAL1c8Nc3fRZYnm6HYpFy51KOKd7phAVPaXrUs2EwLunIOAoTuXN4GKBbcusW1g5D4hRhyYs0D6gD3wAbYaCUbTCbvIEe7rkBbWlgP1fsYWlsSLH18jcNwX+XOtIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iobIkpx7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZHGur3aWHY+1srxVk3xEW8bzU49GQBpGwqMQyUxkfid3QmWzXa/rOKnWnkItG2kJY4j57zOSKICQZaj7Aso3J/kTpc3B/tZTyHNG2HBEAm/dzQtyg+F5+Enqdo2i/TcVID7w6Em8y6jUIflrv3aoh0Xf3HNfA0mLmd/nywQaI5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQyRphb0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iobIkpx7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9551E1F00A3D;
-	Fri,  4 Sep 2026 05:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQyRphb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704631F00A3D;
+	Fri,  4 Sep 2026 05:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499041;
-	bh=3CrzMUZvdAQPSjQezlazJ+mw2IMhqcs9FH+u7vfSBYE=;
+	s=korg; t=1788499044;
+	bh=5vTSPkZFMQUh90YZW8hc+drSmq0zQmD23X5m1Wcl4Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iobIkpx73fdiasFIokQNOWafWbhH1zUOWQySZpUgM0dMHthi1wWQoYHaqW641FD97
-	 Us5xDNE6jArcipJB3G/BdC8QjPGZ2ddbsgblHr+iM5g69bzVLf3yZkvaYvaOZiPNfK
-	 bfvq2YoyBhOyBHJPei+/+/7cQf8zhF5gpbeKrazk=
+	b=ZQyRphb0RMvNGq4EuZ5dJgMqVCDAlm+YEninF9O+5v51aRf4pLp2nX/CztncIHWzs
+	 S9qZkmprjRlbwX4+bP5LJOVE75xoJr9x/E8bm32eoqdoDQUrip9ouhopdlru262xsi
+	 DdZf3B6GdUovXMP8AVfna/3w3En7MKHhTTlmdaSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.2 278/713] entry: Fix seccomp bypass after ptrace with TSYNC
-Date: Fri,  4 Sep 2026 06:54:06 +0200
-Message-ID: <20260904045810.071679079@linuxfoundation.org>
+	Nikhil Gurudasani <nikhilgurudasani314@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Chao Yu <chao@kernel.org>
+Subject: [PATCH 7.2 279/713] erofs: skip sufficiently large global buffers when resizing
+Date: Fri,  4 Sep 2026 06:54:07 +0200
+Message-ID: <20260904045810.095171761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
 
-commit 4a3591287fb7f808e209b4974ed337f609a2006b upstream.
+commit a7d097cf01301c5da37927c8f26123d006f0fd8a upstream.
 
-Sashiko review pointed out the following issue.
+z_erofs_gbuf_nrpages is advanced only after every global buffer has been
+grown. If a resize fails after some buffers were enlarged, a retry
+revisits those enlarged buffers.
 
-If a thread is stopped in syscall_trace_enter() for ptrace, another
-thread can install a seccomp filter with SECCOMP_FILTER_FLAG_TSYNC
-(e.g., via seccomp_attach_filter()). This will successfully set
-SYSCALL_WORK_SECCOMP on the stopped thread, but syscall_trace_enter()
-evaluates a cached 'work' variable sampled on entry. Consequently,
-the subsequent check for SYSCALL_WORK_SECCOMP misses the newly
-assigned flag, and the filter is silently bypassed.
+Retrying the same size then returns -ENOMEM because alloc_pages_bulk()
+has no pages to add and the unchanged return value is treated as a
+failure. Retrying an intermediate size allocates a temporary pointer
+array smaller than gbuf->nrpages and copies more existing pointers than
+the array can hold.
 
-This race condition could allow an unprivileged process to execute
-a prohibited system call (e.g., execve) that the newly installed filter
-was intended to block, especially since the tracer might have modified
-the system call number during the ptrace stop.
+Skip buffers that already satisfy the request. Once all remaining
+buffers have caught up, advancing z_erofs_gbuf_nrpages again describes
+the guaranteed minimum size across the pool.
 
-Fix this by re-reading the syscall_work flags after ptrace handling,
-so that any new SYSCALL_WORK_SECCOMP flag set by another thread via
-TSYNC during the ptrace stop is observed before the subsequent
-seccomp check.
-
-Fixes: 142781e108b1 ("entry: Provide generic syscall entry functionality")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260629132914.1135C1F000E9@smtp.kernel.org/
-Link: https://patch.msgid.link/20260713025712.416366-1-ruanjinjie@huawei.com
+Fixes: d6db47e571dc ("erofs: do not use pagepool in z_erofs_gbuf_growsize()")
+Cc: stable@vger.kernel.org # 6.10+
+Signed-off-by: Nikhil Gurudasani <nikhilgurudasani314@gmail.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/entry-common.h |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/erofs/zutil.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/entry-common.h
-+++ b/include/linux/entry-common.h
-@@ -96,6 +96,9 @@ static __always_inline long syscall_trac
- 		ret = arch_ptrace_report_syscall_entry(regs);
- 		if (ret || (work & SYSCALL_WORK_SYSCALL_EMU))
- 			return -1L;
-+
-+		/* ptrace might have changed work flags */
-+		work = READ_ONCE(current_thread_info()->syscall_work);
- 	}
+--- a/fs/erofs/zutil.c
++++ b/fs/erofs/zutil.c
+@@ -79,6 +79,8 @@ int z_erofs_gbuf_growsize(unsigned int n
  
- 	/* Do seccomp after ptrace, to catch any tracer changes. */
+ 	for (i = 0; i < z_erofs_gbuf_count; ++i) {
+ 		gbuf = &z_erofs_gbufpool[i];
++		if (gbuf->nrpages >= nrpages)
++			continue;
+ 		tmp_pages = kzalloc_objs(*tmp_pages, nrpages);
+ 		if (!tmp_pages)
+ 			goto out;
 
 
