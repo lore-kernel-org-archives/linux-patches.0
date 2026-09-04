@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83506405C3F;
-	Fri,  4 Sep 2026 06:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593B6410D36;
+	Fri,  4 Sep 2026 06:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501901; cv=none; b=TN/Hw6nqNlCKCHxVpUQKvm5T6DLiEBnLvj+qg1QIhYxMbDdxMnhffZkQLvJvIvfENCbVzKt27HcdUHIzwDYTwMkkYpPmgLm9KiOvQcELpymNAWgUy+cBHYQxEGF7l4B6PUpdZo/FA6SvmIGqAbBwWfmuHflF8bh5Ld+4xeuGAHM=
+	t=1788501904; cv=none; b=bY2ttX5HU8PAgXCnWIQppD5Ye5LmOhtWMlmW448COCPAdc06pl/bd9zkWcqXsAIVIcvbuUK7t+jPEoIp6af6Wa7WW7PV5qCfdAOHj05/WuiqYJ5JLb13BfpKCrrte3YOLuQHhla/2zNE+XtN8RIVbYNiv9Yq8BcgFoHTKJ0DoYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501901; c=relaxed/simple;
-	bh=tSqQ1eJBu1U4xQ4auJLd8/PKYzEcsfirjMedk5rTbDU=;
+	s=arc-20240116; t=1788501904; c=relaxed/simple;
+	bh=qOcrRtWLEzf/EGKfIkRllFgBS3GDUoO4h6abImDAPO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNdjb71HDZlf9QD560NDppWQfuBNjkCt0GET15oAwqSEaXSXj9FnEFLiUz1/2VTBWR5uUtLcb4IkgXMI5Vi3q/5lbr7Nt7OyVW2uMEKfHUdFwwaLvk2GJkCniqLRtMYLK1j8VZtt+O1y8xKP+lYdWqF9PeMD0odGSbce6/I/3DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kndeJ/o8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P+yl962g2QwdfJFvIlYmZ5Ag6toXGELJH8hy5LqSkQzqmbsC62G6RrdO/2/U5SWD1N3rSrrSt6nY6kk+yU6BIrX5bdlGE1I9ZvrbHUDKLzrKwDtnDP6uENYtlgC/jqBiM+42wFFXarXX2+IC2yM7WoDaouVPTj8d7DzSBtWER40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+FS5g0q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kndeJ/o8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99071F00A3D;
-	Fri,  4 Sep 2026 06:04:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+FS5g0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2F81F00A3D;
+	Fri,  4 Sep 2026 06:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501900;
-	bh=mpgLxLf4/AbXFyGnwM0d77oQHAfJ1RjWju/aPR76gGk=;
+	s=korg; t=1788501903;
+	bh=h8dkwpWLaJOT0IErZ2ETHxLOHdrWMScD2resDiyfpfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kndeJ/o8nFtZXMcgRztdqTYUgjnRNcGwdAEC5UjG/42HRbbvcjQw3sdqDc8PWBh6q
-	 csb2NfjqJ4YInxQdAmY2f2IM1fGD0EMHj1yahCM9oBuPUXvYf4VBQUA6PYKUSMuFRl
-	 Cqj0LrBfTrEdSvYDOai67A+y6lOLC8RDzF5a9v8w=
+	b=I+FS5g0qouH38SMo95fmAuPuhD++Cw6aepKP78Q3YwpRbPMfA+YDppZVzFJp/622q
+	 /rf4b6TDBqIFBB1R9+Joe9MtvQbzQwY26LpGdHWzuE+AxZOmqxQmweeMVDoZgMgfSl
+	 6QuKYXNw5iXTdqH3CMT+bDc9WjvcN9tK/xr5NFRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/403] md: make rdev_addable usable for rcu mode
-Date: Fri,  4 Sep 2026 06:56:45 +0200
-Message-ID: <20260904045734.863346883@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Lance Yang <lance.yang@linux.dev>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Qian Cai <cai@lca.pw>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 020/403] mm/kmemleak: avoid soft lockup when scanning task stacks
+Date: Fri,  4 Sep 2026 06:57:03 +0200
+Message-ID: <20260904045735.271470151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,80 +56,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 13017b427118f4311471ee47df74872372ca8482 ]
+commit 5d10d4e19e6daa487f0cd0ea6cba472325de92f9 upstream.
 
-Our testcase trigger panic:
+Patch series "mm/kmemleak: avoid soft lockup when scanning task", v3.
 
-BUG: kernel NULL pointer dereference, address: 00000000000000e0
-...
-Oops: Oops: 0000 [#1] SMP NOPTI
-CPU: 2 UID: 0 PID: 85 Comm: kworker/2:1 Not tainted 6.16.0+ #94
-PREEMPT(none)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.16.1-2.fc37 04/01/2014
-Workqueue: md_misc md_start_sync
-RIP: 0010:rdev_addable+0x4d/0xf0
-...
-Call Trace:
- <TASK>
- md_start_sync+0x329/0x480
- process_one_work+0x226/0x6d0
- worker_thread+0x19e/0x340
- kthread+0x10f/0x250
- ret_from_fork+0x14d/0x180
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-Modules linked in: raid10
-CR2: 00000000000000e0
----[ end trace 0000000000000000 ]---
-RIP: 0010:rdev_addable+0x4d/0xf0
+kmemleak_scan() scans every task stack under one rcu_read_lock() with no
+reschedule point, which can trip the soft lockup watchdog on hosts with
+very many threads.
 
-md_spares_need_change in md_start_sync will call rdev_addable which
-protected by rcu_read_lock/rcu_read_unlock. This rcu context will help
-protect rdev won't be released, but rdev->mddev will be set to NULL
-before we call synchronize_rcu in md_kick_rdev_from_array. Fix this by
-using READ_ONCE and check does rdev->mddev still alive.
+That prints the following message, depending on the workload+host
+configuration:
 
-Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
-Fixes: 570b9147deb6 ("md: use RCU lock to protect traversal in md_spares_need_change()")
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Link: https://lore.kernel.org/linux-raid/20250731114530.776670-1-yangerkun@huawei.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+      watchdog: BUG: soft lockup - CPU#35 stuck for 22s! [kmemleak:537]
+       scan_block
+       kmemleak_scan
+       kmemleak_scan_thread
+       kthread
+
+Patch 1 walks the tasks with find_ge_pid() so the scan reschedules between
+tasks
+
+Patches 2-3 let the scan loops stop early once a scan is interrupted.
+
+
+This patch (of 3):
+
+kmemleak_scan() walks every thread and scans its kernel stack under a
+single rcu_read_lock() with no reschedule point.  On a host with very many
+threads -- amplified by KASAN/lockdep in debug builds -- this loop can hog
+a CPU long enough to trip the soft lockup watchdog:
+
+  watchdog: BUG: soft lockup - CPU#35 stuck for 22s! [kmemleak:537]
+   scan_block
+   kmemleak_scan
+   kmemleak_scan_thread
+   kthread
+
+A cond_resched() cannot be added directly: the loop runs inside an RCU
+read-side critical section.
+
+Walk the tasks one PID at a time with find_ge_pid(), taking the RCU read
+lock only to look up and pin each task.  The stack is then scanned with no
+lock held, so cond_resched() runs between tasks and the scan stops early
+on scan_should_stop().  This follows the next_tgid()/task_seq_get_next()
+iteration pattern and keeps each RCU critical section short.
+
+Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-0-acecd7d7fd92@debian.org
+Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-1-acecd7d7fd92@debian.org
+Fixes: c4b28963fd79 ("mm/kmemleak: rely on rcu for task stack scanning")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Qian Cai <cai@lca.pw>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ mm/kmemleak.c |   51 ++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 1aff3e541ceb5..60a07d7264d83 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9373,6 +9373,12 @@ static bool rdev_is_spare(struct md_rdev *rdev)
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1671,6 +1671,42 @@ unlock_put:
+ }
  
- static bool rdev_addable(struct md_rdev *rdev)
- {
-+	struct mddev *mddev;
+ /*
++ * Scan all task kernel stacks, rescheduling between tasks. Each task is looked
++ * up and pinned within its own RCU read-side section, so no lock is held across
++ * the scan and the walk cannot trip the soft lockup watchdog.
++ */
++static void kmemleak_scan_task_stacks(void)
++{
++	struct pid *pid;
++	int nr = 1;
 +
-+	mddev = READ_ONCE(rdev->mddev);
-+	if (!mddev)
-+		return false;
++	do {
++		struct task_struct *p = NULL;
 +
- 	/* rdev is already used, don't add it again. */
- 	if (test_bit(Candidate, &rdev->flags) || rdev->raid_disk >= 0 ||
- 	    test_bit(Faulty, &rdev->flags))
-@@ -9383,7 +9389,7 @@ static bool rdev_addable(struct md_rdev *rdev)
- 		return true;
- 
- 	/* Allow to add if array is read-write. */
--	if (md_is_rdwr(rdev->mddev))
-+	if (md_is_rdwr(mddev))
- 		return true;
++		rcu_read_lock();
++		pid = find_ge_pid(nr, &init_pid_ns);
++		if (pid) {
++			nr = pid_nr(pid) + 1;
++			p = pid_task(pid, PIDTYPE_PID);
++			if (p)
++				get_task_struct(p);
++		}
++		rcu_read_unlock();
++
++		if (p) {
++			void *stack = try_get_task_stack(p);
++
++			if (stack) {
++				scan_block(stack, stack + THREAD_SIZE, NULL);
++				put_task_stack(p);
++			}
++			put_task_struct(p);
++		}
++		cond_resched();
++	} while (pid && !scan_should_stop());
++}
++
++/*
+  * Scan data sections and all the referenced memory blocks allocated via the
+  * kernel's standard allocators. This function must be called with the
+  * scan_mutex held.
+@@ -1761,19 +1797,8 @@ static void kmemleak_scan(void)
+ 	/*
+ 	 * Scanning the task stacks (may introduce false negatives).
+ 	 */
+-	if (kmemleak_stack_scan) {
+-		struct task_struct *p, *g;
+-
+-		rcu_read_lock();
+-		for_each_process_thread(g, p) {
+-			void *stack = try_get_task_stack(p);
+-			if (stack) {
+-				scan_block(stack, stack + THREAD_SIZE, NULL);
+-				put_task_stack(p);
+-			}
+-		}
+-		rcu_read_unlock();
+-	}
++	if (kmemleak_stack_scan)
++		kmemleak_scan_task_stacks();
  
  	/*
--- 
-2.53.0
-
+ 	 * Scan the objects already referenced from the sections scanned
 
 
