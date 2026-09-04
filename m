@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DE438E8DD;
-	Fri,  4 Sep 2026 05:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B86372B2F;
+	Fri,  4 Sep 2026 05:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498869; cv=none; b=Pideu0C1eNqZSDLAkdQ8ANgYQJo2KDSHYaW9gmbDG0Ojy31vjFp1/4sg8qrABLRic6ARGfAn6rT/x7LjHAXHL+TaxdeywyvDoBVkIoAD0R9OidF21MgYmIHsEXLWUdYPqS7Vn8gZiZw+kntA5OXr5+jQw0u5f98JRROUHQuIeL8=
+	t=1788498872; cv=none; b=mCeAe+4Yn8zN8nPw1Xe783nKXKFYgfjlIY2UP9hevBie0787Wlh4An1BZvOkmkF4Bqr5WMX4jcrnKrNac5yAh7imHTUYwYX9kH/rq+gQrhV/j5tnTpyJR8zCXvjzp4L4H1auuf5kjnlG2e/VyWnkpcnwPLwnF7j455gRbZY2WoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498869; c=relaxed/simple;
-	bh=qzQkLC7BQJhmdHO8AlpQrrJdFlbldPQjLLrxlDM4jEs=;
+	s=arc-20240116; t=1788498872; c=relaxed/simple;
+	bh=QJWhHDe7HqFJgDC/EemC/WAfsM0lpFIWEpfaxJ6Oy/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aR7sZ4YcQTSIi5HQBROB6BDHSSwGWa4LFJiOWQDVOmoqX+B8Bucqsy6WT6V6TwXHehAwdZltHvcuUl3x9PjvRW9CHJHoiz8I6/4de+QAoR74Ep5VEhP+jBHWU/LZY8viMLArC6pBqyJlYLKxSXSQ9lk90gBU/3zuq+iVcli2K48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klsZZ1Ie; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cYDbrGTUCOnalrXcuHlhjIEiHndA5g6DGU1nJK56+ROlxVabmDIosk2vuKmXfLADZlwD1hsDFrhs39m0LQipzu0aasZx/Wz3dYXEnuzKJ+3h7oKJgB+/IMKL6z3+X11BtlgKeq/pNheUPr6qrab8CuRs5T9QUCH4nMGQzHxSTxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQZM258Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klsZZ1Ie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403691F00A3D;
-	Fri,  4 Sep 2026 05:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQZM258Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191101F00A3D;
+	Fri,  4 Sep 2026 05:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498868;
-	bh=f2EPcbu8GgnyHPwV0XwfYbH+QAJhquNSzKqu7/i/XSY=;
+	s=korg; t=1788498871;
+	bh=tn12SDJz+7d5T8anjFyjbBp47lbP1HTMiIBhGAXyxBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klsZZ1IeHFGy9nSTLkDkimrCv3Mwhs2HJbdtZScEtdz9xM4YZvYM/8pKk5DBGXLfr
-	 M4g3qrOwrue1JqheIirGIcYsKHdK9y6dcWdtZDbTrp4fqRXV2HGH3pujT5wauPZfsC
-	 XfEnhSG5SDbvPEC0fUiEmag22oASO7EWjxv3TSSM=
+	b=TQZM258Zrnlpko0Tr6D1TLjKKdYwIIZIf6B6A82qjnQ7x0uAOa/rytDSCrszujnP9
+	 Z1ARjDtSEEiqKgf0VC/SK8VaOqeGPQOM0asXMp09ARyweCQeD9shSuyUXHkY2LuAgP
+	 NX6DGD2ZCPofYpj8EU1EozsVaazQVEMalhwyYC7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Alex Markuze <amarkuze@redhat.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.2 214/713] libceph: reject buckets with mismatched CRUSH ids
-Date: Fri,  4 Sep 2026 06:53:02 +0200
-Message-ID: <20260904045808.614575179@linuxfoundation.org>
+Subject: [PATCH 7.2 215/713] ceph: fix UAF in __kick_flushing_caps() on cf entry freed during unlock
+Date: Fri,  4 Sep 2026 06:53:03 +0200
+Message-ID: <20260904045808.637425237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,47 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-commit 3cde4a8302301679937474a5f7a851394cc1bd11 upstream.
+commit 7af4c4f01305b0935adf6d4301b1ec407025485d upstream.
 
-crush_decode() stores bucket data by array slot, and the mapper later
-derives the per-bucket workspace index from the decoded bucket id. A
-malformed map can therefore make one bucket reuse another bucket's
-workspace by encoding an id different from -1 - slot.
+list_for_each_entry() iterates ci->i_cap_flush_list but drops
+i_ceph_lock to send cap messages.  During the unlock window,
+handle_cap_flush_ack() can acquire i_ceph_lock, detach cf entries
+with tid <= flush_tid from the list, release i_ceph_lock, and free
+them via ceph_free_cap_flush() outside any lock.  When the original
+thread reacquires i_ceph_lock and the for-loop macro advances via
+cf = list_next_entry(cf, i_list), it dereferences cf->i_list.next
+on freed memory.
 
-For uniform buckets, the second replica selection expands the source
-bucket's permutation into that aliased workspace buffer. If the source
-bucket is larger than the aliased bucket, the write runs past the smaller
-permutation array and can escape the kvmalloc'd CRUSH workspace. KASAN
-reports a slab OOB write of 4 bytes in bucket_perm_choose().
+The race timeline:
 
-Reject buckets whose encoded id does not match their array slot. Valid
-CRUSH maps already use the canonical negative id corresponding to the
-bucket slot, so this restores the invariant expected by
-work->work[-1 - in->id] without changing valid map behavior.
+  __kick_flushing_caps()              handle_cap_flush_ack()
+  -----------------------             -----------------------
+  holds i_ceph_lock        <---
+  iterates to cf (tid=10)
+  prepares FLUSH message
+  drops i_ceph_lock        <---
+  __send_cap() ── FLUSH(tid=10)
+	                              MDS sends FLUSH_ACK(tid=10)
+                           --->       acquires i_ceph_lock
+                                      cf->tid(10) <= flush_tid(10),
+                                      detaches cf from i_cap_flush_list
+                                      drops i_ceph_lock
+                                      ceph_free_cap_flush(cf) <- frees it!
+  acquires i_ceph_lock     <---
+  for-loop advances:
+    cf = list_next_entry(cf, i_list)
+      -- UAF on freed cf->i_list.next
+
+The cf was just sent by __kick_flushing_caps itself via __send_cap().
+The MDS may respond with FLUSH_ACK quickly enough that
+handle_cap_flush_ack() frees cf before __kick_flushing_caps can
+finish the iteration.
+
+Fix by converting to a manual while loop: save the next pointer
+under i_ceph_lock before dropping it, then use the saved pointer
+after reacquiring, so the potentially-freed cf is never accessed again.
 
 Cc: stable@vger.kernel.org
-Fixes: 66a0e2d579db ("crush: remove mutable part of CRUSH map")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ceph/caps.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -517,6 +517,8 @@ static struct crush_map *crush_decode(vo
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -2589,9 +2589,14 @@ static void __kick_flushing_caps(struct
+ 		}
+ 	}
  
- 		ceph_decode_need(p, end, 4*sizeof(u32), bad);
- 		b->id = ceph_decode_32(p);
-+		if (b->id != -1 - i)
-+			goto bad;
- 		b->type = ceph_decode_16(p);
- 		if (b->type == 0)
- 			goto bad;
+-	list_for_each_entry(cf, &ci->i_cap_flush_list, i_list) {
+-		if (cf->tid < first_tid)
++	cf = list_first_entry(&ci->i_cap_flush_list, struct ceph_cap_flush, i_list);
++	while (&cf->i_list != &ci->i_cap_flush_list) {
++		struct ceph_cap_flush *next;
++
++		if (cf->tid < first_tid) {
++			cf = list_next_entry(cf, i_list);
+ 			continue;
++		}
+ 
+ 		cap = ci->i_auth_cap;
+ 		if (!(cap && cap->session == session)) {
+@@ -2601,6 +2606,7 @@ static void __kick_flushing_caps(struct
+ 		}
+ 
+ 		first_tid = cf->tid + 1;
++		next = list_next_entry(cf, i_list);
+ 
+ 		if (!cf->is_capsnap) {
+ 			struct cap_msg_args arg;
+@@ -2641,6 +2647,7 @@ static void __kick_flushing_caps(struct
+ 		}
+ 
+ 		spin_lock(&ci->i_ceph_lock);
++		cf = next;
+ 	}
+ }
+ 
 
 
