@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D0B3D9521;
-	Fri,  4 Sep 2026 05:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0961AA1F4;
+	Fri,  4 Sep 2026 05:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498712; cv=none; b=JZiw37pUZfcr/9MJ+1m7k5eQeCEcDagd26WlhbdWndp8MKn3hYY9Z4hJ3AWB5p5eY5pDzR9NydtS9L6qRtKySNoCRhMbAVCb1EbzqI/xkfqde2Oo0G8/DflR0TYKevOO9UQCKFd5+qPlXSoGNjSInjXOo/iBs+HJtYeVU58APWQ=
+	t=1788498715; cv=none; b=QJzzcF9O9LsA2QxdOh9Ct7NhrMOrkPxqlh3SQ5oaZsXklGvLtvuEXJYImY5GO9fJquYJTn5BLQ/eZFqVqVM1n7GXBFCAU/7RR58bVhKQ3Ax1kZrQQn/rdG1Nn7egt6c//b0lvF9G4cq5J7k0qUoPC3azOnDRyyOasvl3U/CQa2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498712; c=relaxed/simple;
-	bh=oT74xNCvs7531Sv1KSyO0QvtYm1XRfLf/4G5eYJR3tM=;
+	s=arc-20240116; t=1788498715; c=relaxed/simple;
+	bh=6z5cKAB5Bp39MOlqmnyejHOjabFzyed8DPnXCK8HM88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAlQulLihHdhzphOtv+mrGa0AFFvi7k/jrPT0R6YdI2IN5UvBUjNn0KuuP4no1JxLe4y8jQV0ABEcAXbFCj0SJ15FFnNHzG5cjX2XKB9u41UywZiDO3x4jCytmAM2mPN3bGRnvbdiflUPN2FaUlM21BW6GxL+mee1IKN8xXU3jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFafGuEo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kwrCD/o1HhJQV9JjW8VEPFYul/OFVVsNN0dOHPRVJzwnsInkmsm2ko7tpW31Cslm8oSM08mbDh8+c3Bqouz3Wq/qRBDQGbYjC2GajDWqDjoX+zbHpDVyi5V4S3biJ/BTr1qp7nBJbjINe/kLAWcblfd/E3hYw0elbAyqP+2cx50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uP01NDli; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFafGuEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14C81F00A3E;
-	Fri,  4 Sep 2026 05:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP01NDli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993E01F00A3D;
+	Fri,  4 Sep 2026 05:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498711;
-	bh=O6enONspFY9QJCoR554iBuXoMj1QIMO9SAMuh2jtYHU=;
+	s=korg; t=1788498714;
+	bh=z6PT4cl31x7aI5RBAOsvu+I5+qLjZpt9XM7RuRfpU5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IFafGuEovuKSgZNhgwRpsqztL1NEGbjrNNeJvYc5whMBNwobsaLqYhZYwiioOJ9s3
-	 mrSJcyeAUgJy4vTUeJDj0y87D/ZhFboFj3BEQT9277k5O22FevxQn5iCxyh3zfGsmS
-	 jjsJ/PCnYBJyfy995dyFmLHA1VEeXfeX91zrkP8o=
+	b=uP01NDlie7ajWyJkqSF1o+Yd9YjqjdqDhiLNigpo/jkIhNFpS7iibb0Aks78t+0JM
+	 ZyJGciyLON+p0HADBqUTFk/bfJSZIMmIjixD5sjqDiyKzYO9EPXNYTulzRxFCPDpZW
+	 aQTstuxc0EHfwNQX2dX8Es7Q1Ex2fzKVBqEEOYKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 159/713] nfsd: widen nfsd_genl_rqstp address fields to sockaddr_storage
-Date: Fri,  4 Sep 2026 06:52:07 +0200
-Message-ID: <20260904045807.389340259@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 160/713] nfsd: add fh_want_write() for early-verified SETATTR in nfsd_proc_setattr()
+Date: Fri,  4 Sep 2026 06:52:08 +0200
+Message-ID: <20260904045807.410539179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,80 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit a99d720ed2a5258564e5e9d5f39f3184a030d354 upstream.
+commit 4e475be769aa9f7a2c1ce55a2b8592cfccacddcc upstream.
 
-struct nfsd_genl_rqstp declares rq_daddr and rq_saddr as plain
-"struct sockaddr" (16 bytes). When an IPv6 NFS client is connected,
-nfsd_genl_rpc_status_compose_msg() casts these fields to
-"struct sockaddr_in6 *" (28 bytes) and reads sin6_addr at offset 8..24,
-which extends 8 bytes past the end of the 16-byte sockaddr field into
-the adjacent rq_flags member. The 16-byte nla_put_in6_addr then ships 8
-bytes of truncated IPv6 address followed by 8 bytes of rq_flags to
-userspace via the NFSD_A_RPC_STATUS_SADDR6/DADDR6 netlink attributes.
+The BOTH_TIME_SET branch calls fh_verify() early so setattr_prepare()
+can inspect the dentry. This causes nfsd_setattr() to skip
+fh_want_write(), so notify_change() runs without a mount write
+reference.
 
-This is reachable by any unprivileged process in the network namespace
-because NFSD_CMD_RPC_STATUS_GET uses GENL_CMD_CAP_DUMP without
-GENL_ADMIN_PERM.
+Add the missing fh_want_write() call after the early fh_verify().
 
-Fix by widening rq_daddr and rq_saddr to struct sockaddr_storage so the
-IPv6 casts operate within bounds, copying sizeof(struct sockaddr_storage)
-bytes in the memcpy calls so the full address is captured, and
-zero-initializing the genl_rqstp stack variable to prevent leaking
-uninitialized tail bytes through netlink.
-
-Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
+Fixes: cc265089ce1b ("nfsd: Disable NFSv2 timestamp workaround for NFSv3+")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260602-nfsd-testing-v2-5-e4ea62e3cd5c@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-11-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/nfsd/nfsproc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1418,8 +1418,8 @@ static int create_proc_exports_entry(voi
- unsigned int nfsd_net_id;
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -82,6 +82,7 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
+ 		.na_iattr	= iap,
+ 	};
+ 	struct svc_fh *fhp;
++	int hosterr;
  
- struct nfsd_genl_rqstp {
--	struct sockaddr		rq_daddr;
--	struct sockaddr		rq_saddr;
-+	struct sockaddr_storage	rq_daddr;
-+	struct sockaddr_storage	rq_saddr;
- 	unsigned long		rq_flags;
- 	ktime_t			rq_stime;
- 	__be32			rq_xid;
-@@ -1454,7 +1454,7 @@ static int nfsd_genl_rpc_status_compose_
- 			NFSD_A_RPC_STATUS_PAD))
- 		return -ENOBUFS;
+ 	dprintk("nfsd: SETATTR  %s, valid=%x, size=%ld\n",
+ 		SVCFH_fmt(&argp->fh),
+@@ -117,6 +118,12 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
+ 		if (resp->status != nfs_ok)
+ 			goto out;
  
--	switch (genl_rqstp->rq_saddr.sa_family) {
-+	switch (genl_rqstp->rq_saddr.ss_family) {
- 	case AF_INET: {
- 		const struct sockaddr_in *s_in, *d_in;
- 
-@@ -1531,7 +1531,7 @@ int nfsd_nl_rpc_status_get_dumpit(struct
- 		list_for_each_entry_rcu(rqstp,
- 				&nn->nfsd_serv->sv_pools[i].sp_all_threads,
- 				rq_all) {
--			struct nfsd_genl_rqstp genl_rqstp;
-+			struct nfsd_genl_rqstp genl_rqstp = {};
- 			unsigned int status_counter;
- 
- 			if (rqstp_index++ < cb->args[1]) /* already consumed */
-@@ -1555,9 +1555,9 @@ int nfsd_nl_rpc_status_get_dumpit(struct
- 			genl_rqstp.rq_stime = rqstp->rq_stime;
- 			genl_rqstp.rq_opcnt = 0;
- 			memcpy(&genl_rqstp.rq_daddr, svc_daddr(rqstp),
--			       sizeof(struct sockaddr));
-+			       sizeof(struct sockaddr_storage));
- 			memcpy(&genl_rqstp.rq_saddr, svc_addr(rqstp),
--			       sizeof(struct sockaddr));
-+			       sizeof(struct sockaddr_storage));
- 
- #ifdef CONFIG_NFSD_V4
- 			if (rqstp->rq_vers == NFS4_VERSION &&
++		hosterr = fh_want_write(fhp);
++		if (hosterr) {
++			resp->status = nfserrno(hosterr);
++			goto out;
++		}
++
+ 		if (delta < 0)
+ 			delta = -delta;
+ 		if (delta < MAX_TOUCH_TIME_ERROR &&
 
 
