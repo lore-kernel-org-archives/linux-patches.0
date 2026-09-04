@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428BD415F29;
-	Fri,  4 Sep 2026 06:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E14E4156F9;
+	Fri,  4 Sep 2026 06:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501733; cv=none; b=NL2HcGBiy0lqecfSQlUisRSDRn9AAblAsyE172TWwOR8i+7lzwI3gILXeQX6U6yr+Mu26bygpO98p1kZl2blx3pd7OGbJiWW3FQWZOrWohz8L433nkVBqdqbYgbX/34rA8E8uWh5pdLJrth5CUOA46wYkNeBhIv2yFPnHaL0QrQ=
+	t=1788501736; cv=none; b=hzfM4zmVii47AL6w/Ww+DOfV1zurtMjzeqsSkOQE6yYfKNQcP7o5uIzFXtmyL4kw04ocjXEktO9A6KpIvFx+88l/yKoJ9VbcLmpFDwcMpqCkdcmgRwfuvcD/lRAZAz8QkOLTJsupHc3dOLQ/sugXA9IjyD/a0PqgsPwOpLSpucA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501733; c=relaxed/simple;
-	bh=f2swh1BiXfW91FUevCIc3zR2O4ihP9AVHStp90Tff4Q=;
+	s=arc-20240116; t=1788501736; c=relaxed/simple;
+	bh=Nth+trzEERg63GcnSReurzKfGjFNOVM5/BLOGZKBtw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jaTNkUFyejjXoy4DX9kTJ+Ro/5+bK0BpDhMapt3RKNU2sqJTzOFrIiSRF+f8G/cajgnRNYX75t1JdE/tX0GoCsEIgij9sR0FBY1ul+jF4ZFN8Po9WgedKSZk8vxD7hQa8V1eY1tXMEVhtWclkicVqk2SnM5dkP61tgIOU7Qwabg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXwhnuh2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6kfSRIcf6oxPZHo5Et7PAiHs4Q8ztFkOX1Ws+wtZPliz7XkO/vu705h6U0zb5DsfAky5SlwZ5LSzAmLib+lgkm9dmu8bzXvjF+K3JjKSsfNL0E60m45GFdAxvM883p7in4chDK2nROgUNiDsVST4wQhgSSbFRB4BMghISpsIIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGhrZtDv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXwhnuh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF4D1F00A3D;
-	Fri,  4 Sep 2026 06:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGhrZtDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753EB1F00A3D;
+	Fri,  4 Sep 2026 06:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501732;
-	bh=pW3TX9kuadlNUhGfZqBJzmie6jrVWXxc2CvwtNME8Ec=;
+	s=korg; t=1788501735;
+	bh=3/ktuSQ+3sCjTuHb68TVyF2WQwNfPLKJjjLc/AwiFcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXwhnuh2Bo6WhegXOTLTUCYOpqs7D4wXygdc9lOznZHbuR5+juRou5Xn+6z4rQaDA
-	 YTjXH0x06iuZxhRoZRzWaSvUVRN9b9upK7128T1tf2dy7eHHjT/9nFy88b+QF92veb
-	 GdenCUSZVAN61SXJG3UTXPNzWqsHXAbrfd93T4rU=
+	b=lGhrZtDvNWgPFkWduByzvP3cCr4z1UJdqJ5LWigC7IlsWDU4WUWaYbHZ/SF1i92ok
+	 XjZH+w2uTn64p6z5XWduSRLIyeqJhJhHIprFeGplme6HIFPdMGb0UkgHD7K12pTy0D
+	 o3qmFwjqBwrR74sMd2Ij67xbUCo+uUIt6wwWxdZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jianyun Gao <jianyungao89@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 513/552] dm-pcache: fix implicit u8 truncation of gc_percent in message handler
-Date: Fri,  4 Sep 2026 07:01:10 +0200
-Message-ID: <20260904045802.265710041@linuxfoundation.org>
+Subject: [PATCH 6.18 514/552] dm-pcache: fix use-after-free and invalid seg operations in kset_replay()
+Date: Fri,  4 Sep 2026 07:01:11 +0200
+Message-ID: <20260904045802.286579347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,17 +52,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Jianyun Gao <jianyungao89@gmail.com>
 
-commit fb9e17287a4ea1cbbcedc77e6866978ecc2a7b55 upstream.
+commit c2e894eac398b258f12fdec73ed6ba081047f7b3 upstream.
 
-When setting gc_percent via message, kstrtoul parses the input into an
-unsigned long, which is then implicitly truncated to u8 when passed to
-pcache_cache_set_gc_percent(). For example, value 266 (0x10A) silently
-truncates to 10 (0x0A), successfully bypassing the > 90 upper bound
-check in pcache_cache_set_gc_percent(), and setting a different value
-than the user intended.
+In kset_replay, when key->seg_gen is stale (key->seg_gen <
+key->cache_pos.cache_seg->gen), cache_key_put(key) is called but then
+key->cache_pos.cache_seg is accessed as the argument to cache_seg_get().
+This is a use-after-free on the freed key memory. Although mempool
+recycled memory is not immediately reclaimed or overwritten in practice,
+this is still a potential UAF bug.
 
-Use kstrtou8 directly instead of kstrtoul, so that overflow values are
-properly rejected.
+Additionally, for expired invalid keys, setting the cache->seg_map bit
+and calling cache_seg_get() is unreasonable since the corresponding
+segment data is no longer valid.
+
+Fix both issues by moving cache_seg_get() and __set_bit() after the
+gen check, so they only execute for valid keys, and using continue to
+skip invalid keys.
 
 Cc: stable@vger.kernel.org
 Fixes: 1d57628ff95b ("dm-pcache: add persistent cache target in device-mapper")
@@ -70,31 +75,35 @@ Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-pcache/dm_pcache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-pcache/cache_key.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-pcache/dm_pcache.c b/drivers/md/dm-pcache/dm_pcache.c
-index d5cfd162c063..645fc27d82ba 100644
---- a/drivers/md/dm-pcache/dm_pcache.c
-+++ b/drivers/md/dm-pcache/dm_pcache.c
-@@ -439,13 +439,13 @@ static int dm_pcache_message(struct dm_target *ti, unsigned int argc,
- 			     char **argv, char *result, unsigned int maxlen)
- {
- 	struct dm_pcache *pcache = ti->private;
--	unsigned long val;
-+	u8 val;
- 
- 	if (argc != 2)
- 		goto err;
- 
- 	if (!strcasecmp(argv[0], "gc_percent")) {
--		if (kstrtoul(argv[1], 10, &val))
-+		if (kstrtou8(argv[1], 10, &val))
+--- a/drivers/md/dm-pcache/cache_key.c
++++ b/drivers/md/dm-pcache/cache_key.c
+@@ -736,18 +736,17 @@ static int kset_replay(struct pcache_cac
  			goto err;
+ 		}
  
- 		return pcache_cache_set_gc_percent(&pcache->cache, val);
--- 
-2.55.0
-
+-		__set_bit(key->cache_pos.cache_seg->cache_seg_id, cache->seg_map);
+-
+ 		/* Check if the segment generation is valid for insertion. */
+ 		if (key->seg_gen < key->cache_pos.cache_seg->gen) {
+ 			cache_key_put(key);
+-		} else {
+-			cache_subtree = get_subtree(&cache->req_key_tree, key->off);
+-			spin_lock(&cache_subtree->tree_lock);
+-			cache_key_insert(&cache->req_key_tree, key, true);
+-			spin_unlock(&cache_subtree->tree_lock);
++			continue;
+ 		}
+ 
++		__set_bit(key->cache_pos.cache_seg->cache_seg_id, cache->seg_map);
++		cache_subtree = get_subtree(&cache->req_key_tree, key->off);
++		spin_lock(&cache_subtree->tree_lock);
++		cache_key_insert(&cache->req_key_tree, key, true);
++		spin_unlock(&cache_subtree->tree_lock);
+ 		cache_seg_get(key->cache_pos.cache_seg);
+ 	}
+ 
 
 
