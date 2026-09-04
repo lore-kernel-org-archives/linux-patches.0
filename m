@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A68840BCD4;
-	Fri,  4 Sep 2026 05:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464C43242BD;
+	Fri,  4 Sep 2026 05:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501292; cv=none; b=EBmJuBBmiNQjfVl6XnYX9iX+bj113la5/qjnNin3czxC/sXIjiMgPIyHvhbzgp5WT4Bw5wh71qmQXm0wv0tvlQ68j21NOMzOKskCPCFgwL9huI+YhJaKAx59vxiTAL7swQopMtRYytkTtiYPJ077QROqExPrAPu9uVuXe+FCdZI=
+	t=1788501295; cv=none; b=eENuN2Y8yfrfYzregtw7Xpf762Xe9tudhGnXJoVYM2nThn+CajGaeAmbkOIcidVg35cT9Uz++VnOHsr8QFbPhGWJGlkaVy1ocP/dVUFtAe2ShWGNpHytKZzhxwbRUKfZkJ+KkyBErxg2+TNxlysMds6280/DKn4u2bJv6fSI1fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501292; c=relaxed/simple;
-	bh=dPDzRhygKH4wzLvck2yJuJn3YsUy2nAqSIK5R+BegS8=;
+	s=arc-20240116; t=1788501295; c=relaxed/simple;
+	bh=kBMWaAFS9Z/mzfq+ShivP9ss5Zak4ouWmLE+9cNikU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AL2qmd6jpD9mX2nlrzSYZotdXssrCWD9T40Q4fwpa6h26VcIdap8uYWTZYha5OBU/q+WTeJZCwwdDAXTAMsqcLtZWd3LqAfzmwwJOLyIzbAYnCdaOJ3nSZ4lxbKt3drL8dwXj8jVgxfuiiPQwwDn7EzD4ogJsb/Fa9WGXNubvu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVX/cx3q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TAhDx7wc+1wbfvqb9cYH4OY4VB8SgQBNSrqVR0RTItwkZIOJa6N6BT/XAvw5sNZnQqvL+jQfVGxrRncdm6CYAEcKku+ycJbtFHn5Z5lJNFU/Jl1X/0KQ7YMqLbc9ZD5TQ1GwgrnAprP4kBuBxAHJKKliilecYvjguaNyvTKDmQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwiPoql1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVX/cx3q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61061F00A3D;
-	Fri,  4 Sep 2026 05:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwiPoql1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE9B1F00A3D;
+	Fri,  4 Sep 2026 05:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501291;
-	bh=Dmo7G/fKiXnrnZd4QaBOxgkhknqZXZnwc749is7g7Tk=;
+	s=korg; t=1788501294;
+	bh=a+CP64ZOzFZC7oBL2f6BUlmU5O0nrifp8eemf+CuqUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AVX/cx3qrViQs2oAKvR8uotGsLEN9Mo/u9l0E3P/643LqmEiv9ZEf+4eE3q+DHUXP
-	 mjjGDYhkEVdwSbeRI8bup704lgqwLFRo6kuYzPq2z7Cm2lwcsApGnR/9gMaLp5AudL
-	 ce/Yw6amYT/Uv2rq/A3VLu4xvs6Ukbz+8sWMPqZI=
+	b=vwiPoql15SER/GtwH9/287OAdGFz+muNUsitiUJ6wU9hwOm/WsiNqdBX6bf36lGcj
+	 OAptEeFrbxthk+rGUivAxUSSe9BSYO5PCOV3qLUMcM766Jlk2YowPut1GEFKLdWmYk
+	 bsKpFxohUDU0MTeO0yKsd6Pb69Ym9fkC66h3vh2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 359/552] nvme-tcp: fix host memory disclosure on R2T for a read command
-Date: Fri,  4 Sep 2026 06:58:36 +0200
-Message-ID: <20260904045758.376966106@linuxfoundation.org>
+Subject: [PATCH 6.18 360/552] nvme-tcp: reject a read that transferred too few bytes
+Date: Fri,  4 Sep 2026 06:58:37 +0200
+Message-ID: <20260904045758.398039999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,23 +52,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 6efbc52237facda35d2d874fe1765bb4839275d8 upstream.
+commit 7fa3f73f6c8ddc5f0425b50fb2a626a782ef7d12 upstream.
 
-nvme_tcp_handle_r2t() does not check the direction of the request the
-R2T refers to. A malicious controller can send an R2T for a READ and
-the host will answer it: nvme_tcp_setup_h2c_data_pdu() builds the
-H2CData header and nvme_tcp_try_send_data() sends the request's data
-buffer. That buffer is the READ destination, so its contents go to the
-controller.
+nvme_tcp_recv_data() completes a request once the current C2HData PDU
+has been consumed. Nothing compares the total bytes received against
+the length the command asked for: struct nvme_tcp_request has no
+receive-side counter, queue->data_remaining is per queue, and
+blk_mq_end_request() completes for blk_rq_bytes(rq) unconditionally
+with no residual concept anywhere above.
 
-The command then completes normally and nothing is logged.
+A controller can therefore answer a 4096-byte read with 512 bytes and
+have it reported as a complete read; user space then gets 4096 bytes of
+which 3584 are whatever was already in the page. I reproduced that with
+a test target.
 
-Against a test controller that answers every READ with an R2T, a 4096
-byte buffered read returned all 4096 bytes, split over two R2Ts. The
-pages contained stale kernel data, including an array of struct page
-pointers.
-
-Reject an R2T for a request that is not a write.
+Count the bytes received and refuse to complete a successful read whose
+count does not match, at the two NVME_TCP_F_DATA_SUCCESS paths and in
+nvme_tcp_process_nvme_cqe(). The success test shifts req->status right
+by one, because the driver keeps the wire value there and shifts it on
+completion, so the check must see what the completion path will see.
+Only REQ_OP_READ is checked, because there the length comes from the
+sectors the request covers; a passthrough command is built by its
+submitter, which picks both command and buffer, so the kernel has
+nothing to compare against.
 
 Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
 Cc: stable@vger.kernel.org
@@ -76,24 +82,93 @@ Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nvme/host/tcp.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
 --- a/drivers/nvme/host/tcp.c
 +++ b/drivers/nvme/host/tcp.c
-@@ -756,6 +756,13 @@ static int nvme_tcp_handle_r2t(struct nv
- 	}
- 	req = blk_mq_rq_to_pdu(rq);
+@@ -117,6 +117,7 @@ struct nvme_tcp_request {
  
-+	if (unlikely(rq_data_dir(rq) != WRITE)) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"req %d unexpected r2t for a non-write command\n",
-+			rq->tag);
-+		return -EPROTO;
-+	}
+ 	struct bio		*curr_bio;
+ 	struct iov_iter		iter;
++	u32			data_recvd;
+ 
+ 	/* send state */
+ 	size_t			offset;
+@@ -621,6 +622,29 @@ static void nvme_tcp_error_recovery(stru
+ 	queue_work(nvme_reset_wq, &to_tcp_ctrl(ctrl)->err_work);
+ }
+ 
++/*
++ * NVMe has no short read: a read that completes successfully must
++ * have transferred everything it asked for.
++ */
++static bool nvme_tcp_data_in_short(struct nvme_tcp_queue *queue,
++				   struct request *rq)
++{
++	struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
 +
- 	if (unlikely(!r2t_length)) {
- 		dev_err(queue->ctrl->ctrl.device,
- 			"req %d r2t len is %u, probably a bug...\n",
++	if (le16_to_cpu(req->status) >> 1)
++		return false;
++	if (req_op(rq) != REQ_OP_READ || !req->data_len)
++		return false;
++	if (likely(req->data_recvd == req->data_len))
++		return false;
++
++	dev_err(queue->ctrl->ctrl.device,
++		"queue %d tag %#x short data-in: got %u of %u\n",
++		nvme_tcp_queue_id(queue), rq->tag,
++		req->data_recvd, req->data_len);
++	return true;
++}
++
+ static int nvme_tcp_process_nvme_cqe(struct nvme_tcp_queue *queue,
+ 		struct nvme_completion *cqe)
+ {
+@@ -640,6 +664,9 @@ static int nvme_tcp_process_nvme_cqe(str
+ 	if (req->status == cpu_to_le16(NVME_SC_SUCCESS))
+ 		req->status = cqe->status;
+ 
++	if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++		return -EPROTO;
++
+ 	if (!nvme_try_complete_req(rq, req->status, cqe->result))
+ 		nvme_complete_rq(rq);
+ 	queue->nr_cqe++;
+@@ -971,6 +998,7 @@ static int nvme_tcp_recv_data(struct nvm
+ 		*len -= recv_len;
+ 		*offset += recv_len;
+ 		queue->data_remaining -= recv_len;
++		req->data_recvd += recv_len;
+ 	}
+ 
+ 	if (!queue->data_remaining) {
+@@ -979,6 +1007,8 @@ static int nvme_tcp_recv_data(struct nvm
+ 			queue->ddgst_remaining = NVME_TCP_DIGEST_LENGTH;
+ 		} else {
+ 			if (pdu->hdr.flags & NVME_TCP_F_DATA_SUCCESS) {
++				if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++					return -EPROTO;
+ 				nvme_tcp_end_request(rq,
+ 						le16_to_cpu(req->status));
+ 				queue->nr_cqe++;
+@@ -1027,6 +1057,9 @@ static int nvme_tcp_recv_ddgst(struct nv
+ 					pdu->command_id);
+ 		struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
+ 
++		if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++			return -EPROTO;
++
+ 		nvme_tcp_end_request(rq, le16_to_cpu(req->status));
+ 		queue->nr_cqe++;
+ 	}
+@@ -2729,6 +2762,7 @@ static blk_status_t nvme_tcp_setup_cmd_p
+ 	req->status = cpu_to_le16(NVME_SC_SUCCESS);
+ 	req->offset = 0;
+ 	req->data_sent = 0;
++	req->data_recvd = 0;
+ 	req->pdu_len = 0;
+ 	req->pdu_sent = 0;
+ 	req->h2cdata_left = 0;
 
 
