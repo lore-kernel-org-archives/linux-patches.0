@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359873F1AB8;
-	Fri,  4 Sep 2026 06:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C62923BD1B;
+	Fri,  4 Sep 2026 06:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502761; cv=none; b=pxr8Nb+9yBNbaGQU1UnU33PIMh1WZToaKwEnPtfw1Q90mNaZm8mO0KnWdNIDmcB2DnnPlptMTKWjP7V4Cabpk8fehSNb/JDZvUZ4nBD+vu64fIpHs1jK+CvB/26UD6ZEqGrQbAsqLQuw86GCIrIU75Mpx5Y/NTMn3at8k6Mx72k=
+	t=1788502763; cv=none; b=XeX4IHdsBNpCSmTWvr+HzZN9VbAhm5bGIF3Gg8LcvbBu51WVYndA7BGtavFxWgr9iYKTnk2uN+77fg9P8JGd0nd1EmSlWMStfnOz2Mh0DdQYH3zu8xBN/QYqbdKhF0RCWsmL3qV0AGtr7jQ2ABQbN+owc1mLk1o/w5M34dhSF/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502761; c=relaxed/simple;
-	bh=bXbRDEKhV3/YirUv/cdp+9tE41e/ATGA1r/YuVi1B90=;
+	s=arc-20240116; t=1788502763; c=relaxed/simple;
+	bh=0fbSNY2oOnjx2pgEvEh4JPcm9zsvKxGkg6/6yP+gjWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdu/6mD4SoOeW+aWLVoecacO8Br8Xy+fF3CJSMgSiBqi7HpnGN8wS1oy2/q7/TmmUF7ZsI2/BgHzgSqvpuSTBrXUmxNo7ZXtUeDkwlKuzK7P/Q6Mtm5pU9Cen0SreyyPc/J6M9qI9yd/pQ3K70l9chH+okj9a81gnIdPi8XBckc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwnZy+3U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ru+eYMr2EFRtY2N0slbj9qY+IH4gqCTbhK5ZfBOpKJvhW78xv/8xmAWOgdbFwB3eoP6FdDsxY3PI68czY0CQHed6nu1bcLAkEPlDvjommcFYodfzRYT6fjqF8egPlfH95EiiBkeh/f9hNRErnHYYsccZDV5o8yWo0cOZ/o5vdGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yah3zpgf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwnZy+3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA6F1F00A3D;
-	Fri,  4 Sep 2026 06:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yah3zpgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795A61F00A3E;
+	Fri,  4 Sep 2026 06:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502759;
-	bh=ca4My48HfriWM8c7Z++DBtiJvMvZZ7jQjtihfs73Ygg=;
+	s=korg; t=1788502762;
+	bh=/HiIgRLpgLp4ty6Rnrr9IjPMTUjV3+XgklYPTehrAjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uwnZy+3UsQs5H5jBf+6f+FetGxhmrmwk+JE9eTo34np7ocDhnroXIfIP0YOGXltFW
-	 sQNyd5MxVmwDYGCEPxGuatLwaL1itgGY7AoOgq9Y6nv0MOpxUqjUWvALB3IGruKLFZ
-	 YhFWgI/3c6sYPFtk4EY6HoA6geXZmyq7vshucos8=
+	b=yah3zpgfEagG2rkBbREWZrepvOUE9B+/ScrsWDXV3vUMwthXAoxLX+d/mBa5XQzr5
+	 LBf3fuecWUcBxhaj4R+LmF0RnaNRvO3NIjq0FiAdBP46mEvv08QSJ0EY3Q9359CjIX
+	 py+YaucJ5Ju2K0bbNKEv1rYndCscZw6wopNHdeyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 277/403] power: supply: lp8788-charger: fix use-after-free on remove
-Date: Fri,  4 Sep 2026 07:01:20 +0200
-Message-ID: <20260904045741.160335708@linuxfoundation.org>
+Subject: [PATCH 6.12 278/403] power: supply: qcom_battmgr: terminate the strings from firmware
+Date: Fri,  4 Sep 2026 07:01:21 +0200
+Message-ID: <20260904045741.182618675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,44 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 831c29a12d560f8a3225f43050b3fbb5dfd79c66 upstream.
+commit ab1112df8f4ffa88cb024dd370c432ced80f77d8 upstream.
 
-lp8788_charger_remove() flushes charger_work before unregistering the
-IRQs. An IRQ thread can queue charger_work after flush_work() has
-returned. The work can then run after devres frees pchg and dereference
-it in lp8788_charger_event().
+The qcom_battmgr_sc8280xp_strcpy() takes a Pascal-style string when the
+firmware sends one. Otherwise it copies all BATTMGR_STRING_LEN bytes and
+leaves the destination without a terminator.
 
-Unregister the IRQs first. free_irq() waits for any running threaded
-handler, so no handler can queue more work afterwards. Then use
-cancel_work_sync() to cancel pending work or wait for running work to
-finish.
+Those destinations are model_number, serial_number and oem_info, each
+BATTMGR_STRING_LEN and declared next to each other. They go out to user
+space as val->strval, which power_supply_format_property() prints with
+"%s", so a firmware string that fills the whole field makes that read run
+into the following members.
 
-This issue was found by an in-house static analysis tool.
+Use strscpy() so the copy always terminates, the way the SM8350 path
+already does for the same field.
 
-Fixes: 98a276649358 ("power_supply: Add new lp8788 charger driver")
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260802035442.421697-1-fanwu01@zju.edu.cn
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260727074119.2585463-1-sammiee5311@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/lp8788-charger.c |    2 +-
+ drivers/power/supply/qcom_battmgr.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/lp8788-charger.c
-+++ b/drivers/power/supply/lp8788-charger.c
-@@ -710,8 +710,8 @@ static void lp8788_charger_remove(struct
- {
- 	struct lp8788_charger *pchg = platform_get_drvdata(pdev);
- 
--	flush_work(&pchg->charger_work);
- 	lp8788_irq_unregister(pdev, pchg);
-+	cancel_work_sync(&pchg->charger_work);
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -976,7 +976,7 @@ static void qcom_battmgr_sc8280xp_strcpy
+ 		memcpy(dest, src + 1, len);
+ 		dest[len] = '\0';
+ 	} else {
+-		memcpy(dest, src, BATTMGR_STRING_LEN);
++		strscpy(dest, src, BATTMGR_STRING_LEN);
+ 	}
  }
  
- static struct platform_driver lp8788_charger_driver = {
 
 
