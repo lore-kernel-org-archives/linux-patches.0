@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77922419FBB;
-	Fri,  4 Sep 2026 05:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488B2415F22;
+	Fri,  4 Sep 2026 05:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499322; cv=none; b=NzJUmebvfz0Rp4Xj9Cnf3s+GEFtVXePbw2bTICW4BGxjMVh2r41wWbu2yqmuAjkf3L97cVB4xODFoOrOkTDkeGg4THGle04LOihsWBlRWTW2Hc4m3MHHZJQ7FmrIZuggsR1MSEYV39+Ptf0OOmACrX4T+vN8/Q+pK46zr/Fgd/k=
+	t=1788499325; cv=none; b=m1LKm80cLFBLnFU2GJFGN0HfG+L1TWOWhvoP3Sj2eEug7DXmCE0Te22Fe2VbYzw+/xDwHTmLyo5It+W0PWuib0o9Z0sIrs/LTtlszpvbD00u2XqP4I2+8YLVG0NF10OguvQhLbSNt9tcfvN+2dRKPFB/d+nrwCqeWDbxB3HzG5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499322; c=relaxed/simple;
-	bh=QwA3KKrF/lTjMYFcnUD1/LvoJShr7Ugot4yM8Z4Pp4c=;
+	s=arc-20240116; t=1788499325; c=relaxed/simple;
+	bh=4q9STuB6rR3Q0vDZDgtfiI4gbWDky56CwzHng9EFCaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smoliBBNG8ck0Wj/TwiWsHhMmjE+bDZC6w3GKh5WP4HlhOJ5Nnc4OU7kN9UB3eTQ4tAO3cAc+90IyqGEuKx0vZRryz9MMTwhZ1r6ms3g21xY+EWXucsgR2a+VRSpTeWXkvJajBXo4nihFEfmWJOxsMohCfAfXn/Lno5Y+m/JOmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1JVz91M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LWL8DYLK34oZWw5NW9G9xQaGmoeqKSPLXZ9iHMuIASgc9Ri0k9Qcw7f/U2SPMq6lREZvtYgEzoN5RH7ekUVIjy4jZr/B/dyFRpaXP18bRDkLRQ0J/Mm0daBAMCH0y5583m/6bfLwaKCLxyZXoNEWr92qILg1zvCQJH2Mo/9ydJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQDiAHsC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1JVz91M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13061F00ACA;
-	Fri,  4 Sep 2026 05:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQDiAHsC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44D31F00A3D;
+	Fri,  4 Sep 2026 05:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499321;
-	bh=+XQZh+8jc3eBvIJ8Vsl2MvW+VmH7cUNMOBmeQoI2OAE=;
+	s=korg; t=1788499324;
+	bh=Jay8LQpXSS5wQlr0mTI3cUcrfQe57SYi/Vr7EDZBosQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j1JVz91MdFbNHDotOQd4m+4gkDMHFcM+K6EC8rlBfPiClGJuX0d4l29Rcmrj25Cx/
-	 MCbPbS/AKeCDI3vxSDKHDz/kodZkjgl3kBrSfTSk6K6P4uQQ8cS5qb35cCJ5qDKzII
-	 E/m6IHPvcK0f5gpxV2O9Mwfo9LibUdZFUO66JFLU=
+	b=NQDiAHsCLW4FPE+3jvRJmR8l7IUn/9Dzk61s14Hoz4sq4xVRZoPmmCj8jHhOgMmzg
+	 z+0gV+76mdQWmwUZrbsW//AjrnPRPN48zMMrssbeoAHzVTF+N3u0o1VRHGrnNauQVK
+	 Vyj44PpHI+mp2NvNFmBh5ibiCV91EJHEmxTwtWQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 376/713] SUNRPC: Check svc pool percpu counter allocation
-Date: Fri,  4 Sep 2026 06:55:44 +0200
-Message-ID: <20260904045812.255071387@linuxfoundation.org>
+Subject: [PATCH 7.2 377/713] SUNRPC: close backchannel before destroying callback service
+Date: Fri,  4 Sep 2026 06:55:45 +0200
+Message-ID: <20260904045812.276885771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,117 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 43e11e164704dde975c9edb370de1a06bec67270 upstream.
+commit 3674f780f47d2906b5a0f7199b66973067bdfeca upstream.
 
-__svc_create() initializes three per-pool percpu_counter stats and
-ignores every return value. On SMP, percpu_counter_init() fails when
-__alloc_percpu_gfp() cannot satisfy the allocation, leaving the failed
-counter with fbc->counters == NULL and its embedded raw_spinlock_t,
-list_head, and count never initialized. __svc_create() returns the
-half-constructed svc_serv to nfsd, lockd, or the NFS callback service
-anyway.
+A backchannel receive can complete a request while the NFS callback
+service is being torn down.  xprt_complete_bc_request() removes the
+request from bc_pa_list, drops bc_alloc_count, marks the request in use,
+and then asks xprt_enqueue_bc_request() to hand it to the callback
+service.
 
-Once that service is live, the hot-path increments in
-svc_xprt_enqueue(), svc_handle_xprt(), and
-svc_pool_wake_idle_thread() reach a counter whose backing pointer is
-NULL. The pointer is a per-cpu offset, so the access does not fault:
-it resolves to offset zero of the current CPU's per-cpu area and
-silently corrupts whatever variable lives there. A
-/proc/fs/nfsd/pool_stats read walks the same NULL per-cpu storage and
-returns garbage, and on CONFIG_DEBUG_SPINLOCK or lockdep it splats on
-the never-initialized lock.
+If teardown has already cleared xprt->bc_serv, xprt_enqueue_bc_request()
+currently returns without enqueueing or freeing the committed request.
+The xprt_get() taken on entry is leaked as well.  If the producer wins
+the race before bc_serv is cleared, it can also enqueue onto sv_cb_list
+after nfs_callback_down() has stopped the callback threads, leaving the
+request linked to a svc_serv that is about to be freed.
 
-Creating the broken service requires a percpu allocation failure during
-RPC server startup, so it is reachable only by a local administrator
-under memory pressure or fault injection; a remote peer cannot induce
-the bad state on its own.
+Close the producer side before callback threads are stopped.  Add
+xprt_svc_shutdown_bc() to clear xprt->bc_serv under bc_pa_lock, and call
+it on callback shutdown and callback-start failure before stopping the
+service threads.  Requests that lose the NULL transition in
+xprt_enqueue_bc_request() are released through the normal backchannel
+free path after balancing bc_slot_count.  Finally, drain any remaining
+sv_cb_list requests after the callback threads have stopped and before
+svc_destroy() frees the service.
 
-Check each percpu_counter_init() return value in __svc_create() and
-fail when an allocation fails, unwinding the counters already set up
-in the current pool and in every pool initialized before it. A
-discrete percpu_counter_destroy() per counter at teardown frees each
-per-cpu allocation exactly once.
-
-Fixes: ccf08bed6e7a ("SUNRPC: Replace pool stats with per-CPU variables")
+Fixes: 441244d4273a ("SUNRPC: cleanup common code in backchannel request")
+Fixes: 9e9fdd0ad0fb ("NFSv4.1: protect destroying and nullifying bc_serv structure")
 Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-tier2-local-v2-2-5a0fd532db57@oracle.com
+Link: https://patch.msgid.link/20260528-tier2-v1-6-d026a1415e0b@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc.c |   45 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 6 deletions(-)
+ fs/nfs/callback.c              |  4 +++-
+ include/linux/sunrpc/bc_xprt.h |  5 +++++
+ net/sunrpc/backchannel_rqst.c  | 38 +++++++++++++++++++++++++++-------
+ 3 files changed, 39 insertions(+), 8 deletions(-)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -503,6 +503,35 @@ __svc_init_bc(struct svc_serv *serv)
- }
- #endif
+diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
+index ff4e9fd38e83..bc282b744f34 100644
+--- a/fs/nfs/callback.c
++++ b/fs/nfs/callback.c
+@@ -231,8 +231,9 @@ int nfs_callback_up(u32 minorversion, struct rpc_xprt *xprt)
+ 	cb_info->users++;
+ err_net:
+ 	if (!cb_info->users) {
++		xprt_svc_shutdown_bc(xprt);
+ 		svc_set_num_threads(cb_info->serv, 0, 0);
+-		svc_destroy(&cb_info->serv);
++		xprt_svc_destroy_nullify_bc(xprt, &cb_info->serv);
+ 	}
+ err_create:
+ 	mutex_unlock(&nfs_callback_mutex);
+@@ -254,6 +255,7 @@ void nfs_callback_down(int minorversion, struct net *net, struct rpc_xprt *xprt)
  
-+static int svc_pool_init_counters(struct svc_pool *pool)
-+{
-+	int err;
-+
-+	err = percpu_counter_init(&pool->sp_messages_arrived, 0, GFP_KERNEL);
-+	if (err)
-+		return err;
-+	err = percpu_counter_init(&pool->sp_sockets_queued, 0, GFP_KERNEL);
-+	if (err)
-+		goto err_sockets;
-+	err = percpu_counter_init(&pool->sp_threads_woken, 0, GFP_KERNEL);
-+	if (err)
-+		goto err_threads;
-+	return 0;
-+
-+err_threads:
-+	percpu_counter_destroy(&pool->sp_sockets_queued);
-+err_sockets:
-+	percpu_counter_destroy(&pool->sp_messages_arrived);
-+	return err;
-+}
-+
-+static void svc_pool_destroy_counters(struct svc_pool *pool)
-+{
-+	percpu_counter_destroy(&pool->sp_messages_arrived);
-+	percpu_counter_destroy(&pool->sp_sockets_queued);
-+	percpu_counter_destroy(&pool->sp_threads_woken);
-+}
-+
+ 	mutex_lock(&nfs_callback_mutex);
+ 	serv = cb_info->serv;
++	xprt_svc_shutdown_bc(xprt);
+ 	nfs_callback_down_net(minorversion, serv, net);
+ 	cb_info->users--;
+ 	if (cb_info->users == 0) {
+diff --git a/include/linux/sunrpc/bc_xprt.h b/include/linux/sunrpc/bc_xprt.h
+index 98939cb664cf..59d0cc889beb 100644
+--- a/include/linux/sunrpc/bc_xprt.h
++++ b/include/linux/sunrpc/bc_xprt.h
+@@ -32,6 +32,7 @@ int xprt_setup_bc(struct rpc_xprt *xprt, unsigned int min_reqs);
+ void xprt_destroy_bc(struct rpc_xprt *xprt, unsigned int max_reqs);
+ void xprt_free_bc_rqst(struct rpc_rqst *req);
+ unsigned int xprt_bc_max_slots(struct rpc_xprt *xprt);
++void xprt_svc_shutdown_bc(struct rpc_xprt *xprt);
+ void xprt_svc_destroy_nullify_bc(struct rpc_xprt *xprt, struct svc_serv **serv);
+ 
  /*
-  * Create an RPC service
-  */
-@@ -567,12 +596,18 @@ __svc_create(struct svc_program *prog, i
- 		INIT_LIST_HEAD(&pool->sp_all_threads);
- 		init_llist_head(&pool->sp_idle_threads);
- 
--		percpu_counter_init(&pool->sp_messages_arrived, 0, GFP_KERNEL);
--		percpu_counter_init(&pool->sp_sockets_queued, 0, GFP_KERNEL);
--		percpu_counter_init(&pool->sp_threads_woken, 0, GFP_KERNEL);
-+		if (svc_pool_init_counters(pool))
-+			goto out_err;
- 	}
- 
- 	return serv;
-+
-+out_err:
-+	while (i--)
-+		svc_pool_destroy_counters(&serv->sv_pools[i]);
-+	kfree(serv->sv_pools);
-+	kfree(serv);
-+	return NULL;
+@@ -71,6 +72,10 @@ static inline void xprt_free_bc_request(struct rpc_rqst *req)
+ {
  }
  
- /**
-@@ -651,9 +686,7 @@ svc_destroy(struct svc_serv **servp)
- 	for (i = 0; i < serv->sv_nrpools; i++) {
- 		struct svc_pool *pool = &serv->sv_pools[i];
++static inline void xprt_svc_shutdown_bc(struct rpc_xprt *xprt)
++{
++}
++
+ static inline void xprt_svc_destroy_nullify_bc(struct rpc_xprt *xprt, struct svc_serv **serv)
+ {
+ 	svc_destroy(serv);
+diff --git a/net/sunrpc/backchannel_rqst.c b/net/sunrpc/backchannel_rqst.c
+index 0ffa4d01a938..1482b06e0f38 100644
+--- a/net/sunrpc/backchannel_rqst.c
++++ b/net/sunrpc/backchannel_rqst.c
+@@ -25,20 +25,39 @@ unsigned int xprt_bc_max_slots(struct rpc_xprt *xprt)
+ }
  
--		percpu_counter_destroy(&pool->sp_messages_arrived);
--		percpu_counter_destroy(&pool->sp_sockets_queued);
--		percpu_counter_destroy(&pool->sp_threads_woken);
-+		svc_pool_destroy_counters(pool);
+ /*
+- * Helper function to nullify backchannel server pointer in transport.
+- * We need to synchronize setting the pointer to NULL (done so after
+- * the backchannel server is shutdown) with the usage of that pointer
+- * by the backchannel request processing routines
+- * xprt_complete_bc_request() and rpcrdma_bc_receive_call().
++ * Close the backchannel producer side, drain any requests still
++ * queued on sv_cb_list, then destroy the callback service.
+  */
+ void xprt_svc_destroy_nullify_bc(struct rpc_xprt *xprt, struct svc_serv **serv)
+ {
+-	spin_lock(&xprt->bc_pa_lock);
++	struct svc_serv *bc_serv = *serv;
++	struct rpc_rqst *req;
++
++	xprt_svc_shutdown_bc(xprt);
++	while ((req = lwq_dequeue(&bc_serv->sv_cb_list, struct rpc_rqst,
++				  rq_bc_list)) != NULL) {
++		atomic_dec(&req->rq_xprt->bc_slot_count);
++		xprt_free_bc_request(req);
++	}
+ 	svc_destroy(serv);
++}
++EXPORT_SYMBOL_GPL(xprt_svc_destroy_nullify_bc);
++
++/*
++ * Clear the backchannel server pointer in the transport.  The NULL
++ * store is serialized under bc_pa_lock against readers of
++ * xprt->bc_serv in xprt_complete_bc_request() and
++ * rpcrdma_bc_receive_call().  Clearing it before the callback service
++ * is stopped prevents a producer from enqueueing onto a service that
++ * is being torn down.
++ */
++void xprt_svc_shutdown_bc(struct rpc_xprt *xprt)
++{
++	spin_lock(&xprt->bc_pa_lock);
+ 	xprt->bc_serv = NULL;
+ 	spin_unlock(&xprt->bc_pa_lock);
+ }
+-EXPORT_SYMBOL_GPL(xprt_svc_destroy_nullify_bc);
++EXPORT_SYMBOL_GPL(xprt_svc_shutdown_bc);
+ 
+ /*
+  * Helper routines that track the number of preallocation elements
+@@ -393,7 +412,12 @@ void xprt_enqueue_bc_request(struct rpc_rqst *req)
+ 	if (bc_serv) {
+ 		lwq_enqueue(&req->rq_bc_list, &bc_serv->sv_cb_list);
+ 		svc_pool_wake_idle_thread(&bc_serv->sv_pools[0]);
++		spin_unlock(&xprt->bc_pa_lock);
++		return;
  	}
- 	kfree(serv->sv_pools);
- 	kfree(serv);
+ 	spin_unlock(&xprt->bc_pa_lock);
++
++	atomic_dec(&xprt->bc_slot_count);
++	xprt_free_bc_request(req);
+ }
+ EXPORT_SYMBOL_GPL(xprt_enqueue_bc_request);
+-- 
+2.55.0
+
 
 
