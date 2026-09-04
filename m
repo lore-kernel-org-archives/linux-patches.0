@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56673F9F2F;
-	Fri,  4 Sep 2026 05:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5213B2FE4;
+	Fri,  4 Sep 2026 05:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498648; cv=none; b=fNyibetUlLfotAp1MuqHB+BLQ+toz8YxC38BbNUIYz16ygUAsT6u2MebDEcaGFyW0s6VsFT+xQPJ57/K4mUtO9p04UgLolKBIwY1jXFfXRC0eKKMO3cWIrSt4cZ9hMAVHc589UX7BHWGqUBxiaOPLOadrlQpBhmHR7mlOHBcOtU=
+	t=1788498650; cv=none; b=aHsrHzpLCee0/XQ8mrGS71/MPQDSu+m2DJ2P8/eonLWJM1Bc32Ptv+P6LpMwtLbdqBclyOBnSmvmXluo64wTuaxfkV9wg9YZxb6chmHSh7uCRlF4eQ5cGMomxs2dqLyw1TeRgffhPwJirCqmD8iGJKMfVJUblPzVDH5+4W6wLu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498648; c=relaxed/simple;
-	bh=HKu5aYLK3ufpQsGYHGBYwaqyPAhvsYg0AlmlFHHGc0I=;
+	s=arc-20240116; t=1788498650; c=relaxed/simple;
+	bh=NDOZe9eyk2VEBHSxCB4JjT4H+N6einbNgxGWrxzrrfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sEzrOhZkEvHrSfU/yc/8iROMvO4Y7eL+HrMTr6VBIN9h1KDle8S5lv0ZfZfXFkzIhuEeCTJBma8t2ZvpM3rHXW/vN8A6VHksyAT0Dj2gY0h3ELJ1FIufj6+1AnSbDxUEgi2/J/CYupZdL6bfXst4wIAIwvcDLvq7aIlCUjW092M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzM0tKb9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=opXn9xYe3LZiDeQ2PD9U7r6i7bB62AtQTm10fRcfMF2W+czKo/qOQ+5j27d9cNb8x5nIKhNMwqdbmsD9Ag+OuJMEkE7jSnsbc5BCpO+Euf5HfTAez4Q6NuLjWyWg/+TzuUmJmT7dP91iqiE5/Defl+/C8ghStcN1vX2HAQcQrHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMFPe0fQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzM0tKb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079471F00A3D;
-	Fri,  4 Sep 2026 05:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMFPe0fQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B911F00A3D;
+	Fri,  4 Sep 2026 05:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498646;
-	bh=t1oJqUqRbPhNLBovv++26xrZpqySy202GTR7yMpHOgU=;
+	s=korg; t=1788498649;
+	bh=RcqJ5J4tl9CUwsxluSbyLR5pBzlU6oZo8J9Vz7jXaZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GzM0tKb9e1fnaN5qiAUtxupgMtv8mKc9F7sAw9A12MQDtwKRfFOWXEC+bmxaj3cxv
-	 7M7o7EFvv4RSOMsVWgHQuO9gpQsPnG0fLxbhuZxvbvk/uozw0vdDR7bsdPPsxVwTRR
-	 Rf5yPPD4nuk1fKsO/fzk3EMopbiBVr+GkKb41RL4=
+	b=wMFPe0fQoc/ILK1yIiKQ0wrU8KIdjHAwk7N0yD8wjciAv2/BPU4kPMWYDa89pbRtt
+	 aDsCQ1/41joAOXEwScF4K9SB/7zemEK9+yjoXtx2utQqJDGZPVwHRv8/aKueD6Cln8
+	 Y6nWZENJKdBaTHMsG3SXfGyhAWpPHvyutWhof7FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 138/713] NFSD: check truncate permission under inode lock
-Date: Fri,  4 Sep 2026 06:51:46 +0200
-Message-ID: <20260904045806.924136590@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.2 139/713] NFSD: Encode only the status in NFS-ACL v2 GETACL error replies
+Date: Fri,  4 Sep 2026 06:51:47 +0200
+Message-ID: <20260904045806.945603011@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,96 +49,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit b778e0e0a16759f22a70579c3cf8d254a40d4a7f upstream.
+commit ed4edddad19babf76b56882ad9600f5646b167a0 upstream.
 
-nfsd_setattr() checks whether a size update needs NFSD_MAY_TRUNC
-before it takes inode_lock(). The comparison uses the file size sampled
-by that unlocked read, but the actual ATTR_SIZE update is applied later
-under inode_lock() by notify_change().
+The NFSv2 ACL GETACL reply is a union that carries file attributes
+and ACL data only when the status is NFS_OK. All error cases are
+void results. However, currently the NFSv2 ACL GETACL result encoder
+decides whether to append the "OK" body by testing only whether the
+file handle resolved to a positive dentry, not the actual reply
+status.
 
-This leaves a TOCTOU window for append-only files. If a client sends a
-SETATTR that does not shrink the file at the time of the unlocked
-sample, a concurrent append can extend the file before nfsd_setattr()
-takes inode_lock(). notify_change() then applies a real truncation
-without the NFSD_MAY_TRUNC check that rejects IS_APPEND(inode). The VFS
-truncate syscall paths perform their own append-only checks before
-calling notify_change(), so NFSD must make this decision against the
-locked size it is about to change.
+A GETACL request that resolves its file handle but then fails for
+another reason (an unsupported mask value, a getattr failure, or an
+ACL retrieval error) therefore appends file attributes and ACL data
+after the error status on the wire. Worse, when the mask is
+rejected, fh_getattr() hasn't been called at all, so those
+attributes are serialized from a zero-filled kstat and are junk.
 
-Split the write-count acquisition from the truncation permission check.
-Keep get_write_access() before the locked setattr work, then recheck
-whether the requested size is below i_size_read(inode) after inode_lock()
-has been acquired and before notify_change(ATTR_SIZE). This also avoids
-the plain unlocked inode->i_size load.
+The logic before the xdr_stream conversion used the reply status.
+Revert to that approach (but keep the xdr_stream conversion in
+place).
 
-Fixes: 783112f7401f ("nfsd: special case truncates some more")
+Fixes: f8cba47344f7 ("NFSD: Update the NFSv2 GETACL result encoder to use struct xdr_stream")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-6-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260712150911.48461-1-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |   30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ fs/nfsd/nfs2acl.c |   31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -419,21 +419,22 @@ nfsd_sanitize_attrs(struct inode *inode,
- }
+--- a/fs/nfsd/nfs2acl.c
++++ b/fs/nfsd/nfs2acl.c
+@@ -248,22 +248,21 @@ nfsaclsvc_encode_getaclres(struct svc_rq
  
- static __be32
--nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		struct iattr *iap)
-+nfsd_may_truncate(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+		  struct iattr *iap)
- {
- 	struct inode *inode = d_inode(fhp->fh_dentry);
- 
--	if (iap->ia_size < inode->i_size) {
--		__be32 err;
-+	if (iap->ia_size >= i_size_read(inode))
-+		return nfs_ok;
- 
--		err = nfsd_permission(&rqstp->rq_cred,
--				      fhp->fh_export, fhp->fh_dentry,
--				      NFSD_MAY_TRUNC | NFSD_MAY_OWNER_OVERRIDE);
--		if (err)
--			return err;
--	}
--	return nfserrno(get_write_access(inode));
-+	return nfsd_permission(&rqstp->rq_cred, fhp->fh_export, fhp->fh_dentry,
-+			       NFSD_MAY_TRUNC | NFSD_MAY_OWNER_OVERRIDE);
-+}
-+
-+static __be32
-+nfsd_get_write_access(struct svc_fh *fhp)
-+{
-+	return nfserrno(get_write_access(d_inode(fhp->fh_dentry)));
- }
- 
- static int __nfsd_setattr(struct dentry *dentry, struct iattr *iap)
-@@ -560,12 +561,17 @@ nfsd_setattr(struct svc_rqst *rqstp, str
- 	 * setattr call.
- 	 */
- 	if (size_change) {
--		err = nfsd_get_write_access(rqstp, fhp, iap);
-+		err = nfsd_get_write_access(fhp);
- 		if (err)
- 			return err;
- 	}
- 
- 	inode_lock(inode);
-+	if (size_change) {
-+		err = nfsd_may_truncate(rqstp, fhp, iap);
-+		if (err)
-+			goto out_unlock;
+ 	if (!svcxdr_encode_stat(xdr, resp->status))
+ 		return false;
+-
+-	if (dentry == NULL || d_really_is_negative(dentry))
+-		return true;
+-	inode = d_inode(dentry);
+-
+-	if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
+-		return false;
+-	if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
+-		return false;
+-
+-	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
+-				   resp->mask & NFS_ACL, 0))
+-		return false;
+-	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
+-				   resp->mask & NFS_DFACL, NFS_ACL_DEFAULT))
+-		return false;
++	switch (resp->status) {
++	case nfs_ok:
++		inode = d_inode(dentry);
++		if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
++			return false;
++		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
++			return false;
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
++					   resp->mask & NFS_ACL, 0))
++			return false;
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
++					   resp->mask & NFS_DFACL, NFS_ACL_DEFAULT))
++			return false;
++		break;
 +	}
- 	err = fh_fill_pre_attrs(fhp);
- 	if (err)
- 		goto out_unlock;
+ 
+ 	return true;
+ }
 
 
