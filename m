@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1689441CB50;
-	Fri,  4 Sep 2026 06:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70562415F22;
+	Fri,  4 Sep 2026 06:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502387; cv=none; b=cEgMvUBZkvFCg1DrzJf6mVwrl8CS2vyXhDypqCjBe4/FackDiLO3dXhfOMvZCmtzy5nqRmmk/zZhHLJCpS6YJJICnleU54YezmlJTwzgZ3ZDW4nliRta9GrSmEkuyk6iU7CoV9zSkwWJlD2/A71tVaTuE/fLEyS2AZApyo3pyt8=
+	t=1788502390; cv=none; b=s7WU/xlqzyEZlC4U86wVmoEg/NhNRpKUuethqlmX32YOB2GcZ1mlfZuW/uwxtK/4ctX4wzNg5NEdlVKYw/qmXdLWiR277gl/ztdoG9SXmE1olJM5nZwoYHLsy+luOa9K5um5TvtEz/nAOZY+WHS7kxYVyyEfa3lc7uikV5Kxgs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502387; c=relaxed/simple;
-	bh=0i5xD6+8YwXmqgz9Cl3ayJ7LWWiS+MYMjOV7jjSNNC0=;
+	s=arc-20240116; t=1788502390; c=relaxed/simple;
+	bh=OIoXNyfiyHWMLfh6TqTUHNurT2XuZetyYUlT+PLSNXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u37aPFFu39xkTw8ECXScEgXQWevgAMsJ4wSGzA578MckX+DxQ/z0VpOhYl2bizrAVlJgxw+lLkcvln1355PKMDafLJszADdJRnmogKciv/q9Rd0TWuCjwS0yudUCe7WIDcRdfHf1u/fvC/+cfwiUjqrM8bMIEtXHJyA3sqxMphA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjJIpH9p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EwgK2Qg9ndqq5lkV9EgEz7IbwXAxjJj1LbyGlHHqd10xxYQCfHwTtDNGS+r3g5Qn+VMt3G2hpaDJR5ifU0Mv59f6JCnkBHHu8FjGnIO5oTJL2jhT7omqDplvHx+yKJiSzp9UKwu0L7j4w4qP0NjX0Z9hktiA1Nfkk04c6Oq1qlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrSZfUFk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjJIpH9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0B11F00A3D;
-	Fri,  4 Sep 2026 06:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrSZfUFk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA5F1F00A3D;
+	Fri,  4 Sep 2026 06:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502385;
-	bh=Ib7UxRjTRSPi+jnEdgEtlryvgu2GBLPGLnTJbmZ48VI=;
+	s=korg; t=1788502388;
+	bh=6wCTJNAHFZ63t29urm+w2zDi6qKjADjqSFLWMEWN05w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xjJIpH9p7xvv7hzg5EriNSVLa0yHp5bbcJgBQuy24EoARteFh/k44xmpY/ejtcpj/
-	 nnCJIWa6cTwbceSgVtVP5wNBAirbNZ7fDLx0xkRJSSq2ON6DG8Y41VF2iGlZuNe4rL
-	 jLuLwh4YjD094EASqXVycdgqMVKRZsA9l5DNodhk=
+	b=MrSZfUFk/Rd5fAjYYanO9d+2ep5J5oxuEMj9oCWe6l3OTUSq4GKJxxAhJdLA5927P
+	 BVzVPQws+mHWh4eKkn0lLKF1BBkZSLr9Ou07J+UF1sCZ66fv/i9G8B5hCVaz8AfJbi
+	 DU3tjsNcZkTSet7WhDFAidY1xFYnpwUmwgmuvjwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Zhiling Zou <zhilinz@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 190/403] ip6_tunnel: use skb_cow_head() in ip6_tnl_xmit()
-Date: Fri,  4 Sep 2026 06:59:53 +0200
-Message-ID: <20260904045739.178369679@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 191/403] ip6_gre: fix hardware header length for NBMA tunnels
+Date: Fri,  4 Sep 2026 06:59:54 +0200
+Message-ID: <20260904045739.200344303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -54,68 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 87f21b59ddc618eff9670c174842964ad65fdade upstream.
+commit 505b6d296c486ef7d1274f279d4c43a172f63224 upstream.
 
-ip6_tnl_xmit() may need to expand headroom before it can push the
-outer IPv6 and optional encap headers. It currently does that with
-skb_realloc_headroom(), copies skb->sk ownership, consumes the original
-skb, and then continues processing with the replacement skb kept only in
-its local variable.
+ip6gre_tnl_link_config_route() accumulates the lower device's hardware
+header length into dev->hard_header_len whenever header_ops is set. This
+is incorrect for both users of header_ops.
 
-That is safe only if the helper cannot fail afterwards. But this helper
-still has post-reallocation error exits. collect_md tunnels reject
-non-NONE encap after the replacement, and ip6_tnl_encap() can also fail
-later. In those cases the helper returns an error to its callers while
-the caller still only has the original skb pointer.
+ip6gretap and ip6erspan have a fixed Ethernet hardware header length.
+For an NBMA ip6gre tunnel, ip6gre_header() creates only the GRE header,
+the optional FOU or GUE header, and the outer IPv6 header. The lower
+device header is headroom needed later, not part of the tunnel device's
+hardware header.
 
-Both ip6_tnl_start_xmit() and the IPv6 GRE paths free the caller skb on
-error, so they can end up freeing an skb that ip6_tnl_xmit() already
-consumed.
+Keep the lower device header in needed_headroom. Set hard_header_len to
+the tunnel header length only for ARPHRD_IP6GRE devices with header_ops,
+and leave the fixed Ethernet header length unchanged for tap and erspan
+devices.
 
-Use skb_cow_head() instead. It provides the required headroom and
-writability without privately replacing the caller-owned skb, so later
-error returns cannot leave callers with a stale pointer.
-
-The Ethernet users, ip6gretap and ip6erspan, clear IFF_TX_SKB_SHARING
-and already call skb_cow_head() before entering ip6_tnl_xmit(). They do
-not rely on the removed skb_shared() reallocation. This also makes the
-IPv6 tunnel path consistent with ip_tunnel_xmit().
-
-Fixes: 058214a4d1df ("ip6_tun: Add infrastructure for doing encapsulation")
+Fixes: 832ba596494b ("net: ip6_gre: set dev->hard_header_len when using header_ops")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/30807a062ccc5c9c8a5ec2c5eb805ef279c50bdd.1786452593.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/64b46542bbe1701f07702aaa50273e2a87903db5.1786542637.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c |   15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ net/ipv6/ip6_gre.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1228,19 +1228,8 @@ route_lookup:
- 	 */
- 	max_headroom += LL_RESERVED_SPACE(tdev);
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1165,13 +1165,8 @@ static void ip6gre_tnl_link_config_route
+ 			return;
  
--	if (skb_headroom(skb) < max_headroom || skb_shared(skb) ||
--	    (skb_cloned(skb) && !skb_clone_writable(skb, 0))) {
--		struct sk_buff *new_skb;
+ 		if (rt->dst.dev) {
+-			unsigned short dst_len = rt->dst.dev->hard_header_len +
+-						 t_hlen;
 -
--		new_skb = skb_realloc_headroom(skb, max_headroom);
--		if (!new_skb)
--			goto tx_err_dst_release;
--
--		if (skb->sk)
--			skb_set_owner_w(new_skb, skb->sk);
--		consume_skb(skb);
--		skb = new_skb;
--	}
-+	if (skb_cow_head(skb, max_headroom))
-+		goto tx_err_dst_release;
+-			if (t->dev->header_ops)
+-				dev->hard_header_len = dst_len;
+-			else
+-				dev->needed_headroom = dst_len;
++			dev->needed_headroom = rt->dst.dev->hard_header_len +
++					       t_hlen;
  
- 	if (t->parms.collect_md) {
- 		if (t->encap.type != TUNNEL_ENCAP_NONE)
+ 			if (set_mtu) {
+ 				int mtu = rt->dst.dev->mtu - t_hlen;
+@@ -1199,8 +1194,8 @@ static int ip6gre_calc_hlen(struct ip6_t
+ 
+ 	t_hlen = tunnel->hlen + sizeof(struct ipv6hdr);
+ 
+-	if (tunnel->dev->header_ops)
+-		tunnel->dev->hard_header_len = LL_MAX_HEADER + t_hlen;
++	if (tunnel->dev->header_ops && tunnel->dev->type == ARPHRD_IP6GRE)
++		tunnel->dev->hard_header_len = t_hlen;
+ 	else
+ 		tunnel->dev->needed_headroom = LL_MAX_HEADER + t_hlen;
+ 
 
 
