@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237E83A16AC;
-	Fri,  4 Sep 2026 05:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D9D33FE09;
+	Fri,  4 Sep 2026 05:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498721; cv=none; b=T3sww0b8jNr8TesyTaN0mIL+65S9LMgExCXmht/f1yvEOnTBWF/hm3x6zungEhL9YR/seE34EEcfrLK7YCcBG58I4nQo3jQRiS9JjlvaMwfVoxg+ndJDuh83Lx6tLBRz1cdhnhVgxFinjLSGKqsdC61sziaOyjuuRVh3RlJt55E=
+	t=1788498723; cv=none; b=hNJ4RWa3oeYr7h/xfG9xGyIK43qPGzAX/ovFgUaTeEwJwc0yb7FrHPyoP/C47SWMrrGnYkUSAtKdjNaLvqrvwBkyx0HYzeIO/agakABexpalZs2LVmv9R+1xRRYm4SzE/zuyilA+CrGtg4RR8m0DABptnFX9Xl4UgBFPTiVbl1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498721; c=relaxed/simple;
-	bh=eA5zlIIPGCS3hlQFnOgzgiGCVP6tQS5loc/muM0Gtv8=;
+	s=arc-20240116; t=1788498723; c=relaxed/simple;
+	bh=m3mCmol/fzLFfn7UPhsam5dFSV0mkOIZxRWi114fZZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/gWZ12opkkxWdVHJA/vWErw8GSbVIx/BXJYrJBjubJGD4kHh7hZE0USe7gEpyUBRGQ8zX02qugH7p7H0wETnqHg4mqS+vBVXXVdWPnUFbPbyLHVE0F4m33HFHiY97qzMukoK+1qUonPcmXhgssguCfoYYXwoPN4/ZOEuME+0U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfGkPwtz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJ1mav+wufWARjZeaCn137jAEXtJvezk9oKqep9mQetnZk7V7FilKxOMd0QsP10RwzUM9lR0F15QMOrOzuHGhePxMzIK1VVZskwNxyoqG8/lFZV/SmeLCxQ2IwgmHQGIvKD1uHeidRifsOW1kKe8Gaa2+rAQO7zRM9wPBHedp3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BY8g0UJC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfGkPwtz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7121F00A3D;
-	Fri,  4 Sep 2026 05:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BY8g0UJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236E31F00A3D;
+	Fri,  4 Sep 2026 05:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498719;
-	bh=CZNuWNG+7ta0XoKtXI7zcT4nrNgYeJeW60tvKQaT3Nc=;
+	s=korg; t=1788498722;
+	bh=zmwlJek/zyolcVqNqyPEVBmVBO3o2o+9qR48QuaqMjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfGkPwtzZJzQPiHcsiYeasGhNHL90vrt1nZv226y9+08Lg8as05HCBVmVj1+n1JW9
-	 BUfhLbxiFFQknUn+8y9PkOwuBs6XBMNe81Ct2+qWK3wQUUQVV3vHAF63adXvM8BRGl
-	 6pfZ0fNtJce9Ii6Jmxg3VFMWgCP2P4pn7mjBVg90=
+	b=BY8g0UJCWJqy4oQkJcFaGnwRfrrkK4tEnXti6/A/D+VmZxvbBGNqNsJtPPmNbELBt
+	 QC2kFlRUZyHFJy3If3wgRCd8XSpXjur9APoCEVdfmsc4w9eHd/45V2xtzTCqW2tDPN
+	 ru+u/rGFSRNe902JnYd0rdaO3vFHzkFpHHTmBz50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.2 162/713] nfsd: add missing read barrier to rpc_status_get dumpit seqcount retry
-Date: Fri,  4 Sep 2026 06:52:10 +0200
-Message-ID: <20260904045807.455964922@linuxfoundation.org>
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 7.2 127/713] of: fix out-of-bounds read in of_alias_scan() stem parser
+Date: Fri,  4 Sep 2026 06:51:35 +0200
+Message-ID: <20260904045806.681042767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,60 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit a71f161a857117e8e0264deb7d14fff5c98adcf5 upstream.
+commit 5bb01c657ff9fc807c2c592ca18af34c4fc3bc6f upstream.
 
-The hand-rolled seqcount-like protocol in nfsd_nl_rpc_status_get_dumpit()
-is missing a read memory barrier (smp_rmb) before its second counter
-check.  The standard kernel read_seqcount_retry() includes smp_rmb()
-to ensure that all data reads complete before the counter is re-checked.
+The stem parser tests isdigit(*(end - 1)) before checking end > start
+and so reads one byte before the property name when the name is empty
+or all digits. Check the bound first.
 
-Without this barrier, on weakly-ordered architectures (ARM, POWER),
-the CPU may reorder field reads past the second counter check, making
-the retry logic ineffective: it could observe a consistent counter pair
-while reading fields that have been concurrently modified by the writer.
-
-Add smp_rmb() before the second counter check to order the field reads
-ahead of it, matching the barrier semantics of the standard seqcount
-read-side.  The begin-side smp_load_acquire() already pairs with the
-smp_store_release() in nfsd_dispatch(); with the smp_rmb() now ordering
-the field reads, the retry check no longer needs acquire semantics and
-reads the counter with a plain READ_ONCE(), as read_seqcount_retry()
-does.
-
-Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
+Fixes: 611cad720148 ("dt: add of_alias_scan and of_alias_get_id")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: Use READ_ONCE instead of smp_load_acquire() ]
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-2-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: Claude:claude-fable-5 [Claude Code]
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260805-nh-of-alias-overlay-v6-1-74f21d440819@nexthop.ai
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/of/base.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1576,11 +1576,14 @@ int nfsd_nl_rpc_status_get_dumpit(struct
- #endif /* CONFIG_NFSD_V4 */
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1967,7 +1967,7 @@ void of_alias_scan(void * (*dt_alloc)(u6
  
- 			/*
--			 * Acquire rq_status_counter before reporting the rqst
--			 * fields to the user.
-+			 * Read-side load-load fence: order the field reads
-+			 * above before the counter re-read below, mirroring
-+			 * the smp_rmb() in the standard seqcount retry. The
-+			 * begin-side smp_load_acquire() above pairs with the
-+			 * smp_store_release() in nfsd_dispatch().
- 			 */
--			if (smp_load_acquire(&rqstp->rq_status_counter) !=
--			    status_counter)
-+			smp_rmb();
-+			if (READ_ONCE(rqstp->rq_status_counter) != status_counter)
- 				continue;
+ 		/* walk the alias backwards to extract the id and work out
+ 		 * the 'stem' string */
+-		while (isdigit(*(end-1)) && end > start)
++		while (end > start && isdigit(*(end - 1)))
+ 			end--;
+ 		len = end - start;
  
- 			ret = nfsd_genl_rpc_status_compose_msg(skb, cb,
 
 
