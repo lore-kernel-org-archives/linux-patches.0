@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DAA4119FD;
-	Fri,  4 Sep 2026 05:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4E94119FD;
+	Fri,  4 Sep 2026 05:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498695; cv=none; b=CXEqsdmU7AmtoXTbtIAJlZdRlRjq0qayOHOefVFer4+BiYVam08/lMqhMjJ2q+LJ5w/+IOLGWDj/vE9JmXWfY0iLu9DM0w5UNaPsxvOxf9x3Z/EfGRfKj5s5eSGlI+4MtE3nlWEyp6mtqcp2dTC7oHJj5Jnj3ckBEw5JCyfAD/I=
+	t=1788498698; cv=none; b=Q+FS+VTdPZ3digQoJeiy5iXYnCMwXrHtmWcvK/7Rnn+ad4XbSGWlYzVYezdLUFjRKNSDntrJk9nZec1so4NfP06pvJR2D71Rhgl5uwpkWMmnYSAHWfQdLbKKImC/TPbhHjeGFq9FcCBJ8rqUFTXgidH93MylBrEHXXkcsS7g6mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498695; c=relaxed/simple;
-	bh=TQE+DR7F9i7eDOsKEzI8Bc52/InIBGErGVqoG594HRw=;
+	s=arc-20240116; t=1788498698; c=relaxed/simple;
+	bh=GUxK/sLkt72ffFqHA2cE7T1p/OSS1/U4Fgan8wiNBR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFeCNPRnDiJTLuvrVCISyrYingEdUeMmoPH/3wqFvaoXqBj94x/MQHA+12zHHKR46D33SDz8Bssta25+WuneCEDHW/ClkSQX0aj9V8yivg8B1MO9xXCVlIubnmG+XsvkXWD7je4H+rYZTTHGv018MKaZ2ZUm0E+AJx93xaOwKBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ho4yLQSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GdlIIVYDtLq1IGKIDKIQg6g0CufJVpfHktYhGYPHA+d/3ykz80WPH8SOeYqOkcncx2z6YDHQrnZ1wVgZmkHDnW28RgGo6ER1hnanOQJtxUVhoR/XHA3ZAA02WQ+kjKzbFPlPAdPhkalPfRdeF6H0tIeQSeDQ1ORGe+Bx1lJ8QPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxIIchC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ho4yLQSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154DF1F00A3D;
-	Fri,  4 Sep 2026 05:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxIIchC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA2B1F00A3D;
+	Fri,  4 Sep 2026 05:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498694;
-	bh=2S45nkSPZtb6DJ0jydQG+Qg4H8BWabtNyRixGWG753A=;
+	s=korg; t=1788498697;
+	bh=66pvR8EudnFT3o6Peic8KV7WpFzgZP/3jQIkI54pCbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ho4yLQSi+5zsyonIaWKB3Ramei8y4NMhlFtXUOYAf5V8Wb1MNyUlJvWPoGVI5oRbG
-	 BXpDAo3KS7wBGxwkquyF/Cx5x8Mpm2edV8GLhqOLdCJOjtR7EvHWgKw5uxqRS2QiKs
-	 EZtRVLXsqXWxwvVbG/Am+sDzfmmWOWXYlWbz/tJI=
+	b=qxIIchC9Hto7RL3sf+CXEL3GL9EHzLqQcz+bufRbPpdQBPTqDUy/orMEsfwaEGiTg
+	 5MMp1bVamfUrqOQwM8QgHvdYel555Yzyv7EWSOGfcBy39b7twXipyshS9JuFfOiDDO
+	 XoVhCIzjPalWG7eBzSvS36JnhAdSF5VPjIx9MXhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 153/713] nfsd: sample writeback error cursor before async COPY loop
-Date: Fri,  4 Sep 2026 06:52:01 +0200
-Message-ID: <20260904045807.256144853@linuxfoundation.org>
+Subject: [PATCH 7.2 154/713] nfsd: set SC_STATUS_FREED in nfsd4_drop_revoked_stid for delegations
+Date: Fri,  4 Sep 2026 06:52:02 +0200
+Message-ID: <20260904045807.279688201@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,61 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-commit 20a67a7d18221af736f124770c2c5e859b479046 upstream.
+commit 650d370cfbc66a96dd14d517bd704689b5bda4e5 upstream.
 
-_nfsd_copy_file_range() samples dst->f_wb_err into "since"
-after the copy loop, then uses it to detect writeback errors
-via filemap_check_wb_err() once vfs_fsync_range() returns.
-Because the nfsd_file cache reuses a single struct file
-across requests targeting the same inode, a concurrent
-COMMIT or stable WRITE on dst advances dst->f_wb_err to the
-current mapping->wb_err via file_check_and_advance_wb_err()
-during its own vfs_fsync_range(). If that advancement lands
-between the writeback error appearing in mapping->wb_err
-and the COPY worker sampling "since", the worker captures
-the already-advanced cursor, errseq_check() sees cur ==
-since and returns zero, and NFSD4_COPY_F_COMMITTED is set
-even though writeback failed. CB_OFFLOAD then encodes
-wr_stable_how = FILE_SYNC4, the client treats the copied
-data as durable, and the failure becomes silent data loss.
+nfsd4_drop_revoked_stid() handles FREE_STATEID for admin-revoked
+delegations but does not set SC_STATUS_FREED before releasing cl_lock.
+revoke_delegation() uses this flag to detect whether FREE_STATEID has
+already processed the delegation -- without it, the freed delegation is
+added to cl_revoked via list_add(), producing a use-after-free when
+cl_revoked is later traversed in __destroy_client().
 
-Sample since once at the start of the function. The cursor
-then reflects state in effect before this COPY issues any
-writes, and filemap_check_wb_err() detects any error that
-occurs during the copy regardless of which thread first
-observes it. This matches the pattern used by
-nfsd_vfs_write() and nfsd4_clone_file_range().
+The SC_STATUS_REVOKED path in nfsd4_free_stateid() (line 7983) already
+sets SC_STATUS_FREED correctly. Apply the same pattern to the
+SC_STATUS_ADMIN_REVOKED path in nfsd4_drop_revoked_stid().
 
-Closes: https://sashiko.dev/#/patchset/20260522194441.436065-1-cel@kernel.org?part=1
-Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
+Fixes: 8dd91e8d31fe ("nfsd: fix race between laundromat and free_stateid")
 Cc: stable@vger.kernel.org
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260522214558.460859-1-cel@kernel.org
+Link: https://patch.msgid.link/20260526104554.46262-1-kipreyyy@gmail.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1950,6 +1950,7 @@ static ssize_t _nfsd_copy_file_range(str
- 	/* See RFC 7862 p.67: */
- 	if (bytes_total == 0)
- 		bytes_total = ULLONG_MAX;
-+	since = READ_ONCE(dst->f_wb_err);
- 	do {
- 		/* Only async copies can be stopped here */
- 		if (kthread_should_stop())
-@@ -1965,7 +1966,6 @@ static ssize_t _nfsd_copy_file_range(str
- 	} while (bytes_total > 0 && nfsd4_copy_is_async(copy));
- 	/* for a non-zero asynchronous copy do a commit of data */
- 	if (nfsd4_copy_is_async(copy) && copy->cp_res.wr_bytes_written > 0) {
--		since = READ_ONCE(dst->f_wb_err);
- 		end = copy->cp_dst_pos + copy->cp_res.wr_bytes_written - 1;
- 		status = vfs_fsync_range(dst, copy->cp_dst_pos, end, 0);
- 		if (!status)
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -5172,6 +5172,7 @@ static void nfsd4_drop_revoked_stid(stru
+ 	case SC_TYPE_DELEG:
+ 		dp = delegstateid(s);
+ 		list_del_init(&dp->dl_recall_lru);
++		s->sc_status |= SC_STATUS_FREED;
+ 		spin_unlock(&cl->cl_lock);
+ 		nfs4_put_stid(s);
+ 		break;
 
 
