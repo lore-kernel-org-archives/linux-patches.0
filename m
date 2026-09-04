@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1861B3D9521;
-	Fri,  4 Sep 2026 05:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB0D3A16AC;
+	Fri,  4 Sep 2026 05:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498732; cv=none; b=a3e91rnu6IVOn6TqmsehvmfNc1vKqd2BgM+VFUAGGv7bTL66DjUl11iSenTQfMvZhfUDquvJ+FUEmlZ7aSpzq53EQaHaC2ohpD17vi9CU5og844EMkGq+QFc2tm0D1fXqSBaGvuukAKZOAHMA07u5i95M7AJK9IhiiHtmpCKdwE=
+	t=1788498735; cv=none; b=goSmbSVlLA5jsTcvqCVohdHeiHmrlN0RwSBEtzpcT1ZHevOuL5+ElYYCqHCvZaakL/ay/pTcOK0HWtGceZtejwoslz+17UvVXKXsYWyya2UrdsgltQHIO1EteWQGEJ5grFgU+A3ejJSQNNIxL6fzt3kDDvt5A+rXk2gm1Ca8v0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498732; c=relaxed/simple;
-	bh=0mMTm/VpTOMw/U2CTo55hYONr51LdgnjxqDlEzxGF64=;
+	s=arc-20240116; t=1788498735; c=relaxed/simple;
+	bh=/gvu/mPsj6mVHTq7EyxNppRFYfonDQfHBfE9Z/k4aIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7GoHC/B1xShW/qPd4yEGmWcHWWpi8xD4lcDUuMcJsWU5hptJpd7DlG6nYohmDQI5qpSripgjkhVLSiZReeof3oCX3C1K2fOQnUzidtAnzJej3k5BNlgO1E//gbIELM+R10qoAWwgt9/pM6rSMSOTHpbZSkYAhScQOmJP7H9o9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5j6Xtly; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BAjrSffmhzhANCJQ/0rvp9sUPyK1vhuquYO9ny4zi6gHCYbSVYy6KVTvpHuQwYxCBBtCvZi/wajKyD2WjUh5UYcyYQAFoMJB41OYd7SVcQ1uGjrkwpwJp4b4qMeAfNO245Ae2vDtbOfX3bgJHH2Kg/5vDfQJ8nb40iroO9+sb/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWVgfrGv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5j6Xtly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C171F00AC4;
-	Fri,  4 Sep 2026 05:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWVgfrGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525681F00A3E;
+	Fri,  4 Sep 2026 05:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498731;
-	bh=27L14dBcxUnZl+d4Cyq2/kGxiaqdQQoXLUK4iE0mwjg=;
+	s=korg; t=1788498733;
+	bh=4DjuS1D1A5WeUn2bl87KIWjGS4aLEYmoB1qHSiKQlck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E5j6Xtly89AGOGTtowpkmANCgsVJURVm12rrsKurVL2HRjZvQq1TfuDjVNyrnWUj3
-	 xZvrqB0AxTi+sYlQOoqTWrwfNy7kSR4UtRKAhKVpn/HAH8O4KWabe7KVW1VJYNHf+n
-	 ps/M7CaPydCQbzSXPNeCvkHewUknCKOd+NlEtZpc=
+	b=rWVgfrGvuQ46TSucwNC4kFz0c/jHPn8rEYfJQenn3trgHxM3JDOyXlyZx+O60m9Uc
+	 drmTjfYZJ30XPzHcz2iH+xKak/Yr8A5dFQJf5jW/3lCWsPE8gvBI8CllTMXFnOjJt0
+	 PKofJ5eYfZEIB+UgPx9J5MMEeMVJjiZfmz+xHgsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.2 165/713] nfsd: check client ownership when cancelling a copy-notify stateid
-Date: Fri,  4 Sep 2026 06:52:13 +0200
-Message-ID: <20260904045807.522451829@linuxfoundation.org>
+Subject: [PATCH 7.2 166/713] nfsd: check nfsd4_acl_to_attr() return value in nfsd4_create()
+Date: Fri,  4 Sep 2026 06:52:14 +0200
+Message-ID: <20260904045807.543710599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,54 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 6bdbfab96e0cf25e5f57dac5c09dc1749751a4bf upstream.
+commit 2c7912732184773dbd371a411da87af1cc080b86 upstream.
 
-On the OFFLOAD_CANCEL path (clp != NULL), manage_cpntf_state() freed the
-target cpntf state without checking ownership. The lookup key
-st->si_opaque.so_id is allocated cyclically (guessable) and the embedded
-clientid is the fixed per-net nn->s2s_cp_cl_id, so any authenticated
-NFSv4.2 client could cancel and free another client's copy-notify
-stateid.
+nfsd4_create() stores the return value of nfsd4_acl_to_attr() in
+status, but the switch(create->cr_type) block unconditionally
+overwrites it in every branch. ACL translation errors are silently
+discarded, and the CREATE proceeds without the requested ACL.
 
-Compare the creating clientid recorded in state->cp_p_clid against the
-requesting client's cl_clientid and return nfserr_bad_stateid on a
-mismatch instead of freeing the entry.
+Add an early exit check after nfsd4_acl_to_attr(), matching the
+pattern already used in nfsd4_setattr().
 
-Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
+Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-5-a0ff7db6aa3e@kernel.org
+[ cel: prefer NFS4ERR_BADTYPE over NFS4ERR_ATTRNOTSUPP ]
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-5-5b90e276f2d9@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7504,10 +7504,20 @@ __be32 manage_cpntf_state(struct nfsd_ne
- 			state = NULL;
- 			goto unlock;
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -839,6 +839,20 @@ nfsd4_create(struct svc_rqst *rqstp, str
+ 	if (status)
+ 		goto out_aftermask;
+ 
++	/* Sanitize cr_type to avoid returning ATTRNOTSUPP. */
++	switch (create->cr_type) {
++	case NF4LNK:
++	case NF4BLK:
++	case NF4CHR:
++	case NF4SOCK:
++	case NF4FIFO:
++	case NF4DIR:
++		break;
++	default:
++		status = nfserr_badtype;
++		goto out_aftermask;
++	}
++
+ 	if (create->cr_acl) {
+ 		if (attrs.na_dpacl || attrs.na_pacl) {
+ 			status = nfserr_inval;
+@@ -846,6 +860,8 @@ nfsd4_create(struct svc_rqst *rqstp, str
  		}
--		if (!clp)
-+		if (!clp) {
- 			refcount_inc(&state->cp_stateid.cs_count);
--		else
-+		} else if (memcmp(&clp->cl_clientid, &state->cp_p_clid,
-+				  sizeof(clientid_t))) {
-+			/*
-+			 * OFFLOAD_CANCEL: only the creating client may cancel.
-+			 * so_id is guessable, so without this check any client
-+			 * could free another's cpntf state.
-+			 */
-+			state = NULL;
-+			goto unlock;
-+		} else {
- 			_free_cpntf_state_locked(nn, state);
-+		}
+ 		status = nfsd4_acl_to_attr(create->cr_type, create->cr_acl,
+ 								&attrs);
++		if (status != nfs_ok)
++			goto out_aftermask;
  	}
- unlock:
- 	spin_unlock(&nn->s2s_cp_lock);
+ 	current->fs->umask = create->cr_umask;
+ 	switch (create->cr_type) {
 
 
