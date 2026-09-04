@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBF141DEDF;
-	Fri,  4 Sep 2026 06:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DE7420463;
+	Fri,  4 Sep 2026 06:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502708; cv=none; b=oH4F29iQRq0PLtqAYfMnrYUkw90ubMjZ3H3RbeycdYPgAtc36X6mOIkdLC6tLfFAKZLiTvrIfdRlHfR8TMJMeTXJxSVquZnh6vW7WWof+AzjWfILKs+nKR6D4A/ljEQlwQ+YokNm+33x656itDvpapr/xwlM8kDHl1yYfBUwfnA=
+	t=1788502712; cv=none; b=gVvgXZxZFsw279PCzUIMtInku66guGg/sXqhY14cdN/zXdkSeL+Vgh+pKYFtZt8hiN1yJyfwGXiO6mbi4vyXPTIIGM7QAsx80dV90wEzyN1pzBg968uVavtpYTSjciyANHz2uHC5WO8O2iRSG361olt4vseJsyQPDgNDlgIxSK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502708; c=relaxed/simple;
-	bh=UhcgCvyhUs85HsD81tYzZOXpB29J7rJ57DUnlKIADvc=;
+	s=arc-20240116; t=1788502712; c=relaxed/simple;
+	bh=wjP12+RjhXwotiaL3pLbX6OGwZcu5OtTgaLeRwtRJiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WGwQpOlT4rTztVnwXY0lDq72kibMlBV2oMpcF5Gnc0grhKb3XU6TvjzmqYODCCA3vl5arrDvuKcVB2+vhQJtHjLVP32LcmCIQkKQZ0JazoVJr3ouwQla4XcGgCvRgVmdhnmc/UBDY6Fu3nUd+dELRYTfcGUPeXdoBGKHiwQ9Bv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csuede3C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PYpBB+LCNpC/u3BFSow6B0lFAz7FUUGTvM1dhsM3ocGwy+wJmXzCKs++vxKp4pl4TPeWN+WTyu7+AgQ9C9QYXlMR8ylisyeiPnGwickgvxSa5TCYEUQFt12VvuyoNUK4778TQT7aXQXGizVitefkkgE2IZHPCCcfunnygiTaCaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXbyi5aw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csuede3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FE11F00A3D;
-	Fri,  4 Sep 2026 06:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXbyi5aw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DE41F00A3D;
+	Fri,  4 Sep 2026 06:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502707;
-	bh=Ckp87feQ79YwSUKYmeZRLTSc633axVeSBEHMZ1wJDiA=;
+	s=korg; t=1788502710;
+	bh=NGSvLUUNp2PDnTbydu2i4NgYjW3sCAyD9wlqA7bdVwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=csuede3CLILcE0ePbXt+VZSixMRDztQCTbO0LkuqcD35gfQAtAtCwk+pbMja512wU
-	 uimrZam6Wb3S+KScYTI3gVc+5AhXz5ThX0t6ZojkbFU9rvVTIqVT8OIFjMZQ0wcGRJ
-	 a26nHLBH6Sht/RxVqebOtt/5eAQgXLGoI1rQpy7k=
+	b=fXbyi5awaZD9t2NV6ZkB2oiQE2AQ8X+effz8JzMtiqDwvdy/NejTnLL5kL+li1B01
+	 DnIhfi8HMxBao45mCrhYKNNaPhK61bQBox/p04VTb+e44o8owPIy2wJE6StkMOjoZ3
+	 QWwWI5IDb1XLJrHTy2WULdZf+tmxP8uT7oKYl2hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.12 301/403] PCI/proc: Warn on writes to kernel-exclusive config space regions
-Date: Fri,  4 Sep 2026 07:01:44 +0200
-Message-ID: <20260904045741.687247904@linuxfoundation.org>
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.12 302/403] iommu/amd: Put PCI device after handling PPR faults
+Date: Fri,  4 Sep 2026 07:01:45 +0200
+Message-ID: <20260904045741.711256910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -44,63 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit 3359e044d597dd5344f17613e4be6b6e12067f60 upstream.
+commit af3b69b16383fbc8fe5f61b5b0150d2e41ede71f upstream.
 
-Currently, a driver can claim a region of a device's config space as
-exclusive using pci_request_config_region_exclusive(), after which a write
-to that region originating from user space is expected to emit a warning
-and taint the kernel.  The check is advisory only, as the write itself is
-still allowed to proceed.
+iommu_call_iopf_notifier() looks up the requester with
+pci_get_domain_bus_and_slot(), which returns a PCI device with its
+reference count incremented.
 
-Since commit 278294798ac9 ("PCI: Allow drivers to request exclusive config
-regions"), the sysfs config space attribute performs this check in
-pci_write_config(), but the procfs interface was never updated.  A write
-performed through /proc/bus/pci/BB/DD.F therefore bypasses the detection
-entirely, even though both interfaces offer the same level of access.
+Neither the successful iommu_report_device_fault() path nor the abort
+path drops that reference, so every handled PPR request leaks a PCI
+device reference.
 
-Add the same resource_is_exclusive() check to proc_bus_pci_write().
+This is the same ownership rule that was fixed for the old iommu_v2
+ppr_notifier() path by commit 6cf0981c2233 ("iommu/amd: Fix pci device
+refcount leak in ppr_notifier()"), but iommu_call_iopf_notifier() was
+added later as a separate PPR/IOPF notifier path.
 
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Drop the PCI device reference after handling the PPR entry.
+
+Fixes: 978d626b8f1a ("iommu/amd: Add IO page fault notifier handler")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260729075413.1215821-1-kwilczynski@kernel.org
+Assisted-by: Qoder:Qwen-3.8-MAX-Preview
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/proc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iommu/amd/ppr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -14,6 +14,8 @@
- #include <linux/capability.h>
- #include <linux/uaccess.h>
- #include <linux/security.h>
-+#include <linux/panic.h>
-+#include <linux/sched.h>
- #include <asm/byteorder.h>
- #include "pci.h"
+diff --git a/drivers/iommu/amd/ppr.c b/drivers/iommu/amd/ppr.c
+index 1f8d2823bea4..80369ca1e316 100644
+--- a/drivers/iommu/amd/ppr.c
++++ b/drivers/iommu/amd/ppr.c
+@@ -151,7 +151,7 @@ static void iommu_call_iopf_notifier(struct amd_iommu *iommu, u64 *raw)
  
-@@ -127,6 +129,12 @@ static ssize_t proc_bus_pci_write(struct
- 	if (!nbytes)
- 		return 0;
+ 	/* Submit event */
+ 	iommu_report_device_fault(&pdev->dev, &event);
+-
++	pci_dev_put(pdev);
+ 	return;
  
-+	if (resource_is_exclusive(&dev->driver_exclusive_resource, pos, nbytes)) {
-+		pci_warn_once(dev, "%s: Unexpected write to kernel-exclusive config offset %x",
-+			      current->comm, pos);
-+		add_taint(TAINT_USER, LOCKDEP_STILL_OK);
-+	}
-+
- 	if (pos >= size)
- 		return 0;
- 	if (nbytes >= size)
+ out:
+@@ -159,6 +159,7 @@ static void iommu_call_iopf_notifier(struct amd_iommu *iommu, u64 *raw)
+ 	amd_iommu_complete_ppr(&pdev->dev, PPR_PASID(raw[0]),
+ 			       IOMMU_PAGE_RESP_FAILURE,
+ 			       PPR_TAG(raw[0]) & 0x1FF);
++	pci_dev_put(pdev);
+ }
+ 
+ void amd_iommu_poll_ppr_log(struct amd_iommu *iommu)
+-- 
+2.55.0
+
 
 
