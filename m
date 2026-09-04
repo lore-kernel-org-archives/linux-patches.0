@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BD940F754;
-	Fri,  4 Sep 2026 06:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1748D40F754;
+	Fri,  4 Sep 2026 06:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502880; cv=none; b=Zcrw5boUvvNcdSs3mlJCU6mL939Fcm0BQ0sFUvENX3M31NAVh4Cj/CbNn/ZJS+LdPGXBbhgiNsNNWKvIk176pCMzHDwrcFhsmpc9xS1cE3GCVRYoF/J1gLbKjxgIqmSBrqnlJF8uUqxUW1FBbkhpHSkEVtFzEf5Eu4XkaDm6JYU=
+	t=1788502883; cv=none; b=oRNyIpZTKNmiga4kaMYSxq5V8c433W8acuiGgfdKYfx33EA7X2hXjl6YWRVdKF7M+t2hA3QHyEQchJD7MgIUrHBCDzjPFNP6X14RlhvIhcoMU4yxyfea9fzqPz+/mGeIF88cIhu2qwc1DFlfB0m9aE+QdvG1Z/d1za8fd+m0psE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502880; c=relaxed/simple;
-	bh=Sbn/IrO3bs5a15HaU+voKIjv6h5d5Libuypw895G+V4=;
+	s=arc-20240116; t=1788502883; c=relaxed/simple;
+	bh=yS2slKXNQlE1OWtBuWJeKLgoNYsUnvT/90roaXI+e0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bg6PlJWR8sOvjBL/RsAJi2T9LmlehtTi9xXMzmel6FEGDZlcprknkjhH2qewfJZmMk559P0nrYyONBx6B8C/Yjo4/dr0ggYfUDpU4JDXOig41B1Aksg4LpfIE9IicWIJ/fX2MZmrFVsntXkS+KdUAdxTbzPhnHC3zV4x3SNxHjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6GUOCE4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hXIxJvPc9h+6xe27N6DQlU5fowDqV71EvLncxYhXkHb0hCC0N2h/OBBRtaFcRWdqS4Wa2NwD2sFTlfg5d0lPq7lqtPWYTUe2FT9jGS3zXdpylgdFdx1yiGm6xKc1GaoiHdw4RxiJxEXJiK1eFQlC6T21SNjaKqpM1lqfkilH15o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvpD75md; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6GUOCE4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C3E1F00A3D;
-	Fri,  4 Sep 2026 06:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvpD75md"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B341F00A3D;
+	Fri,  4 Sep 2026 06:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502879;
-	bh=NGbabwNwPUwyL7F5Q5cwWjDwaiF/RM1X3RyfW5A1EL4=;
+	s=korg; t=1788502881;
+	bh=l6+cZvwcqaoKb1vd1BY2+6AaI+5zOQsREEGKpUfzrCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y6GUOCE4DKXnOKpkK7Aw0aupSHCb1YZsyDpi0TD6SXx2qlKWI5T4EIyyP/hUmxDlx
-	 LlK1qsgtriLiatdulDFOEZHW+435V9Ff1YbPCK3cUQY90JLoClIWgIzx2C5ViZSh8j
-	 XBXPPjLrDYGdk5yHj0NBgjxU87Kj47rjaIuf+3LY=
+	b=CvpD75mdV6QjjLs7b9Xfld4UMaXohx0AOkAGWoRw8ZAneVdoqWRauLBAyGhHqGCcn
+	 wdK7coqm2ooXQQgyfBQAHotYITRnYVFcj2c7dAjIZGyZjxSBvS/g4GSeDueY9UYnCY
+	 GftTCRojuz1+R1XUFyNHRqrSYlyZ6wtNXmM+KgXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 360/403] mfd: sm501: Fix potential memory leaks during remove
-Date: Fri,  4 Sep 2026 07:02:43 +0200
-Message-ID: <20260904045742.998073456@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 361/403] ALSA: 6fire: bound the MIDI event length from the device
+Date: Fri,  4 Sep 2026 07:02:44 +0200
+Message-ID: <20260904045743.020948712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,42 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 83feedd9d83c0c5199f98c72df0a6196b4aefb4d upstream.
+commit a478893b59e36cfe7d77a76b352f2db55502e879 upstream.
 
-The memory allocated for struct sm501_devdata in sm501_pci_probe() and
-sm501_plat_probe() is not freed by the corresponding remove functions
-sm501_pci_remove() and sm501_plat_remove(). Fix that by adding a call to
-kfree().
+usb6fire_comm_receiver_handler() forwards a MIDI event using a length
+byte the device supplies, with no bound and no check that the transfer
+delivered that many bytes:
 
-Fixes: b6d6454fdb66 ("[PATCH] mfd: SM501 core driver")
+	if (!urb->status) {
+		if (rt->receiver_buffer[0] == 0x10) /* midi in event */
+			if (midi_rt)
+				midi_rt->in_received(midi_rt,
+						rt->receiver_buffer + 2,
+						rt->receiver_buffer[1]);
+	}
+
+receiver_buffer is a 64-byte kzalloc() buffer (COMM_RECEIVER_BUFSIZE), so
+only 62 bytes follow the two-byte header.  receiver_buffer[1] is a u8 the
+device chooses, so a device that answers with 0x10 and a length of 0xFF
+makes snd_rawmidi_receive() read 255 bytes starting two bytes into a
+64-byte object.  The bytes past the buffer are handed to userspace
+through the rawmidi read path.
+
+urb->actual_length is not consulted either, so a short transfer leaves
+both the type byte and the length byte at their previous values and the
+handler acts on stale data.
+
+The receiver URB is submitted from usb6fire_comm_init() at probe, so the
+read happens on plug with no user action; forwarding to userspace also
+needs a MIDI input substream open, since usb6fire_midi_in_received()
+only calls snd_rawmidi_receive() when rt->in is set.
+
+KASAN on 7.2.0-rc5 (arm64), single packet from an emulated device:
+
+  BUG: KASAN: slab-out-of-bounds in snd_rawmidi_receive
+  Read of size 255 at addr ffff000009f64682 by task bash/183
+   __asan_memcpy
+   snd_rawmidi_receive
+   usb6fire_midi_in_received [snd_usb_6fire]
+   usb6fire_comm_receiver_handler [snd_usb_6fire]
+  Allocated by task 11:
+   usb6fire_comm_init [snd_usb_6fire]
+   usb6fire_chip_probe [snd_usb_6fire]
+  The buggy address is located 2 bytes inside of
+   allocated 64-byte region [ffff000009f64680, ffff000009f646c0)
+
+Reject the event when the length exceeds the bytes that follow the
+header, and require the transfer to have delivered the header plus that
+many bytes.  The receiver URB is submitted with a 64-byte
+transfer_buffer_length, so a genuine device cannot deliver an event
+longer than those 62 bytes and nothing valid is dropped.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260720113836.73133-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260805013423.38175-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/sm501.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/6fire/comm.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/mfd/sm501.c
-+++ b/drivers/mfd/sm501.c
-@@ -1667,6 +1667,7 @@ static void sm501_pci_remove(struct pci_
- 	release_mem_region(sm->io_res->start, 0x100);
+--- a/sound/usb/6fire/comm.c
++++ b/sound/usb/6fire/comm.c
+@@ -36,11 +36,14 @@ static void usb6fire_comm_receiver_handl
+ 	struct midi_runtime *midi_rt = rt->chip->midi;
  
- 	pci_disable_device(dev);
-+	kfree(sm);
- }
+ 	if (!urb->status) {
+-		if (rt->receiver_buffer[0] == 0x10) /* midi in event */
++		u8 len = rt->receiver_buffer[1];
++
++		if (rt->receiver_buffer[0] == 0x10 && /* midi in event */
++		    len <= COMM_RECEIVER_BUFSIZE - 2 &&
++		    urb->actual_length >= len + 2)
+ 			if (midi_rt)
+ 				midi_rt->in_received(midi_rt,
+-						rt->receiver_buffer + 2,
+-						rt->receiver_buffer[1]);
++						rt->receiver_buffer + 2, len);
+ 	}
  
- static void sm501_plat_remove(struct platform_device *dev)
-@@ -1677,6 +1678,7 @@ static void sm501_plat_remove(struct pla
- 	iounmap(sm->regs);
- 
- 	release_mem_region(sm->io_res->start, 0x100);
-+	kfree(sm);
- }
- 
- static const struct pci_device_id sm501_pci_tbl[] = {
+ 	if (!rt->chip->shutdown) {
 
 
