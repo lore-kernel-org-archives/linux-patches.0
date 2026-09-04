@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862BC3A7F4C;
-	Fri,  4 Sep 2026 05:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B03034A77D;
+	Fri,  4 Sep 2026 05:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499070; cv=none; b=j689mjFAbEYnwUudGQ26tXjyVj0RsgSOhPNJ4u66or0GX9NRm6oBss5Pyfoqm4UTDZPW3rG17i54m16y2eQ12qCyVn52wG3cpRDkWvOc4OC2HzigDgXoq1HWlNMJN/KsldpKEtI2ArzxoYqgrHRX9bR/CJbA4ClNx357bhS3nvI=
+	t=1788499073; cv=none; b=EixWQr3/HbU88ZYL0gJsNOar4+v1Il21qF0H5o/FF0jUBcebxJAhKzFQO2ZR3KdddE+YvHq1yR1rDDAxmXijjYWnzrTq2skXUtk2iMVwpqiZlWnCj3CMmLM8lY9aRvdXmdlgpHU5h7oZN1TfTitGyBOp/VHOICJmi/JWnMyKhf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499070; c=relaxed/simple;
-	bh=ijYrmqJecwMyw4dirumR8BU5+ju8tueT/OStItdAQ6U=;
+	s=arc-20240116; t=1788499073; c=relaxed/simple;
+	bh=/ID5l3ym2PmnmlO0+hvekh6i88Xd8VqfoBbpr3DzKAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayepfQ/S3JK9TZeyCJSocYKReyzZ1h1nUrrBeF/8ipwBcB0iJzGSq0/HK0UouhEMF4pfL9HVTdQHBv5s+dM8KSbx4/P0hXff8I0d436GF/Lqg0R5o8TxaR9MaRDHX8QDUDjQaHT2QcUOvPT5wXqTN1f1aOv7YKOvUkX8nY3cgpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4KpXpC+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IFdm4ijkj176p6qYZ0BKUj+w0WRSq8BEOT0Cj0GMqod7HUv0gLoPZ1Y2mpVsD4e2uUxPUvcFDR++L3cDmhk6eEOd2uz7+eylBRURE+WgNiOkl4tmwIHddtXDwCBsJGfC0RkK+TSGhKZmraveFESsDwKdU2d5lc94tqV5kls9drQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wo7K1eYO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4KpXpC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05161F00A3D;
-	Fri,  4 Sep 2026 05:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wo7K1eYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B191F00A3D;
+	Fri,  4 Sep 2026 05:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499069;
-	bh=fD5+0whZFt7lJZxD9nLXxkfsNC5Wwr3HDqLol4SdIcI=;
+	s=korg; t=1788499072;
+	bh=4jcKMww0PHLyNF77LHab/D4XVoD6iDrSu6p5pO/XtK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e4KpXpC+8e9DDKp+u+yHeSrjmrWmH/bPM5WMYcyp/1La/Pwo5W5y3oVa46Zgh9ZWX
-	 5YKV2VdevBaSrO3PDW/mp7PgBYYKPEstGR/M3Sn6Pud5OHPbWXzhAnqWfQa2gy1Ktz
-	 L5aRln5/3iyL9UBIF8OkQpvJCZ/YgJgwdlqxO/ho=
+	b=Wo7K1eYOhLP6whyt5ZeXAHZRLQfPdgIRhrFcwwcqrM3YkCGkuN031pqGs9wmriWZG
+	 E40iVjllOScmsSaTwjp/0X3CKhczJcXhsXmNQZjFqIkabHlnQDmklRWxTjtoBcQW7b
+	 eZoNakK1TxZm84X31x5Iypn/RVm0WKlwnwZ4VwNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.2 287/713] fonts: fixup font.h kernel-doc warnings
-Date: Fri,  4 Sep 2026 06:54:15 +0200
-Message-ID: <20260904045810.271745187@linuxfoundation.org>
+	Marek Czernohous <marek@czernohous.de>,
+	Simon Horman <horms@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 288/713] forcedeth: fix off-by-one when saving/restoring non-PCI config space
+Date: Fri,  4 Sep 2026 06:54:16 +0200
+Message-ID: <20260904045810.294841975@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,45 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Marek Czernohous <marek@czernohous.de>
 
-commit 048ad864d61feedc24129eeb976e973edcbc3aac upstream.
+commit 9393f1d656a79693e0c123ff7bc7c5c0f708046d upstream.
 
-Use the typedef keyword when describing a typedef.
-Add the missing function return value for font_glyph_size().
+nv_suspend() and nv_resume() walk the non-PCI configuration space with
 
-Warning: include/linux/font.h:84 cannot understand function prototype:
-  'typedef const unsigned char font_data_t;'
-Warning: include/linux/font.h:53 No description found for return value
-  of 'font_glyph_size'
+	for (i = 0; i <= np->register_size/sizeof(u32); i++)
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: stable@vger.kernel.org # v7.1+
-Signed-off-by: Helge Deller <deller@gmx.de>
+which runs one iteration too many. saved_config_space is declared as
+
+	u32 saved_config_space[NV_PCI_REGSZ_MAX/4];
+
+and NV_PCI_REGSZ_VER3 is equal to NV_PCI_REGSZ_MAX (0x604), so on a VER3
+device register_size/sizeof(u32) is exactly the array length and the last
+iteration addresses one element past the end.
+
+The element it lands on is np->name_rx[0..3]: saved_config_space[] is
+followed immediately by char name_rx[IFNAMSIZ + 3], and char needs no
+padding. Nothing observable is corrupted by that, because nv_request_irq()
+rewrites name_rx with sprintf() before it is ever passed to request_irq().
+The bug is the out-of-bounds access itself, which UBSAN reports and which
+CONFIG_UBSAN_TRAP=y turns into a trap that aborts the running kernel code,
+plus an MMIO read and, on resume, an MMIO writel() to base + 0x604, one
+dword past the range the driver mapped:
+
+	np->base = ioremap(addr, np->register_size);
+
+VER1 and VER2 devices stay inside the array, but they too get the stray
+read and the stray write one dword past their own window.
+
+Caught by UBSAN on an Apple Macmini3,1 (MCP79) during a deep S3 cycle.
+The splat below is trimmed: the build path in the file name, the CPU
+and taint lines, the Workqueue line, the "?" hint frames, and the
+frames below device_suspend are all cut. The kernel was tainted, with
+an out-of-tree nouveau and CPU_OUT_OF_SPEC; forcedeth itself was the
+stock module.
+
+  UBSAN: array-index-out-of-bounds in drivers/net/ethernet/nvidia/forcedeth.c:6225:25
+  index 385 is out of range for type 'u32 [385]'
+  Call Trace:
+   dump_stack_lvl+0x5d/0x80
+   ubsan_epilogue+0x5/0x2b
+   __ubsan_handle_out_of_bounds.cold+0x54/0x59
+   __this_module+0xe398c/0xe9010 [forcedeth]
+   pci_pm_suspend+0x80/0x170
+   dpm_run_callback+0x51/0x160
+   device_suspend+0x1a2/0x4a0
+   ...
+
+Both loops are hit. UBSAN reports each source location only once per module
+load (__ubsan_handle_out_of_bounds() calls suppress_report(), which does
+test_and_set_bit(REPORTED_BIT, ...) on the struct source_location), so the
+two splats land in the first S3 cycle after the module is loaded and later
+cycles are silent even though the access still runs off the end every time.
+In that first cycle line 6225 is reported from pci_pm_suspend and line 6240
+from pci_pm_resume.
+
+The same off-by-one was fixed in nv_get_regs() by commit ba9aa134287f
+("forcedeth: fix buffer overflow") in 2012; these two loops were missed.
+The suspend and resume side was reported on LKML in September 2013 by Marc
+Weber, with the same analysis and the same one-character fix, but the patch
+was attached rather than sent inline and the thread ended there.
+
+Use < instead of <=, which saves and restores exactly register_size bytes.
+
+Fixes: 1a1ca86158ee ("[netdrvr] forcedeth: save/restore device configuration space")
+Cc: stable@vger.kernel.org
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/178682367885.3748309.10595890901761762683@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/font.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/nvidia/forcedeth.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/font.h
-+++ b/include/linux/font.h
-@@ -49,6 +49,8 @@ static inline unsigned int font_glyph_pi
-  * scanlines, which is usually the glyph's height in scanlines. Fonts
-  * coming from user space can sometimes have a different vertical pitch
-  * with empty scanlines between two adjacent glyphs.
-+ *
-+ * Returns: the number of bytes per glyph
-  */
- static inline unsigned int font_glyph_size(unsigned int width, unsigned int vpitch)
- {
-@@ -60,7 +62,7 @@ static inline unsigned int font_glyph_si
-  */
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -6221,7 +6221,7 @@ static int nv_suspend(struct device *dev
+ 	netif_device_detach(dev);
  
- /**
-- * font_data_t - Raw font data
-+ * typedef font_data_t - Raw font data
-  *
-  * Values of type font_data_t store a pointer to raw font data. The format
-  * is monochrome. Each bit sets a pixel of a stored glyph. Font data does
+ 	/* save non-pci configuration space */
+-	for (i = 0; i <= np->register_size/sizeof(u32); i++)
++	for (i = 0; i < np->register_size/sizeof(u32); i++)
+ 		np->saved_config_space[i] = readl(base + i*sizeof(u32));
+ 
+ 	return 0;
+@@ -6236,7 +6236,7 @@ static int nv_resume(struct device *devi
+ 	int i, rc = 0;
+ 
+ 	/* restore non-pci configuration space */
+-	for (i = 0; i <= np->register_size/sizeof(u32); i++)
++	for (i = 0; i < np->register_size/sizeof(u32); i++)
+ 		writel(np->saved_config_space[i], base+i*sizeof(u32));
+ 
+ 	if (np->driver_data & DEV_NEED_MSI_FIX)
 
 
