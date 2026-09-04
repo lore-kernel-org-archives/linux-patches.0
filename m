@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05D44195A0;
-	Fri,  4 Sep 2026 06:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C4141CB47;
+	Fri,  4 Sep 2026 06:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502337; cv=none; b=NV0xrwkcy6qhVI1PRaX/Ee9QGBGFNPkVg1Rf6aMkKUx+ZG9wC8K2JLIO42b2l0dWUAxl7PjN6xx1r9cd0PFzIkM0IbNGA2XpsiHsRXaqNH55jDUzE2bpJZgUCxH9Gd1jxFvWLahjiPlo/DB2C/+jRdBiKy0jt27a5JI1JlOGa/k=
+	t=1788502341; cv=none; b=lzDRrKh4V+1ywPpr95mLPxpz8fkdCE/50maenEXbfbV1tR3x7Oe7l5jHINbgBAtjQR5WryGrb3zI5vlfCp9topQiWXKP+8aAZASYABRs3DQHFZ8a5Ma77mJEggOUraKWzGEo2DKBuqhfmpM6DLZBktLnWBZrFzn0AmiUnofdrIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502337; c=relaxed/simple;
-	bh=5my52hmNdboBGsXTNlQd0XDCwF6b8pKsShwgDTul1Lk=;
+	s=arc-20240116; t=1788502341; c=relaxed/simple;
+	bh=AYnKIrPHR4/igMYveO3PLsf9nms34X/8RUiRqpEyXl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sbfZadLYMx5BUxLoy3vb+54C9V05ksJ5bfP9I9skGhDnVdJWfR+E8P6jo036ycvioslngdJQ1wC+CQ8prrrAnZFf+n4FNpJ70fWVqSux9lbj+sUjHJ8j6nIj35MjPqeKR27q1BKK2LAaZg9ULk1uIbHeVGJxkiq4Sik4buGoq9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMU2Hkju; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9BToifBbDu0aU3QiR6b5pdeCpE1PGZHTVWzsKpA6vShZWDWjyIUjNoHcGo0ef4Wr8sQB6+zT9UsAU/+zsXpfVLgaGnMclt1hsAnYuM+WGy9yo3Xvhtu9NnIJzIXmLuaz0uScReFH2dqehE3S+zo2k6ZB+ghGMJOaq5Ox2cYUqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBtI6M8+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMU2Hkju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA011F00A3D;
-	Fri,  4 Sep 2026 06:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBtI6M8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EC81F00A3D;
+	Fri,  4 Sep 2026 06:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502336;
-	bh=m9ajRZ+RtGg2O7+YrvLIyjn1L4n0CkB8e/6bnr0UVZI=;
+	s=korg; t=1788502339;
+	bh=sJjS/Z/hLYMnfNS44ugTvYGstxaYOQXtgLar9cCK5ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iMU2HkjuCPw4/L57OVTqFDLmbeW5zme9M+ouItOujD8Wbx0vMuWgy8PSwhhxUAqki
-	 zd+dKLI52lu2BNL4hQFsoKWSVP7nd/wnpImY8O+Zhw3HTHYZZ1E4j0evuottDa+wNe
-	 NURmqE+yfxxCAd0KJrNWncK+vd8y58DAAEAxvgwM=
+	b=xBtI6M8+rUKlH/MEUOvXgvJF6eU7HyezybLKIu1mSljkEelpKv5oBSmTWu2LP+VFG
+	 iDQ3O32CEjDqkp2mx2ZRi+x48zYOmEGQM1+/umH7KRQEZJYE6foEc1Ah5nwmJ1Ds/V
+	 TTlcyqdSuj2p5zkn/cXCRMnyK2XOAqCp8/opFNVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 171/403] dm array: reject an array block whose value size is not the callers
-Date: Fri,  4 Sep 2026 06:59:34 +0200
-Message-ID: <20260904045738.749170586@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Tyler Hicks <code@tyhicks.com>
+Subject: [PATCH 6.12 136/403] ecryptfs: hold msg ctx list lock when cleaning daemon queue
+Date: Fri,  4 Sep 2026 06:58:59 +0200
+Message-ID: <20260904045737.933845344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,65 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 4538a287bdf5d0f9a379c678e5262b9f5783f547 upstream.
+commit 779972513c2fa8c7938e54976f686091dafff22f upstream.
 
-array_block_check() can only compare the header against itself, so a block
-with value_size 4 and max_entries 1018 is internally consistent and passes.
-dm-cache keeps two arrays -- mappings at 8 bytes and hints at 4 -- and the
-roots for both live in the superblock. Point the mappings root at a hint
-block and __load_mappings() walks it through an info whose value size is 8,
-so element_at() strides 8 bytes over 4-byte entries and reaches offset 8160
-of a 4096-byte block.
+ecryptfs_exorcise_daemon() drops queued messages from a dying daemon
+without holding ecryptfs_msg_ctx_lists_mux, but
+ecryptfs_msg_ctx_alloc_to_free() requires that lock.
 
-get_ablock() and __shadow_ablock() are the two places that hold the block
-and the caller at once. Reject there when the two value sizes disagree.
-Arrays only ever read their own blocks, so this fires on crafted metadata
-only.
+Take the list lock while moving the queued contexts back to the free
+list to avoid racing with other global msg ctx list users.
 
-Fixes: 6513c29f44f2 ("dm persistent data: add transactional array")
-Suggested-by: Ming-Hung Tsai <mtsai@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: f66e883eb618 ("eCryptfs: integrate eCryptfs device handle into the module.")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-array.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/ecryptfs/messaging.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/persistent-data/dm-array.c
-+++ b/drivers/md/persistent-data/dm-array.c
-@@ -246,6 +246,14 @@ static int get_ablock(struct dm_array_in
- 		return r;
- 
- 	*ab = dm_block_data(*block);
-+	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
-+		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
-+			    le32_to_cpu((*ab)->value_size),
-+			    info->value_type.size);
-+		dm_tm_unlock(info->btree_info.tm, *block);
-+		return -EILSEQ;
-+	}
-+
- 	return 0;
- }
- 
-@@ -308,6 +316,14 @@ static int __shadow_ablock(struct dm_arr
- 		return r;
- 
- 	*ab = dm_block_data(*block);
-+	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
-+		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
-+			    le32_to_cpu((*ab)->value_size),
-+			    info->value_type.size);
-+		dm_tm_unlock(info->btree_info.tm, *block);
-+		return -EILSEQ;
-+	}
-+
- 	if (inc)
- 		inc_ablock_entries(info, *ab);
- 
+--- a/fs/ecryptfs/messaging.c
++++ b/fs/ecryptfs/messaging.c
+@@ -165,6 +165,7 @@ int ecryptfs_exorcise_daemon(struct ecry
+ 		mutex_unlock(&daemon->mux);
+ 		goto out;
+ 	}
++	mutex_lock(&ecryptfs_msg_ctx_lists_mux);
+ 	list_for_each_entry_safe(msg_ctx, msg_ctx_tmp,
+ 				 &daemon->msg_ctx_out_queue, daemon_out_list) {
+ 		list_del(&msg_ctx->daemon_out_list);
+@@ -173,6 +174,7 @@ int ecryptfs_exorcise_daemon(struct ecry
+ 		       "the out queue of a dying daemon\n", __func__);
+ 		ecryptfs_msg_ctx_alloc_to_free(msg_ctx);
+ 	}
++	mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
+ 	hlist_del(&daemon->euid_chain);
+ 	mutex_unlock(&daemon->mux);
+ 	kfree_sensitive(daemon);
 
 
