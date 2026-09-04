@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B3434A3A5;
-	Fri,  4 Sep 2026 05:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2078348C47;
+	Fri,  4 Sep 2026 05:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500806; cv=none; b=kAv4JoORZRbttuZRrlu1TRyqmMgQnhwGJgDKwuQ1/4CtaQcVAH4t88iCTbFetaKPaIkEjXcIi7c/VvbtxTlwNjvp/uYuGtAFr+gCR1cy2VgKmSJoGGRC7M87349G6YX6R2zRaOx/c7KrTg/FPdCy/EX82bYKO4nqSmIug52zhlw=
+	t=1788500809; cv=none; b=u072T7lRGkB81hb/GfOJC1zeDZjXlH9qu59BVQtK3C8Z8LhySJFwdGoGCkb08NPe6IWYtSGF1B0L1xtZ5mUDAffM6c9/e+2pc5M6bHPrTywFN7k5HwsjTYudGTkQriD1PZAbbtOh3R7QP/GqmfFrFj3Q5UDelqfAKYwtixOe2ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500806; c=relaxed/simple;
-	bh=6/1OlNVIWabipiePIIq1KO5B29ZvmKCLBAQo4AP7yoM=;
+	s=arc-20240116; t=1788500809; c=relaxed/simple;
+	bh=iS3sR51/bVqZSH0E0r5YbJd9SGB7zLOMXgS2eVf1eyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNmvEFZcM6Bs5hhNYBcaKjta77qVu7sK3ZZU0ChSOiG99YWXUF9HZ4WiqLh7RI49IdVZ/lLbLohRCHc0uOC5IvI7emHxGJJ+i9Iz740J09uR48ocaU3j2mjvqZ4vxPNXb+kHl/Vac3rtyVmkmOd+Pww+GLnsQDsHeGzbrsLxXWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERzJMrSg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J5unV42wBwPd/PGDqhBFRBCA8G1C/YGa9POr01UCp2EcMHY12YuU9rlpKWB0ADqNF62Ma8WwA/9Rwe5ZFgLIYQDHXddclNm7L08ftiT9zKnAI/pWXTnwOACh/ca577dUQKonrbtAtM9aiNJ3JnFnD4snQIrD4X8myi9gW0s2+9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5LnRTWQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERzJMrSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8DC1F00A3D;
-	Fri,  4 Sep 2026 05:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5LnRTWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECD11F00A3D;
+	Fri,  4 Sep 2026 05:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500804;
-	bh=Av19EX/OJQlp3J3CkEMMBujxn+/TTAoL+oHsUPy/L7Q=;
+	s=korg; t=1788500807;
+	bh=aK88KhZyLYEmTwwsB4RMLjsDbmQI3OrURraPFFaQ0dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ERzJMrSgouIuvrUibBJa9zIbPSEy+m5BVKrIT7KQEVXd63/RHXMq7EzEbux0mpnIE
-	 MfTrckhf4X2/DudGc6R3QiyopsdLwnFqCMDWFuPWfHR52STkDqT92N+jIdDZa/cQvy
-	 W2PLnfi3s6/uOAfNivd3aDB1NaHw8a4xR1UBlXK8=
+	b=S5LnRTWQ8/CQP0A7/8Mz0qysuAa0QTMEU3azAE8ILqyjiprLbhMO6yaHQygOdCpLN
+	 gKbJhNN7Rymb/DzS1OlFQE0i0USC8qmpZhhYgDAP/Us8AK/hYnVw3TvhmelfYvPbiB
+	 Q7i+lPcNqA3REXTq7cR1iIJ6K72Bro4VGcTRsUtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Even Xu <even.xu@intel.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 186/552] HID: intel-thc-hid: intel-quickspi: fix autosuspend cleanup during teardown
-Date: Fri,  4 Sep 2026 06:55:43 +0200
-Message-ID: <20260904045753.234752193@linuxfoundation.org>
+	syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 187/552] eventfs: Initialize ei->children and ei->list in init_ei()
+Date: Fri,  4 Sep 2026 06:55:44 +0200
+Message-ID: <20260904045753.256171403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,48 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 05dffa55fd6dbed4bf2421fae5accc2b857e668d upstream.
+commit 1704aaaf5d22bc765c168402350d191e24e245bc upstream.
 
-quickspi_probe() calls pm_runtime_use_autosuspend(), but
-quickspi_remove() does not call the matching
-pm_runtime_dont_use_autosuspend() during teardown.
+eventfs_create_dir() allocates the eventfs_inode and initializes it with
+init_ei(). But this does not initialize the eventfs_inode list_heads. If
+the eventfs_create_dir() fails due to memory pressure, it will call
+free_ei() before it initialized the lists, and that checks to make sure
+the eventfs_inode has no children. But because the list wasn't
+initialized, it will give a false warning.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped.
+Fix it by moving the list initialization into init_ei().
 
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
-
-Add the missing pm_runtime_dont_use_autosuspend() call to the driver
-remove path.
-
-This issue was found by manual code inspection.
-
-Fixes: 6912aaf3fd24 ("HID: intel-thc-hid: intel-quickspi: Add PM implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Even Xu <even.xu@intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 5790b1fb3d67 ("eventfs: Remove eventfs_file and just use eventfs_inode")
+Reported-by: syzbot+3ef80b4ed02226d04a06@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3ef80b4ed02226d04a06
+Link: https://patch.msgid.link/20260824144653.54044-1-kartikey406@gmail.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+[ Rewrote change log ]
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/tracefs/event_inode.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-@@ -722,6 +722,7 @@ static void quickspi_remove(struct pci_d
- 	quickspi_hid_remove(qsdev);
- 	quickspi_dma_deinit(qsdev);
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -436,6 +436,8 @@ static inline struct eventfs_inode *init
+ 	if (!ei->name)
+ 		return NULL;
+ 	kref_init(&ei->kref);
++	INIT_LIST_HEAD(&ei->children);
++	INIT_LIST_HEAD(&ei->list);
+ 	return ei;
+ }
  
-+	pm_runtime_dont_use_autosuspend(qsdev->dev);
- 	pm_runtime_get_noresume(qsdev->dev);
+@@ -727,8 +729,6 @@ struct eventfs_inode *eventfs_create_dir
+ 	ei->entries = entries;
+ 	ei->nr_entries = size;
+ 	ei->data = data;
+-	INIT_LIST_HEAD(&ei->children);
+-	INIT_LIST_HEAD(&ei->list);
  
- 	quickspi_dev_deinit(qsdev);
+ 	mutex_lock(&eventfs_mutex);
+ 	if (!parent->is_freed)
+@@ -801,9 +801,6 @@ struct eventfs_inode *eventfs_create_eve
+ 	ei->attr.uid = uid;
+ 	ei->attr.gid = gid;
+ 
+-	INIT_LIST_HEAD(&ei->children);
+-	INIT_LIST_HEAD(&ei->list);
+-
+ 	ti = get_tracefs(inode);
+ 	ti->flags |= TRACEFS_EVENT_INODE;
+ 	ti->private = ei;
 
 
