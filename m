@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E1B40F742;
-	Fri,  4 Sep 2026 05:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8516740B11F;
+	Fri,  4 Sep 2026 05:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498613; cv=none; b=GhSJveAzTBYNIO8u8NN/EUARZvI+cJPkrXov6q2NUWCralO0ezJWomW6nkkELx2NKx/kUHtGxqMB6MEs8SpikBe+32KSwGOXpsf9/3jmfb+B5llE50/zoRoaaVZ/0h//8UIjMja901mJGpN7vOprdQ26Iw2NYuSjD8RYikBPowA=
+	t=1788498616; cv=none; b=cJg14C2rskGZKrSIvF0BQPdLtlec9Cf7YN9mnWFh8RIOvsawBgdtbAt5BVeJ71KyvghrUirVfy0lk3FeSE/2L7vQmXc/Xi0CeuLD94KJz6VtTi4weOCSLo73EsU7+G4aaZnby/Q4pG4ATmpqEJnN9UV3YgRu6EGJTs8Lpjupqkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498613; c=relaxed/simple;
-	bh=cqkxCpDqcvXHXwle+bwFCynL+HK1Lh3NeesTN4cRsV8=;
+	s=arc-20240116; t=1788498616; c=relaxed/simple;
+	bh=MMeWwrMWAJ91qUC3LU5YnCXUHKWWG2qzK4RTwLAbEUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRrVGPXf2GuKPZ63PXruGbkFgsqbwPxjjsXSoru2zCv661Wj4QQwn6E6zudXh+NJNhUkzNuu2vOc3xKSZDOKMkCB5zZXdbGLDhXzmnUnsIC1Yp4t3CACQ5iIzeWMKLG2+B/rgn23IWvsqcvsG01PqAB4GSlojTFQaZJHkxkugOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEB9k2N7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LPb08YQjmf3+7lCMR+tFHicQZGLl+cg0qM0JK4Sh1fkHNAaZH697JZR/6YJtHSwFTVcJLRiPflxp6AtmKLLnAZsDd3f58G4JA6xMS82aiWUDuw5TzQ00oudMHLPv3aQDm8BxJs0RzOM2neJyuNwdtPxjlgLz9U9dWul36lJsEOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSAxADs6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEB9k2N7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134471F00A3D;
-	Fri,  4 Sep 2026 05:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSAxADs6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06661F00A3D;
+	Fri,  4 Sep 2026 05:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498612;
-	bh=HuOU+16uBN1foWm+3QN/yGorup2xWML2ZiC0uiHBJeg=;
+	s=korg; t=1788498615;
+	bh=7gWzNh2Sphbhl6rXd7IhbEneFXyCSYu1lB7TIF3RZts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qEB9k2N7Z0E0yj8b1J4/22YYmcL0jNryRCnAgmP+6JSV06eQygPuQQO1+ipCA6WB0
-	 P2RVC6Jo2Dv739jeOzfQ4UwDNgeApzm3IqywCY1b1Bqw+ZM2/f2s86SAwdPuFYPNyp
-	 NKTRuIaO/h15kVsOxVw7NarR9a6VY3zbSRPm76ME=
+	b=LSAxADs6WUC6cSEwFRqipyddGmoPGrkkDUB/h8qAABawABU1N74i/Ti9CIrloezxX
+	 stvSa9qzpIoSeYkiRbVrqd28zfvykDVy213SYj9gaBiMzMAR0u3rLLBdfb1rGda07K
+	 Wr61HEVdTbK4tRApjreqMbpQg+M/6WXRABwchy2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <me@ziyao.cc>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.2 082/713] x86/locking: Use sfence for wmb() if SSE is available
-Date: Fri,  4 Sep 2026 06:50:50 +0200
-Message-ID: <20260904045805.677574287@linuxfoundation.org>
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.2 083/713] x86/insn-eval: Move assign_register() out of KVM as insn_assign_reg()
+Date: Fri,  4 Sep 2026 06:50:51 +0200
+Message-ID: <20260904045805.700279177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,37 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <me@ziyao.cc>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit d824ed1307680dd482f607b0e707c575f70668c4 upstream.
+commit 1fe104b048d77d6cb25bd938e6a67450fb50e61d upstream.
 
-When adding cc clobber to wmb()'s definition, the alternative()
-condition to use sfence was incorrectly raised from X86_FEATURE_XMM to
-X86_FEATURE_XMM2.
+KVM's instruction emulator has a small helper, assign_register(), that
+writes a value into a register following the x86 rules for writes to
+general-purpose registers: an 8- or 16-bit write leaves the rest of the
+register untouched, a 32-bit write zero-extends the result to 64 bits,
+and a 64-bit write replaces the whole register.
 
-Restore the correct constraint for potential better performance on
-machines without SSE2.
+The TDX guest #VE handler needs the same logic for port I/O emulation
+to get 32-bit zero-extension right.  Rather than add a third copy of
+the same switch, move the helper verbatim to <asm/insn-eval.h>, rename
+it to insn_assign_reg(), and route KVM's callers through it.
 
-Fixes: bd922477d935 ("locking/x86: Add cc clobber for ADDL")
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260801182953.15069-1-me@ziyao.cc
+Add <asm/insn.h> to the header's includes so it builds standalone in
+callers that have not pulled it in transitively.
+
+No functional change.
+
+Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Cc:stable@vger.kernel.org
+Link: https://patch.msgid.link/20260713133753.223947-3-kirill@shutemov.name
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/barrier.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/insn-eval.h |   36 ++++++++++++++++++++++++++++++++++++
+ arch/x86/kvm/emulate.c           |   26 ++++----------------------
+ 2 files changed, 40 insertions(+), 22 deletions(-)
 
---- a/arch/x86/include/asm/barrier.h
-+++ b/arch/x86/include/asm/barrier.h
-@@ -17,7 +17,7 @@
- #define rmb() asm volatile(ALTERNATIVE("lock addl $0,-4(%%esp)", "lfence", \
- 				       X86_FEATURE_XMM2) ::: "memory", "cc")
- #define wmb() asm volatile(ALTERNATIVE("lock addl $0,-4(%%esp)", "sfence", \
--				       X86_FEATURE_XMM2) ::: "memory", "cc")
-+				       X86_FEATURE_XMM) ::: "memory", "cc")
- #else
- #define __mb()	asm volatile("mfence":::"memory")
- #define __rmb()	asm volatile("lfence":::"memory")
+--- a/arch/x86/include/asm/insn-eval.h
++++ b/arch/x86/include/asm/insn-eval.h
+@@ -9,6 +9,7 @@
+ #include <linux/compiler.h>
+ #include <linux/bug.h>
+ #include <linux/err.h>
++#include <asm/insn.h>
+ #include <asm/ptrace.h>
+ 
+ #define INSN_CODE_SEG_ADDR_SZ(params) ((params >> 4) & 0xf)
+@@ -46,4 +47,39 @@ enum insn_mmio_type insn_decode_mmio(str
+ 
+ bool insn_is_nop(struct insn *insn);
+ 
++/*
++ * Write @val into *@reg following the x86 rules for writes to
++ * general-purpose registers (Intel SDM Vol. 1, "General-Purpose
++ * Registers in 64-Bit Mode"): an 8- or 16-bit write leaves the rest of
++ * the register untouched, a 32-bit write zero-extends the result into
++ * the upper 32 bits, and a 64-bit write replaces the whole register.
++ *
++ * @bytes is the width of the write, not a property of the instruction:
++ * an instruction that, say, sign-extends a 32-bit immediate into a
++ * 64-bit register does a 64-bit write here.
++ *
++ * @reg need not be 8-byte aligned: KVM's instruction emulator offsets
++ * the pointer by one byte to address the high-byte registers (AH, CH,
++ * DH, BH).  Use narrow stores for the sub-word cases so the access
++ * width matches @bytes and the adjacent bytes are left alone.
++ */
++static inline void insn_assign_reg(unsigned long *reg, u64 val, int bytes)
++{
++	switch (bytes) {
++	case 1:
++		*(u8 *)reg = (u8)val;
++		break;
++	case 2:
++		*(u16 *)reg = (u16)val;
++		break;
++	case 4:
++		/* A 32-bit write zero-extends into the upper 32 bits. */
++		*reg = (u32)val;
++		break;
++	case 8:
++		*reg = val;
++		break;
++	}
++}
++
+ #endif /* _ASM_X86_INSN_EVAL_H */
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -24,6 +24,7 @@
+ #include "kvm_emulate.h"
+ #include <linux/stringify.h>
+ #include <asm/debugreg.h>
++#include <asm/insn-eval.h>
+ #include <asm/nospec-branch.h>
+ #include <asm/ibt.h>
+ #include <asm/text-patching.h>
+@@ -439,25 +440,6 @@ static void assign_masked(ulong *dest, u
+ 	*dest = (*dest & ~mask) | (src & mask);
+ }
+ 
+-static void assign_register(unsigned long *reg, u64 val, int bytes)
+-{
+-	/* The 4-byte case *is* correct: in 64-bit mode we zero-extend. */
+-	switch (bytes) {
+-	case 1:
+-		*(u8 *)reg = (u8)val;
+-		break;
+-	case 2:
+-		*(u16 *)reg = (u16)val;
+-		break;
+-	case 4:
+-		*reg = (u32)val;
+-		break;	/* 64b: zero-extend */
+-	case 8:
+-		*reg = val;
+-		break;
+-	}
+-}
+-
+ static inline unsigned long ad_mask(struct x86_emulate_ctxt *ctxt)
+ {
+ 	return (1UL << (ctxt->ad_bytes << 3)) - 1;
+@@ -505,7 +487,7 @@ register_address_increment(struct x86_em
+ {
+ 	ulong *preg = reg_rmw(ctxt, reg);
+ 
+-	assign_register(preg, *preg + inc, ctxt->ad_bytes);
++	insn_assign_reg(preg, *preg + inc, ctxt->ad_bytes);
+ }
+ 
+ static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
+@@ -1767,7 +1749,7 @@ static int load_segment_descriptor(struc
+ 
+ static void write_register_operand(struct operand *op)
+ {
+-	return assign_register(op->addr.reg, op->val, op->bytes);
++	return insn_assign_reg(op->addr.reg, op->val, op->bytes);
+ }
+ 
+ static int writeback(struct x86_emulate_ctxt *ctxt, struct operand *op)
+@@ -2008,7 +1990,7 @@ static int em_popa(struct x86_emulate_ct
+ 		rc = emulate_pop(ctxt, &val, ctxt->op_bytes);
+ 		if (rc != X86EMUL_CONTINUE)
+ 			break;
+-		assign_register(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
++		insn_assign_reg(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
+ 		--reg;
+ 	}
+ 	return rc;
 
 
