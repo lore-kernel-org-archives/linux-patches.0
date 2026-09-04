@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B3E3451AB;
-	Fri,  4 Sep 2026 06:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9207D38B7D4;
+	Fri,  4 Sep 2026 06:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501689; cv=none; b=QuSe/9ablMhmVzdwgjYOyA8eC9XDfMaXVYvHLzDKwrS01MAOa7ujKeP0UPEseoZecRXGHs65u/qcy2OdQeDzWfKWqBENgSegO9NGdmupRh9UmhC5JwinwtuX6Tme4U33Jtz9SuyHTcrhQ9MqVK1+nieiTRZBtu4SQ0pQ+ziH1No=
+	t=1788501691; cv=none; b=ffhUdLocy1qBHACCBptZIsHGapU29SD1XsA2JP4WUdHbEucx7zZ9PDNoEQ9/gjcbckCRXJcVJXt1TXNc3ZtutHEOL45XsLt6K0PxOm2XfmaG6gJjQ7lQIByGTb6VuICy3qS5ae3LvnHZgR1uUzjL9DKkfjfUK0k4RZh8OV+ZX4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501689; c=relaxed/simple;
-	bh=yv0Z5W4ErV2qlV9uA9Y4epsFDH9bwFow638YCIC1ro0=;
+	s=arc-20240116; t=1788501691; c=relaxed/simple;
+	bh=cnS4p/i4QeHQcQC20Xok09oQCSzLD6k1cnsqIekxo8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LTkXUj3sfByA0zbvfKEFnd3+y9k0ZtTOnmeWmJwPun7w2mQ5fkcaGtUOBILHRAxA+ONZIza17KN1VTo0LqKo57Rnw2Td/7HFPe2MnOo6WwV0kTmaecI/rWOYBf2beza+QQk+pgY/OPV8uOe8QIRQXjpUs4O1wfI8uxYBUmBQenM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRf9d4hI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IhxY3taIpwr6gkeanVQVt30MZFMj/SWd06w6Ki7W6mwq0CLk3styaalJiGZKUwKqxS77XeTHBwzIVfamrK47574doSTves2Z1ns3onUfEjYifXmi+Refo3z6uQ706YO3VlDrpumy09jLqyahPaUOMQUGzK2/C/n70fozm4Ndxjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XA7CKrJt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRf9d4hI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2CB1F00A3D;
-	Fri,  4 Sep 2026 06:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XA7CKrJt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDA51F00A3E;
+	Fri,  4 Sep 2026 06:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501686;
-	bh=zLfXVU51l5MT6LMcgQKq70c5WQ2cFKMWOE2rgRluTZA=;
+	s=korg; t=1788501689;
+	bh=eiNTpi1NrPFxzsMQjvNeN8SxzBcx0afnA0SkNzjkaFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NRf9d4hIrXTobKgTi594uA0ga6JdwoO3E2dx05RzvwISgY0NImsmEPdy4HCerL5ts
-	 vRq8yIup5KJViw6+2f74cE1OYtgEPRJa951/fPP3hT1/eRewaNl7PM88EkkqVHGKr5
-	 yNvZZAYBAxhBQQ5BSB6UoEtyrLp4LT2a9yM51EF0=
+	b=XA7CKrJtRqep13PonUf2gd9ByoEwUHRcoMu1J3mb4hqRcfrR9WKXhwkGMykT9d0MD
+	 Qnf2YiEvZcTJVOEsS5MbJHIXmD6QBsqXyOGG4kdW3JMi745WfxLCZJf1dvbI+QFkyy
+	 GZG1fmkq3yylVk9TWnoABIW1yygW3/66zrMub02Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 498/552] ALSA: hda/realtek: Fix Lenovo Yoga Slim 7 14AKP10 quirk ordering
-Date: Fri,  4 Sep 2026 07:00:55 +0200
-Message-ID: <20260904045801.947040473@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 499/552] ring-buffer: Fix subbuf resize race with ring buffer readers
+Date: Fri,  4 Sep 2026 07:00:56 +0200
+Message-ID: <20260904045801.968537501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,67 +53,475 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-commit 75dc2eda659f6be4a370734f11baf25df8a9fd80 upstream.
+[ Upstream commit 8a5f63637890f03177146efddaba5ec7a1b4d61f ]
 
-The Yoga Slim 7 14AKP10 has a PCI SSID of 17aa:38b4 but a codec SSID of
-17aa:391a. The current quirk table contains a PCI quirk for 17aa:38b4
-(for the Legion Slim 7 16IRH8) which matches first, so the codec-specific
-quirk for 17aa:391a is never applied.
+trace_buffer subbuf_size is read lockless in ring_buffer_read_page() and
+ring_buffer_read_start(), while it can simultaneously be resized with
+ring_buffer_subbuf_order_set().
 
-This results in the wrong fixup being used (CS35L41_I2C_2 instead of the
-correct bass speaker fixup), leaving the internal speakers misconfigured
-or silent.
+Instead of trace_buffer::subbuf_size, use bpage::order in
+ring_buffer_read_start() and ring_buffer_read_page().
 
-Remove the 17aa:391a entry from its PCI-SSID-sorted position and add it as
-an HDA_CODEC_QUIRK directly before the 17aa:38b4 entry, because it must
-match on the codec subsystem ID rather than the PCI SSID and it has to win
-over the colliding PCI quirk for the Legion Slim 7 16IRH8.  A comment is
-added to explain the out-of-order placement, following the same style
-already used for the 17aa:38bb and 17aa:38f9 codec-SSID overrides.
+In ring_buffer_read_start(), even with resize_disabled, there is still a
+possibility of a race with a buffer modification. Hold the trace_buffer
+mutex to synchronise with any pending ring buffer order modification.
 
-With this change, the correct ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN is
-applied, restoring speaker output and auto-mute functionality.
+trace_buffer::subbuf_size is now actually useless, remove it. Also,
+create accessors rb_subbuf_capacity() and rb_page_capacity() which
+return the actual size available for storing events, while
+rb_subbuf_size() returns the actual subbuf page-size.
 
-The original quirk added in commit e6c888202297 ("ALSA: hda/realtek: Add
-quirk for Lenovo Yoga Slim 7 14AKP10") matched on the PCI SSID 17aa:391a,
-but this model actually exposes PCI SSID 17aa:38b4 (shared with the Legion
-Slim 7 16IRH8), so that quirk never matched and the bass speaker remained
-silent.  Fix it by matching on the codec SSID and placing the entry before
-the colliding 17aa:38b4 PCI quirk.
-
-Fixes: e6c888202297 ("ALSA: hda/realtek: Add quirk for Lenovo Yoga Slim 7 14AKP10")
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221298
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260817094708.222154-1-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260813131152.3589632-5-vdonnefort@google.com
+Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260805153225.2096152-1-vdonnefort%40google.com # patch 1
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 167 +++++++++++++++++++++++--------------
+ 1 file changed, 106 insertions(+), 61 deletions(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7465,6 +7465,10 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x17aa, 0x38a8, "Y780P AMD VECO dual", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x38a9, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
-+	/* Lenovo Yoga Slim 7 14AKP10 shares PCI SSID 17aa:38b4 with Legion Slim 7
-+	 * 16IRH8; use codec SSID to distinguish them
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index c0ca860c9b5b9..5936389188bd7 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -396,6 +396,17 @@ static __always_inline unsigned int rb_page_commit(struct buffer_page *bpage)
+ 	return local_read(&bpage->page->commit);
+ }
+ 
++/**
++ * rb_page_capacity - Get the capacity of a buffer page
++ * @bpage:	The buffer page
++ *
++ * Return: The maximum size available for events in the given buffer page.
++ */
++static __always_inline unsigned int rb_page_capacity(struct buffer_page *bpage)
++{
++	return (PAGE_SIZE << bpage->order) - BUF_PAGE_HDR_SIZE;
++}
++
+ static void free_buffer_page(struct buffer_page *bpage)
+ {
+ 	/* Range pages are not to be freed */
+@@ -595,11 +606,42 @@ struct trace_buffer {
+ 
+ 	struct ring_buffer_meta		*meta;
+ 
+-	unsigned int			subbuf_size;
+ 	unsigned int			subbuf_order;
+ 	unsigned int			max_data_size;
+ };
+ 
++static __always_inline unsigned int rb_subbuf_size(struct trace_buffer *buffer)
++{
++	return PAGE_SIZE << buffer->subbuf_order;
++}
++
++/**
++ * rb_subbuf_capacity - Get the capacity of a subbuffer
++ * @buffer:	A trace buffer
++ *
++ * Unsafe to use without holding trace_buffer::mutex or with resizing enabled.
++ * Consider rb_page_capacity() instead.
++ *
++ * Return: The maximum size available for events in a trace buffer subbuffer.
++ */
++static __always_inline unsigned int rb_subbuf_capacity(struct trace_buffer *buffer)
++{
++	return rb_subbuf_size(buffer) - BUF_PAGE_HDR_SIZE;
++}
++
++/**
++ * rb_subbuf_start - Get the start address of a subbuffer
++ * @buffer:	A trace buffer
++ * @addr:	An address of an event on a subbuffer
++ *
++ * Return: The start of the subbuffer for where @addr sits
++ */
++static __always_inline
++unsigned long rb_subbuf_start(struct trace_buffer *buffer, unsigned long addr)
++{
++	return addr & ~((unsigned long)(rb_subbuf_size(buffer) - 1));
++}
++
+ struct ring_buffer_iter {
+ 	struct ring_buffer_per_cpu	*cpu_buffer;
+ 	unsigned long			head;
+@@ -639,7 +681,7 @@ int ring_buffer_print_page_header(struct trace_buffer *buffer, struct trace_seq
+ 	trace_seq_printf(s, "\tfield: char data;\t"
+ 			 "offset:%u;\tsize:%u;\tsigned:%u;\n",
+ 			 (unsigned int)offsetof(typeof(field), data),
+-			 (unsigned int)buffer->subbuf_size,
++			 (unsigned int)rb_subbuf_capacity(buffer),
+ 			 (unsigned int)is_signed_type(char));
+ 
+ 	return !trace_seq_has_overflowed(s);
+@@ -1628,7 +1670,7 @@ rb_range_align_subbuf(unsigned long addr, int subbuf_size, int nr_subbufs)
+  */
+ static void *rb_range_meta(struct trace_buffer *buffer, int nr_pages, int cpu)
+ {
+-	int subbuf_size = buffer->subbuf_size + BUF_PAGE_HDR_SIZE;
++	int subbuf_size = rb_subbuf_size(buffer);
+ 	struct ring_buffer_cpu_meta *meta;
+ 	struct ring_buffer_meta *bmeta;
+ 	unsigned long ptr;
+@@ -2302,8 +2344,8 @@ static int __rb_allocate_pages(struct ring_buffer_per_cpu *cpu_buffer,
+ 			bpage->range = 1;
+ 			bpage->id = i + 1;
+ 		} else {
+-			int order = cpu_buffer->buffer->subbuf_order;
+-			bpage->page = alloc_cpu_data(cpu_buffer->cpu, order);
++			bpage->page = alloc_cpu_data(cpu_buffer->cpu,
++						     cpu_buffer->buffer->subbuf_order);
+ 			if (!bpage->page)
+ 				goto free_pages;
+ 		}
+@@ -2402,8 +2444,7 @@ rb_allocate_cpu_buffer(struct trace_buffer *buffer, long nr_pages, int cpu)
+ 
+ 		atomic_inc(&cpu_buffer->resize_disabled);
+ 	} else {
+-		int order = cpu_buffer->buffer->subbuf_order;
+-		bpage->page = alloc_cpu_data(cpu, order);
++		bpage->page = alloc_cpu_data(cpu, bpage->order);
+ 		if (!bpage->page)
+ 			goto fail_free_reader;
+ 	}
+@@ -2512,10 +2553,9 @@ static struct trace_buffer *alloc_buffer(unsigned long size, unsigned flags,
+ 
+ 	buffer->subbuf_order = order;
+ 	subbuf_size = (PAGE_SIZE << order);
+-	buffer->subbuf_size = subbuf_size - BUF_PAGE_HDR_SIZE;
+ 
+ 	/* Max payload is buffer page size - header (8bytes) */
+-	buffer->max_data_size = buffer->subbuf_size - (sizeof(u32) * 2);
++	buffer->max_data_size = rb_subbuf_capacity(buffer) - (sizeof(u32) * 2);
+ 
+ 	buffer->flags = flags;
+ 	buffer->clock = trace_clock_local;
+@@ -2588,9 +2628,8 @@ static struct trace_buffer *alloc_buffer(unsigned long size, unsigned flags,
+ 
+ 		rb_range_meta_init(buffer, nr_pages, scratch_size);
+ 	} else {
+-
+ 		/* need at least two pages */
+-		nr_pages = DIV_ROUND_UP(size, buffer->subbuf_size);
++		nr_pages = DIV_ROUND_UP(size, rb_subbuf_capacity(buffer));
+ 		if (nr_pages < 2)
+ 			nr_pages = 2;
+ 	}
+@@ -2963,7 +3002,7 @@ static void update_pages_handler(struct work_struct *work)
+  * @size: the new size.
+  * @cpu_id: the cpu buffer to resize
+  *
+- * Minimum size is 2 * buffer->subbuf_size.
++ * Minimum size is 2 * rb_subbuf_capacity(buffer).
+  *
+  * Returns 0 on success and < 0 on failure.
+  */
+@@ -2985,12 +3024,6 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
+ 	    !cpumask_test_cpu(cpu_id, buffer->cpumask))
+ 		return 0;
+ 
+-	nr_pages = DIV_ROUND_UP(size, buffer->subbuf_size);
+-
+-	/* we need a minimum of two pages */
+-	if (nr_pages < 2)
+-		nr_pages = 2;
+-
+ 	/*
+ 	 * Keep CPUs from coming online while resizing to synchronize
+ 	 * with new per CPU buffers being created.
+@@ -3001,6 +3034,12 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
+ 	mutex_lock(&buffer->mutex);
+ 	atomic_inc(&buffer->resizing);
+ 
++	nr_pages = DIV_ROUND_UP(size, rb_subbuf_capacity(buffer));
++
++	/* we need a minimum of two pages */
++	if (nr_pages < 2)
++		nr_pages = 2;
++
+ 	if (cpu_id == RING_BUFFER_ALL_CPUS) {
+ 		/*
+ 		 * Don't succeed if resizing is disabled, as a reader might be
+@@ -3279,7 +3318,7 @@ rb_event_index(struct ring_buffer_per_cpu *cpu_buffer, struct ring_buffer_event
+ {
+ 	unsigned long addr = (unsigned long)event;
+ 
+-	addr &= (PAGE_SIZE << cpu_buffer->buffer->subbuf_order) - 1;
++	addr &= (unsigned long)rb_subbuf_size(cpu_buffer->buffer) - 1;
+ 
+ 	return addr - BUF_PAGE_HDR_SIZE;
+ }
+@@ -3518,8 +3557,8 @@ static inline void
+ rb_reset_tail(struct ring_buffer_per_cpu *cpu_buffer,
+ 	      unsigned long tail, struct rb_event_info *info)
+ {
+-	unsigned long bsize = READ_ONCE(cpu_buffer->buffer->subbuf_size);
+ 	struct buffer_page *tail_page = info->tail_page;
++	unsigned long bsize = rb_page_capacity(tail_page);
+ 	struct ring_buffer_event *event;
+ 	unsigned long length = info->length;
+ 
+@@ -3871,8 +3910,7 @@ rb_try_to_discard(struct ring_buffer_per_cpu *cpu_buffer,
+ 
+ 	new_index = rb_event_index(cpu_buffer, event);
+ 	old_index = new_index + rb_event_ts_length(event);
+-	addr = (unsigned long)event;
+-	addr &= ~((PAGE_SIZE << cpu_buffer->buffer->subbuf_order) - 1);
++	addr = rb_subbuf_start(cpu_buffer->buffer, (unsigned long)event);
+ 
+ 	bpage = READ_ONCE(cpu_buffer->tail_page);
+ 
+@@ -4519,7 +4557,7 @@ __rb_reserve_next(struct ring_buffer_per_cpu *cpu_buffer,
+ 	tail = write - info->length;
+ 
+ 	/* See if we shot pass the end of this buffer page */
+-	if (unlikely(write > cpu_buffer->buffer->subbuf_size)) {
++	if (unlikely(write > rb_page_capacity(tail_page))) {
+ 		check_buffer(cpu_buffer, info, CHECK_FULL_PAGE);
+ 		return rb_move_tail(cpu_buffer, tail, info);
+ 	}
+@@ -4764,7 +4802,7 @@ rb_decrement_entry(struct ring_buffer_per_cpu *cpu_buffer,
+ 	struct buffer_page *bpage = cpu_buffer->commit_page;
+ 	struct buffer_page *start;
+ 
+-	addr &= ~((PAGE_SIZE << cpu_buffer->buffer->subbuf_order) - 1);
++	addr = rb_subbuf_start(cpu_buffer->buffer, addr);
+ 
+ 	/* Do the likely case first */
+ 	if (likely(bpage->page == (void *)addr)) {
+@@ -5441,7 +5479,6 @@ static struct buffer_page *
+ rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
+ {
+ 	struct buffer_page *reader = NULL;
+-	unsigned long bsize = READ_ONCE(cpu_buffer->buffer->subbuf_size);
+ 	unsigned long overwrite;
+ 	unsigned long flags;
+ 	int nr_loops = 0;
+@@ -5580,7 +5617,7 @@ rb_get_reader_page(struct ring_buffer_per_cpu *cpu_buffer)
+ #define USECS_WAIT	1000000
+         for (nr_loops = 0; nr_loops < USECS_WAIT; nr_loops++) {
+ 		/* If the write is past the end of page, a writer is still updating it */
+-		if (likely(!reader || rb_page_write(reader) <= bsize))
++		if (likely(!reader || rb_page_write(reader) <= rb_page_capacity(reader)))
+ 			break;
+ 
+ 		udelay(1);
+@@ -6002,36 +6039,44 @@ EXPORT_SYMBOL_GPL(ring_buffer_consume);
+ struct ring_buffer_iter *
+ ring_buffer_read_start(struct trace_buffer *buffer, int cpu, gfp_t flags)
+ {
++	struct ring_buffer_iter *iter __free(kfree) = kzalloc_obj(*iter, flags);
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+-	struct ring_buffer_iter *iter;
+-
+-	if (!cpumask_test_cpu(cpu, buffer->cpumask))
+-		return NULL;
+ 
+-	iter = kzalloc(sizeof(*iter), flags);
+ 	if (!iter)
+ 		return NULL;
+ 
+-	/* Holds the entire event: data and meta data */
+-	iter->event_size = buffer->subbuf_size;
+-	iter->event = kmalloc(iter->event_size, flags);
+-	if (!iter->event) {
+-		kfree(iter);
++	if (!cpumask_test_cpu(cpu, buffer->cpumask))
+ 		return NULL;
+-	}
+ 
+ 	cpu_buffer = buffer->buffers[cpu];
+ 
+-	iter->cpu_buffer = cpu_buffer;
++	/*
++	 * Only KDB is using GFP_ATOMIC, for the others, lock the buffer to
++	 * prevent concurrent resizing.
 +	 */
-+	HDA_CODEC_QUIRK(0x17aa, 0x391a, "Lenovo Yoga Slim 7 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	HDA_CODEC_QUIRK(0x17aa, 0x391d, "Lenovo Yoga 7 2-in-1 16AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-@@ -7499,7 +7503,6 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
--	SND_PCI_QUIRK(0x17aa, 0x391a, "Lenovo Yoga Slim 7 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TXNW2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3929, "Thinkbook 13x Gen 5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
++	if (gfpflags_allow_blocking(flags))
++		mutex_lock(&buffer->mutex);
+ 
+ 	atomic_inc(&cpu_buffer->resize_disabled);
+ 
++	if (gfpflags_allow_blocking(flags))
++		mutex_unlock(&buffer->mutex);
++
++	/* Holds the entire event: data and meta data. */
++	iter->event_size = rb_page_capacity(READ_ONCE(cpu_buffer->reader_page));
++	iter->event = kmalloc(iter->event_size, flags);
++	if (!iter->event) {
++		atomic_dec(&cpu_buffer->resize_disabled);
++		return NULL;
++	}
++	iter->cpu_buffer = cpu_buffer;
++
+ 	guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock);
+ 	arch_spin_lock(&cpu_buffer->lock);
+ 	rb_iter_reset(iter);
+ 	arch_spin_unlock(&cpu_buffer->lock);
+ 
+-	return iter;
++	return_ptr(iter);
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_read_start);
+ 
+@@ -6085,7 +6130,7 @@ unsigned long ring_buffer_size(struct trace_buffer *buffer, int cpu)
+ 	if (!cpumask_test_cpu(cpu, buffer->cpumask))
+ 		return 0;
+ 
+-	return buffer->subbuf_size * buffer->buffers[cpu]->nr_pages;
++	return rb_subbuf_capacity(buffer) * buffer->buffers[cpu]->nr_pages;
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_size);
+ 
+@@ -6655,15 +6700,15 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
+ 	if (!data_page || !data_page->data)
+ 		return -1;
+ 
+-	if (data_page->order != buffer->subbuf_order)
+-		return -1;
+-
+ 	bpage = data_page->data;
+ 	if (!bpage)
+ 		return -1;
+ 
+ 	guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock);
+ 
++	if (data_page->order != cpu_buffer->reader_page->order)
++		return -1;
++
+ 	reader = rb_get_reader_page(cpu_buffer);
+ 	if (!reader)
+ 		return -1;
+@@ -6778,7 +6823,7 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
+ 		/* If there is room at the end of the page to save the
+ 		 * missed events, then record it there.
+ 		 */
+-		if (buffer->subbuf_size - commit >= sizeof(missed_events)) {
++		if (rb_page_capacity(reader) - commit >= sizeof(missed_events)) {
+ 			memcpy(&bpage->data[commit], &missed_events,
+ 			       sizeof(missed_events));
+ 			local_add(RB_MISSED_STORED, &bpage->commit);
+@@ -6790,8 +6835,8 @@ int ring_buffer_read_page(struct trace_buffer *buffer,
+ 	/*
+ 	 * This page may be off to user land. Zero it out here.
+ 	 */
+-	if (commit < buffer->subbuf_size)
+-		memset(&bpage->data[commit], 0, buffer->subbuf_size - commit);
++	if (commit < rb_page_capacity(reader))
++		memset(&bpage->data[commit], 0, rb_page_capacity(reader) - commit);
+ 
+ 	return read;
+ }
+@@ -6817,7 +6862,7 @@ EXPORT_SYMBOL_GPL(ring_buffer_read_page_data);
+  */
+ int ring_buffer_subbuf_size_get(struct trace_buffer *buffer)
+ {
+-	return buffer->subbuf_size + BUF_PAGE_HDR_SIZE;
++	return rb_subbuf_size(buffer);
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_subbuf_size_get);
+ 
+@@ -6862,7 +6907,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+ {
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	struct buffer_page *bpage, *tmp;
+-	int old_order, old_size;
++	unsigned int old_capacity;
++	int old_order;
+ 	int nr_pages;
+ 	int psize;
+ 	int err;
+@@ -6871,9 +6917,6 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+ 	if (!buffer || order < 0)
+ 		return -EINVAL;
+ 
+-	if (buffer->subbuf_order == order)
+-		return 0;
+-
+ 	psize = (1 << order) * PAGE_SIZE;
+ 	if (psize <= BUF_PAGE_HDR_SIZE)
+ 		return -EINVAL;
+@@ -6882,18 +6925,21 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+ 	if (psize > RB_WRITE_MASK + 1)
+ 		return -EINVAL;
+ 
+-	old_order = buffer->subbuf_order;
+-	old_size = buffer->subbuf_size;
+-
+ 	/* prevent another thread from changing buffer sizes */
+ 	guard(mutex)(&buffer->mutex);
++
++	old_order = buffer->subbuf_order;
++	if (old_order == order)
++		return 0;
++
++	old_capacity = rb_subbuf_capacity(buffer);
++
+ 	atomic_inc(&buffer->record_disabled);
+ 
+ 	/* Make sure all commits have finished */
+ 	synchronize_rcu();
+ 
+ 	buffer->subbuf_order = order;
+-	buffer->subbuf_size = psize - BUF_PAGE_HDR_SIZE;
+ 
+ 	/* Make sure all new buffers are allocated, before deleting the old ones */
+ 	for_each_buffer_cpu(buffer, cpu) {
+@@ -6909,8 +6955,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+ 		}
+ 
+ 		/* Update the number of pages to match the new size */
+-		nr_pages = old_size * buffer->buffers[cpu]->nr_pages;
+-		nr_pages = DIV_ROUND_UP(nr_pages, buffer->subbuf_size);
++		nr_pages = old_capacity * buffer->buffers[cpu]->nr_pages;
++		nr_pages = DIV_ROUND_UP(nr_pages, rb_subbuf_capacity(buffer));
+ 
+ 		/* we need a minimum of two pages */
+ 		if (nr_pages < 2)
+@@ -6998,7 +7044,6 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+ 
+ error:
+ 	buffer->subbuf_order = old_order;
+-	buffer->subbuf_size = old_size;
+ 
+ 	atomic_dec(&buffer->record_disabled);
+ 
+@@ -7076,7 +7121,7 @@ static void rb_setup_ids_meta_page(struct ring_buffer_per_cpu *cpu_buffer,
+ 
+ 	meta->meta_struct_len = sizeof(*meta);
+ 	meta->nr_subbufs = nr_subbufs;
+-	meta->subbuf_size = cpu_buffer->buffer->subbuf_size + BUF_PAGE_HDR_SIZE;
++	meta->subbuf_size = rb_subbuf_size(cpu_buffer->buffer);
+ 	meta->meta_page_size = meta->subbuf_size;
+ 
+ 	rb_update_meta_page(cpu_buffer);
+@@ -7438,7 +7483,7 @@ int ring_buffer_map_get_reader(struct trace_buffer *buffer, int cpu)
+ 			 * missed events, then record it there.
+ 			 */
+ 			commit = rb_page_size(reader);
+-			if (buffer->subbuf_size - commit >= sizeof(missed_events)) {
++			if (rb_subbuf_capacity(buffer) - commit >= sizeof(missed_events)) {
+ 				memcpy(&bpage->data[commit], &missed_events,
+ 				       sizeof(missed_events));
+ 				local_add(RB_MISSED_STORED, &bpage->commit);
+@@ -7470,7 +7515,7 @@ int ring_buffer_map_get_reader(struct trace_buffer *buffer, int cpu)
+ out:
+ 	/* Some archs do not have data cache coherency between kernel and user-space */
+ 	flush_kernel_vmap_range(cpu_buffer->reader_page->page,
+-				buffer->subbuf_size + BUF_PAGE_HDR_SIZE);
++				rb_subbuf_size(buffer));
+ 
+ 	rb_update_meta_page(cpu_buffer);
+ 
+-- 
+2.53.0
+
 
 
