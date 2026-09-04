@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241A126AC3;
-	Fri,  4 Sep 2026 05:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE56F26AC3;
+	Fri,  4 Sep 2026 05:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499741; cv=none; b=RXNW3HuIFYeuJYLOaRxKSIDwIF4b4sGmB0KTnyRIw5dgWDjJiTs+SAsv+TPeHuRSpidb55v3ATttnqCmxeCuzEQh3n0Vw8uDKHpshk5KHYnDrSSZ92bM8O5woyVA8vV7sUo2M4X5Xm72wuc6Ln90JmPZZG5c0nS5GlnXO+yLGgY=
+	t=1788499744; cv=none; b=o5Hsdkji79aaKD1p/k/WI7rSb5N40yAK3sjWO685igjhpTCGAatdtb6CoejSo/Ni4x/YOckFZEpUrPwthvkAWzUl0VXQfDH0M37bmubGOTkdIwQTQhStlZJ2n+ze9V2R3PM/DVZtTyA5ZmF22hZvE/nnvuNh+i6tOVdgNYIgtFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499741; c=relaxed/simple;
-	bh=SuI0mtXaqWxyZOgbTymJ3q5KAbSzYTffjCdL0AoxKmU=;
+	s=arc-20240116; t=1788499744; c=relaxed/simple;
+	bh=ZSqLjMNQT+MfyhpAFgxECC/Gqg8PfDzFmmlF5Y96h9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pscsq1x2L9CRuTR7vtVZpaN0YuHEBoEEB3Xw7YTyCUHc7HFpcDNWu8jloR6CdrHOjTsUZtUcPtwhZ/aJtf8OOf6VSIJxLz8l9RRUOWXz0Hf917SUDR2lLGWvb+q52r52F5SgH4d6hH77vc19+M8P2xT61nRy4XXII1DzxKJVASo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdlRDZr9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LjBWL/dgICI4eCu4VL5BB2/OXsxyTGJPLYyBwqM8/cHhiCc9Es4RiltV0FXmhLed42bcx58v0ndKNHbP2ornMu6ueN1O8XVoaFUcuhxF/z07iS0VRxmyCx4p69m/NLZDXWstltIZhx4oXmuwKY+whEg0rhQ4EUYx1QG41+/sXDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSDfLxg2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdlRDZr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F81F1F00A3D;
-	Fri,  4 Sep 2026 05:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSDfLxg2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5569F1F00A3D;
+	Fri,  4 Sep 2026 05:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499740;
-	bh=Jvk3P2YIx2xzogpIeKhZj3w09xcokDwLL3VW7MIGwvA=;
+	s=korg; t=1788499742;
+	bh=UxVDZULK+CarjYpOCL6gDy6JgKB8UX7SaSjiyBbkPYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WdlRDZr9mBqODzLJBv8szBBejsWoNPTdLPeu7McTPj9GY+WNHrhiajQgYxzLA4i5F
-	 O+MD+u+7BMZVVQrnFRLtfrg086yXKs3wQQRGaAzBxVARukXOFMnwwlanAjgbVQ2QQg
-	 zDmHk0OE9JybL4CHR9R84xaYK1eJb4efsn6EmZFY=
+	b=YSDfLxg2Ri5l59KE08EP+Avwn60gXMrtWfuajlIExFraBz+tow7PavHNZRwXg6Oq+
+	 8sue/0uoUxkUOqikYC4Zlj9yl2d5ZzbJBxIiDtd7JJ+ktpIiZT5FiWJJsLS9J3CLFK
+	 2UUKks64doYvU5wrqsG0qsFxjyxEviFIFymwaEfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ali Tariq <alitariq45892@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 7.2 523/713] PCI: starfive: Fix resource leaks on error paths in host_init()
-Date: Fri,  4 Sep 2026 06:58:11 +0200
-Message-ID: <20260904045815.543608405@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 7.2 524/713] PCI: plda: Fix use-after-free of event IRQs during teardown
+Date: Fri,  4 Sep 2026 06:58:12 +0200
+Message-ID: <20260904045815.565415457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,76 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Ali Tariq <alitariq45892@gmail.com>
 
-commit 22877a061f81c5d58041e384b3131684bec636b9 upstream.
+commit 26b73bae01d6eb81a4a38f36101812f20b2639de upstream.
 
-starfive_pcie_host_init() acquires the PHY, clocks/resets, and an
-optional regulator in sequence, but does not correctly unwind these
-resources when a later step fails.
+plda_pcie_irq_domain_deinit() removes pcie->event_domain via
+irq_domain_remove(), but the per-event IRQs mapped from that domain
+are requested with devm_request_irq() in plda_init_interrupts(). The
+actual free_irq() for a devm-managed IRQ is deferred by devres until
+after the calling probe()/remove() function returns.
 
-If starfive_pcie_clk_rst_init() fails after the PHY has already been
-successfully enabled, the function returns directly without disabling
-the PHY, leaking it and leaving it powered.
+This means irq_domain_remove() can free the domain's internal data
+before the deferred free_irq() for IRQs still mapped into it has run.
+When devres later processes that deferred cleanup, it can end up
+dereferencing the already-freed domain.
 
-If regulator_enable() fails for the optional vpcie3v3 regulator, the
-failure is only logged; the function falls through and returns
-success, leaving the driver believing the regulator is enabled while
-continuing to configure PCIe hardware that may be unpowered. This
-also leaves the clocks and PHY enabled with nothing to clean them up.
+Free each event IRQ explicitly with devm_free_irq() before removing
+the domain. This triggers the free immediately and removes the IRQ
+from the devres tracking list, so devres will not attempt to free it
+a second time later.
 
-Disable the PHY on the clk/reset failure path, and disable the
-clocks/resets and PHY, then return the error, if the regulator fails
-to enable.
+Also dispose of the event, INTx, and MSI IRQ mappings with
+irq_dispose_mapping() before their owning domains are removed.
 
-Build-tested and boot-tested on StarFive VisionFive 2 v1.2A
+Finally, guard the calls to irq_set_chained_handler_and_data() for
+pcie->irq, pcie->msi_irq, and pcie->intx_irq so they only run when
+those fields hold a valid (>0) IRQ number.
 
-Fixes: 05a75df4182e ("PCI: starfive: Use regulator APIs to control the 3v3 power supply of PCIe slots")
-Fixes: 39b91eb40c6a ("PCI: starfive: Add JH7110 PCIe controller")
+This is a pre-existing issue, flagged by automated review during work
+on an earlier, unrelated patch to this driver.
+
+Build-tested and boot-tested on StarFive VisionFive v1.2A board
+
+Fixes: 76c911396807 ("PCI: plda: Add host init/deinit and map bus functions")
+Closes: https://lore.kernel.org/linux-pci/20260714115343.4D49E1F000E9@smtp.kernel.org/
 Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260716102053.185276-1-alitariq45892@gmail.com
+Link: https://patch.msgid.link/20260723140434.675512-2-alitariq45892@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/plda/pcie-starfive.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/pci/controller/plda/pcie-plda-host.c |   24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/plda/pcie-starfive.c b/drivers/pci/controller/plda/pcie-starfive.c
-index 298036c3e7f9..628f8c8d6747 100644
---- a/drivers/pci/controller/plda/pcie-starfive.c
-+++ b/drivers/pci/controller/plda/pcie-starfive.c
-@@ -304,12 +304,14 @@ static int starfive_pcie_host_init(struct plda_pcie_rp *plda)
+--- a/drivers/pci/controller/plda/pcie-plda-host.c
++++ b/drivers/pci/controller/plda/pcie-plda-host.c
+@@ -559,9 +559,27 @@ EXPORT_SYMBOL_GPL(plda_pcie_setup_iomems
  
- 	ret = starfive_pcie_clk_rst_init(pcie);
- 	if (ret)
--		return ret;
-+		goto err_disable_phy;
- 
- 	if (pcie->vpcie3v3) {
- 		ret = regulator_enable(pcie->vpcie3v3);
--		if (ret)
-+		if (ret) {
- 			dev_err_probe(dev, ret, "failed to enable vpcie3v3 regulator\n");
-+			goto err_clk_rst;
+ static void plda_pcie_irq_domain_deinit(struct plda_pcie_rp *pcie)
+ {
+-	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
+-	irq_set_chained_handler_and_data(pcie->msi_irq, NULL, NULL);
+-	irq_set_chained_handler_and_data(pcie->intx_irq, NULL, NULL);
++	u32 i, event_irq;
++
++	if (pcie->irq > 0)
++		irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
++	if (pcie->msi_irq > 0)
++		irq_set_chained_handler_and_data(pcie->msi_irq, NULL, NULL);
++	if (pcie->intx_irq > 0)
++		irq_set_chained_handler_and_data(pcie->intx_irq, NULL, NULL);
++
++	for_each_set_bit(i, &pcie->events_bitmap, pcie->num_events) {
++		event_irq = irq_find_mapping(pcie->event_domain, i);
++		if (event_irq) {
++			devm_free_irq(pcie->dev, event_irq, pcie);
++			irq_dispose_mapping(event_irq);
 +		}
- 	}
- 
- 	if (pcie->reset_gpio)
-@@ -379,6 +381,13 @@ static int starfive_pcie_host_init(struct plda_pcie_rp *plda)
- 		dev_info(dev, "port link down\n");
- 
- 	return 0;
++	}
 +
-+err_clk_rst:
-+	starfive_pcie_clk_rst_deinit(pcie);
-+err_disable_phy:
-+	starfive_pcie_disable_phy(pcie);
-+
-+	return ret;
- }
++	if (pcie->intx_irq)
++		irq_dispose_mapping(pcie->intx_irq);
++	if (pcie->msi_irq)
++		irq_dispose_mapping(pcie->msi_irq);
  
- static const struct plda_pcie_host_ops sf_host_ops = {
--- 
-2.55.0
-
+ 	irq_domain_remove(pcie->msi.dev_domain);
+ 
 
 
