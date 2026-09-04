@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4DD3905F4;
-	Fri,  4 Sep 2026 05:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A275A34A3A5;
+	Fri,  4 Sep 2026 05:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500792; cv=none; b=JpbKttiMTKBzwot5/ObfDlt5WwNoJDwXjuRjdC7sf6TBmogkjNBb/vNuswwxgFAvf/mFnPv2GULwvK+AqyQmuwr6ej0I2wSetb7k9U48j8kksAwmYvcuOT8lcEx1CsGIc9GeeVRzVqRvpmHwIYg2Hef8+VGsDnMO2LzdhhyBK4c=
+	t=1788500794; cv=none; b=sGhGkG3OZgXb0Ro6AoyvZh4n+BnXmxYZd+Jb1P908sQ4hg2uYCM2LgSapUh3RvAo2UcnUUpK9N/OTZMRZ6nh6/LWkN0xUs9VmM0Q9LtWQZEwqhLL4UlPBFHga5KjV0W73IImvHkgvMon5+etRaSAiqRbj1cF1nt4mDRvLUOvnSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500792; c=relaxed/simple;
-	bh=nJW1DL/paZI/gUaLmNJFsGPKqJ1WYZLCn/+D5umwY6Y=;
+	s=arc-20240116; t=1788500794; c=relaxed/simple;
+	bh=0aGbC+s5PT9UYlO7N3egKAuMDmv9t3xNCgp16U1ycz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scGkftFW2vYVs5zQ+jK7lsxrU+7xy5eAKPdiRYChR12WdcZ8tz+7ROv56ULEeJx89KNA+KvtWoPgdbooNmBwT3bWuGhz8z013NeCPPF0dmxY8H6uu9PKjHbp/OwvhLt4/8KacWvt7lNNsDRVk3H/1h67S9pqvtzPHZTBtcslRUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kk5ZtXMJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gXe0WEJDdmr/SJtwYp3mZAWo5I6BOpUTtFtr5dzMXbHSYAAK5mPt7Cu5Gf7OwMtxAPrYduQObp2zPfczejwV6LeSDMBeKbEp8UQ343JkXbVdFBKFRaNG9IE7WqLfcLh/KtKULmy19kAmGLPdIZkW9u4Tc8C5/1iS0ljlJFmY5/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ht4wDI7q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kk5ZtXMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6A81F00A3E;
-	Fri,  4 Sep 2026 05:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ht4wDI7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7041F00A3D;
+	Fri,  4 Sep 2026 05:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500790;
-	bh=EPUoemxpZbsrgZZ5VhhTzDi0Q9at00vV3bW6w4CJR+E=;
+	s=korg; t=1788500793;
+	bh=IH1ULuaDpIlWxhUh+4MGUYk+aUWHhYR27IIVQWzKHqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kk5ZtXMJU7dhf4bvmnW1zSP7wEv1iJl+qNkJLPPKzt/bJnmS3DfVTF9aG3rO4UcEX
-	 p620+ppPObHW61AaA0e5DqO8KNyumZX33T1yiVhDN0VDZf0R96PBKzjD/MEwl9DTww
-	 +BgQDVsG3HMZlRos13ozO2W5Q0nIOl/AkEm6exUk=
+	b=ht4wDI7q6B8zhdkjhwd9rLMA1SIiriINHxCRz6ScGRObNwOQAhQoryqytI+zRkGjJ
+	 bgZ3nw1+oT3OxnCrIjM16Gijjy2T8fPkEsP9toh7DpYYW5ss+TbhwVGW9Lfv7QQU7i
+	 DIsvdawo7iH0qMvNlip5TEefmaro0DICRN/4Escs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.18 164/552] btrfs: fix extent map leak in NOCOW direct I/O write
-Date: Fri,  4 Sep 2026 06:55:21 +0200
-Message-ID: <20260904045752.744228130@linuxfoundation.org>
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 182/552] HID: mcp2221: validate report size in mcp2221_raw_event()
+Date: Fri,  4 Sep 2026 06:55:39 +0200
+Message-ID: <20260904045753.144467236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,68 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit 3f950867c307c5413d628a153ac44915bd117ffd upstream.
+commit 2c9a6998c19503626c57a2267bf279e204113079 upstream.
 
-btrfs_dio_iomap_begin() calls btrfs_get_extent(), which returns an
-extent map reference that must be dropped on all exit paths.
+mcp2221_raw_event() never validates the size of incoming HID reports.
+In the MCP2221_I2C_GET_DATA path it trusts the device-supplied data[3]
+as the copy length without checking that 4 + data[3] bytes actually
+exist in the received report. A malicious or misbehaving USB device can
+send a short report with a large data[3], causing the memcpy to read
+past the valid report data in the HID transfer buffer and leak
+uninitialized kernel memory back to userspace through the I2C/SMBus
+read path.
 
-For direct writes into a NOCOW range, btrfs_get_blocks_direct_write()
-keeps using that extent map and asks btrfs_create_dio_extent() to
-allocate the ordered extent. If that fails, for example because
-btrfs_alloc_ordered_extent() fails, the function returns the error
-without dropping the input extent map. The PREALLOC path avoided this by
-dropping the input extent map before replacing it with the newly created
-one.
+Add a minimum size check at entry and validate that the source range
+fits within the received report before the copy.
 
-Check the error from btrfs_create_dio_extent() before replacing the
-map and drop the input extent map on failure.
-
-Fixes: 5f9a8a51d8b9 ("Btrfs: add semaphore to synchronize direct IO writes with fsync")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/direct-io.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/hid/hid-mcp2221.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/btrfs/direct-io.c
-+++ b/fs/btrfs/direct-io.c
-@@ -281,17 +281,24 @@ static int btrfs_get_blocks_direct_write
- 		em2 = btrfs_create_dio_extent(BTRFS_I(inode), dio_data, start,
- 					      &file_extent, type);
- 		btrfs_dec_nocow_writers(bg);
--		if (type == BTRFS_ORDERED_PREALLOC) {
--			btrfs_free_extent_map(em);
--			*map = em2;
--			em = em2;
--		}
--
- 		if (IS_ERR(em2)) {
- 			ret = PTR_ERR(em2);
-+			btrfs_free_extent_map(em);
-+			*map = NULL;
- 			goto out;
- 		}
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -851,6 +851,9 @@ static int mcp2221_raw_event(struct hid_
+ 	u8 *buf;
+ 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
  
-+		/*
-+		 * True NOCOW writes don't need to create a new extent map,
-+		 * while PREALLOC writes must replace the existing one.
-+		 */
-+		if (em2) {
-+			ASSERT(type == BTRFS_ORDERED_PREALLOC);
-+			btrfs_free_extent_map(em);
-+			*map = em2;
-+			em = em2;
-+		}
++	if (size < 4)
++		return 0;
 +
- 		dio_data->nocow_done = true;
- 	} else {
- 		/* Our caller expects us to free the input extent map. */
+ 	switch (data[0]) {
+ 
+ 	case MCP2221_I2C_WR_DATA:
+@@ -912,6 +915,10 @@ static int mcp2221_raw_event(struct hid_
+ 					mcp->status = -EINVAL;
+ 					break;
+ 				}
++				if (4 + data[3] > size) {
++					mcp->status = -EINVAL;
++					break;
++				}
+ 				buf = mcp->rxbuf;
+ 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
+ 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
 
 
