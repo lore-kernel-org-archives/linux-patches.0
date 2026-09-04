@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6D134A77D;
-	Fri,  4 Sep 2026 05:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF634A77D;
+	Fri,  4 Sep 2026 05:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499087; cv=none; b=irTbTZrLekQAaMwcEzr+Ohx9kVM+cG5gximmfkEJc4MVfRB1rYX84yp2hpzlIbaMD/j0HoyAoRUXtQiOAK8jDy+1V+V8N+Rgc3Fh1LuTifSnDxnogVgXxrC633qZNNR1wTIWBLiVgaXw6nVzd5SQCi6HesKgsnh7KiZxC85k8pU=
+	t=1788499090; cv=none; b=kvu9xy5o0rv38qcTi+Vh7YGvBK5evQi8jcpR9pBnlR2IMvm7M4dXBHzPuAZwWofv+CJrW+/+jrSe/DaP3J/LASuSwc1uHDm9aTl5uxW+2VVLsCXrC63Lp79il2j6+QdssdPZ76SAYBcrEeZpMdVEYpyYHLdpYXgfa5uKq3KRs7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499087; c=relaxed/simple;
-	bh=usx9PxFPVEeWcjP0f2ifhgm3VpWkd+9XTcp9hQ2bMVI=;
+	s=arc-20240116; t=1788499090; c=relaxed/simple;
+	bh=EAEUGU+AtTPi6Lgnjfl2Z1eFJ81amTqOOah6EtLsbtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkkBKi8vbDO96t8OWlsx1c5m4BbsepjcfbQnUlYhBWpVDPwK11WoHs43xcxb4PNJ1NjWd+aCeev5lc9PNANvCxXAcuj/VLbcMobpCoAFzZuP3/Rvvz5/oW1u4kKgL1F1jw5Y+KmGgQiOTsfKK62h9+uVd83owGjkn2RqO10DMI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cxnlcc2z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=febqicE1t0aaq9ebRhwtpdUCGyhPdZbxfws0ecoqNDnxZg4rc/Kf+u+vHX7R7rQ6L5QYJnwhGROmOfM1/+g2MUycinSkpK828LV80G//7VJNLexpuZE2xJlt8vez+yBg0LlisDIgQAu8BJODQvyzZDSHVB6cpfcbbK51S2BJ2KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxlZxV6O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cxnlcc2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACED1F00A3D;
-	Fri,  4 Sep 2026 05:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxlZxV6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAD21F00A3D;
+	Fri,  4 Sep 2026 05:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499086;
-	bh=7DIsfObO1+PDV2NROUUhafSYElZW2QwR+BDv0ujIR7s=;
+	s=korg; t=1788499089;
+	bh=+CryiEzCVv0wHDospS/4EVAFdDrWbZrVu5JCl4vvNoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cxnlcc2zVX3zOkL3XbVZ9LeIaIt4YuA5Am42lWA+PRox+FUx0FyR+YOCZHocvPb9S
-	 EV3CvOTX0Flo+JkyDdzoX3Wit+Oxzs4jJChDkcw5GIFLsdlf5EWvW2QMa/ATez9H6x
-	 /Y8L/DcwEhfArHoZw4bCFOcLKXHM8RJMAZLlPYZs=
+	b=vxlZxV6OhwcFRig57SQARiyJ+HHwo0j/CSZ+21Ja12GxD3wocEkjsfqgUr0LjSJXD
+	 /CFMOpgXXXmYGkCGUhAyEC69cuBWqQyH1/+tUUw02cTjiaIe/GRIRBlUeebekwGtzj
+	 BiWoVkca/nqdlio/R2VyHExmDlzKnYEuPPeyplI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Morin <guillaume@morinfr.org>,
-	Breno Leitao <leitao@debian.org>,
-	Rik van Riel <riel@surriel.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 292/713] hugetlb: only adjust reservation during unmapping if mapcount is 0
-Date: Fri,  4 Sep 2026 06:54:20 +0200
-Message-ID: <20260904045810.387223818@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Subject: [PATCH 7.2 293/713] accel/rocket: fix NULL dereference and integer overflow in rocket_job_push()
+Date: Fri,  4 Sep 2026 06:54:21 +0200
+Message-ID: <20260904045810.409308207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -55,63 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Morin <guillaume@morinfr.org>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 5120b1e048d48596ffaec1a8412012a91adba73b upstream.
+commit a85402bff218f2b8f0d806e46c16c2f3d49cdda7 upstream.
 
-Since df7a6d1f6405, __unmap_hugepage_range can adjust reservations.  In
-the case of folio mapped in both a parent and a child, if the parent
-unmaps the range first, the reservation adjustment will result in an
-underflow of the reserved count.  Once the child unmaps the range, the
-count is restored.  Change __unmap_hugepage_range() to check the mapcount
-before adjusting the reservation.
+rocket_job_push() allocates a temporary array to hold all input and
+output GEM object pointers:
 
-Link: https://lore.kernel.org/all/alEJkwn5VlTTH_ZX@bender.morinfr.org/
-Link: https://lore.kernel.org/amkC_1Ya6OiUoiLZ@bender.morinfr.org
-Fixes: df7a6d1f6405 ("mm/hugetlb: restore the reservation if needed")
-Signed-off-by: Guillaume Morin <guillaume@morinfr.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+    bos = kvmalloc_array(job->in_bo_count + job->out_bo_count,
+                         sizeof(void *), GFP_KERNEL);
+    memcpy(bos, job->in_bos, job->in_bo_count * sizeof(void *));
+    memcpy(&bos[job->in_bo_count], job->out_bos, ...);
+
+Two bugs exist:
+
+1. Missing NULL check: if kvmalloc_array() fails, bos is NULL and
+   the subsequent memcpy() dereferences it, causing a kernel NULL
+   pointer dereference.
+
+2. Integer overflow: in_bo_count and out_bo_count are both u32, set
+   directly from userspace-supplied in_bo_handle_count and
+   out_bo_handle_count with no prior validation. Their sum is computed
+   in u32 arithmetic and can wrap to a smaller value, causing the
+   allocation count passed to kvmalloc_array() to be smaller than
+   intended. Subsequent uses still operate on the original counts when
+   copying and locking objects, which may lead to out-of-bounds accesses
+   on the temporary array.
+
+Fix by using check_add_overflow() to detect count overflow before the
+allocation, and adding a NULL check on the allocation result.
+
+Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/r/20260524155716.90955-1-meatuni001@gmail.com
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/accel/rocket/rocket_job.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5181,6 +5181,7 @@ void __unmap_hugepage_range(struct mmu_g
- 	bool adjust_reservation;
- 	unsigned long last_addr_mask;
+--- a/drivers/accel/rocket/rocket_job.c
++++ b/drivers/accel/rocket/rocket_job.c
+@@ -8,6 +8,7 @@
+ #include <drm/drm_gem.h>
+ #include <drm/rocket_accel.h>
+ #include <linux/interrupt.h>
++#include <linux/overflow.h>
+ #include <linux/iommu.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
+@@ -188,14 +189,19 @@ static int rocket_job_push(struct rocket
+ 	struct rocket_device *rdev = job->rdev;
+ 	struct drm_gem_object **bos;
+ 	struct ww_acquire_ctx acquire_ctx;
++	u32 bo_count;
+ 	int ret = 0;
  
-+	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
- 	WARN_ON(!is_vm_hugetlb_page(vma));
- 	BUG_ON(start & ~huge_page_mask(h));
- 	BUG_ON(end & ~huge_page_mask(h));
-@@ -5272,7 +5273,10 @@ void __unmap_hugepage_range(struct mmu_g
+-	bos = kvmalloc_array(job->in_bo_count + job->out_bo_count, sizeof(void *),
+-			     GFP_KERNEL);
++	if (check_add_overflow(job->in_bo_count, job->out_bo_count, &bo_count))
++		return -EINVAL;
++
++	bos = kvmalloc_array(bo_count, sizeof(*bos), GFP_KERNEL);
++	if (!bos)
++		return -ENOMEM;
+ 	memcpy(bos, job->in_bos, job->in_bo_count * sizeof(void *));
+ 	memcpy(&bos[job->in_bo_count], job->out_bos, job->out_bo_count * sizeof(void *));
  
- 		/*
- 		 * Restore the reservation for anonymous page, otherwise the
--		 * backing page could be stolen by someone.
-+		 * backing page could be stolen by someone. Restore only on the
-+		 * last unmap, otherwise the owner could empty its resv map
-+		 * while the folio is still mapped by a child. Note that holding
-+		 * i_mmap_lock_write is needed to check the number of mappings.
- 		 * If there we are freeing a surplus, do not set the restore
- 		 * reservation bit.
- 		 */
-@@ -5280,7 +5284,7 @@ void __unmap_hugepage_range(struct mmu_g
+-	ret = drm_gem_lock_reservations(bos, job->in_bo_count + job->out_bo_count, &acquire_ctx);
++	ret = drm_gem_lock_reservations(bos, bo_count, &acquire_ctx);
+ 	if (ret)
+ 		goto err;
  
- 		spin_lock_irq(&hugetlb_lock);
- 		if (!h->surplus_huge_pages && __vma_private_lock(vma) &&
--		    folio_test_anon(folio)) {
-+		    !folio_mapped(folio) && folio_test_anon(folio)) {
- 			folio_set_hugetlb_restore_reserve(folio);
- 			/* Reservation to be adjusted after the spin lock */
- 			adjust_reservation = true;
+@@ -220,7 +226,7 @@ static int rocket_job_push(struct rocket
+ 	rocket_attach_object_fences(job->out_bos, job->out_bo_count, job->inference_done_fence);
+ 
+ err_unlock:
+-	drm_gem_unlock_reservations(bos, job->in_bo_count + job->out_bo_count, &acquire_ctx);
++	drm_gem_unlock_reservations(bos, bo_count, &acquire_ctx);
+ err:
+ 	kvfree(bos);
+ 
 
 
