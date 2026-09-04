@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D12135AC03;
-	Fri,  4 Sep 2026 05:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF71537C106;
+	Fri,  4 Sep 2026 05:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501272; cv=none; b=gjKTZanQO0eTYvlxBr9CKOJoy1dhfOCFLiq7Quk/UCZyEawAP0bgjkdg7dPTlIWG5G/1OwDu1z2pNYu4twYwdNv3GTM1IsVPR1/EAPNjrWZFA6PapLkf9ul3xs6en3E842XlM/BemU+hi5zsieDoDuIJn31kD8EERkZtSF2x5Hk=
+	t=1788501275; cv=none; b=synAg17Fm/7CZY0qwf0C/YcS4/zwLk1N2iI7CTJ+XgkyVB9BDS+W4Rug/rxNeOGXB30iYz40BVcyDToPq9li614wW/QORn3W3o2BIWhURTdXpT/hdj2NyeDs7oSMjuSmsc+p5EYQgyKESYdgK88itsUz5Dxrv+JhaD0V8P8S76k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501272; c=relaxed/simple;
-	bh=9XWIv7W5UuhVgOvLfalYNfrEDvITAo8K7fIt3LyQ3VQ=;
+	s=arc-20240116; t=1788501275; c=relaxed/simple;
+	bh=kHmF2sjDK8j8ZNaSPnXuVu3xI90tav1ZcIZd22EldSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnWqNI9XgaMH/AIJnwsrmPateDmKaFkE64pNFYjudUqyGLESpYzZakVLPg8hawoVHqQrmQXDNPpbs/kWovCNwX8Gi/NClPHE2hpIjqM4vhZoFp0mleO7CDgtLWl2hEAU9jJwBeybn8sHW2AdmnSAzCKUh1KLNYDz+GgeEjr3Dg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jh04yd5M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dqaw0EqcpIIOzGmyxFhwTYkfRs0Q2bEe/tZB3F7yiTGVOUyDURWkrRLQKwQFbuMGMgNr9veUXu/Ux6lC7dKPBGCAIG0KuMdpb+doV5ivnkOlh/CuD/mSJdQuMpb70uZyehaqBZHQI9vnmdWqy59oCzUlZJpO1uoZBuaiW9ix6sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpXEl+6P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jh04yd5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014C41F00A3D;
-	Fri,  4 Sep 2026 05:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpXEl+6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A311F00A3D;
+	Fri,  4 Sep 2026 05:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501271;
-	bh=SFsLDM+/thj7bYKVOutLMKBuqZRNROev3obX4H29Y9Y=;
+	s=korg; t=1788501274;
+	bh=XutjuGuvwKkUQ7EMc7MN5gki+D7yobMFf56Y0rriBJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jh04yd5MbajFohimPS4C8ropONpx3TQLsb96qlguEmW3nnUM2H1lNJVY5MNqEiH+z
-	 t6PExmvRKZLjmAv9KoMkSWLt6rvuMgVZplMJjbt+2/BcJOYZy6ue5d3Co650jibU7Y
-	 cfYJ/oHXLBJIbe6iPTcqeABJRJe+U8Rg2jqOXFGU=
+	b=wpXEl+6POWFFQdNAh/P+91RG2707s+jdBBq38SBSXQmnfqEoa8Sk/WBN8Rom4lWNp
+	 Gm0cyIKhvyjCpDDBNsOuaU7YlTzjjRdIOdX0bk8wvMmBJrVtkwyaGcr9leLbIO41tm
+	 ueDCuuj/0qYFX+CKl87mv5dxl47g9g8w9mkQJxAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Oren Klopfer <oklopfer37@gmail.com>
-Subject: [PATCH 6.18 308/552] Revert "arm64: dts: rockchip: Further describe the WiFi for the Pinephone Pro"
-Date: Fri,  4 Sep 2026 06:57:45 +0200
-Message-ID: <20260904045757.265973221@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.18 309/552] arm64: dts: qcom: sm6115-pro1x: Correct touchscreen GPIO flags
+Date: Fri,  4 Sep 2026 06:57:46 +0200
+Message-ID: <20260904045757.289883059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,70 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oren Klopfer <oklopfer37@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit 5f19535351bf28f28d702f452d11a1216ec2bd28 upstream.
+commit 8e73ae5c34e4fbbd25a8324e3c0eb1e845d7f01e upstream.
 
-This reverts commit 096bd8c679185f898cae9933c6a68650fa26ea4f.
+IRQ_TYPE_xxx flags are not correct in the context of GPIO flags.
+These are simple defines so they could be used in DTS but they will not
+have the same meaning: IRQ_TYPE_LEVEL_LOW = 8 = GPIO_TRANSITORY.
 
-Just as with the Pinebook Pro, there are multiple chipset variants for
-the Pinephone Pro, and multiple firmware binaries for different
-distributions. The change causes issues with some of these combinations,
-and reverting it resolves the issues. See the Closes below for the full
-report.
+Correct the touchscreen irq-gpios to use proper flags, assuming the
+author of the code wanted similar logical behavior:
 
-Similarly with the Pinebook Pro adjustment, the original commit only
-indicates "further description" and not indicative of fixing any
-existing issues, so reverting should not kick any back up.
+  IRQ_TYPE_LEVEL_LOW => GPIO_ACTIVE_LOW
 
-Fixes: 096bd8c67918 ("arm64: dts: rockchip: Further describe the WiFi for the Pinephone Pro")
-Cc: Heiko Stuebner <heiko@sntech.de>
-Cc: Peter Robinson <pbrobinson@gmail.com>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Fixes: e46b455e67f8 ("arm64: dts: qcom: sm6115-pro1x: Add Goodix Touchscreen")
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/r/20260607225901.64019-1-oklopfer37@gmail.com/
-Signed-off-by: Oren Klopfer <oklopfer37@gmail.com>
-Link: https://patch.msgid.link/20260703201010.67311-1-oklopfer37@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260413090527.53000-2-krzysztof.kozlowski@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts |   18 ------------------
- 1 file changed, 18 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -689,12 +689,6 @@
- 		};
- 	};
+--- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
++++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+@@ -151,7 +151,7 @@
  
--	wifi {
--		wifi_host_wake_l: wifi-host-wake-l {
--			rockchip,pins = <4 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
--		};
--	};
--
- 	wireless-bluetooth {
- 		bt_wake_pin: bt-wake-pin {
- 			rockchip,pins = <2 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
-@@ -721,19 +715,7 @@
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
- 	sd-uhs-sdr104;
--	#address-cells = <1>;
--	#size-cells = <0>;
- 	status = "okay";
--
--	brcmf: wifi@1 {
--		compatible = "brcm,bcm4329-fmac";
--		reg = <1>;
--		interrupt-parent = <&gpio4>;
--		interrupts = <RK_PD0 IRQ_TYPE_LEVEL_HIGH>;
--		interrupt-names = "host-wake";
--		pinctrl-names = "default";
--		pinctrl-0 = <&wifi_host_wake_l>;
--	};
- };
+ 		interrupts-extended = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
  
- &pwm0 {
+-		irq-gpios = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
++		irq-gpios = <&tlmm 80 GPIO_ACTIVE_LOW>;
+ 		reset-gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
+ 		AVDD28-supply = <&ts_vdd_supply>;
+ 		VDDIO-supply = <&ts_vddio_supply>;
 
 
