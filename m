@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5486E417BF8;
-	Fri,  4 Sep 2026 06:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38941417BF8;
+	Fri,  4 Sep 2026 06:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502375; cv=none; b=saBiIIaouscQfv07EUKm8L0TCOd9BEDTkAEP2iCTKLYOnqNZAXholy8VFfrA3njnihUYolguNSm4j2aeC+xvoWjT8pwpY2wPY5tva1ELddPQp5R+1N9FVU6o05K5FgaQAJcS+Eov5vusvv7Dq0/bXvzHFw+aqdyQblh7HBrSNlA=
+	t=1788502378; cv=none; b=lX5GbplcJUnLIcUabqtsXWZM9krGCTuD2uROostyN7N4IZYKGXZo49n/4+TPPlMHKLmPWklc+45Bls0aAMx3V4JUuuqN10G+2LEfcn8bWC4I99+k8/5tLTXp3+jLyyMJzSfbYi7xF72s9MZIungv3I1ltXCWXX6dxgnaB3hYZq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502375; c=relaxed/simple;
-	bh=GU9BfZnhSaXk7fnbFgxaw0xlikHal/Ej/yEIeFVWMmw=;
+	s=arc-20240116; t=1788502378; c=relaxed/simple;
+	bh=F7rSPmhDjng0j7yuz3Kl9iOVhW6MT7jmWkn57cQVqPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ef3Je9iAHRIm3YCidKIbEHswHgQ6lV40b6/n8KR83k1jPJWdWRLj/Nl/KVUuPovz3SB8aCFKjXHol97Ez7hTiCgsABWuvE7b9nEm/HRR9jQQ1aBL0sOMOTTmgEakJkdtxm8r04k/FuyS66o4w6iqB66YDOGkHHtNe+Gl9C5qCq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qprOfoqj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LYawtNPnHd6DDo1GwVYieUHNLjs708/1AdWbYi/7B7pV5JkwW6Jg7vInOYARXd5xhPA+mkrLxNstg4+m9i2SnFUYzylKGmjHgi4Xu6sTa3c9SfybVHr7S3s676E72efz+fBshOwQDXzkKD1H3dpno1tbTCdunt4gpuA7QWv1tek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFVv7enM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qprOfoqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6771F00A3E;
-	Fri,  4 Sep 2026 06:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFVv7enM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F451F00A3D;
+	Fri,  4 Sep 2026 06:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502374;
-	bh=X6KvE0TKofrSN5UooKvWJ3ov2koMRgzc/+mBFMVeRTE=;
+	s=korg; t=1788502377;
+	bh=K7sGkPsz6yrFiKXLFX3oa+8xo3bAXq/ov4+IVVHCnPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qprOfoqjSdpASwEcbwr9FWqjfHPtewy7SnorZ0QgvgX8VLDS15n3AIR2z13L+PiRf
-	 gS1y+8zAmVzls3LWysuhC4DZxTCTHD5MicmL+wGL2k8qGiwoJ2acQ09cJRFcjdh5Lv
-	 Tdq9M5haAnTAql1U/LKMIFCkRaoLC0G7r2W9WNog=
+	b=tFVv7enMENa7DBXmCX4xDyBFuLFx+R8zHxM6eyw1P/1jBKfQPdZoTOpk9ntHViOFc
+	 zOJ1w+I3dy7J9v7JHzt0KMHRWG0wWugxmh6c2YpsuVorzRTiTJVGUhe2PCFiWd5Kws
+	 psXinA8MBBpU10nzNsYPElJwfckCIBWWUIpukmF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.12 132/403] fs/ntfs3: fix info-leak on partial LZNT decompress in ni_read_frame()
-Date: Fri,  4 Sep 2026 06:58:55 +0200
-Message-ID: <20260904045737.839163280@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 179/403] Bluetooth: RFCOMM: serialize security confirmation handling
+Date: Fri,  4 Sep 2026 06:59:42 +0200
+Message-ID: <20260904045738.928271115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,60 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 35d1ea92c7d946e2ebdbe36cdb2c969c8704bebd upstream.
+commit 759c185d0bbdb131357408f50b8735e04ed3caff upstream.
 
-ni_read_frame() decompresses an LZNT $DATA frame into the vmapped target
-pages and then trusts decompress_lznt()'s return value:
+rfcomm_security_cfm() looks up a session on session_list and then walks
+its DLC list without holding rfcomm_mutex. Since RFCOMM session teardown
+uses rfcomm_mutex, krfcommd can close and free the same session and DLCs
+concurrently:
 
-  unc_size = decompress_lznt(frame_ondisk, ondisk_size, frame_mem,
-                             frame_size);
-  if ((ssize_t)unc_size < 0)        err = unc_size;
-  else if (!unc_size || unc_size > frame_size)  err = -EINVAL;
+  hci_rx_work                    krfcommd
+  -----------                    ---------
+  rfcomm_session_get()
+                                 rfcomm_lock()
+                                 rfcomm_session_close()
+                                   rfcomm_dlc_unlink()
+                                   rfcomm_session_del()
+                                     kfree(s)
+                                 rfcomm_unlock()
+  walk s->dlcs
 
-decompress_lznt() stops as soon as the compressed stream is exhausted
-(e.g. a zero chunk header) and returns the number of bytes it actually
-wrote, which may be far less than frame_size. The bytes between unc_size
-and frame_size are never written. The only memset() that follows zeroes
-the region beyond i_valid; when the frame lies entirely within the file's
-valid size that memset() does not run, so the gap retains whatever was in
-the just-vmapped pages. All pages are then marked uptodate and returned
-to userspace, disclosing uninitialized (recently-freed) kernel page
-memory. A crafted compressed file whose stream decompresses to only a few
-bytes leaks the remainder of every frame on a plain read(2), which is
-enough to recover kernel pointers and defeat KASLR.
+The callback can then read a freed session list head and touch freed DLCs
+while updating their flags or timers.
 
-Zero the [unc_size, frame_size) tail immediately after a successful LZNT
-decompress so the remainder reads back as zero.
+Serialize the session lookup and DLC traversal in rfcomm_security_cfm()
+with rfcomm_mutex. This matches the existing RFCOMM session lifetime
+rules and prevents concurrent rfcomm_session_del() / rfcomm_dlc_unlink()
+from tearing the objects down while the callback is using them.
 
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in rfcomm_security_cfm+0x41c/0x440
+  Read of size 8 at addr ffff888111fb3960 by task kworker/u17:1/89
+  Workqueue: hci0 hci_rx_work
+  Call Trace:
+   rfcomm_security_cfm+0x41c/0x440
+   hci_encrypt_cfm+0x139/0x590
+   hci_encrypt_change_evt+0x37b/0xc40
+   hci_event_packet+0x71b/0xb20
+   hci_rx_work+0x293/0x730
+  Allocated by task 69:
+   rfcomm_session_add+0x9e/0x2f0
+   rfcomm_run+0x44b/0x41e0
+  Freed by task 69:
+   kfree+0x131/0x3c0
+   rfcomm_session_del+0x188/0x220
+   rfcomm_run+0x1985/0x41e0
+
+Fixes: 08c30aca9e698faddebd34f81e1196295f9dc063 ("Bluetooth: Remove RFCOMM session refcnt")
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/frecord.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/rfcomm/core.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2707,6 +2707,15 @@ int ni_read_frame(struct ntfs_inode *ni,
- 			err = unc_size;
- 		else if (!unc_size || unc_size > frame_size)
- 			err = -EINVAL;
-+		else if (unc_size < frame_size) {
-+			/*
-+			 * Partial decompress: zero the [unc_size, frame_size)
-+			 * tail.  decompress_lznt() leaves it untouched, so
-+			 * without this the freshly vmapped pages would expose
-+			 * uninitialized kernel memory to userspace.
-+			 */
-+			memset(frame_mem + unc_size, 0, frame_size - unc_size);
-+		}
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -2207,9 +2207,13 @@ static void rfcomm_security_cfm(struct h
+ 
+ 	BT_DBG("conn %p status 0x%02x encrypt 0x%02x", conn, status, encrypt);
+ 
++	rfcomm_lock();
++
+ 	s = rfcomm_session_get(&conn->hdev->bdaddr, &conn->dst);
+-	if (!s)
++	if (!s) {
++		rfcomm_unlock();
+ 		return;
++	}
+ 
+ 	list_for_each_entry_safe(d, n, &s->dlcs, list) {
+ 		if (test_and_clear_bit(RFCOMM_SEC_PENDING, &d->flags)) {
+@@ -2241,6 +2245,8 @@ static void rfcomm_security_cfm(struct h
+ 			set_bit(RFCOMM_AUTH_REJECT, &d->flags);
  	}
- 	if (!err && valid_size < frame_vbo + frame_size) {
- 		size_t ok = valid_size - frame_vbo;
+ 
++	rfcomm_unlock();
++
+ 	rfcomm_schedule();
+ }
+ 
 
 
