@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5AA3B05AF;
-	Fri,  4 Sep 2026 05:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098F64CCDC7;
+	Fri,  4 Sep 2026 05:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500187; cv=none; b=ghSGa86Yk858eL4wpsKmyu3EBMdIVV6w7hzY4cpFllCKZBIhPOoMYc8Yh8UCF9kzk2NSt5xfmPgd4gopCvc4Ms+4QWgW7UYIWFSs1ernmiuUXgfpBNBjwDqhYy+hahYeKRPM62v9Mwgi9SeH5AXZmWvqPPr+UFA9TgLeP3HTeXs=
+	t=1788500190; cv=none; b=qcXSU2PYqO9QXDnv7p2BAqNhzUxOt3xVbuSH8Qc/Pgoa1Eaq4FN1x+2dMwAPYefYqLLhoyJko6XhC8tEw2+I26sSLUm3GJyghmIMqRZHn9MwSX8LampA5yNN6lu2Xg8BDjEQqwOVonDrLxftZnsKmUOgXHfg1N4O/g8JwBsHPzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500187; c=relaxed/simple;
-	bh=IPF32lkGfcC2d/24T19Xa+QJFuNm0mbkmVYFcCVDQ70=;
+	s=arc-20240116; t=1788500190; c=relaxed/simple;
+	bh=HYkOb0qytLfaCDa6zNuZIv8OmwusXr44onG0+T2btUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVRzw5UyAH3H/ZPev3Ue7GqcOdwaozI9uygC4BoYuZJ+uvHmRy96Bhik8oDyDB526BX3cyKiqBD1zBkTBhGG2NG2wKLspi6NZgWIAO/8vbZwNTdT03JpqBojHBuWi6DEx2Wn1oRX4nlIip2MkpYFFXXWv9ouklGAA4pHc8M+0oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzQvwWMZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fwclL5CNH8X5CMDdCmlpHn14N/golHcySTHDcBCVzrVG01Yx22kJxdar1hQmHm6RmtFhpXCGB8r9tvXqUPLTtyW/LVXLPprLP+5FJjvrwPodyffKuriHpfeT1y3DYgCNr6wWsXMXT9DxE8WDTb3FfGvcroy8m6zKMUwauAazsP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3tVqwEw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzQvwWMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B121F00A3D;
-	Fri,  4 Sep 2026 05:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3tVqwEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EF81F00A3D;
+	Fri,  4 Sep 2026 05:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500186;
-	bh=78L7NkR0nGzVBI1F9Hqq6R5LOg3jssnkxCJBsaAM4To=;
+	s=korg; t=1788500188;
+	bh=8uNTDcDsWN0Lbkq19lSXQfMAU4+0EVWF1FVimW2OvCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TzQvwWMZMw5kA1maD12M5rhDfXiZrrib5n5XDaKbtIAaqc8/UKaT3gZrprBZKq4S8
-	 RzLp2/SG+BB5rjPgnip8cn3ZjF4VEb1ygQWi9uV2zRwtP9Z2SGP5Yxl+gOrLxmHRim
-	 8zzD3C442MVibAJkGavW5aUUvtv5KiE4wM5awuYY=
+	b=J3tVqwEwJwGGNyge8cYnMjHudPtbcR+4ReZW8GlhpTJeW50XDNoFuX3QLSolQpQR0
+	 Yp/Yzru79QLL2MnyzU1K5px959yJOHD0mERWcyyy2LerJAOM9Cso5CtzySLKOKTCLR
+	 q7PPvy5KzSm2HCv1Hl5/RQgUsyO0NZydaGIsfURk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.2 638/713] ALSA: FCP: do not copy out an uninitialised init response
-Date: Fri,  4 Sep 2026 07:00:06 +0200
-Message-ID: <20260904045818.131390008@linuxfoundation.org>
+Subject: [PATCH 7.2 639/713] ALSA: hda/ext: preserve PPLCCTL bits when clearing reset
+Date: Fri,  4 Sep 2026 07:00:07 +0200
+Message-ID: <20260904045818.153832544@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,105 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 4335e387786479889e6db691fe06d345e52ea536 upstream.
+commit 36aa66de481d29edd63cbad9b5c4dc18c340fdf6 upstream.
 
-fcp_ioctl_init() allocates its response buffer with kmalloc() and copies
-the whole buffer back to userspace:
+snd_hdac_ext_stream_reset() polls PPLCCTL for STRST by masking the
+register value with AZX_PPLCCTL_STRST:
 
-	buf_size = init.step0_resp_size + init.step2_resp_size;
+	val = readl(...) & AZX_PPLCCTL_STRST;
 
-	void *resp __free(kfree) =
-		kmalloc(buf_size, GFP_KERNEL);
-	...
-	if (copy_to_user(arg->resp, resp, buf_size))
-		return -EFAULT;
+The same masked value is then used when clearing STRST. Since val
+contains no bits other than STRST, clearing STRST from it always
+produces zero. The subsequent writel() therefore writes zero to the
+entire PPLCCTL register instead of clearing only the reset bit.
 
-Nothing clears the buffer, and the only writer of its leading
-step0_resp_size bytes is the step-0 control transfer:
+PPLCCTL contains other stream control fields, including the stream tag
+in AZX_PPLCCTL_STRM_MASK. Those fields must not be modified as a side
+effect of clearing stream reset.
 
-	err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0),
-		FCP_USB_REQ_STEP0,
-		USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_IN,
-		0, private->bInterfaceNumber,
-		step0_resp, private->step0_resp_size);
-	if (err < 0)
-		return err;
+Use snd_hdac_updatel() to clear STRST, matching the existing set-reset
+path and preserving all unrelated PPLCCTL bits.
 
-usb_fill_control_urb() does not set URB_SHORT_NOT_OK, so a short or
-zero-length data stage completes with status 0 and snd_usb_ctl_msg()
-returns a small actual_length.  The only check is err < 0, so a short
-transfer is accepted as success.
-
-snd_usb_ctl_msg() copies the full size back unconditionally:
-
-	buf = kmemdup(data, size, GFP_KERNEL);
-	...
-	memcpy(data, buf, size);
-
-Bytes the device never wrote are therefore restored into resp unchanged
-and copied to userspace.  step0_resp_size and step2_resp_size are each
-validated only to 1..255, so the caller also picks the slab cache, from
-kmalloc-8 up to kmalloc-512.
-
-On 7.2.0-rc5 (arm64), device answering step 0 with a zero-length data
-stage, s0 = s2 = 255:
-
-  # init_on_alloc off, no spray
-  step0 window [0,255): nonzero=94/255
-  000: 00 80 60 06 00 00 ff ff 18 00 00 00 57 01 ea 01
-  010: 08 78 22 13 00 00 ff ff a8 c4 5f 80 00 80 ff ff
-
-  # same kernel, kmalloc-512 pre-seeded with an 8-byte tag
-  step0 window [0,255): nonzero=219/255  tagbytes=232
-
-  # identical run, init_on_alloc=1
-  step0 window [0,255): nonzero=0/255  tagbytes=0
-
-  # all three runs
-  step2 window [255,510): device words matched=62/62
-
-a8 c4 5f 80 00 80 ff ff is the little-endian kernel text address
-ffff8000805fc4a8.  The step-2 window is unaffected, so the disclosure is
-exactly the step-0 region.
-
-Zero the buffer, and require the step-0 transfer to deliver the full
-step0_resp_size bytes so a short data stage is reported as an error.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: df203a4e46f4 ("ALSA: hdac_ext: add extended stream capabilities")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013804.38839-1-baul.lee@xbow.com
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/43BB7930B0F07C09+20260813065524.1955696-1-raoxu@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/fcp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/hda/core/ext/stream.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/usb/fcp.c
-+++ b/sound/usb/fcp.c
-@@ -494,7 +494,7 @@ static int fcp_ioctl_init(struct usb_mix
- 	buf_size = init.step0_resp_size + init.step2_resp_size;
+--- a/sound/hda/core/ext/stream.c
++++ b/sound/hda/core/ext/stream.c
+@@ -210,8 +210,8 @@ void snd_hdac_ext_stream_reset(struct hd
+ 			break;
+ 		udelay(3);
+ 	} while (--timeout);
+-	val &= ~AZX_PPLCCTL_STRST;
+-	writel(val, hext_stream->pplc_addr + AZX_REG_PPLCCTL);
++	snd_hdac_updatel(hext_stream->pplc_addr, AZX_REG_PPLCCTL,
++			 AZX_PPLCCTL_STRST, 0);
+ 	udelay(3);
  
- 	void *resp __free(kfree) =
--		kmalloc(buf_size, GFP_KERNEL);
-+		kzalloc(buf_size, GFP_KERNEL);
- 	if (!resp)
- 		return -ENOMEM;
- 
-@@ -1033,6 +1033,8 @@ static int fcp_init(struct usb_mixer_int
- 		step0_resp, private->step0_resp_size);
- 	if (err < 0)
- 		return err;
-+	if (err != private->step0_resp_size)
-+		return -EIO;
- 
- 	err = fcp_init_notify(mixer);
- 	if (err < 0)
+ 	timeout = 50;
 
 
