@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEFC3A6B82;
-	Fri,  4 Sep 2026 05:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35DB405C3F;
+	Fri,  4 Sep 2026 05:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498608; cv=none; b=mvFIqBCEmxKOO62gJvFU0prw4WR/EmaZsCB60qzeQ5LofYlGVN4K5jUUrdCv6Hn6CFCyVhPuFovDZUMP1wF/cCAIPg/vquR76WHNmQzx7+YxN12LXLbt+Z7DMih1NUKxDuxOcBhHqQqly5LLSC43kouKmh2UnMO/hgM8cPhKh5w=
+	t=1788498610; cv=none; b=XBb5APWlGYXZb9v7lll4IDle+BQ55wsULC3nI/Rwm/ZuMD4yAdszZ48GtE33fKFGUhnjpCT1UXtYslSl8nPBkK2xBwsJn793Ky9ViCLpR2LXYfUtkT+PBa/ws9pKgDB4W5AZIKLIlOAKoAzgjiCySAhC4KGf0j1WwBfLnnWIKqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498608; c=relaxed/simple;
-	bh=HbdwMtr5TYpUwaddcIx4jPgNxnMS2hHqsDDw8qZF8PA=;
+	s=arc-20240116; t=1788498610; c=relaxed/simple;
+	bh=Kj+HjDcARhxQK977mRyCstZFYRF6qRDXy8ROrX1Hl7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkI04tmL2bNmuzT6wqnPHTO3G9Kt740Z0xPBsaXuJLERkXxAPaOXcuw3DugsOef85fmuR4FgsjsHQeHRZzwyMn5NHDr3utIAjku5qMs+qktmvYOIgI/Zqk60Wv2UoQZyl1uoSS/48dFK7c4ckenv+zkmguI/8yTr/Af2jNRFqag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3yZ1DBe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b3S/rbnBwHcnQfxTdVFiz5OLlOQA0FrIUZIO80XoqWj2/7veFrZBE4XWWMfgvozKNwqN/kP10VDWVeqpFCSMgr/hxYywnGcg3A+EPzsUgkD2iANV7d6PyzwKF0Carg/OQqI2llitor6nuU8pa1lneK3l//17NR/B3RbERlowIXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/N2xlnq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3yZ1DBe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792EB1F00A3D;
-	Fri,  4 Sep 2026 05:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/N2xlnq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C26B1F00A3D;
+	Fri,  4 Sep 2026 05:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498607;
-	bh=msbAmkfov5fBOXoKROUJ88dcBrjnuxM+fRYbuasJCoY=;
+	s=korg; t=1788498609;
+	bh=hl0zgcM81r0O1gaV9M0zrevXa+xgCTEhO7ETKOjOQSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3yZ1DBepw5T361KSGZigrJW8a+8TUkJWKfvk0bnErXbjmcOUV55dxkcifLsSSD+T
-	 pnB+pdf7qR6QpqMs8Ol1hp58MJRhDFHtSGzQk45DnjqtBT/43hY0ypKfTx744nrqXo
-	 JvVkSwM9YVBYMIPyJjAbYJOBOEdePFXzTJ0Wsxow=
+	b=U/N2xlnqDp1AKpnpYV1qfm1/4Sq87dW7GN4uEi5lQ/4l3ZJEs6fZsbi9JpfF8cIGX
+	 E3uo6Q3yQ5vkPM7Rd0EhNoFlYk+v0XUOsaNOIjHDOhaEI35PekeYNDW/ndej84Kwx5
+	 H4deaUH6T/Sbg94tMychd3bFhROCrYEwXkAxUPi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 7.2 121/713] i3c: renesas: Fix out-of-bounds access for newdevs mask
-Date: Fri,  4 Sep 2026 06:51:29 +0200
-Message-ID: <20260904045806.548691758@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Oliver Upton <oupton@kernel.org>
+Subject: [PATCH 7.2 122/713] KVM: arm64: GICv2: Dont WARN on out-of-range GICV_DIR INTID
+Date: Fri,  4 Sep 2026 06:51:30 +0200
+Message-ID: <20260904045806.570317128@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,47 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 50dec95c9d1f1f82819bc898ef2b60fa83fd4ccd upstream.
+commit c6d9c8ac6521d3049ec90ac58bebd23ed03ac496 upstream.
 
-When software initiates DAA (Dynamic Address Assignment), the controller
-reports the result via the NRSPQP (Normal Response Queue Port Register).
-The data length field of the response descriptor, which is accessible
-through the NRSPQP register, indicates the number of devices remaining
-after DAA. Consequently, when the bus is empty, this field contains the
-maximum number of devices supported by the controller (8 for the Renesas
-I3C controller).
+vgic_v2_deactivate() passes the INTID a guest wrote to GICV_DIR straight
+to vgic_get_vcpu_irq(), and treats a failed lookup as a "can't happen"
+condition with WARN_ON_ONCE().
 
-Adjust the condition that computes the newly discovered devices bitmask
-to prevent an out-of-bounds when the I3C bus is empty.
+The guest can make it happen at will, though: for any INTID outside of
+the implemented SGI, PPI and SPI ranges the lookup returns NULL, since
+GICv2 has no LPIs. A guest running with EOImode==1 writing such an INTID
+to GICV_DIR triggers the WARN, and panics hosts running with
+panic_on_warn.
 
-Fixes: e7218986319b ("i3c: renesas: Add suspend/resume support")
+Drop the WARN and ignore failed lookups.
+
+Fixes: 255de897e7fb ("KVM: arm64: GICv2: Handle deactivation via GICV_DIR traps")
 Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260713130545.568657-9-claudiu.beznea+renesas@tuxon.dev
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260726174803.5880-1-kmehltretter@gmail.com
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/renesas-i3c.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-v2.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/i3c/master/renesas-i3c.c
-+++ b/drivers/i3c/master/renesas-i3c.c
-@@ -689,7 +689,11 @@ static int renesas_i3c_daa(struct i3c_ma
+--- a/arch/arm64/kvm/vgic/vgic-v2.c
++++ b/arch/arm64/kvm/vgic/vgic-v2.c
+@@ -170,8 +170,9 @@ void vgic_v2_deactivate(struct kvm_vcpu
+ 	/* Make sure we're in the same context as LR handling */
+ 	local_irq_save(flags);
  
- 	renesas_i3c_wait_xfer(i3c, xfer);
++	/* Guest-supplied INTID: out of range yields no irq, so ignore it */
+ 	irq = vgic_get_vcpu_irq(vcpu, val);
+-	if (WARN_ON_ONCE(!irq))
++	if (!irq)
+ 		goto out;
  
--	newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
-+	if (cmd->rx_count >= i3c->maxdevs)
-+		newdevs = 0;
-+	else
-+		newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
-+
- 	newdevs &= ~olddevs;
- 
- 	for (pos = 0; pos < i3c->maxdevs; pos++) {
+ 	/* See the corresponding v3 code for the rationale */
 
 
