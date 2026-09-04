@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1372B30C160;
-	Fri,  4 Sep 2026 05:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05413515D2;
+	Fri,  4 Sep 2026 05:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498429; cv=none; b=bOdmpZHXKeBm63K1wLSK7SuR1dtyDnwxCv6/yCiGe/oXQu/UK50Mn9XbvDmfQtCLaGrQFLIP5J5IsrefKitT1NrbqSK+cAoWTJTAWkBtLy1IEMNQXYRX1YECa48YDEHOI4aP8oAuV80v5v3PQcYVxcvYQNFBuRSCbFWpxr+am/Q=
+	t=1788498432; cv=none; b=mhdFxTd+G7guxtXhWm++8e+Gav4Oz+7tldFVYw7f6j9FhNN9bPc4YFzQQ48NqqmqiFWVMdtw7gj1JiYRcjVH9+9JaguIwq7UNU8byXrAPd8PskI0T1mp0x43plQN8D+2g6UlHePbaMhTMR1MXROMHjq1u1eE/AfEeOnVK7qFDNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498429; c=relaxed/simple;
-	bh=X3nnNAlsjYNk2TaBGHJdlL+ECGyfj4/QrTK7lMP8Zas=;
+	s=arc-20240116; t=1788498432; c=relaxed/simple;
+	bh=qBLsNW1imEFubvh6hGempdheh7LvSjkLcl/OfprKM6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNqVeiDurKsM8uESEx2jrG/QRbl8oWuroKVcfT3ao4ess7A9TBbMv79o2d9umCPq+66a/noAS+MV3/8UXejuFAjLYY9cpbfBCsTZqasnyKBnBiojan/Lkw/5BBdKjA9fPa2s5NL4FouTs5qj0ykmaJbxSaUSgcvvpjR3gENw/Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDe2H7iw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aGufFFek2B7Z1B8d2zVbTJRl0msC7c8eMex8gEfsKwbxsnX6UjMXB6ddEKpEGqq55bdoesrK2AaszgJp5mwhEMYe3WMPuZkm3UT/aNmyJBDYfr7g5HfioF6pYW6wiEeIPHoBt7K4SQaP5yginOK0QGSK02ZpfwSL4BcSRA1S3AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNaCSArw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDe2H7iw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E751F00A3E;
-	Fri,  4 Sep 2026 05:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNaCSArw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A861F00A3D;
+	Fri,  4 Sep 2026 05:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498428;
-	bh=revPVlwi7ZMYXsmjtCZZpZgW1PGufsxaRIgwg/gy9D4=;
+	s=korg; t=1788498430;
+	bh=T6AkxGO0PtJ5BQuHjb+4ls2JMwn1e5V9QcFjUZUwNB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cDe2H7iwZrMklLGvO6+LRHvMsYR+PLLCQYMB5f68+CPw1wJhc3WGacRawFb6SaxyH
-	 gATmIx9qQlGhrUbhKbJtc+o2w1VS6gAn9uSGQR60cyxmtQLxPfDCFKKKtDA6VuyTa7
-	 O4lr7j8RQCB2ZQNCNnKBXoGbJ1AL/DESzJBfy1lg=
+	b=ZNaCSArwpS9/EXdBoQPHNMlpCiU05cD2q0nVayHa9a5OvE+uI2t+bgnjsP/punMYi
+	 nZENa70ivNKfHOWmdzTueoKEmWJQU9SfUPRJoiORzhQrnX1A5XF8qi5LAKUPx2g3CO
+	 4HS5FlJK7FhrZmE2KFbYCLseGyFBN4qAzFfnSG7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	David Hildenbrand <david@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 059/713] mm/migrate_device: clear stale mapping after freeing swapcache
-Date: Fri,  4 Sep 2026 06:50:27 +0200
-Message-ID: <20260904045805.159647555@linuxfoundation.org>
+	Alexander Graf <graf@amazon.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
+Subject: [PATCH 7.2 060/713] mm/mm_init: deferred_grow_zone(): fix out-of-range first_deferred_pfn
+Date: Fri,  4 Sep 2026 06:50:28 +0200
+Message-ID: <20260904045805.182860677@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -60,75 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Alexander Graf <graf@amazon.com>
 
-commit 34a00895d032a414830d41106a09329ae6c251b6 upstream.
+commit 97090500d776c3f6d08e857e3a0a7cf092999094 upstream.
 
-__migrate_device_pages() reads the folio mapping before calling
-folio_free_swap().  When folio_free_swap() succeeds, the folio is removed
-from the swap cache, but the saved mapping still points to swap_space.
+With CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled, deferred_grow_zone()
+initializes struct pages early in boot to satisfy an allocation.
 
-Passing the stale mapping to folio_migrate_mapping() makes it use the
-mapped-folio path for a folio that is no longer in swapcache.  It can then
-operate on swap_space.i_pages with invalid reference accounting,
-eventually triggering a folio reference count BUG.
+With a large CMA reservation in place, the ranges deferred_init_memmap()
+finds may not add up to the allocation it was asked for, and the function
+ends up initializing the memory map of the entire zone and still falls
+short.
 
-After a successful split, nr still contains the number of pages in the
-original large folio, although each resulting page is now a separate
-order-0 folio.  Reset nr to 1 so each split folio is processed separately,
-including its own swapcache removal and mapping lookup.
+That is fine in itself: the function accounts for it and leaves the
+caller to decide whether it now has enough memory.
 
-Refresh the saved mapping after folio_free_swap() so the current folio
-state is used during migration.
+However, the update of pgdat->first_deferred_pfn that tracks where
+uninitialized memory map starts could overflow.
 
-Link: https://lore.kernel.org/20260728062832.1107127-1-arvind.yadav@intel.com
-Fixes: df263d9a7dff ("mm/migrate_device: try to handle swapcache pages")
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+If the node's RAM end is not aligned on PAGES_PER_SECTION boundaries and
+some deferred struct pages were initialized, pgdat->first_deferred_pfn
+would point past the end of the node's memory.
+
+deferred_init_memmap() later picks up from pgdat->first_deferred_pfn and
+hits a BUG_ON(), because it expects a pfn within its node.
+
+For example, when running a kernel with CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
+and CONFIG_CMA=y using the following qemu command line
+
+  qemu-system-x86_64 -enable-kvm -m 8032M -kernel bzImage \
+      -append "nokaslr cma=4768M@0x100000000"
+
+the kernel panics:
+
+  kernel BUG at mm/mm_init.c:2131!
+  CPU: 3 UID: 0 PID: 36 Comm: pgdatinit0 Not tainted 7.2.0-rc6 #1
+  RIP: 0010:deferred_init_memmap+0x1b8/0x1c0
+  RAX: 0000000000236000 R13: 0000000000238000
+  Call Trace:
+   kthread+0xdf/0x120
+   ret_from_fork+0x187/0x250
+
+Make sure that the update of pgdta->first_deferred_pfn does not overflow
+when the entire zone's (and therefore node's) memory map is initialized.
+
+Fixes: 3acb913c9d5b ("mm/mm_init: use deferred_init_memmap_chunk() in deferred_grow_zone()")
+Cc: stable@vger.kernel.org
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Link: https://patch.msgid.link/20260807031243.87904-1-graf@amazon.com
+[rppt: massaged the changelog]
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate_device.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ mm/mm_init.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/mm/migrate_device.c
-+++ b/mm/migrate_device.c
-@@ -1183,6 +1183,13 @@ static void __migrate_device_pages(unsig
- 							 MIGRATE_PFN_COMPOUND);
- 					goto next;
- 				}
-+
-+				/*
-+				 * reset nr so that only first after-split folio
-+				 * is processed below
-+				 */
-+				VM_WARN_ON_ONCE(folio_test_large(folio));
-+				nr = 1;
- 			} else if ((src_pfns[i] & MIGRATE_PFN_MIGRATE) &&
- 				(dst_pfns[i] & MIGRATE_PFN_COMPOUND) &&
- 				!(src_pfns[i] & MIGRATE_PFN_COMPOUND)) {
-@@ -1222,6 +1229,12 @@ static void __migrate_device_pages(unsig
- 			folio = page_folio(migrate_pfn_to_page(src_pfns[i+j]));
- 			newfolio = page_folio(migrate_pfn_to_page(dst_pfns[i+j]));
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -2214,10 +2214,13 @@ bool __init deferred_grow_zone(struct zo
+ 	}
  
-+			/*
-+			 * folio_free_swap() removed the folio from the swap
-+			 * cache. Refresh the saved mapping before migration.
-+			 */
-+			mapping = folio_mapping(folio);
-+
- 			r = folio_migrate_mapping(mapping, newfolio, folio, extra_cnt);
- 			if (r)
- 				src_pfns[i+j] &= ~MIGRATE_PFN_MIGRATE;
+ 	/*
+-	 * There were no pages to initialize and free which means the zone's
+-	 * memory map is completely initialized.
++	 * The loop only tests spfn before entering an iteration, so on exit it
++	 * may point up to a section past the end of the zone.  When it does,
++	 * the rest of the zone has already been handed to
++	 * deferred_init_memmap_chunk() and nothing is left to initialize.
+ 	 */
+-	pgdat->first_deferred_pfn = nr_pages ? spfn : ULONG_MAX;
++	pgdat->first_deferred_pfn =
++		spfn < zone_end_pfn(zone) ? spfn : ULONG_MAX;
+ 
+ 	pgdat_resize_unlock(pgdat, &flags);
+ 
 
 
