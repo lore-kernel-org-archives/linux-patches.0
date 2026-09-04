@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18B6418A44;
-	Fri,  4 Sep 2026 05:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D516416869;
+	Fri,  4 Sep 2026 05:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499438; cv=none; b=dOP3vFqtSuYCvBdF10hi/lhtp8eDe/Y+0UtFTaIEeQ070LIcNTIEC1IsHDz5FCcablWEAbV6DiyS6lsvhfNpGz8LtTryy5TNeJLjeIIlr5S8kkUkfEqnqdbQnROKSkatj3f5RHFIMUN+ujAPytqdQPFgf2mWyRMpWqYbN/nncng=
+	t=1788499441; cv=none; b=k34WpOHPZJwZgOVzDkIQ/LS0az6JSOFt/ZWxrCJF6X/+EH2uCqGJf2mmKKtF7y2XHdrlNIuCLJfrldMTqfyo5BJjeUx759GGPV/39dufiLn4LGdB4KZZuuYYoJ+WM95e07PDZk5Tqlldmj9evyE+qPG5Bmc5emleBBr2YjHDMzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499438; c=relaxed/simple;
-	bh=wCwbfy6/IbMrrQtxewTST6+rUQCUK2Ooyu9YS77OUq0=;
+	s=arc-20240116; t=1788499441; c=relaxed/simple;
+	bh=U9t2f5p0taTn12wJAqnL4nzSE02Yq25ro6wUclricG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kgMmUHAxwNZsqT1FCCUmu9jUg83ULbXxg8gTPLkAuic46aXerw0XeSo3GB/z8++AIiB/l2Pt2Eff5RU8dfpoiXaBVEHGhs43oBikZrAhNHxmBV5Hs0jVXC0243hdzIEsLGQXdhAhdtiJNNvV3GBtJMQRkYTcnZ0TcTeATN8KMJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5T5vTlP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ESOp0CNSKLslUGdA8fNGM7vDreUHgmHUGX+le7Nn/nZ0D4OOsA56p08Khjh3Apu7wheb530fl0fOF3wRnnqn1xiDOy0ZEofhy0AV8ZalxXJbBi5Pz0zb6lvy9PyNo1IkfBRndSpW+bvCNIG3FX34PAG4Jlge4m0iqwoyqFGFRhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRZZmNV3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5T5vTlP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82D11F00ACA;
-	Fri,  4 Sep 2026 05:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRZZmNV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8695B1F00ACA;
+	Fri,  4 Sep 2026 05:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499437;
-	bh=LHmmgJMa4WnPyRpj/qetCZwXMCdSmLCoSqaV6XFkKbs=;
+	s=korg; t=1788499440;
+	bh=VeQAiiz80ti/bZaecdl70c8Fca+guHltY98N92hPDIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K5T5vTlPFuJsg26QYlKOO9KtfIe2X5+LIPRhPQbiOn2OR+J+pNHt3j/k7OJ8qkIrL
-	 ZDOVM+slj+9Eu8fcw+/imMm1L4PmYcvuL2fxMuCXled52GRKQlDgUJR7MJlUWU2QRf
-	 OjB/uiMQsqtws7JlqRhQRuSOiqSwtgRfVLWNzDcs=
+	b=HRZZmNV3TLJBI0SLg+oF+CoyMFhLe7H1PgxCBCCHpkmpeh1pU/rlI4qcozKQRLsr0
+	 EHv29KIgIJTLJuGZ+h0rin3CkTG/xOZGaQ9mg6E59pG0wq/m6RJedHEEQMzXPhFT0M
+	 bSNwg6BB35+b/b1ROuOUd8tZHz0wt4XiQSGn2jh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 418/713] sched_ext: Keep kick_sync waiting on the rqs own CPU
-Date: Fri,  4 Sep 2026 06:56:26 +0200
-Message-ID: <20260904045813.201622079@linuxfoundation.org>
+	Petr Vaganov <p.vaganov@ideco.ru>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 7.2 419/713] scsi: core: Fill in DMA padding bytes in scsi_alloc_sgtables()
+Date: Fri,  4 Sep 2026 06:56:27 +0200
+Message-ID: <20260904045813.224004124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -43,71 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Petr Vaganov <p.vaganov@ideco.ru>
 
-commit e0253dd04beb03e79477c5ef4768b11135687206 upstream.
+commit 626147717bea776b61ed3631d2c26283760c4cc4 upstream.
 
-kick_sync_wait_bal_cb() assumes it runs on the rq's CPU from the
-__schedule() tail: the snapshots it compares against live in that CPU's
-percpu area and the busy-wait runs with the rq lock dropped and IRQs
-enabled.
+During fuzz testing, the following issue was discovered:
 
-However, dispatch can now drop the rq lock while the callback sits queued,
-and rq lock takers in that window (the sched class change paths, the scx
-task iterator) flush pending balance callbacks on release, running the
-callback on a foreign CPU. Such a run compares against unrelated snapshots
-and can deadlock when the executing CPU is itself a wait target.
+BUG: KMSAN: uninit-value in __dma_map_sg_attrs+0x217/0x310
+ __dma_map_sg_attrs+0x217/0x310
+ dma_map_sg_attrs+0x4a/0x70
+ ata_qc_issue+0x9f8/0x1420
+ __ata_scsi_queuecmd+0x1657/0x1740
+ ata_scsi_queuecmd+0x79a/0x920
+ scsi_queue_rq+0x4472/0x4f40
+ blk_mq_dispatch_rq_list+0x1cca/0x3ee0
+ __blk_mq_sched_dispatch_requests+0x458/0x630
+ blk_mq_sched_dispatch_requests+0x15b/0x340
+ __blk_mq_run_hw_queue+0xe5/0x250
+ __blk_mq_delay_run_hw_queue+0x138/0x780
+ blk_mq_run_hw_queue+0x4bb/0x7e0
+ blk_mq_sched_insert_request+0x2a7/0x4c0
+ blk_execute_rq+0x497/0x8a0
+ sg_io+0xbe0/0xe20
+ scsi_ioctl+0x2b36/0x3c60
+ sr_block_ioctl+0x319/0x440
+ blkdev_ioctl+0x80f/0xd70
+ __se_sys_ioctl+0x219/0x420
+ __x64_sys_ioctl+0x93/0xe0
+ x64_sys_call+0x1d6c/0x3ad0
+ do_syscall_64+0x4c/0xa0
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-Bail on a foreign CPU and leave the wait state alone. The wait only observes
-progress that the resched kicks already guarantee and the rq's next wait
-picks up the stale cpus_to_sync bits.
+Uninit was created at:
+ __alloc_pages+0x5c0/0xc80
+ alloc_pages+0xe0e/0x1050
+ blk_rq_map_user_iov+0x2b77/0x6100
+ blk_rq_map_user_io+0x2fa/0x4d0
+ sg_io+0xad6/0xe20
+ scsi_ioctl+0x2b36/0x3c60
+ sr_block_ioctl+0x319/0x440
+ blkdev_ioctl+0x80f/0xd70
+ __se_sys_ioctl+0x219/0x420
+ __x64_sys_ioctl+0x93/0xe0
+ x64_sys_call+0x1d6c/0x3ad0
+ do_syscall_64+0x4c/0xa0
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
-Cc: stable@vger.kernel.org # v6.19+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Bytes 14-15 of 16 are uninitialized
+Memory access of size 16 starts at ffff88800cbdb000
+
+When processing the last unaligned element of the scatterlist, it is
+supplemented with missing bytes in the amount of pad_len.  These bytes
+remain uninitialized, which leads to a problem.
+
+Extend last_sg->length by pad_len first, then use sg_zero_buffer() to
+zero those pad_len bytes.  sg_zero_buffer() uses sg_miter internally,
+which correctly handles sg entries spanning multiple pages and padding
+that crosses a page boundary.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 40b01b9bbdf5 ("block: update bio according to DMA alignment padding")
+Cc: stable@vger.kernel.org
+Signed-off-by: Petr Vaganov <p.vaganov@ideco.ru>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260628185229.37957-1-p.vaganov@ideco.ru
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_lib.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3163,12 +3163,27 @@ switch_class:
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1187,8 +1187,10 @@ blk_status_t scsi_alloc_sgtables(struct
+ 	if (blk_rq_bytes(rq) & rq->q->limits.dma_pad_mask) {
+ 		unsigned int pad_len =
+ 			(rq->q->limits.dma_pad_mask & ~blk_rq_bytes(rq)) + 1;
++		unsigned int data_len = last_sg->length;
  
- static void kick_sync_wait_bal_cb(struct rq *rq)
- {
--	struct scx_kick_syncs __rcu *ks = __this_cpu_read(scx_kick_syncs);
--	unsigned long *ksyncs = rcu_dereference_sched(ks)->syncs;
-+	struct scx_kick_syncs __rcu *ks;
-+	unsigned long *ksyncs;
- 	bool waited;
- 	s32 cpu;
+ 		last_sg->length += pad_len;
++		sg_zero_buffer(last_sg, 1, pad_len, data_len);
+ 		cmd->extra_len += pad_len;
+ 	}
  
- 	/*
-+	 * This callback is queued and normally flushed within @rq's own
-+	 * scheduling pass. However, dispatch can drop the rq lock while it sits
-+	 * queued, and lock takers in that window (the sched class change paths,
-+	 * the scx task iterator) flush pending balance callbacks on release,
-+	 * running this one on a foreign CPU whose snapshots are unrelated. The
-+	 * kicked CPUs are already on their way to advance the kick_syncs being
-+	 * waited on. Don't get in the way.
-+	 */
-+	if (unlikely(cpu_of(rq) != smp_processor_id()))
-+		return;
-+
-+	ks = __this_cpu_read(scx_kick_syncs);
-+	ksyncs = rcu_dereference_sched(ks)->syncs;
-+
-+	/*
- 	 * Drop rq lock and enable IRQs while waiting. IRQs must be enabled
- 	 * — a target CPU may be waiting for us to process an IPI (e.g. TLB
- 	 * flush) while we wait for its kick_sync to advance.
 
 
