@@ -1,48 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B867C3B42F7;
-	Fri,  4 Sep 2026 05:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853683876CC;
+	Fri,  4 Sep 2026 05:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498399; cv=none; b=fbCzJsrbUecyhPAye+gBZr9zC4CqQ8fkmF4yfiB+s0AIDBscGTSSfAPRph/KHe6VyfxZuBOifCCloRe7EopjIQyh/V85GVvifVGo6jD5trB7WGiXgcFyyyCqFb8C5O+GNkp9ypiGVjVWPGnaGMJEIAveLOPHYUGVv5VoIhBzq+Y=
+	t=1788498401; cv=none; b=gX6KN1+0juBX0be84mcsK0UQ+XoNSxlQo3hhs7GUtYbS136GazsG1VjMqsG3iYoSLH22dBpH8XKlJFz4sK5w3+T33MfAMvihx+tz9Tl665+XFsxLIm7Vnk5jvej0fWFgyVB4+7YrJZwi2aA2CooHHLF933Bb9IqA9RhAqdQXkEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498399; c=relaxed/simple;
-	bh=wZjKjyMPa+fXGatdy/UF4TayGWbEyfnXIo41pppSHZY=;
+	s=arc-20240116; t=1788498401; c=relaxed/simple;
+	bh=OCDkGUS1gDG2wFkG0nhfAPoAScqhLU05N6C3eMGad1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LL5+Hh7M+D459bKcXdeawq5sKoxl95FQZKZ30HeWlm32dg5Ck/7zXSTOutyeiV2qmj7JyFNzcW4WpkfOUnb5F/frXfc+cdhhIn663Lf38fRefm+88PhaEUkPmkQAIOFdhAwdw7WWO1n8oLoNjfeKHh/jkFpL8PtYIXnQPtOMUIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyzW6mE+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CtMc9D4H8+NWRAD4ZofJtf6Mvrr2TBMSbDBgRiK6XsLbhRyf4j8KGSI3QxmrngcsS+KcV15ZM5W88bqLUDvrhYYGuClVl82zpyoEw0dHFZVXVS7XlU76paxDGR2xwFJwM1mXMkPVuqzNSXNA0J/TStSmFT3ZIpFCvD7q1GPyjt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmOHGDNR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyzW6mE+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE3D1F00A3D;
-	Fri,  4 Sep 2026 05:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmOHGDNR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7531F00A3D;
+	Fri,  4 Sep 2026 05:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498397;
-	bh=mUVJfwN4U/GEP3e94q4a4seSb44oHtNHuKiyX/Yh0Sg=;
+	s=korg; t=1788498400;
+	bh=9K1vF+fND/P8CFFOGoalseEq17v5sRzvIZnFO7PCfWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FyzW6mE+NxpbG7jGnbRQuJ984YVZ5g8frDudy8KyaG9eemolMTmkr8O1QJSZLOQ9k
-	 1w370J3PKDfgkagbWqhbOHcpkcwjBRr9LDRvMB0liCThcbLo2VK6MyIr45QJnEPLRm
-	 ZI6u8IuJo7vNTPAP+7o4bEJ82nsvKkLv3hefVmRM=
+	b=tmOHGDNRWCijSyyqbOFbMry1JarrI6BYu/aYp65UvusHmXfJJncsccmwMqV5kL8t0
+	 /4AvBj5HkAPltQ+xveAlNJyLzR5BCvkFF+3Vw03DlRtd3XZqt+heO0Xgm2Sz3pUoh+
+	 HPh/vnwt6RSDeYkjSGKJZSojw8fajDukgXukWDE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Michal Clapinski <mclapinski@google.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
 	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	William Kucharski <william.kucharski@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Mike Rapoport <rppt@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Frank van der Linden <fvdl@google.com>,
+	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
+	Usama Arif <usama.arif@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 049/713] mm/huge_memory: use folios memcg inside __folio_split()
-Date: Fri,  4 Sep 2026 06:50:17 +0200
-Message-ID: <20260904045804.929328240@linuxfoundation.org>
+Subject: [PATCH 7.2 050/713] mm/hugetlb: fix boot panic with CONFIG_DEBUG_VM and HVO bootmem pages
+Date: Fri,  4 Sep 2026 06:50:18 +0200
+Message-ID: <20260904045804.952650336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -61,119 +65,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit c299a2285d9d8bda4da024455de65e3d00de6f17 upstream.
+commit c0caeceb0c3899dc42844d3979093b27d1434108 upstream.
 
-Patch series "Honor XA_FLAGS_ACCOUNT in xas_split_alloc() and charge to
-folio's memcg", v3.
+Patch series "mm: Refactor bootmem gigantic hugepage allocation", v4.
 
-__GFP_ACCOUNT is needed for xarray node allocation accounting when
-XA_FLAGS_ACCOUNT is set. Commit 7b785645e8f13 ("mm: fix page cache
-convergence regression") fixed a workingset regression with it.
-xas_split_alloc() does not have it and needs to be fixed.
+This series is split out from the earlier larger series "mm: Generalize
+HVO for HugeTLB and device DAX" [1].  It collects the first 19 patches of
+that series as a standalone set of fixes and preparatory cleanups around
+bootmem HugeTLB handling, sparse initialization ordering, and related
+vmemmap setup.
 
-In addition, based on Sashiko's review[1] and Johannes' confirmation[2], to
-charge the right memcg, folio's memcg needs to be active during folio
-split. Add that before adding __GFP_ACCOUNT.
+The first patches fix a few bugs found while reviewing the existing code,
+including incorrect bootmem HVO handling, wrong vmemmap registration
+arguments, a powerpc compound-vmemmap tracking bug, and too-late
+initialization of gigantic bootmem HugeTLB struct pages.
 
-There is no workingset convergence regression related to missing
-__GFP_ACCOUNT in xas_split_alloc() and the impact to userspace should be
-minor.
+The rest of the series reorders early memory initialization so the
+relevant zone state is available before sparse and HugeTLB boot-time setup
+runs, then simplifies the remaining bootmem gigantic hugepage allocation
+path and removes code made obsolete by that rework.
+
+At a high level:
+  - patches [1-4] fix boot-time and arch-specific bugs
+  - patches [5-12] reorder and simplify sparse/mm/hugetlb early init
+  - patches [13-19] refactor bootmem gigantic hugepage allocation and
+    remove obsolete helpers and state
 
 
-This patch (of 2):
+This patch (of 19):
 
-During a pagecache folio split, an xarray node allocation can happen and
-needs to charge at folio's memcg instead of folio split invoker's memcg,
-because for example folio split can happen during reclaim and reclaim's
-active memcg might not be folio's memcg.  Switch to folio's memcg at the
-beginning and switch back afterwards.
+Commit 622026e87c40 ("mm/hugetlb: remove fake head pages") switched
+HVO to reuse per-zone shared tail pages from zone->vmemmap_tails[].
 
-Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-0-38cb3ff325c5@nvidia.com
-Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-1-38cb3ff325c5@nvidia.com
-Link: https://sashiko.dev/#/patchset/20260727-add-gfp_account-to-xas_split_alloc-v1-1-9fae6bf64838%40nvidia.com?part=1 [1]
-Link: https://lore.kernel.org/all/amtcBZ-_QVRgCd6b@cmpxchg.org/ [2]
-Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Barry Song <baohua@kernel.org>
+Those shared tail pages were initialized in hugetlb_vmemmap_init(), but
+bootmem HugeTLB folios are prepared earlier from
+gather_bootmem_prealloc().  With hugetlb_free_vmemmap=on,
+prep_and_add_bootmem_folios() can access pageblock flags on bootmem
+HugeTLB pages whose mirrored tail struct pages already point to the shared
+tail page.  On CONFIG_DEBUG_VM kernels, get_pfnblock_bitmap_bitidx() then
+dereferences the still-uninitialized shared tail page and can panic during
+boot.
+
+Initialize zone->vmemmap_tails[] from gather_bootmem_prealloc(), before
+bootmem HugeTLB folios are processed, and drop the later initialization
+from hugetlb_vmemmap_init().
+
+This bug only affects CONFIG_DEBUG_VM kernels, where the relevant
+assertion is evaluated.
+
+Link: https://lore.kernel.org/20260612035903.2468601-1-songmuchun@bytedance.com
+Link: https://lore.kernel.org/20260612035903.2468601-2-songmuchun@bytedance.com
+Fixes: 622026e87c40 ("mm/hugetlb: remove fake head pages")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Tested-by: Michal Clapinski <mclapinski@google.com>
+Reviewed-by: Michal Clapinski <mclapinski@google.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: William Kucharski <william.kucharski@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Frank van der Linden <fvdl@google.com>
+Cc: Oscar Salvador (SUSE) <osalvador@kernel.org>
+Cc: Usama Arif <usama.arif@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ mm/hugetlb.c         | 25 +++++++++++++++++++++++++
+ mm/hugetlb_vmemmap.c | 17 -----------------
+ mm/sparse-vmemmap.c  |  2 +-
+ 3 files changed, 26 insertions(+), 18 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -4027,34 +4027,42 @@ static int __folio_split(struct folio *f
- 	XA_STATE(xas, &folio->mapping->i_pages, folio->index);
- 	struct folio *end_folio = folio_next(folio);
- 	bool is_anon = folio_test_anon(folio);
-+	struct mem_cgroup *memcg, *old_memcg;
- 	struct address_space *mapping = NULL;
- 	struct anon_vma *anon_vma = NULL;
- 	int old_order = folio_order(folio);
- 	struct folio *new_folio, *next;
- 	int nr_shmem_dropped = 0;
- 	enum ttu_flags ttu_flags = 0;
--	int ret;
- 	pgoff_t end = 0;
-+	int ret;
- 
- 	VM_WARN_ON_ONCE_FOLIO(!folio_test_locked(folio), folio);
- 	VM_WARN_ON_ONCE_FOLIO(!folio_test_large(folio), folio);
- 
- 	if (folio != page_folio(split_at) || folio != page_folio(lock_at)) {
- 		ret = -EINVAL;
--		goto out;
-+		goto out_no_memcg;
- 	}
- 
- 	if (new_order >= old_order) {
- 		ret = -EINVAL;
--		goto out;
-+		goto out_no_memcg;
- 	}
- 
- 	ret = folio_check_splittable(folio, new_order, split_type);
- 	if (ret) {
- 		VM_WARN_ONCE(ret == -EINVAL, "Tried to split an unsplittable folio");
--		goto out;
-+		goto out_no_memcg;
- 	}
- 
-+	/*
-+	 * switch to folio's memcg as xarray node allocation can happen and
-+	 * needs to charge to it.
-+	 */
-+	memcg = get_mem_cgroup_from_folio(folio);
-+	old_memcg = set_active_memcg(memcg);
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index b75774455d65..4c234611e7a0 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -3365,6 +3365,31 @@ static void __init gather_bootmem_prealloc(void)
+ 		.max_threads	= num_node_state(N_MEMORY),
+ 		.numa_aware	= true,
+ 	};
++#ifdef CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP
++	struct zone *zone;
 +
- 	if (is_anon) {
- 		/*
- 		 * The caller does not necessarily hold an mmap_lock that would
-@@ -4197,6 +4205,10 @@ out_unlock:
- 	if (mapping)
- 		i_mmap_unlock_read(mapping);
- out:
-+	/* restore to caller's old_memcg */
-+	set_active_memcg(old_memcg);
-+	mem_cgroup_put(memcg);
-+out_no_memcg:
- 	xas_destroy(&xas);
- 	if (is_pmd_order(old_order))
- 		count_vm_event(!ret ? THP_SPLIT_PAGE : THP_SPLIT_PAGE_FAILED);
++	for_each_zone(zone) {
++		for (int i = 0; i < NR_VMEMMAP_TAILS; i++) {
++			struct page *tail, *p;
++			unsigned int order;
++
++			tail = zone->vmemmap_tails[i];
++			if (!tail)
++				continue;
++
++			order = i + VMEMMAP_TAIL_MIN_ORDER;
++			p = page_to_virt(tail);
++			/*
++			 * prep_and_add_bootmem_folios() can access pageblock
++			 * flags on bootmem HugeTLB pages, so initialize the
++			 * shared tail struct pages here before bootmem folios
++			 * start using them.
++			 */
++			for (int j = 0; j < PAGE_SIZE / sizeof(struct page); j++)
++				init_compound_tail(p + j, NULL, order, zone);
++		}
++	}
++#endif
+ 
+ 	padata_do_multithreaded(&job);
+ }
+diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
+index 133b46dfb09f..c713c0d2593a 100644
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -870,27 +870,10 @@ static const struct ctl_table hugetlb_vmemmap_sysctls[] = {
+ static int __init hugetlb_vmemmap_init(void)
+ {
+ 	const struct hstate *h;
+-	struct zone *zone;
+ 
+ 	/* HUGETLB_VMEMMAP_RESERVE_SIZE should cover all used struct pages */
+ 	BUILD_BUG_ON(__NR_USED_SUBPAGE > HUGETLB_VMEMMAP_RESERVE_PAGES);
+ 
+-	for_each_zone(zone) {
+-		for (int i = 0; i < NR_VMEMMAP_TAILS; i++) {
+-			struct page *tail, *p;
+-			unsigned int order;
+-
+-			tail = zone->vmemmap_tails[i];
+-			if (!tail)
+-				continue;
+-
+-			order = i + VMEMMAP_TAIL_MIN_ORDER;
+-			p = page_to_virt(tail);
+-			for (int j = 0; j < PAGE_SIZE / sizeof(struct page); j++)
+-				init_compound_tail(p + j, NULL, order, zone);
+-		}
+-	}
+-
+ 	for_each_hstate(h) {
+ 		if (hugetlb_vmemmap_optimizable(h)) {
+ 			register_sysctl_init("vm", hugetlb_vmemmap_sysctls);
+diff --git a/mm/sparse-vmemmap.c b/mm/sparse-vmemmap.c
+index ebd3ac997f64..dff8da23eabb 100644
+--- a/mm/sparse-vmemmap.c
++++ b/mm/sparse-vmemmap.c
+@@ -342,7 +342,7 @@ static __meminit struct page *vmemmap_get_tail(unsigned int order, struct zone *
+ 	 *
+ 	 * Any initialization done here will be overwritten by memmap_init().
+ 	 *
+-	 * hugetlb_vmemmap_init() will take care of initialization after
++	 * gather_bootmem_prealloc() will take care of initialization after
+ 	 * memmap_init().
+ 	 */
+ 
+-- 
+2.55.0
+
 
 
