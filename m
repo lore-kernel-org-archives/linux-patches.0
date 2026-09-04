@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BAF4156F0;
-	Fri,  4 Sep 2026 05:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5183AE198;
+	Fri,  4 Sep 2026 05:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499449; cv=none; b=Q6rrdykgaF8rJ7b8cEpIq2MJScbjkatpYAYMvKlFa8E7EutmGhscX/HToLeVrnqTnNGLMzC38R0GAkBZNUK06bDesm4ceT7N/4FlXx7UbrbXFEGyzdkbS/HwNuX91XTDw5u9C88I/q0AT5FH2H2lcrZwsd01YmNfBE3EfHP1oF4=
+	t=1788499452; cv=none; b=azC5W2ArcPDVphA7FplO3JSovdZl6WM3+uaHCZApIQfXs72/EIYCE1l5gyapZDMtVV25YvpMi3axYm6dlbBE8hfBunfyO8KcF4vUU/ABFfX1PwB7WRl0GOjKU0Vaj8xYvxFWO5L2ick0bvQpGYK5bOicyz8ppPdx/53U6PT0Bns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499449; c=relaxed/simple;
-	bh=Vvt9UTblVk6Vq6ahyg03Mq/RndRxMunF3yDeebC4pQg=;
+	s=arc-20240116; t=1788499452; c=relaxed/simple;
+	bh=ed0oZRre0d4uNxntTlF0TKuq2ICeCHP5J7upbvFRNUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qg0/8ZfT5gRwUhYoFLTzi2PHDACFD4Z8kVpSUOLSVkZxTOI5xg5t1vv8/4KngC8RlimmLJH+1dIilg5f4q5uYCoPyrL6AioJX1PDKTYEkW8HwJx2cHoeNYMc47BPqBvhNBJ03jOOmdh0hVqrJmpPUGFH0b2sVup9A7UY62Pmgps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHSCTed3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rAtqkkeuiGofGv5Qwdkaee7syjODhVuBp79x9uSoRs6IwDlYPQuArT1mQwrXLZxmKvEtGG373ufEIr8DQaCktAWK2Bt/EoOnL90TUK54m3JGtVBSKpHEPwGzhuuQKTTxK8WZKh7kalI5C1zr/atwybqcnkLD9TXuO9zMbEJyvjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9OuBE0Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHSCTed3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0401F00A3F;
-	Fri,  4 Sep 2026 05:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9OuBE0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33651F00A3D;
+	Fri,  4 Sep 2026 05:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499448;
-	bh=RU8mCNLrmZFiCZvxkyA9QmuPgbKZNb6I8+DPYEY8L7I=;
+	s=korg; t=1788499451;
+	bh=HtZKlrIcY7ZXt6pRzvDw8515N4Cu2JeVvAToa85mL+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kHSCTed3OLbRLzIGiy8sGI6jTJUJr04p4S/rZTyIMOphhD209Nu688kdrgjFmu/ED
-	 krMCXI0aYcdf8En6oV1or4d8povbv4Ckhku7D5p9NovRNCstC37v1NLuQvqwMDuDHj
-	 4JP+WK/fgbMSQbiEYE4rhndLaYKi9dCPqSrf9/x4=
+	b=p9OuBE0Y60q/EPPqI/CTfw08K/x2X1S1wM6IRWn3Pc+PY4up1+d5loUQuZwKVm7yX
+	 BzPF39VQcBh6wwzrYRXbLJAe+7sPb5xsB1V26NFZFB5lsFsw5RY10pu2HFcYFqW2BZ
+	 HnhzHIQ/rcme9wM1qjVYYs9b9DnRav4VZZNWolRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunkai Deng <chunkai.deng@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 7.2 421/713] rpmsg: glink: smem: order FIFO read after availability check
-Date: Fri,  4 Sep 2026 06:56:29 +0200
-Message-ID: <20260904045813.267500873@linuxfoundation.org>
+	Heiko Stuebner <heiko@sntech.de>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Oren Klopfer <oklopfer37@gmail.com>
+Subject: [PATCH 7.2 422/713] Revert "arm64: dts: rockchip: Further describe the WiFi for the Pinephone Pro"
+Date: Fri,  4 Sep 2026 06:56:30 +0200
+Message-ID: <20260904045813.288666443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,48 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+From: Oren Klopfer <oklopfer37@gmail.com>
 
-commit 786439ad58763e04b91bc2ec5f590e463939f197 upstream.
+commit 5f19535351bf28f28d702f452d11a1216ec2bd28 upstream.
 
-glink_smem_rx_peek() reads the RX FIFO payload after the caller has
-determined data is available via glink_smem_rx_avail(), which reads the
-remote-updated head index. A control dependency between the head read
-and the subsequent payload read does not order the two loads, so the
-CPU may speculatively read the FIFO before observing the head update
-and consume stale data the remote has not yet published.
+This reverts commit 096bd8c679185f898cae9933c6a68650fa26ea4f.
 
-Add rmb() in glink_smem_rx_peek() before the memcpy_fromio() so the
-availability (head) read is ordered ahead of the FIFO payload read,
-matching the consumer pattern in
-Documentation/core-api/circular-buffers.rst.
+Just as with the Pinebook Pro, there are multiple chipset variants for
+the Pinephone Pro, and multiple firmware binaries for different
+distributions. The change causes issues with some of these combinations,
+and reverting it resolves the issues. See the Closes below for the full
+report.
 
-Fixes: caf989c350e8 ("rpmsg: glink: Introduce glink smem based transport")
+Similarly with the Pinebook Pro adjustment, the original commit only
+indicates "further description" and not indicative of fixing any
+existing issues, so reverting should not kick any back up.
+
+Fixes: 096bd8c67918 ("arm64: dts: rockchip: Further describe the WiFi for the Pinephone Pro")
+Cc: Heiko Stuebner <heiko@sntech.de>
+Cc: Peter Robinson <pbrobinson@gmail.com>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
 Cc: stable@vger.kernel.org
-Signed-off-by: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260618-rpmsg-glink-smem-mb-v1-1-68a026453a69@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Closes: https://lore.kernel.org/r/20260607225901.64019-1-oklopfer37@gmail.com/
+Signed-off-by: Oren Klopfer <oklopfer37@gmail.com>
+Link: https://patch.msgid.link/20260703201010.67311-1-oklopfer37@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_smem.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts |   18 ------------------
+ 1 file changed, 18 deletions(-)
 
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -103,6 +103,13 @@ static void glink_smem_rx_peek(struct qc
- 	if (tail >= pipe->native.length)
- 		tail -= pipe->native.length;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+@@ -734,12 +734,6 @@
+ 		};
+ 	};
  
-+	/*
-+	 * Order the availability (head) read in glink_smem_rx_avail()
-+	 * against the FIFO payload read below, so APPS never consumes
-+	 * stale data the remote has not yet published.
-+	 */
-+	rmb();
-+
- 	len = min_t(size_t, count, pipe->native.length - tail);
- 	if (len)
- 		memcpy_fromio(data, pipe->fifo + tail, len);
+-	wifi {
+-		wifi_host_wake_l: wifi-host-wake-l {
+-			rockchip,pins = <4 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
+-	};
+-
+ 	wireless-bluetooth {
+ 		bt_wake_pin: bt-wake-pin {
+ 			rockchip,pins = <2 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
+@@ -766,19 +760,7 @@
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
+ 	sd-uhs-sdr104;
+-	#address-cells = <1>;
+-	#size-cells = <0>;
+ 	status = "okay";
+-
+-	brcmf: wifi@1 {
+-		compatible = "brcm,bcm4329-fmac";
+-		reg = <1>;
+-		interrupt-parent = <&gpio4>;
+-		interrupts = <RK_PD0 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-names = "host-wake";
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&wifi_host_wake_l>;
+-	};
+ };
+ 
+ &pwm0 {
 
 
