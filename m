@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A423938E8DD;
-	Fri,  4 Sep 2026 05:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6AD38E8DD;
+	Fri,  4 Sep 2026 05:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499670; cv=none; b=mYjpg6b8akbLP25jgSY+m4GWzuUxyG9M4H/awC+Kk9MZxIk0gBJ81ZR7E2uUoAQ8GjWnmupxcdWLYuPTQpCstBVuL0WpWf6GBBgNDPXquf2nr9xENEpimTyv7/I2DZtUhNZHDTaw4aTYQT6AcXo30YsWX49NIbAymVdrtBBMT4s=
+	t=1788499673; cv=none; b=LDReUZN0fyhQbOxHcbJVFWXreMiawzKStSnVmvqnoF7z5fn7GkJvrdWdVYn3i+0mMEDhMJP1pErW4cED3D2iNrsyXirZ8vQPBD6JT0ZYXarhKmzYHOAAB321ZXNe7/UV4fA1RtwTDiRTLDZ6yipkPjfEhXpMEuq9HSY7x72OkUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499670; c=relaxed/simple;
-	bh=nlCjoq+vFIRfnjhv8jVJoLxRfjtctkwQQXc5VonuOs8=;
+	s=arc-20240116; t=1788499673; c=relaxed/simple;
+	bh=dODgK9hedy8/fT/aUmNdxJ5Hn6GTvir1L4Y6Yj5PoiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MmWXBMwfRqyBQoH/pWV63vRwTYm3i0FdllQ+oQO6xJ/OEe4Fn2DHH0Iilcp65ntdXsx3O2R5qqffG2Jeyxr/viNfta4dOFL9Vta2NFuRJ4XsPEe6QzIjbKPhLKV+zLKPTa6fGbyp3j3brWdr41o+7sksL6Hs1GJRU52WJ9TaWWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=px4YOjFz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ieyOHAve6dQriOVb3wdxv4CIzwqqvF6WI4fnz6MCeKsrkHRCoVqCMSEQBBawRNpuPO53iR/cdjgGvmXWfUdf9IEZHlPdVEQ8gjXaqmGzkF4AltwWcJSIc0wDdRId4VRdjLm+MUNIcQjZEetR8lTmJYWslDUPX7Bb9ECDCKVsdBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6pgPPQF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="px4YOjFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD851F00A3D;
-	Fri,  4 Sep 2026 05:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6pgPPQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C291F00A3D;
+	Fri,  4 Sep 2026 05:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499669;
-	bh=cWff1+XTKqSKnHpvDQ0qa39aSOsoE7wDdqpgBBJfx3Y=;
+	s=korg; t=1788499672;
+	bh=VTtN/I2Q+xDOE/audSynXPafqPqJrS5kHdVC5Vfww9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=px4YOjFzCo4VVe3o/MFiKv+1EmGEbGDX0ci0FR73Yd3tgOoEN/1NxGALESy3ACBmM
-	 fm58RJdRpKU44HzfrLdep0qHhs8rqRcP2WB7JI55VyO3oxM+56fR1P4vJN4x888pU2
-	 lzJ0wapxwLS6GNCxmsnDY2VaAZhcLOzqgZRNqXRs=
+	b=e6pgPPQFUuT+m1HD1tnhHvPzO8vDkw8cb8KquIXC2rYYxrGU/7aHid25WJT1ITYon
+	 hHz/2WJHCSZgIFufqFe4HR/Bx7XrLtvlipY1s4nY0V5zWxbPBDFgQBFVjgnHYyGelQ
+	 wUkxF50hzq63KTeiby1C2jQVKELGeV6gl4rnxXpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 456/713] ring-buffer: Stop remote reader update when page swap fails
-Date: Fri,  4 Sep 2026 06:57:04 +0200
-Message-ID: <20260904045814.047778235@linuxfoundation.org>
+	Jacob Moroni <jmoroni@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.2 447/713] RDMA/uverbs: Add UVERBS_ATTR_UHW to UVERBS_METHOD_REG_MR
+Date: Fri,  4 Sep 2026 06:56:55 +0200
+Message-ID: <20260904045813.850354872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,47 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 5eab74874d11160725c42ab676ba97a797a362eb upstream.
+commit 011199f46f44a9fd93a9e5ab5d7fd1328d80e9bf upstream.
 
-The remote swap_reader_page callback can return -EBUSY when the writer
-moves the head before the remote catches it, particularly during an event
-storm on a small buffer. __rb_get_reader_page_from_remote() currently
-warns about that failure but continues with the unchanged reader ID and
-rearranges the local page list as though the swap succeeded.
+The original commit missed that three drivers (mthca, irdma, siw) have UHW
+data associated with reg_mr that cannot be passed through the ioctl. They
+also assume that the udata cannot be NULL, so failing to pass a valid
+udata can trigger a NULL udata crash in those drivers.
 
-Handle the callback failure as a recoverable error. Report it with
-pr_warn_ratelimited() and return NULL. Callers already handle a NULL reader
-page as a failed attempt. This avoids splicing the same page as both the
-previous and new reader without flooding the log under contention.
+This never happens in real systems since in rdma-core ibv_cmd_reg_mr_ex()
+does not accept a udata and those three drivers don't use it, however a
+malicious userspace could trigger it.
 
 Cc: stable@vger.kernel.org
-Fixes: 2e67fabd8b77 ("ring-buffer: Introduce ring-buffer remotes")
-Link: https://patch.msgid.link/20260825-kernel-patch-1-v2-2-bb3461807a32@gmail.com
-Assisted-by: LLM sparse
-Signed-off-by: Ivan Immanuel Shaji <ivanimmanuel1234@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 5b2e45049dc0 ("IB/core: Add UVERBS_METHOD_REG_MR on the MR object")
+Reported-by: Jacob Moroni <jmoroni@google.com>
+Closes: https://lore.kernel.org/all/CAHYDg1TOGxRGZrS69d4Y--Shj_DZv0nJuM73iHUBwBM70g_t3Q@mail.gmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/uverbs_std_types_mr.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -5791,8 +5791,11 @@ __rb_get_reader_page_from_remote(struct
+--- a/drivers/infiniband/core/uverbs_std_types_mr.c
++++ b/drivers/infiniband/core/uverbs_std_types_mr.c
+@@ -364,7 +364,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_
+ 							dmah, attrs);
+ 	else
+ 		mr = pd->device->ops.reg_user_mr(pd, addr, length, iova,
+-						 access_flags, dmah, NULL);
++						 access_flags, dmah,
++						 &attrs->driver_udata);
  
- 	prev_reader = cpu_buffer->subbuf_ids[cpu_buffer->meta_page->reader.id];
+ 	if (IS_ERR(mr))
+ 		return PTR_ERR(mr);
+@@ -527,7 +528,8 @@ DECLARE_UVERBS_NAMED_METHOD(
+ 			    UA_MANDATORY),
+ 	UVERBS_ATTR_PTR_OUT(UVERBS_ATTR_REG_MR_RESP_RKEY,
+ 			    UVERBS_ATTR_TYPE(u32),
+-			    UA_MANDATORY));
++			    UA_MANDATORY),
++	UVERBS_ATTR_UHW());
  
--	WARN_ON_ONCE(cpu_buffer->remote->swap_reader_page(cpu_buffer->cpu,
--							  cpu_buffer->remote->priv));
-+	if (cpu_buffer->remote->swap_reader_page(cpu_buffer->cpu,
-+						 cpu_buffer->remote->priv)) {
-+		pr_warn_ratelimited("Remote reader page swap failed\n");
-+		return NULL;
-+	}
- 	/* nr_pages doesn't include the reader page */
- 	if (WARN_ON_ONCE(cpu_buffer->meta_page->reader.id > cpu_buffer->nr_pages))
- 		return NULL;
+ DECLARE_UVERBS_NAMED_METHOD_DESTROY(
+ 	UVERBS_METHOD_MR_DESTROY,
 
 
