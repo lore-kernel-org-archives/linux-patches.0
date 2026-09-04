@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AFD414A2A;
-	Fri,  4 Sep 2026 05:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DC43C73C1;
+	Fri,  4 Sep 2026 05:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500616; cv=none; b=NhmfEDu+XYTABfhA/QrsozrC+dDlod6MsnxpbsjOWVpXmsJeMq39nNGwXKhNG7SQ0i4k3h69rnzjuIz8rnTvgk+3mn87F5S6UhXXNYJrrijugwy6n/x7qNu3ZQP+jE6UO2R+LGj9Oww8hYBQ4/4cyaAx4WDIvHnQzP7SA4fcXfc=
+	t=1788500618; cv=none; b=sSkh+KlxACw/rHnKSEmXEQNplv84wmF87RhdSbgebOwxJUlY1BvnfWZkfIJbmqaVeQwxWhanVTV+ecOBTTgeTde9AsSAq/uWd753YdX7r7+uYceVt1X45wb7cNRN91XLjd9kKNf1VtEiIUXI7g46sKzfDP93162FA5K/ED7757U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500616; c=relaxed/simple;
-	bh=IyhqG+t1UNNrvbKtNGHxS/AnF4wxa8Um8EgaLiy07wU=;
+	s=arc-20240116; t=1788500618; c=relaxed/simple;
+	bh=tI4DfR8mXsFJNEeeMZuPc5fayru+nSVoY67R2Xj4r/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VrljWDw5bDy7u1asJy8pnlSV/+jrBd467DA4xdMu92S3eX8DZ4LohoDAQHCNdRaYtMGmqAjnqVv0Qw1nGPIf70KrfJTkthJAOP/gkvxEnvc9sEIZ8NauNTRTo4qd2pFsISBP5B41I0KR2Zt+yMNZcl8R3cqTcK2m53qIbHF0Bic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6uE9FZX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1W/IGCW2sKJ4gNJDAYbpE2BOSXRWw0nmbgT+3KU9WHuMw73E+f/x4iAkrV6iL9a5OzycPl3Nocc5dQa9IOwULbdGukxoKVbyaEnYgOz76ettk091Rru7wsErD8vlNCjOc12okzVtzIDrHHbnhGehRL00AL/JqY/orh4c8/qpHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/RyB1Ia; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6uE9FZX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47BE11F00A3D;
-	Fri,  4 Sep 2026 05:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/RyB1Ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5F61F00A3D;
+	Fri,  4 Sep 2026 05:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500614;
-	bh=6Hjy8OUxixpmKHCNfNg86kDAUFGPJdWEBvcSPkSIRtw=;
+	s=korg; t=1788500617;
+	bh=YBqIsiXZjzx1ygxr90fzVxu1yt6VK/s5ov2BHgf6iBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V6uE9FZXM4SE57MtpzgQgRPCjhIJJOFFoH2oZtTl/2VeFSQY+ZpckeTuyFJBSfFVz
-	 3UM4kyuvsmV9nQjrFDmzCDY+WVh/XLfBQBGaDKE8tA1fZvXRf4AWoWOMSpPeCdeXs0
-	 S1OVD3CqpO+I8E+WucQIU443Dn9DRiFK8bZzIo6Y=
+	b=J/RyB1Ia38Ngk7aQ0w6C/Q+SWVYV/yvQjA4ltNwq1EWSL3NWQx7HxJvNrTnaNljMk
+	 mTtInIw/EJ3HZ4fVwbJDljRXgw2XoTYR0fZEXH7S8OVgNKm4+JFWSMAC7XIzMG5KcU
+	 pzy4nff0aT5ROFUyZyKgj/xJl8qm1zRntXPv04yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 076/552] usb: typec: thunderbolt: Disable work before freeing tbt on remove
-Date: Fri,  4 Sep 2026 06:53:53 +0200
-Message-ID: <20260904045749.578989547@linuxfoundation.org>
+	Huang Wei <huangwei@kylinos.cn>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Fedor Pchelkin <boddah8794@gmail.com>
+Subject: [PATCH 6.18 077/552] usb: typec: ucsi: use UCSI_TIMEOUT_MS for sync command completion
+Date: Fri,  4 Sep 2026 06:53:54 +0200
+Message-ID: <20260904045749.602832064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,43 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Huang Wei <huangwei@kylinos.cn>
 
-commit 92090f6ff2acc81e9dd99881dcfb4f8c1bdaabd3 upstream.
+commit eb4573cf2fd860b20adfae050c3f6ec6ddc3abdb upstream.
 
-tbt_altmode_remove() drops the plug and cable references without
-draining tbt->work. The work function dereferences those references,
-and can also requeue itself in its error path. The VDM callbacks can
-queue the same work item.
+The synchronous command completion path in ucsi_sync_control_common()
+hardcodes a 5 second (5 * HZ) timeout when waiting for the PPM to signal
+command completion via ACPI notification. This value matched
+UCSI_TIMEOUT_MS when it was still 5000 ms, but it was not updated when
+that macro was later raised to 10000 ms to fix PPM reset timeouts.
 
-Disable and drain tbt->work before dropping the references. This waits
-for an existing invocation and prevents subsequent schedule_work()
-calls from queueing it during teardown.
+As a result, the two PPM communication paths are now inconsistent: the
+polling path in ucsi_reset_ppm() respects the 10 second timeout, while
+the event-driven completion path still uses 5 seconds. On machines where
+the firmware is slow to respond during boot (e.g. some Lenovo ThinkPad
+models such as the E14 Gen 7), commands sent after the PPM reset, such
+as SET_NOTIFICATION_ENABLE and GET_CAPABILITY, can exceed 5 seconds and
+cause UCSI initialization to fail with:
 
-This issue was found by an in-house static analysis tool and confirmed
-by manual code review.
+    ucsi_acpi USBC000:00: error -ETIMEDOUT: PPM init failed
 
-Fixes: 100e25738659 ("usb: typec: Add driver for Thunderbolt 3 Alternate Mode")
+Once UCSI init aborts, USB-C PD negotiation never completes, which in
+turn blocks USB-C dock enumeration since the dock depends on a successful
+PD contract.
+
+Replace the hardcoded 5 * HZ with msecs_to_jiffies(UCSI_TIMEOUT_MS) so
+that both communication paths share a single, consistent timeout value,
+and future adjustments to UCSI_TIMEOUT_MS are picked up automatically.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221740
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=2183790
+Fixes: bf4f9ae1cb08c ("usb: typec: ucsi: increase timeout for PPM reset operations")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260802014959.416687-1-fanwu01@zju.edu.cn
+Signed-off-by: Huang Wei <huangwei@kylinos.cn>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Fedor Pchelkin <boddah8794@gmail.com>
+Link: https://patch.msgid.link/20260805085725.389761-1-huangwei@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/thunderbolt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/altmodes/thunderbolt.c
-+++ b/drivers/usb/typec/altmodes/thunderbolt.c
-@@ -303,6 +303,8 @@ static void tbt_altmode_remove(struct ty
- {
- 	struct tbt_altmode *tbt = typec_altmode_get_drvdata(alt);
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -78,7 +78,8 @@ int ucsi_sync_control_common(struct ucsi
+ 	if (ret)
+ 		goto out_clear_bit;
  
-+	disable_work_sync(&tbt->work);
-+
- 	for (int i = TYPEC_PLUG_SOP_PP; i >= 0; --i) {
- 		if (tbt->plug[i])
- 			typec_altmode_put_plug(tbt->plug[i]);
+-	if (!wait_for_completion_timeout(&ucsi->complete, 5 * HZ))
++	if (!wait_for_completion_timeout(&ucsi->complete,
++					 msecs_to_jiffies(UCSI_TIMEOUT_MS)))
+ 		ret = -ETIMEDOUT;
+ 
+ out_clear_bit:
 
 
