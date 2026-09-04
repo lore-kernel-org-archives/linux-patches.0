@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF683F4101;
-	Fri,  4 Sep 2026 05:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D30408035;
+	Fri,  4 Sep 2026 05:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500766; cv=none; b=NNnXFAReEqdwyhAITBvAr2E75SOW/KPXlHosghp7VhLb7Qn3PMreDkq/U349TL1KUKe1HDwfCHNhDQcPHVCUf+yuzGgptFGinBYmZSPfshOnZO9ijxfKnXItfQoypfc4YoyJvdqwCRxS/dkbT54ZggA4l9MRGTTiKKhi8dyzAgQ=
+	t=1788500769; cv=none; b=NnQkFAYTrmoHBnn8b0RSqNCs2cSnRE4Djupd7QNKfdniV8YghLtDlOB/QciVr8FrK21umQJDPtVT7KKDWTcS+T+esJJ9XkMQ2UJDZR5aX+C7zc5UdkqIkSZdI8oq8wMmn4tS9ptV8aLtKWpcb0Ef9iCOiOH7EKMAoNKYffAm2Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500766; c=relaxed/simple;
-	bh=QuOKEhG6CD2Mj3mutnE5oHpX5q5RdtEatFoJbGA8yS8=;
+	s=arc-20240116; t=1788500769; c=relaxed/simple;
+	bh=Yf34zX7P5uz4hpI6sKsYuF/Zo4pbqSF8UCybWbMymvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EohwvRp9azDwCvUwXgD1qGmVDimxIrnaAxmZ9u8GPiLduMwngpzFU+JW5N8PrxEmuTSIgbtinCBuNw4FE86zToYQPniWXigGDlIPSzMcniAtzUWMFvJYBzJ0cdBVEcu+BSDsTM68O7MZr49N5QZm9esZGr0WiUs5p54Bdfv/vTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9MuUY+h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P0m/PyRWfNTrs4SFTfcbXIeaIia+NMKsTR0a7FbYy4O/s5BTAOk64eAIYdflvwbD4POmU0uhDLrxHCd7+5oUyN31O3Gws2t0JNpka7OqEWSNKDGFLQyfuOoatjceTrxaPD3DlgB7QtrjuD6GIKciAPlppnZzfdO0gC5R65RmT4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBWNB3nI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9MuUY+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986571F00A3E;
-	Fri,  4 Sep 2026 05:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBWNB3nI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732981F00A3D;
+	Fri,  4 Sep 2026 05:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500765;
-	bh=JrVXHGWfVpXg3CxquuOiec5H3of+UyquBv/ucTj1M6g=;
+	s=korg; t=1788500768;
+	bh=lNXRkoM+8TZmCQG4WXcgLK/w7Cls9rgGZNGFKBkzwzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c9MuUY+h82dVgRie/AwB3dSPJFaiPI96qEgwuNibm7E8tcbUGGXP5jtOPAvjgr8Ar
-	 +gJacVen2Lj7B1aeS0JaxVt2h4u/Flbur7ajtCfPTpZ9IhQZfel/k+GqhxfwrvU0UM
-	 uyZiXoYA/etL5lmBgjyVeQIBgTGl8nkt4YBoPc1o=
+	b=qBWNB3nIZfyme+t1aTHjxdgKssOSB9+RurqdiQU+CXHo7T85GUgDCQAZz+hiIls2H
+	 CoVMmQSyCe0kQLC7Pwo4yVBbX65t27FFGOLAG5yReZwZSCACniAooXSBah2r/qffT7
+	 W6IzSGGmviOtFf33trFE/S7fcvw6YZ9sVh5tZOgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 173/552] smb: client: harden DFS cache against invalid target hints
-Date: Fri,  4 Sep 2026 06:55:30 +0200
-Message-ID: <20260904045752.946386567@linuxfoundation.org>
+	Andre Eikmeyer <dev@deq.rocks>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 174/552] HID: apple: preserve keyboard backlight across T2 resume
+Date: Fri,  4 Sep 2026 06:55:31 +0200
+Message-ID: <20260904045752.967307430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,86 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Andre Eikmeyer <dev@deq.rocks>
 
-commit bf86c08123c6ab8c61cc0be1dad7540db93738ff upstream.
+commit 2b5d1495bd101f3d9c13caf3923754f48ee7371a upstream.
 
-Currently, get_tgt_name() returns ERR_PTR(-ENOENT) when ce->tgthint is
-NULL, and dfs_cache_noreq_update_tgthint() assumes ce->tgthint is always
-valid.
+The T2 virtual USB host controller re-enumerates the internal keyboard
+after system resume. The butterfly keyboard backlight currently uses
+LED_CORE_SUSPENDRESUME, so the LED core sends a blocking request to the
+old HID device while it is disappearing. That request fails with -ENODEV
+and the newly probed device starts with its backlight off.
 
-In preparation for clearing ce->tgthint in free_tgts(), harden callers
-of get_tgt_name() against ERR_PTR results and harden
-dfs_cache_noreq_update_tgthint() against NULL pointer dereferences.
+To fix this, we cache the requested brightness when the old HID device is
+removed and restore it when the replacement is probed. We let
+re-enumeration handle restoration instead of issuing a request through the
+stale device.
 
+Fixes: 1f95a6cd5ad7 ("HID: apple: ensure the keyboard backlight is off if suspending")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dfs_cache.c |   31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ drivers/hid/hid-apple.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/dfs_cache.c
-+++ b/fs/smb/client/dfs_cache.c
-@@ -871,13 +871,22 @@ int dfs_cache_find(const unsigned int xi
- 		goto out_free_path;
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -91,6 +91,9 @@ struct apple_sc_backlight {
+ 	struct hid_device *hdev;
+ };
+ 
++/* T2 VHCI re-enumerates the internal keyboard across system resume. */
++static int apple_backlight_resume_brightness = -1;
++
+ struct apple_backlight_config_report {
+ 	u8 report_id;
+ 	u8 version;
+@@ -823,6 +826,7 @@ static int apple_backlight_led_set(struc
+ static int apple_backlight_init(struct hid_device *hdev)
+ {
+ 	int ret;
++	int brightness;
+ 	struct apple_sc *asc = hid_get_drvdata(hdev);
+ 	struct apple_backlight_config_report *rep;
+ 
+@@ -858,13 +862,20 @@ static int apple_backlight_init(struct h
+ 	asc->backlight->cdev.name = "apple::kbd_backlight";
+ 	asc->backlight->cdev.max_brightness = rep->backlight_on_max;
+ 	asc->backlight->cdev.brightness_set_blocking = apple_backlight_led_set;
+-	asc->backlight->cdev.flags = LED_CORE_SUSPENDRESUME;
++	/* VHCI re-enumeration restores the cached brightness in the next probe. */
++
++	brightness = READ_ONCE(apple_backlight_resume_brightness);
++	if (brightness < 0)
++		brightness = LED_OFF;
++	else
++		brightness = min_t(int, brightness, rep->backlight_on_max);
+ 
+-	ret = apple_backlight_set(hdev, 0, 0);
++	ret = apple_backlight_set(hdev, brightness, 0);
+ 	if (ret < 0) {
+ 		hid_err(hdev, "backlight set request failed: %d\n", ret);
+ 		goto cleanup_and_exit;
  	}
++	asc->backlight->cdev.brightness = brightness;
  
--	if (ref)
--		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
--	else
-+	if (ref) {
-+		char *target = get_tgt_name(ce);
-+
-+		if (IS_ERR(target)) {
-+			rc = PTR_ERR(target);
-+			goto out_unlock;
-+		}
-+		rc = setup_referral(path, ce, ref, target);
-+	} else {
- 		rc = 0;
-+	}
-+
- 	if (!rc && tgt_list)
- 		rc = get_targets(ce, tgt_list);
+ 	ret = devm_led_classdev_register(&hdev->dev, &asc->backlight->cdev);
  
-+out_unlock:
- 	up_read(&htable_rw_lock);
+@@ -997,6 +1008,9 @@ static void apple_remove(struct hid_devi
  
- out_free_path:
-@@ -917,10 +926,17 @@ int dfs_cache_noreq_find(const char *pat
- 		goto out_unlock;
- 	}
+ 	if (asc->quirks & APPLE_RDESC_BATTERY)
+ 		timer_delete_sync(&asc->battery_timer);
++	if (asc->backlight)
++		WRITE_ONCE(apple_backlight_resume_brightness,
++			   asc->backlight->cdev.brightness);
  
--	if (ref)
--		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
--	else
-+	if (ref) {
-+		char *target = get_tgt_name(ce);
-+
-+		if (IS_ERR(target)) {
-+			rc = PTR_ERR(target);
-+			goto out_unlock;
-+		}
-+		rc = setup_referral(path, ce, ref, target);
-+	} else {
- 		rc = 0;
-+	}
- 	if (!rc && tgt_list)
- 		rc = get_targets(ce, tgt_list);
- 
-@@ -961,7 +977,8 @@ void dfs_cache_noreq_update_tgthint(cons
- 
- 	t = READ_ONCE(ce->tgthint);
- 
--	if (unlikely(!strcasecmp(it->it_name, t->name)))
-+	/* Check 't' in case ce->tgthint was cleared by free_tgts() */
-+	if (t && unlikely(!strcasecmp(it->it_name, t->name)))
- 		goto out_unlock;
- 
- 	list_for_each_entry(t, &ce->tlist, list) {
+ 	hid_hw_stop(hdev);
+ }
 
 
