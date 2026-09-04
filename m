@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5AB3328E6;
-	Fri,  4 Sep 2026 06:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DAD346FB3;
+	Fri,  4 Sep 2026 06:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502732; cv=none; b=jRHUfpcx/wSF0D31sGO3C43smnULG3JCux2XseASnFEFE9sxpoVlVgRDfeoJbKer9rtw/IS97MZmAEvZi3Oum1cTBjiUCwtwIW9vaXThDinN5BWYMGwdYdS/jXWjlcS14YgnEDdmKVWm2G93R+5vT29c2iwQhERwxTUHPza2Kak=
+	t=1788502734; cv=none; b=ddHirLwQwAq+qgc49iYRTLZbMr2qw212SMC5I/uY9ux4edgiaXZU4Rjt7VFFA0CG4HBmK95rEqz8o75Zuf8Y18/z932Rr7BxaOmf3a/J1Izem2vkej5scUGxGo/GDxZtxn+P7oKOFnDcbiTSyPcsTGQJLr6NgTBreldGQkgJaVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502732; c=relaxed/simple;
-	bh=5bbaNjCjCpGK5d8eUwzD4sfXEhlxDPw1VNwMW9qkHok=;
+	s=arc-20240116; t=1788502734; c=relaxed/simple;
+	bh=CXmobGMvnhwfpybvmxP190/imadmrzHZYgxhYBi1Z1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RIPqMSf0tRfh603Z7IC2606S7q8OCnShf9s3Z/oeZllZDdfZ4CYXTcAL+VTuEivnZyDems4op+3UfBLNKY5nLdtq4b/5ihjlnHG3QMATWL7H55Bbxc6PD+luPxCSXMV5jSyEb7fLsHX5nUQxfrce2aspEWY1YHgn1ohDZAMTodk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVB6DvdS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mOpUVA/CSv3ouLhvoYNEXthHgHSKmNEvlXdX4bkipCFvFhWH1Br5+bMwz7tSRm3tX5Ru1z/kUflubUPPziEnNl7MYRi2LVADykQd9npa6If803wI5Akwq7RLeurk/QBypkjgHG+OQS51udzNT441uaB5iI/1IyFFpOedP6zoVxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HttrtRfs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVB6DvdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265021F00A3D;
-	Fri,  4 Sep 2026 06:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HttrtRfs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FD21F00A3D;
+	Fri,  4 Sep 2026 06:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502730;
-	bh=o3qCpQZNz3ptzDRZHRsWNIk5CCnbWDoyQLUc4St4+Jo=;
+	s=korg; t=1788502733;
+	bh=8CXNwSVLQaccxbAe4k6Nu/ZhhO/3Kx+LjzjI9pqd+/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GVB6DvdSqJIbjJMuf70a4gEPKFtjsLv0QtS29W8zLp2H9DFhmH0QK5+lL4Ttjso0C
-	 fqigq9lDx0CQmPMGcj26BiKtMY/1BPr8AURDSl+ejdK3ehU5E6kpLUpBKakMeYz4OI
-	 7SjSqm/FW1TGVU7KMH4TW3Tz8xOjd6jVPR3d60ZI=
+	b=HttrtRfs6iTE2pZocH7pregRCAJtrfKon/qWgir9JAn0HN7Dt+XlJVbCxnLeDAbOm
+	 UdyZDYGdl/LtbMXGOPFlKws8vkKgODEWeg9gQJ/LW+9aHWYFqigZLlZs8Vy9vLL31+
+	 M6ek34QKeb7aJNaomKampokKLOqoH9u3UGLF39fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 309/403] platform/x86: ISST: Validate socket ID in clos_assoc ioctl
-Date: Fri,  4 Sep 2026 07:01:52 +0200
-Message-ID: <20260904045741.870728695@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.12 274/403] power: supply: cros_usbpd-charger: bound the EC-reported port count
+Date: Fri,  4 Sep 2026 07:01:17 +0200
+Message-ID: <20260904045741.089943832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -45,65 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit a89f07db0cb95c54dac4a8406c79a04e44a73c3c upstream.
+commit 48355ce49359740f52e94d3623f6fc557ce341f0 upstream.
 
-isst_if_clos_assoc() validates the user-supplied socket_id with
-'socket_id > topology_max_packages()', but isst_common.sst_inst[] is
-allocated with topology_max_packages() entries, so the valid index range
-is [0, topology_max_packages()).  The '>' comparison lets
-socket_id == topology_max_packages() pass and index one entry past the
-array.
+cros_usbpd_charger_probe() reads two port counts from the EC and uses
+one of them, num_charger_ports, as the loop bound when populating a
+fixed-size array:
 
-In addition, isst_common.sst_inst[socket_id] is NULL for an in-range
-package that has no bound TPMI SST instance, and the pointer is used
-without a NULL check.  Both the out-of-bounds entry and the NULL pointer
-are then dereferenced by map_partition_power_domain_id() and the
-following power_domain_info access.
+	struct port_data *ports[EC_USB_PD_MAX_PORTS];	/* 8 entries */
+	...
+	for (i = 0; i < charger->num_charger_ports; i++)
+		charger->ports[charger->num_registered_psy++] = port;
 
-Reject socket_id >= topology_max_packages() and a NULL sst_inst, matching
-the checks already performed by get_instance().
+Both num_usbpd_ports (from EC_CMD_USB_PD_PORTS) and num_charger_ports
+(from EC_CMD_CHARGE_PORT_COUNT) are u8 values reported by the EC. The
+only validation is a sanity check that compares the two EC-reported
+values against each other:
 
-Fixes: 12a7d2cb811d ("platform/x86: ISST: Add SST-CP support via TPMI")
+	if (num_charger_ports < num_usbpd_ports ||
+	    num_charger_ports > num_usbpd_ports + 1)
+		return -EPROTO;
+
+It never checks either count against EC_USB_PD_MAX_PORTS, the size of
+the ports[] array. A malfunctioning, malicious or compromised EC that
+reports num_usbpd_ports == num_charger_ports == N for any N > 8 (for
+example both 255) passes this check, and the loop then writes N pointers
+into the 8-entry ports[] array embedded in the devm_kzalloc()'d
+charger_data, overflowing it by up to 255 - 8 = 247 entries (~1976
+bytes): a slab out-of-bounds write.
+
+Reject a port count larger than the ports[] array can hold.
+
+Fixes: f68b883e8fad ("power: supply: add cros-ec USBPD charger driver.")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260807144003.3498972-2-sammiee5311@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260616-b4-disp-5e197080-v2-1-8aa5bffce945@proton.me
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/power/supply/cros_usbpd-charger.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -724,7 +724,7 @@ static long isst_if_clos_assoc(void __us
- 		if (copy_from_user(&clos_assoc, ptr, sizeof(clos_assoc)))
- 			return -EFAULT;
+--- a/drivers/power/supply/cros_usbpd-charger.c
++++ b/drivers/power/supply/cros_usbpd-charger.c
+@@ -589,10 +589,13 @@ static int cros_usbpd_charger_probe(stru
  
--		if (clos_assoc.socket_id > topology_max_packages())
-+		if (clos_assoc.socket_id >= topology_max_packages())
- 			return -EINVAL;
- 
- 		cpu = clos_assoc.logical_cpu;
-@@ -742,6 +742,8 @@ static long isst_if_clos_assoc(void __us
- 		pkg_id = clos_assoc.socket_id;
- 
- 		sst_inst = isst_common.sst_inst[pkg_id];
-+		if (!sst_inst)
-+			return -EINVAL;
- 
- 		punit_id = map_partition_power_domain_id(sst_inst, punit_id, &part);
- 		if (punit_id < 0)
+ 	/*
+ 	 * Sanity checks on the number of ports:
+-	 *  there should be at most 1 dedicated port
++	 *  there should be at most 1 dedicated port, and the count must
++	 *  not exceed the maximum number of supported ports
++	 *  (EC_USB_PD_MAX_PORTS).
+ 	 */
+ 	if (charger->num_charger_ports < charger->num_usbpd_ports ||
+-	    charger->num_charger_ports > (charger->num_usbpd_ports + 1)) {
++	    charger->num_charger_ports > (charger->num_usbpd_ports + 1) ||
++	    charger->num_charger_ports > EC_USB_PD_MAX_PORTS) {
+ 		dev_err(dev, "Unexpected number of charge port count\n");
+ 		ret = -EPROTO;
+ 		goto fail_nowarn;
 
 
