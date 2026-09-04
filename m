@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7353451AB;
-	Fri,  4 Sep 2026 06:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EBA3451AB;
+	Fri,  4 Sep 2026 06:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501761; cv=none; b=r6cu1PleG0/t2k92IFC1KE12C296wUEM8Ml5GQaJX584MvBDMlaGSjVDK6SrP4PgyYpT1E5qwzSUuD58Vr/xqe4zBwUcP5T3VeBRUTeN8jOUiW9ScHzN9mkegV7FA01QVhzXGsWWAUDApVKLpTu87A45cWB2NlK2QBF84dusm+k=
+	t=1788501764; cv=none; b=hylnuQQgYf02DWG4xIq826HXqdEqHtdNlR6wB3y+c9pE1aF2JXTQnJcO3Gk9ErxhwD9EeleXudGjpdsFWSuExBjj7cjfFyYf9PQrC0htPvexLYOisk88O/lfJplenx7fBTVaJREIVyp6Nj+jnZDXkR9jGSBE+k0nCUhy86krdyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501761; c=relaxed/simple;
-	bh=1ohY4H++YukCU1hoFUZ1QkVjPwLQMFo18veMYyAxPg8=;
+	s=arc-20240116; t=1788501764; c=relaxed/simple;
+	bh=mxA4IwF5TGMOTk6zLaPhkwjxx2vK+zA+azGa5J9gEJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gj1Nw2yGAxba3hZV3RGQN4ii04kzNWF7EwHRsJfHkvFYyip8qiSW0UncuXDuymHKfoEzEujxeqBEMXWEag6E6/Wea41ThMTLL66FeMY6I6swwx2FtJdNwIeGnD0atYljYSkE/TcYh+WKZ2pLMeJdY0EEGt9NpxbMg2GOxz+8s7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHZ/+BOZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sZx//LY0TEwgVoIqL86xSlvw1Fk8e+fTHrqJHud9Na/fQE1A8Q46RuGLZADRUpDk2tX0B131tYi9UdZm4/iZsBwoTxN/u3RSTdzygN+KjCFC9E4TdtmCnY6Bk20VGsZ/3O4KEIMTO5bsAor7o29uwXoe0kQ+yuxdf2ut+tc4MgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyT8KqkX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHZ/+BOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230911F00A3D;
-	Fri,  4 Sep 2026 06:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyT8KqkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B3D1F00A3D;
+	Fri,  4 Sep 2026 06:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501760;
-	bh=3zsfPNlktrOalcOpYCMOq2tV7/fPP9U/Vh8njIcFrMk=;
+	s=korg; t=1788501763;
+	bh=OeC3yODhhdyoIv6YqWOKYPHzjtgFI4o/Oh4xrL9xZdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QHZ/+BOZVTzK5YiT7yJuiXVNnDKGtQTfEFHquqHVA7TLs5pOR/KWv8QBmHyDExCZN
-	 f9EIT+2bJK6m1Out3VXg4/T1ozo3M0LV9bwCtDiOQsKx9jpUw1Ueje2e4IIhUZHtrr
-	 5fDbqbXX98rBGxft2sZU17AbVWKYdRAP/B1nly+8=
+	b=cyT8KqkXodzp1tOeazb5rW+6iPws9MlLfmIzh2n85LNBV5L0bh2WgEb+jjiJslfFC
+	 +7+Lj6rxb9qghB/tU0M5i0AhYM4Uvn7v9GRqKqjbb2DGPY1uTrgwA+6Rh4qOICFz86
+	 n5jtfdPVj61owftZo4KmLHHkcVOhYNFlMyPmdE8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 522/552] wifi: brcmfmac: Fix memory leak in brcmf_sdio_read_control()
-Date: Fri,  4 Sep 2026 07:01:19 +0200
-Message-ID: <20260904045802.462442868@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.18 523/552] wifi: iwlwifi: dvm: fix memory leak in iwl_op_mode_dvm_start()
+Date: Fri,  4 Sep 2026 07:01:20 +0200
+Message-ID: <20260904045802.485120517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,46 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 0d10db8e94fcb23a799789aaa696b4d8f937e207 upstream.
+commit 67105abd6195a685a84dcb8a5daf54a1f4bfdb60 upstream.
 
-The memory allocated for buf is not freed in some of the error paths in
-brcmf_sdio_read_control(). Fix that by adding vfree() calls.
+In iwl_op_mode_dvm_start(), jumping to out_free_eeprom currently bypasses
+the out_free_eeprom_blob label. Consequently, error paths triggered after
+successfully parsing the EEPROM free priv->nvm_data but leak
+priv->eeprom_blob.
+
+Fix this memory leak by reordering the error handling labels so
+that out_free_eeprom falls through to out_free_eeprom_blob.
+
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc6.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+supported Intel DVM wireless hardware and firmware to test with, no
+runtime testing was able to be performed.
 
 Cc: stable@vger.kernel.org
-Fixes: dd43a01c5cdb ("brcmfmac: use dynamically allocated control frame buffer")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-[arend: rework as suggested by Johannes]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260803093506.1647790-1-arend.vanspriel@broadcom.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260624084404.570703-1-dawei.feng@seu.edu.cn
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/dvm/main.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -1827,17 +1827,18 @@ gotpkt:
- 	if (bus->rxctl) {
- 		brcmf_err("last control frame is being processed.\n");
- 		spin_unlock_bh(&bus->rxctl_lock);
--		vfree(buf);
- 		goto done;
- 	}
- 	bus->rxctl = buf + doff;
- 	bus->rxctl_orig = buf;
- 	bus->rxlen = len - doff;
- 	spin_unlock_bh(&bus->rxctl_lock);
-+	buf = NULL;
- 
- done:
- 	/* Awake any waiters */
- 	brcmf_sdio_dcmd_resp_wake(bus);
-+	vfree(buf);
- }
- 
- /* Pad read to blocksize for efficiency */
+--- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
+@@ -1511,10 +1511,10 @@ out_destroy_workqueue:
+ 	priv->workqueue = NULL;
+ out_uninit_drv:
+ 	iwl_uninit_drv(priv);
+-out_free_eeprom_blob:
+-	kfree(priv->eeprom_blob);
+ out_free_eeprom:
+ 	kfree(priv->nvm_data);
++out_free_eeprom_blob:
++	kfree(priv->eeprom_blob);
+ out_leave_trans:
+ 	iwl_trans_op_mode_leave(priv->trans);
+ out_free_hw:
 
 
