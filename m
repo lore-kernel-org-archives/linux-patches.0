@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D4B35AC03;
-	Fri,  4 Sep 2026 05:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967823A5445;
+	Fri,  4 Sep 2026 05:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501207; cv=none; b=h/wecRezw1gN00PaiTljPcc5hdKE3+3+xoyvEks8unZkLs+3uaD2d+ngbsCYfVi49vg3MK9Wlz6ERngh+sAzFCzR513nN8jPDauQ8x+0BszEzRYt3beHJ/EmsY2Ks0LyRJiIPH5Mkfxoer1h63gFwNoKCaZWNZNB3WMFaFpWhMA=
+	t=1788501210; cv=none; b=tGtOcKV9Ed2hdPr2NykyPdPeHOcWzaA4NGMx09NDz9S/tAjTqNYHoeq4tj5m7AEAi3xLXFnEJjB4HqbjnkJVU49iRcRBpdTNm2BGCIrzLDdZ1hhT0IaYQgCMgrIho6YjiMyGfJtUUwq6zeaawgYeqZqAWFQbQHAyT56FlCQuS44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501207; c=relaxed/simple;
-	bh=IiFaO/v7VOrkTw/JPrJaIFoIny4MLAP6yUJa62W7Nk4=;
+	s=arc-20240116; t=1788501210; c=relaxed/simple;
+	bh=Dcna9bXfOQ1ZKvYDeeTl2gyDuCYfGf7nTNuiYImAaqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVvUWTJQ6zovvSAEaYBZIXX74C+LGy2XWW50ivlC1uGsBDkcjJ0fF4oyDmahgKmRmJfhzzZhrhBH00bMAsM3A/p3F1JX+YOAnfltEhJTVfDaivAiP++qhTDbkymakqHkp3LEBTqglHadLGurOrnbSpZ2Rk+0lk7diFLRlNKgHWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsmnIBXu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PjLPIQ0deyOgr3Qo7TuAVos5Baf3+KTrtzRDHqmRNkSN6Y6rJf6TnnfmMQRbZlN1I039Ko4oE5vT6w+SNYQKVl0+i0xs89f0XMAulBeQ3mefEx4W/XYbKk4hvdUOYpHAYcmXOXhLBDbFLjnLpIEuwNGpu6YIg4P1F4g4Habypdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxDmHU0l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsmnIBXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6911F00A3D;
-	Fri,  4 Sep 2026 05:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxDmHU0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1391F00A3D;
+	Fri,  4 Sep 2026 05:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501206;
-	bh=2ZWv6KdwM1FwtoFrVMLNmyjby8lqO5MbaW8t6cFItvE=;
+	s=korg; t=1788501209;
+	bh=xpVmt8CaMKpGJEasCM9KBnhJXssrUjF4XSXpXFVYgjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SsmnIBXulxp6S4TPmqrGKKiAVnXs8/Z0FBQ4BmJVy6PGiw76xBoG9rm+oUc9iYmzt
-	 9nwXyZfT4C/nA28fwJ5qskAEp8wsJON4sFz5QehsDnTHUZJwcMgzTJj9asAyKziL+Z
-	 An5Gex/FI0tnuyYydItPINmZl2+mcAZxA2TAtLc8=
+	b=CxDmHU0luDP2daoLW2HMuggxowl4pjYcpURZRjxyccEuPr3q45hhCVuPWJyKJlOZ7
+	 UR5YZLiqVLys03QJprmJTZHkwVy1OcdIkNjKpuT/Xo6bwpbr+6UUffsEtgKsu2jsvs
+	 mw4oauZf7iRCYO9ixfEb5VDxhBGryNjLMJFcD2ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 328/552] regulator: qcom-refgen: correct the regulator type to CURRENT
-Date: Fri,  4 Sep 2026 06:58:05 +0200
-Message-ID: <20260904045757.704462775@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 329/552] ring-buffer: Fix subbuf resize race with ring_buffer_alloc_read_page()
+Date: Fri,  4 Sep 2026 06:58:06 +0200
+Message-ID: <20260904045757.726681435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,44 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-commit 05dfeb2d0ccf87a7b92cd149a393b8423a26a04e upstream.
+commit e743527c5bfdceda1095bc0a9e596e2aebb6a9c3 upstream.
 
-As per the REFGEN IP team, this block supplies the reference current to
-the PHYs in the SoC. So, correct the regulator type to REGULATOR_CURRENT
-to match with the HW behavior.
+ring_buffer_alloc_read_page() is racy with ring_buffer_subbuf_order_set,
+it can allocate a reader page with an outdated order. This isn't a big
+issue, the user can still re-allocate a new reader page and try again.
 
-Fixes: 7cbfbe237960 ("regulator: Introduce Qualcomm REFGEN regulator driver")
+However, what is more problematic is if the value of subbuf_order
+changes in the middle of ring_buffer_alloc_read_page(). In that case,
+bpage->order might not match the actual allocated memory.
+
+Use bpage->order for the allocation to prevent this race.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260617-ipq9650_refgen-v4-1-c505ea6c6661@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260813131152.3589632-6-vdonnefort@google.com
+Fixes: bce761d75745 ("ring-buffer: Read and write to ring buffers with custom sub buffer size")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/qcom-refgen-regulator.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/regulator/qcom-refgen-regulator.c
-+++ b/drivers/regulator/qcom-refgen-regulator.c
-@@ -66,7 +66,7 @@ static const struct regulator_desc sdm84
- 	.enable_time = 5,
- 	.name = "refgen",
- 	.owner = THIS_MODULE,
--	.type = REGULATOR_VOLTAGE,
-+	.type = REGULATOR_CURRENT,
- 	.ops = &(const struct regulator_ops) {
- 		.enable		= qcom_sdm845_refgen_enable,
- 		.disable	= qcom_sdm845_refgen_disable,
-@@ -82,7 +82,7 @@ static const struct regulator_desc sm825
- 	.enable_time = 5,
- 	.name = "refgen",
- 	.owner = THIS_MODULE,
--	.type = REGULATOR_VOLTAGE,
-+	.type = REGULATOR_CURRENT,
- 	.ops = &(const struct regulator_ops) {
- 		.enable		= regulator_enable_regmap,
- 		.disable	= regulator_disable_regmap,
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -6536,7 +6536,7 @@ ring_buffer_alloc_read_page(struct trace
+ 	if (bpage->data) {
+ 		rb_init_page(bpage->data);
+ 	} else {
+-		bpage->data = alloc_cpu_data(cpu, cpu_buffer->buffer->subbuf_order);
++		bpage->data = alloc_cpu_data(cpu, bpage->order);
+ 		if (!bpage->data) {
+ 			kfree(bpage);
+ 			return ERR_PTR(-ENOMEM);
 
 
