@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD36C18D636;
-	Fri,  4 Sep 2026 05:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D0C248F64;
+	Fri,  4 Sep 2026 05:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501224; cv=none; b=SsBthbNCoizkykMm7D0uLu4SIY/cg6N75uLgbmXX3yjq31SJdDOLpfkWXgRNeeklKKmu9msc3aGQYXxS6/Hg/nzmDD57dE9sd/TCdKuRYXfWnTHU5kUrlpDBqih4ZQTiWwEPbhihPkMJ18HocmzOsrYEY91K+Y535n1qYlid3/U=
+	t=1788501227; cv=none; b=LxhFfUDHNnQKfXUp5jRsNvVfvLSf38eolOWft7NL12gNT88Gan7LrrvR805dV+U2PEjnUItq3LMV9I6cFCTYZKHj5CNM7kt0rRkc4nyEyO+tCtWgTOuMIhWaOKFjizPxMp/YmFfwZVQii9oE+ETkGHoIkYrK4yfvF/TAZ5ZeBEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501224; c=relaxed/simple;
-	bh=f4CVZgMhc+1nU+ewWdctjvnwtKPEBQATFtQBJYrkGrc=;
+	s=arc-20240116; t=1788501227; c=relaxed/simple;
+	bh=LLYN619ZNFhsA2oAuzEHSQ8v80p5kufDnS6wC/hAUV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUNComCb9lxyv2VQE283zr0NykM87CoJ1nBte1nAXCBy+tg+6E/6Inzs0pFB1dsne3Ss2f6BEQwZ3ODDZJ91LnAqo0qx5flkMc/CusBaQwZD3TJ9aqXsdaiQDpWbm14fUs84wb/dSRUUPX4bz270M5wJnODDCbM/v0Sb9try7iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIVXOrAQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NgIFJAeOFYeEVddWt6g7OGQU68ytxu7OGSm6FdfGyrsNcQXl4yqRVnE99rxCZazXukyilSTkQrIHB2A/LAaEhSDcOdK4JDzsKVStpkxFK8V9aRFCuoSzDbE5VWoKoLH+PWDKOtA9wtoWZHC/KYLbyvfkX4u9pc3Ei3fL4/Mr+OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYDiAHpx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIVXOrAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131F11F00A3D;
-	Fri,  4 Sep 2026 05:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYDiAHpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFCF1F00A3D;
+	Fri,  4 Sep 2026 05:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501223;
-	bh=fpOfKxHi5PsJugbzHvi2B/ygUGnTVCnrrQG6G0MCv/w=;
+	s=korg; t=1788501226;
+	bh=q4VLHIX+9cKbKZiFx4r3x4VX69A69DS5zshg0LVCNG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uIVXOrAQSudWWAe2I1UgrSjwVBLCQrzqrze9tBKeBDKZEVIaX/V33VVrjwkNkK4An
-	 TI1GylufaKIZ2xBYOtlTZ8q9CxPq68BPUrNyucMN2KIycvU4rhvjkMsl6Gbp4rA062
-	 +wl5Wa1M9b5x6KaxFYTznbh9agqkzuSeHx0WAAUo=
+	b=MYDiAHpx3kdyTJxVGTsZp6gW+f+tblb1IBEUa8Qzq2FHngVjC4G6VSvWbtbYnCMoq
+	 KPKEarYHaR4ra1zK5JeWuo4Q+CtVPudD5J2HjXyKtUB4p9wpufa7R+T5ew0VFf70RB
+	 cKFWxolVdj6CflM0ra4iF6nbxn0ypMqCv1LtbXXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Gao <gyf161023@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Mike Marshall <hubcap@omnibond.com>
-Subject: [PATCH 6.18 333/552] orangefs: fix double-free of trailer_buf on readdir copy failure
-Date: Fri,  4 Sep 2026 06:58:10 +0200
-Message-ID: <20260904045757.812661562@linuxfoundation.org>
+Subject: [PATCH 6.18 334/552] orangefs: skip leading spaces before parsing client debug masks
+Date: Fri,  4 Sep 2026 06:58:11 +0200
+Message-ID: <20260904045757.833944007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,40 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit f574296be7f46eb60beca851240b526df232f480 upstream.
+commit d410cd5303ec59c7cf23dd61423752ce8e9ecb59 upstream.
 
-On a readdir downcall, orangefs_devreq_write_iter() frees
-op->downcall.trailer_buf with vfree() when copy_from_iter_full() fails,
-but does not clear the pointer before goto Efault. The waiter in
-do_readdir() is then woken with a negative status and frees the same
-pointer again on its r < 0 path, causing a deterministic double-free.
-A client holding /dev/pvfs2-req triggers it by sending a readdir
-downcall whose declared trailer_size exceeds the bytes it supplies.
+orangefs_prepare_cdm_array() sizes each client debug keyword buffer
+with strcspn(cds_head, " "), but then parses the keyword with %s. The
+%s conversion skips leading whitespace, while strcspn() does not.
 
-Clear the pointer after freeing so the readdir-side vfree() becomes a
-no-op.
+If a client debug entry starts with a space, the allocation can be sized
+for an empty keyword while sscanf() copies the following non-empty token.
+This can write past the end of the allocated keyword buffer.
 
-Fixes: 382f4581e67f ("orangefs: rewrite readdir to fix several bugs")
+Skip leading spaces before computing the keyword length so the allocation
+matches the string parsed by sscanf().
+
+Fixes: f7be4ee07fb7 ("Orangefs: kernel client part 4")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
 Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/orangefs/devorangefs-req.c |    1 +
+ fs/orangefs/orangefs-debugfs.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/fs/orangefs/devorangefs-req.c
-+++ b/fs/orangefs/devorangefs-req.c
-@@ -474,6 +474,7 @@ static ssize_t orangefs_devreq_write_ite
- 			         op->downcall.trailer_size, iter)) {
- 		gossip_err("%s: failed to copy trailer.\n", __func__);
- 		vfree(op->downcall.trailer_buf);
-+		op->downcall.trailer_buf = NULL;
- 		goto Efault;
- 	}
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -569,6 +569,7 @@ static int orangefs_prepare_cdm_array(ch
+ 		cds_delimiter = strchr(cds_head, '\n');
+ 		*cds_delimiter = '\0';
  
++		cds_head = skip_spaces(cds_head);
+ 		keyword_len = strcspn(cds_head, " ");
+ 
+ 		cdm_array[i].keyword = kzalloc(keyword_len + 1, GFP_KERNEL);
 
 
