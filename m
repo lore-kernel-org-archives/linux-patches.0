@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B94396572;
-	Fri,  4 Sep 2026 06:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4387396572;
+	Fri,  4 Sep 2026 06:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502204; cv=none; b=RVBZj0TxhLefRYdttcR0uwaqwRp5ZlTnmdNgr3u9Not3OTJo7wUdvkxDzqR5HILxtvxz0A80lUzJSG1kWLjoxXCMeYOK7XFEA5MVp+uSDHzHUEUMh8rwEfUqM1OxVMOH81XaJXQZlxtk7H4CP9OMZCfiHhDsFxw99Spxqo7xkR8=
+	t=1788502206; cv=none; b=VaS8cNwhcCu+90p1AbKKd+308pdmofc+mQnKjI848qjADrTtMoNxEAi0zuGD7DPeSMtX/BqvtIZ/NhTXSN1OtdruIlG1GbsjU2h5TXd+Ln4v0bSCySVMwtDUU6e/0/QVmGb5IGvoqJmaNFj1U9wPMRt1V/EmJ3p74UPvZAp/CVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502204; c=relaxed/simple;
-	bh=FhIOJcZr+OJ7PmtMj33sFAMiSrVWOqUsNY0hgO/eZ5E=;
+	s=arc-20240116; t=1788502206; c=relaxed/simple;
+	bh=y1i+LWZE0yJTpKsc/lNu31xEytJ3HalF5ZGpBFSLMDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bwQcDOW70l560oWfbTlI+fwblZtRaxbKQPFzEzLfP0CLY5hn7fuE+2/8LXujz4UJCq+gtdNA5qkuE6rPohtkl90ZtyxzofP2iIeOiw5XnOPQmmY0PQEpRmUKOkJZQ+lzzvQ2t9HSkMJFagKFCD9EFGNpZoaTY1do/aXC1ZxRB3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fd0Zp3Z0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hnj5kNpuelMuY3992iDaV92gUyXyRPp5ywKRq1j6/XENBK+XGq/72H4RjxirveEgH1CUnlSgwBYeYz+lYIxQY4/FnaUAuoGkvABJwZp3c5sOvGYvBtPtx05ojgXBKd9/+TNqcGnB7BQk41cYgGcpUGoaFFLOXmvHARJ3gjsOJw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8sQuqFt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fd0Zp3Z0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE591F00A3D;
-	Fri,  4 Sep 2026 06:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8sQuqFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186C31F00A3D;
+	Fri,  4 Sep 2026 06:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502202;
-	bh=re+mAooBAyIs/o9fkYivkoK0d4OKL6snlGPtXr585Qk=;
+	s=korg; t=1788502205;
+	bh=vRhJDpQihJT1vxqxjDWFAsdAtHVoqm9La2xy0dC/gGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fd0Zp3Z0jUblQR4mbqztX99t0LsnMgYiA72d5g04NgEDyTweIJT7EzZC16ZLRjio4
-	 K9rnCcelHWb7u9+Eff+4W2thMsYD5+5WWfjKPJC1hxR79ly2QnRDdBlGjf6aFv/mtg
-	 QjJt/7/8QnzNNnE+dbyk48wHHEp7eg/kTI2ppuKY=
+	b=I8sQuqFtKiEJkrTwpLRIONBGWtsg07nqcDQSIN35C1tsZvoj7DjMor9jUQCIbPM38
+	 8fzJ6taY2Duz8pEp3sPvOGtv6gQqrFTVlLiocIkiAVQqH+d9kEmzhZ9uacPmnOoAsP
+	 CeMFagjqP+lXvzagqYfFq52cS0zmYh8j/6oFdYIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 124/403] smb: client: harden DFS cache against invalid target hints
-Date: Fri,  4 Sep 2026 06:58:47 +0200
-Message-ID: <20260904045737.659100337@linuxfoundation.org>
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 125/403] HID: picolcd: clamp eeprom debugfs read to bytes actually received
+Date: Fri,  4 Sep 2026 06:58:48 +0200
+Message-ID: <20260904045737.681018366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,86 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit bf86c08123c6ab8c61cc0be1dad7540db93738ff upstream.
+commit e9c667395ac1f8024f623250b32bae4c7af9caa0 upstream.
 
-Currently, get_tgt_name() returns ERR_PTR(-ENOENT) when ce->tgthint is
-NULL, and dfs_cache_noreq_update_tgthint() assumes ce->tgthint is always
-valid.
+picolcd_debug_eeprom_read() trusts resp->raw_data[2] -- a length byte
+supplied by the device in its REPORT_EE_DATA reply -- clamped only to
+the caller's read() count:
 
-In preparation for clearing ce->tgthint in free_tgts(), harden callers
-of get_tgt_name() against ERR_PTR results and harden
-dfs_cache_noreq_update_tgthint() against NULL pointer dereferences.
+	ret = resp->raw_data[2];
+	if (ret > s)
+		ret = s;
+	if (copy_to_user(u, resp->raw_data+3, ret))
 
+It never checks resp->raw_size, the number of bytes picolcd_raw_event()
+actually copied into the 64-byte raw_data[] of the kmalloc'd struct
+picolcd_pending. A device (or a spoofed picoLCD) returning a length byte
+of 0xff, read with a count >= 255, makes copy_to_user() read past
+raw_data[] into adjacent slab memory and return it to userspace through
+the debugfs "eeprom" file:
+
+	BUG: KASAN: slab-out-of-bounds in _copy_to_user
+	Read of size 255 ... picolcd_debug_eeprom_read+0x214/0x2f0 [hid_picolcd]
+
+The debug-dump path in the same file already validates the device length
+byte against the received size before trusting it; this read does not.
+The file is created S_IRUSR (root-only) and a crafted device is needed,
+so it is neither unprivileged- nor remotely-triggerable.
+
+Clamp the copy length to resp->raw_size - 3 (the payload actually
+received, minus the 3-byte header), floored at 0 for short replies.
+
+Fixes: 9bbf2b98ba11 ("HID: add experimental access to PicoLCD device's EEPROM and FLASH")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dfs_cache.c |   31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ drivers/hid/hid-picolcd_debugfs.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/smb/client/dfs_cache.c
-+++ b/fs/smb/client/dfs_cache.c
-@@ -871,13 +871,22 @@ int dfs_cache_find(const unsigned int xi
- 		goto out_free_path;
- 	}
- 
--	if (ref)
--		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
--	else
-+	if (ref) {
-+		char *target = get_tgt_name(ce);
-+
-+		if (IS_ERR(target)) {
-+			rc = PTR_ERR(target);
-+			goto out_unlock;
-+		}
-+		rc = setup_referral(path, ce, ref, target);
-+	} else {
- 		rc = 0;
-+	}
-+
- 	if (!rc && tgt_list)
- 		rc = get_targets(ce, tgt_list);
- 
-+out_unlock:
- 	up_read(&htable_rw_lock);
- 
- out_free_path:
-@@ -917,10 +926,17 @@ int dfs_cache_noreq_find(const char *pat
- 		goto out_unlock;
- 	}
- 
--	if (ref)
--		rc = setup_referral(path, ce, ref, get_tgt_name(ce));
--	else
-+	if (ref) {
-+		char *target = get_tgt_name(ce);
-+
-+		if (IS_ERR(target)) {
-+			rc = PTR_ERR(target);
-+			goto out_unlock;
-+		}
-+		rc = setup_referral(path, ce, ref, target);
-+	} else {
- 		rc = 0;
-+	}
- 	if (!rc && tgt_list)
- 		rc = get_targets(ce, tgt_list);
- 
-@@ -961,7 +977,8 @@ void dfs_cache_noreq_update_tgthint(cons
- 
- 	t = READ_ONCE(ce->tgthint);
- 
--	if (unlikely(!strcasecmp(it->it_name, t->name)))
-+	/* Check 't' in case ce->tgthint was cleared by free_tgts() */
-+	if (t && unlikely(!strcasecmp(it->it_name, t->name)))
- 		goto out_unlock;
- 
- 	list_for_each_entry(t, &ce->tlist, list) {
+--- a/drivers/hid/hid-picolcd_debugfs.c
++++ b/drivers/hid/hid-picolcd_debugfs.c
+@@ -98,6 +98,15 @@ static ssize_t picolcd_debug_eeprom_read
+ 		ret = resp->raw_data[2];
+ 		if (ret > s)
+ 			ret = s;
++		/*
++		 * raw_data[2] is a device-supplied length; also clamp it to
++		 * what picolcd_raw_event() actually stored (raw_size), or a
++		 * hostile device overruns the raw_data[] buffer.
++		 */
++		if (ret > resp->raw_size - 3)
++			ret = resp->raw_size - 3;
++		if (ret < 0)
++			ret = 0;
+ 		if (copy_to_user(u, resp->raw_data+3, ret))
+ 			ret = -EFAULT;
+ 		else
 
 
