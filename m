@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4782419FBB;
-	Fri,  4 Sep 2026 06:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEC141D208;
+	Fri,  4 Sep 2026 06:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502568; cv=none; b=Yn4Ga8ByzHmgsly7pgDFrsb3fKuB+QK8v+MUNXqyPmAr0KlFkn9Ff0AkDYMrEMV0NHY/HX8vLAxX7qqa6G0AbmUu+jnroH4nzJ6RmV1W2wyPormjbZkzsQyxZFG4z+5lAVJ0HuCKyjdm8/2cFfPboKuulAX3XIFxwy+lzFEE30c=
+	t=1788502571; cv=none; b=b60G/+339olILhZK2teWHD3aT1Y6XPsjMRVmbGJ52iGiA/4hKK5dUt25rJeMRMZcz0c3la++0/0AifKYGkfSMcaVXemqiQ8sCjfgJ6PKk5biDVj4iLPjDjlqnjRjTw6auIin8rePXAYIEy8ts5C94kcazENj9CMPF3PeRXrn4GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502568; c=relaxed/simple;
-	bh=ziARoTUxOMOLbsSga5qlPRY49vIMUbYNoSjv0Eyfwwg=;
+	s=arc-20240116; t=1788502571; c=relaxed/simple;
+	bh=qWYjWFRUTFvVOb2rWzJGRi/6yWtyBUjGJY1sdbhLBE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1ncoM+UuotVXJ5DloZ2KJvUEzaNgDtZ1qtVms3RE/egGtIpq8CnbYgLf33pMXSt6GG4KvxBiDSsZFykhwUnzOzFpGQzER6ggRwn9oA5+7UuaQ2/gM4FC7VI1LN4D5qxWewMV+w7w49UWu7abcwL5fEDIiuh9TCrN+pcrB986os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGt9MuQl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kqAqJKohzuup8bvguYgqU/rIjH1qODiopjzBFfZmg291ox826Op3SUj25QOXosFnmv8M8H21h95JOjsCl2bnes6lBgQ5AlKyMEEeOIWH6yEZnACk3lHGyR0ydea3/+oBwTSLi2vtx1VDI3HFoPgZS8G/WUeBD8mrZAEGiK5Erx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqVfnqso; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGt9MuQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B9331F00A3D;
-	Fri,  4 Sep 2026 06:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqVfnqso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5521F00A3D;
+	Fri,  4 Sep 2026 06:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502567;
-	bh=p2qG/JHGci/GojUw1L0Bp/Vrj9HwH0dYUnrM7qd/hIQ=;
+	s=korg; t=1788502570;
+	bh=Jjp/JyqbadJqgVH9F/aE3f7zOyzQa0GKGRfbuURpTaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IGt9MuQlDwpmrynIl9Gk9bYPS5NxNRt5imoB8seHJte2RdHG+pZxglJGNnZX/98Pe
-	 oj5rZ+m7mK7iXeeMStpKTTQFeB+USgG2gYe42psQ4c8PLxTy+AjL8CMw37VvVS2A0q
-	 5numkrNBwyLexDWMWn0GtvAjUabYyaToVm8sjDeo=
+	b=qqVfnqsoRKeX+9GTVuWrMhLE84BuGxd8Xr3ea1IDy602znQaQFnt7l3aBVJ4LW47q
+	 spgAWO0O6DjbVi0rmu9TLOk/OiswDuUzU9V8BXL9gpJWJq9dW8llG+Boj5lDiD0jER
+	 Q7JZsY7YZqMw4BuoQxTyFUoi3r0GdlDkZLU1QycQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 253/403] arm64: compat: Fix decrementing LDM/STM alignment emulation
-Date: Fri,  4 Sep 2026 07:00:56 +0200
-Message-ID: <20260904045740.622827463@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.12 227/403] arm64: dts: qcom: sm6115-pro1x: Correct touchscreen GPIO flags
+Date: Fri,  4 Sep 2026 07:00:30 +0200
+Message-ID: <20260904045740.024072123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,54 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit f5b8b9037df387394a73aab47c5437bbac975077 upstream.
+commit 8e73ae5c34e4fbbd25a8324e3c0eb1e845d7f01e upstream.
 
-The compat alignment emulator inherited unsigned long data addresses from
-the 32-bit ARM implementation.
+IRQ_TYPE_xxx flags are not correct in the context of GPIO flags.
+These are simple defines so they could be used in DTS but they will not
+have the same meaning: IRQ_TYPE_LEVEL_LOW = 8 = GPIO_TRANSITORY.
 
-In do_alignment_ldmstm(), nr_regs is an unsigned int holding the transfer
-size. The function uses the same address addition for both transfer
-directions, negating nr_regs first for a decrementing LDM or STM. The
-32-bit negation wraps before the addition, so the handler adds nearly
-4 GiB instead of subtracting the transfer size.
-The resulting address lies outside the compat task's address space, so
-decrementing LDM/STM emulation fails, while incrementing forms work.
+Correct the touchscreen irq-gpios to use proper flags, assuming the
+author of the code wanted similar logical behavior:
 
-For example, a backwards-moving copy routine using decrementing LDM/STM can
-take an alignment fault when called with unaligned pointers. The compat
-handler should emulate the transfer, but this bug instead causes SIGBUS.
+  IRQ_TYPE_LEVEL_LOW => GPIO_ACTIVE_LOW
 
-The offset negated in do_alignment_finish_ldst() is offset_union.un, which
-is already unsigned long and does not have this width mismatch.
-
-Make nr_regs unsigned long so its negation and the address arithmetic
-use the same width.
-
-Fixes: 3fc24ef32d3b ("arm64: compat: Implement misalignment fixups for multiword loads")
+Fixes: e46b455e67f8 ("arm64: dts: qcom: sm6115-pro1x: Add Goodix Touchscreen")
 Cc: stable@vger.kernel.org
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260413090527.53000-2-krzysztof.kozlowski@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/compat_alignment.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/compat_alignment.c
-+++ b/arch/arm64/kernel/compat_alignment.c
-@@ -114,8 +114,8 @@ do_alignment_ldrdstrd(unsigned long addr
- static int
- do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
--	unsigned int rd, rn, nr_regs, regbits;
--	unsigned long eaddr, newaddr;
-+	unsigned int rd, rn, regbits;
-+	unsigned long eaddr, newaddr, nr_regs;
- 	unsigned int val;
+diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+index 0f23eaef01f2..b290f0f4c0e1 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
++++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+@@ -151,7 +151,7 @@ touchscreen@14 {
  
- 	/* count the number of registers in the mask to be transferred */
+ 		interrupts-extended = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
+ 
+-		irq-gpios = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
++		irq-gpios = <&tlmm 80 GPIO_ACTIVE_LOW>;
+ 		reset-gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
+ 		AVDD28-supply = <&ts_vdd_supply>;
+ 		VDDIO-supply = <&ts_vddio_supply>;
+-- 
+2.55.0
+
 
 
