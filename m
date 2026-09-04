@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146983AA187;
-	Fri,  4 Sep 2026 05:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA37D3AA187;
+	Fri,  4 Sep 2026 05:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498385; cv=none; b=bVTc8AYvW7K+utV9q5EJzYQwloaM/YJFPN8PgALbZSz1pRyqNqJr/oe15DZmio7FNBJJz4g87hBPCxsVOtuk41pVJvhDQ9EF3JzVkzdAh3Ukl5NR+T9VaVtRtOy2EhvZjXas98QVCBRpG0ETVonuUpS8A0OPPpbL0s+IJ2yJ+ao=
+	t=1788498388; cv=none; b=VC/5Kp6OxFMpocPvCi+qGCxy3c6AJ/cXdn4ImLFErsuz2jhbICRf2lQNgXFAHwUCPAFn+tW8IuU4LMZOIRJA2A77lOlyeIKf6c3wRw/USl65W3acO9ocxgaK0mxux/NAsPM3A4AM6Pvr8eYht7IqaiGaUuT4z7j2SOd3nAqtIlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498385; c=relaxed/simple;
-	bh=RwOMnZUEnZTwfruJpJ0zX/glKBhdpP1Rn7lXI17v8hg=;
+	s=arc-20240116; t=1788498388; c=relaxed/simple;
+	bh=T+lWbtOGTgHEqAofPkJ1j7qPmev+8BINtMtE/caiYls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByV0KhFb7qbRGBz5o0l+waYNo7LPBDTgh8ldLryacxNm1xlmgg2jSk5ex4Ie30ojQn1NZRShjYP6WagHFmiqKesQU1Om5U2oSIBf4wG9uLZivGEPuQvLfiJPmDQXb9wYHXmp12Bk0xDf3EmVU0J+c7kaXMdvNMOM51RYhG+Dn+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaOkb2Nv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QBqyOAKSnSfPECVgg+iLOouiP9LRrbsOuJ7dDd8/G8ly7lD8zyMBKVZFoaGOCSdIhNx77C8HZgPPnDgZbpmZFIAvY8DicPKlaTPno2Afs0UZpSrSbW9BPaxky2whvBeA3cWx+zPW7tz8vABNrLIwfXYgZRTvmNyndemHYwjX12Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhveuxq+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaOkb2Nv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C171F00A3D;
-	Fri,  4 Sep 2026 05:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhveuxq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D161F00A3D;
+	Fri,  4 Sep 2026 05:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498384;
-	bh=o/fk6Sr4QJ+UbCbadacmSamTZzjmGSFvU0JBa8VBa9Y=;
+	s=korg; t=1788498386;
+	bh=8eTir/Uk+s2gvttk7jn9Xe8bzDQhsOY91akHwvdiO8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YaOkb2NvkbqK7BHWHdw78g5HjnOJ8XiDI5+mRaz2p/NSBRa2/ohjakzUefjN0ehdr
-	 BfzQ0H+AUNT6VLk4VldxSEdmwYe7Z8zffpR9y/RLBWnLQqUnvxKrYwTY9nfJcLuQcs
-	 xWVrkiLwY0yWMxSrok6pYvWf0AeZn0xXi88bK4Ng=
+	b=bhveuxq+xP12hOWNbQjnJcc0SpOzA3hJ7XijcC0PsTfEK4UTY8W77IWNBjMh+xswp
+	 uIu/u/o3Wu4yntD4cNzNVX2vuMA27a96hH33rjSUf3+dH+ywqKpnbaXP5DuClZO+0O
+	 rttot4wXMBnx9HWn5nnJw55hDrod0c3ZvC5dTK4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan R Abrahams-Whitehead <ajordanr@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Giuliano Procida <gprocida@google.com>,
-	Yabin Cui <yabinc@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
+	Youngjun Park <youngjun.park@lge.com>,
+	Kairui Song <kasong@tencent.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 044/713] include/linux/list.h: mark list_add and __list_add as __always_inline
-Date: Fri,  4 Sep 2026 06:50:12 +0200
-Message-ID: <20260904045804.816625204@linuxfoundation.org>
+Subject: [PATCH 7.2 045/713] mm, swap: dont free a hibernation slot that is in the swap cache
+Date: Fri,  4 Sep 2026 06:50:13 +0200
+Message-ID: <20260904045804.840049243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -57,92 +56,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan R Abrahams-Whitehead <ajordanr@google.com>
+From: Youngjun Park <youngjun.park@lge.com>
 
-commit 2780860eddecba9ffe210bb9436eee3cf22bfcdd upstream.
+commit 10d9012e83efedde8718ceaa5053f836e0c8596c upstream.
 
-This commit resolves an issue where modpost section verification fails due
-to section mismatches between list_add and its callers.
+A slot with a folio in the swap cache is freed when the folio leaves the
+cache, not when its count drops.  swap_put_entries_cluster() follows that
+rule.  swap_free_hibernation_slot() does not, it calls
+__swap_cluster_free_entries() whether or not a folio sits on the slot.
 
-At present, list_add (and its internal __list_add) are called from both
-.text and .init code sections.  Since inlining can vary per call site,
-list_add can be 4 different states:
+Cluster readahead can put one there.  It walks a raw page_cluster sized
+window of offsets around the faulting entry, and a hibernation slot passes
+__swap_cache_add_check() because it is not a folio and its count is not
+zero.  Freeing the slot then clears the entry under that folio.
 
-  list_add in text with arguments to non-.init.data values
-  list_add in init with arguments to static .init.data values
-  list_add in init with arguments to non-.init.data values
-  list_add in text with arguments to static .init.data values
+The folio is now unreachable from the swap table, and the offset goes back
+to the allocator.  The folio is still on the LRU though, so reclaim can
+pick it up later.  It then takes the old offset out of folio->swap and
+overwrites the table entry there, which by then may belong to someone
+else.
 
-It is last instance that ends up causing the section mismatch caused by
-constant propagation of the address of static libs inside the `dir_add` as
-seen below (with the dir_list being defined statically in initramfs.c,
-resting in .init.data).
+This bug can trigger silent memory corruption, process crashes, or data
+instability across completely unrelated userspace applications - typically
+occurring when uswsusp is preparing the hibernation image.
 
-  WARNING: modpost: vmlinux.o: section mismatch in reference: __list_add
-  (section: .text.unlikely.) -> dir_list (section: .init.data)
+I found this while working on giving hibernation slots their own marker in
+the swap table, which I had discussed with Kairui.
+(https://lore.kernel.org/linux-mm/abp7aDgYLrxF3Me8@KASONG-MC4/) As far as
+I know there are no reports, so there is no Reported-by/Closes to add.
 
-Because of these section matching requirements, semantically, __list_add
-and list_add MUST be inlined.  This will then ensure callers inside .init
-will receive a list_add that exists and refers to only .init data, and
-list_add code in .text sections will only refer to non-init data.
+Check for a cached folio before freeing.  The slot is then left in the
+ordinary state where only the swap cache holds it, and it is freed when
+the folio leaves the cache, either through the reclaim below or through
+normal reclaim later.
 
-This issue manifests predominently in AutoFDO with clang, which is very
-hesitant to inline cold functions such as list_add even when marked
-`inline`.  Marking them as `__always_inline` therefore matches the
-existing semantic constraints imposed by modpost's section mismatch
-checks.
-
-Link: https://lore.kernel.org/20260731-always-inline-list-add-v1-1-d29f54ce5477@google.com
-Link: https://lore.kernel.org/all/CANn89iJVQe=wedLheJmjZjOTJsWHijT0jZs=iRxKssJZbjAxHw@mail.gmail.com/
-Signed-off-by: Jordan R Abrahams-Whitehead <ajordanr@google.com>
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Reported-by: Giuliano Procida <gprocida@google.com>
-Reported-by: Yabin Cui <yabinc@google.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2173
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/20260811132209.2862708-2-youngjun.park@lge.com
+Fixes: 0d6af9bcf383 ("mm, swap: use the swap table to track the swap count")
+Signed-off-by: Youngjun Park <youngjun.park@lge.com>
+Acked-by: Kairui Song <kasong@tencent.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/list.h |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ mm/swapfile.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/include/linux/list.h
-+++ b/include/linux/list.h
-@@ -150,10 +150,13 @@ static inline bool __list_del_entry_vali
-  *
-  * This is only for internal list manipulation where we know
-  * the prev/next entries already!
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void __list_add(struct list_head *new,
--			      struct list_head *prev,
--			      struct list_head *next)
-+static __always_inline void __list_add(struct list_head *new,
-+				       struct list_head *prev,
-+				       struct list_head *next)
- {
- 	if (!__list_add_valid(new, prev, next))
- 		return;
-@@ -171,8 +174,12 @@ static inline void __list_add(struct lis
-  *
-  * Insert a new entry after the specified head.
-  * This is good for implementing stacks.
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void list_add(struct list_head *new, struct list_head *head)
-+static __always_inline void list_add(struct list_head *new,
-+				     struct list_head *head)
- {
- 	__list_add(new, head, head->next);
- }
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2196,7 +2196,14 @@ void swap_free_hibernation_slot(swp_entr
+ 
+ 	ci = swap_cluster_lock(si, offset);
+ 	__swap_cluster_put_entry(ci, offset % SWAPFILE_CLUSTER);
+-	__swap_cluster_free_entries(si, ci, offset % SWAPFILE_CLUSTER, 1);
++	/*
++	 * A slot with a folio in the swap cache is freed when the folio
++	 * leaves the cache, the same rule swap_put_entries_cluster() follows.
++	 * Readahead can put a folio here, and freeing the slot now would
++	 * leave that folio with no entry behind it.
++	 */
++	if (!swp_tb_is_folio(__swap_table_get(ci, offset % SWAPFILE_CLUSTER)))
++		__swap_cluster_free_entries(si, ci, offset % SWAPFILE_CLUSTER, 1);
+ 	swap_cluster_unlock(ci);
+ 
+ 	/* In theory readahead might add it to the swap cache by accident */
 
 
