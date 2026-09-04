@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1EF41A922;
-	Fri,  4 Sep 2026 05:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F2D41D11A;
+	Fri,  4 Sep 2026 05:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499331; cv=none; b=pMFCOTZLNfPybkwTdKJz1X2ud+a3VOwPWHEy2bDQ4F0znPS3X9stX+Rt/smMlvjOqYpsFk1s/barZACkC2HQLqTUcWf9703Av2BCgTiATkibGzyk1bm2gnYXvV48K5t/0x0WaVqUA5/PJuzwtradWKabuGOX89DfV+ADJxiAd9I=
+	t=1788499333; cv=none; b=YKl8A9wWotrcP246n6MLJGk8hHfSoodMQiuMTpGR8zBIooXUQNHHKqRP0GmZxAgExwu7nWNLynmwG57gPRtqmS7A7OeNcdCltU91CjzrHHY7mJPQqZeOrPo2xVenZKsdkXCecMdWcjiD5bUW8baeekI5MmRfli597xq8jVQp2Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499331; c=relaxed/simple;
-	bh=h902hf18Gh3zuKs6iDZ4cpHmb828cN65I5VSjlji6Hg=;
+	s=arc-20240116; t=1788499333; c=relaxed/simple;
+	bh=K3DbZyM08mzAg1vG253G9ZP6PfV7M7AxrJH0KA0x3es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mkk5WqZ743tfVGGZEK9icKTzT9Z2DsybC9TaODBSM8ghvOaAMYOCllf+zY9XA7r/3GZsZ1/J7rh9qs+TaDPUXMNl2lz1D4qgBkBJsbmIUPEzO9mTpLO+5/HhtdczoYsItqOlxdp+WKpW6sOvMHsKGIymdlIRmzBCqAJSF2cawMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oR97ooaC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kwtojyMvo1+ThSvjUNx7U8qGg0oPQ9XMNwtV2koHHcNSp9fWPVn9O0vJfzakg5fjp6wYyDr/CktnMfPS3ZeUGbbkIpDTOkwBg5KX8Hh7cIipLo/GfveGJY43USrEBdIfcPzg+aglze2eW1JJwNmVGmo7YtHONxnaOSYdEAAj9fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byNzlBOO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oR97ooaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AA91F00A3D;
-	Fri,  4 Sep 2026 05:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byNzlBOO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1743F1F00ACA;
+	Fri,  4 Sep 2026 05:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499329;
-	bh=eCyNKQyuOBrh4lZTNtkuzy7sbA9ywbrQ5lX8dmKZnUw=;
+	s=korg; t=1788499332;
+	bh=qBFGeI34fZ4MRXNIh/N9HF6VofCOzRErWmg3JKnnFA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oR97ooaC6d6oVK5kIx/+ylrT9wclTVc8KumnX1GFgVuRPotQ5TaOpLkKe0OcoPXCT
-	 dsllwKQQrj4OG/ilIrYeSpX3uGp1dn/UyYOCZoant/BliEOU6sWz0kwnatRT5tvLQN
-	 xbs8c/A/0YssAQk1AhKbSq8o1huvBVVKP7+GLHIY=
+	b=byNzlBOOevZ84IFWBbNO4jJA9ytJqgfm1R4WkNUHldqzDJhsX/yEkzTtAUjPvF7e8
+	 hh3WlqGY0mj5nIZ01VmTnF2+EXBE6voiD/YpMCKE4bnZWfZzrQyZXm6BeDhjoHOB4G
+	 m9/a08yfcI8VxEWk7p3/477beUndDRG+huKzU1w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 379/713] SUNRPC: fix gssx_dec_option_array error path bugs
-Date: Fri,  4 Sep 2026 06:55:47 +0200
-Message-ID: <20260904045812.320931093@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <dstsmallbird@foxmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 7.2 380/713] sunrpc: fix use-after-free in __rpc_clnt_handle_event and __rpc_clnt_remove_pipedir
+Date: Fri,  4 Sep 2026 06:55:48 +0200
+Message-ID: <20260904045812.342753448@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,111 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit 5e9a94539b1ec17a89177d952badfd0d844d694a upstream.
+commit 932a8cf6abb2b2f8677b79153a823108d8861fe2 upstream.
 
-Four coupled defects in the gssx XDR option-array decoder make the
-error paths unsafe: a NULL deref in the caller, a refcount leak on
-the decoded group_info, and a latent use-after-free that the leak
-fix would otherwise expose.
+Normal client creation goes through rpc_setup_pipedir(), which records
+clnt->pipefs_sb, but the mount-event path in __rpc_clnt_handle_event()
+calls rpc_setup_pipedir_sb() directly and never refreshes that field.
+The umount path also removes the directory without clearing
+clnt->pipefs_sb.
 
-gssx_dec_option_array() sets oa->count = 1 before allocating
-oa->data.  If that allocation fails, -ENOMEM is returned with
-oa->count == 1 and oa->data == NULL.  All other error paths jump
-to free_oa: which frees oa->data and NULLs it but also leaves
-oa->count == 1.  The caller trusts the count:
+After a late pipefs mount or any remount, rpc_clnt_remove_pipedir()
+compares the current superblock against a stale pipefs_sb pointer and
+skips cleanup, leaving pipefs dentries whose inode private data still
+points at a freed rpc_clnt, leading to a potential use-after-free during
+subsequent rpc_info_open() or rpc_show_info() calls.
 
-    gssp_accept_sec_context_upcall()
-      gssx_dec_accept_sec_context()
-        gssx_dec_option_array()        /* fails, count=1 data=NULL */
-      data = res.options.data[0].value /* NULL deref */
+Fix this by properly updating clnt->pipefs_sb upon mount events and
+clearing it during unmount or failure paths.
 
-Independently, free_creds: releases the partially decoded svc_cred
-with a bare kfree(creds).  gssx_dec_linux_creds() installs a
-groups_alloc() result into creds->cr_group_info; that object is
-kvmalloc-backed and refcounted, and only put_group_info() reaches
-kvfree().  A plain kfree(creds) drops the wrapper and leaks the
-group_info allocation.
-
-The natural fix for the leak is to call free_svc_cred(creds) before
-kfree(creds), but free_svc_cred() invokes put_group_info() on
-creds->cr_group_info unconditionally when non-NULL.  The existing
-out_free_groups: path in gssx_dec_linux_creds() already called
-groups_free() on that pointer without clearing it, so once
-free_svc_cred() is wired in, the subsequent put_group_info() would
-touch freed memory.
-
-Fix all four together:
-
-  - Move the oa->count = 1 assignment below the oa->data allocation
-    so it is never set when oa->data is NULL.
-  - Reset oa->count to 0 at free_oa: so count and data stay
-    coherent and the caller sees an empty option array.
-  - Call free_svc_cred(creds) before kfree(creds) at free_creds:
-    so the refcounted cr_group_info is released.  free_svc_cred()
-    either NULL-guards each field explicitly (cr_group_info has
-    an if() check) or delegates to a helper that is NULL-safe
-    itself (kfree for the string fields, gss_mech_put() which
-    guards with if(gm) at gss_mech_switch.c:342), so it is safe
-    to call on a partially decoded svc_cred where only
-    cr_uid/cr_gid/cr_group_info have been written and everything
-    else is zero from kzalloc.
-  - In gssx_dec_linux_creds()'s out_free_groups: path, release
-    cr_group_info with put_group_info() rather than groups_free()
-    so the teardown matches free_svc_cred()'s refcount-aware path,
-    and clear the pointer so a later free_svc_cred() on the same
-    creds does not release it a second time.
-
-Fixes: 3cfcfc102a5e ("SUNRPC: fix some memleaks in gssx_dec_option_array")
+Fixes: bfca5fb4e97c ("SUNRPC: Fix RPC client cleaned up the freed pipefs dentries")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
-Signed-off-by: Chris Mason <clm@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-2-d026a1415e0b@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <dstsmallbird@foxmail.com>
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_rpc_xdr.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sunrpc/clnt.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
---- a/net/sunrpc/auth_gss/gss_rpc_xdr.c
-+++ b/net/sunrpc/auth_gss/gss_rpc_xdr.c
-@@ -222,7 +222,8 @@ static int gssx_dec_linux_creds(struct x
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -96,7 +96,10 @@ static void rpc_unregister_client(struct
  
- 	return 0;
- out_free_groups:
--	groups_free(creds->cr_group_info);
-+	put_group_info(creds->cr_group_info);
-+	creds->cr_group_info = NULL;
- 	return err;
+ static void __rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
+ {
+-	rpc_remove_client_dir(clnt);
++	if (clnt->pipefs_sb) {
++		rpc_remove_client_dir(clnt);
++		clnt->pipefs_sb = NULL;
++	}
  }
  
-@@ -242,12 +243,12 @@ static int gssx_dec_option_array(struct
- 		return 0;
+ static void rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
+@@ -177,19 +180,28 @@ static int rpc_clnt_skip_event(struct rp
+ }
  
- 	/* we recognize only 1 currently: CREDS_VALUE */
--	oa->count = 1;
--
- 	oa->data = kmalloc_obj(struct gssx_option);
- 	if (!oa->data)
- 		return -ENOMEM;
- 
-+	oa->count = 1;
+ static int __rpc_clnt_handle_event(struct rpc_clnt *clnt, unsigned long event,
+-				   struct super_block *sb)
++				    struct super_block *sb)
+ {
++	int err = 0;
 +
- 	creds = kzalloc_obj(struct svc_cred);
- 	if (!creds) {
- 		err = -ENOMEM;
-@@ -294,8 +295,10 @@ static int gssx_dec_option_array(struct
- 	return 0;
+ 	switch (event) {
+ 	case RPC_PIPEFS_MOUNT:
+-		return rpc_setup_pipedir_sb(sb, clnt);
++		clnt->pipefs_sb = sb;
++		err = rpc_setup_pipedir_sb(sb, clnt);
++		if (err)
++			clnt->pipefs_sb = NULL;
++		break;
+ 	case RPC_PIPEFS_UMOUNT:
+-		__rpc_clnt_remove_pipedir(clnt);
++		if (clnt->pipefs_sb == sb) {
++			__rpc_clnt_remove_pipedir(clnt);
++			clnt->pipefs_sb = NULL;
++		}
+ 		break;
+ 	default:
+ 		printk(KERN_ERR "%s: unknown event: %ld\n", __func__, event);
+ 		return -ENOTSUPP;
+ 	}
+-	return 0;
++	return err;
+ }
  
- free_creds:
-+	free_svc_cred(creds);
- 	kfree(creds);
- free_oa:
-+	oa->count = 0;
- 	kfree(oa->data);
- 	oa->data = NULL;
- 	return err;
+ static int __rpc_pipefs_event(struct rpc_clnt *clnt, unsigned long event,
 
 
