@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ABA411A1C;
-	Fri,  4 Sep 2026 05:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E504F414A0E;
+	Fri,  4 Sep 2026 05:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499819; cv=none; b=J47425JvV14KFi/N+oLDvFq0Bz29o0hxWvG2Bq9uLodfHoMHbBbr01xGKAYmBvDkja9VizYYtQNVQnTyeenYHFBN+9zrsltDq7G2a35k7i0mJG9uRWh0+pfsBZ7Ul4NXyu4n/sM9k1Mj/NpzWmXW8v4bHGcf1bDxbvs70Cj4bD0=
+	t=1788499821; cv=none; b=aTXRkJCJ5EHfGXS2YQERvKCFucdE7qzxtecKa3/61C9IeWz7VvgBdEY5WPCy1g6M7QrQsgsHXNfeoVmW5nVOZTlJls2akguc6xaLrfyz9Q4l7ytw/c7e+OzpGForvUPmJ6fCcoJhsJ51P6VmEwwWqQeuScHzmTj0LVwnW0p0gm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499819; c=relaxed/simple;
-	bh=BCuEy0ixpTirPoGchRm8SrJndhCdbw1UX6GVXUzeLQs=;
+	s=arc-20240116; t=1788499821; c=relaxed/simple;
+	bh=NKGA0z+CEokoxEUkZApYk67znNPo1Vt/0QThQ4UyVhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=akpRk3UGYRm6ebufBoSj78XfRs92fCKKXWW2H+nR2KAwGxZufxPFq2A9Ow06hmrtrVL/BNrGZvpsVGgNyvqdKQG6vJMDnKaGJK59UEdHfjC2UnfVAbR6Q7N6rhnLiOFjrrTxe/tJr7ek7bxkQRyvobAIbnxN+nebiSw8u1pA+4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxdVYBX5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G2CebJTzC2MWqkaKUnSyI/7EwQzRw2ped5pevx19juLgwCccH02pU/zczkCkl5pBqFElQh7v5IQMoBJfMdRCzQhC8f/bTGYuZDd0W7eLa4n0D0s9msqSdJJ/lNkiCzaw5vtbjWdYBNYlBaHsJjf5P1VGVwKjm6GH+CF/zq/MCIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bB+1fw4t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxdVYBX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179141F00A3D;
-	Fri,  4 Sep 2026 05:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bB+1fw4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43B71F00A3E;
+	Fri,  4 Sep 2026 05:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499816;
-	bh=ommNyVMcxRYVyHR002bp0u5aL2/3lF6VCjByR5s4rIg=;
+	s=korg; t=1788499819;
+	bh=u7NPEN9I9fbiZ0l8Uiobstu0ln1Hku5xlnxAN8rMru0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pxdVYBX5Q5YFUN0VVLQPGiYl5bbq235ibW4+CYzsY19ZpgHdhBvZkxh/c8cezY/bP
-	 qXbAuwrNtdICgbg9TauID3yelw7Dr57C2mydxI2iPqryERfQ5YdcMBAdA4+6pc4oB5
-	 qXy+AWyM/Evy8ZP4bBtL1jzKmT2PXXZRjlwSH3Rc=
+	b=bB+1fw4tOnRGI3lAqhbcTFL/TTzFTLwuEtCih/fj1qCnawrJypgIpTunwmeeGn3wI
+	 XilcvIipYpJ+DxT1B8xIj3KnSC2sjO/kIn+3cC9fmDpPvhR2sun37OrawUv0MUdE3N
+	 vtef66XdnrsgmhwSE8LRU4dBfWPm4YXm5V/TfSC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 552/713] platform/x86: ISST: Validate socket ID in clos_assoc ioctl
-Date: Fri,  4 Sep 2026 06:58:40 +0200
-Message-ID: <20260904045816.191034677@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.2 553/713] mmc: via-sdmmc: cancel card-detect work on remove
+Date: Fri,  4 Sep 2026 06:58:41 +0200
+Message-ID: <20260904045816.213982401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,65 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit a89f07db0cb95c54dac4a8406c79a04e44a73c3c upstream.
+commit 57e5d877f898d5e5c9d672a77bb6bdd24f0d9bf5 upstream.
 
-isst_if_clos_assoc() validates the user-supplied socket_id with
-'socket_id > topology_max_packages()', but isst_common.sst_inst[] is
-allocated with topology_max_packages() entries, so the valid index range
-is [0, topology_max_packages()).  The '>' comparison lets
-socket_id == topology_max_packages() pass and index one entry past the
-array.
+Disabling the device interrupt and freeing the IRQ prevents new card-detect
+work from being queued, but carddet_work already queued by the handler can
+still run after via_sd_remove() returns. via_sdc_card_detect() recovers the
+host through container_of() and dereferences its MMIO base; once remove()
+returns the host can be freed, so that work would touch freed memory.
 
-In addition, isst_common.sst_inst[socket_id] is NULL for an in-range
-package that has no bound TPMI SST instance, and the pointer is used
-without a NULL check.  Both the out-of-bounds entry and the NULL pointer
-are then dereferenced by map_partition_power_domain_id() and the
-following power_domain_info access.
+Cancel carddet_work after freeing the IRQ and before cancelling
+finish_bh_work, which the card-detect handler can also queue. carddet_work
+can re-enable the interrupt through via_reset_pcictrl(); mask it again
+afterwards.
 
-Reject socket_id >= topology_max_packages() and a NULL sst_inst, matching
-the checks already performed by get_instance().
+This issue was found by an in-house static analysis tool and confirmed by
+manual code review.
 
-Fixes: 12a7d2cb811d ("platform/x86: ISST: Add SST-CP support via TPMI")
+Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260807144003.3498972-2-sammiee5311@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/via-sdmmc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -729,7 +729,7 @@ static long isst_if_clos_assoc(void __us
- 		if (copy_from_user(&clos_assoc, ptr, sizeof(clos_assoc)))
- 			return -EFAULT;
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1199,6 +1199,10 @@ static void via_sd_remove(struct pci_dev
  
--		if (clos_assoc.socket_id > topology_max_packages())
-+		if (clos_assoc.socket_id >= topology_max_packages())
- 			return -EINVAL;
+ 	free_irq(pcidev->irq, sdhost);
  
- 		cpu = clos_assoc.logical_cpu;
-@@ -747,6 +747,8 @@ static long isst_if_clos_assoc(void __us
- 		pkg_id = clos_assoc.socket_id;
++	cancel_work_sync(&sdhost->carddet_work);
++	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
++
+ 	timer_delete_sync(&sdhost->timer);
  
- 		sst_inst = isst_common.sst_inst[pkg_id];
-+		if (!sst_inst)
-+			return -EINVAL;
- 
- 		punit_id = map_partition_power_domain_id(sst_inst, punit_id, &part);
- 		if (punit_id < 0)
+ 	cancel_work_sync(&sdhost->finish_bh_work);
 
 
