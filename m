@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F87437DAD0;
-	Fri,  4 Sep 2026 05:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D64F3B19BC;
+	Fri,  4 Sep 2026 05:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499920; cv=none; b=teQQXOWHwMN65ENlFXUVp/h/+fpMumPN+J63We79LquBP6UOrFjVp3zUKifs4By2aJCgwXhSZqeqMDTWaPmTqXejf2T3sClurRrjGBoXjh68ZUdqgHNOmVwMSNmC5DXf/gW9fAqPdcB/63oP/q2HImCeoQoiCB7dVCR11uiYy6o=
+	t=1788499923; cv=none; b=WLb4xjdbCcR4MRtmGOyTFffTUEm2r66yZ48CMj3pnHICL88kGUist7VR643wO0Lc14hRw8VCBwT1vEjBhudKV61EcKqDN4I5D/lzZVtvMYzmvlABL+4AWkyzOeAbzy48gB9GZE5IS3rZClgOMcJXYg17N3JA6tS29aIUpKBLTZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499920; c=relaxed/simple;
-	bh=WqokYmlyBcJakozUZNyj7fuyPUCJo5WnDXRm/rXK5tc=;
+	s=arc-20240116; t=1788499923; c=relaxed/simple;
+	bh=+MpG0srlkoZRhcQfHGCah503JkSxe3tLldZKc1NNBA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F/4o4qkjuHdYiX3985RZbSoXL4KQmjoP7hgIp8En07vqKNGLOF4s8xYr6S1cEmAoM16y+lZCu591xAmzGvyOiM7sl26WoHwPikBZBN/LyhtpCz/oQQIR3oKi/VY5HdGs7+GQ7r3IhCoRszbpOfwgD0TV4grmQLw1wMkub3ZIJp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNFpjpnq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e7e4BxA+wkTA/o3prbuOeLvbaD+WK+PqiNG2GR8rv9t4FGc/A7mMOhkHgYpDIv97YmWPOyrzjh3uW5Az4aCYSScLgCFtPqHQIRcUStEOhMep6eEP/U8Hky+EBYQkrYX+9f4MG+MIymC8D5HXc2wUDqml1n9x8iggxp06iRA01/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKX08ThE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNFpjpnq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992B71F00A3D;
-	Fri,  4 Sep 2026 05:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKX08ThE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AE11F00A3D;
+	Fri,  4 Sep 2026 05:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499919;
-	bh=tmiplIoXefxocDkeoVRkIgA5n19oNtmgSfEq6iQPyDI=;
+	s=korg; t=1788499922;
+	bh=FacyaB+ndDgrg6H8nzIfquuoBcdci56QJcJn5glJdmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bNFpjpnqCMjSFGhcdgUuDtW1YN+sZ+8vjsd6V3L29PV4XFOS2hrMKLrsbgNe9rP56
-	 Y+zqsM+XQP/TWOIYp/g293/pGwKQhwsLWD/IyyUQamSKErzj3tvdsOfB1mlf4oFScC
-	 O0utPJ9LcfX5ZtNiQBtrWQKJCn6DgD94suRPC9aw=
+	b=vKX08ThEU76S9m6Nqzd68lOjqtGSkGcQGHiHrvt8BXH15HQgr4NFwf1R4mYXCPsYb
+	 kjxuGEac3AcPBHu2I1qA81XGXRfFuvD91nQ/SPj/ymzPgK49+uO9JkzxO4eZllM7pP
+	 j8PQDIS+hYltCi+GgNA4fh38MvAxT6Tp/y+oAanQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 585/713] platform/x86: hp-bioscfg: warn on element type mismatch instead of failing
-Date: Fri,  4 Sep 2026 06:59:13 +0200
-Message-ID: <20260904045816.931347720@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 7.2 544/713] iommu/vt-d: Fix no_iommu to disable platform opt-in
+Date: Fri,  4 Sep 2026 06:58:32 +0200
+Message-ID: <20260904045816.012768721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -45,63 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Kevin Tian <kevin.tian@intel.com>
 
-commit b0e2af3ec94e0431adb59d9f249ebbd3b7285158 upstream.
+commit 219cc978d69ce9b538d0d73936c569d4ca5b0a24 upstream.
 
-hp_populate_enumeration_elements_from_package() returns -EIO and aborts
-enumeration of the entire attribute when any single element has an
-unexpected ACPI type. This is observed on HP EliteBook 840 G2 when the
-BIOS returns malformed ACPI data following a failed WMI query:
+If user explicitly requests to disable iommu (via "iommu=off" or
+"intel_iommu=off"), there is no reason to force enabling it due
+to platform opt-in (for external-facing devices). User should be
+aware of any security implication of doing so.
 
-  ACPI BIOS Error (bug): AE_AML_BUFFER_LIMIT, Index (0x000000032)
-    is beyond end of object (length 0x32)
-  ACPI Error: Aborting method \_SB.WMID.WQBE due to previous error
-  Error expected type 2 for elem 13, but got type 1 instead
-  hp_bioscfg: Returned error 0x3,
-    "Invalid command value/Feature not supported"
+"intel_iommu=off" implements this policy by setting no_platform_optin
+to skip platform opt-in in platform_optin_force_iommu().
 
-Aborting immediately discards the attribute entirely.
+However, "iommu=off" (no_iommu=1) doesn't set no_platform_optin
+hence is broken in this aspect:
 
-Warn about the unexpected element type, free the temporary string, skip
-the offending element, and continue parsing the remaining package
-instead of failing the whole attribute.
+  - detect_intel_iommu() doesn't request ACS if no_iommu=1
+  - platform_optin_force_iommu() forces iommu on if external-facing
+    devices exist and no_platform_optin is not set
 
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
+This leads to a bad configuration with ACS disabled while DMA
+remapping is enabled.
+
+Instead of setting no_platform_optin (will soon be removed) for
+no_iommu=1, directly check no_iommu in platform_optin_force_iommu().
+
+Fixes: 89a6079df791 ("iommu/vt-d: Force IOMMU on for platform opt in hint")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260709165900.30615-5-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/iommu/intel/iommu.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/enum-attributes.c
-@@ -163,10 +163,11 @@ static int hp_populate_enumeration_eleme
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -2482,10 +2482,11 @@ static bool has_external_pci(void)
  
- 		/* Check that both expected and read object type match */
- 		if (expected_enum_types[eloc] != enum_obj[elem].type) {
--			pr_err("Error expected type %d for elem %d, but got type %d instead\n",
--			       expected_enum_types[eloc], elem, enum_obj[elem].type);
-+			pr_warn("Unexpected element type at elem %d: expected %d, got %d, skipping\n",
-+				elem, expected_enum_types[eloc], enum_obj[elem].type);
- 			kfree(str_value);
--			return -EIO;
-+			str_value = NULL;
-+			continue;
- 		}
+ static int __init platform_optin_force_iommu(void)
+ {
+-	if (!dmar_platform_optin() || no_platform_optin || !has_external_pci())
++	if (no_iommu || !dmar_platform_optin() || no_platform_optin ||
++	    !has_external_pci())
+ 		return 0;
  
- 		/* Assign appropriate element value to corresponding field */
+-	if (no_iommu || dmar_disabled)
++	if (dmar_disabled)
+ 		pr_info("Intel-IOMMU force enabled due to platform opt in\n");
+ 
+ 	/*
+@@ -2496,7 +2497,6 @@ static int __init platform_optin_force_i
+ 		iommu_set_default_passthrough(false);
+ 
+ 	dmar_disabled = 0;
+-	no_iommu = 0;
+ 
+ 	return 1;
+ }
 
 
