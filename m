@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E4A3A7F4C;
-	Fri,  4 Sep 2026 05:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A6723BD1B;
+	Fri,  4 Sep 2026 05:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498985; cv=none; b=bNz23qyjZmj7sov1ucko8Pm21ViMwwPEfuwjbAy3OuOeUzOBDNcHrPCl4IivLI7hZRB+bc5OsIuP0SIblJwXxzxdjVX1GD9WJgDoyeEQmQ7Nx3cJAU5eKJVfgtNlcJxMBRzXgeJF4mEwrYHm9ZgUalUW5XRqGWchTOLvLrWXLs4=
+	t=1788498988; cv=none; b=EjqIpSco5+LeIg53gCvLfyMbkr5RE2gGoBhzG5Fe9QPjHLk5VaoruyyzZLw6PlztlPcP+GFLaQ3UG/sjXUyGlsf/T5tjTyeVF4gimsXmNqXMmJy9R7yFWTadBPD7glASb62SEa3A/IREVK+TuFfIJK/gA3IVvqWrnWJ13puvMK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498985; c=relaxed/simple;
-	bh=N55kqw91Bl45o6Ur8Yv1WlnReAuwAeZVX9ML+617XUA=;
+	s=arc-20240116; t=1788498988; c=relaxed/simple;
+	bh=If3oMLq71ujtD1vP/hESoZ7LixiHZHnq+Yg9uyysrKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDSuHcGhOChAK4BGiU/SSiswMpmWuD5OqQxDpwd7Jk5SMWiXTkuuqtyid3Tu4dpOtP6FGucrgzn60IJBBZ19vukn3KTpM0W9APjEbWHZIQN1v9YSoUrc32seU1472HB5bKXKcxvqse0DcUcXfDVDeSBHuDlYxTNinkvv/3RZRPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqW6XarL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X4T7hQrPSvDlqoCAg2N9ZADSTTtcCBX9eZsHNVr/IikvYG7ZmSeO9VB3EQ8QuF6qSdryw9AdVHwka/MtvGtsuTr4PecUEZg0eIbMIW5SV3w0ZZGROPSwtrBhKgO7XiEVbhZh9LtFUoVinj5ndoQP0NEYj6czABPgQofXXdTFH1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzgHdWqK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqW6XarL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D441F00A3D;
-	Fri,  4 Sep 2026 05:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzgHdWqK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90AD1F00A3D;
+	Fri,  4 Sep 2026 05:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498984;
-	bh=9D/g4bSNUtUDLgP2+RyNVERa9JejFuCyfQI2/x8w68Y=;
+	s=korg; t=1788498987;
+	bh=6HfYYtdSmpFZOhOCCpwLbfhOGNuVAYq1d3F8wwTMQt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aqW6XarLMj3di4a7nrgjX5gxJJtx8f6LOhlf6SmXWT88K5ApH5rMgYz7whe9Pqu6Y
-	 phYtuvef0Ssqt2MQf/bbUlUO/DTkEhxCCoRJo6PCYlsQTSJX3u/F4wvZ7aX4q62dS7
-	 XGmbkRwTyJvDL5Dqrl7zJJgL805Gzgw9YA1kVYA0=
+	b=gzgHdWqKeYxXrUh8ijXs2+wrf0lR4jXpEa/z5N2FxWk7lFjbQ3vZ9zqqJEV7Iczp+
+	 blkN9aBnpw7G2kSVGBs27pJeVkLtnapPvBeUgSM+YbVWCEAtpmJT7o7fbse9R1Qjpf
+	 03b/+RhwHqPSjq2FvvC828bzsKV9elORke/CLtIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.2 220/713] ceph: bound MDSCapAuth path and fs_name decode in handle_session()
-Date: Fri,  4 Sep 2026 06:53:08 +0200
-Message-ID: <20260904045808.750134262@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Even Xu <even.xu@intel.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.2 256/713] HID: intel-thc-hid: intel-quickspi: validate report size before copy
+Date: Fri,  4 Sep 2026 06:53:44 +0200
+Message-ID: <20260904045809.577216225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,70 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 77933e22adfe813be2bd10be08d6e950103c3967 upstream.
+commit a59cf84441f9a17323c89452cec2bf16724c48a9 upstream.
 
-handle_session() decodes the MDSCapAuth records carried by a
-CEPH_SESSION_OPEN message (msg_version >= 6). For each record the
-match.path and match.fs_name byte strings are read by first decoding a
-32-bit length and then copying that many bytes with the bare
-ceph_decode_copy(). Unlike the surrounding fields, which all use the
-_safe decode variants, these two copies are not preceded by a
-ceph_decode_need() bounds check, and the enclosing MDSCapAuth and
-MDSCapMatch struct_len fields are skipped rather than enforced as an
-upper bound. A length larger than the bytes remaining in the message
-front makes ceph_decode_copy() read past the end of the front buffer.
+write_cmd_to_txdma() builds an output report in qsdev->report_buf, a heap
+buffer allocated in quickspi_alloc_report_buf() to the device-descriptor
+derived max_report_len (a few hundred bytes for a touch controller).  It
+copies the caller-supplied report into that buffer:
 
-The message front is a dedicated allocation (ceph_msg_new2() ->
-kvmalloc), so the over-read runs off that object. A malicious or
-compromised MDS can trigger this with the first post-connect message on
-mount, with no client-side user interaction; under KASAN it is reported
-as a slab-out-of-bounds read in handle_session().
+    memcpy(write_buf->content, report_buf, report_buf_len);
 
-Impact: a malicious MDS can force the kernel client to read up to 4 GiB
-past the message front allocation during session setup, crashing the
-client (out-of-bounds read).
+The HID core caps a report at HID_MAX_BUFFER_SIZE (16384) by default, and
+quickspi_hid_ll_driver does not set max_buffer_size, so the length reaches
+the driver unbounded.  A hidraw SET_REPORT/SET_FEATURE ioctl carrying a
+report larger than max_report_len therefore overflows report_buf with
+attacker-controlled length and content.
 
-Switch both copies to ceph_decode_copy_safe(), which performs the
-ceph_decode_need() bounds check before the copy and branches to the
-existing bad label, matching the rest of the decoder and the error path
-that frees the partially decoded cap_auths array.
+Record the report_buf allocation size and reject reports that do not fit
+before copying, matching the equivalent guard in the intel-quicki2c
+sibling (quicki2c_init_write_buf()) and the hid-goodix-spi fix.
 
+write_cmd_to_txdma() writes the output report header ahead of the content
+in the same buffer, so size the allocation to cover the header as well.
+That keeps the added bound from rejecting a maximum-sized report.
+
+Fixes: 9d8d51735a3a ("HID: intel-thc-hid: intel-quickspi: Add HIDSPI protocol implementation")
 Cc: stable@vger.kernel.org
-Fixes: 1d17de9534cb ("ceph: save cap_auths in MDS client when session is opened")
 Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Even Xu <even.xu@intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c      |    9 ++++++++-
+ drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h      |    1 +
+ drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c |    3 +++
+ 3 files changed, 12 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -4441,7 +4441,9 @@ static void handle_session(struct ceph_m
- 					pr_err_client(cl, "No memory for path\n");
- 					goto fail;
- 				}
--				ceph_decode_copy(&p, cap_auths[i].match.path, _len);
-+				ceph_decode_copy_safe(&p, end,
-+						      cap_auths[i].match.path,
-+						      _len, bad);
+--- a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
++++ b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
+@@ -555,7 +555,14 @@ static int quickspi_alloc_report_buf(str
+ 	max_report_len = max(le16_to_cpu(qsdev->dev_desc.max_output_len),
+ 			     le16_to_cpu(qsdev->dev_desc.max_input_len));
  
- 				/* Remove the tailing '/' */
- 				while (_len && cap_auths[i].match.path[_len - 1] == '/') {
-@@ -4458,7 +4460,9 @@ static void handle_session(struct ceph_m
- 					pr_err_client(cl, "No memory for fs_name\n");
- 					goto fail;
- 				}
--				ceph_decode_copy(&p, cap_auths[i].match.fs_name, _len);
-+				ceph_decode_copy_safe(&p, end,
-+						      cap_auths[i].match.fs_name,
-+						      _len, bad);
- 			}
+-	qsdev->report_buf = devm_kzalloc(qsdev->dev, max_report_len, GFP_KERNEL);
++	/*
++	 * write_cmd_to_txdma() writes the output report header ahead of the
++	 * content in this buffer, so it has to hold both.
++	 */
++	qsdev->report_buf_size = HIDSPI_OUTPUT_REPORT_SIZE(max_report_len);
++
++	qsdev->report_buf = devm_kzalloc(qsdev->dev, qsdev->report_buf_size,
++					 GFP_KERNEL);
+ 	if (!qsdev->report_buf)
+ 		return -ENOMEM;
  
- 			ceph_decode_8_safe(&p, end, cap_auths[i].match.root_squash, bad);
+--- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
++++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
+@@ -157,6 +157,7 @@ struct quickspi_device {
+ 	u8 *report_descriptor;
+ 	u8 *input_buf;
+ 	u8 *report_buf;
++	u32 report_buf_size;
+ 	u32 report_len;
+ 
+ 	wait_queue_head_t reset_ack_wq;
+--- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
++++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-protocol.c
+@@ -30,6 +30,9 @@ static int write_cmd_to_txdma(struct qui
+ 
+ 	write_buf = (struct output_report *)qsdev->report_buf;
+ 
++	if (HIDSPI_OUTPUT_REPORT_SIZE(report_buf_len) > qsdev->report_buf_size)
++		return -EINVAL;
++
+ 	write_buf->output_hdr.report_type = report_type;
+ 	write_buf->output_hdr.content_len = cpu_to_le16(report_buf_len);
+ 	write_buf->output_hdr.content_id = report_id;
 
 
