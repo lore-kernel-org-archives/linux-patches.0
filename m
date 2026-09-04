@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB6C401A25;
-	Fri,  4 Sep 2026 05:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19613BCD0A;
+	Fri,  4 Sep 2026 05:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501414; cv=none; b=IosNc65/wL4pKQsW6VSy2h+Rr8avCAsir0mc9kyebPxSkC8wyxW/cBEaLihT7xD4oRohVCSMGWI+DqB45uxeC1LFoBEKdRcWMBWvyMij0J5bC0scnYqZMvhRIXviQlUmksEP+rrzFekkhqwKQ1JvezVEag5lB8dQ+nd0zJ+IS40=
+	t=1788501417; cv=none; b=K7PX0KsOvokBre4Fat0KL8WJcfPIfaUXX7C2Ew86k2I7XW3E8m5FkJIclxMu0D36uNXiC4V3e8W5sQtActQ9QKH4Ie+h2EB1e/pC1uRjMelxMKdI5YV9tQ1VBph+2PDCGcEaoc+DE3dXIHpy1n0h40u04+Kc44+RPVRw4RGvvbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501414; c=relaxed/simple;
-	bh=IbPJbZQu2+KHuQwPX2S0Ty+Qd2/2VfLZQjgF3fcAG5Q=;
+	s=arc-20240116; t=1788501417; c=relaxed/simple;
+	bh=FFPWVSmEQ2LfnSEEd9m/oIeihDvVgnlWTkUkYyvu9AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+QV6pFvV08lPTDvU952l6SLdlkfgsFeRuN/EX2OWlcRTSvJ7PTMBIc4V1wurnadF98WfwfvhPGPRhQc3RLrP1d9wYhesb8PeZjfy3w0rLnvRNASd8c+RPwN0YnUqqAMlbRwEduNNiBbaLnYsqAj2ua4FR0/wYrjsMEX4Z0x/BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6lPvDQ+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S9mJpLRCSz5INV1Er0PBUXFyUK0dXN1mWMMywsyuSXkRjs9lsLqMrijlmReCnNk+V9q9F8H67yGzblGEu4ihROWYCnt+3htiKMU8++WDSvA8p/mSb50ZqPyB2hp0vJouRaxR6ftwFdih+yXYy/jfdgNCggWP0I8awHkAMCKHkm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4Ud4ceu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6lPvDQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1C21F00A3D;
-	Fri,  4 Sep 2026 05:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4Ud4ceu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472AD1F00A3D;
+	Fri,  4 Sep 2026 05:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501413;
-	bh=qk8ozDuYWuo3jsf8k5nwlUWTsblQCRBcn9BBUxVAJWM=;
+	s=korg; t=1788501415;
+	bh=GPCr2UXuTzRsCFexVEO1a1QiENigvMko5Tda2JkOxUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y6lPvDQ+GcfoN4gojRBbEDzCkg18hOlR4WljfLUmqHEU57w8ftlFyIg52oG48BVSJ
-	 HjI3m9EZR+VS4/yW1tIuEI3R9sWFT2IBvLA/fizmz59tNHNpDOzUnmgLqFBPfvVVS6
-	 AXMFhaMH3N93CSxFgKog/zZEZ58TFVTQuXAqnKw8=
+	b=d4Ud4ceuMoegzF+wFxrIuZtgDaharmTMDSYuYSlydqwX72Jtqy+s88lXVF/M5NeCS
+	 T/fcilZWuTA7IZd3KA+d92lFZ2BM9fJctHkITmIrBj00eFBX5l6kWa60lD+bcBKfnX
+	 O2+4igPQgsJBSqf9jmBOpgc1UXJw2RITObBQm6NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 402/552] iommu/amd: Put PCI device after handling PPR faults
-Date: Fri,  4 Sep 2026 06:59:19 +0200
-Message-ID: <20260904045759.585077702@linuxfoundation.org>
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Weimin Xiong <xiongwm2026@163.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 403/552] iommu/msm: Unwind probe state on registration failure
+Date: Fri,  4 Sep 2026 06:59:20 +0200
+Message-ID: <20260904045759.636213614@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,54 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Weimin Xiong <xiongwm2026@163.com>
 
-commit af3b69b16383fbc8fe5f61b5b0150d2e41ede71f upstream.
+commit 535a200220ca2c83bc8bf54bd2cbe045d6ee70c4 upstream.
 
-iommu_call_iopf_notifier() looks up the requester with
-pci_get_domain_bus_and_slot(), which returns a PCI device with its
-reference count incremented.
+msm_iommu_probe() adds its devm-managed IOMMU object to
+qcom_iommu_devices before adding the IOMMU sysfs device and registering
+it with the IOMMU core.
 
-Neither the successful iommu_report_device_fault() path nor the abort
-path drops that reference, so every handled PPR request leaks a PCI
-device reference.
+If iommu_device_sysfs_add() fails, probe returns with the object still on
+qcom_iommu_devices. The driver core then releases the devm allocation,
+leaving a dangling list entry that later list walks may dereference.
 
-This is the same ownership rule that was fixed for the old iommu_v2
-ppr_notifier() path by commit 6cf0981c2233 ("iommu/amd: Fix pci device
-refcount leak in ppr_notifier()"), but iommu_call_iopf_notifier() was
-added later as a separate PPR/IOPF notifier path.
+If iommu_device_register() fails, the same dangling list entry remains
+and the sysfs device is left registered as well.
 
-Drop the PCI device reference after handling the PPR entry.
+Unwind the sysfs device and global list entry in reverse setup order on
+the corresponding failure paths.
 
-Fixes: 978d626b8f1a ("iommu/amd: Add IO page fault notifier handler")
+Fixes: 42df43b36163 ("iommu/msm: Make use of iommu_device_register interface")
 Cc: stable@vger.kernel.org
-Assisted-by: Qoder:Qwen-3.8-MAX-Preview
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Weimin Xiong <xiongwm2026@163.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/ppr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/msm_iommu.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/amd/ppr.c
-+++ b/drivers/iommu/amd/ppr.c
-@@ -151,7 +151,7 @@ static void iommu_call_iopf_notifier(str
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -783,19 +783,25 @@ static int msm_iommu_probe(struct platfo
+ 				     "msm-smmu.%pa", &ioaddr);
+ 	if (ret) {
+ 		pr_err("Could not add msm-smmu at %pa to sysfs\n", &ioaddr);
+-		return ret;
++		goto err_remove_list;
+ 	}
  
- 	/* Submit event */
- 	iommu_report_device_fault(&pdev->dev, &event);
--
-+	pci_dev_put(pdev);
- 	return;
+ 	ret = iommu_device_register(&iommu->iommu, &msm_iommu_ops, &pdev->dev);
+ 	if (ret) {
+ 		pr_err("Could not register msm-smmu at %pa\n", &ioaddr);
+-		return ret;
++		goto err_remove_sysfs;
+ 	}
  
- out:
-@@ -159,6 +159,7 @@ out:
- 	amd_iommu_complete_ppr(&pdev->dev, PPR_PASID(raw[0]),
- 			       IOMMU_PAGE_RESP_FAILURE,
- 			       PPR_TAG(raw[0]) & 0x1FF);
-+	pci_dev_put(pdev);
+ 	pr_info("device mapped at %p, irq %d with %d ctx banks\n",
+ 		iommu->base, iommu->irq, iommu->ncb);
+ 
+ 	return ret;
++
++err_remove_sysfs:
++	iommu_device_sysfs_remove(&iommu->iommu);
++err_remove_list:
++	list_del(&iommu->dev_node);
++	return ret;
  }
  
- void amd_iommu_poll_ppr_log(struct amd_iommu *iommu)
+ static const struct of_device_id msm_iommu_dt_match[] = {
 
 
