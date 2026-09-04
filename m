@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F366432BF5;
-	Fri,  4 Sep 2026 06:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CAB4399F8;
+	Fri,  4 Sep 2026 06:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502860; cv=none; b=l9kvG7w+f5OX+SME48ceN/vABSSXXky8j9gVD7U+XRE/WX2f7TRWzCKIfzKW4dM3c8FpJvoCyJ2+dIGI8E6sladIwNkwf06XE+6vtmy1EWrn4HB6aoX17OPHGw1J0B+Dp3028ZxNTbPCxZpzI3g3CAVoEYKg8tkS1ZHqbTaRBII=
+	t=1788502863; cv=none; b=uhrNj/sx1QfbI2JxdDk1HES9SytrBPRYafcOCtmn2P0FyUiXLzVxCEAVX1aRk7e8usyIwcyzSwAwwrkMbO1yKXw2Ak+CLg6WOZBXLi5V+xadZttCj6bow0qTIpevBHdP0hGgSoiKWLAA3FihLbjs5P8HuQkoiwZu63mS8fdnA4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502860; c=relaxed/simple;
-	bh=JRJsAk77vB0s4wRBcZrsUZmCsYFB8PXIqdPPv4G6jUA=;
+	s=arc-20240116; t=1788502863; c=relaxed/simple;
+	bh=Bw1GymIcEtrX0Vwwt3r9SorOo4LZm8OeDemnMo6oyqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LpA6NYDpE22gd0SkITd9b/58oNDIpmrrgxIfLjp5M7cNC2llpcxnO3QrVPaGSCZprCclWY8kwXPLLESYzcE+jNVPN/05/GzkKaYNMNI0/aRDt1au0/9r3kDYrcNxhmCEKN94rODGHzeagJI4kAyg3LBb9P//kakvPvNraQyQNx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKfA/z15; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PbXRpPucXBBbc8ouzl1iLZ0Q58bpUQh1k+aGVNl1cAqOuzcLabmaSI3cElIKi49BBpIkDq+cVcm9CjHKe/LuGh11V+M6a8RdPGTf30OlXlSZmUaLl5c+Dn4dVo3kVH+KMlV9W+ZWnVB8NUv/NVlWvjWwaoLUuwJIqK7mmJ3K+gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00K8QuOI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKfA/z15"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897BA1F00A3D;
-	Fri,  4 Sep 2026 06:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00K8QuOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613821F00A3D;
+	Fri,  4 Sep 2026 06:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502859;
-	bh=ZPXZJJvaCoBhVXueTc46wspBg4lONKPpGJCfbw6/aks=;
+	s=korg; t=1788502861;
+	bh=bYOuqPMztS/yMyaQz6VdZ68pPmfEdN7oYayHHj4WehU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yKfA/z15MoyWBu9NrEXV8S85OHv+DQvjy5MvUxajY2Cl12GUAOlG9hQuCgDLNlS7K
-	 0E0Xz1nZ9Le4Vd/8ZmOo3reB11PhXH5rmrEjvwkqE6B2mPbuD/GIg7f8zb2P39GPsS
-	 5RQtEohC/g6y87VwJjBSws94rKMzwVXP8gYA2Qvs=
+	b=00K8QuOIFxJVBxj+YZOEL9uMBFwbesdGQenT3C1Ii2/KX0vQiUci0cqtDzfZCoB66
+	 lpEJIcmpot991pCk+OOlepDdJKjTGEhyqvpuKnNDQaJtvGqIsVqRBpW5TKoKhfE/2d
+	 foX+CxdNnNVassszz/MO0FNeMzUHQzI8oZr/Age8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 354/403] net/smc: fix use-after-free in smc_rx_pipe_buf_release()
-Date: Fri,  4 Sep 2026 07:02:37 +0200
-Message-ID: <20260904045742.866295437@linuxfoundation.org>
+Subject: [PATCH 6.12 355/403] net/smc: unregister the connection before draining the rx tasklet
+Date: Fri,  4 Sep 2026 07:02:38 +0200
+Message-ID: <20260904045742.887970852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,63 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit c924884743e948e25625b7fbf3ee2a9325a204a7 upstream.
+commit 36cdf5d48ca191dcd71c28cadbe0981b1d25318d upstream.
 
-smc_rx_splice() hands RMB pages to a pipe and takes a socket reference
-per entry so the smc_sock stays alive until the reader finishes. The
-connection does not: a concurrent close runs smc_conn_free(), which
-releases the receive buffer back to the link group pool.
+smc_conn_free() calls smc_ism_unset_conn() only while the link group is
+still on its device list, and never sets conn->killed.
+smc_lgr_terminate_sched() unlinks the group immediately and defers killing
+its connections to a work item, so a connection freed in that window keeps
+its smcd->conn[] slot with both gates in smcd_handle_irq() open, and the
+device can re-arm the receive tasklet after tasklet_kill() has returned. On
+the DMB-nocopy path the ghost send buffer is freed right after that drain,
+so the re-armed tasklet dereferences it.
 
-smc_rx_pipe_buf_release() tests sk_state before taking the socket lock.
-The state can change between the test and the lock, and
-smc_rx_update_cons() then dereferences conn->rmb_desc and walks
-conn->lgr, which smc_conn_free() has already released. On the
-is_reg_err path smcr_buf_unuse() frees the descriptor outright, so
-this is a use-after-free.
+Unregister unconditionally and drain before the detach at both teardown
+sites, mirroring rmb_desc, which smc_buf_unuse() releases after the drain.
+Clear conn->sndbuf_desc before freeing it as well, so a reader that samples
+the pointer cannot get one that is already freed.
 
-Take the socket lock first and test conn->freed instead.
-smc_conn_free() sets that flag before releasing anything, and every
-caller holds the socket lock. The two paths exclude each other: either
-the pipe release runs first with everything valid, or it sees the flag
-and skips the update.
-
-Fixes: 9014db202cb7 ("smc: add support for splice()")
+Fixes: ae2be35cbed2 ("net/smc: {at|de}tach sndbuf to peer DMB if supported")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260820074642.966856-3-hidayath@linux.ibm.com
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Link: https://patch.msgid.link/20260808-b4-disp-22f119e6-v2-1-61647601a6f3@proton.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_rx.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/smc/smc_core.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -115,16 +115,15 @@ static void smc_rx_pipe_buf_release(stru
- 				    struct pipe_buffer *buf)
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1190,14 +1190,16 @@ static void smcd_buf_detach(struct smc_c
  {
- 	struct smc_spd_priv *priv = (struct smc_spd_priv *)buf->private;
-+	struct smc_connection *conn = &priv->smc->conn;
- 	struct smc_sock *smc = priv->smc;
--	struct smc_connection *conn;
- 	struct sock *sk = &smc->sk;
+ 	struct smcd_dev *smcd = conn->lgr->smcd;
+ 	u64 peer_token = conn->peer_token;
++	struct smc_buf_desc *buf_desc;
  
--	if (sk->sk_state == SMC_CLOSED ||
--	    sk->sk_state == SMC_PEERFINCLOSEWAIT ||
--	    sk->sk_state == SMC_APPFINCLOSEWAIT)
--		goto out;
--	conn = &smc->conn;
- 	lock_sock(sk);
-+	if (conn->freed) {
-+		release_sock(sk);
-+		goto out;
-+	}
- 	smc_rx_update_cons(smc, priv->len);
- 	release_sock(sk);
- 	if (atomic_sub_and_test(priv->len, &conn->splice_pending))
+ 	if (!conn->sndbuf_desc)
+ 		return;
+ 
+ 	smc_ism_detach_dmb(smcd, peer_token);
+ 
+-	kfree(conn->sndbuf_desc);
++	buf_desc = conn->sndbuf_desc;
+ 	conn->sndbuf_desc = NULL;
++	kfree(buf_desc);
+ }
+ 
+ static void smc_buf_unuse(struct smc_connection *conn,
+@@ -1249,11 +1251,10 @@ void smc_conn_free(struct smc_connection
+ 		goto lgr_put;
+ 
+ 	if (lgr->is_smcd) {
+-		if (!list_empty(&lgr->list))
+-			smc_ism_unset_conn(conn);
++		smc_ism_unset_conn(conn);
++		tasklet_kill(&conn->rx_tsklet);
+ 		if (smc_ism_support_dmb_nocopy(lgr->smcd))
+ 			smcd_buf_detach(conn);
+-		tasklet_kill(&conn->rx_tsklet);
+ 	} else {
+ 		smc_cdc_wait_pend_tx_wr(conn);
+ 		if (current_work() != &conn->abort_work)
+@@ -1506,12 +1507,12 @@ static void smc_conn_kill(struct smc_con
+ 	smc_sk_wake_ups(smc);
+ 	if (conn->lgr->is_smcd) {
+ 		smc_ism_unset_conn(conn);
+-		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
+-			smcd_buf_detach(conn);
+ 		if (soft)
+ 			tasklet_kill(&conn->rx_tsklet);
+ 		else
+ 			tasklet_unlock_wait(&conn->rx_tsklet);
++		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
++			smcd_buf_detach(conn);
+ 	} else {
+ 		smc_cdc_wait_pend_tx_wr(conn);
+ 	}
 
 
