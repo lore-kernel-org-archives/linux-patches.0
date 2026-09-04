@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C036C3B95FA;
-	Fri,  4 Sep 2026 05:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E91B37DAD0;
+	Fri,  4 Sep 2026 05:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499889; cv=none; b=M7Z0ygmM2e3t0GFz2lDe9cdxNBsjorzAgoFt4Y9Jfh1I5UdZBHNFqNIJaFQXMEQD3tqBNC8ZOat76xIaN0uzFiIjLtnU9q+TlqUZ1yxsBrN3GJCky86cFehNqAc1Znh/Tt9Cx+EkMQ6TrxLy2ZIe+I6KXPhBIjkBdSiwAheBkwI=
+	t=1788499891; cv=none; b=dQxX7+4Y6Eb55LyZjF1rPY8kh0PVrIC5t/IWZ3By3eKaKc2dm2OSPvjLoC7/R+3g/qtcpnUlKvZZfF04hCzdQzTr4mGfXqDSTUaFY7BZ4B9I4O4fTwhkGui32kgNVwQGXpIH2RDk3ZzRnAkicPfLYDmxYpDebHE3KcZlY/tLumU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499889; c=relaxed/simple;
-	bh=Lef3wIG1FT32/XFWxUVug5aPIDcLmB2NkqQpnG/StiY=;
+	s=arc-20240116; t=1788499891; c=relaxed/simple;
+	bh=h2cye9sMmdZPc1SahHnmdgJJ15nwMw+dJsHS3Hu8yPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K0LAor6RKqwpx1HUmHSL7AoFc5DnwtreWIjcW+CAjBaG3WiujyrDc+6ZXsL9JGGnLVWg2AnZ5rSkSRxnjIf3yy/fFdT2hD3pBQRTzHpd8cpyILPInE7Xp24FrCrVnzb34NwRzrmQTrZvohYGj4OWAZfncfrZARGbEQgDacyFfuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVsaSVHx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oEq+7zfY8r6eHos6tC67Bucr/3jjnAqFXCM7IXCFny+ZXU1GUpwZvets8WWVrzAtJnqIYMmFVWTo7y5RT6upxfm7NQlMyHot5n8LbcsyL3X3NMWvOvW1aLK9ABJj9/xuxiTF180xAxEE5yfYcx6ZYwJAigGRaNi/UDHiauJpH+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfY95/BD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVsaSVHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2710D1F00A3D;
-	Fri,  4 Sep 2026 05:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfY95/BD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022DB1F00A3D;
+	Fri,  4 Sep 2026 05:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499887;
-	bh=dekKnfOZBkKRLjOpX6TBJfc9YEudqiVFZ5kZqIRMxaU=;
+	s=korg; t=1788499890;
+	bh=H/BuYXKRqFik5FV1RiQoHKjZHOc+oHfAQoz/WFa65+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVsaSVHx8OZrDH6p7jV1eYm7Qx2ye4b9aMs5tmNm3BPBBNOPSH5gyc6ji4jSk4/6x
-	 a/RUPNqfbYhEb4otS4t4f0KE4YbGPj1KCwer+E26wwAEJVi/8XaN5t4MrECajHS5b0
-	 NCWDaQXKDVdrHt5qhyLDWM5h16+bcR3xaAOKxB9Y=
+	b=VfY95/BDY79tvo0AYLjRvnMepPskxsb9/2GVL4hb/J5TrYpxhspZDjnm5WwFHaOPi
+	 SM4cbFBo6XiZbZTygQEKnJ+1WsuFDtkYeJSfye8TLqGo+qnHptI5HgbXGAuKa7RMpG
+	 BirmcNNalodMLnCAXt8b7I6pJ4cKPdoa69r6oV68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.2 575/713] platform/x86/amd/pmc: Fix msg_port restoration in amd_stb_debugfs_open_v2()
-Date: Fri,  4 Sep 2026 06:59:03 +0200
-Message-ID: <20260904045816.710089352@linuxfoundation.org>
+Subject: [PATCH 7.2 576/713] platform/x86: hp-bioscfg: accept reduced ACPI packages from older HP BIOS
+Date: Fri,  4 Sep 2026 06:59:04 +0200
+Message-ID: <20260904045816.732337156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -51,86 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit cbb32ff92f8a62212e0f7384b1de986ced92082b upstream.
+commit 40e10e6cc8f70c041431a1e30186807e28ec46e0 upstream.
 
-amd_stb_debugfs_open_v2() switches dev->msg_port to MSG_PORT_S2D to query
-S2D telemetry but only restores it to MSG_PORT_PMC on one path.  The early
-return on the dump_custom_stb path (and the error/allocation returns) leave
-the port stuck on MSG_PORT_S2D, so subsequent SMU communication - including
-the s2idle prepare/restore handlers - is directed at the wrong mailbox.
+hp_init_bios_package_attribute() hard-fails when a WMI ACPI package
+contains fewer elements than the type-specific expected count (e.g. 11
+elements instead of 13 for INTEGER or ENUMERATION attributes). This
+causes the entire hp_bioscfg driver to skip attribute enumeration on
+older HP hardware whose BIOS returns shortened packages when optional
+fields like prerequisites or possible values are absent.
 
-Consolidate the exit path through a single label so the message port is
-always restored, mirroring the fix in amd_stb_s2d_init().
+Observed on HP EliteBook 840 G2 (BIOS M71 Ver. 01.31):
 
-Reported-by: sashiko.dev
-Link: https://sashiko.dev/#/patchset/20260717162023.956346-1-mario.limonciello%40amd.com
-Fixes: 2851f4f8ed4e ("platform/x86/amd/pmc: Define enum for S2D/PMC msg_port and add helper function")
+  hp_bioscfg: ACPI-package does not have enough elements: 11 < 13
+
+The element layout has two tiers:
+  - Elements 0-9 (SECURITY_LEVEL+1 = 10): common to all attribute types
+  - Elements 10-N: type-specific (bounds, values, encodings, ...)
+
+The per-type populate functions (hp_populate_*_elements_from_package)
+already handle sparse packages correctly via their own elem < count
+loop guards and inner-loop bounds checks. The only unsafe case is when
+we lack even the common elements needed to register the attribute.
+
+Fix by introducing COMMON_ELEM_CNT to mark the hard minimum (10), and
+splitting the check into two tiers:
+  - Fewer than COMMON_ELEM_CNT elements: hard fail, can't proceed.
+  - Fewer than expected type-specific elements: warn, but let the
+    populate function parse what is available.
+
+Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260721181756.143084-3-mario.limonciello@amd.com
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260709165900.30615-4-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/mp1_stb.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c |   11 ++++++++---
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    3 +++
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/mp1_stb.c
-+++ b/drivers/platform/x86/amd/pmc/mp1_stb.c
-@@ -157,7 +157,7 @@ static int amd_stb_debugfs_open_v2(struc
- 	struct amd_pmc_dev *dev = filp->f_inode->i_private;
- 	u32 fsize, num_samples, val, stb_rdptr_offset = 0;
- 	struct amd_stb_v2_data *stb_data_arr;
--	int ret;
-+	int ret = 0;
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -661,12 +661,17 @@ static int hp_init_bios_package_attribut
+ 	int ret = 0;
  
- 	/* Write dummy postcode while reading the STB buffer */
- 	ret = amd_stb_write(dev, AMD_PMC_STB_DUMMY_PC);
-@@ -176,22 +176,24 @@ static int amd_stb_debugfs_open_v2(struc
- 	 * the enhanced dram size. Note that we land here only for the
- 	 * platforms that support enhanced dram size reporting.
- 	 */
--	if (dump_custom_stb)
--		return amd_stb_handle_efr(filp);
-+	if (dump_custom_stb) {
-+		ret = amd_stb_handle_efr(filp);
-+		goto out;
-+	}
- 
- 	/* Get the num_samples to calculate the last push location */
- 	ret = amd_pmc_send_cmd(dev, S2D_NUM_SAMPLES, &num_samples, dev->stb_arg.s2d_msg_id, true);
--	/* Clear msg_port for other SMU operation */
--	dev->msg_port = MSG_PORT_PMC;
- 	if (ret) {
- 		dev_err(dev->dev, "error: S2D_NUM_SAMPLES not supported : %d\n", ret);
--		return ret;
-+		goto out;
+ 	/* Take action appropriate to each ACPI TYPE */
+-	if (obj->package.count < min_elements) {
+-		pr_err("ACPI-package does not have enough elements: %d < %d\n",
+-		       obj->package.count, min_elements);
++	if (obj->package.count < COMMON_ELEM_CNT) {
++		pr_err("ACPI-package is missing common elements: %d < %d\n",
++		       obj->package.count, COMMON_ELEM_CNT);
+ 		goto pack_attr_exit;
  	}
  
- 	fsize = min(num_samples, S2D_TELEMETRY_BYTES_MAX);
- 	stb_data_arr = kmalloc_flex(*stb_data_arr, data, fsize);
--	if (!stb_data_arr)
--		return -ENOMEM;
-+	if (!stb_data_arr) {
-+		ret = -ENOMEM;
-+		goto out;
++	if (obj->package.count < min_elements) {
++		pr_warn("ACPI-package has fewer elements than expected: %d < %d, parsing available elements\n",
++			obj->package.count, min_elements);
 +	}
++
+ 	elements = obj->package.elements;
  
- 	stb_data_arr->size = fsize;
+ 	/* sanity checking */
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
+@@ -279,6 +279,9 @@ enum hp_wmi_data_elements {
+ 	PSWD_ENCODINGS = 13,
+ 	PSWD_IS_SET = 14,
+ 	PSWD_ELEM_CNT = 15,
++
++	/* Minimum elements shared by all attribute types (NAME..SECURITY_LEVEL) */
++	COMMON_ELEM_CNT = SECURITY_LEVEL + 1,
+ };
  
-@@ -214,7 +216,10 @@ static int amd_stb_debugfs_open_v2(struc
- 
- 	filp->private_data = stb_data_arr;
- 
--	return 0;
-+out:
-+	/* Restore the default message port for subsequent SMU operations */
-+	dev->msg_port = MSG_PORT_PMC;
-+	return ret;
- }
- 
- static ssize_t amd_stb_debugfs_read_v2(struct file *filp, char __user *buf, size_t size,
+ #define GET_INSTANCE_ID(type)						\
 
 
