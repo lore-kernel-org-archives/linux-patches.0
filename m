@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA7E414DF6;
-	Fri,  4 Sep 2026 05:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0933C415F06;
+	Fri,  4 Sep 2026 05:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500483; cv=none; b=YiVtJdbI/uA82oVuxgRCfeKGEpeTns1IPWXzJFP2S1uwb4R38ZH3Vp8PkxLCNa8qByuboys8V81KhWvy3ggQxzRGfTS5ilK+ImjSQ52dw/QS2T8p+rpcu7zuqKDGLzAKJrGa05JEzN55OOBJPciIH2rrlcs4rTxaB/9+HMHJTus=
+	t=1788500486; cv=none; b=ox1Vn3x67a7KOBjyXPwiVBDrrrt+qaZBD9wfjXb4L0uyQ8EWFHTkbi8JnOiDuLi6wXw3LBhVuDhp20zQoSiFXNLAVabZpG6ctrtPMgs3i2cx064idhDss8MAs/oHI83cdZWoirElOcK61kZNMC5eF4CFljZIaDGZ7Ib9sDd+uuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500483; c=relaxed/simple;
-	bh=wEZJQrTwktqzhaiXMTxRzL0Rpw37MSuQ9ljxgh8d1/M=;
+	s=arc-20240116; t=1788500486; c=relaxed/simple;
+	bh=BzB9rwAN2uAR8FxrEQkHpa0byTSB+AwdolykvoV4sMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3Ct1u+o2Fdsp5dUCeQ28j1+0K2tV3kvGwN7eHTbF+TrnHontTCZBj+4eyRk4OGJm0z/dFJC8bE9n3sRd8oFU6dFwgsuvJyaZe2TjpndPEFWPo02Um+8QL0KqCZJUoHPQcEB2xymd+zjeDaMqb3+7IT/NWvT5AVSiUCTTUCLLm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEhzsG/N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=npTMNrosyFJX9+mKk8LtaEBTOXr6osC5QVYMwFEQjD5ugsb92sekRXQMXNERvfDYu4fjIQglq2a3YHYqL2i31lPigNz8LHJr4sN22gCOLzSggCEoCGYwqPCZDukN9S9dBQORd38K4xlDqrTGZwhEb5+I7fT+kkxwJlkoxUGZhLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MouOhmv/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEhzsG/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DC11F00A3D;
-	Fri,  4 Sep 2026 05:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MouOhmv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEB31F00A3D;
+	Fri,  4 Sep 2026 05:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500481;
-	bh=8zNKo8KVbiScNmSd3kBTgN9uTP7ofEBnwLlsbDcmLg4=;
+	s=korg; t=1788500484;
+	bh=M4bdsNeW7/0lEKpZdW0IKFtHmjxLDGpoWekx6aSMx8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gEhzsG/Nnd9OWEd7YXbEC20OskyfDBWdwJDhSLnoxt/+IKFtvgNn0hQlcr0jwvljc
-	 fj6VaWvXO2ErBfkpaHm2S3fM6NOBR264DAyjzHRNg39HTdO7yM1jIwjszs501dceV1
-	 0HJmNTV+qEEKJcy1KfsR0zZT2BLMLEEdG381nODk=
+	b=MouOhmv/z25Waagyf0KJH3c2HUCuqUqAaMl9nvUHqHveVSFXeA4/lt9Mqm7x1/D6m
+	 IRfg9cPzpPqdHj2bgnFFlcQ7kv9eKYNQB/XuxkgoNv5h0pFazHQ+0jf9/qMv6uUJkZ
+	 7eW91pU9T7KKzr4RBr6jMvU74j3bW2REpJ9PC3dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.18 029/552] apparmor: fix out-of-bounds write when null terminating a label vec
-Date: Fri,  4 Sep 2026 06:53:06 +0200
-Message-ID: <20260904045748.489518156@linuxfoundation.org>
+	Jordan R Abrahams-Whitehead <ajordanr@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Giuliano Procida <gprocida@google.com>,
+	Yabin Cui <yabinc@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 030/552] include/linux/list.h: mark list_add and __list_add as __always_inline
+Date: Fri,  4 Sep 2026 06:53:07 +0200
+Message-ID: <20260904045748.512543346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,70 +57,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Jordan R Abrahams-Whitehead <ajordanr@google.com>
 
-commit 9f1e40193eef7f047e6b77cfb4b4cafdecd7a123 upstream.
+commit 2780860eddecba9ffe210bb9436eee3cf22bfcdd upstream.
 
-aa_vec_unique() null terminates at vec[n - dups] when VEC_FLAG_TERMINATE
-is passed. If the components are all distinct no duplicates are dropped,
-dups is 0 and the terminator goes to vec[n], so the caller has to provide
-room for n + 1 entries.
+This commit resolves an issue where modpost section verification fails due
+to section mismatches between list_add and its callers.
 
-aa_label_strn_parse() sets up its vector with vec_setup(profile, vec, len,
-gfp) and then calls aa_vec_unique(vec, len, VEC_FLAG_TERMINATE), but
-vec_setup() does not reserve the terminator entry. Up to LOCAL_VEC_ENTRIES
-it uses the local array of LOCAL_VEC_ENTRIES pointers, above that it
-allocates exactly len pointers. The terminator therefore lands one entry
-past the end of the local array when len is LOCAL_VEC_ENTRIES, and one
-entry past the end of the allocation when len is larger.
+At present, list_add (and its internal __list_add) are called from both
+.text and .init code sections.  Since inlining can vary per call site,
+list_add can be 4 different states:
 
-len comes from the number of "//&" separated components in the label name
-and label_count_strn_entries() does not bound it. An unprivileged task
-reaches the parse by writing to /proc/self/attr/apparmor/current or through
-lsm_set_self_attr(2), both of which go through do_setattr(), and the name
-is parsed before the change_profile permission is checked.
-The query_label() path behind the securityfs .access file, which is
-mode 0666, performs no permission check at all. Every component has to
-resolve to a loaded profile, so a system with policy loaded is required.
+  list_add in text with arguments to non-.init.data values
+  list_add in init with arguments to static .init.data values
+  list_add in init with arguments to non-.init.data values
+  list_add in text with arguments to static .init.data values
 
-The other two VEC_FLAG_TERMINATE users work on a label vec that
-aa_label_alloc() has already sized with "+ 1 for null terminator entry on
-vec". Reserve the same entry in vec_setup() and DEFINE_VEC(). Passing
-len + 1 from the caller instead would move len == LOCAL_VEC_ENTRIES out of
-the local array and into kzalloc().
+It is last instance that ends up causing the section mismatch caused by
+constant propagation of the address of static libs inside the `dir_add` as
+seen below (with the dir_list being defined statically in initramfs.c,
+resting in .init.data).
 
-Fixes: f1bd904175e8 ("apparmor: add the base fns() for domain labels")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+  WARNING: modpost: vmlinux.o: section mismatch in reference: __list_add
+  (section: .text.unlikely.) -> dir_list (section: .init.data)
+
+Because of these section matching requirements, semantically, __list_add
+and list_add MUST be inlined.  This will then ensure callers inside .init
+will receive a list_add that exists and refers to only .init data, and
+list_add code in .text sections will only refer to non-init data.
+
+This issue manifests predominently in AutoFDO with clang, which is very
+hesitant to inline cold functions such as list_add even when marked
+`inline`.  Marking them as `__always_inline` therefore matches the
+existing semantic constraints imposed by modpost's section mismatch
+checks.
+
+Link: https://lore.kernel.org/20260731-always-inline-list-add-v1-1-d29f54ce5477@google.com
+Link: https://lore.kernel.org/all/CANn89iJVQe=wedLheJmjZjOTJsWHijT0jZs=iRxKssJZbjAxHw@mail.gmail.com/
+Signed-off-by: Jordan R Abrahams-Whitehead <ajordanr@google.com>
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
+Reported-by: Giuliano Procida <gprocida@google.com>
+Reported-by: Yabin Cui <yabinc@google.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2173
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/include/label.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/list.h |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/security/apparmor/include/label.h
-+++ b/security/apparmor/include/label.h
-@@ -23,7 +23,7 @@ struct aa_ruleset;
- 
- #define LOCAL_VEC_ENTRIES 8
- #define DEFINE_VEC(T, V)						\
--	struct aa_ ## T *(_ ## V ## _localtmp)[LOCAL_VEC_ENTRIES];	\
-+	struct aa_ ## T *(_ ## V ## _localtmp)[LOCAL_VEC_ENTRIES + 1];	\
- 	struct aa_ ## T **(V)
- 
- #define vec_setup(T, V, N, GFP)						\
-@@ -31,10 +31,10 @@ struct aa_ruleset;
- 	if ((N) <= LOCAL_VEC_ENTRIES) {					\
- 		typeof(N) i;						\
- 		(V) = (_ ## V ## _localtmp);				\
--		for (i = 0; i < (N); i++)				\
-+		for (i = 0; i <= (N); i++)				\
- 			(V)[i] = NULL;					\
- 	} else								\
--		(V) = kzalloc(sizeof(struct aa_ ## T *) * (N), (GFP));	\
-+		(V) = kzalloc_objs(struct aa_ ## T *, (N) + 1, (GFP));	\
- 	(V) ? 0 : -ENOMEM;						\
- })
- 
+--- a/include/linux/list.h
++++ b/include/linux/list.h
+@@ -150,10 +150,13 @@ static inline bool __list_del_entry_vali
+  *
+  * This is only for internal list manipulation where we know
+  * the prev/next entries already!
++ *
++ * Must be inlined to ensure it can be safely called
++ * with initdata arguments.
+  */
+-static inline void __list_add(struct list_head *new,
+-			      struct list_head *prev,
+-			      struct list_head *next)
++static __always_inline void __list_add(struct list_head *new,
++				       struct list_head *prev,
++				       struct list_head *next)
+ {
+ 	if (!__list_add_valid(new, prev, next))
+ 		return;
+@@ -171,8 +174,12 @@ static inline void __list_add(struct lis
+  *
+  * Insert a new entry after the specified head.
+  * This is good for implementing stacks.
++ *
++ * Must be inlined to ensure it can be safely called
++ * with initdata arguments.
+  */
+-static inline void list_add(struct list_head *new, struct list_head *head)
++static __always_inline void list_add(struct list_head *new,
++				     struct list_head *head)
+ {
+ 	__list_add(new, head, head->next);
+ }
 
 
