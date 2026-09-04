@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25981414A2A;
-	Fri,  4 Sep 2026 05:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FE9412294;
+	Fri,  4 Sep 2026 05:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500387; cv=none; b=s8/5AnfoTLKUaafMYCVJU4AcJ+PVTPAylu1GFeWSEMVsCS5mfHHaCPGTVh3vv3Fo9TSN4VLmcv8+Kwh2xzr3+t1VvhSAYEZ81ozVfDAOxjGKbN6rPXuZBnwq8uwUWMWP3oE1ztUns5EwtkEc1EM/iRvLAYUnOQKWqVS950obeMk=
+	t=1788500390; cv=none; b=g5TCbsX+SXbRJzBQ/yzOwoi6OwzLQ13et1ztQ3jCyf9blrlNXJgErFL565KSnslAqxpkl43b/TmB79l1uqgYbDJ4eZqNF51C4LK3TurloEnEwlMHs8W2r72HjxT5acXZYNq2ZWSy9NPCKgX6ks3cPZHaBWUBobUDL0FvJ1aHV94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500387; c=relaxed/simple;
-	bh=+w4m7mG70dg3fuleGmD7yYPE8LmgELka0wGQAKI8X+I=;
+	s=arc-20240116; t=1788500390; c=relaxed/simple;
+	bh=s/QRWGxxb91TbJ/usz7mBN3lvg76A/ahLu/lpk9exo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qc9BIU2xKYBm29bttsqXTLXcl7RQ2KnL/VAFPu12nPGZoRRIcgDamo10SHtv/icklG2LeKq6qQG13OeSLIO5I+rpmwaYkUQGT0o06002LTG95YrapJTOYYnv6f8mK5t07TA4hlpweHgwdyfKuMgbfY55PE0y9eN6Zc0Jlpg3Yto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqXyse50; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m/ZR0q7emwfx3ZkzCzd3zCL18Dj+r9qb0oBFhmHWope6tcLrfuu/9jrYrG7irTRk+oVCOTC9d+FktaQvDZtHxJogEYolnOVdXHYaSCVDdu3POtzMA9eh9NDYgV6RDf7TG/MSK35uxK5A3yiyTOlK0DbWdWdgAGdc9zDmFuVVQPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VE/CsIt9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqXyse50"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888921F00A3E;
-	Fri,  4 Sep 2026 05:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VE/CsIt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F871F00A3E;
+	Fri,  4 Sep 2026 05:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500386;
-	bh=qvqZ63w2cNh13uB/8djDHvoBr0d77gTeihENHDVlMtw=;
+	s=korg; t=1788500388;
+	bh=L9Sc199FgSt9sxUCh5QkSGBNjMalLrhsiIm2T4Pqd0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lqXyse50ekgN1gqxRy2cZvcNcPTCHhMAosIA22jhAau+oGBYloYpHofq0Y7CbWmJi
-	 +Va9wMER1afhOc1nYOgc6MCVVwzKO9gUTZ1obXXP3sHCgFCxAVG1R+LG3MFLCSJvVW
-	 Ppxs+GuRNNIOAipMH71LjytwRMGwuF9VobNKyYyw=
+	b=VE/CsIt9/Il5iNiv+aZ3AVXA2fY/GAe2kKjOj5oE8mmAZ6KeqEqGQrJTWrdeLsJK4
+	 gRmtYSLZmprpXZvDKGJ47uG+/jEv2I2VhkoU7u872+X/YjuZeda5nkZ0ZXzP/7emGg
+	 TKRvuvSmw48xgJPKMviL2aL3mvmvXYGK8xY9M7yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Max Boone <mboone@akamai.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 039/552] mm/pagewalk: fix stale walk->action escaping walk_pmd_range()
-Date: Fri,  4 Sep 2026 06:53:16 +0200
-Message-ID: <20260904045748.719097230@linuxfoundation.org>
+Subject: [PATCH 6.18 040/552] mm/vmscan: report RCU-tasks quiescent states in shrink_lruvec()
+Date: Fri,  4 Sep 2026 06:53:17 +0200
+Message-ID: <20260904045748.742202540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -58,159 +61,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit aedf2efd18977e0cef7eb963166e2b1fcc0aa321 upstream.
+commit 25f52e81216884a7444bf07a606691feb09a94e3 upstream.
 
-If ->pmd_entry() sets walk->action = ACTION_AGAIN, the pmd_none() check is
-retried.  The PMD entry may be cleared at the point of retry.
+I am seeing some rcu_tasks stalls in the Meta fleet during reclaim.
 
-In this case, if walk->ops->install_pte is not specified, the code
-continues to the next PMD entry in the range without resetting
-walk->action to ACTION_SUBTREE.
+  INFO: rcu_tasks detected stalls on tasks:
+	0000000088620d09: .. nvcsw: 6735/6735 holdout: 1 idle_cpu: -1/8
+	task:GlobalCPUThread state:R  running task  pid:2552016 tgid:2524552
+  Call Trace:
+   shrink_lruvec
+   mem_cgroup_iter
+   shrink_node
+   do_try_to_free_pages
+   try_to_free_pages
+   __alloc_frozen_pages_noprof
+   alloc_pages_noprof
+   pte_alloc_one
+   __pte_alloc
+   handle_mm_fault
 
-This leaves walk->action erroneously set to ACTION_AGAIN, which is
-incorrect.
+Nothing promises direct reclaim returns in bounded time, and the scan loop
+in shrink_lruvec() only calls cond_resched(), which is a no-op on
+PREEMPTION kernels.  Involuntary preemption is not a Tasks-RCU quiescent
+state, so the reclaiming task never reports one and becomes a holdout.
 
-This was incorrect but not problematic up until commit 3b89863c3fa4
-("mm/pagewalk: fix race between concurrent split and refault") which
-updated walk_pud_range() to check for walk->action == ACTION_AGAIN upon
-walk_pmd_range()'s return, causing the PUD walk to be retried.
+Upgrade it to cond_resched_tasks_rcu_qs(), which reports a quiescent state
+even when cond_resched() does nothing.
 
-In this case this results in duplicate walk callbacks being invoked,
-which is erroneous and will break any caller that is not idempotent
-with respect to this (and waste time for those which are).  The result
-is an out-of-bounds write, triggered by a local fuzzer:
+PS: This has been discussed in [1]
 
-[    2.272695] ==================================================================
-[    2.273471] BUG: KASAN: slab-out-of-bounds in __mincore_unmapped_range+0x14f/0x190
-[    2.274302] Write of size 1 at addr ffff888008d9b000 by task poc/106
-[    2.274966]
-[    2.275154] CPU: 0 UID: 1000 PID: 106 Comm: poc Not tainted 7.2.0-rc6-00429-ga7c7074b58d2 #55 PREEMPT(lazy)
-[    2.275159] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    2.275164] Call Trace:
-[    2.275170]  <TASK>
-[    2.275172]  dump_stack_lvl+0x53/0x70
-[    2.275200]  print_report+0xd0/0x630
-[    2.275210]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[    2.275219]  ? irqentry_exit+0xd2/0x670
-[    2.275224]  ? irqentry_exit+0xd2/0x670
-[    2.275226]  ? __virt_addr_valid+0xef/0x1a0
-[    2.275239]  ? __mincore_unmapped_range+0x14f/0x190
-[    2.275242]  kasan_report+0xce/0x100
-[    2.275245]  ? __mincore_unmapped_range+0x14f/0x190
-[    2.275248]  __mincore_unmapped_range+0x14f/0x190
-[    2.275252]  mincore_unmapped_range+0x45/0x70
-[    2.275254]  walk_pgd_range+0xafc/0xfc0
-[    2.275261]  ? __pfx_walk_pgd_range+0x10/0x10
-[    2.275264]  ? __update_load_avg_se+0x3d1/0x670
-[    2.275275]  __walk_page_range+0xc0/0x310
-[    2.275278]  ? __pfx_find_vma+0x10/0x10
-[    2.275281]  ? finish_task_switch.isra.0+0x16d/0x4f0
-[    2.275290]  walk_page_range_mm_unsafe+0x26f/0x3a0
-[    2.275293]  ? __pfx_mtree_load+0x10/0x10
-[    2.275298]  ? __pfx_walk_page_range_mm_unsafe+0x10/0x10
-[    2.275302]  ? __free_frozen_pages+0x54d/0x7e0
-[    2.275308]  __do_sys_mincore+0x132/0x380
-[    2.275311]  do_syscall_64+0xf9/0x540
-[    2.275316]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[    2.275322] RIP: 0033:0x422ccd
-[    2.275326] Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-[    2.275329] RSP: 002b:00007fffffffec18 EFLAGS: 00000287 ORIG_RAX: 000000000000001b
-[    2.275337] RAX: ffffffffffffffda RBX: 0000000000000066 RCX: 0000000000422ccd
-[    2.275339] RDX: 00000000004d0940 RSI: 0000000001000000 RDI: 00007ffff4000000
-[    2.275340] RBP: 00000000004d0940 R08: 0000000000000100 R09: 0000000000000100
-[    2.275342] R10: 0000000000000100 R11: 0000000000000287 R12: 20c49ba5e353f7cf
-[    2.275343] R13: 00000000004990d3 R14: 0000000000000000 R15: 0000000000000001
-[    2.275346]  </TASK>
-[    2.275347]
-[    2.296904] The buggy address belongs to the object at ffff888008d9b000
-[    2.296904]  which belongs to the cache sigqueue of size 80
-[    2.298151] The buggy address is located 0 bytes inside of
-[    2.298151]  allocated 80-byte region [ffff888008d9b000, ffff888008d9b050)
-[    2.299408]
-[    2.299601] The buggy address belongs to the physical page:
-[    2.300191] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8d9b
-[    2.301001] flags: 0x100000000000000(node=0|zone=1)
-[    2.301535] page_type: f5(slab)
-[    2.301884] raw: 0100000000000000 ffff888107e46780 dead000000000122 0000000000000000
-[    2.302687] raw: 0000000000000000 0000000800240024 00000000f5000000 0000000000000000
-[    2.303489] page dumped because: kasan: bad access detected
-[    2.304092]
-[    2.304276] Memory state around the buggy address:
-[    2.304801]  ffff888008d9af00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    2.305567]  ffff888008d9af80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[    2.306340] >ffff888008d9b000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    2.307115]                    ^
-[    2.307474]  ffff888008d9b080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    2.308237]  ffff888008d9b100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    2.308997] ==================================================================
-
-A specific example of this breaking things is mincore which walks an
-internal cursor data structure a byte at a time on assumption that page
-table entry callbacks are called only once for each entry.
-
-Fix the problem by resetting walk->action to ACTION_SUBTREE prior to the
-none check.
-
-The pattern also exists in walk_pud_range() so fix it there too.
-
-This issue was found through AI-based fuzzing.
-
-Link: https://lore.kernel.org/20260811161949.3879321-2-imv4bel@gmail.com
-Fixes: 3b89863c3fa4 ("mm/pagewalk: fix race between concurrent split and refault")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Max Boone <mboone@akamai.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Link: https://lore.kernel.org/20260810-rcu_task_shrink_lruvec-v1-1-4d9f7d5251cb@debian.org
+Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/pagewalk.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ mm/vmscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -127,6 +127,7 @@ static int walk_pmd_range(pud_t *pud, un
- 	pmd = pmd_offset(pud, addr);
- 	do {
- again:
-+		walk->action = ACTION_SUBTREE;
- 		next = pmd_addr_end(addr, end);
- 		if (pmd_none(*pmd)) {
- 			if (has_install)
-@@ -139,8 +140,6 @@ again:
- 				continue;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5864,7 +5864,7 @@ static void shrink_lruvec(struct lruvec
+ 			}
  		}
  
--		walk->action = ACTION_SUBTREE;
--
- 		/*
- 		 * This implies that each ->pmd_entry() handler
- 		 * needs to know about pmd_trans_huge() pmds
-@@ -197,6 +196,7 @@ static int walk_pud_range(p4d_t *p4d, un
- 	pud = pud_offset(p4d, addr);
- 	do {
-  again:
-+		walk->action = ACTION_SUBTREE;
- 		next = pud_addr_end(addr, end);
- 		if (pud_none(*pud)) {
- 			if (has_install)
-@@ -209,8 +209,6 @@ static int walk_pud_range(p4d_t *p4d, un
- 				continue;
- 		}
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
  
--		walk->action = ACTION_SUBTREE;
--
- 		if (ops->pud_entry)
- 			err = ops->pud_entry(pud, addr, next, walk);
- 		if (err)
+ 		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
+ 			continue;
 
 
