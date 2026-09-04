@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE86D3E7631;
-	Fri,  4 Sep 2026 05:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C345348C47;
+	Fri,  4 Sep 2026 05:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500865; cv=none; b=SYDt750Z7vuGHCpFI6XnUqYCcCaZFk4JaR0U/8yIV5180HNSEggJythhjjfS1k20hmBkZsJ6Vv1EFSSy/GJ6xw0OiNSb+t8BtRvKKYxgwHnFY89KnKF0kKn515t4CV4lh0/07ucis+rY7M3Ltiw5hrKofFscod6Ks9ey3UiUsMo=
+	t=1788500868; cv=none; b=OFGSoLdXFMUulO3fKtd29oD0esDjWvymdaLaBkZwX4V0Y+wNw9cSTEvsk8iA1/G/XQegMSC+VW/y3RSsWYM2y2vT6ZvewwsijZk3n09B091aA5wFmd9BKQZ+LSiNRDrwxL/tA3QgbCmy0tDRiQ/wslnPJsUBlf8dLJmgzrwh65A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500865; c=relaxed/simple;
-	bh=u+mMTu6+vs65DXCPc1KOgVyHCGAE5Lxk1fqV+Uo3tR4=;
+	s=arc-20240116; t=1788500868; c=relaxed/simple;
+	bh=tcMW5MUdFI6umXE+0W6YW5tdzwRu0bTPDc7MoC5vwFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1CHwlgvD7eihBARY5pmH/iAL1jy6bEiZfQ2LG2EjHp/GsaHgONtZSigt+mU+vxiWqMD9osAO2f2fr0GdACSIpNxJzoRd0YuuScSAmNKkyIHoYtiirR/bM1Oxq64h/9X0ZDd3y/ef3zchTa9qJLXAI4fTkSow1n41ZLkAO2XsPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a15fd4nw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gBDi5SiM4nHjXleEn5emlpct3hCAESG7RFoPHtqZWThChXwfLRUJG6SA81Lv5F4CIFJrQCxEVra5dB4bFCeLtiBE/VE7BZWP8bzMa7E0MgDmMcCDtDC1zn5443A9tnRCmnijx5SLo4/12ZnvO/t14Kv9E9Zv2AxAz+lTiRhkhy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9I9Tq0t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a15fd4nw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148A91F00A3D;
-	Fri,  4 Sep 2026 05:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9I9Tq0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8521F00A3D;
+	Fri,  4 Sep 2026 05:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500864;
-	bh=eExaGaLlZfTQ6HjNCM2uep35UedBpNf4PVHizPpW9q8=;
+	s=korg; t=1788500867;
+	bh=rB1wgImJf14bo/R/dm4fw2Iyb2rkxCEpYLzRJtn6+r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a15fd4nwvGsY98IMS0sW/PoCIXvLd+km93EoqI7kBSl8H5rFi40O1hmXrtXls1/Fz
-	 DgSIIjyV4om1eCbfytCY9xGUPZBHpp5DxDsrrbGknJvnMcDywYDDSIaH9gpMxrsSeZ
-	 6gbFUl1zzz+X8QHV0YETODQ0iZxbanWZ4qnjx2Jc=
+	b=G9I9Tq0tXOUWSS40vhvZHItaRibPitK3g1onmxHownIiW6UUZUHHRxseJxvPOBaY2
+	 6ayEsCJGnUr4HQ1UOcdmI81g8vfileSf8uCx5rYWoGIHbUZ/iKFEYA2WnZNSy93GWm
+	 gmv2ZiDBZmHOGYt3TuXecH7bhXFCa7CVUFv9WAsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 205/552] fbdev: uvesafb: unregister connector callback on init failure
-Date: Fri,  4 Sep 2026 06:56:02 +0200
-Message-ID: <20260904045753.908223397@linuxfoundation.org>
+	Marek Czernohous <marek@czernohous.de>,
+	Simon Horman <horms@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 206/552] forcedeth: fix off-by-one when saving/restoring non-PCI config space
+Date: Fri,  4 Sep 2026 06:56:03 +0200
+Message-ID: <20260904045753.946464589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,42 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Marek Czernohous <marek@czernohous.de>
 
-commit de8db23aa7c337e606fca9faf48b3ba72968597a upstream.
+commit 9393f1d656a79693e0c123ff7bc7c5c0f708046d upstream.
 
-uvesafb_init() registers the v86d connector callback before registering
-the platform driver. If platform_driver_register() fails, the function
-returns the error directly and leaves the connector callback registered.
+nv_suspend() and nv_resume() walk the non-PCI configuration space with
 
-The later platform-device failure path already unregisters the callback.
-Add the same cleanup before the final return when platform-driver
-registration fails.
+	for (i = 0; i <= np->register_size/sizeof(u32); i++)
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+which runs one iteration too many. saved_config_space is declared as
 
-Fixes: 8bdb3a2d7df4 ("uvesafb: the driver core")
+	u32 saved_config_space[NV_PCI_REGSZ_MAX/4];
+
+and NV_PCI_REGSZ_VER3 is equal to NV_PCI_REGSZ_MAX (0x604), so on a VER3
+device register_size/sizeof(u32) is exactly the array length and the last
+iteration addresses one element past the end.
+
+The element it lands on is np->name_rx[0..3]: saved_config_space[] is
+followed immediately by char name_rx[IFNAMSIZ + 3], and char needs no
+padding. Nothing observable is corrupted by that, because nv_request_irq()
+rewrites name_rx with sprintf() before it is ever passed to request_irq().
+The bug is the out-of-bounds access itself, which UBSAN reports and which
+CONFIG_UBSAN_TRAP=y turns into a trap that aborts the running kernel code,
+plus an MMIO read and, on resume, an MMIO writel() to base + 0x604, one
+dword past the range the driver mapped:
+
+	np->base = ioremap(addr, np->register_size);
+
+VER1 and VER2 devices stay inside the array, but they too get the stray
+read and the stray write one dword past their own window.
+
+Caught by UBSAN on an Apple Macmini3,1 (MCP79) during a deep S3 cycle.
+The splat below is trimmed: the build path in the file name, the CPU
+and taint lines, the Workqueue line, the "?" hint frames, and the
+frames below device_suspend are all cut. The kernel was tainted, with
+an out-of-tree nouveau and CPU_OUT_OF_SPEC; forcedeth itself was the
+stock module.
+
+  UBSAN: array-index-out-of-bounds in drivers/net/ethernet/nvidia/forcedeth.c:6225:25
+  index 385 is out of range for type 'u32 [385]'
+  Call Trace:
+   dump_stack_lvl+0x5d/0x80
+   ubsan_epilogue+0x5/0x2b
+   __ubsan_handle_out_of_bounds.cold+0x54/0x59
+   __this_module+0xe398c/0xe9010 [forcedeth]
+   pci_pm_suspend+0x80/0x170
+   dpm_run_callback+0x51/0x160
+   device_suspend+0x1a2/0x4a0
+   ...
+
+Both loops are hit. UBSAN reports each source location only once per module
+load (__ubsan_handle_out_of_bounds() calls suppress_report(), which does
+test_and_set_bit(REPORTED_BIT, ...) on the struct source_location), so the
+two splats land in the first S3 cycle after the module is loaded and later
+cycles are silent even though the access still runs off the end every time.
+In that first cycle line 6225 is reported from pci_pm_suspend and line 6240
+from pci_pm_resume.
+
+The same off-by-one was fixed in nv_get_regs() by commit ba9aa134287f
+("forcedeth: fix buffer overflow") in 2012; these two loops were missed.
+The suspend and resume side was reported on LKML in September 2013 by Marc
+Weber, with the same analysis and the same one-character fix, but the patch
+was attached rather than sent inline and the thread ended there.
+
+Use < instead of <=, which saves and restores exactly register_size bytes.
+
+Fixes: 1a1ca86158ee ("[netdrvr] forcedeth: save/restore device configuration space")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/178682367885.3748309.10595890901761762683@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/uvesafb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/nvidia/forcedeth.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/uvesafb.c
-+++ b/drivers/video/fbdev/uvesafb.c
-@@ -1910,6 +1910,8 @@ static int uvesafb_init(void)
- 			err = 0;
- 		}
- 	}
-+	if (err)
-+		cn_del_callback(&uvesafb_cn_id);
- 	return err;
- }
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -6221,7 +6221,7 @@ static int nv_suspend(struct device *dev
+ 	netif_device_detach(dev);
  
+ 	/* save non-pci configuration space */
+-	for (i = 0; i <= np->register_size/sizeof(u32); i++)
++	for (i = 0; i < np->register_size/sizeof(u32); i++)
+ 		np->saved_config_space[i] = readl(base + i*sizeof(u32));
+ 
+ 	return 0;
+@@ -6236,7 +6236,7 @@ static int nv_resume(struct device *devi
+ 	int i, rc = 0;
+ 
+ 	/* restore non-pci configuration space */
+-	for (i = 0; i <= np->register_size/sizeof(u32); i++)
++	for (i = 0; i < np->register_size/sizeof(u32); i++)
+ 		writel(np->saved_config_space[i], base+i*sizeof(u32));
+ 
+ 	if (np->driver_data & DEV_NEED_MSI_FIX)
 
 
