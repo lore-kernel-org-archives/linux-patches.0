@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8007F24A05D;
-	Fri,  4 Sep 2026 05:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCA03876B3;
+	Fri,  4 Sep 2026 05:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498333; cv=none; b=oL9qLT0KEB8HyX9Tg95cwY0BlOs6SLzN4q1vaU8vnML5cCpq8+5MfaneOUm32QA3fV8f0DpF9CgFqTbBhZlqnDyO6BetzfF1ulCwQUQd6+9qb95Cv6J9c3W4hl8wzjBcweN03CdrD27xKlHBJUyafRyygRz17ZxN5KzEEsTOjJE=
+	t=1788498336; cv=none; b=p8zvIGFTBdTawiUqflDgLa4h+3elGzP54d8buOodWNqCr53V4JBliY4R8VkifoEskfP4v0Y7goZ9o31vFfAQroj5qTbZjwCV3Skldy+SVK73opHWcFEyZRZclRBPAQRLnf8AZ/3yahyIr3V3Eo6rTE2KYCt7WSe8XGjrr/GzFhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498333; c=relaxed/simple;
-	bh=DUy8jma4GHeeAp1Fhp36cc8733cb4nS2CNAyhbEpFIM=;
+	s=arc-20240116; t=1788498336; c=relaxed/simple;
+	bh=ErXf+JapEHZFx5DMYOd+lW7uRzbTycTdgrGya1Ljk3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7qQy0KMA3DHiFAN9p+JYkRYPBHr1j+HDSA6jsy0/F7rbUXkdIQI10qudYFs/ssHlK6B4oxEPkbFbxs3+ozIS78PcGiLtstmWMyp76uzL2CC6DaMSRQqfGCfC5velgrRdZgOeNLeL3YcZvOzOztDxYJVN0N4Ra+ieQ7UbykYZ5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuHBqDAn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eH6xkB78OW61exhuojLn7h88FThRzqOhl+siQvP2bJV7kWqhK+2LtjmufUvIYM+r/iH4q8/OUalt9YAvypqWXz1gCGL4o8be/veCTt5aZjBD6fDnKdobcr5YYThjN0wbG1UVyIs+dYZvcm8P4sli5CudG3Qn/UoyUU5BtU4BMl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTFtPHPQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuHBqDAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D981F00A3D;
-	Fri,  4 Sep 2026 05:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTFtPHPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69801F00A3D;
+	Fri,  4 Sep 2026 05:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498332;
-	bh=QjJpF6V7LTl6X+BYY1vzGXxWZyhwHznNw2xEfkCqxr0=;
+	s=korg; t=1788498335;
+	bh=mnDBCOrS7UxlhTtb/voaCP/ejwBKPytuzCB/uw5RvtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nuHBqDAnBoRNLg1gG9Uhp67Y/FrgsxkwczMpGFMYTYNjwu4s9UbBFfhRy3ZUAh9KY
-	 C8o55+m0scUGhrourDVeXei6AnGVNmS3/ChvPrcB1olxDVEu20YF42g9uAknjKqNGV
-	 XNwgU2T5lEUpRNbfjtZOoJdjFiBoNnlOZY+481a4=
+	b=GTFtPHPQ5AoRXJLwBdN0+vhc4U8fvWzAriytyXoT15QbTuz3Gnp5qZMP6QvDj1Olt
+	 oIE7W1TDREGYwS29glFYIohsQpdeqkGEvwyDVSSFWk4xu1lggpQXGwWTtfNdsXXprp
+	 P7w6PPRJc7A1SKMwvTpDe/g5k9+65nj76acCgDig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Alice Ryhl <aliceryhl@google.com>,
+	Antoni Boucher <bouanto@zoho.com>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.2 025/713] objtool/rust: add one more `noreturn` Rust function for Rust 1.99.0
-Date: Fri,  4 Sep 2026 06:49:53 +0200
-Message-ID: <20260904045804.391581557@linuxfoundation.org>
+Subject: [PATCH 7.2 026/713] rust: kbuild: disambiguate `zerocopy` for `rusttest`
+Date: Fri,  4 Sep 2026 06:49:54 +0200
+Message-ID: <20260904045804.416381891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,49 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Antoni Boucher <bouanto@zoho.com>
 
-commit 16861ca3508e0deac70d3bcacb6dcf435b49d9ef upstream.
+commit fe39a233ea52601d416a1d02e7f70049aae47016 upstream.
 
-Starting with Rust 1.99.0 (expected 2026-10-01), `objtool` may report:
+Starting with Rust 1.76.0, `zerocopy` was added as an (indirect)
+compiler dependency [1]. In turn, this meant that the `rustc-dev`
+component started including a precompiled `zerocopy` crate in the sysroot.
 
-    rust/kernel.o: warning: objtool: _R..._6kernel3str9parse_intaNtNtB2_7private12FromStrRadix14from_str_radix()
-    falls through to next function _R..._6kernel3str9parse_intaNtNtB2_7private12FromStrRadix16from_u64_negated()
+This makes `rusttest` fail because the compiler finds several candidates:
 
-due to calls to the `noreturn` symbol:
+    error[E0464]: multiple candidates for `rmeta` dependency `zerocopy` found
+      --> rust/kernel/prelude.rs:64:9
+       |
+    64 | pub use zerocopy::{
+       |         ^^^^^^^^
+       |
+       = note: candidate #1: .../lib/rustlib/x86_64-unknown-linux-gnu/lib/libzerocopy-dfef4cb07ca752aa.rmeta
+       = note: candidate #2: ./rust/test/libzerocopy.rlib
 
-    core::num::from_ascii_bytes_radix_panic
+We cannot use `--sysroot=/dev/null` for these, thus point to the dependency
+explicitly.
 
-The function was renamed from `from_ascii_radix_panic` [1], which is
-already in the list.
-
-Thus add the new one to the list so that `objtool` knows it is actually
-`noreturn`.
-
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://github.com/rust-lang/rust/pull/159554 [1]
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260728191448.349241-1-ojeda@kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Antoni Boucher <bouanto@zoho.com>
+Cc: stable@vger.kernel.org
+Fixes: 567621523ab7 ("rust: zerocopy: enable support in kbuild")
+Link: https://github.com/rust-lang/rust/pull/118546 [1]
+Link: https://patch.msgid.link/20260729173803.13459-1-ojeda@kernel.org
+[ Investigated when it started happening, reworded to add that and to
+  follow our usual style and sent on behalf of Antoni, who found this
+  during his work to support Rust for Linux with the GCC backend, i.e.
+  with `rustc_codegen_gcc`. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    1 +
- 1 file changed, 1 insertion(+)
+ rust/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -194,6 +194,7 @@ static bool is_rust_noreturn(const struc
- 	 */
- 	return str_ends_with(func->name, "_4core3num20from_str_radix_panic")				||
- 	       str_ends_with(func->name, "_4core3num22from_ascii_radix_panic")				||
-+	       str_ends_with(func->name, "_4core3num28from_ascii_bytes_radix_panic")			||
- 	       str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
- 	       str_ends_with(func->name, "_4core6option13expect_failed")				||
- 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
+diff --git a/rust/Makefile b/rust/Makefile
+index 627ed79dc6f5..fbe0accc51a3 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -350,7 +350,7 @@ rusttestlib-pin_init: $(src)/pin-init/src/lib.rs rusttestlib-macros \
+ rusttestlib-kernel: private rustc_target_flags = --extern ffi \
+     --extern build_error --extern macros --extern pin_init \
+     --extern bindings --extern uapi \
+-    --extern zerocopy --extern zerocopy_derive
++    --extern zerocopy=$(objtree)/$(obj)/test/libzerocopy.rlib --extern zerocopy_derive
+ rusttestlib-kernel: $(src)/kernel/lib.rs rusttestlib-bindings rusttestlib-uapi \
+     rusttestlib-build_error rusttestlib-pin_init $(obj)/$(libmacros_name) \
+     $(obj)/bindings.o rusttestlib-zerocopy rusttestlib-zerocopy_derive FORCE
+-- 
+2.55.0
+
 
 
