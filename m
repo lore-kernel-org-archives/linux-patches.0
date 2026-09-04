@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF682264A3;
-	Fri,  4 Sep 2026 05:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D113AFB1C;
+	Fri,  4 Sep 2026 05:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500559; cv=none; b=G0ciO9ksyLNlQv7gJvEOlDGGeo1CxlyiIMCZOUf8R8xQd26z7WRN3vO7eTDi84IuI2cxY2brOPa7MFXLs2gB+V9h0hmRQG+JwagzsQ2qfaZ+zNgBn9/mmwHVq4Klcm6V5nuIgwFxMY3/DKPIPQMjjmzq5g2gcECMGwUWYszy9po=
+	t=1788500564; cv=none; b=emmamP2n3q3KoPvlLvD7MLLObyc66NLJQ5ZEmmg529sbl1HQdwmFAf76SqaSSv59vuvPL7IAMMxXkRgSwKaPrrHDavvmCHnnlC5EXL0MBwntNDURRG+Xz37xDVX6IS/4JcQ62SpxGtq7X5xiJaQUiG7xKmLC36g5m6rLrmCbpt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500559; c=relaxed/simple;
-	bh=I1TTcgJf5G9PqNd/Q8IulChEoH6/MIQ1Iux4XNOrEF8=;
+	s=arc-20240116; t=1788500564; c=relaxed/simple;
+	bh=3Xrcyhi53jZLFe4gzKERyXqq2IAQNmPbKYv63Kx4t/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6rKIpUTkTUPjHkeYDXRBydRdbm36gPq8pmubVwmp6ZLsdv0PDPsrLfeFQxx7Bj7eruDSNgNg5qWj2xPjL6ZKE2B3xen8myqZwsViea9szu3jIgQqcTspiGnWrum9b24k2jkL8mrq0UEY3yLwl8fFfyttGBP186vK/SUe9/JAKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsb/fUw+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rLBxDypZ0M2IUjCsM6+2cHhlqPgRo9HtcMnjAUZPFUZXMGBOq5KqdzYMPQYk/LaAeKwU5SAaQ5J54bWloO27VkBLyn5n8mveYnLROYDo75fqDhViS/S/IPJ3JyoXLa+t/Ni0cWpqXq+qU3M+1nmhLpIfne6UXLtkXsrr3cMZci4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hixT/Jjx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsb/fUw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D6B1F00A3D;
-	Fri,  4 Sep 2026 05:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hixT/Jjx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1601F00A3D;
+	Fri,  4 Sep 2026 05:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500558;
-	bh=B4kHXXTWDGJmlegVMJvREa+G4POrxMgmcPEOFsye7QA=;
+	s=korg; t=1788500561;
+	bh=sqLS8+S+eQRLpf+ZuCgyHVAj6m83PXrVsGHWaDBzAI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xsb/fUw+jrbIEBxaGaCaP8oiuejDiyjXUOjMv/bIodMMCjcF3bMbDT8wbwkj18z3t
-	 QtJfoa62QXJa+RxK+KqeTpQtRybsUaSAy4JNEEzqHzXjqXfvHvXHsyWKNRRxXurL7m
-	 bIKhiBNiN7WhOgO390lAxD73It1EtU33m6Zbh7Qo=
+	b=hixT/JjxDNXdkl1pCqGV8zJwhr+HbuFpi2RrCVyOqSsB0yzmvISLIABjcDiwnowec
+	 /7w0aMBxFN+uEAZtowzqLD5ujTKojqqKK26IwDcx0Xoym2gmLBVWfUxhklyTrLEZMB
+	 aubVppmfZiLEwgBOwO/esn6Rt12aUJFbvg2XROvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 099/552] NFSD: check truncate permission under inode lock
-Date: Fri,  4 Sep 2026 06:54:16 +0200
-Message-ID: <20260904045750.146576106@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 6.18 073/552] usb: gadget: at91_udc: drain polled-VBUS timer/work before udc is freed
+Date: Fri,  4 Sep 2026 06:53:50 +0200
+Message-ID: <20260904045749.503380662@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,96 +49,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit b778e0e0a16759f22a70579c3cf8d254a40d4a7f upstream.
+commit c27d13ce4bab80fbdf6523928071b6c24b37606c upstream.
 
-nfsd_setattr() checks whether a size update needs NFSD_MAY_TRUNC
-before it takes inode_lock(). The comparison uses the file size sampled
-by that unlocked read, but the actual ATTR_SIZE update is applied later
-under inode_lock() by notify_change().
+In polled-VBUS mode (board.vbus_pin && board.vbus_polled), probe arms a
+self-restarting cycle: at91_vbus_timer() schedules vbus_timer_work, and
+at91_vbus_timer_work() calls at91_vbus_update() and re-arms the timer via
+mod_timer(). Both recover the same udc through container_of and dereference
+it on every iteration.
 
-This leaves a TOCTOU window for append-only files. If a client sends a
-SETATTR that does not shrink the file at the time of the unlocked
-sample, a concurrent append can extend the file before nfsd_setattr()
-takes inode_lock(). notify_change() then applies a real truncation
-without the NFSD_MAY_TRUNC check that rejects IS_APPEND(inode). The VFS
-truncate syscall paths perform their own append-only checks before
-calling notify_change(), so NFSD must make this decision against the
-locked size it is about to change.
+Neither teardown path cancels this cycle. udc is devm-allocated, so it is
+freed after at91udc_remove() returns, and is likewise freed when probe
+fails and devres runs. A timer callback or work item that is pending or
+running at either point dereferences the freed udc.
 
-Split the write-count acquisition from the truncation permission check.
-Keep get_write_access() before the locked setattr work, then recheck
-whether the requested size is below i_size_read(inode) after inode_lock()
-has been acquired and before notify_change(ATTR_SIZE). This also avoids
-the plain unlocked inode->i_size load.
+Add at91_udc_shutdown_vbus_timer() and call it from at91udc_remove() and
+from the usb_add_gadget_udc() failure path in probe; the remaining probe
+error paths fail before the timer is armed. timer_shutdown_sync() waits
+for a running callback and clears timer->function, which makes the work
+handler's mod_timer() a permanent no-op; cancel_work_sync() then drains
+any pending or running work whose re-arm attempt now does nothing. The
+timer must be shut down first, since cancelling the work alone would let
+the timer re-queue it. The guard mirrors probe: in IRQ mode the timer and
+work_struct are never initialized.
 
-Fixes: 783112f7401f ("nfsd: special case truncates some more")
+This does not require a fault; a normal driver unbind can interleave with
+an already queued work item.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 4037242c4f5f ("ARM: 6209/3: at91_udc: Add vbus polarity and polling mode")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-6-f27e8eb4d974@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719042839.3167094-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c |   30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/usb/gadget/udc/at91_udc.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -418,21 +418,22 @@ nfsd_sanitize_attrs(struct inode *inode,
+--- a/drivers/usb/gadget/udc/at91_udc.c
++++ b/drivers/usb/gadget/udc/at91_udc.c
+@@ -1794,6 +1794,19 @@ static void at91udc_of_init(struct at91_
+ 		udc->caps = match->data;
  }
  
- static __be32
--nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		struct iattr *iap)
-+nfsd_may_truncate(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+		  struct iattr *iap)
- {
- 	struct inode *inode = d_inode(fhp->fh_dentry);
- 
--	if (iap->ia_size < inode->i_size) {
--		__be32 err;
-+	if (iap->ia_size >= i_size_read(inode))
-+		return nfs_ok;
- 
--		err = nfsd_permission(&rqstp->rq_cred,
--				      fhp->fh_export, fhp->fh_dentry,
--				      NFSD_MAY_TRUNC | NFSD_MAY_OWNER_OVERRIDE);
--		if (err)
--			return err;
--	}
--	return nfserrno(get_write_access(inode));
-+	return nfsd_permission(&rqstp->rq_cred, fhp->fh_export, fhp->fh_dentry,
-+			       NFSD_MAY_TRUNC | NFSD_MAY_OWNER_OVERRIDE);
++/*
++ * The work handler re-arms this timer, so shut the timer down before
++ * draining the work; otherwise it restarts the polling cycle.
++ */
++static void at91_udc_shutdown_vbus_timer(struct at91_udc *udc)
++{
++	if (!(udc->board.vbus_pin && udc->board.vbus_polled))
++		return;
++
++	timer_shutdown_sync(&udc->vbus_timer);
++	cancel_work_sync(&udc->vbus_timer_work);
 +}
 +
-+static __be32
-+nfsd_get_write_access(struct svc_fh *fhp)
-+{
-+	return nfserrno(get_write_access(d_inode(fhp->fh_dentry)));
- }
- 
- static int __nfsd_setattr(struct dentry *dentry, struct iattr *iap)
-@@ -559,12 +560,17 @@ nfsd_setattr(struct svc_rqst *rqstp, str
- 	 * setattr call.
- 	 */
- 	if (size_change) {
--		err = nfsd_get_write_access(rqstp, fhp, iap);
-+		err = nfsd_get_write_access(fhp);
- 		if (err)
- 			return err;
+ static int at91udc_probe(struct platform_device *pdev)
+ {
+ 	struct device	*dev = &pdev->dev;
+@@ -1907,7 +1920,7 @@ static int at91udc_probe(struct platform
  	}
+ 	retval = usb_add_gadget_udc(dev, &udc->gadget);
+ 	if (retval)
+-		goto err_unprepare_iclk;
++		goto err_shutdown_vbus;
+ 	dev_set_drvdata(dev, udc);
+ 	device_init_wakeup(dev, 1);
+ 	create_debug_file(udc);
+@@ -1915,6 +1928,8 @@ static int at91udc_probe(struct platform
+ 	INFO("%s version %s\n", driver_name, DRIVER_VERSION);
+ 	return 0;
  
- 	inode_lock(inode);
-+	if (size_change) {
-+		err = nfsd_may_truncate(rqstp, fhp, iap);
-+		if (err)
-+			goto out_unlock;
-+	}
- 	err = fh_fill_pre_attrs(fhp);
- 	if (err)
- 		goto out_unlock;
++err_shutdown_vbus:
++	at91_udc_shutdown_vbus_timer(udc);
+ err_unprepare_iclk:
+ 	clk_unprepare(udc->iclk);
+ err_unprepare_fclk:
+@@ -1933,6 +1948,9 @@ static void at91udc_remove(struct platfo
+ 	DBG("remove\n");
+ 
+ 	usb_del_gadget_udc(&udc->gadget);
++
++	at91_udc_shutdown_vbus_timer(udc);
++
+ 	if (udc->driver) {
+ 		dev_err(&pdev->dev,
+ 			"Driver still in use but removing anyhow\n");
 
 
