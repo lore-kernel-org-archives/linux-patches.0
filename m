@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFA0415F0B;
-	Fri,  4 Sep 2026 06:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFC8415F0B;
+	Fri,  4 Sep 2026 06:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501847; cv=none; b=bxWVxQRWrsc2reoP0kpUhLMNaFhBBrA2vmXZxeeEsrIF4YK+yKaJ9wtHopqo3r1sjON3CjNSe1hEjWVD3XIxjIsekKOZDOpsyXaiK/xq/IY2B4aERbcjzVS2Yl/XjvDS114920EpJyT+c5aLQwPZEXMCNoxgZH23iEIHqhLoL0g=
+	t=1788501850; cv=none; b=fGIqhf64S3jE5n6+V9/mIGNpt6F11Y8+4xWoNFrsxvsJSX/w8bqhfshJzwu04POEB/uGLxdBbcYe8ZpwC1j6S00h3MS4/Zx7ZJUEKMvsk00uDKsPKCQLqpFHuOArt44ks5Hhh2kmrL5U7Gwf3bDEopZXxaA6+DLS7B8zDkKznlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501847; c=relaxed/simple;
-	bh=1hBm7HkAI/tLuj9oQsJKG7IU6/xMav9Yzsz2RCfqzPU=;
+	s=arc-20240116; t=1788501850; c=relaxed/simple;
+	bh=z/B7VaVJ2JAGwWjyggvi83JqAJi4f+LWB/VVR+/Osos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKsPBvqViuAAn3yndTApHkC0QNTGHlAiUI5CzyL2df6RpReWtCLmsnG2xkR7P9Ux0EwDxBLIuuFd60UgHTYhy0gliefeF2GHtsdIEA+tzh5ewnOjqmKBu8BUC6i3GACXE1Buy7kTHb7jxvfGxKi+QX7aYnHkIf9ldqBYJIy19A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qzUJrGW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D5Tp/6/oMk5KrFKhbqNZ2EdbkXd+MGt2FD/78abdIuVSeHxPSif5/7uoawMe/ZizztmaTuapMqNxeJdqLh5dq2IR9F3aaVWohWb4S+DrQkYpZ97ZFeuIMkM3OXw0Yoy+wQkhtB5bjOA+rBk6m6wf/cpAgdDL0FISnyuFqIb/bL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oT9v1xaZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qzUJrGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E571F00A3D;
-	Fri,  4 Sep 2026 06:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oT9v1xaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A241F00A3D;
+	Fri,  4 Sep 2026 06:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501846;
-	bh=lMiId92N6vkcpCX18uecL7Kv5/AZIAd8FYkL9zfyoHg=;
+	s=korg; t=1788501849;
+	bh=zm8HRffhQ5aeyJUkzv7yydIjMb6LqBjrCiHEZhAhdSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qzUJrGWJKCNzMf01zD62uyxaekTaoTEiD1KWkPL2t6ndH/NAqUEeVx3XOHGk9gkR
-	 lBE+Iow1VVfzjw4KdsCZJfIrpv+NH2KReSNNipz9/EE0CyShGIq+u+UQLXW14IBZ3e
-	 T5A2AsUWVHlFANfMpQ2Dsv4DVjxtLSCl78C3Zc8s=
+	b=oT9v1xaZlgs2P+G415oIzuvQhyTrBapST2BziJu8hBVvLqrhMnGtlQo8bImQSTALr
+	 N2jIp0j0K8WouaUN+F6YNnQ9vqbIyC+TIfsck84KTSX7Djc3HFccwkkZti3n/EfzmI
+	 zvicge0TMjuFr4hfG5Xd9bGpER8TcIMU++IVLzdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Traockl <281473483+Traockl@users.noreply.github.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 534/552] wifi: mt76: mt7915: bound the device EEPROM address before the EFUSE copy
-Date: Fri,  4 Sep 2026 07:01:31 +0200
-Message-ID: <20260904045802.721442438@linuxfoundation.org>
+Subject: [PATCH 6.18 535/552] wifi: mt76: mt7925: cancel mlo_pm_work on stop
+Date: Fri,  4 Sep 2026 07:01:32 +0200
+Message-ID: <20260904045802.744559787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,49 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit 44b5adfe49499f53002737f5fe81d608c08122fc upstream.
+commit 81faf578320df2dfc682a96baa6e85851dd68b6f upstream.
 
-mt7915_mcu_get_eeprom() copies a fixed EFUSE block into the driver's
-dev->mt76.eeprom.data buffer at the offset reported by the MCU response
-(res->addr, a device-controlled __le32) without checking it against the
-buffer size. A malicious or malfunctioning device can report an arbitrary
-address and drive a 16-byte out-of-bounds write past eeprom.data.
+mt7925 queues mlo_pm_work with a 5 second delay during multi-link
+power-save setup and never cancels it on the stop path. If the device is
+torn down inside that window, the work outlives the teardown and its timer
+fires afterwards, trying to queue onto the workqueue that is already gone:
 
-Reject a response whose address would place the copy outside eeprom.data
-before deriving the destination pointer. Devices that echo the requested
-in-bounds offset are unaffected.
+  workqueue: cannot queue mt7925_mlo_pm_work [mt7925_common] on wq phy0
+  WARNING: kernel/workqueue.c:2283 at __queue_work+0x59/0xa0, CPU#1: swapper/1/0
+   call_timer_fn+0x2a/0x140
+   __run_timers+0x203/0x330
+   run_timer_softirq+0x86/0xf0
 
-Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
+mt7921 already has its own stop callback, so add one for mt7925 that
+cancels the work before calling mt792x_stop(). mt7925_ops backs both the
+PCIe and USB drivers, so this covers both.
+
+Fixes: 276a56883257 ("wifi: mt76: mt7925: update the power-saving flow")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260625-b4-disp-16f99062-v1-1-aee52ecf61b9@proton.me
+Tested-by: Traockl <281473483+Traockl@users.noreply.github.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260627202946.25598-1-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -2917,8 +2917,15 @@ int mt7915_mcu_get_eeprom(struct mt7915_
- 		return ret;
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -2181,10 +2181,19 @@ static void mt7925_rfkill_poll(struct ie
+ 	wiphy_rfkill_set_hw_state(hw->wiphy, ret == 0);
+ }
  
- 	res = (struct mt7915_mcu_eeprom_info *)skb->data;
--	if (!buf)
--		buf = dev->mt76.eeprom.data + le32_to_cpu(res->addr);
-+	if (!buf) {
-+		u32 addr = le32_to_cpu(res->addr);
++static void mt7925_stop(struct ieee80211_hw *hw, bool suspend)
++{
++	struct mt792x_dev *dev = mt792x_hw_dev(hw);
 +
-+		if (addr > dev->mt76.eeprom.size - MT7915_EEPROM_BLOCK_SIZE) {
-+			dev_kfree_skb(skb);
-+			return -EINVAL;
-+		}
-+		buf = dev->mt76.eeprom.data + addr;
-+	}
- 	memcpy(buf, res->data, MT7915_EEPROM_BLOCK_SIZE);
- 
- 	dev_kfree_skb(skb);
++	cancel_delayed_work_sync(&dev->mlo_pm_work);
++
++	mt792x_stop(hw, suspend);
++}
++
+ const struct ieee80211_ops mt7925_ops = {
+ 	.tx = mt792x_tx,
+ 	.start = mt7925_start,
+-	.stop = mt792x_stop,
++	.stop = mt7925_stop,
+ 	.add_interface = mt7925_add_interface,
+ 	.remove_interface = mt792x_remove_interface,
+ 	.config = mt7925_config,
 
 
