@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C302C34EF15;
-	Fri,  4 Sep 2026 05:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A534534EF15;
+	Fri,  4 Sep 2026 05:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499616; cv=none; b=Zl89NGuaUsO1DiLQnmYky8A+340+hBg0l5jm7I5smul0orkcGuAtNdy4XDag5nK4w5tgdu0xmeBmKsDo12es38TysLg2EqHzog4IcNSw79pkiXqfA1HyNQcPWfsXv7puvFYKVg/uw0l3QlOVSs0Z78cxUzYtDpCWz93Q1vCW1YY=
+	t=1788499619; cv=none; b=ADHuNdc4PmYJCbddqM96+xaF1y+4A8szY1EG+SfdwKOHOPXYY1jR1RUzEqe8xuVd4AP9eoI4RLdAOb696fthn2ypDvPCMtPuOFlsbOBkl7R7a37RSArzEA74G1kL4VlPZGQzHv5EjCYx1WsxQtpjG9lvXG5szIuKbCNfHsCaFBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499616; c=relaxed/simple;
-	bh=cR7yHsx8sbPg1JfEiPSlSAXSYW673GQbfV0GVhBekSU=;
+	s=arc-20240116; t=1788499619; c=relaxed/simple;
+	bh=2LkmRko1EexvxMzWJjuA7aPVMoSQN2NOFcrwOnm6r3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FP16IDfCg/snn8j1dg3Fkp9P32BEviPN/rElg4px5JmpuVFhxyI1djOtNLtXFhObFdPGR1Cmr0fJyeLfkj08xPtvkS0UBdMK6IQJO3auhZaRtb4F0uVIJqdctwsRaEYBXsK8RKNVwCUdFJsrgzppjdI1Gky0piC+L2npbd2O/28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C27SU58X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lwgBNt6Zh6ci4YcYDdWkaCe5d+dpHSa+eMIdwEX5cYkV3ohNFLHximGbXofjLhk6DoMQOeyUWbP2WcnviuPi1zdYL9O5ekXcZD7KDnSLUdDIjEpf4ZyFRZaJudjSFndDBaUVtaBnCGCYuNIt0jtLDQpJxcRDUOeb+2Rhd0ShYyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHikttX6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C27SU58X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269F71F00A3D;
-	Fri,  4 Sep 2026 05:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHikttX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CF11F00A3D;
+	Fri,  4 Sep 2026 05:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499615;
-	bh=NSqF8Q8usSdFEc1T1PBp4gKDzBKazD3FlGSBo80x6EI=;
+	s=korg; t=1788499618;
+	bh=Mq8gJ3EFX6T7e7cOodXd9jAZx5GYXUPLWLYZN4sJaIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C27SU58XKXRcFqwuILBcKrDR1LLIBDDln26a+gTQbvZM4c73v+erdSa7T61n+TY+w
-	 tR9ErYYSFaPSLKlO6cAaCZApokBrpk/KzOVhkaHUmCAJ/B3lj0HDy5gW/rdXDGPY4+
-	 nJH0eigR/npFmhYjdWVa3k9X/N2cOnJsOVRkyNvc=
+	b=iHikttX6xScXuH8Ls9kJqq9TgftWlxxJfKu/dKi7ASwO5Jz7bsJ+SJ7RR6IRokXMS
+	 hHmryKSwjuBlefYo7+TF4k3zZd/HHoQvR+Y/j4KBKY7c2r7CWQQF/OSM7s7shWEOH6
+	 cgjTdr89rD8fa1AxQjbJiuNpRyIjwdcuQlAedpC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cong Nguyen <congnt264@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.2 479/713] hwmon: (max6621) fix negative temperature offset and crit readings
-Date: Fri,  4 Sep 2026 06:57:27 +0200
-Message-ID: <20260904045814.561621740@linuxfoundation.org>
+Subject: [PATCH 7.2 480/713] hwmon: (max6621) fix temperature clamp range
+Date: Fri,  4 Sep 2026 06:57:28 +0200
+Message-ID: <20260904045814.583984366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,29 +52,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Cong Nguyen <congnt264@gmail.com>
 
-commit acc52bd431e2d8698fae8d82a74ac45d79b62e0a upstream.
+commit 24fbeb83d9b750a36da42cb835a154d80fd3d495 upstream.
 
-max6621_read() reads the CONFIG2 offset and the critical alert threshold
-registers into a u32 and scales them without sign extension:
+MAX6621_TEMP_INPUT_MIN and MAX6621_TEMP_INPUT_MAX are used to clamp the
+writable offset and critical thresholds. They are defined as -127000 and
+128000.
 
-	/* offset */ *val = (regval >> MAX6621_REG_TEMP_SHIFT) * 1000L;
-	/* crit   */ *val = regval * 1000L;
+The driver decodes the temperature through an s8 and its own comment in
+max6621_read() documents an 8-bit two's complement value, whose range is
+-128 to +127 degrees C. The current limits therefore reject the valid
+-128 degrees C and accept +128 degrees C, which does not fit the 8-bit
+range.
 
-Both attributes are writable and their write paths clamp to a negative
-minimum and encode negative values, so a value written as negative is read
-back as a large positive number. For example, writing a -10 degrees C
-offset stores max6621_temp_mc2reg(-10000) = (-10 << 6) = 0xfd80; the read
-then computes 0xfd80 >> 6 = 1014 -> 1014000 instead of -10000.
-
-Cast the register value to s16 before scaling so the read preserves the
-sign the write path encodes. The temperature input path already uses an s8
-intermediate and is left unchanged.
+Correct the limits to -128000 and 127000.
 
 Fixes: 92b64580f14b ("hwmon: (max6621) Add support for Maxim MAX6621 temperature sensor")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4
 Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://lore.kernel.org/r/ad0baddbd6163cf73545c8e9273258136718585c.1786334038.git.congnt264@gmail.com
+Link: https://lore.kernel.org/r/9d3a4f1895a47794bb359a2a32fb1ccd6a15812c.1786334038.git.congnt264@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -83,23 +79,16 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/hwmon/max6621.c
 +++ b/drivers/hwmon/max6621.c
-@@ -239,7 +239,7 @@ max6621_read(struct device *dev, enum hw
- 			if (ret)
- 				return ret;
+@@ -17,8 +17,8 @@
  
--			*val = (regval >> MAX6621_REG_TEMP_SHIFT) *
-+			*val = ((s16)regval >> MAX6621_REG_TEMP_SHIFT) *
- 			       1000L;
+ #define MAX6621_DRV_NAME		"max6621"
+ #define MAX6621_TEMP_INPUT_REG_NUM	9
+-#define MAX6621_TEMP_INPUT_MIN		-127000
+-#define MAX6621_TEMP_INPUT_MAX		128000
++#define MAX6621_TEMP_INPUT_MIN		-128000
++#define MAX6621_TEMP_INPUT_MAX		127000
+ #define MAX6621_TEMP_ALERT_CHAN_SHIFT	1
  
- 			break;
-@@ -254,7 +254,7 @@ max6621_read(struct device *dev, enum hw
- 			if (ret)
- 				return ret;
- 
--			*val = regval * 1000L;
-+			*val = (s16)regval * 1000L;
- 
- 			break;
- 		case hwmon_temp_crit_alarm:
+ #define MAX6621_TEMP_S0D0_REG		0x00
 
 
