@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C18335BBB;
-	Fri,  4 Sep 2026 05:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4978E335BBB;
+	Fri,  4 Sep 2026 05:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500746; cv=none; b=ql5j7hNUeprvheQEae3W6EcETFDyzYNG921dRdZ+ii0ffBjcegb6vvNCyPiPSBdTnmapnZYRs+wLCrLg2NEwNP2/HSaEDnl6KqEsxB6xPaZny4Xi0ebrx8hGHO1u4GBWcw72AD2khMxXWiFefgxJ4kQRafdR9x41ca21FIutlKs=
+	t=1788500749; cv=none; b=FCDOFpV/7uWolQ1OEHyS8hJYtL5sanNPnVtC67L1ZLqshMi/aPH/3/VjPhjVabOoPGpLIToCc2pcsxZy60SS9SiPYCiDNzwnL92NP7nx+3eJ6oJiYlt1mu0NIzbU6aGP6awRfjnlYAwSe8Pi2btP8am1WS+bHPtbNWK2Ipulg/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500746; c=relaxed/simple;
-	bh=qoDcXWmAYAkUP5elpOj3gsOw3DaMFWt+MLL+iC2B6gg=;
+	s=arc-20240116; t=1788500749; c=relaxed/simple;
+	bh=Bnh3cIhxg6/kfeqc1QO4whNaMcYjmDNFJX35SRMWX1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFoVUKbD9usjFRx30wnZKoBMB31x137BXGoyyxNVNTOktmnYq6eFFTWq5K3BTYSwYc1zv1z7sYZDNCkRoZgj0CCP/V6gdoCEtQjPrCO6SOJcex9MMW1F07Dmng8dOL2aALy3Rg5ty6tvAZnaCNTXVO5n1oUkHFFo4ynK/6y5nj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iv0/BM0z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n8Zvcxawz8lP9SHCrR9GzQAaIE7a/GOfDTPeuE8ncprCZUipfNYzyfKwattn0CrchH+P+s3V46k6GzXIBKp4e7s6RTUoFz9jAs8NikilWtioMiDUVC3ect2RwLpKS04ccjFk/4ldiaXxB2iYgLho9ubrMnmKt4XZxqHRbuqOMLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8wwkrZU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iv0/BM0z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85071F00A3D;
-	Fri,  4 Sep 2026 05:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8wwkrZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A186E1F00A3D;
+	Fri,  4 Sep 2026 05:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500745;
-	bh=gfuPmUVXTgINs7Y/+fZDJVdPvTetKcZ3SlfDHIFFTyk=;
+	s=korg; t=1788500748;
+	bh=948lranMauO1SMdN/noFnRHRQP2w9g4LXR6esMobrrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iv0/BM0z0AjokVVugjnUdgY7DjQwZLD+hNUDb7YcIJ38GGx2ceDS4ijGkiCf+3yVC
-	 cVFXAFXfzW8mxT+K75SU2YBdbbv83bLF1+ctI08oHYhcm9rCENR9XFOwcwweQtsW5y
-	 Isu22WFk6+hrd5O1pqZ439SU4NCHHUqX+iMHz6Kw=
+	b=E8wwkrZUjNFHuSmvt5QL7Vkj9og7XX52/++d1nfhid/CeO1vTjfSH+9XEaWOAdxw9
+	 6wfUU5TYUy0xxMoMdrki+4ff987uV3U3GZR2D9o3kYjJwlN9Tno7ZS/mkC7+eTStv0
+	 t1+AxLPF/V2fDQFsQh01pW4NoyZ5yjtQKNyihplE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 122/552] nfsd: clear CALLBACK_RUNNING on failed delegation recall queue
-Date: Fri,  4 Sep 2026 06:54:39 +0200
-Message-ID: <20260904045750.849947727@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 123/552] nfsd: clear opcnt on compound arg release to prevent OOB read
+Date: Fri,  4 Sep 2026 06:54:40 +0200
+Message-ID: <20260904045750.883533484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -52,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit b036727d334b1b7cd4c1f1fba3b59ba93a6bbe96 upstream.
+commit ae4c38555e81563b8dc5eae55ffd70f0ea97aa5a upstream.
 
-nfsd_break_one_deleg() sets NFSD4_CALLBACK_RUNNING via test_and_set_bit
-at entry to serialize recall work, then calls nfsd4_run_cb() to queue
-the recall.  When the queue attempt fails the refcount bump is undone,
-but the RUNNING bit is left set.  The only site that clears the bit is
-nfsd41_destroy_cb() (fs/nfsd/nfs4callback.c), which runs from the
-workqueue and is therefore unreachable when nothing was queued.
+nfsd4_release_compoundargs() resets args->ops to the inline iops[8]
+array when the dynamically-allocated ops buffer is freed, but leaves
+args->opcnt at its original value (which can be up to 200 for NFSv4.1+
+compounds).
 
-The bit becomes a permanent latch on dp->dl_recall.cb_flags: every
-subsequent break_lease() on the same delegation hits the early-return
-guard in nfsd_break_one_deleg() and silently skips the recall, so the
-delegation is never broken and the conflicting open or lock stalls.
+If rq_status_counter is stuck at an odd value (which can happen when
+nfsd_dispatch() hits an error path after setting it odd), the RPC
+status dumpit handler reads min(opcnt, 16) entries from args->ops[].
+Since iops only has 8 elements and is the last field in struct
+nfsd4_compoundargs, reading indices 8-15 accesses adjacent slab memory
+and leaks it to userspace via netlink.
 
-Fix by clearing NFSD4_CALLBACK_RUNNING on the !queued branch alongside
-the refcount_dec.
+Zero opcnt unconditionally in nfsd4_release_compoundargs() so stale
+compound metadata is never exposed through the status interface.
 
-Fixes: 1054e8ffc5c4 ("nfsd: prevent callback tasks running concurrently")
+Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-cb_recall_any_callback_running_stuck-v1-2-310011a028f3@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ cel: Remove the kvfree_rcu_mightsleep() sleep from the exposure window ]
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-1-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5516,8 +5516,10 @@ static void nfsd_break_one_deleg(struct
- 	refcount_inc(&dp->dl_stid.sc_count);
- 	queued = nfsd4_run_cb(&dp->dl_recall);
- 	WARN_ON_ONCE(!queued);
--	if (!queued)
-+	if (!queued) {
- 		refcount_dec(&dp->dl_stid.sc_count);
-+		clear_bit(NFSD4_CALLBACK_RUNNING, &dp->dl_recall.cb_flags);
-+	}
- }
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -6005,6 +6005,7 @@ void nfsd4_release_compoundargs(struct s
+ {
+ 	struct nfsd4_compoundargs *args = rqstp->rq_argp;
  
- /* Called from break_lease() with flc_lock held. */
++	args->opcnt = 0;
+ 	if (args->ops != args->iops) {
+ 		vfree(args->ops);
+ 		args->ops = args->iops;
 
 
