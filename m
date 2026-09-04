@@ -1,46 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7CF3DAAB7;
-	Fri,  4 Sep 2026 05:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4351415B85;
+	Fri,  4 Sep 2026 05:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498436; cv=none; b=RmEKe0A8J8s7iBo4QMwoCQU7DHi7Mj+CrxTZaFarAE0OWqN/kr1ijoxq2D2KEutMbau5M5WY1fwhSzIm93mV8m4Hi+InHPDHhqHR2KRd7bxzioztInZ7HMaKY80NapINBOApha3NfIDREFNR6m56nc4mBiOgetcxJf3/HgwFNoI=
+	t=1788498440; cv=none; b=Ox9664KQsHQ66wTBTPZZxDa3/K3iyO/3fHk+WuHtgCnEBKYTKqGeKmOGPZQJyCa+aOWTP3Vt/PD8ZJuUhotXbLwAPdh8UYCbrS2ZO1cLlU4kppBMsTnnooPlKw2LhGK8ZxOwunaMosFC7RpVs6NXj09OWUKZ5ExKy1Bxpp9rab0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498436; c=relaxed/simple;
-	bh=ruxHvggCYUzrOgNWhB1GV/iSbaHsCapVzCPWDWL7kkI=;
+	s=arc-20240116; t=1788498440; c=relaxed/simple;
+	bh=auh5VcJthaaAG1ohlXZ1YfBht89Q6VkXAYno8gbrsy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Shdsb8zC4RLLSOcN6y4cCIHiJPKEWRlkD3U4P4PrYGA4TN9RFVa/54D6E7TYfx5/OdDQpfdEb3tpTH6JPMZu5kVRr0JNSYdJdm9telfcwVzLPETLr2EiCRlI7xvqQS5qXhVrNL1i46jp+090fsaY+TOEZbQzPLFA4CL5M/PM3R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dK6aJQ3T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jqUOIyK2YiU2tRmoJU49y+4RD0ZkOznRztg7bBl74eQTtERJTeovfFM3EQKOyrlSSNBGjA94wyZrMeVlY5XgN87wLvk5Hgr8ODZYXWSFJu3VDLxm60xiBnyF2wPJ+K82uwijaoW7ijcV0tlvTViwSr2lh+jQ31ZTLpAth2JnNGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ScVuyr6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dK6aJQ3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1441F00A3D;
-	Fri,  4 Sep 2026 05:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ScVuyr6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E10F1F00A3E;
+	Fri,  4 Sep 2026 05:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498433;
-	bh=UwhV80x/vJwhO++AVyLRP0PCw54N0UUyfePTQWE1NLk=;
+	s=korg; t=1788498436;
+	bh=fi0HQ7ErhX1IPa9W1Gj1AYMZpdbt8wX2S4MHcSSZdy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dK6aJQ3TbH14SnNMgA2SWAIUJ1rxYBIXbsikKIS0ufxUs27WjrTvVGo4nLVwMjC0U
-	 PKJ3beTmMgEy6jeRrVxdjhTTgoOIwaf++1p/4nZ0AgBPK8JLSWguVw1/moJk4uEyL+
-	 OlBAOkcy5DXtVyue7fJj6zKJPOFINRawjknkWkPw=
+	b=1ScVuyr6fpwb0PrEP6ShXmjRqqvvU5DmptQmi+jbmZhaYwpDVQxNAmZJVhuVq754e
+	 DOxy6gc+Hd8tKQd7IdNmbGxIJreA6TzUbjLhEjmLk0Rdm7GjUPB+gk+3mfwyGb+eZX
+	 SCogMewVZNL6/94JRBmUuZJxuFSdtcbU5R3fHxhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Liu <ye.liu@linux.dev>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Dev Jain <dev.jain@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Gregory Price <gourry@gourry.net>,
+	Harry Yoo <harry@kernel.org>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Jann Horn <jannh@google.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Mel Gorman <mel@csn.ul.ie>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 061/713] mm/page_owner: use memcg_data snapshot to avoid TOCTOU in print_page_owner_memcg()
-Date: Fri,  4 Sep 2026 06:50:29 +0200
-Message-ID: <20260904045805.204324545@linuxfoundation.org>
+Subject: [PATCH 7.2 062/713] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
+Date: Fri,  4 Sep 2026 06:50:30 +0200
+Message-ID: <20260904045805.226681332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -59,79 +81,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Liu <ye.liu@linux.dev>
+From: Dev Jain <dev.jain@arm.com>
 
-commit 90f095b816e25c6a9e4446d299bac5007fdcb3df upstream.
+commit e87df0d5d6962bde50f55f6d02b779daa394f894 upstream.
 
-print_page_owner_memcg() reads page->memcg_data via READ_ONCE() at the
-start to guard against tail pages and NULL data.  However, it later
-re-reads page->memcg_data locklessly in two places:
+check_pte() is the final validation step in page_vma_mapped_walk().  It
+reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
+range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
+entry.
 
-1: page_memcg_check(page)
+On arches which provide their own huge_ptep_get() to dereference a huge
+pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
+etc to misbehave.
 
-2: PageMemcgKmem(page) (via folio_memcg_kmem(), which includes
-   VM_BUG_ON assertions for tail pages and MEMCG_DATA_OBJEXTS)
+It is not clear whether this has a trivially visible effect to userspace.
 
-If the page is concurrently freed and reallocated as a THP tail page or
-slab page between these calls, the VM_BUG_ON assertions can trigger on
-CONFIG_DEBUG_VM=y builds, crashing the kernel.
+Use huge_ptep_get() to dereference a huge pte pointer.
 
-Fix both TOCTOU issues by using the memcg_data snapshot throughout.
-
-Link: https://lore.kernel.org/20260714015117.78351-10-ye.liu@linux.dev
-Fixes: fcf8935832b8 ("mm/page_owner: print memcg information")
-Signed-off-by: Ye Liu <ye.liu@linux.dev>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
+Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
+Signed-off-by: Dev Jain <dev.jain@arm.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@intel.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Mel Gorman <mel@csn.ul.ie>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_owner.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ mm/page_vma_mapped.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/mm/page_owner.c
-+++ b/mm/page_owner.c
-@@ -513,6 +513,7 @@ static inline int print_page_owner_memcg
+--- a/mm/page_vma_mapped.c
++++ b/mm/page_vma_mapped.c
+@@ -107,7 +107,13 @@ again:
+ static bool check_pte(struct page_vma_mapped_walk *pvmw, unsigned long pte_nr)
  {
- #ifdef CONFIG_MEMCG
- 	unsigned long memcg_data;
-+	struct obj_cgroup *objcg;
- 	struct mem_cgroup *memcg;
- 	bool online;
- 	char name[80];
-@@ -522,11 +523,14 @@ static inline int print_page_owner_memcg
- 	if (!memcg_data || PageTail(page))
- 		goto out_unlock;
+ 	unsigned long pfn;
+-	pte_t ptent = ptep_get(pvmw->pte);
++	pte_t ptent;
++
++	if (is_vm_hugetlb_page(pvmw->vma))
++		ptent = huge_ptep_get(pvmw->vma->vm_mm, pvmw->address,
++				      pvmw->pte);
++	else
++		ptent = ptep_get(pvmw->pte);
  
--	if (memcg_data & MEMCG_DATA_OBJEXTS)
-+	if (memcg_data & MEMCG_DATA_OBJEXTS) {
- 		ret += scnprintf(kbuf + ret, count - ret,
- 				"Slab cache page\n");
-+		goto out_unlock;
-+	}
- 
--	memcg = page_memcg_check(page);
-+	objcg = (void *)(memcg_data & ~OBJEXTS_FLAGS_MASK);
-+	memcg = objcg ? obj_cgroup_memcg(objcg) : NULL;
- 	if (!memcg)
- 		goto out_unlock;
- 
-@@ -534,7 +538,7 @@ static inline int print_page_owner_memcg
- 	cgroup_name(memcg->css.cgroup, name, sizeof(name));
- 	ret += scnprintf(kbuf + ret, count - ret,
- 			"Charged %sto %smemcg %s\n",
--			PageMemcgKmem(page) ? "(via objcg) " : "",
-+			(memcg_data & MEMCG_DATA_KMEM) ? "(via objcg) " : "",
- 			online ? "" : "offline ",
- 			name);
- out_unlock:
+ 	if (pvmw->flags & PVMW_MIGRATION) {
+ 		const softleaf_t entry = softleaf_from_pte(ptent);
 
 
