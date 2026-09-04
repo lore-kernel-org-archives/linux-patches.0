@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365B641D11C;
-	Fri,  4 Sep 2026 06:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2586D415B8F;
+	Fri,  4 Sep 2026 06:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502075; cv=none; b=CZnGIbDnBu6h0NFT+OERw/SkmOpxycWP+dRps7CHm82YhPtd8O7H5wcBH23rBN3MwfDDneZEEWxmMwjZ2RJu3zGFkO3rdykXkFpO8bMoBe85fSGKzsDSV937QgIH1255yb5C1SW9fAQcLiz4gjl04JPjuY1gx0vL4rxUIm9HbFA=
+	t=1788502078; cv=none; b=UFDiq/AimK0XTR+vjAP44O1aye42wN0IaQjMcWmzrIsZ6CKI4NLoQygQ9tRCeE0BKgSQR7uuQfyJ2v5J+UUtZFyOI26357fGchWMrQKbsO4M1xIVtuEnUf1zVE3RhMIhFuRJgjiY/yF/ZQ27e8U0WMjdfx/28FP0trk5UglncGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502075; c=relaxed/simple;
-	bh=rxaUHLGU9k6tPzoj4hOXz72TDIsa3Zb4x9vgr5/hMYw=;
+	s=arc-20240116; t=1788502078; c=relaxed/simple;
+	bh=k+nLS7HLIqiJU1DGzfD9O+lKfZNbg8UNCxroMReHikI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzmFRfqQHYIHrRR5elMgk7HRUyYXtUorRYdQ5uAq/aXWgRVP8CY0QSbEli/lf8qvCjXzos8Z6lFNRAEgK2JeGIs68kt4XuTvfbDQEqlFGb25jqwa4udQ618YJbLZPYoH8Yva7EMzw/8L26Z8jkow9W0FuOFdSxQ3EW4w0hN2kAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjXn5ApS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B9cygXwlMvGqMnuYo5D7ZU/N0MFQp+g8Zx2KTTnwtHnjeMBzz3VBVBr0e9GeeHfD0mkwWJQSGcnFCrYNj9NNzmInpFaFeUveEe6+KDEJcIfpqGfiqWR6nVfpDukNJT4+FEuI7zLQo6uMfzgVLGdwNV485NxCGsatFGntGrV8MmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkpf6Fuw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjXn5ApS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852351F00A3E;
-	Fri,  4 Sep 2026 06:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkpf6Fuw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3892D1F00A3D;
+	Fri,  4 Sep 2026 06:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502073;
-	bh=MgTnFyfhwjLTAvVYlsXi38gxSyU5qNipRCwfimNyOa8=;
+	s=korg; t=1788502076;
+	bh=kdZypQLjtz6aj+YCuL9CknGoUTNrWGu1uaQkRxw4Uus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XjXn5ApS3VQn/NPK47A8eHPAB78mB8wZA6+sONgWLTHN1wbmNSvqWQJXkpkGvVsZN
-	 L6Rw/Qn3rc2hnkrZQyq8sUus4Js657vgkZofv+5CHNFmT8mXgdZXn9kLTpF3ISnCPk
-	 +o70HZMVn69g70NS52PxXcJhNW0g8gd54b0jeMBY=
+	b=gkpf6Fuwf0j7YFT0WIm5GOt1P4HKOABLOVtTrbZS/2sjipGIWOuBntWIOnwQCi8vm
+	 cfLecoIbXyF2YLb+ytPG9cEAm/0fP9UMRNG0Of4R+t+ttYcNuRqVo+CGbeX0rYPB30
+	 Y3YlnbFdanCxllSk9V+FZu4/EfRfiZUog1bW5kSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 043/403] rapidio: mport_cdev: fix use-after-free in dma_req_free()
-Date: Fri,  4 Sep 2026 06:57:26 +0200
-Message-ID: <20260904045735.794636555@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 079/403] nfsd: sample writeback error cursor before async COPY loop
+Date: Fri,  4 Sep 2026 06:58:02 +0200
+Message-ID: <20260904045736.627650740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,56 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 5cbef379a94b161726c5f504598bf4791d45cedc upstream.
+commit 20a67a7d18221af736f124770c2c5e859b479046 upstream.
 
-dma_req_free() acquires buf_mutex through req->map, drops the mapping
-reference with kref_put(), and then dereferences req->map again to unlock
-the mutex.
+_nfsd_copy_file_range() samples dst->f_wb_err into "since"
+after the copy loop, then uses it to detect writeback errors
+via filemap_check_wb_err() once vfs_fsync_range() returns.
+Because the nfsd_file cache reuses a single struct file
+across requests targeting the same inode, a concurrent
+COMMIT or stable WRITE on dst advances dst->f_wb_err to the
+current mapping->wb_err via file_check_and_advance_wb_err()
+during its own vfs_fsync_range(). If that advancement lands
+between the writeback error appearing in mapping->wb_err
+and the COPY worker sampling "since", the worker captures
+the already-advanced cursor, errseq_check() sees cur ==
+since and returns zero, and NFSD4_COPY_F_COMMITTED is set
+even though writeback failed. CB_OFFLOAD then encodes
+wr_stable_how = FILE_SYNC4, the client treats the copied
+data as durable, and the failure becomes silent data loss.
 
-If kref_put() drops the last reference, mport_release_mapping() frees the
-mapping, and the subsequent mutex_unlock() dereferences a freed object.
-This is a use-after-free.
+Sample since once at the start of the function. The cursor
+then reflects state in effect before this COPY issues any
+writes, and filemap_check_wb_err() detects any error that
+occurs during the copy regardless of which thread first
+observes it. This matches the pattern used by
+nfsd_vfs_write() and nfsd4_clone_file_range().
 
-Fix this by caching map and md before kref_put(), clearing req->map while
-holding buf_mutex, and using the cached md for mutex unlocking.
-
-The bug is reachable from userspace via the RapidIO mport character device
-interface.
-
-Link: https://lore.kernel.org/20260723235220.588424-1-james010kim@gmail.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://sashiko.dev/#/patchset/20260522194441.436065-1-cel@kernel.org?part=1
+Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260522214558.460859-1-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -584,9 +584,13 @@ static void dma_req_free(struct kref *re
- 	}
- 
- 	if (req->map) {
--		mutex_lock(&req->map->md->buf_mutex);
--		kref_put(&req->map->ref, mport_release_mapping);
--		mutex_unlock(&req->map->md->buf_mutex);
-+		struct rio_mport_mapping *map = req->map;
-+		struct mport_dev *md = map->md;
-+
-+		mutex_lock(&md->buf_mutex);
-+		req->map = NULL;
-+		kref_put(&map->ref, mport_release_mapping);
-+		mutex_unlock(&md->buf_mutex);
- 	}
- 
- 	kref_put(&priv->dma_ref, mport_release_dma);
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1645,6 +1645,7 @@ static ssize_t _nfsd_copy_file_range(str
+ 	/* See RFC 7862 p.67: */
+ 	if (bytes_total == 0)
+ 		bytes_total = ULLONG_MAX;
++	since = READ_ONCE(dst->f_wb_err);
+ 	do {
+ 		/* Only async copies can be stopped here */
+ 		if (kthread_should_stop())
+@@ -1660,7 +1661,6 @@ static ssize_t _nfsd_copy_file_range(str
+ 	} while (bytes_total > 0 && nfsd4_copy_is_async(copy));
+ 	/* for a non-zero asynchronous copy do a commit of data */
+ 	if (nfsd4_copy_is_async(copy) && copy->cp_res.wr_bytes_written > 0) {
+-		since = READ_ONCE(dst->f_wb_err);
+ 		end = copy->cp_dst_pos + copy->cp_res.wr_bytes_written - 1;
+ 		status = vfs_fsync_range(dst, copy->cp_dst_pos, end, 0);
+ 		if (!status)
 
 
