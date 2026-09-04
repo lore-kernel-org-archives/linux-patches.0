@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857AA3BED30;
-	Fri,  4 Sep 2026 05:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690D330C366;
+	Fri,  4 Sep 2026 05:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501060; cv=none; b=s1LfbgMFJkBw/xElLNCYSCAWde4lfMcBzyE+ujdf/Bvhn2vkAWCp1XObDUgOLRHlQfkFJkYVKNDQ4Q1UgY6rdmWQZS8bL1PmTHozLH69yfR15hvRecRLkj4/RdhnZdHTm9yKoG+IKKU7rGeJGrtQO2hI5Pa/F3JAtSdoGM/k6fM=
+	t=1788501063; cv=none; b=p4DuAGsr5fOQypcukQC7G0o6cyGfREFGoYNbFCXPrP+jRaOS+tM+fWRWL7Zx/Lf46L011O0N4Ttzd/+K4tdFc0vZpsdjlK01B2mq5PNOp45sdt4CTAI60N6oOCP0sFbAN2RnNqM4sQn39SL/McCQyVQoZ/dHQmskIZ2AsVXhoJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501060; c=relaxed/simple;
-	bh=YQMkgaE1/aTB2uxsLO3lRviKg8aKn5rHPPvzO1Jhigc=;
+	s=arc-20240116; t=1788501063; c=relaxed/simple;
+	bh=M4AX+/TKWMDdmAXwxaqx+ftwoJfKz840MQDER5RloH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTwq8yg3XZHyXNV/Vj1HwSIxyJ3yG8P/NZ+rocccUuWh9MX7HAN898Wh4RfLdW/yeDVQq4jAu+phQ4cQljA4kcvT/GdVvTjmu14fE/yzlx+fYktY0DtMYDPsnbQxpOSI33cStbAIjTer4iVupujKmjO/87MW8BwkxwMaUkcfxSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dImn7H3M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BbiLI6MEwwV24ezxhsF8/+ubljx484rdhcmVUTaU3/sT0lr+cgR2pvZfCZtya6+xf778naGf7ml0t9rMzDKQgC6RyI2+hp9RYcJ2kihtHUBWz3pQKzQq2Wxmp9ajKPPOoIjo1Y42kjBgtyOYugV+29bZ8wouRSRT5lT9duNiLAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXtK1+jP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dImn7H3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E311F00A3F;
-	Fri,  4 Sep 2026 05:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXtK1+jP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9851F00A3D;
+	Fri,  4 Sep 2026 05:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501059;
-	bh=5T5KIPc8Pyd36lBMsQLP4UK6j1o0n5sdpFzTKPelpjY=;
+	s=korg; t=1788501062;
+	bh=1rp5l7h8fmtciQrti48O1C3oO7Tl+MYc15ze4N21TIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dImn7H3MoO42JzgFKpuHsyslV9zHVXz8xhDPRyysIRNi2R7wV5EwKoTLDrF/xG/YN
-	 2CXRA8u+tXcUd9iy/7rakQyd2WFDmDYqcx3lSfnRzrrg4WB9ruLIpMGTNYfcm/nwSN
-	 geNwDLUNEm848e6qL1PDo5/6X/+WNxQxTwHA9xYU=
+	b=zXtK1+jPXxj35OlYSaPcZaF/fUcTjY+MDncdIjAziagqRn1hdIE6sV0l0XecymdRq
+	 zJlrQZ8KmOkgokyYpaJiIHjB3oUtqbdHLelrPQRKBuY3W+0MM3W6VMhLLvrRUkTc4P
+	 1VpM7Mdv2ScnAXUoo8f9lPdByrFJL/zasXB/pkpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 276/552] SUNRPC: xdr_buf_trim: clamp buf->len to avoid underflow
-Date: Fri,  4 Sep 2026 06:57:13 +0200
-Message-ID: <20260904045756.228293907@linuxfoundation.org>
+Subject: [PATCH 6.18 277/552] SUNRPC: Zero rpc_gss_wire_cred at svcauth_gss_decode_credbody() entry
+Date: Fri,  4 Sep 2026 06:57:14 +0200
+Message-ID: <20260904045756.250075591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -53,62 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <clm@meta.com>
 
-commit 3f491306dcb673ff5e78e1044ba450c58978774e upstream.
+commit 11539e8fcce0b0af062ae5fecf7b3676c2f7aeed upstream.
 
-xdr_buf_trim() trims `len` bytes from the tail of an xdr_buf by
-walking the tail, pages, and head iovecs.  Each per-section step
-uses min_t() so it never removes more bytes than that section
-holds, but the final accounting at the fix_len label subtracts the
-total bytes actually consumed from buf->len without any clamp:
+svcauth_gss_decode_credbody() writes the caller's
+rpc_gss_wire_cred field by field and assigns gc_ctx.len only on
+the success tail.  The caller storage is svcdata->clcred, which
+lives in the per-svc_rqst gss_svc_data and is reused across
+requests.  Early decode failures leave partially decoded state
+mixed with residue from the prior request.
 
-    fix_len:
-            buf->len -= (len - trim);
+The trailing body_len tightness check is the sharpest case:
+xdr_stream_decode_opaque_inline() has already written gc_ctx.data
+with a borrowed inline pointer into the current request's XDR
+pages, but gc_ctx.len retains its prior value.  Once the request
+pages are released the pooled clcred carries a dangling pointer
+paired with a stale length.
 
-When the caller has set buf->len to a value smaller than the sum
-of the iov_lens, (len - trim) can exceed buf->len and the unsigned
-subtraction wraps to near UINT_MAX.  gss_krb5_unwrap_v2() reaches
-xdr_buf_trim() in exactly that state:
+Zero the caller's rpc_gss_wire_cred at function entry so that
+every early-return path leaves a deterministic all-zero cred.
+On the trailing tightness-check path, gc_ctx.len is now zero
+instead of stale, which neuters length-driven consumers such as
+gss_svc_searchbyctx() that would otherwise walk the dangling
+data pointer.
 
-    buf->head[0].iov_len -= GSS_KRB5_TOK_HDR_LEN + headskip;
-    buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
-    xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
-
-buf->len is a small wire-derived value while the iov_lens are at
-page scale, so the per-section loops legitimately consume far more
-bytes than buf->len records.  The wrapped buf->len then propagates
-as the authoritative stream bound into every downstream XDR
-decoder.
-
-Fix by clamping the decrement so buf->len bottoms out at zero:
-
-    buf->len -= min_t(unsigned int, buf->len, len - trim);
-
-On the normal path where the iov_lens sum to buf->len, (len - trim)
-is always <= buf->len and the result is identical to before.  No
-callers change behavior outside the underflow case.
-
-Fixes: 4c190e2f913f ("sunrpc: trim off trailing checksum before returning decrypted or integrity authenticated buffer")
+Fixes: b0bc53470d1a ("SUNRPC: Convert the svcauth_gss_accept() pre-amble to use xdr_stream")
 Cc: stable@vger.kernel.org
-Assisted-by: kres (claude-opus-4-7)
 Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260524010213.557424-4-cel@kernel.org
+Link: https://patch.msgid.link/20260528-tier2-v1-5-d026a1415e0b@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xdr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sunrpc/xdr.c
-+++ b/net/sunrpc/xdr.c
-@@ -2049,7 +2049,7 @@ void xdr_buf_trim(struct xdr_buf *buf, u
- 		trim -= cur;
- 	}
- fix_len:
--	buf->len -= (len - trim);
-+	buf->len -= min_t(unsigned int, buf->len, len - trim);
- }
- EXPORT_SYMBOL_GPL(xdr_buf_trim);
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1573,6 +1573,9 @@ svcauth_gss_decode_credbody(struct xdr_s
+ 	u32 body_len;
+ 	__be32 *p;
  
++	/* Early-return paths leave deterministic state, not stale residue. */
++	memset(gc, 0, sizeof(*gc));
++
+ 	p = xdr_inline_decode(xdr, XDR_UNIT);
+ 	if (!p)
+ 		return false;
 
 
