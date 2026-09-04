@@ -1,60 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3474C30C160;
-	Fri,  4 Sep 2026 05:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E3730C160;
+	Fri,  4 Sep 2026 05:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498418; cv=none; b=TiAO9a6bv8r5j3oVAC0WY3/U3JeIO1sduTyM9hxssGgUhQJCkG+6RJB+Urf1GR8XqZWK9Wl/4gyZQ8rkGViaD4TAmZcCh3CtNScv6b3xGOpnZaGXlYTlX5QV0MFmYMeq6Z99gPjztGlAx4JpdHrbob45CBAzxZlHRF+3LwYwi3E=
+	t=1788498421; cv=none; b=h2vP1sAytMQ06iZWIBrnjRXVnY/eUVNUTY0ChnltY++qV4RFyFeoadc5f8o2wSxcORhJDcR+WvMH+kAQ9LmKxG+GR8Ry45VWbsfFX1vhDQH3b+Czi3z6xa/YdpEUsBYPqIwDtbprpPzlXd8c2bAWAElIayLAYaGE81/blR4CfZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498418; c=relaxed/simple;
-	bh=H/pJzNh20eU50MppEHtwHfiqApArqs4MfvxT0LJ/Y7M=;
+	s=arc-20240116; t=1788498421; c=relaxed/simple;
+	bh=UUp5OHPxca/aVc0atb3Rim7KUZ5tomD+43J0KWk4D8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJLG5eDVv81/nGGJBqJQP4R0uFxjZ+snKX75nadu8DpH5unANUe15rHwjXB1ztwtOoPqUaoZbO4WoH9X8ikYoAC+f47zKh1hC9s7gsa3zFiOI80bIixxUa6rHVeKzsrB+TBVbGiS7NovLZOLk6HXYEuzjnq7Y8KpPC/MbGzAVNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdweMh18; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E+FbH+FFmWivZhBMVC32SfnUICm0JTdXjAmNhqSFXU5HUBJzwaTjsVmeF9IYHAsEdx8cswz5+zdlNdMFBxASm2Ao5VKvFSv2gfqATUA+Cla7qanJukgyCotwUsW21MSSk25SJonz0PaCbM3i3dQM6+WgIJdk0uYhRUrCMCKeeLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qH/itAjH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdweMh18"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C031F00A3E;
-	Fri,  4 Sep 2026 05:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qH/itAjH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B871F00A3D;
+	Fri,  4 Sep 2026 05:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498417;
-	bh=O06gei7IOLMjB/OKAA16k0u/CJNoLC25r+wPlGQkAVM=;
+	s=korg; t=1788498419;
+	bh=ucnmwLo8E7QEflU3TphBTEhr2Cokb98u/BAeae61oDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wdweMh187suW8ydbrofXmsETRmxMXCHmoRBlPl9jsyyAqkKsdxXfY66SU0Ws7dF7z
-	 3259MFlRAiRv7A2NSC9VUDyr86ftR+9Dhu5IwyUB6I3f0iU1ThrK71+tWumLWn8JbM
-	 K2h+dMcuNd3e7howIkhjPKoMj7f2GKpTM1OfDVG0=
+	b=qH/itAjHBH/+mPbI5IBxpo63bz1vzsz+OWzjkO7Ej/A4tgCqHzTcGYsfof71f30Uh
+	 QGklFOtts5EVwdprmtF4ISI3sml1zKukMSnsE0QHzSE8gN8DrvMsIzf1/vEDpIpcaG
+	 phG2vFIzaJn4Xr4v+HuZ3QFlww5jJ6GrdqOjyz1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Gregory Price <gourry@gourry.net>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kairui Song <kasong@tencent.com>,
 	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Dev Jain <dev.jain@arm.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>,
 	Johannes Weiner <hannes@cmpxchg.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
 	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Nico Pache <npache@redhat.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Steven Barrett <steven@liquorix.net>,
+	Suleiman Souhlal <suleiman@google.com>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 055/713] mm/mempolicy: skip non-present PMDs when queueing folios
-Date: Fri,  4 Sep 2026 06:50:23 +0200
-Message-ID: <20260904045805.068965292@linuxfoundation.org>
+Subject: [PATCH 7.2 056/713] mm/mglru: fix and remove redundant unevictable folio handling
+Date: Fri,  4 Sep 2026 06:50:24 +0200
+Message-ID: <20260904045805.093538926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -73,95 +66,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Kairui Song <kasong@tencent.com>
 
-commit 2858b4027f491e6fdb8ee2d8923798b619bf2791 upstream.
+commit f7e698e326b239a91ea15844817551921209e826 upstream.
 
-Patch series "mm: handle device-private PMDs in walk callbacks", v3.
+sort_folio() has a shortcut for moving folios that are no longer evictable
+but are still sitting on a generation list.  However, this shortcut is
+buggy.  It does not follow the PG_lru usage convention, and it has a more
+serious issue.
 
-Since commit 368076f52ebe ("mm/huge_memory: add device-private THP support
-to PMD operations") a PMD may hold a device-private swap entry whenever an
-HMM-based GPU driver migrates an anonymous THP folio to device memory via
-migrate_vma_pages().
+Unevictable folios are not threaded on lists[LRU_UNEVICTABLE], so that
+folio->lru can be reused to hold folio->mlock_count (see the comment in
+lruvec_init()).  Hence lruvec_add_folio() skips the list_add() for them,
+and every other place that turns a folio unevictable initialises
+mlock_count explicitly: lru_add() sets it to 0, __mlock_folio() and
+__mlock_new_folio() set it to !!folio_test_mlocked(folio).  sort_folio()
+sets nothing, and the lru_gen_del_folio() right above it may have already
+poisoned folio->lru via list_del(), so mlock_count ends up aliasing
+LIST_POISON2, which reads as 0x122, i.e.  290.  The result is user
+visible.  On munlock, __munlock_folio() decrements that bogus count, finds
+it still non-zero and bails out before clearing PG_mlocked, so the folio
+remains unevictable and the Mlocked accounting stays inflated until the
+folio is freed.
 
-pmd_trans_huge_lock() succeeds for such PMDs (pmd_is_huge() returns true
-for any non-present, non-none huge PMD), so several MM walk callbacks that
-used to assume present THP or migration entry are now reachable with a
-device-private PMD.  The results range from a VM_BUG_ON() firing on debug
-kernels, to an oops on a bogus vmemmap dereference, to silently isolating
-an unrelated live folio from LRU in the aliasing case.
+The shortcut also touches the LRU flags in the wrong order.  It calls
+lru_gen_del_folio() while PG_lru is still set, so a concurrent
+folio_test_clear_lru() (e.g.  compaction, folio_isolate_lru()) can succeed
+on a folio that has already been taken off the generation list, which may
+lead to unexpected behavior.
 
+So fix it by isolating them as common folios and letting the generic
+shrink path cull them.  This matches the classical LRU behavior, and there
+should be no visible effect on the generic eviction or isolation behavior.
 
-This patch (of 3):
+There is no performance concern either, such a folio goes through this
+once, and then it is off the generation lists for good.
 
-queue_folios_pmd() is called under pmd_trans_huge_lock(), whose
-pmd_is_huge() check returns true for any non-present, non-none PMD
-softleaf.  Passing such a PMD to pmd_folio() treats the softleaf encoding
-as a hardware PFN and can return a bogus folio pointer.
-
-Mirror queue_folios_pte_range(): handle non-present entries before looking
-up a folio.  Keep migration entries counted as failures, but skip other
-non-present PMDs such as device-private entries.
-
-Potential trigger: an HMM-based GPU driver migrates an anonymous THP folio
-to device memory via migrate_vma_pages(), leaving a device-private PMD.
-Userspace then calls mbind(), migrate_pages() or set_mempolicy_home_node()
-on that range.
-
-Link: https://lore.kernel.org/20260710105557.1987433-1-usama.arif@linux.dev
-Link: https://lore.kernel.org/20260710105557.1987433-2-usama.arif@linux.dev
-Fixes: 368076f52ebe ("mm/huge_memory: add device-private THP support to PMD operations")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260703173903.3789516-1-usama.arif%40linux.dev?part=6
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/20260812-mglru-mlock-fix-v2-1-a3fec5853c08@tencent.com
+Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
 Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Steven Barrett <steven@liquorix.net>
+Cc: Suleiman Souhlal <suleiman@google.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ mm/vmscan.c |   19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -653,12 +653,14 @@ static void queue_folios_pmd(pmd_t *pmd,
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4573,7 +4573,6 @@ void lru_gen_reparent_memcg(struct mem_c
+ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_control *sc,
+ 		       int tier_idx)
  {
- 	struct folio *folio;
- 	struct queue_pages *qp = walk->private;
-+	pmd_t pmdval = pmdp_get(pmd);
+-	bool success;
+ 	int gen = folio_lru_gen(folio);
+ 	int type = folio_is_file_lru(folio);
+ 	int zone = folio_zonenum(folio);
+@@ -4585,15 +4584,9 @@ static bool sort_folio(struct lruvec *lr
  
--	if (unlikely(pmd_is_migration_entry(*pmd))) {
--		qp->nr_failed++;
-+	if (unlikely(!pmd_present(pmdval))) {
-+		if (pmd_is_migration_entry(pmdval))
-+			qp->nr_failed++;
- 		return;
- 	}
--	folio = pmd_folio(*pmd);
-+	folio = pmd_folio(pmdval);
- 	if (is_huge_zero_folio(folio)) {
- 		walk->action = ACTION_CONTINUE;
- 		return;
+ 	VM_WARN_ON_ONCE_FOLIO(gen >= MAX_NR_GENS, folio);
+ 
+-	/* unevictable */
+-	if (!folio_evictable(folio)) {
+-		success = lru_gen_del_folio(lruvec, folio, true);
+-		VM_WARN_ON_ONCE_FOLIO(!success, folio);
+-		folio_set_unevictable(folio);
+-		lruvec_add_folio(lruvec, folio);
+-		__count_vm_events(UNEVICTABLE_PGCULLED, delta);
+-		return true;
+-	}
++	/* unevictable: let it through and the generic path will cull it */
++	if (!folio_evictable(folio))
++		return false;
+ 
+ 	/* promoted */
+ 	if (gen != lru_gen_from_seq(lrugen->min_seq[type])) {
+@@ -4843,11 +4836,9 @@ retry:
+ 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
+ 		DEFINE_MIN_SEQ(lruvec);
+ 
+-		if (!folio_evictable(folio)) {
+-			list_del(&folio->lru);
+-			folio_putback_lru(folio);
++		/* move_folios_to_lru() culls unevictable folios via folio_putback_lru() */
++		if (!folio_evictable(folio))
+ 			continue;
+-		}
+ 
+ 		/* retry folios that may have missed folio_rotate_reclaimable() */
+ 		if (!skip_retry && !folio_test_active(folio) && !folio_mapped(folio) &&
 
 
