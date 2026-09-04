@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30CC410D36;
-	Fri,  4 Sep 2026 05:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875724156F0;
+	Fri,  4 Sep 2026 05:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499421; cv=none; b=k40PI0lHy3mwQo7sMJkhdsrR7Ce39NtpJC7ERRkKDjRPhg+HPNBAM+yUJibcJZb4TS/mpXgW8S0OtngdjerLB6COHDPCXS21sX3tVD5cz9U/Pp/PBIwdGos3mMndVUp2Uox9lTsZVdfkQcXSFdmsLzyVAYA7lDbV4N9OCT05yqo=
+	t=1788499424; cv=none; b=WiNT3pW22bZ96esxA5yQnmH6vbG5ubmzh6p72MrnYpQPPJNpibf157IiD+dWIRlBrFvnTlp6MWvGkBWFVbS5dhFn1vpfx/CSG0TDC0NoZR6Lf1UMvsZ4DgP2B0ky1a+5t0ECJljYXq2gL6HulPOov2hyas06XOjHYd1v3JylGk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499421; c=relaxed/simple;
-	bh=PfgZogafNm7GtgbrNnnctAHMcdY//IWKk1N8kCnlscU=;
+	s=arc-20240116; t=1788499424; c=relaxed/simple;
+	bh=OJ/Gt3qIXVMLNvN4OMeH37lYCyq4QQRTXLpEn+1hZjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhAyHbeM631TN9ko4WXC//vjsFWyrsfdH/EeOa+vnJwkGcQ9kPJUreajllEkW79egkdnAFDFPmxq7aQSaHubpPv24kG8EaAT95DFFEkhEXygXq9jUUkuj5KiuNCmuONpAa5Is1DB9jJDHoTCp6RcfuZfSz41RfjA6hePkTj1NjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfTAdiJk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QTyvMlAiseKlYKzZ70gKcK012iZIpfWItSoU/zLSmG8nXscgXg7WkbWEuEwbxCdbaKIriFPmdVXbQNBPE2N84GsAxZCoAUD6X75kSMawigU8cNyVk7CIZFiefTv2VRQ17Sgr64zRZWgp7IfkzdhfBPivf5Mo5eEOeVKqfGyE+LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmxydCLE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfTAdiJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DB41F00A3D;
-	Fri,  4 Sep 2026 05:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmxydCLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4931F00A3D;
+	Fri,  4 Sep 2026 05:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499420;
-	bh=R24nBXu7aW+WlMkTuLkRw+otDSIj2sTeBcnPnBv2GMk=;
+	s=korg; t=1788499423;
+	bh=GW/kV2l10wRSgbmvqoILH9DHoDK0VMGee+iiiPEFKAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zfTAdiJkIwxMmWvMqHcXwWitJajjaoU0PtLD3O++eearUhoGkizc3mTODWViDVFQA
-	 ZQWgrwj8/5f7jXGc25jYq9zpxXRrfL9spVcwvMQb+JspI63pA/+Xdvq4OdsHWYY/gJ
-	 t0lUX6yhz754ay+i/xEZDKXmFfcVvgAqxAHubxEE=
+	b=zmxydCLEV6btaxhMt1sxaOIVaNBvvpvBeGVwOt3QkjGVZB61A0hGYbqluLUnkd26Y
+	 yojH1/Metpp80/3WzCvvBH9QmHbcLOVhG6AJ8pSJeLJJ0CWvAsUvp6zlXcS2dc3IQN
+	 0cr8ALORZ332VPO5ky8dNh2cFr7C1cyI1I7WShoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	fangqiurong <fangqiurong@kylinos.cn>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 412/713] sched_ext: Count rq lock releases in rq->scx.lock_drop_seq
-Date: Fri,  4 Sep 2026 06:56:20 +0200
-Message-ID: <20260904045813.062485869@linuxfoundation.org>
+Subject: [PATCH 7.2 413/713] sched_ext: Fix scx_bpf_dsq_move_to_local___v2 compat detection
+Date: Fri,  4 Sep 2026 06:56:21 +0200
+Message-ID: <20260904045813.087040514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -49,207 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: fangqiurong <fangqiurong@kylinos.cn>
 
-commit f2da9587118d5da41a3f81a59642d5bb4782ddcc upstream.
+commit 56bbc91219c0711f1580a8ba7cd60471b6e1684e upstream.
 
-Under core scheduling, pick_next_task() selects for all SMT siblings under
-one continuous hold of the shared core-wide rq lock, and sched_ext's
-dispatch can release that lock from inside the pick. In preparation for
-making the core-sched pick detect the releases and retry, add
-rq->scx.lock_drop_seq and bump it at every site that can release an rq lock
-while a dispatch may be in flight. The counter is only maintained while core
-scheduling is enabled. No functional changes.
+libbpf strips the last ___flavor suffix when resolving kfunc externs, so
+the bare ___v2 declaration resolves to scx_bpf_dsq_move_to_local, whose
+BTF proto lacks @enq_flags. The extern never matches, bpf_ksym_exists()
+returns false on every kernel that has the ___v2 kfunc, and the macro
+falls back to ___v1, silently dropping @enq_flags.
 
-Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
-Cc: stable@vger.kernel.org # v6.19+
+Add the trailing ___compat suffix used by the other versioned externs in
+this file (scx_bpf_dsq_insert___v2, scx_bpf_reenqueue_local___v2).
+
+Any caller passing non-zero @enq_flags through the compat macro silently
+loses them.
+
+Fixes: 860683763ebf ("sched_ext: Add enq_flags to scx_bpf_dsq_move_to_local()")
+Cc: stable@vger.kernel.org # v7.1+
+Assisted-by: Z.ai:glm-5.2
+Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |   38 ++++++++++++++++++++++++++++++++++++--
- kernel/sched/sched.h   |    3 +++
- 2 files changed, 39 insertions(+), 2 deletions(-)
+ tools/sched_ext/include/scx/compat.bpf.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -479,12 +479,27 @@ static bool rq_is_open(struct rq *rq, u6
+diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
+index bddbf83831cb..5767647f8c49 100644
+--- a/tools/sched_ext/include/scx/compat.bpf.h
++++ b/tools/sched_ext/include/scx/compat.bpf.h
+@@ -31,7 +31,7 @@ struct cgroup *scx_bpf_task_cgroup___new(struct task_struct *p) __ksym __weak;
+  *
+  * v7.1: scx_bpf_dsq_move_to_local___v2() to add @enq_flags.
   */
- DEFINE_PER_CPU(struct rq *, scx_locked_rq_state);
+-bool scx_bpf_dsq_move_to_local___v2(u64 dsq_id, u64 enq_flags) __ksym __weak;
++bool scx_bpf_dsq_move_to_local___v2___compat(u64 dsq_id, u64 enq_flags) __ksym __weak;
+ bool scx_bpf_dsq_move_to_local___v1(u64 dsq_id) __ksym __weak;
+ void scx_bpf_dsq_move_set_slice___new(struct bpf_iter_scx_dsq *it__iter, u64 slice) __ksym __weak;
+ void scx_bpf_dsq_move_set_vtime___new(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
+@@ -45,8 +45,8 @@ bool scx_bpf_dispatch_from_dsq___old(struct bpf_iter_scx_dsq *it__iter, struct t
+ bool scx_bpf_dispatch_vtime_from_dsq___old(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
  
-+/*
-+ * Under core scheduling, a pick that releases the rq lock invalidates the
-+ * core-wide selection it is part of. Count the releases so that the core-sched
-+ * pick can tell whether one happened across dispatch.
-+ */
-+static void scx_rq_lock_drop(struct rq *rq)
-+{
-+	lockdep_assert_rq_held(rq);
-+#ifdef CONFIG_SCHED_CORE
-+	if (sched_core_enabled(rq))
-+		rq->scx.lock_drop_seq++;
-+#endif
-+}
-+
- static void switch_rq_lock(struct rq *from, struct rq *to)
- {
- 	bool tracked = scx_locked_rq() == from;
- 
- 	if (tracked)
- 		update_locked_rq(NULL);
-+	scx_rq_lock_drop(from);
- 	raw_spin_rq_unlock(from);
- 	raw_spin_rq_lock(to);
- 	if (tracked)
-@@ -1133,6 +1148,7 @@ static void deferred_irq_workfn(struct i
- 
- 	raw_spin_rq_lock(rq);
- 	run_deferred(rq);
-+	scx_rq_lock_drop(rq);
- 	raw_spin_rq_unlock(rq);
- }
- 
-@@ -2430,12 +2446,14 @@ static bool consume_remote_task(struct r
- 				struct task_struct *p, u64 enq_flags,
- 				struct scx_dispatch_q *dsq, struct rq *src_rq)
- {
-+	scx_rq_lock_drop(this_rq);
- 	raw_spin_rq_unlock(this_rq);
- 
- 	if (unlink_dsq_and_lock_src_rq(p, dsq, src_rq)) {
- 		move_remote_task_to_local_dsq(p, enq_flags, src_rq, this_rq);
- 		return true;
- 	} else {
-+		scx_rq_lock_drop(src_rq);
- 		raw_spin_rq_unlock(src_rq);
- 		raw_spin_rq_lock(this_rq);
- 		return false;
-@@ -3172,6 +3190,7 @@ retry:
- 			continue;
- 		}
- 
-+		scx_rq_lock_drop(rq);
- 		raw_spin_rq_unlock_irq(rq);
- 		while (READ_ONCE(cpu_rq(cpu)->scx.kick_sync) == ksyncs[cpu]) {
- 			smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
-@@ -4350,8 +4369,10 @@ static void reenq_user(struct rq *rq, st
- 		task_rq = task_rq(p);
- 
- 		if (locked_rq != task_rq) {
--			if (locked_rq)
-+			if (locked_rq) {
-+				scx_rq_lock_drop(locked_rq);
- 				raw_spin_rq_unlock(locked_rq);
-+			}
- 			if (unlikely(!raw_spin_rq_trylock(task_rq))) {
- 				raw_spin_unlock(&dsq->lock);
- 				raw_spin_rq_lock(task_rq);
-@@ -4377,6 +4398,7 @@ static void reenq_user(struct rq *rq, st
- 		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
- 
- 		if (!(++nr_enqueued % SCX_TASK_ITER_BATCH)) {
-+			scx_rq_lock_drop(locked_rq);
- 			raw_spin_rq_unlock(locked_rq);
- 			locked_rq = NULL;
- 			cpu_relax();
-@@ -4389,8 +4411,10 @@ static void reenq_user(struct rq *rq, st
- 	raw_spin_unlock(&dsq->lock);
- 
- 	if (locked_rq != rq) {
--		if (locked_rq)
-+		if (locked_rq) {
-+			scx_rq_lock_drop(locked_rq);
- 			raw_spin_rq_unlock(locked_rq);
-+		}
- 		raw_spin_rq_lock(rq);
- 	}
- }
-@@ -5442,6 +5466,7 @@ resume:
- 		if (!(nr_balanced % SCX_BYPASS_LB_BATCH) && n) {
- 			list_move_tail(&cursor.node, &n->scx.dsq_list.node);
- 			raw_spin_unlock(&donor_dsq->lock);
-+			scx_rq_lock_drop(donor_rq);
- 			raw_spin_rq_unlock_irq(donor_rq);
- 			cpu_relax();
- 			raw_spin_rq_lock_irq(donor_rq);
-@@ -5452,6 +5477,7 @@ resume:
- 
- 	list_del_init(&cursor.node);
- 	raw_spin_unlock(&donor_dsq->lock);
-+	scx_rq_lock_drop(donor_rq);
- 	raw_spin_rq_unlock_irq(donor_rq);
- 
- 	return nr_balanced;
-@@ -5742,6 +5768,7 @@ static void scx_bypass(struct scx_sched
- 		 * sees scx_bypassing() before moving tasks to SCX.
- 		 */
- 		if (!scx_enabled()) {
-+			scx_rq_lock_drop(rq);
- 			raw_spin_rq_unlock(rq);
- 			continue;
- 		}
-@@ -5768,6 +5795,7 @@ static void scx_bypass(struct scx_sched
- 		if (cpu_online(cpu) || cpu == smp_processor_id())
- 			resched_curr(rq);
- 
-+		scx_rq_lock_drop(rq);
- 		raw_spin_rq_unlock(rq);
- 	}
- 
-@@ -8495,6 +8523,7 @@ static bool kick_one_cpu(s32 cpu, struct
- 		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
- 	}
- 
-+	scx_rq_lock_drop(rq);
- 	raw_spin_rq_unlock_irqrestore(rq, flags);
- 
- 	return should_wait;
-@@ -8511,6 +8540,7 @@ static void kick_one_cpu_if_idle(s32 cpu
- 	    (cpu_online(cpu) || cpu == cpu_of(this_rq)))
- 		resched_curr(rq);
- 
-+	scx_rq_lock_drop(rq);
- 	raw_spin_rq_unlock_irqrestore(rq, flags);
- }
- 
-@@ -8548,6 +8578,7 @@ static void kick_cpus_irq_workfn(struct
- 		raw_spin_rq_lock(this_rq);
- 		this_scx->kick_sync_pending = true;
- 		resched_curr(this_rq);
-+		scx_rq_lock_drop(this_rq);
- 		raw_spin_rq_unlock(this_rq);
- 	}
- }
-@@ -9039,6 +9070,7 @@ out:
- 		if (locked_rq != p_rq)
- 			switch_rq_lock(p_rq, locked_rq);
- 	} else {
-+		scx_rq_lock_drop(p_rq);
- 		raw_spin_rq_unlock_irqrestore(p_rq, flags);
- 	}
- 
-@@ -9518,9 +9550,11 @@ static void scx_kick_cpu(struct scx_sche
- 
- 		if (raw_spin_rq_trylock(target_rq)) {
- 			if (can_skip_idle_kick(target_rq)) {
-+				scx_rq_lock_drop(target_rq);
- 				raw_spin_rq_unlock(target_rq);
- 				goto out;
- 			}
-+			scx_rq_lock_drop(target_rq);
- 			raw_spin_rq_unlock(target_rq);
- 		}
- 		cpumask_set_cpu(cpu, this_rq->scx.cpus_to_kick_if_idle);
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -803,6 +803,9 @@ struct scx_rq {
- 	bool			cpu_released;
- 	u32			flags;
- 	u32			nr_immed;		/* ENQ_IMMED tasks on local_dsq */
-+#ifdef CONFIG_SCHED_CORE
-+	u32			lock_drop_seq;	/* nr dispatch lock releases */
-+#endif
- 	u64			clock;			/* current per-rq clock -- see scx_bpf_now() */
- 	cpumask_var_t		cpus_to_kick;
- 	cpumask_var_t		cpus_to_kick_if_idle;
+ #define scx_bpf_dsq_move_to_local(dsq_id, enq_flags)				\
+-	(bpf_ksym_exists(scx_bpf_dsq_move_to_local___v2) ?			\
+-	 scx_bpf_dsq_move_to_local___v2((dsq_id), (enq_flags)) :		\
++	(bpf_ksym_exists(scx_bpf_dsq_move_to_local___v2___compat) ?		\
++	 scx_bpf_dsq_move_to_local___v2___compat((dsq_id), (enq_flags)) :	\
+ 	 (bpf_ksym_exists(scx_bpf_dsq_move_to_local___v1) ?			\
+ 	  scx_bpf_dsq_move_to_local___v1((dsq_id)) :				\
+ 	  scx_bpf_consume___old((dsq_id))))
+-- 
+2.55.0
+
 
 
