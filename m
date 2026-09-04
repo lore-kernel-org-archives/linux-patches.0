@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069E63A7F4C;
-	Fri,  4 Sep 2026 05:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DA53A7F4C;
+	Fri,  4 Sep 2026 05:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499147; cv=none; b=WSaKpGBNCY1cRaPDtEO+nfVxNr/+aDfCjdDkqUDF+j6cex2hSFlK5ROaCIMZGzCZb8Ze2qm9su7jLg59HNXw7bZ9Hw4FQCBQ50ORfcznp7feWxqOkEnIo1HhMzEeYUYrDQdZfQB1KsrN1FDRxmeCgKDFjVBB1P4Xz3VsWfIkka0=
+	t=1788499150; cv=none; b=C90GeTCdrpI9cIXHgopJoMIRdLiUxId34Wo/HdoIHY6adXVPrg/IpgUVJ1sn2CsSRecgcyojACJ/XAX95JU8sKf7wzKQq4y6R1g+22+MWKsleYgj2MiRYw4rCd6obD9HjZxxag3npUm6Laa7VKSOvsPhnO2nUgtVCsZOVfZ0Oow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499147; c=relaxed/simple;
-	bh=R/rSy+SMYjkUEmy6LHTagOibq++G68rr8s1KIHjVK+4=;
+	s=arc-20240116; t=1788499150; c=relaxed/simple;
+	bh=RDBSBNJFevooElKdE3+iKoF1O8DxB8XksNSou/c7rsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsyCQfhaCMPHAYeuaZBqY6cP2rInDTBsw9bk1DhjmKqDk8KiqmxP1TbL3FZf9yx9KIZsHI4Uqws2pj0MvCLyLVrGtcFWG9xjA/Rj/tTNM6OzhTBz6T9DeVtawhbFZVcppq0eNVg5ZdC+3qfS4ZwZLZDcUCToKbWipJi7OX/Agws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZJ/ENbR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DYAw6q2YE/dlvsIXlr3ZwsgA8NDKTYZ5WNzTYZ1Vro6KZFVV/oUcJHTAp01IwsgQu/dHeGIFfBljpiR0gHbB0Ua26X7LmRgzHRZey2MuudDdI9vb8pd5qfR34Wn5TLYjdWaE4fMzOKzcGK8CLnf+hkNYuN/+eH3JKyIVBCuLF9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpD/O5qa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZJ/ENbR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6211F00A3D;
-	Fri,  4 Sep 2026 05:19:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpD/O5qa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A141F00A3D;
+	Fri,  4 Sep 2026 05:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499145;
-	bh=1ftbj8JiOu050iiTDgW2P13vJDIXkeFaGOSUGKMH+cM=;
+	s=korg; t=1788499148;
+	bh=oXkv4H4HkBePUNJAY8DFqCcI3VV5OzP3723rtM8kfsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RZJ/ENbRYy/zi/I2tM3VxEG8uIrw5vcY+dbS+yPgvuIu44NY7wWbNcmHoqC0lKGmg
-	 5DP7yw8hqAYG7zC0KN9eLV5Yj/S9wu6dGNHu7A/gqMY6vXE57s/FdHZdTmfcom7zhq
-	 0EeP3pT+6YZa6oGqrrs7crI0KA61ntrXl3qCI2QU=
+	b=TpD/O5qaSVCMOeQc3eC/VXWwP6a0SGfAQj0Y7MPlaRkTW+JD1fPgxjE3oRGZoKq29
+	 VD0bhmTmFFVuoXMZr/+1G+b9zEVDvnOicMLFDMrcSE6EKXA/GcKPFZItJJIo4zVr6U
+	 ztluGiXAzkZGm3WmkTm03eejVqfTieMhhOk6Xvug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 7.2 271/713] ecryptfs: hold msg ctx list lock when cleaning daemon queue
-Date: Fri,  4 Sep 2026 06:53:59 +0200
-Message-ID: <20260904045809.911965952@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.2 262/713] fs/ntfs3: fix info-leak on partial LZNT decompress in ni_read_frame()
+Date: Fri,  4 Sep 2026 06:53:50 +0200
+Message-ID: <20260904045809.709954004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,43 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Samuel Page <sam@bynar.io>
 
-commit 779972513c2fa8c7938e54976f686091dafff22f upstream.
+commit 35d1ea92c7d946e2ebdbe36cdb2c969c8704bebd upstream.
 
-ecryptfs_exorcise_daemon() drops queued messages from a dying daemon
-without holding ecryptfs_msg_ctx_lists_mux, but
-ecryptfs_msg_ctx_alloc_to_free() requires that lock.
+ni_read_frame() decompresses an LZNT $DATA frame into the vmapped target
+pages and then trusts decompress_lznt()'s return value:
 
-Take the list lock while moving the queued contexts back to the free
-list to avoid racing with other global msg ctx list users.
+  unc_size = decompress_lznt(frame_ondisk, ondisk_size, frame_mem,
+                             frame_size);
+  if ((ssize_t)unc_size < 0)        err = unc_size;
+  else if (!unc_size || unc_size > frame_size)  err = -EINVAL;
 
-Fixes: f66e883eb618 ("eCryptfs: integrate eCryptfs device handle into the module.")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Signed-off-by: Tyler Hicks <code@tyhicks.com>
+decompress_lznt() stops as soon as the compressed stream is exhausted
+(e.g. a zero chunk header) and returns the number of bytes it actually
+wrote, which may be far less than frame_size. The bytes between unc_size
+and frame_size are never written. The only memset() that follows zeroes
+the region beyond i_valid; when the frame lies entirely within the file's
+valid size that memset() does not run, so the gap retains whatever was in
+the just-vmapped pages. All pages are then marked uptodate and returned
+to userspace, disclosing uninitialized (recently-freed) kernel page
+memory. A crafted compressed file whose stream decompresses to only a few
+bytes leaks the remainder of every frame on a plain read(2), which is
+enough to recover kernel pointers and defeat KASLR.
+
+Zero the [unc_size, frame_size) tail immediately after a successful LZNT
+decompress so the remainder reads back as zero.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Cc: stable@vger.kernel.org
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/messaging.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ntfs3/frecord.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/ecryptfs/messaging.c
-+++ b/fs/ecryptfs/messaging.c
-@@ -166,6 +166,7 @@ int ecryptfs_exorcise_daemon(struct ecry
- 		mutex_unlock(&daemon->mux);
- 		goto out;
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2443,6 +2443,15 @@ int ni_read_frame(struct ntfs_inode *ni,
+ 			err = unc_size;
+ 		else if (!unc_size || unc_size > frame_size)
+ 			err = -EINVAL;
++		else if (unc_size < frame_size) {
++			/*
++			 * Partial decompress: zero the [unc_size, frame_size)
++			 * tail.  decompress_lznt() leaves it untouched, so
++			 * without this the freshly vmapped pages would expose
++			 * uninitialized kernel memory to userspace.
++			 */
++			memset(frame_mem + unc_size, 0, frame_size - unc_size);
++		}
  	}
-+	mutex_lock(&ecryptfs_msg_ctx_lists_mux);
- 	list_for_each_entry_safe(msg_ctx, msg_ctx_tmp,
- 				 &daemon->msg_ctx_out_queue, daemon_out_list) {
- 		list_del(&msg_ctx->daemon_out_list);
-@@ -174,6 +175,7 @@ int ecryptfs_exorcise_daemon(struct ecry
- 		       "the out queue of a dying daemon\n", __func__);
- 		ecryptfs_msg_ctx_alloc_to_free(msg_ctx);
- 	}
-+	mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
- 	hlist_del(&daemon->euid_chain);
- 	mutex_unlock(&daemon->mux);
- 	kfree_sensitive(daemon);
+ 	if (!err && valid_size < frame_vbo + frame_size) {
+ 		size_t ok = valid_size - frame_vbo;
 
 
