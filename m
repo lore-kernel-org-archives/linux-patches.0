@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841263515D2;
-	Fri,  4 Sep 2026 05:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655B03B2FE4;
+	Fri,  4 Sep 2026 05:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498633; cv=none; b=pXYzzdy0QskzXbfdwpMnJ+s/vcpdIK9cQE0BRW9X4v+sWnvZS2oIRIC+TLpJhaoJLTawvFXv9iw1iso1UpSU7WmoXe3rmZaDxcQlRv7y2VtNvs3UdenYXfVbD8/zbyTGlnfyi08P7BvaKmyQgcix/BxnsMbcPLZuaEzrGlC4wm8=
+	t=1788498636; cv=none; b=u9KqjerEiTK+jdXcZlkI7Xj1zkxVb71fDnxhtkyVM00Ub+EvFTiuUw5+TqAYYJ1cu9NatM6KlXaNDwXk5Ry4frFCkFiokbHRrSM41JBjstumeueD7yZi7bpPQTYxqpO3VtyRMkx1BfSJwRJOqiy74PL3cpYx55sPkM0mRBhwEGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498633; c=relaxed/simple;
-	bh=tbDEo9c/TnIb/WeKQEpdQUYAlgNVjHYibriyY7Ah2o4=;
+	s=arc-20240116; t=1788498636; c=relaxed/simple;
+	bh=WrLdK6ogOuBvYjir/0bHspf4/7oOkDBPMOkNc/XgT3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/i9F15lLdlkeds5/QY0jrQuR/whCxpAOu3vQzcknaghBBRFuNmyDSHrWrwc03Nvdy521n9VqSUSfbdtDkiDS2P9tCh/PMxqFTCGnVJ3kO5+9MAJHa0BRoc/nsiO39HCH4YYus195xRUJ8QuFCk23CmSPaNNA6HR9LmdF4Lf6SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwYlEo0A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2TK/Vib1eCcQ9HD1cpL66kN/26D2OScf8LwCho8xfqnz9W37IIauSsbcnS0Yc0Nu7MeC2fpt/TUeuCSycJMLtsUYEBvVojrq55lmJAnyHmUQ7Ssjf72VuIiKaY5H2bnYfmNTcUXlLZfrFp7jgywSCIzkNV7S2sDkcchgdU8f74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NU1u4bPL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwYlEo0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA85E1F00A3D;
-	Fri,  4 Sep 2026 05:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NU1u4bPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDE31F00A3E;
+	Fri,  4 Sep 2026 05:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498632;
-	bh=GglkQNeXqqwPcwep9IipyCO2LFhzdLM2iEnd/+bFELE=;
+	s=korg; t=1788498635;
+	bh=4xI2abJs8B8KFyJqy2O1LM2JDNtdNRbFT5F/6aW2FcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZwYlEo0AwcxdaPBeEzhc76mrxKuNxxBmlVm+3xx2q8gl++iJfR3LPQRT9dAxSNphr
-	 pCob3qLmAo6ejFLitucHNZkelufOvR3k7a/mInw0sqk/2thdjwfrn2AXebmBU3+9HI
-	 AnnwsXUiOJeZwN1GDEBnerKjKqnDutDMU9ICuwdM=
+	b=NU1u4bPLTNMDWEHFs096e192DZzFpcgYe7E2GC6CinEEkwXWHalgeR2UTlFx5w2HN
+	 0FrrfTKYX6D2qo5eMl1Nc/ZFdYtJaNn31QCngvXzCr3Mh1zBq4OXEeydtT562MzTu2
+	 k/6odHJ+6pyLd2imOJJPpzCLoj1wyTInf9FHw46k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Minchan Kim <minchan@kernel.org>,
 	Haoqin Huang <haoqinhuang7@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2 133/713] zram: set default primary compressor in zram_destroy_comps()
-Date: Fri,  4 Sep 2026 06:51:41 +0200
-Message-ID: <20260904045806.813319965@linuxfoundation.org>
+Subject: [PATCH 7.2 134/713] zram: validate deflate params
+Date: Fri,  4 Sep 2026 06:51:42 +0200
+Message-ID: <20260904045806.835189891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -54,26 +54,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-commit dde75313eed0b014c437f48dd75c0308b592cbf9 upstream.
+commit ec7607ac4717ff521c9c1e9d8271c26293345513 upstream.
 
-Patch series "zram: fix zram issues reported by sashiko".
+We must validate user-supplied deflate winbits before we pass it to
+zlib_deflate_workspacesize(), which triggers BUG_ON() if winbits value is
+outside of valid ranges.
 
-Sashiko drove by and reported [1] a couple of zram issues:
-a possible BUG_ON() in zlib code due to missing winbits range
-validation and one possible NULL-ptr dereference in zcomp.
-Both are low risk yet still worth fixing.
-
-
-This patch (of 2):
-
-zram_destroy_comps() resets all compressors and leaves them set to NULL,
-including the primary one, which is invalid device state, as now
-comp_algorithm_show()->strcmp() can be called on a NULL compressor.  Set
-default primary compressor in zram_destroy_comps().
-
-Link: https://lore.kernel.org/20260729045745.775973-2-senozhatsky@chromium.org
-Fixes: 486fd58af7ac ("zram: don't free statically defined names")
-Link: https://sashiko.dev/#/patchset/20260728092935.31139-1-haoqinhuang7@gmail.com [1]
+Link: https://lore.kernel.org/20260729045745.775973-3-senozhatsky@chromium.org
+Fixes: dc75a0d93bd5 ("zram: support deflate-specific params")
+Link: https://sashiko.dev/#/patchset/20260728092935.31139-1-haoqinhuang7@gmail.com
 Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Cc: Minchan Kim <minchan@kernel.org>
 Cc: Haoqin Huang <haoqinhuang7@gmail.com>
@@ -81,27 +70,28 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/block/zram/backend_deflate.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -2841,6 +2841,7 @@ static void zram_destroy_comps(struct zr
- 		zram->comp_algs[prio] = NULL;
+--- a/drivers/block/zram/backend_deflate.c
++++ b/drivers/block/zram/backend_deflate.c
+@@ -24,8 +24,16 @@ static int deflate_setup_params(struct z
+ {
+ 	if (params->level == ZCOMP_PARAM_NOT_SET)
+ 		params->level = Z_DEFAULT_COMPRESSION;
+-	if (params->deflate.winbits == ZCOMP_PARAM_NOT_SET)
++	if (params->deflate.winbits == ZCOMP_PARAM_NOT_SET) {
+ 		params->deflate.winbits = DEFLATE_DEF_WINBITS;
++	} else {
++		s32 wb = params->deflate.winbits;
++
++		if ((wb < -15 || wb > -9) && (wb < 9 || wb > 15)) {
++			pr_err("invalid deflate winbits: %d\n", wb);
++			return -EINVAL;
++		}
++	}
  
- 	zram_comp_params_reset(zram);
-+	comp_algorithm_set(zram, ZRAM_PRIMARY_COMP, default_compressor);
+ 	return 0;
  }
- 
- static void zram_reset_device(struct zram *zram)
-@@ -2858,8 +2859,6 @@ static void zram_reset_device(struct zra
- 	zram_destroy_comps(zram);
- 	memset(&zram->stats, 0, sizeof(zram->stats));
- 	reset_bdev(zram);
--
--	comp_algorithm_set(zram, ZRAM_PRIMARY_COMP, default_compressor);
- }
- 
- static ssize_t disksize_store(struct device *dev, struct device_attribute *attr,
 
 
