@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B1135AC03;
-	Fri,  4 Sep 2026 06:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8582F30C160;
+	Fri,  4 Sep 2026 06:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501971; cv=none; b=rFvV6ZXiV0RoSpAVCb9RYyqc6In1uQNkb6FUINpsW/HTuLNp/Cqz27jbn67pkxzBboU4QybN052JSHBuP5Ir/9tAOMNVzuPJPKi/iyQ9TaevzSm8qO7tBpcqGW99ClJ9CxNfa3GxkXCQsU1/FaYxtG8N5/XFJCKEbparFqWwPlY=
+	t=1788501974; cv=none; b=dIcAABJFIEwtijVpEBEqLC5zFqub3CypdZLYYjdFqwV1QjLl0j/TB0YnLbkyyYldA6nhlhp/iHDr7nmUpvg2KvtKZ5Pwx8AXt2EUPgoAM3xeuGpnIePfdpbJ/nDcZdulkQAZE/MA+sA4uX1P6ma8ovTA7uuw5U3K+gberfN7SrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501971; c=relaxed/simple;
-	bh=KBZKmhb+eymHupMtHm5TQ0g0sFlSu1RfnEr/NKtmOpc=;
+	s=arc-20240116; t=1788501974; c=relaxed/simple;
+	bh=u4Ver1weJbrgM+4TSeWfihjYf5tGt7V8neNAGX/5Bec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmSX7qpOBMU5URxr8IYVa64g55TfH8ULmBgIpz/yYsYXfI+yqjzwJnB3DakmmcZ7ersMf4375mFW5J9hmXZbWoV5dWUjYjuosU6TL5wj6CAeY1z/nqIZz6rAiCy3VVPr2YqQOEEeKAFtOc8/FTkfF846qsDkwXNi2I0xzKHFwrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m62vy28m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X4uFXga1K/ZSdEEMhyTv7Hq9S7NJY+FLQZS2n+dB309aLdakkEbKDdUNVjIc+U3EQl/n6wwkLPUyI8tdlXKUZUuUkhz5HmPHMFbsSWhT3pW+tGKvtZ7XibiwyrKk0y35zxIrVzwT4hVpP+UJcKTiXp5fzbHxTNv09k+9Oe2UbWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgnL67pp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m62vy28m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0481F00A3D;
-	Fri,  4 Sep 2026 06:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgnL67pp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FA31F00A3D;
+	Fri,  4 Sep 2026 06:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501970;
-	bh=/r1Hy9avq/e4vbonHuBzfvv1DAREl+XrCFr29mYMJNM=;
+	s=korg; t=1788501973;
+	bh=kPt/bOC3OxYCO965QNdm5MC60CI+HCgA/t1/xL5xt+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m62vy28mPirLLSbhO6Wu1tUY8wo8Qd94bavTwGH4+JLtP4wJcf/gymZOgF9FPTTvd
-	 hmEe9151LEq591C2MTRO+yfm3g5a75QrvUsCVcMS85EX+ATXiJRMBOyN/bHwaXcpIZ
-	 WB8wKlUQSQlpIAzWt3SGlKsC/SrVLOONBnm0y9WE=
+	b=QgnL67ppkAraKJQlOQ6DjAIeWdRoF1TZkhrAaPSs9N81hnuEfBvn0vj1nUASaQt2l
+	 mjLSAlg5bqcee94eDntKrjkqVbhJ4OtV2sFRURmYwp4qgjKmixqhS9RJmtSQizjpGF
+	 4JGeWsI+bPEG8EciS5RS9AfEWbzCtgBIFvEmQPnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/403] wifi: ath11k: fix memory leaks in beacon template setup
-Date: Fri,  4 Sep 2026 06:56:51 +0200
-Message-ID: <20260904045735.000146157@linuxfoundation.org>
+Subject: [PATCH 6.12 009/403] drm/amd/display: Avoid NULL dereference in dc_dmub_srv error paths
+Date: Fri,  4 Sep 2026 06:56:52 +0200
+Message-ID: <20260904045735.021422753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -53,103 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit ff49eba595df500e4ddccc593088c8a4ab5f2c27 ]
+[ Upstream commit 4ae3e16f4b3bf64140f773629b765d605ee079a9 ]
 
-The functions ath11k_mac_setup_bcn_tmpl_ema() and
-ath11k_mac_setup_bcn_tmpl_mbssid() allocate memory for beacon templates
-but fail to free it when parameter setup returns an error.
+In dc_dmub_srv_log_diagnostic_data() and
+dc_dmub_srv_enable_dpia_trace().
 
-Since beacon templates must be released during normal execution, they
-must also be released in the error handling paths to prevent memory
-leaks.
+Both functions check:
 
-Fix this by using unified exit paths with proper cleanup in the respective
-error paths.
+  if (!dc_dmub_srv || !dc_dmub_srv->dmub)
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+and then call DC_LOG_ERROR() inside that block.
 
-Fixes: 3a415daa3e8b ("wifi: ath11k: add P2P IE in beacon template")
-Fixes: 335a92765d30 ("wifi: ath11k: MBSSID beacon support")
-Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260130084451.110768-1-zilin@seu.edu.cn
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+DC_LOG_ERROR() uses dc_dmub_srv->ctx internally. So if
+dc_dmub_srv is NULL, the logging itself can dereference a
+NULL pointer and cause a crash.
+
+Fix this by splitting the checks.
+
+First check if dc_dmub_srv is NULL and return immediately.
+Then check dc_dmub_srv->dmub and log the error only when
+dc_dmub_srv is valid.
+
+Fixes the below:
+../display/dc/dc_dmub_srv.c:962 dc_dmub_srv_log_diagnostic_data() error: we previously assumed 'dc_dmub_srv' could be null (see line 961)
+../display/dc/dc_dmub_srv.c:1167 dc_dmub_srv_enable_dpia_trace() error: we previously assumed 'dc_dmub_srv' could be null (see line 1166)
+
+Fixes: 2631ac1ac328 ("drm/amd/display: add DMUB registers to crash dump diagnostic data.")
+Fixes: 71ba6b577a35 ("drm/amd/display: Add interface to enable DPIA trace")
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 28 ++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index dd5690a4996f3..c4856480fffe7 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -1545,12 +1545,15 @@ static int ath11k_mac_setup_bcn_tmpl_ema(struct ath11k_vif *arvif)
- 	if (!beacons || !beacons->cnt) {
- 		ath11k_warn(arvif->ar->ab,
- 			    "failed to get ema beacon templates from mac80211\n");
--		return -EPERM;
-+		ret = -EPERM;
-+		goto free;
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+index 19b8d46ce848d..abc376f5cd9c9 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+@@ -935,7 +935,10 @@ void dc_dmub_srv_log_diagnostic_data(struct dc_dmub_srv *dc_dmub_srv)
+ 	struct dmub_diagnostic_data diag_data = {0};
+ 	uint32_t i;
+ 
+-	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
++	if (!dc_dmub_srv)
++		return;
++
++	if (!dc_dmub_srv->dmub) {
+ 		DC_LOG_ERROR("%s: invalid parameters.", __func__);
+ 		return;
  	}
+@@ -1179,7 +1182,10 @@ void dc_dmub_srv_enable_dpia_trace(const struct dc *dc)
+ {
+ 	struct dc_dmub_srv *dc_dmub_srv = dc->ctx->dmub_srv;
  
- 	if (tx_arvif == arvif) {
--		if (ath11k_mac_set_vif_params(tx_arvif, beacons->bcn[0].skb))
--			return -EINVAL;
-+		if (ath11k_mac_set_vif_params(tx_arvif, beacons->bcn[0].skb)) {
-+			ret = -EINVAL;
-+			goto free;
-+		}
- 	} else {
- 		arvif->wpaie_present = tx_arvif->wpaie_present;
+-	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
++	if (!dc_dmub_srv)
++		return;
++
++	if (!dc_dmub_srv->dmub) {
+ 		DC_LOG_ERROR("%s: invalid parameters.", __func__);
+ 		return;
  	}
-@@ -1577,11 +1580,11 @@ static int ath11k_mac_setup_bcn_tmpl_ema(struct ath11k_vif *arvif)
- 		}
- 	}
- 
--	ieee80211_beacon_free_ema_list(beacons);
--
- 	if (tx_arvif != arvif && !nontx_vif_params_set)
--		return -EINVAL; /* Profile not found in the beacons */
-+		ret = -EINVAL; /* Profile not found in the beacons */
- 
-+free:
-+	ieee80211_beacon_free_ema_list(beacons);
- 	return ret;
- }
- 
-@@ -1613,19 +1616,22 @@ static int ath11k_mac_setup_bcn_tmpl_mbssid(struct ath11k_vif *arvif)
- 	}
- 
- 	if (tx_arvif == arvif) {
--		if (ath11k_mac_set_vif_params(tx_arvif, bcn))
--			return -EINVAL;
-+		if (ath11k_mac_set_vif_params(tx_arvif, bcn)) {
-+			ret = -EINVAL;
-+			goto free;
-+		}
- 	} else if (!ath11k_mac_set_nontx_vif_params(tx_arvif, arvif, bcn)) {
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto free;
- 	}
- 
- 	ret = ath11k_wmi_bcn_tmpl(ar, arvif->vdev_id, &offs, bcn, 0);
--	kfree_skb(bcn);
--
- 	if (ret)
- 		ath11k_warn(ab, "failed to submit beacon template command: %d\n",
- 			    ret);
- 
-+free:
-+	kfree_skb(bcn);
- 	return ret;
- }
- 
 -- 
 2.53.0
 
