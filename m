@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C971D7080D;
-	Fri,  4 Sep 2026 05:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C587080D;
+	Fri,  4 Sep 2026 05:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498964; cv=none; b=tKoceOmqAeIa4nk8q2i2zt49+J7g36Org6Kfn/srP9/Q4SuddjD+7s5QWQTP4skBEaFHnrfWzWt0Zfn/uSlkTk2RZl4Vc2i+0Qe2wOcoeaj+2sod3AKkvV1it2rqSYHew93G3PrPOQ5iODKK/16OtEc02UTxi8RZBiOlOx5tHoI=
+	t=1788498966; cv=none; b=G24+jD7GIuEzyUxVOS1BeXmDyZ8/Pt6tosUFiC0zgX2ijUmSIh54kw3hghn76uuOhrNp9Y5E0xNlB2PJ8Ek7TYuBJdVTk8uGg1VDBP55VXGJesd6fnBc8sVvShtI1768G1ih7YgMJ06okAItt+K42tcOsQym34iq3onS+zcWa7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498964; c=relaxed/simple;
-	bh=dRCTieCIdE3lDnZGHF1tO3HIvlcFeOSnwbMr95PipRM=;
+	s=arc-20240116; t=1788498966; c=relaxed/simple;
+	bh=STuI/g7oVOQEQdOzP/nmoUrveM3WCrP9h0pByKBIrlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sS1M29HD8fvDjqPMkZag3K8khsn/R0d93i4wVWhHfTHiBUro1YcXj4kyitZl8CmuvmoQlOHxeRspwKTaAF9ThD+nbjn+LhBJ5nJQkabmAmsEMtwpB86d60ObV9eQGxQxtTRL/9H7wPL0z/Us3SGGW36DCAfjGfR5v2OrPPE33hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcHhs58A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZpyYtu3DoSNFADHu+E8VXuFKrqFk2ht/niz8rt/YF0U64IUcJQCa3JErEvsq/jRaCCiZsVZ0aj26b5gFldawbcKv4rpKjKFQMwVwsvKeUlE5TntEDij4PQNNkomlgSti1v88EjZ8gJt71dgsaV2doR5yRfu73pvsxhYdaVbXMMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUDTjLMI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcHhs58A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32171F00A3D;
-	Fri,  4 Sep 2026 05:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUDTjLMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607461F00A3E;
+	Fri,  4 Sep 2026 05:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498959;
-	bh=6bT6e2isHTG1ue+ABhgNKxL2Udm0RkygungU6YUzD+E=;
+	s=korg; t=1788498964;
+	bh=T1LE1TD66En1eUvS4k88ihFfNtenuWbx5ad14Kw0hmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gcHhs58Agp8vNoGtsyJFFaYfLXF4Dvj1hAPB9sY/MExKZpmXR5JTcfgqEr/vEdioD
-	 CNJzjmubafU5/HQ3kM2B81Qt83cHXSny+fOIuuC6I/UG6DK9D4ftEV7lr9g2bnknKP
-	 d9iDAkZXscgcM5H3ZqcVIlaVGBeWTP4iUvMfQN1A=
+	b=bUDTjLMIijSgtaSaFE1kwOau5Ze8nbM1jwFqaUg1Bc0BrkBMlgbSEOoLDflwvs7SI
+	 y1ta+OwwZJR0i5Of51mtdkj2FmCnmS0MqcRhf6tKms4Av+QnIZBazGuKDe7TcFi7x+
+	 WtOnNxd9cdK1EAeJfclcKaEgWYJUwlWSbUgpDXRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 247/713] HID: corsair-void: Check size of status and firmware events before reading them
-Date: Fri,  4 Sep 2026 06:53:35 +0200
-Message-ID: <20260904045809.370724866@linuxfoundation.org>
+Subject: [PATCH 7.2 249/713] HID: roccat: free buffered reports when destroying device
+Date: Fri,  4 Sep 2026 06:53:37 +0200
+Message-ID: <20260904045809.415765241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,62 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 08d8814521885e67b1bdf6a3036ee264e3e58377 upstream.
+commit bbff0ccbff360a5498075525005f6a913239a3d7 upstream.
 
-Malformed status and firmware events could cause an out-of-bounds read since
-the size wasn't being checked. Check the size and warn on unexpected values to
-avoid this.
+roccat_report_event() duplicates each report with kmemdup() and stores
+the allocation in a circular-buffer slot. The allocation is released only
+when that slot is reused.
 
-Fixes: 6ea2a6fd3872 ("HID: corsair-void: Add Corsair Void headset family driver")
+The device destruction paths free struct roccat_device without releasing
+reports still stored in cbuf[]. This makes those allocations unreachable
+and leaks up to ROCCAT_CBUF_SIZE report buffers per device.
+
+Add a small destructor that frees every buffered report before freeing the
+device, and use it in both paths that can destroy a registered device.
+
+Fixes: 206f5f2fcb5f ("HID: roccat: propagate special events of roccat hardware to userspace")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-corsair-void.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/hid/hid-roccat.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-corsair-void.c
-+++ b/drivers/hid/hid-corsair-void.c
-@@ -92,6 +92,9 @@
- #define CORSAIR_VOID_STATUS_REPORT_ID		0x64
- #define CORSAIR_VOID_FIRMWARE_REPORT_ID		0x66
+--- a/drivers/hid/hid-roccat.c
++++ b/drivers/hid/hid-roccat.c
+@@ -70,6 +70,15 @@ static struct roccat_device *devices[ROC
+ /* protects modifications of devices array */
+ static DEFINE_MUTEX(devices_lock);
  
-+#define CORSAIR_VOID_STATUS_REPORT_SIZE		5
-+#define CORSAIR_VOID_FIRMWARE_REPORT_SIZE	5
++static void roccat_free_device(struct roccat_device *device)
++{
++	int i;
 +
- #define CORSAIR_VOID_USB_SIDETONE_REQUEST	0x1
- #define CORSAIR_VOID_USB_SIDETONE_REQUEST_TYPE	0x21
- #define CORSAIR_VOID_USB_SIDETONE_VALUE		0x200
-@@ -742,6 +745,13 @@ static int corsair_void_raw_event(struct
++	for (i = 0; i < ROCCAT_CBUF_SIZE; i++)
++		kfree(device->cbuf[i].value);
++	kfree(device);
++}
++
+ static ssize_t roccat_read(struct file *file, char __user *buffer,
+ 		size_t count, loff_t *ppos)
+ {
+@@ -226,7 +235,7 @@ static int roccat_release(struct inode *
+ 			hid_hw_power(device->hid, PM_HINT_NORMAL);
+ 			hid_hw_close(device->hid);
+ 		} else {
+-			kfree(device);
++			roccat_free_device(device);
+ 		}
+ 	}
  
- 	/* Description of packets are documented at the top of this file */
- 	if (hid_report->id == CORSAIR_VOID_STATUS_REPORT_ID) {
-+		if (size < CORSAIR_VOID_STATUS_REPORT_SIZE) {
-+			hid_warn_ratelimited(hid_dev,
-+			                     "unexpected status report of size %d",
-+			                     size);
-+			return 1;
-+		}
-+
- 		drvdata->mic_up = FIELD_GET(CORSAIR_VOID_MIC_MASK, data[2]);
- 		drvdata->connected = (data[3] == CORSAIR_VOID_WIRELESS_CONNECTED) ||
- 				     drvdata->is_wired;
-@@ -750,6 +760,13 @@ static int corsair_void_raw_event(struct
- 					      FIELD_GET(CORSAIR_VOID_CAPACITY_MASK, data[2]),
- 					      data[3], data[4]);
- 	} else if (hid_report->id == CORSAIR_VOID_FIRMWARE_REPORT_ID) {
-+		if (size < CORSAIR_VOID_FIRMWARE_REPORT_SIZE) {
-+			hid_warn_ratelimited(hid_dev,
-+			                     "unexpected firmware report of size %d",
-+			                     size);
-+			return 1;
-+		}
-+
- 		drvdata->fw_receiver_major = data[1];
- 		drvdata->fw_receiver_minor = data[2];
- 		drvdata->fw_headset_major = data[3];
+@@ -374,7 +383,7 @@ void roccat_disconnect(int minor)
+ 		hid_hw_close(device->hid);
+ 		wake_up_interruptible(&device->wait);
+ 	} else {
+-		kfree(device);
++		roccat_free_device(device);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(roccat_disconnect);
 
 
