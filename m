@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9104A3B42F7;
-	Fri,  4 Sep 2026 06:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784D03CB2DB;
+	Fri,  4 Sep 2026 06:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502671; cv=none; b=hm2Xu93ewkb1Q0r9GNKwLlDjUU8smFyhnZ+GHNdQ44b2/bAXBDELdT1HiCA4e3oyQjRLjABvJL9zwp7+yLgtgGhPDndAT3dqyBuRABwhZEzekyCC5J8WTz0XxviaNxvDLM3uEq+QxlqzGLqsr9sGYsZRWkNxNTYF0ASS+VfSHqw=
+	t=1788502674; cv=none; b=MxozavciqmY5fCaImnfsSGhkCQnlAitop5RQ7d3JWcheNLHVz23kcOxNn6ZwI97QFvci0ze63yYKu9kfZZ9dm6rv4lW/d1X/tndHM9FWn413qV7+Gniui56r+5RR4UPQPeoIsv3c9y6N4JiQWyiNlxKUx0sUomwzjFhwArF19Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502671; c=relaxed/simple;
-	bh=jFe4UV8pGVN9lSI7SKm3zTbAzhv3KtG2VCXTUzAyghY=;
+	s=arc-20240116; t=1788502674; c=relaxed/simple;
+	bh=F9ZzMHZKGmmnspaI2kLhPGsIF93TmZ6z07vkDD3/WCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ny5uw9Aa4MZpkqgNYyycsvgWTLk663gN4qYf2kLIAofVQCl1f25aUvwNCJ6Dn1pPXxY12jBdpBmibQ2svNWBMWbLSYtkz/dXcaaIR8Gp8N1+GiX0n+RZf/D8NpF/SY1Y+HQty6UYADgA04F10m+2vqS+uEvcYC3qVXHONYkS0yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0RBrb3O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NdRtN2B1XQ4HHVRtRZ0+6HWXp6vcCKoMzoQTEJI71c5T3bKW9SW9NsfHzxii8H2qNfqeAlN8F47bbZtP2nAkRLDFdL17rfuGQ+LubwbgXzYpo1yS27cy2hXZx3zI0lEAyDUBSW18SYYhbd7nejuc+tcppc9rtst0/0dZEQeMbUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqPnsten; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0RBrb3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3191F00A3D;
-	Fri,  4 Sep 2026 06:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqPnsten"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F1A1F00A3D;
+	Fri,  4 Sep 2026 06:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502670;
-	bh=ThkovmA4mGPDlRianZKorI7SuINwyQq9cOjimc4ChCk=;
+	s=korg; t=1788502673;
+	bh=fseq3J3ov4Ai9jUw+sO7bCWCpPfU64YRUiFWlcY8NFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u0RBrb3O+6phgCbcmaqqewBNVXcuk61OlFC53dMYCvd5ypAmJ3wn4bP0APhtJMOoA
-	 /29keplT+wEtlf4EK5Ub+Y+GsOSiXY/BQjwDSlGpmJ1xUN8Vpppu3sfZtQ2j/caG96
-	 byzlz3yi78tPTfib4z18kL5KecudWHHptTlIKScM=
+	b=oqPnstenZC9HwhV1h/2iudjbCqpdY7pP0DRT2NQUKPOacRUWZbUIUs+DCH/lntcJx
+	 6uK2C3Y2E0eQni0c6kg8yOiodOJdDG55fYM216QATvl+b+hD84YpwTMU/6tDQgCmuB
+	 MmU6HGJDZ4YMCnpLPHNtgjU1F1qLCbPhxGnbUKLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 272/403] power: supply: bq25890: Fix power_supply reference leak
-Date: Fri,  4 Sep 2026 07:01:15 +0200
-Message-ID: <20260904045741.041835724@linuxfoundation.org>
+	Ronald Claveau <linux-kernel-dev@aliel.fr>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.12 290/403] PCI: meson: Fix GPIO state while requesting PERST#
+Date: Fri,  4 Sep 2026 07:01:33 +0200
+Message-ID: <20260904045741.446489355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -50,60 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 
-commit 863c32a83e4235eb0cbf6106f2b124e645302156 upstream.
+commit 40fb390cbcc11797c44c16dabdf763ec87643671 upstream.
 
-bq25890_fw_probe() acquires a reference to a secondary charger using
-power_supply_get_by_name(), but the reference is not released on later
-probe failures or on driver detach.
+Meson devicetree defines the PERST# GPIO as 'reset' GPIO.  Commit
+4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
+inverted the PERST# assertion logic to use proper GPIO descriptor semantics
+and moved the polarity configuration to the device tree as GPIO_ACTIVE_LOW.
+However, the initial PERST# GPIO state "GPIOD_OUT_LOW" was not updated
+accordingly.
 
-In particular, failures after bq25890_fw_probe() returns successfully,
-such as a failure in bq25890_hw_init(), also leak the reference.
+This results in the enumeration failure of the endpoint devices as
+PERST# would get deasserted while requesting the GPIO even before
+power and REFCLK becomes stable.
 
-Register a device-managed cleanup action immediately after acquiring
-the secondary charger. This releases the reference on all subsequent
-probe failures and on driver detach.
+Without this fix:
 
-Found by code review.
+  ahci 0000:01:00.0: enabling device (0000 -> 0002)
+  ahci 0000:01:00.0: SSS flag set, parallel bus scan disabled
+  ahci 0000:01:00.0: Controller reset failed (0xffffffff)
+  ahci 0000:01:00.0: probe with driver ahci failed with error -5
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
+With this fix:
+
+  ahci 0000:01:00.0: enabling device (0000 -> 0002)
+  ahci 0000:01:00.0: AHCI vers 0001.0300, 32 command slots, 6 Gbps, SATA mode
+  ahci 0000:01:00.0: 1/1 ports implemented (port mask 0x1)
+  ahci 0000:01:00.0: flags: 64bit ncq led clo only pio ccc
+
+Change the GPIO request flag from GPIOD_OUT_LOW to GPIOD_OUT_HIGH to get
+the right behaviour.
+
+Fixes: 4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
+Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
+[mani: CCed stable and commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Cc: stable@vger.kernel.org
-Fixes: d54bf877fd87 ("power: supply: bq25890: Add support for having a secondary charger IC")
-Link: https://patch.msgid.link/20260722044416.1623621-1-make_ruc2021@163.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://patch.msgid.link/20260616-fix-meson-pcie-reset-gpio-v1-1-fca404b4c8be@aliel.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq25890_charger.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/pci/controller/dwc/pci-meson.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/bq25890_charger.c
-+++ b/drivers/power/supply/bq25890_charger.c
-@@ -1389,6 +1389,14 @@ static int bq25890_fw_read_u32_props(str
- 	return 0;
- }
- 
-+static void bq25890_release_secondary_chrg(void *data)
-+{
-+	struct bq25890_device *bq = data;
-+
-+	power_supply_put(bq->secondary_chrg);
-+	bq->secondary_chrg = NULL;
-+}
-+
- static int bq25890_fw_probe(struct bq25890_device *bq)
- {
- 	int ret;
-@@ -1401,6 +1409,10 @@ static int bq25890_fw_probe(struct bq258
- 		bq->secondary_chrg = power_supply_get_by_name(str);
- 		if (!bq->secondary_chrg)
- 			return -EPROBE_DEFER;
-+
-+		ret = devm_add_action_or_reset(bq->dev, bq25890_release_secondary_chrg, bq);
-+		if (ret)
-+			return ret;
+--- a/drivers/pci/controller/dwc/pci-meson.c
++++ b/drivers/pci/controller/dwc/pci-meson.c
+@@ -421,7 +421,7 @@ static int meson_pcie_probe(struct platf
+ 		return PTR_ERR(mp->phy);
  	}
  
- 	/* Optional, left at 0 if property is not present */
+-	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(mp->reset_gpio)) {
+ 		dev_err(dev, "get reset gpio failed\n");
+ 		return PTR_ERR(mp->reset_gpio);
 
 
