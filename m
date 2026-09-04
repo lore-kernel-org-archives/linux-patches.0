@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2BA3AA187;
-	Fri,  4 Sep 2026 05:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B981F2264A3;
+	Fri,  4 Sep 2026 05:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500604; cv=none; b=uTUYQpjxNKLS6ARiq0ttzLDHOF7bZiwGBWdkmQh5g2mrYz9g9HWVxVmQS9HgGnCW2BZwfRGnBCMSo9GHeYVys9OZdz8vStofARN2/RPUNaZ7hB42RTDkzeBn3Tphpx4/I7/9uRTWtq4omnchxv8UKoV2PRo+kA4jpQHAhDPMPJg=
+	t=1788500607; cv=none; b=Iil0Em9UwwIBahOO8ab1yctoNmNecZC4togwzRvI9/AkXK5S4n0QjCD7h36CZMYZtr1yeZEwlnv1OvF/iiv3ZbNpnNc+DEvGBcpTfRFB4J19UAY/0FLduoQt4tltvup7r+qemf4+NNcXwCJmwsCRyyf+68agRgiyNnHDcvGUcAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500604; c=relaxed/simple;
-	bh=M31Ev4xexaZCgR4NSE3Wnx8ZsqtiI7BpiL4Wt4P4y8c=;
+	s=arc-20240116; t=1788500607; c=relaxed/simple;
+	bh=pafMPib9VZwfuWLGNsZVYzkJNaO7LcjVbppkmYsDdMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCl8iDOkpFZR5PTYtUxl9G17WYhdy6v5XW3XsGBjGy5/BFkJGyHylsp5V/Q50y3KXmsjziX+0UIhHIysxpSKdNbwlG03//aYfyb3aq7h2LHo3EvsykPeLHDEfAcBEt2y+J57DKgdcI7EQxKuh1izEhpOza5iobe2fvYgNbXHuaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymMmUBtQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AJOAoE2T/nj/duRy6q+pqkgLHH4C56pqlV/MfXmpcJIbxUoMH8/5lAegJ9wdbH76RPMCUgg4jeMl4E19MyVwADEW9csWejq6N2CLl9eSA+wEPKtzpZ99KmcK153292r3N9WjI5r2LWtmBYfGR2U4Uyp0lli5ZRZjSzfKsXxVEoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mC90jqPs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymMmUBtQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049191F00A3D;
-	Fri,  4 Sep 2026 05:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mC90jqPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BCD1F00A3D;
+	Fri,  4 Sep 2026 05:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500603;
-	bh=OJPz/TznN6hKrjRXRrCS/HZU8Cw/MEuIB4cEsrUuLl4=;
+	s=korg; t=1788500606;
+	bh=PEqSFhK1nHgfMBa4rgvNAVRPbjhDF22SwAmqgE0NYpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ymMmUBtQM0E68vpQ/MMlWTbwAc3q1E2amtoJh11wRG1f2yqmplKDB70jsiLUIchva
-	 PqEkmL1TpQPDne+ihP1E1ftehwEQTZeY+INVVBJIJanNdt4P3Tfl6eW3V4Bk7jYH1P
-	 a8EFeHU/J7xsKLL4VAHYz8uAJIxAmRkwuEImwW+g=
+	b=mC90jqPsgSu+LWLaMXTnlZ2kSKusGUqhmB4tB+YxJgrKgD24iXIoWE/gZPYgmlwuq
+	 a4h0oM5hKhmAPbgjmA43BOez4Hf/dbRujGZsLLcCrFpCtfHYkWH10gpol9jLiNI89f
+	 xselxuCdv2h/LNovd6cT3r9WiRtkNZCPo3Nu4ZTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 113/552] nfsd: size fh_verify server sockaddr slot by xpt_locallen
-Date: Fri,  4 Sep 2026 06:54:30 +0200
-Message-ID: <20260904045750.467054498@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 114/552] nfsd: validate nseconds in TIME_DELEG decode paths
+Date: Fri,  4 Sep 2026 06:54:31 +0200
+Message-ID: <20260904045750.501771893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,79 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 71d068490098b1d23c63b2345e40675d3a1ca763 upstream.
+commit 0f4a767340fad392bd656115b8752005518c9065 upstream.
 
-The nfsd_fh_verify and nfsd_fh_verify_err tracepoints declare the
-server sockaddr slot sized by xpt_remotelen but fill it from
-xpt_local using xpt_locallen:
+The xdrgen-based TIME_DELEG_ACCESS and TIME_DELEG_MODIFY decode arms
+store a raw uint32_t nseconds directly into tv_nsec without enforcing
+nseconds < NSEC_PER_SEC. The legacy nfsd4_decode_nfstime4 has this
+check but the TIME_DELEG paths do not. A malformed timespec can
+propagate through notify_change() to disk.
 
-    TP_STRUCT__entry(
-            ...
-            __sockaddr(server, rqstp->rq_xprt->xpt_remotelen)
-            ...
-    )
-    TP_fast_assign(
-            ...
-            __assign_sockaddr(server, &rqstp->rq_xprt->xpt_local,
-                              rqstp->rq_xprt->xpt_locallen);
-            ...
-    )
+Add range checks in both nfs4xdr.c (SETATTR path) and
+nfs4callback.c (CB_GETATTR path).
 
-When xpt_locallen exceeds xpt_remotelen, __assign_sockaddr's memcpy
-writes past the reserved ring-buffer slot. In the reverse direction
-(xpt_locallen < xpt_remotelen) the slot is oversized and the
-unwritten tail leaks prior ring-buffer contents to trace consumers.
-
-The write-past-end case is reachable on NFS/UDP. svc_xprt_set_remote()
-is only called from svc_tcp_accept() (net/sunrpc/svcsock.c) and from
-the RDMA connect path; svc_create_socket() for UDP calls only
-svc_xprt_set_local(), so xpt_remotelen stays 0 for the xprt's
-lifetime. Every fh_verify trace for an NFSv2/v3-over-UDP request
-then copies 16 or 28 bytes from xpt_local into a zero-byte slot.
-
-The other NFSD tracepoints that record the server address
-(NFSD_TRACE_PROC_CALL_FIELDS, NFSD_TRACE_PROC_RES_FIELDS,
-SVC_RQST_ENDPOINT_FIELDS) already size the server slot by
-xpt_locallen; nfsd_fh_verify and nfsd_fh_verify_err were the only
-exceptions.
-
-Fix by sizing the server slot with xpt_locallen so the declared slot
-matches the copy length. The client slot and its assignment already
-agree on xpt_remotelen and are left untouched.
-
-Fixes: 051382885552 ("NFSD: Instrument fh_verify()")
-Fixes: 948755efc951 ("NFSD: Replace dprintk() call site in fh_verify()")
+Fixes: 6ae30d6eb26b ("nfsd: add support for delegated timestamps")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Chris Mason <clm@meta.com>
-Link: https://patch.msgid.link/20260531-nfsd-testing-v1-1-7bfa481b0540@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-7-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/trace.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4callback.c |    4 ++++
+ fs/nfsd/nfs4xdr.c      |    4 ++++
+ 2 files changed, 8 insertions(+)
 
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -236,7 +236,7 @@ TRACE_EVENT_CONDITION(nfsd_fh_verify,
- 	TP_CONDITION(rqstp != NULL),
- 	TP_STRUCT__entry(
- 		__field(unsigned int, netns_ino)
--		__sockaddr(server, rqstp->rq_xprt->xpt_remotelen)
-+		__sockaddr(server, rqstp->rq_xprt->xpt_locallen)
- 		__sockaddr(client, rqstp->rq_xprt->xpt_remotelen)
- 		__field(u32, xid)
- 		__field(u32, fh_hash)
-@@ -275,7 +275,7 @@ TRACE_EVENT_CONDITION(nfsd_fh_verify_err
- 	TP_CONDITION(rqstp != NULL && error),
- 	TP_STRUCT__entry(
- 		__field(unsigned int, netns_ino)
--		__sockaddr(server, rqstp->rq_xprt->xpt_remotelen)
-+		__sockaddr(server, rqstp->rq_xprt->xpt_locallen)
- 		__sockaddr(client, rqstp->rq_xprt->xpt_remotelen)
- 		__field(u32, xid)
- 		__field(u32, fh_hash)
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -108,6 +108,8 @@ static int decode_cb_fattr4(struct xdr_s
+ 
+ 		if (!xdrgen_decode_fattr4_time_deleg_access(xdr, &access))
+ 			return -EIO;
++		if (access.nseconds >= NSEC_PER_SEC)
++			return -EIO;
+ 		fattr->ncf_cb_atime.tv_sec = access.seconds;
+ 		fattr->ncf_cb_atime.tv_nsec = access.nseconds;
+ 
+@@ -117,6 +119,8 @@ static int decode_cb_fattr4(struct xdr_s
+ 
+ 		if (!xdrgen_decode_fattr4_time_deleg_modify(xdr, &modify))
+ 			return -EIO;
++		if (modify.nseconds >= NSEC_PER_SEC)
++			return -EIO;
+ 		fattr->ncf_cb_mtime.tv_sec = modify.seconds;
+ 		fattr->ncf_cb_mtime.tv_nsec = modify.nseconds;
+ 
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -526,6 +526,8 @@ nfsd4_decode_fattr4(struct nfsd4_compoun
+ 
+ 		if (!xdrgen_decode_fattr4_time_deleg_access(argp->xdr, &access))
+ 			return nfserr_bad_xdr;
++		if (access.nseconds >= NSEC_PER_SEC)
++			return nfserr_inval;
+ 		iattr->ia_atime.tv_sec = access.seconds;
+ 		iattr->ia_atime.tv_nsec = access.nseconds;
+ 		iattr->ia_valid |= ATTR_ATIME | ATTR_ATIME_SET | ATTR_DELEG;
+@@ -535,6 +537,8 @@ nfsd4_decode_fattr4(struct nfsd4_compoun
+ 
+ 		if (!xdrgen_decode_fattr4_time_deleg_modify(argp->xdr, &modify))
+ 			return nfserr_bad_xdr;
++		if (modify.nseconds >= NSEC_PER_SEC)
++			return nfserr_inval;
+ 		iattr->ia_mtime.tv_sec = modify.seconds;
+ 		iattr->ia_mtime.tv_nsec = modify.nseconds;
+ 		iattr->ia_ctime.tv_sec = modify.seconds;
 
 
