@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4253C73C1;
-	Fri,  4 Sep 2026 05:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9012AD37;
+	Fri,  4 Sep 2026 05:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500573; cv=none; b=LsuEEM9eJSEn3wLaUBfC3f8cYifzwI4d0oSOWiXxDtm+nB8xeIZLmFT7u0nAhZIj20iEhQwx44yN79oECBu0GaAPvIs1MFViikReeOZ89JqNQn49Z6q9pRIwox30THjqBrXfCKiZxnh3dyp9nE1fsLrxWXS4Ensl/ZuBJnSABTA=
+	t=1788500576; cv=none; b=MP9oU92KnY3Co4EngnHSoAzDvEjCYGwXbWC74JTe/FaL9VXYz+FuR9R/TyPfBh7Lc5cry3Duok5tGrvD3WdpdBjT5ofIa+iuwDtSvzyaqe9rw7I/w19EVmJIcjegNkGf/WnxqU9s6p7CgUf2i+RsJIMjECA661I2IXo7mnYV91E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500573; c=relaxed/simple;
-	bh=09AG+g0Laofv6F0PWs0ucEZbJTtNvhzq0wbp34wzdlI=;
+	s=arc-20240116; t=1788500576; c=relaxed/simple;
+	bh=fB/b9xM2Vi0LWlEst0xNo1lXvwtvjWLO4iHF1xhUKdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpx9ixlVuDyvVifJy0ImPQmFy4UFLW0M479T93xDeJW6r6iYW402qheAQHMxA3XB5KC5ztu01NMHr30wcvu2qyoUwzjKp5CzwrKnuqhyD1Qs2rf2GRSIPNPb6zE9eNpmze+zA1v7O8bxa1pIQ05dGBuGxzjAQ6MWsxtJV9iW5TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5uqLTFA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CgjJuB8AXj4DY5QYV54gw2RoL8TEwPKD9P4wVic+0yjohvM/nzZ93X+/2zuz+EZ+B0lRjvnlKBRAJ45qQTozs9b90nJ04XmPR/NO7Gz6phu9Lt8ig08hs4LntUPut46BYbGgUDU5zf98GvEvf4b9ZCjyG/azL3tNQfuJyWtG2VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKdpKrg4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5uqLTFA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74711F00A3D;
-	Fri,  4 Sep 2026 05:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKdpKrg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DFC1F00A3D;
+	Fri,  4 Sep 2026 05:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500572;
-	bh=m2Zg6Bu6c8r4AfIT4arouEJbWJbHgfRMUhBL1ug4c48=;
+	s=korg; t=1788500575;
+	bh=9Zq02yBkhXfFaNpI0b+TRM0Am6XZIi4Vz/iVFG362mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o5uqLTFArJ/lBd6KNp8eyvrp/xw6EDa+cogS2NDURC2jMLrg9q6lMqDeFhg0aC2Ig
-	 3hVPkV1LIz3RtLVvJIlLBdfoYpcssYmzbXL0saGKx6WqKlF0YdnQ4R/p36y69dsFrS
-	 f1lV3DQTq+c4gC03Etm86MQgC0xU4RoNnZ3gbMeY=
+	b=IKdpKrg4Re/cJwoYMGbv0Jr43WKe5zFDjkG+VlfUi4xLZ0crm5ZQFKxgZyViYdWiA
+	 aMlxpAiiAZ/lenNRlNIfqyF1U138MBVY78AhiK7ogdceeqXz15BgTA42P4ZhCOCnlu
+	 vRxTonwW3O6JyxBdk0ZK5lvDcqaMfv7jX7HpTiOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 103/552] NFSD: remove flawed WARN_ON_ONCE from nfsd_mode_check
-Date: Fri,  4 Sep 2026 06:54:20 +0200
-Message-ID: <20260904045750.241301846@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 104/552] nfsd: guard nfsd_serv deref in nfsd_file_net_dispose
+Date: Fri,  4 Sep 2026 06:54:21 +0200
+Message-ID: <20260904045750.262491031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,50 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Chris Mason <clm@meta.com>
 
-commit aa0cf48a448c5a9fe1a1e880899ecd589ce39e6e upstream.
+commit 9f1ddfc8cb9076592401a611eb3a44d36186d014 upstream.
 
-The header for commit e75b23f9e323 ("nfsd: check d_can_lookup in
-fh_verify of directories") details the assumption that justified
-adding the WARN_ON_ONCE to nfsd_mode_check(), that assumption is
-invalid (in the case of NFS reexport).
+nfsd_file_net_dispose() is the consumer side of l->freeme: the nfsd
+service thread loop calls it to drain entries that the filecache
+garbage collector and shrinker append via
+nfsd_file_dispose_list_delayed().  During per-net teardown,
+nn->nfsd_serv is cleared before the filecache laundrette is shut
+down, so the service thread can still run a dispose pass that finds
+more than eight entries on l->freeme and dereferences a NULL
+svc_serv:
 
-When NFSD exports an NFS filesystem it is very possible for
-nfsd_mode_check() to encounter a @dentry that doesn't have
-i_op->lookup (see nfs_fhget()'s NFS_ATTR_FATTR_MOUNTPOINT and
-NFS_ATTR_FATTR_V4_REFERRAL handling, and d_flags_for_inode()).
+    nfsd service thread loop
+      nfsd_file_net_dispose(nn)
+        if (!list_empty(&l->freeme)) {
+            ...
+            svc_wake_up(nn->nfsd_serv);   /* nn->nfsd_serv == NULL */
+        }
 
-So remove nfsd_mode_check()'s WARN_ON_ONCE(). The nfserr_notdir
-return on that branch must stay. It guards the subsequent
-lookup_one_unlocked() -> __lookup_slow() path, which calls
-inode->i_op->lookup() with no NULL check, so returning nfserr_notdir
-is what keeps a client LOOKUP into such a @dentry from dereferencing
-a NULL method pointer.
+The sibling helper nfsd_file_dispose_list_delayed() already documents
+this ordering and caches nn->nfsd_serv into a local before testing it
+for NULL.  nfsd_file_net_dispose() was introduced with the same raw
+svc_wake_up(nn->nfsd_serv) call and never picked up the guard.
 
-Fixes: e75b23f9e323 ("nfsd: check d_can_lookup in fh_verify of directories")
+Fix by loading nn->nfsd_serv into a local svc_serv pointer and only
+calling svc_wake_up() when it is non-NULL, matching the pattern in
+nfsd_file_dispose_list_delayed().
+
+Fixes: ffb402596147 ("nfsd: Don't leave work of closing files to a work queue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://patch.msgid.link/20260612191410.50177-1-snitzer@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Link: https://patch.msgid.link/20260602-nfsd-testing-v2-4-e4ea62e3cd5c@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsfh.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/nfsd/filecache.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -69,10 +69,8 @@ nfsd_mode_check(struct dentry *dentry, u
- 	if (requested == 0) /* the caller doesn't care */
- 		return nfs_ok;
- 	if (mode == requested) {
--		if (mode == S_IFDIR && !d_can_lookup(dentry)) {
--			WARN_ON_ONCE(1);
-+		if (mode == S_IFDIR && !d_can_lookup(dentry))
- 			return nfserr_notdir;
--		}
- 		return nfs_ok;
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -471,11 +471,20 @@ void nfsd_file_net_dispose(struct nfsd_n
+ 		for (i = 0; i < 8 && !list_empty(&l->freeme); i++)
+ 			list_move(l->freeme.next, &dispose);
+ 		spin_unlock(&l->lock);
+-		if (!list_empty(&l->freeme))
+-			/* Wake up another thread to share the work
++		if (!list_empty(&l->freeme)) {
++			/*
++			 * Wake up another thread to share the work
+ 			 * *before* doing any actual disposing.
++			 *
++			 * The filecache laundrette is shut down after
++			 * the nn->nfsd_serv pointer is cleared, but
++			 * before the svc_serv is freed.
+ 			 */
+-			svc_wake_up(nn->nfsd_serv);
++			struct svc_serv *serv = nn->nfsd_serv;
++
++			if (serv)
++				svc_wake_up(serv);
++		}
+ 		nfsd_file_dispose_list(&dispose);
  	}
- 	if (mode == S_IFLNK) {
+ }
 
 
