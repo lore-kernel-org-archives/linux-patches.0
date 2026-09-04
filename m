@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91EA3A6B82;
-	Fri,  4 Sep 2026 05:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AB33A6B82;
+	Fri,  4 Sep 2026 05:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788498566; cv=none; b=pBUqmX8uMYYbKl7tn7sLY/wa8Cw3fZkrn3j+brfYWsCJXh9/REGVxc0sxpaWxAL4Dm5mDTnbCuOvIO8E0TtDgpHK68L/GVZ3tmuMAkBF2rlPfVXF3UQb7Rcfuiw6Zhs/WiB8fQxAquVHcSCne4tjQEdj314kzDHeIq2ynk2XLD4=
+	t=1788498569; cv=none; b=tr2yoORu5WRdYss2Ba5OJ07cZrjOueGQ2hbnVjUcKx9k/RSfU+F3oCkPMARsLG0wFvWli6UoWPxbYbn6E10Kh8grVuSAySwRVOaRfXTtP9/97G9EclOYt+pYeLS3DdpuqGl1fa394CoTSm3MfbMWxjOjByAFY37EVbIXeeRS2fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788498566; c=relaxed/simple;
-	bh=RlxrDW2oqL1F2TPR40Pf4LHfvZtHFeQYAqWr/q2lXSA=;
+	s=arc-20240116; t=1788498569; c=relaxed/simple;
+	bh=RdVUTCefOpkg5mT0zk9MxoLuIAnyLkIbT09TBoF70Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clPEpOiBKgl95iQOp/t2VFC+q4Y0ywkkPqYPKvm4tKUUomSjlpmoO29fFjEnqzzU2tQHgLyJpdh5HGfnRBL4PlJdY/DI9TXogDlF6rXVZ06xWz8d5wfpzVv4mBYb3eFGYbq8tcd8WSWNxxbDbRhgdQvl6G469ebYsjnEbZimI84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzDQk2OU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s96d3A3duQDOoUckTMMPtpbyyhzA3Ur8LxMDKMT8RzAEAWqGo83VSEzzqm8qQYtbYcqEmV5UsnYkBNxPZNSEDopscw4elElk41b59eSrtPUFKGMPh6dubZFiCqkHY+jfnUHGBuIGNYdzBS0t9GtrHfaW2RaSYSDsv6myoqpuTCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovM9a+pw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzDQk2OU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CACC1F00A3D;
-	Fri,  4 Sep 2026 05:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovM9a+pw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C861F00A3D;
+	Fri,  4 Sep 2026 05:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788498564;
-	bh=NRIth315qUuRSxe6w65jn8HHRvSQH9JoDhr6nBmdkyo=;
+	s=korg; t=1788498567;
+	bh=B00sA+q4NfNZMxIFQhfoEXebnNkB9KM8fS30bd2wcj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bzDQk2OUvGVSDSyvPWMBOHAk6ckDF+PcaUB3ywH52b/3fcKags1GwTPnq6DrEQSHr
-	 /RTUt6LtEkRV/JBjA5eKx0hol32sWu0DKG36xx+m3ZqoFpS6/7saTLsgSJ8xc4OHsF
-	 sEjPxTOe+cyYTAdAMhZ3CZHX/LHGHCQixJ2t8JPg=
+	b=ovM9a+pwBIDgBX0eERtNvk8lhU9cZXqR8Yg71Cbbi3zaSvvbfxoj4ETYPo/Lzmgms
+	 Rbj+K3dQpDJNLpFvllP4iwIcQBL4xjhfmTWHH4szmE5u05lCitLkQgNUy/KCunjqSa
+	 uEDGvGvRJuD415CxM9cKR8O7Jzd1lDtkUociM34k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Xu Rao <raoxu@uniontech.com>
-Subject: [PATCH 7.2 107/713] usb: typec: hd3ss3220: fix VBUS regulator error message
-Date: Fri,  4 Sep 2026 06:51:15 +0200
-Message-ID: <20260904045806.232625176@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 7.2 108/713] usb: typec: tcpci: pass correct rx_type to tcpm_pd_receive()
+Date: Fri,  4 Sep 2026 06:51:16 +0200
+Message-ID: <20260904045806.256340672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,38 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 10ff55ff552b3bf1dadba03fcc430ea205fa2761 upstream.
+commit b691a07c5f644080374ddd24de6a0e05f5d28744 upstream.
 
-hd3ss3220_regulator_control() enables the VBUS regulator when @on is
-true and disables it when @on is false.  However, its error message uses
-the opposite operation name, so an enable failure is reported as a
-disable failure and vice versa.
+Previously, tcpci_irq() always passed TCPC_TX_SOP as the receive type
+to tcpm_pd_receive(), ignoring the actual frame type reported by the
+TCPC_RX_BUF_FRAME_TYPE register.
 
-Print the operation that was actually attempted.  Reporting the opposite
-regulator operation on failures can mislead debugging of VBUS problems.
+Cache the TCPC_RX_DETECT register value in rx_type_mask variable. When
+a PD messageis received, read TCPC_RX_BUF_FRAME_TYPE register and handle
+the message only if its frame type is enabled in mask.
 
-Fixes: 27fbc19e52b9 ("usb: typec: hd3ss3220: Enable VBUS based on role state")
+The TCPC_RX_BUF_FRAME_TYPE register records the received message type,
+which has a 1:1 mapping to enum tcpm_transmit_type.
+
+Fixes: fb7ff25ae433 ("usb: typec: tcpm: add discover identity support for SOP'")
 Cc: stable@vger.kernel.org
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/7A42A287B2B588D0+20260812094632.348581-1-raoxu@uniontech.com
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://patch.msgid.link/20260723104614.3717623-1-xu.yang_2@oss.nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/hd3ss3220.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpci.c |   12 +++++++++++-
+ include/linux/usb/tcpci.h      |    1 +
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/hd3ss3220.c
-+++ b/drivers/usb/typec/hd3ss3220.c
-@@ -218,7 +218,7 @@ static void hd3ss3220_regulator_control(
+--- a/drivers/usb/typec/tcpm/tcpci.c
++++ b/drivers/usb/typec/tcpm/tcpci.c
+@@ -38,6 +38,7 @@ struct tcpci {
  
- 	if (ret)
- 		dev_err(hd3ss3220->dev,
--			"vbus regulator %s failed: %d\n", on ? "disable" : "enable", ret);
-+			"vbus regulator %s failed: %d\n", on ? "enable" : "disable", ret);
- }
+ 	struct regmap *regmap;
+ 	unsigned int alert_mask;
++	unsigned int rx_type_mask;
  
- static void hd3ss3220_set_role(struct hd3ss3220 *hd3ss3220)
+ 	bool controls_vbus;
+ 
+@@ -488,6 +489,8 @@ static int tcpci_set_pd_rx(struct tcpc_d
+ 		if (tcpci->data->cable_comm_capable)
+ 			reg |= TCPC_RX_DETECT_SOP1;
+ 	}
++
++	tcpci->rx_type_mask = reg;
+ 	ret = regmap_write(tcpci->regmap, TCPC_RX_DETECT, reg);
+ 	if (ret < 0)
+ 		return ret;
+@@ -749,6 +752,7 @@ process_status:
+ 	if (status & TCPC_ALERT_RX_STATUS) {
+ 		struct pd_message msg;
+ 		unsigned int cnt, payload_cnt;
++		enum tcpm_transmit_type rx_type;
+ 		u16 header;
+ 
+ 		regmap_read(tcpci->regmap, TCPC_RX_BYTE_CNT, &cnt);
+@@ -773,10 +777,16 @@ process_status:
+ 			regmap_raw_read(tcpci->regmap, TCPC_RX_DATA,
+ 					&msg.payload, payload_cnt);
+ 
++		ret = regmap_read(tcpci->regmap, TCPC_RX_BUF_FRAME_TYPE, &rx_type);
++		if (ret)
++			return ret;
++
+ 		/* Read complete, clear RX status alert bit */
+ 		tcpci_write16(tcpci, TCPC_ALERT, TCPC_ALERT_RX_STATUS);
+ 
+-		tcpm_pd_receive(tcpci->port, &msg, TCPC_TX_SOP);
++		rx_type &= TCPC_RX_BUF_FRAME_TYPE_MASK;
++		if (tcpci->rx_type_mask & BIT(rx_type))
++			tcpm_pd_receive(tcpci->port, &msg, rx_type);
+ 	}
+ 
+ 	if (tcpci->data->vbus_vsafe0v && (status & TCPC_ALERT_EXTENDED_STATUS)) {
+--- a/include/linux/usb/tcpci.h
++++ b/include/linux/usb/tcpci.h
+@@ -144,6 +144,7 @@
+ #define TCPC_RX_BUF_FRAME_TYPE		0x31
+ #define TCPC_RX_BUF_FRAME_TYPE_SOP	0
+ #define TCPC_RX_BUF_FRAME_TYPE_SOP1	1
++#define TCPC_RX_BUF_FRAME_TYPE_MASK	GENMASK(2, 0)
+ #define TCPC_RX_HDR			0x32
+ #define TCPC_RX_DATA			0x34 /* through 0x4f */
+ 
 
 
