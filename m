@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1FB410D36;
-	Fri,  4 Sep 2026 05:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815063B7B7B;
+	Fri,  4 Sep 2026 05:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499135; cv=none; b=Woro+vYkxjEEKn0rhEso7s36PH3C/uY4kS7sz9DOWcTbFTnG6EoaQJj6+drc6NIwxvtqzfzeagJbbscUfC9RRrLihRKXdHmWvO/awnwotV5VLDP6hHEBATi79nU/BE0+mtkxB6h+qfG/2sEODLjfTCV0v+1H/kgGU+hss5+FV/o=
+	t=1788499138; cv=none; b=YCvqxP8s5eZ76YthOgItQH9g/Q4LoDAGSLJTNZ1GFp862aJHF6Y39mwykOS8DECVfz7WYHbk72eTYtZdSxhy3uCowHclql33oYcaOG2xc+2A3soxNzUQHwYEO3SV/lcWF+xKVRJeVK8HBGUqzYAcwq8R/0wV+RS1hl1kQ+5c+gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499135; c=relaxed/simple;
-	bh=q9vMvF0kBJzonGbgzSu2OvRWAhLVt9AKGnseGek8apk=;
+	s=arc-20240116; t=1788499138; c=relaxed/simple;
+	bh=gGgQVaRMxHSGhbmugf/6wTIe2dhlyuiFh0OsTKn9O2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Stk4aOD9SPquZtSZ227SXZfRLj6aBD0pmfgQoWKNg7z0hZFGP/qrN6Qc9ZHo+hIjP0TRNH330+F2UIdZSTBdPmypKW61DvSdYVqzTxGVUWp38MG/6QaT7AYlMZrYhP3cTjTCS9fVmYz8K+JIcgOwiVNU/snvAoy/WX+ZSboWF1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIRGfZ9r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PHrZ+RUjRsS5NB3ElGgqgTMB/F7uk82gZlKQnjyd8bnq/W6FluM8f9Wt13GuTLRV10QBV3FWQ9Q1lfbaxZixA5E536qED5OputlJwXp39hM+fIYF2de5nVL4r34I+ZIZITRMphdSDIDgD/8LUQIl+3PNT8bPOP61xBUYs3eRPQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8MQGzRi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIRGfZ9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6D11F00A3D;
-	Fri,  4 Sep 2026 05:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8MQGzRi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC85F1F00A3D;
+	Fri,  4 Sep 2026 05:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499134;
-	bh=jDSeazDw0On975CP8HFw6F7cMgOxMob8H1zbXZqJsuc=;
+	s=korg; t=1788499137;
+	bh=DWKhB15tDo9J+1+vZDEthM6+dRxBBwA8z6DR3NoVNuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xIRGfZ9rvWH4rW9EALedxHK3Ec9/q9vGeIUjTesg4oByneQ+03pVwaXvPCs9BaONF
-	 Y2KpAKjbBEIkJfzSb5AVAdLaQfumL0thIRc/8x3OodF+G5Z6WBWWdMkccM66AFhwcs
-	 Jg51V37xwH1b5w4lRpjG59Xn+qEVsAVnluwmUpK8=
+	b=L8MQGzRiHknpyO0LjkqR22Fr5UysFcQIjC7WjmMbuNAc0BS14GJq9HQV8Zv946c0J
+	 HNnSVVcUPs0BVw7AOkQhwVywLFN4n1t6KG2TN+at9SFw1nvuT2rVPH8F+EvDkvOZ85
+	 YMmnygIOs6sm/uGnVaeQsCTJjCbHitP6NrlIpzAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hongling Zeng <zenghongling@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.2 267/713] ntfs: validate non-resident attribute offsets
-Date: Fri,  4 Sep 2026 06:53:55 +0200
-Message-ID: <20260904045809.822556830@linuxfoundation.org>
+Subject: [PATCH 7.2 268/713] ntfs: verify run length exceeding volume boundary
+Date: Fri,  4 Sep 2026 06:53:56 +0200
+Message-ID: <20260904045809.844311824@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,82 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit a83e82b0ec3ae523028e24813f23f18b43e8fc1c upstream.
+commit fea9e4488f384c0ef1c0e3d96b565127c1b98447 upstream.
 
-ntfs_attr_update_meta() shifts the attribute name when converting between
-non-sparse and sparse attributes. Converting to sparse also adds the
-compressed_size field before the name and mapping pairs, requiring eight
-additional bytes in the attribute record.
+The mapping pairs decoder validates that the starting LCN is within the
+volume but does not check if the run extends beyond the volume boundary.
 
-However, the validator does not check that name_offset is within safe
-boundaries for these operations or that the additional space is available.
-A malicious MFT record could set name_offset such that:
+A malformed NTFS image with a crafted mapping pairs array could cause
+the kernel to access memory beyond the volume boundary, potentially leading
+to memory corruption and privilege escalation.
 
-1. The name is positioned at the very end of a non-sparse attribute.
-   Converting to sparse would shift the name forward by 8 bytes,
-   writing beyond the attribute boundary.
+Add validation to ensure lcn + length stays within nr_clusters.
 
-2. The name overlaps with the mapping pairs, causing corruption during
-   conversion.
-
-Add validation to ensure:
-- For named attributes, name_offset is within valid bounds
-- Name does not extend beyond the attribute or overlap with mapping pairs
-- For non-sparse, non-compressed attributes, eight bytes are available
-  after mapping_pairs_offset for the compressed_size field
-
-The space check also covers unnamed attributes, for which name_offset = 0
-is valid and no name range needs to be checked.
-
-Fixes: 7e2a1c554bc4 ("ntfs: Fix min_len for compressed/sparse attributes in ntfs_non_resident_attr_value_is_valid()")
 Cc: stable@vger.kernel.org
+Fixes: b4be3a47f8ba4 ("ntfs: bound the free-cluster bitmap scan to the volume")
 Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Co-developed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/attrib.c |   24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ fs/ntfs/runlist.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -693,6 +693,8 @@ static bool ntfs_non_resident_attr_value
- 	u32 attr_len;
- 	u32 min_len;
- 	u16 mp_offset;
-+	u16 name_offset;
-+	u32 name_end;
+--- a/fs/ntfs/runlist.c
++++ b/fs/ntfs/runlist.c
+@@ -916,6 +916,28 @@ struct runlist_element *ntfs_mapping_pai
+ 				goto err_out;
+ 			}
  
- 	attr_len = le32_to_cpu(a->length);
- 	min_len = offsetof(struct attr_record, data.non_resident.initialized_size) +
-@@ -701,7 +703,27 @@ static bool ntfs_non_resident_attr_value
- 		return false;
- 
- 	mp_offset = le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
--	return mp_offset >= min_len && mp_offset <= attr_len;
-+	if (mp_offset < min_len || mp_offset > attr_len)
-+		return false;
++			if (lcn >= 0) {
++				s64 run_end;
 +
-+	if (a->name_length) {
-+		name_offset = le16_to_cpu(a->name_offset);
++				/*
++				 * Ensure that the run stays within the volume.
++				 * A valid starting LCN is not sufficient because
++				 * the run length comes from disk.
++				 */
++				if (unlikely(check_add_overflow(lcn,
++						rl[rlpos].length,
++						&run_end))) {
++					ntfs_error(vol->sb,
++							"Run length overflow in mapping pairs array.");
++					goto err_out;
++				}
++				if (unlikely(run_end > (s64)vol->nr_clusters)) {
++					ntfs_error(vol->sb,
++							"Run extends beyond volume boundary.");
++					goto err_out;
++				}
++			}
 +
-+		if (name_offset < min_len || name_offset >= attr_len)
-+			return false;
-+
-+		name_end = name_offset + a->name_length * sizeof(__le16);
-+		if (name_end > attr_len || name_end > mp_offset)
-+			return false;
-+	}
-+
-+	/* Ensure there's room for the compressed_size field if needed. */
-+	if (!(a->flags & (ATTR_IS_SPARSE | ATTR_COMPRESSION_MASK)) &&
-+	    attr_len - mp_offset <
-+			sizeof(a->data.non_resident.compressed_size))
-+		return false;
-+
-+	return true;
- }
- 
- static bool ntfs_attr_value_is_valid(struct ntfs_volume *vol,
+ 			/* chkdsk accepts zero-sized runs only for holes */
+ 			if ((lcn != -1) && !rl[rlpos].length) {
+ 				ntfs_error(vol->sb,
 
 
