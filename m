@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130C538E8DD;
-	Fri,  4 Sep 2026 05:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F62B38E8DD;
+	Fri,  4 Sep 2026 05:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499611; cv=none; b=mw6oh58o3RjcCc+CpAcpMfSllQa6BpzLUPQRLKsgXMhfkbf42O3FE0FjYXCy4IR6EftRnJsfV4I4oD22DuPvb7VlQbXDGCgD+OBQfSOZQkUR1O7CBVY49gSyDm7AhPXS8/AVPfIbqNeimQI4HaNQA5L122NZtDweOsvrLZCPwG0=
+	t=1788499614; cv=none; b=JuEPn/Z0nNdXqXZaUy2CJNlcvSMp7N6LX5AC5BuFsN6RjXQCkm+OpGyCW/FXt5UbQ2U/2EDaMno5vnrQZU352Gfng2cXLpHQUU3VFAWNB9YwyVLL94cMH7soZRm2GdDMPsUtGdHjMI3qJFKkrXkt6wMQ4sYXSUQ3INTOF0sSOZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499611; c=relaxed/simple;
-	bh=jz0ldKHIrXqCOB+C9sZHpCwjRDqVeYwE4pnF1zDLwDs=;
+	s=arc-20240116; t=1788499614; c=relaxed/simple;
+	bh=EGz4/AFCNFAlx2d56uNgvxkP0bdBA3Px//e9iRAVs8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tu6Blg94A2FN+/0E6f00HnHoxJZeH0rI25kprYB8RakldiIF5SGNWT7Da4SjLwSLObMACUnexrtsjwfP8U1PbzEe9+7La8VwcIMwdLkfAZdIxGu+TykTyt3sh+8qMYcvbcFrJC28iWIWekrClUL62ms8ipx6OrRCiF/iteO81TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOxSf6an; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NaGPevShnuD9nEP/YYjo75y4Yvc9PU7s0snJhG97LS1Xy+Pwc82Hgf8BIOqL52hnfhN6cun/9LNUyXoA3WeuglH0wo2NNdCOBDs23gkYjMOvBi4TAHWgwY7uX58eqK5TTbD4yrI2nFh4ml8PmdPwdTMys4tvQ44DkruCUYNxrnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wA31wfQO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOxSf6an"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4FF1F00ACA;
-	Fri,  4 Sep 2026 05:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wA31wfQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4531D1F00A3D;
+	Fri,  4 Sep 2026 05:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499610;
-	bh=Ng1rElYdUwuvXAbggPYjeLdWRVy1kDgxRJnGYSxw7lI=;
+	s=korg; t=1788499612;
+	bh=Qt8OruHqoA93zcyG54VJevXcWdF4XmzzeUXjOWH0528=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AOxSf6anwyDcYBmJtpYl9OgLJnr1GgZOGzbU38izybmQYlsGoTJ5f6+5oozxHeJ1p
-	 3/H5GprGNtyarG5E5EiEgs9/sE0AC7WGOZuNENeXqYfOVSfg59qeB/N27NT53EZddt
-	 C8bwCQDLJRmrbLN9YdQXhG5WxtTLX15kjpb8MJuA=
+	b=wA31wfQOAIPxjiXvSAvZMFCHnq+A+ifWvEx2QxYjN3S9zQ0w8/GEVvpDH7F16RPj8
+	 aBJCg92zJEDC2IZ6NS4lolM9wLYxOCB5ZAgtWgvT8Sue4kSlkZL23if3PYA3OY7Y+L
+	 U+OyhjNAhO1SZOkbgF04P58uLKkZl4mNrUgELZBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.2 477/713] ASoC: codecs: aw88261: only check PLL and clock state at power-up
-Date: Fri,  4 Sep 2026 06:57:25 +0200
-Message-ID: <20260904045814.516860474@linuxfoundation.org>
+	Alexander Graf <graf@amazon.com>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 7.2 478/713] dma-contiguous: fix truncation of numa_cma / cma_pernuma sizes >= 2G
+Date: Fri,  4 Sep 2026 06:57:26 +0200
+Message-ID: <20260904045814.539871002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,74 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
+From: Alexander Graf <graf@amazon.com>
 
-commit 06b6f1245567a4be862c3e1cc74577922ceb05fb upstream.
+commit 1476cca098f6d3a553fcec6fe9b7d86e15c00b59 upstream.
 
-The SYSST check performed during device start requires SWS (amplifier
-switching, bit 8) and BSTS (boost finished, bit 9) on top of PLL lock
-and clock stability. Those bits cannot be asserted at this point in the
-sequence: the check runs after amppd release but before the
-hmute/ULS-hmute release, and the amplifier neither switches nor
-finishes ramping its boost converter while it is still muted. With the
-Fairphone (Gen. 6) firmware profile, aw88261_dev_start() therefore
-always fails with
+numa_cma=0:4G reserves nothing at all. dma_numa_cma_reserve() copies the
+requested size into a local int before handing it to
+cma_declare_contiguous_nid(), so 0x100000000 truncates to zero and the
+loop skips the node silently. Both parameters are documented in
+kernel-parameters.txt as nn[MG], so that is the syntax the documentation
+invites.
 
-  check sysst fail, reg_val=0x0011, check:0x311
+Which bits survive decides what a request turns into: 4G, 8G and 16G
+reserve nothing, 2G, 3G and 6G sign-extend into a size the allocator
+rejects with a warning, and 5G quietly reserves 1G.
 
-and playback aborts, even though the amplifier is fine and PLL lock
-and stable clocks are present.
+It reaches further than those parameters. On a CMA_SIZE_PERNUMA kernel
+with no per-node parameter, dma_numa_cma_reserve() takes the per-node
+size from the default area, so a plain cma=4G on a multi-node machine
+feeds that size through the same local and loses every per-node area.
 
-Check only PLL lock and clock stability, for which a definition
-already exists; this still re-validates the clocks after amppd release
-(aw88261_dev_check_syspll() checked them before it). This matches the
-vendor aw882xx driver, which only validates PLL lock and clock
-stability at this stage, and the in-tree aw88399 driver, which skips
-the SWS check whenever the amplifier may legitimately not be switching
-(AW88399_BIT_SYSST_NOSWS_CHECK).
+numa_cma_size[] and pernuma_size_bytes are both phys_addr_t, so use it
+for the local too, and give early_numa_cma() separate variables for the
+node id and the size while in there.
 
-Fixes: 028a2ae25691 ("ASoC: codecs: Add aw88261 amplifier driver")
+Fixes: d5cae2261b86 ("dma-contiguous: simplify numa cma area handling")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
-Link: https://patch.msgid.link/20260704192857.88366-1-jorijnvdgraaf@catcrafts.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Reviewed-by: Feng Tang <feng.tang@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20260821224252.70640-1-graf@amazon.com
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/aw88261.c |    6 +++---
- sound/soc/codecs/aw88261.h |    6 ------
- 2 files changed, 3 insertions(+), 9 deletions(-)
+ kernel/dma/contiguous.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/sound/soc/codecs/aw88261.c
-+++ b/sound/soc/codecs/aw88261.c
-@@ -206,10 +206,10 @@ static int aw88261_dev_check_sysst(struc
- 			return ret;
+diff --git a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
+index f754079a287d..66093460584e 100644
+--- a/kernel/dma/contiguous.c
++++ b/kernel/dma/contiguous.c
+@@ -140,21 +140,22 @@ static bool numa_cma_configured __initdata;
+ static int __init early_numa_cma(char *p)
+ {
+ 	int nid, count = 0;
+-	unsigned long tmp;
++	unsigned long node;
++	phys_addr_t size;
+ 	char *s = p;
  
- 		check_val = reg_val & (~AW88261_BIT_SYSST_CHECK_MASK)
--							& AW88261_BIT_SYSST_CHECK;
--		if (check_val != AW88261_BIT_SYSST_CHECK) {
-+							& AW88261_BIT_PLL_CHECK;
-+		if (check_val != AW88261_BIT_PLL_CHECK) {
- 			dev_dbg(aw_dev->dev, "check sysst fail, reg_val=0x%04x, check:0x%x",
--				reg_val, AW88261_BIT_SYSST_CHECK);
-+				reg_val, AW88261_BIT_PLL_CHECK);
- 			usleep_range(AW88261_2000_US, AW88261_2000_US + 10);
- 		} else {
- 			return 0;
---- a/sound/soc/codecs/aw88261.h
-+++ b/sound/soc/codecs/aw88261.h
-@@ -194,12 +194,6 @@
- 		AW88261_OTHS_OT_VALUE | \
- 		AW88261_PLLS_LOCKED_VALUE))
+ 	while (*s) {
+-		if (sscanf(s, "%lu%n", &tmp, &count) != 1)
++		if (sscanf(s, "%lu%n", &node, &count) != 1)
+ 			break;
  
--#define AW88261_BIT_SYSST_CHECK \
--		(AW88261_BSTS_FINISHED_VALUE | \
--		AW88261_SWS_SWITCHING_VALUE | \
--		AW88261_CLKS_STABLE_VALUE | \
--		AW88261_PLLS_LOCKED_VALUE)
--
- #define AW88261_ULS_HMUTE_START_BIT	(14)
- #define AW88261_ULS_HMUTE_BITS_LEN	(1)
- #define AW88261_ULS_HMUTE_MASK		\
+ 		if (s[count] == ':') {
+-			if (tmp >= MAX_NUMNODES)
++			if (node >= MAX_NUMNODES)
+ 				break;
+-			nid = array_index_nospec(tmp, MAX_NUMNODES);
++			nid = array_index_nospec(node, MAX_NUMNODES);
+ 
+ 			s += count + 1;
+-			tmp = memparse(s, &s);
+-			numa_cma_size[nid] = tmp;
++			size = memparse(s, &s);
++			numa_cma_size[nid] = size;
+ 
+ 			if (*s == ',')
+ 				s++;
+@@ -207,9 +208,10 @@ static void __init dma_numa_cma_reserve(void)
+ 		pernuma_size_bytes = cma_get_size(dma_contiguous_default_area);
+ 
+ 	for_each_node(nid) {
+-		int size, ret;
++		phys_addr_t size;
+ 		char name[CMA_MAX_NAME];
+ 		struct cma **cma;
++		int ret;
+ 
+ 		if (!node_online(nid)) {
+ 			if (pernuma_size_bytes || numa_cma_size[nid])
+-- 
+2.55.0
+
 
 
