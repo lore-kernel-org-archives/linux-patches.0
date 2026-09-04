@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFDE395266;
-	Fri,  4 Sep 2026 05:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9183BED30;
+	Fri,  4 Sep 2026 05:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500891; cv=none; b=Lhz7uIqSmZh/9bAeJegXUl557hwcEJl0TbXo0NwQOJhHwyrUeSiAvkMiPZ2Nh86WaYhOHetAkxUy5pqFMfj8d+0iwcwY0vnJtPcqbLAEdo9zi/DIfKMfuGpUPLde0TMYZReR4aFhjYupVvzUZkUMBtsLmQl0jNdlhOcMG78zf8A=
+	t=1788500894; cv=none; b=iRUF4mY7wABgBfwnfIERYn9GMv88sz2rd5YBqTaPYERqoKKehKcX7kyRBTdOk0j930OKNNhVWkIXTi9vLQ6sxlh71HBI6qU2ucTvNbcas80fEWZjT+RjicoEoBips5nWiVPGLC7s/5n5KuqLCKklFC7fevBWB3UuuatqXetZnAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500891; c=relaxed/simple;
-	bh=QQVAoSvVJg4cLdKeLzhQ5Mm2gSw6KcsreqsCcBMe2CY=;
+	s=arc-20240116; t=1788500894; c=relaxed/simple;
+	bh=x/c3rFXZjAQm3NOSExGP7zLYBSV2n9MQj/NfIXV2iRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1qCjybsx4kMb2uJtF4ewiuGhmnv3oOPihZ/iMl8ZZHkm1Argx+m30KkBCJOX1oCJtgB1qcKlqB7mPJ/1I9UJrnkE8md6ejk5cC/F9hzFQ2QNv2Jzbn4gqPKR/7U9ivlkvRtOaP7ndreaankTHFEAGWrduKDTIfKoxbj2qlerFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCvpksT7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ogEdayZ8AATOIYJFMddlYNUmI0p/CDAeGuFsjDe+3+M9/Q9zIjDWPFApadPtZpcOoR7E/Fvc5KlIssr6Q9ltT7tzTPe/KQCZp0okrSqJXYLGn6XxoifEKnDwrURbYpaIzHBQvBNRQkq9ZmMOBCr9CpBTiljjU9r2MT/mWaQ/OQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HDc7p5f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCvpksT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702BD1F00A3D;
-	Fri,  4 Sep 2026 05:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HDc7p5f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463361F00A3D;
+	Fri,  4 Sep 2026 05:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500890;
-	bh=5Y/k5Q67QXwkuJHqo9BhKbe0YXIQPjB3aoZqzFtQ7cI=;
+	s=korg; t=1788500892;
+	bh=gswIjIWZEnUgafIYtHDeg4H9ehWmrSPBKqp9sZM0e8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RCvpksT7kuKojlU8ZiPBMd0D9gsXNNoNqYL7IDGxnRgoUTtMLCcDle+ZqZOi3rv/M
-	 zTLFEDbjPcwrMAfg6JVTevlhTjwAPgt0SMhtgdumvRw1zAmAl37QP3U6RfYWDwmlxp
-	 YD0e4/HrbgpLs51oFo5TLBNkln8mpHgQAHwKACAA=
+	b=2HDc7p5fe33nH8TiQ0kveoyCi9vmvZ+wWPc7qzIeNi7yE3Fw4Cv6IpOIpJCbi9leN
+	 Dk8rPZ5hHpZbL4wmKgATpMiiqItJ2pVuN1IrUUKyYq2k7Xs2lWEwTeVuWtJKe1GgXs
+	 DXmqlni2al9IbnvjH2xX61Hul4oXuf8WgO4O/4lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Morin <guillaume@morinfr.org>,
-	Breno Leitao <leitao@debian.org>,
-	Rik van Riel <riel@surriel.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 209/552] hugetlb: only adjust reservation during unmapping if mapcount is 0
-Date: Fri,  4 Sep 2026 06:56:06 +0200
-Message-ID: <20260904045754.068068862@linuxfoundation.org>
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 6.18 218/552] alpha: marvel: Fix irq_set_status_flags to use correct IRQ number
+Date: Fri,  4 Sep 2026 06:56:15 +0200
+Message-ID: <20260904045754.440437067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -55,63 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Morin <guillaume@morinfr.org>
+From: Matt Turner <mattst88@gmail.com>
 
-commit 5120b1e048d48596ffaec1a8412012a91adba73b upstream.
+commit 3a3ac1f6c6a67b3803f2643584310f78301e58a8 upstream.
 
-Since df7a6d1f6405, __unmap_hugepage_range can adjust reservations.  In
-the case of folio mapped in both a parent and a child, if the parent
-unmaps the range first, the reservation adjustment will result in an
-underflow of the reserved count.  Once the child unmaps the range, the
-count is restored.  Change __unmap_hugepage_range() to check the mapcount
-before adjusting the reservation.
+Pass base + i to irq_set_status_flags() to match the IRQ number
+used in irq_set_chip_and_handler(). Previously, IRQ_LEVEL was set
+on the wrong (low-numbered) IRQ descriptors rather than the IO7
+IRQs at base + i.
 
-Link: https://lore.kernel.org/all/alEJkwn5VlTTH_ZX@bender.morinfr.org/
-Link: https://lore.kernel.org/amkC_1Ya6OiUoiLZ@bender.morinfr.org
-Fixes: df7a6d1f6405 ("mm/hugetlb: restore the reservation if needed")
-Signed-off-by: Guillaume Morin <guillaume@morinfr.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 08876fe8519c ("alpha: marvel: Convert irq_chip functions")
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260528230516.1839694-1-mattst88@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/alpha/kernel/sys_marvel.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5876,6 +5876,7 @@ void __unmap_hugepage_range(struct mmu_g
- 	bool adjust_reservation;
- 	unsigned long last_addr_mask;
+--- a/arch/alpha/kernel/sys_marvel.c
++++ b/arch/alpha/kernel/sys_marvel.c
+@@ -275,7 +275,7 @@ init_io7_irqs(struct io7 *io7,
+ 	/* Set up the lsi irqs.  */
+ 	for (i = 0; i < 128; ++i) {
+ 		irq_set_chip_and_handler(base + i, lsi_ops, handle_level_irq);
+-		irq_set_status_flags(i, IRQ_LEVEL);
++		irq_set_status_flags(base + i, IRQ_LEVEL);
+ 	}
  
-+	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
- 	WARN_ON(!is_vm_hugetlb_page(vma));
- 	BUG_ON(start & ~huge_page_mask(h));
- 	BUG_ON(end & ~huge_page_mask(h));
-@@ -5967,7 +5968,10 @@ void __unmap_hugepage_range(struct mmu_g
+ 	/* Disable the implemented irqs in hardware.  */
+@@ -289,7 +289,7 @@ init_io7_irqs(struct io7 *io7,
+ 	/* Set up the msi irqs.  */
+ 	for (i = 128; i < (128 + 512); ++i) {
+ 		irq_set_chip_and_handler(base + i, msi_ops, handle_level_irq);
+-		irq_set_status_flags(i, IRQ_LEVEL);
++		irq_set_status_flags(base + i, IRQ_LEVEL);
+ 	}
  
- 		/*
- 		 * Restore the reservation for anonymous page, otherwise the
--		 * backing page could be stolen by someone.
-+		 * backing page could be stolen by someone. Restore only on the
-+		 * last unmap, otherwise the owner could empty its resv map
-+		 * while the folio is still mapped by a child. Note that holding
-+		 * i_mmap_lock_write is needed to check the number of mappings.
- 		 * If there we are freeing a surplus, do not set the restore
- 		 * reservation bit.
- 		 */
-@@ -5975,7 +5979,7 @@ void __unmap_hugepage_range(struct mmu_g
- 
- 		spin_lock_irq(&hugetlb_lock);
- 		if (!h->surplus_huge_pages && __vma_private_lock(vma) &&
--		    folio_test_anon(folio)) {
-+		    !folio_mapped(folio) && folio_test_anon(folio)) {
- 			folio_set_hugetlb_restore_reserve(folio);
- 			/* Reservation to be adjusted after the spin lock */
- 			adjust_reservation = true;
+ 	for (i = 0; i < 16; ++i)
 
 
