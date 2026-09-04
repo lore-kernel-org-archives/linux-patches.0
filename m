@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B3C412294;
-	Fri,  4 Sep 2026 05:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F55E412BE7;
+	Fri,  4 Sep 2026 05:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501434; cv=none; b=L7Dz+idQMFPW3kAxFMue6QA4hxU1xw8Ry8k7BSFAfakM+7ye+3j+QHoCGFH6lsGZ0HDp46Sd8vYMrkHgPKK8K5gd06dBXV6VAjAjwGfTCMpGTD2qhwfABiuBmcrNQkl/Gmwhpykf2qgkNY9qQE2XuR4ARjraLj2OZPAfOWZ1Kko=
+	t=1788501436; cv=none; b=AiMDSZ+XgQ4dsVMdBWf4fNvR8OI7zxPD0yRp7f4TeImxmZb4NKZrDBT+Rv4Ky6HtpYlSm9Qrpm9hzbyti9QUTkAtC1LQYUOqdT1GFJGsOzND6WLGEZjr2AgXU0xZa/acjQOzAqY2t8txqh5tS6x9pu/WUf0Z6tQwV351bi+wBXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501434; c=relaxed/simple;
-	bh=+mLezNA8vBOVeyEt+kR1Qn7a1c1Mww01Um3CTm/aURE=;
+	s=arc-20240116; t=1788501436; c=relaxed/simple;
+	bh=evntsyDps8KY1Ij9ZQ5FJ1fkM9npf5DZGFlxLSlqoxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jaKNRhct5p7WIPR6KA5uaGPbzLPgmlC5neojuxqaHw2FxWGTHVGeL35NvihZLXsc21tMLcp9rHyS/3Drey0SStLEvh9E06ydCRbkYZ854LfkJA6MojYb1oJQ8DelzgjXP9t9iCc+Hl3fLIbUBQ/6za4JRXVwESFx46LrGHi7sGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFG2Rhjw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lkq0Vdwdix5r1VntVt90WB5LCWFBWZQQggVzYrgTk73JDYP5g81TFOGyE2IFvuDJggDR7Jgmn2vSfvM9sVUKdSIS9wl58OkXSNwFrHf8qBbehy79g71tQhQOJAnBgDkeCpI1RwGN71ydYFpkO9AGJfaAG7kl+wYvs5Nr5L2Nrtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01vFt2M/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFG2Rhjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BF11F00A3D;
-	Fri,  4 Sep 2026 05:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01vFt2M/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050381F00A3D;
+	Fri,  4 Sep 2026 05:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501432;
-	bh=2wDDsO3gJ10qGLdPzup9JOk3DEMaKjL865KT7K+XHLY=;
+	s=korg; t=1788501435;
+	bh=EAOQsvhI8zp4j9jIg9uo3W9kHfpmlsBJEBM09gcoyXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AFG2RhjwSNcTwkc2BGXPIhqPkoJnLHvJ3Jf1Q07ZwfWCwAbUkqZbe7GI2qO0WjYyt
-	 AmbkwUU9sdOkJw/Nov4BeVrQk5vadqN6Qrh6tqHQFurqqkznNrPb2y8RKJttJ7ogRG
-	 afGevJB1x87WWjUk/x3Cg8DyqYEuhGL3ug1zQ7io=
+	b=01vFt2M/gKESf37IhUjFPwYA1+aCrIp5oqVw4xI9VEGFQhi2jlI7O8T8gL8mhr8z6
+	 bjA/+Dx2hmEpIF61s3mM8iuW+HSXnYjSWL1boiVmuQV92TM7jEjXWT5ZX4Z2Fi8Az3
+	 ySUo9k4QRHRxQVPs3hIVrqzv//+a8rJ/M4s4PEX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
 	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 409/552] iommu/vt-d: Force requesting ACS when tboot is enabled
-Date: Fri,  4 Sep 2026 06:59:26 +0200
-Message-ID: <20260904045759.890199431@linuxfoundation.org>
+Subject: [PATCH 6.18 410/552] iommufd: Avoid locking internal accesses during unmap
+Date: Fri,  4 Sep 2026 06:59:27 +0200
+Message-ID: <20260904045759.915006195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -51,88 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Tian <kevin.tian@intel.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit 607432b2618b61df81134be0ef2562b8300c1216 upstream.
+commit 0dbcdf4473a614adbd732d567c9b39ac0e040e0c upstream.
 
-Currently the conditions of requesting ACS in detect_intel_iommu()
-don't include tboot, leading to a possible misconfiguration with ACS
-disabled (e.g. due to user opts) while iommu is later forced on by
-tboot_force_iommu().
+iommufd_access_notify_unmap() skips internal accesses because they do
+not have an external unmap callback to invoke.
 
-Fix it by checking tboot in detect_intel_iommu().
+However, the current test calls iommufd_lock_obj() before checking
+whether the access is internal. If iommufd_lock_obj() succeeds, the loop
+then sees the internal access and continues, bypassing the matching
+iommufd_put_object() used by the normal unmap path. This leaks the
+object reference taken by iommufd_lock_obj().
 
-Fixes: 5d990b627537 ("PCI: add pci_request_acs")
+Check for internal accesses first so skipped entries are never locked.
+
+Fixes: 27b77ea5feaa ("iommufd/access: Bypass access->ops->unmap for internal use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Assisted-by: Qoder:Qwen-3.8-MAX-Preview
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/dmar.c  |   15 +++++++++++++--
- drivers/iommu/intel/iommu.c |    2 +-
- drivers/iommu/intel/iommu.h |    2 ++
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/iommu/iommufd/device.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -915,6 +915,18 @@ dmar_validate_one_drhd(struct acpi_dmar_
- 	return 0;
- }
+diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
+index 170a7005f0bc..e4537db724d5 100644
+--- a/drivers/iommu/iommufd/device.c
++++ b/drivers/iommu/iommufd/device.c
+@@ -1307,8 +1307,8 @@ void iommufd_access_notify_unmap(struct io_pagetable *iopt, unsigned long iova,
  
-+static bool dmar_required(void)
-+{
-+	/* tboot supersedes any user/platform opt */
-+	if (!intel_iommu_tboot_noforce && tboot_enabled())
-+		return true;
-+
-+	if (!no_iommu && (!dmar_disabled || dmar_platform_optin()))
-+		return true;
-+
-+	return false;
-+}
-+
- void __init detect_intel_iommu(void)
- {
- 	int ret;
-@@ -928,8 +940,7 @@ void __init detect_intel_iommu(void)
- 	if (!ret)
- 		ret = dmar_walk_dmar_table((struct acpi_table_dmar *)dmar_tbl,
- 					   &validate_drhd_cb);
--	if (!ret && !no_iommu && !iommu_detected &&
--	    (!dmar_disabled || dmar_platform_optin())) {
-+	if (!ret && !iommu_detected && dmar_required()) {
- 		iommu_detected = 1;
- 		/* Make sure ACS will be enabled */
- 		pci_request_acs();
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -64,7 +64,7 @@ static int rwbf_quirk;
-  * (used when kernel is launched w/ TXT)
-  */
- static int force_on = 0;
--static int intel_iommu_tboot_noforce;
-+int intel_iommu_tboot_noforce;
- static int no_platform_optin;
+ 	xa_lock(&ioas->iopt.access_list);
+ 	xa_for_each(&ioas->iopt.access_list, index, access) {
+-		if (!iommufd_lock_obj(&access->obj) ||
+-		    iommufd_access_is_internal(access))
++		if (iommufd_access_is_internal(access) ||
++		    !iommufd_lock_obj(&access->obj))
+ 			continue;
+ 		xa_unlock(&ioas->iopt.access_list);
  
- #define ROOT_ENTRY_NR (VTD_PAGE_SIZE/sizeof(struct root_entry))
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -1434,6 +1434,7 @@ static inline bool ecmd_has_pmu_essentia
- 
- extern int dmar_disabled;
- extern int intel_iommu_enabled;
-+extern int intel_iommu_tboot_noforce;
- #else
- static inline int iommu_calculate_agaw(struct intel_iommu *iommu)
- {
-@@ -1446,6 +1447,7 @@ static inline int iommu_calculate_max_sa
- #define dmar_disabled	(1)
- #define intel_iommu_enabled (0)
- #define intel_iommu_sm (0)
-+#define intel_iommu_tboot_noforce (0)
- #endif
- 
- static inline const char *decode_prq_descriptor(char *str, size_t size,
+-- 
+2.55.0
+
 
 
