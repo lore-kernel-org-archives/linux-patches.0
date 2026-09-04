@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC713F4101;
-	Fri,  4 Sep 2026 06:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B386E41685A;
+	Fri,  4 Sep 2026 06:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502241; cv=none; b=nIgWraSqDv8n0Mgt2QEecjpTzz9H1Aom+7lxQsyLqWTrtlf2aEJnTY3jSj3aac0oitXUwU38gm3LkeMx8zvNCiUyHam8UCkopYgBFZnAo5Je3+T9lo1eYXlxkrspmlpvmVNjEg5ay4dqI9Aayd9UrthxGNmDGf4dbjDwCK8fI30=
+	t=1788502243; cv=none; b=HOkVN93lIaT+OQJUK5nbS6IrHFO4CsgIaMo44RYhcXyoePMMirtFM24B+TI/xo7U0cA2HTGT9d/NMr7u87ri8QEXwKW6xGL21MisEDUcdQb7rccjCQUo0GlUV+skdBaSPuhVItgQnb0HQmldACGpQ/jN3+gypAiI78pCh6obZaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502241; c=relaxed/simple;
-	bh=5Blh5QcPYXRyRq9opDWaqCyb6tggkcH9yFhWKU0kRrg=;
+	s=arc-20240116; t=1788502243; c=relaxed/simple;
+	bh=AYNrDUrWniTdBP3W+sPIknfCqijXF6nDqXyGXoHkx6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5tfL+5gsIMMTKYkGfRftttmR5Qm6DNFkN2uRCH8vKaHieGr/2RUIpEAXyaCGTf0ko9tEFi7MAHsK5AK4CJyYCyI/mkJIhRJqhAr5jaHTSLDxUTnwMtw9rvxWl+SfkkO3Hk/97g+WsmPrEQ8peW3zKmuB9JTsudvQa5Yh/u5k4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kc7iaX02; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=urzXWmtW5axBwn18LyFzctQzrscWxOYecC0f8eSdub5mBxc8D/entQ2VFBEQH0Yiq3CB/J4SkDPurwlg2R6xR4KvHz+OeD8kTsayd41y8jPkQNCMlX5aCYMchAjKxDY1BYE6T4OE3ZMWiucaWPp7Cc2G2R6hN2z+FSCYi4RuibU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3MyLyxq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kc7iaX02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396DA1F00A3E;
-	Fri,  4 Sep 2026 06:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3MyLyxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BDD1F00A3D;
+	Fri,  4 Sep 2026 06:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502239;
-	bh=iIbs4am+0Chec77RcSwJr9ya/LQ0Xp+AM3L7Qz0AT2E=;
+	s=korg; t=1788502242;
+	bh=Zaa8wKBLdTod4JJsRsKxNRvzdrSMg36s5WqCKTMgDDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kc7iaX02TUPXiJRDbshNS24X+SHtzn6I3wGAnHzK8fU5Soz1r0gSlFUoihjtpEczf
-	 HX6YZf0Slejioiky0Sd8jkcgkABF6dFz5erBIeXsks2yBaT9deznA5BXJhVaj2J9eA
-	 sSR+MSUaSi2wI62kuqA4y1wRl1+6rqp0hnhxkA0Y=
+	b=n3MyLyxqFYmveNa+5A2AZp1g1oC2cYOmsqWdYLzi0rGI4KVRoBcnXGu75FXxk0/L9
+	 fk6mCeNhZM3KErpyIQgngst+BYV2EVGd4MS3IeQ2UgLzHupl/PDSa+1gyorbf/Wn+n
+	 riEMCeI9j+ksSJ996fHVFaEMfT4TQ9D8vQlH67Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 095/403] nfsd: fix reply size estimate for GET_DIR_DELEGATION
-Date: Fri,  4 Sep 2026 06:58:18 +0200
-Message-ID: <20260904045736.993693554@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 086/403] nfsd: block non-SAVEFH ops after FOREIGN PUTFH to prevent NULL deref
+Date: Fri,  4 Sep 2026 06:58:09 +0200
+Message-ID: <20260904045736.789964109@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -52,40 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 46f929b907b3bc488593c006f0c97e35baba9ea4 upstream.
+commit c59738a00aa51b16adc1b5ceb7c80877168efb4d upstream.
 
-nfsd4_get_dir_delegation_rsize() returns its estimate in XDR words, but
-the COMPOUND reply-size machinery works in bytes: every other op's
-_rsize helper multiplies its word count by sizeof(__be32). Since
-GET_DIR_DELEGATION is OP_MODIFIES_SOMETHING, this estimate is consulted
-before the op executes to ensure the reply will fit. The ~4x too-small
-estimate lets a compound near the session/reply limit pass the check,
-grant a directory delegation, and then fail to encode the reply with
-NFS4ERR_RESOURCE/REP_TOO_BIG, leaving the client without the returned
-stateid.
+When CONFIG_NFSD_V4_2_INTER_SSC is enabled, nfsd4_putfh() can return
+success with fh_dentry and fh_export both NULL if fh_verify() returns
+nfserr_stale and putfh->no_verify is true. The NFSD4_FH_FOREIGN flag
+is set, but the compound dispatch loop only uses this flag to bypass
+the nfserr_nofilehandle check -- it does not prevent subsequent ops
+from running with a NULL fh_dentry.
 
-Multiply the estimate by sizeof(__be32) like the other _rsize helpers.
+A remote client can exploit this by crafting a COMPOUND that includes
+an inter-SSC COPY (which causes check_if_stalefh_allowed() to set
+no_verify=true on the saved PUTFH) with an additional op inserted
+between the source PUTFH and SAVEFH. For example, SETATTR calls
+fh_want_write() which dereferences fh_export->ex_path.mnt without
+calling fh_verify() first, causing a NULL pointer dereference in the
+nfsd kthread.
 
-Fixes: 33a1e6ea73e5 ("nfsd: trivial GET_DIR_DELEGATION support")
+Fix this by gating the dispatch loop: when NFSD4_FH_FOREIGN is set
+and fh_dentry is NULL, only OP_SAVEFH (needed for the inter-SSC flow)
+and ops with ALLOWED_WITHOUT_FH (which don't need a resolved
+filehandle) may proceed. All other ops receive nfserr_stale, per
+RFC 7862 Section 15.2.3 which specifies that foreign filehandle
+validation is deferred to the consuming operation and NFS4ERR_STALE
+returned at that point.
+
+Fixes: b9e8638e3d9e ("NFSD: allow inter server COPY to have a STALE source server fh")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260616-dir-deleg-v7-17-6cbc7eac0ade@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20260527-putfh_foreign_fh_null_deref_consumers-v1-1-1b8a5aa28c59@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -3141,7 +3141,7 @@ static u32 nfsd4_get_dir_delegation_rsiz
- 		op_encode_stateid_maxsz +
- 		2 /* gddr_notification */ +
- 		2 /* gddr_child_attributes */ +
--		2 /* gddr_dir_attributes */);
-+		2 /* gddr_dir_attributes */) * sizeof(__be32);
- }
- 
- #ifdef CONFIG_NFSD_PNFS
+@@ -2743,9 +2743,22 @@ nfsd4_proc_compound(struct svc_rqst *rqs
+ 				op->status = nfsd4_open_omfg(rqstp, cstate, op);
+ 			goto encode_op;
+ 		}
+-		if (!current_fh->fh_dentry &&
+-				!HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
+-			if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
++		if (!current_fh->fh_dentry) {
++			if (HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
++				/*
++				 * FOREIGN fh from inter-SSC PUTFH: only
++				 * SAVEFH may proceed with a NULL fh_dentry.
++				 * Per RFC 7862 S15.2.3, validation of a
++				 * foreign fh is deferred to the operation
++				 * that consumes it, and NFS4ERR_STALE is
++				 * returned at that point.
++				 */
++				if (op->opnum != OP_SAVEFH &&
++				    !(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
++					op->status = nfserr_stale;
++					goto encode_op;
++				}
++			} else if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
+ 				op->status = nfserr_nofilehandle;
+ 				goto encode_op;
+ 			}
 
 
