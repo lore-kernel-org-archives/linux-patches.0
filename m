@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E61412294;
-	Fri,  4 Sep 2026 05:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850D37C106;
+	Fri,  4 Sep 2026 05:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501573; cv=none; b=r+tjd/Vgz0b5DYjKwqFm3ZwXKYoN/5xK3UKDGBhCRKnsZEQlnq0BfJYZUhivn4L29pRE2RS0gcZE253GIFeWtyVf9t3uMZgnONyLGeg6WV+ZhdhWvdhdlxAKAQCyAXr4/GawWRT/oI/PRDbcFLUFakXKDd2W9sfTHjks86A3COA=
+	t=1788501576; cv=none; b=nCaHWcFmm55qDPRy2UEoGQbHF5ygrIpn644opu/Lkc2flefUo0HPxNQFSH+jpYETCDJtyvSRqfufa2k2HmOVwwDzsCUox4PRygLnP+ePTOxgJIM13B4R9simS9Ta1Mk9el9XZmHFUQN8K3omQO2hfBqTKaI0h85VWNJjIRixFq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501573; c=relaxed/simple;
-	bh=KnSSKwAjiAcKMh52UU14tj6jmetSFnXoMHOxqo/5hHU=;
+	s=arc-20240116; t=1788501576; c=relaxed/simple;
+	bh=Se4A/JleIfyihEqsBcOjcebVM9BWzjfIWdqs/lOwlvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1ipTSteadTGyQ3F1glTcY3g+ZVMJwhXGJxu+N3oruLhXsfS4MbeCDpke6Re5OS5ZQTQMGrxm4/AM3gNxi0RJc6w/0+VBhdIrSqLA63ebk6IFsvdPfz9ugAuwwDU2AT73fTz8rjYYO4YXfmHGp/MbGoscLZoVOJNy1ykczfHISQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3dbWHYo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FYL0gorTxtNsPafKM9/pa7DS2uG/y+ix36VE7y2dM/ptB32qnK3y1MJUx33Vvwfrjv9mi6lLZ+EEpri71Kp1C7jyCDWtiqh5Cq9MMGv8LTIJUjXvd2rjyqjY0kB67mb18gJ9wRaVJ+nqcuQB4GVAFzRFToVND6YZRCMcnbu0WQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cwb+EdV4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3dbWHYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3701F00A3D;
-	Fri,  4 Sep 2026 05:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cwb+EdV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E661F00A3D;
+	Fri,  4 Sep 2026 05:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501572;
-	bh=lrS088TfAkmYhbObhGv8WDhgmYfyiLxXZM2Q2HCoxxI=;
+	s=korg; t=1788501575;
+	bh=kxPADy7x0x6xQ/vZAcp8JRoGrevho6HFBzHvzFST4UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G3dbWHYoPBDoLVVNhE0KjDD3KaMUVbSCVsT6tumSKvsxf5bB7u7VC9JEjNa+MzbZq
-	 Q4AI0521zuuEG7DdGKoqs9rY6Cl7TFiblBdOuYtCSO1sqqO69vLcc30TtL2XzI22xA
-	 cieYy0Ec8AKhVB51HXc9zlkIP3raXlC2MkWKT1To=
+	b=Cwb+EdV4uSs4R6aXZd0vrZVZgvIp5nciZsUbyN5RH54pDH4stO2lxLldIRMfBH1VV
+	 pkYb3xWSVoo01zWDAAJ55bbWC2zmEftkDZPIcgC1LSaWbolU6iByTkR8VxWjBUZ7AJ
+	 bmPX1SqoE5K24o0QJKJ8zi0iiLvwC7oBPe4rIvZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 458/552] net: l2tp: do not propagate multicast notification errors
-Date: Fri,  4 Sep 2026 07:00:15 +0200
-Message-ID: <20260904045801.084512361@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 441/552] platform/x86: hp-bioscfg: fix ORD_LIST_ELEMENTS never being parsed
+Date: Fri,  4 Sep 2026 06:59:58 +0200
+Message-ID: <20260904045800.587233151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -46,86 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit af20e269f7459d2ce69887fdf2fad7caf986c865 upstream.
+commit cb6b1b0fb236a9581cae213c2a9182e68cc3ffe5 upstream.
 
-The tunnel create, tunnel modify, session create, and session modify
-netlink handlers send multicast notifications through helpers that can fail
-while allocating or encoding a message, or while multicasting it.
+The ACPI_TYPE_STRING case explicitly skips the string conversion for
+elem == ORD_LIST_ELEMENTS:
 
-For tunnel and session create/modify, a notification is sent after the live
-operation has completed. Returning a best-effort notification error as the
-command result can therefore report failure for an operation that already
-committed and can cause callers to retry and accumulate live objects.
+	if (elem != PREREQUISITES && elem != ORD_LIST_ELEMENTS) {
+		ret = hp_convert_hexstr_to_str(..., &str_value, &value_len);
+		if (ret)
+			continue;
+	}
 
-Keep sending notifications for listener visibility, but do not propagate
-their best-effort status as the command result. This also keeps the tunnel
-modify command consistent with the other notification-only paths.
+so by the time the ORD_LIST_ELEMENTS case in the eloc switch runs,
+str_value is NULL (it was freed and reset to NULL at the end of the
+previous iteration). That case then does:
 
-Fixes: 33f72e6f0c67 ("l2tp : multicast notification to the registered listeners")
+	ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
+
+hp_convert_hexstr_to_str() rejects a NULL input with -EINVAL, which
+sends this function to exit_list, and exit_list unconditionally
+returns 0. The net effect is that any ordered-list attribute with
+elements present silently ends up with an empty elements list, with no
+error surfaced anywhere.
+
+Fix by converting the current element directly, order_obj[elem], the
+same way the PREREQUISITES case already handles its own array
+elements, instead of reusing the unrelated str_value/value_len left
+over from earlier processing.
+
+Fixes: 4b2672ec71a3 ("platform/x86: hp-bioscfg: order-list-attributes")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/54f48e812ca0424c47ffdb9a8182180921f7e6b2.1787247008.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260812111829.172273-9-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/l2tp/l2tp_netlink.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/l2tp/l2tp_netlink.c
-+++ b/net/l2tp/l2tp_netlink.c
-@@ -248,8 +248,8 @@ static int l2tp_nl_cmd_tunnel_create(str
- 		kfree(tunnel);
- 		goto out;
- 	}
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
--				 L2TP_CMD_TUNNEL_CREATE);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info, tunnel,
-+			   L2TP_CMD_TUNNEL_CREATE);
- 	l2tp_tunnel_put(tunnel);
- 
- out:
-@@ -305,8 +305,8 @@ static int l2tp_nl_cmd_tunnel_modify(str
- 		goto out;
- 	}
- 
--	ret = l2tp_tunnel_notify(&l2tp_nl_family, info,
--				 tunnel, L2TP_CMD_TUNNEL_MODIFY);
-+	l2tp_tunnel_notify(&l2tp_nl_family, info,
-+			   tunnel, L2TP_CMD_TUNNEL_MODIFY);
- 
- 	l2tp_tunnel_put(tunnel);
- 
-@@ -645,8 +645,8 @@ static int l2tp_nl_cmd_session_create(st
- 		session = l2tp_session_get(net, tunnel->sock, tunnel->version,
- 					   tunnel_id, session_id);
- 		if (session) {
--			ret = l2tp_session_notify(&l2tp_nl_family, info, session,
--						  L2TP_CMD_SESSION_CREATE);
-+			l2tp_session_notify(&l2tp_nl_family, info, session,
-+					    L2TP_CMD_SESSION_CREATE);
- 			l2tp_session_put(session);
- 		}
- 	}
-@@ -710,8 +710,8 @@ static int l2tp_nl_cmd_session_modify(st
- 	if (info->attrs[L2TP_ATTR_RECV_TIMEOUT])
- 		session->reorder_timeout = nla_get_msecs(info->attrs[L2TP_ATTR_RECV_TIMEOUT]);
- 
--	ret = l2tp_session_notify(&l2tp_nl_family, info,
--				  session, L2TP_CMD_SESSION_MODIFY);
-+	l2tp_session_notify(&l2tp_nl_family, info,
-+			    session, L2TP_CMD_SESSION_MODIFY);
- 
- 	l2tp_session_put(session);
+--- a/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/order-list-attributes.c
+@@ -264,7 +264,9 @@ static int hp_populate_ordered_list_elem
+ 			 * Ordered list data is stored in hex and comma separated format
+ 			 * Convert the data and split it to show each element
+ 			 */
+-			ret = hp_convert_hexstr_to_str(str_value, value_len, &tmpstr, &tmp_len);
++			ret = hp_convert_hexstr_to_str(order_obj[elem].string.pointer,
++						       order_obj[elem].string.length,
++						       &tmpstr, &tmp_len);
+ 			if (ret)
+ 				goto exit_list;
  
 
 
