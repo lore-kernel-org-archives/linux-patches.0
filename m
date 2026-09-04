@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ED1415F22;
-	Fri,  4 Sep 2026 05:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CD8415F22;
+	Fri,  4 Sep 2026 05:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499299; cv=none; b=OOcC76kPQSiUYrZimJYt/yCbpCC4nsz4LOzzScnepSJ9iT+ZamWpRbDnZVHiQSTO183i0qCl+jonurtfFqM0PXzfHeHmoXI+DfmJcdASmH39Tgfofyoy5jt21Z9NbE9Zl8E2ZV7AD1lIOcpdYz1ILkY7UOS6Mx3SI1uD7H7FnYA=
+	t=1788499302; cv=none; b=cbkF0WbvRCSUiGBJqTgegou3yhQA+R5k14PgGIiErBpsI17zgj30YZql8z0C8sNaL7ebr/qfeT55yTR2p9jvq2dxDdyBLr2OQXwKqfbNgvB9Bn01OubDZn4ptchARi43OQk3XGSuOl6jUpXj2/fwkU8cKz2XxmMYh9dfDc01LuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499299; c=relaxed/simple;
-	bh=FTJcyssRH9kxY1W3kCWqQ9+CkD69PupxpXA0kcjxyHw=;
+	s=arc-20240116; t=1788499302; c=relaxed/simple;
+	bh=dHx03CZOHfOvLgZYFqu3zEANPttnugcsya+A/p74lzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhmZTVCvqMCHgNxXd1S+5Nr/M06htgva6eZvlwgPy5MLKC8/SlHOLgrV0T+3UGTEZAu5DV5b2zaXjHAMMxchV18mMrVUJQjxk0B7o3fnDPojqxt4KjTudftCi5jjXh7y5xQjXfbldihUAazlzuS+T4ZLqPk8k/L2EEuofDhfUZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEvP8wUB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DPxAmsnByo8QBdTPLnH59bkvbdXqzOhzcsOzA+Vy4JCd3GQ0iKiV+rrjCEaYhrNZmpVY1ojhHZ4ayuzy6fKJn+T1TOUf6RFis9PjMsdPYOSNGKX1PWcqCEjEtnSGoqn/z0oMv2WJKTsPBxYbPvlnJQcuaTI94OLROc11b6/MClY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvCMFota; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEvP8wUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0B81F00ACA;
-	Fri,  4 Sep 2026 05:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvCMFota"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCAF1F00AC4;
+	Fri,  4 Sep 2026 05:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499298;
-	bh=Qq6poiQjs3SzHwQsNOt7ohCc3H6jX4fx1WFEmduVmz0=;
+	s=korg; t=1788499301;
+	bh=cOSH4+x7w5W8KCeUu51TH35g7VpbXetSo0gZEs+rPhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gEvP8wUBvSr5SOBkvq8WBukefeBm+Fhzv+SqhSs121OT9oHeORH9qX5DWITYyDcFn
-	 R4OI4iVGvp61inKZ/NIsjXJfDDHqytBqaKSo31BJmLHdsp7RYxssfbekOoMo3z967t
-	 TR3D2ovoTbTCV3GOqZ+pxA3p/0WdoVrdgeFLoayI=
+	b=gvCMFota912hWaob+Qdxry7vZOB8LRov2Hplsyz5g50NXkT5rXp2sKVoLcabskxWD
+	 EzVIeE85iEujGibWwFjvRdYAEiPPtiNldVGH7wdpKd5OSSahu9A4VamYunZ3uRKjuy
+	 u/laAvtT0ouGu3k8CMBuoIRbtkbqIYVufr4W8Oo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 7.2 369/713] phy: fsl-imx8mq-usb: fix typec switch leak on probe error path
-Date: Fri,  4 Sep 2026 06:55:37 +0200
-Message-ID: <20260904045812.099471493@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 7.2 370/713] SUNRPC: xdr_buf_trim: clamp buf->len to avoid underflow
+Date: Fri,  4 Sep 2026 06:55:38 +0200
+Message-ID: <20260904045812.121110192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -52,84 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Chris Mason <clm@meta.com>
 
-commit 87a1805b1c346b092c34f96f3806f207792910e1 upstream.
+commit 3f491306dcb673ff5e78e1044ba450c58978774e upstream.
 
-If probe fails after imx95_usb_phy_get_tca() succeeds, the typec
-switch leaks because the only cleanup path was in .remove(), which
-never runs on probe failure.
+xdr_buf_trim() trims `len` bytes from the tail of an xdr_buf by
+walking the tail, pages, and head iovecs.  Each per-section step
+uses min_t() so it never removes more bytes than that section
+holds, but the final accounting at the fix_len label subtracts the
+total bytes actually consumed from buf->len without any clamp:
 
-Use devm_add_action_or_reset() so the switch is cleaned up on both
-probe failure and driver removal. The imx95_usb_phy_put_tca() is no
-longer needed, it will be removed in .remove() too.
+    fix_len:
+            buf->len -= (len - trim);
 
-Fixes: b58f0f86fd61 ("phy: fsl-imx8mq-usb: add tca function driver for imx95")
+When the caller has set buf->len to a value smaller than the sum
+of the iov_lens, (len - trim) can exceed buf->len and the unsigned
+subtraction wraps to near UINT_MAX.  gss_krb5_unwrap_v2() reaches
+xdr_buf_trim() in exactly that state:
+
+    buf->head[0].iov_len -= GSS_KRB5_TOK_HDR_LEN + headskip;
+    buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+    xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
+
+buf->len is a small wire-derived value while the iov_lens are at
+page scale, so the per-section loops legitimately consume far more
+bytes than buf->len records.  The wrapped buf->len then propagates
+as the authoritative stream bound into every downstream XDR
+decoder.
+
+Fix by clamping the decrement so buf->len bottoms out at zero:
+
+    buf->len -= min_t(unsigned int, buf->len, len - trim);
+
+On the normal path where the iov_lens sum to buf->len, (len - trim)
+is always <= buf->len and the result is identical to before.  No
+callers change behavior outside the underflow case.
+
+Fixes: 4c190e2f913f ("sunrpc: trim off trailing checksum before returning decrypted or integrity authenticated buffer")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260731-imx8mp-usb-phy-improvement-v8-1-2ec8d6b3854d@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260524010213.557424-4-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/freescale/phy-fsl-imx8mq-usb.c |   21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ net/sunrpc/xdr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-@@ -173,9 +173,9 @@ static struct typec_switch_dev *tca_blk_
- 	return sw;
+--- a/net/sunrpc/xdr.c
++++ b/net/sunrpc/xdr.c
+@@ -2049,7 +2049,7 @@ void xdr_buf_trim(struct xdr_buf *buf, u
+ 		trim -= cur;
+ 	}
+ fix_len:
+-	buf->len -= (len - trim);
++	buf->len -= min_t(unsigned int, buf->len, len - trim);
  }
+ EXPORT_SYMBOL_GPL(xdr_buf_trim);
  
--static void tca_blk_put_typec_switch(struct typec_switch_dev *sw)
-+static void tca_blk_put_typec_switch(void *data)
- {
--	typec_switch_unregister(sw);
-+	typec_switch_unregister(data);
- }
- 
- static void tca_blk_orientation_set(struct tca_blk *tca,
-@@ -248,6 +248,7 @@ static struct tca_blk *imx95_usb_phy_get
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
- 	struct tca_blk *tca;
-+	int ret;
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
- 	if (!res)
-@@ -266,17 +267,11 @@ static struct tca_blk *imx95_usb_phy_get
- 	tca->orientation = TYPEC_ORIENTATION_NORMAL;
- 	tca->sw = tca_blk_get_typec_switch(pdev, imx_phy);
- 
--	return tca;
--}
--
--static void imx95_usb_phy_put_tca(struct imx8mq_usb_phy *imx_phy)
--{
--	struct tca_blk *tca = imx_phy->tca;
--
--	if (!tca)
--		return;
-+	ret = devm_add_action_or_reset(&pdev->dev, tca_blk_put_typec_switch, tca->sw);
-+	if (ret)
-+		return ERR_PTR(ret);
- 
--	tca_blk_put_typec_switch(tca->sw);
-+	return tca;
- }
- 
- static u32 phy_tx_vref_tune_from_property(u32 percent)
-@@ -741,9 +736,7 @@ static int imx8mq_usb_phy_probe(struct p
- 
- static void imx8mq_usb_phy_remove(struct platform_device *pdev)
- {
--	struct imx8mq_usb_phy *imx_phy = platform_get_drvdata(pdev);
- 
--	imx95_usb_phy_put_tca(imx_phy);
- }
- 
- static struct platform_driver imx8mq_usb_phy_driver = {
 
 
