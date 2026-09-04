@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815063B7B7B;
-	Fri,  4 Sep 2026 05:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7EA3B7B7B;
+	Fri,  4 Sep 2026 05:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499138; cv=none; b=YCvqxP8s5eZ76YthOgItQH9g/Q4LoDAGSLJTNZ1GFp862aJHF6Y39mwykOS8DECVfz7WYHbk72eTYtZdSxhy3uCowHclql33oYcaOG2xc+2A3soxNzUQHwYEO3SV/lcWF+xKVRJeVK8HBGUqzYAcwq8R/0wV+RS1hl1kQ+5c+gc=
+	t=1788499141; cv=none; b=J0oQQDaDwaq2V40JN+J/JnZYVAYU5QAkqJb9NgCLONszb+rVwymWv0ocDwbrsABTwu0OE/yGhvjU3K2rfDlgQQlBqUPWDO8x9djFIlRYWUyNdkJdcl2JFXgP+lQZRTXr8AqWl1sl75UzAynGthXkO2IAGg0EifDPkEpAVVH9ucU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499138; c=relaxed/simple;
-	bh=gGgQVaRMxHSGhbmugf/6wTIe2dhlyuiFh0OsTKn9O2w=;
+	s=arc-20240116; t=1788499141; c=relaxed/simple;
+	bh=kzQwaFajECBF+gpJUXYDTG5OSRvPCRxzoIznqqmFKpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHrZ+RUjRsS5NB3ElGgqgTMB/F7uk82gZlKQnjyd8bnq/W6FluM8f9Wt13GuTLRV10QBV3FWQ9Q1lfbaxZixA5E536qED5OputlJwXp39hM+fIYF2de5nVL4r34I+ZIZITRMphdSDIDgD/8LUQIl+3PNT8bPOP61xBUYs3eRPQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8MQGzRi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iELKOEf2yRPhV1CiMLYwGt/f+t/JuSOpQu8dber36Y3Tp1OFltdgtaMT0nD2EDzlH3HlZVFbHCLnFO4iBii4npxh7V1saf2xpoUwEd9y5YA/znwSwjlkFwF2kKr84rlLkGWWgRrIMK+ix1g8272Y1V2xrBLU4R/z7sHmk0rwa+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2gADo3f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8MQGzRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC85F1F00A3D;
-	Fri,  4 Sep 2026 05:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2gADo3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46F41F00A3D;
+	Fri,  4 Sep 2026 05:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499137;
-	bh=DWKhB15tDo9J+1+vZDEthM6+dRxBBwA8z6DR3NoVNuY=;
+	s=korg; t=1788499140;
+	bh=MIO1zwNXDLD5XOWivux3212sx+rfyj23hDlZ2A5PUXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L8MQGzRiHknpyO0LjkqR22Fr5UysFcQIjC7WjmMbuNAc0BS14GJq9HQV8Zv946c0J
-	 HNnSVVcUPs0BVw7AOkQhwVywLFN4n1t6KG2TN+at9SFw1nvuT2rVPH8F+EvDkvOZ85
-	 YMmnygIOs6sm/uGnVaeQsCTJjCbHitP6NrlIpzAc=
+	b=w2gADo3fGzOTueU1tjuPj4a9vr3TswEDSBp9AG2m3kCyofv2K+QxIonGYepM1q5k3
+	 YZRahgFfDzbehWBkk24AabHN6Xv98FPuzu8smeESIFUyT4fuKp5maVAT/9enAnl5vd
+	 XnpX4LMsLp0C2tYu9GW0c6acHrU1Ud6xAz6KPK9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.2 268/713] ntfs: verify run length exceeding volume boundary
-Date: Fri,  4 Sep 2026 06:53:56 +0200
-Message-ID: <20260904045809.844311824@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Tyler Hicks <code@tyhicks.com>
+Subject: [PATCH 7.2 269/713] eCryptfs: bound the packet-length peek to the user buffer
+Date: Fri,  4 Sep 2026 06:53:57 +0200
+Message-ID: <20260904045809.865777034@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,58 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit fea9e4488f384c0ef1c0e3d96b565127c1b98447 upstream.
+commit 95540462e630edbc8504e9537d16453d6942d143 upstream.
 
-The mapping pairs decoder validates that the starting LCN is within the
-volume but does not check if the run extends beyond the volume boundary.
+ecryptfs_miscdev_write() accepts the minimum one-byte packet-length
+encoding, but always copies the maximum two-byte encoding from userspace
+before parsing it. A six-byte message therefore reads one byte beyond the
+submitted user buffer.
 
-A malformed NTFS image with a crafted mapping pairs array could cause
-the kernel to access memory beyond the volume boundary, potentially leading
-to memory corruption and privilege escalation.
+Zero-initialize the peek buffer and copy only the packet-length bytes
+present. The existing exact packet-size check still rejects truncated
+two-byte encodings after the parser determines their encoded length.
 
-Add validation to ensure lcn + length stays within nr_clusters.
-
-Cc: stable@vger.kernel.org
-Fixes: b4be3a47f8ba4 ("ntfs: bound the free-cluster bitmap scan to the volume")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 8bf2debd5f7b ("eCryptfs: introduce device handle for userspace daemon communications")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/runlist.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/ecryptfs/miscdev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs/runlist.c
-+++ b/fs/ntfs/runlist.c
-@@ -916,6 +916,28 @@ struct runlist_element *ntfs_mapping_pai
- 				goto err_out;
- 			}
+--- a/fs/ecryptfs/miscdev.c
++++ b/fs/ecryptfs/miscdev.c
+@@ -360,7 +360,7 @@ ecryptfs_miscdev_write(struct file *file
+ 	u32 seq;
+ 	size_t packet_size, packet_size_length;
+ 	char *data;
+-	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE];
++	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE] = { };
+ 	ssize_t rc;
  
-+			if (lcn >= 0) {
-+				s64 run_end;
-+
-+				/*
-+				 * Ensure that the run stays within the volume.
-+				 * A valid starting LCN is not sufficient because
-+				 * the run length comes from disk.
-+				 */
-+				if (unlikely(check_add_overflow(lcn,
-+						rl[rlpos].length,
-+						&run_end))) {
-+					ntfs_error(vol->sb,
-+							"Run length overflow in mapping pairs array.");
-+					goto err_out;
-+				}
-+				if (unlikely(run_end > (s64)vol->nr_clusters)) {
-+					ntfs_error(vol->sb,
-+							"Run extends beyond volume boundary.");
-+					goto err_out;
-+				}
-+			}
-+
- 			/* chkdsk accepts zero-sized runs only for holes */
- 			if ((lcn != -1) && !rl[rlpos].length) {
- 				ntfs_error(vol->sb,
+ 	if (count == 0) {
+@@ -376,7 +376,8 @@ ecryptfs_miscdev_write(struct file *file
+ 	}
+ 
+ 	if (copy_from_user(packet_size_peek, &buf[PKT_LEN_OFFSET],
+-			   sizeof(packet_size_peek))) {
++			   min_t(size_t, count - PKT_LEN_OFFSET,
++				 sizeof(packet_size_peek)))) {
+ 		printk(KERN_WARNING "%s: Error while inspecting packet size\n",
+ 		       __func__);
+ 		return -EFAULT;
 
 
