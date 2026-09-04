@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8903A7F4C;
-	Fri,  4 Sep 2026 05:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A4E3E7631;
+	Fri,  4 Sep 2026 05:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501505; cv=none; b=RYhnwSovl/DmkWk9B1WdUigDtQqQ25EW2yMWs747ylhvqTREck6sF/DlYAv/dV5/Be+ss1Z9kBAZhlsTVb56H6fIjyxtEqIznUxa69RHVtrtL5wxYM5XzmzbtpGs9J+otIpyNvHiwHs/+Epf7Qn1NOvtM+pbqaaJyV+kSHhJY0w=
+	t=1788501508; cv=none; b=i7B5Cy/qyBbNYOsXzK5ySsBDNqQk0qr+iTs3J0xWQHl+QSQau5sq7sUOQ+LC85LDymen6oG0R8/bdtEcajQz7u4TrjMVKQeD6MoX0u/Y7nXutZkGjSAtFLTGObkla5tJRovfLlWcMN8F6yZ/alXB1IbLhgMRUV8TJPo7ecRK4VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501505; c=relaxed/simple;
-	bh=dG507S5IXLkw6yJ7Mu8YtOv/IOljec1ZJiZEwvez/M4=;
+	s=arc-20240116; t=1788501508; c=relaxed/simple;
+	bh=sfDT71rtjvDv2QI6ffCMhe4apfAzVVj9sAICemkkZO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QswvYmR+s1ng0LJqY1c5HiFgv/mQQaxc7C19pW0g4qUBMDdG2jCRySCxwdcqzUxsQGWHG6TytOQDkfkD6WVBnkZOopnPftyB2cOqpUFHxy/oVcn5JJyn5SEdfQ8kT0eMXVo+Hjt/m9Mcza5Qmhy2wzLXgAS4VTY4C2Pn2NkQm6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAv1QK6G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YJcNl51ecDccebCfTH3xXK4QvAdlV/s4PIDKSC4H/cjSQnAi8rQsaAuJurrh9qXEX2P3aGad4EXRaKjHiLzmyUT3ppSr+h5Zep/nv8N1bVWzK1DcBs5Dv6iOzS7ydDWL9rJ5czpggL3GArEL0slyJlc9p9eDS91WllcRjghOTQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAgXUO8N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAv1QK6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A3F1F00A3D;
-	Fri,  4 Sep 2026 05:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAgXUO8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEEC1F00A3D;
+	Fri,  4 Sep 2026 05:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501503;
-	bh=tZ8xIbncuTo0WXo2509r5xsZEn3AWGuzH5d32XW4CQA=;
+	s=korg; t=1788501506;
+	bh=hkdiAKdZd81V3BvD4kEYf1HSihrz+tTjXb8k1uI8dHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DAv1QK6GJe0D1A0r9Va+qJk2VD1ZY4+1txRCsuzXg8hYYmNX8kPv4yHbx41cd7I0w
-	 ie9mgWeqKiOKtNzVz/UiLYqhYitioCvUy8N0Mkyok7MpfVi+SBp1GCBBbdgAQ76RfQ
-	 cjKBQSDGw6+ORFQVJ4eSUuzP5VWC9nJvlAMKRlAw=
+	b=WAgXUO8N+wMQDgO+ByqmfZrCijW0LAuJVy4Jx4btQGXvEtEJnffAnjF+1HXv2IRCu
+	 dhnKuzd++wrtICdWRZMH6cPq724aPzaK9sVf7Dyvmpp/qntMEDtVsnIihsa3532tNI
+	 drSJnNM/nD5wA8KRFVvcoKGpSyHSNW67bsMakCSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Lee <max.lee@canonical.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 6.18 396/552] PCI/ASPM: Avoid L0s for Realtek RTS525A
-Date: Fri,  4 Sep 2026 06:59:13 +0200
-Message-ID: <20260904045759.306857791@linuxfoundation.org>
+	Francis De Brabandere <francisdb@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 432/552] platform/x86/amd/pmc: Propagate SMU errors and validate S2D address
+Date: Fri,  4 Sep 2026 06:59:49 +0200
+Message-ID: <20260904045800.387937840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -46,61 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Lee <max.lee@canonical.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit ec3d987fcaf92516d13ee18c305c82281557046d upstream.
+commit 0225c1d637687b03726f00ac65b6def843d2c464 upstream.
 
-The Realtek RTS525A PCIe card reader reports an AER Correctable Replay
-Timer Timeout storm when ASPM L0s is enabled on its link.  On an affected
-HP ZBook Power 16 inch G11, the Root Port received tens of millions of AER
-interrupts from the RTS525A even when the rtsx_pci driver was blacklisted
-and the endpoint was not enabled by a driver.
+amd_stb_s2d_init() discards the return value of several S2D SMU commands.
+When the SMU refuses a command (e.g. "SMU cmd failed. err: 0xff") the
+failure is only noticed indirectly - if at all - and reported as -EIO,
+masking the real error.
 
-For example:
+More seriously, the S2D_PHYS_ADDR_LOW/HIGH return values are ignored, so
+on failure phys_addr_low/hi are left uninitialised and the assembled
+address is passed straight to devm_ioremap().  When the SMU leaves them at
+zero this maps physical address 0 and trips the ioremap-on-RAM warning:
 
-  pcieport 0000:00:1c.6: AER: Multiple Correctable error message received from 0000:58:00.0
-  rtsx_pci 0000:58:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
-  rtsx_pci 0000:58:00.0:   device [10ec:525a] error status/mask=00001000/00006000
-  rtsx_pci 0000:58:00.0:    [12] Timeout
-  pcieport 0000:00:1c.6: AER: Correctable error message received from 0000:58:00.0
+  amd_pmc AMDI000B:00: SMU cmd failed. err: 0xff
+  ioremap on RAM at 0x0000000000000000 - 0x0000000000ffffff
+  WARNING: CPU: 13 PID: 4592 at arch/x86/mm/ioremap.c:...
 
-Testing with OS-native AER control showed that disabling only L0s on the
-RTS525A link stops new AER interrupt and counter growth while leaving L1
-enabled.  Disabling L1, L1 substates, or Clock PM alone did not stop the
-storm.
+Check the return value of each SMU command and propagate it, and reject a
+zero physical address before calling devm_ioremap().
 
-Prevent the broken L0s configuration by removing L0s from the RTS525A
-advertised ASPM capability.  This avoids enabling the non-working ASPM
-state instead of masking the resulting AER Replay Timer Timeout reports.
-
-Signed-off-by: Max Lee <max.lee@canonical.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reported-by: Francis De Brabandere <francisdb@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221759
+Tested-by: Francis De Brabandere <francisdb@gmail.com>
+Fixes: 3d7d407dfb05 ("platform/x86: amd-pmc: Add support for AMD Spill to DRAM STB feature")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260707021527.639611-1-max.lee@canonical.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260721181756.143084-4-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/amd/pmc/mp1_stb.c |   31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -2506,6 +2506,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_I
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10f4, quirk_disable_aspm_l0s);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x1508, quirk_disable_aspm_l0s);
+--- a/drivers/platform/x86/amd/pmc/mp1_stb.c
++++ b/drivers/platform/x86/amd/pmc/mp1_stb.c
+@@ -306,30 +306,39 @@ int amd_stb_s2d_init(struct amd_pmc_dev
+ 	/* Spill to DRAM feature uses separate SMU message port */
+ 	dev->msg_port = MSG_PORT_S2D;
  
-+/* Realtek RTS525A generates a Replay Timer Timeout storm when L0s is enabled. */
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_REALTEK, 0x525a, quirk_disable_aspm_l0s);
-+
- static void quirk_disable_aspm_l0s_l1(struct pci_dev *dev)
- {
- 	pcie_aspm_remove_cap(dev,
+-	amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, dev->stb_arg.s2d_msg_id, true);
++	ret = amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, dev->stb_arg.s2d_msg_id, true);
++	if (ret)
++		goto out;
+ 	if (size != S2D_TELEMETRY_BYTES_MAX) {
+ 		ret = -EIO;
+ 		goto out;
+ 	}
+ 
+-	/* Get DRAM size */
+-	ret = amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->stb_arg.s2d_msg_id, true);
+-	if (ret || !dev->dram_size)
++	/* Get DRAM size; fall back to the default if the query fails */
++	if (amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->stb_arg.s2d_msg_id, true) ||
++	    !dev->dram_size)
+ 		dev->dram_size = S2D_TELEMETRY_DRAMBYTES_MAX;
+ 
+ 	/* Get STB DRAM address */
+-	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_LOW, &phys_addr_low, dev->stb_arg.s2d_msg_id, true);
+-	amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_HIGH, &phys_addr_hi, dev->stb_arg.s2d_msg_id, true);
++	ret = amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_LOW, &phys_addr_low,
++			       dev->stb_arg.s2d_msg_id, true);
++	if (ret)
++		goto out;
++	ret = amd_pmc_send_cmd(dev, S2D_PHYS_ADDR_HIGH, &phys_addr_hi,
++			       dev->stb_arg.s2d_msg_id, true);
++	if (ret)
++		goto out;
+ 
+ 	stb_phys_addr = ((u64)phys_addr_hi << 32 | phys_addr_low);
+-
+-	dev->stb_virt_addr = devm_ioremap(dev->dev, stb_phys_addr, dev->dram_size);
+-	if (!dev->stb_virt_addr) {
+-		ret = -ENOMEM;
++	if (!stb_phys_addr) {
++		dev_err(dev->dev, "S2D phys addr query returned invalid address\n");
++		ret = -ENXIO;
+ 		goto out;
+ 	}
+ 
+-	ret = 0;
++	dev->stb_virt_addr = devm_ioremap(dev->dev, stb_phys_addr, dev->dram_size);
++	if (!dev->stb_virt_addr)
++		ret = -ENOMEM;
+ 
+ out:
+ 	/* Restore the default message port for subsequent SMU operations */
 
 
