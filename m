@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FDC358378;
-	Fri,  4 Sep 2026 05:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8903A7F4C;
+	Fri,  4 Sep 2026 05:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501502; cv=none; b=mONlvqhhHFHEcJD6yhrfSOFDsyI/GS8F7bZ7Wmx+eqJJH7qlL45tBZTgNCFcuUR3DeTuXvvrjF/bJ0o8FArpUNISaPJ8xbwtp+qVfLxSTuay9bbMMVLvOF/AzNt0pPULt0KrAr+KfI058OvqT3ctRPfWL0TCnaI4+92u9aSTi1w=
+	t=1788501505; cv=none; b=RYhnwSovl/DmkWk9B1WdUigDtQqQ25EW2yMWs747ylhvqTREck6sF/DlYAv/dV5/Be+ss1Z9kBAZhlsTVb56H6fIjyxtEqIznUxa69RHVtrtL5wxYM5XzmzbtpGs9J+otIpyNvHiwHs/+Epf7Qn1NOvtM+pbqaaJyV+kSHhJY0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501502; c=relaxed/simple;
-	bh=q0exRCyEni8mjVw1R8x2oaoybvCqIQ/JNNBkVD6bUX0=;
+	s=arc-20240116; t=1788501505; c=relaxed/simple;
+	bh=dG507S5IXLkw6yJ7Mu8YtOv/IOljec1ZJiZEwvez/M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rXkLUc29qjRw4/bSUaxIieF1En4YTdnenGYa6TrpxqJtrUqaXZ2aaoo9n86uZ2JP07GSVTH0DQaF6sVq8mr7+D+hNpC5/IOVI0VqsQVO30nElTgEn/clyYE3TH8BFRcsWfowfP5nip4kfZatJwtodn6vRUPZ6HZrccbxjLv8xoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdPqLcIv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QswvYmR+s1ng0LJqY1c5HiFgv/mQQaxc7C19pW0g4qUBMDdG2jCRySCxwdcqzUxsQGWHG6TytOQDkfkD6WVBnkZOopnPftyB2cOqpUFHxy/oVcn5JJyn5SEdfQ8kT0eMXVo+Hjt/m9Mcza5Qmhy2wzLXgAS4VTY4C2Pn2NkQm6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAv1QK6G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdPqLcIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DABB1F00A3D;
-	Fri,  4 Sep 2026 05:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAv1QK6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A3F1F00A3D;
+	Fri,  4 Sep 2026 05:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501501;
-	bh=IsHoTsqXHY12KZyjI1Coxw4FvltTL0GGLXrSz0OMfF0=;
+	s=korg; t=1788501503;
+	bh=tZ8xIbncuTo0WXo2509r5xsZEn3AWGuzH5d32XW4CQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qdPqLcIvCq/UCaZitXfVcPrecfzbSfqhhH7Aw9PKQi+zZb8mxjrhH9dR2wIKNC5bt
-	 qBFniGXjTtR72PbEaWV/Yq6Yk9CVOJId/+ETum/7GpA7lAKrcmxucVoa4kTC1Yz4fY
-	 p/+c9QeBL6InV1MWUWsJcpodRtjCNMKj1pT/Y9F4=
+	b=DAv1QK6GJe0D1A0r9Va+qJk2VD1ZY4+1txRCsuzXg8hYYmNX8kPv4yHbx41cd7I0w
+	 ie9mgWeqKiOKtNzVz/UiLYqhYitioCvUy8N0Mkyok7MpfVi+SBp1GCBBbdgAQ76RfQ
+	 cjKBQSDGw6+ORFQVJ4eSUuzP5VWC9nJvlAMKRlAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 431/552] platform/x86/amd/pmc: Restore msg_port on amd_stb_s2d_init() error paths
-Date: Fri,  4 Sep 2026 06:59:48 +0200
-Message-ID: <20260904045800.365917998@linuxfoundation.org>
+	Max Lee <max.lee@canonical.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.18 396/552] PCI/ASPM: Avoid L0s for Realtek RTS525A
+Date: Fri,  4 Sep 2026 06:59:13 +0200
+Message-ID: <20260904045759.306857791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -44,83 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Max Lee <max.lee@canonical.com>
 
-commit 9cef693bce96bb4c6952f48d855284cf7fa4f367 upstream.
+commit ec3d987fcaf92516d13ee18c305c82281557046d upstream.
 
-dev->msg_port is switched to MSG_PORT_S2D before issuing the S2D SMU
-commands but is only restored to MSG_PORT_PMC on the success path.  The
-early "return -EIO" and "return -ENOMEM" leave the port stuck on
-MSG_PORT_S2D, so all subsequent SMU communication - including the s2idle
-prepare/restore handlers - is directed at the wrong mailbox.
+The Realtek RTS525A PCIe card reader reports an AER Correctable Replay
+Timer Timeout storm when ASPM L0s is enabled on its link.  On an affected
+HP ZBook Power 16 inch G11, the Root Port received tens of millions of AER
+interrupts from the RTS525A even when the rtsx_pci driver was blacklisted
+and the endpoint was not enabled by a driver.
 
-Consolidate the exit path through a single label so the message port is
-always restored.
+For example:
 
-Fixes: 3d7d407dfb05 ("platform/x86: amd-pmc: Add support for AMD Spill to DRAM STB feature")
+  pcieport 0000:00:1c.6: AER: Multiple Correctable error message received from 0000:58:00.0
+  rtsx_pci 0000:58:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
+  rtsx_pci 0000:58:00.0:   device [10ec:525a] error status/mask=00001000/00006000
+  rtsx_pci 0000:58:00.0:    [12] Timeout
+  pcieport 0000:00:1c.6: AER: Correctable error message received from 0000:58:00.0
+
+Testing with OS-native AER control showed that disabling only L0s on the
+RTS525A link stops new AER interrupt and counter growth while leaving L1
+enabled.  Disabling L1, L1 substates, or Clock PM alone did not stop the
+storm.
+
+Prevent the broken L0s configuration by removing L0s from the RTS525A
+advertised ASPM capability.  This avoids enabling the non-working ASPM
+state instead of masking the resulting AER Replay Timer Timeout reports.
+
+Signed-off-by: Max Lee <max.lee@canonical.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260721181756.143084-2-mario.limonciello@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260707021527.639611-1-max.lee@canonical.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/mp1_stb.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/pci/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/platform/x86/amd/pmc/mp1_stb.c
-+++ b/drivers/platform/x86/amd/pmc/mp1_stb.c
-@@ -289,7 +289,7 @@ int amd_stb_s2d_init(struct amd_pmc_dev
- 	u32 phys_addr_low, phys_addr_hi;
- 	u64 stb_phys_addr;
- 	u32 size = 0;
--	int ret;
-+	int ret = 0;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -2506,6 +2506,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_I
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10f4, quirk_disable_aspm_l0s);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x1508, quirk_disable_aspm_l0s);
  
- 	if (!enable_stb)
- 		return 0;
-@@ -307,8 +307,10 @@ int amd_stb_s2d_init(struct amd_pmc_dev
- 	dev->msg_port = MSG_PORT_S2D;
- 
- 	amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, dev->stb_arg.s2d_msg_id, true);
--	if (size != S2D_TELEMETRY_BYTES_MAX)
--		return -EIO;
-+	if (size != S2D_TELEMETRY_BYTES_MAX) {
-+		ret = -EIO;
-+		goto out;
-+	}
- 
- 	/* Get DRAM size */
- 	ret = amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->stb_arg.s2d_msg_id, true);
-@@ -321,12 +323,16 @@ int amd_stb_s2d_init(struct amd_pmc_dev
- 
- 	stb_phys_addr = ((u64)phys_addr_hi << 32 | phys_addr_low);
- 
--	/* Clear msg_port for other SMU operation */
--	dev->msg_port = MSG_PORT_PMC;
--
- 	dev->stb_virt_addr = devm_ioremap(dev->dev, stb_phys_addr, dev->dram_size);
--	if (!dev->stb_virt_addr)
--		return -ENOMEM;
-+	if (!dev->stb_virt_addr) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
++/* Realtek RTS525A generates a Replay Timer Timeout storm when L0s is enabled. */
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_REALTEK, 0x525a, quirk_disable_aspm_l0s);
 +
-+	ret = 0;
- 
--	return 0;
-+out:
-+	/* Restore the default message port for subsequent SMU operations */
-+	dev->msg_port = MSG_PORT_PMC;
-+	return ret;
- }
+ static void quirk_disable_aspm_l0s_l1(struct pci_dev *dev)
+ {
+ 	pcie_aspm_remove_cap(dev,
 
 
