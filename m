@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDB2378838;
-	Fri,  4 Sep 2026 06:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A553415F22;
+	Fri,  4 Sep 2026 06:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501793; cv=none; b=g1FBP1/jmuXXtO1Yr09hTJhDlgPRVQFwIqPOuuyO2NGHR14EVkXBxg5laD6P33n4l8RRN9ul3g+xtta6/a8oKn0uhmZngs05pcROmXCmy846iNQ1J4w/fBPkZUa4ZE3ioii1sIJHa/5quFd92RMK4N/4piY/jHSW0YKZlZleZIM=
+	t=1788501796; cv=none; b=q81p5EzplnnxHFCmI0C9Vwlm8EHPf1V3XeaouwCjeCO60qcfCZC+yLFCP15gAOkiPHi3pkN/46wQ/NDHl/xKRBlL8GMC/Nkr8PcGnF0VxnPgiPCVy8zdcHkhvnUzkttERCd3JTpLSf3qf0WFNVnH9t+yDY8JEjaBcTiZaTcPTcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501793; c=relaxed/simple;
-	bh=x/qBFy62N68FSNtLWNjgf8uElZ3ZqxPaQ1swKzTsaOg=;
+	s=arc-20240116; t=1788501796; c=relaxed/simple;
+	bh=Ff5S6GKOF2f5JIqo1mma/r5Z82Mt0Vk9PxR4b146nCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ql8JQ/reDPV2EToQ9PJ6GKOrgJjzJ2LC4Oc97PrcEdjdXcNuCw4XskDgcF8X4uHHRqRfo2rZKCrhg+Xltl3V12RsfWmZIu5HOHmR0jpZAVyGL37z3I6mIETU+mpqkNDRm4Vy4Wke1Y8u3Sjnq5jFzvPxVobZCK3hK7A2i+bqj5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qt1ixB5/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UmlGLiFwE5KpEP4ki3UJVfHt+dE8TRO6lWqTxcQeUIkyMoG3QVRpRp5gsWjbYJvBmOimQHV7qS4HC3ncUCxN4Jfk0eV2CQ+lzIxMnIvPOuX+/Y8BMuNpe7MSKY/bFmW3jJXAaTQSsislfmeGtA4r2RMfA5nD9tPXi+E3os8oJwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdZLpXnu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qt1ixB5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF1D1F00A3D;
-	Fri,  4 Sep 2026 06:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdZLpXnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647A51F00A3E;
+	Fri,  4 Sep 2026 06:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501792;
-	bh=KM2kfkaX7C54krvi79N3fLX0zF8wVj32uankVc/kSCI=;
+	s=korg; t=1788501794;
+	bh=Jp+CPd33NIeWi4FY0xeQBdqRfm6oBrvectsFR4IpWAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qt1ixB5/7Tv7w576+cQntzEXhueWbjKv8Tb/8Th5TYDf+5R8Zozmu0oTartHW7KYj
-	 1nFCs2adDUBNAvVO81mfRdaHbQ4HqWPIpkdfThEY7W/eRR0mJDrjQDMjZti4tNdrKY
-	 +pOEC7vrxMRnPfLR/CvRfo7eh9w7nnmzLl9SHIoo=
+	b=jdZLpXnuOlbm3FoUof8CNfCQN6psMwWVNmgho92mJLgzYXRg3MeQAnUv5l8dBr38L
+	 VMy/XM7c60kV8bW2U+uyESeiiidOlNBUR5Lza1e1vXyZcgIasCTWkXy18w3IxfPktW
+	 spy4IX558LbQZISFtNDNL1uaqN7jBCeD9HFOt+CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 491/552] ALSA: mts64: Check card index validity at probe
-Date: Fri,  4 Sep 2026 07:00:48 +0200
-Message-ID: <20260904045801.794275142@linuxfoundation.org>
+Subject: [PATCH 6.18 492/552] ALSA: pcxhr: initialize mutexes before requesting threaded IRQ
+Date: Fri,  4 Sep 2026 07:00:49 +0200
+Message-ID: <20260904045801.815725700@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -49,40 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit d18a260720f86a5f8b5fcfefc4ba2e9dd01c10f8 upstream.
+commit 6c97817e20598e5473094e0e38d1f51f1cf4dfff upstream.
 
-Although mts64 driver has a check of the given devptr->id value, it
-doesn't check for a negative id, which is often given as "none" or
-such value when bound via sysfs.  This may lead to OOB access for
-index[] and other parameters.
+pcxhr_probe() requests pcxhr_threaded_irq() before initializing
+mgr->lock, even though the threaded handler takes that mutex.
 
-Add a sanity check for the card index and warn/correct it if it's a
-value out of the range.
+Initialize the manager locks before request_threaded_irq() so an
+early interrupt cannot run against uninitialized mutex state during
+probe.
 
+Fixes: 9bef72bdb26e ("ALSA: pcxhr: Use nonatomic PCM ops")
 Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260818144717.2269918-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260806153227.1460166-6-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/mts64.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/pcxhr/pcxhr.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/sound/drivers/mts64.c
-+++ b/sound/drivers/mts64.c
-@@ -900,6 +900,12 @@ static int snd_mts64_probe(struct platfo
- 	p = platform_get_drvdata(pdev);
- 	platform_set_drvdata(pdev, NULL);
+--- a/sound/pci/pcxhr/pcxhr.c
++++ b/sound/pci/pcxhr/pcxhr.c
+@@ -1532,6 +1532,13 @@ static int pcxhr_probe(struct pci_dev *p
+ 	mgr->pci = pci;
+ 	mgr->irq = -1;
  
-+	if (dev < 0) {
-+		dev_warn(&pdev->dev,
-+			 "Invalid card index %d, using default 0\n", dev);
-+		dev = 0;
-+	}
++	/* ISR lock  */
++	mutex_init(&mgr->lock);
++	mutex_init(&mgr->msg_lock);
 +
- 	if (dev >= SNDRV_CARDS)
- 		return -ENODEV;
- 	if (!enable[dev]) 
++	/* init setup mutex*/
++	mutex_init(&mgr->setup_mutex);
++
+ 	if (request_threaded_irq(pci->irq, pcxhr_interrupt,
+ 				 pcxhr_threaded_irq, IRQF_SHARED,
+ 				 KBUILD_MODNAME, mgr)) {
+@@ -1545,13 +1552,6 @@ static int pcxhr_probe(struct pci_dev *p
+ 		 "Digigram at 0x%lx & 0x%lx, 0x%lx irq %i",
+ 		 mgr->port[0], mgr->port[1], mgr->port[2], mgr->irq);
+ 
+-	/* ISR lock  */
+-	mutex_init(&mgr->lock);
+-	mutex_init(&mgr->msg_lock);
+-
+-	/* init setup mutex*/
+-	mutex_init(&mgr->setup_mutex);
+-
+ 	mgr->prmh = kmalloc(sizeof(*mgr->prmh) +
+ 			    sizeof(u32) * (PCXHR_SIZE_MAX_LONG_STATUS -
+ 					   PCXHR_SIZE_MAX_STATUS),
 
 
