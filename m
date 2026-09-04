@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A70426693;
-	Fri,  4 Sep 2026 06:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED778427F85;
+	Fri,  4 Sep 2026 06:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502980; cv=none; b=AgB2Jr52zs40Kc0g7qxLDrJgHz+UfVFFiB1/LwpXP8g3zJIkZqSy2JjO9iMhIywU0F0jEdXwt5upjvWkUrlL+aiOTIfYSvw7h7iFGy/xm4ad69nhtC4Dbn1eXe+keTQxHadQH0IojtvA+KqEpaePoCYaTrMfxDCzdbksRZNY6oU=
+	t=1788502983; cv=none; b=icSmpk8Hrv/icV7Dh8pSQKqcxrrRbErAqFjvmEmCmSfM2T0cag0b05g1qeLgjGxZKOtvPoF9FgDT+Mgc8QtAc8gTLci5bbf/g2ylyCZGT4sFSayuTrGTt5T+Awl06kAqHTsTQAneqwPSyywGyUOHfTEzb0HWKNbLtMR5n4x/zYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502980; c=relaxed/simple;
-	bh=qojq4fp3LjCdEosig5KNTuG6mN7Jzw5AJe1FzPEn7fs=;
+	s=arc-20240116; t=1788502983; c=relaxed/simple;
+	bh=n/1bSZZrPkI7wGZiY5ea7WP+XvsyRWTrOPFoHly3qZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpyovBubq7ilpsqqG4KcD41dbIFbdGJXHaO7FsJrp7l7CscNkzo+VpIEu5tjn5Mr1WsjaRFhPGC2jqV62KfA2llJRW3kfp81iuSWF0jcwC9CqRDQUHbBzG0Z3ZPdn82+kDPN3GZLTXJh/bzJCzP4qHTamRuGFZoJnAkiUAAuc2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BY6ujkgx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aWxpboAvZiHKJzeVzO5rx1iwD+O0N69/hX5tiaHDpBjyPymYpie56ls2ZZ0WOefWfbamEa/PXl5iD1cTNUBr7LTY69eqXozIszwij6M4/yVHnAayFnZEnc2y9+TlGFVgNYswyIBUGsASUbugixSS23zumraJsz3HJ+dIuqJpjLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mx0ZoaqY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BY6ujkgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7E01F00A3D;
-	Fri,  4 Sep 2026 06:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mx0ZoaqY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516271F00ACA;
+	Fri,  4 Sep 2026 06:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502979;
-	bh=q9Ebf80JnikwwkWZBHWH6gX9972E9+wu6qwg/KWGOgg=;
+	s=korg; t=1788502981;
+	bh=CqApgxfev6b3xGwU2/e6iRrQwcGNAggNLxjXQra+rh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BY6ujkgxOsHv+4gnpRnFPFXjpx8MBf9pygcvXv9aT3Lhjpg8OHFfWwESbe0rLrGID
-	 QF8CoO8urcSvLIKJLjzTzFLG+k/bWXLE3+q0wPFsGMQh/4ZvdQQlyi1R0HRm+8m/Xg
-	 BCxfzFwfb2F9xUl6g4skWhnyuAuO9dm1a/c4hBJE=
+	b=mx0ZoaqYnzU45KqDBHydRvBFrKue/YB97vcwfVsL8fIMG6H3BR0cObBw6GdFjo4pg
+	 Skb8V+JrLteH3KGGoyeDMR9J/3B+im1waO+Lvgy4zUJ1WChe/mYUKdn0BScyKwf4If
+	 zEGT957Xer6SfAWVE2n95l9QoVmDuAcANmpNXH0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.12 396/403] tpm: tpm_i2c_nuvoton: disable IRQ on wait timeout
-Date: Fri,  4 Sep 2026 07:03:19 +0200
-Message-ID: <20260904045743.787173456@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 397/403] sticon/parisc: Detect default STI graphics card for console output
+Date: Fri,  4 Sep 2026 07:03:20 +0200
+Message-ID: <20260904045743.808812236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,46 +49,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 705c4ed0643366963547b2616d53165f2519c81f upstream.
+commit de508ece1d37cdbbbfa52f074954310f9b066b13 upstream.
 
-i2c_nuvoton_wait_for_stat() enables the IRQ before waiting for the
-interrupt handler to report a status change. If the wait times out, or is
-interrupted before the handler runs, the function returns without
-balancing the enable_irq() call.
+If a machine has multiple graphic cards, detect the graphic card which is used
+to display firmware messages and use that one as the default graphic card for
+sticon and fbcon.
 
-Disable the IRQ before leaving the failed wait path. Also preserve an
-interrupted wait's original error code instead of converting it to
--ETIMEDOUT inside the helper.
+On parisc machines the default graphic card used for BCH (boot console
+handler, aka BIOS menu) is stored in the stable storage (equivalent to CMOS
+storage on x86) or in the console path in page zero. Extract that path and
+store it as default STI path for later comparism. Take care that the graphic
+card can be a GSC or a PCI card which use different path strings.
 
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: 4c336e4b1556 ("tpm: Add support for the Nuvoton NPCT501 I2C TPM")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260626091653.54929-1-mhun512@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Increase max string size for default_sti_path to 32 chars as the
+print_pa_hwpath() function formats a hardware path using unbounded sprintf
+calls for up to 6 bus converter components and 1 module component (e.g.,
+255/255/...), which can produce a string up to 28 bytes long.
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_i2c_nuvoton.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/video/sticore.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm_i2c_nuvoton.c
-+++ b/drivers/char/tpm/tpm_i2c_nuvoton.c
-@@ -182,8 +182,10 @@ static int i2c_nuvoton_wait_for_stat(str
- 						      timeout);
- 		if (rc > 0)
- 			return 0;
--		/* At this point we know that the SINT pin is asserted, so we
--		 * do not need to do i2c_nuvoton_check_status */
+--- a/drivers/video/sticore.c
++++ b/drivers/video/sticore.c
+@@ -325,7 +325,7 @@ static void sti_rom_copy(unsigned long b
+ 
+ 
+ 
+-static char default_sti_path[21] __read_mostly;
++static char default_sti_path[32] __read_mostly;
+ 
+ #ifndef MODULE
+ static int __init sti_setup(char *str)
+@@ -1148,6 +1148,26 @@ static void sti_init_roms(void)
+ 	pr_info("STI GSC/PCI core graphics driver "
+ 			STI_DRIVERVERSION "\n");
+ 
++	/*
++	 * Find default console by hardware path which is either stored in
++	 * console entry in stable storage or alternatively from console path
++	 * in PAGE0 used by BCH and PDC.
++	 */
++	if (!default_sti_path[0]) {
++		struct pdc_module_path conspath;
++		struct device *dev = NULL;
 +
-+		disable_irq(priv->irq);
-+		if (rc < 0)
-+			return rc;
- 	} else {
- 		unsigned long ten_msec, stop;
- 		bool status_valid;
++		if (pdc_stable_read(0x60, &conspath, sizeof(conspath)) == PDC_OK)
++			dev = hwpath_to_device(&conspath.path);
++		if (!dev)
++			dev = hwpath_to_device(&PAGE0->mem_cons.dp.path);
++		if (dev && dev_is_pci(dev))
++			print_pci_hwpath(to_pci_dev(dev), default_sti_path);
++		else if (dev && !dev_is_pci(dev))
++			print_pa_hwpath(to_parisc_device(dev), default_sti_path);
++		pr_debug("default graphic card: %s\n", default_sti_path);
++	}
++
+ 	/* Register drivers for native & PCI cards */
+ 	register_parisc_driver(&pa_sti_driver);
+ 	WARN_ON(pci_register_driver(&pci_sti_driver));
 
 
