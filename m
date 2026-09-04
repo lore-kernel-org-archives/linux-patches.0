@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B59F41685A;
-	Fri,  4 Sep 2026 05:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77922419FBB;
+	Fri,  4 Sep 2026 05:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788499319; cv=none; b=IVurBPC02P30TsUpu6S1yuEhC9VIpcccp2xuMJR/U7DlkJIOHjtlrhl13eLmF+zRgvxGZjAHnDe/934QB4EIoADFZCA2+918cuJqJFUDfYDD78GIfmjCMf1bPITTca3XJSSCiOaooGeuQYKaRxIwa2n+Tqsp7jcDI3+59dgHndo=
+	t=1788499322; cv=none; b=NzJUmebvfz0Rp4Xj9Cnf3s+GEFtVXePbw2bTICW4BGxjMVh2r41wWbu2yqmuAjkf3L97cVB4xODFoOrOkTDkeGg4THGle04LOihsWBlRWTW2Hc4m3MHHZJQ7FmrIZuggsR1MSEYV39+Ptf0OOmACrX4T+vN8/Q+pK46zr/Fgd/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788499319; c=relaxed/simple;
-	bh=uQsZyXlJ06VYpyZB/p3b1MKBSbU90vdn+zrF6DJE2LA=;
+	s=arc-20240116; t=1788499322; c=relaxed/simple;
+	bh=QwA3KKrF/lTjMYFcnUD1/LvoJShr7Ugot4yM8Z4Pp4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8QSvyhs9oS6vTu80zlp+zyYOBXVR0RAKaGrcQNkG739kI0GbyhBbDm50bQ7fc38Zm24JaLmb0JXlJ6Rrpz3WxE5j8IbqhqDiSWVrhL79X/h0q1ruUFvTLzrN1hkfDN7DwUTEAqd8Jee0SGvg2mfJSsckjI4Une7P75UImJ9Uw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaKjD35i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=smoliBBNG8ck0Wj/TwiWsHhMmjE+bDZC6w3GKh5WP4HlhOJ5Nnc4OU7kN9UB3eTQ4tAO3cAc+90IyqGEuKx0vZRryz9MMTwhZ1r6ms3g21xY+EWXucsgR2a+VRSpTeWXkvJajBXo4nihFEfmWJOxsMohCfAfXn/Lno5Y+m/JOmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1JVz91M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaKjD35i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BBA1F00A3D;
-	Fri,  4 Sep 2026 05:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1JVz91M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13061F00ACA;
+	Fri,  4 Sep 2026 05:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788499318;
-	bh=mhMd2mNBwszDviMEIhtRvSHGUYcbAPLOJxsGk013l4M=;
+	s=korg; t=1788499321;
+	bh=+XQZh+8jc3eBvIJ8Vsl2MvW+VmH7cUNMOBmeQoI2OAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LaKjD35i1hXV7sBIuiXsFuIH9z+D990L2MEbkSDDwBMT+yXPCiCL8mGwsW1e8mUeh
-	 GOim7npbKzn5+RpzkigZlJyXJ+/Kw3fBEX9/8Etqs3GyHBa7xPxa89x8TvY3LxeK5E
-	 Bf3ONjioEMe05cDdYZ7Kf86or9LB0Elsbp12eSxQ=
+	b=j1JVz91MdFbNHDotOQd4m+4gkDMHFcM+K6EC8rlBfPiClGJuX0d4l29Rcmrj25Cx/
+	 MCbPbS/AKeCDI3vxSDKHDz/kodZkjgl3kBrSfTSk6K6P4uQQ8cS5qb35cCJ5qDKzII
+	 E/m6IHPvcK0f5gpxV2O9Mwfo9LibUdZFUO66JFLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.2 375/713] SUNRPC: always drain cache_cleaner before destroying a cache_detail
-Date: Fri,  4 Sep 2026 06:55:43 +0200
-Message-ID: <20260904045812.233130824@linuxfoundation.org>
+Subject: [PATCH 7.2 376/713] SUNRPC: Check svc pool percpu counter allocation
+Date: Fri,  4 Sep 2026 06:55:44 +0200
+Message-ID: <20260904045812.255071387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045803.810145556@linuxfoundation.org>
 References: <20260904045803.810145556@linuxfoundation.org>
@@ -50,51 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit f42d0fda0c67695db6bc704b04b7c10240805377 upstream.
+commit 43e11e164704dde975c9edb370de1a06bec67270 upstream.
 
-sunrpc_destroy_cache_detail() only cancels the global cache_cleaner
-delayed_work when cache_list is empty.  During per-netns teardown
-cache_list is never empty because init_net's caches remain registered,
-so the cancel never fires.  After unlink, the caller proceeds to
-cache_destroy_net() which kfrees the cache_detail while cache_clean()
-may still hold a dangling pointer to it.  The result is a
-use-after-free: cache_dequeue() takes cd->queue_lock on freed memory,
-and cache_put() dereferences cd->cache_put as a function pointer from
-freed slab.
+__svc_create() initializes three per-pool percpu_counter stats and
+ignores every return value. On SMP, percpu_counter_init() fails when
+__alloc_percpu_gfp() cannot satisfy the allocation, leaving the failed
+counter with fbc->counters == NULL and its embedded raw_spinlock_t,
+list_head, and count never initialized. __svc_create() returns the
+half-constructed svc_serv to nfsd, lockd, or the NFS callback service
+anyway.
 
-Drop the list_empty guard so that cancel_delayed_work_sync() always
-runs, ensuring any in-flight cache_clean() completes before the
-cache_detail is freed.  Re-arm the cleaner afterwards if other caches
-are still registered.
+Once that service is live, the hot-path increments in
+svc_xprt_enqueue(), svc_handle_xprt(), and
+svc_pool_wake_idle_thread() reach a counter whose backing pointer is
+NULL. The pointer is a per-cpu offset, so the access does not fault:
+it resolves to offset zero of the current CPU's per-cpu area and
+silently corrupts whatever variable lives there. A
+/proc/fs/nfsd/pool_stats read walks the same NULL per-cpu storage and
+returns garbage, and on CONFIG_DEBUG_SPINLOCK or lockdep it splats on
+the never-initialized lock.
 
-Fixes: 820f9442e711 ("SUNRPC: split cache creation and PipeFS registration")
+Creating the broken service requires a percpu allocation failure during
+RPC server startup, so it is reachable only by a local administrator
+under memory pressure or fault injection; a remote peer cannot induce
+the bad state on its own.
+
+Check each percpu_counter_init() return value in __svc_create() and
+fail when an allocation fails, unwinding the counters already set up
+in the current pool and in every pool initialized before it. A
+discrete percpu_counter_destroy() per counter at teardown frees each
+per-cpu allocation exactly once.
+
+Fixes: ccf08bed6e7a ("SUNRPC: Replace pool stats with per-CPU variables")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-cache_cleaner_vs_destroy_no_sync-v1-1-a707a6fcfd32@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260530-tier2-local-v2-2-5a0fd532db57@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/cache.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/sunrpc/svc.c |   45 +++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 39 insertions(+), 6 deletions(-)
 
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -430,10 +430,9 @@ void sunrpc_destroy_cache_detail(struct
- 	list_del_init(&cd->others);
- 	spin_unlock(&cd->hash_lock);
- 	spin_unlock(&cache_list_lock);
--	if (list_empty(&cache_list)) {
--		/* module must be being unloaded so its safe to kill the worker */
--		cancel_delayed_work_sync(&cache_cleaner);
--	}
-+	cancel_delayed_work_sync(&cache_cleaner);
-+	if (!list_empty(&cache_list))
-+		queue_delayed_work(system_power_efficient_wq, &cache_cleaner, 0);
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -503,6 +503,35 @@ __svc_init_bc(struct svc_serv *serv)
  }
- EXPORT_SYMBOL_GPL(sunrpc_destroy_cache_detail);
+ #endif
  
++static int svc_pool_init_counters(struct svc_pool *pool)
++{
++	int err;
++
++	err = percpu_counter_init(&pool->sp_messages_arrived, 0, GFP_KERNEL);
++	if (err)
++		return err;
++	err = percpu_counter_init(&pool->sp_sockets_queued, 0, GFP_KERNEL);
++	if (err)
++		goto err_sockets;
++	err = percpu_counter_init(&pool->sp_threads_woken, 0, GFP_KERNEL);
++	if (err)
++		goto err_threads;
++	return 0;
++
++err_threads:
++	percpu_counter_destroy(&pool->sp_sockets_queued);
++err_sockets:
++	percpu_counter_destroy(&pool->sp_messages_arrived);
++	return err;
++}
++
++static void svc_pool_destroy_counters(struct svc_pool *pool)
++{
++	percpu_counter_destroy(&pool->sp_messages_arrived);
++	percpu_counter_destroy(&pool->sp_sockets_queued);
++	percpu_counter_destroy(&pool->sp_threads_woken);
++}
++
+ /*
+  * Create an RPC service
+  */
+@@ -567,12 +596,18 @@ __svc_create(struct svc_program *prog, i
+ 		INIT_LIST_HEAD(&pool->sp_all_threads);
+ 		init_llist_head(&pool->sp_idle_threads);
+ 
+-		percpu_counter_init(&pool->sp_messages_arrived, 0, GFP_KERNEL);
+-		percpu_counter_init(&pool->sp_sockets_queued, 0, GFP_KERNEL);
+-		percpu_counter_init(&pool->sp_threads_woken, 0, GFP_KERNEL);
++		if (svc_pool_init_counters(pool))
++			goto out_err;
+ 	}
+ 
+ 	return serv;
++
++out_err:
++	while (i--)
++		svc_pool_destroy_counters(&serv->sv_pools[i]);
++	kfree(serv->sv_pools);
++	kfree(serv);
++	return NULL;
+ }
+ 
+ /**
+@@ -651,9 +686,7 @@ svc_destroy(struct svc_serv **servp)
+ 	for (i = 0; i < serv->sv_nrpools; i++) {
+ 		struct svc_pool *pool = &serv->sv_pools[i];
+ 
+-		percpu_counter_destroy(&pool->sp_messages_arrived);
+-		percpu_counter_destroy(&pool->sp_sockets_queued);
+-		percpu_counter_destroy(&pool->sp_threads_woken);
++		svc_pool_destroy_counters(pool);
+ 	}
+ 	kfree(serv->sv_pools);
+ 	kfree(serv);
 
 
