@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2A32D738A;
-	Fri,  4 Sep 2026 06:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D6835AC03;
+	Fri,  4 Sep 2026 06:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502152; cv=none; b=E2c0AuwBVH4EPoFuIuI1l7IbUlG11KL61R1GJBNIhm+eG6qO2ed8naA9Bj/KL7ACIPP/4++SCUzqbFCZsfdaCNJA4jTnWZj1crDXJOZEPYygYYYqb6aZFHCgPUZUAVq8JMR0Eedya9mg/QOXojsUBWm9pashcRV4n9YTFBOEDn0=
+	t=1788502155; cv=none; b=YlGjCD3E+ygUVQgPRhvRA5GdfUAE7m+vC5Uvg7MEhfZnFN79fgWZ45rw26A9B5n3PZnF8zfQXhqcWmAx9GHsjldV8PKenmfaSx1OEZ9b/RLZNV+y9ndPE5slABjZP2ZyJvlVA9yDt+a92uUHYZ2rki3lDpIFMwMgN4p3XUqsCnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502152; c=relaxed/simple;
-	bh=+PG0p88t7udzvU4NYUOS8JVzWU/mzh/HDllzcX+oyqo=;
+	s=arc-20240116; t=1788502155; c=relaxed/simple;
+	bh=4LyGgiKchx3YxOuRyD3RQLpTGAx8ACOIdtJ0d4g5MFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpNQATNR8aqrie+YLwedB2DGkJdAbOrXrESL+Z/732QLsAHA8LgbPFfeoeIldxe3/RHQ3HnQEjmsRFL66b5AVHfKrkQZAdnmpy0GmV/yi6H1xFRlEHTNLhPdW6tBECI1UVOZh9UW0qbNBXmzcro5Kl0pVKdIxYchcAYYzjLTR9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlStSpwV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LfHs7hnY5pEhKhrM/jI5wGk9++5z/MshAs0Kz/+WOH9WfQWZ7RH8LPfz3pRnqlbL1Ue/3xV65YA8LwETPcHh2CA8jCzRVvW8eAVt+w+Zw2a4DtqvyW3LVZFf0oDA1+c4TVthC7sxNQEgIubX+HjOInXL0LuWJkDHQrtQ4dKBQ2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJ7fRFbb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlStSpwV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAA91F00A3D;
-	Fri,  4 Sep 2026 06:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJ7fRFbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9951F00A3D;
+	Fri,  4 Sep 2026 06:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502151;
-	bh=8ivk6jqvJUkLLfwlm5nH75yfLFLobXeEp7M9PO+sCIc=;
+	s=korg; t=1788502154;
+	bh=hwU5dEWZis75n41Knt7DjIzZlQhBCdVwu+ybOfM82mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vlStSpwVVV8KY/9nOF2ffvmKfrBLJPNUaDI9LYyK5t50lXzN1PMkyn3dNsEjZS95g
-	 iUdVZsuKc5aIYv4MEODX27YG0EU/5GYc6l71Uym6gRR+fOWA7QMnt5CuvPuxkYMHfI
-	 qd6rVgELGBK8sgKaXn73p3DQjzozeURYZD8EkgOI=
+	b=sJ7fRFbbo8xJchmnI44Uhb4ger3RtK3jNE7SqjHcHUwJLkdS3MKwz4OYEMJyvtObr
+	 0dezJ6ekqv3loQQDNBQwOrZtDJWMLS2N3tiiHDhQDnT77ItMC8s5kgU/ocgy/bC4vv
+	 FRoXQq9Xdh9wtYIlTNFU4Dk+raUuDw8H1XWZX/gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfgang Walter <linux@stwm.de>,
 	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 107/403] NFSD: Prevent lock owner use-after-free during client teardown
-Date: Fri,  4 Sep 2026 06:58:30 +0200
-Message-ID: <20260904045737.263423736@linuxfoundation.org>
+Subject: [PATCH 6.12 108/403] NFSD: Prevent client use-after-free during NFSv4.0 revoked-state cleanup
+Date: Fri,  4 Sep 2026 06:58:31 +0200
+Message-ID: <20260904045737.285349066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -54,71 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit 5e2fa29d223a9a1e6a948e40b109d09081d1decd upstream.
+commit 7b4f8a1586c42d3afc3c0ac779af2db7ab1a5c55 upstream.
 
-__destroy_client() releases a client's open owners, but a lock owner
-whose only reference is a blocked lock (nbl) stays on
-cl_ownerstr_hashtbl.  client_has_state() does not count a bare owner,
-so DESTROY_CLIENTID can reach __destroy_client() with such owners
-present.
+nfs40_clean_admin_revoked() takes a stateid reference under
+clp->cl_lock, drops nn->client_lock, and calls
+nfsd4_drop_revoked_stid(), which dereferences the stateid's client
+through s->sc_client->cl_lock.  The stateid reference does not pin the
+client, so a teardown racing the dropped lock can free the client
+while nfsd4_drop_revoked_stid() is still using it.
 
-__destroy_client() then walks the table, calling remove_blocked_locks()
-on each owner without a reference.  Freeing a blocked lock drops the
-owner reference held via flc_owner.  The per-net laundromat reaps
-blocked locks from nn->blocked_locks_lru independently of client state.
-The two paths share blocked_locks_lock only for the list splice, not
-the owner's lifetime.  The laundromat therefore frees the owner as
-__destroy_client() dereferences it, a NULL dereference in
-remove_blocked_locks().
+This cleanup runs from the laundromat, so a periodic sweep can race
+force_expire_client() driven by a write to the clients/<id>/ctl file.
 
-nfsd4_release_lockowner() holds a reference across the same call;
-__destroy_client() does not.  Hold cl_lock across the walk, taking a
-reference and unhashing each owner, then drop it before
-remove_blocked_locks() and nfs4_put_stateowner(), which take
-blocked_locks_lock and cl_lock.
+Skip a client that is already expiring and otherwise pin it with
+cl_rpc_users under client_lock before dropping the lock, matching
+nfsd4_revoke_states().
 
-Reported-by: Wolfgang Walter <linux@stwm.de>
-Closes: https://lore.kernel.org/linux-nfs/6eccafaaaa60651ef091257c3439c46b@stwm.de/
-Fixes: 68ef3bc31664 ("nfsd: remove blocked locks on client teardown")
+Fixes: d688d8585e6b ("nfsd: allow admin-revoked NFSv4.0 state to be freed.")
 Cc: stable@vger.kernel.org
 Reviewed-by: NeilBrown <neil@brown.name>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-1-1d519d9be0cb@kernel.org
+Link: https://patch.msgid.link/20260709-cel-v4-5-1d519d9be0cb@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -2522,14 +2522,24 @@ __destroy_client(struct nfs4_client *clp
- 		release_openowner(oo);
- 	}
- 	for (i = 0; i < OWNER_HASH_SIZE; i++) {
--		struct nfs4_stateowner *so, *tmp;
-+		struct nfs4_stateowner *so;
+@@ -6709,16 +6709,22 @@ retry:
  
--		list_for_each_entry_safe(so, tmp, &clp->cl_ownerstr_hashtbl[i],
--					 so_strhash) {
-+		spin_lock(&clp->cl_lock);
-+		while (!list_empty(&clp->cl_ownerstr_hashtbl[i])) {
-+			so = list_first_entry(&clp->cl_ownerstr_hashtbl[i],
-+					      struct nfs4_stateowner, so_strhash);
- 			/* Should be no openowners at this point */
- 			WARN_ON_ONCE(so->so_is_open_owner);
-+			nfs4_get_stateowner(so);
-+			unhash_lockowner_locked(lockowner(so));
-+			spin_unlock(&clp->cl_lock);
-+
- 			remove_blocked_locks(lockowner(so));
-+			nfs4_put_stateowner(so);
-+
-+			spin_lock(&clp->cl_lock);
- 		}
-+		spin_unlock(&clp->cl_lock);
- 	}
- 	nfsd4_return_all_client_layouts(clp);
- 	nfsd4_shutdown_copy(clp);
+ 		if (atomic_read(&clp->cl_admin_revoked) == 0)
+ 			continue;
++		if (is_client_expired(clp))
++			continue;
+ 
+ 		spin_lock(&clp->cl_lock);
+ 		idr_for_each_entry_ul(&clp->cl_stateids, stid, tmp, id)
+ 			if (stid->sc_status & SC_STATUS_ADMIN_REVOKED) {
+ 				refcount_inc(&stid->sc_count);
++				atomic_inc(&clp->cl_rpc_users);
+ 				spin_unlock(&nn->client_lock);
+ 				/* this function drops ->cl_lock */
+ 				nfsd4_drop_revoked_stid(stid);
+ 				nfs4_put_stid(stid);
+ 				spin_lock(&nn->client_lock);
++				if (atomic_dec_and_test(&clp->cl_rpc_users) &&
++				    is_client_expired(clp))
++					wake_up_all(&expiry_wq);
+ 				goto retry;
+ 			}
+ 		spin_unlock(&clp->cl_lock);
 
 
