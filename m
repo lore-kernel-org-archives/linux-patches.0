@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2B5378838;
-	Fri,  4 Sep 2026 06:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4691D378838;
+	Fri,  4 Sep 2026 06:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788501768; cv=none; b=kwg0omkWkMQF+o4yBywhmNdeU2b4OWTFzbm+iMWWUh3KhV4i46GoG6Ko9/sv7Og+YL0GB6fgC68TqJXN+U8BdVdhiHCmuOAjkrXr3BhWGiFPbgQlHwebVtlcC55ncPMTh3JHmzM6I/s735KZspxDhb36Hvkxy0C/SaWgENgz0pA=
+	t=1788501770; cv=none; b=bPH6b3y7XYzg8eW+ymEYnFwKcJShHDaKglKQRPNA87u+DgXMFn22rG3G9czfsCXN5i1ACdADaAaKPLVCtJnhl4dO4k+975R+XY+9qOVVrxnHOV4xU8SBnhKl4xMbI+NjAsPJDWLf2+uGdimcynjxoLew3uCqNg3s9eqP3qlc8EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788501768; c=relaxed/simple;
-	bh=Q69ZcraczQQ1hsUgwRDr56rkohtGAsdWjlRn6WV3rJE=;
+	s=arc-20240116; t=1788501770; c=relaxed/simple;
+	bh=OZm19TLwTtwtz0Nvp3eqQkBGm9Y8+q/QARrGCWHoQ0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ks/TVjpLrpT3v/djjsYoVOb8GQQ9eQnneGbjvdhz15InErYBJ80rLRFDBfOUAqVXFFTuXxITW5Kn6eCWlBGNL3ZF4kRLMzsPNvfzRIPUy0oBS2bDRcFVOfawgWbNtq7hy2hqfV79Dge8XCllv4+kU7LHJv4OpRufumSCGQGkHPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzc6ZKts; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b63HCMgSVMoyuWqNvxoDR3+g5smTgW6pxTsKQqOfhbXcfoJMZgzwHpeClC6V7VPifVBDU9RUqvWQ9BJF2QLGGgS7PotB1PXLOPh8aZL4izvP8NtX9lq07BabSnoY/eZaKy2wZnr2D7gbFnSvbSaX0c+dsc1mf3ppILPiODvZ4yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXUK61rY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzc6ZKts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B3B1F00A3D;
-	Fri,  4 Sep 2026 06:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXUK61rY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11F51F00A3E;
+	Fri,  4 Sep 2026 06:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788501766;
-	bh=FwH0I9PB/8rwhsJUbit6qubxyyrdu5U7VP/fArsainw=;
+	s=korg; t=1788501769;
+	bh=w4oCOMx0l7ZULFa9ATulooEa9JQCBxbRP34uTeM59DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzc6ZKtsPfvHqCu7nCW6+ywfddd1VCVNCsrjiCitoQ51HA4k9bcMhY3TAz5Z9Srar
-	 P+L0oUvbVasTGdLZ6EPAE9HajiqA/ZQ3dd0NkQZhA9zuZY/KjTGiiw7BGRWNAfSqSa
-	 h1/IWLk6lfMtIrV27sDFYfegoAd7gG6b2IjyWb4k=
+	b=DXUK61rYCrnHWF0esz1uNEfmzAIOImU6iiRrMyF/Z+idxSvhBq4IOk2Y8UNuSUEa7
+	 aeDFj94nUTYtHRmGgceWCiSsPtbwDbzdlSCILPQ0avx8lNLlgPML9df7AeFbSOXW3K
+	 ALbV8qQMYcHPZsAd1Fw/R2UOwwMEdjhV4t5AOYvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.18 524/552] wifi: rtl8xxxu: fix use-after-free from rx_urb_wq on stop
-Date: Fri,  4 Sep 2026 07:01:21 +0200
-Message-ID: <20260904045802.506095300@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 489/552] ALSA: hda/ext: preserve PPLCCTL bits when clearing reset
+Date: Fri,  4 Sep 2026 07:00:46 +0200
+Message-ID: <20260904045801.752752566@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,112 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 6c080026ecc17eecb103f8927c64ea73a74bb818 upstream.
+commit 36aa66de481d29edd63cbad9b5c4dc18c340fdf6 upstream.
 
-rtl8xxxu arms rx_urb_wq from the RX completion path:
-rtl8xxxu_rx_complete() hands the URB to rtl8xxxu_queue_rx_urb(), which
-queues it on rx_urb_pending_list and, once the list grows past
-RTL8XXXU_RX_URB_PENDING_WATER, schedules rx_urb_wq.  The worker
-rtl8xxxu_rx_urb_work() drains rx_urb_pending_list, recovers priv through
-container_of, and resubmits each URB through rtl8xxxu_submit_rx_urb(),
-which anchors it on rx_anchor and dereferences priv->udev.
+snd_hdac_ext_stream_reset() polls PPLCCTL for STRST by masking the
+register value with AZX_PPLCCTL_STRST:
 
-rtl8xxxu_stop() cancels the sibling work items (c2hcmd_work, ra_watchdog,
-update_beacon_work) but never cancels rx_urb_wq, so a worker armed during
-the last burst of RX traffic can run rtl8xxxu_rx_urb_work() after
-rtl8xxxu_disconnect() has called ieee80211_free_hw(), which frees priv,
-producing a use-after-free.  The window opens under active RX traffic
-(pending count above the watermark) followed by a disconnect.
+	val = readl(...) & AZX_PPLCCTL_STRST;
 
-There are two teardown races to close:
+The same masked value is then used when clearing STRST. Since val
+contains no bits other than STRST, clearing STRST from it always
+produces zero. The subsequent writel() therefore writes zero to the
+entire PPLCCTL register instead of clearing only the reset bit.
 
-  * rtl8xxxu_queue_rx_urb() decided whether to enqueue under rx_urb_lock
-    but called schedule_work() after dropping the lock.  A completion
-    that observed shutdown == false and released the lock could then call
-    schedule_work() after rtl8xxxu_stop() had set shutdown and
-    cancel_work_sync() had already returned, arming the worker to run
-    after the teardown.  Move schedule_work() under the same !shutdown
-    branch so the arming decision is atomic with the shutdown check.
+PPLCCTL contains other stream control fields, including the stream tag
+in AZX_PPLCCTL_STRM_MASK. Those fields must not be modified as a side
+effect of clearing stream reset.
 
-  * rtl8xxxu_rx_urb_work() anchors every URB it drained back onto
-    rx_anchor through rtl8xxxu_submit_rx_urb().  A worker still running
-    when usb_kill_anchored_urbs(&priv->rx_anchor) returned would submit a
-    URB that escaped the kill.  In rtl8xxxu_stop(), call
-    cancel_work_sync(&priv->rx_urb_wq) before the kill so the worker is
-    drained first.
+Use snd_hdac_updatel() to clear STRST, matching the existing set-reset
+path and preserving all unrelated PPLCCTL bits.
 
-After priv->shutdown is set under rx_urb_lock, completions can no longer
-queue rx_urb_wq. cancel_work_sync() then drains the last queued or running
-worker, and the following usb_kill_anchored_urbs() kills the URBs it may
-have submitted.
-
-rtl8xxxu_disconnect() is covered because ieee80211_unregister_hw()
-guarantees .stop() runs for a live interface before ieee80211_free_hw()
-frees priv.  The probe error path needs no cancel: rx_urb_wq is
-INIT_WORK()'d there but cannot have been scheduled, since no URB is
-submitted before ieee80211_register_hw() succeeds.
-
-This bug was found by static analysis.
-
-Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
+Fixes: df203a4e46f4 ("ALSA: hdac_ext: add extended stream capabilities")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260630033117.3377-1-fanwu01@zju.edu.cn
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/43BB7930B0F07C09+20260813065524.1955696-1-raoxu@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/core.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ sound/hda/core/ext/stream.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -5885,14 +5885,19 @@ static void rtl8xxxu_queue_rx_urb(struct
- {
- 	struct sk_buff *skb;
- 	unsigned long flags;
--	int pending = 0;
+--- a/sound/hda/core/ext/stream.c
++++ b/sound/hda/core/ext/stream.c
+@@ -211,8 +211,8 @@ void snd_hdac_ext_stream_reset(struct hd
+ 			break;
+ 		udelay(3);
+ 	} while (--timeout);
+-	val &= ~AZX_PPLCCTL_STRST;
+-	writel(val, hext_stream->pplc_addr + AZX_REG_PPLCCTL);
++	snd_hdac_updatel(hext_stream->pplc_addr, AZX_REG_PPLCCTL,
++			 AZX_PPLCCTL_STRST, 0);
+ 	udelay(3);
  
- 	spin_lock_irqsave(&priv->rx_urb_lock, flags);
- 
- 	if (!priv->shutdown) {
- 		list_add_tail(&rx_urb->list, &priv->rx_urb_pending_list);
- 		priv->rx_urb_pending_count++;
--		pending = priv->rx_urb_pending_count;
-+		/*
-+		 * Arm the worker under rx_urb_lock so this is atomic with the
-+		 * shutdown check: moving it out of the lock would let a
-+		 * completion arm the work after rtl8xxxu_stop() canceled it.
-+		 */
-+		if (priv->rx_urb_pending_count > RTL8XXXU_RX_URB_PENDING_WATER)
-+			schedule_work(&priv->rx_urb_wq);
- 	} else {
- 		skb = (struct sk_buff *)rx_urb->urb.context;
- 		dev_kfree_skb_irq(skb);
-@@ -5900,9 +5905,6 @@ static void rtl8xxxu_queue_rx_urb(struct
- 	}
- 
- 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
--
--	if (pending > RTL8XXXU_RX_URB_PENDING_WATER)
--		schedule_work(&priv->rx_urb_wq);
- }
- 
- static void rtl8xxxu_rx_urb_work(struct work_struct *work)
-@@ -7550,6 +7552,13 @@ static void rtl8xxxu_stop(struct ieee802
- 	priv->shutdown = true;
- 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
- 
-+	/*
-+	 * Cancel before killing rx_anchor: the worker re-anchors every URB
-+	 * it drained via rtl8xxxu_submit_rx_urb(), so a worker still running
-+	 * after the kill could submit a URB that escapes it.
-+	 */
-+	cancel_work_sync(&priv->rx_urb_wq);
-+
- 	usb_kill_anchored_urbs(&priv->rx_anchor);
- 	usb_kill_anchored_urbs(&priv->tx_anchor);
- 	if (priv->usb_interrupts)
+ 	timeout = 50;
 
 
