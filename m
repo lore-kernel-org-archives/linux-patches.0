@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51694CCDC7;
-	Fri,  4 Sep 2026 05:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94A1412294;
+	Fri,  4 Sep 2026 05:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500652; cv=none; b=GGA09qsgwLYJpyGdEw/Cw+AZA/jsn81OWNNktUpqrGp9ZShrbx5MCATKC/mqgxdietULBhiBPeLlX8P9xVe8zbW0A4LIQPmHkHhBKLRzHdC2ymm8B0UDMGQuwHurLmF15+qo0DYqkZ3hHfLPwKDiRAuvDBIf+/tphgHlWgz422g=
+	t=1788500655; cv=none; b=BEJcPwb44+LbaB8y+E/O3dmhi8ofcF3jrzK7/XblJIge0iOmrqETHgIGclHxMJq237vzsHzJ1lIJjFsaKVgtIAQ91a6f+m1fl/G7f+TpyImCBilrzZUm+mYmfcKmgBTvC2YW/eAMfGwEICuCHb07z6T1mTeie5RiUifuwXtqyMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500652; c=relaxed/simple;
-	bh=gmegEv18Lw3Yb57swbuuIBLoxLnJfs85t/eBUr3Mmek=;
+	s=arc-20240116; t=1788500655; c=relaxed/simple;
+	bh=clnRxxc/xEY/ZLtnVIDCHYikF3uecO62QWZVJb8We4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDPL4Z3ngJomaMB/NYhARL4JbxD8M2kq19zuqG9ksnGba2LCsVSeUK3bVkCXvZ4P4uCoVWp/WT5dg+inEHVzZMHk88xgti48w7UpIUuIONMR7zSQKSQWfA+tAHtJjFJ1j38JPr9P6KOJoKXkA5RFCS2yQOgzbx1zN0B+WfguXZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMS+GJ6A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V1izmHudHot//T90yr7FAaIp/k/PRh6UjVVddB6ZodaCG5EhGNww+Jy4yLhtgpBGmpH7NDtBG23epKtCpNjAZUP07obFUga19htON2k3bO5k9+O3DfctFeqG/0SJzlDh6RJVOY7MjTOiph1KB9uxb5LQR3wMCxP0G6NkW2Wyn4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNLUH1D+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMS+GJ6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B451F00A3D;
-	Fri,  4 Sep 2026 05:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNLUH1D+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F81F00A3D;
+	Fri,  4 Sep 2026 05:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500651;
-	bh=ryGZgvUudMedVQPtb1BQfs3DVnYGFUmsfIAUOjguf68=;
+	s=korg; t=1788500654;
+	bh=B07egZvqBrH3SiCiZuyo1wJ8a6u0VKcG+5saqCLNit8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eMS+GJ6AEfZhDTCVV5xFqSzz2QafqTq6MynHbPaJ3z5MD89K5OWjuTjct4dKC6n1e
-	 arUBeSLwXZhXNE4MWW0XoURj+jD8d4biQ5gVm/ZJ6aJITRp/TuOjdpY3ibsrhcYhxo
-	 35Xoe7bXJFnZrvLAjH5qXAKmeU0FoLv2Tbn1lPAc=
+	b=qNLUH1D+y22jtb8VIPxBur1UESRaEQYCk6mLgMlZ0DHluR9BCOKsxOWFhjp/kv6Dy
+	 jH9zTVMDLUiJ9Rzi0txwgF42f4ujakQhE5DjvVKff0NrXsVGgmrvX0y2LcYI2MSqKd
+	 8PxR0OUlIH8yLIOb2ghGv0fR113/7E9kZdLA81NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 133/552] nfsd: fix nfsd_file leak on inter-server COPY setup failure
-Date: Fri,  4 Sep 2026 06:54:50 +0200
-Message-ID: <20260904045751.377063317@linuxfoundation.org>
+	Nikol Kuklev <nikolk202@gmail.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 134/552] nfsd: fix null dereference in nfsd4_setattr for deleg timestamp attrs
+Date: Fri,  4 Sep 2026 06:54:51 +0200
+Message-ID: <20260904045751.423713839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,52 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Nikol Kuklev <nikolk202@gmail.com>
 
-commit 88a76145451d703eedd867b5989bf73d17340399 upstream.
+commit fe456c8c0931bb3e8a03d429920e87fd85747fba upstream.
 
-When nfsd4_setup_inter_ssc() fails, nfsd4_copy() returns
-nfserr_offload_denied directly, bypassing the out: label where
-release_copy_files() would drop the nf_dst reference taken by
-nfs4_preprocess_stateid_op(). Each failed inter-server COPY
-leaks one nfsd_file, pinning file/inode/dentry/vfsmount.
+When a SETATTR request includes FATTR4_WORD2_TIME_DELEG_ACCESS or
+FATTR4_WORD2_TIME_DELEG_MODIFY in the attribute bitmap, nfsd4_setattr()
+sets deleg_attrs=true and calls nfs4_preprocess_stateid_op() to validate
+the stateid.
 
-Fix by setting status and jumping to out: instead of returning
-directly.
+If the client supplies the NFSv4 "one stateid" (all-0xFF bytes),
+check_special_stateids() returns nfs_ok without populating the output
+nfs4_stid pointer, because the special-stateid path in
+nfs4_preprocess_stateid_op() jumps to done: with s==NULL, and the
+"if (s)" block that would set *cstid is skipped. The local variable `st`
+remains NULL.
 
-Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
+Back in nfsd4_setattr(), the if (deleg_attrs) block then unconditionally
+dereferences st->sc_type (at offset 4 from NULL), causing a kernel oops.
+
+This is remotely triggerable by any NFSv4 client: send COMPOUND [PUTROOTFH,
+SETATTR(ONE_STATEID, {bmval2=FATTR4_WORD2_TIME_DELEG_ACCESS, ...})].
+No authentication, delegation, or prior state is required.
+
+Fix by adding a NULL check before the dereference. A special stateid is
+not a delegation stateid, so the existing nfserr_bad_stateid return value
+is already correct; we only need to guard the pointer dereference itself.
+
+Fixes: 7e13f4f8d27d ("nfsd: handle delegated timestamps in SETATTR")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260531-nfsd-testing-v1-3-7bfa481b0540@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Nikol Kuklev <nikolk202@gmail.com>
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -1987,16 +1987,14 @@ nfsd4_copy(struct svc_rqst *rqstp, struc
- 		}
- 		status = nfsd4_setup_inter_ssc(rqstp, cstate, copy);
- 		if (status) {
--			trace_nfsd_copy_done(copy, status);
--			return nfserr_offload_denied;
-+			status = nfserr_offload_denied;
-+			goto out;
- 		}
- 	} else {
- 		trace_nfsd_copy_intra(copy);
- 		status = nfsd4_setup_intra_ssc(rqstp, cstate, copy);
--		if (status) {
--			trace_nfsd_copy_done(copy, status);
--			return status;
--		}
-+		if (status)
-+			goto out;
- 	}
+@@ -1196,7 +1196,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, st
  
- 	memcpy(&copy->fh, &cstate->current_fh.fh_handle,
+ 	if (deleg_attrs) {
+ 		status = nfserr_bad_stateid;
+-		if (st->sc_type & SC_TYPE_DELEG) {
++		if (st && (st->sc_type & SC_TYPE_DELEG)) {
+ 			struct nfs4_delegation *dp = delegstateid(st);
+ 
+ 			/* Only for *_ATTRS_DELEG flavors */
 
 
