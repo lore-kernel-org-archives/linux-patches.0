@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8BA377EDC;
-	Fri,  4 Sep 2026 05:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD9735AC03;
+	Fri,  4 Sep 2026 05:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788500951; cv=none; b=T1IdxIz8ZjOpBD0db3a9YujbWFQas3eiIuRuPRAQKmqBvZjPrM4+0QpNWeW9CPDabwaqQ4EMyOjt2rPSMNU3qRVb2CM3CKz+xbe5wmBPBjb3qj3z8gzV0ZvD3py/c3qW6w6bIbkZncYSYVG/KdMXJu+7Pkx8U1EA4GJ/PEXz+ws=
+	t=1788500953; cv=none; b=uMtQGW3KiMC4KSTvQYryAIla9vpjd+kKUrbDlfXOm4jg5eNAmn2MDvUZHlY3EXAs3DFYoKVOzRSuAAOCd2YyJZ5+yMWmItmlIYaxhcE9BzENl+X3nlcxEu3uBeaKyEmwQAWE7Ybm2XhlvXhZrw7sgzAX6o7gnTs7qh0vUz/2M70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788500951; c=relaxed/simple;
-	bh=44xeC1BCkaphD9hgpnQolfBIiRqwJ4LMlLPq3/Li5xE=;
+	s=arc-20240116; t=1788500953; c=relaxed/simple;
+	bh=t74MXM2QyhYnPkyYvQoGJoIIXEjMjb+czDQo9WhKgZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQS60510U7z5y78Sq3vaOGrljeww0DOmdkr/9P0gbgF/pLXVAduNtmyRoIRTVjLjNGcqjSRPtfDt8KvZIfxLQznbFRpXE6V66w/zXGAlhIrAcvEvXI9zqSxg9wRtVGhxOjhkCdrhcvt4lw4C+Nmr2BoAdfiTIu0pG+EwRasXSVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8/gRvG0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uRUvpthp48yYioe5w74AwZsiZ1J3YFn4KpJ226R11T6eL5KFJEaGjwsXgZXV+w+enC7jAZK8nC4wWOFELdpGJKmeZcVYrxsi2+Uq0SJWM8I5IyyuDp0BdG5kLd/RuqEToAvycO1RKfyyKZy4Au2r8ePCOi1IrMPsr77Uki45Ws0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plY1jjaY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8/gRvG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFD21F00A3D;
-	Fri,  4 Sep 2026 05:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plY1jjaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3F61F00A3D;
+	Fri,  4 Sep 2026 05:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788500949;
-	bh=nHWTLFcVZYUKbMd9PuXA9pmwwcp4FOEz2JpWlfaKDl8=;
+	s=korg; t=1788500952;
+	bh=9351m2xPzQnyO/pdeZD1rBwkGbfrBZDRb7A8Mu8bbDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U8/gRvG08tScSwinWs0utLSmbfWDqycOFEYImOyISP09KNFfJshzjJ+4sFW/63WUS
-	 gcSkvKQ4ly+AIPY52Gm4oz8ivas3C+F05RSGOtsnqoGBwLwsElJCsfH7teTTjOA/H4
-	 HJp62TVXoT7M1itzgl383Ks+SklGFpHDgkdBJ5YE=
+	b=plY1jjaYl97vGIrDhFla1S5w4/KYjkmylBeafNJ1FnINLHqHSBnn6TkUagWf77yHL
+	 /bnCXl0XxbyCtaPUpRkpYiOmft5V1Vu5FzWmranjKyOsJkfd3DNh1Gvr1IXeyW3rKs
+	 6b0tE45KDbMbegPFM9dJm38iGx+4T3HMECZcOkJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Krutskih <devsec@tpz.ru>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 237/552] dm raid1: reserve space for NUL-terminator in build_constructor_string()
-Date: Fri,  4 Sep 2026 06:56:34 +0200
-Message-ID: <20260904045754.853720348@linuxfoundation.org>
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Subject: [PATCH 6.18 211/552] accel/rocket: initialize job domain before cleanup paths
+Date: Fri,  4 Sep 2026 06:56:08 +0200
+Message-ID: <20260904045754.142157285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045747.813364717@linuxfoundation.org>
 References: <20260904045747.813364717@linuxfoundation.org>
@@ -50,31 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Krutskih <devsec@tpz.ru>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-commit 73c37fe54cd056d07461b142ab0b8b81e1ef6ad8 upstream.
+commit 70e6a33d68a9b03335c5426332666e52d07f45d6 upstream.
 
-Reserve space for the termination NUL after the maximum 20 decimal
-digits of a long long value to avoid buffer overflow in sprintf().
+rocket_ioctl_submit_job() releases rjob through rocket_job_put() on
+allocation error paths. rocket_job_cleanup() unconditionally calls
+rocket_iommu_domain_put(job->domain), but job->domain is assigned only
+after task copying and BO lookups. A failure before that assignment can
+therefore clean up a job with a NULL domain pointer.
 
-Fixes: f5db4af466e2 ("dm raid1: add userspace log")
+Take the per-file domain reference before the first error path can release
+rjob. Also clear rjob->tasks after freeing it in rocket_copy_tasks(), so
+the common cleanup path cannot free the task array again after a task-copy
+error.
+
+Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Link: https://lore.kernel.org/r/6a454b48.6a8fa39a.27019b.984b@mx.google.com
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log-userspace-base.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/accel/rocket/rocket_job.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-log-userspace-base.c
-+++ b/drivers/md/dm-log-userspace-base.c
-@@ -139,6 +139,7 @@ static int build_constructor_string(stru
- 		str_size += strlen(argv[i]) + 1; /* +1 for space between args */
+--- a/drivers/accel/rocket/rocket_job.c
++++ b/drivers/accel/rocket/rocket_job.c
+@@ -103,6 +103,7 @@ rocket_copy_tasks(struct drm_device *dev
  
- 	str_size += 20; /* Max number of chars in a printed u64 number */
-+	str_size++; /* For NUL-terminator */
+ fail:
+ 	kvfree(rjob->tasks);
++	rjob->tasks = NULL;
+ 	return ret;
+ }
  
- 	str = kzalloc(str_size, GFP_KERNEL);
- 	if (!str) {
+@@ -556,6 +557,7 @@ static int rocket_ioctl_submit_job(struc
+ 	kref_init(&rjob->refcount);
+ 
+ 	rjob->rdev = rdev;
++	rjob->domain = rocket_iommu_domain_get(file_priv);
+ 
+ 	ret = drm_sched_job_init(&rjob->base,
+ 				 &file_priv->sched_entity,
+@@ -581,8 +583,6 @@ static int rocket_ioctl_submit_job(struc
+ 
+ 	rjob->out_bo_count = job->out_bo_handle_count;
+ 
+-	rjob->domain = rocket_iommu_domain_get(file_priv);
+-
+ 	ret = rocket_job_push(rjob);
+ 	if (ret)
+ 		goto out_cleanup_job;
 
 
