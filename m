@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F12358378;
-	Fri,  4 Sep 2026 06:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87330396572;
+	Fri,  4 Sep 2026 06:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788502226; cv=none; b=W3YYD4mZLKgx1fJD4g0TBcV4vMbKkc1vEVkXP0nFF4GCiAxU7s1f6wTl/CLVlaetIwTL6LiPLRhMuKsfySWcvWLuf8AJbjdpFnfosgNs/kbzNH2KLEgPtBwAWZkY7mp7PPVWQPp5fZMoJPQN78YB+KlPF9TExfJyqumeQWEjQmA=
+	t=1788502229; cv=none; b=TBhjl3VFnt9DXqi8FXKRr62q4b7UjytOVGD1+n/4rfE8/BjP7mNM2elNICR0XSTbAEKgj3OWB15+q5bCDTezD7I2F8WNuX+xCJQamNv6QARDZQhBdwmRCJgqpr/PSPTD7nDEXh+Vkbj0yhTCO2cuzqbi7Q7AAN48Nh339xjyi04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788502226; c=relaxed/simple;
-	bh=3SPSm/P+CL8cP8jppv0kXqL1Fdubr1tX7dFvhaTTVuk=;
+	s=arc-20240116; t=1788502229; c=relaxed/simple;
+	bh=9Cci3qMg3SbeqvSWKGujcDxYgiAmf9HWeyyNIrzwtKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnhJFymtJiTBz9RL8rfa4/45PaTPDu0F8pMZwwU1txOSDG8H7OgQOVcyWVY7vIF5T8n0IiIEf9dYs/KFDh6JPw7kMCSUO5nO9E2V0QpEdcHaLYcdCEWXl8RYyCPUQyflfeHibNR7qJMpukGplbYz4FaIObr3m/9NhYl6E6UyZ5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KK3ea2hv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GT13f0I6oZbUCKFo8ep8KMKQ1u/2rSB0a6cuB/w3CPJp6RqxlVF/Er+G17bRL+1Cukmsc1X1rjYzxCqlrAU2VE7KC9Pv0pxsPCVSWCxtSfK7VGiKvpLi80SqYHbGATb3v6qX3BbYQmlGQnVXS6UXvMzGLm8fyT3eLk3+B311gNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRBsj1W7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KK3ea2hv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5741F00A3D;
-	Fri,  4 Sep 2026 06:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRBsj1W7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03421F00A3D;
+	Fri,  4 Sep 2026 06:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1788502225;
-	bh=MiebpDIdfFt3fUxpn1aAlK6Yh5jDtnOpYhGWzK1YxTU=;
+	s=korg; t=1788502228;
+	bh=wA2wotvbTS56pnJNVzzVxiDZLhuyxajRcaQBxwTFzOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KK3ea2hvoObl4J2kTQ57PjPInSRP4AAHh8JT7jrT3WoXsRSpn35IJquL4KxA3sGDx
-	 5nnU+ZcXDCKR470lrez7W+kPVu9lESGCHwXHxNbcLjfMdHWgDXIBpxeBoihcepWaoS
-	 JfAt+GibaunbxlvftBXG4GIJNlIYiqDEAkmkEVeM=
+	b=tRBsj1W7D4vaVm21dC6P0knsXTcVq806e+2kW5evhg4EDd+RlLQ/0ScTZ6vvMqhZK
+	 0GNkdgqFnBili8zHFabCO4k/HLabtf0WZvcGHq478ifcUvEwF2Qsx6KCy67ldgy65k
+	 pXD7Ac6lQxsR7vI1zRRzgWlrSzCLoYYIq5qJA27g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.12 131/403] fs/ntfs3: validate dirty page table on log replay
-Date: Fri,  4 Sep 2026 06:58:54 +0200
-Message-ID: <20260904045737.816007233@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 091/403] nfsd: fix BUG_ON in nfsd4_alloc_layout_stateid on racing delegation revoke
+Date: Fri,  4 Sep 2026 06:58:14 +0200
+Message-ID: <20260904045736.903183590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260904045734.806166532@linuxfoundation.org>
 References: <20260904045734.806166532@linuxfoundation.org>
@@ -51,69 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 006cb7713dec10368e699abc4367e5faa334c9a5 upstream.
+commit ca94ba36172046be6a694a7986f6931e47ed4d51 upstream.
 
-Each DIR_PAGE_ENTRY ends in a page_lcns[] array whose length is the on-disk
-lcns_follow field. check_rstbl() validates the table bookkeeping but never
-checks that this array fits in the entry, so a crafted lcns_follow lets the
-v0->v1 conversion memmove and later replay passes run off the entry.
+nfsd4_alloc_layout_stateid reads fp->fi_deleg_file without holding
+fi_lock when the parent stateid is a delegation. A concurrent delegation
+revoke via the laundromat can clear fi_deleg_file under fi_lock, causing
+nfsd_file_get() to return NULL and triggering the BUG_ON.
 
-Add check_dp_table() to reject, right after check_rstbl(), any entry larger
-than its size claims via struct_size() (the same expression used to allocate
-these entries, so the check is overflow-safe by construction). All consumers
-can then trust lcns_follow as the real capacity. This covers every
-page_lcns[] access whose index is bounded by the entry itself (the
-conversion memmove, the HotFix store via find_dp(), and the self-bounded
-scan loops). Accesses whose index comes from the log record need a separate
-bound and are handled in a follow-up patch.
+This race is client-reachable: two NFS clients can trigger it by having
+one hold a delegation while another opens the same file to force a
+recall. When the first client doesn't respond to the recall, the
+laundromat revokes it. A concurrent LAYOUTGET from any client using the
+delegation stateid hits the race window.
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Fix this by taking fi_lock around the fi_deleg_file read in the
+SC_TYPE_DELEG path, matching the locking discipline of the
+find_any_file() arm, and replacing the BUG_ON with a graceful error
+return that cleans up the partially-initialized layout stateid.
+
+Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-1-f27e8eb4d974@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/nfsd/nfs4layouts.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -789,6 +789,20 @@ static bool check_rstbl(const struct RES
- 	return true;
- }
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -249,11 +249,17 @@ nfsd4_alloc_layout_stateid(struct nfsd4_
+ 	nfsd4_init_cb(&ls->ls_recall, clp, &nfsd4_cb_layout_ops,
+ 			NFSPROC4_CLNT_CB_LAYOUT);
  
-+static bool check_dp_table(const struct RESTART_TABLE *dptbl)
-+{
-+	u32 rsize = le16_to_cpu(dptbl->size);
-+	struct DIR_PAGE_ENTRY *dp = NULL;
-+
-+	while ((dp = enum_rstbl((struct RESTART_TABLE *)dptbl, dp))) {
-+		if (struct_size(dp, page_lcns, le32_to_cpu(dp->lcns_follow)) >
-+		    rsize)
-+			return false;
+-	if (parent->sc_type == SC_TYPE_DELEG)
++	if (parent->sc_type == SC_TYPE_DELEG) {
++		spin_lock(&fp->fi_lock);
+ 		ls->ls_file = nfsd_file_get(fp->fi_deleg_file);
+-	else
++		spin_unlock(&fp->fi_lock);
++	} else {
+ 		ls->ls_file = find_any_file(fp);
+-	BUG_ON(!ls->ls_file);
 +	}
-+
-+	return true;
-+}
-+
- /*
-  * free_rsttbl_idx - Free a previously allocated index a Restart Table.
-  */
-@@ -4281,6 +4295,11 @@ check_dirty_page_table:
- 		err = -EINVAL;
- 		goto out;
- 	}
-+
-+	if (!check_dp_table(rt)) {
-+		err = -EINVAL;
-+		goto out;
++	if (!ls->ls_file) {
++		nfs4_put_stid(stp);
++		return NULL;
 +	}
  
- 	dptbl = kmemdup(rt, t32, GFP_NOFS);
- 	if (!dptbl) {
+ 	if (nfsd4_layout_setlease(ls)) {
+ 		nfs4_put_stid(stp);
 
 
